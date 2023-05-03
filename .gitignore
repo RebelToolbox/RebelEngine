@@ -247,6 +247,12 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+# Do not ignore architecture folders in thirdparty libraries
+!thirdparty/**/arm/
+!thirdparty/**/arm64/
+!thirdparty/**/x86/
+!thirdparty/**/x64/
+
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 
