@@ -159,19 +159,12 @@ EditorAbout::EditorAbout() {
 	tc->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	vbc->add_child(tc);
 
-	// Authors
+	// Contributors
 
 	List<String> dev_sections;
-	dev_sections.push_back(TTR("Project Founders"));
-	dev_sections.push_back(TTR("Lead Developer"));
-	// TRANSLATORS: This refers to a job title.
-	// The trailing space is used to distinguish with the project list application,
-	// you do not have to keep it in your translation.
-	dev_sections.push_back(TTR("Project Manager "));
-	dev_sections.push_back(TTR("Developers"));
-	const char *const *dev_src[] = { AUTHORS_FOUNDERS, AUTHORS_LEAD_DEVELOPERS,
-		AUTHORS_PROJECT_MANAGERS, AUTHORS_DEVELOPERS };
-	tc->add_child(_populate_list(TTR("Authors"), dev_sections, dev_src, 1));
+	dev_sections.push_back(TTR("Rebel Contributors"));
+	const char *const *dev_src[] = { CONTRIBUTORS };
+	tc->add_child(_populate_list(TTR("Contributors"), dev_sections, dev_src, 1));
 
 	// Donors
 
