@@ -1,9 +1,9 @@
-# Exhaustive licensing information for files in the Godot Engine repository
+# Exhaustive licensing information for files in the Rebel Engine repository
 # =========================================================================
 #
 # This file aims at documenting the copyright and license for every source
-# file in the Godot Engine repository, and especially outline the files
-# whose license differs from the MIT/Expat license used by Godot Engine.
+# file in the Rebel Engine repository, and especially outline the files
+# whose license differs from the MIT/Expat license used by Rebel Engine.
 #
 # It is written as a machine-readable format following the debian/copyright
 # specification. Globbing patterns (e.g. "Files: *") mean that they affect
@@ -27,24 +27,25 @@
 #   License: Zlib
 # The exact copyright for each file in that library *may* differ, and some
 # files or code snippets might be distributed under other compatible licenses
-# (e.g. a public domain dedication), but as far as Godot Engine is concerned
+# (e.g. a public domain dedication), but as far as Rebel Engine is concerned
 # the library is considered as a whole under the Zlib license.
 #
-# Nota: When linking dynamically against thirdparty libraries instead of
-# building them into the Godot binary, you may remove the corresponding
+# Note: When linking dynamically against thirdparty libraries instead of
+# building them into the Rebel binary, you may remove the corresponding
 # license details from this file.
 
 -----------------------------------------------------------------------
 
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Godot Engine
-Upstream-Contact: Rémi Verschelde <contact@godotengine.org>
-Source: https://github.com/godotengine/godot
+Upstream-Name: Rebel Engine
+Upstream-Contact: Marcel Admiraal <info@rebeltoolbox.com>
+Source: https://github.com/RebelToolbox/RebelEngine
 
 Files: *
-Comment: Godot Engine
-Copyright: 2007-2022, Juan Linietsky, Ariel Manzur.
- 2014-2022, Godot Engine contributors.
+Comment: Rebel Engine
+Copyright: 2022-Present, Rebel Engine contributors
+ 2014-2022, Godot Engine contributors
+ 2007-2014, Juan Linietsky, Ariel Manzur
 License: Expat
 
 Files: ./rebel-logo.svg
@@ -55,16 +56,17 @@ License: CC-BY-4.0
 Files: ./core/math/convex_hull.cpp
  ./core/math/convex_hull.h
 Comment: Bullet Continuous Collision Detection and Physics Library
-Copyright: 2011, Ole Kniemeyer, MAXON, www.maxon.net
- 2007-2022, Juan Linietsky, Ariel Manzur.
- 2014-2022, Godot Engine contributors.
+Copyright: 2022-Present, Rebel Engine contributors
+ 2014-2022, Godot Engine contributors
+ 2011-2014, Juan Linietsky, Ariel Manzur
+ 2011, Ole Kniemeyer, MAXON, www.maxon.net
 License: Expat and Zlib
 
 Files: ./modules/fbx/fbx_parser/
 Comment: Open Asset Import Library (FBX parser)
-Copyright: 2006-2020, assimp team
- 2007-2022, Juan Linietsky, Ariel Manzur.
- 2014-2022, Godot Engine contributors.
+Copyright: 2022-Present, Rebel Engine contributors
+ 2020-2022, Godot Engine contributors
+ 2006-2020, assimp team
 License: BSD-3-clause
 
 Files: ./platform/android/java/lib/aidl/com/android/vending/licensing/
@@ -88,9 +90,9 @@ Files: ./platform/android/power_android.cpp
  ./platform/windows/power_windows.cpp
  ./platform/x11/power_x11.cpp
 Comment: Simple DirectMedia Layer
-Copyright: 1997-2017, Sam Lantinga
- 2007-2022, Juan Linietsky, Ariel Manzur.
- 2014-2022, Godot Engine contributors.
+Copyright: 2022-Present, Rebel Engine contributors
+ 2017-2022, Godot Engine contributors
+ 1997-2017, Sam Lantinga
 License: Expat and Zlib
 
 Files: ./servers/physics/collision_solver_sat.cpp
@@ -111,17 +113,19 @@ Files: ./servers/physics/gjk_epa.cpp
  ./servers/physics/shape_sw.cpp
  ./servers/physics/shape_sw.h
 Comment: Bullet Continuous Collision Detection and Physics Library
-Copyright: 2003-2008, Erwin Coumans
- 2007-2022, Juan Linietsky, Ariel Manzur.
- 2014-2022, Godot Engine contributors.
+Copyright: 2022-Present, Rebel Engine contributors
+ 2014-2022, Godot Engine contributors
+ 2008-2014, Juan Linietsky, Ariel Manzur
+ 2003-2008, Erwin Coumans
 License: Expat and Zlib
 
 Files: ./servers/physics/joints/cone_twist_joint_sw.cpp
  ./servers/physics/joints/cone_twist_joint_sw.h
 Comment: Bullet Continuous Collision Detection and Physics Library
-Copyright: 2007, Starbreeze Studios
- 2007-2022, Juan Linietsky, Ariel Manzur.
- 2014-2022, Godot Engine contributors.
+Copyright: 2022-Present, Rebel Engine contributors
+ 2014-2022, Godot Engine contributors
+ 2007-2014, Juan Linietsky, Ariel Manzur
+ 2007, Starbreeze Studios
 License: Expat and Zlib
 
 Files: ./thirdparty/bullet/
@@ -255,8 +259,8 @@ License: BSD-3-clause
 Files: ./thirdparty/minizip/
 Comment: MiniZip
 Copyright: 1998-2010, Gilles Vollant
- 2007-2008, Even Rouault
  2009-2010, Mathias Svensson
+ 2007-2008, Even Rouault
 License: Zlib
 
 Files: ./thirdparty/misc/clipper.cpp
