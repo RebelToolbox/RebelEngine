@@ -112,7 +112,7 @@ ScrollContainer *EditorAbout::_populate_list(const String &p_name, const List<St
 }
 
 EditorAbout::EditorAbout() {
-	set_title(TTR("Thanks from the Godot community!"));
+	set_title(TTR("Rebel Engine"));
 	set_hide_on_ok(true);
 	set_resizable(true);
 
@@ -148,8 +148,9 @@ EditorAbout::EditorAbout() {
 
 	Label *about_text = memnew(Label);
 	about_text->set_v_size_flags(Control::SIZE_SHRINK_CENTER);
-	about_text->set_text(String::utf8("\xc2\xa9 2007-2022 Juan Linietsky, Ariel Manzur.\n\xc2\xa9 2014-2022 ") +
-			TTR("Godot Engine contributors") + "\n");
+	about_text->set_text(
+			TTR("Rebel Engine is Free and Open Source Software; released under the MIT license.\n") +
+			TTR("Games developed with Rebel Engine remain the property of the game developer."));
 	version_info_vbc->add_child(about_text);
 
 	hbc->add_child(version_info_vbc);
@@ -193,7 +194,7 @@ EditorAbout::EditorAbout() {
 	Label *tpl_label = memnew(Label);
 	tpl_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	tpl_label->set_autowrap(true);
-	tpl_label->set_text(TTR("Godot Engine relies on a number of third-party free and open source libraries, all compatible with the terms of its MIT license. The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."));
+	tpl_label->set_text(TTR("Rebel Engine relies on a number of third-party free and open source libraries, all compatible with the terms of its MIT license. The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."));
 	tpl_label->set_size(Size2(630, 1) * EDSCALE);
 	license_thirdparty->add_child(tpl_label);
 
