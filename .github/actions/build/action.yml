@@ -1,5 +1,5 @@
-name: Build Godot
-description: Build Godot with the provided options.
+name: Build Rebel
+description: Build Rebel with the provided options.
 inputs:
   target:
     description: The scons target (debug/release_debug/release).
@@ -11,7 +11,7 @@ inputs:
     description: If tests are to be built.
     default: false
   platform:
-    description: The Godot platform to build.
+    description: The platform to build.
     required: false
   sconsflags:
     default: ""

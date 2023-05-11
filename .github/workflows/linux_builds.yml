@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 # Global Settings
 env:
-  GODOT_BASE_BRANCH: 3.4
+  BRANCH_NAME: main
   SCONSFLAGS: verbose=yes warnings=all werror=yes
 
 concurrency:
@@ -61,17 +61,17 @@ jobs:
               libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev \
               libdbus-1-dev libudev-dev libxi-dev libxrandr-dev yasm xvfb wget unzip
 
-      - name: Setup Godot build cache
-        uses: ./.github/actions/godot-cache
+      - name: Setup build cache
+        uses: ./.github/actions/build-cache
         with:
           cache-name: ${{ matrix.cache-name }}
         continue-on-error: true
 
-      - name: Setup python and scons
-        uses: ./.github/actions/godot-deps
+      - name: Setup build dependencies
+        uses: ./.github/actions/build-dependencies
 
-      - name: Compilation
-        uses: ./.github/actions/godot-build
+      - name: Build
+        uses: ./.github/actions/build
         with:
           sconsflags: ${{ env.SCONSFLAGS }} ${{ matrix.sconsflags }}
           platform: linuxbsd
@@ -85,8 +85,8 @@ jobs:
           DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --generate-mono-glue modules/mono/glue || true
 
       # Rebuild with mono
-      - name: Compilation (mono_glue=yes)
-        uses: ./.github/actions/godot-build
+      - name: Build (mono_glue=yes)
+        uses: ./.github/actions/build
         if: ${{ matrix.build-mono }}
         with:
           sconsflags: ${{ env.SCONSFLAGS }} ${{ matrix.sconsflags }} mono_glue=yes

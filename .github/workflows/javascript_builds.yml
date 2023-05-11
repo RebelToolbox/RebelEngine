@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 # Global Settings
 env:
-  GODOT_BASE_BRANCH: 3.4
+  BRANCH_NAME: main
   SCONSFLAGS: verbose=yes warnings=all werror=yes debug_symbols=no
   EM_VERSION: 2.0.25
   EM_CACHE_FOLDER: "emsdk-cache"
@@ -38,15 +38,15 @@ jobs:
         run: |
           emcc -v
 
-      - name: Setup Godot build cache
-        uses: ./.github/actions/godot-cache
+      - name: Setup build cache
+        uses: ./.github/actions/build-cache
         continue-on-error: true
 
-      - name: Setup python and scons
-        uses: ./.github/actions/godot-deps
+      - name: Setup build dependencies
+        uses: ./.github/actions/build-dependencies
 
-      - name: Compilation
-        uses: ./.github/actions/godot-build
+      - name: Build
+        uses: ./.github/actions/build
         with:
           sconsflags: ${{ env.SCONSFLAGS }}
           platform: javascript

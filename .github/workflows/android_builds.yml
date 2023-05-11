@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 # Global Settings
 env:
-  GODOT_BASE_BRANCH: 3.4
+  BRANCH_NAME: main
   SCONSFLAGS: verbose=yes warnings=all werror=yes debug_symbols=no
 
 concurrency:
@@ -31,30 +31,30 @@ jobs:
         with:
           java-version: 11
 
-      - name: Setup Godot build cache
-        uses: ./.github/actions/godot-cache
+      - name: Setup build cache
+        uses: ./.github/actions/build-cache
         continue-on-error: true
 
-      - name: Setup python and scons
-        uses: ./.github/actions/godot-deps
+      - name: Setup build dependencies
+        uses: ./.github/actions/build-dependencies
 
-      - name: Compilation (armv7)
-        uses: ./.github/actions/godot-build
+      - name: Build (armv7)
+        uses: ./.github/actions/build
         with:
           sconsflags: ${{ env.SCONSFLAGS }} android_arch=armv7
           platform: android
           target: release
           tools: false
 
-      - name: Compilation (arm64v8)
-        uses: ./.github/actions/godot-build
+      - name: Build (arm64v8)
+        uses: ./.github/actions/build
         with:
           sconsflags: ${{ env.SCONSFLAGS }} android_arch=arm64v8
           platform: android
           target: release
           tools: false
 
-      - name: Generate Godot templates
+      - name: Generate templates
         run: |
           cd platform/android/java
           ./gradlew generateGodotTemplates

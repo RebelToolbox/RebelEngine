@@ -1,4 +1,4 @@
-name: Setup python and scons
+name: Setup build dependencies
 description: Setup python, install the pip version of scons.
 inputs:
   python-version:
