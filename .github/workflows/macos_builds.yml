@@ -22,7 +22,7 @@ jobs:
             cache-name: macos-editor
             target: release_debug
             tools: true
-            bin: "./bin/godot.osx.opt.tools.64"
+            bin: "./bin/rebel.osx.opt.tools.64"
 
           - name: Template (target=release, tools=no)
             cache-name: macos-template

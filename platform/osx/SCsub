@@ -14,7 +14,7 @@ files = [
     "power_osx.cpp",
 ]
 
-prog = env.add_program("#bin/godot", files)
+prog = env.add_program("#bin/rebel", files)
 
 if env["debug_symbols"] and env["separate_debug_symbols"]:
     env.AddPostAction(prog, run_in_subprocess(platform_osx_builders.make_debug_osx))

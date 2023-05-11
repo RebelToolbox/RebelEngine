@@ -25,7 +25,7 @@ jobs:
             cache-name: windows-editor
             target: release_debug
             tools: true
-            bin: "./bin/godot.windows.opt.tools.64.exe"
+            bin: "./bin/rebel.windows.opt.tools.64.exe"
 
           - name: Template (target=release, tools=no)
             cache-name: windows-template
