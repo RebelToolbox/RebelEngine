@@ -4,7 +4,7 @@
   <img src="rebel-logo.svg" width="256" alt="Rebel Engine logo"/>
 </p>
 
-Rebel Engine is cross-platform game engine and game development tool for creating desktop (Windows, Linux and MacOS), mobile (Android and iPhone) and web games (HTML5).
+Rebel Engine is a cross-platform game engine and game development tool for creating desktop (Windows, Linux and MacOS), mobile (Android and iPhone) and web games (HTML5).
 
 ## Background
 
