@@ -115,12 +115,12 @@ opts = Variables(customs, ARGUMENTS)
 # Target build options
 opts.Add("p", "Platform (alias for 'platform')", "")
 opts.Add("platform", "Target platform (%s)" % ("|".join(platform_list),), "")
-opts.Add(BoolVariable("tools", "Build the tools (a.k.a. the Godot editor)", True))
+opts.Add(BoolVariable("tools", "Build the tools (a.k.a. the Rebel editor)", True))
 opts.Add(EnumVariable("target", "Compilation target", "debug", ("debug", "release_debug", "release")))
 opts.Add("arch", "Platform-dependent architecture (arm/arm64/x86/x64/mips/...)", "")
 opts.Add(EnumVariable("bits", "Target platform bits", "default", ("default", "32", "64")))
 opts.Add(EnumVariable("optimize", "Optimization type", "speed", ("speed", "size", "none")))
-opts.Add(BoolVariable("production", "Set defaults to build Godot for use in production", False))
+opts.Add(BoolVariable("production", "Set defaults to build Rebel for use in production", False))
 opts.Add(BoolVariable("use_lto", "Use link-time optimization", False))
 
 # Components
@@ -221,10 +221,6 @@ else:
         print("Automatically detected platform: " + selected_platform)
 
 if selected_platform in ["linux", "bsd", "linuxbsd"]:
-    if selected_platform == "linuxbsd":
-        # Alias for forward compatibility.
-        print('Platform "linuxbsd" is still called "x11" in Godot 3.x. Building for platform "x11".')
-    # Alias for convenience.
     selected_platform = "x11"
 
 # Make sure to update this to the found, valid platform as it's used through the buildsystem as the reference.
