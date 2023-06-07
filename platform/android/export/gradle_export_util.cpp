@@ -147,8 +147,8 @@ String _android_xml_escape(const String &p_string) {
 Error _create_project_name_strings_files(const Ref<EditorExportPreset> &p_preset, const String &project_name) {
 	print_verbose("Creating strings resources for supported locales for project " + project_name);
 	// Stores the string into the default values directory.
-	String processed_default_xml_string = vformat(godot_project_name_xml_string, _android_xml_escape(project_name));
-	store_string_at_path("res://android/build/res/values/godot_project_name_string.xml", processed_default_xml_string);
+	String processed_default_xml_string = vformat(project_name_xml_string, _android_xml_escape(project_name));
+	store_string_at_path("res://android/build/res/values/project_name_string.xml", processed_default_xml_string);
 
 	// Searches the Gradle project res/ directory to find all supported locales
 	DirAccessRef da = DirAccess::open("res://android/build/res");
@@ -170,10 +170,10 @@ Error _create_project_name_strings_files(const Ref<EditorExportPreset> &p_preset
 		}
 		String locale = file.replace("values-", "").replace("-r", "_");
 		String property_name = "application/config/name_" + locale;
-		String locale_directory = "res://android/build/res/" + file + "/godot_project_name_string.xml";
+		String locale_directory = "res://android/build/res/" + file + "/project_name_string.xml";
 		if (ProjectSettings::get_singleton()->has_setting(property_name)) {
 			String locale_project_name = ProjectSettings::get_singleton()->get(property_name);
-			String processed_xml_string = vformat(godot_project_name_xml_string, _android_xml_escape(locale_project_name));
+			String processed_xml_string = vformat(project_name_xml_string, _android_xml_escape(locale_project_name));
 			print_verbose("Storing project name for locale " + locale + " under " + locale_directory);
 			store_string_at_path(locale_directory, processed_xml_string);
 		} else {
@@ -240,7 +240,7 @@ String _get_instrumentation_tag(const Ref<EditorExportPreset> &p_preset) {
 			"        tools:node=\"replace\"\n"
 			"        android:name=\".GodotInstrumentation\"\n"
 			"        android:icon=\"@mipmap/icon\"\n"
-			"        android:label=\"@string/godot_project_name_string\"\n"
+			"        android:label=\"@string/project_name_string\"\n"
 			"        android:targetPackage=\"%s\" />\n",
 			package_name);
 	return manifest_instrumentation_text;
@@ -271,7 +271,7 @@ String _get_application_tag(const Ref<EditorExportPreset> &p_preset, bool p_has_
 	int xr_mode_index = (int)(p_preset->get("xr_features/xr_mode"));
 	bool uses_xr = xr_mode_index == XR_MODE_OVR || xr_mode_index == XR_MODE_OPENXR;
 	String manifest_application_text = vformat(
-			"    <application android:label=\"@string/godot_project_name_string\"\n"
+			"    <application android:label=\"@string/project_name_string\"\n"
 			"        android:allowBackup=\"%s\"\n"
 			"        android:isGame=\"%s\"\n"
 			"        android:hasFragileUserData=\"%s\"\n"

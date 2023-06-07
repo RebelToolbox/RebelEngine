@@ -37,10 +37,10 @@
 #include "core/os/os.h"
 #include "editor/editor_export.h"
 
-const String godot_project_name_xml_string = R"(<?xml version="1.0" encoding="utf-8"?>
+const String project_name_xml_string = R"(<?xml version="1.0" encoding="utf-8"?>
 <!--WARNING: THIS FILE WILL BE OVERWRITTEN AT BUILD TIME-->
 <resources>
-	<string name="godot_project_name_string">%s</string>
+	<string name="project_name_string">%s</string>
 </resources>
 )";
 

@@ -21,7 +21,7 @@
     <instrumentation
         android:name=".GodotInstrumentation"
         android:icon="@mipmap/icon"
-        android:label="@string/godot_project_name_string"
+        android:label="@string/project_name_string"
         android:targetPackage="org.godotengine.godot" />
 
 </manifest>

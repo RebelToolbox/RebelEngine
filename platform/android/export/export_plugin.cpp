@@ -1405,8 +1405,8 @@ void EditorExportPlatformAndroid::_fix_resources(const Ref<EditorExportPreset> &
 
 		String str = _parse_string(&r_manifest[offset], string_flags & UTF8_FLAG);
 
-		if (str.begins_with("godot-project-name")) {
-			if (str == "godot-project-name") {
+		if (str.begins_with("project-name")) {
+			if (str == "project-name") {
 				//project name
 				str = get_project_name(package_name);
 
