@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-package com.godot.game;
+package com.rebeltoolbox.rebelapp;
 
 import org.godotengine.godot.FullScreenGodotApp;
 

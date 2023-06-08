@@ -19,11 +19,11 @@ ext.libraries = [
 ]
 
 ext.getExportPackageName = { ->
-    // Retrieve the app id from the project property set by the Godot build command.
+    // Retrieve the app id from the project export package unique name property.
     String appId = project.hasProperty("export_package_name") ? project.property("export_package_name") : ""
     // Check if the app id is valid, otherwise use the default.
     if (appId == null || appId.isEmpty()) {
-        appId = "com.godot.game"
+        appId = "com.rebeltoolbox.rebelapp"
     }
     return appId
 }
