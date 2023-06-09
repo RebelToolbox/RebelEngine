@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  java_godot_io_wrapper.h                                              */
+/*  OvrContextFactory.java                                               */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -28,59 +28,31 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
+package com.rebeltoolbox.rebelengine.xr.ovr;
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+import android.opengl.EGL14;
+import android.opengl.GLSurfaceView;
 
-#include <android/log.h>
-#include <jni.h>
+import javax.microedition.khronos.egl.EGL10;
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.egl.EGLContext;
+import javax.microedition.khronos.egl.EGLDisplay;
 
-#include "string_android.h"
+/**
+ * EGL Context factory for the Oculus mobile VR SDK.
+ */
+public class OvrContextFactory implements GLSurfaceView.EGLContextFactory {
+	private static final int[] CONTEXT_ATTRIBS = {
+		EGL14.EGL_CONTEXT_CLIENT_VERSION, 3, EGL10.EGL_NONE
+	};
 
-// Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
-class GodotIOJavaWrapper {
-private:
-	jobject godot_io_instance;
-	jclass cls;
+	@Override
+	public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
+		return egl.eglCreateContext(display, eglConfig, EGL10.EGL_NO_CONTEXT, CONTEXT_ATTRIBS);
+	}
 
-	jmethodID _open_URI = 0;
-	jmethodID _get_cache_dir = 0;
-	jmethodID _get_data_dir = 0;
-	jmethodID _get_locale = 0;
-	jmethodID _get_model = 0;
-	jmethodID _get_screen_DPI = 0;
-	jmethodID _get_window_safe_area = 0;
-	jmethodID _get_unique_id = 0;
-	jmethodID _show_keyboard = 0;
-	jmethodID _hide_keyboard = 0;
-	jmethodID _set_screen_orientation = 0;
-	jmethodID _get_screen_orientation = 0;
-	jmethodID _get_system_dir = 0;
-
-public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
-	~GodotIOJavaWrapper();
-
-	jobject get_instance();
-
-	Error open_uri(const String &p_uri);
-	String get_cache_dir();
-	String get_user_data_dir();
-	String get_locale();
-	String get_model();
-	int get_screen_dpi();
-	void get_window_safe_area(int (&p_rect_xywh)[4]);
-	String get_unique_id();
-	bool has_vk();
-	void show_vk(const String &p_existing, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end);
-	void hide_vk();
-	int get_vk_height();
-	void set_vk_height(int p_height);
-	void set_screen_orientation(int p_orient);
-	int get_screen_orientation() const;
-	String get_system_dir(int p_dir, bool p_shared_storage);
-};
-
-#endif /* !JAVA_GODOT_IO_WRAPPER_H */
+	@Override
+	public void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context) {
+		egl.eglDestroyContext(display, context);
+	}
+}

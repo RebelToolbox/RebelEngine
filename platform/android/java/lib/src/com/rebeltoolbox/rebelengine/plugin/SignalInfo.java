@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  java_godot_io_wrapper.h                                              */
+/*  SignalInfo.java                                                      */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -28,59 +28,72 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
+package com.rebeltoolbox.rebelengine.plugin;
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+import android.text.TextUtils;
 
-#include <android/log.h>
-#include <jni.h>
+import androidx.annotation.NonNull;
 
-#include "string_android.h"
+import java.util.Arrays;
 
-// Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
-class GodotIOJavaWrapper {
-private:
-	jobject godot_io_instance;
-	jclass cls;
+/**
+ * Store information about a {@link GodotPlugin}'s signal.
+ */
+public final class SignalInfo {
+	private final String name;
+	private final Class<?>[] paramTypes;
+	private final String[] paramTypesNames;
 
-	jmethodID _open_URI = 0;
-	jmethodID _get_cache_dir = 0;
-	jmethodID _get_data_dir = 0;
-	jmethodID _get_locale = 0;
-	jmethodID _get_model = 0;
-	jmethodID _get_screen_DPI = 0;
-	jmethodID _get_window_safe_area = 0;
-	jmethodID _get_unique_id = 0;
-	jmethodID _show_keyboard = 0;
-	jmethodID _hide_keyboard = 0;
-	jmethodID _set_screen_orientation = 0;
-	jmethodID _get_screen_orientation = 0;
-	jmethodID _get_system_dir = 0;
+	public SignalInfo(@NonNull String signalName, Class<?>... paramTypes) {
+		if (TextUtils.isEmpty(signalName)) {
+			throw new IllegalArgumentException("Invalid signal name: " + signalName);
+		}
 
-public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
-	~GodotIOJavaWrapper();
+		this.name = signalName;
+		this.paramTypes = paramTypes == null ? new Class<?>[ 0 ] : paramTypes;
+		this.paramTypesNames = new String[this.paramTypes.length];
+		for (int i = 0; i < this.paramTypes.length; i++) {
+			this.paramTypesNames[i] = this.paramTypes[i].getName();
+		}
+	}
 
-	jobject get_instance();
+	public String getName() {
+		return name;
+	}
 
-	Error open_uri(const String &p_uri);
-	String get_cache_dir();
-	String get_user_data_dir();
-	String get_locale();
-	String get_model();
-	int get_screen_dpi();
-	void get_window_safe_area(int (&p_rect_xywh)[4]);
-	String get_unique_id();
-	bool has_vk();
-	void show_vk(const String &p_existing, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end);
-	void hide_vk();
-	int get_vk_height();
-	void set_vk_height(int p_height);
-	void set_screen_orientation(int p_orient);
-	int get_screen_orientation() const;
-	String get_system_dir(int p_dir, bool p_shared_storage);
-};
+	Class<?>[] getParamTypes() {
+		return paramTypes;
+	}
 
-#endif /* !JAVA_GODOT_IO_WRAPPER_H */
+	String[] getParamTypesNames() {
+		return paramTypesNames;
+	}
+
+	@Override
+	public String toString() {
+		return "SignalInfo{"
+				+
+				"name='" + name + '\'' +
+				", paramsTypes=" + Arrays.toString(paramTypes) +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof SignalInfo)) {
+			return false;
+		}
+
+		SignalInfo that = (SignalInfo)o;
+
+		return name.equals(that.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+}

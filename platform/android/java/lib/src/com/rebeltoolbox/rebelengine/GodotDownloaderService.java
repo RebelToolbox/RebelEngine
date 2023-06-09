@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  java_godot_io_wrapper.h                                              */
+/*  GodotDownloaderService.java                                          */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -28,59 +28,58 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
+package com.rebeltoolbox.rebelengine;
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
-#include <android/log.h>
-#include <jni.h>
+import com.google.android.vending.expansion.downloader.impl.DownloaderService;
 
-#include "string_android.h"
+/**
+ * This class demonstrates the minimal client implementation of the
+ * DownloaderService from the Downloader library.
+ */
+public class GodotDownloaderService extends DownloaderService {
+	// stuff for LVL -- MODIFY FOR YOUR APPLICATION!
+	private static final String BASE64_PUBLIC_KEY = "REPLACE THIS WITH YOUR PUBLIC KEY";
+	// used by the preference obfuscater
+	private static final byte[] SALT = new byte[] {
+		1, 43, -12, -1, 54, 98,
+		-100, -12, 43, 2, -8, -4, 9, 5, -106, -108, -33, 45, -1, 84
+	};
 
-// Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
-class GodotIOJavaWrapper {
-private:
-	jobject godot_io_instance;
-	jclass cls;
+	/**
+	 * This public key comes from your Android Market publisher account, and it
+	 * used by the LVL to validate responses from Market on your behalf.
+	 */
+	@Override
+	public String getPublicKey() {
+		SharedPreferences prefs = getApplicationContext().getSharedPreferences("app_data_keys", Context.MODE_PRIVATE);
+		Log.d("GODOT", "getting public key:" + prefs.getString("store_public_key", null));
+		return prefs.getString("store_public_key", null);
 
-	jmethodID _open_URI = 0;
-	jmethodID _get_cache_dir = 0;
-	jmethodID _get_data_dir = 0;
-	jmethodID _get_locale = 0;
-	jmethodID _get_model = 0;
-	jmethodID _get_screen_DPI = 0;
-	jmethodID _get_window_safe_area = 0;
-	jmethodID _get_unique_id = 0;
-	jmethodID _show_keyboard = 0;
-	jmethodID _hide_keyboard = 0;
-	jmethodID _set_screen_orientation = 0;
-	jmethodID _get_screen_orientation = 0;
-	jmethodID _get_system_dir = 0;
+		//return BASE64_PUBLIC_KEY;
+	}
 
-public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
-	~GodotIOJavaWrapper();
+	/**
+	 * This is used by the preference obfuscater to make sure that your
+	 * obfuscated preferences are different than the ones used by other
+	 * applications.
+	 */
+	@Override
+	public byte[] getSALT() {
+		return SALT;
+	}
 
-	jobject get_instance();
-
-	Error open_uri(const String &p_uri);
-	String get_cache_dir();
-	String get_user_data_dir();
-	String get_locale();
-	String get_model();
-	int get_screen_dpi();
-	void get_window_safe_area(int (&p_rect_xywh)[4]);
-	String get_unique_id();
-	bool has_vk();
-	void show_vk(const String &p_existing, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end);
-	void hide_vk();
-	int get_vk_height();
-	void set_vk_height(int p_height);
-	void set_screen_orientation(int p_orient);
-	int get_screen_orientation() const;
-	String get_system_dir(int p_dir, bool p_shared_storage);
-};
-
-#endif /* !JAVA_GODOT_IO_WRAPPER_H */
+	/**
+	 * Fill this in with the class name for your alarm receiver. We do this
+	 * because receivers must be unique across all of Android (it's a good idea
+	 * to make sure that your receiver is in your unique package)
+	 */
+	@Override
+	public String getAlarmReceiverClassName() {
+		Log.d("GODOT", "getAlarmReceiverClassName()");
+		return GodotDownloaderAlarmReceiver.class.getName();
+	}
+}

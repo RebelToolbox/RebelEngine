@@ -39,7 +39,7 @@
 
 #include "string_android.h"
 
-// Class that makes functions in java/src/org/godotengine/godot/Godot.java callable from C++
+// Class that makes functions in java/src/lib/com/rebeltoolbox/rebelengine/Godot.java callable from C++
 class GodotJavaWrapper {
 private:
 	jobject godot_instance;

@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  java_godot_io_wrapper.h                                              */
+/*  RegularFallbackConfigChooser.java                                    */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -28,59 +28,35 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
+package com.rebeltoolbox.rebelengine.xr.regular;
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+import com.rebeltoolbox.rebelengine.utils.GLUtils;
 
-#include <android/log.h>
-#include <jni.h>
+import android.util.Log;
 
-#include "string_android.h"
+import javax.microedition.khronos.egl.EGL10;
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.egl.EGLDisplay;
 
-// Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
-class GodotIOJavaWrapper {
-private:
-	jobject godot_io_instance;
-	jclass cls;
+/* Fallback if 32bit View is not supported*/
+public class RegularFallbackConfigChooser extends RegularConfigChooser {
+	private static final String TAG = RegularFallbackConfigChooser.class.getSimpleName();
 
-	jmethodID _open_URI = 0;
-	jmethodID _get_cache_dir = 0;
-	jmethodID _get_data_dir = 0;
-	jmethodID _get_locale = 0;
-	jmethodID _get_model = 0;
-	jmethodID _get_screen_DPI = 0;
-	jmethodID _get_window_safe_area = 0;
-	jmethodID _get_unique_id = 0;
-	jmethodID _show_keyboard = 0;
-	jmethodID _hide_keyboard = 0;
-	jmethodID _set_screen_orientation = 0;
-	jmethodID _get_screen_orientation = 0;
-	jmethodID _get_system_dir = 0;
+	private RegularConfigChooser fallback;
 
-public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
-	~GodotIOJavaWrapper();
+	public RegularFallbackConfigChooser(int r, int g, int b, int a, int depth, int stencil, RegularConfigChooser fallback) {
+		super(r, g, b, a, depth, stencil);
+		this.fallback = fallback;
+	}
 
-	jobject get_instance();
-
-	Error open_uri(const String &p_uri);
-	String get_cache_dir();
-	String get_user_data_dir();
-	String get_locale();
-	String get_model();
-	int get_screen_dpi();
-	void get_window_safe_area(int (&p_rect_xywh)[4]);
-	String get_unique_id();
-	bool has_vk();
-	void show_vk(const String &p_existing, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end);
-	void hide_vk();
-	int get_vk_height();
-	void set_vk_height(int p_height);
-	void set_screen_orientation(int p_orient);
-	int get_screen_orientation() const;
-	String get_system_dir(int p_dir, bool p_shared_storage);
-};
-
-#endif /* !JAVA_GODOT_IO_WRAPPER_H */
+	@Override
+	public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs) {
+		EGLConfig ec = super.chooseConfig(egl, display, configs);
+		if (ec == null) {
+			Log.w(TAG, "Trying ConfigChooser fallback");
+			ec = fallback.chooseConfig(egl, display, configs);
+			GLUtils.use_32 = false;
+		}
+		return ec;
+	}
+}

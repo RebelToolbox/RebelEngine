@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  java_godot_io_wrapper.h                                              */
+/*  GodotHost.java                                                       */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -28,59 +28,40 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
+package com.rebeltoolbox.rebelengine;
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+import java.util.Collections;
+import java.util.List;
 
-#include <android/log.h>
-#include <jni.h>
+/**
+ * Denotate a component (e.g: Activity, Fragment) that hosts the {@link Godot} fragment.
+ */
+public interface GodotHost {
+	/**
+	 * Provides a set of command line parameters to setup the engine.
+	 */
+	default List<String> getCommandLine() {
+		return Collections.emptyList();
+	}
 
-#include "string_android.h"
+	/**
+	 * Invoked on the render thread when the Godot setup is complete.
+	 */
+	default void onGodotSetupCompleted() {}
 
-// Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
-class GodotIOJavaWrapper {
-private:
-	jobject godot_io_instance;
-	jclass cls;
+	/**
+	 * Invoked on the render thread when the Godot main loop has started.
+	 */
+	default void onGodotMainLoopStarted() {}
 
-	jmethodID _open_URI = 0;
-	jmethodID _get_cache_dir = 0;
-	jmethodID _get_data_dir = 0;
-	jmethodID _get_locale = 0;
-	jmethodID _get_model = 0;
-	jmethodID _get_screen_DPI = 0;
-	jmethodID _get_window_safe_area = 0;
-	jmethodID _get_unique_id = 0;
-	jmethodID _show_keyboard = 0;
-	jmethodID _hide_keyboard = 0;
-	jmethodID _set_screen_orientation = 0;
-	jmethodID _get_screen_orientation = 0;
-	jmethodID _get_system_dir = 0;
+	/**
+	 * Invoked on the UI thread as the last step of the Godot instance clean up phase.
+	 */
+	default void onGodotForceQuit(Godot instance) {}
 
-public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
-	~GodotIOJavaWrapper();
-
-	jobject get_instance();
-
-	Error open_uri(const String &p_uri);
-	String get_cache_dir();
-	String get_user_data_dir();
-	String get_locale();
-	String get_model();
-	int get_screen_dpi();
-	void get_window_safe_area(int (&p_rect_xywh)[4]);
-	String get_unique_id();
-	bool has_vk();
-	void show_vk(const String &p_existing, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end);
-	void hide_vk();
-	int get_vk_height();
-	void set_vk_height(int p_height);
-	void set_screen_orientation(int p_orient);
-	int get_screen_orientation() const;
-	String get_system_dir(int p_dir, bool p_shared_storage);
-};
-
-#endif /* !JAVA_GODOT_IO_WRAPPER_H */
+	/**
+	 * Invoked on the GL thread when the Godot instance wants to be restarted. It's up to the host
+	 * to perform the appropriate action(s).
+	 */
+	default void onGodotRestartRequested(Godot instance) {}
+}

@@ -73,8 +73,8 @@ Files: ./platform/android/java/lib/aidl/com/android/vending/licensing/
  ./platform/android/java/lib/res/layout/status_bar_ongoing_event_progress_bar.xml
  ./platform/android/java/lib/src/com/google/android/vending/expansion/downloader/
  ./platform/android/java/lib/src/com/google/android/vending/licensing/
- ./platform/android/java/lib/src/org/godotengine/godot/input/InputManagerCompat.java
- ./platform/android/java/lib/src/org/godotengine/godot/input/InputManagerV16.java
+ ./platform/android/java/lib/src/com/rebeltoolbox/rebelengine/input/InputManagerCompat.java
+ ./platform/android/java/lib/src/com/rebeltoolbox/rebelengine/input/InputManagerV16.java
 Comment: The Android Open Source Project
 Copyright: 2008-2013, The Android Open Source Project
 License: Apache-2.0

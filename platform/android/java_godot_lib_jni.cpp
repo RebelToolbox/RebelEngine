@@ -102,7 +102,7 @@ static void _initialize_java_modules() {
 			jclass singletonClass = (jclass)env->CallObjectMethod(cls, findClass, strClassName);
 			ERR_CONTINUE_MSG(!singletonClass, "Couldn't find singleton for class: " + m + ".");
 
-			jmethodID initialize = env->GetStaticMethodID(singletonClass, "initialize", "(Landroid/app/Activity;)Lorg/godotengine/godot/Godot$SingletonBase;");
+			jmethodID initialize = env->GetStaticMethodID(singletonClass, "initialize", "(Landroid/app/Activity;)Lcom/rebeltoolbox/rebelengine/Godot$SingletonBase;");
 			ERR_CONTINUE_MSG(!initialize, "Couldn't find proper initialize function 'public static Godot.SingletonBase Class::initialize(Activity p_activity)' initializer for singleton class: " + m + ".");
 
 			jobject obj = env->CallStaticObjectMethod(singletonClass, initialize, godot_java->get_activity());
@@ -127,7 +127,7 @@ JNIEXPORT void JNICALL Java_org_godotengine_godot_GodotLib_initialize(JNIEnv *en
 
 	// create our wrapper classes
 	godot_java = new GodotJavaWrapper(env, activity, godot_instance);
-	godot_io_java = new GodotIOJavaWrapper(env, godot_java->get_member_object("io", "Lorg/godotengine/godot/GodotIO;", env));
+	godot_io_java = new GodotIOJavaWrapper(env, godot_java->get_member_object("io", "Lcom/rebeltoolbox/rebelengine/GodotIO;", env));
 
 	init_thread_jandroid(jvm, env);
 
@@ -136,7 +136,7 @@ JNIEXPORT void JNICALL Java_org_godotengine_godot_GodotLib_initialize(JNIEnv *en
 	FileAccessAndroid::asset_manager = AAssetManager_fromJava(env, amgr);
 
 	DirAccessJAndroid::setup(godot_io_java->get_instance());
-	NetSocketAndroid::setup(godot_java->get_member_object("netUtils", "Lorg/godotengine/godot/utils/GodotNetUtils;", env));
+	NetSocketAndroid::setup(godot_java->get_member_object("netUtils", "Lcom/rebeltoolbox/rebelengine/utils/GodotNetUtils;", env));
 
 	os_android = new OS_Android(godot_java, godot_io_java, p_use_apk_expansion);
 

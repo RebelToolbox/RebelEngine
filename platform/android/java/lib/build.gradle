@@ -28,7 +28,7 @@ android {
         manifestPlaceholders = [godotLibraryVersion: getGodotLibraryVersion()]
     }
 
-    namespace = "org.godotengine.godot"
+    namespace = "com.rebeltoolbox.rebelengine"
 
     compileOptions {
         sourceCompatibility versions.javaVersion

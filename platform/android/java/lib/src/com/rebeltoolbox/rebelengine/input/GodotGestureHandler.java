@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  java_godot_io_wrapper.h                                              */
+/*  GodotGestureHandler.java                                             */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -28,59 +28,69 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
+package com.rebeltoolbox.rebelengine.input;
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+import com.rebeltoolbox.rebelengine.GodotLib;
+import com.rebeltoolbox.rebelengine.GodotView;
 
-#include <android/log.h>
-#include <jni.h>
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 
-#include "string_android.h"
+/**
+ * Handles gesture input related events for the {@link GodotView} view.
+ * https://developer.android.com/reference/android/view/GestureDetector.SimpleOnGestureListener
+ */
+public class GodotGestureHandler extends GestureDetector.SimpleOnGestureListener {
+	private final GodotView godotView;
 
-// Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
-class GodotIOJavaWrapper {
-private:
-	jobject godot_io_instance;
-	jclass cls;
+	public GodotGestureHandler(GodotView godotView) {
+		this.godotView = godotView;
+	}
 
-	jmethodID _open_URI = 0;
-	jmethodID _get_cache_dir = 0;
-	jmethodID _get_data_dir = 0;
-	jmethodID _get_locale = 0;
-	jmethodID _get_model = 0;
-	jmethodID _get_screen_DPI = 0;
-	jmethodID _get_window_safe_area = 0;
-	jmethodID _get_unique_id = 0;
-	jmethodID _show_keyboard = 0;
-	jmethodID _hide_keyboard = 0;
-	jmethodID _set_screen_orientation = 0;
-	jmethodID _get_screen_orientation = 0;
-	jmethodID _get_system_dir = 0;
+	private void queueEvent(Runnable task) {
+		godotView.queueEvent(task);
+	}
 
-public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
-	~GodotIOJavaWrapper();
+	@Override
+	public boolean onDown(MotionEvent event) {
+		super.onDown(event);
+		//Log.i("GodotGesture", "onDown");
+		return true;
+	}
 
-	jobject get_instance();
+	@Override
+	public boolean onSingleTapConfirmed(MotionEvent event) {
+		super.onSingleTapConfirmed(event);
+		return true;
+	}
 
-	Error open_uri(const String &p_uri);
-	String get_cache_dir();
-	String get_user_data_dir();
-	String get_locale();
-	String get_model();
-	int get_screen_dpi();
-	void get_window_safe_area(int (&p_rect_xywh)[4]);
-	String get_unique_id();
-	bool has_vk();
-	void show_vk(const String &p_existing, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end);
-	void hide_vk();
-	int get_vk_height();
-	void set_vk_height(int p_height);
-	void set_screen_orientation(int p_orient);
-	int get_screen_orientation() const;
-	String get_system_dir(int p_dir, bool p_shared_storage);
-};
+	@Override
+	public void onLongPress(MotionEvent event) {
+		//Log.i("GodotGesture", "onLongPress");
+	}
 
-#endif /* !JAVA_GODOT_IO_WRAPPER_H */
+	@Override
+	public boolean onDoubleTap(MotionEvent event) {
+		//Log.i("GodotGesture", "onDoubleTap");
+		final int x = Math.round(event.getX());
+		final int y = Math.round(event.getY());
+		final int buttonMask = event.getButtonState();
+		GodotLib.doubleTap(buttonMask, x, y);
+		return true;
+	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		//Log.i("GodotGesture", "onScroll");
+		final int x = Math.round(distanceX);
+		final int y = Math.round(distanceY);
+		GodotLib.scroll(x, y);
+		return true;
+	}
+
+	@Override
+	public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+		//Log.i("GodotGesture", "onFling");
+		return true;
+	}
+}

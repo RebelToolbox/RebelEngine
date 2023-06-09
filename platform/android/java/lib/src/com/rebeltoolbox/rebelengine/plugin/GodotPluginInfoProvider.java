@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  java_godot_io_wrapper.h                                              */
+/*  GodotPluginInfoProvider.java                                         */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -28,59 +28,45 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
+package com.rebeltoolbox.rebelengine.plugin;
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+import androidx.annotation.NonNull;
 
-#include <android/log.h>
-#include <jni.h>
+import java.util.Collections;
+import java.util.Set;
 
-#include "string_android.h"
+/**
+ * Provides the set of information expected from a Godot plugin.
+ */
+public interface GodotPluginInfoProvider {
+	/**
+	 * Returns the name of the plugin.
+	 */
+	@NonNull
+	String getPluginName();
 
-// Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
-class GodotIOJavaWrapper {
-private:
-	jobject godot_io_instance;
-	jclass cls;
+	/**
+	 * Returns the list of signals to be exposed to Godot.
+	 */
+	@NonNull
+	default Set<SignalInfo> getPluginSignals() {
+		return Collections.emptySet();
+	}
 
-	jmethodID _open_URI = 0;
-	jmethodID _get_cache_dir = 0;
-	jmethodID _get_data_dir = 0;
-	jmethodID _get_locale = 0;
-	jmethodID _get_model = 0;
-	jmethodID _get_screen_DPI = 0;
-	jmethodID _get_window_safe_area = 0;
-	jmethodID _get_unique_id = 0;
-	jmethodID _show_keyboard = 0;
-	jmethodID _hide_keyboard = 0;
-	jmethodID _set_screen_orientation = 0;
-	jmethodID _get_screen_orientation = 0;
-	jmethodID _get_system_dir = 0;
+	/**
+	 * Returns the paths for the plugin's gdnative libraries (if any).
+	 *
+	 * The paths must be relative to the 'assets' directory and point to a '*.gdnlib' file.
+	 */
+	@NonNull
+	default Set<String> getPluginGDNativeLibrariesPaths() {
+		return Collections.emptySet();
+	}
 
-public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
-	~GodotIOJavaWrapper();
-
-	jobject get_instance();
-
-	Error open_uri(const String &p_uri);
-	String get_cache_dir();
-	String get_user_data_dir();
-	String get_locale();
-	String get_model();
-	int get_screen_dpi();
-	void get_window_safe_area(int (&p_rect_xywh)[4]);
-	String get_unique_id();
-	bool has_vk();
-	void show_vk(const String &p_existing, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end);
-	void hide_vk();
-	int get_vk_height();
-	void set_vk_height(int p_height);
-	void set_screen_orientation(int p_orient);
-	int get_screen_orientation() const;
-	String get_system_dir(int p_dir, bool p_shared_storage);
-};
-
-#endif /* !JAVA_GODOT_IO_WRAPPER_H */
+	/**
+	 * This is invoked on the render thread when the plugin described by this instance has been
+	 * registered.
+	 */
+	default void onPluginRegistered() {
+	}
+}

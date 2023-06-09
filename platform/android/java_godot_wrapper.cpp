@@ -42,7 +42,7 @@ GodotJavaWrapper::GodotJavaWrapper(JNIEnv *p_env, jobject p_activity, jobject p_
 	activity = p_env->NewGlobalRef(p_activity);
 
 	// get info about our Godot class so we can get pointers and stuff...
-	godot_class = p_env->FindClass("org/godotengine/godot/Godot");
+	godot_class = p_env->FindClass("com/rebeltoolbox/rebelengine/Godot");
 	if (godot_class) {
 		godot_class = (jclass)p_env->NewGlobalRef(godot_class);
 	} else {

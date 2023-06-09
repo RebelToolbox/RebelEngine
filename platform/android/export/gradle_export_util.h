@@ -45,7 +45,7 @@ const String project_name_xml_string = R"(<?xml version="1.0" encoding="utf-8"?>
 )";
 
 // Supported XR modes.
-// This should match the entries in 'platform/android/java/lib/src/org/godotengine/godot/xr/XRMode.java'
+// This should match the entries in 'platform/android/java/lib/src/com/rebeltoolbox/rebelengine/xr/XRMode.java'
 static const int XR_MODE_REGULAR = 0;
 static const int XR_MODE_OVR = 1;
 static const int XR_MODE_OPENXR = 2;

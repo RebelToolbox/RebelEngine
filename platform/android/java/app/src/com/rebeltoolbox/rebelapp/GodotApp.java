@@ -30,7 +30,7 @@
 
 package com.rebeltoolbox.rebelapp;
 
-import org.godotengine.godot.FullScreenGodotApp;
+import com.rebeltoolbox.rebelengine.FullScreenGodotApp;
 
 import android.os.Bundle;
 

@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  java_godot_io_wrapper.h                                              */
+/*  GodotNetUtils.java                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -28,59 +28,55 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
+package com.rebeltoolbox.rebelengine.utils;
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+import android.app.Activity;
+import android.content.Context;
+import android.net.wifi.WifiManager;
+import android.util.Log;
 
-#include <android/log.h>
-#include <jni.h>
+/**
+ * This class handles Android-specific networking functions.
+ * For now, it only provides access to WifiManager.MulticastLock, which is needed on some devices
+ * to receive broadcast and multicast packets.
+ */
+public class GodotNetUtils {
+	/* A single, reference counted, multicast lock, or null if permission CHANGE_WIFI_MULTICAST_STATE is missing */
+	private WifiManager.MulticastLock multicastLock;
 
-#include "string_android.h"
+	public GodotNetUtils(Activity p_activity) {
+		if (PermissionsUtil.hasManifestPermission(p_activity, "android.permission.CHANGE_WIFI_MULTICAST_STATE")) {
+			WifiManager wifi = (WifiManager)p_activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+			multicastLock = wifi.createMulticastLock("GodotMulticastLock");
+			multicastLock.setReferenceCounted(true);
+		}
+	}
 
-// Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
-class GodotIOJavaWrapper {
-private:
-	jobject godot_io_instance;
-	jclass cls;
+	/**
+	 * Acquire the multicast lock. This is required on some devices to receive broadcast/multicast packets.
+	 * This is done automatically by Godot when enabling broadcast or joining a multicast group on a socket.
+	 */
+	public void multicastLockAcquire() {
+		if (multicastLock == null)
+			return;
+		try {
+			multicastLock.acquire();
+		} catch (RuntimeException e) {
+			Log.e("Godot", "Exception during multicast lock acquire: " + e);
+		}
+	}
 
-	jmethodID _open_URI = 0;
-	jmethodID _get_cache_dir = 0;
-	jmethodID _get_data_dir = 0;
-	jmethodID _get_locale = 0;
-	jmethodID _get_model = 0;
-	jmethodID _get_screen_DPI = 0;
-	jmethodID _get_window_safe_area = 0;
-	jmethodID _get_unique_id = 0;
-	jmethodID _show_keyboard = 0;
-	jmethodID _hide_keyboard = 0;
-	jmethodID _set_screen_orientation = 0;
-	jmethodID _get_screen_orientation = 0;
-	jmethodID _get_system_dir = 0;
-
-public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
-	~GodotIOJavaWrapper();
-
-	jobject get_instance();
-
-	Error open_uri(const String &p_uri);
-	String get_cache_dir();
-	String get_user_data_dir();
-	String get_locale();
-	String get_model();
-	int get_screen_dpi();
-	void get_window_safe_area(int (&p_rect_xywh)[4]);
-	String get_unique_id();
-	bool has_vk();
-	void show_vk(const String &p_existing, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end);
-	void hide_vk();
-	int get_vk_height();
-	void set_vk_height(int p_height);
-	void set_screen_orientation(int p_orient);
-	int get_screen_orientation() const;
-	String get_system_dir(int p_dir, bool p_shared_storage);
-};
-
-#endif /* !JAVA_GODOT_IO_WRAPPER_H */
+	/**
+	 * Release the multicast lock.
+	 * This is done automatically by Godot when the lock is no longer needed by a socket.
+	 */
+	public void multicastLockRelease() {
+		if (multicastLock == null)
+			return;
+		try {
+			multicastLock.release();
+		} catch (RuntimeException e) {
+			Log.e("Godot", "Exception during multicast lock release: " + e);
+		}
+	}
+}

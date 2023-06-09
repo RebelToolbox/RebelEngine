@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  java_godot_io_wrapper.h                                              */
+/*  GodotRenderer.java                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -28,59 +28,67 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
+package com.rebeltoolbox.rebelengine;
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+import com.rebeltoolbox.rebelengine.plugin.GodotPlugin;
+import com.rebeltoolbox.rebelengine.plugin.GodotPluginRegistry;
+import com.rebeltoolbox.rebelengine.utils.GLUtils;
 
-#include <android/log.h>
-#include <jni.h>
+import android.opengl.GLSurfaceView;
 
-#include "string_android.h"
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
-// Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
-class GodotIOJavaWrapper {
-private:
-	jobject godot_io_instance;
-	jclass cls;
+/**
+ * Godot's renderer implementation.
+ */
+class GodotRenderer implements GLSurfaceView.Renderer {
+	private final GodotPluginRegistry pluginRegistry;
+	private boolean activityJustResumed = false;
 
-	jmethodID _open_URI = 0;
-	jmethodID _get_cache_dir = 0;
-	jmethodID _get_data_dir = 0;
-	jmethodID _get_locale = 0;
-	jmethodID _get_model = 0;
-	jmethodID _get_screen_DPI = 0;
-	jmethodID _get_window_safe_area = 0;
-	jmethodID _get_unique_id = 0;
-	jmethodID _show_keyboard = 0;
-	jmethodID _hide_keyboard = 0;
-	jmethodID _set_screen_orientation = 0;
-	jmethodID _get_screen_orientation = 0;
-	jmethodID _get_system_dir = 0;
+	GodotRenderer() {
+		this.pluginRegistry = GodotPluginRegistry.getPluginRegistry();
+	}
 
-public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
-	~GodotIOJavaWrapper();
+	public void onDrawFrame(GL10 gl) {
+		if (activityJustResumed) {
+			GodotLib.onRendererResumed();
+			activityJustResumed = false;
+		}
 
-	jobject get_instance();
+		GodotLib.step();
+		for (int i = 0; i < Godot.singleton_count; i++) {
+			Godot.singletons[i].onGLDrawFrame(gl);
+		}
+		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
+			plugin.onGLDrawFrame(gl);
+		}
+	}
 
-	Error open_uri(const String &p_uri);
-	String get_cache_dir();
-	String get_user_data_dir();
-	String get_locale();
-	String get_model();
-	int get_screen_dpi();
-	void get_window_safe_area(int (&p_rect_xywh)[4]);
-	String get_unique_id();
-	bool has_vk();
-	void show_vk(const String &p_existing, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end);
-	void hide_vk();
-	int get_vk_height();
-	void set_vk_height(int p_height);
-	void set_screen_orientation(int p_orient);
-	int get_screen_orientation() const;
-	String get_system_dir(int p_dir, bool p_shared_storage);
-};
+	public void onSurfaceChanged(GL10 gl, int width, int height) {
+		GodotLib.resize(width, height);
+		for (int i = 0; i < Godot.singleton_count; i++) {
+			Godot.singletons[i].onGLSurfaceChanged(gl, width, height);
+		}
+		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
+			plugin.onGLSurfaceChanged(gl, width, height);
+		}
+	}
 
-#endif /* !JAVA_GODOT_IO_WRAPPER_H */
+	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		GodotLib.newcontext(GLUtils.use_32);
+		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
+			plugin.onGLSurfaceCreated(gl, config);
+		}
+	}
+
+	void onActivityResumed() {
+		// We defer invoking GodotLib.onRendererResumed() until the first draw frame call.
+		// This ensures we have a valid GL context and surface when we do so.
+		activityJustResumed = true;
+	}
+
+	void onActivityPaused() {
+		GodotLib.onRendererPaused();
+	}
+}

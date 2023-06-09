@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.godotengine.godot"
+    package="com.rebeltoolbox.rebelengine"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -22,6 +22,6 @@
         android:name=".GodotInstrumentation"
         android:icon="@mipmap/icon"
         android:label="@string/project_name_string"
-        android:targetPackage="org.godotengine.godot" />
+        android:targetPackage="com.rebeltoolbox.rebelengine" />
 
 </manifest>
