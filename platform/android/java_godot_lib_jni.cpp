@@ -113,13 +113,13 @@ static void _initialize_java_modules() {
 
 extern "C" {
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_setVirtualKeyboardHeight(JNIEnv *env, jclass clazz, jint p_height) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_setVirtualKeyboardHeight(JNIEnv *env, jclass clazz, jint p_height) {
 	if (godot_io_java) {
 		godot_io_java->set_vk_height(p_height);
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_initialize(JNIEnv *env, jclass clazz, jobject activity, jobject godot_instance, jobject p_asset_manager, jboolean p_use_apk_expansion) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(JNIEnv *env, jclass clazz, jobject activity, jobject godot_instance, jobject p_asset_manager, jboolean p_use_apk_expansion) {
 	initialized = true;
 
 	JavaVM *jvm;
@@ -146,7 +146,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_initialize(JNI
 	godot_java->on_video_init(env);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_ondestroy(JNIEnv *env, jclass clazz) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_ondestroy(JNIEnv *env, jclass clazz) {
 	// lets cleanup
 	if (godot_io_java) {
 		delete godot_io_java;
@@ -162,7 +162,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_ondestroy(JNIE
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_setup(JNIEnv *env, jclass clazz, jobjectArray p_cmdline) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_setup(JNIEnv *env, jclass clazz, jobjectArray p_cmdline) {
 	setup_android_thread();
 
 	const char **cmdline = NULL;
@@ -207,12 +207,12 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_setup(JNIEnv *
 	_initialize_java_modules();
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_resize(JNIEnv *env, jclass clazz, jint width, jint height) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_resize(JNIEnv *env, jclass clazz, jint width, jint height) {
 	if (os_android)
 		os_android->set_display_size(Size2(width, height));
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_newcontext(JNIEnv *env, jclass clazz, jboolean p_32_bits) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_newcontext(JNIEnv *env, jclass clazz, jboolean p_32_bits) {
 	if (os_android) {
 		if (step.get() == 0) {
 			// During startup
@@ -226,7 +226,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_newcontext(JNI
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_back(JNIEnv *env, jclass clazz) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_back(JNIEnv *env, jclass clazz) {
 	if (step.get() == 0)
 		return;
 
@@ -235,7 +235,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_back(JNIEnv *e
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_step(JNIEnv *env, jclass clazz) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_step(JNIEnv *env, jclass clazz) {
 	if (step.get() == -1)
 		return;
 
@@ -291,22 +291,22 @@ void touch_preprocessing(JNIEnv *env, jclass clazz, jint input_device, jint ev, 
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_touch__IIII_3F(JNIEnv *env, jclass clazz, jint input_device, jint ev, jint pointer, jint pointer_count, jfloatArray position) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_touch__IIII_3F(JNIEnv *env, jclass clazz, jint input_device, jint ev, jint pointer, jint pointer_count, jfloatArray position) {
 	touch_preprocessing(env, clazz, input_device, ev, pointer, pointer_count, position);
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_touch__IIII_3FI(JNIEnv *env, jclass clazz, jint input_device, jint ev, jint pointer, jint pointer_count, jfloatArray position, jint buttons_mask) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_touch__IIII_3FI(JNIEnv *env, jclass clazz, jint input_device, jint ev, jint pointer, jint pointer_count, jfloatArray position, jint buttons_mask) {
 	touch_preprocessing(env, clazz, input_device, ev, pointer, pointer_count, position, buttons_mask);
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_touch__IIII_3FIFF(JNIEnv *env, jclass clazz, jint input_device, jint ev, jint pointer, jint pointer_count, jfloatArray position, jint buttons_mask, jfloat vertical_factor, jfloat horizontal_factor) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_touch__IIII_3FIFF(JNIEnv *env, jclass clazz, jint input_device, jint ev, jint pointer, jint pointer_count, jfloatArray position, jint buttons_mask, jfloat vertical_factor, jfloat horizontal_factor) {
 	touch_preprocessing(env, clazz, input_device, ev, pointer, pointer_count, position, buttons_mask, vertical_factor, horizontal_factor);
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_hover(JNIEnv *env, jclass clazz, jint p_type, jfloat p_x, jfloat p_y) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_hover(JNIEnv *env, jclass clazz, jint p_type, jfloat p_x, jfloat p_y) {
 	if (step.get() <= 0)
 		return;
 
@@ -314,7 +314,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_hover(JNIEnv *
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_doubleTap(JNIEnv *env, jclass clazz, jint p_button_mask, jint p_x, jint p_y) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_doubleTap(JNIEnv *env, jclass clazz, jint p_button_mask, jint p_x, jint p_y) {
 	if (step.get() <= 0)
 		return;
 
@@ -322,7 +322,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_doubleTap(JNIE
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_scroll(JNIEnv *env, jclass clazz, jint p_x, jint p_y) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_scroll(JNIEnv *env, jclass clazz, jint p_x, jint p_y) {
 	if (step.get() <= 0)
 		return;
 
@@ -330,7 +330,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_scroll(JNIEnv 
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_joybutton(JNIEnv *env, jclass clazz, jint p_device, jint p_button, jboolean p_pressed) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_joybutton(JNIEnv *env, jclass clazz, jint p_device, jint p_button, jboolean p_pressed) {
 	if (step.get() <= 0)
 		return;
 
@@ -344,7 +344,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_joybutton(JNIE
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_joyaxis(JNIEnv *env, jclass clazz, jint p_device, jint p_axis, jfloat p_value) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_joyaxis(JNIEnv *env, jclass clazz, jint p_device, jint p_axis, jfloat p_value) {
 	if (step.get() <= 0)
 		return;
 
@@ -358,7 +358,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_joyaxis(JNIEnv
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_joyhat(JNIEnv *env, jclass clazz, jint p_device, jint p_hat_x, jint p_hat_y) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_joyhat(JNIEnv *env, jclass clazz, jint p_device, jint p_hat_x, jint p_hat_y) {
 	if (step.get() <= 0)
 		return;
 
@@ -384,7 +384,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_joyhat(JNIEnv 
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_joyconnectionchanged(JNIEnv *env, jclass clazz, jint p_device, jboolean p_connected, jstring p_name) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_joyconnectionchanged(JNIEnv *env, jclass clazz, jint p_device, jboolean p_connected, jstring p_name) {
 	if (step.get() <= 0)
 		return;
 
@@ -393,50 +393,50 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_joyconnectionc
 }
 
 // Called on the UI thread
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_key(JNIEnv *env, jclass clazz, jint p_keycode, jint p_scancode, jint p_unicode_char, jboolean p_pressed) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_key(JNIEnv *env, jclass clazz, jint p_keycode, jint p_scancode, jint p_unicode_char, jboolean p_pressed) {
 	if (step.get() <= 0)
 		return;
 
 	input_handler->process_key_event(p_keycode, p_scancode, p_unicode_char, p_pressed);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_accelerometer(JNIEnv *env, jclass clazz, jfloat x, jfloat y, jfloat z) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_accelerometer(JNIEnv *env, jclass clazz, jfloat x, jfloat y, jfloat z) {
 	accelerometer = Vector3(x, y, z);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_gravity(JNIEnv *env, jclass clazz, jfloat x, jfloat y, jfloat z) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_gravity(JNIEnv *env, jclass clazz, jfloat x, jfloat y, jfloat z) {
 	gravity = Vector3(x, y, z);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_magnetometer(JNIEnv *env, jclass clazz, jfloat x, jfloat y, jfloat z) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_magnetometer(JNIEnv *env, jclass clazz, jfloat x, jfloat y, jfloat z) {
 	magnetometer = Vector3(x, y, z);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_gyroscope(JNIEnv *env, jclass clazz, jfloat x, jfloat y, jfloat z) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_gyroscope(JNIEnv *env, jclass clazz, jfloat x, jfloat y, jfloat z) {
 	gyroscope = Vector3(x, y, z);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_focusin(JNIEnv *env, jclass clazz) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_focusin(JNIEnv *env, jclass clazz) {
 	if (step.get() <= 0)
 		return;
 
 	os_android->main_loop_focusin();
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_focusout(JNIEnv *env, jclass clazz) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_focusout(JNIEnv *env, jclass clazz) {
 	if (step.get() <= 0)
 		return;
 
 	os_android->main_loop_focusout();
 }
 
-JNIEXPORT jstring JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_getGlobal(JNIEnv *env, jclass clazz, jstring path) {
+JNIEXPORT jstring JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_getGlobal(JNIEnv *env, jclass clazz, jstring path) {
 	String js = jstring_to_string(path, env);
 
 	return env->NewStringUTF(ProjectSettings::get_singleton()->get(js).operator String().utf8().get_data());
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_callobject(JNIEnv *env, jclass clazz, jlong ID, jstring method, jobjectArray params) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_callobject(JNIEnv *env, jclass clazz, jlong ID, jstring method, jobjectArray params) {
 	Object *obj = ObjectDB::get_instance(ID);
 	ERR_FAIL_COND(!obj);
 
@@ -466,7 +466,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_callobject(JNI
 	env->PopLocalFrame(NULL);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_calldeferred(JNIEnv *env, jclass clazz, jlong ID, jstring method, jobjectArray params) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_calldeferred(JNIEnv *env, jclass clazz, jlong ID, jstring method, jobjectArray params) {
 	Object *obj = ObjectDB::get_instance(ID);
 	ERR_FAIL_COND(!obj);
 
@@ -490,7 +490,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_calldeferred(J
 	env->PopLocalFrame(NULL);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_requestPermissionResult(JNIEnv *env, jclass clazz, jstring p_permission, jboolean p_result) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_requestPermissionResult(JNIEnv *env, jclass clazz, jstring p_permission, jboolean p_result) {
 	String permission = jstring_to_string(p_permission, env);
 	if (permission == "android.permission.RECORD_AUDIO" && p_result) {
 		AudioDriver::get_singleton()->capture_start();
@@ -501,7 +501,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_requestPermiss
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_onRendererResumed(JNIEnv *env, jclass clazz) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_onRendererResumed(JNIEnv *env, jclass clazz) {
 	if (step.get() <= 0)
 		return;
 
@@ -510,7 +510,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_onRendererResu
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_GodotLib_onRendererPaused(JNIEnv *env, jclass clazz) {
+JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_onRendererPaused(JNIEnv *env, jclass clazz) {
 	if (step.get() <= 0)
 		return;
 

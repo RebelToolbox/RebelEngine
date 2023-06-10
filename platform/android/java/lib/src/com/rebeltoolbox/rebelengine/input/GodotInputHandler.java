@@ -32,8 +32,8 @@ package com.rebeltoolbox.rebelengine.input;
 
 import static com.rebeltoolbox.rebelengine.utils.GLUtils.DEBUG;
 
-import com.rebeltoolbox.rebelengine.GodotLib;
 import com.rebeltoolbox.rebelengine.GodotView;
+import com.rebeltoolbox.rebelengine.RebelEngine;
 import com.rebeltoolbox.rebelengine.input.InputManagerCompat.InputDeviceListener;
 
 import android.os.Build;
@@ -92,12 +92,12 @@ public class GodotInputHandler implements InputDeviceListener {
 			if (mJoystickIds.indexOfKey(deviceId) >= 0) {
 				final int button = getGodotButton(keyCode);
 				final int godotJoyId = mJoystickIds.get(deviceId);
-				GodotLib.joybutton(godotJoyId, button, false);
+				RebelEngine.joybutton(godotJoyId, button, false);
 			}
 		} else {
 			final int scanCode = event.getScanCode();
 			final int chr = event.getUnicodeChar(0);
-			GodotLib.key(keyCode, scanCode, chr, false);
+			RebelEngine.key(keyCode, scanCode, chr, false);
 		};
 
 		return true;
@@ -127,12 +127,12 @@ public class GodotInputHandler implements InputDeviceListener {
 			if (mJoystickIds.indexOfKey(deviceId) >= 0) {
 				final int button = getGodotButton(keyCode);
 				final int godotJoyId = mJoystickIds.get(deviceId);
-				GodotLib.joybutton(godotJoyId, button, true);
+				RebelEngine.joybutton(godotJoyId, button, true);
 			}
 		} else {
 			final int scanCode = event.getScanCode();
 			final int chr = event.getUnicodeChar(0);
-			GodotLib.key(keyCode, scanCode, chr, true);
+			RebelEngine.key(keyCode, scanCode, chr, true);
 		}
 
 		return true;
@@ -171,7 +171,7 @@ public class GodotInputHandler implements InputDeviceListener {
 				case MotionEvent.ACTION_MOVE:
 				case MotionEvent.ACTION_POINTER_UP:
 				case MotionEvent.ACTION_POINTER_DOWN: {
-					GodotLib.touch(event.getSource(), action, pointer_idx, evcount, arr);
+					RebelEngine.touch(event.getSource(), action, pointer_idx, evcount, arr);
 				} break;
 			}
 		}
@@ -197,7 +197,7 @@ public class GodotInputHandler implements InputDeviceListener {
 						// save value to prevent repeats
 						joystick.axesValues.put(axis, value);
 						final int godotAxisIdx = i;
-						GodotLib.joyaxis(godotJoyId, godotAxisIdx, value);
+						RebelEngine.joyaxis(godotJoyId, godotAxisIdx, value);
 					}
 				}
 
@@ -207,7 +207,7 @@ public class GodotInputHandler implements InputDeviceListener {
 					if (joystick.hatX != hatX || joystick.hatY != hatY) {
 						joystick.hatX = hatX;
 						joystick.hatY = hatY;
-						GodotLib.joyhat(godotJoyId, hatX, hatY);
+						RebelEngine.joyhat(godotJoyId, hatX, hatY);
 					}
 				}
 				return true;
@@ -216,7 +216,7 @@ public class GodotInputHandler implements InputDeviceListener {
 			final float x = event.getX();
 			final float y = event.getY();
 			final int type = event.getAction();
-			GodotLib.hover(type, x, y);
+			RebelEngine.hover(type, x, y);
 			return true;
 		} else if ((event.isFromSource(InputDevice.SOURCE_MOUSE))) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -307,7 +307,7 @@ public class GodotInputHandler implements InputDeviceListener {
 		}
 		mJoysticksDevices.put(deviceId, joystick);
 
-		GodotLib.joyconnectionchanged(id, true, joystick.name);
+		RebelEngine.joyconnectionchanged(id, true, joystick.name);
 	}
 
 	@Override
@@ -319,7 +319,7 @@ public class GodotInputHandler implements InputDeviceListener {
 		final int godotJoyId = mJoystickIds.get(deviceId);
 		mJoystickIds.delete(deviceId);
 		mJoysticksDevices.delete(deviceId);
-		GodotLib.joyconnectionchanged(godotJoyId, false, "");
+		RebelEngine.joyconnectionchanged(godotJoyId, false, "");
 	}
 
 	@Override
@@ -408,7 +408,7 @@ public class GodotInputHandler implements InputDeviceListener {
 				final float x = event.getX();
 				final float y = event.getY();
 				final int type = event.getAction();
-				GodotLib.hover(type, x, y);
+				RebelEngine.hover(type, x, y);
 				return true;
 			}
 			case MotionEvent.ACTION_BUTTON_PRESS:
@@ -418,7 +418,7 @@ public class GodotInputHandler implements InputDeviceListener {
 				final float y = event.getY();
 				final int buttonsMask = event.getButtonState();
 				final int action = event.getAction();
-				GodotLib.touch(event.getSource(), action, 0, 1, new float[] { 0, x, y }, buttonsMask);
+				RebelEngine.touch(event.getSource(), action, 0, 1, new float[] { 0, x, y }, buttonsMask);
 				return true;
 			}
 			case MotionEvent.ACTION_SCROLL: {
@@ -428,7 +428,7 @@ public class GodotInputHandler implements InputDeviceListener {
 				final int action = event.getAction();
 				final float verticalFactor = event.getAxisValue(MotionEvent.AXIS_VSCROLL);
 				final float horizontalFactor = event.getAxisValue(MotionEvent.AXIS_HSCROLL);
-				GodotLib.touch(event.getSource(), action, 0, 1, new float[] { 0, x, y }, buttonsMask, verticalFactor, horizontalFactor);
+				RebelEngine.touch(event.getSource(), action, 0, 1, new float[] { 0, x, y }, buttonsMask, verticalFactor, horizontalFactor);
 			}
 		}
 		return false;

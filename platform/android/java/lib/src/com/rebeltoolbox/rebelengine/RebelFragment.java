@@ -224,7 +224,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 		protected void onGLDrawFrame(GL10 gl) {}
 		protected void onGLSurfaceChanged(GL10 gl, int width, int height) {} // singletons will always miss first onGLSurfaceChanged call
-		// protected void onGLSurfaceCreated(GL10 gl, EGLConfig config) {} // singletons won't be ready until first GodotLib.step()
+		// protected void onGLSurfaceCreated(GL10 gl, EGLConfig config) {} // singletons won't be ready until first RebelEngine.step()
 
 		public void registerMethods() {}
 	}
@@ -307,7 +307,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		}
 
 		for (int i = 0; i < permissions.length; i++) {
-			GodotLib.requestPermissionResult(permissions[i], grantResults[i] == PackageManager.PERMISSION_GRANTED);
+			RebelEngine.requestPermissionResult(permissions[i], grantResults[i] == PackageManager.PERMISSION_GRANTED);
 		}
 	}
 
@@ -368,20 +368,20 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 			Rect gameSize = new Rect();
 			mView.getWindowVisibleDisplayFrame(gameSize);
 			final int keyboardHeight = fullSize.y - gameSize.bottom;
-			GodotLib.setVirtualKeyboardHeight(keyboardHeight);
+			RebelEngine.setVirtualKeyboardHeight(keyboardHeight);
 		});
 
 		final String[] current_command_line = command_line;
 		mView.queueEvent(() -> {
-			GodotLib.setup(current_command_line);
+			RebelEngine.setup(current_command_line);
 
-			// Must occur after GodotLib.setup has completed.
+			// Must occur after RebelEngine.setup has completed.
 			for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
 				plugin.onRegisterPluginWithGodotNative();
 			}
-			setKeepScreenOn("True".equals(GodotLib.getGlobal("display/window/energy_saving/keep_screen_on")));
+			setKeepScreenOn("True".equals(RebelEngine.getGlobal("display/window/energy_saving/keep_screen_on")));
 
-			// The Godot Android plugins are setup on completion of GodotLib.setup
+			// The Godot Android plugins are setup on completion of RebelEngine.setup
 			mainThreadHandler.post(() -> {
 				// Include the non-null views returned in the Godot view hierarchy.
 				for (int i = 0; i < singleton_count; i++) {
@@ -559,7 +559,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 		final Activity activity = getActivity();
 		io = new GodotIO(activity);
-		GodotLib.io = io;
+		RebelEngine.io = io;
 		netUtils = new GodotNetUtils(activity);
 		mSensorManager = (SensorManager)activity.getSystemService(Context.SENSOR_SERVICE);
 		mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -571,7 +571,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 		mSensorManager.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_GAME);
 
-		GodotLib.initialize(activity, this, activity.getAssets(), use_apk_expansion);
+		RebelEngine.initialize(activity, this, activity.getAssets(), use_apk_expansion);
 
 		result_callback = null;
 
@@ -746,7 +746,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 			plugin.onMainDestroy();
 		}
 
-		GodotLib.ondestroy();
+		RebelEngine.ondestroy();
 
 		super.onDestroy();
 
@@ -872,16 +872,16 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		if (mView != null) {
 			mView.queueEvent(() -> {
 				if (typeOfSensor == Sensor.TYPE_ACCELEROMETER) {
-					GodotLib.accelerometer(-x, y, -z);
+					RebelEngine.accelerometer(-x, y, -z);
 				}
 				if (typeOfSensor == Sensor.TYPE_GRAVITY) {
-					GodotLib.gravity(-x, y, -z);
+					RebelEngine.gravity(-x, y, -z);
 				}
 				if (typeOfSensor == Sensor.TYPE_MAGNETIC_FIELD) {
-					GodotLib.magnetometer(-x, y, -z);
+					RebelEngine.magnetometer(-x, y, -z);
 				}
 				if (typeOfSensor == Sensor.TYPE_GYROSCOPE) {
-					GodotLib.gyroscope(x, -y, z);
+					RebelEngine.gyroscope(x, -y, z);
 				}
 			});
 		}
@@ -899,7 +899,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 			System.out.printf("** BACK REQUEST!\n");
 
-			GodotLib.quit();
+			RebelEngine.quit();
 			return true;
 		}
 		System.out.printf("** OTHER KEY!\n");
@@ -923,7 +923,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		}
 
 		if (shouldQuit && mView != null) {
-			mView.queueEvent(GodotLib::back);
+			mView.queueEvent(RebelEngine::back);
 		}
 	}
 

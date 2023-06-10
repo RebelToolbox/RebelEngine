@@ -30,8 +30,8 @@
 
 package com.rebeltoolbox.rebelengine.input;
 
-import com.rebeltoolbox.rebelengine.GodotLib;
 import com.rebeltoolbox.rebelengine.GodotView;
+import com.rebeltoolbox.rebelengine.RebelEngine;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -75,7 +75,7 @@ public class GodotGestureHandler extends GestureDetector.SimpleOnGestureListener
 		final int x = Math.round(event.getX());
 		final int y = Math.round(event.getY());
 		final int buttonMask = event.getButtonState();
-		GodotLib.doubleTap(buttonMask, x, y);
+		RebelEngine.doubleTap(buttonMask, x, y);
 		return true;
 	}
 
@@ -84,7 +84,7 @@ public class GodotGestureHandler extends GestureDetector.SimpleOnGestureListener
 		//Log.i("GodotGesture", "onScroll");
 		final int x = Math.round(distanceX);
 		final int y = Math.round(distanceY);
-		GodotLib.scroll(x, y);
+		RebelEngine.scroll(x, y);
 		return true;
 	}
 

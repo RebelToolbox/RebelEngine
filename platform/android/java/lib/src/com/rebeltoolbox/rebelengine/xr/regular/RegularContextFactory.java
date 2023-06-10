@@ -30,7 +30,7 @@
 
 package com.rebeltoolbox.rebelengine.xr.regular;
 
-import com.rebeltoolbox.rebelengine.GodotLib;
+import com.rebeltoolbox.rebelengine.RebelEngine;
 import com.rebeltoolbox.rebelengine.utils.GLUtils;
 
 import android.opengl.GLSurfaceView;
@@ -53,7 +53,7 @@ public class RegularContextFactory implements GLSurfaceView.EGLContextFactory {
 	private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
 
 	public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
-		String driver_name = GodotLib.getGlobal("rendering/quality/driver/driver_name");
+		String driver_name = RebelEngine.getGlobal("rendering/quality/driver/driver_name");
 		if (GLUtils.use_gl3 && !driver_name.equals("GLES3")) {
 			GLUtils.use_gl3 = false;
 		}

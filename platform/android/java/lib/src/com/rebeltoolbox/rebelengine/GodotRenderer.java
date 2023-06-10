@@ -52,11 +52,11 @@ class GodotRenderer implements GLSurfaceView.Renderer {
 
 	public void onDrawFrame(GL10 gl) {
 		if (activityJustResumed) {
-			GodotLib.onRendererResumed();
+			RebelEngine.onRendererResumed();
 			activityJustResumed = false;
 		}
 
-		GodotLib.step();
+		RebelEngine.step();
 		for (int i = 0; i < RebelFragment.singleton_count; i++) {
 			RebelFragment.singletons[i].onGLDrawFrame(gl);
 		}
@@ -66,7 +66,7 @@ class GodotRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
-		GodotLib.resize(width, height);
+		RebelEngine.resize(width, height);
 		for (int i = 0; i < RebelFragment.singleton_count; i++) {
 			RebelFragment.singletons[i].onGLSurfaceChanged(gl, width, height);
 		}
@@ -76,19 +76,19 @@ class GodotRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		GodotLib.newcontext(GLUtils.use_32);
+		RebelEngine.newcontext(GLUtils.use_32);
 		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
 			plugin.onGLSurfaceCreated(gl, config);
 		}
 	}
 
 	void onActivityResumed() {
-		// We defer invoking GodotLib.onRendererResumed() until the first draw frame call.
+		// We defer invoking RebelEngine.onRendererResumed() until the first draw frame call.
 		// This ensures we have a valid GL context and surface when we do so.
 		activityJustResumed = true;
 	}
 
 	void onActivityPaused() {
-		GodotLib.onRendererPaused();
+		RebelEngine.onRendererPaused();
 	}
 }

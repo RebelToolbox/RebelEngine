@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotLib.java                                                        */
+/*  RebelEngine.java                                                     */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -38,7 +38,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Wrapper for native library
  */
-public class GodotLib {
+public class RebelEngine {
 	public static GodotIO io;
 
 	static {
@@ -46,19 +46,19 @@ public class GodotLib {
 	}
 
 	/**
-	 * Invoked on the main thread to initialize Godot native layer.
+	 * Invoked on the main thread to initialize Rebel Engine.
 	 */
 	public static native void initialize(Activity activity, RebelFragment p_instance, Object p_asset_manager, boolean use_apk_expansion);
 
 	/**
-	 * Invoked on the main thread to clean up Godot native layer.
+	 * Invoked on the main thread to terminate the Rebel Engine.
 	 * @see androidx.fragment.app.Fragment#onDestroy()
 	 */
 	public static native void ondestroy();
 
 	/**
-	 * Invoked on the GL thread to complete setup for the Godot native layer logic.
-	 * @param p_cmdline Command line arguments used to configure Godot native layer components.
+	 * Invoked on the GL thread to setup Rebel Engine.
+	 * @param p_cmdline Command line arguments used to configure Rebel Engine.
 	 */
 	public static native void setup(String[] p_cmdline);
 
@@ -172,23 +172,23 @@ public class GodotLib {
 	public static native void focusout();
 
 	/**
-	 * Used to access Godot global properties.
+	 * Used to access global properties.
 	 * @param p_key Property key
 	 * @return String value of the property
 	 */
 	public static native String getGlobal(String p_key);
 
 	/**
-	 * Invoke method |p_method| on the Godot object specified by |p_id|
-	 * @param p_id Id of the Godot object to invoke
+	 * Invoke method |p_method| on the Rebel object specified by |p_id|
+	 * @param p_id Id of the Rebel object to invoke the method on
 	 * @param p_method Name of the method to invoke
 	 * @param p_params Parameters to use for method invocation
 	 */
 	public static native void callobject(long p_id, String p_method, Object[] p_params);
 
 	/**
-	 * Invoke method |p_method| on the Godot object specified by |p_id| during idle time.
-	 * @param p_id Id of the Godot object to invoke
+	 * Invoke method |p_method| on the Rebel object specified by |p_id| during idle time.
+	 * @param p_id Id of the Rebel object to invoke the method on
 	 * @param p_method Name of the method to invoke
 	 * @param p_params Parameters to use for method invocation
 	 */

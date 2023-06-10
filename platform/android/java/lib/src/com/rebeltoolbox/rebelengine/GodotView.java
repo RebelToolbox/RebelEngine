@@ -190,7 +190,7 @@ public class GodotView extends GLSurfaceView {
 		queueEvent(() -> {
 			// Resume the renderer
 			godotRenderer.onActivityResumed();
-			GodotLib.focusin();
+			RebelEngine.focusin();
 		});
 	}
 
@@ -199,7 +199,7 @@ public class GodotView extends GLSurfaceView {
 		super.onPause();
 
 		queueEvent(() -> {
-			GodotLib.focusout();
+			RebelEngine.focusout();
 			// Pause the renderer
 			godotRenderer.onActivityPaused();
 		});
