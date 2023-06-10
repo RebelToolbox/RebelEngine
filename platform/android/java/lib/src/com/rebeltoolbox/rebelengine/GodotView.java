@@ -73,7 +73,7 @@ public class GodotView extends GLSurfaceView {
 	private final RebelFragment rebelFragment;
 	private final GodotInputHandler inputHandler;
 	private final GestureDetector detector;
-	private final GodotRenderer godotRenderer;
+	private final RebelRenderer rebelRenderer;
 
 	public GodotView(Context context, RebelFragment rebelFragment, XRMode xrMode, boolean p_use_gl3,
 			boolean p_use_32_bits, boolean p_use_debug_opengl, boolean p_translucent) {
@@ -85,7 +85,7 @@ public class GodotView extends GLSurfaceView {
 		this.rebelFragment = rebelFragment;
 		this.inputHandler = new GodotInputHandler(this);
 		this.detector = new GestureDetector(context, new GodotGestureHandler(this));
-		this.godotRenderer = new GodotRenderer();
+		this.rebelRenderer = new RebelRenderer();
 
 		init(xrMode, p_translucent, 16, 0);
 	}
@@ -172,7 +172,7 @@ public class GodotView extends GLSurfaceView {
 		}
 
 		/* Set the renderer responsible for frame rendering */
-		setRenderer(godotRenderer);
+		setRenderer(rebelRenderer);
 	}
 
 	public void onBackPressed() {
@@ -189,7 +189,7 @@ public class GodotView extends GLSurfaceView {
 
 		queueEvent(() -> {
 			// Resume the renderer
-			godotRenderer.onActivityResumed();
+			rebelRenderer.onActivityResumed();
 			RebelEngine.focusin();
 		});
 	}
@@ -201,7 +201,7 @@ public class GodotView extends GLSurfaceView {
 		queueEvent(() -> {
 			RebelEngine.focusout();
 			// Pause the renderer
-			godotRenderer.onActivityPaused();
+			rebelRenderer.onActivityPaused();
 		});
 	}
 }

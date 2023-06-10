@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotRenderer.java                                                   */
+/*  RebelRenderer.java                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -39,14 +39,11 @@ import android.opengl.GLSurfaceView;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-/**
- * Godot's renderer implementation.
- */
-class GodotRenderer implements GLSurfaceView.Renderer {
+class RebelRenderer implements GLSurfaceView.Renderer {
 	private final GodotPluginRegistry pluginRegistry;
 	private boolean activityJustResumed = false;
 
-	GodotRenderer() {
+	RebelRenderer() {
 		this.pluginRegistry = GodotPluginRegistry.getPluginRegistry();
 	}
 

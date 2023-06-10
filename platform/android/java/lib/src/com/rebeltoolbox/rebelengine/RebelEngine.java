@@ -208,14 +208,14 @@ public class RebelEngine {
 	public static native void setVirtualKeyboardHeight(int p_height);
 
 	/**
-	 * Invoked on the GL thread when the {@link GodotRenderer} has been resumed.
-	 * @see GodotRenderer#onActivityResumed()
+	 * Invoked on the GL thread when the {@link RebelRenderer} has been resumed.
+	 * @see RebelRenderer#onActivityResumed()
 	 */
 	public static native void onRendererResumed();
 
 	/**
-	 * Invoked on the GL thread when the {@link GodotRenderer} has been paused.
-	 * @see GodotRenderer#onActivityPaused()
+	 * Invoked on the GL thread when the {@link RebelRenderer} has been paused.
+	 * @see RebelRenderer#onActivityPaused()
 	 */
 	public static native void onRendererPaused();
 }
