@@ -30,7 +30,7 @@
 
 package com.rebeltoolbox.rebelapp;
 
-import com.rebeltoolbox.rebelengine.FullScreenGodotApp;
+import com.rebeltoolbox.rebelengine.RebelActivity;
 
 import android.os.Bundle;
 
@@ -38,7 +38,7 @@ import android.os.Bundle;
  * Template activity for Android custom builds.
  * Feel free to extend and modify this class for your custom logic.
  */
-public class RebelApp extends FullScreenGodotApp {
+public class RebelApp extends RebelActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.GodotAppMainTheme);

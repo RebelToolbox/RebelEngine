@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  FullScreenGodotApp.java                                              */
+/*  RebelActivity.java                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -46,8 +46,8 @@ import androidx.fragment.app.FragmentActivity;
  * It's also a reference implementation for how to setup and use the {@link RebelFragment}
  * within an Android app.
  */
-public abstract class FullScreenGodotApp extends FragmentActivity implements RebelHost {
-	private static final String TAG = FullScreenGodotApp.class.getSimpleName();
+public abstract class RebelActivity extends FragmentActivity implements RebelHost {
+	private static final String TAG = RebelActivity.class.getSimpleName();
 
 	@Nullable
 	private RebelFragment rebelFragment;
@@ -87,7 +87,7 @@ public abstract class FullScreenGodotApp extends FragmentActivity implements Reb
 		if (rebelFragment == restartFragment) {
 			// HACK:
 			//
-			// Currently it's very hard to properly deinitialize Godot on Android to restart the game
+			// Currently it's very hard to properly terminate Rebel Engine on Android to restart the game
 			// from scratch. Therefore, we need to kill the whole app process and relaunch it.
 			//
 			// Restarting only the activity, wouldn't be enough unless it did proper cleanup (including
@@ -138,7 +138,7 @@ public abstract class FullScreenGodotApp extends FragmentActivity implements Reb
 	}
 
 	/**
-	 * Used to initialize the Godot fragment instance in {@link FullScreenGodotApp#onCreate(Bundle)}.
+	 * Used to initialize the Rebel Engine instance in {@link RebelActivity#onCreate(Bundle)}.
 	 */
 	@NonNull
 	protected RebelFragment createRebelFragment() {
