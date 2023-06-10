@@ -137,7 +137,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	// Used to dispatch events to the main thread.
 	private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
 
-	private GodotHost godotHost;
+	private RebelHost rebelHost;
 	private GodotPluginRegistry pluginRegistry;
 
 	static private Intent mCurrentIntent;
@@ -265,17 +265,17 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		if (getParentFragment() instanceof GodotHost) {
-			godotHost = (GodotHost)getParentFragment();
-		} else if (getActivity() instanceof GodotHost) {
-			godotHost = (GodotHost)getActivity();
+		if (getParentFragment() instanceof RebelHost) {
+			rebelHost = (RebelHost)getParentFragment();
+		} else if (getActivity() instanceof RebelHost) {
+			rebelHost = (RebelHost)getActivity();
 		}
 	}
 
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		godotHost = null;
+		rebelHost = null;
 	}
 
 	@CallSuper
@@ -320,8 +320,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 			plugin.onGodotSetupCompleted();
 		}
 
-		if (godotHost != null) {
-			godotHost.onGodotSetupCompleted();
+		if (rebelHost != null) {
+			rebelHost.onGodotSetupCompleted();
 		}
 	}
 
@@ -334,8 +334,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 			plugin.onGodotMainLoopStarted();
 		}
 
-		if (godotHost != null) {
-			godotHost.onGodotMainLoopStarted();
+		if (rebelHost != null) {
+			rebelHost.onGodotMainLoopStarted();
 		}
 	}
 
@@ -437,8 +437,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	}
 
 	public void restart() {
-		if (godotHost != null) {
-			godotHost.onGodotRestartRequested(this);
+		if (rebelHost != null) {
+			rebelHost.onGodotRestartRequested(this);
 		}
 	}
 
@@ -465,7 +465,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	protected String[] getCommandLine() {
 		String[] original = parseCommandLine();
 		String[] updated;
-		List<String> hostCommandLine = godotHost != null ? godotHost.getCommandLine() : null;
+		List<String> hostCommandLine = rebelHost != null ? rebelHost.getCommandLine() : null;
 		if (hostCommandLine == null || hostCommandLine.isEmpty()) {
 			updated = original;
 		} else {
@@ -948,8 +948,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		// TODO: This is a temp solution.
 		//  The proper fix will involve tracking down and properly shutting down each
 		//  Rebel Engine component that is started in onVideoInit.
-		if (godotHost != null) {
-			godotHost.onGodotForceQuit(this);
+		if (rebelHost != null) {
+			rebelHost.onGodotForceQuit(this);
 		}
 	}
 

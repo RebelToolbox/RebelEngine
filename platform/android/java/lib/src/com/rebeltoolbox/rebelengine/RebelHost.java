@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotHost.java                                                       */
+/*  RebelHost.java                                                       */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * Denotes a component (e.g: Activity, Fragment) that hosts the {@link RebelFragment} fragment.
  */
-public interface GodotHost {
+public interface RebelHost {
 	/**
 	 * Provides a set of command line parameters to setup the engine.
 	 */

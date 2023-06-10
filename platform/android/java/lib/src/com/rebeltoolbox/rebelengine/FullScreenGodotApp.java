@@ -46,7 +46,7 @@ import androidx.fragment.app.FragmentActivity;
  * It's also a reference implementation for how to setup and use the {@link RebelFragment}
  * within an Android app.
  */
-public abstract class FullScreenGodotApp extends FragmentActivity implements GodotHost {
+public abstract class FullScreenGodotApp extends FragmentActivity implements RebelHost {
 	private static final String TAG = FullScreenGodotApp.class.getSimpleName();
 
 	@Nullable
