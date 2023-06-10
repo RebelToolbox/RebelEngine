@@ -33,13 +33,13 @@
 
 // JNIEnv is only valid within the thread it belongs to, in a multi threading environment
 // we can't cache it.
-// For GodotIO we call all access methods from our thread and we thus get a valid JNIEnv
+// For IO we call all access methods from our thread and we thus get a valid JNIEnv
 // from ThreadAndroid.
 
-GodotIOJavaWrapper::GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance) {
-	godot_io_instance = p_env->NewGlobalRef(p_godot_io_instance);
-	if (godot_io_instance) {
-		cls = p_env->GetObjectClass(godot_io_instance);
+GodotIOJavaWrapper::GodotIOJavaWrapper(JNIEnv *p_env, jobject io_object) {
+	io_object = p_env->NewGlobalRef(io_object);
+	if (io_object) {
+		cls = p_env->GetObjectClass(io_object);
 		if (cls) {
 			cls = (jclass)p_env->NewGlobalRef(cls);
 		} else {
@@ -68,7 +68,7 @@ GodotIOJavaWrapper::~GodotIOJavaWrapper() {
 }
 
 jobject GodotIOJavaWrapper::get_instance() {
-	return godot_io_instance;
+	return io_object;
 }
 
 Error GodotIOJavaWrapper::open_uri(const String &p_uri) {
@@ -76,7 +76,7 @@ Error GodotIOJavaWrapper::open_uri(const String &p_uri) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND_V(env == nullptr, ERR_UNAVAILABLE);
 		jstring jStr = env->NewStringUTF(p_uri.utf8().get_data());
-		return env->CallIntMethod(godot_io_instance, _open_URI, jStr) ? ERR_CANT_OPEN : OK;
+		return env->CallIntMethod(io_object, _open_URI, jStr) ? ERR_CANT_OPEN : OK;
 	} else {
 		return ERR_UNAVAILABLE;
 	}
@@ -86,7 +86,7 @@ String GodotIOJavaWrapper::get_cache_dir() {
 	if (_get_cache_dir) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND_V(env == nullptr, String());
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_cache_dir);
+		jstring s = (jstring)env->CallObjectMethod(io_object, _get_cache_dir);
 		return jstring_to_string(s, env);
 	} else {
 		return String();
@@ -97,7 +97,7 @@ String GodotIOJavaWrapper::get_user_data_dir() {
 	if (_get_data_dir) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND_V(env == nullptr, String());
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_data_dir);
+		jstring s = (jstring)env->CallObjectMethod(io_object, _get_data_dir);
 		return jstring_to_string(s, env);
 	} else {
 		return String();
@@ -108,7 +108,7 @@ String GodotIOJavaWrapper::get_locale() {
 	if (_get_locale) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND_V(env == nullptr, String());
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_locale);
+		jstring s = (jstring)env->CallObjectMethod(io_object, _get_locale);
 		return jstring_to_string(s, env);
 	} else {
 		return String();
@@ -119,7 +119,7 @@ String GodotIOJavaWrapper::get_model() {
 	if (_get_model) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND_V(env == nullptr, String());
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_model);
+		jstring s = (jstring)env->CallObjectMethod(io_object, _get_model);
 		return jstring_to_string(s, env);
 	} else {
 		return String();
@@ -130,7 +130,7 @@ int GodotIOJavaWrapper::get_screen_dpi() {
 	if (_get_screen_DPI) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND_V(env == nullptr, 160);
-		return env->CallIntMethod(godot_io_instance, _get_screen_DPI);
+		return env->CallIntMethod(io_object, _get_screen_DPI);
 	} else {
 		return 160;
 	}
@@ -140,7 +140,7 @@ void GodotIOJavaWrapper::get_window_safe_area(int (&p_rect_xywh)[4]) {
 	if (_get_window_safe_area) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND(env == nullptr);
-		jintArray returnArray = (jintArray)env->CallObjectMethod(godot_io_instance, _get_window_safe_area);
+		jintArray returnArray = (jintArray)env->CallObjectMethod(io_object, _get_window_safe_area);
 		ERR_FAIL_COND(env->GetArrayLength(returnArray) != 4);
 		jint *arrayBody = env->GetIntArrayElements(returnArray, JNI_FALSE);
 		for (int i = 0; i < 4; i++) {
@@ -154,7 +154,7 @@ String GodotIOJavaWrapper::get_unique_id() {
 	if (_get_unique_id) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND_V(env == nullptr, String());
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_unique_id);
+		jstring s = (jstring)env->CallObjectMethod(io_object, _get_unique_id);
 		return jstring_to_string(s, env);
 	} else {
 		return String();
@@ -170,7 +170,7 @@ void GodotIOJavaWrapper::show_vk(const String &p_existing, bool p_multiline, int
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND(env == nullptr);
 		jstring jStr = env->NewStringUTF(p_existing.utf8().get_data());
-		env->CallVoidMethod(godot_io_instance, _show_keyboard, jStr, p_multiline, p_max_input_length, p_cursor_start, p_cursor_end);
+		env->CallVoidMethod(io_object, _show_keyboard, jStr, p_multiline, p_max_input_length, p_cursor_start, p_cursor_end);
 	}
 }
 
@@ -178,7 +178,7 @@ void GodotIOJavaWrapper::hide_vk() {
 	if (_hide_keyboard) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND(env == nullptr);
-		env->CallVoidMethod(godot_io_instance, _hide_keyboard);
+		env->CallVoidMethod(io_object, _hide_keyboard);
 	}
 }
 
@@ -186,7 +186,7 @@ void GodotIOJavaWrapper::set_screen_orientation(int p_orient) {
 	if (_set_screen_orientation) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND(env == nullptr);
-		env->CallVoidMethod(godot_io_instance, _set_screen_orientation, p_orient);
+		env->CallVoidMethod(io_object, _set_screen_orientation, p_orient);
 	}
 }
 
@@ -194,7 +194,7 @@ int GodotIOJavaWrapper::get_screen_orientation() const {
 	if (_get_screen_orientation) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND_V(env == nullptr, 0);
-		return env->CallIntMethod(godot_io_instance, _get_screen_orientation);
+		return env->CallIntMethod(io_object, _get_screen_orientation);
 	} else {
 		return 0;
 	}
@@ -204,7 +204,7 @@ String GodotIOJavaWrapper::get_system_dir(int p_dir, bool p_shared_storage) {
 	if (_get_system_dir) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_COND_V(env == nullptr, String("."));
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_system_dir, p_dir, p_shared_storage);
+		jstring s = (jstring)env->CallObjectMethod(io_object, _get_system_dir, p_dir, p_shared_storage);
 		return jstring_to_string(s, env);
 	} else {
 		return String(".");

@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotIO.java                                                         */
+/*  RebelIO.java                                                         */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -55,8 +55,8 @@ import java.util.Locale;
 
 // Wrapper for native library
 
-public class GodotIO {
-	private static final String TAG = GodotIO.class.getSimpleName();
+public class RebelIO {
+	private static final String TAG = RebelIO.class.getSimpleName();
 
 	private final AssetManager am;
 	private final Activity activity;
@@ -161,7 +161,7 @@ public class GodotIO {
 		dirs.remove(id);
 	}
 
-	GodotIO(Activity p_activity) {
+	RebelIO(Activity p_activity) {
 		am = p_activity.getAssets();
 		activity = p_activity;
 		dirs = new SparseArray<>();

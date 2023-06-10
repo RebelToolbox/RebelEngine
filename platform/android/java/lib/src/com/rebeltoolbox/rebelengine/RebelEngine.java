@@ -39,7 +39,7 @@ import javax.microedition.khronos.opengles.GL10;
  * Wrapper for native library
  */
 public class RebelEngine {
-	public static GodotIO io;
+	public static RebelIO io;
 
 	static {
 		System.loadLibrary("godot_android");

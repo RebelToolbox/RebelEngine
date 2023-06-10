@@ -42,7 +42,7 @@
 // Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
 class GodotIOJavaWrapper {
 private:
-	jobject godot_io_instance;
+	jobject io_object;
 	jclass cls;
 
 	jmethodID _open_URI = 0;
@@ -60,7 +60,7 @@ private:
 	jmethodID _get_system_dir = 0;
 
 public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
+	GodotIOJavaWrapper(JNIEnv *p_env, jobject io_object);
 	~GodotIOJavaWrapper();
 
 	jobject get_instance();

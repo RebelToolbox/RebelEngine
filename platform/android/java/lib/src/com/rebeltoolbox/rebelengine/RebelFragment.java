@@ -251,7 +251,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	private Sensor mMagnetometer;
 	private Sensor mGyroscope;
 
-	public static GodotIO io;
+	public static RebelIO io;
 	public static GodotNetUtils netUtils;
 
 	static SingletonBase[] singletons = new SingletonBase[MAX_SINGLETONS];
@@ -558,7 +558,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		}
 
 		final Activity activity = getActivity();
-		io = new GodotIO(activity);
+		io = new RebelIO(activity);
 		RebelEngine.io = io;
 		netUtils = new GodotNetUtils(activity);
 		mSensorManager = (SensorManager)activity.getSystemService(Context.SENSOR_SERVICE);
