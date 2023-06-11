@@ -693,13 +693,13 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 					startResult = DownloaderClientMarshaller.startDownloadServiceIfRequired(
 							getContext(),
 							pendingIntent,
-							GodotDownloaderService.class);
+							RebelDownloaderService.class);
 
 					if (startResult != DownloaderClientMarshaller.NO_DOWNLOAD_REQUIRED) {
 						// This is where you do set up to display the download
 						// progress (next step in onCreateView)
 						mDownloaderClientStub = DownloaderClientMarshaller.CreateStub(this,
-								GodotDownloaderService.class);
+								RebelDownloaderService.class);
 
 						return;
 					}

@@ -14,7 +14,7 @@
             android:name="org.godotengine.library.version"
             android:value="${godotLibraryVersion}" />
 
-        <service android:name=".GodotDownloaderService" />
+        <service android:name=".RebelDownloaderService" />
 
     </application>
 

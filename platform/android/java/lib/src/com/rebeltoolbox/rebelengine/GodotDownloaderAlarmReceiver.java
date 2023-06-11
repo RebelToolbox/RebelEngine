@@ -50,7 +50,7 @@ public class GodotDownloaderAlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		Log.d("GODOT", "Alarma recivida");
 		try {
-			DownloaderClientMarshaller.startDownloadServiceIfRequired(context, intent, GodotDownloaderService.class);
+			DownloaderClientMarshaller.startDownloadServiceIfRequired(context, intent, RebelDownloaderService.class);
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 			Log.d("GODOT", "Exception: " + e.getClass().getName() + ":" + e.getMessage());
