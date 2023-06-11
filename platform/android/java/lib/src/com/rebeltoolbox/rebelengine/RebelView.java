@@ -30,8 +30,8 @@
 
 package com.rebeltoolbox.rebelengine;
 
-import com.rebeltoolbox.rebelengine.input.GodotGestureHandler;
 import com.rebeltoolbox.rebelengine.input.GodotInputHandler;
+import com.rebeltoolbox.rebelengine.input.RebelGestureListener;
 import com.rebeltoolbox.rebelengine.utils.GLUtils;
 import com.rebeltoolbox.rebelengine.xr.XRMode;
 import com.rebeltoolbox.rebelengine.xr.ovr.OvrConfigChooser;
@@ -72,7 +72,7 @@ public class RebelView extends GLSurfaceView {
 
 	private final RebelFragment rebelFragment;
 	private final GodotInputHandler inputHandler;
-	private final GestureDetector detector;
+	private final GestureDetector gestureDetector;
 	private final RebelRenderer rebelRenderer;
 
 	public RebelView(Context context, RebelFragment rebelFragment, XRMode xrMode, boolean p_use_gl3,
@@ -84,7 +84,7 @@ public class RebelView extends GLSurfaceView {
 
 		this.rebelFragment = rebelFragment;
 		this.inputHandler = new GodotInputHandler(this);
-		this.detector = new GestureDetector(context, new GodotGestureHandler(this));
+		this.gestureDetector = new GestureDetector(context, new RebelGestureListener(this));
 		this.rebelRenderer = new RebelRenderer();
 
 		init(xrMode, p_translucent, 16, 0);
@@ -98,7 +98,7 @@ public class RebelView extends GLSurfaceView {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		super.onTouchEvent(event);
-		this.detector.onTouchEvent(event);
+		gestureDetector.onTouchEvent(event);
 		return inputHandler.onTouchEvent(event);
 	}
 

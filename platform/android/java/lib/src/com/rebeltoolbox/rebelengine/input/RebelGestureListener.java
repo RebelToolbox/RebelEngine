@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotGestureHandler.java                                             */
+/*  RebelGestureListener.java                                            */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -40,10 +40,10 @@ import android.view.MotionEvent;
  * Handles gesture input related events for the {@link RebelView}.
  * https://developer.android.com/reference/android/view/GestureDetector.SimpleOnGestureListener
  */
-public class GodotGestureHandler extends GestureDetector.SimpleOnGestureListener {
+public class RebelGestureListener extends GestureDetector.SimpleOnGestureListener {
 	private final RebelView rebelView;
 
-	public GodotGestureHandler(RebelView rebelView) {
+	public RebelGestureListener(RebelView rebelView) {
 		this.rebelView = rebelView;
 	}
 
@@ -54,7 +54,6 @@ public class GodotGestureHandler extends GestureDetector.SimpleOnGestureListener
 	@Override
 	public boolean onDown(MotionEvent event) {
 		super.onDown(event);
-		//Log.i("GodotGesture", "onDown");
 		return true;
 	}
 
@@ -66,12 +65,10 @@ public class GodotGestureHandler extends GestureDetector.SimpleOnGestureListener
 
 	@Override
 	public void onLongPress(MotionEvent event) {
-		//Log.i("GodotGesture", "onLongPress");
 	}
 
 	@Override
 	public boolean onDoubleTap(MotionEvent event) {
-		//Log.i("GodotGesture", "onDoubleTap");
 		final int x = Math.round(event.getX());
 		final int y = Math.round(event.getY());
 		final int buttonMask = event.getButtonState();
@@ -81,7 +78,6 @@ public class GodotGestureHandler extends GestureDetector.SimpleOnGestureListener
 
 	@Override
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		//Log.i("GodotGesture", "onScroll");
 		final int x = Math.round(distanceX);
 		final int y = Math.round(distanceY);
 		RebelEngine.scroll(x, y);
@@ -90,7 +86,6 @@ public class GodotGestureHandler extends GestureDetector.SimpleOnGestureListener
 
 	@Override
 	public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-		//Log.i("GodotGesture", "onFling");
 		return true;
 	}
 }
