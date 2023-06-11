@@ -119,13 +119,13 @@ public abstract class RebelPlugin {
 	 * This method must be invoked on the render thread.
 	 */
 	public static void registerPluginWithGodotNative(Object pluginObject,
-			GodotPluginInfoProvider pluginInfoProvider) {
-		registerPluginWithGodotNative(pluginObject, pluginInfoProvider.getPluginName(),
-				Collections.emptyList(), pluginInfoProvider.getPluginSignals(),
-				pluginInfoProvider.getPluginGDNativeLibrariesPaths());
+			RebelPluginInfoProvider rebelPluginInfoProvider) {
+		registerPluginWithGodotNative(pluginObject, rebelPluginInfoProvider.getPluginName(),
+				Collections.emptyList(), rebelPluginInfoProvider.getPluginSignals(),
+				rebelPluginInfoProvider.getPluginGDNativeLibrariesPaths());
 
 		// Notify that registration is complete.
-		pluginInfoProvider.onPluginRegistered();
+		rebelPluginInfoProvider.onPluginRegistered();
 	}
 
 	private static Map<String, SignalInfo> registerPluginWithGodotNative(Object pluginObject,

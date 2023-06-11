@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotPluginInfoProvider.java                                         */
+/*  RebelPluginInfoProvider.java                                         */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -35,19 +35,10 @@ import androidx.annotation.NonNull;
 import java.util.Collections;
 import java.util.Set;
 
-/**
- * Provides the set of information expected from a Godot plugin.
- */
-public interface GodotPluginInfoProvider {
-	/**
-	 * Returns the name of the plugin.
-	 */
+public interface RebelPluginInfoProvider {
 	@NonNull
 	String getPluginName();
 
-	/**
-	 * Returns the list of signals to be exposed to Godot.
-	 */
 	@NonNull
 	default Set<SignalInfo> getPluginSignals() {
 		return Collections.emptySet();
