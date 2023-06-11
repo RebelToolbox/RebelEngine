@@ -19,7 +19,7 @@
     </application>
 
     <instrumentation
-        android:name=".GodotInstrumentation"
+        android:name=".RebelInstrumentation"
         android:icon="@mipmap/icon"
         android:label="@string/project_name_string"
         android:targetPackage="com.rebeltoolbox.rebelengine" />

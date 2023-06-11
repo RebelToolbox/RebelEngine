@@ -98,7 +98,7 @@ public abstract class RebelActivity extends FragmentActivity implements RebelHos
 			//
 			Bundle args = new Bundle();
 			args.putParcelable("intent", getIntent());
-			startInstrumentation(new ComponentName(this, GodotInstrumentation.class), null, args);
+			startInstrumentation(new ComponentName(this, RebelInstrumentation.class), null, args);
 		}
 	}
 

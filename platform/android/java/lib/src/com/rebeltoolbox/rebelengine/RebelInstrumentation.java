@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotInstrumentation.java                                            */
+/*  RebelInstrumentation.java                                            */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -34,7 +34,7 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class GodotInstrumentation extends Instrumentation {
+public class RebelInstrumentation extends Instrumentation {
 	private Intent intent;
 
 	@Override
