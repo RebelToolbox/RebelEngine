@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotEditText.java                                                   */
+/*  RebelEditText.java                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -45,7 +45,7 @@ import android.widget.EditText;
 
 import java.lang.ref.WeakReference;
 
-public class GodotEditText extends EditText {
+public class RebelEditText extends EditText {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -57,22 +57,22 @@ public class GodotEditText extends EditText {
 	// ===========================================================
 	private RebelView rebelView;
 	private GodotTextInputWrapper mInputWrapper;
-	private EditHandler sHandler = new EditHandler(this);
+	private final EditHandler editHandler = new EditHandler(this);
 	private String mOriginText;
 	private int mMaxInputLength = Integer.MAX_VALUE;
 	private boolean mMultiline = false;
 
 	private static class EditHandler extends Handler {
-		private final WeakReference<GodotEditText> mEdit;
-		public EditHandler(GodotEditText edit) {
-			mEdit = new WeakReference<>(edit);
+		private final WeakReference<RebelEditText> rebelEditTextReference;
+		public EditHandler(RebelEditText rebelEditText) {
+			rebelEditTextReference = new WeakReference<>(rebelEditText);
 		}
 
 		@Override
 		public void handleMessage(Message msg) {
-			GodotEditText edit = mEdit.get();
-			if (edit != null) {
-				edit.handleMessage(msg);
+			RebelEditText rebelEditText = rebelEditTextReference.get();
+			if (rebelEditText != null) {
+				rebelEditText.handleMessage(msg);
 			}
 		}
 	}
@@ -80,17 +80,17 @@ public class GodotEditText extends EditText {
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-	public GodotEditText(final Context context) {
+	public RebelEditText(final Context context) {
 		super(context);
 		this.initView();
 	}
 
-	public GodotEditText(final Context context, final AttributeSet attrs) {
+	public RebelEditText(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
 		this.initView();
 	}
 
-	public GodotEditText(final Context context, final AttributeSet attrs, final int defStyle) {
+	public RebelEditText(final Context context, final AttributeSet attrs, final int defStyle) {
 		super(context, attrs, defStyle);
 		this.initView();
 	}
@@ -107,35 +107,35 @@ public class GodotEditText extends EditText {
 	private void handleMessage(final Message msg) {
 		switch (msg.what) {
 			case HANDLER_OPEN_IME_KEYBOARD: {
-				GodotEditText edit = (GodotEditText)msg.obj;
-				String text = edit.mOriginText;
-				if (edit.requestFocus()) {
-					edit.removeTextChangedListener(edit.mInputWrapper);
-					setMaxInputLength(edit);
-					edit.setText("");
-					edit.append(text);
+				RebelEditText rebelEditText = (RebelEditText)msg.obj;
+				String text = rebelEditText.mOriginText;
+				if (rebelEditText.requestFocus()) {
+					rebelEditText.removeTextChangedListener(rebelEditText.mInputWrapper);
+					setMaxInputLength(rebelEditText);
+					rebelEditText.setText("");
+					rebelEditText.append(text);
 					if (msg.arg2 != -1) {
-						edit.setSelection(msg.arg1, msg.arg2);
-						edit.mInputWrapper.setSelection(true);
+						rebelEditText.setSelection(msg.arg1, msg.arg2);
+						rebelEditText.mInputWrapper.setSelection(true);
 					} else {
-						edit.mInputWrapper.setSelection(false);
+						rebelEditText.mInputWrapper.setSelection(false);
 					}
 
 					int inputType = InputType.TYPE_CLASS_TEXT;
-					if (edit.isMultiline()) {
+					if (rebelEditText.isMultiline()) {
 						inputType |= InputType.TYPE_TEXT_FLAG_MULTI_LINE;
 					}
-					edit.setInputType(inputType);
+					rebelEditText.setInputType(inputType);
 
-					edit.mInputWrapper.setOriginText(text);
-					edit.addTextChangedListener(edit.mInputWrapper);
+					rebelEditText.mInputWrapper.setOriginText(text);
+					rebelEditText.addTextChangedListener(rebelEditText.mInputWrapper);
 					final InputMethodManager imm = (InputMethodManager)rebelView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.showSoftInput(edit, 0);
+					imm.showSoftInput(rebelEditText, 0);
 				}
 			} break;
 
 			case HANDLER_CLOSE_IME_KEYBOARD: {
-				GodotEditText edit = (GodotEditText)msg.obj;
+				RebelEditText edit = (RebelEditText)msg.obj;
 
 				edit.removeTextChangedListener(mInputWrapper);
 				final InputMethodManager imm = (InputMethodManager)rebelView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -167,9 +167,9 @@ public class GodotEditText extends EditText {
 	// ===========================================================
 	@Override
 	public boolean onKeyDown(final int keyCode, final KeyEvent keyEvent) {
-		/* Let SurfaceView get focus if back key is input. */
-		// pass event to godot in special cases
-		if (needHandlingInGodot(keyCode, keyEvent) && rebelView.getInputHandler().onKeyDown(keyCode, keyEvent)) {
+		// Let SurfaceView get focus if back key is pressed
+		// Handle special key events
+		if (isSpecialKey(keyCode, keyEvent) && rebelView.getInputHandler().onKeyDown(keyCode, keyEvent)) {
 			return true;
 		} else {
 			return super.onKeyDown(keyCode, keyEvent);
@@ -178,14 +178,14 @@ public class GodotEditText extends EditText {
 
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent keyEvent) {
-		if (needHandlingInGodot(keyCode, keyEvent) && rebelView.getInputHandler().onKeyUp(keyCode, keyEvent)) {
+		if (isSpecialKey(keyCode, keyEvent) && rebelView.getInputHandler().onKeyUp(keyCode, keyEvent)) {
 			return true;
 		} else {
 			return super.onKeyUp(keyCode, keyEvent);
 		}
 	}
 
-	private boolean needHandlingInGodot(int keyCode, KeyEvent keyEvent) {
+	private boolean isSpecialKey(int keyCode, KeyEvent keyEvent) {
 		boolean isArrowKey = keyCode == KeyEvent.KEYCODE_DPAD_UP || keyCode == KeyEvent.KEYCODE_DPAD_DOWN ||
 				keyCode == KeyEvent.KEYCODE_DPAD_LEFT || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT;
 		boolean isModifiedKey = keyEvent.isAltPressed() || keyEvent.isCtrlPressed() || keyEvent.isSymPressed() ||
@@ -217,14 +217,14 @@ public class GodotEditText extends EditText {
 		msg.obj = this;
 		msg.arg1 = p_cursor_start;
 		msg.arg2 = p_cursor_end;
-		sHandler.sendMessage(msg);
+		editHandler.sendMessage(msg);
 	}
 
 	public void hideKeyboard() {
 		final Message msg = new Message();
 		msg.what = HANDLER_CLOSE_IME_KEYBOARD;
 		msg.obj = this;
-		sHandler.sendMessage(msg);
+		editHandler.sendMessage(msg);
 	}
 
 	// ===========================================================

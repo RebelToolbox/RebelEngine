@@ -30,7 +30,7 @@
 
 package com.rebeltoolbox.rebelengine;
 
-import com.rebeltoolbox.rebelengine.input.GodotEditText;
+import com.rebeltoolbox.rebelengine.input.RebelEditText;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -61,7 +61,7 @@ public class RebelIO {
 	private final AssetManager am;
 	private final Activity activity;
 	private final String uniqueId;
-	GodotEditText edit;
+	RebelEditText rebelEditText;
 
 	final int SCREEN_LANDSCAPE = 0;
 	final int SCREEN_PORTRAIT = 1;
@@ -249,16 +249,16 @@ public class RebelIO {
 	}
 
 	public void showKeyboard(String p_existing_text, boolean p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end) {
-		if (edit != null)
-			edit.showKeyboard(p_existing_text, p_multiline, p_max_input_length, p_cursor_start, p_cursor_end);
+		if (rebelEditText != null)
+			rebelEditText.showKeyboard(p_existing_text, p_multiline, p_max_input_length, p_cursor_start, p_cursor_end);
 
 		//InputMethodManager inputMgr = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 		//inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 	}
 
 	public void hideKeyboard() {
-		if (edit != null)
-			edit.hideKeyboard();
+		if (rebelEditText != null)
+			rebelEditText.hideKeyboard();
 	}
 
 	public void setScreenOrientation(int p_orientation) {
@@ -318,8 +318,8 @@ public class RebelIO {
 		}
 	}
 
-	public void setEdit(GodotEditText _edit) {
-		edit = _edit;
+	public void setRebelEditText(RebelEditText rebelEditText) {
+		this.rebelEditText = rebelEditText;
 	}
 
 	public static final int SYSTEM_DIR_DESKTOP = 0;

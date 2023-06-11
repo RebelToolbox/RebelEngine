@@ -51,7 +51,7 @@ public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListene
 	// Fields
 	// ===========================================================
 	private final RebelView rebelView;
-	private final GodotEditText mEdit;
+	private final RebelEditText rebelEditText;
 	private String mOriginText;
 	private boolean mHasSelection;
 
@@ -59,9 +59,9 @@ public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListene
 	// Constructors
 	// ===========================================================
 
-	public GodotTextInputWrapper(final RebelView rebelView, final GodotEditText edit) {
+	public GodotTextInputWrapper(final RebelView rebelView, final RebelEditText rebelEditText) {
 		this.rebelView = rebelView;
-		this.mEdit = edit;
+		this.rebelEditText = rebelEditText;
 	}
 
 	// ===========================================================
@@ -69,8 +69,7 @@ public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListene
 	// ===========================================================
 
 	private boolean isFullScreenEdit() {
-		final TextView textField = this.mEdit;
-		final InputMethodManager imm = (InputMethodManager)textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		final InputMethodManager imm = (InputMethodManager)rebelEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 		return imm.isFullscreenMode();
 	}
 
@@ -115,7 +114,7 @@ public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListene
 		}
 		for (int i = 0; i < count; ++i) {
 			int key = newChars[i];
-			if ((key == '\n') && !mEdit.isMultiline()) {
+			if ((key == '\n') && !rebelEditText.isMultiline()) {
 				// Return keys are handled through action events
 				continue;
 			}
@@ -126,7 +125,7 @@ public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListene
 
 	@Override
 	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
-		if (this.mEdit == pTextView && this.isFullScreenEdit()) {
+		if (this.rebelEditText == pTextView && this.isFullScreenEdit()) {
 			final String characters = pKeyEvent.getCharacters();
 
 			for (int i = 0; i < characters.length(); i++) {

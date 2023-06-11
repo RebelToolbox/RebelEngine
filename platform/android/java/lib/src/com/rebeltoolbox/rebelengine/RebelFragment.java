@@ -33,7 +33,7 @@ package com.rebeltoolbox.rebelengine;
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.WINDOW_SERVICE;
 
-import com.rebeltoolbox.rebelengine.input.GodotEditText;
+import com.rebeltoolbox.rebelengine.input.RebelEditText;
 import com.rebeltoolbox.rebelengine.plugin.GodotPlugin;
 import com.rebeltoolbox.rebelengine.plugin.GodotPluginRegistry;
 import com.rebeltoolbox.rebelengine.utils.GodotNetUtils;
@@ -349,17 +349,17 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		containerLayout = new FrameLayout(activity);
 		containerLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-		// GodotEditText layout
-		GodotEditText edittext = new GodotEditText(activity);
-		edittext.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT,
+		// RebelEditText layout
+		RebelEditText rebelEditText = new RebelEditText(activity);
+		rebelEditText.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT,
 				(int)getResources().getDimension(R.dimen.text_edit_height)));
 		// ...add to FrameLayout
-		containerLayout.addView(edittext);
+		containerLayout.addView(rebelEditText);
 
 		rebelView = new RebelView(activity, this, xrMode, use_gl3, use_32_bits, use_debug_opengl, translucent);
 		containerLayout.addView(rebelView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		edittext.setRebelView(rebelView);
-		io.setEdit(edittext);
+		rebelEditText.setRebelView(rebelView);
+		io.setRebelEditText(rebelEditText);
 
 		rebelView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
 			Point fullSize = new Point();
