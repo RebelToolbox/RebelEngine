@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotInputHandler.java                                               */
+/*  RebelInputHandler.java                                               */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -53,7 +53,7 @@ import java.util.Set;
 /**
  * Handles input related events for the {@link RebelView}.
  */
-public class GodotInputHandler implements InputDeviceListener {
+public class RebelInputHandler implements InputDeviceListener {
 	private final String tag = this.getClass().getSimpleName();
 
 	private final SparseIntArray mJoystickIds = new SparseIntArray(4);
@@ -62,7 +62,7 @@ public class GodotInputHandler implements InputDeviceListener {
 	private final RebelView rebelView;
 	private final InputManagerCompat inputManager;
 
-	public GodotInputHandler(RebelView rebelView) {
+	public RebelInputHandler(RebelView rebelView) {
 		this.rebelView = rebelView;
 		this.inputManager = InputManagerCompat.Factory.getInputManager(rebelView.getContext());
 		this.inputManager.registerInputDeviceListener(this, null);
@@ -90,9 +90,9 @@ public class GodotInputHandler implements InputDeviceListener {
 			// Check if the device exists
 			final int deviceId = event.getDeviceId();
 			if (mJoystickIds.indexOfKey(deviceId) >= 0) {
-				final int button = getGodotButton(keyCode);
-				final int godotJoyId = mJoystickIds.get(deviceId);
-				RebelEngine.joybutton(godotJoyId, button, false);
+				final int buttonId = getButtonId(keyCode);
+				final int joystickId = mJoystickIds.get(deviceId);
+				RebelEngine.joybutton(joystickId, buttonId, false);
 			}
 		} else {
 			final int scanCode = event.getScanCode();
@@ -125,9 +125,9 @@ public class GodotInputHandler implements InputDeviceListener {
 				return true;
 
 			if (mJoystickIds.indexOfKey(deviceId) >= 0) {
-				final int button = getGodotButton(keyCode);
-				final int godotJoyId = mJoystickIds.get(deviceId);
-				RebelEngine.joybutton(godotJoyId, button, true);
+				final int buttonId = getButtonId(keyCode);
+				final int joystickId = mJoystickIds.get(deviceId);
+				RebelEngine.joybutton(joystickId, buttonId, true);
 			}
 		} else {
 			final int scanCode = event.getScanCode();
@@ -183,7 +183,7 @@ public class GodotInputHandler implements InputDeviceListener {
 			// Check if the device exists
 			final int deviceId = event.getDeviceId();
 			if (mJoystickIds.indexOfKey(deviceId) >= 0) {
-				final int godotJoyId = mJoystickIds.get(deviceId);
+				final int joystickId = mJoystickIds.get(deviceId);
 				Joystick joystick = mJoysticksDevices.get(deviceId);
 
 				for (int i = 0; i < joystick.axes.size(); i++) {
@@ -191,13 +191,13 @@ public class GodotInputHandler implements InputDeviceListener {
 					final float value = event.getAxisValue(axis);
 					/**
 					 * As all axes are polled for each event, only fire an axis event if the value has actually changed.
-					 * Prevents flooding Godot with repeated events.
+					 * Prevents flooding Rebel Engine with repeated events.
 					 */
 					if (joystick.axesValues.indexOfKey(axis) < 0 || (float)joystick.axesValues.get(axis) != value) {
 						// save value to prevent repeats
 						joystick.axesValues.put(axis, value);
-						final int godotAxisIdx = i;
-						RebelEngine.joyaxis(godotJoyId, godotAxisIdx, value);
+						final int axisIndex = i;
+						RebelEngine.joyaxis(joystickId, axisIndex, value);
 					}
 				}
 
@@ -207,7 +207,7 @@ public class GodotInputHandler implements InputDeviceListener {
 					if (joystick.hatX != hatX || joystick.hatY != hatY) {
 						joystick.hatX = hatX;
 						joystick.hatY = hatY;
-						RebelEngine.joyhat(godotJoyId, hatX, hatY);
+						RebelEngine.joyhat(joystickId, hatX, hatY);
 					}
 				}
 				return true;
@@ -240,12 +240,12 @@ public class GodotInputHandler implements InputDeviceListener {
 	}
 
 	private int assignJoystickIdNumber(int deviceId) {
-		int godotJoyId = 0;
-		while (mJoystickIds.indexOfValue(godotJoyId) >= 0) {
-			godotJoyId++;
+		int joystickId = 0;
+		while (mJoystickIds.indexOfValue(joystickId) >= 0) {
+			joystickId++;
 		}
-		mJoystickIds.put(deviceId, godotJoyId);
-		return godotJoyId;
+		mJoystickIds.put(deviceId, joystickId);
+		return joystickId;
 	}
 
 	@Override
@@ -303,7 +303,7 @@ public class GodotInputHandler implements InputDeviceListener {
 		Collections.sort(joystick.axes);
 		for (int idx = 0; idx < joystick.axes.size(); idx++) {
 			//Helps with creating new joypad mappings.
-			Log.i(tag, " - Mapping Android axis " + joystick.axes.get(idx) + " to Godot axis " + idx);
+			Log.i(tag, " - Mapping Android axis " + joystick.axes.get(idx) + " to Rebel Engine axis " + idx);
 		}
 		mJoysticksDevices.put(deviceId, joystick);
 
@@ -316,10 +316,10 @@ public class GodotInputHandler implements InputDeviceListener {
 		if (mJoystickIds.indexOfKey(deviceId) < 0) {
 			return;
 		}
-		final int godotJoyId = mJoystickIds.get(deviceId);
+		final int joystickId = mJoystickIds.get(deviceId);
 		mJoystickIds.delete(deviceId);
 		mJoysticksDevices.delete(deviceId);
-		RebelEngine.joyconnectionchanged(godotJoyId, false, "");
+		RebelEngine.joyconnectionchanged(joystickId, false, "");
 	}
 
 	@Override
@@ -335,7 +335,7 @@ public class GodotInputHandler implements InputDeviceListener {
 		}
 	}
 
-	public static int getGodotButton(int keyCode) {
+	public static int getButtonId(int keyCode) {
 		int button;
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BUTTON_A: // Android A is SNES B

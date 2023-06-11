@@ -169,7 +169,7 @@ public class RebelEditText extends EditText {
 	public boolean onKeyDown(final int keyCode, final KeyEvent keyEvent) {
 		// Let SurfaceView get focus if back key is pressed
 		// Handle special key events
-		if (isSpecialKey(keyCode, keyEvent) && rebelView.getInputHandler().onKeyDown(keyCode, keyEvent)) {
+		if (isSpecialKey(keyCode, keyEvent) && rebelView.getRebelInputHandler().onKeyDown(keyCode, keyEvent)) {
 			return true;
 		} else {
 			return super.onKeyDown(keyCode, keyEvent);
@@ -178,7 +178,7 @@ public class RebelEditText extends EditText {
 
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent keyEvent) {
-		if (isSpecialKey(keyCode, keyEvent) && rebelView.getInputHandler().onKeyUp(keyCode, keyEvent)) {
+		if (isSpecialKey(keyCode, keyEvent) && rebelView.getRebelInputHandler().onKeyUp(keyCode, keyEvent)) {
 			return true;
 		} else {
 			return super.onKeyUp(keyCode, keyEvent);

@@ -30,8 +30,8 @@
 
 package com.rebeltoolbox.rebelengine;
 
-import com.rebeltoolbox.rebelengine.input.GodotInputHandler;
 import com.rebeltoolbox.rebelengine.input.RebelGestureListener;
+import com.rebeltoolbox.rebelengine.input.RebelInputHandler;
 import com.rebeltoolbox.rebelengine.utils.GLUtils;
 import com.rebeltoolbox.rebelengine.xr.XRMode;
 import com.rebeltoolbox.rebelengine.xr.ovr.OvrConfigChooser;
@@ -71,7 +71,7 @@ public class RebelView extends GLSurfaceView {
 	private static String TAG = RebelView.class.getSimpleName();
 
 	private final RebelFragment rebelFragment;
-	private final GodotInputHandler inputHandler;
+	private final RebelInputHandler rebelInputHandler;
 	private final GestureDetector gestureDetector;
 	private final RebelRenderer rebelRenderer;
 
@@ -83,7 +83,7 @@ public class RebelView extends GLSurfaceView {
 		GLUtils.use_debug_opengl = p_use_debug_opengl;
 
 		this.rebelFragment = rebelFragment;
-		this.inputHandler = new GodotInputHandler(this);
+		this.rebelInputHandler = new RebelInputHandler(this);
 		this.gestureDetector = new GestureDetector(context, new RebelGestureListener(this));
 		this.rebelRenderer = new RebelRenderer();
 
@@ -91,7 +91,7 @@ public class RebelView extends GLSurfaceView {
 	}
 
 	public void initInputDevices() {
-		this.inputHandler.initInputDevices();
+		rebelInputHandler.initInputDevices();
 	}
 
 	@SuppressLint("ClickableViewAccessibility")
@@ -99,22 +99,22 @@ public class RebelView extends GLSurfaceView {
 	public boolean onTouchEvent(MotionEvent event) {
 		super.onTouchEvent(event);
 		gestureDetector.onTouchEvent(event);
-		return inputHandler.onTouchEvent(event);
+		return rebelInputHandler.onTouchEvent(event);
 	}
 
 	@Override
 	public boolean onKeyUp(final int keyCode, KeyEvent event) {
-		return inputHandler.onKeyUp(keyCode, event) || super.onKeyUp(keyCode, event);
+		return rebelInputHandler.onKeyUp(keyCode, event) || super.onKeyUp(keyCode, event);
 	}
 
 	@Override
 	public boolean onKeyDown(final int keyCode, KeyEvent event) {
-		return inputHandler.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
+		return rebelInputHandler.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
 	}
 
 	@Override
 	public boolean onGenericMotionEvent(MotionEvent event) {
-		return inputHandler.onGenericMotionEvent(event) || super.onGenericMotionEvent(event);
+		return rebelInputHandler.onGenericMotionEvent(event) || super.onGenericMotionEvent(event);
 	}
 
 	private void init(XRMode xrMode, boolean translucent, int depth, int stencil) {
@@ -179,8 +179,8 @@ public class RebelView extends GLSurfaceView {
 		rebelFragment.onBackPressed();
 	}
 
-	public GodotInputHandler getInputHandler() {
-		return inputHandler;
+	public RebelInputHandler getRebelInputHandler() {
+		return rebelInputHandler;
 	}
 
 	@Override
