@@ -35,7 +35,6 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.android.vending.expansion.downloader.impl.DownloaderService;
-import com.rebeltoolbox.rebelengine.plugin.RebelPlugin;
 
 /**
  * This class demonstrates the minimal client implementation of the
@@ -82,6 +81,6 @@ public class RebelDownloaderService extends DownloaderService {
 	@Override
 	public String getAlarmReceiverClassName() {
 		Log.d(TAG, "getAlarmReceiverClassName()");
-		return GodotDownloaderAlarmReceiver.class.getName();
+		return RebelDownloaderReceiver.class.getName();
 	}
 }

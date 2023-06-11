@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotDownloaderAlarmReceiver.java                                    */
+/*  RebelDownloaderReceiver.java                                         */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -43,17 +43,19 @@ import com.google.android.vending.expansion.downloader.DownloaderClientMarshalle
  * from the alarm service using the provided service helper function within the
  * DownloaderClientMarshaller. This class must be then registered in your AndroidManifest.xml
  * file with a section like this:
- *         <receiver android:name=".GodotDownloaderAlarmReceiver"/>
+ *         <receiver android:name=".RebelDownloaderReceiver"/>
  */
-public class GodotDownloaderAlarmReceiver extends BroadcastReceiver {
+public class RebelDownloaderReceiver extends BroadcastReceiver {
+	private static final String TAG = RebelDownloaderReceiver.class.getSimpleName();
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.d("GODOT", "Alarma recivida");
+		Log.d(TAG, "Rebel Downloader Alarm received");
 		try {
 			DownloaderClientMarshaller.startDownloadServiceIfRequired(context, intent, RebelDownloaderService.class);
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
-			Log.d("GODOT", "Exception: " + e.getClass().getName() + ":" + e.getMessage());
+			Log.d(TAG, "Exception: " + e.getClass().getName() + ":" + e.getMessage());
 		}
 	}
 }
