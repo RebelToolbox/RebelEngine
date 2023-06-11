@@ -55,9 +55,9 @@ public abstract class RebelActivity extends FragmentActivity implements RebelHos
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.godot_app_layout);
+		setContentView(R.layout.rebel_fragment);
 
-		Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.godot_fragment_container);
+		Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.rebel_fragment);
 		if (currentFragment instanceof RebelFragment) {
 			Log.v(TAG, "Reusing existing Rebel Fragment.");
 			rebelFragment = (RebelFragment)currentFragment;
@@ -65,7 +65,7 @@ public abstract class RebelActivity extends FragmentActivity implements RebelHos
 			Log.v(TAG, "Creating new Rebel Fragment.");
 			rebelFragment = createRebelFragment();
 
-			getSupportFragmentManager().beginTransaction().replace(R.id.godot_fragment_container, rebelFragment).setPrimaryNavigationFragment(rebelFragment).commitNowAllowingStateLoss();
+			getSupportFragmentManager().beginTransaction().replace(R.id.rebel_fragment, rebelFragment).setPrimaryNavigationFragment(rebelFragment).commitNowAllowingStateLoss();
 		}
 	}
 
