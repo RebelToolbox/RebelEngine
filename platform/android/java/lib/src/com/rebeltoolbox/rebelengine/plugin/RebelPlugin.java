@@ -138,8 +138,8 @@ public abstract class RebelPlugin {
 
 		Method[] methods = clazz.getDeclaredMethods();
 		for (Method method : methods) {
-			// Check if the method is annotated with {@link UsedByGodot}.
-			if (method.getAnnotation(UsedByGodot.class) != null) {
+			// Check if the method is annotated with {@link UsedByRebel}.
+			if (method.getAnnotation(UsedByRebel.class) != null) {
 				filteredMethods.add(method);
 			} else {
 				// For backward compatibility, process the methods from the given <pluginMethods> argument.
@@ -267,9 +267,9 @@ public abstract class RebelPlugin {
 	public abstract String getPluginName();
 
 	/**
-	 * Returns the list of methods to be exposed to Godot.
+	 * Returns the list of methods to be exposed to Rebel Engine.
 	 *
-	 * @deprecated Used the {@link UsedByGodot} annotation instead.
+	 * @deprecated Use the {@link UsedByRebel} annotation instead.
 	 */
 	@NonNull
 	@Deprecated
@@ -278,7 +278,7 @@ public abstract class RebelPlugin {
 	}
 
 	/**
-	 * Returns the list of signals to be exposed to Godot.
+	 * Returns the list of signals to be exposed to Rebel Engine.
 	 */
 	@NonNull
 	public Set<SignalInfo> getPluginSignals() {

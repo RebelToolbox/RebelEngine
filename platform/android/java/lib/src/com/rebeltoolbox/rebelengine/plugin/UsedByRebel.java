@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  UsedByGodot.java                                                     */
+/*  UsedByRebel.java                                                     */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -36,10 +36,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to indicate a method is being invoked from the Godot game logic.
+ * Annotation to indicate a method is being invoked by the Rebel Engine.
  *
  * At runtime, annotated plugin methods are detected and automatically registered.
  */
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UsedByGodot {}
+public @interface UsedByRebel {}
