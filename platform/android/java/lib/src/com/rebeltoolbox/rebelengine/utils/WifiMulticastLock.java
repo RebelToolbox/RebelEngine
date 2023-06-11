@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotNetUtils.java                                                   */
+/*  WifiMulticastLock.java                                               */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -35,26 +35,23 @@ import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
-/**
- * This class handles Android-specific networking functions.
- * For now, it only provides access to WifiManager.MulticastLock, which is needed on some devices
- * to receive broadcast and multicast packets.
- */
-public class GodotNetUtils {
+public class WifiMulticastLock {
 	/* A single, reference counted, multicast lock, or null if permission CHANGE_WIFI_MULTICAST_STATE is missing */
+	private static final String TAG = WifiMulticastLock.class.getSimpleName();
+
 	private WifiManager.MulticastLock multicastLock;
 
-	public GodotNetUtils(Activity p_activity) {
+	public WifiMulticastLock(Activity p_activity) {
 		if (PermissionsUtil.hasManifestPermission(p_activity, "android.permission.CHANGE_WIFI_MULTICAST_STATE")) {
 			WifiManager wifi = (WifiManager)p_activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-			multicastLock = wifi.createMulticastLock("GodotMulticastLock");
+			multicastLock = wifi.createMulticastLock(TAG);
 			multicastLock.setReferenceCounted(true);
 		}
 	}
 
 	/**
 	 * Acquire the multicast lock. This is required on some devices to receive broadcast/multicast packets.
-	 * This is done automatically by Godot when enabling broadcast or joining a multicast group on a socket.
+	 * This is done automatically when enabling broadcast or joining a multicast group on a socket.
 	 */
 	public void multicastLockAcquire() {
 		if (multicastLock == null)
@@ -62,13 +59,13 @@ public class GodotNetUtils {
 		try {
 			multicastLock.acquire();
 		} catch (RuntimeException e) {
-			Log.e("Godot", "Exception during multicast lock acquire: " + e);
+			Log.e(TAG, "Exception during multicast lock acquire: " + e);
 		}
 	}
 
 	/**
 	 * Release the multicast lock.
-	 * This is done automatically by Godot when the lock is no longer needed by a socket.
+	 * This is done automatically when the lock is no longer needed by a socket.
 	 */
 	public void multicastLockRelease() {
 		if (multicastLock == null)
@@ -76,7 +73,7 @@ public class GodotNetUtils {
 		try {
 			multicastLock.release();
 		} catch (RuntimeException e) {
-			Log.e("Godot", "Exception during multicast lock release: " + e);
+			Log.e(TAG, "Exception during multicast lock release: " + e);
 		}
 	}
 }

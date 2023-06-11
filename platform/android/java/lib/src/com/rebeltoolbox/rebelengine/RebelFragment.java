@@ -36,8 +36,8 @@ import static android.content.Context.WINDOW_SERVICE;
 import com.rebeltoolbox.rebelengine.input.RebelEditText;
 import com.rebeltoolbox.rebelengine.plugin.RebelPlugin;
 import com.rebeltoolbox.rebelengine.plugin.RebelPluginRegistry;
-import com.rebeltoolbox.rebelengine.utils.GodotNetUtils;
 import com.rebeltoolbox.rebelengine.utils.PermissionsUtil;
+import com.rebeltoolbox.rebelengine.utils.WifiMulticastLock;
 import com.rebeltoolbox.rebelengine.xr.XRMode;
 
 import android.annotation.SuppressLint;
@@ -251,7 +251,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	private Sensor mGyroscope;
 
 	public static RebelIO io;
-	public static GodotNetUtils netUtils;
+	public static WifiMulticastLock wifiMulticastLock;
 
 	static SingletonBase[] singletons = new SingletonBase[MAX_SINGLETONS];
 	static int singleton_count = 0;
@@ -559,7 +559,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		final Activity activity = getActivity();
 		io = new RebelIO(activity);
 		RebelEngine.io = io;
-		netUtils = new GodotNetUtils(activity);
+		wifiMulticastLock = new WifiMulticastLock(activity);
 		mSensorManager = (SensorManager)activity.getSystemService(Context.SENSOR_SERVICE);
 		mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
