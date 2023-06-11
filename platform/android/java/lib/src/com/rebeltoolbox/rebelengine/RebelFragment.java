@@ -34,8 +34,8 @@ import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.WINDOW_SERVICE;
 
 import com.rebeltoolbox.rebelengine.input.RebelEditText;
-import com.rebeltoolbox.rebelengine.plugin.GodotPluginRegistry;
 import com.rebeltoolbox.rebelengine.plugin.RebelPlugin;
+import com.rebeltoolbox.rebelengine.plugin.RebelPluginRegistry;
 import com.rebeltoolbox.rebelengine.utils.GodotNetUtils;
 import com.rebeltoolbox.rebelengine.utils.PermissionsUtil;
 import com.rebeltoolbox.rebelengine.xr.XRMode;
@@ -138,7 +138,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
 
 	private RebelHost rebelHost;
-	private GodotPluginRegistry pluginRegistry;
+	private RebelPluginRegistry rebelPluginRegistry;
 
 	static private Intent mCurrentIntent;
 
@@ -289,7 +289,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		for (int i = 0; i < singleton_count; i++) {
 			singletons[i].onMainActivityResult(requestCode, resultCode, data);
 		}
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			rebelPlugin.onMainActivityResult(requestCode, resultCode, data);
 		}
 	}
@@ -301,7 +301,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		for (int i = 0; i < singleton_count; i++) {
 			singletons[i].onMainRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			rebelPlugin.onMainRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 
@@ -315,7 +315,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	 */
 	@CallSuper
 	protected void onGodotSetupCompleted() {
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			rebelPlugin.onGodotSetupCompleted();
 		}
 
@@ -329,7 +329,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	 */
 	@CallSuper
 	protected void onGodotMainLoopStarted() {
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			rebelPlugin.onGodotMainLoopStarted();
 		}
 
@@ -375,7 +375,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 			RebelEngine.setup(current_command_line);
 
 			// Must occur after RebelEngine.setup has completed.
-			for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+			for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 				rebelPlugin.onRegisterPluginWithGodotNative();
 			}
 			setKeepScreenOn("True".equals(RebelEngine.getGlobal("display/window/energy_saving/keep_screen_on")));
@@ -393,7 +393,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		});
 
 		// Include all the non-null views.
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			View pluginView = rebelPlugin.onMainCreate(activity);
 			if (pluginView != null) {
 				if (rebelPlugin.shouldBeOnTop()) {
@@ -591,7 +591,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		Window window = activity.getWindow();
 		window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 		mClipboard = (ClipboardManager)activity.getSystemService(Context.CLIPBOARD_SERVICE);
-		pluginRegistry = GodotPluginRegistry.initializePluginRegistry(this);
+		rebelPluginRegistry = RebelPluginRegistry.initialize(this);
 
 		// check for apk expansion API
 		boolean md5mismatch = false;
@@ -741,7 +741,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		for (int i = 0; i < singleton_count; i++) {
 			singletons[i].onMainDestroy();
 		}
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			rebelPlugin.onMainDestroy();
 		}
 
@@ -770,7 +770,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		for (int i = 0; i < singleton_count; i++) {
 			singletons[i].onMainPause();
 		}
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			rebelPlugin.onMainPause();
 		}
 	}
@@ -822,7 +822,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		for (int i = 0; i < singleton_count; i++) {
 			singletons[i].onMainResume();
 		}
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			rebelPlugin.onMainResume();
 		}
 	}
@@ -915,7 +915,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 				shouldQuit = false;
 			}
 		}
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			if (rebelPlugin.onMainBackPressed()) {
 				shouldQuit = false;
 			}

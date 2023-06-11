@@ -30,8 +30,8 @@
 
 package com.rebeltoolbox.rebelengine;
 
-import com.rebeltoolbox.rebelengine.plugin.GodotPluginRegistry;
 import com.rebeltoolbox.rebelengine.plugin.RebelPlugin;
+import com.rebeltoolbox.rebelengine.plugin.RebelPluginRegistry;
 import com.rebeltoolbox.rebelengine.utils.GLUtils;
 
 import android.opengl.GLSurfaceView;
@@ -40,11 +40,11 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 class RebelRenderer implements GLSurfaceView.Renderer {
-	private final GodotPluginRegistry pluginRegistry;
+	private final RebelPluginRegistry rebelPluginRegistry;
 	private boolean activityJustResumed = false;
 
 	RebelRenderer() {
-		this.pluginRegistry = GodotPluginRegistry.getPluginRegistry();
+		this.rebelPluginRegistry = RebelPluginRegistry.getPluginRegistry();
 	}
 
 	public void onDrawFrame(GL10 gl) {
@@ -57,7 +57,7 @@ class RebelRenderer implements GLSurfaceView.Renderer {
 		for (int i = 0; i < RebelFragment.singleton_count; i++) {
 			RebelFragment.singletons[i].onGLDrawFrame(gl);
 		}
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			rebelPlugin.onGLDrawFrame(gl);
 		}
 	}
@@ -67,14 +67,14 @@ class RebelRenderer implements GLSurfaceView.Renderer {
 		for (int i = 0; i < RebelFragment.singleton_count; i++) {
 			RebelFragment.singletons[i].onGLSurfaceChanged(gl, width, height);
 		}
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			rebelPlugin.onGLSurfaceChanged(gl, width, height);
 		}
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		RebelEngine.newcontext(GLUtils.use_32);
-		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
 			rebelPlugin.onGLSurfaceCreated(gl, config);
 		}
 	}

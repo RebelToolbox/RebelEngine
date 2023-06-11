@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotPluginRegistry.java                                             */
+/*  RebelPluginRegistry.java                                             */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -47,17 +47,17 @@ import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Registry used to load and access the registered Godot Android plugins.
+ * Registry used to load and access the registered Rebel plugins.
  */
-public final class GodotPluginRegistry {
-	private static final String TAG = GodotPluginRegistry.class.getSimpleName();
+public final class RebelPluginRegistry {
+	private static final String TAG = RebelPluginRegistry.class.getSimpleName();
 
 	private static final String META_DATA_NAME_PREFIX = "rebel.plugin.";
 
-	private static GodotPluginRegistry instance;
+	private static RebelPluginRegistry instance;
 	private final ConcurrentHashMap<String, RebelPlugin> registry;
 
-	private GodotPluginRegistry(RebelFragment rebelFragment) {
+	private RebelPluginRegistry(RebelFragment rebelFragment) {
 		registry = new ConcurrentHashMap<>();
 		loadPlugins(rebelFragment);
 	}
@@ -75,23 +75,23 @@ public final class GodotPluginRegistry {
 	/**
 	 * Retrieve the full set of loaded plugins.
 	 */
-	public Collection<RebelPlugin> getAllPlugins() {
+	public Collection<RebelPlugin> getAllRebelPlugins() {
 		return registry.values();
 	}
 
 	/**
-	 * Parse the manifest file and load all included Godot Android plugins.
+	 * Parse the manifest file and load all included Rebel plugins.
 	 * <p>
 	 * A plugin manifest entry is a '<meta-data>' tag setup as described in the {@link RebelPlugin}
 	 * documentation.
 	 *
 	 * @param rebelFragment Rebel Fragment
-	 * @return A singleton instance of {@link GodotPluginRegistry}. This ensures that only one instance
-	 * of each Godot Android plugins is available at runtime.
+	 * @return A singleton instance of {@link RebelPluginRegistry}. This ensures that only one instance
+	 * of each Rebel plugin is available at runtime.
 	 */
-	public static GodotPluginRegistry initializePluginRegistry(RebelFragment rebelFragment) {
+	public static RebelPluginRegistry initialize(RebelFragment rebelFragment) {
 		if (instance == null) {
-			instance = new GodotPluginRegistry(rebelFragment);
+			instance = new RebelPluginRegistry(rebelFragment);
 		}
 
 		return instance;
@@ -101,9 +101,9 @@ public final class GodotPluginRegistry {
 	 * Return the plugin registry if it's initialized.
 	 * Throws a {@link IllegalStateException} exception if not.
 	 *
-	 * @throws IllegalStateException if {@link GodotPluginRegistry#initializePluginRegistry(RebelFragment)} has not been called prior to calling this method.
+	 * @throws IllegalStateException if {@link RebelPluginRegistry#initialize(RebelFragment)} has not been called prior to calling this method.
 	 */
-	public static GodotPluginRegistry getPluginRegistry() throws IllegalStateException {
+	public static RebelPluginRegistry getPluginRegistry() throws IllegalStateException {
 		if (instance == null) {
 			throw new IllegalStateException("Plugin registry hasn't been initialized.");
 		}
