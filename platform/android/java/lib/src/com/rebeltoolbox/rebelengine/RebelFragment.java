@@ -34,8 +34,8 @@ import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.WINDOW_SERVICE;
 
 import com.rebeltoolbox.rebelengine.input.RebelEditText;
-import com.rebeltoolbox.rebelengine.plugin.GodotPlugin;
 import com.rebeltoolbox.rebelengine.plugin.GodotPluginRegistry;
+import com.rebeltoolbox.rebelengine.plugin.RebelPlugin;
 import com.rebeltoolbox.rebelengine.utils.GodotNetUtils;
 import com.rebeltoolbox.rebelengine.utils.PermissionsUtil;
 import com.rebeltoolbox.rebelengine.xr.XRMode;
@@ -165,7 +165,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 	static public class SingletonBase {
 		protected void registerClass(String p_name, String[] p_methods) {
-			GodotPlugin.nativeRegisterSingleton(p_name, this);
+			RebelPlugin.nativeRegisterSingleton(p_name, this);
 
 			Class clazz = getClass();
 			Method[] methods = clazz.getDeclaredMethods();
@@ -191,7 +191,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 				String[] pt = new String[ptr.size()];
 				ptr.toArray(pt);
 
-				GodotPlugin.nativeRegisterMethod(p_name, method.getName(), method.getReturnType().getName(), pt);
+				RebelPlugin.nativeRegisterMethod(p_name, method.getName(), method.getReturnType().getName(), pt);
 			}
 
 			RebelFragment.singletons[RebelFragment.singleton_count++] = this;
@@ -289,8 +289,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		for (int i = 0; i < singleton_count; i++) {
 			singletons[i].onMainActivityResult(requestCode, resultCode, data);
 		}
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
-			plugin.onMainActivityResult(requestCode, resultCode, data);
+		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+			rebelPlugin.onMainActivityResult(requestCode, resultCode, data);
 		}
 	}
 
@@ -301,8 +301,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		for (int i = 0; i < singleton_count; i++) {
 			singletons[i].onMainRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
-			plugin.onMainRequestPermissionsResult(requestCode, permissions, grantResults);
+		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+			rebelPlugin.onMainRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 
 		for (int i = 0; i < permissions.length; i++) {
@@ -315,8 +315,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	 */
 	@CallSuper
 	protected void onGodotSetupCompleted() {
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
-			plugin.onGodotSetupCompleted();
+		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+			rebelPlugin.onGodotSetupCompleted();
 		}
 
 		if (rebelHost != null) {
@@ -329,8 +329,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	 */
 	@CallSuper
 	protected void onGodotMainLoopStarted() {
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
-			plugin.onGodotMainLoopStarted();
+		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+			rebelPlugin.onGodotMainLoopStarted();
 		}
 
 		if (rebelHost != null) {
@@ -375,14 +375,14 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 			RebelEngine.setup(current_command_line);
 
 			// Must occur after RebelEngine.setup has completed.
-			for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
-				plugin.onRegisterPluginWithGodotNative();
+			for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+				rebelPlugin.onRegisterPluginWithGodotNative();
 			}
 			setKeepScreenOn("True".equals(RebelEngine.getGlobal("display/window/energy_saving/keep_screen_on")));
 
-			// The Godot Android plugins are setup on completion of RebelEngine.setup
+			// The Rebel Plugins are setup on completion of RebelEngine.setup
 			mainThreadHandler.post(() -> {
-				// Include the non-null views returned in the Godot view hierarchy.
+				// Include all the non-null views.
 				for (int i = 0; i < singleton_count; i++) {
 					View view = singletons[i].onMainCreateView(activity);
 					if (view != null) {
@@ -392,11 +392,11 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 			});
 		});
 
-		// Include the returned non-null views in the Godot view hierarchy.
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
-			View pluginView = plugin.onMainCreate(activity);
+		// Include all the non-null views.
+		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+			View pluginView = rebelPlugin.onMainCreate(activity);
 			if (pluginView != null) {
-				if (plugin.shouldBeOnTop()) {
+				if (rebelPlugin.shouldBeOnTop()) {
 					containerLayout.addView(pluginView);
 				} else {
 					containerLayout.addView(pluginView, 0);
@@ -741,8 +741,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		for (int i = 0; i < singleton_count; i++) {
 			singletons[i].onMainDestroy();
 		}
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
-			plugin.onMainDestroy();
+		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+			rebelPlugin.onMainDestroy();
 		}
 
 		RebelEngine.ondestroy();
@@ -770,8 +770,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		for (int i = 0; i < singleton_count; i++) {
 			singletons[i].onMainPause();
 		}
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
-			plugin.onMainPause();
+		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+			rebelPlugin.onMainPause();
 		}
 	}
 
@@ -822,8 +822,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		for (int i = 0; i < singleton_count; i++) {
 			singletons[i].onMainResume();
 		}
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
-			plugin.onMainResume();
+		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+			rebelPlugin.onMainResume();
 		}
 	}
 
@@ -915,8 +915,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 				shouldQuit = false;
 			}
 		}
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
-			if (plugin.onMainBackPressed()) {
+		for (RebelPlugin rebelPlugin : pluginRegistry.getAllPlugins()) {
+			if (rebelPlugin.onMainBackPressed()) {
 				shouldQuit = false;
 			}
 		}

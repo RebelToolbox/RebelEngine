@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotPlugin.java                                                     */
+/*  RebelPlugin.java                                                     */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -57,35 +57,33 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 /**
- * Base class for the Godot Android plugins.
+ * Base class for the Rebel plugins.
  * <p>
- * A Godot Android plugin is a regular Android library packaged as an aar archive file with the following caveats:
+ * A Rebel plugin is a regular Android library packaged as an aar archive file with the following caveats:
  * <p>
- * - The library must have a dependency on the Godot Android library (godot-lib.aar).
+ * - The library must have a dependency on the Rebel Android library (rebel-lib.aar).
  * A stable version is available for each release.
  * <p>
  * - The library must include a <meta-data> tag in its manifest file setup as follow:
- * <meta-data android:name="org.godotengine.plugin.v1.[PluginName]" android:value="[plugin.init.ClassFullName]" />
+ * <meta-data android:name="rebel.plugin.[PluginName]" android:value="[Plugin.Class.Name]" />
  * Where:
- * - 'PluginName' is the name of the plugin.
- * - 'plugin.init.ClassFullName' is the full name (package + class name) of the plugin class
- * extending {@link GodotPlugin}.
+ * - 'PluginName' is the name of the Rebel plugin.
+ * - 'Plugin.Class.Name' is the full name (package + class name) of the plugin class that
+ * extends {@link RebelPlugin}.
  *
  * A plugin can also define and provide c/c++ gdnative libraries and nativescripts for the target
  * app/game to leverage.
  * The shared library for the gdnative library will be automatically bundled by the aar build
  * system.
- * Godot '*.gdnlib' and '*.gdns' resource files must however be manually defined in the project
- * 'assets' directory. The recommended path for these resources in the 'assets' directory should be:
- * 'godot/plugin/v1/[PluginName]/'
+ * '*.gdnlib' and '*.gdns' resource files must however be manually defined in the project.
  */
-public abstract class GodotPlugin {
-	private static final String TAG = GodotPlugin.class.getSimpleName();
+public abstract class RebelPlugin {
+	private static final String TAG = RebelPlugin.class.getSimpleName();
 
 	private final RebelFragment rebelFragment;
 	private final ConcurrentHashMap<String, SignalInfo> registeredSignals = new ConcurrentHashMap<>();
 
-	public GodotPlugin(RebelFragment rebelFragment) {
+	public RebelPlugin(RebelFragment rebelFragment) {
 		this.rebelFragment = rebelFragment;
 	}
 
@@ -188,11 +186,11 @@ public abstract class GodotPlugin {
 	 * Invoked once during the Rebel Engine initialization process after creation of the
 	 * {@link RebelView}.
 	 * <p>
-	 * The plugin can return a non-null {@link View} layout in order to add it to the Godot view
+	 * The plugin can return a non-null {@link View} layout in order to add it to the view
 	 * hierarchy.
 	 *
 	 * Use shouldBeOnTop() to set whether the plugin's {@link View} should be added on top or behind
-	 * the main Godot view.
+	 * the main view.
 	 *
 	 * @see Activity#onCreate(Bundle)
 	 * @return the plugin's view to be included; null if no views should be included.
@@ -299,10 +297,10 @@ public abstract class GodotPlugin {
 
 	/**
 	 * Returns whether the plugin's {@link View} returned in onMainCreate() should be placed on
-	 * top of the main Godot view.
+	 * top of the main view.
 	 *
 	 * Returning false causes the plugin's {@link View} to be placed behind, which can be useful
-	 * when used with transparency in order to let the Godot view handle inputs.
+	 * when used with transparency in order to let the main view handle inputs.
 	 */
 	public boolean shouldBeOnTop() {
 		return true;
@@ -329,7 +327,7 @@ public abstract class GodotPlugin {
 	}
 
 	/**
-	 * Emit a registered Godot signal.
+	 * Emit a registered signal.
 	 * @param signalName Name of the signal to emit. It will be validated against the set of registered signals.
 	 * @param signalArgs Arguments used to populate the emitted signal. The arguments will be validated against the {@link SignalInfo} matching the registered signalName parameter.
 	 */
@@ -351,9 +349,10 @@ public abstract class GodotPlugin {
 	}
 
 	/**
-	 * Emit a Godot signal.
+	 * Emit a signal.
 	 * @param rebelFragment
-	 * @param pluginName Name of the Godot plugin the signal will be emitted from. The plugin must already be registered with the Godot engine.
+	 * @param pluginName Name of the Rebel plugin the signal will be emitted from.
+	 *                   The plugin must already be registered with the Rebel Engine.
 	 * @param signalInfo Information about the signal to emit.
 	 * @param signalArgs Arguments used to populate the emitted signal. The arguments will be validated against the given {@link SignalInfo} parameter.
 	 */
@@ -389,13 +388,13 @@ public abstract class GodotPlugin {
 	}
 
 	/**
-	 * Used to setup a {@link GodotPlugin} instance.
+	 * Used to setup a {@link RebelPlugin} instance.
 	 * @param p_name Name of the instance.
 	 */
 	public static native void nativeRegisterSingleton(String p_name, Object object);
 
 	/**
-	 * Used to complete registration of the {@link GodotPlugin} instance's methods.
+	 * Used to complete registration of the {@link RebelPlugin} instance's methods.
 	 * @param p_sname Name of the instance
 	 * @param p_name Name of the method to register
 	 * @param p_ret Return type of the registered method
@@ -410,7 +409,7 @@ public abstract class GodotPlugin {
 	private static native void nativeRegisterGDNativeLibraries(String[] gdnlibPaths);
 
 	/**
-	 * Used to complete registration of the {@link GodotPlugin} instance's methods.
+	 * Used to complete registration of the {@link RebelPlugin} instance's methods.
 	 * @param pluginName Name of the plugin
 	 * @param signalName Name of the signal to register
 	 * @param signalParamTypes Signal parameters types
@@ -418,7 +417,7 @@ public abstract class GodotPlugin {
 	private static native void nativeRegisterSignal(String pluginName, String signalName, String[] signalParamTypes);
 
 	/**
-	 * Used to emit signal by {@link GodotPlugin} instance.
+	 * Used to emit signal by {@link RebelPlugin} instance.
 	 * @param pluginName Name of the plugin
 	 * @param signalName Name of the signal to emit
 	 * @param signalParams Signal parameters

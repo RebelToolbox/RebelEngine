@@ -52,10 +52,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class GodotPluginRegistry {
 	private static final String TAG = GodotPluginRegistry.class.getSimpleName();
 
-	private static final String GODOT_PLUGIN_V1_NAME_PREFIX = "org.godotengine.plugin.v1.";
+	private static final String META_DATA_NAME_PREFIX = "rebel.plugin.";
 
 	private static GodotPluginRegistry instance;
-	private final ConcurrentHashMap<String, GodotPlugin> registry;
+	private final ConcurrentHashMap<String, RebelPlugin> registry;
 
 	private GodotPluginRegistry(RebelFragment rebelFragment) {
 		registry = new ConcurrentHashMap<>();
@@ -65,24 +65,24 @@ public final class GodotPluginRegistry {
 	/**
 	 * Retrieve the plugin tied to the given plugin name.
 	 * @param pluginName Name of the plugin
-	 * @return {@link GodotPlugin} handle if it exists, null otherwise.
+	 * @return {@link RebelPlugin} handle if it exists, null otherwise.
 	 */
 	@Nullable
-	public GodotPlugin getPlugin(String pluginName) {
+	public RebelPlugin getPlugin(String pluginName) {
 		return registry.get(pluginName);
 	}
 
 	/**
 	 * Retrieve the full set of loaded plugins.
 	 */
-	public Collection<GodotPlugin> getAllPlugins() {
+	public Collection<RebelPlugin> getAllPlugins() {
 		return registry.values();
 	}
 
 	/**
 	 * Parse the manifest file and load all included Godot Android plugins.
 	 * <p>
-	 * A plugin manifest entry is a '<meta-data>' tag setup as described in the {@link GodotPlugin}
+	 * A plugin manifest entry is a '<meta-data>' tag setup as described in the {@link RebelPlugin}
 	 * documentation.
 	 *
 	 * @param rebelFragment Rebel Fragment
@@ -123,12 +123,11 @@ public final class GodotPluginRegistry {
 				return;
 			}
 
-			int godotPluginV1NamePrefixLength = GODOT_PLUGIN_V1_NAME_PREFIX.length();
 			for (String metaDataName : metaData.keySet()) {
-				// Parse the meta-data looking for entry with the Godot plugin name prefix.
-				if (metaDataName.startsWith(GODOT_PLUGIN_V1_NAME_PREFIX)) {
-					String pluginName = metaDataName.substring(godotPluginV1NamePrefixLength).trim();
-					Log.i(TAG, "Initializing Godot plugin " + pluginName);
+				// Parse the meta-data looking for entry with the Rebel Plugin name prefix.
+				if (metaDataName.startsWith(META_DATA_NAME_PREFIX)) {
+					String rebelPluginName = metaDataName.substring(META_DATA_NAME_PREFIX.length()).trim();
+					Log.i(TAG, "Initializing Rebel plugin " + rebelPluginName);
 
 					// Retrieve the plugin class full name.
 					String pluginHandleClassFullName = metaData.getString(metaDataName);
@@ -136,37 +135,31 @@ public final class GodotPluginRegistry {
 						try {
 							// Attempt to create the plugin init class via reflection.
 							@SuppressWarnings("unchecked")
-							Class<GodotPlugin> pluginClass = (Class<GodotPlugin>)Class
+							Class<RebelPlugin> pluginClass = (Class<RebelPlugin>)Class
 																	 .forName(pluginHandleClassFullName);
-							Constructor<GodotPlugin> pluginConstructor = pluginClass
+							Constructor<RebelPlugin> pluginConstructor = pluginClass
 																				 .getConstructor(RebelFragment.class);
-							GodotPlugin pluginHandle = pluginConstructor.newInstance(rebelFragment);
+							RebelPlugin rebelPlugin = pluginConstructor.newInstance(rebelFragment);
 
 							// Load the plugin initializer into the registry using the plugin name as key.
-							if (!pluginName.equals(pluginHandle.getPluginName())) {
+							if (!rebelPluginName.equals(rebelPlugin.getPluginName())) {
 								Log.w(TAG,
-										"Meta-data plugin name does not match the value returned by the plugin handle: " + pluginName + " =/= " + pluginHandle.getPluginName());
+										"Meta-data plugin name does not match the value returned by the plugin handle: " + rebelPluginName + " =/= " + rebelPlugin.getPluginName());
 							}
-							registry.put(pluginName, pluginHandle);
-							Log.i(TAG, "Completed initialization for Godot plugin " + pluginHandle.getPluginName());
-						} catch (ClassNotFoundException e) {
-							Log.w(TAG, "Unable to load Godot plugin " + pluginName, e);
-						} catch (IllegalAccessException e) {
-							Log.w(TAG, "Unable to load Godot plugin " + pluginName, e);
-						} catch (InstantiationException e) {
-							Log.w(TAG, "Unable to load Godot plugin " + pluginName, e);
-						} catch (NoSuchMethodException e) {
-							Log.w(TAG, "Unable to load Godot plugin " + pluginName, e);
-						} catch (InvocationTargetException e) {
-							Log.w(TAG, "Unable to load Godot plugin " + pluginName, e);
+							registry.put(rebelPluginName, rebelPlugin);
+							Log.i(TAG, "Completed initialization for Rebel plugin " + rebelPluginName);
+						} catch (ClassNotFoundException | IllegalAccessException |
+								InstantiationException | NoSuchMethodException |
+								InvocationTargetException e) {
+							Log.w(TAG, "Unable to load Rebel plugin " + rebelPluginName, e);
 						}
 					} else {
-						Log.w(TAG, "Invalid plugin loader class for " + pluginName);
+						Log.w(TAG, "Invalid plugin loader class for " + rebelPluginName);
 					}
 				}
 			}
 		} catch (PackageManager.NameNotFoundException e) {
-			Log.e(TAG, "Unable load Godot Android plugins from the manifest file.", e);
+			Log.e(TAG, "Unable load Rebel plugins from the manifest file.", e);
 		}
 	}
 }

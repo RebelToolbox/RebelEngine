@@ -37,7 +37,7 @@ import androidx.annotation.NonNull;
 import java.util.Arrays;
 
 /**
- * Store information about a {@link GodotPlugin}'s signal.
+ * Store information about a {@link RebelPlugin}'s signal.
  */
 public final class SignalInfo {
 	private final String name;
