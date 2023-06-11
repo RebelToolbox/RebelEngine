@@ -32,8 +32,8 @@ package com.rebeltoolbox.rebelengine.input;
 
 import static com.rebeltoolbox.rebelengine.utils.GLUtils.DEBUG;
 
-import com.rebeltoolbox.rebelengine.GodotView;
 import com.rebeltoolbox.rebelengine.RebelEngine;
+import com.rebeltoolbox.rebelengine.RebelView;
 import com.rebeltoolbox.rebelengine.input.InputManagerCompat.InputDeviceListener;
 
 import android.os.Build;
@@ -51,7 +51,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Handles input related events for the {@link GodotView} view.
+ * Handles input related events for the {@link RebelView}.
  */
 public class GodotInputHandler implements InputDeviceListener {
 	private final String tag = this.getClass().getSimpleName();
@@ -59,12 +59,12 @@ public class GodotInputHandler implements InputDeviceListener {
 	private final SparseIntArray mJoystickIds = new SparseIntArray(4);
 	private final SparseArray<Joystick> mJoysticksDevices = new SparseArray<>(4);
 
-	private final GodotView godotView;
+	private final RebelView rebelView;
 	private final InputManagerCompat inputManager;
 
-	public GodotInputHandler(GodotView godotView) {
-		this.godotView = godotView;
-		this.inputManager = InputManagerCompat.Factory.getInputManager(godotView.getContext());
+	public GodotInputHandler(RebelView rebelView) {
+		this.rebelView = rebelView;
+		this.inputManager = InputManagerCompat.Factory.getInputManager(rebelView.getContext());
 		this.inputManager.registerInputDeviceListener(this, null);
 	}
 
@@ -105,7 +105,7 @@ public class GodotInputHandler implements InputDeviceListener {
 
 	public boolean onKeyDown(final int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			godotView.onBackPressed();
+			rebelView.onBackPressed();
 			// press 'back' button should not terminate program
 			//normal handle 'back' event in game logic
 			return true;
@@ -153,7 +153,7 @@ public class GodotInputHandler implements InputDeviceListener {
 		if (evcount == 0)
 			return true;
 
-		if (godotView != null) {
+		if (rebelView != null) {
 			final float[] arr = new float[event.getPointerCount() * 3]; // pointerId1, x1, y1, pointerId2, etc...
 
 			for (int i = 0; i < event.getPointerCount(); i++) {

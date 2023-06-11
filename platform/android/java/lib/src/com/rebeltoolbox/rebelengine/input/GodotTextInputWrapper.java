@@ -50,7 +50,7 @@ public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListene
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	private final GodotView mView;
+	private final RebelView rebelView;
 	private final GodotEditText mEdit;
 	private String mOriginText;
 	private boolean mHasSelection;
@@ -59,8 +59,8 @@ public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListene
 	// Constructors
 	// ===========================================================
 
-	public GodotTextInputWrapper(final GodotView view, final GodotEditText edit) {
-		this.mView = view;
+	public GodotTextInputWrapper(final RebelView rebelView, final GodotEditText edit) {
+		this.rebelView = rebelView;
 		this.mEdit = edit;
 	}
 
@@ -138,11 +138,11 @@ public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListene
 
 		if (pActionID == EditorInfo.IME_ACTION_DONE) {
 			// Enter key has been pressed
-			mView.queueEvent(() -> {
+			rebelView.queueEvent(() -> {
 				RebelEngine.key(KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_ENTER, 0, true);
 				RebelEngine.key(KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_ENTER, 0, false);
 			});
-			mView.requestFocus();
+			rebelView.requestFocus();
 			return true;
 		}
 		return false;

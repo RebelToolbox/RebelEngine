@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotView.java                                                       */
+/*  RebelView.java                                                       */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -67,15 +67,15 @@ import android.view.MotionEvent;
  *   that matches it exactly (with regards to red/green/blue/alpha channels
  *   bit depths). Failure to do so would result in an EGL_BAD_MATCH error.
  */
-public class GodotView extends GLSurfaceView {
-	private static String TAG = GodotView.class.getSimpleName();
+public class RebelView extends GLSurfaceView {
+	private static String TAG = RebelView.class.getSimpleName();
 
 	private final RebelFragment rebelFragment;
 	private final GodotInputHandler inputHandler;
 	private final GestureDetector detector;
 	private final RebelRenderer rebelRenderer;
 
-	public GodotView(Context context, RebelFragment rebelFragment, XRMode xrMode, boolean p_use_gl3,
+	public RebelView(Context context, RebelFragment rebelFragment, XRMode xrMode, boolean p_use_gl3,
 			boolean p_use_32_bits, boolean p_use_debug_opengl, boolean p_translucent) {
 		super(context);
 		GLUtils.use_gl3 = p_use_gl3;

@@ -32,6 +32,7 @@ package com.rebeltoolbox.rebelengine.plugin;
 
 import com.rebeltoolbox.rebelengine.BuildConfig;
 import com.rebeltoolbox.rebelengine.RebelFragment;
+import com.rebeltoolbox.rebelengine.RebelView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -184,8 +185,8 @@ public abstract class GodotPlugin {
 	}
 
 	/**
-	 * Invoked once during the Godot Android initialization process after creation of the
-	 * {@link com.rebeltoolbox.rebelengine.GodotView} view.
+	 * Invoked once during the Rebel Engine initialization process after creation of the
+	 * {@link RebelView}.
 	 * <p>
 	 * The plugin can return a non-null {@link View} layout in order to add it to the Godot view
 	 * hierarchy.

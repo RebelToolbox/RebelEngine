@@ -55,7 +55,7 @@ public class GodotEditText extends EditText {
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	private GodotView mView;
+	private RebelView rebelView;
 	private GodotTextInputWrapper mInputWrapper;
 	private EditHandler sHandler = new EditHandler(this);
 	private String mOriginText;
@@ -129,7 +129,7 @@ public class GodotEditText extends EditText {
 
 					edit.mInputWrapper.setOriginText(text);
 					edit.addTextChangedListener(edit.mInputWrapper);
-					final InputMethodManager imm = (InputMethodManager)mView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+					final InputMethodManager imm = (InputMethodManager)rebelView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.showSoftInput(edit, 0);
 				}
 			} break;
@@ -138,9 +138,9 @@ public class GodotEditText extends EditText {
 				GodotEditText edit = (GodotEditText)msg.obj;
 
 				edit.removeTextChangedListener(mInputWrapper);
-				final InputMethodManager imm = (InputMethodManager)mView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+				final InputMethodManager imm = (InputMethodManager)rebelView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
-				edit.mView.requestFocus();
+				edit.rebelView.requestFocus();
 			} break;
 		}
 	}
@@ -154,12 +154,12 @@ public class GodotEditText extends EditText {
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
-	public void setView(final GodotView view) {
-		this.mView = view;
+	public void setRebelView(final RebelView rebelView) {
+		this.rebelView = rebelView;
 		if (mInputWrapper == null)
-			mInputWrapper = new GodotTextInputWrapper(mView, this);
+			mInputWrapper = new GodotTextInputWrapper(rebelView, this);
 		this.setOnEditorActionListener(mInputWrapper);
-		view.requestFocus();
+		rebelView.requestFocus();
 	}
 
 	// ===========================================================
@@ -169,7 +169,7 @@ public class GodotEditText extends EditText {
 	public boolean onKeyDown(final int keyCode, final KeyEvent keyEvent) {
 		/* Let SurfaceView get focus if back key is input. */
 		// pass event to godot in special cases
-		if (needHandlingInGodot(keyCode, keyEvent) && mView.getInputHandler().onKeyDown(keyCode, keyEvent)) {
+		if (needHandlingInGodot(keyCode, keyEvent) && rebelView.getInputHandler().onKeyDown(keyCode, keyEvent)) {
 			return true;
 		} else {
 			return super.onKeyDown(keyCode, keyEvent);
@@ -178,7 +178,7 @@ public class GodotEditText extends EditText {
 
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent keyEvent) {
-		if (needHandlingInGodot(keyCode, keyEvent) && mView.getInputHandler().onKeyUp(keyCode, keyEvent)) {
+		if (needHandlingInGodot(keyCode, keyEvent) && rebelView.getInputHandler().onKeyUp(keyCode, keyEvent)) {
 			return true;
 		} else {
 			return super.onKeyUp(keyCode, keyEvent);

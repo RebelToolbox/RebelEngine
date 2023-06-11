@@ -198,11 +198,10 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		}
 
 		/**
-		 * Invoked once during the Godot Android initialization process after creation of the
-		 * {@link GodotView} view.
-		 * <p>
+		 * Invoked once during Android initialization after creation of the {@link RebelView}.
+		 * 
 		 * This method should be overridden by descendants of this class that would like to add
-		 * their view/layout to the Godot view hierarchy.
+		 * their view/layout to the view hierarchy.
 		 *
 		 * @return the view to be included; null if no views should be included.
 		 */
@@ -242,7 +241,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	private boolean use_apk_expansion;
 
 	private ViewGroup containerLayout;
-	public GodotView mView;
+	public RebelView rebelView;
 	private boolean godot_initialized = false;
 
 	private SensorManager mSensorManager;
@@ -357,22 +356,22 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		// ...add to FrameLayout
 		containerLayout.addView(edittext);
 
-		mView = new GodotView(activity, this, xrMode, use_gl3, use_32_bits, use_debug_opengl, translucent);
-		containerLayout.addView(mView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		edittext.setView(mView);
+		rebelView = new RebelView(activity, this, xrMode, use_gl3, use_32_bits, use_debug_opengl, translucent);
+		containerLayout.addView(rebelView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		edittext.setRebelView(rebelView);
 		io.setEdit(edittext);
 
-		mView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+		rebelView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
 			Point fullSize = new Point();
 			activity.getWindowManager().getDefaultDisplay().getSize(fullSize);
 			Rect gameSize = new Rect();
-			mView.getWindowVisibleDisplayFrame(gameSize);
+			rebelView.getWindowVisibleDisplayFrame(gameSize);
 			final int keyboardHeight = fullSize.y - gameSize.bottom;
 			RebelEngine.setVirtualKeyboardHeight(keyboardHeight);
 		});
 
 		final String[] current_command_line = command_line;
-		mView.queueEvent(() -> {
+		rebelView.queueEvent(() -> {
 			RebelEngine.setup(current_command_line);
 
 			// Must occur after RebelEngine.setup has completed.
@@ -524,7 +523,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	 */
 	@Keep
 	private Surface getSurface() {
-		return mView.getHolder().getSurface();
+		return rebelView.getHolder().getSurface();
 	}
 
 	/**
@@ -764,7 +763,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 			}
 			return;
 		}
-		mView.onPause();
+		rebelView.onPause();
 
 		mSensorManager.unregisterListener(this);
 
@@ -802,7 +801,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 			return;
 		}
 
-		mView.onResume();
+		rebelView.onResume();
 
 		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
 		mSensorManager.registerListener(this, mGravity, SensorManager.SENSOR_DELAY_GAME);
@@ -869,8 +868,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		final float z = adjustedValues[2];
 
 		final int typeOfSensor = event.sensor.getType();
-		if (mView != null) {
-			mView.queueEvent(() -> {
+		if (rebelView != null) {
+			rebelView.queueEvent(() -> {
 				if (typeOfSensor == Sensor.TYPE_ACCELEROMETER) {
 					RebelEngine.accelerometer(-x, y, -z);
 				}
@@ -922,8 +921,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 			}
 		}
 
-		if (shouldQuit && mView != null) {
-			mView.queueEvent(RebelEngine::back);
+		if (shouldQuit && rebelView != null) {
+			rebelView.queueEvent(RebelEngine::back);
 		}
 	}
 
@@ -933,8 +932,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	 * This must be called after the render thread has started.
 	 */
 	public final void runOnRenderThread(@NonNull Runnable action) {
-		if (mView != null) {
-			mView.queueEvent(action);
+		if (rebelView != null) {
+			rebelView.queueEvent(action);
 		}
 	}
 
@@ -1100,6 +1099,6 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 				progress.mOverallTotal));
 	}
 	public void initInputDevices() {
-		mView.initInputDevices();
+		rebelView.initInputDevices();
 	}
 }

@@ -30,25 +30,25 @@
 
 package com.rebeltoolbox.rebelengine.input;
 
-import com.rebeltoolbox.rebelengine.GodotView;
 import com.rebeltoolbox.rebelengine.RebelEngine;
+import com.rebeltoolbox.rebelengine.RebelView;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 /**
- * Handles gesture input related events for the {@link GodotView} view.
+ * Handles gesture input related events for the {@link RebelView}.
  * https://developer.android.com/reference/android/view/GestureDetector.SimpleOnGestureListener
  */
 public class GodotGestureHandler extends GestureDetector.SimpleOnGestureListener {
-	private final GodotView godotView;
+	private final RebelView rebelView;
 
-	public GodotGestureHandler(GodotView godotView) {
-		this.godotView = godotView;
+	public GodotGestureHandler(RebelView rebelView) {
+		this.rebelView = rebelView;
 	}
 
 	private void queueEvent(Runnable task) {
-		godotView.queueEvent(task);
+		rebelView.queueEvent(task);
 	}
 
 	@Override
