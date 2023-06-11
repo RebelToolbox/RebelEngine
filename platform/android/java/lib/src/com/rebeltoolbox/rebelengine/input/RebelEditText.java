@@ -56,7 +56,7 @@ public class RebelEditText extends EditText {
 	// Fields
 	// ===========================================================
 	private RebelView rebelView;
-	private GodotTextInputWrapper mInputWrapper;
+	private RebelTextInputWrapper rebelTextInputWrapper;
 	private final EditHandler editHandler = new EditHandler(this);
 	private String mOriginText;
 	private int mMaxInputLength = Integer.MAX_VALUE;
@@ -110,15 +110,15 @@ public class RebelEditText extends EditText {
 				RebelEditText rebelEditText = (RebelEditText)msg.obj;
 				String text = rebelEditText.mOriginText;
 				if (rebelEditText.requestFocus()) {
-					rebelEditText.removeTextChangedListener(rebelEditText.mInputWrapper);
+					rebelEditText.removeTextChangedListener(rebelEditText.rebelTextInputWrapper);
 					setMaxInputLength(rebelEditText);
 					rebelEditText.setText("");
 					rebelEditText.append(text);
 					if (msg.arg2 != -1) {
 						rebelEditText.setSelection(msg.arg1, msg.arg2);
-						rebelEditText.mInputWrapper.setSelection(true);
+						rebelEditText.rebelTextInputWrapper.setSelection(true);
 					} else {
-						rebelEditText.mInputWrapper.setSelection(false);
+						rebelEditText.rebelTextInputWrapper.setSelection(false);
 					}
 
 					int inputType = InputType.TYPE_CLASS_TEXT;
@@ -127,8 +127,8 @@ public class RebelEditText extends EditText {
 					}
 					rebelEditText.setInputType(inputType);
 
-					rebelEditText.mInputWrapper.setOriginText(text);
-					rebelEditText.addTextChangedListener(rebelEditText.mInputWrapper);
+					rebelEditText.rebelTextInputWrapper.setOriginText(text);
+					rebelEditText.addTextChangedListener(rebelEditText.rebelTextInputWrapper);
 					final InputMethodManager imm = (InputMethodManager)rebelView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.showSoftInput(rebelEditText, 0);
 				}
@@ -137,7 +137,7 @@ public class RebelEditText extends EditText {
 			case HANDLER_CLOSE_IME_KEYBOARD: {
 				RebelEditText edit = (RebelEditText)msg.obj;
 
-				edit.removeTextChangedListener(mInputWrapper);
+				edit.removeTextChangedListener(rebelTextInputWrapper);
 				final InputMethodManager imm = (InputMethodManager)rebelView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
 				edit.rebelView.requestFocus();
@@ -156,9 +156,9 @@ public class RebelEditText extends EditText {
 	// ===========================================================
 	public void setRebelView(final RebelView rebelView) {
 		this.rebelView = rebelView;
-		if (mInputWrapper == null)
-			mInputWrapper = new GodotTextInputWrapper(rebelView, this);
-		this.setOnEditorActionListener(mInputWrapper);
+		if (rebelTextInputWrapper == null)
+			rebelTextInputWrapper = new RebelTextInputWrapper(rebelView, this);
+		setOnEditorActionListener(rebelTextInputWrapper);
 		rebelView.requestFocus();
 	}
 
