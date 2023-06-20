@@ -30,8 +30,8 @@ allprojects {
 //CHUNK_ALLPROJECTS_REPOSITORIES_BEGIN
 //CHUNK_ALLPROJECTS_REPOSITORIES_END
 
-        // Godot user plugins custom maven repos
-        String[] mavenRepos = getGodotPluginsMavenRepos()
+        // User plugins' Maven repos
+        String[] mavenRepos = getPluginsMavenRepos()
         if (mavenRepos != null && mavenRepos.size() > 0) {
             for (String repoUrl : mavenRepos) {
                 maven {
@@ -57,18 +57,18 @@ dependencies {
         releaseImplementation fileTree(dir: 'libs/release', include: ['*.jar', '*.aar'])
     }
 
-    // Godot user plugins remote dependencies
-    String[] remoteDeps = getGodotPluginsRemoteBinaries()
-    if (remoteDeps != null && remoteDeps.size() > 0) {
-        for (String dep : remoteDeps) {
-            implementation dep
+    // User plugins' remote dependencies
+    String[] remoteDependencies = getPluginsRemoteDependencies()
+    if (remoteDependencies != null && remoteDependencies.size() > 0) {
+        for (String dependency : remoteDependencies) {
+            implementation dependency
         }
     }
 
-    // Godot user plugins local dependencies
-    String[] pluginsBinaries = getGodotPluginsLocalBinaries()
-    if (pluginsBinaries != null && pluginsBinaries.size() > 0) {
-        implementation files(pluginsBinaries)
+    // User plugins' local dependencies
+    String[] localDependencies = getPluginsLocalDependencies()
+    if (localDependencies != null && localDependencies.size() > 0) {
+        implementation files(localDependencies)
     }
 
 //CHUNK_DEPENDENCIES_BEGIN
@@ -97,7 +97,7 @@ android {
             abiFilters export_abi_list
         }
 
-        manifestPlaceholders = [godotEditorVersion: getGodotEditorVersion()]
+        manifestPlaceholders = [godotEditorVersion: getEditorVersion()]
 
         // Feel free to modify the application id to your own.
         applicationId getExportPackageName()

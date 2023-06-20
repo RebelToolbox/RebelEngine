@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 ext {
-    PUBLISH_VERSION = getGodotPublishVersion()
+    PUBLISH_VERSION = getPublishVersion()
     PUBLISH_ARTIFACT_ID = 'godot'
 }
 
@@ -25,7 +25,7 @@ android {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
 
-        manifestPlaceholders = [godotLibraryVersion: getGodotLibraryVersion()]
+        manifestPlaceholders = [godotLibraryVersion: getLibraryVersion()]
     }
 
     namespace = "com.rebeltoolbox.rebelengine"

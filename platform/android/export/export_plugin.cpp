@@ -2957,9 +2957,9 @@ Error EditorExportPlatformAndroid::export_project_helper(const Ref<EditorExportP
 		String zipalign_flag = "true";
 
 		Vector<PluginConfigAndroid> enabled_plugins = get_enabled_plugins(p_preset);
-		String local_plugins_binaries = PluginConfigAndroid::get_plugins_binaries(PluginConfigAndroid::BINARY_TYPE_LOCAL, enabled_plugins);
-		String remote_plugins_binaries = PluginConfigAndroid::get_plugins_binaries(PluginConfigAndroid::BINARY_TYPE_REMOTE, enabled_plugins);
-		String custom_maven_repos = PluginConfigAndroid::get_plugins_custom_maven_repos(enabled_plugins);
+		String plugins_local_dependencies = PluginConfigAndroid::get_plugins_dependencies(PluginConfigAndroid::BINARY_TYPE_LOCAL, enabled_plugins);
+		String plugins_remote_dependencies = PluginConfigAndroid::get_plugins_dependencies(PluginConfigAndroid::BINARY_TYPE_REMOTE, enabled_plugins);
+		String plugins_maven_repos = PluginConfigAndroid::get_plugins_maven_repos(enabled_plugins);
 		bool clean_build_required = is_clean_build_required(enabled_plugins);
 
 		List<String> cmdline;
@@ -2984,9 +2984,9 @@ Error EditorExportPlatformAndroid::export_project_helper(const Ref<EditorExportP
 		cmdline.push_back("-Pexport_version_min_sdk=" + min_sdk_version); // argument to specify the min sdk.
 		cmdline.push_back("-Pexport_version_target_sdk=" + target_sdk_version); // argument to specify the target sdk.
 		cmdline.push_back("-Pexport_enabled_abis=" + enabled_abi_string); // argument to specify enabled ABIs.
-		cmdline.push_back("-Pplugins_local_binaries=" + local_plugins_binaries); // argument to specify the list of plugins local dependencies.
-		cmdline.push_back("-Pplugins_remote_binaries=" + remote_plugins_binaries); // argument to specify the list of plugins remote dependencies.
-		cmdline.push_back("-Pplugins_maven_repos=" + custom_maven_repos); // argument to specify the list of custom maven repos for the plugins dependencies.
+		cmdline.push_back("-Pplugins_local_dependencies=" + plugins_local_dependencies); // argument to specify the list of plugins local dependencies.
+		cmdline.push_back("-Pplugins_remote_dependencies=" + plugins_remote_dependencies); // argument to specify the list of plugins remote dependencies.
+		cmdline.push_back("-Pplugins_maven_repos=" + plugins_maven_repos); // argument to specify the list of custom maven repos for the plugins dependencies.
 		cmdline.push_back("-Pperform_zipalign=" + zipalign_flag); // argument to specify whether the build should be zipaligned.
 		cmdline.push_back("-Pperform_signing=" + sign_flag); // argument to specify whether the build should be signed.
 		cmdline.push_back("-Peditor_version=" + String(VERSION_FULL_CONFIG));

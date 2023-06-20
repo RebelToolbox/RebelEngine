@@ -152,7 +152,7 @@ PluginConfigAndroid PluginConfigAndroid::load_plugin_config(Ref<ConfigFile> conf
 				}
 
 				plugin_config.remote_dependencies = config_file->get_value(PluginConfigAndroid::DEPENDENCIES_SECTION, PluginConfigAndroid::DEPENDENCIES_REMOTE_KEY, Vector<String>());
-				plugin_config.custom_maven_repos = config_file->get_value(PluginConfigAndroid::DEPENDENCIES_SECTION, PluginConfigAndroid::DEPENDENCIES_CUSTOM_MAVEN_REPOS_KEY, Vector<String>());
+				plugin_config.maven_repos = config_file->get_value(PluginConfigAndroid::DEPENDENCIES_SECTION, PluginConfigAndroid::DEPENDENCIES_CUSTOM_MAVEN_REPOS_KEY, Vector<String>());
 			}
 
 			plugin_config.valid_config = is_plugin_config_valid(plugin_config);
@@ -163,10 +163,10 @@ PluginConfigAndroid PluginConfigAndroid::load_plugin_config(Ref<ConfigFile> conf
 	return plugin_config;
 }
 
-String PluginConfigAndroid::get_plugins_binaries(String type, Vector<PluginConfigAndroid> plugins_configs) {
-	String plugins_binaries;
+String PluginConfigAndroid::get_plugins_dependencies(String type, Vector<PluginConfigAndroid> plugins_configs) {
+	String plugins_dependencies;
 	if (!plugins_configs.empty()) {
-		Vector<String> binaries;
+		Vector<String> dependencies;
 		for (int i = 0; i < plugins_configs.size(); i++) {
 			PluginConfigAndroid config = plugins_configs[i];
 			if (!config.valid_config) {
@@ -174,25 +174,25 @@ String PluginConfigAndroid::get_plugins_binaries(String type, Vector<PluginConfi
 			}
 
 			if (config.binary_type == type) {
-				binaries.push_back(config.binary);
+				dependencies.push_back(config.binary);
 			}
 
 			if (type == PluginConfigAndroid::BINARY_TYPE_LOCAL) {
-				binaries.append_array(config.local_dependencies);
+				dependencies.append_array(config.local_dependencies);
 			}
 
 			if (type == PluginConfigAndroid::BINARY_TYPE_REMOTE) {
-				binaries.append_array(config.remote_dependencies);
+				dependencies.append_array(config.remote_dependencies);
 			}
 		}
 
-		plugins_binaries = String(PluginConfigAndroid::PLUGIN_VALUE_SEPARATOR).join(binaries);
+		plugins_dependencies = String(PluginConfigAndroid::PLUGIN_VALUE_SEPARATOR).join(dependencies);
 	}
 
-	return plugins_binaries;
+	return plugins_dependencies;
 }
 
-String PluginConfigAndroid::get_plugins_custom_maven_repos(Vector<PluginConfigAndroid> plugins_configs) {
+String PluginConfigAndroid::get_plugins_maven_repos(Vector<PluginConfigAndroid> plugins_configs) {
 	String maven_repos;
 	if (!plugins_configs.empty()) {
 		Vector<String> repos_urls;
@@ -202,7 +202,7 @@ String PluginConfigAndroid::get_plugins_custom_maven_repos(Vector<PluginConfigAn
 				continue;
 			}
 
-			repos_urls.append_array(config.custom_maven_repos);
+			repos_urls.append_array(config.maven_repos);
 		}
 
 		maven_repos = String(PluginConfigAndroid::PLUGIN_VALUE_SEPARATOR).join(repos_urls);

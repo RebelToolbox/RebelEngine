@@ -47,7 +47,7 @@
 The `dependencies` section and fields are optional and defined as follow:
 - **local**: contains a list of local `.aar` binary files the plugin depends on. The local binary dependencies must also be located in the `res://android/plugins` directory.
 - **remote**: contains a list of remote binary gradle dependencies for the plugin.
-- **custom_maven_repos**: contains a list of urls specifying custom maven repos required for the plugin's dependencies.
+- **maven_repos**: contains a list of urls specifying custom maven repos required for the plugin's dependencies.
 
  See https://github.com/godotengine/godot/issues/38157#issuecomment-618773871
  */
@@ -82,7 +82,7 @@ struct PluginConfigAndroid {
 	// Optional dependencies section
 	Vector<String> local_dependencies;
 	Vector<String> remote_dependencies;
-	Vector<String> custom_maven_repos;
+	Vector<String> maven_repos;
 
 	static String resolve_local_dependency_path(String plugin_config_dir, String dependency_path);
 
@@ -96,9 +96,9 @@ struct PluginConfigAndroid {
 
 	static PluginConfigAndroid load_plugin_config(Ref<ConfigFile> config_file, const String &path);
 
-	static String get_plugins_binaries(String type, Vector<PluginConfigAndroid> plugins_configs);
+	static String get_plugins_dependencies(String type, Vector<PluginConfigAndroid> plugins_configs);
 
-	static String get_plugins_custom_maven_repos(Vector<PluginConfigAndroid> plugins_configs);
+	static String get_plugins_maven_repos(Vector<PluginConfigAndroid> plugins_configs);
 
 	static String get_plugins_names(Vector<PluginConfigAndroid> plugins_configs);
 };
