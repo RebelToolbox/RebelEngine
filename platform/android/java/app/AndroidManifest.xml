@@ -30,12 +30,12 @@
     <!-- TODO: Remove the 'requestLegacyExternalStorage' attribute when https://github.com/godotengine/godot/issues/38913 is resolved -->
     <application android:label="@string/project_name_string" android:allowBackup="false" android:isGame="true" android:hasFragileUserData="false" android:requestLegacyExternalStorage="false" tools:ignore="GoogleAppIndexingWarning" android:icon="@mipmap/icon" >
 
-        <!-- Records the version of the Godot editor used for building -->
+        <!-- Records the version of the editor used for building -->
         <meta-data
-            android:name="org.godotengine.editor.version"
-            android:value="${godotEditorVersion}" />
+            android:name="com.rebeltoolbox.rebeleditor.version"
+            android:value="${editorVersion}" />
 
-        <!-- The following metadata values are replaced when Godot exports, modifying them here has no effect. -->
+        <!-- The following metadata values are replaced when the game is exported, modifying them here has no effect. -->
         <!-- Do these changes in the export preset. Adding new ones is fine. -->
 
         <!-- XR mode metadata. This is modified by the exporter based on the selected xr mode. DO NOT CHANGE the values here. -->

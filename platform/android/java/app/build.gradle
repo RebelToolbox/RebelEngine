@@ -97,7 +97,7 @@ android {
             abiFilters export_abi_list
         }
 
-        manifestPlaceholders = [godotEditorVersion: getEditorVersion()]
+        manifestPlaceholders = [editorVersion: getEditorVersion()]
 
         // Feel free to modify the application id to your own.
         applicationId getExportPackageName()
