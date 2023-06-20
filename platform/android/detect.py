@@ -183,7 +183,8 @@ def configure(env):
 
     env["neon_enabled"] = False
     if env["android_arch"] == "x86":
-        # The NDK adds this if targeting API < 24, so we can drop it when Rebel targets it at least
+        # For x86 targets prior to Android Nougat (API 24),
+        # -mstackrealign is needed to properly align stacks for global constructors.
         env.Append(CCFLAGS=["-mstackrealign"])
     elif env["android_arch"] == "armv7":
         env.Append(CCFLAGS="-march=armv7-a -mfloat-abi=softfp".split())
