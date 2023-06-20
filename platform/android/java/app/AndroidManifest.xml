@@ -66,7 +66,7 @@
         <activity
             android:name=".RebelApp"
             android:label="@string/project_name_string"
-            android:theme="@style/GodotAppSplashTheme"
+            android:theme="@style/SplashTheme"
             android:launchMode="singleTask"
             android:excludeFromRecents="false"
             android:exported="true"

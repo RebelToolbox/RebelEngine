@@ -41,7 +41,7 @@ import android.os.Bundle;
 public class RebelApp extends RebelActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.GodotAppMainTheme);
+		setTheme(R.style.MainTheme);
 		super.onCreate(savedInstanceState);
 	}
 }
