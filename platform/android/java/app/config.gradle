@@ -73,7 +73,7 @@ ext.getExportTargetSdkVersion = { ->
 }
 
 ext.getGodotEditorVersion = { ->
-    String editorVersion = project.hasProperty("godot_editor_version") ? project.property("godot_editor_version") : ""
+    String editorVersion = project.hasProperty("editor_version") ? project.property("editor_version") : ""
     if (editorVersion == null || editorVersion.isEmpty()) {
         // Try the library version first
         editorVersion = getGodotLibraryVersion()
