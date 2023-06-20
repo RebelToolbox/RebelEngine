@@ -9,10 +9,10 @@
 
     <application>
 
-        <!-- Records the version of the Godot library -->
+        <!-- Records the version of the library -->
         <meta-data
-            android:name="org.godotengine.library.version"
-            android:value="${godotLibraryVersion}" />
+            android:name="com.rebeltoolbox.rebellibrary.version"
+            android:value="${libraryVersion}" />
 
         <service android:name=".RebelDownloaderService" />
 
