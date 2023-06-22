@@ -74,8 +74,8 @@ GodotJavaWrapper::GodotJavaWrapper(JNIEnv *p_env, jobject p_activity, jobject p_
 	_is_activity_resumed = p_env->GetMethodID(java_method_class, "isActivityResumed", "()Z");
 	_vibrate = p_env->GetMethodID(java_method_class, "vibrate", "(I)V");
 	_get_input_fallback_mapping = p_env->GetMethodID(java_method_class, "getInputFallbackMapping", "()Ljava/lang/String;");
-	_on_godot_setup_completed = p_env->GetMethodID(java_method_class, "onGodotSetupCompleted", "()V");
-	_on_godot_main_loop_started = p_env->GetMethodID(java_method_class, "onGodotMainLoopStarted", "()V");
+	_on_setup_completed = p_env->GetMethodID(java_method_class, "onSetupCompleted", "()V");
+	_on_main_loop_started = p_env->GetMethodID(java_method_class, "onMainLoopStarted", "()V");
 
 	// get some Activity method pointers...
 	_get_class_loader = p_env->GetMethodID(activity_class, "getClassLoader", "()Ljava/lang/ClassLoader;");
@@ -131,23 +131,23 @@ void GodotJavaWrapper::on_video_init(JNIEnv *p_env) {
 	}
 }
 
-void GodotJavaWrapper::on_godot_setup_completed(JNIEnv *p_env) {
-	if (_on_godot_setup_completed) {
+void GodotJavaWrapper::on_setup_completed(JNIEnv *p_env) {
+	if (_on_setup_completed) {
 		if (p_env == NULL) {
 			p_env = get_jni_env();
 		}
 		ERR_FAIL_COND(p_env == nullptr);
-		p_env->CallVoidMethod(godot_instance, _on_godot_setup_completed);
+		p_env->CallVoidMethod(godot_instance, _on_setup_completed);
 	}
 }
 
-void GodotJavaWrapper::on_godot_main_loop_started(JNIEnv *p_env) {
-	if (_on_godot_main_loop_started) {
+void GodotJavaWrapper::on_main_loop_started(JNIEnv *p_env) {
+	if (_on_main_loop_started) {
 		if (p_env == NULL) {
 			p_env = get_jni_env();
 		}
 		ERR_FAIL_COND(p_env == nullptr);
-		p_env->CallVoidMethod(godot_instance, _on_godot_main_loop_started);
+		p_env->CallVoidMethod(godot_instance, _on_main_loop_started);
 	}
 }
 

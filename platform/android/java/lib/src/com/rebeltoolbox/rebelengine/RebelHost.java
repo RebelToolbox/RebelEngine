@@ -45,23 +45,23 @@ public interface RebelHost {
 	}
 
 	/**
-	 * Invoked on the render thread when the Godot setup is complete.
+	 * Invoked on the render thread when the Rebel Engine setup is complete.
 	 */
-	default void onGodotSetupCompleted() {}
+	default void onSetupCompleted() {}
 
 	/**
-	 * Invoked on the render thread when the Godot main loop has started.
+	 * Invoked on the render thread when the Rebel Engine main loop has started.
 	 */
-	default void onGodotMainLoopStarted() {}
+	default void onMainLoopStarted() {}
 
 	/**
-	 * Invoked on the UI thread as the last step of the Godot instance clean up phase.
+	 * Invoked on the UI thread as the last step of the Rebel Engine clean up phase.
 	 */
-	default void onGodotForceQuit(RebelFragment quitFragment) {}
+	default void onQuit(RebelFragment quitFragment) {}
 
 	/**
-	 * Invoked on the GL thread when the Godot instance wants to be restarted. It's up to the host
+	 * Invoked on the GL thread when the Rebel Engine is restarted. It's up to the host
 	 * to perform the appropriate action(s).
 	 */
-	default void onGodotRestartRequested(RebelFragment restartFragment) {}
+	default void onRestart(RebelFragment restartFragment) {}
 }

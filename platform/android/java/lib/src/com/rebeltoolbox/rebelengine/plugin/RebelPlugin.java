@@ -233,14 +233,14 @@ public abstract class RebelPlugin {
 	public boolean onMainBackPressed() { return false; }
 
 	/**
-	 * Invoked on the render thread when the Godot setup is complete.
+	 * Invoked on the render thread when the Rebel Engine setup is complete.
 	 */
-	public void onGodotSetupCompleted() {}
+	public void onSetupCompleted() {}
 
 	/**
-	 * Invoked on the render thread when the Godot main loop has started.
+	 * Invoked on the render thread when the Rebel Engine main loop has started.
 	 */
-	public void onGodotMainLoopStarted() {}
+	public void onMainLoopStarted() {}
 
 	/**
 	 * Invoked once per frame on the GL thread after the frame is drawn.

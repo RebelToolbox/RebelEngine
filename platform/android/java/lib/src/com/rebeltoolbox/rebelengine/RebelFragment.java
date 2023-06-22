@@ -199,7 +199,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 		/**
 		 * Invoked once during Android initialization after creation of the {@link RebelView}.
-		 * 
+		 *
 		 * This method should be overridden by descendants of this class that would like to add
 		 * their view/layout to the view hierarchy.
 		 *
@@ -311,30 +311,30 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	}
 
 	/**
-	 * Invoked on the render thread when the Godot setup is complete.
+	 * Invoked on the render thread when the Rebel Engine setup is complete.
 	 */
 	@CallSuper
-	protected void onGodotSetupCompleted() {
+	protected void onSetupCompleted() {
 		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
-			rebelPlugin.onGodotSetupCompleted();
+			rebelPlugin.onSetupCompleted();
 		}
 
 		if (rebelHost != null) {
-			rebelHost.onGodotSetupCompleted();
+			rebelHost.onSetupCompleted();
 		}
 	}
 
 	/**
-	 * Invoked on the render thread when the Godot main loop has started.
+	 * Invoked on the render thread when the Rebel Engine main loop has started.
 	 */
 	@CallSuper
-	protected void onGodotMainLoopStarted() {
+	protected void onMainLoopStarted() {
 		for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
-			rebelPlugin.onGodotMainLoopStarted();
+			rebelPlugin.onMainLoopStarted();
 		}
 
 		if (rebelHost != null) {
-			rebelHost.onGodotMainLoopStarted();
+			rebelHost.onMainLoopStarted();
 		}
 	}
 
@@ -437,7 +437,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 	public void restart() {
 		if (rebelHost != null) {
-			rebelHost.onGodotRestartRequested(this);
+			rebelHost.onRestart(this);
 		}
 	}
 
@@ -948,7 +948,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		//  The proper fix will involve tracking down and properly shutting down each
 		//  Rebel Engine component that is started in onVideoInit.
 		if (rebelHost != null) {
-			rebelHost.onGodotForceQuit(this);
+			rebelHost.onQuit(this);
 		}
 	}
 

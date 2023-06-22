@@ -253,9 +253,9 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_step(JNIEnv
 			return; // should exit instead and print the error
 		}
 
-		godot_java->on_godot_setup_completed(env);
+		godot_java->on_setup_completed(env);
 		os_android->main_loop_begin();
-		godot_java->on_godot_main_loop_started(env);
+		godot_java->on_main_loop_started(env);
 		step.increment();
 	}
 

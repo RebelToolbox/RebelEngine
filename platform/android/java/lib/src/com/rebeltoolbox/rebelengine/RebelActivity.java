@@ -72,18 +72,18 @@ public abstract class RebelActivity extends FragmentActivity implements RebelHos
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		onGodotForceQuit(rebelFragment);
+		onQuit(rebelFragment);
 	}
 
 	@Override
-	public final void onGodotForceQuit(RebelFragment quitFragment) {
+	public final void onQuit(RebelFragment quitFragment) {
 		if (rebelFragment == quitFragment) {
 			System.exit(0);
 		}
 	}
 
 	@Override
-	public final void onGodotRestartRequested(RebelFragment restartFragment) {
+	public final void onRestart(RebelFragment restartFragment) {
 		if (rebelFragment == restartFragment) {
 			// HACK:
 			//
