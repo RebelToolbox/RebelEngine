@@ -40,7 +40,7 @@ def rootDir = "../../.."
 def binDir = "$rootDir/bin/"
 
 def getSconsTaskName(String buildType) {
-    return "compileGodotNativeLibs" + buildType.capitalize()
+    return "compileRebelEngine" + buildType.capitalize()
 }
 
 /**
