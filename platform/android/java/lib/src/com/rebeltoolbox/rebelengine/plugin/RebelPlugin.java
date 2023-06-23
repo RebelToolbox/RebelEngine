@@ -103,24 +103,24 @@ public abstract class RebelPlugin {
 	}
 
 	/**
-	 * Register the plugin with Godot native code.
+	 * Register the plugin.
 	 *
 	 * This method is invoked on the render thread.
 	 */
-	public final void onRegisterPluginWithGodotNative() {
+	public final void onRegisterPlugin() {
 		registeredSignals.putAll(
-				registerPluginWithGodotNative(this, getPluginName(), getPluginMethods(), getPluginSignals(),
+				registerPlugin(this, getPluginName(), getPluginMethods(), getPluginSignals(),
 						getPluginGDNativeLibrariesPaths()));
 	}
 
 	/**
-	 * Register the plugin with Godot native code.
+	 * Register the plugin.
 	 *
 	 * This method must be invoked on the render thread.
 	 */
-	public static void registerPluginWithGodotNative(Object pluginObject,
+	public static void registerPlugin(Object pluginObject,
 			RebelPluginInfoProvider rebelPluginInfoProvider) {
-		registerPluginWithGodotNative(pluginObject, rebelPluginInfoProvider.getPluginName(),
+		registerPlugin(pluginObject, rebelPluginInfoProvider.getPluginName(),
 				Collections.emptyList(), rebelPluginInfoProvider.getPluginSignals(),
 				rebelPluginInfoProvider.getPluginGDNativeLibrariesPaths());
 
@@ -128,7 +128,7 @@ public abstract class RebelPlugin {
 		rebelPluginInfoProvider.onPluginRegistered();
 	}
 
-	private static Map<String, SignalInfo> registerPluginWithGodotNative(Object pluginObject,
+	private static Map<String, SignalInfo> registerPlugin(Object pluginObject,
 			String pluginName, List<String> pluginMethods, Set<SignalInfo> pluginSignals,
 			Set<String> pluginGDNativeLibrariesPaths) {
 		nativeRegisterSingleton(pluginName, pluginObject);

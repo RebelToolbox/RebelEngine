@@ -376,7 +376,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 			// Must occur after RebelEngine.setup has completed.
 			for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
-				rebelPlugin.onRegisterPluginWithGodotNative();
+				rebelPlugin.onRegisterPlugin();
 			}
 			setKeepScreenOn("True".equals(RebelEngine.getGlobal("display/window/energy_saving/keep_screen_on")));
 
