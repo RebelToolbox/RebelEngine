@@ -252,7 +252,7 @@ String _get_activity_tag(const Ref<EditorExportPreset> &p_preset) {
 	String orientation = _get_android_orientation_label(
 			OS::get_singleton()->get_screen_orientation_from_string(GLOBAL_GET("display/window/handheld/orientation")));
 	String manifest_activity_text = vformat(
-			"        <activity android:name=\"com.rebeltoolbox.rebelapp.GodotApp\" "
+			"        <activity android:name=\"com.rebeltoolbox.rebelapp.RebelApp\" "
 			"tools:replace=\"android:screenOrientation,android:excludeFromRecents\" "
 			"android:excludeFromRecents=\"%s\" "
 			"android:screenOrientation=\"%s\">\n",

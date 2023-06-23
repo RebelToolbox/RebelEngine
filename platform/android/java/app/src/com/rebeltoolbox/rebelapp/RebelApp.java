@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  GodotApp.java                                                        */
+/*  RebelApp.java                                                        */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -35,10 +35,10 @@ import com.rebeltoolbox.rebelengine.FullScreenGodotApp;
 import android.os.Bundle;
 
 /**
- * Template activity for Godot Android custom builds.
+ * Template activity for Android custom builds.
  * Feel free to extend and modify this class for your custom logic.
  */
-public class GodotApp extends FullScreenGodotApp {
+public class RebelApp extends FullScreenGodotApp {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.GodotAppMainTheme);

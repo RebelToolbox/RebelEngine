@@ -64,7 +64,7 @@
             android:value="all" />
 
         <activity
-            android:name=".GodotApp"
+            android:name=".RebelApp"
             android:label="@string/project_name_string"
             android:theme="@style/GodotAppSplashTheme"
             android:launchMode="singleTask"

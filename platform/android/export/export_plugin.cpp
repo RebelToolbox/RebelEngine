@@ -1985,7 +1985,7 @@ Error EditorExportPlatformAndroid::run(const Ref<EditorExportPreset> &p_preset, 
 	args.push_back("-a");
 	args.push_back("android.intent.action.MAIN");
 	args.push_back("-n");
-	args.push_back(get_package_name(package_name) + "/com.rebeltoolbox.rebelapp.GodotApp");
+	args.push_back(get_package_name(package_name) + "/com.rebeltoolbox.rebelapp.RebelApp");
 
 	output.clear();
 	err = OS::get_singleton()->execute(adb, args, true, nullptr, &output, &rv, true);
