@@ -242,7 +242,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 	private ViewGroup containerLayout;
 	public RebelView rebelView;
-	private boolean godot_initialized = false;
+	private boolean initialized = false;
 
 	private SensorManager mSensorManager;
 	private Sensor mAccelerometer;
@@ -537,7 +537,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 	String expansion_pack_path;
 
-	private void initializeGodot() {
+	private void initialize() {
 		if (expansion_pack_path != null) {
 			String[] new_cmdline;
 			int cll = 0;
@@ -574,7 +574,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 		result_callback = null;
 
-		godot_initialized = true;
+		initialized = true;
 	}
 
 	@Override
@@ -711,7 +711,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
 		mCurrentIntent = activity.getIntent();
 
-		initializeGodot();
+		initialize();
 	}
 
 	@Override
@@ -757,7 +757,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 		super.onPause();
 		activityResumed = false;
 
-		if (!godot_initialized) {
+		if (!initialized) {
 			if (null != mDownloaderClientStub) {
 				mDownloaderClientStub.disconnect(getActivity());
 			}
@@ -794,7 +794,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 	public void onResume() {
 		super.onResume();
 		activityResumed = true;
-		if (!godot_initialized) {
+		if (!initialized) {
 			if (null != mDownloaderClientStub) {
 				mDownloaderClientStub.connect(getActivity());
 			}
@@ -1065,7 +1065,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 				showDashboard = false;
 				paused = false;
 				indeterminate = false;
-				initializeGodot();
+				initialize();
 				return;
 			default:
 				paused = true;
