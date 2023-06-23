@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  Godot.java                                                           */
+/*  RebelFragment.java                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           REBEL ENGINE                                */
@@ -47,7 +47,6 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -109,7 +108,7 @@ import java.util.Locale;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class Godot extends Fragment implements SensorEventListener, IDownloaderClient {
+public class RebelFragment extends Fragment implements SensorEventListener, IDownloaderClient {
 	static final int MAX_SINGLETONS = 64;
 	private IStub mDownloaderClientStub;
 	private TextView mStatusText;
@@ -195,7 +194,7 @@ public class Godot extends Fragment implements SensorEventListener, IDownloaderC
 				GodotPlugin.nativeRegisterMethod(p_name, method.getName(), method.getReturnType().getName(), pt);
 			}
 
-			Godot.singletons[Godot.singleton_count++] = this;
+			RebelFragment.singletons[RebelFragment.singleton_count++] = this;
 		}
 
 		/**
@@ -946,8 +945,9 @@ public class Godot extends Fragment implements SensorEventListener, IDownloaderC
 	}
 
 	private void forceQuit() {
-		// TODO: This is a temp solution. The proper fix will involve tracking down and properly shutting down each
-		// native Godot components that is started in Godot#onVideoInit.
+		// TODO: This is a temp solution.
+		//  The proper fix will involve tracking down and properly shutting down each
+		//  Rebel Engine component that is started in onVideoInit.
 		if (godotHost != null) {
 			godotHost.onGodotForceQuit(this);
 		}

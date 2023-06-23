@@ -31,7 +31,7 @@
 package com.rebeltoolbox.rebelengine.plugin;
 
 import com.rebeltoolbox.rebelengine.BuildConfig;
-import com.rebeltoolbox.rebelengine.Godot;
+import com.rebeltoolbox.rebelengine.RebelFragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -81,18 +81,18 @@ import javax.microedition.khronos.opengles.GL10;
 public abstract class GodotPlugin {
 	private static final String TAG = GodotPlugin.class.getSimpleName();
 
-	private final Godot godot;
+	private final RebelFragment rebelFragment;
 	private final ConcurrentHashMap<String, SignalInfo> registeredSignals = new ConcurrentHashMap<>();
 
-	public GodotPlugin(Godot godot) {
-		this.godot = godot;
+	public GodotPlugin(RebelFragment rebelFragment) {
+		this.rebelFragment = rebelFragment;
 	}
 
 	/**
-	 * Provides access to the Godot engine.
+	 * Provides access to the Rebel Fragment.
 	 */
-	protected Godot getGodot() {
-		return godot;
+	protected RebelFragment getRebelFragment() {
+		return rebelFragment;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public abstract class GodotPlugin {
 	 */
 	@Nullable
 	protected Activity getActivity() {
-		return godot.getActivity();
+		return rebelFragment.getActivity();
 	}
 
 	/**
@@ -315,7 +315,7 @@ public abstract class GodotPlugin {
 	 * @param action the action to run on the UI thread
 	 */
 	protected void runOnUiThread(Runnable action) {
-		godot.runOnUiThread(action);
+		rebelFragment.runOnUiThread(action);
 	}
 
 	/**
@@ -324,7 +324,7 @@ public abstract class GodotPlugin {
 	 * @param action the action to run on the render thread
 	 */
 	protected void runOnRenderThread(Runnable action) {
-		godot.runOnRenderThread(action);
+		rebelFragment.runOnRenderThread(action);
 	}
 
 	/**
@@ -340,7 +340,7 @@ public abstract class GodotPlugin {
 				throw new IllegalArgumentException(
 						"Signal " + signalName + " is not registered for this plugin.");
 			}
-			emitSignal(getGodot(), getPluginName(), signalInfo, signalArgs);
+			emitSignal(getRebelFragment(), getPluginName(), signalInfo, signalArgs);
 		} catch (IllegalArgumentException exception) {
 			Log.w(TAG, exception.getMessage());
 			if (BuildConfig.DEBUG) {
@@ -351,12 +351,12 @@ public abstract class GodotPlugin {
 
 	/**
 	 * Emit a Godot signal.
-	 * @param godot
+	 * @param rebelFragment
 	 * @param pluginName Name of the Godot plugin the signal will be emitted from. The plugin must already be registered with the Godot engine.
 	 * @param signalInfo Information about the signal to emit.
 	 * @param signalArgs Arguments used to populate the emitted signal. The arguments will be validated against the given {@link SignalInfo} parameter.
 	 */
-	public static void emitSignal(Godot godot, String pluginName, SignalInfo signalInfo, final Object... signalArgs) {
+	public static void emitSignal(RebelFragment rebelFragment, String pluginName, SignalInfo signalInfo, final Object... signalArgs) {
 		try {
 			if (signalInfo == null) {
 				throw new IllegalArgumentException("Signal must be non null.");
@@ -377,7 +377,7 @@ public abstract class GodotPlugin {
 				}
 			}
 
-			godot.runOnRenderThread(() -> nativeEmitSignal(pluginName, signalInfo.getName(), signalArgs));
+			rebelFragment.runOnRenderThread(() -> nativeEmitSignal(pluginName, signalInfo.getName(), signalArgs));
 
 		} catch (IllegalArgumentException exception) {
 			Log.w(TAG, exception.getMessage());

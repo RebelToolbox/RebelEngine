@@ -42,16 +42,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 /**
- * Base activity for Android apps intending to use Godot as the primary and only screen.
- *
- * It's also a reference implementation for how to setup and use the {@link Godot} fragment
+ * Base activity for Android apps intending to use a Rebel Game as the primary and only screen.
+ * It's also a reference implementation for how to setup and use the {@link RebelFragment}
  * within an Android app.
  */
 public abstract class FullScreenGodotApp extends FragmentActivity implements GodotHost {
 	private static final String TAG = FullScreenGodotApp.class.getSimpleName();
 
 	@Nullable
-	private Godot godotFragment;
+	private RebelFragment rebelFragment;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,36 +58,33 @@ public abstract class FullScreenGodotApp extends FragmentActivity implements God
 		setContentView(R.layout.godot_app_layout);
 
 		Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.godot_fragment_container);
-		if (currentFragment instanceof Godot) {
-			Log.v(TAG, "Reusing existing Godot fragment instance.");
-			godotFragment = (Godot)currentFragment;
+		if (currentFragment instanceof RebelFragment) {
+			Log.v(TAG, "Reusing existing Rebel Fragment.");
+			rebelFragment = (RebelFragment)currentFragment;
 		} else {
-			Log.v(TAG, "Creating new Godot fragment instance.");
-			godotFragment = initGodotInstance();
-			if (godotFragment == null) {
-				throw new IllegalStateException("Godot instance must be non-null.");
-			}
+			Log.v(TAG, "Creating new Rebel Fragment.");
+			rebelFragment = createRebelFragment();
 
-			getSupportFragmentManager().beginTransaction().replace(R.id.godot_fragment_container, godotFragment).setPrimaryNavigationFragment(godotFragment).commitNowAllowingStateLoss();
+			getSupportFragmentManager().beginTransaction().replace(R.id.godot_fragment_container, rebelFragment).setPrimaryNavigationFragment(rebelFragment).commitNowAllowingStateLoss();
 		}
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		onGodotForceQuit(godotFragment);
+		onGodotForceQuit(rebelFragment);
 	}
 
 	@Override
-	public final void onGodotForceQuit(Godot instance) {
-		if (instance == godotFragment) {
+	public final void onGodotForceQuit(RebelFragment quitFragment) {
+		if (rebelFragment == quitFragment) {
 			System.exit(0);
 		}
 	}
 
 	@Override
-	public final void onGodotRestartRequested(Godot instance) {
-		if (instance == godotFragment) {
+	public final void onGodotRestartRequested(RebelFragment restartFragment) {
+		if (rebelFragment == restartFragment) {
 			// HACK:
 			//
 			// Currently it's very hard to properly deinitialize Godot on Android to restart the game
@@ -109,8 +105,8 @@ public abstract class FullScreenGodotApp extends FragmentActivity implements God
 	@Override
 	public void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		if (godotFragment != null) {
-			godotFragment.onNewIntent(intent);
+		if (rebelFragment != null) {
+			rebelFragment.onNewIntent(intent);
 		}
 	}
 
@@ -118,8 +114,8 @@ public abstract class FullScreenGodotApp extends FragmentActivity implements God
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (godotFragment != null) {
-			godotFragment.onActivityResult(requestCode, resultCode, data);
+		if (rebelFragment != null) {
+			rebelFragment.onActivityResult(requestCode, resultCode, data);
 		}
 	}
 
@@ -127,15 +123,15 @@ public abstract class FullScreenGodotApp extends FragmentActivity implements God
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		if (godotFragment != null) {
-			godotFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (rebelFragment != null) {
+			rebelFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 
 	@Override
 	public void onBackPressed() {
-		if (godotFragment != null) {
-			godotFragment.onBackPressed();
+		if (rebelFragment != null) {
+			rebelFragment.onBackPressed();
 		} else {
 			super.onBackPressed();
 		}
@@ -145,12 +141,12 @@ public abstract class FullScreenGodotApp extends FragmentActivity implements God
 	 * Used to initialize the Godot fragment instance in {@link FullScreenGodotApp#onCreate(Bundle)}.
 	 */
 	@NonNull
-	protected Godot initGodotInstance() {
-		return new Godot();
+	protected RebelFragment createRebelFragment() {
+		return new RebelFragment();
 	}
 
 	@Nullable
-	protected final Godot getGodotFragment() {
-		return godotFragment;
+	protected final RebelFragment getRebelFragment() {
+		return rebelFragment;
 	}
 }

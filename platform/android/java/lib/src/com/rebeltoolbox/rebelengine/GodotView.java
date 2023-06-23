@@ -70,19 +70,19 @@ import android.view.MotionEvent;
 public class GodotView extends GLSurfaceView {
 	private static String TAG = GodotView.class.getSimpleName();
 
-	private final Godot godot;
+	private final RebelFragment rebelFragment;
 	private final GodotInputHandler inputHandler;
 	private final GestureDetector detector;
 	private final GodotRenderer godotRenderer;
 
-	public GodotView(Context context, Godot godot, XRMode xrMode, boolean p_use_gl3,
+	public GodotView(Context context, RebelFragment rebelFragment, XRMode xrMode, boolean p_use_gl3,
 			boolean p_use_32_bits, boolean p_use_debug_opengl, boolean p_translucent) {
 		super(context);
 		GLUtils.use_gl3 = p_use_gl3;
 		GLUtils.use_32 = p_use_32_bits;
 		GLUtils.use_debug_opengl = p_use_debug_opengl;
 
-		this.godot = godot;
+		this.rebelFragment = rebelFragment;
 		this.inputHandler = new GodotInputHandler(this);
 		this.detector = new GestureDetector(context, new GodotGestureHandler(this));
 		this.godotRenderer = new GodotRenderer();
@@ -176,7 +176,7 @@ public class GodotView extends GLSurfaceView {
 	}
 
 	public void onBackPressed() {
-		godot.onBackPressed();
+		rebelFragment.onBackPressed();
 	}
 
 	public GodotInputHandler getInputHandler() {

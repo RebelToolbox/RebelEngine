@@ -57,8 +57,8 @@ class GodotRenderer implements GLSurfaceView.Renderer {
 		}
 
 		GodotLib.step();
-		for (int i = 0; i < Godot.singleton_count; i++) {
-			Godot.singletons[i].onGLDrawFrame(gl);
+		for (int i = 0; i < RebelFragment.singleton_count; i++) {
+			RebelFragment.singletons[i].onGLDrawFrame(gl);
 		}
 		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
 			plugin.onGLDrawFrame(gl);
@@ -67,8 +67,8 @@ class GodotRenderer implements GLSurfaceView.Renderer {
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		GodotLib.resize(width, height);
-		for (int i = 0; i < Godot.singleton_count; i++) {
-			Godot.singletons[i].onGLSurfaceChanged(gl, width, height);
+		for (int i = 0; i < RebelFragment.singleton_count; i++) {
+			RebelFragment.singletons[i].onGLSurfaceChanged(gl, width, height);
 		}
 		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
 			plugin.onGLSurfaceChanged(gl, width, height);

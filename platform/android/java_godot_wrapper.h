@@ -39,12 +39,12 @@
 
 #include "string_android.h"
 
-// Class that makes functions in java/src/lib/com/rebeltoolbox/rebelengine/Godot.java callable from C++
+// Class that makes methods in java/src/lib/com/rebeltoolbox/rebelengine/RebelFragment.java class callable from C++
 class GodotJavaWrapper {
 private:
 	jobject godot_instance;
 	jobject activity;
-	jclass godot_class;
+	jclass java_method_class;
 	jclass activity_class;
 
 	jmethodID _on_video_init = 0;

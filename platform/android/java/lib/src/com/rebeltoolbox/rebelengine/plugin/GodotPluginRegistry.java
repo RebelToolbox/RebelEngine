@@ -30,7 +30,7 @@
 
 package com.rebeltoolbox.rebelengine.plugin;
 
-import com.rebeltoolbox.rebelengine.Godot;
+import com.rebeltoolbox.rebelengine.RebelFragment;
 
 import android.app.Activity;
 import android.content.pm.ApplicationInfo;
@@ -57,9 +57,9 @@ public final class GodotPluginRegistry {
 	private static GodotPluginRegistry instance;
 	private final ConcurrentHashMap<String, GodotPlugin> registry;
 
-	private GodotPluginRegistry(Godot godot) {
+	private GodotPluginRegistry(RebelFragment rebelFragment) {
 		registry = new ConcurrentHashMap<>();
-		loadPlugins(godot);
+		loadPlugins(rebelFragment);
 	}
 
 	/**
@@ -85,13 +85,13 @@ public final class GodotPluginRegistry {
 	 * A plugin manifest entry is a '<meta-data>' tag setup as described in the {@link GodotPlugin}
 	 * documentation.
 	 *
-	 * @param godot Godot instance
+	 * @param rebelFragment Rebel Fragment
 	 * @return A singleton instance of {@link GodotPluginRegistry}. This ensures that only one instance
 	 * of each Godot Android plugins is available at runtime.
 	 */
-	public static GodotPluginRegistry initializePluginRegistry(Godot godot) {
+	public static GodotPluginRegistry initializePluginRegistry(RebelFragment rebelFragment) {
 		if (instance == null) {
-			instance = new GodotPluginRegistry(godot);
+			instance = new GodotPluginRegistry(rebelFragment);
 		}
 
 		return instance;
@@ -101,7 +101,7 @@ public final class GodotPluginRegistry {
 	 * Return the plugin registry if it's initialized.
 	 * Throws a {@link IllegalStateException} exception if not.
 	 *
-	 * @throws IllegalStateException if {@link GodotPluginRegistry#initializePluginRegistry(Godot)} has not been called prior to calling this method.
+	 * @throws IllegalStateException if {@link GodotPluginRegistry#initializePluginRegistry(RebelFragment)} has not been called prior to calling this method.
 	 */
 	public static GodotPluginRegistry getPluginRegistry() throws IllegalStateException {
 		if (instance == null) {
@@ -111,9 +111,9 @@ public final class GodotPluginRegistry {
 		return instance;
 	}
 
-	private void loadPlugins(Godot godot) {
+	private void loadPlugins(RebelFragment rebelFragment) {
 		try {
-			final Activity activity = godot.getActivity();
+			final Activity activity = rebelFragment.getActivity();
 			ApplicationInfo appInfo = activity
 											  .getPackageManager()
 											  .getApplicationInfo(activity.getPackageName(),
@@ -139,8 +139,8 @@ public final class GodotPluginRegistry {
 							Class<GodotPlugin> pluginClass = (Class<GodotPlugin>)Class
 																	 .forName(pluginHandleClassFullName);
 							Constructor<GodotPlugin> pluginConstructor = pluginClass
-																				 .getConstructor(Godot.class);
-							GodotPlugin pluginHandle = pluginConstructor.newInstance(godot);
+																				 .getConstructor(RebelFragment.class);
+							GodotPlugin pluginHandle = pluginConstructor.newInstance(rebelFragment);
 
 							// Load the plugin initializer into the registry using the plugin name as key.
 							if (!pluginName.equals(pluginHandle.getPluginName())) {
