@@ -214,7 +214,7 @@ void editor_register_and_generate_icons(Ref<Theme> p_theme, bool p_dark_theme = 
 		exceptions.insert("EditorPivot");
 		exceptions.insert("EditorHandle");
 		exceptions.insert("Editor3DHandle");
-		exceptions.insert("Godot");
+		exceptions.insert("Rebel");
 		exceptions.insert("PanoramaSky");
 		exceptions.insert("ProceduralSky");
 		exceptions.insert("EditorControlAnchor");
