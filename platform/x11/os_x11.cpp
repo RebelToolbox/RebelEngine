@@ -32,6 +32,7 @@
 
 #include "core/os/dir_access.h"
 #include "core/print_string.h"
+#include "core/version.h"
 #include "detect_prime.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
@@ -469,7 +470,7 @@ Error OS_X11::initialize(const VideoMode &p_desired, int p_video_driver, int p_a
 	XISelectEvents(x11_display, DefaultRootWindow(x11_display), &xi.all_master_event_mask, 1);
 
 	/* set the titlebar name */
-	XStoreName(x11_display, x11_window, "Godot");
+	XStoreName(x11_display, x11_window, VERSION_NAME);
 
 	wm_delete = XInternAtom(x11_display, "WM_DELETE_WINDOW", true);
 	XSetWMProtocols(x11_display, x11_window, &wm_delete, 1);
