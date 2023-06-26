@@ -409,7 +409,7 @@ Error VariantParser::_parse_enginecfg(Stream *p_stream, Vector<String> &strings,
 	Token token;
 	get_token(p_stream, token, line, r_err_str);
 	if (token.type != TK_PARENTHESIS_OPEN) {
-		r_err_str = "Expected '(' in old-style project.godot construct";
+		r_err_str = "Expected '(' in old-style project.rebel construct";
 		return ERR_PARSE_ERROR;
 	}
 
@@ -419,7 +419,7 @@ Error VariantParser::_parse_enginecfg(Stream *p_stream, Vector<String> &strings,
 		CharType c = p_stream->get_char();
 
 		if (p_stream->is_eof()) {
-			r_err_str = "Unexpected EOF while parsing old-style project.godot construct";
+			r_err_str = "Unexpected EOF while parsing old-style project.rebel construct";
 			return ERR_PARSE_ERROR;
 		}
 

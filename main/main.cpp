@@ -223,7 +223,7 @@ void Main::print_help(const char *p_binary) {
 	OS::get_singleton()->print("Rebel Engine is Free and Open Source Software released under the MIT license.\n");
 	OS::get_singleton()->print("Games developed with Rebel Engine remain the property of the game developer.\n");
 	OS::get_singleton()->print("\n");
-	OS::get_singleton()->print("Usage: %s [options] [path to scene or 'project.godot' file]\n", p_binary);
+	OS::get_singleton()->print("Usage: %s [options] [path to scene or 'project.rebel' file]\n", p_binary);
 	OS::get_singleton()->print("\n");
 
 	OS::get_singleton()->print("General options:\n");
@@ -240,8 +240,8 @@ void Main::print_help(const char *p_binary) {
 #endif
 	OS::get_singleton()->print("  -q, --quit                       Quit after the first iteration.\n");
 	OS::get_singleton()->print("  -l, --language <locale>          Use a specific locale (<locale> being a two-letter code).\n");
-	OS::get_singleton()->print("  --path <directory>               Path to a project (<directory> must contain a 'project.godot' file).\n");
-	OS::get_singleton()->print("  -u, --upwards                    Scan folders upwards for project.godot file.\n");
+	OS::get_singleton()->print("  --path <directory>               Path to a project (<directory> must contain a 'project.rebel' file).\n");
+	OS::get_singleton()->print("  -u, --upwards                    Scan folders upwards for project.rebel file.\n");
 	OS::get_singleton()->print("  --main-pack <file>               Path to a pack (.pck) file to load.\n");
 	OS::get_singleton()->print("  --render-thread <mode>           Render thread mode ('unsafe', 'safe', 'separate').\n");
 	OS::get_singleton()->print("  --remote-fs <address>            Remote filesystem (<host/IP>[:<port>] address).\n");
@@ -746,7 +746,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 			upwards = true;
 		} else if (I->get() == "-q" || I->get() == "--quit") { // Auto quit at the end of the first main loop iteration
 			auto_quit = true;
-		} else if (I->get().ends_with("project.godot")) {
+		} else if (I->get().ends_with("project.rebel")) {
 			String path;
 			String file = I->get();
 			int sep = MAX(file.find_last("/"), file.find_last("\\"));
@@ -864,7 +864,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 #endif
 
 	// Network file system needs to be configured before globals, since globals are based on the
-	// 'project.godot' file which will only be available through the network if this is enabled
+	// 'project.rebel' file which will only be available through the network if this is enabled
 	FileAccessNetwork::configure();
 	if (remotefs != "") {
 		file_access_network_client = memnew(FileAccessNetworkClient);
@@ -1095,7 +1095,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 
 	OS::get_singleton()->_vsync_via_compositor = video_mode.vsync_via_compositor;
 
-	if (tablet_driver == "") { // specified in project.godot
+	if (tablet_driver == "") { // specified in project.rebel
 		tablet_driver = GLOBAL_DEF_RST_NOVAL("display/window/tablet_driver", OS::get_singleton()->get_tablet_driver_name(0));
 	}
 
@@ -1154,7 +1154,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 		video_driver_idx = 0;
 	}
 
-	if (audio_driver == "") { // specified in project.godot
+	if (audio_driver == "") { // specified in project.rebel
 		audio_driver = GLOBAL_DEF_RST_NOVAL("audio/driver", OS::get_singleton()->get_audio_driver_name(0));
 	}
 

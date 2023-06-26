@@ -1999,7 +1999,7 @@ bool EditorFileSystem::_should_skip_directory(const String &p_path) {
 		return true;
 	}
 
-	if (FileAccess::exists(p_path.plus_file("project.godot"))) { // skip if another project inside this
+	if (FileAccess::exists(p_path.plus_file("project.rebel"))) { // skip if another project inside this
 		return true;
 	}
 
