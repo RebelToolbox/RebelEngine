@@ -2455,6 +2455,7 @@ void Image::blend_rect_mask(const Ref<Image> &p_src, const Ref<Image> &p_mask, c
 }
 
 void Image::fill(const Color &c) {
+	ERR_FAIL_COND(data.size() == 0);
 	ERR_FAIL_COND_MSG(!_can_modify(format), "Cannot fill in compressed or custom image formats.");
 
 	lock();
