@@ -168,6 +168,9 @@ private:
 		create(p_width, p_height, p_use_mipmaps, p_format, p_data);
 	}
 
+	Color _get_pixel(uint8_t *ptr, int p_x, int p_y) const;
+	void _set_pixel(uint8_t *ptr, int p_x, int p_y, const Color &p_color);
+
 	Format format;
 	PoolVector<uint8_t> data;
 	int width, height;
