@@ -427,13 +427,13 @@ void Image::convert(Format p_new_format) {
 		Image new_img(width, height, false, p_new_format);
 		lock();
 		new_img.lock();
-
+		uint8_t *src_ptr = write_lock.ptr();
+		uint8_t *dst_ptr = new_img.write_lock.ptr();
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				new_img.set_pixel(i, j, get_pixel(i, j));
+				new_img._set_pixel(dst_ptr, i, j, _get_pixel(src_ptr, i, j));
 			}
 		}
-
 		unlock();
 		new_img.unlock();
 
@@ -1579,19 +1579,18 @@ void Image::normalize() {
 	}
 
 	lock();
-
+	uint8_t *ptr = write_lock.ptr();
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			Color c = get_pixel(x, y);
+			Color c = _get_pixel(ptr, x, y);
 			Vector3 v(c.r * 2.0 - 1.0, c.g * 2.0 - 1.0, c.b * 2.0 - 1.0);
 			v.normalize();
 			c.r = v.x * 0.5 + 0.5;
 			c.g = v.y * 0.5 + 0.5;
 			c.b = v.z * 0.5 + 0.5;
-			set_pixel(x, y, c);
+			_set_pixel(ptr, x, y, c);
 		}
 	}
-
 	unlock();
 
 	if (used_mipmaps) {
@@ -2192,12 +2191,13 @@ Rect2 Image::get_used_rect() const {
 		return Rect2();
 	}
 
-	const_cast<Image *>(this)->lock();
 	int minx = 0xFFFFFF, miny = 0xFFFFFFF;
 	int maxx = -1, maxy = -1;
+	const_cast<Image *>(this)->lock();
+	uint8_t *ptr = write_lock.ptr();
 	for (int j = 0; j < height; j++) {
 		for (int i = 0; i < width; i++) {
-			if (!(get_pixel(i, j).a > 0)) {
+			if (!(_get_pixel(ptr, i, j).a > 0)) {
 				continue;
 			}
 			if (i > maxx) {
@@ -2214,7 +2214,6 @@ Rect2 Image::get_used_rect() const {
 			}
 		}
 	}
-
 	const_cast<Image *>(this)->unlock();
 
 	if (maxx == -1) {
@@ -2320,13 +2319,12 @@ void Image::blit_rect_mask(const Ref<Image> &p_src, const Ref<Image> &p_mask, co
 
 	Ref<Image> msk = p_mask;
 	msk->lock();
-
+	uint8_t *msk_ptr = msk->write_lock.ptr();
 	for (int i = 0; i < dest_rect.size.y; i++) {
 		for (int j = 0; j < dest_rect.size.x; j++) {
 			int src_x = clipped_src_rect.position.x + j;
 			int src_y = clipped_src_rect.position.y + i;
-
-			if (msk->get_pixel(src_x, src_y).a != 0) {
+			if (msk->_get_pixel(msk_ptr, src_x, src_y).a != 0) {
 				int dst_x = dest_rect.position.x + j;
 				int dst_y = dest_rect.position.y + i;
 
@@ -2339,7 +2337,6 @@ void Image::blit_rect_mask(const Ref<Image> &p_src, const Ref<Image> &p_mask, co
 			}
 		}
 	}
-
 	msk->unlock();
 }
 
@@ -2370,7 +2367,8 @@ void Image::blend_rect(const Ref<Image> &p_src, const Rect2 &p_src_rect, const P
 	lock();
 	Ref<Image> img = p_src;
 	img->lock();
-
+	uint8_t *dst_ptr = write_lock.ptr();
+	uint8_t *src_ptr = img->write_lock.ptr();
 	for (int i = 0; i < dest_rect.size.y; i++) {
 		for (int j = 0; j < dest_rect.size.x; j++) {
 			int src_x = clipped_src_rect.position.x + j;
@@ -2379,15 +2377,14 @@ void Image::blend_rect(const Ref<Image> &p_src, const Rect2 &p_src_rect, const P
 			int dst_x = dest_rect.position.x + j;
 			int dst_y = dest_rect.position.y + i;
 
-			Color sc = img->get_pixel(src_x, src_y);
+			Color sc = img->_get_pixel(src_ptr, src_x, src_y);
 			if (sc.a != 0) {
-				Color dc = get_pixel(dst_x, dst_y);
+				Color dc = _get_pixel(dst_ptr, dst_x, dst_y);
 				dc = dc.blend(sc);
-				set_pixel(dst_x, dst_y, dc);
+				_set_pixel(dst_ptr, dst_x, dst_y, dc);
 			}
 		}
 	}
-
 	img->unlock();
 	unlock();
 }
@@ -2426,29 +2423,25 @@ void Image::blend_rect_mask(const Ref<Image> &p_src, const Ref<Image> &p_mask, c
 	Ref<Image> msk = p_mask;
 	img->lock();
 	msk->lock();
-
+	uint8_t *dst_ptr = write_lock.ptr();
+	uint8_t *src_ptr = img->write_lock.ptr();
+	uint8_t *msk_ptr = msk->write_lock.ptr();
 	for (int i = 0; i < dest_rect.size.y; i++) {
 		for (int j = 0; j < dest_rect.size.x; j++) {
 			int src_x = clipped_src_rect.position.x + j;
 			int src_y = clipped_src_rect.position.y + i;
-
-			// If the mask's pixel is transparent then we skip it
-			//Color c = msk->get_pixel(src_x, src_y);
-			//if (c.a == 0) continue;
-			if (msk->get_pixel(src_x, src_y).a != 0) {
+			if (msk->_get_pixel(msk_ptr, src_x, src_y).a != 0) {
 				int dst_x = dest_rect.position.x + j;
 				int dst_y = dest_rect.position.y + i;
-
-				Color sc = img->get_pixel(src_x, src_y);
+				Color sc = img->_get_pixel(src_ptr, src_x, src_y);
 				if (sc.a != 0) {
-					Color dc = get_pixel(dst_x, dst_y);
+					Color dc = _get_pixel(dst_ptr, dst_x, dst_y);
 					dc = dc.blend(sc);
-					set_pixel(dst_x, dst_y, dc);
+					_set_pixel(dst_ptr, dst_x, dst_y, dc);
 				}
 			}
 		}
 	}
-
 	msk->unlock();
 	img->unlock();
 	unlock();
@@ -2555,14 +2548,13 @@ Color Image::get_pixelv(const Point2 &p_src) const {
 
 Color Image::get_pixel(int p_x, int p_y) const {
 	uint8_t *ptr = write_lock.ptr();
-#ifdef DEBUG_ENABLED
 	ERR_FAIL_COND_V_MSG(!ptr, Color(), "Image must be locked with 'lock()' before using get_pixel().");
-
 	ERR_FAIL_INDEX_V(p_x, width, Color());
 	ERR_FAIL_INDEX_V(p_y, height, Color());
+	return _get_pixel(ptr, p_x, p_y);
+}
 
-#endif
-
+Color Image::_get_pixel(uint8_t *ptr, int p_x, int p_y) const {
 	uint32_t ofs = p_y * width + p_x;
 
 	switch (format) {
@@ -2672,14 +2664,13 @@ void Image::set_pixelv(const Point2 &p_dst, const Color &p_color) {
 
 void Image::set_pixel(int p_x, int p_y, const Color &p_color) {
 	uint8_t *ptr = write_lock.ptr();
-#ifdef DEBUG_ENABLED
 	ERR_FAIL_COND_MSG(!ptr, "Image must be locked with 'lock()' before using set_pixel().");
-
 	ERR_FAIL_INDEX(p_x, width);
 	ERR_FAIL_INDEX(p_y, height);
+	return _set_pixel(ptr, p_x, p_y, p_color);
+}
 
-#endif
-
+void Image::_set_pixel(uint8_t *ptr, int p_x, int p_y, const Color &p_color) {
 	uint32_t ofs = p_y * width + p_x;
 
 	switch (format) {
@@ -2782,9 +2773,10 @@ Image::DetectChannels Image::get_detected_channels() {
 	ERR_FAIL_COND_V(is_compressed(), DETECTED_RGBA);
 	bool r = false, g = false, b = false, a = false, c = false;
 	lock();
+	uint8_t *ptr = write_lock.ptr();
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
-			Color col = get_pixel(i, j);
+			Color col = _get_pixel(ptr, i, j);
 
 			if (col.r > 0.001) {
 				r = true;
@@ -2804,7 +2796,6 @@ Image::DetectChannels Image::get_detected_channels() {
 			}
 		}
 	}
-
 	unlock();
 
 	if (!c && !a) {
@@ -3030,15 +3021,14 @@ Ref<Image> Image::rgbe_to_srgb() {
 	new_image->create(width, height, false, Image::FORMAT_RGB8);
 
 	lock();
-
 	new_image->lock();
-
+	uint8_t *dst_ptr = write_lock.ptr();
+	uint8_t *src_ptr = new_image->write_lock.ptr();
 	for (int row = 0; row < height; row++) {
 		for (int col = 0; col < width; col++) {
-			new_image->set_pixel(col, row, get_pixel(col, row).to_srgb());
+			new_image->_set_pixel(dst_ptr, col, row, _get_pixel(src_ptr, col, row).to_srgb());
 		}
 	}
-
 	unlock();
 	new_image->unlock();
 
