@@ -386,7 +386,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 	ClassDB::register_class<Performance>();
 	engine->add_singleton(Engine::Singleton("Performance", performance));
 
-	GLOBAL_DEF("debug/settings/crash_handler/message", String("Please include this when reporting the bug on https://github.com/godotengine/godot/issues"));
+	GLOBAL_DEF("debug/settings/crash_handler/message", String("Please include this when reporting the bug on https://github.com/RebelToolbox/RebelEngine/issues"));
 
 	MAIN_PRINT("Main: Parse CMDLine");
 
