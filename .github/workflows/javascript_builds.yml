@@ -18,12 +18,12 @@ jobs:
     name: Template (target=release, tools=no)
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # Additional cache for Emscripten generated system libraries
       - name: Load Emscripten cache
         id: javascript-template-emscripten-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{env.EM_CACHE_FOLDER}}
           key: ${{env.EM_VERSION}}-${{github.job}}
