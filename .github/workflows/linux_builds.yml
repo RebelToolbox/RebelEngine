@@ -94,26 +94,31 @@ jobs:
           target: ${{ matrix.target }}
           tools: ${{ matrix.tools }}
 
-      # Download and extract zip archive with project, folder is renamed to be able to easy change used project
-      - name: Download test project
+      # Checkout test project
+      # If the test project needs to be updated, modify these settings to point to the updated test project.
+      # - repository: Your fork of the test project i.e. <username>/RebelTestProject
+      # - ref: Your branch with the updated test project e.g. fix-test-project
+      # - path: RebelTestProject - Don't change. This is the folder the rest of the workflow uses.
+      - name: Checkout test project
         if: ${{ matrix.test }}
-        run: |
-          wget https://github.com/RebelToolbox/RebelTestProject/archive/main.zip
-          unzip main.zip
-          mv "RebelTestProject-main" "test_project"
+        uses: actions/checkout@v4
+        with:
+          repository: RebelToolbox/RebelTestProject
+          ref: main
+          path: RebelTestProject
 
       # Editor is quite complicated piece of software, so it is easy to introduce bug here
       - name: Open and close editor
         if: ${{ matrix.test }}
         run: |
-          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --audio-driver Dummy -e -q --path test_project 2>&1 | tee sanitizers_log.txt || true
+          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --audio-driver Dummy -e -q --path RebelTestProject 2>&1 | tee sanitizers_log.txt || true
           misc/scripts/check_ci_log.py sanitizers_log.txt
 
       # Run test project
       - name: Run project
         if: ${{ matrix.test }}
         run: |
-          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} 30 --video-driver GLES3 --audio-driver Dummy --path test_project 2>&1 | tee sanitizers_log.txt || true
+          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} 30 --video-driver GLES3 --audio-driver Dummy --path RebelTestProject 2>&1 | tee sanitizers_log.txt || true
           misc/scripts/check_ci_log.py sanitizers_log.txt
 
       # Check class reference
