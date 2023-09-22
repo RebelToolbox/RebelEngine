@@ -11,7 +11,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>(c) 2007-2022 Juan Linietsky, Ariel Manzur &amp; Godot Engine contributors</string>
 	<key>CFBundleIconFile</key>
-	<string>Godot.icns</string>
+	<string>rebel-icon.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.godotengine.godot</string>
 	<key>CFBundleInfoDictionaryVersion</key>
