@@ -5,9 +5,9 @@
 	</brief_description>
 	<description>
 		Base class for all UI-related nodes. [Control] features a bounding rectangle that defines its extents, an anchor position relative to its parent control or the current viewport, and margins that represent an offset to the anchor. The margins update automatically when the node, any of its parents, or the screen size change.
-		For more information on Godot's UI system, anchors, margins, and containers, see the related tutorials in the manual. To build flexible UIs, you'll need a mix of UI elements that inherit from [Control] and [Container] nodes.
+		For more information on Rebel Engine's UI system, anchors, margins, and containers, see the related tutorials in the manual. To build flexible UIs, you'll need a mix of UI elements that inherit from [Control] and [Container] nodes.
 		[b]User Interface nodes and input[/b]
-		Godot sends input events to the scene's root node first, by calling [method Node._input]. [method Node._input] forwards the event down the node tree to the nodes under the mouse cursor, or on keyboard focus. To do so, it calls [method MainLoop._input_event]. Call [method accept_event] so no other node receives the event. Once you accept an input, it becomes handled so [method Node._unhandled_input] will not process it.
+		Rebel Engine sends input events to the scene's root node first, by calling [method Node._input]. [method Node._input] forwards the event down the node tree to the nodes under the mouse cursor, or on keyboard focus. To do so, it calls [method MainLoop._input_event]. Call [method accept_event] so no other node receives the event. Once you accept an input, it becomes handled so [method Node._unhandled_input] will not process it.
 		Only one [Control] node can be in keyboard focus. Only the node in focus will receive keyboard events. To get the focus, call [method grab_focus]. [Control] nodes lose focus when another node grabs it, or if you hide the node in focus.
 		Sets [member mouse_filter] to [constant MOUSE_FILTER_IGNORE] to tell a [Control] node to ignore mouse or touch events. You'll need it if you place an icon on top of a button.
 		[Theme] resources change the Control's appearance. If you change the [Theme] on a [Control] node, it affects all of its children. To override some of the theme's parameters, call one of the [code]add_*_override[/code] methods, like [method add_font_override]. You can override the theme with the inspector.
@@ -162,7 +162,7 @@
 			<argument index="0" name="position" type="Vector2" />
 			<argument index="1" name="data" type="Variant" />
 			<description>
-				Godot calls this method to test if [code]data[/code] from a control's [method get_drag_data] can be dropped at [code]position[/code]. [code]position[/code] is local to this control.
+				Rebel Engine calls this method to test if [code]data[/code] from a control's [method get_drag_data] can be dropped at [code]position[/code]. [code]position[/code] is local to this control.
 				This method should only be used to test the data. Process the data in [method drop_data].
 				[codeblock]
 				func can_drop_data(position, data):
@@ -177,7 +177,7 @@
 			<argument index="0" name="position" type="Vector2" />
 			<argument index="1" name="data" type="Variant" />
 			<description>
-				Godot calls this method to pass you the [code]data[/code] from a control's [method get_drag_data] result. Godot first calls [method can_drop_data] to test if [code]data[/code] is allowed to drop at [code]position[/code] where [code]position[/code] is local to this control.
+				Rebel Engine calls this method to pass you the [code]data[/code] from a control's [method get_drag_data] result. Rebel Engine first calls [method can_drop_data] to test if [code]data[/code] is allowed to drop at [code]position[/code] where [code]position[/code] is local to this control.
 				[codeblock]
 				func can_drop_data(position, data):
 				    return typeof(data) == TYPE_DICTIONARY and data.has("color")
@@ -263,7 +263,7 @@
 			<return type="Variant" />
 			<argument index="0" name="position" type="Vector2" />
 			<description>
-				Godot calls this method to get data that can be dragged and dropped onto controls that expect drop data. Returns [code]null[/code] if there is no data to drag. Controls that want to receive drop data should implement [method can_drop_data] and [method drop_data]. [code]position[/code] is local to this control. Drag may be forced with [method force_drag].
+				Rebel Engine calls this method to get data that can be dragged and dropped onto controls that expect drop data. Returns [code]null[/code] if there is no data to drag. Controls that want to receive drop data should implement [method can_drop_data] and [method drop_data]. [code]position[/code] is local to this control. Drag may be forced with [method force_drag].
 				A preview that will follow the mouse that should represent the data can be set with [method set_drag_preview]. A good time to set the preview is in this method.
 				[codeblock]
 				func get_drag_data(position):
@@ -706,24 +706,24 @@
 			The focus access mode for the control (None, Click or All). Only one Control can be focused at the same time, and it will receive keyboard signals.
 		</member>
 		<member name="focus_neighbour_bottom" type="NodePath" setter="set_focus_neighbour" getter="get_focus_neighbour" default="NodePath(&quot;&quot;)">
-			Tells Godot which node it should give keyboard focus to if the user presses the down arrow on the keyboard or down on a gamepad by default. You can change the key by editing the [code]ui_down[/code] input action. The node must be a [Control]. If this property is not set, Godot will give focus to the closest [Control] to the bottom of this one.
+			Tells Rebel Engine which node it should give keyboard focus to if the user presses the down arrow on the keyboard or down on a gamepad by default. You can change the key by editing the [code]ui_down[/code] input action. The node must be a [Control]. If this property is not set, Rebel Engine will give focus to the closest [Control] to the bottom of this one.
 		</member>
 		<member name="focus_neighbour_left" type="NodePath" setter="set_focus_neighbour" getter="get_focus_neighbour" default="NodePath(&quot;&quot;)">
-			Tells Godot which node it should give keyboard focus to if the user presses the left arrow on the keyboard or left on a gamepad by default. You can change the key by editing the [code]ui_left[/code] input action. The node must be a [Control]. If this property is not set, Godot will give focus to the closest [Control] to the left of this one.
+			Tells Rebel Engine which node it should give keyboard focus to if the user presses the left arrow on the keyboard or left on a gamepad by default. You can change the key by editing the [code]ui_left[/code] input action. The node must be a [Control]. If this property is not set, Rebel Engine will give focus to the closest [Control] to the left of this one.
 		</member>
 		<member name="focus_neighbour_right" type="NodePath" setter="set_focus_neighbour" getter="get_focus_neighbour" default="NodePath(&quot;&quot;)">
-			Tells Godot which node it should give keyboard focus to if the user presses the right arrow on the keyboard or right on a gamepad by default. You can change the key by editing the [code]ui_right[/code] input action. The node must be a [Control]. If this property is not set, Godot will give focus to the closest [Control] to the bottom of this one.
+			Tells Rebel Engine which node it should give keyboard focus to if the user presses the right arrow on the keyboard or right on a gamepad by default. You can change the key by editing the [code]ui_right[/code] input action. The node must be a [Control]. If this property is not set, Rebel Engine will give focus to the closest [Control] to the bottom of this one.
 		</member>
 		<member name="focus_neighbour_top" type="NodePath" setter="set_focus_neighbour" getter="get_focus_neighbour" default="NodePath(&quot;&quot;)">
-			Tells Godot which node it should give keyboard focus to if the user presses the top arrow on the keyboard or top on a gamepad by default. You can change the key by editing the [code]ui_top[/code] input action. The node must be a [Control]. If this property is not set, Godot will give focus to the closest [Control] to the bottom of this one.
+			Tells Rebel Engine which node it should give keyboard focus to if the user presses the top arrow on the keyboard or top on a gamepad by default. You can change the key by editing the [code]ui_top[/code] input action. The node must be a [Control]. If this property is not set, Rebel Engine will give focus to the closest [Control] to the bottom of this one.
 		</member>
 		<member name="focus_next" type="NodePath" setter="set_focus_next" getter="get_focus_next" default="NodePath(&quot;&quot;)">
-			Tells Godot which node it should give keyboard focus to if the user presses Tab on a keyboard by default. You can change the key by editing the [code]ui_focus_next[/code] input action.
-			If this property is not set, Godot will select a "best guess" based on surrounding nodes in the scene tree.
+			Tells Rebel Engine which node it should give keyboard focus to if the user presses Tab on a keyboard by default. You can change the key by editing the [code]ui_focus_next[/code] input action.
+			If this property is not set, Rebel Engine will select a "best guess" based on surrounding nodes in the scene tree.
 		</member>
 		<member name="focus_previous" type="NodePath" setter="set_focus_previous" getter="get_focus_previous" default="NodePath(&quot;&quot;)">
-			Tells Godot which node it should give keyboard focus to if the user presses Shift+Tab on a keyboard by default. You can change the key by editing the [code]ui_focus_prev[/code] input action.
-			If this property is not set, Godot will select a "best guess" based on surrounding nodes in the scene tree.
+			Tells Rebel Engine which node it should give keyboard focus to if the user presses Shift+Tab on a keyboard by default. You can change the key by editing the [code]ui_focus_prev[/code] input action.
+			If this property is not set, Rebel Engine will select a "best guess" based on surrounding nodes in the scene tree.
 		</member>
 		<member name="grow_horizontal" type="int" setter="set_h_grow_direction" getter="get_h_grow_direction" enum="Control.GrowDirection" default="1">
 			Controls the direction on the horizontal axis in which the control should grow if its horizontal minimum size is changed to be greater than its current size, as the control always has to be at least the minimum size.
@@ -764,7 +764,7 @@
 			Margins are often controlled by one or multiple parent [Container] nodes, so you should not modify them manually if your node is a direct child of a [Container]. Margins update automatically when you move or resize the node.
 		</member>
 		<member name="mouse_default_cursor_shape" type="int" setter="set_default_cursor_shape" getter="get_default_cursor_shape" enum="Control.CursorShape" default="0">
-			The default cursor shape for this control. Useful for Godot plugins and applications or games that use the system's mouse cursors.
+			The default cursor shape for this control. Useful for Rebel Engine plugins and applications or games that use the system's mouse cursors.
 			[b]Note:[/b] On Linux, shapes may vary depending on the cursor theme of the system.
 		</member>
 		<member name="mouse_filter" type="int" setter="set_mouse_filter" getter="get_mouse_filter" enum="Control.MouseFilter" default="0">
@@ -891,7 +891,7 @@
 			Sent when the node loses focus.
 		</constant>
 		<constant name="NOTIFICATION_THEME_CHANGED" value="45">
-			Sent when the node's [member theme] changes, right before Godot redraws the control. Happens when you call one of the [code]add_*_override[/code] methods.
+			Sent when the node's [member theme] changes, right before Rebel Engine redraws the control. Happens when you call one of the [code]add_*_override[/code] methods.
 		</constant>
 		<constant name="NOTIFICATION_MODAL_CLOSE" value="46">
 			Sent when an open modal dialog closes. See [method show_modal].

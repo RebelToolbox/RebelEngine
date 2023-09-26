@@ -39,7 +39,7 @@
 			<argument index="0" name="peer_source" type="int" />
 			<description>
 				Emitted when a packet is received from a peer.
-				[b]Note:[/b] This signal is only emitted when the client or server is configured to use Godot multiplayer API.
+				[b]Note:[/b] This signal is only emitted when the client or server is configured to use Rebel Engine multiplayer API.
 			</description>
 		</signal>
 	</signals>

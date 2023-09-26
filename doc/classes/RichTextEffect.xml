@@ -14,7 +14,6 @@
 	</description>
 	<tutorials>
 		<link>https://docs.rebeltoolbox.com/en/latest/tutorials/ui/bbcode_in_richtextlabel.html</link>
-		<link>https://github.com/Eoin-ONeill-Yokai/Godot-Rich-Text-Effect-Test-Project</link>
 	</tutorials>
 	<methods>
 		<method name="_process_custom_fx" qualifiers="virtual">

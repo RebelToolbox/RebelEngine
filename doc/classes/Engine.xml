@@ -61,13 +61,13 @@
 		<method name="get_license_info" qualifiers="const">
 			<return type="Dictionary" />
 			<description>
-				Returns Dictionary of licenses used by Godot and included third party components.
+				Returns Dictionary of licenses used by Rebel Engine and included third party components.
 			</description>
 		</method>
 		<method name="get_license_text" qualifiers="const">
 			<return type="String" />
 			<description>
-				Returns Godot license text.
+				Returns Rebel Engine license text.
 			</description>
 		</method>
 		<method name="get_main_loop" qualifiers="const">
@@ -98,7 +98,7 @@
 			<return type="Object" />
 			<argument index="0" name="name" type="String" />
 			<description>
-				Returns a global singleton with given [code]name[/code]. Often used for plugins, e.g. [code]GodotPayment[/code] on Android.
+				Returns a global singleton with given [code]name[/code]. Often used for plugins on Android.
 			</description>
 		</method>
 		<method name="get_version_info" qualifiers="const">
@@ -150,7 +150,7 @@
 			[b]Note:[/b] To detect whether the script is run from an editor [i]build[/i] (e.g. when pressing [code]F5[/code]), use [method OS.has_feature] with the [code]"editor"[/code] argument instead. [code]OS.has_feature("editor")[/code] will evaluate to [code]true[/code] both when the code is running in the editor and when running the project from the editor, but it will evaluate to [code]false[/code] when the code is run from an exported project.
 		</member>
 		<member name="iterations_per_second" type="int" setter="set_iterations_per_second" getter="get_iterations_per_second" default="60">
-			The number of fixed iterations per second. This controls how often physics simulation and [method Node._physics_process] methods are run. This value should generally always be set to [code]60[/code] or above, as Godot doesn't interpolate the physics step. As a result, values lower than [code]60[/code] will look stuttery. This value can be increased to make input more reactive or work around collision tunneling issues, but keep in mind doing so will increase CPU usage. See also [member target_fps] and [member ProjectSettings.physics/common/physics_fps].
+			The number of fixed iterations per second. This controls how often physics simulation and [method Node._physics_process] methods are run. This value should generally always be set to [code]60[/code] or above, as Rebel Engine doesn't interpolate the physics step. As a result, values lower than [code]60[/code] will look stuttery. This value can be increased to make input more reactive or work around collision tunneling issues, but keep in mind doing so will increase CPU usage. See also [member target_fps] and [member ProjectSettings.physics/common/physics_fps].
 			[b]Note:[/b] Only 8 physics ticks may be simulated per rendered frame at most. If more than 8 physics ticks have to be simulated per rendered frame to keep up with rendering, the game will appear to slow down (even if [code]delta[/code] is used consistently in physics calculations). Therefore, it is recommended not to increase [member Engine.iterations_per_second] above 240. Otherwise, the game will slow down when the rendering framerate goes below 30 FPS.
 		</member>
 		<member name="physics_jitter_fix" type="float" setter="set_physics_jitter_fix" getter="get_physics_jitter_fix" default="0.5">

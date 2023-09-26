@@ -4,7 +4,7 @@
 		A script implemented in the C# programming language (Mono-enabled builds only).
 	</brief_description>
 	<description>
-		This class represents a C# script. It is the C# equivalent of the [GDScript] class and is only available in Mono-enabled Godot builds.
+		This class represents a C# script. It is the C# equivalent of the [GDScript] class and is only available in Mono-enabled Rebel builds.
 		See also [GodotSharp].
 	</description>
 	<tutorials>

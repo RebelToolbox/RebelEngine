@@ -4,8 +4,8 @@
 		Abstract base class for the game's main loop.
 	</brief_description>
 	<description>
-		[MainLoop] is the abstract base class for a Godot project's game loop. It is inherited by [SceneTree], which is the default game loop implementation used in Godot projects, though it is also possible to write and use one's own [MainLoop] subclass instead of the scene tree.
-		Upon the application start, a [MainLoop] implementation must be provided to the OS; otherwise, the application will exit. This happens automatically (and a [SceneTree] is created) unless a main [Script] is provided from the command line (with e.g. [code]godot -s my_loop.gd[/code], which should then be a [MainLoop] implementation.
+		[MainLoop] is the abstract base class for a Rebel Engine project's game loop. It is inherited by [SceneTree], which is the default game loop implementation used in Rebel Engine projects, though it is also possible to write and use one's own [MainLoop] subclass instead of the scene tree.
+		Upon the application start, a [MainLoop] implementation must be provided to the OS; otherwise, the application will exit. This happens automatically (and a [SceneTree] is created) unless a main [Script] is provided from the command line (with e.g. [code]rebel -s my_loop.gd[/code], which should then be a [MainLoop] implementation.
 		Here is an example script implementing a simple [MainLoop]:
 		[codeblock]
 		extends MainLoop
@@ -90,7 +90,7 @@
 			<return type="void" />
 			<argument index="0" name="text" type="String" />
 			<description>
-				Deprecated callback, does not do anything. Use [method _input_event] to parse text input. Will be removed in Godot 4.0.
+				Deprecated callback, does not do anything. Use [method _input_event] to parse text input.
 			</description>
 		</method>
 		<method name="_iteration" qualifiers="virtual">
@@ -104,41 +104,41 @@
 		<method name="finish">
 			<return type="void" />
 			<description>
-				Should not be called manually, override [method _finalize] instead. Will be removed in Godot 4.0.
+				Should not be called manually, override [method _finalize] instead.
 			</description>
 		</method>
 		<method name="idle">
 			<return type="bool" />
 			<argument index="0" name="delta" type="float" />
 			<description>
-				Should not be called manually, override [method _idle] instead. Will be removed in Godot 4.0.
+				Should not be called manually, override [method _idle] instead.
 			</description>
 		</method>
 		<method name="init">
 			<return type="void" />
 			<description>
-				Should not be called manually, override [method _initialize] instead. Will be removed in Godot 4.0.
+				Should not be called manually, override [method _initialize] instead.
 			</description>
 		</method>
 		<method name="input_event">
 			<return type="void" />
 			<argument index="0" name="event" type="InputEvent" />
 			<description>
-				Should not be called manually, override [method _input_event] instead. Will be removed in Godot 4.0.
+				Should not be called manually, override [method _input_event] instead.
 			</description>
 		</method>
 		<method name="input_text">
 			<return type="void" />
 			<argument index="0" name="text" type="String" />
 			<description>
-				Should not be called manually, override [method _input_text] instead. Will be removed in Godot 4.0.
+				Should not be called manually, override [method _input_text] instead.
 			</description>
 		</method>
 		<method name="iteration">
 			<return type="bool" />
 			<argument index="0" name="delta" type="float" />
 			<description>
-				Should not be called manually, override [method _iteration] instead. Will be removed in Godot 4.0.
+				Should not be called manually, override [method _iteration] instead.
 			</description>
 		</method>
 	</methods>
@@ -192,7 +192,7 @@
 			Specific to the macOS platform.
 		</constant>
 		<constant name="NOTIFICATION_CRASH" value="1012">
-			Notification received from Godot's crash handler when the engine is about to crash.
+			Notification received from Rebel Engine's crash handler when the engine is about to crash.
 			Implemented on desktop platforms if the crash handler is enabled.
 		</constant>
 		<constant name="NOTIFICATION_OS_IME_UPDATE" value="1013">

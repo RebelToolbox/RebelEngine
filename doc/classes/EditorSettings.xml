@@ -5,7 +5,7 @@
 	</brief_description>
 	<description>
 		Object that holds the project-independent editor settings. These settings are generally visible in the [b]Editor &gt; Editor Settings[/b] menu.
-		Property names use slash delimiters to distinguish sections. Setting values can be of any [Variant] type. It's recommended to use [code]snake_case[/code] for editor settings to be consistent with the Godot editor itself.
+		Property names use slash delimiters to distinguish sections. Setting values can be of any [Variant] type. It's recommended to use [code]snake_case[/code] for editor settings to be consistent with the Rebel Engine editor itself.
 		Accessing the settings can be done using the following methods, such as:
 		[codeblock]
 		# `settings.set("some/property", value)` also works as this class overrides `_set()` internally.

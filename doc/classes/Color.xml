@@ -219,7 +219,7 @@
 		<method name="to_rgba32">
 			<return type="int" />
 			<description>
-				Returns the color converted to a 32-bit integer in RGBA format (each byte represents a color channel). RGBA is Godot's default format.
+				Returns the color converted to a 32-bit integer in RGBA format (each byte represents a color channel). RGBA is Rebel Engine's default format.
 				[codeblock]
 				var color = Color(1, 0.5, 0.2)
 				print(color.to_rgba32()) # Prints 4286526463
@@ -229,7 +229,7 @@
 		<method name="to_rgba64">
 			<return type="int" />
 			<description>
-				Returns the color converted to a 64-bit integer in RGBA format (each word represents a color channel). RGBA is Godot's default format.
+				Returns the color converted to a 64-bit integer in RGBA format (each word represents a color channel). RGBA is Rebel Engine's default format.
 				[codeblock]
 				var color = Color(1, 0.5, 0.2)
 				print(color.to_rgba64()) # Prints -140736629309441

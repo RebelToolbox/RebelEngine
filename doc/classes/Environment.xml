@@ -294,7 +294,7 @@
 			The default exposure used for tonemapping.
 		</member>
 		<member name="tonemap_mode" type="int" setter="set_tonemapper" getter="get_tonemapper" enum="Environment.ToneMapper" default="0">
-			The tonemapping mode to use. Tonemapping is the process that "converts" HDR values to be suitable for rendering on a LDR display. (Godot doesn't support rendering on HDR displays yet.)
+			The tonemapping mode to use. Tonemapping is the process that "converts" HDR values to be suitable for rendering on a LDR display. (Rebel Engine doesn't support rendering on HDR displays yet.)
 		</member>
 		<member name="tonemap_white" type="float" setter="set_tonemap_white" getter="get_tonemap_white" default="1.0">
 			The white reference value for tonemapping. Only effective if the [member tonemap_mode] isn't set to [constant TONE_MAPPER_LINEAR].
@@ -348,8 +348,7 @@
 			Filmic tonemapper operator. This avoids clipping bright highlights, with a resulting image that usually looks more vivid than [constant TONE_MAPPER_REINHARDT].
 		</constant>
 		<constant name="TONE_MAPPER_ACES" value="3" enum="ToneMapper">
-			Use the legacy Godot version of the Academy Color Encoding System tonemapper. Unlike [constant TONE_MAPPER_ACES_FITTED], this version of ACES does not handle bright lighting in a physically accurate way. ACES typically has a more contrasted output compared to [constant TONE_MAPPER_REINHARDT] and [constant TONE_MAPPER_FILMIC].
-			[b]Note:[/b] This tonemapping operator will be removed in Godot 4.0 in favor of the more accurate [constant TONE_MAPPER_ACES_FITTED].
+			Use the legacy Rebel Engine version of the Academy Color Encoding System tonemapper. Unlike [constant TONE_MAPPER_ACES_FITTED], this version of ACES does not handle bright lighting in a physically accurate way. ACES typically has a more contrasted output compared to [constant TONE_MAPPER_REINHARDT] and [constant TONE_MAPPER_FILMIC].
 		</constant>
 		<constant name="TONE_MAPPER_ACES_FITTED" value="4" enum="ToneMapper">
 			Use the Academy Color Encoding System tonemapper. ACES is slightly more expensive than other options, but it handles bright lighting in a more realistic fashion by desaturating it as it becomes brighter. ACES typically has a more contrasted output compared to [constant TONE_MAPPER_REINHARDT] and [constant TONE_MAPPER_FILMIC].

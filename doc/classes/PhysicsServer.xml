@@ -673,7 +673,7 @@
 			<return type="int" />
 			<argument index="0" name="process_info" type="int" enum="PhysicsServer.ProcessInfo" />
 			<description>
-				Returns information about the current state of the 3D physics engine. See [enum ProcessInfo] for a list of available states. Only implemented for Godot Physics.
+				Returns information about the current state of the 3D physics engine. See [enum ProcessInfo] for a list of available states. Only implemented for Rebel Physics.
 			</description>
 		</method>
 		<method name="hinge_joint_get_flag" qualifiers="const">
@@ -841,7 +841,7 @@
 			<argument index="0" name="iterations" type="int" />
 			<description>
 				Sets the amount of iterations for calculating velocities of colliding bodies. The greater the amount of iterations, the more accurate the collisions will be. However, a greater amount of iterations requires more CPU power, which can decrease performance. The default value is [code]8[/code].
-				[b]Note:[/b] Only has an effect when using the GodotPhysics engine, not the default Bullet physics engine.
+				[b]Note:[/b] Only has an effect when using the Rebel Physics engine, not the default Bullet physics engine.
 			</description>
 		</method>
 		<method name="shape_create">

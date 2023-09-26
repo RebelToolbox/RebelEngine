@@ -5,7 +5,7 @@
 	</brief_description>
 	<description>
 		TextEdit is meant for editing large, multiline text. It also has facilities for editing code, such as syntax highlighting support and multiple levels of undo/redo.
-		[b]Note:[/b] When holding down [code]Alt[/code], the vertical scroll wheel will scroll 5 times as fast as it would normally do. This also works in the Godot script editor.
+		[b]Note:[/b] When holding down [code]Alt[/code], the vertical scroll wheel will scroll 5 times as fast as it would normally do. This also works in the Rebel Engine script editor.
 	</description>
 	<tutorials>
 	</tutorials>

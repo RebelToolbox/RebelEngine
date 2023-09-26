@@ -269,7 +269,7 @@
 			<argument index="0" name="buffer" type="PoolByteArray" />
 			<description>
 				Loads an image from the binary contents of a BMP file.
-				[b]Note:[/b] Godot's BMP module doesn't support 16-bit per pixel images. Only 1-bit, 4-bit, 8-bit, 24-bit, and 32-bit per pixel images are supported.
+				[b]Note:[/b] Rebel Engine's BMP module doesn't support 16-bit per pixel images. Only 1-bit, 4-bit, 8-bit, 24-bit, and 32-bit per pixel images are supported.
 			</description>
 		</method>
 		<method name="load_jpg_from_buffer">
@@ -346,7 +346,7 @@
 			<argument index="0" name="path" type="String" />
 			<argument index="1" name="grayscale" type="bool" default="false" />
 			<description>
-				Saves the image as an EXR file to [code]path[/code]. If [code]grayscale[/code] is [code]true[/code] and the image has only one channel, it will be saved explicitly as monochrome rather than one red channel. This function will return [constant ERR_UNAVAILABLE] if Godot was compiled without the TinyEXR module.
+				Saves the image as an EXR file to [code]path[/code]. If [code]grayscale[/code] is [code]true[/code] and the image has only one channel, it will be saved explicitly as monochrome rather than one red channel. This function will return [constant ERR_UNAVAILABLE] if Rebel Engine was compiled without the TinyEXR module.
 				[b]Note:[/b] The TinyEXR module is disabled in non-editor builds, which means [method save_exr] will return [constant ERR_UNAVAILABLE] when it is called from an exported project.
 			</description>
 		</method>

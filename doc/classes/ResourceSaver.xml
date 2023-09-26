@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="ResourceSaver" inherits="Object" version="1.0">
 	<brief_description>
-		Singleton for saving Godot-specific resource types.
+		Singleton for saving Rebel Engine specific resource types.
 	</brief_description>
 	<description>
-		Singleton for saving Godot-specific resource types to the filesystem.
+		Singleton for saving Rebel Engine specific resource types to the filesystem.
 		It uses the many [ResourceFormatSaver] classes registered in the engine (either built-in or from a plugin) to save engine-specific resource data to text-based (e.g. [code].tres[/code] or [code].tscn[/code]) or binary files (e.g. [code].res[/code] or [code].scn[/code]).
 	</description>
 	<tutorials>

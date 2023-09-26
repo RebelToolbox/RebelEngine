@@ -25,7 +25,7 @@
 		add_child(mi)
 		[/codeblock]
 		See also [ArrayMesh], [ImmediateGeometry] and [SurfaceTool] for procedural geometry generation.
-		[b]Note:[/b] Godot uses clockwise [url=https://learnopengl.com/Advanced-OpenGL/Face-culling]winding order[/url] for front faces of triangle primitive modes.
+		[b]Note:[/b] Rebel Engine uses clockwise [url=https://learnopengl.com/Advanced-OpenGL/Face-culling]winding order[/url] for front faces of triangle primitive modes.
 	</description>
 	<tutorials>
 	</tutorials>

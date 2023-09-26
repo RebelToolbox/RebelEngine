@@ -40,7 +40,7 @@
 		<method name="get_joystick_id" qualifiers="const">
 			<return type="int" />
 			<description>
-				Returns the ID of the joystick object bound to this. Every controller tracked by the [ARVRServer] that has buttons and axis will also be registered as a joystick within Godot. This means that all the normal joystick tracking and input mapping will work for buttons and axis found on the AR/VR controllers. This ID is purely offered as information so you can link up the controller with its joystick entry.
+				Returns the ID of the joystick object bound to this. Every controller tracked by the [ARVRServer] that has buttons and axis will also be registered as a joystick within Rebel Engine. This means that all the normal joystick tracking and input mapping will work for buttons and axis found on the AR/VR controllers. This ID is purely offered as information so you can link up the controller with its joystick entry.
 			</description>
 		</method>
 		<method name="get_mesh" qualifiers="const">

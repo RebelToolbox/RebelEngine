@@ -58,7 +58,7 @@
 			<return type="void" />
 			<argument index="0" name="path" type="String" />
 			<description>
-				Update a file information. Call this if an external program (not Godot) modified the file.
+				Update a file information. Call this if an external program (not Rebel Engine) modified the file.
 			</description>
 		</method>
 		<method name="update_script_classes">

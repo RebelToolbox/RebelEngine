@@ -116,7 +116,7 @@
 		<method name="get_resource_type" qualifiers="virtual">
 			<return type="String" />
 			<description>
-				Gets the Godot resource type associated with this loader. e.g. [code]"Mesh"[/code] or [code]"Animation"[/code].
+				Gets the Rebel Engine resource type associated with this loader. e.g. [code]"Mesh"[/code] or [code]"Animation"[/code].
 			</description>
 		</method>
 		<method name="get_save_extension" qualifiers="virtual">

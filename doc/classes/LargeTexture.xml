@@ -4,7 +4,7 @@
 		[i]Deprecated.[/i] A [Texture] capable of storing many smaller textures with offsets.
 	</brief_description>
 	<description>
-		[i]Deprecated (will be removed in Godot 4.0).[/i] A [Texture] capable of storing many smaller textures with offsets.
+		A [Texture] capable of storing many smaller textures with offsets.
 		You can dynamically add pieces ([Texture]s) to this [LargeTexture] using different offsets.
 	</description>
 	<tutorials>

@@ -68,7 +68,7 @@
 
 		func _webxr_session_started():
 		    $Button.visible = false
-		    # This tells Godot to start rendering to the headset.
+		    # This tells Rebel Engine to start rendering to the headset.
 		    get_viewport().arvr = true
 		    # This will be the reference space type you ultimately got, out of the
 		    # types that you requested above. This is useful if you want the game to
@@ -77,7 +77,7 @@
 
 		func _webxr_session_ended():
 		    $Button.visible = true
-		    # If the user exits immersive mode, then we tell Godot to render to the web
+		    # If the user exits immersive mode, then we tell Rebel Engine to render to the web
 		    # page again.
 		    get_viewport().arvr = false
 
@@ -85,13 +85,12 @@
 		    OS.alert("Failed to initialize: " + message)
 		[/codeblock]
 		There are several ways to handle "controller" input:
-		- Using [ARVRController] nodes and their [signal ARVRController.button_pressed] and [signal ARVRController.button_release] signals. This is how controllers are typically handled in AR/VR apps in Godot, however, this will only work with advanced VR controllers like the Oculus Touch or Index controllers, for example. The buttons codes are defined by [url=https://immersive-web.github.io/webxr-gamepads-module/#xr-standard-gamepad-mapping]Section 3.3 of the WebXR Gamepads Module[/url].
+		- Using [ARVRController] nodes and their [signal ARVRController.button_pressed] and [signal ARVRController.button_release] signals. This is how controllers are typically handled in AR/VR apps in Rebel Engine, however, this will only work with advanced VR controllers like the Oculus Touch or Index controllers, for example. The buttons codes are defined by [url=https://immersive-web.github.io/webxr-gamepads-module/#xr-standard-gamepad-mapping]Section 3.3 of the WebXR Gamepads Module[/url].
 		- Using [method Node._unhandled_input] and [InputEventJoypadButton] or [InputEventJoypadMotion]. This works the same as normal joypads, except the [member InputEvent.device] starts at 100, so the left controller is 100 and the right controller is 101, and the button codes are also defined by [url=https://immersive-web.github.io/webxr-gamepads-module/#xr-standard-gamepad-mapping]Section 3.3 of the WebXR Gamepads Module[/url].
 		- Using the [signal select], [signal squeeze] and related signals. This method will work for both advanced VR controllers, and non-traditional "controllers" like a tap on the screen, a spoken voice command or a button press on the device itself. The [code]controller_id[/code] passed to these signals is the same id as used in [member ARVRController.controller_id].
 		You can use one or all of these methods to allow your game or app to support a wider or narrower set of devices and input methods, or to allow more advanced interations with more advanced devices.
 	</description>
 	<tutorials>
-		<link title="How to make a VR game for WebXR with Godot">https://www.snopekgames.com/blog/2020/how-make-vr-game-webxr-godot</link>
 	</tutorials>
 	<methods>
 		<method name="get_controller" qualifiers="const">
@@ -189,7 +188,7 @@
 		<signal name="session_ended">
 			<description>
 				Emitted when the user ends the WebXR session (which can be done using UI from the browser or device).
-				At this point, you should do [code]get_viewport().arvr = false[/code] to instruct Godot to resume rendering to the screen.
+				At this point, you should do [code]get_viewport().arvr = false[/code] to instruct Rebel Engine to resume rendering to the screen.
 			</description>
 		</signal>
 		<signal name="session_failed">
@@ -202,7 +201,7 @@
 		<signal name="session_started">
 			<description>
 				Emitted by [method ARVRInterface.initialize] if the session is successfully started.
-				At this point, it's safe to do [code]get_viewport().arvr = true[/code] to instruct Godot to start rendering to the AR/VR device.
+				At this point, it's safe to do [code]get_viewport().arvr = true[/code] to instruct Rebel Engine to start rendering to the AR/VR device.
 			</description>
 		</signal>
 		<signal name="session_supported">
