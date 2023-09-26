@@ -38,7 +38,7 @@
 #include "editor_scale.h"
 #include "editor_settings.h"
 
-#define CONTRIBUTE_URL "https://docs.godotengine.org/en/latest/community/contributing/updating_the_class_reference.html"
+#define CONTRIBUTE_URL "https://docs.rebeltoolbox.com/en/latest/community/contributing/updating_the_class_reference.html"
 
 DocData *EditorHelp::doc = nullptr;
 

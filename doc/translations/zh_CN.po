@@ -4394,21 +4394,21 @@ msgstr ""
 #: doc/classes/AABB.xml doc/classes/Basis.xml doc/classes/Plane.xml
 #: doc/classes/Rect2.xml doc/classes/Transform.xml doc/classes/Transform2D.xml
 #: doc/classes/Vector2.xml doc/classes/Vector3.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/math/index.html"
-msgstr "https://docs.godotengine.org/zh_CN/stable/tutorials/math/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/math/index.html"
+msgstr "https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/math/index.html"
 
 #: doc/classes/AABB.xml doc/classes/Rect2.xml doc/classes/Vector2.xml
 #: doc/classes/Vector3.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/math/vector_math.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/math/vector_math.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/math/vector_math.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/math/vector_math.html"
 
 #: doc/classes/AABB.xml doc/classes/Rect2.xml doc/classes/Vector2.xml
 #: doc/classes/Vector3.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/math/vectors_advanced.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/math/vectors_advanced.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/math/vectors_advanced."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/math/vectors_advanced."
 "html"
 
 #: doc/classes/AABB.xml
@@ -4843,9 +4843,9 @@ msgstr ""
 #: doc/classes/AnimatedSprite.xml doc/classes/AnimatedSprite3D.xml
 #: doc/classes/AnimationPlayer.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/2d/2d_sprite_animation.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/2d/2d_sprite_animation.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/2d/2d_sprite_animation."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/2d/2d_sprite_animation."
 "html"
 
 #: doc/classes/AnimatedSprite.xml doc/classes/Area2D.xml
@@ -5134,9 +5134,9 @@ msgstr ""
 "TrackType] 查看可用类型。"
 
 #: doc/classes/Animation.xml doc/classes/AnimationPlayer.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/animation/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/animation/index.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/animation/index.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/animation/index.html"
 
 #: doc/classes/Animation.xml
 msgid "Adds a track to the Animation."
@@ -5655,9 +5655,9 @@ msgstr ""
 #: doc/classes/AnimationNodeTransition.xml doc/classes/AnimationTree.xml
 #: doc/classes/AnimationTreePlayer.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/animation/animation_tree.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/animation/animation_tree.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/animation/animation_tree."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/animation/animation_tree."
 "html"
 
 #: doc/classes/AnimationNode.xml
@@ -6494,7 +6494,7 @@ msgstr "按照最短路径从当前状态过渡到另一个状态。"
 msgid ""
 "Turn on auto advance when this condition is set. The provided name will "
 "become a boolean parameter on the [AnimationTree] that can be controlled "
-"from code (see [url=https://docs.godotengine.org/en/3.4/tutorials/animation/"
+"from code (see [url=https://docs.rebeltoolbox.com/en/latest/tutorials/animation/"
 "animation_tree.html#controlling-from-code][/url]). For example, if [member "
 "AnimationTree.tree_root] is an [AnimationNodeStateMachine] and [member "
 "advance_condition] is set to [code]\"idle\"[/code]:\n"
@@ -6504,7 +6504,7 @@ msgid ""
 "[/codeblock]"
 msgstr ""
 "设置此条件，开启自动前进。提供的名称将成为[AnimationTree]上的一个布尔参数，可"
-"以通过代码控制，参阅[url=https://docs.godotengine.org/zh_CN/stable/tutorials/"
+"以通过代码控制，参阅[url=https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/"
 "animation/animation_tree.html#controlling-from-code][/url]。例如，如果"
 "[member AnimationTree.tree_root]是一个[AnimationNodeStateMachine]，[member "
 "advance_condition]被设置为[code]\"idle\"[/code]。\n"
@@ -7864,9 +7864,9 @@ msgstr ""
 
 #: doc/classes/Area2D.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/physics/using_area_2d.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/physics/using_area_2d.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/physics/using_area_2d."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/physics/using_area_2d."
 "html"
 
 #: doc/classes/Area2D.xml doc/classes/CollisionShape2D.xml
@@ -8740,10 +8740,10 @@ msgstr ""
 
 #: doc/classes/ArrayMesh.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/procedural_geometry/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/procedural_geometry/"
 "arraymesh.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/procedural_geometry/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/procedural_geometry/"
 "arraymesh.html"
 
 #: doc/classes/ArrayMesh.xml
@@ -9107,8 +9107,8 @@ msgstr ""
 #: doc/classes/ARVRCamera.xml doc/classes/ARVRController.xml
 #: doc/classes/ARVRInterface.xml doc/classes/ARVROrigin.xml
 #: doc/classes/ARVRPositionalTracker.xml doc/classes/ARVRServer.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/vr/index.html"
-msgstr "https://docs.godotengine.org/zh_CN/stable/tutorials/vr/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/vr/index.html"
 
 #: doc/classes/ARVRController.xml
 msgid "A spatial node representing a spatially-tracked controller."
@@ -10888,9 +10888,9 @@ msgstr ""
 #: doc/classes/AudioEffectDistortion.xml doc/classes/AudioEffectFilter.xml
 #: doc/classes/AudioEffectHighShelfFilter.xml
 #: doc/classes/AudioEffectLowShelfFilter.xml doc/classes/AudioServer.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/audio/audio_buses.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/audio/audio_buses.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/audio/audio_buses.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/audio/audio_buses.html"
 
 #: doc/classes/AudioEffectDistortion.xml
 msgid "Distortion power. Value can range from 0 to 1."
@@ -11371,10 +11371,10 @@ msgstr ""
 
 #: doc/classes/AudioEffectRecord.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/audio/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/audio/"
 "recording_with_microphone.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/audio/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/audio/"
 "recording_with_microphone.html"
 
 #: doc/classes/AudioEffectRecord.xml
@@ -11782,9 +11782,9 @@ msgstr ""
 
 #: doc/classes/AudioStream.xml doc/classes/AudioStreamPlayer.xml
 #: doc/classes/AudioStreamPlayer2D.xml doc/classes/AudioStreamPlayer3D.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/audio/audio_streams.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/audio/audio_streams.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/audio/audio_streams.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/audio/audio_streams.html"
 
 #: doc/classes/AudioStream.xml doc/classes/AudioStreamGenerator.xml
 #: doc/classes/AudioStreamGeneratorPlayback.xml
@@ -12525,9 +12525,9 @@ msgstr ""
 "看到效果。"
 
 #: doc/classes/BakedLightmap.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/baked_lightmaps.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/baked_lightmaps.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/baked_lightmaps.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/baked_lightmaps.html"
 
 #: doc/classes/BakedLightmap.xml
 msgid ""
@@ -13047,16 +13047,16 @@ msgstr ""
 
 #: doc/classes/Basis.xml doc/classes/Transform.xml doc/classes/Transform2D.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/math/matrices_and_transforms."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/math/matrices_and_transforms."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/math/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/math/"
 "matrices_and_transforms.html"
 
 #: doc/classes/Basis.xml doc/classes/Transform.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/using_transforms.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/using_transforms.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/using_transforms.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/using_transforms.html"
 
 #: doc/classes/Basis.xml doc/classes/Line2D.xml doc/classes/Transform.xml
 #: doc/classes/Transform2D.xml doc/classes/Vector2.xml doc/classes/Vector3.xml
@@ -14768,15 +14768,15 @@ msgstr ""
 
 #: doc/classes/CanvasItem.xml doc/classes/CanvasLayer.xml
 #: doc/classes/InputEvent.xml doc/classes/Viewport.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/2d/2d_transforms.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/2d/2d_transforms.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/2d/2d_transforms.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/2d/2d_transforms.html"
 
 #: doc/classes/CanvasItem.xml doc/classes/Control.xml doc/classes/Node2D.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/2d/custom_drawing_in_2d.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/2d/custom_drawing_in_2d.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/2d/custom_drawing_in_2d."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/2d/custom_drawing_in_2d."
 "html"
 
 #: doc/classes/CanvasItem.xml
@@ -15341,9 +15341,9 @@ msgstr ""
 "中）或背景（在-1层或更低层中）非常有用。"
 
 #: doc/classes/CanvasLayer.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/2d/canvas_layers.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/2d/canvas_layers.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/2d/canvas_layers.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/2d/canvas_layers.html"
 
 #: doc/classes/CanvasLayer.xml
 msgid "Returns the RID of the canvas used by this layer."
@@ -15482,9 +15482,9 @@ msgstr ""
 #: doc/classes/CharFXTransform.xml doc/classes/RichTextEffect.xml
 #: doc/classes/RichTextLabel.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/ui/bbcode_in_richtextlabel.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/ui/bbcode_in_richtextlabel.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/ui/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/ui/"
 "bbcode_in_richtextlabel.html"
 
 #: doc/classes/CharFXTransform.xml doc/classes/RichTextEffect.xml
@@ -16062,13 +16062,13 @@ msgstr "如果[code]true[/code]，相机在接触[PhysicsBody]时停止。"
 #: doc/classes/ClippedCamera.xml
 msgid ""
 "The camera's collision mask. Only objects in at least one collision layer "
-"matching the mask will be detected. See [url=https://docs.godotengine.org/"
+"matching the mask will be detected. See [url=https://docs.rebeltoolbox.com/"
 "en/3.4/tutorials/physics/physics_introduction.html#collision-layers-and-"
 "masks]Collision layers and masks[/url] in the documentation for more "
 "information."
 msgstr ""
 "相机的碰撞遮罩。只有在对象有至少一个碰撞层和碰撞这招匹对时才能被检测到。详细"
-"信息请参阅文档[url=https://docs.godotengine.org/zh_CN/stable/tutorials/"
+"信息请参阅文档[url=https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/"
 "physics/physics_introduction.html#collision-layers-and-masks]Collision "
 "layers and masks[/url]。"
 
@@ -16229,14 +16229,14 @@ msgid ""
 "in one or more of 32 different layers. See also [member collision_mask].\n"
 "[b]Note:[/b] A contact is detected if object A is in any of the layers that "
 "object B scans, or object B is in any layers that object A scans. See "
-"[url=https://docs.godotengine.org/en/latest/tutorials/physics/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
 msgstr ""
 "CollisionObject3D 所在的物理层。碰撞对象可以存在于 32 个不同层中的一个或多"
 "个。另见 [member collision_mask]。\n"
 "[b]注意：[/b]如果对象A在对象B扫描的任何层中，或者对象B在对象A扫描的任何层中，"
-"则检测到接触。有关更多信息，请参阅文档中的 [url=https://docs.godotengine.org/"
+"则检测到接触。有关更多信息，请参阅文档中的 [url=https://docs.rebeltoolbox.com/"
 "zh_CN/latest/tutorials/physics/physics_introduction.html#collision-layers-"
 "and-masks] 碰撞层和掩码[/url]。"
 
@@ -16246,14 +16246,14 @@ msgid ""
 "one or more of 32 different layers. See also [member collision_layer].\n"
 "[b]Note:[/b] A contact is detected if object A is in any of the layers that "
 "object B scans, or object B is in any layers that object A scans. See "
-"[url=https://docs.godotengine.org/en/latest/tutorials/physics/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
 msgstr ""
 "CollisionObject3D 扫描的物理层。碰撞对象可以扫描 32 个不同层中的一个或多个。"
 "另见 [member collision_layer]]。\n"
 "[b]注意：[/b]如果对象A在对象B扫描的任何层中，或者对象B在对象A扫描的任何层中，"
-"则检测到接触。有关更多信息，请参阅文档中的 [url=https://docs.godotengine.org/"
+"则检测到接触。有关更多信息，请参阅文档中的 [url=https://docs.rebeltoolbox.com/"
 "zh_CN/latest/tutorials/physics/physics_introduction.html#collision-layers-"
 "and-masks] 碰撞层和掩码[/url]。"
 
@@ -16381,14 +16381,14 @@ msgid ""
 "in one or more of 32 different layers. See also [member collision_mask].\n"
 "[b]Note:[/b] A contact is detected if object A is in any of the layers that "
 "object B scans, or object B is in any layers that object A scans. See "
-"[url=https://docs.godotengine.org/en/latest/tutorials/physics/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
 msgstr ""
 "这个CollisionObject2D所在的物理层。碰撞对象可以存在于32个不同层中的一个或多"
 "个。也见[member collision_mask]。\n"
 "[b]注意：[/b]如果对象A在对象B扫描的任何层中，或者对象B在对象A扫描的任何层中，"
-"则检测到接触。更多信息见文档[url=https://docs.godotengine.org/zh_CN/latest/"
+"则检测到接触。更多信息见文档[url=https://docs.rebeltoolbox.com/zh_CN/latest/"
 "tutorials/physics/physics_introduction.html#collision-layers-and-masks] 碰撞"
 "层和掩码[/url]。"
 
@@ -16398,14 +16398,14 @@ msgid ""
 "one or more of 32 different layers. See also [member collision_layer].\n"
 "[b]Note:[/b] A contact is detected if object A is in any of the layers that "
 "object B scans, or object B is in any layers that object A scans. See "
-"[url=https://docs.godotengine.org/en/latest/tutorials/physics/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
 msgstr ""
 "这个CollisionObject2D所扫描的物理层。碰撞对象可以扫描32个不同层中的一个或多"
 "个。也见[member collision_layer]。\n"
 "[b]注意：[/b] 如果对象A在对象B扫描的任何层中，或者对象B在对象A扫描的任何层"
-"中，就会检测到接触。更多信息见文档[url=https://docs.godotengine.org/zh_CN/"
+"中，就会检测到接触。更多信息见文档[url=https://docs.rebeltoolbox.com/zh_CN/"
 "latest/tutorials/physics/physics_introduction.html#collision-layers-and-"
 "masks] 碰撞层和掩码[/url]。"
 
@@ -16572,10 +16572,10 @@ msgstr ""
 #: doc/classes/PhysicsDirectSpaceState.xml doc/classes/RigidBody.xml
 #: doc/classes/Shape.xml doc/classes/Shape2D.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/physics/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/physics/"
 "physics_introduction.html"
 
 #: doc/classes/CollisionShape.xml
@@ -18434,14 +18434,14 @@ msgstr ""
 "[method get_stylebox]，以及这个类提供的 [code]add_*_override[/code] 方法。"
 
 #: doc/classes/Control.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/ui/index.html"
-msgstr "https://docs.godotengine.org/zh_CN/stable/tutorials/ui/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/ui/index.html"
+msgstr "https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/ui/index.html"
 
 #: doc/classes/Control.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/ui/control_node_gallery.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/ui/control_node_gallery.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/ui/control_node_gallery."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/ui/control_node_gallery."
 "html"
 
 #: doc/classes/Control.xml
@@ -19748,7 +19748,7 @@ msgid ""
 "purposes. Text inside the Control will look pixelated or blurry when the "
 "Control is scaled. To support multiple resolutions in your project, use an "
 "appropriate viewport stretch mode as described in the [url=https://docs."
-"godotengine.org/en/3.4/tutorials/rendering/multiple_resolutions."
+"rebeltoolbox.com/en/latest/tutorials/rendering/multiple_resolutions."
 "html]documentation[/url] instead of scaling Controls individually.\n"
 "[b]Note:[/b] If the Control node is a child of a [Container] node, the scale "
 "will be reset to [code]Vector2(1, 1)[/code] when the scene is instanced. To "
@@ -19761,7 +19761,7 @@ msgstr ""
 "这个值进行缩放。\n"
 "[b]注意：[/b]这个属性主要用于动画用途。当控件被缩放时，控件内的文本将看起来是"
 "像素化或模糊的。要在你的项目支持多种分辨率，请使用[url=https://docs."
-"godotengine.org/zh_CN/stable/tutorials/rendering/multiple_resolutions.html]文"
+"rebeltoolbox.com/zh_CN/latest/tutorials/rendering/multiple_resolutions.html]文"
 "档[/url]中描述的合适的视窗拉伸模式，而不是单独缩放控件。\n"
 "[b]注意：[/b]如果控件节点是 [Container] 节点的子节点，当场景实例化时，缩放将"
 "被重置为 [code]Vector2(1, 1)[/code]。要在实例化时设置控件的缩放，使用 "
@@ -21073,9 +21073,9 @@ msgstr ""
 
 #: doc/classes/CPUParticles2D.xml doc/classes/Particles2D.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/2d/particle_systems_2d.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/2d/particle_systems_2d.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/2d/particle_systems_2d."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/2d/particle_systems_2d."
 "html"
 
 #: doc/classes/CPUParticles2D.xml
@@ -21807,7 +21807,7 @@ msgid ""
 "property.\n"
 "A contact is detected if object A is in any of the layers that object B "
 "scans, or object B is in any layer scanned by object A. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -21816,19 +21816,19 @@ msgstr ""
 "而不是可视化的。一个可碰撞物体可以使用这些层来选择它可以与哪些物体碰撞，使用 "
 "collision_mask 属性。\n"
 "如果对象A在对象B所扫描的任何层中，或者对象B在对象A所扫描的任何层中，就会检测"
-"到接触。详见文档中的[url=https://docs.godotengine.org/zh_CN/stable/tutorials/"
+"到接触。详见文档中的[url=https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/"
 "physics/physics_introduction.html#collision-layers-and-masks]碰撞层和掩码[/"
 "url]。"
 
 #: modules/csg/doc_classes/CSGShape.xml
 msgid ""
 "The physics layers this CSG shape scans for collisions. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
 "此 CSG 形状将要扫描碰撞的物理层。有关更多信息，请参阅文档中的 [url=https://"
-"docs.godotengine.org/zh_CN/stable/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/zh_CN/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]碰撞层和掩码[/url]。"
 
 #: modules/csg/doc_classes/CSGShape.xml
@@ -21960,10 +21960,10 @@ msgstr ""
 
 #: modules/mono/doc_classes/CSharpScript.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/getting_started/scripting/c_sharp/index."
+"https://docs.rebeltoolbox.com/en/latest/getting_started/scripting/c_sharp/index."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/getting_started/scripting/c_sharp/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/getting_started/scripting/c_sharp/"
 "index.html"
 
 #: modules/mono/doc_classes/CSharpScript.xml
@@ -23111,10 +23111,10 @@ msgstr ""
 
 #: doc/classes/Dictionary.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/gdscript/"
 "gdscript_basics.html#dictionary"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/scripting/gdscript/"
 "gdscript_basics.html#dictionary"
 
 #: doc/classes/Dictionary.xml
@@ -23239,9 +23239,9 @@ msgstr ""
 #: doc/classes/DirectionalLight.xml doc/classes/Light.xml
 #: doc/classes/OmniLight.xml doc/classes/SpotLight.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/lights_and_shadows.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/lights_and_shadows.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/lights_and_shadows."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/lights_and_shadows."
 "html"
 
 #: doc/classes/DirectionalLight.xml
@@ -23410,9 +23410,9 @@ msgstr ""
 "[/codeblock]"
 
 #: doc/classes/Directory.xml doc/classes/File.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/scripting/filesystem.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/filesystem.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/scripting/filesystem.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/scripting/filesystem.html"
 
 #: doc/classes/Directory.xml
 msgid ""
@@ -24714,10 +24714,10 @@ msgstr ""
 
 #: doc/classes/EditorImportPlugin.xml doc/classes/ResourceImporter.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/import_plugins."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/editor/import_plugins."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/plugins/editor/"
 "import_plugins.html"
 
 #: doc/classes/EditorImportPlugin.xml
@@ -24956,10 +24956,10 @@ msgstr ""
 
 #: doc/classes/EditorInspectorPlugin.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/editor/"
 "inspector_plugins.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/plugins/editor/"
 "inspector_plugins.html"
 
 #: doc/classes/EditorInspectorPlugin.xml
@@ -25277,9 +25277,9 @@ msgstr ""
 "件和导出插件。另请参阅[EditorScript]向编辑器添加函数。"
 
 #: doc/classes/EditorPlugin.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/editor/index.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/plugins/editor/index.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/plugins/editor/index.html"
 
 #: doc/classes/EditorPlugin.xml
 msgid ""
@@ -26447,10 +26447,10 @@ msgstr ""
 
 #: doc/classes/EditorScenePostImport.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/assets_pipeline/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/assets_pipeline/"
 "importing_scenes.html#custom-script"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/assets_pipeline/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/assets_pipeline/"
 "importing_scenes.html#custom-script"
 
 #: doc/classes/EditorScenePostImport.xml
@@ -26998,10 +26998,10 @@ msgstr ""
 
 #: doc/classes/EditorSpatialGizmoPlugin.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/spatial_gizmos."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/editor/spatial_gizmos."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/plugins/editor/"
 "spatial_gizmos.html"
 
 #: doc/classes/EditorSpatialGizmoPlugin.xml
@@ -27559,7 +27559,7 @@ msgid ""
 "else:\n"
 "    simulate_physics()\n"
 "[/codeblock]\n"
-"See [url=https://docs.godotengine.org/en/3.4/tutorials/misc/"
+"See [url=https://docs.rebeltoolbox.com/en/latest/tutorials/misc/"
 "running_code_in_the_editor.html]Running code in the editor[/url] in the "
 "documentation for more information.\n"
 "[b]Note:[/b] To detect whether the script is run from an editor [i]build[/i] "
@@ -27578,7 +27578,7 @@ msgstr ""
 "else:\n"
 "    simulate_physics()\n"
 "[/codeblock]\n"
-"更多信息请参阅文档中[url=https://docs.godotengine.org/zh_CN/stable/tutorials/"
+"更多信息请参阅文档中[url=https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/"
 "misc/running_code_in_the_editor.html]在编辑器中运行代码[/url]。\n"
 "[b]注意：[/b]要检测脚本是否从编辑器[i]构建[/i]中运行（例如按[code]F5[/code]"
 "时），请使用带有[code]\"editor\"[/code]参数的[method OS.has_feature]代替。"
@@ -27706,17 +27706,17 @@ msgstr ""
 
 #: doc/classes/Environment.xml doc/classes/WorldEnvironment.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/"
 "environment_and_post_processing.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/"
 "environment_and_post_processing.html"
 
 #: doc/classes/Environment.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/high_dynamic_range.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/high_dynamic_range.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/high_dynamic_range."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/high_dynamic_range."
 "html"
 
 #: doc/classes/Environment.xml doc/classes/Material.xml doc/classes/Mesh.xml
@@ -28580,7 +28580,7 @@ msgid ""
 "    return content\n"
 "[/codeblock]\n"
 "In the example above, the file will be saved in the user data folder as "
-"specified in the [url=https://docs.godotengine.org/en/3.4/tutorials/io/"
+"specified in the [url=https://docs.rebeltoolbox.com/en/latest/tutorials/io/"
 "data_paths.html]Data paths[/url] documentation.\n"
 "[b]Note:[/b] To access project resources once exported, it is recommended to "
 "use [ResourceLoader] instead of the [File] API, as some files are converted "
@@ -28610,7 +28610,7 @@ msgstr ""
 "    file.close()\n"
 "    return content\n"
 "[/codeblock]\n"
-"在上面的例子中，文件将被保存在[url=https://docs.godotengine.org/zh_CN/stable/"
+"在上面的例子中，文件将被保存在[url=https://docs.rebeltoolbox.com/zh_CN/latest/"
 "tutorials/io/data_paths.html]数据路径[/url]文件中指定的用户数据文件夹中。\n"
 "[b]注意:[/b]要在导出后访问项目资源，建议使用 [ResourceLoader] 而不是 [File] "
 "API，因为有些文件被转换为引擎特定的格式，其原始源文件可能不存在于导出的 PCK "
@@ -29600,18 +29600,18 @@ msgstr ""
 
 #: modules/gdnative/doc_classes/GDNativeLibrary.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/gdnative/gdnative-c-"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/gdnative/gdnative-c-"
 "example.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/plugins/gdnative/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/plugins/gdnative/"
 "gdnative-c-example.html"
 
 #: modules/gdnative/doc_classes/GDNativeLibrary.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/gdnative/gdnative-cpp-"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/gdnative/gdnative-cpp-"
 "example.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/plugins/gdnative/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/plugins/gdnative/"
 "gdnative-cpp-example.html"
 
 #: modules/gdnative/doc_classes/GDNativeLibrary.xml
@@ -29706,10 +29706,10 @@ msgstr ""
 
 #: modules/gdscript/doc_classes/GDScript.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/getting_started/scripting/gdscript/index."
+"https://docs.rebeltoolbox.com/en/latest/getting_started/scripting/gdscript/index."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/getting_started/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/getting_started/scripting/gdscript/"
 "index.html"
 
 #: modules/gdscript/doc_classes/GDScript.xml
@@ -30971,8 +30971,8 @@ msgstr ""
 "发光。只有发射型的[SpatialMaterial]可以在[GIProbe]中发射光线。"
 
 #: doc/classes/GIProbe.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/gi_probes.html"
-msgstr "https://docs.godotengine.org/zh_CN/stable/tutorials/3d/gi_probes.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/gi_probes.html"
+msgstr "https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/gi_probes.html"
 
 #: doc/classes/GIProbe.xml
 msgid ""
@@ -32074,9 +32074,9 @@ msgstr ""
 "GridMap 就都不会被相关的灯光照亮。"
 
 #: modules/gridmap/doc_classes/GridMap.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/using_gridmaps.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/using_gridmaps.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/using_gridmaps.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/using_gridmaps.html"
 
 #: modules/gridmap/doc_classes/GridMap.xml
 msgid "Clear all cells."
@@ -32210,11 +32210,11 @@ msgstr ""
 #: modules/gridmap/doc_classes/GridMap.xml
 msgid ""
 "The physics layers this GridMap detects collisions in. See [url=https://docs."
-"godotengine.org/en/3.4/tutorials/physics/physics_introduction.html#collision-"
+"rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction.html#collision-"
 "layers-and-masks]Collision layers and masks[/url] in the documentation for "
 "more information."
 msgstr ""
-"此 GridMap 检测碰撞的物理层。参阅 [url=https://docs.godotengine.org/zh_CN/"
+"此 GridMap 检测碰撞的物理层。参阅 [url=https://docs.rebeltoolbox.com/zh_CN/"
 "stable/tutorials/physics/physics_introduction.html#collision-layers-and-"
 "masks]碰撞层和掩码[/url] 文档，从中获取更多信息。"
 
@@ -32815,19 +32815,19 @@ msgstr ""
 
 #: doc/classes/HTTPClient.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/networking/http_client_class."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/networking/http_client_class."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/networking/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/networking/"
 "http_client_class.html"
 
 #: doc/classes/HTTPClient.xml doc/classes/HTTPRequest.xml
 #: doc/classes/StreamPeerSSL.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/networking/ssl_certificates."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/networking/ssl_certificates."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/networking/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/networking/"
 "ssl_certificates.html"
 
 #: doc/classes/HTTPClient.xml
@@ -33885,10 +33885,10 @@ msgstr ""
 
 #: doc/classes/HTTPRequest.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/networking/http_request_class."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/networking/http_request_class."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/networking/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/networking/"
 "http_request_class.html"
 
 #: doc/classes/HTTPRequest.xml
@@ -34073,10 +34073,10 @@ msgstr ""
 
 #: doc/classes/Image.xml doc/classes/ImageTexture.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/assets_pipeline/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/assets_pipeline/"
 "importing_images.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/assets_pipeline/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/assets_pipeline/"
 "importing_images.html"
 
 #: doc/classes/Image.xml
@@ -34331,7 +34331,7 @@ msgstr ""
 #: doc/classes/Image.xml
 msgid ""
 "Loads an image from file [code]path[/code]. See [url=https://docs."
-"godotengine.org/en/3.4/tutorials/assets_pipeline/importing_images."
+"rebeltoolbox.com/en/latest/tutorials/assets_pipeline/importing_images."
 "html#supported-image-formats]Supported image formats[/url] for a list of "
 "supported image formats and limitations.\n"
 "[b]Warning:[/b] This method should only be used in the editor or in cases "
@@ -34339,7 +34339,7 @@ msgid ""
 "the [code]user://[/code] directory, and may not work in exported projects.\n"
 "See also [ImageTexture] description for usage examples."
 msgstr ""
-"从文件 [code]path[/code] 加载图像。请参阅 [url=https://docs.godotengine.org/"
+"从文件 [code]path[/code] 加载图像。请参阅 [url=https://docs.rebeltoolbox.com/"
 "zh_CN/stable/tutorials/assets_pipeline/importing_images.html#supported-image-"
 "formats]支持的图像格式[/url]，了解支持的图像格式和限制。\n"
 "[b]警告：[/b]这个方法只能在编辑器中使用，或者在运行时需要加载外部图像的情况下"
@@ -35239,8 +35239,8 @@ msgstr ""
 "件。"
 
 #: doc/classes/Input.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/inputs/index.html"
-msgstr "https://docs.godotengine.org/zh_CN/stable/tutorials/inputs/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/inputs/index.html"
+msgstr "https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/inputs/index.html"
 
 #: doc/classes/Input.xml
 msgid ""
@@ -35924,9 +35924,9 @@ msgstr "各种输入事件的基类。请参阅 [method Node._input]。"
 #: doc/classes/InputEventMouse.xml doc/classes/InputEventScreenDrag.xml
 #: doc/classes/InputEventScreenTouch.xml
 #: doc/classes/InputEventWithModifiers.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/inputs/inputevent.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/inputs/inputevent.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/inputs/inputevent.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/inputs/inputevent.html"
 
 #: doc/classes/InputEvent.xml
 msgid ""
@@ -36084,9 +36084,9 @@ msgstr ""
 
 #: doc/classes/InputEventAction.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/inputs/inputevent.html#actions"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/inputs/inputevent.html#actions"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/inputs/inputevent."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/inputs/inputevent."
 "html#actions"
 
 #: doc/classes/InputEventAction.xml
@@ -36318,10 +36318,10 @@ msgstr "包含鼠标点击信息。见[method Node._input]。"
 
 #: doc/classes/InputEventMouseButton.xml doc/classes/InputEventMouseMotion.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/inputs/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/inputs/"
 "mouse_and_input_coordinates.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/inputs/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/inputs/"
 "mouse_and_input_coordinates.html"
 
 #: doc/classes/InputEventMouseButton.xml
@@ -36519,9 +36519,9 @@ msgstr ""
 
 #: doc/classes/InputMap.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/inputs/inputevent.html#inputmap"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/inputs/inputevent.html#inputmap"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/inputs/inputevent."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/inputs/inputevent."
 "html#inputmap"
 
 #: doc/classes/InputMap.xml
@@ -37400,22 +37400,22 @@ msgid ""
 "[b]Note:[/b] This singleton can be disabled at build-time to improve "
 "security. By default, the JavaScript singleton is enabled. Official export "
 "templates also have the JavaScript singleton enabled. See [url=https://docs."
-"godotengine.org/en/3.4/development/compiling/compiling_for_web."
+"rebeltoolbox.com/en/latest/development/compiling/compiling_for_web."
 "html]Compiling for the Web[/url] in the documentation for more information."
 msgstr ""
 "JavaScript 单例仅在 HTML5 导出中实现。它用于访问浏览器的 JavaScript 上下文。"
 "这允许与嵌入页面交互或调用第三方 JavaScript API。\n"
 "[b]注意：[/b] 可以在构建时禁用此单例以提高安全性。默认情况下，启用 "
 "JavaScript 单例。官方导出模板也启用了 JavaScript 单例。有关详细信息，请参阅文"
-"档中的 [url=https://docs.godotengine.org/zh_CN/stable/development/compiling/"
+"档中的 [url=https://docs.rebeltoolbox.com/zh_CN/latest/development/compiling/"
 "compiling_for_web.html]为 Web平台编译[/url]。"
 
 #: doc/classes/JavaScript.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/export/exporting_for_web."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/export/exporting_for_web."
 "html#calling-javascript-from-script"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/export/exporting_for_web."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/export/exporting_for_web."
 "html#calling-javascript-from-script"
 
 #: doc/classes/JavaScript.xml
@@ -37586,10 +37586,10 @@ msgstr ""
 
 #: doc/classes/JNISingleton.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/platform/android/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/platform/android/"
 "android_plugin.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/platform/android/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/platform/android/"
 "android_plugin.html"
 
 #: doc/classes/Joint.xml
@@ -37948,10 +37948,10 @@ msgstr ""
 
 #: doc/classes/KinematicBody.xml doc/classes/KinematicBody2D.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/physics/kinematic_character_2d."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/physics/kinematic_character_2d."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/physics/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/physics/"
 "kinematic_character_2d.html"
 
 #: doc/classes/KinematicBody.xml
@@ -38264,10 +38264,10 @@ msgstr ""
 
 #: doc/classes/KinematicBody2D.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/physics/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "using_kinematic_body_2d.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/physics/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/physics/"
 "using_kinematic_body_2d.html"
 
 #: doc/classes/KinematicBody2D.xml
@@ -39022,9 +39022,9 @@ msgstr ""
 
 #: doc/classes/Light2D.xml doc/classes/LightOccluder2D.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/2d/2d_lights_and_shadows.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/2d/2d_lights_and_shadows.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/2d/2d_lights_and_shadows."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/2d/2d_lights_and_shadows."
 "html"
 
 #: doc/classes/Light2D.xml
@@ -41222,8 +41222,8 @@ msgstr ""
 "\"创建Mesh2D\"。"
 
 #: doc/classes/MeshInstance2D.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/2d/2d_meshes.html"
-msgstr "https://docs.godotengine.org/zh_CN/stable/tutorials/2d/2d_meshes.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/2d/2d_meshes.html"
+msgstr "https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/2d/2d_meshes.html"
 
 #: doc/classes/MeshInstance2D.xml
 msgid "The [Mesh] that will be drawn by the [MeshInstance2D]."
@@ -41500,18 +41500,18 @@ msgstr ""
 
 #: doc/classes/MultiMesh.xml doc/classes/MultiMeshInstance.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/vertex_animation/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/vertex_animation/"
 "animating_thousands_of_fish.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/performance/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/performance/"
 "vertex_animation/animating_thousands_of_fish.html"
 
 #: doc/classes/MultiMesh.xml doc/classes/MultiMeshInstance.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/using_multimesh."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/using_multimesh."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/performance/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/performance/"
 "using_multimesh.html"
 
 #: doc/classes/MultiMesh.xml
@@ -41688,10 +41688,10 @@ msgstr ""
 
 #: doc/classes/MultiMeshInstance.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/using_multi_mesh_instance."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/using_multi_mesh_instance."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/"
 "using_multi_mesh_instance.html"
 
 #: doc/classes/MultiMeshInstance.xml
@@ -42014,10 +42014,10 @@ msgstr ""
 
 #: doc/classes/Mutex.xml doc/classes/Semaphore.xml doc/classes/Thread.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/threads/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/threads/"
 "using_multiple_threads.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/performance/threads/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/performance/threads/"
 "using_multiple_threads.html"
 
 #: doc/classes/Mutex.xml
@@ -42745,10 +42745,10 @@ msgstr ""
 #: modules/enet/doc_classes/NetworkedMultiplayerENet.xml
 #: doc/classes/NetworkedMultiplayerPeer.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/networking/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/networking/"
 "high_level_multiplayer.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/networking/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/networking/"
 "high_level_multiplayer.html"
 
 #: modules/enet/doc_classes/NetworkedMultiplayerENet.xml
@@ -43457,10 +43457,10 @@ msgstr ""
 
 #: doc/classes/Node.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/getting_started/step_by_step/"
+"https://docs.rebeltoolbox.com/en/latest/getting_started/step_by_step/"
 "nodes_and_scenes.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/getting_started/step_by_step/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/getting_started/step_by_step/"
 "nodes_and_scenes.html"
 
 #: doc/classes/Node.xml
@@ -45352,18 +45352,18 @@ msgstr ""
 
 #: doc/classes/Object.xml doc/classes/Reference.xml doc/classes/Resource.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/best_practices/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/best_practices/"
 "node_alternatives.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/best_practices/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/best_practices/"
 "node_alternatives.html"
 
 #: doc/classes/Object.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/gdscript/"
 "gdscript_exports.html#advanced-exports"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/scripting/gdscript/"
 "gdscript_exports.html#advanced-exports"
 
 #: doc/classes/Object.xml
@@ -46742,7 +46742,7 @@ msgid ""
 "Returns the [i]global[/i] cache data directory according to the operating "
 "system's standards. On desktop platforms, this path can be overridden by "
 "setting the [code]XDG_CACHE_HOME[/code] environment variable before starting "
-"the project. See [url=https://docs.godotengine.org/en/latest/tutorials/io/"
+"the project. See [url=https://docs.rebeltoolbox.com/en/latest/tutorials/io/"
 "data_paths.html]File paths in Godot projects[/url] in the documentation for "
 "more information. See also [method get_config_dir] and [method "
 "get_data_dir].\n"
@@ -46751,7 +46751,7 @@ msgid ""
 msgstr ""
 "根据操作系统的标准返回[i]全局[/i]缓存数据目录。在桌面平台上，可以通过在启动项"
 "目之前设置 [code]XDG_CACHE_HOME[/code] 环境变量来覆盖此路径。有关更多信息，请"
-"参阅文档中的 [url=https://docs.godotengine.org/zh_CN/latest/tutorials/io/"
+"参阅文档中的 [url=https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/io/"
 "data_paths.html]Godot 项目中的文件路径[/url]。另请参阅 [method "
 "get_config_dir] 和 [method get_data_dir]。\n"
 "不要与 [method get_user_data_dir] 混淆，后者返回 [i] 项目特定的 [/i] 用户数据"
@@ -46800,7 +46800,7 @@ msgid ""
 "Returns the [i]global[/i] user configuration directory according to the "
 "operating system's standards. On desktop platforms, this path can be "
 "overridden by setting the [code]XDG_CONFIG_HOME[/code] environment variable "
-"before starting the project. See [url=https://docs.godotengine.org/en/latest/"
+"before starting the project. See [url=https://docs.rebeltoolbox.com/en/latest/"
 "tutorials/io/data_paths.html]File paths in Godot projects[/url] in the "
 "documentation for more information. See also [method get_cache_dir] and "
 "[method get_data_dir].\n"
@@ -46809,7 +46809,7 @@ msgid ""
 msgstr ""
 "根据操作系统的标准，返回[i]全局[/i]用户配置目录。在桌面平台上，这个路径可以在"
 "启动项目前通过设置[code]XDG_CONFIG_HOME[/code]环境变量来覆盖。更多信息请参见"
-"文档中[url=https://docs.godotengine.org/zh_CN/latest/tutorials/io/data_paths."
+"文档中[url=https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/io/data_paths."
 "html]Godot项目中的文件路径[/url]。也请参见 [method get_cache_dir] 和 [method "
 "get_data_dir]。\n"
 "不要与[method get_user_data_dir]混淆，后者返回[i]项目专用[/i]用户数据路径。"
@@ -46837,7 +46837,7 @@ msgid ""
 "Returns the [i]global[/i] user data directory according to the operating "
 "system's standards. On desktop platforms, this path can be overridden by "
 "setting the [code]XDG_DATA_HOME[/code] environment variable before starting "
-"the project. See [url=https://docs.godotengine.org/en/latest/tutorials/io/"
+"the project. See [url=https://docs.rebeltoolbox.com/en/latest/tutorials/io/"
 "data_paths.html]File paths in Godot projects[/url] in the documentation for "
 "more information. See also [method get_cache_dir] and [method "
 "get_config_dir].\n"
@@ -46846,7 +46846,7 @@ msgid ""
 msgstr ""
 "根据操作系统的标准，返回[i]全局[/i]用户数据目录。在桌面平台上，这个路径可以在"
 "启动项目前通过设置[code]XDG_DATA_HOME[/code]环境变量来覆盖。更多信息请参见文"
-"档中[url=https://docs.godotengine.org/zh_CN/latest/tutorials/io/data_paths."
+"档中[url=https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/io/data_paths."
 "html]Godot项目中的文件路径[/url]。也请参见 [method get_cache_dir] 和 [method "
 "get_config_dir]。\n"
 "不要与[method get_user_data_dir]混淆，后者返回[i]项目专用[/i]用户数据路径。"
@@ -47430,13 +47430,13 @@ msgid ""
 "supported in the currently running instance, depending on the platform, "
 "build etc. Can be used to check whether you're currently running a debug "
 "build, on a certain platform or arch, etc. Refer to the [url=https://docs."
-"godotengine.org/en/3.4/tutorials/export/feature_tags.html]Feature Tags[/url] "
+"rebeltoolbox.com/en/latest/tutorials/export/feature_tags.html]Feature Tags[/url] "
 "documentation for more details.\n"
 "[b]Note:[/b] Tag names are case-sensitive."
 msgstr ""
 "如果给定的特征标签的特征在当前运行的实例中得到支持，则返回 [code]true[/"
 "code]，具体取决于平台和构建等。可以用来检查你当前是否在运行一个调试构建，是否"
-"在某个平台或架构上，等等。更多细节请参考[url=https://docs.godotengine.org/"
+"在某个平台或架构上，等等。更多细节请参考[url=https://docs.rebeltoolbox.com/"
 "zh_CN/stable/tutorials/export/feature_tags.html]功能标签[/url]文档。\n"
 "[b]注意：[/b]标签名称区分大小写。"
 
@@ -48971,10 +48971,10 @@ msgstr ""
 
 #: doc/classes/Particles.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/vertex_animation/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/vertex_animation/"
 "controlling_thousands_of_fish.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/performance/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/performance/"
 "vertex_animation/controlling_thousands_of_fish.html"
 
 #: doc/classes/Particles.xml
@@ -50003,9 +50003,9 @@ msgstr ""
 #: doc/classes/PhysicsDirectBodyState.xml
 #: doc/classes/PhysicsDirectSpaceState.xml doc/classes/RayCast.xml
 #: doc/classes/RayCast2D.xml doc/classes/World.xml doc/classes/World2D.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/physics/ray-casting.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/physics/ray-casting.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/physics/ray-casting.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/physics/ray-casting.html"
 
 #: doc/classes/Physics2DDirectBodyState.xml doc/classes/RigidBody2D.xml
 msgid "Adds a constant directional force without affecting rotation."
@@ -51295,12 +51295,12 @@ msgstr "如果[code]true[/code]，查询将考虑[PhysicsBody2D]。"
 #: doc/classes/PhysicsShapeQueryParameters.xml
 msgid ""
 "The physics layer(s) the query will take into account (as a bitmask). See "
-"[url=https://docs.godotengine.org/en/3.4/tutorials/physics/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
 msgstr ""
 "查询将考虑的物理层（作为位掩码）。有关更多信息，请参阅文档中的 [url=https://"
-"docs.godotengine.org/zh_CN/stable/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/zh_CN/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]碰撞层和掩码[/url]。"
 
 #: doc/classes/Physics2DShapeQueryParameters.xml
@@ -54189,13 +54189,13 @@ msgid ""
 "Project Settings dialog.\n"
 "[b]Feature tags:[/b] Project settings can be overridden for specific "
 "platforms and configurations (debug, release, ...) using [url=https://docs."
-"godotengine.org/en/3.4/tutorials/export/feature_tags.html]feature tags[/"
+"rebeltoolbox.com/en/latest/tutorials/export/feature_tags.html]feature tags[/"
 "url].\n"
 "[b]Overriding:[/b] Any project setting can be overridden by creating a file "
 "named [code]override.cfg[/code] in the project's root directory. This can "
 "also be used in exported projects by placing this file in the same directory "
 "as the project binary. Overriding will still take the base project "
-"settings' [url=https://docs.godotengine.org/en/3.4/tutorials/export/"
+"settings' [url=https://docs.rebeltoolbox.com/en/latest/tutorials/export/"
 "feature_tags.html]feature tags[/url] in account. Therefore, make sure to "
 "[i]also[/i] override the setting with the desired feature tags if you want "
 "them to override base project settings on all platforms and configurations."
@@ -54207,13 +54207,13 @@ msgstr ""
 "指定“项目设置”的属性时，请使用设置的完整路径，包括类别。例如项目名称应使用 "
 "[code]\"application/config/name\"[/code]。类别和属性名称可以在“项目设置”对话"
 "框中查看。\n"
-"[b]特性标签：[/b]可以使用[url=https://docs.godotengine.org/zh_CN/stable/"
+"[b]特性标签：[/b]可以使用[url=https://docs.rebeltoolbox.com/zh_CN/latest/"
 "tutorials/export/feature_tags.html]特性标签[/url]来针对特定的平台和配置（调"
 "试、发布……）做项目设置的覆盖。\n"
 "[b]覆盖：[/b]在项目的根目录下创建名为 [code]override.cfg[/code] 的文件，就可"
 "以对任意项目设置进行覆盖。对于已导出的项目，把这个文件放在与项目二进制文件相"
 "同的目录下，也可以达到覆盖的目的。覆盖时仍会考虑基础项目设置的[url=https://"
-"docs.godotengine.org/zh_CN/stable/tutorials/export/feature_tags.html]特性标签"
+"docs.rebeltoolbox.com/zh_CN/latest/tutorials/export/feature_tags.html]特性标签"
 "[/url]。因此，如果你想让它们在所有平台和配置上覆盖基础项目设置，请确保[i]也用"
 "[/i]所需的特性标签覆盖该设置。"
 
@@ -54286,7 +54286,7 @@ msgid ""
 "Returns the absolute, native OS path corresponding to the localized "
 "[code]path[/code] (starting with [code]res://[/code] or [code]user://[/"
 "code]). The returned path will vary depending on the operating system and "
-"user preferences. See [url=https://docs.godotengine.org/en/3.4/tutorials/io/"
+"user preferences. See [url=https://docs.rebeltoolbox.com/en/latest/tutorials/io/"
 "data_paths.html]File paths in Godot projects[/url] to see what those paths "
 "convert to. See also [method localize_path].\n"
 "[b]Note:[/b] [method globalize_path] with [code]res://[/code] will not work "
@@ -54311,7 +54311,7 @@ msgid ""
 msgstr ""
 "返回与本地化 [code]path[/code]（以 [code]res://[/code] 或 [code]user://[/"
 "code] 开头）相对应的绝对原生 OS 路径。返回的路径将因操作系统和用户首选项而"
-"异。这些路径会转换为什么请参阅[url=https://docs.godotengine.org/zh_CN/stable/"
+"异。这些路径会转换为什么请参阅[url=https://docs.rebeltoolbox.com/zh_CN/latest/"
 "tutorials/io/data_paths.html]《Godot 项目中的文件路径》[/url]。另请参阅 "
 "[method localize_path]。\n"
 "[b]注意：[/b]对 [code]res://[/code] 调用 [method globalize_path] 在导出的项目"
@@ -54525,7 +54525,7 @@ msgid ""
 "path if [member application/config/use_custom_user_dir] is [code]false[/"
 "code]. After renaming the project, you will no longer be able to access "
 "existing data in [code]user://[/code] unless you rename the old folder to "
-"match the new project name. See [url=https://docs.godotengine.org/en/3.4/"
+"match the new project name. See [url=https://docs.rebeltoolbox.com/en/latest/"
 "tutorials/io/data_paths.html]Data paths[/url] in the documentation for more "
 "information."
 msgstr ""
@@ -54534,7 +54534,7 @@ msgstr ""
 "[b]注意：[/b] 如果 [member application/config/use_custom_user_dir] 为 "
 "[code]false[/code]，更改此值也会更改用户数据文件夹的路径。重命名项目后，您将"
 "无法再访问 [code]user://[/code] 中的现有数据，除非您重命名旧文件夹以匹配新项"
-"目名称。有关更多信息，请参阅文档中的 [url=https://docs.godotengine.org/zh_CN/"
+"目名称。有关更多信息，请参阅文档中的 [url=https://docs.rebeltoolbox.com/zh_CN/"
 "stable/tutorials/io/data_paths.html]数据路径[/url]。"
 
 #: doc/classes/ProjectSettings.xml
@@ -55263,7 +55263,7 @@ msgid ""
 "display the running project.\n"
 "Regardless of the platform, enabling fullscreen will change the window size "
 "to match the monitor's size. Therefore, make sure your project supports "
-"[url=https://docs.godotengine.org/en/3.4/tutorials/rendering/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/rendering/"
 "multiple_resolutions.html]multiple resolutions[/url] when enabling "
 "fullscreen mode.\n"
 "[b]Note:[/b] This setting is ignored on iOS, Android, and HTML5."
@@ -55272,7 +55272,7 @@ msgstr ""
 "Windows 和 Linux 上，无边框窗口用于模拟全屏。在 macOS 上，会创建一个新的桌面"
 "用于显示正在运行的项目。\n"
 "无论平台如何，启用全屏都会更改窗口大小以匹配显示器的大小。因此，请确保您的项"
-"目在启用全屏模式时支持 [url=https://docs.godotengine.org/zh_CN/stable/"
+"目在启用全屏模式时支持 [url=https://docs.rebeltoolbox.com/zh_CN/latest/"
 "tutorials/rendering/multiple_resolutions.html]多种分辨率[/url]。\n"
 "[b]注意：[/b] 在 iOS、Android 和 HTML5 上忽略此设置。"
 
@@ -57805,10 +57805,10 @@ msgstr ""
 
 #: doc/classes/Quat.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/using_transforms."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/using_transforms."
 "html#interpolating-with-quaternions"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/using_transforms."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/using_transforms."
 "html#interpolating-with-quaternions"
 
 #: doc/classes/Quat.xml
@@ -58021,10 +58021,10 @@ msgstr ""
 
 #: doc/classes/RandomNumberGenerator.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/math/random_number_generation."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/math/random_number_generation."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/math/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/math/"
 "random_number_generation.html"
 
 #: doc/classes/RandomNumberGenerator.xml
@@ -58383,13 +58383,13 @@ msgstr "如果 [code]true[/code]，将反馈与 [PhysicsBody] 的碰撞。"
 #: doc/classes/RayCast.xml doc/classes/RayCast2D.xml
 msgid ""
 "The ray's collision mask. Only objects in at least one collision layer "
-"enabled in the mask will be detected. See [url=https://docs.godotengine.org/"
+"enabled in the mask will be detected. See [url=https://docs.rebeltoolbox.com/"
 "en/3.4/tutorials/physics/physics_introduction.html#collision-layers-and-"
 "masks]Collision layers and masks[/url] in the documentation for more "
 "information."
 msgstr ""
 "光线的碰撞遮罩。只有在遮罩中启用至少一个碰撞层中物体，才会被检测到。有关更多"
-"信息，请参阅文档中的 [url=https://docs.godotengine.org/zh_CN/stable/"
+"信息，请参阅文档中的 [url=https://docs.rebeltoolbox.com/zh_CN/latest/"
 "tutorials/physics/physics_introduction.html#collision-layers-and-masks]碰撞层"
 "和掩码[/url]。"
 
@@ -58805,9 +58805,9 @@ msgstr ""
 "把跨越多个反射探针的大网格分割成小网格。"
 
 #: doc/classes/ReflectionProbe.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/reflection_probes.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/reflection_probes.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/reflection_probes.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/reflection_probes.html"
 
 #: doc/classes/ReflectionProbe.xml
 #, fuzzy
@@ -59327,9 +59327,9 @@ msgstr ""
 "行，并释放不再使用的资源。这意味着未使用的资源在被删除之前会停留一段时间。"
 
 #: doc/classes/Resource.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/scripting/resources.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/resources.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/scripting/resources.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/scripting/resources.html"
 
 #: doc/classes/Resource.xml
 msgid ""
@@ -61899,10 +61899,10 @@ msgstr ""
 
 #: doc/classes/RootMotionView.xml
 msgid ""
-"https://docs.godotengine.org/en/latest/tutorials/animation/animation_tree."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/animation/animation_tree."
 "html#root-motion"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/latest/tutorials/animation/animation_tree."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/animation/animation_tree."
 "html#root-motion"
 
 #: doc/classes/RootMotionView.xml
@@ -62144,16 +62144,16 @@ msgstr ""
 "[SceneTree] 是场景所使用的默认 [MainLoop] 实现，因此掌控着游戏循环。"
 
 #: doc/classes/SceneTree.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/scripting/scene_tree.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/scene_tree.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/scripting/scene_tree.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/scripting/scene_tree.html"
 
 #: doc/classes/SceneTree.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/rendering/multiple_resolutions."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/rendering/multiple_resolutions."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/rendering/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/rendering/"
 "multiple_resolutions.html"
 
 #: doc/classes/SceneTree.xml
@@ -62742,9 +62742,9 @@ msgstr ""
 "的基类之一相匹配，[method Object.set_script] 会扩展该对象。"
 
 #: doc/classes/Script.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/scripting/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/index.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/scripting/index.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/scripting/index.html"
 
 #: doc/classes/Script.xml
 msgid "Returns [code]true[/code] if the script can be instanced."
@@ -63108,15 +63108,15 @@ msgstr ""
 "链接的教程。"
 
 #: doc/classes/Shader.xml doc/classes/ShaderMaterial.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/shaders/index.html"
-msgstr "https://docs.godotengine.org/zh_CN/stable/tutorials/shaders/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/shaders/index.html"
+msgstr "https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/shaders/index.html"
 
 #: doc/classes/Shader.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/shaders/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/shaders/"
 "introduction_to_shaders.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/shaders/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/shaders/"
 "introduction_to_shaders.html"
 
 #: doc/classes/Shader.xml
@@ -63520,9 +63520,9 @@ msgstr ""
 
 #: doc/classes/Skeleton2D.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/animation/2d_skeletons.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/animation/2d_skeletons.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/animation/2d_skeletons."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/animation/2d_skeletons."
 "html"
 
 #: doc/classes/Skeleton2D.xml
@@ -63915,9 +63915,9 @@ msgid ""
 msgstr "可变形的物理体。用于创建弹性或可变形的物体，如布、橡胶或其他柔性材质。"
 
 #: doc/classes/SoftBody.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/physics/soft_body.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/physics/soft_body.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/physics/soft_body.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/physics/soft_body.html"
 
 #: doc/classes/SoftBody.xml
 msgid "Returns local translation of a vertex in the surface array."
@@ -63946,7 +63946,7 @@ msgid ""
 "property.\n"
 "A contact is detected if object A is in any of the layers that object B "
 "scans, or object B is in any layer scanned by object A. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -63955,19 +63955,19 @@ msgstr ""
 "统，并不是可视化的。一个可碰撞物体可以使用这些层来选择它可以与哪些物体碰撞，"
 "使用 collision_mask 属性。\n"
 "如果对象 A 在对象 B 所扫描的任何层中，或者对象 B 在对象 A 所扫描的任何层中，"
-"就会检测到接触。更多信息请参阅文档中的[url=https://docs.godotengine.org/"
+"就会检测到接触。更多信息请参阅文档中的[url=https://docs.rebeltoolbox.com/"
 "zh_CN/stable/tutorials/physics/physics_introduction.html#collision-layers-"
 "and-masks]碰撞层和掩码[/url]。"
 
 #: doc/classes/SoftBody.xml
 msgid ""
 "The physics layers this SoftBody scans for collisions. See [url=https://docs."
-"godotengine.org/en/3.4/tutorials/physics/physics_introduction.html#collision-"
+"rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction.html#collision-"
 "layers-and-masks]Collision layers and masks[/url] in the documentation for "
 "more information."
 msgstr ""
 "此 SoftBody 扫描碰撞的物理层。更多信息请参阅文档中的[url=https://docs."
-"godotengine.org/zh_CN/stable/tutorials/physics/physics_introduction."
+"rebeltoolbox.com/zh_CN/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]碰撞层和掩码[/url]。"
 
 #: doc/classes/SoftBody.xml
@@ -64027,9 +64027,9 @@ msgstr ""
 
 #: doc/classes/Spatial.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/introduction_to_3d.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/introduction_to_3d.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/introduction_to_3d."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/introduction_to_3d."
 "html"
 
 #: doc/classes/Spatial.xml doc/classes/Vector3.xml
@@ -64380,9 +64380,9 @@ msgstr ""
 "下面的教程。"
 
 #: doc/classes/SpatialMaterial.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/spatial_material.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/spatial_material.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/3d/spatial_material.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/3d/spatial_material.html"
 
 #: doc/classes/SpatialMaterial.xml
 msgid "Returns [code]true[/code], if the specified [enum Feature] is enabled."
@@ -65916,11 +65916,11 @@ msgstr "从碰撞检查排除的 [PhysicsBody] 对象列表中删除指定的 [R
 #: doc/classes/SpringArm.xml
 msgid ""
 "The layers against which the collision check shall be done. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
-"碰撞检测的目标层。更多信息请参阅文档中的[url=https://docs.godotengine.org/"
+"碰撞检测的目标层。更多信息请参阅文档中的[url=https://docs.rebeltoolbox.com/"
 "zh_CN/stable/tutorials/physics/physics_introduction.html#collision-layers-"
 "and-masks]碰撞层与遮罩[/url]。"
 
@@ -66764,10 +66764,10 @@ msgstr ""
 
 #: doc/classes/String.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/gdscript/"
 "gdscript_format_string.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/scripting/gdscript/"
 "gdscript_format_string.html"
 
 #: doc/classes/String.xml
@@ -70465,9 +70465,9 @@ msgstr ""
 "还可以通过编写 [code].theme[/code] 文件加载主题资源，更多信息见文档。"
 
 #: doc/classes/Theme.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/ui/gui_skinning.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/ui/gui_skinning.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/ui/gui_skinning.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/ui/gui_skinning.html"
 
 #: doc/classes/Theme.xml
 msgid "Clears all values on the theme."
@@ -70948,10 +70948,10 @@ msgstr ""
 
 #: doc/classes/Thread.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/threads/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/threads/"
 "thread_safe_apis.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/performance/threads/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/performance/threads/"
 "thread_safe_apis.html"
 
 #: doc/classes/Thread.xml
@@ -71053,9 +71053,9 @@ msgstr ""
 "处的单元格坐标会被编码为 [code]metadata[/code]。"
 
 #: doc/classes/TileMap.xml doc/classes/TileSet.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/2d/using_tilemaps.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/2d/using_tilemaps.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/2d/using_tilemaps.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/2d/using_tilemaps.html"
 
 #: doc/classes/TileMap.xml doc/classes/TileSet.xml
 msgid "https://godotengine.org/asset-library/asset/111"
@@ -71318,23 +71318,23 @@ msgstr "静态体碰撞的摩擦值，参阅[code]collision_use_kinematic[/code]
 #: doc/classes/TileMap.xml
 msgid ""
 "The collision layer(s) for all colliders in the TileMap. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
 "图块地图中所有碰撞器的碰撞层。更多信息请参阅文档中的[url=https://docs."
-"godotengine.org/zh_CN/stable/tutorials/physics/physics_introduction."
+"rebeltoolbox.com/zh_CN/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]碰撞层和掩码[/url]。"
 
 #: doc/classes/TileMap.xml
 msgid ""
 "The collision mask(s) for all colliders in the TileMap. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
 "图块地图中所有碰撞器的碰撞掩码。更多信息请参阅文档中的[url=https://docs."
-"godotengine.org/zh_CN/stable/tutorials/physics/physics_introduction."
+"rebeltoolbox.com/zh_CN/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]碰撞层和掩码[/url]。"
 
 #: doc/classes/TileMap.xml
@@ -72427,15 +72427,15 @@ msgstr "翻译是可以按需加载和卸载的资源，将一个字符串映射
 
 #: doc/classes/Translation.xml doc/classes/TranslationServer.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/i18n/internationalizing_games."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/i18n/internationalizing_games."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/i18n/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/i18n/"
 "internationalizing_games.html"
 
 #: doc/classes/Translation.xml doc/classes/TranslationServer.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/i18n/locales.html"
-msgstr "https://docs.godotengine.org/zh_CN/stable/tutorials/i18n/locales.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/i18n/locales.html"
+msgstr "https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/i18n/locales.html"
 
 #: doc/classes/Translation.xml
 msgid "Virtual method to override [method get_message]."
@@ -74954,9 +74954,9 @@ msgstr ""
 "[Mutex] 来锁定它。"
 
 #: doc/classes/Variant.xml
-msgid "https://docs.godotengine.org/en/3.4/development/cpp/variant_class.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/development/cpp/variant_class.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/development/cpp/variant_class.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/development/cpp/variant_class.html"
 
 #: doc/classes/VBoxContainer.xml
 msgid "Vertical box container."
@@ -76056,9 +76056,9 @@ msgstr ""
 "[member render_target_v_flip] 可以使该 Viewport 使用正确的朝向显示。"
 
 #: doc/classes/Viewport.xml
-msgid "https://docs.godotengine.org/en/3.4/tutorials/rendering/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/rendering/index.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/rendering/index.html"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/rendering/index.html"
 
 #: doc/classes/Viewport.xml doc/classes/ViewportTexture.xml
 msgid "https://godotengine.org/asset-library/asset/128"
@@ -77056,10 +77056,10 @@ msgstr ""
 
 #: modules/visual_script/doc_classes/VisualScript.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/getting_started/scripting/visual_script/"
+"https://docs.rebeltoolbox.com/en/latest/getting_started/scripting/visual_script/"
 "index.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/getting_started/scripting/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/getting_started/scripting/"
 "visual_script/index.html"
 
 #: modules/visual_script/doc_classes/VisualScript.xml
@@ -79066,9 +79066,9 @@ msgstr ""
 
 #: doc/classes/VisualServer.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/using_servers.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/using_servers.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/performance/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/performance/"
 "using_servers.html"
 
 #: doc/classes/VisualServer.xml
@@ -82586,9 +82586,9 @@ msgstr ""
 
 #: doc/classes/VisualShaderNode.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/shaders/visual_shaders.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/shaders/visual_shaders.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/shaders/visual_shaders."
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/shaders/visual_shaders."
 "html"
 
 #: doc/classes/VisualShaderNode.xml
@@ -83158,10 +83158,10 @@ msgstr ""
 
 #: doc/classes/VisualShaderNodeCustom.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/editor/"
 "visual_shader_plugins.html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/plugins/editor/"
 "visual_shader_plugins.html"
 
 #: doc/classes/VisualShaderNodeCustom.xml
@@ -83588,10 +83588,10 @@ msgstr ""
 
 #: doc/classes/VisualShaderNodeInput.xml
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/shaders/shader_reference/index."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/shaders/shader_reference/index."
 "html"
 msgstr ""
-"https://docs.godotengine.org/zh_CN/stable/tutorials/shaders/shader_reference/"
+"https://docs.rebeltoolbox.com/zh_CN/latest/tutorials/shaders/shader_reference/"
 "index.html"
 
 #: doc/classes/VisualShaderNodeInput.xml

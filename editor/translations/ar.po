@@ -13730,10 +13730,10 @@ msgstr "بناء مشروع الأندرويد (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "أخفق بناء مشروع الأندرويد، تفقد المُخرجات للإطلاع على الخطأ.\n"
-"بصورة بديلة يمكنك زيارة docs.godotengine.org لأجل مستندات البناء للأندرويد."
+"بصورة بديلة يمكنك زيارة docs.rebeltoolbox.com لأجل مستندات البناء للأندرويد."
 
 #: platform/android/export/export_plugin.cpp
 msgid "Moving output"

@@ -13739,11 +13739,11 @@ msgstr "Compilazione di un progetto Android (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "Compilazione del progetto Android fallita, controlla l'output per vedere gli "
 "errori.\n"
-"In alternativa, visita docs.godotengine.org per la documentazione della "
+"In alternativa, visita docs.rebeltoolbox.com per la documentazione della "
 "build Android."
 
 #: platform/android/export/export_plugin.cpp

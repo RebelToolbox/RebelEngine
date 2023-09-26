@@ -13507,10 +13507,10 @@ msgstr "Käännetään Android-projektia (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "Android-projektin käännös epäonnistui, tarkista virhe tulosteesta.\n"
-"Vaihtoehtoisesti, lue docs.godotengine.org sivustolta Androidin "
+"Vaihtoehtoisesti, lue docs.rebeltoolbox.com sivustolta Androidin "
 "käännösdokumentaatio."
 
 #: platform/android/export/export_plugin.cpp

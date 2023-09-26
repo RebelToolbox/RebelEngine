@@ -13916,11 +13916,11 @@ msgstr "Construint Projecte Android (gradle)"
 #, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "La construcció del projecte Android ha fallat, comproveu la sortida per "
 "l'error.\n"
-"Alternativament visiteu docs.godotengine.org per a la documentació de "
+"Alternativament visiteu docs.rebeltoolbox.com per a la documentació de "
 "compilació d'Android."
 
 #: platform/android/export/export_plugin.cpp

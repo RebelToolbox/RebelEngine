@@ -1041,7 +1041,7 @@ void ScriptEditor::_menu_option(int p_option) {
 			help_search_dialog->popup_dialog();
 		} break;
 		case SEARCH_WEBSITE: {
-			OS::get_singleton()->shell_open("https://docs.godotengine.org/");
+			OS::get_singleton()->shell_open("https://docs.rebeltoolbox.com/");
 		} break;
 		case WINDOW_NEXT: {
 			_history_forward();

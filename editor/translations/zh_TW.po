@@ -13234,10 +13234,10 @@ msgstr "建置 Android 專案（Gradle）"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "建置 Android 專案失敗，請檢查輸出以確認錯誤。\n"
-"也可以瀏覽 docs.godotengine.org 以瀏覽 Android 建置說明文件。"
+"也可以瀏覽 docs.rebeltoolbox.com 以瀏覽 Android 建置說明文件。"
 
 #: platform/android/export/export_plugin.cpp
 msgid "Moving output"

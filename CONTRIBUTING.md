@@ -115,10 +115,10 @@ recommend that you have a look at it to know what's important to take into
 account for a PR to be considered for merging.
 
 In addition to the following tips, also take a look at the
-[Engine development guide](https://docs.godotengine.org/en/latest/development/cpp/)
+[Engine development guide](https://docs.rebeltoolbox.com/en/latest/development/cpp/)
 for an introduction to developing on Godot.
 
-The [Contributing docs](https://docs.godotengine.org/en/latest/community/contributing/index.html)
+The [Contributing docs](https://docs.rebeltoolbox.com/en/latest/community/contributing/index.html)
 also have important information on the PR workflow and the code style we use.
 
 ### Document your changes
@@ -128,10 +128,10 @@ scripting APIs, you **must** update the class reference to document those.
 This is to ensure the documentation coverage doesn't decrease as contributions
 are merged.
 
-[Update the documentation template](https://docs.godotengine.org/en/latest/community/contributing/updating_the_class_reference.html#updating-the-documentation-template)
+[Update the documentation template](https://docs.rebeltoolbox.com/en/latest/community/contributing/updating_the_class_reference.html#updating-the-documentation-template)
 using your compiled binary, then fill in the descriptions.
 Follow the style guide described in the
-[Docs writing guidelines](https://docs.godotengine.org/en/latest/community/contributing/docs_writing_guidelines.html).
+[Docs writing guidelines](https://docs.rebeltoolbox.com/en/latest/community/contributing/docs_writing_guidelines.html).
 
 If your pull request modifies parts of the code in a non-obvious way, make sure
 to add comments in the code as well. This helps other people understand the
@@ -156,7 +156,7 @@ Internet).
 This [Git style guide](https://github.com/agis-/git-style-guide) has some
 good practices to have in mind.
 
-See our [PR workflow](https://docs.godotengine.org/en/latest/community/contributing/pr_workflow.html)
+See our [PR workflow](https://docs.rebeltoolbox.com/en/latest/community/contributing/pr_workflow.html)
 documentation for tips on using Git, amending commits and rebasing branches.
 
 ### Format your commit messages with readability in mind

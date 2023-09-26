@@ -13599,10 +13599,10 @@ msgstr "Сборка проекта Android (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "Сборка проекта Android не удалась, проверьте вывод на ошибки.\n"
-"Также посетите docs.godotengine.org для получения документации по сборке "
+"Также посетите docs.rebeltoolbox.com для получения документации по сборке "
 "Android."
 
 #: platform/android/export/export_plugin.cpp

@@ -234,12 +234,13 @@ class ClassStatus:
         )
 
         if self.name.startswith("Total"):
-            output["url"] = color("url", "https://docs.godotengine.org/en/latest/classes/")
+            output["url"] = color("url", "https://docs.rebeltoolbox.com/en/latest/classes/")
             if flags["s"]:
                 output["comment"] = color("part_good", "ALL OK")
         else:
             output["url"] = color(
-                "url", "https://docs.godotengine.org/en/latest/classes/class_{name}.html".format(name=self.name.lower())
+                "url",
+                "https://docs.rebeltoolbox.com/en/latest/classes/class_{name}.html".format(name=self.name.lower()),
             )
 
             if flags["s"] and not flags["g"] and self.is_ok():
@@ -253,7 +254,6 @@ class ClassStatus:
         status.name = c.attrib["name"]
 
         for tag in list(c):
-
             if tag.tag == "brief_description":
                 status.has_brief_description = len(tag.text.strip()) > 0
 
@@ -401,7 +401,6 @@ table_column_chars = "|"
 total_status = ClassStatus("Total")
 
 for cn in filtered_classes:
-
     c = classes[cn]
     validate_tag(c, "class")
     status = ClassStatus.generate_for_class(c)

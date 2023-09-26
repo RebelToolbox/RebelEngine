@@ -13543,11 +13543,11 @@ msgstr "Android Projesi Oluşturma (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "Android projesinin oluşturulması başarısız oldu, hatayı çıktı için kontrol "
 "edin.\n"
-"Alternatif olarak, Android derleme dokümantasyonu için docs.godotengine.org "
+"Alternatif olarak, Android derleme dokümantasyonu için docs.rebeltoolbox.com "
 "adresini ziyaret edin.."
 
 #: platform/android/export/export_plugin.cpp

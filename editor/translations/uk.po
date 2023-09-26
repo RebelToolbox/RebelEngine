@@ -13562,11 +13562,11 @@ msgstr "Збирання проєкту Android (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "Не вдалося виконати збирання проєкту Android. Ознайомтеся із виведеними "
 "даними, щоб визначити причину помилки.\n"
-"Крім того, можете відвідати docs.godotengine.org і ознайомитися із "
+"Крім того, можете відвідати docs.rebeltoolbox.com і ознайомитися із "
 "документацією щодо збирання для Android."
 
 #: platform/android/export/export_plugin.cpp
