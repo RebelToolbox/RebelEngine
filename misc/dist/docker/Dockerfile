@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER Mohammad Rezai, https://github.com/mrezai
-WORKDIR /godot-dev
-COPY scripts/install-android-tools /godot-dev/
+WORKDIR /rebel-dev
+COPY scripts/install-android-tools /rebel-dev/
 ENV DEBIAN_FRONTEND noninteractive
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \

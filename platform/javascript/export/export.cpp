@@ -79,7 +79,7 @@ private:
 		if (regen) {
 			key = p_crypto->generate_rsa(2048);
 			key->save(key_path);
-			cert = p_crypto->generate_self_signed_certificate(key, "CN=godot-debug.local,O=A Game Dev,C=XXA", "20140101000000", "20340101000000");
+			cert = p_crypto->generate_self_signed_certificate(key, "CN=rebel-debug.local,O=A Game Dev,C=XXA", "20140101000000", "20340101000000");
 			cert->save(crt_path);
 		}
 	}
@@ -380,7 +380,7 @@ Error EditorExportPlatformJavaScript::_extract_template(const String &p_template
 		String file = String::utf8(fname);
 
 		// Skip service worker and offline page if not exporting pwa.
-		if (!pwa && (file == "godot.service.worker.js" || file == "godot.offline.html")) {
+		if (!pwa && (file == "rebel.service.worker.js" || file == "rebel.offline.html")) {
 			continue;
 		}
 		Vector<uint8_t> data;
@@ -392,7 +392,7 @@ Error EditorExportPlatformJavaScript::_extract_template(const String &p_template
 		unzCloseCurrentFile(pkg);
 
 		//write
-		String dst = p_dir.plus_file(file.replace("godot", p_name));
+		String dst = p_dir.plus_file(file.replace("rebel", p_name));
 		FileAccess *f = FileAccess::open(dst, FileAccess::WRITE);
 		if (!f) {
 			EditorNode::get_singleton()->show_warning(TTR("Could not write file:") + "\n" + dst);
@@ -472,10 +472,10 @@ void EditorExportPlatformJavaScript::_fix_html(Vector<uint8_t> &p_html, const Re
 	const String str_config = JSON::print(config);
 	const String custom_head_include = p_preset->get("html/head_include");
 	Map<String, String> replaces;
-	replaces["$GODOT_URL"] = p_name + ".js";
-	replaces["$GODOT_PROJECT_NAME"] = ProjectSettings::get_singleton()->get_setting("application/config/name");
-	replaces["$GODOT_HEAD_INCLUDE"] = head_include + custom_head_include;
-	replaces["$GODOT_CONFIG"] = str_config;
+	replaces["$GAME_URL"] = p_name + ".js";
+	replaces["$REBEL_PROJECT_NAME"] = ProjectSettings::get_singleton()->get_setting("application/config/name");
+	replaces["$HEAD_INCLUDE"] = head_include + custom_head_include;
+	replaces["$GAME_CONFIG"] = str_config;
 	_replace_strings(replaces, p_html);
 }
 
@@ -518,11 +518,11 @@ Error EditorExportPlatformJavaScript::_build_pwa(const Ref<EditorExportPreset> &
 	const String name = p_path.get_file().get_basename();
 	const ExportMode mode = (ExportMode)(int)p_preset->get("variant/export_type");
 	Map<String, String> replaces;
-	replaces["@GODOT_VERSION@"] = "1";
-	replaces["@GODOT_NAME@"] = name;
-	replaces["@GODOT_OFFLINE_PAGE@"] = name + ".offline.html";
+	replaces["@REBEL_VERSION@"] = "1";
+	replaces["@REBEL_NAME@"] = name;
+	replaces["@OFFLINE_PAGE@"] = name + ".offline.html";
 	Array files;
-	replaces["@GODOT_OPT_CACHE@"] = JSON::print(files);
+	replaces["@REBEL_OPT_CACHE@"] = JSON::print(files);
 	files.push_back(name + ".html");
 	files.push_back(name + ".js");
 	files.push_back(name + ".wasm");
@@ -541,7 +541,7 @@ Error EditorExportPlatformJavaScript::_build_pwa(const Ref<EditorExportPreset> &
 			files.push_back(p_shared_objects[i].path.get_file());
 		}
 	}
-	replaces["@GODOT_CACHE@"] = JSON::print(files);
+	replaces["@REBEL_CACHE@"] = JSON::print(files);
 
 	const String sw_path = dir.plus_file(name + ".service.worker.js");
 	Vector<uint8_t> sw;
@@ -583,7 +583,7 @@ Error EditorExportPlatformJavaScript::_build_pwa(const Ref<EditorExportPreset> &
 	Dictionary manifest;
 	String proj_name = ProjectSettings::get_singleton()->get_setting("application/config/name");
 	if (proj_name.empty()) {
-		proj_name = "Godot Game";
+		proj_name = "Rebel Game";
 	}
 	manifest["name"] = proj_name;
 	manifest["start_url"] = "./" + name + ".html";

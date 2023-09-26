@@ -5,25 +5,23 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>Godot</string>
+	<string>Rebel</string>
 	<key>CFBundleName</key>
-	<string>Godot</string>
+	<string>Rebel</string>
 	<key>CFBundleGetInfoString</key>
-	<string>(c) 2007-2022 Juan Linietsky, Ariel Manzur &amp; Godot Engine contributors</string>
+	<string>1.0</string>
 	<key>CFBundleIconFile</key>
 	<string>rebel-icon.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.godotengine.godot</string>
+	<string>com.rebeltoolbox.rebelengine</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.4.5</string>
-	<key>CFBundleSignature</key>
-	<string>godot</string>
+	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>3.4.5</string>
+	<string>1.0</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Microphone access is required to capture audio.</string>
 	<key>NSCameraUsageDescription</key>
@@ -31,7 +29,7 @@
 	<key>NSRequiresAquaSystemAppearance</key>
 	<false />
 	<key>NSHumanReadableCopyright</key>
-	<string>© 2007-2022 Juan Linietsky, Ariel Manzur &amp; Godot Engine contributors</string>
+	<string>© Rebel Engine contributors</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
@@ -68,11 +66,11 @@
 			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>public.godot</string>
+				<string>public.rebel</string>
 			</array>
 			<key>NSExportableTypes</key>
 			<array>
-				<string>public.godot</string>
+				<string>public.rebel</string>
 			</array>
 		</dict>
 	</array>
@@ -84,7 +82,7 @@
 			<key>UTTypeReferenceURL</key>
 			<string></string>
 			<key>UTTypeDescription</key>
-			<string>Godot Scene</string>
+			<string>Rebel Scene</string>
 			<key>UTTypeIconFile</key>
 			<string>Scene.icns</string>
 			<key>UTTypeConformsTo</key>
@@ -99,7 +97,7 @@
 					<string>tscn</string>
 				</array>
 				<key>public.mime-type</key>
-				<string>application/x-godot-scene</string>
+				<string>application/x-rebel-scene</string>
 			</dict>
 		</dict>
 		<dict>
@@ -108,7 +106,7 @@
 			<key>UTTypeReferenceURL</key>
 			<string></string>
 			<key>UTTypeDescription</key>
-			<string>Godot Script</string>
+			<string>Rebel Script</string>
 			<key>UTTypeIconFile</key>
 			<string>GDScript.icns</string>
 			<key>UTTypeConformsTo</key>
@@ -131,7 +129,7 @@
 			<key>UTTypeReferenceURL</key>
 			<string></string>
 			<key>UTTypeDescription</key>
-			<string>Godot Resource</string>
+			<string>Rebel Resource</string>
 			<key>UTTypeIconFile</key>
 			<string>Resource.icns</string>
 			<key>UTTypeConformsTo</key>
@@ -146,16 +144,16 @@
 					<string>tres</string>
 				</array>
 				<key>public.mime-type</key>
-				<string>application/x-godot-resource</string>
+				<string>application/x-rebel-resource</string>
 			</dict>
 		</dict>
 		<dict>
 			<key>UTTypeIdentifier</key>
-			<string>public.godot</string>
+			<string>public.rebel</string>
 			<key>UTTypeReferenceURL</key>
 			<string></string>
 			<key>UTTypeDescription</key>
-			<string>Godot Project</string>
+			<string>Rebel Project</string>
 			<key>UTTypeIconFile</key>
 			<string>Project.icns</string>
 			<key>UTTypeConformsTo</key>
@@ -166,10 +164,10 @@
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
-					<string>godot</string>
+					<string>rebel</string>
 				</array>
 				<key>public.mime-type</key>
-				<string>text/x-godot-project</string>
+				<string>text/x-rebel-project</string>
 			</dict>
 		</dict>
 	</array>
