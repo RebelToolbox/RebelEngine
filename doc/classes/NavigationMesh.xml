@@ -7,7 +7,6 @@
 		A navigation mesh is a collection of polygons that define which areas of an environment are traversable to aid agents in pathfinding through complicated spaces.
 	</description>
 	<tutorials>
-		<link title="3D Navmesh Demo">https://godotengine.org/asset-library/asset/124</link>
 	</tutorials>
 	<methods>
 		<method name="add_polygon">

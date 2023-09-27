@@ -85,8 +85,6 @@
 	</description>
 	<tutorials>
 		<link title="GDScript basics: Dictionary">https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/gdscript/gdscript_basics.html#dictionary</link>
-		<link title="3D Voxel Demo">https://godotengine.org/asset-library/asset/676</link>
-		<link title="OS Test Demo">https://godotengine.org/asset-library/asset/677</link>
 	</tutorials>
 	<methods>
 		<method name="clear">

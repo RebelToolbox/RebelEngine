@@ -11,8 +11,6 @@
 	<tutorials>
 		<link title="Kinematic character (2D)">https://docs.rebeltoolbox.com/en/latest/tutorials/physics/kinematic_character_2d.html</link>
 		<link title="Using KinematicBody2D">https://docs.rebeltoolbox.com/en/latest/tutorials/physics/using_kinematic_body_2d.html</link>
-		<link title="2D Kinematic Character Demo">https://godotengine.org/asset-library/asset/113</link>
-		<link title="2D Platformer Demo">https://godotengine.org/asset-library/asset/120</link>
 	</tutorials>
 	<methods>
 		<method name="get_floor_angle" qualifiers="const">

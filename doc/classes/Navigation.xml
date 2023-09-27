@@ -8,7 +8,6 @@
 		[b]Note:[/b] The current navigation system has many known issues and will not always return optimal paths as expected.
 	</description>
 	<tutorials>
-		<link title="3D Navmesh Demo">https://godotengine.org/asset-library/asset/124</link>
 	</tutorials>
 	<methods>
 		<method name="get_closest_point">

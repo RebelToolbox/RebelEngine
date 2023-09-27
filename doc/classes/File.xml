@@ -26,7 +26,6 @@
 	</description>
 	<tutorials>
 		<link title="File system">https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/filesystem.html</link>
-		<link title="3D Voxel Demo">https://godotengine.org/asset-library/asset/676</link>
 	</tutorials>
 	<methods>
 		<method name="close">
