@@ -3022,8 +3022,8 @@ Ref<Image> Image::rgbe_to_srgb() {
 
 	lock();
 	new_image->lock();
-	uint8_t *dst_ptr = write_lock.ptr();
-	uint8_t *src_ptr = new_image->write_lock.ptr();
+	uint8_t *src_ptr = write_lock.ptr();
+	uint8_t *dst_ptr = new_image->write_lock.ptr();
 	for (int row = 0; row < height; row++) {
 		for (int col = 0; col < width; col++) {
 			new_image->_set_pixel(dst_ptr, col, row, _get_pixel(src_ptr, col, row).to_srgb());
