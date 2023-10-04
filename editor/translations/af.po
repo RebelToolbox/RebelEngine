@@ -1,7 +1,8 @@
-# Afrikaans translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Afrikaans translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # Ray West <the.raxar@gmail.com>, 2017.
 # Julius Stopforth <jjstopforth@gmail.com>, 2018.
 # Isa Tippens <isatippens2@gmail.com>, 2019.
@@ -9,8 +10,8 @@
 # Henry LeRoux <henry.leroux@ocsbstudent.ca>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-04-05 14:28+0000\n"
 "Last-Translator: Henry LeRoux <henry.leroux@ocsbstudent.ca>\n"

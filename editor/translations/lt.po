@@ -1,7 +1,8 @@
-# Lithuanian translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Lithuanian translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # Ignas Kiela <ignaskiela@super.lt>, 2017.
 # Kornelijus <kornelijus.github@gmail.com>, 2017, 2018.
 # Ignotas Gražys <ignotas.gr@gmail.com>, 2020.
@@ -9,8 +10,8 @@
 # Lukas Hamm <ideallygrey@tuta.io>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-10-15 04:33+0000\n"
 "Last-Translator: Lukas Hamm <ideallygrey@tuta.io>\n"

@@ -1,7 +1,8 @@
-# Slovenian translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Slovenian translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # matevž lapajne <sivar.lapajne@gmail.com>, 2016-2018.
 # Matjaž Vitas <matjaz.vitas@gmail.com>, 2017-2018.
 # Miha Komatar <miha.komatar@gmail.com>, 2018.
@@ -15,8 +16,8 @@
 # Jakob Tadej Vrtačnik <minecraftalka2@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-02-01 20:54+0000\n"
 "Last-Translator: Jakob Tadej Vrtačnik <minecraftalka2@gmail.com>\n"

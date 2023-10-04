@@ -1,7 +1,8 @@
-# Hindi translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Hindi translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # Abhas Kumar Sinha <abhaskumarsinha@gmail.com>, 2017.
 # Suryansh5545 <suryanshpathak5545@gmail.com>, 2018, 2020.
 # Vikram1323 <vikram1323@gmail.com>, 2018.
@@ -17,8 +18,8 @@
 # Sumanyu Aggarwal <sumanyu.code@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-10-28 22:09+0000\n"
 "Last-Translator: Sumanyu Aggarwal <sumanyu.code@gmail.com>\n"
