@@ -1,7 +1,8 @@
-# Portuguese (Brazil) translation of the Godot Engine class reference.
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Portuguese (Brazil) translation of the Rebel Engine class reference
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 #
 # José Paulo <jose.paulo1919@gmail.com>, 2020.
 # Necco <necco@outlook.com>, 2020.
@@ -34,8 +35,8 @@
 # Vinicius A. Portela <vinicius@simpx.net>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine class reference\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Engine class reference\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "PO-Revision-Date: 2021-12-19 17:31+0000\n"
 "Last-Translator: Vinicius A. Portela <vinicius@simpx.net>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"

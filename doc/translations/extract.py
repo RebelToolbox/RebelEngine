@@ -7,18 +7,19 @@ from collections import OrderedDict
 
 EXTRACT_TAGS = ["description", "brief_description", "member", "constant", "theme_item", "link"]
 HEADER = """\
-# LANGUAGE translation of the Godot Engine class reference.
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# LANGUAGE translation of the Rebel Engine class reference
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine class reference\\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\\n"
+"Project-Id-Version: Rebel Engine class reference\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=UTF-8\\n"
 "Content-Transfer-Encoding: 8-bit\\n"
@@ -44,6 +45,7 @@ import sys
 
 sys.modules["_elementtree"] = None
 import xml.etree.ElementTree as ET
+
 
 ## override the parser to get the line number
 class LineNumberingParser(ET.XMLParser):

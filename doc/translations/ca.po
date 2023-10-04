@@ -1,15 +1,16 @@
-# Catalan translation of the Godot Engine class reference.
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Catalan translation of the Rebel Engine class reference
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 #
 # roger <616steam@gmail.com>, 2020.
 # Pierre Stempin <pierre.stempin@gmail.com>, 2020.
 # Xavier Gomez <hiulit@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine class reference\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Engine class reference\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "PO-Revision-Date: 2021-10-21 10:30+0000\n"
 "Last-Translator: Xavier Gomez <hiulit@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/godot-engine/"

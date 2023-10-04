@@ -1,7 +1,8 @@
-# Russian translation of the Godot Engine class reference.
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Russian translation of the Rebel Engine class reference
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 #
 # Alex <Alex.Gorichev@protonmail.com>, 2020.
 # Nikita <Kulacnikita@ya.ru>, 2020.
@@ -34,8 +35,8 @@
 # artem <artem999.r@protonmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine class reference\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Engine class reference\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "PO-Revision-Date: 2021-12-04 12:53+0000\n"
 "Last-Translator: artem <artem999.r@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/godot-engine/"
