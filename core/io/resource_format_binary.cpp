@@ -819,7 +819,10 @@ void ResourceInteractiveLoaderBinary::open(FileAccess *p_f) {
 	print_bl("minor: " + itos(ver_minor));
 	print_bl("format: " + itos(ver_format));
 
-	if (ver_format > FORMAT_VERSION || ver_major > VERSION_MAJOR) {
+	// We permit resources with ver_major set to 3, because
+	// resources created in Godot v3.x will have ver_major set to 3, and
+	// Rebel Engine v1.x should be able to open these.
+	if (ver_format > FORMAT_VERSION || (ver_major > VERSION_MAJOR && ver_major != 3)) {
 		f->close();
 		ERR_FAIL_MSG(vformat("File '%s' can't be loaded, as it uses a format version (%d) or engine version (%d.%d) which are not supported by your engine version (%s).",
 				local_path, ver_format, ver_major, ver_minor, VERSION_BRANCH));
