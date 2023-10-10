@@ -489,7 +489,7 @@ bool PolygonPathFinder::is_point_inside(const Vector2 &p_point) const {
 }
 
 Vector2 PolygonPathFinder::get_closest_point(const Vector2 &p_point) const {
-	float closest_dist = 1e20;
+	float closest_dist = 1e20f;
 	Vector2 closest_point;
 
 	for (Set<Edge>::Element *E = edges.front(); E; E = E->next()) {
@@ -508,7 +508,7 @@ Vector2 PolygonPathFinder::get_closest_point(const Vector2 &p_point) const {
 		}
 	}
 
-	ERR_FAIL_COND_V(closest_dist == 1e20, Vector2());
+	ERR_FAIL_COND_V(closest_dist == 1e20f, Vector2());
 
 	return closest_point;
 }
