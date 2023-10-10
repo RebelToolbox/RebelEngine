@@ -1316,7 +1316,6 @@ int GDScriptCompiler::_parse_expression(CodeGen &codegen, const GDScriptParser::
 
 Error GDScriptCompiler::_parse_block(CodeGen &codegen, const GDScriptParser::BlockNode *p_block, int p_stack_level, int p_break_addr, int p_continue_addr) {
 	codegen.push_stack_identifiers();
-	int new_identifiers = 0;
 	codegen.current_line = p_block->line;
 
 	for (int i = 0; i < p_block->statements.size(); i++) {
@@ -1347,7 +1346,6 @@ Error GDScriptCompiler::_parse_block(CodeGen &codegen, const GDScriptParser::Blo
 						// copied because there is no _parse_statement :(
 						codegen.add_stack_identifier(id->name, p_stack_level++);
 						codegen.alloc_stack(p_stack_level);
-						new_identifiers++;
 
 						GDScriptParser::OperatorNode *op = memnew(GDScriptParser::OperatorNode);
 						op->op = GDScriptParser::OperatorNode::OP_ASSIGN;
@@ -1595,18 +1593,8 @@ Error GDScriptCompiler::_parse_block(CodeGen &codegen, const GDScriptParser::Blo
 			} break;
 			case GDScriptParser::Node::TYPE_LOCAL_VAR: {
 				const GDScriptParser::LocalVarNode *lv = static_cast<const GDScriptParser::LocalVarNode *>(s);
-
-				// since we are using properties now for most class access, allow shadowing of class members to make user's life easier.
-				//
-				//if (_is_class_member_property(codegen, lv->name)) {
-				//	_set_error("Name for local variable '" + String(lv->name) + "' can't shadow class property of the same name.", lv);
-				//	return ERR_ALREADY_EXISTS;
-				//}
-
 				codegen.add_stack_identifier(lv->name, p_stack_level++);
 				codegen.alloc_stack(p_stack_level);
-				new_identifiers++;
-
 			} break;
 			default: {
 				//expression
