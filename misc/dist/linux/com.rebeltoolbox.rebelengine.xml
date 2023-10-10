@@ -1,31 +1,31 @@
 <?xml version="1.0"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="application/x-godot-project">
-    <comment>Godot Engine project</comment>
+  <mime-type type="application/x-rebel-project">
+    <comment>Rebel Engine project</comment>
     <sub-class-of type="text/plain"/>
-    <icon name="x-godot-project"/>
-    <glob pattern="project.godot"/>
+    <icon name="x-rebel-project"/>
+    <glob pattern="project.rebel"/>
   </mime-type>
 
-  <mime-type type="application/x-godot-resource">
-    <comment>Godot Engine resource</comment>
-    <icon name="x-godot-resource"/>
+  <mime-type type="application/x-rebel-resource">
+    <comment>Rebel Engine resource</comment>
+    <icon name="x-rebel-resource"/>
     <glob pattern="*.res"/>
     <glob pattern="*.tres"/>
   </mime-type>
 
-  <mime-type type="application/x-godot-scene">
-    <comment>Godot Engine scene</comment>
-    <icon name="x-godot-scene"/>
+  <mime-type type="application/x-rebel-scene">
+    <comment>Rebel Engine scene</comment>
+    <icon name="x-rebel-scene"/>
     <glob pattern="*.scn"/>
     <glob pattern="*.tscn"/>
     <glob pattern="*.escn"/>
   </mime-type>
 
-  <mime-type type="application/x-godot-shader">
-    <comment>Godot Engine shader</comment>
+  <mime-type type="application/x-rebel-shader">
+    <comment>Rebel Engine shader</comment>
     <sub-class-of type="text/plain"/>
-    <icon name="x-godot-shader"/>
+    <icon name="x-rebel-shader"/>
     <glob pattern="*.gdshader"/>
   </mime-type>
 

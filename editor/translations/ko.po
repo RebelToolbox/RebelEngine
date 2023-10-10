@@ -1,7 +1,8 @@
-# Korean translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Korean translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # Ch <ccwpc@hanmail.net>, 2017.
 # paijai 송 (fivejobi) <xotjq237@gmail.com>, 2018.
 # pgyage3263 <pgyage3263@naver.com>, 2018.
@@ -31,8 +32,8 @@
 # JumpJetAvocado <dwkng@jbnu.ac.kr>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-11-22 20:39+0000\n"
 "Last-Translator: JumpJetAvocado <dwkng@jbnu.ac.kr>\n"
@@ -13411,10 +13412,10 @@ msgstr "Android 프로젝트 빌드 중 (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "Android 프로젝트의 빌드에 실패했습니다, 출력된 오류를 확인하세요.\n"
-"또는 docs.godotengine.org에서 Android 빌드 문서를 찾아보세요."
+"또는 docs.rebeltoolbox.com에서 Android 빌드 문서를 찾아보세요."
 
 #: platform/android/export/export_plugin.cpp
 msgid "Moving output"

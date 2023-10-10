@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="VisualServer" inherits="Object" version="3.4">
+<class name="VisualServer" inherits="Object" version="1.0">
 	<brief_description>
 		Server for anything visible.
 	</brief_description>
@@ -15,7 +15,7 @@
 		In 2D, all visible objects are some form of canvas item. In order to be visible, a canvas item needs to be the child of a canvas attached to a viewport, or it needs to be the child of another canvas item that is eventually attached to the canvas.
 	</description>
 	<tutorials>
-		<link>https://docs.godotengine.org/en/3.4/tutorials/performance/using_servers.html</link>
+		<link>https://docs.rebeltoolbox.com/en/latest/tutorials/performance/using_servers.html</link>
 	</tutorials>
 	<methods>
 		<method name="black_bars_set_images">
@@ -1343,7 +1343,7 @@
 			<argument index="0" name="instance" type="RID" />
 			<argument index="1" name="as_lod_of_instance" type="RID" />
 			<description>
-				Not implemented in Godot 3.x.
+				Not implemented in Rebel Engine.
 			</description>
 		</method>
 		<method name="instance_geometry_set_cast_shadows_setting">
@@ -1362,7 +1362,7 @@
 			<argument index="3" name="min_margin" type="float" />
 			<argument index="4" name="max_margin" type="float" />
 			<description>
-				Not implemented in Godot 3.x.
+				Not implemented in Rebel Engine.
 			</description>
 		</method>
 		<method name="instance_geometry_set_flag">
@@ -1412,7 +1412,7 @@
 			<argument index="0" name="instance" type="RID" />
 			<argument index="1" name="enabled" type="bool" />
 			<description>
-				Function not implemented in Godot 3.x.
+				Function not implemented in Rebel Engine.
 			</description>
 		</method>
 		<method name="instance_set_extra_visibility_margin">
@@ -1589,7 +1589,7 @@
 			<argument index="0" name="light" type="RID" />
 			<argument index="1" name="texture" type="RID" />
 			<description>
-				Not implemented in Godot 3.x.
+				Not implemented in Rebel Engine.
 			</description>
 		</method>
 		<method name="light_set_reverse_cull_face_mode">
@@ -1951,7 +1951,7 @@
 			<argument index="2" name="index_len" type="int" />
 			<argument index="3" name="array_index" type="int" />
 			<description>
-				Function is unused in Godot 3.x.
+				Function is unused in Rebel Engine.
 			</description>
 		</method>
 		<method name="mesh_surface_get_format_stride" qualifiers="const">
@@ -2670,7 +2670,7 @@
 		<method name="sync">
 			<return type="void" />
 			<description>
-				Not implemented in Godot 3.x.
+				Not implemented in Rebel Engine.
 			</description>
 		</method>
 		<method name="texture_allocate">
@@ -3002,7 +3002,7 @@
 			<argument index="0" name="viewport" type="RID" />
 			<argument index="1" name="hidden" type="bool" />
 			<description>
-				Currently unimplemented in Godot 3.x.
+				Currently unimplemented in Rebel Engine.
 			</description>
 		</method>
 		<method name="viewport_set_msaa">
@@ -3164,7 +3164,7 @@
 			Max number of glow levels that can be used with glow post-process effect.
 		</constant>
 		<constant name="MAX_CURSORS" value="8">
-			Unused enum in Godot 3.x.
+			Unused enum in Rebel Engine.
 		</constant>
 		<constant name="MATERIAL_RENDER_PRIORITY_MIN" value="-128">
 			The minimum renderpriority of all materials.
@@ -3702,10 +3702,10 @@
 			The amount of vertex memory used.
 		</constant>
 		<constant name="FEATURE_SHADERS" value="0" enum="Features">
-			Hardware supports shaders. This enum is currently unused in Godot 3.x.
+			Hardware supports shaders. This enum is currently unused in Rebel Engine.
 		</constant>
 		<constant name="FEATURE_MULTITHREADED" value="1" enum="Features">
-			Hardware supports multithreading. This enum is currently unused in Godot 3.x.
+			Hardware supports multithreading. This enum is currently unused in Rebel Engine.
 		</constant>
 		<constant name="MULTIMESH_TRANSFORM_2D" value="0" enum="MultimeshTransformFormat">
 			Use [Transform2D] to store MultiMesh transform.
@@ -3798,8 +3798,7 @@
 			Use the filmic tonemapper. This avoids clipping bright highlights, with a resulting image that usually looks more vivid than [constant ENV_TONE_MAPPER_REINHARD].
 		</constant>
 		<constant name="ENV_TONE_MAPPER_ACES" value="3" enum="EnvironmentToneMapper">
-			Use the legacy Godot version of the Academy Color Encoding System tonemapper. Unlike [constant ENV_TONE_MAPPER_ACES_FITTED], this version of ACES does not handle bright lighting in a physically accurate way. ACES typically has a more contrasted output compared to [constant ENV_TONE_MAPPER_REINHARD] and [constant ENV_TONE_MAPPER_FILMIC].
-			[b]Note:[/b] This tonemapping operator will be removed in Godot 4.0 in favor of the more accurate [constant ENV_TONE_MAPPER_ACES_FITTED].
+			Use the legacy Rebel Engine version of the Academy Color Encoding System tonemapper. Unlike [constant ENV_TONE_MAPPER_ACES_FITTED], this version of ACES does not handle bright lighting in a physically accurate way. ACES typically has a more contrasted output compared to [constant ENV_TONE_MAPPER_REINHARD] and [constant ENV_TONE_MAPPER_FILMIC].
 		</constant>
 		<constant name="ENV_TONE_MAPPER_ACES_FITTED" value="4" enum="EnvironmentToneMapper">
 			Use the Academy Color Encoding System tonemapper. ACES is slightly more expensive than other options, but it handles bright lighting in a more realistic fashion by desaturating it as it becomes brighter. ACES typically has a more contrasted output compared to [constant ENV_TONE_MAPPER_REINHARD] and [constant ENV_TONE_MAPPER_FILMIC].

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="PoolVector2Array" version="3.4">
+<class name="PoolVector2Array" version="1.0">
 	<brief_description>
 		A pooled [Array] of [Vector2].
 	</brief_description>
@@ -8,7 +8,6 @@
 		[b]Note:[/b] This type is passed by value and not by reference.
 	</description>
 	<tutorials>
-		<link title="2D Navigation Astar Demo">https://godotengine.org/asset-library/asset/519</link>
 	</tutorials>
 	<methods>
 		<method name="PoolVector2Array">

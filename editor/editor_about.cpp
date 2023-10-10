@@ -2,11 +2,11 @@
 /*  editor_about.cpp                                                     */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           REBEL ENGINE                                */
 /*************************************************************************/
-/* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2022-Present Rebel Engine contributors                  */
+/* Copyright (c) 2014-2022 Godot Engine contributors                     */
+/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur                  */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -112,7 +112,7 @@ ScrollContainer *EditorAbout::_populate_list(const String &p_name, const List<St
 }
 
 EditorAbout::EditorAbout() {
-	set_title(TTR("Thanks from the Godot community!"));
+	set_title(TTR("Rebel Engine"));
 	set_hide_on_ok(true);
 	set_resizable(true);
 
@@ -148,8 +148,9 @@ EditorAbout::EditorAbout() {
 
 	Label *about_text = memnew(Label);
 	about_text->set_v_size_flags(Control::SIZE_SHRINK_CENTER);
-	about_text->set_text(String::utf8("\xc2\xa9 2007-2022 Juan Linietsky, Ariel Manzur.\n\xc2\xa9 2014-2022 ") +
-			TTR("Godot Engine contributors") + "\n");
+	about_text->set_text(
+			TTR("Rebel Engine is Free and Open Source Software; released under the MIT license.\n") +
+			TTR("Games developed with Rebel Engine remain the property of the game developer."));
 	version_info_vbc->add_child(about_text);
 
 	hbc->add_child(version_info_vbc);
@@ -159,34 +160,19 @@ EditorAbout::EditorAbout() {
 	tc->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	vbc->add_child(tc);
 
-	// Authors
+	// Contributors
 
 	List<String> dev_sections;
-	dev_sections.push_back(TTR("Project Founders"));
-	dev_sections.push_back(TTR("Lead Developer"));
-	// TRANSLATORS: This refers to a job title.
-	// The trailing space is used to distinguish with the project list application,
-	// you do not have to keep it in your translation.
-	dev_sections.push_back(TTR("Project Manager "));
-	dev_sections.push_back(TTR("Developers"));
-	const char *const *dev_src[] = { AUTHORS_FOUNDERS, AUTHORS_LEAD_DEVELOPERS,
-		AUTHORS_PROJECT_MANAGERS, AUTHORS_DEVELOPERS };
-	tc->add_child(_populate_list(TTR("Authors"), dev_sections, dev_src, 1));
+	dev_sections.push_back(TTR("Rebel Contributors"));
+	const char *const *dev_src[] = { CONTRIBUTORS };
+	tc->add_child(_populate_list(TTR("Contributors"), dev_sections, dev_src, 1));
 
 	// Donors
 
 	List<String> donor_sections;
-	donor_sections.push_back(TTR("Platinum Sponsors"));
-	donor_sections.push_back(TTR("Gold Sponsors"));
-	donor_sections.push_back(TTR("Silver Sponsors"));
-	donor_sections.push_back(TTR("Bronze Sponsors"));
-	donor_sections.push_back(TTR("Mini Sponsors"));
-	donor_sections.push_back(TTR("Gold Donors"));
-	donor_sections.push_back(TTR("Silver Donors"));
-	donor_sections.push_back(TTR("Bronze Donors"));
-	const char *const *donor_src[] = { DONORS_SPONSOR_PLATINUM, DONORS_SPONSOR_GOLD,
-		DONORS_SPONSOR_SILVER, DONORS_SPONSOR_BRONZE, DONORS_SPONSOR_MINI,
-		DONORS_GOLD, DONORS_SILVER, DONORS_BRONZE };
+	donor_sections.push_back(TTR("Sponsors"));
+	donor_sections.push_back(TTR("Donors"));
+	const char *const *donor_src[] = { DONORS_SPONSOR, DONORS_DONOR };
 	tc->add_child(_populate_list(TTR("Donors"), donor_sections, donor_src, 3));
 
 	// License
@@ -208,7 +194,7 @@ EditorAbout::EditorAbout() {
 	Label *tpl_label = memnew(Label);
 	tpl_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	tpl_label->set_autowrap(true);
-	tpl_label->set_text(TTR("Godot Engine relies on a number of third-party free and open source libraries, all compatible with the terms of its MIT license. The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."));
+	tpl_label->set_text(TTR("Rebel Engine relies on a number of third-party free and open source libraries, all compatible with the terms of its MIT license. The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."));
 	tpl_label->set_size(Size2(630, 1) * EDSCALE);
 	license_thirdparty->add_child(tpl_label);
 

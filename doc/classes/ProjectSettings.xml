@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="ProjectSettings" inherits="Object" version="3.4">
+<class name="ProjectSettings" inherits="Object" version="1.0">
 	<brief_description>
 		Contains global variables accessible from everywhere.
 	</brief_description>
 	<description>
-		Contains global variables accessible from everywhere. Use [method get_setting], [method set_setting] or [method has_setting] to access them. Variables stored in [code]project.godot[/code] are also loaded into ProjectSettings, making this object very useful for reading custom game configuration options.
+		Contains global variables accessible from everywhere. Use [method get_setting], [method set_setting] or [method has_setting] to access them. Variables stored in [code]project.rebel[/code] are also loaded into ProjectSettings, making this object very useful for reading custom game configuration options.
 		When naming a Project Settings property, use the full path to the setting including the category. For example, [code]"application/config/name"[/code] for the project name. Category and property names can be viewed in the Project Settings dialog.
-		[b]Feature tags:[/b] Project settings can be overridden for specific platforms and configurations (debug, release, ...) using [url=https://docs.godotengine.org/en/3.4/tutorials/export/feature_tags.html]feature tags[/url].
-		[b]Overriding:[/b] Any project setting can be overridden by creating a file named [code]override.cfg[/code] in the project's root directory. This can also be used in exported projects by placing this file in the same directory as the project binary. Overriding will still take the base project settings' [url=https://docs.godotengine.org/en/3.4/tutorials/export/feature_tags.html]feature tags[/url] in account. Therefore, make sure to [i]also[/i] override the setting with the desired feature tags if you want them to override base project settings on all platforms and configurations.
+		[b]Feature tags:[/b] Project settings can be overridden for specific platforms and configurations (debug, release, ...) using [url=https://docs.rebeltoolbox.com/en/latest/tutorials/export/feature_tags.html]feature tags[/url].
+		[b]Overriding:[/b] Any project setting can be overridden by creating a file named [code]override.cfg[/code] in the project's root directory. This can also be used in exported projects by placing this file in the same directory as the project binary. Overriding will still take the base project settings' [url=https://docs.rebeltoolbox.com/en/latest/tutorials/export/feature_tags.html]feature tags[/url] in account. Therefore, make sure to [i]also[/i] override the setting with the desired feature tags if you want them to override base project settings on all platforms and configurations.
 	</description>
 	<tutorials>
-		<link title="3D Physics Tests Demo">https://godotengine.org/asset-library/asset/675</link>
-		<link title="3D Platformer Demo">https://godotengine.org/asset-library/asset/125</link>
-		<link title="OS Test Demo">https://godotengine.org/asset-library/asset/677</link>
 	</tutorials>
 	<methods>
 		<method name="add_property_info">
@@ -67,7 +64,7 @@
 			<return type="String" />
 			<argument index="0" name="path" type="String" />
 			<description>
-				Returns the absolute, native OS path corresponding to the localized [code]path[/code] (starting with [code]res://[/code] or [code]user://[/code]). The returned path will vary depending on the operating system and user preferences. See [url=https://docs.godotengine.org/en/3.4/tutorials/io/data_paths.html]File paths in Godot projects[/url] to see what those paths convert to. See also [method localize_path].
+				Returns the absolute, native OS path corresponding to the localized [code]path[/code] (starting with [code]res://[/code] or [code]user://[/code]). The returned path will vary depending on the operating system and user preferences. See [url=https://docs.rebeltoolbox.com/en/latest/tutorials/io/data_paths.html]File paths in Rebel Engine projects[/url] to see what those paths convert to. See also [method localize_path].
 				[b]Note:[/b] [method globalize_path] with [code]res://[/code] will not work in an exported project. Instead, prepend the executable's base directory to the path when running from an exported project:
 				[codeblock]
 				var path = ""
@@ -126,7 +123,7 @@
 		<method name="save">
 			<return type="int" enum="Error" />
 			<description>
-				Saves the configuration to the [code]project.godot[/code] file.
+				Saves the configuration to the [code]project.rebel[/code] file.
 				[b]Note:[/b] This method is intended to be used by editor plugins, as modified [ProjectSettings] can't be loaded back in the running app. If you want to change project settings in exported projects, use [method save_custom] to save [code]override.cfg[/code] file.
 			</description>
 		</method>
@@ -134,7 +131,7 @@
 			<return type="int" enum="Error" />
 			<argument index="0" name="file" type="String" />
 			<description>
-				Saves the configuration to a custom file. The file extension must be [code].godot[/code] (to save in text-based [ConfigFile] format) or [code].binary[/code] (to save in binary format). You can also save [code]override.cfg[/code] file, which is also text, but can be used in exported projects unlike other formats.
+				Saves the configuration to a custom file. The file extension must be [code].rebel[/code] (to save in text-based [ConfigFile] format) or [code].binary[/code] (to save in binary format). You can also save [code]override.cfg[/code] file, which is also text, but can be used in exported projects unlike other formats.
 			</description>
 		</method>
 		<method name="set_initial_value">
@@ -169,10 +166,9 @@
 	</methods>
 	<members>
 		<member name="android/modules" type="String" setter="" getter="" default="&quot;&quot;">
-			Comma-separated list of custom Android modules (which must have been built in the Android export templates) using their Java package path, e.g. [code]"org/godotengine/godot/MyCustomSingleton,com/example/foo/FrenchFriesFactory"[/code].
-			[b]Note:[/b] Since Godot 3.2.2, the [code]org/godotengine/godot/GodotPaymentV3[/code] module was deprecated and replaced by the [code]GodotPayment[/code] plugin which should be enabled in the Android export preset under [code]Plugins[/code] section. The singleton to access in code was also renamed to [code]GodotPayment[/code].
+			Comma-separated list of custom Android modules (which must have been built in the Android export templates) using their Java package path, e.g. [code]"com/example/module/MyCustomSingleton,com/example/module/MyCustomView"[/code].
 		</member>
-		<member name="application/boot_splash/bg_color" type="Color" setter="" getter="" default="Color( 0.14, 0.14, 0.14, 1 )">
+		<member name="application/boot_splash/bg_color" type="Color" setter="" getter="" default="Color( 0.5, 0.5, 0.5, 1 )">
 			Background color for the boot splash.
 		</member>
 		<member name="application/boot_splash/fullsize" type="bool" setter="" getter="" default="true">
@@ -185,7 +181,7 @@
 			If [code]true[/code], applies linear filtering when scaling the image (recommended for high resolution artwork). If [code]false[/code], uses nearest-neighbor interpolation (recommended for pixel art).
 		</member>
 		<member name="application/config/custom_user_dir_name" type="String" setter="" getter="" default="&quot;&quot;">
-			This user directory is used for storing persistent data ([code]user://[/code] filesystem). If left empty, [code]user://[/code] resolves to a project-specific folder in Godot's own configuration folder (see [method OS.get_user_data_dir]). If a custom directory name is defined, this name will be used instead and appended to the system-specific user data directory (same parent folder as the Godot configuration folder documented in [method OS.get_user_data_dir]).
+			This user directory is used for storing persistent data ([code]user://[/code] filesystem). If left empty, [code]user://[/code] resolves to a project-specific folder in Rebel Engine's own configuration folder (see [method OS.get_user_data_dir]). If a custom directory name is defined, this name will be used instead and appended to the system-specific user data directory (same parent folder as the Rebel Engine configuration folder documented in [method OS.get_user_data_dir]).
 			The [member application/config/use_custom_user_dir] setting must be enabled for this to take effect.
 		</member>
 		<member name="application/config/description" type="String" setter="" getter="" default="&quot;&quot;">
@@ -199,14 +195,14 @@
 		</member>
 		<member name="application/config/name" type="String" setter="" getter="" default="&quot;&quot;">
 			The project's name. It is used both by the Project Manager and by exporters. The project name can be translated by translating its value in localization files. The window title will be set to match the project name automatically on startup.
-			[b]Note:[/b] Changing this value will also change the user data folder's path if [member application/config/use_custom_user_dir] is [code]false[/code]. After renaming the project, you will no longer be able to access existing data in [code]user://[/code] unless you rename the old folder to match the new project name. See [url=https://docs.godotengine.org/en/3.4/tutorials/io/data_paths.html]Data paths[/url] in the documentation for more information.
+			[b]Note:[/b] Changing this value will also change the user data folder's path if [member application/config/use_custom_user_dir] is [code]false[/code]. After renaming the project, you will no longer be able to access existing data in [code]user://[/code] unless you rename the old folder to match the new project name. See [url=https://docs.rebeltoolbox.com/en/latest/tutorials/io/data_paths.html]Data paths[/url] in the documentation for more information.
 		</member>
 		<member name="application/config/project_settings_override" type="String" setter="" getter="" default="&quot;&quot;">
 			Specifies a file to override project settings. For example: [code]user://custom_settings.cfg[/code]. See "Overriding" in the [ProjectSettings] class description at the top for more information.
 			[b]Note:[/b] Regardless of this setting's value, [code]res://override.cfg[/code] will still be read to override the project settings.
 		</member>
 		<member name="application/config/use_custom_user_dir" type="bool" setter="" getter="" default="false">
-			If [code]true[/code], the project will save user data to its own user directory (see [member application/config/custom_user_dir_name]). This setting is only effective on desktop platforms. A name must be set in the [member application/config/custom_user_dir_name] setting for this to take effect. If [code]false[/code], the project will save user data to [code](OS user data directory)/Godot/app_userdata/(project name)[/code].
+			If [code]true[/code], the project will save user data to its own user directory (see [member application/config/custom_user_dir_name]). This setting is only effective on desktop platforms. A name must be set in the [member application/config/custom_user_dir_name] setting for this to take effect. If [code]false[/code], the project will save user data to [code](OS user data directory)/Rebel/app_userdata/(project name)[/code].
 		</member>
 		<member name="application/config/use_hidden_project_data_directory" type="bool" setter="" getter="" default="true">
 			If [code]true[/code], the project will use a hidden directory ([code].import[/code]) for storing project-specific data (metadata, shader cache, etc.).
@@ -278,7 +274,7 @@
 		</member>
 		<member name="audio/output_latency" type="int" setter="" getter="" default="15">
 			Specifies the preferred output latency in milliseconds for audio. Lower values will result in lower audio latency at the cost of increased CPU usage. Low values may result in audible cracking on slower hardware.
-			Audio output latency may be constrained by the host operating system and audio hardware drivers. If the host can not provide the specified audio output latency then Godot will attempt to use the nearest latency allowed by the host. As such you should always use [method AudioServer.get_output_latency] to determine the actual audio output latency.
+			Audio output latency may be constrained by the host operating system and audio hardware drivers. If the host can not provide the specified audio output latency then Rebel Engine will attempt to use the nearest latency allowed by the host. As such you should always use [method AudioServer.get_output_latency] to determine the actual audio output latency.
 			[b]Note:[/b] This setting is ignored on Windows.
 		</member>
 		<member name="audio/output_latency.web" type="int" setter="" getter="" default="50">
@@ -303,7 +299,7 @@
 			Largest size limit (in power of 2) allowed when compressing using long-distance matching with Zstandard. Higher values can result in better compression, but will require more memory when compressing and decompressing.
 		</member>
 		<member name="debug/gdscript/completion/autocomplete_setters_and_getters" type="bool" setter="" getter="" default="false">
-			If [code]true[/code], displays getters and setters in autocompletion results in the script editor. This setting is meant to be used when porting old projects (Godot 2), as using member variables is the preferred style from Godot 3 onwards.
+			If [code]true[/code], displays getters and setters in autocompletion results in the script editor.
 		</member>
 		<member name="debug/gdscript/warnings/constant_used_as_function" type="bool" setter="" getter="" default="true">
 			If [code]true[/code], enables warnings when a constant is used as a function.
@@ -395,7 +391,7 @@
 		<member name="debug/gdscript/warnings/void_assignment" type="bool" setter="" getter="" default="true">
 			If [code]true[/code], enables warnings when assigning the result of a function that returns [code]void[/code] to a variable.
 		</member>
-		<member name="debug/settings/crash_handler/message" type="String" setter="" getter="" default="&quot;Please include this when reporting the bug on https://github.com/godotengine/godot/issues&quot;">
+		<member name="debug/settings/crash_handler/message" type="String" setter="" getter="" default="&quot;Please include this when reporting the bug on https://github.com/RebelToolbox/RebelEngine/issues&quot;">
 			Message to be displayed before the backtrace when the engine crashes.
 		</member>
 		<member name="debug/settings/fps/force_fps" type="int" setter="" getter="" default="0">
@@ -479,7 +475,7 @@
 		</member>
 		<member name="display/window/size/fullscreen" type="bool" setter="" getter="" default="false">
 			Sets the main window to full screen when the project starts. Note that this is not [i]exclusive[/i] fullscreen. On Windows and Linux, a borderless window is used to emulate fullscreen. On macOS, a new desktop is used to display the running project.
-			Regardless of the platform, enabling fullscreen will change the window size to match the monitor's size. Therefore, make sure your project supports [url=https://docs.godotengine.org/en/3.4/tutorials/rendering/multiple_resolutions.html]multiple resolutions[/url] when enabling fullscreen mode.
+			Regardless of the platform, enabling fullscreen will change the window size to match the monitor's size. Therefore, make sure your project supports [url=https://docs.rebeltoolbox.com/en/latest/tutorials/rendering/multiple_resolutions.html]multiple resolutions[/url] when enabling fullscreen mode.
 			[b]Note:[/b] This setting is ignored on iOS, Android, and HTML5.
 		</member>
 		<member name="display/window/size/height" type="int" setter="" getter="" default="600">
@@ -509,15 +505,15 @@
 			[b]Note:[/b] This option is experimental and meant to alleviate stutter experienced by some users. However, some users have experienced a Vsync framerate halving (e.g. from 60 FPS to 30 FPS) when using it.
 		</member>
 		<member name="editor/main_run_args" type="String" setter="" getter="" default="&quot;&quot;">
-			The command-line arguments to append to Godot's own command line when running the project. This doesn't affect the editor itself.
-			It is possible to make another executable run Godot by using the [code]%command%[/code] placeholder. The placeholder will be replaced with Godot's own command line. Program-specific arguments should be placed [i]before[/i] the placeholder, whereas Godot-specific arguments should be placed [i]after[/i] the placeholder.
+			The command-line arguments to append to Rebel Engine's own command line when running the project. This doesn't affect the editor itself.
+			It is possible to make another executable run Rebel Engine by using the [code]%command%[/code] placeholder. The placeholder will be replaced with Rebel Engine's own command line. Program-specific arguments should be placed [i]before[/i] the placeholder, whereas Rebel Engine-specific arguments should be placed [i]after[/i] the placeholder.
 			For example, this can be used to force the project to run on the dedicated GPU in a NVIDIA Optimus system on Linux:
 			[codeblock]
 			prime-run %command%
 			[/codeblock]
 		</member>
 		<member name="editor/script_templates_search_path" type="String" setter="" getter="" default="&quot;res://script_templates&quot;">
-			Search path for project-specific script templates. Godot will search for script templates both in the editor-specific path and in this project-specific path.
+			Search path for project-specific script templates. Rebel Engine will search for script templates both in the editor-specific path and in this project-specific path.
 		</member>
 		<member name="editor/search_in_file_extensions" type="PoolStringArray" setter="" getter="" default="PoolStringArray( &quot;gd&quot;, &quot;gdshader&quot;, &quot;shader&quot; )">
 			Text-based file extensions to include in the script editor's "Find in Files" feature. You can add e.g. [code]tscn[/code] if you wish to also parse your scene files, especially if you use built-in scripts which are serialized in the scene files.
@@ -939,7 +935,7 @@
 		<member name="logging/file_logging/enable_file_logging.pc" type="bool" setter="" getter="" default="true">
 			Desktop override for [member logging/file_logging/enable_file_logging], as log files are not readily accessible on mobile/Web platforms.
 		</member>
-		<member name="logging/file_logging/log_path" type="String" setter="" getter="" default="&quot;user://logs/godot.log&quot;">
+		<member name="logging/file_logging/log_path" type="String" setter="" getter="" default="&quot;user://logs/rebel.log&quot;">
 			Path to logs within the project. Using an [code]user://[/code] path is recommended.
 		</member>
 		<member name="logging/file_logging/max_log_files" type="int" setter="" getter="" default="5">
@@ -948,7 +944,7 @@
 		<member name="memory/limits/command_queue/multithreading_queue_size_kb" type="int" setter="" getter="" default="256">
 		</member>
 		<member name="memory/limits/message_queue/max_size_kb" type="int" setter="" getter="" default="4096">
-			Godot uses a message queue to defer some function calls. If you run out of space on it (you will see an error), you can increase the size here.
+			Rebel Engine uses a message queue to defer some function calls. If you run out of space on it (you will see an error), you can increase the size here.
 		</member>
 		<member name="memory/limits/multithreaded_server/rid_pool_prealloc" type="int" setter="" getter="" default="60">
 			This is used by servers when used in multi-threading mode (servers and visual). RIDs are preallocated to avoid stalling the server requesting them on threads. If servers get stalled too often when loading resources in a thread, increase this number.
@@ -966,7 +962,7 @@
 			Maximum number of warnings allowed to be sent as output from the debugger. Over this value, content is dropped. This helps not to stall the debugger connection.
 		</member>
 		<member name="network/limits/packet_peer_stream/max_buffer_po2" type="int" setter="" getter="" default="16">
-			Default size of packet peer stream for deserializing Godot data (in bytes, specified as a power of two). The default value [code]16[/code] is equal to 65,536 bytes. Over this size, data is dropped.
+			Default size of packet peer stream for deserializing Rebel Engine data (in bytes, specified as a power of two). The default value [code]16[/code] is equal to 65,536 bytes. Over this size, data is dropped.
 		</member>
 		<member name="network/limits/tcp/connect_timeout_seconds" type="int" setter="" getter="" default="30">
 			Timeout (in seconds) for connection attempts using TCP.
@@ -1005,7 +1001,7 @@
 			Page size used by remote filesystem (in bytes).
 		</member>
 		<member name="network/ssl/certificates" type="String" setter="" getter="" default="&quot;&quot;">
-			The CA certificates bundle to use for SSL connections. If this is set to a non-empty value, this will [i]override[/i] Godot's default [url=https://github.com/godotengine/godot/blob/master/thirdparty/certs/ca-certificates.crt]Mozilla certificate bundle[/url]. If left empty, the default certificate bundle will be used.
+			The CA certificates bundle to use for SSL connections. If this is set to a non-empty value, this will [i]override[/i] Rebel Engine's default [url=https://github.com/RebelToolbox/RebelEngine/blob/main/thirdparty/certs/ca-certificates.crt]Mozilla certificate bundle[/url]. If left empty, the default certificate bundle will be used.
 			If in doubt, leave this setting empty.
 		</member>
 		<member name="node/name_casing" type="int" setter="" getter="" default="0">
@@ -1057,7 +1053,7 @@
 		</member>
 		<member name="physics/2d/physics_engine" type="String" setter="" getter="" default="&quot;DEFAULT&quot;">
 			Sets which physics engine to use for 2D physics.
-			"DEFAULT" and "GodotPhysics" are the same, as there is currently no alternative 2D physics server implemented.
+			"DEFAULT" and "Rebel Physics" are the same, as there is currently no alternative 2D physics server implemented.
 		</member>
 		<member name="physics/2d/sleep_threshold_angular" type="float" setter="" getter="" default="0.139626">
 			Threshold angular velocity under which a 2D physics body will be considered inactive. See [constant Physics2DServer.SPACE_PARAM_BODY_ANGULAR_VELOCITY_SLEEP_THRESHOLD].
@@ -1067,7 +1063,7 @@
 		</member>
 		<member name="physics/2d/thread_model" type="int" setter="" getter="" default="1">
 			Sets whether physics is run on the main thread or a separate one. Running the server on a thread increases performance, but restricts API access to only physics process.
-			[b]Warning:[/b] As of Godot 3.2, there are mixed reports about the use of a Multi-Threaded thread model for physics. Be sure to assess whether it does give you extra performance and no regressions when using it.
+			[b]Warning:[/b] There are mixed reports about the use of a Multi-Threaded thread model for physics. Be sure to assess whether it does give you extra performance and no regressions when using it.
 		</member>
 		<member name="physics/2d/time_before_sleep" type="float" setter="" getter="" default="0.5">
 			Time (in seconds) of inactivity before which a 2D physics body will put to sleep. See [constant Physics2DServer.SPACE_PARAM_BODY_TIME_TO_SLEEP].
@@ -1112,7 +1108,7 @@
 		</member>
 		<member name="physics/3d/physics_engine" type="String" setter="" getter="" default="&quot;DEFAULT&quot;">
 			Sets which physics engine to use for 3D physics.
-			"DEFAULT" is currently the [url=https://bulletphysics.org]Bullet[/url] physics engine. The "GodotPhysics" engine is still supported as an alternative.
+			"DEFAULT" is currently the [url=https://bulletphysics.org]Bullet[/url] physics engine. The "Rebel Physics" engine is still supported as an alternative.
 		</member>
 		<member name="physics/common/enable_object_picking" type="bool" setter="" getter="" default="true">
 			Enables [member Viewport.physics_object_picking] on the root viewport.
@@ -1478,7 +1474,7 @@
 			Thread model for rendering. Rendering on a thread can vastly improve performance, but synchronizing to the main thread can cause a bit more jitter.
 		</member>
 		<member name="rendering/threads/thread_safe_bvh" type="bool" setter="" getter="" default="false">
-			If [code]true[/code], a thread safe version of BVH (bounding volume hierarchy) will be used in rendering and Godot physics.
+			If [code]true[/code], a thread safe version of BVH (bounding volume hierarchy) will be used in rendering and Rebel Physics.
 			Try enabling this option if you see any visual anomalies in 3D (such as incorrect object visibility).
 		</member>
 		<member name="rendering/vram_compression/import_bptc" type="bool" setter="" getter="" default="false">

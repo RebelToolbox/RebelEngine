@@ -1,5 +1,5 @@
-name: Upload Godot artifact
-description: Upload the Godot artifact.
+name: Upload artifact
+description: Upload an artifact.
 inputs:
   name:
     description: The artifact name.
@@ -11,8 +11,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Upload Godot Artifact
-      uses: actions/upload-artifact@v2
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ inputs.name }}
         path: ${{ inputs.path }}

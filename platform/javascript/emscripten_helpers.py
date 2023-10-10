@@ -79,7 +79,7 @@ def create_template_zip(env, js, wasm, extra):
             "@GODOT_OPT_CACHE@": json.dumps(opt_cache),
             "@GODOT_OFFLINE_PAGE@": "offline.html",
         }
-        html = env.Substfile(target="#bin/godot${PROGSUFFIX}.html", source=html, SUBST_DICT=subst_dict)
+        html = env.Substfile(target="#bin/rebel${PROGSUFFIX}.html", source=html, SUBST_DICT=subst_dict)
         in_files.append(html)
         out_files.append(zip_dir.File(binary_name + ".html"))
         # And logo/favicon
@@ -89,7 +89,7 @@ def create_template_zip(env, js, wasm, extra):
         out_files.append(zip_dir.File("favicon.png"))
         # PWA
         service_worker = env.Substfile(
-            target="#bin/godot${PROGSUFFIX}.service.worker.js", source=service_worker, SUBST_DICT=subst_dict
+            target="#bin/rebel${PROGSUFFIX}.service.worker.js", source=service_worker, SUBST_DICT=subst_dict
         )
         in_files.append(service_worker)
         out_files.append(zip_dir.File("service.worker.js"))
@@ -108,7 +108,7 @@ def create_template_zip(env, js, wasm, extra):
 
     zip_files = env.InstallAs(out_files, in_files)
     env.Zip(
-        "#bin/godot",
+        "#bin/rebel",
         zip_files,
         ZIPROOT=zip_dir,
         ZIPSUFFIX="${PROGSUFFIX}${ZIPSUFFIX}",

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>com.rebeltoolbox.rebelengine</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Rebel Engine</name>
+  <summary>Multi-platform 2D and 3D game engine with a feature-rich editor</summary>
+  ​<launchable type="desktop-id">com.rebeltoolbox.rebelengine.desktop</launchable>
+  <description>
+    <p>
+      Rebel Engine is an advanced, feature-packed, multi-platform 2D and 3D game
+      engine. It provides a huge set of common tools, so you can just focus on
+      making your game without reinventing the wheel.
+    </p>
+    <p>
+      Rebel Engine is completely free and open source under the very permissive MIT
+      license. No strings attached, no royalties, nothing. Your game is yours,
+      down to the last line of engine code.
+    </p>
+  </description>
+  <url type="homepage">https://rebeltoolbox.com</url>
+  <url type="bugtracker">https://github.com/RebelToolbox/RebelEngine/issues</url>
+  <url type="faq">https://docs.rebeltoolbox.com/en/latest/about/faq.html</url>
+  <url type="help">https://docs.rebeltoolbox.com/</url>
+  <developer_name>Rebel Toolbox Contributors</developer_name>
+  <update_contact>info_at_rebeltoolbox_dot_com</update_contact>
+</component>

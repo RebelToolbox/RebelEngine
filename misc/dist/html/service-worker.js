@@ -1,15 +1,15 @@
-// This service worker is required to expose an exported Godot project as a
+// This service worker is required to expose an exported Rebel project as a
 // Progressive Web App. It provides an offline fallback page telling the user
 // that they need an Internet connection to run the project if desired.
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
-const CACHE_VERSION = "@GODOT_VERSION@";
-const CACHE_NAME = "@GODOT_NAME@-cache";
-const OFFLINE_URL = "@GODOT_OFFLINE_PAGE@";
+const CACHE_VERSION = "@REBEL_VERSION@";
+const CACHE_NAME = "@REBEL_NAME@-cache";
+const OFFLINE_URL = "@OFFLINE_PAGE@";
 // Files that will be cached on load.
-const CACHED_FILES = @GODOT_CACHE@;
+const CACHED_FILES = @REBEL_CACHE@;
 // Files that we might not want the user to preload, and will only be cached on first load.
-const CACHABLE_FILES = @GODOT_OPT_CACHE@;
+const CACHABLE_FILES = @REBEL_OPT_CACHE@;
 const FULL_CACHE = CACHED_FILES.concat(CACHABLE_FILES);
 
 self.addEventListener("install", (event) => {

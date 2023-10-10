@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="Object" version="3.4">
+<class name="Object" version="1.0">
 	<brief_description>
 		Base class for all non-built-in types.
 	</brief_description>
@@ -21,8 +21,8 @@
 		[b]Note:[/b] Due to a bug, you can't create a "plain" Object using [code]Object.new()[/code]. Instead, use [code]ClassDB.instance("Object")[/code]. This bug only applies to Object itself, not any of its descendents like [Reference].
 	</description>
 	<tutorials>
-		<link title="When and how to avoid using nodes for everything">https://docs.godotengine.org/en/3.4/tutorials/best_practices/node_alternatives.html</link>
-		<link title="Advanced exports using _get_property_list()">https://docs.godotengine.org/en/3.4/tutorials/scripting/gdscript/gdscript_exports.html#advanced-exports</link>
+		<link title="When and how to avoid using nodes for everything">https://docs.rebeltoolbox.com/en/latest/tutorials/best_practices/node_alternatives.html</link>
+		<link title="Advanced exports using _get_property_list()">https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/gdscript/gdscript_exports.html#advanced-exports</link>
 	</tutorials>
 	<methods>
 		<method name="_get" qualifiers="virtual">
@@ -87,7 +87,7 @@
 				[codeblock]
 				call("set", "position", Vector2(42.0, 0.0))
 				[/codeblock]
-				[b]Note:[/b] In C#, the method name must be specified as snake_case if it is defined by a built-in Godot node. This doesn't apply to user-defined methods where you should use the same convention as in the C# source (typically PascalCase).
+				[b]Note:[/b] In C#, the method name must be specified as snake_case if it is defined by a built-in Rebel Engine node. This doesn't apply to user-defined methods where you should use the same convention as in the C# source (typically PascalCase).
 			</description>
 		</method>
 		<method name="call_deferred" qualifiers="vararg">
@@ -98,7 +98,7 @@
 				[codeblock]
 				call_deferred("set", "position", Vector2(42.0, 0.0))
 				[/codeblock]
-				[b]Note:[/b] In C#, the method name must be specified as snake_case if it is defined by a built-in Godot node. This doesn't apply to user-defined methods where you should use the same convention as in the C# source (typically PascalCase).
+				[b]Note:[/b] In C#, the method name must be specified as snake_case if it is defined by a built-in Rebel Engine node. This doesn't apply to user-defined methods where you should use the same convention as in the C# source (typically PascalCase).
 			</description>
 		</method>
 		<method name="callv">
@@ -177,7 +177,7 @@
 			<argument index="0" name="property" type="String" />
 			<description>
 				Returns the [Variant] value of the given [code]property[/code]. If the [code]property[/code] doesn't exist, this will return [code]null[/code].
-				[b]Note:[/b] In C#, the property name must be specified as snake_case if it is defined by a built-in Godot node. This doesn't apply to user-defined properties where you should use the same convention as in the C# source (typically PascalCase).
+				[b]Note:[/b] In C#, the property name must be specified as snake_case if it is defined by a built-in Rebel Engine node. This doesn't apply to user-defined properties where you should use the same convention as in the C# source (typically PascalCase).
 			</description>
 		</method>
 		<method name="get_class" qualifiers="const">
@@ -342,7 +342,7 @@
 			<argument index="1" name="value" type="Variant" />
 			<description>
 				Assigns a new value to the given property. If the [code]property[/code] does not exist or the given value's type doesn't match, nothing will happen.
-				[b]Note:[/b] In C#, the property name must be specified as snake_case if it is defined by a built-in Godot node. This doesn't apply to user-defined properties where you should use the same convention as in the C# source (typically PascalCase).
+				[b]Note:[/b] In C#, the property name must be specified as snake_case if it is defined by a built-in Rebel Engine node. This doesn't apply to user-defined properties where you should use the same convention as in the C# source (typically PascalCase).
 			</description>
 		</method>
 		<method name="set_block_signals">
@@ -358,7 +358,7 @@
 			<argument index="1" name="value" type="Variant" />
 			<description>
 				Assigns a new value to the given property, after the current frame's physics step. This is equivalent to calling [method set] via [method call_deferred], i.e. [code]call_deferred("set", property, value)[/code].
-				[b]Note:[/b] In C#, the property name must be specified as snake_case if it is defined by a built-in Godot node. This doesn't apply to user-defined properties where you should use the same convention as in the C# source (typically PascalCase).
+				[b]Note:[/b] In C#, the property name must be specified as snake_case if it is defined by a built-in Rebel Engine node. This doesn't apply to user-defined properties where you should use the same convention as in the C# source (typically PascalCase).
 			</description>
 		</method>
 		<method name="set_indexed">

@@ -1,9 +1,9 @@
-short_name = "godot"
-name = "Godot Engine"
-major = 3
-minor = 4
-patch = 5
-status = "stable"
+short_name = "rebel"
+name = "Rebel Engine"
+major = 1
+minor = 0
+patch = 0
+status = "dev"
 module_config = ""
-year = 2022
-website = "https://godotengine.org"
+year = 2023
+website = "https://rebeltoolbox.com"

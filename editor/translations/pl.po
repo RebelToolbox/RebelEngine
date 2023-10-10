@@ -1,7 +1,8 @@
-# Polish translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Polish translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # 8-bit Pixel <dawdejw@gmail.com>, 2016.
 # Adam Wolanski <adam.wolanski94@gmail.com>, 2017.
 # Adrian Węcławski <weclawskiadrian@gmail.com>, 2016.
@@ -54,8 +55,8 @@
 # voltinus <voltinusmail@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-12-23 15:30+0000\n"
 "Last-Translator: Tomek <kobewi4e@gmail.com>\n"
@@ -13527,10 +13528,10 @@ msgstr "Budowanie projektu Androida (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "Budowanie projektu Androida się nie powiodło, sprawdź wyjście błędu.\n"
-"Alternatywnie, odwiedź docs.godotengine.org po dokumentację budowania dla "
+"Alternatywnie, odwiedź docs.rebeltoolbox.com po dokumentację budowania dla "
 "Androida."
 
 #: platform/android/export/export_plugin.cpp

@@ -2,11 +2,11 @@
 /*  editor_log.cpp                                                       */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           REBEL ENGINE                                */
 /*************************************************************************/
-/* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2022-Present Rebel Engine contributors                  */
+/* Copyright (c) 2014-2022 Godot Engine contributors                     */
+/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur                  */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -177,7 +177,7 @@ EditorLog::EditorLog() {
 	log->set_v_size_flags(SIZE_EXPAND_FILL);
 	log->set_h_size_flags(SIZE_EXPAND_FILL);
 	vb->add_child(log);
-	add_message(VERSION_FULL_NAME " (c) 2007-2022 Juan Linietsky, Ariel Manzur & Godot Contributors.");
+	add_message(VERSION_FULL_NAME);
 
 	eh.errfunc = _error_handler;
 	eh.userdata = this;

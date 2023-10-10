@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="Particles2D" inherits="Node2D" version="3.4">
+<class name="Particles2D" inherits="Node2D" version="1.0">
 	<brief_description>
 		GPU-based 2D particle emitter.
 	</brief_description>
@@ -12,8 +12,7 @@
 		[b]Note:[/b] Unlike [CPUParticles2D], [Particles2D] currently ignore the texture region defined in [AtlasTexture]s.
 	</description>
 	<tutorials>
-		<link title="Particle systems (2D)">https://docs.godotengine.org/en/3.4/tutorials/2d/particle_systems_2d.html</link>
-		<link title="2D Dodge The Creeps Demo">https://godotengine.org/asset-library/asset/515</link>
+		<link title="Particle systems (2D)">https://docs.rebeltoolbox.com/en/latest/tutorials/2d/particle_systems_2d.html</link>
 	</tutorials>
 	<methods>
 		<method name="capture_rect" qualifiers="const">
@@ -57,7 +56,7 @@
 		</member>
 		<member name="normal_map" type="Texture" setter="set_normal_map" getter="get_normal_map">
 			Normal map to be used for the [member texture] property.
-			[b]Note:[/b] Godot expects the normal map to use X+, Y-, and Z+ coordinates. See [url=http://wiki.polycount.com/wiki/Normal_Map_Technical_Details#Common_Swizzle_Coordinates]this page[/url] for a comparison of normal map coordinates expected by popular engines.
+			[b]Note:[/b] Rebel Engine expects the normal map to use X+, Y-, and Z+ coordinates. See [url=http://wiki.polycount.com/wiki/Normal_Map_Technical_Details#Common_Swizzle_Coordinates]this page[/url] for a comparison of normal map coordinates expected by popular engines.
 		</member>
 		<member name="one_shot" type="bool" setter="set_one_shot" getter="get_one_shot" default="false">
 			If [code]true[/code], only one emission cycle occurs. If set [code]true[/code] during a cycle, emission will stop at the cycle's end.

@@ -2,11 +2,11 @@
 /*  context_gl_x11.cpp                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           REBEL ENGINE                                */
 /*************************************************************************/
-/* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2022-Present Rebel Engine contributors                  */
+/* Copyright (c) 2014-2022 Godot Engine contributors                     */
+/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur                  */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -29,6 +29,8 @@
 /*************************************************************************/
 
 #include "context_gl_x11.h"
+
+#include "core/version.h"
 
 #ifdef X11_ENABLED
 #if defined(OPENGL_ENABLED)
@@ -186,7 +188,7 @@ Error ContextGL_X11::initialize() {
 
 	swa.colormap = XCreateColormap(x11_display, RootWindow(x11_display, vi->screen), vi->visual, AllocNone);
 	x11_window = XCreateWindow(x11_display, RootWindow(x11_display, vi->screen), 0, 0, OS::get_singleton()->get_video_mode().width, OS::get_singleton()->get_video_mode().height, 0, vi->depth, InputOutput, vi->visual, valuemask, &swa);
-	XStoreName(x11_display, x11_window, "Godot Engine");
+	XStoreName(x11_display, x11_window, VERSION_NAME);
 
 	ERR_FAIL_COND_V(!x11_window, ERR_UNCONFIGURED);
 	set_class_hint(x11_display, x11_window);

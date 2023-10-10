@@ -1,7 +1,8 @@
-# Russian translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Russian translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # Аркадий Авас <savvot@gmail.com>, 2018.
 # Artem Varaksa <aymfst@gmail.com>, 2018.
 # B10nicMachine <shumik1337@gmail.com>, 2017.
@@ -103,8 +104,8 @@
 # AngryPhilomel <an.aries@icloud.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-12-14 15:28+0000\n"
 "Last-Translator: Danil Alexeev <danil@alexeev.xyz>\n"
@@ -13598,10 +13599,10 @@ msgstr "Сборка проекта Android (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "Сборка проекта Android не удалась, проверьте вывод на ошибки.\n"
-"Также посетите docs.godotengine.org для получения документации по сборке "
+"Также посетите docs.rebeltoolbox.com для получения документации по сборке "
 "Android."
 
 #: platform/android/export/export_plugin.cpp

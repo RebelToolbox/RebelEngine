@@ -1,11 +1,10 @@
 [Desktop Entry]
-Name=Godot Engine
+Name=Rebel Engine
 GenericName=Libre game engine
 Comment=Multi-platform 2D and 3D game engine with a feature-rich editor
-Exec=godot %f
-Icon=godot
+Exec=rebelengine %f
+Icon=rebelengine
 Terminal=false
 PrefersNonDefaultGPU=true
 Type=Application
-MimeType=application/x-godot-project;
 Categories=Development;IDE;

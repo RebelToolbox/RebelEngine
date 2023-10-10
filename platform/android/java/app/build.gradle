@@ -51,8 +51,8 @@ dependencies {
     } else if (rootProject.findProject(":godot:lib")) {
         implementation project(":godot:lib")
     } else {
-        // Custom build mode. In this scenario this project is the only one around and the Godot
-        // library is available through the pre-generated godot-lib.*.aar android archive files.
+        // Custom build mode. In this scenario this project is the only one around and the Rebel
+        // library is available through the pre-generated rebel-lib.*.aar android archive files.
         debugImplementation fileTree(dir: 'libs/debug', include: ['*.jar', '*.aar'])
         releaseImplementation fileTree(dir: 'libs/release', include: ['*.jar', '*.aar'])
     }

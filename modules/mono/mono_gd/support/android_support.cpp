@@ -2,11 +2,11 @@
 /*  android_support.cpp                                                  */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           REBEL ENGINE                                */
 /*************************************************************************/
-/* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2022-Present Rebel Engine contributors                  */
+/* Copyright (c) 2014-2022 Godot Engine contributors                     */
+/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur                  */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -159,7 +159,7 @@ int gd_mono_convert_dl_flags(int flags) {
 #endif
 
 const char *mono_so_name = GD_MONO_SO_NAME;
-const char *godot_so_name = "libgodot_android.so";
+const char *lib_so_name = "librebel_android.so";
 
 void *mono_dl_handle = NULL;
 void *godot_dl_handle = NULL;
@@ -405,7 +405,7 @@ void initialize() {
 	mono_dl_fallback_register(gd_mono_android_dlopen, gd_mono_android_dlsym, gd_mono_android_dlclose, NULL);
 
 	String app_native_lib_dir = get_app_native_lib_dir();
-	String so_path = path::join(app_native_lib_dir, godot_so_name);
+	String so_path = path::join(app_native_lib_dir, lib_so_name);
 
 	godot_dl_handle = try_dlopen(so_path, gd_mono_convert_dl_flags(MONO_DL_LAZY));
 	ERR_FAIL_COND_MSG(!godot_dl_handle, "Failed to load Godot native library");

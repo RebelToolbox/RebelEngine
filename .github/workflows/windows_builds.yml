@@ -4,7 +4,7 @@ on: [push, pull_request]
 # Global Settings
 # SCONS_CACHE for windows must be set in the build environment
 env:
-  GODOT_BASE_BRANCH: 3.4
+  BRANCH_NAME: main
   SCONSFLAGS: verbose=yes warnings=all werror=yes debug_symbols=no
   SCONS_CACHE_MSVC_CONFIG: true
 
@@ -25,7 +25,7 @@ jobs:
             cache-name: windows-editor
             target: release_debug
             tools: true
-            bin: "./bin/godot.windows.opt.tools.64.exe"
+            bin: "./bin/rebel.windows.opt.tools.64.exe"
 
           - name: Template (target=release, tools=no)
             cache-name: windows-template
@@ -33,19 +33,19 @@ jobs:
             tools: false
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Setup Godot build cache
-        uses: ./.github/actions/godot-cache
+      - name: Setup build cache
+        uses: ./.github/actions/build-cache
         with:
           cache-name: ${{ matrix.cache-name }}
         continue-on-error: true
 
-      - name: Setup python and scons
-        uses: ./.github/actions/godot-deps
+      - name: Setup build dependencies
+        uses: ./.github/actions/build-dependencies
 
-      - name: Compilation
-        uses: ./.github/actions/godot-build
+      - name: Build
+        uses: ./.github/actions/build
         with:
           sconsflags: ${{ env.SCONSFLAGS }}
           platform: windows

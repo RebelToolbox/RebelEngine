@@ -34,18 +34,19 @@ matches.sort()
 unique_str = []
 unique_loc = {}
 main_po = """
-# LANGUAGE translation of the Godot Engine editor.
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# LANGUAGE translation of the Rebel Editor.
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=UTF-8\\n"
 "Content-Transfer-Encoding: 8-bit\\n"\n
@@ -149,7 +150,6 @@ def _extract_translator_comment(line, is_block_translator_comment):
 
 
 def process_file(f, fname):
-
     global main_po, unique_str, unique_loc
 
     patterns = ['RTR("', 'TTR("', 'TTRC("']
@@ -161,7 +161,6 @@ def process_file(f, fname):
     translator_comment = ""
 
     while l:
-
         # Detect translator comments.
         if not reading_translator_comment and l.find("TRANSLATORS:") != -1:
             reading_translator_comment = True

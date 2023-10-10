@@ -1,7 +1,8 @@
-# Danish translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Danish translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # Dankse Memes <purplelops@gmail.com>, 2018.
 # David Lamhauge <davidlamhauge@gmail.com>, 2016, 2018.
 # Esben Damkjær Sørensen <esben@damkjaergaard.com>, 2018.
@@ -20,8 +21,8 @@
 # snakatk <snaqii@live.dk>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-11-05 11:56+0000\n"
 "Last-Translator: Joe Osborne <reachjoe.o@gmail.com>\n"
@@ -13878,7 +13879,7 @@ msgstr ""
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp

@@ -2,11 +2,11 @@
 /*  export_plugin.cpp                                                    */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           REBEL ENGINE                                */
 /*************************************************************************/
-/* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2022-Present Rebel Engine contributors                  */
+/* Copyright (c) 2014-2022 Godot Engine contributors                     */
+/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur                  */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -3040,7 +3040,7 @@ Error EditorExportPlatformAndroid::export_project_helper(const Ref<EditorExportP
 
 		int result = EditorNode::get_singleton()->execute_and_show_output(TTR("Building Android Project (gradle)"), build_command, cmdline);
 		if (result != 0) {
-			EditorNode::get_singleton()->show_warning(TTR("Building of Android project failed, check output for the error.\nAlternatively visit docs.godotengine.org for Android build documentation."));
+			EditorNode::get_singleton()->show_warning(TTR("Building of Android project failed, check output for the error.\nAlternatively visit https://docs.rebeltoolbox.com for Android build documentation."));
 			return ERR_CANT_CREATE;
 		}
 

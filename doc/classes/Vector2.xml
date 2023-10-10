@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="Vector2" version="3.4">
+<class name="Vector2" version="1.0">
 	<brief_description>
 		Vector used for 2D math.
 	</brief_description>
@@ -8,12 +8,10 @@
 		[b]Note:[/b] In a boolean context, a Vector2 will evaluate to [code]false[/code] if it's equal to [code]Vector2(0, 0)[/code]. Otherwise, a Vector2 will always evaluate to [code]true[/code].
 	</description>
 	<tutorials>
-		<link title="Math tutorial index">https://docs.godotengine.org/en/3.4/tutorials/math/index.html</link>
-		<link title="Vector math">https://docs.godotengine.org/en/3.4/tutorials/math/vector_math.html</link>
-		<link title="Advanced vector math">https://docs.godotengine.org/en/3.4/tutorials/math/vectors_advanced.html</link>
+		<link title="Math tutorial index">https://docs.rebeltoolbox.com/en/latest/tutorials/math/index.html</link>
+		<link title="Vector math">https://docs.rebeltoolbox.com/en/latest/tutorials/math/vector_math.html</link>
+		<link title="Advanced vector math">https://docs.rebeltoolbox.com/en/latest/tutorials/math/vectors_advanced.html</link>
 		<link title="3Blue1Brown Essence of Linear Algebra">https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab</link>
-		<link title="Matrix Transform Demo">https://godotengine.org/asset-library/asset/584</link>
-		<link title="All 2D Demos">https://github.com/godotengine/godot-demo-projects/tree/master/2d</link>
 	</tutorials>
 	<methods>
 		<method name="Vector2">
@@ -35,7 +33,7 @@
 			<description>
 				Returns this vector's angle with respect to the positive X axis, or [code](1, 0)[/code] vector, in radians.
 				For example, [code]Vector2.RIGHT.angle()[/code] will return zero, [code]Vector2.DOWN.angle()[/code] will return [code]PI / 2[/code] (a quarter turn, or 90 degrees), and [code]Vector2(1, -1).angle()[/code] will return [code]-PI / 4[/code] (a negative eighth turn, or -45 degrees).
-				[url=https://raw.githubusercontent.com/godotengine/godot-docs/master/img/vector2_angle.png]Illustration of the returned angle.[/url]
+				[url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/img/vector2_angle.png]Illustration of the returned angle.[/url]
 				Equivalent to the result of [method @GDScript.atan2] when called with the vector's [member y] and [member x] as parameters: [code]atan2(y, x)[/code].
 			</description>
 		</method>
@@ -44,7 +42,7 @@
 			<argument index="0" name="to" type="Vector2" />
 			<description>
 				Returns the angle to the given vector, in radians.
-				[url=https://raw.githubusercontent.com/godotengine/godot-docs/master/img/vector2_angle_to.png]Illustration of the returned angle.[/url]
+				[url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/img/vector2_angle_to.png]Illustration of the returned angle.[/url]
 			</description>
 		</method>
 		<method name="angle_to_point">
@@ -52,7 +50,7 @@
 			<argument index="0" name="to" type="Vector2" />
 			<description>
 				Returns the angle between the line connecting the two points and the X axis, in radians.
-				[url=https://raw.githubusercontent.com/godotengine/godot-docs/3.4/img/vector2_angle_to_point.png]Illustration of the returned angle.[/url]
+				[url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/img/vector2_angle_to_point.png]Illustration of the returned angle.[/url]
 			</description>
 		</method>
 		<method name="aspect">

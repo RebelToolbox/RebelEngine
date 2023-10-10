@@ -1,7 +1,8 @@
-# Czech translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Czech translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # Fadex <vitekpaulik@gmail.com>, 2017.
 # Jan 'spl!te' Kondelík <j.kondelik@centrum.cz>, 2016, 2018.
 # Jiri Hysek <contact@jirihysek.com>, 2017.
@@ -30,8 +31,8 @@
 # Jakub Janšta <jansta.ja@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2022-01-03 03:55+0000\n"
 "Last-Translator: Vojtěch Šamla <auzkok@seznam.cz>\n"
@@ -13496,10 +13497,10 @@ msgstr "Buildování projektu pro Android (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "Buildování projektu pro Android se nezdařilo, zkontrolujte chybový výstup.\n"
-"Případně navštivte dokumentaci o build pro Android na docs.godotengine.org."
+"Případně navštivte dokumentaci o build pro Android na docs.rebeltoolbox.com."
 
 #: platform/android/export/export_plugin.cpp
 msgid "Moving output"

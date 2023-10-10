@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 # Global Settings
 env:
-  GODOT_BASE_BRANCH: 3.4
+  BRANCH_NAME: main
   SCONSFLAGS: verbose=yes warnings=all werror=yes
 
 concurrency:
@@ -23,7 +23,7 @@ jobs:
             target: release_debug
             tools: true
             sconsflags: module_mono_enabled=yes mono_static=yes mono_glue=no
-            bin: "./bin/godot.x11.opt.tools.64.mono"
+            bin: "./bin/rebel.x11.opt.tools.64.mono"
             build-mono: true
             artifact: true
 
@@ -33,7 +33,7 @@ jobs:
             tools: true
             sconsflags: use_asan=yes use_ubsan=yes
             test: true
-            bin: "./bin/godot.x11.tools.64s"
+            bin: "./bin/rebel.x11.tools.64s"
             build-mono: false
             # Skip 2GiB artifact speeding up action.
             artifact: false
@@ -47,7 +47,7 @@ jobs:
             artifact: true
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Linux dependencies
         shell: bash
@@ -61,17 +61,17 @@ jobs:
               libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev \
               libdbus-1-dev libudev-dev libxi-dev libxrandr-dev yasm xvfb wget unzip
 
-      - name: Setup Godot build cache
-        uses: ./.github/actions/godot-cache
+      - name: Setup build cache
+        uses: ./.github/actions/build-cache
         with:
           cache-name: ${{ matrix.cache-name }}
         continue-on-error: true
 
-      - name: Setup python and scons
-        uses: ./.github/actions/godot-deps
+      - name: Setup build dependencies
+        uses: ./.github/actions/build-dependencies
 
-      - name: Compilation
-        uses: ./.github/actions/godot-build
+      - name: Build
+        uses: ./.github/actions/build
         with:
           sconsflags: ${{ env.SCONSFLAGS }} ${{ matrix.sconsflags }}
           platform: linuxbsd
@@ -85,8 +85,8 @@ jobs:
           DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --generate-mono-glue modules/mono/glue || true
 
       # Rebuild with mono
-      - name: Compilation (mono_glue=yes)
-        uses: ./.github/actions/godot-build
+      - name: Build (mono_glue=yes)
+        uses: ./.github/actions/build
         if: ${{ matrix.build-mono }}
         with:
           sconsflags: ${{ env.SCONSFLAGS }} ${{ matrix.sconsflags }} mono_glue=yes
@@ -94,26 +94,31 @@ jobs:
           target: ${{ matrix.target }}
           tools: ${{ matrix.tools }}
 
-      # Download and extract zip archive with project, folder is renamed to be able to easy change used project
-      - name: Download test project
+      # Checkout test project
+      # If the test project needs to be updated, modify these settings to point to the updated test project.
+      # - repository: Your fork of the test project i.e. <username>/RebelTestProject
+      # - ref: Your branch with the updated test project e.g. fix-test-project
+      # - path: RebelTestProject - Don't change. This is the folder the rest of the workflow uses.
+      - name: Checkout test project
         if: ${{ matrix.test }}
-        run: |
-          wget https://github.com/godotengine/regression-test-project/archive/3.4.zip
-          unzip 3.4.zip
-          mv "regression-test-project-3.4" "test_project"
+        uses: actions/checkout@v4
+        with:
+          repository: RebelToolbox/RebelTestProject
+          ref: main
+          path: RebelTestProject
 
       # Editor is quite complicated piece of software, so it is easy to introduce bug here
       - name: Open and close editor
         if: ${{ matrix.test }}
         run: |
-          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --audio-driver Dummy -e -q --path test_project 2>&1 | tee sanitizers_log.txt || true
+          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --audio-driver Dummy -e -q --path RebelTestProject 2>&1 | tee sanitizers_log.txt || true
           misc/scripts/check_ci_log.py sanitizers_log.txt
 
       # Run test project
       - name: Run project
         if: ${{ matrix.test }}
         run: |
-          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} 30 --video-driver GLES3 --audio-driver Dummy --path test_project 2>&1 | tee sanitizers_log.txt || true
+          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} 30 --video-driver GLES3 --audio-driver Dummy --path RebelTestProject 2>&1 | tee sanitizers_log.txt || true
           misc/scripts/check_ci_log.py sanitizers_log.txt
 
       # Check class reference
@@ -128,7 +133,7 @@ jobs:
       - name: Prepare artifact
         if: ${{ matrix.artifact }}
         run: |
-          strip bin/godot.*
+          strip bin/rebel.*
 
       - name: Upload artifact
         uses: ./.github/actions/upload-artifact

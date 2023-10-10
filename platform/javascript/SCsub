@@ -36,7 +36,7 @@ for ext in env["JS_EXTERNS"]:
 
 build = []
 if env["gdnative_enabled"]:
-    build_targets = ["#bin/godot${PROGSUFFIX}.js", "#bin/godot${PROGSUFFIX}.wasm"]
+    build_targets = ["#bin/rebel${PROGSUFFIX}.js", "#bin/rebel${PROGSUFFIX}.wasm"]
     # Reset libraries. The main runtime will only link emscripten libraries, not godot ones.
     sys_env["LIBS"] = []
     # We use IDBFS. Since Emscripten 1.39.1 it needs to be linked explicitly.
@@ -57,12 +57,12 @@ if env["gdnative_enabled"]:
     wasm_env.Append(CPPDEFINES=["WASM_GDNATIVE"])  # So that OS knows it can run GDNative libraries.
     wasm_env.Append(CCFLAGS=["-s", "SIDE_MODULE=2"])
     wasm_env.Append(LINKFLAGS=["-s", "SIDE_MODULE=2"])
-    wasm = wasm_env.add_program("#bin/godot.side${PROGSUFFIX}.wasm", javascript_files)
+    wasm = wasm_env.add_program("#bin/rebel.side${PROGSUFFIX}.wasm", javascript_files)
     build = [sys[0], sys[1], wasm[0]]
 else:
-    build_targets = ["#bin/godot${PROGSUFFIX}.js", "#bin/godot${PROGSUFFIX}.wasm"]
+    build_targets = ["#bin/rebel${PROGSUFFIX}.js", "#bin/rebel${PROGSUFFIX}.wasm"]
     if env["threads_enabled"]:
-        build_targets.append("#bin/godot${PROGSUFFIX}.worker.js")
+        build_targets.append("#bin/rebel${PROGSUFFIX}.worker.js")
     # We use IDBFS. Since Emscripten 1.39.1 it needs to be linked explicitly.
     sys_env.Append(LIBS=["idbfs.js"])
     build = sys_env.Program(build_targets, javascript_files + ["javascript_runtime.cpp"])
@@ -77,14 +77,14 @@ engine = [
     "js/engine/engine.js",
 ]
 externs = [env.File("#platform/javascript/js/engine/engine.externs.js")]
-js_engine = env.CreateEngineFile("#bin/godot${PROGSUFFIX}.engine.js", engine, externs)
+js_engine = env.CreateEngineFile("#bin/rebel${PROGSUFFIX}.engine.js", engine, externs)
 env.Depends(js_engine, externs)
 
 wrap_list = [
     build[0],
     js_engine,
 ]
-js_wrapped = env.Textfile("#bin/godot", [env.File(f) for f in wrap_list], TEXTFILESUFFIX="${PROGSUFFIX}.wrapped.js")
+js_wrapped = env.Textfile("#bin/rebel", [env.File(f) for f in wrap_list], TEXTFILESUFFIX="${PROGSUFFIX}.wrapped.js")
 
 # Extra will be the thread worker, or the GDNative side, or None
 extra = build[2] if len(build) > 2 else None

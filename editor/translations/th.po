@@ -1,7 +1,8 @@
-# Thai translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Thai translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # Kaveeta Vivatchai <goodytong@gmail.com>, 2017.
 # Poommetee Ketson (Noshyaar) <poommetee@protonmail.com>, 2017-2018.
 # Thanachart Monpassorn <nunf_2539@hotmail.com>, 2020, 2021.
@@ -14,8 +15,8 @@
 # SysError_ <ictsanook@hotmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-12-10 10:33+0000\n"
 "Last-Translator: SysError_ <ictsanook@hotmail.com>\n"
@@ -13474,10 +13475,10 @@ msgstr "กำลังสร้างโปรเจคแอนดรอยด
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "การสร้างโปรเจกต์แอนดรอยด์ล้มเหลว ตรวจสอบผลลัพธ์เพื่อหาข้อผิดพลาด\n"
-"หรือไปที่ docs.godotengine.org สำหรับเอกสารประกอบการสร้างสำหรับแอนดรอยด์"
+"หรือไปที่ docs.rebeltoolbox.com สำหรับเอกสารประกอบการสร้างสำหรับแอนดรอยด์"
 
 #: platform/android/export/export_plugin.cpp
 msgid "Moving output"

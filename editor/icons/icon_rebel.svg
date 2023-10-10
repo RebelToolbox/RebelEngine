@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="RebelLogo"
+   viewBox="0 0 16 16"
+   version="1.1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <path
+     id="Head"
+     style="fill:#0d31e2;stroke:none"
+     d="
+       m 5.625,2.8125
+       h 9.375
+       c 0,0
+         0.625,7.5
+         -4.6875,7.5
+       h -4.6875
+       z" />
+
+  <path
+     id="Body"
+     style="fill:#0d31e2;stroke:none"
+     d="
+       m 5.625,2.8125
+       h 4.375
+       l -3.8125,13.1875
+       h -4.375
+       z" />
+
+  <path
+     id="FrontLeg"
+     style="fill:#0d31e2;stroke:none"
+     d="
+       m 5.625,2.8125
+       h 2.8125
+       l 4.6875,13.1875
+       h -3.4375
+       l -4.0625,-5.6875
+       z" />
+
+  <path
+     id="Ear"
+     style="fill:#000000;stroke:none"
+     d="
+       m 5.625,2.8125
+       c 0.625,-2.8125
+         3.75,-2.8125
+         3.75,-2.8125
+         0,0
+         -0.9375,1.421875
+         -0.9375,2.8125
+       z" />
+
+  <path
+     id="Tail"
+     style="fill:#000000;stroke:none"
+     d="
+       m 1.8373975,16
+       c -2.52827785,-1.381518
+         -1.66038282,-4.383581
+         -1.66038282,-4.383581
+         0,0
+         1.09055992,1.291172
+         2.44148832,1.681724
+       z" />
+
+  <circle
+     id="Nose"
+     style="fill:#000000;stroke:none"
+     cx="14.875"
+     cy="3.125"
+     r="1.125" />
+
+  <circle
+     id="Eye"
+     style="fill:#ffffff;stroke:none"
+     cx="10"
+     cy="6.25"
+     r="1.125" />
+</svg>

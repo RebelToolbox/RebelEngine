@@ -1,7 +1,8 @@
-# Hebrew translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Hebrew translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # Daniel <lorddaniel09@gmail.com>, 2018.
 # Ben Golan <golanben4@gmail.com>, 2017.
 # Luc Stepniewski <lior@gradstein.info>, 2017.
@@ -23,8 +24,8 @@
 # Shailee Eliyahu <dev.sle.il@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-11-29 20:38+0000\n"
 "Last-Translator: Shailee Eliyahu <dev.sle.il@gmail.com>\n"
@@ -13614,10 +13615,10 @@ msgstr "בניית מיזם אנדרואיד (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "בניית מיזם אנדרואיד נכשלה, ניתן לבדוק את הפלט לאיתור השגיאה.\n"
-"לחלופין, קיים ב- docs.godotengine.org תיעוד לבניית אנדרואיד."
+"לחלופין, קיים ב- docs.rebeltoolbox.com תיעוד לבניית אנדרואיד."
 
 #: platform/android/export/export_plugin.cpp
 msgid "Moving output"

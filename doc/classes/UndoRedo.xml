@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="UndoRedo" inherits="Object" version="3.4">
+<class name="UndoRedo" inherits="Object" version="1.0">
 	<brief_description>
 		Helper to manage undo/redo operations in the editor or custom tools.
 	</brief_description>
 	<description>
 		Helper to manage undo/redo operations in the editor or custom tools. It works by registering methods and property changes inside "actions".
 		Common behavior is to create an action, then add do/undo calls to functions or property changes, then committing the action.
-		Here's an example on how to add an action to the Godot editor's own [UndoRedo], from a plugin:
+		Here's an example on how to add an action to the Rebel Engine editor's own [UndoRedo], from a plugin:
 		[codeblock]
 		var undo_redo = get_undo_redo() # Method of EditorPlugin.
 

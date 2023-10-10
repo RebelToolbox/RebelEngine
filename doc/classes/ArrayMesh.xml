@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="ArrayMesh" inherits="Mesh" version="3.4">
+<class name="ArrayMesh" inherits="Mesh" version="1.0">
 	<brief_description>
 		[Mesh] type that provides utility for constructing a surface from arrays.
 	</brief_description>
@@ -23,10 +23,10 @@
 		[/codeblock]
 		The [MeshInstance] is ready to be added to the [SceneTree] to be shown.
 		See also [ImmediateGeometry], [MeshDataTool] and [SurfaceTool] for procedural geometry generation.
-		[b]Note:[/b] Godot uses clockwise [url=https://learnopengl.com/Advanced-OpenGL/Face-culling]winding order[/url] for front faces of triangle primitive modes.
+		[b]Note:[/b] Rebel Engine uses clockwise [url=https://learnopengl.com/Advanced-OpenGL/Face-culling]winding order[/url] for front faces of triangle primitive modes.
 	</description>
 	<tutorials>
-		<link>https://docs.godotengine.org/en/3.4/tutorials/3d/procedural_geometry/arraymesh.html</link>
+		<link>https://docs.rebeltoolbox.com/en/latest/tutorials/3d/procedural_geometry/arraymesh.html</link>
 	</tutorials>
 	<methods>
 		<method name="add_blend_shape">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="FileDialog" inherits="ConfirmationDialog" version="3.4">
+<class name="FileDialog" inherits="ConfirmationDialog" version="1.0">
 	<brief_description>
 		Dialog for selecting files or directories in the filesystem.
 	</brief_description>
@@ -15,7 +15,7 @@
 			<description>
 				Adds [code]filter[/code] to the list of filters, which restricts what files can be picked.
 				A [code]filter[/code] should be of the form [code]"filename.extension ; Description"[/code], where filename and extension can be [code]*[/code] to match any string. Filters starting with [code].[/code] (i.e. empty filenames) are not allowed.
-				Example filters: [code]"*.png ; PNG Images"[/code], [code]"project.godot ; Godot Project"[/code].
+				Example filters: [code]"*.png ; PNG Images"[/code], [code]"project.rebel ; Rebel Project"[/code].
 			</description>
 		</method>
 		<method name="clear_filters">
@@ -54,7 +54,7 @@
 	<members>
 		<member name="access" type="int" setter="set_access" getter="get_access" enum="FileDialog.Access" default="0">
 			The file system access scope. See enum [code]Access[/code] constants.
-			[b]Warning:[/b] Currently, in sandboxed environments such as HTML5 builds or sandboxed macOS apps, FileDialog cannot access the host file system. See [url=https://github.com/godotengine/godot-proposals/issues/1123]godot-proposals#1123[/url].
+			[b]Warning:[/b] Currently, in sandboxed environments such as HTML5 builds or sandboxed macOS apps, FileDialog cannot access the host file system.
 		</member>
 		<member name="current_dir" type="String" setter="set_current_dir" getter="get_current_dir" default="&quot;res://&quot;">
 			The current working directory of the file dialog.

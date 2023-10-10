@@ -2,11 +2,11 @@
 /*  shader_editor_plugin.cpp                                             */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           REBEL ENGINE                                */
 /*************************************************************************/
-/* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2022-Present Rebel Engine contributors                  */
+/* Copyright (c) 2014-2022 Godot Engine contributors                     */
+/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur                  */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -337,7 +337,7 @@ void ShaderEditor::_menu_option(int p_option) {
 			shader_editor->remove_all_bookmarks();
 		} break;
 		case HELP_DOCS: {
-			OS::get_singleton()->shell_open("https://docs.godotengine.org/en/3.4/tutorials/shading/shading_reference/index.html");
+			OS::get_singleton()->shell_open("https://docs.rebeltoolbox.com/en/latest/tutorials/shading/shading_reference/index.html");
 		} break;
 	}
 	if (p_option != SEARCH_FIND && p_option != SEARCH_REPLACE && p_option != SEARCH_GOTO_LINE) {

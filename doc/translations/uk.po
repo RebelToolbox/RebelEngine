@@ -1,7 +1,8 @@
-# Ukrainian translation of the Godot Engine class reference.
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Ukrainian translation of the Rebel Engine class reference
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 #
 # Yuri Chornoivan <yurchor@ukr.net>, 2020.
 # Kiev Ball <supermensy2@gmail.com>, 2020.
@@ -11,8 +12,8 @@
 # Valerii Bosiak <valerii540@protonmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine class reference\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Engine class reference\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "PO-Revision-Date: 2021-11-11 16:02+0000\n"
 "Last-Translator: Valerii Bosiak <valerii540@protonmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/godot-engine/"
@@ -3681,21 +3682,21 @@ msgstr ""
 #: doc/classes/Rect2.xml doc/classes/Transform.xml doc/classes/Transform2D.xml
 #: doc/classes/Vector2.xml doc/classes/Vector3.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/math/index.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/math/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/math/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/math/index.html"
 
 #: doc/classes/AABB.xml doc/classes/Rect2.xml doc/classes/Vector2.xml
 #: doc/classes/Vector3.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/math/vector_math.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/math/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/math/vector_math.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/math/index.html"
 
 #: doc/classes/AABB.xml doc/classes/Rect2.xml doc/classes/Vector2.xml
 #: doc/classes/Vector3.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/math/vectors_advanced.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/math/index.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/math/vectors_advanced.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/math/index.html"
 
 #: doc/classes/AABB.xml
 msgid "Constructs an [AABB] from a position and size."
@@ -4033,8 +4034,8 @@ msgstr ""
 #: doc/classes/AnimationPlayer.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/2d/2d_sprite_animation.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/2d/2d_transforms.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/2d/2d_sprite_animation.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/2d/2d_transforms.html"
 
 #: doc/classes/AnimatedSprite.xml doc/classes/Area2D.xml
 #: doc/classes/AudioStreamPlayer.xml doc/classes/Button.xml
@@ -4045,7 +4046,7 @@ msgstr "https://docs.godotengine.org/uk/latest/tutorials/2d/2d_transforms.html"
 #: doc/classes/VisibilityNotifier2D.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/515"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/AnimatedSprite.xml doc/classes/AnimatedSprite3D.xml
 msgid "Returns [code]true[/code] if an animation is currently being played."
@@ -4261,8 +4262,8 @@ msgstr ""
 
 #: doc/classes/Animation.xml doc/classes/AnimationPlayer.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/animation/index.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/animation/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/animation/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/animation/index.html"
 
 #: doc/classes/Animation.xml
 msgid "Adds a track to the Animation."
@@ -4707,9 +4708,9 @@ msgstr ""
 #: doc/classes/AnimationTreePlayer.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/animation/animation_tree.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/animation/animation_tree.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/animation/animation_tree."
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/animation/animation_tree."
 "html"
 
 #: doc/classes/AnimationNode.xml
@@ -4906,7 +4907,7 @@ msgstr ""
 #: doc/classes/StaticBody.xml doc/classes/WorldEnvironment.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/678"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/AnimationNodeAnimation.xml
 msgid "Input animation to use in an [AnimationNodeBlendTree]."
@@ -4929,7 +4930,7 @@ msgstr ""
 #: doc/classes/ProjectSettings.xml doc/classes/Transform.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/125"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/AnimationNodeAnimation.xml
 msgid ""
@@ -5441,7 +5442,7 @@ msgstr ""
 msgid ""
 "Turn on auto advance when this condition is set. The provided name will "
 "become a boolean parameter on the [AnimationTree] that can be controlled "
-"from code (see [url=https://docs.godotengine.org/en/3.4/tutorials/animation/"
+"from code (see [url=https://docs.rebeltoolbox.com/en/latest/tutorials/animation/"
 "animation_tree.html#controlling-from-code][/url]). For example, if [member "
 "AnimationTree.tree_root] is an [AnimationNodeStateMachine] and [member "
 "advance_condition] is set to [code]\"idle\"[/code]:\n"
@@ -6332,7 +6333,7 @@ msgstr ""
 #: doc/classes/ViewportTexture.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/127"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Area.xml
 msgid ""
@@ -6569,22 +6570,22 @@ msgstr ""
 #: doc/classes/Area2D.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/physics/using_area_2d.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/physics/using_area_2d.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/physics/using_area_2d.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/physics/using_area_2d.html"
 
 #: doc/classes/Area2D.xml doc/classes/CollisionShape2D.xml
 #: doc/classes/RectangleShape2D.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/121"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Area2D.xml doc/classes/Camera2D.xml
 #: doc/classes/KinematicBody2D.xml doc/classes/TileMap.xml
 #: doc/classes/TileSet.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/120"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Area2D.xml
 msgid ""
@@ -7168,10 +7169,10 @@ msgstr ""
 #: doc/classes/ArrayMesh.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/procedural_geometry/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/procedural_geometry/"
 "arraymesh.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/content/procedural_geometry/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/content/procedural_geometry/"
 "arraymesh.html"
 
 #: doc/classes/ArrayMesh.xml
@@ -7478,8 +7479,8 @@ msgstr ""
 #: doc/classes/ARVRInterface.xml doc/classes/ARVROrigin.xml
 #: doc/classes/ARVRPositionalTracker.xml doc/classes/ARVRServer.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/vr/index.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/ARVRController.xml
 msgid "A spatial node representing a spatially-tracked controller."
@@ -8604,7 +8605,7 @@ msgstr ""
 #: doc/classes/AudioStreamPlayer.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/527"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/AudioEffectAmplify.xml
 msgid ""
@@ -8900,9 +8901,9 @@ msgstr ""
 #: doc/classes/AudioEffectHighShelfFilter.xml
 #: doc/classes/AudioEffectLowShelfFilter.xml doc/classes/AudioServer.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/audio/audio_buses.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/audio/audio_buses.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/audio/audio_buses.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/audio/audio_buses.html"
 
 #: doc/classes/AudioEffectDistortion.xml
 msgid "Distortion power. Value can range from 0 to 1."
@@ -9294,10 +9295,10 @@ msgstr ""
 #: doc/classes/AudioEffectRecord.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/audio/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/audio/"
 "recording_with_microphone.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/audio/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/audio/"
 "recording_with_microphone.html"
 
 #: doc/classes/AudioEffectRecord.xml
@@ -9438,13 +9439,13 @@ msgstr ""
 #: doc/classes/AudioServer.xml doc/classes/AudioStreamPlayer.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/525"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/AudioServer.xml doc/classes/AudioStream.xml
 #: doc/classes/AudioStreamPlayer.xml doc/classes/CanvasItem.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/528"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/AudioServer.xml
 msgid "Adds a bus at [code]at_position[/code]."
@@ -9671,16 +9672,16 @@ msgstr ""
 #: doc/classes/AudioStream.xml doc/classes/AudioStreamPlayer.xml
 #: doc/classes/AudioStreamPlayer2D.xml doc/classes/AudioStreamPlayer3D.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/audio/audio_streams.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/audio/audio_streams.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/audio/audio_streams.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/audio/audio_streams.html"
 
 #: doc/classes/AudioStream.xml doc/classes/AudioStreamGenerator.xml
 #: doc/classes/AudioStreamGeneratorPlayback.xml
 #: doc/classes/AudioStreamPlayback.xml doc/classes/AudioStreamPlayer.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/526"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/AudioStream.xml
 msgid "Returns the length of the audio stream in seconds."
@@ -10296,9 +10297,9 @@ msgstr ""
 
 #: doc/classes/BakedLightmap.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/baked_lightmaps.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/baked_lightmaps.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/using_gridmaps.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/using_gridmaps.html"
 
 #: doc/classes/BakedLightmap.xml
 msgid ""
@@ -10734,23 +10735,23 @@ msgstr ""
 #: doc/classes/Basis.xml doc/classes/Transform.xml doc/classes/Transform2D.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/math/matrices_and_transforms."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/math/matrices_and_transforms."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/math/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/math/"
 "matrices_and_transforms.html"
 
 #: doc/classes/Basis.xml doc/classes/Transform.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/using_transforms.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/using_transforms.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/using_transforms.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/using_transforms.html"
 
 #: doc/classes/Basis.xml doc/classes/Line2D.xml doc/classes/Transform.xml
 #: doc/classes/Transform2D.xml doc/classes/Vector2.xml doc/classes/Vector3.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/584"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Basis.xml doc/classes/CylinderShape.xml
 #: doc/classes/Dictionary.xml doc/classes/DynamicFont.xml
@@ -10763,13 +10764,13 @@ msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
 #: doc/classes/VBoxContainer.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/676"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Basis.xml doc/classes/Line2D.xml doc/classes/Transform.xml
 #: doc/classes/Transform2D.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/583"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Basis.xml
 msgid "Constructs a pure rotation basis matrix from the given quaternion."
@@ -11252,7 +11253,7 @@ msgstr ""
 #: doc/classes/StaticBody.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/675"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/BoxShape.xml doc/classes/CollisionShape.xml
 #: modules/gridmap/doc_classes/GridMap.xml doc/classes/KinematicBody.xml
@@ -11260,7 +11261,7 @@ msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
 #: doc/classes/MeshLibrary.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/126"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/BoxShape.xml
 msgid ""
@@ -11304,7 +11305,7 @@ msgstr ""
 #: doc/classes/ResourceLoader.xml doc/classes/RichTextLabel.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/677"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Button.xml
 msgid ""
@@ -11739,13 +11740,13 @@ msgstr ""
 #: doc/classes/Camera2D.xml doc/classes/TileMap.xml doc/classes/TileSet.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/112"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Camera2D.xml doc/classes/Environment.xml
 #: doc/classes/WorldEnvironment.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/110"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Camera2D.xml
 msgid "Aligns the camera to the tracked node."
@@ -12163,15 +12164,15 @@ msgstr ""
 #: doc/classes/CanvasItem.xml doc/classes/CanvasLayer.xml
 #: doc/classes/InputEvent.xml doc/classes/Viewport.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/2d/2d_transforms.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/2d/2d_transforms.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/2d/2d_transforms.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/2d/2d_transforms.html"
 
 #: doc/classes/CanvasItem.xml doc/classes/Control.xml doc/classes/Node2D.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/2d/custom_drawing_in_2d.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/2d/custom_drawing_in_2d.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/2d/custom_drawing_in_2d.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/2d/custom_drawing_in_2d.html"
 
 #: doc/classes/CanvasItem.xml
 msgid ""
@@ -12646,8 +12647,8 @@ msgstr ""
 
 #: doc/classes/CanvasLayer.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/2d/canvas_layers.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/2d/canvas_layers.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/2d/canvas_layers.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/2d/canvas_layers.html"
 
 #: doc/classes/CanvasLayer.xml
 msgid "Returns the RID of the canvas used by this layer."
@@ -12780,9 +12781,9 @@ msgstr ""
 #: doc/classes/RichTextLabel.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/ui/bbcode_in_richtextlabel.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/ui/bbcode_in_richtextlabel.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/gui/bbcode_in_richtextlabel."
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/gui/bbcode_in_richtextlabel."
 "html"
 
 #: doc/classes/CharFXTransform.xml doc/classes/RichTextEffect.xml
@@ -13286,7 +13287,7 @@ msgstr ""
 #: doc/classes/ClippedCamera.xml
 msgid ""
 "The camera's collision mask. Only objects in at least one collision layer "
-"matching the mask will be detected. See [url=https://docs.godotengine.org/"
+"matching the mask will be detected. See [url=https://docs.rebeltoolbox.com/"
 "en/3.4/tutorials/physics/physics_introduction.html#collision-layers-and-"
 "masks]Collision layers and masks[/url] in the documentation for more "
 "information."
@@ -13429,7 +13430,7 @@ msgid ""
 "in one or more of 32 different layers. See also [member collision_mask].\n"
 "[b]Note:[/b] A contact is detected if object A is in any of the layers that "
 "object B scans, or object B is in any layers that object A scans. See "
-"[url=https://docs.godotengine.org/en/latest/tutorials/physics/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
 msgstr ""
@@ -13440,7 +13441,7 @@ msgid ""
 "one or more of 32 different layers. See also [member collision_layer].\n"
 "[b]Note:[/b] A contact is detected if object A is in any of the layers that "
 "object B scans, or object B is in any layers that object A scans. See "
-"[url=https://docs.godotengine.org/en/latest/tutorials/physics/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
 msgstr ""
@@ -13548,7 +13549,7 @@ msgid ""
 "in one or more of 32 different layers. See also [member collision_mask].\n"
 "[b]Note:[/b] A contact is detected if object A is in any of the layers that "
 "object B scans, or object B is in any layers that object A scans. See "
-"[url=https://docs.godotengine.org/en/latest/tutorials/physics/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
 msgstr ""
@@ -13559,7 +13560,7 @@ msgid ""
 "one or more of 32 different layers. See also [member collision_layer].\n"
 "[b]Note:[/b] A contact is detected if object A is in any of the layers that "
 "object B scans, or object B is in any layers that object A scans. See "
-"[url=https://docs.godotengine.org/en/latest/tutorials/physics/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
 msgstr ""
@@ -13699,10 +13700,10 @@ msgstr ""
 #: doc/classes/Shape.xml doc/classes/Shape2D.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/physics/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/physics/"
 "physics_introduction.html"
 
 #: doc/classes/CollisionShape.xml
@@ -13744,7 +13745,7 @@ msgstr ""
 #: doc/classes/TileSet.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/113"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/CollisionShape2D.xml
 msgid ""
@@ -13791,17 +13792,17 @@ msgstr ""
 #: doc/classes/Color.xml doc/classes/ColorPickerButton.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/517"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Color.xml doc/classes/ColorPicker.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/146"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Color.xml doc/classes/ColorPickerButton.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/133"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Color.xml
 msgid ""
@@ -15251,14 +15252,14 @@ msgstr ""
 
 #: doc/classes/Control.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/ui/index.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/gui/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/ui/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/gui/index.html"
 
 #: doc/classes/Control.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/ui/control_node_gallery.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/gui/index.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/ui/control_node_gallery.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/gui/index.html"
 
 #: doc/classes/Control.xml
 #, fuzzy
@@ -16172,7 +16173,7 @@ msgid ""
 "purposes. Text inside the Control will look pixelated or blurry when the "
 "Control is scaled. To support multiple resolutions in your project, use an "
 "appropriate viewport stretch mode as described in the [url=https://docs."
-"godotengine.org/en/3.4/tutorials/rendering/multiple_resolutions."
+"rebeltoolbox.com/en/latest/tutorials/rendering/multiple_resolutions."
 "html]documentation[/url] instead of scaling Controls individually.\n"
 "[b]Note:[/b] If the Control node is a child of a [Container] node, the scale "
 "will be reset to [code]Vector2(1, 1)[/code] when the scene is instanced. To "
@@ -17292,9 +17293,9 @@ msgstr ""
 #: doc/classes/CPUParticles2D.xml doc/classes/Particles2D.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/2d/particle_systems_2d.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/2d/particle_systems_2d.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/2d/particle_systems_2d.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/2d/particle_systems_2d.html"
 
 #: doc/classes/CPUParticles2D.xml
 msgid ""
@@ -17876,7 +17877,7 @@ msgid ""
 "property.\n"
 "A contact is detected if object A is in any of the layers that object B "
 "scans, or object B is in any layer scanned by object A. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -17884,7 +17885,7 @@ msgstr ""
 #: modules/csg/doc_classes/CSGShape.xml
 msgid ""
 "The physics layers this CSG shape scans for collisions. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -18006,10 +18007,10 @@ msgstr ""
 #: modules/mono/doc_classes/CSharpScript.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/getting_started/scripting/c_sharp/index."
+"https://docs.rebeltoolbox.com/en/latest/getting_started/scripting/c_sharp/index."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/scripting/c_sharp/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/scripting/c_sharp/"
 "index.html"
 
 #: modules/mono/doc_classes/CSharpScript.xml
@@ -18893,10 +18894,10 @@ msgstr ""
 #: doc/classes/Dictionary.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/gdscript/"
 "gdscript_basics.html#dictionary"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/scripting/gdscript/"
 "gdscript_basics.html#dictionary"
 
 #: doc/classes/Dictionary.xml
@@ -18995,9 +18996,9 @@ msgstr ""
 #: doc/classes/OmniLight.xml doc/classes/SpotLight.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/lights_and_shadows.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/lights_and_shadows.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/lights_and_shadows.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/lights_and_shadows.html"
 
 #: doc/classes/DirectionalLight.xml
 msgid ""
@@ -19123,9 +19124,9 @@ msgstr ""
 
 #: doc/classes/Directory.xml doc/classes/File.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/scripting/filesystem.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/filesystem.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/2d/particle_systems_2d.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/2d/particle_systems_2d.html"
 
 #: doc/classes/Directory.xml
 msgid ""
@@ -20129,10 +20130,10 @@ msgstr ""
 #: doc/classes/EditorImportPlugin.xml doc/classes/ResourceImporter.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/import_plugins."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/editor/import_plugins."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/plugins/editor/"
 "import_plugins.html"
 
 #: doc/classes/EditorImportPlugin.xml
@@ -20311,10 +20312,10 @@ msgstr ""
 #: doc/classes/EditorInspectorPlugin.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/editor/"
 "inspector_plugins.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/plugins/editor/"
 "import_plugins.html"
 
 #: doc/classes/EditorInspectorPlugin.xml
@@ -20579,9 +20580,9 @@ msgstr ""
 
 #: doc/classes/EditorPlugin.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/editor/index.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/plugins/editor/index.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/plugins/editor/index.html"
 
 #: doc/classes/EditorPlugin.xml
 msgid ""
@@ -21439,10 +21440,10 @@ msgstr ""
 #: doc/classes/EditorScenePostImport.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/assets_pipeline/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/assets_pipeline/"
 "importing_scenes.html#custom-script"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/workflow/assets/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/workflow/assets/"
 "importing_scenes.html#custom-script"
 
 #: doc/classes/EditorScenePostImport.xml
@@ -21860,10 +21861,10 @@ msgstr ""
 #: doc/classes/EditorSpatialGizmoPlugin.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/spatial_gizmos."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/editor/spatial_gizmos."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/plugins/editor/"
 "spatial_gizmos.html"
 
 #: doc/classes/EditorSpatialGizmoPlugin.xml
@@ -22285,7 +22286,7 @@ msgid ""
 "else:\n"
 "    simulate_physics()\n"
 "[/codeblock]\n"
-"See [url=https://docs.godotengine.org/en/3.4/tutorials/misc/"
+"See [url=https://docs.rebeltoolbox.com/en/latest/tutorials/misc/"
 "running_code_in_the_editor.html]Running code in the editor[/url] in the "
 "documentation for more information.\n"
 "[b]Note:[/b] To detect whether the script is run from an editor [i]build[/i] "
@@ -22384,24 +22385,24 @@ msgstr ""
 #: doc/classes/Environment.xml doc/classes/WorldEnvironment.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/"
 "environment_and_post_processing.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/"
 "environment_and_post_processing.html"
 
 #: doc/classes/Environment.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/high_dynamic_range.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/high_dynamic_range.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/high_dynamic_range.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/high_dynamic_range.html"
 
 #: doc/classes/Environment.xml doc/classes/Material.xml doc/classes/Mesh.xml
 #: doc/classes/MeshInstance.xml doc/classes/WorldEnvironment.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/123"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Environment.xml
 msgid ""
@@ -23130,7 +23131,7 @@ msgid ""
 "    return content\n"
 "[/codeblock]\n"
 "In the example above, the file will be saved in the user data folder as "
-"specified in the [url=https://docs.godotengine.org/en/3.4/tutorials/io/"
+"specified in the [url=https://docs.rebeltoolbox.com/en/latest/tutorials/io/"
 "data_paths.html]Data paths[/url] documentation.\n"
 "[b]Note:[/b] To access project resources once exported, it is recommended to "
 "use [ResourceLoader] instead of the [File] API, as some files are converted "
@@ -23912,19 +23913,19 @@ msgstr ""
 #: modules/gdnative/doc_classes/GDNativeLibrary.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/gdnative/gdnative-c-"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/gdnative/gdnative-c-"
 "example.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/plugins/gdnative/gdnative-c-"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/plugins/gdnative/gdnative-c-"
 "example.html"
 
 #: modules/gdnative/doc_classes/GDNativeLibrary.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/gdnative/gdnative-cpp-"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/gdnative/gdnative-cpp-"
 "example.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/plugins/gdnative/gdnative-"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/plugins/gdnative/gdnative-"
 "cpp-example.html"
 
 #: modules/gdnative/doc_classes/GDNativeLibrary.xml
@@ -23999,10 +24000,10 @@ msgstr ""
 #: modules/gdscript/doc_classes/GDScript.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/getting_started/scripting/gdscript/index."
+"https://docs.rebeltoolbox.com/en/latest/getting_started/scripting/gdscript/index."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/scripting/gdscript/"
 "index.html"
 
 #: modules/gdscript/doc_classes/GDScript.xml
@@ -25042,8 +25043,8 @@ msgstr ""
 
 #: doc/classes/GIProbe.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/gi_probes.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/3d/gi_probes.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/gi_probes.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/gi_probes.html"
 
 #: doc/classes/GIProbe.xml
 msgid ""
@@ -25989,9 +25990,9 @@ msgstr ""
 
 #: modules/gridmap/doc_classes/GridMap.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/using_gridmaps.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/using_gridmaps.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/using_gridmaps.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/using_gridmaps.html"
 
 #: modules/gridmap/doc_classes/GridMap.xml
 msgid "Clear all cells."
@@ -26106,7 +26107,7 @@ msgstr ""
 #: modules/gridmap/doc_classes/GridMap.xml
 msgid ""
 "The physics layers this GridMap detects collisions in. See [url=https://docs."
-"godotengine.org/en/3.4/tutorials/physics/physics_introduction.html#collision-"
+"rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction.html#collision-"
 "layers-and-masks]Collision layers and masks[/url] in the documentation for "
 "more information."
 msgstr ""
@@ -26586,20 +26587,20 @@ msgstr ""
 #: doc/classes/HTTPClient.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/networking/http_client_class."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/networking/http_client_class."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/networking/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/networking/"
 "http_client_class.html"
 
 #: doc/classes/HTTPClient.xml doc/classes/HTTPRequest.xml
 #: doc/classes/StreamPeerSSL.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/networking/ssl_certificates."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/networking/ssl_certificates."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/networking/ssl_certificates."
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/networking/ssl_certificates."
 "html"
 
 #: doc/classes/HTTPClient.xml
@@ -27381,10 +27382,10 @@ msgstr ""
 #: doc/classes/HTTPRequest.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/networking/http_request_class."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/networking/http_request_class."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/networking/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/networking/"
 "http_request_class.html"
 
 #: doc/classes/HTTPRequest.xml
@@ -27534,10 +27535,10 @@ msgstr ""
 #: doc/classes/Image.xml doc/classes/ImageTexture.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/assets_pipeline/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/assets_pipeline/"
 "importing_images.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/workflow/assets/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/workflow/assets/"
 "importing_scenes.html#custom-script"
 
 #: doc/classes/Image.xml
@@ -27745,7 +27746,7 @@ msgstr ""
 #: doc/classes/Image.xml
 msgid ""
 "Loads an image from file [code]path[/code]. See [url=https://docs."
-"godotengine.org/en/3.4/tutorials/assets_pipeline/importing_images."
+"rebeltoolbox.com/en/latest/tutorials/assets_pipeline/importing_images."
 "html#supported-image-formats]Supported image formats[/url] for a list of "
 "supported image formats and limitations.\n"
 "[b]Warning:[/b] This method should only be used in the editor or in cases "
@@ -28446,8 +28447,8 @@ msgstr ""
 
 #: doc/classes/Input.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/inputs/index.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/inputs/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/inputs/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/inputs/index.html"
 
 #: doc/classes/Input.xml
 msgid ""
@@ -28977,9 +28978,9 @@ msgstr ""
 #: doc/classes/InputEventScreenTouch.xml
 #: doc/classes/InputEventWithModifiers.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/inputs/inputevent.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/inputs/inputevent.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/inputs/inputevent.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/inputs/inputevent.html"
 
 #: doc/classes/InputEvent.xml
 msgid ""
@@ -29093,9 +29094,9 @@ msgstr ""
 #: doc/classes/InputEventAction.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/inputs/inputevent.html#actions"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/inputs/inputevent.html#actions"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/inputs/inputevent."
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/inputs/inputevent."
 "html#actions"
 
 #: doc/classes/InputEventAction.xml
@@ -29282,10 +29283,10 @@ msgstr ""
 #: doc/classes/InputEventMouseButton.xml doc/classes/InputEventMouseMotion.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/inputs/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/inputs/"
 "mouse_and_input_coordinates.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/inputs/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/inputs/"
 "mouse_and_input_coordinates.html"
 
 #: doc/classes/InputEventMouseButton.xml
@@ -29455,9 +29456,9 @@ msgstr ""
 #: doc/classes/InputMap.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/inputs/inputevent.html#inputmap"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/inputs/inputevent.html#inputmap"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/inputs/inputevent."
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/inputs/inputevent."
 "html#inputmap"
 
 #: doc/classes/InputMap.xml
@@ -30210,17 +30211,17 @@ msgid ""
 "[b]Note:[/b] This singleton can be disabled at build-time to improve "
 "security. By default, the JavaScript singleton is enabled. Official export "
 "templates also have the JavaScript singleton enabled. See [url=https://docs."
-"godotengine.org/en/3.4/development/compiling/compiling_for_web."
+"rebeltoolbox.com/en/latest/development/compiling/compiling_for_web."
 "html]Compiling for the Web[/url] in the documentation for more information."
 msgstr ""
 
 #: doc/classes/JavaScript.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/export/exporting_for_web."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/export/exporting_for_web."
 "html#calling-javascript-from-script"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/workflow/export/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/workflow/export/"
 "exporting_for_web.html#calling-javascript-from-script"
 
 #: doc/classes/JavaScript.xml
@@ -30333,10 +30334,10 @@ msgstr ""
 #: doc/classes/JNISingleton.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/platform/android/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/platform/android/"
 "android_plugin.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/plugins/editor/"
 "import_plugins.html"
 
 #: doc/classes/Joint.xml
@@ -30354,7 +30355,7 @@ msgstr ""
 #: doc/classes/VehicleWheel.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/524"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Joint.xml
 msgid ""
@@ -30606,10 +30607,10 @@ msgstr ""
 #: doc/classes/KinematicBody.xml doc/classes/KinematicBody2D.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/physics/kinematic_character_2d."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/physics/kinematic_character_2d."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/physics/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/physics/"
 "kinematic_character_2d.html"
 
 #: doc/classes/KinematicBody.xml
@@ -30838,10 +30839,10 @@ msgstr ""
 #: doc/classes/KinematicBody2D.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/physics/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "using_kinematic_body_2d.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/physics/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/physics/"
 "using_kinematic_body_2d.html"
 
 #: doc/classes/KinematicBody2D.xml
@@ -31472,9 +31473,9 @@ msgstr ""
 #: doc/classes/Light2D.xml doc/classes/LightOccluder2D.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/2d/2d_lights_and_shadows.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/2d/2d_lights_and_shadows.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/2d/2d_lights_and_shadows."
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/2d/2d_lights_and_shadows."
 "html"
 
 #: doc/classes/Light2D.xml
@@ -33323,8 +33324,8 @@ msgstr ""
 
 #: doc/classes/MeshInstance2D.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/2d/2d_meshes.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/2d/2d_meshes.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/2d/2d_meshes.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/2d/2d_meshes.html"
 
 #: doc/classes/MeshInstance2D.xml
 msgid "The [Mesh] that will be drawn by the [MeshInstance2D]."
@@ -33561,19 +33562,19 @@ msgstr ""
 #: doc/classes/MultiMesh.xml doc/classes/MultiMeshInstance.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/vertex_animation/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/vertex_animation/"
 "animating_thousands_of_fish.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/vertex_animation/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/vertex_animation/"
 "animating_thousands_of_fish.html"
 
 #: doc/classes/MultiMesh.xml doc/classes/MultiMeshInstance.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/using_multimesh."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/using_multimesh."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/optimization/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/optimization/"
 "using_multimesh.html"
 
 #: doc/classes/MultiMesh.xml
@@ -33721,10 +33722,10 @@ msgstr ""
 #: doc/classes/MultiMeshInstance.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/using_multi_mesh_instance."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/using_multi_mesh_instance."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/"
 "using_multi_mesh_instance.html"
 
 #: doc/classes/MultiMeshInstance.xml
@@ -33979,10 +33980,10 @@ msgstr ""
 #: doc/classes/Mutex.xml doc/classes/Semaphore.xml doc/classes/Thread.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/threads/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/threads/"
 "using_multiple_threads.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/threads/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/threads/"
 "using_multiple_threads.html"
 
 #: doc/classes/Mutex.xml
@@ -34061,7 +34062,7 @@ msgstr ""
 #: doc/classes/Navigation.xml doc/classes/NavigationMesh.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/124"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Navigation.xml doc/classes/Navigation2D.xml
 msgid ""
@@ -34143,7 +34144,7 @@ msgstr ""
 #: doc/classes/Navigation2D.xml doc/classes/NavigationPolygon.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/117"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Navigation2D.xml
 msgid ""
@@ -34577,10 +34578,10 @@ msgstr ""
 #: doc/classes/NetworkedMultiplayerPeer.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/networking/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/networking/"
 "high_level_multiplayer.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/networking/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/networking/"
 "high_level_multiplayer.html"
 
 #: modules/enet/doc_classes/NetworkedMultiplayerENet.xml
@@ -34828,7 +34829,7 @@ msgstr ""
 #: doc/classes/NetworkedMultiplayerPeer.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/537"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/NetworkedMultiplayerPeer.xml
 msgid ""
@@ -35120,10 +35121,10 @@ msgstr ""
 #: doc/classes/Node.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/getting_started/step_by_step/"
+"https://docs.rebeltoolbox.com/en/latest/getting_started/step_by_step/"
 "nodes_and_scenes.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/step_by_step/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/step_by_step/"
 "scenes_and_nodes.html"
 
 #: doc/classes/Node.xml
@@ -36286,7 +36287,7 @@ msgstr ""
 #: doc/classes/TileSet.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/520"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/NodePath.xml
 msgid ""
@@ -36500,19 +36501,19 @@ msgstr ""
 #: doc/classes/Object.xml doc/classes/Reference.xml doc/classes/Resource.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/best_practices/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/best_practices/"
 "node_alternatives.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/workflow/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/workflow/"
 "best_practices/node_alternatives.html"
 
 #: doc/classes/Object.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/gdscript/"
 "gdscript_exports.html#advanced-exports"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/scripting/gdscript/"
 "gdscript_basics.html#dictionary"
 
 #: doc/classes/Object.xml
@@ -37509,8 +37510,8 @@ msgid ""
 "strings. Platform path resolution will take place. The resolved file must "
 "exist and be executable.\n"
 "The arguments are used in the given order and separated by a space, so "
-"[code]OS.execute(\"ping\", [\"-w\", \"3\", \"godotengine.org\"], false)[/"
-"code] will resolve to [code]ping -w 3 godotengine.org[/code] in the system's "
+"[code]OS.execute(\"ping\", [\"-w\", \"3\", \"rebeltoolbox.com\"], false)[/"
+"code] will resolve to [code]ping -w 3 rebeltoolbox.com[/code] in the system's "
 "shell.\n"
 "This method has slightly different behavior based on whether the "
 "[code]blocking[/code] mode is enabled.\n"
@@ -37567,7 +37568,7 @@ msgid ""
 "Returns the [i]global[/i] cache data directory according to the operating "
 "system's standards. On desktop platforms, this path can be overridden by "
 "setting the [code]XDG_CACHE_HOME[/code] environment variable before starting "
-"the project. See [url=https://docs.godotengine.org/en/latest/tutorials/io/"
+"the project. See [url=https://docs.rebeltoolbox.com/en/latest/tutorials/io/"
 "data_paths.html]File paths in Godot projects[/url] in the documentation for "
 "more information. See also [method get_config_dir] and [method "
 "get_data_dir].\n"
@@ -37602,7 +37603,7 @@ msgid ""
 "Returns the [i]global[/i] user configuration directory according to the "
 "operating system's standards. On desktop platforms, this path can be "
 "overridden by setting the [code]XDG_CONFIG_HOME[/code] environment variable "
-"before starting the project. See [url=https://docs.godotengine.org/en/latest/"
+"before starting the project. See [url=https://docs.rebeltoolbox.com/en/latest/"
 "tutorials/io/data_paths.html]File paths in Godot projects[/url] in the "
 "documentation for more information. See also [method get_cache_dir] and "
 "[method get_data_dir].\n"
@@ -37629,7 +37630,7 @@ msgid ""
 "Returns the [i]global[/i] user data directory according to the operating "
 "system's standards. On desktop platforms, this path can be overridden by "
 "setting the [code]XDG_DATA_HOME[/code] environment variable before starting "
-"the project. See [url=https://docs.godotengine.org/en/latest/tutorials/io/"
+"the project. See [url=https://docs.rebeltoolbox.com/en/latest/tutorials/io/"
 "data_paths.html]File paths in Godot projects[/url] in the documentation for "
 "more information. See also [method get_cache_dir] and [method "
 "get_config_dir].\n"
@@ -38060,7 +38061,7 @@ msgid ""
 "supported in the currently running instance, depending on the platform, "
 "build etc. Can be used to check whether you're currently running a debug "
 "build, on a certain platform or arch, etc. Refer to the [url=https://docs."
-"godotengine.org/en/3.4/tutorials/export/feature_tags.html]Feature Tags[/url] "
+"rebeltoolbox.com/en/latest/tutorials/export/feature_tags.html]Feature Tags[/url] "
 "documentation for more details.\n"
 "[b]Note:[/b] Tag names are case-sensitive."
 msgstr ""
@@ -38347,7 +38348,7 @@ msgid ""
 "example:\n"
 "- [code]OS.shell_open(\"C:\\\\Users\\name\\Downloads\")[/code] on Windows "
 "opens the file explorer at the user's Downloads folder.\n"
-"- [code]OS.shell_open(\"https://godotengine.org\")[/code] opens the default "
+"- [code]OS.shell_open(\"https://rebeltoolbox.com\")[/code] opens the default "
 "web browser on the official Godot website.\n"
 "- [code]OS.shell_open(\"mailto:example@example.com\")[/code] opens the "
 "default email client with the \"To\" field set to [code]example@example.com[/"
@@ -39108,12 +39109,12 @@ msgstr ""
 #: doc/classes/Panel.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/516"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Panel.xml doc/classes/Skeleton.xml doc/classes/SkeletonIK.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/523"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Panel.xml
 msgid "The style of this [Panel]."
@@ -39262,10 +39263,10 @@ msgstr ""
 #: doc/classes/Particles.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/vertex_animation/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/vertex_animation/"
 "controlling_thousands_of_fish.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/vertex_animation/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/vertex_animation/"
 "controlling_thousands_of_fish.html"
 
 #: doc/classes/Particles.xml
@@ -40129,9 +40130,9 @@ msgstr ""
 #: doc/classes/PhysicsDirectSpaceState.xml doc/classes/RayCast.xml
 #: doc/classes/RayCast2D.xml doc/classes/World.xml doc/classes/World2D.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/physics/ray-casting.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/physics/ray-casting.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/physics/ray-casting.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/physics/ray-casting.html"
 
 #: doc/classes/Physics2DDirectBodyState.xml doc/classes/RigidBody2D.xml
 msgid "Adds a constant directional force without affecting rotation."
@@ -41231,7 +41232,7 @@ msgstr ""
 #: doc/classes/PhysicsShapeQueryParameters.xml
 msgid ""
 "The physics layer(s) the query will take into account (as a bitmask). See "
-"[url=https://docs.godotengine.org/en/3.4/tutorials/physics/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
 msgstr ""
@@ -42725,7 +42726,7 @@ msgstr ""
 #: doc/classes/TileSet.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/519"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/PoolVector2Array.xml
 msgid ""
@@ -43697,13 +43698,13 @@ msgid ""
 "Project Settings dialog.\n"
 "[b]Feature tags:[/b] Project settings can be overridden for specific "
 "platforms and configurations (debug, release, ...) using [url=https://docs."
-"godotengine.org/en/3.4/tutorials/export/feature_tags.html]feature tags[/"
+"rebeltoolbox.com/en/latest/tutorials/export/feature_tags.html]feature tags[/"
 "url].\n"
 "[b]Overriding:[/b] Any project setting can be overridden by creating a file "
 "named [code]override.cfg[/code] in the project's root directory. This can "
 "also be used in exported projects by placing this file in the same directory "
 "as the project binary. Overriding will still take the base project "
-"settings' [url=https://docs.godotengine.org/en/3.4/tutorials/export/"
+"settings' [url=https://docs.rebeltoolbox.com/en/latest/tutorials/export/"
 "feature_tags.html]feature tags[/url] in account. Therefore, make sure to "
 "[i]also[/i] override the setting with the desired feature tags if you want "
 "them to override base project settings on all platforms and configurations."
@@ -43755,7 +43756,7 @@ msgid ""
 "Returns the absolute, native OS path corresponding to the localized "
 "[code]path[/code] (starting with [code]res://[/code] or [code]user://[/"
 "code]). The returned path will vary depending on the operating system and "
-"user preferences. See [url=https://docs.godotengine.org/en/3.4/tutorials/io/"
+"user preferences. See [url=https://docs.rebeltoolbox.com/en/latest/tutorials/io/"
 "data_paths.html]File paths in Godot projects[/url] to see what those paths "
 "convert to. See also [method localize_path].\n"
 "[b]Note:[/b] [method globalize_path] with [code]res://[/code] will not work "
@@ -43931,7 +43932,7 @@ msgid ""
 "path if [member application/config/use_custom_user_dir] is [code]false[/"
 "code]. After renaming the project, you will no longer be able to access "
 "existing data in [code]user://[/code] unless you rename the old folder to "
-"match the new project name. See [url=https://docs.godotengine.org/en/3.4/"
+"match the new project name. See [url=https://docs.rebeltoolbox.com/en/latest/"
 "tutorials/io/data_paths.html]Data paths[/url] in the documentation for more "
 "information."
 msgstr ""
@@ -44508,7 +44509,7 @@ msgid ""
 "display the running project.\n"
 "Regardless of the platform, enabling fullscreen will change the window size "
 "to match the monitor's size. Therefore, make sure your project supports "
-"[url=https://docs.godotengine.org/en/3.4/tutorials/rendering/"
+"[url=https://docs.rebeltoolbox.com/en/latest/tutorials/rendering/"
 "multiple_resolutions.html]multiple resolutions[/url] when enabling "
 "fullscreen mode.\n"
 "[b]Note:[/b] This setting is ignored on iOS, Android, and HTML5."
@@ -46490,7 +46491,7 @@ msgstr ""
 #: doc/classes/ViewportTexture.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/129"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/QuadMesh.xml
 msgid "Offset of the generated Quad. Useful for particles."
@@ -46519,10 +46520,10 @@ msgstr ""
 #: doc/classes/Quat.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/using_transforms."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/using_transforms."
 "html#interpolating-with-quaternions"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/using_transforms."
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/using_transforms."
 "html#interpolating-with-quaternions"
 
 #: doc/classes/Quat.xml
@@ -46692,9 +46693,9 @@ msgstr ""
 #: doc/classes/RandomNumberGenerator.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/math/random_number_generation."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/math/random_number_generation."
 "html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/math/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/math/index.html"
 
 #: doc/classes/RandomNumberGenerator.xml
 msgid ""
@@ -46978,7 +46979,7 @@ msgstr ""
 #: doc/classes/RayCast.xml doc/classes/RayCast2D.xml
 msgid ""
 "The ray's collision mask. Only objects in at least one collision layer "
-"enabled in the mask will be detected. See [url=https://docs.godotengine.org/"
+"enabled in the mask will be detected. See [url=https://docs.rebeltoolbox.com/"
 "en/3.4/tutorials/physics/physics_introduction.html#collision-layers-and-"
 "masks]Collision layers and masks[/url] in the documentation for more "
 "information."
@@ -47318,9 +47319,9 @@ msgstr ""
 
 #: doc/classes/ReflectionProbe.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/reflection_probes.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/reflection_probes.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/reflection_probes.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/reflection_probes.html"
 
 #: doc/classes/ReflectionProbe.xml
 msgid ""
@@ -47710,8 +47711,8 @@ msgstr ""
 
 #: doc/classes/Resource.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/scripting/resources.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/i18n/locales.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/resources.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/i18n/locales.html"
 
 #: doc/classes/Resource.xml
 msgid ""
@@ -48249,7 +48250,7 @@ msgstr ""
 #: doc/classes/RichTextLabel.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/132"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/RichTextLabel.xml
 msgid ""
@@ -49041,12 +49042,12 @@ msgstr ""
 #: doc/classes/RigidBody2D.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/119"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/RigidBody2D.xml doc/classes/Sprite.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/148"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/RigidBody2D.xml
 msgid ""
@@ -49646,10 +49647,10 @@ msgstr ""
 #: doc/classes/RootMotionView.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/latest/tutorials/animation/animation_tree."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/animation/animation_tree."
 "html#root-motion"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/animation/animation_tree."
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/animation/animation_tree."
 "html"
 
 #: doc/classes/RootMotionView.xml
@@ -49850,16 +49851,16 @@ msgstr ""
 
 #: doc/classes/SceneTree.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/scripting/scene_tree.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/shading/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/scene_tree.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/shading/index.html"
 
 #: doc/classes/SceneTree.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/rendering/multiple_resolutions."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/rendering/multiple_resolutions."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/viewports/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/viewports/"
 "multiple_resolutions.html"
 
 #: doc/classes/SceneTree.xml
@@ -50319,8 +50320,8 @@ msgstr ""
 
 #: doc/classes/Script.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/scripting/index.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/shading/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/shading/index.html"
 
 #: doc/classes/Script.xml
 msgid "Returns [code]true[/code] if the script can be instanced."
@@ -50628,16 +50629,16 @@ msgstr ""
 
 #: doc/classes/Shader.xml doc/classes/ShaderMaterial.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/shaders/index.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/shading/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/shaders/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/shading/index.html"
 
 #: doc/classes/Shader.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/shaders/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/shaders/"
 "introduction_to_shaders.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/introduction_to_3d.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/introduction_to_3d.html"
 
 #: doc/classes/Shader.xml
 msgid ""
@@ -50969,9 +50970,9 @@ msgstr ""
 #: doc/classes/Skeleton2D.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/animation/2d_skeletons.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/animation/2d_skeletons.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/animation/2d_skeletons.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/animation/2d_skeletons.html"
 
 #: doc/classes/Skeleton2D.xml
 msgid ""
@@ -51278,9 +51279,9 @@ msgstr ""
 
 #: doc/classes/SoftBody.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/physics/soft_body.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/physics/soft_body.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/physics/soft_body.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/physics/soft_body.html"
 
 #: doc/classes/SoftBody.xml
 msgid "Returns local translation of a vertex in the surface array."
@@ -51306,7 +51307,7 @@ msgid ""
 "property.\n"
 "A contact is detected if object A is in any of the layers that object B "
 "scans, or object B is in any layer scanned by object A. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -51314,7 +51315,7 @@ msgstr ""
 #: doc/classes/SoftBody.xml
 msgid ""
 "The physics layers this SoftBody scans for collisions. See [url=https://docs."
-"godotengine.org/en/3.4/tutorials/physics/physics_introduction.html#collision-"
+"rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction.html#collision-"
 "layers-and-masks]Collision layers and masks[/url] in the documentation for "
 "more information."
 msgstr ""
@@ -51366,9 +51367,9 @@ msgstr ""
 #: doc/classes/Spatial.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/3d/introduction_to_3d.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/3d/introduction_to_3d.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/introduction_to_3d.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/introduction_to_3d.html"
 
 #: doc/classes/Spatial.xml doc/classes/Vector3.xml
 #, fuzzy
@@ -51679,9 +51680,9 @@ msgstr ""
 
 #: doc/classes/SpatialMaterial.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/3d/spatial_material.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/spatial_material.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/3d/spatial_material.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/3d/spatial_material.html"
 
 #: doc/classes/SpatialMaterial.xml
 msgid "Returns [code]true[/code], if the specified [enum Feature] is enabled."
@@ -52986,7 +52987,7 @@ msgstr ""
 #: doc/classes/SpringArm.xml
 msgid ""
 "The layers against which the collision check shall be done. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -53699,10 +53700,10 @@ msgstr ""
 #: doc/classes/String.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/gdscript/"
 "gdscript_format_string.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/scripting/gdscript/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/scripting/gdscript/"
 "gdscript_format_string.html"
 
 #: doc/classes/String.xml
@@ -56773,8 +56774,8 @@ msgstr ""
 
 #: doc/classes/Theme.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/ui/gui_skinning.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/gui/gui_skinning.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/ui/gui_skinning.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/gui/gui_skinning.html"
 
 #: doc/classes/Theme.xml
 msgid "Clears all values on the theme."
@@ -57145,10 +57146,10 @@ msgstr ""
 #: doc/classes/Thread.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/threads/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/threads/"
 "thread_safe_apis.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/threads/thread_safe_apis."
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/threads/thread_safe_apis."
 "html"
 
 #: doc/classes/Thread.xml
@@ -57225,14 +57226,14 @@ msgstr ""
 
 #: doc/classes/TileMap.xml doc/classes/TileSet.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/2d/using_tilemaps.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/2d/using_tilemaps.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/2d/using_tilemaps.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/2d/using_tilemaps.html"
 
 #: doc/classes/TileMap.xml doc/classes/TileSet.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/111"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/TileMap.xml
 msgid "Clears all cells."
@@ -57443,7 +57444,7 @@ msgstr ""
 #: doc/classes/TileMap.xml
 msgid ""
 "The collision layer(s) for all colliders in the TileMap. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -57451,7 +57452,7 @@ msgstr ""
 #: doc/classes/TileMap.xml
 msgid ""
 "The collision mask(s) for all colliders in the TileMap. See [url=https://"
-"docs.godotengine.org/en/3.4/tutorials/physics/physics_introduction."
+"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -58397,16 +58398,16 @@ msgstr ""
 #: doc/classes/Translation.xml doc/classes/TranslationServer.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/i18n/internationalizing_games."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/i18n/internationalizing_games."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/i18n/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/i18n/"
 "internationalizing_games.html"
 
 #: doc/classes/Translation.xml doc/classes/TranslationServer.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/i18n/locales.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/i18n/locales.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/i18n/locales.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/i18n/locales.html"
 
 #: doc/classes/Translation.xml
 msgid "Virtual method to override [method get_message]."
@@ -60417,9 +60418,9 @@ msgstr ""
 
 #: doc/classes/Variant.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/development/cpp/variant_class.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/development/cpp/variant_class.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/development/cpp/variant_class.html"
+"https://docs.rebeltoolbox.com/uk/latest/development/cpp/variant_class.html"
 
 #: doc/classes/VBoxContainer.xml
 msgid "Vertical box container."
@@ -61326,28 +61327,28 @@ msgstr ""
 
 #: doc/classes/Viewport.xml
 #, fuzzy
-msgid "https://docs.godotengine.org/en/3.4/tutorials/rendering/index.html"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/shading/index.html"
+msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/rendering/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/shading/index.html"
 
 #: doc/classes/Viewport.xml doc/classes/ViewportTexture.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/128"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Viewport.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/130"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Viewport.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/541"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Viewport.xml doc/classes/ViewportTexture.xml
 #, fuzzy
 msgid "https://godotengine.org/asset-library/asset/586"
-msgstr "https://docs.godotengine.org/uk/latest/tutorials/vr/index.html"
+msgstr "https://docs.rebeltoolbox.com/uk/latest/tutorials/vr/index.html"
 
 #: doc/classes/Viewport.xml
 msgid ""
@@ -62178,10 +62179,10 @@ msgstr ""
 #: modules/visual_script/doc_classes/VisualScript.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/getting_started/scripting/visual_script/"
+"https://docs.rebeltoolbox.com/en/latest/getting_started/scripting/visual_script/"
 "index.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/getting_started/scripting/"
+"https://docs.rebeltoolbox.com/uk/latest/getting_started/scripting/"
 "visual_script/index.html"
 
 #: modules/visual_script/doc_classes/VisualScript.xml
@@ -63945,9 +63946,9 @@ msgstr ""
 #: doc/classes/VisualServer.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/performance/using_servers.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/performance/using_servers.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/optimization/using_servers."
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/optimization/using_servers."
 "html"
 
 #: doc/classes/VisualServer.xml
@@ -67064,9 +67065,9 @@ msgstr ""
 #: doc/classes/VisualShaderNode.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/shaders/visual_shaders.html"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/shaders/visual_shaders.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/shading/visual_shaders.html"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/shading/visual_shaders.html"
 
 #: doc/classes/VisualShaderNode.xml
 msgid ""
@@ -67511,10 +67512,10 @@ msgstr ""
 #: doc/classes/VisualShaderNodeCustom.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/plugins/editor/"
 "visual_shader_plugins.html"
 msgstr ""
-"https://docs.godotengine.org/uk/latest/tutorials/plugins/editor/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/plugins/editor/"
 "visual_shader_plugins.html"
 
 #: doc/classes/VisualShaderNodeCustom.xml
@@ -67859,10 +67860,10 @@ msgstr ""
 #: doc/classes/VisualShaderNodeInput.xml
 #, fuzzy
 msgid ""
-"https://docs.godotengine.org/en/3.4/tutorials/shaders/shader_reference/index."
+"https://docs.rebeltoolbox.com/en/latest/tutorials/shaders/shader_reference/index."
 "html"
 msgstr ""
-"https://docs.godotengine.org/uk/stable/tutorials/shading/shading_reference/"
+"https://docs.rebeltoolbox.com/uk/latest/tutorials/shading/shading_reference/"
 "index.html"
 
 #: doc/classes/VisualShaderNodeInput.xml

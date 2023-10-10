@@ -1,7 +1,8 @@
-# Vietnamese translation of the Godot Engine editor
-# Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.
-# Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).
-# This file is distributed under the same license as the Godot source code.
+# Vietnamese translation of the Rebel Editor
+# Copyright (c) 2022-Present Rebel Engine contributors
+# Copyright (c) 2014-2022 Godot Engine contributors
+# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
+# This file is distributed under the same license as the Rebel Engine source code
 # 01lifeleft <01lifeleft@gmail.com>, 2018.
 # Dlean Jeans <dleanjeans@gmail.com>, 2018.
 # Hai Le <dark.hades.1102@gmail.com>, 2017.
@@ -22,8 +23,8 @@
 # Hung <hungthitkhia@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Rebel Editor\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2021-09-15 00:46+0000\n"
 "Last-Translator: IoeCmcomc <hopdaigia2004@gmail.com>\n"
@@ -13555,10 +13556,10 @@ msgstr "Đang dựng dự án Android (gradle)"
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.godotengine.org for Android build documentation."
+"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
 msgstr ""
 "Xây dựng dự án Android thất bại, hãy kiểm tra đầu ra để biết lỗi.\n"
-"Hoặc truy cập 'docs.godotengine.org' để xem cách xây dựng Android."
+"Hoặc truy cập 'docs.rebeltoolbox.com' để xem cách xây dựng Android."
 
 #: platform/android/export/export_plugin.cpp
 msgid "Moving output"

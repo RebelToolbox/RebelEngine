@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="RoomManager" inherits="Spatial" version="3.4">
+<class name="RoomManager" inherits="Spatial" version="1.0">
 	<brief_description>
 		The RoomManager node is used to control the portal culling system.
 	</brief_description>
@@ -27,7 +27,7 @@
 				[Portal]s are really just specialized [MeshInstance]s. In fact you will usually first create a portal by creating a [MeshInstance], especially a [code]plane[/code] mesh instance. You would move the plane in the editor to cover a window or doorway, with the front face pointing outward from the room. To let the conversion process know you want this mesh to be a portal, again we use a special naming convention. [MeshInstance]s to be converted to a [Portal] should start with the prefix [i]'Portal_'[/i].
 				You now have a choice - you can leave the name as [i]'Portal_'[/i] and allow the system to automatically detect the nearest [Room] to link. In most cases this will work fine.
 				An alternative method is to specify the [Room] to link to manually, appending a suffix to the portal name, which should be the name of the room you intend to link to. For example [i]'Portal_lounge'[/i] will attempt to link to the room named [i]'Room_lounge'[/i].
-				There is a special case here - Godot does not allow two nodes to share the same name. What if you want to manually have more than one portal leading into the same room? Surely they will need to both be called, e.g. [i]'Portal_lounge'[/i]?
+				There is a special case here - Rebel Engine does not allow two nodes to share the same name. What if you want to manually have more than one portal leading into the same room? Surely they will need to both be called, e.g. [i]'Portal_lounge'[/i]?
 				The solution is a wildcard character. After the room name, if you use the character [i]'*'[/i], this character and anything following it will be ignored. So you can use for example [i]'Portal_lounge*0'[/i], [i]'Portal_lounge*1'[/i] etc.
 				Note that [Portal]s that have already been converted to [Portal] nodes (rather than [MeshInstance]s) still need to follow the same naming convention, as they will be relinked each time during conversion.
 				It is recommended that you only place objects in rooms that are desired to stay within those rooms - i.e. [code]portal mode[/code]s [code]STATIC[/code] or [code]DYNAMIC[/code] (not crossing portals). [code]GLOBAL[/code] and [code]ROAMING[/code] objects are best placed in another part of the scene tree, to avoid confusion. See [CullInstance] for a full description of portal modes.

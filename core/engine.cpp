@@ -2,11 +2,11 @@
 /*  engine.cpp                                                           */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           REBEL ENGINE                                */
 /*************************************************************************/
-/* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2022-Present Rebel Engine contributors                  */
+/* Copyright (c) 2014-2022 Godot Engine contributors                     */
+/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur                  */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -129,10 +129,7 @@ static Array array_from_info_count(const char *const *info_list, int info_count)
 Dictionary Engine::get_author_info() const {
 	Dictionary dict;
 
-	dict["lead_developers"] = array_from_info(AUTHORS_LEAD_DEVELOPERS);
-	dict["project_managers"] = array_from_info(AUTHORS_PROJECT_MANAGERS);
-	dict["founders"] = array_from_info(AUTHORS_FOUNDERS);
-	dict["developers"] = array_from_info(AUTHORS_DEVELOPERS);
+	dict["contributors"] = array_from_info(CONTRIBUTORS);
 
 	return dict;
 }
@@ -161,14 +158,8 @@ Array Engine::get_copyright_info() const {
 
 Dictionary Engine::get_donor_info() const {
 	Dictionary donors;
-	donors["platinum_sponsors"] = array_from_info(DONORS_SPONSOR_PLATINUM);
-	donors["gold_sponsors"] = array_from_info(DONORS_SPONSOR_GOLD);
-	donors["silver_sponsors"] = array_from_info(DONORS_SPONSOR_SILVER);
-	donors["bronze_sponsors"] = array_from_info(DONORS_SPONSOR_BRONZE);
-	donors["mini_sponsors"] = array_from_info(DONORS_SPONSOR_MINI);
-	donors["gold_donors"] = array_from_info(DONORS_GOLD);
-	donors["silver_donors"] = array_from_info(DONORS_SILVER);
-	donors["bronze_donors"] = array_from_info(DONORS_BRONZE);
+	donors["sponsors"] = array_from_info(DONORS_SPONSOR);
+	donors["donors"] = array_from_info(DONORS_DONOR);
 	return donors;
 }
 
