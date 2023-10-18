@@ -1,0 +1,605 @@
+name: Create Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version"
+        required: true
+  schedule:
+    # Create nightly development release every day at midnight.
+    - cron: '0 0 * * *'
+
+jobs:
+  builds:
+    name: ${{ matrix.name }}
+    # Don't run on forks.
+    if: github.repository == 'RebelToolbox/RebelEngine'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          # Rebel Editor builds
+          - name: Linux Editor
+            os: ubuntu-latest
+            artifact: linux-editor
+            build-options: production=yes target=release_debug
+            rebel-executable: rebel.x11.opt.tools.64
+
+          - name: Windows Editor
+            os: windows-latest
+            artifact: windows-editor
+            build-options: production=yes target=release_debug
+            rebel-executable: rebel.windows.opt.tools.64.msvc.exe
+
+          - name: macOS Editor x86 64 bit
+            os: macos-latest
+            artifact: macos-editor-x86-64
+            build-options: production=yes target=release_debug
+            rebel-executable: rebel.osx.opt.tools.64
+
+          - name: macOS Editor armv8 64 bit
+            os: macos-latest
+            artifact: macos-editor-arm64
+            build-options: production=yes target=release_debug arch=arm64
+            rebel-executable: rebel.osx.opt.tools.arm64
+
+          # Rebel Engine Linux builds
+          - name: Linux Engine 64 bit
+            os: ubuntu-latest
+            artifact: linux-engine-x86-64
+            build-options: production=yes tools=no target=release
+            rebel-executable: rebel.x11.opt.64
+
+          - name: Linux Engine 64 bit Debug
+            os: ubuntu-latest
+            artifact: linux-engine-x86-64-debug
+            build-options: production=yes tools=no target=release_debug
+            rebel-executable: rebel.x11.opt.debug.64
+
+          - name: Linux Engine 32 bit
+            os: ubuntu-latest
+            artifact: linux-engine-x86-32
+            build-options: production=yes tools=no target=release bits=32
+            rebel-executable: rebel.x11.opt.32
+
+          - name: Linux Engine 32 bit Debug
+            os: ubuntu-latest
+            artifact: linux-engine-x86-32-debug
+            build-options: production=yes tools=no target=release_debug bits=32
+            rebel-executable: rebel.x11.opt.debug.32
+
+          # Rebel Engine Windows builds
+          - name: Windows Engine 64 bit
+            os: windows-latest
+            artifact: windows-engine-x86-64
+            build-options: production=yes tools=no target=release
+            rebel-executable: rebel.windows.opt.64.msvc.exe
+
+          - name: Windows Engine 64 bit Debug
+            os: windows-latest
+            artifact: windows-engine-x86-64-debug
+            build-options: production=yes tools=no target=release_debug
+            rebel-executable: rebel.windows.opt.debug.64.msvc.exe
+
+          - name: Windows Engine 32 bit
+            os: windows-latest
+            artifact: windows-engine-x86-32
+            build-options: production=yes tools=no target=release bits=32
+            rebel-executable: rebel.windows.opt.32.msvc.exe
+
+          - name: Windows Engine 32 bit Debug
+            os: windows-latest
+            artifact: windows-engine-x86-32-debug
+            build-options: production=yes tools=no target=release_debug bits=32
+            rebel-executable: rebel.windows.opt.debug.32.msvc.exe
+
+          # Rebel Engine macOS builds
+          - name: macOS Engine x86 64 bit
+            os: macos-latest
+            artifact: macos-engine-x86-64
+            build-options: production=yes tools=no target=release
+            rebel-executable: rebel.osx.opt.64
+
+          - name: macOS Engine x86 64 bit Debug
+            os: macos-latest
+            artifact: macos-engine-x86-64-debug
+            build-options: production=yes tools=no target=release_debug
+            rebel-executable: rebel.osx.opt.debug.64
+
+          - name: macOS Engine armv8 64 bit
+            os: macos-latest
+            artifact: macos-engine-arm64
+            build-options: production=yes tools=no target=release arch=arm64
+            rebel-executable: rebel.osx.opt.arm64
+
+          - name: macOS Engine armv8 64 bit Debug
+            os: macos-latest
+            artifact: macos-engine-arm64-debug
+            build-options: production=yes tools=no target=release_debug arch=arm64
+            rebel-executable: rebel.osx.opt.debug.arm64
+
+          # Rebel Engine Android Library builds
+          - name: Android Engine Library armv8 64 bit
+            os: ubuntu-latest
+            artifact: android-engine-library-arm64
+            build-options: platform=android production=yes tools=no target=release
+            rebel-executable: librebel.android.opt.armv8.so
+
+          - name: Android Engine Library armv8 64 bit Debug
+            os: ubuntu-latest
+            artifact: android-engine-library-arm64-debug
+            build-options: platform=android production=yes tools=no target=release_debug
+            rebel-executable: librebel.android.opt.debug.armv8.so
+
+          - name: Android Engine Library armv7 Neon
+            os: ubuntu-latest
+            artifact: android-engine-library-arm-neon
+            build-options: platform=android production=yes tools=no target=release android_arch=armv7
+            rebel-executable: librebel.android.opt.armv7.neon.so
+
+          - name: Android Engine Library armv7 Neon Debug
+            os: ubuntu-latest
+            artifact: android-engine-library-arm-neon-debug
+            build-options: platform=android production=yes tools=no target=release_debug android_arch=armv7
+            rebel-executable: librebel.android.opt.debug.armv7.neon.so
+
+          - name: Android Engine Library x86 64 bit
+            os: ubuntu-latest
+            artifact: android-engine-library-x86-64
+            build-options: platform=android production=yes tools=no target=release android_arch=x86_64
+            rebel-executable: librebel.android.opt.x86_64.so
+
+          - name: Android Engine Library x86 64 bit Debug
+            os: ubuntu-latest
+            artifact: android-engine-library-x86-64-debug
+            build-options: platform=android production=yes tools=no target=release_debug android_arch=x86_64
+            rebel-executable: librebel.android.opt.debug.x86_64.so
+
+          - name: Android Engine Library x86 32 bit
+            os: ubuntu-latest
+            artifact: android-engine-library-x86-32
+            build-options: platform=android production=yes tools=no target=release android_arch=x86
+            rebel-executable: librebel.android.opt.x86.so
+
+          - name: Android Engine Library x86 32 bit Debug
+            os: ubuntu-latest
+            artifact: android-engine-library-x86-32-debug
+            build-options: platform=android production=yes tools=no target=release_debug android_arch=x86
+            rebel-executable: librebel.android.opt.debug.x86.so
+
+          # Rebel Engine iOS Library builds
+          - name: iOS Engine Library arm 64 bit
+            os: macos-latest
+            artifact: ios-engine-library-arm64
+            build-options: platform=iphone production=yes tools=no target=release
+            rebel-executable: librebel.iphone.opt.arm64.a
+
+          - name: iOS Engine Library arm 64 bit Debug
+            os: macos-latest
+            artifact: ios-engine-library-arm64-debug
+            build-options: platform=iphone production=yes tools=no target=release_debug
+            rebel-executable: librebel.iphone.opt.debug.arm64.a
+
+          - name: iOS Engine Library arm 32 bit
+            os: macos-latest
+            artifact: ios-engine-library-arm
+            build-options: platform=iphone production=yes tools=no target=release arch=arm
+            rebel-executable: librebel.iphone.opt.arm.a
+
+          - name: iOS Engine Library arm 32 bit Debug
+            os: macos-latest
+            artifact: ios-engine-library-arm-debug
+            build-options: platform=iphone production=yes tools=no target=release_debug arch=arm
+            rebel-executable: librebel.iphone.opt.debug.arm.a
+
+          - name: iOS Engine Library x86 64 bit Simulator
+            os: macos-latest
+            artifact: ios-engine-library-x86-64
+            build-options: platform=iphone production=yes tools=no ios_simulator=yes target=release arch=x86_64
+            rebel-executable: librebel.iphone.opt.x86_64.simulator.a
+
+          - name: iOS Engine Library x86 64 bit Simulator Debug
+            os: macos-latest
+            artifact: ios-engine-library-x86-64-debug
+            build-options: platform=iphone production=yes tools=no ios_simulator=yes target=release_debug arch=x86_64
+            rebel-executable: librebel.iphone.opt.debug.x86_64.simulator.a
+
+          # Rebel Engine Web builds
+          - name: Web Engine
+            os: ubuntu-latest
+            artifact: web-engine
+            build-options: platform=javascript production=yes tools=no target=release
+            rebel-executable: rebel.javascript.opt.zip
+
+          - name: Web Engine Debug
+            os: ubuntu-latest
+            artifact: web-engine-debug
+            build-options: platform=javascript production=yes tools=no target=release_debug
+            rebel-executable: rebel.javascript.opt.debug.zip
+
+          - name: Web Engine Threads
+            os: ubuntu-latest
+            artifact: web-engine-threads
+            build-options: platform=javascript production=yes tools=no threads_enabled=yes target=release
+            rebel-executable: rebel.javascript.opt.threads.zip
+
+          - name: Web Engine Threads Debug
+            os: ubuntu-latest
+            artifact: web-engine-threads-debug
+            build-options: platform=javascript production=yes tools=no threads_enabled=yes target=release_debug
+            rebel-executable: rebel.javascript.opt.debug.threads.zip
+
+          - name: Web Engine GDNative
+            os: ubuntu-latest
+            artifact: web-engine-gdnative
+            build-options: platform=javascript production=yes tools=no gdnative_enabled=yes target=release
+            rebel-executable: rebel.javascript.opt.gdnative.zip
+
+          - name: Web Engine GDNative Debug
+            os: ubuntu-latest
+            artifact: web-engine-gdnative-debug
+            build-options: platform=javascript production=yes tools=no gdnative_enabled=yes target=release_debug
+            rebel-executable: rebel.javascript.opt.debug.gdnative.zip
+
+    steps:
+      - name: Build Rebel
+        uses: RebelToolbox/RebelBuildAction@v2
+        with:
+          artifact: ${{ matrix.artifact }}
+          build-options: ${{ matrix.build-options }}
+          rebel-executable: ${{ matrix.rebel-executable }}
+          use-build-cache: false
+
+  android-templates:
+    name: Create Android Templates
+    needs: builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Rebel Engine
+        uses: actions/checkout@v4
+
+      - name: Download Android build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: android*
+          path: bin/
+          merge-multiple: true
+
+      - name: Install Dependencies
+        run: |
+          # Intall dependencies.
+          sudo apt-get update
+          sudo apt-get install -y \
+          scons
+          sdkmanager="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+          $sdkmanager "ndk;23.2.8568313"
+          echo "ANDROID_NDK_ROOT=$ANDROID_SDK_ROOT/ndk/23.2.8568313" >> $GITHUB_ENV
+
+      - name: Copy Android libraries to Java libs folders
+        run: |
+          # For each library identify the correct build and architecture folder.
+          java_libs_dir=platform/android/java/lib/libs
+          for library in `ls -1 bin/librebel.android.*`; do
+            case $library in
+              *debug* )
+                build="debug"
+                arch_id=${library#*debug.}
+                arch_id=${arch_id%%.*}
+                ;;
+              * )
+                build="release"
+                arch_id=${library#*opt.}
+                arch_id=${arch_id%%.*}
+                ;;
+            esac
+            case $arch_id in
+              armv7 )
+                arch="armeabi-v7a" ;;
+              armv8 )
+                arch="arm64-v8a" ;;
+              x86 )
+                arch="x86" ;;
+              x86_64 )
+                arch="x86_64" ;;
+            esac
+            stl_lib=$ANDROID_NDK_ROOT/sources/cxx-stl/llvm-libc++/libs/$arch/libc++_shared.so
+            target=$java_libs_dir/$build/$arch
+            mkdir -p $target
+            echo Copying $library into $build/$arch
+            cp $library $target/librebel_android.so
+            echo Copying stl library int $build/$arch
+            cp $stl_lib $target/
+          done
+
+      - name: Create Android Templates
+        run: |
+          #./gradlew createAndroidTemplates in platform/android/java
+          cd platform/android/java
+          ./gradlew createAndroidTemplates
+          cd ../../..
+
+      - name: Upload Android Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release-apk
+          path: bin/android_release.apk
+          retention-days: 1
+
+      - name: Upload Android Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-debug-apk
+          path: bin/android_debug.apk
+          retention-days: 1
+
+      - name: Upload Android Custom Build Files
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-source
+          path: bin/android_source.zip
+          retention-days: 1
+
+  macos-apps:
+    name: Create macOS Apps
+    needs: builds
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Rebel Engine
+        uses: actions/checkout@v4
+
+      - name: Download macOS build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: macos*
+          path: bin/
+          merge-multiple: true
+
+      - name: Create Universal binaries
+        run: |
+          # For each application and build type, run lipo to create a universal binary.
+          for build in          \
+            rebel.osx.opt.tools \
+            rebel.osx.opt       \
+            rebel.osx.opt.debug
+          do
+            lipo -create         \
+            bin/$build.64        \
+            bin/$build.arm64     \
+            -output              \
+            bin/$build.universal
+          done
+
+      - name: Create macOS Editor App
+        run: |
+          # Add universal binary to macOS Editor App template.
+          cp -r tools/dist/osx_tools.app RebelEditor.app
+          bin_folder=RebelEditor.app/Contents/MacOS
+          mkdir $bin_folder
+          cp bin/rebel.osx.opt.tools.universal $bin_folder/Rebel
+          echo "::group::Zip macOS Editor App."
+          zip -r rebel-editor-macos-universal.zip RebelEditor.app
+          echo "::endgroup::"
+
+      - name: Create macOS Engine App
+        run: |
+          # Add universal binaries to macOS Engine App template.
+          cp -r tools/dist/osx_template.app RebelEngine.app
+          bin_folder=RebelEngine.app/Contents/MacOS
+          mkdir $bin_folder
+          cp bin/rebel.osx.opt.universal $bin_folder/rebel_release.universal
+          cp bin/rebel.osx.opt.debug.universal $bin_folder/rebel_debug.universal
+          echo "::group::Zip macOS Engine App."
+          zip -r rebel-engine-macos-universal.zip RebelEngine.app
+          echo "::endgroup::"
+
+      - name: Upload macOS Editor App
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-editor-app
+          path: rebel-editor-macos-universal.zip
+          retention-days: 1
+
+      - name: Upload macOS Template App
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-engine-app
+          path: rebel-engine-macos-universal.zip
+          retention-days: 1
+
+  ios-template:
+    name: Create iOS Template
+    needs: builds
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Rebel Engine
+        uses: actions/checkout@v4
+
+      - name: Download iOS build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ios*
+          path: bin/
+          merge-multiple: true
+
+      - name: Create Universal binaries
+        run: |
+          # For each build type, run lipo to create a universal binary.
+          for build in                \
+            librebel.iphone.opt       \
+            librebel.iphone.opt.debug
+          do
+            lipo -create           \
+            bin/$build.arm.a       \
+            bin/$build.arm64.a     \
+            -output                \
+            bin/$build.universal.a
+          done
+
+      - name: Create iOS Template
+        run: |
+          # Add universal binaries to iOS Tempate.
+          cp -r tools/dist/ios_xcode .
+          cp bin/librebel.iphone.opt.universal.a                                              \
+          ios_xcode/libgodot.iphone.release.xcframework/ios-arm64/librebel.a
+          cp bin/librebel.iphone.opt.debug.universal.a                                        \
+          ios_xcode/libgodot.iphone.debug.xcframework/ios-arm64/librebel.a
+          cp bin/librebel.iphone.opt.x86_64.simulator.a                                       \
+          ios_xcode/libgodot.iphone.release.xcframework/ios-arm64_x86_64-simulator/librebel.a
+          cp bin/librebel.iphone.opt.debug.x86_64.simulator.a                                 \
+          ios_xcode/libgodot.iphone.debug.xcframework/ios-arm64_x86_64-simulator/librebel.a
+          cd ios_xcode/
+          echo "::group::Zip iOS Template."
+          zip -r ../ios-template.zip .
+          echo "::endgroup::"
+
+      - name: Upload iOS Template
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-template
+          path: ios-template.zip
+
+  create-templates-zip:
+    name: Create Templates Zip File
+    needs: [builds, android-templates, macos-apps, ios-template]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Rebel Engine
+        uses: actions/checkout@v4
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+          merge-multiple: true
+
+      - name: Create version.txt File
+        run: |
+          #Creating version.txt file.
+          echo "::group::Create extract_version.py."
+          set +H
+          echo "#!/usr/bin/env python3" > extract_version.py
+          echo "import version" >> extract_version.py
+          echo "version_number = str(version.major)" >> extract_version.py
+          echo "version_number += '.' +  str(version.minor)" >> extract_version.py
+          echo "if version.patch != 0:" >> extract_version.py
+          echo "  version_number += '.' + str(version.patch)" >> extract_version.py
+          echo "version_number += '.' + version.status" >> extract_version.py
+          echo "file = open(\"version.txt\", \"w\")" >> extract_version.py
+          echo "file.write(version_number + \"\\n\")" >> extract_version.py
+          echo "file.close()" >> extract_version.py
+          echo "::endgroup::"
+          # Run python script to create version.txt file.
+          chmod +x extract_version.py
+          ./extract_version.py
+
+      - name: Create Zip File
+        run: |
+          # Move all template binaries into the templates directory.
+          mkdir templates
+          # Move Linux templates.
+          mv artifacts/rebel.x11.opt.64 templates/linux_x11_64_release
+          mv artifacts/rebel.x11.opt.debug.64 templates/linux_x11_64_debug
+          mv artifacts/rebel.x11.opt.32 templates/linux_x11_32_release
+          mv artifacts/rebel.x11.opt.debug.32 templates/linux_x11_32_debug
+          # Move Windows templates.
+          mv artifacts/rebel.windows.opt.64.msvc.exe templates/windows_64_release.exe
+          mv artifacts/rebel.windows.opt.debug.64.msvc.exe templates/windows_64_debug.exe
+          mv artifacts/rebel.windows.opt.32.msvc.exe templates/windows_32_release.exe
+          mv artifacts/rebel.windows.opt.debug.32.msvc.exe templates/windows_32_debug.exe
+          # Move macOS templates.
+          mv artifacts/rebel-engine-macos-universal.zip templates/osx.zip
+          # Move iOS template.
+          mv artifacts/ios-template.zip templates/iphone.zip
+          # Move Android templates.
+          mv artifacts/android_release.apk templates/android_release.apk
+          mv artifacts/android_debug.apk templates/android_debug.apk
+          mv artifacts/android_source.zip templates/android_source.zip
+          # Move Web templates.
+          mv artifacts/rebel.javascript.opt.zip templates/webassembly_release.zip
+          mv artifacts/rebel.javascript.opt.debug.zip templates/webassembly_debug.zip
+          mv artifacts/rebel.javascript.opt.threads.zip templates/webassembly_threads_release.zip
+          mv artifacts/rebel.javascript.opt.debug.threads.zip templates/webassembly_threads_debug.zip
+          mv artifacts/rebel.javascript.opt.gdnative.zip templates/webassembly_gdnative_release.zip
+          mv artifacts/rebel.javascript.opt.debug.gdnative.zip templates/webassembly_gdnative_debug.zip
+          # Move version.txt file.
+          mv version.txt templates/
+          # Zip
+          echo "::group::Create Templates Zip file."
+          zip -r rebel-templates.zip templates
+          echo "::endgroup::"
+
+      - name: Upload Templates Zip File
+        uses: actions/upload-artifact@v4
+        with:
+          name: rebel-templates
+          path: rebel-templates.zip
+
+  create-release:
+    name: Create Release
+    needs: [builds, create-templates-zip]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Rebel Engine
+        uses: actions/checkout@v4
+
+      - name: Set Version
+        run: |
+          # If a development or nightly version, append the date.
+          version=dev
+          if [[ "${{ github.event.inputs.version }}" != "" ]]; then
+            version=${{ github.event.inputs.version }}
+          fi
+          if [[ $version == "dev" ]]; then
+            version=dev-$(date +'%Y-%m-%d')
+          fi
+          echo "version=$version" >> $GITHUB_ENV
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+          merge-multiple: true
+
+      - name: Prepare Editor release applications
+        run: |
+          # Rename editor applications with version.
+          mkdir bin
+          mv artifacts/rebel.x11.opt.tools.64 bin/rebel-editor-$version-linux-x86-64
+          mv artifacts/rebel.windows.opt.tools.64.msvc.exe bin/rebel-editor-$version-windows-x86-64.exe
+          chmod +x bin/rebel-editor-$version-linux-x86-64
+
+      - name: Create release folder
+        run: |
+          # Zip and copy editor applications into release folder.
+          mkdir release
+          cd bin
+          zip ../release/rebel-editor-$version-linux-x86-64.zip rebel-editor-$version-linux-x86-64
+          zip ../release/rebel-editor-$version-windows-x86-64.zip rebel-editor-$version-windows-x86-64.exe
+          cd ..
+          # Copy macOS Editor App into release folder.
+          cp artifacts/rebel-editor-macos-universal.zip release/rebel-editor-$version-macos-universal.zip
+          # Copy templates zip file into release folder.
+          cp artifacts/rebel-templates.zip release/rebel-templates-$version.tpz
+
+      - name: Upload release ${{ env.version }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: rebel-${{ env.version }}
+          path: release
+
+      - name: Create Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          #Creating release
+          echo "Removing previous development and nightly releases"
+          gh release list | grep dev | while IFS=$'\t' read title type tag published ; do
+            gh release delete $tag --cleanup-tag
+          done
+          if [[ $version == dev* ]] ; then
+            echo "Creating $(date +'%Y-%m-%d') Nightly"
+            gh release create $version ./release/* --generate-notes --title "Nightly $(date +'%Y-%m-%d')"
+          else
+            echo "Creating Rebel Engine $version"
+            gh release create $version ./release/* --generate-notes --title "Rebel Engine v$version"
+          fi
