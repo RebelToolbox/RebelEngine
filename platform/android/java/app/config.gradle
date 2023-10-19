@@ -7,7 +7,7 @@ ext.versions = [
     kotlinVersion      : '1.6.10',
     fragmentVersion    : '1.3.6',
     javaVersion        : 11,
-    ndkVersion         : '21.4.7075529' // Also update 'platform/android/detect.py#get_project_ndk_version()' when this is updated.
+    ndkVersion         : '23.2.8568313' // Also update 'platform/android/detect.py#get_ndk_version' when this is updated.
 
 ]
 
