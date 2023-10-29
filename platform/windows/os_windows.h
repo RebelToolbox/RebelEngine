@@ -355,14 +355,10 @@ class OS_Windows : public OS {
 
     CrashHandler crash_handler;
 
-    bool _is_win11_terminal() const;
-
     void _drag_event(float p_x, float p_y, int idx);
     void _touch_event(bool p_pressed, float p_x, float p_y, int idx);
-
     void _update_window_style(bool p_repaint = true, bool p_maximized = false);
     void _update_window_mouse_passthrough();
-
     void _set_mouse_mode_impl(MouseMode p_mode);
 
     // functions used by main to initialize/deinitialize the OS

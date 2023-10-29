@@ -2551,27 +2551,14 @@ bool OS_Windows::is_window_focused() const {
     return window_focused;
 }
 
-bool OS_Windows::_is_win11_terminal() const {
-    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    DWORD dwMode   = 0;
-    if (GetConsoleMode(hStdOut, &dwMode)) {
-        return (
-            (dwMode & ENABLE_VIRTUAL_TERMINAL_PROCESSING)
-            == ENABLE_VIRTUAL_TERMINAL_PROCESSING
-        );
-    } else {
-        return false;
-    }
-}
-
 void OS_Windows::set_console_visible(bool p_enabled) {
     if (console_visible == p_enabled) {
         return;
     }
 
-    if (!_is_win11_terminal()) {
-        // GetConsoleWindow is not supported by the Windows Terminal.
-        ShowWindow(GetConsoleWindow(), p_enabled ? SW_SHOW : SW_HIDE);
+    HWND console_window = GetConsoleWindow();
+    if (console_window != nullptr) {
+        ShowWindow(console_window, p_enabled ? SW_SHOW : SW_HIDE);
         console_visible = p_enabled;
     }
 }
@@ -3319,20 +3306,13 @@ Error OS_Windows::execute(
         modstr.write[i] = cmdline[i];
     }
 
-    DWORD creation_flags = NORMAL_PRIORITY_CLASS & CREATE_NO_WINDOW;
-    if (p_path == get_executable_path() && GetConsoleWindow() != NULL
-        && _is_win11_terminal()) {
-        // Open a new terminal as a workaround for Windows Terminal bug.
-        creation_flags |= CREATE_NEW_CONSOLE;
-    }
-
     int ret = CreateProcessW(
         NULL,
         modstr.ptrw(),
         NULL,
         NULL,
-        0,
-        creation_flags,
+        FALSE,
+        NORMAL_PRIORITY_CLASS,
         NULL,
         NULL,
         si_w,
