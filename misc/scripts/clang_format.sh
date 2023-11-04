@@ -34,25 +34,21 @@ while IFS= read -rd '' f; do
             elif [[ "$f" == "platform/android/java/lib/src/com/rebeltoolbox/rebelengine/input/InputManager"* ]]; then
                 continue 2
             fi
-            python misc/scripts/copyright_headers.py "$f"
+            python3 misc/scripts/copyright_headers.py "$f"
             continue 2
         fi
     done
 done
 
-git diff --color > patch.patch
-
-# If no patch has been generated all is OK, clean up, and exit.
-if [ ! -s patch.patch ] ; then
-    printf "Files in this commit comply with the clang-format style rules.\n"
-    rm -f patch.patch
-    exit 0
+# If a diff has been created, notify the user and exit with an error.
+if [[ $(git diff) ]]; then
+    echo "Files in this commit do not comply with the clang-format style rules."
+    echo "The following differences were found between the code and the formatting rules:"
+    echo
+    git diff --color
+    echo
+    echo "Please fix your commit(s)"
+    echo "::error::Files in this commit do not comply with the clang-format style rules." && exit 1
 fi
 
-# A patch has been created, notify the user, clean up, and exit.
-printf "\n*** The following differences were found between the code "
-printf "and the formatting rules:\n\n"
-cat patch.patch
-printf "\n*** Aborting, please fix your commit(s) with 'git commit --amend' or 'git rebase -i <hash>'\n"
-rm -f patch.patch
-exit 1
+echo "Files in this commit comply with the clang-format style rules."

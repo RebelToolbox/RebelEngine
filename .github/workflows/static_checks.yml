@@ -1,44 +1,57 @@
 name: 📊 Static Checks
 on: [push, pull_request]
+env:
+  CLANG_FORMAT_VERSION: "13"
+  BLACK_VERSION: "21.10"
 
 jobs:
   static-checks:
     name: Static Checks (clang-format, black format, file format, documentation checks)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Azure repositories are not reliable, we need to prevent Azure giving us packages.
-      - name: Make apt sources.list use the default Ubuntu repositories
-        run: |
-          sudo rm -f /etc/apt/sources.list.d/*
-          sudo cp -f misc/ci/sources.list /etc/apt/sources.list
-          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-          sudo apt-add-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-13 main"
-          sudo apt-get update
-
       - name: Install dependencies
         run: |
-          sudo apt-get install -qq dos2unix recode clang-format-13
+          #Install dependencies
+          sudo apt-get update
+          sudo apt-get install -y \
+          recode \
+          dos2unix \
+          clang-format-${{ env.CLANG_FORMAT_VERSION }}
           sudo update-alternatives --remove-all clang-format
-          sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-13 100
-          sudo pip3 install black==21.10b0 pygments
+          sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-${{ env.CLANG_FORMAT_VERSION }} 100
+          python3 -m pip install black==${{ env.BLACK_VERSION }}
 
       - name: File formatting checks (file_format.sh)
         run: |
-          bash ./misc/scripts/file_format.sh
+          bash misc/scripts/file_format.sh
 
       - name: Style checks via clang-format (clang_format.sh)
         run: |
-          bash ./misc/scripts/clang_format.sh
+          bash misc/scripts/clang_format.sh
 
       - name: Python style checks via black (black_format.sh)
         run: |
-          bash ./misc/scripts/black_format.sh
+          bash misc/scripts/black_format.sh
+
+      - name: Create patch file
+        if: failure()
+        run: |
+          git diff > static-checks.patch
+
+      - name: Upload patch file
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: patch-files
+          path: |
+            static-checks.patch
 
       - name: JavaScript style and documentation checks via ESLint and JSDoc
         run: |
+          #JavaScript style and documentation checks
           cd platform/javascript
           npm ci
           npm run lint

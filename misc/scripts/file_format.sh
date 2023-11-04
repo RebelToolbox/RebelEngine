@@ -4,9 +4,10 @@
 # This is supplementary to clang_format.sh and black_format.sh, but should be
 # run before them.
 
-# We need dos2unix and recode.
-if [ ! -x "$(command -v dos2unix)" -o ! -x "$(command -v recode)" ]; then
-    printf "Install 'dos2unix' and 'recode' to use this script.\n"
+# We need recode and dos2unix.
+if [ ! -x "$(command -v recode)" -o ! -x "$(command -v dos2unix)" ]; then
+    echo "Install 'recode' and 'dos2unix' to use this script."
+    echo "::error::'recode' and 'dos2unix' are required to perform file formatting checks." && exit 1
 fi
 
 set -uo pipefail
@@ -15,7 +16,7 @@ IFS=$'\n\t'
 # Loops through all text files tracked by Git.
 git grep -zIl '' |
 while IFS= read -rd '' f; do
-    # Exclude some types of files.
+    # Exclude some files.
     if [[ "$f" == *"csproj" ]]; then
         continue
     elif [[ "$f" == *"sln" ]]; then
@@ -46,19 +47,15 @@ while IFS= read -rd '' f; do
     perl -i -pe 's/\x20== true//g' "$f"
 done
 
-git diff --color > patch.patch
-
-# If no patch has been generated all is OK, clean up, and exit.
-if [ ! -s patch.patch ] ; then
-    printf "Files in this commit comply with the formatting rules.\n"
-    rm -f patch.patch
-    exit 0
+# If a diff has been created, notify the user and exit with an error.
+if [[ $(git diff) ]]; then
+    echo "Files in this commit do not comply with the file formatting rules."
+    echo "The following differences were found between the code and the formatting rules:"
+    echo
+    git diff --color
+    echo
+    echo "Please fix your commit(s)"
+    echo "::error::Files in this commit do not comply with the file formatting rules." && exit 1
 fi
 
-# A patch has been created, notify the user, clean up, and exit.
-printf "\n*** The following differences were found between the code "
-printf "and the formatting rules:\n\n"
-cat patch.patch
-printf "\n*** Aborting, please fix your commit(s) with 'git commit --amend' or 'git rebase -i <hash>'\n"
-rm -f patch.patch
-exit 1
+echo "Files in this commit comply with the file formatting rules."

@@ -15,19 +15,16 @@ PY_FILES=$(find \( -path "./.git" \
                 \) -print)
 black -l 120 $PY_FILES
 
-git diff --color > patch.patch
+# If a diff has been created, notify the user and exit with error.
+if [[ $(git diff) ]]; then
+    echo "Files in this commit do not comply with the black Python style rules."
+    echo "The following differences were found between the code and the formatting rules:"
+    echo
+    git diff --color
+    echo
+    echo "Please fix your commit(s)"
 
-# If no patch has been generated all is OK, clean up, and exit.
-if [ ! -s patch.patch ] ; then
-    printf "Files in this commit comply with the black style rules.\n"
-    rm -f patch.patch
-    exit 0
+    echo "::error::Files in this commit do not comply with the black Python style rules." && exit 1
 fi
 
-# A patch has been created, notify the user, clean up, and exit.
-printf "\n*** The following differences were found between the code "
-printf "and the formatting rules:\n\n"
-cat patch.patch
-printf "\n*** Aborting, please fix your commit(s) with 'git commit --amend' or 'git rebase -i <hash>'\n"
-rm -f patch.patch
-exit 1
+echo "Files in this commit comply with the black Python style rules."
