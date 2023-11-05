@@ -1,0 +1,234 @@
+#!/usr/bin/env bash
+
+# Runs an application style check.
+# Features:
+#  - Aborts commit when the commit does not comply with the style guidelines.
+#  - Creates a patch with the proposed style changes.
+
+application_name="$1"
+options="$2"
+include_files="$3"
+include_extensions="$4"
+exclude_directories="$5"
+exclude_file_patterns="$6"
+
+# Get full paths to applications.
+application=$(which "$application_name" 2>/dev/null)
+zenity=$(which zenity 2>/dev/null)
+xmessage=$(which xmessage 2>/dev/null)
+powershell=$(which powershell 2>/dev/null)
+pygmentize=$(which pygmentize 2>/dev/null)
+
+# Set exit on error.
+set -e
+
+# Function to check whether the given file is in
+# exclude_directories or matches any of the
+# exclude_file_patterns file patterns, EXCLUDE_EXTS file extensions,
+# include_files file names or include_extensions file extensions,
+# and returns whether or not the file is included in the checks.
+include_file() {
+    local filename
+    local directory
+    local extension
+    local include_file
+    local include_extension
+    local exclude_directory
+    local exclude_file_pattern
+
+    filename=$(basename -- "$1")
+    directory=$(dirname -- "$1")
+    extension=".${filename##*.}"
+
+    # Exclude files in exclude_directories.
+    for exclude_directory in $exclude_directories; do
+        [[ "$directory" = $exclude_directory* ]] && return 1
+    done
+
+    # Exclude files which match exclude_file_patterns.
+    for exclude_file_pattern in $exclude_file_patterns; do
+        if grep -q "$exclude_file_pattern" <<< "$filename"; then
+            return 1
+        fi
+    done
+
+    # Include files that match include_files.
+    for include_file in $include_files; do
+        [[ "$include_file" = "$filename" ]] && return 0
+    done
+
+    # Include extensions that match include_extensions.
+    for include_extension in $include_extensions; do
+        [[ "$include_extension" = "$extension" ]] && return 0
+    done
+    return 1
+}
+
+# Check if application is installed.
+if [ ! -x "$application" ]; then
+    message="$application_name executable not found. Please install $application_name."
+    if [ -t 1 ]; then
+        # git commit run from a terminal application.
+        echo "Error: $message"
+    else
+        # git commit run from a windows application.
+        if [ -x "$zenity" ]; then
+            $zenity --error --title="Error" --text="$message"
+        elif [ -x "$xmessage" ]; then
+            $xmessage -center -title "Error" "$message"
+        elif [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "win32" ] && [ -x "$powershell" ]; then
+            path=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd -P)
+            $powershell -noprofile -executionpolicy bypass -file "$path/messagebox.ps1" -message "$message"
+        else
+            echo "Error: zenity, xmessage, or powershell executable not found."
+        fi
+    fi
+    exit 1
+fi
+
+# Get the HEAD commit hash.
+if git rev-parse --verify HEAD >/dev/null 2>&1 ; then
+    against=HEAD
+else
+    # This is the initial commit: compare against an empty tree object.
+    against=$(git hash-object -t tree /dev/null)
+fi
+
+# Create a random filename to store our generated patch.
+prefix="pre-commit-$application_name"
+suffix="$(date +%s)"
+patch_file="/tmp/$prefix-$suffix.patch"
+
+# Create one patch containing all changes to the files.
+git diff-index --cached --diff-filter=ACMR --name-only "$against" -- | \
+while read -r file; do
+    if ! include_file "$file"; then
+        continue
+    fi
+
+    # We need to create diffs from each style check application,
+    # and merge the diffs into our patch file.
+    # Each application has a different way of creating diffs,
+    # and the format of these diffs are slightly different.
+    case $application_name in
+    "clang-format")
+        "$application" "$options" "$file" | \
+            diff -u "$file" - | \
+            sed -e "1s|--- |--- a/|" -e "2s|+++ -|+++ b/$file|" >> "$patch_file";;
+    "black")
+        "$application" "$options" --diff "$file" | \
+            sed -e "1s|--- |--- a/|" -e "2s|+++ |+++ b/|" >> "$patch_file";;
+    *)
+        echo "Unrecognised application: $application_name."
+        echo "Please consider adding $application_name's method for creating diffs."
+        exit 1;;
+    esac
+done
+
+# If no patch has been generated, all is ok, clean up the patch stub and exit.
+if [ ! -s "$patch_file" ]; then
+    echo "Files in this commit comply with the $application_name rules."
+    rm -f "$patch_file"
+    exit 0
+fi
+
+# If a patch has been generated, notify the user and abort commit.
+echo "Files in this commit do not comply with the $application_name rules."
+echo "The following differences were found between the code to commit and"
+echo "the $application_name rules:"
+echo
+
+# If possible, use pygmentize instead of cat to parse diff with highlighting.
+# Install it with `pip install pygments` or `easy_install Pygments` (Mac).
+if [ -x "$pygmentize" ]; then
+    pygmentize -l diff "$patch_file"
+else
+    cat "$patch_file"
+fi
+echo
+
+if [ -t 1 ]; then
+    # git commit run from a terminal application.
+    # Assign stdin to keyboard: allows us to read user input.
+    exec < /dev/tty
+else
+    # Allow non-zero exit codes.
+    set +e
+fi
+
+while true; do
+    if [ -t 1 ]; then
+        # git commit run from a terminal application.
+        echo "Do you want to apply this patch?"
+        read -rp "Y - Apply, N - Do not apply, S - Apply and stage files [Y/N/S] " response
+        echo
+    else
+        # git commit run from a windows application.
+        if [ -x "$zenity" ]; then
+            button=$($zenity --text-info --filename="$patch_file" --width=800 --height=600 --title="Do you want to apply this patch?" --ok-label="Apply" --cancel-label="Do not apply" --extra-button="Apply and stage")
+            exit_code=$?
+            if [ "$exit_code" = "0" ]; then
+                response="Y"
+            elif [ "$button" = "Apply and stage" ]; then
+                response="S"
+            else
+                response="N"
+            fi
+        elif [ -x "$xmessage" ]; then
+            $xmessage -file "$patch_file" -buttons "Apply":100,"Apply and stage":200,"Do not apply":0 -center -default "Do not apply" -geometry 800x600 -title "Do you want to apply this patch?"
+            exit_code=$?
+            if [ "$exit_code" = "100" ]; then
+                response="Y"
+            elif [ "$exit_code" = "200" ]; then
+                response="S"
+            else
+                response="N"
+            fi
+        elif [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "win32" ] && [ -x "$powershell" ]; then
+            path=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd -P)
+            $powershell -noprofile -executionpolicy bypass -file "$path/messagebox.ps1" -title "Do you want to apply this patch?" -file "$patch_file" -buttons "Apply:100,Apply and stage:200,Do not apply:0" -size "800x600"
+            exit_code=$?
+            if [ "$exit_code" = "100" ]; then
+                response="Y"
+            elif [ "$exit_code" = "200" ]; then
+                response="S"
+            else
+                response="N"
+            fi
+        else
+            echo "Error: zenity, xmessage, or powershell executable not found."
+            exit 1
+        fi
+    fi
+
+    case $response in
+        [Yy])
+            git apply "$patch_file";
+            echo "The patch was applied."
+            echo "You can now stage the changes and commit again."
+            break;;
+        [Nn])
+            if [ -t 1 ]; then
+                # The patch file is only available when run from an interactive terminal.
+                echo "You can apply these changes with:"
+                echo "git apply $patch_file"
+            fi
+            echo "Apply changes and commit again, or skip checking (not recommended) with:"
+            echo "git commit --no-verify"
+            break;;
+        [Ss])
+            git apply "$patch_file";
+            git diff-index --cached --diff-filter=ACMR --name-only "$against" -- | \
+            while read -r file; do
+                git add "$file";
+            done
+            echo "The patch was applied and the changed files staged."
+            echo "You can now commit again.";
+            break;;
+        *)
+            echo "Please answer Y, N or S.";;
+    esac
+done
+
+# Abort commit
+exit 1
