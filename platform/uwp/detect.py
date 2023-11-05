@@ -15,7 +15,6 @@ def can_build():
     if os.name == "nt":
         # building natively on windows!
         if os.getenv("VSINSTALLDIR"):
-
             if os.getenv("ANGLE_SRC_PATH") is None:
                 return False
 
@@ -99,7 +98,6 @@ def configure(env):
 
     arch = ""
     if str(os.getenv("Platform")).lower() == "arm":
-
         print("Compiled program architecture will be an ARM executable. (forcing bits=32).")
 
         arch = "arm"

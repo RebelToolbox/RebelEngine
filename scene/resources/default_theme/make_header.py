@@ -22,7 +22,6 @@ pixmaps = glob.glob("*.png")
 pixmaps.sort()
 
 for x in pixmaps:
-
     var_str = x[:-4] + "_png"
 
     s = "\nstatic const unsigned char " + var_str + "[] = {\n\t"
@@ -47,7 +46,6 @@ shaders = glob.glob("*.gsl")
 shaders.sort()
 
 for x in shaders:
-
     var_str = x[:-4] + "_shader_code"
 
     s = "\nstatic const char *" + var_str + " = \n"

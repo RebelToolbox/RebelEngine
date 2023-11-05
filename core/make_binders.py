@@ -281,7 +281,6 @@ MethodBind* create_method_bind($ifret R$ $ifnoret void$ (*p_method)($ifconst con
 
 
 def make_version(template, nargs, argmax, const, ret):
-
     intext = template
     from_pos = 0
     outtext = ""
@@ -340,7 +339,6 @@ def make_version(template, nargs, argmax, const, ret):
 
 
 def run(target, source, env):
-
     versions = 13
     versions_ext = 6
     text = ""
@@ -352,7 +350,6 @@ def run(target, source, env):
     )
 
     for i in range(0, versions + 1):
-
         t = ""
         t += make_version(template, i, versions, False, False)
         t += make_version(template_typed, i, versions, False, False)

@@ -8,7 +8,6 @@ from compat import iteritems, itervalues, open_utf8, escape_string, byte_to_str
 
 
 def make_certs_header(target, source, env):
-
     src = source[0]
     dst = target[0]
     f = open(src, "rb")
@@ -191,7 +190,6 @@ def make_license_header(target, source, env):
             data_list += part["Copyright"]
 
     with open_utf8(dst, "w") as f:
-
         f.write("/* THIS FILE IS GENERATED DO NOT EDIT */\n")
         f.write("#ifndef _EDITOR_LICENSE_H\n")
         f.write("#define _EDITOR_LICENSE_H\n")

@@ -16,7 +16,6 @@ else:
 def run_in_subprocess(builder_function):
     @functools.wraps(builder_function)
     def wrapper(target, source, env):
-
         # Convert SCons Node instances to absolute paths
         target = [node.srcnode().abspath for node in target]
         source = [node.srcnode().abspath for node in source]
@@ -73,7 +72,6 @@ def run_in_subprocess(builder_function):
 
 
 def subprocess_main(namespace):
-
     with open(sys.argv[1]) as json_file:
         data = json.load(json_file)
 

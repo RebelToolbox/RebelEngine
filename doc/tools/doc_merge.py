@@ -56,7 +56,6 @@ def get_tag(node, name):
 
 
 def find_method_descr(old_class, name):
-
     methods = old_class.find("methods")
     if methods != None and len(list(methods)) > 0:
         for m in list(methods):
@@ -69,7 +68,6 @@ def find_method_descr(old_class, name):
 
 
 def find_signal_descr(old_class, name):
-
     signals = old_class.find("signals")
     if signals != None and len(list(signals)) > 0:
         for m in list(signals):
@@ -82,7 +80,6 @@ def find_signal_descr(old_class, name):
 
 
 def find_constant_descr(old_class, name):
-
     if old_class is None:
         return None
     constants = old_class.find("constants")
@@ -126,7 +123,6 @@ def write_class(c):
 
     methods = c.find("methods")
     if methods != None and len(list(methods)) > 0:
-
         write_string(f, "<methods>")
         inc_tab()
 
@@ -142,7 +138,6 @@ def write_class(c):
                     write_string(f, "<return" + typ + ">")
                     write_string(f, "</return>")
                 elif a.tag == "argument":
-
                     default = get_tag(a, "default")
 
                     write_string(
@@ -173,18 +168,15 @@ def write_class(c):
 
     signals = c.find("signals")
     if signals != None and len(list(signals)) > 0:
-
         write_string(f, "<signals>")
         inc_tab()
 
         for m in list(signals):
-
             write_string(f, '<signal name="' + escape(m.attrib["name"]) + '">')
             inc_tab()
 
             for a in list(m):
                 if a.tag == "argument":
-
                     write_string(
                         f,
                         '<argument index="'
@@ -210,12 +202,10 @@ def write_class(c):
 
     constants = c.find("constants")
     if constants != None and len(list(constants)) > 0:
-
         write_string(f, "<constants>")
         inc_tab()
 
         for m in list(constants):
-
             write_string(f, '<constant name="' + escape(m.attrib["name"]) + '" value="' + m.attrib["value"] + '">')
             old_constant_descr = find_constant_descr(old_class, m.attrib["name"])
             if old_constant_descr:

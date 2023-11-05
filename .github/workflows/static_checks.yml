@@ -2,7 +2,7 @@ name: 📊 Static Checks
 on: [push, pull_request]
 env:
   CLANG_FORMAT_VERSION: "13"
-  BLACK_VERSION: "21.10"
+  BLACK_VERSION: "23.10"
 
 jobs:
   static-checks:
