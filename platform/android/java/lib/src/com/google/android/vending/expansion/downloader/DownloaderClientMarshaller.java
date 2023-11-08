@@ -32,9 +32,9 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 
-// -- GODOT start --
+// -- REBEL start --
 import java.lang.ref.WeakReference;
-// -- GODOT end --
+// -- REBEL end --
 
 
 /**
@@ -121,7 +121,7 @@ public class DownloaderClientMarshaller {
         /**
          * Target we publish for clients to send messages to IncomingHandler.
          */
-        // -- GODOT start --
+        // -- REBEL start --
         private final MessengerHandlerClient mMsgHandler = new MessengerHandlerClient(this);
         final Messenger mMessenger = new Messenger(mMsgHandler);
 
@@ -160,7 +160,7 @@ public class DownloaderClientMarshaller {
                     break;
             }
         }
-        // -- GODOT end --
+        // -- REBEL end --
 
         public Stub(IDownloaderClient itf, Class<?> downloaderService) {
             mItf = itf;

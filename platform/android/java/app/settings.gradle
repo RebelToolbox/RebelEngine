@@ -1,2 +1,2 @@
-// This is the root directory of the Godot custom build.
+// These settings apply when creating a custom build in the Rebel Editor.
 include ':assetPacks:installTime'

@@ -54,10 +54,10 @@ jobs:
           target: release
           tools: false
 
-      - name: Generate templates
+      - name: Create Android templates
         run: |
           cd platform/android/java
-          ./gradlew generateGodotTemplates
+          ./gradlew createAndroidTemplates
           cd ../../..
           ls -l bin/
 
