@@ -1,7 +1,7 @@
 name: 📊 Static Checks
 on: [push, pull_request]
 env:
-  CLANG_FORMAT_VERSION: "13"
+  CLANG_FORMAT_VERSION: "17"
   BLACK_VERSION: "23.10"
 
 jobs:
@@ -15,6 +15,9 @@ jobs:
       - name: Install dependencies
         run: |
           #Install dependencies
+          sudo wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key |
+              sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+          sudo add-apt-repository 'deb http://apt.llvm.org/jammy/  llvm-toolchain-jammy-${{ env.CLANG_FORMAT_VERSION }} main'
           sudo apt-get update
           sudo apt-get install -y \
           recode \
