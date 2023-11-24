@@ -174,7 +174,6 @@ def _build_gdnative_api_struct_source(api):
         )
 
     def get_extension_struct_definition(name, ext, include_version=True):
-
         ret_val = []
 
         if ext["next"]:
@@ -268,7 +267,6 @@ def _build_gdnative_api_struct_source(api):
 
 
 def build_gdnative_api_struct(target, source, env):
-
     with open(source[0], "r") as fd:
         api = json.load(fd)
 

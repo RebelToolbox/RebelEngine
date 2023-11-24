@@ -112,14 +112,11 @@ def update_version(module_version_string=""):
 
 
 def parse_cg_file(fname, uniforms, sizes, conditionals):
-
     fs = open(fname, "r")
     line = fs.readline()
 
     while line:
-
         if re.match(r"^\s*uniform", line):
-
             res = re.match(r"uniform ([\d\w]*) ([\d\w]*)")
             type = res.groups(1)
             name = res.groups(2)
@@ -289,7 +286,6 @@ def disable_module(self):
 
 
 def use_windows_spawn_fix(self, platform=None):
-
     if os.name != "nt":
         return  # not needed, only for windows
 
@@ -304,7 +300,6 @@ def use_windows_spawn_fix(self, platform=None):
     self.Replace(ARFLAGS="q")
 
     def mySubProcess(cmdline, env):
-
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         proc = subprocess.Popen(
@@ -325,7 +320,6 @@ def use_windows_spawn_fix(self, platform=None):
         return rv
 
     def mySpawn(sh, escape, cmd, args, env):
-
         newargs = " ".join(args[1:])
         cmdline = cmd + " " + newargs
 
@@ -405,7 +399,6 @@ def split_lib(self, libname, src_list=None, env_lib=None):
 
 
 def save_active_platforms(apnames, ap):
-
     for x in ap:
         names = ["logo"]
         if os.path.isfile(x + "/run_icon.png"):
@@ -433,7 +426,6 @@ def save_active_platforms(apnames, ap):
 
 
 def no_verbose(sys, env):
-
     colors = {}
 
     # Colors are disabled in non-TTY environments such as pipes. This means
@@ -577,7 +569,6 @@ def detect_visual_c_compiler_version(tools_env):
 
     # and for VS 2017 and newer we check VCTOOLSINSTALLDIR:
     if "VCTOOLSINSTALLDIR" in tools_env:
-
         # Newer versions have a different path available
         vc_amd64_compiler_detection_index = (
             tools_env["PATH"].upper().find(tools_env["VCTOOLSINSTALLDIR"].upper() + "BIN\\HOSTX64\\X64;")

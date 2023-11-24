@@ -9,14 +9,12 @@ from compat import StringIO
 
 
 def make_editor_icons_action(target, source, env):
-
     dst = target[0]
     svg_icons = source
 
     icons_string = StringIO()
 
     for f in svg_icons:
-
         fname = str(f)
 
         icons_string.write('\t"')
@@ -47,7 +45,6 @@ def make_editor_icons_action(target, source, env):
     thumb_big_indices = []
     index = 0
     for f in svg_icons:
-
         fname = str(f)
 
         icon_name = os.path.basename(fname)[5:-4].title().replace("_", "")

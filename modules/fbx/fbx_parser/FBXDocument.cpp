@@ -677,7 +677,8 @@ std::vector<const Connection *> Document::GetConnectionsByDestinationSequenced(u
 // ------------------------------------------------------------------------------------------------
 Connection::Connection(uint64_t insertionOrder, uint64_t src, uint64_t dest, const std::string &prop,
 		const Document &doc) :
-		insertionOrder(insertionOrder), prop(prop), src(src), dest(dest), doc(doc) {
+		insertionOrder(insertionOrder),
+		prop(prop), src(src), dest(dest), doc(doc) {
 }
 
 // ------------------------------------------------------------------------------------------------
