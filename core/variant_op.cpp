@@ -204,12 +204,12 @@ bool Variant::booleanize() const {
         if (p_b.type == INT) _RETURN(p_a._data.m_type m_op p_b._data._int);    \
         if (p_b.type == REAL) _RETURN(p_a._data.m_type m_op p_b._data._real);  \
         if (p_b.type == VECTOR2)                                               \
-            _RETURN(p_a._data.m_type m_op* reinterpret_cast<const Vector2*>(   \
-                p_b._data._mem                                                 \
+            _RETURN(p_a._data.m_type m_op(                                     \
+                *reinterpret_cast<const Vector2*>(p_b._data._mem)              \
             ));                                                                \
         if (p_b.type == VECTOR3)                                               \
-            _RETURN(p_a._data.m_type m_op* reinterpret_cast<const Vector3*>(   \
-                p_b._data._mem                                                 \
+            _RETURN(p_a._data.m_type m_op(                                     \
+                *reinterpret_cast<const Vector3*>(p_b._data._mem)              \
             ));                                                                \
                                                                                \
         _RETURN_FAIL                                                           \
@@ -219,10 +219,10 @@ bool Variant::booleanize() const {
     CASE_TYPE(m_prefix, m_op_name, m_name) {                                   \
         if (p_b.type == STRING)                                                \
             _RETURN(*reinterpret_cast<const m_type*>(p_b._data._mem            \
-            ) m_op* reinterpret_cast<const String*>(p_a._data._mem));          \
+            ) m_op(*reinterpret_cast<const String*>(p_a._data._mem)));         \
         if (p_b.type == NODE_PATH)                                             \
             _RETURN(*reinterpret_cast<const m_type*>(p_b._data._mem            \
-            ) m_op* reinterpret_cast<const NodePath*>(p_a._data._mem));        \
+            ) m_op(*reinterpret_cast<const NodePath*>(p_a._data._mem)));       \
                                                                                \
         _RETURN_FAIL                                                           \
     };
@@ -231,10 +231,10 @@ bool Variant::booleanize() const {
     CASE_TYPE(m_prefix, m_op_name, m_name) {                                   \
         if (p_b.type == STRING)                                                \
             _RETURN(*reinterpret_cast<const m_type*>(p_a._data._mem            \
-            ) m_op* reinterpret_cast<const String*>(p_b._data._mem));          \
+            ) m_op(*reinterpret_cast<const String*>(p_b._data._mem)));         \
         if (p_b.type == NODE_PATH)                                             \
             _RETURN(*reinterpret_cast<const m_type*>(p_a._data._mem            \
-            ) m_op* reinterpret_cast<const NodePath*>(p_b._data._mem));        \
+            ) m_op(*reinterpret_cast<const NodePath*>(p_b._data._mem)));       \
                                                                                \
         _RETURN_FAIL                                                           \
     };
@@ -243,10 +243,10 @@ bool Variant::booleanize() const {
     CASE_TYPE(m_prefix, m_op_name, m_name) {                                   \
         if (p_b.type == STRING)                                                \
             _RETURN(*reinterpret_cast<const m_type*>(p_a._data._mem            \
-            ) m_op* reinterpret_cast<const String*>(p_b._data._mem));          \
+            ) m_op(*reinterpret_cast<const String*>(p_b._data._mem)));         \
         if (p_b.type == NODE_PATH)                                             \
             _RETURN(*reinterpret_cast<const m_type*>(p_a._data._mem            \
-            ) m_op* reinterpret_cast<const NodePath*>(p_b._data._mem));        \
+            ) m_op(*reinterpret_cast<const NodePath*>(p_b._data._mem)));       \
         if (p_b.type == NIL) _RETURN(!(p_b.type m_op NIL));                    \
                                                                                \
         _RETURN_FAIL                                                           \
@@ -256,7 +256,7 @@ bool Variant::booleanize() const {
     CASE_TYPE(m_prefix, m_op_name, m_name) {                                   \
         if (p_b.type == m_name)                                                \
             _RETURN(*reinterpret_cast<const m_type*>(p_b._data._mem            \
-            ) m_op* reinterpret_cast<const m_type*>(p_a._data._mem));          \
+            ) m_op(*reinterpret_cast<const m_type*>(p_a._data._mem)));         \
                                                                                \
         _RETURN_FAIL                                                           \
     };
@@ -265,7 +265,7 @@ bool Variant::booleanize() const {
     CASE_TYPE(m_prefix, m_op_name, m_name) {                                   \
         if (p_b.type == m_name)                                                \
             _RETURN(*reinterpret_cast<const m_type*>(p_a._data._mem            \
-            ) m_op* reinterpret_cast<const m_type*>(p_b._data._mem));          \
+            ) m_op(*reinterpret_cast<const m_type*>(p_b._data._mem)));         \
                                                                                \
         _RETURN_FAIL                                                           \
     };
@@ -274,7 +274,7 @@ bool Variant::booleanize() const {
     CASE_TYPE(m_prefix, m_op_name, m_name) {                                   \
         if (p_b.type == m_name)                                                \
             _RETURN(*reinterpret_cast<const m_type*>(p_a._data._mem            \
-            ) m_op* reinterpret_cast<const m_type*>(p_b._data._mem));          \
+            ) m_op(*reinterpret_cast<const m_type*>(p_b._data._mem)));         \
         if (p_b.type == NIL) _RETURN(!(p_b.type m_op NIL));                    \
                                                                                \
         _RETURN_FAIL                                                           \
@@ -294,7 +294,7 @@ bool Variant::booleanize() const {
     CASE_TYPE(m_prefix, m_op_name, m_name) {                                   \
         if (p_b.type == m_name)                                                \
             _RETURN(*reinterpret_cast<const m_type*>(p_a._data._mem            \
-            ) m_op* reinterpret_cast<const m_type*>(p_b._data._mem));          \
+            ) m_op(*reinterpret_cast<const m_type*>(p_b._data._mem)));         \
         if (p_b.type == INT)                                                   \
             _RETURN(*reinterpret_cast<const m_type*>(p_a._data._mem)           \
                          m_op p_b._data._int);                                 \
@@ -315,7 +315,7 @@ bool Variant::booleanize() const {
 #define DEFAULT_OP_PTRREF(m_prefix, m_op_name, m_name, m_op, m_sub)            \
     CASE_TYPE(m_prefix, m_op_name, m_name) {                                   \
         if (p_b.type == m_name)                                                \
-            _RETURN(*p_a._data.m_sub m_op* p_b._data.m_sub);                   \
+            _RETURN(*p_a._data.m_sub m_op(*p_b._data.m_sub));                  \
                                                                                \
         _RETURN_FAIL                                                           \
     }
@@ -323,7 +323,7 @@ bool Variant::booleanize() const {
 #define DEFAULT_OP_PTRREF_NULL(m_prefix, m_op_name, m_name, m_op, m_sub)       \
     CASE_TYPE(m_prefix, m_op_name, m_name) {                                   \
         if (p_b.type == m_name)                                                \
-            _RETURN(*p_a._data.m_sub m_op* p_b._data.m_sub);                   \
+            _RETURN(*p_a._data.m_sub m_op(*p_b._data.m_sub));                  \
         if (p_b.type == NIL) _RETURN(!(p_b.type m_op NIL));                    \
                                                                                \
         _RETURN_FAIL                                                           \
