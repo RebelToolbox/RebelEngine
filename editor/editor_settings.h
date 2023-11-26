@@ -31,9 +31,8 @@
 #ifndef EDITOR_SETTINGS_H
 #define EDITOR_SETTINGS_H
 
-#include "core/object.h"
-
 #include "core/io/config_file.h"
+#include "core/object.h"
 #include "core/os/thread_safe.h"
 #include "core/resource.h"
 #include "core/translation.h"

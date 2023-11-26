@@ -33,7 +33,6 @@
 
 /* Must come before shaders or the Windows build fails... */
 #include "rasterizer_storage_gles2.h"
-
 #include "shaders/cube_to_dp.glsl.gen.h"
 #include "shaders/effect_blur.glsl.gen.h"
 #include "shaders/scene.glsl.gen.h"

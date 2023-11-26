@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "dictionary_property_edit.h"
+
 #include "editor_node.h"
 
 void DictionaryPropertyEdit::_notif_change() {

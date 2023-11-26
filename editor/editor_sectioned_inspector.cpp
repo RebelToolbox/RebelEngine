@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "editor_sectioned_inspector.h"
+
 #include "editor_scale.h"
 
 class SectionedInspectorFilter : public Object {

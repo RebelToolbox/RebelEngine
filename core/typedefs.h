@@ -103,9 +103,8 @@ T* _nullptr() {
 #undef CONNECT_DEFERRED // override from Windows SDK, clashes with Object enum
 #endif
 
-#include "core/int_types.h"
-
 #include "core/error_list.h"
+#include "core/int_types.h"
 
 /** Generic ABS function, for math uses please use Math::abs */
 

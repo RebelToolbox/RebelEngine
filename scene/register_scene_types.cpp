@@ -66,6 +66,8 @@
 #include "scene/2d/touch_screen_button.h"
 #include "scene/2d/visibility_notifier_2d.h"
 #include "scene/2d/y_sort.h"
+#include "scene/3d/spatial.h"
+#include "scene/3d/world_environment.h"
 #include "scene/animation/animation_blend_space_1d.h"
 #include "scene/animation/animation_blend_space_2d.h"
 #include "scene/animation/animation_blend_tree.h"
@@ -169,9 +171,6 @@
 #include "scene/resources/world.h"
 #include "scene/resources/world_2d.h"
 #include "scene/scene_string_names.h"
-
-#include "scene/3d/spatial.h"
-#include "scene/3d/world_environment.h"
 
 #ifndef _3D_DISABLED
 #include "scene/3d/area.h"

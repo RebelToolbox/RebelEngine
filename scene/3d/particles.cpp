@@ -32,7 +32,6 @@
 
 #include "core/os/os.h"
 #include "scene/resources/particles_material.h"
-
 #include "servers/visual_server.h"
 
 AABB Particles::get_aabb() const {

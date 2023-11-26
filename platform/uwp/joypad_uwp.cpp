@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "joypad_uwp.h"
+
 #include "core/os/os.h"
 
 using namespace Windows::Gaming::Input;

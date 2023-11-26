@@ -33,11 +33,10 @@
 
 #ifdef ALSA_ENABLED
 
+#include "asound-so_wrap.h"
 #include "core/os/mutex.h"
 #include "core/os/thread.h"
 #include "servers/audio_server.h"
-
-#include "asound-so_wrap.h"
 
 class AudioDriverALSA : public AudioDriver {
     Thread thread;

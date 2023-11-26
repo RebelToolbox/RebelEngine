@@ -30,13 +30,13 @@
 
 #include "gd_mono_utils.h"
 
-#include <mono/metadata/debug-helpers.h>
-#include <mono/metadata/exception.h>
-
 #include "core/os/dir_access.h"
 #include "core/os/os.h"
 #include "core/project_settings.h"
 #include "core/reference.h"
+
+#include <mono/metadata/debug-helpers.h>
+#include <mono/metadata/exception.h>
 
 #ifdef TOOLS_ENABLED
 #include "editor/script_editor_debugger.h"

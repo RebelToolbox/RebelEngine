@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "script_editor_debugger.h"
+
 #include "core/io/marshalls.h"
 #include "core/os/os.h"
 #include "core/project_settings.h"

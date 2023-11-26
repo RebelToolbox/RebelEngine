@@ -43,10 +43,9 @@
 
 #include <algorithm>
 #include <iterator>
+#include <psapi.h>
 #include <string>
 #include <vector>
-
-#include <psapi.h>
 
 #pragma comment(lib, "psapi.lib")
 #pragma comment(lib, "dbghelp.lib")

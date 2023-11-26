@@ -30,11 +30,10 @@
 
 #include "editor_run.h"
 
-#include "plugins/script_editor_plugin.h"
-#include "script_editor_debugger.h"
-
 #include "core/project_settings.h"
 #include "editor_settings.h"
+#include "plugins/script_editor_plugin.h"
+#include "script_editor_debugger.h"
 
 EditorRun::Status EditorRun::get_status() const {
     return status;

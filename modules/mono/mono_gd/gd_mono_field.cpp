@@ -30,12 +30,12 @@
 
 #include "gd_mono_field.h"
 
-#include <mono/metadata/attrdefs.h>
-
 #include "gd_mono_cache.h"
 #include "gd_mono_class.h"
 #include "gd_mono_marshal.h"
 #include "gd_mono_utils.h"
+
+#include <mono/metadata/attrdefs.h>
 
 void GDMonoField::set_value_raw(MonoObject* p_object, void* p_ptr) {
     mono_field_set_value(p_object, mono_field, &p_ptr);

@@ -30,16 +30,15 @@
 
 #include "csharp_project.h"
 
+#include "../csharp_script.h"
+#include "../mono_gd/gd_mono_class.h"
+#include "../mono_gd/gd_mono_marshal.h"
+#include "../utils/string_utils.h"
 #include "core/io/json.h"
 #include "core/os/dir_access.h"
 #include "core/os/file_access.h"
 #include "core/os/os.h"
 #include "core/project_settings.h"
-
-#include "../csharp_script.h"
-#include "../mono_gd/gd_mono_class.h"
-#include "../mono_gd/gd_mono_marshal.h"
-#include "../utils/string_utils.h"
 #include "script_class_parser.h"
 
 namespace CSharpProject

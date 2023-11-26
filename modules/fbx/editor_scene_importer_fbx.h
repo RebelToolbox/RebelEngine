@@ -33,28 +33,26 @@
 
 #ifdef TOOLS_ENABLED
 
-#include "data/import_state.h"
-#include "tools/import_utils.h"
-
 #include "core/bind/core_bind.h"
 #include "core/dictionary.h"
 #include "core/io/resource_importer.h"
 #include "core/local_vector.h"
 #include "core/ustring.h"
 #include "core/vector.h"
+#include "data/import_state.h"
 #include "editor/import/resource_importer_scene.h"
 #include "editor/project_settings_editor.h"
+#include "fbx_parser/FBXDocument.h"
+#include "fbx_parser/FBXImportSettings.h"
+#include "fbx_parser/FBXMeshGeometry.h"
+#include "fbx_parser/FBXUtil.h"
 #include "scene/3d/mesh_instance.h"
 #include "scene/3d/skeleton.h"
 #include "scene/3d/spatial.h"
 #include "scene/animation/animation_player.h"
 #include "scene/resources/animation.h"
 #include "scene/resources/surface_tool.h"
-
-#include "fbx_parser/FBXDocument.h"
-#include "fbx_parser/FBXImportSettings.h"
-#include "fbx_parser/FBXMeshGeometry.h"
-#include "fbx_parser/FBXUtil.h"
+#include "tools/import_utils.h"
 
 #define CONVERT_FBX_TIME(time) static_cast<double>(time) / 46186158000LL
 

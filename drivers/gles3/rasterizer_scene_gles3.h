@@ -32,8 +32,6 @@
 #define RASTERIZERSCENEGLES3_H
 
 /* Must come before shaders or the Windows build fails... */
-#include "rasterizer_storage_gles3.h"
-
 #include "drivers/gles3/shaders/cube_to_dp.glsl.gen.h"
 #include "drivers/gles3/shaders/effect_blur.glsl.gen.h"
 #include "drivers/gles3/shaders/exposure.glsl.gen.h"
@@ -45,6 +43,7 @@
 #include "drivers/gles3/shaders/ssao_minify.glsl.gen.h"
 #include "drivers/gles3/shaders/subsurf_scattering.glsl.gen.h"
 #include "drivers/gles3/shaders/tonemap.glsl.gen.h"
+#include "rasterizer_storage_gles3.h"
 
 class RasterizerSceneGLES3 : public RasterizerScene {
 public:

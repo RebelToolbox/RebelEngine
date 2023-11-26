@@ -29,8 +29,6 @@
 /*************************************************************************/
 
 #include "java_godot_lib_jni.h"
-#include "java_godot_io_wrapper.h"
-#include "java_godot_wrapper.h"
 
 #include "android/asset_manager_jni.h"
 #include "android_input_handler.h"
@@ -40,6 +38,8 @@
 #include "core/project_settings.h"
 #include "dir_access_jandroid.h"
 #include "file_access_android.h"
+#include "java_godot_io_wrapper.h"
+#include "java_godot_wrapper.h"
 #include "jni_utils.h"
 #include "main/input_default.h"
 #include "main/main.h"

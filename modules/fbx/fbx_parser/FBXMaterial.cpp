@@ -79,8 +79,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXImportSettings.h"
 #include "FBXParser.h"
 #include "FBXProperties.h"
-
 #include "FBXUtil.h"
+
 #include <algorithm> // std::transform
 
 namespace FBXDocParser

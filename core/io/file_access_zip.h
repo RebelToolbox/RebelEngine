@@ -35,7 +35,6 @@
 
 #include "core/io/file_access_pack.h"
 #include "core/map.h"
-
 #include "thirdparty/minizip/unzip.h"
 
 #include <stdlib.h>

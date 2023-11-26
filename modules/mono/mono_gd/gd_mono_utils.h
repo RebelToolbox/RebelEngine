@@ -31,12 +31,12 @@
 #ifndef GD_MONOUTILS_H
 #define GD_MONOUTILS_H
 
-#include <mono/metadata/threads.h>
-
 #include "../mono_gc_handle.h"
 #include "../utils/macros.h"
 #include "../utils/thread_local.h"
 #include "gd_mono_header.h"
+
+#include <mono/metadata/threads.h>
 #ifdef JAVASCRIPT_ENABLED
 #include "gd_mono_wasm_m2n.h"
 #endif

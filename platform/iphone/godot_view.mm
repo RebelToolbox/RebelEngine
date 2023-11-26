@@ -31,17 +31,15 @@
 #import "godot_view.h"
 
 #include "core/project_settings.h"
-#include "os_iphone.h"
-#include "servers/audio_server.h"
-
-#import <OpenGLES/EAGLDrawable.h>
-#import <QuartzCore/QuartzCore.h>
-
 #import "display_layer.h"
 #import "godot_view_gesture_recognizer.h"
 #import "godot_view_renderer.h"
+#include "os_iphone.h"
+#include "servers/audio_server.h"
 
 #import <CoreMotion/CoreMotion.h>
+#import <OpenGLES/EAGLDrawable.h>
+#import <QuartzCore/QuartzCore.h>
 
 static const int max_touches = 8;
 

@@ -31,6 +31,12 @@
 #ifndef FILESYSTEM_DOCK_H
 #define FILESYSTEM_DOCK_H
 
+#include "core/os/dir_access.h"
+#include "core/os/thread.h"
+#include "create_dialog.h"
+#include "dependency_editor.h"
+#include "editor_dir_dialog.h"
+#include "editor_file_system.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/control.h"
 #include "scene/gui/dialogs.h"
@@ -43,15 +49,6 @@
 #include "scene/gui/tool_button.h"
 #include "scene/gui/tree.h"
 #include "scene/main/timer.h"
-
-#include "core/os/dir_access.h"
-#include "core/os/thread.h"
-
-#include "create_dialog.h"
-
-#include "dependency_editor.h"
-#include "editor_dir_dialog.h"
-#include "editor_file_system.h"
 #include "script_create_dialog.h"
 
 class EditorNode;

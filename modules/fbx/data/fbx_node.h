@@ -31,11 +31,10 @@
 #ifndef FBX_NODE_H
 #define FBX_NODE_H
 
+#include "fbx_parser/FBXDocument.h"
 #include "fbx_skeleton.h"
 #include "model_abstraction.h"
 #include "pivot_transform.h"
-
-#include "fbx_parser/FBXDocument.h"
 
 class Spatial;
 struct PivotTransform;

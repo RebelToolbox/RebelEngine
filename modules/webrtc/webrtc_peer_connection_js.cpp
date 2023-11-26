@@ -32,10 +32,9 @@
 
 #include "webrtc_peer_connection_js.h"
 
-#include "webrtc_data_channel_js.h"
-
 #include "core/io/json.h"
 #include "emscripten.h"
+#include "webrtc_data_channel_js.h"
 
 void WebRTCPeerConnectionJS::_on_ice_candidate(
     void* p_obj,

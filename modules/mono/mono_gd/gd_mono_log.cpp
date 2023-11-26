@@ -30,13 +30,12 @@
 
 #include "gd_mono_log.h"
 
-#include <stdlib.h> // abort
-
+#include "../godotsharp_dirs.h"
+#include "../utils/string_utils.h"
 #include "core/os/dir_access.h"
 #include "core/os/os.h"
 
-#include "../godotsharp_dirs.h"
-#include "../utils/string_utils.h"
+#include <stdlib.h> // abort
 
 static CharString get_default_log_level() {
 #ifdef DEBUG_ENABLED

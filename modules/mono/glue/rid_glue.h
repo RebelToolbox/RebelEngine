@@ -33,10 +33,9 @@
 
 #ifdef MONO_GLUE_ENABLED
 
+#include "../mono_gd/gd_mono_marshal.h"
 #include "core/object.h"
 #include "core/rid.h"
-
-#include "../mono_gd/gd_mono_marshal.h"
 
 RID* godot_icall_RID_Ctor(Object* p_from);
 

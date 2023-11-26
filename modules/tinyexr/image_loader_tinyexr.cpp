@@ -32,7 +32,6 @@
 
 #include "core/os/os.h"
 #include "core/print_string.h"
-
 #include "thirdparty/tinyexr/tinyexr.h"
 
 Error ImageLoaderTinyEXR::load_image(

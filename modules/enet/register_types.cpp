@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "register_types.h"
+
 #include "core/error_macros.h"
 #include "networked_multiplayer_enet.h"
 

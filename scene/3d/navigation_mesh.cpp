@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "navigation_mesh.h"
+
 #include "mesh_instance.h"
 #include "navigation.h"
 

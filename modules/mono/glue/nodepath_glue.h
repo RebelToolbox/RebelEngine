@@ -33,9 +33,8 @@
 
 #ifdef MONO_GLUE_ENABLED
 
-#include "core/node_path.h"
-
 #include "../mono_gd/gd_mono_marshal.h"
+#include "core/node_path.h"
 
 NodePath* godot_icall_NodePath_Ctor(MonoString* p_path);
 

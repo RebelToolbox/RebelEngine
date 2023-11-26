@@ -32,7 +32,6 @@
 #define SURFACE_TOOL_H
 
 #include "scene/resources/mesh.h"
-
 #include "thirdparty/misc/mikktspace.h"
 
 class SurfaceTool : public Reference {

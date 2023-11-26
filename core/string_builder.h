@@ -32,7 +32,6 @@
 #define STRING_BUILDER_H
 
 #include "core/ustring.h"
-
 #include "core/vector.h"
 
 class StringBuilder {

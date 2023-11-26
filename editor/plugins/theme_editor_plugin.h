@@ -31,6 +31,7 @@
 #ifndef THEME_EDITOR_PLUGIN_H
 #define THEME_EDITOR_PLUGIN_H
 
+#include "editor/editor_node.h"
 #include "scene/gui/margin_container.h"
 #include "scene/gui/option_button.h"
 #include "scene/gui/scroll_container.h"
@@ -38,8 +39,6 @@
 #include "scene/gui/texture_rect.h"
 #include "scene/resources/theme.h"
 #include "theme_editor_preview.h"
-
-#include "editor/editor_node.h"
 
 class ThemeItemImportTree : public VBoxContainer {
     GDCLASS(ThemeItemImportTree, VBoxContainer);

@@ -55,14 +55,14 @@ Adapted from corresponding SDL 2.0 code.
 
 #include "power_x11.h"
 
-#include <stdio.h>
-#include <unistd.h>
-
 #include "core/error_macros.h"
+
 #include <dirent.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 // CODE CHUNK IMPORTED FROM SDL 2.0
 

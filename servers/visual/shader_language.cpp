@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "shader_language.h"
+
 #include "core/os/os.h"
 #include "core/print_string.h"
 #include "servers/visual_server.h"

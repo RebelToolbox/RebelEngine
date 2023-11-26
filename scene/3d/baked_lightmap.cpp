@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "baked_lightmap.h"
+
 #include "core/io/config_file.h"
 #include "core/io/resource_saver.h"
 #include "core/math/math_defs.h"

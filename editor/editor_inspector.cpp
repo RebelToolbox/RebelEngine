@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "editor_inspector.h"
+
 #include "array_property_edit.h"
 #include "dictionary_property_edit.h"
 #include "editor_feature_profile.h"

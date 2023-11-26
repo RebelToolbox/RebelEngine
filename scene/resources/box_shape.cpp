@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "box_shape.h"
+
 #include "servers/physics_server.h"
 
 Vector<Vector3> BoxShape::get_debug_mesh_lines() {

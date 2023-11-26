@@ -29,7 +29,9 @@
 /*************************************************************************/
 
 #include "texture_button.h"
+
 #include "core/typedefs.h"
+
 #include <stdlib.h>
 
 Size2 TextureButton::get_minimum_size() const {

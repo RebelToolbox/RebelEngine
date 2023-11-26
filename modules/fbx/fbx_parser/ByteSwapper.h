@@ -75,9 +75,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef BYTE_SWAPPER_H
 #define BYTE_SWAPPER_H
 
-#include <stdint.h>
 #include <algorithm>
 #include <locale>
+#include <stdint.h>
 
 namespace FBXDocParser
 {

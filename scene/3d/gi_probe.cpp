@@ -31,7 +31,6 @@
 #include "gi_probe.h"
 
 #include "core/os/os.h"
-
 #include "mesh_instance.h"
 #include "voxel_light_baker.h"
 

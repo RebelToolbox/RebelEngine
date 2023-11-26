@@ -31,6 +31,8 @@
 #ifndef GLTF_STATE_H
 #define GLTF_STATE_H
 
+#include "core/map.h"
+#include "core/pair.h"
 #include "core/resource.h"
 #include "core/vector.h"
 #include "editor_scene_importer_gltf.h"
@@ -45,11 +47,6 @@
 #include "gltf_skeleton.h"
 #include "gltf_skin.h"
 #include "gltf_texture.h"
-
-#include "core/map.h"
-#include "core/pair.h"
-#include "core/resource.h"
-#include "core/vector.h"
 #include "scene/animation/animation_player.h"
 #include "scene/resources/texture.h"
 

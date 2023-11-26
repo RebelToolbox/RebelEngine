@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "dialogs.h"
+
 #include "core/print_string.h"
 #include "core/translation.h"
 #include "line_edit.h"

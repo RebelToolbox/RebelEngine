@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "export.h"
+
 #include "core/bind/core_bind.h"
 #include "core/crypto/crypto_core.h"
 #include "core/io/marshalls.h"
@@ -41,7 +42,6 @@
 #include "editor/editor_export.h"
 #include "editor/editor_node.h"
 #include "platform/uwp/logo.gen.h"
-
 #include "thirdparty/minizip/unzip.h"
 #include "thirdparty/minizip/zip.h"
 

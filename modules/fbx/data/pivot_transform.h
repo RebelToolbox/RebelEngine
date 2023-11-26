@@ -33,10 +33,8 @@
 
 #include "core/math/transform.h"
 #include "core/reference.h"
-
-#include "model_abstraction.h"
-
 #include "fbx_parser/FBXDocument.h"
+#include "model_abstraction.h"
 #include "tools/import_utils.h"
 
 enum TransformationComp {

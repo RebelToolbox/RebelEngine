@@ -28,6 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
+#include "modules/gltf/editor_scene_importer_gltf.h"
+
 #include "core/crypto/crypto_core.h"
 #include "core/io/json.h"
 #include "core/math/disjoint_set.h"
@@ -43,8 +45,6 @@
 #include "scene/animation/animation_player.h"
 #include "scene/resources/packed_scene.h"
 #include "scene/resources/surface_tool.h"
-
-#include "modules/gltf/editor_scene_importer_gltf.h"
 
 uint32_t EditorSceneImporterGLTF::get_import_flags() const {
     return ImportFlags::IMPORT_SCENE | ImportFlags::IMPORT_ANIMATION;

@@ -30,9 +30,9 @@
 
 // object.h needs to be the first include *before* method_bind.h
 // FIXME: Find out why and fix potential cyclical dependencies.
-#include "core/object.h"
-
 #include "method_bind.h"
+
+#include "core/object.h"
 
 #ifdef DEBUG_METHODS_ENABLED
 PropertyInfo MethodBind::get_argument_info(int p_argument) const {

@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "api.h"
+
 #include "core/engine.h"
 #include "javascript_singleton.h"
 #include "javascript_tools_editor_plugin.h"

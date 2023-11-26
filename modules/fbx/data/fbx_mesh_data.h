@@ -32,12 +32,11 @@
 #define FBX_MESH_DATA_H
 
 #include "core/hash_map.h"
-#include "scene/3d/mesh_instance.h"
-#include "scene/resources/surface_tool.h"
-
 #include "fbx_bone.h"
 #include "fbx_parser/FBXMeshGeometry.h"
 #include "import_state.h"
+#include "scene/3d/mesh_instance.h"
+#include "scene/resources/surface_tool.h"
 #include "tools/import_utils.h"
 
 struct FBXNode;

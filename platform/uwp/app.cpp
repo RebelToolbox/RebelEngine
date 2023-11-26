@@ -39,7 +39,6 @@
 #include "core/os/file_access.h"
 #include "core/os/keyboard.h"
 #include "main/main.h"
-
 #include "platform/windows/key_mapping_windows.h"
 
 #include <collection.h>

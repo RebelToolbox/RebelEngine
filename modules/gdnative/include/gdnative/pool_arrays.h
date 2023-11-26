@@ -160,10 +160,9 @@ typedef struct {
 
 #include <gdnative/array.h>
 #include <gdnative/color.h>
+#include <gdnative/gdnative.h>
 #include <gdnative/vector2.h>
 #include <gdnative/vector3.h>
-
-#include <gdnative/gdnative.h>
 
 #ifdef __cplusplus
 extern "C" {

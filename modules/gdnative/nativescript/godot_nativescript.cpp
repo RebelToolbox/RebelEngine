@@ -36,7 +36,6 @@
 #include "core/project_settings.h"
 #include "core/variant.h"
 #include "gdnative/gdnative.h"
-
 #include "nativescript.h"
 
 #ifdef __cplusplus

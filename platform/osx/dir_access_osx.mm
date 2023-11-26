@@ -32,10 +32,9 @@
 
 #if defined(UNIX_ENABLED) || defined(LIBC_FILEIO_ENABLED)
 
-#include <errno.h>
-
 #include <AppKit/NSWorkspace.h>
 #include <Foundation/Foundation.h>
+#include <errno.h>
 
 String DirAccessOSX::fix_unicode_name(const char* p_name) const {
     String fname;

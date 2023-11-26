@@ -29,10 +29,10 @@
 /*************************************************************************/
 
 #include "packet_peer_mbed_dtls.h"
-#include "mbedtls/platform_util.h"
 
 #include "core/io/stream_peer_ssl.h"
 #include "core/os/file_access.h"
+#include "mbedtls/platform_util.h"
 
 int PacketPeerMbedDTLS::bio_send(
     void* ctx,

@@ -39,6 +39,7 @@
 #include "core/self_list.h"
 // PluginScript imports
 #include "pluginscript_loader.h"
+
 #include <pluginscript/godot_pluginscript.h>
 
 class PluginScript;

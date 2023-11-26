@@ -36,15 +36,12 @@
 #include "core/print_string.h"
 #include "core/ustring.h"
 
-#include <stdlib.h>
-
 #include <GL/gl.h>
 #include <GL/glx.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-
 #include <cstring>
-
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>

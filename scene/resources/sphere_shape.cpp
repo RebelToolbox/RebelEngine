@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "sphere_shape.h"
+
 #include "servers/physics_server.h"
 
 Vector<Vector3> SphereShape::get_debug_mesh_lines() {

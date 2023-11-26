@@ -31,7 +31,6 @@
 #include "android_input_handler.h"
 
 #include "android_keys_utils.h"
-
 #include "core/os/os.h"
 
 void AndroidInputHandler::process_joy_event(const JoypadEvent& p_event) {

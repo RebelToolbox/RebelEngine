@@ -34,7 +34,6 @@
 #include "core/os/input.h"
 #include "core/os/keyboard.h"
 #include "core/project_settings.h"
-
 #include "editor/editor_feature_profile.h"
 #include "editor/editor_node.h"
 #include "editor/editor_scale.h"
@@ -45,10 +44,9 @@
 #include "editor/plugins/script_editor_plugin.h"
 #include "editor/plugins/spatial_editor_plugin.h"
 #include "editor/script_editor_debugger.h"
+#include "modules/modules_enabled.gen.h" // For regex.
 #include "scene/main/viewport.h"
 #include "scene/resources/packed_scene.h"
-
-#include "modules/modules_enabled.gen.h" // For regex.
 
 void SceneTreeDock::_nodes_drag_begin() {
     if (restore_script_editor_on_drag) {

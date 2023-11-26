@@ -31,10 +31,9 @@
 #ifndef AUDIO_DRIVER_DUMMY_H
 #define AUDIO_DRIVER_DUMMY_H
 
-#include "servers/audio_server.h"
-
 #include "core/os/mutex.h"
 #include "core/os/thread.h"
+#include "servers/audio_server.h"
 
 class AudioDriverDummy : public AudioDriver {
     Thread thread;

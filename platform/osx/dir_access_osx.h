@@ -33,13 +33,13 @@
 
 #if defined(UNIX_ENABLED) || defined(LIBC_FILEIO_ENABLED)
 
+#include "core/os/dir_access.h"
+#include "drivers/unix/dir_access_unix.h"
+
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-
-#include "core/os/dir_access.h"
-#include "drivers/unix/dir_access_unix.h"
 
 class DirAccessOSX : public DirAccessUnix {
 protected:

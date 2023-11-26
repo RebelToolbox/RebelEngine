@@ -35,6 +35,7 @@
 #include "core/script_language.h"
 // PluginScript imports
 #include "pluginscript_language.h"
+
 #include <pluginscript/godot_pluginscript.h>
 
 class PluginScript : public Script {

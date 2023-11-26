@@ -31,11 +31,10 @@
 #ifndef RANDOM_PCG_H
 #define RANDOM_PCG_H
 
-#include <math.h>
-
 #include "core/math/math_defs.h"
-
 #include "thirdparty/misc/pcg.h"
+
+#include <math.h>
 
 #if defined(__GNUC__) || (_llvm_has_builtin(__builtin_clz))
 #define CLZ32(x) __builtin_clz(x)

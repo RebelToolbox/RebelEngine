@@ -32,9 +32,8 @@
 
 #include "core/math/math_funcs.h"
 #include "core/os/input.h"
-#include "scene/resources/packed_scene.h"
-
 #include "editor/editor_scale.h"
+#include "scene/resources/packed_scene.h"
 
 constexpr double REFRESH_TIMER = 1.5;
 

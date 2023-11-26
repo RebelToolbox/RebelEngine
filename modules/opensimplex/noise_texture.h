@@ -31,13 +31,12 @@
 #ifndef NOISE_TEXTURE_H
 #define NOISE_TEXTURE_H
 
-#include "open_simplex_noise.h"
-
 #include "core/image.h"
 #include "core/reference.h"
 #include "editor/editor_node.h"
 #include "editor/editor_plugin.h"
 #include "editor/property_editor.h"
+#include "open_simplex_noise.h"
 
 class NoiseTexture : public Texture {
     GDCLASS(NoiseTexture, Texture);

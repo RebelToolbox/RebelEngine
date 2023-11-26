@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "sprite_3d.h"
+
 #include "core/core_string_names.h"
 #include "scene/scene_string_names.h"
 

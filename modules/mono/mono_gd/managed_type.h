@@ -31,9 +31,9 @@
 #ifndef MANAGED_TYPE_H
 #define MANAGED_TYPE_H
 
-#include <mono/metadata/object.h>
-
 #include "gd_mono_header.h"
+
+#include <mono/metadata/object.h>
 
 struct ManagedType {
     int type_encoding;

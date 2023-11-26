@@ -44,8 +44,8 @@
 #include "core/ucaps.h"
 #include "core/variant.h"
 
-#include <wchar.h>
 #include <cstdint>
+#include <wchar.h>
 
 #ifndef NO_USE_STDLIB
 #include <stdio.h>

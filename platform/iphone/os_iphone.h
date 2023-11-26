@@ -36,9 +36,8 @@
 #include "core/os/input.h"
 #include "drivers/coreaudio/audio_driver_coreaudio.h"
 #include "drivers/unix/os_unix.h"
-#include "joypad_iphone.h"
-
 #include "ios.h"
+#include "joypad_iphone.h"
 #include "main/input_default.h"
 #include "servers/audio_server.h"
 #include "servers/visual/rasterizer.h"

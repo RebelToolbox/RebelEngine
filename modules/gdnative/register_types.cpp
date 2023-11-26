@@ -30,21 +30,18 @@
 
 #include "register_types.h"
 
-#include "gdnative/gdnative.h"
-
-#include "gdnative.h"
-
 #include "arvr/register_types.h"
-#include "nativescript/register_types.h"
-#include "net/register_types.h"
-#include "pluginscript/register_types.h"
-#include "videodecoder/register_types.h"
-
 #include "core/engine.h"
 #include "core/io/resource_loader.h"
 #include "core/io/resource_saver.h"
 #include "core/os/os.h"
 #include "core/project_settings.h"
+#include "gdnative.h"
+#include "gdnative/gdnative.h"
+#include "nativescript/register_types.h"
+#include "net/register_types.h"
+#include "pluginscript/register_types.h"
+#include "videodecoder/register_types.h"
 
 #ifdef TOOLS_ENABLED
 #include "editor/editor_export.h"

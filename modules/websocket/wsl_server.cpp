@@ -31,6 +31,7 @@
 #ifndef JAVASCRIPT_ENABLED
 
 #include "wsl_server.h"
+
 #include "core/os/os.h"
 #include "core/project_settings.h"
 

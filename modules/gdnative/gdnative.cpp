@@ -36,7 +36,6 @@
 #include "core/os/file_access.h"
 #include "core/os/os.h"
 #include "core/project_settings.h"
-
 #include "scene/main/scene_tree.h"
 
 static const String init_symbol = "gdnative_init";

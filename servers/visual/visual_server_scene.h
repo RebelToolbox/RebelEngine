@@ -31,8 +31,6 @@
 #ifndef VISUALSERVERSCENE_H
 #define VISUALSERVERSCENE_H
 
-#include "servers/visual/rasterizer.h"
-
 #include "core/math/bvh.h"
 #include "core/math/geometry.h"
 #include "core/math/octree.h"
@@ -42,6 +40,7 @@
 #include "core/self_list.h"
 #include "portals/portal_renderer.h"
 #include "servers/arvr/arvr_interface.h"
+#include "servers/visual/rasterizer.h"
 
 class VisualServerScene {
 public:

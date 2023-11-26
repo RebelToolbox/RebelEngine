@@ -74,17 +74,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *  @brief Implementation of the FBX parser and the rudimentary DOM that we use
  */
 
-#include <stdlib.h> /* strtol */
-#include <zlib.h>
+#include "FBXParser.h"
 
 #include "ByteSwapper.h"
 #include "FBXParseTools.h"
-#include "FBXParser.h"
 #include "FBXTokenizer.h"
 #include "core/math/math_defs.h"
 #include "core/math/transform.h"
 #include "core/math/vector3.h"
 #include "core/print_string.h"
+
+#include <stdlib.h> /* strtol */
+#include <zlib.h>
 
 using namespace FBXDocParser;
 

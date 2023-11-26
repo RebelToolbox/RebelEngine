@@ -36,7 +36,6 @@
 #include "core/global_constants.h"
 #include "core/os/os.h"
 #include "core/variant.h"
-
 #include "modules/gdnative/gdnative.h"
 
 #ifdef __cplusplus

@@ -31,24 +31,22 @@
 #include "os_android.h"
 
 #include "core/project_settings.h"
+#include "dir_access_jandroid.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
 #include "drivers/unix/dir_access_unix.h"
 #include "drivers/unix/file_access_unix.h"
+#include "file_access_android.h"
+#include "java_godot_io_wrapper.h"
+#include "java_godot_wrapper.h"
 #include "main/main.h"
+#include "net_socket_android.h"
 #include "servers/visual/visual_server_raster.h"
 #include "servers/visual/visual_server_wrap_mt.h"
-
-#include "dir_access_jandroid.h"
-#include "file_access_android.h"
-#include "net_socket_android.h"
 
 #include <android/input.h>
 #include <core/os/keyboard.h>
 #include <dlfcn.h>
-
-#include "java_godot_io_wrapper.h"
-#include "java_godot_wrapper.h"
 
 String _remove_symlink(const String& dir) {
     // Workaround for Android 6.0+ using a symlink.

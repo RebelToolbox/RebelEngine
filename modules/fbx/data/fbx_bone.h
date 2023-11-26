@@ -32,9 +32,8 @@
 #define FBX_BONE_H
 
 #include "fbx_node.h"
-#include "import_state.h"
-
 #include "fbx_parser/FBXDocument.h"
+#include "import_state.h"
 
 struct PivotTransform;
 

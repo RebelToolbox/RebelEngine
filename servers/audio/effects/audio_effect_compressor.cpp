@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "audio_effect_compressor.h"
+
 #include "servers/audio_server.h"
 
 void AudioEffectCompressorInstance::process(

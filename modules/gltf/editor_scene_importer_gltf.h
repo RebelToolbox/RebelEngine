@@ -36,6 +36,8 @@
 #include "core/project_settings.h"
 #include "core/vector.h"
 #include "editor/import/resource_importer_scene.h"
+#include "gltf_document.h"
+#include "gltf_state.h"
 #include "modules/csg/csg_shape.h"
 #include "modules/gridmap/grid_map.h"
 #include "scene/3d/mesh_instance.h"
@@ -47,9 +49,6 @@
 #include "scene/main/node.h"
 #include "scene/resources/packed_scene.h"
 #include "scene/resources/surface_tool.h"
-
-#include "gltf_document.h"
-#include "gltf_state.h"
 
 class AnimationPlayer;
 class BoneAttachment;

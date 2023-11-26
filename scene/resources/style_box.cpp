@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "style_box.h"
+
 #include "scene/2d/canvas_item.h"
 
 #include <limits.h>

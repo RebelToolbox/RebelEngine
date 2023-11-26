@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "area_pair_2d_sw.h"
+
 #include "collision_solver_2d_sw.h"
 
 bool AreaPair2DSW::setup(real_t p_step) {

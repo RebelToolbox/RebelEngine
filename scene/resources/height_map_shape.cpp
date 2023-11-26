@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "height_map_shape.h"
+
 #include "servers/physics_server.h"
 
 Vector<Vector3> HeightMapShape::get_debug_mesh_lines() {

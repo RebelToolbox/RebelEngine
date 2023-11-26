@@ -31,12 +31,12 @@
 #ifndef TEST_XML_PARSER_H
 #define TEST_XML_PARSER_H
 
-#include <inttypes.h>
-
 #include "core/io/xml_parser.h"
 #include "core/os/main_loop.h"
 #include "core/ustring.h"
 #include "core/vector.h"
+
+#include <inttypes.h>
 
 namespace TestXMLParser
 {

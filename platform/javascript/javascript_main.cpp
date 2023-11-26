@@ -29,10 +29,9 @@
 /*************************************************************************/
 
 #include "core/io/resource_loader.h"
+#include "godot_js.h"
 #include "main/main.h"
 #include "platform/javascript/os_javascript.h"
-
-#include "godot_js.h"
 
 #include <emscripten/emscripten.h>
 #include <stdlib.h>

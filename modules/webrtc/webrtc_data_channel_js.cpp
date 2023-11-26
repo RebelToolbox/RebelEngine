@@ -31,6 +31,7 @@
 #ifdef JAVASCRIPT_ENABLED
 
 #include "webrtc_data_channel_js.h"
+
 #include "emscripten.h"
 
 extern "C" {

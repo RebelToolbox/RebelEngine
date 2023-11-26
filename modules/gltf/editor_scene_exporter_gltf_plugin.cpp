@@ -29,15 +29,15 @@
 /*************************************************************************/
 
 #include "editor_scene_exporter_gltf_plugin.h"
+
 #include "core/object.h"
 #include "core/project_settings.h"
 #include "core/vector.h"
 #include "editor/editor_file_system.h"
+#include "editor/editor_node.h"
 #include "scene/3d/mesh_instance.h"
 #include "scene/gui/check_box.h"
 #include "scene/main/node.h"
-
-#include "editor/editor_node.h"
 
 String SceneExporterGLTFPlugin::get_name() const {
     return "ConvertGLTF2";

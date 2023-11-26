@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "slider.h"
+
 #include "core/os/keyboard.h"
 
 Size2 Slider::get_minimum_size() const {

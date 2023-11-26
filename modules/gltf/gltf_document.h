@@ -32,6 +32,7 @@
 #define GLTF_DOCUMENT_H
 
 #include "gltf_animation.h"
+#include "modules/modules_enabled.gen.h" // For csg, gridmap.
 #include "scene/2d/node_2d.h"
 #include "scene/3d/bone_attachment.h"
 #include "scene/3d/light.h"
@@ -41,8 +42,6 @@
 #include "scene/animation/animation_player.h"
 #include "scene/resources/material.h"
 #include "scene/resources/texture.h"
-
-#include "modules/modules_enabled.gen.h" // For csg, gridmap.
 
 class GLTFState;
 class GLTFSkin;

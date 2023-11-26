@@ -43,6 +43,7 @@
 
 #if !defined(NO_THREADS)
 #include "core/safe_refcount.h"
+
 #include <thread>
 #endif
 

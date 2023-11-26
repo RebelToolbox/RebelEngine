@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "sprite.h"
+
 #include "core/core_string_names.h"
 #include "core/os/os.h"
 #include "scene/main/viewport.h"

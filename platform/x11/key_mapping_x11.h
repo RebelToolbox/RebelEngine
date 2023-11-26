@@ -36,9 +36,9 @@
 #define XK_MISCELLANY
 #define XK_LATIN1
 #define XK_XKB_KEYS
-#include <X11/keysymdef.h>
-
 #include "core/os/keyboard.h"
+
+#include <X11/keysymdef.h>
 
 class KeyMappingX11 {
     KeyMappingX11(){};

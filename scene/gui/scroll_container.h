@@ -32,7 +32,6 @@
 #define SCROLL_CONTAINER_H
 
 #include "container.h"
-
 #include "scroll_bar.h"
 
 class ScrollContainer : public Container {

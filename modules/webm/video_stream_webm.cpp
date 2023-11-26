@@ -34,7 +34,6 @@
 #include "core/os/os.h"
 #include "core/project_settings.h"
 #include "servers/audio_server.h"
-
 #include "thirdparty/misc/yuv2rgb.h"
 
 // libsimplewebm

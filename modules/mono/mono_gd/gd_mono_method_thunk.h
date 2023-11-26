@@ -31,13 +31,13 @@
 #ifndef GD_MONO_METHOD_THUNK_H
 #define GD_MONO_METHOD_THUNK_H
 
-#include <type_traits>
-
 #include "gd_mono_class.h"
 #include "gd_mono_header.h"
 #include "gd_mono_marshal.h"
 #include "gd_mono_method.h"
 #include "gd_mono_utils.h"
+
+#include <type_traits>
 
 #if !defined(JAVASCRIPT_ENABLED) && !defined(IPHONE_ENABLED)
 #define HAVE_METHOD_THUNKS

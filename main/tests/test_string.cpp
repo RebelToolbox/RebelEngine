@@ -33,7 +33,6 @@
 #include "core/io/ip_address.h"
 #include "core/os/os.h"
 #include "core/ustring.h"
-
 #include "modules/modules_enabled.gen.h" // For regex.
 #ifdef MODULE_REGEX_ENABLED
 #include "modules/regex/regex.h"

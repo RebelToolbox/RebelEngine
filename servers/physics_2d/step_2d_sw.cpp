@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "step_2d_sw.h"
+
 #include "core/os/os.h"
 
 void Step2DSW::_populate_island(

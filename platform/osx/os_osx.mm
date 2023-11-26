@@ -40,14 +40,13 @@
 #include "main/main.h"
 #include "servers/visual/visual_server_raster.h"
 
-#include <mach-o/dyld.h>
-
 #include <Carbon/Carbon.h>
 #import <Cocoa/Cocoa.h>
 #include <IOKit/IOCFPlugIn.h>
 #include <IOKit/IOKitLib.h>
 #include <IOKit/hid/IOHIDKeys.h>
 #include <IOKit/hid/IOHIDLib.h>
+#include <mach-o/dyld.h>
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= 101200
 #include <os/log.h>
 #endif

@@ -31,9 +31,8 @@
 #include "platform_config.h"
 #ifndef PLATFORM_THREAD_OVERRIDE // See details in thread.h
 
-#include "thread.h"
-
 #include "core/script_language.h"
+#include "thread.h"
 
 #if !defined(NO_THREADS)
 

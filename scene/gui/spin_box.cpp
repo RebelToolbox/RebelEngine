@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "spin_box.h"
+
 #include "core/math/expression.h"
 #include "core/os/input.h"
 

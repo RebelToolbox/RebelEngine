@@ -33,12 +33,12 @@
 
 #ifdef ALSAMIDI_ENABLED
 
+#include "../alsa/asound-so_wrap.h"
 #include "core/os/midi_driver.h"
 #include "core/os/mutex.h"
 #include "core/os/thread.h"
 #include "core/vector.h"
 
-#include "../alsa/asound-so_wrap.h"
 #include <stdio.h>
 
 class MIDIDriverALSAMidi : public MIDIDriver {

@@ -31,6 +31,7 @@
 #ifdef JAVASCRIPT_ENABLED
 
 #include "emws_peer.h"
+
 #include "core/io/ip.h"
 
 void EMWSPeer::set_sock(

@@ -31,7 +31,6 @@
 #pragma once
 
 #include <string>
-
 #include <wrl.h>
 
 // ANGLE doesn't provide a specific lib for GLES3, so we keep using GLES2

@@ -36,9 +36,8 @@
 #include "editor/editor_plugin.h"
 #include "editor/editor_scale.h"
 #include "editor/project_settings_editor.h"
-#include "scene/gui/grid_container.h"
-
 #include "modules/modules_enabled.gen.h" // For gdscript.
+#include "scene/gui/grid_container.h"
 #ifdef MODULE_GDSCRIPT_ENABLED
 #include "modules/gdscript/gdscript.h"
 #endif

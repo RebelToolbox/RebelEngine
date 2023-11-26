@@ -30,13 +30,11 @@
 
 #include "default_theme.h"
 
-#include "scene/resources/theme.h"
-
 #include "core/os/os.h"
-#include "theme_data.h"
-
 #include "font_hidpi.inc"
 #include "font_lodpi.inc"
+#include "scene/resources/theme.h"
+#include "theme_data.h"
 
 typedef Map<const void*, Ref<ImageTexture>> TexCacheMap;
 

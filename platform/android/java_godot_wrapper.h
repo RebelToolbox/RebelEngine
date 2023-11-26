@@ -34,10 +34,10 @@
 #ifndef JAVA_GODOT_WRAPPER_H
 #define JAVA_GODOT_WRAPPER_H
 
+#include "string_android.h"
+
 #include <android/log.h>
 #include <jni.h>
-
-#include "string_android.h"
 
 // Class that makes methods in
 // java/src/lib/com/rebeltoolbox/rebelengine/RebelFragment.java class callable

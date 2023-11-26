@@ -31,30 +31,27 @@
 #ifndef IMPORT_STATE_H
 #define IMPORT_STATE_H
 
-#include "fbx_mesh_data.h"
-#include "tools/import_utils.h"
-#include "tools/validation_tools.h"
-
-#include "pivot_transform.h"
-
 #include "core/bind/core_bind.h"
 #include "core/io/resource_importer.h"
 #include "core/vector.h"
 #include "editor/import/resource_importer_scene.h"
 #include "editor/project_settings_editor.h"
-#include "scene/3d/mesh_instance.h"
-#include "scene/3d/skeleton.h"
-#include "scene/3d/spatial.h"
-#include "scene/animation/animation_player.h"
-#include "scene/resources/animation.h"
-#include "scene/resources/surface_tool.h"
-
+#include "fbx_mesh_data.h"
 #include "modules/fbx/fbx_parser/FBXDocument.h"
 #include "modules/fbx/fbx_parser/FBXImportSettings.h"
 #include "modules/fbx/fbx_parser/FBXMeshGeometry.h"
 #include "modules/fbx/fbx_parser/FBXParser.h"
 #include "modules/fbx/fbx_parser/FBXTokenizer.h"
 #include "modules/fbx/fbx_parser/FBXUtil.h"
+#include "pivot_transform.h"
+#include "scene/3d/mesh_instance.h"
+#include "scene/3d/skeleton.h"
+#include "scene/3d/spatial.h"
+#include "scene/animation/animation_player.h"
+#include "scene/resources/animation.h"
+#include "scene/resources/surface_tool.h"
+#include "tools/import_utils.h"
+#include "tools/validation_tools.h"
 
 struct FBXBone;
 struct FBXMeshData;

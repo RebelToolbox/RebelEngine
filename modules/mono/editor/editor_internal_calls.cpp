@@ -34,21 +34,20 @@
 #include <unistd.h> // access
 #endif
 
-#include "core/os/os.h"
-#include "core/version.h"
-#include "editor/editor_node.h"
-#include "editor/editor_scale.h"
-#include "editor/plugins/script_editor_plugin.h"
-#include "editor/script_editor_debugger.h"
-#include "main/main.h"
-
 #include "../csharp_script.h"
 #include "../glue/cs_glue_version.gen.h"
 #include "../godotsharp_dirs.h"
 #include "../mono_gd/gd_mono_marshal.h"
 #include "../utils/osx_utils.h"
 #include "code_completion.h"
+#include "core/os/os.h"
+#include "core/version.h"
+#include "editor/editor_node.h"
+#include "editor/editor_scale.h"
+#include "editor/plugins/script_editor_plugin.h"
+#include "editor/script_editor_debugger.h"
 #include "godotsharp_export.h"
+#include "main/main.h"
 #include "script_class_parser.h"
 
 MonoString* godot_icall_GodotSharpDirs_ResDataDir() {

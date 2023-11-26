@@ -33,10 +33,9 @@
 
 #ifdef MONO_GLUE_ENABLED
 
+#include "../mono_gd/gd_mono_marshal.h"
 #include "core/class_db.h"
 #include "core/object.h"
-
-#include "../mono_gd/gd_mono_marshal.h"
 
 Object* godot_icall_Object_Ctor(MonoObject* p_obj);
 

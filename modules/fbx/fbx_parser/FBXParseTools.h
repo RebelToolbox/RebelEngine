@@ -34,9 +34,9 @@
 #include "core/error_macros.h"
 #include "core/ustring.h"
 
-#include <stdint.h>
 #include <algorithm>
 #include <locale>
+#include <stdint.h>
 
 template <class char_t>
 inline bool IsNewLine(char_t c) {

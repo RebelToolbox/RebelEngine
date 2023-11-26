@@ -32,24 +32,21 @@
 
 #include "os_iphone.h"
 
-#include "drivers/gles2/rasterizer_gles2.h"
-#include "drivers/gles3/rasterizer_gles3.h"
-#include "servers/visual/visual_server_raster.h"
-#include "servers/visual/visual_server_wrap_mt.h"
-
-#include "main/main.h"
-
+#import "app_delegate.h"
 #include "core/io/file_access_pack.h"
 #include "core/os/dir_access.h"
 #include "core/os/file_access.h"
 #include "core/project_settings.h"
-#include "drivers/unix/syslog_logger.h"
-
-#import "app_delegate.h"
 #import "device_metrics.h"
+#include "drivers/gles2/rasterizer_gles2.h"
+#include "drivers/gles3/rasterizer_gles3.h"
+#include "drivers/unix/syslog_logger.h"
 #import "godot_view.h"
 #import "keyboard_input_view.h"
+#include "main/main.h"
 #import "native_video_view.h"
+#include "servers/visual/visual_server_raster.h"
+#include "servers/visual/visual_server_wrap_mt.h"
 #import "view_controller.h"
 
 #import <UIKit/UIKit.h>

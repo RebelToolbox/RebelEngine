@@ -31,7 +31,6 @@
 #include "geometry.h"
 
 #include "core/print_string.h"
-
 #include "thirdparty/misc/clipper.hpp"
 #include "thirdparty/misc/triangulator.h"
 #define STB_RECT_PACK_IMPLEMENTATION

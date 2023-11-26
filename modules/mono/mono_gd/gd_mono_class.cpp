@@ -30,12 +30,12 @@
 
 #include "gd_mono_class.h"
 
-#include <mono/metadata/attrdefs.h>
-#include <mono/metadata/debug-helpers.h>
-
 #include "gd_mono_assembly.h"
 #include "gd_mono_cache.h"
 #include "gd_mono_marshal.h"
+
+#include <mono/metadata/attrdefs.h>
+#include <mono/metadata/debug-helpers.h>
 
 String GDMonoClass::get_full_name(MonoClass* p_mono_class) {
     // mono_type_get_full_name is not exposed to embedders, but this seems to do

@@ -30,18 +30,6 @@
 
 #include "gltf_document.h"
 
-#include "gltf_accessor.h"
-#include "gltf_animation.h"
-#include "gltf_camera.h"
-#include "gltf_light.h"
-#include "gltf_mesh.h"
-#include "gltf_node.h"
-#include "gltf_skeleton.h"
-#include "gltf_skin.h"
-#include "gltf_spec_gloss.h"
-#include "gltf_state.h"
-#include "gltf_texture.h"
-
 #include "core/bind/core_bind.h"
 #include "core/crypto/crypto_core.h"
 #include "core/error_list.h"
@@ -54,6 +42,18 @@
 #include "core/version_hash.gen.h"
 #include "drivers/png/png_driver_common.h"
 #include "editor/import/resource_importer_scene.h"
+#include "gltf_accessor.h"
+#include "gltf_animation.h"
+#include "gltf_camera.h"
+#include "gltf_light.h"
+#include "gltf_mesh.h"
+#include "gltf_node.h"
+#include "gltf_skeleton.h"
+#include "gltf_skin.h"
+#include "gltf_spec_gloss.h"
+#include "gltf_state.h"
+#include "gltf_texture.h"
+#include "modules/modules_enabled.gen.h" // For csg, gridmap, regex.
 #include "scene/2d/node_2d.h"
 #include "scene/3d/bone_attachment.h"
 #include "scene/3d/camera.h"
@@ -65,8 +65,6 @@
 #include "scene/main/node.h"
 #include "scene/resources/surface_tool.h"
 
-#include "modules/modules_enabled.gen.h" // For csg, gridmap, regex.
-
 #ifdef MODULE_CSG_ENABLED
 #include "modules/csg/csg_shape.h"
 #endif // MODULE_CSG_ENABLED
@@ -77,9 +75,9 @@
 #include "modules/regex/regex.h"
 #endif // MODULE_REGEX_ENABLED
 
+#include <limits>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits>
 
 Error GLTFDocument::serialize(
     Ref<GLTFState> state,

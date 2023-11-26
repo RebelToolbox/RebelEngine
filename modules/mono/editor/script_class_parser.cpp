@@ -30,10 +30,9 @@
 
 #include "script_class_parser.h"
 
+#include "../utils/string_utils.h"
 #include "core/map.h"
 #include "core/os/os.h"
-
-#include "../utils/string_utils.h"
 
 const char* ScriptClassParser::token_names[ScriptClassParser::TK_MAX] = {
     "[",

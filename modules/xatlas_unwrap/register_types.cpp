@@ -31,7 +31,6 @@
 #include "register_types.h"
 
 #include "core/error_macros.h"
-
 #include "thirdparty/xatlas/xatlas.h"
 
 #include <stdio.h>

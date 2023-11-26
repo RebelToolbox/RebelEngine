@@ -29,9 +29,9 @@
 /*************************************************************************/
 
 #include "step_sw.h"
-#include "joints_sw.h"
 
 #include "core/os/os.h"
+#include "joints_sw.h"
 
 void StepSW::_populate_island(
     BodySW* p_body,

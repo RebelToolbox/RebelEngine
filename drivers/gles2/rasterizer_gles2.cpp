@@ -72,12 +72,11 @@
 #endif
 
 #if !defined(GLES_OVER_GL) && defined(CAN_DEBUG)
+#include <EGL/egl.h>
+#include <EGL/eglext.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #include <GLES2/gl2platform.h>
-
-#include <EGL/egl.h>
-#include <EGL/eglext.h>
 #endif
 
 #if defined(MINGW_ENABLED) || defined(_MSC_VER)

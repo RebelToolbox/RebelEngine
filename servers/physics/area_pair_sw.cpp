@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "area_pair_sw.h"
+
 #include "collision_solver_sw.h"
 
 bool AreaPairSW::setup(real_t p_step) {

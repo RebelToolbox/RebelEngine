@@ -30,26 +30,25 @@
 
 #include "gd_mono.h"
 
+#include "../csharp_script.h"
+#include "../godotsharp_dirs.h"
+#include "../utils/path_utils.h"
+#include "core/os/dir_access.h"
+#include "core/os/file_access.h"
+#include "core/os/os.h"
+#include "core/os/thread.h"
+#include "core/project_settings.h"
+#include "gd_mono_cache.h"
+#include "gd_mono_class.h"
+#include "gd_mono_marshal.h"
+#include "gd_mono_utils.h"
+
 #include <mono/metadata/environment.h>
 #include <mono/metadata/exception.h>
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/mono-debug.h>
 #include <mono/metadata/mono-gc.h>
 #include <mono/metadata/profiler.h>
-
-#include "core/os/dir_access.h"
-#include "core/os/file_access.h"
-#include "core/os/os.h"
-#include "core/os/thread.h"
-#include "core/project_settings.h"
-
-#include "../csharp_script.h"
-#include "../godotsharp_dirs.h"
-#include "../utils/path_utils.h"
-#include "gd_mono_cache.h"
-#include "gd_mono_class.h"
-#include "gd_mono_marshal.h"
-#include "gd_mono_utils.h"
 
 #ifdef TOOLS_ENABLED
 #include "main/main.h"

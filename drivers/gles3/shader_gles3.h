@@ -35,7 +35,6 @@
 #include "core/map.h"
 #include "core/math/camera_matrix.h"
 #include "core/variant.h"
-
 #include "platform_config.h"
 #ifndef GLES3_INCLUDE_H
 #include <GLES3/gl3.h>

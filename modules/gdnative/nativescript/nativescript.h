@@ -40,9 +40,9 @@
 #include "core/safe_refcount.h"
 #include "core/script_language.h"
 #include "core/self_list.h"
+#include "modules/gdnative/gdnative.h"
 #include "scene/main/node.h"
 
-#include "modules/gdnative/gdnative.h"
 #include <nativescript/godot_nativescript.h>
 
 #ifndef NO_THREADS

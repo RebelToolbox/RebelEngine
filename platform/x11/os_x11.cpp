@@ -45,16 +45,15 @@
 #include <mntent.h>
 #endif
 
+#include <X11/Xatom.h>
+#include <X11/Xutil.h>
+#include <X11/extensions/Xinerama.h>
+#include <X11/extensions/shape.h>
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <X11/Xatom.h>
-#include <X11/Xutil.h>
-#include <X11/extensions/Xinerama.h>
-#include <X11/extensions/shape.h>
 
 // ICCCM
 #define WM_NormalState 1L // window normal state

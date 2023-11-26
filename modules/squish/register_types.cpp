@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "register_types.h"
+
 #include "image_compress_squish.h"
 
 void register_squish_types() {

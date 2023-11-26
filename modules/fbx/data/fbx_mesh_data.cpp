@@ -33,7 +33,6 @@
 #include "core/local_vector.h"
 #include "scene/resources/mesh.h"
 #include "scene/resources/surface_tool.h"
-
 #include "thirdparty/misc/triangulator.h"
 
 template <class T>

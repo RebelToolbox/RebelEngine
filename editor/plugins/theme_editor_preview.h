@@ -31,6 +31,7 @@
 #ifndef THEME_EDITOR_PREVIEW_H
 #define THEME_EDITOR_PREVIEW_H
 
+#include "editor/editor_node.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/check_box.h"
 #include "scene/gui/check_button.h"
@@ -49,8 +50,6 @@
 #include "scene/gui/text_edit.h"
 #include "scene/gui/tree.h"
 #include "scene/resources/theme.h"
-
-#include "editor/editor_node.h"
 
 class ThemeEditorPreview : public VBoxContainer {
     GDCLASS(ThemeEditorPreview, VBoxContainer);

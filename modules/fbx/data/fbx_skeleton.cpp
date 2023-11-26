@@ -31,7 +31,6 @@
 #include "fbx_skeleton.h"
 
 #include "import_state.h"
-
 #include "tools/import_utils.h"
 
 void FBXSkeleton::init_skeleton(const ImportState& state) {

@@ -36,11 +36,11 @@
 #else
 #include <Kernel/IOKit/hidsystem/IOHIDUsageTables.h>
 #endif
+#include "main/input_default.h"
+
 #include <ForceFeedback/ForceFeedback.h>
 #include <ForceFeedback/ForceFeedbackConstants.h>
 #include <IOKit/hid/IOHIDLib.h>
-
-#include "main/input_default.h"
 
 struct rec_element {
     IOHIDElementRef ref;

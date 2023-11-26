@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "broad_phase_octree.h"
+
 #include "collision_object_sw.h"
 
 BroadPhaseSW::ID BroadPhaseOctree::create(

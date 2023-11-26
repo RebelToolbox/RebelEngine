@@ -40,6 +40,7 @@
 #include "editor/rename_dialog.h"
 #include "editor/reparent_dialog.h"
 #include "editor/script_create_dialog.h"
+#include "modules/modules_enabled.gen.h" // For regex.
 #include "scene/animation/animation_player.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/button.h"
@@ -49,8 +50,6 @@
 #include "scene/gui/tool_button.h"
 #include "scene/gui/tree.h"
 #include "scene_tree_editor.h"
-
-#include "modules/modules_enabled.gen.h" // For regex.
 
 class EditorNode;
 

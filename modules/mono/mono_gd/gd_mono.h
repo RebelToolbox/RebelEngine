@@ -31,9 +31,8 @@
 #ifndef GD_MONO_H
 #define GD_MONO_H
 
-#include "core/io/config_file.h"
-
 #include "../godotsharp_defs.h"
+#include "core/io/config_file.h"
 #include "gd_mono_assembly.h"
 #include "gd_mono_log.h"
 

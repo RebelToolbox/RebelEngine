@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "polygon_path_finder.h"
+
 #include "core/math/geometry.h"
 
 bool PolygonPathFinder::_is_point_inside(const Vector2& p_point) const {

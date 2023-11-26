@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "register_types.h"
+
 #include "noise_texture.h"
 #include "open_simplex_noise.h"
 

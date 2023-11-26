@@ -31,7 +31,9 @@
 // Author: Juan Linietsky <reduzio@gmail.com>, (C) 2006
 
 #include "reverb.h"
+
 #include "core/math/math_funcs.h"
+
 #include <math.h>
 
 const float Reverb::comb_tunings[MAX_COMBS] = {

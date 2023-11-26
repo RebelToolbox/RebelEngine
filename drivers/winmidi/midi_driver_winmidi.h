@@ -38,9 +38,8 @@
 
 #include <stdio.h>
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-
 #include <mmsystem.h>
+#include <windows.h>
 
 class MIDIDriverWinMidi : public MIDIDriver {
     Vector<HMIDIIN> connected_sources;

@@ -31,6 +31,7 @@
 #define ENABLE_VHACD_IMPLEMENTATION 1
 
 #include "register_types.h"
+
 #include "scene/resources/mesh.h"
 #include "thirdparty/vhacd/include/VHACD.h"
 

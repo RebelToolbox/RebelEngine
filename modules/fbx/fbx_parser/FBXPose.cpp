@@ -76,6 +76,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "FBXDocument.h"
 #include "FBXParser.h"
+
 #include <iostream>
 
 namespace FBXDocParser

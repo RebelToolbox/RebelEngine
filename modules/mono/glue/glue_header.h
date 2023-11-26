@@ -52,6 +52,9 @@ void godot_register_glue_header_icalls() {
 
 // Used by the generated glue
 
+#include "../mono_gd/gd_mono_class.h"
+#include "../mono_gd/gd_mono_internals.h"
+#include "../mono_gd/gd_mono_utils.h"
 #include "core/array.h"
 #include "core/class_db.h"
 #include "core/dictionary.h"
@@ -62,10 +65,6 @@ void godot_register_glue_header_icalls() {
 #include "core/reference.h"
 #include "core/typedefs.h"
 #include "core/ustring.h"
-
-#include "../mono_gd/gd_mono_class.h"
-#include "../mono_gd/gd_mono_internals.h"
-#include "../mono_gd/gd_mono_utils.h"
 
 #define GODOTSHARP_INSTANCE_OBJECT(m_instance, m_type)                         \
     static ClassDB::ClassInfo* ci = NULL;                                      \

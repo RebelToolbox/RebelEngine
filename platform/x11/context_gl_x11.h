@@ -36,6 +36,7 @@
 #if defined(OPENGL_ENABLED)
 
 #include "core/os/os.h"
+
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrender.h>
 

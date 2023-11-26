@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "parallax_background.h"
+
 #include "parallax_layer.h"
 
 void ParallaxBackground::_notification(int p_what) {

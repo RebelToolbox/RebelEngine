@@ -31,11 +31,9 @@
 #include "gdnative/array.h"
 
 #include "core/array.h"
-#include "core/os/memory.h"
-
 #include "core/color.h"
+#include "core/os/memory.h"
 #include "core/pool_vector.h"
-
 #include "core/variant.h"
 
 #ifdef __cplusplus

@@ -30,18 +30,17 @@
 
 #include "gd_mono_assembly.h"
 
-#include <mono/metadata/mono-debug.h>
-#include <mono/metadata/tokentype.h>
-
+#include "../godotsharp_dirs.h"
 #include "core/io/file_access_pack.h"
 #include "core/list.h"
 #include "core/os/file_access.h"
 #include "core/os/os.h"
 #include "core/project_settings.h"
-
-#include "../godotsharp_dirs.h"
 #include "gd_mono_cache.h"
 #include "gd_mono_class.h"
+
+#include <mono/metadata/mono-debug.h>
+#include <mono/metadata/tokentype.h>
 
 Vector<String> GDMonoAssembly::search_dirs;
 

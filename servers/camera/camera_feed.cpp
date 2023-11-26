@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "camera_feed.h"
+
 #include "servers/visual_server.h"
 
 void CameraFeed::_bind_methods() {

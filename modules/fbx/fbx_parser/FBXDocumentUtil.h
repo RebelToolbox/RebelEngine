@@ -75,6 +75,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define FBX_DOCUMENT_UTIL_H
 
 #include "FBXDocument.h"
+
 #include <memory>
 #include <string>
 

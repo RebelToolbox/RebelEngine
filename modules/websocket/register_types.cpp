@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "register_types.h"
+
 #include "core/error_macros.h"
 #include "core/project_settings.h"
 #ifdef JAVASCRIPT_ENABLED

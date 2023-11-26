@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "physical_bone_plugin.h"
+
 #include "editor/plugins/spatial_editor_plugin.h"
 #include "scene/3d/physics_body.h"
 

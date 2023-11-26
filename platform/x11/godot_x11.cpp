@@ -28,13 +28,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
+#include "main/main.h"
+#include "os_x11.h"
+
 #include <limits.h>
 #include <locale.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-#include "main/main.h"
-#include "os_x11.h"
 
 int main(int argc, char* argv[]) {
     OS_X11 os;

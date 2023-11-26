@@ -34,13 +34,12 @@
 #include "modules/modules_enabled.gen.h" // For regex.
 #ifdef MODULE_REGEX_ENABLED
 
+#include "core/undo_redo.h"
+#include "editor/scene_tree_editor.h"
 #include "scene/gui/check_box.h"
 #include "scene/gui/dialogs.h"
 #include "scene/gui/option_button.h"
 #include "scene/gui/spin_box.h"
-
-#include "core/undo_redo.h"
-#include "editor/scene_tree_editor.h"
 
 /**
 @author Blazej Floch

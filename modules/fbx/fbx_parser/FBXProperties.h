@@ -77,6 +77,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define FBX_PROPERTIES_H
 
 #include "FBXParser.h"
+
 #include <map>
 #include <memory>
 #include <string>

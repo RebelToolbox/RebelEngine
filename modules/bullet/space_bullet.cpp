@@ -50,9 +50,8 @@
 #include <BulletCollision/NarrowPhaseCollision/btPointCollector.h>
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
-#include <btBulletDynamicsCommon.h>
-
 #include <assert.h>
+#include <btBulletDynamicsCommon.h>
 
 /**
     @author AndreaCatania

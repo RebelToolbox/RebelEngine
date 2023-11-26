@@ -35,7 +35,6 @@
 #include "core/os/keyboard.h"
 #include "editor/editor_node.h"
 #include "editor/editor_plugin.h"
-
 #include "scene/2d/collision_shape_2d.h"
 
 class CanvasItemEditor;

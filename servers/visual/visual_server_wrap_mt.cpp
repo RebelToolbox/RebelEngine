@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "visual_server_wrap_mt.h"
+
 #include "core/os/os.h"
 #include "core/project_settings.h"
 

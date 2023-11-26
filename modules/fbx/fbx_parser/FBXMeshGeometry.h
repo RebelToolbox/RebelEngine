@@ -73,13 +73,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef FBX_MESH_GEOMETRY_H
 #define FBX_MESH_GEOMETRY_H
 
+#include "FBXDocument.h"
+#include "FBXParser.h"
 #include "core/color.h"
 #include "core/math/vector2.h"
 #include "core/math/vector3.h"
 #include "core/vector.h"
-
-#include "FBXDocument.h"
-#include "FBXParser.h"
 
 #include <iostream>
 

@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "webrtc_data_channel.h"
+
 #include "core/project_settings.h"
 
 void WebRTCDataChannel::_bind_methods() {

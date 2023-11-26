@@ -35,9 +35,8 @@
 
 #include "core/os/mutex.h"
 #include "core/os/thread.h"
-#include "servers/audio_server.h"
-
 #include "pulse-so_wrap.h"
+#include "servers/audio_server.h"
 
 class AudioDriverPulseAudio : public AudioDriver {
     Thread thread;

@@ -31,11 +31,10 @@
 #ifndef GD_MONO_INTERNALS_H
 #define GD_MONO_INTERNALS_H
 
-#include <mono/jit/jit.h>
-
 #include "../utils/macros.h"
-
 #include "core/object.h"
+
+#include <mono/jit/jit.h>
 
 namespace GDMonoInternals
 {

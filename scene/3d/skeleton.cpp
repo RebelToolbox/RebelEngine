@@ -31,7 +31,6 @@
 #include "skeleton.h"
 
 #include "core/message_queue.h"
-
 #include "core/project_settings.h"
 #include "scene/3d/physics_body.h"
 #include "scene/resources/surface_tool.h"

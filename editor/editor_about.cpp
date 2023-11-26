@@ -29,13 +29,13 @@
 /*************************************************************************/
 
 #include "editor_about.h"
-#include "editor_node.h"
 
 #include "core/authors.gen.h"
 #include "core/donors.gen.h"
 #include "core/license.gen.h"
 #include "core/version.h"
 #include "core/version_hash.gen.h"
+#include "editor_node.h"
 
 // The metadata key used to store and retrieve the version text to copy to the
 // clipboard.

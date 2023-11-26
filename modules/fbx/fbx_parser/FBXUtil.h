@@ -77,6 +77,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define FBX_UTIL_H
 
 #include "FBXTokenizer.h"
+
 #include <stdint.h>
 
 namespace FBXDocParser

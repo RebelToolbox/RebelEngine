@@ -40,9 +40,8 @@
 #include <BulletCollision/CollisionDispatch/btGhostObject.h>
 #include <BulletCollision/CollisionShapes/btConvexPointCloudShape.h>
 #include <BulletDynamics/Dynamics/btRigidBody.h>
-#include <btBulletCollisionCommon.h>
-
 #include <assert.h>
+#include <btBulletCollisionCommon.h>
 
 /**
     @author AndreaCatania

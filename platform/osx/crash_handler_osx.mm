@@ -47,11 +47,10 @@
 #include <cxxabi.h>
 #include <dlfcn.h>
 #include <execinfo.h>
-#include <signal.h>
-#include <stdlib.h>
-
 #include <mach-o/dyld.h>
 #include <mach-o/getsect.h>
+#include <signal.h>
+#include <stdlib.h>
 
 static uint64_t load_address() {
     const struct segment_command_64* cmd = getsegbyname("__TEXT");

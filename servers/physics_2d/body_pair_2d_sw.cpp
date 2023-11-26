@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "body_pair_2d_sw.h"
+
 #include "collision_solver_2d_sw.h"
 #include "space_2d_sw.h"
 

@@ -30,9 +30,9 @@
 
 #ifdef TOOLS_ENABLED
 #include "gdnative_library_singleton_editor.h"
-#include "gdnative.h"
 
 #include "editor/editor_node.h"
+#include "gdnative.h"
 
 Set<String> GDNativeLibrarySingletonEditor::_find_singletons_recursive(
     EditorFileSystemDirectory* p_dir

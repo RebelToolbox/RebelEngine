@@ -32,6 +32,11 @@
 
 #if defined(DEBUG_METHODS_ENABLED) && defined(TOOLS_ENABLED)
 
+#include "../glue/cs_glue_version.gen.h"
+#include "../godotsharp_defs.h"
+#include "../mono_gd/gd_mono_marshal.h"
+#include "../utils/path_utils.h"
+#include "../utils/string_utils.h"
 #include "core/engine.h"
 #include "core/global_constants.h"
 #include "core/io/compression.h"
@@ -40,12 +45,6 @@
 #include "core/os/os.h"
 #include "core/ucaps.h"
 #include "main/main.h"
-
-#include "../glue/cs_glue_version.gen.h"
-#include "../godotsharp_defs.h"
-#include "../mono_gd/gd_mono_marshal.h"
-#include "../utils/path_utils.h"
-#include "../utils/string_utils.h"
 
 #define CS_INDENT "    " // 4 whitespaces
 

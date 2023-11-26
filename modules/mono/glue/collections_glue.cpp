@@ -32,11 +32,11 @@
 
 #ifdef MONO_GLUE_ENABLED
 
-#include <mono/metadata/exception.h>
-
 #include "../mono_gd/gd_mono_cache.h"
 #include "../mono_gd/gd_mono_class.h"
 #include "../mono_gd/gd_mono_utils.h"
+
+#include <mono/metadata/exception.h>
 
 Array* godot_icall_Array_Ctor() {
     return memnew(Array);

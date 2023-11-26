@@ -39,6 +39,7 @@
 #include "core/print_string.h"
 #include "core/project_settings.h"
 #include "main/input_default.h"
+#include "modules/modules_enabled.gen.h" // For freetype.
 #include "node.h"
 #include "scene/debugger/script_debugger_remote.h"
 #include "scene/resources/dynamic_font.h"
@@ -49,8 +50,6 @@
 #include "servers/physics_2d_server.h"
 #include "servers/physics_server.h"
 #include "viewport.h"
-
-#include "modules/modules_enabled.gen.h" // For freetype.
 
 #include <stdio.h>
 #include <stdlib.h>

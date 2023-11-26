@@ -28,8 +28,6 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "variant.h"
-
 #include "core/color_names.inc"
 #include "core/core_string_names.h"
 #include "core/crypto/crypto_core.h"
@@ -38,6 +36,7 @@
 #include "core/object_rc.h"
 #include "core/os/os.h"
 #include "core/script_language.h"
+#include "variant.h"
 
 typedef void (*VariantFunc)(
     Variant& r_ret,

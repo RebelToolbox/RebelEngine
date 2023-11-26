@@ -35,10 +35,9 @@
 #include "core/os/os.h"
 #include "core/print_string.h"
 
+#include <errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-
-#include <errno.h>
 
 #if defined(UNIX_ENABLED)
 #include <unistd.h>

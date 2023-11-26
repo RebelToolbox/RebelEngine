@@ -32,7 +32,6 @@
 #define GODOT_UPNP_H
 
 #include "core/reference.h"
-
 #include "upnp_device.h"
 
 #include <miniupnpc/miniupnpc.h>

@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "visual_server_canvas.h"
+
 #include "visual_server_globals.h"
 #include "visual_server_raster.h"
 #include "visual_server_viewport.h"

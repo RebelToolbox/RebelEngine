@@ -32,9 +32,8 @@
 #define AUDIO_STREAM_MP3_H
 
 #include "core/io/resource_loader.h"
-#include "servers/audio/audio_stream.h"
-
 #include "minimp3_ex.h"
+#include "servers/audio/audio_stream.h"
 
 class AudioStreamMP3;
 

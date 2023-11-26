@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "collision_solver_2d_sw.h"
+
 #include "collision_solver_2d_sat.h"
 
 #define collision_solver sat_2d_calculate_penetration

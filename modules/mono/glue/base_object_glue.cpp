@@ -32,9 +32,6 @@
 
 #ifdef MONO_GLUE_ENABLED
 
-#include "core/reference.h"
-#include "core/string_name.h"
-
 #include "../csharp_script.h"
 #include "../mono_gd/gd_mono_cache.h"
 #include "../mono_gd/gd_mono_class.h"
@@ -42,6 +39,8 @@
 #include "../mono_gd/gd_mono_utils.h"
 #include "../signal_awaiter_utils.h"
 #include "arguments_vector.h"
+#include "core/reference.h"
+#include "core/string_name.h"
 
 Object* godot_icall_Object_Ctor(MonoObject* p_obj) {
     Object* instance = memnew(Object);

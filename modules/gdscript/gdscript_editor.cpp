@@ -28,11 +28,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "gdscript.h"
-
 #include "core/engine.h"
 #include "core/global_constants.h"
 #include "core/os/file_access.h"
+#include "gdscript.h"
 #include "gdscript_compiler.h"
 
 #ifdef TOOLS_ENABLED

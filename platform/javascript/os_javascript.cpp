@@ -41,13 +41,13 @@
 #include "servers/visual/visual_server_wrap_mt.h"
 #endif
 
+#include "dom_keys.inc"
+#include "godot_js.h"
+
 #include <dlfcn.h>
 #include <emscripten.h>
 #include <png.h>
 #include <stdlib.h>
-
-#include "dom_keys.inc"
-#include "godot_js.h"
 
 #define DOM_BUTTON_LEFT 0
 #define DOM_BUTTON_MIDDLE 1

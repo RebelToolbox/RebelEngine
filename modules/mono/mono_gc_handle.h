@@ -31,9 +31,9 @@
 #ifndef CSHARP_GC_HANDLE_H
 #define CSHARP_GC_HANDLE_H
 
-#include <mono/jit/jit.h>
-
 #include "core/reference.h"
+
+#include <mono/jit/jit.h>
 
 class MonoGCHandle : public Reference {
     GDCLASS(MonoGCHandle, Reference);

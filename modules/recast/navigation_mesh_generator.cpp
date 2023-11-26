@@ -33,6 +33,7 @@
 #include "core/math/convex_hull.h"
 #include "core/os/thread.h"
 #include "editor/editor_settings.h"
+#include "modules/modules_enabled.gen.h" // For csg, gridmap.
 #include "scene/3d/collision_shape.h"
 #include "scene/3d/mesh_instance.h"
 #include "scene/3d/physics_body.h"
@@ -45,8 +46,6 @@
 #include "scene/resources/primitive_meshes.h"
 #include "scene/resources/shape.h"
 #include "scene/resources/sphere_shape.h"
-
-#include "modules/modules_enabled.gen.h" // For csg, gridmap.
 #ifdef MODULE_CSG_ENABLED
 #include "modules/csg/csg_shape.h"
 #endif

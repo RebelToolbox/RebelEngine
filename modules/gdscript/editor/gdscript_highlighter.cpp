@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "gdscript_highlighter.h"
+
 #include "../gdscript_tokenizer.h"
 #include "editor/editor_settings.h"
 #include "scene/gui/text_edit.h"

@@ -30,16 +30,15 @@
 
 #include "godotsharp_export.h"
 
-#include <mono/metadata/image.h>
-
-#include "core/io/file_access_pack.h"
-#include "core/os/os.h"
-#include "core/project_settings.h"
-
 #include "../mono_gd/gd_mono.h"
 #include "../mono_gd/gd_mono_assembly.h"
 #include "../mono_gd/gd_mono_cache.h"
 #include "../utils/macros.h"
+#include "core/io/file_access_pack.h"
+#include "core/os/os.h"
+#include "core/project_settings.h"
+
+#include <mono/metadata/image.h>
 
 namespace GodotSharpExport
 {

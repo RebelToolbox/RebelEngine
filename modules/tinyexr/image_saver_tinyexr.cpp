@@ -29,8 +29,8 @@
 /*************************************************************************/
 
 #include "image_saver_tinyexr.h"
-#include "core/math/math_funcs.h"
 
+#include "core/math/math_funcs.h"
 #include "thirdparty/tinyexr/tinyexr.h"
 
 #include <cstdlib>

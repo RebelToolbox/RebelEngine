@@ -33,7 +33,6 @@
 
 #include "core/map.h"
 #include "core/ustring.h"
-
 #include "gd_mono_field.h"
 #include "gd_mono_header.h"
 #include "gd_mono_method.h"

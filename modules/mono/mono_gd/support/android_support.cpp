@@ -32,10 +32,10 @@
 
 #if defined(ANDROID_ENABLED)
 
+#include <cstddef>
 #include <dlfcn.h> // dlopen, dlsym
 #include <mono/utils/mono-dl-fallback.h>
 #include <sys/system_properties.h>
-#include <cstddef>
 
 #if __ANDROID_API__ < 24
 #include "thirdparty/misc/ifaddrs-android.h"
@@ -43,16 +43,15 @@
 #include <ifaddrs.h>
 #endif
 
+#include "../../utils/path_utils.h"
+#include "../../utils/string_utils.h"
+#include "../gd_mono_cache.h"
+#include "../gd_mono_marshal.h"
 #include "core/os/os.h"
 #include "core/ustring.h"
 #include "platform/android/java_godot_wrapper.h"
 #include "platform/android/os_android.h"
 #include "platform/android/thread_jandroid.h"
-
-#include "../../utils/path_utils.h"
-#include "../../utils/string_utils.h"
-#include "../gd_mono_cache.h"
-#include "../gd_mono_marshal.h"
 
 // Warning: JNI boilerplate ahead... continue at your own risk
 

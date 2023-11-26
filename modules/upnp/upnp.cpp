@@ -32,7 +32,6 @@
 
 #include <miniupnpc/miniwget.h>
 #include <miniupnpc/upnpcommands.h>
-
 #include <stdlib.h>
 
 bool UPNP::is_common_device(const String& dev) const {

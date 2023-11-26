@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "canvas_item.h"
+
 #include "core/message_queue.h"
 #include "core/method_bind_ext.gen.inc"
 #include "core/os/input.h"

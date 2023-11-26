@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "animation_blend_space_2d.h"
+
 #include "core/math/delaunay.h"
 
 void AnimationNodeBlendSpace2D::get_parameter_list(List<PropertyInfo>* r_list

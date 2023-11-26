@@ -38,7 +38,6 @@
 #include "servers/visual/shader_language.h"
 #include "shader_compiler_gles2.h"
 #include "shader_gles2.h"
-
 #include "shaders/copy.glsl.gen.h"
 #include "shaders/cubemap_filter.glsl.gen.h"
 

@@ -31,7 +31,6 @@
 #include "register_types.h"
 
 #include "core/engine.h"
-
 #include "csharp_script.h"
 
 CSharpLanguage* script_language_cs = NULL;

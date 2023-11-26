@@ -31,6 +31,7 @@
 #ifdef JAVASCRIPT_ENABLED
 
 #include "emws_server.h"
+
 #include "core/os/os.h"
 
 Error EMWSServer::listen(

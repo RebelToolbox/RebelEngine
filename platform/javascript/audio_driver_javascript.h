@@ -33,9 +33,8 @@
 
 #include "core/os/mutex.h"
 #include "core/os/thread.h"
-#include "servers/audio_server.h"
-
 #include "godot_audio.h"
+#include "servers/audio_server.h"
 
 class AudioDriverJavaScript : public AudioDriver {
 private:

@@ -35,7 +35,6 @@
 #include "core/io/resource_saver.h"
 #include "core/script_language.h"
 #include "core/self_list.h"
-
 #include "mono_gc_handle.h"
 #include "mono_gd/gd_mono.h"
 #include "mono_gd/gd_mono_header.h"

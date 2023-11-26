@@ -31,12 +31,14 @@
 #ifdef JAVASCRIPT_ENABLED
 
 #include "webxr_interface_js.h"
+
 #include "core/os/input.h"
 #include "core/os/os.h"
 #include "emscripten.h"
 #include "godot_webxr.h"
 #include "main/input_default.h"
 #include "servers/visual/visual_server_globals.h"
+
 #include <stdlib.h>
 
 void _emwebxr_on_session_supported(char* p_session_mode, int p_supported) {

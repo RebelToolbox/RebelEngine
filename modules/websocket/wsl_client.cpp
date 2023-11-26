@@ -31,6 +31,7 @@
 #ifndef JAVASCRIPT_ENABLED
 
 #include "wsl_client.h"
+
 #include "core/io/ip.h"
 #include "core/project_settings.h"
 

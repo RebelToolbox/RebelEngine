@@ -34,6 +34,7 @@
 #include "core/math/camera_matrix.h"
 #include "core/math/math_funcs.h"
 #include "core/math/transform.h"
+#include "core/method_ptrcall.h"
 #include "core/os/file_access.h"
 #include "core/os/keyboard.h"
 #include "core/os/os.h"
@@ -44,8 +45,6 @@
 #include "scene/main/node.h"
 #include "scene/resources/texture.h"
 #include "servers/visual/shader_language.h"
-
-#include "core/method_ptrcall.h"
 
 namespace TestMath
 {

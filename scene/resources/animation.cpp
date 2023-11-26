@@ -29,9 +29,9 @@
 /*************************************************************************/
 
 #include "animation.h"
-#include "scene/scene_string_names.h"
 
 #include "core/math/geometry.h"
+#include "scene/scene_string_names.h"
 
 bool Animation::_set(const StringName& p_name, const Variant& p_value) {
     String name = p_name;

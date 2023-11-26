@@ -30,13 +30,13 @@
 
 #include "csharp_script.h"
 
-#include <mono/metadata/threads.h>
-
 #include "core/io/json.h"
 #include "core/os/file_access.h"
 #include "core/os/os.h"
 #include "core/os/thread.h"
 #include "core/project_settings.h"
+
+#include <mono/metadata/threads.h>
 
 #ifdef TOOLS_ENABLED
 #include "core/os/keyboard.h"

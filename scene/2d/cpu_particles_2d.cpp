@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "cpu_particles_2d.h"
+
 #include "core/core_string_names.h"
 #include "scene/2d/canvas_item.h"
 #include "scene/2d/particles_2d.h"

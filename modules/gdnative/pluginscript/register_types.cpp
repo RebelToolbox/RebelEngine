@@ -35,10 +35,10 @@
 #include "core/os/dir_access.h"
 #include "core/os/os.h"
 #include "core/project_settings.h"
-#include "scene/main/scene_tree.h"
-
 #include "pluginscript_language.h"
 #include "pluginscript_script.h"
+#include "scene/main/scene_tree.h"
+
 #include <pluginscript/godot_pluginscript.h>
 
 static List<PluginScriptLanguage*> pluginscript_languages;

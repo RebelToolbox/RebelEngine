@@ -29,8 +29,6 @@
 /*************************************************************************/
 
 #include "register_server_types.h"
-#include "core/engine.h"
-#include "core/project_settings.h"
 
 #include "arvr/arvr_interface.h"
 #include "arvr/arvr_positional_tracker.h"
@@ -57,6 +55,8 @@
 #include "audio_server.h"
 #include "camera/camera_feed.h"
 #include "camera_server.h"
+#include "core/engine.h"
+#include "core/project_settings.h"
 #include "physics/physics_server_sw.h"
 #include "physics_2d/physics_2d_server_sw.h"
 #include "physics_2d/physics_2d_server_wrap_mt.h"

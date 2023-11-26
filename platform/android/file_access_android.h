@@ -32,6 +32,7 @@
 #define FILE_ACCESS_ANDROID_H
 
 #include "core/os/file_access.h"
+
 #include <android/asset_manager.h>
 #include <android/log.h>
 #include <stdio.h>

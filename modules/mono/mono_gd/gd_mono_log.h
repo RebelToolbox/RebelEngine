@@ -31,9 +31,9 @@
 #ifndef GD_MONO_LOG_H
 #define GD_MONO_LOG_H
 
-#include <mono/utils/mono-logger.h>
-
 #include "core/typedefs.h"
+
+#include <mono/utils/mono-logger.h>
 
 #if !defined(JAVASCRIPT_ENABLED) && !defined(IPHONE_ENABLED)
 // We have custom mono log callbacks for WASM and iOS

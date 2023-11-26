@@ -36,6 +36,7 @@
 #include "core/os/os.h"
 #include "core/print_string.h"
 #include "scene/2d/sprite.h"
+#include "scene/3d/camera.h"
 #include "scene/gui/button.h"
 #include "scene/gui/control.h"
 #include "scene/gui/label.h"
@@ -52,8 +53,6 @@
 #include "scene/gui/texture_rect.h"
 #include "scene/gui/tree.h"
 #include "scene/main/scene_tree.h"
-
-#include "scene/3d/camera.h"
 #include "scene/main/viewport.h"
 
 namespace TestGUI

@@ -30,29 +30,27 @@
 
 #include "editor_scene_importer_fbx.h"
 
+#include "core/io/image_loader.h"
 #include "data/fbx_anim_container.h"
 #include "data/fbx_material.h"
 #include "data/fbx_mesh_data.h"
 #include "data/fbx_skeleton.h"
-#include "tools/import_utils.h"
-
-#include "core/io/image_loader.h"
 #include "editor/editor_log.h"
 #include "editor/editor_node.h"
 #include "editor/import/resource_importer_scene.h"
-#include "scene/3d/bone_attachment.h"
-#include "scene/3d/camera.h"
-#include "scene/3d/light.h"
-#include "scene/3d/mesh_instance.h"
-#include "scene/main/node.h"
-#include "scene/resources/material.h"
-
 #include "fbx_parser/FBXDocument.h"
 #include "fbx_parser/FBXImportSettings.h"
 #include "fbx_parser/FBXMeshGeometry.h"
 #include "fbx_parser/FBXParser.h"
 #include "fbx_parser/FBXProperties.h"
 #include "fbx_parser/FBXTokenizer.h"
+#include "scene/3d/bone_attachment.h"
+#include "scene/3d/camera.h"
+#include "scene/3d/light.h"
+#include "scene/3d/mesh_instance.h"
+#include "scene/main/node.h"
+#include "scene/resources/material.h"
+#include "tools/import_utils.h"
 
 #include <string>
 

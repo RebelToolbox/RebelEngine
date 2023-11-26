@@ -31,11 +31,10 @@
 #ifndef FBX_SKELETON_H
 #define FBX_SKELETON_H
 
+#include "core/reference.h"
 #include "fbx_bone.h"
 #include "fbx_node.h"
 #include "model_abstraction.h"
-
-#include "core/reference.h"
 #include "scene/3d/skeleton.h"
 
 struct FBXNode;

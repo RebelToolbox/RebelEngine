@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "audio_effect_stereo_enhance.h"
+
 #include "servers/audio_server.h"
 
 void AudioEffectStereoEnhanceInstance::process(

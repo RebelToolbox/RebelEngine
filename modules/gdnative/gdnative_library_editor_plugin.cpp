@@ -30,9 +30,9 @@
 
 #ifdef TOOLS_ENABLED
 #include "gdnative_library_editor_plugin.h"
-#include "gdnative.h"
 
 #include "editor/editor_scale.h"
+#include "gdnative.h"
 
 void GDNativeLibraryEditor::edit(Ref<GDNativeLibrary> p_library) {
     library = p_library;

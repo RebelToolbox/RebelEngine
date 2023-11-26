@@ -29,8 +29,8 @@
 /*************************************************************************/
 
 #include "collision_solver_sat.h"
-#include "core/math/geometry.h"
 
+#include "core/math/geometry.h"
 #include "gjk_epa.h"
 
 #define fallback_collision_solver gjk_epa_calculate_penetration

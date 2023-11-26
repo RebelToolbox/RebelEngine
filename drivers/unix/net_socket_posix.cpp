@@ -48,7 +48,6 @@
 #include <sys/ioctl.h>
 #endif
 #include <netinet/in.h>
-
 #include <sys/socket.h>
 #ifdef JAVASCRIPT_ENABLED
 #include <arpa/inet.h>
@@ -75,10 +74,9 @@
 
 /* Windows */
 #elif defined(WINDOWS_ENABLED)
+#include <mswsock.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-
-#include <mswsock.h>
 // Some custom defines to minimize ifdefs
 #define SOCK_EMPTY INVALID_SOCKET
 #define SOCK_BUF(x) (char*)(x)

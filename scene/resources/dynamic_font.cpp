@@ -31,10 +31,9 @@
 #include "modules/modules_enabled.gen.h" // For freetype.
 #ifdef MODULE_FREETYPE_ENABLED
 
-#include "dynamic_font.h"
-
 #include "core/os/file_access.h"
 #include "core/os/os.h"
+#include "dynamic_font.h"
 
 #include FT_STROKER_H
 

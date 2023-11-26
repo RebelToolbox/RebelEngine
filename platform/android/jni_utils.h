@@ -32,6 +32,7 @@
 #define JNI_UTILS_H
 
 #include "string_android.h"
+
 #include <core/engine.h>
 #include <core/variant.h>
 #include <jni.h>

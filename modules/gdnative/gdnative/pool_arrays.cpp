@@ -31,12 +31,11 @@
 #include "gdnative/pool_arrays.h"
 
 #include "core/array.h"
-#include "core/pool_vector.h"
-#include "core/variant.h"
-
 #include "core/color.h"
 #include "core/math/vector2.h"
 #include "core/math/vector3.h"
+#include "core/pool_vector.h"
+#include "core/variant.h"
 
 #ifdef __cplusplus
 extern "C" {

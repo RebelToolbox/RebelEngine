@@ -31,15 +31,14 @@
 #ifndef MATERIAL_EDITOR_PLUGIN_H
 #define MATERIAL_EDITOR_PLUGIN_H
 
-#include "editor/property_editor.h"
-#include "scene/resources/primitive_meshes.h"
-
 #include "editor/editor_node.h"
 #include "editor/editor_plugin.h"
+#include "editor/property_editor.h"
 #include "scene/3d/camera.h"
 #include "scene/3d/light.h"
 #include "scene/3d/mesh_instance.h"
 #include "scene/resources/material.h"
+#include "scene/resources/primitive_meshes.h"
 
 class ViewportContainer;
 

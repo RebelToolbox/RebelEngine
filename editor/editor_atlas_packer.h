@@ -32,7 +32,6 @@
 #define EDITOR_ATLAS_PACKER_H
 
 #include "core/math/vector2.h"
-
 #include "core/vector.h"
 #include "scene/resources/bit_map.h"
 

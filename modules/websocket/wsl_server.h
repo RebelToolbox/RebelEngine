@@ -33,12 +33,11 @@
 
 #ifndef JAVASCRIPT_ENABLED
 
-#include "websocket_server.h"
-#include "wsl_peer.h"
-
 #include "core/io/stream_peer_ssl.h"
 #include "core/io/stream_peer_tcp.h"
 #include "core/io/tcp_server.h"
+#include "websocket_server.h"
+#include "wsl_peer.h"
 
 class WSLServer : public WebSocketServer {
     GDCIIMPL(WSLServer, WebSocketServer);

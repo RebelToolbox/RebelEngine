@@ -32,14 +32,12 @@
 #define RASTERIZERCANVASBASEGLES2_H
 
 #include "drivers/gles_common/rasterizer_array.h"
+#include "drivers/gles_common/rasterizer_storage_common.h"
 #include "rasterizer_storage_gles2.h"
 #include "servers/visual/rasterizer.h"
-
 #include "shaders/canvas.glsl.gen.h"
-#include "shaders/lens_distorted.glsl.gen.h"
-
-#include "drivers/gles_common/rasterizer_storage_common.h"
 #include "shaders/canvas_shadow.glsl.gen.h"
+#include "shaders/lens_distorted.glsl.gen.h"
 
 class RasterizerCanvasBaseGLES2 : public RasterizerCanvas {
 public:

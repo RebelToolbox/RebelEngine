@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "option_button.h"
+
 #include "core/print_string.h"
 
 Size2 OptionButton::get_minimum_size() const {

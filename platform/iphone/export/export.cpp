@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "export.h"
+
 #include "core/io/image_loader.h"
 #include "core/io/marshalls.h"
 #include "core/io/resource_saver.h"

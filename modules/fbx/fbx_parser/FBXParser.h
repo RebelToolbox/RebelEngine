@@ -76,16 +76,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef FBX_PARSER_H
 #define FBX_PARSER_H
 
-#include <stdint.h>
-#include <map>
-#include <memory>
-
+#include "FBXTokenizer.h"
 #include "core/color.h"
 #include "core/math/transform.h"
 #include "core/math/vector2.h"
 #include "core/math/vector3.h"
 
-#include "FBXTokenizer.h"
+#include <map>
+#include <memory>
+#include <stdint.h>
 
 namespace FBXDocParser
 {

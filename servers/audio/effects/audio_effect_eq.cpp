@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "audio_effect_eq.h"
+
 #include "servers/audio_server.h"
 
 void AudioEffectEQInstance::process(

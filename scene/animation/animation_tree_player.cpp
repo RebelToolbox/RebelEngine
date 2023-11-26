@@ -29,8 +29,8 @@
 /*************************************************************************/
 
 #include "animation_tree_player.h"
-#include "animation_player.h"
 
+#include "animation_player.h"
 #include "scene/scene_string_names.h"
 
 void AnimationTreePlayer::set_animation_process_mode(AnimationProcessMode p_mode

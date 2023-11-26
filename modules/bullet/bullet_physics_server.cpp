@@ -42,7 +42,6 @@
 #include "slider_joint_bullet.h"
 
 #include <LinearMath/btVector3.h>
-
 #include <assert.h>
 
 /**

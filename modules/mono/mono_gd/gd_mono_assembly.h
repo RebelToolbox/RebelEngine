@@ -31,13 +31,13 @@
 #ifndef GD_MONO_ASSEMBLY_H
 #define GD_MONO_ASSEMBLY_H
 
-#include <mono/jit/jit.h>
-#include <mono/metadata/assembly.h>
-
 #include "core/hash_map.h"
 #include "core/map.h"
 #include "core/ustring.h"
 #include "gd_mono_utils.h"
+
+#include <mono/jit/jit.h>
+#include <mono/metadata/assembly.h>
 
 class GDMonoAssembly {
     struct ClassKey {

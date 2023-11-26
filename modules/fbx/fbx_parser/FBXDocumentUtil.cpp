@@ -75,6 +75,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "FBXDocumentUtil.h"
+
 #include "FBXDocument.h"
 #include "FBXParser.h"
 #include "FBXProperties.h"

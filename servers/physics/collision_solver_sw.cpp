@@ -29,8 +29,8 @@
 /*************************************************************************/
 
 #include "collision_solver_sw.h"
-#include "collision_solver_sat.h"
 
+#include "collision_solver_sat.h"
 #include "gjk_epa.h"
 
 #define collision_solver sat_calculate_penetration

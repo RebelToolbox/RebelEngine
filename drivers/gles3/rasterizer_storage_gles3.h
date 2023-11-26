@@ -37,7 +37,6 @@
 #include "servers/visual/shader_language.h"
 #include "shader_compiler_gles3.h"
 #include "shader_gles3.h"
-
 #include "shaders/blend_shape.glsl.gen.h"
 #include "shaders/canvas.glsl.gen.h"
 #include "shaders/copy.glsl.gen.h"

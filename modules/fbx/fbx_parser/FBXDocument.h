@@ -41,8 +41,9 @@
 #include "core/math/vector2.h"
 #include "core/math/vector3.h"
 #include "core/print_string.h"
-#include <stdint.h>
+
 #include <numeric>
+#include <stdint.h>
 
 #define _AI_CONCAT(a, b) a##b
 #define AI_CONCAT(a, b) _AI_CONCAT(a, b)

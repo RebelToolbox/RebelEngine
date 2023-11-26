@@ -34,6 +34,7 @@
 #include "bullet_types_converter.h"
 #include "collision_object_bullet.h"
 #include "rigid_body_bullet.h"
+
 #include <BulletCollision/CollisionDispatch/btInternalEdgeUtility.h>
 
 /**

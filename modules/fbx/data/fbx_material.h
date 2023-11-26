@@ -31,10 +31,9 @@
 #ifndef FBX_MATERIAL_H
 #define FBX_MATERIAL_H
 
-#include "tools/import_utils.h"
-
 #include "core/reference.h"
 #include "core/ustring.h"
+#include "tools/import_utils.h"
 
 struct FBXMaterial : public Reference {
     String material_name = String();
