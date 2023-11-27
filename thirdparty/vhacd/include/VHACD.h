@@ -7607,16 +7607,16 @@ void VHACDImpl::PerformConvexDecomposition()
                                 break;
                             }
                             ConvexHull* secondHull = i.second;
-                            CostTask t;
-                            t.m_hullA = combinedHull;
-                            t.m_hullB = secondHull;
-                            t.m_this = this;
-                            if ( DoFastCost(t) )
+                            CostTask ct;
+                            ct.m_hullA = combinedHull;
+                            ct.m_hullB = secondHull;
+                            ct.m_this = this;
+                            if ( DoFastCost(ct) )
                             {
                             }
                             else
                             {
-                                tasks.push_back(std::move(t));
+                                tasks.push_back(std::move(ct));
                             }
                         }
                         m_hulls[combinedHull->m_meshId] = combinedHull;
