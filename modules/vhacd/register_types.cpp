@@ -28,9 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
+#define ENABLE_VHACD_IMPLEMENTATION 1
+
 #include "register_types.h"
 #include "scene/resources/mesh.h"
-#include "thirdparty/vhacd/public/VHACD.h"
+#include "thirdparty/vhacd/include/VHACD.h"
 
 static Vector<PoolVector<Vector3>> convex_decompose(const real_t *p_vertices, int p_vertex_count, const uint32_t *p_triangles, int p_triangle_count, int p_max_convex_hulls = -1, Vector<PoolVector<uint32_t>> *r_convex_indices = nullptr) {
 	VHACD::IVHACD::Parameters params;
@@ -55,20 +57,22 @@ static Vector<PoolVector<Vector3>> convex_decompose(const real_t *p_vertices, in
 		decomposer->GetConvexHull(i, hull);
 
 		PoolVector<Vector3> &points = ret.write[i];
-		points.resize(hull.m_nPoints);
+		points.resize(hull.m_points.size());
 
-		PoolVector<Vector3>::Write w = points.write();
-		for (uint32_t j = 0; j < hull.m_nPoints; ++j) {
-			for (int k = 0; k < 3; k++) {
-				w[j][k] = hull.m_points[j * 3 + k];
-			}
+		PoolVector<Vector3>::Write write_points = points.write();
+		for (uint32_t j = 0; j < hull.m_points.size(); ++j) {
+			write_points[j] = Vector3(hull.m_points[j].mX, hull.m_points[j].mY, hull.m_points[j].mZ);
 		}
 
 		if (r_convex_indices) {
 			PoolVector<uint32_t> &indices = r_convex_indices->write[i];
-			indices.resize(hull.m_nTriangles * 3);
-
-			memcpy(indices.write().ptr(), hull.m_triangles, hull.m_nTriangles * 3 * sizeof(uint32_t));
+			PoolVector<uint32_t>::Write write_indices = indices.write();
+			indices.resize(hull.m_triangles.size() * 3);
+			for (uint32_t j = 0; j < hull.m_triangles.size(); ++j) {
+				write_indices[j * 3 + 0] = hull.m_triangles[j].mI0;
+				write_indices[j * 3 + 1] = hull.m_triangles[j].mI1;
+				write_indices[j * 3 + 2] = hull.m_triangles[j].mI2;
+			}
 		}
 	}
 
