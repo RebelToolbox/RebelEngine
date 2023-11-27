@@ -514,12 +514,12 @@ Files extracted from upstream source:
 ## vhacd
 
 - Upstream: https://github.com/kmammou/v-hacd
-- Version: git (b07958e18e01d504e3af80eeaeb9f033226533d7, 2019)
+- Version: 4.1
 - License: BSD-3-Clause
 
 Files extracted from upstream source:
 
-- From `src/VHACD_Lib/`: `inc`, `public` and `src`
+- `include`
 - `LICENSE`
 
 Some downstream changes have been made and are identified by
