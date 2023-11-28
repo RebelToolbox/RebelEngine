@@ -37,127 +37,127 @@
 namespace GDMonoCache {
 
 struct CachedData {
-	// -----------------------------------------------
-	// corlib classes
+    // -----------------------------------------------
+    // corlib classes
 
-	// Let's use the no-namespace format for these too
-	GDMonoClass *class_MonoObject; // object
-	GDMonoClass *class_bool; // bool
-	GDMonoClass *class_int8_t; // sbyte
-	GDMonoClass *class_int16_t; // short
-	GDMonoClass *class_int32_t; // int
-	GDMonoClass *class_int64_t; // long
-	GDMonoClass *class_uint8_t; // byte
-	GDMonoClass *class_uint16_t; // ushort
-	GDMonoClass *class_uint32_t; // uint
-	GDMonoClass *class_uint64_t; // ulong
-	GDMonoClass *class_float; // float
-	GDMonoClass *class_double; // double
-	GDMonoClass *class_String; // string
-	GDMonoClass *class_IntPtr; // System.IntPtr
+    // Let's use the no-namespace format for these too
+    GDMonoClass *class_MonoObject; // object
+    GDMonoClass *class_bool; // bool
+    GDMonoClass *class_int8_t; // sbyte
+    GDMonoClass *class_int16_t; // short
+    GDMonoClass *class_int32_t; // int
+    GDMonoClass *class_int64_t; // long
+    GDMonoClass *class_uint8_t; // byte
+    GDMonoClass *class_uint16_t; // ushort
+    GDMonoClass *class_uint32_t; // uint
+    GDMonoClass *class_uint64_t; // ulong
+    GDMonoClass *class_float; // float
+    GDMonoClass *class_double; // double
+    GDMonoClass *class_String; // string
+    GDMonoClass *class_IntPtr; // System.IntPtr
 
-	GDMonoClass *class_System_Collections_IEnumerable;
-	GDMonoClass *class_System_Collections_ICollection;
-	GDMonoClass *class_System_Collections_IDictionary;
-
-#ifdef DEBUG_ENABLED
-	GDMonoClass *class_System_Diagnostics_StackTrace;
-	GDMonoMethodThunkR<MonoArray *, MonoObject *> methodthunk_System_Diagnostics_StackTrace_GetFrames;
-	GDMonoMethod *method_System_Diagnostics_StackTrace_ctor_bool;
-	GDMonoMethod *method_System_Diagnostics_StackTrace_ctor_Exception_bool;
-#endif
-
-	GDMonoClass *class_KeyNotFoundException;
-
-	MonoClass *rawclass_Dictionary;
-	// -----------------------------------------------
-
-	GDMonoClass *class_Vector2;
-	GDMonoClass *class_Rect2;
-	GDMonoClass *class_Transform2D;
-	GDMonoClass *class_Vector3;
-	GDMonoClass *class_Basis;
-	GDMonoClass *class_Quat;
-	GDMonoClass *class_Transform;
-	GDMonoClass *class_AABB;
-	GDMonoClass *class_Color;
-	GDMonoClass *class_Plane;
-	GDMonoClass *class_NodePath;
-	GDMonoClass *class_RID;
-	GDMonoClass *class_GodotObject;
-	GDMonoClass *class_GodotResource;
-	GDMonoClass *class_Node;
-	GDMonoClass *class_Control;
-	GDMonoClass *class_Spatial;
-	GDMonoClass *class_WeakRef;
-	GDMonoClass *class_Array;
-	GDMonoClass *class_Dictionary;
-	GDMonoClass *class_MarshalUtils;
-	GDMonoClass *class_ISerializationListener;
+    GDMonoClass *class_System_Collections_IEnumerable;
+    GDMonoClass *class_System_Collections_ICollection;
+    GDMonoClass *class_System_Collections_IDictionary;
 
 #ifdef DEBUG_ENABLED
-	GDMonoClass *class_DebuggingUtils;
-	GDMonoMethodThunk<MonoObject *, MonoString **, int *, MonoString **> methodthunk_DebuggingUtils_GetStackFrameInfo;
+    GDMonoClass *class_System_Diagnostics_StackTrace;
+    GDMonoMethodThunkR<MonoArray *, MonoObject *> methodthunk_System_Diagnostics_StackTrace_GetFrames;
+    GDMonoMethod *method_System_Diagnostics_StackTrace_ctor_bool;
+    GDMonoMethod *method_System_Diagnostics_StackTrace_ctor_Exception_bool;
 #endif
 
-	GDMonoClass *class_ExportAttribute;
-	GDMonoField *field_ExportAttribute_hint;
-	GDMonoField *field_ExportAttribute_hintString;
-	GDMonoClass *class_SignalAttribute;
-	GDMonoClass *class_ToolAttribute;
-	GDMonoClass *class_RemoteAttribute;
-	GDMonoClass *class_SyncAttribute;
-	GDMonoClass *class_RemoteSyncAttribute;
-	GDMonoClass *class_MasterSyncAttribute;
-	GDMonoClass *class_PuppetSyncAttribute;
-	GDMonoClass *class_MasterAttribute;
-	GDMonoClass *class_PuppetAttribute;
-	GDMonoClass *class_SlaveAttribute;
-	GDMonoClass *class_GodotMethodAttribute;
-	GDMonoField *field_GodotMethodAttribute_methodName;
+    GDMonoClass *class_KeyNotFoundException;
 
-	GDMonoField *field_GodotObject_ptr;
-	GDMonoField *field_NodePath_ptr;
-	GDMonoField *field_Image_ptr;
-	GDMonoField *field_RID_ptr;
+    MonoClass *rawclass_Dictionary;
+    // -----------------------------------------------
 
-	GDMonoMethodThunk<MonoObject *> methodthunk_GodotObject_Dispose;
-	GDMonoMethodThunkR<Array *, MonoObject *> methodthunk_Array_GetPtr;
-	GDMonoMethodThunkR<Dictionary *, MonoObject *> methodthunk_Dictionary_GetPtr;
-	GDMonoMethodThunk<MonoObject *, MonoArray *> methodthunk_SignalAwaiter_SignalCallback;
-	GDMonoMethodThunk<MonoObject *> methodthunk_SignalAwaiter_FailureCallback;
-	GDMonoMethodThunk<MonoObject *> methodthunk_GodotTaskScheduler_Activate;
+    GDMonoClass *class_Vector2;
+    GDMonoClass *class_Rect2;
+    GDMonoClass *class_Transform2D;
+    GDMonoClass *class_Vector3;
+    GDMonoClass *class_Basis;
+    GDMonoClass *class_Quat;
+    GDMonoClass *class_Transform;
+    GDMonoClass *class_AABB;
+    GDMonoClass *class_Color;
+    GDMonoClass *class_Plane;
+    GDMonoClass *class_NodePath;
+    GDMonoClass *class_RID;
+    GDMonoClass *class_GodotObject;
+    GDMonoClass *class_GodotResource;
+    GDMonoClass *class_Node;
+    GDMonoClass *class_Control;
+    GDMonoClass *class_Spatial;
+    GDMonoClass *class_WeakRef;
+    GDMonoClass *class_Array;
+    GDMonoClass *class_Dictionary;
+    GDMonoClass *class_MarshalUtils;
+    GDMonoClass *class_ISerializationListener;
 
-	// Start of MarshalUtils methods
+#ifdef DEBUG_ENABLED
+    GDMonoClass *class_DebuggingUtils;
+    GDMonoMethodThunk<MonoObject *, MonoString **, int *, MonoString **> methodthunk_DebuggingUtils_GetStackFrameInfo;
+#endif
 
-	GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsGenericArray;
-	GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsGenericDictionary;
-	GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsSystemGenericList;
-	GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsSystemGenericDictionary;
-	GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsGenericIEnumerable;
-	GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsGenericICollection;
-	GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsGenericIDictionary;
+    GDMonoClass *class_ExportAttribute;
+    GDMonoField *field_ExportAttribute_hint;
+    GDMonoField *field_ExportAttribute_hintString;
+    GDMonoClass *class_SignalAttribute;
+    GDMonoClass *class_ToolAttribute;
+    GDMonoClass *class_RemoteAttribute;
+    GDMonoClass *class_SyncAttribute;
+    GDMonoClass *class_RemoteSyncAttribute;
+    GDMonoClass *class_MasterSyncAttribute;
+    GDMonoClass *class_PuppetSyncAttribute;
+    GDMonoClass *class_MasterAttribute;
+    GDMonoClass *class_PuppetAttribute;
+    GDMonoClass *class_SlaveAttribute;
+    GDMonoClass *class_GodotMethodAttribute;
+    GDMonoField *field_GodotMethodAttribute_methodName;
 
-	GDMonoMethodThunk<MonoReflectionType *, MonoReflectionType **> methodthunk_MarshalUtils_ArrayGetElementType;
-	GDMonoMethodThunk<MonoReflectionType *, MonoReflectionType **, MonoReflectionType **> methodthunk_MarshalUtils_DictionaryGetKeyValueTypes;
+    GDMonoField *field_GodotObject_ptr;
+    GDMonoField *field_NodePath_ptr;
+    GDMonoField *field_Image_ptr;
+    GDMonoField *field_RID_ptr;
 
-	GDMonoMethodThunkR<MonoReflectionType *, MonoReflectionType *> methodthunk_MarshalUtils_MakeGenericArrayType;
-	GDMonoMethodThunkR<MonoReflectionType *, MonoReflectionType *, MonoReflectionType *> methodthunk_MarshalUtils_MakeGenericDictionaryType;
+    GDMonoMethodThunk<MonoObject *> methodthunk_GodotObject_Dispose;
+    GDMonoMethodThunkR<Array *, MonoObject *> methodthunk_Array_GetPtr;
+    GDMonoMethodThunkR<Dictionary *, MonoObject *> methodthunk_Dictionary_GetPtr;
+    GDMonoMethodThunk<MonoObject *, MonoArray *> methodthunk_SignalAwaiter_SignalCallback;
+    GDMonoMethodThunk<MonoObject *> methodthunk_SignalAwaiter_FailureCallback;
+    GDMonoMethodThunk<MonoObject *> methodthunk_GodotTaskScheduler_Activate;
 
-	// End of MarshalUtils methods
+    // Start of MarshalUtils methods
 
-	Ref<MonoGCHandle> task_scheduler_handle;
+    GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsGenericArray;
+    GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsGenericDictionary;
+    GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsSystemGenericList;
+    GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsSystemGenericDictionary;
+    GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsGenericIEnumerable;
+    GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsGenericICollection;
+    GDMonoMethodThunkR<MonoBoolean, MonoReflectionType *> methodthunk_MarshalUtils_TypeIsGenericIDictionary;
 
-	bool corlib_cache_updated;
-	bool godot_api_cache_updated;
+    GDMonoMethodThunk<MonoReflectionType *, MonoReflectionType **> methodthunk_MarshalUtils_ArrayGetElementType;
+    GDMonoMethodThunk<MonoReflectionType *, MonoReflectionType **, MonoReflectionType **> methodthunk_MarshalUtils_DictionaryGetKeyValueTypes;
 
-	void clear_corlib_cache();
-	void clear_godot_api_cache();
+    GDMonoMethodThunkR<MonoReflectionType *, MonoReflectionType *> methodthunk_MarshalUtils_MakeGenericArrayType;
+    GDMonoMethodThunkR<MonoReflectionType *, MonoReflectionType *, MonoReflectionType *> methodthunk_MarshalUtils_MakeGenericDictionaryType;
 
-	CachedData() {
-		clear_corlib_cache();
-		clear_godot_api_cache();
-	}
+    // End of MarshalUtils methods
+
+    Ref<MonoGCHandle> task_scheduler_handle;
+
+    bool corlib_cache_updated;
+    bool godot_api_cache_updated;
+
+    void clear_corlib_cache();
+    void clear_godot_api_cache();
+
+    CachedData() {
+        clear_corlib_cache();
+        clear_godot_api_cache();
+    }
 };
 
 extern CachedData cached_data;
@@ -166,11 +166,11 @@ void update_corlib_cache();
 void update_godot_api_cache();
 
 inline void clear_corlib_cache() {
-	cached_data.clear_corlib_cache();
+    cached_data.clear_corlib_cache();
 }
 
 inline void clear_godot_api_cache() {
-	cached_data.clear_godot_api_cache();
+    cached_data.clear_godot_api_cache();
 }
 
 } // namespace GDMonoCache

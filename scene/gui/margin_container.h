@@ -34,15 +34,15 @@
 #include "scene/gui/container.h"
 
 class MarginContainer : public Container {
-	GDCLASS(MarginContainer, Container);
+    GDCLASS(MarginContainer, Container);
 
 protected:
-	void _notification(int p_what);
+    void _notification(int p_what);
 
 public:
-	virtual Size2 get_minimum_size() const;
+    virtual Size2 get_minimum_size() const;
 
-	MarginContainer();
+    MarginContainer();
 };
 
 #endif // MARGIN_CONTAINER_H

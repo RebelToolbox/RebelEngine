@@ -100,40 +100,40 @@ void DOMWarning(const std::string &message, const std::shared_ptr<Element> eleme
 
 // fetch a property table and the corresponding property template
 const PropertyTable *GetPropertyTable(const Document &doc,
-		const std::string &templateName,
-		const ElementPtr element,
-		const ScopePtr sc,
-		bool no_warn = false);
+        const std::string &templateName,
+        const ElementPtr element,
+        const ScopePtr sc,
+        bool no_warn = false);
 
 // ------------------------------------------------------------------------------------------------
 template <typename T>
 const T *ProcessSimpleConnection(const Connection &con,
-		bool is_object_property_conn,
-		const char *name,
-		const ElementPtr element,
-		const char **propNameOut = nullptr) {
-	if (is_object_property_conn && !con.PropertyName().length()) {
-		DOMWarning("expected incoming " + std::string(name) +
-						" link to be an object-object connection, ignoring",
-				element);
-		return nullptr;
-	} else if (!is_object_property_conn && con.PropertyName().length()) {
-		DOMWarning("expected incoming " + std::string(name) +
-						" link to be an object-property connection, ignoring",
-				element);
-		return nullptr;
-	}
+        bool is_object_property_conn,
+        const char *name,
+        const ElementPtr element,
+        const char **propNameOut = nullptr) {
+    if (is_object_property_conn && !con.PropertyName().length()) {
+        DOMWarning("expected incoming " + std::string(name) +
+                        " link to be an object-object connection, ignoring",
+                element);
+        return nullptr;
+    } else if (!is_object_property_conn && con.PropertyName().length()) {
+        DOMWarning("expected incoming " + std::string(name) +
+                        " link to be an object-property connection, ignoring",
+                element);
+        return nullptr;
+    }
 
-	if (is_object_property_conn && propNameOut) {
-		// note: this is ok, the return value of PropertyValue() is guaranteed to
-		// remain valid and unchanged as long as the document exists.
-		*propNameOut = con.PropertyName().c_str();
-	}
+    if (is_object_property_conn && propNameOut) {
+        // note: this is ok, the return value of PropertyValue() is guaranteed to
+        // remain valid and unchanged as long as the document exists.
+        *propNameOut = con.PropertyName().c_str();
+    }
 
-	// Cast Object to AnimationPlayer for example using safe functions, which return nullptr etc
-	Object *ob = con.SourceObject();
-	ERR_FAIL_COND_V_MSG(!ob, nullptr, "Failed to load object from SourceObject ptr");
-	return dynamic_cast<const T *>(ob);
+    // Cast Object to AnimationPlayer for example using safe functions, which return nullptr etc
+    Object *ob = con.SourceObject();
+    ERR_FAIL_COND_V_MSG(!ob, nullptr, "Failed to load object from SourceObject ptr");
+    return dynamic_cast<const T *>(ob);
 }
 
 } // namespace Util

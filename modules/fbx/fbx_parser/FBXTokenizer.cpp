@@ -84,13 +84,13 @@ namespace FBXDocParser {
 
 // ------------------------------------------------------------------------------------------------
 Token::Token(const char *p_sbegin, const char *p_send, TokenType p_type, unsigned int p_line, unsigned int p_column) :
-		sbegin(p_sbegin),
-		send(p_send),
-		type(p_type),
-		line(p_line),
-		column(p_column) {
+        sbegin(p_sbegin),
+        send(p_send),
+        type(p_type),
+        line(p_line),
+        column(p_column) {
 #ifdef DEBUG_ENABLED
-	contents = std::string(sbegin, static_cast<size_t>(send - sbegin));
+    contents = std::string(sbegin, static_cast<size_t>(send - sbegin));
 #endif
 }
 
@@ -102,152 +102,152 @@ namespace {
 
 // ------------------------------------------------------------------------------------------------
 void TokenizeError(const std::string &message, unsigned int line, unsigned int column) {
-	print_error("[FBX-Tokenize]" + String(message.c_str()) + " " + itos(line) + ":" + itos(column));
+    print_error("[FBX-Tokenize]" + String(message.c_str()) + " " + itos(line) + ":" + itos(column));
 }
 
 // process a potential data token up to 'cur', adding it to 'output_tokens'.
 // ------------------------------------------------------------------------------------------------
 void ProcessDataToken(TokenList &output_tokens, const char *&start, const char *&end,
-		unsigned int line,
-		unsigned int column,
-		TokenType type = TokenType_DATA,
-		bool must_have_token = false) {
-	if (start && end) {
-		// sanity check:
-		// tokens should have no whitespace outside quoted text and [start,end] should
-		// properly delimit the valid range.
-		bool in_double_quotes = false;
-		for (const char *c = start; c != end + 1; ++c) {
-			if (*c == '\"') {
-				in_double_quotes = !in_double_quotes;
-			}
+        unsigned int line,
+        unsigned int column,
+        TokenType type = TokenType_DATA,
+        bool must_have_token = false) {
+    if (start && end) {
+        // sanity check:
+        // tokens should have no whitespace outside quoted text and [start,end] should
+        // properly delimit the valid range.
+        bool in_double_quotes = false;
+        for (const char *c = start; c != end + 1; ++c) {
+            if (*c == '\"') {
+                in_double_quotes = !in_double_quotes;
+            }
 
-			if (!in_double_quotes && IsSpaceOrNewLine(*c)) {
-				TokenizeError("unexpected whitespace in token", line, column);
-			}
-		}
+            if (!in_double_quotes && IsSpaceOrNewLine(*c)) {
+                TokenizeError("unexpected whitespace in token", line, column);
+            }
+        }
 
-		if (in_double_quotes) {
-			TokenizeError("non-terminated double quotes", line, column);
-		}
+        if (in_double_quotes) {
+            TokenizeError("non-terminated double quotes", line, column);
+        }
 
-		output_tokens.push_back(new_Token(start, end + 1, type, line, column));
-	} else if (must_have_token) {
-		TokenizeError("unexpected character, expected data token", line, column);
-	}
+        output_tokens.push_back(new_Token(start, end + 1, type, line, column));
+    } else if (must_have_token) {
+        TokenizeError("unexpected character, expected data token", line, column);
+    }
 
-	start = end = nullptr;
+    start = end = nullptr;
 }
 
 } // namespace
 
 // ------------------------------------------------------------------------------------------------
 void Tokenize(TokenList &output_tokens, const char *input, size_t length) {
-	// line and column numbers numbers are one-based
-	unsigned int line = 1;
-	unsigned int column = 1;
+    // line and column numbers numbers are one-based
+    unsigned int line = 1;
+    unsigned int column = 1;
 
-	bool comment = false;
-	bool in_double_quotes = false;
-	bool pending_data_token = false;
+    bool comment = false;
+    bool in_double_quotes = false;
+    bool pending_data_token = false;
 
-	const char *token_begin = nullptr, *token_end = nullptr;
+    const char *token_begin = nullptr, *token_end = nullptr;
 
-	// input (starting string), *cur the current string, column +=
-	// modified to fix strlen() and stop buffer overflow
-	for (size_t x = 0; x < length; x++) {
-		const char c = input[x];
-		const char *cur = &input[x];
-		column += (c == '\t' ? ASSIMP_FBX_TAB_WIDTH : 1);
+    // input (starting string), *cur the current string, column +=
+    // modified to fix strlen() and stop buffer overflow
+    for (size_t x = 0; x < length; x++) {
+        const char c = input[x];
+        const char *cur = &input[x];
+        column += (c == '\t' ? ASSIMP_FBX_TAB_WIDTH : 1);
 
-		if (IsLineEnd(c)) {
-			comment = false;
+        if (IsLineEnd(c)) {
+            comment = false;
 
-			column = 0;
-			++line;
-		}
+            column = 0;
+            ++line;
+        }
 
-		if (comment) {
-			continue;
-		}
+        if (comment) {
+            continue;
+        }
 
-		if (in_double_quotes) {
-			if (c == '\"') {
-				in_double_quotes = false;
-				token_end = cur;
+        if (in_double_quotes) {
+            if (c == '\"') {
+                in_double_quotes = false;
+                token_end = cur;
 
-				ProcessDataToken(output_tokens, token_begin, token_end, line, column);
-				pending_data_token = false;
-			}
-			continue;
-		}
+                ProcessDataToken(output_tokens, token_begin, token_end, line, column);
+                pending_data_token = false;
+            }
+            continue;
+        }
 
-		switch (c) {
-			case '\"':
-				if (token_begin) {
-					TokenizeError("unexpected double-quote", line, column);
-				}
-				token_begin = cur;
-				in_double_quotes = true;
-				continue;
+        switch (c) {
+            case '\"':
+                if (token_begin) {
+                    TokenizeError("unexpected double-quote", line, column);
+                }
+                token_begin = cur;
+                in_double_quotes = true;
+                continue;
 
-			case ';':
-				ProcessDataToken(output_tokens, token_begin, token_end, line, column);
-				comment = true;
-				continue;
+            case ';':
+                ProcessDataToken(output_tokens, token_begin, token_end, line, column);
+                comment = true;
+                continue;
 
-			case '{':
-				ProcessDataToken(output_tokens, token_begin, token_end, line, column);
-				output_tokens.push_back(new_Token(cur, cur + 1, TokenType_OPEN_BRACKET, line, column));
-				continue;
+            case '{':
+                ProcessDataToken(output_tokens, token_begin, token_end, line, column);
+                output_tokens.push_back(new_Token(cur, cur + 1, TokenType_OPEN_BRACKET, line, column));
+                continue;
 
-			case '}':
-				ProcessDataToken(output_tokens, token_begin, token_end, line, column);
-				output_tokens.push_back(new_Token(cur, cur + 1, TokenType_CLOSE_BRACKET, line, column));
-				continue;
+            case '}':
+                ProcessDataToken(output_tokens, token_begin, token_end, line, column);
+                output_tokens.push_back(new_Token(cur, cur + 1, TokenType_CLOSE_BRACKET, line, column));
+                continue;
 
-			case ',':
-				if (pending_data_token) {
-					ProcessDataToken(output_tokens, token_begin, token_end, line, column, TokenType_DATA, true);
-				}
-				output_tokens.push_back(new_Token(cur, cur + 1, TokenType_COMMA, line, column));
-				continue;
+            case ',':
+                if (pending_data_token) {
+                    ProcessDataToken(output_tokens, token_begin, token_end, line, column, TokenType_DATA, true);
+                }
+                output_tokens.push_back(new_Token(cur, cur + 1, TokenType_COMMA, line, column));
+                continue;
 
-			case ':':
-				if (pending_data_token) {
-					ProcessDataToken(output_tokens, token_begin, token_end, line, column, TokenType_KEY, true);
-				} else {
-					TokenizeError("unexpected colon", line, column);
-				}
-				continue;
-		}
+            case ':':
+                if (pending_data_token) {
+                    ProcessDataToken(output_tokens, token_begin, token_end, line, column, TokenType_KEY, true);
+                } else {
+                    TokenizeError("unexpected colon", line, column);
+                }
+                continue;
+        }
 
-		if (IsSpaceOrNewLine(c)) {
-			if (token_begin) {
-				// peek ahead and check if the next token is a colon in which
-				// case this counts as KEY token.
-				TokenType type = TokenType_DATA;
-				for (const char *peek = cur; *peek && IsSpaceOrNewLine(*peek); ++peek) {
-					if (*peek == ':') {
-						type = TokenType_KEY;
-						cur = peek;
-						break;
-					}
-				}
+        if (IsSpaceOrNewLine(c)) {
+            if (token_begin) {
+                // peek ahead and check if the next token is a colon in which
+                // case this counts as KEY token.
+                TokenType type = TokenType_DATA;
+                for (const char *peek = cur; *peek && IsSpaceOrNewLine(*peek); ++peek) {
+                    if (*peek == ':') {
+                        type = TokenType_KEY;
+                        cur = peek;
+                        break;
+                    }
+                }
 
-				ProcessDataToken(output_tokens, token_begin, token_end, line, column, type);
-			}
+                ProcessDataToken(output_tokens, token_begin, token_end, line, column, type);
+            }
 
-			pending_data_token = false;
-		} else {
-			token_end = cur;
-			if (!token_begin) {
-				token_begin = cur;
-			}
+            pending_data_token = false;
+        } else {
+            token_end = cur;
+            if (!token_begin) {
+                token_begin = cur;
+            }
 
-			pending_data_token = true;
-		}
-	}
+            pending_data_token = true;
+        }
+    }
 }
 
 } // namespace FBXDocParser

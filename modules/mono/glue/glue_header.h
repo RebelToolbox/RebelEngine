@@ -42,12 +42,12 @@
  * from the generated GodotSharpBindings::register_generated_icalls() function.
  */
 void godot_register_glue_header_icalls() {
-	godot_register_collections_icalls();
-	godot_register_gd_icalls();
-	godot_register_nodepath_icalls();
-	godot_register_object_icalls();
-	godot_register_rid_icalls();
-	godot_register_string_icalls();
+    godot_register_collections_icalls();
+    godot_register_gd_icalls();
+    godot_register_nodepath_icalls();
+    godot_register_object_icalls();
+    godot_register_rid_icalls();
+    godot_register_string_icalls();
 }
 
 // Used by the generated glue
@@ -68,11 +68,11 @@ void godot_register_glue_header_icalls() {
 #include "../mono_gd/gd_mono_utils.h"
 
 #define GODOTSHARP_INSTANCE_OBJECT(m_instance, m_type) \
-	static ClassDB::ClassInfo *ci = NULL;              \
-	if (!ci) {                                         \
-		ci = ClassDB::classes.getptr(m_type);          \
-	}                                                  \
-	Object *m_instance = ci->creation_func();
+    static ClassDB::ClassInfo *ci = NULL;              \
+    if (!ci) {                                         \
+        ci = ClassDB::classes.getptr(m_type);          \
+    }                                                  \
+    Object *m_instance = ci->creation_func();
 
 #include "arguments_vector.h"
 

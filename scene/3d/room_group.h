@@ -37,45 +37,45 @@
 class Room;
 
 class RoomGroup : public Spatial {
-	GDCLASS(RoomGroup, Spatial);
+    GDCLASS(RoomGroup, Spatial);
 
-	friend class RoomManager;
+    friend class RoomManager;
 
-	RID _room_group_rid;
+    RID _room_group_rid;
 
 public:
-	RoomGroup();
-	~RoomGroup();
+    RoomGroup();
+    ~RoomGroup();
 
-	void add_room(Room *p_room);
+    void add_room(Room *p_room);
 
-	void set_roomgroup_priority(int p_priority) {
-		_settings_priority = p_priority;
-		_changed();
-	}
-	int get_roomgroup_priority() const { return _settings_priority; }
+    void set_roomgroup_priority(int p_priority) {
+        _settings_priority = p_priority;
+        _changed();
+    }
+    int get_roomgroup_priority() const { return _settings_priority; }
 
-	String get_configuration_warning() const;
+    String get_configuration_warning() const;
 
 private:
-	void clear();
-	void _changed();
+    void clear();
+    void _changed();
 
-	// roomgroup ID during conversion
-	int _roomgroup_ID;
+    // roomgroup ID during conversion
+    int _roomgroup_ID;
 
-	// the roomgroup can be used to set a number of rooms to a different priority
-	// to allow a group of rooms WITHIN another room / rooms.
-	// This is for e.g. buildings on landscape.
-	int _settings_priority = 0;
+    // the roomgroup can be used to set a number of rooms to a different priority
+    // to allow a group of rooms WITHIN another room / rooms.
+    // This is for e.g. buildings on landscape.
+    int _settings_priority = 0;
 
-	// makes sure lrooms are not converted more than once per
-	// call to rooms_convert
-	int _conversion_tick = -1;
+    // makes sure lrooms are not converted more than once per
+    // call to rooms_convert
+    int _conversion_tick = -1;
 
 protected:
-	static void _bind_methods();
-	void _notification(int p_what);
+    static void _bind_methods();
+    void _notification(int p_what);
 };
 
 #endif

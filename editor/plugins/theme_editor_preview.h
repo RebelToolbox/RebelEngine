@@ -53,75 +53,75 @@
 #include "editor/editor_node.h"
 
 class ThemeEditorPreview : public VBoxContainer {
-	GDCLASS(ThemeEditorPreview, VBoxContainer);
+    GDCLASS(ThemeEditorPreview, VBoxContainer);
 
-	ScrollContainer *preview_container;
-	ColorRect *preview_bg;
-	MarginContainer *preview_overlay;
-	Control *picker_overlay;
-	Control *hovered_control = nullptr;
+    ScrollContainer *preview_container;
+    ColorRect *preview_bg;
+    MarginContainer *preview_overlay;
+    Control *picker_overlay;
+    Control *hovered_control = nullptr;
 
-	struct ThemeCache {
-		Ref<StyleBox> preview_picker_overlay;
-		Color preview_picker_overlay_color;
-		Ref<StyleBox> preview_picker_label;
-		Ref<Font> preview_picker_font;
-	} theme_cache;
+    struct ThemeCache {
+        Ref<StyleBox> preview_picker_overlay;
+        Color preview_picker_overlay_color;
+        Ref<StyleBox> preview_picker_label;
+        Ref<Font> preview_picker_font;
+    } theme_cache;
 
-	double time_left = 0;
+    double time_left = 0;
 
-	void _propagate_redraw(Control *p_at);
-	void _refresh_interval();
-	void _preview_visibility_changed();
+    void _propagate_redraw(Control *p_at);
+    void _refresh_interval();
+    void _preview_visibility_changed();
 
-	void _picker_button_cbk();
-	Control *_find_hovered_control(Control *p_parent, Vector2 p_mouse_position);
+    void _picker_button_cbk();
+    Control *_find_hovered_control(Control *p_parent, Vector2 p_mouse_position);
 
-	void _draw_picker_overlay();
-	void _gui_input_picker_overlay(const Ref<InputEvent> &p_event);
-	void _reset_picker_overlay();
+    void _draw_picker_overlay();
+    void _gui_input_picker_overlay(const Ref<InputEvent> &p_event);
+    void _reset_picker_overlay();
 
 protected:
-	HBoxContainer *preview_toolbar;
-	MarginContainer *preview_content;
-	Button *picker_button;
+    HBoxContainer *preview_toolbar;
+    MarginContainer *preview_content;
+    Button *picker_button;
 
-	void add_preview_overlay(Control *p_overlay);
+    void add_preview_overlay(Control *p_overlay);
 
-	void _notification(int p_what);
-	static void _bind_methods();
+    void _notification(int p_what);
+    static void _bind_methods();
 
 public:
-	void set_preview_theme(const Ref<Theme> &p_theme);
+    void set_preview_theme(const Ref<Theme> &p_theme);
 
-	ThemeEditorPreview();
+    ThemeEditorPreview();
 };
 
 class DefaultThemeEditorPreview : public ThemeEditorPreview {
-	GDCLASS(DefaultThemeEditorPreview, ThemeEditorPreview);
+    GDCLASS(DefaultThemeEditorPreview, ThemeEditorPreview);
 
 public:
-	DefaultThemeEditorPreview();
+    DefaultThemeEditorPreview();
 };
 
 class SceneThemeEditorPreview : public ThemeEditorPreview {
-	GDCLASS(SceneThemeEditorPreview, ThemeEditorPreview);
+    GDCLASS(SceneThemeEditorPreview, ThemeEditorPreview);
 
-	Ref<PackedScene> loaded_scene;
+    Ref<PackedScene> loaded_scene;
 
-	Button *reload_scene_button;
+    Button *reload_scene_button;
 
-	void _reload_scene();
+    void _reload_scene();
 
 protected:
-	void _notification(int p_what);
-	static void _bind_methods();
+    void _notification(int p_what);
+    static void _bind_methods();
 
 public:
-	bool set_preview_scene(const String &p_path);
-	String get_preview_scene_path() const;
+    bool set_preview_scene(const String &p_path);
+    String get_preview_scene_path() const;
 
-	SceneThemeEditorPreview();
+    SceneThemeEditorPreview();
 };
 
 #endif // THEME_EDITOR_PREVIEW_H

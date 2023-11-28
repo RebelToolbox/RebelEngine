@@ -36,10 +36,10 @@
 namespace TestGDScript {
 
 enum TestType {
-	TEST_TOKENIZER,
-	TEST_PARSER,
-	TEST_COMPILER,
-	TEST_BYTECODE,
+    TEST_TOKENIZER,
+    TEST_PARSER,
+    TEST_COMPILER,
+    TEST_BYTECODE,
 };
 
 MainLoop *test(TestType p_type);

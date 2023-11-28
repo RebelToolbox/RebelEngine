@@ -21,8 +21,8 @@ uniform highp float distance_norm;
 varying highp vec4 position_interp;
 
 void main() {
-	gl_Position = projection_matrix * (light_matrix * (world_matrix * vec4(vertex, 1.0)));
-	position_interp = gl_Position;
+    gl_Position = projection_matrix * (light_matrix * (world_matrix * vec4(vertex, 1.0)));
+    position_interp = gl_Position;
 }
 
 /* clang-format off */
@@ -46,15 +46,15 @@ varying highp vec4 position_interp;
 /* clang-format on */
 
 void main() {
-	highp float depth = ((position_interp.z / position_interp.w) + 1.0) * 0.5 + 0.0; // bias
+    highp float depth = ((position_interp.z / position_interp.w) + 1.0) * 0.5 + 0.0; // bias
 
 #ifdef USE_RGBA_SHADOWS
 
-	highp vec4 comp = fract(depth * vec4(255.0 * 255.0 * 255.0, 255.0 * 255.0, 255.0, 1.0));
-	comp -= comp.xxyz * vec4(0.0, 1.0 / 255.0, 1.0 / 255.0, 1.0 / 255.0);
-	gl_FragColor = comp;
+    highp vec4 comp = fract(depth * vec4(255.0 * 255.0 * 255.0, 255.0 * 255.0, 255.0, 1.0));
+    comp -= comp.xxyz * vec4(0.0, 1.0 / 255.0, 1.0 / 255.0, 1.0 / 255.0);
+    gl_FragColor = comp;
 #else
 
-	gl_FragColor = vec4(depth);
+    gl_FragColor = vec4(depth);
 #endif
 }

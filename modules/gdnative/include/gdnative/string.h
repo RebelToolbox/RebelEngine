@@ -46,7 +46,7 @@ typedef wchar_t godot_char_type;
 #ifndef GODOT_CORE_API_GODOT_STRING_TYPE_DEFINED
 #define GODOT_CORE_API_GODOT_STRING_TYPE_DEFINED
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_STRING_SIZE];
+    uint8_t _dont_touch_that[GODOT_STRING_SIZE];
 } godot_string;
 
 #endif
@@ -54,7 +54,7 @@ typedef struct {
 #ifndef GODOT_CORE_API_GODOT_CHAR_STRING_TYPE_DEFINED
 #define GODOT_CORE_API_GODOT_CHAR_STRING_TYPE_DEFINED
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_CHAR_STRING_SIZE];
+    uint8_t _dont_touch_that[GODOT_CHAR_STRING_SIZE];
 } godot_char_string;
 #endif
 

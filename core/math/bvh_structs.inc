@@ -1,128 +1,128 @@
 
 public:
 struct ItemRef {
-	uint32_t tnode_id; // -1 is invalid
-	uint32_t item_id; // in the leaf
+    uint32_t tnode_id; // -1 is invalid
+    uint32_t item_id; // in the leaf
 
-	bool is_active() const { return tnode_id != BVHCommon::INACTIVE; }
-	void set_inactive() {
-		tnode_id = BVHCommon::INACTIVE;
-		item_id = BVHCommon::INACTIVE;
-	}
+    bool is_active() const { return tnode_id != BVHCommon::INACTIVE; }
+    void set_inactive() {
+        tnode_id = BVHCommon::INACTIVE;
+        item_id = BVHCommon::INACTIVE;
+    }
 };
 
 // extra info kept in separate parallel list to the references,
 // as this is less used as keeps cache better
 struct ItemExtra {
-	uint32_t last_updated_tick;
-	uint32_t pairable;
-	uint32_t pairable_mask;
-	uint32_t pairable_type;
+    uint32_t last_updated_tick;
+    uint32_t pairable;
+    uint32_t pairable_mask;
+    uint32_t pairable_type;
 
-	int32_t subindex;
+    int32_t subindex;
 
-	// the active reference is a separate list of which references
-	// are active so that we can slowly iterate through it over many frames for
-	// slow optimize.
-	uint32_t active_ref_id;
+    // the active reference is a separate list of which references
+    // are active so that we can slowly iterate through it over many frames for
+    // slow optimize.
+    uint32_t active_ref_id;
 
-	T *userdata;
+    T *userdata;
 };
 
 // tree leaf
 struct TLeaf {
-	uint16_t num_items;
+    uint16_t num_items;
 
 private:
-	uint16_t dirty;
-	// separate data orientated lists for faster SIMD traversal
-	uint32_t item_ref_ids[MAX_ITEMS];
-	BVHABB_CLASS aabbs[MAX_ITEMS];
+    uint16_t dirty;
+    // separate data orientated lists for faster SIMD traversal
+    uint32_t item_ref_ids[MAX_ITEMS];
+    BVHABB_CLASS aabbs[MAX_ITEMS];
 
 public:
-	// accessors
-	BVHABB_CLASS &get_aabb(uint32_t p_id) { return aabbs[p_id]; }
-	const BVHABB_CLASS &get_aabb(uint32_t p_id) const { return aabbs[p_id]; }
+    // accessors
+    BVHABB_CLASS &get_aabb(uint32_t p_id) { return aabbs[p_id]; }
+    const BVHABB_CLASS &get_aabb(uint32_t p_id) const { return aabbs[p_id]; }
 
-	uint32_t &get_item_ref_id(uint32_t p_id) { return item_ref_ids[p_id]; }
-	const uint32_t &get_item_ref_id(uint32_t p_id) const { return item_ref_ids[p_id]; }
+    uint32_t &get_item_ref_id(uint32_t p_id) { return item_ref_ids[p_id]; }
+    const uint32_t &get_item_ref_id(uint32_t p_id) const { return item_ref_ids[p_id]; }
 
-	bool is_dirty() const { return dirty; }
-	void set_dirty(bool p) { dirty = p; }
+    bool is_dirty() const { return dirty; }
+    void set_dirty(bool p) { dirty = p; }
 
-	void clear() {
-		num_items = 0;
-		set_dirty(true);
-	}
-	bool is_full() const { return num_items >= MAX_ITEMS; }
+    void clear() {
+        num_items = 0;
+        set_dirty(true);
+    }
+    bool is_full() const { return num_items >= MAX_ITEMS; }
 
-	void remove_item_unordered(uint32_t p_id) {
-		BVH_ASSERT(p_id < num_items);
-		num_items--;
-		aabbs[p_id] = aabbs[num_items];
-		item_ref_ids[p_id] = item_ref_ids[num_items];
-	}
+    void remove_item_unordered(uint32_t p_id) {
+        BVH_ASSERT(p_id < num_items);
+        num_items--;
+        aabbs[p_id] = aabbs[num_items];
+        item_ref_ids[p_id] = item_ref_ids[num_items];
+    }
 
-	uint32_t request_item() {
-		if (num_items < MAX_ITEMS) {
-			uint32_t id = num_items;
-			num_items++;
-			return id;
-		}
-		return -1;
-	}
+    uint32_t request_item() {
+        if (num_items < MAX_ITEMS) {
+            uint32_t id = num_items;
+            num_items++;
+            return id;
+        }
+        return -1;
+    }
 };
 
 // tree node
 struct TNode {
-	BVHABB_CLASS aabb;
-	// either number of children if positive
-	// or leaf id if negative (leaf id 0 is disallowed)
-	union {
-		int32_t num_children;
-		int32_t neg_leaf_id;
-	};
-	uint32_t parent_id; // or -1
-	uint16_t children[MAX_CHILDREN];
+    BVHABB_CLASS aabb;
+    // either number of children if positive
+    // or leaf id if negative (leaf id 0 is disallowed)
+    union {
+        int32_t num_children;
+        int32_t neg_leaf_id;
+    };
+    uint32_t parent_id; // or -1
+    uint16_t children[MAX_CHILDREN];
 
-	// height in the tree, where leaves are 0, and all above are 1+
-	// (or the highest where there is a tie off)
-	int32_t height;
+    // height in the tree, where leaves are 0, and all above are 1+
+    // (or the highest where there is a tie off)
+    int32_t height;
 
-	bool is_leaf() const { return num_children < 0; }
-	void set_leaf_id(int id) { neg_leaf_id = -id; }
-	int get_leaf_id() const { return -neg_leaf_id; }
+    bool is_leaf() const { return num_children < 0; }
+    void set_leaf_id(int id) { neg_leaf_id = -id; }
+    int get_leaf_id() const { return -neg_leaf_id; }
 
-	void clear() {
-		num_children = 0;
-		parent_id = BVHCommon::INVALID;
-		height = 0; // or -1 for testing
+    void clear() {
+        num_children = 0;
+        parent_id = BVHCommon::INVALID;
+        height = 0; // or -1 for testing
 
-		// for safety set to improbable value
-		aabb.set_to_max_opposite_extents();
+        // for safety set to improbable value
+        aabb.set_to_max_opposite_extents();
 
-		// other members are not blanked for speed .. they may be uninitialized
-	}
+        // other members are not blanked for speed .. they may be uninitialized
+    }
 
-	bool is_full_of_children() const { return num_children >= MAX_CHILDREN; }
+    bool is_full_of_children() const { return num_children >= MAX_CHILDREN; }
 
-	void remove_child_internal(uint32_t child_num) {
-		children[child_num] = children[num_children - 1];
-		num_children--;
-	}
+    void remove_child_internal(uint32_t child_num) {
+        children[child_num] = children[num_children - 1];
+        num_children--;
+    }
 
-	int find_child(uint32_t p_child_node_id) {
-		BVH_ASSERT(!is_leaf());
+    int find_child(uint32_t p_child_node_id) {
+        BVH_ASSERT(!is_leaf());
 
-		for (int n = 0; n < num_children; n++) {
-			if (children[n] == p_child_node_id) {
-				return n;
-			}
-		}
+        for (int n = 0; n < num_children; n++) {
+            if (children[n] == p_child_node_id) {
+                return n;
+            }
+        }
 
-		// not found
-		return -1;
-	}
+        // not found
+        return -1;
+    }
 };
 
 // instead of using linked list we maintain

@@ -35,24 +35,24 @@
 #include "scene/resources/multimesh.h"
 
 class MultiMeshInstance : public GeometryInstance {
-	GDCLASS(MultiMeshInstance, GeometryInstance);
+    GDCLASS(MultiMeshInstance, GeometryInstance);
 
-	Ref<MultiMesh> multimesh;
+    Ref<MultiMesh> multimesh;
 
 protected:
-	static void _bind_methods();
-	// bind helpers
+    static void _bind_methods();
+    // bind helpers
 
 public:
-	virtual PoolVector<Face3> get_faces(uint32_t p_usage_flags) const;
+    virtual PoolVector<Face3> get_faces(uint32_t p_usage_flags) const;
 
-	void set_multimesh(const Ref<MultiMesh> &p_multimesh);
-	Ref<MultiMesh> get_multimesh() const;
+    void set_multimesh(const Ref<MultiMesh> &p_multimesh);
+    Ref<MultiMesh> get_multimesh() const;
 
-	virtual AABB get_aabb() const;
+    virtual AABB get_aabb() const;
 
-	MultiMeshInstance();
-	~MultiMeshInstance();
+    MultiMeshInstance();
+    ~MultiMeshInstance();
 };
 
 #endif // MULTIMESH_INSTANCE_H

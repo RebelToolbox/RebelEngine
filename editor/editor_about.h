@@ -50,28 +50,28 @@
  * EditorAbout is also used from the project manager where EditorNode isn't initialized.
  */
 class EditorAbout : public AcceptDialog {
-	GDCLASS(EditorAbout, AcceptDialog);
+    GDCLASS(EditorAbout, AcceptDialog);
 
 private:
-	void _license_tree_selected();
-	void _version_button_pressed();
-	ScrollContainer *_populate_list(const String &p_name, const List<String> &p_sections, const char *const *const p_src[], const int p_flag_single_column = 0);
+    void _license_tree_selected();
+    void _version_button_pressed();
+    ScrollContainer *_populate_list(const String &p_name, const List<String> &p_sections, const char *const *const p_src[], const int p_flag_single_column = 0);
 
-	LinkButton *version_btn;
-	Tree *_tpl_tree;
-	RichTextLabel *_license_text;
-	RichTextLabel *_tpl_text;
-	TextureRect *_logo;
+    LinkButton *version_btn;
+    Tree *_tpl_tree;
+    RichTextLabel *_license_text;
+    RichTextLabel *_tpl_text;
+    TextureRect *_logo;
 
 protected:
-	void _notification(int p_what);
-	static void _bind_methods();
+    void _notification(int p_what);
+    static void _bind_methods();
 
 public:
-	TextureRect *get_logo() const;
+    TextureRect *get_logo() const;
 
-	EditorAbout();
-	~EditorAbout();
+    EditorAbout();
+    ~EditorAbout();
 };
 
 #endif

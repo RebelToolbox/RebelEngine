@@ -40,11 +40,11 @@
 
 class JoypadIPhone {
 private:
-	JoypadIPhoneObserver *observer;
+    JoypadIPhoneObserver *observer;
 
 public:
-	JoypadIPhone();
-	~JoypadIPhone();
+    JoypadIPhone();
+    ~JoypadIPhone();
 
-	void start_processing();
+    void start_processing();
 };

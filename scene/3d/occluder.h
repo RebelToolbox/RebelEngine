@@ -35,27 +35,27 @@
 #include "scene/resources/occluder_shape.h"
 
 class Occluder : public Spatial {
-	GDCLASS(Occluder, Spatial);
+    GDCLASS(Occluder, Spatial);
 
-	friend class OccluderSpatialGizmo;
-	friend class OccluderEditorPlugin;
+    friend class OccluderSpatialGizmo;
+    friend class OccluderEditorPlugin;
 
-	Ref<OccluderShape> _shape;
+    Ref<OccluderShape> _shape;
 
-	void resource_changed(RES res);
+    void resource_changed(RES res);
 
 protected:
-	void _notification(int p_what);
-	static void _bind_methods();
+    void _notification(int p_what);
+    static void _bind_methods();
 
 public:
-	void set_shape(const Ref<OccluderShape> &p_shape);
-	Ref<OccluderShape> get_shape() const;
+    void set_shape(const Ref<OccluderShape> &p_shape);
+    Ref<OccluderShape> get_shape() const;
 
-	String get_configuration_warning() const;
+    String get_configuration_warning() const;
 
-	Occluder();
-	~Occluder();
+    Occluder();
+    ~Occluder();
 };
 
 #endif // OCCLUDER_H

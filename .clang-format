@@ -240,6 +240,6 @@ TabWidth: 4
 # TypeNames:
 # TypenameMacros:
 UseCRLF: false
-UseTab: Always
+# UseTab: Never
 # VerilogBreakBetweenInstancePorts: true
 # WhitespaceSensitiveMacros:

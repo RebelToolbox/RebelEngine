@@ -35,199 +35,199 @@
 #include "scene/main/node.h"
 
 class SceneState : public Reference {
-	GDCLASS(SceneState, Reference);
+    GDCLASS(SceneState, Reference);
 
-	Vector<StringName> names;
-	Vector<Variant> variants;
-	Vector<NodePath> node_paths;
-	Vector<NodePath> editable_instances;
-	mutable HashMap<NodePath, int> node_path_cache;
-	mutable Map<int, int> base_scene_node_remap;
+    Vector<StringName> names;
+    Vector<Variant> variants;
+    Vector<NodePath> node_paths;
+    Vector<NodePath> editable_instances;
+    mutable HashMap<NodePath, int> node_path_cache;
+    mutable Map<int, int> base_scene_node_remap;
 
-	int base_scene_idx;
+    int base_scene_idx;
 
-	enum {
-		NO_PARENT_SAVED = 0x7FFFFFFF,
-		NAME_INDEX_BITS = 18,
-		NAME_MASK = (1 << NAME_INDEX_BITS) - 1,
-	};
+    enum {
+        NO_PARENT_SAVED = 0x7FFFFFFF,
+        NAME_INDEX_BITS = 18,
+        NAME_MASK = (1 << NAME_INDEX_BITS) - 1,
+    };
 
-	struct NodeData {
-		int parent;
-		int owner;
-		int type;
-		int name;
-		int instance;
-		int index;
+    struct NodeData {
+        int parent;
+        int owner;
+        int type;
+        int name;
+        int instance;
+        int index;
 
-		struct Property {
-			int name;
-			int value;
-		};
+        struct Property {
+            int name;
+            int value;
+        };
 
-		Vector<Property> properties;
-		Vector<int> groups;
-	};
+        Vector<Property> properties;
+        Vector<int> groups;
+    };
 
-	struct PackState {
-		Ref<SceneState> state;
-		int node;
-		PackState() { node = -1; }
-	};
+    struct PackState {
+        Ref<SceneState> state;
+        int node;
+        PackState() { node = -1; }
+    };
 
-	Vector<NodeData> nodes;
+    Vector<NodeData> nodes;
 
-	struct ConnectionData {
-		int from;
-		int to;
-		int signal;
-		int method;
-		int flags;
-		Vector<int> binds;
-	};
+    struct ConnectionData {
+        int from;
+        int to;
+        int signal;
+        int method;
+        int flags;
+        Vector<int> binds;
+    };
 
-	Vector<ConnectionData> connections;
+    Vector<ConnectionData> connections;
 
-	Error _parse_node(Node *p_owner, Node *p_node, int p_parent_idx, Map<StringName, int> &name_map, HashMap<Variant, int, VariantHasher, VariantComparator> &variant_map, Map<Node *, int> &node_map, Map<Node *, int> &nodepath_map);
-	Error _parse_connections(Node *p_owner, Node *p_node, Map<StringName, int> &name_map, HashMap<Variant, int, VariantHasher, VariantComparator> &variant_map, Map<Node *, int> &node_map, Map<Node *, int> &nodepath_map);
+    Error _parse_node(Node *p_owner, Node *p_node, int p_parent_idx, Map<StringName, int> &name_map, HashMap<Variant, int, VariantHasher, VariantComparator> &variant_map, Map<Node *, int> &node_map, Map<Node *, int> &nodepath_map);
+    Error _parse_connections(Node *p_owner, Node *p_node, Map<StringName, int> &name_map, HashMap<Variant, int, VariantHasher, VariantComparator> &variant_map, Map<Node *, int> &node_map, Map<Node *, int> &nodepath_map);
 
-	String path;
+    String path;
 
-	uint64_t last_modified_time;
+    uint64_t last_modified_time;
 
-	_FORCE_INLINE_ Ref<SceneState> _get_base_scene_state() const;
+    _FORCE_INLINE_ Ref<SceneState> _get_base_scene_state() const;
 
-	static bool disable_placeholders;
+    static bool disable_placeholders;
 
-	PoolVector<String> _get_node_groups(int p_idx) const;
+    PoolVector<String> _get_node_groups(int p_idx) const;
 
-	int _find_base_scene_node_remap_key(int p_idx) const;
+    int _find_base_scene_node_remap_key(int p_idx) const;
 
 protected:
-	static void _bind_methods();
+    static void _bind_methods();
 
 public:
-	enum {
-		FLAG_ID_IS_PATH = (1 << 30),
-		TYPE_INSTANCED = 0x7FFFFFFF,
-		FLAG_INSTANCE_IS_PLACEHOLDER = (1 << 30),
-		FLAG_MASK = (1 << 24) - 1,
-	};
+    enum {
+        FLAG_ID_IS_PATH = (1 << 30),
+        TYPE_INSTANCED = 0x7FFFFFFF,
+        FLAG_INSTANCE_IS_PLACEHOLDER = (1 << 30),
+        FLAG_MASK = (1 << 24) - 1,
+    };
 
-	enum GenEditState {
-		GEN_EDIT_STATE_DISABLED,
-		GEN_EDIT_STATE_INSTANCE,
-		GEN_EDIT_STATE_MAIN,
-	};
+    enum GenEditState {
+        GEN_EDIT_STATE_DISABLED,
+        GEN_EDIT_STATE_INSTANCE,
+        GEN_EDIT_STATE_MAIN,
+    };
 
-	static void set_disable_placeholders(bool p_disable);
+    static void set_disable_placeholders(bool p_disable);
 
-	int find_node_by_path(const NodePath &p_node) const;
-	Variant get_property_value(int p_node, const StringName &p_property, bool &found) const;
-	bool is_node_in_group(int p_node, const StringName &p_group) const;
-	bool is_connection(int p_node, const StringName &p_signal, int p_to_node, const StringName &p_to_method) const;
+    int find_node_by_path(const NodePath &p_node) const;
+    Variant get_property_value(int p_node, const StringName &p_property, bool &found) const;
+    bool is_node_in_group(int p_node, const StringName &p_group) const;
+    bool is_connection(int p_node, const StringName &p_signal, int p_to_node, const StringName &p_to_method) const;
 
-	void set_bundled_scene(const Dictionary &p_dictionary);
-	Dictionary get_bundled_scene() const;
+    void set_bundled_scene(const Dictionary &p_dictionary);
+    Dictionary get_bundled_scene() const;
 
-	Error pack(Node *p_scene);
+    Error pack(Node *p_scene);
 
-	void set_path(const String &p_path);
-	String get_path() const;
+    void set_path(const String &p_path);
+    String get_path() const;
 
-	void clear();
+    void clear();
 
-	bool can_instance() const;
-	Node *instance(GenEditState p_edit_state) const;
+    bool can_instance() const;
+    Node *instance(GenEditState p_edit_state) const;
 
-	//unbuild API
+    //unbuild API
 
-	int get_node_count() const;
-	StringName get_node_type(int p_idx) const;
-	StringName get_node_name(int p_idx) const;
-	NodePath get_node_path(int p_idx, bool p_for_parent = false) const;
-	NodePath get_node_owner_path(int p_idx) const;
-	Ref<PackedScene> get_node_instance(int p_idx) const;
-	String get_node_instance_placeholder(int p_idx) const;
-	bool is_node_instance_placeholder(int p_idx) const;
-	Vector<StringName> get_node_groups(int p_idx) const;
-	int get_node_index(int p_idx) const;
+    int get_node_count() const;
+    StringName get_node_type(int p_idx) const;
+    StringName get_node_name(int p_idx) const;
+    NodePath get_node_path(int p_idx, bool p_for_parent = false) const;
+    NodePath get_node_owner_path(int p_idx) const;
+    Ref<PackedScene> get_node_instance(int p_idx) const;
+    String get_node_instance_placeholder(int p_idx) const;
+    bool is_node_instance_placeholder(int p_idx) const;
+    Vector<StringName> get_node_groups(int p_idx) const;
+    int get_node_index(int p_idx) const;
 
-	int get_node_property_count(int p_idx) const;
-	StringName get_node_property_name(int p_idx, int p_prop) const;
-	Variant get_node_property_value(int p_idx, int p_prop) const;
+    int get_node_property_count(int p_idx) const;
+    StringName get_node_property_name(int p_idx, int p_prop) const;
+    Variant get_node_property_value(int p_idx, int p_prop) const;
 
-	int get_connection_count() const;
-	NodePath get_connection_source(int p_idx) const;
-	StringName get_connection_signal(int p_idx) const;
-	NodePath get_connection_target(int p_idx) const;
-	StringName get_connection_method(int p_idx) const;
-	int get_connection_flags(int p_idx) const;
-	Array get_connection_binds(int p_idx) const;
+    int get_connection_count() const;
+    NodePath get_connection_source(int p_idx) const;
+    StringName get_connection_signal(int p_idx) const;
+    NodePath get_connection_target(int p_idx) const;
+    StringName get_connection_method(int p_idx) const;
+    int get_connection_flags(int p_idx) const;
+    Array get_connection_binds(int p_idx) const;
 
-	bool has_connection(const NodePath &p_node_from, const StringName &p_signal, const NodePath &p_node_to, const StringName &p_method);
+    bool has_connection(const NodePath &p_node_from, const StringName &p_signal, const NodePath &p_node_to, const StringName &p_method);
 
-	Vector<NodePath> get_editable_instances() const;
+    Vector<NodePath> get_editable_instances() const;
 
-	//build API
+    //build API
 
-	int add_name(const StringName &p_name);
-	int find_name(const StringName &p_name) const;
-	int add_value(const Variant &p_value);
-	int add_node_path(const NodePath &p_path);
-	int add_node(int p_parent, int p_owner, int p_type, int p_name, int p_instance, int p_index);
-	void add_node_property(int p_node, int p_name, int p_value);
-	void add_node_group(int p_node, int p_group);
-	void set_base_scene(int p_idx);
-	void add_connection(int p_from, int p_to, int p_signal, int p_method, int p_flags, const Vector<int> &p_binds);
-	void add_editable_instance(const NodePath &p_path);
+    int add_name(const StringName &p_name);
+    int find_name(const StringName &p_name) const;
+    int add_value(const Variant &p_value);
+    int add_node_path(const NodePath &p_path);
+    int add_node(int p_parent, int p_owner, int p_type, int p_name, int p_instance, int p_index);
+    void add_node_property(int p_node, int p_name, int p_value);
+    void add_node_group(int p_node, int p_group);
+    void set_base_scene(int p_idx);
+    void add_connection(int p_from, int p_to, int p_signal, int p_method, int p_flags, const Vector<int> &p_binds);
+    void add_editable_instance(const NodePath &p_path);
 
-	virtual void set_last_modified_time(uint64_t p_time) { last_modified_time = p_time; }
-	uint64_t get_last_modified_time() const { return last_modified_time; }
+    virtual void set_last_modified_time(uint64_t p_time) { last_modified_time = p_time; }
+    uint64_t get_last_modified_time() const { return last_modified_time; }
 
-	SceneState();
+    SceneState();
 };
 
 VARIANT_ENUM_CAST(SceneState::GenEditState)
 
 class PackedScene : public Resource {
-	GDCLASS(PackedScene, Resource);
-	RES_BASE_EXTENSION("scn");
+    GDCLASS(PackedScene, Resource);
+    RES_BASE_EXTENSION("scn");
 
-	Ref<SceneState> state;
+    Ref<SceneState> state;
 
-	void _set_bundled_scene(const Dictionary &p_scene);
-	Dictionary _get_bundled_scene() const;
+    void _set_bundled_scene(const Dictionary &p_scene);
+    Dictionary _get_bundled_scene() const;
 
 protected:
-	virtual bool editor_can_reload_from_file() { return false; } // this is handled by editor better
-	static void _bind_methods();
+    virtual bool editor_can_reload_from_file() { return false; } // this is handled by editor better
+    static void _bind_methods();
 
 public:
-	enum GenEditState {
-		GEN_EDIT_STATE_DISABLED,
-		GEN_EDIT_STATE_INSTANCE,
-		GEN_EDIT_STATE_MAIN,
-	};
+    enum GenEditState {
+        GEN_EDIT_STATE_DISABLED,
+        GEN_EDIT_STATE_INSTANCE,
+        GEN_EDIT_STATE_MAIN,
+    };
 
-	Error pack(Node *p_scene);
+    Error pack(Node *p_scene);
 
-	void clear();
+    void clear();
 
-	bool can_instance() const;
-	Node *instance(GenEditState p_edit_state = GEN_EDIT_STATE_DISABLED) const;
+    bool can_instance() const;
+    Node *instance(GenEditState p_edit_state = GEN_EDIT_STATE_DISABLED) const;
 
-	void recreate_state();
-	void replace_state(Ref<SceneState> p_by);
+    void recreate_state();
+    void replace_state(Ref<SceneState> p_by);
 
-	virtual void set_path(const String &p_path, bool p_take_over = false);
+    virtual void set_path(const String &p_path, bool p_take_over = false);
 #ifdef TOOLS_ENABLED
-	virtual void set_last_modified_time(uint64_t p_time) { state->set_last_modified_time(p_time); }
+    virtual void set_last_modified_time(uint64_t p_time) { state->set_last_modified_time(p_time); }
 
 #endif
-	Ref<SceneState> get_state();
+    Ref<SceneState> get_state();
 
-	PackedScene();
+    PackedScene();
 };
 
 VARIANT_ENUM_CAST(PackedScene::GenEditState)

@@ -38,9 +38,9 @@
 // to avoid having to rewrite the entire logic I refactored this into the code instead.
 // once it works I can rewrite so we can add the fun misc features / small features
 struct FBXTrack {
-	bool has_default = false;
-	Vector3 default_value;
-	std::map<int64_t, Vector3> keyframes;
+    bool has_default = false;
+    Vector3 default_value;
+    std::map<int64_t, Vector3> keyframes;
 };
 
 #endif //MODEL_ABSTRACTION_ANIM_CONTAINER_H

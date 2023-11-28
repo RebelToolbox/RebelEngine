@@ -42,44 +42,44 @@ using namespace Windows::UI::Core;
 
 class ContextEGL_UWP {
 public:
-	enum Driver {
-		GLES_2_0,
-		GLES_3_0,
-	};
+    enum Driver {
+        GLES_2_0,
+        GLES_3_0,
+    };
 
 private:
-	CoreWindow ^ window;
+    CoreWindow ^ window;
 
-	EGLDisplay mEglDisplay;
-	EGLContext mEglContext;
-	EGLSurface mEglSurface;
+    EGLDisplay mEglDisplay;
+    EGLContext mEglContext;
+    EGLSurface mEglSurface;
 
-	EGLint width;
-	EGLint height;
+    EGLint width;
+    EGLint height;
 
-	bool vsync;
+    bool vsync;
 
-	Driver driver;
+    Driver driver;
 
 public:
-	void release_current();
+    void release_current();
 
-	void make_current();
+    void make_current();
 
-	int get_window_width();
-	int get_window_height();
-	void swap_buffers();
+    int get_window_width();
+    int get_window_height();
+    void swap_buffers();
 
-	void set_use_vsync(bool use) { vsync = use; }
-	bool is_using_vsync() const { return vsync; }
+    void set_use_vsync(bool use) { vsync = use; }
+    bool is_using_vsync() const { return vsync; }
 
-	Error initialize();
-	void reset();
+    Error initialize();
+    void reset();
 
-	void cleanup();
+    void cleanup();
 
-	ContextEGL_UWP(CoreWindow ^ p_window, Driver p_driver);
-	~ContextEGL_UWP();
+    ContextEGL_UWP(CoreWindow ^ p_window, Driver p_driver);
+    ~ContextEGL_UWP();
 };
 
 #endif // CONTEXT_EGL_UWP_H

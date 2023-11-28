@@ -119,102 +119,102 @@ uniform float blend_amount;
 
 #ifdef ENABLE_OCTAHEDRAL_COMPRESSION
 vec3 oct_to_vec3(vec2 e) {
-	vec3 v = vec3(e.xy, 1.0 - abs(e.x) - abs(e.y));
-	float t = max(-v.z, 0.0);
-	v.xy += t * -sign(v.xy);
-	return normalize(v);
+    vec3 v = vec3(e.xy, 1.0 - abs(e.x) - abs(e.y));
+    float t = max(-v.z, 0.0);
+    v.xy += t * -sign(v.xy);
+    return normalize(v);
 }
 #endif
 
 void main() {
 #ifdef ENABLE_BLEND
 
-	vertex_out = vertex_attrib_blend + vertex_attrib * blend_amount;
+    vertex_out = vertex_attrib_blend + vertex_attrib * blend_amount;
 
 #ifdef ENABLE_NORMAL
 #ifdef ENABLE_OCTAHEDRAL_COMPRESSION
-	normal_out = normal_attrib_blend + oct_to_vec3(normal_tangent_attrib.xy) * blend_amount;
+    normal_out = normal_attrib_blend + oct_to_vec3(normal_tangent_attrib.xy) * blend_amount;
 #else
-	normal_out = normal_attrib_blend + normal_attrib * blend_amount;
+    normal_out = normal_attrib_blend + normal_attrib * blend_amount;
 #endif
 #endif
 
 #ifdef ENABLE_TANGENT
 #ifdef ENABLE_OCTAHEDRAL_COMPRESSION
-	tangent_out.xyz = tangent_attrib_blend.xyz + oct_to_vec3(vec2(normal_tangent_attrib.z, abs(normal_tangent_attrib.w) * 2.0 - 1.0)) * blend_amount;
-	tangent_out.w = sign(tangent_attrib_blend.w);
+    tangent_out.xyz = tangent_attrib_blend.xyz + oct_to_vec3(vec2(normal_tangent_attrib.z, abs(normal_tangent_attrib.w) * 2.0 - 1.0)) * blend_amount;
+    tangent_out.w = sign(tangent_attrib_blend.w);
 #else
-	tangent_out.xyz = tangent_attrib_blend.xyz + tangent_attrib.xyz * blend_amount;
-	tangent_out.w = tangent_attrib_blend.w; //just copy, no point in blending his
+    tangent_out.xyz = tangent_attrib_blend.xyz + tangent_attrib.xyz * blend_amount;
+    tangent_out.w = tangent_attrib_blend.w; //just copy, no point in blending his
 #endif
 #endif
 
 #ifdef ENABLE_COLOR
 
-	color_out = color_attrib_blend + color_attrib * blend_amount;
+    color_out = color_attrib_blend + color_attrib * blend_amount;
 #endif
 
 #ifdef ENABLE_UV
 
-	uv_out = uv_attrib_blend + uv_attrib * blend_amount;
+    uv_out = uv_attrib_blend + uv_attrib * blend_amount;
 #endif
 
 #ifdef ENABLE_UV2
 
-	uv2_out = uv2_attrib_blend + uv2_attrib * blend_amount;
+    uv2_out = uv2_attrib_blend + uv2_attrib * blend_amount;
 #endif
 
 #ifdef ENABLE_SKELETON
 
-	bone_out = bone_attrib_blend;
-	weight_out = weight_attrib_blend + weight_attrib * blend_amount;
+    bone_out = bone_attrib_blend;
+    weight_out = weight_attrib_blend + weight_attrib * blend_amount;
 #endif
 
 #else //ENABLE_BLEND
 
-	vertex_out = vertex_attrib * blend_amount;
+    vertex_out = vertex_attrib * blend_amount;
 
 #ifdef ENABLE_NORMAL
 #ifdef ENABLE_OCTAHEDRAL_COMPRESSION
-	normal_out = oct_to_vec3(normal_tangent_attrib.xy) * blend_amount;
+    normal_out = oct_to_vec3(normal_tangent_attrib.xy) * blend_amount;
 #else
-	normal_out = normal_attrib * blend_amount;
+    normal_out = normal_attrib * blend_amount;
 #endif
 #endif
 
 #ifdef ENABLE_TANGENT
 #ifdef ENABLE_OCTAHEDRAL_COMPRESSION
-	tangent_out.xyz = oct_to_vec3(vec2(normal_tangent_attrib.z, abs(normal_tangent_attrib.w) * 2.0 - 1.0)) * blend_amount;
-	tangent_out.w = sign(normal_tangent_attrib.w);
+    tangent_out.xyz = oct_to_vec3(vec2(normal_tangent_attrib.z, abs(normal_tangent_attrib.w) * 2.0 - 1.0)) * blend_amount;
+    tangent_out.w = sign(normal_tangent_attrib.w);
 #else
-	tangent_out.xyz = tangent_attrib.xyz * blend_amount;
-	tangent_out.w = tangent_attrib.w; //just copy, no point in blending his
+    tangent_out.xyz = tangent_attrib.xyz * blend_amount;
+    tangent_out.w = tangent_attrib.w; //just copy, no point in blending his
 #endif
 #endif
 
 #ifdef ENABLE_COLOR
 
-	color_out = color_attrib * blend_amount;
+    color_out = color_attrib * blend_amount;
 #endif
 
 #ifdef ENABLE_UV
 
-	uv_out = uv_attrib * blend_amount;
+    uv_out = uv_attrib * blend_amount;
 #endif
 
 #ifdef ENABLE_UV2
 
-	uv2_out = uv2_attrib * blend_amount;
+    uv2_out = uv2_attrib * blend_amount;
 #endif
 
 #ifdef ENABLE_SKELETON
 
-	bone_out = bone_attrib;
-	weight_out = weight_attrib * blend_amount;
+    bone_out = bone_attrib;
+    weight_out = weight_attrib * blend_amount;
 #endif
 
 #endif
-	gl_Position = vec4(0.0);
+    gl_Position = vec4(0.0);
 }
 
 /* clang-format off */

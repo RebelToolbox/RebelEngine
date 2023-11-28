@@ -34,22 +34,22 @@
 #include "scene/2d/node_2d.h"
 
 class CanvasModulate : public Node2D {
-	GDCLASS(CanvasModulate, Node2D);
+    GDCLASS(CanvasModulate, Node2D);
 
-	Color color;
+    Color color;
 
 protected:
-	void _notification(int p_what);
-	static void _bind_methods();
+    void _notification(int p_what);
+    static void _bind_methods();
 
 public:
-	void set_color(const Color &p_color);
-	Color get_color() const;
+    void set_color(const Color &p_color);
+    Color get_color() const;
 
-	String get_configuration_warning() const;
+    String get_configuration_warning() const;
 
-	CanvasModulate();
-	~CanvasModulate();
+    CanvasModulate();
+    ~CanvasModulate();
 };
 
 #endif // CANVASMODULATE_H

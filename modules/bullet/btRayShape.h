@@ -36,68 +36,68 @@
 #include <BulletCollision/CollisionShapes/btConvexInternalShape.h>
 
 /**
-	@author AndreaCatania
+    @author AndreaCatania
 */
 
 /// Ray shape around z axis
 ATTRIBUTE_ALIGNED16(class)
 btRayShape : public btConvexInternalShape {
-	btScalar m_length;
-	bool slipsOnSlope;
-	/// The default axis is the z
-	btVector3 m_shapeAxis;
+    btScalar m_length;
+    bool slipsOnSlope;
+    /// The default axis is the z
+    btVector3 m_shapeAxis;
 
-	btTransform m_cacheSupportPoint;
-	btScalar m_cacheScaledLength;
+    btTransform m_cacheSupportPoint;
+    btScalar m_cacheScaledLength;
 
 public:
-	BT_DECLARE_ALIGNED_ALLOCATOR();
+    BT_DECLARE_ALIGNED_ALLOCATOR();
 
-	btRayShape(btScalar length);
-	virtual ~btRayShape();
+    btRayShape(btScalar length);
+    virtual ~btRayShape();
 
-	void setLength(btScalar p_length);
-	btScalar getLength() const {
-		return m_length;
-	}
+    void setLength(btScalar p_length);
+    btScalar getLength() const {
+        return m_length;
+    }
 
-	virtual void setMargin(btScalar margin);
+    virtual void setMargin(btScalar margin);
 
-	void setSlipsOnSlope(bool p_slipsOnSlope);
-	bool getSlipsOnSlope() const {
-		return slipsOnSlope;
-	}
+    void setSlipsOnSlope(bool p_slipsOnSlope);
+    bool getSlipsOnSlope() const {
+        return slipsOnSlope;
+    }
 
-	const btTransform &getSupportPoint() const {
-		return m_cacheSupportPoint;
-	}
-	const btScalar &getScaledLength() const {
-		return m_cacheScaledLength;
-	}
+    const btTransform &getSupportPoint() const {
+        return m_cacheSupportPoint;
+    }
+    const btScalar &getScaledLength() const {
+        return m_cacheScaledLength;
+    }
 
-	virtual btVector3 localGetSupportingVertex(const btVector3 &vec) const;
+    virtual btVector3 localGetSupportingVertex(const btVector3 &vec) const;
 #ifndef __SPU__
-	virtual btVector3 localGetSupportingVertexWithoutMargin(const btVector3 &vec) const;
+    virtual btVector3 localGetSupportingVertexWithoutMargin(const btVector3 &vec) const;
 #endif //#ifndef __SPU__
 
-	virtual void batchedUnitVectorGetSupportingVertexWithoutMargin(const btVector3 *vectors, btVector3 *supportVerticesOut, int numVectors) const;
+    virtual void batchedUnitVectorGetSupportingVertexWithoutMargin(const btVector3 *vectors, btVector3 *supportVerticesOut, int numVectors) const;
 
-	///getAabb returns the axis aligned bounding box in the coordinate frame of the given transform t.
-	virtual void getAabb(const btTransform &t, btVector3 &aabbMin, btVector3 &aabbMax) const;
+    ///getAabb returns the axis aligned bounding box in the coordinate frame of the given transform t.
+    virtual void getAabb(const btTransform &t, btVector3 &aabbMin, btVector3 &aabbMax) const;
 
 #ifndef __SPU__
-	virtual void calculateLocalInertia(btScalar mass, btVector3 & inertia) const;
+    virtual void calculateLocalInertia(btScalar mass, btVector3 & inertia) const;
 
-	virtual const char *getName() const {
-		return "RayZ";
-	}
+    virtual const char *getName() const {
+        return "RayZ";
+    }
 #endif //__SPU__
 
-	virtual int getNumPreferredPenetrationDirections() const;
-	virtual void getPreferredPenetrationDirection(int index, btVector3 &penetrationVector) const;
+    virtual int getNumPreferredPenetrationDirections() const;
+    virtual void getPreferredPenetrationDirection(int index, btVector3 &penetrationVector) const;
 
 private:
-	void reload_cache();
+    void reload_cache();
 };
 
 #endif // BTRAYSHAPE_H

@@ -65,9 +65,9 @@ static const int XR_PASSTHROUGH_OPTIONAL = 1;
 static const int XR_PASSTHROUGH_REQUIRED = 2;
 
 struct CustomExportData {
-	String assets_directory;
-	bool debug;
-	Vector<String> libs;
+    String assets_directory;
+    bool debug;
+    Vector<String> libs;
 };
 
 int _get_android_orientation_value(OS::ScreenOrientation screen_orientation);

@@ -36,11 +36,11 @@
 #include "core/ustring.h"
 
 struct MonoRegInfo {
-	String version;
-	String install_root_dir;
-	String assembly_dir;
-	String config_dir;
-	String bin_dir;
+    String version;
+    String install_root_dir;
+    String assembly_dir;
+    String config_dir;
+    String bin_dir;
 };
 
 namespace MonoRegUtils {

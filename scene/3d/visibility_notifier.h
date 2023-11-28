@@ -36,70 +36,70 @@
 class World;
 class Camera;
 class VisibilityNotifier : public CullInstance {
-	GDCLASS(VisibilityNotifier, CullInstance);
+    GDCLASS(VisibilityNotifier, CullInstance);
 
-	Ref<World> world;
-	Set<Camera *> cameras;
+    Ref<World> world;
+    Set<Camera *> cameras;
 
-	AABB aabb;
+    AABB aabb;
 
-	// if using rooms and portals
-	RID _cull_instance_rid;
-	bool _in_gameplay;
+    // if using rooms and portals
+    RID _cull_instance_rid;
+    bool _in_gameplay;
 
 protected:
-	virtual void _screen_enter() {}
-	virtual void _screen_exit() {}
-	virtual void _refresh_portal_mode();
+    virtual void _screen_enter() {}
+    virtual void _screen_exit() {}
+    virtual void _refresh_portal_mode();
 
-	void _notification(int p_what);
-	static void _bind_methods();
-	friend struct SpatialIndexer;
+    void _notification(int p_what);
+    static void _bind_methods();
+    friend struct SpatialIndexer;
 
-	void _enter_camera(Camera *p_camera);
-	void _exit_camera(Camera *p_camera);
+    void _enter_camera(Camera *p_camera);
+    void _exit_camera(Camera *p_camera);
 
 public:
-	void set_aabb(const AABB &p_aabb);
-	AABB get_aabb() const;
-	bool is_on_screen() const;
+    void set_aabb(const AABB &p_aabb);
+    AABB get_aabb() const;
+    bool is_on_screen() const;
 
-	VisibilityNotifier();
-	~VisibilityNotifier();
+    VisibilityNotifier();
+    ~VisibilityNotifier();
 };
 
 class VisibilityEnabler : public VisibilityNotifier {
-	GDCLASS(VisibilityEnabler, VisibilityNotifier);
+    GDCLASS(VisibilityEnabler, VisibilityNotifier);
 
 public:
-	enum Enabler {
-		ENABLER_PAUSE_ANIMATIONS,
-		ENABLER_FREEZE_BODIES,
-		ENABLER_MAX
-	};
+    enum Enabler {
+        ENABLER_PAUSE_ANIMATIONS,
+        ENABLER_FREEZE_BODIES,
+        ENABLER_MAX
+    };
 
 protected:
-	virtual void _screen_enter();
-	virtual void _screen_exit();
+    virtual void _screen_enter();
+    virtual void _screen_exit();
 
-	bool visible;
+    bool visible;
 
-	void _find_nodes(Node *p_node);
+    void _find_nodes(Node *p_node);
 
-	Map<Node *, Variant> nodes;
-	void _node_removed(Node *p_node);
-	bool enabler[ENABLER_MAX];
+    Map<Node *, Variant> nodes;
+    void _node_removed(Node *p_node);
+    bool enabler[ENABLER_MAX];
 
-	void _change_node_state(Node *p_node, bool p_enabled);
+    void _change_node_state(Node *p_node, bool p_enabled);
 
-	void _notification(int p_what);
-	static void _bind_methods();
+    void _notification(int p_what);
+    static void _bind_methods();
 
 public:
-	void set_enabler(Enabler p_enabler, bool p_enable);
-	bool is_enabler_enabled(Enabler p_enabler) const;
+    void set_enabler(Enabler p_enabler, bool p_enable);
+    bool is_enabler_enabled(Enabler p_enabler) const;
 
-	VisibilityEnabler();
+    VisibilityEnabler();
 };
 
 VARIANT_ENUM_CAST(VisibilityEnabler::Enabler);

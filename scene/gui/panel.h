@@ -34,14 +34,14 @@
 #include "scene/gui/control.h"
 
 class Panel : public Control {
-	GDCLASS(Panel, Control);
+    GDCLASS(Panel, Control);
 
 protected:
-	void _notification(int p_what);
+    void _notification(int p_what);
 
 public:
-	Panel();
-	~Panel();
+    Panel();
+    ~Panel();
 };
 
 #endif

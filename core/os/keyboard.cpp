@@ -33,13 +33,13 @@
 #include "core/os/os.h"
 
 struct _KeyCodeText {
-	int code;
-	const char *text;
+    int code;
+    const char *text;
 };
 
 static const _KeyCodeText _keycodes[] = {
 
-	/* clang-format off */
+    /* clang-format off */
 		{KEY_ESCAPE                        ,"Escape"},
 		{KEY_TAB                           ,"Tab"},
 		{KEY_BACKTAB                       ,"BackTab"},
@@ -289,185 +289,185 @@ static const _KeyCodeText _keycodes[] = {
 		{KEY_DIVISION                      ,"Division"},
 		{KEY_YDIAERESIS                    ,"Ydiaeresis"},
 		{0                                 ,nullptr}
-	/* clang-format on */
+    /* clang-format on */
 };
 
 bool keycode_has_unicode(uint32_t p_keycode) {
-	switch (p_keycode) {
-		case KEY_ESCAPE:
-		case KEY_TAB:
-		case KEY_BACKTAB:
-		case KEY_BACKSPACE:
-		case KEY_ENTER:
-		case KEY_KP_ENTER:
-		case KEY_INSERT:
-		case KEY_DELETE:
-		case KEY_PAUSE:
-		case KEY_PRINT:
-		case KEY_SYSREQ:
-		case KEY_CLEAR:
-		case KEY_HOME:
-		case KEY_END:
-		case KEY_LEFT:
-		case KEY_UP:
-		case KEY_RIGHT:
-		case KEY_DOWN:
-		case KEY_PAGEUP:
-		case KEY_PAGEDOWN:
-		case KEY_SHIFT:
-		case KEY_CONTROL:
-		case KEY_META:
-		case KEY_ALT:
-		case KEY_CAPSLOCK:
-		case KEY_NUMLOCK:
-		case KEY_SCROLLLOCK:
-		case KEY_F1:
-		case KEY_F2:
-		case KEY_F3:
-		case KEY_F4:
-		case KEY_F5:
-		case KEY_F6:
-		case KEY_F7:
-		case KEY_F8:
-		case KEY_F9:
-		case KEY_F10:
-		case KEY_F11:
-		case KEY_F12:
-		case KEY_F13:
-		case KEY_F14:
-		case KEY_F15:
-		case KEY_F16:
-		case KEY_SUPER_L:
-		case KEY_SUPER_R:
-		case KEY_MENU:
-		case KEY_HYPER_L:
-		case KEY_HYPER_R:
-		case KEY_HELP:
-		case KEY_DIRECTION_L:
-		case KEY_DIRECTION_R:
-		case KEY_BACK:
-		case KEY_FORWARD:
-		case KEY_STOP:
-		case KEY_REFRESH:
-		case KEY_VOLUMEDOWN:
-		case KEY_VOLUMEMUTE:
-		case KEY_VOLUMEUP:
-		case KEY_BASSBOOST:
-		case KEY_BASSUP:
-		case KEY_BASSDOWN:
-		case KEY_TREBLEUP:
-		case KEY_TREBLEDOWN:
-		case KEY_MEDIAPLAY:
-		case KEY_MEDIASTOP:
-		case KEY_MEDIAPREVIOUS:
-		case KEY_MEDIANEXT:
-		case KEY_MEDIARECORD:
-		case KEY_HOMEPAGE:
-		case KEY_FAVORITES:
-		case KEY_SEARCH:
-		case KEY_STANDBY:
-		case KEY_OPENURL:
-		case KEY_LAUNCHMAIL:
-		case KEY_LAUNCHMEDIA:
-		case KEY_LAUNCH0:
-		case KEY_LAUNCH1:
-		case KEY_LAUNCH2:
-		case KEY_LAUNCH3:
-		case KEY_LAUNCH4:
-		case KEY_LAUNCH5:
-		case KEY_LAUNCH6:
-		case KEY_LAUNCH7:
-		case KEY_LAUNCH8:
-		case KEY_LAUNCH9:
-		case KEY_LAUNCHA:
-		case KEY_LAUNCHB:
-		case KEY_LAUNCHC:
-		case KEY_LAUNCHD:
-		case KEY_LAUNCHE:
-		case KEY_LAUNCHF:
-			return false;
-	}
+    switch (p_keycode) {
+        case KEY_ESCAPE:
+        case KEY_TAB:
+        case KEY_BACKTAB:
+        case KEY_BACKSPACE:
+        case KEY_ENTER:
+        case KEY_KP_ENTER:
+        case KEY_INSERT:
+        case KEY_DELETE:
+        case KEY_PAUSE:
+        case KEY_PRINT:
+        case KEY_SYSREQ:
+        case KEY_CLEAR:
+        case KEY_HOME:
+        case KEY_END:
+        case KEY_LEFT:
+        case KEY_UP:
+        case KEY_RIGHT:
+        case KEY_DOWN:
+        case KEY_PAGEUP:
+        case KEY_PAGEDOWN:
+        case KEY_SHIFT:
+        case KEY_CONTROL:
+        case KEY_META:
+        case KEY_ALT:
+        case KEY_CAPSLOCK:
+        case KEY_NUMLOCK:
+        case KEY_SCROLLLOCK:
+        case KEY_F1:
+        case KEY_F2:
+        case KEY_F3:
+        case KEY_F4:
+        case KEY_F5:
+        case KEY_F6:
+        case KEY_F7:
+        case KEY_F8:
+        case KEY_F9:
+        case KEY_F10:
+        case KEY_F11:
+        case KEY_F12:
+        case KEY_F13:
+        case KEY_F14:
+        case KEY_F15:
+        case KEY_F16:
+        case KEY_SUPER_L:
+        case KEY_SUPER_R:
+        case KEY_MENU:
+        case KEY_HYPER_L:
+        case KEY_HYPER_R:
+        case KEY_HELP:
+        case KEY_DIRECTION_L:
+        case KEY_DIRECTION_R:
+        case KEY_BACK:
+        case KEY_FORWARD:
+        case KEY_STOP:
+        case KEY_REFRESH:
+        case KEY_VOLUMEDOWN:
+        case KEY_VOLUMEMUTE:
+        case KEY_VOLUMEUP:
+        case KEY_BASSBOOST:
+        case KEY_BASSUP:
+        case KEY_BASSDOWN:
+        case KEY_TREBLEUP:
+        case KEY_TREBLEDOWN:
+        case KEY_MEDIAPLAY:
+        case KEY_MEDIASTOP:
+        case KEY_MEDIAPREVIOUS:
+        case KEY_MEDIANEXT:
+        case KEY_MEDIARECORD:
+        case KEY_HOMEPAGE:
+        case KEY_FAVORITES:
+        case KEY_SEARCH:
+        case KEY_STANDBY:
+        case KEY_OPENURL:
+        case KEY_LAUNCHMAIL:
+        case KEY_LAUNCHMEDIA:
+        case KEY_LAUNCH0:
+        case KEY_LAUNCH1:
+        case KEY_LAUNCH2:
+        case KEY_LAUNCH3:
+        case KEY_LAUNCH4:
+        case KEY_LAUNCH5:
+        case KEY_LAUNCH6:
+        case KEY_LAUNCH7:
+        case KEY_LAUNCH8:
+        case KEY_LAUNCH9:
+        case KEY_LAUNCHA:
+        case KEY_LAUNCHB:
+        case KEY_LAUNCHC:
+        case KEY_LAUNCHD:
+        case KEY_LAUNCHE:
+        case KEY_LAUNCHF:
+            return false;
+    }
 
-	return true;
+    return true;
 }
 
 String keycode_get_string(uint32_t p_code) {
-	String codestr;
-	if (p_code & KEY_MASK_SHIFT) {
-		codestr += find_keycode_name(KEY_SHIFT);
-		codestr += "+";
-	}
-	if (p_code & KEY_MASK_ALT) {
-		codestr += find_keycode_name(KEY_ALT);
-		codestr += "+";
-	}
-	if (p_code & KEY_MASK_CTRL) {
-		codestr += find_keycode_name(KEY_CONTROL);
-		codestr += "+";
-	}
-	if (p_code & KEY_MASK_META) {
-		codestr += find_keycode_name(KEY_META);
-		codestr += "+";
-	}
+    String codestr;
+    if (p_code & KEY_MASK_SHIFT) {
+        codestr += find_keycode_name(KEY_SHIFT);
+        codestr += "+";
+    }
+    if (p_code & KEY_MASK_ALT) {
+        codestr += find_keycode_name(KEY_ALT);
+        codestr += "+";
+    }
+    if (p_code & KEY_MASK_CTRL) {
+        codestr += find_keycode_name(KEY_CONTROL);
+        codestr += "+";
+    }
+    if (p_code & KEY_MASK_META) {
+        codestr += find_keycode_name(KEY_META);
+        codestr += "+";
+    }
 
-	p_code &= KEY_CODE_MASK;
+    p_code &= KEY_CODE_MASK;
 
-	const _KeyCodeText *kct = &_keycodes[0];
+    const _KeyCodeText *kct = &_keycodes[0];
 
-	while (kct->text) {
-		if (kct->code == (int)p_code) {
-			codestr += kct->text;
-			return codestr;
-		}
-		kct++;
-	}
+    while (kct->text) {
+        if (kct->code == (int)p_code) {
+            codestr += kct->text;
+            return codestr;
+        }
+        kct++;
+    }
 
-	codestr += String::chr(p_code);
+    codestr += String::chr(p_code);
 
-	return codestr;
+    return codestr;
 }
 
 int find_keycode(const String &p_code) {
-	const _KeyCodeText *kct = &_keycodes[0];
+    const _KeyCodeText *kct = &_keycodes[0];
 
-	while (kct->text) {
-		if (p_code.nocasecmp_to(kct->text) == 0) {
-			return kct->code;
-		}
-		kct++;
-	}
+    while (kct->text) {
+        if (p_code.nocasecmp_to(kct->text) == 0) {
+            return kct->code;
+        }
+        kct++;
+    }
 
-	return 0;
+    return 0;
 }
 
 const char *find_keycode_name(int p_keycode) {
-	const _KeyCodeText *kct = &_keycodes[0];
+    const _KeyCodeText *kct = &_keycodes[0];
 
-	while (kct->text) {
-		if (kct->code == p_keycode) {
-			return kct->text;
-		}
-		kct++;
-	}
+    while (kct->text) {
+        if (kct->code == p_keycode) {
+            return kct->text;
+        }
+        kct++;
+    }
 
-	return "";
+    return "";
 }
 
 int keycode_get_count() {
-	const _KeyCodeText *kct = &_keycodes[0];
+    const _KeyCodeText *kct = &_keycodes[0];
 
-	int count = 0;
-	while (kct->text) {
-		count++;
-		kct++;
-	}
-	return count;
+    int count = 0;
+    while (kct->text) {
+        count++;
+        kct++;
+    }
+    return count;
 }
 
 int keycode_get_value_by_index(int p_index) {
-	return _keycodes[p_index].code;
+    return _keycodes[p_index].code;
 }
 
 const char *keycode_get_name_by_index(int p_index) {
-	return _keycodes[p_index].text;
+    return _keycodes[p_index].text;
 }

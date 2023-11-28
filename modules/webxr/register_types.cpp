@@ -34,12 +34,12 @@
 #include "webxr_interface_js.h"
 
 void register_webxr_types() {
-	ClassDB::register_virtual_class<WebXRInterface>();
+    ClassDB::register_virtual_class<WebXRInterface>();
 
 #ifdef JAVASCRIPT_ENABLED
-	Ref<WebXRInterfaceJS> webxr;
-	webxr.instance();
-	ARVRServer::get_singleton()->add_interface(webxr);
+    Ref<WebXRInterfaceJS> webxr;
+    webxr.instance();
+    ARVRServer::get_singleton()->add_interface(webxr);
 #endif
 }
 

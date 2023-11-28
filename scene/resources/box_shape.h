@@ -34,21 +34,21 @@
 #include "scene/resources/shape.h"
 
 class BoxShape : public Shape {
-	GDCLASS(BoxShape, Shape);
-	Vector3 extents;
+    GDCLASS(BoxShape, Shape);
+    Vector3 extents;
 
 protected:
-	static void _bind_methods();
+    static void _bind_methods();
 
-	virtual void _update_shape();
+    virtual void _update_shape();
 
 public:
-	void set_extents(const Vector3 &p_extents);
-	Vector3 get_extents() const;
+    void set_extents(const Vector3 &p_extents);
+    Vector3 get_extents() const;
 
-	virtual Vector<Vector3> get_debug_mesh_lines();
+    virtual Vector<Vector3> get_debug_mesh_lines();
 
-	BoxShape();
+    BoxShape();
 };
 
 #endif // BOX_SHAPE_H

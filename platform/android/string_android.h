@@ -41,18 +41,18 @@
  * @return Godot string instance.
  */
 static inline String jstring_to_string(jstring source, JNIEnv *env = NULL) {
-	String result;
-	if (source) {
-		if (!env) {
-			env = get_jni_env();
-		}
-		const char *const source_utf8 = env->GetStringUTFChars(source, NULL);
-		if (source_utf8) {
-			result.parse_utf8(source_utf8);
-			env->ReleaseStringUTFChars(source, source_utf8);
-		}
-	}
-	return result;
+    String result;
+    if (source) {
+        if (!env) {
+            env = get_jni_env();
+        }
+        const char *const source_utf8 = env->GetStringUTFChars(source, NULL);
+        if (source_utf8) {
+            result.parse_utf8(source_utf8);
+            env->ReleaseStringUTFChars(source, source_utf8);
+        }
+    }
+    return result;
 }
 
 #endif // STRING_ANDROID_H

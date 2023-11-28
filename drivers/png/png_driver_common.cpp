@@ -41,166 +41,166 @@ namespace PNGDriverCommon {
 // On error, set explain and return true.
 // Call should be wrapped in ERR_FAIL_COND
 static bool check_error(const png_image &image) {
-	const png_uint_32 failed = PNG_IMAGE_FAILED(image);
-	if (failed & PNG_IMAGE_ERROR) {
-		return true;
-	} else if (failed) {
+    const png_uint_32 failed = PNG_IMAGE_FAILED(image);
+    if (failed & PNG_IMAGE_ERROR) {
+        return true;
+    } else if (failed) {
 #ifdef TOOLS_ENABLED
-		// suppress this warning, to avoid log spam when opening assetlib
-		const static char *const noisy = "iCCP: known incorrect sRGB profile";
-		const Engine *const eng = Engine::get_singleton();
-		if (eng && eng->is_editor_hint() && !strcmp(image.message, noisy)) {
-			return false;
-		}
+        // suppress this warning, to avoid log spam when opening assetlib
+        const static char *const noisy = "iCCP: known incorrect sRGB profile";
+        const Engine *const eng = Engine::get_singleton();
+        if (eng && eng->is_editor_hint() && !strcmp(image.message, noisy)) {
+            return false;
+        }
 #endif
-		WARN_PRINT(image.message);
-	}
-	return false;
+        WARN_PRINT(image.message);
+    }
+    return false;
 }
 
 Error png_to_image(const uint8_t *p_source, size_t p_size, bool p_force_linear, Ref<Image> p_image) {
-	png_image png_img;
-	memset(&png_img, 0, sizeof(png_img));
-	png_img.version = PNG_IMAGE_VERSION;
+    png_image png_img;
+    memset(&png_img, 0, sizeof(png_img));
+    png_img.version = PNG_IMAGE_VERSION;
 
-	// fetch image properties
-	int success = png_image_begin_read_from_memory(&png_img, p_source, p_size);
-	ERR_FAIL_COND_V_MSG(check_error(png_img), ERR_FILE_CORRUPT, png_img.message);
-	ERR_FAIL_COND_V(!success, ERR_FILE_CORRUPT);
+    // fetch image properties
+    int success = png_image_begin_read_from_memory(&png_img, p_source, p_size);
+    ERR_FAIL_COND_V_MSG(check_error(png_img), ERR_FILE_CORRUPT, png_img.message);
+    ERR_FAIL_COND_V(!success, ERR_FILE_CORRUPT);
 
-	// flags to be masked out of input format to give target format
-	const png_uint_32 format_mask = ~(
-			// convert component order to RGBA
-			PNG_FORMAT_FLAG_BGR | PNG_FORMAT_FLAG_AFIRST
-			// convert 16 bit components to 8 bit
-			| PNG_FORMAT_FLAG_LINEAR
-			// convert indexed image to direct color
-			| PNG_FORMAT_FLAG_COLORMAP);
+    // flags to be masked out of input format to give target format
+    const png_uint_32 format_mask = ~(
+            // convert component order to RGBA
+            PNG_FORMAT_FLAG_BGR | PNG_FORMAT_FLAG_AFIRST
+            // convert 16 bit components to 8 bit
+            | PNG_FORMAT_FLAG_LINEAR
+            // convert indexed image to direct color
+            | PNG_FORMAT_FLAG_COLORMAP);
 
-	png_img.format &= format_mask;
+    png_img.format &= format_mask;
 
-	Image::Format dest_format;
-	switch (png_img.format) {
-		case PNG_FORMAT_GRAY:
-			dest_format = Image::FORMAT_L8;
-			break;
-		case PNG_FORMAT_GA:
-			dest_format = Image::FORMAT_LA8;
-			break;
-		case PNG_FORMAT_RGB:
-			dest_format = Image::FORMAT_RGB8;
-			break;
-		case PNG_FORMAT_RGBA:
-			dest_format = Image::FORMAT_RGBA8;
-			break;
-		default:
-			png_image_free(&png_img); // only required when we return before finish_read
-			ERR_PRINT("Unsupported png format.");
-			return ERR_UNAVAILABLE;
-	}
+    Image::Format dest_format;
+    switch (png_img.format) {
+        case PNG_FORMAT_GRAY:
+            dest_format = Image::FORMAT_L8;
+            break;
+        case PNG_FORMAT_GA:
+            dest_format = Image::FORMAT_LA8;
+            break;
+        case PNG_FORMAT_RGB:
+            dest_format = Image::FORMAT_RGB8;
+            break;
+        case PNG_FORMAT_RGBA:
+            dest_format = Image::FORMAT_RGBA8;
+            break;
+        default:
+            png_image_free(&png_img); // only required when we return before finish_read
+            ERR_PRINT("Unsupported png format.");
+            return ERR_UNAVAILABLE;
+    }
 
-	if (!p_force_linear) {
-		// assume 16 bit pngs without sRGB or gAMA chunks are in sRGB format
-		png_img.flags |= PNG_IMAGE_FLAG_16BIT_sRGB;
-	}
+    if (!p_force_linear) {
+        // assume 16 bit pngs without sRGB or gAMA chunks are in sRGB format
+        png_img.flags |= PNG_IMAGE_FLAG_16BIT_sRGB;
+    }
 
-	const png_uint_32 stride = PNG_IMAGE_ROW_STRIDE(png_img);
-	PoolVector<uint8_t> buffer;
-	Error err = buffer.resize(PNG_IMAGE_BUFFER_SIZE(png_img, stride));
-	if (err) {
-		png_image_free(&png_img); // only required when we return before finish_read
-		return err;
-	}
-	PoolVector<uint8_t>::Write writer = buffer.write();
+    const png_uint_32 stride = PNG_IMAGE_ROW_STRIDE(png_img);
+    PoolVector<uint8_t> buffer;
+    Error err = buffer.resize(PNG_IMAGE_BUFFER_SIZE(png_img, stride));
+    if (err) {
+        png_image_free(&png_img); // only required when we return before finish_read
+        return err;
+    }
+    PoolVector<uint8_t>::Write writer = buffer.write();
 
-	// read image data to buffer and release libpng resources
-	success = png_image_finish_read(&png_img, nullptr, writer.ptr(), stride, nullptr);
-	ERR_FAIL_COND_V_MSG(check_error(png_img), ERR_FILE_CORRUPT, png_img.message);
-	ERR_FAIL_COND_V(!success, ERR_FILE_CORRUPT);
+    // read image data to buffer and release libpng resources
+    success = png_image_finish_read(&png_img, nullptr, writer.ptr(), stride, nullptr);
+    ERR_FAIL_COND_V_MSG(check_error(png_img), ERR_FILE_CORRUPT, png_img.message);
+    ERR_FAIL_COND_V(!success, ERR_FILE_CORRUPT);
 
-	p_image->create(png_img.width, png_img.height, false, dest_format, buffer);
+    p_image->create(png_img.width, png_img.height, false, dest_format, buffer);
 
-	return OK;
+    return OK;
 }
 
 Error image_to_png(const Ref<Image> &p_image, PoolVector<uint8_t> &p_buffer) {
-	Ref<Image> source_image = p_image->duplicate();
+    Ref<Image> source_image = p_image->duplicate();
 
-	if (source_image->is_compressed()) {
-		source_image->decompress();
-	}
+    if (source_image->is_compressed()) {
+        source_image->decompress();
+    }
 
-	ERR_FAIL_COND_V(source_image->is_compressed(), FAILED);
+    ERR_FAIL_COND_V(source_image->is_compressed(), FAILED);
 
-	png_image png_img;
-	memset(&png_img, 0, sizeof(png_img));
-	png_img.version = PNG_IMAGE_VERSION;
-	png_img.width = source_image->get_width();
-	png_img.height = source_image->get_height();
+    png_image png_img;
+    memset(&png_img, 0, sizeof(png_img));
+    png_img.version = PNG_IMAGE_VERSION;
+    png_img.width = source_image->get_width();
+    png_img.height = source_image->get_height();
 
-	switch (source_image->get_format()) {
-		case Image::FORMAT_L8:
-			png_img.format = PNG_FORMAT_GRAY;
-			break;
-		case Image::FORMAT_LA8:
-			png_img.format = PNG_FORMAT_GA;
-			break;
-		case Image::FORMAT_RGB8:
-			png_img.format = PNG_FORMAT_RGB;
-			break;
-		case Image::FORMAT_RGBA8:
-			png_img.format = PNG_FORMAT_RGBA;
-			break;
-		default:
-			if (source_image->detect_alpha()) {
-				source_image->convert(Image::FORMAT_RGBA8);
-				png_img.format = PNG_FORMAT_RGBA;
-			} else {
-				source_image->convert(Image::FORMAT_RGB8);
-				png_img.format = PNG_FORMAT_RGB;
-			}
-	}
+    switch (source_image->get_format()) {
+        case Image::FORMAT_L8:
+            png_img.format = PNG_FORMAT_GRAY;
+            break;
+        case Image::FORMAT_LA8:
+            png_img.format = PNG_FORMAT_GA;
+            break;
+        case Image::FORMAT_RGB8:
+            png_img.format = PNG_FORMAT_RGB;
+            break;
+        case Image::FORMAT_RGBA8:
+            png_img.format = PNG_FORMAT_RGBA;
+            break;
+        default:
+            if (source_image->detect_alpha()) {
+                source_image->convert(Image::FORMAT_RGBA8);
+                png_img.format = PNG_FORMAT_RGBA;
+            } else {
+                source_image->convert(Image::FORMAT_RGB8);
+                png_img.format = PNG_FORMAT_RGB;
+            }
+    }
 
-	const PoolVector<uint8_t> image_data = source_image->get_data();
-	const PoolVector<uint8_t>::Read reader = image_data.read();
+    const PoolVector<uint8_t> image_data = source_image->get_data();
+    const PoolVector<uint8_t>::Read reader = image_data.read();
 
-	// we may be passed a buffer with existing content we're expected to append to
-	const int buffer_offset = p_buffer.size();
+    // we may be passed a buffer with existing content we're expected to append to
+    const int buffer_offset = p_buffer.size();
 
-	const size_t png_size_estimate = PNG_IMAGE_PNG_SIZE_MAX(png_img);
+    const size_t png_size_estimate = PNG_IMAGE_PNG_SIZE_MAX(png_img);
 
-	// try with estimated size
-	size_t compressed_size = png_size_estimate;
-	int success = 0;
-	{ // scope writer lifetime
-		Error err = p_buffer.resize(buffer_offset + png_size_estimate);
-		ERR_FAIL_COND_V(err, err);
+    // try with estimated size
+    size_t compressed_size = png_size_estimate;
+    int success = 0;
+    { // scope writer lifetime
+        Error err = p_buffer.resize(buffer_offset + png_size_estimate);
+        ERR_FAIL_COND_V(err, err);
 
-		PoolVector<uint8_t>::Write writer = p_buffer.write();
-		success = png_image_write_to_memory(&png_img, &writer[buffer_offset],
-				&compressed_size, 0, reader.ptr(), 0, nullptr);
-		ERR_FAIL_COND_V_MSG(check_error(png_img), FAILED, png_img.message);
-	}
-	if (!success) {
-		// buffer was big enough, must be some other error
-		ERR_FAIL_COND_V(compressed_size <= png_size_estimate, FAILED);
+        PoolVector<uint8_t>::Write writer = p_buffer.write();
+        success = png_image_write_to_memory(&png_img, &writer[buffer_offset],
+                &compressed_size, 0, reader.ptr(), 0, nullptr);
+        ERR_FAIL_COND_V_MSG(check_error(png_img), FAILED, png_img.message);
+    }
+    if (!success) {
+        // buffer was big enough, must be some other error
+        ERR_FAIL_COND_V(compressed_size <= png_size_estimate, FAILED);
 
-		// write failed due to buffer size, resize and retry
-		Error err = p_buffer.resize(buffer_offset + compressed_size);
-		ERR_FAIL_COND_V(err, err);
+        // write failed due to buffer size, resize and retry
+        Error err = p_buffer.resize(buffer_offset + compressed_size);
+        ERR_FAIL_COND_V(err, err);
 
-		PoolVector<uint8_t>::Write writer = p_buffer.write();
-		success = png_image_write_to_memory(&png_img, &writer[buffer_offset],
-				&compressed_size, 0, reader.ptr(), 0, nullptr);
-		ERR_FAIL_COND_V_MSG(check_error(png_img), FAILED, png_img.message);
-		ERR_FAIL_COND_V(!success, FAILED);
-	}
+        PoolVector<uint8_t>::Write writer = p_buffer.write();
+        success = png_image_write_to_memory(&png_img, &writer[buffer_offset],
+                &compressed_size, 0, reader.ptr(), 0, nullptr);
+        ERR_FAIL_COND_V_MSG(check_error(png_img), FAILED, png_img.message);
+        ERR_FAIL_COND_V(!success, FAILED);
+    }
 
-	// trim buffer size to content
-	Error err = p_buffer.resize(buffer_offset + compressed_size);
-	ERR_FAIL_COND_V(err, err);
+    // trim buffer size to content
+    Error err = p_buffer.resize(buffer_offset + compressed_size);
+    ERR_FAIL_COND_V(err, err);
 
-	return OK;
+    return OK;
 }
 
 } // namespace PNGDriverCommon

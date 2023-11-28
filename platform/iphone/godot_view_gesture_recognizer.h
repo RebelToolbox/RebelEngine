@@ -40,13 +40,13 @@
 @interface GodotViewGestureRecognizer : UIGestureRecognizer {
 @private
 
-	// Timer used to delay begin touch message.
-	// Should work as simple emulation of UIDelayedAction
-	NSTimer *delayTimer;
+    // Timer used to delay begin touch message.
+    // Should work as simple emulation of UIDelayedAction
+    NSTimer *delayTimer;
 
-	// Delayed touch parameters
-	NSSet *delayedTouches;
-	UIEvent *delayedEvent;
+    // Delayed touch parameters
+    NSSet *delayedTouches;
+    UIEvent *delayedEvent;
 }
 
 @property(nonatomic, readonly, assign) NSTimeInterval delayTimeInterval;

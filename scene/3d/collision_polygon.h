@@ -36,47 +36,47 @@
 
 class CollisionObject;
 class CollisionPolygon : public Spatial {
-	GDCLASS(CollisionPolygon, Spatial);
-	real_t margin = 0.04;
+    GDCLASS(CollisionPolygon, Spatial);
+    real_t margin = 0.04;
 
 protected:
-	float depth;
-	AABB aabb;
-	Vector<Point2> polygon;
+    float depth;
+    AABB aabb;
+    Vector<Point2> polygon;
 
-	uint32_t owner_id;
-	CollisionObject *parent;
+    uint32_t owner_id;
+    CollisionObject *parent;
 
-	bool disabled;
+    bool disabled;
 
-	void _build_polygon();
+    void _build_polygon();
 
-	void _update_in_shape_owner(bool p_xform_only = false);
+    void _update_in_shape_owner(bool p_xform_only = false);
 
-	bool _is_editable_3d_polygon() const;
+    bool _is_editable_3d_polygon() const;
 
 protected:
-	void _notification(int p_what);
-	static void _bind_methods();
+    void _notification(int p_what);
+    static void _bind_methods();
 
 public:
-	void set_depth(float p_depth);
-	float get_depth() const;
+    void set_depth(float p_depth);
+    float get_depth() const;
 
-	void set_polygon(const Vector<Point2> &p_polygon);
-	Vector<Point2> get_polygon() const;
+    void set_polygon(const Vector<Point2> &p_polygon);
+    Vector<Point2> get_polygon() const;
 
-	void set_disabled(bool p_disabled);
-	bool is_disabled() const;
+    void set_disabled(bool p_disabled);
+    bool is_disabled() const;
 
-	virtual AABB get_item_rect() const;
+    virtual AABB get_item_rect() const;
 
-	real_t get_margin() const;
-	void set_margin(real_t p_margin);
+    real_t get_margin() const;
+    void set_margin(real_t p_margin);
 
-	String get_configuration_warning() const;
+    String get_configuration_warning() const;
 
-	CollisionPolygon();
+    CollisionPolygon();
 };
 
 #endif // COLLISION_POLYGON_H

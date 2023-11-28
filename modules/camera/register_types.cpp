@@ -39,10 +39,10 @@
 
 void register_camera_types() {
 #if defined(WINDOWS_ENABLED)
-	CameraServer::make_default<CameraWindows>();
+    CameraServer::make_default<CameraWindows>();
 #endif
 #if defined(OSX_ENABLED)
-	CameraServer::make_default<CameraOSX>();
+    CameraServer::make_default<CameraOSX>();
 #endif
 }
 

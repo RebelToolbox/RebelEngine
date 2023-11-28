@@ -47,122 +47,122 @@
 
 template <class T, bool force_trivial = false>
 class PooledList {
-	LocalVector<T, uint32_t, force_trivial> list;
-	LocalVector<uint32_t, uint32_t, true> freelist;
+    LocalVector<T, uint32_t, force_trivial> list;
+    LocalVector<uint32_t, uint32_t, true> freelist;
 
-	// not all list members are necessarily used
-	int _used_size;
+    // not all list members are necessarily used
+    int _used_size;
 
 public:
-	PooledList() {
-		_used_size = 0;
-	}
+    PooledList() {
+        _used_size = 0;
+    }
 
-	int estimate_memory_use() const {
-		return (list.size() * sizeof(T)) + (freelist.size() * sizeof(uint32_t));
-	}
+    int estimate_memory_use() const {
+        return (list.size() * sizeof(T)) + (freelist.size() * sizeof(uint32_t));
+    }
 
-	const T &operator[](uint32_t p_index) const {
-		return list[p_index];
-	}
-	T &operator[](uint32_t p_index) {
-		return list[p_index];
-	}
+    const T &operator[](uint32_t p_index) const {
+        return list[p_index];
+    }
+    T &operator[](uint32_t p_index) {
+        return list[p_index];
+    }
 
-	int size() const { return _used_size; }
+    int size() const { return _used_size; }
 
-	T *request(uint32_t &r_id) {
-		_used_size++;
+    T *request(uint32_t &r_id) {
+        _used_size++;
 
-		if (freelist.size()) {
-			// pop from freelist
-			int new_size = freelist.size() - 1;
-			r_id = freelist[new_size];
-			freelist.resize(new_size);
-			return &list[r_id];
-		}
+        if (freelist.size()) {
+            // pop from freelist
+            int new_size = freelist.size() - 1;
+            r_id = freelist[new_size];
+            freelist.resize(new_size);
+            return &list[r_id];
+        }
 
-		r_id = list.size();
-		list.resize(r_id + 1);
-		return &list[r_id];
-	}
-	void free(const uint32_t &p_id) {
-		// should not be on free list already
-		CRASH_COND(p_id >= list.size());
-		freelist.push_back(p_id);
-		_used_size--;
-	}
+        r_id = list.size();
+        list.resize(r_id + 1);
+        return &list[r_id];
+    }
+    void free(const uint32_t &p_id) {
+        // should not be on free list already
+        CRASH_COND(p_id >= list.size());
+        freelist.push_back(p_id);
+        _used_size--;
+    }
 };
 
 // a pooled list which automatically keeps a list of the active members
 template <class T, bool force_trivial = false>
 class TrackedPooledList {
 public:
-	int pool_size() const { return _pool.size(); }
-	int active_size() const { return _active_list.size(); }
+    int pool_size() const { return _pool.size(); }
+    int active_size() const { return _active_list.size(); }
 
-	uint32_t get_active_id(uint32_t p_index) const {
-		return _active_list[p_index];
-	}
+    uint32_t get_active_id(uint32_t p_index) const {
+        return _active_list[p_index];
+    }
 
-	const T &get_active(uint32_t p_index) const {
-		return _pool[get_active_id(p_index)];
-	}
+    const T &get_active(uint32_t p_index) const {
+        return _pool[get_active_id(p_index)];
+    }
 
-	T &get_active(uint32_t p_index) {
-		return _pool[get_active_id(p_index)];
-	}
+    T &get_active(uint32_t p_index) {
+        return _pool[get_active_id(p_index)];
+    }
 
-	const T &operator[](uint32_t p_index) const {
-		return _pool[p_index];
-	}
-	T &operator[](uint32_t p_index) {
-		return _pool[p_index];
-	}
+    const T &operator[](uint32_t p_index) const {
+        return _pool[p_index];
+    }
+    T &operator[](uint32_t p_index) {
+        return _pool[p_index];
+    }
 
-	T *request(uint32_t &r_id) {
-		T *item = _pool.request(r_id);
+    T *request(uint32_t &r_id) {
+        T *item = _pool.request(r_id);
 
-		// add to the active list
-		uint32_t active_list_id = _active_list.size();
-		_active_list.push_back(r_id);
+        // add to the active list
+        uint32_t active_list_id = _active_list.size();
+        _active_list.push_back(r_id);
 
-		// expand the active map (this should be in sync with the pool list
-		if (_pool.size() > (int)_active_map.size()) {
-			_active_map.resize(_pool.size());
-		}
+        // expand the active map (this should be in sync with the pool list
+        if (_pool.size() > (int)_active_map.size()) {
+            _active_map.resize(_pool.size());
+        }
 
-		// store in the active map
-		_active_map[r_id] = active_list_id;
+        // store in the active map
+        _active_map[r_id] = active_list_id;
 
-		return item;
-	}
+        return item;
+    }
 
-	void free(const uint32_t &p_id) {
-		_pool.free(p_id);
+    void free(const uint32_t &p_id) {
+        _pool.free(p_id);
 
-		// remove from the active list.
-		uint32_t list_id = _active_map[p_id];
+        // remove from the active list.
+        uint32_t list_id = _active_map[p_id];
 
-		// zero the _active map to detect bugs (only in debug?)
-		_active_map[p_id] = -1;
+        // zero the _active map to detect bugs (only in debug?)
+        _active_map[p_id] = -1;
 
-		_active_list.remove_unordered(list_id);
+        _active_list.remove_unordered(list_id);
 
-		// keep the replacement in sync with the correct list Id
-		if (list_id < (uint32_t)_active_list.size()) {
-			// which pool id has been replaced in the active list
-			uint32_t replacement_id = _active_list[list_id];
+        // keep the replacement in sync with the correct list Id
+        if (list_id < (uint32_t)_active_list.size()) {
+            // which pool id has been replaced in the active list
+            uint32_t replacement_id = _active_list[list_id];
 
-			// keep that replacements map up to date with the new position
-			_active_map[replacement_id] = list_id;
-		}
-	}
+            // keep that replacements map up to date with the new position
+            _active_map[replacement_id] = list_id;
+        }
+    }
 
-	const LocalVector<uint32_t, uint32_t> &get_active_list() const { return _active_list; }
+    const LocalVector<uint32_t, uint32_t> &get_active_list() const { return _active_list; }
 
 private:
-	PooledList<T, force_trivial> _pool;
-	LocalVector<uint32_t, uint32_t> _active_map;
-	LocalVector<uint32_t, uint32_t> _active_list;
+    PooledList<T, force_trivial> _pool;
+    LocalVector<uint32_t, uint32_t> _active_map;
+    LocalVector<uint32_t, uint32_t> _active_list;
 };

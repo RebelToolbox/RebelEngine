@@ -61,82 +61,82 @@ class ConeTwistJointSW : public JointSW {
 public:
 #endif
 
-	union {
-		struct {
-			BodySW *A;
-			BodySW *B;
-		};
+    union {
+        struct {
+            BodySW *A;
+            BodySW *B;
+        };
 
-		BodySW *_arr[2];
-	};
+        BodySW *_arr[2];
+    };
 
-	JacobianEntrySW m_jac[3]; //3 orthogonal linear constraints
+    JacobianEntrySW m_jac[3]; //3 orthogonal linear constraints
 
-	real_t m_appliedImpulse;
-	Transform m_rbAFrame;
-	Transform m_rbBFrame;
+    real_t m_appliedImpulse;
+    Transform m_rbAFrame;
+    Transform m_rbBFrame;
 
-	real_t m_limitSoftness;
-	real_t m_biasFactor;
-	real_t m_relaxationFactor;
+    real_t m_limitSoftness;
+    real_t m_biasFactor;
+    real_t m_relaxationFactor;
 
-	real_t m_swingSpan1;
-	real_t m_swingSpan2;
-	real_t m_twistSpan;
+    real_t m_swingSpan1;
+    real_t m_swingSpan2;
+    real_t m_twistSpan;
 
-	Vector3 m_swingAxis;
-	Vector3 m_twistAxis;
+    Vector3 m_swingAxis;
+    Vector3 m_twistAxis;
 
-	real_t m_kSwing;
-	real_t m_kTwist;
+    real_t m_kSwing;
+    real_t m_kTwist;
 
-	real_t m_twistLimitSign;
-	real_t m_swingCorrection;
-	real_t m_twistCorrection;
+    real_t m_twistLimitSign;
+    real_t m_swingCorrection;
+    real_t m_twistCorrection;
 
-	real_t m_accSwingLimitImpulse;
-	real_t m_accTwistLimitImpulse;
+    real_t m_accSwingLimitImpulse;
+    real_t m_accTwistLimitImpulse;
 
-	bool m_angularOnly;
-	bool m_solveTwistLimit;
-	bool m_solveSwingLimit;
+    bool m_angularOnly;
+    bool m_solveTwistLimit;
+    bool m_solveSwingLimit;
 
 public:
-	virtual PhysicsServer::JointType get_type() const { return PhysicsServer::JOINT_CONE_TWIST; }
+    virtual PhysicsServer::JointType get_type() const { return PhysicsServer::JOINT_CONE_TWIST; }
 
-	virtual bool setup(real_t p_timestep);
-	virtual void solve(real_t p_timestep);
+    virtual bool setup(real_t p_timestep);
+    virtual void solve(real_t p_timestep);
 
-	ConeTwistJointSW(BodySW *rbA, BodySW *rbB, const Transform &rbAFrame, const Transform &rbBFrame);
+    ConeTwistJointSW(BodySW *rbA, BodySW *rbB, const Transform &rbAFrame, const Transform &rbBFrame);
 
-	void setAngularOnly(bool angularOnly) {
-		m_angularOnly = angularOnly;
-	}
+    void setAngularOnly(bool angularOnly) {
+        m_angularOnly = angularOnly;
+    }
 
-	void setLimit(real_t _swingSpan1, real_t _swingSpan2, real_t _twistSpan, real_t _softness = 0.8f, real_t _biasFactor = 0.3f, real_t _relaxationFactor = 1.0f) {
-		m_swingSpan1 = _swingSpan1;
-		m_swingSpan2 = _swingSpan2;
-		m_twistSpan = _twistSpan;
+    void setLimit(real_t _swingSpan1, real_t _swingSpan2, real_t _twistSpan, real_t _softness = 0.8f, real_t _biasFactor = 0.3f, real_t _relaxationFactor = 1.0f) {
+        m_swingSpan1 = _swingSpan1;
+        m_swingSpan2 = _swingSpan2;
+        m_twistSpan = _twistSpan;
 
-		m_limitSoftness = _softness;
-		m_biasFactor = _biasFactor;
-		m_relaxationFactor = _relaxationFactor;
-	}
+        m_limitSoftness = _softness;
+        m_biasFactor = _biasFactor;
+        m_relaxationFactor = _relaxationFactor;
+    }
 
-	inline int getSolveTwistLimit() {
-		return m_solveTwistLimit;
-	}
+    inline int getSolveTwistLimit() {
+        return m_solveTwistLimit;
+    }
 
-	inline int getSolveSwingLimit() {
-		return m_solveTwistLimit;
-	}
+    inline int getSolveSwingLimit() {
+        return m_solveTwistLimit;
+    }
 
-	inline real_t getTwistLimitSign() {
-		return m_twistLimitSign;
-	}
+    inline real_t getTwistLimitSign() {
+        return m_twistLimitSign;
+    }
 
-	void set_param(PhysicsServer::ConeTwistJointParam p_param, real_t p_value);
-	real_t get_param(PhysicsServer::ConeTwistJointParam p_param) const;
+    void set_param(PhysicsServer::ConeTwistJointParam p_param, real_t p_value);
+    real_t get_param(PhysicsServer::ConeTwistJointParam p_param) const;
 };
 
 #endif // CONE_TWIST_JOINT_SW_H

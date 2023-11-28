@@ -35,32 +35,32 @@
 #include "core/reference.h"
 
 class AESContext : public Reference {
-	GDCLASS(AESContext, Reference);
+    GDCLASS(AESContext, Reference);
 
 public:
-	enum Mode {
-		MODE_ECB_ENCRYPT,
-		MODE_ECB_DECRYPT,
-		MODE_CBC_ENCRYPT,
-		MODE_CBC_DECRYPT,
-		MODE_MAX
-	};
+    enum Mode {
+        MODE_ECB_ENCRYPT,
+        MODE_ECB_DECRYPT,
+        MODE_CBC_ENCRYPT,
+        MODE_CBC_DECRYPT,
+        MODE_MAX
+    };
 
 private:
-	Mode mode;
-	CryptoCore::AESContext ctx;
-	PoolByteArray iv;
+    Mode mode;
+    CryptoCore::AESContext ctx;
+    PoolByteArray iv;
 
 protected:
-	static void _bind_methods();
+    static void _bind_methods();
 
 public:
-	Error start(Mode p_mode, PoolByteArray p_key, PoolByteArray p_iv = PoolByteArray());
-	PoolByteArray update(PoolByteArray p_src);
-	PoolByteArray get_iv_state();
-	void finish();
+    Error start(Mode p_mode, PoolByteArray p_key, PoolByteArray p_iv = PoolByteArray());
+    PoolByteArray update(PoolByteArray p_src);
+    PoolByteArray get_iv_state();
+    void finish();
 
-	AESContext();
+    AESContext();
 };
 
 VARIANT_ENUM_CAST(AESContext::Mode);

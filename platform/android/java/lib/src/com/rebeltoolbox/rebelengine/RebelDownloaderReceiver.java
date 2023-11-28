@@ -46,16 +46,16 @@ import com.google.android.vending.expansion.downloader.DownloaderClientMarshalle
  *         <receiver android:name=".RebelDownloaderReceiver"/>
  */
 public class RebelDownloaderReceiver extends BroadcastReceiver {
-	private static final String TAG = RebelDownloaderReceiver.class.getSimpleName();
+    private static final String TAG = RebelDownloaderReceiver.class.getSimpleName();
 
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		Log.d(TAG, "Rebel Downloader Alarm received");
-		try {
-			DownloaderClientMarshaller.startDownloadServiceIfRequired(context, intent, RebelDownloaderService.class);
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-			Log.d(TAG, "Exception: " + e.getClass().getName() + ":" + e.getMessage());
-		}
-	}
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Log.d(TAG, "Rebel Downloader Alarm received");
+        try {
+            DownloaderClientMarshaller.startDownloadServiceIfRequired(context, intent, RebelDownloaderService.class);
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+            Log.d(TAG, "Exception: " + e.getClass().getName() + ":" + e.getMessage());
+        }
+    }
 }

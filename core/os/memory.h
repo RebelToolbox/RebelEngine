@@ -42,28 +42,28 @@
 #endif
 
 class Memory {
-	Memory();
+    Memory();
 #ifdef DEBUG_ENABLED
-	static SafeNumeric<uint64_t> mem_usage;
-	static SafeNumeric<uint64_t> max_usage;
+    static SafeNumeric<uint64_t> mem_usage;
+    static SafeNumeric<uint64_t> max_usage;
 #endif
 
-	static SafeNumeric<uint64_t> alloc_count;
+    static SafeNumeric<uint64_t> alloc_count;
 
 public:
-	static void *alloc_static(size_t p_bytes, bool p_pad_align = false);
-	static void *realloc_static(void *p_memory, size_t p_bytes, bool p_pad_align = false);
-	static void free_static(void *p_ptr, bool p_pad_align = false);
+    static void *alloc_static(size_t p_bytes, bool p_pad_align = false);
+    static void *realloc_static(void *p_memory, size_t p_bytes, bool p_pad_align = false);
+    static void free_static(void *p_ptr, bool p_pad_align = false);
 
-	static uint64_t get_mem_available();
-	static uint64_t get_mem_usage();
-	static uint64_t get_mem_max_usage();
+    static uint64_t get_mem_available();
+    static uint64_t get_mem_usage();
+    static uint64_t get_mem_max_usage();
 };
 
 class DefaultAllocator {
 public:
-	_FORCE_INLINE_ static void *alloc(size_t p_memory) { return Memory::alloc_static(p_memory, false); }
-	_FORCE_INLINE_ static void free(void *p_ptr) { Memory::free_static(p_ptr, false); }
+    _FORCE_INLINE_ static void *alloc(size_t p_memory) { return Memory::alloc_static(p_memory, false); }
+    _FORCE_INLINE_ static void free(void *p_ptr) { Memory::free_static(p_ptr, false); }
 };
 
 void *operator new(size_t p_size, const char *p_description); ///< operator new that takes a description and uses MemoryStaticPool
@@ -87,82 +87,82 @@ _ALWAYS_INLINE_ void postinitialize_handler(void *) {}
 
 template <class T>
 _ALWAYS_INLINE_ T *_post_initialize(T *p_obj) {
-	postinitialize_handler(p_obj);
-	return p_obj;
+    postinitialize_handler(p_obj);
+    return p_obj;
 }
 
 #define memnew(m_class) _post_initialize(new ("") m_class)
 
 _ALWAYS_INLINE_ void *operator new(size_t p_size, void *p_pointer, size_t check, const char *p_description) {
-	//void *failptr=0;
-	//ERR_FAIL_COND_V( check < p_size , failptr); /** bug, or strange compiler, most likely */
+    //void *failptr=0;
+    //ERR_FAIL_COND_V( check < p_size , failptr); /** bug, or strange compiler, most likely */
 
-	return p_pointer;
+    return p_pointer;
 }
 
 #define memnew_allocator(m_class, m_allocator) _post_initialize(new (m_allocator::alloc) m_class)
 #define memnew_placement(m_placement, m_class) _post_initialize(new (m_placement, sizeof(m_class), "") m_class)
 
 _ALWAYS_INLINE_ bool predelete_handler(void *) {
-	return true;
+    return true;
 }
 
 template <class T>
 void memdelete(T *p_class) {
-	if (!predelete_handler(p_class)) {
-		return; // doesn't want to be deleted
-	}
-	if (!std::is_trivially_destructible<T>::value) {
-		p_class->~T();
-	}
+    if (!predelete_handler(p_class)) {
+        return; // doesn't want to be deleted
+    }
+    if (!std::is_trivially_destructible<T>::value) {
+        p_class->~T();
+    }
 
-	Memory::free_static(p_class, false);
+    Memory::free_static(p_class, false);
 }
 
 template <class T, class A>
 void memdelete_allocator(T *p_class) {
-	if (!predelete_handler(p_class)) {
-		return; // doesn't want to be deleted
-	}
-	if (!std::is_trivially_destructible<T>::value) {
-		p_class->~T();
-	}
+    if (!predelete_handler(p_class)) {
+        return; // doesn't want to be deleted
+    }
+    if (!std::is_trivially_destructible<T>::value) {
+        p_class->~T();
+    }
 
-	A::free(p_class);
+    A::free(p_class);
 }
 
 #define memdelete_notnull(m_v) \
-	{                          \
-		if (m_v)               \
-			memdelete(m_v);    \
-	}
+    {                          \
+        if (m_v)               \
+            memdelete(m_v);    \
+    }
 
 #define memnew_arr(m_class, m_count) memnew_arr_template<m_class>(m_count)
 
 template <typename T>
 T *memnew_arr_template(size_t p_elements, const char *p_descr = "") {
-	if (p_elements == 0) {
-		return nullptr;
-	}
-	/** overloading operator new[] cannot be done , because it may not return the real allocated address (it may pad the 'element count' before the actual array). Because of that, it must be done by hand. This is the
-	same strategy used by std::vector, and the PoolVector class, so it should be safe.*/
+    if (p_elements == 0) {
+        return nullptr;
+    }
+    /** overloading operator new[] cannot be done , because it may not return the real allocated address (it may pad the 'element count' before the actual array). Because of that, it must be done by hand. This is the
+    same strategy used by std::vector, and the PoolVector class, so it should be safe.*/
 
-	size_t len = sizeof(T) * p_elements;
-	uint64_t *mem = (uint64_t *)Memory::alloc_static(len, true);
-	T *failptr = nullptr; //get rid of a warning
-	ERR_FAIL_COND_V(!mem, failptr);
-	*(mem - 1) = p_elements;
+    size_t len = sizeof(T) * p_elements;
+    uint64_t *mem = (uint64_t *)Memory::alloc_static(len, true);
+    T *failptr = nullptr; //get rid of a warning
+    ERR_FAIL_COND_V(!mem, failptr);
+    *(mem - 1) = p_elements;
 
-	if (!std::is_trivially_constructible<T>::value) {
-		T *elems = (T *)mem;
+    if (!std::is_trivially_constructible<T>::value) {
+        T *elems = (T *)mem;
 
-		/* call operator new */
-		for (size_t i = 0; i < p_elements; i++) {
-			new (&elems[i], sizeof(T), p_descr) T;
-		}
-	}
+        /* call operator new */
+        for (size_t i = 0; i < p_elements; i++) {
+            new (&elems[i], sizeof(T), p_descr) T;
+        }
+    }
 
-	return (T *)mem;
+    return (T *)mem;
 }
 
 /**
@@ -172,36 +172,36 @@ T *memnew_arr_template(size_t p_elements, const char *p_descr = "") {
 
 template <typename T>
 size_t memarr_len(const T *p_class) {
-	uint64_t *ptr = (uint64_t *)p_class;
-	return *(ptr - 1);
+    uint64_t *ptr = (uint64_t *)p_class;
+    return *(ptr - 1);
 }
 
 template <typename T>
 void memdelete_arr(T *p_class) {
-	uint64_t *ptr = (uint64_t *)p_class;
+    uint64_t *ptr = (uint64_t *)p_class;
 
-	if (!std::is_trivially_destructible<T>::value) {
-		uint64_t elem_count = *(ptr - 1);
+    if (!std::is_trivially_destructible<T>::value) {
+        uint64_t elem_count = *(ptr - 1);
 
-		for (uint64_t i = 0; i < elem_count; i++) {
-			p_class[i].~T();
-		}
-	}
+        for (uint64_t i = 0; i < elem_count; i++) {
+            p_class[i].~T();
+        }
+    }
 
-	Memory::free_static(ptr, true);
+    Memory::free_static(ptr, true);
 }
 
 struct _GlobalNil {
-	int color;
-	_GlobalNil *right;
-	_GlobalNil *left;
-	_GlobalNil *parent;
+    int color;
+    _GlobalNil *right;
+    _GlobalNil *left;
+    _GlobalNil *parent;
 
-	_GlobalNil();
+    _GlobalNil();
 };
 
 struct _GlobalNilClass {
-	static _GlobalNil _nil;
+    static _GlobalNil _nil;
 };
 
 #endif

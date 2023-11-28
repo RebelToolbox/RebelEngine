@@ -38,62 +38,62 @@
 #include "thirdparty/misc/open-simplex-noise.h"
 
 class OpenSimplexNoise : public Resource {
-	GDCLASS(OpenSimplexNoise, Resource);
-	OBJ_SAVE_TYPE(OpenSimplexNoise);
+    GDCLASS(OpenSimplexNoise, Resource);
+    OBJ_SAVE_TYPE(OpenSimplexNoise);
 
-	// The maximum number of octaves allowed. Note that these are statically allocated.
-	// Higher values become exponentially slower, so this shouldn't be set too high
-	// to avoid freezing the editor for long periods of time.
-	static const int MAX_OCTAVES = 9;
+    // The maximum number of octaves allowed. Note that these are statically allocated.
+    // Higher values become exponentially slower, so this shouldn't be set too high
+    // to avoid freezing the editor for long periods of time.
+    static const int MAX_OCTAVES = 9;
 
-	osn_context contexts[MAX_OCTAVES];
+    osn_context contexts[MAX_OCTAVES];
 
-	int seed;
-	float persistence; // Controls details, value in [0,1]. Higher increases grain, lower increases smoothness.
-	int octaves; // Number of noise layers
-	float period; // Distance above which we start to see similarities. The higher, the longer "hills" will be on a terrain.
-	float lacunarity; // Controls period change across octaves. 2 is usually a good value to address all detail levels.
+    int seed;
+    float persistence; // Controls details, value in [0,1]. Higher increases grain, lower increases smoothness.
+    int octaves; // Number of noise layers
+    float period; // Distance above which we start to see similarities. The higher, the longer "hills" will be on a terrain.
+    float lacunarity; // Controls period change across octaves. 2 is usually a good value to address all detail levels.
 
 public:
-	OpenSimplexNoise();
-	~OpenSimplexNoise();
+    OpenSimplexNoise();
+    ~OpenSimplexNoise();
 
-	void _init_seeds();
+    void _init_seeds();
 
-	void set_seed(int seed);
-	int get_seed() const;
+    void set_seed(int seed);
+    int get_seed() const;
 
-	void set_octaves(int p_octaves);
-	int get_octaves() const { return octaves; }
+    void set_octaves(int p_octaves);
+    int get_octaves() const { return octaves; }
 
-	void set_period(float p_period);
-	float get_period() const { return period; }
+    void set_period(float p_period);
+    float get_period() const { return period; }
 
-	void set_persistence(float p_persistence);
-	float get_persistence() const { return persistence; }
+    void set_persistence(float p_persistence);
+    float get_persistence() const { return persistence; }
 
-	void set_lacunarity(float p_lacunarity);
-	float get_lacunarity() const { return lacunarity; }
+    void set_lacunarity(float p_lacunarity);
+    float get_lacunarity() const { return lacunarity; }
 
-	Ref<Image> get_image(int p_width, int p_height, const Vector2 &p_noise_offset = Vector2()) const;
-	Ref<Image> get_seamless_image(int p_size) const;
+    Ref<Image> get_image(int p_width, int p_height, const Vector2 &p_noise_offset = Vector2()) const;
+    Ref<Image> get_seamless_image(int p_size) const;
 
-	float get_noise_1d(float x) const;
-	float get_noise_2d(float x, float y) const;
-	float get_noise_3d(float x, float y, float z) const;
-	float get_noise_4d(float x, float y, float z, float w) const;
+    float get_noise_1d(float x) const;
+    float get_noise_2d(float x, float y) const;
+    float get_noise_3d(float x, float y, float z) const;
+    float get_noise_4d(float x, float y, float z, float w) const;
 
-	_FORCE_INLINE_ float _get_octave_noise_2d(int octave, float x, float y) const { return open_simplex_noise2(&(contexts[octave]), x, y); }
-	_FORCE_INLINE_ float _get_octave_noise_3d(int octave, float x, float y, float z) const { return open_simplex_noise3(&(contexts[octave]), x, y, z); }
-	_FORCE_INLINE_ float _get_octave_noise_4d(int octave, float x, float y, float z, float w) const { return open_simplex_noise4(&(contexts[octave]), x, y, z, w); }
+    _FORCE_INLINE_ float _get_octave_noise_2d(int octave, float x, float y) const { return open_simplex_noise2(&(contexts[octave]), x, y); }
+    _FORCE_INLINE_ float _get_octave_noise_3d(int octave, float x, float y, float z) const { return open_simplex_noise3(&(contexts[octave]), x, y, z); }
+    _FORCE_INLINE_ float _get_octave_noise_4d(int octave, float x, float y, float z, float w) const { return open_simplex_noise4(&(contexts[octave]), x, y, z, w); }
 
-	// Convenience
+    // Convenience
 
-	_FORCE_INLINE_ float get_noise_2dv(const Vector2 &v) const { return get_noise_2d(v.x, v.y); }
-	_FORCE_INLINE_ float get_noise_3dv(const Vector3 &v) const { return get_noise_3d(v.x, v.y, v.z); }
+    _FORCE_INLINE_ float get_noise_2dv(const Vector2 &v) const { return get_noise_2d(v.x, v.y); }
+    _FORCE_INLINE_ float get_noise_3dv(const Vector3 &v) const { return get_noise_3d(v.x, v.y, v.z); }
 
 protected:
-	static void _bind_methods();
+    static void _bind_methods();
 };
 
 #endif // OPEN_SIMPLEX_NOISE_H

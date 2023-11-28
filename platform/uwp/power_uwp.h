@@ -37,19 +37,19 @@
 
 class PowerUWP {
 private:
-	int nsecs_left;
-	int percent_left;
-	OS::PowerState power_state;
+    int nsecs_left;
+    int percent_left;
+    OS::PowerState power_state;
 
-	bool UpdatePowerInfo();
+    bool UpdatePowerInfo();
 
 public:
-	PowerUWP();
-	virtual ~PowerUWP();
+    PowerUWP();
+    virtual ~PowerUWP();
 
-	OS::PowerState get_power_state();
-	int get_power_seconds_left();
-	int get_power_percent_left();
+    OS::PowerState get_power_state();
+    int get_power_seconds_left();
+    int get_power_percent_left();
 };
 
 #endif // POWER_UWP_H

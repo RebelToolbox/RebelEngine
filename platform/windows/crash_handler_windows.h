@@ -42,16 +42,16 @@ extern DWORD CrashHandlerException(EXCEPTION_POINTERS *ep);
 #endif
 
 class CrashHandler {
-	bool disabled;
+    bool disabled;
 
 public:
-	void initialize();
+    void initialize();
 
-	void disable();
-	bool is_disabled() const { return disabled; };
+    void disable();
+    bool is_disabled() const { return disabled; };
 
-	CrashHandler();
-	~CrashHandler();
+    CrashHandler();
+    ~CrashHandler();
 };
 
 #endif // CRASH_HANDLER_WINDOWS_H

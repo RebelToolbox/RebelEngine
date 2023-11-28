@@ -52,55 +52,55 @@ The `dependencies` section and fields are optional and defined as follow:
  See https://github.com/godotengine/godot/issues/38157#issuecomment-618773871
  */
 struct PluginConfigAndroid {
-	static const char *PLUGIN_CONFIG_EXT;
+    static const char *PLUGIN_CONFIG_EXT;
 
-	static const char *CONFIG_SECTION;
-	static const char *CONFIG_NAME_KEY;
-	static const char *CONFIG_BINARY_TYPE_KEY;
-	static const char *CONFIG_BINARY_KEY;
+    static const char *CONFIG_SECTION;
+    static const char *CONFIG_NAME_KEY;
+    static const char *CONFIG_BINARY_TYPE_KEY;
+    static const char *CONFIG_BINARY_KEY;
 
-	static const char *DEPENDENCIES_SECTION;
-	static const char *DEPENDENCIES_LOCAL_KEY;
-	static const char *DEPENDENCIES_REMOTE_KEY;
-	static const char *DEPENDENCIES_CUSTOM_MAVEN_REPOS_KEY;
+    static const char *DEPENDENCIES_SECTION;
+    static const char *DEPENDENCIES_LOCAL_KEY;
+    static const char *DEPENDENCIES_REMOTE_KEY;
+    static const char *DEPENDENCIES_CUSTOM_MAVEN_REPOS_KEY;
 
-	static const char *BINARY_TYPE_LOCAL;
-	static const char *BINARY_TYPE_REMOTE;
+    static const char *BINARY_TYPE_LOCAL;
+    static const char *BINARY_TYPE_REMOTE;
 
-	static const char *PLUGIN_VALUE_SEPARATOR;
+    static const char *PLUGIN_VALUE_SEPARATOR;
 
-	// Set to true when the config file is properly loaded.
-	bool valid_config = false;
-	// Unix timestamp of last change to this plugin.
-	uint64_t last_updated = 0;
+    // Set to true when the config file is properly loaded.
+    bool valid_config = false;
+    // Unix timestamp of last change to this plugin.
+    uint64_t last_updated = 0;
 
-	// Required config section
-	String name;
-	String binary_type;
-	String binary;
+    // Required config section
+    String name;
+    String binary_type;
+    String binary;
 
-	// Optional dependencies section
-	Vector<String> local_dependencies;
-	Vector<String> remote_dependencies;
-	Vector<String> maven_repos;
+    // Optional dependencies section
+    Vector<String> local_dependencies;
+    Vector<String> remote_dependencies;
+    Vector<String> maven_repos;
 
-	static String resolve_local_dependency_path(String plugin_config_dir, String dependency_path);
+    static String resolve_local_dependency_path(String plugin_config_dir, String dependency_path);
 
-	static PluginConfigAndroid resolve_prebuilt_plugin(PluginConfigAndroid prebuilt_plugin, String plugin_config_dir);
+    static PluginConfigAndroid resolve_prebuilt_plugin(PluginConfigAndroid prebuilt_plugin, String plugin_config_dir);
 
-	static Vector<PluginConfigAndroid> get_prebuilt_plugins(String plugins_base_dir);
+    static Vector<PluginConfigAndroid> get_prebuilt_plugins(String plugins_base_dir);
 
-	static bool is_plugin_config_valid(PluginConfigAndroid plugin_config);
+    static bool is_plugin_config_valid(PluginConfigAndroid plugin_config);
 
-	static uint64_t get_plugin_modification_time(const PluginConfigAndroid &plugin_config, const String &config_path);
+    static uint64_t get_plugin_modification_time(const PluginConfigAndroid &plugin_config, const String &config_path);
 
-	static PluginConfigAndroid load_plugin_config(Ref<ConfigFile> config_file, const String &path);
+    static PluginConfigAndroid load_plugin_config(Ref<ConfigFile> config_file, const String &path);
 
-	static String get_plugins_dependencies(String type, Vector<PluginConfigAndroid> plugins_configs);
+    static String get_plugins_dependencies(String type, Vector<PluginConfigAndroid> plugins_configs);
 
-	static String get_plugins_maven_repos(Vector<PluginConfigAndroid> plugins_configs);
+    static String get_plugins_maven_repos(Vector<PluginConfigAndroid> plugins_configs);
 
-	static String get_plugins_names(Vector<PluginConfigAndroid> plugins_configs);
+    static String get_plugins_names(Vector<PluginConfigAndroid> plugins_configs);
 };
 
 #endif // ANDROID_GODOT_PLUGIN_CONFIG_H

@@ -55,166 +55,166 @@ extern void godot_js_rtc_datachannel_close(int p_id);
 }
 
 void WebRTCDataChannelJS::_on_open(void *p_obj) {
-	WebRTCDataChannelJS *peer = static_cast<WebRTCDataChannelJS *>(p_obj);
-	peer->in_buffer.resize(peer->_in_buffer_shift);
+    WebRTCDataChannelJS *peer = static_cast<WebRTCDataChannelJS *>(p_obj);
+    peer->in_buffer.resize(peer->_in_buffer_shift);
 }
 
 void WebRTCDataChannelJS::_on_close(void *p_obj) {
-	WebRTCDataChannelJS *peer = static_cast<WebRTCDataChannelJS *>(p_obj);
-	peer->close();
+    WebRTCDataChannelJS *peer = static_cast<WebRTCDataChannelJS *>(p_obj);
+    peer->close();
 }
 
 void WebRTCDataChannelJS::_on_error(void *p_obj) {
-	WebRTCDataChannelJS *peer = static_cast<WebRTCDataChannelJS *>(p_obj);
-	peer->close();
+    WebRTCDataChannelJS *peer = static_cast<WebRTCDataChannelJS *>(p_obj);
+    peer->close();
 }
 
 void WebRTCDataChannelJS::_on_message(void *p_obj, const uint8_t *p_data, int p_size, int p_is_string) {
-	WebRTCDataChannelJS *peer = static_cast<WebRTCDataChannelJS *>(p_obj);
-	RingBuffer<uint8_t> &in_buffer = peer->in_buffer;
+    WebRTCDataChannelJS *peer = static_cast<WebRTCDataChannelJS *>(p_obj);
+    RingBuffer<uint8_t> &in_buffer = peer->in_buffer;
 
-	ERR_FAIL_COND_MSG(in_buffer.space_left() < (int)(p_size + 5), "Buffer full! Dropping data.");
+    ERR_FAIL_COND_MSG(in_buffer.space_left() < (int)(p_size + 5), "Buffer full! Dropping data.");
 
-	uint8_t is_string = p_is_string ? 1 : 0;
-	in_buffer.write((uint8_t *)&p_size, 4);
-	in_buffer.write((uint8_t *)&is_string, 1);
-	in_buffer.write(p_data, p_size);
-	peer->queue_count++;
+    uint8_t is_string = p_is_string ? 1 : 0;
+    in_buffer.write((uint8_t *)&p_size, 4);
+    in_buffer.write((uint8_t *)&is_string, 1);
+    in_buffer.write(p_data, p_size);
+    peer->queue_count++;
 }
 
 void WebRTCDataChannelJS::close() {
-	in_buffer.resize(0);
-	queue_count = 0;
-	_was_string = false;
-	godot_js_rtc_datachannel_close(_js_id);
+    in_buffer.resize(0);
+    queue_count = 0;
+    _was_string = false;
+    godot_js_rtc_datachannel_close(_js_id);
 }
 
 Error WebRTCDataChannelJS::poll() {
-	return OK;
+    return OK;
 }
 
 WebRTCDataChannelJS::ChannelState WebRTCDataChannelJS::get_ready_state() const {
-	return (ChannelState)godot_js_rtc_datachannel_ready_state_get(_js_id);
+    return (ChannelState)godot_js_rtc_datachannel_ready_state_get(_js_id);
 }
 
 int WebRTCDataChannelJS::get_available_packet_count() const {
-	return queue_count;
+    return queue_count;
 }
 
 Error WebRTCDataChannelJS::get_packet(const uint8_t **r_buffer, int &r_buffer_size) {
-	ERR_FAIL_COND_V(get_ready_state() != STATE_OPEN, ERR_UNCONFIGURED);
+    ERR_FAIL_COND_V(get_ready_state() != STATE_OPEN, ERR_UNCONFIGURED);
 
-	if (queue_count == 0)
-		return ERR_UNAVAILABLE;
+    if (queue_count == 0)
+        return ERR_UNAVAILABLE;
 
-	uint32_t to_read = 0;
-	uint32_t left = 0;
-	uint8_t is_string = 0;
-	r_buffer_size = 0;
+    uint32_t to_read = 0;
+    uint32_t left = 0;
+    uint8_t is_string = 0;
+    r_buffer_size = 0;
 
-	in_buffer.read((uint8_t *)&to_read, 4);
-	--queue_count;
-	left = in_buffer.data_left();
+    in_buffer.read((uint8_t *)&to_read, 4);
+    --queue_count;
+    left = in_buffer.data_left();
 
-	if (left < to_read + 1) {
-		in_buffer.advance_read(left);
-		return FAILED;
-	}
+    if (left < to_read + 1) {
+        in_buffer.advance_read(left);
+        return FAILED;
+    }
 
-	in_buffer.read(&is_string, 1);
-	_was_string = is_string == 1;
-	in_buffer.read(packet_buffer, to_read);
-	*r_buffer = packet_buffer;
-	r_buffer_size = to_read;
+    in_buffer.read(&is_string, 1);
+    _was_string = is_string == 1;
+    in_buffer.read(packet_buffer, to_read);
+    *r_buffer = packet_buffer;
+    r_buffer_size = to_read;
 
-	return OK;
+    return OK;
 }
 
 Error WebRTCDataChannelJS::put_packet(const uint8_t *p_buffer, int p_buffer_size) {
-	ERR_FAIL_COND_V(get_ready_state() != STATE_OPEN, ERR_UNCONFIGURED);
+    ERR_FAIL_COND_V(get_ready_state() != STATE_OPEN, ERR_UNCONFIGURED);
 
-	int is_bin = _write_mode == WebRTCDataChannel::WRITE_MODE_BINARY ? 1 : 0;
-	godot_js_rtc_datachannel_send(_js_id, p_buffer, p_buffer_size, is_bin);
-	return OK;
+    int is_bin = _write_mode == WebRTCDataChannel::WRITE_MODE_BINARY ? 1 : 0;
+    godot_js_rtc_datachannel_send(_js_id, p_buffer, p_buffer_size, is_bin);
+    return OK;
 }
 
 int WebRTCDataChannelJS::get_max_packet_size() const {
-	return 1200;
+    return 1200;
 }
 
 void WebRTCDataChannelJS::set_write_mode(WriteMode p_mode) {
-	_write_mode = p_mode;
+    _write_mode = p_mode;
 }
 
 WebRTCDataChannel::WriteMode WebRTCDataChannelJS::get_write_mode() const {
-	return _write_mode;
+    return _write_mode;
 }
 
 bool WebRTCDataChannelJS::was_string_packet() const {
-	return _was_string;
+    return _was_string;
 }
 
 String WebRTCDataChannelJS::get_label() const {
-	return _label;
+    return _label;
 }
 
 bool WebRTCDataChannelJS::is_ordered() const {
-	return godot_js_rtc_datachannel_is_ordered(_js_id);
+    return godot_js_rtc_datachannel_is_ordered(_js_id);
 }
 
 int WebRTCDataChannelJS::get_id() const {
-	return godot_js_rtc_datachannel_id_get(_js_id);
+    return godot_js_rtc_datachannel_id_get(_js_id);
 }
 
 int WebRTCDataChannelJS::get_max_packet_life_time() const {
-	return godot_js_rtc_datachannel_max_packet_lifetime_get(_js_id);
+    return godot_js_rtc_datachannel_max_packet_lifetime_get(_js_id);
 }
 
 int WebRTCDataChannelJS::get_max_retransmits() const {
-	return godot_js_rtc_datachannel_max_retransmits_get(_js_id);
+    return godot_js_rtc_datachannel_max_retransmits_get(_js_id);
 }
 
 String WebRTCDataChannelJS::get_protocol() const {
-	return _protocol;
+    return _protocol;
 }
 
 bool WebRTCDataChannelJS::is_negotiated() const {
-	return godot_js_rtc_datachannel_is_negotiated(_js_id);
+    return godot_js_rtc_datachannel_is_negotiated(_js_id);
 }
 
 int WebRTCDataChannelJS::get_buffered_amount() const {
-	return godot_js_rtc_datachannel_get_buffered_amount(_js_id);
+    return godot_js_rtc_datachannel_get_buffered_amount(_js_id);
 }
 
 WebRTCDataChannelJS::WebRTCDataChannelJS() {
-	queue_count = 0;
-	_was_string = false;
-	_write_mode = WRITE_MODE_BINARY;
-	_js_id = 0;
+    queue_count = 0;
+    _was_string = false;
+    _write_mode = WRITE_MODE_BINARY;
+    _js_id = 0;
 }
 
 WebRTCDataChannelJS::WebRTCDataChannelJS(int js_id) {
-	queue_count = 0;
-	_was_string = false;
-	_write_mode = WRITE_MODE_BINARY;
-	_js_id = js_id;
+    queue_count = 0;
+    _was_string = false;
+    _write_mode = WRITE_MODE_BINARY;
+    _js_id = js_id;
 
-	godot_js_rtc_datachannel_connect(js_id, this, &_on_open, &_on_message, &_on_error, &_on_close);
-	// Parse label
-	char *label = godot_js_rtc_datachannel_label_get(js_id);
-	if (label) {
-		_label.parse_utf8(label);
-		free(label);
-	}
-	char *protocol = godot_js_rtc_datachannel_protocol_get(js_id);
-	if (protocol) {
-		_protocol.parse_utf8(protocol);
-		free(protocol);
-	}
+    godot_js_rtc_datachannel_connect(js_id, this, &_on_open, &_on_message, &_on_error, &_on_close);
+    // Parse label
+    char *label = godot_js_rtc_datachannel_label_get(js_id);
+    if (label) {
+        _label.parse_utf8(label);
+        free(label);
+    }
+    char *protocol = godot_js_rtc_datachannel_protocol_get(js_id);
+    if (protocol) {
+        _protocol.parse_utf8(protocol);
+        free(protocol);
+    }
 }
 
 WebRTCDataChannelJS::~WebRTCDataChannelJS() {
-	close();
-	godot_js_rtc_datachannel_destroy(_js_id);
+    close();
+    godot_js_rtc_datachannel_destroy(_js_id);
 }
 #endif

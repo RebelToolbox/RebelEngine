@@ -36,19 +36,19 @@
 Rasterizer *(*Rasterizer::_create_func)() = nullptr;
 
 Rasterizer *Rasterizer::create() {
-	return _create_func();
+    return _create_func();
 }
 
 RasterizerStorage *RasterizerStorage::base_singleton = nullptr;
 
 RasterizerStorage::RasterizerStorage() {
-	base_singleton = this;
+    base_singleton = this;
 }
 
 bool RasterizerStorage::material_uses_tangents(RID p_material) {
-	return false;
+    return false;
 }
 
 bool RasterizerStorage::material_uses_ensure_correct_normals(RID p_material) {
-	return false;
+    return false;
 }

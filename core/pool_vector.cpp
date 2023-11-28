@@ -46,19 +46,19 @@ size_t MemoryPool::total_memory = 0;
 size_t MemoryPool::max_memory = 0;
 
 void MemoryPool::setup(uint32_t p_max_allocs) {
-	allocs = memnew_arr(Alloc, p_max_allocs);
-	alloc_count = p_max_allocs;
-	allocs_used = 0;
+    allocs = memnew_arr(Alloc, p_max_allocs);
+    alloc_count = p_max_allocs;
+    allocs_used = 0;
 
-	for (uint32_t i = 0; i < alloc_count - 1; i++) {
-		allocs[i].free_list = &allocs[i + 1];
-	}
+    for (uint32_t i = 0; i < alloc_count - 1; i++) {
+        allocs[i].free_list = &allocs[i + 1];
+    }
 
-	free_list = &allocs[0];
+    free_list = &allocs[0];
 }
 
 void MemoryPool::cleanup() {
-	memdelete_arr(allocs);
+    memdelete_arr(allocs);
 
-	ERR_FAIL_COND_MSG(allocs_used > 0, "There are still MemoryPool allocs in use at exit!");
+    ERR_FAIL_COND_MSG(allocs_used > 0, "There are still MemoryPool allocs in use at exit!");
 }

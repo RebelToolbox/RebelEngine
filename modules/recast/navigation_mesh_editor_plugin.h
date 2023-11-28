@@ -36,48 +36,48 @@
 #include "navigation_mesh_generator.h"
 
 class NavigationMeshEditor : public Control {
-	friend class NavigationMeshEditorPlugin;
+    friend class NavigationMeshEditorPlugin;
 
-	GDCLASS(NavigationMeshEditor, Control);
+    GDCLASS(NavigationMeshEditor, Control);
 
-	AcceptDialog *err_dialog;
+    AcceptDialog *err_dialog;
 
-	HBoxContainer *bake_hbox;
-	ToolButton *button_bake;
-	ToolButton *button_reset;
-	Label *bake_info;
+    HBoxContainer *bake_hbox;
+    ToolButton *button_bake;
+    ToolButton *button_reset;
+    Label *bake_info;
 
-	NavigationMeshInstance *node;
+    NavigationMeshInstance *node;
 
-	void _bake_pressed();
-	void _clear_pressed();
+    void _bake_pressed();
+    void _clear_pressed();
 
 protected:
-	void _node_removed(Node *p_node);
-	static void _bind_methods();
-	void _notification(int p_option);
+    void _node_removed(Node *p_node);
+    static void _bind_methods();
+    void _notification(int p_option);
 
 public:
-	void edit(NavigationMeshInstance *p_nav_mesh_instance);
-	NavigationMeshEditor();
-	~NavigationMeshEditor();
+    void edit(NavigationMeshInstance *p_nav_mesh_instance);
+    NavigationMeshEditor();
+    ~NavigationMeshEditor();
 };
 
 class NavigationMeshEditorPlugin : public EditorPlugin {
-	GDCLASS(NavigationMeshEditorPlugin, EditorPlugin);
+    GDCLASS(NavigationMeshEditorPlugin, EditorPlugin);
 
-	NavigationMeshEditor *navigation_mesh_editor;
-	EditorNode *editor;
+    NavigationMeshEditor *navigation_mesh_editor;
+    EditorNode *editor;
 
 public:
-	virtual String get_name() const { return "NavigationMesh"; }
-	bool has_main_screen() const { return false; }
-	virtual void edit(Object *p_object);
-	virtual bool handles(Object *p_object) const;
-	virtual void make_visible(bool p_visible);
+    virtual String get_name() const { return "NavigationMesh"; }
+    bool has_main_screen() const { return false; }
+    virtual void edit(Object *p_object);
+    virtual bool handles(Object *p_object) const;
+    virtual void make_visible(bool p_visible);
 
-	NavigationMeshEditorPlugin(EditorNode *p_node);
-	~NavigationMeshEditorPlugin();
+    NavigationMeshEditorPlugin(EditorNode *p_node);
+    ~NavigationMeshEditorPlugin();
 };
 
 #endif // NAVIGATION_MESH_GENERATOR_PLUGIN_H

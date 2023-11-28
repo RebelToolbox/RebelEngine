@@ -116,26 +116,26 @@ typedef std::pair<ElementMap::const_iterator, ElementMap::const_iterator> Elemen
  *  as their trailing member.  **/
 class Element {
 public:
-	Element(TokenPtr key_token, Parser &parser);
-	~Element();
+    Element(TokenPtr key_token, Parser &parser);
+    ~Element();
 
-	ScopePtr Compound() const {
-		return compound;
-	}
+    ScopePtr Compound() const {
+        return compound;
+    }
 
-	TokenPtr KeyToken() const {
-		return key_token;
-	}
+    TokenPtr KeyToken() const {
+        return key_token;
+    }
 
-	const TokenList &Tokens() const {
-		return tokens;
-	}
+    const TokenList &Tokens() const {
+        return tokens;
+    }
 
 private:
-	TokenList tokens;
-	ScopePtr compound = nullptr;
-	std::vector<ScopePtr> compound_scope;
-	TokenPtr key_token = nullptr;
+    TokenList tokens;
+    ScopePtr compound = nullptr;
+    std::vector<ScopePtr> compound_scope;
+    TokenPtr key_token = nullptr;
 };
 
 /** FBX data entity that consists of a 'scope', a collection
@@ -151,71 +151,71 @@ private:
  *  @endverbatim  */
 class Scope {
 public:
-	Scope(Parser &parser, bool topLevel = false);
-	~Scope();
+    Scope(Parser &parser, bool topLevel = false);
+    ~Scope();
 
-	ElementPtr GetElement(const std::string &index) const {
-		ElementMap::const_iterator it = elements.find(index);
-		return it == elements.end() ? nullptr : (*it).second;
-	}
+    ElementPtr GetElement(const std::string &index) const {
+        ElementMap::const_iterator it = elements.find(index);
+        return it == elements.end() ? nullptr : (*it).second;
+    }
 
-	ElementPtr FindElementCaseInsensitive(const std::string &elementName) const {
-		for (auto element = elements.begin(); element != elements.end(); ++element) {
-			if (element->first.compare(elementName)) {
-				return element->second;
-			}
-		}
+    ElementPtr FindElementCaseInsensitive(const std::string &elementName) const {
+        for (auto element = elements.begin(); element != elements.end(); ++element) {
+            if (element->first.compare(elementName)) {
+                return element->second;
+            }
+        }
 
-		// nothing to reference / expired.
-		return nullptr;
-	}
+        // nothing to reference / expired.
+        return nullptr;
+    }
 
-	ElementCollection GetCollection(const std::string &index) const {
-		return elements.equal_range(index);
-	}
+    ElementCollection GetCollection(const std::string &index) const {
+        return elements.equal_range(index);
+    }
 
-	const ElementMap &Elements() const {
-		return elements;
-	}
+    const ElementMap &Elements() const {
+        return elements;
+    }
 
 private:
-	ElementMap elements;
+    ElementMap elements;
 };
 
 /** FBX parsing class, takes a list of input tokens and generates a hierarchy
  *  of nested #Scope instances, representing the fbx DOM.*/
 class Parser {
 public:
-	/** Parse given a token list. Does not take ownership of the tokens -
-	 *  the objects must persist during the entire parser lifetime */
-	Parser(const TokenList &tokens, bool is_binary);
-	~Parser();
+    /** Parse given a token list. Does not take ownership of the tokens -
+     *  the objects must persist during the entire parser lifetime */
+    Parser(const TokenList &tokens, bool is_binary);
+    ~Parser();
 
-	ScopePtr GetRootScope() const {
-		return root;
-	}
+    ScopePtr GetRootScope() const {
+        return root;
+    }
 
-	bool IsBinary() const {
-		return is_binary;
-	}
-
-private:
-	friend class Scope;
-	friend class Element;
-
-	TokenPtr AdvanceToNextToken();
-	TokenPtr LastToken() const;
-	TokenPtr CurrentToken() const;
+    bool IsBinary() const {
+        return is_binary;
+    }
 
 private:
-	ScopeList scopes;
-	const TokenList &tokens;
+    friend class Scope;
+    friend class Element;
 
-	TokenPtr last = nullptr, current = nullptr;
-	TokenList::const_iterator cursor;
-	ScopePtr root = nullptr;
+    TokenPtr AdvanceToNextToken();
+    TokenPtr LastToken() const;
+    TokenPtr CurrentToken() const;
 
-	const bool is_binary;
+private:
+    ScopeList scopes;
+    const TokenList &tokens;
+
+    TokenPtr last = nullptr, current = nullptr;
+    TokenList::const_iterator cursor;
+    ScopePtr root = nullptr;
+
+    const bool is_binary;
 };
 
 /* token parsing - this happens when building the DOM out of the parse-tree*/
