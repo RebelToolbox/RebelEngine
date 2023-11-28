@@ -49,9 +49,9 @@
 #include <png.h>
 #include <stdlib.h>
 
-#define DOM_BUTTON_LEFT 0
-#define DOM_BUTTON_MIDDLE 1
-#define DOM_BUTTON_RIGHT 2
+#define DOM_BUTTON_LEFT     0
+#define DOM_BUTTON_MIDDLE   1
+#define DOM_BUTTON_RIGHT    2
 #define DOM_BUTTON_XBUTTON1 3
 #define DOM_BUTTON_XBUTTON2 4
 

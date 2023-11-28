@@ -63,8 +63,8 @@ April 04, 2008
 
 */
 
-#define SLIDER_CONSTRAINT_DEF_SOFTNESS (real_t(1.0))
-#define SLIDER_CONSTRAINT_DEF_DAMPING (real_t(1.0))
+#define SLIDER_CONSTRAINT_DEF_SOFTNESS    (real_t(1.0))
+#define SLIDER_CONSTRAINT_DEF_DAMPING     (real_t(1.0))
 #define SLIDER_CONSTRAINT_DEF_RESTITUTION (real_t(0.7))
 
 //-----------------------------------------------------------------------------

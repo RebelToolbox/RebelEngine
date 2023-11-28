@@ -156,7 +156,7 @@ void _err_print_index_error(
 void _err_flush_stdout();
 
 #ifndef _STR
-#define _STR(m_x) #m_x
+#define _STR(m_x)   #m_x
 #define _MKSTR(m_x) _STR(m_x)
 #endif
 

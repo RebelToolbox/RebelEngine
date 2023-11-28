@@ -72,9 +72,9 @@ class VisualServerWrapMT : public VisualServer {
 #endif
 
 public:
-#define ServerName VisualServer
+#define ServerName       VisualServer
 #define ServerNameWrapMT VisualServerWrapMT
-#define server_name visual_server
+#define server_name      visual_server
 #include "servers/server_wrap_mt_common.h"
 
     /* EVENT QUEUING */

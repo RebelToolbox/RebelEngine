@@ -40,7 +40,7 @@ extern "C" {
 
 typedef wchar_t godot_char_type;
 
-#define GODOT_STRING_SIZE sizeof(void*)
+#define GODOT_STRING_SIZE      sizeof(void*)
 #define GODOT_CHAR_STRING_SIZE sizeof(void*)
 
 #ifndef GODOT_CORE_API_GODOT_STRING_TYPE_DEFINED

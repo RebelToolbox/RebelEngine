@@ -34,9 +34,9 @@
 
 // setter and getter names for property serialization
 #define COLOR_RAMP_GET_OFFSETS "get_offsets"
-#define COLOR_RAMP_GET_COLORS "get_colors"
+#define COLOR_RAMP_GET_COLORS  "get_colors"
 #define COLOR_RAMP_SET_OFFSETS "set_offsets"
-#define COLOR_RAMP_SET_COLORS "set_colors"
+#define COLOR_RAMP_SET_COLORS  "set_colors"
 
 Gradient::Gradient() {
     // Set initial color ramp transition from black to white

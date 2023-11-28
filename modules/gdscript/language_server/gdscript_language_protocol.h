@@ -40,7 +40,7 @@
 #include "modules/jsonrpc/jsonrpc.h"
 
 #define LSP_MAX_BUFFER_SIZE 4194304
-#define LSP_MAX_CLIENTS 8
+#define LSP_MAX_CLIENTS     8
 
 class GDScriptLanguageProtocol : public JSONRPC {
     GDCLASS(GDScriptLanguageProtocol, JSONRPC)

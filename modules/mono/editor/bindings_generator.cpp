@@ -56,43 +56,43 @@
 
 #define MEMBER_BEGIN "\n" INDENT2
 
-#define OPEN_BLOCK "{\n"
+#define OPEN_BLOCK  "{\n"
 #define CLOSE_BLOCK "}\n"
 
-#define OPEN_BLOCK_L2 INDENT2 OPEN_BLOCK INDENT3
-#define OPEN_BLOCK_L3 INDENT3 OPEN_BLOCK INDENT4
-#define OPEN_BLOCK_L4 INDENT4 OPEN_BLOCK INDENT5
+#define OPEN_BLOCK_L2  INDENT2 OPEN_BLOCK INDENT3
+#define OPEN_BLOCK_L3  INDENT3 OPEN_BLOCK INDENT4
+#define OPEN_BLOCK_L4  INDENT4 OPEN_BLOCK INDENT5
 #define CLOSE_BLOCK_L2 INDENT2 CLOSE_BLOCK
 #define CLOSE_BLOCK_L3 INDENT3 CLOSE_BLOCK
 #define CLOSE_BLOCK_L4 INDENT4 CLOSE_BLOCK
 
-#define CS_FIELD_MEMORYOWN "memoryOwn"
-#define CS_PARAM_METHODBIND "method"
-#define CS_PARAM_INSTANCE "ptr"
+#define CS_FIELD_MEMORYOWN     "memoryOwn"
+#define CS_PARAM_METHODBIND    "method"
+#define CS_PARAM_INSTANCE      "ptr"
 #define CS_SMETHOD_GETINSTANCE "GetPtr"
-#define CS_METHOD_CALL "Call"
+#define CS_METHOD_CALL         "Call"
 
-#define GLUE_HEADER_FILE "glue_header.h"
-#define ICALL_PREFIX "godot_icall_"
+#define GLUE_HEADER_FILE       "glue_header.h"
+#define ICALL_PREFIX           "godot_icall_"
 #define SINGLETON_ICALL_SUFFIX "_get_singleton"
-#define ICALL_GET_METHODBIND ICALL_PREFIX "Object_ClassDB_get_method"
+#define ICALL_GET_METHODBIND   ICALL_PREFIX "Object_ClassDB_get_method"
 
-#define C_LOCAL_RET "ret"
-#define C_LOCAL_VARARG_RET "vararg_ret"
-#define C_LOCAL_PTRCALL_ARGS "call_args"
+#define C_LOCAL_RET              "ret"
+#define C_LOCAL_VARARG_RET       "vararg_ret"
+#define C_LOCAL_PTRCALL_ARGS     "call_args"
 #define C_MACRO_OBJECT_CONSTRUCT "GODOTSHARP_INSTANCE_OBJECT"
 
-#define C_NS_MONOUTILS "GDMonoUtils"
+#define C_NS_MONOUTILS     "GDMonoUtils"
 #define C_NS_MONOINTERNALS "GDMonoInternals"
 #define C_METHOD_TIE_MANAGED_TO_UNMANAGED                                      \
     C_NS_MONOINTERNALS "::tie_managed_to_unmanaged"
 #define C_METHOD_UNMANAGED_GET_MANAGED C_NS_MONOUTILS "::unmanaged_get_managed"
 
-#define C_NS_MONOMARSHAL "GDMonoMarshal"
+#define C_NS_MONOMARSHAL            "GDMonoMarshal"
 #define C_METHOD_MANAGED_TO_VARIANT C_NS_MONOMARSHAL "::mono_object_to_variant"
 #define C_METHOD_MANAGED_FROM_VARIANT                                          \
     C_NS_MONOMARSHAL "::variant_to_mono_object"
-#define C_METHOD_MONOSTR_TO_GODOT C_NS_MONOMARSHAL "::mono_string_to_godot"
+#define C_METHOD_MONOSTR_TO_GODOT   C_NS_MONOMARSHAL "::mono_string_to_godot"
 #define C_METHOD_MONOSTR_FROM_GODOT C_NS_MONOMARSHAL "::mono_string_from_godot"
 #define C_METHOD_MONOARRAY_TO(m_type)                                          \
     C_NS_MONOMARSHAL "::mono_array_to_" #m_type

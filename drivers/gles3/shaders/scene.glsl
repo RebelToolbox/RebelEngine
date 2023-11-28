@@ -510,7 +510,7 @@ void main() {
 
 // defines that make writing custom shaders easier
 #define projection_matrix local_projection
-#define world_transform world_matrix
+#define world_transform   world_matrix
 
 #ifdef USE_SKELETON
     {
@@ -751,7 +751,7 @@ VERTEX_SHADER_CODE
 uniform highp mat4 world_transform;
 /* clang-format on */
 
-#define M_PI 3.14159265359
+#define M_PI           3.14159265359
 #define SHADER_IS_SRGB false
 
 /* Varyings */
@@ -2007,7 +2007,7 @@ vec4 textureArray_bicubic(sampler2DArray tex, vec3 uv) {
     textureArray_bicubic(m_tex, m_uv)
 
 #else //! USE_LIGHTMAP_FILTER_BICUBIC
-#define LIGHTMAP_TEXTURE_SAMPLE(m_tex, m_uv) texture(m_tex, m_uv)
+#define LIGHTMAP_TEXTURE_SAMPLE(m_tex, m_uv)         texture(m_tex, m_uv)
 #define LIGHTMAP_TEXTURE_LAYERED_SAMPLE(m_tex, m_uv) texture(m_tex, m_uv)
 
 #endif // USE_LIGHTMAP_FILTER_BICUBIC

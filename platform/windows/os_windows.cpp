@@ -275,11 +275,11 @@ bool OS_Windows::can_draw() const {
     return !minimized;
 };
 
-#define MI_WP_SIGNATURE 0xFF515700
-#define SIGNATURE_MASK 0xFFFFFF00
+#define MI_WP_SIGNATURE  0xFF515700
+#define SIGNATURE_MASK   0xFFFFFF00
 // Keeping the name suggested by Microsoft, but this macro really answers:
 // Is this mouse event emulated from touch or pen input?
-#define IsPenEvent(dw) (((dw) & SIGNATURE_MASK) == MI_WP_SIGNATURE)
+#define IsPenEvent(dw)   (((dw) & SIGNATURE_MASK) == MI_WP_SIGNATURE)
 // This one tells whether the event comes from touchscreen (and not from pen)
 #define IsTouchEvent(dw) (IsPenEvent(dw) && ((dw) & 0x80))
 

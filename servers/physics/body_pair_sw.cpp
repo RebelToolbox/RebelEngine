@@ -46,8 +46,8 @@
 
 // #define ALLOWED_PENETRATION 0.01
 #define RELAXATION_TIMESTEPS 3
-#define MIN_VELOCITY 0.0001
-#define MAX_BIAS_ROTATION (Math_PI / 8)
+#define MIN_VELOCITY         0.0001
+#define MAX_BIAS_ROTATION    (Math_PI / 8)
 
 void BodyPairSW::_contact_added_callback(
     const Vector3& p_point_A,

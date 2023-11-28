@@ -71,9 +71,9 @@ class Physics2DServerWrapMT : public Physics2DServer {
     int pool_max_size;
 
 public:
-#define ServerName Physics2DServer
+#define ServerName       Physics2DServer
 #define ServerNameWrapMT Physics2DServerWrapMT
-#define server_name physics_2d_server
+#define server_name      physics_2d_server
 #include "servers/server_wrap_mt_common.h"
 
     // FUNC1RID(shape,ShapeType); todo fix

@@ -46,7 +46,7 @@
 #include <stdint.h>
 
 #define _AI_CONCAT(a, b) a##b
-#define AI_CONCAT(a, b) _AI_CONCAT(a, b)
+#define AI_CONCAT(a, b)  _AI_CONCAT(a, b)
 
 namespace FBXDocParser
 {

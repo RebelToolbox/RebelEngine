@@ -43,18 +43,18 @@
 /**
  *  Time constants borrowed from loc_time.h
  */
-#define EPOCH_YR 1970 /* EPOCH = Jan 1 1970 00:00:00 */
-#define SECS_DAY (24L * 60L * 60L)
+#define EPOCH_YR       1970 /* EPOCH = Jan 1 1970 00:00:00 */
+#define SECS_DAY       (24L * 60L * 60L)
 #define LEAPYEAR(year) (!((year) % 4) && (((year) % 100) || !((year) % 400)))
 #define YEARSIZE(year) (LEAPYEAR(year) ? 366 : 365)
-#define SECOND_KEY "second"
-#define MINUTE_KEY "minute"
-#define HOUR_KEY "hour"
-#define DAY_KEY "day"
-#define MONTH_KEY "month"
-#define YEAR_KEY "year"
-#define WEEKDAY_KEY "weekday"
-#define DST_KEY "dst"
+#define SECOND_KEY     "second"
+#define MINUTE_KEY     "minute"
+#define HOUR_KEY       "hour"
+#define DAY_KEY        "day"
+#define MONTH_KEY      "month"
+#define YEAR_KEY       "year"
+#define WEEKDAY_KEY    "weekday"
+#define DST_KEY        "dst"
 
 /// Table of number of days in each month (for regular year and leap year)
 static const unsigned int MONTH_DAYS_TABLE[2][12] = {

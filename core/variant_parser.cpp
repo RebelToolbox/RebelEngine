@@ -316,9 +316,9 @@ Error VariantParser::get_token(
 
                     StringBuffer<> num;
 #define READING_SIGN 0
-#define READING_INT 1
-#define READING_DEC 2
-#define READING_EXP 3
+#define READING_INT  1
+#define READING_DEC  2
+#define READING_EXP  3
 #define READING_DONE 4
                     int reading = READING_INT;
 

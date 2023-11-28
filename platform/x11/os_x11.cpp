@@ -56,11 +56,11 @@
 #include <string.h>
 
 // ICCCM
-#define WM_NormalState 1L // window normal state
-#define WM_IconicState 3L // window minimized
+#define WM_NormalState       1L // window normal state
+#define WM_IconicState       3L // window minimized
 // EWMH
 #define _NET_WM_STATE_REMOVE 0L // remove/unset property
-#define _NET_WM_STATE_ADD 1L    // add/set property
+#define _NET_WM_STATE_ADD    1L // add/set property
 #define _NET_WM_STATE_TOGGLE 2L // toggle property
 
 #include <dlfcn.h>
@@ -82,11 +82,11 @@
 #define XINPUT_CLIENT_VERSION_MAJOR 2
 #define XINPUT_CLIENT_VERSION_MINOR 2
 
-#define VALUATOR_ABSX 0
-#define VALUATOR_ABSY 1
+#define VALUATOR_ABSX     0
+#define VALUATOR_ABSY     1
 #define VALUATOR_PRESSURE 2
-#define VALUATOR_TILTX 3
-#define VALUATOR_TILTY 4
+#define VALUATOR_TILTX    3
+#define VALUATOR_TILTY    4
 
 static const double abs_resolution_mult = 10000.0;
 static const double abs_resolution_range_mult = 10.0;

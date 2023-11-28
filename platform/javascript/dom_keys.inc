@@ -87,7 +87,7 @@ int dom_code2godot_scancode(
         }
 
 #define _U_2BYTES_MASK 0xE0
-#define _U_2BYTES 0xC0
+#define _U_2BYTES      0xC0
         // Latin-1 codes.
         if (b2 == 0
             && (b0 & _U_2BYTES_MASK)

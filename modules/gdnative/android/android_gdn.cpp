@@ -39,7 +39,7 @@
 #include "platform/android/os_android.h"
 #include "platform/android/thread_jandroid.h"
 #else
-#define JNIEnv void
+#define JNIEnv  void
 #define jobject void*
 #endif
 

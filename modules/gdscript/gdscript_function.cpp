@@ -274,20 +274,20 @@ String GDScriptFunction::_get_call_error(
     OPSEXIT:
 #define OPCODES_OUT                                                            \
     OPSOUT:
-#define DISPATCH_OPCODE goto* switch_table_ops[_code_ptr[ip]]
+#define DISPATCH_OPCODE       goto* switch_table_ops[_code_ptr[ip]]
 #define OPCODE_SWITCH(m_test) DISPATCH_OPCODE;
-#define OPCODE_BREAK goto OPSEXIT
-#define OPCODE_OUT goto OPSOUT
+#define OPCODE_BREAK          goto OPSEXIT
+#define OPCODE_OUT            goto OPSOUT
 #else
 #define OPCODES_TABLE
-#define OPCODE(m_op) case m_op:
+#define OPCODE(m_op)         case m_op:
 #define OPCODE_WHILE(m_test) while (m_test)
 #define OPCODES_END
 #define OPCODES_OUT
-#define DISPATCH_OPCODE continue
+#define DISPATCH_OPCODE       continue
 #define OPCODE_SWITCH(m_test) switch (m_test)
-#define OPCODE_BREAK break
-#define OPCODE_OUT break
+#define OPCODE_BREAK          break
+#define OPCODE_OUT            break
 #endif
 
 Variant GDScriptFunction::call(

@@ -61,7 +61,7 @@
 #define MIN_ZOOM 1. / 128
 #define MAX_ZOOM 128
 
-#define RULER_WIDTH (15 * EDSCALE)
+#define RULER_WIDTH           (15 * EDSCALE)
 #define SCALE_HANDLE_DISTANCE 25
 
 class SnapDialog : public ConfirmationDialog {

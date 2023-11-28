@@ -70,8 +70,8 @@ EncodedObjectAsID::EncodedObjectAsID() : id(0) {}
 #define ERR_FAIL_MUL_OF(a, b, err)                                             \
     ERR_FAIL_COND_V(_S(a) < 0 || _S(b) <= 0 || _S(a) > INT_MAX / _S(b), err)
 
-#define ENCODE_MASK 0xFF
-#define ENCODE_FLAG_64 1 << 16
+#define ENCODE_MASK              0xFF
+#define ENCODE_FLAG_64           1 << 16
 #define ENCODE_FLAG_OBJECT_AS_ID 1 << 16
 
 static Error _decode_string(

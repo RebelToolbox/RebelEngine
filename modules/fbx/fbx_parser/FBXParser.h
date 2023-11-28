@@ -101,7 +101,7 @@ typedef std::multimap<std::string, ElementPtr> ElementMap;
 typedef std::pair<ElementMap::const_iterator, ElementMap::const_iterator>
     ElementCollection;
 
-#define new_Scope new Scope
+#define new_Scope   new Scope
 #define new_Element new Element
 
 /** FBX data entity that consists of a key:value tuple.

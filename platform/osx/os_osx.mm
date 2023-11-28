@@ -61,18 +61,18 @@
 #include <unistd.h>
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED < 101200
-#define NSEventMaskAny NSAnyEventMask
-#define NSEventTypeKeyDown NSKeyDown
-#define NSEventTypeKeyUp NSKeyUp
-#define NSEventModifierFlagShift NSShiftKeyMask
-#define NSEventModifierFlagCommand NSCommandKeyMask
-#define NSEventModifierFlagControl NSControlKeyMask
-#define NSEventModifierFlagOption NSAlternateKeyMask
-#define NSWindowStyleMaskTitled NSTitledWindowMask
-#define NSWindowStyleMaskResizable NSResizableWindowMask
+#define NSEventMaskAny                  NSAnyEventMask
+#define NSEventTypeKeyDown              NSKeyDown
+#define NSEventTypeKeyUp                NSKeyUp
+#define NSEventModifierFlagShift        NSShiftKeyMask
+#define NSEventModifierFlagCommand      NSCommandKeyMask
+#define NSEventModifierFlagControl      NSControlKeyMask
+#define NSEventModifierFlagOption       NSAlternateKeyMask
+#define NSWindowStyleMaskTitled         NSTitledWindowMask
+#define NSWindowStyleMaskResizable      NSResizableWindowMask
 #define NSWindowStyleMaskMiniaturizable NSMiniaturizableWindowMask
-#define NSWindowStyleMaskClosable NSClosableWindowMask
-#define NSWindowStyleMaskBorderless NSBorderlessWindowMask
+#define NSWindowStyleMaskClosable       NSClosableWindowMask
+#define NSWindowStyleMaskBorderless     NSBorderlessWindowMask
 #endif
 
 #ifndef NSAppKitVersionNumber10_12

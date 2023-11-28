@@ -36,7 +36,7 @@
 #include "core/project_settings.h"
 
 #define kOutputBus 0
-#define kInputBus 1
+#define kInputBus  1
 
 #ifdef OSX_ENABLED
 OSStatus AudioDriverCoreAudio::input_device_address_cb(

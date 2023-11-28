@@ -32,7 +32,7 @@
 
 #include "core/method_bind_ext.gen.inc"
 
-#define _VERTEX_SNAP 0.0001
+#define _VERTEX_SNAP   0.0001
 #define EQ_VERTEX_DIST 0.00001
 
 bool SurfaceTool::Vertex::operator==(const Vertex& p_vertex) const {

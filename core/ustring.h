@@ -538,14 +538,14 @@ _FORCE_INLINE_ bool is_str_less(const L* l_ptr, const R* r_ptr) {
 String TTR(const String&);
 String DTR(const String&);
 // Use for C strings.
-#define TTRC(m_value) (m_value)
+#define TTRC(m_value)   (m_value)
 // Use to avoid parsing (for use later with C strings).
 #define TTRGET(m_value) TTR(m_value)
 
 #else
-#define TTR(m_value) (String())
-#define DTR(m_value) (String())
-#define TTRC(m_value) (m_value)
+#define TTR(m_value)    (String())
+#define DTR(m_value)    (String())
+#define TTRC(m_value)   (m_value)
 #define TTRGET(m_value) (m_value)
 #endif
 

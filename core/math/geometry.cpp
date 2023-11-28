@@ -569,7 +569,7 @@ PoolVector<Face3> Geometry::wrap_geometry(
     PoolVector<Face3> p_array,
     real_t* p_error
 ) {
-#define _MIN_SIZE 1.0
+#define _MIN_SIZE   1.0
 #define _MAX_LENGTH 20
 
     int face_count = p_array.size();

@@ -107,9 +107,9 @@ void operator delete(
 );
 #endif
 
-#define memalloc(m_size) Memory::alloc_static(m_size)
+#define memalloc(m_size)          Memory::alloc_static(m_size)
 #define memrealloc(m_mem, m_size) Memory::realloc_static(m_mem, m_size)
-#define memfree(m_mem) Memory::free_static(m_mem)
+#define memfree(m_mem)            Memory::free_static(m_mem)
 
 _ALWAYS_INLINE_ void postinitialize_handler(void*) {}
 

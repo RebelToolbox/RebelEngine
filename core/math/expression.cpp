@@ -1097,11 +1097,11 @@ Error Expression::_get_token(Token& r_token) {
 
                     String num;
 #define READING_SIGN 0
-#define READING_INT 1
-#define READING_HEX 2
-#define READING_BIN 3
-#define READING_DEC 4
-#define READING_EXP 5
+#define READING_INT  1
+#define READING_HEX  2
+#define READING_BIN  3
+#define READING_DEC  4
+#define READING_EXP  5
 #define READING_DONE 6
                     int reading = READING_INT;
 

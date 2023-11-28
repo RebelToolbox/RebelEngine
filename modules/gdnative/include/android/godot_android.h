@@ -36,7 +36,7 @@
 #ifdef __ANDROID__
 #include <jni.h>
 #else
-#define JNIEnv void
+#define JNIEnv  void
 #define jobject void*
 #endif
 

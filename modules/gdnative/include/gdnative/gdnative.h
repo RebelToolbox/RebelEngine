@@ -42,14 +42,14 @@ extern "C" {
 #include "TargetConditionals.h"
 #if TARGET_OS_IPHONE
 #define GDCALLINGCONV __attribute__((visibility("default")))
-#define GDAPI GDCALLINGCONV
+#define GDAPI         GDCALLINGCONV
 #elif TARGET_OS_MAC
 #define GDCALLINGCONV __attribute__((sysv_abi))
-#define GDAPI GDCALLINGCONV
+#define GDAPI         GDCALLINGCONV
 #endif
 #else // !_WIN32 && !__APPLE__
 #define GDCALLINGCONV __attribute__((sysv_abi))
-#define GDAPI GDCALLINGCONV
+#define GDAPI         GDCALLINGCONV
 #endif
 
 // This is for libraries *using* the header, NOT GODOT EXPOSING STUFF!!
@@ -128,7 +128,7 @@ typedef enum {
 
 typedef bool godot_bool;
 
-#define GODOT_TRUE 1
+#define GODOT_TRUE  1
 #define GODOT_FALSE 0
 
 /////// int

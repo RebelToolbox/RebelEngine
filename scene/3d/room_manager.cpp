@@ -313,7 +313,7 @@ void RoomManager::_bind_methods() {
 
     // just some macros to make setting inspector values easier
 #define LPORTAL_STRINGIFY(x) #x
-#define LPORTAL_TOSTRING(x) LPORTAL_STRINGIFY(x)
+#define LPORTAL_TOSTRING(x)  LPORTAL_STRINGIFY(x)
 
 #define LIMPL_PROPERTY(P_TYPE, P_NAME, P_SET, P_GET)                           \
     ClassDB::bind_method(                                                      \

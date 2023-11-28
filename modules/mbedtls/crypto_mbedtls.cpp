@@ -40,7 +40,7 @@
 #include "editor/editor_settings.h"
 #endif
 #define PEM_BEGIN_CRT "-----BEGIN CERTIFICATE-----\n"
-#define PEM_END_CRT "-----END CERTIFICATE-----\n"
+#define PEM_END_CRT   "-----END CERTIFICATE-----\n"
 
 #include <mbedtls/debug.h>
 #include <mbedtls/md.h>

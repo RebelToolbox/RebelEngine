@@ -507,7 +507,7 @@ void main() {
     float roughness = 1.0;
 
 #define projection_matrix local_projection_matrix
-#define world_transform world_matrix
+#define world_transform   world_matrix
 
     float point_size = 1.0;
 

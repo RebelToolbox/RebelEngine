@@ -58,22 +58,22 @@
 #include <windows.h>
 #include <windowsx.h>
 // WinTab API
-#define WT_PACKET 0x7FF0
-#define WT_PROXIMITY 0x7FF5
+#define WT_PACKET     0x7FF0
+#define WT_PROXIMITY  0x7FF5
 #define WT_INFOCHANGE 0x7FF6
-#define WT_CSRCHANGE 0x7FF7
+#define WT_CSRCHANGE  0x7FF7
 
-#define WTI_DEFSYSCTX 4
-#define WTI_DEVICES 100
-#define DVC_NPRESSURE 15
-#define DVC_TPRESSURE 16
+#define WTI_DEFSYSCTX   4
+#define WTI_DEVICES     100
+#define DVC_NPRESSURE   15
+#define DVC_TPRESSURE   16
 #define DVC_ORIENTATION 17
-#define DVC_ROTATION 18
+#define DVC_ROTATION    18
 
-#define CXO_MESSAGES 0x0004
-#define PK_NORMAL_PRESSURE 0x0400
+#define CXO_MESSAGES        0x0004
+#define PK_NORMAL_PRESSURE  0x0400
 #define PK_TANGENT_PRESSURE 0x0800
-#define PK_ORIENTATION 0x1000
+#define PK_ORIENTATION      0x1000
 
 typedef struct tagLOGCONTEXTW {
     WCHAR lcName[40];

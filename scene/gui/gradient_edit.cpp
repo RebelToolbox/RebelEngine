@@ -34,10 +34,10 @@
 
 #ifdef TOOLS_ENABLED
 #include "editor/editor_scale.h"
-#define SPACING (3 * EDSCALE)
+#define SPACING     (3 * EDSCALE)
 #define POINT_WIDTH (8 * EDSCALE)
 #else
-#define SPACING 3
+#define SPACING     3
 #define POINT_WIDTH 8
 #endif
 

@@ -35,7 +35,7 @@
 #define _GD_VARNAME_CONCAT_A_(m_a, m_b, m_c)                                   \
     _GD_VARNAME_CONCAT_B_(hello there, m_a##m_b##m_c)
 #define _GD_VARNAME_CONCAT_(m_a, m_b, m_c) _GD_VARNAME_CONCAT_A_(m_a, m_b, m_c)
-#define GD_UNIQUE_NAME(m_name) _GD_VARNAME_CONCAT_(m_name, _, __COUNTER__)
+#define GD_UNIQUE_NAME(m_name)             _GD_VARNAME_CONCAT_(m_name, _, __COUNTER__)
 
 // static assert
 // TODO: Get rid of this macro once we upgrade to C++11

@@ -47,8 +47,8 @@ class RasterizerCanvasGLES3;
 class RasterizerSceneGLES3;
 
 #define _TEXTURE_SRGB_DECODE_EXT 0x8A48
-#define _DECODE_EXT 0x8A49
-#define _SKIP_DECODE_EXT 0x8A4A
+#define _DECODE_EXT              0x8A49
+#define _SKIP_DECODE_EXT         0x8A4A
 
 void glTexStorage2DCustom(
     GLenum target,

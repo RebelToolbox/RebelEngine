@@ -231,7 +231,7 @@ public:
 
 // not a macro any longer
 
-#define EDITOR_DEF(m_var, m_val) _EDITOR_DEF(m_var, Variant(m_val))
+#define EDITOR_DEF(m_var, m_val)     _EDITOR_DEF(m_var, Variant(m_val))
 #define EDITOR_DEF_RST(m_var, m_val) _EDITOR_DEF(m_var, Variant(m_val), true)
 Variant _EDITOR_DEF(
     const String& p_setting,

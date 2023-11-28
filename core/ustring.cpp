@@ -2263,9 +2263,9 @@ done:
 }
 
 #define READING_SIGN 0
-#define READING_INT 1
-#define READING_DEC 2
-#define READING_EXP 3
+#define READING_INT  1
+#define READING_DEC  2
+#define READING_EXP  3
 #define READING_DONE 4
 
 double String::to_double(const char* p_str) {

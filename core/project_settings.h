@@ -227,7 +227,7 @@ Variant _GLOBAL_DEF_ALIAS(
     const Variant& p_default,
     bool p_restart_if_changed = false
 );
-#define GLOBAL_DEF(m_var, m_value) _GLOBAL_DEF(m_var, m_value)
+#define GLOBAL_DEF(m_var, m_value)     _GLOBAL_DEF(m_var, m_value)
 #define GLOBAL_DEF_RST(m_var, m_value) _GLOBAL_DEF(m_var, m_value, true)
 #define GLOBAL_DEF_NOVAL(m_var, m_value)                                       \
     _GLOBAL_DEF(m_var, m_value, false, true)

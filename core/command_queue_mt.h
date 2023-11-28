@@ -39,15 +39,15 @@
 
 #define COMMA(N) _COMMA_##N
 #define _COMMA_0
-#define _COMMA_1 ,
-#define _COMMA_2 ,
-#define _COMMA_3 ,
-#define _COMMA_4 ,
-#define _COMMA_5 ,
-#define _COMMA_6 ,
-#define _COMMA_7 ,
-#define _COMMA_8 ,
-#define _COMMA_9 ,
+#define _COMMA_1  ,
+#define _COMMA_2  ,
+#define _COMMA_3  ,
+#define _COMMA_4  ,
+#define _COMMA_5  ,
+#define _COMMA_6  ,
+#define _COMMA_7  ,
+#define _COMMA_8  ,
+#define _COMMA_9  ,
 #define _COMMA_10 ,
 #define _COMMA_11 ,
 #define _COMMA_12 ,
@@ -182,8 +182,8 @@
     ITEM(1)
 #define _SPACE_SEP_LIST_0(ITEM)
 
-#define ARG(N) p##N
-#define PARAM(N) P##N p##N
+#define ARG(N)        p##N
+#define PARAM(N)      P##N p##N
 #define TYPE_PARAM(N) class P##N
 #define PARAM_DECL(N) typename GetSimpleTypeT<P##N>::type_t p##N
 
@@ -224,8 +224,8 @@
         }                                                                      \
     };
 
-#define TYPE_ARG(N) P##N
-#define CMD_TYPE(N) Command##N<T, M COMMA(N) COMMA_SEP_LIST(TYPE_ARG, N)>
+#define TYPE_ARG(N)         P##N
+#define CMD_TYPE(N)         Command##N<T, M COMMA(N) COMMA_SEP_LIST(TYPE_ARG, N)>
 #define CMD_ASSIGN_PARAM(N) cmd->p##N = p##N
 
 #define DECL_PUSH(N)                                                           \

@@ -74,7 +74,7 @@ const IID IID_IAudioCaptureClient = __uuidof(IAudioCaptureClient);
         (memory) = NULL;                                                       \
     }
 
-#define REFTIMES_PER_SEC 10000000
+#define REFTIMES_PER_SEC      10000000
 #define REFTIMES_PER_MILLISEC 10000
 
 #define CAPTURE_BUFFER_CHANNELS 2

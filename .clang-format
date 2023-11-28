@@ -26,12 +26,12 @@ AlignArrayOfStructures: Left
 #   AcrossComments:   false
 #   AlignCompound:    false
 #   PadOperators:     false
-# AlignConsecutiveMacros:
-#   Enabled:          false
+AlignConsecutiveMacros:
+    Enabled:          true
 #   AcrossEmptyLines: false
-#   AcrossComments:   false
-#   AlignCompound:    false
-#   PadOperators:     false
+    AcrossComments:   true
+    AlignCompound:    true
+    PadOperators:     true
 # AlignConsecutiveShortCaseStatements:
 #   Enabled:          false
 #   AcrossEmptyLines: false

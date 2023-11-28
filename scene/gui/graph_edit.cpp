@@ -39,7 +39,7 @@
 #include "editor/editor_scale.h"
 #endif
 
-#define MINIMAP_OFFSET 12
+#define MINIMAP_OFFSET  12
 #define MINIMAP_PADDING 5
 
 bool GraphEditFilter::has_point(const Point2& p_point) const {

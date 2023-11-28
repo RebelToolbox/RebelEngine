@@ -64,11 +64,11 @@
 #endif
 
 // Some custom defines to minimize ifdefs
-#define SOCK_EMPTY -1
-#define SOCK_BUF(x) x
+#define SOCK_EMPTY   -1
+#define SOCK_BUF(x)  x
 #define SOCK_CBUF(x) x
-#define SOCK_IOCTL ioctl
-#define SOCK_CLOSE ::close
+#define SOCK_IOCTL   ioctl
+#define SOCK_CLOSE   ::close
 #define SOCK_CONNECT(p_sock, p_addr, p_addr_len)                               \
     ::connect(p_sock, p_addr, p_addr_len)
 
@@ -78,11 +78,11 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 // Some custom defines to minimize ifdefs
-#define SOCK_EMPTY INVALID_SOCKET
-#define SOCK_BUF(x) (char*)(x)
+#define SOCK_EMPTY   INVALID_SOCKET
+#define SOCK_BUF(x)  (char*)(x)
 #define SOCK_CBUF(x) (const char*)(x)
-#define SOCK_IOCTL ioctlsocket
-#define SOCK_CLOSE closesocket
+#define SOCK_IOCTL   ioctlsocket
+#define SOCK_CLOSE   closesocket
 // connect is broken on windows under certain conditions, reasons unknown:
 // See https://github.com/godotengine/webrtc-native/issues/6
 #define SOCK_CONNECT(p_sock, p_addr, p_addr_len)                               \

@@ -40,7 +40,7 @@
 #include "platform_config.h"
 
 #ifndef _STR
-#define _STR(m_x) #m_x
+#define _STR(m_x)   #m_x
 #define _MKSTR(m_x) _STR(m_x)
 #endif
 
@@ -317,13 +317,13 @@ struct _GlobalLock {
 #define MT_SAFE
 
 #define __STRX(m_index) #m_index
-#define __STR(m_index) __STRX(m_index)
+#define __STR(m_index)  __STRX(m_index)
 
 #ifdef __GNUC__
-#define likely(x) __builtin_expect(!!(x), 1)
+#define likely(x)   __builtin_expect(!!(x), 1)
 #define unlikely(x) __builtin_expect(!!(x), 0)
 #else
-#define likely(x) x
+#define likely(x)   x
 #define unlikely(x) x
 #endif
 

@@ -32,7 +32,7 @@
 
 #include <string.h>
 
-#define MAX_NUMBER_INTERFACES 3
+#define MAX_NUMBER_INTERFACES     3
 #define MAX_NUMBER_OUTPUT_DEVICES 6
 
 /* Structure for passing information to callback function */
