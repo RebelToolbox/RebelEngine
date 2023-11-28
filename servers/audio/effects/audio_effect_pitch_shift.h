@@ -50,10 +50,19 @@ class SMBPitchShift {
     float gSynMagn[MAX_FRAME_LENGTH];
     long gRover;
 
-    void smbFft(float *fftBuffer, long fftFrameSize, long sign);
+    void smbFft(float* fftBuffer, long fftFrameSize, long sign);
 
 public:
-    void PitchShift(float pitchShift, long numSampsToProcess, long fftFrameSize, long osamp, float sampleRate, float *indata, float *outdata, int stride);
+    void PitchShift(
+        float pitchShift,
+        long numSampsToProcess,
+        long fftFrameSize,
+        long osamp,
+        float sampleRate,
+        float* indata,
+        float* outdata,
+        int stride
+    );
 
     SMBPitchShift() {
         gRover = 0;
@@ -80,7 +89,11 @@ class AudioEffectPitchShiftInstance : public AudioEffectInstance {
     SMBPitchShift shift_r;
 
 public:
-    virtual void process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
+    virtual void process(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
 };
 
 class AudioEffectPitchShift : public AudioEffect {

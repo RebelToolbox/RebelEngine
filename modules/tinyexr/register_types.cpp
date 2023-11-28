@@ -33,7 +33,7 @@
 #include "image_loader_tinyexr.h"
 #include "image_saver_tinyexr.h"
 
-static ImageLoaderTinyEXR *image_loader_tinyexr = nullptr;
+static ImageLoaderTinyEXR* image_loader_tinyexr = nullptr;
 
 void register_tinyexr_types() {
     image_loader_tinyexr = memnew(ImageLoaderTinyEXR);

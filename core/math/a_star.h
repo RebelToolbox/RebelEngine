@@ -45,20 +45,18 @@ class AStar : public Reference {
     friend class AStar2D;
 
     struct Point {
-        Point() :
-                neighbours(4u),
-                unlinked_neighbours(4u) {}
+        Point() : neighbours(4u), unlinked_neighbours(4u) {}
 
         int id;
         Vector3 pos;
         real_t weight_scale;
         bool enabled;
 
-        OAHashMap<int, Point *> neighbours;
-        OAHashMap<int, Point *> unlinked_neighbours;
+        OAHashMap<int, Point*> neighbours;
+        OAHashMap<int, Point*> unlinked_neighbours;
 
         // Used for pathfinding.
-        Point *prev_point;
+        Point* prev_point;
         real_t g_score;
         real_t f_score;
         uint64_t open_pass;
@@ -66,13 +64,17 @@ class AStar : public Reference {
     };
 
     struct SortPoints {
-        _FORCE_INLINE_ bool operator()(const Point *A, const Point *B) const { // Returns true when the Point A is worse than Point B.
+        _FORCE_INLINE_ bool operator()(const Point* A, const Point* B)
+            const { // Returns true when the Point A is worse than Point B.
             if (A->f_score > B->f_score) {
                 return true;
             } else if (A->f_score < B->f_score) {
                 return false;
             } else {
-                return A->g_score < B->g_score; // If the f_costs are the same then prioritize the points that are further away from the start.
+                return A->g_score
+                     < B->g_score; // If the f_costs are the same then
+                                   // prioritize the points that are further
+                                   // away from the start.
             }
         }
     };
@@ -83,6 +85,7 @@ class AStar : public Reference {
                 int32_t u;
                 int32_t v;
             };
+
             uint64_t key;
         };
 
@@ -92,13 +95,18 @@ class AStar : public Reference {
             BACKWARD = 2,
             BIDIRECTIONAL = FORWARD | BACKWARD
         };
+
         unsigned char direction;
 
-        bool operator<(const Segment &p_s) const { return key < p_s.key; }
+        bool operator<(const Segment& p_s) const {
+            return key < p_s.key;
+        }
+
         Segment() {
             key = 0;
             direction = NONE;
         }
+
         Segment(int p_from, int p_to) {
             if (p_from < p_to) {
                 u = p_from;
@@ -115,10 +123,10 @@ class AStar : public Reference {
     int last_free_id;
     uint64_t pass;
 
-    OAHashMap<int, Point *> points;
+    OAHashMap<int, Point*> points;
     Set<Segment> segments;
 
-    bool _solve(Point *begin_point, Point *end_point);
+    bool _solve(Point* begin_point, Point* end_point);
 
 protected:
     static void _bind_methods();
@@ -129,9 +137,9 @@ protected:
 public:
     int get_available_point_id() const;
 
-    void add_point(int p_id, const Vector3 &p_pos, real_t p_weight_scale = 1);
+    void add_point(int p_id, const Vector3& p_pos, real_t p_weight_scale = 1);
     Vector3 get_point_position(int p_id) const;
-    void set_point_position(int p_id, const Vector3 &p_pos);
+    void set_point_position(int p_id, const Vector3& p_pos);
     real_t get_point_weight_scale(int p_id) const;
     void set_point_weight_scale(int p_id, real_t p_weight_scale);
     void remove_point(int p_id);
@@ -144,15 +152,22 @@ public:
 
     void connect_points(int p_id, int p_with_id, bool bidirectional = true);
     void disconnect_points(int p_id, int p_with_id, bool bidirectional = true);
-    bool are_points_connected(int p_id, int p_with_id, bool bidirectional = true) const;
+    bool are_points_connected(
+        int p_id,
+        int p_with_id,
+        bool bidirectional = true
+    ) const;
 
     int get_point_count() const;
     int get_point_capacity() const;
     void reserve_space(int p_num_nodes);
     void clear();
 
-    int get_closest_point(const Vector3 &p_point, bool p_include_disabled = false) const;
-    Vector3 get_closest_position_in_segment(const Vector3 &p_point) const;
+    int get_closest_point(
+        const Vector3& p_point,
+        bool p_include_disabled = false
+    ) const;
+    Vector3 get_closest_position_in_segment(const Vector3& p_point) const;
 
     PoolVector<Vector3> get_point_path(int p_from_id, int p_to_id);
     PoolVector<int> get_id_path(int p_from_id, int p_to_id);
@@ -165,7 +180,7 @@ class AStar2D : public Reference {
     GDCLASS(AStar2D, Reference);
     AStar astar;
 
-    bool _solve(AStar::Point *begin_point, AStar::Point *end_point);
+    bool _solve(AStar::Point* begin_point, AStar::Point* end_point);
 
 protected:
     static void _bind_methods();
@@ -176,9 +191,9 @@ protected:
 public:
     int get_available_point_id() const;
 
-    void add_point(int p_id, const Vector2 &p_pos, real_t p_weight_scale = 1);
+    void add_point(int p_id, const Vector2& p_pos, real_t p_weight_scale = 1);
     Vector2 get_point_position(int p_id) const;
-    void set_point_position(int p_id, const Vector2 &p_pos);
+    void set_point_position(int p_id, const Vector2& p_pos);
     real_t get_point_weight_scale(int p_id) const;
     void set_point_weight_scale(int p_id, real_t p_weight_scale);
     void remove_point(int p_id);
@@ -198,8 +213,11 @@ public:
     void reserve_space(int p_num_nodes);
     void clear();
 
-    int get_closest_point(const Vector2 &p_point, bool p_include_disabled = false) const;
-    Vector2 get_closest_position_in_segment(const Vector2 &p_point) const;
+    int get_closest_point(
+        const Vector2& p_point,
+        bool p_include_disabled = false
+    ) const;
+    Vector2 get_closest_position_in_segment(const Vector2& p_point) const;
 
     PoolVector<Vector2> get_point_path(int p_from_id, int p_to_id);
     PoolVector<int> get_id_path(int p_from_id, int p_to_id);

@@ -38,8 +38,9 @@
 #include "core/ustring.h"
 #include "core/vector.h"
 
-namespace TestXMLParser {
+namespace TestXMLParser
+{
 
-MainLoop *test();
-}
+MainLoop* test();
+} // namespace TestXMLParser
 #endif // TEST_XML_PARSER_H

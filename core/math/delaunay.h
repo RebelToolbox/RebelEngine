@@ -38,7 +38,11 @@ public:
     struct Triangle {
         int points[3];
         bool bad;
-        Triangle() { bad = false; }
+
+        Triangle() {
+            bad = false;
+        }
+
         Triangle(int p_a, int p_b, int p_c) {
             points[0] = p_a;
             points[1] = p_b;
@@ -50,7 +54,11 @@ public:
     struct Edge {
         int edge[2];
         bool bad;
-        Edge() { bad = false; }
+
+        Edge() {
+            bad = false;
+        }
+
         Edge(int p_a, int p_b) {
             bad = false;
             edge[0] = p_a;
@@ -58,7 +66,11 @@ public:
         }
     };
 
-    static bool circum_circle_contains(const Vector<Vector2> &p_vertices, const Triangle &p_triangle, int p_vertex) {
+    static bool circum_circle_contains(
+        const Vector<Vector2>& p_vertices,
+        const Triangle& p_triangle,
+        int p_vertex
+    ) {
         Vector2 p1 = p_vertices[p_triangle.points[0]];
         Vector2 p2 = p_vertices[p_triangle.points[1]];
         Vector2 p3 = p_vertices[p_triangle.points[2]];
@@ -68,8 +80,13 @@ public:
         real_t ef = p3.x * p3.x + p3.y * p3.y;
 
         Vector2 circum(
-                (ab * (p3.y - p2.y) + cd * (p1.y - p3.y) + ef * (p2.y - p1.y)) / (p1.x * (p3.y - p2.y) + p2.x * (p1.y - p3.y) + p3.x * (p2.y - p1.y)),
-                (ab * (p3.x - p2.x) + cd * (p1.x - p3.x) + ef * (p2.x - p1.x)) / (p1.y * (p3.x - p2.x) + p2.y * (p1.x - p3.x) + p3.y * (p2.x - p1.x)));
+            (ab * (p3.y - p2.y) + cd * (p1.y - p3.y) + ef * (p2.y - p1.y))
+                / (p1.x * (p3.y - p2.y) + p2.x * (p1.y - p3.y)
+                   + p3.x * (p2.y - p1.y)),
+            (ab * (p3.x - p2.x) + cd * (p1.x - p3.x) + ef * (p2.x - p1.x))
+                / (p1.y * (p3.x - p2.x) + p2.y * (p1.x - p3.x)
+                   + p3.y * (p2.x - p1.x))
+        );
 
         circum *= 0.5;
         float r = p1.distance_squared_to(circum);
@@ -77,19 +94,27 @@ public:
         return d <= r;
     }
 
-    static bool edge_compare(const Vector<Vector2> &p_vertices, const Edge &p_a, const Edge &p_b) {
-        if (p_vertices[p_a.edge[0]].is_equal_approx(p_vertices[p_b.edge[0]]) && p_vertices[p_a.edge[1]].is_equal_approx(p_vertices[p_b.edge[1]])) {
+    static bool edge_compare(
+        const Vector<Vector2>& p_vertices,
+        const Edge& p_a,
+        const Edge& p_b
+    ) {
+        if (p_vertices[p_a.edge[0]].is_equal_approx(p_vertices[p_b.edge[0]])
+            && p_vertices[p_a.edge[1]].is_equal_approx(p_vertices[p_b.edge[1]]
+            )) {
             return true;
         }
 
-        if (p_vertices[p_a.edge[0]].is_equal_approx(p_vertices[p_b.edge[1]]) && p_vertices[p_a.edge[1]].is_equal_approx(p_vertices[p_b.edge[0]])) {
+        if (p_vertices[p_a.edge[0]].is_equal_approx(p_vertices[p_b.edge[1]])
+            && p_vertices[p_a.edge[1]].is_equal_approx(p_vertices[p_b.edge[0]]
+            )) {
             return true;
         }
 
         return false;
     }
 
-    static Vector<Triangle> triangulate(const Vector<Vector2> &p_points) {
+    static Vector<Triangle> triangulate(const Vector<Vector2>& p_points) {
         Vector<Vector2> points = p_points;
         Vector<Triangle> triangles;
 
@@ -105,24 +130,39 @@ public:
         float delta_max = MAX(rect.size.width, rect.size.height);
         Vector2 center = rect.position + rect.size * 0.5;
 
-        points.push_back(Vector2(center.x - 20 * delta_max, center.y - delta_max));
+        points.push_back(
+            Vector2(center.x - 20 * delta_max, center.y - delta_max)
+        );
         points.push_back(Vector2(center.x, center.y + 20 * delta_max));
-        points.push_back(Vector2(center.x + 20 * delta_max, center.y - delta_max));
+        points.push_back(
+            Vector2(center.x + 20 * delta_max, center.y - delta_max)
+        );
 
-        triangles.push_back(Triangle(p_points.size() + 0, p_points.size() + 1, p_points.size() + 2));
+        triangles.push_back(Triangle(
+            p_points.size() + 0,
+            p_points.size() + 1,
+            p_points.size() + 2
+        ));
 
         for (int i = 0; i < p_points.size(); i++) {
-            //std::cout << "Traitement du point " << *p << std::endl;
-            //std::cout << "_triangles contains " << _triangles.size() << " elements" << std::endl;
+            // std::cout << "Traitement du point " << *p << std::endl;
+            // std::cout << "_triangles contains " << _triangles.size() << "
+            // elements" << std::endl;
 
             Vector<Edge> polygon;
 
             for (int j = 0; j < triangles.size(); j++) {
                 if (circum_circle_contains(points, triangles[j], i)) {
                     triangles.write[j].bad = true;
-                    polygon.push_back(Edge(triangles[j].points[0], triangles[j].points[1]));
-                    polygon.push_back(Edge(triangles[j].points[1], triangles[j].points[2]));
-                    polygon.push_back(Edge(triangles[j].points[2], triangles[j].points[0]));
+                    polygon.push_back(
+                        Edge(triangles[j].points[0], triangles[j].points[1])
+                    );
+                    polygon.push_back(
+                        Edge(triangles[j].points[1], triangles[j].points[2])
+                    );
+                    polygon.push_back(
+                        Edge(triangles[j].points[2], triangles[j].points[0])
+                    );
                 }
             }
 
@@ -146,7 +186,9 @@ public:
                 if (polygon[j].bad) {
                     continue;
                 }
-                triangles.push_back(Triangle(polygon[j].edge[0], polygon[j].edge[1], i));
+                triangles.push_back(
+                    Triangle(polygon[j].edge[0], polygon[j].edge[1], i)
+                );
             }
         }
 

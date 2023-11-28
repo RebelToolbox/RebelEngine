@@ -43,9 +43,20 @@ typedef enum {
     GODOT_JS_FETCH_STATE_ERROR = -1,
 } godot_js_fetch_state_t;
 
-extern int godot_js_fetch_create(const char *p_method, const char *p_url, const char **p_headers, int p_headers_len, const uint8_t *p_body, int p_body_len);
-extern int godot_js_fetch_read_headers(int p_id, void (*parse_callback)(int p_size, const char **p_headers, void *p_ref), void *p_ref);
-extern int godot_js_fetch_read_chunk(int p_id, uint8_t *p_buf, int p_buf_size);
+extern int godot_js_fetch_create(
+    const char* p_method,
+    const char* p_url,
+    const char** p_headers,
+    int p_headers_len,
+    const uint8_t* p_body,
+    int p_body_len
+);
+extern int godot_js_fetch_read_headers(
+    int p_id,
+    void (*parse_callback)(int p_size, const char** p_headers, void* p_ref),
+    void* p_ref
+);
+extern int godot_js_fetch_read_chunk(int p_id, uint8_t* p_buf, int p_buf_size);
 extern void godot_js_fetch_free(int p_id);
 extern godot_js_fetch_state_t godot_js_fetch_state_get(int p_id);
 extern int godot_js_fetch_body_length_get(int p_id);
@@ -56,17 +67,29 @@ extern int godot_js_fetch_is_chunked(int p_id);
 }
 #endif
 
-void HTTPClient::_parse_headers(int p_len, const char **p_headers, void *p_ref) {
-    HTTPClient *client = static_cast<HTTPClient *>(p_ref);
+void HTTPClient::_parse_headers(
+    int p_len,
+    const char** p_headers,
+    void* p_ref
+) {
+    HTTPClient* client = static_cast<HTTPClient*>(p_ref);
     for (int i = 0; i < p_len; i++) {
         client->response_headers.push_back(String::utf8(p_headers[i]));
     }
 }
 
-Error HTTPClient::connect_to_host(const String &p_host, int p_port, bool p_ssl, bool p_verify_host) {
+Error HTTPClient::connect_to_host(
+    const String& p_host,
+    int p_port,
+    bool p_ssl,
+    bool p_verify_host
+) {
     close();
     if (p_ssl && !p_verify_host) {
-        WARN_PRINT("Disabling HTTPClient's host verification is not supported for the HTML5 platform, host will be verified");
+        WARN_PRINT(
+            "Disabling HTTPClient's host verification is not supported for the "
+            "HTML5 platform, host will be verified"
+        );
     }
 
     port = p_port;
@@ -97,25 +120,44 @@ Error HTTPClient::connect_to_host(const String &p_host, int p_port, bool p_ssl, 
     return OK;
 }
 
-void HTTPClient::set_connection(const Ref<StreamPeer> &p_connection) {
-    ERR_FAIL_MSG("Accessing an HTTPClient's StreamPeer is not supported for the HTML5 platform.");
+void HTTPClient::set_connection(const Ref<StreamPeer>& p_connection) {
+    ERR_FAIL_MSG(
+        "Accessing an HTTPClient's StreamPeer is not supported for the HTML5 "
+        "platform."
+    );
 }
 
 Ref<StreamPeer> HTTPClient::get_connection() const {
-    ERR_FAIL_V_MSG(REF(), "Accessing an HTTPClient's StreamPeer is not supported for the HTML5 platform.");
+    ERR_FAIL_V_MSG(
+        REF(),
+        "Accessing an HTTPClient's StreamPeer is not supported for the HTML5 "
+        "platform."
+    );
 }
 
-Error HTTPClient::make_request(Method p_method, const String &p_url, const Vector<String> &p_headers, const uint8_t *p_body, int p_body_len) {
+Error HTTPClient::make_request(
+    Method p_method,
+    const String& p_url,
+    const Vector<String>& p_headers,
+    const uint8_t* p_body,
+    int p_body_len
+) {
     ERR_FAIL_INDEX_V(p_method, METHOD_MAX, ERR_INVALID_PARAMETER);
-    ERR_FAIL_COND_V_MSG(p_method == METHOD_TRACE || p_method == METHOD_CONNECT, ERR_UNAVAILABLE, "HTTP methods TRACE and CONNECT are not supported for the HTML5 platform.");
+    ERR_FAIL_COND_V_MSG(
+        p_method == METHOD_TRACE || p_method == METHOD_CONNECT,
+        ERR_UNAVAILABLE,
+        "HTTP methods TRACE and CONNECT are not supported for the HTML5 "
+        "platform."
+    );
     ERR_FAIL_COND_V(status != STATUS_CONNECTED, ERR_INVALID_PARAMETER);
     ERR_FAIL_COND_V(host.empty(), ERR_UNCONFIGURED);
     ERR_FAIL_COND_V(port < 0, ERR_UNCONFIGURED);
     ERR_FAIL_COND_V(!p_url.begins_with("/"), ERR_INVALID_PARAMETER);
 
-    String url = (use_tls ? "https://" : "http://") + host + ":" + itos(port) + p_url;
+    String url =
+        (use_tls ? "https://" : "http://") + host + ":" + itos(port) + p_url;
     Vector<CharString> keeper;
-    Vector<const char *> c_strings;
+    Vector<const char*> c_strings;
     for (int i = 0; i < p_headers.size(); i++) {
         keeper.push_back(p_headers[i].utf8());
         c_strings.push_back(keeper[i].get_data());
@@ -123,12 +165,24 @@ Error HTTPClient::make_request(Method p_method, const String &p_url, const Vecto
     if (js_id) {
         godot_js_fetch_free(js_id);
     }
-    js_id = godot_js_fetch_create(_methods[p_method], url.utf8().get_data(), c_strings.ptrw(), c_strings.size(), p_body, p_body_len);
+    js_id = godot_js_fetch_create(
+        _methods[p_method],
+        url.utf8().get_data(),
+        c_strings.ptrw(),
+        c_strings.size(),
+        p_body,
+        p_body_len
+    );
     status = STATUS_REQUESTING;
     return OK;
 }
 
-Error HTTPClient::request_raw(Method p_method, const String &p_url, const Vector<String> &p_headers, const PoolVector<uint8_t> &p_body) {
+Error HTTPClient::request_raw(
+    Method p_method,
+    const String& p_url,
+    const Vector<String>& p_headers,
+    const PoolVector<uint8_t>& p_body
+) {
     if (p_body.empty()) {
         return make_request(p_method, p_url, p_headers, nullptr, 0);
     }
@@ -136,12 +190,23 @@ Error HTTPClient::request_raw(Method p_method, const String &p_url, const Vector
     return make_request(p_method, p_url, p_headers, read.ptr(), p_body.size());
 }
 
-Error HTTPClient::request(Method p_method, const String &p_url, const Vector<String> &p_headers, const String &p_body) {
+Error HTTPClient::request(
+    Method p_method,
+    const String& p_url,
+    const Vector<String>& p_headers,
+    const String& p_body
+) {
     if (p_body.empty()) {
         return make_request(p_method, p_url, p_headers, nullptr, 0);
     }
     const CharString cs = p_body.utf8();
-    return make_request(p_method, p_url, p_headers, (const uint8_t *)cs.get_data(), cs.size() - 1);
+    return make_request(
+        p_method,
+        p_url,
+        p_headers,
+        (const uint8_t*)cs.get_data(),
+        cs.size() - 1
+    );
 }
 
 void HTTPClient::close() {
@@ -174,7 +239,7 @@ int HTTPClient::get_response_code() const {
     return polled_response_code;
 }
 
-Error HTTPClient::get_response_headers(List<String> *r_response) {
+Error HTTPClient::get_response_headers(List<String>* r_response) {
     if (!response_headers.size()) {
         return ERR_INVALID_PARAMETER;
     }
@@ -195,7 +260,8 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
     if (response_buffer.size() != read_limit) {
         response_buffer.resize(read_limit);
     }
-    int read = godot_js_fetch_read_chunk(js_id, response_buffer.ptrw(), read_limit);
+    int read =
+        godot_js_fetch_read_chunk(js_id, response_buffer.ptrw(), read_limit);
 
     // Check if the stream is over.
     godot_js_fetch_state_t state = godot_js_fetch_state_get(js_id);
@@ -216,7 +282,10 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
 }
 
 void HTTPClient::set_blocking_mode(bool p_enable) {
-    ERR_FAIL_COND_MSG(p_enable, "HTTPClient blocking mode is not supported for the HTML5 platform.");
+    ERR_FAIL_COND_MSG(
+        p_enable,
+        "HTTPClient blocking mode is not supported for the HTML5 platform."
+    );
 }
 
 bool HTTPClient::is_blocking_mode_enabled() const {
@@ -264,10 +333,13 @@ Error HTTPClient::poll() {
         case STATUS_REQUESTING: {
 #ifdef DEBUG_ENABLED
             // forcing synchronous requests is not possible on the web
-            if (last_polling_frame == Engine::get_singleton()->get_idle_frames()) {
-                WARN_PRINT("HTTPClient polled multiple times in one frame, "
-                           "but request cannot progress more than once per "
-                           "frame on the HTML5 platform.");
+            if (last_polling_frame
+                == Engine::get_singleton()->get_idle_frames()) {
+                WARN_PRINT(
+                    "HTTPClient polled multiple times in one frame, "
+                    "but request cannot progress more than once per "
+                    "frame on the HTML5 platform."
+                );
             }
             last_polling_frame = Engine::get_singleton()->get_idle_frames();
 #endif
@@ -296,8 +368,7 @@ Error HTTPClient::poll() {
     return OK;
 }
 
-HTTPClient::HTTPClient() {
-}
+HTTPClient::HTTPClient() {}
 
 HTTPClient::~HTTPClient() {
     close();

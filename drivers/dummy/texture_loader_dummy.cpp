@@ -35,11 +35,15 @@
 
 #include <string.h>
 
-RES ResourceFormatDummyTexture::load(const String &p_path, const String &p_original_path, Error *r_error) {
+RES ResourceFormatDummyTexture::load(
+    const String& p_path,
+    const String& p_original_path,
+    Error* r_error
+) {
     unsigned int width = 8;
     unsigned int height = 8;
 
-    //We just use some format
+    // We just use some format
     Image::Format fmt = Image::FORMAT_RGB8;
     int rowsize = 3 * width;
 
@@ -47,10 +51,10 @@ RES ResourceFormatDummyTexture::load(const String &p_path, const String &p_origi
 
     dstbuff.resize(rowsize * height);
 
-    uint8_t **row_p = memnew_arr(uint8_t *, height);
+    uint8_t** row_p = memnew_arr(uint8_t*, height);
 
     for (unsigned int i = 0; i < height; i++) {
-        row_p[i] = 0; //No colors any more, I want them to turn black
+        row_p[i] = 0; // No colors any more, I want them to turn black
     }
 
     memdelete_arr(row_p);
@@ -60,13 +64,16 @@ RES ResourceFormatDummyTexture::load(const String &p_path, const String &p_origi
     Ref<ImageTexture> texture = memnew(ImageTexture);
     texture->create_from_image(img);
 
-    if (r_error)
+    if (r_error) {
         *r_error = OK;
+    }
 
     return texture;
 }
 
-void ResourceFormatDummyTexture::get_recognized_extensions(List<String> *p_extensions) const {
+void ResourceFormatDummyTexture::get_recognized_extensions(
+    List<String>* p_extensions
+) const {
     p_extensions->push_back("bmp");
     p_extensions->push_back("dds");
     p_extensions->push_back("exr");
@@ -81,25 +88,17 @@ void ResourceFormatDummyTexture::get_recognized_extensions(List<String> *p_exten
     p_extensions->push_back("webp");
 }
 
-bool ResourceFormatDummyTexture::handles_type(const String &p_type) const {
+bool ResourceFormatDummyTexture::handles_type(const String& p_type) const {
     return ClassDB::is_parent_class(p_type, "Texture");
 }
 
-String ResourceFormatDummyTexture::get_resource_type(const String &p_path) const {
+String ResourceFormatDummyTexture::get_resource_type(const String& p_path
+) const {
     String extension = p_path.get_extension().to_lower();
-    if (
-            extension == "bmp" ||
-            extension == "dds" ||
-            extension == "exr" ||
-            extension == "jpeg" ||
-            extension == "jpg" ||
-            extension == "hdr" ||
-            extension == "pkm" ||
-            extension == "png" ||
-            extension == "pvr" ||
-            extension == "svg" ||
-            extension == "tga" ||
-            extension == "webp") {
+    if (extension == "bmp" || extension == "dds" || extension == "exr"
+        || extension == "jpeg" || extension == "jpg" || extension == "hdr"
+        || extension == "pkm" || extension == "png" || extension == "pvr"
+        || extension == "svg" || extension == "tga" || extension == "webp") {
         return "ImageTexture";
     }
 

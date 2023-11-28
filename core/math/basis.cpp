@@ -33,41 +33,47 @@
 #include "core/math/math_funcs.h"
 #include "core/print_string.h"
 
-#define cofac(row1, col1, row2, col2) \
-    (elements[row1][col1] * elements[row2][col2] - elements[row1][col2] * elements[row2][col1])
+#define cofac(row1, col1, row2, col2)                                          \
+    (elements[row1][col1] * elements[row2][col2]                               \
+     - elements[row1][col2] * elements[row2][col1])
 
-void Basis::from_z(const Vector3 &p_z) {
+void Basis::from_z(const Vector3& p_z) {
     if (Math::abs(p_z.z) > Math_SQRT12) {
         // choose p in y-z plane
         real_t a = p_z[1] * p_z[1] + p_z[2] * p_z[2];
         real_t k = 1.0 / Math::sqrt(a);
         elements[0] = Vector3(0, -p_z[2] * k, p_z[1] * k);
-        elements[1] = Vector3(a * k, -p_z[0] * elements[0][2], p_z[0] * elements[0][1]);
+        elements[1] =
+            Vector3(a * k, -p_z[0] * elements[0][2], p_z[0] * elements[0][1]);
     } else {
         // choose p in x-y plane
         real_t a = p_z.x * p_z.x + p_z.y * p_z.y;
         real_t k = 1.0 / Math::sqrt(a);
         elements[0] = Vector3(-p_z.y * k, p_z.x * k, 0);
-        elements[1] = Vector3(-p_z.z * elements[0].y, p_z.z * elements[0].x, a * k);
+        elements[1] =
+            Vector3(-p_z.z * elements[0].y, p_z.z * elements[0].x, a * k);
     }
     elements[2] = p_z;
 }
 
 void Basis::invert() {
-    real_t co[3] = {
-        cofac(1, 1, 2, 2), cofac(1, 2, 2, 0), cofac(1, 0, 2, 1)
-    };
-    real_t det = elements[0][0] * co[0] +
-            elements[0][1] * co[1] +
-            elements[0][2] * co[2];
+    real_t co[3] = {cofac(1, 1, 2, 2), cofac(1, 2, 2, 0), cofac(1, 0, 2, 1)};
+    real_t det = elements[0][0] * co[0] + elements[0][1] * co[1]
+               + elements[0][2] * co[2];
 #ifdef MATH_CHECKS
     ERR_FAIL_COND(det == 0);
 #endif
     real_t s = 1.0 / det;
 
-    set(co[0] * s, cofac(0, 2, 2, 1) * s, cofac(0, 1, 1, 2) * s,
-            co[1] * s, cofac(0, 0, 2, 2) * s, cofac(0, 2, 1, 0) * s,
-            co[2] * s, cofac(0, 1, 2, 0) * s, cofac(0, 0, 1, 1) * s);
+    set(co[0] * s,
+        cofac(0, 2, 2, 1) * s,
+        cofac(0, 1, 1, 2) * s,
+        co[1] * s,
+        cofac(0, 0, 2, 2) * s,
+        cofac(0, 2, 1, 0) * s,
+        co[2] * s,
+        cofac(0, 1, 2, 0) * s,
+        cofac(0, 0, 1, 1) * s);
 }
 
 void Basis::orthonormalize() {
@@ -103,23 +109,40 @@ bool Basis::is_orthogonal() const {
 
 bool Basis::is_diagonal() const {
     return (
-            Math::is_zero_approx(elements[0][1]) && Math::is_zero_approx(elements[0][2]) &&
-            Math::is_zero_approx(elements[1][0]) && Math::is_zero_approx(elements[1][2]) &&
-            Math::is_zero_approx(elements[2][0]) && Math::is_zero_approx(elements[2][1]));
+        Math::is_zero_approx(elements[0][1])
+        && Math::is_zero_approx(elements[0][2])
+        && Math::is_zero_approx(elements[1][0])
+        && Math::is_zero_approx(elements[1][2])
+        && Math::is_zero_approx(elements[2][0])
+        && Math::is_zero_approx(elements[2][1])
+    );
 }
 
 bool Basis::is_rotation() const {
-    return Math::is_equal_approx(determinant(), 1, (real_t)UNIT_EPSILON) && is_orthogonal();
+    return Math::is_equal_approx(determinant(), 1, (real_t)UNIT_EPSILON)
+        && is_orthogonal();
 }
 
 bool Basis::is_symmetric() const {
-    if (!Math::is_equal_approx_ratio(elements[0][1], elements[1][0], UNIT_EPSILON)) {
+    if (!Math::is_equal_approx_ratio(
+            elements[0][1],
+            elements[1][0],
+            UNIT_EPSILON
+        )) {
         return false;
     }
-    if (!Math::is_equal_approx_ratio(elements[0][2], elements[2][0], UNIT_EPSILON)) {
+    if (!Math::is_equal_approx_ratio(
+            elements[0][2],
+            elements[2][0],
+            UNIT_EPSILON
+        )) {
         return false;
     }
-    if (!Math::is_equal_approx_ratio(elements[1][2], elements[2][1], UNIT_EPSILON)) {
+    if (!Math::is_equal_approx_ratio(
+            elements[1][2],
+            elements[2][1],
+            UNIT_EPSILON
+        )) {
         return false;
     }
 
@@ -127,14 +150,16 @@ bool Basis::is_symmetric() const {
 }
 
 Basis Basis::diagonalize() {
-//NOTE: only implemented for symmetric matrices
-//with the Jacobi iterative method method
+// NOTE: only implemented for symmetric matrices
+// with the Jacobi iterative method method
 #ifdef MATH_CHECKS
     ERR_FAIL_COND_V(!is_symmetric(), Basis());
 #endif
     const int ite_max = 1024;
 
-    real_t off_matrix_norm_2 = elements[0][1] * elements[0][1] + elements[0][2] * elements[0][2] + elements[1][2] * elements[1][2];
+    real_t off_matrix_norm_2 = elements[0][1] * elements[0][1]
+                             + elements[0][2] * elements[0][2]
+                             + elements[1][2] * elements[1][2];
 
     int ite = 0;
     Basis acc_rot;
@@ -167,7 +192,10 @@ Basis Basis::diagonalize() {
         if (Math::is_equal_approx(elements[j][j], elements[i][i])) {
             angle = Math_PI / 4;
         } else {
-            angle = 0.5 * Math::atan(2 * elements[i][j] / (elements[j][j] - elements[i][i]));
+            angle = 0.5
+                  * Math::atan(
+                        2 * elements[i][j] / (elements[j][j] - elements[i][i])
+                  );
         }
 
         // Compute the rotation matrix
@@ -206,7 +234,7 @@ Basis Basis::transposed() const {
 
 // Multiplies the matrix from left by the scaling matrix: M -> S.M
 // See the comment for Basis::rotated for further explanation.
-void Basis::scale(const Vector3 &p_scale) {
+void Basis::scale(const Vector3& p_scale) {
     elements[0][0] *= p_scale.x;
     elements[0][1] *= p_scale.x;
     elements[0][2] *= p_scale.x;
@@ -218,19 +246,19 @@ void Basis::scale(const Vector3 &p_scale) {
     elements[2][2] *= p_scale.z;
 }
 
-Basis Basis::scaled(const Vector3 &p_scale) const {
+Basis Basis::scaled(const Vector3& p_scale) const {
     Basis m = *this;
     m.scale(p_scale);
     return m;
 }
 
-void Basis::scale_local(const Vector3 &p_scale) {
+void Basis::scale_local(const Vector3& p_scale) {
     // performs a scaling in object-local coordinate system:
     // M -> (M.S.Minv).M = M.S.
     *this = scaled_local(p_scale);
 }
 
-Basis Basis::scaled_local(const Vector3 &p_scale) const {
+Basis Basis::scaled_local(const Vector3& p_scale) const {
     Basis b;
     b.set_diagonal(p_scale);
 
@@ -239,46 +267,62 @@ Basis Basis::scaled_local(const Vector3 &p_scale) const {
 
 Vector3 Basis::get_scale_abs() const {
     return Vector3(
-            Vector3(elements[0][0], elements[1][0], elements[2][0]).length(),
-            Vector3(elements[0][1], elements[1][1], elements[2][1]).length(),
-            Vector3(elements[0][2], elements[1][2], elements[2][2]).length());
+        Vector3(elements[0][0], elements[1][0], elements[2][0]).length(),
+        Vector3(elements[0][1], elements[1][1], elements[2][1]).length(),
+        Vector3(elements[0][2], elements[1][2], elements[2][2]).length()
+    );
 }
 
 Vector3 Basis::get_scale_local() const {
     real_t det_sign = SGN(determinant());
-    return det_sign * Vector3(elements[0].length(), elements[1].length(), elements[2].length());
+    return det_sign
+         * Vector3(
+               elements[0].length(),
+               elements[1].length(),
+               elements[2].length()
+         );
 }
 
-// get_scale works with get_rotation, use get_scale_abs if you need to enforce positive signature.
+// get_scale works with get_rotation, use get_scale_abs if you need to enforce
+// positive signature.
 Vector3 Basis::get_scale() const {
-    // FIXME: We are assuming M = R.S (R is rotation and S is scaling), and use polar decomposition to extract R and S.
-    // A polar decomposition is M = O.P, where O is an orthogonal matrix (meaning rotation and reflection) and
-    // P is a positive semi-definite matrix (meaning it contains absolute values of scaling along its diagonal).
+    // FIXME: We are assuming M = R.S (R is rotation and S is scaling), and use
+    // polar decomposition to extract R and S. A polar decomposition is M = O.P,
+    // where O is an orthogonal matrix (meaning rotation and reflection) and P
+    // is a positive semi-definite matrix (meaning it contains absolute values
+    // of scaling along its diagonal).
     //
-    // Despite being different from what we want to achieve, we can nevertheless make use of polar decomposition
-    // here as follows. We can split O into a rotation and a reflection as O = R.Q, and obtain M = R.S where
-    // we defined S = Q.P. Now, R is a proper rotation matrix and S is a (signed) scaling matrix,
-    // which can involve negative scalings. However, there is a catch: unlike the polar decomposition of M = O.P,
-    // the decomposition of O into a rotation and reflection matrix as O = R.Q is not unique.
-    // Therefore, we are going to do this decomposition by sticking to a particular convention.
-    // This may lead to confusion for some users though.
+    // Despite being different from what we want to achieve, we can nevertheless
+    // make use of polar decomposition here as follows. We can split O into a
+    // rotation and a reflection as O = R.Q, and obtain M = R.S where we defined
+    // S = Q.P. Now, R is a proper rotation matrix and S is a (signed) scaling
+    // matrix, which can involve negative scalings. However, there is a catch:
+    // unlike the polar decomposition of M = O.P, the decomposition of O into a
+    // rotation and reflection matrix as O = R.Q is not unique. Therefore, we
+    // are going to do this decomposition by sticking to a particular
+    // convention. This may lead to confusion for some users though.
     //
-    // The convention we use here is to absorb the sign flip into the scaling matrix.
-    // The same convention is also used in other similar functions such as get_rotation_axis_angle, get_rotation, ...
+    // The convention we use here is to absorb the sign flip into the scaling
+    // matrix. The same convention is also used in other similar functions such
+    // as get_rotation_axis_angle, get_rotation, ...
     //
-    // A proper way to get rid of this issue would be to store the scaling values (or at least their signs)
-    // as a part of Basis. However, if we go that path, we need to disable direct (write) access to the
-    // matrix elements.
+    // A proper way to get rid of this issue would be to store the scaling
+    // values (or at least their signs) as a part of Basis. However, if we go
+    // that path, we need to disable direct (write) access to the matrix
+    // elements.
     //
-    // The rotation part of this decomposition is returned by get_rotation* functions.
+    // The rotation part of this decomposition is returned by get_rotation*
+    // functions.
     real_t det_sign = SGN(determinant());
     return det_sign * get_scale_abs();
 }
 
-// Decomposes a Basis into a rotation-reflection matrix (an element of the group O(3)) and a positive scaling matrix as B = O.S.
-// Returns the rotation-reflection matrix via reference argument, and scaling information is returned as a Vector3.
-// This (internal) function is too specific and named too ugly to expose to users, and probably there's no need to do so.
-Vector3 Basis::rotref_posscale_decomposition(Basis &rotref) const {
+// Decomposes a Basis into a rotation-reflection matrix (an element of the group
+// O(3)) and a positive scaling matrix as B = O.S. Returns the
+// rotation-reflection matrix via reference argument, and scaling information is
+// returned as a Vector3. This (internal) function is too specific and named too
+// ugly to expose to users, and probably there's no need to do so.
+Vector3 Basis::rotref_posscale_decomposition(Basis& rotref) const {
 #ifdef MATH_CHECKS
     ERR_FAIL_COND_V(determinant() == 0, Vector3());
 
@@ -286,7 +330,8 @@ Vector3 Basis::rotref_posscale_decomposition(Basis &rotref) const {
     ERR_FAIL_COND_V(!m.is_diagonal(), Vector3());
 #endif
     Vector3 scale = get_scale();
-    Basis inv_scale = Basis().scaled(scale.inverse()); // this will also absorb the sign of scale
+    Basis inv_scale = Basis().scaled(scale.inverse()
+    ); // this will also absorb the sign of scale
     rotref = (*this) * inv_scale;
 
 #ifdef MATH_CHECKS
@@ -298,50 +343,54 @@ Vector3 Basis::rotref_posscale_decomposition(Basis &rotref) const {
 // Multiplies the matrix from left by the rotation matrix: M -> R.M
 // Note that this does *not* rotate the matrix itself.
 //
-// The main use of Basis is as Transform.basis, which is used a the transformation matrix
-// of 3D object. Rotate here refers to rotation of the object (which is R * (*this)),
-// not the matrix itself (which is R * (*this) * R.transposed()).
-Basis Basis::rotated(const Vector3 &p_axis, real_t p_phi) const {
+// The main use of Basis is as Transform.basis, which is used a the
+// transformation matrix of 3D object. Rotate here refers to rotation of the
+// object (which is R * (*this)), not the matrix itself (which is R * (*this) *
+// R.transposed()).
+Basis Basis::rotated(const Vector3& p_axis, real_t p_phi) const {
     return Basis(p_axis, p_phi) * (*this);
 }
 
-void Basis::rotate(const Vector3 &p_axis, real_t p_phi) {
+void Basis::rotate(const Vector3& p_axis, real_t p_phi) {
     *this = rotated(p_axis, p_phi);
 }
 
-void Basis::rotate_local(const Vector3 &p_axis, real_t p_phi) {
+void Basis::rotate_local(const Vector3& p_axis, real_t p_phi) {
     // performs a rotation in object-local coordinate system:
     // M -> (M.R.Minv).M = M.R.
     *this = rotated_local(p_axis, p_phi);
 }
-Basis Basis::rotated_local(const Vector3 &p_axis, real_t p_phi) const {
+
+Basis Basis::rotated_local(const Vector3& p_axis, real_t p_phi) const {
     return (*this) * Basis(p_axis, p_phi);
 }
 
-Basis Basis::rotated(const Vector3 &p_euler) const {
+Basis Basis::rotated(const Vector3& p_euler) const {
     return Basis(p_euler) * (*this);
 }
 
-void Basis::rotate(const Vector3 &p_euler) {
+void Basis::rotate(const Vector3& p_euler) {
     *this = rotated(p_euler);
 }
 
-Basis Basis::rotated(const Quat &p_quat) const {
+Basis Basis::rotated(const Quat& p_quat) const {
     return Basis(p_quat) * (*this);
 }
 
-void Basis::rotate(const Quat &p_quat) {
+void Basis::rotate(const Quat& p_quat) {
     *this = rotated(p_quat);
 }
 
 Vector3 Basis::get_rotation_euler() const {
-    // Assumes that the matrix can be decomposed into a proper rotation and scaling matrix as M = R.S,
-    // and returns the Euler angles corresponding to the rotation part, complementing get_scale().
-    // See the comment in get_scale() for further information.
+    // Assumes that the matrix can be decomposed into a proper rotation and
+    // scaling matrix as M = R.S, and returns the Euler angles corresponding to
+    // the rotation part, complementing get_scale(). See the comment in
+    // get_scale() for further information.
     Basis m = orthonormalized();
     real_t det = m.determinant();
     if (det < 0) {
-        // Ensure that the determinant is 1, such that result is a proper rotation matrix which can be represented by Euler angles.
+        // Ensure that the determinant is 1, such that result is a proper
+        // rotation matrix which can be represented by Euler angles.
         m.scale(Vector3(-1, -1, -1));
     }
 
@@ -349,42 +398,49 @@ Vector3 Basis::get_rotation_euler() const {
 }
 
 Quat Basis::get_rotation_quat() const {
-    // Assumes that the matrix can be decomposed into a proper rotation and scaling matrix as M = R.S,
-    // and returns the Euler angles corresponding to the rotation part, complementing get_scale().
-    // See the comment in get_scale() for further information.
+    // Assumes that the matrix can be decomposed into a proper rotation and
+    // scaling matrix as M = R.S, and returns the Euler angles corresponding to
+    // the rotation part, complementing get_scale(). See the comment in
+    // get_scale() for further information.
     Basis m = orthonormalized();
     real_t det = m.determinant();
     if (det < 0) {
-        // Ensure that the determinant is 1, such that result is a proper rotation matrix which can be represented by Euler angles.
+        // Ensure that the determinant is 1, such that result is a proper
+        // rotation matrix which can be represented by Euler angles.
         m.scale(Vector3(-1, -1, -1));
     }
 
     return m.get_quat();
 }
 
-void Basis::get_rotation_axis_angle(Vector3 &p_axis, real_t &p_angle) const {
-    // Assumes that the matrix can be decomposed into a proper rotation and scaling matrix as M = R.S,
-    // and returns the Euler angles corresponding to the rotation part, complementing get_scale().
-    // See the comment in get_scale() for further information.
+void Basis::get_rotation_axis_angle(Vector3& p_axis, real_t& p_angle) const {
+    // Assumes that the matrix can be decomposed into a proper rotation and
+    // scaling matrix as M = R.S, and returns the Euler angles corresponding to
+    // the rotation part, complementing get_scale(). See the comment in
+    // get_scale() for further information.
     Basis m = orthonormalized();
     real_t det = m.determinant();
     if (det < 0) {
-        // Ensure that the determinant is 1, such that result is a proper rotation matrix which can be represented by Euler angles.
+        // Ensure that the determinant is 1, such that result is a proper
+        // rotation matrix which can be represented by Euler angles.
         m.scale(Vector3(-1, -1, -1));
     }
 
     m.get_axis_angle(p_axis, p_angle);
 }
 
-void Basis::get_rotation_axis_angle_local(Vector3 &p_axis, real_t &p_angle) const {
-    // Assumes that the matrix can be decomposed into a proper rotation and scaling matrix as M = R.S,
-    // and returns the Euler angles corresponding to the rotation part, complementing get_scale().
-    // See the comment in get_scale() for further information.
+void Basis::get_rotation_axis_angle_local(Vector3& p_axis, real_t& p_angle)
+    const {
+    // Assumes that the matrix can be decomposed into a proper rotation and
+    // scaling matrix as M = R.S, and returns the Euler angles corresponding to
+    // the rotation part, complementing get_scale(). See the comment in
+    // get_scale() for further information.
     Basis m = transposed();
     m.orthonormalize();
     real_t det = m.determinant();
     if (det < 0) {
-        // Ensure that the determinant is 1, such that result is a proper rotation matrix which can be represented by Euler angles.
+        // Ensure that the determinant is 1, such that result is a proper
+        // rotation matrix which can be represented by Euler angles.
         m.scale(Vector3(-1, -1, -1));
     }
 
@@ -415,8 +471,11 @@ Vector3 Basis::get_euler_xyz() const {
     if (sy < (1.0 - CMP_EPSILON)) {
         if (sy > -(1.0 - CMP_EPSILON)) {
             // is this a pure Y rotation?
-            if (elements[1][0] == 0.0 && elements[0][1] == 0.0 && elements[1][2] == 0 && elements[2][1] == 0 && elements[1][1] == 1) {
-                // return the simplest form (human friendlier in editor and scripts)
+            if (elements[1][0] == 0.0 && elements[0][1] == 0.0
+                && elements[1][2] == 0 && elements[2][1] == 0
+                && elements[1][1] == 1) {
+                // return the simplest form (human friendlier in editor and
+                // scripts)
                 euler.x = 0;
                 euler.y = atan2(elements[0][2], elements[0][0]);
                 euler.z = 0;
@@ -442,7 +501,7 @@ Vector3 Basis::get_euler_xyz() const {
 // (ax,ay,az), where ax is the angle of rotation around x axis,
 // and similar for other axes.
 // The current implementation uses XYZ convention (Z is the first rotation).
-void Basis::set_euler_xyz(const Vector3 &p_euler) {
+void Basis::set_euler_xyz(const Vector3& p_euler) {
     real_t c, s;
 
     c = Math::cos(p_euler.x);
@@ -457,7 +516,7 @@ void Basis::set_euler_xyz(const Vector3 &p_euler) {
     s = Math::sin(p_euler.z);
     Basis zmat(c, -s, 0.0, s, c, 0.0, 0.0, 0.0, 1.0);
 
-    //optimizer will optimize away all this anyway
+    // optimizer will optimize away all this anyway
     *this = xmat * (ymat * zmat);
 }
 
@@ -491,7 +550,7 @@ Vector3 Basis::get_euler_xzy() const {
     return euler;
 }
 
-void Basis::set_euler_xzy(const Vector3 &p_euler) {
+void Basis::set_euler_xzy(const Vector3& p_euler) {
     real_t c, s;
 
     c = Math::cos(p_euler.x);
@@ -539,7 +598,7 @@ Vector3 Basis::get_euler_yzx() const {
     return euler;
 }
 
-void Basis::set_euler_yzx(const Vector3 &p_euler) {
+void Basis::set_euler_yzx(const Vector3& p_euler) {
     real_t c, s;
 
     c = Math::cos(p_euler.x);
@@ -557,9 +616,10 @@ void Basis::set_euler_yzx(const Vector3 &p_euler) {
     *this = ymat * zmat * xmat;
 }
 
-// get_euler_yxz returns a vector containing the Euler angles in the YXZ convention,
-// as in first-Z, then-X, last-Y. The angles for X, Y, and Z rotations are returned
-// as the x, y, and z components of a Vector3 respectively.
+// get_euler_yxz returns a vector containing the Euler angles in the YXZ
+// convention, as in first-Z, then-X, last-Y. The angles for X, Y, and Z
+// rotations are returned as the x, y, and z components of a Vector3
+// respectively.
 Vector3 Basis::get_euler_yxz() const {
     // Euler angles in YXZ convention.
     // See https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
@@ -575,8 +635,11 @@ Vector3 Basis::get_euler_yxz() const {
     if (m12 < (1 - CMP_EPSILON)) {
         if (m12 > -(1 - CMP_EPSILON)) {
             // is this a pure X rotation?
-            if (elements[1][0] == 0 && elements[0][1] == 0 && elements[0][2] == 0 && elements[2][0] == 0 && elements[0][0] == 1) {
-                // return the simplest form (human friendlier in editor and scripts)
+            if (elements[1][0] == 0 && elements[0][1] == 0
+                && elements[0][2] == 0 && elements[2][0] == 0
+                && elements[0][0] == 1) {
+                // return the simplest form (human friendlier in editor and
+                // scripts)
                 euler.x = atan2(-m12, elements[1][1]);
                 euler.y = 0;
                 euler.z = 0;
@@ -603,7 +666,7 @@ Vector3 Basis::get_euler_yxz() const {
 // (ax,ay,az), where ax is the angle of rotation around x axis,
 // and similar for other axes.
 // The current implementation uses YXZ convention (Z is the first rotation).
-void Basis::set_euler_yxz(const Vector3 &p_euler) {
+void Basis::set_euler_yxz(const Vector3& p_euler) {
     real_t c, s;
 
     c = Math::cos(p_euler.x);
@@ -618,7 +681,7 @@ void Basis::set_euler_yxz(const Vector3 &p_euler) {
     s = Math::sin(p_euler.z);
     Basis zmat(c, -s, 0.0, s, c, 0.0, 0.0, 0.0, 1.0);
 
-    //optimizer will optimize away all this anyway
+    // optimizer will optimize away all this anyway
     *this = ymat * xmat * zmat;
 }
 
@@ -651,7 +714,7 @@ Vector3 Basis::get_euler_zxy() const {
     return euler;
 }
 
-void Basis::set_euler_zxy(const Vector3 &p_euler) {
+void Basis::set_euler_zxy(const Vector3& p_euler) {
     real_t c, s;
 
     c = Math::cos(p_euler.x);
@@ -698,7 +761,7 @@ Vector3 Basis::get_euler_zyx() const {
     return euler;
 }
 
-void Basis::set_euler_zyx(const Vector3 &p_euler) {
+void Basis::set_euler_zyx(const Vector3& p_euler) {
     real_t c, s;
 
     c = Math::cos(p_euler.x);
@@ -716,14 +779,24 @@ void Basis::set_euler_zyx(const Vector3 &p_euler) {
     *this = zmat * ymat * xmat;
 }
 
-bool Basis::is_equal_approx(const Basis &p_basis) const {
-    return elements[0].is_equal_approx(p_basis.elements[0]) && elements[1].is_equal_approx(p_basis.elements[1]) && elements[2].is_equal_approx(p_basis.elements[2]);
+bool Basis::is_equal_approx(const Basis& p_basis) const {
+    return elements[0].is_equal_approx(p_basis.elements[0])
+        && elements[1].is_equal_approx(p_basis.elements[1])
+        && elements[2].is_equal_approx(p_basis.elements[2]);
 }
 
-bool Basis::is_equal_approx_ratio(const Basis &a, const Basis &b, real_t p_epsilon) const {
+bool Basis::is_equal_approx_ratio(
+    const Basis& a,
+    const Basis& b,
+    real_t p_epsilon
+) const {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            if (!Math::is_equal_approx_ratio(a.elements[i][j], b.elements[i][j], p_epsilon)) {
+            if (!Math::is_equal_approx_ratio(
+                    a.elements[i][j],
+                    b.elements[i][j],
+                    p_epsilon
+                )) {
                 return false;
             }
         }
@@ -732,7 +805,7 @@ bool Basis::is_equal_approx_ratio(const Basis &a, const Basis &b, real_t p_epsil
     return true;
 }
 
-bool Basis::operator==(const Basis &p_matrix) const {
+bool Basis::operator==(const Basis& p_matrix) const {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             if (elements[i][j] != p_matrix.elements[i][j]) {
@@ -744,7 +817,7 @@ bool Basis::operator==(const Basis &p_matrix) const {
     return true;
 }
 
-bool Basis::operator!=(const Basis &p_matrix) const {
+bool Basis::operator!=(const Basis& p_matrix) const {
     return (!(*this == p_matrix));
 }
 
@@ -765,7 +838,13 @@ Basis::operator String() const {
 
 Quat Basis::get_quat() const {
 #ifdef MATH_CHECKS
-    ERR_FAIL_COND_V_MSG(!is_rotation(), Quat(), "Basis must be normalized in order to be casted to a Quaternion. Use get_rotation_quat() or call orthonormalized() if the Basis contains linearly independent vectors.");
+    ERR_FAIL_COND_V_MSG(
+        !is_rotation(),
+        Quat(),
+        "Basis must be normalized in order to be casted to a Quaternion. Use "
+        "get_rotation_quat() or call orthonormalized() if the Basis contains "
+        "linearly independent vectors."
+    );
 #endif
     /* Allow getting a quaternion from an unnormalized transform */
     Basis m = *this;
@@ -782,12 +861,14 @@ Quat Basis::get_quat() const {
         temp[2] = ((m.elements[1][0] - m.elements[0][1]) * s);
     } else {
         int i = m.elements[0][0] < m.elements[1][1]
-                ? (m.elements[1][1] < m.elements[2][2] ? 2 : 1)
-                : (m.elements[0][0] < m.elements[2][2] ? 2 : 0);
+                  ? (m.elements[1][1] < m.elements[2][2] ? 2 : 1)
+                  : (m.elements[0][0] < m.elements[2][2] ? 2 : 0);
         int j = (i + 1) % 3;
         int k = (i + 2) % 3;
 
-        real_t s = Math::sqrt(m.elements[i][i] - m.elements[j][j] - m.elements[k][k] + 1.0);
+        real_t s = Math::sqrt(
+            m.elements[i][i] - m.elements[j][j] - m.elements[k][k] + 1.0
+        );
         temp[i] = s * 0.5;
         s = 0.5 / s;
 
@@ -800,34 +881,22 @@ Quat Basis::get_quat() const {
 }
 
 static const Basis _ortho_bases[24] = {
-    Basis(1, 0, 0, 0, 1, 0, 0, 0, 1),
-    Basis(0, -1, 0, 1, 0, 0, 0, 0, 1),
-    Basis(-1, 0, 0, 0, -1, 0, 0, 0, 1),
-    Basis(0, 1, 0, -1, 0, 0, 0, 0, 1),
-    Basis(1, 0, 0, 0, 0, -1, 0, 1, 0),
-    Basis(0, 0, 1, 1, 0, 0, 0, 1, 0),
-    Basis(-1, 0, 0, 0, 0, 1, 0, 1, 0),
-    Basis(0, 0, -1, -1, 0, 0, 0, 1, 0),
-    Basis(1, 0, 0, 0, -1, 0, 0, 0, -1),
-    Basis(0, 1, 0, 1, 0, 0, 0, 0, -1),
-    Basis(-1, 0, 0, 0, 1, 0, 0, 0, -1),
-    Basis(0, -1, 0, -1, 0, 0, 0, 0, -1),
-    Basis(1, 0, 0, 0, 0, 1, 0, -1, 0),
-    Basis(0, 0, -1, 1, 0, 0, 0, -1, 0),
-    Basis(-1, 0, 0, 0, 0, -1, 0, -1, 0),
-    Basis(0, 0, 1, -1, 0, 0, 0, -1, 0),
-    Basis(0, 0, 1, 0, 1, 0, -1, 0, 0),
-    Basis(0, -1, 0, 0, 0, 1, -1, 0, 0),
-    Basis(0, 0, -1, 0, -1, 0, -1, 0, 0),
-    Basis(0, 1, 0, 0, 0, -1, -1, 0, 0),
-    Basis(0, 0, 1, 0, -1, 0, 1, 0, 0),
-    Basis(0, 1, 0, 0, 0, 1, 1, 0, 0),
-    Basis(0, 0, -1, 0, 1, 0, 1, 0, 0),
-    Basis(0, -1, 0, 0, 0, -1, 1, 0, 0)
+    Basis(1, 0, 0, 0, 1, 0, 0, 0, 1),    Basis(0, -1, 0, 1, 0, 0, 0, 0, 1),
+    Basis(-1, 0, 0, 0, -1, 0, 0, 0, 1),  Basis(0, 1, 0, -1, 0, 0, 0, 0, 1),
+    Basis(1, 0, 0, 0, 0, -1, 0, 1, 0),   Basis(0, 0, 1, 1, 0, 0, 0, 1, 0),
+    Basis(-1, 0, 0, 0, 0, 1, 0, 1, 0),   Basis(0, 0, -1, -1, 0, 0, 0, 1, 0),
+    Basis(1, 0, 0, 0, -1, 0, 0, 0, -1),  Basis(0, 1, 0, 1, 0, 0, 0, 0, -1),
+    Basis(-1, 0, 0, 0, 1, 0, 0, 0, -1),  Basis(0, -1, 0, -1, 0, 0, 0, 0, -1),
+    Basis(1, 0, 0, 0, 0, 1, 0, -1, 0),   Basis(0, 0, -1, 1, 0, 0, 0, -1, 0),
+    Basis(-1, 0, 0, 0, 0, -1, 0, -1, 0), Basis(0, 0, 1, -1, 0, 0, 0, -1, 0),
+    Basis(0, 0, 1, 0, 1, 0, -1, 0, 0),   Basis(0, -1, 0, 0, 0, 1, -1, 0, 0),
+    Basis(0, 0, -1, 0, -1, 0, -1, 0, 0), Basis(0, 1, 0, 0, 0, -1, -1, 0, 0),
+    Basis(0, 0, 1, 0, -1, 0, 1, 0, 0),   Basis(0, 1, 0, 0, 0, 1, 1, 0, 0),
+    Basis(0, 0, -1, 0, 1, 0, 1, 0, 0),   Basis(0, -1, 0, 0, 0, -1, 1, 0, 0)
 };
 
 int Basis::get_orthogonal_index() const {
-    //could be sped up if i come up with a way
+    // could be sped up if i come up with a way
     Basis orth = *this;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -854,27 +923,31 @@ int Basis::get_orthogonal_index() const {
 }
 
 void Basis::set_orthogonal_index(int p_index) {
-    //there only exist 24 orthogonal bases in r3
+    // there only exist 24 orthogonal bases in r3
     ERR_FAIL_INDEX(p_index, 24);
 
     *this = _ortho_bases[p_index];
 }
 
-void Basis::get_axis_angle(Vector3 &r_axis, real_t &r_angle) const {
-    /* checking this is a bad idea, because obtaining from scaled transform is a valid use case
-#ifdef MATH_CHECKS
-    ERR_FAIL_COND(!is_rotation());
-#endif
+void Basis::get_axis_angle(Vector3& r_axis, real_t& r_angle) const {
+    /* checking this is a bad idea, because obtaining from scaled transform is a
+valid use case #ifdef MATH_CHECKS ERR_FAIL_COND(!is_rotation()); #endif
 */
     real_t angle, x, y, z; // variables for result
     real_t epsilon = 0.01; // margin to allow for rounding errors
     real_t epsilon2 = 0.1; // margin to distinguish between 0 and 180 degrees
 
-    if ((Math::abs(elements[1][0] - elements[0][1]) < epsilon) && (Math::abs(elements[2][0] - elements[0][2]) < epsilon) && (Math::abs(elements[2][1] - elements[1][2]) < epsilon)) {
+    if ((Math::abs(elements[1][0] - elements[0][1]) < epsilon)
+        && (Math::abs(elements[2][0] - elements[0][2]) < epsilon)
+        && (Math::abs(elements[2][1] - elements[1][2]) < epsilon)) {
         // singularity found
         // first check for identity matrix which must have +1 for all terms
         //  in leading diagonaland zero in other terms
-        if ((Math::abs(elements[1][0] + elements[0][1]) < epsilon2) && (Math::abs(elements[2][0] + elements[0][2]) < epsilon2) && (Math::abs(elements[2][1] + elements[1][2]) < epsilon2) && (Math::abs(elements[0][0] + elements[1][1] + elements[2][2] - 3) < epsilon2)) {
+        if ((Math::abs(elements[1][0] + elements[0][1]) < epsilon2)
+            && (Math::abs(elements[2][0] + elements[0][2]) < epsilon2)
+            && (Math::abs(elements[2][1] + elements[1][2]) < epsilon2)
+            && (Math::abs(elements[0][0] + elements[1][1] + elements[2][2] - 3)
+                < epsilon2)) {
             // this singularity is identity matrix so angle = 0
             r_axis = Vector3(0, 1, 0);
             r_angle = 0;
@@ -888,7 +961,8 @@ void Basis::get_axis_angle(Vector3 &r_axis, real_t &r_angle) const {
         real_t xy = (elements[1][0] + elements[0][1]) / 4;
         real_t xz = (elements[2][0] + elements[0][2]) / 4;
         real_t yz = (elements[2][1] + elements[1][2]) / 4;
-        if ((xx > yy) && (xx > zz)) { // elements[0][0] is the largest diagonal term
+        if ((xx > yy)
+            && (xx > zz)) { // elements[0][0] is the largest diagonal term
             if (xx < epsilon) {
                 x = 0;
                 y = Math_SQRT12;
@@ -908,7 +982,8 @@ void Basis::get_axis_angle(Vector3 &r_axis, real_t &r_angle) const {
                 x = xy / y;
                 z = yz / y;
             }
-        } else { // elements[2][2] is the largest diagonal term so base result on this
+        } else { // elements[2][2] is the largest diagonal term so base result
+                 // on this
             if (zz < epsilon) {
                 x = Math_SQRT12;
                 y = Math_SQRT12;
@@ -923,10 +998,16 @@ void Basis::get_axis_angle(Vector3 &r_axis, real_t &r_angle) const {
         r_angle = angle;
         return;
     }
-    // as we have reached here there are no singularities so we can handle normally
-    real_t s = Math::sqrt((elements[1][2] - elements[2][1]) * (elements[1][2] - elements[2][1]) + (elements[2][0] - elements[0][2]) * (elements[2][0] - elements[0][2]) + (elements[0][1] - elements[1][0]) * (elements[0][1] - elements[1][0])); // s=|axis||sin(angle)|, used to normalise
+    // as we have reached here there are no singularities so we can handle
+    // normally
+    real_t s = Math::sqrt(
+        (elements[1][2] - elements[2][1]) * (elements[1][2] - elements[2][1])
+        + (elements[2][0] - elements[0][2]) * (elements[2][0] - elements[0][2])
+        + (elements[0][1] - elements[1][0]) * (elements[0][1] - elements[1][0])
+    ); // s=|axis||sin(angle)|, used to normalise
 
-    angle = Math::acos((elements[0][0] + elements[1][1] + elements[2][2] - 1) / 2);
+    angle =
+        Math::acos((elements[0][0] + elements[1][1] + elements[2][2] - 1) / 2);
     if (angle < 0) {
         s = -s;
     }
@@ -938,24 +1019,38 @@ void Basis::get_axis_angle(Vector3 &r_axis, real_t &r_angle) const {
     r_angle = angle;
 }
 
-void Basis::set_quat(const Quat &p_quat) {
+void Basis::set_quat(const Quat& p_quat) {
     real_t d = p_quat.length_squared();
     real_t s = 2.0 / d;
     real_t xs = p_quat.x * s, ys = p_quat.y * s, zs = p_quat.z * s;
     real_t wx = p_quat.w * xs, wy = p_quat.w * ys, wz = p_quat.w * zs;
     real_t xx = p_quat.x * xs, xy = p_quat.x * ys, xz = p_quat.x * zs;
     real_t yy = p_quat.y * ys, yz = p_quat.y * zs, zz = p_quat.z * zs;
-    set(1.0 - (yy + zz), xy - wz, xz + wy,
-            xy + wz, 1.0 - (xx + zz), yz - wx,
-            xz - wy, yz + wx, 1.0 - (xx + yy));
+    set(1.0 - (yy + zz),
+        xy - wz,
+        xz + wy,
+        xy + wz,
+        1.0 - (xx + zz),
+        yz - wx,
+        xz - wy,
+        yz + wx,
+        1.0 - (xx + yy));
 }
 
-void Basis::set_axis_angle(const Vector3 &p_axis, real_t p_phi) {
-// Rotation matrix from axis and angle, see https://en.wikipedia.org/wiki/Rotation_matrix#Rotation_matrix_from_axis_angle
+void Basis::set_axis_angle(const Vector3& p_axis, real_t p_phi) {
+// Rotation matrix from axis and angle, see
+// https://en.wikipedia.org/wiki/Rotation_matrix#Rotation_matrix_from_axis_angle
 #ifdef MATH_CHECKS
-    ERR_FAIL_COND_MSG(!p_axis.is_normalized(), "The axis Vector3 must be normalized.");
+    ERR_FAIL_COND_MSG(
+        !p_axis.is_normalized(),
+        "The axis Vector3 must be normalized."
+    );
 #endif
-    Vector3 axis_sq(p_axis.x * p_axis.x, p_axis.y * p_axis.y, p_axis.z * p_axis.z);
+    Vector3 axis_sq(
+        p_axis.x * p_axis.x,
+        p_axis.y * p_axis.y,
+        p_axis.z * p_axis.z
+    );
     real_t cosine = Math::cos(p_phi);
     elements[0][0] = axis_sq.x + cosine * (1.0 - axis_sq.x);
     elements[1][1] = axis_sq.y + cosine * (1.0 - axis_sq.y);
@@ -980,22 +1075,26 @@ void Basis::set_axis_angle(const Vector3 &p_axis, real_t p_phi) {
     elements[2][1] = xyzt + zyxs;
 }
 
-void Basis::set_axis_angle_scale(const Vector3 &p_axis, real_t p_phi, const Vector3 &p_scale) {
+void Basis::set_axis_angle_scale(
+    const Vector3& p_axis,
+    real_t p_phi,
+    const Vector3& p_scale
+) {
     set_diagonal(p_scale);
     rotate(p_axis, p_phi);
 }
 
-void Basis::set_euler_scale(const Vector3 &p_euler, const Vector3 &p_scale) {
+void Basis::set_euler_scale(const Vector3& p_euler, const Vector3& p_scale) {
     set_diagonal(p_scale);
     rotate(p_euler);
 }
 
-void Basis::set_quat_scale(const Quat &p_quat, const Vector3 &p_scale) {
+void Basis::set_quat_scale(const Quat& p_quat, const Vector3& p_scale) {
     set_diagonal(p_scale);
     rotate(p_quat);
 }
 
-void Basis::set_diagonal(const Vector3 &p_diag) {
+void Basis::set_diagonal(const Vector3& p_diag) {
     elements[0][0] = p_diag.x;
     elements[0][1] = 0;
     elements[0][2] = 0;
@@ -1009,15 +1108,18 @@ void Basis::set_diagonal(const Vector3 &p_diag) {
     elements[2][2] = p_diag.z;
 }
 
-Basis Basis::slerp(const Basis &p_to, const real_t &p_weight) const {
-    //consider scale
+Basis Basis::slerp(const Basis& p_to, const real_t& p_weight) const {
+    // consider scale
     Quat from(*this);
     Quat to(p_to);
 
     Basis b(from.slerp(to, p_weight));
-    b.elements[0] *= Math::lerp(elements[0].length(), p_to.elements[0].length(), p_weight);
-    b.elements[1] *= Math::lerp(elements[1].length(), p_to.elements[1].length(), p_weight);
-    b.elements[2] *= Math::lerp(elements[2].length(), p_to.elements[2].length(), p_weight);
+    b.elements[0] *=
+        Math::lerp(elements[0].length(), p_to.elements[0].length(), p_weight);
+    b.elements[1] *=
+        Math::lerp(elements[1].length(), p_to.elements[1].length(), p_weight);
+    b.elements[2] *=
+        Math::lerp(elements[2].length(), p_to.elements[2].length(), p_weight);
 
     return b;
 }

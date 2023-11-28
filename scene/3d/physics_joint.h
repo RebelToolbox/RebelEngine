@@ -55,17 +55,17 @@ protected:
 
     void _notification(int p_what);
 
-    virtual RID _configure_joint(PhysicsBody *body_a, PhysicsBody *body_b) = 0;
+    virtual RID _configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) = 0;
 
     static void _bind_methods();
 
 public:
     virtual String get_configuration_warning() const;
 
-    void set_node_a(const NodePath &p_node_a);
+    void set_node_a(const NodePath& p_node_a);
     NodePath get_node_a() const;
 
-    void set_node_b(const NodePath &p_node_b);
+    void set_node_b(const NodePath& p_node_b);
     NodePath get_node_b() const;
 
     void set_solver_priority(int p_priority);
@@ -74,7 +74,10 @@ public:
     void set_exclude_nodes_from_collision(bool p_enable);
     bool get_exclude_nodes_from_collision() const;
 
-    RID get_joint() const { return joint; }
+    RID get_joint() const {
+        return joint;
+    }
+
     Joint();
 };
 
@@ -92,7 +95,7 @@ public:
 
 protected:
     float params[3];
-    virtual RID _configure_joint(PhysicsBody *body_a, PhysicsBody *body_b);
+    virtual RID _configure_joint(PhysicsBody* body_a, PhysicsBody* body_b);
     static void _bind_methods();
 
 public:
@@ -115,7 +118,8 @@ public:
         PARAM_LIMIT_BIAS = PhysicsServer::HINGE_JOINT_LIMIT_BIAS,
         PARAM_LIMIT_SOFTNESS = PhysicsServer::HINGE_JOINT_LIMIT_SOFTNESS,
         PARAM_LIMIT_RELAXATION = PhysicsServer::HINGE_JOINT_LIMIT_RELAXATION,
-        PARAM_MOTOR_TARGET_VELOCITY = PhysicsServer::HINGE_JOINT_MOTOR_TARGET_VELOCITY,
+        PARAM_MOTOR_TARGET_VELOCITY =
+            PhysicsServer::HINGE_JOINT_MOTOR_TARGET_VELOCITY,
         PARAM_MOTOR_MAX_IMPULSE = PhysicsServer::HINGE_JOINT_MOTOR_MAX_IMPULSE,
         PARAM_MAX = PhysicsServer::HINGE_JOINT_MAX
     };
@@ -129,7 +133,7 @@ public:
 protected:
     float params[PARAM_MAX];
     bool flags[FLAG_MAX];
-    virtual RID _configure_joint(PhysicsBody *body_a, PhysicsBody *body_b);
+    virtual RID _configure_joint(PhysicsBody* body_a, PhysicsBody* body_b);
     static void _bind_methods();
 
     void _set_upper_limit(float p_limit);
@@ -156,31 +160,52 @@ class SliderJoint : public Joint {
 
 public:
     enum Param {
-        PARAM_LINEAR_LIMIT_UPPER = PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_UPPER,
-        PARAM_LINEAR_LIMIT_LOWER = PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_LOWER,
-        PARAM_LINEAR_LIMIT_SOFTNESS = PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_SOFTNESS,
-        PARAM_LINEAR_LIMIT_RESTITUTION = PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_RESTITUTION,
-        PARAM_LINEAR_LIMIT_DAMPING = PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_DAMPING,
-        PARAM_LINEAR_MOTION_SOFTNESS = PhysicsServer::SLIDER_JOINT_LINEAR_MOTION_SOFTNESS,
-        PARAM_LINEAR_MOTION_RESTITUTION = PhysicsServer::SLIDER_JOINT_LINEAR_MOTION_RESTITUTION,
-        PARAM_LINEAR_MOTION_DAMPING = PhysicsServer::SLIDER_JOINT_LINEAR_MOTION_DAMPING,
-        PARAM_LINEAR_ORTHOGONAL_SOFTNESS = PhysicsServer::SLIDER_JOINT_LINEAR_ORTHOGONAL_SOFTNESS,
-        PARAM_LINEAR_ORTHOGONAL_RESTITUTION = PhysicsServer::SLIDER_JOINT_LINEAR_ORTHOGONAL_RESTITUTION,
-        PARAM_LINEAR_ORTHOGONAL_DAMPING = PhysicsServer::SLIDER_JOINT_LINEAR_ORTHOGONAL_DAMPING,
+        PARAM_LINEAR_LIMIT_UPPER =
+            PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_UPPER,
+        PARAM_LINEAR_LIMIT_LOWER =
+            PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_LOWER,
+        PARAM_LINEAR_LIMIT_SOFTNESS =
+            PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_SOFTNESS,
+        PARAM_LINEAR_LIMIT_RESTITUTION =
+            PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_RESTITUTION,
+        PARAM_LINEAR_LIMIT_DAMPING =
+            PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_DAMPING,
+        PARAM_LINEAR_MOTION_SOFTNESS =
+            PhysicsServer::SLIDER_JOINT_LINEAR_MOTION_SOFTNESS,
+        PARAM_LINEAR_MOTION_RESTITUTION =
+            PhysicsServer::SLIDER_JOINT_LINEAR_MOTION_RESTITUTION,
+        PARAM_LINEAR_MOTION_DAMPING =
+            PhysicsServer::SLIDER_JOINT_LINEAR_MOTION_DAMPING,
+        PARAM_LINEAR_ORTHOGONAL_SOFTNESS =
+            PhysicsServer::SLIDER_JOINT_LINEAR_ORTHOGONAL_SOFTNESS,
+        PARAM_LINEAR_ORTHOGONAL_RESTITUTION =
+            PhysicsServer::SLIDER_JOINT_LINEAR_ORTHOGONAL_RESTITUTION,
+        PARAM_LINEAR_ORTHOGONAL_DAMPING =
+            PhysicsServer::SLIDER_JOINT_LINEAR_ORTHOGONAL_DAMPING,
 
-        PARAM_ANGULAR_LIMIT_UPPER = PhysicsServer::SLIDER_JOINT_ANGULAR_LIMIT_UPPER,
-        PARAM_ANGULAR_LIMIT_LOWER = PhysicsServer::SLIDER_JOINT_ANGULAR_LIMIT_LOWER,
-        PARAM_ANGULAR_LIMIT_SOFTNESS = PhysicsServer::SLIDER_JOINT_ANGULAR_LIMIT_SOFTNESS,
-        PARAM_ANGULAR_LIMIT_RESTITUTION = PhysicsServer::SLIDER_JOINT_ANGULAR_LIMIT_RESTITUTION,
-        PARAM_ANGULAR_LIMIT_DAMPING = PhysicsServer::SLIDER_JOINT_ANGULAR_LIMIT_DAMPING,
-        PARAM_ANGULAR_MOTION_SOFTNESS = PhysicsServer::SLIDER_JOINT_ANGULAR_MOTION_SOFTNESS,
-        PARAM_ANGULAR_MOTION_RESTITUTION = PhysicsServer::SLIDER_JOINT_ANGULAR_MOTION_RESTITUTION,
-        PARAM_ANGULAR_MOTION_DAMPING = PhysicsServer::SLIDER_JOINT_ANGULAR_MOTION_DAMPING,
-        PARAM_ANGULAR_ORTHOGONAL_SOFTNESS = PhysicsServer::SLIDER_JOINT_ANGULAR_ORTHOGONAL_SOFTNESS,
-        PARAM_ANGULAR_ORTHOGONAL_RESTITUTION = PhysicsServer::SLIDER_JOINT_ANGULAR_ORTHOGONAL_RESTITUTION,
-        PARAM_ANGULAR_ORTHOGONAL_DAMPING = PhysicsServer::SLIDER_JOINT_ANGULAR_ORTHOGONAL_DAMPING,
+        PARAM_ANGULAR_LIMIT_UPPER =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_LIMIT_UPPER,
+        PARAM_ANGULAR_LIMIT_LOWER =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_LIMIT_LOWER,
+        PARAM_ANGULAR_LIMIT_SOFTNESS =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_LIMIT_SOFTNESS,
+        PARAM_ANGULAR_LIMIT_RESTITUTION =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_LIMIT_RESTITUTION,
+        PARAM_ANGULAR_LIMIT_DAMPING =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_LIMIT_DAMPING,
+        PARAM_ANGULAR_MOTION_SOFTNESS =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_MOTION_SOFTNESS,
+        PARAM_ANGULAR_MOTION_RESTITUTION =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_MOTION_RESTITUTION,
+        PARAM_ANGULAR_MOTION_DAMPING =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_MOTION_DAMPING,
+        PARAM_ANGULAR_ORTHOGONAL_SOFTNESS =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_ORTHOGONAL_SOFTNESS,
+        PARAM_ANGULAR_ORTHOGONAL_RESTITUTION =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_ORTHOGONAL_RESTITUTION,
+        PARAM_ANGULAR_ORTHOGONAL_DAMPING =
+            PhysicsServer::SLIDER_JOINT_ANGULAR_ORTHOGONAL_DAMPING,
         PARAM_MAX = PhysicsServer::SLIDER_JOINT_MAX
-
     };
 
 protected:
@@ -191,7 +216,7 @@ protected:
     float _get_lower_limit_angular() const;
 
     float params[PARAM_MAX];
-    virtual RID _configure_joint(PhysicsBody *body_a, PhysicsBody *body_b);
+    virtual RID _configure_joint(PhysicsBody* body_a, PhysicsBody* body_b);
     static void _bind_methods();
 
 public:
@@ -208,7 +233,6 @@ class ConeTwistJoint : public Joint {
 
 public:
     enum Param {
-
         PARAM_SWING_SPAN,
         PARAM_TWIST_SPAN,
         PARAM_BIAS,
@@ -225,7 +249,7 @@ protected:
     float _get_twist_span() const;
 
     float params[PARAM_MAX];
-    virtual RID _configure_joint(PhysicsBody *body_a, PhysicsBody *body_b);
+    virtual RID _configure_joint(PhysicsBody* body_a, PhysicsBody* body_b);
     static void _bind_methods();
 
 public:
@@ -242,39 +266,62 @@ class Generic6DOFJoint : public Joint {
 
 public:
     enum Param {
-
-        PARAM_LINEAR_LOWER_LIMIT = PhysicsServer::G6DOF_JOINT_LINEAR_LOWER_LIMIT,
-        PARAM_LINEAR_UPPER_LIMIT = PhysicsServer::G6DOF_JOINT_LINEAR_UPPER_LIMIT,
-        PARAM_LINEAR_LIMIT_SOFTNESS = PhysicsServer::G6DOF_JOINT_LINEAR_LIMIT_SOFTNESS,
-        PARAM_LINEAR_RESTITUTION = PhysicsServer::G6DOF_JOINT_LINEAR_RESTITUTION,
+        PARAM_LINEAR_LOWER_LIMIT =
+            PhysicsServer::G6DOF_JOINT_LINEAR_LOWER_LIMIT,
+        PARAM_LINEAR_UPPER_LIMIT =
+            PhysicsServer::G6DOF_JOINT_LINEAR_UPPER_LIMIT,
+        PARAM_LINEAR_LIMIT_SOFTNESS =
+            PhysicsServer::G6DOF_JOINT_LINEAR_LIMIT_SOFTNESS,
+        PARAM_LINEAR_RESTITUTION =
+            PhysicsServer::G6DOF_JOINT_LINEAR_RESTITUTION,
         PARAM_LINEAR_DAMPING = PhysicsServer::G6DOF_JOINT_LINEAR_DAMPING,
-        PARAM_LINEAR_MOTOR_TARGET_VELOCITY = PhysicsServer::G6DOF_JOINT_LINEAR_MOTOR_TARGET_VELOCITY,
-        PARAM_LINEAR_MOTOR_FORCE_LIMIT = PhysicsServer::G6DOF_JOINT_LINEAR_MOTOR_FORCE_LIMIT,
-        PARAM_LINEAR_SPRING_STIFFNESS = PhysicsServer::G6DOF_JOINT_LINEAR_SPRING_STIFFNESS,
-        PARAM_LINEAR_SPRING_DAMPING = PhysicsServer::G6DOF_JOINT_LINEAR_SPRING_DAMPING,
-        PARAM_LINEAR_SPRING_EQUILIBRIUM_POINT = PhysicsServer::G6DOF_JOINT_LINEAR_SPRING_EQUILIBRIUM_POINT,
-        PARAM_ANGULAR_LOWER_LIMIT = PhysicsServer::G6DOF_JOINT_ANGULAR_LOWER_LIMIT,
-        PARAM_ANGULAR_UPPER_LIMIT = PhysicsServer::G6DOF_JOINT_ANGULAR_UPPER_LIMIT,
-        PARAM_ANGULAR_LIMIT_SOFTNESS = PhysicsServer::G6DOF_JOINT_ANGULAR_LIMIT_SOFTNESS,
+        PARAM_LINEAR_MOTOR_TARGET_VELOCITY =
+            PhysicsServer::G6DOF_JOINT_LINEAR_MOTOR_TARGET_VELOCITY,
+        PARAM_LINEAR_MOTOR_FORCE_LIMIT =
+            PhysicsServer::G6DOF_JOINT_LINEAR_MOTOR_FORCE_LIMIT,
+        PARAM_LINEAR_SPRING_STIFFNESS =
+            PhysicsServer::G6DOF_JOINT_LINEAR_SPRING_STIFFNESS,
+        PARAM_LINEAR_SPRING_DAMPING =
+            PhysicsServer::G6DOF_JOINT_LINEAR_SPRING_DAMPING,
+        PARAM_LINEAR_SPRING_EQUILIBRIUM_POINT =
+            PhysicsServer::G6DOF_JOINT_LINEAR_SPRING_EQUILIBRIUM_POINT,
+        PARAM_ANGULAR_LOWER_LIMIT =
+            PhysicsServer::G6DOF_JOINT_ANGULAR_LOWER_LIMIT,
+        PARAM_ANGULAR_UPPER_LIMIT =
+            PhysicsServer::G6DOF_JOINT_ANGULAR_UPPER_LIMIT,
+        PARAM_ANGULAR_LIMIT_SOFTNESS =
+            PhysicsServer::G6DOF_JOINT_ANGULAR_LIMIT_SOFTNESS,
         PARAM_ANGULAR_DAMPING = PhysicsServer::G6DOF_JOINT_ANGULAR_DAMPING,
-        PARAM_ANGULAR_RESTITUTION = PhysicsServer::G6DOF_JOINT_ANGULAR_RESTITUTION,
-        PARAM_ANGULAR_FORCE_LIMIT = PhysicsServer::G6DOF_JOINT_ANGULAR_FORCE_LIMIT,
+        PARAM_ANGULAR_RESTITUTION =
+            PhysicsServer::G6DOF_JOINT_ANGULAR_RESTITUTION,
+        PARAM_ANGULAR_FORCE_LIMIT =
+            PhysicsServer::G6DOF_JOINT_ANGULAR_FORCE_LIMIT,
         PARAM_ANGULAR_ERP = PhysicsServer::G6DOF_JOINT_ANGULAR_ERP,
-        PARAM_ANGULAR_MOTOR_TARGET_VELOCITY = PhysicsServer::G6DOF_JOINT_ANGULAR_MOTOR_TARGET_VELOCITY,
-        PARAM_ANGULAR_MOTOR_FORCE_LIMIT = PhysicsServer::G6DOF_JOINT_ANGULAR_MOTOR_FORCE_LIMIT,
-        PARAM_ANGULAR_SPRING_STIFFNESS = PhysicsServer::G6DOF_JOINT_ANGULAR_SPRING_STIFFNESS,
-        PARAM_ANGULAR_SPRING_DAMPING = PhysicsServer::G6DOF_JOINT_ANGULAR_SPRING_DAMPING,
-        PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT = PhysicsServer::G6DOF_JOINT_ANGULAR_SPRING_EQUILIBRIUM_POINT,
+        PARAM_ANGULAR_MOTOR_TARGET_VELOCITY =
+            PhysicsServer::G6DOF_JOINT_ANGULAR_MOTOR_TARGET_VELOCITY,
+        PARAM_ANGULAR_MOTOR_FORCE_LIMIT =
+            PhysicsServer::G6DOF_JOINT_ANGULAR_MOTOR_FORCE_LIMIT,
+        PARAM_ANGULAR_SPRING_STIFFNESS =
+            PhysicsServer::G6DOF_JOINT_ANGULAR_SPRING_STIFFNESS,
+        PARAM_ANGULAR_SPRING_DAMPING =
+            PhysicsServer::G6DOF_JOINT_ANGULAR_SPRING_DAMPING,
+        PARAM_ANGULAR_SPRING_EQUILIBRIUM_POINT =
+            PhysicsServer::G6DOF_JOINT_ANGULAR_SPRING_EQUILIBRIUM_POINT,
         PARAM_MAX = PhysicsServer::G6DOF_JOINT_MAX,
     };
 
     enum Flag {
-        FLAG_ENABLE_LINEAR_LIMIT = PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_LINEAR_LIMIT,
-        FLAG_ENABLE_ANGULAR_LIMIT = PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_ANGULAR_LIMIT,
-        FLAG_ENABLE_LINEAR_SPRING = PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_LINEAR_SPRING,
-        FLAG_ENABLE_ANGULAR_SPRING = PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_ANGULAR_SPRING,
+        FLAG_ENABLE_LINEAR_LIMIT =
+            PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_LINEAR_LIMIT,
+        FLAG_ENABLE_ANGULAR_LIMIT =
+            PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_ANGULAR_LIMIT,
+        FLAG_ENABLE_LINEAR_SPRING =
+            PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_LINEAR_SPRING,
+        FLAG_ENABLE_ANGULAR_SPRING =
+            PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_ANGULAR_SPRING,
         FLAG_ENABLE_MOTOR = PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_MOTOR,
-        FLAG_ENABLE_LINEAR_MOTOR = PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_LINEAR_MOTOR,
+        FLAG_ENABLE_LINEAR_MOTOR =
+            PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_LINEAR_MOTOR,
         FLAG_MAX = PhysicsServer::G6DOF_JOINT_FLAG_MAX
     };
 
@@ -304,7 +351,7 @@ protected:
     float params_z[PARAM_MAX];
     bool flags_z[FLAG_MAX];
 
-    virtual RID _configure_joint(PhysicsBody *body_a, PhysicsBody *body_b);
+    virtual RID _configure_joint(PhysicsBody* body_a, PhysicsBody* body_b);
     static void _bind_methods();
 
 public:

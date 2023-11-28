@@ -46,5 +46,4 @@ void register_camera_types() {
 #endif
 }
 
-void unregister_camera_types() {
-}
+void unregister_camera_types() {}

@@ -37,7 +37,12 @@ void Timer::_notification(int p_what) {
         case NOTIFICATION_READY: {
             if (autostart) {
 #ifdef TOOLS_ENABLED
-                if (Engine::get_singleton()->is_editor_hint() && get_tree()->get_edited_scene_root() && (get_tree()->get_edited_scene_root() == this || get_tree()->get_edited_scene_root()->is_a_parent_of(this))) {
+                if (Engine::get_singleton()->is_editor_hint()
+                    && get_tree()->get_edited_scene_root()
+                    && (get_tree()->get_edited_scene_root() == this
+                        || get_tree()->get_edited_scene_root()->is_a_parent_of(
+                            this
+                        ))) {
                     break;
                 }
 #endif
@@ -46,7 +51,8 @@ void Timer::_notification(int p_what) {
             }
         } break;
         case NOTIFICATION_INTERNAL_PROCESS: {
-            if (!processing || timer_process_mode == TIMER_PROCESS_PHYSICS || !is_processing_internal()) {
+            if (!processing || timer_process_mode == TIMER_PROCESS_PHYSICS
+                || !is_processing_internal()) {
                 return;
             }
             time_left -= get_process_delta_time();
@@ -63,7 +69,8 @@ void Timer::_notification(int p_what) {
 
         } break;
         case NOTIFICATION_INTERNAL_PHYSICS_PROCESS: {
-            if (!processing || timer_process_mode == TIMER_PROCESS_IDLE || !is_physics_processing_internal()) {
+            if (!processing || timer_process_mode == TIMER_PROCESS_IDLE
+                || !is_physics_processing_internal()) {
                 return;
             }
             time_left -= get_physics_process_delta_time();
@@ -86,6 +93,7 @@ void Timer::set_wait_time(float p_time) {
     wait_time = p_time;
     update_configuration_warning();
 }
+
 float Timer::get_wait_time() const {
     return wait_time;
 }
@@ -93,6 +101,7 @@ float Timer::get_wait_time() const {
 void Timer::set_one_shot(bool p_one_shot) {
     one_shot = p_one_shot;
 }
+
 bool Timer::is_one_shot() const {
     return one_shot;
 }
@@ -100,12 +109,17 @@ bool Timer::is_one_shot() const {
 void Timer::set_autostart(bool p_start) {
     autostart = p_start;
 }
+
 bool Timer::has_autostart() const {
     return autostart;
 }
 
 void Timer::start(float p_time) {
-    ERR_FAIL_COND_MSG(!is_inside_tree(), "Timer was not added to the SceneTree. Either add it or set autostart to true.");
+    ERR_FAIL_COND_MSG(
+        !is_inside_tree(),
+        "Timer was not added to the SceneTree. Either add it or set autostart "
+        "to true."
+    );
 
     if (p_time > 0) {
         set_wait_time(p_time);
@@ -186,23 +200,40 @@ String Timer::get_configuration_warning() const {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("Very low timer wait times (< 0.05 seconds) may behave in significantly different ways depending on the rendered or physics frame rate.\nConsider using a script's process loop instead of relying on a Timer for very low wait times.");
+        warning +=
+            TTR("Very low timer wait times (< 0.05 seconds) may behave in "
+                "significantly different ways depending on the rendered or "
+                "physics frame rate.\nConsider using a script's process loop "
+                "instead of relying on a Timer for very low wait times.");
     }
 
     return warning;
 }
 
 void Timer::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_wait_time", "time_sec"), &Timer::set_wait_time);
+    ClassDB::bind_method(
+        D_METHOD("set_wait_time", "time_sec"),
+        &Timer::set_wait_time
+    );
     ClassDB::bind_method(D_METHOD("get_wait_time"), &Timer::get_wait_time);
 
-    ClassDB::bind_method(D_METHOD("set_one_shot", "enable"), &Timer::set_one_shot);
+    ClassDB::bind_method(
+        D_METHOD("set_one_shot", "enable"),
+        &Timer::set_one_shot
+    );
     ClassDB::bind_method(D_METHOD("is_one_shot"), &Timer::is_one_shot);
 
-    ClassDB::bind_method(D_METHOD("set_autostart", "enable"), &Timer::set_autostart);
+    ClassDB::bind_method(
+        D_METHOD("set_autostart", "enable"),
+        &Timer::set_autostart
+    );
     ClassDB::bind_method(D_METHOD("has_autostart"), &Timer::has_autostart);
 
-    ClassDB::bind_method(D_METHOD("start", "time_sec"), &Timer::start, DEFVAL(-1));
+    ClassDB::bind_method(
+        D_METHOD("start", "time_sec"),
+        &Timer::start,
+        DEFVAL(-1)
+    );
     ClassDB::bind_method(D_METHOD("stop"), &Timer::stop);
 
     ClassDB::bind_method(D_METHOD("set_paused", "paused"), &Timer::set_paused);
@@ -212,17 +243,57 @@ void Timer::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("get_time_left"), &Timer::get_time_left);
 
-    ClassDB::bind_method(D_METHOD("set_timer_process_mode", "mode"), &Timer::set_timer_process_mode);
-    ClassDB::bind_method(D_METHOD("get_timer_process_mode"), &Timer::get_timer_process_mode);
+    ClassDB::bind_method(
+        D_METHOD("set_timer_process_mode", "mode"),
+        &Timer::set_timer_process_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_timer_process_mode"),
+        &Timer::get_timer_process_mode
+    );
 
     ADD_SIGNAL(MethodInfo("timeout"));
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "process_mode", PROPERTY_HINT_ENUM, "Physics,Idle"), "set_timer_process_mode", "get_timer_process_mode");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "wait_time", PROPERTY_HINT_EXP_RANGE, "0.001,4096,0.001,or_greater"), "set_wait_time", "get_wait_time");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "one_shot"), "set_one_shot", "is_one_shot");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "autostart"), "set_autostart", "has_autostart");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "paused", PROPERTY_HINT_NONE, "", 0), "set_paused", "is_paused");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "time_left", PROPERTY_HINT_NONE, "", 0), "", "get_time_left");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "process_mode",
+            PROPERTY_HINT_ENUM,
+            "Physics,Idle"
+        ),
+        "set_timer_process_mode",
+        "get_timer_process_mode"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "wait_time",
+            PROPERTY_HINT_EXP_RANGE,
+            "0.001,4096,0.001,or_greater"
+        ),
+        "set_wait_time",
+        "get_wait_time"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "one_shot"),
+        "set_one_shot",
+        "is_one_shot"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "autostart"),
+        "set_autostart",
+        "has_autostart"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "paused", PROPERTY_HINT_NONE, "", 0),
+        "set_paused",
+        "is_paused"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "time_left", PROPERTY_HINT_NONE, "", 0),
+        "",
+        "get_time_left"
+    );
 
     BIND_ENUM_CONSTANT(TIMER_PROCESS_PHYSICS);
     BIND_ENUM_CONSTANT(TIMER_PROCESS_IDLE);

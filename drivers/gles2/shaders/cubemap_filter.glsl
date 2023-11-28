@@ -86,12 +86,11 @@ uniform sampler2D radical_inverse_vdc_cache; // texunit:1
 #ifdef USE_SOURCE_PANORAMA
 
 vec4 texturePanorama(sampler2D pano, vec3 normal) {
-    vec2 st = vec2(
-            atan(normal.x, normal.z),
-            acos(normal.y));
+    vec2 st = vec2(atan(normal.x, normal.z), acos(normal.y));
 
-    if (st.x < 0.0)
+    if (st.x < 0.0) {
         st.x += M_PI * 2.0;
+    }
 
     st /= vec2(M_PI * 2.0, M_PI);
 
@@ -104,17 +103,17 @@ vec3 texelCoordToVec(vec2 uv, int faceID) {
     mat3 faceUvVectors[6];
 
     // -x
-    faceUvVectors[0][0] = vec3(0.0, 0.0, 1.0); // u -> +z
+    faceUvVectors[0][0] = vec3(0.0, 0.0, 1.0);  // u -> +z
     faceUvVectors[0][1] = vec3(0.0, -1.0, 0.0); // v -> -y
     faceUvVectors[0][2] = vec3(-1.0, 0.0, 0.0); // -x face
 
     // +x
     faceUvVectors[1][0] = vec3(0.0, 0.0, -1.0); // u -> -z
     faceUvVectors[1][1] = vec3(0.0, -1.0, 0.0); // v -> -y
-    faceUvVectors[1][2] = vec3(1.0, 0.0, 0.0); // +x face
+    faceUvVectors[1][2] = vec3(1.0, 0.0, 0.0);  // +x face
 
     // -y
-    faceUvVectors[2][0] = vec3(1.0, 0.0, 0.0); // u -> +x
+    faceUvVectors[2][0] = vec3(1.0, 0.0, 0.0);  // u -> +x
     faceUvVectors[2][1] = vec3(0.0, 0.0, -1.0); // v -> -z
     faceUvVectors[2][2] = vec3(0.0, -1.0, 0.0); // -y face
 
@@ -129,15 +128,16 @@ vec3 texelCoordToVec(vec2 uv, int faceID) {
     faceUvVectors[4][2] = vec3(0.0, 0.0, -1.0); // -z face
 
     // +z
-    faceUvVectors[5][0] = vec3(1.0, 0.0, 0.0); // u -> +x
+    faceUvVectors[5][0] = vec3(1.0, 0.0, 0.0);  // u -> +x
     faceUvVectors[5][1] = vec3(0.0, -1.0, 0.0); // v -> -y
-    faceUvVectors[5][2] = vec3(0.0, 0.0, 1.0); // +z face
+    faceUvVectors[5][2] = vec3(0.0, 0.0, 1.0);  // +z face
 
     // out = u * s_faceUv[0] + v * s_faceUv[1] + s_faceUv[2].
     vec3 result;
     for (int i = 0; i < 6; i++) {
         if (i == faceID) {
-            result = (faceUvVectors[i][0] * uv.x) + (faceUvVectors[i][1] * uv.y) + faceUvVectors[i][2];
+            result = (faceUvVectors[i][0] * uv.x) + (faceUvVectors[i][1] * uv.y)
+                   + faceUvVectors[i][2];
             break;
         }
     }
@@ -145,7 +145,8 @@ vec3 texelCoordToVec(vec2 uv, int faceID) {
 }
 
 vec3 ImportanceSampleGGX(vec2 Xi, float Roughness, vec3 N) {
-    float a = Roughness * Roughness; // DISNEY'S ROUGHNESS [see Burley'12 siggraph]
+    float a =
+        Roughness * Roughness; // DISNEY'S ROUGHNESS [see Burley'12 siggraph]
 
     // Compute distribution direction
     float Phi = 2.0 * M_PI * Xi.x;
@@ -158,7 +159,8 @@ vec3 ImportanceSampleGGX(vec2 Xi, float Roughness, vec3 N) {
     H.y = SinTheta * sin(Phi);
     H.z = CosTheta;
 
-    vec3 UpVector = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+    vec3 UpVector =
+        abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
     vec3 TangentX = normalize(cross(UpVector, N));
     vec3 TangentY = cross(N, TangentX);
 
@@ -190,7 +192,7 @@ void main() {
 #else
 
     gl_FragColor = vec4(textureCube(source_cube, N).rgb, 1.0);
-#endif //USE_SOURCE_PANORAMA
+#endif // USE_SOURCE_PANORAMA
 
 #else
 
@@ -212,8 +214,11 @@ void main() {
 #else
             vec3 val = textureCubeLod(source_cube, L, 0.0).rgb;
 #endif
-            //mix using Linear, to approximate high end back-end
-            val = mix(pow((val + vec3(0.055)) * (1.0 / (1.0 + 0.055)), vec3(2.4)), val * (1.0 / 12.92), vec3(lessThan(val, vec3(0.04045))));
+            // mix using Linear, to approximate high end back-end
+            val =
+                mix(pow((val + vec3(0.055)) * (1.0 / (1.0 + 0.055)), vec3(2.4)),
+                    val * (1.0 / 12.92),
+                    vec3(lessThan(val, vec3(0.04045))));
 
             sum.rgb += val * NdotL;
 
@@ -224,7 +229,10 @@ void main() {
     sum /= sum.a;
 
     vec3 a = vec3(0.055);
-    sum.rgb = mix((vec3(1.0) + a) * pow(sum.rgb, vec3(1.0 / 2.4)) - a, 12.92 * sum.rgb, vec3(lessThan(sum.rgb, vec3(0.0031308))));
+    sum.rgb =
+        mix((vec3(1.0) + a) * pow(sum.rgb, vec3(1.0 / 2.4)) - a,
+            12.92 * sum.rgb,
+            vec3(lessThan(sum.rgb, vec3(0.0031308))));
 
     gl_FragColor = vec4(sum.rgb, 1.0);
 #endif

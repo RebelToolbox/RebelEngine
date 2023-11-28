@@ -36,30 +36,93 @@ void ARVRPositionalTracker::_bind_methods() {
     BIND_ENUM_CONSTANT(TRACKER_LEFT_HAND);
     BIND_ENUM_CONSTANT(TRACKER_RIGHT_HAND);
 
-    // this class is read only from GDScript, so we only have access to getters..
-    ClassDB::bind_method(D_METHOD("get_type"), &ARVRPositionalTracker::get_type);
-    ClassDB::bind_method(D_METHOD("get_tracker_id"), &ARVRPositionalTracker::get_tracker_id);
-    ClassDB::bind_method(D_METHOD("get_name"), &ARVRPositionalTracker::get_name);
-    ClassDB::bind_method(D_METHOD("get_joy_id"), &ARVRPositionalTracker::get_joy_id);
-    ClassDB::bind_method(D_METHOD("get_tracks_orientation"), &ARVRPositionalTracker::get_tracks_orientation);
-    ClassDB::bind_method(D_METHOD("get_orientation"), &ARVRPositionalTracker::get_orientation);
-    ClassDB::bind_method(D_METHOD("get_tracks_position"), &ARVRPositionalTracker::get_tracks_position);
-    ClassDB::bind_method(D_METHOD("get_position"), &ARVRPositionalTracker::get_position);
-    ClassDB::bind_method(D_METHOD("get_hand"), &ARVRPositionalTracker::get_hand);
-    ClassDB::bind_method(D_METHOD("get_transform", "adjust_by_reference_frame"), &ARVRPositionalTracker::get_transform);
-    ClassDB::bind_method(D_METHOD("get_mesh"), &ARVRPositionalTracker::get_mesh);
+    // this class is read only from GDScript, so we only have access to
+    // getters..
+    ClassDB::bind_method(
+        D_METHOD("get_type"),
+        &ARVRPositionalTracker::get_type
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_tracker_id"),
+        &ARVRPositionalTracker::get_tracker_id
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_name"),
+        &ARVRPositionalTracker::get_name
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_joy_id"),
+        &ARVRPositionalTracker::get_joy_id
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_tracks_orientation"),
+        &ARVRPositionalTracker::get_tracks_orientation
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_orientation"),
+        &ARVRPositionalTracker::get_orientation
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_tracks_position"),
+        &ARVRPositionalTracker::get_tracks_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_position"),
+        &ARVRPositionalTracker::get_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_hand"),
+        &ARVRPositionalTracker::get_hand
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_transform", "adjust_by_reference_frame"),
+        &ARVRPositionalTracker::get_transform
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_mesh"),
+        &ARVRPositionalTracker::get_mesh
+    );
 
-    // these functions we don't want to expose to normal users but do need to be callable from GDNative
-    ClassDB::bind_method(D_METHOD("_set_type", "type"), &ARVRPositionalTracker::set_type);
-    ClassDB::bind_method(D_METHOD("_set_name", "name"), &ARVRPositionalTracker::set_name);
-    ClassDB::bind_method(D_METHOD("_set_joy_id", "joy_id"), &ARVRPositionalTracker::set_joy_id);
-    ClassDB::bind_method(D_METHOD("_set_orientation", "orientation"), &ARVRPositionalTracker::set_orientation);
-    ClassDB::bind_method(D_METHOD("_set_rw_position", "rw_position"), &ARVRPositionalTracker::set_rw_position);
-    ClassDB::bind_method(D_METHOD("_set_mesh", "mesh"), &ARVRPositionalTracker::set_mesh);
-    ClassDB::bind_method(D_METHOD("get_rumble"), &ARVRPositionalTracker::get_rumble);
-    ClassDB::bind_method(D_METHOD("set_rumble", "rumble"), &ARVRPositionalTracker::set_rumble);
+    // these functions we don't want to expose to normal users but do need to be
+    // callable from GDNative
+    ClassDB::bind_method(
+        D_METHOD("_set_type", "type"),
+        &ARVRPositionalTracker::set_type
+    );
+    ClassDB::bind_method(
+        D_METHOD("_set_name", "name"),
+        &ARVRPositionalTracker::set_name
+    );
+    ClassDB::bind_method(
+        D_METHOD("_set_joy_id", "joy_id"),
+        &ARVRPositionalTracker::set_joy_id
+    );
+    ClassDB::bind_method(
+        D_METHOD("_set_orientation", "orientation"),
+        &ARVRPositionalTracker::set_orientation
+    );
+    ClassDB::bind_method(
+        D_METHOD("_set_rw_position", "rw_position"),
+        &ARVRPositionalTracker::set_rw_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("_set_mesh", "mesh"),
+        &ARVRPositionalTracker::set_mesh
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_rumble"),
+        &ARVRPositionalTracker::get_rumble
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_rumble", "rumble"),
+        &ARVRPositionalTracker::set_rumble
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "rumble"), "set_rumble", "get_rumble");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "rumble"),
+        "set_rumble",
+        "get_rumble"
+    );
 };
 
 void ARVRPositionalTracker::set_type(ARVRServer::TrackerType p_type) {
@@ -67,11 +130,12 @@ void ARVRPositionalTracker::set_type(ARVRServer::TrackerType p_type) {
         type = p_type;
         hand = ARVRPositionalTracker::TRACKER_HAND_UNKNOWN;
 
-        ARVRServer *arvr_server = ARVRServer::get_singleton();
+        ARVRServer* arvr_server = ARVRServer::get_singleton();
         ERR_FAIL_NULL(arvr_server);
 
         // get a tracker id for our type
-        // note if this is a controller this will be 3 or higher but we may change it later.
+        // note if this is a controller this will be 3 or higher but we may
+        // change it later.
         tracker_id = arvr_server->get_free_tracker_id_for_type(p_type);
     };
 };
@@ -80,7 +144,7 @@ ARVRServer::TrackerType ARVRPositionalTracker::get_type() const {
     return type;
 };
 
-void ARVRPositionalTracker::set_name(const String &p_name) {
+void ARVRPositionalTracker::set_name(const String& p_name) {
     name = p_name;
 };
 
@@ -104,7 +168,7 @@ bool ARVRPositionalTracker::get_tracks_orientation() const {
     return tracks_orientation;
 };
 
-void ARVRPositionalTracker::set_orientation(const Basis &p_orientation) {
+void ARVRPositionalTracker::set_orientation(const Basis& p_orientation) {
     _THREAD_SAFE_METHOD_
 
     tracks_orientation = true; // obviously we have this
@@ -121,10 +185,10 @@ bool ARVRPositionalTracker::get_tracks_position() const {
     return tracks_position;
 };
 
-void ARVRPositionalTracker::set_position(const Vector3 &p_position) {
+void ARVRPositionalTracker::set_position(const Vector3& p_position) {
     _THREAD_SAFE_METHOD_
 
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
     real_t world_scale = arvr_server->get_world_scale();
     ERR_FAIL_COND(world_scale == 0);
@@ -136,14 +200,14 @@ void ARVRPositionalTracker::set_position(const Vector3 &p_position) {
 Vector3 ARVRPositionalTracker::get_position() const {
     _THREAD_SAFE_METHOD_
 
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, rw_position);
     real_t world_scale = arvr_server->get_world_scale();
 
     return rw_position * world_scale;
 };
 
-void ARVRPositionalTracker::set_rw_position(const Vector3 &p_rw_position) {
+void ARVRPositionalTracker::set_rw_position(const Vector3& p_rw_position) {
     _THREAD_SAFE_METHOD_
 
     tracks_position = true; // obviously we have this
@@ -156,7 +220,7 @@ Vector3 ARVRPositionalTracker::get_rw_position() const {
     return rw_position;
 };
 
-void ARVRPositionalTracker::set_mesh(const Ref<Mesh> &p_mesh) {
+void ARVRPositionalTracker::set_mesh(const Ref<Mesh>& p_mesh) {
     _THREAD_SAFE_METHOD_
 
     mesh = p_mesh;
@@ -172,13 +236,19 @@ ARVRPositionalTracker::TrackerHand ARVRPositionalTracker::get_hand() const {
     return hand;
 };
 
-void ARVRPositionalTracker::set_hand(const ARVRPositionalTracker::TrackerHand p_hand) {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+void ARVRPositionalTracker::set_hand(
+    const ARVRPositionalTracker::TrackerHand p_hand
+) {
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
     if (hand != p_hand) {
-        // we can only set this if we've previously set this to be a controller!!
-        ERR_FAIL_COND((type != ARVRServer::TRACKER_CONTROLLER) && (p_hand != ARVRPositionalTracker::TRACKER_HAND_UNKNOWN));
+        // we can only set this if we've previously set this to be a
+        // controller!!
+        ERR_FAIL_COND(
+            (type != ARVRServer::TRACKER_CONTROLLER)
+            && (p_hand != ARVRPositionalTracker::TRACKER_HAND_UNKNOWN)
+        );
 
         hand = p_hand;
         if (hand == ARVRPositionalTracker::TRACKER_LEFT_HAND) {
@@ -193,14 +263,15 @@ void ARVRPositionalTracker::set_hand(const ARVRPositionalTracker::TrackerHand p_
     };
 };
 
-Transform ARVRPositionalTracker::get_transform(bool p_adjust_by_reference_frame) const {
+Transform ARVRPositionalTracker::get_transform(bool p_adjust_by_reference_frame
+) const {
     Transform new_transform;
 
     new_transform.basis = get_orientation();
     new_transform.origin = get_position();
 
     if (p_adjust_by_reference_frame) {
-        ARVRServer *arvr_server = ARVRServer::get_singleton();
+        ARVRServer* arvr_server = ARVRServer::get_singleton();
         ERR_FAIL_NULL_V(arvr_server, new_transform);
 
         new_transform = arvr_server->get_reference_frame() * new_transform;

@@ -53,13 +53,21 @@ void EditorSettingsDialog::_settings_changed() {
     timer->start();
 }
 
-void EditorSettingsDialog::_settings_property_edited(const String &p_name) {
+void EditorSettingsDialog::_settings_property_edited(const String& p_name) {
     String full_name = inspector->get_full_item_path(p_name);
 
-    if (full_name == "interface/theme/accent_color" || full_name == "interface/theme/base_color" || full_name == "interface/theme/contrast") {
-        EditorSettings::get_singleton()->set_manually("interface/theme/preset", "Custom"); // set preset to Custom
+    if (full_name == "interface/theme/accent_color"
+        || full_name == "interface/theme/base_color"
+        || full_name == "interface/theme/contrast") {
+        EditorSettings::get_singleton()->set_manually(
+            "interface/theme/preset",
+            "Custom"
+        ); // set preset to Custom
     } else if (full_name.begins_with("text_editor/highlighting")) {
-        EditorSettings::get_singleton()->set_manually("text_editor/theme/color_theme", "Custom");
+        EditorSettings::get_singleton()->set_manually(
+            "text_editor/theme/color_theme",
+            "Custom"
+        );
     }
 }
 
@@ -81,7 +89,8 @@ void EditorSettingsDialog::popup_edit_settings() {
         return;
     }
 
-    EditorSettings::get_singleton()->list_text_editor_themes(); // make sure we have an up to date list of themes
+    EditorSettings::get_singleton()->list_text_editor_themes(
+    ); // make sure we have an up to date list of themes
 
     inspector->edit(EditorSettings::get_singleton());
     inspector->get_inspector()->update_tree();
@@ -93,7 +102,11 @@ void EditorSettingsDialog::popup_edit_settings() {
     set_process_unhandled_input(true);
 
     // Restore valid window bounds or pop up at default size.
-    Rect2 saved_size = EditorSettings::get_singleton()->get_project_metadata("dialog_bounds", "editor_settings", Rect2());
+    Rect2 saved_size = EditorSettings::get_singleton()->get_project_metadata(
+        "dialog_bounds",
+        "editor_settings",
+        Rect2()
+    );
     if (saved_size != Rect2()) {
         popup(saved_size);
     } else {
@@ -103,28 +116,39 @@ void EditorSettingsDialog::popup_edit_settings() {
     _focus_current_search_box();
 }
 
-void EditorSettingsDialog::_filter_shortcuts(const String &p_filter) {
+void EditorSettingsDialog::_filter_shortcuts(const String& p_filter) {
     shortcut_filter = p_filter;
     _update_shortcuts();
 }
 
-void EditorSettingsDialog::_undo_redo_callback(void *p_self, const String &p_name) {
+void EditorSettingsDialog::_undo_redo_callback(
+    void* p_self,
+    const String& p_name
+) {
     EditorNode::get_log()->add_message(p_name, EditorLog::MSG_TYPE_EDITOR);
 }
 
 void EditorSettingsDialog::_notification(int p_what) {
     switch (p_what) {
         case NOTIFICATION_READY: {
-            ScriptEditorDebugger *sed = ScriptEditor::get_singleton()->get_debugger();
+            ScriptEditorDebugger* sed =
+                ScriptEditor::get_singleton()->get_debugger();
             undo_redo->set_method_notify_callback(sed->_method_changeds, sed);
-            undo_redo->set_property_notify_callback(sed->_property_changeds, sed);
+            undo_redo->set_property_notify_callback(
+                sed->_property_changeds,
+                sed
+            );
             undo_redo->set_commit_notify_callback(_undo_redo_callback, this);
         } break;
         case NOTIFICATION_ENTER_TREE: {
             _update_icons();
         } break;
         case NOTIFICATION_POPUP_HIDE: {
-            EditorSettings::get_singleton()->set_project_metadata("dialog_bounds", "editor_settings", get_rect());
+            EditorSettings::get_singleton()->set_project_metadata(
+                "dialog_bounds",
+                "editor_settings",
+                get_rect()
+            );
             set_process_unhandled_input(false);
         } break;
         case EditorSettings::NOTIFICATION_EDITOR_SETTINGS_CHANGED: {
@@ -136,7 +160,7 @@ void EditorSettingsDialog::_notification(int p_what) {
     }
 }
 
-void EditorSettingsDialog::_unhandled_input(const Ref<InputEvent> &p_event) {
+void EditorSettingsDialog::_unhandled_input(const Ref<InputEvent>& p_event) {
     const Ref<InputEventKey> k = p_event;
 
     if (k.is_valid() && is_window_modal_on_top() && k->is_pressed()) {
@@ -145,7 +169,10 @@ void EditorSettingsDialog::_unhandled_input(const Ref<InputEvent> &p_event) {
         if (ED_IS_SHORTCUT("editor/undo", p_event)) {
             String action = undo_redo->get_current_action_name();
             if (action != "") {
-                EditorNode::get_log()->add_message("Undo: " + action, EditorLog::MSG_TYPE_EDITOR);
+                EditorNode::get_log()->add_message(
+                    "Undo: " + action,
+                    EditorLog::MSG_TYPE_EDITOR
+                );
             }
             undo_redo->undo();
             handled = true;
@@ -155,7 +182,10 @@ void EditorSettingsDialog::_unhandled_input(const Ref<InputEvent> &p_event) {
             undo_redo->redo();
             String action = undo_redo->get_current_action_name();
             if (action != "") {
-                EditorNode::get_log()->add_message("Redo: " + action, EditorLog::MSG_TYPE_EDITOR);
+                EditorNode::get_log()->add_message(
+                    "Redo: " + action,
+                    EditorLog::MSG_TYPE_EDITOR
+                );
             }
             handled = true;
         }
@@ -180,14 +210,18 @@ void EditorSettingsDialog::_update_icons() {
     restart_close_button->set_icon(get_icon("Close", "EditorIcons"));
     restart_container->add_style_override("panel", get_stylebox("bg", "Tree"));
     restart_icon->set_texture(get_icon("StatusWarning", "EditorIcons"));
-    restart_label->add_color_override("font_color", get_color("warning_color", "Editor"));
+    restart_label->add_color_override(
+        "font_color",
+        get_color("warning_color", "Editor")
+    );
 }
 
 void EditorSettingsDialog::_update_shortcuts() {
     Map<String, bool> collapsed;
 
     if (shortcuts->get_root() && shortcuts->get_root()->get_children()) {
-        for (TreeItem *item = shortcuts->get_root()->get_children(); item; item = item->get_next()) {
+        for (TreeItem* item = shortcuts->get_root()->get_children(); item;
+             item = item->get_next()) {
             collapsed[item->get_text(0)] = item->is_collapsed();
         }
     }
@@ -196,12 +230,13 @@ void EditorSettingsDialog::_update_shortcuts() {
 
     List<String> slist;
     EditorSettings::get_singleton()->get_shortcut_list(&slist);
-    TreeItem *root = shortcuts->create_item();
+    TreeItem* root = shortcuts->create_item();
 
-    Map<String, TreeItem *> sections;
+    Map<String, TreeItem*> sections;
 
-    for (List<String>::Element *E = slist.front(); E; E = E->next()) {
-        Ref<ShortCut> sc = EditorSettings::get_singleton()->get_shortcut(E->get());
+    for (List<String>::Element* E = slist.front(); E; E = E->next()) {
+        Ref<ShortCut> sc =
+            EditorSettings::get_singleton()->get_shortcut(E->get());
         if (!sc->has_meta("original")) {
             continue;
         }
@@ -210,7 +245,7 @@ void EditorSettingsDialog::_update_shortcuts() {
 
         String section_name = E->get().get_slice("/", 0);
 
-        TreeItem *section;
+        TreeItem* section;
 
         if (sections.has(section_name)) {
             section = sections[section_name];
@@ -225,25 +260,39 @@ void EditorSettingsDialog::_update_shortcuts() {
             }
 
             sections[section_name] = section;
-            section->set_custom_bg_color(0, get_color("prop_subsection", "Editor"));
-            section->set_custom_bg_color(1, get_color("prop_subsection", "Editor"));
+            section->set_custom_bg_color(
+                0,
+                get_color("prop_subsection", "Editor")
+            );
+            section->set_custom_bg_color(
+                1,
+                get_color("prop_subsection", "Editor")
+            );
         }
 
-        // Don't match unassigned shortcuts when searching for assigned keys in search results.
-        // This prevents all unassigned shortcuts from appearing when searching a string like "no".
-        if (shortcut_filter.is_subsequence_ofi(sc->get_name()) || (sc->get_as_text() != "None" && shortcut_filter.is_subsequence_ofi(sc->get_as_text()))) {
-            TreeItem *item = shortcuts->create_item(section);
+        // Don't match unassigned shortcuts when searching for assigned keys in
+        // search results. This prevents all unassigned shortcuts from appearing
+        // when searching a string like "no".
+        if (shortcut_filter.is_subsequence_ofi(sc->get_name())
+            || (sc->get_as_text() != "None"
+                && shortcut_filter.is_subsequence_ofi(sc->get_as_text()))) {
+            TreeItem* item = shortcuts->create_item(section);
 
             item->set_text(0, sc->get_name());
             item->set_text(1, sc->get_as_text());
 
-            if (!sc->is_shortcut(original) && !(sc->get_shortcut().is_null() && original.is_null())) {
+            if (!sc->is_shortcut(original)
+                && !(sc->get_shortcut().is_null() && original.is_null())) {
                 item->add_button(1, get_icon("Reload", "EditorIcons"), 2);
             }
 
             if (sc->get_as_text() == "None") {
-                // Fade out unassigned shortcut labels for easier visual grepping.
-                item->set_custom_color(1, get_color("font_color", "Label") * Color(1, 1, 1, 0.5));
+                // Fade out unassigned shortcut labels for easier visual
+                // grepping.
+                item->set_custom_color(
+                    1,
+                    get_color("font_color", "Label") * Color(1, 1, 1, 0.5)
+                );
             }
 
             item->add_button(1, get_icon("Edit", "EditorIcons"), 0);
@@ -254,16 +303,21 @@ void EditorSettingsDialog::_update_shortcuts() {
     }
 
     // remove sections with no shortcuts
-    for (Map<String, TreeItem *>::Element *E = sections.front(); E; E = E->next()) {
-        TreeItem *section = E->get();
+    for (Map<String, TreeItem*>::Element* E = sections.front(); E;
+         E = E->next()) {
+        TreeItem* section = E->get();
         if (section->get_children() == nullptr) {
             root->remove_child(section);
         }
     }
 }
 
-void EditorSettingsDialog::_shortcut_button_pressed(Object *p_item, int p_column, int p_idx) {
-    TreeItem *ti = Object::cast_to<TreeItem>(p_item);
+void EditorSettingsDialog::_shortcut_button_pressed(
+    Object* p_item,
+    int p_column,
+    int p_idx
+) {
+    TreeItem* ti = Object::cast_to<TreeItem>(p_item);
     ERR_FAIL_COND(!ti);
 
     String item = ti->get_metadata(0);
@@ -278,29 +332,31 @@ void EditorSettingsDialog::_shortcut_button_pressed(Object *p_item, int p_column
         press_a_key->get_cancel()->set_focus_mode(FOCUS_NONE);
         shortcut_configured = item;
 
-    } else if (p_idx == 1) { //erase
+    } else if (p_idx == 1) { // erase
         if (!sc.is_valid()) {
-            return; //pointless, there is nothing
+            return; // pointless, there is nothing
         }
 
         undo_redo->create_action(TTR("Erase Shortcut"));
         undo_redo->add_do_method(sc.ptr(), "set_shortcut", Ref<InputEvent>());
-        undo_redo->add_undo_method(sc.ptr(), "set_shortcut", sc->get_shortcut());
+        undo_redo
+            ->add_undo_method(sc.ptr(), "set_shortcut", sc->get_shortcut());
         undo_redo->add_do_method(this, "_update_shortcuts");
         undo_redo->add_undo_method(this, "_update_shortcuts");
         undo_redo->add_do_method(this, "_settings_changed");
         undo_redo->add_undo_method(this, "_settings_changed");
         undo_redo->commit_action();
-    } else if (p_idx == 2) { //revert to original
+    } else if (p_idx == 2) { // revert to original
         if (!sc.is_valid()) {
-            return; //pointless, there is nothing
+            return; // pointless, there is nothing
         }
 
         Ref<InputEvent> original = sc->get_meta("original");
 
         undo_redo->create_action(TTR("Restore Shortcut"));
         undo_redo->add_do_method(sc.ptr(), "set_shortcut", original);
-        undo_redo->add_undo_method(sc.ptr(), "set_shortcut", sc->get_shortcut());
+        undo_redo
+            ->add_undo_method(sc.ptr(), "set_shortcut", sc->get_shortcut());
         undo_redo->add_do_method(this, "_update_shortcuts");
         undo_redo->add_undo_method(this, "_update_shortcuts");
         undo_redo->add_do_method(this, "_settings_changed");
@@ -309,7 +365,7 @@ void EditorSettingsDialog::_shortcut_button_pressed(Object *p_item, int p_column
     }
 }
 
-void EditorSettingsDialog::_wait_for_key(const Ref<InputEvent> &p_event) {
+void EditorSettingsDialog::_wait_for_key(const Ref<InputEvent>& p_event) {
     Ref<InputEventKey> k = p_event;
 
     if (k.is_valid() && k->is_pressed() && k->get_scancode() != 0) {
@@ -334,9 +390,12 @@ void EditorSettingsDialog::_press_a_key_confirm() {
     ie->set_alt(last_wait_for_key->get_alt());
     ie->set_metakey(last_wait_for_key->get_metakey());
 
-    Ref<ShortCut> sc = EditorSettings::get_singleton()->get_shortcut(shortcut_configured);
+    Ref<ShortCut> sc =
+        EditorSettings::get_singleton()->get_shortcut(shortcut_configured);
 
-    undo_redo->create_action(TTR("Change Shortcut") + " '" + shortcut_configured + "'");
+    undo_redo->create_action(
+        TTR("Change Shortcut") + " '" + shortcut_configured + "'"
+    );
     undo_redo->add_do_method(sc.ptr(), "set_shortcut", ie);
     undo_redo->add_undo_method(sc.ptr(), "set_shortcut", sc->get_shortcut());
     undo_redo->add_do_method(this, "_update_shortcuts");
@@ -351,8 +410,8 @@ void EditorSettingsDialog::_tabs_tab_changed(int p_tab) {
 }
 
 void EditorSettingsDialog::_focus_current_search_box() {
-    Control *tab = tabs->get_current_tab_control();
-    LineEdit *current_search_box = nullptr;
+    Control* tab = tabs->get_current_tab_control();
+    LineEdit* current_search_box = nullptr;
     if (tab == tab_general) {
         current_search_box = search_box;
     } else if (tab == tab_shortcuts) {
@@ -379,20 +438,59 @@ void EditorSettingsDialog::_editor_restart_close() {
 }
 
 void EditorSettingsDialog::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_unhandled_input"), &EditorSettingsDialog::_unhandled_input);
-    ClassDB::bind_method(D_METHOD("_settings_save"), &EditorSettingsDialog::_settings_save);
-    ClassDB::bind_method(D_METHOD("_settings_changed"), &EditorSettingsDialog::_settings_changed);
-    ClassDB::bind_method(D_METHOD("_settings_property_edited"), &EditorSettingsDialog::_settings_property_edited);
-    ClassDB::bind_method(D_METHOD("_shortcut_button_pressed"), &EditorSettingsDialog::_shortcut_button_pressed);
-    ClassDB::bind_method(D_METHOD("_filter_shortcuts"), &EditorSettingsDialog::_filter_shortcuts);
-    ClassDB::bind_method(D_METHOD("_update_shortcuts"), &EditorSettingsDialog::_update_shortcuts);
-    ClassDB::bind_method(D_METHOD("_press_a_key_confirm"), &EditorSettingsDialog::_press_a_key_confirm);
-    ClassDB::bind_method(D_METHOD("_wait_for_key"), &EditorSettingsDialog::_wait_for_key);
-    ClassDB::bind_method(D_METHOD("_tabs_tab_changed"), &EditorSettingsDialog::_tabs_tab_changed);
+    ClassDB::bind_method(
+        D_METHOD("_unhandled_input"),
+        &EditorSettingsDialog::_unhandled_input
+    );
+    ClassDB::bind_method(
+        D_METHOD("_settings_save"),
+        &EditorSettingsDialog::_settings_save
+    );
+    ClassDB::bind_method(
+        D_METHOD("_settings_changed"),
+        &EditorSettingsDialog::_settings_changed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_settings_property_edited"),
+        &EditorSettingsDialog::_settings_property_edited
+    );
+    ClassDB::bind_method(
+        D_METHOD("_shortcut_button_pressed"),
+        &EditorSettingsDialog::_shortcut_button_pressed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_filter_shortcuts"),
+        &EditorSettingsDialog::_filter_shortcuts
+    );
+    ClassDB::bind_method(
+        D_METHOD("_update_shortcuts"),
+        &EditorSettingsDialog::_update_shortcuts
+    );
+    ClassDB::bind_method(
+        D_METHOD("_press_a_key_confirm"),
+        &EditorSettingsDialog::_press_a_key_confirm
+    );
+    ClassDB::bind_method(
+        D_METHOD("_wait_for_key"),
+        &EditorSettingsDialog::_wait_for_key
+    );
+    ClassDB::bind_method(
+        D_METHOD("_tabs_tab_changed"),
+        &EditorSettingsDialog::_tabs_tab_changed
+    );
 
-    ClassDB::bind_method(D_METHOD("_editor_restart_request"), &EditorSettingsDialog::_editor_restart_request);
-    ClassDB::bind_method(D_METHOD("_editor_restart"), &EditorSettingsDialog::_editor_restart);
-    ClassDB::bind_method(D_METHOD("_editor_restart_close"), &EditorSettingsDialog::_editor_restart_close);
+    ClassDB::bind_method(
+        D_METHOD("_editor_restart_request"),
+        &EditorSettingsDialog::_editor_restart_request
+    );
+    ClassDB::bind_method(
+        D_METHOD("_editor_restart"),
+        &EditorSettingsDialog::_editor_restart
+    );
+    ClassDB::bind_method(
+        D_METHOD("_editor_restart_close"),
+        &EditorSettingsDialog::_editor_restart_close
+    );
 }
 
 EditorSettingsDialog::EditorSettingsDialog() {
@@ -411,7 +509,7 @@ EditorSettingsDialog::EditorSettingsDialog() {
     tabs->add_child(tab_general);
     tab_general->set_name(TTR("General"));
 
-    HBoxContainer *hbc = memnew(HBoxContainer);
+    HBoxContainer* hbc = memnew(HBoxContainer);
     hbc->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     tab_general->add_child(hbc);
 
@@ -426,21 +524,25 @@ EditorSettingsDialog::EditorSettingsDialog() {
     inspector->set_v_size_flags(Control::SIZE_EXPAND_FILL);
     inspector->get_inspector()->set_undo_redo(undo_redo);
     tab_general->add_child(inspector);
-    inspector->get_inspector()->connect("property_edited", this, "_settings_property_edited");
-    inspector->get_inspector()->connect("restart_requested", this, "_editor_restart_request");
+    inspector->get_inspector()
+        ->connect("property_edited", this, "_settings_property_edited");
+    inspector->get_inspector()
+        ->connect("restart_requested", this, "_editor_restart_request");
 
     restart_container = memnew(PanelContainer);
     tab_general->add_child(restart_container);
-    HBoxContainer *restart_hb = memnew(HBoxContainer);
+    HBoxContainer* restart_hb = memnew(HBoxContainer);
     restart_container->add_child(restart_hb);
     restart_icon = memnew(TextureRect);
     restart_icon->set_v_size_flags(SIZE_SHRINK_CENTER);
     restart_hb->add_child(restart_icon);
     restart_label = memnew(Label);
-    restart_label->set_text(TTR("The editor must be restarted for changes to take effect."));
+    restart_label->set_text(
+        TTR("The editor must be restarted for changes to take effect.")
+    );
     restart_hb->add_child(restart_label);
     restart_hb->add_spacer();
-    Button *restart_button = memnew(Button);
+    Button* restart_button = memnew(Button);
     restart_button->connect("pressed", this, "_editor_restart");
     restart_hb->add_child(restart_button);
     restart_button->set_text(TTR("Save & Restart"));
@@ -479,7 +581,7 @@ EditorSettingsDialog::EditorSettingsDialog() {
     press_a_key->set_focus_mode(FOCUS_ALL);
     add_child(press_a_key);
 
-    Label *l = memnew(Label);
+    Label* l = memnew(Label);
     l->set_text(TTR("Press a Key..."));
     l->set_anchors_and_margins_preset(Control::PRESET_WIDE);
     l->set_align(Label::ALIGN_CENTER);
@@ -497,7 +599,8 @@ EditorSettingsDialog::EditorSettingsDialog() {
     timer->connect("timeout", this, "_settings_save");
     timer->set_one_shot(true);
     add_child(timer);
-    EditorSettings::get_singleton()->connect("settings_changed", this, "_settings_changed");
+    EditorSettings::get_singleton()
+        ->connect("settings_changed", this, "_settings_changed");
     get_ok()->set_text(TTR("Close"));
 
     updating = false;

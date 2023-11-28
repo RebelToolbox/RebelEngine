@@ -41,7 +41,6 @@
 class GDScriptTokenizer {
 public:
     enum Token {
-
         TK_EMPTY,
         TK_IDENTIFIER,
         TK_CONSTANT,
@@ -80,8 +79,8 @@ public:
         TK_OP_BIT_OR,
         TK_OP_BIT_XOR,
         TK_OP_BIT_INVERT,
-        //TK_OP_PLUS_PLUS,
-        //TK_OP_MINUS_MINUS,
+        // TK_OP_PLUS_PLUS,
+        // TK_OP_MINUS_MINUS,
         TK_CF_IF,
         TK_CF_ELIF,
         TK_CF_ELSE,
@@ -141,7 +140,7 @@ public:
         TK_CONST_NAN,
         TK_ERROR,
         TK_EOF,
-        TK_CURSOR, //used for code completion
+        TK_CURSOR, // used for code completion
         TK_MAX
     };
 
@@ -152,18 +151,20 @@ protected:
         STRING_MULTILINE
     };
 
-    static const char *token_names[TK_MAX];
+    static const char* token_names[TK_MAX];
 
 public:
-    static const char *get_token_name(Token p_token);
+    static const char* get_token_name(Token p_token);
 
     bool is_token_literal(int p_offset = 0, bool variable_safe = false) const;
     StringName get_token_literal(int p_offset = 0) const;
 
-    virtual const Variant &get_token_constant(int p_offset = 0) const = 0;
+    virtual const Variant& get_token_constant(int p_offset = 0) const = 0;
     virtual Token get_token(int p_offset = 0) const = 0;
     virtual StringName get_token_identifier(int p_offset = 0) const = 0;
-    virtual GDScriptFunctions::Function get_token_built_in_func(int p_offset = 0) const = 0;
+    virtual GDScriptFunctions::Function get_token_built_in_func(
+        int p_offset = 0
+    ) const = 0;
     virtual Variant::Type get_token_type(int p_offset = 0) const = 0;
     virtual int get_token_line(int p_offset = 0) const = 0;
     virtual int get_token_column(int p_offset = 0) const = 0;
@@ -172,8 +173,8 @@ public:
     virtual String get_token_error(int p_offset = 0) const = 0;
     virtual void advance(int p_amount = 1) = 0;
 #ifdef DEBUG_ENABLED
-    virtual const Vector<Pair<int, String>> &get_warning_skips() const = 0;
-    virtual const Set<String> &get_warning_global_skips() const = 0;
+    virtual const Vector<Pair<int, String>>& get_warning_skips() const = 0;
+    virtual const Set<String>& get_warning_global_skips() const = 0;
     virtual bool is_ignoring_warnings() const = 0;
 #endif // DEBUG_ENABLED
 
@@ -184,19 +185,21 @@ class GDScriptTokenizerText : public GDScriptTokenizer {
     enum {
         MAX_LOOKAHEAD = 4,
         TK_RB_SIZE = MAX_LOOKAHEAD * 2 + 1
-
     };
 
     struct TokenData {
         Token type;
-        StringName identifier; //for identifier types
-        Variant constant; //for constant types
+        StringName identifier; // for identifier types
+        Variant constant;      // for constant types
+
         union {
-            Variant::Type vtype; //for type types
-            GDScriptFunctions::Function func; //function for built in functions
-            int warning_code; //for warning skip
+            Variant::Type vtype;              // for type types
+            GDScriptFunctions::Function func; // function for built in functions
+            int warning_code;                 // for warning skip
         };
+
         int line, col;
+
         TokenData() {
             type = TK_EMPTY;
             line = col = 0;
@@ -206,16 +209,16 @@ class GDScriptTokenizerText : public GDScriptTokenizer {
 
     void _make_token(Token p_type);
     void _make_newline(int p_indentation = 0, int p_tabs = 0);
-    void _make_identifier(const StringName &p_identifier);
+    void _make_identifier(const StringName& p_identifier);
     void _make_built_in_func(GDScriptFunctions::Function p_func);
-    void _make_constant(const Variant &p_constant);
-    void _make_type(const Variant::Type &p_type);
-    void _make_error(const String &p_error);
+    void _make_constant(const Variant& p_constant);
+    void _make_type(const Variant::Type& p_type);
+    void _make_error(const String& p_error);
 
     String code;
     int len;
     int code_pos;
-    const CharType *_code;
+    const CharType* _code;
     int line;
     int column;
     TokenData tk_rb[TK_RB_SIZE * 2 + 1];
@@ -232,28 +235,37 @@ class GDScriptTokenizerText : public GDScriptTokenizer {
     void _advance();
 
 public:
-    void set_code(const String &p_code);
+    void set_code(const String& p_code);
     virtual Token get_token(int p_offset = 0) const;
     virtual StringName get_token_identifier(int p_offset = 0) const;
-    virtual GDScriptFunctions::Function get_token_built_in_func(int p_offset = 0) const;
+    virtual GDScriptFunctions::Function get_token_built_in_func(
+        int p_offset = 0
+    ) const;
     virtual Variant::Type get_token_type(int p_offset = 0) const;
     virtual int get_token_line(int p_offset = 0) const;
     virtual int get_token_column(int p_offset = 0) const;
     virtual int get_token_line_indent(int p_offset = 0) const;
     virtual int get_token_line_tab_indent(int p_offset = 0) const;
-    virtual const Variant &get_token_constant(int p_offset = 0) const;
+    virtual const Variant& get_token_constant(int p_offset = 0) const;
     virtual String get_token_error(int p_offset = 0) const;
     virtual void advance(int p_amount = 1);
 #ifdef DEBUG_ENABLED
-    virtual const Vector<Pair<int, String>> &get_warning_skips() const { return warning_skips; }
-    virtual const Set<String> &get_warning_global_skips() const { return warning_global_skips; }
-    virtual bool is_ignoring_warnings() const { return ignore_warnings; }
+    virtual const Vector<Pair<int, String>>& get_warning_skips() const {
+        return warning_skips;
+    }
+
+    virtual const Set<String>& get_warning_global_skips() const {
+        return warning_global_skips;
+    }
+
+    virtual bool is_ignoring_warnings() const {
+        return ignore_warnings;
+    }
 #endif // DEBUG_ENABLED
 };
 
 class GDScriptTokenizerBuffer : public GDScriptTokenizer {
     enum {
-
         TOKEN_BYTE_MASK = 0x80,
         TOKEN_BITS = 8,
         TOKEN_MASK = (1 << TOKEN_BITS) - 1,
@@ -269,29 +281,39 @@ class GDScriptTokenizerBuffer : public GDScriptTokenizer {
     int token;
 
 public:
-    Error set_code_buffer(const Vector<uint8_t> &p_buffer);
-    static Vector<uint8_t> parse_code_string(const String &p_code);
+    Error set_code_buffer(const Vector<uint8_t>& p_buffer);
+    static Vector<uint8_t> parse_code_string(const String& p_code);
     virtual Token get_token(int p_offset = 0) const;
     virtual StringName get_token_identifier(int p_offset = 0) const;
-    virtual GDScriptFunctions::Function get_token_built_in_func(int p_offset = 0) const;
+    virtual GDScriptFunctions::Function get_token_built_in_func(
+        int p_offset = 0
+    ) const;
     virtual Variant::Type get_token_type(int p_offset = 0) const;
     virtual int get_token_line(int p_offset = 0) const;
     virtual int get_token_column(int p_offset = 0) const;
     virtual int get_token_line_indent(int p_offset = 0) const;
-    virtual int get_token_line_tab_indent(int p_offset = 0) const { return 0; }
-    virtual const Variant &get_token_constant(int p_offset = 0) const;
+
+    virtual int get_token_line_tab_indent(int p_offset = 0) const {
+        return 0;
+    }
+
+    virtual const Variant& get_token_constant(int p_offset = 0) const;
     virtual String get_token_error(int p_offset = 0) const;
     virtual void advance(int p_amount = 1);
 #ifdef DEBUG_ENABLED
-    virtual const Vector<Pair<int, String>> &get_warning_skips() const {
+    virtual const Vector<Pair<int, String>>& get_warning_skips() const {
         static Vector<Pair<int, String>> v;
         return v;
     }
-    virtual const Set<String> &get_warning_global_skips() const {
+
+    virtual const Set<String>& get_warning_global_skips() const {
         static Set<String> s;
         return s;
     }
-    virtual bool is_ignoring_warnings() const { return true; }
+
+    virtual bool is_ignoring_warnings() const {
+        return true;
+    }
 #endif // DEBUG_ENABLED
     GDScriptTokenizerBuffer();
 };

@@ -58,7 +58,7 @@ public:
     virtual bool _edit_use_rect() const;
 #endif
 
-    void set_rect(const Rect2 &p_rect);
+    void set_rect(const Rect2& p_rect);
     Rect2 get_rect() const;
     Rect2 get_anchorable_rect() const;
 

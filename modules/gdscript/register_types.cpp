@@ -37,7 +37,7 @@
 #include "gdscript.h"
 #include "gdscript_tokenizer.h"
 
-GDScriptLanguage *script_language_gd = nullptr;
+GDScriptLanguage* script_language_gd = nullptr;
 Ref<ResourceFormatLoaderGDScript> resource_loader_gd;
 Ref<ResourceFormatSaverGDScript> resource_saver_gd;
 
@@ -57,18 +57,23 @@ class EditorExportGDScript : public EditorExportPlugin {
     GDCLASS(EditorExportGDScript, EditorExportPlugin);
 
 public:
-    virtual void _export_file(const String &p_path, const String &p_type, const Set<String> &p_features) {
+    virtual void _export_file(
+        const String& p_path,
+        const String& p_type,
+        const Set<String>& p_features
+    ) {
         int script_mode = EditorExportPreset::MODE_SCRIPT_COMPILED;
         String script_key;
 
-        const Ref<EditorExportPreset> &preset = get_export_preset();
+        const Ref<EditorExportPreset>& preset = get_export_preset();
 
         if (preset.is_valid()) {
             script_mode = preset->get_script_export_mode();
             script_key = preset->get_script_encryption_key().to_lower();
         }
 
-        if (!p_path.ends_with(".gd") || script_mode == EditorExportPreset::MODE_SCRIPT_TEXT) {
+        if (!p_path.ends_with(".gd")
+            || script_mode == EditorExportPreset::MODE_SCRIPT_TEXT) {
             return;
         }
 
@@ -78,13 +83,16 @@ public:
         }
 
         String txt;
-        txt.parse_utf8((const char *)file.ptr(), file.size());
+        txt.parse_utf8((const char*)file.ptr(), file.size());
         file = GDScriptTokenizerBuffer::parse_code_string(txt);
 
         if (!file.empty()) {
             if (script_mode == EditorExportPreset::MODE_SCRIPT_ENCRYPTED) {
-                String tmp_path = EditorSettings::get_singleton()->get_cache_dir().plus_file("script.gde");
-                FileAccess *fa = FileAccess::open(tmp_path, FileAccess::WRITE);
+                String tmp_path =
+                    EditorSettings::get_singleton()->get_cache_dir().plus_file(
+                        "script.gde"
+                    );
+                FileAccess* fa = FileAccess::open(tmp_path, FileAccess::WRITE);
 
                 Vector<uint8_t> key;
                 key.resize(32);
@@ -111,8 +119,12 @@ public:
                     }
                     key.write[i] = v;
                 }
-                FileAccessEncrypted *fae = memnew(FileAccessEncrypted);
-                Error err = fae->open_and_parse(fa, key, FileAccessEncrypted::MODE_WRITE_AES256);
+                FileAccessEncrypted* fae = memnew(FileAccessEncrypted);
+                Error err = fae->open_and_parse(
+                    fa,
+                    key,
+                    FileAccessEncrypted::MODE_WRITE_AES256
+                );
 
                 if (err == OK) {
                     fae->store_buffer(file.ptr(), file.size());
@@ -140,9 +152,12 @@ static void _editor_init() {
 
 #ifndef GDSCRIPT_NO_LSP
     register_lsp_types();
-    GDScriptLanguageServer *lsp_plugin = memnew(GDScriptLanguageServer);
+    GDScriptLanguageServer* lsp_plugin = memnew(GDScriptLanguageServer);
     EditorNode::get_singleton()->add_editor_plugin(lsp_plugin);
-    Engine::get_singleton()->add_singleton(Engine::Singleton("GDScriptLanguageProtocol", GDScriptLanguageProtocol::get_singleton()));
+    Engine::get_singleton()->add_singleton(Engine::Singleton(
+        "GDScriptLanguageProtocol",
+        GDScriptLanguageProtocol::get_singleton()
+    ));
 #endif // !GDSCRIPT_NO_LSP
 }
 
@@ -162,7 +177,9 @@ void register_gdscript_types() {
     ResourceSaver::add_resource_format_saver(resource_saver_gd);
 
 #ifdef TOOLS_ENABLED
-    ScriptEditor::register_create_syntax_highlighter_function(GDScriptSyntaxHighlighter::create);
+    ScriptEditor::register_create_syntax_highlighter_function(
+        GDScriptSyntaxHighlighter::create
+    );
     EditorNode::add_init_callback(_editor_init);
 #endif // TOOLS_ENABLED
 }

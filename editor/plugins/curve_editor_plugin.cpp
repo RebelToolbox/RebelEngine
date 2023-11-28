@@ -49,7 +49,8 @@ CurveEditor::CurveEditor() {
     set_clip_contents(true);
 
     _context_menu = memnew(PopupMenu);
-    _context_menu->connect("id_pressed", this, "_on_context_menu_item_selected");
+    _context_menu
+        ->connect("id_pressed", this, "_on_context_menu_item_selected");
     add_child(_context_menu);
 
     _presets_menu = memnew(PopupMenu);
@@ -70,15 +71,25 @@ void CurveEditor::set_curve(Ref<Curve> curve) {
     }
 
     if (_curve_ref.is_valid()) {
-        _curve_ref->disconnect(CoreStringNames::get_singleton()->changed, this, "_curve_changed");
-        _curve_ref->disconnect(Curve::SIGNAL_RANGE_CHANGED, this, "_curve_changed");
+        _curve_ref->disconnect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            "_curve_changed"
+        );
+        _curve_ref
+            ->disconnect(Curve::SIGNAL_RANGE_CHANGED, this, "_curve_changed");
     }
 
     _curve_ref = curve;
 
     if (_curve_ref.is_valid()) {
-        _curve_ref->connect(CoreStringNames::get_singleton()->changed, this, "_curve_changed");
-        _curve_ref->connect(Curve::SIGNAL_RANGE_CHANGED, this, "_curve_changed");
+        _curve_ref->connect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            "_curve_changed"
+        );
+        _curve_ref
+            ->connect(Curve::SIGNAL_RANGE_CHANGED, this, "_curve_changed");
     }
 
     _selected_point = -1;
@@ -101,10 +112,10 @@ void CurveEditor::_notification(int p_what) {
     }
 }
 
-void CurveEditor::on_gui_input(const Ref<InputEvent> &p_event) {
+void CurveEditor::on_gui_input(const Ref<InputEvent>& p_event) {
     Ref<InputEventMouseButton> mb_ref = p_event;
     if (mb_ref.is_valid()) {
-        const InputEventMouseButton &mb = **mb_ref;
+        const InputEventMouseButton& mb = **mb_ref;
 
         if (mb.is_pressed() && !_dragging) {
             Vector2 mpos = mb.get_position();
@@ -130,16 +141,26 @@ void CurveEditor::on_gui_input(const Ref<InputEvent> &p_event) {
             }
         }
 
-        if (!mb.is_pressed() && _dragging && mb.get_button_index() == BUTTON_LEFT) {
+        if (!mb.is_pressed() && _dragging
+            && mb.get_button_index() == BUTTON_LEFT) {
             _dragging = false;
             if (_has_undo_data) {
-                UndoRedo &ur = *EditorNode::get_singleton()->get_undo_redo();
+                UndoRedo& ur = *EditorNode::get_singleton()->get_undo_redo();
 
-                ur.create_action(_selected_tangent == TANGENT_NONE ? TTR("Modify Curve Point") : TTR("Modify Curve Tangent"));
-                ur.add_do_method(*_curve_ref, "_set_data", _curve_ref->get_data());
+                ur.create_action(
+                    _selected_tangent == TANGENT_NONE
+                        ? TTR("Modify Curve Point")
+                        : TTR("Modify Curve Tangent")
+                );
+                ur.add_do_method(
+                    *_curve_ref,
+                    "_set_data",
+                    _curve_ref->get_data()
+                );
                 ur.add_undo_method(*_curve_ref, "_set_data", _undo_data);
-                // Note: this will trigger one more "changed" signal even if nothing changes,
-                // but it's ok since it would have fired every frame during the drag anyways
+                // Note: this will trigger one more "changed" signal even if
+                // nothing changes, but it's ok since it would have fired every
+                // frame during the drag anyways
                 ur.commit_action();
 
                 _has_undo_data = false;
@@ -149,13 +170,13 @@ void CurveEditor::on_gui_input(const Ref<InputEvent> &p_event) {
 
     Ref<InputEventMouseMotion> mm_ref = p_event;
     if (mm_ref.is_valid()) {
-        const InputEventMouseMotion &mm = **mm_ref;
+        const InputEventMouseMotion& mm = **mm_ref;
 
         Vector2 mpos = mm.get_position();
 
         if (_dragging && _curve_ref.is_valid()) {
             if (_selected_point != -1) {
-                Curve &curve = **_curve_ref;
+                Curve& curve = **_curve_ref;
 
                 if (!_has_undo_data) {
                     // Save full curve state before dragging points,
@@ -164,7 +185,8 @@ void CurveEditor::on_gui_input(const Ref<InputEvent> &p_event) {
                     _has_undo_data = true;
                 }
 
-                const float curve_amplitude = curve.get_max_value() - curve.get_min_value();
+                const float curve_amplitude =
+                    curve.get_max_value() - curve.get_min_value();
                 // Snap to "round" coordinates when holding Ctrl.
                 // Be more precise when holding Shift as well.
                 float snap_threshold;
@@ -177,14 +199,20 @@ void CurveEditor::on_gui_input(const Ref<InputEvent> &p_event) {
                 if (_selected_tangent == TANGENT_NONE) {
                     // Drag point
 
-                    Vector2 point_pos = get_world_pos(mpos).snapped(Vector2(snap_threshold, snap_threshold * curve_amplitude));
+                    Vector2 point_pos = get_world_pos(mpos).snapped(Vector2(
+                        snap_threshold,
+                        snap_threshold * curve_amplitude
+                    ));
 
-                    int i = curve.set_point_offset(_selected_point, point_pos.x);
-                    // The index may change if the point is dragged across another one
+                    int i =
+                        curve.set_point_offset(_selected_point, point_pos.x);
+                    // The index may change if the point is dragged across
+                    // another one
                     set_hover_point_index(i);
                     set_selected_point(i);
 
-                    // This is to prevent the user from losing a point out of view.
+                    // This is to prevent the user from losing a point out of
+                    // view.
                     if (point_pos.y < curve.get_min_value()) {
                         point_pos.y = curve.get_min_value();
                     } else if (point_pos.y > curve.get_max_value()) {
@@ -196,8 +224,13 @@ void CurveEditor::on_gui_input(const Ref<InputEvent> &p_event) {
                 } else {
                     // Drag tangent
 
-                    const Vector2 point_pos = curve.get_point_position(_selected_point);
-                    const Vector2 control_pos = get_world_pos(mpos).snapped(Vector2(snap_threshold, snap_threshold * curve_amplitude));
+                    const Vector2 point_pos =
+                        curve.get_point_position(_selected_point);
+                    const Vector2 control_pos =
+                        get_world_pos(mpos).snapped(Vector2(
+                            snap_threshold,
+                            snap_threshold * curve_amplitude
+                        ));
 
                     Vector2 dir = (control_pos - point_pos).normalized();
 
@@ -208,21 +241,34 @@ void CurveEditor::on_gui_input(const Ref<InputEvent> &p_event) {
                         tangent = 9999 * (dir.y >= 0 ? 1 : -1);
                     }
 
-                    bool link = !Input::get_singleton()->is_key_pressed(KEY_SHIFT);
+                    bool link =
+                        !Input::get_singleton()->is_key_pressed(KEY_SHIFT);
 
                     if (_selected_tangent == TANGENT_LEFT) {
                         curve.set_point_left_tangent(_selected_point, tangent);
 
-                        // Note: if a tangent is set to linear, it shouldn't be linked to the other
-                        if (link && _selected_point != (curve.get_point_count() - 1) && curve.get_point_right_mode(_selected_point) != Curve::TANGENT_LINEAR) {
-                            curve.set_point_right_tangent(_selected_point, tangent);
+                        // Note: if a tangent is set to linear, it shouldn't be
+                        // linked to the other
+                        if (link
+                            && _selected_point != (curve.get_point_count() - 1)
+                            && curve.get_point_right_mode(_selected_point)
+                                   != Curve::TANGENT_LINEAR) {
+                            curve.set_point_right_tangent(
+                                _selected_point,
+                                tangent
+                            );
                         }
 
                     } else {
                         curve.set_point_right_tangent(_selected_point, tangent);
 
-                        if (link && _selected_point != 0 && curve.get_point_left_mode(_selected_point) != Curve::TANGENT_LINEAR) {
-                            curve.set_point_left_tangent(_selected_point, tangent);
+                        if (link && _selected_point != 0
+                            && curve.get_point_left_mode(_selected_point)
+                                   != Curve::TANGENT_LINEAR) {
+                            curve.set_point_left_tangent(
+                                _selected_point,
+                                tangent
+                            );
                         }
                     }
                 }
@@ -235,7 +281,7 @@ void CurveEditor::on_gui_input(const Ref<InputEvent> &p_event) {
 
     Ref<InputEventKey> key_ref = p_event;
     if (key_ref.is_valid()) {
-        const InputEventKey &key = **key_ref;
+        const InputEventKey& key = **key_ref;
 
         if (key.is_pressed() && _selected_point != -1) {
             if (key.get_scancode() == KEY_DELETE) {
@@ -249,7 +295,7 @@ void CurveEditor::on_preset_item_selected(int preset_id) {
     ERR_FAIL_COND(preset_id < 0 || preset_id >= PRESET_COUNT);
     ERR_FAIL_COND(_curve_ref.is_null());
 
-    Curve &curve = **_curve_ref;
+    Curve& curve = **_curve_ref;
     Array previous_data = curve.get_data();
 
     curve.clear_points();
@@ -278,11 +324,19 @@ void CurveEditor::on_preset_item_selected(int preset_id) {
 
         case PRESET_EASE_IN:
             curve.add_point(Vector2(0, 0));
-            curve.add_point(Vector2(1, 1), (curve.get_max_value() - curve.get_min_value()) * 1.4, 0);
+            curve.add_point(
+                Vector2(1, 1),
+                (curve.get_max_value() - curve.get_min_value()) * 1.4,
+                0
+            );
             break;
 
         case PRESET_EASE_OUT:
-            curve.add_point(Vector2(0, 0), 0, (curve.get_max_value() - curve.get_min_value()) * 1.4);
+            curve.add_point(
+                Vector2(0, 0),
+                0,
+                (curve.get_max_value() - curve.get_min_value()) * 1.4
+            );
             curve.add_point(Vector2(1, 1));
             break;
 
@@ -295,7 +349,7 @@ void CurveEditor::on_preset_item_selected(int preset_id) {
             break;
     }
 
-    UndoRedo &ur = *EditorNode::get_singleton()->get_undo_redo();
+    UndoRedo& ur = *EditorNode::get_singleton()->get_undo_redo();
     ur.create_action(TTR("Load Curve Preset"));
 
     ur.add_do_method(&curve, "_set_data", curve.get_data());
@@ -352,26 +406,45 @@ void CurveEditor::open_context_menu(Vector2 pos) {
 
                 _context_menu->add_check_item(TTR("Linear"), CONTEXT_LINEAR);
 
-                bool is_linear = _selected_tangent == TANGENT_LEFT
-                        ? _curve_ref->get_point_left_mode(_selected_point) == Curve::TANGENT_LINEAR
-                        : _curve_ref->get_point_right_mode(_selected_point) == Curve::TANGENT_LINEAR;
+                bool is_linear =
+                    _selected_tangent == TANGENT_LEFT
+                        ? _curve_ref->get_point_left_mode(_selected_point)
+                              == Curve::TANGENT_LINEAR
+                        : _curve_ref->get_point_right_mode(_selected_point)
+                              == Curve::TANGENT_LINEAR;
 
-                _context_menu->set_item_checked(_context_menu->get_item_index(CONTEXT_LINEAR), is_linear);
+                _context_menu->set_item_checked(
+                    _context_menu->get_item_index(CONTEXT_LINEAR),
+                    is_linear
+                );
 
             } else {
-                if (_selected_point > 0 || _selected_point + 1 < _curve_ref->get_point_count()) {
+                if (_selected_point > 0
+                    || _selected_point + 1 < _curve_ref->get_point_count()) {
                     _context_menu->add_separator();
                 }
 
                 if (_selected_point > 0) {
-                    _context_menu->add_check_item(TTR("Left Linear"), CONTEXT_LEFT_LINEAR);
-                    _context_menu->set_item_checked(_context_menu->get_item_index(CONTEXT_LEFT_LINEAR),
-                            _curve_ref->get_point_left_mode(_selected_point) == Curve::TANGENT_LINEAR);
+                    _context_menu->add_check_item(
+                        TTR("Left Linear"),
+                        CONTEXT_LEFT_LINEAR
+                    );
+                    _context_menu->set_item_checked(
+                        _context_menu->get_item_index(CONTEXT_LEFT_LINEAR),
+                        _curve_ref->get_point_left_mode(_selected_point)
+                            == Curve::TANGENT_LINEAR
+                    );
                 }
                 if (_selected_point + 1 < _curve_ref->get_point_count()) {
-                    _context_menu->add_check_item(TTR("Right Linear"), CONTEXT_RIGHT_LINEAR);
-                    _context_menu->set_item_checked(_context_menu->get_item_index(CONTEXT_RIGHT_LINEAR),
-                            _curve_ref->get_point_right_mode(_selected_point) == Curve::TANGENT_LINEAR);
+                    _context_menu->add_check_item(
+                        TTR("Right Linear"),
+                        CONTEXT_RIGHT_LINEAR
+                    );
+                    _context_menu->set_item_checked(
+                        _context_menu->get_item_index(CONTEXT_RIGHT_LINEAR),
+                        _curve_ref->get_point_right_mode(_selected_point)
+                            == Curve::TANGENT_LINEAR
+                    );
                 }
             }
         }
@@ -379,7 +452,10 @@ void CurveEditor::open_context_menu(Vector2 pos) {
         _context_menu->add_separator();
     }
 
-    _context_menu->add_submenu_item(TTR("Load Preset"), _presets_menu->get_name());
+    _context_menu->add_submenu_item(
+        TTR("Load Preset"),
+        _presets_menu->get_name()
+    );
 
     _context_menu->set_size(Size2(0, 0));
     _context_menu->popup();
@@ -389,7 +465,7 @@ int CurveEditor::get_point_at(Vector2 pos) const {
     if (_curve_ref.is_null()) {
         return -1;
     }
-    const Curve &curve = **_curve_ref;
+    const Curve& curve = **_curve_ref;
 
     const float true_hover_radius = Math::round(_hover_radius * EDSCALE);
     const float r = true_hover_radius * true_hover_radius;
@@ -410,14 +486,16 @@ CurveEditor::TangentIndex CurveEditor::get_tangent_at(Vector2 pos) const {
     }
 
     if (_selected_point != 0) {
-        Vector2 control_pos = get_tangent_view_pos(_selected_point, TANGENT_LEFT);
+        Vector2 control_pos =
+            get_tangent_view_pos(_selected_point, TANGENT_LEFT);
         if (control_pos.distance_to(pos) < _hover_radius) {
             return TANGENT_LEFT;
         }
     }
 
     if (_selected_point != _curve_ref->get_point_count() - 1) {
-        Vector2 control_pos = get_tangent_view_pos(_selected_point, TANGENT_RIGHT);
+        Vector2 control_pos =
+            get_tangent_view_pos(_selected_point, TANGENT_RIGHT);
         if (control_pos.distance_to(pos) < _hover_radius) {
             return TANGENT_RIGHT;
         }
@@ -429,7 +507,7 @@ CurveEditor::TangentIndex CurveEditor::get_tangent_at(Vector2 pos) const {
 void CurveEditor::add_point(Vector2 pos) {
     ERR_FAIL_COND(_curve_ref.is_null());
 
-    UndoRedo &ur = *EditorNode::get_singleton()->get_undo_redo();
+    UndoRedo& ur = *EditorNode::get_singleton()->get_undo_redo();
     ur.create_action(TTR("Remove Curve Point"));
 
     Vector2 point_pos = get_world_pos(pos);
@@ -452,13 +530,21 @@ void CurveEditor::add_point(Vector2 pos) {
 void CurveEditor::remove_point(int index) {
     ERR_FAIL_COND(_curve_ref.is_null());
 
-    UndoRedo &ur = *EditorNode::get_singleton()->get_undo_redo();
+    UndoRedo& ur = *EditorNode::get_singleton()->get_undo_redo();
     ur.create_action(TTR("Remove Curve Point"));
 
     Curve::Point p = _curve_ref->get_point(index);
 
     ur.add_do_method(*_curve_ref, "remove_point", index);
-    ur.add_undo_method(*_curve_ref, "add_point", p.pos, p.left_tangent, p.right_tangent, p.left_mode, p.right_mode);
+    ur.add_undo_method(
+        *_curve_ref,
+        "add_point",
+        p.pos,
+        p.left_tangent,
+        p.right_tangent,
+        p.left_mode,
+        p.right_mode
+    );
 
     if (index == _selected_point) {
         set_selected_point(-1);
@@ -474,7 +560,7 @@ void CurveEditor::remove_point(int index) {
 void CurveEditor::toggle_linear(TangentIndex tangent) {
     ERR_FAIL_COND(_curve_ref.is_null());
 
-    UndoRedo &ur = *EditorNode::get_singleton()->get_undo_redo();
+    UndoRedo& ur = *EditorNode::get_singleton()->get_undo_redo();
     ur.create_action(TTR("Toggle Curve Linear Tangent"));
 
     if (tangent == TANGENT_NONE) {
@@ -482,22 +568,48 @@ void CurveEditor::toggle_linear(TangentIndex tangent) {
     }
 
     if (tangent == TANGENT_LEFT) {
-        bool is_linear = _curve_ref->get_point_left_mode(_selected_point) == Curve::TANGENT_LINEAR;
+        bool is_linear = _curve_ref->get_point_left_mode(_selected_point)
+                      == Curve::TANGENT_LINEAR;
 
-        Curve::TangentMode prev_mode = _curve_ref->get_point_left_mode(_selected_point);
-        Curve::TangentMode mode = is_linear ? Curve::TANGENT_FREE : Curve::TANGENT_LINEAR;
+        Curve::TangentMode prev_mode =
+            _curve_ref->get_point_left_mode(_selected_point);
+        Curve::TangentMode mode =
+            is_linear ? Curve::TANGENT_FREE : Curve::TANGENT_LINEAR;
 
-        ur.add_do_method(*_curve_ref, "set_point_left_mode", _selected_point, mode);
-        ur.add_undo_method(*_curve_ref, "set_point_left_mode", _selected_point, prev_mode);
+        ur.add_do_method(
+            *_curve_ref,
+            "set_point_left_mode",
+            _selected_point,
+            mode
+        );
+        ur.add_undo_method(
+            *_curve_ref,
+            "set_point_left_mode",
+            _selected_point,
+            prev_mode
+        );
 
     } else {
-        bool is_linear = _curve_ref->get_point_right_mode(_selected_point) == Curve::TANGENT_LINEAR;
+        bool is_linear = _curve_ref->get_point_right_mode(_selected_point)
+                      == Curve::TANGENT_LINEAR;
 
-        Curve::TangentMode prev_mode = _curve_ref->get_point_right_mode(_selected_point);
-        Curve::TangentMode mode = is_linear ? Curve::TANGENT_FREE : Curve::TANGENT_LINEAR;
+        Curve::TangentMode prev_mode =
+            _curve_ref->get_point_right_mode(_selected_point);
+        Curve::TangentMode mode =
+            is_linear ? Curve::TANGENT_FREE : Curve::TANGENT_LINEAR;
 
-        ur.add_do_method(*_curve_ref, "set_point_right_mode", _selected_point, mode);
-        ur.add_undo_method(*_curve_ref, "set_point_right_mode", _selected_point, prev_mode);
+        ur.add_do_method(
+            *_curve_ref,
+            "set_point_right_mode",
+            _selected_point,
+            mode
+        );
+        ur.add_undo_method(
+            *_curve_ref,
+            "set_point_right_mode",
+            _selected_point,
+            prev_mode
+        );
     }
 
     ur.commit_action();
@@ -529,7 +641,8 @@ void CurveEditor::update_view_transform() {
         max_y = _curve_ref->get_max_value();
     }
 
-    const Rect2 world_rect = Rect2(Curve::MIN_X, min_y, Curve::MAX_X, max_y - min_y);
+    const Rect2 world_rect =
+        Rect2(Curve::MIN_X, min_y, Curve::MAX_X, max_y - min_y);
     const Size2 view_margin(margin, margin);
     const Size2 view_size = get_size() - view_margin * 2;
     const Vector2 scale = view_size / world_rect.size;
@@ -555,7 +668,9 @@ Vector2 CurveEditor::get_tangent_view_pos(int i, TangentIndex tangent) const {
     Vector2 point_pos = get_view_pos(_curve_ref->get_point_position(i));
     Vector2 control_pos = get_view_pos(_curve_ref->get_point_position(i) + dir);
 
-    return point_pos + Math::round(_tangents_length * EDSCALE) * (control_pos - point_pos).normalized();
+    return point_pos
+         + Math::round(_tangents_length * EDSCALE)
+               * (control_pos - point_pos).normalized();
 }
 
 Vector2 CurveEditor::get_view_pos(Vector2 world_pos) const {
@@ -568,7 +683,7 @@ Vector2 CurveEditor::get_world_pos(Vector2 view_pos) const {
 
 // Uses non-baked points, but takes advantage of ordered iteration to be faster
 template <typename T>
-static void plot_curve_accurate(const Curve &curve, float step, T plot_func) {
+static void plot_curve_accurate(const Curve& curve, float step, T plot_func) {
     if (curve.get_point_count() <= 1) {
         // Not enough points to make a curve, so it's just a straight line
         float y = curve.interpolate(0);
@@ -576,14 +691,16 @@ static void plot_curve_accurate(const Curve &curve, float step, T plot_func) {
 
     } else {
         Vector2 first_point = curve.get_point_position(0);
-        Vector2 last_point = curve.get_point_position(curve.get_point_count() - 1);
+        Vector2 last_point =
+            curve.get_point_position(curve.get_point_count() - 1);
 
         // Edge lines
         plot_func(Vector2(0, first_point.y), first_point, false);
         plot_func(Vector2(Curve::MAX_X, last_point.y), last_point, false);
 
-        // Draw section by section, so that we get maximum precision near points.
-        // It's an accurate representation, but slower than using the baked one.
+        // Draw section by section, so that we get maximum precision near
+        // points. It's an accurate representation, but slower than using the
+        // baked one.
         for (int i = 1; i < curve.get_point_count(); ++i) {
             Vector2 a = curve.get_point_position(i - 1);
             Vector2 b = curve.get_point_position(i);
@@ -606,14 +723,14 @@ static void plot_curve_accurate(const Curve &curve, float step, T plot_func) {
 }
 
 struct CanvasItemPlotCurve {
-    CanvasItem &ci;
+    CanvasItem& ci;
     Color color1;
     Color color2;
 
-    CanvasItemPlotCurve(CanvasItem &p_ci, Color p_color1, Color p_color2) :
-            ci(p_ci),
-            color1(p_color1),
-            color2(p_color2) {}
+    CanvasItemPlotCurve(CanvasItem& p_ci, Color p_color1, Color p_color2) :
+        ci(p_ci),
+        color1(p_color1),
+        color2(p_color2) {}
 
     void operator()(Vector2 pos0, Vector2 pos1, bool in_definition) {
         // FIXME: Using a line width greater than 1 breaks curve rendering
@@ -625,7 +742,7 @@ void CurveEditor::_draw() {
     if (_curve_ref.is_null()) {
         return;
     }
-    Curve &curve = **_curve_ref;
+    Curve& curve = **_curve_ref;
 
     update_view_transform();
 
@@ -641,10 +758,20 @@ void CurveEditor::_draw() {
     Vector2 min_edge = get_world_pos(Vector2(0, view_size.y));
     Vector2 max_edge = get_world_pos(Vector2(view_size.x, 0));
 
-    const Color grid_color0 = get_color("mono_color", "Editor") * Color(1, 1, 1, 0.15);
-    const Color grid_color1 = get_color("mono_color", "Editor") * Color(1, 1, 1, 0.07);
-    draw_line(Vector2(min_edge.x, curve.get_min_value()), Vector2(max_edge.x, curve.get_min_value()), grid_color0);
-    draw_line(Vector2(max_edge.x, curve.get_max_value()), Vector2(min_edge.x, curve.get_max_value()), grid_color0);
+    const Color grid_color0 =
+        get_color("mono_color", "Editor") * Color(1, 1, 1, 0.15);
+    const Color grid_color1 =
+        get_color("mono_color", "Editor") * Color(1, 1, 1, 0.07);
+    draw_line(
+        Vector2(min_edge.x, curve.get_min_value()),
+        Vector2(max_edge.x, curve.get_min_value()),
+        grid_color0
+    );
+    draw_line(
+        Vector2(max_edge.x, curve.get_max_value()),
+        Vector2(min_edge.x, curve.get_max_value()),
+        grid_color0
+    );
     draw_line(Vector2(0, min_edge.y), Vector2(0, max_edge.y), grid_color0);
     draw_line(Vector2(1, max_edge.y), Vector2(1, min_edge.y), grid_color0);
 
@@ -654,7 +781,8 @@ void CurveEditor::_draw() {
     for (real_t x = 0; x < 1.0; x += grid_step.x) {
         draw_line(Vector2(x, min_edge.y), Vector2(x, max_edge.y), grid_color1);
     }
-    for (real_t y = curve.get_min_value(); y < curve.get_max_value(); y += grid_step.y) {
+    for (real_t y = curve.get_min_value(); y < curve.get_max_value();
+         y += grid_step.y) {
         draw_line(Vector2(min_edge.x, y), Vector2(max_edge.x, y), grid_color1);
     }
 
@@ -671,9 +799,24 @@ void CurveEditor::_draw() {
         float y = curve.get_min_value();
         Vector2 off(0, font_height - 1);
         draw_string(font, get_view_pos(Vector2(0, y)) + off, "0.0", text_color);
-        draw_string(font, get_view_pos(Vector2(0.25, y)) + off, "0.25", text_color);
-        draw_string(font, get_view_pos(Vector2(0.5, y)) + off, "0.5", text_color);
-        draw_string(font, get_view_pos(Vector2(0.75, y)) + off, "0.75", text_color);
+        draw_string(
+            font,
+            get_view_pos(Vector2(0.25, y)) + off,
+            "0.25",
+            text_color
+        );
+        draw_string(
+            font,
+            get_view_pos(Vector2(0.5, y)) + off,
+            "0.5",
+            text_color
+        );
+        draw_string(
+            font,
+            get_view_pos(Vector2(0.75, y)) + off,
+            "0.75",
+            text_color
+        );
         draw_string(font, get_view_pos(Vector2(1, y)) + off, "1.0", text_color);
     }
 
@@ -683,9 +826,24 @@ void CurveEditor::_draw() {
         float m1 = 0.5 * (curve.get_min_value() + curve.get_max_value());
         float m2 = curve.get_max_value();
         Vector2 off(1, -1);
-        draw_string(font, get_view_pos(Vector2(0, m0)) + off, String::num(m0, 2), text_color);
-        draw_string(font, get_view_pos(Vector2(0, m1)) + off, String::num(m1, 2), text_color);
-        draw_string(font, get_view_pos(Vector2(0, m2)) + off, String::num(m2, 3), text_color);
+        draw_string(
+            font,
+            get_view_pos(Vector2(0, m0)) + off,
+            String::num(m0, 2),
+            text_color
+        );
+        draw_string(
+            font,
+            get_view_pos(Vector2(0, m1)) + off,
+            String::num(m1, 2),
+            text_color
+        );
+        draw_string(
+            font,
+            get_view_pos(Vector2(0, m2)) + off,
+            String::num(m2, 3),
+            text_color
+        );
     }
 
     // Draw tangents for current point
@@ -698,14 +856,34 @@ void CurveEditor::_draw() {
 
         if (i != 0) {
             Vector2 control_pos = get_tangent_view_pos(i, TANGENT_LEFT);
-            draw_line(get_view_pos(pos), control_pos, tangent_color, Math::round(EDSCALE), true);
-            draw_rect(Rect2(control_pos, Vector2(1, 1)).grow(Math::round(2 * EDSCALE)), tangent_color);
+            draw_line(
+                get_view_pos(pos),
+                control_pos,
+                tangent_color,
+                Math::round(EDSCALE),
+                true
+            );
+            draw_rect(
+                Rect2(control_pos, Vector2(1, 1))
+                    .grow(Math::round(2 * EDSCALE)),
+                tangent_color
+            );
         }
 
         if (i != curve.get_point_count() - 1) {
             Vector2 control_pos = get_tangent_view_pos(i, TANGENT_RIGHT);
-            draw_line(get_view_pos(pos), control_pos, tangent_color, Math::round(EDSCALE), true);
-            draw_rect(Rect2(control_pos, Vector2(1, 1)).grow(Math::round(2 * EDSCALE)), tangent_color);
+            draw_line(
+                get_view_pos(pos),
+                control_pos,
+                tangent_color,
+                Math::round(EDSCALE),
+                true
+            );
+            draw_rect(
+                Rect2(control_pos, Vector2(1, 1))
+                    .grow(Math::round(2 * EDSCALE)),
+                tangent_color
+            );
         }
     }
 
@@ -728,9 +906,13 @@ void CurveEditor::_draw() {
 
     for (int i = 0; i < curve.get_point_count(); ++i) {
         Vector2 pos = curve.get_point_position(i);
-        draw_rect(Rect2(get_view_pos(pos), Vector2(1, 1)).grow(Math::round(3 * EDSCALE)), i == _selected_point ? selected_point_color : point_color);
+        draw_rect(
+            Rect2(get_view_pos(pos), Vector2(1, 1))
+                .grow(Math::round(3 * EDSCALE)),
+            i == _selected_point ? selected_point_color : point_color
+        );
         // TODO Circles are prettier. Needs a fix! Or a texture
-        //draw_circle(pos, 2, point_color);
+        // draw_circle(pos, 2, point_color);
     }
 
     // Hover
@@ -738,69 +920,105 @@ void CurveEditor::_draw() {
     if (_hover_point != -1) {
         const Color hover_color = line_color;
         Vector2 pos = curve.get_point_position(_hover_point);
-        draw_rect(Rect2(get_view_pos(pos), Vector2(1, 1)).grow(Math::round(_hover_radius * EDSCALE)), hover_color, false, Math::round(EDSCALE));
+        draw_rect(
+            Rect2(get_view_pos(pos), Vector2(1, 1))
+                .grow(Math::round(_hover_radius * EDSCALE)),
+            hover_color,
+            false,
+            Math::round(EDSCALE)
+        );
     }
 
     // Help text
 
     if (_selected_point > 0 && _selected_point + 1 < curve.get_point_count()) {
         text_color.a *= 0.4;
-        draw_string(font, Vector2(50 * EDSCALE, font_height), TTR("Hold Shift to edit tangents individually"), text_color);
+        draw_string(
+            font,
+            Vector2(50 * EDSCALE, font_height),
+            TTR("Hold Shift to edit tangents individually"),
+            text_color
+        );
     } else if (curve.get_point_count() == 0) {
         text_color.a *= 0.4;
-        draw_string(font, Vector2(50 * EDSCALE, font_height), TTR("Right click to add point"), text_color);
+        draw_string(
+            font,
+            Vector2(50 * EDSCALE, font_height),
+            TTR("Right click to add point"),
+            text_color
+        );
     }
 }
 
 void CurveEditor::_bind_methods() {
     ClassDB::bind_method(D_METHOD("_gui_input"), &CurveEditor::on_gui_input);
-    ClassDB::bind_method(D_METHOD("_on_preset_item_selected"), &CurveEditor::on_preset_item_selected);
-    ClassDB::bind_method(D_METHOD("_curve_changed"), &CurveEditor::_curve_changed);
-    ClassDB::bind_method(D_METHOD("_on_context_menu_item_selected"), &CurveEditor::on_context_menu_item_selected);
+    ClassDB::bind_method(
+        D_METHOD("_on_preset_item_selected"),
+        &CurveEditor::on_preset_item_selected
+    );
+    ClassDB::bind_method(
+        D_METHOD("_curve_changed"),
+        &CurveEditor::_curve_changed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_on_context_menu_item_selected"),
+        &CurveEditor::on_context_menu_item_selected
+    );
 }
 
 //---------------
 
-bool EditorInspectorPluginCurve::can_handle(Object *p_object) {
+bool EditorInspectorPluginCurve::can_handle(Object* p_object) {
     return Object::cast_to<Curve>(p_object) != nullptr;
 }
 
-void EditorInspectorPluginCurve::parse_begin(Object *p_object) {
-    Curve *curve = Object::cast_to<Curve>(p_object);
+void EditorInspectorPluginCurve::parse_begin(Object* p_object) {
+    Curve* curve = Object::cast_to<Curve>(p_object);
     ERR_FAIL_COND(!curve);
     Ref<Curve> c(curve);
 
-    CurveEditor *editor = memnew(CurveEditor);
+    CurveEditor* editor = memnew(CurveEditor);
     editor->set_curve(curve);
     add_custom_control(editor);
 }
 
-CurveEditorPlugin::CurveEditorPlugin(EditorNode *p_node) {
+CurveEditorPlugin::CurveEditorPlugin(EditorNode* p_node) {
     Ref<EditorInspectorPluginCurve> curve_plugin;
     curve_plugin.instance();
     EditorInspector::add_inspector_plugin(curve_plugin);
 
-    get_editor_interface()->get_resource_previewer()->add_preview_generator(memnew(CurvePreviewGenerator));
+    get_editor_interface()->get_resource_previewer()->add_preview_generator(
+        memnew(CurvePreviewGenerator)
+    );
 }
 
 //-----------------------------------
 // Preview generator
 
-bool CurvePreviewGenerator::handles(const String &p_type) const {
+bool CurvePreviewGenerator::handles(const String& p_type) const {
     return p_type == "Curve";
 }
 
-Ref<Texture> CurvePreviewGenerator::generate(const Ref<Resource> &p_from, const Size2 &p_size) const {
+Ref<Texture> CurvePreviewGenerator::generate(
+    const Ref<Resource>& p_from,
+    const Size2& p_size
+) const {
     Ref<Curve> curve_ref = p_from;
-    ERR_FAIL_COND_V_MSG(curve_ref.is_null(), Ref<Texture>(), "It's not a reference to a valid Resource object.");
-    Curve &curve = **curve_ref;
+    ERR_FAIL_COND_V_MSG(
+        curve_ref.is_null(),
+        Ref<Texture>(),
+        "It's not a reference to a valid Resource object."
+    );
+    Curve& curve = **curve_ref;
 
     // FIXME: Should be ported to use p_size as done in b2633a97
-    int thumbnail_size = EditorSettings::get_singleton()->get("filesystem/file_dialog/thumbnail_size");
+    int thumbnail_size = EditorSettings::get_singleton()->get(
+        "filesystem/file_dialog/thumbnail_size"
+    );
     thumbnail_size *= EDSCALE;
     Ref<Image> img_ref;
     img_ref.instance();
-    Image &im = **img_ref;
+    Image& im = **img_ref;
 
     im.create(thumbnail_size, thumbnail_size / 2, false, Image::FORMAT_RGBA8);
 
@@ -819,15 +1037,18 @@ Ref<Texture> CurvePreviewGenerator::generate(const Ref<Resource> &p_from, const 
     int prev_y = 0;
     for (int x = 0; x < im.get_width(); ++x) {
         float t = static_cast<float>(x) / im.get_width();
-        float v = (curve.interpolate_baked(t) - curve.get_min_value()) / range_y;
-        int y = CLAMP(im.get_height() - v * im.get_height(), 0, im.get_height());
+        float v =
+            (curve.interpolate_baked(t) - curve.get_min_value()) / range_y;
+        int y =
+            CLAMP(im.get_height() - v * im.get_height(), 0, im.get_height());
 
         // Plot point
         if (y >= 0 && y < im.get_height()) {
             im.set_pixel(x, y, line_color);
         }
 
-        // Plot vertical line to fix discontinuity (not 100% correct but enough for a preview)
+        // Plot vertical line to fix discontinuity (not 100% correct but enough
+        // for a preview)
         if (x != 0 && Math::abs(y - prev_y) > 1) {
             int y0, y1;
             if (y < prev_y) {

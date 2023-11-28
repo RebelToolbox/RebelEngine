@@ -38,16 +38,20 @@ class DTLSServer : public Reference {
     GDCLASS(DTLSServer, Reference);
 
 protected:
-    static DTLSServer *(*_create)();
+    static DTLSServer* (*_create)();
     static void _bind_methods();
 
     static bool available;
 
 public:
     static bool is_available();
-    static DTLSServer *create();
+    static DTLSServer* create();
 
-    virtual Error setup(Ref<CryptoKey> p_key, Ref<X509Certificate> p_cert, Ref<X509Certificate> p_ca_chain = Ref<X509Certificate>()) = 0;
+    virtual Error setup(
+        Ref<CryptoKey> p_key,
+        Ref<X509Certificate> p_cert,
+        Ref<X509Certificate> p_ca_chain = Ref<X509Certificate>()
+    ) = 0;
     virtual void stop() = 0;
     virtual Ref<PacketPeerDTLS> take_connection(Ref<PacketPeerUDP> p_peer) = 0;
 

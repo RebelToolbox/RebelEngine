@@ -31,15 +31,40 @@
 #include "udp_server.h"
 
 void UDPServer::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("listen", "port", "bind_address"), &UDPServer::listen, DEFVAL("*"));
+    ClassDB::bind_method(
+        D_METHOD("listen", "port", "bind_address"),
+        &UDPServer::listen,
+        DEFVAL("*")
+    );
     ClassDB::bind_method(D_METHOD("poll"), &UDPServer::poll);
-    ClassDB::bind_method(D_METHOD("is_connection_available"), &UDPServer::is_connection_available);
+    ClassDB::bind_method(
+        D_METHOD("is_connection_available"),
+        &UDPServer::is_connection_available
+    );
     ClassDB::bind_method(D_METHOD("is_listening"), &UDPServer::is_listening);
-    ClassDB::bind_method(D_METHOD("take_connection"), &UDPServer::take_connection);
+    ClassDB::bind_method(
+        D_METHOD("take_connection"),
+        &UDPServer::take_connection
+    );
     ClassDB::bind_method(D_METHOD("stop"), &UDPServer::stop);
-    ClassDB::bind_method(D_METHOD("set_max_pending_connections", "max_pending_connections"), &UDPServer::set_max_pending_connections);
-    ClassDB::bind_method(D_METHOD("get_max_pending_connections"), &UDPServer::get_max_pending_connections);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "max_pending_connections", PROPERTY_HINT_RANGE, "0,256,1"), "set_max_pending_connections", "get_max_pending_connections");
+    ClassDB::bind_method(
+        D_METHOD("set_max_pending_connections", "max_pending_connections"),
+        &UDPServer::set_max_pending_connections
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_max_pending_connections"),
+        &UDPServer::get_max_pending_connections
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "max_pending_connections",
+            PROPERTY_HINT_RANGE,
+            "0,256,1"
+        ),
+        "set_max_pending_connections",
+        "get_max_pending_connections"
+    );
 }
 
 Error UDPServer::poll() {
@@ -62,7 +87,7 @@ Error UDPServer::poll() {
         Peer p;
         p.ip = ip;
         p.port = port;
-        List<Peer>::Element *E = peers.find(p);
+        List<Peer>::Element* E = peers.find(p);
         if (!E) {
             E = pending.find(p);
         }
@@ -86,10 +111,13 @@ Error UDPServer::poll() {
     return OK;
 }
 
-Error UDPServer::listen(uint16_t p_port, const IP_Address &p_bind_address) {
+Error UDPServer::listen(uint16_t p_port, const IP_Address& p_bind_address) {
     ERR_FAIL_COND_V(!_sock.is_valid(), ERR_UNAVAILABLE);
     ERR_FAIL_COND_V(_sock->is_open(), ERR_ALREADY_IN_USE);
-    ERR_FAIL_COND_V(!p_bind_address.is_valid() && !p_bind_address.is_wildcard(), ERR_INVALID_PARAMETER);
+    ERR_FAIL_COND_V(
+        !p_bind_address.is_valid() && !p_bind_address.is_wildcard(),
+        ERR_INVALID_PARAMETER
+    );
 
     Error err;
     IP::Type ip_type = IP::TYPE_ANY;
@@ -134,10 +162,14 @@ bool UDPServer::is_connection_available() const {
 }
 
 void UDPServer::set_max_pending_connections(int p_max) {
-    ERR_FAIL_COND_MSG(p_max < 0, "Max pending connections value must be a positive number (0 means refuse new connections).");
+    ERR_FAIL_COND_MSG(
+        p_max < 0,
+        "Max pending connections value must be a positive number (0 means "
+        "refuse new connections)."
+    );
     max_pending_connections = p_max;
     while (p_max > pending.size()) {
-        List<Peer>::Element *E = pending.back();
+        List<Peer>::Element* E = pending.back();
         if (!E) {
             break;
         }
@@ -166,7 +198,7 @@ void UDPServer::remove_peer(IP_Address p_ip, int p_port) {
     Peer peer;
     peer.ip = p_ip;
     peer.port = p_port;
-    List<Peer>::Element *E = peers.find(peer);
+    List<Peer>::Element* E = peers.find(peer);
     if (E) {
         peers.erase(E);
     }
@@ -178,7 +210,7 @@ void UDPServer::stop() {
     }
     bind_port = 0;
     bind_address = IP_Address();
-    List<Peer>::Element *E = peers.front();
+    List<Peer>::Element* E = peers.front();
     while (E) {
         E->get().peer->disconnect_shared_socket();
         E = E->next();
@@ -193,9 +225,7 @@ void UDPServer::stop() {
     pending.clear();
 }
 
-UDPServer::UDPServer() :
-        _sock(Ref<NetSocket>(NetSocket::create())) {
-}
+UDPServer::UDPServer() : _sock(Ref<NetSocket>(NetSocket::create())) {}
 
 UDPServer::~UDPServer() {
     stop();

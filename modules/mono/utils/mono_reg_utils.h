@@ -43,7 +43,8 @@ struct MonoRegInfo {
     String bin_dir;
 };
 
-namespace MonoRegUtils {
+namespace MonoRegUtils
+{
 
 MonoRegInfo find_mono();
 String find_msbuild_tools_path();

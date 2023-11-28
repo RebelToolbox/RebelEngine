@@ -50,10 +50,12 @@ class BakedLightmapData : public Resource {
 
     struct User {
         NodePath path;
+
         struct {
             Ref<Texture> single;
             Ref<TextureLayered> layered;
         } lightmap;
+
         int lightmap_slice;
         Rect2 lightmap_uv_rect;
         int instance_index;
@@ -61,20 +63,20 @@ class BakedLightmapData : public Resource {
 
     Vector<User> users;
 
-    void _set_user_data(const Array &p_data);
+    void _set_user_data(const Array& p_data);
     Array _get_user_data() const;
 
 protected:
     static void _bind_methods();
 
 public:
-    void set_bounds(const AABB &p_bounds);
+    void set_bounds(const AABB& p_bounds);
     AABB get_bounds() const;
 
-    void set_octree(const PoolVector<uint8_t> &p_octree);
+    void set_octree(const PoolVector<uint8_t>& p_octree);
     PoolVector<uint8_t> get_octree() const;
 
-    void set_cell_space_transform(const Transform &p_xform);
+    void set_cell_space_transform(const Transform& p_xform);
     Transform get_cell_space_transform() const;
 
     void set_cell_subdiv(int p_cell_subdiv);
@@ -86,7 +88,13 @@ public:
     void set_interior(bool p_interior);
     bool is_interior() const;
 
-    void add_user(const NodePath &p_path, const Ref<Resource> &p_lightmap, int p_lightmap_slice, const Rect2 &p_lightmap_uv_rect, int p_instance);
+    void add_user(
+        const NodePath& p_path,
+        const Ref<Resource>& p_lightmap,
+        int p_lightmap_slice,
+        const Rect2& p_lightmap_uv_rect,
+        int p_instance
+    );
     int get_user_count() const;
     NodePath get_user_path(int p_user) const;
     Ref<Resource> get_user_lightmap(int p_user) const;
@@ -133,14 +141,14 @@ public:
 
     struct BakeStepUD {
         Lightmapper::BakeStepFunc func;
-        void *ud;
+        void* ud;
         float from_percent;
         float to_percent;
     };
 
     struct LightsFound {
         Transform xform;
-        Light *light;
+        Light* light;
     };
 
     struct MeshesFound {
@@ -186,18 +194,36 @@ private:
     void _assign_lightmaps();
     void _clear_lightmaps();
 
-    void _get_material_images(const MeshesFound &p_found_mesh, Lightmapper::MeshData &r_mesh_data, Vector<Ref<Texture>> &r_albedo_textures, Vector<Ref<Texture>> &r_emission_textures);
-    Ref<Image> _get_irradiance_from_sky(Ref<Sky> p_sky, float p_energy, Vector2i p_size);
+    void _get_material_images(
+        const MeshesFound& p_found_mesh,
+        Lightmapper::MeshData& r_mesh_data,
+        Vector<Ref<Texture>>& r_albedo_textures,
+        Vector<Ref<Texture>>& r_emission_textures
+    );
+    Ref<Image> _get_irradiance_from_sky(
+        Ref<Sky> p_sky,
+        float p_energy,
+        Vector2i p_size
+    );
     Ref<Image> _get_irradiance_map(Ref<Environment> p_env, Vector2i p_size);
-    void _find_meshes_and_lights(Node *p_at_node, Vector<MeshesFound> &meshes, Vector<LightsFound> &lights);
-    Vector2i _compute_lightmap_size(const MeshesFound &p_mesh);
+    void _find_meshes_and_lights(
+        Node* p_at_node,
+        Vector<MeshesFound>& meshes,
+        Vector<LightsFound>& lights
+    );
+    Vector2i _compute_lightmap_size(const MeshesFound& p_mesh);
 
-    static bool _lightmap_bake_step_function(float p_completion, const String &p_text, void *ud, bool p_refresh);
-    void _save_image(String &r_base_path, Ref<Image> p_img, bool p_use_srgb);
+    static bool _lightmap_bake_step_function(
+        float p_completion,
+        const String& p_text,
+        void* ud,
+        bool p_refresh
+    );
+    void _save_image(String& r_base_path, Ref<Image> p_img, bool p_use_srgb);
 
 protected:
     static void _bind_methods();
-    void _validate_property(PropertyInfo &property) const;
+    void _validate_property(PropertyInfo& property) const;
     void _notification(int p_what);
 
 public:
@@ -205,16 +231,16 @@ public:
     static Lightmapper::BakeStepFunc bake_substep_function;
     static Lightmapper::BakeEndFunc bake_end_function;
 
-    void set_light_data(const Ref<BakedLightmapData> &p_data);
+    void set_light_data(const Ref<BakedLightmapData>& p_data);
     Ref<BakedLightmapData> get_light_data() const;
 
     void set_capture_cell_size(float p_cell_size);
     float get_capture_cell_size() const;
 
-    void set_extents(const Vector3 &p_extents);
+    void set_extents(const Vector3& p_extents);
     Vector3 get_extents() const;
 
-    void set_default_texels_per_unit(const float &p_extents);
+    void set_default_texels_per_unit(const float& p_extents);
     float get_default_texels_per_unit() const;
 
     void set_capture_propagation(float p_propagation);
@@ -235,19 +261,19 @@ public:
     void set_capture_enabled(bool p_enable);
     bool get_capture_enabled() const;
 
-    void set_image_path(const String &p_path);
+    void set_image_path(const String& p_path);
     String get_image_path() const;
 
     void set_environment_mode(EnvironmentMode p_mode);
     EnvironmentMode get_environment_mode() const;
 
-    void set_environment_custom_sky(const Ref<Sky> &p_sky);
+    void set_environment_custom_sky(const Ref<Sky>& p_sky);
     Ref<Sky> get_environment_custom_sky() const;
 
-    void set_environment_custom_sky_rotation_degrees(const Vector3 &p_rotation);
+    void set_environment_custom_sky_rotation_degrees(const Vector3& p_rotation);
     Vector3 get_environment_custom_sky_rotation_degrees() const;
 
-    void set_environment_custom_color(const Color &p_color);
+    void set_environment_custom_color(const Color& p_color);
     Color get_environment_custom_color() const;
 
     void set_environment_custom_energy(float p_energy);
@@ -277,7 +303,7 @@ public:
     AABB get_aabb() const;
     PoolVector<Face3> get_faces(uint32_t p_usage_flags) const;
 
-    BakeError bake(Node *p_from_node, String p_data_save_path = "");
+    BakeError bake(Node* p_from_node, String p_data_save_path = "");
     BakedLightmap();
 };
 

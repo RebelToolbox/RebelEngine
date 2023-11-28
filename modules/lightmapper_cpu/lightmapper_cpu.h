@@ -100,7 +100,7 @@ class LightmapperCPU : public Lightmapper {
         Vector3 normal[2];
         Vector2 uv[2];
 
-        _FORCE_INLINE_ bool operator<(const SeamEdge &p_edge) const {
+        _FORCE_INLINE_ bool operator<(const SeamEdge& p_edge) const {
             return pos[0].x < p_edge.pos[0].x;
         }
     };
@@ -113,13 +113,13 @@ class LightmapperCPU : public Lightmapper {
 
     struct ThreadData;
 
-    typedef void (LightmapperCPU::*BakeThreadFunc)(uint32_t, void *);
+    typedef void (LightmapperCPU::*BakeThreadFunc)(uint32_t, void*);
 
     struct ThreadData {
-        LightmapperCPU *instance;
+        LightmapperCPU* instance;
         uint32_t count;
         BakeThreadFunc thread_func;
-        void *userdata;
+        void* userdata;
     };
 
     BakeParams parameters;
@@ -140,40 +140,145 @@ class LightmapperCPU : public Lightmapper {
 
     Ref<LightmapRaycaster> raycaster;
 
-    Error _layout_atlas(int p_max_size, Vector2i *r_atlas_size, int *r_atlas_slices);
+    Error _layout_atlas(
+        int p_max_size,
+        Vector2i* r_atlas_size,
+        int* r_atlas_slices
+    );
 
-    static void _thread_func_callback(void *p_thread_data);
-    void _thread_func_wrapper(uint32_t p_idx, ThreadData *p_thread_data);
-    bool _parallel_run(int p_count, const String &p_description, BakeThreadFunc p_thread_func, void *p_userdata, BakeStepFunc p_substep_func = nullptr);
+    static void _thread_func_callback(void* p_thread_data);
+    void _thread_func_wrapper(uint32_t p_idx, ThreadData* p_thread_data);
+    bool _parallel_run(
+        int p_count,
+        const String& p_description,
+        BakeThreadFunc p_thread_func,
+        void* p_userdata,
+        BakeStepFunc p_substep_func = nullptr
+    );
 
-    void _generate_buffer(uint32_t p_idx, void *p_unused);
-    Ref<Image> _init_bake_texture(const MeshData::TextureDef &p_texture_def, const Map<RID, Ref<Image>> &p_tex_cache, Image::Format p_default_format);
-    Color _bilinear_sample(const Ref<Image> &p_img, const Vector2 &p_uv, bool p_clamp_x = false, bool p_clamp_y = false);
-    Vector3 _fix_sample_position(const Vector3 &p_position, const Vector3 &p_texel_center, const Vector3 &p_normal, const Vector3 &p_tangent, const Vector3 &p_bitangent, const Vector2 &p_texel_size);
-    void _plot_triangle(const Vector2 *p_vertices, const Vector3 *p_positions, const Vector3 *p_normals, const Vector2 *p_uvs, const Ref<Image> &p_albedo_texture, const Ref<Image> &p_emission_texture, Vector2i p_size, LocalVector<LightmapTexel> &r_texels, LocalVector<int> &r_lightmap_indices);
+    void _generate_buffer(uint32_t p_idx, void* p_unused);
+    Ref<Image> _init_bake_texture(
+        const MeshData::TextureDef& p_texture_def,
+        const Map<RID, Ref<Image>>& p_tex_cache,
+        Image::Format p_default_format
+    );
+    Color _bilinear_sample(
+        const Ref<Image>& p_img,
+        const Vector2& p_uv,
+        bool p_clamp_x = false,
+        bool p_clamp_y = false
+    );
+    Vector3 _fix_sample_position(
+        const Vector3& p_position,
+        const Vector3& p_texel_center,
+        const Vector3& p_normal,
+        const Vector3& p_tangent,
+        const Vector3& p_bitangent,
+        const Vector2& p_texel_size
+    );
+    void _plot_triangle(
+        const Vector2* p_vertices,
+        const Vector3* p_positions,
+        const Vector3* p_normals,
+        const Vector2* p_uvs,
+        const Ref<Image>& p_albedo_texture,
+        const Ref<Image>& p_emission_texture,
+        Vector2i p_size,
+        LocalVector<LightmapTexel>& r_texels,
+        LocalVector<int>& r_lightmap_indices
+    );
 
-    float _get_omni_attenuation(float distance, float inv_range, float decay) const;
+    float _get_omni_attenuation(float distance, float inv_range, float decay)
+        const;
 
-    void _compute_direct_light(uint32_t p_idx, void *r_lightmap);
+    void _compute_direct_light(uint32_t p_idx, void* r_lightmap);
 
-    void _compute_indirect_light(uint32_t p_idx, void *r_lightmap);
+    void _compute_indirect_light(uint32_t p_idx, void* r_lightmap);
 
-    void _post_process(uint32_t p_idx, void *r_output);
-    void _compute_seams(const MeshInstance &p_mesh, LocalVector<UVSeam> &r_seams);
-    void _fix_seams(const LocalVector<UVSeam> &p_seams, Vector3 *r_lightmap, Vector2i p_size);
-    void _fix_seam(const Vector2 &p_pos0, const Vector2 &p_pos1, const Vector2 &p_uv0, const Vector2 &p_uv1, const Vector3 *p_read_buffer, Vector3 *r_write_buffer, const Vector2i &p_size);
-    void _dilate_lightmap(Vector3 *r_lightmap, const LocalVector<int> p_indices, Vector2i p_size, int margin);
+    void _post_process(uint32_t p_idx, void* r_output);
+    void _compute_seams(
+        const MeshInstance& p_mesh,
+        LocalVector<UVSeam>& r_seams
+    );
+    void _fix_seams(
+        const LocalVector<UVSeam>& p_seams,
+        Vector3* r_lightmap,
+        Vector2i p_size
+    );
+    void _fix_seam(
+        const Vector2& p_pos0,
+        const Vector2& p_pos1,
+        const Vector2& p_uv0,
+        const Vector2& p_uv1,
+        const Vector3* p_read_buffer,
+        Vector3* r_write_buffer,
+        const Vector2i& p_size
+    );
+    void _dilate_lightmap(
+        Vector3* r_lightmap,
+        const LocalVector<int> p_indices,
+        Vector2i p_size,
+        int margin
+    );
 
-    void _blit_lightmap(const Vector<Vector3> &p_src, const Vector2i &p_size, Ref<Image> &p_dst, int p_x, int p_y, bool p_with_padding);
+    void _blit_lightmap(
+        const Vector<Vector3>& p_src,
+        const Vector2i& p_size,
+        Ref<Image>& p_dst,
+        int p_x,
+        int p_y,
+        bool p_with_padding
+    );
 
 public:
     virtual void add_albedo_texture(Ref<Texture> p_texture);
     virtual void add_emission_texture(Ref<Texture> p_texture);
-    virtual void add_mesh(const MeshData &p_mesh, Vector2i p_size);
-    virtual void add_directional_light(bool p_bake_direct, const Vector3 &p_direction, const Color &p_color, float p_energy, float p_indirect_multiplier, float p_size);
-    virtual void add_omni_light(bool p_bake_direct, const Vector3 &p_position, const Color &p_color, float p_energy, float p_indirect_multiplier, float p_range, float p_attenuation, float p_size);
-    virtual void add_spot_light(bool p_bake_direct, const Vector3 &p_position, const Vector3 p_direction, const Color &p_color, float p_energy, float p_indirect_multiplier, float p_range, float p_attenuation, float p_spot_angle, float p_spot_attenuation, float p_size);
-    virtual BakeError bake(BakeQuality p_quality, bool p_use_denoiser, int p_bounces, float p_bounce_energy, float p_bias, bool p_generate_atlas, int p_max_texture_size, const Ref<Image> &p_environment_panorama, const Basis &p_environment_transform, BakeStepFunc p_step_function = nullptr, void *p_bake_userdata = nullptr, BakeStepFunc p_substep_function = nullptr);
+    virtual void add_mesh(const MeshData& p_mesh, Vector2i p_size);
+    virtual void add_directional_light(
+        bool p_bake_direct,
+        const Vector3& p_direction,
+        const Color& p_color,
+        float p_energy,
+        float p_indirect_multiplier,
+        float p_size
+    );
+    virtual void add_omni_light(
+        bool p_bake_direct,
+        const Vector3& p_position,
+        const Color& p_color,
+        float p_energy,
+        float p_indirect_multiplier,
+        float p_range,
+        float p_attenuation,
+        float p_size
+    );
+    virtual void add_spot_light(
+        bool p_bake_direct,
+        const Vector3& p_position,
+        const Vector3 p_direction,
+        const Color& p_color,
+        float p_energy,
+        float p_indirect_multiplier,
+        float p_range,
+        float p_attenuation,
+        float p_spot_angle,
+        float p_spot_attenuation,
+        float p_size
+    );
+    virtual BakeError bake(
+        BakeQuality p_quality,
+        bool p_use_denoiser,
+        int p_bounces,
+        float p_bounce_energy,
+        float p_bias,
+        bool p_generate_atlas,
+        int p_max_texture_size,
+        const Ref<Image>& p_environment_panorama,
+        const Basis& p_environment_transform,
+        BakeStepFunc p_step_function = nullptr,
+        void* p_bake_userdata = nullptr,
+        BakeStepFunc p_substep_function = nullptr
+    );
 
     int get_bake_texture_count() const;
     Ref<Image> get_bake_texture(int p_index) const;

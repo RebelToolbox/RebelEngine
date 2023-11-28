@@ -47,28 +47,43 @@
 class ImportUtils {
 public:
     ///	Convert a vector from degrees to radians.
-    static Vector3 deg2rad(const Vector3 &p_rotation);
+    static Vector3 deg2rad(const Vector3& p_rotation);
 
     ///	Convert a vector from radians to degrees.
-    static Vector3 rad2deg(const Vector3 &p_rotation);
+    static Vector3 rad2deg(const Vector3& p_rotation);
 
     /// Converts rotation order vector (in rad) to quaternion.
-    static Basis EulerToBasis(FBXDocParser::Model::RotOrder mode, const Vector3 &p_rotation);
+    static Basis EulerToBasis(
+        FBXDocParser::Model::RotOrder mode,
+        const Vector3& p_rotation
+    );
 
     /// Converts rotation order vector (in rad) to quaternion.
-    static Quat EulerToQuaternion(FBXDocParser::Model::RotOrder mode, const Vector3 &p_rotation);
+    static Quat EulerToQuaternion(
+        FBXDocParser::Model::RotOrder mode,
+        const Vector3& p_rotation
+    );
 
     /// Converts basis into rotation order vector (in rad).
-    static Vector3 BasisToEuler(FBXDocParser::Model::RotOrder mode, const Basis &p_rotation);
+    static Vector3 BasisToEuler(
+        FBXDocParser::Model::RotOrder mode,
+        const Basis& p_rotation
+    );
 
     /// Converts quaternion into rotation order vector (in rad).
-    static Vector3 QuaternionToEuler(FBXDocParser::Model::RotOrder mode, const Quat &p_rotation);
+    static Vector3 QuaternionToEuler(
+        FBXDocParser::Model::RotOrder mode,
+        const Quat& p_rotation
+    );
 
-    static void debug_xform(String name, const Transform &t) {
-        print_verbose(name + " " + t.origin + " rotation: " + (t.basis.get_euler() * (180 / Math_PI)));
+    static void debug_xform(String name, const Transform& t) {
+        print_verbose(
+            name + " " + t.origin
+            + " rotation: " + (t.basis.get_euler() * (180 / Math_PI))
+        );
     }
 
-    static String FBXNodeToName(const std::string &name) {
+    static String FBXNodeToName(const std::string& name) {
         // strip Model:: prefix, avoiding ambiguities (i.e. don't strip if
         // this causes ambiguities, well possible between empty identifiers,
         // such as "Model::" and ""). Make sure the behaviour is consistent
@@ -125,7 +140,7 @@ public:
         return node_name.replace(":", "");
     }
 
-    static std::string FBXAnimMeshName(const std::string &name) {
+    static std::string FBXAnimMeshName(const std::string& name) {
         if (name.length()) {
             size_t indexOf = name.find_first_of("::");
             if (indexOf != std::string::npos && indexOf < name.size() - 2) {
@@ -135,7 +150,7 @@ public:
         return name.length() ? name : "AnimMesh";
     }
 
-    static Vector3 safe_import_vector3(const Vector3 &p_vec) {
+    static Vector3 safe_import_vector3(const Vector3& p_vec) {
         Vector3 vector = p_vec;
         if (Math::is_equal_approx(0, vector.x)) {
             vector.x = 0;
@@ -151,15 +166,16 @@ public:
         return vector;
     }
 
-    static void debug_xform(String name, const Basis &t) {
-        //print_verbose(name + " rotation: " + (t.get_euler() * (180 / Math_PI)));
+    static void debug_xform(String name, const Basis& t) {
+        // print_verbose(name + " rotation: " + (t.get_euler() * (180 /
+        // Math_PI)));
     }
 
     static Vector3 FixAxisConversions(Vector3 input) {
         return Vector3(input.x, input.y, input.z);
     }
 
-    static void AlignMeshAxes(std::vector<Vector3> &vertex_data) {
+    static void AlignMeshAxes(std::vector<Vector3>& vertex_data) {
         for (size_t x = 0; x < vertex_data.size(); x++) {
             vertex_data[x] = FixAxisConversions(vertex_data[x]);
         }
@@ -184,11 +200,13 @@ public:
             TIME_MODE_CUSTOM = 14,
             TIME_MODE_TIME_MODE_COUNT = 15
         };
+
         enum UpAxis {
             UP_VECTOR_AXIS_X = 1,
             UP_VECTOR_AXIS_Y = 2,
             UP_VECTOR_AXIS_Z = 3
         };
+
         enum FrontAxis {
             FRONT_PARITY_EVEN = 1,
             FRONT_PARITY_ODD = 2,
@@ -238,7 +256,8 @@ public:
         return 0;
     }
 
-    static float get_fbx_fps(const FBXDocParser::FileGlobalSettings *FBXSettings) {
+    static float get_fbx_fps(const FBXDocParser::FileGlobalSettings* FBXSettings
+    ) {
         int time_mode = FBXSettings->TimeMode();
 
         // get the animation FPS
@@ -249,24 +268,31 @@ public:
             print_verbose("FBX Animation has custom FPS setting");
             frames_per_second = FBXSettings->CustomFrameRate();
 
-            // not our problem this is the modeller, we can print as an error so they can fix the source.
+            // not our problem this is the modeller, we can print as an error so
+            // they can fix the source.
             if (frames_per_second == 0) {
-                print_error("Custom animation time in file is set to 0 value, animation won't play, please edit your file to correct the FPS value");
+                print_error(
+                    "Custom animation time in file is set to 0 value, "
+                    "animation won't play, please edit your file to correct "
+                    "the FPS value"
+                );
             }
         }
         return frames_per_second;
     }
 
     /**
-     * Find hardcoded textures from assimp which could be in many different directories
+     * Find hardcoded textures from assimp which could be in many different
+     * directories
      */
 
     /**
      * set_texture_mapping_mode
-     * Helper to check the mapping mode of the texture (repeat, clamp and mirror)
+     * Helper to check the mapping mode of the texture (repeat, clamp and
+     * mirror)
      */
-    // static void set_texture_mapping_mode(aiTextureMapMode *map_mode, Ref<ImageTexture> texture) {
-    // 	ERR_FAIL_COND(texture.is_null());
+    // static void set_texture_mapping_mode(aiTextureMapMode *map_mode,
+    // Ref<ImageTexture> texture) { 	ERR_FAIL_COND(texture.is_null());
     // 	ERR_FAIL_COND(map_mode == NULL);
     // 	aiTextureMapMode tex_mode = map_mode[0];
 
@@ -285,9 +311,11 @@ public:
      * Load or load from cache image :)
      * We need to upgrade this in the later version :) should not be hard
      */
-    //static Ref<Image> load_image(ImportState &state, const aiScene *p_scene, String p_path){
+    // static Ref<Image> load_image(ImportState &state, const aiScene *p_scene,
+    // String p_path){
 
-    // Map<String, Ref<Image> >::Element *match = state.path_to_image_cache.find(p_path);
+    // Map<String, Ref<Image> >::Element *match =
+    // state.path_to_image_cache.find(p_path);
 
     // // if our cache contains this image then don't bother
     // if (match) {
@@ -299,22 +327,22 @@ public:
     // 	size_t texture_idx = split_path[1].to_int();
     // 	ERR_FAIL_COND_V(texture_idx >= p_scene->mNumTextures, Ref<Image>());
     // 	aiTexture *tex = p_scene->mTextures[texture_idx];
-    // 	String filename = AssimpUtils::get_raw_string_from_assimp(tex->mFilename);
-    // 	filename = filename.get_file();
-    // 	print_verbose("Open Asset Import: Loading embedded texture " + filename);
-    // 	if (tex->mHeight == 0) {
-    // 		if (tex->CheckFormat("png")) {
-    // 			Ref<Image> img = Image::_png_mem_loader_func((uint8_t *)tex->pcData, tex->mWidth);
+    // 	String filename =
+    // AssimpUtils::get_raw_string_from_assimp(tex->mFilename); 	filename =
+    // filename.get_file(); 	print_verbose("Open Asset Import: Loading
+    // embedded texture " + filename); 	if (tex->mHeight == 0) { 		if
+    // (tex->CheckFormat("png")) { 			Ref<Image> img =
+    // Image::_png_mem_loader_func((uint8_t *)tex->pcData, tex->mWidth);
     // 			ERR_FAIL_COND_V(img.is_null(), Ref<Image>());
     // 			state.path_to_image_cache.insert(p_path, img);
     // 			return img;
     // 		} else if (tex->CheckFormat("jpg")) {
-    // 			Ref<Image> img = Image::_jpg_mem_loader_func((uint8_t *)tex->pcData, tex->mWidth);
-    // 			ERR_FAIL_COND_V(img.is_null(), Ref<Image>());
-    // 			state.path_to_image_cache.insert(p_path, img);
-    // 			return img;
-    // 		} else if (tex->CheckFormat("dds")) {
-    // 			ERR_FAIL_COND_V_MSG(true, Ref<Image>(), "Open Asset Import: Embedded dds not implemented");
+    // 			Ref<Image> img = Image::_jpg_mem_loader_func((uint8_t
+    // *)tex->pcData, tex->mWidth); 			ERR_FAIL_COND_V(img.is_null(),
+    // Ref<Image>()); 			state.path_to_image_cache.insert(p_path, img);
+    // return img; 		} else if (tex->CheckFormat("dds")) {
+    // 			ERR_FAIL_COND_V_MSG(true, Ref<Image>(), "Open Asset Import:
+    // Embedded dds not implemented");
     // 		}
     // 	} else {
     // 		Ref<Image> img;
@@ -331,8 +359,8 @@ public:
     // 			arr.write().ptr()[(4 * i) + 1] = arr[(4 * i) + 2];
     // 			arr.write().ptr()[(4 * i) + 2] = arr[(4 * i) + 3];
     // 		}
-    // 		img->create(tex->mWidth, tex->mHeight, true, Image::FORMAT_RGBA8, arr);
-    // 		ERR_FAIL_COND_V(img.is_null(), Ref<Image>());
+    // 		img->create(tex->mWidth, tex->mHeight, true, Image::FORMAT_RGBA8,
+    // arr); 		ERR_FAIL_COND_V(img.is_null(), Ref<Image>());
     // 		state.path_to_image_cache.insert(p_path, img);
     // 		return img;
     // 	}
@@ -361,8 +389,8 @@ public:
     // 	bool found = false;
     // 	find_texture_path(state.path, path, found);
     // 	if (found) {
-    // 		image_state.raw_image = AssimpUtils::load_image(state, state.assimp_scene, path);
-    // 		if (image_state.raw_image.is_valid()) {
+    // 		image_state.raw_image = AssimpUtils::load_image(state,
+    // state.assimp_scene, path); 		if (image_state.raw_image.is_valid()) {
     // 			image_state.texture.instance();
     // 			image_state.texture->create_from_image(image_state.raw_image);
     // 			image_state.texture->set_storage(ImageTexture::STORAGE_COMPRESS_LOSSY);
@@ -383,8 +411,9 @@ public:
     // 		String &path,
     // 		AssimpImageData &image_state) {
     // 	aiString ai_filename = aiString();
-    // 	if (AI_SUCCESS == ai_material->GetTexture(texture_type, 0, &ai_filename, NULL, NULL, NULL, NULL, image_state.map_mode)) {
-    // 		return CreateAssimpTexture(state, ai_filename, filename, path, image_state);
+    // 	if (AI_SUCCESS == ai_material->GetTexture(texture_type, 0, &ai_filename,
+    // NULL, NULL, NULL, NULL, image_state.map_mode)) { 		return
+    // CreateAssimpTexture(state, ai_filename, filename, path, image_state);
     // 	}
 
     // 	return false;
@@ -392,10 +421,10 @@ public:
 };
 
 // Apply the transforms so the basis will have scale 1.
-Transform get_unscaled_transform(const Transform &p_initial, real_t p_scale);
+Transform get_unscaled_transform(const Transform& p_initial, real_t p_scale);
 
 /// Uses the Newell's method to compute any polygon normal.
 /// The polygon must be at least size of 3 or bigger.
-Vector3 get_poly_normal(const std::vector<Vector3> &p_vertices);
+Vector3 get_poly_normal(const std::vector<Vector3>& p_vertices);
 
 #endif // IMPORT_UTILS_FBX_IMPORTER_H

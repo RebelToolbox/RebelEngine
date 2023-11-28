@@ -37,13 +37,19 @@
 #include <platform/android/jni_utils.h>
 #include <platform/android/string_android.h>
 
-static HashMap<String, JNISingleton *> jni_singletons;
+static HashMap<String, JNISingleton*> jni_singletons;
 
 extern "C" {
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSingleton(JNIEnv *env, jclass clazz, jstring name, jobject obj) {
+JNIEXPORT void JNICALL
+Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSingleton(
+    JNIEnv* env,
+    jclass clazz,
+    jstring name,
+    jobject obj
+) {
     String singname = jstring_to_string(name, env);
-    JNISingleton *s = (JNISingleton *)ClassDB::instance("JNISingleton");
+    JNISingleton* s = (JNISingleton*)ClassDB::instance("JNISingleton");
     s->set_instance(env->NewGlobalRef(obj));
     jni_singletons[singname] = s;
 
@@ -51,12 +57,20 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nati
     ProjectSettings::get_singleton()->set(singname, s);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterMethod(JNIEnv *env, jclass clazz, jstring sname, jstring name, jstring ret, jobjectArray args) {
+JNIEXPORT void JNICALL
+Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterMethod(
+    JNIEnv* env,
+    jclass clazz,
+    jstring sname,
+    jstring name,
+    jstring ret,
+    jobjectArray args
+) {
     String singname = jstring_to_string(sname, env);
 
     ERR_FAIL_COND(!jni_singletons.has(singname));
 
-    JNISingleton *s = jni_singletons.get(singname);
+    JNISingleton* s = jni_singletons.get(singname);
 
     String mname = jstring_to_string(name, env);
     String retval = jstring_to_string(ret, env);
@@ -75,7 +89,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nati
     cs += ")";
     cs += get_jni_sig(retval);
     jclass cls = env->GetObjectClass(s->get_instance());
-    jmethodID mid = env->GetMethodID(cls, mname.ascii().get_data(), cs.ascii().get_data());
+    jmethodID mid =
+        env->GetMethodID(cls, mname.ascii().get_data(), cs.ascii().get_data());
     if (!mid) {
         print_line("Failed getting method ID " + mname);
     }
@@ -83,12 +98,19 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nati
     s->add_method(mname, mid, types, get_jni_type(retval));
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSignal(JNIEnv *env, jclass clazz, jstring j_plugin_name, jstring j_signal_name, jobjectArray j_signal_param_types) {
+JNIEXPORT void JNICALL
+Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSignal(
+    JNIEnv* env,
+    jclass clazz,
+    jstring j_plugin_name,
+    jstring j_signal_name,
+    jobjectArray j_signal_param_types
+) {
     String singleton_name = jstring_to_string(j_plugin_name, env);
 
     ERR_FAIL_COND(!jni_singletons.has(singleton_name));
 
-    JNISingleton *singleton = jni_singletons.get(singleton_name);
+    JNISingleton* singleton = jni_singletons.get(singleton_name);
 
     String signal_name = jstring_to_string(j_signal_name, env);
     Vector<Variant::Type> types;
@@ -96,28 +118,40 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nati
     int stringCount = env->GetArrayLength(j_signal_param_types);
 
     for (int i = 0; i < stringCount; i++) {
-        jstring j_signal_param_type = (jstring)env->GetObjectArrayElement(j_signal_param_types, i);
-        const String signal_param_type = jstring_to_string(j_signal_param_type, env);
+        jstring j_signal_param_type =
+            (jstring)env->GetObjectArrayElement(j_signal_param_types, i);
+        const String signal_param_type =
+            jstring_to_string(j_signal_param_type, env);
         types.push_back(get_jni_type(signal_param_type));
     }
 
     singleton->add_signal(signal_name, types);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeEmitSignal(JNIEnv *env, jclass clazz, jstring j_plugin_name, jstring j_signal_name, jobjectArray j_signal_params) {
+JNIEXPORT void JNICALL
+Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeEmitSignal(
+    JNIEnv* env,
+    jclass clazz,
+    jstring j_plugin_name,
+    jstring j_signal_name,
+    jobjectArray j_signal_params
+) {
     String singleton_name = jstring_to_string(j_plugin_name, env);
 
     ERR_FAIL_COND(!jni_singletons.has(singleton_name));
 
-    JNISingleton *singleton = jni_singletons.get(singleton_name);
+    JNISingleton* singleton = jni_singletons.get(singleton_name);
 
     String signal_name = jstring_to_string(j_signal_name, env);
 
     int count = env->GetArrayLength(j_signal_params);
-    ERR_FAIL_COND_MSG(count > VARIANT_ARG_MAX, "Maximum argument count exceeded!");
+    ERR_FAIL_COND_MSG(
+        count > VARIANT_ARG_MAX,
+        "Maximum argument count exceeded!"
+    );
 
     Variant variant_params[VARIANT_ARG_MAX];
-    const Variant *args[VARIANT_ARG_MAX];
+    const Variant* args[VARIANT_ARG_MAX];
 
     for (int i = 0; i < count; i++) {
         jobject j_param = env->GetObjectArrayElement(j_signal_params, i);
@@ -129,7 +163,12 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nati
     singleton->emit_signal(signal_name, args, count);
 }
 
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterGDNativeLibraries(JNIEnv *env, jclass clazz, jobjectArray gdnlib_paths) {
+JNIEXPORT void JNICALL
+Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterGDNativeLibraries(
+    JNIEnv* env,
+    jclass clazz,
+    jobjectArray gdnlib_paths
+) {
     int gdnlib_count = env->GetArrayLength(gdnlib_paths);
     if (gdnlib_count == 0) {
         return;
@@ -138,12 +177,14 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nati
     // Retrieve the current list of gdnative libraries.
     Array singletons = Array();
     if (ProjectSettings::get_singleton()->has_setting("gdnative/singletons")) {
-        singletons = ProjectSettings::get_singleton()->get("gdnative/singletons");
+        singletons =
+            ProjectSettings::get_singleton()->get("gdnative/singletons");
     }
 
     // Insert the libraries provided by the plugin
     for (int i = 0; i < gdnlib_count; i++) {
-        jstring relative_path = (jstring)env->GetObjectArrayElement(gdnlib_paths, i);
+        jstring relative_path =
+            (jstring)env->GetObjectArrayElement(gdnlib_paths, i);
 
         String path = "res://" + jstring_to_string(relative_path, env);
         if (!singletons.has(path)) {

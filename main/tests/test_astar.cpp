@@ -37,14 +37,17 @@
 #include <math.h>
 #include <stdio.h>
 
-namespace TestAStar {
+namespace TestAStar
+{
 
 class ABCX : public AStar {
 public:
-    enum { A,
+    enum {
+        A,
         B,
         C,
-        X };
+        X
+    };
 
     ABCX() {
         add_point(A, Vector3(0, 0, 0));
@@ -154,7 +157,9 @@ bool test_add_remove() {
 
     // Tests for get_closest_position_in_segment
     a.connect_points(2, 3);
-    ok = ok && (a.get_closest_position_in_segment(Vector3(0.5, 0.5, 0)) == Vector3(0.5, 1, 0));
+    ok = ok
+      && (a.get_closest_position_in_segment(Vector3(0.5, 0.5, 0))
+          == Vector3(0.5, 1, 0));
 
     a.connect_points(3, 4);
     a.connect_points(0, 3);
@@ -163,9 +168,15 @@ bool test_add_remove() {
     a.disconnect_points(4, 3, false);
     a.disconnect_points(3, 4, false);
     // Remaining edges: <2, 3>, <0, 3>, <1, 4> (directed)
-    ok = ok && (a.get_closest_position_in_segment(Vector3(2, 0.5, 0)) == Vector3(1.75, 0.75, 0));
-    ok = ok && (a.get_closest_position_in_segment(Vector3(-1, 0.2, 0)) == Vector3(0, 0, 0));
-    ok = ok && (a.get_closest_position_in_segment(Vector3(3, 2, 0)) == Vector3(2, 1, 0));
+    ok = ok
+      && (a.get_closest_position_in_segment(Vector3(2, 0.5, 0))
+          == Vector3(1.75, 0.75, 0));
+    ok = ok
+      && (a.get_closest_position_in_segment(Vector3(-1, 0.2, 0))
+          == Vector3(0, 0, 0));
+    ok = ok
+      && (a.get_closest_position_in_segment(Vector3(3, 2, 0))
+          == Vector3(2, 1, 0));
 
     Math::seed(0);
 
@@ -181,7 +192,8 @@ bool test_add_remove() {
             a.connect_points(u, v, false);
             ok = ok && (a.are_points_connected(u, v, false));
         } else {
-            // Remove a (possibly nonexistent) directed edge and confirm disconnectivity
+            // Remove a (possibly nonexistent) directed edge and confirm
+            // disconnectivity
             a.disconnect_points(u, v, false);
             ok = ok && (a.are_points_connected(u, v, false) == false);
         }
@@ -229,7 +241,7 @@ bool test_solutions() {
     for (int test = 0; test < 1000; test++) {
         AStar a;
         Vector3 p[N];
-        bool adj[N][N] = { { false } };
+        bool adj[N][N] = {{false}};
 
         // Assign initial coordinates
         for (int u = 0; u < N; u++) {
@@ -275,7 +287,8 @@ bool test_solutions() {
                     }
                     break;
                 case 8:
-                    // Remove point u and add it back; clears adjacent edges and changes coordinates
+                    // Remove point u and add it back; clears adjacent edges and
+                    // changes coordinates
                     a.remove_point(u);
                     p[u].x = Math::rand() % 100;
                     p[u].y = Math::rand() % 100;
@@ -292,7 +305,8 @@ bool test_solutions() {
         float d[N][N];
         for (int u = 0; u < N; u++) {
             for (int v = 0; v < N; v++) {
-                d[u][v] = (u == v || adj[u][v]) ? p[u].distance_to(p[v]) : INFINITY;
+                d[u][v] =
+                    (u == v || adj[u][v]) ? p[u].distance_to(p[v]) : INFINITY;
             }
         }
 
@@ -335,30 +349,52 @@ bool test_solutions() {
                     if (!Math::is_inf(d[u][v])) {
                         // Reachable
                         if (route.size() == 0) {
-                            printf("From %d to %d: A* did not find a path\n", u, v);
+                            printf(
+                                "From %d to %d: A* did not find a path\n",
+                                u,
+                                v
+                            );
                             match = false;
                             goto exit;
                         }
                         float astar_dist = 0;
                         for (int i = 1; i < route.size(); i++) {
                             if (!adj[route[i - 1]][route[i]]) {
-                                printf("From %d to %d: edge (%d, %d) does not exist\n",
-                                        u, v, route[i - 1], route[i]);
+                                printf(
+                                    "From %d to %d: edge (%d, %d) does not "
+                                    "exist\n",
+                                    u,
+                                    v,
+                                    route[i - 1],
+                                    route[i]
+                                );
                                 match = false;
                                 goto exit;
                             }
-                            astar_dist += p[route[i - 1]].distance_to(p[route[i]]);
+                            astar_dist +=
+                                p[route[i - 1]].distance_to(p[route[i]]);
                         }
                         if (!Math::is_equal_approx(astar_dist, d[u][v])) {
-                            printf("From %d to %d: Floyd-Warshall gives %.6f, A* gives %.6f\n",
-                                    u, v, d[u][v], astar_dist);
+                            printf(
+                                "From %d to %d: Floyd-Warshall gives %.6f, A* "
+                                "gives %.6f\n",
+                                u,
+                                v,
+                                d[u][v],
+                                astar_dist
+                            );
                             match = false;
                             goto exit;
                         }
                     } else {
                         // Unreachable
                         if (route.size() > 0) {
-                            printf("From %d to %d: A* somehow found a nonexistent path\n", u, v);
+                            printf(
+                                "From %d to %d: A* somehow found a nonexistent "
+                                "path\n",
+                                u,
+                                v
+                            );
                             match = false;
                             goto exit;
                         }
@@ -377,15 +413,10 @@ bool test_solutions() {
 
 typedef bool (*TestFunc)();
 
-TestFunc test_funcs[] = {
-    test_abc,
-    test_abcx,
-    test_add_remove,
-    test_solutions,
-    nullptr
-};
+TestFunc test_funcs[] =
+    {test_abc, test_abcx, test_add_remove, test_solutions, nullptr};
 
-MainLoop *test() {
+MainLoop* test() {
     int count = 0;
     int passed = 0;
 

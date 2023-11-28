@@ -38,7 +38,8 @@
 
 // #define GODOT_TEST_TRANSFORM_NON_UNIFORM_SCALE_TESTS_ENABLED
 
-namespace TestTransform {
+namespace TestTransform
+{
 
 bool test_plane() {
     bool pass = true;
@@ -74,12 +75,16 @@ bool test_aabb_regular() {
     AABB bb3 = tr.xform_inv(bb2);
 
     if (!bb3.position.is_equal_approx(bb.position)) {
-        OS::get_singleton()->print("Fail due to Transform::xform_inv(AABB) position\n");
+        OS::get_singleton()->print(
+            "Fail due to Transform::xform_inv(AABB) position\n"
+        );
         pass = false;
     }
 
     if (!bb3.size.is_equal_approx(bb.size)) {
-        OS::get_singleton()->print("Fail due to Transform::xform_inv(AABB) size\n");
+        OS::get_singleton()->print(
+            "Fail due to Transform::xform_inv(AABB) size\n"
+        );
         pass = false;
     }
 
@@ -105,12 +110,17 @@ bool test_aabb_non_uniform_scale() {
     AABB bb2 = tr.xform(bb);
 
     if (!bb2.position.is_equal_approx(Vector3(1, 2, 3))) {
-        OS::get_singleton()->print("Fail with non-uniform scale due to Transform::xform(AABB) position\n");
+        OS::get_singleton()->print(
+            "Fail with non-uniform scale due to Transform::xform(AABB) "
+            "position\n"
+        );
         pass = false;
     }
 
     if (!bb2.size.is_equal_approx(Vector3(2, 6, 12))) {
-        OS::get_singleton()->print("Fail with non-uniform scale due to Transform::xform(AABB) size\n");
+        OS::get_singleton()->print(
+            "Fail with non-uniform scale due to Transform::xform(AABB) size\n"
+        );
         pass = false;
     }
 
@@ -122,12 +132,18 @@ bool test_aabb_non_uniform_scale() {
     AABB bb3 = tr.xform_inv(bb2);
 
     if (!bb3.position.is_equal_approx(bb.position)) {
-        OS::get_singleton()->print("Fail with non-uniform scale due to Transform::xform_inv(AABB) position\n");
+        OS::get_singleton()->print(
+            "Fail with non-uniform scale due to Transform::xform_inv(AABB) "
+            "position\n"
+        );
         pass = false;
     }
 
     if (!bb3.size.is_equal_approx(bb.size)) {
-        OS::get_singleton()->print("Fail with non-uniform scale due to Transform::xform_inv(AABB) size\n");
+        OS::get_singleton()->print(
+            "Fail with non-uniform scale due to Transform::xform_inv(AABB) "
+            "size\n"
+        );
         pass = false;
     }
 
@@ -167,10 +183,22 @@ bool test_vector3_regular() {
 
     bool passed_multi = true;
     for (int n = 0; n < 1000; n++) {
-        Vector3 pt_test = Vector3(rng.randf_range(-range, range), rng.randf_range(-range, range), rng.randf_range(-range, range));
+        Vector3 pt_test = Vector3(
+            rng.randf_range(-range, range),
+            rng.randf_range(-range, range),
+            rng.randf_range(-range, range)
+        );
 
-        tr.origin = Vector3(rng.randf_range(-range, range), rng.randf_range(-range, range), rng.randf_range(-range, range));
-        tr.basis = Basis(Vector3(rng.randf_range(-range_rot, range_rot), rng.randf_range(-range_rot, range_rot), rng.randf_range(-range_rot, range_rot)));
+        tr.origin = Vector3(
+            rng.randf_range(-range, range),
+            rng.randf_range(-range, range),
+            rng.randf_range(-range, range)
+        );
+        tr.basis = Basis(Vector3(
+            rng.randf_range(-range_rot, range_rot),
+            rng.randf_range(-range_rot, range_rot),
+            rng.randf_range(-range_rot, range_rot)
+        ));
 
         Vector3 pt = tr.xform(pt_test);
         pt = tr.xform_inv(pt);
@@ -180,7 +208,9 @@ bool test_vector3_regular() {
         }
     }
     if (!passed_multi) {
-        OS::get_singleton()->print("Failed multitest due to Transform::xform and xform_inv(Vector3)\n");
+        OS::get_singleton()->print(
+            "Failed multitest due to Transform::xform and xform_inv(Vector3)\n"
+        );
         pass = false;
     }
 
@@ -197,13 +227,17 @@ bool test_vector3_non_uniform_scale() {
     Vector3 res = tr.xform(pt);
 
     if (!res.is_equal_approx(Vector3(3, 3, 3))) {
-        OS::get_singleton()->print("Fail with scale due to Transform::xform(Vector3)\n");
+        OS::get_singleton()->print(
+            "Fail with scale due to Transform::xform(Vector3)\n"
+        );
         pass = false;
     }
 
     res = tr.xform_inv(res);
     if (!res.is_equal_approx(pt)) {
-        OS::get_singleton()->print("Fail with scale due to Transform::xform_inv(Vector3)\n");
+        OS::get_singleton()->print(
+            "Fail with scale due to Transform::xform_inv(Vector3)\n"
+        );
         pass = false;
     }
 
@@ -212,14 +246,18 @@ bool test_vector3_non_uniform_scale() {
     res = tr.xform(pt);
 
     if (!res.is_equal_approx(Vector3(1, 2, 3))) {
-        OS::get_singleton()->print("Fail with non-uniform scale due to Transform::xform(Vector3)\n");
+        OS::get_singleton()->print(
+            "Fail with non-uniform scale due to Transform::xform(Vector3)\n"
+        );
         pass = false;
     }
 
     pt = Vector3(1, 2, 3);
     res = tr.xform_inv(pt);
     if (!res.is_equal_approx(Vector3(1, 1, 1))) {
-        OS::get_singleton()->print("Fail with non-uniform scale due to Transform::xform_inv(Vector3)\n");
+        OS::get_singleton()->print(
+            "Fail with non-uniform scale due to Transform::xform_inv(Vector3)\n"
+        );
         pass = false;
     }
 
@@ -241,7 +279,7 @@ bool test_vector3() {
     return pass;
 }
 
-MainLoop *test() {
+MainLoop* test() {
     OS::get_singleton()->print("Start Transform checks.\n");
 
     bool success = true;

@@ -52,54 +52,68 @@
 #define GLX_CONTEXT_MAJOR_VERSION_ARB 0x2091
 #define GLX_CONTEXT_MINOR_VERSION_ARB 0x2092
 
-typedef GLXContext (*GLXCREATECONTEXTATTRIBSARBPROC)(Display *, GLXFBConfig, GLXContext, Bool, const int *);
+typedef GLXContext (*GLXCREATECONTEXTATTRIBSARBPROC)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
 
 struct vendor {
-    const char *glxvendor;
+    const char* glxvendor;
     int priority;
 };
 
 vendor vendormap[] = {
-    { "Advanced Micro Devices, Inc.", 30 },
-    { "AMD", 30 },
-    { "NVIDIA Corporation", 30 },
-    { "X.Org", 30 },
-    { "Intel Open Source Technology Center", 20 },
-    { "Intel", 20 },
-    { "nouveau", 10 },
-    { "Mesa Project", 0 },
-    { nullptr, 0 }
+    {"Advanced Micro Devices, Inc.", 30},
+    {"AMD", 30},
+    {"NVIDIA Corporation", 30},
+    {"X.Org", 30},
+    {"Intel Open Source Technology Center", 20},
+    {"Intel", 20},
+    {"nouveau", 10},
+    {"Mesa Project", 0},
+    {nullptr, 0}
 };
 
 // Runs inside a child. Exiting will not quit the engine.
 void create_context() {
-    Display *x11_display = XOpenDisplay(nullptr);
+    Display* x11_display = XOpenDisplay(nullptr);
     Window x11_window;
     GLXContext glx_context;
 
-    GLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB = (GLXCREATECONTEXTATTRIBSARBPROC)glXGetProcAddress((const GLubyte *)"glXCreateContextAttribsARB");
+    GLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB =
+        (GLXCREATECONTEXTATTRIBSARBPROC
+        )glXGetProcAddress((const GLubyte*)"glXCreateContextAttribsARB");
 
     static int visual_attribs[] = {
-        GLX_RENDER_TYPE, GLX_RGBA_BIT,
-        GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
-        GLX_DOUBLEBUFFER, true,
-        GLX_RED_SIZE, 1,
-        GLX_GREEN_SIZE, 1,
-        GLX_BLUE_SIZE, 1,
-        GLX_DEPTH_SIZE, 24,
+        GLX_RENDER_TYPE,
+        GLX_RGBA_BIT,
+        GLX_DRAWABLE_TYPE,
+        GLX_WINDOW_BIT,
+        GLX_DOUBLEBUFFER,
+        true,
+        GLX_RED_SIZE,
+        1,
+        GLX_GREEN_SIZE,
+        1,
+        GLX_BLUE_SIZE,
+        1,
+        GLX_DEPTH_SIZE,
+        24,
         None
     };
 
     int fbcount;
     GLXFBConfig fbconfig = nullptr;
-    XVisualInfo *vi = nullptr;
+    XVisualInfo* vi = nullptr;
 
     XSetWindowAttributes swa;
     swa.event_mask = StructureNotifyMask;
     swa.border_pixel = 0;
     unsigned long valuemask = CWBorderPixel | CWColormap | CWEventMask;
 
-    GLXFBConfig *fbc = glXChooseFBConfig(x11_display, DefaultScreen(x11_display), visual_attribs, &fbcount);
+    GLXFBConfig* fbc = glXChooseFBConfig(
+        x11_display,
+        DefaultScreen(x11_display),
+        visual_attribs,
+        &fbcount
+    );
     if (!fbc) {
         exit(1);
     }
@@ -109,17 +123,45 @@ void create_context() {
     fbconfig = fbc[0];
 
     static int context_attribs[] = {
-        GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
-        GLX_CONTEXT_MINOR_VERSION_ARB, 3,
-        GLX_CONTEXT_PROFILE_MASK_ARB, GLX_CONTEXT_CORE_PROFILE_BIT_ARB,
-        GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+        GLX_CONTEXT_MAJOR_VERSION_ARB,
+        3,
+        GLX_CONTEXT_MINOR_VERSION_ARB,
+        3,
+        GLX_CONTEXT_PROFILE_MASK_ARB,
+        GLX_CONTEXT_CORE_PROFILE_BIT_ARB,
+        GLX_CONTEXT_FLAGS_ARB,
+        GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
         None
     };
 
-    glx_context = glXCreateContextAttribsARB(x11_display, fbconfig, nullptr, true, context_attribs);
+    glx_context = glXCreateContextAttribsARB(
+        x11_display,
+        fbconfig,
+        nullptr,
+        true,
+        context_attribs
+    );
 
-    swa.colormap = XCreateColormap(x11_display, RootWindow(x11_display, vi->screen), vi->visual, AllocNone);
-    x11_window = XCreateWindow(x11_display, RootWindow(x11_display, vi->screen), 0, 0, 10, 10, 0, vi->depth, InputOutput, vi->visual, valuemask, &swa);
+    swa.colormap = XCreateColormap(
+        x11_display,
+        RootWindow(x11_display, vi->screen),
+        vi->visual,
+        AllocNone
+    );
+    x11_window = XCreateWindow(
+        x11_display,
+        RootWindow(x11_display, vi->screen),
+        0,
+        0,
+        10,
+        10,
+        0,
+        vi->depth,
+        InputOutput,
+        vi->visual,
+        valuemask,
+        &swa
+    );
 
     if (!x11_window) {
         exit(1);
@@ -148,7 +190,8 @@ int detect_prime() {
             return 0;
         }
 
-        // Fork so the driver initialization can crash without taking down the engine.
+        // Fork so the driver initialization can crash without taking down the
+        // engine.
         p = fork();
 
         if (p > 0) {
@@ -186,8 +229,8 @@ int detect_prime() {
             }
             create_context();
 
-            const char *vendor = (const char *)glGetString(GL_VENDOR);
-            const char *renderer = (const char *)glGetString(GL_RENDERER);
+            const char* vendor = (const char*)glGetString(GL_VENDOR);
+            const char* renderer = (const char*)glGetString(GL_RENDERER);
 
             unsigned int vendor_len = strlen(vendor) + 1;
             unsigned int renderer_len = strlen(renderer) + 1;
@@ -216,7 +259,7 @@ int detect_prime() {
     }
 
     for (int i = 1; i >= 0; --i) {
-        vendor *v = vendormap;
+        vendor* v = vendormap;
         while (v->glxvendor) {
             if (v->glxvendor == vendors[i]) {
                 priorities[i] = v->priority;
@@ -232,7 +275,10 @@ int detect_prime() {
 
     print_verbose("Found renderers:");
     for (int i = 0; i < 2; ++i) {
-        print_verbose("Renderer " + itos(i) + ": " + renderers[i] + " with priority: " + itos(priorities[i]));
+        print_verbose(
+            "Renderer " + itos(i) + ": " + renderers[i]
+            + " with priority: " + itos(priorities[i])
+        );
     }
 
     print_verbose("Using renderer: " + renderers[preferred]);

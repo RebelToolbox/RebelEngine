@@ -39,13 +39,13 @@
 class ConnectionInfoDialog : public AcceptDialog {
     GDCLASS(ConnectionInfoDialog, AcceptDialog);
 
-    Label *method;
-    Tree *tree;
+    Label* method;
+    Tree* tree;
 
     virtual void ok_pressed();
 
 public:
-    void popup_connections(String p_method, Vector<Node *> p_nodes);
+    void popup_connections(String p_method, Vector<Node*> p_nodes);
 
     ConnectionInfoDialog();
 };
@@ -53,8 +53,8 @@ public:
 class ScriptTextEditor : public ScriptEditorBase {
     GDCLASS(ScriptTextEditor, ScriptEditorBase);
 
-    CodeTextEditor *code_editor;
-    RichTextLabel *warnings_panel;
+    CodeTextEditor* code_editor;
+    RichTextLabel* warnings_panel;
 
     Ref<Script> script;
     bool script_is_valid;
@@ -66,23 +66,23 @@ class ScriptTextEditor : public ScriptEditorBase {
 
     Vector<String> member_keywords;
 
-    HBoxContainer *edit_hb;
+    HBoxContainer* edit_hb;
 
-    MenuButton *edit_menu;
-    MenuButton *search_menu;
-    MenuButton *goto_menu;
-    PopupMenu *bookmarks_menu;
-    PopupMenu *breakpoints_menu;
-    PopupMenu *highlighter_menu;
-    PopupMenu *context_menu;
-    PopupMenu *convert_case;
+    MenuButton* edit_menu;
+    MenuButton* search_menu;
+    MenuButton* goto_menu;
+    PopupMenu* bookmarks_menu;
+    PopupMenu* breakpoints_menu;
+    PopupMenu* highlighter_menu;
+    PopupMenu* context_menu;
+    PopupMenu* convert_case;
 
-    GotoLineDialog *goto_line_dialog;
-    ScriptEditorQuickOpen *quick_open;
-    ConnectionInfoDialog *connection_info_dialog;
+    GotoLineDialog* goto_line_dialog;
+    ScriptEditorQuickOpen* quick_open;
+    ConnectionInfoDialog* connection_info_dialog;
 
-    PopupPanel *color_panel;
-    ColorPicker *color_picker;
+    PopupPanel* color_panel;
+    ColorPicker* color_picker;
     Vector2 color_position;
     String color_args;
 
@@ -158,8 +158,17 @@ protected:
     void _update_bookmark_list();
     void _bookmark_item_pressed(int p_idx);
 
-    static void _code_complete_scripts(void *p_ud, const String &p_code, List<ScriptCodeCompletionOption> *r_options, bool &r_force);
-    void _code_complete_script(const String &p_code, List<ScriptCodeCompletionOption> *r_options, bool &r_force);
+    static void _code_complete_scripts(
+        void* p_ud,
+        const String& p_code,
+        List<ScriptCodeCompletionOption>* r_options,
+        bool& r_force
+    );
+    void _code_complete_script(
+        const String& p_code,
+        List<ScriptCodeCompletionOption>* r_options,
+        bool& r_force
+    );
 
     void _load_theme_settings();
     void _set_theme_for_script();
@@ -168,39 +177,57 @@ protected:
 
     static void _bind_methods();
 
-    Map<String, SyntaxHighlighter *> highlighters;
+    Map<String, SyntaxHighlighter*> highlighters;
     void _change_syntax_highlighter(int p_idx);
 
     void _edit_option(int p_op);
     void _edit_option_toggle_inline_comment();
-    void _make_context_menu(bool p_selection, bool p_color, bool p_foldable, bool p_open_docs, bool p_goto_definition, Vector2 p_pos);
-    void _text_edit_gui_input(const Ref<InputEvent> &ev);
-    void _color_changed(const Color &p_color);
+    void _make_context_menu(
+        bool p_selection,
+        bool p_color,
+        bool p_foldable,
+        bool p_open_docs,
+        bool p_goto_definition,
+        Vector2 p_pos
+    );
+    void _text_edit_gui_input(const Ref<InputEvent>& ev);
+    void _color_changed(const Color& p_color);
     void _prepare_edit_menu();
 
-    void _goto_line(int p_line) { goto_line(p_line); }
-    void _lookup_symbol(const String &p_symbol, int p_row, int p_column);
+    void _goto_line(int p_line) {
+        goto_line(p_line);
+    }
+
+    void _lookup_symbol(const String& p_symbol, int p_row, int p_column);
 
     void _lookup_connections(int p_row, String p_method);
 
     void _convert_case(CodeTextEditor::CaseStyle p_case);
 
-    Variant get_drag_data_fw(const Point2 &p_point, Control *p_from);
-    bool can_drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from) const;
-    void drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from);
+    Variant get_drag_data_fw(const Point2& p_point, Control* p_from);
+    bool can_drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    ) const;
+    void drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    );
 
-    String _get_absolute_path(const String &rel_path);
+    String _get_absolute_path(const String& rel_path);
 
 public:
     void _update_connected_methods();
 
-    virtual void add_syntax_highlighter(SyntaxHighlighter *p_highlighter);
-    virtual void set_syntax_highlighter(SyntaxHighlighter *p_highlighter);
+    virtual void add_syntax_highlighter(SyntaxHighlighter* p_highlighter);
+    virtual void set_syntax_highlighter(SyntaxHighlighter* p_highlighter);
     void update_toggle_scripts_button();
 
     virtual void apply_code();
     virtual RES get_edited_resource() const;
-    virtual void set_edited_resource(const RES &p_res);
+    virtual void set_edited_resource(const RES& p_res);
     virtual void enable_editor();
     virtual Vector<String> get_functions();
     virtual void reload_text();
@@ -208,7 +235,7 @@ public:
     virtual Ref<Texture> get_icon();
     virtual bool is_unsaved();
     virtual Variant get_edit_state();
-    virtual void set_edit_state(const Variant &p_state);
+    virtual void set_edit_state(const Variant& p_state);
     virtual void ensure_focus();
     virtual void trim_trailing_whitespace();
     virtual void insert_final_newline();
@@ -223,18 +250,18 @@ public:
     virtual void clear_executing_line();
 
     virtual void reload(bool p_soft);
-    virtual void get_breakpoints(List<int> *p_breakpoints);
+    virtual void get_breakpoints(List<int>* p_breakpoints);
 
-    virtual void add_callback(const String &p_function, PoolStringArray p_args);
+    virtual void add_callback(const String& p_function, PoolStringArray p_args);
     virtual void update_settings();
 
     virtual bool show_members_overview();
 
-    virtual void set_tooltip_request_func(String p_method, Object *p_obj);
+    virtual void set_tooltip_request_func(String p_method, Object* p_obj);
 
     virtual void set_debugger_active(bool p_active);
 
-    Control *get_edit_menu();
+    Control* get_edit_menu();
     virtual void clear_edit_menu();
     static void register_editor();
 

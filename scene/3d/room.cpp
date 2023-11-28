@@ -53,16 +53,20 @@ void Room::SimplifyInfo::set_simplify(real_t p_value, real_t p_room_size) {
     _plane_simplify_dot = 0.99;
     _plane_simplify_dist = 0.08;
 
-    // print_verbose("plane simplify dot : " + String(Variant(_plane_simplify_dot)));
-    // print_verbose("plane simplify dist : " + String(Variant(_plane_simplify_dist)));
+    // print_verbose("plane simplify dot : " +
+    // String(Variant(_plane_simplify_dot))); print_verbose("plane simplify dist
+    // : " + String(Variant(_plane_simplify_dist)));
 }
 
-bool Room::SimplifyInfo::add_plane_if_unique(LocalVector<Plane, int32_t> &r_planes, const Plane &p) const {
+bool Room::SimplifyInfo::add_plane_if_unique(
+    LocalVector<Plane, int32_t>& r_planes,
+    const Plane& p
+) const {
     for (int n = 0; n < r_planes.size(); n++) {
-        const Plane &o = r_planes[n];
+        const Plane& o = r_planes[n];
 
-        // this is a fudge factor for how close planes can be to be considered the same ...
-        // to prevent ridiculous amounts of planes
+        // this is a fudge factor for how close planes can be to be considered
+        // the same ... to prevent ridiculous amounts of planes
         const real_t d = _plane_simplify_dist; // 0.08f
 
         if (Math::abs(p.d - o.d) > d) {
@@ -108,7 +112,7 @@ Room::~Room() {
     }
 }
 
-bool Room::contains_point(const Vector3 &p_pt) const {
+bool Room::contains_point(const Vector3& p_pt) const {
     if (!_aabb.has_point(p_pt)) {
         return false;
     }
@@ -130,7 +134,7 @@ void Room::set_use_default_simplify(bool p_use) {
     _use_default_simplify = p_use;
 }
 
-void Room::set_point(int p_idx, const Vector3 &p_point) {
+void Room::set_point(int p_idx, const Vector3& p_point) {
     if (p_idx >= _bound_pts.size()) {
         return;
     }
@@ -142,7 +146,7 @@ void Room::set_point(int p_idx, const Vector3 &p_point) {
 #endif
 }
 
-void Room::set_points(const PoolVector<Vector3> &p_points) {
+void Room::set_points(const PoolVector<Vector3>& p_points) {
     _bound_pts = p_points;
 
 #ifdef TOOLS_ENABLED
@@ -160,7 +164,7 @@ PoolVector<Vector3> Room::generate_points() {
     PoolVector<Vector3> pts_returned;
 #ifdef TOOLS_ENABLED
     // do a rooms convert to make sure the planes are up to date
-    RoomManager *rm = RoomManager::active_room_manager;
+    RoomManager* rm = RoomManager::active_room_manager;
     if (rm) {
         rm->rooms_convert();
     }
@@ -174,14 +178,18 @@ PoolVector<Vector3> Room::generate_points() {
     scaled_epsilon = MAX(scaled_epsilon * 0.01, 0.001);
 
     LocalVector<Vector3, int32_t> pts;
-    pts = Geometry::compute_convex_mesh_points(&_planes[0], _planes.size(), scaled_epsilon);
+    pts = Geometry::compute_convex_mesh_points(
+        &_planes[0],
+        _planes.size(),
+        scaled_epsilon
+    );
 
     // eliminate duplicates
     for (int n = 0; n < pts.size(); n++) {
-        const Vector3 &a = pts[n];
+        const Vector3& a = pts[n];
 
         for (int m = n + 1; m < pts.size(); m++) {
-            const Vector3 &b = pts[m];
+            const Vector3& b = pts[m];
             if (a.is_equal_approx(b, scaled_epsilon)) {
                 // remove b
                 pts.remove_unordered(m);
@@ -210,8 +218,12 @@ PoolVector<Vector3> Room::generate_points() {
 String Room::get_configuration_warning() const {
     String warning = Spatial::get_configuration_warning();
 
-    auto lambda = [](const Node *p_node) {
-        return static_cast<bool>((Object::cast_to<Room>(p_node) || Object::cast_to<RoomManager>(p_node) || Object::cast_to<RoomGroup>(p_node)));
+    auto lambda = [](const Node* p_node) {
+        return static_cast<bool>(
+            (Object::cast_to<Room>(p_node)
+             || Object::cast_to<RoomManager>(p_node)
+             || Object::cast_to<RoomGroup>(p_node))
+        );
     };
 
     if (detect_nodes_using_lambda(this, lambda)) {
@@ -219,14 +231,17 @@ String Room::get_configuration_warning() const {
             if (!warning.empty()) {
                 warning += "\n\n";
             }
-            warning += TTR("A Room cannot have another Room as a child or grandchild.");
+            warning +=
+                TTR("A Room cannot have another Room as a child or grandchild."
+                );
         }
 
         if (detect_nodes_of_type<RoomManager>(this)) {
             if (!warning.empty()) {
                 warning += "\n\n";
             }
-            warning += TTR("The RoomManager should not be placed inside a Room.");
+            warning +=
+                TTR("The RoomManager should not be placed inside a Room.");
         }
 
         if (detect_nodes_of_type<RoomGroup>(this)) {
@@ -241,7 +256,9 @@ String Room::get_configuration_warning() const {
         if (!warning.empty()) {
             warning += "\n\n";
         }
-        warning += TTR("Room convex hull contains a large number of planes.\nConsider simplifying the room bound in order to increase performance.");
+        warning +=
+            TTR("Room convex hull contains a large number of planes.\nConsider "
+                "simplifying the room bound in order to increase performance.");
     }
 
     return warning;
@@ -251,7 +268,7 @@ String Room::get_configuration_warning() const {
 // on change, or re-converting
 void Room::_changed(bool p_regenerate_bounds) {
 #ifdef TOOLS_ENABLED
-    RoomManager *rm = RoomManager::active_room_manager;
+    RoomManager* rm = RoomManager::active_room_manager;
     if (!rm) {
         return;
     }
@@ -267,7 +284,10 @@ void Room::_notification(int p_what) {
     switch (p_what) {
         case NOTIFICATION_ENTER_WORLD: {
             ERR_FAIL_COND(get_world().is_null());
-            VisualServer::get_singleton()->room_set_scenario(_room_rid, get_world()->get_scenario());
+            VisualServer::get_singleton()->room_set_scenario(
+                _room_rid,
+                get_world()->get_scenario()
+            );
         } break;
         case NOTIFICATION_EXIT_WORLD: {
             VisualServer::get_singleton()->room_set_scenario(_room_rid, RID());
@@ -276,20 +296,52 @@ void Room::_notification(int p_what) {
 }
 
 void Room::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_use_default_simplify", "p_use"), &Room::set_use_default_simplify);
-    ClassDB::bind_method(D_METHOD("get_use_default_simplify"), &Room::get_use_default_simplify);
+    ClassDB::bind_method(
+        D_METHOD("set_use_default_simplify", "p_use"),
+        &Room::set_use_default_simplify
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_use_default_simplify"),
+        &Room::get_use_default_simplify
+    );
 
-    ClassDB::bind_method(D_METHOD("set_room_simplify", "p_value"), &Room::set_room_simplify);
-    ClassDB::bind_method(D_METHOD("get_room_simplify"), &Room::get_room_simplify);
+    ClassDB::bind_method(
+        D_METHOD("set_room_simplify", "p_value"),
+        &Room::set_room_simplify
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_room_simplify"),
+        &Room::get_room_simplify
+    );
 
     ClassDB::bind_method(D_METHOD("set_points", "points"), &Room::set_points);
     ClassDB::bind_method(D_METHOD("get_points"), &Room::get_points);
 
-    ClassDB::bind_method(D_METHOD("set_point", "index", "position"), &Room::set_point);
+    ClassDB::bind_method(
+        D_METHOD("set_point", "index", "position"),
+        &Room::set_point
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_default_simplify"), "set_use_default_simplify", "get_use_default_simplify");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "room_simplify", PROPERTY_HINT_RANGE, "0.0,1.0,0.005"), "set_room_simplify", "get_room_simplify");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "use_default_simplify"),
+        "set_use_default_simplify",
+        "get_use_default_simplify"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "room_simplify",
+            PROPERTY_HINT_RANGE,
+            "0.0,1.0,0.005"
+        ),
+        "set_room_simplify",
+        "get_room_simplify"
+    );
 
     ADD_GROUP("Bound", "");
-    ADD_PROPERTY(PropertyInfo(Variant::POOL_VECTOR3_ARRAY, "points"), "set_points", "get_points");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::POOL_VECTOR3_ARRAY, "points"),
+        "set_points",
+        "get_points"
+    );
 }

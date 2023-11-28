@@ -32,13 +32,14 @@
 
 #include <squish.h>
 
-void image_decompress_squish(Image *p_image) {
+void image_decompress_squish(Image* p_image) {
     int w = p_image->get_width();
     int h = p_image->get_height();
 
     Image::Format target_format = Image::FORMAT_RGBA8;
     PoolVector<uint8_t> data;
-    int target_size = Image::get_image_data_size(w, h, target_format, p_image->has_mipmaps());
+    int target_size =
+        Image::get_image_data_size(w, h, target_format, p_image->has_mipmaps());
     int mm_count = p_image->get_mipmap_count();
     data.resize(target_size);
 
@@ -57,25 +58,49 @@ void image_decompress_squish(Image *p_image) {
     } else if (p_image->get_format() == Image::FORMAT_RGTC_RG) {
         squish_flags = squish::kBc5;
     } else {
-        ERR_FAIL_MSG("Squish: Can't decompress unknown format: " + itos(p_image->get_format()) + ".");
+        ERR_FAIL_MSG(
+            "Squish: Can't decompress unknown format: "
+            + itos(p_image->get_format()) + "."
+        );
         return;
     }
 
     for (int i = 0; i <= mm_count; i++) {
         int src_ofs = 0, mipmap_size = 0, mipmap_w = 0, mipmap_h = 0;
-        p_image->get_mipmap_offset_size_and_dimensions(i, src_ofs, mipmap_size, mipmap_w, mipmap_h);
-        int dst_ofs = Image::get_image_mipmap_offset(p_image->get_width(), p_image->get_height(), target_format, i);
+        p_image->get_mipmap_offset_size_and_dimensions(
+            i,
+            src_ofs,
+            mipmap_size,
+            mipmap_w,
+            mipmap_h
+        );
+        int dst_ofs = Image::get_image_mipmap_offset(
+            p_image->get_width(),
+            p_image->get_height(),
+            target_format,
+            i
+        );
         squish::DecompressImage(&wb[dst_ofs], w, h, &rb[src_ofs], squish_flags);
         w >>= 1;
         h >>= 1;
     }
 
-    p_image->create(p_image->get_width(), p_image->get_height(), p_image->has_mipmaps(), target_format, data);
+    p_image->create(
+        p_image->get_width(),
+        p_image->get_height(),
+        p_image->has_mipmaps(),
+        target_format,
+        data
+    );
 }
 
-void image_compress_squish(Image *p_image, float p_lossy_quality, Image::CompressSource p_source) {
+void image_compress_squish(
+    Image* p_image,
+    float p_lossy_quality,
+    Image::CompressSource p_source
+) {
     if (p_image->get_format() >= Image::FORMAT_DXT1) {
-        return; //do not compress, already compressed
+        return; // do not compress, already compressed
     }
 
     int w = p_image->get_width();
@@ -95,7 +120,7 @@ void image_compress_squish(Image *p_image, float p_lossy_quality, Image::Compres
         Image::DetectChannels dc = p_image->get_detected_channels();
 
         if (p_source == Image::COMPRESS_SOURCE_LAYERED) {
-            //keep what comes in
+            // keep what comes in
             switch (p_image->get_format()) {
                 case Image::FORMAT_L8: {
                     dc = Image::DETECTED_L;
@@ -122,15 +147,16 @@ void image_compress_squish(Image *p_image, float p_lossy_quality, Image::Compres
             }
         }
 
-        p_image->convert(Image::FORMAT_RGBA8); //still uses RGBA to convert
+        p_image->convert(Image::FORMAT_RGBA8); // still uses RGBA to convert
 
-        if (p_source == Image::COMPRESS_SOURCE_SRGB && (dc == Image::DETECTED_R || dc == Image::DETECTED_RG)) {
-            //R and RG do not support SRGB
+        if (p_source == Image::COMPRESS_SOURCE_SRGB
+            && (dc == Image::DETECTED_R || dc == Image::DETECTED_RG)) {
+            // R and RG do not support SRGB
             dc = Image::DETECTED_RGB;
         }
 
         if (p_source == Image::COMPRESS_SOURCE_NORMAL) {
-            //R and RG do not support SRGB
+            // R and RG do not support SRGB
             dc = Image::DETECTED_RG;
         }
 
@@ -156,7 +182,8 @@ void image_compress_squish(Image *p_image, float p_lossy_quality, Image::Compres
                 squish_comp |= squish::kDxt1;
             } break;
             case Image::DETECTED_RGBA: {
-                //TODO, should convert both, then measure which one does a better job
+                // TODO, should convert both, then measure which one does a
+                // better job
                 target_format = Image::FORMAT_DXT5;
                 squish_comp |= squish::kDxt5;
 
@@ -168,8 +195,16 @@ void image_compress_squish(Image *p_image, float p_lossy_quality, Image::Compres
         }
 
         PoolVector<uint8_t> data;
-        int target_size = Image::get_image_data_size(w, h, target_format, p_image->has_mipmaps());
-        int mm_count = p_image->has_mipmaps() ? Image::get_image_required_mipmaps(w, h, target_format) : 0;
+        int target_size = Image::get_image_data_size(
+            w,
+            h,
+            target_format,
+            p_image->has_mipmaps()
+        );
+        int mm_count =
+            p_image->has_mipmaps()
+                ? Image::get_image_required_mipmaps(w, h, target_format)
+                : 0;
         data.resize(target_size);
         int shift = Image::get_format_pixel_rshift(target_format);
 
@@ -183,7 +218,13 @@ void image_compress_squish(Image *p_image, float p_lossy_quality, Image::Compres
             int bh = h % 4 != 0 ? h + (4 - h % 4) : h;
 
             int src_ofs = p_image->get_mipmap_offset(i);
-            squish::CompressImage(&rb[src_ofs], w, h, &wb[dst_ofs], squish_comp);
+            squish::CompressImage(
+                &rb[src_ofs],
+                w,
+                h,
+                &wb[dst_ofs],
+                squish_comp
+            );
             dst_ofs += (MAX(4, bw) * MAX(4, bh)) >> shift;
             w = MAX(w / 2, 1);
             h = MAX(h / 2, 1);
@@ -192,6 +233,12 @@ void image_compress_squish(Image *p_image, float p_lossy_quality, Image::Compres
         rb.release();
         wb.release();
 
-        p_image->create(p_image->get_width(), p_image->get_height(), p_image->has_mipmaps(), target_format, data);
+        p_image->create(
+            p_image->get_width(),
+            p_image->get_height(),
+            p_image->has_mipmaps(),
+            target_format,
+            data
+        );
     }
 }

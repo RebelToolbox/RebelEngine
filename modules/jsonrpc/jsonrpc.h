@@ -37,7 +37,7 @@
 class JSONRPC : public Object {
     GDCLASS(JSONRPC, Object)
 
-    Map<String, Object *> method_scopes;
+    Map<String, Object*> method_scopes;
 
 protected:
     static void _bind_methods();
@@ -54,15 +54,29 @@ public:
         INTERNAL_ERROR = -32603,
     };
 
-    Dictionary make_response_error(int p_code, const String &p_message, const Variant &p_id = Variant()) const;
-    Dictionary make_response(const Variant &p_value, const Variant &p_id);
-    Dictionary make_notification(const String &p_method, const Variant &p_params);
-    Dictionary make_request(const String &p_method, const Variant &p_params, const Variant &p_id);
+    Dictionary make_response_error(
+        int p_code,
+        const String& p_message,
+        const Variant& p_id = Variant()
+    ) const;
+    Dictionary make_response(const Variant& p_value, const Variant& p_id);
+    Dictionary make_notification(
+        const String& p_method,
+        const Variant& p_params
+    );
+    Dictionary make_request(
+        const String& p_method,
+        const Variant& p_params,
+        const Variant& p_id
+    );
 
-    Variant process_action(const Variant &p_action, bool p_process_arr_elements = false);
-    String process_string(const String &p_input);
+    Variant process_action(
+        const Variant& p_action,
+        bool p_process_arr_elements = false
+    );
+    String process_string(const String& p_input);
 
-    void set_scope(const String &p_scope, Object *p_obj);
+    void set_scope(const String& p_scope, Object* p_obj);
 };
 
 VARIANT_ENUM_CAST(JSONRPC::ErrorCode);

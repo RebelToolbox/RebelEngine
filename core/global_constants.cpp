@@ -40,23 +40,26 @@ struct _GlobalConstant {
     StringName enum_name;
     bool ignore_value_in_docs;
 #endif
-    const char *name;
+    const char* name;
     int value;
 
     _GlobalConstant() {}
 
 #ifdef DEBUG_METHODS_ENABLED
-    _GlobalConstant(const StringName &p_enum_name, const char *p_name, int p_value, bool p_ignore_value_in_docs = false) :
-            enum_name(p_enum_name),
-            ignore_value_in_docs(p_ignore_value_in_docs),
-            name(p_name),
-            value(p_value) {
-    }
+    _GlobalConstant(
+        const StringName& p_enum_name,
+        const char* p_name,
+        int p_value,
+        bool p_ignore_value_in_docs = false
+    ) :
+        enum_name(p_enum_name),
+        ignore_value_in_docs(p_ignore_value_in_docs),
+        name(p_name),
+        value(p_value) {}
 #else
-    _GlobalConstant(const char *p_name, int p_value) :
-            name(p_name),
-            value(p_value) {
-    }
+    _GlobalConstant(const char* p_name, int p_value) :
+        name(p_name),
+        value(p_value) {}
 #endif
 };
 
@@ -64,42 +67,64 @@ static Vector<_GlobalConstant> _global_constants;
 
 #ifdef DEBUG_METHODS_ENABLED
 
-#define BIND_GLOBAL_CONSTANT(m_constant) \
-    _global_constants.push_back(_GlobalConstant(StringName(), #m_constant, m_constant));
+#define BIND_GLOBAL_CONSTANT(m_constant)                                       \
+    _global_constants.push_back(                                               \
+        _GlobalConstant(StringName(), #m_constant, m_constant)                 \
+    );
 
-#define BIND_GLOBAL_ENUM_CONSTANT(m_constant) \
-    _global_constants.push_back(_GlobalConstant(__constant_get_enum_name(m_constant, #m_constant), #m_constant, m_constant));
+#define BIND_GLOBAL_ENUM_CONSTANT(m_constant)                                  \
+    _global_constants.push_back(_GlobalConstant(                               \
+        __constant_get_enum_name(m_constant, #m_constant),                     \
+        #m_constant,                                                           \
+        m_constant                                                             \
+    ));
 
-#define BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(m_custom_name, m_constant) \
-    _global_constants.push_back(_GlobalConstant(__constant_get_enum_name(m_constant, #m_constant), m_custom_name, m_constant));
+#define BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(m_custom_name, m_constant)            \
+    _global_constants.push_back(_GlobalConstant(                               \
+        __constant_get_enum_name(m_constant, #m_constant),                     \
+        m_custom_name,                                                         \
+        m_constant                                                             \
+    ));
 
-#define BIND_GLOBAL_CONSTANT_NO_VAL(m_constant) \
-    _global_constants.push_back(_GlobalConstant(StringName(), #m_constant, m_constant, true));
+#define BIND_GLOBAL_CONSTANT_NO_VAL(m_constant)                                \
+    _global_constants.push_back(                                               \
+        _GlobalConstant(StringName(), #m_constant, m_constant, true)           \
+    );
 
-#define BIND_GLOBAL_ENUM_CONSTANT_NO_VAL(m_constant) \
-    _global_constants.push_back(_GlobalConstant(__constant_get_enum_name(m_constant, #m_constant), #m_constant, m_constant, true));
+#define BIND_GLOBAL_ENUM_CONSTANT_NO_VAL(m_constant)                           \
+    _global_constants.push_back(_GlobalConstant(                               \
+        __constant_get_enum_name(m_constant, #m_constant),                     \
+        #m_constant,                                                           \
+        m_constant,                                                            \
+        true                                                                   \
+    ));
 
-#define BIND_GLOBAL_ENUM_CONSTANT_CUSTOM_NO_VAL(m_custom_name, m_constant) \
-    _global_constants.push_back(_GlobalConstant(__constant_get_enum_name(m_constant, #m_constant), m_custom_name, m_constant, true));
+#define BIND_GLOBAL_ENUM_CONSTANT_CUSTOM_NO_VAL(m_custom_name, m_constant)     \
+    _global_constants.push_back(_GlobalConstant(                               \
+        __constant_get_enum_name(m_constant, #m_constant),                     \
+        m_custom_name,                                                         \
+        m_constant,                                                            \
+        true                                                                   \
+    ));
 
 #else
 
-#define BIND_GLOBAL_CONSTANT(m_constant) \
+#define BIND_GLOBAL_CONSTANT(m_constant)                                       \
     _global_constants.push_back(_GlobalConstant(#m_constant, m_constant));
 
-#define BIND_GLOBAL_ENUM_CONSTANT(m_constant) \
+#define BIND_GLOBAL_ENUM_CONSTANT(m_constant)                                  \
     _global_constants.push_back(_GlobalConstant(#m_constant, m_constant));
 
-#define BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(m_custom_name, m_constant) \
+#define BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(m_custom_name, m_constant)            \
     _global_constants.push_back(_GlobalConstant(m_custom_name, m_constant));
 
-#define BIND_GLOBAL_CONSTANT_NO_VAL(m_constant) \
+#define BIND_GLOBAL_CONSTANT_NO_VAL(m_constant)                                \
     _global_constants.push_back(_GlobalConstant(#m_constant, m_constant));
 
-#define BIND_GLOBAL_ENUM_CONSTANT_NO_VAL(m_constant) \
+#define BIND_GLOBAL_ENUM_CONSTANT_NO_VAL(m_constant)                           \
     _global_constants.push_back(_GlobalConstant(#m_constant, m_constant));
 
-#define BIND_GLOBAL_ENUM_CONSTANT_CUSTOM_NO_VAL(m_custom_name, m_constant) \
+#define BIND_GLOBAL_ENUM_CONSTANT_CUSTOM_NO_VAL(m_custom_name, m_constant)     \
     _global_constants.push_back(_GlobalConstant(m_custom_name, m_constant));
 
 #endif
@@ -409,7 +434,7 @@ void register_global_constants() {
     BIND_GLOBAL_ENUM_CONSTANT(BUTTON_MASK_XBUTTON1);
     BIND_GLOBAL_ENUM_CONSTANT(BUTTON_MASK_XBUTTON2);
 
-    //joypads
+    // joypads
     BIND_GLOBAL_ENUM_CONSTANT(JOY_INVALID_OPTION);
     BIND_GLOBAL_ENUM_CONSTANT(JOY_BUTTON_0);
     BIND_GLOBAL_ENUM_CONSTANT(JOY_BUTTON_1);
@@ -604,9 +629,9 @@ void register_global_constants() {
     BIND_GLOBAL_ENUM_CONSTANT(PROPERTY_USAGE_INTERNATIONALIZED);
     BIND_GLOBAL_ENUM_CONSTANT(PROPERTY_USAGE_GROUP);
     BIND_GLOBAL_ENUM_CONSTANT(PROPERTY_USAGE_CATEGORY);
-    //deprecated, replaced by ClassDB function to check default value
-    //BIND_GLOBAL_ENUM_CONSTANT(PROPERTY_USAGE_STORE_IF_NONZERO);
-    //BIND_GLOBAL_ENUM_CONSTANT(PROPERTY_USAGE_STORE_IF_NONONE);
+    // deprecated, replaced by ClassDB function to check default value
+    // BIND_GLOBAL_ENUM_CONSTANT(PROPERTY_USAGE_STORE_IF_NONZERO);
+    // BIND_GLOBAL_ENUM_CONSTANT(PROPERTY_USAGE_STORE_IF_NONONE);
     BIND_GLOBAL_ENUM_CONSTANT(PROPERTY_USAGE_NO_INSTANCE_STATE);
     BIND_GLOBAL_ENUM_CONSTANT(PROPERTY_USAGE_RESTART_IF_CHANGED);
     BIND_GLOBAL_ENUM_CONSTANT(PROPERTY_USAGE_SCRIPT_VARIABLE);
@@ -639,28 +664,55 @@ void register_global_constants() {
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_BASIS", Variant::BASIS);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_TRANSFORM", Variant::TRANSFORM);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_COLOR", Variant::COLOR);
-    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_NODE_PATH", Variant::NODE_PATH); // 15
+    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(
+        "TYPE_NODE_PATH",
+        Variant::NODE_PATH
+    ); // 15
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_RID", Variant::_RID);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_OBJECT", Variant::OBJECT);
-    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_DICTIONARY", Variant::DICTIONARY); // 20
+    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(
+        "TYPE_DICTIONARY",
+        Variant::DICTIONARY
+    ); // 20
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_ARRAY", Variant::ARRAY);
-    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_RAW_ARRAY", Variant::POOL_BYTE_ARRAY);
+    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(
+        "TYPE_RAW_ARRAY",
+        Variant::POOL_BYTE_ARRAY
+    );
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_INT_ARRAY", Variant::POOL_INT_ARRAY);
-    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_REAL_ARRAY", Variant::POOL_REAL_ARRAY);
-    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_STRING_ARRAY", Variant::POOL_STRING_ARRAY);
-    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_VECTOR2_ARRAY", Variant::POOL_VECTOR2_ARRAY); // 25
-    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_VECTOR3_ARRAY", Variant::POOL_VECTOR3_ARRAY);
-    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_COLOR_ARRAY", Variant::POOL_COLOR_ARRAY);
+    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(
+        "TYPE_REAL_ARRAY",
+        Variant::POOL_REAL_ARRAY
+    );
+    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(
+        "TYPE_STRING_ARRAY",
+        Variant::POOL_STRING_ARRAY
+    );
+    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(
+        "TYPE_VECTOR2_ARRAY",
+        Variant::POOL_VECTOR2_ARRAY
+    ); // 25
+    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(
+        "TYPE_VECTOR3_ARRAY",
+        Variant::POOL_VECTOR3_ARRAY
+    );
+    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(
+        "TYPE_COLOR_ARRAY",
+        Variant::POOL_COLOR_ARRAY
+    );
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("TYPE_MAX", Variant::VARIANT_MAX);
 
-    //comparison
+    // comparison
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_EQUAL", Variant::OP_EQUAL);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_NOT_EQUAL", Variant::OP_NOT_EQUAL);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_LESS", Variant::OP_LESS);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_LESS_EQUAL", Variant::OP_LESS_EQUAL);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_GREATER", Variant::OP_GREATER);
-    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_GREATER_EQUAL", Variant::OP_GREATER_EQUAL);
-    //mathematic
+    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(
+        "OP_GREATER_EQUAL",
+        Variant::OP_GREATER_EQUAL
+    );
+    // mathematic
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_ADD", Variant::OP_ADD);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_SUBTRACT", Variant::OP_SUBTRACT);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_MULTIPLY", Variant::OP_MULTIPLY);
@@ -668,20 +720,23 @@ void register_global_constants() {
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_NEGATE", Variant::OP_NEGATE);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_POSITIVE", Variant::OP_POSITIVE);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_MODULE", Variant::OP_MODULE);
-    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_STRING_CONCAT", Variant::OP_STRING_CONCAT);
-    //bitwise
+    BIND_GLOBAL_ENUM_CONSTANT_CUSTOM(
+        "OP_STRING_CONCAT",
+        Variant::OP_STRING_CONCAT
+    );
+    // bitwise
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_SHIFT_LEFT", Variant::OP_SHIFT_LEFT);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_SHIFT_RIGHT", Variant::OP_SHIFT_RIGHT);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_BIT_AND", Variant::OP_BIT_AND);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_BIT_OR", Variant::OP_BIT_OR);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_BIT_XOR", Variant::OP_BIT_XOR);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_BIT_NEGATE", Variant::OP_BIT_NEGATE);
-    //logic
+    // logic
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_AND", Variant::OP_AND);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_OR", Variant::OP_OR);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_XOR", Variant::OP_XOR);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_NOT", Variant::OP_NOT);
-    //containment
+    // containment
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_IN", Variant::OP_IN);
     BIND_GLOBAL_ENUM_CONSTANT_CUSTOM("OP_MAX", Variant::OP_MAX);
 }
@@ -712,7 +767,7 @@ bool GlobalConstants::get_ignore_value_in_docs(int p_idx) {
 }
 #endif
 
-const char *GlobalConstants::get_global_constant_name(int p_idx) {
+const char* GlobalConstants::get_global_constant_name(int p_idx) {
     return _global_constants[p_idx].name;
 }
 

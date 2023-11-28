@@ -30,9 +30,9 @@
 
 #include "bone_attachment.h"
 
-void BoneAttachment::_validate_property(PropertyInfo &property) const {
+void BoneAttachment::_validate_property(PropertyInfo& property) const {
     if (property.name == "bone_name") {
-        Skeleton *parent = Object::cast_to<Skeleton>(get_parent());
+        Skeleton* parent = Object::cast_to<Skeleton>(get_parent());
 
         if (parent) {
             String names;
@@ -53,7 +53,7 @@ void BoneAttachment::_validate_property(PropertyInfo &property) const {
 }
 
 void BoneAttachment::_check_bind() {
-    Skeleton *sk = Object::cast_to<Skeleton>(get_parent());
+    Skeleton* sk = Object::cast_to<Skeleton>(get_parent());
     if (sk) {
         int idx = sk->find_bone(bone_name);
         if (idx != -1) {
@@ -66,7 +66,7 @@ void BoneAttachment::_check_bind() {
 
 void BoneAttachment::_check_unbind() {
     if (bound) {
-        Skeleton *sk = Object::cast_to<Skeleton>(get_parent());
+        Skeleton* sk = Object::cast_to<Skeleton>(get_parent());
         if (sk) {
             int idx = sk->find_bone(bone_name);
             if (idx != -1) {
@@ -77,7 +77,7 @@ void BoneAttachment::_check_unbind() {
     }
 }
 
-void BoneAttachment::set_bone_name(const String &p_name) {
+void BoneAttachment::set_bone_name(const String& p_name) {
     if (is_inside_tree()) {
         _check_unbind();
     }
@@ -109,8 +109,18 @@ BoneAttachment::BoneAttachment() {
 }
 
 void BoneAttachment::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_bone_name", "bone_name"), &BoneAttachment::set_bone_name);
-    ClassDB::bind_method(D_METHOD("get_bone_name"), &BoneAttachment::get_bone_name);
+    ClassDB::bind_method(
+        D_METHOD("set_bone_name", "bone_name"),
+        &BoneAttachment::set_bone_name
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_bone_name"),
+        &BoneAttachment::get_bone_name
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "bone_name"), "set_bone_name", "get_bone_name");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "bone_name"),
+        "set_bone_name",
+        "get_bone_name"
+    );
 }

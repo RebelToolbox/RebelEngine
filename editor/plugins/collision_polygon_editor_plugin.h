@@ -43,30 +43,29 @@ class CanvasItemEditor;
 class Polygon3DEditor : public HBoxContainer {
     GDCLASS(Polygon3DEditor, HBoxContainer);
 
-    UndoRedo *undo_redo;
-    enum Mode {
+    UndoRedo* undo_redo;
 
+    enum Mode {
         MODE_CREATE,
         MODE_EDIT,
-
     };
 
     Mode mode;
 
-    ToolButton *button_create;
-    ToolButton *button_edit;
+    ToolButton* button_create;
+    ToolButton* button_edit;
 
     Ref<SpatialMaterial> line_material;
     Ref<SpatialMaterial> handle_material;
 
-    EditorNode *editor;
-    Panel *panel;
-    Spatial *node;
-    ImmediateGeometry *imgeom;
-    MeshInstance *pointsm;
+    EditorNode* editor;
+    Panel* panel;
+    Spatial* node;
+    ImmediateGeometry* imgeom;
+    MeshInstance* pointsm;
     Ref<ArrayMesh> m;
 
-    MenuButton *options;
+    MenuButton* options;
 
     int edited_point;
     Vector2 edited_point_pos;
@@ -85,32 +84,49 @@ class Polygon3DEditor : public HBoxContainer {
 
 protected:
     void _notification(int p_what);
-    void _node_removed(Node *p_node);
+    void _node_removed(Node* p_node);
     static void _bind_methods();
 
 public:
-    virtual bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event);
-    void edit(Node *p_collision_polygon);
-    Polygon3DEditor(EditorNode *p_editor);
+    virtual bool forward_spatial_gui_input(
+        Camera* p_camera,
+        const Ref<InputEvent>& p_event
+    );
+    void edit(Node* p_collision_polygon);
+    Polygon3DEditor(EditorNode* p_editor);
     ~Polygon3DEditor();
 };
 
 class Polygon3DEditorPlugin : public EditorPlugin {
     GDCLASS(Polygon3DEditorPlugin, EditorPlugin);
 
-    Polygon3DEditor *collision_polygon_editor;
-    EditorNode *editor;
+    Polygon3DEditor* collision_polygon_editor;
+    EditorNode* editor;
 
 public:
-    virtual bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event) { return collision_polygon_editor->forward_spatial_gui_input(p_camera, p_event); }
+    virtual bool forward_spatial_gui_input(
+        Camera* p_camera,
+        const Ref<InputEvent>& p_event
+    ) {
+        return collision_polygon_editor->forward_spatial_gui_input(
+            p_camera,
+            p_event
+        );
+    }
 
-    virtual String get_name() const { return "Polygon3DEditor"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual String get_name() const {
+        return "Polygon3DEditor";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
 
-    Polygon3DEditorPlugin(EditorNode *p_node);
+    Polygon3DEditorPlugin(EditorNode* p_node);
     ~Polygon3DEditorPlugin();
 };
 

@@ -36,7 +36,7 @@ Size2 CenterContainer::get_minimum_size() const {
     }
     Size2 ms;
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c) {
             continue;
         }
@@ -73,7 +73,7 @@ void CenterContainer::_notification(int p_what) {
     if (p_what == NOTIFICATION_SORT_CHILDREN) {
         Size2 size = get_size();
         for (int i = 0; i < get_child_count(); i++) {
-            Control *c = Object::cast_to<Control>(get_child(i));
+            Control* c = Object::cast_to<Control>(get_child(i));
             if (!c) {
                 continue;
             }
@@ -82,17 +82,28 @@ void CenterContainer::_notification(int p_what) {
             }
 
             Size2 minsize = c->get_combined_minimum_size();
-            Point2 ofs = use_top_left ? (-minsize * 0.5).floor() : ((size - minsize) / 2.0).floor();
+            Point2 ofs = use_top_left ? (-minsize * 0.5).floor()
+                                      : ((size - minsize) / 2.0).floor();
             fit_child_in_rect(c, Rect2(ofs, minsize));
         }
     }
 }
 
 void CenterContainer::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_use_top_left", "enable"), &CenterContainer::set_use_top_left);
-    ClassDB::bind_method(D_METHOD("is_using_top_left"), &CenterContainer::is_using_top_left);
+    ClassDB::bind_method(
+        D_METHOD("set_use_top_left", "enable"),
+        &CenterContainer::set_use_top_left
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_using_top_left"),
+        &CenterContainer::is_using_top_left
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_top_left"), "set_use_top_left", "is_using_top_left");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "use_top_left"),
+        "set_use_top_left",
+        "is_using_top_left"
+    );
 }
 
 CenterContainer::CenterContainer() {

@@ -1,9 +1,10 @@
 
 // for slow incremental optimization, we will periodically remove each
-// item from the tree and reinsert, to give it a chance to find a better position
+// item from the tree and reinsert, to give it a chance to find a better
+// position
 void _logic_item_remove_and_reinsert(uint32_t p_ref_id) {
     // get the reference
-    ItemRef &ref = _refs[p_ref_id];
+    ItemRef& ref = _refs[p_ref_id];
 
     // no need to optimize inactive items
     if (!ref.is_active()) {
@@ -34,7 +35,7 @@ void _logic_item_remove_and_reinsert(uint32_t p_ref_id) {
 }
 
 // from randy gaul balance function
-BVHABB_CLASS _logic_abb_merge(const BVHABB_CLASS &a, const BVHABB_CLASS &b) {
+BVHABB_CLASS _logic_abb_merge(const BVHABB_CLASS& a, const BVHABB_CLASS& b) {
     BVHABB_CLASS c = a;
     c.merge(b);
     return c;
@@ -67,9 +68,9 @@ BVHABB_CLASS _logic_abb_merge(const BVHABB_CLASS &a, const BVHABB_CLASS &b) {
 // It is MODIFIED from qu3e version.
 // This is the only function used (and _logic_abb_merge helper function).
 int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
-    //return iA; // uncomment this to bypass balance
+    // return iA; // uncomment this to bypass balance
 
-    TNode *A = &_nodes[iA];
+    TNode* A = &_nodes[iA];
 
     if (A->is_leaf() || A->height == 1) {
         return iA;
@@ -85,8 +86,8 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
     CRASH_COND(A->num_children != 2);
     int32_t iB = A->children[0];
     int32_t iC = A->children[1];
-    TNode *B = &_nodes[iB];
-    TNode *C = &_nodes[iC];
+    TNode* B = &_nodes[iB];
+    TNode* C = &_nodes[iC];
 
     int32_t balance = C->height - B->height;
 
@@ -94,8 +95,8 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
     if (balance > 1) {
         int32_t iF = C->children[0];
         int32_t iG = C->children[1];
-        TNode *F = &_nodes[iF];
-        TNode *G = &_nodes[iG];
+        TNode* F = &_nodes[iF];
+        TNode* G = &_nodes[iG];
 
         // grandParent point to C
         if (A->parent_id != BVHCommon::INVALID) {
@@ -145,8 +146,8 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
     else if (balance < -1) {
         int32_t iD = B->children[0];
         int32_t iE = B->children[1];
-        TNode *D = &_nodes[iD];
-        TNode *E = &_nodes[iE];
+        TNode* D = &_nodes[iD];
+        TNode* E = &_nodes[iE];
 
         // grandParent point to B
         if (A->parent_id != BVHCommon::INVALID) {
@@ -196,11 +197,15 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
     return iA;
 }
 
-// either choose an existing node to add item to, or create a new node and return this
-uint32_t _logic_choose_item_add_node(uint32_t p_node_id, const BVHABB_CLASS &p_aabb) {
+// either choose an existing node to add item to, or create a new node and
+// return this
+uint32_t _logic_choose_item_add_node(
+    uint32_t p_node_id,
+    const BVHABB_CLASS& p_aabb
+) {
     while (true) {
         BVH_ASSERT(p_node_id != BVHCommon::INVALID);
-        TNode &tnode = _nodes[p_node_id];
+        TNode& tnode = _nodes[p_node_id];
 
         if (tnode.is_leaf()) {
             // if a leaf, and non full, use this to add to
@@ -213,15 +218,19 @@ uint32_t _logic_choose_item_add_node(uint32_t p_node_id, const BVHABB_CLASS &p_a
         }
 
         // this should not happen???
-        // is still happening, need to debug and find circumstances. Is not that serious
-        // but would be nice to prevent. I think it only happens with the root node.
+        // is still happening, need to debug and find circumstances. Is not that
+        // serious but would be nice to prevent. I think it only happens with
+        // the root node.
         if (tnode.num_children == 1) {
-            WARN_PRINT_ONCE("BVH::recursive_choose_item_add_node, node with 1 child, recovering");
+            WARN_PRINT_ONCE(
+                "BVH::recursive_choose_item_add_node, node with 1 child, "
+                "recovering"
+            );
             p_node_id = tnode.children[0];
         } else {
             BVH_ASSERT(tnode.num_children == 2);
-            TNode &childA = _nodes[tnode.children[0]];
-            TNode &childB = _nodes[tnode.children[1]];
+            TNode& childA = _nodes[tnode.children[0]];
+            TNode& childB = _nodes[tnode.children[1]];
             int which = p_aabb.select_by_proximity(childA.aabb, childB.aabb);
 
             p_node_id = tnode.children[which];

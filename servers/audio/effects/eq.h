@@ -43,7 +43,6 @@
 class EQ {
 public:
     enum Preset {
-
         PRESET_6_BANDS,
         PRESET_8_BANDS,
         PRESET_10_BANDS,
@@ -54,6 +53,7 @@ public:
     class BandProcess {
         friend class EQ;
         float c1, c2, c3;
+
         struct History {
             float a1, a2, a3;
             float b1, b2, b3;
@@ -61,7 +61,7 @@ public:
         } history;
 
     public:
-        inline void process_one(float &p_data);
+        inline void process_one(float& p_data);
 
         BandProcess();
     };
@@ -83,7 +83,7 @@ public:
 
     int get_band_count() const;
     void set_preset_band_mode(Preset p_preset);
-    void set_bands(const Vector<float> &p_bands);
+    void set_bands(const Vector<float>& p_bands);
     BandProcess get_band_processor(int p_band) const;
     float get_band_frequency(int p_band);
 
@@ -93,10 +93,11 @@ public:
 
 /* Inline Function */
 
-inline void EQ::BandProcess::process_one(float &p_data) {
+inline void EQ::BandProcess::process_one(float& p_data) {
     history.a1 = p_data;
 
-    history.b1 = c1 * (history.a1 - history.a3) + c3 * history.b2 - c2 * history.b3;
+    history.b1 =
+        c1 * (history.a1 - history.a3) + c3 * history.b2 - c2 * history.b3;
 
     p_data = history.b1;
 

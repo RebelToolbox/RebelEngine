@@ -33,7 +33,8 @@
 #include "core/oa_hash_map.h"
 #include "core/os/os.h"
 
-namespace TestOAHashMap {
+namespace TestOAHashMap
+{
 
 struct CountedItem {
     static int count;
@@ -41,25 +42,19 @@ struct CountedItem {
     int id;
     bool destroyed;
 
-    CountedItem() :
-            id(-1),
-            destroyed(false) {
+    CountedItem() : id(-1), destroyed(false) {
         count++;
     }
 
-    CountedItem(int p_id) :
-            id(p_id),
-            destroyed(false) {
+    CountedItem(int p_id) : id(p_id), destroyed(false) {
         count++;
     }
 
-    CountedItem(const CountedItem &p_other) :
-            id(p_other.id),
-            destroyed(false) {
+    CountedItem(const CountedItem& p_other) : id(p_other.id), destroyed(false) {
         count++;
     }
 
-    CountedItem &operator=(const CountedItem &p_other) = default;
+    CountedItem& operator=(const CountedItem& p_other) = default;
 
     ~CountedItem() {
         CRASH_COND(destroyed);
@@ -70,7 +65,7 @@ struct CountedItem {
 
 int CountedItem::count;
 
-MainLoop *test() {
+MainLoop* test() {
     OS::get_singleton()->print("\n\n\nHello from test\n");
 
     // test element tracking.
@@ -110,7 +105,8 @@ MainLoop *test() {
             }
         }
 
-        OS::get_singleton()->print("elements %d == %d.\n", map.get_num_elements(), num_elems);
+        OS::get_singleton()
+            ->print("elements %d == %d.\n", map.get_num_elements(), num_elems);
     }
 
     // iteration
@@ -121,8 +117,13 @@ MainLoop *test() {
         map.set("World", 2);
         map.set("Godot rocks", 42);
 
-        for (OAHashMap<String, int>::Iterator it = map.iter(); it.valid; it = map.next_iter(it)) {
-            OS::get_singleton()->print("map[\"%s\"] = %d\n", it.key->utf8().get_data(), *it.value);
+        for (OAHashMap<String, int>::Iterator it = map.iter(); it.valid;
+             it = map.next_iter(it)) {
+            OS::get_singleton()->print(
+                "map[\"%s\"] = %d\n",
+                it.key->utf8().get_data(),
+                *it.value
+            );
         }
     }
 
@@ -131,7 +132,7 @@ MainLoop *test() {
         OAHashMap<int, int> map;
         int dummy = 0;
         const int N = 1000;
-        uint32_t *keys = new uint32_t[N];
+        uint32_t* keys = new uint32_t[N];
 
         Math::seed(0);
 
@@ -141,14 +142,21 @@ MainLoop *test() {
             map.set(keys[i], dummy);
 
             if (!map.lookup(keys[i], dummy)) {
-                OS::get_singleton()->print("could not find 0x%X despite it was just inserted!\n", unsigned(keys[i]));
+                OS::get_singleton()->print(
+                    "could not find 0x%X despite it was just inserted!\n",
+                    unsigned(keys[i])
+                );
             }
         }
 
         // check whether the keys are still present
         for (int i = 0; i < N; i++) {
             if (!map.lookup(keys[i], dummy)) {
-                OS::get_singleton()->print("could not find 0x%X despite it has been inserted previously! (not checking the other keys, breaking...)\n", unsigned(keys[i]));
+                OS::get_singleton()->print(
+                    "could not find 0x%X despite it has been inserted "
+                    "previously! (not checking the other keys, breaking...)\n",
+                    unsigned(keys[i])
+                );
                 break;
             }
         }
@@ -161,7 +169,8 @@ MainLoop *test() {
         OS::get_singleton()->print("test for issue #31402 started...\n");
 
         const int num_test_values = 12;
-        int test_values[num_test_values] = { 0, 24, 48, 72, 96, 120, 144, 168, 192, 216, 240, 264 };
+        int test_values[num_test_values] =
+            {0, 24, 48, 72, 96, 120, 144, 168, 192, 216, 240, 264};
 
         int dummy = 0;
         OAHashMap<int, int> map;
@@ -208,7 +217,11 @@ MainLoop *test() {
             }
 
             if (CountedItem::count != 0) {
-                OS::get_singleton()->print("%d != 0 (not performing the other test sub-cases, breaking...)\n", CountedItem::count);
+                OS::get_singleton()->print(
+                    "%d != 0 (not performing the other test sub-cases, "
+                    "breaking...)\n",
+                    CountedItem::count
+                );
                 break;
             }
         }

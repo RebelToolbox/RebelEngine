@@ -69,11 +69,23 @@ private:
     bool _use_ssl;
 
     void _do_handshake();
-    bool _verify_headers(String &r_protocol);
+    bool _verify_headers(String& r_protocol);
 
 public:
-    Error set_buffers(int p_in_buffer, int p_in_packets, int p_out_buffer, int p_out_packets);
-    Error connect_to_host(String p_host, String p_path, uint16_t p_port, bool p_ssl, const Vector<String> p_protocol = Vector<String>(), const Vector<String> p_custom_headers = Vector<String>());
+    Error set_buffers(
+        int p_in_buffer,
+        int p_in_packets,
+        int p_out_buffer,
+        int p_out_packets
+    );
+    Error connect_to_host(
+        String p_host,
+        String p_path,
+        uint16_t p_port,
+        bool p_ssl,
+        const Vector<String> p_protocol = Vector<String>(),
+        const Vector<String> p_custom_headers = Vector<String>()
+    );
     int get_max_packet_size() const;
     Ref<WebSocketPeer> get_peer(int p_peer_id) const;
     void disconnect_from_host(int p_code = 1000, String p_reason = "");

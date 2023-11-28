@@ -64,12 +64,14 @@ void TextureRect::_notification(int p_what) {
             case STRETCH_KEEP_ASPECT_CENTERED:
             case STRETCH_KEEP_ASPECT: {
                 size = get_size();
-                int tex_width = texture->get_width() * size.height / texture->get_height();
+                int tex_width =
+                    texture->get_width() * size.height / texture->get_height();
                 int tex_height = size.height;
 
                 if (tex_width > size.width) {
                     tex_width = size.width;
-                    tex_height = texture->get_height() * tex_width / texture->get_width();
+                    tex_height = texture->get_height() * tex_width
+                               / texture->get_width();
                 }
 
                 if (stretch_mode == STRETCH_KEEP_ASPECT_CENTERED) {
@@ -84,11 +86,17 @@ void TextureRect::_notification(int p_what) {
                 size = get_size();
 
                 Size2 tex_size = texture->get_size();
-                Size2 scale_size(size.width / tex_size.width, size.height / tex_size.height);
-                float scale = scale_size.width > scale_size.height ? scale_size.width : scale_size.height;
+                Size2 scale_size(
+                    size.width / tex_size.width,
+                    size.height / tex_size.height
+                );
+                float scale = scale_size.width > scale_size.height
+                                ? scale_size.width
+                                : scale_size.height;
                 Size2 scaled_tex_size = tex_size * scale;
 
-                region.position = ((scaled_tex_size - size) / scale).abs() / 2.0f;
+                region.position =
+                    ((scaled_tex_size - size) / scale).abs() / 2.0f;
                 region.size = size / scale;
             } break;
         }
@@ -96,10 +104,17 @@ void TextureRect::_notification(int p_what) {
         Ref<AtlasTexture> p_atlas = texture;
 
         if (p_atlas.is_valid() && region.has_no_area()) {
-            Size2 scale_size(size.width / texture->get_width(), size.height / texture->get_height());
+            Size2 scale_size(
+                size.width / texture->get_width(),
+                size.height / texture->get_height()
+            );
 
-            offset.width += hflip ? p_atlas->get_margin().get_position().width * scale_size.width * 2 : 0;
-            offset.height += vflip ? p_atlas->get_margin().get_position().height * scale_size.height * 2 : 0;
+            offset.width += hflip ? p_atlas->get_margin().get_position().width
+                                        * scale_size.width * 2
+                                  : 0;
+            offset.height += vflip ? p_atlas->get_margin().get_position().height
+                                         * scale_size.height * 2
+                                   : 0;
         }
 
         size.width *= hflip ? -1.0f : 1.0f;
@@ -122,23 +137,75 @@ Size2 TextureRect::get_minimum_size() const {
 }
 
 void TextureRect::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_texture", "texture"), &TextureRect::set_texture);
+    ClassDB::bind_method(
+        D_METHOD("set_texture", "texture"),
+        &TextureRect::set_texture
+    );
     ClassDB::bind_method(D_METHOD("get_texture"), &TextureRect::get_texture);
-    ClassDB::bind_method(D_METHOD("set_expand", "enable"), &TextureRect::set_expand);
+    ClassDB::bind_method(
+        D_METHOD("set_expand", "enable"),
+        &TextureRect::set_expand
+    );
     ClassDB::bind_method(D_METHOD("has_expand"), &TextureRect::has_expand);
-    ClassDB::bind_method(D_METHOD("set_flip_h", "enable"), &TextureRect::set_flip_h);
+    ClassDB::bind_method(
+        D_METHOD("set_flip_h", "enable"),
+        &TextureRect::set_flip_h
+    );
     ClassDB::bind_method(D_METHOD("is_flipped_h"), &TextureRect::is_flipped_h);
-    ClassDB::bind_method(D_METHOD("set_flip_v", "enable"), &TextureRect::set_flip_v);
+    ClassDB::bind_method(
+        D_METHOD("set_flip_v", "enable"),
+        &TextureRect::set_flip_v
+    );
     ClassDB::bind_method(D_METHOD("is_flipped_v"), &TextureRect::is_flipped_v);
-    ClassDB::bind_method(D_METHOD("set_stretch_mode", "stretch_mode"), &TextureRect::set_stretch_mode);
-    ClassDB::bind_method(D_METHOD("get_stretch_mode"), &TextureRect::get_stretch_mode);
-    ClassDB::bind_method(D_METHOD("_texture_changed"), &TextureRect::_texture_changed);
+    ClassDB::bind_method(
+        D_METHOD("set_stretch_mode", "stretch_mode"),
+        &TextureRect::set_stretch_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_stretch_mode"),
+        &TextureRect::get_stretch_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("_texture_changed"),
+        &TextureRect::_texture_changed
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture"), "set_texture", "get_texture");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "expand"), "set_expand", "has_expand");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "stretch_mode", PROPERTY_HINT_ENUM, "Scale On Expand (Compat),Scale,Tile,Keep,Keep Centered,Keep Aspect,Keep Aspect Centered,Keep Aspect Covered"), "set_stretch_mode", "get_stretch_mode");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flip_h"), "set_flip_h", "is_flipped_h");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flip_v"), "set_flip_v", "is_flipped_v");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "texture",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Texture"
+        ),
+        "set_texture",
+        "get_texture"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "expand"),
+        "set_expand",
+        "has_expand"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "stretch_mode",
+            PROPERTY_HINT_ENUM,
+            "Scale On Expand (Compat),Scale,Tile,Keep,Keep Centered,Keep "
+            "Aspect,Keep Aspect Centered,Keep Aspect Covered"
+        ),
+        "set_stretch_mode",
+        "get_stretch_mode"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "flip_h"),
+        "set_flip_h",
+        "is_flipped_h"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "flip_v"),
+        "set_flip_v",
+        "is_flipped_v"
+    );
 
     BIND_ENUM_CONSTANT(STRETCH_SCALE_ON_EXPAND);
     BIND_ENUM_CONSTANT(STRETCH_SCALE);
@@ -157,19 +224,27 @@ void TextureRect::_texture_changed() {
     }
 }
 
-void TextureRect::set_texture(const Ref<Texture> &p_tex) {
+void TextureRect::set_texture(const Ref<Texture>& p_tex) {
     if (p_tex == texture) {
         return;
     }
 
     if (texture.is_valid()) {
-        texture->disconnect(CoreStringNames::get_singleton()->changed, this, "_texture_changed");
+        texture->disconnect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            "_texture_changed"
+        );
     }
 
     texture = p_tex;
 
     if (texture.is_valid()) {
-        texture->connect(CoreStringNames::get_singleton()->changed, this, "_texture_changed");
+        texture->connect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            "_texture_changed"
+        );
     }
 
     update();
@@ -225,5 +300,4 @@ TextureRect::TextureRect() {
     stretch_mode = STRETCH_SCALE_ON_EXPAND;
 }
 
-TextureRect::~TextureRect() {
-}
+TextureRect::~TextureRect() {}

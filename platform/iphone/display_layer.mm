@@ -52,34 +52,43 @@ bool gles3_available = true;
     GLint backingWidth;
     GLint backingHeight;
 
-    EAGLContext *context;
+    EAGLContext* context;
     GLuint viewRenderbuffer, viewFramebuffer;
     GLuint depthRenderbuffer;
 }
 
 - (void)initializeDisplayLayer {
-    // Configure it so that it is opaque, does not retain the contents of the backbuffer when displayed, and uses RGBA8888 color.
+    // Configure it so that it is opaque, does not retain the contents of the
+    // backbuffer when displayed, and uses RGBA8888 color.
     self.opaque = YES;
     self.drawableProperties = [NSDictionary
-            dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:FALSE],
-            kEAGLDrawablePropertyRetainedBacking,
-            kEAGLColorFormatRGBA8,
-            kEAGLDrawablePropertyColorFormat,
-            nil];
+        dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:FALSE],
+                                     kEAGLDrawablePropertyRetainedBacking,
+                                     kEAGLColorFormatRGBA8,
+                                     kEAGLDrawablePropertyColorFormat,
+                                     nil];
     bool fallback_gl2 = false;
     // Create a GL ES 3 context based on the gl driver from project settings
     if (GLOBAL_GET("rendering/quality/driver/driver_name") == "GLES3") {
         context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
-        NSLog(@"Setting up an OpenGL ES 3.0 context. Based on Project Settings \"rendering/quality/driver/driver_name\"");
-        if (!context && GLOBAL_GET("rendering/quality/driver/fallback_to_gles2")) {
+        NSLog(
+            @"Setting up an OpenGL ES 3.0 context. Based on Project Settings "
+            @"\"rendering/quality/driver/driver_name\""
+        );
+        if (!context
+            && GLOBAL_GET("rendering/quality/driver/fallback_to_gles2")) {
             gles3_available = false;
             fallback_gl2 = true;
-            NSLog(@"Failed to create OpenGL ES 3.0 context. Falling back to OpenGL ES 2.0");
+            NSLog(
+                @"Failed to create OpenGL ES 3.0 context. Falling back to "
+                @"OpenGL ES 2.0"
+            );
         }
     }
 
     // Create GL ES 2 context
-    if (GLOBAL_GET("rendering/quality/driver/driver_name") == "GLES2" || fallback_gl2) {
+    if (GLOBAL_GET("rendering/quality/driver/driver_name") == "GLES2"
+        || fallback_gl2) {
         context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
         NSLog(@"Setting up an OpenGL ES 2.0 context.");
         if (!context) {
@@ -139,22 +148,53 @@ bool gles3_available = true;
 
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
-    // This call associates the storage for the current render buffer with the EAGLDrawable (our CAEAGLLayer)
-    // allowing us to draw into a buffer that will later be rendered to screen wherever the layer is (which corresponds with our view).
-    [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:(id<EAGLDrawable>)self];
-    glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, viewRenderbuffer);
+    // This call associates the storage for the current render buffer with the
+    // EAGLDrawable (our CAEAGLLayer) allowing us to draw into a buffer that
+    // will later be rendered to screen wherever the layer is (which corresponds
+    // with our view).
+    [context renderbufferStorage:GL_RENDERBUFFER_OES
+                    fromDrawable:(id<EAGLDrawable>)self];
+    glFramebufferRenderbufferOES(
+        GL_FRAMEBUFFER_OES,
+        GL_COLOR_ATTACHMENT0_OES,
+        GL_RENDERBUFFER_OES,
+        viewRenderbuffer
+    );
 
-    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
-    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
+    glGetRenderbufferParameterivOES(
+        GL_RENDERBUFFER_OES,
+        GL_RENDERBUFFER_WIDTH_OES,
+        &backingWidth
+    );
+    glGetRenderbufferParameterivOES(
+        GL_RENDERBUFFER_OES,
+        GL_RENDERBUFFER_HEIGHT_OES,
+        &backingHeight
+    );
 
-    // For this sample, we also need a depth buffer, so we'll create and attach one via another renderbuffer.
+    // For this sample, we also need a depth buffer, so we'll create and attach
+    // one via another renderbuffer.
     glGenRenderbuffersOES(1, &depthRenderbuffer);
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
-    glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, backingWidth, backingHeight);
-    glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthRenderbuffer);
+    glRenderbufferStorageOES(
+        GL_RENDERBUFFER_OES,
+        GL_DEPTH_COMPONENT16_OES,
+        backingWidth,
+        backingHeight
+    );
+    glFramebufferRenderbufferOES(
+        GL_FRAMEBUFFER_OES,
+        GL_DEPTH_ATTACHMENT_OES,
+        GL_RENDERBUFFER_OES,
+        depthRenderbuffer
+    );
 
-    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES) {
-        NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
+    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES)
+        != GL_FRAMEBUFFER_COMPLETE_OES) {
+        NSLog(
+            @"failed to make complete framebuffer object %x",
+            glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES)
+        );
         return NO;
     }
 

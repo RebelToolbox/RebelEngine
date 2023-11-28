@@ -40,9 +40,9 @@ class DictionaryPropertyEdit : public Reference {
     StringName property;
 
     void _notif_change();
-    void _notif_changev(const String &p_v);
-    void _set_key(const Variant &p_old_key, const Variant &p_new_key);
-    void _set_value(const Variant &p_key, const Variant &p_value);
+    void _notif_changev(const String& p_v);
+    void _set_key(const Variant& p_old_key, const Variant& p_new_key);
+    void _set_value(const Variant& p_key, const Variant& p_value);
 
     Variant get_dictionary() const;
 
@@ -50,14 +50,14 @@ class DictionaryPropertyEdit : public Reference {
 
 protected:
     static void _bind_methods();
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
 
 public:
-    void edit(Object *p_obj, const StringName &p_prop);
+    void edit(Object* p_obj, const StringName& p_prop);
 
-    Node *get_node();
+    Node* get_node();
 
     DictionaryPropertyEdit();
 };

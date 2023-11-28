@@ -39,12 +39,22 @@
 #include "core/os/os.h"
 #include "core/script_language.h"
 
-typedef void (*VariantFunc)(Variant &r_ret, Variant &p_self, const Variant **p_args);
-typedef void (*VariantConstructFunc)(Variant &r_ret, const Variant **p_args);
+typedef void (*VariantFunc)(
+    Variant& r_ret,
+    Variant& p_self,
+    const Variant** p_args
+);
+typedef void (*VariantConstructFunc)(Variant& r_ret, const Variant** p_args);
 
 struct _VariantCall {
-    static void Vector3_dot(Variant &r_ret, Variant &p_self, const Variant **p_args) {
-        r_ret = reinterpret_cast<Vector3 *>(p_self._data._mem)->dot(*reinterpret_cast<const Vector3 *>(p_args[0]->_data._mem));
+    static void Vector3_dot(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
+        r_ret =
+            reinterpret_cast<Vector3*>(p_self._data._mem)
+                ->dot(*reinterpret_cast<const Vector3*>(p_args[0]->_data._mem));
     }
 
     struct FuncData {
@@ -59,19 +69,23 @@ struct _VariantCall {
 
         VariantFunc func;
 
-        _FORCE_INLINE_ bool verify_arguments(const Variant **p_args, Variant::CallError &r_error) {
+        _FORCE_INLINE_ bool verify_arguments(
+            const Variant** p_args,
+            Variant::CallError& r_error
+        ) {
             if (arg_count == 0) {
                 return true;
             }
 
-            const Variant::Type *tptr = &arg_types[0];
+            const Variant::Type* tptr = &arg_types[0];
 
             for (int i = 0; i < arg_count; i++) {
                 if (tptr[i] == Variant::NIL || tptr[i] == p_args[i]->type) {
                     continue; // all good
                 }
                 if (!Variant::can_convert(p_args[i]->type, tptr[i])) {
-                    r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+                    r_error.error =
+                        Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
                     r_error.argument = i;
                     r_error.expected = tptr[i];
                     return false;
@@ -80,26 +94,34 @@ struct _VariantCall {
             return true;
         }
 
-        _FORCE_INLINE_ void call(Variant &r_ret, Variant &p_self, const Variant **p_args, int p_argcount, Variant::CallError &r_error) {
+        _FORCE_INLINE_ void call(
+            Variant& r_ret,
+            Variant& p_self,
+            const Variant** p_args,
+            int p_argcount,
+            Variant::CallError& r_error
+        ) {
 #ifdef DEBUG_ENABLED
             if (p_argcount > arg_count) {
-                r_error.error = Variant::CallError::CALL_ERROR_TOO_MANY_ARGUMENTS;
+                r_error.error =
+                    Variant::CallError::CALL_ERROR_TOO_MANY_ARGUMENTS;
                 r_error.argument = arg_count;
                 return;
             } else
 #endif
-                    if (p_argcount < arg_count) {
+                if (p_argcount < arg_count) {
                 int def_argcount = default_args.size();
 #ifdef DEBUG_ENABLED
                 if (p_argcount < (arg_count - def_argcount)) {
-                    r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+                    r_error.error =
+                        Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
                     r_error.argument = arg_count - def_argcount;
                     return;
                 }
 
 #endif
                 ERR_FAIL_COND(p_argcount > VARIANT_ARG_MAX);
-                const Variant *newargs[VARIANT_ARG_MAX];
+                const Variant* newargs[VARIANT_ARG_MAX];
                 for (int i = 0; i < p_argcount; i++) {
                     newargs[i] = p_args[i];
                 }
@@ -129,27 +151,47 @@ struct _VariantCall {
         Map<StringName, FuncData> functions;
     };
 
-    static TypeFunc *type_funcs;
+    static TypeFunc* type_funcs;
 
     struct Arg {
         StringName name;
         Variant::Type type;
-        Arg() { type = Variant::NIL; }
-        Arg(Variant::Type p_type, const StringName &p_name) :
-                name(p_name),
-                type(p_type) {
+
+        Arg() {
+            type = Variant::NIL;
         }
+
+        Arg(Variant::Type p_type, const StringName& p_name) :
+            name(p_name),
+            type(p_type) {}
     };
 
-    //void addfunc(Variant::Type p_type, const StringName& p_name,VariantFunc p_func);
+    // void addfunc(Variant::Type p_type, const StringName& p_name,VariantFunc
+    // p_func);
 
-    static void make_func_return_variant(Variant::Type p_type, const StringName &p_name) {
+    static void make_func_return_variant(
+        Variant::Type p_type,
+        const StringName& p_name
+    ) {
 #ifdef DEBUG_ENABLED
         type_funcs[p_type].functions[p_name].returns = true;
 #endif
     }
 
-    static void addfunc(bool p_const, Variant::Type p_type, Variant::Type p_return, bool p_has_return, const StringName &p_name, VariantFunc p_func, const Vector<Variant> &p_defaultarg, const Arg &p_argtype1 = Arg(), const Arg &p_argtype2 = Arg(), const Arg &p_argtype3 = Arg(), const Arg &p_argtype4 = Arg(), const Arg &p_argtype5 = Arg()) {
+    static void addfunc(
+        bool p_const,
+        Variant::Type p_type,
+        Variant::Type p_return,
+        bool p_has_return,
+        const StringName& p_name,
+        VariantFunc p_func,
+        const Vector<Variant>& p_defaultarg,
+        const Arg& p_argtype1 = Arg(),
+        const Arg& p_argtype2 = Arg(),
+        const Arg& p_argtype3 = Arg(),
+        const Arg& p_argtype4 = Arg(),
+        const Arg& p_argtype5 = Arg()
+    ) {
         FuncData funcdata;
         funcdata.func = p_func;
         funcdata.default_args = p_defaultarg;
@@ -211,30 +253,124 @@ struct _VariantCall {
         type_funcs[p_type].functions[p_name] = funcdata;
     }
 
-#define VCALL_LOCALMEM0(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._mem)->m_method(); }
-#define VCALL_LOCALMEM0R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._mem)->m_method(); }
-#define VCALL_LOCALMEM1(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._mem)->m_method(*p_args[0]); }
-#define VCALL_LOCALMEM1R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._mem)->m_method(*p_args[0]); }
-#define VCALL_LOCALMEM2(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._mem)->m_method(*p_args[0], *p_args[1]); }
-#define VCALL_LOCALMEM2R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._mem)->m_method(*p_args[0], *p_args[1]); }
-#define VCALL_LOCALMEM3(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._mem)->m_method(*p_args[0], *p_args[1], *p_args[2]); }
-#define VCALL_LOCALMEM3R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._mem)->m_method(*p_args[0], *p_args[1], *p_args[2]); }
-#define VCALL_LOCALMEM4(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._mem)->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3]); }
-#define VCALL_LOCALMEM4R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._mem)->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3]); }
-#define VCALL_LOCALMEM5(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._mem)->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3], *p_args[4]); }
-#define VCALL_LOCALMEM5R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._mem)->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3], *p_args[4]); }
+#define VCALL_LOCALMEM0(m_type, m_method)                                      \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._mem)->m_method();              \
+    }
+#define VCALL_LOCALMEM0R(m_type, m_method)                                     \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret = reinterpret_cast<m_type*>(p_self._data._mem)->m_method();      \
+    }
+#define VCALL_LOCALMEM1(m_type, m_method)                                      \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._mem)->m_method(*p_args[0]);    \
+    }
+#define VCALL_LOCALMEM1R(m_type, m_method)                                     \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret = reinterpret_cast<m_type*>(p_self._data._mem)                   \
+                    ->m_method(*p_args[0]);                                    \
+    }
+#define VCALL_LOCALMEM2(m_type, m_method)                                      \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._mem)                           \
+            ->m_method(*p_args[0], *p_args[1]);                                \
+    }
+#define VCALL_LOCALMEM2R(m_type, m_method)                                     \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret = reinterpret_cast<m_type*>(p_self._data._mem)                   \
+                    ->m_method(*p_args[0], *p_args[1]);                        \
+    }
+#define VCALL_LOCALMEM3(m_type, m_method)                                      \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._mem)                           \
+            ->m_method(*p_args[0], *p_args[1], *p_args[2]);                    \
+    }
+#define VCALL_LOCALMEM3R(m_type, m_method)                                     \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret = reinterpret_cast<m_type*>(p_self._data._mem)                   \
+                    ->m_method(*p_args[0], *p_args[1], *p_args[2]);            \
+    }
+#define VCALL_LOCALMEM4(m_type, m_method)                                      \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._mem)                           \
+            ->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3]);        \
+    }
+#define VCALL_LOCALMEM4R(m_type, m_method)                                     \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret =                                                                \
+            reinterpret_cast<m_type*>(p_self._data._mem)                       \
+                ->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3]);    \
+    }
+#define VCALL_LOCALMEM5(m_type, m_method)                                      \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._mem)                           \
+            ->m_method(                                                        \
+                *p_args[0],                                                    \
+                *p_args[1],                                                    \
+                *p_args[2],                                                    \
+                *p_args[3],                                                    \
+                *p_args[4]                                                     \
+            );                                                                 \
+    }
+#define VCALL_LOCALMEM5R(m_type, m_method)                                     \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret = reinterpret_cast<m_type*>(p_self._data._mem)                   \
+                    ->m_method(                                                \
+                        *p_args[0],                                            \
+                        *p_args[1],                                            \
+                        *p_args[2],                                            \
+                        *p_args[3],                                            \
+                        *p_args[4]                                             \
+                    );                                                         \
+    }
 
     // built-in functions of localmem based types
 
@@ -321,8 +457,12 @@ struct _VariantCall {
     VCALL_LOCALMEM1R(String, trim_prefix);
     VCALL_LOCALMEM1R(String, trim_suffix);
 
-    static void _call_String_to_ascii(Variant &r_ret, Variant &p_self, const Variant **p_args) {
-        String *s = reinterpret_cast<String *>(p_self._data._mem);
+    static void _call_String_to_ascii(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
+        String* s = reinterpret_cast<String*>(p_self._data._mem);
         if (s->empty()) {
             r_ret = PoolByteArray();
             return;
@@ -339,8 +479,12 @@ struct _VariantCall {
         r_ret = retval;
     }
 
-    static void _call_String_to_utf8(Variant &r_ret, Variant &p_self, const Variant **p_args) {
-        String *s = reinterpret_cast<String *>(p_self._data._mem);
+    static void _call_String_to_utf8(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
+        String* s = reinterpret_cast<String*>(p_self._data._mem);
         if (s->empty()) {
             r_ret = PoolByteArray();
             return;
@@ -357,8 +501,12 @@ struct _VariantCall {
         r_ret = retval;
     }
 
-    static void _call_String_to_wchar(Variant &r_ret, Variant &p_self, const Variant **p_args) {
-        String *s = reinterpret_cast<String *>(p_self._data._mem);
+    static void _call_String_to_wchar(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
+        String* s = reinterpret_cast<String*>(p_self._data._mem);
         if (s->empty()) {
             r_ret = PoolByteArray();
             return;
@@ -466,28 +614,43 @@ struct _VariantCall {
     VCALL_LOCALMEM2R(Plane, has_point);
     VCALL_LOCALMEM1R(Plane, project);
 
-    //return vector3 if intersected, nil if not
-    static void _call_Plane_intersect_3(Variant &r_ret, Variant &p_self, const Variant **p_args) {
+    // return vector3 if intersected, nil if not
+    static void _call_Plane_intersect_3(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
         Vector3 result;
-        if (reinterpret_cast<Plane *>(p_self._data._mem)->intersect_3(*p_args[0], *p_args[1], &result)) {
+        if (reinterpret_cast<Plane*>(p_self._data._mem)
+                ->intersect_3(*p_args[0], *p_args[1], &result)) {
             r_ret = result;
         } else {
             r_ret = Variant();
         }
     }
 
-    static void _call_Plane_intersects_ray(Variant &r_ret, Variant &p_self, const Variant **p_args) {
+    static void _call_Plane_intersects_ray(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
         Vector3 result;
-        if (reinterpret_cast<Plane *>(p_self._data._mem)->intersects_ray(*p_args[0], *p_args[1], &result)) {
+        if (reinterpret_cast<Plane*>(p_self._data._mem)
+                ->intersects_ray(*p_args[0], *p_args[1], &result)) {
             r_ret = result;
         } else {
             r_ret = Variant();
         }
     }
 
-    static void _call_Plane_intersects_segment(Variant &r_ret, Variant &p_self, const Variant **p_args) {
+    static void _call_Plane_intersects_segment(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
         Vector3 result;
-        if (reinterpret_cast<Plane *>(p_self._data._mem)->intersects_segment(*p_args[0], *p_args[1], &result)) {
+        if (reinterpret_cast<Plane*>(p_self._data._mem)
+                ->intersects_segment(*p_args[0], *p_args[1], &result)) {
             r_ret = result;
         } else {
             r_ret = Variant();
@@ -585,8 +748,12 @@ struct _VariantCall {
     VCALL_LOCALMEM0R(Array, max);
     VCALL_LOCALMEM0R(Array, min);
 
-    static void _call_PoolByteArray_get_string_from_ascii(Variant &r_ret, Variant &p_self, const Variant **p_args) {
-        PoolByteArray *ba = reinterpret_cast<PoolByteArray *>(p_self._data._mem);
+    static void _call_PoolByteArray_get_string_from_ascii(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
+        PoolByteArray* ba = reinterpret_cast<PoolByteArray*>(p_self._data._mem);
         String s;
         if (ba->size() > 0) {
             PoolByteArray::Read r = ba->read();
@@ -600,24 +767,39 @@ struct _VariantCall {
         r_ret = s;
     }
 
-    static void _call_PoolByteArray_get_string_from_utf8(Variant &r_ret, Variant &p_self, const Variant **p_args) {
-        PoolByteArray *ba = reinterpret_cast<PoolByteArray *>(p_self._data._mem);
+    static void _call_PoolByteArray_get_string_from_utf8(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
+        PoolByteArray* ba = reinterpret_cast<PoolByteArray*>(p_self._data._mem);
         String s;
         if (ba->size() > 0) {
             PoolByteArray::Read r = ba->read();
-            s.parse_utf8((const char *)r.ptr(), ba->size());
+            s.parse_utf8((const char*)r.ptr(), ba->size());
         }
         r_ret = s;
     }
 
-    static void _call_PoolByteArray_compress(Variant &r_ret, Variant &p_self, const Variant **p_args) {
-        PoolByteArray *ba = reinterpret_cast<PoolByteArray *>(p_self._data._mem);
+    static void _call_PoolByteArray_compress(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
+        PoolByteArray* ba = reinterpret_cast<PoolByteArray*>(p_self._data._mem);
         PoolByteArray compressed;
         if (ba->size() > 0) {
             Compression::Mode mode = (Compression::Mode)(int)(*p_args[0]);
 
-            compressed.resize(Compression::get_max_compressed_buffer_size(ba->size(), mode));
-            int result = Compression::compress(compressed.write().ptr(), ba->read().ptr(), ba->size(), mode);
+            compressed.resize(
+                Compression::get_max_compressed_buffer_size(ba->size(), mode)
+            );
+            int result = Compression::compress(
+                compressed.write().ptr(),
+                ba->read().ptr(),
+                ba->size(),
+                mode
+            );
 
             result = result >= 0 ? result : 0;
             compressed.resize(result);
@@ -625,8 +807,12 @@ struct _VariantCall {
         r_ret = compressed;
     }
 
-    static void _call_PoolByteArray_decompress(Variant &r_ret, Variant &p_self, const Variant **p_args) {
-        PoolByteArray *ba = reinterpret_cast<PoolByteArray *>(p_self._data._mem);
+    static void _call_PoolByteArray_decompress(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
+        PoolByteArray* ba = reinterpret_cast<PoolByteArray*>(p_self._data._mem);
         PoolByteArray decompressed;
         Compression::Mode mode = (Compression::Mode)(int)(*p_args[1]);
 
@@ -634,7 +820,8 @@ struct _VariantCall {
 
         if (buffer_size <= 0) {
             r_ret = decompressed;
-            ERR_FAIL_MSG("Decompression buffer size must be greater than zero.");
+            ERR_FAIL_MSG("Decompression buffer size must be greater than zero."
+            );
         }
         if (ba->size() == 0) {
             r_ret = decompressed;
@@ -642,7 +829,13 @@ struct _VariantCall {
         }
 
         decompressed.resize(buffer_size);
-        int result = Compression::decompress(decompressed.write().ptr(), buffer_size, ba->read().ptr(), ba->size(), mode);
+        int result = Compression::decompress(
+            decompressed.write().ptr(),
+            buffer_size,
+            ba->read().ptr(),
+            ba->size(),
+            mode
+        );
 
         result = result >= 0 ? result : 0;
         decompressed.resize(result);
@@ -650,14 +843,24 @@ struct _VariantCall {
         r_ret = decompressed;
     }
 
-    static void _call_PoolByteArray_decompress_dynamic(Variant &r_ret, Variant &p_self, const Variant **p_args) {
-        PoolByteArray *ba = reinterpret_cast<PoolByteArray *>(p_self._data._mem);
+    static void _call_PoolByteArray_decompress_dynamic(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
+        PoolByteArray* ba = reinterpret_cast<PoolByteArray*>(p_self._data._mem);
         PoolByteArray decompressed;
         int max_output_size = (int)(*p_args[0]);
         Compression::Mode mode = (Compression::Mode)(int)(*p_args[1]);
 
         decompressed.resize(1024);
-        int result = Compression::decompress_dynamic(&decompressed, max_output_size, ba->read().ptr(), ba->size(), mode);
+        int result = Compression::decompress_dynamic(
+            &decompressed,
+            max_output_size,
+            ba->read().ptr(),
+            ba->size(),
+            mode
+        );
 
         if (result == OK) {
             r_ret = decompressed;
@@ -668,8 +871,12 @@ struct _VariantCall {
         }
     }
 
-    static void _call_PoolByteArray_hex_encode(Variant &r_ret, Variant &p_self, const Variant **p_args) {
-        PoolByteArray *ba = reinterpret_cast<PoolByteArray *>(p_self._data._mem);
+    static void _call_PoolByteArray_hex_encode(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
+        PoolByteArray* ba = reinterpret_cast<PoolByteArray*>(p_self._data._mem);
         if (ba->size() == 0) {
             r_ret = String();
             return;
@@ -765,30 +972,124 @@ struct _VariantCall {
     VCALL_LOCALMEM1(PoolColorArray, append_array);
     VCALL_LOCALMEM0(PoolColorArray, invert);
 
-#define VCALL_PTR0(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(); }
-#define VCALL_PTR0R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(); }
-#define VCALL_PTR1(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(*p_args[0]); }
-#define VCALL_PTR1R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(*p_args[0]); }
-#define VCALL_PTR2(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(*p_args[0], *p_args[1]); }
-#define VCALL_PTR2R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(*p_args[0], *p_args[1]); }
-#define VCALL_PTR3(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(*p_args[0], *p_args[1], *p_args[2]); }
-#define VCALL_PTR3R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(*p_args[0], *p_args[1], *p_args[2]); }
-#define VCALL_PTR4(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3]); }
-#define VCALL_PTR4R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3]); }
-#define VCALL_PTR5(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3], *p_args[4]); }
-#define VCALL_PTR5R(m_type, m_method) \
-    static void _call_##m_type##_##m_method(Variant &r_ret, Variant &p_self, const Variant **p_args) { r_ret = reinterpret_cast<m_type *>(p_self._data._ptr)->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3], *p_args[4]); }
+#define VCALL_PTR0(m_type, m_method)                                           \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._ptr)->m_method();              \
+    }
+#define VCALL_PTR0R(m_type, m_method)                                          \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret = reinterpret_cast<m_type*>(p_self._data._ptr)->m_method();      \
+    }
+#define VCALL_PTR1(m_type, m_method)                                           \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._ptr)->m_method(*p_args[0]);    \
+    }
+#define VCALL_PTR1R(m_type, m_method)                                          \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret = reinterpret_cast<m_type*>(p_self._data._ptr)                   \
+                    ->m_method(*p_args[0]);                                    \
+    }
+#define VCALL_PTR2(m_type, m_method)                                           \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._ptr)                           \
+            ->m_method(*p_args[0], *p_args[1]);                                \
+    }
+#define VCALL_PTR2R(m_type, m_method)                                          \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret = reinterpret_cast<m_type*>(p_self._data._ptr)                   \
+                    ->m_method(*p_args[0], *p_args[1]);                        \
+    }
+#define VCALL_PTR3(m_type, m_method)                                           \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._ptr)                           \
+            ->m_method(*p_args[0], *p_args[1], *p_args[2]);                    \
+    }
+#define VCALL_PTR3R(m_type, m_method)                                          \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret = reinterpret_cast<m_type*>(p_self._data._ptr)                   \
+                    ->m_method(*p_args[0], *p_args[1], *p_args[2]);            \
+    }
+#define VCALL_PTR4(m_type, m_method)                                           \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._ptr)                           \
+            ->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3]);        \
+    }
+#define VCALL_PTR4R(m_type, m_method)                                          \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret =                                                                \
+            reinterpret_cast<m_type*>(p_self._data._ptr)                       \
+                ->m_method(*p_args[0], *p_args[1], *p_args[2], *p_args[3]);    \
+    }
+#define VCALL_PTR5(m_type, m_method)                                           \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        reinterpret_cast<m_type*>(p_self._data._ptr)                           \
+            ->m_method(                                                        \
+                *p_args[0],                                                    \
+                *p_args[1],                                                    \
+                *p_args[2],                                                    \
+                *p_args[3],                                                    \
+                *p_args[4]                                                     \
+            );                                                                 \
+    }
+#define VCALL_PTR5R(m_type, m_method)                                          \
+    static void _call_##m_type##_##m_method(                                   \
+        Variant& r_ret,                                                        \
+        Variant& p_self,                                                       \
+        const Variant** p_args                                                 \
+    ) {                                                                        \
+        r_ret = reinterpret_cast<m_type*>(p_self._data._ptr)                   \
+                    ->m_method(                                                \
+                        *p_args[0],                                            \
+                        *p_args[1],                                            \
+                        *p_args[2],                                            \
+                        *p_args[3],                                            \
+                        *p_args[4]                                             \
+                    );                                                         \
+    }
 
     VCALL_PTR0R(AABB, abs);
     VCALL_PTR0R(AABB, get_area);
@@ -825,52 +1126,76 @@ struct _VariantCall {
     VCALL_PTR2R(Transform2D, interpolate_with);
     VCALL_PTR1R(Transform2D, is_equal_approx);
 
-    static void _call_Transform2D_xform(Variant &r_ret, Variant &p_self, const Variant **p_args) {
+    static void _call_Transform2D_xform(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
         switch (p_args[0]->type) {
             case Variant::VECTOR2:
-                r_ret = reinterpret_cast<Transform2D *>(p_self._data._ptr)->xform(p_args[0]->operator Vector2());
+                r_ret = reinterpret_cast<Transform2D*>(p_self._data._ptr)
+                            ->xform(p_args[0]->operator Vector2());
                 return;
             case Variant::RECT2:
-                r_ret = reinterpret_cast<Transform2D *>(p_self._data._ptr)->xform(p_args[0]->operator Rect2());
+                r_ret = reinterpret_cast<Transform2D*>(p_self._data._ptr)
+                            ->xform(p_args[0]->operator Rect2());
                 return;
             case Variant::POOL_VECTOR2_ARRAY:
-                r_ret = reinterpret_cast<Transform2D *>(p_self._data._ptr)->xform(p_args[0]->operator PoolVector2Array());
+                r_ret = reinterpret_cast<Transform2D*>(p_self._data._ptr)
+                            ->xform(p_args[0]->operator PoolVector2Array());
                 return;
             default:
                 r_ret = Variant();
         }
     }
 
-    static void _call_Transform2D_xform_inv(Variant &r_ret, Variant &p_self, const Variant **p_args) {
+    static void _call_Transform2D_xform_inv(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
         switch (p_args[0]->type) {
             case Variant::VECTOR2:
-                r_ret = reinterpret_cast<Transform2D *>(p_self._data._ptr)->xform_inv(p_args[0]->operator Vector2());
+                r_ret = reinterpret_cast<Transform2D*>(p_self._data._ptr)
+                            ->xform_inv(p_args[0]->operator Vector2());
                 return;
             case Variant::RECT2:
-                r_ret = reinterpret_cast<Transform2D *>(p_self._data._ptr)->xform_inv(p_args[0]->operator Rect2());
+                r_ret = reinterpret_cast<Transform2D*>(p_self._data._ptr)
+                            ->xform_inv(p_args[0]->operator Rect2());
                 return;
             case Variant::POOL_VECTOR2_ARRAY:
-                r_ret = reinterpret_cast<Transform2D *>(p_self._data._ptr)->xform_inv(p_args[0]->operator PoolVector2Array());
+                r_ret = reinterpret_cast<Transform2D*>(p_self._data._ptr)
+                            ->xform_inv(p_args[0]->operator PoolVector2Array());
                 return;
             default:
                 r_ret = Variant();
         }
     }
 
-    static void _call_Transform2D_basis_xform(Variant &r_ret, Variant &p_self, const Variant **p_args) {
+    static void _call_Transform2D_basis_xform(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
         switch (p_args[0]->type) {
             case Variant::VECTOR2:
-                r_ret = reinterpret_cast<Transform2D *>(p_self._data._ptr)->basis_xform(p_args[0]->operator Vector2());
+                r_ret = reinterpret_cast<Transform2D*>(p_self._data._ptr)
+                            ->basis_xform(p_args[0]->operator Vector2());
                 return;
             default:
                 r_ret = Variant();
         }
     }
 
-    static void _call_Transform2D_basis_xform_inv(Variant &r_ret, Variant &p_self, const Variant **p_args) {
+    static void _call_Transform2D_basis_xform_inv(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
         switch (p_args[0]->type) {
             case Variant::VECTOR2:
-                r_ret = reinterpret_cast<Transform2D *>(p_self._data._ptr)->basis_xform_inv(p_args[0]->operator Vector2());
+                r_ret = reinterpret_cast<Transform2D*>(p_self._data._ptr)
+                            ->basis_xform_inv(p_args[0]->operator Vector2());
                 return;
             default:
                 r_ret = Variant();
@@ -917,38 +1242,55 @@ struct _VariantCall {
     VCALL_PTR2R(Transform, interpolate_with);
     VCALL_PTR1R(Transform, is_equal_approx);
 
-    static void _call_Transform_xform(Variant &r_ret, Variant &p_self, const Variant **p_args) {
+    static void _call_Transform_xform(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
         switch (p_args[0]->type) {
             case Variant::VECTOR3:
-                r_ret = reinterpret_cast<Transform *>(p_self._data._ptr)->xform(p_args[0]->operator Vector3());
+                r_ret = reinterpret_cast<Transform*>(p_self._data._ptr)
+                            ->xform(p_args[0]->operator Vector3());
                 return;
             case Variant::PLANE:
-                r_ret = reinterpret_cast<Transform *>(p_self._data._ptr)->xform(p_args[0]->operator Plane());
+                r_ret = reinterpret_cast<Transform*>(p_self._data._ptr)
+                            ->xform(p_args[0]->operator Plane());
                 return;
             case Variant::AABB:
-                r_ret = reinterpret_cast<Transform *>(p_self._data._ptr)->xform(p_args[0]->operator ::AABB());
+                r_ret = reinterpret_cast<Transform*>(p_self._data._ptr)
+                            ->xform(p_args[0]->operator ::AABB());
                 return;
             case Variant::POOL_VECTOR3_ARRAY:
-                r_ret = reinterpret_cast<Transform *>(p_self._data._ptr)->xform(p_args[0]->operator ::PoolVector3Array());
+                r_ret = reinterpret_cast<Transform*>(p_self._data._ptr)
+                            ->xform(p_args[0]->operator ::PoolVector3Array());
                 return;
             default:
                 r_ret = Variant();
         }
     }
 
-    static void _call_Transform_xform_inv(Variant &r_ret, Variant &p_self, const Variant **p_args) {
+    static void _call_Transform_xform_inv(
+        Variant& r_ret,
+        Variant& p_self,
+        const Variant** p_args
+    ) {
         switch (p_args[0]->type) {
             case Variant::VECTOR3:
-                r_ret = reinterpret_cast<Transform *>(p_self._data._ptr)->xform_inv(p_args[0]->operator Vector3());
+                r_ret = reinterpret_cast<Transform*>(p_self._data._ptr)
+                            ->xform_inv(p_args[0]->operator Vector3());
                 return;
             case Variant::PLANE:
-                r_ret = reinterpret_cast<Transform *>(p_self._data._ptr)->xform_inv(p_args[0]->operator Plane());
+                r_ret = reinterpret_cast<Transform*>(p_self._data._ptr)
+                            ->xform_inv(p_args[0]->operator Plane());
                 return;
             case Variant::AABB:
-                r_ret = reinterpret_cast<Transform *>(p_self._data._ptr)->xform_inv(p_args[0]->operator ::AABB());
+                r_ret = reinterpret_cast<Transform*>(p_self._data._ptr)
+                            ->xform_inv(p_args[0]->operator ::AABB());
                 return;
             case Variant::POOL_VECTOR3_ARRAY:
-                r_ret = reinterpret_cast<Transform *>(p_self._data._ptr)->xform_inv(p_args[0]->operator ::PoolVector3Array());
+                r_ret =
+                    reinterpret_cast<Transform*>(p_self._data._ptr)
+                        ->xform_inv(p_args[0]->operator ::PoolVector3Array());
                 return;
             default:
                 r_ret = Variant();
@@ -974,26 +1316,26 @@ struct _VariantCall {
         List<ConstructData> constructors;
     };
 
-    static ConstructFunc *construct_funcs;
+    static ConstructFunc* construct_funcs;
 
-    static void Vector2_init1(Variant &r_ret, const Variant **p_args) {
+    static void Vector2_init1(Variant& r_ret, const Variant** p_args) {
         r_ret = Vector2(*p_args[0], *p_args[1]);
     }
 
-    static void Rect2_init1(Variant &r_ret, const Variant **p_args) {
+    static void Rect2_init1(Variant& r_ret, const Variant** p_args) {
         r_ret = Rect2(*p_args[0], *p_args[1]);
     }
 
-    static void Rect2_init2(Variant &r_ret, const Variant **p_args) {
+    static void Rect2_init2(Variant& r_ret, const Variant** p_args) {
         r_ret = Rect2(*p_args[0], *p_args[1], *p_args[2], *p_args[3]);
     }
 
-    static void Transform2D_init2(Variant &r_ret, const Variant **p_args) {
+    static void Transform2D_init2(Variant& r_ret, const Variant** p_args) {
         Transform2D m(*p_args[0], *p_args[1]);
         r_ret = m;
     }
 
-    static void Transform2D_init3(Variant &r_ret, const Variant **p_args) {
+    static void Transform2D_init3(Variant& r_ret, const Variant** p_args) {
         Transform2D m;
         m[0] = *p_args[0];
         m[1] = *p_args[1];
@@ -1001,58 +1343,61 @@ struct _VariantCall {
         r_ret = m;
     }
 
-    static void Vector3_init1(Variant &r_ret, const Variant **p_args) {
+    static void Vector3_init1(Variant& r_ret, const Variant** p_args) {
         r_ret = Vector3(*p_args[0], *p_args[1], *p_args[2]);
     }
 
-    static void Plane_init1(Variant &r_ret, const Variant **p_args) {
+    static void Plane_init1(Variant& r_ret, const Variant** p_args) {
         r_ret = Plane(*p_args[0], *p_args[1], *p_args[2], *p_args[3]);
     }
 
-    static void Plane_init2(Variant &r_ret, const Variant **p_args) {
+    static void Plane_init2(Variant& r_ret, const Variant** p_args) {
         r_ret = Plane(*p_args[0], *p_args[1], *p_args[2]);
     }
 
-    static void Plane_init3(Variant &r_ret, const Variant **p_args) {
-        r_ret = Plane(p_args[0]->operator Vector3(), p_args[1]->operator real_t());
-    }
-    static void Plane_init4(Variant &r_ret, const Variant **p_args) {
-        r_ret = Plane(p_args[0]->operator Vector3(), p_args[1]->operator Vector3());
+    static void Plane_init3(Variant& r_ret, const Variant** p_args) {
+        r_ret =
+            Plane(p_args[0]->operator Vector3(), p_args[1]->operator real_t());
     }
 
-    static void Quat_init1(Variant &r_ret, const Variant **p_args) {
+    static void Plane_init4(Variant& r_ret, const Variant** p_args) {
+        r_ret =
+            Plane(p_args[0]->operator Vector3(), p_args[1]->operator Vector3());
+    }
+
+    static void Quat_init1(Variant& r_ret, const Variant** p_args) {
         r_ret = Quat(*p_args[0], *p_args[1], *p_args[2], *p_args[3]);
     }
 
-    static void Quat_init2(Variant &r_ret, const Variant **p_args) {
+    static void Quat_init2(Variant& r_ret, const Variant** p_args) {
         r_ret = Quat(((Vector3)(*p_args[0])), ((real_t)(*p_args[1])));
     }
 
-    static void Quat_init3(Variant &r_ret, const Variant **p_args) {
+    static void Quat_init3(Variant& r_ret, const Variant** p_args) {
         r_ret = Quat(((Vector3)(*p_args[0])));
     }
 
-    static void Color_init1(Variant &r_ret, const Variant **p_args) {
+    static void Color_init1(Variant& r_ret, const Variant** p_args) {
         r_ret = Color(*p_args[0], *p_args[1], *p_args[2], *p_args[3]);
     }
 
-    static void Color_init2(Variant &r_ret, const Variant **p_args) {
+    static void Color_init2(Variant& r_ret, const Variant** p_args) {
         r_ret = Color(*p_args[0], *p_args[1], *p_args[2]);
     }
 
-    static void Color_init3(Variant &r_ret, const Variant **p_args) {
+    static void Color_init3(Variant& r_ret, const Variant** p_args) {
         r_ret = Color::html(*p_args[0]);
     }
 
-    static void Color_init4(Variant &r_ret, const Variant **p_args) {
+    static void Color_init4(Variant& r_ret, const Variant** p_args) {
         r_ret = Color::hex(*p_args[0]);
     }
 
-    static void AABB_init1(Variant &r_ret, const Variant **p_args) {
+    static void AABB_init1(Variant& r_ret, const Variant** p_args) {
         r_ret = ::AABB(*p_args[0], *p_args[1]);
     }
 
-    static void Basis_init1(Variant &r_ret, const Variant **p_args) {
+    static void Basis_init1(Variant& r_ret, const Variant** p_args) {
         Basis m;
         m.set_axis(0, *p_args[0]);
         m.set_axis(1, *p_args[1]);
@@ -1060,11 +1405,12 @@ struct _VariantCall {
         r_ret = m;
     }
 
-    static void Basis_init2(Variant &r_ret, const Variant **p_args) {
-        r_ret = Basis(p_args[0]->operator Vector3(), p_args[1]->operator real_t());
+    static void Basis_init2(Variant& r_ret, const Variant** p_args) {
+        r_ret =
+            Basis(p_args[0]->operator Vector3(), p_args[1]->operator real_t());
     }
 
-    static void Transform_init1(Variant &r_ret, const Variant **p_args) {
+    static void Transform_init1(Variant& r_ret, const Variant** p_args) {
         Transform t;
         t.basis.set_axis(0, *p_args[0]);
         t.basis.set_axis(1, *p_args[1]);
@@ -1073,15 +1419,25 @@ struct _VariantCall {
         r_ret = t;
     }
 
-    static void Transform_init2(Variant &r_ret, const Variant **p_args) {
-        r_ret = Transform(p_args[0]->operator Basis(), p_args[1]->operator Vector3());
+    static void Transform_init2(Variant& r_ret, const Variant** p_args) {
+        r_ret = Transform(
+            p_args[0]->operator Basis(),
+            p_args[1]->operator Vector3()
+        );
     }
 
-    static void add_constructor(VariantConstructFunc p_func, const Variant::Type p_type,
-            const String &p_name1 = "", const Variant::Type p_type1 = Variant::NIL,
-            const String &p_name2 = "", const Variant::Type p_type2 = Variant::NIL,
-            const String &p_name3 = "", const Variant::Type p_type3 = Variant::NIL,
-            const String &p_name4 = "", const Variant::Type p_type4 = Variant::NIL) {
+    static void add_constructor(
+        VariantConstructFunc p_func,
+        const Variant::Type p_type,
+        const String& p_name1 = "",
+        const Variant::Type p_type1 = Variant::NIL,
+        const String& p_name2 = "",
+        const Variant::Type p_type2 = Variant::NIL,
+        const String& p_name3 = "",
+        const Variant::Type p_type3 = Variant::NIL,
+        const String& p_name4 = "",
+        const Variant::Type p_type4 = Variant::NIL
+    ) {
         ConstructData cd;
         cd.func = p_func;
         cd.arg_count = 0;
@@ -1130,16 +1486,24 @@ struct _VariantCall {
 #endif
     };
 
-    static ConstantData *constant_data;
+    static ConstantData* constant_data;
 
-    static void add_constant(int p_type, StringName p_constant_name, int p_constant_value) {
+    static void add_constant(
+        int p_type,
+        StringName p_constant_name,
+        int p_constant_value
+    ) {
         constant_data[p_type].value[p_constant_name] = p_constant_value;
 #ifdef DEBUG_ENABLED
         constant_data[p_type].value_ordered.push_back(p_constant_name);
 #endif
     }
 
-    static void add_variant_constant(int p_type, StringName p_constant_name, const Variant &p_constant_value) {
+    static void add_variant_constant(
+        int p_type,
+        StringName p_constant_name,
+        const Variant& p_constant_value
+    ) {
         constant_data[p_type].variant_value[p_constant_name] = p_constant_value;
 #ifdef DEBUG_ENABLED
         constant_data[p_type].variant_value_ordered.push_back(p_constant_name);
@@ -1147,22 +1511,33 @@ struct _VariantCall {
     }
 };
 
-_VariantCall::TypeFunc *_VariantCall::type_funcs = nullptr;
-_VariantCall::ConstructFunc *_VariantCall::construct_funcs = nullptr;
-_VariantCall::ConstantData *_VariantCall::constant_data = nullptr;
+_VariantCall::TypeFunc* _VariantCall::type_funcs = nullptr;
+_VariantCall::ConstructFunc* _VariantCall::construct_funcs = nullptr;
+_VariantCall::ConstantData* _VariantCall::constant_data = nullptr;
 
-Variant Variant::call(const StringName &p_method, const Variant **p_args, int p_argcount, CallError &r_error) {
+Variant Variant::call(
+    const StringName& p_method,
+    const Variant** p_args,
+    int p_argcount,
+    CallError& r_error
+) {
     Variant ret;
     call_ptr(p_method, p_args, p_argcount, &ret, r_error);
     return ret;
 }
 
-void Variant::call_ptr(const StringName &p_method, const Variant **p_args, int p_argcount, Variant *r_ret, CallError &r_error) {
+void Variant::call_ptr(
+    const StringName& p_method,
+    const Variant** p_args,
+    int p_argcount,
+    Variant* r_ret,
+    CallError& r_error
+) {
     Variant ret;
 
     if (type == Variant::OBJECT) {
-        //call object
-        Object *obj = _OBJ_PTR(*this);
+        // call object
+        Object* obj = _OBJ_PTR(*this);
         if (unlikely(!obj)) {
 #ifdef DEBUG_ENABLED
             if (_get_obj().rc) {
@@ -1175,19 +1550,20 @@ void Variant::call_ptr(const StringName &p_method, const Variant **p_args, int p
 
         ret = obj->call(p_method, p_args, p_argcount, r_error);
 
-        //else if (type==Variant::METHOD) {
+        // else if (type==Variant::METHOD) {
 
     } else {
         r_error.error = Variant::CallError::CALL_OK;
 
-        Map<StringName, _VariantCall::FuncData>::Element *E = _VariantCall::type_funcs[type].functions.find(p_method);
+        Map<StringName, _VariantCall::FuncData>::Element* E =
+            _VariantCall::type_funcs[type].functions.find(p_method);
 #ifdef DEBUG_ENABLED
         if (!E) {
             r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
             return;
         }
 #endif
-        _VariantCall::FuncData &funcdata = E->get();
+        _VariantCall::FuncData& funcdata = E->get();
         funcdata.call(ret, *this, p_args, p_argcount, r_error);
     }
 
@@ -1198,12 +1574,18 @@ void Variant::call_ptr(const StringName &p_method, const Variant **p_args, int p
 
 #define VCALL(m_type, m_method) _VariantCall::_call_##m_type##_##m_method
 
-Variant Variant::construct(const Variant::Type p_type, const Variant **p_args, int p_argcount, CallError &r_error, bool p_strict) {
+Variant Variant::construct(
+    const Variant::Type p_type,
+    const Variant** p_args,
+    int p_argcount,
+    CallError& r_error,
+    bool p_strict
+) {
     r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
     ERR_FAIL_INDEX_V(p_type, VARIANT_MAX, Variant());
 
     r_error.error = Variant::CallError::CALL_OK;
-    if (p_argcount == 0) { //generic construct
+    if (p_argcount == 0) { // generic construct
 
         switch (p_type) {
             case NIL:
@@ -1247,7 +1629,7 @@ Variant Variant::construct(const Variant::Type p_type, const Variant **p_args, i
             case _RID:
                 return RID();
             case OBJECT:
-                return (Object *)nullptr;
+                return (Object*)nullptr;
             case DICTIONARY:
                 return Dictionary();
             case ARRAY:
@@ -1271,9 +1653,9 @@ Variant Variant::construct(const Variant::Type p_type, const Variant **p_args, i
         }
 
     } else if (p_argcount == 1 && p_args[0]->type == p_type) {
-        return *p_args[0]; //copy construct
+        return *p_args[0]; // copy construct
     } else if (p_argcount == 1 && (!p_strict || Variant::can_convert(p_args[0]->type, p_type))) {
-        //near match construct
+        // near match construct
 
         switch (p_type) {
             case NIL: {
@@ -1313,13 +1695,15 @@ Variant Variant::construct(const Variant::Type p_type, const Variant **p_args, i
 
             // misc types
             case COLOR:
-                return p_args[0]->type == Variant::STRING ? Color::html(*p_args[0]) : Color::hex(*p_args[0]);
+                return p_args[0]->type == Variant::STRING
+                         ? Color::html(*p_args[0])
+                         : Color::hex(*p_args[0]);
             case NODE_PATH:
                 return (NodePath(p_args[0]->operator NodePath())); // 15
             case _RID:
                 return (RID(*p_args[0]));
             case OBJECT:
-                return ((Object *)(p_args[0]->operator Object *()));
+                return ((Object*)(p_args[0]->operator Object*()));
             case DICTIONARY:
                 return p_args[0]->operator Dictionary();
             case ARRAY:
@@ -1344,19 +1728,23 @@ Variant Variant::construct(const Variant::Type p_type, const Variant **p_args, i
                 return Variant();
         }
     } else if (p_argcount >= 1) {
-        _VariantCall::ConstructFunc &c = _VariantCall::construct_funcs[p_type];
+        _VariantCall::ConstructFunc& c = _VariantCall::construct_funcs[p_type];
 
-        for (List<_VariantCall::ConstructData>::Element *E = c.constructors.front(); E; E = E->next()) {
-            const _VariantCall::ConstructData &cd = E->get();
+        for (List<_VariantCall::ConstructData>::Element* E =
+                 c.constructors.front();
+             E;
+             E = E->next()) {
+            const _VariantCall::ConstructData& cd = E->get();
 
             if (cd.arg_count != p_argcount) {
                 continue;
             }
 
-            //validate parameters
+            // validate parameters
             for (int i = 0; i < cd.arg_count; i++) {
                 if (!Variant::can_convert(p_args[i]->type, cd.arg_types[i])) {
-                    r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT; //no such constructor
+                    r_error.error = Variant::CallError::
+                        CALL_ERROR_INVALID_ARGUMENT; // no such constructor
                     r_error.argument = i;
                     r_error.expected = cd.arg_types[i];
                     return Variant();
@@ -1368,13 +1756,14 @@ Variant Variant::construct(const Variant::Type p_type, const Variant **p_args, i
             return v;
         }
     }
-    r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD; //no such constructor
+    r_error.error =
+        Variant::CallError::CALL_ERROR_INVALID_METHOD; // no such constructor
     return Variant();
 }
 
-bool Variant::has_method(const StringName &p_method) const {
+bool Variant::has_method(const StringName& p_method) const {
     if (type == OBJECT) {
-        Object *obj = _OBJ_PTR(*this);
+        Object* obj = _OBJ_PTR(*this);
         if (unlikely(!obj)) {
 #ifdef DEBUG_ENABLED
             if (_get_obj().rc) {
@@ -1386,14 +1775,18 @@ bool Variant::has_method(const StringName &p_method) const {
         return obj->has_method(p_method);
     }
 
-    const _VariantCall::TypeFunc &tf = _VariantCall::type_funcs[type];
+    const _VariantCall::TypeFunc& tf = _VariantCall::type_funcs[type];
     return tf.functions.has(p_method);
 }
 
-Vector<Variant::Type> Variant::get_method_argument_types(Variant::Type p_type, const StringName &p_method) {
-    const _VariantCall::TypeFunc &tf = _VariantCall::type_funcs[p_type];
+Vector<Variant::Type> Variant::get_method_argument_types(
+    Variant::Type p_type,
+    const StringName& p_method
+) {
+    const _VariantCall::TypeFunc& tf = _VariantCall::type_funcs[p_type];
 
-    const Map<StringName, _VariantCall::FuncData>::Element *E = tf.functions.find(p_method);
+    const Map<StringName, _VariantCall::FuncData>::Element* E =
+        tf.functions.find(p_method);
     if (!E) {
         return Vector<Variant::Type>();
     }
@@ -1401,10 +1794,14 @@ Vector<Variant::Type> Variant::get_method_argument_types(Variant::Type p_type, c
     return E->get().arg_types;
 }
 
-bool Variant::is_method_const(Variant::Type p_type, const StringName &p_method) {
-    const _VariantCall::TypeFunc &tf = _VariantCall::type_funcs[p_type];
+bool Variant::is_method_const(
+    Variant::Type p_type,
+    const StringName& p_method
+) {
+    const _VariantCall::TypeFunc& tf = _VariantCall::type_funcs[p_type];
 
-    const Map<StringName, _VariantCall::FuncData>::Element *E = tf.functions.find(p_method);
+    const Map<StringName, _VariantCall::FuncData>::Element* E =
+        tf.functions.find(p_method);
     if (!E) {
         return false;
     }
@@ -1412,10 +1809,14 @@ bool Variant::is_method_const(Variant::Type p_type, const StringName &p_method) 
     return E->get()._const;
 }
 
-Vector<StringName> Variant::get_method_argument_names(Variant::Type p_type, const StringName &p_method) {
-    const _VariantCall::TypeFunc &tf = _VariantCall::type_funcs[p_type];
+Vector<StringName> Variant::get_method_argument_names(
+    Variant::Type p_type,
+    const StringName& p_method
+) {
+    const _VariantCall::TypeFunc& tf = _VariantCall::type_funcs[p_type];
 
-    const Map<StringName, _VariantCall::FuncData>::Element *E = tf.functions.find(p_method);
+    const Map<StringName, _VariantCall::FuncData>::Element* E =
+        tf.functions.find(p_method);
     if (!E) {
         return Vector<StringName>();
     }
@@ -1423,10 +1824,15 @@ Vector<StringName> Variant::get_method_argument_names(Variant::Type p_type, cons
     return E->get().arg_names;
 }
 
-Variant::Type Variant::get_method_return_type(Variant::Type p_type, const StringName &p_method, bool *r_has_return) {
-    const _VariantCall::TypeFunc &tf = _VariantCall::type_funcs[p_type];
+Variant::Type Variant::get_method_return_type(
+    Variant::Type p_type,
+    const StringName& p_method,
+    bool* r_has_return
+) {
+    const _VariantCall::TypeFunc& tf = _VariantCall::type_funcs[p_type];
 
-    const Map<StringName, _VariantCall::FuncData>::Element *E = tf.functions.find(p_method);
+    const Map<StringName, _VariantCall::FuncData>::Element* E =
+        tf.functions.find(p_method);
     if (!E) {
         return Variant::NIL;
     }
@@ -1438,21 +1844,28 @@ Variant::Type Variant::get_method_return_type(Variant::Type p_type, const String
     return E->get().return_type;
 }
 
-Vector<Variant> Variant::get_method_default_arguments(Variant::Type p_type, const StringName &p_method) {
+Vector<Variant> Variant::get_method_default_arguments(
+    Variant::Type p_type,
+    const StringName& p_method
+) {
     ERR_FAIL_INDEX_V(p_type, Variant::VARIANT_MAX, Vector<Variant>());
-    const _VariantCall::TypeFunc &tf = _VariantCall::type_funcs[p_type];
+    const _VariantCall::TypeFunc& tf = _VariantCall::type_funcs[p_type];
 
-    const Map<StringName, _VariantCall::FuncData>::Element *E = tf.functions.find(p_method);
+    const Map<StringName, _VariantCall::FuncData>::Element* E =
+        tf.functions.find(p_method);
     ERR_FAIL_COND_V(!E, Vector<Variant>());
 
     return E->get().default_args;
 }
 
-void Variant::get_method_list(List<MethodInfo> *p_list) const {
-    const _VariantCall::TypeFunc &tf = _VariantCall::type_funcs[type];
+void Variant::get_method_list(List<MethodInfo>* p_list) const {
+    const _VariantCall::TypeFunc& tf = _VariantCall::type_funcs[type];
 
-    for (const Map<StringName, _VariantCall::FuncData>::Element *E = tf.functions.front(); E; E = E->next()) {
-        const _VariantCall::FuncData &fd = E->get();
+    for (const Map<StringName, _VariantCall::FuncData>::Element* E =
+             tf.functions.front();
+         E;
+         E = E->next()) {
+        const _VariantCall::FuncData& fd = E->get();
 
         MethodInfo mi;
         mi.name = E->key();
@@ -1484,12 +1897,18 @@ void Variant::get_method_list(List<MethodInfo> *p_list) const {
     }
 }
 
-void Variant::get_constructor_list(Variant::Type p_type, List<MethodInfo> *p_list) {
+void Variant::get_constructor_list(
+    Variant::Type p_type,
+    List<MethodInfo>* p_list
+) {
     ERR_FAIL_INDEX(p_type, VARIANT_MAX);
 
-    //custom constructors
-    for (const List<_VariantCall::ConstructData>::Element *E = _VariantCall::construct_funcs[p_type].constructors.front(); E; E = E->next()) {
-        const _VariantCall::ConstructData &cd = E->get();
+    // custom constructors
+    for (const List<_VariantCall::ConstructData>::Element* E =
+             _VariantCall::construct_funcs[p_type].constructors.front();
+         E;
+         E = E->next()) {
+        const _VariantCall::ConstructData& cd = E->get();
         MethodInfo mi;
         mi.name = Variant::get_type_name(p_type);
         mi.return_val.type = p_type;
@@ -1501,7 +1920,7 @@ void Variant::get_constructor_list(Variant::Type p_type, List<MethodInfo> *p_lis
         }
         p_list->push_back(mi);
     }
-    //default constructors
+    // default constructors
     for (int i = 0; i < VARIANT_MAX; i++) {
         if (i == p_type) {
             continue;
@@ -1521,47 +1940,58 @@ void Variant::get_constructor_list(Variant::Type p_type, List<MethodInfo> *p_lis
     }
 }
 
-void Variant::get_constants_for_type(Variant::Type p_type, List<StringName> *p_constants) {
+void Variant::get_constants_for_type(
+    Variant::Type p_type,
+    List<StringName>* p_constants
+) {
     ERR_FAIL_INDEX(p_type, Variant::VARIANT_MAX);
 
-    _VariantCall::ConstantData &cd = _VariantCall::constant_data[p_type];
+    _VariantCall::ConstantData& cd = _VariantCall::constant_data[p_type];
 
 #ifdef DEBUG_ENABLED
-    for (List<StringName>::Element *E = cd.value_ordered.front(); E; E = E->next()) {
+    for (List<StringName>::Element* E = cd.value_ordered.front(); E;
+         E = E->next()) {
         p_constants->push_back(E->get());
 #else
-    for (Map<StringName, int>::Element *E = cd.value.front(); E; E = E->next()) {
+    for (Map<StringName, int>::Element* E = cd.value.front(); E;
+         E = E->next()) {
         p_constants->push_back(E->key());
 #endif
     }
 
 #ifdef DEBUG_ENABLED
-    for (List<StringName>::Element *E = cd.variant_value_ordered.front(); E; E = E->next()) {
+    for (List<StringName>::Element* E = cd.variant_value_ordered.front(); E;
+         E = E->next()) {
         p_constants->push_back(E->get());
 #else
-    for (Map<StringName, Variant>::Element *E = cd.variant_value.front(); E; E = E->next()) {
+    for (Map<StringName, Variant>::Element* E = cd.variant_value.front(); E;
+         E = E->next()) {
         p_constants->push_back(E->key());
 #endif
     }
 }
 
-bool Variant::has_constant(Variant::Type p_type, const StringName &p_value) {
+bool Variant::has_constant(Variant::Type p_type, const StringName& p_value) {
     ERR_FAIL_INDEX_V(p_type, Variant::VARIANT_MAX, false);
-    _VariantCall::ConstantData &cd = _VariantCall::constant_data[p_type];
+    _VariantCall::ConstantData& cd = _VariantCall::constant_data[p_type];
     return cd.value.has(p_value) || cd.variant_value.has(p_value);
 }
 
-Variant Variant::get_constant_value(Variant::Type p_type, const StringName &p_value, bool *r_valid) {
+Variant Variant::get_constant_value(
+    Variant::Type p_type,
+    const StringName& p_value,
+    bool* r_valid
+) {
     if (r_valid) {
         *r_valid = false;
     }
 
     ERR_FAIL_INDEX_V(p_type, Variant::VARIANT_MAX, 0);
-    _VariantCall::ConstantData &cd = _VariantCall::constant_data[p_type];
+    _VariantCall::ConstantData& cd = _VariantCall::constant_data[p_type];
 
-    Map<StringName, int>::Element *E = cd.value.find(p_value);
+    Map<StringName, int>::Element* E = cd.value.find(p_value);
     if (!E) {
-        Map<StringName, Variant>::Element *F = cd.variant_value.find(p_value);
+        Map<StringName, Variant>::Element* F = cd.variant_value.find(p_value);
         if (F) {
             if (r_valid) {
                 *r_valid = true;
@@ -1579,96 +2009,649 @@ Variant Variant::get_constant_value(Variant::Type p_type, const StringName &p_va
 }
 
 void register_variant_methods() {
-    _VariantCall::type_funcs = memnew_arr(_VariantCall::TypeFunc, Variant::VARIANT_MAX);
+    _VariantCall::type_funcs =
+        memnew_arr(_VariantCall::TypeFunc, Variant::VARIANT_MAX);
 
-    _VariantCall::construct_funcs = memnew_arr(_VariantCall::ConstructFunc, Variant::VARIANT_MAX);
-    _VariantCall::constant_data = memnew_arr(_VariantCall::ConstantData, Variant::VARIANT_MAX);
+    _VariantCall::construct_funcs =
+        memnew_arr(_VariantCall::ConstructFunc, Variant::VARIANT_MAX);
+    _VariantCall::constant_data =
+        memnew_arr(_VariantCall::ConstantData, Variant::VARIANT_MAX);
 
-#define ADDFUNC0R(m_vtype, m_ret, m_class, m_method, m_defarg) \
-    _VariantCall::addfunc(true, Variant::m_vtype, Variant::m_ret, true, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg);
-#define ADDFUNC1R(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_defarg) \
-    _VariantCall::addfunc(true, Variant::m_vtype, Variant::m_ret, true, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)));
-#define ADDFUNC2R(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_defarg) \
-    _VariantCall::addfunc(true, Variant::m_vtype, Variant::m_ret, true, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)));
-#define ADDFUNC3R(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_arg3, m_argname3, m_defarg) \
-    _VariantCall::addfunc(true, Variant::m_vtype, Variant::m_ret, true, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)), _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)));
-#define ADDFUNC4R(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_arg3, m_argname3, m_arg4, m_argname4, m_defarg) \
-    _VariantCall::addfunc(true, Variant::m_vtype, Variant::m_ret, true, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)), _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)), _VariantCall::Arg(Variant::m_arg4, _scs_create(m_argname4)));
+#define ADDFUNC0R(m_vtype, m_ret, m_class, m_method, m_defarg)                 \
+    _VariantCall::addfunc(                                                     \
+        true,                                                                  \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        true,                                                                  \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg                                                               \
+    );
+#define ADDFUNC1R(                                                             \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        true,                                                                  \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        true,                                                                  \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1))            \
+    );
+#define ADDFUNC2R(                                                             \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        true,                                                                  \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        true,                                                                  \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2))            \
+    );
+#define ADDFUNC3R(                                                             \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_arg3,                                                                    \
+    m_argname3,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        true,                                                                  \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        true,                                                                  \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)),           \
+        _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3))            \
+    );
+#define ADDFUNC4R(                                                             \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_arg3,                                                                    \
+    m_argname3,                                                                \
+    m_arg4,                                                                    \
+    m_argname4,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        true,                                                                  \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        true,                                                                  \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)),           \
+        _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)),           \
+        _VariantCall::Arg(Variant::m_arg4, _scs_create(m_argname4))            \
+    );
 
-#define ADDFUNC0RNC(m_vtype, m_ret, m_class, m_method, m_defarg) \
-    _VariantCall::addfunc(false, Variant::m_vtype, Variant::m_ret, true, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg);
-#define ADDFUNC1RNC(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_defarg) \
-    _VariantCall::addfunc(false, Variant::m_vtype, Variant::m_ret, true, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)));
-#define ADDFUNC2RNC(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_defarg) \
-    _VariantCall::addfunc(false, Variant::m_vtype, Variant::m_ret, true, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)));
-#define ADDFUNC3RNC(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_arg3, m_argname3, m_defarg) \
-    _VariantCall::addfunc(false, Variant::m_vtype, Variant::m_ret, true, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)), _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)));
-#define ADDFUNC4RNC(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_arg3, m_argname3, m_arg4, m_argname4, m_defarg) \
-    _VariantCall::addfunc(false, Variant::m_vtype, Variant::m_ret, true, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)), _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)), _VariantCall::Arg(Variant::m_arg4, _scs_create(m_argname4)));
+#define ADDFUNC0RNC(m_vtype, m_ret, m_class, m_method, m_defarg)               \
+    _VariantCall::addfunc(                                                     \
+        false,                                                                 \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        true,                                                                  \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg                                                               \
+    );
+#define ADDFUNC1RNC(                                                           \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        false,                                                                 \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        true,                                                                  \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1))            \
+    );
+#define ADDFUNC2RNC(                                                           \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        false,                                                                 \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        true,                                                                  \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2))            \
+    );
+#define ADDFUNC3RNC(                                                           \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_arg3,                                                                    \
+    m_argname3,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        false,                                                                 \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        true,                                                                  \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)),           \
+        _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3))            \
+    );
+#define ADDFUNC4RNC(                                                           \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_arg3,                                                                    \
+    m_argname3,                                                                \
+    m_arg4,                                                                    \
+    m_argname4,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        false,                                                                 \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        true,                                                                  \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)),           \
+        _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)),           \
+        _VariantCall::Arg(Variant::m_arg4, _scs_create(m_argname4))            \
+    );
 
-#define ADDFUNC0(m_vtype, m_ret, m_class, m_method, m_defarg) \
-    _VariantCall::addfunc(true, Variant::m_vtype, Variant::m_ret, false, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg);
-#define ADDFUNC1(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_defarg) \
-    _VariantCall::addfunc(true, Variant::m_vtype, Variant::m_ret, false, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)));
-#define ADDFUNC2(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_defarg) \
-    _VariantCall::addfunc(true, Variant::m_vtype, Variant::m_ret, false, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)));
-#define ADDFUNC3(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_arg3, m_argname3, m_defarg) \
-    _VariantCall::addfunc(true, Variant::m_vtype, Variant::m_ret, false, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)), _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)));
-#define ADDFUNC4(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_arg3, m_argname3, m_arg4, m_argname4, m_defarg) \
-    _VariantCall::addfunc(true, Variant::m_vtype, Variant::m_ret, false, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)), _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)), _VariantCall::Arg(Variant::m_arg4, _scs_create(m_argname4)));
+#define ADDFUNC0(m_vtype, m_ret, m_class, m_method, m_defarg)                  \
+    _VariantCall::addfunc(                                                     \
+        true,                                                                  \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        false,                                                                 \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg                                                               \
+    );
+#define ADDFUNC1(                                                              \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        true,                                                                  \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        false,                                                                 \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1))            \
+    );
+#define ADDFUNC2(                                                              \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        true,                                                                  \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        false,                                                                 \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2))            \
+    );
+#define ADDFUNC3(                                                              \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_arg3,                                                                    \
+    m_argname3,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        true,                                                                  \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        false,                                                                 \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)),           \
+        _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3))            \
+    );
+#define ADDFUNC4(                                                              \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_arg3,                                                                    \
+    m_argname3,                                                                \
+    m_arg4,                                                                    \
+    m_argname4,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        true,                                                                  \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        false,                                                                 \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)),           \
+        _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)),           \
+        _VariantCall::Arg(Variant::m_arg4, _scs_create(m_argname4))            \
+    );
 
-#define ADDFUNC0NC(m_vtype, m_ret, m_class, m_method, m_defarg) \
-    _VariantCall::addfunc(false, Variant::m_vtype, Variant::m_ret, false, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg);
-#define ADDFUNC1NC(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_defarg) \
-    _VariantCall::addfunc(false, Variant::m_vtype, Variant::m_ret, false, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)));
-#define ADDFUNC2NC(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_defarg) \
-    _VariantCall::addfunc(false, Variant::m_vtype, Variant::m_ret, false, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)));
-#define ADDFUNC3NC(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_arg3, m_argname3, m_defarg) \
-    _VariantCall::addfunc(false, Variant::m_vtype, Variant::m_ret, false, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)), _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)));
-#define ADDFUNC4NC(m_vtype, m_ret, m_class, m_method, m_arg1, m_argname1, m_arg2, m_argname2, m_arg3, m_argname3, m_arg4, m_argname4, m_defarg) \
-    _VariantCall::addfunc(false, Variant::m_vtype, Variant::m_ret, false, _scs_create(#m_method), VCALL(m_class, m_method), m_defarg, _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)), _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)), _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)), _VariantCall::Arg(Variant::m_arg4, _scs_create(m_argname4)));
+#define ADDFUNC0NC(m_vtype, m_ret, m_class, m_method, m_defarg)                \
+    _VariantCall::addfunc(                                                     \
+        false,                                                                 \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        false,                                                                 \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg                                                               \
+    );
+#define ADDFUNC1NC(                                                            \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        false,                                                                 \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        false,                                                                 \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1))            \
+    );
+#define ADDFUNC2NC(                                                            \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        false,                                                                 \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        false,                                                                 \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2))            \
+    );
+#define ADDFUNC3NC(                                                            \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_arg3,                                                                    \
+    m_argname3,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        false,                                                                 \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        false,                                                                 \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)),           \
+        _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3))            \
+    );
+#define ADDFUNC4NC(                                                            \
+    m_vtype,                                                                   \
+    m_ret,                                                                     \
+    m_class,                                                                   \
+    m_method,                                                                  \
+    m_arg1,                                                                    \
+    m_argname1,                                                                \
+    m_arg2,                                                                    \
+    m_argname2,                                                                \
+    m_arg3,                                                                    \
+    m_argname3,                                                                \
+    m_arg4,                                                                    \
+    m_argname4,                                                                \
+    m_defarg                                                                   \
+)                                                                              \
+    _VariantCall::addfunc(                                                     \
+        false,                                                                 \
+        Variant::m_vtype,                                                      \
+        Variant::m_ret,                                                        \
+        false,                                                                 \
+        _scs_create(#m_method),                                                \
+        VCALL(m_class, m_method),                                              \
+        m_defarg,                                                              \
+        _VariantCall::Arg(Variant::m_arg1, _scs_create(m_argname1)),           \
+        _VariantCall::Arg(Variant::m_arg2, _scs_create(m_argname2)),           \
+        _VariantCall::Arg(Variant::m_arg3, _scs_create(m_argname3)),           \
+        _VariantCall::Arg(Variant::m_arg4, _scs_create(m_argname4))            \
+    );
 
     /* STRING */
     ADDFUNC1R(STRING, INT, String, casecmp_to, STRING, "to", varray());
     ADDFUNC1R(STRING, INT, String, nocasecmp_to, STRING, "to", varray());
     ADDFUNC1R(STRING, INT, String, naturalnocasecmp_to, STRING, "to", varray());
     ADDFUNC0R(STRING, INT, String, length, varray());
-    ADDFUNC2R(STRING, STRING, String, substr, INT, "from", INT, "len", varray(-1));
+    ADDFUNC2R(
+        STRING,
+        STRING,
+        String,
+        substr,
+        INT,
+        "from",
+        INT,
+        "len",
+        varray(-1)
+    );
 
-    ADDFUNC2R(STRING, INT, String, find, STRING, "what", INT, "from", varray(0));
+    ADDFUNC2R(
+        STRING,
+        INT,
+        String,
+        find,
+        STRING,
+        "what",
+        INT,
+        "from",
+        varray(0)
+    );
 
-    ADDFUNC3R(STRING, INT, String, count, STRING, "what", INT, "from", INT, "to", varray(0, 0));
-    ADDFUNC3R(STRING, INT, String, countn, STRING, "what", INT, "from", INT, "to", varray(0, 0));
+    ADDFUNC3R(
+        STRING,
+        INT,
+        String,
+        count,
+        STRING,
+        "what",
+        INT,
+        "from",
+        INT,
+        "to",
+        varray(0, 0)
+    );
+    ADDFUNC3R(
+        STRING,
+        INT,
+        String,
+        countn,
+        STRING,
+        "what",
+        INT,
+        "from",
+        INT,
+        "to",
+        varray(0, 0)
+    );
 
     ADDFUNC1R(STRING, INT, String, find_last, STRING, "what", varray());
-    ADDFUNC2R(STRING, INT, String, findn, STRING, "what", INT, "from", varray(0));
-    ADDFUNC2R(STRING, INT, String, rfind, STRING, "what", INT, "from", varray(-1));
-    ADDFUNC2R(STRING, INT, String, rfindn, STRING, "what", INT, "from", varray(-1));
+    ADDFUNC2R(
+        STRING,
+        INT,
+        String,
+        findn,
+        STRING,
+        "what",
+        INT,
+        "from",
+        varray(0)
+    );
+    ADDFUNC2R(
+        STRING,
+        INT,
+        String,
+        rfind,
+        STRING,
+        "what",
+        INT,
+        "from",
+        varray(-1)
+    );
+    ADDFUNC2R(
+        STRING,
+        INT,
+        String,
+        rfindn,
+        STRING,
+        "what",
+        INT,
+        "from",
+        varray(-1)
+    );
     ADDFUNC1R(STRING, BOOL, String, match, STRING, "expr", varray());
     ADDFUNC1R(STRING, BOOL, String, matchn, STRING, "expr", varray());
     ADDFUNC1R(STRING, BOOL, String, begins_with, STRING, "text", varray());
     ADDFUNC1R(STRING, BOOL, String, ends_with, STRING, "text", varray());
-    ADDFUNC1R(STRING, BOOL, String, is_subsequence_of, STRING, "text", varray());
-    ADDFUNC1R(STRING, BOOL, String, is_subsequence_ofi, STRING, "text", varray());
+    ADDFUNC1R(
+        STRING,
+        BOOL,
+        String,
+        is_subsequence_of,
+        STRING,
+        "text",
+        varray()
+    );
+    ADDFUNC1R(
+        STRING,
+        BOOL,
+        String,
+        is_subsequence_ofi,
+        STRING,
+        "text",
+        varray()
+    );
     ADDFUNC0R(STRING, POOL_STRING_ARRAY, String, bigrams, varray());
     ADDFUNC1R(STRING, REAL, String, similarity, STRING, "text", varray());
 
-    ADDFUNC2R(STRING, STRING, String, format, NIL, "values", STRING, "placeholder", varray("{_}"));
-    ADDFUNC2R(STRING, STRING, String, replace, STRING, "what", STRING, "forwhat", varray());
-    ADDFUNC2R(STRING, STRING, String, replacen, STRING, "what", STRING, "forwhat", varray());
+    ADDFUNC2R(
+        STRING,
+        STRING,
+        String,
+        format,
+        NIL,
+        "values",
+        STRING,
+        "placeholder",
+        varray("{_}")
+    );
+    ADDFUNC2R(
+        STRING,
+        STRING,
+        String,
+        replace,
+        STRING,
+        "what",
+        STRING,
+        "forwhat",
+        varray()
+    );
+    ADDFUNC2R(
+        STRING,
+        STRING,
+        String,
+        replacen,
+        STRING,
+        "what",
+        STRING,
+        "forwhat",
+        varray()
+    );
     ADDFUNC1R(STRING, STRING, String, repeat, INT, "count", varray());
-    ADDFUNC2R(STRING, STRING, String, insert, INT, "position", STRING, "what", varray());
+    ADDFUNC2R(
+        STRING,
+        STRING,
+        String,
+        insert,
+        INT,
+        "position",
+        STRING,
+        "what",
+        varray()
+    );
     ADDFUNC0R(STRING, STRING, String, capitalize, varray());
-    ADDFUNC3R(STRING, POOL_STRING_ARRAY, String, split, STRING, "delimiter", BOOL, "allow_empty", INT, "maxsplit", varray(true, 0));
-    ADDFUNC3R(STRING, POOL_STRING_ARRAY, String, rsplit, STRING, "delimiter", BOOL, "allow_empty", INT, "maxsplit", varray(true, 0));
-    ADDFUNC2R(STRING, POOL_REAL_ARRAY, String, split_floats, STRING, "delimiter", BOOL, "allow_empty", varray(true));
+    ADDFUNC3R(
+        STRING,
+        POOL_STRING_ARRAY,
+        String,
+        split,
+        STRING,
+        "delimiter",
+        BOOL,
+        "allow_empty",
+        INT,
+        "maxsplit",
+        varray(true, 0)
+    );
+    ADDFUNC3R(
+        STRING,
+        POOL_STRING_ARRAY,
+        String,
+        rsplit,
+        STRING,
+        "delimiter",
+        BOOL,
+        "allow_empty",
+        INT,
+        "maxsplit",
+        varray(true, 0)
+    );
+    ADDFUNC2R(
+        STRING,
+        POOL_REAL_ARRAY,
+        String,
+        split_floats,
+        STRING,
+        "delimiter",
+        BOOL,
+        "allow_empty",
+        varray(true)
+    );
 
     ADDFUNC0R(STRING, STRING, String, to_upper, varray());
     ADDFUNC0R(STRING, STRING, String, to_lower, varray());
 
     ADDFUNC1R(STRING, STRING, String, left, INT, "position", varray());
     ADDFUNC1R(STRING, STRING, String, right, INT, "position", varray());
-    ADDFUNC2R(STRING, STRING, String, strip_edges, BOOL, "left", BOOL, "right", varray(true, true));
+    ADDFUNC2R(
+        STRING,
+        STRING,
+        String,
+        strip_edges,
+        BOOL,
+        "left",
+        BOOL,
+        "right",
+        varray(true, true)
+    );
     ADDFUNC0R(STRING, STRING, String, strip_escapes, varray());
     ADDFUNC1R(STRING, STRING, String, lstrip, STRING, "chars", varray());
     ADDFUNC1R(STRING, STRING, String, rstrip, STRING, "chars", varray());
@@ -1678,7 +2661,17 @@ void register_variant_methods() {
     ADDFUNC1R(STRING, INT, String, ord_at, INT, "at", varray());
     ADDFUNC1R(STRING, STRING, String, indent, STRING, "prefix", varray());
     ADDFUNC0R(STRING, STRING, String, dedent, varray());
-    ADDFUNC2(STRING, NIL, String, erase, INT, "position", INT, "chars", varray());
+    ADDFUNC2(
+        STRING,
+        NIL,
+        String,
+        erase,
+        INT,
+        "position",
+        INT,
+        "chars",
+        varray()
+    );
     ADDFUNC0R(STRING, INT, String, hash, varray());
     ADDFUNC0R(STRING, STRING, String, md5_text, varray());
     ADDFUNC0R(STRING, STRING, String, sha1_text, varray());
@@ -1706,7 +2699,15 @@ void register_variant_methods() {
     ADDFUNC0R(STRING, BOOL, String, is_valid_identifier, varray());
     ADDFUNC0R(STRING, BOOL, String, is_valid_integer, varray());
     ADDFUNC0R(STRING, BOOL, String, is_valid_float, varray());
-    ADDFUNC1R(STRING, BOOL, String, is_valid_hex_number, BOOL, "with_prefix", varray(false));
+    ADDFUNC1R(
+        STRING,
+        BOOL,
+        String,
+        is_valid_hex_number,
+        BOOL,
+        "with_prefix",
+        varray(false)
+    );
     ADDFUNC0R(STRING, BOOL, String, is_valid_html_color, varray());
     ADDFUNC0R(STRING, BOOL, String, is_valid_ip_address, varray());
     ADDFUNC0R(STRING, BOOL, String, is_valid_filename, varray());
@@ -1727,7 +2728,15 @@ void register_variant_methods() {
     ADDFUNC1R(VECTOR2, REAL, Vector2, angle_to_point, VECTOR2, "to", varray());
     ADDFUNC1R(VECTOR2, VECTOR2, Vector2, direction_to, VECTOR2, "b", varray());
     ADDFUNC1R(VECTOR2, REAL, Vector2, distance_to, VECTOR2, "to", varray());
-    ADDFUNC1R(VECTOR2, REAL, Vector2, distance_squared_to, VECTOR2, "to", varray());
+    ADDFUNC1R(
+        VECTOR2,
+        REAL,
+        Vector2,
+        distance_squared_to,
+        VECTOR2,
+        "to",
+        varray()
+    );
     ADDFUNC0R(VECTOR2, REAL, Vector2, length, varray());
     ADDFUNC0R(VECTOR2, REAL, Vector2, length_squared, varray());
     ADDFUNC0R(VECTOR2, VECTOR2, Vector2, normalized, varray());
@@ -1736,10 +2745,54 @@ void register_variant_methods() {
     ADDFUNC1R(VECTOR2, VECTOR2, Vector2, posmod, REAL, "mod", varray());
     ADDFUNC1R(VECTOR2, VECTOR2, Vector2, posmodv, VECTOR2, "modv", varray());
     ADDFUNC1R(VECTOR2, VECTOR2, Vector2, project, VECTOR2, "b", varray());
-    ADDFUNC2R(VECTOR2, VECTOR2, Vector2, linear_interpolate, VECTOR2, "to", REAL, "weight", varray());
-    ADDFUNC2R(VECTOR2, VECTOR2, Vector2, slerp, VECTOR2, "to", REAL, "weight", varray());
-    ADDFUNC4R(VECTOR2, VECTOR2, Vector2, cubic_interpolate, VECTOR2, "b", VECTOR2, "pre_a", VECTOR2, "post_b", REAL, "weight", varray());
-    ADDFUNC2R(VECTOR2, VECTOR2, Vector2, move_toward, VECTOR2, "to", REAL, "delta", varray());
+    ADDFUNC2R(
+        VECTOR2,
+        VECTOR2,
+        Vector2,
+        linear_interpolate,
+        VECTOR2,
+        "to",
+        REAL,
+        "weight",
+        varray()
+    );
+    ADDFUNC2R(
+        VECTOR2,
+        VECTOR2,
+        Vector2,
+        slerp,
+        VECTOR2,
+        "to",
+        REAL,
+        "weight",
+        varray()
+    );
+    ADDFUNC4R(
+        VECTOR2,
+        VECTOR2,
+        Vector2,
+        cubic_interpolate,
+        VECTOR2,
+        "b",
+        VECTOR2,
+        "pre_a",
+        VECTOR2,
+        "post_b",
+        REAL,
+        "weight",
+        varray()
+    );
+    ADDFUNC2R(
+        VECTOR2,
+        VECTOR2,
+        Vector2,
+        move_toward,
+        VECTOR2,
+        "to",
+        REAL,
+        "delta",
+        varray()
+    );
     ADDFUNC1R(VECTOR2, VECTOR2, Vector2, rotated, REAL, "phi", varray());
     ADDFUNC0R(VECTOR2, VECTOR2, Vector2, tangent, varray());
     ADDFUNC0R(VECTOR2, VECTOR2, Vector2, floor, varray());
@@ -1760,23 +2813,75 @@ void register_variant_methods() {
     ADDFUNC0R(RECT2, BOOL, Rect2, has_no_area, varray());
     ADDFUNC1R(RECT2, BOOL, Rect2, has_point, VECTOR2, "point", varray());
     ADDFUNC1R(RECT2, BOOL, Rect2, is_equal_approx, RECT2, "rect", varray());
-    ADDFUNC2R(RECT2, BOOL, Rect2, intersects, RECT2, "b", BOOL, "include_borders", varray(false));
+    ADDFUNC2R(
+        RECT2,
+        BOOL,
+        Rect2,
+        intersects,
+        RECT2,
+        "b",
+        BOOL,
+        "include_borders",
+        varray(false)
+    );
     ADDFUNC1R(RECT2, BOOL, Rect2, encloses, RECT2, "b", varray());
     ADDFUNC1R(RECT2, RECT2, Rect2, clip, RECT2, "b", varray());
     ADDFUNC1R(RECT2, RECT2, Rect2, merge, RECT2, "b", varray());
     ADDFUNC1R(RECT2, RECT2, Rect2, expand, VECTOR2, "to", varray());
     ADDFUNC1R(RECT2, RECT2, Rect2, grow, REAL, "by", varray());
-    ADDFUNC2R(RECT2, RECT2, Rect2, grow_margin, INT, "margin", REAL, "by", varray());
-    ADDFUNC4R(RECT2, RECT2, Rect2, grow_individual, REAL, "left", REAL, "top", REAL, "right", REAL, " bottom", varray());
+    ADDFUNC2R(
+        RECT2,
+        RECT2,
+        Rect2,
+        grow_margin,
+        INT,
+        "margin",
+        REAL,
+        "by",
+        varray()
+    );
+    ADDFUNC4R(
+        RECT2,
+        RECT2,
+        Rect2,
+        grow_individual,
+        REAL,
+        "left",
+        REAL,
+        "top",
+        REAL,
+        "right",
+        REAL,
+        " bottom",
+        varray()
+    );
     ADDFUNC0R(RECT2, RECT2, Rect2, abs, varray());
 
     ADDFUNC0R(VECTOR3, INT, Vector3, min_axis, varray());
     ADDFUNC0R(VECTOR3, INT, Vector3, max_axis, varray());
     ADDFUNC1R(VECTOR3, REAL, Vector3, angle_to, VECTOR3, "to", varray());
-    ADDFUNC2R(VECTOR3, REAL, Vector3, signed_angle_to, VECTOR3, "to", VECTOR3, "axis", varray());
+    ADDFUNC2R(
+        VECTOR3,
+        REAL,
+        Vector3,
+        signed_angle_to,
+        VECTOR3,
+        "to",
+        VECTOR3,
+        "axis",
+        varray()
+    );
     ADDFUNC1R(VECTOR3, VECTOR3, Vector3, direction_to, VECTOR3, "b", varray());
     ADDFUNC1R(VECTOR3, REAL, Vector3, distance_to, VECTOR3, "b", varray());
-    ADDFUNC1R(VECTOR3, REAL, Vector3, distance_squared_to, VECTOR3, "b", varray());
+    ADDFUNC1R(
+        VECTOR3,
+        REAL,
+        Vector3,
+        distance_squared_to,
+        VECTOR3,
+        "b",
+        varray()
+    );
     ADDFUNC0R(VECTOR3, REAL, Vector3, length, varray());
     ADDFUNC0R(VECTOR3, REAL, Vector3, length_squared, varray());
     ADDFUNC0R(VECTOR3, VECTOR3, Vector3, normalized, varray());
@@ -1784,11 +2889,65 @@ void register_variant_methods() {
     ADDFUNC1R(VECTOR3, BOOL, Vector3, is_equal_approx, VECTOR3, "v", varray());
     ADDFUNC0R(VECTOR3, VECTOR3, Vector3, inverse, varray());
     ADDFUNC1R(VECTOR3, VECTOR3, Vector3, snapped, VECTOR3, "by", varray());
-    ADDFUNC2R(VECTOR3, VECTOR3, Vector3, rotated, VECTOR3, "axis", REAL, "phi", varray());
-    ADDFUNC2R(VECTOR3, VECTOR3, Vector3, linear_interpolate, VECTOR3, "to", REAL, "weight", varray());
-    ADDFUNC2R(VECTOR3, VECTOR3, Vector3, slerp, VECTOR3, "to", REAL, "weight", varray());
-    ADDFUNC4R(VECTOR3, VECTOR3, Vector3, cubic_interpolate, VECTOR3, "b", VECTOR3, "pre_a", VECTOR3, "post_b", REAL, "weight", varray());
-    ADDFUNC2R(VECTOR3, VECTOR3, Vector3, move_toward, VECTOR3, "to", REAL, "delta", varray());
+    ADDFUNC2R(
+        VECTOR3,
+        VECTOR3,
+        Vector3,
+        rotated,
+        VECTOR3,
+        "axis",
+        REAL,
+        "phi",
+        varray()
+    );
+    ADDFUNC2R(
+        VECTOR3,
+        VECTOR3,
+        Vector3,
+        linear_interpolate,
+        VECTOR3,
+        "to",
+        REAL,
+        "weight",
+        varray()
+    );
+    ADDFUNC2R(
+        VECTOR3,
+        VECTOR3,
+        Vector3,
+        slerp,
+        VECTOR3,
+        "to",
+        REAL,
+        "weight",
+        varray()
+    );
+    ADDFUNC4R(
+        VECTOR3,
+        VECTOR3,
+        Vector3,
+        cubic_interpolate,
+        VECTOR3,
+        "b",
+        VECTOR3,
+        "pre_a",
+        VECTOR3,
+        "post_b",
+        REAL,
+        "weight",
+        varray()
+    );
+    ADDFUNC2R(
+        VECTOR3,
+        VECTOR3,
+        Vector3,
+        move_toward,
+        VECTOR3,
+        "to",
+        REAL,
+        "delta",
+        varray()
+    );
     ADDFUNC1R(VECTOR3, REAL, Vector3, dot, VECTOR3, "b", varray());
     ADDFUNC1R(VECTOR3, VECTOR3, Vector3, cross, VECTOR3, "b", varray());
     ADDFUNC1R(VECTOR3, BASIS, Vector3, outer, VECTOR3, "b", varray());
@@ -1811,11 +2970,51 @@ void register_variant_methods() {
     ADDFUNC1R(PLANE, BOOL, Plane, is_equal_approx, PLANE, "plane", varray());
     ADDFUNC1R(PLANE, BOOL, Plane, is_point_over, VECTOR3, "point", varray());
     ADDFUNC1R(PLANE, REAL, Plane, distance_to, VECTOR3, "point", varray());
-    ADDFUNC2R(PLANE, BOOL, Plane, has_point, VECTOR3, "point", REAL, "epsilon", varray(CMP_EPSILON));
+    ADDFUNC2R(
+        PLANE,
+        BOOL,
+        Plane,
+        has_point,
+        VECTOR3,
+        "point",
+        REAL,
+        "epsilon",
+        varray(CMP_EPSILON)
+    );
     ADDFUNC1R(PLANE, VECTOR3, Plane, project, VECTOR3, "point", varray());
-    ADDFUNC2R(PLANE, VECTOR3, Plane, intersect_3, PLANE, "b", PLANE, "c", varray());
-    ADDFUNC2R(PLANE, VECTOR3, Plane, intersects_ray, VECTOR3, "from", VECTOR3, "dir", varray());
-    ADDFUNC2R(PLANE, VECTOR3, Plane, intersects_segment, VECTOR3, "begin", VECTOR3, "end", varray());
+    ADDFUNC2R(
+        PLANE,
+        VECTOR3,
+        Plane,
+        intersect_3,
+        PLANE,
+        "b",
+        PLANE,
+        "c",
+        varray()
+    );
+    ADDFUNC2R(
+        PLANE,
+        VECTOR3,
+        Plane,
+        intersects_ray,
+        VECTOR3,
+        "from",
+        VECTOR3,
+        "dir",
+        varray()
+    );
+    ADDFUNC2R(
+        PLANE,
+        VECTOR3,
+        Plane,
+        intersects_segment,
+        VECTOR3,
+        "begin",
+        VECTOR3,
+        "end",
+        varray()
+    );
 
     ADDFUNC0R(QUAT, REAL, Quat, length, varray());
     ADDFUNC0R(QUAT, REAL, Quat, length_squared, varray());
@@ -1828,10 +3027,34 @@ void register_variant_methods() {
     ADDFUNC1R(QUAT, VECTOR3, Quat, xform, VECTOR3, "v", varray());
     ADDFUNC2R(QUAT, QUAT, Quat, slerp, QUAT, "to", REAL, "weight", varray());
     ADDFUNC2R(QUAT, QUAT, Quat, slerpni, QUAT, "to", REAL, "weight", varray());
-    ADDFUNC4R(QUAT, QUAT, Quat, cubic_slerp, QUAT, "b", QUAT, "pre_a", QUAT, "post_b", REAL, "weight", varray());
+    ADDFUNC4R(
+        QUAT,
+        QUAT,
+        Quat,
+        cubic_slerp,
+        QUAT,
+        "b",
+        QUAT,
+        "pre_a",
+        QUAT,
+        "post_b",
+        REAL,
+        "weight",
+        varray()
+    );
     ADDFUNC0R(QUAT, VECTOR3, Quat, get_euler, varray());
     ADDFUNC1(QUAT, NIL, Quat, set_euler, VECTOR3, "euler", varray());
-    ADDFUNC2(QUAT, NIL, Quat, set_axis_angle, VECTOR3, "axis", REAL, "angle", varray());
+    ADDFUNC2(
+        QUAT,
+        NIL,
+        Quat,
+        set_axis_angle,
+        VECTOR3,
+        "axis",
+        REAL,
+        "angle",
+        varray()
+    );
 
     ADDFUNC0R(COLOR, INT, Color, to_argb32, varray());
     ADDFUNC0R(COLOR, INT, Color, to_abgr32, varray());
@@ -1842,12 +3065,36 @@ void register_variant_methods() {
     ADDFUNC0R(COLOR, REAL, Color, gray, varray());
     ADDFUNC0R(COLOR, COLOR, Color, inverted, varray());
     ADDFUNC0R(COLOR, COLOR, Color, contrasted, varray());
-    ADDFUNC2R(COLOR, COLOR, Color, linear_interpolate, COLOR, "to", REAL, "weight", varray());
+    ADDFUNC2R(
+        COLOR,
+        COLOR,
+        Color,
+        linear_interpolate,
+        COLOR,
+        "to",
+        REAL,
+        "weight",
+        varray()
+    );
     ADDFUNC1R(COLOR, COLOR, Color, blend, COLOR, "over", varray());
     ADDFUNC1R(COLOR, COLOR, Color, lightened, REAL, "amount", varray());
     ADDFUNC1R(COLOR, COLOR, Color, darkened, REAL, "amount", varray());
     ADDFUNC1R(COLOR, STRING, Color, to_html, BOOL, "with_alpha", varray(true));
-    ADDFUNC4R(COLOR, COLOR, Color, from_hsv, REAL, "h", REAL, "s", REAL, "v", REAL, "a", varray(1.0));
+    ADDFUNC4R(
+        COLOR,
+        COLOR,
+        Color,
+        from_hsv,
+        REAL,
+        "h",
+        REAL,
+        "s",
+        REAL,
+        "v",
+        REAL,
+        "a",
+        varray(1.0)
+    );
     ADDFUNC1R(COLOR, BOOL, Color, is_equal_approx, COLOR, "color", varray());
 
     ADDFUNC0R(_RID, INT, RID, get_id, varray());
@@ -1870,8 +3117,26 @@ void register_variant_methods() {
     ADDFUNC0R(DICTIONARY, INT, Dictionary, hash, varray());
     ADDFUNC0R(DICTIONARY, ARRAY, Dictionary, keys, varray());
     ADDFUNC0R(DICTIONARY, ARRAY, Dictionary, values, varray());
-    ADDFUNC1R(DICTIONARY, DICTIONARY, Dictionary, duplicate, BOOL, "deep", varray(false));
-    ADDFUNC2R(DICTIONARY, NIL, Dictionary, get, NIL, "key", NIL, "default", varray(Variant()));
+    ADDFUNC1R(
+        DICTIONARY,
+        DICTIONARY,
+        Dictionary,
+        duplicate,
+        BOOL,
+        "deep",
+        varray(false)
+    );
+    ADDFUNC2R(
+        DICTIONARY,
+        NIL,
+        Dictionary,
+        get,
+        NIL,
+        "key",
+        NIL,
+        "default",
+        varray(Variant())
+    );
 
     ADDFUNC0R(ARRAY, INT, Array, size, varray());
     ADDFUNC0R(ARRAY, BOOL, Array, empty, varray());
@@ -1882,7 +3147,17 @@ void register_variant_methods() {
     ADDFUNC1NC(ARRAY, NIL, Array, append, NIL, "value", varray());
     ADDFUNC1NC(ARRAY, NIL, Array, append_array, ARRAY, "array", varray());
     ADDFUNC1NC(ARRAY, NIL, Array, resize, INT, "size", varray());
-    ADDFUNC2NC(ARRAY, NIL, Array, insert, INT, "position", NIL, "value", varray());
+    ADDFUNC2NC(
+        ARRAY,
+        NIL,
+        Array,
+        insert,
+        INT,
+        "position",
+        NIL,
+        "value",
+        varray()
+    );
     ADDFUNC1NC(ARRAY, NIL, Array, remove, INT, "position", varray());
     ADDFUNC1NC(ARRAY, NIL, Array, erase, NIL, "value", varray());
     ADDFUNC0R(ARRAY, NIL, Array, front, varray());
@@ -1896,103 +3171,581 @@ void register_variant_methods() {
     ADDFUNC0RNC(ARRAY, NIL, Array, pop_front, varray());
     ADDFUNC1RNC(ARRAY, NIL, Array, pop_at, INT, "position", varray());
     ADDFUNC0NC(ARRAY, NIL, Array, sort, varray());
-    ADDFUNC2NC(ARRAY, NIL, Array, sort_custom, OBJECT, "obj", STRING, "func", varray());
+    ADDFUNC2NC(
+        ARRAY,
+        NIL,
+        Array,
+        sort_custom,
+        OBJECT,
+        "obj",
+        STRING,
+        "func",
+        varray()
+    );
     ADDFUNC0NC(ARRAY, NIL, Array, shuffle, varray());
-    ADDFUNC2R(ARRAY, INT, Array, bsearch, NIL, "value", BOOL, "before", varray(true));
-    ADDFUNC4R(ARRAY, INT, Array, bsearch_custom, NIL, "value", OBJECT, "obj", STRING, "func", BOOL, "before", varray(true));
+    ADDFUNC2R(
+        ARRAY,
+        INT,
+        Array,
+        bsearch,
+        NIL,
+        "value",
+        BOOL,
+        "before",
+        varray(true)
+    );
+    ADDFUNC4R(
+        ARRAY,
+        INT,
+        Array,
+        bsearch_custom,
+        NIL,
+        "value",
+        OBJECT,
+        "obj",
+        STRING,
+        "func",
+        BOOL,
+        "before",
+        varray(true)
+    );
     ADDFUNC0NC(ARRAY, NIL, Array, invert, varray());
     ADDFUNC1R(ARRAY, ARRAY, Array, duplicate, BOOL, "deep", varray(false));
-    ADDFUNC4R(ARRAY, ARRAY, Array, slice, INT, "begin", INT, "end", INT, "step", BOOL, "deep", varray(1, false));
+    ADDFUNC4R(
+        ARRAY,
+        ARRAY,
+        Array,
+        slice,
+        INT,
+        "begin",
+        INT,
+        "end",
+        INT,
+        "step",
+        BOOL,
+        "deep",
+        varray(1, false)
+    );
     ADDFUNC0R(ARRAY, NIL, Array, max, varray());
     ADDFUNC0R(ARRAY, NIL, Array, min, varray());
 
     ADDFUNC0R(POOL_BYTE_ARRAY, INT, PoolByteArray, size, varray());
     ADDFUNC0R(POOL_BYTE_ARRAY, BOOL, PoolByteArray, empty, varray());
-    ADDFUNC2(POOL_BYTE_ARRAY, NIL, PoolByteArray, set, INT, "idx", INT, "byte", varray());
-    ADDFUNC1(POOL_BYTE_ARRAY, NIL, PoolByteArray, push_back, INT, "byte", varray());
-    ADDFUNC1(POOL_BYTE_ARRAY, NIL, PoolByteArray, append, INT, "byte", varray());
-    ADDFUNC1(POOL_BYTE_ARRAY, NIL, PoolByteArray, append_array, POOL_BYTE_ARRAY, "array", varray());
+    ADDFUNC2(
+        POOL_BYTE_ARRAY,
+        NIL,
+        PoolByteArray,
+        set,
+        INT,
+        "idx",
+        INT,
+        "byte",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_BYTE_ARRAY,
+        NIL,
+        PoolByteArray,
+        push_back,
+        INT,
+        "byte",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_BYTE_ARRAY,
+        NIL,
+        PoolByteArray,
+        append,
+        INT,
+        "byte",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_BYTE_ARRAY,
+        NIL,
+        PoolByteArray,
+        append_array,
+        POOL_BYTE_ARRAY,
+        "array",
+        varray()
+    );
     ADDFUNC1(POOL_BYTE_ARRAY, NIL, PoolByteArray, remove, INT, "idx", varray());
-    ADDFUNC2R(POOL_BYTE_ARRAY, INT, PoolByteArray, insert, INT, "idx", INT, "byte", varray());
+    ADDFUNC2R(
+        POOL_BYTE_ARRAY,
+        INT,
+        PoolByteArray,
+        insert,
+        INT,
+        "idx",
+        INT,
+        "byte",
+        varray()
+    );
     ADDFUNC1(POOL_BYTE_ARRAY, NIL, PoolByteArray, resize, INT, "idx", varray());
     ADDFUNC0(POOL_BYTE_ARRAY, NIL, PoolByteArray, invert, varray());
-    ADDFUNC2R(POOL_BYTE_ARRAY, POOL_BYTE_ARRAY, PoolByteArray, subarray, INT, "from", INT, "to", varray());
+    ADDFUNC2R(
+        POOL_BYTE_ARRAY,
+        POOL_BYTE_ARRAY,
+        PoolByteArray,
+        subarray,
+        INT,
+        "from",
+        INT,
+        "to",
+        varray()
+    );
 
-    ADDFUNC0R(POOL_BYTE_ARRAY, STRING, PoolByteArray, get_string_from_ascii, varray());
-    ADDFUNC0R(POOL_BYTE_ARRAY, STRING, PoolByteArray, get_string_from_utf8, varray());
+    ADDFUNC0R(
+        POOL_BYTE_ARRAY,
+        STRING,
+        PoolByteArray,
+        get_string_from_ascii,
+        varray()
+    );
+    ADDFUNC0R(
+        POOL_BYTE_ARRAY,
+        STRING,
+        PoolByteArray,
+        get_string_from_utf8,
+        varray()
+    );
     ADDFUNC0R(POOL_BYTE_ARRAY, STRING, PoolByteArray, hex_encode, varray());
-    ADDFUNC1R(POOL_BYTE_ARRAY, POOL_BYTE_ARRAY, PoolByteArray, compress, INT, "compression_mode", varray(0));
-    ADDFUNC2R(POOL_BYTE_ARRAY, POOL_BYTE_ARRAY, PoolByteArray, decompress, INT, "buffer_size", INT, "compression_mode", varray(0));
-    ADDFUNC2R(POOL_BYTE_ARRAY, POOL_BYTE_ARRAY, PoolByteArray, decompress_dynamic, INT, "max_output_size", INT, "compression_mode", varray(0));
+    ADDFUNC1R(
+        POOL_BYTE_ARRAY,
+        POOL_BYTE_ARRAY,
+        PoolByteArray,
+        compress,
+        INT,
+        "compression_mode",
+        varray(0)
+    );
+    ADDFUNC2R(
+        POOL_BYTE_ARRAY,
+        POOL_BYTE_ARRAY,
+        PoolByteArray,
+        decompress,
+        INT,
+        "buffer_size",
+        INT,
+        "compression_mode",
+        varray(0)
+    );
+    ADDFUNC2R(
+        POOL_BYTE_ARRAY,
+        POOL_BYTE_ARRAY,
+        PoolByteArray,
+        decompress_dynamic,
+        INT,
+        "max_output_size",
+        INT,
+        "compression_mode",
+        varray(0)
+    );
 
     ADDFUNC0R(POOL_INT_ARRAY, INT, PoolIntArray, size, varray());
     ADDFUNC0R(POOL_INT_ARRAY, BOOL, PoolIntArray, empty, varray());
-    ADDFUNC2(POOL_INT_ARRAY, NIL, PoolIntArray, set, INT, "idx", INT, "integer", varray());
-    ADDFUNC1(POOL_INT_ARRAY, NIL, PoolIntArray, push_back, INT, "integer", varray());
-    ADDFUNC1(POOL_INT_ARRAY, NIL, PoolIntArray, append, INT, "integer", varray());
-    ADDFUNC1(POOL_INT_ARRAY, NIL, PoolIntArray, append_array, POOL_INT_ARRAY, "array", varray());
+    ADDFUNC2(
+        POOL_INT_ARRAY,
+        NIL,
+        PoolIntArray,
+        set,
+        INT,
+        "idx",
+        INT,
+        "integer",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_INT_ARRAY,
+        NIL,
+        PoolIntArray,
+        push_back,
+        INT,
+        "integer",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_INT_ARRAY,
+        NIL,
+        PoolIntArray,
+        append,
+        INT,
+        "integer",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_INT_ARRAY,
+        NIL,
+        PoolIntArray,
+        append_array,
+        POOL_INT_ARRAY,
+        "array",
+        varray()
+    );
     ADDFUNC1(POOL_INT_ARRAY, NIL, PoolIntArray, remove, INT, "idx", varray());
-    ADDFUNC2R(POOL_INT_ARRAY, INT, PoolIntArray, insert, INT, "idx", INT, "integer", varray());
+    ADDFUNC2R(
+        POOL_INT_ARRAY,
+        INT,
+        PoolIntArray,
+        insert,
+        INT,
+        "idx",
+        INT,
+        "integer",
+        varray()
+    );
     ADDFUNC1(POOL_INT_ARRAY, NIL, PoolIntArray, resize, INT, "idx", varray());
     ADDFUNC0(POOL_INT_ARRAY, NIL, PoolIntArray, invert, varray());
 
     ADDFUNC0R(POOL_REAL_ARRAY, INT, PoolRealArray, size, varray());
     ADDFUNC0R(POOL_REAL_ARRAY, BOOL, PoolRealArray, empty, varray());
-    ADDFUNC2(POOL_REAL_ARRAY, NIL, PoolRealArray, set, INT, "idx", REAL, "value", varray());
-    ADDFUNC1(POOL_REAL_ARRAY, NIL, PoolRealArray, push_back, REAL, "value", varray());
-    ADDFUNC1(POOL_REAL_ARRAY, NIL, PoolRealArray, append, REAL, "value", varray());
-    ADDFUNC1(POOL_REAL_ARRAY, NIL, PoolRealArray, append_array, POOL_REAL_ARRAY, "array", varray());
+    ADDFUNC2(
+        POOL_REAL_ARRAY,
+        NIL,
+        PoolRealArray,
+        set,
+        INT,
+        "idx",
+        REAL,
+        "value",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_REAL_ARRAY,
+        NIL,
+        PoolRealArray,
+        push_back,
+        REAL,
+        "value",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_REAL_ARRAY,
+        NIL,
+        PoolRealArray,
+        append,
+        REAL,
+        "value",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_REAL_ARRAY,
+        NIL,
+        PoolRealArray,
+        append_array,
+        POOL_REAL_ARRAY,
+        "array",
+        varray()
+    );
     ADDFUNC1(POOL_REAL_ARRAY, NIL, PoolRealArray, remove, INT, "idx", varray());
-    ADDFUNC2R(POOL_REAL_ARRAY, INT, PoolRealArray, insert, INT, "idx", REAL, "value", varray());
+    ADDFUNC2R(
+        POOL_REAL_ARRAY,
+        INT,
+        PoolRealArray,
+        insert,
+        INT,
+        "idx",
+        REAL,
+        "value",
+        varray()
+    );
     ADDFUNC1(POOL_REAL_ARRAY, NIL, PoolRealArray, resize, INT, "idx", varray());
     ADDFUNC0(POOL_REAL_ARRAY, NIL, PoolRealArray, invert, varray());
 
     ADDFUNC0R(POOL_STRING_ARRAY, INT, PoolStringArray, size, varray());
     ADDFUNC0R(POOL_STRING_ARRAY, BOOL, PoolStringArray, empty, varray());
-    ADDFUNC2(POOL_STRING_ARRAY, NIL, PoolStringArray, set, INT, "idx", STRING, "string", varray());
-    ADDFUNC1(POOL_STRING_ARRAY, NIL, PoolStringArray, push_back, STRING, "string", varray());
-    ADDFUNC1(POOL_STRING_ARRAY, NIL, PoolStringArray, append, STRING, "string", varray());
-    ADDFUNC1(POOL_STRING_ARRAY, NIL, PoolStringArray, append_array, POOL_STRING_ARRAY, "array", varray());
-    ADDFUNC1(POOL_STRING_ARRAY, NIL, PoolStringArray, remove, INT, "idx", varray());
-    ADDFUNC2R(POOL_STRING_ARRAY, INT, PoolStringArray, insert, INT, "idx", STRING, "string", varray());
-    ADDFUNC1(POOL_STRING_ARRAY, NIL, PoolStringArray, resize, INT, "idx", varray());
+    ADDFUNC2(
+        POOL_STRING_ARRAY,
+        NIL,
+        PoolStringArray,
+        set,
+        INT,
+        "idx",
+        STRING,
+        "string",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_STRING_ARRAY,
+        NIL,
+        PoolStringArray,
+        push_back,
+        STRING,
+        "string",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_STRING_ARRAY,
+        NIL,
+        PoolStringArray,
+        append,
+        STRING,
+        "string",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_STRING_ARRAY,
+        NIL,
+        PoolStringArray,
+        append_array,
+        POOL_STRING_ARRAY,
+        "array",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_STRING_ARRAY,
+        NIL,
+        PoolStringArray,
+        remove,
+        INT,
+        "idx",
+        varray()
+    );
+    ADDFUNC2R(
+        POOL_STRING_ARRAY,
+        INT,
+        PoolStringArray,
+        insert,
+        INT,
+        "idx",
+        STRING,
+        "string",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_STRING_ARRAY,
+        NIL,
+        PoolStringArray,
+        resize,
+        INT,
+        "idx",
+        varray()
+    );
     ADDFUNC0(POOL_STRING_ARRAY, NIL, PoolStringArray, invert, varray());
-    ADDFUNC1(POOL_STRING_ARRAY, STRING, PoolStringArray, join, STRING, "delimiter", varray());
+    ADDFUNC1(
+        POOL_STRING_ARRAY,
+        STRING,
+        PoolStringArray,
+        join,
+        STRING,
+        "delimiter",
+        varray()
+    );
 
     ADDFUNC0R(POOL_VECTOR2_ARRAY, INT, PoolVector2Array, size, varray());
     ADDFUNC0R(POOL_VECTOR2_ARRAY, BOOL, PoolVector2Array, empty, varray());
-    ADDFUNC2(POOL_VECTOR2_ARRAY, NIL, PoolVector2Array, set, INT, "idx", VECTOR2, "vector2", varray());
-    ADDFUNC1(POOL_VECTOR2_ARRAY, NIL, PoolVector2Array, push_back, VECTOR2, "vector2", varray());
-    ADDFUNC1(POOL_VECTOR2_ARRAY, NIL, PoolVector2Array, append, VECTOR2, "vector2", varray());
-    ADDFUNC1(POOL_VECTOR2_ARRAY, NIL, PoolVector2Array, append_array, POOL_VECTOR2_ARRAY, "array", varray());
-    ADDFUNC1(POOL_VECTOR2_ARRAY, NIL, PoolVector2Array, remove, INT, "idx", varray());
-    ADDFUNC2R(POOL_VECTOR2_ARRAY, INT, PoolVector2Array, insert, INT, "idx", VECTOR2, "vector2", varray());
-    ADDFUNC1(POOL_VECTOR2_ARRAY, NIL, PoolVector2Array, resize, INT, "idx", varray());
+    ADDFUNC2(
+        POOL_VECTOR2_ARRAY,
+        NIL,
+        PoolVector2Array,
+        set,
+        INT,
+        "idx",
+        VECTOR2,
+        "vector2",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_VECTOR2_ARRAY,
+        NIL,
+        PoolVector2Array,
+        push_back,
+        VECTOR2,
+        "vector2",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_VECTOR2_ARRAY,
+        NIL,
+        PoolVector2Array,
+        append,
+        VECTOR2,
+        "vector2",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_VECTOR2_ARRAY,
+        NIL,
+        PoolVector2Array,
+        append_array,
+        POOL_VECTOR2_ARRAY,
+        "array",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_VECTOR2_ARRAY,
+        NIL,
+        PoolVector2Array,
+        remove,
+        INT,
+        "idx",
+        varray()
+    );
+    ADDFUNC2R(
+        POOL_VECTOR2_ARRAY,
+        INT,
+        PoolVector2Array,
+        insert,
+        INT,
+        "idx",
+        VECTOR2,
+        "vector2",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_VECTOR2_ARRAY,
+        NIL,
+        PoolVector2Array,
+        resize,
+        INT,
+        "idx",
+        varray()
+    );
     ADDFUNC0(POOL_VECTOR2_ARRAY, NIL, PoolVector2Array, invert, varray());
 
     ADDFUNC0R(POOL_VECTOR3_ARRAY, INT, PoolVector3Array, size, varray());
     ADDFUNC0R(POOL_VECTOR3_ARRAY, BOOL, PoolVector3Array, empty, varray());
-    ADDFUNC2(POOL_VECTOR3_ARRAY, NIL, PoolVector3Array, set, INT, "idx", VECTOR3, "vector3", varray());
-    ADDFUNC1(POOL_VECTOR3_ARRAY, NIL, PoolVector3Array, push_back, VECTOR3, "vector3", varray());
-    ADDFUNC1(POOL_VECTOR3_ARRAY, NIL, PoolVector3Array, append, VECTOR3, "vector3", varray());
-    ADDFUNC1(POOL_VECTOR3_ARRAY, NIL, PoolVector3Array, append_array, POOL_VECTOR3_ARRAY, "array", varray());
-    ADDFUNC1(POOL_VECTOR3_ARRAY, NIL, PoolVector3Array, remove, INT, "idx", varray());
-    ADDFUNC2R(POOL_VECTOR3_ARRAY, INT, PoolVector3Array, insert, INT, "idx", VECTOR3, "vector3", varray());
-    ADDFUNC1(POOL_VECTOR3_ARRAY, NIL, PoolVector3Array, resize, INT, "idx", varray());
+    ADDFUNC2(
+        POOL_VECTOR3_ARRAY,
+        NIL,
+        PoolVector3Array,
+        set,
+        INT,
+        "idx",
+        VECTOR3,
+        "vector3",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_VECTOR3_ARRAY,
+        NIL,
+        PoolVector3Array,
+        push_back,
+        VECTOR3,
+        "vector3",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_VECTOR3_ARRAY,
+        NIL,
+        PoolVector3Array,
+        append,
+        VECTOR3,
+        "vector3",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_VECTOR3_ARRAY,
+        NIL,
+        PoolVector3Array,
+        append_array,
+        POOL_VECTOR3_ARRAY,
+        "array",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_VECTOR3_ARRAY,
+        NIL,
+        PoolVector3Array,
+        remove,
+        INT,
+        "idx",
+        varray()
+    );
+    ADDFUNC2R(
+        POOL_VECTOR3_ARRAY,
+        INT,
+        PoolVector3Array,
+        insert,
+        INT,
+        "idx",
+        VECTOR3,
+        "vector3",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_VECTOR3_ARRAY,
+        NIL,
+        PoolVector3Array,
+        resize,
+        INT,
+        "idx",
+        varray()
+    );
     ADDFUNC0(POOL_VECTOR3_ARRAY, NIL, PoolVector3Array, invert, varray());
 
     ADDFUNC0R(POOL_COLOR_ARRAY, INT, PoolColorArray, size, varray());
     ADDFUNC0R(POOL_COLOR_ARRAY, BOOL, PoolColorArray, empty, varray());
-    ADDFUNC2(POOL_COLOR_ARRAY, NIL, PoolColorArray, set, INT, "idx", COLOR, "color", varray());
-    ADDFUNC1(POOL_COLOR_ARRAY, NIL, PoolColorArray, push_back, COLOR, "color", varray());
-    ADDFUNC1(POOL_COLOR_ARRAY, NIL, PoolColorArray, append, COLOR, "color", varray());
-    ADDFUNC1(POOL_COLOR_ARRAY, NIL, PoolColorArray, append_array, POOL_COLOR_ARRAY, "array", varray());
-    ADDFUNC1(POOL_COLOR_ARRAY, NIL, PoolColorArray, remove, INT, "idx", varray());
-    ADDFUNC2R(POOL_COLOR_ARRAY, INT, PoolColorArray, insert, INT, "idx", COLOR, "color", varray());
-    ADDFUNC1(POOL_COLOR_ARRAY, NIL, PoolColorArray, resize, INT, "idx", varray());
+    ADDFUNC2(
+        POOL_COLOR_ARRAY,
+        NIL,
+        PoolColorArray,
+        set,
+        INT,
+        "idx",
+        COLOR,
+        "color",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_COLOR_ARRAY,
+        NIL,
+        PoolColorArray,
+        push_back,
+        COLOR,
+        "color",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_COLOR_ARRAY,
+        NIL,
+        PoolColorArray,
+        append,
+        COLOR,
+        "color",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_COLOR_ARRAY,
+        NIL,
+        PoolColorArray,
+        append_array,
+        POOL_COLOR_ARRAY,
+        "array",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_COLOR_ARRAY,
+        NIL,
+        PoolColorArray,
+        remove,
+        INT,
+        "idx",
+        varray()
+    );
+    ADDFUNC2R(
+        POOL_COLOR_ARRAY,
+        INT,
+        PoolColorArray,
+        insert,
+        INT,
+        "idx",
+        COLOR,
+        "color",
+        varray()
+    );
+    ADDFUNC1(
+        POOL_COLOR_ARRAY,
+        NIL,
+        PoolColorArray,
+        resize,
+        INT,
+        "idx",
+        varray()
+    );
     ADDFUNC0(POOL_COLOR_ARRAY, NIL, PoolColorArray, invert, varray());
 
-    //pointerbased
+    // pointerbased
 
     ADDFUNC0R(AABB, AABB, AABB, abs, varray());
     ADDFUNC0R(AABB, REAL, AABB, get_area, varray());
@@ -2003,7 +3756,17 @@ void register_variant_methods() {
     ADDFUNC1R(AABB, BOOL, AABB, intersects, AABB, "with", varray());
     ADDFUNC1R(AABB, BOOL, AABB, encloses, AABB, "with", varray());
     ADDFUNC1R(AABB, BOOL, AABB, intersects_plane, PLANE, "plane", varray());
-    ADDFUNC2R(AABB, BOOL, AABB, intersects_segment, VECTOR3, "from", VECTOR3, "to", varray());
+    ADDFUNC2R(
+        AABB,
+        BOOL,
+        AABB,
+        intersects_segment,
+        VECTOR3,
+        "from",
+        VECTOR3,
+        "to",
+        varray()
+    );
     ADDFUNC1R(AABB, AABB, AABB, intersection, AABB, "with", varray());
     ADDFUNC1R(AABB, AABB, AABB, merge, AABB, "with", varray());
     ADDFUNC1R(AABB, AABB, AABB, expand, VECTOR3, "to_point", varray());
@@ -2023,21 +3786,89 @@ void register_variant_methods() {
     ADDFUNC0R(TRANSFORM2D, VECTOR2, Transform2D, get_origin, varray());
     ADDFUNC0R(TRANSFORM2D, VECTOR2, Transform2D, get_scale, varray());
     ADDFUNC0R(TRANSFORM2D, TRANSFORM2D, Transform2D, orthonormalized, varray());
-    ADDFUNC1R(TRANSFORM2D, TRANSFORM2D, Transform2D, rotated, REAL, "phi", varray());
-    ADDFUNC1R(TRANSFORM2D, TRANSFORM2D, Transform2D, scaled, VECTOR2, "scale", varray());
-    ADDFUNC1R(TRANSFORM2D, TRANSFORM2D, Transform2D, translated, VECTOR2, "offset", varray());
+    ADDFUNC1R(
+        TRANSFORM2D,
+        TRANSFORM2D,
+        Transform2D,
+        rotated,
+        REAL,
+        "phi",
+        varray()
+    );
+    ADDFUNC1R(
+        TRANSFORM2D,
+        TRANSFORM2D,
+        Transform2D,
+        scaled,
+        VECTOR2,
+        "scale",
+        varray()
+    );
+    ADDFUNC1R(
+        TRANSFORM2D,
+        TRANSFORM2D,
+        Transform2D,
+        translated,
+        VECTOR2,
+        "offset",
+        varray()
+    );
     ADDFUNC1R(TRANSFORM2D, NIL, Transform2D, xform, NIL, "v", varray());
     ADDFUNC1R(TRANSFORM2D, NIL, Transform2D, xform_inv, NIL, "v", varray());
-    ADDFUNC1R(TRANSFORM2D, VECTOR2, Transform2D, basis_xform, VECTOR2, "v", varray());
-    ADDFUNC1R(TRANSFORM2D, VECTOR2, Transform2D, basis_xform_inv, VECTOR2, "v", varray());
-    ADDFUNC2R(TRANSFORM2D, TRANSFORM2D, Transform2D, interpolate_with, TRANSFORM2D, "transform", REAL, "weight", varray());
-    ADDFUNC1R(TRANSFORM2D, BOOL, Transform2D, is_equal_approx, TRANSFORM2D, "transform", varray());
+    ADDFUNC1R(
+        TRANSFORM2D,
+        VECTOR2,
+        Transform2D,
+        basis_xform,
+        VECTOR2,
+        "v",
+        varray()
+    );
+    ADDFUNC1R(
+        TRANSFORM2D,
+        VECTOR2,
+        Transform2D,
+        basis_xform_inv,
+        VECTOR2,
+        "v",
+        varray()
+    );
+    ADDFUNC2R(
+        TRANSFORM2D,
+        TRANSFORM2D,
+        Transform2D,
+        interpolate_with,
+        TRANSFORM2D,
+        "transform",
+        REAL,
+        "weight",
+        varray()
+    );
+    ADDFUNC1R(
+        TRANSFORM2D,
+        BOOL,
+        Transform2D,
+        is_equal_approx,
+        TRANSFORM2D,
+        "transform",
+        varray()
+    );
 
     ADDFUNC0R(BASIS, BASIS, Basis, inverse, varray());
     ADDFUNC0R(BASIS, BASIS, Basis, transposed, varray());
     ADDFUNC0R(BASIS, BASIS, Basis, orthonormalized, varray());
     ADDFUNC0R(BASIS, REAL, Basis, determinant, varray());
-    ADDFUNC2R(BASIS, BASIS, Basis, rotated, VECTOR3, "axis", REAL, "phi", varray());
+    ADDFUNC2R(
+        BASIS,
+        BASIS,
+        Basis,
+        rotated,
+        VECTOR3,
+        "axis",
+        REAL,
+        "phi",
+        varray()
+    );
     ADDFUNC1R(BASIS, BASIS, Basis, scaled, VECTOR3, "scale", varray());
     ADDFUNC0R(BASIS, VECTOR3, Basis, get_scale, varray());
     ADDFUNC0R(BASIS, VECTOR3, Basis, get_euler, varray());
@@ -2047,113 +3878,450 @@ void register_variant_methods() {
     ADDFUNC1R(BASIS, VECTOR3, Basis, xform, VECTOR3, "v", varray());
     ADDFUNC1R(BASIS, VECTOR3, Basis, xform_inv, VECTOR3, "v", varray());
     ADDFUNC0R(BASIS, INT, Basis, get_orthogonal_index, varray());
-    ADDFUNC2R(BASIS, BASIS, Basis, slerp, BASIS, "to", REAL, "weight", varray());
-    // For complicated reasons, the epsilon argument is always discarded. See #45062.
-    ADDFUNC2R(BASIS, BOOL, Basis, is_equal_approx, BASIS, "b", REAL, "epsilon", varray(CMP_EPSILON));
+    ADDFUNC2R(
+        BASIS,
+        BASIS,
+        Basis,
+        slerp,
+        BASIS,
+        "to",
+        REAL,
+        "weight",
+        varray()
+    );
+    // For complicated reasons, the epsilon argument is always discarded. See
+    // #45062.
+    ADDFUNC2R(
+        BASIS,
+        BOOL,
+        Basis,
+        is_equal_approx,
+        BASIS,
+        "b",
+        REAL,
+        "epsilon",
+        varray(CMP_EPSILON)
+    );
     ADDFUNC0R(BASIS, QUAT, Basis, get_rotation_quat, varray());
 
     ADDFUNC0R(TRANSFORM, TRANSFORM, Transform, inverse, varray());
     ADDFUNC0R(TRANSFORM, TRANSFORM, Transform, affine_inverse, varray());
     ADDFUNC0R(TRANSFORM, TRANSFORM, Transform, orthonormalized, varray());
-    ADDFUNC2R(TRANSFORM, TRANSFORM, Transform, rotated, VECTOR3, "axis", REAL, "phi", varray());
-    ADDFUNC1R(TRANSFORM, TRANSFORM, Transform, scaled, VECTOR3, "scale", varray());
-    ADDFUNC1R(TRANSFORM, TRANSFORM, Transform, translated, VECTOR3, "offset", varray());
-    ADDFUNC2R(TRANSFORM, TRANSFORM, Transform, looking_at, VECTOR3, "target", VECTOR3, "up", varray());
-    ADDFUNC2R(TRANSFORM, TRANSFORM, Transform, interpolate_with, TRANSFORM, "transform", REAL, "weight", varray());
-    ADDFUNC1R(TRANSFORM, BOOL, Transform, is_equal_approx, TRANSFORM, "transform", varray());
+    ADDFUNC2R(
+        TRANSFORM,
+        TRANSFORM,
+        Transform,
+        rotated,
+        VECTOR3,
+        "axis",
+        REAL,
+        "phi",
+        varray()
+    );
+    ADDFUNC1R(
+        TRANSFORM,
+        TRANSFORM,
+        Transform,
+        scaled,
+        VECTOR3,
+        "scale",
+        varray()
+    );
+    ADDFUNC1R(
+        TRANSFORM,
+        TRANSFORM,
+        Transform,
+        translated,
+        VECTOR3,
+        "offset",
+        varray()
+    );
+    ADDFUNC2R(
+        TRANSFORM,
+        TRANSFORM,
+        Transform,
+        looking_at,
+        VECTOR3,
+        "target",
+        VECTOR3,
+        "up",
+        varray()
+    );
+    ADDFUNC2R(
+        TRANSFORM,
+        TRANSFORM,
+        Transform,
+        interpolate_with,
+        TRANSFORM,
+        "transform",
+        REAL,
+        "weight",
+        varray()
+    );
+    ADDFUNC1R(
+        TRANSFORM,
+        BOOL,
+        Transform,
+        is_equal_approx,
+        TRANSFORM,
+        "transform",
+        varray()
+    );
     ADDFUNC1R(TRANSFORM, NIL, Transform, xform, NIL, "v", varray());
     ADDFUNC1R(TRANSFORM, NIL, Transform, xform_inv, NIL, "v", varray());
 
     /* REGISTER CONSTRUCTORS */
 
-    _VariantCall::add_constructor(_VariantCall::Vector2_init1, Variant::VECTOR2, "x", Variant::REAL, "y", Variant::REAL);
+    _VariantCall::add_constructor(
+        _VariantCall::Vector2_init1,
+        Variant::VECTOR2,
+        "x",
+        Variant::REAL,
+        "y",
+        Variant::REAL
+    );
 
-    _VariantCall::add_constructor(_VariantCall::Rect2_init1, Variant::RECT2, "position", Variant::VECTOR2, "size", Variant::VECTOR2);
-    _VariantCall::add_constructor(_VariantCall::Rect2_init2, Variant::RECT2, "x", Variant::REAL, "y", Variant::REAL, "width", Variant::REAL, "height", Variant::REAL);
+    _VariantCall::add_constructor(
+        _VariantCall::Rect2_init1,
+        Variant::RECT2,
+        "position",
+        Variant::VECTOR2,
+        "size",
+        Variant::VECTOR2
+    );
+    _VariantCall::add_constructor(
+        _VariantCall::Rect2_init2,
+        Variant::RECT2,
+        "x",
+        Variant::REAL,
+        "y",
+        Variant::REAL,
+        "width",
+        Variant::REAL,
+        "height",
+        Variant::REAL
+    );
 
-    _VariantCall::add_constructor(_VariantCall::Transform2D_init2, Variant::TRANSFORM2D, "rotation", Variant::REAL, "position", Variant::VECTOR2);
-    _VariantCall::add_constructor(_VariantCall::Transform2D_init3, Variant::TRANSFORM2D, "x_axis", Variant::VECTOR2, "y_axis", Variant::VECTOR2, "origin", Variant::VECTOR2);
+    _VariantCall::add_constructor(
+        _VariantCall::Transform2D_init2,
+        Variant::TRANSFORM2D,
+        "rotation",
+        Variant::REAL,
+        "position",
+        Variant::VECTOR2
+    );
+    _VariantCall::add_constructor(
+        _VariantCall::Transform2D_init3,
+        Variant::TRANSFORM2D,
+        "x_axis",
+        Variant::VECTOR2,
+        "y_axis",
+        Variant::VECTOR2,
+        "origin",
+        Variant::VECTOR2
+    );
 
-    _VariantCall::add_constructor(_VariantCall::Vector3_init1, Variant::VECTOR3, "x", Variant::REAL, "y", Variant::REAL, "z", Variant::REAL);
+    _VariantCall::add_constructor(
+        _VariantCall::Vector3_init1,
+        Variant::VECTOR3,
+        "x",
+        Variant::REAL,
+        "y",
+        Variant::REAL,
+        "z",
+        Variant::REAL
+    );
 
-    _VariantCall::add_constructor(_VariantCall::Plane_init1, Variant::PLANE, "a", Variant::REAL, "b", Variant::REAL, "c", Variant::REAL, "d", Variant::REAL);
-    _VariantCall::add_constructor(_VariantCall::Plane_init2, Variant::PLANE, "v1", Variant::VECTOR3, "v2", Variant::VECTOR3, "v3", Variant::VECTOR3);
-    _VariantCall::add_constructor(_VariantCall::Plane_init3, Variant::PLANE, "normal", Variant::VECTOR3, "d", Variant::REAL);
+    _VariantCall::add_constructor(
+        _VariantCall::Plane_init1,
+        Variant::PLANE,
+        "a",
+        Variant::REAL,
+        "b",
+        Variant::REAL,
+        "c",
+        Variant::REAL,
+        "d",
+        Variant::REAL
+    );
+    _VariantCall::add_constructor(
+        _VariantCall::Plane_init2,
+        Variant::PLANE,
+        "v1",
+        Variant::VECTOR3,
+        "v2",
+        Variant::VECTOR3,
+        "v3",
+        Variant::VECTOR3
+    );
+    _VariantCall::add_constructor(
+        _VariantCall::Plane_init3,
+        Variant::PLANE,
+        "normal",
+        Variant::VECTOR3,
+        "d",
+        Variant::REAL
+    );
 
-    _VariantCall::add_constructor(_VariantCall::Quat_init1, Variant::QUAT, "x", Variant::REAL, "y", Variant::REAL, "z", Variant::REAL, "w", Variant::REAL);
-    _VariantCall::add_constructor(_VariantCall::Quat_init2, Variant::QUAT, "axis", Variant::VECTOR3, "angle", Variant::REAL);
-    _VariantCall::add_constructor(_VariantCall::Quat_init3, Variant::QUAT, "euler", Variant::VECTOR3);
+    _VariantCall::add_constructor(
+        _VariantCall::Quat_init1,
+        Variant::QUAT,
+        "x",
+        Variant::REAL,
+        "y",
+        Variant::REAL,
+        "z",
+        Variant::REAL,
+        "w",
+        Variant::REAL
+    );
+    _VariantCall::add_constructor(
+        _VariantCall::Quat_init2,
+        Variant::QUAT,
+        "axis",
+        Variant::VECTOR3,
+        "angle",
+        Variant::REAL
+    );
+    _VariantCall::add_constructor(
+        _VariantCall::Quat_init3,
+        Variant::QUAT,
+        "euler",
+        Variant::VECTOR3
+    );
 
-    _VariantCall::add_constructor(_VariantCall::Color_init1, Variant::COLOR, "r", Variant::REAL, "g", Variant::REAL, "b", Variant::REAL, "a", Variant::REAL);
-    _VariantCall::add_constructor(_VariantCall::Color_init2, Variant::COLOR, "r", Variant::REAL, "g", Variant::REAL, "b", Variant::REAL);
+    _VariantCall::add_constructor(
+        _VariantCall::Color_init1,
+        Variant::COLOR,
+        "r",
+        Variant::REAL,
+        "g",
+        Variant::REAL,
+        "b",
+        Variant::REAL,
+        "a",
+        Variant::REAL
+    );
+    _VariantCall::add_constructor(
+        _VariantCall::Color_init2,
+        Variant::COLOR,
+        "r",
+        Variant::REAL,
+        "g",
+        Variant::REAL,
+        "b",
+        Variant::REAL
+    );
 
-    _VariantCall::add_constructor(_VariantCall::AABB_init1, Variant::AABB, "position", Variant::VECTOR3, "size", Variant::VECTOR3);
+    _VariantCall::add_constructor(
+        _VariantCall::AABB_init1,
+        Variant::AABB,
+        "position",
+        Variant::VECTOR3,
+        "size",
+        Variant::VECTOR3
+    );
 
-    _VariantCall::add_constructor(_VariantCall::Basis_init1, Variant::BASIS, "x_axis", Variant::VECTOR3, "y_axis", Variant::VECTOR3, "z_axis", Variant::VECTOR3);
-    _VariantCall::add_constructor(_VariantCall::Basis_init2, Variant::BASIS, "axis", Variant::VECTOR3, "phi", Variant::REAL);
+    _VariantCall::add_constructor(
+        _VariantCall::Basis_init1,
+        Variant::BASIS,
+        "x_axis",
+        Variant::VECTOR3,
+        "y_axis",
+        Variant::VECTOR3,
+        "z_axis",
+        Variant::VECTOR3
+    );
+    _VariantCall::add_constructor(
+        _VariantCall::Basis_init2,
+        Variant::BASIS,
+        "axis",
+        Variant::VECTOR3,
+        "phi",
+        Variant::REAL
+    );
 
-    _VariantCall::add_constructor(_VariantCall::Transform_init1, Variant::TRANSFORM, "x_axis", Variant::VECTOR3, "y_axis", Variant::VECTOR3, "z_axis", Variant::VECTOR3, "origin", Variant::VECTOR3);
-    _VariantCall::add_constructor(_VariantCall::Transform_init2, Variant::TRANSFORM, "basis", Variant::BASIS, "origin", Variant::VECTOR3);
+    _VariantCall::add_constructor(
+        _VariantCall::Transform_init1,
+        Variant::TRANSFORM,
+        "x_axis",
+        Variant::VECTOR3,
+        "y_axis",
+        Variant::VECTOR3,
+        "z_axis",
+        Variant::VECTOR3,
+        "origin",
+        Variant::VECTOR3
+    );
+    _VariantCall::add_constructor(
+        _VariantCall::Transform_init2,
+        Variant::TRANSFORM,
+        "basis",
+        Variant::BASIS,
+        "origin",
+        Variant::VECTOR3
+    );
 
     /* REGISTER CONSTANTS */
 
     _populate_named_colors();
-    for (Map<String, Color>::Element *color = _named_colors.front(); color; color = color->next()) {
-        _VariantCall::add_variant_constant(Variant::COLOR, color->key(), color->value());
+    for (Map<String, Color>::Element* color = _named_colors.front(); color;
+         color = color->next()) {
+        _VariantCall::add_variant_constant(
+            Variant::COLOR,
+            color->key(),
+            color->value()
+        );
     }
 
     _VariantCall::add_constant(Variant::VECTOR3, "AXIS_X", Vector3::AXIS_X);
     _VariantCall::add_constant(Variant::VECTOR3, "AXIS_Y", Vector3::AXIS_Y);
     _VariantCall::add_constant(Variant::VECTOR3, "AXIS_Z", Vector3::AXIS_Z);
 
-    _VariantCall::add_variant_constant(Variant::VECTOR3, "ZERO", Vector3(0, 0, 0));
-    _VariantCall::add_variant_constant(Variant::VECTOR3, "ONE", Vector3(1, 1, 1));
-    _VariantCall::add_variant_constant(Variant::VECTOR3, "INF", Vector3(Math_INF, Math_INF, Math_INF));
-    _VariantCall::add_variant_constant(Variant::VECTOR3, "LEFT", Vector3(-1, 0, 0));
-    _VariantCall::add_variant_constant(Variant::VECTOR3, "RIGHT", Vector3(1, 0, 0));
-    _VariantCall::add_variant_constant(Variant::VECTOR3, "UP", Vector3(0, 1, 0));
-    _VariantCall::add_variant_constant(Variant::VECTOR3, "DOWN", Vector3(0, -1, 0));
-    _VariantCall::add_variant_constant(Variant::VECTOR3, "FORWARD", Vector3(0, 0, -1));
-    _VariantCall::add_variant_constant(Variant::VECTOR3, "BACK", Vector3(0, 0, 1));
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR3,
+        "ZERO",
+        Vector3(0, 0, 0)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR3,
+        "ONE",
+        Vector3(1, 1, 1)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR3,
+        "INF",
+        Vector3(Math_INF, Math_INF, Math_INF)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR3,
+        "LEFT",
+        Vector3(-1, 0, 0)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR3,
+        "RIGHT",
+        Vector3(1, 0, 0)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR3,
+        "UP",
+        Vector3(0, 1, 0)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR3,
+        "DOWN",
+        Vector3(0, -1, 0)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR3,
+        "FORWARD",
+        Vector3(0, 0, -1)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR3,
+        "BACK",
+        Vector3(0, 0, 1)
+    );
 
     _VariantCall::add_constant(Variant::VECTOR2, "AXIS_X", Vector2::AXIS_X);
     _VariantCall::add_constant(Variant::VECTOR2, "AXIS_Y", Vector2::AXIS_Y);
 
     _VariantCall::add_variant_constant(Variant::VECTOR2, "ZERO", Vector2(0, 0));
     _VariantCall::add_variant_constant(Variant::VECTOR2, "ONE", Vector2(1, 1));
-    _VariantCall::add_variant_constant(Variant::VECTOR2, "INF", Vector2(Math_INF, Math_INF));
-    _VariantCall::add_variant_constant(Variant::VECTOR2, "LEFT", Vector2(-1, 0));
-    _VariantCall::add_variant_constant(Variant::VECTOR2, "RIGHT", Vector2(1, 0));
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR2,
+        "INF",
+        Vector2(Math_INF, Math_INF)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR2,
+        "LEFT",
+        Vector2(-1, 0)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::VECTOR2,
+        "RIGHT",
+        Vector2(1, 0)
+    );
     _VariantCall::add_variant_constant(Variant::VECTOR2, "UP", Vector2(0, -1));
     _VariantCall::add_variant_constant(Variant::VECTOR2, "DOWN", Vector2(0, 1));
 
-    _VariantCall::add_variant_constant(Variant::TRANSFORM2D, "IDENTITY", Transform2D());
-    _VariantCall::add_variant_constant(Variant::TRANSFORM2D, "FLIP_X", Transform2D(-1, 0, 0, 1, 0, 0));
-    _VariantCall::add_variant_constant(Variant::TRANSFORM2D, "FLIP_Y", Transform2D(1, 0, 0, -1, 0, 0));
+    _VariantCall::add_variant_constant(
+        Variant::TRANSFORM2D,
+        "IDENTITY",
+        Transform2D()
+    );
+    _VariantCall::add_variant_constant(
+        Variant::TRANSFORM2D,
+        "FLIP_X",
+        Transform2D(-1, 0, 0, 1, 0, 0)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::TRANSFORM2D,
+        "FLIP_Y",
+        Transform2D(1, 0, 0, -1, 0, 0)
+    );
 
     Transform identity_transform = Transform();
     Transform flip_x_transform = Transform(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0);
     Transform flip_y_transform = Transform(1, 0, 0, 0, -1, 0, 0, 0, 1, 0, 0, 0);
     Transform flip_z_transform = Transform(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0);
-    _VariantCall::add_variant_constant(Variant::TRANSFORM, "IDENTITY", identity_transform);
-    _VariantCall::add_variant_constant(Variant::TRANSFORM, "FLIP_X", flip_x_transform);
-    _VariantCall::add_variant_constant(Variant::TRANSFORM, "FLIP_Y", flip_y_transform);
-    _VariantCall::add_variant_constant(Variant::TRANSFORM, "FLIP_Z", flip_z_transform);
+    _VariantCall::add_variant_constant(
+        Variant::TRANSFORM,
+        "IDENTITY",
+        identity_transform
+    );
+    _VariantCall::add_variant_constant(
+        Variant::TRANSFORM,
+        "FLIP_X",
+        flip_x_transform
+    );
+    _VariantCall::add_variant_constant(
+        Variant::TRANSFORM,
+        "FLIP_Y",
+        flip_y_transform
+    );
+    _VariantCall::add_variant_constant(
+        Variant::TRANSFORM,
+        "FLIP_Z",
+        flip_z_transform
+    );
 
     Basis identity_basis = Basis();
     Basis flip_x_basis = Basis(-1, 0, 0, 0, 1, 0, 0, 0, 1);
     Basis flip_y_basis = Basis(1, 0, 0, 0, -1, 0, 0, 0, 1);
     Basis flip_z_basis = Basis(1, 0, 0, 0, 1, 0, 0, 0, -1);
-    _VariantCall::add_variant_constant(Variant::BASIS, "IDENTITY", identity_basis);
+    _VariantCall::add_variant_constant(
+        Variant::BASIS,
+        "IDENTITY",
+        identity_basis
+    );
     _VariantCall::add_variant_constant(Variant::BASIS, "FLIP_X", flip_x_basis);
     _VariantCall::add_variant_constant(Variant::BASIS, "FLIP_Y", flip_y_basis);
     _VariantCall::add_variant_constant(Variant::BASIS, "FLIP_Z", flip_z_basis);
 
-    _VariantCall::add_variant_constant(Variant::PLANE, "PLANE_YZ", Plane(Vector3(1, 0, 0), 0));
-    _VariantCall::add_variant_constant(Variant::PLANE, "PLANE_XZ", Plane(Vector3(0, 1, 0), 0));
-    _VariantCall::add_variant_constant(Variant::PLANE, "PLANE_XY", Plane(Vector3(0, 0, 1), 0));
+    _VariantCall::add_variant_constant(
+        Variant::PLANE,
+        "PLANE_YZ",
+        Plane(Vector3(1, 0, 0), 0)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::PLANE,
+        "PLANE_XZ",
+        Plane(Vector3(0, 1, 0), 0)
+    );
+    _VariantCall::add_variant_constant(
+        Variant::PLANE,
+        "PLANE_XY",
+        Plane(Vector3(0, 0, 1), 0)
+    );
 
-    _VariantCall::add_variant_constant(Variant::QUAT, "IDENTITY", Quat(0, 0, 0, 1));
+    _VariantCall::add_variant_constant(
+        Variant::QUAT,
+        "IDENTITY",
+        Quat(0, 0, 0, 1)
+    );
 }
 
 void unregister_variant_methods() {

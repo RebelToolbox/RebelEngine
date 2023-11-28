@@ -44,6 +44,7 @@ public:
         TARGET_PEER_BROADCAST = 0,
         TARGET_PEER_SERVER = 1
     };
+
     enum TransferMode {
         TRANSFER_MODE_UNRELIABLE,
         TRANSFER_MODE_UNRELIABLE_ORDERED,

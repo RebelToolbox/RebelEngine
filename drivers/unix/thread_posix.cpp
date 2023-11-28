@@ -39,7 +39,7 @@
 #include <pthread_np.h>
 #endif
 
-static Error set_name(const String &p_name) {
+static Error set_name(const String& p_name) {
 #ifdef PTHREAD_NO_RENAME
     return ERR_UNAVAILABLE;
 
@@ -57,7 +57,11 @@ static Error set_name(const String &p_name) {
     pthread_set_name_np(running_thread, p_name.utf8().get_data());
     int err = 0; // Open/FreeBSD ignore errors in this function
 #elif defined(PTHREAD_NETBSD_SET_NAME)
-    int err = pthread_setname_np(running_thread, "%s", const_cast<char *>(p_name.utf8().get_data()));
+    int err = pthread_setname_np(
+        running_thread,
+        "%s",
+        const_cast<char*>(p_name.utf8().get_data())
+    );
 #else
     int err = pthread_setname_np(running_thread, p_name.utf8().get_data());
 #endif // PTHREAD_BSD_SET_NAME

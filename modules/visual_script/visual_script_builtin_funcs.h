@@ -111,11 +111,17 @@ public:
 
     static int get_func_argument_count(BuiltinFunc p_func);
     static String get_func_name(BuiltinFunc p_func);
-    static void exec_func(BuiltinFunc p_func, const Variant **p_inputs, Variant *r_return, Variant::CallError &r_error, String &r_error_str);
-    static BuiltinFunc find_function(const String &p_string);
+    static void exec_func(
+        BuiltinFunc p_func,
+        const Variant** p_inputs,
+        Variant* r_return,
+        Variant::CallError& r_error,
+        String& r_error_str
+    );
+    static BuiltinFunc find_function(const String& p_string);
 
 private:
-    static const char *func_name[FUNC_MAX];
+    static const char* func_name[FUNC_MAX];
     BuiltinFunc func;
 
 protected:
@@ -134,13 +140,17 @@ public:
     virtual PropertyInfo get_output_value_port_info(int p_idx) const;
 
     virtual String get_caption() const;
-    //virtual String get_text() const;
-    virtual String get_category() const { return "functions"; }
+
+    // virtual String get_text() const;
+    virtual String get_category() const {
+        return "functions";
+    }
 
     void set_func(BuiltinFunc p_which);
     BuiltinFunc get_func();
 
-    virtual VisualScriptNodeInstance *instance(VisualScriptInstance *p_instance);
+    virtual VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    );
 
     VisualScriptBuiltinFunc(VisualScriptBuiltinFunc::BuiltinFunc func);
     VisualScriptBuiltinFunc();

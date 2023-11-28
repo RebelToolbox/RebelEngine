@@ -131,11 +131,12 @@ typedef struct tagPACKET {
     ORIENTATION pkOrientation;
 } PACKET;
 
-typedef HANDLE(WINAPI *WTOpenPtr)(HWND p_window, LOGCONTEXTW *p_ctx, BOOL p_enable);
-typedef BOOL(WINAPI *WTClosePtr)(HANDLE p_ctx);
-typedef UINT(WINAPI *WTInfoPtr)(UINT p_category, UINT p_index, LPVOID p_output);
-typedef BOOL(WINAPI *WTPacketPtr)(HANDLE p_ctx, UINT p_param, LPVOID p_packets);
-typedef BOOL(WINAPI *WTEnablePtr)(HANDLE p_ctx, BOOL p_enable);
+typedef HANDLE(WINAPI*
+                   WTOpenPtr)(HWND p_window, LOGCONTEXTW* p_ctx, BOOL p_enable);
+typedef BOOL(WINAPI* WTClosePtr)(HANDLE p_ctx);
+typedef UINT(WINAPI* WTInfoPtr)(UINT p_category, UINT p_index, LPVOID p_output);
+typedef BOOL(WINAPI* WTPacketPtr)(HANDLE p_ctx, UINT p_param, LPVOID p_packets);
+typedef BOOL(WINAPI* WTEnablePtr)(HANDLE p_ctx, BOOL p_enable);
 
 // Windows Ink API
 #ifndef POINTER_STRUCTURES
@@ -228,28 +229,35 @@ typedef struct tagPOINTER_PEN_INFO {
 #define WM_POINTERLEAVE 0x024A
 #endif
 
-typedef BOOL(WINAPI *GetPointerTypePtr)(uint32_t p_id, POINTER_INPUT_TYPE *p_type);
-typedef BOOL(WINAPI *GetPointerPenInfoPtr)(uint32_t p_id, POINTER_PEN_INFO *p_pen_info);
+typedef BOOL(WINAPI* GetPointerTypePtr)(
+    uint32_t p_id,
+    POINTER_INPUT_TYPE* p_type
+);
+typedef BOOL(WINAPI* GetPointerPenInfoPtr)(
+    uint32_t p_id,
+    POINTER_PEN_INFO* p_pen_info
+);
 
 typedef struct {
-    BYTE bWidth; // Width, in pixels, of the image
-    BYTE bHeight; // Height, in pixels, of the image
-    BYTE bColorCount; // Number of colors in image (0 if >=8bpp)
-    BYTE bReserved; // Reserved ( must be 0)
-    WORD wPlanes; // Color Planes
-    WORD wBitCount; // Bits per pixel
-    DWORD dwBytesInRes; // How many bytes in this resource?
+    BYTE bWidth;         // Width, in pixels, of the image
+    BYTE bHeight;        // Height, in pixels, of the image
+    BYTE bColorCount;    // Number of colors in image (0 if >=8bpp)
+    BYTE bReserved;      // Reserved ( must be 0)
+    WORD wPlanes;        // Color Planes
+    WORD wBitCount;      // Bits per pixel
+    DWORD dwBytesInRes;  // How many bytes in this resource?
     DWORD dwImageOffset; // Where in the file is this image?
 } ICONDIRENTRY, *LPICONDIRENTRY;
 
 typedef struct {
-    WORD idReserved; // Reserved (must be 0)
-    WORD idType; // Resource Type (1 for icons)
-    WORD idCount; // How many images?
+    WORD idReserved;           // Reserved (must be 0)
+    WORD idType;               // Resource Type (1 for icons)
+    WORD idCount;              // How many images?
     ICONDIRENTRY idEntries[1]; // An entry for each image (idCount of 'em)
 } ICONDIR, *LPICONDIR;
 
 class JoypadWindows;
+
 class OS_Windows : public OS {
     String tablet_driver;
     Vector<String> tablet_drivers;
@@ -283,7 +291,7 @@ class OS_Windows : public OS {
     };
 
 #ifdef STDOUT_FILE
-    FILE *stdo;
+    FILE* stdo;
 #endif
 
     struct KeyEvent {
@@ -304,9 +312,9 @@ class OS_Windows : public OS {
     int old_x, old_y;
     Point2i center;
 #if defined(OPENGL_ENABLED)
-    ContextGL_Windows *gl_context;
+    ContextGL_Windows* gl_context;
 #endif
-    VisualServer *visual_server;
+    VisualServer* visual_server;
     int pressrc;
     HINSTANCE hInstance; // Holds The Instance Of The Application
     HWND hWnd;
@@ -327,7 +335,7 @@ class OS_Windows : public OS {
     VideoMode video_mode;
     bool preserve_window_size = false;
 
-    MainLoop *main_loop;
+    MainLoop* main_loop;
 
     WNDPROC user_proc;
 
@@ -348,15 +356,15 @@ class OS_Windows : public OS {
     bool use_raw_input;
     bool drop_events;
 
-    HCURSOR cursors[CURSOR_MAX] = { NULL };
+    HCURSOR cursors[CURSOR_MAX] = {NULL};
     CursorShape cursor_shape;
     Map<CursorShape, Vector<Variant>> cursors_cache;
 
-    InputDefault *input;
-    JoypadWindows *joypad;
+    InputDefault* input;
+    JoypadWindows* joypad;
     Map<int, Vector2> touch_state;
 
-    PowerWindows *power_manager;
+    PowerWindows* power_manager;
 
     int video_driver_index;
 #ifdef WASAPI_ENABLED
@@ -382,13 +390,18 @@ class OS_Windows : public OS {
     void _set_mouse_mode_impl(MouseMode p_mode);
 
     // functions used by main to initialize/deinitialize the OS
+
 protected:
     virtual int get_current_video_driver() const;
 
     virtual void initialize_core();
-    virtual Error initialize(const VideoMode &p_desired, int p_video_driver, int p_audio_driver);
+    virtual Error initialize(
+        const VideoMode& p_desired,
+        int p_video_driver,
+        int p_audio_driver
+    );
 
-    virtual void set_main_loop(MainLoop *p_main_loop);
+    virtual void set_main_loop(MainLoop* p_main_loop);
     virtual void delete_main_loop();
 
     virtual void finalize();
@@ -397,13 +410,14 @@ protected:
     void process_events();
     void process_key_events();
 
-    String _quote_command_line_argument(const String &p_text) const;
+    String _quote_command_line_argument(const String& p_text) const;
 
     struct ProcessInfo {
         STARTUPINFO si;
         PROCESS_INFORMATION pi;
     };
-    Map<ProcessID, ProcessInfo> *process_map;
+
+    Map<ProcessID, ProcessInfo>* process_map;
 
     bool pre_fs_valid;
     RECT pre_fs_rect;
@@ -417,27 +431,33 @@ protected:
 public:
     LRESULT WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-    virtual void alert(const String &p_alert, const String &p_title = "ALERT!");
+    virtual void alert(const String& p_alert, const String& p_title = "ALERT!");
     String get_stdin_string(bool p_block);
 
     void set_mouse_mode(MouseMode p_mode);
     MouseMode get_mouse_mode() const;
 
-    virtual void warp_mouse_position(const Point2 &p_to);
+    virtual void warp_mouse_position(const Point2& p_to);
     virtual Point2 get_mouse_position() const;
     void update_real_mouse_position();
     virtual int get_mouse_button_state() const;
-    virtual void set_window_title(const String &p_title);
-    virtual void set_window_mouse_passthrough(const PoolVector2Array &p_region);
+    virtual void set_window_title(const String& p_title);
+    virtual void set_window_mouse_passthrough(const PoolVector2Array& p_region);
 
-    virtual void set_video_mode(const VideoMode &p_video_mode, int p_screen = 0);
+    virtual void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    );
     virtual VideoMode get_video_mode(int p_screen = 0) const;
-    virtual void get_fullscreen_mode_list(List<VideoMode> *p_list, int p_screen = 0) const;
+    virtual void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const;
 
     virtual int get_tablet_driver_count() const;
     virtual String get_tablet_driver_name(int p_driver) const;
     virtual String get_current_tablet_driver() const;
-    virtual void set_current_tablet_driver(const String &p_driver);
+    virtual void set_current_tablet_driver(const String& p_driver);
 
     virtual int get_screen_count() const;
     virtual int get_current_screen() const;
@@ -447,7 +467,7 @@ public:
     virtual int get_screen_dpi(int p_screen = -1) const;
 
     virtual Point2 get_window_position() const;
-    virtual void set_window_position(const Point2 &p_position);
+    virtual void set_window_position(const Point2& p_position);
     virtual Size2 get_window_size() const;
     virtual Size2 get_real_window_size() const;
     virtual Size2 get_max_window_size() const;
@@ -469,7 +489,7 @@ public:
     virtual void set_console_visible(bool p_enabled);
     virtual bool is_console_visible() const;
     virtual void request_attention();
-    virtual void *get_native_handle(int p_handle_type);
+    virtual void* get_native_handle(int p_handle_type);
 
     virtual void set_borderless_window(bool p_borderless);
     virtual bool get_borderless_window();
@@ -477,11 +497,20 @@ public:
     virtual bool get_window_per_pixel_transparency_enabled() const;
     virtual void set_window_per_pixel_transparency_enabled(bool p_enabled);
 
-    virtual Error open_dynamic_library(const String p_path, void *&p_library_handle, bool p_also_set_library_path = false);
-    virtual Error close_dynamic_library(void *p_library_handle);
-    virtual Error get_dynamic_library_symbol_handle(void *p_library_handle, const String p_name, void *&p_symbol_handle, bool p_optional = false);
+    virtual Error open_dynamic_library(
+        const String p_path,
+        void*& p_library_handle,
+        bool p_also_set_library_path = false
+    );
+    virtual Error close_dynamic_library(void* p_library_handle);
+    virtual Error get_dynamic_library_symbol_handle(
+        void* p_library_handle,
+        const String p_name,
+        void*& p_symbol_handle,
+        bool p_optional = false
+    );
 
-    virtual MainLoop *get_main_loop() const;
+    virtual MainLoop* get_main_loop() const;
 
     virtual String get_name() const;
 
@@ -493,29 +522,48 @@ public:
     virtual uint64_t get_system_time_msecs() const;
 
     virtual bool can_draw() const;
-    virtual Error set_cwd(const String &p_cwd);
+    virtual Error set_cwd(const String& p_cwd);
 
     virtual void delay_usec(uint32_t p_usec) const;
     virtual uint64_t get_ticks_usec() const;
 
-    virtual Error execute(const String &p_path, const List<String> &p_arguments, bool p_blocking = true, ProcessID *r_child_id = NULL, String *r_pipe = NULL, int *r_exitcode = NULL, bool read_stderr = false, Mutex *p_pipe_mutex = NULL);
-    virtual Error kill(const ProcessID &p_pid);
+    virtual Error execute(
+        const String& p_path,
+        const List<String>& p_arguments,
+        bool p_blocking = true,
+        ProcessID* r_child_id = NULL,
+        String* r_pipe = NULL,
+        int* r_exitcode = NULL,
+        bool read_stderr = false,
+        Mutex* p_pipe_mutex = NULL
+    );
+    virtual Error kill(const ProcessID& p_pid);
     virtual int get_process_id() const;
 
-    virtual bool has_environment(const String &p_var) const;
-    virtual String get_environment(const String &p_var) const;
-    virtual bool set_environment(const String &p_var, const String &p_value) const;
+    virtual bool has_environment(const String& p_var) const;
+    virtual String get_environment(const String& p_var) const;
+    virtual bool set_environment(const String& p_var, const String& p_value)
+        const;
 
-    virtual void set_clipboard(const String &p_text);
+    virtual void set_clipboard(const String& p_text);
     virtual String get_clipboard() const;
 
     void set_cursor_shape(CursorShape p_shape);
     CursorShape get_cursor_shape() const;
-    virtual void set_custom_mouse_cursor(const RES &p_cursor, CursorShape p_shape, const Vector2 &p_hotspot);
-    void GetMaskBitmaps(HBITMAP hSourceBitmap, COLORREF clrTransparent, OUT HBITMAP &hAndMaskBitmap, OUT HBITMAP &hXorMaskBitmap);
+    virtual void set_custom_mouse_cursor(
+        const RES& p_cursor,
+        CursorShape p_shape,
+        const Vector2& p_hotspot
+    );
+    void GetMaskBitmaps(
+        HBITMAP hSourceBitmap,
+        COLORREF clrTransparent,
+        OUT HBITMAP& hAndMaskBitmap,
+        OUT HBITMAP& hXorMaskBitmap
+    );
 
-    void set_native_icon(const String &p_filename);
-    void set_icon(const Ref<Image> &p_icon);
+    void set_native_icon(const String& p_filename);
+    void set_icon(const Ref<Image>& p_icon);
 
     virtual String get_executable_path() const;
 
@@ -538,13 +586,14 @@ public:
     virtual String get_cache_path() const;
     virtual String get_godot_dir_name() const;
 
-    virtual String get_system_dir(SystemDir p_dir, bool p_shared_storage = true) const;
+    virtual String get_system_dir(SystemDir p_dir, bool p_shared_storage = true)
+        const;
     virtual String get_user_data_dir() const;
 
     virtual String get_unique_id() const;
 
     virtual void set_ime_active(const bool p_active);
-    virtual void set_ime_position(const Point2 &p_pos);
+    virtual void set_ime_position(const Point2& p_pos);
 
     virtual void release_rendering_thread();
     virtual void make_rendering_thread();
@@ -554,19 +603,21 @@ public:
 
     void run();
 
-    virtual bool get_swap_ok_cancel() { return true; }
+    virtual bool get_swap_ok_cancel() {
+        return true;
+    }
 
     virtual bool is_joy_known(int p_device);
     virtual String get_joy_guid(int p_device) const;
 
     virtual void _set_use_vsync(bool p_enable);
-    //virtual bool is_vsync_enabled() const;
+    // virtual bool is_vsync_enabled() const;
 
     virtual OS::PowerState get_power_state();
     virtual int get_power_seconds_left();
     virtual int get_power_percent_left();
 
-    virtual bool _check_internal_feature_support(const String &p_feature);
+    virtual bool _check_internal_feature_support(const String& p_feature);
 
     void disable_crash_handler();
     bool is_disable_crash_handler() const;
@@ -574,7 +625,7 @@ public:
 
     void force_process_input();
 
-    virtual Error move_to_trash(const String &p_path);
+    virtual Error move_to_trash(const String& p_path);
 
     virtual void process_and_drop_events();
 

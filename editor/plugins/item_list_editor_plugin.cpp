@@ -33,7 +33,7 @@
 #include "core/io/resource_loader.h"
 #include "editor/editor_scale.h"
 
-bool ItemListPlugin::_set(const StringName &p_name, const Variant &p_value) {
+bool ItemListPlugin::_set(const StringName& p_name, const Variant& p_value) {
     String name = p_name;
     int idx = name.get_slice("/", 0).to_int();
     String what = name.get_slice("/", 1);
@@ -43,7 +43,8 @@ bool ItemListPlugin::_set(const StringName &p_name, const Variant &p_value) {
     } else if (what == "icon") {
         set_item_icon(idx, p_value);
     } else if (what == "checkable") {
-        // This keeps compatibility to/from versions where this property was a boolean, before radio buttons
+        // This keeps compatibility to/from versions where this property was a
+        // boolean, before radio buttons
         switch ((int)p_value) {
             case 0:
             case 1:
@@ -68,7 +69,7 @@ bool ItemListPlugin::_set(const StringName &p_name, const Variant &p_value) {
     return true;
 }
 
-bool ItemListPlugin::_get(const StringName &p_name, Variant &r_ret) const {
+bool ItemListPlugin::_get(const StringName& p_name, Variant& r_ret) const {
     String name = p_name;
     int idx = name.get_slice("/", 0).to_int();
     String what = name.get_slice("/", 1);
@@ -78,7 +79,8 @@ bool ItemListPlugin::_get(const StringName &p_name, Variant &r_ret) const {
     } else if (what == "icon") {
         r_ret = get_item_icon(idx);
     } else if (what == "checkable") {
-        // This keeps compatibility to/from versions where this property was a boolean, before radio buttons
+        // This keeps compatibility to/from versions where this property was a
+        // boolean, before radio buttons
         if (!is_item_checkable(idx)) {
             r_ret = 0;
         } else {
@@ -98,22 +100,38 @@ bool ItemListPlugin::_get(const StringName &p_name, Variant &r_ret) const {
 
     return true;
 }
-void ItemListPlugin::_get_property_list(List<PropertyInfo> *p_list) const {
+
+void ItemListPlugin::_get_property_list(List<PropertyInfo>* p_list) const {
     for (int i = 0; i < get_item_count(); i++) {
         String base = itos(i) + "/";
 
         p_list->push_back(PropertyInfo(Variant::STRING, base + "text"));
-        p_list->push_back(PropertyInfo(Variant::OBJECT, base + "icon", PROPERTY_HINT_RESOURCE_TYPE, "Texture"));
+        p_list->push_back(PropertyInfo(
+            Variant::OBJECT,
+            base + "icon",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Texture"
+        ));
 
         int flags = get_flags();
 
         if (flags & FLAG_CHECKABLE) {
-            p_list->push_back(PropertyInfo(Variant::INT, base + "checkable", PROPERTY_HINT_ENUM, "No,As checkbox,As radio button"));
+            p_list->push_back(PropertyInfo(
+                Variant::INT,
+                base + "checkable",
+                PROPERTY_HINT_ENUM,
+                "No,As checkbox,As radio button"
+            ));
             p_list->push_back(PropertyInfo(Variant::BOOL, base + "checked"));
         }
 
         if (flags & FLAG_ID) {
-            p_list->push_back(PropertyInfo(Variant::INT, base + "id", PROPERTY_HINT_RANGE, "-1,4096"));
+            p_list->push_back(PropertyInfo(
+                Variant::INT,
+                base + "id",
+                PROPERTY_HINT_RANGE,
+                "-1,4096"
+            ));
         }
 
         if (flags & FLAG_ENABLE) {
@@ -130,11 +148,11 @@ void ItemListPlugin::_get_property_list(List<PropertyInfo> *p_list) const {
 ///////////////////////// PLUGINS /////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-void ItemListOptionButtonPlugin::set_object(Object *p_object) {
+void ItemListOptionButtonPlugin::set_object(Object* p_object) {
     ob = Object::cast_to<OptionButton>(p_object);
 }
 
-bool ItemListOptionButtonPlugin::handles(Object *p_object) const {
+bool ItemListOptionButtonPlugin::handles(Object* p_object) const {
     return p_object->is_class("OptionButton");
 }
 
@@ -162,7 +180,7 @@ ItemListOptionButtonPlugin::ItemListOptionButtonPlugin() {
 
 ///////////////////////////////////////////////////////////////
 
-void ItemListPopupMenuPlugin::set_object(Object *p_object) {
+void ItemListPopupMenuPlugin::set_object(Object* p_object) {
     if (p_object->is_class("MenuButton")) {
         pp = Object::cast_to<MenuButton>(p_object)->get_popup();
     } else {
@@ -170,7 +188,7 @@ void ItemListPopupMenuPlugin::set_object(Object *p_object) {
     }
 }
 
-bool ItemListPopupMenuPlugin::handles(Object *p_object) const {
+bool ItemListPopupMenuPlugin::handles(Object* p_object) const {
     return p_object->is_class("PopupMenu") || p_object->is_class("MenuButton");
 }
 
@@ -198,11 +216,11 @@ ItemListPopupMenuPlugin::ItemListPopupMenuPlugin() {
 
 ///////////////////////////////////////////////////////////////
 
-void ItemListItemListPlugin::set_object(Object *p_object) {
+void ItemListItemListPlugin::set_object(Object* p_object) {
     pp = Object::cast_to<ItemList>(p_object);
 }
 
-bool ItemListItemListPlugin::handles(Object *p_object) const {
+bool ItemListItemListPlugin::handles(Object* p_object) const {
     return p_object->is_class("ItemList");
 }
 
@@ -232,7 +250,7 @@ ItemListItemListPlugin::ItemListItemListPlugin() {
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-void ItemListEditor::_node_removed(Node *p_node) {
+void ItemListEditor::_node_removed(Node* p_node) {
     if (p_node == item_list) {
         item_list = nullptr;
         hide();
@@ -241,7 +259,8 @@ void ItemListEditor::_node_removed(Node *p_node) {
 }
 
 void ItemListEditor::_notification(int p_notification) {
-    if (p_notification == NOTIFICATION_ENTER_TREE || p_notification == NOTIFICATION_THEME_CHANGED) {
+    if (p_notification == NOTIFICATION_ENTER_TREE
+        || p_notification == NOTIFICATION_THEME_CHANGED) {
         add_button->set_icon(get_icon("Add", "EditorIcons"));
         del_button->set_icon(get_icon("Remove", "EditorIcons"));
     } else if (p_notification == NOTIFICATION_READY) {
@@ -268,10 +287,10 @@ void ItemListEditor::_delete_pressed() {
         return;
     }
 
-    // FIXME: Currently relying on selecting a *property* to derive what item to delete
-    // e.g. you select "1/enabled" to delete item 1.
-    // This should be fixed so that you can delete by selecting the item section header,
-    // or a delete button on that header.
+    // FIXME: Currently relying on selecting a *property* to derive what item to
+    // delete e.g. you select "1/enabled" to delete item 1. This should be fixed
+    // so that you can delete by selecting the item section header, or a delete
+    // button on that header.
 
     int idx = current_selected.get_slice("/", 0).to_int();
 
@@ -282,7 +301,7 @@ void ItemListEditor::_edit_items() {
     dialog->popup_centered_clamped(Vector2(425, 1200) * EDSCALE, 0.8);
 }
 
-void ItemListEditor::edit(Node *p_item_list) {
+void ItemListEditor::edit(Node* p_item_list) {
     item_list = p_item_list;
 
     if (!item_list) {
@@ -296,7 +315,9 @@ void ItemListEditor::edit(Node *p_item_list) {
             item_plugins[i]->set_object(p_item_list);
             property_editor->edit(item_plugins[i]);
 
-            toolbar_button->set_icon(EditorNode::get_singleton()->get_object_icon(item_list, ""));
+            toolbar_button->set_icon(
+                EditorNode::get_singleton()->get_object_icon(item_list, "")
+            );
 
             selected_idx = i;
             return;
@@ -307,7 +328,7 @@ void ItemListEditor::edit(Node *p_item_list) {
     property_editor->edit(nullptr);
 }
 
-bool ItemListEditor::handles(Object *p_object) const {
+bool ItemListEditor::handles(Object* p_object) const {
     for (int i = 0; i < item_plugins.size(); i++) {
         if (item_plugins[i]->handles(p_object)) {
             return true;
@@ -337,11 +358,11 @@ ItemListEditor::ItemListEditor() {
     dialog->set_title(TTR("Item List Editor"));
     add_child(dialog);
 
-    VBoxContainer *vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
     dialog->add_child(vbc);
-    //dialog->set_child_rect(vbc);
+    // dialog->set_child_rect(vbc);
 
-    HBoxContainer *hbc = memnew(HBoxContainer);
+    HBoxContainer* hbc = memnew(HBoxContainer);
     hbc->set_h_size_flags(SIZE_EXPAND_FILL);
     vbc->add_child(hbc);
 
@@ -368,11 +389,11 @@ ItemListEditor::~ItemListEditor() {
     }
 }
 
-void ItemListEditorPlugin::edit(Object *p_object) {
+void ItemListEditorPlugin::edit(Object* p_object) {
     item_list_editor->edit(Object::cast_to<Node>(p_object));
 }
 
-bool ItemListEditorPlugin::handles(Object *p_object) const {
+bool ItemListEditorPlugin::handles(Object* p_object) const {
     return item_list_editor->handles(p_object);
 }
 
@@ -385,10 +406,12 @@ void ItemListEditorPlugin::make_visible(bool p_visible) {
     }
 }
 
-ItemListEditorPlugin::ItemListEditorPlugin(EditorNode *p_node) {
+ItemListEditorPlugin::ItemListEditorPlugin(EditorNode* p_node) {
     editor = p_node;
     item_list_editor = memnew(ItemListEditor);
-    CanvasItemEditor::get_singleton()->add_control_to_menu_panel(item_list_editor);
+    CanvasItemEditor::get_singleton()->add_control_to_menu_panel(
+        item_list_editor
+    );
 
     item_list_editor->hide();
     item_list_editor->add_plugin(memnew(ItemListOptionButtonPlugin));
@@ -396,5 +419,4 @@ ItemListEditorPlugin::ItemListEditorPlugin(EditorNode *p_node) {
     item_list_editor->add_plugin(memnew(ItemListItemListPlugin));
 }
 
-ItemListEditorPlugin::~ItemListEditorPlugin() {
-}
+ItemListEditorPlugin::~ItemListEditorPlugin() {}

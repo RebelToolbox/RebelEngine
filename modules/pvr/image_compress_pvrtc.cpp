@@ -36,7 +36,7 @@
 #include <PvrTcEncoder.h>
 #include <RgbaBitmap.h>
 
-static void _compress_pvrtc4(Image *p_img) {
+static void _compress_pvrtc4(Image* p_img) {
     Ref<Image> img = p_img->duplicate();
 
     bool make_mipmaps = false;
@@ -57,7 +57,12 @@ static void _compress_pvrtc4(Image *p_img) {
 
     Ref<Image> new_img;
     new_img.instance();
-    new_img->create(img->get_width(), img->get_height(), img->has_mipmaps(), use_alpha ? Image::FORMAT_PVRTC4A : Image::FORMAT_PVRTC4);
+    new_img->create(
+        img->get_width(),
+        img->get_height(),
+        img->has_mipmaps(),
+        use_alpha ? Image::FORMAT_PVRTC4A : Image::FORMAT_PVRTC4
+    );
 
     PoolVector<uint8_t> data = new_img->get_data();
     {
@@ -68,9 +73,9 @@ static void _compress_pvrtc4(Image *p_img) {
             int ofs, size, w, h;
             img->get_mipmap_offset_size_and_dimensions(i, ofs, size, w, h);
             Javelin::RgbaBitmap bm(w, h);
-            void *dst = (void *)bm.GetData();
+            void* dst = (void*)bm.GetData();
             memcpy(dst, &r[ofs], size);
-            Javelin::ColorRgba<unsigned char> *dp = bm.GetData();
+            Javelin::ColorRgba<unsigned char>* dp = bm.GetData();
             for (int j = 0; j < size / 4; j++) {
                 // Red and blue colors are swapped.
                 SWAP(dp[j].r, dp[j].b);
@@ -80,7 +85,13 @@ static void _compress_pvrtc4(Image *p_img) {
         }
     }
 
-    p_img->create(new_img->get_width(), new_img->get_height(), new_img->has_mipmaps(), new_img->get_format(), data);
+    p_img->create(
+        new_img->get_width(),
+        new_img->get_height(),
+        new_img->has_mipmaps(),
+        new_img->get_format(),
+        data
+    );
 }
 
 void _register_pvrtc_compress_func() {

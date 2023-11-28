@@ -33,7 +33,12 @@
 #include "emws_peer.h"
 #include "core/io/ip.h"
 
-void EMWSPeer::set_sock(int p_sock, unsigned int p_in_buf_size, unsigned int p_in_pkt_size, unsigned int p_out_buf_size) {
+void EMWSPeer::set_sock(
+    int p_sock,
+    unsigned int p_in_buf_size,
+    unsigned int p_in_pkt_size,
+    unsigned int p_out_buf_size
+) {
     peer_sock = p_sock;
     _in_buffer.resize(p_in_pkt_size, p_in_buf_size);
     _packet_buffer.resize((1 << p_in_buf_size));
@@ -48,30 +53,44 @@ EMWSPeer::WriteMode EMWSPeer::get_write_mode() const {
     return write_mode;
 }
 
-Error EMWSPeer::read_msg(const uint8_t *p_data, uint32_t p_size, bool p_is_string) {
+Error EMWSPeer::read_msg(
+    const uint8_t* p_data,
+    uint32_t p_size,
+    bool p_is_string
+) {
     uint8_t is_string = p_is_string ? 1 : 0;
     return _in_buffer.write_packet(p_data, p_size, &is_string);
 }
 
-Error EMWSPeer::put_packet(const uint8_t *p_buffer, int p_buffer_size) {
-    ERR_FAIL_COND_V(_out_buf_size && ((uint64_t)godot_js_websocket_buffered_amount(peer_sock) + p_buffer_size >= (1ULL << _out_buf_size)), ERR_OUT_OF_MEMORY);
+Error EMWSPeer::put_packet(const uint8_t* p_buffer, int p_buffer_size) {
+    ERR_FAIL_COND_V(
+        _out_buf_size
+            && ((uint64_t)godot_js_websocket_buffered_amount(peer_sock)
+                    + p_buffer_size
+                >= (1ULL << _out_buf_size)),
+        ERR_OUT_OF_MEMORY
+    );
 
     int is_bin = write_mode == WebSocketPeer::WRITE_MODE_BINARY ? 1 : 0;
 
-    if (godot_js_websocket_send(peer_sock, p_buffer, p_buffer_size, is_bin) != 0) {
+    if (godot_js_websocket_send(peer_sock, p_buffer, p_buffer_size, is_bin)
+        != 0) {
         return FAILED;
     }
 
     return OK;
 };
 
-Error EMWSPeer::get_packet(const uint8_t **r_buffer, int &r_buffer_size) {
-    if (_in_buffer.packets_left() == 0)
+Error EMWSPeer::get_packet(const uint8_t** r_buffer, int& r_buffer_size) {
+    if (_in_buffer.packets_left() == 0) {
         return ERR_UNAVAILABLE;
+    }
 
     PoolVector<uint8_t>::Write rw = _packet_buffer.write();
     int read = 0;
-    Error err = _in_buffer.read_packet(rw.ptr(), _packet_buffer.size(), &_is_string, read);
+    Error err =
+        _in_buffer
+            .read_packet(rw.ptr(), _packet_buffer.size(), &_is_string, read);
     ERR_FAIL_COND_V(err != OK, err);
 
     *r_buffer = rw.ptr();

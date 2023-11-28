@@ -34,7 +34,8 @@
 #include "core/os/os.h"
 #include "core/ustring.h"
 
-namespace TestBasis {
+namespace TestBasis
+{
 
 enum RotOrder {
     EulerXYZ,
@@ -45,15 +46,15 @@ enum RotOrder {
     EulerZYX
 };
 
-Vector3 deg2rad(const Vector3 &p_rotation) {
+Vector3 deg2rad(const Vector3& p_rotation) {
     return p_rotation / 180.0 * Math_PI;
 }
 
-Vector3 rad2deg(const Vector3 &p_rotation) {
+Vector3 rad2deg(const Vector3& p_rotation) {
     return p_rotation / Math_PI * 180.0;
 }
 
-Basis EulerToBasis(RotOrder mode, const Vector3 &p_rotation) {
+Basis EulerToBasis(RotOrder mode, const Vector3& p_rotation) {
     Basis ret;
     switch (mode) {
         case EulerXYZ:
@@ -88,7 +89,7 @@ Basis EulerToBasis(RotOrder mode, const Vector3 &p_rotation) {
     return ret;
 }
 
-Vector3 BasisToEuler(RotOrder mode, const Basis &p_rotation) {
+Vector3 BasisToEuler(RotOrder mode, const Basis& p_rotation) {
     switch (mode) {
         case EulerXYZ:
             return p_rotation.get_euler_xyz();
@@ -142,15 +143,14 @@ bool test_rotation(Vector3 deg_original_euler, RotOrder rot_order) {
     // 4. Converts the above euler into basis again.
     // 5. Compares the basis obtained in step 2 with the basis of step 4
     //
-    // The conversion "basis to euler", done in the step 3, may be different from
-    // the original euler, even if the final rotation are the same.
-    // This happens because there are more ways to represents the same rotation,
-    // both valid, using eulers.
-    // For this reason is necessary to convert that euler back to basis and finally
-    // compares it.
+    // The conversion "basis to euler", done in the step 3, may be different
+    // from the original euler, even if the final rotation are the same. This
+    // happens because there are more ways to represents the same rotation, both
+    // valid, using eulers. For this reason is necessary to convert that euler
+    // back to basis and finally compares it.
     //
-    // In this way we can assert that both functions: basis to euler / euler to basis
-    // are correct.
+    // In this way we can assert that both functions: basis to euler / euler to
+    // basis are correct.
 
     bool pass = true;
 
@@ -160,20 +160,30 @@ bool test_rotation(Vector3 deg_original_euler, RotOrder rot_order) {
 
     // Euler from rotation
     const Vector3 euler_from_rotation = BasisToEuler(rot_order, to_rotation);
-    const Basis rotation_from_computed_euler = EulerToBasis(rot_order, euler_from_rotation);
+    const Basis rotation_from_computed_euler =
+        EulerToBasis(rot_order, euler_from_rotation);
 
     Basis res = to_rotation.inverse() * rotation_from_computed_euler;
 
     if ((res.get_axis(0) - Vector3(1.0, 0.0, 0.0)).length() > 0.1) {
-        OS::get_singleton()->print("Fail due to X %ls\n", String(res.get_axis(0)).c_str());
+        OS::get_singleton()->print(
+            "Fail due to X %ls\n",
+            String(res.get_axis(0)).c_str()
+        );
         pass = false;
     }
     if ((res.get_axis(1) - Vector3(0.0, 1.0, 0.0)).length() > 0.1) {
-        OS::get_singleton()->print("Fail due to Y %ls\n", String(res.get_axis(1)).c_str());
+        OS::get_singleton()->print(
+            "Fail due to Y %ls\n",
+            String(res.get_axis(1)).c_str()
+        );
         pass = false;
     }
     if ((res.get_axis(2) - Vector3(0.0, 0.0, 1.0)).length() > 0.1) {
-        OS::get_singleton()->print("Fail due to Z %ls\n", String(res.get_axis(2)).c_str());
+        OS::get_singleton()->print(
+            "Fail due to Z %ls\n",
+            String(res.get_axis(2)).c_str()
+        );
         pass = false;
     }
 
@@ -186,25 +196,43 @@ bool test_rotation(Vector3 deg_original_euler, RotOrder rot_order) {
         res = to_rotation.inverse() * rotation_from_xyz_computed_euler;
 
         if ((res.get_axis(0) - Vector3(1.0, 0.0, 0.0)).length() > 0.1) {
-            OS::get_singleton()->print("Double check with XYZ rot order failed, due to X %ls\n", String(res.get_axis(0)).c_str());
+            OS::get_singleton()->print(
+                "Double check with XYZ rot order failed, due to X %ls\n",
+                String(res.get_axis(0)).c_str()
+            );
             pass = false;
         }
         if ((res.get_axis(1) - Vector3(0.0, 1.0, 0.0)).length() > 0.1) {
-            OS::get_singleton()->print("Double check with XYZ rot order failed, due to Y %ls\n", String(res.get_axis(1)).c_str());
+            OS::get_singleton()->print(
+                "Double check with XYZ rot order failed, due to Y %ls\n",
+                String(res.get_axis(1)).c_str()
+            );
             pass = false;
         }
         if ((res.get_axis(2) - Vector3(0.0, 0.0, 1.0)).length() > 0.1) {
-            OS::get_singleton()->print("Double check with XYZ rot order failed, due to Z %ls\n", String(res.get_axis(2)).c_str());
+            OS::get_singleton()->print(
+                "Double check with XYZ rot order failed, due to Z %ls\n",
+                String(res.get_axis(2)).c_str()
+            );
             pass = false;
         }
     }
 
     if (pass == false) {
         // Print phase only if not pass.
-        OS *os = OS::get_singleton();
-        os->print("Rotation order: %ls\n.", get_rot_order_name(rot_order).c_str());
-        os->print("Original Rotation: %ls\n", String(deg_original_euler).c_str());
-        os->print("Quaternion to rotation order: %ls\n", String(rad2deg(euler_from_rotation)).c_str());
+        OS* os = OS::get_singleton();
+        os->print(
+            "Rotation order: %ls\n.",
+            get_rot_order_name(rot_order).c_str()
+        );
+        os->print(
+            "Original Rotation: %ls\n",
+            String(deg_original_euler).c_str()
+        );
+        os->print(
+            "Quaternion to rotation order: %ls\n",
+            String(rad2deg(euler_from_rotation)).c_str()
+        );
     }
 
     return pass;
@@ -279,9 +307,10 @@ void test_euler_conversion() {
     RandomNumberGenerator rng;
     for (int _ = 0; _ < 1000; _ += 1) {
         vectors_to_test.push_back(Vector3(
-                rng.randf_range(-1800, 1800),
-                rng.randf_range(-1800, 1800),
-                rng.randf_range(-1800, 1800)));
+            rng.randf_range(-1800, 1800),
+            rng.randf_range(-1800, 1800),
+            rng.randf_range(-1800, 1800)
+        ));
     }
 
     bool success = true;
@@ -290,10 +319,13 @@ void test_euler_conversion() {
         int failed = 0;
         for (int i = 0; i < vectors_to_test.size(); i += 1) {
             if (test_rotation(vectors_to_test[i], rotorder_to_test[h])) {
-                //OS::get_singleton()->print("Success. \n\n");
+                // OS::get_singleton()->print("Success. \n\n");
                 passed += 1;
             } else {
-                OS::get_singleton()->print("FAILED                   FAILED                        FAILED. \n\n");
+                OS::get_singleton()->print(
+                    "FAILED                   FAILED                        "
+                    "FAILED. \n\n"
+                );
                 OS::get_singleton()->print("------------>\n");
                 OS::get_singleton()->print("------------>\n");
                 failed += 1;
@@ -302,9 +334,17 @@ void test_euler_conversion() {
         }
 
         if (failed == 0) {
-            OS::get_singleton()->print("%i passed tests for rotation order: %ls.\n", passed, get_rot_order_name(rotorder_to_test[h]).c_str());
+            OS::get_singleton()->print(
+                "%i passed tests for rotation order: %ls.\n",
+                passed,
+                get_rot_order_name(rotorder_to_test[h]).c_str()
+            );
         } else {
-            OS::get_singleton()->print("%i FAILED tests for rotation order: %ls.\n", failed, get_rot_order_name(rotorder_to_test[h]).c_str());
+            OS::get_singleton()->print(
+                "%i FAILED tests for rotation order: %ls.\n",
+                failed,
+                get_rot_order_name(rotorder_to_test[h]).c_str()
+            );
         }
     }
 
@@ -315,7 +355,7 @@ void test_euler_conversion() {
     }
 }
 
-MainLoop *test() {
+MainLoop* test() {
     OS::get_singleton()->print("Start euler conversion checks.\n");
     test_euler_conversion();
 

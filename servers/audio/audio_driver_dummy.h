@@ -40,9 +40,9 @@ class AudioDriverDummy : public AudioDriver {
     Thread thread;
     Mutex mutex;
 
-    int32_t *samples_in;
+    int32_t* samples_in;
 
-    static void thread_func(void *p_udata);
+    static void thread_func(void* p_udata);
 
     unsigned int buffer_frames;
     unsigned int mix_rate;
@@ -55,7 +55,7 @@ class AudioDriverDummy : public AudioDriver {
     mutable bool exit_thread;
 
 public:
-    const char *get_name() const {
+    const char* get_name() const {
         return "Dummy";
     };
 

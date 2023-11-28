@@ -32,7 +32,7 @@
 
 #include "editor/plugins/spatial_editor_plugin.h"
 
-void CPUParticlesEditor::_node_removed(Node *p_node) {
+void CPUParticlesEditor::_node_removed(Node* p_node) {
     if (p_node == node) {
         node = nullptr;
         hide();
@@ -41,7 +41,9 @@ void CPUParticlesEditor::_node_removed(Node *p_node) {
 
 void CPUParticlesEditor::_notification(int p_notification) {
     if (p_notification == NOTIFICATION_ENTER_TREE) {
-        options->set_icon(options->get_popup()->get_icon("CPUParticles", "EditorIcons"));
+        options->set_icon(
+            options->get_popup()->get_icon("CPUParticles", "EditorIcons")
+        );
     }
 }
 
@@ -64,7 +66,7 @@ void CPUParticlesEditor::_menu_option(int p_option) {
     }
 }
 
-void CPUParticlesEditor::edit(CPUParticles *p_particles) {
+void CPUParticlesEditor::edit(CPUParticles* p_particles) {
     base_node = p_particles;
     node = p_particles;
 }
@@ -94,25 +96,33 @@ void CPUParticlesEditor::_bind_methods() {
 
 CPUParticlesEditor::CPUParticlesEditor() {
     particles_editor_hb = memnew(HBoxContainer);
-    SpatialEditor::get_singleton()->add_control_to_menu_panel(particles_editor_hb);
+    SpatialEditor::get_singleton()->add_control_to_menu_panel(
+        particles_editor_hb
+    );
     options = memnew(MenuButton);
     options->set_switch_on_hover(true);
     particles_editor_hb->add_child(options);
     particles_editor_hb->hide();
 
     options->set_text(TTR("CPUParticles"));
-    options->get_popup()->add_item(TTR("Create Emission Points From Mesh"), MENU_OPTION_CREATE_EMISSION_VOLUME_FROM_MESH);
-    options->get_popup()->add_item(TTR("Create Emission Points From Node"), MENU_OPTION_CREATE_EMISSION_VOLUME_FROM_NODE);
+    options->get_popup()->add_item(
+        TTR("Create Emission Points From Mesh"),
+        MENU_OPTION_CREATE_EMISSION_VOLUME_FROM_MESH
+    );
+    options->get_popup()->add_item(
+        TTR("Create Emission Points From Node"),
+        MENU_OPTION_CREATE_EMISSION_VOLUME_FROM_NODE
+    );
     options->get_popup()->add_separator();
     options->get_popup()->add_item(TTR("Restart"), MENU_OPTION_RESTART);
     options->get_popup()->connect("id_pressed", this, "_menu_option");
 }
 
-void CPUParticlesEditorPlugin::edit(Object *p_object) {
+void CPUParticlesEditorPlugin::edit(Object* p_object) {
     particles_editor->edit(Object::cast_to<CPUParticles>(p_object));
 }
 
-bool CPUParticlesEditorPlugin::handles(Object *p_object) const {
+bool CPUParticlesEditorPlugin::handles(Object* p_object) const {
     return p_object->is_class("CPUParticles");
 }
 
@@ -127,7 +137,7 @@ void CPUParticlesEditorPlugin::make_visible(bool p_visible) {
     }
 }
 
-CPUParticlesEditorPlugin::CPUParticlesEditorPlugin(EditorNode *p_node) {
+CPUParticlesEditorPlugin::CPUParticlesEditorPlugin(EditorNode* p_node) {
     editor = p_node;
     particles_editor = memnew(CPUParticlesEditor);
     editor->get_viewport()->add_child(particles_editor);
@@ -135,5 +145,4 @@ CPUParticlesEditorPlugin::CPUParticlesEditorPlugin(EditorNode *p_node) {
     particles_editor->hide();
 }
 
-CPUParticlesEditorPlugin::~CPUParticlesEditorPlugin() {
-}
+CPUParticlesEditorPlugin::~CPUParticlesEditorPlugin() {}

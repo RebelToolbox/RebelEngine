@@ -37,9 +37,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern bool (*array_mesh_lightmap_unwrap_callback)(float p_texel_size, const float *p_vertices, const float *p_normals, int p_vertex_count, const int *p_indices, const int *p_face_materials, int p_index_count, float **r_uv, int **r_vertex, int *r_vertex_count, int **r_index, int *r_index_count, int *r_size_hint_x, int *r_size_hint_y);
+extern bool (*array_mesh_lightmap_unwrap_callback)(
+    float p_texel_size,
+    const float* p_vertices,
+    const float* p_normals,
+    int p_vertex_count,
+    const int* p_indices,
+    const int* p_face_materials,
+    int p_index_count,
+    float** r_uv,
+    int** r_vertex,
+    int* r_vertex_count,
+    int** r_index,
+    int* r_index_count,
+    int* r_size_hint_x,
+    int* r_size_hint_y
+);
 
-bool xatlas_mesh_lightmap_unwrap_callback(float p_texel_size, const float *p_vertices, const float *p_normals, int p_vertex_count, const int *p_indices, const int *p_face_materials, int p_index_count, float **r_uv, int **r_vertex, int *r_vertex_count, int **r_index, int *r_index_count, int *r_size_hint_x, int *r_size_hint_y) {
+bool xatlas_mesh_lightmap_unwrap_callback(
+    float p_texel_size,
+    const float* p_vertices,
+    const float* p_normals,
+    int p_vertex_count,
+    const int* p_indices,
+    const int* p_face_materials,
+    int p_index_count,
+    float** r_uv,
+    int** r_vertex,
+    int* r_vertex_count,
+    int** r_index,
+    int* r_index_count,
+    int* r_size_hint_x,
+    int* r_size_hint_y
+) {
     // set up input mesh
     xatlas::MeshDecl input_mesh;
     input_mesh.indexData = p_indices;
@@ -57,18 +87,27 @@ bool xatlas_mesh_lightmap_unwrap_callback(float p_texel_size, const float *p_ver
     xatlas::ChartOptions chart_options;
     chart_options.fixWinding = true;
 
-    ERR_FAIL_COND_V_MSG(p_texel_size <= 0.0f, false, "Texel size must be greater than 0.");
+    ERR_FAIL_COND_V_MSG(
+        p_texel_size <= 0.0f,
+        false,
+        "Texel size must be greater than 0."
+    );
 
     xatlas::PackOptions pack_options;
     pack_options.padding = 1;
-    pack_options.maxChartSize = 4094; // Lightmap atlassing needs 2 for padding between meshes, so 4096-2
+    pack_options.maxChartSize = 4094; // Lightmap atlassing needs 2 for padding
+                                      // between meshes, so 4096-2
     pack_options.blockAlign = true;
     pack_options.texelsPerUnit = 1.0 / p_texel_size;
 
-    xatlas::Atlas *atlas = xatlas::Create();
+    xatlas::Atlas* atlas = xatlas::Create();
 
     xatlas::AddMeshError err = xatlas::AddMesh(atlas, input_mesh, 1);
-    ERR_FAIL_COND_V_MSG(err != xatlas::AddMeshError::Success, false, xatlas::StringForEnum(err));
+    ERR_FAIL_COND_V_MSG(
+        err != xatlas::AddMeshError::Success,
+        false,
+        xatlas::StringForEnum(err)
+    );
 
     xatlas::Generate(atlas, chart_options, pack_options);
 
@@ -80,16 +119,16 @@ bool xatlas_mesh_lightmap_unwrap_callback(float p_texel_size, const float *p_ver
 
     if (w == 0 || h == 0) {
         xatlas::Destroy(atlas);
-        return false; //could not bake because there is no area
+        return false; // could not bake because there is no area
     }
 
-    const xatlas::Mesh &output = atlas->meshes[0];
+    const xatlas::Mesh& output = atlas->meshes[0];
 
-    *r_vertex = (int *)malloc(sizeof(int) * output.vertexCount);
+    *r_vertex = (int*)malloc(sizeof(int) * output.vertexCount);
     ERR_FAIL_NULL_V_MSG(*r_vertex, false, "Out of memory.");
-    *r_uv = (float *)malloc(sizeof(float) * output.vertexCount * 2);
+    *r_uv = (float*)malloc(sizeof(float) * output.vertexCount * 2);
     ERR_FAIL_NULL_V_MSG(*r_uv, false, "Out of memory.");
-    *r_index = (int *)malloc(sizeof(int) * output.indexCount);
+    *r_index = (int*)malloc(sizeof(int) * output.indexCount);
     ERR_FAIL_NULL_V_MSG(*r_index, false, "Out of memory.");
 
     float max_x = 0;
@@ -119,5 +158,4 @@ void register_xatlas_unwrap_types() {
     array_mesh_lightmap_unwrap_callback = xatlas_mesh_lightmap_unwrap_callback;
 }
 
-void unregister_xatlas_unwrap_types() {
-}
+void unregister_xatlas_unwrap_types() {}

@@ -37,13 +37,13 @@
 
 class PowerAndroid {
     struct LocalReferenceHolder {
-        JNIEnv *m_env;
-        const char *m_func;
+        JNIEnv* m_env;
+        const char* m_func;
     };
 
 private:
     static struct LocalReferenceHolder refs;
-    static JNIEnv *env;
+    static JNIEnv* env;
     static jmethodID mid;
     static jobject context;
     static jstring action;
@@ -67,9 +67,16 @@ public:
 
     PowerAndroid();
     virtual ~PowerAndroid();
-    static bool LocalReferenceHolder_Init(struct LocalReferenceHolder *refholder, JNIEnv *env);
-    static struct LocalReferenceHolder LocalReferenceHolder_Setup(const char *func);
-    static void LocalReferenceHolder_Cleanup(struct LocalReferenceHolder *refholder);
+    static bool LocalReferenceHolder_Init(
+        struct LocalReferenceHolder* refholder,
+        JNIEnv* env
+    );
+    static struct LocalReferenceHolder LocalReferenceHolder_Setup(
+        const char* func
+    );
+    static void LocalReferenceHolder_Cleanup(
+        struct LocalReferenceHolder* refholder
+    );
 
     OS::PowerState get_power_state();
     int get_power_seconds_left();

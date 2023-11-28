@@ -66,9 +66,9 @@ class TestPhysicsMainLoop : public MainLoop {
     Map<PhysicsServer::ShapeType, RID> type_shape_map;
     Map<PhysicsServer::ShapeType, RID> type_mesh_map;
 
-    void body_changed_transform(Object *p_state, RID p_visual_instance) {
-        PhysicsDirectBodyState *state = (PhysicsDirectBodyState *)p_state;
-        VisualServer *vs = VisualServer::get_singleton();
+    void body_changed_transform(Object* p_state, RID p_visual_instance) {
+        PhysicsDirectBodyState* state = (PhysicsDirectBodyState*)p_state;
+        VisualServer* vs = VisualServer::get_singleton();
         Transform t = state->get_transform();
         vs->instance_set_transform(p_visual_instance, t);
     }
@@ -77,22 +77,41 @@ class TestPhysicsMainLoop : public MainLoop {
 
 protected:
     static void _bind_methods() {
-        ClassDB::bind_method("body_changed_transform", &TestPhysicsMainLoop::body_changed_transform);
+        ClassDB::bind_method(
+            "body_changed_transform",
+            &TestPhysicsMainLoop::body_changed_transform
+        );
     }
 
-    RID create_body(PhysicsServer::ShapeType p_shape, PhysicsServer::BodyMode p_body, const Transform p_location, bool p_active_default = true, const Transform &p_shape_xform = Transform()) {
-        VisualServer *vs = VisualServer::get_singleton();
-        PhysicsServer *ps = PhysicsServer::get_singleton();
+    RID create_body(
+        PhysicsServer::ShapeType p_shape,
+        PhysicsServer::BodyMode p_body,
+        const Transform p_location,
+        bool p_active_default = true,
+        const Transform& p_shape_xform = Transform()
+    ) {
+        VisualServer* vs = VisualServer::get_singleton();
+        PhysicsServer* ps = PhysicsServer::get_singleton();
 
-        RID mesh_instance = vs->instance_create2(type_mesh_map[p_shape], scenario);
+        RID mesh_instance =
+            vs->instance_create2(type_mesh_map[p_shape], scenario);
         RID body = ps->body_create(p_body, !p_active_default);
         ps->body_set_space(body, space);
         ps->body_set_param(body, PhysicsServer::BODY_PARAM_BOUNCE, 0.0);
-        //todo set space
+        // todo set space
         ps->body_add_shape(body, type_shape_map[p_shape]);
-        ps->body_set_force_integration_callback(body, this, "body_changed_transform", mesh_instance);
+        ps->body_set_force_integration_callback(
+            body,
+            this,
+            "body_changed_transform",
+            mesh_instance
+        );
 
-        ps->body_set_state(body, PhysicsServer::BODY_STATE_TRANSFORM, p_location);
+        ps->body_set_state(
+            body,
+            PhysicsServer::BODY_STATE_TRANSFORM,
+            p_location
+        );
         bodies.push_back(body);
 
         if (p_body == PhysicsServer::BODY_MODE_STATIC) {
@@ -101,29 +120,38 @@ protected:
         return body;
     }
 
-    RID create_static_plane(const Plane &p_plane) {
-        PhysicsServer *ps = PhysicsServer::get_singleton();
+    RID create_static_plane(const Plane& p_plane) {
+        PhysicsServer* ps = PhysicsServer::get_singleton();
 
         RID plane_shape = ps->shape_create(PhysicsServer::SHAPE_PLANE);
         ps->shape_set_data(plane_shape, p_plane);
 
         RID b = ps->body_create(PhysicsServer::BODY_MODE_STATIC);
         ps->body_set_space(b, space);
-        //todo set space
+        // todo set space
         ps->body_add_shape(b, plane_shape);
         return b;
     }
 
-    void configure_body(RID p_body, float p_mass, float p_friction, float p_bounce) {
-        PhysicsServer *ps = PhysicsServer::get_singleton();
+    void configure_body(
+        RID p_body,
+        float p_mass,
+        float p_friction,
+        float p_bounce
+    ) {
+        PhysicsServer* ps = PhysicsServer::get_singleton();
         ps->body_set_param(p_body, PhysicsServer::BODY_PARAM_MASS, p_mass);
-        ps->body_set_param(p_body, PhysicsServer::BODY_PARAM_FRICTION, p_friction);
+        ps->body_set_param(
+            p_body,
+            PhysicsServer::BODY_PARAM_FRICTION,
+            p_friction
+        );
         ps->body_set_param(p_body, PhysicsServer::BODY_PARAM_BOUNCE, p_bounce);
     }
 
     void init_shapes() {
-        VisualServer *vs = VisualServer::get_singleton();
-        PhysicsServer *ps = PhysicsServer::get_singleton();
+        VisualServer* vs = VisualServer::get_singleton();
+        PhysicsServer* ps = PhysicsServer::get_singleton();
 
         /* SPHERE SHAPE */
         RID sphere_mesh = vs->make_sphere_mesh(10, 20, 0.5);
@@ -135,7 +163,8 @@ protected:
 
         /* BOX SHAPE */
 
-        PoolVector<Plane> box_planes = Geometry::build_box_planes(Vector3(0.5, 0.5, 0.5));
+        PoolVector<Plane> box_planes =
+            Geometry::build_box_planes(Vector3(0.5, 0.5, 0.5));
         RID box_mesh = vs->mesh_create();
         Geometry::MeshData box_data = Geometry::build_convex_mesh(box_planes);
         vs->mesh_add_surface_from_mesh_data(box_mesh, box_data);
@@ -147,10 +176,12 @@ protected:
 
         /* CAPSULE SHAPE */
 
-        PoolVector<Plane> capsule_planes = Geometry::build_capsule_planes(0.5, 0.7, 12, Vector3::AXIS_Z);
+        PoolVector<Plane> capsule_planes =
+            Geometry::build_capsule_planes(0.5, 0.7, 12, Vector3::AXIS_Z);
 
         RID capsule_mesh = vs->mesh_create();
-        Geometry::MeshData capsule_data = Geometry::build_convex_mesh(capsule_planes);
+        Geometry::MeshData capsule_data =
+            Geometry::build_convex_mesh(capsule_planes);
         vs->mesh_add_surface_from_mesh_data(capsule_mesh, capsule_data);
 
         type_mesh_map[PhysicsServer::SHAPE_CAPSULE] = capsule_mesh;
@@ -164,27 +195,34 @@ protected:
 
         /* CONVEX SHAPE */
 
-        PoolVector<Plane> convex_planes = Geometry::build_cylinder_planes(0.5, 0.7, 5, Vector3::AXIS_Z);
+        PoolVector<Plane> convex_planes =
+            Geometry::build_cylinder_planes(0.5, 0.7, 5, Vector3::AXIS_Z);
 
         RID convex_mesh = vs->mesh_create();
-        Geometry::MeshData convex_data = Geometry::build_convex_mesh(convex_planes);
+        Geometry::MeshData convex_data =
+            Geometry::build_convex_mesh(convex_planes);
         ConvexHullComputer::convex_hull(convex_data.vertices, convex_data);
         vs->mesh_add_surface_from_mesh_data(convex_mesh, convex_data);
 
         type_mesh_map[PhysicsServer::SHAPE_CONVEX_POLYGON] = convex_mesh;
 
-        RID convex_shape = ps->shape_create(PhysicsServer::SHAPE_CONVEX_POLYGON);
+        RID convex_shape =
+            ps->shape_create(PhysicsServer::SHAPE_CONVEX_POLYGON);
         ps->shape_set_data(convex_shape, convex_data.vertices);
         type_shape_map[PhysicsServer::SHAPE_CONVEX_POLYGON] = convex_shape;
     }
 
-    void make_trimesh(Vector<Vector3> p_faces, const Transform &p_xform = Transform()) {
-        VisualServer *vs = VisualServer::get_singleton();
-        PhysicsServer *ps = PhysicsServer::get_singleton();
-        RID trimesh_shape = ps->shape_create(PhysicsServer::SHAPE_CONCAVE_POLYGON);
+    void make_trimesh(
+        Vector<Vector3> p_faces,
+        const Transform& p_xform = Transform()
+    ) {
+        VisualServer* vs = VisualServer::get_singleton();
+        PhysicsServer* ps = PhysicsServer::get_singleton();
+        RID trimesh_shape =
+            ps->shape_create(PhysicsServer::SHAPE_CONCAVE_POLYGON);
         ps->shape_set_data(trimesh_shape, p_faces);
         p_faces = ps->shape_get_data(trimesh_shape); // optimized one
-        Vector<Vector3> normals; // for drawing
+        Vector<Vector3> normals;                     // for drawing
         for (int i = 0; i < p_faces.size() / 3; i++) {
             Plane p(p_faces[i * 3 + 0], p_faces[i * 3 + 1], p_faces[i * 3 + 2]);
             normals.push_back(p.normal);
@@ -197,20 +235,34 @@ protected:
         d.resize(VS::ARRAY_MAX);
         d[VS::ARRAY_VERTEX] = p_faces;
         d[VS::ARRAY_NORMAL] = normals;
-        vs->mesh_add_surface_from_arrays(trimesh_mesh, VS::PRIMITIVE_TRIANGLES, d);
+        vs->mesh_add_surface_from_arrays(
+            trimesh_mesh,
+            VS::PRIMITIVE_TRIANGLES,
+            d
+        );
 
         RID triins = vs->instance_create2(trimesh_mesh, scenario);
 
         RID tribody = ps->body_create(PhysicsServer::BODY_MODE_STATIC);
         ps->body_set_space(tribody, space);
-        //todo set space
+        // todo set space
         ps->body_add_shape(tribody, trimesh_shape);
         Transform tritrans = p_xform;
-        ps->body_set_state(tribody, PhysicsServer::BODY_STATE_TRANSFORM, tritrans);
+        ps->body_set_state(
+            tribody,
+            PhysicsServer::BODY_STATE_TRANSFORM,
+            tritrans
+        );
         vs->instance_set_transform(triins, tritrans);
     }
 
-    void make_grid(int p_width, int p_height, float p_cellsize, float p_cellheight, const Transform &p_xform = Transform()) {
+    void make_grid(
+        int p_width,
+        int p_height,
+        float p_cellsize,
+        float p_cellheight,
+        const Transform& p_xform = Transform()
+    ) {
         Vector<Vector<float>> grid;
 
         grid.resize(p_width);
@@ -219,7 +271,8 @@ protected:
             grid.write[i].resize(p_height);
 
             for (int j = 0; j < p_height; j++) {
-                grid.write[i].write[j] = 1.0 + Math::random(-p_cellheight, p_cellheight);
+                grid.write[i].write[j] =
+                    1.0 + Math::random(-p_cellheight, p_cellheight);
             }
         }
 
@@ -227,8 +280,12 @@ protected:
 
         for (int i = 1; i < p_width; i++) {
             for (int j = 1; j < p_height; j++) {
-#define MAKE_VERTEX(m_x, m_z) \
-    faces.push_back(Vector3((m_x - p_width / 2) * p_cellsize, grid[m_x][m_z], (m_z - p_height / 2) * p_cellsize))
+#define MAKE_VERTEX(m_x, m_z)                                                  \
+    faces.push_back(Vector3(                                                   \
+        (m_x - p_width / 2) * p_cellsize,                                      \
+        grid[m_x][m_z],                                                        \
+        (m_z - p_height / 2) * p_cellsize                                      \
+    ))
 
                 MAKE_VERTEX(i, j - 1);
                 MAKE_VERTEX(i, j);
@@ -244,7 +301,7 @@ protected:
     }
 
 public:
-    virtual void input_event(const Ref<InputEvent> &p_event) {
+    virtual void input_event(const Ref<InputEvent>& p_event) {
         Ref<InputEventMouseMotion> mm = p_event;
         if (mm.is_valid() && mm->get_button_mask() & 4) {
             ofs_y -= mm->get_relative().y / 200.0;
@@ -256,11 +313,18 @@ public:
             float x = mm->get_relative().x / 20.0;
 
             if (mover.is_valid()) {
-                PhysicsServer *ps = PhysicsServer::get_singleton();
-                Transform t = ps->body_get_state(mover, PhysicsServer::BODY_STATE_TRANSFORM);
+                PhysicsServer* ps = PhysicsServer::get_singleton();
+                Transform t = ps->body_get_state(
+                    mover,
+                    PhysicsServer::BODY_STATE_TRANSFORM
+                );
                 t.origin += Vector3(x, y, 0);
 
-                ps->body_set_state(mover, PhysicsServer::BODY_STATE_TRANSFORM, t);
+                ps->body_set_state(
+                    mover,
+                    PhysicsServer::BODY_STATE_TRANSFORM,
+                    t
+                );
             }
         }
     }
@@ -268,15 +332,16 @@ public:
     virtual void request_quit() {
         quit = true;
     }
+
     virtual void init() {
         ofs_x = ofs_y = 0;
         init_shapes();
 
-        PhysicsServer *ps = PhysicsServer::get_singleton();
+        PhysicsServer* ps = PhysicsServer::get_singleton();
         space = ps->space_create();
         ps->space_set_active(space, true);
 
-        VisualServer *vs = VisualServer::get_singleton();
+        VisualServer* vs = VisualServer::get_singleton();
 
         /* LIGHT */
         RID lightaux = vs->directional_light_create();
@@ -309,12 +374,18 @@ public:
         test_fall();
         quit = false;
     }
+
     virtual bool iteration(float p_time) {
         if (mover.is_valid()) {
             static float joy_speed = 10;
-            PhysicsServer *ps = PhysicsServer::get_singleton();
-            Transform t = ps->body_get_state(mover, PhysicsServer::BODY_STATE_TRANSFORM);
-            t.origin += Vector3(joy_speed * joy_direction.x * p_time, -joy_speed * joy_direction.y * p_time, 0);
+            PhysicsServer* ps = PhysicsServer::get_singleton();
+            Transform t =
+                ps->body_get_state(mover, PhysicsServer::BODY_STATE_TRANSFORM);
+            t.origin += Vector3(
+                joy_speed * joy_direction.x * p_time,
+                -joy_speed * joy_direction.y * p_time,
+                0
+            );
             ps->body_set_state(mover, PhysicsServer::BODY_STATE_TRANSFORM, t);
         };
 
@@ -322,28 +393,28 @@ public:
         cameratr.rotate(Vector3(0, 1, 0), ofs_x);
         cameratr.rotate(Vector3(1, 0, 0), -ofs_y);
         cameratr.translate(Vector3(0, 2, 8));
-        VisualServer *vs = VisualServer::get_singleton();
+        VisualServer* vs = VisualServer::get_singleton();
         vs->camera_set_transform(camera, cameratr);
 
         return quit;
     }
-    virtual void finish() {
-    }
 
-    void test_joint() {
-    }
+    virtual void finish() {}
 
-    void test_hinge() {
-    }
+    void test_joint() {}
+
+    void test_hinge() {}
 
     void test_character() {
-        VisualServer *vs = VisualServer::get_singleton();
-        PhysicsServer *ps = PhysicsServer::get_singleton();
+        VisualServer* vs = VisualServer::get_singleton();
+        PhysicsServer* ps = PhysicsServer::get_singleton();
 
-        PoolVector<Plane> capsule_planes = Geometry::build_capsule_planes(0.5, 1, 12, 5, Vector3::AXIS_Y);
+        PoolVector<Plane> capsule_planes =
+            Geometry::build_capsule_planes(0.5, 1, 12, 5, Vector3::AXIS_Y);
 
         RID capsule_mesh = vs->mesh_create();
-        Geometry::MeshData capsule_data = Geometry::build_convex_mesh(capsule_planes);
+        Geometry::MeshData capsule_data =
+            Geometry::build_convex_mesh(capsule_planes);
         vs->mesh_add_surface_from_mesh_data(capsule_mesh, capsule_data);
         type_mesh_map[PhysicsServer::SHAPE_CAPSULE] = capsule_mesh;
 
@@ -353,18 +424,27 @@ public:
         capsule_params["height"] = 1;
         Transform shape_xform;
         shape_xform.rotate(Vector3(1, 0, 0), Math_PI / 2.0);
-        //shape_xform.origin=Vector3(1,1,1);
+        // shape_xform.origin=Vector3(1,1,1);
         ps->shape_set_data(capsule_shape, capsule_params);
 
         RID mesh_instance = vs->instance_create2(capsule_mesh, scenario);
         character = ps->body_create(PhysicsServer::BODY_MODE_CHARACTER);
         ps->body_set_space(character, space);
-        //todo add space
+        // todo add space
         ps->body_add_shape(character, capsule_shape);
 
-        ps->body_set_force_integration_callback(character, this, "body_changed_transform", mesh_instance);
+        ps->body_set_force_integration_callback(
+            character,
+            this,
+            "body_changed_transform",
+            mesh_instance
+        );
 
-        ps->body_set_state(character, PhysicsServer::BODY_STATE_TRANSFORM, Transform(Basis(), Vector3(-2, 5, -2)));
+        ps->body_set_state(
+            character,
+            PhysicsServer::BODY_STATE_TRANSFORM,
+            Transform(Basis(), Vector3(-2, 5, -2))
+        );
         bodies.push_back(character);
     }
 
@@ -391,7 +471,12 @@ public:
     }
 
     void test_activate() {
-        create_body(PhysicsServer::SHAPE_BOX, PhysicsServer::BODY_MODE_RIGID, Transform(Basis(), Vector3(0, 2, 0)), true);
+        create_body(
+            PhysicsServer::SHAPE_BOX,
+            PhysicsServer::BODY_MODE_RIGID,
+            Transform(Basis(), Vector3(0, 2, 0)),
+            true
+        );
         create_static_plane(Plane(Vector3(0, 1, 0), -1));
     }
 
@@ -399,13 +484,13 @@ public:
         return false;
     }
 
-    TestPhysicsMainLoop() {
-    }
+    TestPhysicsMainLoop() {}
 };
 
-namespace TestPhysics {
+namespace TestPhysics
+{
 
-MainLoop *test() {
+MainLoop* test() {
     return memnew(TestPhysicsMainLoop);
 }
 } // namespace TestPhysics

@@ -58,32 +58,42 @@ Error AudioDriverALSA::init_device() {
     }
 
     int status;
-    snd_pcm_hw_params_t *hwparams;
-    snd_pcm_sw_params_t *swparams;
+    snd_pcm_hw_params_t* hwparams;
+    snd_pcm_sw_params_t* swparams;
 
-#define CHECK_FAIL(m_cond)                                       \
-    if (m_cond) {                                                \
-        fprintf(stderr, "ALSA ERR: %s\n", snd_strerror(status)); \
-        if (pcm_handle) {                                        \
-            snd_pcm_close(pcm_handle);                           \
-            pcm_handle = NULL;                                   \
-        }                                                        \
-        ERR_FAIL_COND_V(m_cond, ERR_CANT_OPEN);                  \
+#define CHECK_FAIL(m_cond)                                                     \
+    if (m_cond) {                                                              \
+        fprintf(stderr, "ALSA ERR: %s\n", snd_strerror(status));               \
+        if (pcm_handle) {                                                      \
+            snd_pcm_close(pcm_handle);                                         \
+            pcm_handle = NULL;                                                 \
+        }                                                                      \
+        ERR_FAIL_COND_V(m_cond, ERR_CANT_OPEN);                                \
     }
 
-    //todo, add
-    //6 chans - "plug:surround51"
-    //4 chans - "plug:surround40";
+    // todo, add
+    // 6 chans - "plug:surround51"
+    // 4 chans - "plug:surround40";
 
     if (device_name == "Default") {
-        status = snd_pcm_open(&pcm_handle, "default", SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK);
+        status = snd_pcm_open(
+            &pcm_handle,
+            "default",
+            SND_PCM_STREAM_PLAYBACK,
+            SND_PCM_NONBLOCK
+        );
     } else {
         String device = device_name;
         int pos = device.find(";");
         if (pos != -1) {
             device = device.substr(0, pos);
         }
-        status = snd_pcm_open(&pcm_handle, device.utf8().get_data(), SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK);
+        status = snd_pcm_open(
+            &pcm_handle,
+            device.utf8().get_data(),
+            SND_PCM_STREAM_PLAYBACK,
+            SND_PCM_NONBLOCK
+        );
     }
 
     ERR_FAIL_COND_V(status < 0, ERR_CANT_OPEN);
@@ -93,22 +103,36 @@ Error AudioDriverALSA::init_device() {
     status = snd_pcm_hw_params_any(pcm_handle, hwparams);
     CHECK_FAIL(status < 0);
 
-    status = snd_pcm_hw_params_set_access(pcm_handle, hwparams, SND_PCM_ACCESS_RW_INTERLEAVED);
+    status = snd_pcm_hw_params_set_access(
+        pcm_handle,
+        hwparams,
+        SND_PCM_ACCESS_RW_INTERLEAVED
+    );
     CHECK_FAIL(status < 0);
 
-    //not interested in anything else
-    status = snd_pcm_hw_params_set_format(pcm_handle, hwparams, SND_PCM_FORMAT_S16_LE);
+    // not interested in anything else
+    status = snd_pcm_hw_params_set_format(
+        pcm_handle,
+        hwparams,
+        SND_PCM_FORMAT_S16_LE
+    );
     CHECK_FAIL(status < 0);
 
-    //todo: support 4 and 6
+    // todo: support 4 and 6
     status = snd_pcm_hw_params_set_channels(pcm_handle, hwparams, 2);
     CHECK_FAIL(status < 0);
 
-    status = snd_pcm_hw_params_set_rate_near(pcm_handle, hwparams, &mix_rate, nullptr);
+    status = snd_pcm_hw_params_set_rate_near(
+        pcm_handle,
+        hwparams,
+        &mix_rate,
+        nullptr
+    );
     CHECK_FAIL(status < 0);
 
-    // In ALSA the period size seems to be the one that will determine the actual latency
-    // Ref: https://www.alsa-project.org/main/index.php/FramesPeriods
+    // In ALSA the period size seems to be the one that will determine the
+    // actual latency Ref:
+    // https://www.alsa-project.org/main/index.php/FramesPeriods
     unsigned int periods = 2;
     int latency = GLOBAL_GET("audio/output_latency");
     buffer_frames = closest_power_of_2(latency * mix_rate / 1000);
@@ -116,21 +140,38 @@ Error AudioDriverALSA::init_device() {
     period_size = buffer_frames;
 
     // set buffer size from project settings
-    status = snd_pcm_hw_params_set_buffer_size_near(pcm_handle, hwparams, &buffer_size);
+    status = snd_pcm_hw_params_set_buffer_size_near(
+        pcm_handle,
+        hwparams,
+        &buffer_size
+    );
     CHECK_FAIL(status < 0);
 
-    status = snd_pcm_hw_params_set_period_size_near(pcm_handle, hwparams, &period_size, nullptr);
+    status = snd_pcm_hw_params_set_period_size_near(
+        pcm_handle,
+        hwparams,
+        &period_size,
+        nullptr
+    );
     CHECK_FAIL(status < 0);
 
-    print_verbose("Audio buffer frames: " + itos(period_size) + " calculated latency: " + itos(period_size * 1000 / mix_rate) + "ms");
+    print_verbose(
+        "Audio buffer frames: " + itos(period_size)
+        + " calculated latency: " + itos(period_size * 1000 / mix_rate) + "ms"
+    );
 
-    status = snd_pcm_hw_params_set_periods_near(pcm_handle, hwparams, &periods, nullptr);
+    status = snd_pcm_hw_params_set_periods_near(
+        pcm_handle,
+        hwparams,
+        &periods,
+        nullptr
+    );
     CHECK_FAIL(status < 0);
 
     status = snd_pcm_hw_params(pcm_handle, hwparams);
     CHECK_FAIL(status < 0);
 
-    //snd_pcm_hw_params_free(&hwparams);
+    // snd_pcm_hw_params_free(&hwparams);
 
     snd_pcm_sw_params_alloca(&swparams);
 
@@ -180,8 +221,8 @@ Error AudioDriverALSA::init() {
     return err;
 }
 
-void AudioDriverALSA::thread_func(void *p_udata) {
-    AudioDriverALSA *ad = (AudioDriverALSA *)p_udata;
+void AudioDriverALSA::thread_func(void* p_udata) {
+    AudioDriverALSA* ad = (AudioDriverALSA*)p_udata;
 
     while (!ad->exit_thread) {
         ad->lock();
@@ -204,8 +245,12 @@ void AudioDriverALSA::thread_func(void *p_udata) {
         int total = 0;
 
         while (todo && !ad->exit_thread) {
-            int16_t *src = (int16_t *)ad->samples_out.ptr();
-            int wrote = snd_pcm_writei(ad->pcm_handle, (void *)(src + (total * ad->channels)), todo);
+            int16_t* src = (int16_t*)ad->samples_out.ptr();
+            int wrote = snd_pcm_writei(
+                ad->pcm_handle,
+                (void*)(src + (total * ad->channels)),
+                todo
+            );
 
             if (wrote > 0) {
                 total += wrote;
@@ -221,14 +266,18 @@ void AudioDriverALSA::thread_func(void *p_udata) {
             } else {
                 wrote = snd_pcm_recover(ad->pcm_handle, wrote, 0);
                 if (wrote < 0) {
-                    ERR_PRINT("ALSA: Failed and can't recover: " + String(snd_strerror(wrote)));
+                    ERR_PRINT(
+                        "ALSA: Failed and can't recover: "
+                        + String(snd_strerror(wrote))
+                    );
                     ad->active = false;
                     ad->exit_thread = true;
                 }
             }
         }
 
-        // User selected a new device, finish the current one so we'll init the new device
+        // User selected a new device, finish the current one so we'll init the
+        // new device
         if (ad->device_name != ad->new_device) {
             ad->device_name = ad->new_device;
             ad->finish_device();
@@ -271,15 +320,15 @@ Array AudioDriverALSA::get_device_list() {
 
     list.push_back("Default");
 
-    void **hints;
+    void** hints;
 
     if (snd_device_name_hint(-1, "pcm", &hints) < 0) {
         return list;
     }
 
-    for (void **n = hints; *n != nullptr; n++) {
-        char *name = snd_device_name_get_hint(*n, "NAME");
-        char *desc = snd_device_name_get_hint(*n, "DESC");
+    for (void** n = hints; *n != nullptr; n++) {
+        char* name = snd_device_name_get_hint(*n, "NAME");
+        char* desc = snd_device_name_get_hint(*n, "DESC");
 
         if (name != nullptr && !strncmp(name, "plughw", 6)) {
             if (desc) {
@@ -334,12 +383,10 @@ void AudioDriverALSA::finish() {
 }
 
 AudioDriverALSA::AudioDriverALSA() :
-        pcm_handle(nullptr),
-        device_name("Default"),
-        new_device("Default") {
-}
+    pcm_handle(nullptr),
+    device_name("Default"),
+    new_device("Default") {}
 
-AudioDriverALSA::~AudioDriverALSA() {
-}
+AudioDriverALSA::~AudioDriverALSA() {}
 
 #endif

@@ -72,8 +72,8 @@ static int get_message_size(uint8_t message) {
     return 256;
 }
 
-void MIDIDriverALSAMidi::thread_func(void *p_udata) {
-    MIDIDriverALSAMidi *md = (MIDIDriverALSAMidi *)p_udata;
+void MIDIDriverALSAMidi::thread_func(void* p_udata) {
+    MIDIDriverALSAMidi* md = (MIDIDriverALSAMidi*)p_udata;
     uint64_t timestamp = 0;
     uint8_t buffer[256];
     int expected_size = 255;
@@ -85,13 +85,16 @@ void MIDIDriverALSAMidi::thread_func(void *p_udata) {
         md->lock();
 
         for (int i = 0; i < md->connected_inputs.size(); i++) {
-            snd_rawmidi_t *midi_in = md->connected_inputs[i];
+            snd_rawmidi_t* midi_in = md->connected_inputs[i];
             do {
                 uint8_t byte = 0;
                 ret = snd_rawmidi_read(midi_in, &byte, 1);
                 if (ret < 0) {
                     if (ret != -EAGAIN) {
-                        ERR_PRINT("snd_rawmidi_read error: " + String(snd_strerror(ret)));
+                        ERR_PRINT(
+                            "snd_rawmidi_read error: "
+                            + String(snd_strerror(ret))
+                        );
                     }
                 } else {
                     if (byte & 0x80) {
@@ -101,14 +104,16 @@ void MIDIDriverALSAMidi::thread_func(void *p_udata) {
                             bytes = 0;
                         }
                         expected_size = get_message_size(byte);
-                        // After a SysEx start, all bytes are data until a SysEx end, so
-                        // we're going to end the command at the SES, and let the common
-                        // driver ignore the following data bytes.
+                        // After a SysEx start, all bytes are data until a SysEx
+                        // end, so we're going to end the command at the SES,
+                        // and let the common driver ignore the following data
+                        // bytes.
                     }
 
                     if (bytes < 256) {
                         buffer[bytes++] = byte;
-                        // If we know the size of the current packet receive it if it reached the expected size
+                        // If we know the size of the current packet receive it
+                        // if it reached the expected size
                         if (bytes >= expected_size) {
                             md->receive_input_packet(timestamp, buffer, bytes);
                             bytes = 0;
@@ -125,19 +130,20 @@ void MIDIDriverALSAMidi::thread_func(void *p_udata) {
 }
 
 Error MIDIDriverALSAMidi::open() {
-    void **hints;
+    void** hints;
 
     if (snd_device_name_hint(-1, "rawmidi", &hints) < 0) {
         return ERR_CANT_OPEN;
     }
 
     int i = 0;
-    for (void **n = hints; *n != nullptr; n++) {
-        char *name = snd_device_name_get_hint(*n, "NAME");
+    for (void** n = hints; *n != nullptr; n++) {
+        char* name = snd_device_name_get_hint(*n, "NAME");
 
         if (name != nullptr) {
-            snd_rawmidi_t *midi_in;
-            int ret = snd_rawmidi_open(&midi_in, nullptr, name, SND_RAWMIDI_NONBLOCK);
+            snd_rawmidi_t* midi_in;
+            int ret =
+                snd_rawmidi_open(&midi_in, nullptr, name, SND_RAWMIDI_NONBLOCK);
             if (ret >= 0) {
                 connected_inputs.insert(i++, midi_in);
             }
@@ -160,7 +166,7 @@ void MIDIDriverALSAMidi::close() {
     thread.wait_to_finish();
 
     for (int i = 0; i < connected_inputs.size(); i++) {
-        snd_rawmidi_t *midi_in = connected_inputs[i];
+        snd_rawmidi_t* midi_in = connected_inputs[i];
         snd_rawmidi_close(midi_in);
     }
     connected_inputs.clear();
@@ -179,8 +185,8 @@ PoolStringArray MIDIDriverALSAMidi::get_connected_inputs() {
 
     lock();
     for (int i = 0; i < connected_inputs.size(); i++) {
-        snd_rawmidi_t *midi_in = connected_inputs[i];
-        snd_rawmidi_info_t *info;
+        snd_rawmidi_t* midi_in = connected_inputs[i];
+        snd_rawmidi_info_t* info;
 
         snd_rawmidi_info_malloc(&info);
         snd_rawmidi_info(midi_in, info);

@@ -61,17 +61,17 @@ private:
     bool as_normalmap;
     float bump_strength;
 
-    void _thread_done(const Ref<Image> &p_image);
-    static void _thread_function(void *p_ud);
+    void _thread_done(const Ref<Image>& p_image);
+    static void _thread_function(void* p_ud);
 
     void _queue_update();
     Ref<Image> _generate_texture();
     void _update_texture();
-    void _set_texture_data(const Ref<Image> &p_image);
+    void _set_texture_data(const Ref<Image>& p_image);
 
 protected:
     static void _bind_methods();
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
 public:
     void set_noise(Ref<OpenSimplexNoise> p_noise);
@@ -98,8 +98,13 @@ public:
     virtual void set_flags(uint32_t p_flags);
     virtual uint32_t get_flags() const;
 
-    virtual RID get_rid() const { return texture; }
-    virtual bool has_alpha() const { return false; }
+    virtual RID get_rid() const {
+        return texture;
+    }
+
+    virtual bool has_alpha() const {
+        return false;
+    }
 
     virtual Ref<Image> get_data() const;
 

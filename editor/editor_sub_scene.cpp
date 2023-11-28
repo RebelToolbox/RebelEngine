@@ -34,12 +34,12 @@
 #include "scene/gui/margin_container.h"
 #include "scene/resources/packed_scene.h"
 
-void EditorSubScene::_path_selected(const String &p_path) {
+void EditorSubScene::_path_selected(const String& p_path) {
     path->set_text(p_path);
     _path_changed(p_path);
 }
 
-void EditorSubScene::_path_changed(const String &p_path) {
+void EditorSubScene::_path_changed(const String& p_path) {
     tree->clear();
 
     if (scene) {
@@ -77,16 +77,19 @@ void EditorSubScene::_notification(int p_what) {
     }
 }
 
-void EditorSubScene::_fill_tree(Node *p_node, TreeItem *p_parent) {
-    TreeItem *it = tree->create_item(p_parent);
+void EditorSubScene::_fill_tree(Node* p_node, TreeItem* p_parent) {
+    TreeItem* it = tree->create_item(p_parent);
     it->set_metadata(0, p_node);
     it->set_text(0, p_node->get_name());
     it->set_editable(0, false);
     it->set_selectable(0, true);
-    it->set_icon(0, EditorNode::get_singleton()->get_object_icon(p_node, "Node"));
+    it->set_icon(
+        0,
+        EditorNode::get_singleton()->get_object_icon(p_node, "Node")
+    );
 
     for (int i = 0; i < p_node->get_child_count(); i++) {
-        Node *c = p_node->get_child(i);
+        Node* c = p_node->get_child(i);
         if (c->get_owner() != scene) {
             continue;
         }
@@ -95,9 +98,9 @@ void EditorSubScene::_fill_tree(Node *p_node, TreeItem *p_parent) {
 }
 
 void EditorSubScene::_selected_changed() {
-    TreeItem *item = tree->get_selected();
+    TreeItem* item = tree->get_selected();
     ERR_FAIL_COND(!item);
-    Node *n = item->get_metadata(0);
+    Node* n = item->get_metadata(0);
 
     if (!n || !selection.find(n)) {
         selection.clear();
@@ -105,12 +108,16 @@ void EditorSubScene::_selected_changed() {
     }
 }
 
-void EditorSubScene::_item_multi_selected(Object *p_object, int p_cell, bool p_selected) {
+void EditorSubScene::_item_multi_selected(
+    Object* p_object,
+    int p_cell,
+    bool p_selected
+) {
     if (!is_root) {
-        TreeItem *item = Object::cast_to<TreeItem>(p_object);
+        TreeItem* item = Object::cast_to<TreeItem>(p_object);
         ERR_FAIL_COND(!item);
 
-        Node *n = item->get_metadata(0);
+        Node* n = item->get_metadata(0);
 
         if (!n) {
             return;
@@ -122,7 +129,7 @@ void EditorSubScene::_item_multi_selected(Object *p_object, int p_cell, bool p_s
             }
             selection.push_back(n);
         } else {
-            List<Node *>::Element *E = selection.find(n);
+            List<Node*>::Element* E = selection.find(n);
 
             if (E) {
                 selection.erase(E);
@@ -131,11 +138,11 @@ void EditorSubScene::_item_multi_selected(Object *p_object, int p_cell, bool p_s
     }
 }
 
-void EditorSubScene::_remove_selection_child(Node *p_node) {
+void EditorSubScene::_remove_selection_child(Node* p_node) {
     if (p_node->get_child_count() > 0) {
         for (int i = 0; i < p_node->get_child_count(); i++) {
-            Node *c = p_node->get_child(i);
-            List<Node *>::Element *E = selection.find(c);
+            Node* c = p_node->get_child(i);
+            List<Node*>::Element* E = selection.find(c);
             if (E) {
                 selection.move_to_back(E);
                 selection.pop_back();
@@ -151,8 +158,8 @@ void EditorSubScene::ok_pressed() {
     if (selection.size() <= 0) {
         return;
     }
-    for (List<Node *>::Element *E = selection.front(); E; E = E->next()) {
-        Node *c = E->get();
+    for (List<Node*>::Element* E = selection.front(); E; E = E->next()) {
+        Node* c = E->get();
         _remove_selection_child(c);
     }
     emit_signal("subscene_selected");
@@ -160,7 +167,7 @@ void EditorSubScene::ok_pressed() {
     clear();
 }
 
-void EditorSubScene::_reown(Node *p_node, List<Node *> *p_to_reown) {
+void EditorSubScene::_reown(Node* p_node, List<Node*>* p_to_reown) {
     if (p_node == scene) {
         scene->set_filename("");
         p_to_reown->push_back(p_node);
@@ -169,12 +176,12 @@ void EditorSubScene::_reown(Node *p_node, List<Node *> *p_to_reown) {
     }
 
     for (int i = 0; i < p_node->get_child_count(); i++) {
-        Node *c = p_node->get_child(i);
+        Node* c = p_node->get_child(i);
         _reown(c, p_to_reown);
     }
 }
 
-void EditorSubScene::move(Node *p_new_parent, Node *p_new_owner) {
+void EditorSubScene::move(Node* p_new_parent, Node* p_new_owner) {
     if (!scene) {
         return;
     }
@@ -183,19 +190,19 @@ void EditorSubScene::move(Node *p_new_parent, Node *p_new_owner) {
         return;
     }
 
-    for (List<Node *>::Element *E = selection.front(); E; E = E->next()) {
-        Node *selnode = E->get();
+    for (List<Node*>::Element* E = selection.front(); E; E = E->next()) {
+        Node* selnode = E->get();
         if (!selnode) {
             return;
         }
-        List<Node *> to_reown;
+        List<Node*> to_reown;
         _reown(selnode, &to_reown);
         if (selnode != scene) {
             selnode->get_parent()->remove_child(selnode);
         }
 
         p_new_parent->add_child(selnode);
-        for (List<Node *>::Element *F = to_reown.front(); F; F = F->next()) {
+        for (List<Node*>::Element* F = to_reown.front(); F; F = F->next()) {
             F->get()->set_owner(p_new_owner);
         }
     }
@@ -203,7 +210,7 @@ void EditorSubScene::move(Node *p_new_parent, Node *p_new_owner) {
         memdelete(scene);
     }
     scene = nullptr;
-    //return selnode;
+    // return selnode;
 }
 
 void EditorSubScene::clear() {
@@ -212,11 +219,26 @@ void EditorSubScene::clear() {
 }
 
 void EditorSubScene::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_path_selected"), &EditorSubScene::_path_selected);
-    ClassDB::bind_method(D_METHOD("_path_changed"), &EditorSubScene::_path_changed);
-    ClassDB::bind_method(D_METHOD("_path_browse"), &EditorSubScene::_path_browse);
-    ClassDB::bind_method(D_METHOD("_item_multi_selected"), &EditorSubScene::_item_multi_selected);
-    ClassDB::bind_method(D_METHOD("_selected_changed"), &EditorSubScene::_selected_changed);
+    ClassDB::bind_method(
+        D_METHOD("_path_selected"),
+        &EditorSubScene::_path_selected
+    );
+    ClassDB::bind_method(
+        D_METHOD("_path_changed"),
+        &EditorSubScene::_path_changed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_path_browse"),
+        &EditorSubScene::_path_browse
+    );
+    ClassDB::bind_method(
+        D_METHOD("_item_multi_selected"),
+        &EditorSubScene::_item_multi_selected
+    );
+    ClassDB::bind_method(
+        D_METHOD("_selected_changed"),
+        &EditorSubScene::_selected_changed
+    );
     ADD_SIGNAL(MethodInfo("subscene_selected"));
 }
 
@@ -227,16 +249,16 @@ EditorSubScene::EditorSubScene() {
     set_title(TTR("Select Node(s) to Import"));
     set_hide_on_ok(false);
 
-    VBoxContainer *vb = memnew(VBoxContainer);
+    VBoxContainer* vb = memnew(VBoxContainer);
     add_child(vb);
-    //set_child_rect(vb);
+    // set_child_rect(vb);
 
-    HBoxContainer *hb = memnew(HBoxContainer);
+    HBoxContainer* hb = memnew(HBoxContainer);
     path = memnew(LineEdit);
     path->connect("text_entered", this, "_path_changed");
     hb->add_child(path);
     path->set_h_size_flags(SIZE_EXPAND_FILL);
-    Button *b = memnew(Button);
+    Button* b = memnew(Button);
     b->set_text(TTR("Browse"));
     hb->add_child(b);
     b->connect("pressed", this, "_path_browse");
@@ -247,16 +269,25 @@ EditorSubScene::EditorSubScene() {
     vb->add_margin_child(TTR("Import From Node:"), tree, true);
     tree->set_select_mode(Tree::SELECT_MULTI);
     tree->connect("multi_selected", this, "_item_multi_selected");
-    //tree->connect("nothing_selected", this, "_deselect_items");
+    // tree->connect("nothing_selected", this, "_deselect_items");
     tree->connect("cell_selected", this, "_selected_changed");
 
-    tree->connect("item_activated", this, "_ok", make_binds(), CONNECT_DEFERRED);
+    tree->connect(
+        "item_activated",
+        this,
+        "_ok",
+        make_binds(),
+        CONNECT_DEFERRED
+    );
 
     file_dialog = memnew(EditorFileDialog);
     List<String> extensions;
-    ResourceLoader::get_recognized_extensions_for_type("PackedScene", &extensions);
+    ResourceLoader::get_recognized_extensions_for_type(
+        "PackedScene",
+        &extensions
+    );
 
-    for (List<String>::Element *E = extensions.front(); E; E = E->next()) {
+    for (List<String>::Element* E = extensions.front(); E; E = E->next()) {
         file_dialog->add_filter("*." + E->get());
     }
 

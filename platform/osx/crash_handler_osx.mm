@@ -54,14 +54,14 @@
 #include <mach-o/getsect.h>
 
 static uint64_t load_address() {
-    const struct segment_command_64 *cmd = getsegbyname("__TEXT");
+    const struct segment_command_64* cmd = getsegbyname("__TEXT");
     char full_path[1024];
     uint32_t size = sizeof(full_path);
 
     if (cmd && !_NSGetExecutablePath(full_path, &size)) {
         uint32_t dyld_count = _dyld_image_count();
         for (uint32_t i = 0; i < dyld_count; i++) {
-            const char *image_name = _dyld_get_image_name(i);
+            const char* image_name = _dyld_get_image_name(i);
             if (image_name && strncmp(image_name, full_path, 1024) == 0) {
                 return cmd->vmaddr + _dyld_get_image_vmaddr_slide(i);
             }
@@ -76,33 +76,43 @@ static void handle_crash(int sig) {
         abort();
     }
 
-    void *bt_buffer[256];
+    void* bt_buffer[256];
     size_t size = backtrace(bt_buffer, 256);
     String _execpath = OS::get_singleton()->get_executable_path();
 
     String msg;
-    const ProjectSettings *proj_settings = ProjectSettings::get_singleton();
+    const ProjectSettings* proj_settings = ProjectSettings::get_singleton();
     if (proj_settings) {
         msg = proj_settings->get("debug/settings/crash_handler/message");
     }
 
     // Dump the backtrace to stderr with a message to the user
-    fprintf(stderr, "\n================================================================\n");
+    fprintf(
+        stderr,
+        "\n================================================================\n"
+    );
     fprintf(stderr, "%s: Program crashed with signal %d\n", __FUNCTION__, sig);
 
-    if (OS::get_singleton()->get_main_loop())
-        OS::get_singleton()->get_main_loop()->notification(MainLoop::NOTIFICATION_CRASH);
+    if (OS::get_singleton()->get_main_loop()) {
+        OS::get_singleton()->get_main_loop()->notification(
+            MainLoop::NOTIFICATION_CRASH
+        );
+    }
 
-    // Print the engine version just before, so that people are reminded to include the version in backtrace reports.
+    // Print the engine version just before, so that people are reminded to
+    // include the version in backtrace reports.
     if (String(VERSION_HASH).length() != 0) {
-        fprintf(stderr, "Engine version: " VERSION_FULL_NAME " (" VERSION_HASH ")\n");
+        fprintf(
+            stderr,
+            "Engine version: " VERSION_FULL_NAME " (" VERSION_HASH ")\n"
+        );
     } else {
         fprintf(stderr, "Engine version: " VERSION_FULL_NAME "\n");
     }
     fprintf(stderr, "Dumping the backtrace. %ls\n", msg.c_str());
-    char **strings = backtrace_symbols(bt_buffer, size);
+    char** strings = backtrace_symbols(bt_buffer, size);
     if (strings) {
-        void *load_addr = (void *)load_address();
+        void* load_addr = (void*)load_address();
 
         for (size_t i = 1; i < size; i++) {
             char fname[1024];
@@ -114,21 +124,23 @@ static void handle_crash(int sig) {
             if (dladdr(bt_buffer[i], &info) && info.dli_sname) {
                 if (info.dli_sname[0] == '_') {
                     int status;
-                    char *demangled = abi::__cxa_demangle(info.dli_sname, NULL, 0, &status);
+                    char* demangled =
+                        abi::__cxa_demangle(info.dli_sname, NULL, 0, &status);
 
                     if (status == 0 && demangled) {
                         snprintf(fname, 1024, "%s", demangled);
                     }
 
-                    if (demangled)
+                    if (demangled) {
                         free(demangled);
+                    }
                 }
             }
 
             String output = fname;
 
             // Try to get the file/line number using atos
-            if (bt_buffer[i] > (void *)0x0 && OS::get_singleton()) {
+            if (bt_buffer[i] > (void*)0x0 && OS::get_singleton()) {
                 List<String> args;
                 char str[1024];
 
@@ -149,7 +161,9 @@ static void handle_crash(int sig) {
 
                 int ret;
                 String out = "";
-                Error err = OS::get_singleton()->execute(String("atos"), args, true, NULL, &out, &ret);
+                Error err =
+                    OS::get_singleton()
+                        ->execute(String("atos"), args, true, NULL, &out, &ret);
                 if (err == OK && out.substr(0, 2) != "0x") {
                     out.erase(out.length() - 1, 1);
                     output = out;
@@ -162,7 +176,10 @@ static void handle_crash(int sig) {
         free(strings);
     }
     fprintf(stderr, "-- END OF BACKTRACE --\n");
-    fprintf(stderr, "================================================================\n");
+    fprintf(
+        stderr,
+        "================================================================\n"
+    );
 
     // Abort to pass the error to the OS
     abort();
@@ -178,8 +195,9 @@ CrashHandler::~CrashHandler() {
 }
 
 void CrashHandler::disable() {
-    if (disabled)
+    if (disabled) {
         return;
+    }
 
 #ifdef CRASH_HANDLER_ENABLED
     signal(SIGSEGV, NULL);

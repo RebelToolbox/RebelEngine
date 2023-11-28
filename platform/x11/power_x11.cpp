@@ -66,30 +66,41 @@ Adapted from corresponding SDL 2.0 code.
 
 // CODE CHUNK IMPORTED FROM SDL 2.0
 
-static const char *proc_apm_path = "/proc/apm";
-static const char *proc_acpi_battery_path = "/proc/acpi/battery";
-static const char *proc_acpi_ac_adapter_path = "/proc/acpi/ac_adapter";
-static const char *sys_class_power_supply_path = "/sys/class/power_supply";
+static const char* proc_apm_path = "/proc/apm";
+static const char* proc_acpi_battery_path = "/proc/acpi/battery";
+static const char* proc_acpi_ac_adapter_path = "/proc/acpi/ac_adapter";
+static const char* sys_class_power_supply_path = "/sys/class/power_supply";
 
-FileAccessRef PowerX11::open_power_file(const char *base, const char *node, const char *key) {
-    String path = String(base) + String("/") + String(node) + String("/") + String(key);
+FileAccessRef PowerX11::open_power_file(
+    const char* base,
+    const char* node,
+    const char* key
+) {
+    String path =
+        String(base) + String("/") + String(node) + String("/") + String(key);
     FileAccessRef f = FileAccess::open(path, FileAccess::READ);
     return f;
 }
 
-bool PowerX11::read_power_file(const char *base, const char *node, const char *key, char *buf, size_t buflen) {
+bool PowerX11::read_power_file(
+    const char* base,
+    const char* node,
+    const char* key,
+    char* buf,
+    size_t buflen
+) {
     FileAccessRef fd = open_power_file(base, node, key);
     if (!fd) {
         return false;
     }
-    uint64_t br = fd->get_buffer(reinterpret_cast<uint8_t *>(buf), buflen - 1);
+    uint64_t br = fd->get_buffer(reinterpret_cast<uint8_t*>(buf), buflen - 1);
     fd->close();
     buf[br] = '\0'; // null-terminate the string
     return true;
 }
 
-bool PowerX11::make_proc_acpi_key_val(char **_ptr, char **_key, char **_val) {
-    char *ptr = *_ptr;
+bool PowerX11::make_proc_acpi_key_val(char** _ptr, char** _key, char** _val) {
+    char* ptr = *_ptr;
 
     while (*ptr == ' ') {
         ptr++; /* skip whitespace. */
@@ -133,13 +144,17 @@ bool PowerX11::make_proc_acpi_key_val(char **_ptr, char **_key, char **_val) {
     return true;
 }
 
-void PowerX11::check_proc_acpi_battery(const char *node, bool *have_battery, bool *charging) {
-    const char *base = proc_acpi_battery_path;
+void PowerX11::check_proc_acpi_battery(
+    const char* node,
+    bool* have_battery,
+    bool* charging
+) {
+    const char* base = proc_acpi_battery_path;
     char info[1024];
     char state[1024];
-    char *ptr = nullptr;
-    char *key = nullptr;
-    char *val = nullptr;
+    char* ptr = nullptr;
+    char* key = nullptr;
+    char* val = nullptr;
     bool charge = false;
     bool choose = false;
     int maximum = -1;
@@ -200,7 +215,7 @@ void PowerX11::check_proc_acpi_battery(const char *node, bool *have_battery, boo
      *  (failing a report of minutes, we'll take the highest percent.)
      */
     // -- GODOT start --
-    //if ((secs < 0) && (this->nsecs_left < 0)) {
+    // if ((secs < 0) && (this->nsecs_left < 0)) {
     if (this->nsecs_left < 0) {
         // -- GODOT end --
         if ((pct < 0) && (this->percent_left < 0)) {
@@ -220,12 +235,12 @@ void PowerX11::check_proc_acpi_battery(const char *node, bool *have_battery, boo
     }
 }
 
-void PowerX11::check_proc_acpi_ac_adapter(const char *node, bool *have_ac) {
-    const char *base = proc_acpi_ac_adapter_path;
+void PowerX11::check_proc_acpi_ac_adapter(const char* node, bool* have_ac) {
+    const char* base = proc_acpi_ac_adapter_path;
     char state[256];
-    char *ptr = nullptr;
-    char *key = nullptr;
-    char *val = nullptr;
+    char* ptr = nullptr;
+    char* key = nullptr;
+    char* val = nullptr;
 
     if (!read_power_file(base, node, "state", state, sizeof(state))) {
         return;
@@ -245,7 +260,7 @@ void PowerX11::check_proc_acpi_ac_adapter(const char *node, bool *have_ac) {
 
 bool PowerX11::GetPowerInfo_Linux_proc_acpi() {
     String node;
-    DirAccess *dirp = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+    DirAccess* dirp = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     bool have_battery = false;
     bool have_ac = false;
     bool charging = false;
@@ -262,7 +277,11 @@ bool PowerX11::GetPowerInfo_Linux_proc_acpi() {
     } else {
         node = dirp->get_next();
         while (node != "") {
-            check_proc_acpi_battery(node.utf8().get_data(), &have_battery, &charging /*, seconds, percent*/);
+            check_proc_acpi_battery(
+                node.utf8().get_data(),
+                &have_battery,
+                &charging /*, seconds, percent*/
+            );
             node = dirp->get_next();
         }
     }
@@ -292,9 +311,9 @@ bool PowerX11::GetPowerInfo_Linux_proc_acpi() {
     return true; /* definitive answer. */
 }
 
-bool PowerX11::next_string(char **_ptr, char **_str) {
-    char *ptr = *_ptr;
-    char *str = *_str;
+bool PowerX11::next_string(char** _ptr, char** _str) {
+    char* ptr = *_ptr;
+    char* str = *_str;
 
     while (*ptr == ' ') { /* skip any spaces... */
         ptr++;
@@ -318,7 +337,7 @@ bool PowerX11::next_string(char **_ptr, char **_str) {
     return true;
 }
 
-bool PowerX11::int_string(char *str, int *val) {
+bool PowerX11::int_string(char* str, int* val) {
     String sval = str;
     *val = sval.to_int();
     return (*str != '\0');
@@ -334,17 +353,18 @@ bool PowerX11::GetPowerInfo_Linux_proc_apm() {
     int battery_time = 0;
     FileAccessRef fd = FileAccess::open(proc_apm_path, FileAccess::READ);
     char buf[128];
-    char *ptr = &buf[0];
-    char *str = nullptr;
+    char* ptr = &buf[0];
+    char* str = nullptr;
 
     if (!fd) {
         return false; /* can't use this interface. */
     }
 
-    uint64_t br = fd->get_buffer(reinterpret_cast<uint8_t *>(buf), sizeof(buf) - 1);
+    uint64_t br =
+        fd->get_buffer(reinterpret_cast<uint8_t*>(buf), sizeof(buf) - 1);
     fd->close();
 
-    buf[br] = '\0'; /* null-terminate the string. */
+    buf[br] = '\0';                 /* null-terminate the string. */
     if (!next_string(&ptr, &str)) { /* driver version */
         return false;
     }
@@ -416,7 +436,8 @@ bool PowerX11::GetPowerInfo_Linux_proc_apm() {
         const int secs = battery_time;
 
         if (pct >= 0) { /* -1 == unknown */
-            this->percent_left = (pct > 100) ? 100 : pct; /* clamp between 0%, 100% */
+            this->percent_left =
+                (pct > 100) ? 100 : pct; /* clamp between 0%, 100% */
         }
         if (secs >= 0) { /* -1 == unknown */
             this->nsecs_left = secs;
@@ -428,11 +449,13 @@ bool PowerX11::GetPowerInfo_Linux_proc_apm() {
 
 /* !!! FIXME: implement d-bus queries to org.freedesktop.UPower. */
 
-bool PowerX11::GetPowerInfo_Linux_sys_class_power_supply(/*PowerState *state, int *seconds, int *percent*/) {
-    const char *base = sys_class_power_supply_path;
+bool PowerX11::GetPowerInfo_Linux_sys_class_power_supply(
+    /*PowerState *state, int *seconds, int *percent*/
+) {
+    const char* base = sys_class_power_supply_path;
     String name;
 
-    DirAccess *dirp = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+    DirAccess* dirp = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     dirp->change_dir(base);
     Error err = dirp->list_dir_begin();
 
@@ -440,7 +463,8 @@ bool PowerX11::GetPowerInfo_Linux_sys_class_power_supply(/*PowerState *state, in
         return false;
     }
 
-    this->power_state = OS::POWERSTATE_NO_BATTERY; /* assume we're just plugged in. */
+    this->power_state =
+        OS::POWERSTATE_NO_BATTERY; /* assume we're just plugged in. */
     this->nsecs_left = -1;
     this->percent_left = -1;
 
@@ -455,9 +479,15 @@ bool PowerX11::GetPowerInfo_Linux_sys_class_power_supply(/*PowerState *state, in
 
         if ((name == ".") || (name == "..")) {
             name = dirp->get_next();
-            continue; //skip these, of course.
+            continue; // skip these, of course.
         } else {
-            if (!read_power_file(base, name.utf8().get_data(), "type", str, sizeof(str))) {
+            if (!read_power_file(
+                    base,
+                    name.utf8().get_data(),
+                    "type",
+                    str,
+                    sizeof(str)
+                )) {
                 name = dirp->get_next();
                 continue; // Don't know _what_ we're looking at. Give up on it.
             } else {
@@ -468,10 +498,24 @@ bool PowerX11::GetPowerInfo_Linux_sys_class_power_supply(/*PowerState *state, in
             }
         }
 
-        /* some drivers don't offer this, so if it's not explicitly reported assume it's present. */
-        if (read_power_file(base, name.utf8().get_data(), "present", str, sizeof(str)) && (String(str) == "0\n")) {
+        /* some drivers don't offer this, so if it's not explicitly reported
+         * assume it's present. */
+        if (read_power_file(
+                base,
+                name.utf8().get_data(),
+                "present",
+                str,
+                sizeof(str)
+            )
+            && (String(str) == "0\n")) {
             st = OS::POWERSTATE_NO_BATTERY;
-        } else if (!read_power_file(base, name.utf8().get_data(), "status", str, sizeof(str))) {
+        } else if (!read_power_file(
+                       base,
+                       name.utf8().get_data(),
+                       "status",
+                       str,
+                       sizeof(str)
+                   )) {
             st = OS::POWERSTATE_UNKNOWN; /* uh oh */
         } else if (String(str) == "Charging\n") {
             st = OS::POWERSTATE_CHARGING;
@@ -483,14 +527,26 @@ bool PowerX11::GetPowerInfo_Linux_sys_class_power_supply(/*PowerState *state, in
             st = OS::POWERSTATE_UNKNOWN; /* uh oh */
         }
 
-        if (!read_power_file(base, name.utf8().get_data(), "capacity", str, sizeof(str))) {
+        if (!read_power_file(
+                base,
+                name.utf8().get_data(),
+                "capacity",
+                str,
+                sizeof(str)
+            )) {
             pct = -1;
         } else {
             pct = String(str).to_int();
             pct = (pct > 100) ? 100 : pct; /* clamp between 0%, 100% */
         }
 
-        if (!read_power_file(base, name.utf8().get_data(), "time_to_empty_now", str, sizeof(str))) {
+        if (!read_power_file(
+                base,
+                name.utf8().get_data(),
+                "time_to_empty_now",
+                str,
+                sizeof(str)
+            )) {
             secs = -1;
         } else {
             secs = String(str).to_int();
@@ -538,13 +594,11 @@ bool PowerX11::UpdatePowerInfo() {
 }
 
 PowerX11::PowerX11() :
-        nsecs_left(-1),
-        percent_left(-1),
-        power_state(OS::POWERSTATE_UNKNOWN) {
-}
+    nsecs_left(-1),
+    percent_left(-1),
+    power_state(OS::POWERSTATE_UNKNOWN) {}
 
-PowerX11::~PowerX11() {
-}
+PowerX11::~PowerX11() {}
 
 OS::PowerState PowerX11::get_power_state() {
     if (UpdatePowerInfo()) {

@@ -44,10 +44,16 @@ String EditorRun::get_running_scene() const {
     return running_scene;
 }
 
-Error EditorRun::run(const String &p_scene, const String &p_custom_args, const List<String> &p_breakpoints, const bool &p_skip_breakpoints) {
+Error EditorRun::run(
+    const String& p_scene,
+    const String& p_custom_args,
+    const List<String>& p_breakpoints,
+    const bool& p_skip_breakpoints
+) {
     List<String> args;
 
-    String resource_path = ProjectSettings::get_singleton()->get_resource_path();
+    String resource_path =
+        ProjectSettings::get_singleton()->get_resource_path();
 
     if (resource_path != "") {
         args.push_back("--path");
@@ -56,12 +62,18 @@ Error EditorRun::run(const String &p_scene, const String &p_custom_args, const L
 
     args.push_back("--remote-debug");
 
-    const String conn_string = ScriptEditor::get_singleton()->get_debugger()->get_connection_string();
+    const String conn_string =
+        ScriptEditor::get_singleton()->get_debugger()->get_connection_string();
     if (!conn_string.empty()) {
-        args.push_back(ScriptEditor::get_singleton()->get_debugger()->get_connection_string());
+        args.push_back(ScriptEditor::get_singleton()
+                           ->get_debugger()
+                           ->get_connection_string());
     } else { // Try anyway with default settings
-        const String remote_host = EditorSettings::get_singleton()->get("network/debug/remote_host");
-        const int remote_port = (int)EditorSettings::get_singleton()->get("network/debug/remote_port");
+        const String remote_host =
+            EditorSettings::get_singleton()->get("network/debug/remote_host");
+        const int remote_port = (int)EditorSettings::get_singleton()->get(
+            "network/debug/remote_port"
+        );
         args.push_back(remote_host + ":" + String::num(remote_port));
     }
     args.push_back("--allow_focus_steal_pid");
@@ -75,25 +87,29 @@ Error EditorRun::run(const String &p_scene, const String &p_custom_args, const L
         args.push_back("--debug-navigation");
     }
 
-    int screen = EditorSettings::get_singleton()->get("run/window_placement/screen");
+    int screen =
+        EditorSettings::get_singleton()->get("run/window_placement/screen");
     if (screen == 0) {
         // Same as editor
         screen = OS::get_singleton()->get_current_screen();
     } else if (screen == 1) {
         // Previous monitor (wrap to the other end if needed)
         screen = Math::wrapi(
-                OS::get_singleton()->get_current_screen() - 1,
-                0,
-                OS::get_singleton()->get_screen_count());
+            OS::get_singleton()->get_current_screen() - 1,
+            0,
+            OS::get_singleton()->get_screen_count()
+        );
     } else if (screen == 2) {
         // Next monitor (wrap to the other end if needed)
         screen = Math::wrapi(
-                OS::get_singleton()->get_current_screen() + 1,
-                0,
-                OS::get_singleton()->get_screen_count());
+            OS::get_singleton()->get_current_screen() + 1,
+            0,
+            OS::get_singleton()->get_screen_count()
+        );
     } else {
         // Fixed monitor ID
-        // There are 3 special options, so decrement the option ID by 3 to get the monitor ID
+        // There are 3 special options, so decrement the option ID by 3 to get
+        // the monitor ID
         screen -= 3;
     }
 
@@ -106,30 +122,42 @@ Error EditorRun::run(const String &p_scene, const String &p_custom_args, const L
     screen_rect.size = OS::get_singleton()->get_screen_size(screen);
 
     Size2 desired_size;
-    desired_size.x = ProjectSettings::get_singleton()->get("display/window/size/width");
-    desired_size.y = ProjectSettings::get_singleton()->get("display/window/size/height");
+    desired_size.x =
+        ProjectSettings::get_singleton()->get("display/window/size/width");
+    desired_size.y =
+        ProjectSettings::get_singleton()->get("display/window/size/height");
 
     Size2 test_size;
-    test_size.x = ProjectSettings::get_singleton()->get("display/window/size/test_width");
-    test_size.y = ProjectSettings::get_singleton()->get("display/window/size/test_height");
+    test_size.x =
+        ProjectSettings::get_singleton()->get("display/window/size/test_width");
+    test_size.y =
+        ProjectSettings::get_singleton()->get("display/window/size/test_height"
+        );
     if (test_size.x > 0 && test_size.y > 0) {
         desired_size = test_size;
     }
 
-    int window_placement = EditorSettings::get_singleton()->get("run/window_placement/rect");
-    bool hidpi_proj = ProjectSettings::get_singleton()->get("display/window/dpi/allow_hidpi");
+    int window_placement =
+        EditorSettings::get_singleton()->get("run/window_placement/rect");
+    bool hidpi_proj =
+        ProjectSettings::get_singleton()->get("display/window/dpi/allow_hidpi");
     int display_scale = 1;
     if (OS::get_singleton()->is_hidpi_allowed()) {
         if (hidpi_proj) {
-            display_scale = 1; // Both editor and project runs in hiDPI mode, do not scale.
+            display_scale =
+                1; // Both editor and project runs in hiDPI mode, do not scale.
         } else {
-            display_scale = OS::get_singleton()->get_screen_max_scale(); // Editor is in hiDPI mode, project is not, scale down.
+            display_scale = OS::get_singleton()->get_screen_max_scale(
+            ); // Editor is in hiDPI mode, project is not, scale down.
         }
     } else {
         if (hidpi_proj) {
-            display_scale = (1.f / OS::get_singleton()->get_screen_max_scale()); // Editor is not in hiDPI mode, project is, scale up.
+            display_scale =
+                (1.f / OS::get_singleton()->get_screen_max_scale()
+                ); // Editor is not in hiDPI mode, project is, scale up.
         } else {
-            display_scale = 1; // Both editor and project runs in lowDPI mode, do not scale.
+            display_scale =
+                1; // Both editor and project runs in lowDPI mode, do not scale.
         }
     }
     screen_rect.position /= display_scale;
@@ -138,15 +166,21 @@ Error EditorRun::run(const String &p_scene, const String &p_custom_args, const L
     switch (window_placement) {
         case 0: { // top left
             args.push_back("--position");
-            args.push_back(itos(screen_rect.position.x) + "," + itos(screen_rect.position.y));
+            args.push_back(
+                itos(screen_rect.position.x) + ","
+                + itos(screen_rect.position.y)
+            );
         } break;
         case 1: { // centered
-            Vector2 pos = screen_rect.position + ((screen_rect.size - desired_size) / 2).floor();
+            Vector2 pos = screen_rect.position
+                        + ((screen_rect.size - desired_size) / 2).floor();
             args.push_back("--position");
             args.push_back(itos(pos.x) + "," + itos(pos.y));
         } break;
         case 2: { // custom pos
-            Vector2 pos = EditorSettings::get_singleton()->get("run/window_placement/rect_custom_position");
+            Vector2 pos = EditorSettings::get_singleton()->get(
+                "run/window_placement/rect_custom_position"
+            );
             pos += screen_rect.position;
             args.push_back("--position");
             args.push_back(itos(pos.x) + "," + itos(pos.y));
@@ -168,7 +202,8 @@ Error EditorRun::run(const String &p_scene, const String &p_custom_args, const L
     if (p_breakpoints.size()) {
         args.push_back("--breakpoints");
         String bpoints;
-        for (const List<String>::Element *E = p_breakpoints.front(); E; E = E->next()) {
+        for (const List<String>::Element* E = p_breakpoints.front(); E;
+             E = E->next()) {
             bpoints += E->get().replace(" ", "%20");
             if (E->next()) {
                 bpoints += ",";
@@ -189,35 +224,42 @@ Error EditorRun::run(const String &p_scene, const String &p_custom_args, const L
     String exec = OS::get_singleton()->get_executable_path();
 
     if (p_custom_args != "") {
-        // Allow the user to specify a command to run, similar to Steam's launch options.
-        // In this case, Godot will no longer be run directly; it's up to the underlying command
-        // to run it. For instance, this can be used on Linux to force a running project
-        // to use Optimus using `prime-run` or similar.
-        // Example: `prime-run %command% --time-scale 0.5`
+        // Allow the user to specify a command to run, similar to Steam's launch
+        // options. In this case, Godot will no longer be run directly; it's up
+        // to the underlying command to run it. For instance, this can be used
+        // on Linux to force a running project to use Optimus using `prime-run`
+        // or similar. Example: `prime-run %command% --time-scale 0.5`
         const int placeholder_pos = p_custom_args.find("%command%");
 
         Vector<String> custom_args;
 
         if (placeholder_pos != -1) {
             // Prepend executable-specific custom arguments.
-            // If nothing is placed before `%command%`, behave as if no placeholder was specified.
-            Vector<String> exec_args = p_custom_args.substr(0, placeholder_pos).split(" ", false);
+            // If nothing is placed before `%command%`, behave as if no
+            // placeholder was specified.
+            Vector<String> exec_args =
+                p_custom_args.substr(0, placeholder_pos).split(" ", false);
             if (exec_args.size() >= 1) {
                 exec = exec_args[0];
                 exec_args.remove(0);
 
-                // Append the Godot executable name before we append executable arguments
-                // (since the order is reversed when using `push_front()`).
+                // Append the Godot executable name before we append executable
+                // arguments (since the order is reversed when using
+                // `push_front()`).
                 args.push_front(OS::get_singleton()->get_executable_path());
             }
 
             for (int i = exec_args.size() - 1; i >= 0; i--) {
-                // Iterate backwards as we're pushing items in the reverse order.
+                // Iterate backwards as we're pushing items in the reverse
+                // order.
                 args.push_front(exec_args[i].replace(" ", "%20"));
             }
 
             // Append Godot-specific custom arguments.
-            custom_args = p_custom_args.substr(placeholder_pos + String("%command%").size()).split(" ", false);
+            custom_args =
+                p_custom_args
+                    .substr(placeholder_pos + String("%command%").size())
+                    .split(" ", false);
             for (int i = 0; i < custom_args.size(); i++) {
                 args.push_back(custom_args[i].replace(" ", "%20"));
             }
@@ -231,7 +273,7 @@ Error EditorRun::run(const String &p_scene, const String &p_custom_args, const L
     }
 
     printf("Running: %ls", exec.c_str());
-    for (List<String>::Element *E = args.front(); E; E = E->next()) {
+    for (List<String>::Element* E = args.front(); E; E = E->next()) {
         printf(" %ls", E->get().c_str());
     };
     printf("\n");

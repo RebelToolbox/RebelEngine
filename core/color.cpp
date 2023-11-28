@@ -207,8 +207,11 @@ void Color::set_hsv(float p_h, float p_s, float p_v, float p_alpha) {
     }
 }
 
-bool Color::is_equal_approx(const Color &p_color) const {
-    return Math::is_equal_approx(r, p_color.r) && Math::is_equal_approx(g, p_color.g) && Math::is_equal_approx(b, p_color.b) && Math::is_equal_approx(a, p_color.a);
+bool Color::is_equal_approx(const Color& p_color) const {
+    return Math::is_equal_approx(r, p_color.r)
+        && Math::is_equal_approx(g, p_color.g)
+        && Math::is_equal_approx(b, p_color.b)
+        && Math::is_equal_approx(a, p_color.a);
 }
 
 void Color::invert() {
@@ -216,6 +219,7 @@ void Color::invert() {
     g = 1.0 - g;
     b = 1.0 - b;
 }
+
 void Color::contrast() {
     r = Math::fmod(r + 0.5, 1.0);
     g = Math::fmod(g + 0.5, 1.0);
@@ -260,7 +264,7 @@ Color Color::from_rgbe9995(uint32_t p_rgbe) {
     return Color(rd, gd, bd, 1.0f);
 }
 
-static float _parse_col(const String &p_str, int p_ofs) {
+static float _parse_col(const String& p_str, int p_ofs) {
     int ig = 0;
 
     for (int i = 0; i < 2; i++) {
@@ -301,7 +305,7 @@ Color Color::contrasted() const {
     return c;
 }
 
-Color Color::html(const String &p_color) {
+Color Color::html(const String& p_color) {
     String color = p_color;
     if (color.length() == 0) {
         return Color();
@@ -331,7 +335,11 @@ Color Color::html(const String &p_color) {
     int a = 255;
     if (alpha) {
         a = _parse_col(color, 0);
-        ERR_FAIL_COND_V_MSG(a < 0, Color(), "Invalid color code: " + p_color + ".");
+        ERR_FAIL_COND_V_MSG(
+            a < 0,
+            Color(),
+            "Invalid color code: " + p_color + "."
+        );
     }
 
     int from = alpha ? 2 : 0;
@@ -346,7 +354,7 @@ Color Color::html(const String &p_color) {
     return Color(r / 255.0, g / 255.0, b / 255.0, a / 255.0);
 }
 
-bool Color::html_is_valid(const String &p_color) {
+bool Color::html_is_valid(const String& p_color) {
     String color = p_color;
 
     if (color.length() == 0) {
@@ -391,7 +399,7 @@ bool Color::html_is_valid(const String &p_color) {
     return true;
 }
 
-Color Color::named(const String &p_name) {
+Color Color::named(const String& p_name) {
     if (_named_colors.empty()) {
         _populate_named_colors(); // from color_names.inc
     }
@@ -404,7 +412,7 @@ Color Color::named(const String &p_name) {
     name = name.replace(".", "");
     name = name.to_lower();
 
-    const Map<String, Color>::Element *color = _named_colors.find(name);
+    const Map<String, Color>::Element* color = _named_colors.find(name);
     ERR_FAIL_NULL_V_MSG(color, Color(), "Invalid color name: " + p_name + ".");
     return color->value();
 }
@@ -415,7 +423,7 @@ String _to_hex(float p_val) {
     String ret;
 
     for (int i = 0; i < 2; i++) {
-        CharType c[2] = { 0, 0 };
+        CharType c[2] = {0, 0};
         int lv = v & 0xF;
         if (lv < 10) {
             c[0] = '0' + lv;
@@ -424,7 +432,7 @@ String _to_hex(float p_val) {
         }
 
         v >>= 4;
-        String cs = (const CharType *)c;
+        String cs = (const CharType*)c;
         ret = cs + ret;
     }
 
@@ -450,7 +458,10 @@ Color Color::from_hsv(float p_h, float p_s, float p_v, float p_a) const {
 
 // FIXME: Remove once Godot 3.1 has been released
 float Color::gray() const {
-    WARN_DEPRECATED_MSG("'Color.gray()' is deprecated and will be removed in a future version. Use 'Color.v' for a better grayscale approximation.");
+    WARN_DEPRECATED_MSG(
+        "'Color.gray()' is deprecated and will be removed in a future version. "
+        "Use 'Color.v' for a better grayscale approximation."
+    );
     return (r + g + b) / 3.0;
 }
 
@@ -458,90 +469,66 @@ Color::operator String() const {
     return rtos(r) + ", " + rtos(g) + ", " + rtos(b) + ", " + rtos(a);
 }
 
-Color Color::operator+(const Color &p_color) const {
-    return Color(
-            r + p_color.r,
-            g + p_color.g,
-            b + p_color.b,
-            a + p_color.a);
+Color Color::operator+(const Color& p_color) const {
+    return Color(r + p_color.r, g + p_color.g, b + p_color.b, a + p_color.a);
 }
 
-void Color::operator+=(const Color &p_color) {
+void Color::operator+=(const Color& p_color) {
     r = r + p_color.r;
     g = g + p_color.g;
     b = b + p_color.b;
     a = a + p_color.a;
 }
 
-Color Color::operator-(const Color &p_color) const {
-    return Color(
-            r - p_color.r,
-            g - p_color.g,
-            b - p_color.b,
-            a - p_color.a);
+Color Color::operator-(const Color& p_color) const {
+    return Color(r - p_color.r, g - p_color.g, b - p_color.b, a - p_color.a);
 }
 
-void Color::operator-=(const Color &p_color) {
+void Color::operator-=(const Color& p_color) {
     r = r - p_color.r;
     g = g - p_color.g;
     b = b - p_color.b;
     a = a - p_color.a;
 }
 
-Color Color::operator*(const Color &p_color) const {
-    return Color(
-            r * p_color.r,
-            g * p_color.g,
-            b * p_color.b,
-            a * p_color.a);
+Color Color::operator*(const Color& p_color) const {
+    return Color(r * p_color.r, g * p_color.g, b * p_color.b, a * p_color.a);
 }
 
-Color Color::operator*(const real_t &rvalue) const {
-    return Color(
-            r * rvalue,
-            g * rvalue,
-            b * rvalue,
-            a * rvalue);
+Color Color::operator*(const real_t& rvalue) const {
+    return Color(r * rvalue, g * rvalue, b * rvalue, a * rvalue);
 }
 
-void Color::operator*=(const Color &p_color) {
+void Color::operator*=(const Color& p_color) {
     r = r * p_color.r;
     g = g * p_color.g;
     b = b * p_color.b;
     a = a * p_color.a;
 }
 
-void Color::operator*=(const real_t &rvalue) {
+void Color::operator*=(const real_t& rvalue) {
     r = r * rvalue;
     g = g * rvalue;
     b = b * rvalue;
     a = a * rvalue;
 }
 
-Color Color::operator/(const Color &p_color) const {
-    return Color(
-            r / p_color.r,
-            g / p_color.g,
-            b / p_color.b,
-            a / p_color.a);
+Color Color::operator/(const Color& p_color) const {
+    return Color(r / p_color.r, g / p_color.g, b / p_color.b, a / p_color.a);
 }
 
-Color Color::operator/(const real_t &rvalue) const {
-    return Color(
-            r / rvalue,
-            g / rvalue,
-            b / rvalue,
-            a / rvalue);
+Color Color::operator/(const real_t& rvalue) const {
+    return Color(r / rvalue, g / rvalue, b / rvalue, a / rvalue);
 }
 
-void Color::operator/=(const Color &p_color) {
+void Color::operator/=(const Color& p_color) {
     r = r / p_color.r;
     g = g / p_color.g;
     b = b / p_color.b;
     a = a / p_color.a;
 }
 
-void Color::operator/=(const real_t &rvalue) {
+void Color::operator/=(const real_t& rvalue) {
     if (rvalue == 0) {
         r = 1.0;
         g = 1.0;
@@ -556,9 +543,5 @@ void Color::operator/=(const real_t &rvalue) {
 };
 
 Color Color::operator-() const {
-    return Color(
-            1.0 - r,
-            1.0 - g,
-            1.0 - b,
-            1.0 - a);
+    return Color(1.0 - r, 1.0 - g, 1.0 - b, 1.0 - a);
 }

@@ -76,7 +76,7 @@ private:
         KEY_EVENT_BUFFER_SIZE = 512
     };
 
-    FILE *stdo;
+    FILE* stdo;
 
     KeyEvent key_event_buffer[KEY_EVENT_BUFFER_SIZE];
     int key_event_pos;
@@ -89,20 +89,20 @@ private:
     bool outside;
     int old_x, old_y;
     Point2i center;
-    VisualServer *visual_server;
+    VisualServer* visual_server;
     int pressrc;
 
-    ContextEGL_UWP *gl_context;
+    ContextEGL_UWP* gl_context;
     Windows::UI::Core::CoreWindow ^ window;
 
     VideoMode video_mode;
     int video_driver_index;
 
-    MainLoop *main_loop;
+    MainLoop* main_loop;
 
     AudioDriverXAudio2 audio_driver;
 
-    PowerUWP *power_manager;
+    PowerUWP* power_manager;
 
     MouseMode mouse_mode;
     bool alt_mem;
@@ -115,7 +115,7 @@ private:
 
     CursorShape cursor_shape;
 
-    InputDefault *input;
+    InputDefault* input;
 
     JoypadUWP ^ joypad;
 
@@ -131,11 +131,25 @@ private:
         property bool alert_close_handle;
         property Platform::String ^ clipboard;
         void alert_close(Windows::UI::Popups::IUICommand ^ command);
-        void on_clipboard_changed(Platform::Object ^ sender, Platform::Object ^ ev);
+        void on_clipboard_changed(
+            Platform::Object ^ sender,
+            Platform::Object ^ ev
+        );
         void update_clipboard();
-        void on_accelerometer_reading_changed(Windows::Devices::Sensors::Accelerometer ^ sender, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs ^ args);
-        void on_magnetometer_reading_changed(Windows::Devices::Sensors::Magnetometer ^ sender, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs ^ args);
-        void on_gyroscope_reading_changed(Windows::Devices::Sensors::Gyrometer ^ sender, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs ^ args);
+        void on_accelerometer_reading_changed(
+            Windows::Devices::Sensors::Accelerometer ^ sender,
+            Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs
+                ^ args
+        );
+        void on_magnetometer_reading_changed(
+            Windows::Devices::Sensors::Magnetometer ^ sender,
+            Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs
+                ^ args
+        );
+        void on_gyroscope_reading_changed(
+            Windows::Devices::Sensors::Gyrometer ^ sender,
+            Windows::Devices::Sensors::GyrometerReadingChangedEventArgs ^ args
+        );
 
         /** clang-format breaks this, it does not understand this token. */
         /* clang-format off */
@@ -144,20 +158,26 @@ private:
 		property OS_UWP* os;
         /* clang-format on */
     };
+
     ManagedType ^ managed_object;
     Windows::Devices::Sensors::Accelerometer ^ accelerometer;
     Windows::Devices::Sensors::Magnetometer ^ magnetometer;
     Windows::Devices::Sensors::Gyrometer ^ gyrometer;
 
     // functions used by main to initialize/deinitialize the OS
+
 protected:
     virtual int get_video_driver_count() const;
     virtual int get_current_video_driver() const;
 
     virtual void initialize_core();
-    virtual Error initialize(const VideoMode &p_desired, int p_video_driver, int p_audio_driver);
+    virtual Error initialize(
+        const VideoMode& p_desired,
+        int p_video_driver,
+        int p_audio_driver
+    );
 
-    virtual void set_main_loop(MainLoop *p_main_loop);
+    virtual void set_main_loop(MainLoop* p_main_loop);
     virtual void delete_main_loop();
 
     virtual void finalize();
@@ -171,7 +191,7 @@ public:
     // Event to send to the app wrapper
     HANDLE mouse_mode_changed;
 
-    virtual void alert(const String &p_alert, const String &p_title = "ALERT!");
+    virtual void alert(const String& p_alert, const String& p_title = "ALERT!");
     String get_stdin_string(bool p_block);
 
     void set_mouse_mode(MouseMode p_mode);
@@ -179,18 +199,24 @@ public:
 
     virtual Point2 get_mouse_position() const;
     virtual int get_mouse_button_state() const;
-    virtual void set_window_title(const String &p_title);
+    virtual void set_window_title(const String& p_title);
 
-    virtual void set_video_mode(const VideoMode &p_video_mode, int p_screen = 0);
+    virtual void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    );
     virtual VideoMode get_video_mode(int p_screen = 0) const;
-    virtual void get_fullscreen_mode_list(List<VideoMode> *p_list, int p_screen = 0) const;
+    virtual void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const;
     virtual Size2 get_window_size() const;
     virtual void set_window_size(const Size2 p_size);
     virtual void set_window_fullscreen(bool p_enabled);
     virtual bool is_window_fullscreen() const;
     virtual void set_keep_screen_on(bool p_enabled);
 
-    virtual MainLoop *get_main_loop() const;
+    virtual MainLoop* get_main_loop() const;
 
     virtual String get_name() const;
 
@@ -200,25 +226,39 @@ public:
     virtual uint64_t get_unix_time() const;
 
     virtual bool can_draw() const;
-    virtual Error set_cwd(const String &p_cwd);
+    virtual Error set_cwd(const String& p_cwd);
 
     virtual void delay_usec(uint32_t p_usec) const;
     virtual uint64_t get_ticks_usec() const;
 
-    virtual Error execute(const String &p_path, const List<String> &p_arguments, bool p_blocking = true, ProcessID *r_child_id = NULL, String *r_pipe = NULL, int *r_exitcode = NULL, bool read_stderr = false, Mutex *p_pipe_mutex = NULL);
-    virtual Error kill(const ProcessID &p_pid);
+    virtual Error execute(
+        const String& p_path,
+        const List<String>& p_arguments,
+        bool p_blocking = true,
+        ProcessID* r_child_id = NULL,
+        String* r_pipe = NULL,
+        int* r_exitcode = NULL,
+        bool read_stderr = false,
+        Mutex* p_pipe_mutex = NULL
+    );
+    virtual Error kill(const ProcessID& p_pid);
 
-    virtual bool has_environment(const String &p_var) const;
-    virtual String get_environment(const String &p_var) const;
-    virtual bool set_environment(const String &p_var, const String &p_value) const;
+    virtual bool has_environment(const String& p_var) const;
+    virtual String get_environment(const String& p_var) const;
+    virtual bool set_environment(const String& p_var, const String& p_value)
+        const;
 
-    virtual void set_clipboard(const String &p_text);
+    virtual void set_clipboard(const String& p_text);
     virtual String get_clipboard() const;
 
     void set_cursor_shape(CursorShape p_shape);
     CursorShape get_cursor_shape() const;
-    virtual void set_custom_mouse_cursor(const RES &p_cursor, CursorShape p_shape, const Vector2 &p_hotspot);
-    void set_icon(const Ref<Image> &p_icon);
+    virtual void set_custom_mouse_cursor(
+        const RES& p_cursor,
+        CursorShape p_shape,
+        const Vector2& p_hotspot
+    );
+    void set_icon(const Ref<Image>& p_icon);
 
     virtual String get_executable_path() const;
 
@@ -227,7 +267,7 @@ public:
     virtual void move_window_to_foreground();
     virtual String get_user_data_dir() const;
 
-    virtual bool _check_internal_feature_support(const String &p_feature);
+    virtual bool _check_internal_feature_support(const String& p_feature);
 
     void set_window(Windows::UI::Core::CoreWindow ^ p_window);
     void screen_size_changed();
@@ -239,26 +279,44 @@ public:
     virtual bool has_touchscreen_ui_hint() const;
 
     virtual bool has_virtual_keyboard() const;
-    virtual void show_virtual_keyboard(const String &p_existing_text, const Rect2 &p_screen_rect = Rect2(), bool p_multiline = false, int p_max_input_length = -1, int p_cursor_start = -1, int p_cursor_end = -1);
+    virtual void show_virtual_keyboard(
+        const String& p_existing_text,
+        const Rect2& p_screen_rect = Rect2(),
+        bool p_multiline = false,
+        int p_max_input_length = -1,
+        int p_cursor_start = -1,
+        int p_cursor_end = -1
+    );
     virtual void hide_virtual_keyboard();
 
-    virtual Error open_dynamic_library(const String p_path, void *&p_library_handle, bool p_also_set_library_path = false);
-    virtual Error close_dynamic_library(void *p_library_handle);
-    virtual Error get_dynamic_library_symbol_handle(void *p_library_handle, const String p_name, void *&p_symbol_handle, bool p_optional = false);
+    virtual Error open_dynamic_library(
+        const String p_path,
+        void*& p_library_handle,
+        bool p_also_set_library_path = false
+    );
+    virtual Error close_dynamic_library(void* p_library_handle);
+    virtual Error get_dynamic_library_symbol_handle(
+        void* p_library_handle,
+        const String p_name,
+        void*& p_symbol_handle,
+        bool p_optional = false
+    );
 
     virtual Error shell_open(String p_uri);
 
     void run();
 
-    virtual bool get_swap_ok_cancel() { return true; }
+    virtual bool get_swap_ok_cancel() {
+        return true;
+    }
 
-    void input_event(const Ref<InputEvent> &p_event);
+    void input_event(const Ref<InputEvent>& p_event);
 
     virtual OS::PowerState get_power_state();
     virtual int get_power_seconds_left();
     virtual int get_power_percent_left();
 
-    void queue_key_event(KeyEvent &p_event);
+    void queue_key_event(KeyEvent& p_event);
 
     OS_UWP();
     ~OS_UWP();

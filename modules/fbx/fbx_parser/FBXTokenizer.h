@@ -83,7 +83,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 /** Rough classification for text FBX tokens used for constructing the
  *  basic scope hierarchy. */
 enum TokenType {
@@ -117,10 +118,21 @@ private:
 
 public:
     /** construct a textual token */
-    Token(const char *p_sbegin, const char *p_send, TokenType p_type, unsigned int p_line, unsigned int p_column);
+    Token(
+        const char* p_sbegin,
+        const char* p_send,
+        TokenType p_type,
+        unsigned int p_line,
+        unsigned int p_column
+    );
 
     /** construct a binary token */
-    Token(const char *p_sbegin, const char *p_send, TokenType p_type, size_t p_offset);
+    Token(
+        const char* p_sbegin,
+        const char* p_send,
+        TokenType p_type,
+        size_t p_offset
+    );
     ~Token();
 
 public:
@@ -132,11 +144,11 @@ public:
         return column == BINARY_MARKER;
     }
 
-    const char *begin() const {
+    const char* begin() const {
         return sbegin;
     }
 
-    const char *end() const {
+    const char* end() const {
         return send;
     }
 
@@ -163,31 +175,33 @@ private:
     std::string contents;
 #endif
 
-    const char *sbegin = nullptr;
-    const char *send = nullptr;
+    const char* sbegin = nullptr;
+    const char* send = nullptr;
     const TokenType type;
 
     union {
         size_t line;
         size_t offset;
     };
+
     const unsigned int column = 0;
 };
 
 // Fixed leak by using shared_ptr for tokens
-typedef Token *TokenPtr;
+typedef Token* TokenPtr;
 typedef std::vector<TokenPtr> TokenList;
 
 #define new_Token new Token
 
-/** Main FBX tokenizer function. Transform input buffer into a list of preprocessed tokens.
+/** Main FBX tokenizer function. Transform input buffer into a list of
+ * preprocessed tokens.
  *
  *  Skips over comments and generates line and column numbers.
  *
  * @param output_tokens Receives a list of all tokens in the input data.
  * @param input_buffer Textual input buffer to be processed, 0-terminated.
  * @print_error if something goes wrong */
-void Tokenize(TokenList &output_tokens, const char *input, size_t length);
+void Tokenize(TokenList& output_tokens, const char* input, size_t length);
 
 /** Tokenizer function for binary FBX files.
  *
@@ -197,7 +211,7 @@ void Tokenize(TokenList &output_tokens, const char *input, size_t length);
  * @param input_buffer Binary input buffer to be processed.
  * @param length Length of input buffer, in bytes. There is no 0-terminal.
  * @print_error if something goes wrong */
-void TokenizeBinary(TokenList &output_tokens, const char *input, size_t length);
+void TokenizeBinary(TokenList& output_tokens, const char* input, size_t length);
 
 } // namespace FBXDocParser
 

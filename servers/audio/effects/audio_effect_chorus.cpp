@@ -32,11 +32,15 @@
 #include "core/math/math_funcs.h"
 #include "servers/audio_server.h"
 
-void AudioEffectChorusInstance::process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count) {
+void AudioEffectChorusInstance::process(
+    const AudioFrame* p_src_frames,
+    AudioFrame* p_dst_frames,
+    int p_frame_count
+) {
     int todo = p_frame_count;
 
     while (todo) {
-        int to_mix = MIN(todo, 256); //can't mix too much
+        int to_mix = MIN(todo, 256); // can't mix too much
 
         _process_chunk(p_src_frames, p_dst_frames, to_mix);
 
@@ -47,8 +51,12 @@ void AudioEffectChorusInstance::process(const AudioFrame *p_src_frames, AudioFra
     }
 }
 
-void AudioEffectChorusInstance::_process_chunk(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count) {
-    //fill ringbuffer
+void AudioEffectChorusInstance::_process_chunk(
+    const AudioFrame* p_src_frames,
+    AudioFrame* p_dst_frames,
+    int p_frame_count
+) {
+    // fill ringbuffer
     for (int i = 0; i < p_frame_count; i++) {
         audio_buffer.write[(buffer_pos + i) & buffer_mask] = p_src_frames[i];
         p_dst_frames[i] = p_src_frames[i] * base->dry;
@@ -58,29 +66,34 @@ void AudioEffectChorusInstance::_process_chunk(const AudioFrame *p_src_frames, A
 
     /* process voices */
     for (int vc = 0; vc < base->voice_count; vc++) {
-        AudioEffectChorus::Voice &v = base->voice[vc];
+        AudioEffectChorus::Voice& v = base->voice[vc];
 
         double time_to_mix = (float)p_frame_count / mix_rate;
         double cycles_to_mix = time_to_mix * v.rate;
 
         unsigned int local_rb_pos = buffer_pos;
-        AudioFrame *dst_buff = p_dst_frames;
-        AudioFrame *rb_buff = audio_buffer.ptrw();
+        AudioFrame* dst_buff = p_dst_frames;
+        AudioFrame* rb_buff = audio_buffer.ptrw();
 
         double delay_msec = v.delay;
-        unsigned int delay_frames = Math::fast_ftoi((delay_msec / 1000.0) * mix_rate);
+        unsigned int delay_frames =
+            Math::fast_ftoi((delay_msec / 1000.0) * mix_rate);
         float max_depth_frames = (v.depth / 1000.0) * mix_rate;
 
         uint64_t local_cycles = cycles[vc];
-        uint64_t increment = llrint(cycles_to_mix / (double)p_frame_count * (double)(1 << AudioEffectChorus::CYCLES_FRAC));
+        uint64_t increment = llrint(
+            cycles_to_mix / (double)p_frame_count
+            * (double)(1 << AudioEffectChorus::CYCLES_FRAC)
+        );
 
-        //check the LFO doesn't read ahead of the write pos
-        if ((((unsigned int)max_depth_frames) + 10) > delay_frames) { //10 as some threshold to avoid precision stuff
+        // check the LFO doesn't read ahead of the write pos
+        if ((((unsigned int)max_depth_frames) + 10)
+            > delay_frames) { // 10 as some threshold to avoid precision stuff
             delay_frames += (int)max_depth_frames - delay_frames;
-            delay_frames += 10; //threshold to avoid precision stuff
+            delay_frames += 10; // threshold to avoid precision stuff
         }
 
-        //low pass filter
+        // low pass filter
         if (v.cutoff == 0) {
             continue;
         }
@@ -93,16 +106,18 @@ void AudioEffectChorusInstance::_process_chunk(const AudioFrame *p_src_frames, A
             c2 = 0.0;
         }
 
-        //vol modifier
+        // vol modifier
 
-        AudioFrame vol_modifier = AudioFrame(base->wet, base->wet) * Math::db2linear(v.level);
+        AudioFrame vol_modifier =
+            AudioFrame(base->wet, base->wet) * Math::db2linear(v.level);
         vol_modifier.l *= CLAMP(1.0 - v.pan, 0, 1);
         vol_modifier.r *= CLAMP(1.0 + v.pan, 0, 1);
 
         for (int i = 0; i < p_frame_count; i++) {
             /** COMPUTE WAVEFORM **/
 
-            float phase = (float)(local_cycles & AudioEffectChorus::CYCLES_MASK) / (float)(1 << AudioEffectChorus::CYCLES_FRAC);
+            float phase = (float)(local_cycles & AudioEffectChorus::CYCLES_MASK)
+                        / (float)(1 << AudioEffectChorus::CYCLES_FRAC);
 
             float wave_delay = sinf(phase * 2.0 * Math_PI) * max_depth_frames;
 
@@ -135,7 +150,9 @@ void AudioEffectChorusInstance::_process_chunk(const AudioFrame *p_src_frames, A
         }
 
         filter_h[vc] = h;
-        cycles[vc] += Math::fast_ftoi(cycles_to_mix * (double)(1 << AudioEffectChorus::CYCLES_FRAC));
+        cycles[vc] += Math::fast_ftoi(
+            cycles_to_mix * (double)(1 << AudioEffectChorus::CYCLES_FRAC)
+        );
     }
 
     buffer_pos += p_frame_count;
@@ -150,10 +167,12 @@ Ref<AudioEffectInstance> AudioEffectChorus::instance() {
         ins->cycles[i] = 0;
     }
 
-    float ring_buffer_max_size = AudioEffectChorus::MAX_DELAY_MS + AudioEffectChorus::MAX_DEPTH_MS + AudioEffectChorus::MAX_WIDTH_MS;
+    float ring_buffer_max_size = AudioEffectChorus::MAX_DELAY_MS
+                               + AudioEffectChorus::MAX_DEPTH_MS
+                               + AudioEffectChorus::MAX_WIDTH_MS;
 
-    ring_buffer_max_size *= 2; //just to avoid complications
-    ring_buffer_max_size /= 1000.0; //convert to seconds
+    ring_buffer_max_size *= 2;      // just to avoid complications
+    ring_buffer_max_size /= 1000.0; // convert to seconds
     ring_buffer_max_size *= AudioServer::get_singleton()->get_mix_rate();
 
     int ringbuff_size = ring_buffer_max_size;
@@ -190,6 +209,7 @@ void AudioEffectChorus::set_voice_delay_ms(int p_voice, float p_delay_ms) {
 
     voice[p_voice].delay = p_delay_ms;
 }
+
 float AudioEffectChorus::get_voice_delay_ms(int p_voice) const {
     ERR_FAIL_INDEX_V(p_voice, MAX_VOICES, 0);
     return voice[p_voice].delay;
@@ -200,6 +220,7 @@ void AudioEffectChorus::set_voice_rate_hz(int p_voice, float p_rate_hz) {
 
     voice[p_voice].rate = p_rate_hz;
 }
+
 float AudioEffectChorus::get_voice_rate_hz(int p_voice) const {
     ERR_FAIL_INDEX_V(p_voice, MAX_VOICES, 0);
 
@@ -211,6 +232,7 @@ void AudioEffectChorus::set_voice_depth_ms(int p_voice, float p_depth_ms) {
 
     voice[p_voice].depth = p_depth_ms;
 }
+
 float AudioEffectChorus::get_voice_depth_ms(int p_voice) const {
     ERR_FAIL_INDEX_V(p_voice, MAX_VOICES, 0);
 
@@ -222,6 +244,7 @@ void AudioEffectChorus::set_voice_level_db(int p_voice, float p_level_db) {
 
     voice[p_voice].level = p_level_db;
 }
+
 float AudioEffectChorus::get_voice_level_db(int p_voice) const {
     ERR_FAIL_INDEX_V(p_voice, MAX_VOICES, 0);
 
@@ -233,6 +256,7 @@ void AudioEffectChorus::set_voice_cutoff_hz(int p_voice, float p_cutoff_hz) {
 
     voice[p_voice].cutoff = p_cutoff_hz;
 }
+
 float AudioEffectChorus::get_voice_cutoff_hz(int p_voice) const {
     ERR_FAIL_INDEX_V(p_voice, MAX_VOICES, 0);
 
@@ -244,6 +268,7 @@ void AudioEffectChorus::set_voice_pan(int p_voice, float p_pan) {
 
     voice[p_voice].pan = p_pan;
 }
+
 float AudioEffectChorus::get_voice_pan(int p_voice) const {
     ERR_FAIL_INDEX_V(p_voice, MAX_VOICES, 0);
 
@@ -253,6 +278,7 @@ float AudioEffectChorus::get_voice_pan(int p_voice) const {
 void AudioEffectChorus::set_wet(float amount) {
     wet = amount;
 }
+
 float AudioEffectChorus::get_wet() const {
     return wet;
 }
@@ -260,11 +286,12 @@ float AudioEffectChorus::get_wet() const {
 void AudioEffectChorus::set_dry(float amount) {
     dry = amount;
 }
+
 float AudioEffectChorus::get_dry() const {
     return dry;
 }
 
-void AudioEffectChorus::_validate_property(PropertyInfo &property) const {
+void AudioEffectChorus::_validate_property(PropertyInfo& property) const {
     if (property.name.begins_with("voice/")) {
         int voice_idx = property.name.get_slice("/", 1).to_int();
         if (voice_idx > voice_count) {
@@ -274,64 +301,370 @@ void AudioEffectChorus::_validate_property(PropertyInfo &property) const {
 }
 
 void AudioEffectChorus::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_voice_count", "voices"), &AudioEffectChorus::set_voice_count);
-    ClassDB::bind_method(D_METHOD("get_voice_count"), &AudioEffectChorus::get_voice_count);
+    ClassDB::bind_method(
+        D_METHOD("set_voice_count", "voices"),
+        &AudioEffectChorus::set_voice_count
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_voice_count"),
+        &AudioEffectChorus::get_voice_count
+    );
 
-    ClassDB::bind_method(D_METHOD("set_voice_delay_ms", "voice_idx", "delay_ms"), &AudioEffectChorus::set_voice_delay_ms);
-    ClassDB::bind_method(D_METHOD("get_voice_delay_ms", "voice_idx"), &AudioEffectChorus::get_voice_delay_ms);
+    ClassDB::bind_method(
+        D_METHOD("set_voice_delay_ms", "voice_idx", "delay_ms"),
+        &AudioEffectChorus::set_voice_delay_ms
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_voice_delay_ms", "voice_idx"),
+        &AudioEffectChorus::get_voice_delay_ms
+    );
 
-    ClassDB::bind_method(D_METHOD("set_voice_rate_hz", "voice_idx", "rate_hz"), &AudioEffectChorus::set_voice_rate_hz);
-    ClassDB::bind_method(D_METHOD("get_voice_rate_hz", "voice_idx"), &AudioEffectChorus::get_voice_rate_hz);
+    ClassDB::bind_method(
+        D_METHOD("set_voice_rate_hz", "voice_idx", "rate_hz"),
+        &AudioEffectChorus::set_voice_rate_hz
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_voice_rate_hz", "voice_idx"),
+        &AudioEffectChorus::get_voice_rate_hz
+    );
 
-    ClassDB::bind_method(D_METHOD("set_voice_depth_ms", "voice_idx", "depth_ms"), &AudioEffectChorus::set_voice_depth_ms);
-    ClassDB::bind_method(D_METHOD("get_voice_depth_ms", "voice_idx"), &AudioEffectChorus::get_voice_depth_ms);
+    ClassDB::bind_method(
+        D_METHOD("set_voice_depth_ms", "voice_idx", "depth_ms"),
+        &AudioEffectChorus::set_voice_depth_ms
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_voice_depth_ms", "voice_idx"),
+        &AudioEffectChorus::get_voice_depth_ms
+    );
 
-    ClassDB::bind_method(D_METHOD("set_voice_level_db", "voice_idx", "level_db"), &AudioEffectChorus::set_voice_level_db);
-    ClassDB::bind_method(D_METHOD("get_voice_level_db", "voice_idx"), &AudioEffectChorus::get_voice_level_db);
+    ClassDB::bind_method(
+        D_METHOD("set_voice_level_db", "voice_idx", "level_db"),
+        &AudioEffectChorus::set_voice_level_db
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_voice_level_db", "voice_idx"),
+        &AudioEffectChorus::get_voice_level_db
+    );
 
-    ClassDB::bind_method(D_METHOD("set_voice_cutoff_hz", "voice_idx", "cutoff_hz"), &AudioEffectChorus::set_voice_cutoff_hz);
-    ClassDB::bind_method(D_METHOD("get_voice_cutoff_hz", "voice_idx"), &AudioEffectChorus::get_voice_cutoff_hz);
+    ClassDB::bind_method(
+        D_METHOD("set_voice_cutoff_hz", "voice_idx", "cutoff_hz"),
+        &AudioEffectChorus::set_voice_cutoff_hz
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_voice_cutoff_hz", "voice_idx"),
+        &AudioEffectChorus::get_voice_cutoff_hz
+    );
 
-    ClassDB::bind_method(D_METHOD("set_voice_pan", "voice_idx", "pan"), &AudioEffectChorus::set_voice_pan);
-    ClassDB::bind_method(D_METHOD("get_voice_pan", "voice_idx"), &AudioEffectChorus::get_voice_pan);
+    ClassDB::bind_method(
+        D_METHOD("set_voice_pan", "voice_idx", "pan"),
+        &AudioEffectChorus::set_voice_pan
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_voice_pan", "voice_idx"),
+        &AudioEffectChorus::get_voice_pan
+    );
 
-    ClassDB::bind_method(D_METHOD("set_wet", "amount"), &AudioEffectChorus::set_wet);
+    ClassDB::bind_method(
+        D_METHOD("set_wet", "amount"),
+        &AudioEffectChorus::set_wet
+    );
     ClassDB::bind_method(D_METHOD("get_wet"), &AudioEffectChorus::get_wet);
 
-    ClassDB::bind_method(D_METHOD("set_dry", "amount"), &AudioEffectChorus::set_dry);
+    ClassDB::bind_method(
+        D_METHOD("set_dry", "amount"),
+        &AudioEffectChorus::set_dry
+    );
     ClassDB::bind_method(D_METHOD("get_dry"), &AudioEffectChorus::get_dry);
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "voice_count", PROPERTY_HINT_RANGE, "1,4,1", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED), "set_voice_count", "get_voice_count");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "dry", PROPERTY_HINT_RANGE, "0,1,0.01"), "set_dry", "get_dry");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "wet", PROPERTY_HINT_RANGE, "0,1,0.01"), "set_wet", "get_wet");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "voice_count",
+            PROPERTY_HINT_RANGE,
+            "1,4,1",
+            PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
+        ),
+        "set_voice_count",
+        "get_voice_count"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "dry", PROPERTY_HINT_RANGE, "0,1,0.01"),
+        "set_dry",
+        "get_dry"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "wet", PROPERTY_HINT_RANGE, "0,1,0.01"),
+        "set_wet",
+        "get_wet"
+    );
 
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/1/delay_ms", PROPERTY_HINT_RANGE, "0,50,0.01"), "set_voice_delay_ms", "get_voice_delay_ms", 0);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/1/rate_hz", PROPERTY_HINT_RANGE, "0.1,20,0.1"), "set_voice_rate_hz", "get_voice_rate_hz", 0);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/1/depth_ms", PROPERTY_HINT_RANGE, "0,20,0.01"), "set_voice_depth_ms", "get_voice_depth_ms", 0);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/1/level_db", PROPERTY_HINT_RANGE, "-60,24,0.1"), "set_voice_level_db", "get_voice_level_db", 0);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/1/cutoff_hz", PROPERTY_HINT_RANGE, "1,20500,1"), "set_voice_cutoff_hz", "get_voice_cutoff_hz", 0);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/1/pan", PROPERTY_HINT_RANGE, "-1,1,0.01"), "set_voice_pan", "get_voice_pan", 0);
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/1/delay_ms",
+            PROPERTY_HINT_RANGE,
+            "0,50,0.01"
+        ),
+        "set_voice_delay_ms",
+        "get_voice_delay_ms",
+        0
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/1/rate_hz",
+            PROPERTY_HINT_RANGE,
+            "0.1,20,0.1"
+        ),
+        "set_voice_rate_hz",
+        "get_voice_rate_hz",
+        0
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/1/depth_ms",
+            PROPERTY_HINT_RANGE,
+            "0,20,0.01"
+        ),
+        "set_voice_depth_ms",
+        "get_voice_depth_ms",
+        0
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/1/level_db",
+            PROPERTY_HINT_RANGE,
+            "-60,24,0.1"
+        ),
+        "set_voice_level_db",
+        "get_voice_level_db",
+        0
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/1/cutoff_hz",
+            PROPERTY_HINT_RANGE,
+            "1,20500,1"
+        ),
+        "set_voice_cutoff_hz",
+        "get_voice_cutoff_hz",
+        0
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/1/pan",
+            PROPERTY_HINT_RANGE,
+            "-1,1,0.01"
+        ),
+        "set_voice_pan",
+        "get_voice_pan",
+        0
+    );
 
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/2/delay_ms", PROPERTY_HINT_RANGE, "0,50,0.01"), "set_voice_delay_ms", "get_voice_delay_ms", 1);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/2/rate_hz", PROPERTY_HINT_RANGE, "0.1,20,0.1"), "set_voice_rate_hz", "get_voice_rate_hz", 1);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/2/depth_ms", PROPERTY_HINT_RANGE, "0,20,0.01"), "set_voice_depth_ms", "get_voice_depth_ms", 1);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/2/level_db", PROPERTY_HINT_RANGE, "-60,24,0.1"), "set_voice_level_db", "get_voice_level_db", 1);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/2/cutoff_hz", PROPERTY_HINT_RANGE, "1,20500,1"), "set_voice_cutoff_hz", "get_voice_cutoff_hz", 1);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/2/pan", PROPERTY_HINT_RANGE, "-1,1,0.01"), "set_voice_pan", "get_voice_pan", 1);
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/2/delay_ms",
+            PROPERTY_HINT_RANGE,
+            "0,50,0.01"
+        ),
+        "set_voice_delay_ms",
+        "get_voice_delay_ms",
+        1
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/2/rate_hz",
+            PROPERTY_HINT_RANGE,
+            "0.1,20,0.1"
+        ),
+        "set_voice_rate_hz",
+        "get_voice_rate_hz",
+        1
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/2/depth_ms",
+            PROPERTY_HINT_RANGE,
+            "0,20,0.01"
+        ),
+        "set_voice_depth_ms",
+        "get_voice_depth_ms",
+        1
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/2/level_db",
+            PROPERTY_HINT_RANGE,
+            "-60,24,0.1"
+        ),
+        "set_voice_level_db",
+        "get_voice_level_db",
+        1
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/2/cutoff_hz",
+            PROPERTY_HINT_RANGE,
+            "1,20500,1"
+        ),
+        "set_voice_cutoff_hz",
+        "get_voice_cutoff_hz",
+        1
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/2/pan",
+            PROPERTY_HINT_RANGE,
+            "-1,1,0.01"
+        ),
+        "set_voice_pan",
+        "get_voice_pan",
+        1
+    );
 
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/3/delay_ms", PROPERTY_HINT_RANGE, "0,50,0.01"), "set_voice_delay_ms", "get_voice_delay_ms", 2);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/3/rate_hz", PROPERTY_HINT_RANGE, "0.1,20,0.1"), "set_voice_rate_hz", "get_voice_rate_hz", 2);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/3/depth_ms", PROPERTY_HINT_RANGE, "0,20,0.01"), "set_voice_depth_ms", "get_voice_depth_ms", 2);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/3/level_db", PROPERTY_HINT_RANGE, "-60,24,0.1"), "set_voice_level_db", "get_voice_level_db", 2);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/3/cutoff_hz", PROPERTY_HINT_RANGE, "1,20500,1"), "set_voice_cutoff_hz", "get_voice_cutoff_hz", 2);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/3/pan", PROPERTY_HINT_RANGE, "-1,1,0.01"), "set_voice_pan", "get_voice_pan", 2);
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/3/delay_ms",
+            PROPERTY_HINT_RANGE,
+            "0,50,0.01"
+        ),
+        "set_voice_delay_ms",
+        "get_voice_delay_ms",
+        2
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/3/rate_hz",
+            PROPERTY_HINT_RANGE,
+            "0.1,20,0.1"
+        ),
+        "set_voice_rate_hz",
+        "get_voice_rate_hz",
+        2
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/3/depth_ms",
+            PROPERTY_HINT_RANGE,
+            "0,20,0.01"
+        ),
+        "set_voice_depth_ms",
+        "get_voice_depth_ms",
+        2
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/3/level_db",
+            PROPERTY_HINT_RANGE,
+            "-60,24,0.1"
+        ),
+        "set_voice_level_db",
+        "get_voice_level_db",
+        2
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/3/cutoff_hz",
+            PROPERTY_HINT_RANGE,
+            "1,20500,1"
+        ),
+        "set_voice_cutoff_hz",
+        "get_voice_cutoff_hz",
+        2
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/3/pan",
+            PROPERTY_HINT_RANGE,
+            "-1,1,0.01"
+        ),
+        "set_voice_pan",
+        "get_voice_pan",
+        2
+    );
 
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/4/delay_ms", PROPERTY_HINT_RANGE, "0,50,0.01"), "set_voice_delay_ms", "get_voice_delay_ms", 3);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/4/rate_hz", PROPERTY_HINT_RANGE, "0.1,20,0.1"), "set_voice_rate_hz", "get_voice_rate_hz", 3);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/4/depth_ms", PROPERTY_HINT_RANGE, "0,20,0.01"), "set_voice_depth_ms", "get_voice_depth_ms", 3);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/4/level_db", PROPERTY_HINT_RANGE, "-60,24,0.1"), "set_voice_level_db", "get_voice_level_db", 3);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/4/cutoff_hz", PROPERTY_HINT_RANGE, "1,20500,1"), "set_voice_cutoff_hz", "get_voice_cutoff_hz", 3);
-    ADD_PROPERTYI(PropertyInfo(Variant::REAL, "voice/4/pan", PROPERTY_HINT_RANGE, "-1,1,0.01"), "set_voice_pan", "get_voice_pan", 3);
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/4/delay_ms",
+            PROPERTY_HINT_RANGE,
+            "0,50,0.01"
+        ),
+        "set_voice_delay_ms",
+        "get_voice_delay_ms",
+        3
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/4/rate_hz",
+            PROPERTY_HINT_RANGE,
+            "0.1,20,0.1"
+        ),
+        "set_voice_rate_hz",
+        "get_voice_rate_hz",
+        3
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/4/depth_ms",
+            PROPERTY_HINT_RANGE,
+            "0,20,0.01"
+        ),
+        "set_voice_depth_ms",
+        "get_voice_depth_ms",
+        3
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/4/level_db",
+            PROPERTY_HINT_RANGE,
+            "-60,24,0.1"
+        ),
+        "set_voice_level_db",
+        "get_voice_level_db",
+        3
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/4/cutoff_hz",
+            PROPERTY_HINT_RANGE,
+            "1,20500,1"
+        ),
+        "set_voice_cutoff_hz",
+        "get_voice_cutoff_hz",
+        3
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(
+            Variant::REAL,
+            "voice/4/pan",
+            PROPERTY_HINT_RANGE,
+            "-1,1,0.01"
+        ),
+        "set_voice_pan",
+        "get_voice_pan",
+        3
+    );
 }
 
 AudioEffectChorus::AudioEffectChorus() {

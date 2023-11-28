@@ -46,8 +46,8 @@ void VisualServerWrapMT::thread_flush() {
     draw_pending.decrement();
 }
 
-void VisualServerWrapMT::_thread_callback(void *_instance) {
-    VisualServerWrapMT *vsmt = reinterpret_cast<VisualServerWrapMT *>(_instance);
+void VisualServerWrapMT::_thread_callback(void* _instance) {
+    VisualServerWrapMT* vsmt = reinterpret_cast<VisualServerWrapMT*>(_instance);
 
     vsmt->thread_loop();
 }
@@ -78,14 +78,19 @@ void VisualServerWrapMT::sync() {
         draw_pending.increment();
         command_queue.push_and_sync(this, &VisualServerWrapMT::thread_flush);
     } else {
-        command_queue.flush_all(); //flush all pending from other threads
+        command_queue.flush_all(); // flush all pending from other threads
     }
 }
 
 void VisualServerWrapMT::draw(bool p_swap_buffers, double frame_step) {
     if (create_thread) {
         draw_pending.increment();
-        command_queue.push(this, &VisualServerWrapMT::thread_draw, p_swap_buffers, frame_step);
+        command_queue.push(
+            this,
+            &VisualServerWrapMT::thread_draw,
+            p_swap_buffers,
+            frame_step
+        );
     } else {
         visual_server->draw(p_swap_buffers, frame_step);
     }
@@ -151,16 +156,22 @@ void VisualServerWrapMT::set_use_vsync_callback(bool p_enable) {
     singleton_mt->call_set_use_vsync(p_enable);
 }
 
-VisualServerWrapMT *VisualServerWrapMT::singleton_mt = nullptr;
+VisualServerWrapMT* VisualServerWrapMT::singleton_mt = nullptr;
 
-VisualServerWrapMT::VisualServerWrapMT(VisualServer *p_contained, bool p_create_thread) :
-        command_queue(p_create_thread) {
+VisualServerWrapMT::VisualServerWrapMT(
+    VisualServer* p_contained,
+    bool p_create_thread
+) :
+    command_queue(p_create_thread) {
     singleton_mt = this;
-    OS::switch_vsync_function = set_use_vsync_callback; //as this goes to another thread, make sure it goes properly
+    OS::switch_vsync_function =
+        set_use_vsync_callback; // as this goes to another thread, make sure it
+                                // goes properly
 
     visual_server = p_contained;
     create_thread = p_create_thread;
-    pool_max_size = GLOBAL_GET("memory/limits/multithreaded_server/rid_pool_prealloc");
+    pool_max_size =
+        GLOBAL_GET("memory/limits/multithreaded_server/rid_pool_prealloc");
 
     if (!p_create_thread) {
         server_thread = Thread::get_caller_id();
@@ -171,5 +182,5 @@ VisualServerWrapMT::VisualServerWrapMT(VisualServer *p_contained, bool p_create_
 
 VisualServerWrapMT::~VisualServerWrapMT() {
     memdelete(visual_server);
-    //finish();
+    // finish();
 }

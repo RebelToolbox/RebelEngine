@@ -33,7 +33,7 @@
 #include "drivers/png/image_loader_png.h"
 #include "drivers/png/resource_saver_png.h"
 
-static ImageLoaderPNG *image_loader_png;
+static ImageLoaderPNG* image_loader_png;
 static Ref<ResourceSaverPNG> resource_saver_png;
 
 void register_core_driver_types() {
@@ -53,8 +53,6 @@ void unregister_core_driver_types() {
     resource_saver_png.unref();
 }
 
-void register_driver_types() {
-}
+void register_driver_types() {}
 
-void unregister_driver_types() {
-}
+void unregister_driver_types() {}

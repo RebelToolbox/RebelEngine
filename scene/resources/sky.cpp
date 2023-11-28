@@ -44,11 +44,27 @@ Sky::RadianceSize Sky::get_radiance_size() const {
 }
 
 void Sky::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_radiance_size", "size"), &Sky::set_radiance_size);
-    ClassDB::bind_method(D_METHOD("get_radiance_size"), &Sky::get_radiance_size);
+    ClassDB::bind_method(
+        D_METHOD("set_radiance_size", "size"),
+        &Sky::set_radiance_size
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_radiance_size"),
+        &Sky::get_radiance_size
+    );
 
-    // Don't expose 1024 and 2048 in the property hint as these sizes will cause GPU hangs on many systems.
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "radiance_size", PROPERTY_HINT_ENUM, "32,64,128,256,512"), "set_radiance_size", "get_radiance_size");
+    // Don't expose 1024 and 2048 in the property hint as these sizes will cause
+    // GPU hangs on many systems.
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "radiance_size",
+            PROPERTY_HINT_ENUM,
+            "32,64,128,256,512"
+        ),
+        "set_radiance_size",
+        "get_radiance_size"
+    );
 
     BIND_ENUM_CONSTANT(RADIANCE_SIZE_32);
     BIND_ENUM_CONSTANT(RADIANCE_SIZE_64);
@@ -68,14 +84,17 @@ Sky::Sky() {
 
 void PanoramaSky::_radiance_changed() {
     if (panorama.is_valid()) {
-        static const int size[RADIANCE_SIZE_MAX] = {
-            32, 64, 128, 256, 512, 1024, 2048
-        };
-        VS::get_singleton()->sky_set_texture(sky, panorama->get_rid(), size[get_radiance_size()]);
+        static const int size[RADIANCE_SIZE_MAX] =
+            {32, 64, 128, 256, 512, 1024, 2048};
+        VS::get_singleton()->sky_set_texture(
+            sky,
+            panorama->get_rid(),
+            size[get_radiance_size()]
+        );
     }
 }
 
-void PanoramaSky::set_panorama(const Ref<Texture> &p_panorama) {
+void PanoramaSky::set_panorama(const Ref<Texture>& p_panorama) {
     panorama = p_panorama;
 
     if (panorama.is_valid()) {
@@ -95,10 +114,22 @@ RID PanoramaSky::get_rid() const {
 }
 
 void PanoramaSky::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_panorama", "texture"), &PanoramaSky::set_panorama);
+    ClassDB::bind_method(
+        D_METHOD("set_panorama", "texture"),
+        &PanoramaSky::set_panorama
+    );
     ClassDB::bind_method(D_METHOD("get_panorama"), &PanoramaSky::get_panorama);
 
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "panorama", PROPERTY_HINT_RESOURCE_TYPE, "Texture"), "set_panorama", "get_panorama");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "panorama",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Texture"
+        ),
+        "set_panorama",
+        "get_panorama"
+    );
 }
 
 PanoramaSky::PanoramaSky() {
@@ -108,17 +139,18 @@ PanoramaSky::PanoramaSky() {
 PanoramaSky::~PanoramaSky() {
     VS::get_singleton()->free(sky);
 }
+
 //////////////////////////////////
 
 void ProceduralSky::_radiance_changed() {
     if (update_queued) {
-        return; //do nothing yet
+        return; // do nothing yet
     }
 
-    static const int size[RADIANCE_SIZE_MAX] = {
-        32, 64, 128, 256, 512, 1024, 2048
-    };
-    VS::get_singleton()->sky_set_texture(sky, texture, size[get_radiance_size()]);
+    static const int size[RADIANCE_SIZE_MAX] =
+        {32, 64, 128, 256, 512, 1024, 2048};
+    VS::get_singleton()
+        ->sky_set_texture(sky, texture, size[get_radiance_size()]);
 }
 
 Ref<Image> ProceduralSky::_generate_sky() {
@@ -126,19 +158,17 @@ Ref<Image> ProceduralSky::_generate_sky() {
 
     PoolVector<uint8_t> imgdata;
 
-    static const int size[TEXTURE_SIZE_MAX] = {
-        256, 512, 1024, 2048, 4096
-    };
+    static const int size[TEXTURE_SIZE_MAX] = {256, 512, 1024, 2048, 4096};
 
     int w = size[texture_size];
     int h = w / 2;
 
-    imgdata.resize(w * h * 4); //RGBE
+    imgdata.resize(w * h * 4); // RGBE
 
     {
         PoolVector<uint8_t>::Write dataw = imgdata.write();
 
-        uint32_t *ptr = (uint32_t *)dataw.ptr();
+        uint32_t* ptr = (uint32_t*)dataw.ptr();
 
         Color sky_top_linear = sky_top_color.to_linear();
         Color sky_horizon_linear = sky_horizon_color.to_linear();
@@ -167,9 +197,10 @@ Ref<Image> ProceduralSky::_generate_sky() {
                 float theta = v * Math_PI;
 
                 Vector3 normal(
-                        Math::sin(phi) * Math::sin(theta) * -1.0,
-                        Math::cos(theta),
-                        Math::cos(phi) * Math::sin(theta) * -1.0);
+                    Math::sin(phi) * Math::sin(theta) * -1.0,
+                    Math::cos(theta),
+                    Math::cos(phi) * Math::sin(theta) * -1.0
+                );
 
                 normal.normalize();
 
@@ -178,29 +209,39 @@ Ref<Image> ProceduralSky::_generate_sky() {
                 Color color;
 
                 if (normal.y < 0) {
-                    //ground
+                    // ground
 
                     float c = (v_angle - (Math_PI * 0.5)) / (Math_PI * 0.5);
-                    color = ground_horizon_linear.linear_interpolate(ground_bottom_linear, Math::ease(c, ground_curve));
+                    color = ground_horizon_linear.linear_interpolate(
+                        ground_bottom_linear,
+                        Math::ease(c, ground_curve)
+                    );
                     color.r *= ground_energy;
                     color.g *= ground_energy;
                     color.b *= ground_energy;
                 } else {
                     float c = v_angle / (Math_PI * 0.5);
-                    color = sky_horizon_linear.linear_interpolate(sky_top_linear, Math::ease(1.0 - c, sky_curve));
+                    color = sky_horizon_linear.linear_interpolate(
+                        sky_top_linear,
+                        Math::ease(1.0 - c, sky_curve)
+                    );
                     color.r *= sky_energy;
                     color.g *= sky_energy;
                     color.b *= sky_energy;
 
-                    float sun_angle = Math::rad2deg(Math::acos(CLAMP(sun.dot(normal), -1.0, 1.0)));
+                    float sun_angle = Math::rad2deg(
+                        Math::acos(CLAMP(sun.dot(normal), -1.0, 1.0))
+                    );
 
                     if (sun_angle < sun_angle_min) {
                         color = color.blend(sun_linear);
                     } else if (sun_angle < sun_angle_max) {
-                        float c2 = (sun_angle - sun_angle_min) / (sun_angle_max - sun_angle_min);
+                        float c2 = (sun_angle - sun_angle_min)
+                                 / (sun_angle_max - sun_angle_min);
                         c2 = Math::ease(c2, sun_curve);
 
-                        color = color.blend(sun_linear).linear_interpolate(color, c2);
+                        color = color.blend(sun_linear)
+                                    .linear_interpolate(color, c2);
                     }
                 }
 
@@ -216,7 +257,7 @@ Ref<Image> ProceduralSky::_generate_sky() {
     return image;
 }
 
-void ProceduralSky::set_sky_top_color(const Color &p_sky_top) {
+void ProceduralSky::set_sky_top_color(const Color& p_sky_top) {
     sky_top_color = p_sky_top;
     _queue_update();
 }
@@ -225,10 +266,11 @@ Color ProceduralSky::get_sky_top_color() const {
     return sky_top_color;
 }
 
-void ProceduralSky::set_sky_horizon_color(const Color &p_sky_horizon) {
+void ProceduralSky::set_sky_horizon_color(const Color& p_sky_horizon) {
     sky_horizon_color = p_sky_horizon;
     _queue_update();
 }
+
 Color ProceduralSky::get_sky_horizon_color() const {
     return sky_horizon_color;
 }
@@ -237,6 +279,7 @@ void ProceduralSky::set_sky_curve(float p_curve) {
     sky_curve = p_curve;
     _queue_update();
 }
+
 float ProceduralSky::get_sky_curve() const {
     return sky_curve;
 }
@@ -245,22 +288,25 @@ void ProceduralSky::set_sky_energy(float p_energy) {
     sky_energy = p_energy;
     _queue_update();
 }
+
 float ProceduralSky::get_sky_energy() const {
     return sky_energy;
 }
 
-void ProceduralSky::set_ground_bottom_color(const Color &p_ground_bottom) {
+void ProceduralSky::set_ground_bottom_color(const Color& p_ground_bottom) {
     ground_bottom_color = p_ground_bottom;
     _queue_update();
 }
+
 Color ProceduralSky::get_ground_bottom_color() const {
     return ground_bottom_color;
 }
 
-void ProceduralSky::set_ground_horizon_color(const Color &p_ground_horizon) {
+void ProceduralSky::set_ground_horizon_color(const Color& p_ground_horizon) {
     ground_horizon_color = p_ground_horizon;
     _queue_update();
 }
+
 Color ProceduralSky::get_ground_horizon_color() const {
     return ground_horizon_color;
 }
@@ -269,6 +315,7 @@ void ProceduralSky::set_ground_curve(float p_curve) {
     ground_curve = p_curve;
     _queue_update();
 }
+
 float ProceduralSky::get_ground_curve() const {
     return ground_curve;
 }
@@ -277,14 +324,16 @@ void ProceduralSky::set_ground_energy(float p_energy) {
     ground_energy = p_energy;
     _queue_update();
 }
+
 float ProceduralSky::get_ground_energy() const {
     return ground_energy;
 }
 
-void ProceduralSky::set_sun_color(const Color &p_sun) {
+void ProceduralSky::set_sun_color(const Color& p_sun) {
     sun_color = p_sun;
     _queue_update();
 }
+
 Color ProceduralSky::get_sun_color() const {
     return sun_color;
 }
@@ -293,6 +342,7 @@ void ProceduralSky::set_sun_latitude(float p_angle) {
     sun_latitude = p_angle;
     _queue_update();
 }
+
 float ProceduralSky::get_sun_latitude() const {
     return sun_latitude;
 }
@@ -301,6 +351,7 @@ void ProceduralSky::set_sun_longitude(float p_angle) {
     sun_longitude = p_angle;
     _queue_update();
 }
+
 float ProceduralSky::get_sun_longitude() const {
     return sun_longitude;
 }
@@ -309,6 +360,7 @@ void ProceduralSky::set_sun_angle_min(float p_angle) {
     sun_angle_min = p_angle;
     _queue_update();
 }
+
 float ProceduralSky::get_sun_angle_min() const {
     return sun_angle_min;
 }
@@ -317,6 +369,7 @@ void ProceduralSky::set_sun_angle_max(float p_angle) {
     sun_angle_max = p_angle;
     _queue_update();
 }
+
 float ProceduralSky::get_sun_angle_max() const {
     return sun_angle_max;
 }
@@ -325,6 +378,7 @@ void ProceduralSky::set_sun_curve(float p_curve) {
     sun_curve = p_curve;
     _queue_update();
 }
+
 float ProceduralSky::get_sun_curve() const {
     return sun_curve;
 }
@@ -333,6 +387,7 @@ void ProceduralSky::set_sun_energy(float p_energy) {
     sun_energy = p_energy;
     _queue_update();
 }
+
 float ProceduralSky::get_sun_energy() const {
     return sun_energy;
 }
@@ -343,6 +398,7 @@ void ProceduralSky::set_texture_size(TextureSize p_size) {
     texture_size = p_size;
     _queue_update();
 }
+
 ProceduralSky::TextureSize ProceduralSky::get_texture_size() const {
     return texture_size;
 }
@@ -374,7 +430,15 @@ void ProceduralSky::_update_sky() {
 
     } else {
         panorama = _generate_sky();
-        VS::get_singleton()->texture_allocate(texture, panorama->get_width(), panorama->get_height(), 0, Image::FORMAT_RGBE9995, VS::TEXTURE_TYPE_2D, VS::TEXTURE_FLAG_FILTER | VS::TEXTURE_FLAG_REPEAT);
+        VS::get_singleton()->texture_allocate(
+            texture,
+            panorama->get_width(),
+            panorama->get_height(),
+            0,
+            Image::FORMAT_RGBE9995,
+            VS::TEXTURE_TYPE_2D,
+            VS::TEXTURE_FLAG_FILTER | VS::TEXTURE_FLAG_REPEAT
+        );
         VS::get_singleton()->texture_set_data(texture, panorama);
         _radiance_changed();
     }
@@ -389,11 +453,19 @@ void ProceduralSky::_queue_update() {
     call_deferred("_update_sky");
 }
 
-void ProceduralSky::_thread_done(const Ref<Image> &p_image) {
+void ProceduralSky::_thread_done(const Ref<Image>& p_image) {
     ERR_FAIL_COND(p_image.is_null());
 
     panorama = p_image;
-    VS::get_singleton()->texture_allocate(texture, panorama->get_width(), panorama->get_height(), 0, Image::FORMAT_RGBE9995, VS::TEXTURE_TYPE_2D, VS::TEXTURE_FLAG_FILTER | VS::TEXTURE_FLAG_REPEAT);
+    VS::get_singleton()->texture_allocate(
+        texture,
+        panorama->get_width(),
+        panorama->get_height(),
+        0,
+        Image::FORMAT_RGBE9995,
+        VS::TEXTURE_TYPE_2D,
+        VS::TEXTURE_FLAG_FILTER | VS::TEXTURE_FLAG_REPEAT
+    );
     VS::get_singleton()->texture_set_data(texture, panorama);
     _radiance_changed();
     sky_thread.wait_to_finish();
@@ -403,87 +475,290 @@ void ProceduralSky::_thread_done(const Ref<Image> &p_image) {
     }
 }
 
-void ProceduralSky::_thread_function(void *p_ud) {
-    ProceduralSky *psky = (ProceduralSky *)p_ud;
+void ProceduralSky::_thread_function(void* p_ud) {
+    ProceduralSky* psky = (ProceduralSky*)p_ud;
     psky->call_deferred("_thread_done", psky->_generate_sky());
 }
 
 void ProceduralSky::_bind_methods() {
     ClassDB::bind_method(D_METHOD("_update_sky"), &ProceduralSky::_update_sky);
 
-    ClassDB::bind_method(D_METHOD("set_sky_top_color", "color"), &ProceduralSky::set_sky_top_color);
-    ClassDB::bind_method(D_METHOD("get_sky_top_color"), &ProceduralSky::get_sky_top_color);
+    ClassDB::bind_method(
+        D_METHOD("set_sky_top_color", "color"),
+        &ProceduralSky::set_sky_top_color
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sky_top_color"),
+        &ProceduralSky::get_sky_top_color
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sky_horizon_color", "color"), &ProceduralSky::set_sky_horizon_color);
-    ClassDB::bind_method(D_METHOD("get_sky_horizon_color"), &ProceduralSky::get_sky_horizon_color);
+    ClassDB::bind_method(
+        D_METHOD("set_sky_horizon_color", "color"),
+        &ProceduralSky::set_sky_horizon_color
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sky_horizon_color"),
+        &ProceduralSky::get_sky_horizon_color
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sky_curve", "curve"), &ProceduralSky::set_sky_curve);
-    ClassDB::bind_method(D_METHOD("get_sky_curve"), &ProceduralSky::get_sky_curve);
+    ClassDB::bind_method(
+        D_METHOD("set_sky_curve", "curve"),
+        &ProceduralSky::set_sky_curve
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sky_curve"),
+        &ProceduralSky::get_sky_curve
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sky_energy", "energy"), &ProceduralSky::set_sky_energy);
-    ClassDB::bind_method(D_METHOD("get_sky_energy"), &ProceduralSky::get_sky_energy);
+    ClassDB::bind_method(
+        D_METHOD("set_sky_energy", "energy"),
+        &ProceduralSky::set_sky_energy
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sky_energy"),
+        &ProceduralSky::get_sky_energy
+    );
 
-    ClassDB::bind_method(D_METHOD("set_ground_bottom_color", "color"), &ProceduralSky::set_ground_bottom_color);
-    ClassDB::bind_method(D_METHOD("get_ground_bottom_color"), &ProceduralSky::get_ground_bottom_color);
+    ClassDB::bind_method(
+        D_METHOD("set_ground_bottom_color", "color"),
+        &ProceduralSky::set_ground_bottom_color
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_ground_bottom_color"),
+        &ProceduralSky::get_ground_bottom_color
+    );
 
-    ClassDB::bind_method(D_METHOD("set_ground_horizon_color", "color"), &ProceduralSky::set_ground_horizon_color);
-    ClassDB::bind_method(D_METHOD("get_ground_horizon_color"), &ProceduralSky::get_ground_horizon_color);
+    ClassDB::bind_method(
+        D_METHOD("set_ground_horizon_color", "color"),
+        &ProceduralSky::set_ground_horizon_color
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_ground_horizon_color"),
+        &ProceduralSky::get_ground_horizon_color
+    );
 
-    ClassDB::bind_method(D_METHOD("set_ground_curve", "curve"), &ProceduralSky::set_ground_curve);
-    ClassDB::bind_method(D_METHOD("get_ground_curve"), &ProceduralSky::get_ground_curve);
+    ClassDB::bind_method(
+        D_METHOD("set_ground_curve", "curve"),
+        &ProceduralSky::set_ground_curve
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_ground_curve"),
+        &ProceduralSky::get_ground_curve
+    );
 
-    ClassDB::bind_method(D_METHOD("set_ground_energy", "energy"), &ProceduralSky::set_ground_energy);
-    ClassDB::bind_method(D_METHOD("get_ground_energy"), &ProceduralSky::get_ground_energy);
+    ClassDB::bind_method(
+        D_METHOD("set_ground_energy", "energy"),
+        &ProceduralSky::set_ground_energy
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_ground_energy"),
+        &ProceduralSky::get_ground_energy
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sun_color", "color"), &ProceduralSky::set_sun_color);
-    ClassDB::bind_method(D_METHOD("get_sun_color"), &ProceduralSky::get_sun_color);
+    ClassDB::bind_method(
+        D_METHOD("set_sun_color", "color"),
+        &ProceduralSky::set_sun_color
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sun_color"),
+        &ProceduralSky::get_sun_color
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sun_latitude", "degrees"), &ProceduralSky::set_sun_latitude);
-    ClassDB::bind_method(D_METHOD("get_sun_latitude"), &ProceduralSky::get_sun_latitude);
+    ClassDB::bind_method(
+        D_METHOD("set_sun_latitude", "degrees"),
+        &ProceduralSky::set_sun_latitude
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sun_latitude"),
+        &ProceduralSky::get_sun_latitude
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sun_longitude", "degrees"), &ProceduralSky::set_sun_longitude);
-    ClassDB::bind_method(D_METHOD("get_sun_longitude"), &ProceduralSky::get_sun_longitude);
+    ClassDB::bind_method(
+        D_METHOD("set_sun_longitude", "degrees"),
+        &ProceduralSky::set_sun_longitude
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sun_longitude"),
+        &ProceduralSky::get_sun_longitude
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sun_angle_min", "degrees"), &ProceduralSky::set_sun_angle_min);
-    ClassDB::bind_method(D_METHOD("get_sun_angle_min"), &ProceduralSky::get_sun_angle_min);
+    ClassDB::bind_method(
+        D_METHOD("set_sun_angle_min", "degrees"),
+        &ProceduralSky::set_sun_angle_min
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sun_angle_min"),
+        &ProceduralSky::get_sun_angle_min
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sun_angle_max", "degrees"), &ProceduralSky::set_sun_angle_max);
-    ClassDB::bind_method(D_METHOD("get_sun_angle_max"), &ProceduralSky::get_sun_angle_max);
+    ClassDB::bind_method(
+        D_METHOD("set_sun_angle_max", "degrees"),
+        &ProceduralSky::set_sun_angle_max
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sun_angle_max"),
+        &ProceduralSky::get_sun_angle_max
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sun_curve", "curve"), &ProceduralSky::set_sun_curve);
-    ClassDB::bind_method(D_METHOD("get_sun_curve"), &ProceduralSky::get_sun_curve);
+    ClassDB::bind_method(
+        D_METHOD("set_sun_curve", "curve"),
+        &ProceduralSky::set_sun_curve
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sun_curve"),
+        &ProceduralSky::get_sun_curve
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sun_energy", "energy"), &ProceduralSky::set_sun_energy);
-    ClassDB::bind_method(D_METHOD("get_sun_energy"), &ProceduralSky::get_sun_energy);
+    ClassDB::bind_method(
+        D_METHOD("set_sun_energy", "energy"),
+        &ProceduralSky::set_sun_energy
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sun_energy"),
+        &ProceduralSky::get_sun_energy
+    );
 
-    ClassDB::bind_method(D_METHOD("set_texture_size", "size"), &ProceduralSky::set_texture_size);
-    ClassDB::bind_method(D_METHOD("get_texture_size"), &ProceduralSky::get_texture_size);
+    ClassDB::bind_method(
+        D_METHOD("set_texture_size", "size"),
+        &ProceduralSky::set_texture_size
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_texture_size"),
+        &ProceduralSky::get_texture_size
+    );
 
-    ClassDB::bind_method(D_METHOD("_thread_done", "image"), &ProceduralSky::_thread_done);
+    ClassDB::bind_method(
+        D_METHOD("_thread_done", "image"),
+        &ProceduralSky::_thread_done
+    );
 
     ADD_GROUP("Sky", "sky_");
-    ADD_PROPERTY(PropertyInfo(Variant::COLOR, "sky_top_color"), "set_sky_top_color", "get_sky_top_color");
-    ADD_PROPERTY(PropertyInfo(Variant::COLOR, "sky_horizon_color"), "set_sky_horizon_color", "get_sky_horizon_color");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "sky_curve", PROPERTY_HINT_EXP_EASING), "set_sky_curve", "get_sky_curve");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "sky_energy", PROPERTY_HINT_RANGE, "0,64,0.01"), "set_sky_energy", "get_sky_energy");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::COLOR, "sky_top_color"),
+        "set_sky_top_color",
+        "get_sky_top_color"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::COLOR, "sky_horizon_color"),
+        "set_sky_horizon_color",
+        "get_sky_horizon_color"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "sky_curve", PROPERTY_HINT_EXP_EASING),
+        "set_sky_curve",
+        "get_sky_curve"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "sky_energy",
+            PROPERTY_HINT_RANGE,
+            "0,64,0.01"
+        ),
+        "set_sky_energy",
+        "get_sky_energy"
+    );
 
     ADD_GROUP("Ground", "ground_");
-    ADD_PROPERTY(PropertyInfo(Variant::COLOR, "ground_bottom_color"), "set_ground_bottom_color", "get_ground_bottom_color");
-    ADD_PROPERTY(PropertyInfo(Variant::COLOR, "ground_horizon_color"), "set_ground_horizon_color", "get_ground_horizon_color");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "ground_curve", PROPERTY_HINT_EXP_EASING), "set_ground_curve", "get_ground_curve");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "ground_energy", PROPERTY_HINT_RANGE, "0,64,0.01"), "set_ground_energy", "get_ground_energy");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::COLOR, "ground_bottom_color"),
+        "set_ground_bottom_color",
+        "get_ground_bottom_color"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::COLOR, "ground_horizon_color"),
+        "set_ground_horizon_color",
+        "get_ground_horizon_color"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "ground_curve", PROPERTY_HINT_EXP_EASING),
+        "set_ground_curve",
+        "get_ground_curve"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "ground_energy",
+            PROPERTY_HINT_RANGE,
+            "0,64,0.01"
+        ),
+        "set_ground_energy",
+        "get_ground_energy"
+    );
 
     ADD_GROUP("Sun", "sun_");
-    ADD_PROPERTY(PropertyInfo(Variant::COLOR, "sun_color"), "set_sun_color", "get_sun_color");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "sun_latitude", PROPERTY_HINT_RANGE, "-180,180,0.01"), "set_sun_latitude", "get_sun_latitude");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "sun_longitude", PROPERTY_HINT_RANGE, "-180,180,0.01"), "set_sun_longitude", "get_sun_longitude");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "sun_angle_min", PROPERTY_HINT_RANGE, "0,360,0.01"), "set_sun_angle_min", "get_sun_angle_min");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "sun_angle_max", PROPERTY_HINT_RANGE, "0,360,0.01"), "set_sun_angle_max", "get_sun_angle_max");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "sun_curve", PROPERTY_HINT_EXP_EASING), "set_sun_curve", "get_sun_curve");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "sun_energy", PROPERTY_HINT_RANGE, "0,64,0.01"), "set_sun_energy", "get_sun_energy");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::COLOR, "sun_color"),
+        "set_sun_color",
+        "get_sun_color"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "sun_latitude",
+            PROPERTY_HINT_RANGE,
+            "-180,180,0.01"
+        ),
+        "set_sun_latitude",
+        "get_sun_latitude"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "sun_longitude",
+            PROPERTY_HINT_RANGE,
+            "-180,180,0.01"
+        ),
+        "set_sun_longitude",
+        "get_sun_longitude"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "sun_angle_min",
+            PROPERTY_HINT_RANGE,
+            "0,360,0.01"
+        ),
+        "set_sun_angle_min",
+        "get_sun_angle_min"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "sun_angle_max",
+            PROPERTY_HINT_RANGE,
+            "0,360,0.01"
+        ),
+        "set_sun_angle_max",
+        "get_sun_angle_max"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "sun_curve", PROPERTY_HINT_EXP_EASING),
+        "set_sun_curve",
+        "get_sun_curve"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "sun_energy",
+            PROPERTY_HINT_RANGE,
+            "0,64,0.01"
+        ),
+        "set_sun_energy",
+        "get_sun_energy"
+    );
 
     ADD_GROUP("Texture", "texture_");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "texture_size", PROPERTY_HINT_ENUM, "256,512,1024,2048,4096"), "set_texture_size", "get_texture_size");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "texture_size",
+            PROPERTY_HINT_ENUM,
+            "256,512,1024,2048,4096"
+        ),
+        "set_texture_size",
+        "get_texture_size"
+    );
 
     BIND_ENUM_CONSTANT(TEXTURE_SIZE_256);
     BIND_ENUM_CONSTANT(TEXTURE_SIZE_512);
@@ -510,9 +785,18 @@ ProceduralSky::ProceduralSky(bool p_desaturate) {
 
     if (p_desaturate) {
         sky_top_color.set_hsv(sky_top_color.get_h(), 0, sky_top_color.get_v());
-        sky_horizon_color.set_hsv(sky_horizon_color.get_h(), 0, sky_horizon_color.get_v());
-        ground_bottom_color.set_hsv(ground_bottom_color.get_h(), 0, ground_bottom_color.get_v());
-        ground_horizon_color.set_hsv(ground_horizon_color.get_h(), 0, ground_horizon_color.get_v());
+        sky_horizon_color
+            .set_hsv(sky_horizon_color.get_h(), 0, sky_horizon_color.get_v());
+        ground_bottom_color.set_hsv(
+            ground_bottom_color.get_h(),
+            0,
+            ground_bottom_color.get_v()
+        );
+        ground_horizon_color.set_hsv(
+            ground_horizon_color.get_h(),
+            0,
+            ground_horizon_color.get_v()
+        );
     }
     sun_color = Color(1, 1, 1);
     sun_latitude = 35;

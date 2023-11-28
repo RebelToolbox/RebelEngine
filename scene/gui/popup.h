@@ -40,7 +40,7 @@ class Popup : public Control {
     bool popped_up;
 
 private:
-    void _popup(const Rect2 &p_bounds = Rect2(), const bool p_centered = false);
+    void _popup(const Rect2& p_bounds = Rect2(), const bool p_centered = false);
 
 protected:
     virtual void _post_popup() {}
@@ -60,11 +60,14 @@ public:
     bool is_exclusive() const;
 
     void popup_centered_ratio(float p_screen_ratio = 0.75);
-    void popup_centered(const Size2 &p_size = Size2());
-    void popup_centered_minsize(const Size2 &p_minsize = Size2());
+    void popup_centered(const Size2& p_size = Size2());
+    void popup_centered_minsize(const Size2& p_minsize = Size2());
     void set_as_minsize();
-    void popup_centered_clamped(const Size2 &p_size = Size2(), float p_fallback_ratio = 0.75);
-    virtual void popup(const Rect2 &p_bounds = Rect2());
+    void popup_centered_clamped(
+        const Size2& p_size = Size2(),
+        float p_fallback_ratio = 0.75
+    );
+    virtual void popup(const Rect2& p_bounds = Rect2());
 
     virtual String get_configuration_warning() const;
 
@@ -80,7 +83,7 @@ protected:
     void _notification(int p_what);
 
 public:
-    void set_child_rect(Control *p_child);
+    void set_child_rect(Control* p_child);
     virtual Size2 get_minimum_size() const;
     PopupPanel();
 };

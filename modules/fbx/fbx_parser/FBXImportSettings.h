@@ -76,12 +76,27 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef FBX_IMPORT_SETTINGS_H
 #define FBX_IMPORT_SETTINGS_H
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
-/** FBX import settings, parts of which are publicly accessible via their corresponding AI_CONFIG constants */
+/** FBX import settings, parts of which are publicly accessible via their
+ * corresponding AI_CONFIG constants */
 struct ImportSettings {
     ImportSettings() :
-            strictMode(true), readAllLayers(true), readAllMaterials(true), readMaterials(true), readTextures(true), readCameras(true), readLights(true), readAnimations(true), readWeights(true), preservePivots(true), optimizeEmptyAnimationCurves(true), useLegacyEmbeddedTextureNaming(false), removeEmptyBones(true), convertToMeters(false) {
+        strictMode(true),
+        readAllLayers(true),
+        readAllMaterials(true),
+        readMaterials(true),
+        readTextures(true),
+        readCameras(true),
+        readLights(true),
+        readAnimations(true),
+        readWeights(true),
+        preservePivots(true),
+        optimizeEmptyAnimationCurves(true),
+        useLegacyEmbeddedTextureNaming(false),
+        removeEmptyBones(true),
+        convertToMeters(false) {
         // empty
     }
 

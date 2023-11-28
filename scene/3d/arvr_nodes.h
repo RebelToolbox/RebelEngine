@@ -41,7 +41,8 @@
 **/
 
 /*
-    ARVRCamera is a subclass of camera which will register itself with its parent ARVROrigin and as a result is automatically positioned
+    ARVRCamera is a subclass of camera which will register itself with its
+   parent ARVROrigin and as a result is automatically positioned
 */
 class ARVRCamera : public Camera {
     GDCLASS(ARVRCamera, Camera);
@@ -52,9 +53,10 @@ protected:
 public:
     String get_configuration_warning() const;
 
-    virtual Vector3 project_local_ray_normal(const Point2 &p_pos) const;
-    virtual Point2 unproject_position(const Vector3 &p_pos) const;
-    virtual Vector3 project_position(const Point2 &p_point, float p_z_depth) const;
+    virtual Vector3 project_local_ray_normal(const Point2& p_pos) const;
+    virtual Point2 unproject_position(const Vector3& p_pos) const;
+    virtual Vector3 project_position(const Point2& p_point, float p_z_depth)
+        const;
     virtual Vector<Plane> get_frustum() const;
 
     ARVRCamera();
@@ -62,7 +64,8 @@ public:
 };
 
 /*
-    ARVRController is a helper node that automatically updates its position based on tracker data.
+    ARVRController is a helper node that automatically updates its position
+   based on tracker data.
 
     It must be a child node of our ARVROrigin node
 */
@@ -104,8 +107,9 @@ public:
 };
 
 /*
-    ARVRAnchor is a helper node that automatically updates its position based on anchor data, it represents a real world location.
-    It must be a child node of our ARVROrigin node
+    ARVRAnchor is a helper node that automatically updates its position based on
+   anchor data, it represents a real world location. It must be a child node of
+   our ARVROrigin node
 */
 
 class ARVRAnchor : public Spatial {
@@ -140,18 +144,23 @@ public:
 };
 
 /*
-    ARVROrigin is special spatial node that acts as our origin point mapping our real world center of our tracking volume into our virtual world.
+    ARVROrigin is special spatial node that acts as our origin point mapping our
+   real world center of our tracking volume into our virtual world.
 
-    It is this point that you will move around the world as the player 'moves while standing still', i.e. the player moves through teleporting or controller inputs as opposed to physically moving.
+    It is this point that you will move around the world as the player 'moves
+   while standing still', i.e. the player moves through teleporting or
+   controller inputs as opposed to physically moving.
 
-    Our camera and controllers will always be child nodes and thus place relative to this origin point.
-    This node will automatically locate any camera child nodes and update its position while our ARVRController node will handle tracked controllers.
+    Our camera and controllers will always be child nodes and thus place
+   relative to this origin point. This node will automatically locate any camera
+   child nodes and update its position while our ARVRController node will handle
+   tracked controllers.
 */
 class ARVROrigin : public Spatial {
     GDCLASS(ARVROrigin, Spatial);
 
 private:
-    ARVRCamera *tracked_camera;
+    ARVRCamera* tracked_camera;
 
 protected:
     void _notification(int p_what);
@@ -160,8 +169,8 @@ protected:
 public:
     String get_configuration_warning() const;
 
-    void set_tracked_camera(ARVRCamera *p_tracked_camera);
-    void clear_tracked_camera_if(ARVRCamera *p_tracked_camera);
+    void set_tracked_camera(ARVRCamera* p_tracked_camera);
+    void clear_tracked_camera_if(ARVRCamera* p_tracked_camera);
 
     float get_world_scale() const;
     void set_world_scale(float p_world_scale);

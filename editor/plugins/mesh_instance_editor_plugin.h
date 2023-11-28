@@ -40,7 +40,6 @@ class MeshInstanceEditor : public Control {
     GDCLASS(MeshInstanceEditor, Control);
 
     enum Menu {
-
         MENU_OPTION_CREATE_STATIC_TRIMESH_BODY,
         MENU_OPTION_CREATE_TRIMESH_COLLISION_SHAPE,
         MENU_OPTION_CREATE_SINGLE_CONVEX_COLLISION_SHAPE,
@@ -53,17 +52,17 @@ class MeshInstanceEditor : public Control {
         MENU_OPTION_DEBUG_UV2,
     };
 
-    MeshInstance *node;
+    MeshInstance* node;
 
-    MenuButton *options;
+    MenuButton* options;
 
-    ConfirmationDialog *outline_dialog;
-    SpinBox *outline_size;
+    ConfirmationDialog* outline_dialog;
+    SpinBox* outline_size;
 
-    AcceptDialog *err_dialog;
+    AcceptDialog* err_dialog;
 
-    AcceptDialog *debug_uv_dialog;
-    Control *debug_uv;
+    AcceptDialog* debug_uv_dialog;
+    Control* debug_uv;
     Vector<Vector2> uv_lines;
 
     void _menu_option(int p_option);
@@ -75,28 +74,34 @@ class MeshInstanceEditor : public Control {
     void _debug_uv_draw();
 
 protected:
-    void _node_removed(Node *p_node);
+    void _node_removed(Node* p_node);
     static void _bind_methods();
 
 public:
-    void edit(MeshInstance *p_mesh);
+    void edit(MeshInstance* p_mesh);
     MeshInstanceEditor();
 };
 
 class MeshInstanceEditorPlugin : public EditorPlugin {
     GDCLASS(MeshInstanceEditorPlugin, EditorPlugin);
 
-    MeshInstanceEditor *mesh_editor;
-    EditorNode *editor;
+    MeshInstanceEditor* mesh_editor;
+    EditorNode* editor;
 
 public:
-    virtual String get_name() const { return "MeshInstance"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual String get_name() const {
+        return "MeshInstance";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
 
-    MeshInstanceEditorPlugin(EditorNode *p_node);
+    MeshInstanceEditorPlugin(EditorNode* p_node);
     ~MeshInstanceEditorPlugin();
 };
 

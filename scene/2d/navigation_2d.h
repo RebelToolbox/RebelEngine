@@ -44,20 +44,24 @@ class Navigation2D : public Node2D {
         };
 
         uint64_t key;
-        bool operator<(const Point &p_key) const { return key < p_key.key; }
+
+        bool operator<(const Point& p_key) const {
+            return key < p_key.key;
+        }
     };
 
     struct EdgeKey {
         Point a;
         Point b;
 
-        bool operator<(const EdgeKey &p_key) const {
-            return (a.key == p_key.a.key) ? (b.key < p_key.b.key) : (a.key < p_key.a.key);
+        bool operator<(const EdgeKey& p_key) const {
+            return (a.key == p_key.a.key) ? (b.key < p_key.b.key)
+                                          : (a.key < p_key.a.key);
         };
 
-        EdgeKey(const Point &p_a = Point(), const Point &p_b = Point()) :
-                a(p_a),
-                b(p_b) {
+        EdgeKey(const Point& p_a = Point(), const Point& p_b = Point()) :
+            a(p_a),
+            b(p_b) {
             if (a.key > b.key) {
                 SWAP(a, b);
             }
@@ -68,16 +72,17 @@ class Navigation2D : public Node2D {
     struct Polygon;
 
     struct ConnectionPending {
-        Polygon *polygon;
+        Polygon* polygon;
         int edge;
     };
 
     struct Polygon {
         struct Edge {
             Point point;
-            Polygon *C; //connection
+            Polygon* C; // connection
             int C_edge;
-            List<ConnectionPending>::Element *P;
+            List<ConnectionPending>::Element* P;
+
             Edge() {
                 C = nullptr;
                 C_edge = -1;
@@ -95,13 +100,13 @@ class Navigation2D : public Node2D {
 
         bool clockwise;
 
-        NavMesh *owner;
+        NavMesh* owner;
     };
 
     struct Connection {
-        Polygon *A;
+        Polygon* A;
         int A_edge;
-        Polygon *B;
+        Polygon* B;
         int B_edge;
 
         List<ConnectionPending> pending;
@@ -117,14 +122,14 @@ class Navigation2D : public Node2D {
     Map<EdgeKey, Connection> connections;
 
     struct NavMesh {
-        Object *owner;
+        Object* owner;
         Transform2D xform;
         bool linked;
         Ref<NavigationPolygon> navpoly;
         List<Polygon> polygons;
     };
 
-    _FORCE_INLINE_ Point _get_point(const Vector2 &p_pos) const {
+    _FORCE_INLINE_ Point _get_point(const Vector2& p_pos) const {
         int x = int(Math::floor(p_pos.x / cell_size));
         int y = int(Math::floor(p_pos.y / cell_size));
 
@@ -135,7 +140,7 @@ class Navigation2D : public Node2D {
         return p;
     }
 
-    _FORCE_INLINE_ Vector2 _get_vertex(const Point &p_point) const {
+    _FORCE_INLINE_ Vector2 _get_vertex(const Point& p_point) const {
         return Vector2(p_point.x, p_point.y) * cell_size;
     }
 
@@ -150,14 +155,22 @@ protected:
     static void _bind_methods();
 
 public:
-    //API should be as dynamic as possible
-    int navpoly_add(const Ref<NavigationPolygon> &p_mesh, const Transform2D &p_xform, Object *p_owner = nullptr);
-    void navpoly_set_transform(int p_id, const Transform2D &p_xform);
+    // API should be as dynamic as possible
+    int navpoly_add(
+        const Ref<NavigationPolygon>& p_mesh,
+        const Transform2D& p_xform,
+        Object* p_owner = nullptr
+    );
+    void navpoly_set_transform(int p_id, const Transform2D& p_xform);
     void navpoly_remove(int p_id);
 
-    Vector<Vector2> get_simple_path(const Vector2 &p_start, const Vector2 &p_end, bool p_optimize = true);
-    Vector2 get_closest_point(const Vector2 &p_point);
-    Object *get_closest_point_owner(const Vector2 &p_point);
+    Vector<Vector2> get_simple_path(
+        const Vector2& p_start,
+        const Vector2& p_end,
+        bool p_optimize = true
+    );
+    Vector2 get_closest_point(const Vector2& p_point);
+    Object* get_closest_point_owner(const Vector2& p_point);
 
     Navigation2D();
 };

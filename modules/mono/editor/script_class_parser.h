@@ -85,21 +85,21 @@ private:
         TK_MAX
     };
 
-    static const char *token_names[TK_MAX];
+    static const char* token_names[TK_MAX];
     static String get_token_name(Token p_token);
 
     Token get_token();
 
     Error _skip_generic_type_params();
 
-    Error _parse_type_full_name(String &r_full_name);
-    Error _parse_class_base(Vector<String> &r_base);
+    Error _parse_type_full_name(String& r_full_name);
+    Error _parse_class_base(Vector<String>& r_base);
     Error _parse_type_constraints();
-    Error _parse_namespace_name(String &r_name, int &r_curly_stack);
+    Error _parse_namespace_name(String& r_name, int& r_curly_stack);
 
 public:
-    Error parse(const String &p_code);
-    Error parse_file(const String &p_filepath);
+    Error parse(const String& p_code);
+    Error parse_file(const String& p_filepath);
 
     String get_error();
 

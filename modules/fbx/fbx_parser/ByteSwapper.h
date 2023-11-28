@@ -79,12 +79,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <algorithm>
 #include <locale>
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 // --------------------------------------------------------------------------------------
 /** Defines some useful byte order swap routines.
  *
  * This is required to read big-endian model formats on little-endian machines,
- * and vice versa. Direct use of this class is DEPRECATED. Use #StreamReader instead. */
+ * and vice versa. Direct use of this class is DEPRECATED. Use #StreamReader
+ * instead. */
 // --------------------------------------------------------------------------------------
 class ByteSwap {
     ByteSwap() {}
@@ -93,16 +95,16 @@ public:
     // ----------------------------------------------------------------------
     /** Swap two bytes of data
      *  @param[inout] _szOut A void* to save the reintcasts for the caller. */
-    static inline void Swap2(void *_szOut) {
-        uint8_t *const szOut = reinterpret_cast<uint8_t *>(_szOut);
+    static inline void Swap2(void* _szOut) {
+        uint8_t* const szOut = reinterpret_cast<uint8_t*>(_szOut);
         std::swap(szOut[0], szOut[1]);
     }
 
     // ----------------------------------------------------------------------
     /** Swap four bytes of data
      *  @param[inout] _szOut A void* to save the reintcasts for the caller. */
-    static inline void Swap4(void *_szOut) {
-        uint8_t *const szOut = reinterpret_cast<uint8_t *>(_szOut);
+    static inline void Swap4(void* _szOut) {
+        uint8_t* const szOut = reinterpret_cast<uint8_t*>(_szOut);
         std::swap(szOut[0], szOut[3]);
         std::swap(szOut[1], szOut[2]);
     }
@@ -110,8 +112,8 @@ public:
     // ----------------------------------------------------------------------
     /** Swap eight bytes of data
      *  @param[inout] _szOut A void* to save the reintcasts for the caller. */
-    static inline void Swap8(void *_szOut) {
-        uint8_t *const szOut = reinterpret_cast<uint8_t *>(_szOut);
+    static inline void Swap8(void* _szOut) {
+        uint8_t* const szOut = reinterpret_cast<uint8_t*>(_szOut);
         std::swap(szOut[0], szOut[7]);
         std::swap(szOut[1], szOut[6]);
         std::swap(szOut[2], szOut[5]);
@@ -121,47 +123,47 @@ public:
     // ----------------------------------------------------------------------
     /** ByteSwap a float. Not a joke.
      *  @param[inout] fOut ehm. .. */
-    static inline void Swap(float *fOut) {
+    static inline void Swap(float* fOut) {
         Swap4(fOut);
     }
 
     // ----------------------------------------------------------------------
     /** ByteSwap a double. Not a joke.
      *  @param[inout] fOut ehm. .. */
-    static inline void Swap(double *fOut) {
+    static inline void Swap(double* fOut) {
         Swap8(fOut);
     }
 
     // ----------------------------------------------------------------------
     /** ByteSwap an int16t. Not a joke.
      *  @param[inout] fOut ehm. .. */
-    static inline void Swap(int16_t *fOut) {
+    static inline void Swap(int16_t* fOut) {
         Swap2(fOut);
     }
 
-    static inline void Swap(uint16_t *fOut) {
+    static inline void Swap(uint16_t* fOut) {
         Swap2(fOut);
     }
 
     // ----------------------------------------------------------------------
     /** ByteSwap an int32t. Not a joke.
      *  @param[inout] fOut ehm. .. */
-    static inline void Swap(int32_t *fOut) {
+    static inline void Swap(int32_t* fOut) {
         Swap4(fOut);
     }
 
-    static inline void Swap(uint32_t *fOut) {
+    static inline void Swap(uint32_t* fOut) {
         Swap4(fOut);
     }
 
     // ----------------------------------------------------------------------
     /** ByteSwap an int64t. Not a joke.
      *  @param[inout] fOut ehm. .. */
-    static inline void Swap(int64_t *fOut) {
+    static inline void Swap(int64_t* fOut) {
         Swap8(fOut);
     }
 
-    static inline void Swap(uint64_t *fOut) {
+    static inline void Swap(uint64_t* fOut) {
         Swap8(fOut);
     }
 
@@ -241,26 +243,26 @@ struct ByteSwap::_swapper<T, 8> {
 #define LE_NCONST
 #endif
 
-namespace Intern {
+namespace Intern
+{
 
 // --------------------------------------------------------------------------------------------
 template <typename T, bool doit>
 struct ByteSwapper {
-    void operator()(T *inout) {
+    void operator()(T* inout) {
         ByteSwap::Swap(inout);
     }
 };
 
 template <typename T>
 struct ByteSwapper<T, false> {
-    void operator()(T *) {
-    }
+    void operator()(T*) {}
 };
 
 // --------------------------------------------------------------------------------------------
 template <bool SwapEndianess, typename T, bool RuntimeSwitch>
 struct Getter {
-    void operator()(T *inout, bool le) {
+    void operator()(T* inout, bool le) {
         le = !le;
         if (le) {
             ByteSwapper<T, (sizeof(T) > 1 ? true : false)>()(inout);
@@ -272,7 +274,7 @@ struct Getter {
 
 template <bool SwapEndianess, typename T>
 struct Getter<SwapEndianess, T, false> {
-    void operator()(T *inout, bool /*le*/) {
+    void operator()(T* inout, bool /*le*/) {
         // static branch
         ByteSwapper<T, (SwapEndianess && sizeof(T) > 1)>()(inout);
     }

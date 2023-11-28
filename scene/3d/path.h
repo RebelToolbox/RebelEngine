@@ -46,7 +46,7 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_curve(const Ref<Curve3D> &p_curve);
+    void set_curve(const Ref<Curve3D>& p_curve);
     Ref<Curve3D> get_curve() const;
 
     Path();
@@ -57,7 +57,6 @@ class PathFollow : public Spatial {
 
 public:
     enum RotationMode {
-
         ROTATION_NONE,
         ROTATION_Y,
         ROTATION_XY,
@@ -66,7 +65,7 @@ public:
     };
 
 private:
-    Path *path;
+    Path* path;
     real_t delta_offset; // change in offset since last _update_transform
     real_t offset;
     real_t h_offset;
@@ -78,7 +77,7 @@ private:
     void _update_transform(bool p_update_xyz_rot = true);
 
 protected:
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
     void _notification(int p_what);
     static void _bind_methods();

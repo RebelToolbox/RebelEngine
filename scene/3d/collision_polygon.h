@@ -35,6 +35,7 @@
 #include "scene/resources/shape.h"
 
 class CollisionObject;
+
 class CollisionPolygon : public Spatial {
     GDCLASS(CollisionPolygon, Spatial);
     real_t margin = 0.04;
@@ -45,7 +46,7 @@ protected:
     Vector<Point2> polygon;
 
     uint32_t owner_id;
-    CollisionObject *parent;
+    CollisionObject* parent;
 
     bool disabled;
 
@@ -63,7 +64,7 @@ public:
     void set_depth(float p_depth);
     float get_depth() const;
 
-    void set_polygon(const Vector<Point2> &p_polygon);
+    void set_polygon(const Vector<Point2>& p_polygon);
     Vector<Point2> get_polygon() const;
 
     void set_disabled(bool p_disabled);

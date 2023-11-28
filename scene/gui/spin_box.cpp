@@ -39,7 +39,8 @@ Size2 SpinBox::get_minimum_size() const {
 }
 
 void SpinBox::_value_changed(double) {
-    String value = String::num(get_value(), Math::range_step_decimals(get_step()));
+    String value =
+        String::num(get_value(), Math::range_step_decimals(get_step()));
     if (prefix != "") {
         value = prefix + " " + value;
     }
@@ -49,11 +50,13 @@ void SpinBox::_value_changed(double) {
     line_edit->set_text(value);
 }
 
-void SpinBox::_text_entered(const String &p_string) {
+void SpinBox::_text_entered(const String& p_string) {
     Ref<Expression> expr;
     expr.instance();
     // Ignore the prefix and suffix in the expression
-    Error err = expr->parse(p_string.trim_prefix(prefix + " ").trim_suffix(" " + suffix));
+    Error err =
+        expr->parse(p_string.trim_prefix(prefix + " ").trim_suffix(" " + suffix)
+        );
     if (err != OK) {
         return;
     }
@@ -65,15 +68,15 @@ void SpinBox::_text_entered(const String &p_string) {
     _value_changed(0);
 }
 
-LineEdit *SpinBox::get_line_edit() {
+LineEdit* SpinBox::get_line_edit() {
     return line_edit;
 }
 
-void SpinBox::_line_edit_input(const Ref<InputEvent> &p_event) {
-}
+void SpinBox::_line_edit_input(const Ref<InputEvent>& p_event) {}
 
 void SpinBox::_range_click_timeout() {
-    if (!drag.enabled && Input::get_singleton()->is_mouse_button_pressed(BUTTON_LEFT)) {
+    if (!drag.enabled
+        && Input::get_singleton()->is_mouse_button_pressed(BUTTON_LEFT)) {
         bool up = get_local_mouse_position().y < (get_size().height / 2);
         set_value(get_value() + (up ? get_step() : -get_step()));
 
@@ -96,7 +99,7 @@ void SpinBox::_release_mouse() {
     }
 }
 
-void SpinBox::_gui_input(const Ref<InputEvent> &p_event) {
+void SpinBox::_gui_input(const Ref<InputEvent>& p_event) {
     if (!is_editable()) {
         return;
     }
@@ -138,8 +141,9 @@ void SpinBox::_gui_input(const Ref<InputEvent> &p_event) {
         }
     }
 
-    if (mb.is_valid() && !mb->is_pressed() && mb->get_button_index() == BUTTON_LEFT) {
-        //set_default_cursor_shape(CURSOR_ARROW);
+    if (mb.is_valid() && !mb->is_pressed()
+        && mb->get_button_index() == BUTTON_LEFT) {
+        // set_default_cursor_shape(CURSOR_ARROW);
         range_click_timer->stop();
         _release_mouse();
         drag.allowed = false;
@@ -150,8 +154,11 @@ void SpinBox::_gui_input(const Ref<InputEvent> &p_event) {
     if (mm.is_valid() && mm->get_button_mask() & BUTTON_MASK_LEFT) {
         if (drag.enabled) {
             drag.diff_y += mm->get_relative().y;
-            float diff_y = -0.01 * Math::pow(ABS(drag.diff_y), 1.8f) * SGN(drag.diff_y);
-            set_value(CLAMP(drag.base_val + get_step() * diff_y, get_min(), get_max()));
+            float diff_y =
+                -0.01 * Math::pow(ABS(drag.diff_y), 1.8f) * SGN(drag.diff_y);
+            set_value(
+                CLAMP(drag.base_val + get_step() * diff_y, get_min(), get_max())
+            );
         } else if (drag.allowed && drag.capture_pos.distance_to(mm->get_position()) > 2) {
             Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
             drag.enabled = true;
@@ -170,7 +177,7 @@ void SpinBox::_line_edit_focus_exit() {
     _text_entered(line_edit->get_text());
 }
 
-inline void SpinBox::_adjust_width_for_icon(const Ref<Texture> &icon) {
+inline void SpinBox::_adjust_width_for_icon(const Ref<Texture>& icon) {
     int w = icon->get_width();
     if (w != last_w) {
         line_edit->set_margin(MARGIN_RIGHT, -w);
@@ -187,7 +194,13 @@ void SpinBox::_notification(int p_what) {
         RID ci = get_canvas_item();
         Size2i size = get_size();
 
-        updown->draw(ci, Point2i(size.width - updown->get_width(), (size.height - updown->get_height()) / 2));
+        updown->draw(
+            ci,
+            Point2i(
+                size.width - updown->get_width(),
+                (size.height - updown->get_height()) / 2
+            )
+        );
 
     } else if (p_what == NOTIFICATION_FOCUS_EXIT) {
         //_value_changed(0);
@@ -210,7 +223,7 @@ LineEdit::Align SpinBox::get_align() const {
     return line_edit->get_align();
 }
 
-void SpinBox::set_suffix(const String &p_suffix) {
+void SpinBox::set_suffix(const String& p_suffix) {
     suffix = p_suffix;
     _value_changed(0);
 }
@@ -219,7 +232,7 @@ String SpinBox::get_suffix() const {
     return suffix;
 }
 
-void SpinBox::set_prefix(const String &p_prefix) {
+void SpinBox::set_prefix(const String& p_prefix) {
     prefix = p_prefix;
     _value_changed(0);
 }
@@ -241,27 +254,66 @@ void SpinBox::apply() {
 }
 
 void SpinBox::_bind_methods() {
-    //ClassDB::bind_method(D_METHOD("_value_changed"),&SpinBox::_value_changed);
+    // ClassDB::bind_method(D_METHOD("_value_changed"),&SpinBox::_value_changed);
     ClassDB::bind_method(D_METHOD("_gui_input"), &SpinBox::_gui_input);
     ClassDB::bind_method(D_METHOD("_text_entered"), &SpinBox::_text_entered);
     ClassDB::bind_method(D_METHOD("set_align", "align"), &SpinBox::set_align);
     ClassDB::bind_method(D_METHOD("get_align"), &SpinBox::get_align);
-    ClassDB::bind_method(D_METHOD("set_suffix", "suffix"), &SpinBox::set_suffix);
+    ClassDB::bind_method(
+        D_METHOD("set_suffix", "suffix"),
+        &SpinBox::set_suffix
+    );
     ClassDB::bind_method(D_METHOD("get_suffix"), &SpinBox::get_suffix);
-    ClassDB::bind_method(D_METHOD("set_prefix", "prefix"), &SpinBox::set_prefix);
+    ClassDB::bind_method(
+        D_METHOD("set_prefix", "prefix"),
+        &SpinBox::set_prefix
+    );
     ClassDB::bind_method(D_METHOD("get_prefix"), &SpinBox::get_prefix);
-    ClassDB::bind_method(D_METHOD("set_editable", "editable"), &SpinBox::set_editable);
+    ClassDB::bind_method(
+        D_METHOD("set_editable", "editable"),
+        &SpinBox::set_editable
+    );
     ClassDB::bind_method(D_METHOD("is_editable"), &SpinBox::is_editable);
     ClassDB::bind_method(D_METHOD("apply"), &SpinBox::apply);
-    ClassDB::bind_method(D_METHOD("_line_edit_focus_exit"), &SpinBox::_line_edit_focus_exit);
+    ClassDB::bind_method(
+        D_METHOD("_line_edit_focus_exit"),
+        &SpinBox::_line_edit_focus_exit
+    );
     ClassDB::bind_method(D_METHOD("get_line_edit"), &SpinBox::get_line_edit);
-    ClassDB::bind_method(D_METHOD("_line_edit_input"), &SpinBox::_line_edit_input);
-    ClassDB::bind_method(D_METHOD("_range_click_timeout"), &SpinBox::_range_click_timeout);
+    ClassDB::bind_method(
+        D_METHOD("_line_edit_input"),
+        &SpinBox::_line_edit_input
+    );
+    ClassDB::bind_method(
+        D_METHOD("_range_click_timeout"),
+        &SpinBox::_range_click_timeout
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "align", PROPERTY_HINT_ENUM, "Left,Center,Right,Fill"), "set_align", "get_align");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "editable"), "set_editable", "is_editable");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "prefix"), "set_prefix", "get_prefix");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "suffix"), "set_suffix", "get_suffix");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "align",
+            PROPERTY_HINT_ENUM,
+            "Left,Center,Right,Fill"
+        ),
+        "set_align",
+        "get_align"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "editable"),
+        "set_editable",
+        "is_editable"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "prefix"),
+        "set_prefix",
+        "get_prefix"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "suffix"),
+        "set_suffix",
+        "get_suffix"
+    );
 }
 
 SpinBox::SpinBox() {
@@ -271,9 +323,21 @@ SpinBox::SpinBox() {
 
     line_edit->set_anchors_and_margins_preset(Control::PRESET_WIDE);
     line_edit->set_mouse_filter(MOUSE_FILTER_PASS);
-    //connect("value_changed",this,"_value_changed");
-    line_edit->connect("text_entered", this, "_text_entered", Vector<Variant>(), CONNECT_DEFERRED);
-    line_edit->connect("focus_exited", this, "_line_edit_focus_exit", Vector<Variant>(), CONNECT_DEFERRED);
+    // connect("value_changed",this,"_value_changed");
+    line_edit->connect(
+        "text_entered",
+        this,
+        "_text_entered",
+        Vector<Variant>(),
+        CONNECT_DEFERRED
+    );
+    line_edit->connect(
+        "focus_exited",
+        this,
+        "_line_edit_focus_exit",
+        Vector<Variant>(),
+        CONNECT_DEFERRED
+    );
     line_edit->connect("gui_input", this, "_line_edit_input");
 
     range_click_timer = memnew(Timer);

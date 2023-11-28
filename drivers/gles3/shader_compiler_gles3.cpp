@@ -85,7 +85,7 @@ static int _get_datatype_size(SL::DataType p_type) {
         case SL::TYPE_VEC4:
             return 16;
         case SL::TYPE_MAT2:
-            return 32; //4 * 4 + 4 * 4
+            return 32; // 4 * 4 + 4 * 4
         case SL::TYPE_MAT3:
             return 48; // 4 * 4 + 4 * 4 + 4 * 4
         case SL::TYPE_MAT4:
@@ -189,6 +189,7 @@ static int _get_datatype_alignment(SL::DataType p_type) {
 
     ERR_FAIL_V(0);
 }
+
 static String _interpstr(SL::DataInterpolation p_interp) {
     switch (p_interp) {
         case SL::INTERPOLATION_FLAT:
@@ -229,9 +230,9 @@ static String _opstr(SL::Operator p_op) {
     return SL::get_operator_text(p_op);
 }
 
-static String _mkid(const String &p_id) {
+static String _mkid(const String& p_id) {
     String id = "m_" + p_id.replace("__", "_dus_");
-    return id.replace("__", "_dus_"); //doubleunderscore is reserved in glsl
+    return id.replace("__", "_dus_"); // doubleunderscore is reserved in glsl
 }
 
 static String f2sp0(float p_float) {
@@ -242,7 +243,10 @@ static String f2sp0(float p_float) {
     return num;
 }
 
-static String get_constant_text(SL::DataType p_type, const Vector<SL::ConstantNode::Value> &p_values) {
+static String get_constant_text(
+    SL::DataType p_type,
+    const Vector<SL::ConstantNode::Value>& p_values
+) {
     switch (p_type) {
         case SL::TYPE_BOOL:
             return p_values[0].boolean ? "true" : "false";
@@ -331,7 +335,13 @@ static String get_constant_text(SL::DataType p_type, const Vector<SL::ConstantNo
     }
 }
 
-void ShaderCompilerGLES3::_dump_function_deps(const SL::ShaderNode *p_node, const StringName &p_for_func, const Map<StringName, String> &p_func_code, String &r_to_add, Set<StringName> &added) {
+void ShaderCompilerGLES3::_dump_function_deps(
+    const SL::ShaderNode* p_node,
+    const StringName& p_for_func,
+    const Map<StringName, String>& p_func_code,
+    String& r_to_add,
+    Set<StringName>& added
+) {
     int fidx = -1;
 
     for (int i = 0; i < p_node->functions.size(); i++) {
@@ -343,14 +353,17 @@ void ShaderCompilerGLES3::_dump_function_deps(const SL::ShaderNode *p_node, cons
 
     ERR_FAIL_COND(fidx == -1);
 
-    for (Set<StringName>::Element *E = p_node->functions[fidx].uses_function.front(); E; E = E->next()) {
+    for (Set<StringName>::Element* E =
+             p_node->functions[fidx].uses_function.front();
+         E;
+         E = E->next()) {
         if (added.has(E->get())) {
-            continue; //was added already
+            continue; // was added already
         }
 
         _dump_function_deps(p_node, E->get(), p_func_code, r_to_add, added);
 
-        SL::FunctionNode *fnode = nullptr;
+        SL::FunctionNode* fnode = nullptr;
 
         for (int i = 0; i < p_node->functions.size(); i++) {
             if (p_node->functions[i].name == E->get()) {
@@ -365,18 +378,25 @@ void ShaderCompilerGLES3::_dump_function_deps(const SL::ShaderNode *p_node, cons
 
         String header;
         if (fnode->return_type == SL::TYPE_STRUCT) {
-            header = _mkid(fnode->return_struct_name) + " " + _mkid(fnode->name) + "(";
+            header = _mkid(fnode->return_struct_name) + " " + _mkid(fnode->name)
+                   + "(";
         } else {
-            header = _typestr(fnode->return_type) + " " + _mkid(fnode->name) + "(";
+            header =
+                _typestr(fnode->return_type) + " " + _mkid(fnode->name) + "(";
         }
         for (int i = 0; i < fnode->arguments.size(); i++) {
             if (i > 0) {
                 header += ", ";
             }
             if (fnode->arguments[i].type == SL::TYPE_STRUCT) {
-                header += _qualstr(fnode->arguments[i].qualifier) + _mkid(fnode->arguments[i].type_str) + " " + _mkid(fnode->arguments[i].name);
+                header += _qualstr(fnode->arguments[i].qualifier)
+                        + _mkid(fnode->arguments[i].type_str) + " "
+                        + _mkid(fnode->arguments[i].name);
             } else {
-                header += _qualstr(fnode->arguments[i].qualifier) + _prestr(fnode->arguments[i].precision) + _typestr(fnode->arguments[i].type) + " " + _mkid(fnode->arguments[i].name);
+                header += _qualstr(fnode->arguments[i].qualifier)
+                        + _prestr(fnode->arguments[i].precision)
+                        + _typestr(fnode->arguments[i].type) + " "
+                        + _mkid(fnode->arguments[i].name);
             }
         }
 
@@ -388,16 +408,31 @@ void ShaderCompilerGLES3::_dump_function_deps(const SL::ShaderNode *p_node, cons
     }
 }
 
-String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level, GeneratedCode &r_gen_code, IdentifierActions &p_actions, const DefaultIdentifierActions &p_default_actions, bool p_assigning, bool p_use_scope) {
+String ShaderCompilerGLES3::_dump_node_code(
+    const SL::Node* p_node,
+    int p_level,
+    GeneratedCode& r_gen_code,
+    IdentifierActions& p_actions,
+    const DefaultIdentifierActions& p_default_actions,
+    bool p_assigning,
+    bool p_use_scope
+) {
     String code;
 
     switch (p_node->type) {
         case SL::Node::TYPE_SHADER: {
-            SL::ShaderNode *pnode = (SL::ShaderNode *)p_node;
+            SL::ShaderNode* pnode = (SL::ShaderNode*)p_node;
 
             for (int i = 0; i < pnode->render_modes.size(); i++) {
-                if (p_default_actions.render_mode_defines.has(pnode->render_modes[i]) && !used_rmode_defines.has(pnode->render_modes[i])) {
-                    r_gen_code.defines.push_back(p_default_actions.render_mode_defines[pnode->render_modes[i]].utf8());
+                if (p_default_actions.render_mode_defines.has(
+                        pnode->render_modes[i]
+                    )
+                    && !used_rmode_defines.has(pnode->render_modes[i])) {
+                    r_gen_code.defines.push_back(
+                        p_default_actions
+                            .render_mode_defines[pnode->render_modes[i]]
+                            .utf8()
+                    );
                     used_rmode_defines.insert(pnode->render_modes[i]);
                 }
 
@@ -406,7 +441,8 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                 }
 
                 if (p_actions.render_mode_values.has(pnode->render_modes[i])) {
-                    Pair<int *, int> &p = p_actions.render_mode_values[pnode->render_modes[i]];
+                    Pair<int*, int>& p =
+                        p_actions.render_mode_values[pnode->render_modes[i]];
                     *p.first = p.second;
                 }
             }
@@ -414,7 +450,7 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
             // structs
 
             for (int i = 0; i < pnode->vstructs.size(); i++) {
-                SL::StructNode *st = pnode->vstructs[i].shader_struct;
+                SL::StructNode* st = pnode->vstructs[i].shader_struct;
                 String struct_code;
 
                 struct_code += "struct ";
@@ -422,7 +458,7 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                 struct_code += " ";
                 struct_code += "{\n";
                 for (int j = 0; j < st->members.size(); j++) {
-                    SL::MemberNode *m = st->members[j];
+                    SL::MemberNode* m = st->members[j];
                     if (m->datatype == SL::TYPE_STRUCT) {
                         struct_code += _mkid(m->struct_name);
                     } else {
@@ -448,7 +484,10 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
             int max_texture_uniforms = 0;
             int max_uniforms = 0;
 
-            for (Map<StringName, SL::ShaderNode::Uniform>::Element *E = pnode->uniforms.front(); E; E = E->next()) {
+            for (Map<StringName, SL::ShaderNode::Uniform>::Element* E =
+                     pnode->uniforms.front();
+                 E;
+                 E = E->next()) {
                 if (SL::is_sampler_type(E->get().type)) {
                     max_texture_uniforms++;
                 } else {
@@ -468,7 +507,10 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
             uniform_defines.resize(max_uniforms);
             bool uses_uniforms = false;
 
-            for (Map<StringName, SL::ShaderNode::Uniform>::Element *E = pnode->uniforms.front(); E; E = E->next()) {
+            for (Map<StringName, SL::ShaderNode::Uniform>::Element* E =
+                     pnode->uniforms.front();
+                 E;
+                 E = E->next()) {
                 String ucode;
 
                 if (SL::is_sampler_type(E->get().type)) {
@@ -482,17 +524,24 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                 if (SL::is_sampler_type(E->get().type)) {
                     r_gen_code.vertex_global += ucode;
                     r_gen_code.fragment_global += ucode;
-                    r_gen_code.texture_uniforms.write[E->get().texture_order] = _mkid(E->key());
-                    r_gen_code.texture_hints.write[E->get().texture_order] = E->get().hint;
-                    r_gen_code.texture_types.write[E->get().texture_order] = E->get().type;
+                    r_gen_code.texture_uniforms.write[E->get().texture_order] =
+                        _mkid(E->key());
+                    r_gen_code.texture_hints.write[E->get().texture_order] =
+                        E->get().hint;
+                    r_gen_code.texture_types.write[E->get().texture_order] =
+                        E->get().type;
                 } else {
                     if (!uses_uniforms) {
-                        r_gen_code.defines.push_back(String("#define USE_MATERIAL\n").ascii());
+                        r_gen_code.defines.push_back(
+                            String("#define USE_MATERIAL\n").ascii()
+                        );
                         uses_uniforms = true;
                     }
                     uniform_defines.write[E->get().order] = ucode;
-                    uniform_sizes.write[E->get().order] = _get_datatype_size(E->get().type);
-                    uniform_alignments.write[E->get().order] = _get_datatype_alignment(E->get().type);
+                    uniform_sizes.write[E->get().order] =
+                        _get_datatype_size(E->get().type);
+                    uniform_alignments.write[E->get().order] =
+                        _get_datatype_alignment(E->get().type);
                 }
 
                 p_actions.uniforms->insert(E->key(), E->get());
@@ -517,15 +566,28 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
             }
 
             r_gen_code.uniform_total_size = offset;
-            if (r_gen_code.uniform_total_size % 16 != 0) { //UBO sizes must be multiples of 16
-                r_gen_code.uniform_total_size += r_gen_code.uniform_total_size % 16;
+            if (r_gen_code.uniform_total_size % 16
+                != 0) { // UBO sizes must be multiples of 16
+                r_gen_code.uniform_total_size +=
+                    r_gen_code.uniform_total_size % 16;
             }
 
             List<Pair<StringName, SL::ShaderNode::Varying>> var_frag_to_light;
 
-            for (Map<StringName, SL::ShaderNode::Varying>::Element *E = pnode->varyings.front(); E; E = E->next()) {
-                if (E->get().stage == SL::ShaderNode::Varying::STAGE_FRAGMENT_TO_LIGHT || E->get().stage == SL::ShaderNode::Varying::STAGE_FRAGMENT) {
-                    var_frag_to_light.push_back(Pair<StringName, SL::ShaderNode::Varying>(E->key(), E->get()));
+            for (Map<StringName, SL::ShaderNode::Varying>::Element* E =
+                     pnode->varyings.front();
+                 E;
+                 E = E->next()) {
+                if (E->get().stage
+                        == SL::ShaderNode::Varying::STAGE_FRAGMENT_TO_LIGHT
+                    || E->get().stage
+                           == SL::ShaderNode::Varying::STAGE_FRAGMENT) {
+                    var_frag_to_light.push_back(
+                        Pair<StringName, SL::ShaderNode::Varying>(
+                            E->key(),
+                            E->get()
+                        )
+                    );
                     fragment_varyings.insert(E->key());
                     continue;
                 }
@@ -546,8 +608,13 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
 
             if (var_frag_to_light.size() > 0) {
                 String gcode = "\n\nstruct {\n";
-                for (List<Pair<StringName, SL::ShaderNode::Varying>>::Element *E = var_frag_to_light.front(); E; E = E->next()) {
-                    gcode += "\t" + _prestr(E->get().second.precision) + _typestr(E->get().second.type) + " " + _mkid(E->get().first);
+                for (List<Pair<StringName, SL::ShaderNode::Varying>>::Element*
+                         E = var_frag_to_light.front();
+                     E;
+                     E = E->next()) {
+                    gcode += "\t" + _prestr(E->get().second.precision)
+                           + _typestr(E->get().second.type) + " "
+                           + _mkid(E->get().first);
                     if (E->get().second.array_size > 0) {
                         gcode += "[";
                         gcode += itos(E->get().second.array_size);
@@ -560,7 +627,7 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
             }
 
             for (int i = 0; i < pnode->vconstants.size(); i++) {
-                const SL::ShaderNode::Constant &cnode = pnode->vconstants[i];
+                const SL::ShaderNode::Constant& cnode = pnode->vconstants[i];
                 String gcode;
                 gcode += "const ";
                 if (pnode->vconstants[i].type == SL::TYPE_STRUCT) {
@@ -576,7 +643,14 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                     gcode += "]";
                 }
                 gcode += "=";
-                gcode += _dump_node_code(cnode.initializer, p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                gcode += _dump_node_code(
+                    cnode.initializer,
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
                 gcode += ";\n";
                 r_gen_code.vertex_global += gcode;
                 r_gen_code.fragment_global += gcode;
@@ -584,64 +658,97 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
 
             Map<StringName, String> function_code;
 
-            //code for functions
+            // code for functions
             for (int i = 0; i < pnode->functions.size(); i++) {
-                SL::FunctionNode *fnode = pnode->functions[i].function;
+                SL::FunctionNode* fnode = pnode->functions[i].function;
                 function = fnode;
                 current_func_name = fnode->name;
-                function_code[fnode->name] = _dump_node_code(fnode->body, p_level + 1, r_gen_code, p_actions, p_default_actions, p_assigning);
+                function_code[fnode->name] = _dump_node_code(
+                    fnode->body,
+                    p_level + 1,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
                 function = nullptr;
             }
 
-            //place functions in actual code
+            // place functions in actual code
 
             Set<StringName> added_vtx;
-            Set<StringName> added_fragment; //share for light
+            Set<StringName> added_fragment; // share for light
 
             for (int i = 0; i < pnode->functions.size(); i++) {
-                SL::FunctionNode *fnode = pnode->functions[i].function;
+                SL::FunctionNode* fnode = pnode->functions[i].function;
 
                 function = fnode;
 
                 current_func_name = fnode->name;
 
                 if (fnode->name == vertex_name) {
-                    _dump_function_deps(pnode, fnode->name, function_code, r_gen_code.vertex_global, added_vtx);
+                    _dump_function_deps(
+                        pnode,
+                        fnode->name,
+                        function_code,
+                        r_gen_code.vertex_global,
+                        added_vtx
+                    );
                     r_gen_code.vertex = function_code[vertex_name];
                 }
 
                 if (fnode->name == fragment_name) {
-                    _dump_function_deps(pnode, fnode->name, function_code, r_gen_code.fragment_global, added_fragment);
+                    _dump_function_deps(
+                        pnode,
+                        fnode->name,
+                        function_code,
+                        r_gen_code.fragment_global,
+                        added_fragment
+                    );
                     r_gen_code.fragment = function_code[fragment_name];
                 }
 
                 if (fnode->name == light_name) {
-                    _dump_function_deps(pnode, fnode->name, function_code, r_gen_code.fragment_global, added_fragment);
+                    _dump_function_deps(
+                        pnode,
+                        fnode->name,
+                        function_code,
+                        r_gen_code.fragment_global,
+                        added_fragment
+                    );
                     r_gen_code.light = function_code[light_name];
                 }
 
                 function = nullptr;
             }
 
-            //code+=dump_node_code(pnode->body,p_level);
+            // code+=dump_node_code(pnode->body,p_level);
         } break;
         case SL::Node::TYPE_STRUCT: {
         } break;
         case SL::Node::TYPE_FUNCTION: {
         } break;
         case SL::Node::TYPE_BLOCK: {
-            SL::BlockNode *bnode = (SL::BlockNode *)p_node;
+            SL::BlockNode* bnode = (SL::BlockNode*)p_node;
 
-            //variables
+            // variables
             if (!bnode->single_statement) {
                 code += _mktab(p_level - 1) + "{\n";
             }
 
             for (int i = 0; i < bnode->statements.size(); i++) {
-                String scode = _dump_node_code(bnode->statements[i], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                String scode = _dump_node_code(
+                    bnode->statements[i],
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
 
-                if (bnode->statements[i]->type == SL::Node::TYPE_CONTROL_FLOW || bnode->single_statement) {
-                    code += scode; //use directly
+                if (bnode->statements[i]->type == SL::Node::TYPE_CONTROL_FLOW
+                    || bnode->single_statement) {
+                    code += scode; // use directly
                 } else {
                     code += _mktab(p_level) + scode + ";\n";
                 }
@@ -652,7 +759,8 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
 
         } break;
         case SL::Node::TYPE_VARIABLE_DECLARATION: {
-            SL::VariableDeclarationNode *vdnode = (SL::VariableDeclarationNode *)p_node;
+            SL::VariableDeclarationNode* vdnode =
+                (SL::VariableDeclarationNode*)p_node;
 
             String declaration;
             if (vdnode->is_const) {
@@ -673,14 +781,21 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                 declaration += _mkid(vdnode->declarations[i].name);
                 if (vdnode->declarations[i].initializer) {
                     declaration += "=";
-                    declaration += _dump_node_code(vdnode->declarations[i].initializer, p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    declaration += _dump_node_code(
+                        vdnode->declarations[i].initializer,
+                        p_level,
+                        r_gen_code,
+                        p_actions,
+                        p_default_actions,
+                        p_assigning
+                    );
                 }
             }
 
             code += declaration;
         } break;
         case SL::Node::TYPE_VARIABLE: {
-            SL::VariableNode *vnode = (SL::VariableNode *)p_node;
+            SL::VariableNode* vnode = (SL::VariableNode*)p_node;
             bool use_fragment_varying = false;
 
             if (!vnode->is_local && current_func_name != vertex_name) {
@@ -699,16 +814,20 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                 *p_actions.write_flag_pointers[vnode->name] = true;
             }
 
-            if (p_default_actions.usage_defines.has(vnode->name) && !used_name_defines.has(vnode->name)) {
+            if (p_default_actions.usage_defines.has(vnode->name)
+                && !used_name_defines.has(vnode->name)) {
                 String define = p_default_actions.usage_defines[vnode->name];
                 if (define.begins_with("@")) {
-                    define = p_default_actions.usage_defines[define.substr(1, define.length())];
+                    define =
+                        p_default_actions
+                            .usage_defines[define.substr(1, define.length())];
                 }
                 r_gen_code.defines.push_back(define.utf8());
                 used_name_defines.insert(vnode->name);
             }
 
-            if (p_actions.usage_flag_pointers.has(vnode->name) && !used_flag_pointers.has(vnode->name)) {
+            if (p_actions.usage_flag_pointers.has(vnode->name)
+                && !used_flag_pointers.has(vnode->name)) {
                 *p_actions.usage_flag_pointers[vnode->name] = true;
                 used_flag_pointers.insert(vnode->name);
             }
@@ -725,14 +844,15 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                 if (current_func_name == vertex_name) {
                     r_gen_code.uses_vertex_time = true;
                 }
-                if (current_func_name == fragment_name || current_func_name == light_name) {
+                if (current_func_name == fragment_name
+                    || current_func_name == light_name) {
                     r_gen_code.uses_fragment_time = true;
                 }
             }
 
         } break;
         case SL::Node::TYPE_ARRAY_CONSTRUCT: {
-            SL::ArrayConstructNode *acnode = (SL::ArrayConstructNode *)p_node;
+            SL::ArrayConstructNode* acnode = (SL::ArrayConstructNode*)p_node;
             int sz = acnode->initializer.size();
             if (acnode->datatype == SL::TYPE_STRUCT) {
                 code += _mkid(acnode->struct_name);
@@ -744,7 +864,14 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
             code += "]";
             code += "(";
             for (int i = 0; i < sz; i++) {
-                code += _dump_node_code(acnode->initializer[i], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                code += _dump_node_code(
+                    acnode->initializer[i],
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
                 if (i != sz - 1) {
                     code += ", ";
                 }
@@ -752,7 +879,8 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
             code += ")";
         } break;
         case SL::Node::TYPE_ARRAY_DECLARATION: {
-            SL::ArrayDeclarationNode *adnode = (SL::ArrayDeclarationNode *)p_node;
+            SL::ArrayDeclarationNode* adnode =
+                (SL::ArrayDeclarationNode*)p_node;
 
             String declaration;
             if (adnode->is_const) {
@@ -787,7 +915,14 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                     declaration += "]";
                     declaration += "(";
                     for (int j = 0; j < sz; j++) {
-                        declaration += _dump_node_code(adnode->declarations[i].initializer[j], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                        declaration += _dump_node_code(
+                            adnode->declarations[i].initializer[j],
+                            p_level,
+                            r_gen_code,
+                            p_actions,
+                            p_default_actions,
+                            p_assigning
+                        );
                         if (j != sz - 1) {
                             declaration += ", ";
                         }
@@ -799,7 +934,7 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
             code += declaration;
         } break;
         case SL::Node::TYPE_ARRAY: {
-            SL::ArrayNode *anode = (SL::ArrayNode *)p_node;
+            SL::ArrayNode* anode = (SL::ArrayNode*)p_node;
             bool use_fragment_varying = false;
 
             if (!anode->is_local && current_func_name != vertex_name) {
@@ -822,16 +957,20 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                 *p_actions.write_flag_pointers[anode->name] = true;
             }
 
-            if (p_default_actions.usage_defines.has(anode->name) && !used_name_defines.has(anode->name)) {
+            if (p_default_actions.usage_defines.has(anode->name)
+                && !used_name_defines.has(anode->name)) {
                 String define = p_default_actions.usage_defines[anode->name];
                 if (define.begins_with("@")) {
-                    define = p_default_actions.usage_defines[define.substr(1, define.length())];
+                    define =
+                        p_default_actions
+                            .usage_defines[define.substr(1, define.length())];
                 }
                 r_gen_code.defines.push_back(define.utf8());
                 used_name_defines.insert(anode->name);
             }
 
-            if (p_actions.usage_flag_pointers.has(anode->name) && !used_flag_pointers.has(anode->name)) {
+            if (p_actions.usage_flag_pointers.has(anode->name)
+                && !used_flag_pointers.has(anode->name)) {
                 *p_actions.usage_flag_pointers[anode->name] = true;
                 used_flag_pointers.insert(anode->name);
             }
@@ -846,28 +985,52 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
 
             if (anode->call_expression != nullptr) {
                 code += ".";
-                code += _dump_node_code(anode->call_expression, p_level, r_gen_code, p_actions, p_default_actions, p_assigning, false);
+                code += _dump_node_code(
+                    anode->call_expression,
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning,
+                    false
+                );
             } else if (anode->index_expression != nullptr) {
                 code += "[";
-                code += _dump_node_code(anode->index_expression, p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                code += _dump_node_code(
+                    anode->index_expression,
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
                 code += "]";
             } else if (anode->assign_expression != nullptr) {
                 code += "=";
-                code += _dump_node_code(anode->assign_expression, p_level, r_gen_code, p_actions, p_default_actions, true, false);
+                code += _dump_node_code(
+                    anode->assign_expression,
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    true,
+                    false
+                );
             }
 
             if (anode->name == time_name) {
                 if (current_func_name == vertex_name) {
                     r_gen_code.uses_vertex_time = true;
                 }
-                if (current_func_name == fragment_name || current_func_name == light_name) {
+                if (current_func_name == fragment_name
+                    || current_func_name == light_name) {
                     r_gen_code.uses_fragment_time = true;
                 }
             }
 
         } break;
         case SL::Node::TYPE_CONSTANT: {
-            SL::ConstantNode *cnode = (SL::ConstantNode *)p_node;
+            SL::ConstantNode* cnode = (SL::ConstantNode*)p_node;
 
             if (cnode->array_size == 0) {
                 return get_constant_text(cnode->datatype, cnode->values);
@@ -887,14 +1050,21 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                     } else {
                         code += "";
                     }
-                    code += _dump_node_code(cnode->array_declarations[0].initializer[i], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    code += _dump_node_code(
+                        cnode->array_declarations[0].initializer[i],
+                        p_level,
+                        r_gen_code,
+                        p_actions,
+                        p_default_actions,
+                        p_assigning
+                    );
                 }
                 code += ")";
             }
 
         } break;
         case SL::Node::TYPE_OPERATOR: {
-            SL::OperatorNode *onode = (SL::OperatorNode *)p_node;
+            SL::OperatorNode* onode = (SL::OperatorNode*)p_node;
 
             switch (onode->op) {
                 case SL::OP_ASSIGN:
@@ -908,25 +1078,61 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                 case SL::OP_ASSIGN_BIT_AND:
                 case SL::OP_ASSIGN_BIT_OR:
                 case SL::OP_ASSIGN_BIT_XOR:
-                    code = _dump_node_code(onode->arguments[0], p_level, r_gen_code, p_actions, p_default_actions, true) + _opstr(onode->op) + _dump_node_code(onode->arguments[1], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    code = _dump_node_code(
+                               onode->arguments[0],
+                               p_level,
+                               r_gen_code,
+                               p_actions,
+                               p_default_actions,
+                               true
+                           )
+                         + _opstr(onode->op)
+                         + _dump_node_code(
+                               onode->arguments[1],
+                               p_level,
+                               r_gen_code,
+                               p_actions,
+                               p_default_actions,
+                               p_assigning
+                         );
                     break;
                 case SL::OP_BIT_INVERT:
                 case SL::OP_NEGATE:
                 case SL::OP_NOT:
                 case SL::OP_DECREMENT:
                 case SL::OP_INCREMENT:
-                    code = _opstr(onode->op) + _dump_node_code(onode->arguments[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    code = _opstr(onode->op)
+                         + _dump_node_code(
+                               onode->arguments[0],
+                               p_level,
+                               r_gen_code,
+                               p_actions,
+                               p_default_actions,
+                               p_assigning
+                         );
                     break;
                 case SL::OP_POST_DECREMENT:
                 case SL::OP_POST_INCREMENT:
-                    code = _dump_node_code(onode->arguments[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + _opstr(onode->op);
+                    code = _dump_node_code(
+                               onode->arguments[0],
+                               p_level,
+                               r_gen_code,
+                               p_actions,
+                               p_default_actions,
+                               p_assigning
+                           )
+                         + _opstr(onode->op);
                     break;
                 case SL::OP_CALL:
                 case SL::OP_STRUCT:
                 case SL::OP_CONSTRUCT: {
-                    ERR_FAIL_COND_V(onode->arguments[0]->type != SL::Node::TYPE_VARIABLE, String());
+                    ERR_FAIL_COND_V(
+                        onode->arguments[0]->type != SL::Node::TYPE_VARIABLE,
+                        String()
+                    );
 
-                    SL::VariableNode *vnode = (SL::VariableNode *)onode->arguments[0];
+                    SL::VariableNode* vnode =
+                        (SL::VariableNode*)onode->arguments[0];
 
                     if (onode->op == SL::OP_STRUCT) {
                         code += _mkid(vnode->name);
@@ -948,24 +1154,66 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                         if (i > 1) {
                             code += ", ";
                         }
-                        code += _dump_node_code(onode->arguments[i], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                        code += _dump_node_code(
+                            onode->arguments[i],
+                            p_level,
+                            r_gen_code,
+                            p_actions,
+                            p_default_actions,
+                            p_assigning
+                        );
                     }
                     code += ")";
                 } break;
                 case SL::OP_INDEX: {
-                    code += _dump_node_code(onode->arguments[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    code += _dump_node_code(
+                        onode->arguments[0],
+                        p_level,
+                        r_gen_code,
+                        p_actions,
+                        p_default_actions,
+                        p_assigning
+                    );
                     code += "[";
-                    code += _dump_node_code(onode->arguments[1], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    code += _dump_node_code(
+                        onode->arguments[1],
+                        p_level,
+                        r_gen_code,
+                        p_actions,
+                        p_default_actions,
+                        p_assigning
+                    );
                     code += "]";
 
                 } break;
                 case SL::OP_SELECT_IF: {
                     code += "(";
-                    code += _dump_node_code(onode->arguments[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    code += _dump_node_code(
+                        onode->arguments[0],
+                        p_level,
+                        r_gen_code,
+                        p_actions,
+                        p_default_actions,
+                        p_assigning
+                    );
                     code += "?";
-                    code += _dump_node_code(onode->arguments[1], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    code += _dump_node_code(
+                        onode->arguments[1],
+                        p_level,
+                        r_gen_code,
+                        p_actions,
+                        p_default_actions,
+                        p_assigning
+                    );
                     code += ":";
-                    code += _dump_node_code(onode->arguments[2], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    code += _dump_node_code(
+                        onode->arguments[2],
+                        p_level,
+                        r_gen_code,
+                        p_actions,
+                        p_default_actions,
+                        p_assigning
+                    );
                     code += ")";
 
                 } break;
@@ -974,7 +1222,23 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
                     if (p_use_scope) {
                         code += "(";
                     }
-                    code += _dump_node_code(onode->arguments[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + _opstr(onode->op) + _dump_node_code(onode->arguments[1], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    code += _dump_node_code(
+                                onode->arguments[0],
+                                p_level,
+                                r_gen_code,
+                                p_actions,
+                                p_default_actions,
+                                p_assigning
+                            )
+                          + _opstr(onode->op)
+                          + _dump_node_code(
+                                onode->arguments[1],
+                                p_level,
+                                r_gen_code,
+                                p_actions,
+                                p_default_actions,
+                                p_assigning
+                          );
                     if (p_use_scope) {
                         code += ")";
                     }
@@ -984,46 +1248,179 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
 
         } break;
         case SL::Node::TYPE_CONTROL_FLOW: {
-            SL::ControlFlowNode *cfnode = (SL::ControlFlowNode *)p_node;
+            SL::ControlFlowNode* cfnode = (SL::ControlFlowNode*)p_node;
             if (cfnode->flow_op == SL::FLOW_OP_IF) {
-                code += _mktab(p_level) + "if (" + _dump_node_code(cfnode->expressions[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + ")\n";
-                code += _dump_node_code(cfnode->blocks[0], p_level + 1, r_gen_code, p_actions, p_default_actions, p_assigning);
+                code += _mktab(p_level) + "if ("
+                      + _dump_node_code(
+                            cfnode->expressions[0],
+                            p_level,
+                            r_gen_code,
+                            p_actions,
+                            p_default_actions,
+                            p_assigning
+                      )
+                      + ")\n";
+                code += _dump_node_code(
+                    cfnode->blocks[0],
+                    p_level + 1,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
                 if (cfnode->blocks.size() == 2) {
                     code += _mktab(p_level) + "else\n";
-                    code += _dump_node_code(cfnode->blocks[1], p_level + 1, r_gen_code, p_actions, p_default_actions, p_assigning);
+                    code += _dump_node_code(
+                        cfnode->blocks[1],
+                        p_level + 1,
+                        r_gen_code,
+                        p_actions,
+                        p_default_actions,
+                        p_assigning
+                    );
                 }
             } else if (cfnode->flow_op == SL::FLOW_OP_SWITCH) {
-                code += _mktab(p_level) + "switch (" + _dump_node_code(cfnode->expressions[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + ")\n";
-                code += _dump_node_code(cfnode->blocks[0], p_level + 1, r_gen_code, p_actions, p_default_actions, p_assigning);
+                code += _mktab(p_level) + "switch ("
+                      + _dump_node_code(
+                            cfnode->expressions[0],
+                            p_level,
+                            r_gen_code,
+                            p_actions,
+                            p_default_actions,
+                            p_assigning
+                      )
+                      + ")\n";
+                code += _dump_node_code(
+                    cfnode->blocks[0],
+                    p_level + 1,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
             } else if (cfnode->flow_op == SL::FLOW_OP_CASE) {
-                code += _mktab(p_level) + "case " + _dump_node_code(cfnode->expressions[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + ":\n";
-                code += _dump_node_code(cfnode->blocks[0], p_level + 1, r_gen_code, p_actions, p_default_actions, p_assigning);
+                code += _mktab(p_level) + "case "
+                      + _dump_node_code(
+                            cfnode->expressions[0],
+                            p_level,
+                            r_gen_code,
+                            p_actions,
+                            p_default_actions,
+                            p_assigning
+                      )
+                      + ":\n";
+                code += _dump_node_code(
+                    cfnode->blocks[0],
+                    p_level + 1,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
             } else if (cfnode->flow_op == SL::FLOW_OP_DEFAULT) {
                 code += _mktab(p_level) + "default:\n";
-                code += _dump_node_code(cfnode->blocks[0], p_level + 1, r_gen_code, p_actions, p_default_actions, p_assigning);
+                code += _dump_node_code(
+                    cfnode->blocks[0],
+                    p_level + 1,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
             } else if (cfnode->flow_op == SL::FLOW_OP_DO) {
                 code += _mktab(p_level) + "do";
-                code += _dump_node_code(cfnode->blocks[0], p_level + 1, r_gen_code, p_actions, p_default_actions, p_assigning);
-                code += _mktab(p_level) + "while (" + _dump_node_code(cfnode->expressions[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + ");";
+                code += _dump_node_code(
+                    cfnode->blocks[0],
+                    p_level + 1,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
+                code += _mktab(p_level) + "while ("
+                      + _dump_node_code(
+                            cfnode->expressions[0],
+                            p_level,
+                            r_gen_code,
+                            p_actions,
+                            p_default_actions,
+                            p_assigning
+                      )
+                      + ");";
 
             } else if (cfnode->flow_op == SL::FLOW_OP_WHILE) {
-                code += _mktab(p_level) + "while (" + _dump_node_code(cfnode->expressions[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + ")\n";
-                code += _dump_node_code(cfnode->blocks[0], p_level + 1, r_gen_code, p_actions, p_default_actions, p_assigning);
+                code += _mktab(p_level) + "while ("
+                      + _dump_node_code(
+                            cfnode->expressions[0],
+                            p_level,
+                            r_gen_code,
+                            p_actions,
+                            p_default_actions,
+                            p_assigning
+                      )
+                      + ")\n";
+                code += _dump_node_code(
+                    cfnode->blocks[0],
+                    p_level + 1,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
             } else if (cfnode->flow_op == SL::FLOW_OP_FOR) {
-                String left = _dump_node_code(cfnode->blocks[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-                String middle = _dump_node_code(cfnode->expressions[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-                String right = _dump_node_code(cfnode->expressions[1], p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
-                code += _mktab(p_level) + "for (" + left + ";" + middle + ";" + right + ")\n";
-                code += _dump_node_code(cfnode->blocks[1], p_level + 1, r_gen_code, p_actions, p_default_actions, p_assigning);
+                String left = _dump_node_code(
+                    cfnode->blocks[0],
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
+                String middle = _dump_node_code(
+                    cfnode->expressions[0],
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
+                String right = _dump_node_code(
+                    cfnode->expressions[1],
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
+                code += _mktab(p_level) + "for (" + left + ";" + middle + ";"
+                      + right + ")\n";
+                code += _dump_node_code(
+                    cfnode->blocks[1],
+                    p_level + 1,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
 
             } else if (cfnode->flow_op == SL::FLOW_OP_RETURN) {
                 if (cfnode->expressions.size()) {
-                    code = "return " + _dump_node_code(cfnode->expressions[0], p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + ";";
+                    code = "return "
+                         + _dump_node_code(
+                               cfnode->expressions[0],
+                               p_level,
+                               r_gen_code,
+                               p_actions,
+                               p_default_actions,
+                               p_assigning
+                         )
+                         + ";";
                 } else {
                     code = "return;";
                 }
             } else if (cfnode->flow_op == SL::FLOW_OP_DISCARD) {
-                if (p_actions.usage_flag_pointers.has("DISCARD") && !used_flag_pointers.has("DISCARD")) {
+                if (p_actions.usage_flag_pointers.has("DISCARD")
+                    && !used_flag_pointers.has("DISCARD")) {
                     *p_actions.usage_flag_pointers["DISCARD"] = true;
                     used_flag_pointers.insert("DISCARD");
                 }
@@ -1037,15 +1434,38 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
 
         } break;
         case SL::Node::TYPE_MEMBER: {
-            SL::MemberNode *mnode = (SL::MemberNode *)p_node;
-            code = _dump_node_code(mnode->owner, p_level, r_gen_code, p_actions, p_default_actions, p_assigning) + "." + mnode->name;
+            SL::MemberNode* mnode = (SL::MemberNode*)p_node;
+            code = _dump_node_code(
+                       mnode->owner,
+                       p_level,
+                       r_gen_code,
+                       p_actions,
+                       p_default_actions,
+                       p_assigning
+                   )
+                 + "." + mnode->name;
             if (mnode->index_expression != nullptr) {
                 code += "[";
-                code += _dump_node_code(mnode->index_expression, p_level, r_gen_code, p_actions, p_default_actions, p_assigning);
+                code += _dump_node_code(
+                    mnode->index_expression,
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    p_assigning
+                );
                 code += "]";
             } else if (mnode->assign_expression != nullptr) {
                 code += "=";
-                code += _dump_node_code(mnode->assign_expression, p_level, r_gen_code, p_actions, p_default_actions, true, false);
+                code += _dump_node_code(
+                    mnode->assign_expression,
+                    p_level,
+                    r_gen_code,
+                    p_actions,
+                    p_default_actions,
+                    true,
+                    false
+                );
             }
         } break;
     }
@@ -1053,8 +1473,19 @@ String ShaderCompilerGLES3::_dump_node_code(const SL::Node *p_node, int p_level,
     return code;
 }
 
-Error ShaderCompilerGLES3::compile(VS::ShaderMode p_mode, const String &p_code, IdentifierActions *p_actions, const String &p_path, GeneratedCode &r_gen_code) {
-    Error err = parser.compile(p_code, ShaderTypes::get_singleton()->get_functions(p_mode), ShaderTypes::get_singleton()->get_modes(p_mode), ShaderTypes::get_singleton()->get_types());
+Error ShaderCompilerGLES3::compile(
+    VS::ShaderMode p_mode,
+    const String& p_code,
+    IdentifierActions* p_actions,
+    const String& p_path,
+    GeneratedCode& r_gen_code
+) {
+    Error err = parser.compile(
+        p_code,
+        ShaderTypes::get_singleton()->get_functions(p_mode),
+        ShaderTypes::get_singleton()->get_modes(p_mode),
+        ShaderTypes::get_singleton()->get_types()
+    );
 
     if (err != OK) {
         Vector<String> shader = p_code.split("\n");
@@ -1068,7 +1499,13 @@ Error ShaderCompilerGLES3::compile(VS::ShaderMode p_mode, const String &p_code, 
             }
         }
 
-        _err_print_error(nullptr, p_path.utf8().get_data(), parser.get_error_line(), parser.get_error_text().utf8().get_data(), ERR_HANDLER_SHADER);
+        _err_print_error(
+            nullptr,
+            p_path.utf8().get_data(),
+            parser.get_error_line(),
+            parser.get_error_text().utf8().get_data(),
+            ERR_HANDLER_SHADER
+        );
         return err;
     }
 
@@ -1090,12 +1527,13 @@ Error ShaderCompilerGLES3::compile(VS::ShaderMode p_mode, const String &p_code, 
     function = nullptr;
     _dump_node_code(shader, 1, r_gen_code, *p_actions, actions[p_mode], false);
 
-    if (r_gen_code.uniform_total_size) { //uniforms used?
+    if (r_gen_code.uniform_total_size) { // uniforms used?
         int md = sizeof(float) * 4;
         if (r_gen_code.uniform_total_size % md) {
-            r_gen_code.uniform_total_size += md - (r_gen_code.uniform_total_size % md);
+            r_gen_code.uniform_total_size +=
+                md - (r_gen_code.uniform_total_size % md);
         }
-        r_gen_code.uniform_total_size += md; //pad just in case
+        r_gen_code.uniform_total_size += md; // pad just in case
     }
 
     return OK;
@@ -1108,24 +1546,32 @@ ShaderCompilerGLES3::ShaderCompilerGLES3() {
     actions[VS::SHADER_CANVAS_ITEM].renames["UV"] = "uv";
     actions[VS::SHADER_CANVAS_ITEM].renames["POINT_SIZE"] = "point_size";
 
-    actions[VS::SHADER_CANVAS_ITEM].renames["WORLD_MATRIX"] = "modelview_matrix";
-    actions[VS::SHADER_CANVAS_ITEM].renames["PROJECTION_MATRIX"] = "projection_matrix";
+    actions[VS::SHADER_CANVAS_ITEM].renames["WORLD_MATRIX"] =
+        "modelview_matrix";
+    actions[VS::SHADER_CANVAS_ITEM].renames["PROJECTION_MATRIX"] =
+        "projection_matrix";
     actions[VS::SHADER_CANVAS_ITEM].renames["EXTRA_MATRIX"] = "extra_matrix";
     actions[VS::SHADER_CANVAS_ITEM].renames["TIME"] = "time";
     actions[VS::SHADER_CANVAS_ITEM].renames["AT_LIGHT_PASS"] = "at_light_pass";
-    actions[VS::SHADER_CANVAS_ITEM].renames["INSTANCE_CUSTOM"] = "instance_custom";
+    actions[VS::SHADER_CANVAS_ITEM].renames["INSTANCE_CUSTOM"] =
+        "instance_custom";
 
     actions[VS::SHADER_CANVAS_ITEM].renames["COLOR"] = "color";
-    actions[VS::SHADER_CANVAS_ITEM].renames["MODULATE"] = "final_modulate_alias";
+    actions[VS::SHADER_CANVAS_ITEM].renames["MODULATE"] =
+        "final_modulate_alias";
     actions[VS::SHADER_CANVAS_ITEM].renames["NORMAL"] = "normal";
     actions[VS::SHADER_CANVAS_ITEM].renames["NORMALMAP"] = "normal_map";
     actions[VS::SHADER_CANVAS_ITEM].renames["NORMALMAP_DEPTH"] = "normal_depth";
     actions[VS::SHADER_CANVAS_ITEM].renames["TEXTURE"] = "color_texture";
-    actions[VS::SHADER_CANVAS_ITEM].renames["TEXTURE_PIXEL_SIZE"] = "color_texpixel_size";
-    actions[VS::SHADER_CANVAS_ITEM].renames["NORMAL_TEXTURE"] = "normal_texture";
+    actions[VS::SHADER_CANVAS_ITEM].renames["TEXTURE_PIXEL_SIZE"] =
+        "color_texpixel_size";
+    actions[VS::SHADER_CANVAS_ITEM].renames["NORMAL_TEXTURE"] =
+        "normal_texture";
     actions[VS::SHADER_CANVAS_ITEM].renames["SCREEN_UV"] = "screen_uv";
-    actions[VS::SHADER_CANVAS_ITEM].renames["SCREEN_TEXTURE"] = "screen_texture";
-    actions[VS::SHADER_CANVAS_ITEM].renames["SCREEN_PIXEL_SIZE"] = "screen_pixel_size";
+    actions[VS::SHADER_CANVAS_ITEM].renames["SCREEN_TEXTURE"] =
+        "screen_texture";
+    actions[VS::SHADER_CANVAS_ITEM].renames["SCREEN_PIXEL_SIZE"] =
+        "screen_pixel_size";
     actions[VS::SHADER_CANVAS_ITEM].renames["FRAGCOORD"] = "gl_FragCoord";
     actions[VS::SHADER_CANVAS_ITEM].renames["POINT_COORD"] = "gl_PointCoord";
 
@@ -1137,24 +1583,38 @@ ShaderCompilerGLES3::ShaderCompilerGLES3() {
     actions[VS::SHADER_CANVAS_ITEM].renames["SHADOW_COLOR"] = "shadow_color";
     actions[VS::SHADER_CANVAS_ITEM].renames["SHADOW_VEC"] = "shadow_vec";
 
-    actions[VS::SHADER_CANVAS_ITEM].usage_defines["COLOR"] = "#define COLOR_USED\n";
-    actions[VS::SHADER_CANVAS_ITEM].usage_defines["MODULATE"] = "#define MODULATE_USED\n";
-    actions[VS::SHADER_CANVAS_ITEM].usage_defines["SCREEN_TEXTURE"] = "#define SCREEN_TEXTURE_USED\n";
-    actions[VS::SHADER_CANVAS_ITEM].usage_defines["SCREEN_UV"] = "#define SCREEN_UV_USED\n";
-    actions[VS::SHADER_CANVAS_ITEM].usage_defines["SCREEN_PIXEL_SIZE"] = "@SCREEN_UV";
-    actions[VS::SHADER_CANVAS_ITEM].usage_defines["NORMAL"] = "#define NORMAL_USED\n";
-    actions[VS::SHADER_CANVAS_ITEM].usage_defines["NORMALMAP"] = "#define NORMALMAP_USED\n";
-    actions[VS::SHADER_CANVAS_ITEM].usage_defines["LIGHT"] = "#define USE_LIGHT_SHADER_CODE\n";
-    actions[VS::SHADER_CANVAS_ITEM].usage_defines["SHADOW_VEC"] = "#define SHADOW_VEC_USED\n";
-    actions[VS::SHADER_CANVAS_ITEM].render_mode_defines["skip_vertex_transform"] = "#define SKIP_TRANSFORM_USED\n";
+    actions[VS::SHADER_CANVAS_ITEM].usage_defines["COLOR"] =
+        "#define COLOR_USED\n";
+    actions[VS::SHADER_CANVAS_ITEM].usage_defines["MODULATE"] =
+        "#define MODULATE_USED\n";
+    actions[VS::SHADER_CANVAS_ITEM].usage_defines["SCREEN_TEXTURE"] =
+        "#define SCREEN_TEXTURE_USED\n";
+    actions[VS::SHADER_CANVAS_ITEM].usage_defines["SCREEN_UV"] =
+        "#define SCREEN_UV_USED\n";
+    actions[VS::SHADER_CANVAS_ITEM].usage_defines["SCREEN_PIXEL_SIZE"] =
+        "@SCREEN_UV";
+    actions[VS::SHADER_CANVAS_ITEM].usage_defines["NORMAL"] =
+        "#define NORMAL_USED\n";
+    actions[VS::SHADER_CANVAS_ITEM].usage_defines["NORMALMAP"] =
+        "#define NORMALMAP_USED\n";
+    actions[VS::SHADER_CANVAS_ITEM].usage_defines["LIGHT"] =
+        "#define USE_LIGHT_SHADER_CODE\n";
+    actions[VS::SHADER_CANVAS_ITEM].usage_defines["SHADOW_VEC"] =
+        "#define SHADOW_VEC_USED\n";
+    actions[VS::SHADER_CANVAS_ITEM]
+        .render_mode_defines["skip_vertex_transform"] =
+        "#define SKIP_TRANSFORM_USED\n";
 
     /** SPATIAL SHADER **/
 
     actions[VS::SHADER_SPATIAL].renames["WORLD_MATRIX"] = "world_transform";
-    actions[VS::SHADER_SPATIAL].renames["INV_CAMERA_MATRIX"] = "camera_inverse_matrix";
+    actions[VS::SHADER_SPATIAL].renames["INV_CAMERA_MATRIX"] =
+        "camera_inverse_matrix";
     actions[VS::SHADER_SPATIAL].renames["CAMERA_MATRIX"] = "camera_matrix";
-    actions[VS::SHADER_SPATIAL].renames["PROJECTION_MATRIX"] = "projection_matrix";
-    actions[VS::SHADER_SPATIAL].renames["INV_PROJECTION_MATRIX"] = "inv_projection_matrix";
+    actions[VS::SHADER_SPATIAL].renames["PROJECTION_MATRIX"] =
+        "projection_matrix";
+    actions[VS::SHADER_SPATIAL].renames["INV_PROJECTION_MATRIX"] =
+        "inv_projection_matrix";
     actions[VS::SHADER_SPATIAL].renames["MODELVIEW_MATRIX"] = "modelview";
 
     actions[VS::SHADER_SPATIAL].renames["VIEW_INDEX"] = "view_index";
@@ -1172,7 +1632,7 @@ ShaderCompilerGLES3::ShaderCompilerGLES3() {
     actions[VS::SHADER_SPATIAL].renames["POINT_SIZE"] = "point_size";
     actions[VS::SHADER_SPATIAL].renames["INSTANCE_ID"] = "gl_InstanceID";
 
-    //builtins
+    // builtins
 
     actions[VS::SHADER_SPATIAL].renames["TIME"] = "time";
     actions[VS::SHADER_SPATIAL].renames["VIEWPORT_SIZE"] = "viewport_size";
@@ -1206,7 +1666,7 @@ ShaderCompilerGLES3::ShaderCompilerGLES3() {
     actions[VS::SHADER_SPATIAL].renames["ALPHA_SCISSOR"] = "alpha_scissor";
     actions[VS::SHADER_SPATIAL].renames["OUTPUT_IS_SRGB"] = "SHADER_IS_SRGB";
 
-    //for light
+    // for light
     actions[VS::SHADER_SPATIAL].renames["VIEW"] = "view";
     actions[VS::SHADER_SPATIAL].renames["LIGHT_COLOR"] = "light_color";
     actions[VS::SHADER_SPATIAL].renames["LIGHT"] = "light";
@@ -1214,69 +1674,111 @@ ShaderCompilerGLES3::ShaderCompilerGLES3() {
     actions[VS::SHADER_SPATIAL].renames["DIFFUSE_LIGHT"] = "diffuse_light";
     actions[VS::SHADER_SPATIAL].renames["SPECULAR_LIGHT"] = "specular_light";
 
-    actions[VS::SHADER_SPATIAL].usage_defines["TANGENT"] = "#define ENABLE_TANGENT_INTERP\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["TANGENT"] =
+        "#define ENABLE_TANGENT_INTERP\n";
     actions[VS::SHADER_SPATIAL].usage_defines["BINORMAL"] = "@TANGENT";
-    actions[VS::SHADER_SPATIAL].usage_defines["RIM"] = "#define LIGHT_USE_RIM\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["RIM"] =
+        "#define LIGHT_USE_RIM\n";
     actions[VS::SHADER_SPATIAL].usage_defines["RIM_TINT"] = "@RIM";
-    actions[VS::SHADER_SPATIAL].usage_defines["CLEARCOAT"] = "#define LIGHT_USE_CLEARCOAT\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["CLEARCOAT"] =
+        "#define LIGHT_USE_CLEARCOAT\n";
     actions[VS::SHADER_SPATIAL].usage_defines["CLEARCOAT_GLOSS"] = "@CLEARCOAT";
-    actions[VS::SHADER_SPATIAL].usage_defines["ANISOTROPY"] = "#define LIGHT_USE_ANISOTROPY\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["ANISOTROPY_FLOW"] = "@ANISOTROPY";
+    actions[VS::SHADER_SPATIAL].usage_defines["ANISOTROPY"] =
+        "#define LIGHT_USE_ANISOTROPY\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["ANISOTROPY_FLOW"] =
+        "@ANISOTROPY";
     actions[VS::SHADER_SPATIAL].usage_defines["AO"] = "#define ENABLE_AO\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["AO_LIGHT_AFFECT"] = "#define ENABLE_AO\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["UV"] = "#define ENABLE_UV_INTERP\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["UV2"] = "#define ENABLE_UV2_INTERP\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["NORMALMAP"] = "#define ENABLE_NORMALMAP\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["AO_LIGHT_AFFECT"] =
+        "#define ENABLE_AO\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["UV"] =
+        "#define ENABLE_UV_INTERP\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["UV2"] =
+        "#define ENABLE_UV2_INTERP\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["NORMALMAP"] =
+        "#define ENABLE_NORMALMAP\n";
     actions[VS::SHADER_SPATIAL].usage_defines["NORMALMAP_DEPTH"] = "@NORMALMAP";
-    actions[VS::SHADER_SPATIAL].usage_defines["COLOR"] = "#define ENABLE_COLOR_INTERP\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["INSTANCE_CUSTOM"] = "#define ENABLE_INSTANCE_CUSTOM\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["ALPHA_SCISSOR"] = "#define ALPHA_SCISSOR_USED\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["POSITION"] = "#define OVERRIDE_POSITION\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["COLOR"] =
+        "#define ENABLE_COLOR_INTERP\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["INSTANCE_CUSTOM"] =
+        "#define ENABLE_INSTANCE_CUSTOM\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["ALPHA_SCISSOR"] =
+        "#define ALPHA_SCISSOR_USED\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["POSITION"] =
+        "#define OVERRIDE_POSITION\n";
 
-    actions[VS::SHADER_SPATIAL].usage_defines["SSS_STRENGTH"] = "#define ENABLE_SSS\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["TRANSMISSION"] = "#define TRANSMISSION_USED\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["SCREEN_TEXTURE"] = "#define SCREEN_TEXTURE_USED\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["SCREEN_UV"] = "#define SCREEN_UV_USED\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["SSS_STRENGTH"] =
+        "#define ENABLE_SSS\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["TRANSMISSION"] =
+        "#define TRANSMISSION_USED\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["SCREEN_TEXTURE"] =
+        "#define SCREEN_TEXTURE_USED\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["SCREEN_UV"] =
+        "#define SCREEN_UV_USED\n";
 
-    actions[VS::SHADER_SPATIAL].usage_defines["DIFFUSE_LIGHT"] = "#define USE_LIGHT_SHADER_CODE\n";
-    actions[VS::SHADER_SPATIAL].usage_defines["SPECULAR_LIGHT"] = "#define USE_LIGHT_SHADER_CODE\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["DIFFUSE_LIGHT"] =
+        "#define USE_LIGHT_SHADER_CODE\n";
+    actions[VS::SHADER_SPATIAL].usage_defines["SPECULAR_LIGHT"] =
+        "#define USE_LIGHT_SHADER_CODE\n";
 
-    actions[VS::SHADER_SPATIAL].render_mode_defines["skip_vertex_transform"] = "#define SKIP_TRANSFORM_USED\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["world_vertex_coords"] = "#define VERTEX_WORLD_COORDS_USED\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["ensure_correct_normals"] = "#define ENSURE_CORRECT_NORMALS\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["cull_front"] = "#define DO_SIDE_CHECK\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["cull_disabled"] = "#define DO_SIDE_CHECK\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["skip_vertex_transform"] =
+        "#define SKIP_TRANSFORM_USED\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["world_vertex_coords"] =
+        "#define VERTEX_WORLD_COORDS_USED\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["ensure_correct_normals"] =
+        "#define ENSURE_CORRECT_NORMALS\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["cull_front"] =
+        "#define DO_SIDE_CHECK\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["cull_disabled"] =
+        "#define DO_SIDE_CHECK\n";
 
-    bool force_lambert = GLOBAL_GET("rendering/quality/shading/force_lambert_over_burley");
+    bool force_lambert =
+        GLOBAL_GET("rendering/quality/shading/force_lambert_over_burley");
 
     if (!force_lambert) {
-        actions[VS::SHADER_SPATIAL].render_mode_defines["diffuse_burley"] = "#define DIFFUSE_BURLEY\n";
+        actions[VS::SHADER_SPATIAL].render_mode_defines["diffuse_burley"] =
+            "#define DIFFUSE_BURLEY\n";
     }
 
-    actions[VS::SHADER_SPATIAL].render_mode_defines["diffuse_oren_nayar"] = "#define DIFFUSE_OREN_NAYAR\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["diffuse_lambert_wrap"] = "#define DIFFUSE_LAMBERT_WRAP\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["diffuse_toon"] = "#define DIFFUSE_TOON\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["diffuse_oren_nayar"] =
+        "#define DIFFUSE_OREN_NAYAR\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["diffuse_lambert_wrap"] =
+        "#define DIFFUSE_LAMBERT_WRAP\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["diffuse_toon"] =
+        "#define DIFFUSE_TOON\n";
 
-    bool force_blinn = GLOBAL_GET("rendering/quality/shading/force_blinn_over_ggx");
+    bool force_blinn =
+        GLOBAL_GET("rendering/quality/shading/force_blinn_over_ggx");
 
     if (!force_blinn) {
-        actions[VS::SHADER_SPATIAL].render_mode_defines["specular_schlick_ggx"] = "#define SPECULAR_SCHLICK_GGX\n";
+        actions[VS::SHADER_SPATIAL]
+            .render_mode_defines["specular_schlick_ggx"] =
+            "#define SPECULAR_SCHLICK_GGX\n";
     } else {
-        actions[VS::SHADER_SPATIAL].render_mode_defines["specular_schlick_ggx"] = "#define SPECULAR_BLINN\n";
+        actions[VS::SHADER_SPATIAL]
+            .render_mode_defines["specular_schlick_ggx"] =
+            "#define SPECULAR_BLINN\n";
     }
 
-    actions[VS::SHADER_SPATIAL].render_mode_defines["specular_blinn"] = "#define SPECULAR_BLINN\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["specular_phong"] = "#define SPECULAR_PHONG\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["specular_toon"] = "#define SPECULAR_TOON\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["specular_disabled"] = "#define SPECULAR_DISABLED\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["shadows_disabled"] = "#define SHADOWS_DISABLED\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["ambient_light_disabled"] = "#define AMBIENT_LIGHT_DISABLED\n";
-    actions[VS::SHADER_SPATIAL].render_mode_defines["shadow_to_opacity"] = "#define USE_SHADOW_TO_OPACITY\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["specular_blinn"] =
+        "#define SPECULAR_BLINN\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["specular_phong"] =
+        "#define SPECULAR_PHONG\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["specular_toon"] =
+        "#define SPECULAR_TOON\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["specular_disabled"] =
+        "#define SPECULAR_DISABLED\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["shadows_disabled"] =
+        "#define SHADOWS_DISABLED\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["ambient_light_disabled"] =
+        "#define AMBIENT_LIGHT_DISABLED\n";
+    actions[VS::SHADER_SPATIAL].render_mode_defines["shadow_to_opacity"] =
+        "#define USE_SHADOW_TO_OPACITY\n";
 
     /* PARTICLES SHADER */
 
     actions[VS::SHADER_PARTICLES].renames["COLOR"] = "out_color";
-    actions[VS::SHADER_PARTICLES].renames["VELOCITY"] = "out_velocity_active.xyz";
+    actions[VS::SHADER_PARTICLES].renames["VELOCITY"] =
+        "out_velocity_active.xyz";
     actions[VS::SHADER_PARTICLES].renames["MASS"] = "mass";
     actions[VS::SHADER_PARTICLES].renames["ACTIVE"] = "shader_active";
     actions[VS::SHADER_PARTICLES].renames["RESTART"] = "restart";
@@ -1288,12 +1790,16 @@ ShaderCompilerGLES3::ShaderCompilerGLES3() {
     actions[VS::SHADER_PARTICLES].renames["NUMBER"] = "particle_number";
     actions[VS::SHADER_PARTICLES].renames["INDEX"] = "index";
     actions[VS::SHADER_PARTICLES].renames["GRAVITY"] = "current_gravity";
-    actions[VS::SHADER_PARTICLES].renames["EMISSION_TRANSFORM"] = "emission_transform";
+    actions[VS::SHADER_PARTICLES].renames["EMISSION_TRANSFORM"] =
+        "emission_transform";
     actions[VS::SHADER_PARTICLES].renames["RANDOM_SEED"] = "random_seed";
 
-    actions[VS::SHADER_PARTICLES].render_mode_defines["disable_force"] = "#define DISABLE_FORCE\n";
-    actions[VS::SHADER_PARTICLES].render_mode_defines["disable_velocity"] = "#define DISABLE_VELOCITY\n";
-    actions[VS::SHADER_PARTICLES].render_mode_defines["keep_data"] = "#define ENABLE_KEEP_DATA\n";
+    actions[VS::SHADER_PARTICLES].render_mode_defines["disable_force"] =
+        "#define DISABLE_FORCE\n";
+    actions[VS::SHADER_PARTICLES].render_mode_defines["disable_velocity"] =
+        "#define DISABLE_VELOCITY\n";
+    actions[VS::SHADER_PARTICLES].render_mode_defines["keep_data"] =
+        "#define ENABLE_KEEP_DATA\n";
 
     vertex_name = "vertex";
     fragment_name = "fragment";
@@ -1304,7 +1810,7 @@ ShaderCompilerGLES3::ShaderCompilerGLES3() {
 
     ShaderLanguage::get_builtin_funcs(&func_list);
 
-    for (List<String>::Element *E = func_list.front(); E; E = E->next()) {
+    for (List<String>::Element* E = func_list.front(); E; E = E->next()) {
         internal_functions.insert(E->get());
     }
 }

@@ -34,7 +34,7 @@
 
 #include "tools/import_utils.h"
 
-void FBXSkeleton::init_skeleton(const ImportState &state) {
+void FBXSkeleton::init_skeleton(const ImportState& state) {
     int skeleton_bone_count = skeleton_bones.size();
 
     if (skeleton == nullptr && skeleton_bone_count > 0) {
@@ -45,9 +45,13 @@ void FBXSkeleton::init_skeleton(const ImportState &state) {
             // can't be done until after node hierarchy is built
             if (fbx_node->godot_node != state.root) {
                 fbx_node->skeleton_node = Ref<FBXSkeleton>(this);
-                print_verbose("cached armature skeleton attachment for node " + fbx_node->node_name);
+                print_verbose(
+                    "cached armature skeleton attachment for node "
+                    + fbx_node->node_name
+                );
             } else {
-                // root node must never be a skeleton to prevent cyclic skeletons from being allowed (skeleton in a skeleton)
+                // root node must never be a skeleton to prevent cyclic
+                // skeletons from being allowed (skeleton in a skeleton)
                 fbx_node->godot_node->add_child(skeleton);
                 skeleton->set_owner(state.root_owner);
                 skeleton->set_name("Skeleton");
@@ -56,7 +60,9 @@ void FBXSkeleton::init_skeleton(const ImportState &state) {
         } else {
             memfree(skeleton);
             skeleton = nullptr;
-            print_error("[doc] skeleton has no valid node to parent nodes to - erasing");
+            print_error(
+                "[doc] skeleton has no valid node to parent nodes to - erasing"
+            );
             skeleton_bones.clear();
             return;
         }
@@ -91,22 +97,39 @@ void FBXSkeleton::init_skeleton(const ImportState &state) {
             bone->godot_bone_id = bone_count;
             bone->fbx_skeleton = Ref<FBXSkeleton>(this);
             bone_map.insert(bone_count, bone);
-            print_verbose("added bone " + itos(bone->bone_id) + " " + bone->bone_name);
+            print_verbose(
+                "added bone " + itos(bone->bone_id) + " " + bone->bone_name
+            );
             bone_count++;
         }
     }
 
-    ERR_FAIL_COND_MSG(skeleton->get_bone_count() != bone_count, "Not all bones got added, is the file corrupted?");
+    ERR_FAIL_COND_MSG(
+        skeleton->get_bone_count() != bone_count,
+        "Not all bones got added, is the file corrupted?"
+    );
 
-    for (Map<int, Ref<FBXBone>>::Element *bone_element = bone_map.front(); bone_element; bone_element = bone_element->next()) {
+    for (Map<int, Ref<FBXBone>>::Element* bone_element = bone_map.front();
+         bone_element;
+         bone_element = bone_element->next()) {
         const Ref<FBXBone> bone = bone_element->value();
         int bone_index = bone_element->key();
-        print_verbose("working on bone: " + itos(bone_index) + " bone name:" + bone->bone_name);
+        print_verbose(
+            "working on bone: " + itos(bone_index)
+            + " bone name:" + bone->bone_name
+        );
 
-        skeleton->set_bone_rest(bone->godot_bone_id, get_unscaled_transform(bone->node->pivot_transform->LocalTransform, state.scale));
+        skeleton->set_bone_rest(
+            bone->godot_bone_id,
+            get_unscaled_transform(
+                bone->node->pivot_transform->LocalTransform,
+                state.scale
+            )
+        );
 
         // lookup parent ID
-        if (bone->valid_parent && state.fbx_bone_map.has(bone->parent_bone_id)) {
+        if (bone->valid_parent
+            && state.fbx_bone_map.has(bone->parent_bone_id)) {
             Ref<FBXBone> parent_bone = state.fbx_bone_map[bone->parent_bone_id];
             int bone_id = skeleton->find_bone(parent_bone->bone_name);
             if (bone_id != -1) {
@@ -116,7 +139,10 @@ void FBXSkeleton::init_skeleton(const ImportState &state) {
             }
         } else {
             if (bone->godot_bone_id != -1) {
-                skeleton->set_bone_parent(bone_index, -1); // no parent for this bone
+                skeleton->set_bone_parent(
+                    bone_index,
+                    -1
+                ); // no parent for this bone
             }
         }
     }

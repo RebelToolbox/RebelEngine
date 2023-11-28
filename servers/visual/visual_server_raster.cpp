@@ -44,14 +44,24 @@ int VisualServerRaster::changes = 0;
 
 /* BLACK BARS */
 
-void VisualServerRaster::black_bars_set_margins(int p_left, int p_top, int p_right, int p_bottom) {
+void VisualServerRaster::black_bars_set_margins(
+    int p_left,
+    int p_top,
+    int p_right,
+    int p_bottom
+) {
     black_margin[MARGIN_LEFT] = p_left;
     black_margin[MARGIN_TOP] = p_top;
     black_margin[MARGIN_RIGHT] = p_right;
     black_margin[MARGIN_BOTTOM] = p_bottom;
 }
 
-void VisualServerRaster::black_bars_set_images(RID p_left, RID p_top, RID p_right, RID p_bottom) {
+void VisualServerRaster::black_bars_set_images(
+    RID p_left,
+    RID p_top,
+    RID p_right,
+    RID p_bottom
+) {
     black_image[MARGIN_LEFT] = p_left;
     black_image[MARGIN_TOP] = p_top;
     black_image[MARGIN_RIGHT] = p_right;
@@ -84,7 +94,11 @@ void VisualServerRaster::free(RID p_rid) {
 
 /* EVENT QUEUING */
 
-void VisualServerRaster::request_frame_drawn_callback(Object *p_where, const StringName &p_method, const Variant &p_userdata) {
+void VisualServerRaster::request_frame_drawn_callback(
+    Object* p_where,
+    const StringName& p_method,
+    const Variant& p_userdata
+) {
     ERR_FAIL_NULL(p_where);
     FrameDrawnCallbacks fdc;
     fdc.object = p_where->get_instance_id();
@@ -95,14 +109,15 @@ void VisualServerRaster::request_frame_drawn_callback(Object *p_where, const Str
 }
 
 void VisualServerRaster::draw(bool p_swap_buffers, double frame_step) {
-    //needs to be done before changes is reset to 0, to not force the editor to redraw
+    // needs to be done before changes is reset to 0, to not force the editor to
+    // redraw
     VS::get_singleton()->emit_signal("frame_pre_draw");
 
     changes = 0;
 
     VSG::rasterizer->begin_frame(frame_step);
 
-    VSG::scene->update_dirty_instances(); //update scene stuff
+    VSG::scene->update_dirty_instances(); // update scene stuff
 
     VSG::viewport->draw_viewports();
     VSG::scene->render_probes();
@@ -110,13 +125,20 @@ void VisualServerRaster::draw(bool p_swap_buffers, double frame_step) {
     VSG::rasterizer->end_frame(p_swap_buffers);
 
     while (frame_drawn_callbacks.front()) {
-        Object *obj = ObjectDB::get_instance(frame_drawn_callbacks.front()->get().object);
+        Object* obj =
+            ObjectDB::get_instance(frame_drawn_callbacks.front()->get().object);
         if (obj) {
             Variant::CallError ce;
-            const Variant *v = &frame_drawn_callbacks.front()->get().param;
+            const Variant* v = &frame_drawn_callbacks.front()->get().param;
             obj->call(frame_drawn_callbacks.front()->get().method, &v, 1, ce);
             if (ce.error != Variant::CallError::CALL_OK) {
-                String err = Variant::get_call_error_text(obj, frame_drawn_callbacks.front()->get().method, &v, 1, ce);
+                String err = Variant::get_call_error_text(
+                    obj,
+                    frame_drawn_callbacks.front()->get().method,
+                    &v,
+                    1,
+                    ce
+                );
                 ERR_PRINT("Error calling frame drawn function: " + err);
             }
         }
@@ -125,14 +147,17 @@ void VisualServerRaster::draw(bool p_swap_buffers, double frame_step) {
     }
     VS::get_singleton()->emit_signal("frame_post_draw");
 }
-void VisualServerRaster::sync() {
-}
+
+void VisualServerRaster::sync() {}
+
 bool VisualServerRaster::has_changed() const {
     return changes > 0;
 }
+
 void VisualServerRaster::init() {
     VSG::rasterizer->initialize();
 }
+
 void VisualServerRaster::finish() {
     if (test_cube.is_valid()) {
         free(test_cube);
@@ -157,11 +182,17 @@ String VisualServerRaster::get_video_adapter_vendor() const {
 
 /* TESTING */
 
-void VisualServerRaster::set_boot_image(const Ref<Image> &p_image, const Color &p_color, bool p_scale, bool p_use_filter) {
+void VisualServerRaster::set_boot_image(
+    const Ref<Image>& p_image,
+    const Color& p_color,
+    bool p_scale,
+    bool p_use_filter
+) {
     redraw_request();
     VSG::rasterizer->set_boot_image(p_image, p_color, p_scale, p_use_filter);
 }
-void VisualServerRaster::set_default_clear_color(const Color &p_color) {
+
+void VisualServerRaster::set_default_clear_color(const Color& p_color) {
     VSG::viewport->set_default_clear_color(p_color);
 }
 
@@ -180,7 +211,7 @@ RID VisualServerRaster::get_test_cube() {
     return test_cube;
 }
 
-bool VisualServerRaster::has_os_feature(const String &p_feature) const {
+bool VisualServerRaster::has_os_feature(const String& p_feature) const {
     return VSG::storage->has_os_feature(p_feature);
 }
 
@@ -195,6 +226,7 @@ void VisualServerRaster::call_set_use_vsync(bool p_enable) {
 bool VisualServerRaster::is_low_end() const {
     return VSG::rasterizer->is_low_end();
 }
+
 VisualServerRaster::VisualServerRaster() {
     VSG::canvas = memnew(VisualServerCanvas);
     VSG::viewport = memnew(VisualServerViewport);

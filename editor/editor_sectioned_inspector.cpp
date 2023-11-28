@@ -30,14 +30,15 @@
 
 #include "editor_sectioned_inspector.h"
 #include "editor_scale.h"
+
 class SectionedInspectorFilter : public Object {
     GDCLASS(SectionedInspectorFilter, Object);
 
-    Object *edited;
+    Object* edited;
     String section;
     bool allow_sub;
 
-    bool _set(const StringName &p_name, const Variant &p_value) {
+    bool _set(const StringName& p_name, const Variant& p_value) {
         if (!edited) {
             return false;
         }
@@ -52,7 +53,7 @@ class SectionedInspectorFilter : public Object {
         return valid;
     }
 
-    bool _get(const StringName &p_name, Variant &r_ret) const {
+    bool _get(const StringName& p_name, Variant& r_ret) const {
         if (!edited) {
             return false;
         }
@@ -67,18 +68,23 @@ class SectionedInspectorFilter : public Object {
         r_ret = edited->get(name, &valid);
         return valid;
     }
-    void _get_property_list(List<PropertyInfo> *p_list) const {
+
+    void _get_property_list(List<PropertyInfo>* p_list) const {
         if (!edited) {
             return;
         }
 
         List<PropertyInfo> pinfo;
         edited->get_property_list(&pinfo);
-        for (List<PropertyInfo>::Element *E = pinfo.front(); E; E = E->next()) {
+        for (List<PropertyInfo>::Element* E = pinfo.front(); E; E = E->next()) {
             PropertyInfo pi = E->get();
             int sp = pi.name.find("/");
 
-            if (pi.name == "resource_path" || pi.name == "resource_name" || pi.name == "resource_local_to_scene" || pi.name.begins_with("script/") || pi.name.begins_with("_global_script")) { //skip resource stuff
+            if (pi.name == "resource_path" || pi.name == "resource_name"
+                || pi.name == "resource_local_to_scene"
+                || pi.name.begins_with("script/")
+                || pi.name.begins_with("_global_script"
+                )) { // skip resource stuff
                 continue;
             }
 
@@ -96,28 +102,34 @@ class SectionedInspectorFilter : public Object {
         }
     }
 
-    bool property_can_revert(const String &p_name) {
+    bool property_can_revert(const String& p_name) {
         return edited->call("property_can_revert", section + "/" + p_name);
     }
 
-    Variant property_get_revert(const String &p_name) {
+    Variant property_get_revert(const String& p_name) {
         return edited->call("property_get_revert", section + "/" + p_name);
     }
 
 protected:
     static void _bind_methods() {
-        ClassDB::bind_method("property_can_revert", &SectionedInspectorFilter::property_can_revert);
-        ClassDB::bind_method("property_get_revert", &SectionedInspectorFilter::property_get_revert);
+        ClassDB::bind_method(
+            "property_can_revert",
+            &SectionedInspectorFilter::property_can_revert
+        );
+        ClassDB::bind_method(
+            "property_get_revert",
+            &SectionedInspectorFilter::property_get_revert
+        );
     }
 
 public:
-    void set_section(const String &p_section, bool p_allow_sub) {
+    void set_section(const String& p_section, bool p_allow_sub) {
         section = p_section;
         allow_sub = p_allow_sub;
         _change_notify();
     }
 
-    void set_edited(Object *p_edited) {
+    void set_edited(Object* p_edited) {
         edited = p_edited;
         _change_notify();
     }
@@ -128,10 +140,19 @@ public:
 };
 
 void SectionedInspector::_bind_methods() {
-    ClassDB::bind_method("_section_selected", &SectionedInspector::_section_selected);
-    ClassDB::bind_method("_search_changed", &SectionedInspector::_search_changed);
+    ClassDB::bind_method(
+        "_section_selected",
+        &SectionedInspector::_section_selected
+    );
+    ClassDB::bind_method(
+        "_search_changed",
+        &SectionedInspector::_search_changed
+    );
 
-    ClassDB::bind_method("update_category_list", &SectionedInspector::update_category_list);
+    ClassDB::bind_method(
+        "update_category_list",
+        &SectionedInspector::update_category_list
+    );
 }
 
 void SectionedInspector::_section_selected() {
@@ -140,11 +161,14 @@ void SectionedInspector::_section_selected() {
     }
 
     selected_category = sections->get_selected()->get_metadata(0);
-    filter->set_section(selected_category, sections->get_selected()->get_children() == nullptr);
+    filter->set_section(
+        selected_category,
+        sections->get_selected()->get_children() == nullptr
+    );
     inspector->set_property_prefix(selected_category + "/");
 }
 
-void SectionedInspector::set_current_section(const String &p_section) {
+void SectionedInspector::set_current_section(const String& p_section) {
     if (section_map.has(p_section)) {
         section_map[p_section]->select(0);
     }
@@ -158,7 +182,7 @@ String SectionedInspector::get_current_section() const {
     }
 }
 
-String SectionedInspector::get_full_item_path(const String &p_item) {
+String SectionedInspector::get_full_item_path(const String& p_item) {
     String base = get_current_section();
 
     if (base != "") {
@@ -168,7 +192,7 @@ String SectionedInspector::get_full_item_path(const String &p_item) {
     }
 }
 
-void SectionedInspector::edit(Object *p_object) {
+void SectionedInspector::edit(Object* p_object) {
     if (!p_object) {
         obj = 0;
         sections->clear();
@@ -190,7 +214,7 @@ void SectionedInspector::edit(Object *p_object) {
         filter->set_edited(p_object);
         inspector->edit(filter);
 
-        TreeItem *first_item = sections->get_root();
+        TreeItem* first_item = sections->get_root();
         if (first_item) {
             while (first_item->get_children()) {
                 first_item = first_item->get_children();
@@ -207,7 +231,7 @@ void SectionedInspector::edit(Object *p_object) {
 void SectionedInspector::update_category_list() {
     sections->clear();
 
-    Object *o = ObjectDB::get_instance(obj);
+    Object* o = ObjectDB::get_instance(obj);
 
     if (!o) {
         return;
@@ -218,7 +242,7 @@ void SectionedInspector::update_category_list() {
 
     section_map.clear();
 
-    TreeItem *root = sections->create_item();
+    TreeItem* root = sections->create_item();
     section_map[""] = root;
 
     String filter;
@@ -226,7 +250,7 @@ void SectionedInspector::update_category_list() {
         filter = search_box->get_text();
     }
 
-    for (List<PropertyInfo>::Element *E = pinfo.front(); E; E = E->next()) {
+    for (List<PropertyInfo>::Element* E = pinfo.front(); E; E = E->next()) {
         PropertyInfo pi = E->get();
 
         if (pi.usage & PROPERTY_USAGE_CATEGORY) {
@@ -235,11 +259,15 @@ void SectionedInspector::update_category_list() {
             continue;
         }
 
-        if (pi.name.find(":") != -1 || pi.name == "script" || pi.name == "resource_name" || pi.name == "resource_path" || pi.name == "resource_local_to_scene" || pi.name.begins_with("_global_script")) {
+        if (pi.name.find(":") != -1 || pi.name == "script"
+            || pi.name == "resource_name" || pi.name == "resource_path"
+            || pi.name == "resource_local_to_scene"
+            || pi.name.begins_with("_global_script")) {
             continue;
         }
 
-        if (!filter.empty() && pi.name.findn(filter) == -1 && pi.name.replace("/", " ").capitalize().findn(filter) == -1) {
+        if (!filter.empty() && pi.name.findn(filter) == -1
+            && pi.name.replace("/", " ").capitalize().findn(filter) == -1) {
             continue;
         }
 
@@ -254,8 +282,11 @@ void SectionedInspector::update_category_list() {
         int sc = MIN(2, sectionarr.size() - 1);
 
         for (int i = 0; i < sc; i++) {
-            TreeItem *parent = section_map[metasection];
-            parent->set_custom_bg_color(0, get_color("prop_subsection", "Editor"));
+            TreeItem* parent = section_map[metasection];
+            parent->set_custom_bg_color(
+                0,
+                get_color("prop_subsection", "Editor")
+            );
 
             if (i > 0) {
                 metasection += "/" + sectionarr[i];
@@ -264,7 +295,7 @@ void SectionedInspector::update_category_list() {
             }
 
             if (!section_map.has(metasection)) {
-                TreeItem *ms = sections->create_item(parent);
+                TreeItem* ms = sections->create_item(parent);
                 section_map[metasection] = ms;
                 ms->set_text(0, sectionarr[i].capitalize());
                 ms->set_metadata(0, metasection);
@@ -272,7 +303,7 @@ void SectionedInspector::update_category_list() {
             }
 
             if (i == sc - 1) {
-                //if it has children, make selectable
+                // if it has children, make selectable
                 section_map[metasection]->set_selectable(0, true);
             }
         }
@@ -285,29 +316,29 @@ void SectionedInspector::update_category_list() {
     inspector->update_tree();
 }
 
-void SectionedInspector::register_search_box(LineEdit *p_box) {
+void SectionedInspector::register_search_box(LineEdit* p_box) {
     search_box = p_box;
     inspector->register_text_enter(p_box);
     search_box->connect("text_changed", this, "_search_changed");
 }
 
-void SectionedInspector::_search_changed(const String &p_what) {
+void SectionedInspector::_search_changed(const String& p_what) {
     update_category_list();
 }
 
-EditorInspector *SectionedInspector::get_inspector() {
+EditorInspector* SectionedInspector::get_inspector() {
     return inspector;
 }
 
 SectionedInspector::SectionedInspector() :
-        obj(0),
-        sections(memnew(Tree)),
-        filter(memnew(SectionedInspectorFilter)),
-        inspector(memnew(EditorInspector)),
-        search_box(nullptr) {
+    obj(0),
+    sections(memnew(Tree)),
+    filter(memnew(SectionedInspectorFilter)),
+    inspector(memnew(EditorInspector)),
+    search_box(nullptr) {
     add_constant_override("autohide", 1); // Fixes the dragger always showing up
 
-    VBoxContainer *left_vb = memnew(VBoxContainer);
+    VBoxContainer* left_vb = memnew(VBoxContainer);
     left_vb->set_custom_minimum_size(Size2(190, 0) * EDSCALE);
     add_child(left_vb);
 
@@ -316,7 +347,7 @@ SectionedInspector::SectionedInspector() :
 
     left_vb->add_child(sections, true);
 
-    VBoxContainer *right_vb = memnew(VBoxContainer);
+    VBoxContainer* right_vb = memnew(VBoxContainer);
     right_vb->set_custom_minimum_size(Size2(300, 0) * EDSCALE);
     right_vb->set_h_size_flags(SIZE_EXPAND_FILL);
     add_child(right_vb);

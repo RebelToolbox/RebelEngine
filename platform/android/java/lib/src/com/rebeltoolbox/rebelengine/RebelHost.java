@@ -34,7 +34,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Denotes a component (e.g: Activity, Fragment) that hosts the {@link RebelFragment} fragment.
+ * Denotes a component (e.g: Activity, Fragment) that hosts the {@link
+ * RebelFragment} fragment.
  */
 public interface RebelHost {
     /**
@@ -55,13 +56,14 @@ public interface RebelHost {
     default void onMainLoopStarted() {}
 
     /**
-     * Invoked on the UI thread as the last step of the Rebel Engine clean up phase.
+     * Invoked on the UI thread as the last step of the Rebel Engine clean up
+     * phase.
      */
     default void onQuit(RebelFragment quitFragment) {}
 
     /**
-     * Invoked on the GL thread when the Rebel Engine is restarted. It's up to the host
-     * to perform the appropriate action(s).
+     * Invoked on the GL thread when the Rebel Engine is restarted. It's up to
+     * the host to perform the appropriate action(s).
      */
     default void onRestart(RebelFragment restartFragment) {}
 }

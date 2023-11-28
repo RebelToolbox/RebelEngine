@@ -77,7 +77,7 @@ protected:
     static void _bind_methods();
 
 private:
-    void on_gui_input(const Ref<InputEvent> &p_event);
+    void on_gui_input(const Ref<InputEvent>& p_event);
     void on_preset_item_selected(int preset_id);
     void _curve_changed();
     void on_context_menu_item_selected(int action_id);
@@ -102,8 +102,8 @@ private:
     Transform2D _world_to_view;
 
     Ref<Curve> _curve_ref;
-    PopupMenu *_context_menu;
-    PopupMenu *_presets_menu;
+    PopupMenu* _context_menu;
+    PopupMenu* _presets_menu;
 
     Array _undo_data;
     bool _has_undo_data;
@@ -123,25 +123,30 @@ class EditorInspectorPluginCurve : public EditorInspectorPlugin {
     GDCLASS(EditorInspectorPluginCurve, EditorInspectorPlugin);
 
 public:
-    virtual bool can_handle(Object *p_object);
-    virtual void parse_begin(Object *p_object);
+    virtual bool can_handle(Object* p_object);
+    virtual void parse_begin(Object* p_object);
 };
 
 class CurveEditorPlugin : public EditorPlugin {
     GDCLASS(CurveEditorPlugin, EditorPlugin);
 
 public:
-    CurveEditorPlugin(EditorNode *p_node);
+    CurveEditorPlugin(EditorNode* p_node);
 
-    virtual String get_name() const { return "Curve"; }
+    virtual String get_name() const {
+        return "Curve";
+    }
 };
 
 class CurvePreviewGenerator : public EditorResourcePreviewGenerator {
     GDCLASS(CurvePreviewGenerator, EditorResourcePreviewGenerator);
 
 public:
-    virtual bool handles(const String &p_type) const;
-    virtual Ref<Texture> generate(const Ref<Resource> &p_from, const Size2 &p_size) const;
+    virtual bool handles(const String& p_type) const;
+    virtual Ref<Texture> generate(
+        const Ref<Resource>& p_from,
+        const Size2& p_size
+    ) const;
 };
 
 #endif // CURVE_EDITOR_PLUGIN_H

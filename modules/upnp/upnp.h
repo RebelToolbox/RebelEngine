@@ -47,17 +47,17 @@ private:
 
     Vector<Ref<UPNPDevice>> devices;
 
-    bool is_common_device(const String &dev) const;
-    void add_device_to_list(UPNPDev *dev, UPNPDev *devlist);
-    void parse_igd(Ref<UPNPDevice> dev, UPNPDev *devlist);
-    char *load_description(const String &url, int *size, int *status_code) const;
+    bool is_common_device(const String& dev) const;
+    void add_device_to_list(UPNPDev* dev, UPNPDev* devlist);
+    void parse_igd(Ref<UPNPDevice> dev, UPNPDev* devlist);
+    char* load_description(const String& url, int* size, int* status_code)
+        const;
 
 protected:
     static void _bind_methods();
 
 public:
     enum UPNPResult {
-
         UPNP_RESULT_SUCCESS,
         UPNP_RESULT_NOT_AUTHORIZED,
         UPNP_RESULT_PORT_MAPPING_NOT_FOUND,
@@ -100,14 +100,24 @@ public:
 
     Ref<UPNPDevice> get_gateway() const;
 
-    int discover(int timeout = 2000, int ttl = 2, const String &device_filter = "InternetGatewayDevice");
+    int discover(
+        int timeout = 2000,
+        int ttl = 2,
+        const String& device_filter = "InternetGatewayDevice"
+    );
 
     String query_external_address() const;
 
-    int add_port_mapping(int port, int port_internal = 0, String desc = "", String proto = "UDP", int duration = 0) const;
+    int add_port_mapping(
+        int port,
+        int port_internal = 0,
+        String desc = "",
+        String proto = "UDP",
+        int duration = 0
+    ) const;
     int delete_port_mapping(int port, String proto = "UDP") const;
 
-    void set_discover_multicast_if(const String &m_if);
+    void set_discover_multicast_if(const String& m_if);
     String get_discover_multicast_if() const;
 
     void set_discover_local_port(int port);

@@ -30,9 +30,9 @@
 
 #include "net_socket.h"
 
-NetSocket *(*NetSocket::_create)() = nullptr;
+NetSocket* (*NetSocket::_create)() = nullptr;
 
-NetSocket *NetSocket::create() {
+NetSocket* NetSocket::create() {
     if (_create) {
         return _create();
     }

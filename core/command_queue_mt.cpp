@@ -46,7 +46,7 @@ void CommandQueueMT::wait_for_flush() {
     OS::get_singleton()->delay_usec(1000);
 }
 
-CommandQueueMT::SyncSemaphore *CommandQueueMT::_alloc_sync_sem() {
+CommandQueueMT::SyncSemaphore* CommandQueueMT::_alloc_sync_sem() {
     int idx = -1;
 
     while (true) {
@@ -77,7 +77,7 @@ tryagain:
         return false;
     }
 
-    uint32_t size = *(uint32_t *)&command_mem[dealloc_ptr];
+    uint32_t size = *(uint32_t*)&command_mem[dealloc_ptr];
 
     if (size == 0) {
         // End of command buffer wrap down
@@ -99,10 +99,21 @@ CommandQueueMT::CommandQueueMT(bool p_sync) {
     write_ptr_and_epoch = 0;
     dealloc_ptr = 0;
 
-    command_mem_size = GLOBAL_DEF_RST("memory/limits/command_queue/multithreading_queue_size_kb", DEFAULT_COMMAND_MEM_SIZE_KB);
-    ProjectSettings::get_singleton()->set_custom_property_info("memory/limits/command_queue/multithreading_queue_size_kb", PropertyInfo(Variant::INT, "memory/limits/command_queue/multithreading_queue_size_kb", PROPERTY_HINT_RANGE, "1,4096,1,or_greater"));
+    command_mem_size = GLOBAL_DEF_RST(
+        "memory/limits/command_queue/multithreading_queue_size_kb",
+        DEFAULT_COMMAND_MEM_SIZE_KB
+    );
+    ProjectSettings::get_singleton()->set_custom_property_info(
+        "memory/limits/command_queue/multithreading_queue_size_kb",
+        PropertyInfo(
+            Variant::INT,
+            "memory/limits/command_queue/multithreading_queue_size_kb",
+            PROPERTY_HINT_RANGE,
+            "1,4096,1,or_greater"
+        )
+    );
     command_mem_size *= 1024;
-    command_mem = (uint8_t *)memalloc(command_mem_size);
+    command_mem = (uint8_t*)memalloc(command_mem_size);
 
     for (int i = 0; i < SYNC_SEMAPHORES; i++) {
         sync_sems[i].in_use = false;

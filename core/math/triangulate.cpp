@@ -30,9 +30,9 @@
 
 #include "triangulate.h"
 
-real_t Triangulate::get_area(const Vector<Vector2> &contour) {
+real_t Triangulate::get_area(const Vector<Vector2>& contour) {
     int n = contour.size();
-    const Vector2 *c = &contour[0];
+    const Vector2* c = &contour[0];
 
     real_t A = 0.0;
 
@@ -46,11 +46,17 @@ real_t Triangulate::get_area(const Vector<Vector2> &contour) {
  * `is_inside_triangle` decides if a point P is inside the triangle
  * defined by A, B, C.
  */
-bool Triangulate::is_inside_triangle(real_t Ax, real_t Ay,
-        real_t Bx, real_t By,
-        real_t Cx, real_t Cy,
-        real_t Px, real_t Py,
-        bool include_edges) {
+bool Triangulate::is_inside_triangle(
+    real_t Ax,
+    real_t Ay,
+    real_t Bx,
+    real_t By,
+    real_t Cx,
+    real_t Cy,
+    real_t Px,
+    real_t Py,
+    bool include_edges
+) {
     real_t ax, ay, bx, by, cx, cy, apx, apy, bpx, bpy, cpx, cpy;
     real_t cCROSSap, bCROSScp, aCROSSbp;
 
@@ -78,10 +84,18 @@ bool Triangulate::is_inside_triangle(real_t Ax, real_t Ay,
     }
 }
 
-bool Triangulate::snip(const Vector<Vector2> &p_contour, int u, int v, int w, int n, const Vector<int> &V, bool relaxed) {
+bool Triangulate::snip(
+    const Vector<Vector2>& p_contour,
+    int u,
+    int v,
+    int w,
+    int n,
+    const Vector<int>& V,
+    bool relaxed
+) {
     int p;
     real_t Ax, Ay, Bx, By, Cx, Cy, Px, Py;
-    const Vector2 *contour = &p_contour[0];
+    const Vector2* contour = &p_contour[0];
 
     Ax = contour[V[u]].x;
     Ay = contour[V[u]].y;
@@ -92,11 +106,11 @@ bool Triangulate::snip(const Vector<Vector2> &p_contour, int u, int v, int w, in
     Cx = contour[V[w]].x;
     Cy = contour[V[w]].y;
 
-    // It can happen that the triangulation ends up with three aligned vertices to deal with.
-    // In this scenario, making the check below strict may reject the possibility of
-    // forming a last triangle with these aligned vertices, preventing the triangulatiom
-    // from completing.
-    // To avoid that we allow zero-area triangles if all else failed.
+    // It can happen that the triangulation ends up with three aligned vertices
+    // to deal with. In this scenario, making the check below strict may reject
+    // the possibility of forming a last triangle with these aligned vertices,
+    // preventing the triangulatiom from completing. To avoid that we allow
+    // zero-area triangles if all else failed.
     float threshold = relaxed ? -CMP_EPSILON : CMP_EPSILON;
 
     if (threshold > (((Bx - Ax) * (Cy - Ay)) - ((By - Ay) * (Cx - Ax)))) {
@@ -117,7 +131,10 @@ bool Triangulate::snip(const Vector<Vector2> &p_contour, int u, int v, int w, in
     return true;
 }
 
-bool Triangulate::triangulate(const Vector<Vector2> &contour, Vector<int> &result) {
+bool Triangulate::triangulate(
+    const Vector<Vector2>& contour,
+    Vector<int>& result
+) {
     /* allocate and initialize list of Vertices in polygon */
 
     int n = contour.size();

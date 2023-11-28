@@ -47,26 +47,41 @@ static uint64_t _align(uint64_t p_n, int p_alignment) {
     }
 };
 
-static void _pad(FileAccess *p_file, int p_bytes) {
+static void _pad(FileAccess* p_file, int p_bytes) {
     for (int i = 0; i < p_bytes; i++) {
         p_file->store_8(0);
     };
 };
 
 void PCKPacker::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("pck_start", "pck_name", "alignment"), &PCKPacker::pck_start, DEFVAL(0));
-    ClassDB::bind_method(D_METHOD("add_file", "pck_path", "source_path"), &PCKPacker::add_file);
-    ClassDB::bind_method(D_METHOD("flush", "verbose"), &PCKPacker::flush, DEFVAL(false));
+    ClassDB::bind_method(
+        D_METHOD("pck_start", "pck_name", "alignment"),
+        &PCKPacker::pck_start,
+        DEFVAL(0)
+    );
+    ClassDB::bind_method(
+        D_METHOD("add_file", "pck_path", "source_path"),
+        &PCKPacker::add_file
+    );
+    ClassDB::bind_method(
+        D_METHOD("flush", "verbose"),
+        &PCKPacker::flush,
+        DEFVAL(false)
+    );
 };
 
-Error PCKPacker::pck_start(const String &p_file, int p_alignment) {
+Error PCKPacker::pck_start(const String& p_file, int p_alignment) {
     if (file != nullptr) {
         memdelete(file);
     }
 
     file = FileAccess::open(p_file, FileAccess::WRITE);
 
-    ERR_FAIL_COND_V_MSG(!file, ERR_CANT_CREATE, "Can't open file to write: " + String(p_file) + ".");
+    ERR_FAIL_COND_V_MSG(
+        !file,
+        ERR_CANT_CREATE,
+        "Can't open file to write: " + String(p_file) + "."
+    );
 
     alignment = p_alignment;
 
@@ -85,8 +100,8 @@ Error PCKPacker::pck_start(const String &p_file, int p_alignment) {
     return OK;
 };
 
-Error PCKPacker::add_file(const String &p_file, const String &p_src) {
-    FileAccess *f = FileAccess::open(p_src, FileAccess::READ);
+Error PCKPacker::add_file(const String& p_file, const String& p_src) {
+    FileAccess* f = FileAccess::open(p_src, FileAccess::READ);
     if (!f) {
         return ERR_FILE_CANT_OPEN;
     };
@@ -106,7 +121,11 @@ Error PCKPacker::add_file(const String &p_file, const String &p_src) {
 };
 
 Error PCKPacker::flush(bool p_verbose) {
-    ERR_FAIL_COND_V_MSG(!file, ERR_INVALID_PARAMETER, "File must be opened before use.");
+    ERR_FAIL_COND_V_MSG(
+        !file,
+        ERR_INVALID_PARAMETER,
+        "File must be opened before use."
+    );
 
     // write the index
 
@@ -115,7 +134,7 @@ Error PCKPacker::flush(bool p_verbose) {
     for (int i = 0; i < files.size(); i++) {
         file->store_pascal_string(files[i].path);
         files.write[i].offset_offset = file->get_position();
-        file->store_64(0); // offset
+        file->store_64(0);             // offset
         file->store_64(files[i].size); // size
 
         // # empty md5
@@ -131,11 +150,11 @@ Error PCKPacker::flush(bool p_verbose) {
     _pad(file, ofs - file->get_position());
 
     const uint32_t buf_max = 65536;
-    uint8_t *buf = memnew_arr(uint8_t, buf_max);
+    uint8_t* buf = memnew_arr(uint8_t, buf_max);
 
     int count = 0;
     for (int i = 0; i < files.size(); i++) {
-        FileAccess *src = FileAccess::open(files[i].src_path, FileAccess::READ);
+        FileAccess* src = FileAccess::open(files[i].src_path, FileAccess::READ);
         uint64_t to_write = files[i].size;
         while (to_write > 0) {
             uint64_t read = src->get_buffer(buf, MIN(to_write, buf_max));
@@ -144,7 +163,8 @@ Error PCKPacker::flush(bool p_verbose) {
         };
 
         uint64_t pos = file->get_position();
-        file->seek(files[i].offset_offset); // go back to store the file's offset
+        file->seek(files[i].offset_offset
+        ); // go back to store the file's offset
         file->store_64(ofs);
         file->seek(pos);
 
@@ -156,7 +176,14 @@ Error PCKPacker::flush(bool p_verbose) {
         count += 1;
         const int file_num = files.size();
         if (p_verbose && (file_num > 0)) {
-            print_line(vformat("[%d/%d - %d%%] PCKPacker flush: %s -> %s", count, file_num, float(count) / file_num * 100, files[i].src_path, files[i].path));
+            print_line(vformat(
+                "[%d/%d - %d%%] PCKPacker flush: %s -> %s",
+                count,
+                file_num,
+                float(count) / file_num * 100,
+                files[i].src_path,
+                files[i].path
+            ));
         }
     }
 

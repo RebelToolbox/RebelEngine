@@ -36,11 +36,11 @@
 #include "scene/gui/separator.h"
 #include "scene/resources/particles_material.h"
 
-void Particles2DEditorPlugin::edit(Object *p_object) {
+void Particles2DEditorPlugin::edit(Object* p_object) {
     particles = Object::cast_to<Particles2D>(p_object);
 }
 
-bool Particles2DEditorPlugin::handles(Object *p_object) const {
+bool Particles2DEditorPlugin::handles(Object* p_object) const {
     return p_object->is_class("Particles2D");
 }
 
@@ -52,7 +52,7 @@ void Particles2DEditorPlugin::make_visible(bool p_visible) {
     }
 }
 
-void Particles2DEditorPlugin::_file_selected(const String &p_file) {
+void Particles2DEditorPlugin::_file_selected(const String& p_file) {
     source_emission_file = p_file;
     emission_mask->popup_centered_minsize();
 }
@@ -76,7 +76,7 @@ void Particles2DEditorPlugin::_menu_callback(int p_idx) {
             emission_mask->popup_centered_minsize();
         } break;
         case MENU_OPTION_CONVERT_TO_CPU_PARTICLES: {
-            CPUParticles2D *cpu_particles = memnew(CPUParticles2D);
+            CPUParticles2D* cpu_particles = memnew(CPUParticles2D);
             cpu_particles->convert_from_particles(particles);
             cpu_particles->set_name(particles->get_name());
             cpu_particles->set_transform(particles->get_transform());
@@ -84,11 +84,25 @@ void Particles2DEditorPlugin::_menu_callback(int p_idx) {
             cpu_particles->set_pause_mode(particles->get_pause_mode());
             cpu_particles->set_z_index(particles->get_z_index());
 
-            UndoRedo *ur = EditorNode::get_singleton()->get_undo_redo();
+            UndoRedo* ur = EditorNode::get_singleton()->get_undo_redo();
             ur->create_action(TTR("Convert to CPUParticles"));
-            ur->add_do_method(EditorNode::get_singleton()->get_scene_tree_dock(), "replace_node", particles, cpu_particles, true, false);
+            ur->add_do_method(
+                EditorNode::get_singleton()->get_scene_tree_dock(),
+                "replace_node",
+                particles,
+                cpu_particles,
+                true,
+                false
+            );
             ur->add_do_reference(cpu_particles);
-            ur->add_undo_method(EditorNode::get_singleton()->get_scene_tree_dock(), "replace_node", cpu_particles, particles, false, false);
+            ur->add_undo_method(
+                EditorNode::get_singleton()->get_scene_tree_dock(),
+                "replace_node",
+                cpu_particles,
+                particles,
+                false,
+                false
+            );
             ur->add_undo_reference(particles);
             ur->commit_action();
 
@@ -104,7 +118,11 @@ void Particles2DEditorPlugin::_generate_visibility_rect() {
 
     float running = 0.0;
 
-    EditorProgress ep("gen_vrect", TTR("Generating Visibility Rect"), int(time));
+    EditorProgress ep(
+        "gen_vrect",
+        TTR("Generating Visibility Rect"),
+        int(time)
+    );
 
     bool was_emitting = particles->is_emitting();
     if (!was_emitting) {
@@ -134,21 +152,30 @@ void Particles2DEditorPlugin::_generate_visibility_rect() {
 
     undo_redo->create_action(TTR("Generate Visibility Rect"));
     undo_redo->add_do_method(particles, "set_visibility_rect", rect);
-    undo_redo->add_undo_method(particles, "set_visibility_rect", particles->get_visibility_rect());
+    undo_redo->add_undo_method(
+        particles,
+        "set_visibility_rect",
+        particles->get_visibility_rect()
+    );
     undo_redo->commit_action();
 }
 
 void Particles2DEditorPlugin::_generate_emission_mask() {
     Ref<ParticlesMaterial> pm = particles->get_process_material();
     if (!pm.is_valid()) {
-        EditorNode::get_singleton()->show_warning(TTR("Can only set point into a ParticlesMaterial process material"));
+        EditorNode::get_singleton()->show_warning(
+            TTR("Can only set point into a ParticlesMaterial process material")
+        );
         return;
     }
 
     Ref<Image> img;
     img.instance();
     Error err = ImageLoader::load_image(source_emission_file, img);
-    ERR_FAIL_COND_MSG(err != OK, "Error loading image '" + source_emission_file + "'.");
+    ERR_FAIL_COND_MSG(
+        err != OK,
+        "Error loading image '" + source_emission_file + "'."
+    );
 
     if (img->is_compressed()) {
         img->decompress();
@@ -189,10 +216,14 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
                 if (a > 128) {
                     if (emode == EMISSION_MODE_SOLID) {
                         if (capture_colors) {
-                            valid_colors.write[vpc * 4 + 0] = r[(j * s.width + i) * 4 + 0];
-                            valid_colors.write[vpc * 4 + 1] = r[(j * s.width + i) * 4 + 1];
-                            valid_colors.write[vpc * 4 + 2] = r[(j * s.width + i) * 4 + 2];
-                            valid_colors.write[vpc * 4 + 3] = r[(j * s.width + i) * 4 + 3];
+                            valid_colors.write[vpc * 4 + 0] =
+                                r[(j * s.width + i) * 4 + 0];
+                            valid_colors.write[vpc * 4 + 1] =
+                                r[(j * s.width + i) * 4 + 1];
+                            valid_colors.write[vpc * 4 + 2] =
+                                r[(j * s.width + i) * 4 + 2];
+                            valid_colors.write[vpc * 4 + 3] =
+                                r[(j * s.width + i) * 4 + 3];
                         }
                         valid_positions.write[vpc++] = Point2(i, j);
 
@@ -200,7 +231,9 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
                         bool on_border = false;
                         for (int x = i - 1; x <= i + 1; x++) {
                             for (int y = j - 1; y <= j + 1; y++) {
-                                if (x < 0 || y < 0 || x >= s.width || y >= s.height || r[(y * s.width + x) * 4 + 3] <= 128) {
+                                if (x < 0 || y < 0 || x >= s.width
+                                    || y >= s.height
+                                    || r[(y * s.width + x) * 4 + 3] <= 128) {
                                     on_border = true;
                                     break;
                                 }
@@ -222,8 +255,12 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
                                             continue;
                                         }
 
-                                        if (x < 0 || y < 0 || x >= s.width || y >= s.height || r[(y * s.width + x) * 4 + 3] <= 128) {
-                                            normal += Vector2(x - i, y - j).normalized();
+                                        if (x < 0 || y < 0 || x >= s.width
+                                            || y >= s.height
+                                            || r[(y * s.width + x) * 4 + 3]
+                                                   <= 128) {
+                                            normal += Vector2(x - i, y - j)
+                                                          .normalized();
                                         }
                                     }
                                 }
@@ -233,10 +270,14 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
                             }
 
                             if (capture_colors) {
-                                valid_colors.write[vpc * 4 + 0] = r[(j * s.width + i) * 4 + 0];
-                                valid_colors.write[vpc * 4 + 1] = r[(j * s.width + i) * 4 + 1];
-                                valid_colors.write[vpc * 4 + 2] = r[(j * s.width + i) * 4 + 2];
-                                valid_colors.write[vpc * 4 + 3] = r[(j * s.width + i) * 4 + 3];
+                                valid_colors.write[vpc * 4 + 0] =
+                                    r[(j * s.width + i) * 4 + 0];
+                                valid_colors.write[vpc * 4 + 1] =
+                                    r[(j * s.width + i) * 4 + 1];
+                                valid_colors.write[vpc * 4 + 2] =
+                                    r[(j * s.width + i) * 4 + 2];
+                                valid_colors.write[vpc * 4 + 3] =
+                                    r[(j * s.width + i) * 4 + 3];
                             }
 
                             vpc++;
@@ -252,7 +293,10 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
         valid_normals.resize(vpc);
     }
 
-    ERR_FAIL_COND_MSG(valid_positions.size() == 0, "No pixels with transparency > 128 in image...");
+    ERR_FAIL_COND_MSG(
+        valid_positions.size() == 0,
+        "No pixels with transparency > 128 in image..."
+    );
 
     PoolVector<uint8_t> texdata;
 
@@ -263,7 +307,7 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
 
     {
         PoolVector<uint8_t>::Write tw = texdata.write();
-        float *twf = (float *)tw.ptr();
+        float* twf = (float*)tw.ptr();
         for (int i = 0; i < vpc; i++) {
             twf[i * 2 + 0] = valid_positions[i].x;
             twf[i * 2 + 1] = valid_positions[i].y;
@@ -282,7 +326,7 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
 
     if (capture_colors) {
         PoolVector<uint8_t> colordata;
-        colordata.resize(w * h * 4); //use RG texture
+        colordata.resize(w * h * 4); // use RG texture
 
         {
             PoolVector<uint8_t>::Write tw = colordata.write();
@@ -300,14 +344,15 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
     }
 
     if (valid_normals.size()) {
-        pm->set_emission_shape(ParticlesMaterial::EMISSION_SHAPE_DIRECTED_POINTS);
+        pm->set_emission_shape(ParticlesMaterial::EMISSION_SHAPE_DIRECTED_POINTS
+        );
 
         PoolVector<uint8_t> normdata;
-        normdata.resize(w * h * 2 * sizeof(float)); //use RG texture
+        normdata.resize(w * h * 2 * sizeof(float)); // use RG texture
 
         {
             PoolVector<uint8_t>::Write tw = normdata.write();
-            float *twf = (float *)tw.ptr();
+            float* twf = (float*)tw.ptr();
             for (int i = 0; i < vpc; i++) {
                 twf[i * 2 + 0] = valid_normals[i].x;
                 twf[i * 2 + 1] = valid_normals[i].y;
@@ -329,19 +374,32 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
 void Particles2DEditorPlugin::_notification(int p_what) {
     if (p_what == NOTIFICATION_ENTER_TREE) {
         menu->get_popup()->connect("id_pressed", this, "_menu_callback");
-        menu->set_icon(menu->get_popup()->get_icon("Particles2D", "EditorIcons"));
+        menu->set_icon(menu->get_popup()->get_icon("Particles2D", "EditorIcons")
+        );
         file->connect("file_selected", this, "_file_selected");
     }
 }
 
 void Particles2DEditorPlugin::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_menu_callback"), &Particles2DEditorPlugin::_menu_callback);
-    ClassDB::bind_method(D_METHOD("_file_selected"), &Particles2DEditorPlugin::_file_selected);
-    ClassDB::bind_method(D_METHOD("_generate_visibility_rect"), &Particles2DEditorPlugin::_generate_visibility_rect);
-    ClassDB::bind_method(D_METHOD("_generate_emission_mask"), &Particles2DEditorPlugin::_generate_emission_mask);
+    ClassDB::bind_method(
+        D_METHOD("_menu_callback"),
+        &Particles2DEditorPlugin::_menu_callback
+    );
+    ClassDB::bind_method(
+        D_METHOD("_file_selected"),
+        &Particles2DEditorPlugin::_file_selected
+    );
+    ClassDB::bind_method(
+        D_METHOD("_generate_visibility_rect"),
+        &Particles2DEditorPlugin::_generate_visibility_rect
+    );
+    ClassDB::bind_method(
+        D_METHOD("_generate_emission_mask"),
+        &Particles2DEditorPlugin::_generate_emission_mask
+    );
 }
 
-Particles2DEditorPlugin::Particles2DEditorPlugin(EditorNode *p_node) {
+Particles2DEditorPlugin::Particles2DEditorPlugin(EditorNode* p_node) {
     particles = nullptr;
     editor = p_node;
     undo_redo = editor->get_undo_redo();
@@ -353,12 +411,22 @@ Particles2DEditorPlugin::Particles2DEditorPlugin(EditorNode *p_node) {
     toolbar->add_child(memnew(VSeparator));
 
     menu = memnew(MenuButton);
-    menu->get_popup()->add_item(TTR("Generate Visibility Rect"), MENU_GENERATE_VISIBILITY_RECT);
+    menu->get_popup()->add_item(
+        TTR("Generate Visibility Rect"),
+        MENU_GENERATE_VISIBILITY_RECT
+    );
     menu->get_popup()->add_separator();
-    menu->get_popup()->add_item(TTR("Load Emission Mask"), MENU_LOAD_EMISSION_MASK);
-    //	menu->get_popup()->add_item(TTR("Clear Emission Mask"), MENU_CLEAR_EMISSION_MASK);
+    menu->get_popup()->add_item(
+        TTR("Load Emission Mask"),
+        MENU_LOAD_EMISSION_MASK
+    );
+    //	menu->get_popup()->add_item(TTR("Clear Emission Mask"),
+    // MENU_CLEAR_EMISSION_MASK);
     menu->get_popup()->add_separator();
-    menu->get_popup()->add_item(TTR("Convert to CPUParticles2D"), MENU_OPTION_CONVERT_TO_CPU_PARTICLES);
+    menu->get_popup()->add_item(
+        TTR("Convert to CPUParticles2D"),
+        MENU_OPTION_CONVERT_TO_CPU_PARTICLES
+    );
     menu->get_popup()->add_separator();
     menu->get_popup()->add_item(TTR("Restart"), MENU_RESTART);
     menu->set_text(TTR("Particles"));
@@ -368,7 +436,7 @@ Particles2DEditorPlugin::Particles2DEditorPlugin(EditorNode *p_node) {
     file = memnew(EditorFileDialog);
     List<String> ext;
     ImageLoader::get_recognized_extensions(&ext);
-    for (List<String>::Element *E = ext.front(); E; E = E->next()) {
+    for (List<String>::Element* E = ext.front(); E; E = E->next()) {
         file->add_filter("*." + E->get() + "; " + E->get().to_upper());
     }
     file->set_mode(EditorFileDialog::MODE_OPEN_FILE);
@@ -383,7 +451,7 @@ Particles2DEditorPlugin::Particles2DEditorPlugin(EditorNode *p_node) {
 
     generate_visibility_rect = memnew(ConfirmationDialog);
     generate_visibility_rect->set_title(TTR("Generate Visibility Rect"));
-    VBoxContainer *genvb = memnew(VBoxContainer);
+    VBoxContainer* genvb = memnew(VBoxContainer);
     generate_visibility_rect->add_child(genvb);
     generate_seconds = memnew(SpinBox);
     genvb->add_margin_child(TTR("Generation Time (sec):"), generate_seconds);
@@ -393,17 +461,21 @@ Particles2DEditorPlugin::Particles2DEditorPlugin(EditorNode *p_node) {
 
     toolbar->add_child(generate_visibility_rect);
 
-    generate_visibility_rect->connect("confirmed", this, "_generate_visibility_rect");
+    generate_visibility_rect
+        ->connect("confirmed", this, "_generate_visibility_rect");
 
     emission_mask = memnew(ConfirmationDialog);
     emission_mask->set_title(TTR("Load Emission Mask"));
-    VBoxContainer *emvb = memnew(VBoxContainer);
+    VBoxContainer* emvb = memnew(VBoxContainer);
     emission_mask->add_child(emvb);
     emission_mask_mode = memnew(OptionButton);
     emvb->add_margin_child(TTR("Emission Mask"), emission_mask_mode);
     emission_mask_mode->add_item(TTR("Solid Pixels"), EMISSION_MODE_SOLID);
     emission_mask_mode->add_item(TTR("Border Pixels"), EMISSION_MODE_BORDER);
-    emission_mask_mode->add_item(TTR("Directed Border Pixels"), EMISSION_MODE_BORDER_DIRECTED);
+    emission_mask_mode->add_item(
+        TTR("Directed Border Pixels"),
+        EMISSION_MODE_BORDER_DIRECTED
+    );
     emission_colors = memnew(CheckBox);
     emission_colors->set_text(TTR("Capture from Pixel"));
     emvb->add_margin_child(TTR("Emission Colors"), emission_colors);
@@ -413,5 +485,4 @@ Particles2DEditorPlugin::Particles2DEditorPlugin(EditorNode *p_node) {
     emission_mask->connect("confirmed", this, "_generate_emission_mask");
 }
 
-Particles2DEditorPlugin::~Particles2DEditorPlugin() {
-}
+Particles2DEditorPlugin::~Particles2DEditorPlugin() {}

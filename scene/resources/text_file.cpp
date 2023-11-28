@@ -40,7 +40,7 @@ String TextFile::get_text() const {
     return text;
 }
 
-void TextFile::set_text(const String &p_code) {
+void TextFile::set_text(const String& p_code) {
     text = p_code;
 }
 
@@ -48,10 +48,10 @@ void TextFile::reload_from_file() {
     load_text(path);
 }
 
-Error TextFile::load_text(const String &p_path) {
+Error TextFile::load_text(const String& p_path) {
     PoolVector<uint8_t> sourcef;
     Error err;
-    FileAccess *f = FileAccess::open(p_path, FileAccess::READ, &err);
+    FileAccess* f = FileAccess::open(p_path, FileAccess::READ, &err);
 
     ERR_FAIL_COND_V_MSG(err, err, "Cannot open TextFile '" + p_path + "'.");
 

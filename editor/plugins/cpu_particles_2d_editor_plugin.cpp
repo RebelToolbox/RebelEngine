@@ -36,11 +36,11 @@
 #include "scene/gui/separator.h"
 #include "scene/resources/particles_material.h"
 
-void CPUParticles2DEditorPlugin::edit(Object *p_object) {
+void CPUParticles2DEditorPlugin::edit(Object* p_object) {
     particles = Object::cast_to<CPUParticles2D>(p_object);
 }
 
-bool CPUParticles2DEditorPlugin::handles(Object *p_object) const {
+bool CPUParticles2DEditorPlugin::handles(Object* p_object) const {
     return p_object->is_class("CPUParticles2D");
 }
 
@@ -52,7 +52,7 @@ void CPUParticles2DEditorPlugin::make_visible(bool p_visible) {
     }
 }
 
-void CPUParticles2DEditorPlugin::_file_selected(const String &p_file) {
+void CPUParticles2DEditorPlugin::_file_selected(const String& p_file) {
     source_emission_file = p_file;
     emission_mask->popup_centered_minsize();
 }
@@ -76,7 +76,10 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
     Ref<Image> img;
     img.instance();
     Error err = ImageLoader::load_image(source_emission_file, img);
-    ERR_FAIL_COND_MSG(err != OK, "Error loading image '" + source_emission_file + "'.");
+    ERR_FAIL_COND_MSG(
+        err != OK,
+        "Error loading image '" + source_emission_file + "'."
+    );
 
     if (img->is_compressed()) {
         img->decompress();
@@ -117,10 +120,14 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
                 if (a > 128) {
                     if (emode == EMISSION_MODE_SOLID) {
                         if (capture_colors) {
-                            valid_colors.write[vpc * 4 + 0] = r[(j * s.width + i) * 4 + 0];
-                            valid_colors.write[vpc * 4 + 1] = r[(j * s.width + i) * 4 + 1];
-                            valid_colors.write[vpc * 4 + 2] = r[(j * s.width + i) * 4 + 2];
-                            valid_colors.write[vpc * 4 + 3] = r[(j * s.width + i) * 4 + 3];
+                            valid_colors.write[vpc * 4 + 0] =
+                                r[(j * s.width + i) * 4 + 0];
+                            valid_colors.write[vpc * 4 + 1] =
+                                r[(j * s.width + i) * 4 + 1];
+                            valid_colors.write[vpc * 4 + 2] =
+                                r[(j * s.width + i) * 4 + 2];
+                            valid_colors.write[vpc * 4 + 3] =
+                                r[(j * s.width + i) * 4 + 3];
                         }
                         valid_positions.write[vpc++] = Point2(i, j);
 
@@ -128,7 +135,9 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
                         bool on_border = false;
                         for (int x = i - 1; x <= i + 1; x++) {
                             for (int y = j - 1; y <= j + 1; y++) {
-                                if (x < 0 || y < 0 || x >= s.width || y >= s.height || r[(y * s.width + x) * 4 + 3] <= 128) {
+                                if (x < 0 || y < 0 || x >= s.width
+                                    || y >= s.height
+                                    || r[(y * s.width + x) * 4 + 3] <= 128) {
                                     on_border = true;
                                     break;
                                 }
@@ -150,8 +159,12 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
                                             continue;
                                         }
 
-                                        if (x < 0 || y < 0 || x >= s.width || y >= s.height || r[(y * s.width + x) * 4 + 3] <= 128) {
-                                            normal += Vector2(x - i, y - j).normalized();
+                                        if (x < 0 || y < 0 || x >= s.width
+                                            || y >= s.height
+                                            || r[(y * s.width + x) * 4 + 3]
+                                                   <= 128) {
+                                            normal += Vector2(x - i, y - j)
+                                                          .normalized();
                                         }
                                     }
                                 }
@@ -161,10 +174,14 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
                             }
 
                             if (capture_colors) {
-                                valid_colors.write[vpc * 4 + 0] = r[(j * s.width + i) * 4 + 0];
-                                valid_colors.write[vpc * 4 + 1] = r[(j * s.width + i) * 4 + 1];
-                                valid_colors.write[vpc * 4 + 2] = r[(j * s.width + i) * 4 + 2];
-                                valid_colors.write[vpc * 4 + 3] = r[(j * s.width + i) * 4 + 3];
+                                valid_colors.write[vpc * 4 + 0] =
+                                    r[(j * s.width + i) * 4 + 0];
+                                valid_colors.write[vpc * 4 + 1] =
+                                    r[(j * s.width + i) * 4 + 1];
+                                valid_colors.write[vpc * 4 + 2] =
+                                    r[(j * s.width + i) * 4 + 2];
+                                valid_colors.write[vpc * 4 + 3] =
+                                    r[(j * s.width + i) * 4 + 3];
                             }
 
                             vpc++;
@@ -180,7 +197,10 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
         valid_normals.resize(vpc);
     }
 
-    ERR_FAIL_COND_MSG(valid_positions.size() == 0, "No pixels with transparency > 128 in image...");
+    ERR_FAIL_COND_MSG(
+        valid_positions.size() == 0,
+        "No pixels with transparency > 128 in image..."
+    );
 
     if (capture_colors) {
         PoolColorArray pca;
@@ -198,7 +218,9 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
     }
 
     if (valid_normals.size()) {
-        particles->set_emission_shape(CPUParticles2D::EMISSION_SHAPE_DIRECTED_POINTS);
+        particles->set_emission_shape(
+            CPUParticles2D::EMISSION_SHAPE_DIRECTED_POINTS
+        );
         PoolVector2Array norms;
         norms.resize(valid_normals.size());
         PoolVector2Array::Write normsw = norms.write();
@@ -224,18 +246,28 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
 void CPUParticles2DEditorPlugin::_notification(int p_what) {
     if (p_what == NOTIFICATION_ENTER_TREE) {
         menu->get_popup()->connect("id_pressed", this, "_menu_callback");
-        menu->set_icon(menu->get_popup()->get_icon("Particles2D", "EditorIcons"));
+        menu->set_icon(menu->get_popup()->get_icon("Particles2D", "EditorIcons")
+        );
         file->connect("file_selected", this, "_file_selected");
     }
 }
 
 void CPUParticles2DEditorPlugin::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_menu_callback"), &CPUParticles2DEditorPlugin::_menu_callback);
-    ClassDB::bind_method(D_METHOD("_file_selected"), &CPUParticles2DEditorPlugin::_file_selected);
-    ClassDB::bind_method(D_METHOD("_generate_emission_mask"), &CPUParticles2DEditorPlugin::_generate_emission_mask);
+    ClassDB::bind_method(
+        D_METHOD("_menu_callback"),
+        &CPUParticles2DEditorPlugin::_menu_callback
+    );
+    ClassDB::bind_method(
+        D_METHOD("_file_selected"),
+        &CPUParticles2DEditorPlugin::_file_selected
+    );
+    ClassDB::bind_method(
+        D_METHOD("_generate_emission_mask"),
+        &CPUParticles2DEditorPlugin::_generate_emission_mask
+    );
 }
 
-CPUParticles2DEditorPlugin::CPUParticles2DEditorPlugin(EditorNode *p_node) {
+CPUParticles2DEditorPlugin::CPUParticles2DEditorPlugin(EditorNode* p_node) {
     particles = nullptr;
     editor = p_node;
     undo_redo = editor->get_undo_redo();
@@ -247,10 +279,14 @@ CPUParticles2DEditorPlugin::CPUParticles2DEditorPlugin(EditorNode *p_node) {
     toolbar->add_child(memnew(VSeparator));
 
     menu = memnew(MenuButton);
-    menu->get_popup()->add_item(TTR("Load Emission Mask"), MENU_LOAD_EMISSION_MASK);
+    menu->get_popup()->add_item(
+        TTR("Load Emission Mask"),
+        MENU_LOAD_EMISSION_MASK
+    );
     menu->get_popup()->add_separator();
     menu->get_popup()->add_item(TTR("Restart"), MENU_RESTART);
-    //	menu->get_popup()->add_item(TTR("Clear Emission Mask"), MENU_CLEAR_EMISSION_MASK);
+    //	menu->get_popup()->add_item(TTR("Clear Emission Mask"),
+    // MENU_CLEAR_EMISSION_MASK);
     menu->set_text(TTR("Particles"));
     menu->set_switch_on_hover(true);
     toolbar->add_child(menu);
@@ -258,7 +294,7 @@ CPUParticles2DEditorPlugin::CPUParticles2DEditorPlugin(EditorNode *p_node) {
     file = memnew(EditorFileDialog);
     List<String> ext;
     ImageLoader::get_recognized_extensions(&ext);
-    for (List<String>::Element *E = ext.front(); E; E = E->next()) {
+    for (List<String>::Element* E = ext.front(); E; E = E->next()) {
         file->add_filter("*." + E->get() + "; " + E->get().to_upper());
     }
     file->set_mode(EditorFileDialog::MODE_OPEN_FILE);
@@ -273,13 +309,16 @@ CPUParticles2DEditorPlugin::CPUParticles2DEditorPlugin(EditorNode *p_node) {
 
     emission_mask = memnew(ConfirmationDialog);
     emission_mask->set_title(TTR("Load Emission Mask"));
-    VBoxContainer *emvb = memnew(VBoxContainer);
+    VBoxContainer* emvb = memnew(VBoxContainer);
     emission_mask->add_child(emvb);
     emission_mask_mode = memnew(OptionButton);
     emvb->add_margin_child(TTR("Emission Mask"), emission_mask_mode);
     emission_mask_mode->add_item(TTR("Solid Pixels"), EMISSION_MODE_SOLID);
     emission_mask_mode->add_item(TTR("Border Pixels"), EMISSION_MODE_BORDER);
-    emission_mask_mode->add_item(TTR("Directed Border Pixels"), EMISSION_MODE_BORDER_DIRECTED);
+    emission_mask_mode->add_item(
+        TTR("Directed Border Pixels"),
+        EMISSION_MODE_BORDER_DIRECTED
+    );
     emission_colors = memnew(CheckBox);
     emission_colors->set_text(TTR("Capture from Pixel"));
     emvb->add_margin_child(TTR("Emission Colors"), emission_colors);
@@ -289,5 +328,4 @@ CPUParticles2DEditorPlugin::CPUParticles2DEditorPlugin(EditorNode *p_node) {
     emission_mask->connect("confirmed", this, "_generate_emission_mask");
 }
 
-CPUParticles2DEditorPlugin::~CPUParticles2DEditorPlugin() {
-}
+CPUParticles2DEditorPlugin::~CPUParticles2DEditorPlugin() {}

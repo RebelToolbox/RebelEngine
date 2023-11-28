@@ -38,8 +38,9 @@
 /**
     @author Bastiaan Olij <mux213@gmail.com>
 
-    Base class for all the classes in this file, handles a number of code functions that are shared among all meshes.
-    This class is set apart that it assumes a single surface is always generated for our mesh.
+    Base class for all the classes in this file, handles a number of code
+   functions that are shared among all meshes. This class is set apart that it
+   assumes a single surface is always generated for our mesh.
 */
 class PrimitiveMesh : public Mesh {
     GDCLASS(PrimitiveMesh, Mesh);
@@ -60,7 +61,7 @@ protected:
 
     static void _bind_methods();
 
-    virtual void _create_mesh_array(Array &p_arr) const = 0;
+    virtual void _create_mesh_array(Array& p_arr) const = 0;
     void _request_update();
 
 public:
@@ -71,20 +72,23 @@ public:
     virtual Array surface_get_blend_shape_arrays(int p_surface) const;
     virtual uint32_t surface_get_format(int p_idx) const;
     virtual Mesh::PrimitiveType surface_get_primitive_type(int p_idx) const;
-    virtual void surface_set_material(int p_idx, const Ref<Material> &p_material);
+    virtual void surface_set_material(
+        int p_idx,
+        const Ref<Material>& p_material
+    );
     virtual Ref<Material> surface_get_material(int p_idx) const;
     virtual int get_blend_shape_count() const;
     virtual StringName get_blend_shape_name(int p_index) const;
-    virtual void set_blend_shape_name(int p_index, const StringName &p_name);
+    virtual void set_blend_shape_name(int p_index, const StringName& p_name);
     virtual AABB get_aabb() const;
     virtual RID get_rid() const;
 
-    void set_material(const Ref<Material> &p_material);
+    void set_material(const Ref<Material>& p_material);
     Ref<Material> get_material() const;
 
     Array get_mesh_arrays() const;
 
-    void set_custom_aabb(const AABB &p_custom);
+    void set_custom_aabb(const AABB& p_custom);
     AABB get_custom_aabb() const;
 
     void set_flip_faces(bool p_enable);
@@ -108,7 +112,7 @@ private:
 
 protected:
     static void _bind_methods();
-    virtual void _create_mesh_array(Array &p_arr) const;
+    virtual void _create_mesh_array(Array& p_arr) const;
 
 public:
     void set_radius(const float p_radius);
@@ -127,7 +131,8 @@ public:
 };
 
 /**
-    Similar to test cube but with subdivision support and different texture coordinates
+    Similar to test cube but with subdivision support and different texture
+   coordinates
 */
 class CubeMesh : public PrimitiveMesh {
     GDCLASS(CubeMesh, PrimitiveMesh);
@@ -140,10 +145,10 @@ private:
 
 protected:
     static void _bind_methods();
-    virtual void _create_mesh_array(Array &p_arr) const;
+    virtual void _create_mesh_array(Array& p_arr) const;
 
 public:
-    void set_size(const Vector3 &p_size);
+    void set_size(const Vector3& p_size);
     Vector3 get_size() const;
 
     void set_subdivide_width(const int p_divisions);
@@ -174,7 +179,7 @@ private:
 
 protected:
     static void _bind_methods();
-    virtual void _create_mesh_array(Array &p_arr) const;
+    virtual void _create_mesh_array(Array& p_arr) const;
 
 public:
     void set_top_radius(const float p_radius);
@@ -209,10 +214,10 @@ private:
 
 protected:
     static void _bind_methods();
-    virtual void _create_mesh_array(Array &p_arr) const;
+    virtual void _create_mesh_array(Array& p_arr) const;
 
 public:
-    void set_size(const Size2 &p_size);
+    void set_size(const Size2& p_size);
     Size2 get_size() const;
 
     void set_subdivide_width(const int p_divisions);
@@ -242,13 +247,13 @@ private:
 
 protected:
     static void _bind_methods();
-    virtual void _create_mesh_array(Array &p_arr) const;
+    virtual void _create_mesh_array(Array& p_arr) const;
 
 public:
     void set_left_to_right(const float p_left_to_right);
     float get_left_to_right() const;
 
-    void set_size(const Vector3 &p_size);
+    void set_size(const Vector3& p_size);
     Vector3 get_size() const;
 
     void set_subdivide_width(const int p_divisions);
@@ -276,12 +281,12 @@ private:
 
 protected:
     static void _bind_methods();
-    virtual void _create_mesh_array(Array &p_arr) const;
+    virtual void _create_mesh_array(Array& p_arr) const;
 
 public:
     QuadMesh();
 
-    void set_size(const Size2 &p_size);
+    void set_size(const Size2& p_size);
     Size2 get_size() const;
 
     void set_center_offset(const Vector3 p_offset);
@@ -303,7 +308,7 @@ private:
 
 protected:
     static void _bind_methods();
-    virtual void _create_mesh_array(Array &p_arr) const;
+    virtual void _create_mesh_array(Array& p_arr) const;
 
 public:
     void set_radius(const float p_radius);
@@ -332,7 +337,7 @@ class PointMesh : public PrimitiveMesh {
     GDCLASS(PointMesh, PrimitiveMesh)
 
 protected:
-    virtual void _create_mesh_array(Array &p_arr) const;
+    virtual void _create_mesh_array(Array& p_arr) const;
 
 public:
     PointMesh();

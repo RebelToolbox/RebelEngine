@@ -37,30 +37,36 @@
 
 #include "core/os/file_access.h"
 
-void AudioStreamPlaybackMP3::_mix_internal(AudioFrame *p_buffer, int p_frames) {
+void AudioStreamPlaybackMP3::_mix_internal(AudioFrame* p_buffer, int p_frames) {
     ERR_FAIL_COND(!active);
 
     int todo = p_frames;
 
     while (todo && active) {
         mp3dec_frame_info_t frame_info;
-        mp3d_sample_t *buf_frame = nullptr;
+        mp3d_sample_t* buf_frame = nullptr;
 
-        int samples_mixed = mp3dec_ex_read_frame(mp3d, &buf_frame, &frame_info, mp3_stream->channels);
+        int samples_mixed = mp3dec_ex_read_frame(
+            mp3d,
+            &buf_frame,
+            &frame_info,
+            mp3_stream->channels
+        );
 
         if (samples_mixed) {
-            p_buffer[p_frames - todo] = AudioFrame(buf_frame[0], buf_frame[samples_mixed - 1]);
+            p_buffer[p_frames - todo] =
+                AudioFrame(buf_frame[0], buf_frame[samples_mixed - 1]);
             --todo;
             ++frames_mixed;
         }
 
         else {
-            //EOF
+            // EOF
             if (mp3_stream->loop) {
                 seek(mp3_stream->loop_offset);
                 loops++;
             } else {
-                //fill remainder with silence
+                // fill remainder with silence
                 for (int i = p_frames - todo; i < p_frames; i++) {
                     p_buffer[i] = AudioFrame(0, 0);
                 }
@@ -121,16 +127,26 @@ AudioStreamPlaybackMP3::~AudioStreamPlaybackMP3() {
 Ref<AudioStreamPlayback> AudioStreamMP3::instance_playback() {
     Ref<AudioStreamPlaybackMP3> mp3s;
 
-    ERR_FAIL_COND_V_MSG(data == nullptr, mp3s,
-            "This AudioStreamMP3 does not have an audio file assigned "
-            "to it. AudioStreamMP3 should not be created from the "
-            "inspector or with `.new()`. Instead, load an audio file.");
+    ERR_FAIL_COND_V_MSG(
+        data == nullptr,
+        mp3s,
+        "This AudioStreamMP3 does not have an audio file assigned "
+        "to it. AudioStreamMP3 should not be created from the "
+        "inspector or with `.new()`. Instead, load an audio file."
+    );
 
     mp3s.instance();
     mp3s->mp3_stream = Ref<AudioStreamMP3>(this);
-    mp3s->mp3d = (mp3dec_ex_t *)AudioServer::get_singleton()->audio_data_alloc(sizeof(mp3dec_ex_t));
+    mp3s->mp3d = (mp3dec_ex_t*)AudioServer::get_singleton()->audio_data_alloc(
+        sizeof(mp3dec_ex_t)
+    );
 
-    int errorcode = mp3dec_ex_open_buf(mp3s->mp3d, (const uint8_t *)data, data_len, MP3D_SEEK_TO_SAMPLE);
+    int errorcode = mp3dec_ex_open_buf(
+        mp3s->mp3d,
+        (const uint8_t*)data,
+        data_len,
+        MP3D_SEEK_TO_SAMPLE
+    );
 
     mp3s->frames_mixed = 0;
     mp3s->active = false;
@@ -144,7 +160,7 @@ Ref<AudioStreamPlayback> AudioStreamMP3::instance_playback() {
 }
 
 String AudioStreamMP3::get_stream_name() const {
-    return ""; //return stream_name;
+    return ""; // return stream_name;
 }
 
 void AudioStreamMP3::clear_data() {
@@ -155,13 +171,21 @@ void AudioStreamMP3::clear_data() {
     }
 }
 
-void AudioStreamMP3::set_data(const PoolVector<uint8_t> &p_data) {
+void AudioStreamMP3::set_data(const PoolVector<uint8_t>& p_data) {
     int src_data_len = p_data.size();
     PoolVector<uint8_t>::Read src_datar = p_data.read();
 
     mp3dec_ex_t mp3d;
-    int err = mp3dec_ex_open_buf(&mp3d, src_datar.ptr(), src_data_len, MP3D_SEEK_TO_SAMPLE);
-    ERR_FAIL_COND_MSG(err || mp3d.info.hz == 0, "Failed to decode mp3 file. Make sure it is a valid mp3 audio file.");
+    int err = mp3dec_ex_open_buf(
+        &mp3d,
+        src_datar.ptr(),
+        src_data_len,
+        MP3D_SEEK_TO_SAMPLE
+    );
+    ERR_FAIL_COND_MSG(
+        err || mp3d.info.hz == 0,
+        "Failed to decode mp3 file. Make sure it is a valid mp3 audio file."
+    );
 
     channels = mp3d.info.channels;
     sample_rate = mp3d.info.hz;
@@ -171,7 +195,10 @@ void AudioStreamMP3::set_data(const PoolVector<uint8_t> &p_data) {
 
     clear_data();
 
-    data = AudioServer::get_singleton()->audio_data_alloc(src_data_len, src_datar.ptr());
+    data = AudioServer::get_singleton()->audio_data_alloc(
+        src_data_len,
+        src_datar.ptr()
+    );
     data_len = src_data_len;
 }
 
@@ -210,22 +237,47 @@ float AudioStreamMP3::get_length() const {
 }
 
 void AudioStreamMP3::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_data", "data"), &AudioStreamMP3::set_data);
+    ClassDB::bind_method(
+        D_METHOD("set_data", "data"),
+        &AudioStreamMP3::set_data
+    );
     ClassDB::bind_method(D_METHOD("get_data"), &AudioStreamMP3::get_data);
 
-    ClassDB::bind_method(D_METHOD("set_loop", "enable"), &AudioStreamMP3::set_loop);
+    ClassDB::bind_method(
+        D_METHOD("set_loop", "enable"),
+        &AudioStreamMP3::set_loop
+    );
     ClassDB::bind_method(D_METHOD("has_loop"), &AudioStreamMP3::has_loop);
 
-    ClassDB::bind_method(D_METHOD("set_loop_offset", "seconds"), &AudioStreamMP3::set_loop_offset);
-    ClassDB::bind_method(D_METHOD("get_loop_offset"), &AudioStreamMP3::get_loop_offset);
+    ClassDB::bind_method(
+        D_METHOD("set_loop_offset", "seconds"),
+        &AudioStreamMP3::set_loop_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_loop_offset"),
+        &AudioStreamMP3::get_loop_offset
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::POOL_BYTE_ARRAY, "data", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR), "set_data", "get_data");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::POOL_BYTE_ARRAY,
+            "data",
+            PROPERTY_HINT_NONE,
+            "",
+            PROPERTY_USAGE_NOEDITOR
+        ),
+        "set_data",
+        "get_data"
+    );
     ADD_PROPERTY(PropertyInfo(Variant::BOOL, "loop"), "set_loop", "has_loop");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "loop_offset"), "set_loop_offset", "get_loop_offset");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "loop_offset"),
+        "set_loop_offset",
+        "get_loop_offset"
+    );
 }
 
-AudioStreamMP3::AudioStreamMP3() {
-}
+AudioStreamMP3::AudioStreamMP3() {}
 
 AudioStreamMP3::~AudioStreamMP3() {
     clear_data();

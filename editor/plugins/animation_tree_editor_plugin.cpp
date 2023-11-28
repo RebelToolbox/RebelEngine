@@ -47,7 +47,7 @@
 #include "scene/main/viewport.h"
 #include "scene/scene_string_names.h"
 
-void AnimationTreeEditor::edit(AnimationTree *p_tree) {
+void AnimationTreeEditor::edit(AnimationTree* p_tree) {
     if (tree == p_tree) {
         return;
     }
@@ -78,7 +78,7 @@ void AnimationTreeEditor::_update_path() {
     Ref<ButtonGroup> group;
     group.instance();
 
-    Button *b = memnew(Button);
+    Button* b = memnew(Button);
     b->set_text("root");
     b->set_toggle_mode(true);
     b->set_button_group(group);
@@ -98,7 +98,7 @@ void AnimationTreeEditor::_update_path() {
     }
 }
 
-void AnimationTreeEditor::edit_path(const Vector<String> &p_path) {
+void AnimationTreeEditor::edit_path(const Vector<String>& p_path) {
     button_path.clear();
 
     Ref<AnimationNode> node = tree->get_tree_root();
@@ -136,14 +136,13 @@ Vector<String> AnimationTreeEditor::get_edited_path() const {
     return button_path;
 }
 
-void AnimationTreeEditor::enter_editor(const String &p_path) {
+void AnimationTreeEditor::enter_editor(const String& p_path) {
     Vector<String> path = edited_path;
     path.push_back(p_path);
     edit_path(path);
 }
 
-void AnimationTreeEditor::_about_to_show_root() {
-}
+void AnimationTreeEditor::_about_to_show_root() {}
 
 void AnimationTreeEditor::_notification(int p_what) {
     if (p_what == NOTIFICATION_PROCESS) {
@@ -163,12 +162,15 @@ void AnimationTreeEditor::_notification(int p_what) {
 }
 
 void AnimationTreeEditor::_bind_methods() {
-    ClassDB::bind_method("_path_button_pressed", &AnimationTreeEditor::_path_button_pressed);
+    ClassDB::bind_method(
+        "_path_button_pressed",
+        &AnimationTreeEditor::_path_button_pressed
+    );
 }
 
-AnimationTreeEditor *AnimationTreeEditor::singleton = nullptr;
+AnimationTreeEditor* AnimationTreeEditor::singleton = nullptr;
 
-void AnimationTreeEditor::add_plugin(AnimationTreeNodeEditorPlugin *p_editor) {
+void AnimationTreeEditor::add_plugin(AnimationTreeNodeEditorPlugin* p_editor) {
     ERR_FAIL_COND(p_editor->get_parent());
     editor_base->add_child(p_editor);
     editors.push_back(p_editor);
@@ -177,7 +179,8 @@ void AnimationTreeEditor::add_plugin(AnimationTreeNodeEditorPlugin *p_editor) {
     p_editor->hide();
 }
 
-void AnimationTreeEditor::remove_plugin(AnimationTreeNodeEditorPlugin *p_editor) {
+void AnimationTreeEditor::remove_plugin(AnimationTreeNodeEditorPlugin* p_editor
+) {
     ERR_FAIL_COND(p_editor->get_parent() != editor_base);
     editor_base->remove_child(p_editor);
     editors.erase(p_editor);
@@ -191,7 +194,7 @@ String AnimationTreeEditor::get_base_path() {
     return path;
 }
 
-bool AnimationTreeEditor::can_edit(const Ref<AnimationNode> &p_node) const {
+bool AnimationTreeEditor::can_edit(const Ref<AnimationNode>& p_node) const {
     for (int i = 0; i < editors.size(); i++) {
         if (editors[i]->can_edit(p_node)) {
             return true;
@@ -205,12 +208,14 @@ Vector<String> AnimationTreeEditor::get_animation_list() {
         return Vector<String>();
     }
 
-    AnimationTree *tree = singleton->tree;
+    AnimationTree* tree = singleton->tree;
     if (!tree || !tree->has_node(tree->get_animation_player())) {
         return Vector<String>();
     }
 
-    AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(tree->get_node(tree->get_animation_player()));
+    AnimationPlayer* ap = Object::cast_to<AnimationPlayer>(
+        tree->get_node(tree->get_animation_player())
+    );
 
     if (!ap) {
         return Vector<String>();
@@ -219,7 +224,7 @@ Vector<String> AnimationTreeEditor::get_animation_list() {
     List<StringName> anims;
     ap->get_animation_list(&anims);
     Vector<String> ret;
-    for (List<StringName>::Element *E = anims.front(); E; E = E->next()) {
+    for (List<StringName>::Element* E = anims.front(); E; E = E->next()) {
         ret.push_back(E->get());
     }
 
@@ -250,18 +255,18 @@ AnimationTreeEditor::AnimationTreeEditor() {
     add_plugin(memnew(AnimationNodeStateMachineEditor));
 }
 
-void AnimationTreeEditorPlugin::edit(Object *p_object) {
+void AnimationTreeEditorPlugin::edit(Object* p_object) {
     anim_tree_editor->edit(Object::cast_to<AnimationTree>(p_object));
 }
 
-bool AnimationTreeEditorPlugin::handles(Object *p_object) const {
+bool AnimationTreeEditorPlugin::handles(Object* p_object) const {
     return p_object->is_class("AnimationTree");
 }
 
 void AnimationTreeEditorPlugin::make_visible(bool p_visible) {
     if (p_visible) {
-        //editor->hide_animation_player_editors();
-        //editor->animation_panel_make_visible(true);
+        // editor->hide_animation_player_editors();
+        // editor->animation_panel_make_visible(true);
         button->show();
         editor->make_bottom_panel_item_visible(anim_tree_editor);
         anim_tree_editor->set_process(true);
@@ -274,14 +279,14 @@ void AnimationTreeEditorPlugin::make_visible(bool p_visible) {
     }
 }
 
-AnimationTreeEditorPlugin::AnimationTreeEditorPlugin(EditorNode *p_node) {
+AnimationTreeEditorPlugin::AnimationTreeEditorPlugin(EditorNode* p_node) {
     editor = p_node;
     anim_tree_editor = memnew(AnimationTreeEditor);
     anim_tree_editor->set_custom_minimum_size(Size2(0, 300) * EDSCALE);
 
-    button = editor->add_bottom_panel_item(TTR("AnimationTree"), anim_tree_editor);
+    button =
+        editor->add_bottom_panel_item(TTR("AnimationTree"), anim_tree_editor);
     button->hide();
 }
 
-AnimationTreeEditorPlugin::~AnimationTreeEditorPlugin() {
-}
+AnimationTreeEditorPlugin::~AnimationTreeEditorPlugin() {}

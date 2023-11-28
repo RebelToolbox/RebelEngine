@@ -30,8 +30,8 @@
 
 #include "zip_io.h"
 
-void *zipio_open(void *data, const char *p_fname, int mode) {
-    FileAccess *&f = *(FileAccess **)data;
+void* zipio_open(void* data, const char* p_fname, int mode) {
+    FileAccess*& f = *(FileAccess**)data;
 
     String fname;
     fname.parse_utf8(p_fname);
@@ -49,24 +49,24 @@ void *zipio_open(void *data, const char *p_fname, int mode) {
     return data;
 }
 
-uLong zipio_read(void *data, void *fdata, void *buf, uLong size) {
-    FileAccess *f = *(FileAccess **)data;
-    return f->get_buffer((uint8_t *)buf, size);
+uLong zipio_read(void* data, void* fdata, void* buf, uLong size) {
+    FileAccess* f = *(FileAccess**)data;
+    return f->get_buffer((uint8_t*)buf, size);
 }
 
-uLong zipio_write(voidpf opaque, voidpf stream, const void *buf, uLong size) {
-    FileAccess *f = *(FileAccess **)opaque;
-    f->store_buffer((uint8_t *)buf, size);
+uLong zipio_write(voidpf opaque, voidpf stream, const void* buf, uLong size) {
+    FileAccess* f = *(FileAccess**)opaque;
+    f->store_buffer((uint8_t*)buf, size);
     return size;
 }
 
 long zipio_tell(voidpf opaque, voidpf stream) {
-    FileAccess *f = *(FileAccess **)opaque;
+    FileAccess* f = *(FileAccess**)opaque;
     return f->get_position();
 }
 
 long zipio_seek(voidpf opaque, voidpf stream, uLong offset, int origin) {
-    FileAccess *f = *(FileAccess **)opaque;
+    FileAccess* f = *(FileAccess**)opaque;
 
     uint64_t pos = offset;
     switch (origin) {
@@ -85,7 +85,7 @@ long zipio_seek(voidpf opaque, voidpf stream, uLong offset, int origin) {
 }
 
 int zipio_close(voidpf opaque, voidpf stream) {
-    FileAccess *&f = *(FileAccess **)opaque;
+    FileAccess*& f = *(FileAccess**)opaque;
     if (f) {
         f->close();
         memdelete(f);
@@ -95,7 +95,7 @@ int zipio_close(voidpf opaque, voidpf stream) {
 }
 
 int zipio_testerror(voidpf opaque, voidpf stream) {
-    FileAccess *f = *(FileAccess **)opaque;
+    FileAccess* f = *(FileAccess**)opaque;
     return (f && f->get_error() != OK) ? 1 : 0;
 }
 
@@ -109,7 +109,7 @@ void zipio_free(voidpf opaque, voidpf address) {
     memfree(address);
 }
 
-zlib_filefunc_def zipio_create_io_from_file(FileAccess **p_file) {
+zlib_filefunc_def zipio_create_io_from_file(FileAccess** p_file) {
     zlib_filefunc_def io;
     io.opaque = p_file;
     io.zopen_file = zipio_open;

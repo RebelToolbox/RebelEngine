@@ -32,15 +32,15 @@
 
 #include "mono_gd/gd_mono.h"
 
-uint32_t MonoGCHandle::new_strong_handle(MonoObject *p_object) {
+uint32_t MonoGCHandle::new_strong_handle(MonoObject* p_object) {
     return mono_gchandle_new(p_object, /* pinned: */ false);
 }
 
-uint32_t MonoGCHandle::new_strong_handle_pinned(MonoObject *p_object) {
+uint32_t MonoGCHandle::new_strong_handle_pinned(MonoObject* p_object) {
     return mono_gchandle_new(p_object, /* pinned: */ true);
 }
 
-uint32_t MonoGCHandle::new_weak_handle(MonoObject *p_object) {
+uint32_t MonoGCHandle::new_weak_handle(MonoObject* p_object) {
     return mono_gchandle_new_weakref(p_object, /* track_resurrection: */ false);
 }
 
@@ -48,11 +48,11 @@ void MonoGCHandle::free_handle(uint32_t p_gchandle) {
     mono_gchandle_free(p_gchandle);
 }
 
-Ref<MonoGCHandle> MonoGCHandle::create_strong(MonoObject *p_object) {
+Ref<MonoGCHandle> MonoGCHandle::create_strong(MonoObject* p_object) {
     return memnew(MonoGCHandle(new_strong_handle(p_object), STRONG_HANDLE));
 }
 
-Ref<MonoGCHandle> MonoGCHandle::create_weak(MonoObject *p_object) {
+Ref<MonoGCHandle> MonoGCHandle::create_weak(MonoObject* p_object) {
     return memnew(MonoGCHandle(new_weak_handle(p_object), WEAK_HANDLE));
 }
 

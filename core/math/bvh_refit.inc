@@ -1,5 +1,5 @@
 void _debug_node_verify_bound(uint32_t p_node_id) {
-    TNode &node = _nodes[p_node_id];
+    TNode& node = _nodes[p_node_id];
     BVHABB_CLASS abb_before = node.aabb;
 
     node_update_aabb(node);
@@ -8,7 +8,7 @@ void _debug_node_verify_bound(uint32_t p_node_id) {
     CRASH_COND(abb_before != abb_after);
 }
 
-void node_update_aabb(TNode &tnode) {
+void node_update_aabb(TNode& tnode) {
     tnode.aabb.set_to_max_opposite_extents();
     tnode.height = 0;
 
@@ -17,7 +17,7 @@ void node_update_aabb(TNode &tnode) {
             uint32_t child_node_id = tnode.children[n];
 
             // merge with child aabb
-            const TNode &tchild = _nodes[child_node_id];
+            const TNode& tchild = _nodes[child_node_id];
             tnode.aabb.merge(tchild.aabb);
 
             // do heights at the same time
@@ -37,7 +37,7 @@ void node_update_aabb(TNode &tnode) {
 #endif
     } else {
         // leaf
-        const TLeaf &leaf = _node_get_leaf(tnode);
+        const TLeaf& leaf = _node_get_leaf(tnode);
 
         for (int n = 0; n < leaf.num_items; n++) {
             tnode.aabb.merge(leaf.get_aabb(n));
@@ -60,7 +60,7 @@ void refit_all(int p_tree_id) {
 
 void refit_upward(uint32_t p_node_id) {
     while (p_node_id != BVHCommon::INVALID) {
-        TNode &tnode = _nodes[p_node_id];
+        TNode& tnode = _nodes[p_node_id];
         node_update_aabb(tnode);
         p_node_id = tnode.parent_id;
     }
@@ -75,7 +75,7 @@ void refit_upward_and_balance(uint32_t p_node_id, uint32_t p_tree_id) {
             VERBOSE_PRINT("REBALANCED!");
         }
 
-        TNode &tnode = _nodes[p_node_id];
+        TNode& tnode = _nodes[p_node_id];
 
         // update overall aabb from the children
         node_update_aabb(tnode);
@@ -85,7 +85,7 @@ void refit_upward_and_balance(uint32_t p_node_id, uint32_t p_tree_id) {
 }
 
 void refit_downward(uint32_t p_node_id) {
-    TNode &tnode = _nodes[p_node_id];
+    TNode& tnode = _nodes[p_node_id];
 
     // do children first
     if (!tnode.is_leaf()) {
@@ -107,9 +107,9 @@ void refit_branch(uint32_t p_node_id) {
     // most of the iterative functionality is contained in this helper class
     BVH_IterativeInfo<RefitParams> ii;
 
-    // alloca must allocate the stack from this function, it cannot be allocated in the
-    // helper class
-    ii.stack = (RefitParams *)alloca(ii.get_alloca_stacksize());
+    // alloca must allocate the stack from this function, it cannot be allocated
+    // in the helper class
+    ii.stack = (RefitParams*)alloca(ii.get_alloca_stacksize());
 
     // seed the stack
     ii.get_first()->node_id = p_node_id;
@@ -118,7 +118,7 @@ void refit_branch(uint32_t p_node_id) {
 
     // while there are still more nodes on the stack
     while (ii.pop(rp)) {
-        TNode &tnode = _nodes[rp.node_id];
+        TNode& tnode = _nodes[rp.node_id];
 
         // do children first
         if (!tnode.is_leaf()) {
@@ -126,12 +126,12 @@ void refit_branch(uint32_t p_node_id) {
                 uint32_t child_id = tnode.children[n];
 
                 // add to the stack
-                RefitParams *child = ii.request();
+                RefitParams* child = ii.request();
                 child->node_id = child_id;
             }
         } else {
             // leaf .. only refit upward if dirty
-            TLeaf &leaf = _node_get_leaf(tnode);
+            TLeaf& leaf = _node_get_leaf(tnode);
             if (leaf.is_dirty()) {
                 leaf.set_dirty(false);
                 refit_upward(p_node_id);

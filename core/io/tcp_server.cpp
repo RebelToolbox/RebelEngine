@@ -31,17 +31,30 @@
 #include "tcp_server.h"
 
 void TCP_Server::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("listen", "port", "bind_address"), &TCP_Server::listen, DEFVAL("*"));
-    ClassDB::bind_method(D_METHOD("is_connection_available"), &TCP_Server::is_connection_available);
+    ClassDB::bind_method(
+        D_METHOD("listen", "port", "bind_address"),
+        &TCP_Server::listen,
+        DEFVAL("*")
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_connection_available"),
+        &TCP_Server::is_connection_available
+    );
     ClassDB::bind_method(D_METHOD("is_listening"), &TCP_Server::is_listening);
-    ClassDB::bind_method(D_METHOD("take_connection"), &TCP_Server::take_connection);
+    ClassDB::bind_method(
+        D_METHOD("take_connection"),
+        &TCP_Server::take_connection
+    );
     ClassDB::bind_method(D_METHOD("stop"), &TCP_Server::stop);
 }
 
-Error TCP_Server::listen(uint16_t p_port, const IP_Address &p_bind_address) {
+Error TCP_Server::listen(uint16_t p_port, const IP_Address& p_bind_address) {
     ERR_FAIL_COND_V(!_sock.is_valid(), ERR_UNAVAILABLE);
     ERR_FAIL_COND_V(_sock->is_open(), ERR_ALREADY_IN_USE);
-    ERR_FAIL_COND_V(!p_bind_address.is_valid() && !p_bind_address.is_wildcard(), ERR_INVALID_PARAMETER);
+    ERR_FAIL_COND_V(
+        !p_bind_address.is_valid() && !p_bind_address.is_wildcard(),
+        ERR_INVALID_PARAMETER
+    );
 
     Error err;
     IP::Type ip_type = IP::TYPE_ANY;
@@ -116,9 +129,7 @@ void TCP_Server::stop() {
     }
 }
 
-TCP_Server::TCP_Server() :
-        _sock(Ref<NetSocket>(NetSocket::create())) {
-}
+TCP_Server::TCP_Server() : _sock(Ref<NetSocket>(NetSocket::create())) {}
 
 TCP_Server::~TCP_Server() {
     stop();

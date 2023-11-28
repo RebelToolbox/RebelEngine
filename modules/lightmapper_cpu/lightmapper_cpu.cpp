@@ -40,7 +40,11 @@
 #include "editor/editor_settings.h"
 #endif
 
-Error LightmapperCPU::_layout_atlas(int p_max_size, Vector2i *r_atlas_size, int *r_atlas_slices) {
+Error LightmapperCPU::_layout_atlas(
+    int p_max_size,
+    Vector2i* r_atlas_size,
+    int* r_atlas_slices
+) {
     Vector2i atlas_size;
     for (unsigned int i = 0; i < mesh_instances.size(); i++) {
         if (mesh_instances[i].generate_lightmap) {
@@ -66,13 +70,18 @@ Error LightmapperCPU::_layout_atlas(int p_max_size, Vector2i *r_atlas_size, int 
 
     int first_try_mem_occupied = 0;
     int first_try_mem_used = 0;
-    for (int recovery_percent = 0; recovery_percent <= 100; recovery_percent += 10) {
+    for (int recovery_percent = 0; recovery_percent <= 100;
+         recovery_percent += 10) {
         // These only make sense from the second round of the loop
         float recovery_scale = 1;
         int target_mem_occupied = 0;
         if (recovery_percent != 0) {
-            target_mem_occupied = first_try_mem_occupied + (first_try_mem_used - first_try_mem_occupied) * recovery_percent * 0.01f;
-            float new_squared_recovery_scale = static_cast<float>(target_mem_occupied) / first_try_mem_occupied;
+            target_mem_occupied = first_try_mem_occupied
+                                + (first_try_mem_used - first_try_mem_occupied)
+                                      * recovery_percent * 0.01f;
+            float new_squared_recovery_scale =
+                static_cast<float>(target_mem_occupied)
+                / first_try_mem_occupied;
             if (new_squared_recovery_scale > 1.0f) {
                 recovery_scale = Math::sqrt(new_squared_recovery_scale);
             }
@@ -81,21 +90,32 @@ Error LightmapperCPU::_layout_atlas(int p_max_size, Vector2i *r_atlas_size, int 
         atlas_size = Vector2i(max, max);
         while (atlas_size.x <= p_max_size && atlas_size.y <= p_max_size) {
             if (recovery_percent != 0) {
-                // Find out how much memory is not recoverable (because of lightmaps that can't grow),
-                // to compute a greater recovery scale for those that can.
+                // Find out how much memory is not recoverable (because of
+                // lightmaps that can't grow), to compute a greater recovery
+                // scale for those that can.
                 int mem_unrecoverable = 0;
 
                 for (unsigned int i = 0; i < mesh_instances.size(); i++) {
                     if (mesh_instances[i].generate_lightmap) {
                         Vector2i scaled_size = Vector2i(
-                                static_cast<int>(recovery_scale * mesh_instances[i].size.x),
-                                static_cast<int>(recovery_scale * mesh_instances[i].size.y));
-                        if (scaled_size.x + 2 > atlas_size.x || scaled_size.y + 2 > atlas_size.y) {
-                            mem_unrecoverable += scaled_size.x * scaled_size.y - mesh_instances[i].size.x * mesh_instances[i].size.y;
+                            static_cast<int>(
+                                recovery_scale * mesh_instances[i].size.x
+                            ),
+                            static_cast<int>(
+                                recovery_scale * mesh_instances[i].size.y
+                            )
+                        );
+                        if (scaled_size.x + 2 > atlas_size.x
+                            || scaled_size.y + 2 > atlas_size.y) {
+                            mem_unrecoverable += scaled_size.x * scaled_size.y
+                                               - mesh_instances[i].size.x
+                                                     * mesh_instances[i].size.y;
                         }
                     }
                 }
-                float new_squared_recovery_scale = static_cast<float>(target_mem_occupied - mem_unrecoverable) / (first_try_mem_occupied - mem_unrecoverable);
+                float new_squared_recovery_scale =
+                    static_cast<float>(target_mem_occupied - mem_unrecoverable)
+                    / (first_try_mem_occupied - mem_unrecoverable);
                 if (new_squared_recovery_scale > 1.0f) {
                     recovery_scale = Math::sqrt(new_squared_recovery_scale);
                 }
@@ -110,16 +130,23 @@ Error LightmapperCPU::_layout_atlas(int p_max_size, Vector2i *r_atlas_size, int 
                             scaled_sizes.write[i] = mesh_instances[i].size;
                         } else {
                             Vector2i scaled_size = Vector2i(
-                                    static_cast<int>(recovery_scale * mesh_instances[i].size.x),
-                                    static_cast<int>(recovery_scale * mesh_instances[i].size.y));
-                            if (scaled_size.x + 2 <= atlas_size.x && scaled_size.y + 2 <= atlas_size.y) {
+                                static_cast<int>(
+                                    recovery_scale * mesh_instances[i].size.x
+                                ),
+                                static_cast<int>(
+                                    recovery_scale * mesh_instances[i].size.y
+                                )
+                            );
+                            if (scaled_size.x + 2 <= atlas_size.x
+                                && scaled_size.y + 2 <= atlas_size.y) {
                                 scaled_sizes.write[i] = scaled_size;
                             } else {
                                 scaled_sizes.write[i] = mesh_instances[i].size;
                             }
                         }
                     } else {
-                        // Don't consider meshes with no generated lightmap here; will compensate later
+                        // Don't consider meshes with no generated lightmap
+                        // here; will compensate later
                         scaled_sizes.write[i] = Vector2i();
                     }
                 }
@@ -130,7 +157,9 @@ Error LightmapperCPU::_layout_atlas(int p_max_size, Vector2i *r_atlas_size, int 
             Vector<int> source_indices;
             source_indices.resize(scaled_sizes.size());
             for (int i = 0; i < source_sizes.size(); i++) {
-                source_sizes.write[i] = scaled_sizes[i] + Vector2i(2, 2); // Add padding between lightmaps
+                source_sizes.write[i] =
+                    scaled_sizes[i]
+                    + Vector2i(2, 2); // Add padding between lightmaps
                 source_indices.write[i] = i;
             }
 
@@ -140,14 +169,16 @@ Error LightmapperCPU::_layout_atlas(int p_max_size, Vector2i *r_atlas_size, int 
             int slices = 0;
 
             while (source_sizes.size() > 0) {
-                Vector<Geometry::PackRectsResult> offsets = Geometry::partial_pack_rects(source_sizes, atlas_size);
+                Vector<Geometry::PackRectsResult> offsets =
+                    Geometry::partial_pack_rects(source_sizes, atlas_size);
                 Vector<int> new_indices;
                 Vector<Vector2i> new_sources;
                 for (int i = 0; i < offsets.size(); i++) {
                     Geometry::PackRectsResult ofs = offsets[i];
                     int sidx = source_indices[i];
                     if (ofs.packed) {
-                        curr_atlas_offsets.write[sidx] = { slices, ofs.x + 1, ofs.y + 1 };
+                        curr_atlas_offsets
+                            .write[sidx] = {slices, ofs.x + 1, ofs.y + 1};
                     } else {
                         new_indices.push_back(sidx);
                         new_sources.push_back(source_sizes[i]);
@@ -167,7 +198,9 @@ Error LightmapperCPU::_layout_atlas(int p_max_size, Vector2i *r_atlas_size, int 
 
             float mem_utilization = static_cast<float>(mem_occupied) / mem_used;
             if (slices * atlas_size.y <= 16384) { // Maximum Image size
-                if (mem_used < best_atlas_memory || (mem_used == best_atlas_memory && mem_utilization > best_atlas_mem_utilization)) {
+                if (mem_used < best_atlas_memory
+                    || (mem_used == best_atlas_memory
+                        && mem_utilization > best_atlas_mem_utilization)) {
                     best_atlas_size = atlas_size;
                     best_atlas_offsets = curr_atlas_offsets;
                     best_atlas_slices = slices;
@@ -200,37 +233,62 @@ Error LightmapperCPU::_layout_atlas(int p_max_size, Vector2i *r_atlas_size, int 
     for (unsigned int i = 0; i < mesh_instances.size(); i++) {
         if (best_scaled_sizes[i] != Vector2i()) {
             mesh_instances[i].size = best_scaled_sizes[i];
-            mesh_instances[i].offset = Vector2i(best_atlas_offsets[i].x, best_atlas_offsets[i].y);
+            mesh_instances[i].offset =
+                Vector2i(best_atlas_offsets[i].x, best_atlas_offsets[i].y);
             mesh_instances[i].slice = best_atlas_offsets[i].slice;
         }
     }
     return OK;
 }
 
-void LightmapperCPU::_thread_func_callback(void *p_thread_data) {
-    ThreadData *thread_data = reinterpret_cast<ThreadData *>(p_thread_data);
+void LightmapperCPU::_thread_func_callback(void* p_thread_data) {
+    ThreadData* thread_data = reinterpret_cast<ThreadData*>(p_thread_data);
 #ifdef TOOLS_ENABLED
-    const int num_threads = EDITOR_GET("editors/3d/lightmap_baking_number_of_cpu_threads");
+    const int num_threads =
+        EDITOR_GET("editors/3d/lightmap_baking_number_of_cpu_threads");
 #else
     const int num_threads = 0;
 #endif
-    thread_process_array(thread_data->count, thread_data->instance, &LightmapperCPU::_thread_func_wrapper, thread_data, num_threads);
+    thread_process_array(
+        thread_data->count,
+        thread_data->instance,
+        &LightmapperCPU::_thread_func_wrapper,
+        thread_data,
+        num_threads
+    );
 }
 
-void LightmapperCPU::_thread_func_wrapper(uint32_t p_idx, ThreadData *p_thread_data) {
+void LightmapperCPU::_thread_func_wrapper(
+    uint32_t p_idx,
+    ThreadData* p_thread_data
+) {
     if (thread_cancelled) {
         return;
     }
 
-    (p_thread_data->instance->*p_thread_data->thread_func)(p_idx, p_thread_data->userdata);
+    (p_thread_data->instance->*p_thread_data->thread_func)(
+        p_idx,
+        p_thread_data->userdata
+    );
 
     thread_progress++;
 }
 
-bool LightmapperCPU::_parallel_run(int p_count, const String &p_description, BakeThreadFunc p_thread_func, void *p_userdata, BakeStepFunc p_substep_func) {
+bool LightmapperCPU::_parallel_run(
+    int p_count,
+    const String& p_description,
+    BakeThreadFunc p_thread_func,
+    void* p_userdata,
+    BakeStepFunc p_substep_func
+) {
     bool cancelled = false;
     if (p_substep_func) {
-        cancelled = p_substep_func(0.0f, vformat("%s (%d/%d)", p_description, 0, p_count), nullptr, false);
+        cancelled = p_substep_func(
+            0.0f,
+            vformat("%s (%d/%d)", p_description, 0, p_count),
+            nullptr,
+            false
+        );
     }
 
     thread_progress = 0;
@@ -241,7 +299,12 @@ bool LightmapperCPU::_parallel_run(int p_count, const String &p_description, Bak
         (this->*p_thread_func)(i, p_userdata);
         float p = float(i) / p_count;
         if (p_substep_func) {
-            cancelled = p_substep_func(p, vformat("%s (%d/%d)", p_description, i + 1, p_count), nullptr, false);
+            cancelled = p_substep_func(
+                p,
+                vformat("%s (%d/%d)", p_description, i + 1, p_count),
+                nullptr,
+                false
+            );
         }
     }
 #else
@@ -263,7 +326,12 @@ bool LightmapperCPU::_parallel_run(int p_count, const String &p_description, Bak
     while (!cancelled && progress < p_count) {
         float p = float(progress) / p_count;
         if (p_substep_func) {
-            cancelled = p_substep_func(p, vformat("%s (%d/%d)", p_description, progress + 1, p_count), nullptr, false);
+            cancelled = p_substep_func(
+                p,
+                vformat("%s (%d/%d)", p_description, progress + 1, p_count),
+                nullptr,
+                false
+            );
         }
         progress = thread_progress;
     }
@@ -276,13 +344,13 @@ bool LightmapperCPU::_parallel_run(int p_count, const String &p_description, Bak
     return cancelled;
 }
 
-void LightmapperCPU::_generate_buffer(uint32_t p_idx, void *p_unused) {
-    const Size2i &size = mesh_instances[p_idx].size;
+void LightmapperCPU::_generate_buffer(uint32_t p_idx, void* p_unused) {
+    const Size2i& size = mesh_instances[p_idx].size;
 
     int buffer_size = size.x * size.y;
 
-    LocalVector<LightmapTexel> &lightmap = scene_lightmaps[p_idx];
-    LocalVector<int> &lightmap_indices = scene_lightmap_indices[p_idx];
+    LocalVector<LightmapTexel>& lightmap = scene_lightmaps[p_idx];
+    LocalVector<int>& lightmap_indices = scene_lightmap_indices[p_idx];
 
     lightmap_indices.resize(buffer_size);
 
@@ -290,22 +358,30 @@ void LightmapperCPU::_generate_buffer(uint32_t p_idx, void *p_unused) {
         lightmap_indices[i] = -1;
     }
 
-    MeshData &md = mesh_instances[p_idx].data;
+    MeshData& md = mesh_instances[p_idx].data;
 
     LocalVector<Ref<Image>> albedo_images;
     LocalVector<Ref<Image>> emission_images;
 
     for (int surface_id = 0; surface_id < md.albedo.size(); surface_id++) {
-        albedo_images.push_back(_init_bake_texture(md.albedo[surface_id], albedo_textures, Image::FORMAT_RGBA8));
-        emission_images.push_back(_init_bake_texture(md.emission[surface_id], emission_textures, Image::FORMAT_RGBH));
+        albedo_images.push_back(_init_bake_texture(
+            md.albedo[surface_id],
+            albedo_textures,
+            Image::FORMAT_RGBA8
+        ));
+        emission_images.push_back(_init_bake_texture(
+            md.emission[surface_id],
+            emission_textures,
+            Image::FORMAT_RGBH
+        ));
     }
 
     int surface_id = 0;
     int surface_facecount = 0;
-    const Vector3 *points_ptr = md.points.ptr();
-    const Vector3 *normals_ptr = md.normal.ptr();
-    const Vector2 *uvs_ptr = md.uv.empty() ? nullptr : md.uv.ptr();
-    const Vector2 *uv2s_ptr = md.uv2.ptr();
+    const Vector3* points_ptr = md.points.ptr();
+    const Vector3* normals_ptr = md.normal.ptr();
+    const Vector2* uvs_ptr = md.uv.empty() ? nullptr : md.uv.ptr();
+    const Vector2* uv2s_ptr = md.uv2.ptr();
 
     for (int i = 0; i < md.points.size() / 3; i++) {
         Ref<Image> albedo = albedo_images[surface_id];
@@ -313,7 +389,17 @@ void LightmapperCPU::_generate_buffer(uint32_t p_idx, void *p_unused) {
 
         albedo->lock();
         emission->lock();
-        _plot_triangle(&(uv2s_ptr[i * 3]), &(points_ptr[i * 3]), &(normals_ptr[i * 3]), uvs_ptr ? &(uvs_ptr[i * 3]) : nullptr, albedo, emission, size, lightmap, lightmap_indices);
+        _plot_triangle(
+            &(uv2s_ptr[i * 3]),
+            &(points_ptr[i * 3]),
+            &(normals_ptr[i * 3]),
+            uvs_ptr ? &(uvs_ptr[i * 3]) : nullptr,
+            albedo,
+            emission,
+            size,
+            lightmap,
+            lightmap_indices
+        );
         albedo->unlock();
         emission->unlock();
 
@@ -325,14 +411,22 @@ void LightmapperCPU::_generate_buffer(uint32_t p_idx, void *p_unused) {
     }
 }
 
-Ref<Image> LightmapperCPU::_init_bake_texture(const MeshData::TextureDef &p_texture_def, const Map<RID, Ref<Image>> &p_tex_cache, Image::Format p_default_format) {
+Ref<Image> LightmapperCPU::_init_bake_texture(
+    const MeshData::TextureDef& p_texture_def,
+    const Map<RID, Ref<Image>>& p_tex_cache,
+    Image::Format p_default_format
+) {
     Ref<Image> ret;
     if (p_texture_def.tex_rid.is_valid()) {
         ret = p_tex_cache[p_texture_def.tex_rid]->duplicate();
         ret->lock();
         for (int j = 0; j < ret->get_height(); j++) {
             for (int i = 0; i < ret->get_width(); i++) {
-                ret->set_pixel(i, j, ret->get_pixel(i, j) * p_texture_def.mul + p_texture_def.add);
+                ret->set_pixel(
+                    i,
+                    j,
+                    ret->get_pixel(i, j) * p_texture_def.mul + p_texture_def.add
+                );
             }
         }
         ret->unlock();
@@ -344,7 +438,12 @@ Ref<Image> LightmapperCPU::_init_bake_texture(const MeshData::TextureDef &p_text
     return ret;
 }
 
-Color LightmapperCPU::_bilinear_sample(const Ref<Image> &p_img, const Vector2 &p_uv, bool p_clamp_x, bool p_clamp_y) {
+Color LightmapperCPU::_bilinear_sample(
+    const Ref<Image>& p_img,
+    const Vector2& p_uv,
+    bool p_clamp_x,
+    bool p_clamp_y
+) {
     int width = p_img->get_width();
     int height = p_img->get_height();
 
@@ -374,12 +473,23 @@ Color LightmapperCPU::_bilinear_sample(const Ref<Image> &p_img, const Vector2 &p
 
     Color c = Color(0, 0, 0, 0);
     for (int i = 0; i < 4; i++) {
-        c[i] = Math::lerp(Math::lerp(texels[0][i], texels[1][i], tx), Math::lerp(texels[2][i], texels[3][i], tx), ty);
+        c[i] = Math::lerp(
+            Math::lerp(texels[0][i], texels[1][i], tx),
+            Math::lerp(texels[2][i], texels[3][i], tx),
+            ty
+        );
     }
     return c;
 }
 
-Vector3 LightmapperCPU::_fix_sample_position(const Vector3 &p_position, const Vector3 &p_texel_center, const Vector3 &p_normal, const Vector3 &p_tangent, const Vector3 &p_bitangent, const Vector2 &p_texel_size) {
+Vector3 LightmapperCPU::_fix_sample_position(
+    const Vector3& p_position,
+    const Vector3& p_texel_center,
+    const Vector3& p_normal,
+    const Vector3& p_tangent,
+    const Vector3& p_bitangent,
+    const Vector2& p_texel_size
+) {
     Basis tangent_basis(p_tangent, p_bitangent, p_normal);
     tangent_basis.orthonormalize();
     Vector2 half_size = p_texel_size / 2.0f;
@@ -395,17 +505,24 @@ Vector3 LightmapperCPU::_fix_sample_position(const Vector3 &p_position, const Ve
             Vector3 target = p_texel_center + rotated_offset;
             Vector3 ray_vector = target - corrected;
 
-            Vector3 ray_back_offset = -ray_vector.normalized() * parameters.bias / 2.0;
+            Vector3 ray_back_offset =
+                -ray_vector.normalized() * parameters.bias / 2.0;
             Vector3 ray_origin = corrected + ray_back_offset;
             ray_vector = target - ray_origin;
             float ray_length = ray_vector.length();
-            LightmapRaycaster::Ray ray(ray_origin + p_normal * parameters.bias, ray_vector.normalized(), 0.0f, ray_length + parameters.bias / 2.0);
+            LightmapRaycaster::Ray ray(
+                ray_origin + p_normal * parameters.bias,
+                ray_vector.normalized(),
+                0.0f,
+                ray_length + parameters.bias / 2.0
+            );
 
             bool hit = raycaster->intersect(ray);
             if (hit) {
                 ray.normal.normalize();
                 if (ray.normal.dot(ray_vector.normalized()) > 0.0f) {
-                    corrected = ray_origin + ray.dir * ray.tfar + ray.normal * (parameters.bias * 2.0f);
+                    corrected = ray_origin + ray.dir * ray.tfar
+                              + ray.normal * (parameters.bias * 2.0f);
                 }
             }
         }
@@ -414,7 +531,17 @@ Vector3 LightmapperCPU::_fix_sample_position(const Vector3 &p_position, const Ve
     return corrected;
 }
 
-void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_positions, const Vector3 *p_normals, const Vector2 *p_uvs, const Ref<Image> &p_albedo, const Ref<Image> &p_emission, Vector2i p_size, LocalVector<LightmapTexel> &r_lightmap, LocalVector<int> &r_lightmap_indices) {
+void LightmapperCPU::_plot_triangle(
+    const Vector2* p_vertices,
+    const Vector3* p_positions,
+    const Vector3* p_normals,
+    const Vector2* p_uvs,
+    const Ref<Image>& p_albedo,
+    const Ref<Image>& p_emission,
+    Vector2i p_size,
+    LocalVector<LightmapTexel>& r_lightmap,
+    LocalVector<int>& r_lightmap_indices
+) {
     Vector2 pv0 = p_vertices[0];
     Vector2 pv1 = p_vertices[1];
     Vector2 pv2 = p_vertices[2];
@@ -435,7 +562,9 @@ void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_
     Vector2 uv1 = p_uvs == nullptr ? Vector2(0.5f, 0.5f) : p_uvs[1];
     Vector2 uv2 = p_uvs == nullptr ? Vector2(0.5f, 0.5f) : p_uvs[2];
 
-#define edgeFunction(a, b, c) ((c)[0] - (a)[0]) * ((b)[1] - (a)[1]) - ((c)[1] - (a)[1]) * ((b)[0] - (a)[0])
+#define edgeFunction(a, b, c)                                                  \
+    ((c)[0] - (a)[0]) * ((b)[1] - (a)[1])                                      \
+        - ((c)[1] - (a)[1]) * ((b)[0] - (a)[0])
 
     if (edgeFunction(v0, v1, v2) < 0.0) {
         SWAP(pv1, pv2);
@@ -460,8 +589,10 @@ void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_
     bitangent.normalize();
 
     // Compute triangle bounding box
-    Vector2 bbox_min = Vector2(MIN(v0.x, MIN(v1.x, v2.x)), MIN(v0.y, MIN(v1.y, v2.y)));
-    Vector2 bbox_max = Vector2(MAX(v0.x, MAX(v1.x, v2.x)), MAX(v0.y, MAX(v1.y, v2.y)));
+    Vector2 bbox_min =
+        Vector2(MIN(v0.x, MIN(v1.x, v2.x)), MIN(v0.y, MIN(v1.y, v2.y)));
+    Vector2 bbox_max =
+        Vector2(MAX(v0.x, MAX(v1.x, v2.x)), MAX(v0.y, MAX(v1.y, v2.y)));
 
     bbox_min = bbox_min.floor();
     bbox_max = bbox_max.ceil();
@@ -486,7 +617,8 @@ void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_
 
     Vector<Vector2> pixel_polygon;
     pixel_polygon.resize(4);
-    static const Vector2 corners[4] = { Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(1, 0) };
+    static const Vector2 corners[4] =
+        {Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(1, 0)};
 
     Vector<Vector2> triangle_polygon;
     triangle_polygon.push_back(v0);
@@ -531,14 +663,30 @@ void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_
                     segment.write[1] = v1;
                 }
 
-                Vector<Vector<Vector2>> intersected_segments = Geometry::intersect_polyline_with_polygon_2d(segment, pixel_polygon);
-                ERR_FAIL_COND_MSG(intersected_segments.size() > 1, "[Lightmapper] Itersecting a segment and a convex polygon should give at most one segment.");
+                Vector<Vector<Vector2>> intersected_segments =
+                    Geometry::intersect_polyline_with_polygon_2d(
+                        segment,
+                        pixel_polygon
+                    );
+                ERR_FAIL_COND_MSG(
+                    intersected_segments.size() > 1,
+                    "[Lightmapper] Itersecting a segment and a convex polygon "
+                    "should give at most one segment."
+                );
                 if (!intersected_segments.empty()) {
-                    const Vector<Vector2> &intersected_segment = intersected_segments[0];
-                    ERR_FAIL_COND_MSG(intersected_segment.size() != 2, "[Lightmapper] Itersecting a segment and a convex polygon should give at most one segment.");
-                    Vector2 sample_pos = (intersected_segment[0] + intersected_segment[1]) / 2.0f;
+                    const Vector<Vector2>& intersected_segment =
+                        intersected_segments[0];
+                    ERR_FAIL_COND_MSG(
+                        intersected_segment.size() != 2,
+                        "[Lightmapper] Itersecting a segment and a convex "
+                        "polygon should give at most one segment."
+                    );
+                    Vector2 sample_pos =
+                        (intersected_segment[0] + intersected_segment[1])
+                        / 2.0f;
 
-                    float u = (segment[0].distance_to(sample_pos)) / (segment[0].distance_to(segment[1]));
+                    float u = (segment[0].distance_to(sample_pos))
+                            / (segment[0].distance_to(segment[1]));
                     float v = (1.0f - u) / 2.0f;
                     intersected = true;
                     if (v0eqv1) {
@@ -557,7 +705,8 @@ void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_
                 Vector<Vector2> line;
                 int middle_vertex;
 
-                if (SGN(edgeFunction(v0, v0 + perpendicular, v1)) != SGN(edgeFunction(v0, v0 + perpendicular, v2))) {
+                if (SGN(edgeFunction(v0, v0 + perpendicular, v1))
+                    != SGN(edgeFunction(v0, v0 + perpendicular, v2))) {
                     line.push_back(v1);
                     line.push_back(v2);
                     middle_vertex = 0;
@@ -571,14 +720,24 @@ void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_
                     middle_vertex = 2;
                 }
 
-                Vector<Vector<Vector2>> intersected_lines = Geometry::intersect_polyline_with_polygon_2d(line, pixel_polygon);
+                Vector<Vector<Vector2>> intersected_lines =
+                    Geometry::intersect_polyline_with_polygon_2d(
+                        line,
+                        pixel_polygon
+                    );
 
-                ERR_FAIL_COND_MSG(intersected_lines.size() > 1, "[Lightmapper] Itersecting a line and a convex polygon should give at most one line.");
+                ERR_FAIL_COND_MSG(
+                    intersected_lines.size() > 1,
+                    "[Lightmapper] Itersecting a line and a convex polygon "
+                    "should give at most one line."
+                );
 
                 if (!intersected_lines.empty()) {
                     intersected = true;
-                    const Vector<Vector2> &intersected_line = intersected_lines[0];
-                    Vector2 sample_pos = (intersected_line[0] + intersected_line[1]) / 2.0f;
+                    const Vector<Vector2>& intersected_line =
+                        intersected_lines[0];
+                    Vector2 sample_pos =
+                        (intersected_line[0] + intersected_line[1]) / 2.0f;
 
                     float line_length = line[0].distance_to(line[1]);
                     float norm = line[0].distance_to(sample_pos) / line_length;
@@ -592,25 +751,50 @@ void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_
                     }
                 }
             } else {
-                Vector<Vector<Vector2>> intersected_polygons = Geometry::intersect_polygons_2d(pixel_polygon, triangle_polygon);
+                Vector<Vector<Vector2>> intersected_polygons =
+                    Geometry::intersect_polygons_2d(
+                        pixel_polygon,
+                        triangle_polygon
+                    );
 
-                ERR_FAIL_COND_MSG(intersected_polygons.size() > 1, "[Lightmapper] Itersecting two convex polygons should give at most one polygon.");
+                ERR_FAIL_COND_MSG(
+                    intersected_polygons.size() > 1,
+                    "[Lightmapper] Itersecting two convex polygons should give "
+                    "at most one polygon."
+                );
 
                 if (!intersected_polygons.empty()) {
-                    const Vector<Vector2> &intersected_polygon = intersected_polygons[0];
+                    const Vector<Vector2>& intersected_polygon =
+                        intersected_polygons[0];
 
                     // do centroid sampling
                     Vector2 sample_pos = intersected_polygon[0];
                     Vector2 area_center = Vector2(i, j) + Vector2(0.5f, 0.5f);
-                    float intersected_area = (intersected_polygon[0] - area_center).cross(intersected_polygon[intersected_polygon.size() - 1] - area_center);
+                    float intersected_area =
+                        (intersected_polygon[0] - area_center)
+                            .cross(
+                                intersected_polygon
+                                    [intersected_polygon.size() - 1]
+                                - area_center
+                            );
                     for (int k = 1; k < intersected_polygon.size(); k++) {
                         sample_pos += intersected_polygon[k];
-                        intersected_area += (intersected_polygon[k] - area_center).cross(intersected_polygon[k - 1] - area_center);
+                        intersected_area +=
+                            (intersected_polygon[k] - area_center)
+                                .cross(
+                                    intersected_polygon[k - 1] - area_center
+                                );
                     }
 
                     if (intersected_area != 0.0f) {
                         sample_pos /= intersected_polygon.size();
-                        barycentric_coords = Geometry::barycentric_coordinates_2d(sample_pos, v0, v1, v2);
+                        barycentric_coords =
+                            Geometry::barycentric_coordinates_2d(
+                                sample_pos,
+                                v0,
+                                v1,
+                                v2
+                            );
                         intersected = true;
                         area_coverage = ABS(intersected_area) / 2.0f;
                     }
@@ -620,9 +804,21 @@ void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_
                     for (int k = 0; k < 4; ++k) {
                         for (int l = 0; l < 3; ++l) {
                             Vector2 intersection_point;
-                            if (Geometry::segment_intersects_segment_2d(pixel_polygon[k], pixel_polygon[(k + 1) % 4], triangle_polygon[l], triangle_polygon[(l + 1) % 3], &intersection_point)) {
+                            if (Geometry::segment_intersects_segment_2d(
+                                    pixel_polygon[k],
+                                    pixel_polygon[(k + 1) % 4],
+                                    triangle_polygon[l],
+                                    triangle_polygon[(l + 1) % 3],
+                                    &intersection_point
+                                )) {
                                 intersected = true;
-                                barycentric_coords = Geometry::barycentric_coordinates_2d(intersection_point, v0, v1, v2);
+                                barycentric_coords =
+                                    Geometry::barycentric_coordinates_2d(
+                                        intersection_point,
+                                        v0,
+                                        v1,
+                                        v2
+                                    );
                                 break;
                             }
                         }
@@ -633,7 +829,8 @@ void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_
                 }
             }
 
-            if (texel_idx >= 0 && area_coverage < r_lightmap[texel_idx].area_coverage) {
+            if (texel_idx >= 0
+                && area_coverage < r_lightmap[texel_idx].area_coverage) {
                 continue; // A previous triangle gives better pixel coverage
             }
 
@@ -657,29 +854,55 @@ void LightmapperCPU::_plot_triangle(const Vector2 *p_vertices, const Vector3 *p_
                 continue;
             }
 
-            if (Math::is_nan(barycentric_coords.x) || Math::is_nan(barycentric_coords.y) || Math::is_nan(barycentric_coords.z)) {
+            if (Math::is_nan(barycentric_coords.x)
+                || Math::is_nan(barycentric_coords.y)
+                || Math::is_nan(barycentric_coords.z)) {
                 continue;
             }
 
-            if (Math::is_inf(barycentric_coords.x) || Math::is_inf(barycentric_coords.y) || Math::is_inf(barycentric_coords.z)) {
+            if (Math::is_inf(barycentric_coords.x)
+                || Math::is_inf(barycentric_coords.y)
+                || Math::is_inf(barycentric_coords.z)) {
                 continue;
             }
 
             r_lightmap_indices[ofs] = r_lightmap.size();
 
-            Vector3 pos = p0 * barycentric_coords[0] + p1 * barycentric_coords[1] + p2 * barycentric_coords[2];
-            Vector3 normal = n0 * barycentric_coords[0] + n1 * barycentric_coords[1] + n2 * barycentric_coords[2];
+            Vector3 pos = p0 * barycentric_coords[0]
+                        + p1 * barycentric_coords[1]
+                        + p2 * barycentric_coords[2];
+            Vector3 normal = n0 * barycentric_coords[0]
+                           + n1 * barycentric_coords[1]
+                           + n2 * barycentric_coords[2];
 
-            Vector2 uv = uv0 * barycentric_coords[0] + uv1 * barycentric_coords[1] + uv2 * barycentric_coords[2];
+            Vector2 uv = uv0 * barycentric_coords[0]
+                       + uv1 * barycentric_coords[1]
+                       + uv2 * barycentric_coords[2];
             Color c = _bilinear_sample(p_albedo, uv);
             Color e = _bilinear_sample(p_emission, uv);
 
             Vector2 texel_center = Vector2(i, j) + Vector2(0.5f, 0.5f);
-            Vector3 texel_center_bary = Geometry::barycentric_coordinates_2d(texel_center, v0, v1, v2);
+            Vector3 texel_center_bary =
+                Geometry::barycentric_coordinates_2d(texel_center, v0, v1, v2);
 
-            if (texel_center_bary.length_squared() <= 1.3 && !Math::is_nan(texel_center_bary.x) && !Math::is_nan(texel_center_bary.y) && !Math::is_nan(texel_center_bary.z) && !Math::is_inf(texel_center_bary.x) && !Math::is_inf(texel_center_bary.y) && !Math::is_inf(texel_center_bary.z)) {
-                Vector3 texel_center_pos = p0 * texel_center_bary[0] + p1 * texel_center_bary[1] + p2 * texel_center_bary[2];
-                pos = _fix_sample_position(pos, texel_center_pos, normal, tangent, bitangent, texel_size);
+            if (texel_center_bary.length_squared() <= 1.3
+                && !Math::is_nan(texel_center_bary.x)
+                && !Math::is_nan(texel_center_bary.y)
+                && !Math::is_nan(texel_center_bary.z)
+                && !Math::is_inf(texel_center_bary.x)
+                && !Math::is_inf(texel_center_bary.y)
+                && !Math::is_inf(texel_center_bary.z)) {
+                Vector3 texel_center_pos = p0 * texel_center_bary[0]
+                                         + p1 * texel_center_bary[1]
+                                         + p2 * texel_center_bary[2];
+                pos = _fix_sample_position(
+                    pos,
+                    texel_center_pos,
+                    normal,
+                    tangent,
+                    bitangent,
+                    texel_size
+                );
             }
 
             LightmapTexel texel;
@@ -700,11 +923,16 @@ _ALWAYS_INLINE_ float uniform_rand() {
     state ^= state << 13;
     state ^= state >> 17;
     state ^= state << 5;
-    /* implicit conversion from 'unsigned int' to 'float' changes value from 4294967295 to 4294967296 */
+    /* implicit conversion from 'unsigned int' to 'float' changes value from
+     * 4294967295 to 4294967296 */
     return float(state) / float(UINT32_MAX);
 }
 
-float LightmapperCPU::_get_omni_attenuation(float distance, float inv_range, float decay) const {
+float LightmapperCPU::_get_omni_attenuation(
+    float distance,
+    float inv_range,
+    float decay
+) const {
     float nd = distance * inv_range;
     nd *= nd;
     nd *= nd; // nd^4
@@ -713,10 +941,10 @@ float LightmapperCPU::_get_omni_attenuation(float distance, float inv_range, flo
     return nd * powf(MAX(distance, 0.0001f), -decay);
 }
 
-void LightmapperCPU::_compute_direct_light(uint32_t p_idx, void *r_lightmap) {
-    LightmapTexel *lightmap = (LightmapTexel *)r_lightmap;
+void LightmapperCPU::_compute_direct_light(uint32_t p_idx, void* r_lightmap) {
+    LightmapTexel* lightmap = (LightmapTexel*)r_lightmap;
     for (unsigned int i = 0; i < lights.size(); ++i) {
-        const Light &light = lights[i];
+        const Light& light = lights[i];
         Vector3 normal = lightmap[p_idx].normal;
         Vector3 position = lightmap[p_idx].pos;
         Color c = light.color;
@@ -744,9 +972,14 @@ void LightmapperCPU::_compute_direct_light(uint32_t p_idx, void *r_lightmap) {
 
             if (light.type == LIGHT_TYPE_OMNI) {
                 if (parameters.use_physical_light_attenuation) {
-                    attenuation = _get_omni_attenuation(dist, 1.0f / light.range, light.attenuation);
+                    attenuation = _get_omni_attenuation(
+                        dist,
+                        1.0f / light.range,
+                        light.attenuation
+                    );
                 } else {
-                    attenuation = powf(1.0 - dist / light.range, light.attenuation);
+                    attenuation =
+                        powf(1.0 - dist / light.range, light.attenuation);
                 }
             } else /* (light.type == LIGHT_TYPE_SPOT) */ {
                 float angle = Math::acos(light.direction.dot(light_to_point));
@@ -755,18 +988,30 @@ void LightmapperCPU::_compute_direct_light(uint32_t p_idx, void *r_lightmap) {
                     continue;
                 }
 
-                float normalized_dist = dist * (1.0f / MAX(0.001f, light.range));
+                float normalized_dist =
+                    dist * (1.0f / MAX(0.001f, light.range));
                 float norm_light_attenuation;
                 if (parameters.use_physical_light_attenuation) {
-                    norm_light_attenuation = _get_omni_attenuation(dist, 1.0f / light.range, light.attenuation);
+                    norm_light_attenuation = _get_omni_attenuation(
+                        dist,
+                        1.0f / light.range,
+                        light.attenuation
+                    );
                 } else {
-                    norm_light_attenuation = Math::pow(MAX(1.0f - normalized_dist, 0.001f), light.attenuation);
+                    norm_light_attenuation = Math::pow(
+                        MAX(1.0f - normalized_dist, 0.001f),
+                        light.attenuation
+                    );
                 }
 
                 float spot_cutoff = Math::cos(light.spot_angle);
-                float scos = MAX(light_to_point.dot(light.direction), spot_cutoff);
+                float scos =
+                    MAX(light_to_point.dot(light.direction), spot_cutoff);
                 float spot_rim = (1.0f - scos) / (1.0f - spot_cutoff);
-                attenuation = norm_light_attenuation * (1.0f - pow(MAX(spot_rim, 0.001f), light.spot_attenuation));
+                attenuation =
+                    norm_light_attenuation
+                    * (1.0f - pow(MAX(spot_rim, 0.001f), light.spot_attenuation)
+                    );
             }
         } else /*if (light.type == LIGHT_TYPE_DIRECTIONAL)*/ {
             dist = INFINITY;
@@ -779,15 +1024,20 @@ void LightmapperCPU::_compute_direct_light(uint32_t p_idx, void *r_lightmap) {
             Vector3 light_to_point_tan;
             Vector3 light_to_point_bitan;
 
-            if (light.type == LIGHT_TYPE_OMNI || light.type == LIGHT_TYPE_SPOT) {
+            if (light.type == LIGHT_TYPE_OMNI
+                || light.type == LIGHT_TYPE_SPOT) {
                 light_to_point = (position - light.position).normalized();
-                Vector3 aux = light_to_point.y < 0.777 ? Vector3(0, 1, 0) : Vector3(1, 0, 0);
+                Vector3 aux = light_to_point.y < 0.777 ? Vector3(0, 1, 0)
+                                                       : Vector3(1, 0, 0);
                 light_to_point_tan = light_to_point.cross(aux).normalized();
-                light_to_point_bitan = light_to_point.cross(light_to_point_tan).normalized();
+                light_to_point_bitan =
+                    light_to_point.cross(light_to_point_tan).normalized();
             } else /*if (light.type == LIGHT_TYPE_DIRECTIONAL)*/ {
-                Vector3 aux = light_to_point.y < 0.777 ? Vector3(0, 1, 0) : Vector3(1, 0, 0);
+                Vector3 aux = light_to_point.y < 0.777 ? Vector3(0, 1, 0)
+                                                       : Vector3(1, 0, 0);
                 light_to_point_tan = light_to_point.cross(aux).normalized();
-                light_to_point_bitan = light_to_point.cross(light_to_point_tan).normalized();
+                light_to_point_bitan =
+                    light_to_point.cross(light_to_point_tan).normalized();
             }
 
             const static int shadowing_rays_check_penumbra_denom = 2;
@@ -797,9 +1047,12 @@ void LightmapperCPU::_compute_direct_light(uint32_t p_idx, void *r_lightmap) {
             Vector3 light_disk_to_point = light_to_point;
             for (int j = 0; j < shadowing_ray_count; j++) {
                 // Optimization:
-                // Once already casted an important proportion of rays, if all are hits or misses,
-                // assume we're not in the penumbra so we can infer the rest would have the same result
-                if (j == shadowing_ray_count / shadowing_rays_check_penumbra_denom) {
+                // Once already casted an important proportion of rays, if all
+                // are hits or misses, assume we're not in the penumbra so we
+                // can infer the rest would have the same result
+                if (j
+                    == shadowing_ray_count
+                           / shadowing_rays_check_penumbra_denom) {
                     if (hits == j) {
                         // Assume totally lit
                         hits = shadowing_ray_count;
@@ -813,10 +1066,19 @@ void LightmapperCPU::_compute_direct_light(uint32_t p_idx, void *r_lightmap) {
 
                 float r = uniform_rand();
                 float a = uniform_rand() * Math_TAU;
-                Vector2 disk_sample = (r * Vector2(Math::cos(a), Math::sin(a))) * soft_shadowing_disk_size;
-                light_disk_to_point = (light_to_point + disk_sample.x * light_to_point_tan + disk_sample.y * light_to_point_bitan).normalized();
+                Vector2 disk_sample = (r * Vector2(Math::cos(a), Math::sin(a)))
+                                    * soft_shadowing_disk_size;
+                light_disk_to_point =
+                    (light_to_point + disk_sample.x * light_to_point_tan
+                     + disk_sample.y * light_to_point_bitan)
+                        .normalized();
 
-                LightmapRaycaster::Ray ray = LightmapRaycaster::Ray(position, -light_disk_to_point, parameters.bias, dist);
+                LightmapRaycaster::Ray ray = LightmapRaycaster::Ray(
+                    position,
+                    -light_disk_to_point,
+                    parameters.bias,
+                    dist
+                );
                 if (raycaster->intersect(ray)) {
                     continue;
                 }
@@ -825,23 +1087,30 @@ void LightmapperCPU::_compute_direct_light(uint32_t p_idx, void *r_lightmap) {
             }
             penumbra = (float)hits / shadowing_ray_count;
         } else {
-            LightmapRaycaster::Ray ray = LightmapRaycaster::Ray(position, -light_to_point, parameters.bias, dist);
+            LightmapRaycaster::Ray ray = LightmapRaycaster::Ray(
+                position,
+                -light_to_point,
+                parameters.bias,
+                dist
+            );
             if (!raycaster->intersect(ray)) {
                 penumbra = 1.0f;
             }
         }
 
-        Vector3 final_energy = attenuation * penumbra * light_energy * MAX(0, normal.dot(-light_to_point));
-        lightmap[p_idx].direct_light += final_energy * light.indirect_multiplier;
+        Vector3 final_energy = attenuation * penumbra * light_energy
+                             * MAX(0, normal.dot(-light_to_point));
+        lightmap[p_idx].direct_light +=
+            final_energy * light.indirect_multiplier;
         if (light.bake_direct) {
             lightmap[p_idx].output_light += final_energy;
         }
     }
 }
 
-void LightmapperCPU::_compute_indirect_light(uint32_t p_idx, void *r_lightmap) {
-    LightmapTexel *lightmap = (LightmapTexel *)r_lightmap;
-    LightmapTexel &texel = lightmap[p_idx];
+void LightmapperCPU::_compute_indirect_light(uint32_t p_idx, void* r_lightmap) {
+    LightmapTexel* lightmap = (LightmapTexel*)r_lightmap;
+    LightmapTexel& texel = lightmap[p_idx];
 
     Vector3 accum;
 
@@ -874,21 +1143,30 @@ void LightmapperCPU::_compute_indirect_light(uint32_t p_idx, void *r_lightmap) {
             float radius = Math::sqrt(u1);
             float theta = Math_TAU * u2;
 
-            Vector3 axis = Vector3(radius * Math::cos(theta), radius * Math::sin(theta), Math::sqrt(MAX(0.0f, 1.0f - u1)));
+            Vector3 axis = Vector3(
+                radius * Math::cos(theta),
+                radius * Math::sin(theta),
+                Math::sqrt(MAX(0.0f, 1.0f - u1))
+            );
 
             direction = normal_xform.xform(axis);
 
-            // We can skip multiplying throughput by cos(theta) because de sampling PDF is also cos(theta) and they cancel each other
-            //float pdf = normal.dot(direction);
-            //throughput *= normal.dot(direction)/pdf;
+            // We can skip multiplying throughput by cos(theta) because de
+            // sampling PDF is also cos(theta) and they cancel each other
+            // float pdf = normal.dot(direction);
+            // throughput *= normal.dot(direction)/pdf;
 
             LightmapRaycaster::Ray ray(position, direction, parameters.bias);
             bool hit = raycaster->intersect(ray);
 
             if (!hit) {
                 if (parameters.environment_panorama.is_valid()) {
-                    direction = parameters.environment_transform.xform_inv(direction);
-                    Vector2 st = Vector2(Math::atan2(direction.z, direction.x), Math::acos(direction.y));
+                    direction =
+                        parameters.environment_transform.xform_inv(direction);
+                    Vector2 st = Vector2(
+                        Math::atan2(direction.z, direction.x),
+                        Math::acos(direction.y)
+                    );
 
                     if (Math::is_nan(st.y)) {
                         st.y = direction.y > 0.0 ? 0.0 : Math_PI;
@@ -897,14 +1175,19 @@ void LightmapperCPU::_compute_indirect_light(uint32_t p_idx, void *r_lightmap) {
                     st.x += Math_PI;
                     st /= Vector2(Math_TAU, Math_PI);
                     st.x = Math::fmod(st.x + 0.75, 1.0);
-                    Color c = _bilinear_sample(parameters.environment_panorama, st, false, true);
+                    Color c = _bilinear_sample(
+                        parameters.environment_panorama,
+                        st,
+                        false,
+                        true
+                    );
                     color += throughput * Vector3(c.r, c.g, c.b) * c.a;
                 }
                 break;
             }
 
             unsigned int hit_mesh_id = ray.geomID;
-            const Vector2i &size = mesh_instances[hit_mesh_id].size;
+            const Vector2i& size = mesh_instances[hit_mesh_id].size;
 
             int x = CLAMP(ray.u * size.x, 0, size.x - 1);
             int y = CLAMP(ray.v * size.y, 0, size.y - 1);
@@ -915,16 +1198,18 @@ void LightmapperCPU::_compute_indirect_light(uint32_t p_idx, void *r_lightmap) {
                 break;
             }
 
-            const LightmapTexel &sample = scene_lightmaps[hit_mesh_id][idx];
+            const LightmapTexel& sample = scene_lightmaps[hit_mesh_id][idx];
 
-            if (sample.normal.dot(ray.dir) > 0.0 && !no_shadow_meshes.has(hit_mesh_id)) {
+            if (sample.normal.dot(ray.dir) > 0.0
+                && !no_shadow_meshes.has(hit_mesh_id)) {
                 // We hit a back-face
                 break;
             }
 
             color += throughput * sample.emission;
             throughput *= sample.albedo;
-            color += throughput * sample.direct_light * parameters.bounce_indirect_energy;
+            color += throughput * sample.direct_light
+                   * parameters.bounce_indirect_energy;
 
             // Russian Roulette
             // https://computergraphics.stackexchange.com/questions/2316/is-russian-roulette-really-the-answer
@@ -943,16 +1228,16 @@ void LightmapperCPU::_compute_indirect_light(uint32_t p_idx, void *r_lightmap) {
     texel.output_light += accum / parameters.samples;
 }
 
-void LightmapperCPU::_post_process(uint32_t p_idx, void *r_output) {
-    const MeshInstance &mesh = mesh_instances[p_idx];
+void LightmapperCPU::_post_process(uint32_t p_idx, void* r_output) {
+    const MeshInstance& mesh = mesh_instances[p_idx];
 
     if (!mesh.generate_lightmap) {
         return;
     }
 
-    LocalVector<int> &indices = scene_lightmap_indices[p_idx];
-    LocalVector<LightmapTexel> &lightmap = scene_lightmaps[p_idx];
-    Vector3 *output = ((LocalVector<Vector3> *)r_output)[p_idx].ptr();
+    LocalVector<int>& indices = scene_lightmap_indices[p_idx];
+    LocalVector<LightmapTexel>& lightmap = scene_lightmaps[p_idx];
+    Vector3* output = ((LocalVector<Vector3>*)r_output)[p_idx].ptr();
     Vector2i size = mesh.size;
 
     // Blit texels to buffer
@@ -981,7 +1266,8 @@ void LightmapperCPU::_post_process(uint32_t p_idx, void *r_output) {
                     }
                     int cell_idx = indices[y * size.x + x];
                     if (cell_idx < 0) {
-                        continue; //also ensures that blitted stuff is not reused
+                        continue; // also ensures that blitted stuff is not
+                                  // reused
                     }
 
                     float dist = Vector2(i - y, j - x).length_squared();
@@ -1018,7 +1304,8 @@ void LightmapperCPU::_post_process(uint32_t p_idx, void *r_output) {
                 data.resize(data_size);
                 PoolByteArray::Write w = data.write();
                 memcpy(w.ptr(), output, data_size);
-                current_image->create(size.x, size.y, false, Image::FORMAT_RGBF, data);
+                current_image
+                    ->create(size.x, size.y, false, Image::FORMAT_RGBF, data);
             }
 
             Ref<Image> denoised_image = denoiser->denoise_image(current_image);
@@ -1037,23 +1324,36 @@ void LightmapperCPU::_post_process(uint32_t p_idx, void *r_output) {
     indices.clear();
 }
 
-void LightmapperCPU::_compute_seams(const MeshInstance &p_mesh, LocalVector<UVSeam> &r_seams) {
+void LightmapperCPU::_compute_seams(
+    const MeshInstance& p_mesh,
+    LocalVector<UVSeam>& r_seams
+) {
     float max_uv_distance = 1.0f / MAX(p_mesh.size.x, p_mesh.size.y);
-    max_uv_distance *= max_uv_distance; // We use distance_to_squared(), so we need to square the max distance as well
+    max_uv_distance *=
+        max_uv_distance; // We use distance_to_squared(), so we need to square
+                         // the max distance as well
     float max_pos_distance = 0.00025f;
     float max_normal_distance = 0.05f;
 
-    const Vector<Vector3> &points = p_mesh.data.points;
-    const Vector<Vector2> &uv2s = p_mesh.data.uv2;
-    const Vector<Vector3> &normals = p_mesh.data.normal;
+    const Vector<Vector3>& points = p_mesh.data.points;
+    const Vector<Vector2>& uv2s = p_mesh.data.uv2;
+    const Vector<Vector3>& normals = p_mesh.data.normal;
 
     LocalVector<SeamEdge> edges;
     edges.resize(points.size()); // One edge per vertex
 
     for (int i = 0; i < points.size(); i += 3) {
-        Vector3 triangle_vtxs[3] = { points[i + 0], points[i + 1], points[i + 2] };
-        Vector2 triangle_uvs[3] = { uv2s[i + 0], uv2s[i + 1], uv2s[i + 2] };
-        Vector3 triangle_normals[3] = { normals[i + 0], normals[i + 1], normals[i + 2] };
+        Vector3 triangle_vtxs[3] = {
+            points[i + 0],
+            points[i + 1],
+            points[i + 2]
+        };
+        Vector2 triangle_uvs[3] = {uv2s[i + 0], uv2s[i + 1], uv2s[i + 2]};
+        Vector3 triangle_normals[3] = {
+            normals[i + 0],
+            normals[i + 1],
+            normals[i + 2]
+        };
 
         for (int k = 0; k < 3; k++) {
             int idx[2];
@@ -1077,7 +1377,7 @@ void LightmapperCPU::_compute_seams(const MeshInstance &p_mesh, LocalVector<UVSe
     edges.sort();
 
     for (unsigned int j = 0; j < edges.size(); j++) {
-        const SeamEdge &edge0 = edges[j];
+        const SeamEdge& edge0 = edges[j];
 
         if (edge0.uv[0].distance_squared_to(edge0.uv[1]) < 0.001) {
             continue;
@@ -1087,8 +1387,11 @@ void LightmapperCPU::_compute_seams(const MeshInstance &p_mesh, LocalVector<UVSe
             continue;
         }
 
-        for (unsigned int k = j + 1; k < edges.size() && edges[k].pos[0].x < (edge0.pos[0].x + max_pos_distance * 1.1f); k++) {
-            const SeamEdge &edge1 = edges[k];
+        for (unsigned int k = j + 1;
+             k < edges.size()
+             && edges[k].pos[0].x < (edge0.pos[0].x + max_pos_distance * 1.1f);
+             k++) {
+            const SeamEdge& edge1 = edges[k];
 
             if (edge1.uv[0].distance_squared_to(edge1.uv[1]) < 0.001) {
                 continue;
@@ -1098,15 +1401,23 @@ void LightmapperCPU::_compute_seams(const MeshInstance &p_mesh, LocalVector<UVSe
                 continue;
             }
 
-            if (edge0.uv[0].distance_squared_to(edge1.uv[0]) < max_uv_distance && edge0.uv[1].distance_squared_to(edge1.uv[1]) < max_uv_distance) {
+            if (edge0.uv[0].distance_squared_to(edge1.uv[0]) < max_uv_distance
+                && edge0.uv[1].distance_squared_to(edge1.uv[1])
+                       < max_uv_distance) {
                 continue;
             }
 
-            if (edge0.pos[0].distance_squared_to(edge1.pos[0]) > max_pos_distance || edge0.pos[1].distance_squared_to(edge1.pos[1]) > max_pos_distance) {
+            if (edge0.pos[0].distance_squared_to(edge1.pos[0])
+                    > max_pos_distance
+                || edge0.pos[1].distance_squared_to(edge1.pos[1])
+                       > max_pos_distance) {
                 continue;
             }
 
-            if (edge0.normal[0].distance_squared_to(edge1.normal[0]) > max_normal_distance || edge0.normal[1].distance_squared_to(edge1.normal[1]) > max_normal_distance) {
+            if (edge0.normal[0].distance_squared_to(edge1.normal[0])
+                    > max_normal_distance
+                || edge0.normal[1].distance_squared_to(edge1.normal[1])
+                       > max_normal_distance) {
                 continue;
             }
 
@@ -1120,25 +1431,57 @@ void LightmapperCPU::_compute_seams(const MeshInstance &p_mesh, LocalVector<UVSe
     }
 }
 
-void LightmapperCPU::_fix_seams(const LocalVector<UVSeam> &p_seams, Vector3 *r_lightmap, Vector2i p_size) {
+void LightmapperCPU::_fix_seams(
+    const LocalVector<UVSeam>& p_seams,
+    Vector3* r_lightmap,
+    Vector2i p_size
+) {
     LocalVector<Vector3> extra_buffer;
     extra_buffer.resize(p_size.x * p_size.y);
 
-    memcpy(extra_buffer.ptr(), r_lightmap, p_size.x * p_size.y * sizeof(Vector3));
+    memcpy(
+        extra_buffer.ptr(),
+        r_lightmap,
+        p_size.x * p_size.y * sizeof(Vector3)
+    );
 
-    Vector3 *read_ptr = extra_buffer.ptr();
-    Vector3 *write_ptr = r_lightmap;
+    Vector3* read_ptr = extra_buffer.ptr();
+    Vector3* write_ptr = r_lightmap;
 
     for (int i = 0; i < 5; i++) {
         for (unsigned int j = 0; j < p_seams.size(); j++) {
-            _fix_seam(p_seams[j].edge0[0], p_seams[j].edge0[1], p_seams[j].edge1[0], p_seams[j].edge1[1], read_ptr, write_ptr, p_size);
-            _fix_seam(p_seams[j].edge1[0], p_seams[j].edge1[1], p_seams[j].edge0[0], p_seams[j].edge0[1], read_ptr, write_ptr, p_size);
+            _fix_seam(
+                p_seams[j].edge0[0],
+                p_seams[j].edge0[1],
+                p_seams[j].edge1[0],
+                p_seams[j].edge1[1],
+                read_ptr,
+                write_ptr,
+                p_size
+            );
+            _fix_seam(
+                p_seams[j].edge1[0],
+                p_seams[j].edge1[1],
+                p_seams[j].edge0[0],
+                p_seams[j].edge0[1],
+                read_ptr,
+                write_ptr,
+                p_size
+            );
         }
         memcpy(read_ptr, write_ptr, p_size.x * p_size.y * sizeof(Vector3));
     }
 }
 
-void LightmapperCPU::_fix_seam(const Vector2 &p_pos0, const Vector2 &p_pos1, const Vector2 &p_uv0, const Vector2 &p_uv1, const Vector3 *p_read_buffer, Vector3 *r_write_buffer, const Vector2i &p_size) {
+void LightmapperCPU::_fix_seam(
+    const Vector2& p_pos0,
+    const Vector2& p_pos1,
+    const Vector2& p_uv0,
+    const Vector2& p_uv1,
+    const Vector3* p_read_buffer,
+    Vector3* r_write_buffer,
+    const Vector2i& p_size
+) {
     Vector2 line[2];
     line[0] = p_pos0 * p_size;
     line[1] = p_pos1 * p_size;
@@ -1147,10 +1490,15 @@ void LightmapperCPU::_fix_seam(const Vector2 &p_pos0, const Vector2 &p_pos1, con
     const Vector2i end_pixel = line[1].floor();
 
     Vector2 seam_dir = (line[1] - line[0]).normalized();
-    Vector2 t_delta = Vector2(1.0f / Math::abs(seam_dir.x), 1.0f / Math::abs(seam_dir.y));
-    Vector2i step = Vector2(seam_dir.x > 0 ? 1 : (seam_dir.x < 0 ? -1 : 0), seam_dir.y > 0 ? 1 : (seam_dir.y < 0 ? -1 : 0));
+    Vector2 t_delta =
+        Vector2(1.0f / Math::abs(seam_dir.x), 1.0f / Math::abs(seam_dir.y));
+    Vector2i step = Vector2(
+        seam_dir.x > 0 ? 1 : (seam_dir.x < 0 ? -1 : 0),
+        seam_dir.y > 0 ? 1 : (seam_dir.y < 0 ? -1 : 0)
+    );
 
-    Vector2 t_next = Vector2(Math::fmod(line[0].x, 1.0f), Math::fmod(line[0].y, 1.0f));
+    Vector2 t_next =
+        Vector2(Math::fmod(line[0].x, 1.0f), Math::fmod(line[0].y, 1.0f));
 
     if (step.x == 1) {
         t_next.x = 1.0f - t_next.x;
@@ -1181,16 +1529,19 @@ void LightmapperCPU::_fix_seam(const Vector2 &p_pos0, const Vector2 &p_pos1, con
 
     while (start_p.distance_to(pixel) < line_length + 1.0f) {
         Vector2 current_point = Vector2(pixel) + Vector2(0.5f, 0.5f);
-        current_point = Geometry::get_closest_point_to_segment_2d(current_point, line);
+        current_point =
+            Geometry::get_closest_point_to_segment_2d(current_point, line);
         float t = line[0].distance_to(current_point) / line_length;
 
         Vector2 current_uv = p_uv0 * (1.0 - t) + p_uv1 * t;
         Vector2i sampled_point = (current_uv * p_size).floor();
 
         Vector3 current_color = r_write_buffer[pixel.y * p_size.x + pixel.x];
-        Vector3 sampled_color = p_read_buffer[sampled_point.y * p_size.x + sampled_point.x];
+        Vector3 sampled_color =
+            p_read_buffer[sampled_point.y * p_size.x + sampled_point.x];
 
-        r_write_buffer[pixel.y * p_size.x + pixel.x] = current_color * 0.6f + sampled_color * 0.4f;
+        r_write_buffer[pixel.y * p_size.x + pixel.x] =
+            current_color * 0.6f + sampled_color * 0.4f;
 
         if (pixel == end_pixel) {
             break;
@@ -1206,12 +1557,17 @@ void LightmapperCPU::_fix_seam(const Vector2 &p_pos0, const Vector2 &p_pos1, con
     }
 }
 
-void LightmapperCPU::_dilate_lightmap(Vector3 *r_lightmap, const LocalVector<int> p_indices, Vector2i p_size, int margin) {
+void LightmapperCPU::_dilate_lightmap(
+    Vector3* r_lightmap,
+    const LocalVector<int> p_indices,
+    Vector2i p_size,
+    int margin
+) {
     for (int i = 0; i < p_size.y; i++) {
         for (int j = 0; j < p_size.x; j++) {
             int idx = p_indices[i * p_size.x + j];
             if (idx >= 0) {
-                continue; //filled, skip
+                continue; // filled, skip
             }
 
             Vector2i closest;
@@ -1230,7 +1586,8 @@ void LightmapperCPU::_dilate_lightmap(Vector3 *r_lightmap, const LocalVector<int
                     }
                     int cell_idx = p_indices[y * p_size.x + x];
                     if (cell_idx < 0) {
-                        continue; //also ensures that blitted stuff is not reused
+                        continue; // also ensures that blitted stuff is not
+                                  // reused
                     }
 
                     float dist = Vector2(i - y, j - x).length_squared();
@@ -1242,13 +1599,21 @@ void LightmapperCPU::_dilate_lightmap(Vector3 *r_lightmap, const LocalVector<int
             }
 
             if (closest_dist < 1e20) {
-                r_lightmap[i * p_size.x + j] = r_lightmap[closest.y * p_size.x + closest.x];
+                r_lightmap[i * p_size.x + j] =
+                    r_lightmap[closest.y * p_size.x + closest.x];
             }
         }
     }
 }
 
-void LightmapperCPU::_blit_lightmap(const Vector<Vector3> &p_src, const Vector2i &p_size, Ref<Image> &p_dst, int p_x, int p_y, bool p_with_padding) {
+void LightmapperCPU::_blit_lightmap(
+    const Vector<Vector3>& p_src,
+    const Vector2i& p_size,
+    Ref<Image>& p_dst,
+    int p_x,
+    int p_y,
+    bool p_with_padding
+) {
     int padding = p_with_padding ? 1 : 0;
     ERR_FAIL_COND(p_x < padding || p_y < padding);
     ERR_FAIL_COND(p_x + p_size.x > p_dst->get_width() - padding);
@@ -1256,7 +1621,7 @@ void LightmapperCPU::_blit_lightmap(const Vector<Vector3> &p_src, const Vector2i
 
     p_dst->lock();
     for (int y = 0; y < p_size.y; y++) {
-        const Vector3 *__restrict src = p_src.ptr() + y * p_size.x;
+        const Vector3* __restrict src = p_src.ptr() + y * p_size.x;
         for (int x = 0; x < p_size.x; x++) {
             p_dst->set_pixel(p_x + x, p_y + y, Color(src->x, src->y, src->z));
             src++;
@@ -1268,24 +1633,58 @@ void LightmapperCPU::_blit_lightmap(const Vector<Vector3> &p_src, const Vector2i
             int yy = CLAMP(y, 0, p_size.y - 1);
             int idx_left = yy * p_size.x;
             int idx_right = idx_left + p_size.x - 1;
-            p_dst->set_pixel(p_x - 1, p_y + y, Color(p_src[idx_left].x, p_src[idx_left].y, p_src[idx_left].z));
-            p_dst->set_pixel(p_x + p_size.x, p_y + y, Color(p_src[idx_right].x, p_src[idx_right].y, p_src[idx_right].z));
+            p_dst->set_pixel(
+                p_x - 1,
+                p_y + y,
+                Color(p_src[idx_left].x, p_src[idx_left].y, p_src[idx_left].z)
+            );
+            p_dst->set_pixel(
+                p_x + p_size.x,
+                p_y + y,
+                Color(
+                    p_src[idx_right].x,
+                    p_src[idx_right].y,
+                    p_src[idx_right].z
+                )
+            );
         }
 
         for (int x = -1; x < p_size.x + 1; x++) {
             int xx = CLAMP(x, 0, p_size.x - 1);
             int idx_top = xx;
             int idx_bot = idx_top + (p_size.y - 1) * p_size.x;
-            p_dst->set_pixel(p_x + x, p_y - 1, Color(p_src[idx_top].x, p_src[idx_top].y, p_src[idx_top].z));
-            p_dst->set_pixel(p_x + x, p_y + p_size.y, Color(p_src[idx_bot].x, p_src[idx_bot].y, p_src[idx_bot].z));
+            p_dst->set_pixel(
+                p_x + x,
+                p_y - 1,
+                Color(p_src[idx_top].x, p_src[idx_top].y, p_src[idx_top].z)
+            );
+            p_dst->set_pixel(
+                p_x + x,
+                p_y + p_size.y,
+                Color(p_src[idx_bot].x, p_src[idx_bot].y, p_src[idx_bot].z)
+            );
         }
     }
     p_dst->unlock();
 }
 
-LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use_denoiser, int p_bounces, float p_bounce_indirect_energy, float p_bias, bool p_generate_atlas, int p_max_texture_size, const Ref<Image> &p_environment_panorama, const Basis &p_environment_transform, BakeStepFunc p_step_function, void *p_bake_userdata, BakeStepFunc p_substep_function) {
+LightmapperCPU::BakeError LightmapperCPU::bake(
+    BakeQuality p_quality,
+    bool p_use_denoiser,
+    int p_bounces,
+    float p_bounce_indirect_energy,
+    float p_bias,
+    bool p_generate_atlas,
+    int p_max_texture_size,
+    const Ref<Image>& p_environment_panorama,
+    const Basis& p_environment_transform,
+    BakeStepFunc p_step_function,
+    void* p_bake_userdata,
+    BakeStepFunc p_substep_function
+) {
     if (p_step_function) {
-        bool cancelled = p_step_function(0.0, TTR("Begin Bake"), p_bake_userdata, true);
+        bool cancelled =
+            p_step_function(0.0, TTR("Begin Bake"), p_bake_userdata, true);
         if (cancelled) {
             return BAKE_ERROR_USER_ABORTED;
         }
@@ -1297,7 +1696,9 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
 
     // Collect parameters
     parameters.use_denoiser = p_use_denoiser;
-    parameters.use_physical_light_attenuation = bool(GLOBAL_GET("rendering/quality/shading/use_physical_light_attenuation"));
+    parameters.use_physical_light_attenuation = bool(
+        GLOBAL_GET("rendering/quality/shading/use_physical_light_attenuation")
+    );
     parameters.bias = p_bias;
     parameters.bounces = p_bounces;
     parameters.bounce_indirect_energy = p_bounce_indirect_energy;
@@ -1306,23 +1707,36 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
 
     switch (p_quality) {
         case BAKE_QUALITY_LOW: {
-            parameters.samples = GLOBAL_GET("rendering/cpu_lightmapper/quality/low_quality_ray_count");
+            parameters.samples = GLOBAL_GET(
+                "rendering/cpu_lightmapper/quality/low_quality_ray_count"
+            );
         } break;
         case BAKE_QUALITY_MEDIUM: {
-            parameters.samples = GLOBAL_GET("rendering/cpu_lightmapper/quality/medium_quality_ray_count");
+            parameters.samples = GLOBAL_GET(
+                "rendering/cpu_lightmapper/quality/medium_quality_ray_count"
+            );
         } break;
         case BAKE_QUALITY_HIGH: {
-            parameters.samples = GLOBAL_GET("rendering/cpu_lightmapper/quality/high_quality_ray_count");
+            parameters.samples = GLOBAL_GET(
+                "rendering/cpu_lightmapper/quality/high_quality_ray_count"
+            );
         } break;
         case BAKE_QUALITY_ULTRA: {
-            parameters.samples = GLOBAL_GET("rendering/cpu_lightmapper/quality/ultra_quality_ray_count");
+            parameters.samples = GLOBAL_GET(
+                "rendering/cpu_lightmapper/quality/ultra_quality_ray_count"
+            );
         } break;
     }
 
     bake_textures.clear();
 
     if (p_step_function) {
-        bool cancelled = p_step_function(0.1, TTR("Preparing data structures"), p_bake_userdata, true);
+        bool cancelled = p_step_function(
+            0.1,
+            TTR("Preparing data structures"),
+            p_bake_userdata,
+            true
+        );
         if (cancelled) {
             return BAKE_ERROR_USER_ABORTED;
         }
@@ -1333,7 +1747,12 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
         if (mesh_instances[i].generate_lightmap) {
             has_baked_mesh = true;
         }
-        raycaster->add_mesh(mesh_instances[i].data.points, mesh_instances[i].data.normal, mesh_instances[i].data.uv2, i);
+        raycaster->add_mesh(
+            mesh_instances[i].data.points,
+            mesh_instances[i].data.normal,
+            mesh_instances[i].data.uv2,
+            i
+        );
     }
 
     if (!has_baked_mesh) {
@@ -1356,31 +1775,44 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
     Vector2i atlas_size = Vector2i(-1, -1);
     int atlas_slices = -1;
     if (p_generate_atlas) {
-        Error err = _layout_atlas(p_max_texture_size, &atlas_size, &atlas_slices);
+        Error err =
+            _layout_atlas(p_max_texture_size, &atlas_size, &atlas_slices);
         if (err != OK) {
             return BAKE_ERROR_LIGHTMAP_TOO_SMALL;
         }
     }
 
     if (p_step_function) {
-        bool cancelled = p_step_function(0.2, TTR("Generate buffers"), p_bake_userdata, true);
+        bool cancelled = p_step_function(
+            0.2,
+            TTR("Generate buffers"),
+            p_bake_userdata,
+            true
+        );
         if (cancelled) {
             return BAKE_ERROR_USER_ABORTED;
         }
     }
 
-    if (_parallel_run(mesh_instances.size(), "Rasterizing meshes", &LightmapperCPU::_generate_buffer, nullptr, p_substep_function)) {
+    if (_parallel_run(
+            mesh_instances.size(),
+            "Rasterizing meshes",
+            &LightmapperCPU::_generate_buffer,
+            nullptr,
+            p_substep_function
+        )) {
         return BAKE_ERROR_USER_ABORTED;
     }
 
     for (unsigned int i = 0; i < mesh_instances.size(); i++) {
-        const Size2i &size = mesh_instances[i].size;
+        const Size2i& size = mesh_instances[i].size;
         bool has_alpha = false;
         PoolVector<uint8_t> alpha_data;
         alpha_data.resize(size.x * size.y);
         {
             PoolVector<uint8_t>::Write w = alpha_data.write();
-            for (unsigned int j = 0; j < scene_lightmap_indices[i].size(); ++j) {
+            for (unsigned int j = 0; j < scene_lightmap_indices[i].size();
+                 ++j) {
                 int idx = scene_lightmap_indices[i][j];
                 uint8_t alpha = 0;
                 if (idx >= 0) {
@@ -1396,7 +1828,8 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
         if (has_alpha) {
             Ref<Image> alpha_texture;
             alpha_texture.instance();
-            alpha_texture->create(size.x, size.y, false, Image::FORMAT_L8, alpha_data);
+            alpha_texture
+                ->create(size.x, size.y, false, Image::FORMAT_L8, alpha_data);
             raycaster->set_mesh_alpha_texture(alpha_texture, i);
         }
     }
@@ -1407,13 +1840,29 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
     for (unsigned int i = 0; i < mesh_instances.size(); i++) {
         if (p_step_function) {
             float p = float(i) / mesh_instances.size();
-            bool cancelled = p_step_function(0.2 + p * 0.2, vformat("%s (%d/%d)", TTR("Direct lighting"), i, mesh_instances.size()), p_bake_userdata, false);
+            bool cancelled = p_step_function(
+                0.2 + p * 0.2,
+                vformat(
+                    "%s (%d/%d)",
+                    TTR("Direct lighting"),
+                    i,
+                    mesh_instances.size()
+                ),
+                p_bake_userdata,
+                false
+            );
             if (cancelled) {
                 return BAKE_ERROR_USER_ABORTED;
             }
         }
 
-        if (_parallel_run(scene_lightmaps[i].size(), "Computing direct light", &LightmapperCPU::_compute_direct_light, scene_lightmaps[i].ptr(), p_substep_function)) {
+        if (_parallel_run(
+                scene_lightmaps[i].size(),
+                "Computing direct light",
+                &LightmapperCPU::_compute_direct_light,
+                scene_lightmaps[i].ptr(),
+                p_substep_function
+            )) {
             return BAKE_ERROR_USER_ABORTED;
         }
     }
@@ -1437,14 +1886,30 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
 
         if (p_step_function) {
             float p = float(i) / n_lit_meshes;
-            bool cancelled = p_step_function(0.4 + p * 0.4, vformat("%s (%d/%d)", TTR("Indirect lighting"), i, mesh_instances.size()), p_bake_userdata, false);
+            bool cancelled = p_step_function(
+                0.4 + p * 0.4,
+                vformat(
+                    "%s (%d/%d)",
+                    TTR("Indirect lighting"),
+                    i,
+                    mesh_instances.size()
+                ),
+                p_bake_userdata,
+                false
+            );
             if (cancelled) {
                 return BAKE_ERROR_USER_ABORTED;
             }
         }
 
         if (!scene_lightmaps[i].empty()) {
-            if (_parallel_run(scene_lightmaps[i].size(), "Computing indirect light", &LightmapperCPU::_compute_indirect_light, scene_lightmaps[i].ptr(), p_substep_function)) {
+            if (_parallel_run(
+                    scene_lightmaps[i].size(),
+                    "Computing indirect light",
+                    &LightmapperCPU::_compute_indirect_light,
+                    scene_lightmaps[i].ptr(),
+                    p_substep_function
+                )) {
                 return BAKE_ERROR_USER_ABORTED;
             }
         }
@@ -1467,13 +1932,20 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
     }
 
     if (p_step_function) {
-        bool cancelled = p_step_function(0.8, TTR("Post processing"), p_bake_userdata, true);
+        bool cancelled =
+            p_step_function(0.8, TTR("Post processing"), p_bake_userdata, true);
         if (cancelled) {
             return BAKE_ERROR_USER_ABORTED;
         }
     }
 
-    if (_parallel_run(mesh_instances.size(), "Denoise & fix seams", &LightmapperCPU::_post_process, lightmaps_data.ptr(), p_substep_function)) {
+    if (_parallel_run(
+            mesh_instances.size(),
+            "Denoise & fix seams",
+            &LightmapperCPU::_post_process,
+            lightmaps_data.ptr(),
+            p_substep_function
+        )) {
         return BAKE_ERROR_USER_ABORTED;
     }
 
@@ -1483,7 +1955,8 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
         for (int i = 0; i < atlas_slices; i++) {
             Ref<Image> image;
             image.instance();
-            image->create(atlas_size.x, atlas_size.y, false, Image::FORMAT_RGBH);
+            image
+                ->create(atlas_size.x, atlas_size.y, false, Image::FORMAT_RGBH);
             bake_textures[i] = image;
         }
     } else {
@@ -1497,7 +1970,8 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
             }
 
             String mesh_name = mesh_instances[i].node_name;
-            if (mesh_name == "" || mesh_name.find(":") != -1 || mesh_name.find("/") != -1) {
+            if (mesh_name == "" || mesh_name.find(":") != -1
+                || mesh_name.find("/") != -1) {
                 mesh_name = "LightMap";
             }
 
@@ -1516,14 +1990,24 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
 
             Ref<Image> image;
             image.instance();
-            image->create(mesh_instances[i].size.x, mesh_instances[i].size.y, false, Image::FORMAT_RGBH);
+            image->create(
+                mesh_instances[i].size.x,
+                mesh_instances[i].size.y,
+                false,
+                Image::FORMAT_RGBH
+            );
             image->set_name(mesh_name);
             bake_textures[i] = image;
         }
     }
 
     if (p_step_function) {
-        bool cancelled = p_step_function(0.9, TTR("Plotting lightmaps"), p_bake_userdata, true);
+        bool cancelled = p_step_function(
+            0.9,
+            TTR("Plotting lightmaps"),
+            p_bake_userdata,
+            true
+        );
         if (cancelled) {
             return BAKE_ERROR_USER_ABORTED;
         }
@@ -1536,9 +2020,23 @@ LightmapperCPU::BakeError LightmapperCPU::bake(BakeQuality p_quality, bool p_use
             }
 
             if (p_generate_atlas) {
-                _blit_lightmap(lightmaps_data[i], mesh_instances[i].size, bake_textures[mesh_instances[i].slice], mesh_instances[i].offset.x, mesh_instances[i].offset.y, true);
+                _blit_lightmap(
+                    lightmaps_data[i],
+                    mesh_instances[i].size,
+                    bake_textures[mesh_instances[i].slice],
+                    mesh_instances[i].offset.x,
+                    mesh_instances[i].offset.y,
+                    true
+                );
             } else {
-                _blit_lightmap(lightmaps_data[i], mesh_instances[i].size, bake_textures[i], 0, 0, false);
+                _blit_lightmap(
+                    lightmaps_data[i],
+                    mesh_instances[i].size,
+                    bake_textures[i],
+                    0,
+                    0,
+                    false
+                );
             }
         }
     }
@@ -1567,7 +2065,8 @@ Variant LightmapperCPU::get_bake_mesh_userdata(int p_index) const {
 Rect2 LightmapperCPU::get_bake_mesh_uv_scale(int p_index) const {
     ERR_FAIL_COND_V(bake_textures.size() == 0, Rect2());
     Rect2 uv_ofs;
-    Vector2 atlas_size = Vector2(bake_textures[0]->get_width(), bake_textures[0]->get_height());
+    Vector2 atlas_size =
+        Vector2(bake_textures[0]->get_width(), bake_textures[0]->get_height());
     uv_ofs.position = Vector2(mesh_instances[p_index].offset) / atlas_size;
     uv_ofs.size = Vector2(mesh_instances[p_index].size) / atlas_size;
     return uv_ofs;
@@ -1628,11 +2127,13 @@ void LightmapperCPU::add_emission_texture(Ref<Texture> p_texture) {
     emission_textures.insert(texture_rid, texture_data);
 }
 
-void LightmapperCPU::add_mesh(const MeshData &p_mesh, Vector2i p_size) {
+void LightmapperCPU::add_mesh(const MeshData& p_mesh, Vector2i p_size) {
     ERR_FAIL_COND(p_mesh.points.size() == 0);
     ERR_FAIL_COND(p_mesh.points.size() != p_mesh.uv2.size());
     ERR_FAIL_COND(p_mesh.points.size() != p_mesh.normal.size());
-    ERR_FAIL_COND(!p_mesh.uv.empty() && p_mesh.points.size() != p_mesh.uv.size());
+    ERR_FAIL_COND(
+        !p_mesh.uv.empty() && p_mesh.points.size() != p_mesh.uv.size()
+    );
     ERR_FAIL_COND(p_mesh.surface_facecounts.size() != p_mesh.albedo.size());
     ERR_FAIL_COND(p_mesh.surface_facecounts.size() != p_mesh.emission.size());
 
@@ -1657,7 +2158,14 @@ void LightmapperCPU::add_mesh(const MeshData &p_mesh, Vector2i p_size) {
     mesh_instances.push_back(mi);
 }
 
-void LightmapperCPU::add_directional_light(bool p_bake_direct, const Vector3 &p_direction, const Color &p_color, float p_energy, float p_indirect_multiplier, float p_size) {
+void LightmapperCPU::add_directional_light(
+    bool p_bake_direct,
+    const Vector3& p_direction,
+    const Color& p_color,
+    float p_energy,
+    float p_indirect_multiplier,
+    float p_size
+) {
     Light l;
     l.type = LIGHT_TYPE_DIRECTIONAL;
     l.direction = p_direction;
@@ -1669,7 +2177,16 @@ void LightmapperCPU::add_directional_light(bool p_bake_direct, const Vector3 &p_
     lights.push_back(l);
 }
 
-void LightmapperCPU::add_omni_light(bool p_bake_direct, const Vector3 &p_position, const Color &p_color, float p_energy, float p_indirect_multiplier, float p_range, float p_attenuation, float p_size) {
+void LightmapperCPU::add_omni_light(
+    bool p_bake_direct,
+    const Vector3& p_position,
+    const Color& p_color,
+    float p_energy,
+    float p_indirect_multiplier,
+    float p_range,
+    float p_attenuation,
+    float p_size
+) {
     Light l;
     l.type = LIGHT_TYPE_OMNI;
     l.position = p_position;
@@ -1683,7 +2200,19 @@ void LightmapperCPU::add_omni_light(bool p_bake_direct, const Vector3 &p_positio
     lights.push_back(l);
 }
 
-void LightmapperCPU::add_spot_light(bool p_bake_direct, const Vector3 &p_position, const Vector3 p_direction, const Color &p_color, float p_energy, float p_indirect_multiplier, float p_range, float p_attenuation, float p_spot_angle, float p_spot_attenuation, float p_size) {
+void LightmapperCPU::add_spot_light(
+    bool p_bake_direct,
+    const Vector3& p_position,
+    const Vector3 p_direction,
+    const Color& p_color,
+    float p_energy,
+    float p_indirect_multiplier,
+    float p_range,
+    float p_attenuation,
+    float p_spot_angle,
+    float p_spot_attenuation,
+    float p_size
+) {
     Light l;
     l.type = LIGHT_TYPE_SPOT;
     l.position = p_position;

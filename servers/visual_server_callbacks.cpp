@@ -49,9 +49,9 @@ void VisualServerCallbacks::flush() {
 
     lock();
     for (int n = 0; n < messages.size(); n++) {
-        const Message &mess = messages[n];
+        const Message& mess = messages[n];
 
-        Object *obj = ObjectDB::get_instance(mess.object_id);
+        Object* obj = ObjectDB::get_instance(mess.object_id);
         if (!obj) {
             continue;
         }

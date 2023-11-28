@@ -40,12 +40,12 @@
 class ShaderCompilerGLES2 {
 public:
     struct IdentifierActions {
-        Map<StringName, Pair<int *, int>> render_mode_values;
-        Map<StringName, bool *> render_mode_flags;
-        Map<StringName, bool *> usage_flag_pointers;
-        Map<StringName, bool *> write_flag_pointers;
+        Map<StringName, Pair<int*, int>> render_mode_values;
+        Map<StringName, bool*> render_mode_flags;
+        Map<StringName, bool*> usage_flag_pointers;
+        Map<StringName, bool*> write_flag_pointers;
 
-        Map<StringName, ShaderLanguage::ShaderNode::Uniform> *uniforms;
+        Map<StringName, ShaderLanguage::ShaderNode::Uniform>* uniforms;
     };
 
     struct GeneratedCode {
@@ -73,11 +73,25 @@ private:
         Map<StringName, String> usage_defines;
     };
 
-    void _dump_function_deps(const ShaderLanguage::ShaderNode *p_node, const StringName &p_for_func, const Map<StringName, String> &p_func_code, StringBuilder &r_to_add, Set<StringName> &r_added);
-    String _dump_node_code(const ShaderLanguage::Node *p_node, int p_level, GeneratedCode &r_gen_code, IdentifierActions &p_actions, const DefaultIdentifierActions &p_default_actions, bool p_assigning, bool p_use_scope = true);
+    void _dump_function_deps(
+        const ShaderLanguage::ShaderNode* p_node,
+        const StringName& p_for_func,
+        const Map<StringName, String>& p_func_code,
+        StringBuilder& r_to_add,
+        Set<StringName>& r_added
+    );
+    String _dump_node_code(
+        const ShaderLanguage::Node* p_node,
+        int p_level,
+        GeneratedCode& r_gen_code,
+        IdentifierActions& p_actions,
+        const DefaultIdentifierActions& p_default_actions,
+        bool p_assigning,
+        bool p_use_scope = true
+    );
 
-    const ShaderLanguage::ShaderNode *shader;
-    const ShaderLanguage::FunctionNode *function;
+    const ShaderLanguage::ShaderNode* shader;
+    const ShaderLanguage::FunctionNode* function;
     StringName current_func_name;
     StringName vertex_name;
     StringName fragment_name;
@@ -93,7 +107,13 @@ private:
     DefaultIdentifierActions actions[VS::SHADER_MAX];
 
 public:
-    Error compile(VS::ShaderMode p_mode, const String &p_code, IdentifierActions *p_actions, const String &p_path, GeneratedCode &r_gen_code);
+    Error compile(
+        VS::ShaderMode p_mode,
+        const String& p_code,
+        IdentifierActions* p_actions,
+        const String& p_path,
+        GeneratedCode& r_gen_code
+    );
 
     ShaderCompilerGLES2();
 };

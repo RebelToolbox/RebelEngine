@@ -41,26 +41,47 @@
 class btDiscreteDynamicsWorld;
 
 class GodotCollisionConfiguration : public btDefaultCollisionConfiguration {
-    btCollisionAlgorithmCreateFunc *m_rayWorldCF;
-    btCollisionAlgorithmCreateFunc *m_swappedRayWorldCF;
+    btCollisionAlgorithmCreateFunc* m_rayWorldCF;
+    btCollisionAlgorithmCreateFunc* m_swappedRayWorldCF;
 
 public:
-    GodotCollisionConfiguration(const btDiscreteDynamicsWorld *world, const btDefaultCollisionConstructionInfo &constructionInfo = btDefaultCollisionConstructionInfo());
+    GodotCollisionConfiguration(
+        const btDiscreteDynamicsWorld* world,
+        const btDefaultCollisionConstructionInfo& constructionInfo =
+            btDefaultCollisionConstructionInfo()
+    );
     virtual ~GodotCollisionConfiguration();
 
-    virtual btCollisionAlgorithmCreateFunc *getCollisionAlgorithmCreateFunc(int proxyType0, int proxyType1);
-    virtual btCollisionAlgorithmCreateFunc *getClosestPointsAlgorithmCreateFunc(int proxyType0, int proxyType1);
+    virtual btCollisionAlgorithmCreateFunc* getCollisionAlgorithmCreateFunc(
+        int proxyType0,
+        int proxyType1
+    );
+    virtual btCollisionAlgorithmCreateFunc* getClosestPointsAlgorithmCreateFunc(
+        int proxyType0,
+        int proxyType1
+    );
 };
 
-class GodotSoftCollisionConfiguration : public btSoftBodyRigidBodyCollisionConfiguration {
-    btCollisionAlgorithmCreateFunc *m_rayWorldCF;
-    btCollisionAlgorithmCreateFunc *m_swappedRayWorldCF;
+class GodotSoftCollisionConfiguration :
+    public btSoftBodyRigidBodyCollisionConfiguration {
+    btCollisionAlgorithmCreateFunc* m_rayWorldCF;
+    btCollisionAlgorithmCreateFunc* m_swappedRayWorldCF;
 
 public:
-    GodotSoftCollisionConfiguration(const btDiscreteDynamicsWorld *world, const btDefaultCollisionConstructionInfo &constructionInfo = btDefaultCollisionConstructionInfo());
+    GodotSoftCollisionConfiguration(
+        const btDiscreteDynamicsWorld* world,
+        const btDefaultCollisionConstructionInfo& constructionInfo =
+            btDefaultCollisionConstructionInfo()
+    );
     virtual ~GodotSoftCollisionConfiguration();
 
-    virtual btCollisionAlgorithmCreateFunc *getCollisionAlgorithmCreateFunc(int proxyType0, int proxyType1);
-    virtual btCollisionAlgorithmCreateFunc *getClosestPointsAlgorithmCreateFunc(int proxyType0, int proxyType1);
+    virtual btCollisionAlgorithmCreateFunc* getCollisionAlgorithmCreateFunc(
+        int proxyType0,
+        int proxyType1
+    );
+    virtual btCollisionAlgorithmCreateFunc* getClosestPointsAlgorithmCreateFunc(
+        int proxyType0,
+        int proxyType1
+    );
 };
 #endif

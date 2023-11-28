@@ -36,7 +36,11 @@
 #include "editor_node.h"
 #include "progress_dialog.h"
 
-void EditorAssetInstaller::_update_subitems(TreeItem *p_item, bool p_check, bool p_first) {
+void EditorAssetInstaller::_update_subitems(
+    TreeItem* p_item,
+    bool p_check,
+    bool p_first
+) {
     if (p_check) {
         if (p_item->get_custom_color(0) == Color()) {
             p_item->set_checked(0, true);
@@ -54,13 +58,13 @@ void EditorAssetInstaller::_update_subitems(TreeItem *p_item, bool p_check, bool
     }
 }
 
-void EditorAssetInstaller::_uncheck_parent(TreeItem *p_item) {
+void EditorAssetInstaller::_uncheck_parent(TreeItem* p_item) {
     if (!p_item) {
         return;
     }
 
     bool any_checked = false;
-    TreeItem *item = p_item->get_children();
+    TreeItem* item = p_item->get_children();
     while (item) {
         if (item->is_checked(0)) {
             any_checked = true;
@@ -80,7 +84,7 @@ void EditorAssetInstaller::_item_edited() {
         return;
     }
 
-    TreeItem *item = tree->get_edited();
+    TreeItem* item = tree->get_edited();
     if (!item) {
         return;
     }
@@ -88,7 +92,7 @@ void EditorAssetInstaller::_item_edited() {
     String path = item->get_metadata(0);
 
     updating = true;
-    if (path == String() || item == tree->get_root()) { //a dir or root
+    if (path == String() || item == tree->get_root()) { // a dir or root
         _update_subitems(item, item->is_checked(0), true);
     }
 
@@ -103,23 +107,26 @@ void EditorAssetInstaller::_item_edited() {
     updating = false;
 }
 
-void EditorAssetInstaller::open(const String &p_path, int p_depth) {
+void EditorAssetInstaller::open(const String& p_path, int p_depth) {
     package_path = p_path;
     Set<String> files_sorted;
 
-    FileAccess *src_f = nullptr;
+    FileAccess* src_f = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
 
     unzFile pkg = unzOpen2(p_path.utf8().get_data(), &io);
     if (!pkg) {
-        error->set_text(vformat(TTR("Error opening asset file for \"%s\" (not in ZIP format)."), asset_name));
+        error->set_text(vformat(
+            TTR("Error opening asset file for \"%s\" (not in ZIP format)."),
+            asset_name
+        ));
         return;
     }
 
     int ret = unzGoToFirstFile(pkg);
 
     while (ret == UNZ_OK) {
-        //get filename
+        // get filename
         unz_file_info info;
         char fname[16384];
         unzGetCurrentFileInfo(pkg, &info, fname, 16384, nullptr, 0, nullptr, 0);
@@ -143,9 +150,12 @@ void EditorAssetInstaller::open(const String &p_path, int p_depth) {
         extension_guess["tga"] = tree->get_icon("ImageTexture", "EditorIcons");
         extension_guess["webp"] = tree->get_icon("ImageTexture", "EditorIcons");
 
-        extension_guess["wav"] = tree->get_icon("AudioStreamSample", "EditorIcons");
-        extension_guess["ogg"] = tree->get_icon("AudioStreamOGGVorbis", "EditorIcons");
-        extension_guess["mp3"] = tree->get_icon("AudioStreamMP3", "EditorIcons");
+        extension_guess["wav"] =
+            tree->get_icon("AudioStreamSample", "EditorIcons");
+        extension_guess["ogg"] =
+            tree->get_icon("AudioStreamOGGVorbis", "EditorIcons");
+        extension_guess["mp3"] =
+            tree->get_icon("AudioStreamMP3", "EditorIcons");
 
         extension_guess["scn"] = tree->get_icon("PackedScene", "EditorIcons");
         extension_guess["tscn"] = tree->get_icon("PackedScene", "EditorIcons");
@@ -158,7 +168,8 @@ void EditorAssetInstaller::open(const String &p_path, int p_depth) {
         extension_guess["shader"] = tree->get_icon("Shader", "EditorIcons");
         extension_guess["gd"] = tree->get_icon("GDScript", "EditorIcons");
         if (Engine::get_singleton()->has_singleton("GodotSharp")) {
-            extension_guess["cs"] = tree->get_icon("CSharpScript", "EditorIcons");
+            extension_guess["cs"] =
+                tree->get_icon("CSharpScript", "EditorIcons");
         } else {
             // Mark C# support as unavailable.
             extension_guess["cs"] = tree->get_icon("ImportFail", "EditorIcons");
@@ -167,8 +178,10 @@ void EditorAssetInstaller::open(const String &p_path, int p_depth) {
 
         extension_guess["res"] = tree->get_icon("Resource", "EditorIcons");
         extension_guess["tres"] = tree->get_icon("Resource", "EditorIcons");
-        extension_guess["atlastex"] = tree->get_icon("AtlasTexture", "EditorIcons");
-        // By default, OBJ files are imported as Mesh resources rather than PackedScenes.
+        extension_guess["atlastex"] =
+            tree->get_icon("AtlasTexture", "EditorIcons");
+        // By default, OBJ files are imported as Mesh resources rather than
+        // PackedScenes.
         extension_guess["obj"] = tree->get_icon("Mesh", "EditorIcons");
 
         extension_guess["txt"] = tree->get_icon("TextFile", "EditorIcons");
@@ -188,17 +201,17 @@ void EditorAssetInstaller::open(const String &p_path, int p_depth) {
 
     updating = true;
     tree->clear();
-    TreeItem *root = tree->create_item();
+    TreeItem* root = tree->create_item();
     root->set_cell_mode(0, TreeItem::CELL_MODE_CHECK);
     root->set_checked(0, true);
     root->set_icon(0, get_icon("folder", "FileDialog"));
     root->set_text(0, "res://");
     root->set_editable(0, true);
-    Map<String, TreeItem *> dir_map;
+    Map<String, TreeItem*> dir_map;
 
     int num_file_conflicts = 0;
 
-    for (Set<String>::Element *E = files_sorted.front(); E; E = E->next()) {
+    for (Set<String>::Element* E = files_sorted.front(); E; E = E->next()) {
         String path = E->get();
         int depth = p_depth;
         bool skip = false;
@@ -219,14 +232,14 @@ void EditorAssetInstaller::open(const String &p_path, int p_depth) {
         bool isdir = false;
 
         if (path.ends_with("/")) {
-            //a directory
+            // a directory
             path = path.substr(0, path.length() - 1);
             isdir = true;
         }
 
         int pp = path.find_last("/");
 
-        TreeItem *parent;
+        TreeItem* parent;
         if (pp == -1) {
             parent = root;
         } else {
@@ -235,7 +248,7 @@ void EditorAssetInstaller::open(const String &p_path, int p_depth) {
             parent = dir_map[ppath];
         }
 
-        TreeItem *ti = tree->create_item(parent);
+        TreeItem* ti = tree->create_item(parent);
         ti->set_cell_mode(0, TreeItem::CELL_MODE_CHECK);
         ti->set_checked(0, true);
         ti->set_editable(0, true);
@@ -258,7 +271,10 @@ void EditorAssetInstaller::open(const String &p_path, int p_depth) {
             if (FileAccess::exists(res_path)) {
                 num_file_conflicts += 1;
                 ti->set_custom_color(0, get_color("error_color", "Editor"));
-                ti->set_tooltip(0, vformat(TTR("%s (already exists)"), res_path));
+                ti->set_tooltip(
+                    0,
+                    vformat(TTR("%s (already exists)"), res_path)
+                );
                 ti->set_checked(0, false);
             } else {
                 ti->set_tooltip(0, res_path);
@@ -271,9 +287,18 @@ void EditorAssetInstaller::open(const String &p_path, int p_depth) {
     }
 
     if (num_file_conflicts >= 1) {
-        asset_contents->set_text(vformat(TTR("Contents of asset \"%s\" - %d file(s) conflict with your project:"), asset_name, num_file_conflicts));
+        asset_contents->set_text(vformat(
+            TTR("Contents of asset \"%s\" - %d file(s) conflict with your "
+                "project:"),
+            asset_name,
+            num_file_conflicts
+        ));
     } else {
-        asset_contents->set_text(vformat(TTR("Contents of asset \"%s\" - No files conflict with your project:"), asset_name));
+        asset_contents->set_text(vformat(
+            TTR("Contents of asset \"%s\" - No files conflict with your "
+                "project:"),
+            asset_name
+        ));
     }
 
     popup_centered_ratio();
@@ -281,12 +306,15 @@ void EditorAssetInstaller::open(const String &p_path, int p_depth) {
 }
 
 void EditorAssetInstaller::ok_pressed() {
-    FileAccess *src_f = nullptr;
+    FileAccess* src_f = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
 
     unzFile pkg = unzOpen2(package_path.utf8().get_data(), &io);
     if (!pkg) {
-        error->set_text(vformat(TTR("Error opening asset file for \"%s\" (not in ZIP format)."), asset_name));
+        error->set_text(vformat(
+            TTR("Error opening asset file for \"%s\" (not in ZIP format)."),
+            asset_name
+        ));
         return;
     }
 
@@ -294,14 +322,27 @@ void EditorAssetInstaller::ok_pressed() {
 
     Vector<String> failed_files;
 
-    ProgressDialog::get_singleton()->add_task("uncompress", TTR("Uncompressing Assets"), status_map.size());
+    ProgressDialog::get_singleton()->add_task(
+        "uncompress",
+        TTR("Uncompressing Assets"),
+        status_map.size()
+    );
 
     int idx = 0;
     while (ret == UNZ_OK) {
-        //get filename
+        // get filename
         unz_file_info info;
         char fname[16384];
-        ret = unzGetCurrentFileInfo(pkg, &info, fname, 16384, nullptr, 0, nullptr, 0);
+        ret = unzGetCurrentFileInfo(
+            pkg,
+            &info,
+            fname,
+            16384,
+            nullptr,
+            0,
+            nullptr,
+            0
+        );
 
         String name = String::utf8(fname);
 
@@ -310,7 +351,7 @@ void EditorAssetInstaller::ok_pressed() {
             if (path == String()) { // a dir
 
                 String dirpath;
-                TreeItem *t = status_map[name];
+                TreeItem* t = status_map[name];
                 while (t) {
                     dirpath = t->get_text(0) + dirpath;
                     t = t->get_parent();
@@ -320,7 +361,7 @@ void EditorAssetInstaller::ok_pressed() {
                     dirpath = dirpath.substr(0, dirpath.length() - 1);
                 }
 
-                DirAccess *da = DirAccess::create(DirAccess::ACCESS_RESOURCES);
+                DirAccess* da = DirAccess::create(DirAccess::ACCESS_RESOURCES);
                 da->make_dir(dirpath);
                 memdelete(da);
 
@@ -328,12 +369,12 @@ void EditorAssetInstaller::ok_pressed() {
                 Vector<uint8_t> data;
                 data.resize(info.uncompressed_size);
 
-                //read
+                // read
                 unzOpenCurrentFile(pkg);
                 unzReadCurrentFile(pkg, data.ptrw(), data.size());
                 unzCloseCurrentFile(pkg);
 
-                FileAccess *f = FileAccess::open(path, FileAccess::WRITE);
+                FileAccess* f = FileAccess::open(path, FileAccess::WRITE);
                 if (f) {
                     f->store_buffer(data.ptr(), data.size());
                     memdelete(f);
@@ -341,7 +382,8 @@ void EditorAssetInstaller::ok_pressed() {
                     failed_files.push_back(path);
                 }
 
-                ProgressDialog::get_singleton()->task_step("uncompress", path, idx);
+                ProgressDialog::get_singleton()
+                    ->task_step("uncompress", path, idx);
             }
         }
 
@@ -353,10 +395,19 @@ void EditorAssetInstaller::ok_pressed() {
     unzClose(pkg);
 
     if (failed_files.size()) {
-        String msg = vformat(TTR("The following files failed extraction from asset \"%s\":"), asset_name) + "\n\n";
+        String msg =
+            vformat(
+                TTR("The following files failed extraction from asset \"%s\":"),
+                asset_name
+            )
+            + "\n\n";
         for (int i = 0; i < failed_files.size(); i++) {
             if (i > 15) {
-                msg += "\n" + vformat(TTR("(and %s more files)"), itos(failed_files.size() - i));
+                msg += "\n"
+                     + vformat(
+                           TTR("(and %s more files)"),
+                           itos(failed_files.size() - i)
+                     );
                 break;
             }
             msg += failed_files[i];
@@ -366,13 +417,19 @@ void EditorAssetInstaller::ok_pressed() {
         }
     } else {
         if (EditorNode::get_singleton() != nullptr) {
-            EditorNode::get_singleton()->show_warning(vformat(TTR("Asset \"%s\" installed successfully!"), asset_name), TTR("Success!"));
+            EditorNode::get_singleton()->show_warning(
+                vformat(
+                    TTR("Asset \"%s\" installed successfully!"),
+                    asset_name
+                ),
+                TTR("Success!")
+            );
         }
     }
     EditorFileSystem::get_singleton()->scan_changes();
 }
 
-void EditorAssetInstaller::set_asset_name(const String &p_asset_name) {
+void EditorAssetInstaller::set_asset_name(const String& p_asset_name) {
     asset_name = p_asset_name;
 }
 
@@ -385,7 +442,7 @@ void EditorAssetInstaller::_bind_methods() {
 }
 
 EditorAssetInstaller::EditorAssetInstaller() {
-    VBoxContainer *vb = memnew(VBoxContainer);
+    VBoxContainer* vb = memnew(VBoxContainer);
     add_child(vb);
 
     asset_contents = memnew(Label);

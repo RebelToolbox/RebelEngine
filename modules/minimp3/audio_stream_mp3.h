@@ -41,7 +41,7 @@ class AudioStreamMP3;
 class AudioStreamPlaybackMP3 : public AudioStreamPlaybackResampled {
     GDCLASS(AudioStreamPlaybackMP3, AudioStreamPlaybackResampled);
 
-    mp3dec_ex_t *mp3d = nullptr;
+    mp3dec_ex_t* mp3d = nullptr;
     uint32_t frames_mixed = 0;
     bool active = false;
     int loops = 0;
@@ -51,7 +51,7 @@ class AudioStreamPlaybackMP3 : public AudioStreamPlaybackResampled {
     Ref<AudioStreamMP3> mp3_stream;
 
 protected:
-    virtual void _mix_internal(AudioFrame *p_buffer, int p_frames);
+    virtual void _mix_internal(AudioFrame* p_buffer, int p_frames);
     virtual float get_stream_sampling_rate();
 
 public:
@@ -59,23 +59,25 @@ public:
     virtual void stop();
     virtual bool is_playing() const;
 
-    virtual int get_loop_count() const; //times it looped
+    virtual int get_loop_count() const; // times it looped
 
     virtual float get_playback_position() const;
     virtual void seek(float p_time);
 
     AudioStreamPlaybackMP3() {}
+
     ~AudioStreamPlaybackMP3();
 };
 
 class AudioStreamMP3 : public AudioStream {
     GDCLASS(AudioStreamMP3, AudioStream);
-    OBJ_SAVE_TYPE(AudioStream) //children are all saved as AudioStream, so they can be exchanged
+    OBJ_SAVE_TYPE(AudioStream
+    ) // children are all saved as AudioStream, so they can be exchanged
     RES_BASE_EXTENSION("mp3str");
 
     friend class AudioStreamPlaybackMP3;
 
-    void *data = nullptr;
+    void* data = nullptr;
     uint32_t data_len = 0;
 
     float sample_rate = 1;
@@ -98,7 +100,7 @@ public:
     virtual Ref<AudioStreamPlayback> instance_playback();
     virtual String get_stream_name() const;
 
-    void set_data(const PoolVector<uint8_t> &p_data);
+    void set_data(const PoolVector<uint8_t>& p_data);
     PoolVector<uint8_t> get_data() const;
 
     virtual float get_length() const;

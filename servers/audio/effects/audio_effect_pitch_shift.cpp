@@ -33,7 +33,7 @@
 #include "core/math/math_funcs.h"
 #include "servers/audio_server.h"
 
-/* Thirdparty code, so disable clang-format with Godot style */
+// Disabling clang-format for thirdparty code snippet
 /* clang-format off */
 
 /****************************************************************************
@@ -286,24 +286,46 @@ void SMBPitchShift::smbFft(float *fftBuffer, long fftFrameSize, long sign)
 /* Godot code again */
 /* clang-format on */
 
-void AudioEffectPitchShiftInstance::process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count) {
+void AudioEffectPitchShiftInstance::process(
+    const AudioFrame* p_src_frames,
+    AudioFrame* p_dst_frames,
+    int p_frame_count
+) {
     float sample_rate = AudioServer::get_singleton()->get_mix_rate();
 
-    float *in_l = (float *)p_src_frames;
-    float *in_r = in_l + 1;
+    float* in_l = (float*)p_src_frames;
+    float* in_r = in_l + 1;
 
-    float *out_l = (float *)p_dst_frames;
-    float *out_r = out_l + 1;
+    float* out_l = (float*)p_dst_frames;
+    float* out_r = out_l + 1;
 
-    shift_l.PitchShift(base->pitch_scale, p_frame_count, fft_size, base->oversampling, sample_rate, in_l, out_l, 2);
-    shift_r.PitchShift(base->pitch_scale, p_frame_count, fft_size, base->oversampling, sample_rate, in_r, out_r, 2);
+    shift_l.PitchShift(
+        base->pitch_scale,
+        p_frame_count,
+        fft_size,
+        base->oversampling,
+        sample_rate,
+        in_l,
+        out_l,
+        2
+    );
+    shift_r.PitchShift(
+        base->pitch_scale,
+        p_frame_count,
+        fft_size,
+        base->oversampling,
+        sample_rate,
+        in_r,
+        out_r,
+        2
+    );
 }
 
 Ref<AudioEffectInstance> AudioEffectPitchShift::instance() {
     Ref<AudioEffectPitchShiftInstance> ins;
     ins.instance();
     ins->base = Ref<AudioEffectPitchShift>(this);
-    static const int fft_sizes[FFT_SIZE_MAX] = { 256, 512, 1024, 2048, 4096 };
+    static const int fft_sizes[FFT_SIZE_MAX] = {256, 512, 1024, 2048, 4096};
     ins->fft_size = fft_sizes[fft_size];
 
     return ins;
@@ -337,18 +359,63 @@ AudioEffectPitchShift::FFT_Size AudioEffectPitchShift::get_fft_size() const {
 }
 
 void AudioEffectPitchShift::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_pitch_scale", "rate"), &AudioEffectPitchShift::set_pitch_scale);
-    ClassDB::bind_method(D_METHOD("get_pitch_scale"), &AudioEffectPitchShift::get_pitch_scale);
+    ClassDB::bind_method(
+        D_METHOD("set_pitch_scale", "rate"),
+        &AudioEffectPitchShift::set_pitch_scale
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_pitch_scale"),
+        &AudioEffectPitchShift::get_pitch_scale
+    );
 
-    ClassDB::bind_method(D_METHOD("set_oversampling", "amount"), &AudioEffectPitchShift::set_oversampling);
-    ClassDB::bind_method(D_METHOD("get_oversampling"), &AudioEffectPitchShift::get_oversampling);
+    ClassDB::bind_method(
+        D_METHOD("set_oversampling", "amount"),
+        &AudioEffectPitchShift::set_oversampling
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_oversampling"),
+        &AudioEffectPitchShift::get_oversampling
+    );
 
-    ClassDB::bind_method(D_METHOD("set_fft_size", "size"), &AudioEffectPitchShift::set_fft_size);
-    ClassDB::bind_method(D_METHOD("get_fft_size"), &AudioEffectPitchShift::get_fft_size);
+    ClassDB::bind_method(
+        D_METHOD("set_fft_size", "size"),
+        &AudioEffectPitchShift::set_fft_size
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_fft_size"),
+        &AudioEffectPitchShift::get_fft_size
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "pitch_scale", PROPERTY_HINT_RANGE, "0.01,16,0.01"), "set_pitch_scale", "get_pitch_scale");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "oversampling", PROPERTY_HINT_RANGE, "4,32,1"), "set_oversampling", "get_oversampling");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "fft_size", PROPERTY_HINT_ENUM, "256,512,1024,2048,4096"), "set_fft_size", "get_fft_size");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "pitch_scale",
+            PROPERTY_HINT_RANGE,
+            "0.01,16,0.01"
+        ),
+        "set_pitch_scale",
+        "get_pitch_scale"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "oversampling",
+            PROPERTY_HINT_RANGE,
+            "4,32,1"
+        ),
+        "set_oversampling",
+        "get_oversampling"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "fft_size",
+            PROPERTY_HINT_ENUM,
+            "256,512,1024,2048,4096"
+        ),
+        "set_fft_size",
+        "get_fft_size"
+    );
 
     BIND_ENUM_CONSTANT(FFT_SIZE_256);
     BIND_ENUM_CONSTANT(FFT_SIZE_512);

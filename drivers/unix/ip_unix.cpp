@@ -63,23 +63,27 @@
 #include <net/if.h> // Order is important on OpenBSD, leave as last
 #endif
 
-static IP_Address _sockaddr2ip(struct sockaddr *p_addr) {
+static IP_Address _sockaddr2ip(struct sockaddr* p_addr) {
     IP_Address ip;
 
     if (p_addr->sa_family == AF_INET) {
-        struct sockaddr_in *addr = (struct sockaddr_in *)p_addr;
-        ip.set_ipv4((uint8_t *)&(addr->sin_addr));
+        struct sockaddr_in* addr = (struct sockaddr_in*)p_addr;
+        ip.set_ipv4((uint8_t*)&(addr->sin_addr));
     } else if (p_addr->sa_family == AF_INET6) {
-        struct sockaddr_in6 *addr6 = (struct sockaddr_in6 *)p_addr;
+        struct sockaddr_in6* addr6 = (struct sockaddr_in6*)p_addr;
         ip.set_ipv6(addr6->sin6_addr.s6_addr);
     };
 
     return ip;
 };
 
-void IP_Unix::_resolve_hostname(List<IP_Address> &r_addresses, const String &p_hostname, Type p_type) const {
+void IP_Unix::_resolve_hostname(
+    List<IP_Address>& r_addresses,
+    const String& p_hostname,
+    Type p_type
+) const {
     struct addrinfo hints;
-    struct addrinfo *result;
+    struct addrinfo* result;
 
     memset(&hints, 0, sizeof(struct addrinfo));
     if (p_type == TYPE_IPV4) {
@@ -107,7 +111,7 @@ void IP_Unix::_resolve_hostname(List<IP_Address> &r_addresses, const String &p_h
         return;
     };
 
-    struct addrinfo *next = result;
+    struct addrinfo* next = result;
 
     do {
         if (next->ai_addr == NULL) {
@@ -128,7 +132,8 @@ void IP_Unix::_resolve_hostname(List<IP_Address> &r_addresses, const String &p_h
 
 #if defined(UWP_ENABLED)
 
-void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) const {
+void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
+) const {
     using namespace Windows::Networking;
     using namespace Windows::Networking::Connectivity;
 
@@ -138,11 +143,13 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) co
     for (int i = 0; i < hostnames->Size; i++) {
         auto hostname = hostnames->GetAt(i);
 
-        if (hostname->Type != HostNameType::Ipv4 && hostname->Type != HostNameType::Ipv6)
+        if (hostname->Type != HostNameType::Ipv4
+            && hostname->Type != HostNameType::Ipv6) {
             continue;
+        }
 
         String name = hostname->RawName->Data();
-        Map<String, Interface_Info>::Element *E = r_interfaces->find(name);
+        Map<String, Interface_Info>::Element* E = r_interfaces->find(name);
         if (!E) {
             Interface_Info info;
             info.name = name;
@@ -152,7 +159,7 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) co
             ERR_CONTINUE(!E);
         }
 
-        Interface_Info &info = E->get();
+        Interface_Info& info = E->get();
 
         IP_Address ip = IP_Address(hostname->CanonicalName->Data());
         info.ip_addresses.push_front(ip);
@@ -161,14 +168,21 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) co
 
 #else
 
-void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) const {
+void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
+) const {
     ULONG buf_size = 1024;
-    IP_ADAPTER_ADDRESSES *addrs;
+    IP_ADAPTER_ADDRESSES* addrs;
 
     while (true) {
-        addrs = (IP_ADAPTER_ADDRESSES *)memalloc(buf_size);
-        int err = GetAdaptersAddresses(AF_UNSPEC, GAA_FLAG_SKIP_ANYCAST | GAA_FLAG_SKIP_MULTICAST | GAA_FLAG_SKIP_DNS_SERVER | GAA_FLAG_SKIP_FRIENDLY_NAME,
-                NULL, addrs, &buf_size);
+        addrs = (IP_ADAPTER_ADDRESSES*)memalloc(buf_size);
+        int err = GetAdaptersAddresses(
+            AF_UNSPEC,
+            GAA_FLAG_SKIP_ANYCAST | GAA_FLAG_SKIP_MULTICAST
+                | GAA_FLAG_SKIP_DNS_SERVER | GAA_FLAG_SKIP_FRIENDLY_NAME,
+            NULL,
+            addrs,
+            &buf_size
+        );
         if (err == NO_ERROR) {
             break;
         };
@@ -177,10 +191,12 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) co
             continue; // will go back and alloc the right size
         };
 
-        ERR_FAIL_MSG("Call to GetAdaptersAddresses failed with error " + itos(err) + ".");
+        ERR_FAIL_MSG(
+            "Call to GetAdaptersAddresses failed with error " + itos(err) + "."
+        );
     };
 
-    IP_ADAPTER_ADDRESSES *adapter = addrs;
+    IP_ADAPTER_ADDRESSES* adapter = addrs;
 
     while (adapter != NULL) {
         Interface_Info info;
@@ -188,18 +204,22 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) co
         info.name_friendly = adapter->FriendlyName;
         info.index = String::num_uint64(adapter->IfIndex);
 
-        IP_ADAPTER_UNICAST_ADDRESS *address = adapter->FirstUnicastAddress;
+        IP_ADAPTER_UNICAST_ADDRESS* address = adapter->FirstUnicastAddress;
         while (address != NULL) {
             int family = address->Address.lpSockaddr->sa_family;
-            if (family != AF_INET && family != AF_INET6)
+            if (family != AF_INET && family != AF_INET6) {
                 continue;
-            info.ip_addresses.push_front(_sockaddr2ip(address->Address.lpSockaddr));
+            }
+            info.ip_addresses.push_front(
+                _sockaddr2ip(address->Address.lpSockaddr)
+            );
             address = address->Next;
         }
         adapter = adapter->Next;
         // Only add interface if it has at least one IP
-        if (info.ip_addresses.size() > 0)
+        if (info.ip_addresses.size() > 0) {
             r_interfaces->insert(info.name, info);
+        }
     };
 
     memfree(addrs);
@@ -209,9 +229,10 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) co
 
 #else // UNIX
 
-void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) const {
-    struct ifaddrs *ifAddrStruct = nullptr;
-    struct ifaddrs *ifa = nullptr;
+void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
+) const {
+    struct ifaddrs* ifAddrStruct = nullptr;
+    struct ifaddrs* ifa = nullptr;
     int family;
 
     getifaddrs(&ifAddrStruct);
@@ -227,7 +248,8 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) co
             continue;
         }
 
-        Map<String, Interface_Info>::Element *E = r_interfaces->find(ifa->ifa_name);
+        Map<String, Interface_Info>::Element* E =
+            r_interfaces->find(ifa->ifa_name);
         if (!E) {
             Interface_Info info;
             info.name = ifa->ifa_name;
@@ -237,7 +259,7 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info> *r_interfaces) co
             ERR_CONTINUE(!E);
         }
 
-        Interface_Info &info = E->get();
+        Interface_Info& info = E->get();
         info.ip_addresses.push_front(_sockaddr2ip(ifa->ifa_addr));
     }
 
@@ -251,11 +273,10 @@ void IP_Unix::make_default() {
     _create = _create_unix;
 }
 
-IP *IP_Unix::_create_unix() {
+IP* IP_Unix::_create_unix() {
     return memnew(IP_Unix);
 }
 
-IP_Unix::IP_Unix() {
-}
+IP_Unix::IP_Unix() {}
 
 #endif

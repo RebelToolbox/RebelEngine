@@ -33,10 +33,10 @@
 #include "core/engine.h"
 #include "parallax_background.h"
 
-void ParallaxLayer::set_motion_scale(const Size2 &p_scale) {
+void ParallaxLayer::set_motion_scale(const Size2& p_scale) {
     motion_scale = p_scale;
 
-    ParallaxBackground *pb = Object::cast_to<ParallaxBackground>(get_parent());
+    ParallaxBackground* pb = Object::cast_to<ParallaxBackground>(get_parent());
     if (pb && is_inside_tree()) {
         Vector2 ofs = pb->get_final_offset();
         float scale = pb->get_scroll_scale();
@@ -48,10 +48,10 @@ Size2 ParallaxLayer::get_motion_scale() const {
     return motion_scale;
 }
 
-void ParallaxLayer::set_motion_offset(const Size2 &p_offset) {
+void ParallaxLayer::set_motion_offset(const Size2& p_offset) {
     motion_offset = p_offset;
 
-    ParallaxBackground *pb = Object::cast_to<ParallaxBackground>(get_parent());
+    ParallaxBackground* pb = Object::cast_to<ParallaxBackground>(get_parent());
     if (pb && is_inside_tree()) {
         Vector2 ofs = pb->get_final_offset();
         float scale = pb->get_scroll_scale();
@@ -68,16 +68,17 @@ void ParallaxLayer::_update_mirroring() {
         return;
     }
 
-    ParallaxBackground *pb = Object::cast_to<ParallaxBackground>(get_parent());
+    ParallaxBackground* pb = Object::cast_to<ParallaxBackground>(get_parent());
     if (pb) {
         RID c = pb->get_canvas();
         RID ci = get_canvas_item();
         Point2 mirrorScale = mirroring * get_scale();
-        VisualServer::get_singleton()->canvas_set_item_mirroring(c, ci, mirrorScale);
+        VisualServer::get_singleton()
+            ->canvas_set_item_mirroring(c, ci, mirrorScale);
     }
 }
 
-void ParallaxLayer::set_mirroring(const Size2 &p_mirroring) {
+void ParallaxLayer::set_mirroring(const Size2& p_mirroring) {
     mirroring = p_mirroring;
     if (mirroring.x < 0) {
         mirroring.x = 0;
@@ -107,7 +108,11 @@ void ParallaxLayer::_notification(int p_what) {
     }
 }
 
-void ParallaxLayer::set_base_offset_and_scale(const Point2 &p_offset, float p_scale, const Point2 &p_screen_offset) {
+void ParallaxLayer::set_base_offset_and_scale(
+    const Point2& p_offset,
+    float p_scale,
+    const Point2& p_screen_offset
+) {
     screen_offset = p_screen_offset;
 
     if (!is_inside_tree()) {
@@ -117,7 +122,8 @@ void ParallaxLayer::set_base_offset_and_scale(const Point2 &p_offset, float p_sc
         return;
     }
 
-    Point2 new_ofs = (screen_offset + (p_offset - screen_offset) * motion_scale) + motion_offset * p_scale + orig_offset * p_scale;
+    Point2 new_ofs = (screen_offset + (p_offset - screen_offset) * motion_scale)
+                   + motion_offset * p_scale + orig_offset * p_scale;
 
     if (mirroring.x) {
         double den = mirroring.x * p_scale;
@@ -141,24 +147,56 @@ String ParallaxLayer::get_configuration_warning() const {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("ParallaxLayer node only works when set as child of a ParallaxBackground node.");
+        warning +=
+            TTR("ParallaxLayer node only works when set as child of a "
+                "ParallaxBackground node.");
     }
 
     return warning;
 }
 
 void ParallaxLayer::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_motion_scale", "scale"), &ParallaxLayer::set_motion_scale);
-    ClassDB::bind_method(D_METHOD("get_motion_scale"), &ParallaxLayer::get_motion_scale);
-    ClassDB::bind_method(D_METHOD("set_motion_offset", "offset"), &ParallaxLayer::set_motion_offset);
-    ClassDB::bind_method(D_METHOD("get_motion_offset"), &ParallaxLayer::get_motion_offset);
-    ClassDB::bind_method(D_METHOD("set_mirroring", "mirror"), &ParallaxLayer::set_mirroring);
-    ClassDB::bind_method(D_METHOD("get_mirroring"), &ParallaxLayer::get_mirroring);
+    ClassDB::bind_method(
+        D_METHOD("set_motion_scale", "scale"),
+        &ParallaxLayer::set_motion_scale
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_motion_scale"),
+        &ParallaxLayer::get_motion_scale
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_motion_offset", "offset"),
+        &ParallaxLayer::set_motion_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_motion_offset"),
+        &ParallaxLayer::get_motion_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_mirroring", "mirror"),
+        &ParallaxLayer::set_mirroring
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_mirroring"),
+        &ParallaxLayer::get_mirroring
+    );
 
     ADD_GROUP("Motion", "motion_");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "motion_scale"), "set_motion_scale", "get_motion_scale");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "motion_offset"), "set_motion_offset", "get_motion_offset");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "motion_mirroring"), "set_mirroring", "get_mirroring");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::VECTOR2, "motion_scale"),
+        "set_motion_scale",
+        "get_motion_scale"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::VECTOR2, "motion_offset"),
+        "set_motion_offset",
+        "get_motion_offset"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::VECTOR2, "motion_mirroring"),
+        "set_mirroring",
+        "get_mirroring"
+    );
 }
 
 ParallaxLayer::ParallaxLayer() {

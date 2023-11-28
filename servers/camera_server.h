@@ -59,45 +59,48 @@ public:
         FEED_IMAGES = 2
     };
 
-    typedef CameraServer *(*CreateFunc)();
+    typedef CameraServer* (*CreateFunc)();
 
 private:
+
 protected:
     static CreateFunc create_func;
 
     Vector<Ref<CameraFeed>> feeds;
 
-    static CameraServer *singleton;
+    static CameraServer* singleton;
 
     static void _bind_methods();
 
     template <class T>
-    static CameraServer *_create_builtin() {
+    static CameraServer* _create_builtin() {
         return memnew(T);
     }
 
 public:
-    static CameraServer *get_singleton();
+    static CameraServer* get_singleton();
 
     template <class T>
     static void make_default() {
         create_func = _create_builtin<T>;
     }
 
-    static CameraServer *create() {
-        CameraServer *server = create_func ? create_func() : memnew(CameraServer);
+    static CameraServer* create() {
+        CameraServer* server =
+            create_func ? create_func() : memnew(CameraServer);
         return server;
     };
 
-    // Right now we identify our feed by it's ID when it's used in the background.
-    // May see if we can change this to purely relying on CameraFeed objects or by name.
+    // Right now we identify our feed by it's ID when it's used in the
+    // background. May see if we can change this to purely relying on CameraFeed
+    // objects or by name.
     int get_free_id();
     int get_feed_index(int p_id);
     Ref<CameraFeed> get_feed_by_id(int p_id);
 
     // add and remove feeds
-    void add_feed(const Ref<CameraFeed> &p_feed);
-    void remove_feed(const Ref<CameraFeed> &p_feed);
+    void add_feed(const Ref<CameraFeed>& p_feed);
+    void remove_feed(const Ref<CameraFeed>& p_feed);
 
     // get our feeds
     Ref<CameraFeed> get_feed(int p_index);

@@ -57,36 +57,50 @@ protected:
     bool connected;
     bool blocking;
     bool broadcast;
-    UDPServer *udp_server;
+    UDPServer* udp_server;
     Ref<NetSocket> _sock;
 
     static void _bind_methods();
 
     String _get_packet_ip() const;
 
-    Error _set_dest_address(const String &p_address, int p_port);
+    Error _set_dest_address(const String& p_address, int p_port);
     Error _poll();
 
 public:
     void set_blocking_mode(bool p_enable);
 
-    Error listen(int p_port, const IP_Address &p_bind_address = IP_Address("*"), int p_recv_buffer_size = 65536);
+    Error listen(
+        int p_port,
+        const IP_Address& p_bind_address = IP_Address("*"),
+        int p_recv_buffer_size = 65536
+    );
     void close();
     Error wait();
     bool is_listening() const;
 
-    Error connect_shared_socket(Ref<NetSocket> p_sock, IP_Address p_ip, uint16_t p_port, UDPServer *ref); // Used by UDPServer
+    Error connect_shared_socket(
+        Ref<NetSocket> p_sock,
+        IP_Address p_ip,
+        uint16_t p_port,
+        UDPServer* ref
+    );                               // Used by UDPServer
     void disconnect_shared_socket(); // Used by UDPServer
-    Error store_packet(IP_Address p_ip, uint32_t p_port, uint8_t *p_buf, int p_buf_size); // Used internally and by UDPServer
-    Error connect_to_host(const IP_Address &p_host, int p_port);
+    Error store_packet(
+        IP_Address p_ip,
+        uint32_t p_port,
+        uint8_t* p_buf,
+        int p_buf_size
+    ); // Used internally and by UDPServer
+    Error connect_to_host(const IP_Address& p_host, int p_port);
     bool is_connected_to_host() const;
 
     IP_Address get_packet_address() const;
     int get_packet_port() const;
-    void set_dest_address(const IP_Address &p_address, int p_port);
+    void set_dest_address(const IP_Address& p_address, int p_port);
 
-    Error put_packet(const uint8_t *p_buffer, int p_buffer_size);
-    Error get_packet(const uint8_t **r_buffer, int &r_buffer_size);
+    Error put_packet(const uint8_t* p_buffer, int p_buffer_size);
+    Error get_packet(const uint8_t** r_buffer, int& r_buffer_size);
     int get_available_packet_count() const;
     int get_max_packet_size() const;
     void set_broadcast_enabled(bool p_enabled);

@@ -52,7 +52,7 @@
 
 @implementation GodotViewRenderer
 
-- (BOOL)setupView:(UIView *)view {
+- (BOOL)setupView:(UIView*)view {
     if (self.hasFinishedSetup) {
         return NO;
     }
@@ -83,21 +83,21 @@
     Main::setup2();
 
     // this might be necessary before here
-    NSDictionary *dict = [[NSBundle mainBundle] infoDictionary];
-    for (NSString *key in dict) {
-        NSObject *value = [dict objectForKey:key];
+    NSDictionary* dict = [[NSBundle mainBundle] infoDictionary];
+    for (NSString* key in dict) {
+        NSObject* value = [dict objectForKey:key];
         String ukey = String::utf8([key UTF8String]);
 
         // we need a NSObject to Variant conversor
 
         if ([value isKindOfClass:[NSString class]]) {
-            NSString *str = (NSString *)value;
+            NSString* str = (NSString*)value;
             String uval = String::utf8([str UTF8String]);
 
             ProjectSettings::get_singleton()->set("Info.plist/" + ukey, uval);
 
         } else if ([value isKindOfClass:[NSNumber class]]) {
-            NSNumber *n = (NSNumber *)value;
+            NSNumber* n = (NSNumber*)value;
             double dval = [n doubleValue];
 
             ProjectSettings::get_singleton()->set("Info.plist/" + ukey, dval);
@@ -106,7 +106,7 @@
     }
 }
 
-- (void)renderOnView:(UIView *)view {
+- (void)renderOnView:(UIView*)view {
     if (!OSIPhone::get_singleton()) {
         return;
     }

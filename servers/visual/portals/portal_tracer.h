@@ -38,7 +38,7 @@
 
 #ifdef TOOLS_ENABLED
 // use this for checking for instance lifetime errors, disable normally
-//#define PORTAL_RENDERER_STORE_MOVING_RIDS
+// #define PORTAL_RENDERER_STORE_MOVING_RIDS
 #endif
 
 class PortalRenderer;
@@ -53,6 +53,7 @@ public:
         void create(int p_num_statics) {
             bf_visible_statics.create(p_num_statics);
         }
+
         void clear() {
             bf_visible_statics.blank();
             visible_static_ids.clear();
@@ -66,12 +67,12 @@ public:
 
     struct TraceParams {
         bool use_pvs;
-        uint8_t *decompressed_room_pvs;
+        uint8_t* decompressed_room_pvs;
     };
 
-    // The recursive visibility function needs to allocate lists of planes each time a room is traversed.
-    // Instead of doing this allocation on the fly we will use a pool which should be much faster and nearer
-    // constant time.
+    // The recursive visibility function needs to allocate lists of planes each
+    // time a room is traversed. Instead of doing this allocation on the fly we
+    // will use a pool which should be much faster and nearer constant time.
 
     // Note this simple pool isn't super optimal but should be fine for now.
     class PlanesPool {
@@ -81,13 +82,16 @@ public:
 
         void reset();
 
-        // request a new vector of planes .. returns the pool id, or -1 if pool is empty
+        // request a new vector of planes .. returns the pool id, or -1 if pool
+        // is empty
         unsigned int request();
 
         // return pool id to the pool
         void free(unsigned int ui);
 
-        LocalVector<Plane> &get(unsigned int ui) { return _planes[ui]; }
+        LocalVector<Plane>& get(unsigned int ui) {
+            return _planes[ui];
+        }
 
         PlanesPool();
 
@@ -99,39 +103,81 @@ public:
         uint32_t _num_free;
     };
 
-    // for debugging, instead of doing a normal trace, show the objects that are sprawled from the current room
-    void trace_debug_sprawl(PortalRenderer &p_portal_renderer, const Vector3 &p_pos, int p_start_room_id, TraceResult &r_result);
+    // for debugging, instead of doing a normal trace, show the objects that are
+    // sprawled from the current room
+    void trace_debug_sprawl(
+        PortalRenderer& p_portal_renderer,
+        const Vector3& p_pos,
+        int p_start_room_id,
+        TraceResult& r_result
+    );
 
     // trace statics, dynamics and roaming
-    void trace(PortalRenderer &p_portal_renderer, const Vector3 &p_pos, const LocalVector<Plane> &p_planes, int p_start_room_id, TraceResult &r_result);
+    void trace(
+        PortalRenderer& p_portal_renderer,
+        const Vector3& p_pos,
+        const LocalVector<Plane>& p_planes,
+        int p_start_room_id,
+        TraceResult& r_result
+    );
 
     // globals are handled separately as they don't care about the rooms
-    int trace_globals(const LocalVector<Plane> &p_planes, VSInstance **p_result_array, int first_result, int p_result_max, uint32_t p_mask, bool p_override_camera);
+    int trace_globals(
+        const LocalVector<Plane>& p_planes,
+        VSInstance** p_result_array,
+        int first_result,
+        int p_result_max,
+        uint32_t p_mask,
+        bool p_override_camera
+    );
 
-    void set_depth_limit(int p_limit) { _depth_limit = p_limit; }
-    int get_depth_limit() const { return _depth_limit; }
+    void set_depth_limit(int p_limit) {
+        _depth_limit = p_limit;
+    }
 
-    // special function for occlusion culling only that does not use portals / rooms,
-    // but allows using occluders with the main scene
-    int occlusion_cull(PortalRenderer &p_portal_renderer, const Vector3 &p_point, const Vector<Plane> &p_convex, VSInstance **p_result_array, int p_num_results);
+    int get_depth_limit() const {
+        return _depth_limit;
+    }
+
+    // special function for occlusion culling only that does not use portals /
+    // rooms, but allows using occluders with the main scene
+    int occlusion_cull(
+        PortalRenderer& p_portal_renderer,
+        const Vector3& p_point,
+        const Vector<Plane>& p_convex,
+        VSInstance** p_result_array,
+        int p_num_results
+    );
 
 private:
     // main tracing function is recursive
-    void trace_recursive(const TraceParams &p_params, int p_depth, int p_room_id, const LocalVector<Plane> &p_planes, int p_from_external_room_id = -1);
+    void trace_recursive(
+        const TraceParams& p_params,
+        int p_depth,
+        int p_room_id,
+        const LocalVector<Plane>& p_planes,
+        int p_from_external_room_id = -1
+    );
 
     // use pvs to cull instead of dynamically using portals
-    // this is a faster trace but less accurate. Only possible if PVS has been generated.
-    void trace_pvs(int p_source_room_id, const LocalVector<Plane> &p_planes);
+    // this is a faster trace but less accurate. Only possible if PVS has been
+    // generated.
+    void trace_pvs(int p_source_room_id, const LocalVector<Plane>& p_planes);
 
     // debug version
     void trace_debug_sprawl_recursive(int p_depth, int p_room_id);
 
-    void cull_statics(const VSRoom &p_room, const LocalVector<Plane> &p_planes);
-    void cull_statics_debug_sprawl(const VSRoom &p_room);
-    void cull_roamers(const VSRoom &p_room, const LocalVector<Plane> &p_planes);
+    void cull_statics(const VSRoom& p_room, const LocalVector<Plane>& p_planes);
+    void cull_statics_debug_sprawl(const VSRoom& p_room);
+    void cull_roamers(const VSRoom& p_room, const LocalVector<Plane>& p_planes);
 
-    // if an aabb is in front of any of the culling planes, it can't be seen so returns false
-    bool test_cull_inside(const AABB &p_aabb, const LocalVector<Plane> &p_planes, bool p_test_explicit_near_plane = true) const {
+    // if an aabb is in front of any of the culling planes, it can't be seen so
+    // returns false
+    bool test_cull_inside(
+        const AABB& p_aabb,
+        const LocalVector<Plane>& p_planes,
+        bool p_test_explicit_near_plane = true
+    ) const {
         for (unsigned int p = 0; p < p_planes.size(); p++) {
             real_t r_min, r_max;
             p_aabb.project_range_in_plane(p_planes[p], r_min, r_max);
@@ -143,7 +189,8 @@ private:
 
         if (p_test_explicit_near_plane) {
             real_t r_min, r_max;
-            p_aabb.project_range_in_plane(_near_and_far_planes[0], r_min, r_max);
+            p_aabb
+                .project_range_in_plane(_near_and_far_planes[0], r_min, r_max);
 
             if (r_min > 0.0) {
                 return false;
@@ -154,9 +201,9 @@ private:
     }
 
     // local versions to prevent passing around the recursive functions
-    PortalRenderer *_portal_renderer = nullptr;
+    PortalRenderer* _portal_renderer = nullptr;
     Vector3 _trace_start_point;
-    TraceResult *_result = nullptr;
+    TraceResult* _result = nullptr;
     Plane _near_and_far_planes[2];
 
     PlanesPool _planes_pool;

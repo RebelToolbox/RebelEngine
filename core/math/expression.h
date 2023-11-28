@@ -112,19 +112,23 @@ public:
 
     static int get_func_argument_count(BuiltinFunc p_func);
     static String get_func_name(BuiltinFunc p_func);
-    static void exec_func(BuiltinFunc p_func, const Variant **p_inputs, Variant *r_return, Variant::CallError &r_error, String &r_error_str);
-    static BuiltinFunc find_function(const String &p_string);
+    static void exec_func(
+        BuiltinFunc p_func,
+        const Variant** p_inputs,
+        Variant* r_return,
+        Variant::CallError& r_error,
+        String& r_error_str
+    );
+    static BuiltinFunc find_function(const String& p_string);
 
 private:
-    static const char *func_name[FUNC_MAX];
+    static const char* func_name[FUNC_MAX];
 
     struct Input {
         Variant::Type type;
         String name;
 
-        Input() :
-                type(Variant::NIL) {
-        }
+        Input() : type(Variant::NIL) {}
     };
 
     Vector<Input> inputs;
@@ -180,13 +184,14 @@ private:
         TK_MAX
     };
 
-    static const char *token_name[TK_MAX];
+    static const char* token_name[TK_MAX];
+
     struct Token {
         TokenType type;
         Variant value;
     };
 
-    void _set_error(const String &p_err) {
+    void _set_error(const String& p_err) {
         if (error_set) {
             return;
         }
@@ -194,7 +199,7 @@ private:
         error_set = true;
     }
 
-    Error _get_token(Token &r_token);
+    Error _get_token(Token& r_token);
 
     String error_str;
     bool error_set;
@@ -214,11 +219,14 @@ private:
             TYPE_CALL
         };
 
-        ENode *next;
+        ENode* next;
 
         Type type;
 
-        ENode() { next = nullptr; }
+        ENode() {
+            next = nullptr;
+        }
+
         virtual ~ENode() {
             if (next) {
                 memdelete(next);
@@ -228,16 +236,18 @@ private:
 
     struct ExpressionNode {
         bool is_op;
+
         union {
             Variant::Operator op;
-            ENode *node;
+            ENode* node;
         };
     };
 
-    ENode *_parse_expression();
+    ENode* _parse_expression();
 
     struct InputNode : public ENode {
         int index;
+
         InputNode() {
             type = TYPE_INPUT;
         }
@@ -245,6 +255,7 @@ private:
 
     struct ConstantNode : public ENode {
         Variant value;
+
         ConstantNode() {
             type = TYPE_CONSTANT;
         }
@@ -253,7 +264,7 @@ private:
     struct OperatorNode : public ENode {
         Variant::Operator op;
 
-        ENode *nodes[2];
+        ENode* nodes[2];
 
         OperatorNode() {
             type = TYPE_OPERATOR;
@@ -267,8 +278,8 @@ private:
     };
 
     struct IndexNode : public ENode {
-        ENode *base;
-        ENode *index;
+        ENode* base;
+        ENode* index;
 
         IndexNode() {
             type = TYPE_INDEX;
@@ -276,7 +287,7 @@ private:
     };
 
     struct NamedIndexNode : public ENode {
-        ENode *base;
+        ENode* base;
         StringName name;
 
         NamedIndexNode() {
@@ -286,7 +297,7 @@ private:
 
     struct ConstructorNode : public ENode {
         Variant::Type data_type;
-        Vector<ENode *> arguments;
+        Vector<ENode*> arguments;
 
         ConstructorNode() {
             type = TYPE_CONSTRUCTOR;
@@ -294,9 +305,9 @@ private:
     };
 
     struct CallNode : public ENode {
-        ENode *base;
+        ENode* base;
         StringName method;
-        Vector<ENode *> arguments;
+        Vector<ENode*> arguments;
 
         CallNode() {
             type = TYPE_CALL;
@@ -304,14 +315,16 @@ private:
     };
 
     struct ArrayNode : public ENode {
-        Vector<ENode *> array;
+        Vector<ENode*> array;
+
         ArrayNode() {
             type = TYPE_ARRAY;
         }
     };
 
     struct DictionaryNode : public ENode {
-        Vector<ENode *> dict;
+        Vector<ENode*> dict;
+
         DictionaryNode() {
             type = TYPE_DICTIONARY;
         }
@@ -319,34 +332,48 @@ private:
 
     struct BuiltinFuncNode : public ENode {
         BuiltinFunc func;
-        Vector<ENode *> arguments;
+        Vector<ENode*> arguments;
+
         BuiltinFuncNode() {
             type = TYPE_BUILTIN_FUNC;
         }
     };
 
     template <class T>
-    T *alloc_node() {
-        T *node = memnew(T);
+    T* alloc_node() {
+        T* node = memnew(T);
         node->next = nodes;
         nodes = node;
         return node;
     }
 
-    ENode *root;
-    ENode *nodes;
+    ENode* root;
+    ENode* nodes;
 
     Vector<String> input_names;
 
     bool execution_error;
-    bool _execute(const Array &p_inputs, Object *p_instance, Expression::ENode *p_node, Variant &r_ret, String &r_error_str);
+    bool _execute(
+        const Array& p_inputs,
+        Object* p_instance,
+        Expression::ENode* p_node,
+        Variant& r_ret,
+        String& r_error_str
+    );
 
 protected:
     static void _bind_methods();
 
 public:
-    Error parse(const String &p_expression, const Vector<String> &p_input_names = Vector<String>());
-    Variant execute(Array p_inputs, Object *p_base = nullptr, bool p_show_error = true);
+    Error parse(
+        const String& p_expression,
+        const Vector<String>& p_input_names = Vector<String>()
+    );
+    Variant execute(
+        Array p_inputs,
+        Object* p_base = nullptr,
+        bool p_show_error = true
+    );
     bool has_execute_failed() const;
     String get_error_text() const;
 

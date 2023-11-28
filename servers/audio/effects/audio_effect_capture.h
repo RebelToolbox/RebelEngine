@@ -47,7 +47,11 @@ class AudioEffectCaptureInstance : public AudioEffectInstance {
     Ref<AudioEffectCapture> base;
 
 public:
-    virtual void process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
+    virtual void process(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
     virtual bool process_silence() const;
 };
 
@@ -71,6 +75,7 @@ public:
         buffer_length_seconds = 0.1f;
         buffer_initialized = false;
     }
+
     virtual Ref<AudioEffectInstance> instance();
 
     void set_buffer_length(float p_buffer_length_seconds);

@@ -38,7 +38,6 @@ class UPNPDevice : public Reference {
 
 public:
     enum IGDStatus {
-
         IGD_STATUS_OK,
         IGD_STATUS_HTTP_ERROR,
         IGD_STATUS_HTTP_EMPTY,
@@ -51,19 +50,19 @@ public:
         IGD_STATUS_UNKNOWN_ERROR,
     };
 
-    void set_description_url(const String &url);
+    void set_description_url(const String& url);
     String get_description_url() const;
 
-    void set_service_type(const String &type);
+    void set_service_type(const String& type);
     String get_service_type() const;
 
-    void set_igd_control_url(const String &url);
+    void set_igd_control_url(const String& url);
     String get_igd_control_url() const;
 
-    void set_igd_service_type(const String &type);
+    void set_igd_service_type(const String& type);
     String get_igd_service_type() const;
 
-    void set_igd_our_addr(const String &addr);
+    void set_igd_our_addr(const String& addr);
     String get_igd_our_addr() const;
 
     void set_igd_status(IGDStatus status);
@@ -71,7 +70,13 @@ public:
 
     bool is_valid_gateway() const;
     String query_external_address() const;
-    int add_port_mapping(int port, int port_internal = 0, String desc = "", String proto = "UDP", int duration = 0) const;
+    int add_port_mapping(
+        int port,
+        int port_internal = 0,
+        String desc = "",
+        String proto = "UDP",
+        int duration = 0
+    ) const;
     int delete_port_mapping(int port, String proto = "UDP") const;
 
     UPNPDevice();

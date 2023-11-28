@@ -42,14 +42,32 @@ CullInstance::PortalMode CullInstance::get_portal_mode() const {
 }
 
 void CullInstance::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_portal_mode", "mode"), &CullInstance::set_portal_mode);
-    ClassDB::bind_method(D_METHOD("get_portal_mode"), &CullInstance::get_portal_mode);
+    ClassDB::bind_method(
+        D_METHOD("set_portal_mode", "mode"),
+        &CullInstance::set_portal_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_portal_mode"),
+        &CullInstance::get_portal_mode
+    );
 
-    ClassDB::bind_method(D_METHOD("set_include_in_bound"), &CullInstance::set_include_in_bound);
-    ClassDB::bind_method(D_METHOD("get_include_in_bound"), &CullInstance::get_include_in_bound);
+    ClassDB::bind_method(
+        D_METHOD("set_include_in_bound"),
+        &CullInstance::set_include_in_bound
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_include_in_bound"),
+        &CullInstance::get_include_in_bound
+    );
 
-    ClassDB::bind_method(D_METHOD("set_portal_autoplace_priority", "priority"), &CullInstance::set_portal_autoplace_priority);
-    ClassDB::bind_method(D_METHOD("get_portal_autoplace_priority"), &CullInstance::get_portal_autoplace_priority);
+    ClassDB::bind_method(
+        D_METHOD("set_portal_autoplace_priority", "priority"),
+        &CullInstance::set_portal_autoplace_priority
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_portal_autoplace_priority"),
+        &CullInstance::get_portal_autoplace_priority
+    );
 
     ADD_GROUP("Portals", "");
 
@@ -59,9 +77,32 @@ void CullInstance::_bind_methods() {
     BIND_ENUM_CONSTANT(PORTAL_MODE_GLOBAL);
     BIND_ENUM_CONSTANT(PORTAL_MODE_IGNORE);
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "portal_mode", PROPERTY_HINT_ENUM, "Static,Dynamic,Roaming,Global,Ignore"), "set_portal_mode", "get_portal_mode");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "include_in_bound"), "set_include_in_bound", "get_include_in_bound");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "autoplace_priority", PROPERTY_HINT_RANGE, "-16,16,1", PROPERTY_USAGE_DEFAULT), "set_portal_autoplace_priority", "get_portal_autoplace_priority");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "portal_mode",
+            PROPERTY_HINT_ENUM,
+            "Static,Dynamic,Roaming,Global,Ignore"
+        ),
+        "set_portal_mode",
+        "get_portal_mode"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "include_in_bound"),
+        "set_include_in_bound",
+        "get_include_in_bound"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "autoplace_priority",
+            PROPERTY_HINT_RANGE,
+            "-16,16,1",
+            PROPERTY_USAGE_DEFAULT
+        ),
+        "set_portal_autoplace_priority",
+        "get_portal_autoplace_priority"
+    );
 }
 
 CullInstance::CullInstance() {

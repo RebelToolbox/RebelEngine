@@ -67,12 +67,12 @@ void godot_register_glue_header_icalls() {
 #include "../mono_gd/gd_mono_internals.h"
 #include "../mono_gd/gd_mono_utils.h"
 
-#define GODOTSHARP_INSTANCE_OBJECT(m_instance, m_type) \
-    static ClassDB::ClassInfo *ci = NULL;              \
-    if (!ci) {                                         \
-        ci = ClassDB::classes.getptr(m_type);          \
-    }                                                  \
-    Object *m_instance = ci->creation_func();
+#define GODOTSHARP_INSTANCE_OBJECT(m_instance, m_type)                         \
+    static ClassDB::ClassInfo* ci = NULL;                                      \
+    if (!ci) {                                                                 \
+        ci = ClassDB::classes.getptr(m_type);                                  \
+    }                                                                          \
+    Object* m_instance = ci->creation_func();
 
 #include "arguments_vector.h"
 

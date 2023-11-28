@@ -65,17 +65,17 @@ private:
     StringName singleton;
     bool validate;
 
-    Node *_get_base_node() const;
+    Node* _get_base_node() const;
     StringName _get_base_type() const;
 
     MethodInfo method_cache;
     void _update_method_cache();
 
-    void _set_argument_cache(const Dictionary &p_cache);
+    void _set_argument_cache(const Dictionary& p_cache);
     Dictionary _get_argument_cache() const;
 
 protected:
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
     static void _bind_methods();
 
@@ -93,24 +93,27 @@ public:
 
     virtual String get_caption() const;
     virtual String get_text() const;
-    virtual String get_category() const { return "functions"; }
+
+    virtual String get_category() const {
+        return "functions";
+    }
 
     void set_basic_type(Variant::Type p_type);
     Variant::Type get_basic_type() const;
 
-    void set_base_type(const StringName &p_type);
+    void set_base_type(const StringName& p_type);
     StringName get_base_type() const;
 
-    void set_base_script(const String &p_path);
+    void set_base_script(const String& p_path);
     String get_base_script() const;
 
-    void set_singleton(const StringName &p_type);
+    void set_singleton(const StringName& p_type);
     StringName get_singleton() const;
 
-    void set_function(const StringName &p_type);
+    void set_function(const StringName& p_type);
     StringName get_function() const;
 
-    void set_base_path(const NodePath &p_type);
+    void set_base_path(const NodePath& p_type);
     NodePath get_base_path() const;
 
     void set_call_mode(CallMode p_mode);
@@ -125,9 +128,11 @@ public:
     void set_rpc_call_mode(RPCCallMode p_mode);
     RPCCallMode get_rpc_call_mode() const;
 
-    virtual VisualScriptNodeInstance *instance(VisualScriptInstance *p_instance);
+    virtual VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    );
 
-    virtual TypeGuess guess_output_type(TypeGuess *p_inputs, int p_output) const;
+    virtual TypeGuess guess_output_type(TypeGuess* p_inputs, int p_output)
+        const;
 
     VisualScriptFunctionCall();
 };
@@ -144,7 +149,6 @@ public:
         CALL_MODE_NODE_PATH,
         CALL_MODE_INSTANCE,
         CALL_MODE_BASIC_TYPE,
-
     };
 
     enum AssignOp {
@@ -174,20 +178,20 @@ private:
     StringName index;
     AssignOp assign_op;
 
-    Node *_get_base_node() const;
+    Node* _get_base_node() const;
     StringName _get_base_type() const;
 
     void _update_base_type();
 
     void _update_cache();
 
-    void _set_type_cache(const Dictionary &p_type);
+    void _set_type_cache(const Dictionary& p_type);
     Dictionary _get_type_cache() const;
 
-    void _adjust_input_index(PropertyInfo &pinfo) const;
+    void _adjust_input_index(PropertyInfo& pinfo) const;
 
 protected:
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
     static void _bind_methods();
 
@@ -205,34 +209,39 @@ public:
 
     virtual String get_caption() const;
     virtual String get_text() const;
-    virtual String get_category() const { return "functions"; }
 
-    void set_base_type(const StringName &p_type);
+    virtual String get_category() const {
+        return "functions";
+    }
+
+    void set_base_type(const StringName& p_type);
     StringName get_base_type() const;
 
-    void set_base_script(const String &p_path);
+    void set_base_script(const String& p_path);
     String get_base_script() const;
 
     void set_basic_type(Variant::Type p_type);
     Variant::Type get_basic_type() const;
 
-    void set_property(const StringName &p_type);
+    void set_property(const StringName& p_type);
     StringName get_property() const;
 
-    void set_base_path(const NodePath &p_type);
+    void set_base_path(const NodePath& p_type);
     NodePath get_base_path() const;
 
     void set_call_mode(CallMode p_mode);
     CallMode get_call_mode() const;
 
-    void set_index(const StringName &p_type);
+    void set_index(const StringName& p_type);
     StringName get_index() const;
 
     void set_assign_op(AssignOp p_op);
     AssignOp get_assign_op() const;
 
-    virtual VisualScriptNodeInstance *instance(VisualScriptInstance *p_instance);
-    virtual TypeGuess guess_output_type(TypeGuess *p_inputs, int p_output) const;
+    virtual VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    );
+    virtual TypeGuess guess_output_type(TypeGuess* p_inputs, int p_output)
+        const;
 
     VisualScriptPropertySet();
 };
@@ -249,7 +258,6 @@ public:
         CALL_MODE_NODE_PATH,
         CALL_MODE_INSTANCE,
         CALL_MODE_BASIC_TYPE,
-
     };
 
 private:
@@ -264,7 +272,7 @@ private:
     StringName index;
 
     void _update_base_type();
-    Node *_get_base_node() const;
+    Node* _get_base_node() const;
     StringName _get_base_type() const;
 
     void _update_cache();
@@ -272,10 +280,10 @@ private:
     void _set_type_cache(Variant::Type p_type);
     Variant::Type _get_type_cache() const;
 
-    void _adjust_input_index(PropertyInfo &pinfo) const;
+    void _adjust_input_index(PropertyInfo& pinfo) const;
 
 protected:
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
     static void _bind_methods();
 
@@ -293,30 +301,34 @@ public:
 
     virtual String get_caption() const;
     virtual String get_text() const;
-    virtual String get_category() const { return "functions"; }
 
-    void set_base_type(const StringName &p_type);
+    virtual String get_category() const {
+        return "functions";
+    }
+
+    void set_base_type(const StringName& p_type);
     StringName get_base_type() const;
 
-    void set_base_script(const String &p_path);
+    void set_base_script(const String& p_path);
     String get_base_script() const;
 
     void set_basic_type(Variant::Type p_type);
     Variant::Type get_basic_type() const;
 
-    void set_property(const StringName &p_type);
+    void set_property(const StringName& p_type);
     StringName get_property() const;
 
-    void set_base_path(const NodePath &p_type);
+    void set_base_path(const NodePath& p_type);
     NodePath get_base_path() const;
 
     void set_call_mode(CallMode p_mode);
     CallMode get_call_mode() const;
 
-    void set_index(const StringName &p_type);
+    void set_index(const StringName& p_type);
     StringName get_index() const;
 
-    virtual VisualScriptNodeInstance *instance(VisualScriptInstance *p_instance);
+    virtual VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    );
 
     VisualScriptPropertyGet();
 };
@@ -330,7 +342,7 @@ private:
     StringName name;
 
 protected:
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
     static void _bind_methods();
 
@@ -347,13 +359,17 @@ public:
     virtual PropertyInfo get_output_value_port_info(int p_idx) const;
 
     virtual String get_caption() const;
-    //virtual String get_text() const;
-    virtual String get_category() const { return "functions"; }
 
-    void set_signal(const StringName &p_type);
+    // virtual String get_text() const;
+    virtual String get_category() const {
+        return "functions";
+    }
+
+    void set_signal(const StringName& p_type);
     StringName get_signal() const;
 
-    virtual VisualScriptNodeInstance *instance(VisualScriptInstance *p_instance);
+    virtual VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    );
 
     VisualScriptEmitSignal();
 };

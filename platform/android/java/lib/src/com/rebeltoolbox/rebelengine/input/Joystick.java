@@ -44,7 +44,8 @@ class Joystick {
     List<Integer> axes = new ArrayList<>();
     protected boolean hasAxisHat = false;
     /*
-     * Keep track of values so we can prevent flooding the engine with useless events.
+     * Keep track of values so we can prevent flooding the engine with useless
+     * events.
      */
     protected final SparseArray<Float> axesValues = new SparseArray<>(4);
     protected int hatX;

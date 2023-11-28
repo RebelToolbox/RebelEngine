@@ -38,21 +38,30 @@
 
 extern "C" {
 
-void GDAPI godot_net_bind_webrtc_peer_connection(godot_object *p_obj, const godot_net_webrtc_peer_connection *p_impl) {
+void GDAPI godot_net_bind_webrtc_peer_connection(
+    godot_object* p_obj,
+    const godot_net_webrtc_peer_connection* p_impl
+) {
 #ifdef WEBRTC_GDNATIVE_ENABLED
-    ((WebRTCPeerConnectionGDNative *)p_obj)->set_native_webrtc_peer_connection(p_impl);
+    ((WebRTCPeerConnectionGDNative*)p_obj)
+        ->set_native_webrtc_peer_connection(p_impl);
 #endif
 }
 
-void GDAPI godot_net_bind_webrtc_data_channel(godot_object *p_obj, const godot_net_webrtc_data_channel *p_impl) {
+void GDAPI godot_net_bind_webrtc_data_channel(
+    godot_object* p_obj,
+    const godot_net_webrtc_data_channel* p_impl
+) {
 #ifdef WEBRTC_GDNATIVE_ENABLED
-    ((WebRTCDataChannelGDNative *)p_obj)->set_native_webrtc_data_channel(p_impl);
+    ((WebRTCDataChannelGDNative*)p_obj)->set_native_webrtc_data_channel(p_impl);
 #endif
 }
 
-godot_error GDAPI godot_net_set_webrtc_library(const godot_net_webrtc_library *p_lib) {
+godot_error GDAPI
+godot_net_set_webrtc_library(const godot_net_webrtc_library* p_lib) {
 #ifdef WEBRTC_GDNATIVE_ENABLED
-    return (godot_error)WebRTCPeerConnectionGDNative::set_default_library(p_lib);
+    return (godot_error)WebRTCPeerConnectionGDNative::set_default_library(p_lib
+    );
 #else
     return (godot_error)ERR_UNAVAILABLE;
 #endif

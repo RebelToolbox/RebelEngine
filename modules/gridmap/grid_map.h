@@ -36,8 +36,9 @@
 #include "scene/resources/mesh_library.h"
 #include "scene/resources/multimesh.h"
 
-//heh heh, godotsphir!! this shares no code and the design is completely different with previous projects i've done..
-//should scale better with hardware that supports instancing
+// heh heh, godotsphir!! this shares no code and the design is completely
+// different with previous projects i've done.. should scale better with
+// hardware that supports instancing
 
 class GridMap : public Spatial {
     GDCLASS(GridMap, Spatial);
@@ -53,17 +54,21 @@ class GridMap : public Spatial {
             int16_t y;
             int16_t z;
         };
+
         uint64_t key;
 
-        _FORCE_INLINE_ bool operator<(const IndexKey &p_key) const {
+        _FORCE_INLINE_ bool operator<(const IndexKey& p_key) const {
             return key < p_key.key;
         }
 
-        IndexKey() { key = 0; }
+        IndexKey() {
+            key = 0;
+        }
     };
 
     /**
-     * @brief A Cell is a single cell in the cube map space; it is defined by its coordinates and the populating Item, identified by int id.
+     * @brief A Cell is a single cell in the cube map space; it is defined by
+     * its coordinates and the populating Item, identified by int id.
      */
     union Cell {
         struct {
@@ -71,6 +76,7 @@ class GridMap : public Spatial {
             unsigned int rot : 5;
             unsigned int layer : 8;
         };
+
         uint32_t cell;
 
         Cell() {
@@ -81,8 +87,8 @@ class GridMap : public Spatial {
     };
 
     /**
-     * @brief An Octant is a prism containing Cells, and possibly belonging to an Area.
-     * A GridMap can have multiple Octants.
+     * @brief An Octant is a prism containing Cells, and possibly belonging to
+     * an Area. A GridMap can have multiple Octants.
      */
     struct Octant {
         struct NavMesh {
@@ -93,13 +99,14 @@ class GridMap : public Spatial {
         struct MultimeshInstance {
             RID instance;
             RID multimesh;
+
             struct Item {
                 int index;
                 Transform transform;
                 IndexKey key;
             };
 
-            Vector<Item> items; //tools only, for changing visibility
+            Vector<Item> items; // tools only, for changing visibility
         };
 
         Vector<MultimeshInstance> multimesh_instances;
@@ -122,12 +129,15 @@ class GridMap : public Spatial {
 
         uint64_t key;
 
-        _FORCE_INLINE_ bool operator<(const OctantKey &p_key) const {
+        _FORCE_INLINE_ bool operator<(const OctantKey& p_key) const {
             return key < p_key.key;
         }
 
-        //OctantKey(const IndexKey& p_k, int p_item) { indexkey=p_k.key; item=p_item; }
-        OctantKey() { key = 0; }
+        // OctantKey(const IndexKey& p_k, int p_item) { indexkey=p_k.key;
+        // item=p_item; }
+        OctantKey() {
+            key = 0;
+        }
     };
 
     uint32_t collision_layer;
@@ -140,7 +150,7 @@ class GridMap : public Spatial {
     int octant_size;
     bool center_x, center_y, center_z;
     float cell_scale;
-    Navigation *navigation;
+    Navigation* navigation;
 
     bool clip;
     bool clip_above;
@@ -153,7 +163,7 @@ class GridMap : public Spatial {
     Ref<MeshLibrary> mesh_library;
     bool use_in_baked_light;
 
-    Map<OctantKey, Octant *> octant_map;
+    Map<OctantKey, Octant*> octant_map;
     Map<IndexKey, Cell> cell_map;
 
     void _recreate_octant_data();
@@ -165,22 +175,22 @@ class GridMap : public Spatial {
         float param[VS::LIGHT_PARAM_MAX];
     };
 
-    _FORCE_INLINE_ Vector3 _octant_get_offset(const OctantKey &p_key) const {
+    _FORCE_INLINE_ Vector3 _octant_get_offset(const OctantKey& p_key) const {
         return Vector3(p_key.x, p_key.y, p_key.z) * cell_size * octant_size;
     }
 
     void _reset_physic_bodies_collision_filters();
-    void _octant_enter_world(const OctantKey &p_key);
-    void _octant_exit_world(const OctantKey &p_key);
-    bool _octant_update(const OctantKey &p_key);
-    void _octant_clean_up(const OctantKey &p_key);
-    void _octant_transform(const OctantKey &p_key);
+    void _octant_enter_world(const OctantKey& p_key);
+    void _octant_exit_world(const OctantKey& p_key);
+    bool _octant_update(const OctantKey& p_key);
+    void _octant_clean_up(const OctantKey& p_key);
+    void _octant_transform(const OctantKey& p_key);
     bool awaiting_update;
 
     void _queue_octants_dirty();
     void _update_octants_callback();
 
-    void resource_changed(const RES &p_res);
+    void resource_changed(const RES& p_res);
 
     void _clear_internal();
 
@@ -194,9 +204,9 @@ class GridMap : public Spatial {
     Vector<BakedMesh> baked_meshes;
 
 protected:
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
 
     void _notification(int p_what);
     void _update_visibility();
@@ -219,13 +229,13 @@ public:
     void set_collision_mask_bit(int p_bit, bool p_value);
     bool get_collision_mask_bit(int p_bit) const;
 
-    void set_mesh_library(const Ref<MeshLibrary> &p_mesh_library);
+    void set_mesh_library(const Ref<MeshLibrary>& p_mesh_library);
     Ref<MeshLibrary> get_mesh_library() const;
 
     void set_use_in_baked_light(bool p_use_baked_light);
     bool get_use_in_baked_light() const;
 
-    void set_cell_size(const Vector3 &p_size);
+    void set_cell_size(const Vector3& p_size);
     Vector3 get_cell_size() const;
 
     void set_octant_size(int p_size);
@@ -242,10 +252,15 @@ public:
     int get_cell_item(int p_x, int p_y, int p_z) const;
     int get_cell_item_orientation(int p_x, int p_y, int p_z) const;
 
-    Vector3 world_to_map(const Vector3 &p_world_pos) const;
+    Vector3 world_to_map(const Vector3& p_world_pos) const;
     Vector3 map_to_world(int p_x, int p_y, int p_z) const;
 
-    void set_clip(bool p_enabled, bool p_clip_above = true, int p_floor = 0, Vector3::Axis p_axis = Vector3::AXIS_X);
+    void set_clip(
+        bool p_enabled,
+        bool p_clip_above = true,
+        int p_floor = 0,
+        Vector3::Axis p_axis = Vector3::AXIS_X
+    );
 
     void set_cell_scale(float p_scale);
     float get_cell_scale() const;
@@ -255,7 +270,10 @@ public:
     Array get_meshes();
 
     void clear_baked_meshes();
-    void make_baked_meshes(bool p_gen_lightmap_uv = false, float p_lightmap_uv_texel_size = 0.1);
+    void make_baked_meshes(
+        bool p_gen_lightmap_uv = false,
+        float p_lightmap_uv_texel_size = 0.1
+    );
 
     void clear();
 

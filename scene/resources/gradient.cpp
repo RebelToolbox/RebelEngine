@@ -32,14 +32,14 @@
 
 #include "core/core_string_names.h"
 
-//setter and getter names for property serialization
+// setter and getter names for property serialization
 #define COLOR_RAMP_GET_OFFSETS "get_offsets"
 #define COLOR_RAMP_GET_COLORS "get_colors"
 #define COLOR_RAMP_SET_OFFSETS "set_offsets"
 #define COLOR_RAMP_SET_COLORS "set_colors"
 
 Gradient::Gradient() {
-    //Set initial color ramp transition from black to white
+    // Set initial color ramp transition from black to white
     points.resize(2);
     points.write[0].color = Color(0, 0, 0, 1);
     points.write[0].offset = 0;
@@ -48,31 +48,71 @@ Gradient::Gradient() {
     is_sorted = true;
 }
 
-Gradient::~Gradient() {
-}
+Gradient::~Gradient() {}
 
 void Gradient::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("add_point", "offset", "color"), &Gradient::add_point);
-    ClassDB::bind_method(D_METHOD("remove_point", "point"), &Gradient::remove_point);
+    ClassDB::bind_method(
+        D_METHOD("add_point", "offset", "color"),
+        &Gradient::add_point
+    );
+    ClassDB::bind_method(
+        D_METHOD("remove_point", "point"),
+        &Gradient::remove_point
+    );
 
-    ClassDB::bind_method(D_METHOD("set_offset", "point", "offset"), &Gradient::set_offset);
-    ClassDB::bind_method(D_METHOD("get_offset", "point"), &Gradient::get_offset);
+    ClassDB::bind_method(
+        D_METHOD("set_offset", "point", "offset"),
+        &Gradient::set_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_offset", "point"),
+        &Gradient::get_offset
+    );
 
-    ClassDB::bind_method(D_METHOD("set_color", "point", "color"), &Gradient::set_color);
+    ClassDB::bind_method(
+        D_METHOD("set_color", "point", "color"),
+        &Gradient::set_color
+    );
     ClassDB::bind_method(D_METHOD("get_color", "point"), &Gradient::get_color);
 
-    ClassDB::bind_method(D_METHOD("interpolate", "offset"), &Gradient::get_color_at_offset);
+    ClassDB::bind_method(
+        D_METHOD("interpolate", "offset"),
+        &Gradient::get_color_at_offset
+    );
 
-    ClassDB::bind_method(D_METHOD("get_point_count"), &Gradient::get_points_count);
+    ClassDB::bind_method(
+        D_METHOD("get_point_count"),
+        &Gradient::get_points_count
+    );
 
-    ClassDB::bind_method(D_METHOD(COLOR_RAMP_SET_OFFSETS, "offsets"), &Gradient::set_offsets);
-    ClassDB::bind_method(D_METHOD(COLOR_RAMP_GET_OFFSETS), &Gradient::get_offsets);
+    ClassDB::bind_method(
+        D_METHOD(COLOR_RAMP_SET_OFFSETS, "offsets"),
+        &Gradient::set_offsets
+    );
+    ClassDB::bind_method(
+        D_METHOD(COLOR_RAMP_GET_OFFSETS),
+        &Gradient::get_offsets
+    );
 
-    ClassDB::bind_method(D_METHOD(COLOR_RAMP_SET_COLORS, "colors"), &Gradient::set_colors);
-    ClassDB::bind_method(D_METHOD(COLOR_RAMP_GET_COLORS), &Gradient::get_colors);
+    ClassDB::bind_method(
+        D_METHOD(COLOR_RAMP_SET_COLORS, "colors"),
+        &Gradient::set_colors
+    );
+    ClassDB::bind_method(
+        D_METHOD(COLOR_RAMP_GET_COLORS),
+        &Gradient::get_colors
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::POOL_REAL_ARRAY, "offsets"), COLOR_RAMP_SET_OFFSETS, COLOR_RAMP_GET_OFFSETS);
-    ADD_PROPERTY(PropertyInfo(Variant::POOL_COLOR_ARRAY, "colors"), COLOR_RAMP_SET_COLORS, COLOR_RAMP_GET_COLORS);
+    ADD_PROPERTY(
+        PropertyInfo(Variant::POOL_REAL_ARRAY, "offsets"),
+        COLOR_RAMP_SET_OFFSETS,
+        COLOR_RAMP_GET_OFFSETS
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::POOL_COLOR_ARRAY, "colors"),
+        COLOR_RAMP_SET_COLORS,
+        COLOR_RAMP_GET_COLORS
+    );
 }
 
 Vector<float> Gradient::get_offsets() const {
@@ -93,7 +133,7 @@ Vector<Color> Gradient::get_colors() const {
     return colors;
 }
 
-void Gradient::set_offsets(const Vector<float> &p_offsets) {
+void Gradient::set_offsets(const Vector<float>& p_offsets) {
     points.resize(p_offsets.size());
     for (int i = 0; i < points.size(); i++) {
         points.write[i].offset = p_offsets[i];
@@ -102,7 +142,7 @@ void Gradient::set_offsets(const Vector<float> &p_offsets) {
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
 
-void Gradient::set_colors(const Vector<Color> &p_colors) {
+void Gradient::set_colors(const Vector<Color>& p_colors) {
     if (points.size() < p_colors.size()) {
         is_sorted = false;
     }
@@ -113,11 +153,11 @@ void Gradient::set_colors(const Vector<Color> &p_colors) {
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
 
-Vector<Gradient::Point> &Gradient::get_points() {
+Vector<Gradient::Point>& Gradient::get_points() {
     return points;
 }
 
-void Gradient::add_point(float p_offset, const Color &p_color) {
+void Gradient::add_point(float p_offset, const Color& p_color) {
     Point p;
     p.offset = p_offset;
     p.color = p_color;
@@ -134,7 +174,7 @@ void Gradient::remove_point(int p_index) {
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
 
-void Gradient::set_points(Vector<Gradient::Point> &p_points) {
+void Gradient::set_points(Vector<Gradient::Point>& p_points) {
     points = p_points;
     is_sorted = false;
     emit_signal(CoreStringNames::get_singleton()->changed);
@@ -154,7 +194,7 @@ float Gradient::get_offset(int pos) {
     return points[pos].offset;
 }
 
-void Gradient::set_color(int pos, const Color &color) {
+void Gradient::set_color(int pos, const Color& color) {
     ERR_FAIL_INDEX(pos, points.size());
     _update_sorting();
     points.write[pos].color = color;

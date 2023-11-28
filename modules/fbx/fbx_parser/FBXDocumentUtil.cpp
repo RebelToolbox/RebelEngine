@@ -70,7 +70,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /** @file  FBXDocumentUtil.cpp
- *  @brief Implementation of the FBX DOM utility functions declared in FBXDocumentUtil.h
+ *  @brief Implementation of the FBX DOM utility functions declared in
+ * FBXDocumentUtil.h
  */
 
 #include "FBXDocumentUtil.h"
@@ -80,44 +81,58 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXUtil.h"
 #include "core/print_string.h"
 
-namespace FBXDocParser {
-namespace Util {
+namespace FBXDocParser
+{
+namespace Util
+{
 
-void DOMError(const std::string &message) {
+void DOMError(const std::string& message) {
     print_error("[FBX-DOM]" + String(message.c_str()));
 }
 
-void DOMError(const std::string &message, const Token *token) {
-    print_error("[FBX-DOM]" + String(message.c_str()) + ";" + String(token->StringContents().c_str()));
+void DOMError(const std::string& message, const Token* token) {
+    print_error(
+        "[FBX-DOM]" + String(message.c_str()) + ";"
+        + String(token->StringContents().c_str())
+    );
 }
 
-void DOMError(const std::string &message, const std::shared_ptr<Token> token) {
-    print_error("[FBX-DOM]" + String(message.c_str()) + ";" + String(token->StringContents().c_str()));
+void DOMError(const std::string& message, const std::shared_ptr<Token> token) {
+    print_error(
+        "[FBX-DOM]" + String(message.c_str()) + ";"
+        + String(token->StringContents().c_str())
+    );
 }
 
-void DOMError(const std::string &message, const Element *element /*= NULL*/) {
+void DOMError(const std::string& message, const Element* element /*= NULL*/) {
     if (element) {
         DOMError(message, element->KeyToken());
     }
     print_error("[FBX-DOM] " + String(message.c_str()));
 }
 
-void DOMError(const std::string &message, const std::shared_ptr<Element> element /*= NULL*/) {
+void DOMError(
+    const std::string& message,
+    const std::shared_ptr<Element> element /*= NULL*/
+) {
     if (element) {
         DOMError(message, element->KeyToken());
     }
     print_error("[FBX-DOM] " + String(message.c_str()));
 }
 
-void DOMWarning(const std::string &message) {
+void DOMWarning(const std::string& message) {
     print_verbose("[FBX-DOM] warning:" + String(message.c_str()));
 }
 
-void DOMWarning(const std::string &message, const Token *token) {
-    print_verbose("[FBX-DOM] warning:" + String(message.c_str()) + ";" + String(token->StringContents().c_str()));
+void DOMWarning(const std::string& message, const Token* token) {
+    print_verbose(
+        "[FBX-DOM] warning:" + String(message.c_str()) + ";"
+        + String(token->StringContents().c_str())
+    );
 }
 
-void DOMWarning(const std::string &message, const Element *element /*= NULL*/) {
+void DOMWarning(const std::string& message, const Element* element /*= NULL*/) {
     if (element) {
         DOMWarning(message, element->KeyToken());
         return;
@@ -125,11 +140,20 @@ void DOMWarning(const std::string &message, const Element *element /*= NULL*/) {
     print_verbose("[FBX-DOM] warning:" + String(message.c_str()));
 }
 
-void DOMWarning(const std::string &message, const std::shared_ptr<Token> token) {
-    print_verbose("[FBX-DOM] warning:" + String(message.c_str()) + ";" + String(token->StringContents().c_str()));
+void DOMWarning(
+    const std::string& message,
+    const std::shared_ptr<Token> token
+) {
+    print_verbose(
+        "[FBX-DOM] warning:" + String(message.c_str()) + ";"
+        + String(token->StringContents().c_str())
+    );
 }
 
-void DOMWarning(const std::string &message, const std::shared_ptr<Element> element /*= NULL*/) {
+void DOMWarning(
+    const std::string& message,
+    const std::shared_ptr<Element> element /*= NULL*/
+) {
     if (element) {
         DOMWarning(message, element->KeyToken());
         return;
@@ -139,17 +163,21 @@ void DOMWarning(const std::string &message, const std::shared_ptr<Element> eleme
 
 // ------------------------------------------------------------------------------------------------
 // fetch a property table and the corresponding property template
-const PropertyTable *GetPropertyTable(const Document &doc,
-        const std::string &templateName,
-        const ElementPtr element,
-        const ScopePtr sc,
-        bool no_warn /*= false*/) {
+const PropertyTable* GetPropertyTable(
+    const Document& doc,
+    const std::string& templateName,
+    const ElementPtr element,
+    const ScopePtr sc,
+    bool no_warn /*= false*/
+) {
     // todo: make this an abstraction
     const ElementPtr Properties70 = sc->GetElement("Properties70");
-    const PropertyTable *templateProps = static_cast<const PropertyTable *>(nullptr);
+    const PropertyTable* templateProps =
+        static_cast<const PropertyTable*>(nullptr);
 
     if (templateName.length()) {
-        PropertyTemplateMap::const_iterator it = doc.Templates().find(templateName);
+        PropertyTemplateMap::const_iterator it =
+            doc.Templates().find(templateName);
         if (it != doc.Templates().end()) {
             templateProps = (*it).second;
         }

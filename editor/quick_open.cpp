@@ -32,9 +32,15 @@
 
 #include "core/os/keyboard.h"
 
-void EditorQuickOpen::popup_dialog(const StringName &p_base, bool p_enable_multi, bool p_dontclear) {
+void EditorQuickOpen::popup_dialog(
+    const StringName& p_base,
+    bool p_enable_multi,
+    bool p_dontclear
+) {
     base_type = p_base;
-    search_options->set_select_mode(p_enable_multi ? Tree::SELECT_MULTI : Tree::SELECT_SINGLE);
+    search_options->set_select_mode(
+        p_enable_multi ? Tree::SELECT_MULTI : Tree::SELECT_SINGLE
+    );
     popup_centered_ratio(0.4);
 
     if (p_dontclear) {
@@ -48,7 +54,7 @@ void EditorQuickOpen::popup_dialog(const StringName &p_base, bool p_enable_multi
 }
 
 String EditorQuickOpen::get_selected() const {
-    TreeItem *ti = search_options->get_selected();
+    TreeItem* ti = search_options->get_selected();
     if (!ti) {
         return String();
     }
@@ -59,7 +65,8 @@ String EditorQuickOpen::get_selected() const {
 Vector<String> EditorQuickOpen::get_selected_files() const {
     Vector<String> files;
 
-    TreeItem *item = search_options->get_next_selected(search_options->get_root());
+    TreeItem* item =
+        search_options->get_next_selected(search_options->get_root());
     while (item) {
         files.push_back("res://" + item->get_text(0));
 
@@ -69,11 +76,11 @@ Vector<String> EditorQuickOpen::get_selected_files() const {
     return files;
 }
 
-void EditorQuickOpen::_text_changed(const String &p_newtext) {
+void EditorQuickOpen::_text_changed(const String& p_newtext) {
     _update_search();
 }
 
-void EditorQuickOpen::_sbox_input(const Ref<InputEvent> &p_ie) {
+void EditorQuickOpen::_sbox_input(const Ref<InputEvent>& p_ie) {
     Ref<InputEventKey> k = p_ie;
     if (k.is_valid()) {
         switch (k->get_scancode()) {
@@ -84,14 +91,14 @@ void EditorQuickOpen::_sbox_input(const Ref<InputEvent> &p_ie) {
                 search_options->call("_gui_input", k);
                 search_box->accept_event();
 
-                TreeItem *root = search_options->get_root();
+                TreeItem* root = search_options->get_root();
                 if (!root->get_children()) {
                     break;
                 }
 
-                TreeItem *current = search_options->get_selected();
+                TreeItem* current = search_options->get_selected();
 
-                TreeItem *item = search_options->get_next_selected(root);
+                TreeItem* item = search_options->get_next_selected(root);
                 while (item) {
                     item->deselect(0);
                     item = search_options->get_next_selected(item);
@@ -109,7 +116,8 @@ float EditorQuickOpen::_path_cmp(String search, String path) const {
         return 1.2f;
     }
 
-    // Substring match, with positive bias for matches close to the end of the path.
+    // Substring match, with positive bias for matches close to the end of the
+    // path.
     int pos = path.rfindn(search);
     if (pos != -1) {
         return 1.1f + 0.09 / (path.length() - pos + 1);
@@ -119,7 +127,10 @@ float EditorQuickOpen::_path_cmp(String search, String path) const {
     return path.to_lower().similarity(search.to_lower());
 }
 
-void EditorQuickOpen::_parse_fs(EditorFileSystemDirectory *efsd, Vector<Pair<String, Ref<Texture>>> &list) {
+void EditorQuickOpen::_parse_fs(
+    EditorFileSystemDirectory* efsd,
+    Vector<Pair<String, Ref<Texture>>>& list
+) {
     for (int i = 0; i < efsd->get_subdir_count(); i++) {
         _parse_fs(efsd->get_subdir(i), list);
     }
@@ -134,10 +145,12 @@ void EditorQuickOpen::_parse_fs(EditorFileSystemDirectory *efsd, Vector<Pair<Str
         StringName file_type = efsd->get_file_type(i);
         // Iterate all possible base types.
         for (int j = 0; j < base_types.size(); j++) {
-            if (ClassDB::is_parent_class(file_type, base_types[j]) && search_text.is_subsequence_ofi(file)) {
+            if (ClassDB::is_parent_class(file_type, base_types[j])
+                && search_text.is_subsequence_ofi(file)) {
                 Pair<String, Ref<Texture>> pair;
                 pair.first = file;
-                StringName icon_name = search_options->has_icon(file_type, ei) ? file_type : ot;
+                StringName icon_name =
+                    search_options->has_icon(file_type, ei) ? file_type : ot;
                 pair.second = search_options->get_icon(icon_name, ei);
                 list.push_back(pair);
 
@@ -148,7 +161,9 @@ void EditorQuickOpen::_parse_fs(EditorFileSystemDirectory *efsd, Vector<Pair<Str
     }
 }
 
-Vector<Pair<String, Ref<Texture>>> EditorQuickOpen::_sort_fs(Vector<Pair<String, Ref<Texture>>> &list) {
+Vector<Pair<String, Ref<Texture>>> EditorQuickOpen::_sort_fs(
+    Vector<Pair<String, Ref<Texture>>>& list
+) {
     String search_text = search_box->get_text();
     Vector<Pair<String, Ref<Texture>>> sorted_list;
 
@@ -184,21 +199,22 @@ Vector<Pair<String, Ref<Texture>>> EditorQuickOpen::_sort_fs(Vector<Pair<String,
 
 void EditorQuickOpen::_update_search() {
     search_options->clear();
-    TreeItem *root = search_options->create_item();
-    EditorFileSystemDirectory *efsd = EditorFileSystem::get_singleton()->get_filesystem();
+    TreeItem* root = search_options->create_item();
+    EditorFileSystemDirectory* efsd =
+        EditorFileSystem::get_singleton()->get_filesystem();
     Vector<Pair<String, Ref<Texture>>> list;
 
     _parse_fs(efsd, list);
     list = _sort_fs(list);
 
     for (int i = 0; i < list.size(); i++) {
-        TreeItem *ti = search_options->create_item(root);
+        TreeItem* ti = search_options->create_item(root);
         ti->set_text(0, list[i].first);
         ti->set_icon(0, list[i].second);
     }
 
     if (root->get_children()) {
-        TreeItem *ti = root->get_children();
+        TreeItem* ti = root->get_children();
 
         ti->select(0);
         ti->set_as_cursor(0);
@@ -208,7 +224,7 @@ void EditorQuickOpen::_update_search() {
 }
 
 void EditorQuickOpen::_confirmed() {
-    TreeItem *ti = search_options->get_selected();
+    TreeItem* ti = search_options->get_selected();
     if (!ti) {
         return;
     }
@@ -238,15 +254,21 @@ StringName EditorQuickOpen::get_base_type() const {
 }
 
 void EditorQuickOpen::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_text_changed"), &EditorQuickOpen::_text_changed);
+    ClassDB::bind_method(
+        D_METHOD("_text_changed"),
+        &EditorQuickOpen::_text_changed
+    );
     ClassDB::bind_method(D_METHOD("_confirmed"), &EditorQuickOpen::_confirmed);
-    ClassDB::bind_method(D_METHOD("_sbox_input"), &EditorQuickOpen::_sbox_input);
+    ClassDB::bind_method(
+        D_METHOD("_sbox_input"),
+        &EditorQuickOpen::_sbox_input
+    );
 
     ADD_SIGNAL(MethodInfo("quick_open"));
 }
 
 EditorQuickOpen::EditorQuickOpen() {
-    VBoxContainer *vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
     add_child(vbc);
 
     search_box = memnew(LineEdit);

@@ -40,7 +40,7 @@ class Object;
 
 // Used to track Variants pointing to a non-Reference Object
 class ObjectRC {
-    std::atomic<Object *> _ptr;
+    std::atomic<Object*> _ptr;
     std::atomic<uint32_t> _users;
 
 public:
@@ -62,12 +62,12 @@ public:
         return decrement();
     }
 
-    _FORCE_INLINE_ Object *get_ptr() {
+    _FORCE_INLINE_ Object* get_ptr() {
         return _ptr.load(std::memory_order_acquire);
     }
 
-    _FORCE_INLINE_ ObjectRC(Object *p_object) :
-            instance_id(p_object->get_instance_id()) {
+    _FORCE_INLINE_ ObjectRC(Object* p_object) :
+        instance_id(p_object->get_instance_id()) {
         // 1 (the Object) + 1 (the first user)
         _users.store(2, std::memory_order_relaxed);
         _ptr.store(p_object, std::memory_order_release);

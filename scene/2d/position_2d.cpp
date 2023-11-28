@@ -37,9 +37,18 @@ const float DEFAULT_GIZMO_EXTENTS = 10.0;
 
 void Position2D::_draw_cross() {
     float extents = get_gizmo_extents();
-    // Colors taken from `axis_x_color` and `axis_y_color` (defined in `editor/editor_themes.cpp`)
-    draw_line(Point2(-extents, 0), Point2(+extents, 0), Color(0.96, 0.20, 0.32));
-    draw_line(Point2(0, -extents), Point2(0, +extents), Color(0.53, 0.84, 0.01));
+    // Colors taken from `axis_x_color` and `axis_y_color` (defined in
+    // `editor/editor_themes.cpp`)
+    draw_line(
+        Point2(-extents, 0),
+        Point2(+extents, 0),
+        Color(0.96, 0.20, 0.32)
+    );
+    draw_line(
+        Point2(0, -extents),
+        Point2(0, +extents),
+        Color(0.53, 0.84, 0.01)
+    );
 }
 
 #ifdef TOOLS_ENABLED
@@ -89,11 +98,26 @@ float Position2D::get_gizmo_extents() const {
 }
 
 void Position2D::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_set_gizmo_extents", "extents"), &Position2D::set_gizmo_extents);
-    ClassDB::bind_method(D_METHOD("_get_gizmo_extents"), &Position2D::get_gizmo_extents);
+    ClassDB::bind_method(
+        D_METHOD("_set_gizmo_extents", "extents"),
+        &Position2D::set_gizmo_extents
+    );
+    ClassDB::bind_method(
+        D_METHOD("_get_gizmo_extents"),
+        &Position2D::get_gizmo_extents
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "gizmo_extents", PROPERTY_HINT_RANGE, "0,1000,0.1,or_greater", PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_INTERNAL), "_set_gizmo_extents", "_get_gizmo_extents");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "gizmo_extents",
+            PROPERTY_HINT_RANGE,
+            "0,1000,0.1,or_greater",
+            PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_INTERNAL
+        ),
+        "_set_gizmo_extents",
+        "_get_gizmo_extents"
+    );
 }
 
-Position2D::Position2D() {
-}
+Position2D::Position2D() {}

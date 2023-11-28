@@ -61,8 +61,16 @@ protected:
     static void _bind_methods();
 
 public:
-    virtual void process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
-    Vector2 get_magnitude_for_frequency_range(float p_begin, float p_end, MagnitudeMode p_mode = MAGNITUDE_MAX) const;
+    virtual void process(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
+    Vector2 get_magnitude_for_frequency_range(
+        float p_begin,
+        float p_end,
+        MagnitudeMode p_mode = MAGNITUDE_MAX
+    ) const;
 };
 
 VARIANT_ENUM_CAST(AudioEffectSpectrumAnalyzerInstance::MagnitudeMode)

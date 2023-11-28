@@ -59,7 +59,13 @@ private:
     bool monitorable;
     bool locked;
 
-    void _body_inout(int p_status, const RID &p_body, int p_instance, int p_body_shape, int p_area_shape);
+    void _body_inout(
+        int p_status,
+        const RID& p_body,
+        int p_instance,
+        int p_body_shape,
+        int p_area_shape
+    );
 
     void _body_enter_tree(ObjectID p_id);
     void _body_exit_tree(ObjectID p_id);
@@ -67,7 +73,8 @@ private:
     struct ShapePair {
         int body_shape;
         int area_shape;
-        bool operator<(const ShapePair &p_sp) const {
+
+        bool operator<(const ShapePair& p_sp) const {
             if (body_shape == p_sp.body_shape) {
                 return area_shape < p_sp.area_shape;
             } else {
@@ -76,6 +83,7 @@ private:
         }
 
         ShapePair() {}
+
         ShapePair(int p_bs, int p_as) {
             body_shape = p_bs;
             area_shape = p_as;
@@ -91,7 +99,13 @@ private:
 
     Map<ObjectID, BodyState> body_map;
 
-    void _area_inout(int p_status, const RID &p_area, int p_instance, int p_area_shape, int p_self_shape);
+    void _area_inout(
+        int p_status,
+        const RID& p_area,
+        int p_instance,
+        int p_area_shape,
+        int p_self_shape
+    );
 
     void _area_enter_tree(ObjectID p_id);
     void _area_exit_tree(ObjectID p_id);
@@ -99,7 +113,8 @@ private:
     struct AreaShapePair {
         int area_shape;
         int self_shape;
-        bool operator<(const AreaShapePair &p_sp) const {
+
+        bool operator<(const AreaShapePair& p_sp) const {
             if (area_shape == p_sp.area_shape) {
                 return self_shape < p_sp.self_shape;
             } else {
@@ -108,6 +123,7 @@ private:
         }
 
         AreaShapePair() {}
+
         AreaShapePair(int p_bs, int p_as) {
             area_shape = p_bs;
             self_shape = p_as;
@@ -130,7 +146,7 @@ private:
 protected:
     void _notification(int p_what);
     static void _bind_methods();
-    void _validate_property(PropertyInfo &property) const;
+    void _validate_property(PropertyInfo& property) const;
 
 public:
     void set_space_override_mode(SpaceOverride p_mode);
@@ -142,7 +158,7 @@ public:
     void set_gravity_distance_scale(real_t p_scale);
     real_t get_gravity_distance_scale() const;
 
-    void set_gravity_vector(const Vector2 &p_vec);
+    void set_gravity_vector(const Vector2& p_vec);
     Vector2 get_gravity_vector() const;
 
     void set_gravity(real_t p_gravity);
@@ -163,16 +179,16 @@ public:
     void set_monitorable(bool p_enable);
     bool is_monitorable() const;
 
-    Array get_overlapping_bodies() const; //function for script
-    Array get_overlapping_areas() const; //function for script
+    Array get_overlapping_bodies() const; // function for script
+    Array get_overlapping_areas() const;  // function for script
 
-    bool overlaps_area(Node *p_area) const;
-    bool overlaps_body(Node *p_body) const;
+    bool overlaps_area(Node* p_area) const;
+    bool overlaps_body(Node* p_body) const;
 
     void set_audio_bus_override(bool p_override);
     bool is_overriding_audio_bus() const;
 
-    void set_audio_bus_name(const StringName &p_audio_bus);
+    void set_audio_bus_name(const StringName& p_audio_bus);
     StringName get_audio_bus_name() const;
 
     Area2D();

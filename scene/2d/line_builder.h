@@ -45,14 +45,15 @@ public:
     Line2D::LineCapMode begin_cap_mode;
     Line2D::LineCapMode end_cap_mode;
     float width;
-    Curve *curve;
+    Curve* curve;
     Color default_color;
-    Gradient *gradient;
+    Gradient* gradient;
     Line2D::LineTextureMode texture_mode;
     float sharp_limit;
     int round_precision;
     float tile_aspect; // w/h
-    // TODO offset_joints option (offers alternative implementation of round joints)
+    // TODO offset_joints option (offers alternative implementation of round
+    // joints)
 
     // TODO Move in a struct and reference it
     // Output
@@ -77,9 +78,19 @@ private:
     void strip_new_quad(Vector2 up, Vector2 down, Color color, float uvx);
     void strip_add_quad(Vector2 up, Vector2 down, Color color, float uvx);
     void strip_add_tri(Vector2 up, Orientation orientation);
-    void strip_add_arc(Vector2 center, float angle_delta, Orientation orientation);
+    void strip_add_arc(
+        Vector2 center,
+        float angle_delta,
+        Orientation orientation
+    );
 
-    void new_arc(Vector2 center, Vector2 vbegin, float angle_delta, Color color, Rect2 uv_rect);
+    void new_arc(
+        Vector2 center,
+        Vector2 vbegin,
+        float angle_delta,
+        Color color,
+        Rect2 uv_rect
+    );
 
 private:
     bool _interpolate_color;

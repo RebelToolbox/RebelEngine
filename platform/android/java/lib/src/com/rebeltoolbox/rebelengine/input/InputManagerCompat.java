@@ -46,15 +46,19 @@ public interface InputManagerCompat {
      *            null if the listener should be invoked on the calling thread's
      *            looper.
      */
-    void registerInputDeviceListener(InputManagerCompat.InputDeviceListener listener,
-            Handler handler);
+    void registerInputDeviceListener(
+        InputManagerCompat.InputDeviceListener listener,
+        Handler handler
+    );
 
     /**
      * Unregisters an input device listener.
      *
      * @param listener The listener to unregister.
      */
-    void unregisterInputDeviceListener(InputManagerCompat.InputDeviceListener listener);
+    void unregisterInputDeviceListener(
+        InputManagerCompat.InputDeviceListener listener
+    );
 
     /*
      * The following three calls are to simulate V16 behavior on pre-Jellybean

@@ -40,20 +40,20 @@ class StreamPeerGDNative : public StreamPeer {
 
 protected:
     static void _bind_methods();
-    const godot_net_stream_peer *interface;
+    const godot_net_stream_peer* interface;
 
 public:
     StreamPeerGDNative();
     ~StreamPeerGDNative();
 
     /* Sets the interface implementation from GDNative */
-    void set_native_stream_peer(const godot_net_stream_peer *p_interface);
+    void set_native_stream_peer(const godot_net_stream_peer* p_interface);
 
     /* Specific to StreamPeer */
-    Error put_data(const uint8_t *p_data, int p_bytes);
-    Error put_partial_data(const uint8_t *p_data, int p_bytes, int &r_sent);
-    Error get_data(uint8_t *p_buffer, int p_bytes);
-    Error get_partial_data(uint8_t *p_buffer, int p_bytes, int &r_received);
+    Error put_data(const uint8_t* p_data, int p_bytes);
+    Error put_partial_data(const uint8_t* p_data, int p_bytes, int& r_sent);
+    Error get_data(uint8_t* p_buffer, int p_bytes);
+    Error get_partial_data(uint8_t* p_buffer, int p_bytes, int& r_received);
     int get_available_bytes() const;
 };
 

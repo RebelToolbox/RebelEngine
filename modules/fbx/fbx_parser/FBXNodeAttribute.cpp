@@ -79,21 +79,36 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXParser.h"
 #include <iostream>
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 using namespace Util;
 
 // ------------------------------------------------------------------------------------------------
-NodeAttribute::NodeAttribute(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Object(id, element, name), props() {
+NodeAttribute::NodeAttribute(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Object(id, element, name),
+    props() {
     const ScopePtr sc = GetRequiredScope(element);
 
-    const std::string &classname = ParseTokenAsString(GetRequiredToken(element, 2));
+    const std::string& classname =
+        ParseTokenAsString(GetRequiredToken(element, 2));
 
-    // hack on the deriving type but Null/LimbNode attributes are the only case in which
-    // the property table is by design absent and no warning should be generated
-    // for it.
-    const bool is_null_or_limb = !strcmp(classname.c_str(), "Null") || !strcmp(classname.c_str(), "LimbNode");
-    props = GetPropertyTable(doc, "NodeAttribute.Fbx" + classname, element, sc, is_null_or_limb);
+    // hack on the deriving type but Null/LimbNode attributes are the only case
+    // in which the property table is by design absent and no warning should be
+    // generated for it.
+    const bool is_null_or_limb = !strcmp(classname.c_str(), "Null")
+                              || !strcmp(classname.c_str(), "LimbNode");
+    props = GetPropertyTable(
+        doc,
+        "NodeAttribute.Fbx" + classname,
+        element,
+        sc,
+        is_null_or_limb
+    );
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -102,8 +117,13 @@ NodeAttribute::~NodeAttribute() {
 }
 
 // ------------------------------------------------------------------------------------------------
-CameraSwitcher::CameraSwitcher(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        NodeAttribute(id, element, doc, name) {
+CameraSwitcher::CameraSwitcher(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    NodeAttribute(id, element, doc, name) {
     const ScopePtr sc = GetRequiredScope(element);
     const ElementPtr CameraId = sc->GetElement("CameraId");
     const ElementPtr CameraName = sc->GetElement("CameraName");
@@ -118,7 +138,8 @@ CameraSwitcher::CameraSwitcher(uint64_t id, const ElementPtr element, const Docu
     }
 
     if (CameraIndexName && CameraIndexName->Tokens().size()) {
-        cameraIndexName = GetRequiredToken(CameraIndexName, 0)->StringContents();
+        cameraIndexName =
+            GetRequiredToken(CameraIndexName, 0)->StringContents();
     }
 }
 
@@ -128,8 +149,13 @@ CameraSwitcher::~CameraSwitcher() {
 }
 
 // ------------------------------------------------------------------------------------------------
-Camera::Camera(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        NodeAttribute(id, element, doc, name) {
+Camera::Camera(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    NodeAttribute(id, element, doc, name) {
     // empty
 }
 
@@ -139,31 +165,43 @@ Camera::~Camera() {
 }
 
 // ------------------------------------------------------------------------------------------------
-Light::Light(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        NodeAttribute(id, element, doc, name) {
+Light::Light(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    NodeAttribute(id, element, doc, name) {
     // empty
 }
 
 // ------------------------------------------------------------------------------------------------
-Light::~Light() {
-}
+Light::~Light() {}
 
 // ------------------------------------------------------------------------------------------------
-Null::Null(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        NodeAttribute(id, element, doc, name) {
-}
+Null::Null(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    NodeAttribute(id, element, doc, name) {}
 
 // ------------------------------------------------------------------------------------------------
-Null::~Null() {
-}
+Null::~Null() {}
 
 // ------------------------------------------------------------------------------------------------
-LimbNode::LimbNode(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        NodeAttribute(id, element, doc, name) {
-    //std::cout << "limb node: " << name << std::endl;
-    //const Scope &sc = GetRequiredScope(element);
+LimbNode::LimbNode(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    NodeAttribute(id, element, doc, name) {
+    // std::cout << "limb node: " << name << std::endl;
+    // const Scope &sc = GetRequiredScope(element);
 
-    //const ElementPtr const TypeFlag = sc["TypeFlags"];
+    // const ElementPtr const TypeFlag = sc["TypeFlags"];
 
     // keep this it can dump new properties for you
     // for( auto element : sc.Elements())
@@ -173,12 +211,12 @@ LimbNode::LimbNode(uint64_t id, const ElementPtr element, const Document &doc, c
 
     // if(TypeFlag)
     // {
-    // //    std::cout << "type flag: " << GetRequiredToken(*TypeFlag, 0).StringContents() << std::endl;
+    // //    std::cout << "type flag: " << GetRequiredToken(*TypeFlag,
+    // 0).StringContents() << std::endl;
     // }
 }
 
 // ------------------------------------------------------------------------------------------------
-LimbNode::~LimbNode() {
-}
+LimbNode::~LimbNode() {}
 
 } // namespace FBXDocParser

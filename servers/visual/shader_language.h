@@ -258,7 +258,8 @@ public:
         OP_INCREMENT,
         OP_DECREMENT,
         OP_SELECT_IF,
-        OP_SELECT_ELSE, //used only internally, then only IF appears with 3 arguments
+        OP_SELECT_ELSE, // used only internally, then only IF appears with 3
+                        // arguments
         OP_POST_INCREMENT,
         OP_POST_DECREMENT,
         OP_CALL,
@@ -294,7 +295,7 @@ public:
     };
 
     struct Node {
-        Node *next;
+        Node* next;
 
         enum Type {
             TYPE_SHADER,
@@ -314,56 +315,73 @@ public:
 
         Type type;
 
-        virtual DataType get_datatype() const { return TYPE_VOID; }
-        virtual String get_datatype_name() const { return ""; }
+        virtual DataType get_datatype() const {
+            return TYPE_VOID;
+        }
 
-        Node(Type t) :
-                next(nullptr),
-                type(t) {}
+        virtual String get_datatype_name() const {
+            return "";
+        }
+
+        Node(Type t) : next(nullptr), type(t) {}
+
         virtual ~Node() {}
     };
 
     template <class T>
-    T *alloc_node() {
-        T *node = memnew(T);
+    T* alloc_node() {
+        T* node = memnew(T);
         node->next = nodes;
         nodes = node;
         return node;
     }
 
-    Node *nodes;
+    Node* nodes;
 
     struct OperatorNode : public Node {
         DataType return_cache;
         DataPrecision return_precision_cache;
         Operator op;
         StringName struct_name;
-        Vector<Node *> arguments;
-        virtual DataType get_datatype() const { return return_cache; }
-        virtual String get_datatype_name() const { return String(struct_name); }
+        Vector<Node*> arguments;
+
+        virtual DataType get_datatype() const {
+            return return_cache;
+        }
+
+        virtual String get_datatype_name() const {
+            return String(struct_name);
+        }
 
         OperatorNode() :
-                Node(TYPE_OPERATOR),
-                return_cache(TYPE_VOID),
-                return_precision_cache(PRECISION_DEFAULT),
-                op(OP_EQUAL),
-                struct_name("") {}
+            Node(TYPE_OPERATOR),
+            return_cache(TYPE_VOID),
+            return_precision_cache(PRECISION_DEFAULT),
+            op(OP_EQUAL),
+            struct_name("") {}
     };
 
     struct VariableNode : public Node {
         DataType datatype_cache;
         StringName name;
         StringName struct_name;
-        virtual DataType get_datatype() const { return datatype_cache; }
-        virtual String get_datatype_name() const { return String(struct_name); }
+
+        virtual DataType get_datatype() const {
+            return datatype_cache;
+        }
+
+        virtual String get_datatype_name() const {
+            return String(struct_name);
+        }
+
         bool is_const;
         bool is_local;
 
         VariableNode() :
-                Node(TYPE_VARIABLE),
-                datatype_cache(TYPE_VOID),
-                is_const(false),
-                is_local(false) {}
+            Node(TYPE_VARIABLE),
+            datatype_cache(TYPE_VOID),
+            is_const(false),
+            is_local(false) {}
     };
 
     struct VariableDeclarationNode : public Node {
@@ -374,51 +392,58 @@ public:
 
         struct Declaration {
             StringName name;
-            Node *initializer;
+            Node* initializer;
         };
 
         Vector<Declaration> declarations;
-        virtual DataType get_datatype() const { return datatype; }
+
+        virtual DataType get_datatype() const {
+            return datatype;
+        }
 
         VariableDeclarationNode() :
-                Node(TYPE_VARIABLE_DECLARATION),
-                precision(PRECISION_DEFAULT),
-                datatype(TYPE_VOID),
-                is_const(false) {}
+            Node(TYPE_VARIABLE_DECLARATION),
+            precision(PRECISION_DEFAULT),
+            datatype(TYPE_VOID),
+            is_const(false) {}
     };
 
     struct ArrayNode : public Node {
         DataType datatype_cache;
         StringName struct_name;
         StringName name;
-        Node *index_expression;
-        Node *call_expression;
-        Node *assign_expression;
+        Node* index_expression;
+        Node* call_expression;
+        Node* assign_expression;
         bool is_const;
         bool is_local;
 
-        virtual DataType get_datatype() const { return datatype_cache; }
-        virtual String get_datatype_name() const { return String(struct_name); }
+        virtual DataType get_datatype() const {
+            return datatype_cache;
+        }
+
+        virtual String get_datatype_name() const {
+            return String(struct_name);
+        }
 
         ArrayNode() :
-                Node(TYPE_ARRAY),
-                datatype_cache(TYPE_VOID),
-                index_expression(nullptr),
-                call_expression(nullptr),
-                assign_expression(nullptr),
-                is_const(false),
-                is_local(false) {}
+            Node(TYPE_ARRAY),
+            datatype_cache(TYPE_VOID),
+            index_expression(nullptr),
+            call_expression(nullptr),
+            assign_expression(nullptr),
+            is_const(false),
+            is_local(false) {}
     };
 
     struct ArrayConstructNode : public Node {
         DataType datatype;
         String struct_name;
-        Vector<Node *> initializer;
+        Vector<Node*> initializer;
 
         ArrayConstructNode() :
-                Node(TYPE_ARRAY_CONSTRUCT),
-                datatype(TYPE_VOID) {
-        }
+            Node(TYPE_ARRAY_CONSTRUCT),
+            datatype(TYPE_VOID) {}
     };
 
     struct ArrayDeclarationNode : public Node {
@@ -430,17 +455,20 @@ public:
         struct Declaration {
             StringName name;
             uint32_t size;
-            Vector<Node *> initializer;
+            Vector<Node*> initializer;
         };
 
         Vector<Declaration> declarations;
-        virtual DataType get_datatype() const { return datatype; }
+
+        virtual DataType get_datatype() const {
+            return datatype;
+        }
 
         ArrayDeclarationNode() :
-                Node(TYPE_ARRAY_DECLARATION),
-                precision(PRECISION_DEFAULT),
-                datatype(TYPE_VOID),
-                is_const(false) {}
+            Node(TYPE_ARRAY_DECLARATION),
+            precision(PRECISION_DEFAULT),
+            datatype(TYPE_VOID),
+            is_const(false) {}
     };
 
     struct ConstantNode : public Node {
@@ -457,19 +485,23 @@ public:
 
         Vector<Value> values;
         Vector<ArrayDeclarationNode::Declaration> array_declarations;
-        virtual DataType get_datatype() const { return datatype; }
-        virtual String get_datatype_name() const { return struct_name; }
 
-        ConstantNode() :
-                Node(TYPE_CONSTANT),
-                datatype(TYPE_VOID) {}
+        virtual DataType get_datatype() const {
+            return datatype;
+        }
+
+        virtual String get_datatype_name() const {
+            return struct_name;
+        }
+
+        ConstantNode() : Node(TYPE_CONSTANT), datatype(TYPE_VOID) {}
     };
 
     struct FunctionNode;
 
     struct BlockNode : public Node {
-        FunctionNode *parent_function;
-        BlockNode *parent_block;
+        FunctionNode* parent_function;
+        BlockNode* parent_block;
 
         enum BlockType {
             BLOCK_TYPE_STANDART,
@@ -485,32 +517,30 @@ public:
             DataType type;
             StringName struct_name;
             DataPrecision precision;
-            int line; //for completion
+            int line; // for completion
             int array_size;
             bool is_const;
         };
 
         Map<StringName, Variable> variables;
-        List<Node *> statements;
+        List<Node*> statements;
         bool single_statement;
 
         BlockNode() :
-                Node(TYPE_BLOCK),
-                parent_function(nullptr),
-                parent_block(nullptr),
-                block_type(BLOCK_TYPE_STANDART),
-                block_tag(SubClassTag::TAG_GLOBAL),
-                single_statement(false) {}
+            Node(TYPE_BLOCK),
+            parent_function(nullptr),
+            parent_block(nullptr),
+            block_type(BLOCK_TYPE_STANDART),
+            block_tag(SubClassTag::TAG_GLOBAL),
+            single_statement(false) {}
     };
 
     struct ControlFlowNode : public Node {
         FlowOperation flow_op;
-        Vector<Node *> expressions;
-        Vector<BlockNode *> blocks;
+        Vector<Node*> expressions;
+        Vector<BlockNode*> blocks;
 
-        ControlFlowNode() :
-                Node(TYPE_CONTROL_FLOW),
-                flow_op(FLOW_OP_IF) {}
+        ControlFlowNode() : Node(TYPE_CONTROL_FLOW), flow_op(FLOW_OP_IF) {}
     };
 
     struct MemberNode : public Node {
@@ -521,29 +551,34 @@ public:
         int array_size;
         StringName struct_name;
         StringName name;
-        Node *owner;
-        Node *index_expression;
-        Node *assign_expression;
+        Node* owner;
+        Node* index_expression;
+        Node* assign_expression;
         bool has_swizzling_duplicates;
 
-        virtual DataType get_datatype() const { return datatype; }
-        virtual String get_datatype_name() const { return String(struct_name); }
+        virtual DataType get_datatype() const {
+            return datatype;
+        }
+
+        virtual String get_datatype_name() const {
+            return String(struct_name);
+        }
 
         MemberNode() :
-                Node(TYPE_MEMBER),
-                basetype(TYPE_VOID),
-                datatype(TYPE_VOID),
-                array_size(0),
-                owner(nullptr),
-                index_expression(nullptr),
-                assign_expression(nullptr),
-                has_swizzling_duplicates(false) {}
+            Node(TYPE_MEMBER),
+            basetype(TYPE_VOID),
+            datatype(TYPE_VOID),
+            array_size(0),
+            owner(nullptr),
+            index_expression(nullptr),
+            assign_expression(nullptr),
+            has_swizzling_duplicates(false) {}
     };
 
     struct StructNode : public Node {
-        List<MemberNode *> members;
-        StructNode() :
-                Node(TYPE_STRUCT) {}
+        List<MemberNode*> members;
+
+        StructNode() : Node(TYPE_STRUCT) {}
     };
 
     struct FunctionNode : public Node {
@@ -560,15 +595,15 @@ public:
         StringName return_struct_name;
         DataPrecision return_precision;
         Vector<Argument> arguments;
-        BlockNode *body;
+        BlockNode* body;
         bool can_discard;
 
         FunctionNode() :
-                Node(TYPE_FUNCTION),
-                return_type(TYPE_VOID),
-                return_precision(PRECISION_DEFAULT),
-                body(nullptr),
-                can_discard(false) {}
+            Node(TYPE_FUNCTION),
+            return_type(TYPE_VOID),
+            return_precision(PRECISION_DEFAULT),
+            body(nullptr),
+            can_discard(false) {}
     };
 
     struct ShaderNode : public Node {
@@ -577,27 +612,30 @@ public:
             DataType type;
             StringName type_str;
             DataPrecision precision;
-            ConstantNode *initializer;
+            ConstantNode* initializer;
             int array_size;
         };
 
         struct Function {
             StringName name;
-            FunctionNode *function;
+            FunctionNode* function;
             Set<StringName> uses_function;
             bool callable;
         };
 
         struct Struct {
             StringName name;
-            StructNode *shader_struct;
+            StructNode* shader_struct;
         };
 
         struct Varying {
             enum Stage {
                 STAGE_UNKNOWN,
-                STAGE_VERTEX, // transition stage to STAGE_VERTEX_TO_FRAGMENT_LIGHT, emits warning if it's not used
-                STAGE_FRAGMENT, // transition stage to STAGE_FRAGMENT_TO_LIGHT, emits warning if it's not used
+                STAGE_VERTEX,   // transition stage to
+                                // STAGE_VERTEX_TO_FRAGMENT_LIGHT, emits warning
+                                // if it's not used
+                STAGE_FRAGMENT, // transition stage to STAGE_FRAGMENT_TO_LIGHT,
+                                // emits warning if it's not used
                 STAGE_VERTEX_TO_FRAGMENT_LIGHT,
                 STAGE_FRAGMENT_TO_LIGHT,
             };
@@ -610,11 +648,11 @@ public:
             TkPos tkpos;
 
             Varying() :
-                    stage(STAGE_UNKNOWN),
-                    type(TYPE_VOID),
-                    interpolation(INTERPOLATION_FLAT),
-                    precision(PRECISION_DEFAULT),
-                    array_size(0) {}
+                stage(STAGE_UNKNOWN),
+                type(TYPE_VOID),
+                interpolation(INTERPOLATION_FLAT),
+                precision(PRECISION_DEFAULT),
+                array_size(0) {}
         };
 
         struct Uniform {
@@ -640,11 +678,11 @@ public:
             float hint_range[3];
 
             Uniform() :
-                    order(0),
-                    texture_order(0),
-                    type(TYPE_VOID),
-                    precision(PRECISION_DEFAULT),
-                    hint(HINT_NONE) {
+                order(0),
+                texture_order(0),
+                type(TYPE_VOID),
+                precision(PRECISION_DEFAULT),
+                hint(HINT_NONE) {
                 hint_range[0] = 0.0f;
                 hint_range[1] = 1.0f;
                 hint_range[2] = 0.001f;
@@ -661,15 +699,15 @@ public:
         Vector<Constant> vconstants;
         Vector<Struct> vstructs;
 
-        ShaderNode() :
-                Node(TYPE_SHADER) {}
+        ShaderNode() : Node(TYPE_SHADER) {}
     };
 
     struct Expression {
         bool is_op;
+
         union {
             Operator op;
-            Node *node;
+            Node* node;
         };
     };
 
@@ -712,40 +750,51 @@ public:
     static bool is_token_operator(TokenType p_type);
     static bool is_token_operator_assign(TokenType p_type);
 
-    static bool convert_constant(ConstantNode *p_constant, DataType p_to_type, ConstantNode::Value *p_value = nullptr);
+    static bool convert_constant(
+        ConstantNode* p_constant,
+        DataType p_to_type,
+        ConstantNode::Value* p_value = nullptr
+    );
     static DataType get_scalar_type(DataType p_type);
     static int get_cardinality(DataType p_type);
     static bool is_scalar_type(DataType p_type);
     static bool is_sampler_type(DataType p_type);
-    static Variant constant_value_to_variant(const Vector<ShaderLanguage::ConstantNode::Value> &p_value, DataType p_type, ShaderLanguage::ShaderNode::Uniform::Hint p_hint = ShaderLanguage::ShaderNode::Uniform::HINT_NONE);
+    static Variant constant_value_to_variant(
+        const Vector<ShaderLanguage::ConstantNode::Value>& p_value,
+        DataType p_type,
+        ShaderLanguage::ShaderNode::Uniform::Hint p_hint =
+            ShaderLanguage::ShaderNode::Uniform::HINT_NONE
+    );
 
-    static void get_keyword_list(List<String> *r_keywords);
+    static void get_keyword_list(List<String>* r_keywords);
     static bool is_control_flow_keyword(String p_keyword);
-    static void get_builtin_funcs(List<String> *r_keywords);
+    static void get_builtin_funcs(List<String>* r_keywords);
 
     struct BuiltInInfo {
         DataType type;
         bool constant;
 
-        BuiltInInfo() :
-                type(TYPE_VOID),
-                constant(false) {}
+        BuiltInInfo() : type(TYPE_VOID), constant(false) {}
 
         BuiltInInfo(DataType p_type, bool p_constant = false) :
-                type(p_type),
-                constant(p_constant) {}
+            type(p_type),
+            constant(p_constant) {}
     };
 
     struct FunctionInfo {
         Map<StringName, BuiltInInfo> built_ins;
         bool can_discard;
     };
-    static bool has_builtin(const Map<StringName, ShaderLanguage::FunctionInfo> &p_functions, const StringName &p_name);
+
+    static bool has_builtin(
+        const Map<StringName, ShaderLanguage::FunctionInfo>& p_functions,
+        const StringName& p_name
+    );
 
 private:
     struct KeyWord {
         TokenType token;
-        const char *text;
+        const char* text;
     };
 
     static const KeyWord keyword_list[];
@@ -762,12 +811,14 @@ private:
     bool last_const = false;
 
     struct VaryingUsage {
-        ShaderNode::Varying *var;
+        ShaderNode::Varying* var;
         int line;
     };
+
     List<VaryingUsage> unknown_varying_usages;
 
-    bool _check_varying_usages(int *r_error_line, String *r_error_message) const;
+    bool _check_varying_usages(int* r_error_line, String* r_error_message)
+        const;
 
     TkPos _get_tkpos() {
         TkPos tkp;
@@ -781,7 +832,7 @@ private:
         tk_line = p_pos.tk_line;
     }
 
-    void _set_error(const String &p_str) {
+    void _set_error(const String& p_str) {
         if (error_set) {
             return;
         }
@@ -791,12 +842,15 @@ private:
         error_str = p_str;
     }
 
-    static const char *token_names[TK_MAX];
+    static const char* token_names[TK_MAX];
 
-    Token _make_token(TokenType p_type, const StringName &p_text = StringName());
+    Token _make_token(
+        TokenType p_type,
+        const StringName& p_text = StringName()
+    );
     Token _get_token();
 
-    ShaderNode *shader;
+    ShaderNode* shader;
 
     enum IdentifierType {
         IDENTIFIER_FUNCTION,
@@ -808,75 +862,148 @@ private:
         IDENTIFIER_CONSTANT,
     };
 
-    bool _find_identifier(const BlockNode *p_block, const Map<StringName, BuiltInInfo> &p_builtin_types, const StringName &p_identifier, DataType *r_data_type = nullptr, IdentifierType *r_type = nullptr, bool *r_is_const = nullptr, int *r_array_size = nullptr, StringName *r_struct_name = nullptr);
+    bool _find_identifier(
+        const BlockNode* p_block,
+        const Map<StringName, BuiltInInfo>& p_builtin_types,
+        const StringName& p_identifier,
+        DataType* r_data_type = nullptr,
+        IdentifierType* r_type = nullptr,
+        bool* r_is_const = nullptr,
+        int* r_array_size = nullptr,
+        StringName* r_struct_name = nullptr
+    );
     bool _is_operator_assign(Operator p_op) const;
-    bool _validate_assign(Node *p_node, const Map<StringName, BuiltInInfo> &p_builtin_types, String *r_message = nullptr);
-    bool _validate_operator(OperatorNode *p_op, DataType *r_ret_type = nullptr);
+    bool _validate_assign(
+        Node* p_node,
+        const Map<StringName, BuiltInInfo>& p_builtin_types,
+        String* r_message = nullptr
+    );
+    bool _validate_operator(OperatorNode* p_op, DataType* r_ret_type = nullptr);
 
     struct BuiltinFuncDef {
-        enum { MAX_ARGS = 5 };
-        const char *name;
+        enum {
+            MAX_ARGS = 5
+        };
+
+        const char* name;
         DataType rettype;
         const DataType args[MAX_ARGS];
         SubClassTag tag;
         bool high_end;
     };
 
-    struct BuiltinFuncOutArgs { //arguments used as out in built in functions
-        const char *name;
+    struct BuiltinFuncOutArgs { // arguments used as out in built in functions
+        const char* name;
         int argument;
     };
 
     CompletionType completion_type;
     int completion_line;
-    BlockNode *completion_block;
+    BlockNode* completion_block;
     DataType completion_base;
     SubClassTag completion_class;
     StringName completion_function;
     StringName completion_struct;
     int completion_argument;
 
-    bool _get_completable_identifier(BlockNode *p_block, CompletionType p_type, StringName &identifier);
+    bool _get_completable_identifier(
+        BlockNode* p_block,
+        CompletionType p_type,
+        StringName& identifier
+    );
     static const BuiltinFuncDef builtin_func_defs[];
     static const BuiltinFuncOutArgs builtin_func_out_args[];
 
     Error _validate_datatype(DataType p_type);
-    bool _compare_datatypes_in_nodes(Node *a, Node *b) const;
+    bool _compare_datatypes_in_nodes(Node* a, Node* b) const;
 
-    bool _validate_function_call(BlockNode *p_block, OperatorNode *p_func, DataType *r_ret_type, StringName *r_ret_type_str);
-    bool _parse_function_arguments(BlockNode *p_block, const Map<StringName, BuiltInInfo> &p_builtin_types, OperatorNode *p_func, int *r_complete_arg = nullptr);
-    bool _validate_varying_assign(ShaderNode::Varying &p_varying, String *r_message);
-    bool _validate_varying_using(ShaderNode::Varying &p_varying, String *r_message);
+    bool _validate_function_call(
+        BlockNode* p_block,
+        OperatorNode* p_func,
+        DataType* r_ret_type,
+        StringName* r_ret_type_str
+    );
+    bool _parse_function_arguments(
+        BlockNode* p_block,
+        const Map<StringName, BuiltInInfo>& p_builtin_types,
+        OperatorNode* p_func,
+        int* r_complete_arg = nullptr
+    );
+    bool _validate_varying_assign(
+        ShaderNode::Varying& p_varying,
+        String* r_message
+    );
+    bool _validate_varying_using(
+        ShaderNode::Varying& p_varying,
+        String* r_message
+    );
 
-    Node *_parse_expression(BlockNode *p_block, const Map<StringName, BuiltInInfo> &p_builtin_types);
-    Node *_parse_array_constructor(BlockNode *p_block, const Map<StringName, BuiltInInfo> &p_builtin_types, DataType p_type, const StringName &p_struct_name, int p_array_size);
-    ShaderLanguage::Node *_reduce_expression(BlockNode *p_block, ShaderLanguage::Node *p_node);
+    Node* _parse_expression(
+        BlockNode* p_block,
+        const Map<StringName, BuiltInInfo>& p_builtin_types
+    );
+    Node* _parse_array_constructor(
+        BlockNode* p_block,
+        const Map<StringName, BuiltInInfo>& p_builtin_types,
+        DataType p_type,
+        const StringName& p_struct_name,
+        int p_array_size
+    );
+    ShaderLanguage::Node* _reduce_expression(
+        BlockNode* p_block,
+        ShaderLanguage::Node* p_node
+    );
 
-    Node *_parse_and_reduce_expression(BlockNode *p_block, const Map<StringName, BuiltInInfo> &p_builtin_types);
-    Error _parse_block(BlockNode *p_block, const Map<StringName, BuiltInInfo> &p_builtin_types, bool p_just_one = false, bool p_can_break = false, bool p_can_continue = false);
-    String _get_shader_type_list(const Set<String> &p_shader_types) const;
+    Node* _parse_and_reduce_expression(
+        BlockNode* p_block,
+        const Map<StringName, BuiltInInfo>& p_builtin_types
+    );
+    Error _parse_block(
+        BlockNode* p_block,
+        const Map<StringName, BuiltInInfo>& p_builtin_types,
+        bool p_just_one = false,
+        bool p_can_break = false,
+        bool p_can_continue = false
+    );
+    String _get_shader_type_list(const Set<String>& p_shader_types) const;
     String _get_qualifier_str(ArgumentQualifier p_qualifier) const;
 
-    Error _parse_shader(const Map<StringName, FunctionInfo> &p_functions, const Vector<StringName> &p_render_modes, const Set<String> &p_shader_types);
+    Error _parse_shader(
+        const Map<StringName, FunctionInfo>& p_functions,
+        const Vector<StringName>& p_render_modes,
+        const Set<String>& p_shader_types
+    );
 
-    Error _find_last_flow_op_in_block(BlockNode *p_block, FlowOperation p_op);
-    Error _find_last_flow_op_in_op(ControlFlowNode *p_flow, FlowOperation p_op);
+    Error _find_last_flow_op_in_block(BlockNode* p_block, FlowOperation p_op);
+    Error _find_last_flow_op_in_op(ControlFlowNode* p_flow, FlowOperation p_op);
 
 public:
-    //static void get_keyword_list(ShaderType p_type,List<String> *p_keywords);
+    // static void get_keyword_list(ShaderType p_type,List<String> *p_keywords);
 
     void clear();
 
-    static String get_shader_type(const String &p_code);
-    Error compile(const String &p_code, const Map<StringName, FunctionInfo> &p_functions, const Vector<StringName> &p_render_modes, const Set<String> &p_shader_types);
-    Error complete(const String &p_code, const Map<StringName, FunctionInfo> &p_functions, const Vector<StringName> &p_render_modes, const Set<String> &p_shader_types, List<ScriptCodeCompletionOption> *r_options, String &r_call_hint);
+    static String get_shader_type(const String& p_code);
+    Error compile(
+        const String& p_code,
+        const Map<StringName, FunctionInfo>& p_functions,
+        const Vector<StringName>& p_render_modes,
+        const Set<String>& p_shader_types
+    );
+    Error complete(
+        const String& p_code,
+        const Map<StringName, FunctionInfo>& p_functions,
+        const Vector<StringName>& p_render_modes,
+        const Set<String>& p_shader_types,
+        List<ScriptCodeCompletionOption>* r_options,
+        String& r_call_hint
+    );
 
     String get_error_text();
     int get_error_line();
 
-    ShaderNode *get_shader();
+    ShaderNode* get_shader();
 
-    String token_debug(const String &p_code);
+    String token_debug(const String& p_code);
 
     ShaderLanguage();
     ~ShaderLanguage();

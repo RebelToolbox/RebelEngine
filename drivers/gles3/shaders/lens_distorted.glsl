@@ -54,7 +54,8 @@ void main() {
     coords /= upscale;
 
     // and check our color
-    if (coords.x < -1.0 || coords.y < -1.0 || coords.x > 1.0 || coords.y > 1.0) {
+    if (coords.x < -1.0 || coords.y < -1.0 || coords.x > 1.0
+        || coords.y > 1.0) {
         frag_color = vec4(0.0, 0.0, 0.0, 1.0);
     } else {
         coords = (coords + vec2(1.0)) / vec2(2.0);

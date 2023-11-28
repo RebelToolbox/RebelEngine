@@ -31,11 +31,15 @@
 #include "audio_effect_eq.h"
 #include "servers/audio_server.h"
 
-void AudioEffectEQInstance::process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count) {
+void AudioEffectEQInstance::process(
+    const AudioFrame* p_src_frames,
+    AudioFrame* p_dst_frames,
+    int p_frame_count
+) {
     int band_count = bands[0].size();
-    EQ::BandProcess *proc_l = bands[0].ptrw();
-    EQ::BandProcess *proc_r = bands[1].ptrw();
-    float *bgain = gains.ptrw();
+    EQ::BandProcess* proc_l = bands[0].ptrw();
+    EQ::BandProcess* proc_r = bands[1].ptrw();
+    float* bgain = gains.ptrw();
     for (int i = 0; i < band_count; i++) {
         bgain[i] = Math::db2linear(base->gain[i]);
     }
@@ -84,12 +88,13 @@ float AudioEffectEQ::get_band_gain_db(int p_band) const {
 
     return gain[p_band];
 }
+
 int AudioEffectEQ::get_band_count() const {
     return gain.size();
 }
 
-bool AudioEffectEQ::_set(const StringName &p_name, const Variant &p_value) {
-    const Map<StringName, int>::Element *E = prop_band_map.find(p_name);
+bool AudioEffectEQ::_set(const StringName& p_name, const Variant& p_value) {
+    const Map<StringName, int>::Element* E = prop_band_map.find(p_name);
     if (E) {
         set_band_gain_db(E->get(), p_value);
         return true;
@@ -98,8 +103,8 @@ bool AudioEffectEQ::_set(const StringName &p_name, const Variant &p_value) {
     return false;
 }
 
-bool AudioEffectEQ::_get(const StringName &p_name, Variant &r_ret) const {
-    const Map<StringName, int>::Element *E = prop_band_map.find(p_name);
+bool AudioEffectEQ::_get(const StringName& p_name, Variant& r_ret) const {
+    const Map<StringName, int>::Element* E = prop_band_map.find(p_name);
     if (E) {
         r_ret = get_band_gain_db(E->get());
         return true;
@@ -108,16 +113,30 @@ bool AudioEffectEQ::_get(const StringName &p_name, Variant &r_ret) const {
     return false;
 }
 
-void AudioEffectEQ::_get_property_list(List<PropertyInfo> *p_list) const {
+void AudioEffectEQ::_get_property_list(List<PropertyInfo>* p_list) const {
     for (int i = 0; i < band_names.size(); i++) {
-        p_list->push_back(PropertyInfo(Variant::REAL, band_names[i], PROPERTY_HINT_RANGE, "-60,24,0.1"));
+        p_list->push_back(PropertyInfo(
+            Variant::REAL,
+            band_names[i],
+            PROPERTY_HINT_RANGE,
+            "-60,24,0.1"
+        ));
     }
 }
 
 void AudioEffectEQ::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_band_gain_db", "band_idx", "volume_db"), &AudioEffectEQ::set_band_gain_db);
-    ClassDB::bind_method(D_METHOD("get_band_gain_db", "band_idx"), &AudioEffectEQ::get_band_gain_db);
-    ClassDB::bind_method(D_METHOD("get_band_count"), &AudioEffectEQ::get_band_count);
+    ClassDB::bind_method(
+        D_METHOD("set_band_gain_db", "band_idx", "volume_db"),
+        &AudioEffectEQ::set_band_gain_db
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_band_gain_db", "band_idx"),
+        &AudioEffectEQ::get_band_gain_db
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_band_count"),
+        &AudioEffectEQ::get_band_count
+    );
 }
 
 AudioEffectEQ::AudioEffectEQ(EQ::Preset p_preset) {

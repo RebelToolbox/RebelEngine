@@ -43,12 +43,12 @@
 
 #ifdef DEBUG_OPENGL
 
-#define DEBUG_TEST_ERROR(m_section)                                         \
-    {                                                                       \
-        uint32_t err = glGetError();                                        \
-        if (err) {                                                          \
-            print_line("OpenGL Error #" + itos(err) + " at: " + m_section); \
-        }                                                                   \
+#define DEBUG_TEST_ERROR(m_section)                                            \
+    {                                                                          \
+        uint32_t err = glGetError();                                           \
+        if (err) {                                                             \
+            print_line("OpenGL Error #" + itos(err) + " at: " + m_section);    \
+        }                                                                      \
     }
 #else
 
@@ -56,9 +56,9 @@
 
 #endif
 
-ShaderGLES2 *ShaderGLES2::active = nullptr;
+ShaderGLES2* ShaderGLES2::active = nullptr;
 
-//#define DEBUG_SHADER
+// #define DEBUG_SHADER
 
 #ifdef DEBUG_SHADER
 
@@ -77,7 +77,8 @@ GLint ShaderGLES2::get_uniform_location(int p_index) const {
 }
 
 bool ShaderGLES2::bind() {
-    if (active != this || !version || !(new_conditional_version == conditional_version)) {
+    if (active != this || !version
+        || !(new_conditional_version == conditional_version)) {
         conditional_version = new_conditional_version;
         version = get_current_version();
     } else {
@@ -86,7 +87,8 @@ bool ShaderGLES2::bind() {
 
     ERR_FAIL_COND_V(!version, false);
 
-    if (!version->ok) { //broken, unable to bind (do not throw error, you saw it before already when it failed compilation).
+    if (!version->ok) { // broken, unable to bind (do not throw error, you saw
+                        // it before already when it failed compilation).
         glUseProgram(0);
         return false;
     }
@@ -108,7 +110,10 @@ void ShaderGLES2::unbind() {
     active = nullptr;
 }
 
-static void _display_error_with_code(const String &p_error, const Vector<const char *> &p_code) {
+static void _display_error_with_code(
+    const String& p_error,
+    const Vector<const char*>& p_code
+) {
     int line = 1;
     String total_code;
 
@@ -126,17 +131,18 @@ static void _display_error_with_code(const String &p_error, const Vector<const c
     ERR_PRINT(p_error);
 }
 
-static String _mkid(const String &p_id) {
+static String _mkid(const String& p_id) {
     String id = "m_" + p_id;
-    return id.replace("__", "_dus_"); //doubleunderscore is reserved in glsl
+    return id.replace("__", "_dus_"); // doubleunderscore is reserved in glsl
 }
 
-ShaderGLES2::Version *ShaderGLES2::get_current_version() {
-    Version *_v = version_map.getptr(conditional_version);
+ShaderGLES2::Version* ShaderGLES2::get_current_version() {
+    Version* _v = version_map.getptr(conditional_version);
 
     if (_v) {
         if (conditional_version.code_version != 0) {
-            CustomCode *cc = custom_code_map.getptr(conditional_version.code_version);
+            CustomCode* cc =
+                custom_code_map.getptr(conditional_version.code_version);
             ERR_FAIL_COND_V(!cc, _v);
             if (cc->version == _v->code_version) {
                 return _v;
@@ -150,7 +156,7 @@ ShaderGLES2::Version *ShaderGLES2::get_current_version() {
         version_map[conditional_version] = Version();
     }
 
-    Version &v = version_map[conditional_version];
+    Version& v = version_map[conditional_version];
 
     if (!_v) {
         v.uniform_location = memnew_arr(GLint, uniform_count);
@@ -165,22 +171,26 @@ ShaderGLES2::Version *ShaderGLES2::get_current_version() {
 
     v.ok = false;
 
-    Vector<const char *> strings;
+    Vector<const char*> strings;
 
 #ifdef GLES_OVER_GL
     strings.push_back("#version 120\n");
     strings.push_back("#define USE_GLES_OVER_GL\n");
 #else
     strings.push_back("#version 100\n");
-//angle does not like
+// angle does not like
 #ifdef JAVASCRIPT_ENABLED
     strings.push_back("#define USE_HIGHP_PRECISION\n");
 #endif
 
     if (GLOBAL_GET("rendering/gles2/compatibility/enable_high_float.Android")) {
-        // enable USE_HIGHP_PRECISION but safeguarded by an availability check as highp support is optional in GLES2
-        // see Section 4.5.4 of the GLSL_ES_Specification_1.00
-        strings.push_back("#ifdef GL_FRAGMENT_PRECISION_HIGH\n  #define USE_HIGHP_PRECISION\n#endif\n");
+        // enable USE_HIGHP_PRECISION but safeguarded by an availability check
+        // as highp support is optional in GLES2 see Section 4.5.4 of the
+        // GLSL_ES_Specification_1.00
+        strings.push_back(
+            "#ifdef GL_FRAGMENT_PRECISION_HIGH\n  #define "
+            "USE_HIGHP_PRECISION\n#endif\n"
+        );
     }
 
 #endif
@@ -208,7 +218,7 @@ ShaderGLES2::Version *ShaderGLES2::get_current_version() {
     CharString code_string2;
     CharString code_globals;
 
-    CustomCode *cc = nullptr;
+    CustomCode* cc = nullptr;
 
     if (conditional_version.code_version > 0) {
         cc = custom_code_map.getptr(conditional_version.code_version);
@@ -225,7 +235,10 @@ ShaderGLES2::Version *ShaderGLES2::get_current_version() {
     if (cc) {
         for (int i = 0; i < cc->custom_defines.size(); i++) {
             strings.push_back(cc->custom_defines.write[i]);
-            DEBUG_PRINT("CD #" + itos(i) + ": " + String(cc->custom_defines[i].get_data()));
+            DEBUG_PRINT(
+                "CD #" + itos(i) + ": "
+                + String(cc->custom_defines[i].get_data())
+            );
         }
     }
 
@@ -277,11 +290,12 @@ ShaderGLES2::Version *ShaderGLES2::get_current_version() {
                 iloglen = 4096; // buggy driver (Adreno 220+)
             }
 
-            char *ilogmem = (char *)Memory::alloc_static(iloglen + 1);
+            char* ilogmem = (char*)Memory::alloc_static(iloglen + 1);
             ilogmem[iloglen] = '\0';
             glGetShaderInfoLog(v.vert_id, iloglen, &iloglen, ilogmem);
 
-            String err_string = get_shader_name() + ": Vertex shader compilation failed:\n";
+            String err_string =
+                get_shader_name() + ": Vertex shader compilation failed:\n";
 
             err_string += ilogmem;
 
@@ -346,17 +360,19 @@ ShaderGLES2::Version *ShaderGLES2::get_current_version() {
             glDeleteProgram(v.id);
             v.id = 0;
 
-            ERR_PRINT("No OpenGL fragment shader compiler log. What the frick?");
+            ERR_PRINT("No OpenGL fragment shader compiler log. What the frick?"
+            );
         } else {
             if (iloglen == 0) {
                 iloglen = 4096; // buggy driver (Adreno 220+)
             }
 
-            char *ilogmem = (char *)Memory::alloc_static(iloglen + 1);
+            char* ilogmem = (char*)Memory::alloc_static(iloglen + 1);
             ilogmem[iloglen] = '\0';
             glGetShaderInfoLog(v.frag_id, iloglen, &iloglen, ilogmem);
 
-            String err_string = get_shader_name() + ": Fragment shader compilation failed:\n";
+            String err_string =
+                get_shader_name() + ": Fragment shader compilation failed:\n";
 
             err_string += ilogmem;
 
@@ -375,11 +391,15 @@ ShaderGLES2::Version *ShaderGLES2::get_current_version() {
     glAttachShader(v.id, v.frag_id);
     glAttachShader(v.id, v.vert_id);
 
-    // bind the attribute locations. This has to be done before linking so that the
-    // linker doesn't assign some random indices
+    // bind the attribute locations. This has to be done before linking so that
+    // the linker doesn't assign some random indices
 
     for (int i = 0; i < attribute_pair_count; i++) {
-        glBindAttribLocation(v.id, attribute_pairs[i].index, attribute_pairs[i].name);
+        glBindAttribLocation(
+            v.id,
+            attribute_pairs[i].index,
+            attribute_pairs[i].name
+        );
     }
 
     glLinkProgram(v.id);
@@ -403,7 +423,7 @@ ShaderGLES2::Version *ShaderGLES2::get_current_version() {
             iloglen = 4096; // buggy driver (Adreno 220+)
         }
 
-        char *ilogmem = (char *)Memory::alloc_static(iloglen + 1);
+        char* ilogmem = (char*)Memory::alloc_static(iloglen + 1);
         ilogmem[iloglen] = '\0';
         glGetProgramInfoLog(v.id, iloglen, &iloglen, ilogmem);
 
@@ -445,14 +465,20 @@ ShaderGLES2::Version *ShaderGLES2::get_current_version() {
         // uniforms
         for (int i = 0; i < cc->custom_uniforms.size(); i++) {
             String native_uniform_name = _mkid(cc->custom_uniforms[i]);
-            GLint location = glGetUniformLocation(v.id, (native_uniform_name).ascii().get_data());
+            GLint location = glGetUniformLocation(
+                v.id,
+                (native_uniform_name).ascii().get_data()
+            );
             v.custom_uniform_locations[cc->custom_uniforms[i]] = location;
         }
 
         // textures
         for (int i = 0; i < cc->texture_uniforms.size(); i++) {
             String native_uniform_name = _mkid(cc->texture_uniforms[i]);
-            GLint location = glGetUniformLocation(v.id, (native_uniform_name).ascii().get_data());
+            GLint location = glGetUniformLocation(
+                v.id,
+                (native_uniform_name).ascii().get_data()
+            );
             v.custom_uniform_locations[cc->texture_uniforms[i]] = location;
             glUniform1i(location, i);
         }
@@ -468,24 +494,25 @@ ShaderGLES2::Version *ShaderGLES2::get_current_version() {
     return &v;
 }
 
-GLint ShaderGLES2::get_uniform_location(const String &p_name) const {
+GLint ShaderGLES2::get_uniform_location(const String& p_name) const {
     ERR_FAIL_COND_V(!version, -1);
     return glGetUniformLocation(version->id, p_name.ascii().get_data());
 }
 
 void ShaderGLES2::setup(
-        const char **p_conditional_defines,
-        int p_conditional_count,
-        const char **p_uniform_names,
-        int p_uniform_count,
-        const AttributePair *p_attribute_pairs,
-        int p_attribute_count,
-        const TexUnitPair *p_texunit_pairs,
-        int p_texunit_pair_count,
-        const char *p_vertex_code,
-        const char *p_fragment_code,
-        int p_vertex_code_start,
-        int p_fragment_code_start) {
+    const char** p_conditional_defines,
+    int p_conditional_count,
+    const char** p_uniform_names,
+    int p_uniform_count,
+    const AttributePair* p_attribute_pairs,
+    int p_attribute_count,
+    const TexUnitPair* p_texunit_pairs,
+    int p_texunit_pair_count,
+    const char* p_vertex_code,
+    const char* p_fragment_code,
+    int p_vertex_code_start,
+    int p_fragment_code_start
+) {
     ERR_FAIL_COND(version);
 
     memset(conditional_version.key, 0, sizeof(conditional_version.key));
@@ -520,7 +547,9 @@ void ShaderGLES2::setup(
                 vertex_code1 = code.ascii();
             } else {
                 vertex_code1 = code.substr(0, cpos).ascii();
-                vertex_code2 = code.substr(cpos + code_tag.length(), code.length()).ascii();
+                vertex_code2 =
+                    code.substr(cpos + code_tag.length(), code.length())
+                        .ascii();
             }
         }
     }
@@ -543,7 +572,8 @@ void ShaderGLES2::setup(
 
             if (cpos != -1) {
                 fragment_code1 = code.substr(0, cpos).ascii();
-                code2 = code.substr(cpos + light_code_tag.length(), code.length());
+                code2 =
+                    code.substr(cpos + light_code_tag.length(), code.length());
             } else {
                 code2 = code;
             }
@@ -553,7 +583,9 @@ void ShaderGLES2::setup(
                 fragment_code2 = code2.ascii();
             } else {
                 fragment_code2 = code2.substr(0, cpos).ascii();
-                fragment_code3 = code2.substr(cpos + code_tag.length(), code2.length()).ascii();
+                fragment_code3 =
+                    code2.substr(cpos + code_tag.length(), code2.length())
+                        .ascii();
             }
         }
     }
@@ -562,10 +594,10 @@ void ShaderGLES2::setup(
 }
 
 void ShaderGLES2::finish() {
-    const VersionKey *V = nullptr;
+    const VersionKey* V = nullptr;
 
     while ((V = version_map.next(V))) {
-        Version &v = version_map[*V];
+        Version& v = version_map[*V];
         glDeleteShader(v.vert_id);
         glDeleteShader(v.frag_id);
         glDeleteProgram(v.id);
@@ -574,10 +606,10 @@ void ShaderGLES2::finish() {
 }
 
 void ShaderGLES2::clear_caches() {
-    const VersionKey *V = nullptr;
+    const VersionKey* V = nullptr;
 
     while ((V = version_map.next(V))) {
-        Version &v = version_map[*V];
+        Version& v = version_map[*V];
         glDeleteShader(v.vert_id);
         glDeleteShader(v.frag_id);
         glDeleteProgram(v.id);
@@ -598,16 +630,18 @@ uint32_t ShaderGLES2::create_custom_shader() {
     return last_custom_code++;
 }
 
-void ShaderGLES2::set_custom_shader_code(uint32_t p_code_id,
-        const String &p_vertex,
-        const String &p_vertex_globals,
-        const String &p_fragment,
-        const String &p_light,
-        const String &p_fragment_globals,
-        const Vector<StringName> &p_uniforms,
-        const Vector<StringName> &p_texture_uniforms,
-        const Vector<CharString> &p_custom_defines) {
-    CustomCode *cc = custom_code_map.getptr(p_code_id);
+void ShaderGLES2::set_custom_shader_code(
+    uint32_t p_code_id,
+    const String& p_vertex,
+    const String& p_vertex_globals,
+    const String& p_fragment,
+    const String& p_light,
+    const String& p_fragment_globals,
+    const Vector<StringName>& p_uniforms,
+    const Vector<StringName>& p_texture_uniforms,
+    const Vector<CharString>& p_custom_defines
+) {
+    CustomCode* cc = custom_code_map.getptr(p_code_id);
     ERR_FAIL_COND(!cc);
 
     cc->vertex = p_vertex;
@@ -628,16 +662,20 @@ void ShaderGLES2::set_custom_shader(uint32_t p_code_id) {
 void ShaderGLES2::free_custom_shader(uint32_t p_code_id) {
     ERR_FAIL_COND(!custom_code_map.has(p_code_id));
     if (conditional_version.code_version == p_code_id) {
-        conditional_version.code_version = 0; //do not keep using a version that is going away
+        conditional_version.code_version =
+            0; // do not keep using a version that is going away
         unbind();
     }
 
     VersionKey key;
     key.code_version = p_code_id;
-    for (Set<uint64_t>::Element *E = custom_code_map[p_code_id].versions.front(); E; E = E->next()) {
+    for (Set<uint64_t>::Element* E =
+             custom_code_map[p_code_id].versions.front();
+         E;
+         E = E->next()) {
         key.version = E->get();
         ERR_CONTINUE(!version_map.has(key));
-        Version &v = version_map[key];
+        Version& v = version_map[key];
 
         glDeleteShader(v.vert_id);
         glDeleteShader(v.frag_id);
@@ -651,8 +689,9 @@ void ShaderGLES2::free_custom_shader(uint32_t p_code_id) {
     custom_code_map.erase(p_code_id);
 }
 
-void ShaderGLES2::use_material(void *p_material) {
-    RasterizerStorageGLES2::Material *material = (RasterizerStorageGLES2::Material *)p_material;
+void ShaderGLES2::use_material(void* p_material) {
+    RasterizerStorageGLES2::Material* material =
+        (RasterizerStorageGLES2::Material*)p_material;
 
     if (!material) {
         return;
@@ -662,22 +701,26 @@ void ShaderGLES2::use_material(void *p_material) {
         return;
     }
 
-    Version *v = version_map.getptr(conditional_version);
+    Version* v = version_map.getptr(conditional_version);
 
     // bind uniforms
-    for (Map<StringName, ShaderLanguage::ShaderNode::Uniform>::Element *E = material->shader->uniforms.front(); E; E = E->next()) {
+    for (Map<StringName, ShaderLanguage::ShaderNode::Uniform>::Element* E =
+             material->shader->uniforms.front();
+         E;
+         E = E->next()) {
         if (E->get().texture_order >= 0) {
             continue; // this is a texture, doesn't go here
         }
 
-        Map<StringName, GLint>::Element *L = v->custom_uniform_locations.find(E->key());
+        Map<StringName, GLint>::Element* L =
+            v->custom_uniform_locations.find(E->key());
         if (!L || L->get() < 0) {
-            continue; //uniform not valid
+            continue; // uniform not valid
         }
 
         GLuint location = L->get();
 
-        Map<StringName, Variant>::Element *V = material->params.find(E->key());
+        Map<StringName, Variant>::Element* V = material->params.find(E->key());
 
         if (V) {
             switch (E->get().type) {
@@ -688,18 +731,33 @@ void ShaderGLES2::use_material(void *p_material) {
 
                 case ShaderLanguage::TYPE_BVEC2: {
                     int flags = V->get();
-                    glUniform2i(location, (flags & 1) ? 1 : 0, (flags & 2) ? 1 : 0);
+                    glUniform2i(
+                        location,
+                        (flags & 1) ? 1 : 0,
+                        (flags & 2) ? 1 : 0
+                    );
                 } break;
 
                 case ShaderLanguage::TYPE_BVEC3: {
                     int flags = V->get();
-                    glUniform3i(location, (flags & 1) ? 1 : 0, (flags & 2) ? 1 : 0, (flags & 4) ? 1 : 0);
+                    glUniform3i(
+                        location,
+                        (flags & 1) ? 1 : 0,
+                        (flags & 2) ? 1 : 0,
+                        (flags & 4) ? 1 : 0
+                    );
 
                 } break;
 
                 case ShaderLanguage::TYPE_BVEC4: {
                     int flags = V->get();
-                    glUniform4i(location, (flags & 1) ? 1 : 0, (flags & 2) ? 1 : 0, (flags & 4) ? 1 : 0, (flags & 8) ? 1 : 0);
+                    glUniform4i(
+                        location,
+                        (flags & 1) ? 1 : 0,
+                        (flags & 2) ? 1 : 0,
+                        (flags & 4) ? 1 : 0,
+                        (flags & 8) ? 1 : 0
+                    );
 
                 } break;
 
@@ -746,7 +804,13 @@ void ShaderGLES2::use_material(void *p_material) {
                         for (int i = 0; i < count; i++) {
                             values[i] = r[i];
                         }
-                        glUniform4i(location, values[0], values[1], values[2], values[3]);
+                        glUniform4i(
+                            location,
+                            values[0],
+                            values[1],
+                            values[2],
+                            values[3]
+                        );
                     }
 
                 } break;
@@ -770,13 +834,31 @@ void ShaderGLES2::use_material(void *p_material) {
                 case ShaderLanguage::TYPE_VEC4: {
                     if (V->get().get_type() == Variant::COLOR) {
                         Color value = V->get();
-                        glUniform4f(location, value.r, value.g, value.b, value.a);
+                        glUniform4f(
+                            location,
+                            value.r,
+                            value.g,
+                            value.b,
+                            value.a
+                        );
                     } else if (V->get().get_type() == Variant::QUAT) {
                         Quat value = V->get();
-                        glUniform4f(location, value.x, value.y, value.z, value.w);
+                        glUniform4f(
+                            location,
+                            value.x,
+                            value.y,
+                            value.z,
+                            value.w
+                        );
                     } else {
                         Plane value = V->get();
-                        glUniform4f(location, value.normal.x, value.normal.y, value.normal.z, value.d);
+                        glUniform4f(
+                            location,
+                            value.normal.x,
+                            value.normal.y,
+                            value.normal.z,
+                            value.d
+                        );
                     }
 
                 } break;
@@ -816,44 +898,44 @@ void ShaderGLES2::use_material(void *p_material) {
                 case ShaderLanguage::TYPE_MAT4: {
                     if (V->get().get_type() == Variant::TRANSFORM) {
                         Transform tr = V->get();
-                        GLfloat matrix[16] = { /* build a 16x16 matrix */
-                            tr.basis.elements[0][0],
-                            tr.basis.elements[1][0],
-                            tr.basis.elements[2][0],
-                            0,
-                            tr.basis.elements[0][1],
-                            tr.basis.elements[1][1],
-                            tr.basis.elements[2][1],
-                            0,
-                            tr.basis.elements[0][2],
-                            tr.basis.elements[1][2],
-                            tr.basis.elements[2][2],
-                            0,
-                            tr.origin.x,
-                            tr.origin.y,
-                            tr.origin.z,
-                            1
+                        GLfloat matrix[16] = {/* build a 16x16 matrix */
+                                              tr.basis.elements[0][0],
+                                              tr.basis.elements[1][0],
+                                              tr.basis.elements[2][0],
+                                              0,
+                                              tr.basis.elements[0][1],
+                                              tr.basis.elements[1][1],
+                                              tr.basis.elements[2][1],
+                                              0,
+                                              tr.basis.elements[0][2],
+                                              tr.basis.elements[1][2],
+                                              tr.basis.elements[2][2],
+                                              0,
+                                              tr.origin.x,
+                                              tr.origin.y,
+                                              tr.origin.z,
+                                              1
                         };
                         glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
                     } else {
                         Transform2D tr = V->get();
-                        GLfloat matrix[16] = { /* build a 16x16 matrix */
-                            tr.elements[0][0],
-                            tr.elements[0][1],
-                            0,
-                            0,
-                            tr.elements[1][0],
-                            tr.elements[1][1],
-                            0,
-                            0,
-                            0,
-                            0,
-                            1,
-                            0,
-                            tr.elements[2][0],
-                            tr.elements[2][1],
-                            0,
-                            1
+                        GLfloat matrix[16] = {/* build a 16x16 matrix */
+                                              tr.elements[0][0],
+                                              tr.elements[0][1],
+                                              0,
+                                              0,
+                                              tr.elements[1][0],
+                                              tr.elements[1][1],
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+                                              1,
+                                              0,
+                                              tr.elements[2][0],
+                                              tr.elements[2][1],
+                                              0,
+                                              1
                         };
                         glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
                     }
@@ -865,7 +947,8 @@ void ShaderGLES2::use_material(void *p_material) {
                 } break;
             }
         } else if (E->get().default_value.size()) {
-            const Vector<ShaderLanguage::ConstantNode::Value> &values = E->get().default_value;
+            const Vector<ShaderLanguage::ConstantNode::Value>& values =
+                E->get().default_value;
             switch (E->get().type) {
                 case ShaderLanguage::TYPE_BOOL: {
                     glUniform1i(location, values[0].boolean);
@@ -876,11 +959,22 @@ void ShaderGLES2::use_material(void *p_material) {
                 } break;
 
                 case ShaderLanguage::TYPE_BVEC3: {
-                    glUniform3i(location, values[0].boolean, values[1].boolean, values[2].boolean);
+                    glUniform3i(
+                        location,
+                        values[0].boolean,
+                        values[1].boolean,
+                        values[2].boolean
+                    );
                 } break;
 
                 case ShaderLanguage::TYPE_BVEC4: {
-                    glUniform4i(location, values[0].boolean, values[1].boolean, values[2].boolean, values[3].boolean);
+                    glUniform4i(
+                        location,
+                        values[0].boolean,
+                        values[1].boolean,
+                        values[2].boolean,
+                        values[3].boolean
+                    );
                 } break;
 
                 case ShaderLanguage::TYPE_INT: {
@@ -892,11 +986,22 @@ void ShaderGLES2::use_material(void *p_material) {
                 } break;
 
                 case ShaderLanguage::TYPE_IVEC3: {
-                    glUniform3i(location, values[0].sint, values[1].sint, values[2].sint);
+                    glUniform3i(
+                        location,
+                        values[0].sint,
+                        values[1].sint,
+                        values[2].sint
+                    );
                 } break;
 
                 case ShaderLanguage::TYPE_IVEC4: {
-                    glUniform4i(location, values[0].sint, values[1].sint, values[2].sint, values[3].sint);
+                    glUniform4i(
+                        location,
+                        values[0].sint,
+                        values[1].sint,
+                        values[2].sint,
+                        values[3].sint
+                    );
                 } break;
 
                 case ShaderLanguage::TYPE_UINT: {
@@ -908,11 +1013,22 @@ void ShaderGLES2::use_material(void *p_material) {
                 } break;
 
                 case ShaderLanguage::TYPE_UVEC3: {
-                    glUniform3i(location, values[0].uint, values[1].uint, values[2].uint);
+                    glUniform3i(
+                        location,
+                        values[0].uint,
+                        values[1].uint,
+                        values[2].uint
+                    );
                 } break;
 
                 case ShaderLanguage::TYPE_UVEC4: {
-                    glUniform4i(location, values[0].uint, values[1].uint, values[2].uint, values[3].uint);
+                    glUniform4i(
+                        location,
+                        values[0].uint,
+                        values[1].uint,
+                        values[2].uint,
+                        values[3].uint
+                    );
                 } break;
 
                 case ShaderLanguage::TYPE_FLOAT: {
@@ -924,11 +1040,22 @@ void ShaderGLES2::use_material(void *p_material) {
                 } break;
 
                 case ShaderLanguage::TYPE_VEC3: {
-                    glUniform3f(location, values[0].real, values[1].real, values[2].real);
+                    glUniform3f(
+                        location,
+                        values[0].real,
+                        values[1].real,
+                        values[2].real
+                    );
                 } break;
 
                 case ShaderLanguage::TYPE_VEC4: {
-                    glUniform4f(location, values[0].real, values[1].real, values[2].real, values[3].real);
+                    glUniform4f(
+                        location,
+                        values[0].real,
+                        values[1].real,
+                        values[2].real,
+                        values[3].real
+                    );
                 } break;
 
                 case ShaderLanguage::TYPE_MAT2: {
@@ -994,7 +1121,7 @@ void ShaderGLES2::use_material(void *p_material) {
                     ERR_PRINT("ShaderNode type missing, bug?");
                 } break;
             }
-        } else { //zero
+        } else { // zero
 
             switch (E->get().type) {
                 case ShaderLanguage::TYPE_BOOL: {
@@ -1010,7 +1137,13 @@ void ShaderGLES2::use_material(void *p_material) {
                 } break;
 
                 case ShaderLanguage::TYPE_BVEC4: {
-                    glUniform4i(location, GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+                    glUniform4i(
+                        location,
+                        GL_FALSE,
+                        GL_FALSE,
+                        GL_FALSE,
+                        GL_FALSE
+                    );
                 } break;
 
                 case ShaderLanguage::TYPE_INT: {
@@ -1062,20 +1195,21 @@ void ShaderGLES2::use_material(void *p_material) {
                 } break;
 
                 case ShaderLanguage::TYPE_MAT2: {
-                    GLfloat mat[4] = { 0, 0, 0, 0 };
+                    GLfloat mat[4] = {0, 0, 0, 0};
 
                     glUniformMatrix2fv(location, 1, GL_FALSE, mat);
                 } break;
 
                 case ShaderLanguage::TYPE_MAT3: {
-                    GLfloat mat[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    GLfloat mat[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
                     glUniformMatrix3fv(location, 1, GL_FALSE, mat);
 
                 } break;
 
                 case ShaderLanguage::TYPE_MAT4: {
-                    GLfloat mat[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    GLfloat mat[16] =
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
                     glUniformMatrix4fv(location, 1, GL_FALSE, mat);
 

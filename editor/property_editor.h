@@ -58,8 +58,8 @@ protected:
 
 public:
     virtual String converts_to() const;
-    virtual bool handles(const Ref<Resource> &p_resource) const;
-    virtual Ref<Resource> convert(const Ref<Resource> &p_resource) const;
+    virtual bool handles(const Ref<Resource>& p_resource) const;
+    virtual Ref<Resource> convert(const Ref<Resource>& p_resource) const;
 };
 
 class CustomPropertyEditor : public Popup {
@@ -90,42 +90,42 @@ class CustomPropertyEditor : public Popup {
         EASING_OUT_IN
     };
 
-    PopupMenu *menu;
-    SceneTreeDialog *scene_tree;
-    EditorFileDialog *file;
-    ConfirmationDialog *error;
+    PopupMenu* menu;
+    SceneTreeDialog* scene_tree;
+    EditorFileDialog* file;
+    ConfirmationDialog* error;
     String name;
     Variant::Type type;
     Variant v;
     List<String> field_names;
     int hint;
     String hint_text;
-    LineEdit *value_editor[MAX_VALUE_EDITORS];
+    LineEdit* value_editor[MAX_VALUE_EDITORS];
     int focused_value_editor;
-    Label *value_label[MAX_VALUE_EDITORS];
-    HScrollBar *scroll[4];
-    Button *action_buttons[MAX_ACTION_BUTTONS];
-    MenuButton *type_button;
+    Label* value_label[MAX_VALUE_EDITORS];
+    HScrollBar* scroll[4];
+    Button* action_buttons[MAX_ACTION_BUTTONS];
+    MenuButton* type_button;
     Vector<String> inheritors_array;
-    TextureRect *texture_preview;
-    ColorPicker *color_picker;
-    TextEdit *text_edit;
+    TextureRect* texture_preview;
+    ColorPicker* color_picker;
+    TextEdit* text_edit;
     bool read_only;
     bool picking_viewport;
-    GridContainer *checks20gc;
-    CheckBox *checks20[20];
-    SpinBox *spinbox;
-    HSlider *slider;
+    GridContainer* checks20gc;
+    CheckBox* checks20[20];
+    SpinBox* spinbox;
+    HSlider* slider;
 
-    Control *easing_draw;
-    CreateDialog *create_dialog;
-    PropertySelector *property_select;
+    Control* easing_draw;
+    CreateDialog* create_dialog;
+    PropertySelector* property_select;
 
-    Object *owner;
+    Object* owner;
 
     bool updating;
 
-    PropertyValueEvaluator *evaluator;
+    PropertyValueEvaluator* evaluator;
 
     void _text_edit_changed();
     void _file_selected(String p_file);
@@ -139,18 +139,23 @@ class CustomPropertyEditor : public Popup {
     void _action_pressed(int p_which);
     void _type_create_selected(int p_idx);
     void _create_dialog_callback();
-    void _create_selected_property(const String &p_prop);
+    void _create_selected_property(const String& p_prop);
 
-    void _color_changed(const Color &p_color);
+    void _color_changed(const Color& p_color);
     void _draw_easing();
     void _menu_option(int p_which);
 
-    void _drag_easing(const Ref<InputEvent> &p_ev);
+    void _drag_easing(const Ref<InputEvent>& p_ev);
 
     void _node_path_selected(NodePath p_path);
     void show_value_editors(int p_amount);
-    void config_value_editors(int p_amount, int p_columns, int p_label_w, const List<String> &p_strings);
-    void config_action_buttons(const List<String> &p_strings);
+    void config_value_editors(
+        int p_amount,
+        int p_columns,
+        int p_label_w,
+        const List<String>& p_strings
+    );
+    void config_action_buttons(const List<String>& p_strings);
 
     void _emit_changed_whole_or_field();
 
@@ -164,9 +169,18 @@ public:
     Variant get_variant() const;
     String get_name() const;
 
-    void set_read_only(bool p_read_only) { read_only = p_read_only; }
+    void set_read_only(bool p_read_only) {
+        read_only = p_read_only;
+    }
 
-    bool edit(Object *p_owner, const String &p_name, Variant::Type p_type, const Variant &p_variant, int p_hint, String p_hint_text);
+    bool edit(
+        Object* p_owner,
+        const String& p_name,
+        Variant::Type p_type,
+        const Variant& p_variant,
+        int p_hint,
+        String p_hint_text
+    );
 
     CustomPropertyEditor();
 };

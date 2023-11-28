@@ -37,12 +37,21 @@
 
 #include "../mono_gd/gd_mono_header.h"
 
-namespace GodotSharpExport {
+namespace GodotSharpExport
+{
 
-Error get_assembly_dependencies(GDMonoAssembly *p_assembly, const Vector<String> &p_search_dirs, Dictionary &r_dependencies);
+Error get_assembly_dependencies(
+    GDMonoAssembly* p_assembly,
+    const Vector<String>& p_search_dirs,
+    Dictionary& r_dependencies
+);
 
-Error get_exported_assembly_dependencies(const Dictionary &p_initial_assemblies,
-        const String &p_build_config, const String &p_custom_lib_dir, Dictionary &r_assembly_dependencies);
+Error get_exported_assembly_dependencies(
+    const Dictionary& p_initial_assemblies,
+    const String& p_build_config,
+    const String& p_custom_lib_dir,
+    Dictionary& r_assembly_dependencies
+);
 
 } // namespace GodotSharpExport
 

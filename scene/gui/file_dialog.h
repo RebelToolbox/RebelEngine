@@ -57,8 +57,8 @@ public:
         MODE_SAVE_FILE
     };
 
-    typedef Ref<Texture> (*GetIconFunc)(const String &);
-    typedef void (*RegisterFunc)(FileDialog *);
+    typedef Ref<Texture> (*GetIconFunc)(const String&);
+    typedef void (*RegisterFunc)(FileDialog*);
 
     static GetIconFunc get_icon_func;
     static GetIconFunc get_large_icon_func;
@@ -66,31 +66,31 @@ public:
     static RegisterFunc unregister_func;
 
 private:
-    ConfirmationDialog *makedialog;
-    LineEdit *makedirname;
+    ConfirmationDialog* makedialog;
+    LineEdit* makedirname;
 
-    Button *makedir;
+    Button* makedir;
     Access access;
-    //Button *action;
-    VBoxContainer *vbox;
+    // Button *action;
+    VBoxContainer* vbox;
     Mode mode;
-    LineEdit *dir;
-    HBoxContainer *drives_container;
-    HBoxContainer *shortcuts_container;
-    OptionButton *drives;
-    Tree *tree;
-    HBoxContainer *file_box;
-    LineEdit *file;
-    OptionButton *filter;
-    AcceptDialog *mkdirerr;
-    AcceptDialog *exterr;
-    DirAccess *dir_access;
-    ConfirmationDialog *confirm_save;
+    LineEdit* dir;
+    HBoxContainer* drives_container;
+    HBoxContainer* shortcuts_container;
+    OptionButton* drives;
+    Tree* tree;
+    HBoxContainer* file_box;
+    LineEdit* file;
+    OptionButton* filter;
+    AcceptDialog* mkdirerr;
+    AcceptDialog* exterr;
+    DirAccess* dir_access;
+    ConfirmationDialog* confirm_save;
 
-    ToolButton *dir_up;
+    ToolButton* dir_up;
 
-    ToolButton *refresh;
-    ToolButton *show_hidden;
+    ToolButton* refresh;
+    ToolButton* show_hidden;
 
     Vector<String> filters;
 
@@ -106,13 +106,13 @@ private:
     void update_file_list();
     void update_filters();
 
-    void _tree_multi_selected(Object *p_object, int p_cell, bool p_selected);
+    void _tree_multi_selected(Object* p_object, int p_cell, bool p_selected);
     void _tree_selected();
 
     void _select_drive(int p_idx);
     void _tree_item_activated();
     void _dir_entered(String p_dir);
-    void _file_entered(const String &p_file);
+    void _file_entered(const String& p_file);
     void _action_pressed();
     void _save_confirm_pressed();
     void _cancel_pressed();
@@ -123,7 +123,7 @@ private:
 
     void _update_drives();
 
-    void _unhandled_input(const Ref<InputEvent> &p_event);
+    void _unhandled_input(const Ref<InputEvent>& p_event);
 
     bool _is_open_should_be_disabled();
 
@@ -132,11 +132,12 @@ private:
 protected:
     void _notification(int p_what);
     static void _bind_methods();
-    //bind helpers
+    // bind helpers
+
 public:
     void clear_filters();
-    void add_filter(const String &p_filter);
-    void set_filters(const Vector<String> &p_filters);
+    void add_filter(const String& p_filter);
+    void set_filters(const Vector<String>& p_filters);
     Vector<String> get_filters() const;
 
     void set_enable_multiple_selection(bool p_enable);
@@ -145,9 +146,9 @@ public:
     String get_current_dir() const;
     String get_current_file() const;
     String get_current_path() const;
-    void set_current_dir(const String &p_dir);
-    void set_current_file(const String &p_file);
-    void set_current_path(const String &p_path);
+    void set_current_dir(const String& p_dir);
+    void set_current_file(const String& p_file);
+    void set_current_path(const String& p_path);
 
     void set_mode_overrides_title(bool p_override);
     bool is_mode_overriding_title() const;
@@ -155,8 +156,11 @@ public:
     void set_mode(Mode p_mode);
     Mode get_mode() const;
 
-    VBoxContainer *get_vbox();
-    LineEdit *get_line_edit() { return file; }
+    VBoxContainer* get_vbox();
+
+    LineEdit* get_line_edit() {
+        return file;
+    }
 
     void set_access(Access p_access);
     Access get_access() const;
@@ -176,20 +180,28 @@ public:
 
 class LineEditFileChooser : public HBoxContainer {
     GDCLASS(LineEditFileChooser, HBoxContainer);
-    Button *button;
-    LineEdit *line_edit;
-    FileDialog *dialog;
+    Button* button;
+    LineEdit* line_edit;
+    FileDialog* dialog;
 
-    void _chosen(const String &p_text);
+    void _chosen(const String& p_text);
     void _browse();
 
 protected:
     static void _bind_methods();
 
 public:
-    Button *get_button() { return button; }
-    LineEdit *get_line_edit() { return line_edit; }
-    FileDialog *get_file_dialog() { return dialog; }
+    Button* get_button() {
+        return button;
+    }
+
+    LineEdit* get_line_edit() {
+        return line_edit;
+    }
+
+    FileDialog* get_file_dialog() {
+        return dialog;
+    }
 
     LineEditFileChooser();
 };

@@ -65,10 +65,12 @@ private:
     }
 
     void _set_internal_certs(Ref<Crypto> p_crypto) {
-        const String cache_path = EditorSettings::get_singleton()->get_cache_dir();
+        const String cache_path =
+            EditorSettings::get_singleton()->get_cache_dir();
         const String key_path = cache_path.plus_file("html5_server.key");
         const String crt_path = cache_path.plus_file("html5_server.crt");
-        bool regen = !FileAccess::exists(key_path) || !FileAccess::exists(crt_path);
+        bool regen =
+            !FileAccess::exists(key_path) || !FileAccess::exists(crt_path);
         if (!regen) {
             key = Ref<CryptoKey>(CryptoKey::create());
             cert = Ref<X509Certificate>(X509Certificate::create());
@@ -79,7 +81,12 @@ private:
         if (regen) {
             key = p_crypto->generate_rsa(2048);
             key->save(key_path);
-            cert = p_crypto->generate_self_signed_certificate(key, "CN=rebel-debug.local,O=A Game Dev,C=XXA", "20140101000000", "20340101000000");
+            cert = p_crypto->generate_self_signed_certificate(
+                key,
+                "CN=rebel-debug.local,O=A Game Dev,C=XXA",
+                "20140101000000",
+                "20340101000000"
+            );
             cert->save(crt_path);
         }
     }
@@ -102,7 +109,13 @@ public:
         _clear_client();
     }
 
-    Error listen(int p_port, IP_Address p_address, bool p_use_ssl, String p_ssl_key, String p_ssl_cert) {
+    Error listen(
+        int p_port,
+        IP_Address p_address,
+        bool p_use_ssl,
+        String p_ssl_key,
+        String p_ssl_cert
+    ) {
         use_ssl = p_use_ssl;
         if (use_ssl) {
             Ref<Crypto> crypto = Crypto::create();
@@ -128,22 +141,31 @@ public:
     }
 
     void _send_response() {
-        Vector<String> psa = String((char *)req_buf).split("\r\n");
+        Vector<String> psa = String((char*)req_buf).split("\r\n");
         int len = psa.size();
-        ERR_FAIL_COND_MSG(len < 4, "Not enough response headers, got: " + itos(len) + ", expected >= 4.");
+        ERR_FAIL_COND_MSG(
+            len < 4,
+            "Not enough response headers, got: " + itos(len)
+                + ", expected >= 4."
+        );
 
         Vector<String> req = psa[0].split(" ", false);
         ERR_FAIL_COND_MSG(req.size() < 2, "Invalid protocol or status code.");
 
         // Wrong protocol
-        ERR_FAIL_COND_MSG(req[0] != "GET" || req[2] != "HTTP/1.1", "Invalid method or HTTP version.");
+        ERR_FAIL_COND_MSG(
+            req[0] != "GET" || req[2] != "HTTP/1.1",
+            "Invalid method or HTTP version."
+        );
 
         const int query_index = req[1].find_char('?');
-        const String path = (query_index == -1) ? req[1] : req[1].substr(0, query_index);
+        const String path =
+            (query_index == -1) ? req[1] : req[1].substr(0, query_index);
 
         const String req_file = path.get_file();
         const String req_ext = path.get_extension();
-        const String cache_path = EditorSettings::get_singleton()->get_cache_dir().plus_file("web");
+        const String cache_path =
+            EditorSettings::get_singleton()->get_cache_dir().plus_file("web");
         const String filepath = cache_path.plus_file(req_file);
 
         if (!mimes.has(req_ext) || !FileAccess::exists(filepath)) {
@@ -151,12 +173,12 @@ public:
             s += "Connection: Close\r\n";
             s += "\r\n";
             CharString cs = s.utf8();
-            peer->put_data((const uint8_t *)cs.get_data(), cs.size() - 1);
+            peer->put_data((const uint8_t*)cs.get_data(), cs.size() - 1);
             return;
         }
         const String ctype = mimes[req_ext];
 
-        FileAccess *f = FileAccess::open(filepath, FileAccess::READ);
+        FileAccess* f = FileAccess::open(filepath, FileAccess::READ);
         ERR_FAIL_COND(!f);
         String s = "HTTP/1.1 200 OK\r\n";
         s += "Connection: Close\r\n";
@@ -167,7 +189,8 @@ public:
         s += "Cache-Control: no-store, max-age=0\r\n";
         s += "\r\n";
         CharString cs = s.utf8();
-        Error err = peer->put_data((const uint8_t *)cs.get_data(), cs.size() - 1);
+        Error err =
+            peer->put_data((const uint8_t*)cs.get_data(), cs.size() - 1);
         if (err != OK) {
             memdelete(f);
             ERR_FAIL();
@@ -230,9 +253,10 @@ public:
         }
 
         while (true) {
-            char *r = (char *)req_buf;
+            char* r = (char*)req_buf;
             int l = req_pos - 1;
-            if (l > 3 && r[l] == '\n' && r[l - 1] == '\r' && r[l - 2] == '\n' && r[l - 3] == '\r') {
+            if (l > 3 && r[l] == '\n' && r[l - 1] == '\r' && r[l - 2] == '\n'
+                && r[l - 3] == '\r') {
                 _send_response();
                 _clear_client();
                 return;
@@ -296,9 +320,14 @@ class EditorExportPlatformJavaScript : public EditorExportPlatform {
     Ref<Image> _get_project_icon() const {
         Ref<Image> icon;
         icon.instance();
-        const String icon_path = String(GLOBAL_GET("application/config/icon")).strip_edges();
-        if (icon_path.empty() || ImageLoader::load_image(icon_path, icon) != OK) {
-            return EditorNode::get_singleton()->get_editor_theme()->get_icon("DefaultProjectIcon", "EditorIcons")->get_data();
+        const String icon_path =
+            String(GLOBAL_GET("application/config/icon")).strip_edges();
+        if (icon_path.empty()
+            || ImageLoader::load_image(icon_path, icon) != OK) {
+            return EditorNode::get_singleton()
+                ->get_editor_theme()
+                ->get_icon("DefaultProjectIcon", "EditorIcons")
+                ->get_data();
         }
         return icon;
     }
@@ -306,73 +335,138 @@ class EditorExportPlatformJavaScript : public EditorExportPlatform {
     Ref<Image> _get_project_splash() const {
         Ref<Image> splash;
         splash.instance();
-        const String splash_path = String(GLOBAL_GET("application/boot_splash/image")).strip_edges();
-        if (splash_path.empty() || ImageLoader::load_image(splash_path, splash) != OK) {
+        const String splash_path =
+            String(GLOBAL_GET("application/boot_splash/image")).strip_edges();
+        if (splash_path.empty()
+            || ImageLoader::load_image(splash_path, splash) != OK) {
             return Ref<Image>(memnew(Image(boot_splash_png)));
         }
         return splash;
     }
 
-    Error _extract_template(const String &p_template, const String &p_dir, const String &p_name, bool pwa);
-    void _replace_strings(Map<String, String> p_replaces, Vector<uint8_t> &r_template);
-    void _fix_html(Vector<uint8_t> &p_html, const Ref<EditorExportPreset> &p_preset, const String &p_name, bool p_debug, int p_flags, const Vector<SharedObject> p_shared_objects, const Dictionary &p_file_sizes);
-    Error _add_manifest_icon(const String &p_path, const String &p_icon, int p_size, Array &r_arr);
-    Error _build_pwa(const Ref<EditorExportPreset> &p_preset, const String p_path, const Vector<SharedObject> &p_shared_objects);
-    Error _write_or_error(const uint8_t *p_content, int p_len, String p_path);
+    Error _extract_template(
+        const String& p_template,
+        const String& p_dir,
+        const String& p_name,
+        bool pwa
+    );
+    void _replace_strings(
+        Map<String, String> p_replaces,
+        Vector<uint8_t>& r_template
+    );
+    void _fix_html(
+        Vector<uint8_t>& p_html,
+        const Ref<EditorExportPreset>& p_preset,
+        const String& p_name,
+        bool p_debug,
+        int p_flags,
+        const Vector<SharedObject> p_shared_objects,
+        const Dictionary& p_file_sizes
+    );
+    Error _add_manifest_icon(
+        const String& p_path,
+        const String& p_icon,
+        int p_size,
+        Array& r_arr
+    );
+    Error _build_pwa(
+        const Ref<EditorExportPreset>& p_preset,
+        const String p_path,
+        const Vector<SharedObject>& p_shared_objects
+    );
+    Error _write_or_error(const uint8_t* p_content, int p_len, String p_path);
 
-    static void _server_thread_poll(void *data);
+    static void _server_thread_poll(void* data);
 
 public:
-    virtual void get_preset_features(const Ref<EditorExportPreset> &p_preset, List<String> *r_features);
+    virtual void get_preset_features(
+        const Ref<EditorExportPreset>& p_preset,
+        List<String>* r_features
+    );
 
-    virtual void get_export_options(List<ExportOption> *r_options);
+    virtual void get_export_options(List<ExportOption>* r_options);
 
     virtual String get_name() const;
     virtual String get_os_name() const;
     virtual Ref<Texture> get_logo() const;
 
-    virtual bool can_export(const Ref<EditorExportPreset> &p_preset, String &r_error, bool &r_missing_templates) const;
-    virtual List<String> get_binary_extensions(const Ref<EditorExportPreset> &p_preset) const;
-    virtual Error export_project(const Ref<EditorExportPreset> &p_preset, bool p_debug, const String &p_path, int p_flags = 0);
+    virtual bool can_export(
+        const Ref<EditorExportPreset>& p_preset,
+        String& r_error,
+        bool& r_missing_templates
+    ) const;
+    virtual List<String> get_binary_extensions(
+        const Ref<EditorExportPreset>& p_preset
+    ) const;
+    virtual Error export_project(
+        const Ref<EditorExportPreset>& p_preset,
+        bool p_debug,
+        const String& p_path,
+        int p_flags = 0
+    );
 
     virtual bool poll_export();
     virtual int get_options_count() const;
-    virtual String get_option_label(int p_index) const { return p_index ? TTR("Stop HTTP Server") : TTR("Run in Browser"); }
-    virtual String get_option_tooltip(int p_index) const { return p_index ? TTR("Stop HTTP Server") : TTR("Run exported HTML in the system's default browser."); }
+
+    virtual String get_option_label(int p_index) const {
+        return p_index ? TTR("Stop HTTP Server") : TTR("Run in Browser");
+    }
+
+    virtual String get_option_tooltip(int p_index) const {
+        return p_index
+                 ? TTR("Stop HTTP Server")
+                 : TTR("Run exported HTML in the system's default browser.");
+    }
+
     virtual Ref<ImageTexture> get_option_icon(int p_index) const;
-    virtual Error run(const Ref<EditorExportPreset> &p_preset, int p_option, int p_debug_flags);
+    virtual Error run(
+        const Ref<EditorExportPreset>& p_preset,
+        int p_option,
+        int p_debug_flags
+    );
     virtual Ref<Texture> get_run_icon() const;
 
-    virtual void get_platform_features(List<String> *r_features) {
+    virtual void get_platform_features(List<String>* r_features) {
         r_features->push_back("web");
         r_features->push_back(get_os_name());
     }
 
-    virtual void resolve_platform_feature_priorities(const Ref<EditorExportPreset> &p_preset, Set<String> &p_features) {
-    }
+    virtual void resolve_platform_feature_priorities(
+        const Ref<EditorExportPreset>& p_preset,
+        Set<String>& p_features
+    ) {}
 
     EditorExportPlatformJavaScript();
     ~EditorExportPlatformJavaScript();
 };
 
-Error EditorExportPlatformJavaScript::_extract_template(const String &p_template, const String &p_dir, const String &p_name, bool pwa) {
-    FileAccess *src_f = nullptr;
+Error EditorExportPlatformJavaScript::_extract_template(
+    const String& p_template,
+    const String& p_dir,
+    const String& p_name,
+    bool pwa
+) {
+    FileAccess* src_f = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
     unzFile pkg = unzOpen2(p_template.utf8().get_data(), &io);
 
     if (!pkg) {
-        EditorNode::get_singleton()->show_warning(TTR("Could not open template for export:") + "\n" + p_template);
+        EditorNode::get_singleton()->show_warning(
+            TTR("Could not open template for export:") + "\n" + p_template
+        );
         return ERR_FILE_NOT_FOUND;
     }
 
     if (unzGoToFirstFile(pkg) != UNZ_OK) {
-        EditorNode::get_singleton()->show_warning(TTR("Invalid export template:") + "\n" + p_template);
+        EditorNode::get_singleton()->show_warning(
+            TTR("Invalid export template:") + "\n" + p_template
+        );
         unzClose(pkg);
         return ERR_FILE_CORRUPT;
     }
 
     do {
-        //get filename
+        // get filename
         unz_file_info info;
         char fname[16384];
         unzGetCurrentFileInfo(pkg, &info, fname, 16384, nullptr, 0, nullptr, 0);
@@ -380,22 +474,26 @@ Error EditorExportPlatformJavaScript::_extract_template(const String &p_template
         String file = String::utf8(fname);
 
         // Skip service worker and offline page if not exporting pwa.
-        if (!pwa && (file == "rebel.service.worker.js" || file == "rebel.offline.html")) {
+        if (!pwa
+            && (file == "rebel.service.worker.js"
+                || file == "rebel.offline.html")) {
             continue;
         }
         Vector<uint8_t> data;
         data.resize(info.uncompressed_size);
 
-        //read
+        // read
         unzOpenCurrentFile(pkg);
         unzReadCurrentFile(pkg, data.ptrw(), data.size());
         unzCloseCurrentFile(pkg);
 
-        //write
+        // write
         String dst = p_dir.plus_file(file.replace("rebel", p_name));
-        FileAccess *f = FileAccess::open(dst, FileAccess::WRITE);
+        FileAccess* f = FileAccess::open(dst, FileAccess::WRITE);
         if (!f) {
-            EditorNode::get_singleton()->show_warning(TTR("Could not write file:") + "\n" + dst);
+            EditorNode::get_singleton()->show_warning(
+                TTR("Could not write file:") + "\n" + dst
+            );
             unzClose(pkg);
             return ERR_FILE_CANT_WRITE;
         }
@@ -407,10 +505,16 @@ Error EditorExportPlatformJavaScript::_extract_template(const String &p_template
     return OK;
 }
 
-Error EditorExportPlatformJavaScript::_write_or_error(const uint8_t *p_content, int p_size, String p_path) {
-    FileAccess *f = FileAccess::open(p_path, FileAccess::WRITE);
+Error EditorExportPlatformJavaScript::_write_or_error(
+    const uint8_t* p_content,
+    int p_size,
+    String p_path
+) {
+    FileAccess* f = FileAccess::open(p_path, FileAccess::WRITE);
     if (!f) {
-        EditorNode::get_singleton()->show_warning(TTR("Could not write file:") + "\n" + p_path);
+        EditorNode::get_singleton()->show_warning(
+            TTR("Could not write file:") + "\n" + p_path
+        );
         return ERR_FILE_CANT_WRITE;
     }
     f->store_buffer(p_content, p_size);
@@ -418,13 +522,20 @@ Error EditorExportPlatformJavaScript::_write_or_error(const uint8_t *p_content, 
     return OK;
 }
 
-void EditorExportPlatformJavaScript::_replace_strings(Map<String, String> p_replaces, Vector<uint8_t> &r_template) {
-    String str_template = String::utf8(reinterpret_cast<const char *>(r_template.ptr()), r_template.size());
+void EditorExportPlatformJavaScript::_replace_strings(
+    Map<String, String> p_replaces,
+    Vector<uint8_t>& r_template
+) {
+    String str_template = String::utf8(
+        reinterpret_cast<const char*>(r_template.ptr()),
+        r_template.size()
+    );
     String out;
     Vector<String> lines = str_template.split("\n");
     for (int i = 0; i < lines.size(); i++) {
         String current_line = lines[i];
-        for (Map<String, String>::Element *E = p_replaces.front(); E; E = E->next()) {
+        for (Map<String, String>::Element* E = p_replaces.front(); E;
+             E = E->next()) {
             current_line = current_line.replace(E->key(), E->get());
         }
         out += current_line + "\n";
@@ -436,7 +547,15 @@ void EditorExportPlatformJavaScript::_replace_strings(Map<String, String> p_repl
     }
 }
 
-void EditorExportPlatformJavaScript::_fix_html(Vector<uint8_t> &p_html, const Ref<EditorExportPreset> &p_preset, const String &p_name, bool p_debug, int p_flags, const Vector<SharedObject> p_shared_objects, const Dictionary &p_file_sizes) {
+void EditorExportPlatformJavaScript::_fix_html(
+    Vector<uint8_t>& p_html,
+    const Ref<EditorExportPreset>& p_preset,
+    const String& p_name,
+    bool p_debug,
+    int p_flags,
+    const Vector<SharedObject> p_shared_objects,
+    const Dictionary& p_file_sizes
+) {
     // Engine.js config
     Dictionary config;
     Array libs;
@@ -444,13 +563,17 @@ void EditorExportPlatformJavaScript::_fix_html(Vector<uint8_t> &p_html, const Re
         libs.push_back(p_shared_objects[i].path.get_file());
     }
     Vector<String> flags;
-    gen_export_flags(flags, p_flags & (~DEBUG_FLAG_REMOTE_DEBUG) & (~DEBUG_FLAG_DUMB_CLIENT));
+    gen_export_flags(
+        flags,
+        p_flags & (~DEBUG_FLAG_REMOTE_DEBUG) & (~DEBUG_FLAG_DUMB_CLIENT)
+    );
     Array args;
     for (int i = 0; i < flags.size(); i++) {
         args.push_back(flags[i]);
     }
     config["canvasResizePolicy"] = p_preset->get("html/canvas_resize_policy");
-    config["experimentalVK"] = p_preset->get("html/experimental_virtual_keyboard");
+    config["experimentalVK"] =
+        p_preset->get("html/experimental_virtual_keyboard");
     config["focusCanvas"] = p_preset->get("html/focus_canvas_on_start");
     config["gdnativeLibs"] = libs;
     config["executable"] = p_name;
@@ -459,13 +582,21 @@ void EditorExportPlatformJavaScript::_fix_html(Vector<uint8_t> &p_html, const Re
 
     String head_include;
     if (p_preset->get("html/export_icon")) {
-        head_include += "<link id='-gd-engine-icon' rel='icon' type='image/png' href='" + p_name + ".icon.png' />\n";
-        head_include += "<link rel='apple-touch-icon' href='" + p_name + ".apple-touch-icon.png'/>\n";
+        head_include +=
+            "<link id='-gd-engine-icon' rel='icon' type='image/png' href='"
+            + p_name + ".icon.png' />\n";
+        head_include += "<link rel='apple-touch-icon' href='" + p_name
+                      + ".apple-touch-icon.png'/>\n";
     }
     if (p_preset->get("progressive_web_app/enabled")) {
-        head_include += "<link rel='manifest' href='" + p_name + ".manifest.json'>\n";
-        head_include += "<script type='application/javascript'>window.addEventListener('load', () => {if ('serviceWorker' in navigator) {navigator.serviceWorker.register('" +
-                p_name + ".service.worker.js');}});</script>\n";
+        head_include +=
+            "<link rel='manifest' href='" + p_name + ".manifest.json'>\n";
+        head_include +=
+            "<script "
+            "type='application/javascript'>window.addEventListener('load', () "
+            "=> {if ('serviceWorker' in navigator) "
+            "{navigator.serviceWorker.register('"
+            + p_name + ".service.worker.js');}});</script>\n";
     }
 
     // Replaces HTML string
@@ -473,13 +604,20 @@ void EditorExportPlatformJavaScript::_fix_html(Vector<uint8_t> &p_html, const Re
     const String custom_head_include = p_preset->get("html/head_include");
     Map<String, String> replaces;
     replaces["$GAME_URL"] = p_name + ".js";
-    replaces["$REBEL_PROJECT_NAME"] = ProjectSettings::get_singleton()->get_setting("application/config/name");
+    replaces["$REBEL_PROJECT_NAME"] =
+        ProjectSettings::get_singleton()->get_setting("application/config/name"
+        );
     replaces["$HEAD_INCLUDE"] = head_include + custom_head_include;
     replaces["$GAME_CONFIG"] = str_config;
     _replace_strings(replaces, p_html);
 }
 
-Error EditorExportPlatformJavaScript::_add_manifest_icon(const String &p_path, const String &p_icon, int p_size, Array &r_arr) {
+Error EditorExportPlatformJavaScript::_add_manifest_icon(
+    const String& p_path,
+    const String& p_icon,
+    int p_size,
+    Array& r_arr
+) {
     const String name = p_path.get_file().get_basename();
     const String icon_name = vformat("%s.%dx%d.png", name, p_size, p_size);
     const String icon_dest = p_path.get_base_dir().plus_file(icon_name);
@@ -489,7 +627,9 @@ Error EditorExportPlatformJavaScript::_add_manifest_icon(const String &p_path, c
         icon.instance();
         const Error err = ImageLoader::load_image(p_icon, icon);
         if (err != OK) {
-            EditorNode::get_singleton()->show_warning(TTR("Could not read file:") + "\n" + p_icon);
+            EditorNode::get_singleton()->show_warning(
+                TTR("Could not read file:") + "\n" + p_icon
+            );
             return err;
         }
         if (icon->get_width() != p_size || icon->get_height() != p_size) {
@@ -501,7 +641,9 @@ Error EditorExportPlatformJavaScript::_add_manifest_icon(const String &p_path, c
     }
     const Error err = icon->save_png(icon_dest);
     if (err != OK) {
-        EditorNode::get_singleton()->show_warning(TTR("Could not write file:") + "\n" + icon_dest);
+        EditorNode::get_singleton()->show_warning(
+            TTR("Could not write file:") + "\n" + icon_dest
+        );
         return err;
     }
     Dictionary icon_dict;
@@ -512,11 +654,16 @@ Error EditorExportPlatformJavaScript::_add_manifest_icon(const String &p_path, c
     return err;
 }
 
-Error EditorExportPlatformJavaScript::_build_pwa(const Ref<EditorExportPreset> &p_preset, const String p_path, const Vector<SharedObject> &p_shared_objects) {
+Error EditorExportPlatformJavaScript::_build_pwa(
+    const Ref<EditorExportPreset>& p_preset,
+    const String p_path,
+    const Vector<SharedObject>& p_shared_objects
+) {
     // Service worker
     const String dir = p_path.get_base_dir();
     const String name = p_path.get_file().get_basename();
-    const ExportMode mode = (ExportMode)(int)p_preset->get("variant/export_type");
+    const ExportMode mode =
+        (ExportMode)(int)p_preset->get("variant/export_type");
     Map<String, String> replaces;
     replaces["@REBEL_VERSION@"] = "1";
     replaces["@REBEL_NAME@"] = name;
@@ -546,9 +693,11 @@ Error EditorExportPlatformJavaScript::_build_pwa(const Ref<EditorExportPreset> &
     const String sw_path = dir.plus_file(name + ".service.worker.js");
     Vector<uint8_t> sw;
     {
-        FileAccess *f = FileAccess::open(sw_path, FileAccess::READ);
+        FileAccess* f = FileAccess::open(sw_path, FileAccess::READ);
         if (!f) {
-            EditorNode::get_singleton()->show_warning(TTR("Could not read file:") + "\n" + sw_path);
+            EditorNode::get_singleton()->show_warning(
+                TTR("Could not read file:") + "\n" + sw_path
+            );
             return ERR_FILE_CANT_READ;
         }
         sw.resize(f->get_len());
@@ -557,31 +706,46 @@ Error EditorExportPlatformJavaScript::_build_pwa(const Ref<EditorExportPreset> &
         f = nullptr;
     }
     _replace_strings(replaces, sw);
-    Error err = _write_or_error(sw.ptr(), sw.size(), dir.plus_file(name + ".service.worker.js"));
+    Error err = _write_or_error(
+        sw.ptr(),
+        sw.size(),
+        dir.plus_file(name + ".service.worker.js")
+    );
     if (err != OK) {
         return err;
     }
 
     // Custom offline page
-    const String offline_page = p_preset->get("progressive_web_app/offline_page");
+    const String offline_page =
+        p_preset->get("progressive_web_app/offline_page");
     if (!offline_page.empty()) {
-        DirAccess *da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+        DirAccess* da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
         const String offline_dest = dir.plus_file(name + ".offline.html");
-        err = da->copy(ProjectSettings::get_singleton()->globalize_path(offline_page), offline_dest);
+        err = da->copy(
+            ProjectSettings::get_singleton()->globalize_path(offline_page),
+            offline_dest
+        );
         if (err != OK) {
-            EditorNode::get_singleton()->show_warning(TTR("Could not read file:") + "\n" + offline_dest);
+            EditorNode::get_singleton()->show_warning(
+                TTR("Could not read file:") + "\n" + offline_dest
+            );
             return err;
         }
     }
 
     // Manifest
-    const char *modes[4] = { "fullscreen", "standalone", "minimal-ui", "browser" };
-    const char *orientations[3] = { "any", "landscape", "portrait" };
-    const int display = CLAMP(int(p_preset->get("progressive_web_app/display")), 0, 4);
-    const int orientation = CLAMP(int(p_preset->get("progressive_web_app/orientation")), 0, 3);
+    const char* modes[4] =
+        {"fullscreen", "standalone", "minimal-ui", "browser"};
+    const char* orientations[3] = {"any", "landscape", "portrait"};
+    const int display =
+        CLAMP(int(p_preset->get("progressive_web_app/display")), 0, 4);
+    const int orientation =
+        CLAMP(int(p_preset->get("progressive_web_app/orientation")), 0, 3);
 
     Dictionary manifest;
-    String proj_name = ProjectSettings::get_singleton()->get_setting("application/config/name");
+    String proj_name =
+        ProjectSettings::get_singleton()->get_setting("application/config/name"
+        );
     if (proj_name.empty()) {
         proj_name = "Rebel Game";
     }
@@ -589,20 +753,28 @@ Error EditorExportPlatformJavaScript::_build_pwa(const Ref<EditorExportPreset> &
     manifest["start_url"] = "./" + name + ".html";
     manifest["display"] = String::utf8(modes[display]);
     manifest["orientation"] = String::utf8(orientations[orientation]);
-    manifest["background_color"] = "#" + p_preset->get("progressive_web_app/background_color").operator Color().to_html(false);
+    manifest["background_color"] =
+        "#"
+        + p_preset->get("progressive_web_app/background_color")
+              .
+              operator Color()
+              .to_html(false);
 
     Array icons_arr;
-    const String icon144_path = p_preset->get("progressive_web_app/icon_144x144");
+    const String icon144_path =
+        p_preset->get("progressive_web_app/icon_144x144");
     err = _add_manifest_icon(p_path, icon144_path, 144, icons_arr);
     if (err != OK) {
         return err;
     }
-    const String icon180_path = p_preset->get("progressive_web_app/icon_180x180");
+    const String icon180_path =
+        p_preset->get("progressive_web_app/icon_180x180");
     err = _add_manifest_icon(p_path, icon180_path, 180, icons_arr);
     if (err != OK) {
         return err;
     }
-    const String icon512_path = p_preset->get("progressive_web_app/icon_512x512");
+    const String icon512_path =
+        p_preset->get("progressive_web_app/icon_512x512");
     err = _add_manifest_icon(p_path, icon512_path, 512, icons_arr);
     if (err != OK) {
         return err;
@@ -610,7 +782,11 @@ Error EditorExportPlatformJavaScript::_build_pwa(const Ref<EditorExportPreset> &
     manifest["icons"] = icons_arr;
 
     CharString cs = JSON::print(manifest).utf8();
-    err = _write_or_error((const uint8_t *)cs.get_data(), cs.length(), dir.plus_file(name + ".manifest.json"));
+    err = _write_or_error(
+        (const uint8_t*)cs.get_data(),
+        cs.length(),
+        dir.plus_file(name + ".manifest.json")
+    );
     if (err != OK) {
         return err;
     }
@@ -618,18 +794,25 @@ Error EditorExportPlatformJavaScript::_build_pwa(const Ref<EditorExportPreset> &
     return OK;
 }
 
-void EditorExportPlatformJavaScript::get_preset_features(const Ref<EditorExportPreset> &p_preset, List<String> *r_features) {
+void EditorExportPlatformJavaScript::get_preset_features(
+    const Ref<EditorExportPreset>& p_preset,
+    List<String>* r_features
+) {
     if (p_preset->get("vram_texture_compression/for_desktop")) {
         r_features->push_back("s3tc");
     }
 
     if (p_preset->get("vram_texture_compression/for_mobile")) {
-        String driver = ProjectSettings::get_singleton()->get("rendering/quality/driver/driver_name");
+        String driver = ProjectSettings::get_singleton()->get(
+            "rendering/quality/driver/driver_name"
+        );
         if (driver == "GLES2") {
             r_features->push_back("etc");
         } else if (driver == "GLES3") {
             r_features->push_back("etc2");
-            if (ProjectSettings::get_singleton()->get("rendering/quality/driver/fallback_to_gles2")) {
+            if (ProjectSettings::get_singleton()->get(
+                    "rendering/quality/driver/fallback_to_gles2"
+                )) {
                 r_features->push_back("etc");
             }
         }
@@ -642,28 +825,149 @@ void EditorExportPlatformJavaScript::get_preset_features(const Ref<EditorExportP
     }
 }
 
-void EditorExportPlatformJavaScript::get_export_options(List<ExportOption> *r_options) {
-    r_options->push_back(ExportOption(PropertyInfo(Variant::STRING, "custom_template/debug", PROPERTY_HINT_GLOBAL_FILE, "*.zip"), ""));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::STRING, "custom_template/release", PROPERTY_HINT_GLOBAL_FILE, "*.zip"), ""));
+void EditorExportPlatformJavaScript::get_export_options(
+    List<ExportOption>* r_options
+) {
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::STRING,
+            "custom_template/debug",
+            PROPERTY_HINT_GLOBAL_FILE,
+            "*.zip"
+        ),
+        ""
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::STRING,
+            "custom_template/release",
+            PROPERTY_HINT_GLOBAL_FILE,
+            "*.zip"
+        ),
+        ""
+    ));
 
-    r_options->push_back(ExportOption(PropertyInfo(Variant::INT, "variant/export_type", PROPERTY_HINT_ENUM, "Regular,Threads,GDNative"), 0)); // Export type.
-    r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "vram_texture_compression/for_desktop"), true)); // S3TC
-    r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "vram_texture_compression/for_mobile"), false)); // ETC or ETC2, depending on renderer
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::INT,
+            "variant/export_type",
+            PROPERTY_HINT_ENUM,
+            "Regular,Threads,GDNative"
+        ),
+        0
+    )); // Export type.
+    r_options->push_back(ExportOption(
+        PropertyInfo(Variant::BOOL, "vram_texture_compression/for_desktop"),
+        true
+    )); // S3TC
+    r_options->push_back(ExportOption(
+        PropertyInfo(Variant::BOOL, "vram_texture_compression/for_mobile"),
+        false
+    )); // ETC or ETC2, depending on renderer
 
-    r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "html/export_icon"), true));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::STRING, "html/custom_html_shell", PROPERTY_HINT_FILE, "*.html"), ""));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::STRING, "html/head_include", PROPERTY_HINT_MULTILINE_TEXT), ""));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::INT, "html/canvas_resize_policy", PROPERTY_HINT_ENUM, "None,Project,Adaptive"), 2));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "html/focus_canvas_on_start"), true));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "html/experimental_virtual_keyboard"), false));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "progressive_web_app/enabled"), false));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::STRING, "progressive_web_app/offline_page", PROPERTY_HINT_FILE, "*.html"), ""));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::INT, "progressive_web_app/display", PROPERTY_HINT_ENUM, "Fullscreen,Standalone,Minimal Ui,Browser"), 1));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::INT, "progressive_web_app/orientation", PROPERTY_HINT_ENUM, "Any,Landscape,Portrait"), 0));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::STRING, "progressive_web_app/icon_144x144", PROPERTY_HINT_FILE, "*.png,*.webp,*.svg"), ""));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::STRING, "progressive_web_app/icon_180x180", PROPERTY_HINT_FILE, "*.png,*.webp,*.svg"), ""));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::STRING, "progressive_web_app/icon_512x512", PROPERTY_HINT_FILE, "*.png,*.webp,*.svg"), ""));
-    r_options->push_back(ExportOption(PropertyInfo(Variant::COLOR, "progressive_web_app/background_color", PROPERTY_HINT_COLOR_NO_ALPHA), Color()));
+    r_options->push_back(
+        ExportOption(PropertyInfo(Variant::BOOL, "html/export_icon"), true)
+    );
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::STRING,
+            "html/custom_html_shell",
+            PROPERTY_HINT_FILE,
+            "*.html"
+        ),
+        ""
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::STRING,
+            "html/head_include",
+            PROPERTY_HINT_MULTILINE_TEXT
+        ),
+        ""
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::INT,
+            "html/canvas_resize_policy",
+            PROPERTY_HINT_ENUM,
+            "None,Project,Adaptive"
+        ),
+        2
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(Variant::BOOL, "html/focus_canvas_on_start"),
+        true
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(Variant::BOOL, "html/experimental_virtual_keyboard"),
+        false
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(Variant::BOOL, "progressive_web_app/enabled"),
+        false
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::STRING,
+            "progressive_web_app/offline_page",
+            PROPERTY_HINT_FILE,
+            "*.html"
+        ),
+        ""
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::INT,
+            "progressive_web_app/display",
+            PROPERTY_HINT_ENUM,
+            "Fullscreen,Standalone,Minimal Ui,Browser"
+        ),
+        1
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::INT,
+            "progressive_web_app/orientation",
+            PROPERTY_HINT_ENUM,
+            "Any,Landscape,Portrait"
+        ),
+        0
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::STRING,
+            "progressive_web_app/icon_144x144",
+            PROPERTY_HINT_FILE,
+            "*.png,*.webp,*.svg"
+        ),
+        ""
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::STRING,
+            "progressive_web_app/icon_180x180",
+            PROPERTY_HINT_FILE,
+            "*.png,*.webp,*.svg"
+        ),
+        ""
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::STRING,
+            "progressive_web_app/icon_512x512",
+            PROPERTY_HINT_FILE,
+            "*.png,*.webp,*.svg"
+        ),
+        ""
+    ));
+    r_options->push_back(ExportOption(
+        PropertyInfo(
+            Variant::COLOR,
+            "progressive_web_app/background_color",
+            PROPERTY_HINT_COLOR_NO_ALPHA
+        ),
+        Color()
+    ));
 }
 
 String EditorExportPlatformJavaScript::get_name() const {
@@ -678,12 +982,17 @@ Ref<Texture> EditorExportPlatformJavaScript::get_logo() const {
     return logo;
 }
 
-bool EditorExportPlatformJavaScript::can_export(const Ref<EditorExportPreset> &p_preset, String &r_error, bool &r_missing_templates) const {
+bool EditorExportPlatformJavaScript::can_export(
+    const Ref<EditorExportPreset>& p_preset,
+    String& r_error,
+    bool& r_missing_templates
+) const {
     String err;
     bool valid = false;
     ExportMode mode = (ExportMode)(int)p_preset->get("variant/export_type");
 
-    // Look for export templates (first official, and if defined custom templates).
+    // Look for export templates (first official, and if defined custom
+    // templates).
     bool dvalid = exists_export_template(_get_template_name(mode, true), &err);
     bool rvalid = exists_export_template(_get_template_name(mode, false), &err);
 
@@ -720,13 +1029,20 @@ bool EditorExportPlatformJavaScript::can_export(const Ref<EditorExportPreset> &p
     return valid;
 }
 
-List<String> EditorExportPlatformJavaScript::get_binary_extensions(const Ref<EditorExportPreset> &p_preset) const {
+List<String> EditorExportPlatformJavaScript::get_binary_extensions(
+    const Ref<EditorExportPreset>& p_preset
+) const {
     List<String> list;
     list.push_back("html");
     return list;
 }
 
-Error EditorExportPlatformJavaScript::export_project(const Ref<EditorExportPreset> &p_preset, bool p_debug, const String &p_path, int p_flags) {
+Error EditorExportPlatformJavaScript::export_project(
+    const Ref<EditorExportPreset>& p_preset,
+    bool p_debug,
+    const String& p_path,
+    int p_flags
+) {
     ExportNotifier notifier(*this, p_preset, p_debug, p_path, p_flags);
 
     const String custom_debug = p_preset->get("custom_template/debug");
@@ -752,7 +1068,9 @@ Error EditorExportPlatformJavaScript::export_project(const Ref<EditorExportPrese
     }
 
     if (template_path != String() && !FileAccess::exists(template_path)) {
-        EditorNode::get_singleton()->show_warning(TTR("Template file not found:") + "\n" + template_path);
+        EditorNode::get_singleton()->show_warning(
+            TTR("Template file not found:") + "\n" + template_path
+        );
         return ERR_FILE_NOT_FOUND;
     }
 
@@ -761,15 +1079,20 @@ Error EditorExportPlatformJavaScript::export_project(const Ref<EditorExportPrese
     String pck_path = base_path + ".pck";
     Error error = save_pack(p_preset, pck_path, &shared_objects);
     if (error != OK) {
-        EditorNode::get_singleton()->show_warning(TTR("Could not write file:") + "\n" + pck_path);
+        EditorNode::get_singleton()->show_warning(
+            TTR("Could not write file:") + "\n" + pck_path
+        );
         return error;
     }
-    DirAccess *da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+    DirAccess* da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     for (int i = 0; i < shared_objects.size(); i++) {
         String dst = base_dir.plus_file(shared_objects[i].path.get_file());
         error = da->copy(shared_objects[i].path, dst);
         if (error != OK) {
-            EditorNode::get_singleton()->show_warning(TTR("Could not write file:") + "\n" + shared_objects[i].path.get_file());
+            EditorNode::get_singleton()->show_warning(
+                TTR("Could not write file:") + "\n"
+                + shared_objects[i].path.get_file()
+            );
             memdelete(da);
             return error;
         }
@@ -783,9 +1106,10 @@ Error EditorExportPlatformJavaScript::export_project(const Ref<EditorExportPrese
         return error;
     }
 
-    // Parse generated file sizes (pck and wasm, to help show a meaningful loading bar).
+    // Parse generated file sizes (pck and wasm, to help show a meaningful
+    // loading bar).
     Dictionary file_sizes;
-    FileAccess *f = nullptr;
+    FileAccess* f = nullptr;
     f = FileAccess::open(pck_path, FileAccess::READ);
     if (f) {
         file_sizes[pck_path.get_file()] = (uint64_t)f->get_len();
@@ -800,11 +1124,14 @@ Error EditorExportPlatformJavaScript::export_project(const Ref<EditorExportPrese
     }
 
     // Read the HTML shell file (custom or from template).
-    const String html_path = custom_html.empty() ? base_path + ".html" : custom_html;
+    const String html_path =
+        custom_html.empty() ? base_path + ".html" : custom_html;
     Vector<uint8_t> html;
     f = FileAccess::open(html_path, FileAccess::READ);
     if (!f) {
-        EditorNode::get_singleton()->show_warning(TTR("Could not read HTML shell:") + "\n" + html_path);
+        EditorNode::get_singleton()->show_warning(
+            TTR("Could not read HTML shell:") + "\n" + html_path
+        );
         return ERR_FILE_CANT_READ;
     }
     html.resize(f->get_len());
@@ -813,7 +1140,15 @@ Error EditorExportPlatformJavaScript::export_project(const Ref<EditorExportPrese
     f = nullptr;
 
     // Generate HTML file with replaced strings.
-    _fix_html(html, p_preset, base_name, p_debug, p_flags, shared_objects, file_sizes);
+    _fix_html(
+        html,
+        p_preset,
+        base_name,
+        p_debug,
+        p_flags,
+        shared_objects,
+        file_sizes
+    );
     Error err = _write_or_error(html.ptr(), html.size(), p_path);
     if (err != OK) {
         return err;
@@ -824,23 +1159,30 @@ Error EditorExportPlatformJavaScript::export_project(const Ref<EditorExportPrese
     Ref<Image> splash = _get_project_splash();
     const String splash_png_path = base_path + ".png";
     if (splash->save_png(splash_png_path) != OK) {
-        EditorNode::get_singleton()->show_warning(TTR("Could not write file:") + "\n" + splash_png_path);
+        EditorNode::get_singleton()->show_warning(
+            TTR("Could not write file:") + "\n" + splash_png_path
+        );
         return ERR_FILE_CANT_WRITE;
     }
 
-    // Save a favicon that can be accessed without waiting for the project to finish loading.
-    // This way, the favicon can be displayed immediately when loading the page.
+    // Save a favicon that can be accessed without waiting for the project to
+    // finish loading. This way, the favicon can be displayed immediately when
+    // loading the page.
     if (export_icon) {
         Ref<Image> favicon = _get_project_icon();
         const String favicon_png_path = base_path + ".icon.png";
         if (favicon->save_png(favicon_png_path) != OK) {
-            EditorNode::get_singleton()->show_warning(TTR("Could not write file:") + "\n" + favicon_png_path);
+            EditorNode::get_singleton()->show_warning(
+                TTR("Could not write file:") + "\n" + favicon_png_path
+            );
             return ERR_FILE_CANT_WRITE;
         }
         favicon->resize(180, 180);
         const String apple_icon_png_path = base_path + ".apple-touch-icon.png";
         if (favicon->save_png(apple_icon_png_path) != OK) {
-            EditorNode::get_singleton()->show_warning(TTR("Could not write file:") + "\n" + apple_icon_png_path);
+            EditorNode::get_singleton()->show_warning(
+                TTR("Could not write file:") + "\n" + apple_icon_png_path
+            );
             return ERR_FILE_CANT_WRITE;
         }
     }
@@ -859,8 +1201,11 @@ Error EditorExportPlatformJavaScript::export_project(const Ref<EditorExportPrese
 bool EditorExportPlatformJavaScript::poll_export() {
     Ref<EditorExportPreset> preset;
 
-    for (int i = 0; i < EditorExport::get_singleton()->get_export_preset_count(); i++) {
-        Ref<EditorExportPreset> ep = EditorExport::get_singleton()->get_export_preset(i);
+    for (int i = 0;
+         i < EditorExport::get_singleton()->get_export_preset_count();
+         i++) {
+        Ref<EditorExportPreset> ep =
+            EditorExport::get_singleton()->get_export_preset(i);
         if (ep->is_runnable() && ep->get_platform() == this) {
             preset = ep;
             break;
@@ -880,32 +1225,42 @@ bool EditorExportPlatformJavaScript::poll_export() {
     return menu_options != prev;
 }
 
-Ref<ImageTexture> EditorExportPlatformJavaScript::get_option_icon(int p_index) const {
-    return p_index == 1 ? stop_icon : EditorExportPlatform::get_option_icon(p_index);
+Ref<ImageTexture> EditorExportPlatformJavaScript::get_option_icon(int p_index
+) const {
+    return p_index == 1 ? stop_icon
+                        : EditorExportPlatform::get_option_icon(p_index);
 }
 
 int EditorExportPlatformJavaScript::get_options_count() const {
     return menu_options;
 }
 
-Error EditorExportPlatformJavaScript::run(const Ref<EditorExportPreset> &p_preset, int p_option, int p_debug_flags) {
+Error EditorExportPlatformJavaScript::run(
+    const Ref<EditorExportPreset>& p_preset,
+    int p_option,
+    int p_debug_flags
+) {
     if (p_option == 1) {
         MutexLock lock(server_lock);
         server->stop();
         return OK;
     }
 
-    const String dest = EditorSettings::get_singleton()->get_cache_dir().plus_file("web");
+    const String dest =
+        EditorSettings::get_singleton()->get_cache_dir().plus_file("web");
     DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     if (!da->dir_exists(dest)) {
         Error err = da->make_dir_recursive(dest);
         if (err != OK) {
-            EditorNode::get_singleton()->show_warning(TTR("Could not create HTTP server directory:") + "\n" + dest);
+            EditorNode::get_singleton()->show_warning(
+                TTR("Could not create HTTP server directory:") + "\n" + dest
+            );
             return err;
         }
     }
     const String basepath = dest.plus_file("tmp_js_export");
-    Error err = export_project(p_preset, true, basepath + ".html", p_debug_flags);
+    Error err =
+        export_project(p_preset, true, basepath + ".html", p_debug_flags);
     if (err != OK) {
         // Export generates several files, clean them up on failure.
         DirAccess::remove_file_or_error(basepath + ".html");
@@ -932,7 +1287,12 @@ Error EditorExportPlatformJavaScript::run(const Ref<EditorExportPreset> &p_prese
     } else {
         bind_ip = IP::get_singleton()->resolve_hostname(bind_host);
     }
-    ERR_FAIL_COND_V_MSG(!bind_ip.is_valid(), ERR_INVALID_PARAMETER, "Invalid editor setting 'export/web/http_host': '" + bind_host + "'. Try using '127.0.0.1'.");
+    ERR_FAIL_COND_V_MSG(
+        !bind_ip.is_valid(),
+        ERR_INVALID_PARAMETER,
+        "Invalid editor setting 'export/web/http_host': '" + bind_host
+            + "'. Try using '127.0.0.1'."
+    );
 
     const bool use_ssl = EDITOR_GET("export/web/use_ssl");
     const String ssl_key = EDITOR_GET("export/web/ssl_key");
@@ -946,13 +1306,18 @@ Error EditorExportPlatformJavaScript::run(const Ref<EditorExportPreset> &p_prese
         err = server->listen(bind_port, bind_ip, use_ssl, ssl_key, ssl_cert);
     }
     if (err != OK) {
-        EditorNode::get_singleton()->show_warning(TTR("Error starting HTTP server:") + "\n" + itos(err));
+        EditorNode::get_singleton()->show_warning(
+            TTR("Error starting HTTP server:") + "\n" + itos(err)
+        );
         return err;
     }
 
-    OS::get_singleton()->shell_open(String((use_ssl ? "https://" : "http://") + bind_host + ":" + itos(bind_port) + "/tmp_js_export.html"));
-    // FIXME: Find out how to clean up export files after running the successfully
-    // exported game. Might not be trivial.
+    OS::get_singleton()->shell_open(String(
+        (use_ssl ? "https://" : "http://") + bind_host + ":" + itos(bind_port)
+        + "/tmp_js_export.html"
+    ));
+    // FIXME: Find out how to clean up export files after running the
+    // successfully exported game. Might not be trivial.
     return OK;
 }
 
@@ -960,8 +1325,8 @@ Ref<Texture> EditorExportPlatformJavaScript::get_run_icon() const {
     return run_icon;
 }
 
-void EditorExportPlatformJavaScript::_server_thread_poll(void *data) {
-    EditorExportPlatformJavaScript *ej = (EditorExportPlatformJavaScript *)data;
+void EditorExportPlatformJavaScript::_server_thread_poll(void* data) {
+    EditorExportPlatformJavaScript* ej = (EditorExportPlatformJavaScript*)data;
     while (!ej->server_quit) {
         OS::get_singleton()->delay_usec(1000);
         {
@@ -1003,9 +1368,24 @@ void register_javascript_exporter() {
     EDITOR_DEF("export/web/use_ssl", false);
     EDITOR_DEF("export/web/ssl_key", "");
     EDITOR_DEF("export/web/ssl_certificate", "");
-    EditorSettings::get_singleton()->add_property_hint(PropertyInfo(Variant::INT, "export/web/http_port", PROPERTY_HINT_RANGE, "1,65535,1"));
-    EditorSettings::get_singleton()->add_property_hint(PropertyInfo(Variant::STRING, "export/web/ssl_key", PROPERTY_HINT_GLOBAL_FILE, "*.key"));
-    EditorSettings::get_singleton()->add_property_hint(PropertyInfo(Variant::STRING, "export/web/ssl_certificate", PROPERTY_HINT_GLOBAL_FILE, "*.crt,*.pem"));
+    EditorSettings::get_singleton()->add_property_hint(PropertyInfo(
+        Variant::INT,
+        "export/web/http_port",
+        PROPERTY_HINT_RANGE,
+        "1,65535,1"
+    ));
+    EditorSettings::get_singleton()->add_property_hint(PropertyInfo(
+        Variant::STRING,
+        "export/web/ssl_key",
+        PROPERTY_HINT_GLOBAL_FILE,
+        "*.key"
+    ));
+    EditorSettings::get_singleton()->add_property_hint(PropertyInfo(
+        Variant::STRING,
+        "export/web/ssl_certificate",
+        PROPERTY_HINT_GLOBAL_FILE,
+        "*.crt,*.pem"
+    ));
 
     Ref<EditorExportPlatformJavaScript> platform;
     platform.instance();

@@ -35,15 +35,17 @@
 #include "core/list.h"
 #include "editor/doc/doc_data.h"
 
-namespace lsp {
+namespace lsp
+{
 
 typedef String DocumentUri;
 
 /** Format BBCode documentation from DocData to markdown */
-static String marked_documentation(const String &p_bbcode);
+static String marked_documentation(const String& p_bbcode);
 
 /**
- * Text documents are identified using a URI. On the protocol level, URIs are passed as strings.
+ * Text documents are identified using a URI. On the protocol level, URIs are
+ * passed as strings.
  */
 struct TextDocumentIdentifier {
     /**
@@ -51,7 +53,7 @@ struct TextDocumentIdentifier {
      */
     DocumentUri uri;
 
-    _FORCE_INLINE_ void load(const Dictionary &p_params) {
+    _FORCE_INLINE_ void load(const Dictionary& p_params) {
         uri = p_params["uri"];
     }
 
@@ -63,9 +65,10 @@ struct TextDocumentIdentifier {
 };
 
 /**
- * Position in a text document expressed as zero-based line and zero-based character offset.
- * A position is between two characters like an ‘insert’ cursor in a editor.
- * Special values like for example -1 to denote the end of a line are not supported.
+ * Position in a text document expressed as zero-based line and zero-based
+ * character offset. A position is between two characters like an ‘insert’
+ * cursor in a editor. Special values like for example -1 to denote the end of a
+ * line are not supported.
  */
 struct Position {
     /**
@@ -74,16 +77,16 @@ struct Position {
     int line = 0;
 
     /**
-     * Character offset on a line in a document (zero-based). Assuming that the line is
-     * represented as a string, the `character` value represents the gap between the
-     * `character` and `character + 1`.
+     * Character offset on a line in a document (zero-based). Assuming that the
+     * line is represented as a string, the `character` value represents the gap
+     * between the `character` and `character + 1`.
      *
-     * If the character value is greater than the line length it defaults back to the
-     * line length.
+     * If the character value is greater than the line length it defaults back
+     * to the line length.
      */
     int character = 0;
 
-    _FORCE_INLINE_ void load(const Dictionary &p_params) {
+    _FORCE_INLINE_ void load(const Dictionary& p_params) {
         line = p_params["line"];
         character = p_params["character"];
     }
@@ -98,8 +101,10 @@ struct Position {
 
 /**
  * A range in a text document expressed as (zero-based) start and end positions.
- * A range is comparable to a selection in an editor. Therefore the end position is exclusive.
- * If you want to specify a range that contains a line including the line ending character(s) then use an end position denoting the start of the next line.
+ * A range is comparable to a selection in an editor. Therefore the end position
+ * is exclusive. If you want to specify a range that contains a line including
+ * the line ending character(s) then use an end position denoting the start of
+ * the next line.
  */
 struct Range {
     /**
@@ -112,7 +117,7 @@ struct Range {
      */
     Position end;
 
-    _FORCE_INLINE_ void load(const Dictionary &p_params) {
+    _FORCE_INLINE_ void load(const Dictionary& p_params) {
         start.load(p_params["start"]);
         end.load(p_params["end"]);
     }
@@ -132,7 +137,7 @@ struct Location {
     DocumentUri uri;
     Range range;
 
-    _FORCE_INLINE_ void load(const Dictionary &p_params) {
+    _FORCE_INLINE_ void load(const Dictionary& p_params) {
         uri = p_params["uri"];
         range.load(p_params["range"]);
     }
@@ -152,10 +157,10 @@ struct LocationLink {
     /**
      * Span of the origin of this link.
      *
-     * Used as the underlined span for mouse interaction. Defaults to the word range at
-     * the mouse position.
+     * Used as the underlined span for mouse interaction. Defaults to the word
+     * range at the mouse position.
      */
-    Range *originSelectionRange = nullptr;
+    Range* originSelectionRange = nullptr;
 
     /**
      * The target resource identifier of this link.
@@ -163,21 +168,24 @@ struct LocationLink {
     String targetUri;
 
     /**
-     * The full target range of this link. If the target for example is a symbol then target range is the
-     * range enclosing this symbol not including leading/trailing whitespace but everything else
-     * like comments. This information is typically used to highlight the range in the editor.
+     * The full target range of this link. If the target for example is a symbol
+     * then target range is the range enclosing this symbol not including
+     * leading/trailing whitespace but everything else like comments. This
+     * information is typically used to highlight the range in the editor.
      */
     Range targetRange;
 
     /**
-     * The range that should be selected and revealed when this link is being followed, e.g the name of a function.
-     * Must be contained by the the `targetRange`. See also `DocumentSymbol#range`
+     * The range that should be selected and revealed when this link is being
+     * followed, e.g the name of a function. Must be contained by the the
+     * `targetRange`. See also `DocumentSymbol#range`
      */
     Range targetSelectionRange;
 };
 
 /**
- * A parameter literal used in requests to pass a text document and a position inside that document.
+ * A parameter literal used in requests to pass a text document and a position
+ * inside that document.
  */
 struct TextDocumentPositionParams {
     /**
@@ -190,7 +198,7 @@ struct TextDocumentPositionParams {
      */
     Position position;
 
-    _FORCE_INLINE_ void load(const Dictionary &p_params) {
+    _FORCE_INLINE_ void load(const Dictionary& p_params) {
         textDocument.load(p_params["textDocument"]);
         position.load(p_params["position"]);
     }
@@ -209,14 +217,14 @@ struct DocumentLinkParams {
      */
     TextDocumentIdentifier textDocument;
 
-    _FORCE_INLINE_ void load(const Dictionary &p_params) {
+    _FORCE_INLINE_ void load(const Dictionary& p_params) {
         textDocument.load(p_params["textDocument"]);
     }
 };
 
 /**
- * A document link is a range in a text document that links to an internal or external resource, like another
- * text document or a web site.
+ * A document link is a range in a text document that links to an internal or
+ * external resource, like another text document or a web site.
  */
 struct DocumentLink {
     /**
@@ -263,7 +271,7 @@ struct WorkspaceEdit {
      */
     Map<String, Vector<TextEdit>> changes;
 
-    _FORCE_INLINE_ void add_edit(const String &uri, const TextEdit &edit) {
+    _FORCE_INLINE_ void add_edit(const String& uri, const TextEdit& edit) {
         if (changes.has(uri)) {
             changes[uri].push_back(edit);
         } else {
@@ -277,7 +285,8 @@ struct WorkspaceEdit {
         Dictionary dict;
 
         Dictionary out_changes;
-        for (Map<String, Vector<TextEdit>>::Element *E = changes.front(); E; E = E->next()) {
+        for (Map<String, Vector<TextEdit>>::Element* E = changes.front(); E;
+             E = E->next()) {
             Array edits;
             for (int i = 0; i < E->get().size(); ++i) {
                 Dictionary text_edit;
@@ -292,8 +301,14 @@ struct WorkspaceEdit {
         return dict;
     }
 
-    _FORCE_INLINE_ void add_change(const String &uri, const int &line, const int &start_character, const int &end_character, const String &new_text) {
-        if (Map<String, Vector<TextEdit>>::Element *E = changes.find(uri)) {
+    _FORCE_INLINE_ void add_change(
+        const String& uri,
+        const int& line,
+        const int& start_character,
+        const int& end_character,
+        const String& new_text
+    ) {
+        if (Map<String, Vector<TextEdit>>::Element* E = changes.find(uri)) {
             Vector<TextEdit> edit_list = E->value();
             for (int i = 0; i < edit_list.size(); ++i) {
                 TextEdit edit = edit_list[i];
@@ -310,7 +325,7 @@ struct WorkspaceEdit {
         new_edit.range.end.line = line;
         new_edit.range.end.character = end_character;
 
-        if (Map<String, Vector<TextEdit>>::Element *E = changes.find(uri)) {
+        if (Map<String, Vector<TextEdit>>::Element* E = changes.find(uri)) {
             E->value().push_back(new_edit);
         } else {
             Vector<TextEdit> edit_list;
@@ -324,8 +339,10 @@ struct WorkspaceEdit {
  * Represents a reference to a command.
  * Provides a title which will be used to represent a command in the UI.
  * Commands are identified by a string identifier.
- * The recommended way to handle commands is to implement their execution on the server side if the client and server provides the corresponding capabilities.
- * Alternatively the tool extension code could handle the command. The protocol currently doesn’t specify a set of well-known commands.
+ * The recommended way to handle commands is to implement their execution on the
+ * server side if the client and server provides the corresponding capabilities.
+ * Alternatively the tool extension code could handle the command. The protocol
+ * currently doesn’t specify a set of well-known commands.
  */
 struct Command {
     /**
@@ -356,7 +373,8 @@ struct Command {
 // Use namespace instead of enumeration to follow the LSP specifications
 // lsp::EnumName::EnumValue is OK but lsp::EnumValue is not
 
-namespace TextDocumentSyncKind {
+namespace TextDocumentSyncKind
+{
 /**
  * Documents should not be synced at all.
  */
@@ -525,32 +543,34 @@ struct FoldingRangeProviderOptions {
 
 struct TextDocumentSyncOptions {
     /**
-     * Open and close notifications are sent to the server. If omitted open close notification should not
-     * be sent.
+     * Open and close notifications are sent to the server. If omitted open
+     * close notification should not be sent.
      */
     bool openClose = true;
 
     /**
-     * Change notifications are sent to the server. See TextDocumentSyncKind.None, TextDocumentSyncKind.Full
-     * and TextDocumentSyncKind.Incremental. If omitted it defaults to TextDocumentSyncKind.None.
+     * Change notifications are sent to the server. See
+     * TextDocumentSyncKind.None, TextDocumentSyncKind.Full and
+     * TextDocumentSyncKind.Incremental. If omitted it defaults to
+     * TextDocumentSyncKind.None.
      */
     int change = TextDocumentSyncKind::Full;
 
     /**
-     * If present will save notifications are sent to the server. If omitted the notification should not be
-     * sent.
+     * If present will save notifications are sent to the server. If omitted the
+     * notification should not be sent.
      */
     bool willSave = false;
 
     /**
-     * If present will save wait until requests are sent to the server. If omitted the request should not be
-     * sent.
+     * If present will save wait until requests are sent to the server. If
+     * omitted the request should not be sent.
      */
     bool willSaveWaitUntil = false;
 
     /**
-     * If present save notifications are sent to the server. If omitted the notification should not be
-     * sent.
+     * If present save notifications are sent to the server. If omitted the
+     * notification should not be sent.
      */
     SaveOptions save;
 
@@ -620,7 +640,7 @@ struct TextDocumentItem {
      */
     String text;
 
-    void load(const Dictionary &p_dict) {
+    void load(const Dictionary& p_dict) {
         uri = p_dict["uri"];
         languageId = p_dict["languageId"];
         version = p_dict["version"];
@@ -638,8 +658,8 @@ struct TextDocumentItem {
 };
 
 /**
- * An event describing a change to a text document. If range and rangeLength are omitted
- * the new text is considered to be the full content of the document.
+ * An event describing a change to a text document. If range and rangeLength are
+ * omitted the new text is considered to be the full content of the document.
  */
 struct TextDocumentContentChangeEvent {
     /**
@@ -657,7 +677,7 @@ struct TextDocumentContentChangeEvent {
      */
     String text;
 
-    void load(const Dictionary &p_params) {
+    void load(const Dictionary& p_params) {
         text = p_params["text"];
         rangeLength = p_params["rangeLength"];
         range.load(p_params["range"]);
@@ -665,7 +685,8 @@ struct TextDocumentContentChangeEvent {
 };
 
 // Use namespace instead of enumeration to follow the LSP specifications
-namespace DiagnosticSeverity {
+namespace DiagnosticSeverity
+{
 /**
  * Reports an error.
  */
@@ -685,9 +706,9 @@ static const int Hint = 4;
 }; // namespace DiagnosticSeverity
 
 /**
- * Represents a related message and source code location for a diagnostic. This should be
- * used to point to code locations that cause or related to a diagnostics, e.g when duplicating
- * a symbol in a scope.
+ * Represents a related message and source code location for a diagnostic. This
+ * should be used to point to code locations that cause or related to a
+ * diagnostics, e.g when duplicating a symbol in a scope.
  */
 struct DiagnosticRelatedInformation {
     /**
@@ -702,8 +723,7 @@ struct DiagnosticRelatedInformation {
 
     Dictionary to_json() const {
         Dictionary dict;
-        dict["location"] = location.to_json(),
-        dict["message"] = message;
+        dict["location"] = location.to_json(), dict["message"] = message;
         return dict;
     }
 };
@@ -773,19 +793,23 @@ struct Diagnostic {
  * Please note that `MarkupKinds` must not start with a `$`. This kinds
  * are reserved for internal usage.
  */
-namespace MarkupKind {
+namespace MarkupKind
+{
 static const String PlainText = "plaintext";
 static const String Markdown = "markdown";
 }; // namespace MarkupKind
 
 /**
- * A `MarkupContent` literal represents a string value which content is interpreted base on its
- * kind flag. Currently the protocol supports `plaintext` and `markdown` as markup kinds.
+ * A `MarkupContent` literal represents a string value which content is
+ *interpreted base on its kind flag. Currently the protocol supports `plaintext`
+ *and `markdown` as markup kinds.
  *
- * If the kind is `markdown` then the value can contain fenced code blocks like in GitHub issues.
- * See https://help.github.com/articles/creating-and-highlighting-code-blocks/#syntax-highlighting
+ * If the kind is `markdown` then the value can contain fenced code blocks like
+ *in GitHub issues. See
+ *https://help.github.com/articles/creating-and-highlighting-code-blocks/#syntax-highlighting
  *
- * Here is an example how such a string can be constructed using JavaScript / TypeScript:
+ * Here is an example how such a string can be constructed using JavaScript /
+ *TypeScript:
  * ```typescript
  * let markdown: MarkdownContent = {
  *  kind: MarkupKind.Markdown,
@@ -799,8 +823,8 @@ static const String Markdown = "markdown";
  * };
  * ```
  *
- * *Please Note* that clients might sanitize the return markdown. A client could decide to
- * remove HTML from the markdown to avoid script execution.
+ * *Please Note* that clients might sanitize the return markdown. A client could
+ *decide to remove HTML from the markdown to avoid script execution.
  */
 struct MarkupContent {
     /**
@@ -817,7 +841,7 @@ struct MarkupContent {
         kind = MarkupKind::Markdown;
     }
 
-    MarkupContent(const String &p_value) {
+    MarkupContent(const String& p_value) {
         value = p_value;
         kind = MarkupKind::Markdown;
     }
@@ -832,11 +856,13 @@ struct MarkupContent {
 
 // Use namespace instead of enumeration to follow the LSP specifications
 // lsp::EnumName::EnumValue is OK but lsp::EnumValue is not
-// And here C++ compilers are unhappy with our enumeration name like Color, File, Reference etc.
+// And here C++ compilers are unhappy with our enumeration name like Color,
+// File, Reference etc.
 /**
  * The kind of a completion entry.
  */
-namespace CompletionItemKind {
+namespace CompletionItemKind
+{
 static const int Text = 1;
 static const int Method = 2;
 static const int Function = 3;
@@ -869,7 +895,8 @@ static const int TypeParameter = 25;
  * Defines whether the insert text in a completion item should be interpreted as
  * plain text or a snippet.
  */
-namespace InsertTextFormat {
+namespace InsertTextFormat
+{
 /**
  * The primary text to be inserted is treated as a plain string.
  */
@@ -944,52 +971,54 @@ struct CompletionItem {
      *
      * The `insertText` is subject to interpretation by the client side.
      * Some tools might not take the string literally. For example
-     * VS Code when code complete is requested in this example `con<cursor position>`
-     * and a completion item with an `insertText` of `console` is provided it
-     * will only insert `sole`. Therefore it is recommended to use `textEdit` instead
-     * since it avoids additional client side interpretation.
+     * VS Code when code complete is requested in this example `con<cursor
+     * position>` and a completion item with an `insertText` of `console` is
+     * provided it will only insert `sole`. Therefore it is recommended to use
+     * `textEdit` instead since it avoids additional client side interpretation.
      *
      * @deprecated Use textEdit instead.
      */
     String insertText;
 
     /**
-     * The format of the insert text. The format applies to both the `insertText` property
-     * and the `newText` property of a provided `textEdit`.
+     * The format of the insert text. The format applies to both the
+     * `insertText` property and the `newText` property of a provided
+     * `textEdit`.
      */
     int insertTextFormat;
 
     /**
-     * An edit which is applied to a document when selecting this completion. When an edit is provided the value of
-     * `insertText` is ignored.
+     * An edit which is applied to a document when selecting this completion.
+     * When an edit is provided the value of `insertText` is ignored.
      *
-     * *Note:* The range of the edit must be a single line range and it must contain the position at which completion
-     * has been requested.
+     * *Note:* The range of the edit must be a single line range and it must
+     * contain the position at which completion has been requested.
      */
     TextEdit textEdit;
 
     /**
      * An optional array of additional text edits that are applied when
-     * selecting this completion. Edits must not overlap (including the same insert position)
-     * with the main edit nor with themselves.
+     * selecting this completion. Edits must not overlap (including the same
+     * insert position) with the main edit nor with themselves.
      *
-     * Additional text edits should be used to change text unrelated to the current cursor position
-     * (for example adding an import statement at the top of the file if the completion item will
-     * insert an unqualified type).
+     * Additional text edits should be used to change text unrelated to the
+     * current cursor position (for example adding an import statement at the
+     * top of the file if the completion item will insert an unqualified type).
      */
     Vector<TextEdit> additionalTextEdits;
 
     /**
-     * An optional set of characters that when pressed while this completion is active will accept it first and
-     * then type that character. *Note* that all commit characters should have `length=1` and that superfluous
-     * characters will be ignored.
+     * An optional set of characters that when pressed while this completion is
+     * active will accept it first and then type that character. *Note* that all
+     * commit characters should have `length=1` and that superfluous characters
+     * will be ignored.
      */
     Vector<String> commitCharacters;
 
     /**
-     * An optional command that is executed *after* inserting this completion. *Note* that
-     * additional modifications to the current document should be described with the
-     * additionalTextEdits-property.
+     * An optional command that is executed *after* inserting this completion.
+     * *Note* that additional modifications to the current document should be
+     * described with the additionalTextEdits-property.
      */
     Command command;
 
@@ -1020,7 +1049,7 @@ struct CompletionItem {
         return dict;
     }
 
-    void load(const Dictionary &p_dict) {
+    void load(const Dictionary& p_dict) {
         if (p_dict.has("label")) {
             label = p_dict["label"];
         }
@@ -1061,8 +1090,8 @@ struct CompletionItem {
 };
 
 /**
- * Represents a collection of [completion items](#CompletionItem) to be presented
- * in the editor.
+ * Represents a collection of [completion items](#CompletionItem) to be
+ * presented in the editor.
  */
 struct CompletionList {
     /**
@@ -1079,11 +1108,13 @@ struct CompletionList {
 
 // Use namespace instead of enumeration to follow the LSP specifications
 // lsp::EnumName::EnumValue is OK but lsp::EnumValue is not
-// And here C++ compilers are unhappy with our enumeration name like String, Array, Object etc
+// And here C++ compilers are unhappy with our enumeration name like String,
+// Array, Object etc
 /**
  * A symbol kind.
  */
-namespace SymbolKind {
+namespace SymbolKind
+{
 static const int File = 1;
 static const int Module = 2;
 static const int Namespace = 3;
@@ -1177,14 +1208,16 @@ struct DocumentedSymbolInformation : public SymbolInformation {
 };
 
 /**
- * Represents programming constructs like variables, classes, interfaces etc. that appear in a document. Document symbols can be
- * hierarchical and they have two ranges: one that encloses its definition and one that points to its most interesting range,
- * e.g. the range of an identifier.
+ * Represents programming constructs like variables, classes, interfaces etc.
+ * that appear in a document. Document symbols can be hierarchical and they have
+ * two ranges: one that encloses its definition and one that points to its most
+ * interesting range, e.g. the range of an identifier.
  */
 struct DocumentSymbol {
     /**
-     * The name of this symbol. Will be displayed in the user interface and therefore must not be
-     * an empty string or a string only consisting of white spaces.
+     * The name of this symbol. Will be displayed in the user interface and
+     * therefore must not be an empty string or a string only consisting of
+     * white spaces.
      */
     String name;
 
@@ -1214,15 +1247,16 @@ struct DocumentSymbol {
     bool deprecated = false;
 
     /**
-     * The range enclosing this symbol not including leading/trailing whitespace but everything else
-     * like comments. This information is typically used to determine if the clients cursor is
-     * inside the symbol to reveal in the symbol in the UI.
+     * The range enclosing this symbol not including leading/trailing whitespace
+     * but everything else like comments. This information is typically used to
+     * determine if the clients cursor is inside the symbol to reveal in the
+     * symbol in the UI.
      */
     Range range;
 
     /**
-     * The range that should be selected and revealed when this symbol is being picked, e.g the name of a function.
-     * Must be contained by the `range`.
+     * The range that should be selected and revealed when this symbol is being
+     * picked, e.g the name of a function. Must be contained by the `range`.
      */
     Range selectionRange;
 
@@ -1255,7 +1289,12 @@ struct DocumentSymbol {
         return dict;
     }
 
-    void symbol_tree_as_list(const String &p_uri, Vector<DocumentedSymbolInformation> &r_list, const String &p_container = "", bool p_join_name = false) const {
+    void symbol_tree_as_list(
+        const String& p_uri,
+        Vector<DocumentedSymbolInformation>& r_list,
+        const String& p_container = "",
+        bool p_join_name = false
+    ) const {
         DocumentedSymbolInformation si;
         if (p_join_name && !p_container.empty()) {
             si.name = p_container + ">" + name;
@@ -1271,7 +1310,8 @@ struct DocumentSymbol {
         si.documentation = documentation;
         r_list.push_back(si);
         for (int i = 0; i < children.size(); i++) {
-            children[i].symbol_tree_as_list(p_uri, r_list, si.name, p_join_name);
+            children[i]
+                .symbol_tree_as_list(p_uri, r_list, si.name, p_join_name);
         }
     }
 
@@ -1289,7 +1329,8 @@ struct DocumentSymbol {
         return markdown;
     }
 
-    _FORCE_INLINE_ CompletionItem make_completion_item(bool resolved = false) const {
+    _FORCE_INLINE_ CompletionItem
+    make_completion_item(bool resolved = false) const {
         lsp::CompletionItem item;
         item.label = name;
 
@@ -1348,7 +1389,7 @@ struct NativeSymbolInspectParams {
     String native_class;
     String symbol_name;
 
-    void load(const Dictionary &p_params) {
+    void load(const Dictionary& p_params) {
         native_class = p_params["native_class"];
         symbol_name = p_params["symbol_name"];
     }
@@ -1357,7 +1398,8 @@ struct NativeSymbolInspectParams {
 /**
  * Enum of known range kinds
  */
-namespace FoldingRangeKind {
+namespace FoldingRangeKind
+{
 /**
  * Folding range for a comment
  */
@@ -1382,7 +1424,8 @@ struct FoldingRange {
     int startLine = 0;
 
     /**
-     * The zero-based character offset from where the folded range starts. If not defined, defaults to the length of the start line.
+     * The zero-based character offset from where the folded range starts. If
+     * not defined, defaults to the length of the start line.
      */
     int startCharacter = 0;
 
@@ -1392,14 +1435,16 @@ struct FoldingRange {
     int endLine = 0;
 
     /**
-     * The zero-based character offset before the folded range ends. If not defined, defaults to the length of the end line.
+     * The zero-based character offset before the folded range ends. If not
+     * defined, defaults to the length of the end line.
      */
     int endCharacter = 0;
 
     /**
-     * Describes the kind of the folding range such as `comment' or 'region'. The kind
-     * is used to categorize folding ranges and used by commands like 'Fold all comments'. See
-     * [FoldingRangeKind](#FoldingRangeKind) for an enumeration of standardized kinds.
+     * Describes the kind of the folding range such as `comment' or 'region'.
+     * The kind is used to categorize folding ranges and used by commands like
+     * 'Fold all comments'. See [FoldingRangeKind](#FoldingRangeKind) for an
+     * enumeration of standardized kinds.
      */
     String kind = FoldingRangeKind::Region;
 
@@ -1417,7 +1462,8 @@ struct FoldingRange {
 /**
  * How a completion was triggered
  */
-namespace CompletionTriggerKind {
+namespace CompletionTriggerKind
+{
 /**
  * Completion was triggered by typing an identifier (24x7 code
  * complete), manual invocation (e.g Ctrl+Space) or via API.
@@ -1437,7 +1483,8 @@ static const int TriggerForIncompleteCompletions = 3;
 } // namespace CompletionTriggerKind
 
 /**
- * Contains additional information about the context in which a completion request is triggered.
+ * Contains additional information about the context in which a completion
+ * request is triggered.
  */
 struct CompletionContext {
     /**
@@ -1446,12 +1493,13 @@ struct CompletionContext {
     int triggerKind = CompletionTriggerKind::TriggerCharacter;
 
     /**
-     * The trigger character (a single character) that has trigger code complete.
-     * Is undefined if `triggerKind !== CompletionTriggerKind.TriggerCharacter`
+     * The trigger character (a single character) that has trigger code
+     * complete. Is undefined if `triggerKind !==
+     * CompletionTriggerKind.TriggerCharacter`
      */
     String triggerCharacter;
 
-    void load(const Dictionary &p_params) {
+    void load(const Dictionary& p_params) {
         triggerKind = int(p_params["triggerKind"]);
         triggerCharacter = p_params["triggerCharacter"];
     }
@@ -1460,11 +1508,12 @@ struct CompletionContext {
 struct CompletionParams : public TextDocumentPositionParams {
     /**
      * The completion context. This is only available if the client specifies
-     * to send this using `ClientCapabilities.textDocument.completion.contextSupport === true`
+     * to send this using
+     * `ClientCapabilities.textDocument.completion.contextSupport === true`
      */
     CompletionContext context;
 
-    void load(const Dictionary &p_params) {
+    void load(const Dictionary& p_params) {
         TextDocumentPositionParams::load(p_params);
         context.load(p_params["context"]);
     }
@@ -1501,12 +1550,14 @@ struct ParameterInformation {
     /**
      * The label of this parameter information.
      *
-     * Either a string or an inclusive start and exclusive end offsets within its containing
-     * signature label. (see SignatureInformation.label). The offsets are based on a UTF-16
-     * string representation as `Position` and `Range` does.
+     * Either a string or an inclusive start and exclusive end offsets within
+     * its containing signature label. (see SignatureInformation.label). The
+     * offsets are based on a UTF-16 string representation as `Position` and
+     * `Range` does.
      *
-     * *Note*: a label of type string should be a substring of its containing signature label.
-     * Its intended use case is to highlight the parameter label part in the `SignatureInformation.label`.
+     * *Note*: a label of type string should be a substring of its containing
+     * signature label. Its intended use case is to highlight the parameter
+     * label part in the `SignatureInformation.label`.
      */
     String label;
 
@@ -1716,8 +1767,10 @@ struct Workspace {
 
 struct ServerCapabilities {
     /**
-     * Defines how text documents are synced. Is either a detailed structure defining each notification or
-     * for backwards compatibility the TextDocumentSyncKind number. If omitted it defaults to `TextDocumentSyncKind.None`.
+     * Defines how text documents are synced. Is either a detailed structure
+     * defining each notification or for backwards compatibility the
+     * TextDocumentSyncKind number. If omitted it defaults to
+     * `TextDocumentSyncKind.None`.
      */
     TextDocumentSyncOptions textDocumentSync;
 
@@ -1781,9 +1834,9 @@ struct ServerCapabilities {
     Workspace workspace;
 
     /**
-     * The server provides code actions. The `CodeActionOptions` return type is only
-     * valid if the client signals code action literal support via the property
-     * `textDocument.codeAction.codeActionLiteralSupport`.
+     * The server provides code actions. The `CodeActionOptions` return type is
+     * only valid if the client signals code action literal support via the
+     * property `textDocument.codeAction.codeActionLiteralSupport`.
      */
     bool codeActionProvider = false;
 
@@ -1852,12 +1905,13 @@ struct ServerCapabilities {
         signatureHelpProvider.triggerCharacters.push_back(",");
         signatureHelpProvider.triggerCharacters.push_back("(");
         dict["signatureHelpProvider"] = signatureHelpProvider.to_json();
-        //dict["codeLensProvider"] = codeLensProvider.to_json();
-        dict["documentOnTypeFormattingProvider"] = documentOnTypeFormattingProvider.to_json();
+        // dict["codeLensProvider"] = codeLensProvider.to_json();
+        dict["documentOnTypeFormattingProvider"] =
+            documentOnTypeFormattingProvider.to_json();
         dict["renameProvider"] = renameProvider.to_json();
         dict["documentLinkProvider"] = documentLinkProvider.to_json();
-        dict["colorProvider"] = false; // colorProvider.to_json();
-        dict["foldingRangeProvider"] = false; //foldingRangeProvider.to_json();
+        dict["colorProvider"] = false;        // colorProvider.to_json();
+        dict["foldingRangeProvider"] = false; // foldingRangeProvider.to_json();
         dict["executeCommandProvider"] = executeCommandProvider.to_json();
         dict["hoverProvider"] = hoverProvider;
         dict["definitionProvider"] = definitionProvider;
@@ -1870,7 +1924,8 @@ struct ServerCapabilities {
         dict["workspace"] = workspace.to_json();
         dict["codeActionProvider"] = codeActionProvider;
         dict["documentFormattingProvider"] = documentFormattingProvider;
-        dict["documentRangeFormattingProvider"] = documentRangeFormattingProvider;
+        dict["documentRangeFormattingProvider"] =
+            documentRangeFormattingProvider;
         dict["declarationProvider"] = declarationProvider;
         return dict;
     }
@@ -1891,8 +1946,8 @@ struct InitializeResult {
 
 struct GodotNativeClassInfo {
     String name;
-    const DocData::ClassDoc *class_doc = nullptr;
-    const ClassDB::ClassInfo *class_info = nullptr;
+    const DocData::ClassDoc* class_doc = nullptr;
+    const ClassDB::ClassInfo* class_info = nullptr;
 
     Dictionary to_json() {
         Dictionary dict;
@@ -1912,7 +1967,8 @@ struct GodotCapabilities {
     Dictionary to_json() {
         Dictionary dict;
         Array classes;
-        for (List<GodotNativeClassInfo>::Element *E = native_classes.front(); E; E = E->next()) {
+        for (List<GodotNativeClassInfo>::Element* E = native_classes.front(); E;
+             E = E->next()) {
             classes.push_back(E->get().to_json());
         }
         dict["native_classes"] = classes;
@@ -1921,7 +1977,7 @@ struct GodotCapabilities {
 };
 
 /** Format BBCode documentation from DocData to markdown */
-static String marked_documentation(const String &p_bbcode) {
+static String marked_documentation(const String& p_bbcode) {
     String markdown = p_bbcode.strip_edges();
 
     Vector<String> lines = markdown.split("\n");

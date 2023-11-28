@@ -2,6 +2,7 @@
 #include "core/map.h"
 
 static Map<String, Color> _named_colors;
+
 static void _populate_named_colors() {
     if (!_named_colors.empty()) {
         return;

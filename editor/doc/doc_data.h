@@ -51,7 +51,8 @@ public:
         String qualifiers;
         String description;
         Vector<ArgumentDoc> arguments;
-        bool operator<(const MethodDoc &p_md) const {
+
+        bool operator<(const MethodDoc& p_md) const {
             return name < p_md.name;
         }
     };
@@ -72,9 +73,11 @@ public:
         String setter, getter;
         String default_value;
         bool overridden;
-        bool operator<(const PropertyDoc &p_prop) const {
+
+        bool operator<(const PropertyDoc& p_prop) const {
             return name < p_prop.name;
         }
+
         PropertyDoc() {
             overridden = false;
         }
@@ -86,7 +89,8 @@ public:
         String data_type;
         String description;
         String default_value;
-        bool operator<(const ThemeItemDoc &p_theme_item) const {
+
+        bool operator<(const ThemeItemDoc& p_theme_item) const {
             // First sort by the data type, then by name.
             if (data_type == p_theme_item.data_type) {
                 return name < p_theme_item.name;
@@ -120,14 +124,21 @@ public:
     Error _load(Ref<XMLParser> parser);
 
 public:
-    void merge_from(const DocData &p_data);
-    void remove_from(const DocData &p_data);
+    void merge_from(const DocData& p_data);
+    void remove_from(const DocData& p_data);
     void generate(bool p_basic_types = false);
-    Error load_classes(const String &p_dir);
-    static Error erase_classes(const String &p_dir);
-    Error save_classes(const String &p_default_path, const Map<String, String> &p_class_path);
+    Error load_classes(const String& p_dir);
+    static Error erase_classes(const String& p_dir);
+    Error save_classes(
+        const String& p_default_path,
+        const Map<String, String>& p_class_path
+    );
 
-    Error load_compressed(const uint8_t *p_data, int p_compressed_size, int p_uncompressed_size);
+    Error load_compressed(
+        const uint8_t* p_data,
+        int p_compressed_size,
+        int p_uncompressed_size
+    );
 };
 
 #endif // DOC_DATA_H

@@ -32,7 +32,10 @@
 
 @interface GodotNativeVideoView : UIView
 
-- (BOOL)playVideoAtPath:(NSString *)filePath volume:(float)videoVolume audio:(NSString *)audioTrack subtitle:(NSString *)subtitleTrack;
+- (BOOL)playVideoAtPath:(NSString*)filePath
+                 volume:(float)videoVolume
+                  audio:(NSString*)audioTrack
+               subtitle:(NSString*)subtitleTrack;
 - (BOOL)isVideoPlaying;
 - (void)pauseVideo;
 - (void)unfocusVideo;

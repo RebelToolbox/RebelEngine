@@ -54,7 +54,8 @@ class Sprite : public Node2D {
     int vframes;
     int hframes;
 
-    void _get_rects(Rect2 &r_src_rect, Rect2 &r_dst_rect, bool &r_filter_clip) const;
+    void _get_rects(Rect2& r_src_rect, Rect2& r_dst_rect, bool& r_filter_clip)
+        const;
 
     void _texture_changed();
 
@@ -63,34 +64,37 @@ protected:
 
     static void _bind_methods();
 
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
 public:
 #ifdef TOOLS_ENABLED
     virtual Dictionary _edit_get_state() const;
-    virtual void _edit_set_state(const Dictionary &p_state);
+    virtual void _edit_set_state(const Dictionary& p_state);
 
-    virtual void _edit_set_pivot(const Point2 &p_pivot);
+    virtual void _edit_set_pivot(const Point2& p_pivot);
     virtual Point2 _edit_get_pivot() const;
     virtual bool _edit_use_pivot() const;
-    virtual bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const;
+    virtual bool _edit_is_selected_on_click(
+        const Point2& p_point,
+        double p_tolerance
+    ) const;
 
     virtual Rect2 _edit_get_rect() const;
     virtual bool _edit_use_rect() const;
 #endif
 
-    bool is_pixel_opaque(const Point2 &p_point) const;
+    bool is_pixel_opaque(const Point2& p_point) const;
 
-    void set_texture(const Ref<Texture> &p_texture);
+    void set_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_texture() const;
 
-    void set_normal_map(const Ref<Texture> &p_texture);
+    void set_normal_map(const Ref<Texture>& p_texture);
     Ref<Texture> get_normal_map() const;
 
     void set_centered(bool p_center);
     bool is_centered() const;
 
-    void set_offset(const Point2 &p_offset);
+    void set_offset(const Point2& p_offset);
     Point2 get_offset() const;
 
     void set_flip_h(bool p_flip);
@@ -105,13 +109,13 @@ public:
     void set_region_filter_clip(bool p_enable);
     bool is_region_filter_clip_enabled() const;
 
-    void set_region_rect(const Rect2 &p_region_rect);
+    void set_region_rect(const Rect2& p_region_rect);
     Rect2 get_region_rect() const;
 
     void set_frame(int p_frame);
     int get_frame() const;
 
-    void set_frame_coords(const Vector2 &p_coord);
+    void set_frame_coords(const Vector2& p_coord);
     Vector2 get_frame_coords() const;
 
     void set_vframes(int p_amount);

@@ -41,11 +41,11 @@
 #include "scene/main/node.h"
 #include "scene/main/viewport.h"
 
-void VisualScriptPropertySelector::_text_changed(const String &p_newtext) {
+void VisualScriptPropertySelector::_text_changed(const String& p_newtext) {
     _update_search();
 }
 
-void VisualScriptPropertySelector::_sbox_input(const Ref<InputEvent> &p_ie) {
+void VisualScriptPropertySelector::_sbox_input(const Ref<InputEvent>& p_ie) {
     Ref<InputEventKey> k = p_ie;
 
     if (k.is_valid()) {
@@ -57,14 +57,14 @@ void VisualScriptPropertySelector::_sbox_input(const Ref<InputEvent> &p_ie) {
                 search_options->call("_gui_input", k);
                 search_box->accept_event();
 
-                TreeItem *root = search_options->get_root();
+                TreeItem* root = search_options->get_root();
                 if (!root->get_children()) {
                     break;
                 }
 
-                TreeItem *current = search_options->get_selected();
+                TreeItem* current = search_options->get_selected();
 
-                TreeItem *item = search_options->get_next_selected(root);
+                TreeItem* item = search_options->get_next_selected(root);
                 while (item) {
                     item->deselect(0);
                     item = search_options->get_next_selected(item);
@@ -83,7 +83,7 @@ void VisualScriptPropertySelector::_update_search() {
     search_options->clear();
     help_bit->set_text("");
 
-    TreeItem *root = search_options->create_item();
+    TreeItem* root = search_options->create_item();
     bool found = false;
     StringName base = base_type;
     List<StringName> base_list;
@@ -92,10 +92,10 @@ void VisualScriptPropertySelector::_update_search() {
         base = ClassDB::get_parent_class_nocheck(base);
     }
 
-    for (List<StringName>::Element *E = base_list.front(); E; E = E->next()) {
+    for (List<StringName>::Element* E = base_list.front(); E; E = E->next()) {
         List<MethodInfo> methods;
         List<PropertyInfo> props;
-        TreeItem *category = nullptr;
+        TreeItem* category = nullptr;
         Ref<Texture> type_icons[Variant::VARIANT_MAX] = {
             Control::get_icon("Variant", "EditorIcons"),
             Control::get_icon("bool", "EditorIcons"),
@@ -141,31 +141,41 @@ void VisualScriptPropertySelector::_update_search() {
             if (instance) {
                 instance->get_property_list(&props, true);
             } else {
-                Object *obj = ObjectDB::get_instance(script);
+                Object* obj = ObjectDB::get_instance(script);
                 if (Object::cast_to<Script>(obj)) {
-                    Object::cast_to<Script>(obj)->get_script_property_list(&props);
+                    Object::cast_to<Script>(obj)->get_script_property_list(
+                        &props
+                    );
                 } else {
                     ClassDB::get_property_list(E->get(), &props, true);
                 }
             }
-            for (List<PropertyInfo>::Element *F = props.front(); F; F = F->next()) {
-                if (!(F->get().usage & PROPERTY_USAGE_EDITOR) && !(F->get().usage & PROPERTY_USAGE_SCRIPT_VARIABLE)) {
+            for (List<PropertyInfo>::Element* F = props.front(); F;
+                 F = F->next()) {
+                if (!(F->get().usage & PROPERTY_USAGE_EDITOR)
+                    && !(F->get().usage & PROPERTY_USAGE_SCRIPT_VARIABLE)) {
                     continue;
                 }
 
-                if (type_filter.size() && type_filter.find(F->get().type) == -1) {
+                if (type_filter.size()
+                    && type_filter.find(F->get().type) == -1) {
                     continue;
                 }
 
-                // capitalize() also converts underscore to space, we'll match again both possible styles
-                String get_text_raw = String(vformat(TTR("Get %s"), F->get().name));
+                // capitalize() also converts underscore to space, we'll match
+                // again both possible styles
+                String get_text_raw =
+                    String(vformat(TTR("Get %s"), F->get().name));
                 String get_text = get_text_raw.capitalize();
-                String set_text_raw = String(vformat(TTR("Set %s"), F->get().name));
+                String set_text_raw =
+                    String(vformat(TTR("Set %s"), F->get().name));
                 String set_text = set_text_raw.capitalize();
                 String input = search_box->get_text().capitalize();
 
-                if (input == String() || get_text_raw.findn(input) != -1 || get_text.findn(input) != -1) {
-                    TreeItem *item = search_options->create_item(category ? category : root);
+                if (input == String() || get_text_raw.findn(input) != -1
+                    || get_text.findn(input) != -1) {
+                    TreeItem* item =
+                        search_options->create_item(category ? category : root);
                     item->set_text(0, get_text);
                     item->set_metadata(0, F->get().name);
                     item->set_icon(0, type_icons[F->get().type]);
@@ -177,8 +187,10 @@ void VisualScriptPropertySelector::_update_search() {
                     item->set_metadata(2, connecting);
                 }
 
-                if (input == String() || set_text_raw.findn(input) != -1 || set_text.findn(input) != -1) {
-                    TreeItem *item = search_options->create_item(category ? category : root);
+                if (input == String() || set_text_raw.findn(input) != -1
+                    || set_text.findn(input) != -1) {
+                    TreeItem* item =
+                        search_options->create_item(category ? category : root);
                     item->set_text(0, set_text);
                     item->set_metadata(0, F->get().name);
                     item->set_icon(0, type_icons[F->get().type]);
@@ -197,17 +209,20 @@ void VisualScriptPropertySelector::_update_search() {
                 v = Variant::construct(type, nullptr, 0, ce);
                 v.get_method_list(&methods);
             } else {
-                Object *obj = ObjectDB::get_instance(script);
+                Object* obj = ObjectDB::get_instance(script);
                 if (Object::cast_to<Script>(obj)) {
-                    Object::cast_to<Script>(obj)->get_script_method_list(&methods);
+                    Object::cast_to<Script>(obj)->get_script_method_list(
+                        &methods
+                    );
                 }
 
                 ClassDB::get_method_list(E->get(), &methods, true, true);
             }
         }
-        for (List<MethodInfo>::Element *M = methods.front(); M; M = M->next()) {
+        for (List<MethodInfo>::Element* M = methods.front(); M; M = M->next()) {
             String name = M->get().name.get_slice(":", 0);
-            if (name.begins_with("_") && !(M->get().flags & METHOD_FLAG_VIRTUAL)) {
+            if (name.begins_with("_")
+                && !(M->get().flags & METHOD_FLAG_VIRTUAL)) {
                 continue;
             }
 
@@ -230,10 +245,13 @@ void VisualScriptPropertySelector::_update_search() {
                     if (mi.arguments[i].type == Variant::NIL) {
                         desc_arguments += "var";
                     } else if (mi.arguments[i].name.find(":") != -1) {
-                        desc_arguments += mi.arguments[i].name.get_slice(":", 1);
-                        mi.arguments[i].name = mi.arguments[i].name.get_slice(":", 0);
+                        desc_arguments +=
+                            mi.arguments[i].name.get_slice(":", 1);
+                        mi.arguments[i].name =
+                            mi.arguments[i].name.get_slice(":", 0);
                     } else {
-                        desc_arguments += Variant::get_type_name(mi.arguments[i].type);
+                        desc_arguments +=
+                            Variant::get_type_name(mi.arguments[i].type);
                     }
                 }
                 desc_arguments += ")";
@@ -241,14 +259,15 @@ void VisualScriptPropertySelector::_update_search() {
             String desc_raw = mi.name + desc_arguments;
             String desc = desc_raw.capitalize().replace("( ", "(");
 
-            if (search_box->get_text() != String() &&
-                    name.findn(search_box->get_text()) == -1 &&
-                    desc.findn(search_box->get_text()) == -1 &&
-                    desc_raw.findn(search_box->get_text()) == -1) {
+            if (search_box->get_text() != String()
+                && name.findn(search_box->get_text()) == -1
+                && desc.findn(search_box->get_text()) == -1
+                && desc_raw.findn(search_box->get_text()) == -1) {
                 continue;
             }
 
-            TreeItem *item = search_options->create_item(category ? category : root);
+            TreeItem* item =
+                search_options->create_item(category ? category : root);
             item->set_text(0, desc);
             item->set_icon(0, get_icon("MemberMethod", "EditorIcons"));
             item->set_metadata(0, name);
@@ -263,45 +282,138 @@ void VisualScriptPropertySelector::_update_search() {
         }
 
         if (category && category->get_children() == nullptr) {
-            memdelete(category); //old category was unused
+            memdelete(category); // old category was unused
         }
     }
     if (properties) {
         if (!seq_connect && !visual_script_generic) {
-            get_visual_node_names("flow_control/type_cast", Set<String>(), found, root, search_box);
-            get_visual_node_names("functions/built_in/print", Set<String>(), found, root, search_box);
-            get_visual_node_names("functions/by_type/" + Variant::get_type_name(type), Set<String>(), found, root, search_box);
-            get_visual_node_names("functions/deconstruct/" + Variant::get_type_name(type), Set<String>(), found, root, search_box);
-            get_visual_node_names("operators/compare/", Set<String>(), found, root, search_box);
+            get_visual_node_names(
+                "flow_control/type_cast",
+                Set<String>(),
+                found,
+                root,
+                search_box
+            );
+            get_visual_node_names(
+                "functions/built_in/print",
+                Set<String>(),
+                found,
+                root,
+                search_box
+            );
+            get_visual_node_names(
+                "functions/by_type/" + Variant::get_type_name(type),
+                Set<String>(),
+                found,
+                root,
+                search_box
+            );
+            get_visual_node_names(
+                "functions/deconstruct/" + Variant::get_type_name(type),
+                Set<String>(),
+                found,
+                root,
+                search_box
+            );
+            get_visual_node_names(
+                "operators/compare/",
+                Set<String>(),
+                found,
+                root,
+                search_box
+            );
             if (type == Variant::INT) {
-                get_visual_node_names("operators/bitwise/", Set<String>(), found, root, search_box);
+                get_visual_node_names(
+                    "operators/bitwise/",
+                    Set<String>(),
+                    found,
+                    root,
+                    search_box
+                );
             }
             if (type == Variant::BOOL) {
-                get_visual_node_names("operators/logic/", Set<String>(), found, root, search_box);
+                get_visual_node_names(
+                    "operators/logic/",
+                    Set<String>(),
+                    found,
+                    root,
+                    search_box
+                );
             }
-            if (type == Variant::BOOL || type == Variant::INT || type == Variant::REAL || type == Variant::VECTOR2 || type == Variant::VECTOR3) {
-                get_visual_node_names("operators/math/", Set<String>(), found, root, search_box);
+            if (type == Variant::BOOL || type == Variant::INT
+                || type == Variant::REAL || type == Variant::VECTOR2
+                || type == Variant::VECTOR3) {
+                get_visual_node_names(
+                    "operators/math/",
+                    Set<String>(),
+                    found,
+                    root,
+                    search_box
+                );
             }
         }
     }
 
     if (seq_connect && !visual_script_generic) {
         String text = search_box->get_text();
-        create_visualscript_item(String("VisualScriptCondition"), root, text, String("Condition"));
-        create_visualscript_item(String("VisualScriptSwitch"), root, text, String("Switch"));
-        create_visualscript_item(String("VisualScriptSequence"), root, text, String("Sequence"));
-        create_visualscript_item(String("VisualScriptIterator"), root, text, String("Iterator"));
-        create_visualscript_item(String("VisualScriptWhile"), root, text, String("While"));
-        create_visualscript_item(String("VisualScriptReturn"), root, text, String("Return"));
-        get_visual_node_names("flow_control/type_cast", Set<String>(), found, root, search_box);
-        get_visual_node_names("functions/built_in/print", Set<String>(), found, root, search_box);
+        create_visualscript_item(
+            String("VisualScriptCondition"),
+            root,
+            text,
+            String("Condition")
+        );
+        create_visualscript_item(
+            String("VisualScriptSwitch"),
+            root,
+            text,
+            String("Switch")
+        );
+        create_visualscript_item(
+            String("VisualScriptSequence"),
+            root,
+            text,
+            String("Sequence")
+        );
+        create_visualscript_item(
+            String("VisualScriptIterator"),
+            root,
+            text,
+            String("Iterator")
+        );
+        create_visualscript_item(
+            String("VisualScriptWhile"),
+            root,
+            text,
+            String("While")
+        );
+        create_visualscript_item(
+            String("VisualScriptReturn"),
+            root,
+            text,
+            String("Return")
+        );
+        get_visual_node_names(
+            "flow_control/type_cast",
+            Set<String>(),
+            found,
+            root,
+            search_box
+        );
+        get_visual_node_names(
+            "functions/built_in/print",
+            Set<String>(),
+            found,
+            root,
+            search_box
+        );
     }
 
     if ((properties || seq_connect) && visual_script_generic) {
         get_visual_node_names("", Set<String>(), found, root, search_box);
     }
 
-    TreeItem *selected_item = search_options->search_item_text(search_box->get_text());
+    TreeItem* selected_item =
+        search_options->search_item_text(search_box->get_text());
     if (!found && selected_item != nullptr) {
         selected_item->select(0);
         found = true;
@@ -310,9 +422,14 @@ void VisualScriptPropertySelector::_update_search() {
     get_ok()->set_disabled(root->get_children() == nullptr);
 }
 
-void VisualScriptPropertySelector::create_visualscript_item(const String &name, TreeItem *const root, const String &search_input, const String &text) {
+void VisualScriptPropertySelector::create_visualscript_item(
+    const String& name,
+    TreeItem* const root,
+    const String& search_input,
+    const String& text
+) {
     if (search_input == String() || text.findn(search_input) != -1) {
-        TreeItem *item = search_options->create_item(root);
+        TreeItem* item = search_options->create_item(root);
         item->set_text(0, text);
         item->set_icon(0, get_icon("VisualScript", "EditorIcons"));
         item->set_metadata(0, name);
@@ -325,13 +442,19 @@ void VisualScriptPropertySelector::create_visualscript_item(const String &name, 
     }
 }
 
-void VisualScriptPropertySelector::get_visual_node_names(const String &root_filter, const Set<String> &p_modifiers, bool &found, TreeItem *const root, LineEdit *const search_box) {
-    Map<String, TreeItem *> path_cache;
+void VisualScriptPropertySelector::get_visual_node_names(
+    const String& root_filter,
+    const Set<String>& p_modifiers,
+    bool& found,
+    TreeItem* const root,
+    LineEdit* const search_box
+) {
+    Map<String, TreeItem*> path_cache;
 
     List<String> fnodes;
     VisualScriptLanguage::singleton->get_registered_node_names(&fnodes);
 
-    for (List<String>::Element *E = fnodes.front(); E; E = E->next()) {
+    for (List<String>::Element* E = fnodes.front(); E; E = E->next()) {
         if (!E->get().begins_with(root_filter)) {
             continue;
         }
@@ -356,7 +479,8 @@ void VisualScriptPropertySelector::get_visual_node_names(const String &root_filt
         }
 
         bool in_modifier = p_modifiers.empty();
-        for (Set<String>::Element *F = p_modifiers.front(); F && in_modifier; F = F->next()) {
+        for (Set<String>::Element* F = p_modifiers.front(); F && in_modifier;
+             F = F->next()) {
             if (E->get().findn(F->get()) != -1) {
                 in_modifier = true;
             }
@@ -365,8 +489,9 @@ void VisualScriptPropertySelector::get_visual_node_names(const String &root_filt
             continue;
         }
 
-        TreeItem *item = search_options->create_item(root);
-        Ref<VisualScriptNode> vnode = VisualScriptLanguage::singleton->create_node_from_name(E->get());
+        TreeItem* item = search_options->create_item(root);
+        Ref<VisualScriptNode> vnode =
+            VisualScriptLanguage::singleton->create_node_from_name(E->get());
         Ref<VisualScriptOperator> vnode_operator = vnode;
         String type_name;
         if (vnode_operator.is_valid()) {
@@ -378,7 +503,8 @@ void VisualScriptPropertySelector::get_visual_node_names(const String &root_filt
         }
         Ref<VisualScriptFunctionCall> vnode_function_call = vnode;
         if (vnode_function_call.is_valid()) {
-            String basic_type = Variant::get_type_name(vnode_function_call->get_basic_type());
+            String basic_type =
+                Variant::get_type_name(vnode_function_call->get_basic_type());
             type_name = basic_type.capitalize() + " ";
         }
         Ref<VisualScriptConstructor> vnode_constructor = vnode;
@@ -389,7 +515,11 @@ void VisualScriptPropertySelector::get_visual_node_names(const String &root_filt
         if (vnode_deconstruct.is_valid()) {
             type_name = "Deconstruct ";
         }
-        Vector<String> desc = path[path.size() - 1].replace("(", " ").replace(")", " ").replace(",", " ").split(" ");
+        Vector<String> desc = path[path.size() - 1]
+                                  .replace("(", " ")
+                                  .replace(")", " ")
+                                  .replace(",", " ")
+                                  .split(" ");
         for (int i = 0; i < desc.size(); i++) {
             desc.write[i] = desc[i].capitalize();
             if (desc[i].ends_with(",")) {
@@ -410,18 +540,23 @@ void VisualScriptPropertySelector::get_visual_node_names(const String &root_filt
 }
 
 void VisualScriptPropertySelector::_confirmed() {
-    TreeItem *ti = search_options->get_selected();
+    TreeItem* ti = search_options->get_selected();
     if (!ti) {
         return;
     }
-    emit_signal("selected", ti->get_metadata(0), ti->get_metadata(1), ti->get_metadata(2));
+    emit_signal(
+        "selected",
+        ti->get_metadata(0),
+        ti->get_metadata(1),
+        ti->get_metadata(2)
+    );
     hide();
 }
 
 void VisualScriptPropertySelector::_item_selected() {
     help_bit->set_text("");
 
-    TreeItem *item = search_options->get_selected();
+    TreeItem* item = search_options->get_selected();
     if (!item) {
         return;
     }
@@ -435,13 +570,14 @@ void VisualScriptPropertySelector::_item_selected() {
         class_type = base_type;
     }
 
-    DocData *dd = EditorHelp::get_doc_data();
+    DocData* dd = EditorHelp::get_doc_data();
     String text;
 
     String at_class = class_type;
 
     while (at_class != String()) {
-        Map<String, DocData::ClassDoc>::Element *E = dd->class_list.find(at_class);
+        Map<String, DocData::ClassDoc>::Element* E =
+            dd->class_list.find(at_class);
         if (E) {
             for (int i = 0; i < E->get().properties.size(); i++) {
                 if (E->get().properties[i].name == name) {
@@ -455,7 +591,8 @@ void VisualScriptPropertySelector::_item_selected() {
     at_class = class_type;
 
     while (at_class != String()) {
-        Map<String, DocData::ClassDoc>::Element *C = dd->class_list.find(at_class);
+        Map<String, DocData::ClassDoc>::Element* C =
+            dd->class_list.find(at_class);
         if (C) {
             for (int i = 0; i < C->get().methods.size(); i++) {
                 if (C->get().methods[i].name == name) {
@@ -467,8 +604,9 @@ void VisualScriptPropertySelector::_item_selected() {
         at_class = ClassDB::get_parent_class_nocheck(at_class);
     }
     Vector<String> functions = name.rsplit("/", false);
-    at_class = functions.size() > 3 ? functions[functions.size() - 2] : class_type;
-    Map<String, DocData::ClassDoc>::Element *T = dd->class_list.find(at_class);
+    at_class =
+        functions.size() > 3 ? functions[functions.size() - 2] : class_type;
+    Map<String, DocData::ClassDoc>::Element* T = dd->class_list.find(at_class);
     if (T) {
         for (int i = 0; i < T->get().methods.size(); i++) {
             if (T->get().methods[i].name == functions[functions.size() - 1]) {
@@ -477,30 +615,38 @@ void VisualScriptPropertySelector::_item_selected() {
         }
     }
 
-    List<String> *names = memnew(List<String>);
+    List<String>* names = memnew(List<String>);
     VisualScriptLanguage::singleton->get_registered_node_names(names);
     if (names->find(name) != nullptr) {
-        Ref<VisualScriptOperator> operator_node = VisualScriptLanguage::singleton->create_node_from_name(name);
+        Ref<VisualScriptOperator> operator_node =
+            VisualScriptLanguage::singleton->create_node_from_name(name);
         if (operator_node.is_valid()) {
-            Map<String, DocData::ClassDoc>::Element *F = dd->class_list.find(operator_node->get_class_name());
+            Map<String, DocData::ClassDoc>::Element* F =
+                dd->class_list.find(operator_node->get_class_name());
             if (F) {
-                text = Variant::get_operator_name(operator_node->get_operator());
+                text =
+                    Variant::get_operator_name(operator_node->get_operator());
             }
         }
-        Ref<VisualScriptTypeCast> typecast_node = VisualScriptLanguage::singleton->create_node_from_name(name);
+        Ref<VisualScriptTypeCast> typecast_node =
+            VisualScriptLanguage::singleton->create_node_from_name(name);
         if (typecast_node.is_valid()) {
-            Map<String, DocData::ClassDoc>::Element *F = dd->class_list.find(typecast_node->get_class_name());
+            Map<String, DocData::ClassDoc>::Element* F =
+                dd->class_list.find(typecast_node->get_class_name());
             if (F) {
                 text = DTR(F->get().description);
             }
         }
 
-        Ref<VisualScriptBuiltinFunc> builtin_node = VisualScriptLanguage::singleton->create_node_from_name(name);
+        Ref<VisualScriptBuiltinFunc> builtin_node =
+            VisualScriptLanguage::singleton->create_node_from_name(name);
         if (builtin_node.is_valid()) {
-            Map<String, DocData::ClassDoc>::Element *F = dd->class_list.find(builtin_node->get_class_name());
+            Map<String, DocData::ClassDoc>::Element* F =
+                dd->class_list.find(builtin_node->get_class_name());
             if (F) {
                 for (int i = 0; i < F->get().constants.size(); i++) {
-                    if (F->get().constants[i].value.to_int() == int(builtin_node->get_func())) {
+                    if (F->get().constants[i].value.to_int()
+                        == int(builtin_node->get_func())) {
                         text = DTR(F->get().constants[i].description);
                     }
                 }
@@ -523,7 +669,13 @@ void VisualScriptPropertySelector::_notification(int p_what) {
     }
 }
 
-void VisualScriptPropertySelector::select_method_from_base_type(const String &p_base, const String &p_current, const bool p_virtuals_only, const bool p_connecting, bool clear_text) {
+void VisualScriptPropertySelector::select_method_from_base_type(
+    const String& p_base,
+    const String& p_current,
+    const bool p_virtuals_only,
+    const bool p_connecting,
+    bool clear_text
+) {
     base_type = p_base;
     selected = p_current;
     type = Variant::NIL;
@@ -544,11 +696,20 @@ void VisualScriptPropertySelector::select_method_from_base_type(const String &p_
     _update_search();
 }
 
-void VisualScriptPropertySelector::set_type_filter(const Vector<Variant::Type> &p_type_filter) {
+void VisualScriptPropertySelector::set_type_filter(
+    const Vector<Variant::Type>& p_type_filter
+) {
     type_filter = p_type_filter;
 }
 
-void VisualScriptPropertySelector::select_from_base_type(const String &p_base, const String &p_current, bool p_virtuals_only, bool p_seq_connect, const bool p_connecting, bool clear_text) {
+void VisualScriptPropertySelector::select_from_base_type(
+    const String& p_base,
+    const String& p_current,
+    bool p_virtuals_only,
+    bool p_seq_connect,
+    const bool p_connecting,
+    bool clear_text
+) {
     base_type = p_base;
     selected = p_current;
     type = Variant::NIL;
@@ -571,7 +732,12 @@ void VisualScriptPropertySelector::select_from_base_type(const String &p_base, c
     _update_search();
 }
 
-void VisualScriptPropertySelector::select_from_script(const Ref<Script> &p_script, const String &p_current, const bool p_connecting, bool clear_text) {
+void VisualScriptPropertySelector::select_from_script(
+    const Ref<Script>& p_script,
+    const String& p_current,
+    const bool p_connecting,
+    bool clear_text
+) {
     ERR_FAIL_COND(p_script.is_null());
 
     base_type = p_script->get_instance_base_type();
@@ -596,7 +762,12 @@ void VisualScriptPropertySelector::select_from_script(const Ref<Script> &p_scrip
     _update_search();
 }
 
-void VisualScriptPropertySelector::select_from_basic_type(Variant::Type p_type, const String &p_current, const bool p_connecting, bool clear_text) {
+void VisualScriptPropertySelector::select_from_basic_type(
+    Variant::Type p_type,
+    const String& p_current,
+    const bool p_connecting,
+    bool clear_text
+) {
     ERR_FAIL_COND(p_type == Variant::NIL);
     base_type = "";
     selected = p_current;
@@ -620,7 +791,12 @@ void VisualScriptPropertySelector::select_from_basic_type(Variant::Type p_type, 
     _update_search();
 }
 
-void VisualScriptPropertySelector::select_from_action(const String &p_type, const String &p_current, const bool p_connecting, bool clear_text) {
+void VisualScriptPropertySelector::select_from_action(
+    const String& p_type,
+    const String& p_current,
+    const bool p_connecting,
+    bool clear_text
+) {
     base_type = p_type;
     selected = p_current;
     type = Variant::NIL;
@@ -643,7 +819,13 @@ void VisualScriptPropertySelector::select_from_action(const String &p_type, cons
     _update_search();
 }
 
-void VisualScriptPropertySelector::select_from_instance(Object *p_instance, const String &p_current, const bool p_connecting, const String &p_basetype, bool clear_text) {
+void VisualScriptPropertySelector::select_from_instance(
+    Object* p_instance,
+    const String& p_current,
+    const bool p_connecting,
+    const String& p_basetype,
+    bool clear_text
+) {
     base_type = p_basetype;
     selected = p_current;
     type = Variant::NIL;
@@ -666,7 +848,11 @@ void VisualScriptPropertySelector::select_from_instance(Object *p_instance, cons
     _update_search();
 }
 
-void VisualScriptPropertySelector::select_from_visual_script(const String &p_base, const bool p_connecting, bool clear_text) {
+void VisualScriptPropertySelector::select_from_visual_script(
+    const String& p_base,
+    const bool p_connecting,
+    bool clear_text
+) {
     base_type = p_base;
     selected = "";
     type = Variant::NIL;
@@ -697,18 +883,35 @@ void VisualScriptPropertySelector::show_window(float p_screen_ratio) {
 }
 
 void VisualScriptPropertySelector::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_text_changed"), &VisualScriptPropertySelector::_text_changed);
-    ClassDB::bind_method(D_METHOD("_confirmed"), &VisualScriptPropertySelector::_confirmed);
-    ClassDB::bind_method(D_METHOD("_sbox_input"), &VisualScriptPropertySelector::_sbox_input);
-    ClassDB::bind_method(D_METHOD("_item_selected"), &VisualScriptPropertySelector::_item_selected);
+    ClassDB::bind_method(
+        D_METHOD("_text_changed"),
+        &VisualScriptPropertySelector::_text_changed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_confirmed"),
+        &VisualScriptPropertySelector::_confirmed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_sbox_input"),
+        &VisualScriptPropertySelector::_sbox_input
+    );
+    ClassDB::bind_method(
+        D_METHOD("_item_selected"),
+        &VisualScriptPropertySelector::_item_selected
+    );
 
-    ADD_SIGNAL(MethodInfo("selected", PropertyInfo(Variant::STRING, "name"), PropertyInfo(Variant::STRING, "category"), PropertyInfo(Variant::BOOL, "connecting")));
+    ADD_SIGNAL(MethodInfo(
+        "selected",
+        PropertyInfo(Variant::STRING, "name"),
+        PropertyInfo(Variant::STRING, "category"),
+        PropertyInfo(Variant::BOOL, "connecting")
+    ));
 }
 
 VisualScriptPropertySelector::VisualScriptPropertySelector() {
-    VBoxContainer *vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
     add_child(vbc);
-    //set_child_rect(vbc);
+    // set_child_rect(vbc);
     search_box = memnew(LineEdit);
     vbc->add_margin_child(TTR("Search:"), search_box);
     search_box->connect("text_changed", this, "_text_changed");

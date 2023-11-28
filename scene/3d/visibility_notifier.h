@@ -35,11 +35,12 @@
 
 class World;
 class Camera;
+
 class VisibilityNotifier : public CullInstance {
     GDCLASS(VisibilityNotifier, CullInstance);
 
     Ref<World> world;
-    Set<Camera *> cameras;
+    Set<Camera*> cameras;
 
     AABB aabb;
 
@@ -49,18 +50,20 @@ class VisibilityNotifier : public CullInstance {
 
 protected:
     virtual void _screen_enter() {}
+
     virtual void _screen_exit() {}
+
     virtual void _refresh_portal_mode();
 
     void _notification(int p_what);
     static void _bind_methods();
     friend struct SpatialIndexer;
 
-    void _enter_camera(Camera *p_camera);
-    void _exit_camera(Camera *p_camera);
+    void _enter_camera(Camera* p_camera);
+    void _exit_camera(Camera* p_camera);
 
 public:
-    void set_aabb(const AABB &p_aabb);
+    void set_aabb(const AABB& p_aabb);
     AABB get_aabb() const;
     bool is_on_screen() const;
 
@@ -84,13 +87,13 @@ protected:
 
     bool visible;
 
-    void _find_nodes(Node *p_node);
+    void _find_nodes(Node* p_node);
 
-    Map<Node *, Variant> nodes;
-    void _node_removed(Node *p_node);
+    Map<Node*, Variant> nodes;
+    void _node_removed(Node* p_node);
     bool enabler[ENABLER_MAX];
 
-    void _change_node_state(Node *p_node, bool p_enabled);
+    void _change_node_state(Node* p_node, bool p_enabled);
 
     void _notification(int p_what);
     static void _bind_methods();

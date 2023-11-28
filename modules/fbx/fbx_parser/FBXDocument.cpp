@@ -87,13 +87,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <map>
 #include <memory>
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
 using namespace Util;
 
 // ------------------------------------------------------------------------------------------------
-LazyObject::LazyObject(uint64_t id, const ElementPtr element, const Document &doc) :
-        doc(doc), element(element), id(id), flags() {
+LazyObject::LazyObject(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc
+) :
+    doc(doc),
+    element(element),
+    id(id),
+    flags() {
     // empty
 }
 
@@ -113,14 +121,15 @@ ObjectPtr LazyObject::LoadObject() {
 
     TokenPtr key = element->KeyToken();
     ERR_FAIL_COND_V(!key, nullptr);
-    const TokenList &tokens = element->Tokens();
+    const TokenList& tokens = element->Tokens();
 
     if (tokens.size() < 3) {
-        //DOMError("expected at least 3 tokens: id, name and class tag",&element);
+        // DOMError("expected at least 3 tokens: id, name and class
+        // tag",&element);
         return nullptr;
     }
 
-    const char *err = nullptr;
+    const char* err = nullptr;
     std::string name = ParseTokenAsString(tokens[1], err);
     if (err) {
         DOMError(err, element);
@@ -149,7 +158,7 @@ ObjectPtr LazyObject::LoadObject() {
 
     // this needs to be relatively fast since it happens a lot,
     // so avoid constructing strings all the time.
-    const char *obtype = key->begin();
+    const char* obtype = key->begin();
     const size_t length = static_cast<size_t>(key->end() - key->begin());
 
     if (!strncmp(obtype, "Pose", length)) {
@@ -218,7 +227,10 @@ ObjectPtr LazyObject::LoadObject() {
     } else if (!strncmp(obtype, "AnimationCurveNode", length)) {
         object.reset(new AnimationCurveNode(id, element, name, doc));
     } else {
-        ERR_FAIL_V_MSG(nullptr, "FBX contains unsupported object: " + String(obtype));
+        ERR_FAIL_V_MSG(
+            nullptr,
+            "FBX contains unsupported object: " + String(obtype)
+        );
     }
 
     flags &= ~BEING_CONSTRUCTED;
@@ -227,9 +239,10 @@ ObjectPtr LazyObject::LoadObject() {
 }
 
 // ------------------------------------------------------------------------------------------------
-Object::Object(uint64_t id, const ElementPtr element, const std::string &name) :
-        element(element), name(name), id(id) {
-}
+Object::Object(uint64_t id, const ElementPtr element, const std::string& name) :
+    element(element),
+    name(name),
+    id(id) {}
 
 // ------------------------------------------------------------------------------------------------
 Object::~Object() {
@@ -237,8 +250,12 @@ Object::~Object() {
 }
 
 // ------------------------------------------------------------------------------------------------
-FileGlobalSettings::FileGlobalSettings(const Document &doc, const PropertyTable *props) :
-        props(props), doc(doc) {
+FileGlobalSettings::FileGlobalSettings(
+    const Document& doc,
+    const PropertyTable* props
+) :
+    props(props),
+    doc(doc) {
     // empty
 }
 
@@ -251,14 +268,17 @@ FileGlobalSettings::~FileGlobalSettings() {
 }
 
 // ------------------------------------------------------------------------------------------------
-Document::Document(const Parser &parser, const ImportSettings &settings) :
-        settings(settings), parser(parser), SafeToImport(false) {
+Document::Document(const Parser& parser, const ImportSettings& settings) :
+    settings(settings),
+    parser(parser),
+    SafeToImport(false) {
     // Cannot use array default initialization syntax because vc8 fails on it
-    for (unsigned int &timeStamp : creationTimeStamp) {
+    for (unsigned int& timeStamp : creationTimeStamp) {
         timeStamp = 0;
     }
 
-    // we must check if we can read the header version safely, if its outdated then drop it.
+    // we must check if we can read the header version safely, if its outdated
+    // then drop it.
     if (ReadHeader()) {
         SafeToImport = true;
         ReadPropertyTemplates();
@@ -279,11 +299,11 @@ Document::~Document() {
         delete v.second;
     }
 
-    for (ObjectMap::value_type &v : objects) {
+    for (ObjectMap::value_type& v : objects) {
         delete v.second;
     }
 
-    for (ConnectionMap::value_type &v : src_connections) {
+    for (ConnectionMap::value_type& v : src_connections) {
         delete v.second;
     }
 
@@ -307,17 +327,26 @@ bool Document::ReadHeader() {
     }
 
     const ScopePtr shead = ehead->Compound();
-    fbxVersion = ParseTokenAsInt(GetRequiredToken(GetRequiredElement(shead, "FBXVersion", ehead), 0));
+    fbxVersion = ParseTokenAsInt(
+        GetRequiredToken(GetRequiredElement(shead, "FBXVersion", ehead), 0)
+    );
 
     // While we may have some success with newer files, we don't support
     // the older 6.n fbx format
     if (fbxVersion < LowerSupportedVersion) {
-        DOMWarning("unsupported, old format version, FBX 2015-2020, you must re-export in a more modern version of your original modelling application");
+        DOMWarning(
+            "unsupported, old format version, FBX 2015-2020, you must "
+            "re-export in a more modern version of your original modelling "
+            "application"
+        );
         return false;
     }
     if (fbxVersion > UpperSupportedVersion) {
-        DOMWarning("unsupported, newer format version, supported are only FBX 2015, up to FBX 2020"
-                   " trying to read it nevertheless");
+        DOMWarning(
+            "unsupported, newer format version, supported are only FBX 2015, "
+            "up to FBX 2020"
+            " trying to read it nevertheless"
+        );
     }
 
     const ElementPtr ecreator = shead->GetElement("Creator");
@@ -332,7 +361,14 @@ bool Document::ReadHeader() {
     const ElementPtr scene_info = shead->GetElement("SceneInfo");
 
     if (scene_info) {
-        PropertyTable *fileExportProps = const_cast<PropertyTable *>(GetPropertyTable(*this, "", scene_info, scene_info->Compound(), true));
+        PropertyTable* fileExportProps =
+            const_cast<PropertyTable*>(GetPropertyTable(
+                *this,
+                "",
+                scene_info,
+                scene_info->Compound(),
+                true
+            ));
 
         if (fileExportProps) {
             metadata_properties = fileExportProps;
@@ -342,13 +378,27 @@ bool Document::ReadHeader() {
     const ElementPtr etimestamp = shead->GetElement("CreationTimeStamp");
     if (etimestamp && etimestamp->Compound()) {
         const ScopePtr stimestamp = etimestamp->Compound();
-        creationTimeStamp[0] = ParseTokenAsInt(GetRequiredToken(GetRequiredElement(stimestamp, "Year"), 0));
-        creationTimeStamp[1] = ParseTokenAsInt(GetRequiredToken(GetRequiredElement(stimestamp, "Month"), 0));
-        creationTimeStamp[2] = ParseTokenAsInt(GetRequiredToken(GetRequiredElement(stimestamp, "Day"), 0));
-        creationTimeStamp[3] = ParseTokenAsInt(GetRequiredToken(GetRequiredElement(stimestamp, "Hour"), 0));
-        creationTimeStamp[4] = ParseTokenAsInt(GetRequiredToken(GetRequiredElement(stimestamp, "Minute"), 0));
-        creationTimeStamp[5] = ParseTokenAsInt(GetRequiredToken(GetRequiredElement(stimestamp, "Second"), 0));
-        creationTimeStamp[6] = ParseTokenAsInt(GetRequiredToken(GetRequiredElement(stimestamp, "Millisecond"), 0));
+        creationTimeStamp[0] = ParseTokenAsInt(
+            GetRequiredToken(GetRequiredElement(stimestamp, "Year"), 0)
+        );
+        creationTimeStamp[1] = ParseTokenAsInt(
+            GetRequiredToken(GetRequiredElement(stimestamp, "Month"), 0)
+        );
+        creationTimeStamp[2] = ParseTokenAsInt(
+            GetRequiredToken(GetRequiredElement(stimestamp, "Day"), 0)
+        );
+        creationTimeStamp[3] = ParseTokenAsInt(
+            GetRequiredToken(GetRequiredElement(stimestamp, "Hour"), 0)
+        );
+        creationTimeStamp[4] = ParseTokenAsInt(
+            GetRequiredToken(GetRequiredElement(stimestamp, "Minute"), 0)
+        );
+        creationTimeStamp[5] = ParseTokenAsInt(
+            GetRequiredToken(GetRequiredElement(stimestamp, "Second"), 0)
+        );
+        creationTimeStamp[6] = ParseTokenAsInt(
+            GetRequiredToken(GetRequiredElement(stimestamp, "Millisecond"), 0)
+        );
     }
 
     return true;
@@ -356,19 +406,26 @@ bool Document::ReadHeader() {
 
 // ------------------------------------------------------------------------------------------------
 void Document::ReadGlobalSettings() {
-    ERR_FAIL_COND_MSG(globals != nullptr, "Global settings is already setup this is a serious error and should be reported");
+    ERR_FAIL_COND_MSG(
+        globals != nullptr,
+        "Global settings is already setup this is a serious error and should "
+        "be reported"
+    );
 
     const ScopePtr sc = parser.GetRootScope();
     const ElementPtr ehead = sc->GetElement("GlobalSettings");
     if (nullptr == ehead || !ehead->Compound()) {
         DOMWarning("no GlobalSettings dictionary found");
-        globals = std::make_shared<FileGlobalSettings>(*this, new PropertyTable());
+        globals =
+            std::make_shared<FileGlobalSettings>(*this, new PropertyTable());
         return;
     }
 
-    const PropertyTable *props = GetPropertyTable(*this, "", ehead, ehead->Compound(), true);
+    const PropertyTable* props =
+        GetPropertyTable(*this, "", ehead, ehead->Compound(), true);
 
-    //double v = PropertyGet<float>( *props, std::string("UnitScaleFactor"), 1.0 );
+    // double v = PropertyGet<float>( *props,
+    // std::string("UnitScaleFactor"), 1.0 );
 
     if (!props) {
         DOMError("GlobalSettings dictionary contains no property table");
@@ -391,15 +448,15 @@ void Document::ReadObjects() {
     objects[0] = new LazyObject(0L, eobjects, *this);
 
     const ScopePtr sobjects = eobjects->Compound();
-    for (const ElementMap::value_type &iter : sobjects->Elements()) {
+    for (const ElementMap::value_type& iter : sobjects->Elements()) {
         // extract ID
-        const TokenList &tok = iter.second->Tokens();
+        const TokenList& tok = iter.second->Tokens();
 
         if (tok.empty()) {
             DOMError("expected ID after object key", iter.second);
         }
 
-        const char *err;
+        const char* err;
         const uint64_t id = ParseTokenAsID(tok[0], err);
         if (err) {
             DOMError(err, iter.second);
@@ -407,11 +464,17 @@ void Document::ReadObjects() {
 
         // id=0 is normally implicit
         if (id == 0L) {
-            DOMError("encountered object with implicitly defined id 0", iter.second);
+            DOMError(
+                "encountered object with implicitly defined id 0",
+                iter.second
+            );
         }
 
         if (objects.find(id) != objects.end()) {
-            DOMWarning("encountered duplicate object id, ignoring first occurrence", iter.second);
+            DOMWarning(
+                "encountered duplicate object id, ignoring first occurrence",
+                iter.second
+            );
         }
 
         objects[id] = new LazyObject(id, iter.second, *this);
@@ -427,8 +490,11 @@ void Document::ReadObjects() {
             materials.push_back(id);
         } else if (!strcmp(iter.first.c_str(), "Deformer")) {
             TokenPtr key = iter.second->KeyToken();
-            ERR_CONTINUE_MSG(!key, "[parser bug] invalid token key for deformer");
-            const TokenList &tokens = iter.second->Tokens();
+            ERR_CONTINUE_MSG(
+                !key,
+                "[parser bug] invalid token key for deformer"
+            );
+            const TokenList& tokens = iter.second->Tokens();
             const std::string class_tag = ParseTokenAsString(tokens[2], err);
 
             if (err) {
@@ -436,7 +502,7 @@ void Document::ReadObjects() {
             }
 
             if (class_tag == "Skin") {
-                //print_verbose("registered skin:" + itos(id));
+                // print_verbose("registered skin:" + itos(id));
                 skins.push_back(id);
             }
         }
@@ -455,7 +521,8 @@ void Document::ReadPropertyTemplates() {
 
     const ScopePtr sdefs = edefs->Compound();
     const ElementCollection otypes = sdefs->GetCollection("ObjectType");
-    for (ElementMap::const_iterator it = otypes.first; it != otypes.second; ++it) {
+    for (ElementMap::const_iterator it = otypes.first; it != otypes.second;
+         ++it) {
         const ElementPtr el = (*it).second;
         const ScopePtr sc_2 = el->Compound();
         if (!sc_2) {
@@ -463,35 +530,46 @@ void Document::ReadPropertyTemplates() {
             continue;
         }
 
-        const TokenList &tok = el->Tokens();
+        const TokenList& tok = el->Tokens();
         if (tok.empty()) {
             DOMWarning("expected name for ObjectType element, ignoring", el);
             continue;
         }
 
-        const std::string &oname = ParseTokenAsString(tok[0]);
+        const std::string& oname = ParseTokenAsString(tok[0]);
 
-        const ElementCollection templs = sc_2->GetCollection("PropertyTemplate");
-        for (ElementMap::const_iterator iter = templs.first; iter != templs.second; ++iter) {
+        const ElementCollection templs =
+            sc_2->GetCollection("PropertyTemplate");
+        for (ElementMap::const_iterator iter = templs.first;
+             iter != templs.second;
+             ++iter) {
             const ElementPtr el_2 = (*iter).second;
             const ScopePtr sc_3 = el_2->Compound();
             if (!sc_3) {
-                DOMWarning("expected nested scope in PropertyTemplate, ignoring", el);
+                DOMWarning(
+                    "expected nested scope in PropertyTemplate, ignoring",
+                    el
+                );
                 continue;
             }
 
-            const TokenList &tok_2 = el_2->Tokens();
+            const TokenList& tok_2 = el_2->Tokens();
             if (tok_2.empty()) {
-                DOMWarning("expected name for PropertyTemplate element, ignoring", el);
+                DOMWarning(
+                    "expected name for PropertyTemplate element, ignoring",
+                    el
+                );
                 continue;
             }
 
-            const std::string &pname = ParseTokenAsString(tok_2[0]);
+            const std::string& pname = ParseTokenAsString(tok_2[0]);
 
             const ElementPtr Properties70 = sc_3->GetElement("Properties70");
             if (Properties70) {
-                // PropertyTable(const ElementPtr element, const PropertyTable* templateProps);
-                const PropertyTable *props = new PropertyTable(Properties70, nullptr);
+                // PropertyTable(const ElementPtr element, const PropertyTable*
+                // templateProps);
+                const PropertyTable* props =
+                    new PropertyTable(Properties70, nullptr);
 
                 templates[oname + "." + pname] = props;
             }
@@ -512,9 +590,10 @@ void Document::ReadConnections() {
     uint64_t insertionOrder = 0l;
     const ScopePtr sconns = econns->Compound();
     const ElementCollection conns = sconns->GetCollection("C");
-    for (ElementMap::const_iterator it = conns.first; it != conns.second; ++it) {
+    for (ElementMap::const_iterator it = conns.first; it != conns.second;
+         ++it) {
         const ElementPtr el = (*it).second;
-        const std::string &type = ParseTokenAsString(GetRequiredToken(el, 0));
+        const std::string& type = ParseTokenAsString(GetRequiredToken(el, 0));
 
         // PP = property-property connection, ignored for now
         // (tokens: "PP", ID1, "Property1", ID2, "Property2")
@@ -526,8 +605,10 @@ void Document::ReadConnections() {
         const uint64_t dest = ParseTokenAsID(GetRequiredToken(el, 2));
 
         // OO = object-object connection
-        // OP = object-property connection, in which case the destination property follows the object ID
-        const std::string &prop = (type == "OP" ? ParseTokenAsString(GetRequiredToken(el, 3)) : "");
+        // OP = object-property connection, in which case the destination
+        // property follows the object ID
+        const std::string& prop =
+            (type == "OP" ? ParseTokenAsString(GetRequiredToken(el, 3)) : "");
 
         if (objects.find(src) == objects.end()) {
             DOMWarning("source object for connection does not exist", el);
@@ -541,30 +622,35 @@ void Document::ReadConnections() {
         }
 
         // add new connection
-        const Connection *const c = new Connection(insertionOrder++, src, dest, prop, *this);
+        const Connection* const c =
+            new Connection(insertionOrder++, src, dest, prop, *this);
         src_connections.insert(ConnectionMap::value_type(src, c));
         dest_connections.insert(ConnectionMap::value_type(dest, c));
     }
 }
 
 // ------------------------------------------------------------------------------------------------
-const std::vector<const AnimationStack *> &Document::AnimationStacks() const {
+const std::vector<const AnimationStack*>& Document::AnimationStacks() const {
     if (!animationStacksResolved.empty() || animationStacks.empty()) {
         return animationStacksResolved;
     }
 
     animationStacksResolved.reserve(animationStacks.size());
     for (uint64_t id : animationStacks) {
-        LazyObject *lazy = GetObject(id);
+        LazyObject* lazy = GetObject(id);
 
         // Two things happen here:
         // We cast internally an Object PTR to an Animation Stack PTR
         // We return invalid weak_ptrs for objects which are invalid
 
-        const AnimationStack *stack = lazy->Get<AnimationStack>();
-        ERR_CONTINUE_MSG(!stack, "invalid ptr to AnimationStack - conversion failure");
+        const AnimationStack* stack = lazy->Get<AnimationStack>();
+        ERR_CONTINUE_MSG(
+            !stack,
+            "invalid ptr to AnimationStack - conversion failure"
+        );
 
-        // We push back the weak reference :) to keep things simple, as ownership is on the parser side so it won't be cleaned up.
+        // We push back the weak reference :) to keep things simple, as
+        // ownership is on the parser side so it won't be cleaned up.
         animationStacksResolved.push_back(stack);
     }
 
@@ -572,7 +658,7 @@ const std::vector<const AnimationStack *> &Document::AnimationStacks() const {
 }
 
 // ------------------------------------------------------------------------------------------------
-LazyObject *Document::GetObject(uint64_t id) const {
+LazyObject* Document::GetObject(uint64_t id) const {
     ObjectMap::const_iterator it = objects.find(id);
     return it == objects.end() ? nullptr : (*it).second;
 }
@@ -580,14 +666,19 @@ LazyObject *Document::GetObject(uint64_t id) const {
 #define MAX_CLASSNAMES 6
 
 // ------------------------------------------------------------------------------------------------
-std::vector<const Connection *> Document::GetConnectionsSequenced(uint64_t id, const ConnectionMap &conns) const {
-    std::vector<const Connection *> temp;
+std::vector<const Connection*> Document::GetConnectionsSequenced(
+    uint64_t id,
+    const ConnectionMap& conns
+) const {
+    std::vector<const Connection*> temp;
 
-    const std::pair<ConnectionMap::const_iterator, ConnectionMap::const_iterator> range =
-            conns.equal_range(id);
+    const std::
+        pair<ConnectionMap::const_iterator, ConnectionMap::const_iterator>
+            range = conns.equal_range(id);
 
     temp.reserve(std::distance(range.first, range.second));
-    for (ConnectionMap::const_iterator it = range.first; it != range.second; ++it) {
+    for (ConnectionMap::const_iterator it = range.first; it != range.second;
+         ++it) {
         temp.push_back((*it).second);
     }
 
@@ -597,10 +688,13 @@ std::vector<const Connection *> Document::GetConnectionsSequenced(uint64_t id, c
 }
 
 // ------------------------------------------------------------------------------------------------
-std::vector<const Connection *> Document::GetConnectionsSequenced(uint64_t id, bool is_src,
-        const ConnectionMap &conns,
-        const char *const *classnames,
-        size_t count) const
+std::vector<const Connection*> Document::GetConnectionsSequenced(
+    uint64_t id,
+    bool is_src,
+    const ConnectionMap& conns,
+    const char* const* classnames,
+    size_t count
+) const
 
 {
     size_t lengths[MAX_CLASSNAMES];
@@ -610,19 +704,26 @@ std::vector<const Connection *> Document::GetConnectionsSequenced(uint64_t id, b
         lengths[i] = strlen(classnames[i]);
     }
 
-    std::vector<const Connection *> temp;
-    const std::pair<ConnectionMap::const_iterator, ConnectionMap::const_iterator> range =
-            conns.equal_range(id);
+    std::vector<const Connection*> temp;
+    const std::
+        pair<ConnectionMap::const_iterator, ConnectionMap::const_iterator>
+            range = conns.equal_range(id);
 
     temp.reserve(std::distance(range.first, range.second));
-    for (ConnectionMap::const_iterator it = range.first; it != range.second; ++it) {
-        TokenPtr key = (is_src ? (*it).second->LazyDestinationObject() : (*it).second->LazySourceObject())->GetElement()->KeyToken();
+    for (ConnectionMap::const_iterator it = range.first; it != range.second;
+         ++it) {
+        TokenPtr key = (is_src ? (*it).second->LazyDestinationObject()
+                               : (*it).second->LazySourceObject())
+                           ->GetElement()
+                           ->KeyToken();
 
-        const char *obtype = key->begin();
+        const char* obtype = key->begin();
 
         for (size_t i = 0; i < c; ++i) {
-            //ai_assert(classnames[i]);
-            if (static_cast<size_t>(std::distance(key->begin(), key->end())) == lengths[i] && !strncmp(classnames[i], obtype, lengths[i])) {
+            // ai_assert(classnames[i]);
+            if (static_cast<size_t>(std::distance(key->begin(), key->end()))
+                    == lengths[i]
+                && !strncmp(classnames[i], obtype, lengths[i])) {
                 obtype = nullptr;
                 break;
             }
@@ -640,46 +741,80 @@ std::vector<const Connection *> Document::GetConnectionsSequenced(uint64_t id, b
 }
 
 // ------------------------------------------------------------------------------------------------
-std::vector<const Connection *> Document::GetConnectionsBySourceSequenced(uint64_t source) const {
+std::vector<const Connection*> Document::GetConnectionsBySourceSequenced(
+    uint64_t source
+) const {
     return GetConnectionsSequenced(source, ConnectionsBySource());
 }
 
 // ------------------------------------------------------------------------------------------------
-std::vector<const Connection *> Document::GetConnectionsBySourceSequenced(uint64_t src, const char *classname) const {
-    const char *arr[] = { classname };
+std::vector<const Connection*> Document::GetConnectionsBySourceSequenced(
+    uint64_t src,
+    const char* classname
+) const {
+    const char* arr[] = {classname};
     return GetConnectionsBySourceSequenced(src, arr, 1);
 }
 
 // ------------------------------------------------------------------------------------------------
-std::vector<const Connection *> Document::GetConnectionsBySourceSequenced(uint64_t source,
-        const char *const *classnames, size_t count) const {
-    return GetConnectionsSequenced(source, true, ConnectionsBySource(), classnames, count);
+std::vector<const Connection*> Document::GetConnectionsBySourceSequenced(
+    uint64_t source,
+    const char* const* classnames,
+    size_t count
+) const {
+    return GetConnectionsSequenced(
+        source,
+        true,
+        ConnectionsBySource(),
+        classnames,
+        count
+    );
 }
 
 // ------------------------------------------------------------------------------------------------
-std::vector<const Connection *> Document::GetConnectionsByDestinationSequenced(uint64_t dest,
-        const char *classname) const {
-    const char *arr[] = { classname };
+std::vector<const Connection*> Document::GetConnectionsByDestinationSequenced(
+    uint64_t dest,
+    const char* classname
+) const {
+    const char* arr[] = {classname};
     return GetConnectionsByDestinationSequenced(dest, arr, 1);
 }
 
 // ------------------------------------------------------------------------------------------------
-std::vector<const Connection *> Document::GetConnectionsByDestinationSequenced(uint64_t dest) const {
+std::vector<const Connection*> Document::GetConnectionsByDestinationSequenced(
+    uint64_t dest
+) const {
     return GetConnectionsSequenced(dest, ConnectionsByDestination());
 }
 
 // ------------------------------------------------------------------------------------------------
-std::vector<const Connection *> Document::GetConnectionsByDestinationSequenced(uint64_t dest,
-        const char *const *classnames, size_t count) const {
-    return GetConnectionsSequenced(dest, false, ConnectionsByDestination(), classnames, count);
+std::vector<const Connection*> Document::GetConnectionsByDestinationSequenced(
+    uint64_t dest,
+    const char* const* classnames,
+    size_t count
+) const {
+    return GetConnectionsSequenced(
+        dest,
+        false,
+        ConnectionsByDestination(),
+        classnames,
+        count
+    );
 }
 
 // ------------------------------------------------------------------------------------------------
-Connection::Connection(uint64_t insertionOrder, uint64_t src, uint64_t dest, const std::string &prop,
-        const Document &doc) :
-        insertionOrder(insertionOrder),
-        prop(prop), src(src), dest(dest), doc(doc) {
-}
+Connection::Connection(
+    uint64_t insertionOrder,
+    uint64_t src,
+    uint64_t dest,
+    const std::string& prop,
+    const Document& doc
+) :
+    insertionOrder(insertionOrder),
+    prop(prop),
+    src(src),
+    dest(dest),
+    doc(doc) {}
 
 // ------------------------------------------------------------------------------------------------
 Connection::~Connection() {
@@ -687,28 +822,28 @@ Connection::~Connection() {
 }
 
 // ------------------------------------------------------------------------------------------------
-LazyObject *Connection::LazySourceObject() const {
-    LazyObject *const lazy = doc.GetObject(src);
+LazyObject* Connection::LazySourceObject() const {
+    LazyObject* const lazy = doc.GetObject(src);
     return lazy;
 }
 
 // ------------------------------------------------------------------------------------------------
-LazyObject *Connection::LazyDestinationObject() const {
-    LazyObject *const lazy = doc.GetObject(dest);
+LazyObject* Connection::LazyDestinationObject() const {
+    LazyObject* const lazy = doc.GetObject(dest);
     return lazy;
 }
 
 // ------------------------------------------------------------------------------------------------
-Object *Connection::SourceObject() const {
-    LazyObject *lazy = doc.GetObject(src);
-    //ai_assert(lazy);
+Object* Connection::SourceObject() const {
+    LazyObject* lazy = doc.GetObject(src);
+    // ai_assert(lazy);
     return lazy->LoadObject();
 }
 
 // ------------------------------------------------------------------------------------------------
-Object *Connection::DestinationObject() const {
-    LazyObject *lazy = doc.GetObject(dest);
-    //ai_assert(lazy);
+Object* Connection::DestinationObject() const {
+    LazyObject* lazy = doc.GetObject(dest);
+    // ai_assert(lazy);
     return lazy->LoadObject();
 }
 

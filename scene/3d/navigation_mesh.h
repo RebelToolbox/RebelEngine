@@ -40,9 +40,11 @@ class NavigationMesh : public Resource {
     GDCLASS(NavigationMesh, Resource);
 
     PoolVector<Vector3> vertices;
+
     struct Polygon {
         Vector<int> indices;
     };
+
     Vector<Polygon> polygons;
     Ref<ArrayMesh> debug_mesh;
 
@@ -50,14 +52,16 @@ class NavigationMesh : public Resource {
         Vector3 from;
         Vector3 to;
 
-        bool operator<(const _EdgeKey &p_with) const { return from == p_with.from ? to < p_with.to : from < p_with.from; }
+        bool operator<(const _EdgeKey& p_with) const {
+            return from == p_with.from ? to < p_with.to : from < p_with.from;
+        }
     };
 
 protected:
     static void _bind_methods();
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
-    void _set_polygons(const Array &p_array);
+    void _set_polygons(const Array& p_array);
     Array _get_polygons() const;
 
 public:
@@ -176,12 +180,12 @@ public:
     void set_filter_walkable_low_height_spans(bool p_value);
     bool get_filter_walkable_low_height_spans() const;
 
-    void create_from_mesh(const Ref<Mesh> &p_mesh);
+    void create_from_mesh(const Ref<Mesh>& p_mesh);
 
-    void set_vertices(const PoolVector<Vector3> &p_vertices);
+    void set_vertices(const PoolVector<Vector3>& p_vertices);
     PoolVector<Vector3> get_vertices() const;
 
-    void add_polygon(const Vector<int> &p_polygon);
+    void add_polygon(const Vector<int>& p_polygon);
     int get_polygon_count() const;
     Vector<int> get_polygon(int p_idx);
     void clear_polygons();
@@ -202,21 +206,21 @@ class NavigationMeshInstance : public Spatial {
 
     bool enabled;
     int nav_id;
-    Navigation *navigation;
+    Navigation* navigation;
     Ref<NavigationMesh> navmesh;
 
-    Node *debug_view;
+    Node* debug_view;
 
 protected:
     void _notification(int p_what);
     static void _bind_methods();
-    void _changed_callback(Object *p_changed, const char *p_prop);
+    void _changed_callback(Object* p_changed, const char* p_prop);
 
 public:
     void set_enabled(bool p_enabled);
     bool is_enabled() const;
 
-    void set_navigation_mesh(const Ref<NavigationMesh> &p_navmesh);
+    void set_navigation_mesh(const Ref<NavigationMesh>& p_navmesh);
     Ref<NavigationMesh> get_navigation_mesh() const;
 
     String get_configuration_warning() const;

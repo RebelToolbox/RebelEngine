@@ -52,7 +52,11 @@ protected:
 
 public:
     virtual void poll() = 0;
-    virtual Error listen(int p_port, const Vector<String> p_protocols = Vector<String>(), bool gd_mp_api = false) = 0;
+    virtual Error listen(
+        int p_port,
+        const Vector<String> p_protocols = Vector<String>(),
+        bool gd_mp_api = false
+    ) = 0;
     virtual void stop() = 0;
     virtual bool is_listening() const = 0;
     virtual bool has_peer(int p_id) const = 0;
@@ -62,7 +66,11 @@ public:
 
     virtual IP_Address get_peer_address(int p_peer_id) const = 0;
     virtual int get_peer_port(int p_peer_id) const = 0;
-    virtual void disconnect_peer(int p_peer_id, int p_code = 1000, String p_reason = "") = 0;
+    virtual void disconnect_peer(
+        int p_peer_id,
+        int p_code = 1000,
+        String p_reason = ""
+    ) = 0;
 
     void _on_peer_packet(int32_t p_peer_id);
     void _on_connect(int32_t p_peer_id, String p_protocol);
@@ -70,7 +78,7 @@ public:
     void _on_close_request(int32_t p_peer_id, int p_code, String p_reason);
 
     IP_Address get_bind_ip() const;
-    void set_bind_ip(const IP_Address &p_bind_ip);
+    void set_bind_ip(const IP_Address& p_bind_ip);
 
     Ref<CryptoKey> get_private_key() const;
     void set_private_key(Ref<CryptoKey> p_key);
@@ -84,7 +92,12 @@ public:
     float get_handshake_timeout() const;
     void set_handshake_timeout(float p_timeout);
 
-    virtual Error set_buffers(int p_in_buffer, int p_in_packets, int p_out_buffer, int p_out_packets) = 0;
+    virtual Error set_buffers(
+        int p_in_buffer,
+        int p_in_packets,
+        int p_out_buffer,
+        int p_out_packets
+    ) = 0;
 
     WebSocketServer();
     ~WebSocketServer();

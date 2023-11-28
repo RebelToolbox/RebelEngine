@@ -49,7 +49,7 @@ void SkeletonIKEditorPlugin::_play() {
     }
 }
 
-void SkeletonIKEditorPlugin::edit(Object *p_object) {
+void SkeletonIKEditorPlugin::edit(Object* p_object) {
     if (p_object != skeleton_ik) {
         if (skeleton_ik) {
             play_btn->set_pressed(false);
@@ -57,7 +57,7 @@ void SkeletonIKEditorPlugin::edit(Object *p_object) {
         }
     }
 
-    SkeletonIK *s = Object::cast_to<SkeletonIK>(p_object);
+    SkeletonIK* s = Object::cast_to<SkeletonIK>(p_object);
     if (!s) {
         return;
     }
@@ -65,7 +65,7 @@ void SkeletonIKEditorPlugin::edit(Object *p_object) {
     skeleton_ik = s;
 }
 
-bool SkeletonIKEditorPlugin::handles(Object *p_object) const {
+bool SkeletonIKEditorPlugin::handles(Object* p_object) const {
     return p_object->is_class("SkeletonIK");
 }
 
@@ -81,7 +81,7 @@ void SkeletonIKEditorPlugin::_bind_methods() {
     ClassDB::bind_method("_play", &SkeletonIKEditorPlugin::_play);
 }
 
-SkeletonIKEditorPlugin::SkeletonIKEditorPlugin(EditorNode *p_node) {
+SkeletonIKEditorPlugin::SkeletonIKEditorPlugin(EditorNode* p_node) {
     editor = p_node;
     play_btn = memnew(Button);
     play_btn->set_icon(editor->get_gui_base()->get_icon("Play", "EditorIcons"));

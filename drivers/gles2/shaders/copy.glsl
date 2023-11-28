@@ -53,7 +53,9 @@ void main() {
 
 #ifdef USE_COPY_SECTION
     uv_interp = copy_section.xy + uv_interp * copy_section.zw;
-    gl_Position.xy = (copy_section.xy + (gl_Position.xy * 0.5 + 0.5) * copy_section.zw) * 2.0 - 1.0;
+    gl_Position.xy =
+        (copy_section.xy + (gl_Position.xy * 0.5 + 0.5) * copy_section.zw) * 2.0
+        - 1.0;
 #elif defined(USE_DISPLAY_TRANSFORM)
     uv_interp = (display_transform * vec4(uv_in, 1.0, 1.0)).xy;
 #endif
@@ -97,7 +99,7 @@ uniform sampler2D source; // texunit:0
 #endif
 
 #ifdef SEP_CBCR_TEXTURE
-uniform sampler2D CbCr; //texunit:1
+uniform sampler2D CbCr; // texunit:1
 #endif
 
 varying vec2 uv2_interp;
@@ -114,12 +116,11 @@ uniform float custom_alpha;
 uniform highp mat4 sky_transform;
 
 vec4 texturePanorama(sampler2D pano, vec3 normal) {
-    vec2 st = vec2(
-            atan(normal.x, normal.z),
-            acos(normal.y));
+    vec2 st = vec2(atan(normal.x, normal.z), acos(normal.y));
 
-    if (st.x < 0.0)
+    if (st.x < 0.0) {
         st.x += M_PI * 2.0;
+    }
 
     st /= vec2(M_PI * 2.0, M_PI);
 
@@ -140,14 +141,19 @@ void main() {
 
 #elif defined(USE_ASYM_PANO)
 
-    // When an asymmetrical projection matrix is used (applicable for stereoscopic rendering i.e. VR) we need to do this calculation per fragment to get a perspective correct result.
-    // Asymmetrical projection means the center of projection is no longer in the center of the screen but shifted.
-    // The Matrix[2][0] (= asym_proj.x) and Matrix[2][1] (= asym_proj.z) values are what provide the right shift in the image.
+    // When an asymmetrical projection matrix is used (applicable for
+    // stereoscopic rendering i.e. VR) we need to do this calculation per
+    // fragment to get a perspective correct result. Asymmetrical projection
+    // means the center of projection is no longer in the center of the screen
+    // but shifted. The Matrix[2][0] (= asym_proj.x) and Matrix[2][1] (=
+    // asym_proj.z) values are what provide the right shift in the image.
 
     vec3 cube_normal;
     cube_normal.z = -1.0;
-    cube_normal.x = (cube_normal.z * (-uv_interp.x - asym_proj.x)) / asym_proj.y;
-    cube_normal.y = (cube_normal.z * (-uv_interp.y - asym_proj.z)) / asym_proj.a;
+    cube_normal.x =
+        (cube_normal.z * (-uv_interp.x - asym_proj.x)) / asym_proj.y;
+    cube_normal.y =
+        (cube_normal.z * (-uv_interp.y - asym_proj.z)) / asym_proj.a;
     cube_normal = mat3(sky_transform) * mat3(pano_transform) * cube_normal;
     cube_normal.z = -cube_normal.z;
 
@@ -169,10 +175,11 @@ void main() {
 
     // Using BT.601, which is the standard for SDTV is provided as a reference
     color.rgb = mat3(
-                        vec3(1.00000, 1.00000, 1.00000),
-                        vec3(0.00000, -0.34413, 1.77200),
-                        vec3(1.40200, -0.71414, 0.00000)) *
-            color.rgb;
+                    vec3(1.00000, 1.00000, 1.00000),
+                    vec3(0.00000, -0.34413, 1.77200),
+                    vec3(1.40200, -0.71414, 0.00000)
+                )
+              * color.rgb;
 #endif
 
 #ifdef USE_NO_ALPHA
@@ -189,7 +196,10 @@ void main() {
 
 #ifdef OUTPUT_LINEAR
     // sRGB -> linear
-    color.rgb = mix(pow((color.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)), vec3(2.4)), color.rgb * (1.0 / 12.92), vec3(lessThan(color.rgb, vec3(0.04045))));
+    color.rgb =
+        mix(pow((color.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)), vec3(2.4)),
+            color.rgb * (1.0 / 12.92),
+            vec3(lessThan(color.rgb, vec3(0.04045))));
 #endif
 
     gl_FragColor = color;

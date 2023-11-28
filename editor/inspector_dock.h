@@ -67,37 +67,41 @@ class InspectorDock : public VBoxContainer {
         OBJECT_METHOD_BASE = 500
     };
 
-    EditorNode *editor;
-    EditorData *editor_data;
+    EditorNode* editor;
+    EditorData* editor_data;
 
-    EditorInspector *inspector;
+    EditorInspector* inspector;
 
-    Object *current;
+    Object* current;
 
-    ToolButton *backward_button;
-    ToolButton *forward_button;
+    ToolButton* backward_button;
+    ToolButton* forward_button;
 
-    EditorFileDialog *load_resource_dialog;
-    CreateDialog *new_resource_dialog;
-    ToolButton *resource_new_button;
-    ToolButton *resource_load_button;
-    MenuButton *resource_save_button;
-    MenuButton *resource_extra_button;
-    MenuButton *history_menu;
-    LineEdit *search;
+    EditorFileDialog* load_resource_dialog;
+    CreateDialog* new_resource_dialog;
+    ToolButton* resource_new_button;
+    ToolButton* resource_load_button;
+    MenuButton* resource_save_button;
+    MenuButton* resource_extra_button;
+    MenuButton* history_menu;
+    LineEdit* search;
 
-    Button *open_docs_button;
-    MenuButton *object_menu;
-    EditorPath *editor_path;
+    Button* open_docs_button;
+    MenuButton* object_menu;
+    EditorPath* editor_path;
 
-    Button *warning;
-    AcceptDialog *warning_dialog;
+    Button* warning;
+    AcceptDialog* warning_dialog;
 
     void _menu_option(int p_option);
 
     void _new_resource();
-    void _load_resource(const String &p_type = "");
-    void _open_resource_selector() { _load_resource(); }; // just used to call from arg-less signal
+    void _load_resource(const String& p_type = "");
+
+    void _open_resource_selector() {
+        _load_resource();
+    }; // just used to call from arg-less signal
+
     void _resource_file_selected(String p_file);
     void _save_resource(bool save_as) const;
     void _unref_resource() const;
@@ -107,7 +111,8 @@ class InspectorDock : public VBoxContainer {
 
     void _warning_pressed();
     void _resource_created() const;
-    void _resource_selected(const RES &p_res, const String &p_property = "") const;
+    void _resource_selected(const RES& p_res, const String& p_property = "")
+        const;
     void _edit_forward();
     void _edit_back();
     void _menu_collapseall();
@@ -115,8 +120,16 @@ class InspectorDock : public VBoxContainer {
     void _select_history(int p_idx) const;
     void _prepare_history();
 
-    void _property_keyed(const String &p_keyed, const Variant &p_value, bool p_advance);
-    void _transform_keyed(Object *sp, const String &p_sub, const Transform &p_key);
+    void _property_keyed(
+        const String& p_keyed,
+        const Variant& p_value,
+        bool p_advance
+    );
+    void _transform_keyed(
+        Object* sp,
+        const String& p_sub,
+        const Transform& p_key
+    );
 
 protected:
     static void _bind_methods();
@@ -125,15 +138,18 @@ protected:
 public:
     void go_back();
     void update_keying();
-    void edit_resource(const Ref<Resource> &p_resource);
-    void open_resource(const String &p_type);
+    void edit_resource(const Ref<Resource>& p_resource);
+    void open_resource(const String& p_type);
     void clear();
-    void set_warning(const String &p_message);
-    void update(Object *p_object);
-    Container *get_addon_area();
-    EditorInspector *get_inspector() { return inspector; }
+    void set_warning(const String& p_message);
+    void update(Object* p_object);
+    Container* get_addon_area();
 
-    InspectorDock(EditorNode *p_editor, EditorData &p_editor_data);
+    EditorInspector* get_inspector() {
+        return inspector;
+    }
+
+    InspectorDock(EditorNode* p_editor, EditorData& p_editor_data);
     ~InspectorDock();
 };
 

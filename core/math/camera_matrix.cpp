@@ -49,17 +49,30 @@ void CameraMatrix::set_zero() {
     }
 }
 
-Plane CameraMatrix::xform4(const Plane &p_vec4) const {
+Plane CameraMatrix::xform4(const Plane& p_vec4) const {
     Plane ret;
 
-    ret.normal.x = matrix[0][0] * p_vec4.normal.x + matrix[1][0] * p_vec4.normal.y + matrix[2][0] * p_vec4.normal.z + matrix[3][0] * p_vec4.d;
-    ret.normal.y = matrix[0][1] * p_vec4.normal.x + matrix[1][1] * p_vec4.normal.y + matrix[2][1] * p_vec4.normal.z + matrix[3][1] * p_vec4.d;
-    ret.normal.z = matrix[0][2] * p_vec4.normal.x + matrix[1][2] * p_vec4.normal.y + matrix[2][2] * p_vec4.normal.z + matrix[3][2] * p_vec4.d;
-    ret.d = matrix[0][3] * p_vec4.normal.x + matrix[1][3] * p_vec4.normal.y + matrix[2][3] * p_vec4.normal.z + matrix[3][3] * p_vec4.d;
+    ret.normal.x = matrix[0][0] * p_vec4.normal.x
+                 + matrix[1][0] * p_vec4.normal.y
+                 + matrix[2][0] * p_vec4.normal.z + matrix[3][0] * p_vec4.d;
+    ret.normal.y = matrix[0][1] * p_vec4.normal.x
+                 + matrix[1][1] * p_vec4.normal.y
+                 + matrix[2][1] * p_vec4.normal.z + matrix[3][1] * p_vec4.d;
+    ret.normal.z = matrix[0][2] * p_vec4.normal.x
+                 + matrix[1][2] * p_vec4.normal.y
+                 + matrix[2][2] * p_vec4.normal.z + matrix[3][2] * p_vec4.d;
+    ret.d = matrix[0][3] * p_vec4.normal.x + matrix[1][3] * p_vec4.normal.y
+          + matrix[2][3] * p_vec4.normal.z + matrix[3][3] * p_vec4.d;
     return ret;
 }
 
-void CameraMatrix::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_t p_z_near, real_t p_z_far, bool p_flip_fov) {
+void CameraMatrix::set_perspective(
+    real_t p_fovy_degrees,
+    real_t p_aspect,
+    real_t p_z_near,
+    real_t p_z_far,
+    bool p_flip_fov
+) {
     if (p_flip_fov) {
         p_fovy_degrees = get_fovy(p_fovy_degrees, 1.0 / p_aspect);
     }
@@ -85,7 +98,16 @@ void CameraMatrix::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_
     matrix[3][3] = 0;
 }
 
-void CameraMatrix::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_t p_z_near, real_t p_z_far, bool p_flip_fov, int p_eye, real_t p_intraocular_dist, real_t p_convergence_dist) {
+void CameraMatrix::set_perspective(
+    real_t p_fovy_degrees,
+    real_t p_aspect,
+    real_t p_z_near,
+    real_t p_z_far,
+    bool p_flip_fov,
+    int p_eye,
+    real_t p_intraocular_dist,
+    real_t p_convergence_dist
+) {
     if (p_flip_fov) {
         p_fovy_degrees = get_fovy(p_fovy_degrees, 1.0 / p_aspect);
     }
@@ -107,7 +129,8 @@ void CameraMatrix::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_
             right = xmax - frustumshift;
             modeltranslation = -p_intraocular_dist / 2.0;
         }; break;
-        default: { // mono, should give the same result as set_perspective(p_fovy_degrees,p_aspect,p_z_near,p_z_far,p_flip_fov)
+        default: { // mono, should give the same result as
+                   // set_perspective(p_fovy_degrees,p_aspect,p_z_near,p_z_far,p_flip_fov)
             left = -xmax;
             right = xmax;
             modeltranslation = 0.0;
@@ -123,13 +146,25 @@ void CameraMatrix::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_
     *this = *this * cm;
 }
 
-void CameraMatrix::set_for_hmd(int p_eye, real_t p_aspect, real_t p_intraocular_dist, real_t p_display_width, real_t p_display_to_lens, real_t p_oversample, real_t p_z_near, real_t p_z_far) {
-    // we first calculate our base frustum on our values without taking our lens magnification into account.
+void CameraMatrix::set_for_hmd(
+    int p_eye,
+    real_t p_aspect,
+    real_t p_intraocular_dist,
+    real_t p_display_width,
+    real_t p_display_to_lens,
+    real_t p_oversample,
+    real_t p_z_near,
+    real_t p_z_far
+) {
+    // we first calculate our base frustum on our values without taking our lens
+    // magnification into account.
     real_t f1 = (p_intraocular_dist * 0.5) / p_display_to_lens;
-    real_t f2 = ((p_display_width - p_intraocular_dist) * 0.5) / p_display_to_lens;
+    real_t f2 =
+        ((p_display_width - p_intraocular_dist) * 0.5) / p_display_to_lens;
     real_t f3 = (p_display_width / 4.0) / p_display_to_lens;
 
-    // now we apply our oversample factor to increase our FOV. how much we oversample is always a balance we strike between performance and how much
+    // now we apply our oversample factor to increase our FOV. how much we
+    // oversample is always a balance we strike between performance and how much
     // we're willing to sacrifice in FOV.
     real_t add = ((f1 + f2) * (p_oversample - 1.0)) / 2.0;
     f1 += add;
@@ -141,17 +176,38 @@ void CameraMatrix::set_for_hmd(int p_eye, real_t p_aspect, real_t p_intraocular_
 
     switch (p_eye) {
         case 1: { // left eye
-            set_frustum(-f2 * p_z_near, f1 * p_z_near, -f3 * p_z_near, f3 * p_z_near, p_z_near, p_z_far);
+            set_frustum(
+                -f2 * p_z_near,
+                f1 * p_z_near,
+                -f3 * p_z_near,
+                f3 * p_z_near,
+                p_z_near,
+                p_z_far
+            );
         }; break;
         case 2: { // right eye
-            set_frustum(-f1 * p_z_near, f2 * p_z_near, -f3 * p_z_near, f3 * p_z_near, p_z_near, p_z_far);
+            set_frustum(
+                -f1 * p_z_near,
+                f2 * p_z_near,
+                -f3 * p_z_near,
+                f3 * p_z_near,
+                p_z_near,
+                p_z_far
+            );
         }; break;
         default: { // mono, does not apply here!
         }; break;
     };
 };
 
-void CameraMatrix::set_orthogonal(real_t p_left, real_t p_right, real_t p_bottom, real_t p_top, real_t p_znear, real_t p_zfar) {
+void CameraMatrix::set_orthogonal(
+    real_t p_left,
+    real_t p_right,
+    real_t p_bottom,
+    real_t p_top,
+    real_t p_znear,
+    real_t p_zfar
+) {
     set_identity();
 
     matrix[0][0] = 2.0 / (p_right - p_left);
@@ -163,20 +219,40 @@ void CameraMatrix::set_orthogonal(real_t p_left, real_t p_right, real_t p_bottom
     matrix[3][3] = 1.0;
 }
 
-void CameraMatrix::set_orthogonal(real_t p_size, real_t p_aspect, real_t p_znear, real_t p_zfar, bool p_flip_fov) {
+void CameraMatrix::set_orthogonal(
+    real_t p_size,
+    real_t p_aspect,
+    real_t p_znear,
+    real_t p_zfar,
+    bool p_flip_fov
+) {
     if (!p_flip_fov) {
         p_size *= p_aspect;
     }
 
-    set_orthogonal(-p_size / 2, +p_size / 2, -p_size / p_aspect / 2, +p_size / p_aspect / 2, p_znear, p_zfar);
+    set_orthogonal(
+        -p_size / 2,
+        +p_size / 2,
+        -p_size / p_aspect / 2,
+        +p_size / p_aspect / 2,
+        p_znear,
+        p_zfar
+    );
 }
 
-void CameraMatrix::set_frustum(real_t p_left, real_t p_right, real_t p_bottom, real_t p_top, real_t p_near, real_t p_far) {
+void CameraMatrix::set_frustum(
+    real_t p_left,
+    real_t p_right,
+    real_t p_bottom,
+    real_t p_top,
+    real_t p_near,
+    real_t p_far
+) {
     ERR_FAIL_COND(p_right <= p_left);
     ERR_FAIL_COND(p_top <= p_bottom);
     ERR_FAIL_COND(p_far <= p_near);
 
-    real_t *te = &matrix[0][0];
+    real_t* te = &matrix[0][0];
     real_t x = 2 * p_near / (p_right - p_left);
     real_t y = 2 * p_near / (p_top - p_bottom);
 
@@ -203,57 +279,82 @@ void CameraMatrix::set_frustum(real_t p_left, real_t p_right, real_t p_bottom, r
     te[15] = 0;
 }
 
-void CameraMatrix::set_frustum(real_t p_size, real_t p_aspect, Vector2 p_offset, real_t p_near, real_t p_far, bool p_flip_fov) {
+void CameraMatrix::set_frustum(
+    real_t p_size,
+    real_t p_aspect,
+    Vector2 p_offset,
+    real_t p_near,
+    real_t p_far,
+    bool p_flip_fov
+) {
     if (!p_flip_fov) {
         p_size *= p_aspect;
     }
 
-    set_frustum(-p_size / 2 + p_offset.x, +p_size / 2 + p_offset.x, -p_size / p_aspect / 2 + p_offset.y, +p_size / p_aspect / 2 + p_offset.y, p_near, p_far);
+    set_frustum(
+        -p_size / 2 + p_offset.x,
+        +p_size / 2 + p_offset.x,
+        -p_size / p_aspect / 2 + p_offset.y,
+        +p_size / p_aspect / 2 + p_offset.y,
+        p_near,
+        p_far
+    );
 }
 
 real_t CameraMatrix::get_z_far() const {
-    const real_t *matrix = (const real_t *)this->matrix;
-    Plane new_plane = Plane(matrix[3] - matrix[2],
-            matrix[7] - matrix[6],
-            matrix[11] - matrix[10],
-            matrix[15] - matrix[14]);
+    const real_t* matrix = (const real_t*)this->matrix;
+    Plane new_plane = Plane(
+        matrix[3] - matrix[2],
+        matrix[7] - matrix[6],
+        matrix[11] - matrix[10],
+        matrix[15] - matrix[14]
+    );
 
     new_plane.normal = -new_plane.normal;
     new_plane.normalize();
 
     return new_plane.d;
 }
+
 real_t CameraMatrix::get_z_near() const {
-    const real_t *matrix = (const real_t *)this->matrix;
-    Plane new_plane = Plane(matrix[3] + matrix[2],
-            matrix[7] + matrix[6],
-            matrix[11] + matrix[10],
-            -matrix[15] - matrix[14]);
+    const real_t* matrix = (const real_t*)this->matrix;
+    Plane new_plane = Plane(
+        matrix[3] + matrix[2],
+        matrix[7] + matrix[6],
+        matrix[11] + matrix[10],
+        -matrix[15] - matrix[14]
+    );
 
     new_plane.normalize();
     return new_plane.d;
 }
 
 Vector2 CameraMatrix::get_viewport_half_extents() const {
-    const real_t *matrix = (const real_t *)this->matrix;
+    const real_t* matrix = (const real_t*)this->matrix;
     ///////--- Near Plane ---///////
-    Plane near_plane = Plane(matrix[3] + matrix[2],
-            matrix[7] + matrix[6],
-            matrix[11] + matrix[10],
-            -matrix[15] - matrix[14]);
+    Plane near_plane = Plane(
+        matrix[3] + matrix[2],
+        matrix[7] + matrix[6],
+        matrix[11] + matrix[10],
+        -matrix[15] - matrix[14]
+    );
     near_plane.normalize();
 
     ///////--- Right Plane ---///////
-    Plane right_plane = Plane(matrix[3] - matrix[0],
-            matrix[7] - matrix[4],
-            matrix[11] - matrix[8],
-            -matrix[15] + matrix[12]);
+    Plane right_plane = Plane(
+        matrix[3] - matrix[0],
+        matrix[7] - matrix[4],
+        matrix[11] - matrix[8],
+        -matrix[15] + matrix[12]
+    );
     right_plane.normalize();
 
-    Plane top_plane = Plane(matrix[3] - matrix[1],
-            matrix[7] - matrix[5],
-            matrix[11] - matrix[9],
-            -matrix[15] + matrix[13]);
+    Plane top_plane = Plane(
+        matrix[3] - matrix[1],
+        matrix[7] - matrix[5],
+        matrix[11] - matrix[9],
+        -matrix[15] + matrix[13]
+    );
     top_plane.normalize();
 
     Vector3 res;
@@ -262,22 +363,29 @@ Vector2 CameraMatrix::get_viewport_half_extents() const {
     return Vector2(res.x, res.y);
 }
 
-bool CameraMatrix::get_endpoints(const Transform &p_transform, Vector3 *p_8points) const {
+bool CameraMatrix::get_endpoints(
+    const Transform& p_transform,
+    Vector3* p_8points
+) const {
     Vector<Plane> planes = get_projection_planes(Transform());
     const Planes intersections[8][3] = {
-        { PLANE_FAR, PLANE_LEFT, PLANE_TOP },
-        { PLANE_FAR, PLANE_LEFT, PLANE_BOTTOM },
-        { PLANE_FAR, PLANE_RIGHT, PLANE_TOP },
-        { PLANE_FAR, PLANE_RIGHT, PLANE_BOTTOM },
-        { PLANE_NEAR, PLANE_LEFT, PLANE_TOP },
-        { PLANE_NEAR, PLANE_LEFT, PLANE_BOTTOM },
-        { PLANE_NEAR, PLANE_RIGHT, PLANE_TOP },
-        { PLANE_NEAR, PLANE_RIGHT, PLANE_BOTTOM },
+        {PLANE_FAR, PLANE_LEFT, PLANE_TOP},
+        {PLANE_FAR, PLANE_LEFT, PLANE_BOTTOM},
+        {PLANE_FAR, PLANE_RIGHT, PLANE_TOP},
+        {PLANE_FAR, PLANE_RIGHT, PLANE_BOTTOM},
+        {PLANE_NEAR, PLANE_LEFT, PLANE_TOP},
+        {PLANE_NEAR, PLANE_LEFT, PLANE_BOTTOM},
+        {PLANE_NEAR, PLANE_RIGHT, PLANE_TOP},
+        {PLANE_NEAR, PLANE_RIGHT, PLANE_BOTTOM},
     };
 
     for (int i = 0; i < 8; i++) {
         Vector3 point;
-        bool res = planes[intersections[i][0]].intersect_3(planes[intersections[i][1]], planes[intersections[i][2]], &point);
+        bool res = planes[intersections[i][0]].intersect_3(
+            planes[intersections[i][1]],
+            planes[intersections[i][2]],
+            &point
+        );
         ERR_FAIL_COND_V(!res, false);
         p_8points[i] = p_transform.xform(point);
     }
@@ -285,7 +393,8 @@ bool CameraMatrix::get_endpoints(const Transform &p_transform, Vector3 *p_8point
     return true;
 }
 
-Vector<Plane> CameraMatrix::get_projection_planes(const Transform &p_transform) const {
+Vector<Plane> CameraMatrix::get_projection_planes(const Transform& p_transform
+) const {
     /** Fast Plane Extraction from combined modelview/projection matrices.
      * References:
      * https://web.archive.org/web/20011221205252/http://www.markmorley.com/opengl/frustumculling.html
@@ -294,15 +403,17 @@ Vector<Plane> CameraMatrix::get_projection_planes(const Transform &p_transform) 
 
     Vector<Plane> planes;
 
-    const real_t *matrix = (const real_t *)this->matrix;
+    const real_t* matrix = (const real_t*)this->matrix;
 
     Plane new_plane;
 
     ///////--- Near Plane ---///////
-    new_plane = Plane(matrix[3] + matrix[2],
-            matrix[7] + matrix[6],
-            matrix[11] + matrix[10],
-            matrix[15] + matrix[14]);
+    new_plane = Plane(
+        matrix[3] + matrix[2],
+        matrix[7] + matrix[6],
+        matrix[11] + matrix[10],
+        matrix[15] + matrix[14]
+    );
 
     new_plane.normal = -new_plane.normal;
     new_plane.normalize();
@@ -310,10 +421,12 @@ Vector<Plane> CameraMatrix::get_projection_planes(const Transform &p_transform) 
     planes.push_back(p_transform.xform(new_plane));
 
     ///////--- Far Plane ---///////
-    new_plane = Plane(matrix[3] - matrix[2],
-            matrix[7] - matrix[6],
-            matrix[11] - matrix[10],
-            matrix[15] - matrix[14]);
+    new_plane = Plane(
+        matrix[3] - matrix[2],
+        matrix[7] - matrix[6],
+        matrix[11] - matrix[10],
+        matrix[15] - matrix[14]
+    );
 
     new_plane.normal = -new_plane.normal;
     new_plane.normalize();
@@ -321,10 +434,12 @@ Vector<Plane> CameraMatrix::get_projection_planes(const Transform &p_transform) 
     planes.push_back(p_transform.xform(new_plane));
 
     ///////--- Left Plane ---///////
-    new_plane = Plane(matrix[3] + matrix[0],
-            matrix[7] + matrix[4],
-            matrix[11] + matrix[8],
-            matrix[15] + matrix[12]);
+    new_plane = Plane(
+        matrix[3] + matrix[0],
+        matrix[7] + matrix[4],
+        matrix[11] + matrix[8],
+        matrix[15] + matrix[12]
+    );
 
     new_plane.normal = -new_plane.normal;
     new_plane.normalize();
@@ -332,10 +447,12 @@ Vector<Plane> CameraMatrix::get_projection_planes(const Transform &p_transform) 
     planes.push_back(p_transform.xform(new_plane));
 
     ///////--- Top Plane ---///////
-    new_plane = Plane(matrix[3] - matrix[1],
-            matrix[7] - matrix[5],
-            matrix[11] - matrix[9],
-            matrix[15] - matrix[13]);
+    new_plane = Plane(
+        matrix[3] - matrix[1],
+        matrix[7] - matrix[5],
+        matrix[11] - matrix[9],
+        matrix[15] - matrix[13]
+    );
 
     new_plane.normal = -new_plane.normal;
     new_plane.normalize();
@@ -343,10 +460,12 @@ Vector<Plane> CameraMatrix::get_projection_planes(const Transform &p_transform) 
     planes.push_back(p_transform.xform(new_plane));
 
     ///////--- Right Plane ---///////
-    new_plane = Plane(matrix[3] - matrix[0],
-            matrix[7] - matrix[4],
-            matrix[11] - matrix[8],
-            matrix[15] - matrix[12]);
+    new_plane = Plane(
+        matrix[3] - matrix[0],
+        matrix[7] - matrix[4],
+        matrix[11] - matrix[8],
+        matrix[15] - matrix[12]
+    );
 
     new_plane.normal = -new_plane.normal;
     new_plane.normalize();
@@ -354,10 +473,12 @@ Vector<Plane> CameraMatrix::get_projection_planes(const Transform &p_transform) 
     planes.push_back(p_transform.xform(new_plane));
 
     ///////--- Bottom Plane ---///////
-    new_plane = Plane(matrix[3] + matrix[1],
-            matrix[7] + matrix[5],
-            matrix[11] + matrix[9],
-            matrix[15] + matrix[13]);
+    new_plane = Plane(
+        matrix[3] + matrix[1],
+        matrix[7] + matrix[5],
+        matrix[11] + matrix[9],
+        matrix[15] + matrix[13]
+    );
 
     new_plane.normal = -new_plane.normal;
     new_plane.normalize();
@@ -376,9 +497,9 @@ CameraMatrix CameraMatrix::inverse() const {
 void CameraMatrix::invert() {
     int i, j, k;
     int pvt_i[4], pvt_j[4]; /* Locations of pivot matrix */
-    real_t pvt_val; /* Value of current pivot element */
-    real_t hold; /* Temporary storage */
-    real_t determinat; /* Determinant */
+    real_t pvt_val;         /* Value of current pivot element */
+    real_t hold;            /* Temporary storage */
+    real_t determinat;      /* Determinant */
 
     determinat = 1.0;
     for (k = 0; k < 4; k++) {
@@ -453,8 +574,8 @@ void CameraMatrix::invert() {
     /* That was most of the work, one final pass of row/column interchange */
     /* to finish */
     for (k = 4 - 2; k >= 0; k--) { /* Don't need to work with 1 by 1 corner*/
-        i = pvt_j[k]; /* Rows to swap correspond to pivot COLUMN */
-        if (i != k) { /* If rows are different */
+        i = pvt_j[k];              /* Rows to swap correspond to pivot COLUMN */
+        if (i != k) {              /* If rows are different */
             for (j = 0; j < 4; j++) {
                 hold = matrix[k][j];
                 matrix[k][j] = -matrix[i][j];
@@ -477,7 +598,7 @@ CameraMatrix::CameraMatrix() {
     set_identity();
 }
 
-CameraMatrix CameraMatrix::operator*(const CameraMatrix &p_matrix) const {
+CameraMatrix CameraMatrix::operator*(const CameraMatrix& p_matrix) const {
     CameraMatrix new_matrix;
 
     for (int j = 0; j < 4; j++) {
@@ -494,7 +615,7 @@ CameraMatrix CameraMatrix::operator*(const CameraMatrix &p_matrix) const {
 }
 
 void CameraMatrix::set_light_bias() {
-    real_t *m = &matrix[0][0];
+    real_t* m = &matrix[0][0];
 
     m[0] = 0.5;
     m[1] = 0.0;
@@ -514,8 +635,8 @@ void CameraMatrix::set_light_bias() {
     m[15] = 1.0;
 }
 
-void CameraMatrix::set_light_atlas_rect(const Rect2 &p_rect) {
-    real_t *m = &matrix[0][0];
+void CameraMatrix::set_light_atlas_rect(const Rect2& p_rect) {
+    real_t* m = &matrix[0][0];
 
     m[0] = p_rect.size.width;
     m[1] = 0.0;
@@ -562,36 +683,42 @@ bool CameraMatrix::is_orthogonal() const {
 }
 
 real_t CameraMatrix::get_fov() const {
-    const real_t *matrix = (const real_t *)this->matrix;
+    const real_t* matrix = (const real_t*)this->matrix;
 
-    Plane right_plane = Plane(matrix[3] - matrix[0],
-            matrix[7] - matrix[4],
-            matrix[11] - matrix[8],
-            -matrix[15] + matrix[12]);
+    Plane right_plane = Plane(
+        matrix[3] - matrix[0],
+        matrix[7] - matrix[4],
+        matrix[11] - matrix[8],
+        -matrix[15] + matrix[12]
+    );
     right_plane.normalize();
 
     if ((matrix[8] == 0) && (matrix[9] == 0)) {
         return Math::rad2deg(Math::acos(Math::abs(right_plane.normal.x))) * 2.0;
     } else {
-        // our frustum is asymmetrical need to calculate the left planes angle separately..
-        Plane left_plane = Plane(matrix[3] + matrix[0],
-                matrix[7] + matrix[4],
-                matrix[11] + matrix[8],
-                matrix[15] + matrix[12]);
+        // our frustum is asymmetrical need to calculate the left planes angle
+        // separately..
+        Plane left_plane = Plane(
+            matrix[3] + matrix[0],
+            matrix[7] + matrix[4],
+            matrix[11] + matrix[8],
+            matrix[15] + matrix[12]
+        );
         left_plane.normalize();
 
-        return Math::rad2deg(Math::acos(Math::abs(left_plane.normal.x))) + Math::rad2deg(Math::acos(Math::abs(right_plane.normal.x)));
+        return Math::rad2deg(Math::acos(Math::abs(left_plane.normal.x)))
+             + Math::rad2deg(Math::acos(Math::abs(right_plane.normal.x)));
     }
 }
 
-void CameraMatrix::make_scale(const Vector3 &p_scale) {
+void CameraMatrix::make_scale(const Vector3& p_scale) {
     set_identity();
     matrix[0][0] = p_scale.x;
     matrix[1][1] = p_scale.y;
     matrix[2][2] = p_scale.z;
 }
 
-void CameraMatrix::scale_translate_to_fit(const AABB &p_aabb) {
+void CameraMatrix::scale_translate_to_fit(const AABB& p_aabb) {
     Vector3 min = p_aabb.position;
     Vector3 max = p_aabb.position + p_aabb.size;
 
@@ -618,7 +745,7 @@ void CameraMatrix::scale_translate_to_fit(const AABB &p_aabb) {
 
 CameraMatrix::operator Transform() const {
     Transform tr;
-    const real_t *m = &matrix[0][0];
+    const real_t* m = &matrix[0][0];
 
     tr.basis.elements[0][0] = m[0];
     tr.basis.elements[1][0] = m[1];
@@ -639,9 +766,9 @@ CameraMatrix::operator Transform() const {
     return tr;
 }
 
-CameraMatrix::CameraMatrix(const Transform &p_transform) {
-    const Transform &tr = p_transform;
-    real_t *m = &matrix[0][0];
+CameraMatrix::CameraMatrix(const Transform& p_transform) {
+    const Transform& tr = p_transform;
+    real_t* m = &matrix[0][0];
 
     m[0] = tr.basis.elements[0][0];
     m[1] = tr.basis.elements[1][0];
@@ -661,5 +788,4 @@ CameraMatrix::CameraMatrix(const Transform &p_transform) {
     m[15] = 1.0;
 }
 
-CameraMatrix::~CameraMatrix() {
-}
+CameraMatrix::~CameraMatrix() {}

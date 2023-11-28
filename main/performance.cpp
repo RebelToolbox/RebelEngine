@@ -39,10 +39,13 @@
 #include "servers/physics_server.h"
 #include "servers/visual_server.h"
 
-Performance *Performance::singleton = nullptr;
+Performance* Performance::singleton = nullptr;
 
 void Performance::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("get_monitor", "monitor"), &Performance::get_monitor);
+    ClassDB::bind_method(
+        D_METHOD("get_monitor", "monitor"),
+        &Performance::get_monitor
+    );
 
     BIND_ENUM_CONSTANT(TIME_FPS);
     BIND_ENUM_CONSTANT(TIME_PROCESS);
@@ -80,8 +83,8 @@ void Performance::_bind_methods() {
 }
 
 float Performance::_get_node_count() const {
-    MainLoop *ml = OS::get_singleton()->get_main_loop();
-    SceneTree *sml = Object::cast_to<SceneTree>(ml);
+    MainLoop* ml = OS::get_singleton()->get_main_loop();
+    SceneTree* sml = Object::cast_to<SceneTree>(ml);
     if (!sml) {
         return 0;
     }
@@ -90,7 +93,7 @@ float Performance::_get_node_count() const {
 
 String Performance::get_monitor_name(Monitor p_monitor) const {
     ERR_FAIL_INDEX_V(p_monitor, MONITOR_MAX, String());
-    static const char *names[MONITOR_MAX] = {
+    static const char* names[MONITOR_MAX] = {
 
         "time/fps",
         "time/process",
@@ -156,41 +159,75 @@ float Performance::get_monitor(Monitor p_monitor) const {
         case OBJECT_ORPHAN_NODE_COUNT:
             return Node::orphan_node_count;
         case RENDER_OBJECTS_IN_FRAME:
-            return VS::get_singleton()->get_render_info(VS::INFO_OBJECTS_IN_FRAME);
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_OBJECTS_IN_FRAME
+            );
         case RENDER_VERTICES_IN_FRAME:
-            return VS::get_singleton()->get_render_info(VS::INFO_VERTICES_IN_FRAME);
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_VERTICES_IN_FRAME
+            );
         case RENDER_MATERIAL_CHANGES_IN_FRAME:
-            return VS::get_singleton()->get_render_info(VS::INFO_MATERIAL_CHANGES_IN_FRAME);
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_MATERIAL_CHANGES_IN_FRAME
+            );
         case RENDER_SHADER_CHANGES_IN_FRAME:
-            return VS::get_singleton()->get_render_info(VS::INFO_SHADER_CHANGES_IN_FRAME);
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_SHADER_CHANGES_IN_FRAME
+            );
         case RENDER_SURFACE_CHANGES_IN_FRAME:
-            return VS::get_singleton()->get_render_info(VS::INFO_SURFACE_CHANGES_IN_FRAME);
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_SURFACE_CHANGES_IN_FRAME
+            );
         case RENDER_DRAW_CALLS_IN_FRAME:
-            return VS::get_singleton()->get_render_info(VS::INFO_DRAW_CALLS_IN_FRAME);
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_DRAW_CALLS_IN_FRAME
+            );
         case RENDER_2D_ITEMS_IN_FRAME:
-            return VS::get_singleton()->get_render_info(VS::INFO_2D_ITEMS_IN_FRAME);
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_2D_ITEMS_IN_FRAME
+            );
         case RENDER_2D_DRAW_CALLS_IN_FRAME:
-            return VS::get_singleton()->get_render_info(VS::INFO_2D_DRAW_CALLS_IN_FRAME);
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_2D_DRAW_CALLS_IN_FRAME
+            );
         case RENDER_VIDEO_MEM_USED:
-            return VS::get_singleton()->get_render_info(VS::INFO_VIDEO_MEM_USED);
+            return VS::get_singleton()->get_render_info(VS::INFO_VIDEO_MEM_USED
+            );
         case RENDER_TEXTURE_MEM_USED:
-            return VS::get_singleton()->get_render_info(VS::INFO_TEXTURE_MEM_USED);
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_TEXTURE_MEM_USED
+            );
         case RENDER_VERTEX_MEM_USED:
-            return VS::get_singleton()->get_render_info(VS::INFO_VERTEX_MEM_USED);
+            return VS::get_singleton()->get_render_info(VS::INFO_VERTEX_MEM_USED
+            );
         case RENDER_USAGE_VIDEO_MEM_TOTAL:
-            return VS::get_singleton()->get_render_info(VS::INFO_USAGE_VIDEO_MEM_TOTAL);
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_USAGE_VIDEO_MEM_TOTAL
+            );
         case PHYSICS_2D_ACTIVE_OBJECTS:
-            return Physics2DServer::get_singleton()->get_process_info(Physics2DServer::INFO_ACTIVE_OBJECTS);
+            return Physics2DServer::get_singleton()->get_process_info(
+                Physics2DServer::INFO_ACTIVE_OBJECTS
+            );
         case PHYSICS_2D_COLLISION_PAIRS:
-            return Physics2DServer::get_singleton()->get_process_info(Physics2DServer::INFO_COLLISION_PAIRS);
+            return Physics2DServer::get_singleton()->get_process_info(
+                Physics2DServer::INFO_COLLISION_PAIRS
+            );
         case PHYSICS_2D_ISLAND_COUNT:
-            return Physics2DServer::get_singleton()->get_process_info(Physics2DServer::INFO_ISLAND_COUNT);
+            return Physics2DServer::get_singleton()->get_process_info(
+                Physics2DServer::INFO_ISLAND_COUNT
+            );
         case PHYSICS_3D_ACTIVE_OBJECTS:
-            return PhysicsServer::get_singleton()->get_process_info(PhysicsServer::INFO_ACTIVE_OBJECTS);
+            return PhysicsServer::get_singleton()->get_process_info(
+                PhysicsServer::INFO_ACTIVE_OBJECTS
+            );
         case PHYSICS_3D_COLLISION_PAIRS:
-            return PhysicsServer::get_singleton()->get_process_info(PhysicsServer::INFO_COLLISION_PAIRS);
+            return PhysicsServer::get_singleton()->get_process_info(
+                PhysicsServer::INFO_COLLISION_PAIRS
+            );
         case PHYSICS_3D_ISLAND_COUNT:
-            return PhysicsServer::get_singleton()->get_process_info(PhysicsServer::INFO_ISLAND_COUNT);
+            return PhysicsServer::get_singleton()->get_process_info(
+                PhysicsServer::INFO_ISLAND_COUNT
+            );
         case AUDIO_OUTPUT_LATENCY:
             return AudioServer::get_singleton()->get_output_latency();
 
@@ -201,41 +238,22 @@ float Performance::get_monitor(Monitor p_monitor) const {
     return 0;
 }
 
-Performance::MonitorType Performance::get_monitor_type(Monitor p_monitor) const {
+Performance::MonitorType Performance::get_monitor_type(Monitor p_monitor
+) const {
     ERR_FAIL_INDEX_V(p_monitor, MONITOR_MAX, MONITOR_TYPE_QUANTITY);
     // ugly
     static const MonitorType types[MONITOR_MAX] = {
 
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_TIME,
-        MONITOR_TYPE_TIME,
-        MONITOR_TYPE_MEMORY,
-        MONITOR_TYPE_MEMORY,
-        MONITOR_TYPE_MEMORY,
-        MONITOR_TYPE_MEMORY,
-        MONITOR_TYPE_MEMORY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_MEMORY,
-        MONITOR_TYPE_MEMORY,
-        MONITOR_TYPE_MEMORY,
-        MONITOR_TYPE_MEMORY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
-        MONITOR_TYPE_QUANTITY,
+        MONITOR_TYPE_QUANTITY, MONITOR_TYPE_TIME,     MONITOR_TYPE_TIME,
+        MONITOR_TYPE_MEMORY,   MONITOR_TYPE_MEMORY,   MONITOR_TYPE_MEMORY,
+        MONITOR_TYPE_MEMORY,   MONITOR_TYPE_MEMORY,   MONITOR_TYPE_QUANTITY,
+        MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY,
+        MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY,
+        MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY,
+        MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY, MONITOR_TYPE_MEMORY,
+        MONITOR_TYPE_MEMORY,   MONITOR_TYPE_MEMORY,   MONITOR_TYPE_MEMORY,
+        MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY,
+        MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY, MONITOR_TYPE_QUANTITY,
         MONITOR_TYPE_TIME,
 
     };

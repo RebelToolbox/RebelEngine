@@ -54,10 +54,12 @@ enum TransformationComp {
     TransformationComp_GeometricScaling,
     TransformationComp_MAXIMUM
 };
+
 // Abstract away pivot data so its simpler to handle
 struct PivotTransform : Reference, ModelAbstraction {
     // at the end we want to keep geometric_ everything, post and pre rotation
-    // these are used during animation data processing / keyframe ingestion the rest can be simplified down / out.
+    // these are used during animation data processing / keyframe ingestion the
+    // rest can be simplified down / out.
     Quat pre_rotation = Quat();
     Quat post_rotation = Quat();
     Quat rotation = Quat();
@@ -82,13 +84,23 @@ struct PivotTransform : Reference, ModelAbstraction {
         print_verbose("debugging node name: " + p_name);
         print_verbose("raw rotation: " + raw_rotation * (180 / Math_PI));
         print_verbose("raw pre_rotation " + raw_pre_rotation * (180 / Math_PI));
-        print_verbose("raw post_rotation " + raw_post_rotation * (180 / Math_PI));
+        print_verbose(
+            "raw post_rotation " + raw_post_rotation * (180 / Math_PI)
+        );
     }
 
     Transform ComputeGlobalTransform(Transform t) const;
     Transform ComputeLocalTransform(Transform t) const;
-    Transform ComputeGlobalTransform(Vector3 p_translation, Quat p_rotation, Vector3 p_scaling) const;
-    Transform ComputeLocalTransform(Vector3 p_translation, Quat p_rotation, Vector3 p_scaling) const;
+    Transform ComputeGlobalTransform(
+        Vector3 p_translation,
+        Quat p_rotation,
+        Vector3 p_scaling
+    ) const;
+    Transform ComputeLocalTransform(
+        Vector3 p_translation,
+        Quat p_rotation,
+        Vector3 p_scaling
+    ) const;
 
     /* Extract into xforms and calculate once */
     void ComputePivotTransform();
@@ -102,14 +114,16 @@ struct PivotTransform : Reference, ModelAbstraction {
 
     bool computed_global_xform = false;
     Ref<PivotTransform> parent_transform = Ref<PivotTransform>();
-    //Transform chain[TransformationComp_MAXIMUM];
+    // Transform chain[TransformationComp_MAXIMUM];
 
     // cached for later use
     Transform GlobalTransform = Transform();
     Transform LocalTransform = Transform();
     Transform Local_Scaling_Matrix = Transform(); // used for inherit type.
-    Transform GeometricTransform = Transform(); // 3DS max only
-    FBXDocParser::TransformInheritance inherit_type = FBXDocParser::TransformInheritance_MAX; // maya fbx requires this - sorry <3
+    Transform GeometricTransform = Transform();   // 3DS max only
+    FBXDocParser::TransformInheritance inherit_type =
+        FBXDocParser::TransformInheritance_MAX; // maya fbx requires this -
+                                                // sorry <3
 };
 
 #endif // PIVOT_TRANSFORM_H

@@ -54,9 +54,9 @@ class EditorAudioBus : public PanelContainer {
     GDCLASS(EditorAudioBus, PanelContainer);
 
     Ref<Texture> disabled_vu;
-    LineEdit *track_name;
-    MenuButton *bus_options;
-    VSlider *slider;
+    LineEdit* track_name;
+    MenuButton* bus_options;
+    VSlider* slider;
 
     int cc;
     static const int CHANNELS_MAX = 4;
@@ -67,36 +67,40 @@ class EditorAudioBus : public PanelContainer {
         float peak_l;
         float peak_r;
 
-        TextureProgress *vu_l;
-        TextureProgress *vu_r;
+        TextureProgress* vu_l;
+        TextureProgress* vu_r;
     } channel[CHANNELS_MAX];
 
-    OptionButton *send;
+    OptionButton* send;
 
-    PopupMenu *effect_options;
-    PopupMenu *bus_popup;
-    PopupMenu *delete_effect_popup;
+    PopupMenu* effect_options;
+    PopupMenu* bus_popup;
+    PopupMenu* delete_effect_popup;
 
-    Panel *audio_value_preview_box;
-    Label *audio_value_preview_label;
-    Timer *preview_timer;
+    Panel* audio_value_preview_box;
+    Label* audio_value_preview_label;
+    Timer* preview_timer;
 
-    Button *solo;
-    Button *mute;
-    Button *bypass;
+    Button* solo;
+    Button* mute;
+    Button* bypass;
 
-    Tree *effects;
+    Tree* effects;
 
     bool updating_bus;
     bool is_master;
     mutable bool hovering_drop;
 
-    void _gui_input(const Ref<InputEvent> &p_event);
+    void _gui_input(const Ref<InputEvent>& p_event);
     void _unhandled_key_input(Ref<InputEvent> p_event);
     void _bus_popup_pressed(int p_option);
 
-    void _name_changed(const String &p_new_name);
-    void _name_focus_exit() { _name_changed(track_name->get_text()); }
+    void _name_changed(const String& p_new_name);
+
+    void _name_focus_exit() {
+        _name_changed(track_name->get_text());
+    }
+
     void _volume_changed(float p_normalized);
     float _normalized_volume_to_scaled_db(float normalized);
     float _scaled_db_to_normalized_volume(float db);
@@ -110,20 +114,29 @@ class EditorAudioBus : public PanelContainer {
     void _effect_add(int p_which);
     void _effect_selected();
     void _delete_effect_pressed(int p_option);
-    void _effect_rmb(const Vector2 &p_pos);
+    void _effect_rmb(const Vector2& p_pos);
     void _update_visible_channels();
 
-    virtual Variant get_drag_data(const Point2 &p_point);
-    virtual bool can_drop_data(const Point2 &p_point, const Variant &p_data) const;
-    virtual void drop_data(const Point2 &p_point, const Variant &p_data);
+    virtual Variant get_drag_data(const Point2& p_point);
+    virtual bool can_drop_data(const Point2& p_point, const Variant& p_data)
+        const;
+    virtual void drop_data(const Point2& p_point, const Variant& p_data);
 
-    Variant get_drag_data_fw(const Point2 &p_point, Control *p_from);
-    bool can_drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from) const;
-    void drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from);
+    Variant get_drag_data_fw(const Point2& p_point, Control* p_from);
+    bool can_drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    ) const;
+    void drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    );
 
     friend class EditorAudioBuses;
 
-    EditorAudioBuses *buses;
+    EditorAudioBuses* buses;
 
 protected:
     static void _bind_methods();
@@ -133,14 +146,18 @@ public:
     void update_bus();
     void update_send();
 
-    EditorAudioBus(EditorAudioBuses *p_buses = nullptr, bool p_is_master = false);
+    EditorAudioBus(
+        EditorAudioBuses* p_buses = nullptr,
+        bool p_is_master = false
+    );
 };
 
 class EditorAudioBusDrop : public Control {
     GDCLASS(EditorAudioBusDrop, Control);
 
-    virtual bool can_drop_data(const Point2 &p_point, const Variant &p_data) const;
-    virtual void drop_data(const Point2 &p_point, const Variant &p_data);
+    virtual bool can_drop_data(const Point2& p_point, const Variant& p_data)
+        const;
+    virtual void drop_data(const Point2& p_point, const Variant& p_data);
 
     mutable bool hovering_drop;
 
@@ -155,22 +172,22 @@ public:
 class EditorAudioBuses : public VBoxContainer {
     GDCLASS(EditorAudioBuses, VBoxContainer);
 
-    HBoxContainer *top_hb;
+    HBoxContainer* top_hb;
 
-    ScrollContainer *bus_scroll;
-    HBoxContainer *bus_hb;
+    ScrollContainer* bus_scroll;
+    HBoxContainer* bus_hb;
 
-    EditorAudioBusDrop *drop_end;
+    EditorAudioBusDrop* drop_end;
 
-    Label *file;
+    Label* file;
 
-    Button *add;
-    Button *load;
-    Button *save_as;
-    Button *_default;
-    Button *_new;
+    Button* add;
+    Button* load;
+    Button* save_as;
+    Button* _default;
+    Button* _new;
 
-    Timer *save_timer;
+    Timer* save_timer;
     String edited_path;
 
     void _add_bus();
@@ -178,9 +195,9 @@ class EditorAudioBuses : public VBoxContainer {
     void _update_bus(int p_index);
     void _update_sends();
 
-    void _delete_bus(Object *p_which);
+    void _delete_bus(Object* p_which);
     void _duplicate_bus(int p_which);
-    void _reset_bus_volume(Object *p_which);
+    void _reset_bus_volume(Object* p_which);
 
     void _request_drop_end();
     void _drop_at_index(int p_bus, int p_index);
@@ -193,19 +210,19 @@ class EditorAudioBuses : public VBoxContainer {
     void _load_default_layout();
     void _new_layout();
 
-    EditorFileDialog *file_dialog;
+    EditorFileDialog* file_dialog;
     bool new_layout;
 
-    void _file_dialog_callback(const String &p_string);
+    void _file_dialog_callback(const String& p_string);
 
 protected:
     static void _bind_methods();
     void _notification(int p_what);
 
 public:
-    void open_layout(const String &p_path);
+    void open_layout(const String& p_path);
 
-    static EditorAudioBuses *register_editor();
+    static EditorAudioBuses* register_editor();
 
     EditorAudioBuses();
 };
@@ -225,13 +242,14 @@ private:
             render_db_value = rndr_val;
         }
 
-        _FORCE_INLINE_ AudioNotch(const AudioNotch &n) {
+        _FORCE_INLINE_ AudioNotch(const AudioNotch& n) {
             relative_position = n.relative_position;
             db_value = n.db_value;
             render_db_value = n.render_db_value;
         }
 
-        _FORCE_INLINE_ AudioNotch operator=(const EditorAudioMeterNotches::AudioNotch &n) {
+        _FORCE_INLINE_ AudioNotch
+        operator=(const EditorAudioMeterNotches::AudioNotch& n) {
             relative_position = n.relative_position;
             db_value = n.db_value;
             render_db_value = n.render_db_value;
@@ -250,7 +268,11 @@ public:
     const float top_padding = 5.0f;
     Color notch_color;
 
-    void add_notch(float p_normalized_offset, float p_db_value, bool p_render_value = false);
+    void add_notch(
+        float p_normalized_offset,
+        float p_db_value,
+        bool p_render_value = false
+    );
     Size2 get_minimum_size() const;
 
 private:
@@ -265,16 +287,22 @@ public:
 class AudioBusesEditorPlugin : public EditorPlugin {
     GDCLASS(AudioBusesEditorPlugin, EditorPlugin);
 
-    EditorAudioBuses *audio_bus_editor;
+    EditorAudioBuses* audio_bus_editor;
 
 public:
-    virtual String get_name() const { return "SampleLibrary"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_node);
-    virtual bool handles(Object *p_node) const;
+    virtual String get_name() const {
+        return "SampleLibrary";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_node);
+    virtual bool handles(Object* p_node) const;
     virtual void make_visible(bool p_visible);
 
-    AudioBusesEditorPlugin(EditorAudioBuses *p_node);
+    AudioBusesEditorPlugin(EditorAudioBuses* p_node);
     ~AudioBusesEditorPlugin();
 };
 

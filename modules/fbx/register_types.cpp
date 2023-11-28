@@ -54,5 +54,4 @@ void register_fbx_types() {
 #endif
 }
 
-void unregister_fbx_types() {
-}
+void unregister_fbx_types() {}

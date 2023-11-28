@@ -76,9 +76,9 @@ private:
     Transform2D custom_transform;
     HalfOffset half_offset;
     bool use_parent;
-    CollisionObject2D *collision_parent;
+    CollisionObject2D* collision_parent;
     bool use_kinematic;
-    Navigation2D *navigation;
+    Navigation2D* navigation;
     bool show_collision = false;
 
     union PosKey {
@@ -86,24 +86,34 @@ private:
             int16_t x;
             int16_t y;
         };
+
         uint32_t key;
 
-        //using a more precise comparison so the regions can be sorted later
-        bool operator<(const PosKey &p_k) const { return (y == p_k.y) ? x < p_k.x : y < p_k.y; }
+        // using a more precise comparison so the regions can be sorted later
+        bool operator<(const PosKey& p_k) const {
+            return (y == p_k.y) ? x < p_k.x : y < p_k.y;
+        }
 
-        bool operator==(const PosKey &p_k) const { return (y == p_k.y && x == p_k.x); }
+        bool operator==(const PosKey& p_k) const {
+            return (y == p_k.y && x == p_k.x);
+        }
 
-        PosKey to_quadrant(const int &p_quadrant_size) const {
-            // rounding down, instead of simply rounding towards zero (truncating)
+        PosKey to_quadrant(const int& p_quadrant_size) const {
+            // rounding down, instead of simply rounding towards zero
+            // (truncating)
             return PosKey(
-                    x > 0 ? x / p_quadrant_size : (x - (p_quadrant_size - 1)) / p_quadrant_size,
-                    y > 0 ? y / p_quadrant_size : (y - (p_quadrant_size - 1)) / p_quadrant_size);
+                x > 0 ? x / p_quadrant_size
+                      : (x - (p_quadrant_size - 1)) / p_quadrant_size,
+                y > 0 ? y / p_quadrant_size
+                      : (y - (p_quadrant_size - 1)) / p_quadrant_size
+            );
         }
 
         PosKey(int16_t p_x, int16_t p_y) {
             x = p_x;
             y = p_y;
         }
+
         PosKey() {
             x = 0;
             y = 0;
@@ -121,7 +131,10 @@ private:
         };
 
         uint64_t _u64t;
-        Cell() { _u64t = 0; }
+
+        Cell() {
+            _u64t = 0;
+        }
     };
 
     Map<PosKey, Cell> tile_map;
@@ -150,7 +163,7 @@ private:
 
         VSet<PosKey> cells;
 
-        void operator=(const Quadrant &q) {
+        void operator=(const Quadrant& q) {
             pos = q.pos;
             canvas_items = q.canvas_items;
             body = q.body;
@@ -159,8 +172,8 @@ private:
             navpoly_ids = q.navpoly_ids;
             occluder_instances = q.occluder_instances;
         }
-        Quadrant(const Quadrant &q) :
-                dirty_list(this) {
+
+        Quadrant(const Quadrant& q) : dirty_list(this) {
             pos = q.pos;
             canvas_items = q.canvas_items;
             body = q.body;
@@ -169,8 +182,8 @@ private:
             occluder_instances = q.occluder_instances;
             navpoly_ids = q.navpoly_ids;
         }
-        Quadrant() :
-                dirty_list(this) {}
+
+        Quadrant() : dirty_list(this) {}
     };
 
     Map<PosKey, Quadrant> quadrant_map;
@@ -199,42 +212,63 @@ private:
 
     int occluder_light_mask;
 
-    void _fix_cell_transform(Transform2D &xform, const Cell &p_cell, const Vector2 &p_offset, const Size2 &p_sc);
+    void _fix_cell_transform(
+        Transform2D& xform,
+        const Cell& p_cell,
+        const Vector2& p_offset,
+        const Size2& p_sc
+    );
 
-    void _add_shape(int &shape_idx, const Quadrant &p_q, const Ref<Shape2D> &p_shape, const TileSet::ShapeData &p_shape_data, const Transform2D &p_xform, const Vector2 &p_metadata);
+    void _add_shape(
+        int& shape_idx,
+        const Quadrant& p_q,
+        const Ref<Shape2D>& p_shape,
+        const TileSet::ShapeData& p_shape_data,
+        const Transform2D& p_xform,
+        const Vector2& p_metadata
+    );
 
-    Map<PosKey, Quadrant>::Element *_create_quadrant(const PosKey &p_qk);
-    void _erase_quadrant(Map<PosKey, Quadrant>::Element *Q);
-    void _make_quadrant_dirty(Map<PosKey, Quadrant>::Element *Q, bool update = true);
+    Map<PosKey, Quadrant>::Element* _create_quadrant(const PosKey& p_qk);
+    void _erase_quadrant(Map<PosKey, Quadrant>::Element* Q);
+    void _make_quadrant_dirty(
+        Map<PosKey, Quadrant>::Element* Q,
+        bool update = true
+    );
     void _recreate_quadrants();
     void _clear_quadrants();
-    void _update_quadrant_space(const RID &p_space);
+    void _update_quadrant_space(const RID& p_space);
     void _update_quadrant_transform();
     void _recompute_rect_cache();
 
     void _update_all_items_material_state();
-    _FORCE_INLINE_ void _update_item_material_state(const RID &p_canvas_item);
+    _FORCE_INLINE_ void _update_item_material_state(const RID& p_canvas_item);
 
     _FORCE_INLINE_ int _get_quadrant_size() const;
 
-    void _set_tile_data(const PoolVector<int> &p_data);
+    void _set_tile_data(const PoolVector<int>& p_data);
     PoolVector<int> _get_tile_data() const;
 
-    void _set_old_cell_size(int p_size) { set_cell_size(Size2(p_size, p_size)); }
-    int _get_old_cell_size() const { return cell_size.x; }
+    void _set_old_cell_size(int p_size) {
+        set_cell_size(Size2(p_size, p_size));
+    }
 
-    _FORCE_INLINE_ Vector2 _map_to_world(int p_x, int p_y, bool p_ignore_ofs = false) const;
+    int _get_old_cell_size() const {
+        return cell_size.x;
+    }
+
+    _FORCE_INLINE_ Vector2
+    _map_to_world(int p_x, int p_y, bool p_ignore_ofs = false) const;
 
 protected:
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
 
     void _notification(int p_what);
     static void _bind_methods();
 
-    virtual void _validate_property(PropertyInfo &property) const;
-    virtual void _changed_callback(Object *p_changed, const char *p_prop);
+    virtual void _validate_property(PropertyInfo& property) const;
+    virtual void _changed_callback(Object* p_changed, const char* p_prop);
 
 public:
     enum {
@@ -245,7 +279,7 @@ public:
     virtual Rect2 _edit_get_rect() const;
 #endif
 
-    void set_tileset(const Ref<TileSet> &p_tileset);
+    void set_tileset(const Ref<TileSet>& p_tileset);
     Ref<TileSet> get_tileset() const;
 
     void set_cell_size(Size2 p_size);
@@ -254,21 +288,39 @@ public:
     void set_quadrant_size(int p_size);
     int get_quadrant_size() const;
 
-    void set_cell(int p_x, int p_y, int p_tile, bool p_flip_x = false, bool p_flip_y = false, bool p_transpose = false, Vector2 p_autotile_coord = Vector2());
+    void set_cell(
+        int p_x,
+        int p_y,
+        int p_tile,
+        bool p_flip_x = false,
+        bool p_flip_y = false,
+        bool p_transpose = false,
+        Vector2 p_autotile_coord = Vector2()
+    );
     int get_cell(int p_x, int p_y) const;
     bool is_cell_x_flipped(int p_x, int p_y) const;
     bool is_cell_y_flipped(int p_x, int p_y) const;
     bool is_cell_transposed(int p_x, int p_y) const;
-    void set_cell_autotile_coord(int p_x, int p_y, const Vector2 &p_coord);
+    void set_cell_autotile_coord(int p_x, int p_y, const Vector2& p_coord);
     Vector2 get_cell_autotile_coord(int p_x, int p_y) const;
 
-    void _set_celld(const Vector2 &p_pos, const Dictionary &p_data);
-    void set_cellv(const Vector2 &p_pos, int p_tile, bool p_flip_x = false, bool p_flip_y = false, bool p_transpose = false, Vector2 p_autotile_coord = Vector2());
-    int get_cellv(const Vector2 &p_pos) const;
+    void _set_celld(const Vector2& p_pos, const Dictionary& p_data);
+    void set_cellv(
+        const Vector2& p_pos,
+        int p_tile,
+        bool p_flip_x = false,
+        bool p_flip_y = false,
+        bool p_transpose = false,
+        Vector2 p_autotile_coord = Vector2()
+    );
+    int get_cellv(const Vector2& p_pos) const;
 
-    void make_bitmask_area_dirty(const Vector2 &p_pos);
-    void update_bitmask_area(const Vector2 &p_pos);
-    void update_bitmask_region(const Vector2 &p_start = Vector2(), const Vector2 &p_end = Vector2());
+    void make_bitmask_area_dirty(const Vector2& p_pos);
+    void update_bitmask_area(const Vector2& p_pos);
+    void update_bitmask_region(
+        const Vector2& p_start = Vector2(),
+        const Vector2& p_end = Vector2()
+    );
     void update_cell_bitmask(int p_x, int p_y);
     void update_dirty_bitmask();
 
@@ -310,14 +362,14 @@ public:
     void set_tile_origin(TileOrigin p_tile_origin);
     TileOrigin get_tile_origin() const;
 
-    void set_custom_transform(const Transform2D &p_xform);
+    void set_custom_transform(const Transform2D& p_xform);
     Transform2D get_custom_transform() const;
 
     Transform2D get_cell_transform() const;
     Vector2 get_cell_draw_offset() const;
 
-    Vector2 map_to_world(const Vector2 &p_pos, bool p_ignore_ofs = false) const;
-    Vector2 world_to_map(const Vector2 &p_pos) const;
+    Vector2 map_to_world(const Vector2& p_pos, bool p_ignore_ofs = false) const;
+    Vector2 world_to_map(const Vector2& p_pos) const;
 
     void set_y_sort_mode(bool p_enable);
     bool is_y_sort_mode_enabled() const;
@@ -337,7 +389,7 @@ public:
 
     virtual void set_light_mask(int p_light_mask);
 
-    virtual void set_material(const Ref<Material> &p_material);
+    virtual void set_material(const Ref<Material>& p_material);
 
     virtual void set_use_parent_material(bool p_use_parent_material);
 

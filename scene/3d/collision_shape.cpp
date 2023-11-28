@@ -43,14 +43,14 @@
 #include "servers/visual_server.h"
 
 void CollisionShape::make_convex_from_brothers() {
-    Node *p = get_parent();
+    Node* p = get_parent();
     if (!p) {
         return;
     }
 
     for (int i = 0; i < p->get_child_count(); i++) {
-        Node *n = p->get_child(i);
-        MeshInstance *mi = Object::cast_to<MeshInstance>(n);
+        Node* n = p->get_child(i);
+        MeshInstance* mi = Object::cast_to<MeshInstance>(n);
         if (mi) {
             Ref<Mesh> m = mi->get_mesh();
             if (m.is_valid()) {
@@ -112,29 +112,40 @@ String CollisionShape::get_configuration_warning() const {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("CollisionShape only serves to provide a collision shape to a CollisionObject derived node. Please only use it as a child of Area, StaticBody, RigidBody, KinematicBody, etc. to give them a shape.");
+        warning +=
+            TTR("CollisionShape only serves to provide a collision shape to a "
+                "CollisionObject derived node. Please only use it as a child "
+                "of Area, StaticBody, RigidBody, KinematicBody, etc. to give "
+                "them a shape.");
     }
 
     if (!shape.is_valid()) {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("A shape must be provided for CollisionShape to function. Please create a shape resource for it.");
+        warning +=
+            TTR("A shape must be provided for CollisionShape to function. "
+                "Please create a shape resource for it.");
     } else {
         if (shape->is_class("PlaneShape")) {
             if (warning != String()) {
                 warning += "\n\n";
             }
-            warning += TTR("Plane shapes don't work well and will be removed in future versions. Please don't use them.");
+            warning +=
+                TTR("Plane shapes don't work well and will be removed in "
+                    "future versions. Please don't use them.");
         }
 
-        if (Object::cast_to<RigidBody>(get_parent()) &&
-                Object::cast_to<ConcavePolygonShape>(*shape) &&
-                Object::cast_to<RigidBody>(get_parent())->get_mode() != RigidBody::MODE_STATIC) {
+        if (Object::cast_to<RigidBody>(get_parent())
+            && Object::cast_to<ConcavePolygonShape>(*shape)
+            && Object::cast_to<RigidBody>(get_parent())->get_mode()
+                   != RigidBody::MODE_STATIC) {
             if (warning != String()) {
                 warning += "\n\n";
             }
-            warning += TTR("ConcavePolygonShape doesn't support RigidBody in another mode than static.");
+            warning +=
+                TTR("ConcavePolygonShape doesn't support RigidBody in another "
+                    "mode than static.");
         }
     }
 
@@ -142,20 +153,49 @@ String CollisionShape::get_configuration_warning() const {
 }
 
 void CollisionShape::_bind_methods() {
-    //not sure if this should do anything
-    ClassDB::bind_method(D_METHOD("resource_changed", "resource"), &CollisionShape::resource_changed);
-    ClassDB::bind_method(D_METHOD("set_shape", "shape"), &CollisionShape::set_shape);
+    // not sure if this should do anything
+    ClassDB::bind_method(
+        D_METHOD("resource_changed", "resource"),
+        &CollisionShape::resource_changed
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_shape", "shape"),
+        &CollisionShape::set_shape
+    );
     ClassDB::bind_method(D_METHOD("get_shape"), &CollisionShape::get_shape);
-    ClassDB::bind_method(D_METHOD("set_disabled", "enable"), &CollisionShape::set_disabled);
+    ClassDB::bind_method(
+        D_METHOD("set_disabled", "enable"),
+        &CollisionShape::set_disabled
+    );
     ClassDB::bind_method(D_METHOD("is_disabled"), &CollisionShape::is_disabled);
-    ClassDB::bind_method(D_METHOD("make_convex_from_brothers"), &CollisionShape::make_convex_from_brothers);
-    ClassDB::set_method_flags("CollisionShape", "make_convex_from_brothers", METHOD_FLAGS_DEFAULT | METHOD_FLAG_EDITOR);
+    ClassDB::bind_method(
+        D_METHOD("make_convex_from_brothers"),
+        &CollisionShape::make_convex_from_brothers
+    );
+    ClassDB::set_method_flags(
+        "CollisionShape",
+        "make_convex_from_brothers",
+        METHOD_FLAGS_DEFAULT | METHOD_FLAG_EDITOR
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "shape", PROPERTY_HINT_RESOURCE_TYPE, "Shape"), "set_shape", "get_shape");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "disabled"), "set_disabled", "is_disabled");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "shape",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Shape"
+        ),
+        "set_shape",
+        "get_shape"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "disabled"),
+        "set_disabled",
+        "is_disabled"
+    );
 }
 
-void CollisionShape::set_shape(const Ref<Shape> &p_shape) {
+void CollisionShape::set_shape(const Ref<Shape>& p_shape) {
     if (p_shape == shape) {
         return;
     }
@@ -198,7 +238,7 @@ bool CollisionShape::is_disabled() const {
 }
 
 CollisionShape::CollisionShape() {
-    //indicator = VisualServer::get_singleton()->mesh_create();
+    // indicator = VisualServer::get_singleton()->mesh_create();
     disabled = false;
     parent = nullptr;
     owner_id = 0;
@@ -209,5 +249,5 @@ CollisionShape::~CollisionShape() {
     if (!shape.is_null()) {
         shape->unregister_owner(this);
     }
-    //VisualServer::get_singleton()->free(indicator);
+    // VisualServer::get_singleton()->free(indicator);
 }

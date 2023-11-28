@@ -36,7 +36,7 @@
 #include <stdio.h>
 
 class DirAccessJAndroid : public DirAccess {
-    //AAssetDir* aad;
+    // AAssetDir* aad;
 
     static jobject io;
     static jclass cls;
@@ -51,7 +51,7 @@ class DirAccessJAndroid : public DirAccess {
     String current_dir;
     String current;
 
-    static DirAccess *create_fs();
+    static DirAccess* create_fs();
 
 public:
     virtual Error list_dir_begin(); ///< This starts dir listing
@@ -63,7 +63,8 @@ public:
     virtual int get_drive_count();
     virtual String get_drive(int p_drive);
 
-    virtual Error change_dir(String p_dir); ///< can be relative or absolute, return false on success
+    virtual Error change_dir(String p_dir
+    ); ///< can be relative or absolute, return false on success
     virtual String get_current_dir(); ///< return current dir location
 
     virtual bool file_exists(String p_file);
@@ -74,9 +75,17 @@ public:
     virtual Error rename(String p_from, String p_to);
     virtual Error remove(String p_name);
 
-    virtual bool is_link(String p_file) { return false; }
-    virtual String read_link(String p_file) { return p_file; }
-    virtual Error create_link(String p_source, String p_target) { return FAILED; }
+    virtual bool is_link(String p_file) {
+        return false;
+    }
+
+    virtual String read_link(String p_file) {
+        return p_file;
+    }
+
+    virtual Error create_link(String p_source, String p_target) {
+        return FAILED;
+    }
 
     virtual String get_filesystem_type() const;
 

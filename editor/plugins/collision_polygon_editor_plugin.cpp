@@ -60,7 +60,8 @@ void Polygon3DEditor::_notification(int p_what) {
         } break;
     }
 }
-void Polygon3DEditor::_node_removed(Node *p_node) {
+
+void Polygon3DEditor::_node_removed(Node* p_node) {
     if (p_node == node) {
         node = nullptr;
         if (imgeom->get_parent() == p_node) {
@@ -101,7 +102,10 @@ void Polygon3DEditor::_wip_close() {
     undo_redo->commit_action();
 }
 
-bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event) {
+bool Polygon3DEditor::forward_spatial_gui_input(
+    Camera* p_camera,
+    const Ref<InputEvent>& p_event
+) {
     if (!node) {
         return false;
     }
@@ -129,14 +133,15 @@ bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<Inpu
 
         Vector2 cpoint(spoint.x, spoint.y);
 
-        //DO NOT snap here, it's confusing in 3D for adding points.
-        //Let the snap happen when the point is being moved, instead.
-        //cpoint = CanvasItemEditor::get_singleton()->snap_point(cpoint);
+        // DO NOT snap here, it's confusing in 3D for adding points.
+        // Let the snap happen when the point is being moved, instead.
+        // cpoint = CanvasItemEditor::get_singleton()->snap_point(cpoint);
 
         Vector<Vector2> poly = node->call("get_polygon");
 
-        //first check if a point is to be added (segment split)
-        real_t grab_threshold = EDITOR_GET("editors/poly_editor/point_grab_radius");
+        // first check if a point is to be added (segment split)
+        real_t grab_threshold =
+            EDITOR_GET("editors/poly_editor/point_grab_radius");
 
         switch (mode) {
             case MODE_CREATE: {
@@ -151,8 +156,14 @@ bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<Inpu
                         edited_point = 1;
                         return true;
                     } else {
-                        if (wip.size() > 1 && p_camera->unproject_position(gt.xform(Vector3(wip[0].x, wip[0].y, depth))).distance_to(gpoint) < grab_threshold) {
-                            //wip closed
+                        if (wip.size() > 1
+                            && p_camera
+                                       ->unproject_position(gt.xform(
+                                           Vector3(wip[0].x, wip[0].y, depth)
+                                       ))
+                                       .distance_to(gpoint)
+                                   < grab_threshold) {
+                            // wip closed
                             _wip_close();
 
                             return true;
@@ -176,28 +187,51 @@ bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<Inpu
                         if (mb->get_control()) {
                             if (poly.size() < 3) {
                                 undo_redo->create_action(TTR("Edit Poly"));
-                                undo_redo->add_undo_method(node, "set_polygon", poly);
+                                undo_redo->add_undo_method(
+                                    node,
+                                    "set_polygon",
+                                    poly
+                                );
                                 poly.push_back(cpoint);
-                                undo_redo->add_do_method(node, "set_polygon", poly);
+                                undo_redo
+                                    ->add_do_method(node, "set_polygon", poly);
                                 undo_redo->add_do_method(this, "_polygon_draw");
-                                undo_redo->add_undo_method(this, "_polygon_draw");
+                                undo_redo->add_undo_method(
+                                    this,
+                                    "_polygon_draw"
+                                );
                                 undo_redo->commit_action();
                                 return true;
                             }
 
-                            //search edges
+                            // search edges
                             int closest_idx = -1;
                             Vector2 closest_pos;
                             real_t closest_dist = 1e10;
                             for (int i = 0; i < poly.size(); i++) {
                                 Vector2 points[2] = {
-                                    p_camera->unproject_position(gt.xform(Vector3(poly[i].x, poly[i].y, depth))),
-                                    p_camera->unproject_position(gt.xform(Vector3(poly[(i + 1) % poly.size()].x, poly[(i + 1) % poly.size()].y, depth)))
+                                    p_camera->unproject_position(gt.xform(
+                                        Vector3(poly[i].x, poly[i].y, depth)
+                                    )),
+                                    p_camera->unproject_position(
+                                        gt.xform(Vector3(
+                                            poly[(i + 1) % poly.size()].x,
+                                            poly[(i + 1) % poly.size()].y,
+                                            depth
+                                        ))
+                                    )
                                 };
 
-                                Vector2 cp = Geometry::get_closest_point_to_segment_2d(gpoint, points);
-                                if (cp.distance_squared_to(points[0]) < CMP_EPSILON2 || cp.distance_squared_to(points[1]) < CMP_EPSILON2) {
-                                    continue; //not valid to reuse point
+                                Vector2 cp =
+                                    Geometry::get_closest_point_to_segment_2d(
+                                        gpoint,
+                                        points
+                                    );
+                                if (cp.distance_squared_to(points[0])
+                                        < CMP_EPSILON2
+                                    || cp.distance_squared_to(points[1])
+                                           < CMP_EPSILON2) {
+                                    continue; // not valid to reuse point
                                 }
 
                                 real_t d = cp.distance_to(gpoint);
@@ -220,13 +254,16 @@ bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<Inpu
                                 return true;
                             }
                         } else {
-                            //look for points to move
+                            // look for points to move
 
                             int closest_idx = -1;
                             Vector2 closest_pos;
                             real_t closest_dist = 1e10;
                             for (int i = 0; i < poly.size(); i++) {
-                                Vector2 cp = p_camera->unproject_position(gt.xform(Vector3(poly[i].x, poly[i].y, depth)));
+                                Vector2 cp =
+                                    p_camera->unproject_position(gt.xform(
+                                        Vector3(poly[i].x, poly[i].y, depth)
+                                    ));
 
                                 real_t d = cp.distance_to(gpoint);
                                 if (d < closest_dist && d < grab_threshold) {
@@ -249,13 +286,17 @@ bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<Inpu
                         snap_ignore = false;
 
                         if (edited_point != -1) {
-                            //apply
+                            // apply
 
                             ERR_FAIL_INDEX_V(edited_point, poly.size(), false);
                             poly.write[edited_point] = edited_point_pos;
                             undo_redo->create_action(TTR("Edit Poly"));
                             undo_redo->add_do_method(node, "set_polygon", poly);
-                            undo_redo->add_undo_method(node, "set_polygon", pre_move_edit);
+                            undo_redo->add_undo_method(
+                                node,
+                                "set_polygon",
+                                pre_move_edit
+                            );
                             undo_redo->add_do_method(this, "_polygon_draw");
                             undo_redo->add_undo_method(this, "_polygon_draw");
                             undo_redo->commit_action();
@@ -265,12 +306,15 @@ bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<Inpu
                         }
                     }
                 }
-                if (mb->get_button_index() == BUTTON_RIGHT && mb->is_pressed() && edited_point == -1) {
+                if (mb->get_button_index() == BUTTON_RIGHT && mb->is_pressed()
+                    && edited_point == -1) {
                     int closest_idx = -1;
                     Vector2 closest_pos;
                     real_t closest_dist = 1e10;
                     for (int i = 0; i < poly.size(); i++) {
-                        Vector2 cp = p_camera->unproject_position(gt.xform(Vector3(poly[i].x, poly[i].y, depth)));
+                        Vector2 cp = p_camera->unproject_position(
+                            gt.xform(Vector3(poly[i].x, poly[i].y, depth))
+                        );
 
                         real_t d = cp.distance_to(gpoint);
                         if (d < closest_dist && d < grab_threshold) {
@@ -281,7 +325,8 @@ bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<Inpu
                     }
 
                     if (closest_idx >= 0) {
-                        undo_redo->create_action(TTR("Edit Poly (Remove Point)"));
+                        undo_redo->create_action(TTR("Edit Poly (Remove Point)")
+                        );
                         undo_redo->add_undo_method(node, "set_polygon", poly);
                         poly.remove(closest_idx);
                         undo_redo->add_do_method(node, "set_polygon", poly);
@@ -299,7 +344,8 @@ bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<Inpu
     Ref<InputEventMouseMotion> mm = p_event;
 
     if (mm.is_valid()) {
-        if (edited_point != -1 && (wip_active || mm->get_button_mask() & BUTTON_MASK_LEFT)) {
+        if (edited_point != -1
+            && (wip_active || mm->get_button_mask() & BUTTON_MASK_LEFT)) {
             Vector2 gpoint = mm->get_position();
 
             Vector3 ray_from = p_camera->project_ray_origin(gpoint);
@@ -315,14 +361,17 @@ bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<Inpu
 
             Vector2 cpoint(spoint.x, spoint.y);
 
-            if (snap_ignore && !Input::get_singleton()->is_key_pressed(KEY_CONTROL)) {
+            if (snap_ignore
+                && !Input::get_singleton()->is_key_pressed(KEY_CONTROL)) {
                 snap_ignore = false;
             }
 
-            if (!snap_ignore && SpatialEditor::get_singleton()->is_snap_enabled()) {
+            if (!snap_ignore
+                && SpatialEditor::get_singleton()->is_snap_enabled()) {
                 cpoint = cpoint.snapped(Vector2(
-                        SpatialEditor::get_singleton()->get_translate_snap(),
-                        SpatialEditor::get_singleton()->get_translate_snap()));
+                    SpatialEditor::get_singleton()->get_translate_snap(),
+                    SpatialEditor::get_singleton()->get_translate_snap()
+                ));
             }
             edited_point_pos = cpoint;
 
@@ -365,7 +414,8 @@ void Polygon3DEditor::_polygon_draw() {
     for (int i = 0; i < poly.size(); i++) {
         Vector2 p, p2;
         p = i == edited_point ? edited_point_pos : poly[i];
-        if ((wip_active && i == poly.size() - 1) || (((i + 1) % poly.size()) == edited_point)) {
+        if ((wip_active && i == poly.size() - 1)
+            || (((i + 1) % poly.size()) == edited_point)) {
             p2 = edited_point_pos;
         } else {
             p2 = poly[(i + 1) % poly.size()];
@@ -385,9 +435,9 @@ void Polygon3DEditor::_polygon_draw() {
         imgeom->set_color(Color(1, 0.3, 0.1, 0.8));
         imgeom->add_vertex(next_point);
 
-        //Color col=Color(1,0.3,0.1,0.8);
-        //vpc->draw_line(point,next_point,col,2);
-        //vpc->draw_texture(handle,point-handle->get_size()*0.5);
+        // Color col=Color(1,0.3,0.1,0.8);
+        // vpc->draw_line(point,next_point,col,2);
+        // vpc->draw_texture(handle,point-handle->get_size()*0.5);
     }
 
     rect = rect.grow(1);
@@ -412,20 +462,28 @@ void Polygon3DEditor::_polygon_draw() {
     imgeom->set_color(Color(0.8, 0.8, 0.8, 0.2));
     imgeom->add_vertex(r.position + Vector3(r.size.x, 0, 0));
     imgeom->set_color(Color(0.8, 0.8, 0.8, 0.2));
-    imgeom->add_vertex(r.position + Vector3(r.size.x, 0, 0) - Vector3(0.3, 0, 0));
+    imgeom->add_vertex(
+        r.position + Vector3(r.size.x, 0, 0) - Vector3(0.3, 0, 0)
+    );
     imgeom->set_color(Color(0.8, 0.8, 0.8, 0.2));
     imgeom->add_vertex(r.position + Vector3(r.size.x, 0, 0));
     imgeom->set_color(Color(0.8, 0.8, 0.8, 0.2));
-    imgeom->add_vertex(r.position + Vector3(r.size.x, 0, 0) + Vector3(0, 0.3, 0));
+    imgeom->add_vertex(
+        r.position + Vector3(r.size.x, 0, 0) + Vector3(0, 0.3, 0)
+    );
 
     imgeom->set_color(Color(0.8, 0.8, 0.8, 0.2));
     imgeom->add_vertex(r.position + Vector3(0, r.size.y, 0));
     imgeom->set_color(Color(0.8, 0.8, 0.8, 0.2));
-    imgeom->add_vertex(r.position + Vector3(0, r.size.y, 0) - Vector3(0, 0.3, 0));
+    imgeom->add_vertex(
+        r.position + Vector3(0, r.size.y, 0) - Vector3(0, 0.3, 0)
+    );
     imgeom->set_color(Color(0.8, 0.8, 0.8, 0.2));
     imgeom->add_vertex(r.position + Vector3(0, r.size.y, 0));
     imgeom->set_color(Color(0.8, 0.8, 0.8, 0.2));
-    imgeom->add_vertex(r.position + Vector3(0, r.size.y, 0) + Vector3(0.3, 0, 0));
+    imgeom->add_vertex(
+        r.position + Vector3(0, r.size.y, 0) + Vector3(0.3, 0, 0)
+    );
 
     imgeom->set_color(Color(0.8, 0.8, 0.8, 0.2));
     imgeom->add_vertex(r.position + r.size);
@@ -465,10 +523,10 @@ void Polygon3DEditor::_polygon_draw() {
     m->surface_set_material(0, handle_material);
 }
 
-void Polygon3DEditor::edit(Node *p_collision_polygon) {
+void Polygon3DEditor::edit(Node* p_collision_polygon) {
     if (p_collision_polygon) {
         node = Object::cast_to<Spatial>(p_collision_polygon);
-        //Enable the pencil tool if the polygon is empty
+        // Enable the pencil tool if the polygon is empty
         if (Vector<Vector2>(node->call("get_polygon")).size() == 0) {
             _menu_option(MODE_CREATE);
         }
@@ -492,12 +550,21 @@ void Polygon3DEditor::edit(Node *p_collision_polygon) {
 }
 
 void Polygon3DEditor::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_menu_option"), &Polygon3DEditor::_menu_option);
-    ClassDB::bind_method(D_METHOD("_polygon_draw"), &Polygon3DEditor::_polygon_draw);
-    ClassDB::bind_method(D_METHOD("_node_removed"), &Polygon3DEditor::_node_removed);
+    ClassDB::bind_method(
+        D_METHOD("_menu_option"),
+        &Polygon3DEditor::_menu_option
+    );
+    ClassDB::bind_method(
+        D_METHOD("_polygon_draw"),
+        &Polygon3DEditor::_polygon_draw
+    );
+    ClassDB::bind_method(
+        D_METHOD("_node_removed"),
+        &Polygon3DEditor::_node_removed
+    );
 }
 
-Polygon3DEditor::Polygon3DEditor(EditorNode *p_editor) {
+Polygon3DEditor::Polygon3DEditor(EditorNode* p_editor) {
     node = nullptr;
     editor = p_editor;
     undo_redo = EditorNode::get_undo_redo();
@@ -505,7 +572,8 @@ Polygon3DEditor::Polygon3DEditor(EditorNode *p_editor) {
     add_child(memnew(VSeparator));
     button_create = memnew(ToolButton);
     add_child(button_create);
-    button_create->connect("pressed", this, "_menu_option", varray(MODE_CREATE));
+    button_create
+        ->connect("pressed", this, "_menu_option", varray(MODE_CREATE));
     button_create->set_toggle_mode(true);
 
     button_edit = memnew(ToolButton);
@@ -522,7 +590,10 @@ Polygon3DEditor::Polygon3DEditor(EditorNode *p_editor) {
     line_material->set_flag(SpatialMaterial::FLAG_UNSHADED, true);
     line_material->set_line_width(3.0);
     line_material->set_feature(SpatialMaterial::FEATURE_TRANSPARENT, true);
-    line_material->set_flag(SpatialMaterial::FLAG_ALBEDO_FROM_VERTEX_COLOR, true);
+    line_material->set_flag(
+        SpatialMaterial::FLAG_ALBEDO_FROM_VERTEX_COLOR,
+        true
+    );
     line_material->set_flag(SpatialMaterial::FLAG_SRGB_VERTEX_COLOR, true);
     line_material->set_albedo(Color(1, 1, 1));
 
@@ -530,9 +601,13 @@ Polygon3DEditor::Polygon3DEditor(EditorNode *p_editor) {
     handle_material->set_flag(SpatialMaterial::FLAG_UNSHADED, true);
     handle_material->set_flag(SpatialMaterial::FLAG_USE_POINT_SIZE, true);
     handle_material->set_feature(SpatialMaterial::FEATURE_TRANSPARENT, true);
-    handle_material->set_flag(SpatialMaterial::FLAG_ALBEDO_FROM_VERTEX_COLOR, true);
+    handle_material->set_flag(
+        SpatialMaterial::FLAG_ALBEDO_FROM_VERTEX_COLOR,
+        true
+    );
     handle_material->set_flag(SpatialMaterial::FLAG_SRGB_VERTEX_COLOR, true);
-    Ref<Texture> handle = editor->get_gui_base()->get_icon("Editor3DHandle", "EditorIcons");
+    Ref<Texture> handle =
+        editor->get_gui_base()->get_icon("Editor3DHandle", "EditorIcons");
     handle_material->set_point_size(handle->get_width());
     handle_material->set_texture(SpatialMaterial::TEXTURE_ALBEDO, handle);
 
@@ -549,12 +624,13 @@ Polygon3DEditor::~Polygon3DEditor() {
     memdelete(imgeom);
 }
 
-void Polygon3DEditorPlugin::edit(Object *p_object) {
+void Polygon3DEditorPlugin::edit(Object* p_object) {
     collision_polygon_editor->edit(Object::cast_to<Node>(p_object));
 }
 
-bool Polygon3DEditorPlugin::handles(Object *p_object) const {
-    return Object::cast_to<Spatial>(p_object) && bool(p_object->call("_is_editable_3d_polygon"));
+bool Polygon3DEditorPlugin::handles(Object* p_object) const {
+    return Object::cast_to<Spatial>(p_object)
+        && bool(p_object->call("_is_editable_3d_polygon"));
 }
 
 void Polygon3DEditorPlugin::make_visible(bool p_visible) {
@@ -566,13 +642,14 @@ void Polygon3DEditorPlugin::make_visible(bool p_visible) {
     }
 }
 
-Polygon3DEditorPlugin::Polygon3DEditorPlugin(EditorNode *p_node) {
+Polygon3DEditorPlugin::Polygon3DEditorPlugin(EditorNode* p_node) {
     editor = p_node;
     collision_polygon_editor = memnew(Polygon3DEditor(p_node));
-    SpatialEditor::get_singleton()->add_control_to_menu_panel(collision_polygon_editor);
+    SpatialEditor::get_singleton()->add_control_to_menu_panel(
+        collision_polygon_editor
+    );
 
     collision_polygon_editor->hide();
 }
 
-Polygon3DEditorPlugin::~Polygon3DEditorPlugin() {
-}
+Polygon3DEditorPlugin::~Polygon3DEditorPlugin() {}

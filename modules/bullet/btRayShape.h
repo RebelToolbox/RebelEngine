@@ -28,8 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-/// IMPORTANT The class name and filename was created by following Bullet writing rules for an easy (eventually) porting to bullet
-/// This shape is a custom shape that is not present to Bullet physics engine
+/// IMPORTANT The class name and filename was created by following Bullet
+/// writing rules for an easy (eventually) porting to bullet This shape is a
+/// custom shape that is not present to Bullet physics engine
 #ifndef BTRAYSHAPE_H
 #define BTRAYSHAPE_H
 
@@ -68,33 +69,47 @@ public:
         return slipsOnSlope;
     }
 
-    const btTransform &getSupportPoint() const {
+    const btTransform& getSupportPoint() const {
         return m_cacheSupportPoint;
     }
-    const btScalar &getScaledLength() const {
+    const btScalar& getScaledLength() const {
         return m_cacheScaledLength;
     }
 
-    virtual btVector3 localGetSupportingVertex(const btVector3 &vec) const;
+    virtual btVector3 localGetSupportingVertex(const btVector3& vec) const;
 #ifndef __SPU__
-    virtual btVector3 localGetSupportingVertexWithoutMargin(const btVector3 &vec) const;
-#endif //#ifndef __SPU__
+    virtual btVector3 localGetSupportingVertexWithoutMargin(const btVector3& vec
+    ) const;
+#endif // #ifndef __SPU__
 
-    virtual void batchedUnitVectorGetSupportingVertexWithoutMargin(const btVector3 *vectors, btVector3 *supportVerticesOut, int numVectors) const;
+    virtual void batchedUnitVectorGetSupportingVertexWithoutMargin(
+        const btVector3* vectors,
+        btVector3* supportVerticesOut,
+        int numVectors
+    ) const;
 
-    ///getAabb returns the axis aligned bounding box in the coordinate frame of the given transform t.
-    virtual void getAabb(const btTransform &t, btVector3 &aabbMin, btVector3 &aabbMax) const;
+    /// getAabb returns the axis aligned bounding box in the coordinate frame of
+    /// the given transform t.
+    virtual void getAabb(
+        const btTransform& t,
+        btVector3& aabbMin,
+        btVector3& aabbMax
+    ) const;
 
 #ifndef __SPU__
-    virtual void calculateLocalInertia(btScalar mass, btVector3 & inertia) const;
+    virtual void calculateLocalInertia(btScalar mass, btVector3 & inertia)
+        const;
 
-    virtual const char *getName() const {
+    virtual const char* getName() const {
         return "RayZ";
     }
 #endif //__SPU__
 
     virtual int getNumPreferredPenetrationDirections() const;
-    virtual void getPreferredPenetrationDirection(int index, btVector3 &penetrationVector) const;
+    virtual void getPreferredPenetrationDirection(
+        int index,
+        btVector3& penetrationVector
+    ) const;
 
 private:
     void reload_cache();

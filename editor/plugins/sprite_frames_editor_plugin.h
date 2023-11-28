@@ -43,48 +43,48 @@
 class SpriteFramesEditor : public HSplitContainer {
     GDCLASS(SpriteFramesEditor, HSplitContainer);
 
-    ToolButton *load;
-    ToolButton *load_sheet;
-    ToolButton *_delete;
-    ToolButton *copy;
-    ToolButton *paste;
-    ToolButton *empty;
-    ToolButton *empty2;
-    ToolButton *move_up;
-    ToolButton *move_down;
-    ToolButton *zoom_out;
-    ToolButton *zoom_reset;
-    ToolButton *zoom_in;
-    ItemList *tree;
+    ToolButton* load;
+    ToolButton* load_sheet;
+    ToolButton* _delete;
+    ToolButton* copy;
+    ToolButton* paste;
+    ToolButton* empty;
+    ToolButton* empty2;
+    ToolButton* move_up;
+    ToolButton* move_down;
+    ToolButton* zoom_out;
+    ToolButton* zoom_reset;
+    ToolButton* zoom_in;
+    ItemList* tree;
     bool loading_scene;
     int sel;
 
-    ToolButton *new_anim;
-    ToolButton *remove_anim;
+    ToolButton* new_anim;
+    ToolButton* remove_anim;
 
-    Tree *animations;
-    SpinBox *anim_speed;
-    CheckButton *anim_loop;
+    Tree* animations;
+    SpinBox* anim_speed;
+    CheckButton* anim_loop;
 
-    EditorFileDialog *file;
+    EditorFileDialog* file;
 
-    AcceptDialog *dialog;
+    AcceptDialog* dialog;
 
-    SpriteFrames *frames;
+    SpriteFrames* frames;
 
     StringName edited_anim;
 
-    ConfirmationDialog *delete_dialog;
+    ConfirmationDialog* delete_dialog;
 
-    ConfirmationDialog *split_sheet_dialog;
-    ScrollContainer *split_sheet_scroll;
-    TextureRect *split_sheet_preview;
-    SpinBox *split_sheet_h;
-    SpinBox *split_sheet_v;
-    ToolButton *split_sheet_zoom_out;
-    ToolButton *split_sheet_zoom_reset;
-    ToolButton *split_sheet_zoom_in;
-    EditorFileDialog *file_split_sheet;
+    ConfirmationDialog* split_sheet_dialog;
+    ScrollContainer* split_sheet_scroll;
+    TextureRect* split_sheet_preview;
+    SpinBox* split_sheet_h;
+    SpinBox* split_sheet_v;
+    ToolButton* split_sheet_zoom_out;
+    ToolButton* split_sheet_zoom_reset;
+    ToolButton* split_sheet_zoom_in;
+    EditorFileDialog* file_split_sheet;
     Set<int> frames_selected;
     Set<int> frames_toggled_by_mouse_hover;
     int last_frame_selected;
@@ -100,7 +100,10 @@ class SpriteFramesEditor : public HSplitContainer {
 
     void _load_pressed();
     void _load_scene_pressed();
-    void _file_load_request(const PoolVector<String> &p_path, int p_at_pos = -1);
+    void _file_load_request(
+        const PoolVector<String>& p_path,
+        int p_at_pos = -1
+    );
     void _copy_pressed();
     void _paste_pressed();
     void _empty_pressed();
@@ -118,27 +121,38 @@ class SpriteFramesEditor : public HSplitContainer {
     void _animation_loop_changed();
     void _animation_fps_changed(double p_value);
 
-    void _tree_input(const Ref<InputEvent> &p_event);
+    void _tree_input(const Ref<InputEvent>& p_event);
     void _zoom_in();
     void _zoom_out();
     void _zoom_reset();
 
     bool updating;
 
-    UndoRedo *undo_redo;
+    UndoRedo* undo_redo;
 
-    bool _is_drop_valid(const Dictionary &p_drag_data, const Dictionary &p_item_data) const;
-    Variant get_drag_data_fw(const Point2 &p_point, Control *p_from);
-    bool can_drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from) const;
-    void drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from);
+    bool _is_drop_valid(
+        const Dictionary& p_drag_data,
+        const Dictionary& p_item_data
+    ) const;
+    Variant get_drag_data_fw(const Point2& p_point, Control* p_from);
+    bool can_drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    ) const;
+    void drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    );
 
     void _open_sprite_sheet();
-    void _prepare_sprite_sheet(const String &p_file);
-    int _sheet_preview_position_to_frame_index(const Vector2 &p_position);
+    void _prepare_sprite_sheet(const String& p_file);
+    int _sheet_preview_position_to_frame_index(const Vector2& p_position);
     void _sheet_preview_draw();
     void _sheet_spin_changed(double);
-    void _sheet_preview_input(const Ref<InputEvent> &p_event);
-    void _sheet_scroll_input(const Ref<InputEvent> &p_event);
+    void _sheet_preview_input(const Ref<InputEvent>& p_event);
+    void _sheet_scroll_input(const Ref<InputEvent>& p_event);
     void _sheet_add_frames();
     void _sheet_zoom_in();
     void _sheet_zoom_out();
@@ -151,27 +165,35 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_undo_redo(UndoRedo *p_undo_redo) { undo_redo = p_undo_redo; }
+    void set_undo_redo(UndoRedo* p_undo_redo) {
+        undo_redo = p_undo_redo;
+    }
 
-    void edit(SpriteFrames *p_frames);
+    void edit(SpriteFrames* p_frames);
     SpriteFramesEditor();
 };
 
 class SpriteFramesEditorPlugin : public EditorPlugin {
     GDCLASS(SpriteFramesEditorPlugin, EditorPlugin);
 
-    SpriteFramesEditor *frames_editor;
-    EditorNode *editor;
-    Button *button;
+    SpriteFramesEditor* frames_editor;
+    EditorNode* editor;
+    Button* button;
 
 public:
-    virtual String get_name() const { return "SpriteFrames"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual String get_name() const {
+        return "SpriteFrames";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
 
-    SpriteFramesEditorPlugin(EditorNode *p_node);
+    SpriteFramesEditorPlugin(EditorNode* p_node);
     ~SpriteFramesEditorPlugin();
 };
 

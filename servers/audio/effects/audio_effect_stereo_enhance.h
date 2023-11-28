@@ -41,16 +41,19 @@ class AudioEffectStereoEnhanceInstance : public AudioEffectInstance {
     Ref<AudioEffectStereoEnhance> base;
 
     enum {
-
         MAX_DELAY_MS = 50
     };
 
-    float *delay_ringbuff;
+    float* delay_ringbuff;
     unsigned int ringbuff_pos;
     unsigned int ringbuff_mask;
 
 public:
-    virtual void process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
+    virtual void process(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
 
     ~AudioEffectStereoEnhanceInstance();
 };

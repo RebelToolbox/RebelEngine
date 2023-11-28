@@ -35,6 +35,7 @@
 #include "scene/resources/world_2d.h"
 
 class Viewport;
+
 class CanvasLayer : public Node {
     GDCLASS(CanvasLayer, Node);
 
@@ -47,10 +48,10 @@ class CanvasLayer : public Node {
     RID canvas;
 
     ObjectID custom_viewport_id; // to check validity
-    Viewport *custom_viewport;
+    Viewport* custom_viewport;
 
     RID viewport;
-    Viewport *vp;
+    Viewport* vp;
 
     int sort_index;
 
@@ -69,10 +70,10 @@ public:
     void set_layer(int p_xform);
     int get_layer() const;
 
-    void set_transform(const Transform2D &p_xform);
+    void set_transform(const Transform2D& p_xform);
     Transform2D get_transform() const;
 
-    void set_offset(const Vector2 &p_offset);
+    void set_offset(const Vector2& p_offset);
     Vector2 get_offset() const;
 
     void set_rotation(real_t p_radians);
@@ -81,15 +82,15 @@ public:
     void set_rotation_degrees(real_t p_degrees);
     real_t get_rotation_degrees() const;
 
-    void set_scale(const Size2 &p_scale);
+    void set_scale(const Size2& p_scale);
     Size2 get_scale() const;
 
     Size2 get_viewport_size() const;
 
     RID get_viewport() const;
 
-    void set_custom_viewport(Node *p_viewport);
-    Node *get_custom_viewport() const;
+    void set_custom_viewport(Node* p_viewport);
+    Node* get_custom_viewport() const;
 
     void reset_sort_index();
     int get_sort_index();

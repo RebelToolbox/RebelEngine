@@ -47,9 +47,10 @@ void ExtendGDScriptParser::update_diagnostics() {
         lsp::Range range;
         lsp::Position pos;
         int line = LINE_NUMBER_TO_INDEX(get_error_line());
-        const String &line_text = get_lines()[line];
+        const String& line_text = get_lines()[line];
         pos.line = line;
-        pos.character = line_text.length() - line_text.strip_edges(true, false).length();
+        pos.character =
+            line_text.length() - line_text.strip_edges(true, false).length();
         range.start = pos;
         range.end = range.start;
         range.end.character = line_text.strip_edges(false).length();
@@ -57,20 +58,23 @@ void ExtendGDScriptParser::update_diagnostics() {
         diagnostics.push_back(diagnostic);
     }
 
-    const List<GDScriptWarning> &warnings = get_warnings();
-    for (const List<GDScriptWarning>::Element *E = warnings.front(); E; E = E->next()) {
-        const GDScriptWarning &warning = E->get();
+    const List<GDScriptWarning>& warnings = get_warnings();
+    for (const List<GDScriptWarning>::Element* E = warnings.front(); E;
+         E = E->next()) {
+        const GDScriptWarning& warning = E->get();
         lsp::Diagnostic diagnostic;
         diagnostic.severity = lsp::DiagnosticSeverity::Warning;
-        diagnostic.message = "(" + warning.get_name() + "): " + warning.get_message();
+        diagnostic.message =
+            "(" + warning.get_name() + "): " + warning.get_message();
         diagnostic.source = "gdscript";
         diagnostic.code = warning.code;
         lsp::Range range;
         lsp::Position pos;
         int line = LINE_NUMBER_TO_INDEX(warning.line);
-        const String &line_text = get_lines()[line];
+        const String& line_text = get_lines()[line];
         pos.line = line;
-        pos.character = line_text.length() - line_text.strip_edges(true, false).length();
+        pos.character =
+            line_text.length() - line_text.strip_edges(true, false).length();
         range.start = pos;
         range.end = pos;
         range.end.character = line_text.strip_edges(false).length();
@@ -82,19 +86,20 @@ void ExtendGDScriptParser::update_diagnostics() {
 void ExtendGDScriptParser::update_symbols() {
     members.clear();
 
-    const GDScriptParser::Node *head = get_parse_tree();
-    if (const GDScriptParser::ClassNode *gdclass = dynamic_cast<const GDScriptParser::ClassNode *>(head)) {
+    const GDScriptParser::Node* head = get_parse_tree();
+    if (const GDScriptParser::ClassNode* gdclass =
+            dynamic_cast<const GDScriptParser::ClassNode*>(head)) {
         parse_class_symbol(gdclass, class_symbol);
 
         for (int i = 0; i < class_symbol.children.size(); i++) {
-            const lsp::DocumentSymbol &symbol = class_symbol.children[i];
+            const lsp::DocumentSymbol& symbol = class_symbol.children[i];
             members.set(symbol.name, &symbol);
 
             // cache level one inner classes
             if (symbol.kind == lsp::SymbolKind::Class) {
                 ClassMembers inner_class;
                 for (int j = 0; j < symbol.children.size(); j++) {
-                    const lsp::DocumentSymbol &s = symbol.children[j];
+                    const lsp::DocumentSymbol& s = symbol.children[j];
                     inner_class.set(s.name, &s);
                 }
                 inner_classes.set(symbol.name, inner_class);
@@ -103,7 +108,7 @@ void ExtendGDScriptParser::update_symbols() {
     }
 }
 
-void ExtendGDScriptParser::update_document_links(const String &p_code) {
+void ExtendGDScriptParser::update_document_links(const String& p_code) {
     document_links.clear();
 
     GDScriptTokenizerText tokenizer;
@@ -111,10 +116,11 @@ void ExtendGDScriptParser::update_document_links(const String &p_code) {
     tokenizer.set_code(p_code);
     while (true) {
         GDScriptTokenizerText::Token token = tokenizer.get_token();
-        if (token == GDScriptTokenizer::TK_EOF || token == GDScriptTokenizer::TK_ERROR) {
+        if (token == GDScriptTokenizer::TK_EOF
+            || token == GDScriptTokenizer::TK_ERROR) {
             break;
         } else if (token == GDScriptTokenizer::TK_CONSTANT) {
-            const Variant &const_val = tokenizer.get_token_constant();
+            const Variant& const_val = tokenizer.get_token_constant();
             if (const_val.get_type() == Variant::STRING) {
                 String path = const_val;
                 bool exists = fs->file_exists(path);
@@ -125,11 +131,16 @@ void ExtendGDScriptParser::update_document_links(const String &p_code) {
                 if (exists) {
                     String value = const_val;
                     lsp::DocumentLink link;
-                    link.target = GDScriptLanguageProtocol::get_singleton()->get_workspace()->get_file_uri(path);
-                    link.range.start.line = LINE_NUMBER_TO_INDEX(tokenizer.get_token_line());
+                    link.target = GDScriptLanguageProtocol::get_singleton()
+                                      ->get_workspace()
+                                      ->get_file_uri(path);
+                    link.range.start.line =
+                        LINE_NUMBER_TO_INDEX(tokenizer.get_token_line());
                     link.range.end.line = link.range.start.line;
-                    link.range.end.character = LINE_NUMBER_TO_INDEX(tokenizer.get_token_column());
-                    link.range.start.character = link.range.end.character - value.length();
+                    link.range.end.character =
+                        LINE_NUMBER_TO_INDEX(tokenizer.get_token_column());
+                    link.range.start.character =
+                        link.range.end.character - value.length();
                     document_links.push_back(link);
                 }
             }
@@ -138,7 +149,10 @@ void ExtendGDScriptParser::update_document_links(const String &p_code) {
     }
 }
 
-void ExtendGDScriptParser::parse_class_symbol(const GDScriptParser::ClassNode *p_class, lsp::DocumentSymbol &r_symbol) {
+void ExtendGDScriptParser::parse_class_symbol(
+    const GDScriptParser::ClassNode* p_class,
+    lsp::DocumentSymbol& r_symbol
+) {
     const String uri = get_uri();
 
     r_symbol.uri = uri;
@@ -156,18 +170,25 @@ void ExtendGDScriptParser::parse_class_symbol(const GDScriptParser::ClassNode *p
     r_symbol.selectionRange.start.line = r_symbol.range.start.line;
     r_symbol.detail = "class " + r_symbol.name;
     bool is_root_class = &r_symbol == &class_symbol;
-    r_symbol.documentation = parse_documentation(is_root_class ? 0 : LINE_NUMBER_TO_INDEX(p_class->line), is_root_class);
+    r_symbol.documentation = parse_documentation(
+        is_root_class ? 0 : LINE_NUMBER_TO_INDEX(p_class->line),
+        is_root_class
+    );
 
     for (int i = 0; i < p_class->variables.size(); ++i) {
-        const GDScriptParser::ClassNode::Member &m = p_class->variables[i];
+        const GDScriptParser::ClassNode::Member& m = p_class->variables[i];
 
         lsp::DocumentSymbol symbol;
         symbol.name = m.identifier;
-        symbol.kind = m.setter == "" && m.getter == "" ? lsp::SymbolKind::Variable : lsp::SymbolKind::Property;
+        symbol.kind = m.setter == "" && m.getter == ""
+                        ? lsp::SymbolKind::Variable
+                        : lsp::SymbolKind::Property;
         symbol.deprecated = false;
         const int line = LINE_NUMBER_TO_INDEX(m.line);
         symbol.range.start.line = line;
-        symbol.range.start.character = lines[line].length() - lines[line].strip_edges(true, false).length();
+        symbol.range.start.character =
+            lines[line].length()
+            - lines[line].strip_edges(true, false).length();
         symbol.range.end.line = line;
         symbol.range.end.character = lines[line].length();
         symbol.selectionRange.start.line = symbol.range.start.line;
@@ -190,7 +211,7 @@ void ExtendGDScriptParser::parse_class_symbol(const GDScriptParser::ClassNode *p
     }
 
     for (int i = 0; i < p_class->_signals.size(); ++i) {
-        const GDScriptParser::ClassNode::Signal &signal = p_class->_signals[i];
+        const GDScriptParser::ClassNode::Signal& signal = p_class->_signals[i];
 
         lsp::DocumentSymbol symbol;
         symbol.name = signal.name;
@@ -198,7 +219,9 @@ void ExtendGDScriptParser::parse_class_symbol(const GDScriptParser::ClassNode *p
         symbol.deprecated = false;
         const int line = LINE_NUMBER_TO_INDEX(signal.line);
         symbol.range.start.line = line;
-        symbol.range.start.character = lines[line].length() - lines[line].strip_edges(true, false).length();
+        symbol.range.start.character =
+            lines[line].length()
+            - lines[line].strip_edges(true, false).length();
         symbol.range.end.line = symbol.range.start.line;
         symbol.range.end.character = lines[line].length();
         symbol.selectionRange.start.line = symbol.range.start.line;
@@ -217,10 +240,14 @@ void ExtendGDScriptParser::parse_class_symbol(const GDScriptParser::ClassNode *p
         r_symbol.children.push_back(symbol);
     }
 
-    for (Map<StringName, GDScriptParser::ClassNode::Constant>::Element *E = p_class->constant_expressions.front(); E; E = E->next()) {
+    for (Map<StringName, GDScriptParser::ClassNode::Constant>::Element* E =
+             p_class->constant_expressions.front();
+         E;
+         E = E->next()) {
         lsp::DocumentSymbol symbol;
-        const GDScriptParser::ClassNode::Constant &c = E->value();
-        const GDScriptParser::ConstantNode *node = dynamic_cast<const GDScriptParser::ConstantNode *>(c.expression);
+        const GDScriptParser::ClassNode::Constant& c = E->value();
+        const GDScriptParser::ConstantNode* node =
+            dynamic_cast<const GDScriptParser::ConstantNode*>(c.expression);
         ERR_FAIL_COND(!node);
         symbol.name = E->key();
         symbol.kind = lsp::SymbolKind::Constant;
@@ -246,8 +273,12 @@ void ExtendGDScriptParser::parse_class_symbol(const GDScriptParser::ClassNode *p
             if (res.is_valid() && !res->get_path().empty()) {
                 value_text = "preload(\"" + res->get_path() + "\")";
                 if (symbol.documentation.empty()) {
-                    if (Map<String, ExtendGDScriptParser *>::Element *S = GDScriptLanguageProtocol::get_singleton()->get_workspace()->scripts.find(res->get_path())) {
-                        symbol.documentation = S->get()->class_symbol.documentation;
+                    if (Map<String, ExtendGDScriptParser*>::Element* S =
+                            GDScriptLanguageProtocol::get_singleton()
+                                ->get_workspace()
+                                ->scripts.find(res->get_path())) {
+                        symbol.documentation =
+                            S->get()->class_symbol.documentation;
                     }
                 }
             } else {
@@ -264,38 +295,43 @@ void ExtendGDScriptParser::parse_class_symbol(const GDScriptParser::ClassNode *p
     }
 
     for (int i = 0; i < p_class->functions.size(); ++i) {
-        const GDScriptParser::FunctionNode *func = p_class->functions[i];
+        const GDScriptParser::FunctionNode* func = p_class->functions[i];
         lsp::DocumentSymbol symbol;
         parse_function_symbol(func, symbol);
         r_symbol.children.push_back(symbol);
     }
 
     for (int i = 0; i < p_class->static_functions.size(); ++i) {
-        const GDScriptParser::FunctionNode *func = p_class->static_functions[i];
+        const GDScriptParser::FunctionNode* func = p_class->static_functions[i];
         lsp::DocumentSymbol symbol;
         parse_function_symbol(func, symbol);
         r_symbol.children.push_back(symbol);
     }
 
     for (int i = 0; i < p_class->subclasses.size(); ++i) {
-        const GDScriptParser::ClassNode *subclass = p_class->subclasses[i];
+        const GDScriptParser::ClassNode* subclass = p_class->subclasses[i];
         lsp::DocumentSymbol symbol;
         parse_class_symbol(subclass, symbol);
         r_symbol.children.push_back(symbol);
     }
 }
 
-void ExtendGDScriptParser::parse_function_symbol(const GDScriptParser::FunctionNode *p_func, lsp::DocumentSymbol &r_symbol) {
+void ExtendGDScriptParser::parse_function_symbol(
+    const GDScriptParser::FunctionNode* p_func,
+    lsp::DocumentSymbol& r_symbol
+) {
     const String uri = get_uri();
 
     r_symbol.name = p_func->name;
-    r_symbol.kind = p_func->_static ? lsp::SymbolKind::Function : lsp::SymbolKind::Method;
+    r_symbol.kind =
+        p_func->_static ? lsp::SymbolKind::Function : lsp::SymbolKind::Method;
     r_symbol.detail = "func " + p_func->name + "(";
     r_symbol.deprecated = false;
     const int line = LINE_NUMBER_TO_INDEX(p_func->line);
     r_symbol.range.start.line = line;
     r_symbol.range.start.character = p_func->column;
-    r_symbol.range.end.line = MAX(p_func->body->end_line - 2, r_symbol.range.start.line);
+    r_symbol.range.end.line =
+        MAX(p_func->body->end_line - 2, r_symbol.range.start.line);
     r_symbol.range.end.character = lines[r_symbol.range.end.line].length();
     r_symbol.selectionRange.start.line = r_symbol.range.start.line;
     r_symbol.documentation = parse_documentation(line);
@@ -317,16 +353,27 @@ void ExtendGDScriptParser::parse_function_symbol(const GDScriptParser::FunctionN
             arguments += ", ";
         }
         arguments += String(p_func->arguments[i]);
-        if (p_func->argument_types[i].kind != GDScriptParser::DataType::UNRESOLVED) {
+        if (p_func->argument_types[i].kind
+            != GDScriptParser::DataType::UNRESOLVED) {
             arguments += ": " + p_func->argument_types[i].to_string();
         }
-        int default_value_idx = i - (p_func->arguments.size() - p_func->default_values.size());
+        int default_value_idx =
+            i - (p_func->arguments.size() - p_func->default_values.size());
         if (default_value_idx >= 0) {
-            const GDScriptParser::ConstantNode *const_node = dynamic_cast<const GDScriptParser::ConstantNode *>(p_func->default_values[default_value_idx]);
+            const GDScriptParser::ConstantNode* const_node =
+                dynamic_cast<const GDScriptParser::ConstantNode*>(
+                    p_func->default_values[default_value_idx]
+                );
             if (const_node == nullptr) {
-                const GDScriptParser::OperatorNode *operator_node = dynamic_cast<const GDScriptParser::OperatorNode *>(p_func->default_values[default_value_idx]);
+                const GDScriptParser::OperatorNode* operator_node =
+                    dynamic_cast<const GDScriptParser::OperatorNode*>(
+                        p_func->default_values[default_value_idx]
+                    );
                 if (operator_node) {
-                    const_node = dynamic_cast<const GDScriptParser::ConstantNode *>(operator_node->next);
+                    const_node =
+                        dynamic_cast<const GDScriptParser::ConstantNode*>(
+                            operator_node->next
+                        );
                 }
             }
 
@@ -341,24 +388,33 @@ void ExtendGDScriptParser::parse_function_symbol(const GDScriptParser::FunctionN
         r_symbol.detail += " -> " + p_func->return_type.to_string();
     }
 
-    List<GDScriptParser::BlockNode *> function_blocks;
-    List<GDScriptParser::BlockNode *> block_stack;
+    List<GDScriptParser::BlockNode*> function_blocks;
+    List<GDScriptParser::BlockNode*> block_stack;
     block_stack.push_back(p_func->body);
 
     while (!block_stack.empty()) {
-        GDScriptParser::BlockNode *block = block_stack[0];
+        GDScriptParser::BlockNode* block = block_stack[0];
         block_stack.pop_front();
 
         function_blocks.push_back(block);
-        for (const List<GDScriptParser::BlockNode *>::Element *E = block->sub_blocks.front(); E; E = E->next()) {
+        for (const List<GDScriptParser::BlockNode*>::Element* E =
+                 block->sub_blocks.front();
+             E;
+             E = E->next()) {
             block_stack.push_back(E->get());
         }
     }
 
-    for (const List<GDScriptParser::BlockNode *>::Element *B = function_blocks.front(); B; B = B->next()) {
-        for (const Map<StringName, LocalVarNode *>::Element *E = B->get()->variables.front(); E; E = E->next()) {
+    for (const List<GDScriptParser::BlockNode*>::Element* B =
+             function_blocks.front();
+         B;
+         B = B->next()) {
+        for (const Map<StringName, LocalVarNode*>::Element* E =
+                 B->get()->variables.front();
+             E;
+             E = E->next()) {
             lsp::DocumentSymbol symbol;
-            const GDScriptParser::LocalVarNode *var = E->value();
+            const GDScriptParser::LocalVarNode* var = E->value();
             symbol.name = E->key();
             symbol.kind = lsp::SymbolKind::Variable;
             symbol.range.start.line = LINE_NUMBER_TO_INDEX(E->get()->line);
@@ -386,9 +442,13 @@ String ExtendGDScriptParser::parse_documentation(int p_line, bool p_docs_down) {
         String inline_comment = lines[p_line];
         int comment_start = inline_comment.find("#");
         if (comment_start != -1) {
-            inline_comment = inline_comment.substr(comment_start, inline_comment.length()).strip_edges();
+            inline_comment =
+                inline_comment.substr(comment_start, inline_comment.length())
+                    .strip_edges();
             if (inline_comment.length() > 1) {
-                doc_lines.push_back(inline_comment.substr(1, inline_comment.length()));
+                doc_lines.push_back(
+                    inline_comment.substr(1, inline_comment.length())
+                );
             }
         }
     }
@@ -420,19 +480,22 @@ String ExtendGDScriptParser::parse_documentation(int p_line, bool p_docs_down) {
     }
 
     String doc;
-    for (List<String>::Element *E = doc_lines.front(); E; E = E->next()) {
+    for (List<String>::Element* E = doc_lines.front(); E; E = E->next()) {
         doc += E->get() + "\n";
     }
     return doc;
 }
 
-String ExtendGDScriptParser::get_text_for_completion(const lsp::Position &p_cursor) const {
+String ExtendGDScriptParser::get_text_for_completion(
+    const lsp::Position& p_cursor
+) const {
     String longthing;
     int len = lines.size();
     for (int i = 0; i < len; i++) {
         if (i == p_cursor.line) {
             longthing += lines[i].substr(0, p_cursor.character);
-            longthing += String::chr(0xFFFF); //not unicode, represents the cursor
+            longthing +=
+                String::chr(0xFFFF); // not unicode, represents the cursor
             longthing += lines[i].substr(p_cursor.character, lines[i].size());
         } else {
             longthing += lines[i];
@@ -446,14 +509,19 @@ String ExtendGDScriptParser::get_text_for_completion(const lsp::Position &p_curs
     return longthing;
 }
 
-String ExtendGDScriptParser::get_text_for_lookup_symbol(const lsp::Position &p_cursor, const String &p_symbol, bool p_func_required) const {
+String ExtendGDScriptParser::get_text_for_lookup_symbol(
+    const lsp::Position& p_cursor,
+    const String& p_symbol,
+    bool p_func_required
+) const {
     String longthing;
     int len = lines.size();
     for (int i = 0; i < len; i++) {
         if (i == p_cursor.line) {
             String line = lines[i];
             String first_part = line.substr(0, p_cursor.character);
-            String last_part = line.substr(p_cursor.character + 1, lines[i].length());
+            String last_part =
+                line.substr(p_cursor.character + 1, lines[i].length());
             if (!p_symbol.empty()) {
                 String left_cursor_text;
                 for (int c = p_cursor.character - 1; c >= 0; c--) {
@@ -467,7 +535,8 @@ String ExtendGDScriptParser::get_text_for_lookup_symbol(const lsp::Position &p_c
             }
 
             longthing += first_part;
-            longthing += String::chr(0xFFFF); //not unicode, represents the cursor
+            longthing +=
+                String::chr(0xFFFF); // not unicode, represents the cursor
             if (p_func_required) {
                 longthing += "("; // tell the parser this is a function call
             }
@@ -484,7 +553,10 @@ String ExtendGDScriptParser::get_text_for_lookup_symbol(const lsp::Position &p_c
     return longthing;
 }
 
-String ExtendGDScriptParser::get_identifier_under_position(const lsp::Position &p_position, Vector2i &p_offset) const {
+String ExtendGDScriptParser::get_identifier_under_position(
+    const lsp::Position& p_position,
+    Vector2i& p_offset
+) const {
     ERR_FAIL_INDEX_V(p_position.line, lines.size(), "");
     String line = lines[p_position.line];
     if (line.empty()) {
@@ -496,7 +568,8 @@ String ExtendGDScriptParser::get_identifier_under_position(const lsp::Position &
     for (int c = p_position.character; c >= 0; c--) {
         start_pos = c;
         CharType ch = line[c];
-        bool valid_char = (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '_';
+        bool valid_char = (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z')
+                       || (ch >= 'A' && ch <= 'Z') || ch == '_';
         if (!valid_char) {
             break;
         }
@@ -505,7 +578,8 @@ String ExtendGDScriptParser::get_identifier_under_position(const lsp::Position &
     int end_pos = p_position.character;
     for (int c = p_position.character; c < line.length(); c++) {
         CharType ch = line[c];
-        bool valid_char = (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '_';
+        bool valid_char = (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z')
+                       || (ch >= 'A' && ch <= 'Z') || ch == '_';
         if (!valid_char) {
             break;
         }
@@ -521,11 +595,16 @@ String ExtendGDScriptParser::get_identifier_under_position(const lsp::Position &
 }
 
 String ExtendGDScriptParser::get_uri() const {
-    return GDScriptLanguageProtocol::get_singleton()->get_workspace()->get_file_uri(path);
+    return GDScriptLanguageProtocol::get_singleton()
+        ->get_workspace()
+        ->get_file_uri(path);
 }
 
-const lsp::DocumentSymbol *ExtendGDScriptParser::search_symbol_defined_at_line(int p_line, const lsp::DocumentSymbol &p_parent) const {
-    const lsp::DocumentSymbol *ret = nullptr;
+const lsp::DocumentSymbol* ExtendGDScriptParser::search_symbol_defined_at_line(
+    int p_line,
+    const lsp::DocumentSymbol& p_parent
+) const {
+    const lsp::DocumentSymbol* ret = nullptr;
     if (p_line < p_parent.range.start.line) {
         return ret;
     } else if (p_parent.range.start.line == p_line) {
@@ -541,7 +620,11 @@ const lsp::DocumentSymbol *ExtendGDScriptParser::search_symbol_defined_at_line(i
     return ret;
 }
 
-Error ExtendGDScriptParser::get_left_function_call(const lsp::Position &p_position, lsp::Position &r_func_pos, int &r_arg_index) const {
+Error ExtendGDScriptParser::get_left_function_call(
+    const lsp::Position& p_position,
+    lsp::Position& r_func_pos,
+    int& r_arg_index
+) const {
     ERR_FAIL_INDEX_V(p_position.line, lines.size(), ERR_INVALID_PARAMETER);
 
     int bracket_stack = 0;
@@ -556,7 +639,7 @@ Error ExtendGDScriptParser::get_left_function_call(const lsp::Position &p_positi
         }
 
         while (c >= 0) {
-            const CharType &character = line[c];
+            const CharType& character = line[c];
             if (character == ')') {
                 ++bracket_stack;
             } else if (character == '(') {
@@ -585,22 +668,27 @@ Error ExtendGDScriptParser::get_left_function_call(const lsp::Position &p_positi
     return ERR_METHOD_NOT_FOUND;
 }
 
-const lsp::DocumentSymbol *ExtendGDScriptParser::get_symbol_defined_at_line(int p_line) const {
+const lsp::DocumentSymbol* ExtendGDScriptParser::get_symbol_defined_at_line(
+    int p_line
+) const {
     if (p_line <= 0) {
         return &class_symbol;
     }
     return search_symbol_defined_at_line(p_line, class_symbol);
 }
 
-const lsp::DocumentSymbol *ExtendGDScriptParser::get_member_symbol(const String &p_name, const String &p_subclass) const {
+const lsp::DocumentSymbol* ExtendGDScriptParser::get_member_symbol(
+    const String& p_name,
+    const String& p_subclass
+) const {
     if (p_subclass.empty()) {
-        const lsp::DocumentSymbol *const *ptr = members.getptr(p_name);
+        const lsp::DocumentSymbol* const* ptr = members.getptr(p_name);
         if (ptr) {
             return *ptr;
         }
     } else {
-        if (const ClassMembers *_class = inner_classes.getptr(p_subclass)) {
-            const lsp::DocumentSymbol *const *ptr = _class->getptr(p_name);
+        if (const ClassMembers* _class = inner_classes.getptr(p_subclass)) {
+            const lsp::DocumentSymbol* const* ptr = _class->getptr(p_name);
             if (ptr) {
                 return *ptr;
             }
@@ -610,15 +698,16 @@ const lsp::DocumentSymbol *ExtendGDScriptParser::get_member_symbol(const String 
     return nullptr;
 }
 
-const List<lsp::DocumentLink> &ExtendGDScriptParser::get_document_links() const {
+const List<lsp::DocumentLink>& ExtendGDScriptParser::get_document_links(
+) const {
     return document_links;
 }
 
-const Array &ExtendGDScriptParser::get_member_completions() {
+const Array& ExtendGDScriptParser::get_member_completions() {
     if (member_completions.empty()) {
-        const String *name = members.next(nullptr);
+        const String* name = members.next(nullptr);
         while (name) {
-            const lsp::DocumentSymbol *symbol = members.get(*name);
+            const lsp::DocumentSymbol* symbol = members.get(*name);
             lsp::CompletionItem item = symbol->make_completion_item();
             item.data = JOIN_SYMBOLS(path, *name);
             member_completions.push_back(item.to_json());
@@ -626,14 +715,16 @@ const Array &ExtendGDScriptParser::get_member_completions() {
             name = members.next(name);
         }
 
-        const String *_class = inner_classes.next(nullptr);
+        const String* _class = inner_classes.next(nullptr);
         while (_class) {
-            const ClassMembers *inner_class = inner_classes.getptr(*_class);
-            const String *member_name = inner_class->next(nullptr);
+            const ClassMembers* inner_class = inner_classes.getptr(*_class);
+            const String* member_name = inner_class->next(nullptr);
             while (member_name) {
-                const lsp::DocumentSymbol *symbol = inner_class->get(*member_name);
+                const lsp::DocumentSymbol* symbol =
+                    inner_class->get(*member_name);
                 lsp::CompletionItem item = symbol->make_completion_item();
-                item.data = JOIN_SYMBOLS(path, JOIN_SYMBOLS(*_class, *member_name));
+                item.data =
+                    JOIN_SYMBOLS(path, JOIN_SYMBOLS(*_class, *member_name));
                 member_completions.push_back(item.to_json());
 
                 member_name = inner_class->next(member_name);
@@ -646,7 +737,9 @@ const Array &ExtendGDScriptParser::get_member_completions() {
     return member_completions;
 }
 
-Dictionary ExtendGDScriptParser::dump_function_api(const GDScriptParser::FunctionNode *p_func) const {
+Dictionary ExtendGDScriptParser::dump_function_api(
+    const GDScriptParser::FunctionNode* p_func
+) const {
     Dictionary func;
     ERR_FAIL_NULL_V(p_func, func);
     func["name"] = p_func->name;
@@ -657,13 +750,23 @@ Dictionary ExtendGDScriptParser::dump_function_api(const GDScriptParser::Functio
         Dictionary arg;
         arg["name"] = p_func->arguments[i];
         arg["type"] = p_func->argument_types[i].to_string();
-        int default_value_idx = i - (p_func->arguments.size() - p_func->default_values.size());
+        int default_value_idx =
+            i - (p_func->arguments.size() - p_func->default_values.size());
         if (default_value_idx >= 0) {
-            const GDScriptParser::ConstantNode *const_node = dynamic_cast<const GDScriptParser::ConstantNode *>(p_func->default_values[default_value_idx]);
+            const GDScriptParser::ConstantNode* const_node =
+                dynamic_cast<const GDScriptParser::ConstantNode*>(
+                    p_func->default_values[default_value_idx]
+                );
             if (const_node == nullptr) {
-                const GDScriptParser::OperatorNode *operator_node = dynamic_cast<const GDScriptParser::OperatorNode *>(p_func->default_values[default_value_idx]);
+                const GDScriptParser::OperatorNode* operator_node =
+                    dynamic_cast<const GDScriptParser::OperatorNode*>(
+                        p_func->default_values[default_value_idx]
+                    );
                 if (operator_node) {
-                    const_node = dynamic_cast<const GDScriptParser::ConstantNode *>(operator_node->next);
+                    const_node =
+                        dynamic_cast<const GDScriptParser::ConstantNode*>(
+                            operator_node->next
+                        );
                 }
             }
             if (const_node) {
@@ -672,7 +775,8 @@ Dictionary ExtendGDScriptParser::dump_function_api(const GDScriptParser::Functio
         }
         arguments.push_back(arg);
     }
-    if (const lsp::DocumentSymbol *symbol = get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(p_func->line))) {
+    if (const lsp::DocumentSymbol* symbol =
+            get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(p_func->line))) {
         func["signature"] = symbol->detail;
         func["description"] = symbol->documentation;
     }
@@ -680,7 +784,9 @@ Dictionary ExtendGDScriptParser::dump_function_api(const GDScriptParser::Functio
     return func;
 }
 
-Dictionary ExtendGDScriptParser::dump_class_api(const GDScriptParser::ClassNode *p_class) const {
+Dictionary ExtendGDScriptParser::dump_class_api(
+    const GDScriptParser::ClassNode* p_class
+) const {
     Dictionary class_api;
 
     ERR_FAIL_NULL_V(p_class, class_api);
@@ -695,7 +801,8 @@ Dictionary ExtendGDScriptParser::dump_class_api(const GDScriptParser::ClassNode 
     class_api["extends_file"] = String(p_class->extends_file);
     class_api["icon"] = String(p_class->icon_path);
 
-    if (const lsp::DocumentSymbol *symbol = get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(p_class->line))) {
+    if (const lsp::DocumentSymbol* symbol =
+            get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(p_class->line))) {
         class_api["signature"] = symbol->detail;
         class_api["description"] = symbol->documentation;
     }
@@ -707,16 +814,21 @@ Dictionary ExtendGDScriptParser::dump_class_api(const GDScriptParser::ClassNode 
     class_api["sub_classes"] = subclasses;
 
     Array constants;
-    for (Map<StringName, GDScriptParser::ClassNode::Constant>::Element *E = p_class->constant_expressions.front(); E; E = E->next()) {
-        const GDScriptParser::ClassNode::Constant &c = E->value();
-        const GDScriptParser::ConstantNode *node = dynamic_cast<const GDScriptParser::ConstantNode *>(c.expression);
+    for (Map<StringName, GDScriptParser::ClassNode::Constant>::Element* E =
+             p_class->constant_expressions.front();
+         E;
+         E = E->next()) {
+        const GDScriptParser::ClassNode::Constant& c = E->value();
+        const GDScriptParser::ConstantNode* node =
+            dynamic_cast<const GDScriptParser::ConstantNode*>(c.expression);
         ERR_FAIL_COND_V(!node, class_api);
 
         Dictionary api;
         api["name"] = E->key();
         api["value"] = node->value;
         api["data_type"] = node->datatype.to_string();
-        if (const lsp::DocumentSymbol *symbol = get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(node->line))) {
+        if (const lsp::DocumentSymbol* symbol =
+                get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(node->line))) {
             api["signature"] = symbol->detail;
             api["description"] = symbol->documentation;
         }
@@ -726,7 +838,7 @@ Dictionary ExtendGDScriptParser::dump_class_api(const GDScriptParser::ClassNode 
 
     Array members;
     for (int i = 0; i < p_class->variables.size(); ++i) {
-        const GDScriptParser::ClassNode::Member &m = p_class->variables[i];
+        const GDScriptParser::ClassNode::Member& m = p_class->variables[i];
         Dictionary api;
         api["name"] = m.identifier;
         api["data_type"] = m.data_type.to_string();
@@ -734,7 +846,8 @@ Dictionary ExtendGDScriptParser::dump_class_api(const GDScriptParser::ClassNode 
         api["setter"] = String(m.setter);
         api["getter"] = String(m.getter);
         api["export"] = m._export.type != Variant::NIL;
-        if (const lsp::DocumentSymbol *symbol = get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(m.line))) {
+        if (const lsp::DocumentSymbol* symbol =
+                get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(m.line))) {
             api["signature"] = symbol->detail;
             api["description"] = symbol->documentation;
         }
@@ -744,7 +857,7 @@ Dictionary ExtendGDScriptParser::dump_class_api(const GDScriptParser::ClassNode 
 
     Array signals;
     for (int i = 0; i < p_class->_signals.size(); ++i) {
-        const GDScriptParser::ClassNode::Signal &signal = p_class->_signals[i];
+        const GDScriptParser::ClassNode::Signal& signal = p_class->_signals[i];
         Dictionary api;
         api["name"] = signal.name;
         Array args;
@@ -752,7 +865,8 @@ Dictionary ExtendGDScriptParser::dump_class_api(const GDScriptParser::ClassNode 
             args.append(signal.arguments[j]);
         }
         api["arguments"] = args;
-        if (const lsp::DocumentSymbol *symbol = get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(signal.line))) {
+        if (const lsp::DocumentSymbol* symbol =
+                get_symbol_defined_at_line(LINE_NUMBER_TO_INDEX(signal.line))) {
             api["signature"] = symbol->detail;
             api["description"] = symbol->documentation;
         }
@@ -768,7 +882,8 @@ Dictionary ExtendGDScriptParser::dump_class_api(const GDScriptParser::ClassNode 
 
     Array static_functions;
     for (int i = 0; i < p_class->static_functions.size(); ++i) {
-        static_functions.append(dump_function_api(p_class->static_functions[i]));
+        static_functions.append(dump_function_api(p_class->static_functions[i])
+        );
     }
     class_api["static_functions"] = static_functions;
 
@@ -777,18 +892,27 @@ Dictionary ExtendGDScriptParser::dump_class_api(const GDScriptParser::ClassNode 
 
 Dictionary ExtendGDScriptParser::generate_api() const {
     Dictionary api;
-    const GDScriptParser::Node *head = get_parse_tree();
-    if (const GDScriptParser::ClassNode *gdclass = dynamic_cast<const GDScriptParser::ClassNode *>(head)) {
+    const GDScriptParser::Node* head = get_parse_tree();
+    if (const GDScriptParser::ClassNode* gdclass =
+            dynamic_cast<const GDScriptParser::ClassNode*>(head)) {
         api = dump_class_api(gdclass);
     }
     return api;
 }
 
-Error ExtendGDScriptParser::parse(const String &p_code, const String &p_path) {
+Error ExtendGDScriptParser::parse(const String& p_code, const String& p_path) {
     path = p_path;
     lines = p_code.split("\n");
 
-    Error err = GDScriptParser::parse(p_code, p_path.get_base_dir(), false, p_path, false, nullptr, false);
+    Error err = GDScriptParser::parse(
+        p_code,
+        p_path.get_base_dir(),
+        false,
+        p_path,
+        false,
+        nullptr,
+        false
+    );
     update_diagnostics();
     update_symbols();
     update_document_links(p_code);

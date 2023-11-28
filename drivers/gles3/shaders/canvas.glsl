@@ -28,12 +28,12 @@ layout(location = 5) in vec4 modulate_attrib; // attrib:5
 #ifdef USE_ATTRIB_LARGE_VERTEX
 // shared with skeleton attributes, not used in batched shader
 layout(location = 6) in vec2 translate_attrib; // attrib:6
-layout(location = 7) in vec4 basis_attrib; // attrib:7
+layout(location = 7) in vec4 basis_attrib;     // attrib:7
 #endif
 
 #ifdef USE_SKELETON
 layout(location = 6) in uvec4 bone_indices; // attrib:6
-layout(location = 7) in vec4 bone_weights; // attrib:7
+layout(location = 7) in vec4 bone_weights;  // attrib:7
 #endif
 
 #ifdef USE_TEXTURE_RECT
@@ -63,7 +63,7 @@ layout(location = 4) in highp vec2 uv_attrib;
 
 uniform highp vec2 color_texpixel_size;
 
-layout(std140) uniform CanvasItemData { //ubo:0
+layout(std140) uniform CanvasItemData { // ubo:0
 
     highp mat4 projection_matrix;
     highp float time;
@@ -76,7 +76,8 @@ out highp vec2 uv_interp;
 out mediump vec4 color_interp;
 
 #ifdef USE_ATTRIB_MODULATE
-// modulate doesn't need interpolating but we need to send it to the fragment shader
+// modulate doesn't need interpolating but we need to send it to the fragment
+// shader
 flat out mediump vec4 modulate_interp;
 #endif
 
@@ -97,7 +98,7 @@ uniform highp mat4 skeleton_transform_inverse;
 
 #ifdef USE_LIGHTING
 
-layout(std140) uniform LightData { //ubo:1
+layout(std140) uniform LightData { // ubo:1
 
     // light matrices
     highp mat4 light_matrix;
@@ -149,7 +150,13 @@ void main() {
     vec4 color = color_attrib;
 
 #ifdef USE_INSTANCING
-    mat4 extra_matrix_instance = extra_matrix * transpose(mat4(instance_xform0, instance_xform1, instance_xform2, vec4(0.0, 0.0, 0.0, 1.0)));
+    mat4 extra_matrix_instance = extra_matrix
+                               * transpose(mat4(
+                                   instance_xform0,
+                                   instance_xform1,
+                                   instance_xform2,
+                                   vec4(0.0, 0.0, 0.0, 1.0)
+                               ));
     color *= instance_color;
 
 #ifdef USE_INSTANCE_CUSTOM
@@ -170,7 +177,17 @@ void main() {
     } else {
         uv_interp = src_rect.xy + abs(src_rect.zw) * vertex;
     }
-    highp vec4 outvec = vec4(dst_rect.xy + abs(dst_rect.zw) * mix(vertex, vec2(1.0, 1.0) - vertex, lessThan(src_rect.zw, vec2(0.0, 0.0))), 0.0, 1.0);
+    highp vec4 outvec = vec4(
+        dst_rect.xy
+            + abs(dst_rect.zw)
+                  * mix(
+                      vertex,
+                      vec2(1.0, 1.0) - vertex,
+                      lessThan(src_rect.zw, vec2(0.0, 0.0))
+                  ),
+        0.0,
+        1.0
+    );
 
 #else
     uv_interp = uv_attrib;
@@ -178,14 +195,14 @@ void main() {
 #endif
 
 #ifdef USE_PARTICLES
-    //scale by texture size
+    // scale by texture size
     outvec.xy /= color_texpixel_size;
 #endif
 
 #define extra_matrix extra_matrix_instance
 
     float point_size = 1.0;
-    //for compatibility with the fragment shader we need to use uv here
+    // for compatibility with the fragment shader we need to use uv here
     vec2 uv = uv_interp;
     {
         /* clang-format off */
@@ -204,7 +221,8 @@ VERTEX_SHADER_CODE
 #endif
 
 #ifdef USE_ATTRIB_MODULATE
-    // modulate doesn't need interpolating but we need to send it to the fragment shader
+    // modulate doesn't need interpolating but we need to send it to the
+    // fragment shader
     modulate_interp = modulate_attrib;
 #endif
 
@@ -242,41 +260,53 @@ VERTEX_SHADER_CODE
 
 #ifdef USE_SKELETON
 
-    if (bone_weights != vec4(0.0)) { //must be a valid bone
-        //skeleton transform
+    if (bone_weights != vec4(0.0)) { // must be a valid bone
+        // skeleton transform
 
         ivec4 bone_indicesi = ivec4(bone_indices);
 
-        ivec2 tex_ofs = ivec2(bone_indicesi.x % 256, (bone_indicesi.x / 256) * 2);
+        ivec2 tex_ofs =
+            ivec2(bone_indicesi.x % 256, (bone_indicesi.x / 256) * 2);
 
         highp mat2x4 m;
         m = mat2x4(
-                    texelFetch(skeleton_texture, tex_ofs, 0),
-                    texelFetch(skeleton_texture, tex_ofs + ivec2(0, 1), 0)) *
-                bone_weights.x;
+                texelFetch(skeleton_texture, tex_ofs, 0),
+                texelFetch(skeleton_texture, tex_ofs + ivec2(0, 1), 0)
+            )
+          * bone_weights.x;
 
         tex_ofs = ivec2(bone_indicesi.y % 256, (bone_indicesi.y / 256) * 2);
 
         m += mat2x4(
-                     texelFetch(skeleton_texture, tex_ofs, 0),
-                     texelFetch(skeleton_texture, tex_ofs + ivec2(0, 1), 0)) *
-                bone_weights.y;
+                 texelFetch(skeleton_texture, tex_ofs, 0),
+                 texelFetch(skeleton_texture, tex_ofs + ivec2(0, 1), 0)
+             )
+           * bone_weights.y;
 
         tex_ofs = ivec2(bone_indicesi.z % 256, (bone_indicesi.z / 256) * 2);
 
         m += mat2x4(
-                     texelFetch(skeleton_texture, tex_ofs, 0),
-                     texelFetch(skeleton_texture, tex_ofs + ivec2(0, 1), 0)) *
-                bone_weights.z;
+                 texelFetch(skeleton_texture, tex_ofs, 0),
+                 texelFetch(skeleton_texture, tex_ofs + ivec2(0, 1), 0)
+             )
+           * bone_weights.z;
 
         tex_ofs = ivec2(bone_indicesi.w % 256, (bone_indicesi.w / 256) * 2);
 
         m += mat2x4(
-                     texelFetch(skeleton_texture, tex_ofs, 0),
-                     texelFetch(skeleton_texture, tex_ofs + ivec2(0, 1), 0)) *
-                bone_weights.w;
+                 texelFetch(skeleton_texture, tex_ofs, 0),
+                 texelFetch(skeleton_texture, tex_ofs + ivec2(0, 1), 0)
+             )
+           * bone_weights.w;
 
-        mat4 bone_matrix = skeleton_transform * transpose(mat4(m[0], m[1], vec4(0.0, 0.0, 1.0, 0.0), vec4(0.0, 0.0, 0.0, 1.0))) * skeleton_transform_inverse;
+        mat4 bone_matrix = skeleton_transform
+                         * transpose(mat4(
+                             m[0],
+                             m[1],
+                             vec4(0.0, 0.0, 1.0, 0.0),
+                             vec4(0.0, 0.0, 0.0, 1.0)
+                         ))
+                         * skeleton_transform_inverse;
 
         outvec = bone_matrix * outvec;
     }
@@ -294,7 +324,9 @@ VERTEX_SHADER_CODE
     inverse_light_matrix[0] = normalize(inverse_light_matrix[0]);
     inverse_light_matrix[1] = normalize(inverse_light_matrix[1]);
     inverse_light_matrix[2] = normalize(inverse_light_matrix[2]);
-    transformed_light_uv = (inverse_light_matrix * vec3(light_uv_interp.zw, 0.0)).xy; //for normal mapping
+    transformed_light_uv =
+        (inverse_light_matrix * vec3(light_uv_interp.zw, 0.0))
+            .xy; // for normal mapping
 
 #ifdef USE_SHADOWS
     pos = outvec.xy;
@@ -316,11 +348,21 @@ VERTEX_SHADER_CODE
     // and just the flips in the light angle.
     // For batching we will encode the rotation and the flips
     // in the light angle, and can use the same shader.
-    local_rot.xy = normalize((modelview_matrix * (extra_matrix_instance * vec4(vla.xy, 0.0, 0.0))).xy);
-    local_rot.zw = normalize((modelview_matrix * (extra_matrix_instance * vec4(vla.zw, 0.0, 0.0))).xy);
+    local_rot.xy = normalize(
+        (modelview_matrix * (extra_matrix_instance * vec4(vla.xy, 0.0, 0.0))).xy
+    );
+    local_rot.zw = normalize(
+        (modelview_matrix * (extra_matrix_instance * vec4(vla.zw, 0.0, 0.0))).xy
+    );
 #else
-    local_rot.xy = normalize((modelview_matrix * (extra_matrix_instance * vec4(1.0, 0.0, 0.0, 0.0))).xy);
-    local_rot.zw = normalize((modelview_matrix * (extra_matrix_instance * vec4(0.0, 1.0, 0.0, 0.0))).xy);
+    local_rot.xy = normalize(
+        (modelview_matrix * (extra_matrix_instance * vec4(1.0, 0.0, 0.0, 0.0)))
+            .xy
+    );
+    local_rot.zw = normalize(
+        (modelview_matrix * (extra_matrix_instance * vec4(0.0, 1.0, 0.0, 0.0)))
+            .xy
+    );
 #ifdef USE_TEXTURE_RECT
     local_rot.xy *= sign(src_rect.z);
     local_rot.zw *= sign(src_rect.w);
@@ -418,19 +460,20 @@ FRAGMENT_SHADER_GLOBALS
 /* clang-format on */
 
 void light_compute(
-        inout vec4 light,
-        inout vec2 light_vec,
-        inout float light_height,
-        inout vec4 light_color,
-        vec2 light_uv,
-        inout vec4 shadow_color,
-        inout vec2 shadow_vec,
-        vec3 normal,
-        vec2 uv,
+    inout vec4 light,
+    inout vec2 light_vec,
+    inout float light_height,
+    inout vec4 light_color,
+    vec2 light_uv,
+    inout vec4 shadow_color,
+    inout vec2 shadow_vec,
+    vec3 normal,
+    vec2 uv,
 #if defined(SCREEN_UV_USED)
-        vec2 screen_uv,
+    vec2 screen_uv,
 #endif
-        vec4 color) {
+    vec4 color
+) {
 
 #if defined(USE_LIGHT_SHADER_CODE)
 
@@ -461,7 +504,16 @@ uniform vec4 np_margins;
 
 // there are two ninepatch modes, and we don't want to waste a conditional
 #if defined USE_NINEPATCH_SCALING
-float map_ninepatch_axis(float pixel, float draw_size, float tex_pixel_size, float margin_begin, float margin_end, float s_ratio, int np_repeat, inout int draw_center) {
+float map_ninepatch_axis(
+    float pixel,
+    float draw_size,
+    float tex_pixel_size,
+    float margin_begin,
+    float margin_end,
+    float s_ratio,
+    int np_repeat,
+    inout int draw_center
+) {
     float tex_size = 1.0 / tex_pixel_size;
 
     float screen_margin_begin = margin_begin / s_ratio;
@@ -475,23 +527,30 @@ float map_ninepatch_axis(float pixel, float draw_size, float tex_pixel_size, flo
             draw_center--;
         }
 
-        if (np_repeat == 0) { //stretch
-            //convert to ratio
-            float ratio = (pixel - screen_margin_begin) / (draw_size - screen_margin_begin - screen_margin_end);
-            //scale to source texture
-            return (margin_begin + ratio * (tex_size - margin_begin - margin_end)) * tex_pixel_size;
-        } else if (np_repeat == 1) { //tile
-            //convert to ratio
-            float ofs = mod((pixel - screen_margin_begin), tex_size - margin_begin - margin_end);
-            //scale to source texture
+        if (np_repeat == 0) { // stretch
+            // convert to ratio
+            float ratio = (pixel - screen_margin_begin)
+                        / (draw_size - screen_margin_begin - screen_margin_end);
+            // scale to source texture
+            return (margin_begin
+                    + ratio * (tex_size - margin_begin - margin_end))
+                 * tex_pixel_size;
+        } else if (np_repeat == 1) { // tile
+            // convert to ratio
+            float ofs =
+                mod((pixel - screen_margin_begin),
+                    tex_size - margin_begin - margin_end);
+            // scale to source texture
             return (margin_begin + ofs) * tex_pixel_size;
-        } else if (np_repeat == 2) { //tile fit
-            //convert to ratio
-            float src_area = draw_size - screen_margin_begin - screen_margin_end;
+        } else if (np_repeat == 2) { // tile fit
+            // convert to ratio
+            float src_area =
+                draw_size - screen_margin_begin - screen_margin_end;
             float dst_area = tex_size - margin_begin - margin_end;
-            float scale = max(1.0, floor(src_area / max(dst_area, 0.0000001) + 0.5));
+            float scale =
+                max(1.0, floor(src_area / max(dst_area, 0.0000001) + 0.5));
 
-            //convert to ratio
+            // convert to ratio
             float ratio = (pixel - screen_margin_begin) / src_area;
             ratio = mod(ratio * scale, 1.0);
             return (margin_begin + ratio * dst_area) * tex_pixel_size;
@@ -499,7 +558,15 @@ float map_ninepatch_axis(float pixel, float draw_size, float tex_pixel_size, flo
     }
 }
 #else
-float map_ninepatch_axis(float pixel, float draw_size, float tex_pixel_size, float margin_begin, float margin_end, int np_repeat, inout int draw_center) {
+float map_ninepatch_axis(
+    float pixel,
+    float draw_size,
+    float tex_pixel_size,
+    float margin_begin,
+    float margin_end,
+    int np_repeat,
+    inout int draw_center
+) {
     float tex_size = 1.0 / tex_pixel_size;
 
     if (pixel < margin_begin) {
@@ -511,22 +578,29 @@ float map_ninepatch_axis(float pixel, float draw_size, float tex_pixel_size, flo
             draw_center--;
         }
 
-        // np_repeat is passed as uniform using NinePatchRect::AxisStretchMode enum.
+        // np_repeat is passed as uniform using NinePatchRect::AxisStretchMode
+        // enum.
         if (np_repeat == 0) { // Stretch.
             // Convert to ratio.
-            float ratio = (pixel - margin_begin) / (draw_size - margin_begin - margin_end);
+            float ratio = (pixel - margin_begin)
+                        / (draw_size - margin_begin - margin_end);
             // Scale to source texture.
-            return (margin_begin + ratio * (tex_size - margin_begin - margin_end)) * tex_pixel_size;
+            return (margin_begin
+                    + ratio * (tex_size - margin_begin - margin_end))
+                 * tex_pixel_size;
         } else if (np_repeat == 1) { // Tile.
             // Convert to offset.
-            float ofs = mod((pixel - margin_begin), tex_size - margin_begin - margin_end);
+            float ofs =
+                mod((pixel - margin_begin),
+                    tex_size - margin_begin - margin_end);
             // Scale to source texture.
             return (margin_begin + ofs) * tex_pixel_size;
         } else if (np_repeat == 2) { // Tile Fit.
             // Calculate scale.
             float src_area = draw_size - margin_begin - margin_end;
             float dst_area = tex_size - margin_begin - margin_end;
-            float scale = max(1.0, floor(src_area / max(dst_area, 0.0000001) + 0.5));
+            float scale =
+                max(1.0, floor(src_area / max(dst_area, 0.0000001) + 0.5));
             // Convert to ratio.
             float ratio = (pixel - margin_begin) / src_area;
             ratio = mod(ratio * scale, 1.0);
@@ -554,25 +628,63 @@ void main() {
 
     int draw_center = 2;
 #if defined USE_NINEPATCH_SCALING
-    float s_ratio = max((1.0 / color_texpixel_size.x) / abs(dst_rect.z), (1.0 / color_texpixel_size.y) / abs(dst_rect.w));
+    float s_ratio =
+        max((1.0 / color_texpixel_size.x) / abs(dst_rect.z),
+            (1.0 / color_texpixel_size.y) / abs(dst_rect.w));
     s_ratio = max(1.0, s_ratio);
     uv = vec2(
-            map_ninepatch_axis(pixel_size_interp.x, abs(dst_rect.z), color_texpixel_size.x, np_margins.x, np_margins.z, s_ratio, np_repeat_h, draw_center),
-            map_ninepatch_axis(pixel_size_interp.y, abs(dst_rect.w), color_texpixel_size.y, np_margins.y, np_margins.w, s_ratio, np_repeat_v, draw_center));
+        map_ninepatch_axis(
+            pixel_size_interp.x,
+            abs(dst_rect.z),
+            color_texpixel_size.x,
+            np_margins.x,
+            np_margins.z,
+            s_ratio,
+            np_repeat_h,
+            draw_center
+        ),
+        map_ninepatch_axis(
+            pixel_size_interp.y,
+            abs(dst_rect.w),
+            color_texpixel_size.y,
+            np_margins.y,
+            np_margins.w,
+            s_ratio,
+            np_repeat_v,
+            draw_center
+        )
+    );
 
     if (draw_center == 0) {
         color.a = 0.0;
     }
 #else
     uv = vec2(
-            map_ninepatch_axis(pixel_size_interp.x, abs(dst_rect.z), color_texpixel_size.x, np_margins.x, np_margins.z, np_repeat_h, draw_center),
-            map_ninepatch_axis(pixel_size_interp.y, abs(dst_rect.w), color_texpixel_size.y, np_margins.y, np_margins.w, np_repeat_v, draw_center));
+        map_ninepatch_axis(
+            pixel_size_interp.x,
+            abs(dst_rect.z),
+            color_texpixel_size.x,
+            np_margins.x,
+            np_margins.z,
+            np_repeat_h,
+            draw_center
+        ),
+        map_ninepatch_axis(
+            pixel_size_interp.y,
+            abs(dst_rect.w),
+            color_texpixel_size.y,
+            np_margins.y,
+            np_margins.w,
+            np_repeat_v,
+            draw_center
+        )
+    );
 
     if (draw_center == 0) {
         color.a = 0.0;
     }
 #endif
-    uv = uv * src_rect.zw + src_rect.xy; //apply region if needed
+    uv = uv * src_rect.zw + src_rect.xy; // apply region if needed
 #endif
 
     if (clip_rect_uv) {
@@ -582,7 +694,7 @@ void main() {
 #endif
 
 #if !defined(COLOR_USED)
-    //default behavior, texture by color
+    // default behavior, texture by color
 
 #ifdef USE_DISTANCE_FIELD
     const float smoothing = 1.0 / 32.0;
@@ -625,8 +737,8 @@ void main() {
 #endif
 
         // If larger fvfs are used, final_modulate is passed as an attribute.
-        // we need to read from this in custom fragment shaders or applying in the post step,
-        // rather than using final_modulate directly.
+        // we need to read from this in custom fragment shaders or applying in
+        // the post step, rather than using final_modulate directly.
 #if defined(final_modulate_alias)
 #undef final_modulate_alias
 #endif
@@ -643,11 +755,21 @@ FRAGMENT_SHADER_CODE
         /* clang-format on */
 
 #if defined(NORMALMAP_USED)
-        normal = mix(vec3(0.0, 0.0, 1.0), normal_map * vec3(2.0, -2.0, 1.0) - vec3(1.0, -1.0, 0.0), normal_depth);
+        normal =
+            mix(vec3(0.0, 0.0, 1.0),
+                normal_map * vec3(2.0, -2.0, 1.0) - vec3(1.0, -1.0, 0.0),
+                normal_depth);
 #endif
     }
 #ifdef DEBUG_ENCODED_32
-    highp float enc32 = dot(color, highp vec4(1.0 / (256.0 * 256.0 * 256.0), 1.0 / (256.0 * 256.0), 1.0 / 256.0, 1.0));
+    highp float enc32 =
+        dot(color,
+            highp vec4(
+                1.0 / (256.0 * 256.0 * 256.0),
+                1.0 / (256.0 * 256.0),
+                1.0 / 256.0,
+                1.0
+            ));
     color = vec4(vec3(enc32), 1.0);
 #endif
 
@@ -669,8 +791,9 @@ FRAGMENT_SHADER_CODE
     vec2 light_uv = light_uv_interp.xy;
     vec4 light = texture(light_texture, light_uv);
 
-    if (any(lessThan(light_uv_interp.xy, vec2(0.0, 0.0))) || any(greaterThanEqual(light_uv_interp.xy, vec2(1.0, 1.0)))) {
-        color.a *= light_outside_alpha; //invisible
+    if (any(lessThan(light_uv_interp.xy, vec2(0.0, 0.0)))
+        || any(greaterThanEqual(light_uv_interp.xy, vec2(1.0, 1.0)))) {
+        color.a *= light_outside_alpha; // invisible
 
     } else {
         float real_light_height = light_height;
@@ -678,21 +801,22 @@ FRAGMENT_SHADER_CODE
         vec4 real_light_shadow_color = light_shadow_color;
 
 #if defined(USE_LIGHT_SHADER_CODE)
-        //light is written by the light shader
+        // light is written by the light shader
         light_compute(
-                light,
-                light_vec,
-                real_light_height,
-                real_light_color,
-                light_uv,
-                real_light_shadow_color,
-                shadow_vec,
-                normal,
-                uv,
+            light,
+            light_vec,
+            real_light_height,
+            real_light_color,
+            light_uv,
+            real_light_shadow_color,
+            shadow_vec,
+            normal,
+            uv,
 #if defined(SCREEN_UV_USED)
-                screen_uv,
+            screen_uv,
 #endif
-                color);
+            color
+        );
 #endif
 
         light *= real_light_color;
@@ -716,8 +840,9 @@ FRAGMENT_SHADER_CODE
 #endif
         float angle_to_light = -atan(shadow_vec.x, shadow_vec.y);
         float PI = 3.14159265358979323846264;
-        /*int i = int(mod(floor((angle_to_light+7.0*PI/6.0)/(4.0*PI/6.0))+1.0, 3.0)); // +1 pq os indices estao em ordem 2,0,1 nos arrays
-        float ang*/
+        /*int i =
+        int(mod(floor((angle_to_light+7.0*PI/6.0)/(4.0*PI/6.0))+1.0, 3.0)); //
+        +1 pq os indices estao em ordem 2,0,1 nos arrays float ang*/
 
         float su, sz;
 
@@ -742,13 +867,20 @@ FRAGMENT_SHADER_CODE
         s.xyz /= s.w;
         su = s.x * 0.5 + 0.5;
         sz = s.z * 0.5 + 0.5;
-        //sz=lightlength(light_vec);
+        // sz=lightlength(light_vec);
 
         highp float shadow_attenuation = 0.0;
 
 #ifdef USE_RGBA_SHADOWS
 
-#define SHADOW_DEPTH(m_tex, m_uv) dot(texture((m_tex), (m_uv)), vec4(1.0 / (255.0 * 255.0 * 255.0), 1.0 / (255.0 * 255.0), 1.0 / 255.0, 1.0))
+#define SHADOW_DEPTH(m_tex, m_uv)                                              \
+    dot(texture((m_tex), (m_uv)),                                              \
+        vec4(                                                                  \
+            1.0 / (255.0 * 255.0 * 255.0),                                     \
+            1.0 / (255.0 * 255.0),                                             \
+            1.0 / 255.0,                                                       \
+            1.0                                                                \
+        ))
 
 #else
 
@@ -758,18 +890,18 @@ FRAGMENT_SHADER_CODE
 
 #ifdef SHADOW_USE_GRADIENT
 
-#define SHADOW_TEST(m_ofs)                                                    \
-    {                                                                         \
-        highp float sd = SHADOW_DEPTH(shadow_texture, vec2(m_ofs, sh));       \
-        shadow_attenuation += 1.0 - smoothstep(sd, sd + shadow_gradient, sz); \
+#define SHADOW_TEST(m_ofs)                                                     \
+    {                                                                          \
+        highp float sd = SHADOW_DEPTH(shadow_texture, vec2(m_ofs, sh));        \
+        shadow_attenuation += 1.0 - smoothstep(sd, sd + shadow_gradient, sz);  \
     }
 
 #else
 
-#define SHADOW_TEST(m_ofs)                                              \
-    {                                                                   \
-        highp float sd = SHADOW_DEPTH(shadow_texture, vec2(m_ofs, sh)); \
-        shadow_attenuation += step(sz, sd);                             \
+#define SHADOW_TEST(m_ofs)                                                     \
+    {                                                                          \
+        highp float sd = SHADOW_DEPTH(shadow_texture, vec2(m_ofs, sh));        \
+        shadow_attenuation += step(sz, sd);                                    \
     }
 
 #endif
@@ -847,21 +979,24 @@ FRAGMENT_SHADER_CODE
 
 #endif
 
-        //color *= shadow_attenuation;
+        // color *= shadow_attenuation;
         color = mix(real_light_shadow_color, color, shadow_attenuation);
-//use shadows
+// use shadows
 #endif
     }
 
-//use lighting
+// use lighting
 #endif
 
 #ifdef LINEAR_TO_SRGB
     // regular Linear -> SRGB conversion
     vec3 a = vec3(0.055);
-    color.rgb = mix((vec3(1.0) + a) * pow(color.rgb, vec3(1.0 / 2.4)) - a, 12.92 * color.rgb, lessThan(color.rgb, vec3(0.0031308)));
+    color.rgb =
+        mix((vec3(1.0) + a) * pow(color.rgb, vec3(1.0 / 2.4)) - a,
+            12.92 * color.rgb,
+            lessThan(color.rgb, vec3(0.0031308)));
 #endif
 
-    //color.rgb *= color.a;
+    // color.rgb *= color.a;
     frag_color = color;
 }

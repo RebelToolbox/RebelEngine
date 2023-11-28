@@ -43,19 +43,19 @@ class AnimationNodeAnimation : public AnimationRootNode {
     bool skip;
 
 protected:
-    void _validate_property(PropertyInfo &property) const;
+    void _validate_property(PropertyInfo& property) const;
 
     static void _bind_methods();
 
 public:
-    void get_parameter_list(List<PropertyInfo> *r_list) const;
+    void get_parameter_list(List<PropertyInfo>* r_list) const;
 
     static Vector<String> (*get_editable_animation_list)();
 
     virtual String get_caption() const;
     virtual float process(float p_time, bool p_seek);
 
-    void set_animation(const StringName &p_name);
+    void set_animation(const StringName& p_name);
     StringName get_animation() const;
 
     AnimationNodeAnimation();
@@ -96,8 +96,9 @@ protected:
     static void _bind_methods();
 
 public:
-    virtual void get_parameter_list(List<PropertyInfo> *r_list) const;
-    virtual Variant get_parameter_default_value(const StringName &p_parameter) const;
+    virtual void get_parameter_list(List<PropertyInfo>* r_list) const;
+    virtual Variant get_parameter_default_value(const StringName& p_parameter
+    ) const;
 
     virtual String get_caption() const;
 
@@ -139,8 +140,9 @@ protected:
     static void _bind_methods();
 
 public:
-    void get_parameter_list(List<PropertyInfo> *r_list) const;
-    virtual Variant get_parameter_default_value(const StringName &p_parameter) const;
+    void get_parameter_list(List<PropertyInfo>* r_list) const;
+    virtual Variant get_parameter_default_value(const StringName& p_parameter
+    ) const;
 
     virtual String get_caption() const;
 
@@ -163,8 +165,9 @@ protected:
     static void _bind_methods();
 
 public:
-    void get_parameter_list(List<PropertyInfo> *r_list) const;
-    virtual Variant get_parameter_default_value(const StringName &p_parameter) const;
+    void get_parameter_list(List<PropertyInfo>* r_list) const;
+    virtual Variant get_parameter_default_value(const StringName& p_parameter
+    ) const;
 
     virtual String get_caption() const;
 
@@ -187,8 +190,9 @@ protected:
     static void _bind_methods();
 
 public:
-    virtual void get_parameter_list(List<PropertyInfo> *r_list) const;
-    virtual Variant get_parameter_default_value(const StringName &p_parameter) const;
+    virtual void get_parameter_list(List<PropertyInfo>* r_list) const;
+    virtual Variant get_parameter_default_value(const StringName& p_parameter
+    ) const;
 
     virtual String get_caption() const;
     virtual float process(float p_time, bool p_seek);
@@ -210,8 +214,9 @@ protected:
     static void _bind_methods();
 
 public:
-    virtual void get_parameter_list(List<PropertyInfo> *r_list) const;
-    virtual Variant get_parameter_default_value(const StringName &p_parameter) const;
+    virtual void get_parameter_list(List<PropertyInfo>* r_list) const;
+    virtual Variant get_parameter_default_value(const StringName& p_parameter
+    ) const;
 
     virtual String get_caption() const;
 
@@ -231,8 +236,9 @@ protected:
     static void _bind_methods();
 
 public:
-    virtual void get_parameter_list(List<PropertyInfo> *r_list) const;
-    virtual Variant get_parameter_default_value(const StringName &p_parameter) const;
+    virtual void get_parameter_list(List<PropertyInfo>* r_list) const;
+    virtual Variant get_parameter_default_value(const StringName& p_parameter
+    ) const;
 
     virtual String get_caption() const;
 
@@ -250,8 +256,9 @@ protected:
     static void _bind_methods();
 
 public:
-    virtual void get_parameter_list(List<PropertyInfo> *r_list) const;
-    virtual Variant get_parameter_default_value(const StringName &p_parameter) const;
+    virtual void get_parameter_list(List<PropertyInfo>* r_list) const;
+    virtual Variant get_parameter_default_value(const StringName& p_parameter
+    ) const;
 
     virtual String get_caption() const;
 
@@ -266,10 +273,14 @@ class AnimationNodeTransition : public AnimationNode {
     enum {
         MAX_INPUTS = 32
     };
+
     struct InputData {
         String name;
         bool auto_advance;
-        InputData() { auto_advance = false; }
+
+        InputData() {
+            auto_advance = false;
+        }
     };
 
     InputData inputs[MAX_INPUTS];
@@ -294,11 +305,12 @@ class AnimationNodeTransition : public AnimationNode {
 
 protected:
     static void _bind_methods();
-    void _validate_property(PropertyInfo &property) const;
+    void _validate_property(PropertyInfo& property) const;
 
 public:
-    virtual void get_parameter_list(List<PropertyInfo> *r_list) const;
-    virtual Variant get_parameter_default_value(const StringName &p_parameter) const;
+    virtual void get_parameter_list(List<PropertyInfo>* r_list) const;
+    virtual Variant get_parameter_default_value(const StringName& p_parameter
+    ) const;
 
     virtual String get_caption() const;
 
@@ -308,7 +320,7 @@ public:
     void set_input_as_auto_advance(int p_input, bool p_enable);
     bool is_input_set_as_auto_advance(int p_input) const;
 
-    void set_input_caption(int p_input, const String &p_name);
+    void set_input_caption(int p_input, const String& p_name);
     String get_input_caption(int p_input) const;
 
     void set_cross_fade_time(float p_fade);
@@ -344,13 +356,13 @@ class AnimationNodeBlendTree : public AnimationRootNode {
     Vector2 graph_offset;
 
     void _tree_changed();
-    void _node_changed(const StringName &p_node);
+    void _node_changed(const StringName& p_node);
 
 protected:
     static void _bind_methods();
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
 
 public:
     enum ConnectionError {
@@ -360,24 +372,33 @@ public:
         CONNECTION_ERROR_NO_OUTPUT,
         CONNECTION_ERROR_SAME_NODE,
         CONNECTION_ERROR_CONNECTION_EXISTS,
-        //no need to check for cycles due to tree topology
+        // no need to check for cycles due to tree topology
     };
 
-    void add_node(const StringName &p_name, Ref<AnimationNode> p_node, const Vector2 &p_position = Vector2());
-    Ref<AnimationNode> get_node(const StringName &p_name) const;
-    void remove_node(const StringName &p_name);
-    void rename_node(const StringName &p_name, const StringName &p_new_name);
-    bool has_node(const StringName &p_name) const;
-    StringName get_node_name(const Ref<AnimationNode> &p_node) const;
-    Vector<StringName> get_node_connection_array(const StringName &p_name) const;
+    void add_node(
+        const StringName& p_name,
+        Ref<AnimationNode> p_node,
+        const Vector2& p_position = Vector2()
+    );
+    Ref<AnimationNode> get_node(const StringName& p_name) const;
+    void remove_node(const StringName& p_name);
+    void rename_node(const StringName& p_name, const StringName& p_new_name);
+    bool has_node(const StringName& p_name) const;
+    StringName get_node_name(const Ref<AnimationNode>& p_node) const;
+    Vector<StringName> get_node_connection_array(const StringName& p_name
+    ) const;
 
-    void set_node_position(const StringName &p_node, const Vector2 &p_position);
-    Vector2 get_node_position(const StringName &p_node) const;
+    void set_node_position(const StringName& p_node, const Vector2& p_position);
+    Vector2 get_node_position(const StringName& p_node) const;
 
-    virtual void get_child_nodes(List<ChildNode> *r_child_nodes);
+    virtual void get_child_nodes(List<ChildNode>* r_child_nodes);
 
-    void connect_node(const StringName &p_input_node, int p_input_index, const StringName &p_output_node);
-    void disconnect_node(const StringName &p_node, int p_input_index);
+    void connect_node(
+        const StringName& p_input_node,
+        int p_input_index,
+        const StringName& p_output_node
+    );
+    void disconnect_node(const StringName& p_node, int p_input_index);
 
     struct NodeConnection {
         StringName input_node;
@@ -385,18 +406,22 @@ public:
         StringName output_node;
     };
 
-    ConnectionError can_connect_node(const StringName &p_input_node, int p_input_index, const StringName &p_output_node) const;
-    void get_node_connections(List<NodeConnection> *r_connections) const;
+    ConnectionError can_connect_node(
+        const StringName& p_input_node,
+        int p_input_index,
+        const StringName& p_output_node
+    ) const;
+    void get_node_connections(List<NodeConnection>* r_connections) const;
 
     virtual String get_caption() const;
     virtual float process(float p_time, bool p_seek);
 
-    void get_node_list(List<StringName> *r_list);
+    void get_node_list(List<StringName>* r_list);
 
-    void set_graph_offset(const Vector2 &p_graph_offset);
+    void set_graph_offset(const Vector2& p_graph_offset);
     Vector2 get_graph_offset() const;
 
-    virtual Ref<AnimationNode> get_child_by_name(const StringName &p_name);
+    virtual Ref<AnimationNode> get_child_by_name(const StringName& p_name);
 
     AnimationNodeBlendTree();
     ~AnimationNodeBlendTree();

@@ -30,7 +30,7 @@
 
 #include "scene_string_names.h"
 
-SceneStringNames *SceneStringNames::singleton = nullptr;
+SceneStringNames* SceneStringNames::singleton = nullptr;
 
 SceneStringNames::SceneStringNames() {
     _estimate_cost = StaticCString::create("_estimate_cost");
@@ -183,7 +183,8 @@ SceneStringNames::SceneStringNames() {
     blend_times = StaticCString::create("blend_times");
     speed = StaticCString::create("speed");
 
-    node_configuration_warning_changed = StaticCString::create("node_configuration_warning_changed");
+    node_configuration_warning_changed =
+        StaticCString::create("node_configuration_warning_changed");
 
     output = StaticCString::create("output");
 

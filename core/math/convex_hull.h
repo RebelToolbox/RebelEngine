@@ -32,13 +32,17 @@
 Copyright (c) 2011 Ole Kniemeyer, MAXON, www.maxon.net
 
 This software is provided 'as-is', without any express or implied warranty.
-In no event will the authors be held liable for any damages arising from the use of this software.
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it freely,
-subject to the following restrictions:
+In no event will the authors be held liable for any damages arising from the use
+of this software. Permission is granted to anyone to use this software for any
+purpose, including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
 
-1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
-2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+1. The origin of this software must not be misrepresented; you must not claim
+that you wrote the original software. If you use this software in a product, an
+acknowledgment in the product documentation would be appreciated but is not
+required.
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
 
@@ -72,17 +76,19 @@ public:
             return target_vertex;
         }
 
-        const Edge *get_next_edge_of_vertex() const // clockwise list of all edges of a vertex
+        const Edge* get_next_edge_of_vertex(
+        ) const // clockwise list of all edges of a vertex
         {
             return this + next;
         }
 
-        const Edge *get_next_edge_of_face() const // counter-clockwise list of all edges of a face
+        const Edge* get_next_edge_of_face(
+        ) const // counter-clockwise list of all edges of a face
         {
             return (this + reverse)->get_next_edge_of_vertex();
         }
 
-        const Edge *get_reverse_edge() const {
+        const Edge* get_reverse_edge() const {
             return this + reverse;
         }
     };
@@ -93,26 +99,45 @@ public:
     // Edges of the output hull
     LocalVector<Edge> edges;
 
-    // Faces of the convex hull. Each entry is an index into the "edges" array pointing to an edge of the face. Faces are planar n-gons
+    // Faces of the convex hull. Each entry is an index into the "edges" array
+    // pointing to an edge of the face. Faces are planar n-gons
     LocalVector<int32_t> faces;
 
     /*
         Compute convex hull of "count" vertices stored in "coords".
-        If "shrink" is positive, the convex hull is shrunken by that amount (each face is moved by "shrink" length units
-        towards the center along its normal).
-        If "shrinkClamp" is positive, "shrink" is clamped to not exceed "shrinkClamp * innerRadius", where "innerRadius"
-        is the minimum distance of a face to the center of the convex hull.
+        If "shrink" is positive, the convex hull is shrunken by that amount
+       (each face is moved by "shrink" length units towards the center along its
+       normal). If "shrinkClamp" is positive, "shrink" is clamped to not exceed
+       "shrinkClamp * innerRadius", where "innerRadius" is the minimum distance
+       of a face to the center of the convex hull.
 
-        The returned value is the amount by which the hull has been shrunken. If it is negative, the amount was so large
-        that the resulting convex hull is empty.
+        The returned value is the amount by which the hull has been shrunken. If
+       it is negative, the amount was so large that the resulting convex hull is
+       empty.
 
-        The output convex hull can be found in the member variables "vertices", "edges", "faces".
+        The output convex hull can be found in the member variables "vertices",
+       "edges", "faces".
         */
-    real_t compute(const Vector3 *p_coords, int32_t p_count, real_t p_shrink, real_t p_shrink_clamp);
+    real_t compute(
+        const Vector3* p_coords,
+        int32_t p_count,
+        real_t p_shrink,
+        real_t p_shrink_clamp
+    );
 
-    static Error convex_hull(const Vector<Vector3> &p_points, Geometry::MeshData &r_mesh);
-    static Error convex_hull(const PoolVector<Vector3> &p_points, Geometry::MeshData &r_mesh);
-    static Error convex_hull(const Vector3 *p_points, int32_t p_point_count, Geometry::MeshData &r_mesh);
+    static Error convex_hull(
+        const Vector<Vector3>& p_points,
+        Geometry::MeshData& r_mesh
+    );
+    static Error convex_hull(
+        const PoolVector<Vector3>& p_points,
+        Geometry::MeshData& r_mesh
+    );
+    static Error convex_hull(
+        const Vector3* p_points,
+        int32_t p_point_count,
+        Geometry::MeshData& r_mesh
+    );
 };
 
 #endif // CONVEX_HULL_H

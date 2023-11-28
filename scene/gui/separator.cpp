@@ -48,20 +48,24 @@ void Separator::_notification(int p_what) {
             Size2i ssize = style->get_minimum_size() + style->get_center_size();
 
             if (orientation == VERTICAL) {
-                style->draw(get_canvas_item(), Rect2((size.x - ssize.x) / 2, 0, ssize.x, size.y));
+                style->draw(
+                    get_canvas_item(),
+                    Rect2((size.x - ssize.x) / 2, 0, ssize.x, size.y)
+                );
             } else {
-                style->draw(get_canvas_item(), Rect2(0, (size.y - ssize.y) / 2, size.x, ssize.y));
+                style->draw(
+                    get_canvas_item(),
+                    Rect2(0, (size.y - ssize.y) / 2, size.x, ssize.y)
+                );
             }
 
         } break;
     }
 }
 
-Separator::Separator() {
-}
+Separator::Separator() {}
 
-Separator::~Separator() {
-}
+Separator::~Separator() {}
 
 HSeparator::HSeparator() {
     orientation = HORIZONTAL;

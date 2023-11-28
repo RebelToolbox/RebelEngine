@@ -47,14 +47,13 @@ public:
         OPERATION_UNION,
         OPERATION_INTERSECTION,
         OPERATION_SUBTRACTION,
-
     };
 
 private:
     Operation operation;
-    CSGShape *parent;
+    CSGShape* parent;
 
-    CSGBrush *brush;
+    CSGBrush* brush;
 
     AABB node_aabb;
 
@@ -72,7 +71,7 @@ private:
     Ref<ArrayMesh> root_mesh;
 
     struct Vector3Hasher {
-        _ALWAYS_INLINE_ uint32_t hash(const Vector3 &p_vec3) const {
+        _ALWAYS_INLINE_ uint32_t hash(const Vector3& p_vec3) const {
             uint32_t h = hash_djb2_one_float(p_vec3.x);
             h = hash_djb2_one_float(p_vec3.y, h);
             h = hash_djb2_one_float(p_vec3.z, h);
@@ -94,28 +93,54 @@ private:
         PoolVector<float>::Write tansw;
     };
 
-    //mikktspace callbacks
-    static int mikktGetNumFaces(const SMikkTSpaceContext *pContext);
-    static int mikktGetNumVerticesOfFace(const SMikkTSpaceContext *pContext, const int iFace);
-    static void mikktGetPosition(const SMikkTSpaceContext *pContext, float fvPosOut[], const int iFace, const int iVert);
-    static void mikktGetNormal(const SMikkTSpaceContext *pContext, float fvNormOut[], const int iFace, const int iVert);
-    static void mikktGetTexCoord(const SMikkTSpaceContext *pContext, float fvTexcOut[], const int iFace, const int iVert);
-    static void mikktSetTSpaceDefault(const SMikkTSpaceContext *pContext, const float fvTangent[], const float fvBiTangent[], const float fMagS, const float fMagT,
-            const tbool bIsOrientationPreserving, const int iFace, const int iVert);
+    // mikktspace callbacks
+    static int mikktGetNumFaces(const SMikkTSpaceContext* pContext);
+    static int mikktGetNumVerticesOfFace(
+        const SMikkTSpaceContext* pContext,
+        const int iFace
+    );
+    static void mikktGetPosition(
+        const SMikkTSpaceContext* pContext,
+        float fvPosOut[],
+        const int iFace,
+        const int iVert
+    );
+    static void mikktGetNormal(
+        const SMikkTSpaceContext* pContext,
+        float fvNormOut[],
+        const int iFace,
+        const int iVert
+    );
+    static void mikktGetTexCoord(
+        const SMikkTSpaceContext* pContext,
+        float fvTexcOut[],
+        const int iFace,
+        const int iVert
+    );
+    static void mikktSetTSpaceDefault(
+        const SMikkTSpaceContext* pContext,
+        const float fvTangent[],
+        const float fvBiTangent[],
+        const float fMagS,
+        const float fMagT,
+        const tbool bIsOrientationPreserving,
+        const int iFace,
+        const int iVert
+    );
 
     void _update_shape();
 
 protected:
     void _notification(int p_what);
-    virtual CSGBrush *_build_brush() = 0;
+    virtual CSGBrush* _build_brush() = 0;
     void _make_dirty();
 
     static void _bind_methods();
 
     friend class CSGCombiner;
-    CSGBrush *_get_brush();
+    CSGBrush* _get_brush();
 
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
 public:
     Array get_meshes() const;
@@ -162,7 +187,7 @@ class CSGCombiner : public CSGShape {
     GDCLASS(CSGCombiner, CSGShape);
 
 private:
-    virtual CSGBrush *_build_brush();
+    virtual CSGBrush* _build_brush();
 
 public:
     CSGCombiner();
@@ -173,7 +198,12 @@ class CSGPrimitive : public CSGShape {
 
 protected:
     bool invert_faces;
-    CSGBrush *_create_brush_from_arrays(const PoolVector<Vector3> &p_vertices, const PoolVector<Vector2> &p_uv, const PoolVector<bool> &p_smooth, const PoolVector<Ref<Material>> &p_materials);
+    CSGBrush* _create_brush_from_arrays(
+        const PoolVector<Vector3>& p_vertices,
+        const PoolVector<Vector2>& p_uv,
+        const PoolVector<bool>& p_smooth,
+        const PoolVector<Ref<Material>>& p_materials
+    );
     static void _bind_methods();
 
 public:
@@ -186,7 +216,7 @@ public:
 class CSGMesh : public CSGPrimitive {
     GDCLASS(CSGMesh, CSGPrimitive);
 
-    virtual CSGBrush *_build_brush();
+    virtual CSGBrush* _build_brush();
 
     Ref<Mesh> mesh;
     Ref<Material> material;
@@ -197,16 +227,16 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_mesh(const Ref<Mesh> &p_mesh);
+    void set_mesh(const Ref<Mesh>& p_mesh);
     Ref<Mesh> get_mesh();
 
-    void set_material(const Ref<Material> &p_material);
+    void set_material(const Ref<Material>& p_material);
     Ref<Material> get_material() const;
 };
 
 class CSGSphere : public CSGPrimitive {
     GDCLASS(CSGSphere, CSGPrimitive);
-    virtual CSGBrush *_build_brush();
+    virtual CSGBrush* _build_brush();
 
     Ref<Material> material;
     bool smooth_faces;
@@ -227,7 +257,7 @@ public:
     void set_rings(const int p_rings);
     int get_rings() const;
 
-    void set_material(const Ref<Material> &p_material);
+    void set_material(const Ref<Material>& p_material);
     Ref<Material> get_material() const;
 
     void set_smooth_faces(bool p_smooth_faces);
@@ -238,7 +268,7 @@ public:
 
 class CSGBox : public CSGPrimitive {
     GDCLASS(CSGBox, CSGPrimitive);
-    virtual CSGBrush *_build_brush();
+    virtual CSGBrush* _build_brush();
 
     Ref<Material> material;
     float width;
@@ -258,7 +288,7 @@ public:
     void set_depth(const float p_depth);
     float get_depth() const;
 
-    void set_material(const Ref<Material> &p_material);
+    void set_material(const Ref<Material>& p_material);
     Ref<Material> get_material() const;
 
     CSGBox();
@@ -266,7 +296,7 @@ public:
 
 class CSGCylinder : public CSGPrimitive {
     GDCLASS(CSGCylinder, CSGPrimitive);
-    virtual CSGBrush *_build_brush();
+    virtual CSGBrush* _build_brush();
 
     Ref<Material> material;
     float radius;
@@ -294,7 +324,7 @@ public:
     void set_smooth_faces(bool p_smooth_faces);
     bool get_smooth_faces() const;
 
-    void set_material(const Ref<Material> &p_material);
+    void set_material(const Ref<Material>& p_material);
     Ref<Material> get_material() const;
 
     CSGCylinder();
@@ -302,7 +332,7 @@ public:
 
 class CSGTorus : public CSGPrimitive {
     GDCLASS(CSGTorus, CSGPrimitive);
-    virtual CSGBrush *_build_brush();
+    virtual CSGBrush* _build_brush();
 
     Ref<Material> material;
     float inner_radius;
@@ -330,7 +360,7 @@ public:
     void set_smooth_faces(bool p_smooth_faces);
     bool get_smooth_faces() const;
 
-    void set_material(const Ref<Material> &p_material);
+    void set_material(const Ref<Material>& p_material);
     Ref<Material> get_material() const;
 
     CSGTorus();
@@ -358,7 +388,7 @@ public:
     };
 
 private:
-    virtual CSGBrush *_build_brush();
+    virtual CSGBrush* _build_brush();
 
     Vector<Vector2> polygon;
     Ref<Material> material;
@@ -377,7 +407,7 @@ private:
     PathRotation path_rotation;
     bool path_local;
 
-    Path *path;
+    Path* path;
 
     bool smooth_faces;
     bool path_continuous_u;
@@ -392,11 +422,11 @@ private:
 
 protected:
     static void _bind_methods();
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
     void _notification(int p_what);
 
 public:
-    void set_polygon(const Vector<Vector2> &p_polygon);
+    void set_polygon(const Vector<Vector2>& p_polygon);
     Vector<Vector2> get_polygon() const;
 
     void set_mode(Mode p_mode);
@@ -411,7 +441,7 @@ public:
     void set_spin_sides(int p_spin_sides);
     int get_spin_sides() const;
 
-    void set_path_node(const NodePath &p_path);
+    void set_path_node(const NodePath& p_path);
     NodePath get_path_node() const;
 
     void set_path_interval_type(PathIntervalType p_interval_type);
@@ -441,7 +471,7 @@ public:
     void set_smooth_faces(bool p_smooth_faces);
     bool get_smooth_faces() const;
 
-    void set_material(const Ref<Material> &p_material);
+    void set_material(const Ref<Material>& p_material);
     Ref<Material> get_material() const;
 
     CSGPolygon();

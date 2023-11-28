@@ -41,14 +41,14 @@
 #include "visual_script_nodes.h"
 #include "visual_script_yield_nodes.h"
 
-VisualScriptLanguage *visual_script_language = nullptr;
+VisualScriptLanguage* visual_script_language = nullptr;
 #ifdef TOOLS_ENABLED
-static _VisualScriptEditor *vs_editor_singleton = nullptr;
+static _VisualScriptEditor* vs_editor_singleton = nullptr;
 #endif
 
 void register_visual_script_types() {
     visual_script_language = memnew(VisualScriptLanguage);
-    //script_language_gd->init();
+    // script_language_gd->init();
     ScriptServer::register_language(visual_script_language);
 
     ClassDB::register_class<VisualScript>();
@@ -86,7 +86,7 @@ void register_visual_script_types() {
     ClassDB::register_class<VisualScriptFunctionCall>();
     ClassDB::register_class<VisualScriptPropertySet>();
     ClassDB::register_class<VisualScriptPropertyGet>();
-    //ClassDB::register_type<VisualScriptScriptCall>();
+    // ClassDB::register_type<VisualScriptScriptCall>();
     ClassDB::register_class<VisualScriptEmitSignal>();
 
     ClassDB::register_class<VisualScriptReturn>();
@@ -94,7 +94,7 @@ void register_visual_script_types() {
     ClassDB::register_class<VisualScriptWhile>();
     ClassDB::register_class<VisualScriptIterator>();
     ClassDB::register_class<VisualScriptSequence>();
-    //ClassDB::register_class<VisualScriptInputFilter>();
+    // ClassDB::register_class<VisualScriptInputFilter>();
     ClassDB::register_class<VisualScriptSwitch>();
     ClassDB::register_class<VisualScriptSelect>();
 
@@ -117,7 +117,10 @@ void register_visual_script_types() {
     ClassDB::register_class<_VisualScriptEditor>();
     ClassDB::set_current_api(ClassDB::API_CORE);
     vs_editor_singleton = memnew(_VisualScriptEditor);
-    Engine::get_singleton()->add_singleton(Engine::Singleton("VisualScriptEditor", _VisualScriptEditor::get_singleton()));
+    Engine::get_singleton()->add_singleton(Engine::Singleton(
+        "VisualScriptEditor",
+        _VisualScriptEditor::get_singleton()
+    ));
 
     VisualScriptEditor::register_editor();
 #endif

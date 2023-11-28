@@ -51,11 +51,11 @@ class EditorResourcePicker : public HBoxContainer {
 
     Vector<String> inheritors_array;
 
-    Button *assign_button;
-    TextureRect *preview_rect;
-    Button *edit_button;
-    EditorFileDialog *file_dialog = nullptr;
-    EditorQuickOpen *quick_open = nullptr;
+    Button* assign_button;
+    TextureRect* preview_rect;
+    Button* edit_button;
+    EditorFileDialog* file_dialog = nullptr;
+    EditorQuickOpen* quick_open = nullptr;
 
     enum MenuOption {
         OBJ_MENU_LOAD,
@@ -72,29 +72,43 @@ class EditorResourcePicker : public HBoxContainer {
         CONVERT_BASE_ID = 1000,
     };
 
-    PopupMenu *edit_menu;
+    PopupMenu* edit_menu;
 
     void _update_resource();
-    void _update_resource_preview(const String &p_path, const Ref<Texture> &p_preview, const Ref<Texture> &p_small_preview, ObjectID p_obj);
+    void _update_resource_preview(
+        const String& p_path,
+        const Ref<Texture>& p_preview,
+        const Ref<Texture>& p_small_preview,
+        ObjectID p_obj
+    );
 
     void _resource_selected();
     void _file_quick_selected();
-    void _file_selected(const String &p_path);
+    void _file_selected(const String& p_path);
 
     void _update_menu();
     void _update_menu_items();
     void _edit_menu_cbk(int p_which);
 
     void _button_draw();
-    void _button_input(const Ref<InputEvent> &p_event);
+    void _button_input(const Ref<InputEvent>& p_event);
 
-    void _get_allowed_types(bool p_with_convert, Set<String> *p_vector) const;
-    bool _is_drop_valid(const Dictionary &p_drag_data) const;
-    bool _is_type_valid(const String p_type_name, Set<String> p_allowed_types) const;
+    void _get_allowed_types(bool p_with_convert, Set<String>* p_vector) const;
+    bool _is_drop_valid(const Dictionary& p_drag_data) const;
+    bool _is_type_valid(const String p_type_name, Set<String> p_allowed_types)
+        const;
 
-    Variant get_drag_data_fw(const Point2 &p_point, Control *p_from);
-    bool can_drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from) const;
-    void drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from);
+    Variant get_drag_data_fw(const Point2& p_point, Control* p_from);
+    bool can_drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    ) const;
+    void drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    );
 
 protected:
     static void _bind_methods();
@@ -103,7 +117,7 @@ protected:
 public:
     static void clear_caches();
 
-    void set_base_type(const String &p_base_type);
+    void set_base_type(const String& p_base_type);
     String get_base_type() const;
     Vector<String> get_allowed_types() const;
 
@@ -117,7 +131,7 @@ public:
     void set_editable(bool p_editable);
     bool is_editable() const;
 
-    virtual void set_create_options(Object *p_menu_node);
+    virtual void set_create_options(Object* p_menu_node);
     virtual bool handle_menu_selected(int p_which);
 
     EditorResourcePicker();
@@ -131,17 +145,17 @@ class EditorScriptPicker : public EditorResourcePicker {
         OBJ_MENU_EXTEND_SCRIPT = 11
     };
 
-    Node *script_owner = nullptr;
+    Node* script_owner = nullptr;
 
 protected:
     static void _bind_methods();
 
 public:
-    virtual void set_create_options(Object *p_menu_node);
+    virtual void set_create_options(Object* p_menu_node);
     virtual bool handle_menu_selected(int p_which);
 
-    void set_script_owner(Node *p_owner);
-    Node *get_script_owner() const;
+    void set_script_owner(Node* p_owner);
+    Node* get_script_owner() const;
 
     EditorScriptPicker();
 };

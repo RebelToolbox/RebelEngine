@@ -39,29 +39,29 @@ class StringBuilder {
     uint32_t string_length;
 
     Vector<String> strings;
-    Vector<const char *> c_strings;
+    Vector<const char*> c_strings;
 
     // -1 means it's a Godot String
     // a natural number means C string.
     Vector<int32_t> appended_strings;
 
 public:
-    StringBuilder &append(const String &p_string);
-    StringBuilder &append(const char *p_cstring);
+    StringBuilder& append(const String& p_string);
+    StringBuilder& append(const char* p_cstring);
 
-    _FORCE_INLINE_ StringBuilder &operator+(const String &p_string) {
+    _FORCE_INLINE_ StringBuilder& operator+(const String& p_string) {
         return append(p_string);
     }
 
-    _FORCE_INLINE_ StringBuilder &operator+(const char *p_cstring) {
+    _FORCE_INLINE_ StringBuilder& operator+(const char* p_cstring) {
         return append(p_cstring);
     }
 
-    _FORCE_INLINE_ void operator+=(const String &p_string) {
+    _FORCE_INLINE_ void operator+=(const String& p_string) {
         append(p_string);
     }
 
-    _FORCE_INLINE_ void operator+=(const char *p_cstring) {
+    _FORCE_INLINE_ void operator+=(const char* p_cstring) {
         append(p_cstring);
     }
 

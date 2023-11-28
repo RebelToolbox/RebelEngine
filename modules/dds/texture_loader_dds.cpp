@@ -32,9 +32,11 @@
 
 #include "core/os/file_access.h"
 
-#define PF_FOURCC(s) ((uint32_t)(((s)[3] << 24U) | ((s)[2] << 16U) | ((s)[1] << 8U) | ((s)[0])))
+#define PF_FOURCC(s)                                                           \
+    ((uint32_t)(((s)[3] << 24U) | ((s)[2] << 16U) | ((s)[1] << 8U) | ((s)[0])))
 
-// Reference: https://docs.microsoft.com/en-us/windows/win32/direct3ddds/dds-header
+// Reference:
+// https://docs.microsoft.com/en-us/windows/win32/direct3ddds/dds-header
 
 enum {
     DDS_MAGIC = 0x20534444,
@@ -56,8 +58,8 @@ enum DDSFormat {
     DDS_A2XY,
     DDS_BGRA8,
     DDS_BGR8,
-    DDS_RGBA8, //flipped in dds
-    DDS_RGB8, //flipped in dds
+    DDS_RGBA8, // flipped in dds
+    DDS_RGB8,  // flipped in dds
     DDS_BGR5A1,
     DDS_BGR565,
     DDS_BGR10A2,
@@ -68,7 +70,7 @@ enum DDSFormat {
 };
 
 struct DDSFormatInfo {
-    const char *name;
+    const char* name;
     bool compressed;
     bool palette;
     uint32_t divisor;
@@ -77,30 +79,34 @@ struct DDSFormatInfo {
 };
 
 static const DDSFormatInfo dds_format_info[DDS_MAX] = {
-    { "DXT1/BC1", true, false, 4, 8, Image::FORMAT_DXT1 },
-    { "DXT3/BC2", true, false, 4, 16, Image::FORMAT_DXT3 },
-    { "DXT5/BC3", true, false, 4, 16, Image::FORMAT_DXT5 },
-    { "ATI1/BC4", true, false, 4, 8, Image::FORMAT_RGTC_R },
-    { "ATI2/3DC/BC5", true, false, 4, 16, Image::FORMAT_RGTC_RG },
-    { "A2XY/DXN/BC5", true, false, 4, 16, Image::FORMAT_RGTC_RG },
-    { "BGRA8", false, false, 1, 4, Image::FORMAT_RGBA8 },
-    { "BGR8", false, false, 1, 3, Image::FORMAT_RGB8 },
-    { "RGBA8", false, false, 1, 4, Image::FORMAT_RGBA8 },
-    { "RGB8", false, false, 1, 3, Image::FORMAT_RGB8 },
-    { "BGR5A1", false, false, 1, 2, Image::FORMAT_RGBA8 },
-    { "BGR565", false, false, 1, 2, Image::FORMAT_RGB8 },
-    { "BGR10A2", false, false, 1, 4, Image::FORMAT_RGBA8 },
-    { "GRAYSCALE", false, false, 1, 1, Image::FORMAT_L8 },
-    { "GRAYSCALE_ALPHA", false, false, 1, 2, Image::FORMAT_LA8 }
+    {"DXT1/BC1", true, false, 4, 8, Image::FORMAT_DXT1},
+    {"DXT3/BC2", true, false, 4, 16, Image::FORMAT_DXT3},
+    {"DXT5/BC3", true, false, 4, 16, Image::FORMAT_DXT5},
+    {"ATI1/BC4", true, false, 4, 8, Image::FORMAT_RGTC_R},
+    {"ATI2/3DC/BC5", true, false, 4, 16, Image::FORMAT_RGTC_RG},
+    {"A2XY/DXN/BC5", true, false, 4, 16, Image::FORMAT_RGTC_RG},
+    {"BGRA8", false, false, 1, 4, Image::FORMAT_RGBA8},
+    {"BGR8", false, false, 1, 3, Image::FORMAT_RGB8},
+    {"RGBA8", false, false, 1, 4, Image::FORMAT_RGBA8},
+    {"RGB8", false, false, 1, 3, Image::FORMAT_RGB8},
+    {"BGR5A1", false, false, 1, 2, Image::FORMAT_RGBA8},
+    {"BGR565", false, false, 1, 2, Image::FORMAT_RGB8},
+    {"BGR10A2", false, false, 1, 4, Image::FORMAT_RGBA8},
+    {"GRAYSCALE", false, false, 1, 1, Image::FORMAT_L8},
+    {"GRAYSCALE_ALPHA", false, false, 1, 2, Image::FORMAT_LA8}
 };
 
-RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path, Error *r_error) {
+RES ResourceFormatDDS::load(
+    const String& p_path,
+    const String& p_original_path,
+    Error* r_error
+) {
     if (r_error) {
         *r_error = ERR_CANT_OPEN;
     }
 
     Error err;
-    FileAccess *f = FileAccess::open(p_path, FileAccess::READ, &err);
+    FileAccess* f = FileAccess::open(p_path, FileAccess::READ, &err);
     if (!f) {
         return RES();
     }
@@ -110,7 +116,11 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
         *r_error = ERR_FILE_CORRUPT;
     }
 
-    ERR_FAIL_COND_V_MSG(err != OK, RES(), "Unable to open DDS texture file '" + p_path + "'.");
+    ERR_FAIL_COND_V_MSG(
+        err != OK,
+        RES(),
+        "Unable to open DDS texture file '" + p_path + "'."
+    );
 
     uint32_t magic = f->get_32();
     uint32_t hsize = f->get_32();
@@ -121,17 +131,21 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
     /* uint32_t depth = */ f->get_32();
     uint32_t mipmaps = f->get_32();
 
-    //skip 11
+    // skip 11
     for (int i = 0; i < 11; i++) {
         f->get_32();
     }
 
-    //validate
+    // validate
 
-    // We don't check DDSD_CAPS or DDSD_PIXELFORMAT, as they're mandatory when writing,
-    // but non-mandatory when reading (as some writers don't set them)...
+    // We don't check DDSD_CAPS or DDSD_PIXELFORMAT, as they're mandatory when
+    // writing, but non-mandatory when reading (as some writers don't set
+    // them)...
     if (magic != DDS_MAGIC || hsize != 124) {
-        ERR_FAIL_V_MSG(RES(), "Invalid or unsupported DDS texture file '" + p_path + "'.");
+        ERR_FAIL_V_MSG(
+            RES(),
+            "Invalid or unsupported DDS texture file '" + p_path + "'."
+        );
     }
 
     /* uint32_t format_size = */ f->get_32();
@@ -147,7 +161,7 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
     /* uint32_t caps_2 = */ f->get_32();
     /* uint32_t caps_ddsx = */ f->get_32();
 
-    //reserved skip
+    // reserved skip
     f->get_32();
     f->get_32();
 
@@ -156,11 +170,13 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
     print_line("DDS height: "+itos(height));
     print_line("DDS mipmaps: "+itos(mipmaps));
 
-    printf("fourcc: %x fflags: %x, rgbbits: %x, fsize: %x\n",format_fourcc,format_flags,format_rgb_bits,format_size);
-    printf("rmask: %x gmask: %x, bmask: %x, amask: %x\n",format_red_mask,format_green_mask,format_blue_mask,format_alpha_mask);
+    printf("fourcc: %x fflags: %x, rgbbits: %x, fsize:
+    %x\n",format_fourcc,format_flags,format_rgb_bits,format_size);
+    printf("rmask: %x gmask: %x, bmask: %x, amask:
+    %x\n",format_red_mask,format_green_mask,format_blue_mask,format_alpha_mask);
     */
 
-    //must avoid this later
+    // must avoid this later
     while (f->get_position() < 128) {
         f->get_8();
     }
@@ -203,8 +219,21 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
     } else if (format_flags & DDPF_INDEXED && format_rgb_bits == 8) {
         dds_format = DDS_BGR565;
     } else {
-        printf("unrecognized fourcc %x format_flags: %x - rgbbits %i - red_mask %x green mask %x blue mask %x alpha mask %x\n", format_fourcc, format_flags, format_rgb_bits, format_red_mask, format_green_mask, format_blue_mask, format_alpha_mask);
-        ERR_FAIL_V_MSG(RES(), "Unrecognized or unsupported color layout in DDS '" + p_path + "'.");
+        printf(
+            "unrecognized fourcc %x format_flags: %x - rgbbits %i - red_mask "
+            "%x green mask %x blue mask %x alpha mask %x\n",
+            format_fourcc,
+            format_flags,
+            format_rgb_bits,
+            format_red_mask,
+            format_green_mask,
+            format_blue_mask,
+            format_alpha_mask
+        );
+        ERR_FAIL_V_MSG(
+            RES(),
+            "Unrecognized or unsupported color layout in DDS '" + p_path + "'."
+        );
     }
 
     if (!(flags & DDSD_MIPMAPCOUNT)) {
@@ -213,22 +242,25 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
 
     PoolVector<uint8_t> src_data;
 
-    const DDSFormatInfo &info = dds_format_info[dds_format];
+    const DDSFormatInfo& info = dds_format_info[dds_format];
     uint32_t w = width;
     uint32_t h = height;
 
     if (info.compressed) {
-        //compressed bc
+        // compressed bc
 
-        uint32_t size = MAX(info.divisor, w) / info.divisor * MAX(info.divisor, h) / info.divisor * info.block_size;
+        uint32_t size = MAX(info.divisor, w) / info.divisor
+                      * MAX(info.divisor, h) / info.divisor * info.block_size;
         ERR_FAIL_COND_V(size != pitch, RES());
         ERR_FAIL_COND_V(!(flags & DDSD_LINEARSIZE), RES());
 
         for (uint32_t i = 1; i < mipmaps; i++) {
             w = MAX(1, w >> 1);
             h = MAX(1, h >> 1);
-            uint32_t bsize = MAX(info.divisor, w) / info.divisor * MAX(info.divisor, h) / info.divisor * info.block_size;
-            //printf("%i x %i - block: %i\n",w,h,bsize);
+            uint32_t bsize = MAX(info.divisor, w) / info.divisor
+                           * MAX(info.divisor, h) / info.divisor
+                           * info.block_size;
+            // printf("%i x %i - block: %i\n",w,h,bsize);
             size += bsize;
         }
 
@@ -237,7 +269,7 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
         f->get_buffer(wb.ptr(), size);
 
     } else if (info.palette) {
-        //indexed
+        // indexed
         ERR_FAIL_COND_V(!(flags & DDSD_PITCH), RES());
         ERR_FAIL_COND_V(format_rgb_bits != 8, RES());
 
@@ -278,7 +310,7 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
             }
         }
     } else {
-        //uncompressed generic...
+        // uncompressed generic...
 
         uint32_t size = width * height * info.block_size;
 
@@ -309,7 +341,8 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
 
                     uint8_t a = wb[src_ofs + 1] & 0x80;
                     uint8_t b = wb[src_ofs] & 0x1F;
-                    uint8_t g = (wb[src_ofs] >> 5) | ((wb[src_ofs + 1] & 0x3) << 3);
+                    uint8_t g =
+                        (wb[src_ofs] >> 5) | ((wb[src_ofs + 1] & 0x3) << 3);
                     uint8_t r = (wb[src_ofs + 1] >> 2) & 0x1F;
                     wb[dst_ofs + 0] = r << 3;
                     wb[dst_ofs + 1] = g << 3;
@@ -325,11 +358,12 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
                     int dst_ofs = i * 3;
 
                     uint8_t b = wb[src_ofs] & 0x1F;
-                    uint8_t g = (wb[src_ofs] >> 5) | ((wb[src_ofs + 1] & 0x7) << 3);
+                    uint8_t g =
+                        (wb[src_ofs] >> 5) | ((wb[src_ofs + 1] & 0x7) << 3);
                     uint8_t r = wb[src_ofs + 1] >> 3;
                     wb[dst_ofs + 0] = r << 3;
                     wb[dst_ofs + 1] = g << 2;
-                    wb[dst_ofs + 2] = b << 3; //b<<3;
+                    wb[dst_ofs + 2] = b << 3; // b<<3;
                 }
 
             } break;
@@ -340,7 +374,10 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
                 for (int i = colcount - 1; i >= 0; i--) {
                     int ofs = i * 4;
 
-                    uint32_t w32 = uint32_t(wb[ofs + 0]) | (uint32_t(wb[ofs + 1]) << 8) | (uint32_t(wb[ofs + 2]) << 16) | (uint32_t(wb[ofs + 3]) << 24);
+                    uint32_t w32 = uint32_t(wb[ofs + 0])
+                                 | (uint32_t(wb[ofs + 1]) << 8)
+                                 | (uint32_t(wb[ofs + 2]) << 16)
+                                 | (uint32_t(wb[ofs + 3]) << 24);
 
                     uint8_t a = (w32 & 0xc0000000) >> 24;
                     uint8_t r = (w32 & 0x3ff00000) >> 22;
@@ -350,7 +387,7 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
                     wb[ofs + 0] = r;
                     wb[ofs + 1] = g;
                     wb[ofs + 2] = b;
-                    wb[ofs + 3] = a == 0xc0 ? 255 : a; //0xc0 should be opaque
+                    wb[ofs + 3] = a == 0xc0 ? 255 : a; // 0xc0 should be opaque
                 }
             } break;
             case DDS_BGRA8: {
@@ -410,7 +447,8 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
         }
     }
 
-    Ref<Image> img = memnew(Image(width, height, mipmaps - 1, info.format, src_data));
+    Ref<Image> img =
+        memnew(Image(width, height, mipmaps - 1, info.format, src_data));
 
     Ref<ImageTexture> texture = memnew(ImageTexture);
     texture->create_from_image(img);
@@ -422,15 +460,16 @@ RES ResourceFormatDDS::load(const String &p_path, const String &p_original_path,
     return texture;
 }
 
-void ResourceFormatDDS::get_recognized_extensions(List<String> *p_extensions) const {
+void ResourceFormatDDS::get_recognized_extensions(List<String>* p_extensions
+) const {
     p_extensions->push_back("dds");
 }
 
-bool ResourceFormatDDS::handles_type(const String &p_type) const {
+bool ResourceFormatDDS::handles_type(const String& p_type) const {
     return ClassDB::is_parent_class(p_type, "Texture");
 }
 
-String ResourceFormatDDS::get_resource_type(const String &p_path) const {
+String ResourceFormatDDS::get_resource_type(const String& p_path) const {
     if (p_path.get_extension().to_lower() == "dds") {
         return "ImageTexture";
     }

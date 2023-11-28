@@ -55,7 +55,7 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_text(const String &p_text);
+    void set_text(const String& p_text);
     String get_text() const;
 
     void set_underline_mode(UnderlineMode p_underline_mode);

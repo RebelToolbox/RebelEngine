@@ -114,13 +114,11 @@ public class RebelIO {
             return false;
         }
         AssetDir ad = dirs.get(id);
-        //System.out.printf("go next: %d,%d\n",ad.current,ad.files.length);
+        // System.out.printf("go next: %d,%d\n",ad.current,ad.files.length);
         int idx = ad.current;
-        if (idx > 0)
-            idx--;
+        if (idx > 0) idx--;
 
-        if (idx >= ad.files.length)
-            return false;
+        if (idx >= ad.files.length) return false;
         String fname = ad.files[idx];
 
         try {
@@ -141,7 +139,7 @@ public class RebelIO {
         }
 
         AssetDir ad = dirs.get(id);
-        //System.out.printf("go next: %d,%d\n",ad.current,ad.files.length);
+        // System.out.printf("go next: %d,%d\n",ad.current,ad.files.length);
 
         if (ad.current >= ad.files.length) {
             ad.current++;
@@ -165,8 +163,10 @@ public class RebelIO {
         am = p_activity.getAssets();
         activity = p_activity;
         dirs = new SparseArray<>();
-        String androidId = Settings.Secure.getString(activity.getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+        String androidId = Settings.Secure.getString(
+            activity.getContentResolver(),
+            Settings.Secure.ANDROID_ID
+        );
         if (androidId == null) {
             androidId = "";
         }
@@ -183,9 +183,10 @@ public class RebelIO {
             String path = p_uri;
             String type = "";
             if (path.startsWith("/")) {
-                //absolute path to filesystem, prepend file://
+                // absolute path to filesystem, prepend file://
                 path = "file://" + path;
-                if (p_uri.endsWith(".png") || p_uri.endsWith(".jpg") || p_uri.endsWith(".gif") || p_uri.endsWith(".webp")) {
+                if (p_uri.endsWith(".png") || p_uri.endsWith(".jpg")
+                    || p_uri.endsWith(".gif") || p_uri.endsWith(".webp")) {
                     type = "image/*";
                 }
             }
@@ -222,7 +223,8 @@ public class RebelIO {
     }
 
     public int getScreenDPI() {
-        DisplayMetrics metrics = activity.getApplicationContext().getResources().getDisplayMetrics();
+        DisplayMetrics metrics =
+            activity.getApplicationContext().getResources().getDisplayMetrics();
         return (int)(metrics.density * 160f);
     }
 
@@ -232,9 +234,10 @@ public class RebelIO {
         Point size = new Point();
         display.getRealSize(size);
 
-        int[] result = { 0, 0, size.x, size.y };
+        int[] result = {0, 0, size.x, size.y};
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            WindowInsets insets = activity.getWindow().getDecorView().getRootWindowInsets();
+            WindowInsets insets =
+                activity.getWindow().getDecorView().getRootWindowInsets();
             DisplayCutout cutout = insets.getDisplayCutout();
             if (cutout != null) {
                 int insetLeft = cutout.getSafeInsetLeft();
@@ -248,41 +251,67 @@ public class RebelIO {
         return result;
     }
 
-    public void showKeyboard(String p_existing_text, boolean p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end) {
+    public void showKeyboard(
+        String p_existing_text,
+        boolean p_multiline,
+        int p_max_input_length,
+        int p_cursor_start,
+        int p_cursor_end
+    ) {
         if (rebelEditText != null)
-            rebelEditText.showKeyboard(p_existing_text, p_multiline, p_max_input_length, p_cursor_start, p_cursor_end);
+            rebelEditText.showKeyboard(
+                p_existing_text,
+                p_multiline,
+                p_max_input_length,
+                p_cursor_start,
+                p_cursor_end
+            );
 
-        //InputMethodManager inputMgr = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        //inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        // InputMethodManager inputMgr =
+        // (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        // inputMgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     public void hideKeyboard() {
-        if (rebelEditText != null)
-            rebelEditText.hideKeyboard();
+        if (rebelEditText != null) rebelEditText.hideKeyboard();
     }
 
     public void setScreenOrientation(int p_orientation) {
         switch (p_orientation) {
             case SCREEN_LANDSCAPE: {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                activity.setRequestedOrientation(
+                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                );
             } break;
             case SCREEN_PORTRAIT: {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                activity.setRequestedOrientation(
+                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                );
             } break;
             case SCREEN_REVERSE_LANDSCAPE: {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+                activity.setRequestedOrientation(
+                    ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+                );
             } break;
             case SCREEN_REVERSE_PORTRAIT: {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+                activity.setRequestedOrientation(
+                    ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+                );
             } break;
             case SCREEN_SENSOR_LANDSCAPE: {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+                activity.setRequestedOrientation(
+                    ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
+                );
             } break;
             case SCREEN_SENSOR_PORTRAIT: {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+                activity.setRequestedOrientation(
+                    ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT
+                );
             } break;
             case SCREEN_SENSOR: {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_USER);
+                activity.setRequestedOrientation(
+                    ActivityInfo.SCREEN_ORIENTATION_FULL_USER
+                );
             } break;
         }
     }
@@ -336,7 +365,8 @@ public class RebelIO {
         switch (idx) {
             case SYSTEM_DIR_DESKTOP:
             default: {
-                what = null; // This leads to the app specific external root directory.
+                what = null; // This leads to the app specific external root
+                             // directory.
             } break;
 
             case SYSTEM_DIR_DCIM: {
@@ -370,12 +400,17 @@ public class RebelIO {
 
         if (shared_storage) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Log.w(TAG, "Shared storage access is limited on Android 10 and higher.");
+                Log.w(
+                    TAG,
+                    "Shared storage access is limited on Android 10 and higher."
+                );
             }
             if (TextUtils.isEmpty(what)) {
-                return Environment.getExternalStorageDirectory().getAbsolutePath();
+                return Environment.getExternalStorageDirectory()
+                    .getAbsolutePath();
             } else {
-                return Environment.getExternalStoragePublicDirectory(what).getAbsolutePath();
+                return Environment.getExternalStoragePublicDirectory(what)
+                    .getAbsolutePath();
             }
         } else {
             return activity.getExternalFilesDir(what).getAbsolutePath();

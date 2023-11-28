@@ -31,21 +31,42 @@
 #include "jsonrpc.h"
 #include "core/io/json.h"
 
-JSONRPC::JSONRPC() {
-}
+JSONRPC::JSONRPC() {}
 
-JSONRPC::~JSONRPC() {
-}
+JSONRPC::~JSONRPC() {}
 
 void JSONRPC::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_scope", "scope", "target"), &JSONRPC::set_scope);
-    ClassDB::bind_method(D_METHOD("process_action", "action", "recurse"), &JSONRPC::process_action, DEFVAL(false));
-    ClassDB::bind_method(D_METHOD("process_string", "action"), &JSONRPC::process_string);
+    ClassDB::bind_method(
+        D_METHOD("set_scope", "scope", "target"),
+        &JSONRPC::set_scope
+    );
+    ClassDB::bind_method(
+        D_METHOD("process_action", "action", "recurse"),
+        &JSONRPC::process_action,
+        DEFVAL(false)
+    );
+    ClassDB::bind_method(
+        D_METHOD("process_string", "action"),
+        &JSONRPC::process_string
+    );
 
-    ClassDB::bind_method(D_METHOD("make_request", "method", "params", "id"), &JSONRPC::make_request);
-    ClassDB::bind_method(D_METHOD("make_response", "result", "id"), &JSONRPC::make_response);
-    ClassDB::bind_method(D_METHOD("make_notification", "method", "params"), &JSONRPC::make_notification);
-    ClassDB::bind_method(D_METHOD("make_response_error", "code", "message", "id"), &JSONRPC::make_response_error, DEFVAL(Variant()));
+    ClassDB::bind_method(
+        D_METHOD("make_request", "method", "params", "id"),
+        &JSONRPC::make_request
+    );
+    ClassDB::bind_method(
+        D_METHOD("make_response", "result", "id"),
+        &JSONRPC::make_response
+    );
+    ClassDB::bind_method(
+        D_METHOD("make_notification", "method", "params"),
+        &JSONRPC::make_notification
+    );
+    ClassDB::bind_method(
+        D_METHOD("make_response_error", "code", "message", "id"),
+        &JSONRPC::make_response_error,
+        DEFVAL(Variant())
+    );
 
     BIND_ENUM_CONSTANT(PARSE_ERROR);
     BIND_ENUM_CONSTANT(INVALID_REQUEST);
@@ -54,7 +75,11 @@ void JSONRPC::_bind_methods() {
     BIND_ENUM_CONSTANT(INTERNAL_ERROR);
 }
 
-Dictionary JSONRPC::make_response_error(int p_code, const String &p_message, const Variant &p_id) const {
+Dictionary JSONRPC::make_response_error(
+    int p_code,
+    const String& p_message,
+    const Variant& p_id
+) const {
     Dictionary dict;
     dict["jsonrpc"] = "2.0";
 
@@ -68,7 +93,7 @@ Dictionary JSONRPC::make_response_error(int p_code, const String &p_message, con
     return dict;
 }
 
-Dictionary JSONRPC::make_response(const Variant &p_value, const Variant &p_id) {
+Dictionary JSONRPC::make_response(const Variant& p_value, const Variant& p_id) {
     Dictionary dict;
     dict["jsonrpc"] = "2.0";
     dict["id"] = p_id;
@@ -76,7 +101,10 @@ Dictionary JSONRPC::make_response(const Variant &p_value, const Variant &p_id) {
     return dict;
 }
 
-Dictionary JSONRPC::make_notification(const String &p_method, const Variant &p_params) {
+Dictionary JSONRPC::make_notification(
+    const String& p_method,
+    const Variant& p_params
+) {
     Dictionary dict;
     dict["jsonrpc"] = "2.0";
     dict["method"] = p_method;
@@ -84,7 +112,11 @@ Dictionary JSONRPC::make_notification(const String &p_method, const Variant &p_p
     return dict;
 }
 
-Dictionary JSONRPC::make_request(const String &p_method, const Variant &p_params, const Variant &p_id) {
+Dictionary JSONRPC::make_request(
+    const String& p_method,
+    const Variant& p_params,
+    const Variant& p_id
+) {
     Dictionary dict;
     dict["jsonrpc"] = "2.0";
     dict["method"] = p_method;
@@ -93,7 +125,10 @@ Dictionary JSONRPC::make_request(const String &p_method, const Variant &p_params
     return dict;
 }
 
-Variant JSONRPC::process_action(const Variant &p_action, bool p_process_arr_elements) {
+Variant JSONRPC::process_action(
+    const Variant& p_action,
+    bool p_process_arr_elements
+) {
     Variant ret;
     if (p_action.get_type() == Variant::DICTIONARY) {
         Dictionary dict = p_action;
@@ -112,7 +147,7 @@ Variant JSONRPC::process_action(const Variant &p_action, bool p_process_arr_elem
             }
         }
 
-        Object *object = this;
+        Object* object = this;
         if (method_scopes.has(method.get_base_dir())) {
             object = method_scopes[method.get_base_dir()];
             method = method.get_file();
@@ -124,7 +159,11 @@ Variant JSONRPC::process_action(const Variant &p_action, bool p_process_arr_elem
         }
 
         if (object == nullptr || !object->has_method(method)) {
-            ret = make_response_error(JSONRPC::METHOD_NOT_FOUND, "Method not found: " + method, id);
+            ret = make_response_error(
+                JSONRPC::METHOD_NOT_FOUND,
+                "Method not found: " + method,
+                id
+            );
         } else {
             Variant call_ret = object->callv(method, args);
             if (id.get_type() != Variant::NIL) {
@@ -137,12 +176,15 @@ Variant JSONRPC::process_action(const Variant &p_action, bool p_process_arr_elem
         if (size) {
             Array arr_ret;
             for (int i = 0; i < size; i++) {
-                const Variant &var = arr.get(i);
+                const Variant& var = arr.get(i);
                 arr_ret.push_back(process_action(var));
             }
             ret = arr_ret;
         } else {
-            ret = make_response_error(JSONRPC::INVALID_REQUEST, "Invalid Request");
+            ret = make_response_error(
+                JSONRPC::INVALID_REQUEST,
+                "Invalid Request"
+            );
         }
     } else {
         ret = make_response_error(JSONRPC::INVALID_REQUEST, "Invalid Request");
@@ -150,7 +192,7 @@ Variant JSONRPC::process_action(const Variant &p_action, bool p_process_arr_elem
     return ret;
 }
 
-String JSONRPC::process_string(const String &p_input) {
+String JSONRPC::process_string(const String& p_input) {
     if (p_input.empty()) {
         return String();
     }
@@ -171,6 +213,6 @@ String JSONRPC::process_string(const String &p_input) {
     return JSON::print(ret);
 }
 
-void JSONRPC::set_scope(const String &p_scope, Object *p_obj) {
+void JSONRPC::set_scope(const String& p_scope, Object* p_obj) {
     method_scopes[p_scope] = p_obj;
 }

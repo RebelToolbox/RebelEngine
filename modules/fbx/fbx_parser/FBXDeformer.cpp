@@ -82,57 +82,77 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <iostream>
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
 using namespace Util;
 
 // ------------------------------------------------------------------------------------------------
-Deformer::Deformer(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Object(id, element, name) {
+Deformer::Deformer(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Object(id, element, name) {
     const ScopePtr sc = GetRequiredScope(element);
 
-    const std::string &classname = ParseTokenAsString(GetRequiredToken(element, 2));
-    props = GetPropertyTable(doc, "Deformer.Fbx" + classname, element, sc, true);
+    const std::string& classname =
+        ParseTokenAsString(GetRequiredToken(element, 2));
+    props =
+        GetPropertyTable(doc, "Deformer.Fbx" + classname, element, sc, true);
 }
 
 // ------------------------------------------------------------------------------------------------
-Deformer::~Deformer() {
-}
+Deformer::~Deformer() {}
 
-Constraint::Constraint(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Object(id, element, name) {
+Constraint::Constraint(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Object(id, element, name) {
     const ScopePtr sc = GetRequiredScope(element);
-    const std::string &classname = ParseTokenAsString(GetRequiredToken(element, 2));
+    const std::string& classname =
+        ParseTokenAsString(GetRequiredToken(element, 2));
     // used something.fbx as this is a cache name.
-    props = GetPropertyTable(doc, "Something.Fbx" + classname, element, sc, true);
+    props =
+        GetPropertyTable(doc, "Something.Fbx" + classname, element, sc, true);
 }
 
-Constraint::~Constraint() {
-}
+Constraint::~Constraint() {}
 
 // ------------------------------------------------------------------------------------------------
-Cluster::Cluster(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Deformer(id, element, doc, name), valid_transformAssociateModel(false) {
+Cluster::Cluster(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Deformer(id, element, doc, name),
+    valid_transformAssociateModel(false) {
     const ScopePtr sc = GetRequiredScope(element);
-    //    for( auto element : sc.Elements())
-    //    {
-    //        std::cout << "cluster element: " << element.first << std::endl;
-    //    }
+    // for( auto element : sc.Elements())
+    // {
+    //     std::cout << "cluster element: " << element.first << std::endl;
+    // }
     //
-    //    element: Indexes
-    //    element: Transform
-    //    element: TransformAssociateModel
-    //    element: TransformLink
-    //    element: UserData
-    //    element: Version
-    //    element: Weights
+    // element: Indexes
+    // element: Transform
+    // element: TransformAssociateModel
+    // element: TransformLink
+    // element: UserData
+    // element: Version
+    // element: Weights
 
     const ElementPtr Indexes = sc->GetElement("Indexes");
     const ElementPtr Weights = sc->GetElement("Weights");
 
-    const ElementPtr TransformAssociateModel = sc->GetElement("TransformAssociateModel");
+    const ElementPtr TransformAssociateModel =
+        sc->GetElement("TransformAssociateModel");
     if (TransformAssociateModel != nullptr) {
-        //Transform t = ReadMatrix(*TransformAssociateModel);
+        // Transform t = ReadMatrix(*TransformAssociateModel);
         link_mode = SkinLinkMode_Additive;
         valid_transformAssociateModel = true;
     } else {
@@ -141,10 +161,12 @@ Cluster::Cluster(uint64_t id, const ElementPtr element, const Document &doc, con
     }
 
     const ElementPtr Transform = GetRequiredElement(sc, "Transform", element);
-    const ElementPtr TransformLink = GetRequiredElement(sc, "TransformLink", element);
+    const ElementPtr TransformLink =
+        GetRequiredElement(sc, "TransformLink", element);
 
     // todo: check if we need this
-    //const Element& TransformAssociateModel = GetRequiredElement(sc, "TransformAssociateModel", &element);
+    // const Element& TransformAssociateModel = GetRequiredElement(sc,
+    // "TransformAssociateModel", &element);
 
     transform = ReadMatrix(Transform);
     transformLink = ReadMatrix(TransformLink);
@@ -164,9 +186,15 @@ Cluster::Cluster(uint64_t id, const ElementPtr element, const Document &doc, con
     }
 
     // read assigned node
-    const std::vector<const Connection *> &conns = doc.GetConnectionsByDestinationSequenced(ID(), "Model");
-    for (const Connection *con : conns) {
-        const Model *mod = ProcessSimpleConnection<Model>(*con, false, "Model -> Cluster", element);
+    const std::vector<const Connection*>& conns =
+        doc.GetConnectionsByDestinationSequenced(ID(), "Model");
+    for (const Connection* con : conns) {
+        const Model* mod = ProcessSimpleConnection<Model>(
+            *con,
+            false,
+            "Model -> Cluster",
+            element
+        );
         if (mod) {
             node = mod;
             break;
@@ -180,12 +208,17 @@ Cluster::Cluster(uint64_t id, const ElementPtr element, const Document &doc, con
 }
 
 // ------------------------------------------------------------------------------------------------
-Cluster::~Cluster() {
-}
+Cluster::~Cluster() {}
 
 // ------------------------------------------------------------------------------------------------
-Skin::Skin(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Deformer(id, element, doc, name), accuracy(0.0f) {
+Skin::Skin(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Deformer(id, element, doc, name),
+    accuracy(0.0f) {
     const ScopePtr sc = GetRequiredScope(element);
 
     // keep this it is used for debugging and any FBX format changes
@@ -201,7 +234,8 @@ Skin::Skin(uint64_t id, const ElementPtr element, const Document &doc, const std
     const ElementPtr SkinType = sc->GetElement("SkinningType");
 
     if (SkinType) {
-        std::string skin_type = ParseTokenAsString(GetRequiredToken(SkinType, 0));
+        std::string skin_type =
+            ParseTokenAsString(GetRequiredToken(SkinType, 0));
 
         if (skin_type == "Linear") {
             skinType = Skin_Linear;
@@ -212,18 +246,27 @@ Skin::Skin(uint64_t id, const ElementPtr element, const Document &doc, const std
         } else if (skin_type == "Blend") {
             skinType = Skin_Blend;
         } else {
-            print_error("[doc:skin] could not find valid skin type: " + String(skin_type.c_str()));
+            print_error(
+                "[doc:skin] could not find valid skin type: "
+                + String(skin_type.c_str())
+            );
         }
     }
 
     // resolve assigned clusters
-    const std::vector<const Connection *> &conns = doc.GetConnectionsByDestinationSequenced(ID(), "Deformer");
+    const std::vector<const Connection*>& conns =
+        doc.GetConnectionsByDestinationSequenced(ID(), "Deformer");
 
     //
 
     clusters.reserve(conns.size());
-    for (const Connection *con : conns) {
-        const Cluster *cluster = ProcessSimpleConnection<Cluster>(*con, false, "Cluster -> Skin", element);
+    for (const Connection* con : conns) {
+        const Cluster* cluster = ProcessSimpleConnection<Cluster>(
+            *con,
+            false,
+            "Cluster -> Skin",
+            element
+        );
         if (cluster) {
             clusters.push_back(cluster);
             continue;
@@ -232,27 +275,45 @@ Skin::Skin(uint64_t id, const ElementPtr element, const Document &doc, const std
 }
 
 // ------------------------------------------------------------------------------------------------
-Skin::~Skin() {
-}
+Skin::~Skin() {}
+
 // ------------------------------------------------------------------------------------------------
-BlendShape::BlendShape(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Deformer(id, element, doc, name) {
-    const std::vector<const Connection *> &conns = doc.GetConnectionsByDestinationSequenced(ID(), "Deformer");
+BlendShape::BlendShape(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Deformer(id, element, doc, name) {
+    const std::vector<const Connection*>& conns =
+        doc.GetConnectionsByDestinationSequenced(ID(), "Deformer");
     blendShapeChannels.reserve(conns.size());
-    for (const Connection *con : conns) {
-        const BlendShapeChannel *bspc = ProcessSimpleConnection<BlendShapeChannel>(*con, false, "BlendShapeChannel -> BlendShape", element);
+    for (const Connection* con : conns) {
+        const BlendShapeChannel* bspc =
+            ProcessSimpleConnection<BlendShapeChannel>(
+                *con,
+                false,
+                "BlendShapeChannel -> BlendShape",
+                element
+            );
         if (bspc) {
             blendShapeChannels.push_back(bspc);
             continue;
         }
     }
 }
+
 // ------------------------------------------------------------------------------------------------
-BlendShape::~BlendShape() {
-}
+BlendShape::~BlendShape() {}
+
 // ------------------------------------------------------------------------------------------------
-BlendShapeChannel::BlendShapeChannel(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Deformer(id, element, doc, name) {
+BlendShapeChannel::BlendShapeChannel(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Deformer(id, element, doc, name) {
     const ScopePtr sc = GetRequiredScope(element);
     const ElementPtr DeformPercent = sc->GetElement("DeformPercent");
     if (DeformPercent) {
@@ -262,18 +323,25 @@ BlendShapeChannel::BlendShapeChannel(uint64_t id, const ElementPtr element, cons
     if (FullWeights) {
         ParseVectorDataArray(fullWeights, FullWeights);
     }
-    const std::vector<const Connection *> &conns = doc.GetConnectionsByDestinationSequenced(ID(), "Geometry");
+    const std::vector<const Connection*>& conns =
+        doc.GetConnectionsByDestinationSequenced(ID(), "Geometry");
     shapeGeometries.reserve(conns.size());
-    for (const Connection *con : conns) {
-        const ShapeGeometry *const sg = ProcessSimpleConnection<ShapeGeometry>(*con, false, "Shape -> BlendShapeChannel", element);
+    for (const Connection* con : conns) {
+        const ShapeGeometry* const sg = ProcessSimpleConnection<ShapeGeometry>(
+            *con,
+            false,
+            "Shape -> BlendShapeChannel",
+            element
+        );
         if (sg) {
             shapeGeometries.push_back(sg);
             continue;
         }
     }
 }
+
 // ------------------------------------------------------------------------------------------------
-BlendShapeChannel::~BlendShapeChannel() {
-}
+BlendShapeChannel::~BlendShapeChannel() {}
+
 // ------------------------------------------------------------------------------------------------
 } // namespace FBXDocParser

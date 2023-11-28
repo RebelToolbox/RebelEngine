@@ -40,17 +40,30 @@ import javax.microedition.khronos.egl.EGLDisplay;
 
 /* Fallback if 32bit View is not supported*/
 public class RegularFallbackConfigChooser extends RegularConfigChooser {
-    private static final String TAG = RegularFallbackConfigChooser.class.getSimpleName();
+    private static final String TAG =
+        RegularFallbackConfigChooser.class.getSimpleName();
 
     private RegularConfigChooser fallback;
 
-    public RegularFallbackConfigChooser(int r, int g, int b, int a, int depth, int stencil, RegularConfigChooser fallback) {
+    public RegularFallbackConfigChooser(
+        int r,
+        int g,
+        int b,
+        int a,
+        int depth,
+        int stencil,
+        RegularConfigChooser fallback
+    ) {
         super(r, g, b, a, depth, stencil);
         this.fallback = fallback;
     }
 
     @Override
-    public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs) {
+    public EGLConfig chooseConfig(
+        EGL10 egl,
+        EGLDisplay display,
+        EGLConfig[] configs
+    ) {
         EGLConfig ec = super.chooseConfig(egl, display, configs);
         if (ec == null) {
             Log.w(TAG, "Trying ConfigChooser fallback");

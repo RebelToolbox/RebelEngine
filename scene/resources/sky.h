@@ -76,7 +76,7 @@ protected:
     virtual void _radiance_changed();
 
 public:
-    void set_panorama(const Ref<Texture> &p_panorama);
+    void set_panorama(const Ref<Texture>& p_panorama);
     Ref<Texture> get_panorama() const;
 
     virtual RID get_rid() const;
@@ -129,8 +129,8 @@ private:
 
     bool first_time;
 
-    void _thread_done(const Ref<Image> &p_image);
-    static void _thread_function(void *p_ud);
+    void _thread_done(const Ref<Image>& p_image);
+    static void _thread_function(void* p_ud);
 
 protected:
     static void _bind_methods();
@@ -142,10 +142,10 @@ protected:
     void _queue_update();
 
 public:
-    void set_sky_top_color(const Color &p_sky_top);
+    void set_sky_top_color(const Color& p_sky_top);
     Color get_sky_top_color() const;
 
-    void set_sky_horizon_color(const Color &p_sky_horizon);
+    void set_sky_horizon_color(const Color& p_sky_horizon);
     Color get_sky_horizon_color() const;
 
     void set_sky_curve(float p_curve);
@@ -154,10 +154,10 @@ public:
     void set_sky_energy(float p_energy);
     float get_sky_energy() const;
 
-    void set_ground_bottom_color(const Color &p_ground_bottom);
+    void set_ground_bottom_color(const Color& p_ground_bottom);
     Color get_ground_bottom_color() const;
 
-    void set_ground_horizon_color(const Color &p_ground_horizon);
+    void set_ground_horizon_color(const Color& p_ground_horizon);
     Color get_ground_horizon_color() const;
 
     void set_ground_curve(float p_curve);
@@ -166,7 +166,7 @@ public:
     void set_ground_energy(float p_energy);
     float get_ground_energy() const;
 
-    void set_sun_color(const Color &p_sun);
+    void set_sun_color(const Color& p_sun);
     Color get_sun_color() const;
 
     void set_sun_latitude(float p_angle);

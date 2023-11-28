@@ -63,7 +63,7 @@ private:
 
 protected:
     static void _bind_methods();
-    void _validate_property(PropertyInfo &property) const;
+    void _validate_property(PropertyInfo& property) const;
 
 public:
     void set_intensity(float p_intensity);
@@ -81,10 +81,10 @@ public:
     void set_max_distance(float p_distance);
     float get_max_distance() const;
 
-    void set_extents(const Vector3 &p_extents);
+    void set_extents(const Vector3& p_extents);
     Vector3 get_extents() const;
 
-    void set_origin_offset(const Vector3 &p_extents);
+    void set_origin_offset(const Vector3& p_extents);
     Vector3 get_origin_offset() const;
 
     void set_as_interior(bool p_enable);

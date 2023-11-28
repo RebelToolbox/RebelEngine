@@ -74,18 +74,18 @@ private:
     bool always_ordered;
 
     ENetEvent event;
-    ENetPeer *peer;
-    ENetHost *host;
+    ENetPeer* peer;
+    ENetHost* host;
 
     bool refuse_connections;
     bool server_relay;
 
     ConnectionStatus connection_status;
 
-    Map<int, ENetPeer *> peer_map;
+    Map<int, ENetPeer*> peer_map;
 
     struct Packet {
-        ENetPacket *packet;
+        ENetPacket* packet;
         int from;
         int channel;
     };
@@ -103,9 +103,22 @@ private:
     Vector<uint8_t> dst_compressor_mem;
 
     ENetCompressor enet_compressor;
-    static size_t enet_compress(void *context, const ENetBuffer *inBuffers, size_t inBufferCount, size_t inLimit, enet_uint8 *outData, size_t outLimit);
-    static size_t enet_decompress(void *context, const enet_uint8 *inData, size_t inLimit, enet_uint8 *outData, size_t outLimit);
-    static void enet_compressor_destroy(void *context);
+    static size_t enet_compress(
+        void* context,
+        const ENetBuffer* inBuffers,
+        size_t inBufferCount,
+        size_t inLimit,
+        enet_uint8* outData,
+        size_t outLimit
+    );
+    static size_t enet_decompress(
+        void* context,
+        const enet_uint8* inData,
+        size_t inLimit,
+        enet_uint8* outData,
+        size_t outLimit
+    );
+    static void enet_compressor_destroy(void* context);
     void _setup_compressor();
 
     IP_Address bind_ip;
@@ -128,10 +141,26 @@ public:
 
     virtual IP_Address get_peer_address(int p_peer_id) const;
     virtual int get_peer_port(int p_peer_id) const;
-    void set_peer_timeout(int p_peer_id, int p_timeout_limit, int p_timeout_min, int p_timeout_max);
+    void set_peer_timeout(
+        int p_peer_id,
+        int p_timeout_limit,
+        int p_timeout_min,
+        int p_timeout_max
+    );
 
-    Error create_server(int p_port, int p_max_clients = 32, int p_in_bandwidth = 0, int p_out_bandwidth = 0);
-    Error create_client(const String &p_address, int p_port, int p_in_bandwidth = 0, int p_out_bandwidth = 0, int p_client_port = 0);
+    Error create_server(
+        int p_port,
+        int p_max_clients = 32,
+        int p_in_bandwidth = 0,
+        int p_out_bandwidth = 0
+    );
+    Error create_client(
+        const String& p_address,
+        int p_port,
+        int p_in_bandwidth = 0,
+        int p_out_bandwidth = 0,
+        int p_client_port = 0
+    );
 
     void close_connection(uint32_t wait_usec = 100);
 
@@ -142,8 +171,11 @@ public:
     virtual bool is_server() const;
 
     virtual int get_available_packet_count() const;
-    virtual Error get_packet(const uint8_t **r_buffer, int &r_buffer_size); ///< buffer is GONE after next get_packet
-    virtual Error put_packet(const uint8_t *p_buffer, int p_buffer_size);
+    virtual Error get_packet(
+        const uint8_t** r_buffer,
+        int& r_buffer_size
+    ); ///< buffer is GONE after next get_packet
+    virtual Error put_packet(const uint8_t* p_buffer, int p_buffer_size);
 
     virtual int get_max_packet_size() const;
 
@@ -171,14 +203,14 @@ public:
     NetworkedMultiplayerENet();
     ~NetworkedMultiplayerENet();
 
-    void set_bind_ip(const IP_Address &p_ip);
+    void set_bind_ip(const IP_Address& p_ip);
     void set_dtls_enabled(bool p_enabled);
     bool is_dtls_enabled() const;
     void set_dtls_verify_enabled(bool p_enabled);
     bool is_dtls_verify_enabled() const;
     void set_dtls_key(Ref<CryptoKey> p_key);
     void set_dtls_certificate(Ref<X509Certificate> p_cert);
-    void set_dtls_hostname(const String &p_hostname);
+    void set_dtls_hostname(const String& p_hostname);
     String get_dtls_hostname() const;
 };
 

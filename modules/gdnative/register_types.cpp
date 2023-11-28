@@ -54,15 +54,23 @@
 
 class GDNativeExportPlugin : public EditorExportPlugin {
 protected:
-    virtual void _export_file(const String &p_path, const String &p_type, const Set<String> &p_features);
+    virtual void _export_file(
+        const String& p_path,
+        const String& p_type,
+        const Set<String>& p_features
+    );
 };
 
 struct LibrarySymbol {
-    const char *name;
+    const char* name;
     bool is_required;
 };
 
-void GDNativeExportPlugin::_export_file(const String &p_path, const String &p_type, const Set<String> &p_features) {
+void GDNativeExportPlugin::_export_file(
+    const String& p_path,
+    const String& p_type,
+    const Set<String>& p_features
+) {
     if (p_type != "GDNativeLibrary") {
         return;
     }
@@ -79,7 +87,7 @@ void GDNativeExportPlugin::_export_file(const String &p_path, const String &p_ty
         List<String> entry_keys;
         config->get_section_keys("entry", &entry_keys);
 
-        for (List<String>::Element *E = entry_keys.front(); E; E = E->next()) {
+        for (List<String>::Element* E = entry_keys.front(); E; E = E->next()) {
             String key = E->get();
 
             Vector<String> tags = key.split(".");
@@ -100,7 +108,10 @@ void GDNativeExportPlugin::_export_file(const String &p_path, const String &p_ty
 
             String entry_lib_path = config->get_value("entry", key);
             if (!entry_lib_path.begins_with("res://")) {
-                print_line("Skipping export of out-of-project library " + entry_lib_path);
+                print_line(
+                    "Skipping export of out-of-project library "
+                    + entry_lib_path
+                );
                 continue;
             }
 
@@ -112,7 +123,8 @@ void GDNativeExportPlugin::_export_file(const String &p_path, const String &p_ty
         List<String> dependency_keys;
         config->get_section_keys("dependencies", &dependency_keys);
 
-        for (List<String>::Element *E = dependency_keys.front(); E; E = E->next()) {
+        for (List<String>::Element* E = dependency_keys.front(); E;
+             E = E->next()) {
             String key = E->get();
 
             Vector<String> tags = key.split(".");
@@ -131,10 +143,14 @@ void GDNativeExportPlugin::_export_file(const String &p_path, const String &p_ty
                 continue;
             }
 
-            Vector<String> dependency_paths = config->get_value("dependencies", key);
+            Vector<String> dependency_paths =
+                config->get_value("dependencies", key);
             for (int i = 0; i < dependency_paths.size(); i++) {
                 if (!dependency_paths[i].begins_with("res://")) {
-                    print_line("Skipping export of out-of-project library " + dependency_paths[i]);
+                    print_line(
+                        "Skipping export of out-of-project library "
+                        + dependency_paths[i]
+                    );
                     continue;
                 }
                 add_shared_object(dependency_paths[i], tags);
@@ -149,7 +165,7 @@ void GDNativeExportPlugin::_export_file(const String &p_path, const String &p_ty
         List<String> entry_keys;
         config->get_section_keys("entry", &entry_keys);
 
-        for (List<String>::Element *E = entry_keys.front(); E; E = E->next()) {
+        for (List<String>::Element* E = entry_keys.front(); E; E = E->next()) {
             String key = E->get();
 
             Vector<String> tags = key.split(".");
@@ -169,7 +185,8 @@ void GDNativeExportPlugin::_export_file(const String &p_path, const String &p_ty
             }
 
             String entry_lib_path = config->get_value("entry", key);
-            if (entry_lib_path.begins_with("res://") && entry_lib_path.ends_with(".a")) {
+            if (entry_lib_path.begins_with("res://")
+                && entry_lib_path.ends_with(".a")) {
                 // If we find static library that was used for export
                 // we should add a fake lookup table.
                 // In case of dynamic library being used,
@@ -180,24 +197,34 @@ void GDNativeExportPlugin::_export_file(const String &p_path, const String &p_ty
         }
 
         if (should_fake_dynamic) {
-            // Register symbols in the "fake" dynamic lookup table, because dlsym does not work well on iOS.
+            // Register symbols in the "fake" dynamic lookup table, because
+            // dlsym does not work well on iOS.
             LibrarySymbol expected_symbols[] = {
-                { "gdnative_init", true },
-                { "gdnative_terminate", false },
-                { "nativescript_init", false },
-                { "nativescript_frame", false },
-                { "nativescript_thread_enter", false },
-                { "nativescript_thread_exit", false },
-                { "gdnative_singleton", false }
+                {"gdnative_init", true},
+                {"gdnative_terminate", false},
+                {"nativescript_init", false},
+                {"nativescript_frame", false},
+                {"nativescript_thread_enter", false},
+                {"nativescript_thread_exit", false},
+                {"gdnative_singleton", false}
             };
             String declare_pattern = "extern \"C\" void $name(void)$weak;\n";
-            String additional_code = "extern void register_dynamic_symbol(char *name, void *address);\n"
-                                     "extern void add_ios_init_callback(void (*cb)());\n";
+            String additional_code =
+                "extern void register_dynamic_symbol(char *name, void "
+                "*address);\n"
+                "extern void add_ios_init_callback(void (*cb)());\n";
             String linker_flags = "";
-            for (unsigned long i = 0; i < sizeof(expected_symbols) / sizeof(expected_symbols[0]); ++i) {
-                String full_name = lib->get_symbol_prefix() + expected_symbols[i].name;
+            for (unsigned long i = 0;
+                 i < sizeof(expected_symbols) / sizeof(expected_symbols[0]);
+                 ++i) {
+                String full_name =
+                    lib->get_symbol_prefix() + expected_symbols[i].name;
                 String code = declare_pattern.replace("$name", full_name);
-                code = code.replace("$weak", expected_symbols[i].is_required ? "" : " __attribute__((weak))");
+                code = code.replace(
+                    "$weak",
+                    expected_symbols[i].is_required ? ""
+                                                    : " __attribute__((weak))"
+                );
                 additional_code += code;
 
                 if (!expected_symbols[i].is_required) {
@@ -208,15 +235,29 @@ void GDNativeExportPlugin::_export_file(const String &p_path, const String &p_ty
                 }
             }
 
-            additional_code += String("void $prefixinit() {\n").replace("$prefix", lib->get_symbol_prefix());
-            String register_pattern = "  if (&$name) register_dynamic_symbol((char *)\"$name\", (void *)$name);\n";
-            for (unsigned long i = 0; i < sizeof(expected_symbols) / sizeof(expected_symbols[0]); ++i) {
-                String full_name = lib->get_symbol_prefix() + expected_symbols[i].name;
+            additional_code +=
+                String("void $prefixinit() {\n")
+                    .replace("$prefix", lib->get_symbol_prefix());
+            String register_pattern =
+                "  if (&$name) register_dynamic_symbol((char *)\"$name\", "
+                "(void *)$name);\n";
+            for (unsigned long i = 0;
+                 i < sizeof(expected_symbols) / sizeof(expected_symbols[0]);
+                 ++i) {
+                String full_name =
+                    lib->get_symbol_prefix() + expected_symbols[i].name;
                 additional_code += register_pattern.replace("$name", full_name);
             }
             additional_code += "}\n";
-            additional_code += String("struct $prefixstruct {$prefixstruct() {add_ios_init_callback($prefixinit);}};\n").replace("$prefix", lib->get_symbol_prefix());
-            additional_code += String("$prefixstruct $prefixstruct_instance;\n").replace("$prefix", lib->get_symbol_prefix());
+            additional_code +=
+                String(
+                    "struct $prefixstruct {$prefixstruct() "
+                    "{add_ios_init_callback($prefixinit);}};\n"
+                )
+                    .replace("$prefix", lib->get_symbol_prefix());
+            additional_code +=
+                String("$prefixstruct $prefixstruct_instance;\n")
+                    .replace("$prefix", lib->get_symbol_prefix());
 
             add_ios_cpp_code(additional_code);
             add_ios_linker_flags(linker_flags);
@@ -225,28 +266,35 @@ void GDNativeExportPlugin::_export_file(const String &p_path, const String &p_ty
 }
 
 static void editor_init_callback() {
-    GDNativeLibrarySingletonEditor *library_editor = memnew(GDNativeLibrarySingletonEditor);
+    GDNativeLibrarySingletonEditor* library_editor =
+        memnew(GDNativeLibrarySingletonEditor);
     library_editor->set_name(TTR("GDNative"));
-    ProjectSettingsEditor::get_singleton()->get_tabs()->add_child(library_editor);
+    ProjectSettingsEditor::get_singleton()->get_tabs()->add_child(library_editor
+    );
 
     Ref<GDNativeExportPlugin> export_plugin;
     export_plugin.instance();
 
     EditorExport::get_singleton()->add_export_plugin(export_plugin);
 
-    EditorNode::get_singleton()->add_editor_plugin(memnew(GDNativeLibraryEditorPlugin(EditorNode::get_singleton())));
+    EditorNode::get_singleton()->add_editor_plugin(
+        memnew(GDNativeLibraryEditorPlugin(EditorNode::get_singleton()))
+    );
 }
 
 #endif
 
-static godot_variant cb_standard_varcall(void *p_procedure_handle, godot_array *p_args) {
+static godot_variant cb_standard_varcall(
+    void* p_procedure_handle,
+    godot_array* p_args
+) {
     godot_gdnative_procedure_fn proc;
     proc = (godot_gdnative_procedure_fn)p_procedure_handle;
 
     return proc(p_args);
 }
 
-GDNativeCallRegistry *GDNativeCallRegistry::singleton;
+GDNativeCallRegistry* GDNativeCallRegistry::singleton;
 
 Vector<Ref<GDNative>> singleton_gdnatives;
 
@@ -270,7 +318,10 @@ void register_gdnative_types() {
 
     GDNativeCallRegistry::singleton = memnew(GDNativeCallRegistry);
 
-    GDNativeCallRegistry::singleton->register_native_call_type("standard_varcall", cb_standard_varcall);
+    GDNativeCallRegistry::singleton->register_native_call_type(
+        "standard_varcall",
+        cb_standard_varcall
+    );
 
     register_net_types();
     register_arvr_types();
@@ -282,11 +333,16 @@ void register_gdnative_types() {
 
     Array singletons = Array();
     if (ProjectSettings::get_singleton()->has_setting("gdnative/singletons")) {
-        singletons = ProjectSettings::get_singleton()->get("gdnative/singletons");
+        singletons =
+            ProjectSettings::get_singleton()->get("gdnative/singletons");
     }
     Array excluded = Array();
-    if (ProjectSettings::get_singleton()->has_setting("gdnative/singletons_disabled")) {
-        excluded = ProjectSettings::get_singleton()->get("gdnative/singletons_disabled");
+    if (ProjectSettings::get_singleton()->has_setting(
+            "gdnative/singletons_disabled"
+        )) {
+        excluded =
+            ProjectSettings::get_singleton()->get("gdnative/singletons_disabled"
+            );
     }
 
     for (int i = 0; i < singletons.size(); i++) {
@@ -306,13 +362,18 @@ void register_gdnative_types() {
             continue;
         }
 
-        void *proc_ptr;
+        void* proc_ptr;
         Error err = singleton->get_symbol(
-                lib->get_symbol_prefix() + "gdnative_singleton",
-                proc_ptr);
+            lib->get_symbol_prefix() + "gdnative_singleton",
+            proc_ptr
+        );
 
         if (err != OK) {
-            ERR_PRINT("No " + lib->get_symbol_prefix() + "gdnative_singleton in \"" + singleton->get_library()->get_current_library_path() + "\" found");
+            ERR_PRINT(
+                "No " + lib->get_symbol_prefix() + "gdnative_singleton in \""
+                + singleton->get_library()->get_current_library_path()
+                + "\" found"
+            );
         } else {
             singleton_gdnatives.push_back(singleton);
             ((void (*)())proc_ptr)();

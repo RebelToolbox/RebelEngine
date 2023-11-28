@@ -56,25 +56,33 @@ class AnimationNodeBlendSpace1D : public AnimationRootNode {
 
     String value_label;
 
-    void _add_blend_point(int p_index, const Ref<AnimationRootNode> &p_node);
+    void _add_blend_point(int p_index, const Ref<AnimationRootNode>& p_node);
 
     void _tree_changed();
 
     StringName blend_position;
 
 protected:
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
     static void _bind_methods();
 
 public:
-    virtual void get_parameter_list(List<PropertyInfo> *r_list) const;
-    virtual Variant get_parameter_default_value(const StringName &p_parameter) const;
+    virtual void get_parameter_list(List<PropertyInfo>* r_list) const;
+    virtual Variant get_parameter_default_value(const StringName& p_parameter
+    ) const;
 
-    virtual void get_child_nodes(List<ChildNode> *r_child_nodes);
+    virtual void get_child_nodes(List<ChildNode>* r_child_nodes);
 
-    void add_blend_point(const Ref<AnimationRootNode> &p_node, float p_position, int p_at_index = -1);
+    void add_blend_point(
+        const Ref<AnimationRootNode>& p_node,
+        float p_position,
+        int p_at_index = -1
+    );
     void set_blend_point_position(int p_point, float p_position);
-    void set_blend_point_node(int p_point, const Ref<AnimationRootNode> &p_node);
+    void set_blend_point_node(
+        int p_point,
+        const Ref<AnimationRootNode>& p_node
+    );
 
     float get_blend_point_position(int p_point) const;
     Ref<AnimationRootNode> get_blend_point_node(int p_point) const;
@@ -90,13 +98,13 @@ public:
     void set_snap(float p_snap);
     float get_snap() const;
 
-    void set_value_label(const String &p_label);
+    void set_value_label(const String& p_label);
     String get_value_label() const;
 
     float process(float p_time, bool p_seek);
     String get_caption() const;
 
-    Ref<AnimationNode> get_child_by_name(const StringName &p_name);
+    Ref<AnimationNode> get_child_by_name(const StringName& p_name);
 
     AnimationNodeBlendSpace1D();
     ~AnimationNodeBlendSpace1D();

@@ -42,27 +42,27 @@ class SectionedInspector : public HSplitContainer {
 
     ObjectID obj;
 
-    Tree *sections;
-    SectionedInspectorFilter *filter;
+    Tree* sections;
+    SectionedInspectorFilter* filter;
 
-    Map<String, TreeItem *> section_map;
-    EditorInspector *inspector;
-    LineEdit *search_box;
+    Map<String, TreeItem*> section_map;
+    EditorInspector* inspector;
+    LineEdit* search_box;
 
     String selected_category;
 
     static void _bind_methods();
     void _section_selected();
 
-    void _search_changed(const String &p_what);
+    void _search_changed(const String& p_what);
 
 public:
-    void register_search_box(LineEdit *p_box);
-    EditorInspector *get_inspector();
-    void edit(Object *p_object);
-    String get_full_item_path(const String &p_item);
+    void register_search_box(LineEdit* p_box);
+    EditorInspector* get_inspector();
+    void edit(Object* p_object);
+    String get_full_item_path(const String& p_item);
 
-    void set_current_section(const String &p_section);
+    void set_current_section(const String& p_section);
     String get_current_section() const;
 
     void update_category_list();

@@ -33,15 +33,22 @@
 
 #include "core/os/os.h"
 
-void StepSW::_populate_island(BodySW *p_body, BodySW **p_island, ConstraintSW **p_constraint_island) {
+void StepSW::_populate_island(
+    BodySW* p_body,
+    BodySW** p_island,
+    ConstraintSW** p_constraint_island
+) {
     p_body->set_island_step(_step);
     p_body->set_island_next(*p_island);
     *p_island = p_body;
 
-    for (Map<ConstraintSW *, int>::Element *E = p_body->get_constraint_map().front(); E; E = E->next()) {
-        ConstraintSW *c = (ConstraintSW *)E->key();
+    for (Map<ConstraintSW*, int>::Element* E =
+             p_body->get_constraint_map().front();
+         E;
+         E = E->next()) {
+        ConstraintSW* c = (ConstraintSW*)E->key();
         if (c->get_island_step() == _step) {
-            continue; //already processed
+            continue; // already processed
         }
         c->set_island_step(_step);
         c->set_island_next(*p_constraint_island);
@@ -51,30 +58,40 @@ void StepSW::_populate_island(BodySW *p_body, BodySW **p_island, ConstraintSW **
             if (i == E->get()) {
                 continue;
             }
-            BodySW *b = c->get_body_ptr()[i];
-            if (b->get_island_step() == _step || b->get_mode() == PhysicsServer::BODY_MODE_STATIC || b->get_mode() == PhysicsServer::BODY_MODE_KINEMATIC) {
-                continue; //no go
+            BodySW* b = c->get_body_ptr()[i];
+            if (b->get_island_step() == _step
+                || b->get_mode() == PhysicsServer::BODY_MODE_STATIC
+                || b->get_mode() == PhysicsServer::BODY_MODE_KINEMATIC) {
+                continue; // no go
             }
-            _populate_island(c->get_body_ptr()[i], p_island, p_constraint_island);
+            _populate_island(
+                c->get_body_ptr()[i],
+                p_island,
+                p_constraint_island
+            );
         }
     }
 }
 
-void StepSW::_setup_island(ConstraintSW *p_island, real_t p_delta) {
-    ConstraintSW *ci = p_island;
+void StepSW::_setup_island(ConstraintSW* p_island, real_t p_delta) {
+    ConstraintSW* ci = p_island;
     while (ci) {
         ci->setup(p_delta);
-        //todo remove from island if process fails
+        // todo remove from island if process fails
         ci = ci->get_island_next();
     }
 }
 
-void StepSW::_solve_island(ConstraintSW *p_island, int p_iterations, real_t p_delta) {
+void StepSW::_solve_island(
+    ConstraintSW* p_island,
+    int p_iterations,
+    real_t p_delta
+) {
     int at_priority = 1;
 
     while (p_island) {
         for (int i = 0; i < p_iterations; i++) {
-            ConstraintSW *ci = p_island;
+            ConstraintSW* ci = p_island;
             while (ci) {
                 ci->solve(p_delta);
                 ci = ci->get_island_next();
@@ -84,12 +101,12 @@ void StepSW::_solve_island(ConstraintSW *p_island, int p_iterations, real_t p_de
         at_priority++;
 
         {
-            ConstraintSW *ci = p_island;
-            ConstraintSW *prev = nullptr;
+            ConstraintSW* ci = p_island;
+            ConstraintSW* prev = nullptr;
             while (ci) {
                 if (ci->get_priority() < at_priority) {
                     if (prev) {
-                        prev->set_island_next(ci->get_island_next()); //remove
+                        prev->set_island_next(ci->get_island_next()); // remove
                     } else {
                         p_island = ci->get_island_next();
                     }
@@ -103,14 +120,15 @@ void StepSW::_solve_island(ConstraintSW *p_island, int p_iterations, real_t p_de
     }
 }
 
-void StepSW::_check_suspend(BodySW *p_island, real_t p_delta) {
+void StepSW::_check_suspend(BodySW* p_island, real_t p_delta) {
     bool can_sleep = true;
 
-    BodySW *b = p_island;
+    BodySW* b = p_island;
     while (b) {
-        if (b->get_mode() == PhysicsServer::BODY_MODE_STATIC || b->get_mode() == PhysicsServer::BODY_MODE_KINEMATIC) {
+        if (b->get_mode() == PhysicsServer::BODY_MODE_STATIC
+            || b->get_mode() == PhysicsServer::BODY_MODE_KINEMATIC) {
             b = b->get_island_next();
-            continue; //ignore for static
+            continue; // ignore for static
         }
 
         if (!b->sleep_test(p_delta)) {
@@ -120,13 +138,14 @@ void StepSW::_check_suspend(BodySW *p_island, real_t p_delta) {
         b = b->get_island_next();
     }
 
-    //put all to sleep or wake up everyoen
+    // put all to sleep or wake up everyoen
 
     b = p_island;
     while (b) {
-        if (b->get_mode() == PhysicsServer::BODY_MODE_STATIC || b->get_mode() == PhysicsServer::BODY_MODE_KINEMATIC) {
+        if (b->get_mode() == PhysicsServer::BODY_MODE_STATIC
+            || b->get_mode() == PhysicsServer::BODY_MODE_KINEMATIC) {
             b = b->get_island_next();
-            continue; //ignore for static
+            continue; // ignore for static
         }
 
         bool active = b->is_active();
@@ -139,12 +158,12 @@ void StepSW::_check_suspend(BodySW *p_island, real_t p_delta) {
     }
 }
 
-void StepSW::step(SpaceSW *p_space, real_t p_delta, int p_iterations) {
+void StepSW::step(SpaceSW* p_space, real_t p_delta, int p_iterations) {
     p_space->lock(); // can't access space during this
 
-    p_space->setup(); //update inertias, etc
+    p_space->setup(); // update inertias, etc
 
-    const SelfList<BodySW>::List *body_list = &p_space->get_active_body_list();
+    const SelfList<BodySW>::List* body_list = &p_space->get_active_body_list();
 
     /* INTEGRATE FORCES */
 
@@ -153,7 +172,7 @@ void StepSW::step(SpaceSW *p_space, real_t p_delta, int p_iterations) {
 
     int active_count = 0;
 
-    const SelfList<BodySW> *b = body_list->first();
+    const SelfList<BodySW>* b = body_list->first();
     while (b) {
         b->self()->integrate_forces(p_delta);
         b = b->next();
@@ -165,26 +184,29 @@ void StepSW::step(SpaceSW *p_space, real_t p_delta, int p_iterations) {
     // Update the broadphase to register collision pairs.
     p_space->update();
 
-    { //profile
+    { // profile
         profile_endtime = OS::get_singleton()->get_ticks_usec();
-        p_space->set_elapsed_time(SpaceSW::ELAPSED_TIME_INTEGRATE_FORCES, profile_endtime - profile_begtime);
+        p_space->set_elapsed_time(
+            SpaceSW::ELAPSED_TIME_INTEGRATE_FORCES,
+            profile_endtime - profile_begtime
+        );
         profile_begtime = profile_endtime;
     }
 
     /* GENERATE CONSTRAINT ISLANDS */
 
-    BodySW *island_list = nullptr;
-    ConstraintSW *constraint_island_list = nullptr;
+    BodySW* island_list = nullptr;
+    ConstraintSW* constraint_island_list = nullptr;
     b = body_list->first();
 
     int island_count = 0;
 
     while (b) {
-        BodySW *body = b->self();
+        BodySW* body = b->self();
 
         if (body->get_island_step() != _step) {
-            BodySW *island = nullptr;
-            ConstraintSW *constraint_island = nullptr;
+            BodySW* island = nullptr;
+            ConstraintSW* constraint_island = nullptr;
             _populate_island(body, &island, &constraint_island);
 
             island->set_island_list_next(island_list);
@@ -201,11 +223,14 @@ void StepSW::step(SpaceSW *p_space, real_t p_delta, int p_iterations) {
 
     p_space->set_island_count(island_count);
 
-    const SelfList<AreaSW>::List &aml = p_space->get_moved_area_list();
+    const SelfList<AreaSW>::List& aml = p_space->get_moved_area_list();
 
     while (aml.first()) {
-        for (const Set<ConstraintSW *>::Element *E = aml.first()->self()->get_constraints().front(); E; E = E->next()) {
-            ConstraintSW *c = E->get();
+        for (const Set<ConstraintSW*>::Element* E =
+                 aml.first()->self()->get_constraints().front();
+             E;
+             E = E->next()) {
+            ConstraintSW* c = E->get();
             if (c->get_island_step() == _step) {
                 continue;
             }
@@ -214,45 +239,55 @@ void StepSW::step(SpaceSW *p_space, real_t p_delta, int p_iterations) {
             c->set_island_list_next(constraint_island_list);
             constraint_island_list = c;
         }
-        p_space->area_remove_from_moved_list((SelfList<AreaSW> *)aml.first()); //faster to remove here
+        p_space->area_remove_from_moved_list((SelfList<AreaSW>*)aml.first()
+        ); // faster to remove here
     }
 
-    { //profile
+    { // profile
         profile_endtime = OS::get_singleton()->get_ticks_usec();
-        p_space->set_elapsed_time(SpaceSW::ELAPSED_TIME_GENERATE_ISLANDS, profile_endtime - profile_begtime);
+        p_space->set_elapsed_time(
+            SpaceSW::ELAPSED_TIME_GENERATE_ISLANDS,
+            profile_endtime - profile_begtime
+        );
         profile_begtime = profile_endtime;
     }
 
     /* SETUP CONSTRAINT ISLANDS */
 
     {
-        ConstraintSW *ci = constraint_island_list;
+        ConstraintSW* ci = constraint_island_list;
         while (ci) {
             _setup_island(ci, p_delta);
             ci = ci->get_island_list_next();
         }
     }
 
-    { //profile
+    { // profile
         profile_endtime = OS::get_singleton()->get_ticks_usec();
-        p_space->set_elapsed_time(SpaceSW::ELAPSED_TIME_SETUP_CONSTRAINTS, profile_endtime - profile_begtime);
+        p_space->set_elapsed_time(
+            SpaceSW::ELAPSED_TIME_SETUP_CONSTRAINTS,
+            profile_endtime - profile_begtime
+        );
         profile_begtime = profile_endtime;
     }
 
     /* SOLVE CONSTRAINT ISLANDS */
 
     {
-        ConstraintSW *ci = constraint_island_list;
+        ConstraintSW* ci = constraint_island_list;
         while (ci) {
-            //iterating each island separatedly improves cache efficiency
+            // iterating each island separatedly improves cache efficiency
             _solve_island(ci, p_iterations, p_delta);
             ci = ci->get_island_list_next();
         }
     }
 
-    { //profile
+    { // profile
         profile_endtime = OS::get_singleton()->get_ticks_usec();
-        p_space->set_elapsed_time(SpaceSW::ELAPSED_TIME_SOLVE_CONSTRAINTS, profile_endtime - profile_begtime);
+        p_space->set_elapsed_time(
+            SpaceSW::ELAPSED_TIME_SOLVE_CONSTRAINTS,
+            profile_endtime - profile_begtime
+        );
         profile_begtime = profile_endtime;
     }
 
@@ -260,7 +295,7 @@ void StepSW::step(SpaceSW *p_space, real_t p_delta, int p_iterations) {
 
     b = body_list->first();
     while (b) {
-        const SelfList<BodySW> *n = b->next();
+        const SelfList<BodySW>* n = b->next();
         b->self()->integrate_velocities(p_delta);
         b = n;
     }
@@ -268,16 +303,19 @@ void StepSW::step(SpaceSW *p_space, real_t p_delta, int p_iterations) {
     /* SLEEP / WAKE UP ISLANDS */
 
     {
-        BodySW *bi = island_list;
+        BodySW* bi = island_list;
         while (bi) {
             _check_suspend(bi, p_delta);
             bi = bi->get_island_list_next();
         }
     }
 
-    { //profile
+    { // profile
         profile_endtime = OS::get_singleton()->get_ticks_usec();
-        p_space->set_elapsed_time(SpaceSW::ELAPSED_TIME_INTEGRATE_VELOCITIES, profile_endtime - profile_begtime);
+        p_space->set_elapsed_time(
+            SpaceSW::ELAPSED_TIME_INTEGRATE_VELOCITIES,
+            profile_endtime - profile_begtime
+        );
         profile_begtime = profile_endtime;
     }
 

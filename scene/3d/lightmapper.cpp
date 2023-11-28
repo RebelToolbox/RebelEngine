@@ -30,7 +30,7 @@
 
 #include "lightmapper.h"
 
-LightmapDenoiser *(*LightmapDenoiser::create_function)() = nullptr;
+LightmapDenoiser* (*LightmapDenoiser::create_function)() = nullptr;
 
 Ref<LightmapDenoiser> LightmapDenoiser::create() {
     if (create_function) {
@@ -39,7 +39,7 @@ Ref<LightmapDenoiser> LightmapDenoiser::create() {
     return Ref<LightmapDenoiser>();
 }
 
-LightmapRaycaster *(*LightmapRaycaster::create_function)() = nullptr;
+LightmapRaycaster* (*LightmapRaycaster::create_function)() = nullptr;
 
 Ref<LightmapRaycaster> LightmapRaycaster::create() {
     if (create_function) {
@@ -53,7 +53,7 @@ Lightmapper::CreateFunc Lightmapper::create_gpu = nullptr;
 Lightmapper::CreateFunc Lightmapper::create_cpu = nullptr;
 
 Ref<Lightmapper> Lightmapper::create() {
-    Lightmapper *lm = nullptr;
+    Lightmapper* lm = nullptr;
     if (create_custom) {
         lm = create_custom();
     }
@@ -72,5 +72,4 @@ Ref<Lightmapper> Lightmapper::create() {
     }
 }
 
-Lightmapper::Lightmapper() {
-}
+Lightmapper::Lightmapper() {}

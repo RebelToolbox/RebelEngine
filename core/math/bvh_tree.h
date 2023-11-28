@@ -55,14 +55,14 @@
 
 // never do these checks in release
 #if defined(TOOLS_ENABLED) && defined(DEBUG_ENABLED)
-//#define BVH_VERBOSE
-//#define BVH_VERBOSE_TREE
-//#define BVH_VERBOSE_PAIRING
-//#define BVH_VERBOSE_MOVES
+// #define BVH_VERBOSE
+// #define BVH_VERBOSE_TREE
+// #define BVH_VERBOSE_PAIRING
+// #define BVH_VERBOSE_MOVES
 
-//#define BVH_VERBOSE_FRAME
-//#define BVH_CHECKS
-//#define BVH_INTEGRITY_CHECKS
+// #define BVH_VERBOSE_FRAME
+// #define BVH_CHECKS
+// #define BVH_INTEGRITY_CHECKS
 #endif
 
 // debug only assert
@@ -92,18 +92,39 @@ struct BVHCommon {
 // a plus one based ID for clients that expect 0 to be invalid.
 struct BVHHandle {
     // conversion operator
-    operator uint32_t() const { return _data; }
-    void set(uint32_t p_value) { _data = p_value; }
+    operator uint32_t() const {
+        return _data;
+    }
+
+    void set(uint32_t p_value) {
+        _data = p_value;
+    }
 
     uint32_t _data;
 
-    void set_invalid() { _data = BVHCommon::INVALID; }
-    bool is_invalid() const { return _data == BVHCommon::INVALID; }
-    uint32_t id() const { return _data; }
-    void set_id(uint32_t p_id) { _data = p_id; }
+    void set_invalid() {
+        _data = BVHCommon::INVALID;
+    }
 
-    bool operator==(const BVHHandle &p_h) const { return _data == p_h._data; }
-    bool operator!=(const BVHHandle &p_h) const { return (*this == p_h) == false; }
+    bool is_invalid() const {
+        return _data == BVHCommon::INVALID;
+    }
+
+    uint32_t id() const {
+        return _data;
+    }
+
+    void set_id(uint32_t p_id) {
+        _data = p_id;
+    }
+
+    bool operator==(const BVHHandle& p_h) const {
+        return _data == p_h._data;
+    }
+
+    bool operator!=(const BVHHandle& p_h) const {
+        return (*this == p_h) == false;
+    }
 };
 
 // helper class to make iterative versions of recursive functions
@@ -116,18 +137,21 @@ public:
 
     int32_t depth = 1;
     int32_t threshold = ALLOCA_STACK_SIZE - 2;
-    T *stack;
-    //only used in rare occasions when you run out of alloca memory
-    // because tree is too unbalanced.
+    T* stack;
+    // only used in rare occasions when you run out of alloca memory
+    //  because tree is too unbalanced.
     LocalVector<T> aux_stack;
-    int32_t get_alloca_stacksize() const { return ALLOCA_STACK_SIZE * sizeof(T); }
 
-    T *get_first() const {
+    int32_t get_alloca_stacksize() const {
+        return ALLOCA_STACK_SIZE * sizeof(T);
+    }
+
+    T* get_first() const {
         return &stack[0];
     }
 
     // pop the last member of the stack, or return false
-    bool pop(T &r_value) {
+    bool pop(T& r_value) {
         if (!depth) {
             return false;
         }
@@ -138,7 +162,7 @@ public:
     }
 
     // request new addition to stack
-    T *request() {
+    T* request() {
         if (depth > threshold) {
             if (aux_stack.empty()) {
                 aux_stack.resize(ALLOCA_STACK_SIZE * 2);
@@ -153,7 +177,13 @@ public:
     }
 };
 
-template <class T, int MAX_CHILDREN, int MAX_ITEMS, bool USE_PAIRS = false, class BOUNDS = AABB, class POINT = Vector3>
+template <
+    class T,
+    int MAX_CHILDREN,
+    int MAX_ITEMS,
+    bool USE_PAIRS = false,
+    class BOUNDS = AABB,
+    class POINT = Vector3>
 class BVH_Tree {
     friend class BVH;
 
@@ -173,13 +203,14 @@ public:
 
         // In many cases you may want to change this default in the client code,
         // or expose this value to the user.
-        // This default may make sense for a typically scaled 3d game, but maybe not for 2d on a pixel scale.
+        // This default may make sense for a typically scaled 3d game, but maybe
+        // not for 2d on a pixel scale.
         params_set_pairing_expansion(0.1);
     }
 
 private:
     bool node_add_child(uint32_t p_node_id, uint32_t p_child_node_id) {
-        TNode &tnode = _nodes[p_node_id];
+        TNode& tnode = _nodes[p_node_id];
         if (tnode.is_full_of_children()) {
             return false;
         }
@@ -188,26 +219,35 @@ private:
         tnode.num_children += 1;
 
         // back link in the child to the parent
-        TNode &tnode_child = _nodes[p_child_node_id];
+        TNode& tnode_child = _nodes[p_child_node_id];
         tnode_child.parent_id = p_node_id;
 
         return true;
     }
 
-    void node_replace_child(uint32_t p_parent_id, uint32_t p_old_child_id, uint32_t p_new_child_id) {
-        TNode &parent = _nodes[p_parent_id];
+    void node_replace_child(
+        uint32_t p_parent_id,
+        uint32_t p_old_child_id,
+        uint32_t p_new_child_id
+    ) {
+        TNode& parent = _nodes[p_parent_id];
         BVH_ASSERT(!parent.is_leaf());
 
         int child_num = parent.find_child(p_old_child_id);
         BVH_ASSERT(child_num != BVHCommon::INVALID);
         parent.children[child_num] = p_new_child_id;
 
-        TNode &new_child = _nodes[p_new_child_id];
+        TNode& new_child = _nodes[p_new_child_id];
         new_child.parent_id = p_parent_id;
     }
 
-    void node_remove_child(uint32_t p_parent_id, uint32_t p_child_id, uint32_t p_tree_id, bool p_prevent_sibling = false) {
-        TNode &parent = _nodes[p_parent_id];
+    void node_remove_child(
+        uint32_t p_parent_id,
+        uint32_t p_child_id,
+        uint32_t p_tree_id,
+        bool p_prevent_sibling = false
+    ) {
+        TNode& parent = _nodes[p_parent_id];
         BVH_ASSERT(!parent.is_leaf());
 
         int child_num = parent.find_child(p_child_id);
@@ -220,21 +260,22 @@ private:
         uint32_t sibling_id; // always a node id, as tnode is never a leaf
         bool sibling_present = false;
 
-        // if there are more children, or this is the root node, don't try and delete
+        // if there are more children, or this is the root node, don't try and
+        // delete
         if (parent.num_children > 1) {
             return;
         }
 
         // if there is 1 sibling, it can be moved to be a child of the
         if (parent.num_children == 1) {
-            // else there is now a redundant node with one child, which can be removed
+            // else there is now a redundant node with one child, which can be
+            // removed
             sibling_id = parent.children[0];
             sibling_present = true;
         }
 
-        // now there may be no children in this node .. in which case it can be deleted
-        // remove node if empty
-        // remove link from parent
+        // now there may be no children in this node .. in which case it can be
+        // deleted remove node if empty remove link from parent
         uint32_t grandparent_id = parent.parent_id;
 
         // special case for root node
@@ -263,7 +304,7 @@ private:
     // A node can either be a node, or a node AND a leaf combo.
     // Both must be deleted to prevent a leak.
     void node_free_node_and_leaf(uint32_t p_node_id) {
-        TNode &node = _nodes[p_node_id];
+        TNode& node = _nodes[p_node_id];
         if (node.is_leaf()) {
             int leaf_id = node.get_leaf_id();
             _leaves.free(leaf_id);
@@ -274,7 +315,7 @@ private:
 
     void change_root_node(uint32_t p_new_root_id, uint32_t p_tree_id) {
         _root_node_id[p_tree_id] = p_new_root_id;
-        TNode &root = _nodes[p_new_root_id];
+        TNode& root = _nodes[p_new_root_id];
 
         // mark no parent
         root.parent_id = BVHCommon::INVALID;
@@ -282,20 +323,25 @@ private:
 
     void node_make_leaf(uint32_t p_node_id) {
         uint32_t child_leaf_id;
-        TLeaf *child_leaf = _leaves.request(child_leaf_id);
+        TLeaf* child_leaf = _leaves.request(child_leaf_id);
         child_leaf->clear();
 
         // zero is reserved at startup, to prevent this id being used
-        // (as they are stored as negative values in the node, and zero is already taken)
+        // (as they are stored as negative values in the node, and zero is
+        // already taken)
         BVH_ASSERT(child_leaf_id != 0);
 
-        TNode &node = _nodes[p_node_id];
+        TNode& node = _nodes[p_node_id];
         node.neg_leaf_id = -(int)child_leaf_id;
     }
 
-    void node_remove_item(uint32_t p_ref_id, uint32_t p_tree_id, BVHABB_CLASS *r_old_aabb = nullptr) {
+    void node_remove_item(
+        uint32_t p_ref_id,
+        uint32_t p_tree_id,
+        BVHABB_CLASS* r_old_aabb = nullptr
+    ) {
         // get the reference
-        ItemRef &ref = _refs[p_ref_id];
+        ItemRef& ref = _refs[p_ref_id];
         uint32_t owner_node_id = ref.tnode_id;
 
         // debug draw special
@@ -304,14 +350,14 @@ private:
             return;
         }
 
-        TNode &tnode = _nodes[owner_node_id];
+        TNode& tnode = _nodes[owner_node_id];
         CRASH_COND(!tnode.is_leaf());
 
-        TLeaf &leaf = _node_get_leaf(tnode);
+        TLeaf& leaf = _node_get_leaf(tnode);
 
-        // if the aabb is not determining the corner size, then there is no need to refit!
-        // (optimization, as merging AABBs takes a lot of time)
-        const BVHABB_CLASS &old_aabb = leaf.get_aabb(ref.item_id);
+        // if the aabb is not determining the corner size, then there is no need
+        // to refit! (optimization, as merging AABBs takes a lot of time)
+        const BVHABB_CLASS& old_aabb = leaf.get_aabb(ref.item_id);
 
         // shrink a little to prevent using corner aabbs
         // in order to miss the corners first we shrink by node_expansion
@@ -335,16 +381,18 @@ private:
         leaf.remove_item_unordered(ref.item_id);
 
         if (leaf.num_items) {
-            // the swapped item has to have its reference changed to, to point to the new item id
+            // the swapped item has to have its reference changed to, to point
+            // to the new item id
             uint32_t swapped_ref_id = leaf.get_item_ref_id(ref.item_id);
 
-            ItemRef &swapped_ref = _refs[swapped_ref_id];
+            ItemRef& swapped_ref = _refs[swapped_ref_id];
 
             swapped_ref.item_id = ref.item_id;
 
             // only have to refit if it is an edge item
             // This is a VERY EXPENSIVE STEP
-            // we defer the refit updates until the update function is called once per frame
+            // we defer the refit updates until the update function is called
+            // once per frame
             if (refit) {
                 leaf.set_dirty(true);
             }
@@ -352,8 +400,8 @@ private:
             // remove node if empty
             // remove link from parent
             if (tnode.parent_id != BVHCommon::INVALID) {
-                // DANGER .. this can potentially end up with root node with 1 child ...
-                // we don't want this and must check for it
+                // DANGER .. this can potentially end up with root node with 1
+                // child ... we don't want this and must check for it
 
                 uint32_t parent_id = tnode.parent_id;
 
@@ -371,15 +419,19 @@ private:
         ref.item_id = BVHCommon::INVALID; // unset
     }
 
-    // returns true if needs refit of PARENT tree only, the node itself AABB is calculated
-    // within this routine
-    bool _node_add_item(uint32_t p_node_id, uint32_t p_ref_id, const BVHABB_CLASS &p_aabb) {
-        ItemRef &ref = _refs[p_ref_id];
+    // returns true if needs refit of PARENT tree only, the node itself AABB is
+    // calculated within this routine
+    bool _node_add_item(
+        uint32_t p_node_id,
+        uint32_t p_ref_id,
+        const BVHABB_CLASS& p_aabb
+    ) {
+        ItemRef& ref = _refs[p_ref_id];
         ref.tnode_id = p_node_id;
 
-        TNode &node = _nodes[p_node_id];
+        TNode& node = _nodes[p_node_id];
         BVH_ASSERT(node.is_leaf());
-        TLeaf &leaf = _node_get_leaf(node);
+        TLeaf& leaf = _node_get_leaf(node);
 
         // optimization - we only need to do a refit
         // if the added item is changing the AABB of the node.
@@ -415,9 +467,12 @@ private:
         return needs_refit;
     }
 
-    uint32_t _node_create_another_child(uint32_t p_node_id, const BVHABB_CLASS &p_aabb) {
+    uint32_t _node_create_another_child(
+        uint32_t p_node_id,
+        const BVHABB_CLASS& p_aabb
+    ) {
         uint32_t child_node_id;
-        TNode *child_node = _nodes.request(child_node_id);
+        TNode* child_node = _nodes.request(child_node_id);
         child_node->clear();
 
         // may not be necessary

@@ -42,20 +42,33 @@
  * @class HashMap
  * @author Juan Linietsky <reduzio@gmail.com>
  *
- * Implementation of a standard Hashing HashMap, for quick lookups of Data associated with a Key.
- * The implementation provides hashers for the default types, if you need a special kind of hasher, provide
- * your own.
- * @param TKey  Key, search is based on it, needs to be hasheable. It is unique in this container.
+ * Implementation of a standard Hashing HashMap, for quick lookups of Data
+ * associated with a Key. The implementation provides hashers for the default
+ * types, if you need a special kind of hasher, provide your own.
+ * @param TKey  Key, search is based on it, needs to be hasheable. It is unique
+ * in this container.
  * @param TData Data, data associated with the key
- * @param Hasher Hasher object, needs to provide a valid static hash function for TKey
- * @param Comparator comparator object, needs to be able to safely compare two TKey values. It needs to ensure that x == x for any items inserted in the map. Bear in mind that nan != nan when implementing an equality check.
- * @param MIN_HASH_TABLE_POWER Miminum size of the hash table, as a power of two. You rarely need to change this parameter.
- * @param RELATIONSHIP Relationship at which the hash table is resized. if amount of elements is RELATIONSHIP
- * times bigger than the hash table, table is resized to solve this condition. if RELATIONSHIP is zero, table is always MIN_HASH_TABLE_POWER.
+ * @param Hasher Hasher object, needs to provide a valid static hash function
+ * for TKey
+ * @param Comparator comparator object, needs to be able to safely compare two
+ * TKey values. It needs to ensure that x == x for any items inserted in the
+ * map. Bear in mind that nan != nan when implementing an equality check.
+ * @param MIN_HASH_TABLE_POWER Miminum size of the hash table, as a power of
+ * two. You rarely need to change this parameter.
+ * @param RELATIONSHIP Relationship at which the hash table is resized. if
+ * amount of elements is RELATIONSHIP times bigger than the hash table, table is
+ * resized to solve this condition. if RELATIONSHIP is zero, table is always
+ * MIN_HASH_TABLE_POWER.
  *
  */
 
-template <class TKey, class TData, class Hasher = HashMapHasherDefault, class Comparator = HashMapComparatorDefault<TKey>, uint8_t MIN_HASH_TABLE_POWER = 3, uint8_t RELATIONSHIP = 8>
+template <
+    class TKey,
+    class TData,
+    class Hasher = HashMapHasherDefault,
+    class Comparator = HashMapComparatorDefault<TKey>,
+    uint8_t MIN_HASH_TABLE_POWER = 3,
+    uint8_t RELATIONSHIP = 8>
 class HashMap {
 public:
     struct Pair {
@@ -63,10 +76,10 @@ public:
         TData data;
 
         Pair() {}
-        Pair(const TKey &p_key, const TData &p_data) :
-                key(p_key),
-                data(p_data) {
-        }
+
+        Pair(const TKey& p_key, const TData& p_data) :
+            key(p_key),
+            data(p_data) {}
     };
 
     struct Element {
@@ -74,33 +87,37 @@ public:
         friend class HashMap;
 
         uint32_t hash;
-        Element *next;
-        Element() { next = nullptr; }
+        Element* next;
+
+        Element() {
+            next = nullptr;
+        }
+
         Pair pair;
 
     public:
-        const TKey &key() const {
+        const TKey& key() const {
             return pair.key;
         }
 
-        TData &value() {
+        TData& value() {
             return pair.data;
         }
 
-        const TData &value() const {
+        const TData& value() const {
             return pair.value();
         }
     };
 
 private:
-    Element **hash_table;
+    Element** hash_table;
     uint8_t hash_table_power;
     uint32_t elements;
 
     void make_hash_table() {
         ERR_FAIL_COND(hash_table);
 
-        hash_table = memnew_arr(Element *, (1 << MIN_HASH_TABLE_POWER));
+        hash_table = memnew_arr(Element*, (1 << MIN_HASH_TABLE_POWER));
 
         hash_table_power = MIN_HASH_TABLE_POWER;
         elements = 0;
@@ -110,7 +127,10 @@ private:
     }
 
     void erase_hash_table() {
-        ERR_FAIL_COND_MSG(elements, "Cannot erase hash table if there are still elements inside.");
+        ERR_FAIL_COND_MSG(
+            elements,
+            "Cannot erase hash table if there are still elements inside."
+        );
 
         memdelete_arr(hash_table);
         hash_table = nullptr;
@@ -125,7 +145,8 @@ private:
             /* rehash up */
             new_hash_table_power = hash_table_power + 1;
 
-            while ((int)elements > ((1 << new_hash_table_power) * RELATIONSHIP)) {
+            while ((int)elements > ((1 << new_hash_table_power) * RELATIONSHIP)
+            ) {
                 new_hash_table_power++;
             }
 
@@ -133,7 +154,8 @@ private:
             /* rehash down */
             new_hash_table_power = hash_table_power - 1;
 
-            while ((int)elements < ((1 << (new_hash_table_power - 1)) * RELATIONSHIP)) {
+            while ((int)elements
+                   < ((1 << (new_hash_table_power - 1)) * RELATIONSHIP)) {
                 new_hash_table_power--;
             }
 
@@ -146,7 +168,8 @@ private:
             return;
         }
 
-        Element **new_hash_table = memnew_arr(Element *, ((uint64_t)1 << new_hash_table_power));
+        Element** new_hash_table =
+            memnew_arr(Element*, ((uint64_t)1 << new_hash_table_power));
         ERR_FAIL_COND_MSG(!new_hash_table, "Out of memory.");
 
         for (int i = 0; i < (1 << new_hash_table_power); i++) {
@@ -156,7 +179,7 @@ private:
         if (hash_table) {
             for (int i = 0; i < (1 << hash_table_power); i++) {
                 while (hash_table[i]) {
-                    Element *se = hash_table[i];
+                    Element* se = hash_table[i];
                     hash_table[i] = se->next;
                     int new_pos = se->hash & ((1 << new_hash_table_power) - 1);
                     se->next = new_hash_table[new_pos];
@@ -171,14 +194,15 @@ private:
     }
 
     /* I want to have only one function.. */
-    _FORCE_INLINE_ const Element *get_element(const TKey &p_key) const {
+    _FORCE_INLINE_ const Element* get_element(const TKey& p_key) const {
         uint32_t hash = Hasher::hash(p_key);
         uint32_t index = hash & ((1 << hash_table_power) - 1);
 
-        Element *e = hash_table[index];
+        Element* e = hash_table[index];
 
         while (e) {
-            /* checking hash first avoids comparing key, which may take longer */
+            /* checking hash first avoids comparing key, which may take longer
+             */
             if (e->hash == hash && Comparator::compare(e->pair.key, p_key)) {
                 /* the pair exists in this hashtable, so just update data */
                 return e;
@@ -190,9 +214,9 @@ private:
         return nullptr;
     }
 
-    Element *create_element(const TKey &p_key) {
+    Element* create_element(const TKey& p_key) {
         /* if element doesn't exist, create it */
-        Element *e = memnew(Element);
+        Element* e = memnew(Element);
         ERR_FAIL_COND_V_MSG(!e, nullptr, "Out of memory.");
         uint32_t hash = Hasher::hash(p_key);
         uint32_t index = hash & ((1 << hash_table_power) - 1);
@@ -207,7 +231,7 @@ private:
         return e;
     }
 
-    void copy_from(const HashMap &p_t) {
+    void copy_from(const HashMap& p_t) {
         if (&p_t == this) {
             return; /* much less bother with that */
         }
@@ -218,17 +242,17 @@ private:
             return; /* not copying from empty table */
         }
 
-        hash_table = memnew_arr(Element *, (uint64_t)1 << p_t.hash_table_power);
+        hash_table = memnew_arr(Element*, (uint64_t)1 << p_t.hash_table_power);
         hash_table_power = p_t.hash_table_power;
         elements = p_t.elements;
 
         for (int i = 0; i < (1 << p_t.hash_table_power); i++) {
             hash_table[i] = nullptr;
 
-            const Element *e = p_t.hash_table[i];
+            const Element* e = p_t.hash_table[i];
 
             while (e) {
-                Element *le = memnew(Element); /* local element */
+                Element* le = memnew(Element); /* local element */
 
                 *le = *e; /* copy data */
 
@@ -242,19 +266,20 @@ private:
     }
 
 public:
-    Element *set(const TKey &p_key, const TData &p_data) {
+    Element* set(const TKey& p_key, const TData& p_data) {
         return set(Pair(p_key, p_data));
     }
 
-    Element *set(const Pair &p_pair) {
-        Element *e = nullptr;
+    Element* set(const Pair& p_pair) {
+        Element* e = nullptr;
         if (!hash_table) {
             make_hash_table(); // if no table, make one
         } else {
-            e = const_cast<Element *>(get_element(p_pair.key));
+            e = const_cast<Element*>(get_element(p_pair.key));
         }
 
-        /* if we made it up to here, the pair doesn't exist, create and assign */
+        /* if we made it up to here, the pair doesn't exist, create and assign
+         */
 
         if (!e) {
             e = create_element(p_pair.key);
@@ -268,24 +293,24 @@ public:
         return e;
     }
 
-    bool has(const TKey &p_key) const {
+    bool has(const TKey& p_key) const {
         return getptr(p_key) != nullptr;
     }
 
     /**
      * Get a key from data, return a const reference.
-     * WARNING: this doesn't check errors, use either getptr and check NULL, or check
-     * first with has(key)
+     * WARNING: this doesn't check errors, use either getptr and check NULL, or
+     * check first with has(key)
      */
 
-    const TData &get(const TKey &p_key) const {
-        const TData *res = getptr(p_key);
+    const TData& get(const TKey& p_key) const {
+        const TData* res = getptr(p_key);
         CRASH_COND_MSG(!res, "Map key not found.");
         return *res;
     }
 
-    TData &get(const TKey &p_key) {
-        TData *res = getptr(p_key);
+    TData& get(const TKey& p_key) {
+        TData* res = getptr(p_key);
         CRASH_COND_MSG(!res, "Map key not found.");
         return *res;
     }
@@ -295,12 +320,12 @@ public:
      * This is mainly used for speed purposes.
      */
 
-    _FORCE_INLINE_ TData *getptr(const TKey &p_key) {
+    _FORCE_INLINE_ TData* getptr(const TKey& p_key) {
         if (unlikely(!hash_table)) {
             return nullptr;
         }
 
-        Element *e = const_cast<Element *>(get_element(p_key));
+        Element* e = const_cast<Element*>(get_element(p_key));
 
         if (e) {
             return &e->pair.data;
@@ -309,12 +334,12 @@ public:
         return nullptr;
     }
 
-    _FORCE_INLINE_ const TData *getptr(const TKey &p_key) const {
+    _FORCE_INLINE_ const TData* getptr(const TKey& p_key) const {
         if (unlikely(!hash_table)) {
             return nullptr;
         }
 
-        const Element *e = const_cast<Element *>(get_element(p_key));
+        const Element* e = const_cast<Element*>(get_element(p_key));
 
         if (e) {
             return &e->pair.data;
@@ -325,11 +350,15 @@ public:
 
     /**
      * Same as get, except it can return NULL when item was not found.
-     * This version is custom, will take a hash and a custom key (that should support operator==()
+     * This version is custom, will take a hash and a custom key (that should
+     * support operator==()
      */
 
     template <class C>
-    _FORCE_INLINE_ TData *custom_getptr(C p_custom_key, uint32_t p_custom_hash) {
+    _FORCE_INLINE_ TData* custom_getptr(
+        C p_custom_key,
+        uint32_t p_custom_hash
+    ) {
         if (unlikely(!hash_table)) {
             return nullptr;
         }
@@ -337,11 +366,13 @@ public:
         uint32_t hash = p_custom_hash;
         uint32_t index = hash & ((1 << hash_table_power) - 1);
 
-        Element *e = hash_table[index];
+        Element* e = hash_table[index];
 
         while (e) {
-            /* checking hash first avoids comparing key, which may take longer */
-            if (e->hash == hash && Comparator::compare(e->pair.key, p_custom_key)) {
+            /* checking hash first avoids comparing key, which may take longer
+             */
+            if (e->hash == hash
+                && Comparator::compare(e->pair.key, p_custom_key)) {
                 /* the pair exists in this hashtable, so just update data */
                 return &e->pair.data;
             }
@@ -353,7 +384,10 @@ public:
     }
 
     template <class C>
-    _FORCE_INLINE_ const TData *custom_getptr(C p_custom_key, uint32_t p_custom_hash) const {
+    _FORCE_INLINE_ const TData* custom_getptr(
+        C p_custom_key,
+        uint32_t p_custom_hash
+    ) const {
         if (unlikely(!hash_table)) {
             return NULL;
         }
@@ -361,11 +395,13 @@ public:
         uint32_t hash = p_custom_hash;
         uint32_t index = hash & ((1 << hash_table_power) - 1);
 
-        const Element *e = hash_table[index];
+        const Element* e = hash_table[index];
 
         while (e) {
-            /* checking hash first avoids comparing key, which may take longer */
-            if (e->hash == hash && Comparator::compare(e->pair.key, p_custom_key)) {
+            /* checking hash first avoids comparing key, which may take longer
+             */
+            if (e->hash == hash
+                && Comparator::compare(e->pair.key, p_custom_key)) {
                 /* the pair exists in this hashtable, so just update data */
                 return &e->pair.data;
             }
@@ -380,7 +416,7 @@ public:
      * Erase an item, return true if erasing was successful
      */
 
-    bool erase(const TKey &p_key) {
+    bool erase(const TKey& p_key) {
         if (unlikely(!hash_table)) {
             return false;
         }
@@ -388,15 +424,16 @@ public:
         uint32_t hash = Hasher::hash(p_key);
         uint32_t index = hash & ((1 << hash_table_power) - 1);
 
-        Element *e = hash_table[index];
-        Element *p = nullptr;
+        Element* e = hash_table[index];
+        Element* p = nullptr;
         while (e) {
-            /* checking hash first avoids comparing key, which may take longer */
+            /* checking hash first avoids comparing key, which may take longer
+             */
             if (e->hash == hash && Comparator::compare(e->pair.key, p_key)) {
                 if (p) {
                     p->next = e->next;
                 } else {
-                    //begin of list
+                    // begin of list
                     hash_table[index] = e->next;
                 }
 
@@ -418,17 +455,18 @@ public:
         return false;
     }
 
-    inline const TData &operator[](const TKey &p_key) const { //constref
+    inline const TData& operator[](const TKey& p_key) const { // constref
 
         return get(p_key);
     }
-    inline TData &operator[](const TKey &p_key) { //assignment
 
-        Element *e = nullptr;
+    inline TData& operator[](const TKey& p_key) { // assignment
+
+        Element* e = nullptr;
         if (!hash_table) {
             make_hash_table(); // if no table, make one
         } else {
-            e = const_cast<Element *>(get_element(p_key));
+            e = const_cast<Element*>(get_element(p_key));
         }
 
         /* if we made it up to here, the pair doesn't exist, create */
@@ -444,7 +482,8 @@ public:
     /**
      * Get the next key to p_key, and the first key if p_key is null.
      * Returns a pointer to the next key if found, NULL otherwise.
-     * Adding/Removing elements while iterating will, of course, have unexpected results, don't do it.
+     * Adding/Removing elements while iterating will, of course, have unexpected
+     * results, don't do it.
      *
      * Example:
      *
@@ -456,7 +495,7 @@ public:
      * 	}
      *
      */
-    const TKey *next(const TKey *p_key) const {
+    const TKey* next(const TKey* p_key) const {
         if (unlikely(!hash_table)) {
             return nullptr;
         }
@@ -471,7 +510,7 @@ public:
 
         } else { /* get the next key */
 
-            const Element *e = get_element(*p_key);
+            const Element* e = get_element(*p_key);
             ERR_FAIL_COND_V_MSG(!e, nullptr, "Invalid key supplied.");
             if (e->next) {
                 /* if there is a "next" in the list, return that */
@@ -506,7 +545,7 @@ public:
         if (hash_table) {
             for (int i = 0; i < (1 << hash_table_power); i++) {
                 while (hash_table[i]) {
-                    Element *e = hash_table[i];
+                    Element* e = hash_table[i];
                     hash_table[i] = e->next;
                     memdelete(e);
                 }
@@ -520,7 +559,7 @@ public:
         elements = 0;
     }
 
-    void operator=(const HashMap &p_table) {
+    void operator=(const HashMap& p_table) {
         copy_from(p_table);
     }
 
@@ -530,12 +569,12 @@ public:
         hash_table_power = 0;
     }
 
-    void get_key_value_ptr_array(const Pair **p_pairs) const {
+    void get_key_value_ptr_array(const Pair** p_pairs) const {
         if (unlikely(!hash_table)) {
             return;
         }
         for (int i = 0; i < (1 << hash_table_power); i++) {
-            Element *e = hash_table[i];
+            Element* e = hash_table[i];
             while (e) {
                 *p_pairs = &e->pair;
                 p_pairs++;
@@ -544,12 +583,12 @@ public:
         }
     }
 
-    void get_key_list(List<TKey> *p_keys) const {
+    void get_key_list(List<TKey>* p_keys) const {
         if (unlikely(!hash_table)) {
             return;
         }
         for (int i = 0; i < (1 << hash_table_power); i++) {
-            Element *e = hash_table[i];
+            Element* e = hash_table[i];
             while (e) {
                 p_keys->push_back(e->pair.key);
                 e = e->next;
@@ -557,7 +596,7 @@ public:
         }
     }
 
-    HashMap(const HashMap &p_table) {
+    HashMap(const HashMap& p_table) {
         hash_table = nullptr;
         elements = 0;
         hash_table_power = 0;

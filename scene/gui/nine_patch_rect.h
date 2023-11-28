@@ -56,13 +56,13 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_texture(const Ref<Texture> &p_tex);
+    void set_texture(const Ref<Texture>& p_tex);
     Ref<Texture> get_texture() const;
 
     void set_patch_margin(Margin p_margin, int p_size);
     int get_patch_margin(Margin p_margin) const;
 
-    void set_region_rect(const Rect2 &p_region_rect);
+    void set_region_rect(const Rect2& p_region_rect);
     Rect2 get_region_rect() const;
 
     void set_draw_center(bool p_enabled);

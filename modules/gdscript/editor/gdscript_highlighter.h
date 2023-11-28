@@ -60,10 +60,12 @@ private:
     Color type_color;
 
 public:
-    static SyntaxHighlighter *create();
+    static SyntaxHighlighter* create();
 
     virtual void _update_cache();
-    virtual Map<int, TextEdit::HighlighterInfo> _get_line_syntax_highlighting(int p_line);
+    virtual Map<int, TextEdit::HighlighterInfo> _get_line_syntax_highlighting(
+        int p_line
+    );
 
     virtual String get_name() const;
     virtual List<String> get_supported_languages();

@@ -37,5 +37,4 @@ void register_opensimplex_types() {
     ClassDB::register_class<NoiseTexture>();
 }
 
-void unregister_opensimplex_types() {
-}
+void unregister_opensimplex_types() {}

@@ -34,7 +34,7 @@
 #include "scene/gui/box_container.h"
 #include "spatial_editor_plugin.h"
 
-void MultiMeshEditor::_node_removed(Node *p_node) {
+void MultiMeshEditor::_node_removed(Node* p_node) {
     if (p_node == node) {
         node = nullptr;
         hide();
@@ -52,19 +52,23 @@ void MultiMeshEditor::_populate() {
         Ref<MultiMesh> multimesh;
         multimesh = node->get_multimesh();
         if (multimesh.is_null()) {
-            err_dialog->set_text(TTR("No mesh source specified (and no MultiMesh set in node)."));
+            err_dialog->set_text(
+                TTR("No mesh source specified (and no MultiMesh set in node).")
+            );
             err_dialog->popup_centered_minsize();
             return;
         }
         if (multimesh->get_mesh().is_null()) {
-            err_dialog->set_text(TTR("No mesh source specified (and MultiMesh contains no Mesh)."));
+            err_dialog->set_text(TTR(
+                "No mesh source specified (and MultiMesh contains no Mesh)."
+            ));
             err_dialog->popup_centered_minsize();
             return;
         }
 
         mesh = multimesh->get_mesh();
     } else {
-        Node *ms_node = node->get_node(mesh_source->get_text());
+        Node* ms_node = node->get_node(mesh_source->get_text());
 
         if (!ms_node) {
             err_dialog->set_text(TTR("Mesh source is invalid (invalid path)."));
@@ -72,10 +76,12 @@ void MultiMeshEditor::_populate() {
             return;
         }
 
-        MeshInstance *ms_instance = Object::cast_to<MeshInstance>(ms_node);
+        MeshInstance* ms_instance = Object::cast_to<MeshInstance>(ms_node);
 
         if (!ms_instance) {
-            err_dialog->set_text(TTR("Mesh source is invalid (not a MeshInstance)."));
+            err_dialog->set_text(
+                TTR("Mesh source is invalid (not a MeshInstance).")
+            );
             err_dialog->popup_centered_minsize();
             return;
         }
@@ -83,7 +89,9 @@ void MultiMeshEditor::_populate() {
         mesh = ms_instance->get_mesh();
 
         if (mesh.is_null()) {
-            err_dialog->set_text(TTR("Mesh source is invalid (contains no Mesh resource)."));
+            err_dialog->set_text(
+                TTR("Mesh source is invalid (contains no Mesh resource).")
+            );
             err_dialog->popup_centered_minsize();
             return;
         }
@@ -95,7 +103,7 @@ void MultiMeshEditor::_populate() {
         return;
     }
 
-    Node *ss_node = node->get_node(surface_source->get_text());
+    Node* ss_node = node->get_node(surface_source->get_text());
 
     if (!ss_node) {
         err_dialog->set_text(TTR("Surface source is invalid (invalid path)."));
@@ -103,7 +111,7 @@ void MultiMeshEditor::_populate() {
         return;
     }
 
-    GeometryInstance *ss_instance = Object::cast_to<MeshInstance>(ss_node);
+    GeometryInstance* ss_instance = Object::cast_to<MeshInstance>(ss_node);
 
     if (!ss_instance) {
         err_dialog->set_text(TTR("Surface source is invalid (no geometry)."));
@@ -111,9 +119,11 @@ void MultiMeshEditor::_populate() {
         return;
     }
 
-    Transform geom_xform = node->get_global_transform().affine_inverse() * ss_instance->get_global_transform();
+    Transform geom_xform = node->get_global_transform().affine_inverse()
+                         * ss_instance->get_global_transform();
 
-    PoolVector<Face3> geometry = ss_instance->get_faces(VisualInstance::FACES_SOLID);
+    PoolVector<Face3> geometry =
+        ss_instance->get_faces(VisualInstance::FACES_SOLID);
 
     if (geometry.size() == 0) {
         err_dialog->set_text(TTR("Surface source is invalid (no faces)."));
@@ -121,7 +131,7 @@ void MultiMeshEditor::_populate() {
         return;
     }
 
-    //make all faces local
+    // make all faces local
 
     int gc = geometry.size();
     PoolVector<Face3>::Write w = geometry.write();
@@ -180,14 +190,14 @@ void MultiMeshEditor::_populate() {
     for (int i = 0; i < instance_count; i++) {
         float areapos = Math::random(0.0f, area_accum);
 
-        Map<float, int>::Element *E = triangle_area_map.find_closest(areapos);
+        Map<float, int>::Element* E = triangle_area_map.find_closest(areapos);
         ERR_FAIL_COND(!E);
         int index = E->get();
         ERR_FAIL_INDEX(index, facecount);
 
         // ok FINALLY get face
         Face3 face = r[index];
-        //now compute some position inside the face...
+        // now compute some position inside the face...
 
         Vector3 pos = face.get_random_point_inside();
         Vector3 normal = face.get_plane().normal;
@@ -200,14 +210,26 @@ void MultiMeshEditor::_populate() {
 
         Basis post_xform;
 
-        post_xform.rotate(xform.basis.get_axis(1), -Math::random(-_rotate_random, _rotate_random) * Math_PI);
-        post_xform.rotate(xform.basis.get_axis(2), -Math::random(-_tilt_random, _tilt_random) * Math_PI);
-        post_xform.rotate(xform.basis.get_axis(0), -Math::random(-_tilt_random, _tilt_random) * Math_PI);
+        post_xform.rotate(
+            xform.basis.get_axis(1),
+            -Math::random(-_rotate_random, _rotate_random) * Math_PI
+        );
+        post_xform.rotate(
+            xform.basis.get_axis(2),
+            -Math::random(-_tilt_random, _tilt_random) * Math_PI
+        );
+        post_xform.rotate(
+            xform.basis.get_axis(0),
+            -Math::random(-_tilt_random, _tilt_random) * Math_PI
+        );
 
         xform.basis = post_xform * xform.basis;
-        //xform.basis.orthonormalize();
+        // xform.basis.orthonormalize();
 
-        xform.basis.scale(Vector3(1, 1, 1) * (_scale + Math::random(-_scale_random, _scale_random)));
+        xform.basis.scale(
+            Vector3(1, 1, 1)
+            * (_scale + Math::random(-_scale_random, _scale_random))
+        );
 
         multimesh->set_instance_transform(i, xform);
     }
@@ -215,7 +237,7 @@ void MultiMeshEditor::_populate() {
     node->set_multimesh(multimesh);
 }
 
-void MultiMeshEditor::_browsed(const NodePath &p_path) {
+void MultiMeshEditor::_browsed(const NodePath& p_path) {
     NodePath path = node->get_path_to(get_node(p_path));
 
     if (browsing_source) {
@@ -246,7 +268,7 @@ void MultiMeshEditor::_menu_option(int p_option) {
     }
 }
 
-void MultiMeshEditor::edit(MultiMeshInstance *p_multimesh) {
+void MultiMeshEditor::edit(MultiMeshInstance* p_multimesh) {
     node = p_multimesh;
 }
 
@@ -274,7 +296,10 @@ MultiMeshEditor::MultiMeshEditor() {
     SpatialEditor::get_singleton()->add_control_to_menu_panel(options);
 
     options->set_text("MultiMesh");
-    options->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon("MultiMeshInstance", "EditorIcons"));
+    options->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon(
+        "MultiMeshInstance",
+        "EditorIcons"
+    ));
 
     options->get_popup()->add_item(TTR("Populate Surface"));
     options->get_popup()->connect("id_pressed", this, "_menu_option");
@@ -283,16 +308,16 @@ MultiMeshEditor::MultiMeshEditor() {
     populate_dialog->set_title(TTR("Populate MultiMesh"));
     add_child(populate_dialog);
 
-    VBoxContainer *vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
     populate_dialog->add_child(vbc);
-    //populate_dialog->set_child_rect(vbc);
+    // populate_dialog->set_child_rect(vbc);
 
-    HBoxContainer *hbc = memnew(HBoxContainer);
+    HBoxContainer* hbc = memnew(HBoxContainer);
 
     surface_source = memnew(LineEdit);
     hbc->add_child(surface_source);
     surface_source->set_h_size_flags(SIZE_EXPAND_FILL);
-    Button *b = memnew(Button);
+    Button* b = memnew(Button);
     hbc->add_child(b);
     b->set_text("..");
     b->connect("pressed", this, "_browse", make_binds(false));
@@ -364,11 +389,11 @@ MultiMeshEditor::MultiMeshEditor() {
     add_child(err_dialog);
 }
 
-void MultiMeshEditorPlugin::edit(Object *p_object) {
+void MultiMeshEditorPlugin::edit(Object* p_object) {
     multimesh_editor->edit(Object::cast_to<MultiMeshInstance>(p_object));
 }
 
-bool MultiMeshEditorPlugin::handles(Object *p_object) const {
+bool MultiMeshEditorPlugin::handles(Object* p_object) const {
     return p_object->is_class("MultiMeshInstance");
 }
 
@@ -381,7 +406,7 @@ void MultiMeshEditorPlugin::make_visible(bool p_visible) {
     }
 }
 
-MultiMeshEditorPlugin::MultiMeshEditorPlugin(EditorNode *p_node) {
+MultiMeshEditorPlugin::MultiMeshEditorPlugin(EditorNode* p_node) {
     editor = p_node;
     multimesh_editor = memnew(MultiMeshEditor);
     editor->get_viewport()->add_child(multimesh_editor);
@@ -389,5 +414,4 @@ MultiMeshEditorPlugin::MultiMeshEditorPlugin(EditorNode *p_node) {
     multimesh_editor->options->hide();
 }
 
-MultiMeshEditorPlugin::~MultiMeshEditorPlugin() {
-}
+MultiMeshEditorPlugin::~MultiMeshEditorPlugin() {}

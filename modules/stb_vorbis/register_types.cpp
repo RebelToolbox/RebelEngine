@@ -48,5 +48,4 @@ void register_stb_vorbis_types() {
     ClassDB::register_class<AudioStreamOGGVorbis>();
 }
 
-void unregister_stb_vorbis_types() {
-}
+void unregister_stb_vorbis_types() {}

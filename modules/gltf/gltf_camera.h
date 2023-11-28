@@ -46,13 +46,36 @@ protected:
     static void _bind_methods();
 
 public:
-    bool get_perspective() const { return perspective; }
-    void set_perspective(bool p_val) { perspective = p_val; }
-    float get_fov_size() const { return fov_size; }
-    void set_fov_size(float p_val) { fov_size = p_val; }
-    float get_zfar() const { return zfar; }
-    void set_zfar(float p_val) { zfar = p_val; }
-    float get_znear() const { return znear; }
-    void set_znear(float p_val) { znear = p_val; }
+    bool get_perspective() const {
+        return perspective;
+    }
+
+    void set_perspective(bool p_val) {
+        perspective = p_val;
+    }
+
+    float get_fov_size() const {
+        return fov_size;
+    }
+
+    void set_fov_size(float p_val) {
+        fov_size = p_val;
+    }
+
+    float get_zfar() const {
+        return zfar;
+    }
+
+    void set_zfar(float p_val) {
+        zfar = p_val;
+    }
+
+    float get_znear() const {
+        return znear;
+    }
+
+    void set_znear(float p_val) {
+        znear = p_val;
+    }
 };
 #endif // GLTF_CAMERA_H

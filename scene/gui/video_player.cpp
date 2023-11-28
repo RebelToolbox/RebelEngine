@@ -42,12 +42,12 @@ int VideoPlayer::sp_get_channel_count() const {
     return playback->get_channels();
 }
 
-bool VideoPlayer::mix(AudioFrame *p_buffer, int p_frames) {
+bool VideoPlayer::mix(AudioFrame* p_buffer, int p_frames) {
     // Check the amount resampler can really handle.
     // If it cannot, wait "wait_resampler_phase_limit" times.
     // This mechanism contributes to smoother pause/unpause operation.
-    if (p_frames <= resampler.get_num_of_ready_frames() ||
-            wait_resampler_limit <= wait_resampler) {
+    if (p_frames <= resampler.get_num_of_ready_frames()
+        || wait_resampler_limit <= wait_resampler) {
         wait_resampler = 0;
         return resampler.mix(p_buffer, p_frames);
     }
@@ -56,15 +56,19 @@ bool VideoPlayer::mix(AudioFrame *p_buffer, int p_frames) {
 }
 
 // Called from main thread (eg VideoStreamPlaybackWebm::update)
-int VideoPlayer::_audio_mix_callback(void *p_udata, const float *p_data, int p_frames) {
+int VideoPlayer::_audio_mix_callback(
+    void* p_udata,
+    const float* p_data,
+    int p_frames
+) {
     ERR_FAIL_NULL_V(p_udata, 0);
     ERR_FAIL_NULL_V(p_data, 0);
 
-    VideoPlayer *vp = (VideoPlayer *)p_udata;
+    VideoPlayer* vp = (VideoPlayer*)p_udata;
 
     int todo = MIN(vp->resampler.get_writer_space(), p_frames);
 
-    float *wb = vp->resampler.get_write_buffer();
+    float* wb = vp->resampler.get_write_buffer();
     int c = vp->resampler.get_channel_count();
 
     for (int i = 0; i < todo * c; i++) {
@@ -75,9 +79,9 @@ int VideoPlayer::_audio_mix_callback(void *p_udata, const float *p_data, int p_f
     return todo;
 }
 
-void VideoPlayer::_mix_audios(void *p_self) {
+void VideoPlayer::_mix_audios(void* p_self) {
     ERR_FAIL_NULL(p_self);
-    reinterpret_cast<VideoPlayer *>(p_self)->_mix_audio();
+    reinterpret_cast<VideoPlayer*>(p_self)->_mix_audio();
 }
 
 // Called from audio thread
@@ -85,11 +89,12 @@ void VideoPlayer::_mix_audio() {
     if (!stream.is_valid()) {
         return;
     }
-    if (!playback.is_valid() || !playback->is_playing() || playback->is_paused()) {
+    if (!playback.is_valid() || !playback->is_playing()
+        || playback->is_paused()) {
         return;
     }
 
-    AudioFrame *buffer = mix_buffer.ptrw();
+    AudioFrame* buffer = mix_buffer.ptrw();
     int buffer_size = mix_buffer.size();
 
     // Resample
@@ -102,7 +107,8 @@ void VideoPlayer::_mix_audio() {
     int cc = AudioServer::get_singleton()->get_channel_count();
 
     if (cc == 1) {
-        AudioFrame *target = AudioServer::get_singleton()->thread_get_channel_mix_buffer(bus_index, 0);
+        AudioFrame* target = AudioServer::get_singleton()
+                                 ->thread_get_channel_mix_buffer(bus_index, 0);
         ERR_FAIL_COND(!target);
 
         for (int j = 0; j < buffer_size; j++) {
@@ -110,10 +116,11 @@ void VideoPlayer::_mix_audio() {
         }
 
     } else {
-        AudioFrame *targets[4];
+        AudioFrame* targets[4];
 
         for (int k = 0; k < cc; k++) {
-            targets[k] = AudioServer::get_singleton()->thread_get_channel_mix_buffer(bus_index, k);
+            targets[k] = AudioServer::get_singleton()
+                             ->thread_get_channel_mix_buffer(bus_index, k);
             ERR_FAIL_COND(!targets[k]);
         }
 
@@ -131,7 +138,8 @@ void VideoPlayer::_notification(int p_notification) {
         case NOTIFICATION_ENTER_TREE: {
             AudioServer::get_singleton()->add_callback(_mix_audios, this);
 
-            if (stream.is_valid() && autoplay && !Engine::get_singleton()->is_editor_hint()) {
+            if (stream.is_valid() && autoplay
+                && !Engine::get_singleton()->is_editor_hint()) {
                 play();
             }
 
@@ -143,22 +151,27 @@ void VideoPlayer::_notification(int p_notification) {
         } break;
 
         case NOTIFICATION_INTERNAL_PROCESS: {
-            bus_index = AudioServer::get_singleton()->thread_find_bus_index(bus);
+            bus_index =
+                AudioServer::get_singleton()->thread_find_bus_index(bus);
 
-            if (stream.is_null() || paused || playback.is_null() || !playback->is_playing()) {
+            if (stream.is_null() || paused || playback.is_null()
+                || !playback->is_playing()) {
                 return;
             }
 
-            double audio_time = USEC_TO_SEC(OS::get_singleton()->get_ticks_usec());
+            double audio_time =
+                USEC_TO_SEC(OS::get_singleton()->get_ticks_usec());
 
-            double delta = last_audio_time == 0 ? 0 : audio_time - last_audio_time;
+            double delta =
+                last_audio_time == 0 ? 0 : audio_time - last_audio_time;
             last_audio_time = audio_time;
 
             if (delta == 0) {
                 return;
             }
 
-            playback->update(delta); // playback->is_playing() returns false in the last video frame
+            playback->update(delta
+            ); // playback->is_playing() returns false in the last video frame
 
             if (!playback->is_playing()) {
                 emit_signal(SceneStringNames::get_singleton()->finished);
@@ -199,11 +212,12 @@ bool VideoPlayer::has_expand() const {
     return expand;
 }
 
-void VideoPlayer::set_stream(const Ref<VideoStream> &p_stream) {
+void VideoPlayer::set_stream(const Ref<VideoStream>& p_stream) {
     stop();
 
     AudioServer::get_singleton()->lock();
-    mix_buffer.resize(AudioServer::get_singleton()->thread_get_mix_buffer_size());
+    mix_buffer.resize(AudioServer::get_singleton()->thread_get_mix_buffer_size()
+    );
     stream = p_stream;
     if (stream.is_valid()) {
         stream->set_audio_track(audio_track);
@@ -222,7 +236,13 @@ void VideoPlayer::set_stream(const Ref<VideoStream> &p_stream) {
 
         AudioServer::get_singleton()->lock();
         if (channels > 0) {
-            resampler.setup(channels, playback->get_mix_rate(), AudioServer::get_singleton()->get_mix_rate(), buffering_ms, 0);
+            resampler.setup(
+                channels,
+                playback->get_mix_rate(),
+                AudioServer::get_singleton()->get_mix_rate(),
+                buffering_ms,
+                0
+            );
         } else {
             resampler.clear();
         }
@@ -375,8 +395,8 @@ bool VideoPlayer::has_autoplay() const {
     return autoplay;
 };
 
-void VideoPlayer::set_bus(const StringName &p_bus) {
-    //if audio is active, must lock this
+void VideoPlayer::set_bus(const StringName& p_bus) {
+    // if audio is active, must lock this
     AudioServer::get_singleton()->lock();
     bus = p_bus;
     AudioServer::get_singleton()->unlock();
@@ -391,10 +411,11 @@ StringName VideoPlayer::get_bus() const {
     return "Master";
 }
 
-void VideoPlayer::_validate_property(PropertyInfo &p_property) const {
+void VideoPlayer::_validate_property(PropertyInfo& p_property) const {
     if (p_property.name == "bus") {
         String options;
-        for (int i = 0; i < AudioServer::get_singleton()->get_bus_count(); i++) {
+        for (int i = 0; i < AudioServer::get_singleton()->get_bus_count();
+             i++) {
             if (i > 0) {
                 options += ",";
             }
@@ -407,7 +428,10 @@ void VideoPlayer::_validate_property(PropertyInfo &p_property) const {
 }
 
 void VideoPlayer::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_stream", "stream"), &VideoPlayer::set_stream);
+    ClassDB::bind_method(
+        D_METHOD("set_stream", "stream"),
+        &VideoPlayer::set_stream
+    );
     ClassDB::bind_method(D_METHOD("get_stream"), &VideoPlayer::get_stream);
 
     ClassDB::bind_method(D_METHOD("play"), &VideoPlayer::play);
@@ -415,51 +439,166 @@ void VideoPlayer::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("is_playing"), &VideoPlayer::is_playing);
 
-    ClassDB::bind_method(D_METHOD("set_paused", "paused"), &VideoPlayer::set_paused);
+    ClassDB::bind_method(
+        D_METHOD("set_paused", "paused"),
+        &VideoPlayer::set_paused
+    );
     ClassDB::bind_method(D_METHOD("is_paused"), &VideoPlayer::is_paused);
 
-    ClassDB::bind_method(D_METHOD("set_volume", "volume"), &VideoPlayer::set_volume);
+    ClassDB::bind_method(
+        D_METHOD("set_volume", "volume"),
+        &VideoPlayer::set_volume
+    );
     ClassDB::bind_method(D_METHOD("get_volume"), &VideoPlayer::get_volume);
 
-    ClassDB::bind_method(D_METHOD("set_volume_db", "db"), &VideoPlayer::set_volume_db);
-    ClassDB::bind_method(D_METHOD("get_volume_db"), &VideoPlayer::get_volume_db);
+    ClassDB::bind_method(
+        D_METHOD("set_volume_db", "db"),
+        &VideoPlayer::set_volume_db
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_volume_db"),
+        &VideoPlayer::get_volume_db
+    );
 
-    ClassDB::bind_method(D_METHOD("set_audio_track", "track"), &VideoPlayer::set_audio_track);
-    ClassDB::bind_method(D_METHOD("get_audio_track"), &VideoPlayer::get_audio_track);
+    ClassDB::bind_method(
+        D_METHOD("set_audio_track", "track"),
+        &VideoPlayer::set_audio_track
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_audio_track"),
+        &VideoPlayer::get_audio_track
+    );
 
-    ClassDB::bind_method(D_METHOD("get_stream_name"), &VideoPlayer::get_stream_name);
+    ClassDB::bind_method(
+        D_METHOD("get_stream_name"),
+        &VideoPlayer::get_stream_name
+    );
 
-    ClassDB::bind_method(D_METHOD("set_stream_position", "position"), &VideoPlayer::set_stream_position);
-    ClassDB::bind_method(D_METHOD("get_stream_position"), &VideoPlayer::get_stream_position);
+    ClassDB::bind_method(
+        D_METHOD("set_stream_position", "position"),
+        &VideoPlayer::set_stream_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_stream_position"),
+        &VideoPlayer::get_stream_position
+    );
 
-    ClassDB::bind_method(D_METHOD("set_autoplay", "enabled"), &VideoPlayer::set_autoplay);
+    ClassDB::bind_method(
+        D_METHOD("set_autoplay", "enabled"),
+        &VideoPlayer::set_autoplay
+    );
     ClassDB::bind_method(D_METHOD("has_autoplay"), &VideoPlayer::has_autoplay);
 
-    ClassDB::bind_method(D_METHOD("set_expand", "enable"), &VideoPlayer::set_expand);
+    ClassDB::bind_method(
+        D_METHOD("set_expand", "enable"),
+        &VideoPlayer::set_expand
+    );
     ClassDB::bind_method(D_METHOD("has_expand"), &VideoPlayer::has_expand);
 
-    ClassDB::bind_method(D_METHOD("set_buffering_msec", "msec"), &VideoPlayer::set_buffering_msec);
-    ClassDB::bind_method(D_METHOD("get_buffering_msec"), &VideoPlayer::get_buffering_msec);
+    ClassDB::bind_method(
+        D_METHOD("set_buffering_msec", "msec"),
+        &VideoPlayer::set_buffering_msec
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_buffering_msec"),
+        &VideoPlayer::get_buffering_msec
+    );
 
     ClassDB::bind_method(D_METHOD("set_bus", "bus"), &VideoPlayer::set_bus);
     ClassDB::bind_method(D_METHOD("get_bus"), &VideoPlayer::get_bus);
 
-    ClassDB::bind_method(D_METHOD("get_video_texture"), &VideoPlayer::get_video_texture);
+    ClassDB::bind_method(
+        D_METHOD("get_video_texture"),
+        &VideoPlayer::get_video_texture
+    );
 
     ADD_SIGNAL(MethodInfo("finished"));
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "audio_track", PROPERTY_HINT_RANGE, "0,128,1"), "set_audio_track", "get_audio_track");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "stream", PROPERTY_HINT_RESOURCE_TYPE, "VideoStream"), "set_stream", "get_stream");
-    //ADD_PROPERTY( PropertyInfo(Variant::BOOL, "stream/loop"), "set_loop", "has_loop") ;
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "volume_db", PROPERTY_HINT_RANGE, "-80,24,0.01"), "set_volume_db", "get_volume_db");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "volume", PROPERTY_HINT_EXP_RANGE, "0,15,0.01", 0), "set_volume", "get_volume");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "autoplay"), "set_autoplay", "has_autoplay");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "paused"), "set_paused", "is_paused");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "expand"), "set_expand", "has_expand");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "buffering_msec", PROPERTY_HINT_RANGE, "10,1000"), "set_buffering_msec", "get_buffering_msec");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "stream_position", PROPERTY_HINT_RANGE, "0,1280000,0.1", 0), "set_stream_position", "get_stream_position");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "audio_track",
+            PROPERTY_HINT_RANGE,
+            "0,128,1"
+        ),
+        "set_audio_track",
+        "get_audio_track"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "stream",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "VideoStream"
+        ),
+        "set_stream",
+        "get_stream"
+    );
+    // ADD_PROPERTY( PropertyInfo(Variant::BOOL, "stream/loop"), "set_loop",
+    // "has_loop") ;
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "volume_db",
+            PROPERTY_HINT_RANGE,
+            "-80,24,0.01"
+        ),
+        "set_volume_db",
+        "get_volume_db"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "volume",
+            PROPERTY_HINT_EXP_RANGE,
+            "0,15,0.01",
+            0
+        ),
+        "set_volume",
+        "get_volume"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "autoplay"),
+        "set_autoplay",
+        "has_autoplay"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "paused"),
+        "set_paused",
+        "is_paused"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "expand"),
+        "set_expand",
+        "has_expand"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "buffering_msec",
+            PROPERTY_HINT_RANGE,
+            "10,1000"
+        ),
+        "set_buffering_msec",
+        "get_buffering_msec"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "stream_position",
+            PROPERTY_HINT_RANGE,
+            "0,1280000,0.1",
+            0
+        ),
+        "set_stream_position",
+        "get_stream_position"
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "bus", PROPERTY_HINT_ENUM, ""), "set_bus", "get_bus");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "bus", PROPERTY_HINT_ENUM, ""),
+        "set_bus",
+        "get_bus"
+    );
 }
 
 VideoPlayer::VideoPlayer() {
@@ -485,5 +624,6 @@ VideoPlayer::VideoPlayer() {
 VideoPlayer::~VideoPlayer() {
     //	if (stream_rid.is_valid())
     //		AudioServer::get_singleton()->free(stream_rid);
-    resampler.clear(); //Not necessary here, but make in consistent with other "stream_player" classes
+    resampler.clear(); // Not necessary here, but make in consistent with other
+                       // "stream_player" classes
 };

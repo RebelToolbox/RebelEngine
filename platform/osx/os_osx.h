@@ -70,6 +70,7 @@ public:
         NSTimeInterval timestamp;
         NSPoint delta;
     };
+
     List<WarpEvent> warp_events;
     NSTimeInterval last_warp = 0;
     bool ignore_warp = false;
@@ -78,12 +79,13 @@ public:
     int key_event_pos;
 
     bool force_quit;
-    //  rasterizer seems to no longer be given to visual server, its using GLES3 directly?
-    //Rasterizer *rasterizer;
-    VisualServer *visual_server;
+    // rasterizer seems to no longer be given to visual server, its using GLES3
+    // directly?
+    // Rasterizer *rasterizer;
+    VisualServer* visual_server;
 
     List<String> args;
-    MainLoop *main_loop;
+    MainLoop* main_loop;
 
 #ifdef COREAUDIO_ENABLED
     AudioDriverCoreAudio audio_driver;
@@ -92,8 +94,8 @@ public:
     MIDIDriverCoreMidi midi_driver;
 #endif
 
-    InputDefault *input;
-    JoypadOSX *joypad_osx;
+    InputDefault* input;
+    JoypadOSX* joypad_osx;
 
     /* objc */
 
@@ -102,8 +104,8 @@ public:
     void process_events();
     void process_key_events();
 
-    void *framework;
-    //          pthread_key_t   current;
+    void* framework;
+    // pthread_key_t   current;
     bool mouse_grab;
     Point2 mouse_pos;
 
@@ -113,14 +115,14 @@ public:
     id window_view;
     id autoreleasePool;
     id cursor;
-    NSOpenGLPixelFormat *pixelFormat;
-    NSOpenGLContext *context;
+    NSOpenGLPixelFormat* pixelFormat;
+    NSOpenGLContext* context;
 
     Vector<Vector2> mpath;
     bool layered_window;
 
     CursorShape cursor_shape;
-    NSCursor *cursors[CURSOR_MAX];
+    NSCursor* cursors[CURSOR_MAX];
     Map<CursorShape, Vector<Variant>> cursors_cache;
     MouseMode mouse_mode;
 
@@ -145,7 +147,7 @@ public:
     Size2 min_size;
     Size2 max_size;
 
-    PowerOSX *power_manager;
+    PowerOSX* power_manager;
 
     CrashHandler crash_handler;
 
@@ -160,10 +162,14 @@ public:
         Variant meta;
 
         GlobalMenuItem() {
-            //NOP
+            // NOP
         }
 
-        GlobalMenuItem(const String &p_label, const Variant &p_signal, const Variant &p_meta) {
+        GlobalMenuItem(
+            const String& p_label,
+            const Variant& p_signal,
+            const Variant& p_meta
+        ) {
             label = p_label;
             signal = p_signal;
             meta = p_meta;
@@ -177,49 +183,66 @@ public:
 
 protected:
     virtual void initialize_core();
-    virtual Error initialize(const VideoMode &p_desired, int p_video_driver, int p_audio_driver);
+    virtual Error initialize(
+        const VideoMode& p_desired,
+        int p_video_driver,
+        int p_audio_driver
+    );
     virtual void finalize();
 
-    virtual void set_main_loop(MainLoop *p_main_loop);
+    virtual void set_main_loop(MainLoop* p_main_loop);
     virtual void delete_main_loop();
 
 public:
-    static OS_OSX *singleton;
+    static OS_OSX* singleton;
 
-    void global_menu_add_item(const String &p_menu, const String &p_label, const Variant &p_signal, const Variant &p_meta);
-    void global_menu_add_separator(const String &p_menu);
-    void global_menu_remove_item(const String &p_menu, int p_idx);
-    void global_menu_clear(const String &p_menu);
+    void global_menu_add_item(
+        const String& p_menu,
+        const String& p_label,
+        const Variant& p_signal,
+        const Variant& p_meta
+    );
+    void global_menu_add_separator(const String& p_menu);
+    void global_menu_remove_item(const String& p_menu, int p_idx);
+    void global_menu_clear(const String& p_menu);
 
     void wm_minimized(bool p_minimized);
 
     virtual String get_name() const;
 
-    virtual void alert(const String &p_alert, const String &p_title = "ALERT!");
+    virtual void alert(const String& p_alert, const String& p_title = "ALERT!");
 
-    virtual Error open_dynamic_library(const String p_path, void *&p_library_handle, bool p_also_set_library_path = false);
+    virtual Error open_dynamic_library(
+        const String p_path,
+        void*& p_library_handle,
+        bool p_also_set_library_path = false
+    );
 
     virtual void set_cursor_shape(CursorShape p_shape);
     virtual CursorShape get_cursor_shape() const;
-    virtual void set_custom_mouse_cursor(const RES &p_cursor, CursorShape p_shape, const Vector2 &p_hotspot);
+    virtual void set_custom_mouse_cursor(
+        const RES& p_cursor,
+        CursorShape p_shape,
+        const Vector2& p_hotspot
+    );
 
     virtual void set_mouse_show(bool p_show);
     virtual void set_mouse_grab(bool p_grab);
     virtual bool is_mouse_grab_enabled() const;
-    virtual void warp_mouse_position(const Point2 &p_to);
+    virtual void warp_mouse_position(const Point2& p_to);
     virtual Point2 get_mouse_position() const;
     virtual int get_mouse_button_state() const;
     void update_real_mouse_position();
-    virtual void set_window_title(const String &p_title);
-    virtual void set_window_mouse_passthrough(const PoolVector2Array &p_region);
+    virtual void set_window_title(const String& p_title);
+    virtual void set_window_mouse_passthrough(const PoolVector2Array& p_region);
 
     virtual Size2 get_window_size() const;
     virtual Size2 get_real_window_size() const;
 
-    virtual void set_native_icon(const String &p_filename);
-    virtual void set_icon(const Ref<Image> &p_icon);
+    virtual void set_native_icon(const String& p_filename);
+    virtual void set_icon(const Ref<Image>& p_icon);
 
-    virtual MainLoop *get_main_loop() const;
+    virtual MainLoop* get_main_loop() const;
 
     virtual String get_config_path() const;
     virtual String get_data_path() const;
@@ -228,11 +251,12 @@ public:
     virtual String get_bundle_icon_path() const;
     virtual String get_godot_dir_name() const;
 
-    virtual String get_system_dir(SystemDir p_dir, bool p_shared_storage = true) const;
+    virtual String get_system_dir(SystemDir p_dir, bool p_shared_storage = true)
+        const;
 
     virtual bool can_draw() const;
 
-    virtual void set_clipboard(const String &p_text);
+    virtual void set_clipboard(const String& p_text);
     virtual String get_clipboard() const;
 
     virtual void release_rendering_thread();
@@ -240,16 +264,31 @@ public:
     virtual void swap_buffers();
 
     Error shell_open(String p_uri);
-    void push_input(const Ref<InputEvent> &p_event);
+    void push_input(const Ref<InputEvent>& p_event);
 
     String get_locale() const;
 
-    virtual void set_video_mode(const VideoMode &p_video_mode, int p_screen = 0);
+    virtual void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    );
     virtual VideoMode get_video_mode(int p_screen = 0) const;
-    virtual void get_fullscreen_mode_list(List<VideoMode> *p_list, int p_screen = 0) const;
+    virtual void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const;
 
     virtual String get_executable_path() const;
-    virtual Error execute(const String &p_path, const List<String> &p_arguments, bool p_blocking = true, ProcessID *r_child_id = nullptr, String *r_pipe = nullptr, int *r_exitcode = nullptr, bool read_stderr = false, Mutex *p_pipe_mutex = nullptr);
+    virtual Error execute(
+        const String& p_path,
+        const List<String>& p_arguments,
+        bool p_blocking = true,
+        ProcessID* r_child_id = nullptr,
+        String* r_pipe = nullptr,
+        int* r_exitcode = nullptr,
+        bool read_stderr = false,
+        Mutex* p_pipe_mutex = nullptr
+    );
 
     virtual LatinKeyboardVariant get_latin_keyboard_variant() const;
     virtual int keyboard_get_layout_count() const;
@@ -270,7 +309,7 @@ public:
     virtual float get_screen_max_scale() const;
 
     virtual Point2 get_window_position() const;
-    virtual void set_window_position(const Point2 &p_position);
+    virtual void set_window_position(const Point2& p_position);
     virtual Size2 get_max_window_size() const;
     virtual Size2 get_min_window_size() const;
     virtual void set_min_window_size(const Size2 p_size);
@@ -297,7 +336,7 @@ public:
     virtual void set_window_per_pixel_transparency_enabled(bool p_enabled);
 
     virtual void set_ime_active(const bool p_active);
-    virtual void set_ime_position(const Point2 &p_pos);
+    virtual void set_ime_position(const Point2& p_pos);
     virtual Point2 get_ime_selection() const;
     virtual String get_ime_text() const;
 
@@ -307,10 +346,10 @@ public:
     virtual int get_power_seconds_left();
     virtual int get_power_percent_left();
 
-    virtual bool _check_internal_feature_support(const String &p_feature);
+    virtual bool _check_internal_feature_support(const String& p_feature);
 
     virtual void _set_use_vsync(bool p_enable);
-    //virtual bool is_vsync_enabled() const;
+    // virtual bool is_vsync_enabled() const;
 
     void run();
 
@@ -320,7 +359,7 @@ public:
     void disable_crash_handler();
     bool is_disable_crash_handler() const;
 
-    virtual Error move_to_trash(const String &p_path);
+    virtual Error move_to_trash(const String& p_path);
 
     void force_process_input();
 
@@ -329,7 +368,7 @@ public:
 private:
     Point2 get_native_screen_position(int p_screen) const;
     Point2 get_native_window_position() const;
-    void set_native_window_position(const Point2 &p_position);
+    void set_native_window_position(const Point2& p_position);
     Point2 get_screens_origin() const;
 };
 

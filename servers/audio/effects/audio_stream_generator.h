@@ -64,10 +64,10 @@ class AudioStreamGeneratorPlayback : public AudioStreamPlaybackResampled {
     int skips;
     bool active;
     float mixed;
-    AudioStreamGenerator *generator;
+    AudioStreamGenerator* generator;
 
 protected:
-    virtual void _mix_internal(AudioFrame *p_buffer, int p_frames);
+    virtual void _mix_internal(AudioFrame* p_buffer, int p_frames);
     virtual float get_stream_sampling_rate();
 
     static void _bind_methods();
@@ -77,14 +77,14 @@ public:
     virtual void stop();
     virtual bool is_playing() const;
 
-    virtual int get_loop_count() const; //times it looped
+    virtual int get_loop_count() const; // times it looped
 
     virtual float get_playback_position() const;
     virtual void seek(float p_time);
 
-    bool push_frame(const Vector2 &p_frame);
+    bool push_frame(const Vector2& p_frame);
     bool can_push_buffer(int p_frames) const;
-    bool push_buffer(const PoolVector2Array &p_frames);
+    bool push_buffer(const PoolVector2Array& p_frames);
     int get_frames_available() const;
     int get_skips() const;
 

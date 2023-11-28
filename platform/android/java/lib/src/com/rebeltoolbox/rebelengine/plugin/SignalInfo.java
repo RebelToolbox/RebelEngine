@@ -46,7 +46,9 @@ public final class SignalInfo {
 
     public SignalInfo(@NonNull String signalName, Class<?>... paramTypes) {
         if (TextUtils.isEmpty(signalName)) {
-            throw new IllegalArgumentException("Invalid signal name: " + signalName);
+            throw new IllegalArgumentException(
+                "Invalid signal name: " + signalName
+            );
         }
 
         this.name = signalName;
@@ -72,10 +74,8 @@ public final class SignalInfo {
     @Override
     public String toString() {
         return "SignalInfo{"
-                +
-                "name='" + name + '\'' +
-                ", paramsTypes=" + Arrays.toString(paramTypes) +
-                '}';
+      + "name='" + name + '\'' + ", paramsTypes=" + Arrays.toString(paramTypes)
+      + '}';
     }
 
     @Override

@@ -35,42 +35,83 @@
 #include "editor_settings.h"
 
 void EditorNetworkProfiler::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_update_frame"), &EditorNetworkProfiler::_update_frame);
-    ClassDB::bind_method(D_METHOD("_activate_pressed"), &EditorNetworkProfiler::_activate_pressed);
-    ClassDB::bind_method(D_METHOD("_clear_pressed"), &EditorNetworkProfiler::_clear_pressed);
-    ADD_SIGNAL(MethodInfo("enable_profiling", PropertyInfo(Variant::BOOL, "enable")));
+    ClassDB::bind_method(
+        D_METHOD("_update_frame"),
+        &EditorNetworkProfiler::_update_frame
+    );
+    ClassDB::bind_method(
+        D_METHOD("_activate_pressed"),
+        &EditorNetworkProfiler::_activate_pressed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_clear_pressed"),
+        &EditorNetworkProfiler::_clear_pressed
+    );
+    ADD_SIGNAL(
+        MethodInfo("enable_profiling", PropertyInfo(Variant::BOOL, "enable"))
+    );
 }
 
 void EditorNetworkProfiler::_notification(int p_what) {
-    if (p_what == NOTIFICATION_ENTER_TREE || p_what == NOTIFICATION_THEME_CHANGED) {
+    if (p_what == NOTIFICATION_ENTER_TREE
+        || p_what == NOTIFICATION_THEME_CHANGED) {
         activate->set_icon(get_icon("Play", "EditorIcons"));
         clear_button->set_icon(get_icon("Clear", "EditorIcons"));
-        incoming_bandwidth_text->set_right_icon(get_icon("ArrowDown", "EditorIcons"));
-        outgoing_bandwidth_text->set_right_icon(get_icon("ArrowUp", "EditorIcons"));
+        incoming_bandwidth_text->set_right_icon(
+            get_icon("ArrowDown", "EditorIcons")
+        );
+        outgoing_bandwidth_text->set_right_icon(
+            get_icon("ArrowUp", "EditorIcons")
+        );
 
-        // This needs to be done here to set the faded color when the profiler is first opened
-        incoming_bandwidth_text->add_color_override("font_color_uneditable", get_color("font_color", "Editor") * Color(1, 1, 1, 0.5));
-        outgoing_bandwidth_text->add_color_override("font_color_uneditable", get_color("font_color", "Editor") * Color(1, 1, 1, 0.5));
+        // This needs to be done here to set the faded color when the profiler
+        // is first opened
+        incoming_bandwidth_text->add_color_override(
+            "font_color_uneditable",
+            get_color("font_color", "Editor") * Color(1, 1, 1, 0.5)
+        );
+        outgoing_bandwidth_text->add_color_override(
+            "font_color_uneditable",
+            get_color("font_color", "Editor") * Color(1, 1, 1, 0.5)
+        );
     }
 }
 
 void EditorNetworkProfiler::_update_frame() {
     counters_display->clear();
 
-    TreeItem *root = counters_display->create_item();
+    TreeItem* root = counters_display->create_item();
 
-    for (Map<ObjectID, MultiplayerAPI::ProfilingInfo>::Element *E = nodes_data.front(); E; E = E->next()) {
-        TreeItem *node = counters_display->create_item(root);
+    for (Map<ObjectID, MultiplayerAPI::ProfilingInfo>::Element* E =
+             nodes_data.front();
+         E;
+         E = E->next()) {
+        TreeItem* node = counters_display->create_item(root);
 
         for (int j = 0; j < counters_display->get_columns(); ++j) {
-            node->set_text_align(j, j > 0 ? TreeItem::ALIGN_RIGHT : TreeItem::ALIGN_LEFT);
+            node->set_text_align(
+                j,
+                j > 0 ? TreeItem::ALIGN_RIGHT : TreeItem::ALIGN_LEFT
+            );
         }
 
         node->set_text(0, E->get().node_path);
-        node->set_text(1, E->get().incoming_rpc == 0 ? "-" : itos(E->get().incoming_rpc));
-        node->set_text(2, E->get().incoming_rset == 0 ? "-" : itos(E->get().incoming_rset));
-        node->set_text(3, E->get().outgoing_rpc == 0 ? "-" : itos(E->get().outgoing_rpc));
-        node->set_text(4, E->get().outgoing_rset == 0 ? "-" : itos(E->get().outgoing_rset));
+        node->set_text(
+            1,
+            E->get().incoming_rpc == 0 ? "-" : itos(E->get().incoming_rpc)
+        );
+        node->set_text(
+            2,
+            E->get().incoming_rset == 0 ? "-" : itos(E->get().incoming_rset)
+        );
+        node->set_text(
+            3,
+            E->get().outgoing_rpc == 0 ? "-" : itos(E->get().outgoing_rpc)
+        );
+        node->set_text(
+            4,
+            E->get().outgoing_rset == 0 ? "-" : itos(E->get().outgoing_rset)
+        );
     }
 }
 
@@ -94,7 +135,9 @@ void EditorNetworkProfiler::_clear_pressed() {
     }
 }
 
-void EditorNetworkProfiler::add_node_frame_data(const MultiplayerAPI::ProfilingInfo p_frame) {
+void EditorNetworkProfiler::add_node_frame_data(
+    const MultiplayerAPI::ProfilingInfo p_frame
+) {
     if (!nodes_data.has(p_frame.node)) {
         nodes_data.insert(p_frame.node, p_frame);
     } else {
@@ -111,16 +154,25 @@ void EditorNetworkProfiler::add_node_frame_data(const MultiplayerAPI::ProfilingI
 }
 
 void EditorNetworkProfiler::set_bandwidth(int p_incoming, int p_outgoing) {
-    incoming_bandwidth_text->set_text(vformat(TTR("%s/s"), String::humanize_size(p_incoming)));
-    outgoing_bandwidth_text->set_text(vformat(TTR("%s/s"), String::humanize_size(p_outgoing)));
+    incoming_bandwidth_text->set_text(
+        vformat(TTR("%s/s"), String::humanize_size(p_incoming))
+    );
+    outgoing_bandwidth_text->set_text(
+        vformat(TTR("%s/s"), String::humanize_size(p_outgoing))
+    );
 
-    // Make labels more prominent when the bandwidth is greater than 0 to attract user attention
+    // Make labels more prominent when the bandwidth is greater than 0 to
+    // attract user attention
     incoming_bandwidth_text->add_color_override(
-            "font_color_uneditable",
-            get_color("font_color", "Editor") * Color(1, 1, 1, p_incoming > 0 ? 1 : 0.5));
+        "font_color_uneditable",
+        get_color("font_color", "Editor")
+            * Color(1, 1, 1, p_incoming > 0 ? 1 : 0.5)
+    );
     outgoing_bandwidth_text->add_color_override(
-            "font_color_uneditable",
-            get_color("font_color", "Editor") * Color(1, 1, 1, p_outgoing > 0 ? 1 : 0.5));
+        "font_color_uneditable",
+        get_color("font_color", "Editor")
+            * Color(1, 1, 1, p_outgoing > 0 ? 1 : 0.5)
+    );
 }
 
 bool EditorNetworkProfiler::is_profiling() {
@@ -128,7 +180,7 @@ bool EditorNetworkProfiler::is_profiling() {
 }
 
 EditorNetworkProfiler::EditorNetworkProfiler() {
-    HBoxContainer *hb = memnew(HBoxContainer);
+    HBoxContainer* hb = memnew(HBoxContainer);
     hb->add_constant_override("separation", 8 * EDSCALE);
     add_child(hb);
 
@@ -145,7 +197,7 @@ EditorNetworkProfiler::EditorNetworkProfiler() {
 
     hb->add_spacer();
 
-    Label *lb = memnew(Label);
+    Label* lb = memnew(Label);
     lb->set_text(TTR("Down"));
     hb->add_child(lb);
 
@@ -155,7 +207,7 @@ EditorNetworkProfiler::EditorNetworkProfiler() {
     incoming_bandwidth_text->set_align(LineEdit::Align::ALIGN_RIGHT);
     hb->add_child(incoming_bandwidth_text);
 
-    Control *down_up_spacer = memnew(Control);
+    Control* down_up_spacer = memnew(Control);
     down_up_spacer->set_custom_minimum_size(Size2(30, 0) * EDSCALE);
     hb->add_child(down_up_spacer);
 

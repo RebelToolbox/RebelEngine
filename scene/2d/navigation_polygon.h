@@ -37,9 +37,11 @@ class NavigationPolygon : public Resource {
     GDCLASS(NavigationPolygon, Resource);
 
     PoolVector<Vector2> vertices;
+
     struct Polygon {
         Vector<int> indices;
     };
+
     Vector<Polygon> polygons;
     Vector<PoolVector<Vector2>> outlines;
 
@@ -49,27 +51,31 @@ class NavigationPolygon : public Resource {
 protected:
     static void _bind_methods();
 
-    void _set_polygons(const Array &p_array);
+    void _set_polygons(const Array& p_array);
     Array _get_polygons() const;
 
-    void _set_outlines(const Array &p_array);
+    void _set_outlines(const Array& p_array);
     Array _get_outlines() const;
 
 public:
 #ifdef TOOLS_ENABLED
     Rect2 _edit_get_rect() const;
-    bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const;
+    bool _edit_is_selected_on_click(const Point2& p_point, double p_tolerance)
+        const;
 #endif
 
-    void set_vertices(const PoolVector<Vector2> &p_vertices);
+    void set_vertices(const PoolVector<Vector2>& p_vertices);
     PoolVector<Vector2> get_vertices() const;
 
-    void add_polygon(const Vector<int> &p_polygon);
+    void add_polygon(const Vector<int>& p_polygon);
     int get_polygon_count() const;
 
-    void add_outline(const PoolVector<Vector2> &p_outline);
-    void add_outline_at_index(const PoolVector<Vector2> &p_outline, int p_index);
-    void set_outline(int p_idx, const PoolVector<Vector2> &p_outline);
+    void add_outline(const PoolVector<Vector2>& p_outline);
+    void add_outline_at_index(
+        const PoolVector<Vector2>& p_outline,
+        int p_index
+    );
+    void set_outline(int p_idx, const PoolVector<Vector2>& p_outline);
     PoolVector<Vector2> get_outline(int p_idx) const;
     void remove_outline(int p_idx);
     int get_outline_count() const;
@@ -90,7 +96,7 @@ class NavigationPolygonInstance : public Node2D {
 
     bool enabled;
     int nav_id;
-    Navigation2D *navigation;
+    Navigation2D* navigation;
     Ref<NavigationPolygon> navpoly;
 
     void _navpoly_changed();
@@ -102,13 +108,16 @@ protected:
 public:
 #ifdef TOOLS_ENABLED
     virtual Rect2 _edit_get_rect() const;
-    virtual bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const;
+    virtual bool _edit_is_selected_on_click(
+        const Point2& p_point,
+        double p_tolerance
+    ) const;
 #endif
 
     void set_enabled(bool p_enabled);
     bool is_enabled() const;
 
-    void set_navigation_polygon(const Ref<NavigationPolygon> &p_navpoly);
+    void set_navigation_polygon(const Ref<NavigationPolygon>& p_navpoly);
     Ref<NavigationPolygon> get_navigation_polygon() const;
 
     String get_configuration_warning() const;

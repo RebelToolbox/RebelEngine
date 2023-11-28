@@ -37,13 +37,17 @@ Bullet Continuous Collision Detection and Physics Library
 ConeTwistJointSW is Copyright (c) 2007 Starbreeze Studios
 
 This software is provided 'as-is', without any express or implied warranty.
-In no event will the authors be held liable for any damages arising from the use of this software.
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it freely,
-subject to the following restrictions:
+In no event will the authors be held liable for any damages arising from the use
+of this software. Permission is granted to anyone to use this software for any
+purpose, including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
 
-1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
-2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+1. The origin of this software must not be misrepresented; you must not claim
+that you wrote the original software. If you use this software in a product, an
+acknowledgment in the product documentation would be appreciated but is not
+required.
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 
 Written by: Marcus Hennix
@@ -55,22 +59,23 @@ Written by: Marcus Hennix
 #include "servers/physics/joints/jacobian_entry_sw.h"
 #include "servers/physics/joints_sw.h"
 
-///ConeTwistJointSW can be used to simulate ragdoll joints (upper arm, leg etc)
+/// ConeTwistJointSW can be used to simulate ragdoll joints (upper arm, leg etc)
 class ConeTwistJointSW : public JointSW {
 #ifdef IN_PARALLELL_SOLVER
+
 public:
 #endif
 
     union {
         struct {
-            BodySW *A;
-            BodySW *B;
+            BodySW* A;
+            BodySW* B;
         };
 
-        BodySW *_arr[2];
+        BodySW* _arr[2];
     };
 
-    JacobianEntrySW m_jac[3]; //3 orthogonal linear constraints
+    JacobianEntrySW m_jac[3]; // 3 orthogonal linear constraints
 
     real_t m_appliedImpulse;
     Transform m_rbAFrame;
@@ -102,18 +107,32 @@ public:
     bool m_solveSwingLimit;
 
 public:
-    virtual PhysicsServer::JointType get_type() const { return PhysicsServer::JOINT_CONE_TWIST; }
+    virtual PhysicsServer::JointType get_type() const {
+        return PhysicsServer::JOINT_CONE_TWIST;
+    }
 
     virtual bool setup(real_t p_timestep);
     virtual void solve(real_t p_timestep);
 
-    ConeTwistJointSW(BodySW *rbA, BodySW *rbB, const Transform &rbAFrame, const Transform &rbBFrame);
+    ConeTwistJointSW(
+        BodySW* rbA,
+        BodySW* rbB,
+        const Transform& rbAFrame,
+        const Transform& rbBFrame
+    );
 
     void setAngularOnly(bool angularOnly) {
         m_angularOnly = angularOnly;
     }
 
-    void setLimit(real_t _swingSpan1, real_t _swingSpan2, real_t _twistSpan, real_t _softness = 0.8f, real_t _biasFactor = 0.3f, real_t _relaxationFactor = 1.0f) {
+    void setLimit(
+        real_t _swingSpan1,
+        real_t _swingSpan2,
+        real_t _twistSpan,
+        real_t _softness = 0.8f,
+        real_t _biasFactor = 0.3f,
+        real_t _relaxationFactor = 1.0f
+    ) {
         m_swingSpan1 = _swingSpan1;
         m_swingSpan2 = _swingSpan2;
         m_twistSpan = _twistSpan;

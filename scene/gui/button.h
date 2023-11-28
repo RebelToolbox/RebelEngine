@@ -61,10 +61,10 @@ protected:
 public:
     virtual Size2 get_minimum_size() const;
 
-    void set_text(const String &p_text);
+    void set_text(const String& p_text);
     String get_text() const;
 
-    void set_icon(const Ref<Texture> &p_icon);
+    void set_icon(const Ref<Texture>& p_icon);
     Ref<Texture> get_icon() const;
 
     void set_expand_icon(bool p_expand_icon);
@@ -79,7 +79,7 @@ public:
     void set_text_align(TextAlign p_align);
     TextAlign get_text_align() const;
 
-    Button(const String &p_text = String());
+    Button(const String& p_text = String());
     ~Button();
 };
 

@@ -55,7 +55,7 @@ public:
 class AudioStreamPreviewGenerator : public Node {
     GDCLASS(AudioStreamPreviewGenerator, Node);
 
-    static AudioStreamPreviewGenerator *singleton;
+    static AudioStreamPreviewGenerator* singleton;
 
     struct Preview {
         Ref<AudioStreamPreview> preview;
@@ -63,10 +63,10 @@ class AudioStreamPreviewGenerator : public Node {
         Ref<AudioStreamPlayback> playback;
         SafeFlag generating;
         ObjectID id;
-        Thread *thread;
+        Thread* thread;
 
         // Needed for the bookkeeping of the Map
-        Preview &operator=(const Preview &p_rhs) {
+        Preview& operator=(const Preview& p_rhs) {
             preview = p_rhs.preview;
             base_stream = p_rhs.base_stream;
             playback = p_rhs.playback;
@@ -79,7 +79,7 @@ class AudioStreamPreviewGenerator : public Node {
 
     Map<ObjectID, Preview> previews;
 
-    static void _preview_thread(void *p_preview);
+    static void _preview_thread(void* p_preview);
 
     void _update_emit(ObjectID p_id);
 
@@ -88,9 +88,11 @@ protected:
     static void _bind_methods();
 
 public:
-    static AudioStreamPreviewGenerator *get_singleton() { return singleton; }
+    static AudioStreamPreviewGenerator* get_singleton() {
+        return singleton;
+    }
 
-    Ref<AudioStreamPreview> generate_preview(const Ref<AudioStream> &p_stream);
+    Ref<AudioStreamPreview> generate_preview(const Ref<AudioStream>& p_stream);
 
     AudioStreamPreviewGenerator();
 };

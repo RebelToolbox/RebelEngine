@@ -41,11 +41,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-public class RebelTextInputWrapper implements TextWatcher, OnEditorActionListener {
+public class RebelTextInputWrapper
+    implements TextWatcher, OnEditorActionListener {
     // ===========================================================
     // Constants
     // ===========================================================
-    private static final String TAG = RebelTextInputWrapper.class.getSimpleName();
+    private static final String TAG =
+        RebelTextInputWrapper.class.getSimpleName();
 
     // ===========================================================
     // Fields
@@ -59,7 +61,10 @@ public class RebelTextInputWrapper implements TextWatcher, OnEditorActionListene
     // Constructors
     // ===========================================================
 
-    public RebelTextInputWrapper(final RebelView rebelView, final RebelEditText rebelEditText) {
+    public RebelTextInputWrapper(
+        final RebelView rebelView,
+        final RebelEditText rebelEditText
+    ) {
         this.rebelView = rebelView;
         this.rebelEditText = rebelEditText;
     }
@@ -69,7 +74,10 @@ public class RebelTextInputWrapper implements TextWatcher, OnEditorActionListene
     // ===========================================================
 
     private boolean isFullScreenEdit() {
-        final InputMethodManager imm = (InputMethodManager)rebelEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm =
+            (InputMethodManager)rebelEditText.getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE
+            );
         return imm.isFullscreenMode();
     }
 
@@ -86,16 +94,23 @@ public class RebelTextInputWrapper implements TextWatcher, OnEditorActionListene
     // ===========================================================
 
     @Override
-    public void afterTextChanged(final Editable s) {
-    }
+    public void afterTextChanged(final Editable s) {}
 
     @Override
-    public void beforeTextChanged(final CharSequence pCharSequence, final int start, final int count, final int after) {
-        //Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
+    public void beforeTextChanged(
+        final CharSequence pCharSequence,
+        final int start,
+        final int count,
+        final int after
+    ) {
+        // Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start
+        // + ",count: " + count + ",after: " + after);
 
         for (int i = 0; i < count; ++i) {
-            RebelEngine.key(KeyEvent.KEYCODE_DEL, KeyEvent.KEYCODE_DEL, 0, true);
-            RebelEngine.key(KeyEvent.KEYCODE_DEL, KeyEvent.KEYCODE_DEL, 0, false);
+            RebelEngine
+                .key(KeyEvent.KEYCODE_DEL, KeyEvent.KEYCODE_DEL, 0, true);
+            RebelEngine
+                .key(KeyEvent.KEYCODE_DEL, KeyEvent.KEYCODE_DEL, 0, false);
 
             if (mHasSelection) {
                 mHasSelection = false;
@@ -105,8 +120,14 @@ public class RebelTextInputWrapper implements TextWatcher, OnEditorActionListene
     }
 
     @Override
-    public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
-        //Log.d(TAG, "onTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",before: " + before);
+    public void onTextChanged(
+        final CharSequence pCharSequence,
+        final int start,
+        final int before,
+        final int count
+    ) {
+        // Log.d(TAG, "onTextChanged(" + pCharSequence + ")start: " + start +
+        // ",count: " + count + ",before: " + before);
 
         final int[] newChars = new int[count];
         for (int i = start; i < start + count; ++i) {
@@ -124,7 +145,11 @@ public class RebelTextInputWrapper implements TextWatcher, OnEditorActionListene
     }
 
     @Override
-    public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
+    public boolean onEditorAction(
+        final TextView pTextView,
+        final int pActionID,
+        final KeyEvent pKeyEvent
+    ) {
         if (this.rebelEditText == pTextView && this.isFullScreenEdit()) {
             final String characters = pKeyEvent.getCharacters();
 
@@ -138,8 +163,18 @@ public class RebelTextInputWrapper implements TextWatcher, OnEditorActionListene
         if (pActionID == EditorInfo.IME_ACTION_DONE) {
             // Enter key has been pressed
             rebelView.queueEvent(() -> {
-                RebelEngine.key(KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_ENTER, 0, true);
-                RebelEngine.key(KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_ENTER, 0, false);
+                RebelEngine.key(
+                    KeyEvent.KEYCODE_ENTER,
+                    KeyEvent.KEYCODE_ENTER,
+                    0,
+                    true
+                );
+                RebelEngine.key(
+                    KeyEvent.KEYCODE_ENTER,
+                    KeyEvent.KEYCODE_ENTER,
+                    0,
+                    false
+                );
             });
             rebelView.requestFocus();
             return true;

@@ -54,16 +54,17 @@ String WSLPeer::generate_key() {
 }
 
 String WSLPeer::compute_key_response(String p_key) {
-    String key = p_key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"; // Magic UUID as per RFC
+    String key =
+        p_key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"; // Magic UUID as per RFC
     Vector<uint8_t> sha = key.sha1_buffer();
     return CryptoCore::b64_encode_str(sha.ptr(), sha.size());
 }
 
-void WSLPeer::_wsl_destroy(struct PeerData **p_data) {
+void WSLPeer::_wsl_destroy(struct PeerData** p_data) {
     if (!p_data || !(*p_data)) {
         return;
     }
-    struct PeerData *data = *p_data;
+    struct PeerData* data = *p_data;
     if (data->polling) {
         data->destroy = true;
         return;
@@ -73,16 +74,19 @@ void WSLPeer::_wsl_destroy(struct PeerData **p_data) {
     *p_data = nullptr;
 }
 
-bool WSLPeer::_wsl_poll(struct PeerData *p_data) {
+bool WSLPeer::_wsl_poll(struct PeerData* p_data) {
     p_data->polling = true;
     int err = 0;
-    if ((err = wslay_event_recv(p_data->ctx)) != 0 || (err = wslay_event_send(p_data->ctx)) != 0) {
+    if ((err = wslay_event_recv(p_data->ctx)) != 0
+        || (err = wslay_event_send(p_data->ctx)) != 0) {
         print_verbose("Websocket (wslay) poll error: " + itos(err));
         p_data->destroy = true;
     }
     p_data->polling = false;
 
-    if (p_data->destroy || (wslay_event_get_close_sent(p_data->ctx) && wslay_event_get_close_received(p_data->ctx))) {
+    if (p_data->destroy
+        || (wslay_event_get_close_sent(p_data->ctx)
+            && wslay_event_get_close_received(p_data->ctx))) {
         bool valid = p_data->valid;
         _wsl_destroy(&p_data);
         return valid;
@@ -90,8 +94,14 @@ bool WSLPeer::_wsl_poll(struct PeerData *p_data) {
     return false;
 }
 
-ssize_t wsl_recv_callback(wslay_event_context_ptr ctx, uint8_t *data, size_t len, int flags, void *user_data) {
-    struct WSLPeer::PeerData *peer_data = (struct WSLPeer::PeerData *)user_data;
+ssize_t wsl_recv_callback(
+    wslay_event_context_ptr ctx,
+    uint8_t* data,
+    size_t len,
+    int flags,
+    void* user_data
+) {
+    struct WSLPeer::PeerData* peer_data = (struct WSLPeer::PeerData*)user_data;
     if (!peer_data->valid) {
         wslay_event_set_error(ctx, WSLAY_ERR_CALLBACK_FAILURE);
         return -1;
@@ -100,7 +110,10 @@ ssize_t wsl_recv_callback(wslay_event_context_ptr ctx, uint8_t *data, size_t len
     int read = 0;
     Error err = conn->get_partial_data(data, len, read);
     if (err != OK) {
-        print_verbose("Websocket get data error: " + itos(err) + ", read (should be 0!): " + itos(read));
+        print_verbose(
+            "Websocket get data error: " + itos(err)
+            + ", read (should be 0!): " + itos(read)
+        );
         wslay_event_set_error(ctx, WSLAY_ERR_CALLBACK_FAILURE);
         return -1;
     }
@@ -111,8 +124,14 @@ ssize_t wsl_recv_callback(wslay_event_context_ptr ctx, uint8_t *data, size_t len
     return read;
 }
 
-ssize_t wsl_send_callback(wslay_event_context_ptr ctx, const uint8_t *data, size_t len, int flags, void *user_data) {
-    struct WSLPeer::PeerData *peer_data = (struct WSLPeer::PeerData *)user_data;
+ssize_t wsl_send_callback(
+    wslay_event_context_ptr ctx,
+    const uint8_t* data,
+    size_t len,
+    int flags,
+    void* user_data
+) {
+    struct WSLPeer::PeerData* peer_data = (struct WSLPeer::PeerData*)user_data;
     if (!peer_data->valid) {
         wslay_event_set_error(ctx, WSLAY_ERR_CALLBACK_FAILURE);
         return -1;
@@ -131,7 +150,12 @@ ssize_t wsl_send_callback(wslay_event_context_ptr ctx, const uint8_t *data, size
     return sent;
 }
 
-int wsl_genmask_callback(wslay_event_context_ptr ctx, uint8_t *buf, size_t len, void *user_data) {
+int wsl_genmask_callback(
+    wslay_event_context_ptr ctx,
+    uint8_t* buf,
+    size_t len,
+    void* user_data
+) {
     RandomNumberGenerator rng;
     // TODO maybe use crypto in the future?
     rng.set_seed(OS::get_singleton()->get_unix_time());
@@ -141,22 +165,26 @@ int wsl_genmask_callback(wslay_event_context_ptr ctx, uint8_t *buf, size_t len, 
     return 0;
 }
 
-void wsl_msg_recv_callback(wslay_event_context_ptr ctx, const struct wslay_event_on_msg_recv_arg *arg, void *user_data) {
-    struct WSLPeer::PeerData *peer_data = (struct WSLPeer::PeerData *)user_data;
+void wsl_msg_recv_callback(
+    wslay_event_context_ptr ctx,
+    const struct wslay_event_on_msg_recv_arg* arg,
+    void* user_data
+) {
+    struct WSLPeer::PeerData* peer_data = (struct WSLPeer::PeerData*)user_data;
     if (!peer_data->valid || peer_data->closing) {
         return;
     }
-    WSLPeer *peer = (WSLPeer *)peer_data->peer;
+    WSLPeer* peer = (WSLPeer*)peer_data->peer;
 
     if (peer->parse_message(arg) != OK) {
         return;
     }
 
     if (peer_data->is_server) {
-        WSLServer *helper = (WSLServer *)peer_data->obj;
+        WSLServer* helper = (WSLServer*)peer_data->obj;
         helper->_on_peer_packet(peer_data->id);
     } else {
-        WSLClient *helper = (WSLClient *)peer_data->obj;
+        WSLClient* helper = (WSLClient*)peer_data->obj;
         helper->_on_peer_packet();
     }
 }
@@ -171,7 +199,7 @@ wslay_event_callbacks wsl_callbacks = {
     wsl_msg_recv_callback
 };
 
-Error WSLPeer::parse_message(const wslay_event_on_msg_recv_arg *arg) {
+Error WSLPeer::parse_message(const wslay_event_on_msg_recv_arg* arg) {
     uint8_t is_string = 0;
     if (arg->opcode == WSLAY_TEXT_FRAME) {
         is_string = 1;
@@ -180,14 +208,14 @@ Error WSLPeer::parse_message(const wslay_event_on_msg_recv_arg *arg) {
         size_t len = arg->msg_length;
         close_reason = "";
         if (len > 2 /* first 2 bytes = close code */) {
-            close_reason.parse_utf8((char *)arg->msg + 2, len - 2);
+            close_reason.parse_utf8((char*)arg->msg + 2, len - 2);
         }
         if (!wslay_event_get_close_sent(_data->ctx)) {
             if (_data->is_server) {
-                WSLServer *helper = (WSLServer *)_data->obj;
+                WSLServer* helper = (WSLServer*)_data->obj;
                 helper->_on_close_request(_data->id, close_code, close_reason);
             } else {
-                WSLClient *helper = (WSLClient *)_data->obj;
+                WSLClient* helper = (WSLClient*)_data->obj;
                 helper->_on_close_request(close_code, close_reason);
             }
         }
@@ -200,7 +228,13 @@ Error WSLPeer::parse_message(const wslay_event_on_msg_recv_arg *arg) {
     return OK;
 }
 
-void WSLPeer::make_context(PeerData *p_data, unsigned int p_in_buf_size, unsigned int p_in_pkt_size, unsigned int p_out_buf_size, unsigned int p_out_pkt_size) {
+void WSLPeer::make_context(
+    PeerData* p_data,
+    unsigned int p_in_buf_size,
+    unsigned int p_in_pkt_size,
+    unsigned int p_out_buf_size,
+    unsigned int p_out_pkt_size
+) {
     ERR_FAIL_COND(_data != nullptr);
     ERR_FAIL_COND(p_data == nullptr);
 
@@ -218,7 +252,10 @@ void WSLPeer::make_context(PeerData *p_data, unsigned int p_in_buf_size, unsigne
     } else {
         wslay_event_context_client_init(&(_data->ctx), &wsl_callbacks, _data);
     }
-    wslay_event_config_set_max_recv_msg_length(_data->ctx, (1ULL << p_in_buf_size));
+    wslay_event_config_set_max_recv_msg_length(
+        _data->ctx,
+        (1ULL << p_in_buf_size)
+    );
 }
 
 void WSLPeer::set_write_mode(WriteMode p_mode) {
@@ -239,24 +276,36 @@ void WSLPeer::poll() {
     }
 }
 
-Error WSLPeer::put_packet(const uint8_t *p_buffer, int p_buffer_size) {
+Error WSLPeer::put_packet(const uint8_t* p_buffer, int p_buffer_size) {
     ERR_FAIL_COND_V(!is_connected_to_host(), FAILED);
-    ERR_FAIL_COND_V(_out_pkt_size && (wslay_event_get_queued_msg_count(_data->ctx) >= (1ULL << _out_pkt_size)), ERR_OUT_OF_MEMORY);
-    ERR_FAIL_COND_V(_out_buf_size && (wslay_event_get_queued_msg_length(_data->ctx) + p_buffer_size >= (1ULL << _out_buf_size)), ERR_OUT_OF_MEMORY);
+    ERR_FAIL_COND_V(
+        _out_pkt_size
+            && (wslay_event_get_queued_msg_count(_data->ctx)
+                >= (1ULL << _out_pkt_size)),
+        ERR_OUT_OF_MEMORY
+    );
+    ERR_FAIL_COND_V(
+        _out_buf_size
+            && (wslay_event_get_queued_msg_length(_data->ctx) + p_buffer_size
+                >= (1ULL << _out_buf_size)),
+        ERR_OUT_OF_MEMORY
+    );
 
     struct wslay_event_msg msg;
-    msg.opcode = write_mode == WRITE_MODE_TEXT ? WSLAY_TEXT_FRAME : WSLAY_BINARY_FRAME;
+    msg.opcode =
+        write_mode == WRITE_MODE_TEXT ? WSLAY_TEXT_FRAME : WSLAY_BINARY_FRAME;
     msg.msg = p_buffer;
     msg.msg_length = p_buffer_size;
 
-    if (wslay_event_queue_msg(_data->ctx, &msg) != 0 || wslay_event_send(_data->ctx) != 0) {
+    if (wslay_event_queue_msg(_data->ctx, &msg) != 0
+        || wslay_event_send(_data->ctx) != 0) {
         close_now();
         return FAILED;
     }
     return OK;
 }
 
-Error WSLPeer::get_packet(const uint8_t **r_buffer, int &r_buffer_size) {
+Error WSLPeer::get_packet(const uint8_t** r_buffer, int& r_buffer_size) {
     r_buffer_size = 0;
 
     ERR_FAIL_COND_V(!is_connected_to_host(), FAILED);
@@ -305,7 +354,12 @@ void WSLPeer::close_now() {
 void WSLPeer::close(int p_code, String p_reason) {
     if (_data && !wslay_event_get_close_sent(_data->ctx)) {
         CharString cs = p_reason.utf8();
-        wslay_event_queue_close(_data->ctx, p_code, (uint8_t *)cs.ptr(), cs.size());
+        wslay_event_queue_close(
+            _data->ctx,
+            p_code,
+            (uint8_t*)cs.ptr(),
+            cs.size()
+        );
         wslay_event_send(_data->ctx);
         _data->closing = true;
     }
@@ -315,7 +369,10 @@ void WSLPeer::close(int p_code, String p_reason) {
 }
 
 IP_Address WSLPeer::get_connected_host() const {
-    ERR_FAIL_COND_V(!is_connected_to_host() || _data->tcp.is_null(), IP_Address());
+    ERR_FAIL_COND_V(
+        !is_connected_to_host() || _data->tcp.is_null(),
+        IP_Address()
+    );
 
     return _data->tcp->get_connected_host();
 }

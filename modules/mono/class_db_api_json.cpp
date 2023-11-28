@@ -37,31 +37,32 @@
 #include "core/project_settings.h"
 #include "core/version.h"
 
-void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
+void class_db_api_to_json(const String& p_output_file, ClassDB::APIType p_api) {
     Dictionary classes_dict;
 
     List<StringName> names;
 
-    const StringName *k = NULL;
+    const StringName* k = NULL;
 
     while ((k = ClassDB::classes.next(k))) {
         names.push_back(*k);
     }
-    //must be alphabetically sorted for hash to compute
+    // must be alphabetically sorted for hash to compute
     names.sort_custom<StringName::AlphCompare>();
 
-    for (List<StringName>::Element *E = names.front(); E; E = E->next()) {
-        ClassDB::ClassInfo *t = ClassDB::classes.getptr(E->get());
+    for (List<StringName>::Element* E = names.front(); E; E = E->next()) {
+        ClassDB::ClassInfo* t = ClassDB::classes.getptr(E->get());
         ERR_FAIL_COND(!t);
-        if (t->api != p_api || !t->exposed)
+        if (t->api != p_api || !t->exposed) {
             continue;
+        }
 
         Dictionary class_dict;
         classes_dict[t->name] = class_dict;
 
         class_dict["inherits"] = t->inherits;
 
-        { //methods
+        { // methods
 
             List<StringName> snames;
 
@@ -72,8 +73,10 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
 
                 ERR_CONTINUE(name.empty());
 
-                if (name[0] == '_')
-                    continue; // Ignore non-virtual methods that start with an underscore
+                if (name[0] == '_') {
+                    continue; // Ignore non-virtual methods that start with an
+                              // underscore
+                }
 
                 snames.push_back(*k);
             }
@@ -82,11 +85,12 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
 
             Array methods;
 
-            for (List<StringName>::Element *F = snames.front(); F; F = F->next()) {
+            for (List<StringName>::Element* F = snames.front(); F;
+                 F = F->next()) {
                 Dictionary method_dict;
                 methods.push_back(method_dict);
 
-                MethodBind *mb = t->method_map[F->get()];
+                MethodBind* mb = t->method_map[F->get()];
                 method_dict["name"] = mb->get_name();
                 method_dict["argument_count"] = mb->get_argument_count();
                 method_dict["return_type"] = mb->get_argument_type(-1);
@@ -104,7 +108,8 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
                     argument_dict["hint_string"] = info.hint_string;
                 }
 
-                method_dict["default_argument_count"] = mb->get_default_argument_count();
+                method_dict["default_argument_count"] =
+                    mb->get_default_argument_count();
 
                 Array default_arguments;
                 method_dict["default_arguments"] = default_arguments;
@@ -112,7 +117,7 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
                 for (int i = 0; i < mb->get_default_argument_count(); i++) {
                     Dictionary default_argument_dict;
                     default_arguments.push_back(default_argument_dict);
-                    //hash should not change, i hope for tis
+                    // hash should not change, i hope for tis
                     Variant da = mb->get_default_argument(i);
                     default_argument_dict["value"] = da;
                 }
@@ -125,7 +130,7 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
             }
         }
 
-        { //constants
+        { // constants
 
             List<StringName> snames;
 
@@ -139,7 +144,8 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
 
             Array constants;
 
-            for (List<StringName>::Element *F = snames.front(); F; F = F->next()) {
+            for (List<StringName>::Element* F = snames.front(); F;
+                 F = F->next()) {
                 Dictionary constant_dict;
                 constants.push_back(constant_dict);
 
@@ -152,7 +158,7 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
             }
         }
 
-        { //signals
+        { // signals
 
             List<StringName> snames;
 
@@ -166,11 +172,12 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
 
             Array signals;
 
-            for (List<StringName>::Element *F = snames.front(); F; F = F->next()) {
+            for (List<StringName>::Element* F = snames.front(); F;
+                 F = F->next()) {
                 Dictionary signal_dict;
                 signals.push_back(signal_dict);
 
-                MethodInfo &mi = t->signal_map[F->get()];
+                MethodInfo& mi = t->signal_map[F->get()];
                 signal_dict["name"] = F->get();
 
                 Array arguments;
@@ -187,7 +194,7 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
             }
         }
 
-        { //properties
+        { // properties
 
             List<StringName> snames;
 
@@ -201,11 +208,13 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
 
             Array properties;
 
-            for (List<StringName>::Element *F = snames.front(); F; F = F->next()) {
+            for (List<StringName>::Element* F = snames.front(); F;
+                 F = F->next()) {
                 Dictionary property_dict;
                 properties.push_back(property_dict);
 
-                ClassDB::PropertySetGet *psg = t->property_setget.getptr(F->get());
+                ClassDB::PropertySetGet* psg =
+                    t->property_setget.getptr(F->get());
 
                 property_dict["name"] = F->get();
                 property_dict["setter"] = psg->setter;
@@ -219,8 +228,9 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
 
         Array property_list;
 
-        //property list
-        for (List<PropertyInfo>::Element *F = t->property_list.front(); F; F = F->next()) {
+        // property list
+        for (List<PropertyInfo>::Element* F = t->property_list.front(); F;
+             F = F->next()) {
             Dictionary property_dict;
             property_list.push_back(property_dict);
 
@@ -241,7 +251,10 @@ void class_db_api_to_json(const String &p_output_file, ClassDB::APIType p_api) {
     f->store_string(JSON::print(classes_dict, /*indent: */ "\t"));
     f->close();
 
-    print_line(String() + "ClassDB API JSON written to: " + ProjectSettings::get_singleton()->globalize_path(p_output_file));
+    print_line(
+        String() + "ClassDB API JSON written to: "
+        + ProjectSettings::get_singleton()->globalize_path(p_output_file)
+    );
 }
 
 #endif // DEBUG_METHODS_ENABLED

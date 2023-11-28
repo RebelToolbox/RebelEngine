@@ -52,8 +52,8 @@ protected:
 
 public:
     Array get_collision_exceptions();
-    void add_collision_exception_with(Node *p_node); //must be physicsbody
-    void remove_collision_exception_with(Node *p_node);
+    void add_collision_exception_with(Node* p_node); // must be physicsbody
+    void remove_collision_exception_with(Node* p_node);
 
     PhysicsBody2D();
 };
@@ -77,10 +77,12 @@ public:
     void set_bounce(real_t p_bounce);
     real_t get_bounce() const;
 #endif
-    void set_physics_material_override(const Ref<PhysicsMaterial> &p_physics_material_override);
+    void set_physics_material_override(
+        const Ref<PhysicsMaterial>& p_physics_material_override
+    );
     Ref<PhysicsMaterial> get_physics_material_override() const;
 
-    void set_constant_linear_velocity(const Vector2 &p_vel);
+    void set_constant_linear_velocity(const Vector2& p_vel);
     void set_constant_angular_velocity(real_t p_vel);
 
     Vector2 get_constant_linear_velocity() const;
@@ -112,7 +114,7 @@ public:
 
 private:
     bool can_sleep;
-    Physics2DDirectBodyState *state;
+    Physics2DDirectBodyState* state;
     Mode mode;
 
     real_t mass;
@@ -135,7 +137,8 @@ private:
         int body_shape;
         int local_shape;
         bool tagged;
-        bool operator<(const ShapePair &p_sp) const {
+
+        bool operator<(const ShapePair& p_sp) const {
             if (body_shape == p_sp.body_shape) {
                 return local_shape < p_sp.local_shape;
             }
@@ -144,16 +147,19 @@ private:
         }
 
         ShapePair() {}
+
         ShapePair(int p_bs, int p_ls) {
             body_shape = p_bs;
             local_shape = p_ls;
         }
     };
+
     struct RigidBody2D_RemoveAction {
         RID rid;
         ObjectID body_id;
         ShapePair pair;
     };
+
     struct BodyState {
         RID rid;
         bool in_scene;
@@ -165,14 +171,26 @@ private:
         Map<ObjectID, BodyState> body_map;
     };
 
-    ContactMonitor *contact_monitor;
+    ContactMonitor* contact_monitor;
     void _body_enter_tree(ObjectID p_id);
     void _body_exit_tree(ObjectID p_id);
 
-    void _body_inout(int p_status, const RID &p_body, ObjectID p_instance, int p_body_shape, int p_local_shape);
-    void _direct_state_changed(Object *p_state);
+    void _body_inout(
+        int p_status,
+        const RID& p_body,
+        ObjectID p_instance,
+        int p_body_shape,
+        int p_local_shape
+    );
+    void _direct_state_changed(Object* p_state);
 
-    bool _test_motion(const Vector2 &p_motion, bool p_infinite_inertia = true, float p_margin = 0.08, const Ref<Physics2DTestMotionResult> &p_result = Ref<Physics2DTestMotionResult>());
+    bool _test_motion(
+        const Vector2& p_motion,
+        bool p_infinite_inertia = true,
+        float p_margin = 0.08,
+        const Ref<Physics2DTestMotionResult>& p_result =
+            Ref<Physics2DTestMotionResult>()
+    );
 
 protected:
     void _notification(int p_what);
@@ -199,7 +217,9 @@ public:
     real_t get_bounce() const;
 #endif
 
-    void set_physics_material_override(const Ref<PhysicsMaterial> &p_physics_material_override);
+    void set_physics_material_override(
+        const Ref<PhysicsMaterial>& p_physics_material_override
+    );
     Ref<PhysicsMaterial> get_physics_material_override() const;
 
     void set_gravity_scale(real_t p_gravity_scale);
@@ -211,10 +231,10 @@ public:
     void set_angular_damp(real_t p_angular_damp);
     real_t get_angular_damp() const;
 
-    void set_linear_velocity(const Vector2 &p_velocity);
+    void set_linear_velocity(const Vector2& p_velocity);
     Vector2 get_linear_velocity() const;
 
-    void set_axis_velocity(const Vector2 &p_axis);
+    void set_axis_velocity(const Vector2& p_axis);
 
     void set_angular_velocity(real_t p_velocity);
     real_t get_angular_velocity() const;
@@ -237,21 +257,21 @@ public:
     void set_continuous_collision_detection_mode(CCDMode p_mode);
     CCDMode get_continuous_collision_detection_mode() const;
 
-    void apply_central_impulse(const Vector2 &p_impulse);
-    void apply_impulse(const Vector2 &p_offset, const Vector2 &p_impulse);
+    void apply_central_impulse(const Vector2& p_impulse);
+    void apply_impulse(const Vector2& p_offset, const Vector2& p_impulse);
     void apply_torque_impulse(float p_torque);
 
-    void set_applied_force(const Vector2 &p_force);
+    void set_applied_force(const Vector2& p_force);
     Vector2 get_applied_force() const;
 
     void set_applied_torque(const float p_torque);
     float get_applied_torque() const;
 
-    void add_central_force(const Vector2 &p_force);
-    void add_force(const Vector2 &p_offset, const Vector2 &p_force);
+    void add_central_force(const Vector2& p_force);
+    void add_force(const Vector2& p_offset, const Vector2& p_force);
     void add_torque(float p_torque);
 
-    Array get_colliding_bodies() const; //function for script
+    Array get_colliding_bodies() const; // function for script
 
     virtual String get_configuration_warning() const;
 
@@ -281,7 +301,7 @@ public:
         Vector2 travel;
         int local_shape;
 
-        real_t get_angle(const Vector2 &p_up_direction) const {
+        real_t get_angle(const Vector2& p_up_direction) const {
             return Math::acos(normal.dot(p_up_direction));
         }
     };
@@ -301,36 +321,84 @@ private:
     Vector<Ref<KinematicCollision2D>> slide_colliders;
     Ref<KinematicCollision2D> motion_cache;
 
-    Ref<KinematicCollision2D> _move(const Vector2 &p_motion, bool p_infinite_inertia = true, bool p_exclude_raycast_shapes = true, bool p_test_only = false);
+    Ref<KinematicCollision2D> _move(
+        const Vector2& p_motion,
+        bool p_infinite_inertia = true,
+        bool p_exclude_raycast_shapes = true,
+        bool p_test_only = false
+    );
     Ref<KinematicCollision2D> _get_slide_collision(int p_bounce);
     Ref<KinematicCollision2D> _get_last_slide_collision();
 
     Transform2D last_valid_transform;
-    void _direct_state_changed(Object *p_state);
-    Vector2 _move_and_slide_internal(const Vector2 &p_linear_velocity, const Vector2 &p_snap, const Vector2 &p_up_direction = Vector2(0, 0), bool p_stop_on_slope = false, int p_max_slides = 4, float p_floor_max_angle = Math::deg2rad((float)45), bool p_infinite_inertia = true);
-    void _set_collision_direction(const Collision &p_collision, const Vector2 &p_up_direction, float p_floor_max_angle);
+    void _direct_state_changed(Object* p_state);
+    Vector2 _move_and_slide_internal(
+        const Vector2& p_linear_velocity,
+        const Vector2& p_snap,
+        const Vector2& p_up_direction = Vector2(0, 0),
+        bool p_stop_on_slope = false,
+        int p_max_slides = 4,
+        float p_floor_max_angle = Math::deg2rad((float)45),
+        bool p_infinite_inertia = true
+    );
+    void _set_collision_direction(
+        const Collision& p_collision,
+        const Vector2& p_up_direction,
+        float p_floor_max_angle
+    );
 
 protected:
     void _notification(int p_what);
     static void _bind_methods();
 
 public:
-    bool move_and_collide(const Vector2 &p_motion, bool p_infinite_inertia, Collision &r_collision, bool p_exclude_raycast_shapes = true, bool p_test_only = false, bool p_cancel_sliding = true, const Set<RID> &p_exclude = Set<RID>());
+    bool move_and_collide(
+        const Vector2& p_motion,
+        bool p_infinite_inertia,
+        Collision& r_collision,
+        bool p_exclude_raycast_shapes = true,
+        bool p_test_only = false,
+        bool p_cancel_sliding = true,
+        const Set<RID>& p_exclude = Set<RID>()
+    );
 
-    bool test_move(const Transform2D &p_from, const Vector2 &p_motion, bool p_infinite_inertia = true);
+    bool test_move(
+        const Transform2D& p_from,
+        const Vector2& p_motion,
+        bool p_infinite_inertia = true
+    );
 
-    bool separate_raycast_shapes(bool p_infinite_inertia, Collision &r_collision);
+    bool separate_raycast_shapes(
+        bool p_infinite_inertia,
+        Collision& r_collision
+    );
 
     void set_safe_margin(float p_margin);
     float get_safe_margin() const;
 
-    Vector2 move_and_slide(const Vector2 &p_linear_velocity, const Vector2 &p_up_direction = Vector2(0, 0), bool p_stop_on_slope = false, int p_max_slides = 4, float p_floor_max_angle = Math::deg2rad((float)45), bool p_infinite_inertia = true);
-    Vector2 move_and_slide_with_snap(const Vector2 &p_linear_velocity, const Vector2 &p_snap, const Vector2 &p_up_direction = Vector2(0, 0), bool p_stop_on_slope = false, int p_max_slides = 4, float p_floor_max_angle = Math::deg2rad((float)45), bool p_infinite_inertia = true);
+    Vector2 move_and_slide(
+        const Vector2& p_linear_velocity,
+        const Vector2& p_up_direction = Vector2(0, 0),
+        bool p_stop_on_slope = false,
+        int p_max_slides = 4,
+        float p_floor_max_angle = Math::deg2rad((float)45),
+        bool p_infinite_inertia = true
+    );
+    Vector2 move_and_slide_with_snap(
+        const Vector2& p_linear_velocity,
+        const Vector2& p_snap,
+        const Vector2& p_up_direction = Vector2(0, 0),
+        bool p_stop_on_slope = false,
+        int p_max_slides = 4,
+        float p_floor_max_angle = Math::deg2rad((float)45),
+        bool p_infinite_inertia = true
+    );
     bool is_on_floor() const;
     bool is_on_wall() const;
     bool is_on_ceiling() const;
     Vector2 get_floor_normal() const;
-    real_t get_floor_angle(const Vector2 &p_up_direction = Vector2(0.0, -1.0)) const;
+    real_t get_floor_angle(const Vector2& p_up_direction = Vector2(0.0, -1.0))
+        const;
     Vector2 get_floor_velocity() const;
 
     int get_slide_count() const;
@@ -346,7 +414,7 @@ public:
 class KinematicCollision2D : public Reference {
     GDCLASS(KinematicCollision2D, Reference);
 
-    KinematicBody2D *owner;
+    KinematicBody2D* owner;
     friend class KinematicBody2D;
     KinematicBody2D::Collision collision;
 
@@ -358,12 +426,12 @@ public:
     Vector2 get_normal() const;
     Vector2 get_travel() const;
     Vector2 get_remainder() const;
-    real_t get_angle(const Vector2 &p_up_direction = Vector2(0.0, -1.0)) const;
-    Object *get_local_shape() const;
-    Object *get_collider() const;
+    real_t get_angle(const Vector2& p_up_direction = Vector2(0.0, -1.0)) const;
+    Object* get_local_shape() const;
+    Object* get_collider() const;
     ObjectID get_collider_id() const;
     RID get_collider_rid() const;
-    Object *get_collider_shape() const;
+    Object* get_collider_shape() const;
     int get_collider_shape_index() const;
     Vector2 get_collider_velocity() const;
     Variant get_collider_metadata() const;

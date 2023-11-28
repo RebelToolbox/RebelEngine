@@ -60,10 +60,12 @@ GDNativeLibrary::GDNativeLibrary() {
     reloadable = default_reloadable;
 }
 
-GDNativeLibrary::~GDNativeLibrary() {
-}
+GDNativeLibrary::~GDNativeLibrary() {}
 
-bool GDNativeLibrary::_set(const StringName &p_name, const Variant &p_property) {
+bool GDNativeLibrary::_set(
+    const StringName& p_name,
+    const Variant& p_property
+) {
     String name = p_name;
 
     if (name.begins_with("entry/")) {
@@ -89,7 +91,8 @@ bool GDNativeLibrary::_set(const StringName &p_name, const Variant &p_property) 
     return false;
 }
 
-bool GDNativeLibrary::_get(const StringName &p_name, Variant &r_property) const {
+bool GDNativeLibrary::_get(const StringName& p_name, Variant& r_property)
+    const {
     String name = p_name;
 
     if (name.begins_with("entry/")) {
@@ -111,7 +114,7 @@ bool GDNativeLibrary::_get(const StringName &p_name, Variant &r_property) const 
     return false;
 }
 
-void GDNativeLibrary::_get_property_list(List<PropertyInfo> *p_list) const {
+void GDNativeLibrary::_get_property_list(List<PropertyInfo>* p_list) const {
     // set entries
     List<String> entry_key_list;
 
@@ -119,7 +122,7 @@ void GDNativeLibrary::_get_property_list(List<PropertyInfo> *p_list) const {
         config_file->get_section_keys("entry", &entry_key_list);
     }
 
-    for (List<String>::Element *E = entry_key_list.front(); E; E = E->next()) {
+    for (List<String>::Element* E = entry_key_list.front(); E; E = E->next()) {
         String key = E->get();
 
         PropertyInfo prop;
@@ -137,7 +140,8 @@ void GDNativeLibrary::_get_property_list(List<PropertyInfo> *p_list) const {
         config_file->get_section_keys("dependencies", &dependency_key_list);
     }
 
-    for (List<String>::Element *E = dependency_key_list.front(); E; E = E->next()) {
+    for (List<String>::Element* E = dependency_key_list.front(); E;
+         E = E->next()) {
         String key = E->get();
 
         PropertyInfo prop;
@@ -152,10 +156,20 @@ void GDNativeLibrary::_get_property_list(List<PropertyInfo> *p_list) const {
 void GDNativeLibrary::set_config_file(Ref<ConfigFile> p_config_file) {
     ERR_FAIL_COND(p_config_file.is_null());
 
-    set_singleton(p_config_file->get_value("general", "singleton", default_singleton));
-    set_load_once(p_config_file->get_value("general", "load_once", default_load_once));
-    set_symbol_prefix(p_config_file->get_value("general", "symbol_prefix", default_symbol_prefix));
-    set_reloadable(p_config_file->get_value("general", "reloadable", default_reloadable));
+    set_singleton(
+        p_config_file->get_value("general", "singleton", default_singleton)
+    );
+    set_load_once(
+        p_config_file->get_value("general", "load_once", default_load_once)
+    );
+    set_symbol_prefix(p_config_file->get_value(
+        "general",
+        "symbol_prefix",
+        default_symbol_prefix
+    ));
+    set_reloadable(
+        p_config_file->get_value("general", "reloadable", default_reloadable)
+    );
 
     String entry_lib_path;
     {
@@ -165,7 +179,7 @@ void GDNativeLibrary::set_config_file(Ref<ConfigFile> p_config_file) {
             p_config_file->get_section_keys("entry", &entry_keys);
         }
 
-        for (List<String>::Element *E = entry_keys.front(); E; E = E->next()) {
+        for (List<String>::Element* E = entry_keys.front(); E; E = E->next()) {
             String key = E->get();
 
             Vector<String> tags = key.split(".");
@@ -197,7 +211,8 @@ void GDNativeLibrary::set_config_file(Ref<ConfigFile> p_config_file) {
             p_config_file->get_section_keys("dependencies", &dependency_keys);
         }
 
-        for (List<String>::Element *E = dependency_keys.front(); E; E = E->next()) {
+        for (List<String>::Element* E = dependency_keys.front(); E;
+             E = E->next()) {
             String key = E->get();
 
             Vector<String> tags = key.split(".");
@@ -226,28 +241,90 @@ void GDNativeLibrary::set_config_file(Ref<ConfigFile> p_config_file) {
 }
 
 void GDNativeLibrary::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("get_config_file"), &GDNativeLibrary::get_config_file);
-    ClassDB::bind_method(D_METHOD("set_config_file", "config_file"), &GDNativeLibrary::set_config_file);
+    ClassDB::bind_method(
+        D_METHOD("get_config_file"),
+        &GDNativeLibrary::get_config_file
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_config_file", "config_file"),
+        &GDNativeLibrary::set_config_file
+    );
 
-    ClassDB::bind_method(D_METHOD("get_current_library_path"), &GDNativeLibrary::get_current_library_path);
-    ClassDB::bind_method(D_METHOD("get_current_dependencies"), &GDNativeLibrary::get_current_dependencies);
+    ClassDB::bind_method(
+        D_METHOD("get_current_library_path"),
+        &GDNativeLibrary::get_current_library_path
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_current_dependencies"),
+        &GDNativeLibrary::get_current_dependencies
+    );
 
-    ClassDB::bind_method(D_METHOD("should_load_once"), &GDNativeLibrary::should_load_once);
-    ClassDB::bind_method(D_METHOD("is_singleton"), &GDNativeLibrary::is_singleton);
-    ClassDB::bind_method(D_METHOD("get_symbol_prefix"), &GDNativeLibrary::get_symbol_prefix);
-    ClassDB::bind_method(D_METHOD("is_reloadable"), &GDNativeLibrary::is_reloadable);
+    ClassDB::bind_method(
+        D_METHOD("should_load_once"),
+        &GDNativeLibrary::should_load_once
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_singleton"),
+        &GDNativeLibrary::is_singleton
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_symbol_prefix"),
+        &GDNativeLibrary::get_symbol_prefix
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_reloadable"),
+        &GDNativeLibrary::is_reloadable
+    );
 
-    ClassDB::bind_method(D_METHOD("set_load_once", "load_once"), &GDNativeLibrary::set_load_once);
-    ClassDB::bind_method(D_METHOD("set_singleton", "singleton"), &GDNativeLibrary::set_singleton);
-    ClassDB::bind_method(D_METHOD("set_symbol_prefix", "symbol_prefix"), &GDNativeLibrary::set_symbol_prefix);
-    ClassDB::bind_method(D_METHOD("set_reloadable", "reloadable"), &GDNativeLibrary::set_reloadable);
+    ClassDB::bind_method(
+        D_METHOD("set_load_once", "load_once"),
+        &GDNativeLibrary::set_load_once
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_singleton", "singleton"),
+        &GDNativeLibrary::set_singleton
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_symbol_prefix", "symbol_prefix"),
+        &GDNativeLibrary::set_symbol_prefix
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_reloadable", "reloadable"),
+        &GDNativeLibrary::set_reloadable
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "config_file", PROPERTY_HINT_RESOURCE_TYPE, "ConfigFile", 0), "set_config_file", "get_config_file");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "config_file",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "ConfigFile",
+            0
+        ),
+        "set_config_file",
+        "get_config_file"
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "load_once"), "set_load_once", "should_load_once");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "singleton"), "set_singleton", "is_singleton");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "symbol_prefix"), "set_symbol_prefix", "get_symbol_prefix");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "reloadable"), "set_reloadable", "is_reloadable");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "load_once"),
+        "set_load_once",
+        "should_load_once"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "singleton"),
+        "set_singleton",
+        "is_singleton"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "symbol_prefix"),
+        "set_symbol_prefix",
+        "get_symbol_prefix"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "reloadable"),
+        "set_reloadable",
+        "is_reloadable"
+    );
 }
 
 GDNative::GDNative() {
@@ -255,23 +332,40 @@ GDNative::GDNative() {
     initialized = false;
 }
 
-GDNative::~GDNative() {
-}
+GDNative::~GDNative() {}
 
 void GDNative::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_library", "library"), &GDNative::set_library);
+    ClassDB::bind_method(
+        D_METHOD("set_library", "library"),
+        &GDNative::set_library
+    );
     ClassDB::bind_method(D_METHOD("get_library"), &GDNative::get_library);
 
     ClassDB::bind_method(D_METHOD("initialize"), &GDNative::initialize);
     ClassDB::bind_method(D_METHOD("terminate"), &GDNative::terminate);
 
-    ClassDB::bind_method(D_METHOD("call_native", "calling_type", "procedure_name", "arguments"), &GDNative::call_native);
+    ClassDB::bind_method(
+        D_METHOD("call_native", "calling_type", "procedure_name", "arguments"),
+        &GDNative::call_native
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "library", PROPERTY_HINT_RESOURCE_TYPE, "GDNativeLibrary"), "set_library", "get_library");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "library",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "GDNativeLibrary"
+        ),
+        "set_library",
+        "get_library"
+    );
 }
 
 void GDNative::set_library(Ref<GDNativeLibrary> p_library) {
-    ERR_FAIL_COND_MSG(library.is_valid(), "Tried to change library of GDNative when it is already set.");
+    ERR_FAIL_COND_MSG(
+        library.is_valid(),
+        "Tried to change library of GDNative when it is already set."
+    );
     library = p_library;
 }
 
@@ -279,8 +373,16 @@ Ref<GDNativeLibrary> GDNative::get_library() const {
     return library;
 }
 
-extern "C" void _gdnative_report_version_mismatch(const godot_object *p_library, const char *p_ext, godot_gdnative_api_version p_want, godot_gdnative_api_version p_have);
-extern "C" void _gdnative_report_loading_error(const godot_object *p_library, const char *p_what);
+extern "C" void _gdnative_report_version_mismatch(
+    const godot_object* p_library,
+    const char* p_ext,
+    godot_gdnative_api_version p_want,
+    godot_gdnative_api_version p_have
+);
+extern "C" void _gdnative_report_loading_error(
+    const godot_object* p_library,
+    const char* p_what
+);
 
 bool GDNative::initialize() {
     if (library.is_null()) {
@@ -297,9 +399,9 @@ bool GDNative::initialize() {
     // On iOS we use static linking by default.
     String path = "";
 
-    // On iOS dylibs is not allowed, but can be replaced with .framework or .xcframework.
-    // If they are used, we can run dlopen on them.
-    // They should be located under Frameworks directory, so we need to replace library path.
+    // On iOS dylibs is not allowed, but can be replaced with .framework or
+    // .xcframework. If they are used, we can run dlopen on them. They should be
+    // located under Frameworks directory, so we need to replace library path.
     if (!lib_path.ends_with(".a")) {
         path = ProjectSettings::get_singleton()->globalize_path(lib_path);
 
@@ -309,9 +411,13 @@ bool GDNative::initialize() {
 
             Dictionary format_dict;
             format_dict["name"] = lib_name;
-            String framework_path = framework_path_format.format(format_dict, "$_");
+            String framework_path =
+                framework_path_format.format(format_dict, "$_");
 
-            path = OS::get_singleton()->get_executable_path().get_base_dir().plus_file(framework_path);
+            path = OS::get_singleton()
+                       ->get_executable_path()
+                       .get_base_dir()
+                       .plus_file(framework_path);
         }
     }
 #elif defined(ANDROID_ENABLED)
@@ -326,13 +432,18 @@ bool GDNative::initialize() {
     // On OSX the exported libraries are located under the Frameworks directory.
     // So we need to replace the library path.
     String path = ProjectSettings::get_singleton()->globalize_path(lib_path);
-    DirAccess *da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+    DirAccess* da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 
     if (!da->file_exists(path) && !da->dir_exists(path)) {
-        path = OS::get_singleton()->get_executable_path().get_base_dir().plus_file("../Frameworks").plus_file(lib_path.get_file());
+        path = OS::get_singleton()
+                   ->get_executable_path()
+                   .get_base_dir()
+                   .plus_file("../Frameworks")
+                   .plus_file(lib_path.get_file());
     }
 
-    if (da->dir_exists(path)) { // Target library is a ".framework", add library base name to the path.
+    if (da->dir_exists(path)) { // Target library is a ".framework", add library
+                                // base name to the path.
         path = path.plus_file(path.get_file().get_basename());
     }
 
@@ -346,30 +457,39 @@ bool GDNative::initialize() {
         if (GDNativeLibrary::loaded_libraries.has(lib_path)) {
             // already loaded. Don't load again.
             // copy some of the stuff instead
-            this->native_handle = GDNativeLibrary::loaded_libraries[lib_path][0]->native_handle;
+            this->native_handle =
+                GDNativeLibrary::loaded_libraries[lib_path][0]->native_handle;
             initialized = true;
             return true;
         }
     }
 
-    Error err = OS::get_singleton()->open_dynamic_library(path, native_handle, true);
+    Error err =
+        OS::get_singleton()->open_dynamic_library(path, native_handle, true);
     if (err != OK) {
         return false;
     }
 
-    void *library_init;
+    void* library_init;
 
     // we cheat here a little bit. you saw nothing
     initialized = true;
 
-    err = get_symbol(library->get_symbol_prefix() + init_symbol, library_init, false);
+    err = get_symbol(
+        library->get_symbol_prefix() + init_symbol,
+        library_init,
+        false
+    );
 
     initialized = false;
 
     if (err || !library_init) {
         OS::get_singleton()->close_dynamic_library(native_handle);
         native_handle = nullptr;
-        ERR_PRINT("Failed to obtain " + library->get_symbol_prefix() + "gdnative_init symbol");
+        ERR_PRINT(
+            "Failed to obtain " + library->get_symbol_prefix()
+            + "gdnative_init symbol"
+        );
         return false;
     }
 
@@ -395,14 +515,15 @@ bool GDNative::initialize() {
     options.no_api_hash = no_api_hash;
     options.report_version_mismatch = &_gdnative_report_version_mismatch;
     options.report_loading_error = &_gdnative_report_loading_error;
-    options.gd_native_library = (godot_object *)(get_library().ptr());
-    options.active_library_path = (godot_string *)&path;
+    options.gd_native_library = (godot_object*)(get_library().ptr());
+    options.active_library_path = (godot_string*)&path;
 
     library_init_fpointer(&options);
 
     initialized = true;
 
-    if (library->should_load_once() && !GDNativeLibrary::loaded_libraries.has(lib_path)) {
+    if (library->should_load_once()
+        && !GDNativeLibrary::loaded_libraries.has(lib_path)) {
         Vector<Ref<GDNative>> gdnatives;
         gdnatives.resize(1);
         gdnatives.write[0] = Ref<GDNative>(this);
@@ -419,22 +540,33 @@ bool GDNative::terminate() {
     }
 
     if (library->should_load_once()) {
-        Vector<Ref<GDNative>> *gdnatives = &GDNativeLibrary::loaded_libraries[library->get_current_library_path()];
+        Vector<Ref<GDNative>>* gdnatives =
+            &GDNativeLibrary::loaded_libraries
+                [library->get_current_library_path()];
         if (gdnatives->size() > 1) {
-            // there are other GDNative's still using this library, so we actually don't terminate
+            // there are other GDNative's still using this library, so we
+            // actually don't terminate
             gdnatives->erase(Ref<GDNative>(this));
             initialized = false;
             return true;
         } else if (gdnatives->size() == 1) {
             // we're the last one, terminate!
             gdnatives->clear();
-            // whew this looks scary, but all it does is remove the entry completely
-            GDNativeLibrary::loaded_libraries.erase(GDNativeLibrary::loaded_libraries.find(library->get_current_library_path()));
+            // whew this looks scary, but all it does is remove the entry
+            // completely
+            GDNativeLibrary::loaded_libraries.erase(
+                GDNativeLibrary::loaded_libraries.find(
+                    library->get_current_library_path()
+                )
+            );
         }
     }
 
-    void *library_terminate;
-    Error error = get_symbol(library->get_symbol_prefix() + terminate_symbol, library_terminate);
+    void* library_terminate;
+    Error error = get_symbol(
+        library->get_symbol_prefix() + terminate_symbol,
+        library_terminate
+    );
     if (error || !library_terminate) {
         OS::get_singleton()->close_dynamic_library(native_handle);
         native_handle = nullptr;
@@ -464,7 +596,10 @@ bool GDNative::is_initialized() const {
     return initialized;
 }
 
-void GDNativeCallRegistry::register_native_call_type(StringName p_call_type, native_call_cb p_callback) {
+void GDNativeCallRegistry::register_native_call_type(
+    StringName p_call_type,
+    native_call_cb p_callback
+) {
     native_calls.insert(p_call_type, p_callback);
 }
 
@@ -473,54 +608,78 @@ Vector<StringName> GDNativeCallRegistry::get_native_call_types() {
     call_types.resize(native_calls.size());
 
     size_t idx = 0;
-    for (Map<StringName, native_call_cb>::Element *E = native_calls.front(); E; E = E->next(), idx++) {
+    for (Map<StringName, native_call_cb>::Element* E = native_calls.front(); E;
+         E = E->next(), idx++) {
         call_types.write[idx] = E->key();
     }
 
     return call_types;
 }
 
-Variant GDNative::call_native(StringName p_native_call_type, StringName p_procedure_name, Array p_arguments) {
-    Map<StringName, native_call_cb>::Element *E = GDNativeCallRegistry::singleton->native_calls.find(p_native_call_type);
+Variant GDNative::call_native(
+    StringName p_native_call_type,
+    StringName p_procedure_name,
+    Array p_arguments
+) {
+    Map<StringName, native_call_cb>::Element* E =
+        GDNativeCallRegistry::singleton->native_calls.find(p_native_call_type);
     if (!E) {
-        ERR_PRINT((String("No handler for native call type \"" + p_native_call_type) + "\" found").utf8().get_data());
+        ERR_PRINT(
+            (String("No handler for native call type \"" + p_native_call_type)
+             + "\" found")
+                .utf8()
+                .get_data()
+        );
         return Variant();
     }
 
-    void *procedure_handle;
+    void* procedure_handle;
 
     Error err = OS::get_singleton()->get_dynamic_library_symbol_handle(
-            native_handle,
-            p_procedure_name,
-            procedure_handle);
+        native_handle,
+        p_procedure_name,
+        procedure_handle
+    );
 
     if (err != OK || procedure_handle == nullptr) {
         return Variant();
     }
 
-    godot_variant result = E->get()(procedure_handle, (godot_array *)&p_arguments);
+    godot_variant result =
+        E->get()(procedure_handle, (godot_array*)&p_arguments);
 
-    Variant res = *(Variant *)&result;
+    Variant res = *(Variant*)&result;
     godot_variant_destroy(&result);
     return res;
 }
 
-Error GDNative::get_symbol(StringName p_procedure_name, void *&r_handle, bool p_optional) const {
+Error GDNative::get_symbol(
+    StringName p_procedure_name,
+    void*& r_handle,
+    bool p_optional
+) const {
     if (!initialized) {
-        ERR_PRINT("No valid library handle, can't get symbol from GDNative object");
+        ERR_PRINT(
+            "No valid library handle, can't get symbol from GDNative object"
+        );
         return ERR_CANT_OPEN;
     }
 
     Error result = OS::get_singleton()->get_dynamic_library_symbol_handle(
-            native_handle,
-            p_procedure_name,
-            r_handle,
-            p_optional);
+        native_handle,
+        p_procedure_name,
+        r_handle,
+        p_optional
+    );
 
     return result;
 }
 
-RES GDNativeLibraryResourceLoader::load(const String &p_path, const String &p_original_path, Error *r_error) {
+RES GDNativeLibraryResourceLoader::load(
+    const String& p_path,
+    const String& p_original_path,
+    Error* r_error
+) {
     Ref<GDNativeLibrary> lib;
     lib.instance();
 
@@ -537,15 +696,18 @@ RES GDNativeLibraryResourceLoader::load(const String &p_path, const String &p_or
     return lib;
 }
 
-void GDNativeLibraryResourceLoader::get_recognized_extensions(List<String> *p_extensions) const {
+void GDNativeLibraryResourceLoader::get_recognized_extensions(
+    List<String>* p_extensions
+) const {
     p_extensions->push_back("gdnlib");
 }
 
-bool GDNativeLibraryResourceLoader::handles_type(const String &p_type) const {
+bool GDNativeLibraryResourceLoader::handles_type(const String& p_type) const {
     return p_type == "GDNativeLibrary";
 }
 
-String GDNativeLibraryResourceLoader::get_resource_type(const String &p_path) const {
+String GDNativeLibraryResourceLoader::get_resource_type(const String& p_path
+) const {
     String el = p_path.get_extension().to_lower();
     if (el == "gdnlib") {
         return "GDNativeLibrary";
@@ -553,7 +715,11 @@ String GDNativeLibraryResourceLoader::get_resource_type(const String &p_path) co
     return "";
 }
 
-Error GDNativeLibraryResourceSaver::save(const String &p_path, const RES &p_resource, uint32_t p_flags) {
+Error GDNativeLibraryResourceSaver::save(
+    const String& p_path,
+    const RES& p_resource,
+    uint32_t p_flags
+) {
     Ref<GDNativeLibrary> lib = p_resource;
 
     if (lib.is_null()) {
@@ -570,11 +736,14 @@ Error GDNativeLibraryResourceSaver::save(const String &p_path, const RES &p_reso
     return config->save(p_path);
 }
 
-bool GDNativeLibraryResourceSaver::recognize(const RES &p_resource) const {
+bool GDNativeLibraryResourceSaver::recognize(const RES& p_resource) const {
     return Object::cast_to<GDNativeLibrary>(*p_resource) != nullptr;
 }
 
-void GDNativeLibraryResourceSaver::get_recognized_extensions(const RES &p_resource, List<String> *p_extensions) const {
+void GDNativeLibraryResourceSaver::get_recognized_extensions(
+    const RES& p_resource,
+    List<String>* p_extensions
+) const {
     if (Object::cast_to<GDNativeLibrary>(*p_resource) != nullptr) {
         p_extensions->push_back("gdnlib");
     }

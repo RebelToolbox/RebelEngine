@@ -54,8 +54,8 @@ protected:
     bool first;
 
     ObjectID custom_viewport_id; // to check validity
-    Viewport *custom_viewport;
-    Viewport *viewport;
+    Viewport* custom_viewport;
+    Viewport* viewport;
 
     StringName group_name;
     StringName canvas_group_name;
@@ -67,7 +67,8 @@ protected:
     bool current;
     float smoothing;
     bool smoothing_enabled;
-    bool smoothing_active; // smoothing can be enabled but not active in the editor
+    bool smoothing_active; // smoothing can be enabled but not active in the
+                           // editor
     int limit[4];
     bool limit_smoothing_enabled;
     float drag_margin[4];
@@ -85,7 +86,7 @@ protected:
     void _update_scroll();
     void _setup_viewport();
 
-    void _make_current(Object *p_which);
+    void _make_current(Object* p_which);
     void _set_current(bool p_current);
 
     bool screen_drawing_enabled;
@@ -100,7 +101,7 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_offset(const Vector2 &p_offset);
+    void set_offset(const Vector2& p_offset);
     Vector2 get_offset() const;
 
     void set_anchor_mode(AnchorMode p_anchor_mode);
@@ -143,13 +144,13 @@ public:
     void clear_current();
     bool is_current() const;
 
-    void set_zoom(const Vector2 &p_zoom);
+    void set_zoom(const Vector2& p_zoom);
     Vector2 get_zoom() const;
 
     Point2 get_camera_screen_center() const;
 
-    void set_custom_viewport(Node *p_viewport);
-    Node *get_custom_viewport() const;
+    void set_custom_viewport(Node* p_viewport);
+    Node* get_custom_viewport() const;
 
     Vector2 get_camera_position() const;
     void force_update_scroll();

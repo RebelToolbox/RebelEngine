@@ -100,18 +100,28 @@ private:
     Overlay overlay;
 
 protected:
-    void _gui_input(const Ref<InputEvent> &p_ev);
+    void _gui_input(const Ref<InputEvent>& p_ev);
     void _notification(int p_what);
     static void _bind_methods();
 
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
 
 public:
-    bool has_point(const Point2 &p_point) const;
+    bool has_point(const Point2& p_point) const;
 
-    void set_slot(int p_idx, bool p_enable_left, int p_type_left, const Color &p_color_left, bool p_enable_right, int p_type_right, const Color &p_color_right, const Ref<Texture> &p_custom_left = Ref<Texture>(), const Ref<Texture> &p_custom_right = Ref<Texture>());
+    void set_slot(
+        int p_idx,
+        bool p_enable_left,
+        int p_type_left,
+        const Color& p_color_left,
+        bool p_enable_right,
+        int p_type_right,
+        const Color& p_color_right,
+        const Ref<Texture>& p_custom_left = Ref<Texture>(),
+        const Ref<Texture>& p_custom_right = Ref<Texture>()
+    );
     void clear_slot(int p_idx);
     void clear_all_slots();
 
@@ -121,7 +131,7 @@ public:
     void set_slot_type_left(int p_idx, int p_type_left);
     int get_slot_type_left(int p_idx) const;
 
-    void set_slot_color_left(int p_idx, const Color &p_color_left);
+    void set_slot_color_left(int p_idx, const Color& p_color_left);
     Color get_slot_color_left(int p_idx) const;
 
     bool is_slot_enabled_right(int p_idx) const;
@@ -130,13 +140,13 @@ public:
     void set_slot_type_right(int p_idx, int p_type_right);
     int get_slot_type_right(int p_idx) const;
 
-    void set_slot_color_right(int p_idx, const Color &p_color_right);
+    void set_slot_color_right(int p_idx, const Color& p_color_right);
     Color get_slot_color_right(int p_idx) const;
 
-    void set_title(const String &p_title);
+    void set_title(const String& p_title);
     String get_title() const;
 
-    void set_offset(const Vector2 &p_offset);
+    void set_offset(const Vector2& p_offset);
     Vector2 get_offset() const;
 
     void set_selected(bool p_selected);
@@ -168,7 +178,9 @@ public:
 
     virtual Size2 get_minimum_size() const;
 
-    bool is_resizing() const { return resizing; }
+    bool is_resizing() const {
+        return resizing;
+    }
 
     GraphNode();
 };

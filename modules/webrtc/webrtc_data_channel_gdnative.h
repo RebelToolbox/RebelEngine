@@ -43,10 +43,12 @@ protected:
     static void _bind_methods();
 
 private:
-    const godot_net_webrtc_data_channel *interface;
+    const godot_net_webrtc_data_channel* interface;
 
 public:
-    void set_native_webrtc_data_channel(const godot_net_webrtc_data_channel *p_impl);
+    void set_native_webrtc_data_channel(
+        const godot_net_webrtc_data_channel* p_impl
+    );
 
     virtual void set_write_mode(WriteMode mode);
     virtual WriteMode get_write_mode() const;
@@ -67,8 +69,11 @@ public:
 
     /** Inherited from PacketPeer: **/
     virtual int get_available_packet_count() const;
-    virtual Error get_packet(const uint8_t **r_buffer, int &r_buffer_size); ///< buffer is GONE after next get_packet
-    virtual Error put_packet(const uint8_t *p_buffer, int p_buffer_size);
+    virtual Error get_packet(
+        const uint8_t** r_buffer,
+        int& r_buffer_size
+    ); ///< buffer is GONE after next get_packet
+    virtual Error put_packet(const uint8_t* p_buffer, int p_buffer_size);
 
     virtual int get_max_packet_size() const;
 

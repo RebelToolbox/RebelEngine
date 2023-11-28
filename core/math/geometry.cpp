@@ -39,15 +39,17 @@
 
 #define SCALE_FACTOR 100000.0 // Based on CMP_EPSILON.
 
-// This implementation is very inefficient, commenting unless bugs happen. See the other one.
+// This implementation is very inefficient, commenting unless bugs happen. See
+// the other one.
 /*
-bool Geometry::is_point_in_polygon(const Vector2 &p_point, const Vector<Vector2> &p_polygon) {
+bool Geometry::is_point_in_polygon(const Vector2 &p_point, const Vector<Vector2>
+&p_polygon) {
 
     Vector<int> indices = Geometry::triangulate_polygon(p_polygon);
     for (int j = 0; j + 3 <= indices.size(); j += 3) {
         int i1 = indices[j], i2 = indices[j + 1], i3 = indices[j + 2];
-        if (Geometry::is_point_in_triangle(p_point, p_polygon[i1], p_polygon[i2], p_polygon[i3]))
-            return true;
+        if (Geometry::is_point_in_triangle(p_point, p_polygon[i1],
+p_polygon[i2], p_polygon[i3])) return true;
     }
     return false;
 }
@@ -100,28 +102,32 @@ struct _FaceClassify {
     struct _Link {
         int face;
         int edge;
+
         void clear() {
             face = -1;
             edge = -1;
         }
+
         _Link() {
             face = -1;
             edge = -1;
         }
     };
+
     bool valid;
     int group;
     _Link links[3];
     Face3 face;
+
     _FaceClassify() {
         group = -1;
         valid = false;
     };
 };
 
-static bool _connect_faces(_FaceClassify *p_faces, int len, int p_group) {
-    // Connect faces, error will occur if an edge is shared between more than 2 faces.
-    // Clear connections.
+static bool _connect_faces(_FaceClassify* p_faces, int len, int p_group) {
+    // Connect faces, error will occur if an edge is shared between more than 2
+    // faces. Clear connections.
 
     bool error = false;
 
@@ -148,8 +154,8 @@ static bool _connect_faces(_FaceClassify *p_faces, int len, int p_group) {
                     Vector3 vj2 = p_faces[j].face.vertex[l];
                     Vector3 vj1 = p_faces[j].face.vertex[(l + 1) % 3];
 
-                    if (vi1.distance_to(vj1) < 0.00001 &&
-                            vi2.distance_to(vj2) < 0.00001) {
+                    if (vi1.distance_to(vj1) < 0.00001
+                        && vi2.distance_to(vj2) < 0.00001) {
                         if (p_faces[i].links[k].face != -1) {
                             ERR_PRINT("already linked\n");
                             error = true;
@@ -191,7 +197,12 @@ static bool _connect_faces(_FaceClassify *p_faces, int len, int p_group) {
     return error;
 }
 
-static bool _group_face(_FaceClassify *p_faces, int len, int p_index, int p_group) {
+static bool _group_face(
+    _FaceClassify* p_faces,
+    int len,
+    int p_index,
+    int p_group
+) {
     if (p_faces[p_index].group >= 0) {
         return false;
     }
@@ -206,14 +217,16 @@ static bool _group_face(_FaceClassify *p_faces, int len, int p_index, int p_grou
     return true;
 }
 
-PoolVector<PoolVector<Face3>> Geometry::separate_objects(PoolVector<Face3> p_array) {
+PoolVector<PoolVector<Face3>> Geometry::separate_objects(
+    PoolVector<Face3> p_array
+) {
     PoolVector<PoolVector<Face3>> objects;
 
     int len = p_array.size();
 
     PoolVector<Face3>::Read r = p_array.read();
 
-    const Face3 *arrayptr = r.ptr();
+    const Face3* arrayptr = r.ptr();
 
     PoolVector<_FaceClassify> fc;
 
@@ -221,7 +234,7 @@ PoolVector<PoolVector<Face3>> Geometry::separate_objects(PoolVector<Face3> p_arr
 
     PoolVector<_FaceClassify>::Write fcw = fc.write();
 
-    _FaceClassify *_fcptr = fcw.ptr();
+    _FaceClassify* _fcptr = fcw.ptr();
 
     for (int i = 0; i < len; i++) {
         _fcptr[i].face = arrayptr[i];
@@ -229,7 +242,11 @@ PoolVector<PoolVector<Face3>> Geometry::separate_objects(PoolVector<Face3> p_arr
 
     bool error = _connect_faces(_fcptr, len, -1);
 
-    ERR_FAIL_COND_V_MSG(error, PoolVector<PoolVector<Face3>>(), "Invalid geometry.");
+    ERR_FAIL_COND_V_MSG(
+        error,
+        PoolVector<PoolVector<Face3>>(),
+        "Invalid geometry."
+    );
 
     // Group connected faces in separate objects.
 
@@ -252,7 +269,7 @@ PoolVector<PoolVector<Face3>> Geometry::separate_objects(PoolVector<Face3> p_arr
     if (group >= 0) {
         objects.resize(group);
         PoolVector<PoolVector<Face3>>::Write obw = objects.write();
-        PoolVector<Face3> *group_faces = obw.ptr();
+        PoolVector<Face3>* group_faces = obw.ptr();
 
         for (int i = 0; i < len; i++) {
             if (!_fcptr[i].valid) {
@@ -270,7 +287,6 @@ PoolVector<PoolVector<Face3>> Geometry::separate_objects(PoolVector<Face3> p_arr
 /*** GEOMETRY WRAPPER ***/
 
 enum _CellFlags {
-
     _CELL_SOLID = 1,
     _CELL_EXTERIOR = 2,
     _CELL_STEP_MASK = 0x1C,
@@ -291,10 +307,19 @@ enum _CellFlags {
     _CELL_PREV_Z_POS = 5 << 5,
     _CELL_PREV_Z_NEG = 6 << 5,
     _CELL_PREV_FIRST = 7 << 5,
-
 };
 
-static inline void _plot_face(uint8_t ***p_cell_status, int x, int y, int z, int len_x, int len_y, int len_z, const Vector3 &voxelsize, const Face3 &p_face) {
+static inline void _plot_face(
+    uint8_t*** p_cell_status,
+    int x,
+    int y,
+    int z,
+    int len_x,
+    int len_y,
+    int len_z,
+    const Vector3& voxelsize,
+    const Face3& p_face
+) {
     AABB aabb(Vector3(x, y, z), Vector3(len_x, len_y, len_z));
     aabb.position = aabb.position * voxelsize;
     aabb.size = aabb.size * voxelsize;
@@ -312,16 +337,16 @@ static inline void _plot_face(uint8_t ***p_cell_status, int x, int y, int z, int
     int div_y = len_y > 1 ? 2 : 1;
     int div_z = len_z > 1 ? 2 : 1;
 
-#define _SPLIT(m_i, m_div, m_v, m_len_v, m_new_v, m_new_len_v) \
-    if (m_div == 1) {                                          \
-        m_new_v = m_v;                                         \
-        m_new_len_v = 1;                                       \
-    } else if (m_i == 0) {                                     \
-        m_new_v = m_v;                                         \
-        m_new_len_v = m_len_v / 2;                             \
-    } else {                                                   \
-        m_new_v = m_v + m_len_v / 2;                           \
-        m_new_len_v = m_len_v - m_len_v / 2;                   \
+#define _SPLIT(m_i, m_div, m_v, m_len_v, m_new_v, m_new_len_v)                 \
+    if (m_div == 1) {                                                          \
+        m_new_v = m_v;                                                         \
+        m_new_len_v = 1;                                                       \
+    } else if (m_i == 0) {                                                     \
+        m_new_v = m_v;                                                         \
+        m_new_len_v = m_len_v / 2;                                             \
+    } else {                                                                   \
+        m_new_v = m_v + m_len_v / 2;                                           \
+        m_new_len_v = m_len_v - m_len_v / 2;                                   \
     }
 
     int new_x;
@@ -340,13 +365,31 @@ static inline void _plot_face(uint8_t ***p_cell_status, int x, int y, int z, int
             for (int k = 0; k < div_z; k++) {
                 _SPLIT(k, div_z, z, len_z, new_z, new_len_z);
 
-                _plot_face(p_cell_status, new_x, new_y, new_z, new_len_x, new_len_y, new_len_z, voxelsize, p_face);
+                _plot_face(
+                    p_cell_status,
+                    new_x,
+                    new_y,
+                    new_z,
+                    new_len_x,
+                    new_len_y,
+                    new_len_z,
+                    voxelsize,
+                    p_face
+                );
             }
         }
     }
 }
 
-static inline void _mark_outside(uint8_t ***p_cell_status, int x, int y, int z, int len_x, int len_y, int len_z) {
+static inline void _mark_outside(
+    uint8_t*** p_cell_status,
+    int x,
+    int y,
+    int z,
+    int len_x,
+    int len_y,
+    int len_z
+) {
     if (p_cell_status[x][y][z] & 3) {
         return; // Nothing to do, already used and/or visited.
     }
@@ -354,7 +397,7 @@ static inline void _mark_outside(uint8_t ***p_cell_status, int x, int y, int z, 
     p_cell_status[x][y][z] = _CELL_PREV_FIRST;
 
     while (true) {
-        uint8_t &c = p_cell_status[x][y][z];
+        uint8_t& c = p_cell_status[x][y][z];
 
         if ((c & _CELL_STEP_MASK) == _CELL_STEP_NONE) {
             // Haven't been in here, mark as outside.
@@ -456,7 +499,16 @@ static inline void _mark_outside(uint8_t ***p_cell_status, int x, int y, int z, 
     }
 }
 
-static inline void _build_faces(uint8_t ***p_cell_status, int x, int y, int z, int len_x, int len_y, int len_z, PoolVector<Face3> &p_faces) {
+static inline void _build_faces(
+    uint8_t*** p_cell_status,
+    int x,
+    int y,
+    int z,
+    int len_x,
+    int len_y,
+    int len_z,
+    PoolVector<Face3>& p_faces
+) {
     ERR_FAIL_INDEX(x, len_x);
     ERR_FAIL_INDEX(y, len_y);
     ERR_FAIL_INDEX(z, len_z);
@@ -468,12 +520,12 @@ static inline void _build_faces(uint8_t ***p_cell_status, int x, int y, int z, i
 #define vert(m_idx) Vector3(((m_idx) & 4) >> 2, ((m_idx) & 2) >> 1, (m_idx) & 1)
 
     static const uint8_t indices[6][4] = {
-        { 7, 6, 4, 5 },
-        { 7, 3, 2, 6 },
-        { 7, 5, 1, 3 },
-        { 0, 2, 3, 1 },
-        { 0, 1, 5, 4 },
-        { 0, 4, 6, 2 },
+        {7, 6, 4, 5},
+        {7, 3, 2, 6},
+        {7, 5, 1, 3},
+        {0, 2, 3, 1},
+        {0, 1, 5, 4},
+        {0, 4, 6, 2},
 
     };
 
@@ -507,27 +559,24 @@ static inline void _build_faces(uint8_t ***p_cell_status, int x, int y, int z, i
             face_points[j] = vert(indices[i][j]) + Vector3(x, y, z);
         }
 
-        p_faces.push_back(
-                Face3(
-                        face_points[0],
-                        face_points[1],
-                        face_points[2]));
+        p_faces.push_back(Face3(face_points[0], face_points[1], face_points[2])
+        );
 
-        p_faces.push_back(
-                Face3(
-                        face_points[2],
-                        face_points[3],
-                        face_points[0]));
+        p_faces.push_back(Face3(face_points[2], face_points[3], face_points[0])
+        );
     }
 }
 
-PoolVector<Face3> Geometry::wrap_geometry(PoolVector<Face3> p_array, real_t *p_error) {
+PoolVector<Face3> Geometry::wrap_geometry(
+    PoolVector<Face3> p_array,
+    real_t* p_error
+) {
 #define _MIN_SIZE 1.0
 #define _MAX_LENGTH 20
 
     int face_count = p_array.size();
     PoolVector<Face3>::Read facesr = p_array.read();
-    const Face3 *faces = facesr.ptr();
+    const Face3* faces = facesr.ptr();
 
     AABB global_aabb;
 
@@ -569,9 +618,9 @@ PoolVector<Face3> Geometry::wrap_geometry(PoolVector<Face3> p_array, real_t *p_e
 
     // Create and initialize cells to zero.
 
-    uint8_t ***cell_status = memnew_arr(uint8_t **, div_x);
+    uint8_t*** cell_status = memnew_arr(uint8_t**, div_x);
     for (int i = 0; i < div_x; i++) {
-        cell_status[i] = memnew_arr(uint8_t *, div_y);
+        cell_status[i] = memnew_arr(uint8_t*, div_y);
 
         for (int j = 0; j < div_y; j++) {
             cell_status[i][j] = memnew_arr(uint8_t, div_z);
@@ -592,7 +641,8 @@ PoolVector<Face3> Geometry::wrap_geometry(PoolVector<Face3> p_array, real_t *p_e
         _plot_face(cell_status, 0, 0, 0, div_x, div_y, div_z, voxelsize, f);
     }
 
-    // Determine which cells connect to the outside by traversing the outside and recursively flood-fill marking.
+    // Determine which cells connect to the outside by traversing the outside
+    // and recursively flood-fill marking.
 
     for (int i = 0; i < div_x; i++) {
         for (int j = 0; j < div_y; j++) {
@@ -622,7 +672,16 @@ PoolVector<Face3> Geometry::wrap_geometry(PoolVector<Face3> p_array, real_t *p_e
     for (int i = 0; i < div_x; i++) {
         for (int j = 0; j < div_y; j++) {
             for (int k = 0; k < div_z; k++) {
-                _build_faces(cell_status, i, j, k, div_x, div_y, div_z, wrapped_faces);
+                _build_faces(
+                    cell_status,
+                    i,
+                    j,
+                    k,
+                    div_x,
+                    div_y,
+                    div_z,
+                    wrapped_faces
+                );
             }
         }
     }
@@ -631,11 +690,11 @@ PoolVector<Face3> Geometry::wrap_geometry(PoolVector<Face3> p_array, real_t *p_e
 
     int wrapped_faces_count = wrapped_faces.size();
     PoolVector<Face3>::Write wrapped_facesw = wrapped_faces.write();
-    Face3 *wrapped_faces_ptr = wrapped_facesw.ptr();
+    Face3* wrapped_faces_ptr = wrapped_facesw.ptr();
 
     for (int i = 0; i < wrapped_faces_count; i++) {
         for (int j = 0; j < 3; j++) {
-            Vector3 &v = wrapped_faces_ptr[i].vertex[j];
+            Vector3& v = wrapped_faces_ptr[i].vertex[j];
             v = v * voxelsize;
             v += global_aabb.position;
         }
@@ -659,7 +718,9 @@ PoolVector<Face3> Geometry::wrap_geometry(PoolVector<Face3> p_array, real_t *p_e
     return wrapped_faces;
 }
 
-Vector<Vector<Vector2>> Geometry::decompose_polygon_in_convex(Vector<Point2> polygon) {
+Vector<Vector<Vector2>> Geometry::decompose_polygon_in_convex(
+    Vector<Point2> polygon
+) {
     Vector<Vector<Vector2>> decomp;
     List<TriangulatorPoly> in_poly, out_poly;
 
@@ -678,8 +739,9 @@ Vector<Vector<Vector2>> Geometry::decompose_polygon_in_convex(Vector<Point2> pol
 
     decomp.resize(out_poly.size());
     int idx = 0;
-    for (List<TriangulatorPoly>::Element *I = out_poly.front(); I; I = I->next()) {
-        TriangulatorPoly &tp = I->get();
+    for (List<TriangulatorPoly>::Element* I = out_poly.front(); I;
+         I = I->next()) {
+        TriangulatorPoly& tp = I->get();
 
         decomp.write[idx].resize(tp.GetNumPoints());
 
@@ -693,7 +755,8 @@ Vector<Vector<Vector2>> Geometry::decompose_polygon_in_convex(Vector<Point2> pol
     return decomp;
 }
 
-Geometry::MeshData Geometry::build_convex_mesh(const PoolVector<Plane> &p_planes) {
+Geometry::MeshData Geometry::build_convex_mesh(const PoolVector<Plane>& p_planes
+) {
     MeshData mesh;
 
 #define SUBPLANE_SIZE 1024.0
@@ -828,7 +891,7 @@ Geometry::MeshData Geometry::build_convex_mesh(const PoolVector<Plane> &p_planes
     return mesh;
 }
 
-PoolVector<Plane> Geometry::build_box_planes(const Vector3 &p_extents) {
+PoolVector<Plane> Geometry::build_box_planes(const Vector3& p_extents) {
     PoolVector<Plane> planes;
 
     planes.push_back(Plane(Vector3(1, 0, 0), p_extents.x));
@@ -841,7 +904,12 @@ PoolVector<Plane> Geometry::build_box_planes(const Vector3 &p_extents) {
     return planes;
 }
 
-PoolVector<Plane> Geometry::build_cylinder_planes(real_t p_radius, real_t p_height, int p_sides, Vector3::Axis p_axis) {
+PoolVector<Plane> Geometry::build_cylinder_planes(
+    real_t p_radius,
+    real_t p_height,
+    int p_sides,
+    Vector3::Axis p_axis
+) {
     ERR_FAIL_INDEX_V(p_axis, 3, PoolVector<Plane>());
 
     PoolVector<Plane> planes;
@@ -863,7 +931,12 @@ PoolVector<Plane> Geometry::build_cylinder_planes(real_t p_radius, real_t p_heig
     return planes;
 }
 
-PoolVector<Plane> Geometry::build_sphere_planes(real_t p_radius, int p_lats, int p_lons, Vector3::Axis p_axis) {
+PoolVector<Plane> Geometry::build_sphere_planes(
+    real_t p_radius,
+    int p_lats,
+    int p_lons,
+    Vector3::Axis p_axis
+) {
     ERR_FAIL_INDEX_V(p_axis, 3, PoolVector<Plane>());
 
     PoolVector<Plane> planes;
@@ -885,7 +958,8 @@ PoolVector<Plane> Geometry::build_sphere_planes(real_t p_radius, int p_lats, int
 
         for (int j = 1; j <= p_lats; j++) {
             // FIXME: This is stupid.
-            Vector3 angle = normal.linear_interpolate(axis, j / (real_t)p_lats).normalized();
+            Vector3 angle = normal.linear_interpolate(axis, j / (real_t)p_lats)
+                                .normalized();
             Vector3 pos = angle * p_radius;
             planes.push_back(Plane(pos, angle));
             planes.push_back(Plane(pos * axis_neg, angle * axis_neg));
@@ -895,7 +969,13 @@ PoolVector<Plane> Geometry::build_sphere_planes(real_t p_radius, int p_lats, int
     return planes;
 }
 
-PoolVector<Plane> Geometry::build_capsule_planes(real_t p_radius, real_t p_height, int p_sides, int p_lats, Vector3::Axis p_axis) {
+PoolVector<Plane> Geometry::build_capsule_planes(
+    real_t p_radius,
+    real_t p_height,
+    int p_sides,
+    int p_lats,
+    Vector3::Axis p_axis
+) {
     ERR_FAIL_INDEX_V(p_axis, 3, PoolVector<Plane>());
 
     PoolVector<Plane> planes;
@@ -916,7 +996,8 @@ PoolVector<Plane> Geometry::build_capsule_planes(real_t p_radius, real_t p_heigh
         planes.push_back(Plane(normal, p_radius));
 
         for (int j = 1; j <= p_lats; j++) {
-            Vector3 angle = normal.linear_interpolate(axis, j / (real_t)p_lats).normalized();
+            Vector3 angle = normal.linear_interpolate(axis, j / (real_t)p_lats)
+                                .normalized();
             Vector3 pos = axis * p_height * 0.5 + angle * p_radius;
             planes.push_back(Plane(pos, angle));
             planes.push_back(Plane(pos * axis_neg, angle * axis_neg));
@@ -930,7 +1011,10 @@ struct _AtlasWorkRect {
     Size2i s;
     Point2i p;
     int idx;
-    _FORCE_INLINE_ bool operator<(const _AtlasWorkRect &p_r) const { return s.width > p_r.s.width; };
+
+    _FORCE_INLINE_ bool operator<(const _AtlasWorkRect& p_r) const {
+        return s.width > p_r.s.width;
+    };
 };
 
 struct _AtlasWorkRectResult {
@@ -939,14 +1023,18 @@ struct _AtlasWorkRectResult {
     int max_h;
 };
 
-void Geometry::make_atlas(const Vector<Size2i> &p_rects, Vector<Point2i> &r_result, Size2i &r_size) {
+void Geometry::make_atlas(
+    const Vector<Size2i>& p_rects,
+    Vector<Point2i>& r_result,
+    Size2i& r_size
+) {
     // Super simple, almost brute force scanline stacking fitter.
-    // It's pretty basic for now, but it tries to make sure that the aspect ratio of the
-    // resulting atlas is somehow square. This is necessary because video cards have limits.
-    // On texture size (usually 2048 or 4096), so the more square a texture, the more chances.
-    // It will work in every hardware.
-    // For example, it will prioritize a 1024x1024 atlas (works everywhere) instead of a
-    // 256x8192 atlas (won't work anywhere).
+    // It's pretty basic for now, but it tries to make sure that the aspect
+    // ratio of the resulting atlas is somehow square. This is necessary because
+    // video cards have limits. On texture size (usually 2048 or 4096), so the
+    // more square a texture, the more chances. It will work in every hardware.
+    // For example, it will prioritize a 1024x1024 atlas (works everywhere)
+    // instead of a 256x8192 atlas (won't work anywhere).
 
     ERR_FAIL_COND(p_rects.size() == 0);
     for (int i = 0; i < p_rects.size(); i++) {
@@ -1014,7 +1102,9 @@ void Geometry::make_atlas(const Vector<Size2i> &p_rects, Vector<Point2i> &r_resu
                 max_w = end_w;
             }
 
-            if (ofs == 0 || end_h > limit_h) { // While h limit not reached, keep stacking.
+            if (ofs == 0
+                || end_h
+                       > limit_h) { // While h limit not reached, keep stacking.
                 ofs += wrects[j].s.width;
             }
         }
@@ -1050,7 +1140,12 @@ void Geometry::make_atlas(const Vector<Size2i> &p_rects, Vector<Point2i> &r_resu
     r_size = Size2(results[best].max_w, results[best].max_h);
 }
 
-Vector<Vector<Point2>> Geometry::_polypaths_do_operation(PolyBooleanOperation p_op, const Vector<Point2> &p_polypath_a, const Vector<Point2> &p_polypath_b, bool is_a_open) {
+Vector<Vector<Point2>> Geometry::_polypaths_do_operation(
+    PolyBooleanOperation p_op,
+    const Vector<Point2>& p_polypath_a,
+    const Vector<Point2>& p_polypath_b,
+    bool is_a_open
+) {
     using namespace ClipperLib;
 
     ClipType op = ctUnion;
@@ -1073,13 +1168,23 @@ Vector<Vector<Point2>> Geometry::_polypaths_do_operation(PolyBooleanOperation p_
 
     // Need to scale points (Clipper's requirement for robust computation).
     for (int i = 0; i != p_polypath_a.size(); ++i) {
-        path_a << IntPoint(p_polypath_a[i].x * SCALE_FACTOR, p_polypath_a[i].y * SCALE_FACTOR);
+        path_a << IntPoint(
+            p_polypath_a[i].x * SCALE_FACTOR,
+            p_polypath_a[i].y * SCALE_FACTOR
+        );
     }
     for (int i = 0; i != p_polypath_b.size(); ++i) {
-        path_b << IntPoint(p_polypath_b[i].x * SCALE_FACTOR, p_polypath_b[i].y * SCALE_FACTOR);
+        path_b << IntPoint(
+            p_polypath_b[i].x * SCALE_FACTOR,
+            p_polypath_b[i].y * SCALE_FACTOR
+        );
     }
     Clipper clp;
-    clp.AddPath(path_a, ptSubject, !is_a_open); // Forward compatible with Clipper 10.0.0.
+    clp.AddPath(
+        path_a,
+        ptSubject,
+        !is_a_open
+    ); // Forward compatible with Clipper 10.0.0.
     clp.AddPath(path_b, ptClip, true); // Polylines cannot be set as clip.
 
     Paths paths;
@@ -1097,19 +1202,25 @@ Vector<Vector<Point2>> Geometry::_polypaths_do_operation(PolyBooleanOperation p_
     for (Paths::size_type i = 0; i < paths.size(); ++i) {
         Vector<Vector2> polypath;
 
-        const Path &scaled_path = paths[i];
+        const Path& scaled_path = paths[i];
 
         for (Paths::size_type j = 0; j < scaled_path.size(); ++j) {
             polypath.push_back(Point2(
-                    static_cast<real_t>(scaled_path[j].X) / SCALE_FACTOR,
-                    static_cast<real_t>(scaled_path[j].Y) / SCALE_FACTOR));
+                static_cast<real_t>(scaled_path[j].X) / SCALE_FACTOR,
+                static_cast<real_t>(scaled_path[j].Y) / SCALE_FACTOR
+            ));
         }
         polypaths.push_back(polypath);
     }
     return polypaths;
 }
 
-Vector<Vector<Point2>> Geometry::_polypath_offset(const Vector<Point2> &p_polypath, real_t p_delta, PolyJoinType p_join_type, PolyEndType p_end_type) {
+Vector<Vector<Point2>> Geometry::_polypath_offset(
+    const Vector<Point2>& p_polypath,
+    real_t p_delta,
+    PolyJoinType p_join_type,
+    PolyEndType p_end_type
+) {
     using namespace ClipperLib;
 
     JoinType jt = jtSquare;
@@ -1150,7 +1261,10 @@ Vector<Vector<Point2>> Geometry::_polypath_offset(const Vector<Point2> &p_polypa
 
     // Need to scale points (Clipper's requirement for robust computation).
     for (int i = 0; i != p_polypath.size(); ++i) {
-        path << IntPoint(p_polypath[i].x * SCALE_FACTOR, p_polypath[i].y * SCALE_FACTOR);
+        path << IntPoint(
+            p_polypath[i].x * SCALE_FACTOR,
+            p_polypath[i].y * SCALE_FACTOR
+        );
     }
     co.AddPath(path, jt, et);
 
@@ -1163,19 +1277,20 @@ Vector<Vector<Point2>> Geometry::_polypath_offset(const Vector<Point2> &p_polypa
     for (Paths::size_type i = 0; i < paths.size(); ++i) {
         Vector<Vector2> polypath;
 
-        const Path &scaled_path = paths[i];
+        const Path& scaled_path = paths[i];
 
         for (Paths::size_type j = 0; j < scaled_path.size(); ++j) {
             polypath.push_back(Point2(
-                    static_cast<real_t>(scaled_path[j].X) / SCALE_FACTOR,
-                    static_cast<real_t>(scaled_path[j].Y) / SCALE_FACTOR));
+                static_cast<real_t>(scaled_path[j].X) / SCALE_FACTOR,
+                static_cast<real_t>(scaled_path[j].Y) / SCALE_FACTOR
+            ));
         }
         polypaths.push_back(polypath);
     }
     return polypaths;
 }
 
-real_t Geometry::calculate_convex_hull_volume(const Geometry::MeshData &p_md) {
+real_t Geometry::calculate_convex_hull_volume(const Geometry::MeshData& p_md) {
     if (!p_md.vertices.size()) {
         return 0.0;
     }
@@ -1193,7 +1308,7 @@ real_t Geometry::calculate_convex_hull_volume(const Geometry::MeshData &p_md) {
 
     // volume of each cone is 1/3 * height * area of face
     for (int f = 0; f < p_md.faces.size(); f++) {
-        const Geometry::MeshData::Face &face = p_md.faces[f];
+        const Geometry::MeshData::Face& face = p_md.faces[f];
 
         real_t height = 0.0;
         real_t face_area = 0.0;
@@ -1218,16 +1333,22 @@ real_t Geometry::calculate_convex_hull_volume(const Geometry::MeshData &p_md) {
     return volume;
 }
 
-// note this function is slow, because it builds meshes etc. Not ideal to use in realtime.
-// Planes must face OUTWARD from the center of the convex hull, by convention.
-bool Geometry::convex_hull_intersects_convex_hull(const Plane *p_planes_a, int p_plane_count_a, const Plane *p_planes_b, int p_plane_count_b) {
+// note this function is slow, because it builds meshes etc. Not ideal to use in
+// realtime. Planes must face OUTWARD from the center of the convex hull, by
+// convention.
+bool Geometry::convex_hull_intersects_convex_hull(
+    const Plane* p_planes_a,
+    int p_plane_count_a,
+    const Plane* p_planes_b,
+    int p_plane_count_b
+) {
     if (!p_plane_count_a || !p_plane_count_b) {
         return false;
     }
 
     // OR alternative approach, we can call compute_convex_mesh_points()
-    // with both sets of planes, to get an intersection. Not sure which method is
-    // faster... this may be faster with more complex hulls.
+    // with both sets of planes, to get an intersection. Not sure which method
+    // is faster... this may be faster with more complex hulls.
 
     // the usual silliness to get from one vector format to another...
     PoolVector<Plane> planes_a;
@@ -1254,7 +1375,7 @@ bool Geometry::convex_hull_intersects_convex_hull(const Plane *p_planes_a, int p
 
     // first check the points against the planes
     for (int p = 0; p < p_plane_count_a; p++) {
-        const Plane &plane = p_planes_a[p];
+        const Plane& plane = p_planes_a[p];
 
         for (int n = 0; n < md_B.vertices.size(); n++) {
             if (!plane.is_point_over(md_B.vertices[n])) {
@@ -1264,7 +1385,7 @@ bool Geometry::convex_hull_intersects_convex_hull(const Plane *p_planes_a, int p
     }
 
     for (int p = 0; p < p_plane_count_b; p++) {
-        const Plane &plane = p_planes_b[p];
+        const Plane& plane = p_planes_b[p];
 
         for (int n = 0; n < md_A.vertices.size(); n++) {
             if (!plane.is_point_over(md_A.vertices[n])) {
@@ -1275,19 +1396,33 @@ bool Geometry::convex_hull_intersects_convex_hull(const Plane *p_planes_a, int p
 
     // now check edges
     for (int n = 0; n < md_A.edges.size(); n++) {
-        const Vector3 &pt_a = md_A.vertices[md_A.edges[n].a];
-        const Vector3 &pt_b = md_A.vertices[md_A.edges[n].b];
+        const Vector3& pt_a = md_A.vertices[md_A.edges[n].a];
+        const Vector3& pt_b = md_A.vertices[md_A.edges[n].b];
 
-        if (segment_intersects_convex(pt_a, pt_b, p_planes_b, p_plane_count_b, nullptr, nullptr)) {
+        if (segment_intersects_convex(
+                pt_a,
+                pt_b,
+                p_planes_b,
+                p_plane_count_b,
+                nullptr,
+                nullptr
+            )) {
             return true;
         }
     }
 
     for (int n = 0; n < md_B.edges.size(); n++) {
-        const Vector3 &pt_a = md_B.vertices[md_B.edges[n].a];
-        const Vector3 &pt_b = md_B.vertices[md_B.edges[n].b];
+        const Vector3& pt_a = md_B.vertices[md_B.edges[n].a];
+        const Vector3& pt_b = md_B.vertices[md_B.edges[n].b];
 
-        if (segment_intersects_convex(pt_a, pt_b, p_planes_a, p_plane_count_a, nullptr, nullptr)) {
+        if (segment_intersects_convex(
+                pt_a,
+                pt_b,
+                p_planes_a,
+                p_plane_count_a,
+                nullptr,
+                nullptr
+            )) {
             return true;
         }
     }
@@ -1295,7 +1430,11 @@ bool Geometry::convex_hull_intersects_convex_hull(const Plane *p_planes_a, int p
     return false;
 }
 
-Vector<Vector3> Geometry::compute_convex_mesh_points(const Plane *p_planes, int p_plane_count, real_t p_epsilon) {
+Vector<Vector3> Geometry::compute_convex_mesh_points(
+    const Plane* p_planes,
+    int p_plane_count,
+    real_t p_epsilon
+) {
     Vector<Vector3> points;
 
     // Iterate through every unique combination of any three planes.
@@ -1305,13 +1444,18 @@ Vector<Vector3> Geometry::compute_convex_mesh_points(const Plane *p_planes, int 
                 // Find the point where these planes all cross over (if they
                 // do at all).
                 Vector3 convex_shape_point;
-                if (p_planes[i].intersect_3(p_planes[j], p_planes[k], &convex_shape_point)) {
+                if (p_planes[i].intersect_3(
+                        p_planes[j],
+                        p_planes[k],
+                        &convex_shape_point
+                    )) {
                     // See if any *other* plane excludes this point because it's
                     // on the wrong side.
                     bool excluded = false;
                     for (int n = 0; n < p_plane_count; n++) {
                         if (n != i && n != j && n != k) {
-                            real_t dist = p_planes[n].distance_to(convex_shape_point);
+                            real_t dist =
+                                p_planes[n].distance_to(convex_shape_point);
                             if (dist > p_epsilon) {
                                 excluded = true;
                                 break;
@@ -1331,13 +1475,22 @@ Vector<Vector3> Geometry::compute_convex_mesh_points(const Plane *p_planes, int 
     return points;
 }
 
-Vector<Geometry::PackRectsResult> Geometry::partial_pack_rects(const Vector<Vector2i> &p_sizes, const Size2i &p_atlas_size) {
+Vector<Geometry::PackRectsResult> Geometry::partial_pack_rects(
+    const Vector<Vector2i>& p_sizes,
+    const Size2i& p_atlas_size
+) {
     Vector<stbrp_node> nodes;
     nodes.resize(p_atlas_size.width);
     memset(nodes.ptrw(), 0, sizeof(stbrp_node) * nodes.size());
 
     stbrp_context context;
-    stbrp_init_target(&context, p_atlas_size.width, p_atlas_size.height, nodes.ptrw(), p_atlas_size.width);
+    stbrp_init_target(
+        &context,
+        p_atlas_size.width,
+        p_atlas_size.height,
+        nodes.ptrw(),
+        p_atlas_size.width
+    );
 
     Vector<stbrp_rect> rects;
     rects.resize(p_sizes.size());
@@ -1357,7 +1510,11 @@ Vector<Geometry::PackRectsResult> Geometry::partial_pack_rects(const Vector<Vect
     ret.resize(p_sizes.size());
 
     for (int i = 0; i < p_sizes.size(); i++) {
-        ret.write[rects[i].id] = { rects[i].x, rects[i].y, static_cast<bool>(rects[i].was_packed) };
+        ret.write[rects[i].id] = {
+            rects[i].x,
+            rects[i].y,
+            static_cast<bool>(rects[i].was_packed)
+        };
     }
 
     return ret;
@@ -1365,14 +1522,18 @@ Vector<Geometry::PackRectsResult> Geometry::partial_pack_rects(const Vector<Vect
 
 // adapted from:
 // https://stackoverflow.com/questions/6989100/sort-points-in-clockwise-order
-void Geometry::sort_polygon_winding(Vector<Vector2> &r_verts, bool p_clockwise) {
+void Geometry::sort_polygon_winding(
+    Vector<Vector2>& r_verts,
+    bool p_clockwise
+) {
     // sort winding order of a (primarily convex) polygon.
     // It can handle some concave polygons, but not
     // where a vertex 'goes back on' a previous vertex ..
     // i.e. it will change the shape in some concave cases.
     struct ElementComparator {
         Vector2 center;
-        bool operator()(const Vector2 &a, const Vector2 &b) const {
+
+        bool operator()(const Vector2& a, const Vector2& b) const {
             if (a.x - center.x >= 0 && b.x - center.x < 0) {
                 return true;
             }
@@ -1386,8 +1547,10 @@ void Geometry::sort_polygon_winding(Vector<Vector2> &r_verts, bool p_clockwise) 
                 return b.y > a.y;
             }
 
-            // compute the cross product of vectors (center -> a) x (center -> b)
-            real_t det = (a.x - center.x) * (b.y - center.y) - (b.x - center.x) * (a.y - center.y);
+            // compute the cross product of vectors (center -> a) x (center ->
+            // b)
+            real_t det = (a.x - center.x) * (b.y - center.y)
+                       - (b.x - center.x) * (a.y - center.y);
             if (det < 0.0) {
                 return true;
             }
@@ -1397,8 +1560,10 @@ void Geometry::sort_polygon_winding(Vector<Vector2> &r_verts, bool p_clockwise) 
 
             // points a and b are on the same line from the center
             // check which point is closer to the center
-            real_t d1 = (a.x - center.x) * (a.x - center.x) + (a.y - center.y) * (a.y - center.y);
-            real_t d2 = (b.x - center.x) * (b.x - center.x) + (b.y - center.y) * (b.y - center.y);
+            real_t d1 = (a.x - center.x) * (a.x - center.x)
+                      + (a.y - center.y) * (a.y - center.y);
+            real_t d2 = (b.x - center.x) * (b.x - center.x)
+                      + (b.y - center.y) * (b.y - center.y);
             return d1 > d2;
         }
     };

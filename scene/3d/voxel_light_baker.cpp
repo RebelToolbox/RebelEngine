@@ -35,16 +35,12 @@
 
 #include <stdlib.h>
 
-#define FINDMINMAX(x0, x1, x2, min, max) \
-    min = max = x0;                      \
-    if (x1 < min)                        \
-        min = x1;                        \
-    if (x1 > max)                        \
-        max = x1;                        \
-    if (x2 < min)                        \
-        min = x2;                        \
-    if (x2 > max)                        \
-        max = x2;
+#define FINDMINMAX(x0, x1, x2, min, max)                                       \
+    min = max = x0;                                                            \
+    if (x1 < min) min = x1;                                                    \
+    if (x1 > max) max = x1;                                                    \
+    if (x2 < min) min = x2;                                                    \
+    if (x2 > max) max = x2;
 
 static bool planeBoxOverlap(Vector3 normal, float d, Vector3 maxbox) {
     int q;
@@ -69,97 +65,97 @@ static bool planeBoxOverlap(Vector3 normal, float d, Vector3 maxbox) {
 }
 
 /*======================== X-tests ========================*/
-#define AXISTEST_X01(a, b, fa, fb)                 \
-    p0 = a * v0.y - b * v0.z;                      \
-    p2 = a * v2.y - b * v2.z;                      \
-    if (p0 < p2) {                                 \
-        min = p0;                                  \
-        max = p2;                                  \
-    } else {                                       \
-        min = p2;                                  \
-        max = p0;                                  \
-    }                                              \
-    rad = fa * boxhalfsize.y + fb * boxhalfsize.z; \
-    if (min > rad || max < -rad)                   \
-        return false;
+#define AXISTEST_X01(a, b, fa, fb)                                             \
+    p0 = a * v0.y - b * v0.z;                                                  \
+    p2 = a * v2.y - b * v2.z;                                                  \
+    if (p0 < p2) {                                                             \
+        min = p0;                                                              \
+        max = p2;                                                              \
+    } else {                                                                   \
+        min = p2;                                                              \
+        max = p0;                                                              \
+    }                                                                          \
+    rad = fa * boxhalfsize.y + fb * boxhalfsize.z;                             \
+    if (min > rad || max < -rad) return false;
 
-#define AXISTEST_X2(a, b, fa, fb)                  \
-    p0 = a * v0.y - b * v0.z;                      \
-    p1 = a * v1.y - b * v1.z;                      \
-    if (p0 < p1) {                                 \
-        min = p0;                                  \
-        max = p1;                                  \
-    } else {                                       \
-        min = p1;                                  \
-        max = p0;                                  \
-    }                                              \
-    rad = fa * boxhalfsize.y + fb * boxhalfsize.z; \
-    if (min > rad || max < -rad)                   \
-        return false;
+#define AXISTEST_X2(a, b, fa, fb)                                              \
+    p0 = a * v0.y - b * v0.z;                                                  \
+    p1 = a * v1.y - b * v1.z;                                                  \
+    if (p0 < p1) {                                                             \
+        min = p0;                                                              \
+        max = p1;                                                              \
+    } else {                                                                   \
+        min = p1;                                                              \
+        max = p0;                                                              \
+    }                                                                          \
+    rad = fa * boxhalfsize.y + fb * boxhalfsize.z;                             \
+    if (min > rad || max < -rad) return false;
 
 /*======================== Y-tests ========================*/
-#define AXISTEST_Y02(a, b, fa, fb)                 \
-    p0 = -a * v0.x + b * v0.z;                     \
-    p2 = -a * v2.x + b * v2.z;                     \
-    if (p0 < p2) {                                 \
-        min = p0;                                  \
-        max = p2;                                  \
-    } else {                                       \
-        min = p2;                                  \
-        max = p0;                                  \
-    }                                              \
-    rad = fa * boxhalfsize.x + fb * boxhalfsize.z; \
-    if (min > rad || max < -rad)                   \
-        return false;
+#define AXISTEST_Y02(a, b, fa, fb)                                             \
+    p0 = -a * v0.x + b * v0.z;                                                 \
+    p2 = -a * v2.x + b * v2.z;                                                 \
+    if (p0 < p2) {                                                             \
+        min = p0;                                                              \
+        max = p2;                                                              \
+    } else {                                                                   \
+        min = p2;                                                              \
+        max = p0;                                                              \
+    }                                                                          \
+    rad = fa * boxhalfsize.x + fb * boxhalfsize.z;                             \
+    if (min > rad || max < -rad) return false;
 
-#define AXISTEST_Y1(a, b, fa, fb)                  \
-    p0 = -a * v0.x + b * v0.z;                     \
-    p1 = -a * v1.x + b * v1.z;                     \
-    if (p0 < p1) {                                 \
-        min = p0;                                  \
-        max = p1;                                  \
-    } else {                                       \
-        min = p1;                                  \
-        max = p0;                                  \
-    }                                              \
-    rad = fa * boxhalfsize.x + fb * boxhalfsize.z; \
-    if (min > rad || max < -rad)                   \
-        return false;
+#define AXISTEST_Y1(a, b, fa, fb)                                              \
+    p0 = -a * v0.x + b * v0.z;                                                 \
+    p1 = -a * v1.x + b * v1.z;                                                 \
+    if (p0 < p1) {                                                             \
+        min = p0;                                                              \
+        max = p1;                                                              \
+    } else {                                                                   \
+        min = p1;                                                              \
+        max = p0;                                                              \
+    }                                                                          \
+    rad = fa * boxhalfsize.x + fb * boxhalfsize.z;                             \
+    if (min > rad || max < -rad) return false;
 
 /*======================== Z-tests ========================*/
 
-#define AXISTEST_Z12(a, b, fa, fb)                 \
-    p1 = a * v1.x - b * v1.y;                      \
-    p2 = a * v2.x - b * v2.y;                      \
-    if (p2 < p1) {                                 \
-        min = p2;                                  \
-        max = p1;                                  \
-    } else {                                       \
-        min = p1;                                  \
-        max = p2;                                  \
-    }                                              \
-    rad = fa * boxhalfsize.x + fb * boxhalfsize.y; \
-    if (min > rad || max < -rad)                   \
-        return false;
+#define AXISTEST_Z12(a, b, fa, fb)                                             \
+    p1 = a * v1.x - b * v1.y;                                                  \
+    p2 = a * v2.x - b * v2.y;                                                  \
+    if (p2 < p1) {                                                             \
+        min = p2;                                                              \
+        max = p1;                                                              \
+    } else {                                                                   \
+        min = p1;                                                              \
+        max = p2;                                                              \
+    }                                                                          \
+    rad = fa * boxhalfsize.x + fb * boxhalfsize.y;                             \
+    if (min > rad || max < -rad) return false;
 
-#define AXISTEST_Z0(a, b, fa, fb)                  \
-    p0 = a * v0.x - b * v0.y;                      \
-    p1 = a * v1.x - b * v1.y;                      \
-    if (p0 < p1) {                                 \
-        min = p0;                                  \
-        max = p1;                                  \
-    } else {                                       \
-        min = p1;                                  \
-        max = p0;                                  \
-    }                                              \
-    rad = fa * boxhalfsize.x + fb * boxhalfsize.y; \
-    if (min > rad || max < -rad)                   \
-        return false;
+#define AXISTEST_Z0(a, b, fa, fb)                                              \
+    p0 = a * v0.x - b * v0.y;                                                  \
+    p1 = a * v1.x - b * v1.y;                                                  \
+    if (p0 < p1) {                                                             \
+        min = p0;                                                              \
+        max = p1;                                                              \
+    } else {                                                                   \
+        min = p1;                                                              \
+        max = p0;                                                              \
+    }                                                                          \
+    rad = fa * boxhalfsize.x + fb * boxhalfsize.y;                             \
+    if (min > rad || max < -rad) return false;
 
-static bool fast_tri_box_overlap(const Vector3 &boxcenter, const Vector3 boxhalfsize, const Vector3 *triverts) {
-    /*    use separating axis theorem to test overlap between triangle and box */
+static bool fast_tri_box_overlap(
+    const Vector3& boxcenter,
+    const Vector3 boxhalfsize,
+    const Vector3* triverts
+) {
+    /*    use separating axis theorem to test overlap between triangle and box
+     */
     /*    need to test for overlap in these directions: */
-    /*    1) the {x,y,z}-directions (actually, since we use the AABB of the triangle */
+    /*    1) the {x,y,z}-directions (actually, since we use the AABB of the
+     * triangle */
     /*       we do not even need to test these) */
     /*    2) normal of the triangle */
     /*    3) crossproduct(edge from tri, {x,y,z}-directin) */
@@ -232,10 +228,21 @@ static bool fast_tri_box_overlap(const Vector3 &boxcenter, const Vector3 boxhalf
     /*  compute plane equation of triangle: normal*x+d=0 */
     normal = e0.cross(e1);
     d = -normal.dot(v0); /* plane eq: normal.x+d=0 */
-    return planeBoxOverlap(normal, d, boxhalfsize); /* if true, box and triangle overlaps */
+    return planeBoxOverlap(
+        normal,
+        d,
+        boxhalfsize
+    ); /* if true, box and triangle overlaps */
 }
 
-static _FORCE_INLINE_ void get_uv_and_normal(const Vector3 &p_pos, const Vector3 *p_vtx, const Vector2 *p_uv, const Vector3 *p_normal, Vector2 &r_uv, Vector3 &r_normal) {
+static _FORCE_INLINE_ void get_uv_and_normal(
+    const Vector3& p_pos,
+    const Vector3* p_vtx,
+    const Vector2* p_uv,
+    const Vector3* p_normal,
+    Vector2& r_uv,
+    Vector3& r_normal
+) {
     if (p_pos.distance_squared_to(p_vtx[0]) < CMP_EPSILON2) {
         r_uv = p_uv[0];
         r_normal = p_normal[0];
@@ -272,14 +279,26 @@ static _FORCE_INLINE_ void get_uv_and_normal(const Vector3 &p_pos, const Vector3
     float u = 1.0f - v - w;
 
     r_uv = p_uv[0] * u + p_uv[1] * v + p_uv[2] * w;
-    r_normal = (p_normal[0] * u + p_normal[1] * v + p_normal[2] * w).normalized();
+    r_normal =
+        (p_normal[0] * u + p_normal[1] * v + p_normal[2] * w).normalized();
 }
 
-void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p_z, const Vector3 *p_vtx, const Vector3 *p_normal, const Vector2 *p_uv, const MaterialCache &p_material, const AABB &p_aabb) {
+void VoxelLightBaker::_plot_face(
+    int p_idx,
+    int p_level,
+    int p_x,
+    int p_y,
+    int p_z,
+    const Vector3* p_vtx,
+    const Vector3* p_normal,
+    const Vector2* p_uv,
+    const MaterialCache& p_material,
+    const AABB& p_aabb
+) {
     if (p_level == cell_subdiv - 1) {
-        //plot the face by guessing its albedo and emission value
+        // plot the face by guessing its albedo and emission value
 
-        //find best axis to map to, for scanning values
+        // find best axis to map to, for scanning values
         int closest_axis = 0;
         float closest_dot = 0;
 
@@ -303,8 +322,10 @@ void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p
         Vector3 t2;
         t2[(closest_axis + 2) % 3] = 1.0;
 
-        t1 *= p_aabb.size[(closest_axis + 1) % 3] / float(color_scan_cell_width);
-        t2 *= p_aabb.size[(closest_axis + 2) % 3] / float(color_scan_cell_width);
+        t1 *=
+            p_aabb.size[(closest_axis + 1) % 3] / float(color_scan_cell_width);
+        t2 *=
+            p_aabb.size[(closest_axis + 2) % 3] / float(color_scan_cell_width);
 
         Color albedo_accum;
         Color emission_accum;
@@ -312,7 +333,7 @@ void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p
 
         float alpha = 0.0;
 
-        //map to a grid average in the best axis for this face
+        // map to a grid average in the best axis for this face
         for (int i = 0; i < color_scan_cell_width; i++) {
             Vector3 ofs_i = float(i) * t1;
 
@@ -323,14 +344,16 @@ void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p
                 Vector3 to = from + t1 + t2 + axis * p_aabb.size[closest_axis];
                 Vector3 half = (to - from) * 0.5;
 
-                //is in this cell?
+                // is in this cell?
                 if (!fast_tri_box_overlap(from + half, half, p_vtx)) {
-                    continue; //face does not span this cell
+                    continue; // face does not span this cell
                 }
 
-                //go from -size to +size*2 to avoid skipping collisions
-                Vector3 ray_from = from + (t1 + t2) * 0.5 - axis * p_aabb.size[closest_axis];
-                Vector3 ray_to = ray_from + axis * p_aabb.size[closest_axis] * 2;
+                // go from -size to +size*2 to avoid skipping collisions
+                Vector3 ray_from =
+                    from + (t1 + t2) * 0.5 - axis * p_aabb.size[closest_axis];
+                Vector3 ray_to =
+                    ray_from + axis * p_aabb.size[closest_axis] * 2;
 
                 if (normal.dot(ray_from - ray_to) < 0) {
                     SWAP(ray_from, ray_to);
@@ -338,25 +361,44 @@ void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p
 
                 Vector3 intersection;
 
-                if (!plane.intersects_segment(ray_from, ray_to, &intersection)) {
-                    if (ABS(plane.distance_to(ray_from)) < ABS(plane.distance_to(ray_to))) {
+                if (!plane
+                         .intersects_segment(ray_from, ray_to, &intersection)) {
+                    if (ABS(plane.distance_to(ray_from))
+                        < ABS(plane.distance_to(ray_to))) {
                         intersection = plane.project(ray_from);
                     } else {
                         intersection = plane.project(ray_to);
                     }
                 }
 
-                intersection = Face3(p_vtx[0], p_vtx[1], p_vtx[2]).get_closest_point_to(intersection);
+                intersection = Face3(p_vtx[0], p_vtx[1], p_vtx[2])
+                                   .get_closest_point_to(intersection);
 
                 Vector2 uv;
                 Vector3 lnormal;
-                get_uv_and_normal(intersection, p_vtx, p_uv, p_normal, uv, lnormal);
-                if (lnormal == Vector3()) { //just in case normal as nor provided
+                get_uv_and_normal(
+                    intersection,
+                    p_vtx,
+                    p_uv,
+                    p_normal,
+                    uv,
+                    lnormal
+                );
+                if (lnormal
+                    == Vector3()) { // just in case normal as nor provided
                     lnormal = normal;
                 }
 
-                int uv_x = CLAMP(int(Math::fposmod(uv.x, 1.0f) * bake_texture_size), 0, bake_texture_size - 1);
-                int uv_y = CLAMP(int(Math::fposmod(uv.y, 1.0f) * bake_texture_size), 0, bake_texture_size - 1);
+                int uv_x = CLAMP(
+                    int(Math::fposmod(uv.x, 1.0f) * bake_texture_size),
+                    0,
+                    bake_texture_size - 1
+                );
+                int uv_y = CLAMP(
+                    int(Math::fposmod(uv.y, 1.0f) * bake_texture_size),
+                    0,
+                    bake_texture_size - 1
+                );
 
                 int ofs = uv_y * bake_texture_size + uv_x;
                 albedo_accum.r += p_material.albedo[ofs].r;
@@ -375,20 +417,30 @@ void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p
         }
 
         if (alpha == 0) {
-            //could not in any way get texture information.. so use closest point to center
+            // could not in any way get texture information.. so use closest
+            // point to center
 
             Face3 f(p_vtx[0], p_vtx[1], p_vtx[2]);
-            Vector3 inters = f.get_closest_point_to(p_aabb.position + p_aabb.size * 0.5);
+            Vector3 inters =
+                f.get_closest_point_to(p_aabb.position + p_aabb.size * 0.5);
 
             Vector3 lnormal;
             Vector2 uv;
             get_uv_and_normal(inters, p_vtx, p_uv, p_normal, uv, normal);
-            if (lnormal == Vector3()) { //just in case normal as nor provided
+            if (lnormal == Vector3()) { // just in case normal as nor provided
                 lnormal = normal;
             }
 
-            int uv_x = CLAMP(Math::fposmod(uv.x, 1.0f) * bake_texture_size, 0, bake_texture_size - 1);
-            int uv_y = CLAMP(Math::fposmod(uv.y, 1.0f) * bake_texture_size, 0, bake_texture_size - 1);
+            int uv_x = CLAMP(
+                Math::fposmod(uv.x, 1.0f) * bake_texture_size,
+                0,
+                bake_texture_size - 1
+            );
+            int uv_y = CLAMP(
+                Math::fposmod(uv.y, 1.0f) * bake_texture_size,
+                0,
+                bake_texture_size - 1
+            );
 
             int ofs = uv_y * bake_texture_size + uv_x;
 
@@ -406,7 +458,8 @@ void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p
             normal_accum = lnormal * alpha;
 
         } else {
-            float accdiv = 1.0 / (color_scan_cell_width * color_scan_cell_width);
+            float accdiv =
+                1.0 / (color_scan_cell_width * color_scan_cell_width);
             alpha *= accdiv;
 
             albedo_accum.r *= accdiv;
@@ -421,7 +474,7 @@ void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p
             normal_accum *= accdiv;
         }
 
-        //put this temporarily here, corrected in a later step
+        // put this temporarily here, corrected in a later step
         bake_cells.write[p_idx].albedo[0] += albedo_accum.r;
         bake_cells.write[p_idx].albedo[1] += albedo_accum.g;
         bake_cells.write[p_idx].albedo[2] += albedo_accum.b;
@@ -434,7 +487,7 @@ void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p
         bake_cells.write[p_idx].alpha += alpha;
 
     } else {
-        //go down
+        // go down
 
         int half = (1 << (cell_subdiv - 1)) >> (p_level + 1);
         for (int i = 0; i < 8; i++) {
@@ -457,25 +510,34 @@ void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p
                 aabb.position.z += aabb.size.z;
                 nz += half;
             }
-            //make sure to not plot beyond limits
-            if (nx < 0 || nx >= axis_cell_size[0] || ny < 0 || ny >= axis_cell_size[1] || nz < 0 || nz >= axis_cell_size[2]) {
+            // make sure to not plot beyond limits
+            if (nx < 0 || nx >= axis_cell_size[0] || ny < 0
+                || ny >= axis_cell_size[1] || nz < 0
+                || nz >= axis_cell_size[2]) {
                 continue;
             }
 
             {
                 AABB test_aabb = aabb;
-                //test_aabb.grow_by(test_aabb.get_longest_axis_size()*0.05); //grow a bit to avoid numerical error in real-time
-                Vector3 qsize = test_aabb.size * 0.5; //quarter size, for fast aabb test
+                // test_aabb.grow_by(test_aabb.get_longest_axis_size()*0.05);
+                // //grow a bit to avoid numerical error in real-time
+                Vector3 qsize =
+                    test_aabb.size * 0.5; // quarter size, for fast aabb test
 
-                if (!fast_tri_box_overlap(test_aabb.position + qsize, qsize, p_vtx)) {
-                    //if (!Face3(p_vtx[0],p_vtx[1],p_vtx[2]).intersects_aabb2(aabb)) {
-                    //does not fit in child, go on
+                if (!fast_tri_box_overlap(
+                        test_aabb.position + qsize,
+                        qsize,
+                        p_vtx
+                    )) {
+                    // if
+                    // (!Face3(p_vtx[0],p_vtx[1],p_vtx[2]).intersects_aabb2(aabb))
+                    // { does not fit in child, go on
                     continue;
                 }
             }
 
             if (bake_cells[p_idx].children[i] == CHILD_EMPTY) {
-                //sub cell must be created
+                // sub cell must be created
 
                 uint32_t child_idx = bake_cells.size();
                 bake_cells.write[p_idx].children[i] = child_idx;
@@ -483,12 +545,27 @@ void VoxelLightBaker::_plot_face(int p_idx, int p_level, int p_x, int p_y, int p
                 bake_cells.write[child_idx].level = p_level + 1;
             }
 
-            _plot_face(bake_cells[p_idx].children[i], p_level + 1, nx, ny, nz, p_vtx, p_normal, p_uv, p_material, aabb);
+            _plot_face(
+                bake_cells[p_idx].children[i],
+                p_level + 1,
+                nx,
+                ny,
+                nz,
+                p_vtx,
+                p_normal,
+                p_uv,
+                p_material,
+                aabb
+            );
         }
     }
 }
 
-Vector<Color> VoxelLightBaker::_get_bake_texture(Ref<Image> p_image, const Color &p_color_mul, const Color &p_color_add) {
+Vector<Color> VoxelLightBaker::_get_bake_texture(
+    Ref<Image> p_image,
+    const Color& p_color_mul,
+    const Color& p_color_add
+) {
     Vector<Color> ret;
 
     if (p_image.is_null() || p_image->empty()) {
@@ -505,7 +582,11 @@ Vector<Color> VoxelLightBaker::_get_bake_texture(Ref<Image> p_image, const Color
         p_image->decompress();
     }
     p_image->convert(Image::FORMAT_RGBA8);
-    p_image->resize(bake_texture_size, bake_texture_size, Image::INTERPOLATE_CUBIC);
+    p_image->resize(
+        bake_texture_size,
+        bake_texture_size,
+        Image::INTERPOLATE_CUBIC
+    );
 
     PoolVector<uint8_t>::Read r = p_image->get_data().read();
     ret.resize(bake_texture_size * bake_texture_size);
@@ -524,11 +605,14 @@ Vector<Color> VoxelLightBaker::_get_bake_texture(Ref<Image> p_image, const Color
     return ret;
 }
 
-VoxelLightBaker::MaterialCache VoxelLightBaker::_get_material_cache(Ref<Material> p_material) {
-    //this way of obtaining materials is inaccurate and also does not support some compressed formats very well
+VoxelLightBaker::MaterialCache VoxelLightBaker::_get_material_cache(
+    Ref<Material> p_material
+) {
+    // this way of obtaining materials is inaccurate and also does not support
+    // some compressed formats very well
     Ref<SpatialMaterial> mat = p_material;
 
-    Ref<Material> material = mat; //hack for now
+    Ref<Material> material = mat; // hack for now
 
     if (material_cache.has(material)) {
         return material_cache[material];
@@ -539,18 +623,28 @@ VoxelLightBaker::MaterialCache VoxelLightBaker::_get_material_cache(Ref<Material
     Ref<Image> empty;
 
     if (mat.is_valid()) {
-        Ref<Texture> albedo_tex = mat->get_texture(SpatialMaterial::TEXTURE_ALBEDO);
+        Ref<Texture> albedo_tex =
+            mat->get_texture(SpatialMaterial::TEXTURE_ALBEDO);
 
         Ref<Image> img_albedo;
         if (albedo_tex.is_valid()) {
             img_albedo = albedo_tex->get_data();
-            mc.albedo = _get_bake_texture(img_albedo, mat->get_albedo(), Color(0, 0, 0)); // albedo texture, color is multiplicative
+            mc.albedo = _get_bake_texture(
+                img_albedo,
+                mat->get_albedo(),
+                Color(0, 0, 0)
+            ); // albedo texture, color is multiplicative
         } else {
-            mc.albedo = _get_bake_texture(img_albedo, Color(1, 1, 1), mat->get_albedo()); // no albedo texture, color is additive
+            mc.albedo = _get_bake_texture(
+                img_albedo,
+                Color(1, 1, 1),
+                mat->get_albedo()
+            ); // no albedo texture, color is additive
         }
 
         if (mat->get_feature(SpatialMaterial::FEATURE_EMISSION)) {
-            Ref<Texture> emission_tex = mat->get_texture(SpatialMaterial::TEXTURE_EMISSION);
+            Ref<Texture> emission_tex =
+                mat->get_texture(SpatialMaterial::TEXTURE_EMISSION);
 
             Color emission_col = mat->get_emission();
             float emission_energy = mat->get_emission_energy();
@@ -561,13 +655,23 @@ VoxelLightBaker::MaterialCache VoxelLightBaker::_get_material_cache(Ref<Material
                 img_emission = emission_tex->get_data();
             }
 
-            if (mat->get_emission_operator() == SpatialMaterial::EMISSION_OP_ADD) {
-                mc.emission = _get_bake_texture(img_emission, Color(1, 1, 1) * emission_energy, emission_col * emission_energy);
+            if (mat->get_emission_operator()
+                == SpatialMaterial::EMISSION_OP_ADD) {
+                mc.emission = _get_bake_texture(
+                    img_emission,
+                    Color(1, 1, 1) * emission_energy,
+                    emission_col * emission_energy
+                );
             } else {
-                mc.emission = _get_bake_texture(img_emission, emission_col * emission_energy, Color(0, 0, 0));
+                mc.emission = _get_bake_texture(
+                    img_emission,
+                    emission_col * emission_energy,
+                    Color(0, 0, 0)
+                );
             }
         } else {
-            mc.emission = _get_bake_texture(empty, Color(0, 0, 0), Color(0, 0, 0));
+            mc.emission =
+                _get_bake_texture(empty, Color(0, 0, 0), Color(0, 0, 0));
         }
 
     } else {
@@ -579,10 +683,16 @@ VoxelLightBaker::MaterialCache VoxelLightBaker::_get_material_cache(Ref<Material
     return mc;
 }
 
-void VoxelLightBaker::plot_mesh(const Transform &p_xform, Ref<Mesh> &p_mesh, const Vector<Ref<Material>> &p_materials, const Ref<Material> &p_override_material) {
+void VoxelLightBaker::plot_mesh(
+    const Transform& p_xform,
+    Ref<Mesh>& p_mesh,
+    const Vector<Ref<Material>>& p_materials,
+    const Ref<Material>& p_override_material
+) {
     for (int i = 0; i < p_mesh->get_surface_count(); i++) {
-        if (p_mesh->surface_get_primitive_type(i) != Mesh::PRIMITIVE_TRIANGLES) {
-            continue; //only triangles
+        if (p_mesh->surface_get_primitive_type(i)
+            != Mesh::PRIMITIVE_TRIANGLES) {
+            continue; // only triangles
         }
 
         Ref<Material> src_material;
@@ -644,12 +754,27 @@ void VoxelLightBaker::plot_mesh(const Transform &p_xform, Ref<Mesh> &p_mesh, con
                     }
                 }
 
-                //test against original bounds
-                if (!fast_tri_box_overlap(original_bounds.position + original_bounds.size * 0.5, original_bounds.size * 0.5, vtxs)) {
+                // test against original bounds
+                if (!fast_tri_box_overlap(
+                        original_bounds.position + original_bounds.size * 0.5,
+                        original_bounds.size * 0.5,
+                        vtxs
+                    )) {
                     continue;
                 }
-                //plot
-                _plot_face(0, 0, 0, 0, 0, vtxs, normal, uvs, material, po2_bounds);
+                // plot
+                _plot_face(
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    vtxs,
+                    normal,
+                    uvs,
+                    material,
+                    po2_bounds
+                );
             }
 
         } else {
@@ -676,12 +801,27 @@ void VoxelLightBaker::plot_mesh(const Transform &p_xform, Ref<Mesh> &p_mesh, con
                     }
                 }
 
-                //test against original bounds
-                if (!fast_tri_box_overlap(original_bounds.position + original_bounds.size * 0.5, original_bounds.size * 0.5, vtxs)) {
+                // test against original bounds
+                if (!fast_tri_box_overlap(
+                        original_bounds.position + original_bounds.size * 0.5,
+                        original_bounds.size * 0.5,
+                        vtxs
+                    )) {
                     continue;
                 }
-                //plot face
-                _plot_face(0, 0, 0, 0, 0, vtxs, normal, uvs, material, po2_bounds);
+                // plot face
+                _plot_face(
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    vtxs,
+                    normal,
+                    uvs,
+                    material,
+                    po2_bounds
+                );
             }
         }
     }
@@ -689,7 +829,14 @@ void VoxelLightBaker::plot_mesh(const Transform &p_xform, Ref<Mesh> &p_mesh, con
     max_original_cells = bake_cells.size();
 }
 
-void VoxelLightBaker::_init_light_plot(int p_idx, int p_level, int p_x, int p_y, int p_z, uint32_t p_parent) {
+void VoxelLightBaker::_init_light_plot(
+    int p_idx,
+    int p_level,
+    int p_x,
+    int p_y,
+    int p_z,
+    uint32_t p_parent
+) {
     bake_light.write[p_idx].x = p_x;
     bake_light.write[p_idx].y = p_y;
     bake_light.write[p_idx].z = p_z;
@@ -698,7 +845,7 @@ void VoxelLightBaker::_init_light_plot(int p_idx, int p_level, int p_x, int p_y,
         bake_light.write[p_idx].next_leaf = first_leaf;
         first_leaf = p_idx;
     } else {
-        //go down
+        // go down
         int half = (1 << (cell_subdiv - 1)) >> (p_level + 1);
         for (int i = 0; i < 8; i++) {
             uint32_t child = bake_cells[p_idx].children[i];
@@ -726,7 +873,10 @@ void VoxelLightBaker::_init_light_plot(int p_idx, int p_level, int p_x, int p_y,
     }
 }
 
-void VoxelLightBaker::begin_bake_light(BakeQuality p_quality, float p_propagation) {
+void VoxelLightBaker::begin_bake_light(
+    BakeQuality p_quality,
+    float p_propagation
+) {
     _check_init_light();
     propagation = p_propagation;
     bake_quality = p_quality;
@@ -736,27 +886,33 @@ void VoxelLightBaker::_check_init_light() {
     if (bake_light.size() == 0) {
         direct_lights_baked = false;
         leaf_voxel_count = 0;
-        _fixup_plot(0, 0); //pre fixup, so normal, albedo, emission, etc. work for lighting.
+        _fixup_plot(
+            0,
+            0
+        ); // pre fixup, so normal, albedo, emission, etc. work for lighting.
         bake_light.resize(bake_cells.size());
-        //memset(bake_light.ptrw(), 0, bake_light.size() * sizeof(Light));
+        // memset(bake_light.ptrw(), 0, bake_light.size() * sizeof(Light));
         first_leaf = -1;
         _init_light_plot(0, 0, 0, 0, 0, CHILD_EMPTY);
     }
 }
 
-static float _get_normal_advance(const Vector3 &p_normal) {
+static float _get_normal_advance(const Vector3& p_normal) {
     Vector3 normal = p_normal;
     Vector3 unorm = normal.abs();
 
     if ((unorm.x >= unorm.y) && (unorm.x >= unorm.z)) {
         // x code
-        unorm = normal.x > 0.0 ? Vector3(1.0, 0.0, 0.0) : Vector3(-1.0, 0.0, 0.0);
+        unorm =
+            normal.x > 0.0 ? Vector3(1.0, 0.0, 0.0) : Vector3(-1.0, 0.0, 0.0);
     } else if ((unorm.y > unorm.x) && (unorm.y >= unorm.z)) {
         // y code
-        unorm = normal.y > 0.0 ? Vector3(0.0, 1.0, 0.0) : Vector3(0.0, -1.0, 0.0);
+        unorm =
+            normal.y > 0.0 ? Vector3(0.0, 1.0, 0.0) : Vector3(0.0, -1.0, 0.0);
     } else if ((unorm.z > unorm.x) && (unorm.z > unorm.y)) {
         // z code
-        unorm = normal.z > 0.0 ? Vector3(0.0, 0.0, 1.0) : Vector3(0.0, 0.0, -1.0);
+        unorm =
+            normal.z > 0.0 ? Vector3(0.0, 0.0, 1.0) : Vector3(0.0, 0.0, -1.0);
     } else {
         // oh-no we messed up code
         // has to be
@@ -775,7 +931,12 @@ static const Vector3 aniso_normal[6] = {
     Vector3(0, 0, 1)
 };
 
-uint32_t VoxelLightBaker::_find_cell_at_pos(const Cell *cells, int x, int y, int z) {
+uint32_t VoxelLightBaker::_find_cell_at_pos(
+    const Cell* cells,
+    int x,
+    int y,
+    int z
+) {
     uint32_t cell = 0;
 
     int ofs_x = 0;
@@ -795,7 +956,7 @@ uint32_t VoxelLightBaker::_find_cell_at_pos(const Cell *cells, int x, int y, int
     }
 
     for (int i = 0; i < cell_subdiv - 1; i++) {
-        const Cell *bc = &cells[cell];
+        const Cell* bc = &cells[cell];
 
         int child = 0;
         if (x >= ofs_x + half) {
@@ -821,10 +982,20 @@ uint32_t VoxelLightBaker::_find_cell_at_pos(const Cell *cells, int x, int y, int
 
     return cell;
 }
-void VoxelLightBaker::plot_light_directional(const Vector3 &p_direction, const Color &p_color, float p_energy, float p_indirect_energy, bool p_direct) {
+
+void VoxelLightBaker::plot_light_directional(
+    const Vector3& p_direction,
+    const Color& p_color,
+    float p_energy,
+    float p_indirect_energy,
+    bool p_direct
+) {
     _check_init_light();
 
-    float max_len = Vector3(axis_cell_size[0], axis_cell_size[1], axis_cell_size[2]).length() * 1.1;
+    float max_len =
+        Vector3(axis_cell_size[0], axis_cell_size[1], axis_cell_size[2])
+            .length()
+        * 1.1;
 
     if (p_direct) {
         direct_lights_baked = true;
@@ -834,8 +1005,8 @@ void VoxelLightBaker::plot_light_directional(const Vector3 &p_direction, const C
     Plane clip[3];
     int clip_planes = 0;
 
-    Light *light_data = bake_light.ptrw();
-    const Cell *cells = bake_cells.ptr();
+    Light* light_data = bake_light.ptrw();
+    const Cell* cells = bake_cells.ptr();
 
     for (int i = 0; i < 3; i++) {
         if (Math::is_zero_approx(light_axis[i])) {
@@ -854,14 +1025,15 @@ void VoxelLightBaker::plot_light_directional(const Vector3 &p_direction, const C
 
     float distance_adv = _get_normal_advance(light_axis);
 
-    Vector3 light_energy = Vector3(p_color.r, p_color.g, p_color.b) * p_energy * p_indirect_energy;
+    Vector3 light_energy =
+        Vector3(p_color.r, p_color.g, p_color.b) * p_energy * p_indirect_energy;
 
     int idx = first_leaf;
     while (idx >= 0) {
-        Light *light = &light_data[idx];
+        Light* light = &light_data[idx];
 
         Vector3 to(light->x + 0.5, light->y + 0.5, light->z + 0.5);
-        to += -light_axis.sign() * 0.47; //make it more likely to receive a ray
+        to += -light_axis.sign() * 0.47; // make it more likely to receive a ray
 
         Vector3 from = to - max_len * light_axis;
 
@@ -870,14 +1042,23 @@ void VoxelLightBaker::plot_light_directional(const Vector3 &p_direction, const C
         }
 
         float distance = (to - from).length();
-        distance += distance_adv - Math::fmod(distance, distance_adv); //make it reach the center of the box always
+        distance += distance_adv
+                  - Math::fmod(
+                        distance,
+                        distance_adv
+                  ); // make it reach the center of the box always
         from = to - light_axis * distance;
 
         uint32_t result = 0xFFFFFFFF;
 
-        while (distance > -distance_adv) { //use this to avoid precision errors
+        while (distance > -distance_adv) { // use this to avoid precision errors
 
-            result = _find_cell_at_pos(cells, int(floor(from.x)), int(floor(from.y)), int(floor(from.z)));
+            result = _find_cell_at_pos(
+                cells,
+                int(floor(from.x)),
+                int(floor(from.y)),
+                int(floor(from.z))
+            );
             if (result != 0xFFFFFFFF) {
                 break;
             }
@@ -887,9 +1068,13 @@ void VoxelLightBaker::plot_light_directional(const Vector3 &p_direction, const C
         }
 
         if (result == (uint32_t)idx) {
-            //cell hit itself! hooray!
+            // cell hit itself! hooray!
 
-            Vector3 normal(cells[idx].normal[0], cells[idx].normal[1], cells[idx].normal[2]);
+            Vector3 normal(
+                cells[idx].normal[0],
+                cells[idx].normal[1],
+                cells[idx].normal[2]
+            );
             if (normal == Vector3()) {
                 for (int i = 0; i < 6; i++) {
                     light->accum[i][0] += light_energy.x * cells[idx].albedo[0];
@@ -900,15 +1085,20 @@ void VoxelLightBaker::plot_light_directional(const Vector3 &p_direction, const C
             } else {
                 for (int i = 0; i < 6; i++) {
                     float s = MAX(0.0, aniso_normal[i].dot(-normal));
-                    light->accum[i][0] += light_energy.x * cells[idx].albedo[0] * s;
-                    light->accum[i][1] += light_energy.y * cells[idx].albedo[1] * s;
-                    light->accum[i][2] += light_energy.z * cells[idx].albedo[2] * s;
+                    light->accum[i][0] +=
+                        light_energy.x * cells[idx].albedo[0] * s;
+                    light->accum[i][1] +=
+                        light_energy.y * cells[idx].albedo[1] * s;
+                    light->accum[i][2] +=
+                        light_energy.z * cells[idx].albedo[2] * s;
                 }
             }
 
             if (p_direct) {
                 for (int i = 0; i < 6; i++) {
-                    float s = MAX(0.0, aniso_normal[i].dot(-light_axis)); //light depending on normal for direct
+                    float s =
+                        MAX(0.0, aniso_normal[i].dot(-light_axis)
+                        ); // light depending on normal for direct
                     light->direct_accum[i][0] += light_energy.x * s;
                     light->direct_accum[i][1] += light_energy.y * s;
                     light->direct_accum[i][2] += light_energy.z * s;
@@ -920,7 +1110,15 @@ void VoxelLightBaker::plot_light_directional(const Vector3 &p_direction, const C
     }
 }
 
-void VoxelLightBaker::plot_light_omni(const Vector3 &p_pos, const Color &p_color, float p_energy, float p_indirect_energy, float p_radius, float p_attenutation, bool p_direct) {
+void VoxelLightBaker::plot_light_omni(
+    const Vector3& p_pos,
+    const Color& p_color,
+    float p_energy,
+    float p_indirect_energy,
+    float p_radius,
+    float p_attenutation,
+    bool p_direct
+) {
     _check_init_light();
 
     if (p_direct) {
@@ -933,25 +1131,33 @@ void VoxelLightBaker::plot_light_omni(const Vector3 &p_pos, const Color &p_color
     // uint64_t us = OS::get_singleton()->get_ticks_usec();
 
     Vector3 light_pos = to_cell_space.xform(p_pos) + Vector3(0.5, 0.5, 0.5);
-    //Vector3 spot_axis = -light_cache.transform.basis.get_axis(2).normalized();
+    // Vector3 spot_axis =
+    // -light_cache.transform.basis.get_axis(2).normalized();
 
-    float local_radius = to_cell_space.basis.xform(Vector3(0, 0, 1)).length() * p_radius;
+    float local_radius =
+        to_cell_space.basis.xform(Vector3(0, 0, 1)).length() * p_radius;
 
-    Light *light_data = bake_light.ptrw();
-    const Cell *cells = bake_cells.ptr();
-    Vector3 light_energy = Vector3(p_color.r, p_color.g, p_color.b) * p_energy * p_indirect_energy;
+    Light* light_data = bake_light.ptrw();
+    const Cell* cells = bake_cells.ptr();
+    Vector3 light_energy =
+        Vector3(p_color.r, p_color.g, p_color.b) * p_energy * p_indirect_energy;
 
     int idx = first_leaf;
     while (idx >= 0) {
-        Light *light = &light_data[idx];
+        Light* light = &light_data[idx];
 
         Vector3 to(light->x + 0.5, light->y + 0.5, light->z + 0.5);
-        to += (light_pos - to).sign() * 0.47; //make it more likely to receive a ray
+        to += (light_pos - to).sign()
+            * 0.47; // make it more likely to receive a ray
 
         Vector3 light_axis = (to - light_pos).normalized();
         float distance_adv = _get_normal_advance(light_axis);
 
-        Vector3 normal(cells[idx].normal[0], cells[idx].normal[1], cells[idx].normal[2]);
+        Vector3 normal(
+            cells[idx].normal[0],
+            cells[idx].normal[1],
+            cells[idx].normal[2]
+        );
 
         if (normal != Vector3() && normal.dot(-light_axis) < 0.001) {
             idx = light_data[idx].next_leaf;
@@ -995,15 +1201,25 @@ void VoxelLightBaker::plot_light_omni(const Vector3 &p_pos, const Color &p_color
 
         float distance = (to - from).length();
 
-        distance -= Math::fmod(distance, distance_adv); //make it reach the center of the box always, but this tame make it closer
+        distance -= Math::fmod(
+            distance,
+            distance_adv
+        ); // make it reach the center of the box always, but this tame make it
+           // closer
         from = to - light_axis * distance;
-        to += (light_pos - to).sign() * 0.47; //make it more likely to receive a ray
+        to += (light_pos - to).sign()
+            * 0.47; // make it more likely to receive a ray
 
         uint32_t result = 0xFFFFFFFF;
 
-        while (distance > -distance_adv) { //use this to avoid precision errors
+        while (distance > -distance_adv) { // use this to avoid precision errors
 
-            result = _find_cell_at_pos(cells, int(floor(from.x)), int(floor(from.y)), int(floor(from.z)));
+            result = _find_cell_at_pos(
+                cells,
+                int(floor(from.x)),
+                int(floor(from.y)),
+                int(floor(from.z))
+            );
             if (result != 0xFFFFFFFF) {
                 break;
             }
@@ -1013,27 +1229,35 @@ void VoxelLightBaker::plot_light_omni(const Vector3 &p_pos, const Color &p_color
         }
 
         if (result == (uint32_t)idx) {
-            //cell hit itself! hooray!
+            // cell hit itself! hooray!
 
             if (normal == Vector3()) {
                 for (int i = 0; i < 6; i++) {
-                    light->accum[i][0] += light_energy.x * cells[idx].albedo[0] * att;
-                    light->accum[i][1] += light_energy.y * cells[idx].albedo[1] * att;
-                    light->accum[i][2] += light_energy.z * cells[idx].albedo[2] * att;
+                    light->accum[i][0] +=
+                        light_energy.x * cells[idx].albedo[0] * att;
+                    light->accum[i][1] +=
+                        light_energy.y * cells[idx].albedo[1] * att;
+                    light->accum[i][2] +=
+                        light_energy.z * cells[idx].albedo[2] * att;
                 }
 
             } else {
                 for (int i = 0; i < 6; i++) {
                     float s = MAX(0.0, aniso_normal[i].dot(-normal));
-                    light->accum[i][0] += light_energy.x * cells[idx].albedo[0] * s * att;
-                    light->accum[i][1] += light_energy.y * cells[idx].albedo[1] * s * att;
-                    light->accum[i][2] += light_energy.z * cells[idx].albedo[2] * s * att;
+                    light->accum[i][0] +=
+                        light_energy.x * cells[idx].albedo[0] * s * att;
+                    light->accum[i][1] +=
+                        light_energy.y * cells[idx].albedo[1] * s * att;
+                    light->accum[i][2] +=
+                        light_energy.z * cells[idx].albedo[2] * s * att;
                 }
             }
 
             if (p_direct) {
                 for (int i = 0; i < 6; i++) {
-                    float s = MAX(0.0, aniso_normal[i].dot(-light_axis)); //light depending on normal for direct
+                    float s =
+                        MAX(0.0, aniso_normal[i].dot(-light_axis)
+                        ); // light depending on normal for direct
                     light->direct_accum[i][0] += light_energy.x * s * att;
                     light->direct_accum[i][1] += light_energy.y * s * att;
                     light->direct_accum[i][2] += light_energy.z * s * att;
@@ -1045,7 +1269,18 @@ void VoxelLightBaker::plot_light_omni(const Vector3 &p_pos, const Color &p_color
     }
 }
 
-void VoxelLightBaker::plot_light_spot(const Vector3 &p_pos, const Vector3 &p_axis, const Color &p_color, float p_energy, float p_indirect_energy, float p_radius, float p_attenutation, float p_spot_angle, float p_spot_attenuation, bool p_direct) {
+void VoxelLightBaker::plot_light_spot(
+    const Vector3& p_pos,
+    const Vector3& p_axis,
+    const Color& p_color,
+    float p_energy,
+    float p_indirect_energy,
+    float p_radius,
+    float p_attenutation,
+    float p_spot_angle,
+    float p_spot_attenuation,
+    bool p_direct
+) {
     _check_init_light();
 
     if (p_direct) {
@@ -1060,22 +1295,28 @@ void VoxelLightBaker::plot_light_spot(const Vector3 &p_pos, const Vector3 &p_axi
     Vector3 light_pos = to_cell_space.xform(p_pos) + Vector3(0.5, 0.5, 0.5);
     Vector3 spot_axis = to_cell_space.basis.xform(p_axis).normalized();
 
-    float local_radius = to_cell_space.basis.xform(Vector3(0, 0, 1)).length() * p_radius;
+    float local_radius =
+        to_cell_space.basis.xform(Vector3(0, 0, 1)).length() * p_radius;
 
-    Light *light_data = bake_light.ptrw();
-    const Cell *cells = bake_cells.ptr();
-    Vector3 light_energy = Vector3(p_color.r, p_color.g, p_color.b) * p_energy * p_indirect_energy;
+    Light* light_data = bake_light.ptrw();
+    const Cell* cells = bake_cells.ptr();
+    Vector3 light_energy =
+        Vector3(p_color.r, p_color.g, p_color.b) * p_energy * p_indirect_energy;
 
     int idx = first_leaf;
     while (idx >= 0) {
-        Light *light = &light_data[idx];
+        Light* light = &light_data[idx];
 
         Vector3 to(light->x + 0.5, light->y + 0.5, light->z + 0.5);
 
         Vector3 light_axis = (to - light_pos).normalized();
         float distance_adv = _get_normal_advance(light_axis);
 
-        Vector3 normal(cells[idx].normal[0], cells[idx].normal[1], cells[idx].normal[2]);
+        Vector3 normal(
+            cells[idx].normal[0],
+            cells[idx].normal[1],
+            cells[idx].normal[2]
+        );
 
         if (normal != Vector3() && normal.dot(-light_axis) < 0.001) {
             idx = light_data[idx].next_leaf;
@@ -1126,14 +1367,23 @@ void VoxelLightBaker::plot_light_spot(const Vector3 &p_pos, const Vector3 &p_axi
 
         float distance = (to - from).length();
 
-        distance -= Math::fmod(distance, distance_adv); //make it reach the center of the box always, but this tame make it closer
+        distance -= Math::fmod(
+            distance,
+            distance_adv
+        ); // make it reach the center of the box always, but this tame make it
+           // closer
         from = to - light_axis * distance;
 
         uint32_t result = 0xFFFFFFFF;
 
-        while (distance > -distance_adv) { //use this to avoid precision errors
+        while (distance > -distance_adv) { // use this to avoid precision errors
 
-            result = _find_cell_at_pos(cells, int(floor(from.x)), int(floor(from.y)), int(floor(from.z)));
+            result = _find_cell_at_pos(
+                cells,
+                int(floor(from.x)),
+                int(floor(from.y)),
+                int(floor(from.z))
+            );
             if (result != 0xFFFFFFFF) {
                 break;
             }
@@ -1143,27 +1393,35 @@ void VoxelLightBaker::plot_light_spot(const Vector3 &p_pos, const Vector3 &p_axi
         }
 
         if (result == (uint32_t)idx) {
-            //cell hit itself! hooray!
+            // cell hit itself! hooray!
 
             if (normal == Vector3()) {
                 for (int i = 0; i < 6; i++) {
-                    light->accum[i][0] += light_energy.x * cells[idx].albedo[0] * att;
-                    light->accum[i][1] += light_energy.y * cells[idx].albedo[1] * att;
-                    light->accum[i][2] += light_energy.z * cells[idx].albedo[2] * att;
+                    light->accum[i][0] +=
+                        light_energy.x * cells[idx].albedo[0] * att;
+                    light->accum[i][1] +=
+                        light_energy.y * cells[idx].albedo[1] * att;
+                    light->accum[i][2] +=
+                        light_energy.z * cells[idx].albedo[2] * att;
                 }
 
             } else {
                 for (int i = 0; i < 6; i++) {
                     float s = MAX(0.0, aniso_normal[i].dot(-normal));
-                    light->accum[i][0] += light_energy.x * cells[idx].albedo[0] * s * att;
-                    light->accum[i][1] += light_energy.y * cells[idx].albedo[1] * s * att;
-                    light->accum[i][2] += light_energy.z * cells[idx].albedo[2] * s * att;
+                    light->accum[i][0] +=
+                        light_energy.x * cells[idx].albedo[0] * s * att;
+                    light->accum[i][1] +=
+                        light_energy.y * cells[idx].albedo[1] * s * att;
+                    light->accum[i][2] +=
+                        light_energy.z * cells[idx].albedo[2] * s * att;
                 }
             }
 
             if (p_direct) {
                 for (int i = 0; i < 6; i++) {
-                    float s = MAX(0.0, aniso_normal[i].dot(-light_axis)); //light depending on normal for direct
+                    float s =
+                        MAX(0.0, aniso_normal[i].dot(-light_axis)
+                        ); // light depending on normal for direct
                     light->direct_accum[i][0] += light_energy.x * s * att;
                     light->direct_accum[i][1] += light_energy.y * s * att;
                     light->direct_accum[i][2] += light_energy.z * s * att;
@@ -1184,7 +1442,7 @@ void VoxelLightBaker::_fixup_plot(int p_idx, int p_level) {
         bake_cells.write[p_idx].albedo[1] /= alpha;
         bake_cells.write[p_idx].albedo[2] /= alpha;
 
-        //transfer emission to light
+        // transfer emission to light
         bake_cells.write[p_idx].emission[0] /= alpha;
         bake_cells.write[p_idx].emission[1] /= alpha;
         bake_cells.write[p_idx].emission[2] /= alpha;
@@ -1193,9 +1451,13 @@ void VoxelLightBaker::_fixup_plot(int p_idx, int p_level) {
         bake_cells.write[p_idx].normal[1] /= alpha;
         bake_cells.write[p_idx].normal[2] /= alpha;
 
-        Vector3 n(bake_cells[p_idx].normal[0], bake_cells[p_idx].normal[1], bake_cells[p_idx].normal[2]);
+        Vector3 n(
+            bake_cells[p_idx].normal[0],
+            bake_cells[p_idx].normal[1],
+            bake_cells[p_idx].normal[2]
+        );
         if (n.length() < 0.01) {
-            //too much fight over normal, zero it
+            // too much fight over normal, zero it
             bake_cells.write[p_idx].normal[0] = 0;
             bake_cells.write[p_idx].normal[1] = 0;
             bake_cells.write[p_idx].normal[2] = 0;
@@ -1215,7 +1477,7 @@ void VoxelLightBaker::_fixup_plot(int p_idx, int p_level) {
         }*/
 
     } else {
-        //go down
+        // go down
 
         bake_cells.write[p_idx].emission[0] = 0;
         bake_cells.write[p_idx].emission[1] = 0;
@@ -1249,13 +1511,19 @@ void VoxelLightBaker::_fixup_plot(int p_idx, int p_level) {
 
             if (bake_light.size() > 0) {
                 for (int j = 0; j < 6; j++) {
-                    bake_light.write[p_idx].accum[j][0] += bake_light[child].accum[j][0];
-                    bake_light.write[p_idx].accum[j][1] += bake_light[child].accum[j][1];
-                    bake_light.write[p_idx].accum[j][2] += bake_light[child].accum[j][2];
+                    bake_light.write[p_idx].accum[j][0] +=
+                        bake_light[child].accum[j][0];
+                    bake_light.write[p_idx].accum[j][1] +=
+                        bake_light[child].accum[j][1];
+                    bake_light.write[p_idx].accum[j][2] +=
+                        bake_light[child].accum[j][2];
                 }
-                bake_cells.write[p_idx].emission[0] += bake_cells[child].emission[0];
-                bake_cells.write[p_idx].emission[1] += bake_cells[child].emission[1];
-                bake_cells.write[p_idx].emission[2] += bake_cells[child].emission[2];
+                bake_cells.write[p_idx].emission[0] +=
+                    bake_cells[child].emission[0];
+                bake_cells.write[p_idx].emission[1] +=
+                    bake_cells[child].emission[1];
+                bake_cells.write[p_idx].emission[2] +=
+                    bake_cells[child].emission[2];
             }
 
             children_found++;
@@ -1276,13 +1544,14 @@ void VoxelLightBaker::_fixup_plot(int p_idx, int p_level) {
     }
 }
 
-void VoxelLightBaker::begin_bake(int p_subdiv, const AABB &p_bounds) {
+void VoxelLightBaker::begin_bake(int p_subdiv, const AABB& p_bounds) {
     original_bounds = p_bounds;
     cell_subdiv = p_subdiv;
     bake_cells.resize(1);
     material_cache.clear();
 
-    //find out the actual real bounds, power of 2, which gets the highest subdivision
+    // find out the actual real bounds, power of 2, which gets the highest
+    // subdivision
     po2_bounds = p_bounds;
     int longest_axis = po2_bounds.get_longest_axis_index();
     axis_cell_size[longest_axis] = (1 << (cell_subdiv - 1));
@@ -1296,7 +1565,7 @@ void VoxelLightBaker::begin_bake(int p_subdiv, const AABB &p_bounds) {
         axis_cell_size[i] = axis_cell_size[longest_axis];
         float axis_size = po2_bounds.size[longest_axis];
 
-        //shrink until fit subdiv
+        // shrink until fit subdiv
         while (axis_size / 2.0 >= po2_bounds.size[i]) {
             axis_size /= 2.0;
             axis_cell_size[i] >>= 1;
@@ -1306,11 +1575,19 @@ void VoxelLightBaker::begin_bake(int p_subdiv, const AABB &p_bounds) {
     }
 
     Transform to_bounds;
-    to_bounds.basis.scale(Vector3(po2_bounds.size[longest_axis], po2_bounds.size[longest_axis], po2_bounds.size[longest_axis]));
+    to_bounds.basis.scale(Vector3(
+        po2_bounds.size[longest_axis],
+        po2_bounds.size[longest_axis],
+        po2_bounds.size[longest_axis]
+    ));
     to_bounds.origin = po2_bounds.position;
 
     Transform to_grid;
-    to_grid.basis.scale(Vector3(axis_cell_size[longest_axis], axis_cell_size[longest_axis], axis_cell_size[longest_axis]));
+    to_grid.basis.scale(Vector3(
+        axis_cell_size[longest_axis],
+        axis_cell_size[longest_axis],
+        axis_cell_size[longest_axis]
+    ));
 
     to_cell_space = to_grid * to_bounds.affine_inverse();
 
@@ -1321,20 +1598,22 @@ void VoxelLightBaker::end_bake() {
     _fixup_plot(0, 0);
 }
 
-//create the data for visual server
+// create the data for visual server
 
 PoolVector<int> VoxelLightBaker::create_gi_probe_data() {
     PoolVector<int> data;
 
-    data.resize(16 + (8 + 1 + 1 + 1 + 1) * bake_cells.size()); //4 for header, rest for rest.
+    data.resize(
+        16 + (8 + 1 + 1 + 1 + 1) * bake_cells.size()
+    ); // 4 for header, rest for rest.
 
     {
         PoolVector<int>::Write w = data.write();
 
-        uint32_t *w32 = (uint32_t *)w.ptr();
+        uint32_t* w32 = (uint32_t*)w.ptr();
 
-        w32[0] = 0; //version
-        w32[1] = cell_subdiv; //subdiv
+        w32[0] = 0;           // version
+        w32[1] = cell_subdiv; // subdiv
         w32[2] = axis_cell_size[0];
         w32[3] = axis_cell_size[1];
         w32[4] = axis_cell_size[2];
@@ -1348,16 +1627,24 @@ PoolVector<int> VoxelLightBaker::create_gi_probe_data() {
                 w32[ofs++] = bake_cells[i].children[j];
             }
 
-            { //albedo
-                uint32_t rgba = uint32_t(CLAMP(bake_cells[i].albedo[0] * 255.0, 0, 255)) << 16;
-                rgba |= uint32_t(CLAMP(bake_cells[i].albedo[1] * 255.0, 0, 255)) << 8;
-                rgba |= uint32_t(CLAMP(bake_cells[i].albedo[2] * 255.0, 0, 255)) << 0;
+            { // albedo
+                uint32_t rgba =
+                    uint32_t(CLAMP(bake_cells[i].albedo[0] * 255.0, 0, 255))
+                    << 16;
+                rgba |= uint32_t(CLAMP(bake_cells[i].albedo[1] * 255.0, 0, 255))
+                     << 8;
+                rgba |= uint32_t(CLAMP(bake_cells[i].albedo[2] * 255.0, 0, 255))
+                     << 0;
 
                 w32[ofs++] = rgba;
             }
-            { //emission
+            { // emission
 
-                Vector3 e(bake_cells[i].emission[0], bake_cells[i].emission[1], bake_cells[i].emission[2]);
+                Vector3 e(
+                    bake_cells[i].emission[0],
+                    bake_cells[i].emission[1],
+                    bake_cells[i].emission[2]
+                );
                 float l = e.length();
                 if (l > 0) {
                     e.normalize();
@@ -1372,10 +1659,14 @@ PoolVector<int> VoxelLightBaker::create_gi_probe_data() {
                 w32[ofs++] = em;
             }
 
-            //w32[ofs++]=bake_cells[i].used_sides;
-            { //normal
+            // w32[ofs++]=bake_cells[i].used_sides;
+            { // normal
 
-                Vector3 n(bake_cells[i].normal[0], bake_cells[i].normal[1], bake_cells[i].normal[2]);
+                Vector3 n(
+                    bake_cells[i].normal[0],
+                    bake_cells[i].normal[1],
+                    bake_cells[i].normal[2]
+                );
                 n = n * Vector3(0.5, 0.5, 0.5) + Vector3(0.5, 0.5, 0.5);
                 uint32_t norm = 0;
 
@@ -1387,7 +1678,8 @@ PoolVector<int> VoxelLightBaker::create_gi_probe_data() {
             }
 
             {
-                uint16_t alpha = MIN(uint32_t(bake_cells[i].alpha * 65535.0), 65535);
+                uint16_t alpha =
+                    MIN(uint32_t(bake_cells[i].alpha * 65535.0), 65535);
                 uint16_t level = bake_cells[i].level;
 
                 w32[ofs++] = (uint32_t(level) << 16) | uint32_t(alpha);
@@ -1398,7 +1690,14 @@ PoolVector<int> VoxelLightBaker::create_gi_probe_data() {
     return data;
 }
 
-void VoxelLightBaker::_debug_mesh(int p_idx, int p_level, const AABB &p_aabb, Ref<MultiMesh> &p_multimesh, int &idx, DebugMode p_mode) {
+void VoxelLightBaker::_debug_mesh(
+    int p_idx,
+    int p_level,
+    const AABB& p_aabb,
+    Ref<MultiMesh>& p_multimesh,
+    int& idx,
+    DebugMode p_mode
+) {
     if (p_level == cell_subdiv - 1) {
         Vector3 center = p_aabb.position + p_aabb.size * 0.5;
         Transform xform;
@@ -1407,7 +1706,11 @@ void VoxelLightBaker::_debug_mesh(int p_idx, int p_level, const AABB &p_aabb, Re
         p_multimesh->set_instance_transform(idx, xform);
         Color col;
         if (p_mode == DEBUG_ALBEDO) {
-            col = Color(bake_cells[p_idx].albedo[0], bake_cells[p_idx].albedo[1], bake_cells[p_idx].albedo[2]);
+            col = Color(
+                bake_cells[p_idx].albedo[0],
+                bake_cells[p_idx].albedo[1],
+                bake_cells[p_idx].albedo[2]
+            );
         } else if (p_mode == DEBUG_LIGHT) {
             for (int i = 0; i < 6; i++) {
                 col.r += bake_light[p_idx].accum[i][0];
@@ -1418,7 +1721,8 @@ void VoxelLightBaker::_debug_mesh(int p_idx, int p_level, const AABB &p_aabb, Re
                 col.b += bake_light[p_idx].direct_accum[i][2];
             }
         }
-        //Color col = Color(bake_cells[p_idx].emission[0], bake_cells[p_idx].emission[1], bake_cells[p_idx].emission[2]);
+        // Color col = Color(bake_cells[p_idx].emission[0],
+        // bake_cells[p_idx].emission[1], bake_cells[p_idx].emission[2]);
         p_multimesh->set_instance_color(idx, col);
 
         idx++;
@@ -1444,7 +1748,14 @@ void VoxelLightBaker::_debug_mesh(int p_idx, int p_level, const AABB &p_aabb, Re
                 aabb.position.z += aabb.size.z;
             }
 
-            _debug_mesh(bake_cells[p_idx].children[i], p_level + 1, aabb, p_multimesh, idx, p_mode);
+            _debug_mesh(
+                bake_cells[p_idx].children[i],
+                p_level + 1,
+                aabb,
+                p_multimesh,
+                idx,
+                p_mode
+            );
         }
     }
 }
@@ -1468,9 +1779,9 @@ Ref<MultiMesh> VoxelLightBaker::create_debug_multimesh(DebugMode p_mode) {
 
         PoolVector<Vector3> vertices;
         PoolVector<Color> colors;
-#define ADD_VTX(m_idx)                      \
-    ;                                       \
-    vertices.push_back(face_points[m_idx]); \
+#define ADD_VTX(m_idx)                                                         \
+    ;                                                                          \
+    vertices.push_back(face_points[m_idx]);                                    \
     colors.push_back(Color(1, 1, 1, 1));
 
         for (int i = 0; i < 6; i++) {
@@ -1491,11 +1802,11 @@ Ref<MultiMesh> VoxelLightBaker::create_debug_multimesh(DebugMode p_mode) {
                 }
             }
 
-            //tri 1
+            // tri 1
             ADD_VTX(0);
             ADD_VTX(1);
             ADD_VTX(2);
-            //tri 2
+            // tri 2
             ADD_VTX(2);
             ADD_VTX(3);
             ADD_VTX(0);
@@ -1530,7 +1841,7 @@ struct VoxelLightBakerOctree {
         CHILD_EMPTY = 0xFFFFFFFF
     };
 
-    uint16_t light[6][3]; //anisotropic light
+    uint16_t light[6][3]; // anisotropic light
     float alpha;
     uint32_t children[8];
 };
@@ -1561,15 +1872,18 @@ PoolVector<uint8_t> VoxelLightBaker::create_capture_octree(int p_subdiv) {
         octree.write[i].alpha = bake_cells[demap[i]].alpha;
         for (int j = 0; j < 6; j++) {
             for (int k = 0; k < 3; k++) {
-                float l = bake_light[demap[i]].accum[j][k]; //add anisotropic light
-                l += bake_cells[demap[i]].emission[k]; //add emission
-                octree.write[i].light[j][k] = CLAMP(l * 1024, 0, 65535); //give two more bits to octree
+                float l =
+                    bake_light[demap[i]].accum[j][k];  // add anisotropic light
+                l += bake_cells[demap[i]].emission[k]; // add emission
+                octree.write[i].light[j][k] =
+                    CLAMP(l * 1024, 0, 65535); // give two more bits to octree
             }
         }
 
         for (int j = 0; j < 8; j++) {
             uint32_t child = bake_cells[demap[i]].children[j];
-            octree.write[i].children[j] = child == CHILD_EMPTY ? CHILD_EMPTY : remap[child];
+            octree.write[i].children[j] =
+                child == CHILD_EMPTY ? CHILD_EMPTY : remap[child];
         }
     }
 
@@ -1591,6 +1905,7 @@ float VoxelLightBaker::get_cell_size() const {
 Transform VoxelLightBaker::get_to_cell_space_xform() const {
     return to_cell_space;
 }
+
 VoxelLightBaker::VoxelLightBaker() {
     color_scan_cell_width = 4;
     bake_texture_size = 128;

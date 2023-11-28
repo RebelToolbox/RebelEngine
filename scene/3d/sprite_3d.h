@@ -37,7 +37,7 @@
 class SpriteBase3D : public GeometryInstance {
     GDCLASS(SpriteBase3D, GeometryInstance);
 
-    mutable Ref<TriangleMesh> triangle_mesh; //cached
+    mutable Ref<TriangleMesh> triangle_mesh; // cached
 
 public:
     enum DrawFlags {
@@ -45,7 +45,6 @@ public:
         FLAG_SHADED,
         FLAG_DOUBLE_SIDED,
         FLAG_MAX
-
     };
 
     enum AlphaCutMode {
@@ -58,9 +57,9 @@ private:
     bool color_dirty;
     Color color_accum;
 
-    SpriteBase3D *parent_sprite;
-    List<SpriteBase3D *> children;
-    List<SpriteBase3D *>::Element *pI;
+    SpriteBase3D* parent_sprite;
+    List<SpriteBase3D*> children;
+    List<SpriteBase3D*>::Element* pI;
 
     bool centered;
     Point2 offset;
@@ -91,9 +90,18 @@ protected:
     void _notification(int p_what);
     static void _bind_methods();
     virtual void _draw() = 0;
-    _FORCE_INLINE_ void set_aabb(const AABB &p_aabb) { aabb = p_aabb; }
-    _FORCE_INLINE_ RID &get_mesh() { return mesh; }
-    _FORCE_INLINE_ RID &get_material() { return material; }
+
+    _FORCE_INLINE_ void set_aabb(const AABB& p_aabb) {
+        aabb = p_aabb;
+    }
+
+    _FORCE_INLINE_ RID& get_mesh() {
+        return mesh;
+    }
+
+    _FORCE_INLINE_ RID& get_material() {
+        return material;
+    }
 
     uint32_t mesh_surface_offsets[VS::ARRAY_MAX];
     PoolByteArray mesh_buffer;
@@ -106,7 +114,7 @@ public:
     void set_centered(bool p_center);
     bool is_centered() const;
 
-    void set_offset(const Point2 &p_offset);
+    void set_offset(const Point2& p_offset);
     Point2 get_offset() const;
 
     void set_flip_h(bool p_flip);
@@ -118,10 +126,10 @@ public:
     void set_region(bool p_region);
     bool is_region() const;
 
-    void set_region_rect(const Rect2 &p_region_rect);
+    void set_region_rect(const Rect2& p_region_rect);
     Rect2 get_region_rect() const;
 
-    void set_modulate(const Color &p_color);
+    void set_modulate(const Color& p_color);
     Color get_modulate() const;
 
     void set_opacity(float p_amount);
@@ -167,22 +175,22 @@ protected:
     virtual void _draw();
     static void _bind_methods();
 
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
 public:
-    void set_texture(const Ref<Texture> &p_texture);
+    void set_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_texture() const;
 
     void set_region(bool p_region);
     bool is_region() const;
 
-    void set_region_rect(const Rect2 &p_region_rect);
+    void set_region_rect(const Rect2& p_region_rect);
     Rect2 get_region_rect() const;
 
     void set_frame(int p_frame);
     int get_frame() const;
 
-    void set_frame_coords(const Vector2 &p_coord);
+    void set_frame_coords(const Vector2& p_coord);
     Vector2 get_frame_coords() const;
 
     void set_vframes(int p_amount);
@@ -224,17 +232,17 @@ protected:
     virtual void _draw();
     static void _bind_methods();
     void _notification(int p_what);
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
 public:
-    void set_sprite_frames(const Ref<SpriteFrames> &p_frames);
+    void set_sprite_frames(const Ref<SpriteFrames>& p_frames);
     Ref<SpriteFrames> get_sprite_frames() const;
 
-    void play(const StringName &p_animation = StringName());
+    void play(const StringName& p_animation = StringName());
     void stop();
     bool is_playing() const;
 
-    void set_animation(const StringName &p_animation);
+    void set_animation(const StringName& p_animation);
     StringName get_animation() const;
 
     void set_frame(int p_frame);

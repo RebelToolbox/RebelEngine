@@ -52,7 +52,10 @@ protected:
     static void _bind_methods();
     virtual void _load_theme_settings();
 
-    virtual void _code_complete_script(const String &p_code, List<ScriptCodeCompletionOption> *r_options);
+    virtual void _code_complete_script(
+        const String& p_code,
+        List<ScriptCodeCompletionOption>* r_options
+    );
 
 public:
     virtual void _validate_script();
@@ -60,7 +63,7 @@ public:
     void reload_text();
 
     Ref<Shader> get_edited_shader() const;
-    void set_edited_shader(const Ref<Shader> &p_shader);
+    void set_edited_shader(const Ref<Shader>& p_shader);
     ShaderTextEditor();
 };
 
@@ -68,7 +71,6 @@ class ShaderEditor : public PanelContainer {
     GDCLASS(ShaderEditor, PanelContainer);
 
     enum {
-
         EDIT_UNDO,
         EDIT_REDO,
         EDIT_CUT,
@@ -95,18 +97,18 @@ class ShaderEditor : public PanelContainer {
         HELP_DOCS,
     };
 
-    MenuButton *edit_menu;
-    MenuButton *search_menu;
-    PopupMenu *bookmarks_menu;
-    MenuButton *help_menu;
-    PopupMenu *context_menu;
+    MenuButton* edit_menu;
+    MenuButton* search_menu;
+    PopupMenu* bookmarks_menu;
+    MenuButton* help_menu;
+    PopupMenu* context_menu;
     uint64_t idle;
 
-    GotoLineDialog *goto_line_dialog;
-    ConfirmationDialog *erase_tab_confirm;
-    ConfirmationDialog *disk_changed;
+    GotoLineDialog* goto_line_dialog;
+    ConfirmationDialog* erase_tab_confirm;
+    ConfirmationDialog* disk_changed;
 
-    ShaderTextEditor *shader_editor;
+    ShaderTextEditor* shader_editor;
 
     void _menu_option(int p_option);
     void _params_changed();
@@ -121,7 +123,7 @@ protected:
     void _notification(int p_what);
     static void _bind_methods();
     void _make_context_menu(bool p_selection, Vector2 p_position);
-    void _text_edit_gui_input(const Ref<InputEvent> &ev);
+    void _text_edit_gui_input(const Ref<InputEvent>& ev);
 
     void _update_bookmark_list();
     void _bookmark_item_pressed(int p_idx);
@@ -130,38 +132,49 @@ public:
     void apply_shaders();
 
     void ensure_select_current();
-    void edit(const Ref<Shader> &p_shader);
+    void edit(const Ref<Shader>& p_shader);
 
     void goto_line_selection(int p_line, int p_begin, int p_end);
 
-    virtual Size2 get_minimum_size() const { return Size2(0, 200); }
-    void save_external_data(const String &p_str = "");
+    virtual Size2 get_minimum_size() const {
+        return Size2(0, 200);
+    }
 
-    ShaderEditor(EditorNode *p_node);
+    void save_external_data(const String& p_str = "");
+
+    ShaderEditor(EditorNode* p_node);
 };
 
 class ShaderEditorPlugin : public EditorPlugin {
     GDCLASS(ShaderEditorPlugin, EditorPlugin);
 
     bool _2d;
-    ShaderEditor *shader_editor;
-    EditorNode *editor;
-    Button *button;
+    ShaderEditor* shader_editor;
+    EditorNode* editor;
+    Button* button;
 
 public:
-    virtual String get_name() const { return "Shader"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual String get_name() const {
+        return "Shader";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
     virtual void selected_notify();
 
-    ShaderEditor *get_shader_editor() const { return shader_editor; }
+    ShaderEditor* get_shader_editor() const {
+        return shader_editor;
+    }
 
     virtual void save_external_data();
     virtual void apply_changes();
 
-    ShaderEditorPlugin(EditorNode *p_node);
+    ShaderEditorPlugin(EditorNode* p_node);
     ~ShaderEditorPlugin();
 };
 

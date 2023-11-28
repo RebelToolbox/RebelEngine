@@ -4,10 +4,10 @@ public:
 // writing loads of code. Not all members are used for some cull checks
 struct CullParams {
     int result_count_overall; // both trees
-    int result_count; // this tree only
+    int result_count;         // this tree only
     int result_max;
-    T **result_array;
-    int *subindex_array;
+    T** result_array;
+    int* subindex_array;
 
     // nobody truly understands how masks are intended to work.
     uint32_t mask;
@@ -26,7 +26,7 @@ struct CullParams {
 };
 
 private:
-void _cull_translate_hits(CullParams &p) {
+void _cull_translate_hits(CullParams& p) {
     int num_hits = _cull_hits.size();
     int left = p.result_max - p.result_count_overall;
 
@@ -39,7 +39,7 @@ void _cull_translate_hits(CullParams &p) {
     for (int n = 0; n < num_hits; n++) {
         uint32_t ref_id = _cull_hits[n];
 
-        const ItemExtra &ex = _extra[ref_id];
+        const ItemExtra& ex = _extra[ref_id];
         p.result_array[out_n] = ex.userdata;
 
         if (p.subindex_array) {
@@ -54,7 +54,7 @@ void _cull_translate_hits(CullParams &p) {
 }
 
 public:
-int cull_convex(CullParams &r_params, bool p_translate_hits = true) {
+int cull_convex(CullParams& r_params, bool p_translate_hits = true) {
     _cull_hits.clear();
     r_params.result_count = 0;
 
@@ -73,7 +73,7 @@ int cull_convex(CullParams &r_params, bool p_translate_hits = true) {
     return r_params.result_count;
 }
 
-int cull_segment(CullParams &r_params, bool p_translate_hits = true) {
+int cull_segment(CullParams& r_params, bool p_translate_hits = true) {
     _cull_hits.clear();
     r_params.result_count = 0;
 
@@ -92,7 +92,7 @@ int cull_segment(CullParams &r_params, bool p_translate_hits = true) {
     return r_params.result_count;
 }
 
-int cull_point(CullParams &r_params, bool p_translate_hits = true) {
+int cull_point(CullParams& r_params, bool p_translate_hits = true) {
     _cull_hits.clear();
     r_params.result_count = 0;
 
@@ -111,7 +111,7 @@ int cull_point(CullParams &r_params, bool p_translate_hits = true) {
     return r_params.result_count;
 }
 
-int cull_aabb(CullParams &r_params, bool p_translate_hits = true) {
+int cull_aabb(CullParams& r_params, bool p_translate_hits = true) {
     _cull_hits.clear();
     r_params.result_count = 0;
 
@@ -134,7 +134,7 @@ int cull_aabb(CullParams &r_params, bool p_translate_hits = true) {
     return r_params.result_count;
 }
 
-bool _cull_hits_full(const CullParams &p) {
+bool _cull_hits_full(const CullParams& p) {
     // instead of checking every hit, we can do a lazy check for this condition.
     // it isn't a problem if we write too much _cull_hits because they only the
     // result_max amount will be translated and outputted. But we might as
@@ -144,7 +144,12 @@ bool _cull_hits_full(const CullParams &p) {
 
 // write this logic once for use in all routines
 // double check this as a possible source of bugs in future.
-bool _cull_pairing_mask_test_hit(uint32_t p_maskA, uint32_t p_typeA, uint32_t p_maskB, uint32_t p_typeB) const {
+bool _cull_pairing_mask_test_hit(
+    uint32_t p_maskA,
+    uint32_t p_typeA,
+    uint32_t p_maskB,
+    uint32_t p_typeB
+) const {
     // double check this as a possible source of bugs in future.
     bool A_match_B = p_maskA & p_typeB;
 
@@ -158,14 +163,19 @@ bool _cull_pairing_mask_test_hit(uint32_t p_maskA, uint32_t p_typeA, uint32_t p_
     return true;
 }
 
-void _cull_hit(uint32_t p_ref_id, CullParams &p) {
+void _cull_hit(uint32_t p_ref_id, CullParams& p) {
     // take into account masks etc
     // this would be more efficient to do before plane checks,
     // but done here for ease to get started
     if (USE_PAIRS) {
-        const ItemExtra &ex = _extra[p_ref_id];
+        const ItemExtra& ex = _extra[p_ref_id];
 
-        if (!_cull_pairing_mask_test_hit(p.mask, p.pairable_type, ex.pairable_mask, ex.pairable_type)) {
+        if (!_cull_pairing_mask_test_hit(
+                p.mask,
+                p.pairable_type,
+                ex.pairable_mask,
+                ex.pairable_type
+            )) {
             return;
         }
     }
@@ -173,7 +183,7 @@ void _cull_hit(uint32_t p_ref_id, CullParams &p) {
     _cull_hits.push_back(p_ref_id);
 }
 
-bool _cull_segment_iterative(uint32_t p_node_id, CullParams &r_params) {
+bool _cull_segment_iterative(uint32_t p_node_id, CullParams& r_params) {
     // our function parameters to keep on a stack
     struct CullSegParams {
         uint32_t node_id;
@@ -182,9 +192,9 @@ bool _cull_segment_iterative(uint32_t p_node_id, CullParams &r_params) {
     // most of the iterative functionality is contained in this helper class
     BVH_IterativeInfo<CullSegParams> ii;
 
-    // alloca must allocate the stack from this function, it cannot be allocated in the
-    // helper class
-    ii.stack = (CullSegParams *)alloca(ii.get_alloca_stacksize());
+    // alloca must allocate the stack from this function, it cannot be allocated
+    // in the helper class
+    ii.stack = (CullSegParams*)alloca(ii.get_alloca_stacksize());
 
     // seed the stack
     ii.get_first()->node_id = p_node_id;
@@ -193,7 +203,7 @@ bool _cull_segment_iterative(uint32_t p_node_id, CullParams &r_params) {
 
     // while there are still more nodes on the stack
     while (ii.pop(csp)) {
-        TNode &tnode = _nodes[csp.node_id];
+        TNode& tnode = _nodes[csp.node_id];
 
         if (tnode.is_leaf()) {
             // lazy check for hits full up condition
@@ -201,11 +211,11 @@ bool _cull_segment_iterative(uint32_t p_node_id, CullParams &r_params) {
                 return false;
             }
 
-            TLeaf &leaf = _node_get_leaf(tnode);
+            TLeaf& leaf = _node_get_leaf(tnode);
 
             // test children individually
             for (int n = 0; n < leaf.num_items; n++) {
-                const BVHABB_CLASS &aabb = leaf.get_aabb(n);
+                const BVHABB_CLASS& aabb = leaf.get_aabb(n);
 
                 if (aabb.intersects_segment(r_params.segment)) {
                     uint32_t child_id = leaf.get_item_ref_id(n);
@@ -218,11 +228,11 @@ bool _cull_segment_iterative(uint32_t p_node_id, CullParams &r_params) {
             // test children individually
             for (int n = 0; n < tnode.num_children; n++) {
                 uint32_t child_id = tnode.children[n];
-                const BVHABB_CLASS &child_abb = _nodes[child_id].aabb;
+                const BVHABB_CLASS& child_abb = _nodes[child_id].aabb;
 
                 if (child_abb.intersects_segment(r_params.segment)) {
                     // add to the stack
-                    CullSegParams *child = ii.request();
+                    CullSegParams* child = ii.request();
                     child->node_id = child_id;
                 }
             }
@@ -234,7 +244,7 @@ bool _cull_segment_iterative(uint32_t p_node_id, CullParams &r_params) {
     return true;
 }
 
-bool _cull_point_iterative(uint32_t p_node_id, CullParams &r_params) {
+bool _cull_point_iterative(uint32_t p_node_id, CullParams& r_params) {
     // our function parameters to keep on a stack
     struct CullPointParams {
         uint32_t node_id;
@@ -243,9 +253,9 @@ bool _cull_point_iterative(uint32_t p_node_id, CullParams &r_params) {
     // most of the iterative functionality is contained in this helper class
     BVH_IterativeInfo<CullPointParams> ii;
 
-    // alloca must allocate the stack from this function, it cannot be allocated in the
-    // helper class
-    ii.stack = (CullPointParams *)alloca(ii.get_alloca_stacksize());
+    // alloca must allocate the stack from this function, it cannot be allocated
+    // in the helper class
+    ii.stack = (CullPointParams*)alloca(ii.get_alloca_stacksize());
 
     // seed the stack
     ii.get_first()->node_id = p_node_id;
@@ -254,7 +264,7 @@ bool _cull_point_iterative(uint32_t p_node_id, CullParams &r_params) {
 
     // while there are still more nodes on the stack
     while (ii.pop(cpp)) {
-        TNode &tnode = _nodes[cpp.node_id];
+        TNode& tnode = _nodes[cpp.node_id];
         // no hit with this node?
         if (!tnode.aabb.intersects_point(r_params.point)) {
             continue;
@@ -266,7 +276,7 @@ bool _cull_point_iterative(uint32_t p_node_id, CullParams &r_params) {
                 return false;
             }
 
-            TLeaf &leaf = _node_get_leaf(tnode);
+            TLeaf& leaf = _node_get_leaf(tnode);
 
             // test children individually
             for (int n = 0; n < leaf.num_items; n++) {
@@ -283,7 +293,7 @@ bool _cull_point_iterative(uint32_t p_node_id, CullParams &r_params) {
                 uint32_t child_id = tnode.children[n];
 
                 // add to the stack
-                CullPointParams *child = ii.request();
+                CullPointParams* child = ii.request();
                 child->node_id = child_id;
             }
         }
@@ -294,7 +304,11 @@ bool _cull_point_iterative(uint32_t p_node_id, CullParams &r_params) {
     return true;
 }
 
-bool _cull_aabb_iterative(uint32_t p_node_id, CullParams &r_params, bool p_fully_within = false) {
+bool _cull_aabb_iterative(
+    uint32_t p_node_id,
+    CullParams& r_params,
+    bool p_fully_within = false
+) {
     // our function parameters to keep on a stack
     struct CullAABBParams {
         uint32_t node_id;
@@ -304,9 +318,9 @@ bool _cull_aabb_iterative(uint32_t p_node_id, CullParams &r_params, bool p_fully
     // most of the iterative functionality is contained in this helper class
     BVH_IterativeInfo<CullAABBParams> ii;
 
-    // alloca must allocate the stack from this function, it cannot be allocated in the
-    // helper class
-    ii.stack = (CullAABBParams *)alloca(ii.get_alloca_stacksize());
+    // alloca must allocate the stack from this function, it cannot be allocated
+    // in the helper class
+    ii.stack = (CullAABBParams*)alloca(ii.get_alloca_stacksize());
 
     // seed the stack
     ii.get_first()->node_id = p_node_id;
@@ -316,7 +330,7 @@ bool _cull_aabb_iterative(uint32_t p_node_id, CullParams &r_params, bool p_fully
 
     // while there are still more nodes on the stack
     while (ii.pop(cap)) {
-        TNode &tnode = _nodes[cap.node_id];
+        TNode& tnode = _nodes[cap.node_id];
 
         if (tnode.is_leaf()) {
             // lazy check for hits full up condition
@@ -324,7 +338,7 @@ bool _cull_aabb_iterative(uint32_t p_node_id, CullParams &r_params, bool p_fully
                 return false;
             }
 
-            TLeaf &leaf = _node_get_leaf(tnode);
+            TLeaf& leaf = _node_get_leaf(tnode);
 
             // if fully within we can just add all items
             // as long as they pass mask checks
@@ -337,7 +351,7 @@ bool _cull_aabb_iterative(uint32_t p_node_id, CullParams &r_params, bool p_fully
                 }
             } else {
                 for (int n = 0; n < leaf.num_items; n++) {
-                    const BVHABB_CLASS &aabb = leaf.get_aabb(n);
+                    const BVHABB_CLASS& aabb = leaf.get_aabb(n);
 
                     if (aabb.intersects(r_params.abb)) {
                         uint32_t child_id = leaf.get_item_ref_id(n);
@@ -352,14 +366,15 @@ bool _cull_aabb_iterative(uint32_t p_node_id, CullParams &r_params, bool p_fully
                 // test children individually
                 for (int n = 0; n < tnode.num_children; n++) {
                     uint32_t child_id = tnode.children[n];
-                    const BVHABB_CLASS &child_abb = _nodes[child_id].aabb;
+                    const BVHABB_CLASS& child_abb = _nodes[child_id].aabb;
 
                     if (child_abb.intersects(r_params.abb)) {
                         // is the node totally within the aabb?
-                        bool fully_within = r_params.abb.is_other_within(child_abb);
+                        bool fully_within =
+                            r_params.abb.is_other_within(child_abb);
 
                         // add to the stack
-                        CullAABBParams *child = ii.request();
+                        CullAABBParams* child = ii.request();
 
                         // should always return valid child
                         child->node_id = child_id;
@@ -371,7 +386,7 @@ bool _cull_aabb_iterative(uint32_t p_node_id, CullParams &r_params, bool p_fully
                     uint32_t child_id = tnode.children[n];
 
                     // add to the stack
-                    CullAABBParams *child = ii.request();
+                    CullAABBParams* child = ii.request();
 
                     // should always return valid child
                     child->node_id = child_id;
@@ -387,7 +402,11 @@ bool _cull_aabb_iterative(uint32_t p_node_id, CullParams &r_params, bool p_fully
 }
 
 // returns full up with results
-bool _cull_convex_iterative(uint32_t p_node_id, CullParams &r_params, bool p_fully_within = false) {
+bool _cull_convex_iterative(
+    uint32_t p_node_id,
+    CullParams& r_params,
+    bool p_fully_within = false
+) {
     // our function parameters to keep on a stack
     struct CullConvexParams {
         uint32_t node_id;
@@ -397,9 +416,9 @@ bool _cull_convex_iterative(uint32_t p_node_id, CullParams &r_params, bool p_ful
     // most of the iterative functionality is contained in this helper class
     BVH_IterativeInfo<CullConvexParams> ii;
 
-    // alloca must allocate the stack from this function, it cannot be allocated in the
-    // helper class
-    ii.stack = (CullConvexParams *)alloca(ii.get_alloca_stacksize());
+    // alloca must allocate the stack from this function, it cannot be allocated
+    // in the helper class
+    ii.stack = (CullConvexParams*)alloca(ii.get_alloca_stacksize());
 
     // seed the stack
     ii.get_first()->node_id = p_node_id;
@@ -407,20 +426,22 @@ bool _cull_convex_iterative(uint32_t p_node_id, CullParams &r_params, bool p_ful
 
     // preallocate these as a once off to be reused
     uint32_t max_planes = r_params.hull.num_planes;
-    uint32_t *plane_ids = (uint32_t *)alloca(sizeof(uint32_t) * max_planes);
+    uint32_t* plane_ids = (uint32_t*)alloca(sizeof(uint32_t) * max_planes);
 
     CullConvexParams ccp;
 
     // while there are still more nodes on the stack
     while (ii.pop(ccp)) {
-        const TNode &tnode = _nodes[ccp.node_id];
+        const TNode& tnode = _nodes[ccp.node_id];
 
         if (!ccp.fully_within) {
-            typename BVHABB_CLASS::IntersectResult res = tnode.aabb.intersects_convex(r_params.hull);
+            typename BVHABB_CLASS::IntersectResult res =
+                tnode.aabb.intersects_convex(r_params.hull);
 
             switch (res) {
                 default: {
-                    continue; // miss, just move on to the next node in the stack
+                    continue; // miss, just move on to the next node in the
+                              // stack
                 } break;
                 case BVHABB_CLASS::IR_PARTIAL: {
                 } break;
@@ -437,7 +458,7 @@ bool _cull_convex_iterative(uint32_t p_node_id, CullParams &r_params, bool p_ful
                 return false;
             }
 
-            const TLeaf &leaf = _node_get_leaf(tnode);
+            const TLeaf& leaf = _node_get_leaf(tnode);
 
             // if fully within, simply add all items to the result
             // (taking into account masks)
@@ -450,16 +471,18 @@ bool _cull_convex_iterative(uint32_t p_node_id, CullParams &r_params, bool p_ful
                 }
 
             } else {
-                // we can either use a naive check of all the planes against the AABB,
-                // or an optimized check, which finds in advance which of the planes can possibly
-                // cut the AABB, and only tests those. This can be much faster.
+                // we can either use a naive check of all the planes against the
+                // AABB, or an optimized check, which finds in advance which of
+                // the planes can possibly cut the AABB, and only tests those.
+                // This can be much faster.
 #define BVH_CONVEX_CULL_OPTIMIZED
 #ifdef BVH_CONVEX_CULL_OPTIMIZED
                 // first find which planes cut the aabb
-                uint32_t num_planes = tnode.aabb.find_cutting_planes(r_params.hull, plane_ids);
+                uint32_t num_planes =
+                    tnode.aabb.find_cutting_planes(r_params.hull, plane_ids);
                 BVH_ASSERT(num_planes <= max_planes);
 
-//#define BVH_CONVEX_CULL_OPTIMIZED_RIGOR_CHECK
+// #define BVH_CONVEX_CULL_OPTIMIZED_RIGOR_CHECK
 #ifdef BVH_CONVEX_CULL_OPTIMIZED_RIGOR_CHECK
                 // rigorous check
                 uint32_t results[MAX_ITEMS];
@@ -468,10 +491,14 @@ bool _cull_convex_iterative(uint32_t p_node_id, CullParams &r_params, bool p_ful
 
                 // test children individually
                 for (int n = 0; n < leaf.num_items; n++) {
-                    //const Item &item = leaf.get_item(n);
-                    const BVHABB_CLASS &aabb = leaf.get_aabb(n);
+                    // const Item &item = leaf.get_item(n);
+                    const BVHABB_CLASS& aabb = leaf.get_aabb(n);
 
-                    if (aabb.intersects_convex_optimized(r_params.hull, plane_ids, num_planes)) {
+                    if (aabb.intersects_convex_optimized(
+                            r_params.hull,
+                            plane_ids,
+                            num_planes
+                        )) {
                         uint32_t child_id = leaf.get_item_ref_id(n);
 
 #ifdef BVH_CONVEX_CULL_OPTIMIZED_RIGOR_CHECK
@@ -487,7 +514,7 @@ bool _cull_convex_iterative(uint32_t p_node_id, CullParams &r_params, bool p_ful
                 uint32_t test_count = 0;
 
                 for (int n = 0; n < leaf.num_items; n++) {
-                    const BVHABB_CLASS &aabb = leaf.get_aabb(n);
+                    const BVHABB_CLASS& aabb = leaf.get_aabb(n);
 
                     if (aabb.intersects_convex_partial(r_params.hull)) {
                         uint32_t child_id = leaf.get_item_ref_id(n);
@@ -502,24 +529,26 @@ bool _cull_convex_iterative(uint32_t p_node_id, CullParams &r_params, bool p_ful
                 // not BVH_CONVEX_CULL_OPTIMIZED
                 // test children individually
                 for (int n = 0; n < leaf.num_items; n++) {
-                    const BVHABB_CLASS &aabb = leaf.get_aabb(n);
+                    const BVHABB_CLASS& aabb = leaf.get_aabb(n);
 
                     if (aabb.intersects_convex_partial(r_params.hull)) {
                         uint32_t child_id = leaf.get_item_ref_id(n);
 
-                        // full up with results? exit early, no point in further testing
-                        if (!_cull_hit(child_id, r_params))
+                        // full up with results? exit early, no point in further
+                        // testing
+                        if (!_cull_hit(child_id, r_params)) {
                             return false;
+                        }
                     }
                 }
-#endif // BVH_CONVEX_CULL_OPTIMIZED
+#endif        // BVH_CONVEX_CULL_OPTIMIZED
             } // if not fully within
         } else {
             for (int n = 0; n < tnode.num_children; n++) {
                 uint32_t child_id = tnode.children[n];
 
                 // add to the stack
-                CullConvexParams *child = ii.request();
+                CullConvexParams* child = ii.request();
 
                 // should always return valid child
                 child->node_id = child_id;

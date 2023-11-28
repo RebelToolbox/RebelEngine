@@ -33,9 +33,10 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestGUI {
+namespace TestGUI
+{
 
-MainLoop *test();
-}
+MainLoop* test();
+} // namespace TestGUI
 
 #endif

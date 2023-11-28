@@ -77,37 +77,45 @@ public:
 class RWLock {
 public:
     void read_lock() const {}
+
     void read_unlock() const {}
-    Error read_try_lock() const { return OK; }
+
+    Error read_try_lock() const {
+        return OK;
+    }
 
     void write_lock() {}
+
     void write_unlock() {}
-    Error write_try_lock() { return OK; }
+
+    Error write_try_lock() {
+        return OK;
+    }
 };
 
 #endif
 
 class RWLockRead {
-    const RWLock &lock;
+    const RWLock& lock;
 
 public:
-    RWLockRead(const RWLock &p_lock) :
-            lock(p_lock) {
+    RWLockRead(const RWLock& p_lock) : lock(p_lock) {
         lock.read_lock();
     }
+
     ~RWLockRead() {
         lock.read_unlock();
     }
 };
 
 class RWLockWrite {
-    RWLock &lock;
+    RWLock& lock;
 
 public:
-    RWLockWrite(RWLock &p_lock) :
-            lock(p_lock) {
+    RWLockWrite(RWLock& p_lock) : lock(p_lock) {
         lock.write_lock();
     }
+
     ~RWLockWrite() {
         lock.write_unlock();
     }

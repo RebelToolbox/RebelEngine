@@ -30,10 +30,13 @@ import java.util.Map;
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class InputManagerV16 implements InputManagerCompat {
     private final InputManager mInputManager;
-    private final Map<InputManagerCompat.InputDeviceListener, V16InputDeviceListener> mListeners;
+    private final
+        Map<InputManagerCompat.InputDeviceListener, V16InputDeviceListener>
+            mListeners;
 
     public InputManagerV16(Context context) {
-        mInputManager = (InputManager)context.getSystemService(Context.INPUT_SERVICE);
+        mInputManager =
+            (InputManager)context.getSystemService(Context.INPUT_SERVICE);
         mListeners = new HashMap<>();
     }
 
@@ -47,7 +50,8 @@ public class InputManagerV16 implements InputManagerCompat {
         return mInputManager.getInputDeviceIds();
     }
 
-    static class V16InputDeviceListener implements InputManager.InputDeviceListener {
+    static class V16InputDeviceListener
+        implements InputManager.InputDeviceListener {
         final InputManagerCompat.InputDeviceListener mIDL;
 
         public V16InputDeviceListener(InputDeviceListener idl) {
@@ -71,8 +75,12 @@ public class InputManagerV16 implements InputManagerCompat {
     }
 
     @Override
-    public void registerInputDeviceListener(InputDeviceListener listener, Handler handler) {
-        V16InputDeviceListener v16Listener = new V16InputDeviceListener(listener);
+    public void registerInputDeviceListener(
+        InputDeviceListener listener,
+        Handler handler
+    ) {
+        V16InputDeviceListener v16Listener =
+            new V16InputDeviceListener(listener);
         mInputManager.registerInputDeviceListener(v16Listener, handler);
         mListeners.put(listener, v16Listener);
     }

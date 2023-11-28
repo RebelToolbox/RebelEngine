@@ -42,11 +42,11 @@
 
     // Timer used to delay begin touch message.
     // Should work as simple emulation of UIDelayedAction
-    NSTimer *delayTimer;
+    NSTimer* delayTimer;
 
     // Delayed touch parameters
-    NSSet *delayedTouches;
-    UIEvent *delayedEvent;
+    NSSet* delayedTouches;
+    UIEvent* delayedEvent;
 }
 
 @property(nonatomic, readonly, assign) NSTimeInterval delayTimeInterval;

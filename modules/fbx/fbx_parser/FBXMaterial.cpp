@@ -83,13 +83,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXUtil.h"
 #include <algorithm> // std::transform
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
 using namespace Util;
 
 // ------------------------------------------------------------------------------------------------
-Material::Material(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Object(id, element, name) {
+Material::Material(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Object(id, element, name) {
     const ScopePtr sc = GetRequiredScope(element);
 
     const ElementPtr ShadingModel = sc->GetElement("ShadingModel");
@@ -121,29 +127,37 @@ Material::Material(uint64_t id, const ElementPtr element, const Document &doc, c
     props = GetPropertyTable(doc, templateName, element, sc);
 
     // resolve texture links
-    const std::vector<const Connection *> &conns = doc.GetConnectionsByDestinationSequenced(ID());
-    for (const Connection *con : conns) {
+    const std::vector<const Connection*>& conns =
+        doc.GetConnectionsByDestinationSequenced(ID());
+    for (const Connection* con : conns) {
         // texture link to properties, not objects
         if (!con->PropertyName().length()) {
             continue;
         }
 
-        Object *ob = con->SourceObject();
+        Object* ob = con->SourceObject();
         if (!ob) {
-            DOMWarning("failed to read source object for texture link, ignoring", element);
+            DOMWarning(
+                "failed to read source object for texture link, ignoring",
+                element
+            );
             continue;
         }
 
-        const Texture *tex = dynamic_cast<const Texture *>(ob);
+        const Texture* tex = dynamic_cast<const Texture*>(ob);
         if (!tex) {
-            LayeredTexture *layeredTexture = dynamic_cast<LayeredTexture *>(ob);
+            LayeredTexture* layeredTexture = dynamic_cast<LayeredTexture*>(ob);
 
             if (!layeredTexture) {
-                DOMWarning("source object for texture link is not a texture or layered texture, ignoring", element);
+                DOMWarning(
+                    "source object for texture link is not a texture or "
+                    "layered texture, ignoring",
+                    element
+                );
                 continue;
             }
 
-            const std::string &prop = con->PropertyName();
+            const std::string& prop = con->PropertyName();
             if (layeredTextures.find(prop) != layeredTextures.end()) {
                 DOMWarning("duplicate layered texture link: " + prop, element);
             }
@@ -151,7 +165,7 @@ Material::Material(uint64_t id, const ElementPtr element, const Document &doc, c
             layeredTextures[prop] = layeredTexture;
             layeredTexture->fillTexture(doc);
         } else {
-            const std::string &prop = con->PropertyName();
+            const std::string& prop = con->PropertyName();
             if (textures.find(prop) != textures.end()) {
                 DOMWarning("duplicate texture link: " + prop, element);
             }
@@ -170,8 +184,15 @@ Material::~Material() {
 }
 
 // ------------------------------------------------------------------------------------------------
-Texture::Texture(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Object(id, element, name), uvScaling(1.0f, 1.0f), media(nullptr) {
+Texture::Texture(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Object(id, element, name),
+    uvScaling(1.0f, 1.0f),
+    media(nullptr) {
     const ScopePtr sc = GetRequiredScope(element);
 
     const ElementPtr Type = sc->GetElement("Type");
@@ -179,7 +200,8 @@ Texture::Texture(uint64_t id, const ElementPtr element, const Document &doc, con
     const ElementPtr RelativeFilename = sc->GetElement("RelativeFilename");
     const ElementPtr ModelUVTranslation = sc->GetElement("ModelUVTranslation");
     const ElementPtr ModelUVScaling = sc->GetElement("ModelUVScaling");
-    const ElementPtr Texture_Alpha_Source = sc->GetElement("Texture_Alpha_Source");
+    const ElementPtr Texture_Alpha_Source =
+        sc->GetElement("Texture_Alpha_Source");
     const ElementPtr Cropping = sc->GetElement("Cropping");
 
     if (Type) {
@@ -191,17 +213,22 @@ Texture::Texture(uint64_t id, const ElementPtr element, const Document &doc, con
     }
 
     if (RelativeFilename) {
-        relativeFileName = ParseTokenAsString(GetRequiredToken(RelativeFilename, 0));
+        relativeFileName =
+            ParseTokenAsString(GetRequiredToken(RelativeFilename, 0));
     }
 
     if (ModelUVTranslation) {
-        uvTrans = Vector2(ParseTokenAsFloat(GetRequiredToken(ModelUVTranslation, 0)),
-                ParseTokenAsFloat(GetRequiredToken(ModelUVTranslation, 1)));
+        uvTrans = Vector2(
+            ParseTokenAsFloat(GetRequiredToken(ModelUVTranslation, 0)),
+            ParseTokenAsFloat(GetRequiredToken(ModelUVTranslation, 1))
+        );
     }
 
     if (ModelUVScaling) {
-        uvScaling = Vector2(ParseTokenAsFloat(GetRequiredToken(ModelUVScaling, 0)),
-                ParseTokenAsFloat(GetRequiredToken(ModelUVScaling, 1)));
+        uvScaling = Vector2(
+            ParseTokenAsFloat(GetRequiredToken(ModelUVScaling, 0)),
+            ParseTokenAsFloat(GetRequiredToken(ModelUVScaling, 1))
+        );
     }
 
     if (Cropping) {
@@ -216,20 +243,23 @@ Texture::Texture(uint64_t id, const ElementPtr element, const Document &doc, con
     }
 
     if (Texture_Alpha_Source) {
-        alphaSource = ParseTokenAsString(GetRequiredToken(Texture_Alpha_Source, 0));
+        alphaSource =
+            ParseTokenAsString(GetRequiredToken(Texture_Alpha_Source, 0));
     }
 
     props = GetPropertyTable(doc, "Texture.FbxFileTexture", element, sc);
 
-    // 3DS Max and FBX SDK use "Scaling" and "Translation" instead of "ModelUVScaling" and "ModelUVTranslation". Use these properties if available.
+    // 3DS Max and FBX SDK use "Scaling" and "Translation" instead of
+    // "ModelUVScaling" and "ModelUVTranslation". Use these properties if
+    // available.
     bool ok;
-    const Vector3 &scaling = PropertyGet<Vector3>(props, "Scaling", ok);
+    const Vector3& scaling = PropertyGet<Vector3>(props, "Scaling", ok);
     if (ok) {
         uvScaling.x = scaling.x;
         uvScaling.y = scaling.y;
     }
 
-    const Vector3 &trans = PropertyGet<Vector3>(props, "Translation", ok);
+    const Vector3& trans = PropertyGet<Vector3>(props, "Translation", ok);
     if (ok) {
         uvTrans.x = trans.x;
         uvTrans.y = trans.y;
@@ -237,15 +267,19 @@ Texture::Texture(uint64_t id, const ElementPtr element, const Document &doc, con
 
     // resolve video links
     if (doc.Settings().readTextures) {
-        const std::vector<const Connection *> &conns = doc.GetConnectionsByDestinationSequenced(ID());
-        for (const Connection *con : conns) {
-            const Object *const ob = con->SourceObject();
+        const std::vector<const Connection*>& conns =
+            doc.GetConnectionsByDestinationSequenced(ID());
+        for (const Connection* con : conns) {
+            const Object* const ob = con->SourceObject();
             if (!ob) {
-                DOMWarning("failed to read source object for texture link, ignoring", element);
+                DOMWarning(
+                    "failed to read source object for texture link, ignoring",
+                    element
+                );
                 continue;
             }
 
-            const Video *const video = dynamic_cast<const Video *>(ob);
+            const Video* const video = dynamic_cast<const Video*>(ob);
             if (video) {
                 media = video;
             }
@@ -260,8 +294,15 @@ Texture::~Texture() {
     }
 }
 
-LayeredTexture::LayeredTexture(uint64_t id, const ElementPtr element, const Document & /*doc*/, const std::string &name) :
-        Object(id, element, name), blendMode(BlendMode_Modulate), alpha(1) {
+LayeredTexture::LayeredTexture(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& /*doc*/,
+    const std::string& name
+) :
+    Object(id, element, name),
+    blendMode(BlendMode_Modulate),
+    alpha(1) {
     const ScopePtr sc = GetRequiredScope(element);
 
     ElementPtr BlendModes = sc->GetElement("BlendModes");
@@ -275,29 +316,39 @@ LayeredTexture::LayeredTexture(uint64_t id, const ElementPtr element, const Docu
     }
 }
 
-LayeredTexture::~LayeredTexture() {
-}
+LayeredTexture::~LayeredTexture() {}
 
-void LayeredTexture::fillTexture(const Document &doc) {
-    const std::vector<const Connection *> &conns = doc.GetConnectionsByDestinationSequenced(ID());
+void LayeredTexture::fillTexture(const Document& doc) {
+    const std::vector<const Connection*>& conns =
+        doc.GetConnectionsByDestinationSequenced(ID());
     for (size_t i = 0; i < conns.size(); ++i) {
-        const Connection *con = conns.at(i);
+        const Connection* con = conns.at(i);
 
-        const Object *const ob = con->SourceObject();
+        const Object* const ob = con->SourceObject();
         if (!ob) {
-            DOMWarning("failed to read source object for texture link, ignoring", element);
+            DOMWarning(
+                "failed to read source object for texture link, ignoring",
+                element
+            );
             continue;
         }
 
-        const Texture *const tex = dynamic_cast<const Texture *>(ob);
+        const Texture* const tex = dynamic_cast<const Texture*>(ob);
 
         textures.push_back(tex);
     }
 }
 
 // ------------------------------------------------------------------------------------------------
-Video::Video(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Object(id, element, name), contentLength(0), content(nullptr) {
+Video::Video(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Object(id, element, name),
+    contentLength(0),
+    content(nullptr) {
     const ScopePtr sc = GetRequiredScope(element);
 
     const ElementPtr Type = sc->GetElement("Type");
@@ -324,28 +375,44 @@ Video::Video(uint64_t id, const ElementPtr element, const Document &doc, const s
     }
 
     if (RelativeFilename) {
-        relativeFileName = ParseTokenAsString(GetRequiredToken(RelativeFilename, 0));
+        relativeFileName =
+            ParseTokenAsString(GetRequiredToken(RelativeFilename, 0));
     }
 
     if (Content && !Content->Tokens().empty()) {
-        //this field is omitted when the embedded texture is already loaded, let's ignore if it's not found
+        // this field is omitted when the embedded texture is already loaded,
+        // let's ignore if it's not found
         try {
-            const Token *token = GetRequiredToken(Content, 0);
-            const char *data = token->begin();
+            const Token* token = GetRequiredToken(Content, 0);
+            const char* data = token->begin();
             if (!token->IsBinary()) {
                 if (*data != '"') {
-                    DOMError("embedded content is not surrounded by quotation marks", element);
+                    DOMError(
+                        "embedded content is not surrounded by quotation marks",
+                        element
+                    );
                 } else {
                     size_t targetLength = 0;
                     auto numTokens = Content->Tokens().size();
-                    // First time compute size (it could be large like 64Gb and it is good to allocate it once)
-                    for (uint32_t tokenIdx = 0; tokenIdx < numTokens; ++tokenIdx) {
-                        const Token *dataToken = GetRequiredToken(Content, tokenIdx);
-                        size_t tokenLength = dataToken->end() - dataToken->begin() - 2; // ignore double quotes
-                        const char *base64data = dataToken->begin() + 1;
-                        const size_t outLength = Util::ComputeDecodedSizeBase64(base64data, tokenLength);
+                    // First time compute size (it could be large like 64Gb and
+                    // it is good to allocate it once)
+                    for (uint32_t tokenIdx = 0; tokenIdx < numTokens;
+                         ++tokenIdx) {
+                        const Token* dataToken =
+                            GetRequiredToken(Content, tokenIdx);
+                        size_t tokenLength = dataToken->end()
+                                           - dataToken->begin()
+                                           - 2; // ignore double quotes
+                        const char* base64data = dataToken->begin() + 1;
+                        const size_t outLength = Util::ComputeDecodedSizeBase64(
+                            base64data,
+                            tokenLength
+                        );
                         if (outLength == 0) {
-                            DOMError("Corrupted embedded content found", element);
+                            DOMError(
+                                "Corrupted embedded content found",
+                                element
+                            );
                         }
                         targetLength += outLength;
                     }
@@ -355,12 +422,21 @@ Video::Video(uint64_t id, const ElementPtr element, const Document &doc, const s
                     content = new uint8_t[targetLength];
                     contentLength = static_cast<uint64_t>(targetLength);
                     size_t dst_offset = 0;
-                    for (uint32_t tokenIdx = 0; tokenIdx < numTokens; ++tokenIdx) {
-                        const Token *dataToken = GetRequiredToken(Content, tokenIdx);
+                    for (uint32_t tokenIdx = 0; tokenIdx < numTokens;
+                         ++tokenIdx) {
+                        const Token* dataToken =
+                            GetRequiredToken(Content, tokenIdx);
                         ERR_FAIL_COND(!dataToken);
-                        size_t tokenLength = dataToken->end() - dataToken->begin() - 2; // ignore double quotes
-                        const char *base64data = dataToken->begin() + 1;
-                        dst_offset += Util::DecodeBase64(base64data, tokenLength, content + dst_offset, targetLength - dst_offset);
+                        size_t tokenLength = dataToken->end()
+                                           - dataToken->begin()
+                                           - 2; // ignore double quotes
+                        const char* base64data = dataToken->begin() + 1;
+                        dst_offset += Util::DecodeBase64(
+                            base64data,
+                            tokenLength,
+                            content + dst_offset,
+                            targetLength - dst_offset
+                        );
                     }
                     if (targetLength != dst_offset) {
                         delete[] content;
@@ -369,9 +445,16 @@ Video::Video(uint64_t id, const ElementPtr element, const Document &doc, const s
                     }
                 }
             } else if (static_cast<size_t>(token->end() - data) < 5) {
-                DOMError("binary data array is too short, need five (5) bytes for type signature and element count", element);
+                DOMError(
+                    "binary data array is too short, need five (5) bytes for "
+                    "type signature and element count",
+                    element
+                );
             } else if (*data != 'R') {
-                DOMWarning("video content is not raw binary data, ignoring", element);
+                DOMWarning(
+                    "video content is not raw binary data, ignoring",
+                    element
+                );
             } else {
                 // read number of elements
                 uint32_t len = 0;
@@ -384,9 +467,10 @@ Video::Video(uint64_t id, const ElementPtr element, const Document &doc, const s
                 ::memcpy(content, data + 5, len);
             }
         } catch (...) {
-            //			//we don't need the content data for contents that has already been loaded
-            //			ASSIMP_LOG_VERBOSE_DEBUG_F("Caught exception in FBXMaterial (likely because content was already loaded): ",
-            //									   runtimeError.what());
+            //			//we don't need the content data for contents that has
+            // already been loaded 			ASSIMP_LOG_VERBOSE_DEBUG_F("Caught
+            // exception in FBXMaterial (likely because content was already
+            // loaded): ", runtimeError.what());
         }
     }
 

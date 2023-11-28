@@ -31,8 +31,9 @@
 #include "transform_2d.h"
 
 void Transform2D::invert() {
-    // FIXME: this function assumes the basis is a rotation matrix, with no scaling.
-    // Transform2D::affine_inverse can handle matrices with scaling, so GDScript should eventually use that.
+    // FIXME: this function assumes the basis is a rotation matrix, with no
+    // scaling. Transform2D::affine_inverse can handle matrices with scaling, so
+    // GDScript should eventually use that.
     SWAP(elements[0][1], elements[1][0]);
     elements[2] = basis_xform(-elements[2]);
 }
@@ -82,7 +83,7 @@ void Transform2D::set_rotation(real_t p_rot) {
     set_scale(scale);
 }
 
-Transform2D::Transform2D(real_t p_rot, const Vector2 &p_pos) {
+Transform2D::Transform2D(real_t p_rot, const Vector2& p_pos) {
     real_t cr = Math::cos(p_rot);
     real_t sr = Math::sin(p_rot);
     elements[0][0] = cr;
@@ -97,27 +98,30 @@ Size2 Transform2D::get_scale() const {
     return Size2(elements[0].length(), det_sign * elements[1].length());
 }
 
-void Transform2D::set_scale(const Size2 &p_scale) {
+void Transform2D::set_scale(const Size2& p_scale) {
     elements[0].normalize();
     elements[1].normalize();
     elements[0] *= p_scale.x;
     elements[1] *= p_scale.y;
 }
 
-void Transform2D::scale(const Size2 &p_scale) {
+void Transform2D::scale(const Size2& p_scale) {
     scale_basis(p_scale);
     elements[2] *= p_scale;
 }
-void Transform2D::scale_basis(const Size2 &p_scale) {
+
+void Transform2D::scale_basis(const Size2& p_scale) {
     elements[0][0] *= p_scale.x;
     elements[0][1] *= p_scale.y;
     elements[1][0] *= p_scale.x;
     elements[1][1] *= p_scale.y;
 }
+
 void Transform2D::translate(real_t p_tx, real_t p_ty) {
     translate(Vector2(p_tx, p_ty));
 }
-void Transform2D::translate(const Vector2 &p_translation) {
+
+void Transform2D::translate(const Vector2& p_translation) {
     elements[2] += basis_xform(p_translation);
 }
 
@@ -141,11 +145,13 @@ Transform2D Transform2D::orthonormalized() const {
     return on;
 }
 
-bool Transform2D::is_equal_approx(const Transform2D &p_transform) const {
-    return elements[0].is_equal_approx(p_transform.elements[0]) && elements[1].is_equal_approx(p_transform.elements[1]) && elements[2].is_equal_approx(p_transform.elements[2]);
+bool Transform2D::is_equal_approx(const Transform2D& p_transform) const {
+    return elements[0].is_equal_approx(p_transform.elements[0])
+        && elements[1].is_equal_approx(p_transform.elements[1])
+        && elements[2].is_equal_approx(p_transform.elements[2]);
 }
 
-bool Transform2D::operator==(const Transform2D &p_transform) const {
+bool Transform2D::operator==(const Transform2D& p_transform) const {
     for (int i = 0; i < 3; i++) {
         if (elements[i] != p_transform.elements[i]) {
             return false;
@@ -155,7 +161,7 @@ bool Transform2D::operator==(const Transform2D &p_transform) const {
     return true;
 }
 
-bool Transform2D::operator!=(const Transform2D &p_transform) const {
+bool Transform2D::operator!=(const Transform2D& p_transform) const {
     for (int i = 0; i < 3; i++) {
         if (elements[i] != p_transform.elements[i]) {
             return true;
@@ -165,7 +171,7 @@ bool Transform2D::operator!=(const Transform2D &p_transform) const {
     return false;
 }
 
-void Transform2D::operator*=(const Transform2D &p_transform) {
+void Transform2D::operator*=(const Transform2D& p_transform) {
     elements[2] = xform(p_transform.elements[2]);
 
     real_t x0, x1, y0, y1;
@@ -181,19 +187,19 @@ void Transform2D::operator*=(const Transform2D &p_transform) {
     elements[1][1] = y1;
 }
 
-Transform2D Transform2D::operator*(const Transform2D &p_transform) const {
+Transform2D Transform2D::operator*(const Transform2D& p_transform) const {
     Transform2D t = *this;
     t *= p_transform;
     return t;
 }
 
-Transform2D Transform2D::scaled(const Size2 &p_scale) const {
+Transform2D Transform2D::scaled(const Size2& p_scale) const {
     Transform2D copy = *this;
     copy.scale(p_scale);
     return copy;
 }
 
-Transform2D Transform2D::basis_scaled(const Size2 &p_scale) const {
+Transform2D Transform2D::basis_scaled(const Size2& p_scale) const {
     Transform2D copy = *this;
     copy.scale_basis(p_scale);
     return copy;
@@ -205,7 +211,7 @@ Transform2D Transform2D::untranslated() const {
     return copy;
 }
 
-Transform2D Transform2D::translated(const Vector2 &p_offset) const {
+Transform2D Transform2D::translated(const Vector2& p_offset) const {
     Transform2D copy = *this;
     copy.translate(p_offset);
     return copy;
@@ -221,8 +227,11 @@ real_t Transform2D::basis_determinant() const {
     return elements[0].x * elements[1].y - elements[0].y * elements[1].x;
 }
 
-Transform2D Transform2D::interpolate_with(const Transform2D &p_transform, real_t p_c) const {
-    //extract parameters
+Transform2D Transform2D::interpolate_with(
+    const Transform2D& p_transform,
+    real_t p_c
+) const {
+    // extract parameters
     Vector2 p1 = get_origin();
     Vector2 p2 = p_transform.get_origin();
 
@@ -232,7 +241,7 @@ Transform2D Transform2D::interpolate_with(const Transform2D &p_transform, real_t
     Size2 s1 = get_scale();
     Size2 s2 = p_transform.get_scale();
 
-    //slerp rotation
+    // slerp rotation
     Vector2 v1(Math::cos(r1), Math::sin(r1));
     Vector2 v2(Math::cos(r2), Math::sin(r2));
 
@@ -243,19 +252,26 @@ Transform2D Transform2D::interpolate_with(const Transform2D &p_transform, real_t
     Vector2 v;
 
     if (dot > 0.9995) {
-        v = Vector2::linear_interpolate(v1, v2, p_c).normalized(); //linearly interpolate to avoid numerical precision issues
+        v = Vector2::linear_interpolate(v1, v2, p_c)
+                .normalized(
+                ); // linearly interpolate to avoid numerical precision issues
     } else {
         real_t angle = p_c * Math::acos(dot);
         Vector2 v3 = (v2 - v1 * dot).normalized();
         v = v1 * Math::cos(angle) + v3 * Math::sin(angle);
     }
 
-    //construct matrix
-    Transform2D res(Math::atan2(v.y, v.x), Vector2::linear_interpolate(p1, p2, p_c));
+    // construct matrix
+    Transform2D res(
+        Math::atan2(v.y, v.x),
+        Vector2::linear_interpolate(p1, p2, p_c)
+    );
     res.scale_basis(Vector2::linear_interpolate(s1, s2, p_c));
     return res;
 }
 
 Transform2D::operator String() const {
-    return String(String() + elements[0] + ", " + elements[1] + ", " + elements[2]);
+    return String(
+        String() + elements[0] + ", " + elements[1] + ", " + elements[2]
+    );
 }

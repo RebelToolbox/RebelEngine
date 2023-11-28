@@ -38,15 +38,16 @@
 #include "core/safe_refcount.h"
 #include "core/self_list.h"
 
-#define RES_BASE_EXTENSION(m_ext)                                        \
-public:                                                                  \
-    static void register_custom_data_to_otdb() {                         \
-        ClassDB::add_resource_base_extension(m_ext, get_class_static()); \
-    }                                                                    \
-    virtual String get_base_extension() const {                          \
-        return m_ext;                                                    \
-    }                                                                    \
-                                                                         \
+#define RES_BASE_EXTENSION(m_ext)                                              \
+                                                                               \
+public:                                                                        \
+    static void register_custom_data_to_otdb() {                               \
+        ClassDB::add_resource_base_extension(m_ext, get_class_static());       \
+    }                                                                          \
+    virtual String get_base_extension() const {                                \
+        return m_ext;                                                          \
+    }                                                                          \
+                                                                               \
 private:
 
 class Resource : public Reference {
@@ -71,7 +72,7 @@ class Resource : public Reference {
 
     bool local_to_scene;
     friend class SceneState;
-    Node *local_scene;
+    Node* local_scene;
 
     SelfList<Resource> remapped_list;
 
@@ -83,49 +84,70 @@ protected:
     virtual void _resource_path_changed();
     static void _bind_methods();
 
-    void _set_path(const String &p_path);
-    void _take_over_path(const String &p_path);
+    void _set_path(const String& p_path);
+    void _take_over_path(const String& p_path);
 
 public:
-    static Node *(*_get_local_scene_func)(); //used by editor
+    static Node* (*_get_local_scene_func)(); // used by editor
 
     virtual bool editor_can_reload_from_file();
     virtual void reload_from_file();
 
-    void register_owner(Object *p_owner);
-    void unregister_owner(Object *p_owner);
+    void register_owner(Object* p_owner);
+    void unregister_owner(Object* p_owner);
 
-    void set_name(const String &p_name);
+    void set_name(const String& p_name);
     String get_name() const;
 
-    virtual void set_path(const String &p_path, bool p_take_over = false);
+    virtual void set_path(const String& p_path, bool p_take_over = false);
     String get_path() const;
 
     void set_subindex(int p_sub_index);
     int get_subindex() const;
 
     virtual Ref<Resource> duplicate(bool p_subresources = false) const;
-    Ref<Resource> duplicate_for_local_scene(Node *p_for_scene, Map<Ref<Resource>, Ref<Resource>> &remap_cache);
-    void configure_for_local_scene(Node *p_for_scene, Map<Ref<Resource>, Ref<Resource>> &remap_cache);
+    Ref<Resource> duplicate_for_local_scene(
+        Node* p_for_scene,
+        Map<Ref<Resource>, Ref<Resource>>& remap_cache
+    );
+    void configure_for_local_scene(
+        Node* p_for_scene,
+        Map<Ref<Resource>, Ref<Resource>>& remap_cache
+    );
 
     void set_local_to_scene(bool p_enable);
     bool is_local_to_scene() const;
     virtual void setup_local_to_scene();
 
-    Node *get_local_scene() const;
+    Node* get_local_scene() const;
 
 #ifdef TOOLS_ENABLED
 
     uint32_t hash_edited_version() const;
 
-    virtual void set_last_modified_time(uint64_t p_time) { last_modified_time = p_time; }
-    uint64_t get_last_modified_time() const { return last_modified_time; }
+    virtual void set_last_modified_time(uint64_t p_time) {
+        last_modified_time = p_time;
+    }
 
-    virtual void set_import_last_modified_time(uint64_t p_time) { import_last_modified_time = p_time; }
-    uint64_t get_import_last_modified_time() const { return import_last_modified_time; }
+    uint64_t get_last_modified_time() const {
+        return last_modified_time;
+    }
 
-    void set_import_path(const String &p_path) { import_path = p_path; }
-    String get_import_path() const { return import_path; }
+    virtual void set_import_last_modified_time(uint64_t p_time) {
+        import_last_modified_time = p_time;
+    }
+
+    uint64_t get_import_last_modified_time() const {
+        return import_last_modified_time;
+    }
+
+    void set_import_path(const String& p_path) {
+        import_path = p_path;
+    }
+
+    String get_import_path() const {
+        return import_path;
+    }
 
 #endif
 
@@ -135,9 +157,10 @@ public:
     virtual RID get_rid() const; // some resources may offer conversion to RID
 
 #ifdef TOOLS_ENABLED
-    //helps keep IDs same number when loading/saving scenes. -1 clears ID and it Returns -1 when no id stored
-    void set_id_for_path(const String &p_path, int p_id);
-    int get_id_for_path(const String &p_path) const;
+    // helps keep IDs same number when loading/saving scenes. -1 clears ID and
+    // it Returns -1 when no id stored
+    void set_id_for_path(const String& p_path, int p_id);
+    int get_id_for_path(const String& p_path) const;
 #endif
 
     Resource();
@@ -148,11 +171,12 @@ typedef Ref<Resource> RES;
 
 class ResourceCache {
     friend class Resource;
-    friend class ResourceLoader; //need the lock
+    friend class ResourceLoader; // need the lock
     static RWLock lock;
-    static HashMap<String, Resource *> resources;
+    static HashMap<String, Resource*> resources;
 #ifdef TOOLS_ENABLED
-    static HashMap<String, HashMap<String, int>> resource_path_cache; // each tscn has a set of resource paths and IDs
+    static HashMap<String, HashMap<String, int>>
+        resource_path_cache; // each tscn has a set of resource paths and IDs
     static RWLock path_cache_lock;
 #endif // TOOLS_ENABLED
     friend void unregister_core_types();
@@ -161,10 +185,10 @@ class ResourceCache {
 
 public:
     static void reload_externals();
-    static bool has(const String &p_path);
-    static Resource *get(const String &p_path);
-    static void dump(const char *p_file = nullptr, bool p_short = false);
-    static void get_cached_resources(List<Ref<Resource>> *p_resources);
+    static bool has(const String& p_path);
+    static Resource* get(const String& p_path);
+    static void dump(const char* p_file = nullptr, bool p_short = false);
+    static void get_cached_resources(List<Ref<Resource>>* p_resources);
     static int get_cached_resource_count();
 };
 

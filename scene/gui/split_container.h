@@ -55,12 +55,12 @@ private:
     DraggerVisibility dragger_visibility;
     bool mouse_inside;
 
-    Control *_getch(int p_idx) const;
+    Control* _getch(int p_idx) const;
 
     void _resort();
 
 protected:
-    void _gui_input(const Ref<InputEvent> &p_event);
+    void _gui_input(const Ref<InputEvent>& p_event);
     void _notification(int p_what);
     static void _bind_methods();
 
@@ -75,7 +75,7 @@ public:
     void set_dragger_visibility(DraggerVisibility p_visibility);
     DraggerVisibility get_dragger_visibility() const;
 
-    virtual CursorShape get_cursor_shape(const Point2 &p_pos = Point2i()) const;
+    virtual CursorShape get_cursor_shape(const Point2& p_pos = Point2i()) const;
 
     virtual Size2 get_minimum_size() const;
 
@@ -88,16 +88,14 @@ class HSplitContainer : public SplitContainer {
     GDCLASS(HSplitContainer, SplitContainer);
 
 public:
-    HSplitContainer() :
-            SplitContainer(false) {}
+    HSplitContainer() : SplitContainer(false) {}
 };
 
 class VSplitContainer : public SplitContainer {
     GDCLASS(VSplitContainer, SplitContainer);
 
 public:
-    VSplitContainer() :
-            SplitContainer(true) {}
+    VSplitContainer() : SplitContainer(true) {}
 };
 
 #endif // SPLIT_CONTAINER_H

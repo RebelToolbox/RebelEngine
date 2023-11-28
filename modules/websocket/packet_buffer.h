@@ -45,7 +45,11 @@ private:
     RingBuffer<uint8_t> _payload;
 
 public:
-    Error write_packet(const uint8_t *p_payload, uint32_t p_size, const T *p_info) {
+    Error write_packet(
+        const uint8_t* p_payload,
+        uint32_t p_size,
+        const T* p_info
+    ) {
 #ifdef TOOLS_ENABLED
         // Verbose buffer warnings
         if (p_payload && _payload.space_left() < (int32_t)p_size) {
@@ -57,7 +61,10 @@ public:
             ERR_FAIL_V(ERR_OUT_OF_MEMORY);
         }
 #else
-        ERR_FAIL_COND_V(p_payload && (uint32_t)_payload.space_left() < p_size, ERR_OUT_OF_MEMORY);
+        ERR_FAIL_COND_V(
+            p_payload && (uint32_t)_payload.space_left() < p_size,
+            ERR_OUT_OF_MEMORY
+        );
         ERR_FAIL_COND_V(p_info && _packets.space_left() < 1, ERR_OUT_OF_MEMORY);
 #endif
 
@@ -71,13 +78,13 @@ public:
 
         // If p_payload is NULL, only the packet information is written.
         if (p_payload) {
-            _payload.write((const uint8_t *)p_payload, p_size);
+            _payload.write((const uint8_t*)p_payload, p_size);
         }
 
         return OK;
     }
 
-    Error read_packet(uint8_t *r_payload, int p_bytes, T *r_info, int &r_read) {
+    Error read_packet(uint8_t* r_payload, int p_bytes, T* r_info, int& r_read) {
         ERR_FAIL_COND_V(_packets.data_left() < 1, ERR_UNAVAILABLE);
         _Packet p;
         _packets.read(&p, 1);

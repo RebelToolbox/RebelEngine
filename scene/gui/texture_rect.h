@@ -38,7 +38,7 @@ class TextureRect : public Control {
 
 public:
     enum StretchMode {
-        STRETCH_SCALE_ON_EXPAND, //default, for backwards compatibility
+        STRETCH_SCALE_ON_EXPAND, // default, for backwards compatibility
         STRETCH_SCALE,
         STRETCH_TILE,
         STRETCH_KEEP,
@@ -63,7 +63,7 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_texture(const Ref<Texture> &p_tex);
+    void set_texture(const Ref<Texture>& p_tex);
     Ref<Texture> get_texture() const;
 
     void set_expand(bool p_expand);

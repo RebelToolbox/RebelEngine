@@ -51,13 +51,13 @@ public:
     virtual bool _edit_use_rect() const;
 #endif
 
-    void set_mesh(const Ref<Mesh> &p_mesh);
+    void set_mesh(const Ref<Mesh>& p_mesh);
     Ref<Mesh> get_mesh() const;
 
-    void set_texture(const Ref<Texture> &p_texture);
+    void set_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_texture() const;
 
-    void set_normal_map(const Ref<Texture> &p_texture);
+    void set_normal_map(const Ref<Texture>& p_texture);
     Ref<Texture> get_normal_map() const;
 
     MeshInstance2D();

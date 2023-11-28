@@ -74,7 +74,7 @@ private:
 protected:
     static void _bind_methods();
     void _notification(int p_what);
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
 public:
     AABB get_aabb() const;
@@ -87,9 +87,9 @@ public:
     void set_pre_process_time(float p_time);
     void set_explosiveness_ratio(float p_ratio);
     void set_randomness_ratio(float p_ratio);
-    void set_visibility_aabb(const AABB &p_aabb);
+    void set_visibility_aabb(const AABB& p_aabb);
     void set_use_local_coordinates(bool p_enable);
-    void set_process_material(const Ref<Material> &p_material);
+    void set_process_material(const Ref<Material>& p_material);
     void set_speed_scale(float p_scale);
 
     bool is_emitting() const;
@@ -116,7 +116,7 @@ public:
     void set_draw_passes(int p_count);
     int get_draw_passes() const;
 
-    void set_draw_pass_mesh(int p_pass, const Ref<Mesh> &p_mesh);
+    void set_draw_pass_mesh(int p_pass, const Ref<Mesh>& p_mesh);
     Ref<Mesh> get_draw_pass_mesh(int p_pass) const;
 
     virtual String get_configuration_warning() const;

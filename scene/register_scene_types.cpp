@@ -238,7 +238,7 @@ static Ref<ResourceFormatLoaderShader> resource_loader_shader;
 void register_scene_types() {
     SceneStringNames::create();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     Node::init_node_hrcr();
 
@@ -268,7 +268,7 @@ void register_scene_types() {
     resource_loader_bmfont.instance();
     ResourceLoader::add_resource_format_loader(resource_loader_bmfont, true);
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_class<Object>();
 
@@ -287,7 +287,7 @@ void register_scene_types() {
     ClassDB::register_class<ButtonGroup>();
     ClassDB::register_virtual_class<BaseButton>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_class<ShortCut>();
     ClassDB::register_class<Control>();
@@ -310,7 +310,7 @@ void register_scene_types() {
     ClassDB::register_class<Panel>();
     ClassDB::register_virtual_class<Range>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_class<TextureRect>();
     ClassDB::register_class<ColorRect>();
@@ -332,7 +332,7 @@ void register_scene_types() {
     ClassDB::register_class<ScrollContainer>();
     ClassDB::register_class<PanelContainer>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_class<TextureProgress>();
     ClassDB::register_class<ItemList>();
@@ -369,7 +369,7 @@ void register_scene_types() {
     ClassDB::register_class<GraphNode>();
     ClassDB::register_class<GraphEdit>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
 #endif
 
@@ -406,7 +406,7 @@ void register_scene_types() {
     ClassDB::register_class<AnimationNodeTimeSeek>();
     ClassDB::register_class<AnimationNodeTransition>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
 #ifndef _3D_DISABLED
     ClassDB::register_virtual_class<VisualInstance>();
@@ -447,9 +447,12 @@ void register_scene_types() {
     ClassDB::register_class<Portal>();
 
     ClassDB::register_class<RootMotionView>();
-    ClassDB::set_class_enabled("RootMotionView", false); //disabled by default, enabled by editor
+    ClassDB::set_class_enabled(
+        "RootMotionView",
+        false
+    ); // disabled by default, enabled by editor
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_virtual_class<CollisionObject>();
     ClassDB::register_virtual_class<PhysicsBody>();
@@ -489,11 +492,14 @@ void register_scene_types() {
     ClassDB::register_class<ConeTwistJoint>();
     ClassDB::register_class<Generic6DOFJoint>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
 #endif
 
-    AcceptDialog::set_swap_ok_cancel(GLOBAL_DEF_NOVAL("gui/common/swap_ok_cancel", bool(OS::get_singleton()->get_swap_ok_cancel())));
+    AcceptDialog::set_swap_ok_cancel(GLOBAL_DEF_NOVAL(
+        "gui/common/swap_ok_cancel",
+        bool(OS::get_singleton()->get_swap_ok_cancel())
+    ));
 
     ClassDB::register_class<Shader>();
     ClassDB::register_class<VisualShader>();
@@ -567,9 +573,9 @@ void register_scene_types() {
     ClassDB::register_class<Node2D>();
     ClassDB::register_class<CPUParticles2D>();
     ClassDB::register_class<Particles2D>();
-    //ClassDB::register_class<ParticleAttractor2D>();
+    // ClassDB::register_class<ParticleAttractor2D>();
     ClassDB::register_class<Sprite>();
-    //ClassDB::register_type<ViewportSprite>();
+    // ClassDB::register_type<ViewportSprite>();
     ClassDB::register_class<SpriteFrames>();
     ClassDB::register_class<AnimatedSprite>();
     ClassDB::register_class<Position2D>();
@@ -597,7 +603,7 @@ void register_scene_types() {
     ClassDB::register_class<YSort>();
     ClassDB::register_class<BackBufferCopy>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_class<Camera2D>();
     ClassDB::register_class<Listener2D>();
@@ -612,7 +618,7 @@ void register_scene_types() {
     ClassDB::register_class<TouchScreenButton>();
     ClassDB::register_class<RemoteTransform2D>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     /* REGISTER RESOURCES */
 
@@ -644,7 +650,7 @@ void register_scene_types() {
 
     ClassDB::register_class<MeshLibrary>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_virtual_class<Shape>();
     ClassDB::register_class<RayShape>();
@@ -659,7 +665,7 @@ void register_scene_types() {
     ClassDB::register_virtual_class<OccluderShape>();
     ClassDB::register_class<OccluderShapeSphere>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_class<SpatialVelocityTracker>();
 
@@ -712,7 +718,7 @@ void register_scene_types() {
     ClassDB::register_class<BitMap>();
     ClassDB::register_class<Gradient>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_class<AudioStreamPlayer>();
     ClassDB::register_class<AudioStreamPlayer2D>();
@@ -722,7 +728,7 @@ void register_scene_types() {
     ClassDB::register_virtual_class<VideoStream>();
     ClassDB::register_class<AudioStreamSample>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_virtual_class<Shape2D>();
     ClassDB::register_class<LineShape2D>();
@@ -741,13 +747,14 @@ void register_scene_types() {
     ClassDB::register_class<NavigationPolygon>();
     ClassDB::register_class<NavigationPolygonInstance>();
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     ClassDB::register_virtual_class<SceneState>();
     ClassDB::register_class<PackedScene>();
 
     ClassDB::register_class<SceneTree>();
-    ClassDB::register_virtual_class<SceneTreeTimer>(); //sorry, you can't create it
+    ClassDB::register_virtual_class<SceneTreeTimer>(
+    ); // sorry, you can't create it
 
 #ifndef DISABLE_DEPRECATED
     ClassDB::add_compatibility_class("ImageSkyBox", "PanoramaSky");
@@ -756,7 +763,7 @@ void register_scene_types() {
 
 #endif
 
-    OS::get_singleton()->yield(); //may take time to init
+    OS::get_singleton()->yield(); // may take time to init
 
     for (int i = 0; i < 20; i++) {
         GLOBAL_DEF("layer_names/2d_render/layer_" + itos(i + 1), "");
@@ -771,11 +778,38 @@ void register_scene_types() {
 
 void initialize_theme() {
     bool default_theme_hidpi = GLOBAL_DEF("gui/theme/use_hidpi", false);
-    ProjectSettings::get_singleton()->set_custom_property_info("gui/theme/use_hidpi", PropertyInfo(Variant::BOOL, "gui/theme/use_hidpi", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_RESTART_IF_CHANGED));
+    ProjectSettings::get_singleton()->set_custom_property_info(
+        "gui/theme/use_hidpi",
+        PropertyInfo(
+            Variant::BOOL,
+            "gui/theme/use_hidpi",
+            PROPERTY_HINT_NONE,
+            "",
+            PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_RESTART_IF_CHANGED
+        )
+    );
     String theme_path = GLOBAL_DEF_RST("gui/theme/custom", "");
-    ProjectSettings::get_singleton()->set_custom_property_info("gui/theme/custom", PropertyInfo(Variant::STRING, "gui/theme/custom", PROPERTY_HINT_FILE, "*.tres,*.res,*.theme", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_RESTART_IF_CHANGED));
+    ProjectSettings::get_singleton()->set_custom_property_info(
+        "gui/theme/custom",
+        PropertyInfo(
+            Variant::STRING,
+            "gui/theme/custom",
+            PROPERTY_HINT_FILE,
+            "*.tres,*.res,*.theme",
+            PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_RESTART_IF_CHANGED
+        )
+    );
     String font_path = GLOBAL_DEF_RST("gui/theme/custom_font", "");
-    ProjectSettings::get_singleton()->set_custom_property_info("gui/theme/custom_font", PropertyInfo(Variant::STRING, "gui/theme/custom_font", PROPERTY_HINT_FILE, "*.tres,*.res,*.font", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_RESTART_IF_CHANGED));
+    ProjectSettings::get_singleton()->set_custom_property_info(
+        "gui/theme/custom_font",
+        PropertyInfo(
+            Variant::STRING,
+            "gui/theme/custom_font",
+            PROPERTY_HINT_FILE,
+            "*.tres,*.res,*.font",
+            PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_RESTART_IF_CHANGED
+        )
+    );
 
     Ref<Font> font;
     if (font_path != String()) {
@@ -785,7 +819,8 @@ void initialize_theme() {
         }
     }
 
-    // Always make the default theme to avoid invalid default font/icon/style in the given theme
+    // Always make the default theme to avoid invalid default font/icon/style in
+    // the given theme
     make_default_theme(default_theme_hidpi, font);
 
     if (theme_path != String()) {
@@ -811,10 +846,13 @@ void unregister_scene_types() {
     DynamicFont::finish_dynamic_fonts();
 #endif // MODULE_FREETYPE_ENABLED
 
-    ResourceLoader::remove_resource_format_loader(resource_loader_texture_layered);
+    ResourceLoader::remove_resource_format_loader(
+        resource_loader_texture_layered
+    );
     resource_loader_texture_layered.unref();
 
-    ResourceLoader::remove_resource_format_loader(resource_loader_stream_texture);
+    ResourceLoader::remove_resource_format_loader(resource_loader_stream_texture
+    );
     resource_loader_stream_texture.unref();
 
     ResourceSaver::remove_resource_format_saver(resource_saver_text);
@@ -832,7 +870,8 @@ void unregister_scene_types() {
     ResourceLoader::remove_resource_format_loader(resource_loader_bmfont);
     resource_loader_bmfont.unref();
 
-    //SpatialMaterial is not initialised when 3D is disabled, so it shouldn't be cleaned up either
+    // SpatialMaterial is not initialised when 3D is disabled, so it shouldn't
+    // be cleaned up either
 #ifndef _3D_DISABLED
     SpatialMaterial::finish_shaders();
 #endif // _3D_DISABLED

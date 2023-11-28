@@ -36,10 +36,13 @@ Size2 ProgressBar::get_minimum_size() const {
     Ref<Font> font = get_font("font");
 
     Size2 minimum_size = bg->get_minimum_size();
-    minimum_size.height = MAX(minimum_size.height, fg->get_minimum_size().height);
+    minimum_size.height =
+        MAX(minimum_size.height, fg->get_minimum_size().height);
     minimum_size.width = MAX(minimum_size.width, fg->get_minimum_size().width);
     if (percent_visible) {
-        minimum_size.height = MAX(minimum_size.height, bg->get_minimum_size().height + font->get_height());
+        minimum_size.height =
+            MAX(minimum_size.height,
+                bg->get_minimum_size().height + font->get_height());
     } else { // this is needed, else the progressbar will collapse
         minimum_size.width = MAX(minimum_size.width, 1);
         minimum_size.height = MAX(minimum_size.height, 1);
@@ -59,12 +62,29 @@ void ProgressBar::_notification(int p_what) {
         int mp = fg->get_minimum_size().width;
         int p = r * (get_size().width - mp);
         if (p > 0) {
-            draw_style_box(fg, Rect2(Point2(), Size2(p + fg->get_minimum_size().width, get_size().height)));
+            draw_style_box(
+                fg,
+                Rect2(
+                    Point2(),
+                    Size2(p + fg->get_minimum_size().width, get_size().height)
+                )
+            );
         }
 
         if (percent_visible) {
             String txt = itos(int(get_as_ratio() * 100)) + "%";
-            font->draw_halign(get_canvas_item(), Point2(0, font->get_ascent() + (get_size().height - font->get_height()) / 2), HALIGN_CENTER, get_size().width, txt, font_color);
+            font->draw_halign(
+                get_canvas_item(),
+                Point2(
+                    0,
+                    font->get_ascent()
+                        + (get_size().height - font->get_height()) / 2
+                ),
+                HALIGN_CENTER,
+                get_size().width,
+                txt,
+                font_color
+            );
         }
     }
 }
@@ -79,10 +99,20 @@ bool ProgressBar::is_percent_visible() const {
 }
 
 void ProgressBar::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_percent_visible", "visible"), &ProgressBar::set_percent_visible);
-    ClassDB::bind_method(D_METHOD("is_percent_visible"), &ProgressBar::is_percent_visible);
+    ClassDB::bind_method(
+        D_METHOD("set_percent_visible", "visible"),
+        &ProgressBar::set_percent_visible
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_percent_visible"),
+        &ProgressBar::is_percent_visible
+    );
     ADD_GROUP("Percent", "percent_");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "percent_visible"), "set_percent_visible", "is_percent_visible");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "percent_visible"),
+        "set_percent_visible",
+        "is_percent_visible"
+    );
 }
 
 ProgressBar::ProgressBar() {

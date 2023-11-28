@@ -40,8 +40,13 @@
     @author AndreaCatania
 */
 
-SliderJointBullet::SliderJointBullet(RigidBodyBullet *rbA, RigidBodyBullet *rbB, const Transform &frameInA, const Transform &frameInB) :
-        JointBullet() {
+SliderJointBullet::SliderJointBullet(
+    RigidBodyBullet* rbA,
+    RigidBodyBullet* rbB,
+    const Transform& frameInA,
+    const Transform& frameInB
+) :
+    JointBullet() {
     Transform scaled_AFrame(frameInA.scaled(rbA->get_body_scale()));
     scaled_AFrame.basis.rotref_posscale_decomposition(scaled_AFrame.basis);
 
@@ -54,20 +59,32 @@ SliderJointBullet::SliderJointBullet(RigidBodyBullet *rbA, RigidBodyBullet *rbB,
 
         btTransform btFrameB;
         G_TO_B(scaled_BFrame, btFrameB);
-        sliderConstraint = bulletnew(btSliderConstraint(*rbA->get_bt_rigid_body(), *rbB->get_bt_rigid_body(), btFrameA, btFrameB, true));
+        sliderConstraint = bulletnew(btSliderConstraint(
+            *rbA->get_bt_rigid_body(),
+            *rbB->get_bt_rigid_body(),
+            btFrameA,
+            btFrameB,
+            true
+        ));
 
     } else {
-        sliderConstraint = bulletnew(btSliderConstraint(*rbA->get_bt_rigid_body(), btFrameA, true));
+        sliderConstraint = bulletnew(
+            btSliderConstraint(*rbA->get_bt_rigid_body(), btFrameA, true)
+        );
     }
     setup(sliderConstraint);
 }
 
-const RigidBodyBullet *SliderJointBullet::getRigidBodyA() const {
-    return static_cast<RigidBodyBullet *>(sliderConstraint->getRigidBodyA().getUserPointer());
+const RigidBodyBullet* SliderJointBullet::getRigidBodyA() const {
+    return static_cast<RigidBodyBullet*>(
+        sliderConstraint->getRigidBodyA().getUserPointer()
+    );
 }
 
-const RigidBodyBullet *SliderJointBullet::getRigidBodyB() const {
-    return static_cast<RigidBodyBullet *>(sliderConstraint->getRigidBodyB().getUserPointer());
+const RigidBodyBullet* SliderJointBullet::getRigidBodyB() const {
+    return static_cast<RigidBodyBullet*>(
+        sliderConstraint->getRigidBodyB().getUserPointer()
+    );
 }
 
 const Transform SliderJointBullet::getCalculatedTransformA() const {
@@ -119,6 +136,7 @@ real_t SliderJointBullet::getLowerLinLimit() const {
 void SliderJointBullet::setLowerLinLimit(real_t lowerLimit) {
     sliderConstraint->setLowerLinLimit(lowerLimit);
 }
+
 real_t SliderJointBullet::getUpperLinLimit() const {
     return sliderConstraint->getUpperLinLimit();
 }
@@ -295,7 +313,8 @@ bool SliderJointBullet::getPoweredLinMotor() {
     return sliderConstraint->getPoweredLinMotor();
 }
 
-void SliderJointBullet::setTargetLinMotorVelocity(real_t targetLinMotorVelocity) {
+void SliderJointBullet::setTargetLinMotorVelocity(real_t targetLinMotorVelocity
+) {
     sliderConstraint->setTargetLinMotorVelocity(targetLinMotorVelocity);
 }
 
@@ -319,7 +338,8 @@ bool SliderJointBullet::getPoweredAngMotor() {
     return sliderConstraint->getPoweredAngMotor();
 }
 
-void SliderJointBullet::setTargetAngMotorVelocity(real_t targetAngMotorVelocity) {
+void SliderJointBullet::setTargetAngMotorVelocity(real_t targetAngMotorVelocity
+) {
     sliderConstraint->setTargetAngMotorVelocity(targetAngMotorVelocity);
 }
 
@@ -340,7 +360,10 @@ real_t SliderJointBullet::getLinearPos() {
     ;
 }
 
-void SliderJointBullet::set_param(PhysicsServer::SliderJointParam p_param, real_t p_value) {
+void SliderJointBullet::set_param(
+    PhysicsServer::SliderJointParam p_param,
+    real_t p_value
+) {
     switch (p_param) {
         case PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_UPPER:
             setUpperLinLimit(p_value);
@@ -413,7 +436,8 @@ void SliderJointBullet::set_param(PhysicsServer::SliderJointParam p_param, real_
     }
 }
 
-real_t SliderJointBullet::get_param(PhysicsServer::SliderJointParam p_param) const {
+real_t SliderJointBullet::get_param(PhysicsServer::SliderJointParam p_param
+) const {
     switch (p_param) {
         case PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_UPPER:
             return getUpperLinLimit();

@@ -30,7 +30,7 @@
 
 #include "color_rect.h"
 
-void ColorRect::set_frame_color(const Color &p_color) {
+void ColorRect::set_frame_color(const Color& p_color) {
     color = p_color;
     update();
 }
@@ -46,10 +46,20 @@ void ColorRect::_notification(int p_what) {
 }
 
 void ColorRect::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_frame_color", "color"), &ColorRect::set_frame_color);
-    ClassDB::bind_method(D_METHOD("get_frame_color"), &ColorRect::get_frame_color);
+    ClassDB::bind_method(
+        D_METHOD("set_frame_color", "color"),
+        &ColorRect::set_frame_color
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_frame_color"),
+        &ColorRect::get_frame_color
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::COLOR, "color"), "set_frame_color", "get_frame_color");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::COLOR, "color"),
+        "set_frame_color",
+        "get_frame_color"
+    );
 }
 
 ColorRect::ColorRect() {

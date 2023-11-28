@@ -37,6 +37,7 @@ class AudioStreamSample;
 
 class AudioStreamPlaybackSample : public AudioStreamPlayback {
     GDCLASS(AudioStreamPlaybackSample, AudioStreamPlayback);
+
     enum {
         MIX_FRAC_BITS = 13,
         MIX_FRAC_LEN = (1 << MIX_FRAC_BITS),
@@ -61,19 +62,26 @@ class AudioStreamPlaybackSample : public AudioStreamPlayback {
     Ref<AudioStreamSample> base;
 
     template <class Depth, bool is_stereo, bool is_ima_adpcm>
-    void do_resample(const Depth *p_src, AudioFrame *p_dst, int64_t &offset, int32_t &increment, uint32_t amount, IMA_ADPCM_State *ima_adpcm);
+    void do_resample(
+        const Depth* p_src,
+        AudioFrame* p_dst,
+        int64_t& offset,
+        int32_t& increment,
+        uint32_t amount,
+        IMA_ADPCM_State* ima_adpcm
+    );
 
 public:
     virtual void start(float p_from_pos = 0.0);
     virtual void stop();
     virtual bool is_playing() const;
 
-    virtual int get_loop_count() const; //times it looped
+    virtual int get_loop_count() const; // times it looped
 
     virtual float get_playback_position() const;
     virtual void seek(float p_time);
 
-    virtual void mix(AudioFrame *p_buffer, float p_rate_scale, int p_frames);
+    virtual void mix(AudioFrame* p_buffer, float p_rate_scale, int p_frames);
 
     AudioStreamPlaybackSample();
 };
@@ -100,7 +108,7 @@ private:
     friend class AudioStreamPlaybackSample;
 
     enum {
-        DATA_PAD = 16 //padding for interpolation
+        DATA_PAD = 16 // padding for interpolation
     };
 
     Format format;
@@ -109,7 +117,7 @@ private:
     int loop_begin;
     int loop_end;
     int mix_rate;
-    void *data;
+    void* data;
     uint32_t data_bytes;
 
 protected:
@@ -134,12 +142,12 @@ public:
     void set_stereo(bool p_enable);
     bool is_stereo() const;
 
-    virtual float get_length() const; //if supported, otherwise return 0
+    virtual float get_length() const; // if supported, otherwise return 0
 
-    void set_data(const PoolVector<uint8_t> &p_data);
+    void set_data(const PoolVector<uint8_t>& p_data);
     PoolVector<uint8_t> get_data() const;
 
-    Error save_to_wav(const String &p_path);
+    Error save_to_wav(const String& p_path);
 
     virtual Ref<AudioStreamPlayback> instance_playback();
     virtual String get_stream_name() const;

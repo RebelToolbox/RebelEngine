@@ -31,7 +31,11 @@
 #include "dtls_server_mbedtls.h"
 #include "packet_peer_mbed_dtls.h"
 
-Error DTLSServerMbedTLS::setup(Ref<CryptoKey> p_key, Ref<X509Certificate> p_cert, Ref<X509Certificate> p_ca_chain) {
+Error DTLSServerMbedTLS::setup(
+    Ref<CryptoKey> p_key,
+    Ref<X509Certificate> p_cert,
+    Ref<X509Certificate> p_ca_chain
+) {
     ERR_FAIL_COND_V(_cookies->setup() != OK, ERR_ALREADY_IN_USE);
     _key = p_key;
     _cert = p_cert;
@@ -43,7 +47,9 @@ void DTLSServerMbedTLS::stop() {
     _cookies->clear();
 }
 
-Ref<PacketPeerDTLS> DTLSServerMbedTLS::take_connection(Ref<PacketPeerUDP> p_udp_peer) {
+Ref<PacketPeerDTLS> DTLSServerMbedTLS::take_connection(
+    Ref<PacketPeerUDP> p_udp_peer
+) {
     Ref<PacketPeerMbedDTLS> out;
     out.instance();
 
@@ -53,7 +59,7 @@ Ref<PacketPeerDTLS> DTLSServerMbedTLS::take_connection(Ref<PacketPeerUDP> p_udp_
     return out;
 }
 
-DTLSServer *DTLSServerMbedTLS::_create_func() {
+DTLSServer* DTLSServerMbedTLS::_create_func() {
     return memnew(DTLSServerMbedTLS);
 }
 

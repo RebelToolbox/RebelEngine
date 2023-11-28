@@ -33,7 +33,7 @@
 Size2 AspectRatioContainer::get_minimum_size() const {
     Size2 ms;
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c) {
             continue;
         }
@@ -60,12 +60,15 @@ void AspectRatioContainer::set_stretch_mode(StretchMode p_mode) {
     queue_sort();
 }
 
-void AspectRatioContainer::set_alignment_horizontal(AlignMode p_alignment_horizontal) {
+void AspectRatioContainer::set_alignment_horizontal(
+    AlignMode p_alignment_horizontal
+) {
     alignment_horizontal = p_alignment_horizontal;
     queue_sort();
 }
 
-void AspectRatioContainer::set_alignment_vertical(AlignMode p_alignment_vertical) {
+void AspectRatioContainer::set_alignment_vertical(AlignMode p_alignment_vertical
+) {
     alignment_vertical = p_alignment_vertical;
     queue_sort();
 }
@@ -75,7 +78,7 @@ void AspectRatioContainer::_notification(int p_what) {
         case NOTIFICATION_SORT_CHILDREN: {
             Size2 size = get_size();
             for (int i = 0; i < get_child_count(); i++) {
-                Control *c = Object::cast_to<Control>(get_child(i));
+                Control* c = Object::cast_to<Control>(get_child(i));
                 if (!c) {
                     continue;
                 }
@@ -94,10 +97,12 @@ void AspectRatioContainer::_notification(int p_what) {
                         scale_factor = size.y / child_size.y;
                     } break;
                     case STRETCH_FIT: {
-                        scale_factor = MIN(size.x / child_size.x, size.y / child_size.y);
+                        scale_factor =
+                            MIN(size.x / child_size.x, size.y / child_size.y);
                     } break;
                     case STRETCH_COVER: {
-                        scale_factor = MAX(size.x / child_size.x, size.y / child_size.y);
+                        scale_factor =
+                            MAX(size.x / child_size.x, size.y / child_size.y);
                     } break;
                 }
                 child_size *= scale_factor;
@@ -128,7 +133,8 @@ void AspectRatioContainer::_notification(int p_what) {
                         align_y = 1.0;
                     } break;
                 }
-                Vector2 offset = (size - child_size) * Vector2(align_x, align_y);
+                Vector2 offset =
+                    (size - child_size) * Vector2(align_x, align_y);
 
                 fit_child_in_rect(c, Rect2(offset, child_size));
             }
@@ -137,24 +143,79 @@ void AspectRatioContainer::_notification(int p_what) {
 }
 
 void AspectRatioContainer::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_ratio", "ratio"), &AspectRatioContainer::set_ratio);
-    ClassDB::bind_method(D_METHOD("get_ratio"), &AspectRatioContainer::get_ratio);
+    ClassDB::bind_method(
+        D_METHOD("set_ratio", "ratio"),
+        &AspectRatioContainer::set_ratio
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_ratio"),
+        &AspectRatioContainer::get_ratio
+    );
 
-    ClassDB::bind_method(D_METHOD("set_stretch_mode", "stretch_mode"), &AspectRatioContainer::set_stretch_mode);
-    ClassDB::bind_method(D_METHOD("get_stretch_mode"), &AspectRatioContainer::get_stretch_mode);
+    ClassDB::bind_method(
+        D_METHOD("set_stretch_mode", "stretch_mode"),
+        &AspectRatioContainer::set_stretch_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_stretch_mode"),
+        &AspectRatioContainer::get_stretch_mode
+    );
 
-    ClassDB::bind_method(D_METHOD("set_alignment_horizontal", "alignment_horizontal"), &AspectRatioContainer::set_alignment_horizontal);
-    ClassDB::bind_method(D_METHOD("get_alignment_horizontal"), &AspectRatioContainer::get_alignment_horizontal);
+    ClassDB::bind_method(
+        D_METHOD("set_alignment_horizontal", "alignment_horizontal"),
+        &AspectRatioContainer::set_alignment_horizontal
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_alignment_horizontal"),
+        &AspectRatioContainer::get_alignment_horizontal
+    );
 
-    ClassDB::bind_method(D_METHOD("set_alignment_vertical", "alignment_vertical"), &AspectRatioContainer::set_alignment_vertical);
-    ClassDB::bind_method(D_METHOD("get_alignment_vertical"), &AspectRatioContainer::get_alignment_vertical);
+    ClassDB::bind_method(
+        D_METHOD("set_alignment_vertical", "alignment_vertical"),
+        &AspectRatioContainer::set_alignment_vertical
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_alignment_vertical"),
+        &AspectRatioContainer::get_alignment_vertical
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "ratio"), "set_ratio", "get_ratio");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "stretch_mode", PROPERTY_HINT_ENUM, "Width controls height,Height controls width,Fit,Cover"), "set_stretch_mode", "get_stretch_mode");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "ratio"),
+        "set_ratio",
+        "get_ratio"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "stretch_mode",
+            PROPERTY_HINT_ENUM,
+            "Width controls height,Height controls width,Fit,Cover"
+        ),
+        "set_stretch_mode",
+        "get_stretch_mode"
+    );
 
     ADD_GROUP("Alignment", "alignment_");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "alignment_horizontal", PROPERTY_HINT_ENUM, "Begin,Center,End"), "set_alignment_horizontal", "get_alignment_horizontal");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "alignment_vertical", PROPERTY_HINT_ENUM, "Begin,Center,End"), "set_alignment_vertical", "get_alignment_vertical");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "alignment_horizontal",
+            PROPERTY_HINT_ENUM,
+            "Begin,Center,End"
+        ),
+        "set_alignment_horizontal",
+        "get_alignment_horizontal"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "alignment_vertical",
+            PROPERTY_HINT_ENUM,
+            "Begin,Center,End"
+        ),
+        "set_alignment_vertical",
+        "get_alignment_vertical"
+    );
 
     BIND_ENUM_CONSTANT(STRETCH_WIDTH_CONTROLS_HEIGHT);
     BIND_ENUM_CONSTANT(STRETCH_HEIGHT_CONTROLS_WIDTH);

@@ -108,7 +108,8 @@ import java.util.Locale;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class RebelFragment extends Fragment implements SensorEventListener, IDownloaderClient {
+public class RebelFragment
+    extends Fragment implements SensorEventListener, IDownloaderClient {
     static final int MAX_SINGLETONS = 64;
     private IStub mDownloaderClientStub;
     private TextView mStatusText;
@@ -135,7 +136,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     private int mState;
 
     // Used to dispatch events to the main thread.
-    private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+    private final Handler mainThreadHandler =
+        new Handler(Looper.getMainLooper());
 
     private RebelHost rebelHost;
     private RebelPluginRegistry rebelPluginRegistry;
@@ -153,13 +155,16 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     private void setState(int newState) {
         if (mState != newState) {
             mState = newState;
-            mStatusText.setText(Helpers.getDownloaderStringResourceIDFromState(newState));
+            mStatusText.setText(
+                Helpers.getDownloaderStringResourceIDFromState(newState)
+            );
         }
     }
 
     private void setButtonPausedState(boolean paused) {
         mStatePaused = paused;
-        int stringResourceID = paused ? R.string.text_button_resume : R.string.text_button_pause;
+        int stringResourceID =
+            paused ? R.string.text_button_resume : R.string.text_button_pause;
         mPauseButton.setText(stringResourceID);
     }
 
@@ -178,8 +183,7 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
                         break;
                     }
                 }
-                if (!found)
-                    continue;
+                if (!found) continue;
 
                 List<String> ptr = new ArrayList<String>();
 
@@ -191,17 +195,23 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
                 String[] pt = new String[ptr.size()];
                 ptr.toArray(pt);
 
-                RebelPlugin.nativeRegisterMethod(p_name, method.getName(), method.getReturnType().getName(), pt);
+                RebelPlugin.nativeRegisterMethod(
+                    p_name,
+                    method.getName(),
+                    method.getReturnType().getName(),
+                    pt
+                );
             }
 
             RebelFragment.singletons[RebelFragment.singleton_count++] = this;
         }
 
         /**
-         * Invoked once during Android initialization after creation of the {@link RebelView}.
+         * Invoked once during Android initialization after creation of the
+         * {@link RebelView}.
          *
-         * This method should be overridden by descendants of this class that would like to add
-         * their view/layout to the view hierarchy.
+         * This method should be overridden by descendants of this class that
+         * would like to add their view/layout to the view hierarchy.
          *
          * @return the view to be included; null if no views should be included.
          */
@@ -210,20 +220,35 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
             return null;
         }
 
-        protected void onMainActivityResult(int requestCode, int resultCode, Intent data) {
-        }
+        protected void onMainActivityResult(
+            int requestCode,
+            int resultCode,
+            Intent data
+        ) {}
 
-        protected void onMainRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        }
+        protected void onMainRequestPermissionsResult(
+            int requestCode,
+            String[] permissions,
+            int[] grantResults
+        ) {}
 
         protected void onMainPause() {}
+
         protected void onMainResume() {}
+
         protected void onMainDestroy() {}
-        protected boolean onMainBackPressed() { return false; }
+
+        protected boolean onMainBackPressed() {
+            return false;
+        }
 
         protected void onGLDrawFrame(GL10 gl) {}
-        protected void onGLSurfaceChanged(GL10 gl, int width, int height) {} // singletons will always miss first onGLSurfaceChanged call
-        // protected void onGLSurfaceCreated(GL10 gl, EGLConfig config) {} // singletons won't be ready until first RebelEngine.step()
+
+        protected void onGLSurfaceChanged(GL10 gl, int width, int height) {
+        } // singletons will always miss first onGLSurfaceChanged call
+
+        // protected void onGLSurfaceCreated(GL10 gl, EGLConfig config) {} //
+        // singletons won't be ready until first RebelEngine.step()
 
         public void registerMethods() {}
     }
@@ -289,24 +314,42 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
         for (int i = 0; i < singleton_count; i++) {
             singletons[i].onMainActivityResult(requestCode, resultCode, data);
         }
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             rebelPlugin.onMainActivityResult(requestCode, resultCode, data);
         }
     }
 
     @CallSuper
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void onRequestPermissionsResult(
+        int requestCode,
+        String[] permissions,
+        int[] grantResults
+    ) {
+        super
+            .onRequestPermissionsResult(requestCode, permissions, grantResults);
         for (int i = 0; i < singleton_count; i++) {
-            singletons[i].onMainRequestPermissionsResult(requestCode, permissions, grantResults);
+            singletons[i].onMainRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+            );
         }
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
-            rebelPlugin.onMainRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
+            rebelPlugin.onMainRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+            );
         }
 
         for (int i = 0; i < permissions.length; i++) {
-            RebelEngine.requestPermissionResult(permissions[i], grantResults[i] == PackageManager.PERMISSION_GRANTED);
+            RebelEngine.requestPermissionResult(
+                permissions[i],
+                grantResults[i] == PackageManager.PERMISSION_GRANTED
+            );
         }
     }
 
@@ -315,7 +358,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
      */
     @CallSuper
     protected void onSetupCompleted() {
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             rebelPlugin.onSetupCompleted();
         }
 
@@ -329,7 +373,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
      */
     @CallSuper
     protected void onMainLoopStarted() {
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             rebelPlugin.onMainLoopStarted();
         }
 
@@ -339,7 +384,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     }
 
     /**
-     * Used by the native code (java_godot_lib_jni.cpp) to complete initialization of the GLSurfaceView view and renderer.
+     * Used by the native code (java_godot_lib_jni.cpp) to complete
+     * initialization of the GLSurfaceView view and renderer.
      */
     @Keep
     private void onVideoInit() {
@@ -347,17 +393,36 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
         final Activity activity = getActivity();
         containerLayout = new FrameLayout(activity);
-        containerLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        containerLayout.setLayoutParams(new LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.MATCH_PARENT
+        ));
 
         // RebelEditText layout
         RebelEditText rebelEditText = new RebelEditText(activity);
-        rebelEditText.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT,
-                (int)getResources().getDimension(R.dimen.text_edit_height)));
+        rebelEditText.setLayoutParams(new ViewGroup.LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            (int)getResources().getDimension(R.dimen.text_edit_height)
+        ));
         // ...add to FrameLayout
         containerLayout.addView(rebelEditText);
 
-        rebelView = new RebelView(activity, this, xrMode, use_gl3, use_32_bits, use_debug_opengl, translucent);
-        containerLayout.addView(rebelView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        rebelView = new RebelView(
+            activity,
+            this,
+            xrMode,
+            use_gl3,
+            use_32_bits,
+            use_debug_opengl,
+            translucent
+        );
+        containerLayout.addView(
+            rebelView,
+            new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT
+            )
+        );
         rebelEditText.setRebelView(rebelView);
         io.setRebelEditText(rebelEditText);
 
@@ -375,10 +440,13 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
             RebelEngine.setup(current_command_line);
 
             // Must occur after RebelEngine.setup has completed.
-            for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+            for (RebelPlugin rebelPlugin :
+                 rebelPluginRegistry.getAllRebelPlugins()) {
                 rebelPlugin.onRegisterPlugin();
             }
-            setKeepScreenOn("True".equals(RebelEngine.getGlobal("display/window/energy_saving/keep_screen_on")));
+            setKeepScreenOn("True".equals(RebelEngine.getGlobal(
+                "display/window/energy_saving/keep_screen_on"
+            )));
 
             // The Rebel Plugins are setup on completion of RebelEngine.setup
             mainThreadHandler.post(() -> {
@@ -393,7 +461,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
         });
 
         // Include all the non-null views.
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             View pluginView = rebelPlugin.onMainCreate(activity);
             if (pluginView != null) {
                 if (rebelPlugin.shouldBeOnTop()) {
@@ -408,9 +477,13 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     public void setKeepScreenOn(final boolean p_enabled) {
         runOnUiThread(() -> {
             if (p_enabled) {
-                getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                getActivity().getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                );
             } else {
-                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                getActivity().getWindow().clearFlags(
+                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                );
             }
         });
     }
@@ -423,10 +496,15 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     @Keep
     private void vibrate(int durationMs) {
         if (durationMs > 0 && requestPermission("VIBRATE")) {
-            Vibrator v = (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator v =
+                (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE
+                );
             if (v != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    v.vibrate(VibrationEffect.createOneShot(durationMs, VibrationEffect.DEFAULT_AMPLITUDE));
+                    v.vibrate(VibrationEffect.createOneShot(
+                        durationMs,
+                        VibrationEffect.DEFAULT_AMPLITUDE
+                    ));
                 } else {
                     // deprecated in API 26
                     v.vibrate(durationMs);
@@ -446,16 +524,16 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
         runOnUiThread(() -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setMessage(message).setTitle(title);
-            builder.setPositiveButton(
-                    "OK",
-                    (dialog, id) -> dialog.cancel());
+            builder.setPositiveButton("OK", (dialog, id) -> dialog.cancel());
             AlertDialog dialog = builder.create();
             dialog.show();
         });
     }
 
     public int getGLESVersionCode() {
-        ActivityManager am = (ActivityManager)getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager)getContext().getSystemService(
+            Context.ACTIVITY_SERVICE
+        );
         ConfigurationInfo deviceInfo = am.getDeviceConfigurationInfo();
         return deviceInfo.reqGlEsVersion;
     }
@@ -464,11 +542,15 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     protected String[] getCommandLine() {
         String[] original = parseCommandLine();
         String[] updated;
-        List<String> hostCommandLine = rebelHost != null ? rebelHost.getCommandLine() : null;
+        List<String> hostCommandLine =
+            rebelHost != null ? rebelHost.getCommandLine() : null;
         if (hostCommandLine == null || hostCommandLine.isEmpty()) {
             updated = original;
         } else {
-            updated = Arrays.copyOf(original, original.length + hostCommandLine.size());
+            updated = Arrays.copyOf(
+                original,
+                original.length + hostCommandLine.size()
+            );
             for (int i = 0; i < hostCommandLine.size(); i++) {
                 updated[original.length + i] = hostCommandLine.get(i);
             }
@@ -485,7 +567,9 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
             if (r < 4) {
                 return new String[0];
             }
-            int argc = ((int)(len[3] & 0xFF) << 24) | ((int)(len[2] & 0xFF) << 16) | ((int)(len[1] & 0xFF) << 8) | ((int)(len[0] & 0xFF));
+            int argc = ((int)(len[3] & 0xFF) << 24)
+                     | ((int)(len[2] & 0xFF) << 16)
+                     | ((int)(len[1] & 0xFF) << 8) | ((int)(len[0] & 0xFF));
             String[] cmdline = new String[argc];
 
             for (int i = 0; i < argc; i++) {
@@ -493,7 +577,9 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
                 if (r < 4) {
                     return new String[0];
                 }
-                int strlen = ((int)(len[3] & 0xFF) << 24) | ((int)(len[2] & 0xFF) << 16) | ((int)(len[1] & 0xFF) << 8) | ((int)(len[0] & 0xFF));
+                int strlen =
+                    ((int)(len[3] & 0xFF) << 24) | ((int)(len[2] & 0xFF) << 16)
+                    | ((int)(len[1] & 0xFF) << 8) | ((int)(len[0] & 0xFF));
                 if (strlen > 65535) {
                     return new String[0];
                 }
@@ -511,7 +597,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     }
 
     /**
-     * Used by the native code (java_godot_wrapper.h) to check whether the activity is resumed or paused.
+     * Used by the native code (java_godot_wrapper.h) to check whether the
+     * activity is resumed or paused.
      */
     @Keep
     private boolean isActivityResumed() {
@@ -519,7 +606,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     }
 
     /**
-     * Used by the native code (java_godot_wrapper.h) to access the Android surface.
+     * Used by the native code (java_godot_wrapper.h) to access the Android
+     * surface.
      */
     @Keep
     private Surface getSurface() {
@@ -527,7 +615,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     }
 
     /**
-     * Used by the native code (java_godot_wrapper.h) to access the input fallback mapping.
+     * Used by the native code (java_godot_wrapper.h) to access the input
+     * fallback mapping.
      * @return The input fallback mapping for the current XR mode.
      */
     @Keep
@@ -560,17 +649,38 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
         io = new RebelIO(activity);
         RebelEngine.io = io;
         wifiMulticastLock = new WifiMulticastLock(activity);
-        mSensorManager = (SensorManager)activity.getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager =
+            (SensorManager)activity.getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer =
+            mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager.registerListener(
+            this,
+            mAccelerometer,
+            SensorManager.SENSOR_DELAY_GAME
+        );
         mGravity = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
-        mSensorManager.registerListener(this, mGravity, SensorManager.SENSOR_DELAY_GAME);
-        mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager
+            .registerListener(this, mGravity, SensorManager.SENSOR_DELAY_GAME);
+        mMagnetometer =
+            mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        mSensorManager.registerListener(
+            this,
+            mMagnetometer,
+            SensorManager.SENSOR_DELAY_GAME
+        );
         mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        mSensorManager.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager.registerListener(
+            this,
+            mGyroscope,
+            SensorManager.SENSOR_DELAY_GAME
+        );
 
-        RebelEngine.initialize(activity, this, activity.getAssets(), use_apk_expansion);
+        RebelEngine.initialize(
+            activity,
+            this,
+            activity.getAssets(),
+            use_apk_expansion
+        );
 
         result_callback = null;
 
@@ -579,7 +689,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
     @Override
     public void onServiceConnected(Messenger m) {
-        IDownloaderService remoteService = DownloaderServiceMarshaller.CreateProxy(m);
+        IDownloaderService remoteService =
+            DownloaderServiceMarshaller.CreateProxy(m);
         remoteService.onClientUpdated(mDownloaderClientStub.getMessenger());
     }
 
@@ -590,7 +701,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
         final Activity activity = getActivity();
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        mClipboard = (ClipboardManager)activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        mClipboard = (ClipboardManager
+        )activity.getSystemService(Context.CLIPBOARD_SERVICE);
         rebelPluginRegistry = RebelPluginRegistry.initialize(this);
 
         // check for apk expansion API
@@ -617,14 +729,17 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
                 translucent = true;
             } else if (command_line[i].equals("--use_immersive")) {
                 use_immersive = true;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { // check if the application runs on an android 4.4+
+                if (Build.VERSION.SDK_INT
+                    >= Build.VERSION_CODES.KITKAT) { // check if the application
+                                                     // runs on an android 4.4+
                     window.getDecorView().setSystemUiVisibility(
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | // hide nav bar
-                            View.SYSTEM_UI_FLAG_FULLSCREEN | // hide status bar
-                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | // hide nav bar
+                        View.SYSTEM_UI_FLAG_FULLSCREEN | // hide status bar
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    );
 
                     UiChangeListener();
                 }
@@ -635,8 +750,10 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
                 i++;
             } else if (has_extra && command_line[i].equals("--apk_expansion_key")) {
                 main_pack_key = command_line[i + 1];
-                SharedPreferences prefs = activity.getSharedPreferences("app_data_keys",
-                        MODE_PRIVATE);
+                SharedPreferences prefs = activity.getSharedPreferences(
+                    "app_data_keys",
+                    MODE_PRIVATE
+                );
                 Editor editor = prefs.edit();
                 editor.putString("store_public_key", main_pack_key);
 
@@ -652,16 +769,24 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
         } else {
             command_line = new_args.toArray(new String[new_args.size()]);
         }
-        if (use_apk_expansion && main_pack_md5 != null && main_pack_key != null) {
+        if (use_apk_expansion && main_pack_md5 != null
+            && main_pack_key != null) {
             // check that environment is ok!
-            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            if (!Environment.getExternalStorageState().equals(
+                    Environment.MEDIA_MOUNTED
+                )) {
                 // show popup and die
             }
 
             // Build the full path to the app's expansion files
             try {
                 expansion_pack_path = Helpers.getSaveFilePath(getContext());
-                expansion_pack_path += "/main." + activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionCode + "." + activity.getPackageName() + ".obb";
+                expansion_pack_path +=
+                    "/main."
+                    + activity.getPackageManager()
+                          .getPackageInfo(activity.getPackageName(), 0)
+                          .versionCode
+                    + "." + activity.getPackageName() + ".obb";
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -677,29 +802,40 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
                 pack_valid = false;
                 try {
                     f.delete();
-                } catch (Exception e) {
-                }
+                } catch (Exception e) {}
             }
 
             if (!pack_valid) {
-                Intent notifierIntent = new Intent(activity, activity.getClass());
-                notifierIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent notifierIntent =
+                    new Intent(activity, activity.getClass());
+                notifierIntent.setFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                );
 
-                PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0,
-                        notifierIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent pendingIntent = PendingIntent.getActivity(
+                    activity,
+                    0,
+                    notifierIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                );
 
                 int startResult;
                 try {
-                    startResult = DownloaderClientMarshaller.startDownloadServiceIfRequired(
-                            getContext(),
-                            pendingIntent,
-                            RebelDownloaderService.class);
+                    startResult = DownloaderClientMarshaller
+                                      .startDownloadServiceIfRequired(
+                                          getContext(),
+                                          pendingIntent,
+                                          RebelDownloaderService.class
+                                      );
 
-                    if (startResult != DownloaderClientMarshaller.NO_DOWNLOAD_REQUIRED) {
+                    if (startResult
+                        != DownloaderClientMarshaller.NO_DOWNLOAD_REQUIRED) {
                         // This is where you do set up to display the download
                         // progress (next step in onCreateView)
-                        mDownloaderClientStub = DownloaderClientMarshaller.CreateStub(this,
-                                RebelDownloaderService.class);
+                        mDownloaderClientStub =
+                            DownloaderClientMarshaller
+                                .CreateStub(this, RebelDownloaderService.class);
 
                         return;
                     }
@@ -715,20 +851,37 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle icicle) {
+    public View onCreateView(
+        LayoutInflater inflater,
+        ViewGroup container,
+        Bundle icicle
+    ) {
         if (mDownloaderClientStub != null) {
-            View downloadingExpansionView =
-                    inflater.inflate(R.layout.downloading_expansion, container, false);
-            mPB = (ProgressBar)downloadingExpansionView.findViewById(R.id.progressBar);
-            mStatusText = (TextView)downloadingExpansionView.findViewById(R.id.statusText);
-            mProgressFraction = (TextView)downloadingExpansionView.findViewById(R.id.progressAsFraction);
-            mProgressPercent = (TextView)downloadingExpansionView.findViewById(R.id.progressAsPercentage);
-            mAverageSpeed = (TextView)downloadingExpansionView.findViewById(R.id.progressAverageSpeed);
-            mTimeRemaining = (TextView)downloadingExpansionView.findViewById(R.id.progressTimeRemaining);
-            mDashboard = downloadingExpansionView.findViewById(R.id.downloaderDashboard);
-            mCellMessage = downloadingExpansionView.findViewById(R.id.approveCellular);
-            mPauseButton = (Button)downloadingExpansionView.findViewById(R.id.pauseButton);
-            mWiFiSettingsButton = (Button)downloadingExpansionView.findViewById(R.id.wifiSettingsButton);
+            View downloadingExpansionView = inflater.inflate(
+                R.layout.downloading_expansion,
+                container,
+                false
+            );
+            mPB = (ProgressBar
+            )downloadingExpansionView.findViewById(R.id.progressBar);
+            mStatusText = (TextView
+            )downloadingExpansionView.findViewById(R.id.statusText);
+            mProgressFraction = (TextView
+            )downloadingExpansionView.findViewById(R.id.progressAsFraction);
+            mProgressPercent = (TextView
+            )downloadingExpansionView.findViewById(R.id.progressAsPercentage);
+            mAverageSpeed = (TextView
+            )downloadingExpansionView.findViewById(R.id.progressAverageSpeed);
+            mTimeRemaining = (TextView
+            )downloadingExpansionView.findViewById(R.id.progressTimeRemaining);
+            mDashboard =
+                downloadingExpansionView.findViewById(R.id.downloaderDashboard);
+            mCellMessage =
+                downloadingExpansionView.findViewById(R.id.approveCellular);
+            mPauseButton =
+                (Button)downloadingExpansionView.findViewById(R.id.pauseButton);
+            mWiFiSettingsButton = (Button
+            )downloadingExpansionView.findViewById(R.id.wifiSettingsButton);
 
             return downloadingExpansionView;
         }
@@ -741,7 +894,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
         for (int i = 0; i < singleton_count; i++) {
             singletons[i].onMainDestroy();
         }
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             rebelPlugin.onMainDestroy();
         }
 
@@ -770,18 +924,17 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
         for (int i = 0; i < singleton_count; i++) {
             singletons[i].onMainPause();
         }
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             rebelPlugin.onMainPause();
         }
     }
 
     public String getClipboard() {
         ClipData clipData = mClipboard.getPrimaryClip();
-        if (clipData == null)
-            return "";
+        if (clipData == null) return "";
         CharSequence text = clipData.getItemAt(0).getText();
-        if (text == null)
-            return "";
+        if (text == null) return "";
         return text.toString();
     }
 
@@ -803,26 +956,44 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
         rebelView.onResume();
 
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-        mSensorManager.registerListener(this, mGravity, SensorManager.SENSOR_DELAY_GAME);
-        mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_GAME);
-        mSensorManager.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager.registerListener(
+            this,
+            mAccelerometer,
+            SensorManager.SENSOR_DELAY_GAME
+        );
+        mSensorManager
+            .registerListener(this, mGravity, SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager.registerListener(
+            this,
+            mMagnetometer,
+            SensorManager.SENSOR_DELAY_GAME
+        );
+        mSensorManager.registerListener(
+            this,
+            mGyroscope,
+            SensorManager.SENSOR_DELAY_GAME
+        );
 
-        if (use_immersive && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { // check if the application runs on an android 4.4+
+        if (use_immersive
+            && Build.VERSION.SDK_INT
+                   >= Build.VERSION_CODES.KITKAT) { // check if the application
+                                                    // runs on an android 4.4+
             Window window = getActivity().getWindow();
             window.getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | // hide nav bar
-                    View.SYSTEM_UI_FLAG_FULLSCREEN | // hide status bar
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | // hide nav bar
+                View.SYSTEM_UI_FLAG_FULLSCREEN |        // hide status bar
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            );
         }
 
         for (int i = 0; i < singleton_count; i++) {
             singletons[i].onMainResume();
         }
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             rebelPlugin.onMainResume();
         }
     }
@@ -833,12 +1004,13 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
             if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     decorView.setSystemUiVisibility(
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                            View.SYSTEM_UI_FLAG_FULLSCREEN |
-                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    );
                 }
             }
         });
@@ -847,15 +1019,16 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
     @Override
     public void onSensorChanged(SensorEvent event) {
         Display display =
-                ((WindowManager)getActivity().getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+            ((WindowManager)getActivity().getSystemService(WINDOW_SERVICE))
+                .getDefaultDisplay();
         int displayRotation = display.getRotation();
 
         float[] adjustedValues = new float[3];
         final int[][] axisSwap = {
-            { 1, -1, 0, 1 }, // ROTATION_0
-            { -1, -1, 1, 0 }, // ROTATION_90
-            { -1, 1, 0, 1 }, // ROTATION_180
-            { 1, 1, 1, 0 }
+            {1, -1, 0, 1},  // ROTATION_0
+            {-1, -1, 1, 0}, // ROTATION_90
+            {-1, 1, 0, 1},  // ROTATION_180
+            {1, 1, 1, 0}
         }; // ROTATION_270
 
         final int[] as = axisSwap[displayRotation];
@@ -915,7 +1088,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
                 shouldQuit = false;
             }
         }
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             if (rebelPlugin.onMainBackPressed()) {
                 shouldQuit = false;
             }
@@ -945,8 +1119,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
     private void forceQuit() {
         // TODO: This is a temp solution.
-        //  The proper fix will involve tracking down and properly shutting down each
-        //  Rebel Engine component that is started in onVideoInit.
+        //  The proper fix will involve tracking down and properly shutting down
+        //  each Rebel Engine component that is started in onVideoInit.
         if (rebelHost != null) {
             rebelHost.onQuit(this);
         }
@@ -1045,7 +1219,8 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
                 indeterminate = false;
                 break;
             case IDownloaderClient.STATE_PAUSED_NEED_CELLULAR_PERMISSION:
-            case IDownloaderClient.STATE_PAUSED_WIFI_DISABLED_NEED_CELLULAR_PERMISSION:
+            case IDownloaderClient
+                .STATE_PAUSED_WIFI_DISABLED_NEED_CELLULAR_PERMISSION:
                 showDashboard = false;
                 paused = true;
                 indeterminate = false;
@@ -1087,17 +1262,28 @@ public class RebelFragment extends Fragment implements SensorEventListener, IDow
 
     @Override
     public void onDownloadProgress(DownloadProgressInfo progress) {
-        mAverageSpeed.setText(getString(R.string.kilobytes_per_second,
-                Helpers.getSpeedString(progress.mCurrentSpeed)));
-        mTimeRemaining.setText(getString(R.string.time_remaining,
-                Helpers.getTimeRemaining(progress.mTimeRemaining)));
+        mAverageSpeed.setText(getString(
+            R.string.kilobytes_per_second,
+            Helpers.getSpeedString(progress.mCurrentSpeed)
+        ));
+        mTimeRemaining.setText(getString(
+            R.string.time_remaining,
+            Helpers.getTimeRemaining(progress.mTimeRemaining)
+        ));
 
         mPB.setMax((int)(progress.mOverallTotal >> 8));
         mPB.setProgress((int)(progress.mOverallProgress >> 8));
-        mProgressPercent.setText(String.format(Locale.ENGLISH, "%d %%", progress.mOverallProgress * 100 / progress.mOverallTotal));
-        mProgressFraction.setText(Helpers.getDownloadProgressString(progress.mOverallProgress,
-                progress.mOverallTotal));
+        mProgressPercent.setText(String.format(
+            Locale.ENGLISH,
+            "%d %%",
+            progress.mOverallProgress * 100 / progress.mOverallTotal
+        ));
+        mProgressFraction.setText(Helpers.getDownloadProgressString(
+            progress.mOverallProgress,
+            progress.mOverallTotal
+        ));
     }
+
     public void initInputDevices() {
         rebelView.initInputDevices();
     }

@@ -53,8 +53,8 @@ Error AudioDriverDummy::init() {
     return OK;
 };
 
-void AudioDriverDummy::thread_func(void *p_udata) {
-    AudioDriverDummy *ad = (AudioDriverDummy *)p_udata;
+void AudioDriverDummy::thread_func(void* p_udata) {
+    AudioDriverDummy* ad = (AudioDriverDummy*)p_udata;
 
     uint64_t usdelay = (ad->buffer_frames / float(ad->mix_rate)) * 1000000;
 

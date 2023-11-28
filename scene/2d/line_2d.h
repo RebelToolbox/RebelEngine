@@ -58,12 +58,15 @@ public:
 #ifdef TOOLS_ENABLED
     virtual Rect2 _edit_get_rect() const;
     virtual bool _edit_use_rect() const;
-    virtual bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const;
+    virtual bool _edit_is_selected_on_click(
+        const Point2& p_point,
+        double p_tolerance
+    ) const;
 #endif
 
     Line2D();
 
-    void set_points(const PoolVector<Vector2> &p_points);
+    void set_points(const PoolVector<Vector2>& p_points);
     PoolVector<Vector2> get_points() const;
 
     void set_point_position(int i, Vector2 pos);
@@ -79,16 +82,16 @@ public:
     void set_width(float width);
     float get_width() const;
 
-    void set_curve(const Ref<Curve> &curve);
+    void set_curve(const Ref<Curve>& curve);
     Ref<Curve> get_curve() const;
 
     void set_default_color(Color color);
     Color get_default_color() const;
 
-    void set_gradient(const Ref<Gradient> &gradient);
+    void set_gradient(const Ref<Gradient>& gradient);
     Ref<Gradient> get_gradient() const;
 
-    void set_texture(const Ref<Texture> &texture);
+    void set_texture(const Ref<Texture>& texture);
     Ref<Texture> get_texture() const;
 
     void set_texture_mode(const LineTextureMode mode);

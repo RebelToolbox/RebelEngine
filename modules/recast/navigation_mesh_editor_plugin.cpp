@@ -35,7 +35,7 @@
 #include "scene/3d/mesh_instance.h"
 #include "scene/gui/box_container.h"
 
-void NavigationMeshEditor::_node_removed(Node *p_node) {
+void NavigationMeshEditor::_node_removed(Node* p_node) {
     if (p_node == node) {
         node = nullptr;
 
@@ -61,15 +61,22 @@ void NavigationMeshEditor::_bake_pressed() {
         return;
     }
 
-    EditorNavigationMeshGenerator::get_singleton()->clear(node->get_navigation_mesh());
-    EditorNavigationMeshGenerator::get_singleton()->bake(node->get_navigation_mesh(), node);
+    EditorNavigationMeshGenerator::get_singleton()->clear(
+        node->get_navigation_mesh()
+    );
+    EditorNavigationMeshGenerator::get_singleton()->bake(
+        node->get_navigation_mesh(),
+        node
+    );
 
     node->update_gizmo();
 }
 
 void NavigationMeshEditor::_clear_pressed() {
     if (node) {
-        EditorNavigationMeshGenerator::get_singleton()->clear(node->get_navigation_mesh());
+        EditorNavigationMeshGenerator::get_singleton()->clear(
+            node->get_navigation_mesh()
+        );
     }
 
     button_bake->set_pressed(false);
@@ -80,7 +87,7 @@ void NavigationMeshEditor::_clear_pressed() {
     }
 }
 
-void NavigationMeshEditor::edit(NavigationMeshInstance *p_nav_mesh_instance) {
+void NavigationMeshEditor::edit(NavigationMeshInstance* p_nav_mesh_instance) {
     if (p_nav_mesh_instance == nullptr || node == p_nav_mesh_instance) {
         return;
     }
@@ -90,7 +97,10 @@ void NavigationMeshEditor::edit(NavigationMeshInstance *p_nav_mesh_instance) {
 
 void NavigationMeshEditor::_bind_methods() {
     ClassDB::bind_method("_bake_pressed", &NavigationMeshEditor::_bake_pressed);
-    ClassDB::bind_method("_clear_pressed", &NavigationMeshEditor::_clear_pressed);
+    ClassDB::bind_method(
+        "_clear_pressed",
+        &NavigationMeshEditor::_clear_pressed
+    );
 }
 
 NavigationMeshEditor::NavigationMeshEditor() {
@@ -104,7 +114,8 @@ NavigationMeshEditor::NavigationMeshEditor() {
 
     button_reset = memnew(ToolButton);
     bake_hbox->add_child(button_reset);
-    // No button text, we only use a revert icon which is set when entering the tree.
+    // No button text, we only use a revert icon which is set when entering the
+    // tree.
     button_reset->set_tooltip(TTR("Clear the navigation mesh."));
     button_reset->connect("pressed", this, "_clear_pressed");
 
@@ -116,14 +127,15 @@ NavigationMeshEditor::NavigationMeshEditor() {
     node = nullptr;
 }
 
-NavigationMeshEditor::~NavigationMeshEditor() {
+NavigationMeshEditor::~NavigationMeshEditor() {}
+
+void NavigationMeshEditorPlugin::edit(Object* p_object) {
+    navigation_mesh_editor->edit(
+        Object::cast_to<NavigationMeshInstance>(p_object)
+    );
 }
 
-void NavigationMeshEditorPlugin::edit(Object *p_object) {
-    navigation_mesh_editor->edit(Object::cast_to<NavigationMeshInstance>(p_object));
-}
-
-bool NavigationMeshEditorPlugin::handles(Object *p_object) const {
+bool NavigationMeshEditorPlugin::handles(Object* p_object) const {
     return p_object->is_class("NavigationMeshInstance");
 }
 
@@ -138,14 +150,16 @@ void NavigationMeshEditorPlugin::make_visible(bool p_visible) {
     }
 }
 
-NavigationMeshEditorPlugin::NavigationMeshEditorPlugin(EditorNode *p_node) {
+NavigationMeshEditorPlugin::NavigationMeshEditorPlugin(EditorNode* p_node) {
     editor = p_node;
     navigation_mesh_editor = memnew(NavigationMeshEditor);
     editor->get_viewport()->add_child(navigation_mesh_editor);
-    add_control_to_container(CONTAINER_SPATIAL_EDITOR_MENU, navigation_mesh_editor->bake_hbox);
+    add_control_to_container(
+        CONTAINER_SPATIAL_EDITOR_MENU,
+        navigation_mesh_editor->bake_hbox
+    );
     navigation_mesh_editor->hide();
     navigation_mesh_editor->bake_hbox->hide();
 }
 
-NavigationMeshEditorPlugin::~NavigationMeshEditorPlugin() {
-}
+NavigationMeshEditorPlugin::~NavigationMeshEditorPlugin() {}

@@ -39,7 +39,8 @@
     The strategy here is similar to the one used by toolkits,
     which consists in leaving the 24 bits unicode range for printable
     characters, and use the upper 8 bits for special keys and
-    modifiers. This way everything (char/keycode) can fit nicely in one 32 bits unsigned integer.
+    modifiers. This way everything (char/keycode) can fit nicely in one 32 bits
+   unsigned integer.
 */
 enum {
     SPKEY = (1 << 24)
@@ -294,12 +295,12 @@ enum KeyList {
 
     KEY_DIVISION = 0x00F7,
     KEY_YDIAERESIS = 0x00FF,
-
 };
 
 enum KeyModifierMask {
-
-    KEY_CODE_MASK = ((1 << 25) - 1), ///< Apply this mask to any keycode to remove modifiers.
+    KEY_CODE_MASK =
+        ((1 << 25) - 1
+        ), ///< Apply this mask to any keycode to remove modifiers.
     KEY_MODIFIER_MASK = (0xFF << 24), ///< Apply this mask to isolate modifiers.
     KEY_MASK_SHIFT = (1 << 25),
     KEY_MASK_ALT = (1 << 26),
@@ -314,15 +315,14 @@ enum KeyModifierMask {
     KEY_MASK_KPAD = (1 << 29),
     KEY_MASK_GROUP_SWITCH = (1 << 30)
     // bit 31 can't be used because variant uses regular 32 bits int as datatype
-
 };
 
 String keycode_get_string(uint32_t p_code);
 bool keycode_has_unicode(uint32_t p_keycode);
-int find_keycode(const String &p_code);
-const char *find_keycode_name(int p_keycode);
+int find_keycode(const String& p_code);
+const char* find_keycode_name(int p_keycode);
 int keycode_get_count();
 int keycode_get_value_by_index(int p_index);
-const char *keycode_get_name_by_index(int p_index);
+const char* keycode_get_name_by_index(int p_index);
 
 #endif

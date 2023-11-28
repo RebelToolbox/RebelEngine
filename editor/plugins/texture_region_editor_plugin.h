@@ -55,24 +55,25 @@ class TextureRegionEditor : public VBoxContainer {
     };
 
     friend class TextureRegionEditorPlugin;
-    OptionButton *snap_mode_button;
-    ToolButton *zoom_in;
-    ToolButton *zoom_reset;
-    ToolButton *zoom_out;
-    HBoxContainer *hb_grid; //For showing/hiding the grid controls when changing the SnapMode
-    SpinBox *sb_step_y;
-    SpinBox *sb_step_x;
-    SpinBox *sb_off_y;
-    SpinBox *sb_off_x;
-    SpinBox *sb_sep_y;
-    SpinBox *sb_sep_x;
-    Panel *edit_draw;
+    OptionButton* snap_mode_button;
+    ToolButton* zoom_in;
+    ToolButton* zoom_reset;
+    ToolButton* zoom_out;
+    HBoxContainer* hb_grid; // For showing/hiding the grid controls when
+                            // changing the SnapMode
+    SpinBox* sb_step_y;
+    SpinBox* sb_step_x;
+    SpinBox* sb_off_y;
+    SpinBox* sb_off_x;
+    SpinBox* sb_sep_y;
+    SpinBox* sb_sep_x;
+    Panel* edit_draw;
 
-    VScrollBar *vscroll;
-    HScrollBar *hscroll;
+    VScrollBar* vscroll;
+    HScrollBar* hscroll;
 
-    EditorNode *editor;
-    UndoRedo *undo_redo;
+    EditorNode* editor;
+    UndoRedo* undo_redo;
 
     Vector2 draw_ofs;
     float draw_zoom;
@@ -83,9 +84,9 @@ class TextureRegionEditor : public VBoxContainer {
     Vector2 snap_step;
     Vector2 snap_separation;
 
-    Sprite *node_sprite;
-    Sprite3D *node_sprite_3d;
-    NinePatchRect *node_ninepatch;
+    Sprite* node_sprite;
+    Sprite3D* node_sprite_3d;
+    NinePatchRect* node_ninepatch;
     Ref<StyleBoxTexture> obj_styleBox;
     Ref<AtlasTexture> atlas_tex;
 
@@ -113,41 +114,41 @@ class TextureRegionEditor : public VBoxContainer {
     void _zoom_in();
     void _zoom_reset();
     void _zoom_out();
-    void apply_rect(const Rect2 &p_rect);
+    void apply_rect(const Rect2& p_rect);
     void _update_rect();
     void _update_autoslice();
 
 protected:
     void _notification(int p_what);
-    void _node_removed(Object *p_obj);
+    void _node_removed(Object* p_obj);
     static void _bind_methods();
 
     Vector2 snap_point(Vector2 p_target) const;
 
-    virtual void _changed_callback(Object *p_changed, const char *p_prop);
+    virtual void _changed_callback(Object* p_changed, const char* p_prop);
 
 public:
     void _edit_region();
     void _region_draw();
-    void _region_input(const Ref<InputEvent> &p_input);
+    void _region_input(const Ref<InputEvent>& p_input);
     void _scroll_changed(float);
     bool is_stylebox();
     bool is_atlas_texture();
     bool is_ninepatch();
-    Sprite3D *get_sprite_3d();
-    Sprite *get_sprite();
+    Sprite3D* get_sprite_3d();
+    Sprite* get_sprite();
 
-    void edit(Object *p_obj);
-    TextureRegionEditor(EditorNode *p_editor);
+    void edit(Object* p_obj);
+    TextureRegionEditor(EditorNode* p_editor);
 };
 
 class TextureRegionEditorPlugin : public EditorPlugin {
     GDCLASS(TextureRegionEditorPlugin, EditorPlugin);
 
     bool manually_hidden;
-    Button *texture_region_button;
-    TextureRegionEditor *region_editor;
-    EditorNode *editor;
+    Button* texture_region_button;
+    TextureRegionEditor* region_editor;
+    EditorNode* editor;
 
 protected:
     static void _bind_methods();
@@ -155,15 +156,21 @@ protected:
     void _editor_visiblity_changed();
 
 public:
-    virtual String get_name() const { return "TextureRegion"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual String get_name() const {
+        return "TextureRegion";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
-    void set_state(const Dictionary &p_state);
+    void set_state(const Dictionary& p_state);
     Dictionary get_state() const;
 
-    TextureRegionEditorPlugin(EditorNode *p_node);
+    TextureRegionEditorPlugin(EditorNode* p_node);
 };
 
 #endif // TEXTURE_REGION_EDITOR_PLUGIN_H

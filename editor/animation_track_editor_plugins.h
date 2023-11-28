@@ -42,7 +42,14 @@ public:
     virtual int get_key_height() const;
     virtual Rect2 get_key_rect(int p_index, float p_pixels_sec);
     virtual bool is_key_selectable_by_distance() const;
-    virtual void draw_key(int p_index, float p_pixels_sec, int p_x, bool p_selected, int p_clip_left, int p_clip_right);
+    virtual void draw_key(
+        int p_index,
+        float p_pixels_sec,
+        int p_x,
+        bool p_selected,
+        int p_clip_left,
+        int p_clip_right
+    );
 };
 
 class AnimationTrackEditColor : public AnimationTrackEdit {
@@ -52,8 +59,22 @@ public:
     virtual int get_key_height() const;
     virtual Rect2 get_key_rect(int p_index, float p_pixels_sec);
     virtual bool is_key_selectable_by_distance() const;
-    virtual void draw_key(int p_index, float p_pixels_sec, int p_x, bool p_selected, int p_clip_left, int p_clip_right);
-    virtual void draw_key_link(int p_index, float p_pixels_sec, int p_x, int p_next_x, int p_clip_left, int p_clip_right);
+    virtual void draw_key(
+        int p_index,
+        float p_pixels_sec,
+        int p_x,
+        bool p_selected,
+        int p_clip_left,
+        int p_clip_right
+    );
+    virtual void draw_key_link(
+        int p_index,
+        float p_pixels_sec,
+        int p_x,
+        int p_next_x,
+        int p_clip_left,
+        int p_clip_right
+    );
 };
 
 class AnimationTrackEditAudio : public AnimationTrackEdit {
@@ -70,9 +91,16 @@ public:
     virtual int get_key_height() const;
     virtual Rect2 get_key_rect(int p_index, float p_pixels_sec);
     virtual bool is_key_selectable_by_distance() const;
-    virtual void draw_key(int p_index, float p_pixels_sec, int p_x, bool p_selected, int p_clip_left, int p_clip_right);
+    virtual void draw_key(
+        int p_index,
+        float p_pixels_sec,
+        int p_x,
+        bool p_selected,
+        int p_clip_left,
+        int p_clip_right
+    );
 
-    void set_node(Object *p_object);
+    void set_node(Object* p_object);
 
     AnimationTrackEditAudio();
 };
@@ -87,12 +115,21 @@ public:
     virtual int get_key_height() const;
     virtual Rect2 get_key_rect(int p_index, float p_pixels_sec);
     virtual bool is_key_selectable_by_distance() const;
-    virtual void draw_key(int p_index, float p_pixels_sec, int p_x, bool p_selected, int p_clip_left, int p_clip_right);
+    virtual void draw_key(
+        int p_index,
+        float p_pixels_sec,
+        int p_x,
+        bool p_selected,
+        int p_clip_left,
+        int p_clip_right
+    );
 
-    void set_node(Object *p_object);
+    void set_node(Object* p_object);
     void set_as_coords();
 
-    AnimationTrackEditSpriteFrame() { is_coords = false; }
+    AnimationTrackEditSpriteFrame() {
+        is_coords = false;
+    }
 };
 
 class AnimationTrackEditSubAnim : public AnimationTrackEdit {
@@ -104,9 +141,16 @@ public:
     virtual int get_key_height() const;
     virtual Rect2 get_key_rect(int p_index, float p_pixels_sec);
     virtual bool is_key_selectable_by_distance() const;
-    virtual void draw_key(int p_index, float p_pixels_sec, int p_x, bool p_selected, int p_clip_left, int p_clip_right);
+    virtual void draw_key(
+        int p_index,
+        float p_pixels_sec,
+        int p_x,
+        bool p_selected,
+        int p_clip_left,
+        int p_clip_right
+    );
 
-    void set_node(Object *p_object);
+    void set_node(Object* p_object);
 };
 
 class AnimationTrackEditTypeAudio : public AnimationTrackEdit {
@@ -124,15 +168,23 @@ protected:
     static void _bind_methods();
 
 public:
-    virtual void _gui_input(const Ref<InputEvent> &p_event);
+    virtual void _gui_input(const Ref<InputEvent>& p_event);
 
-    virtual bool can_drop_data(const Point2 &p_point, const Variant &p_data) const;
-    virtual void drop_data(const Point2 &p_point, const Variant &p_data);
+    virtual bool can_drop_data(const Point2& p_point, const Variant& p_data)
+        const;
+    virtual void drop_data(const Point2& p_point, const Variant& p_data);
 
     virtual int get_key_height() const;
     virtual Rect2 get_key_rect(int p_index, float p_pixels_sec);
     virtual bool is_key_selectable_by_distance() const;
-    virtual void draw_key(int p_index, float p_pixels_sec, int p_x, bool p_selected, int p_clip_left, int p_clip_right);
+    virtual void draw_key(
+        int p_index,
+        float p_pixels_sec,
+        int p_x,
+        bool p_selected,
+        int p_clip_left,
+        int p_clip_right
+    );
 
     AnimationTrackEditTypeAudio();
 };
@@ -146,9 +198,16 @@ public:
     virtual int get_key_height() const;
     virtual Rect2 get_key_rect(int p_index, float p_pixels_sec);
     virtual bool is_key_selectable_by_distance() const;
-    virtual void draw_key(int p_index, float p_pixels_sec, int p_x, bool p_selected, int p_clip_left, int p_clip_right);
+    virtual void draw_key(
+        int p_index,
+        float p_pixels_sec,
+        int p_x,
+        bool p_selected,
+        int p_clip_left,
+        int p_clip_right
+    );
 
-    void set_node(Object *p_object);
+    void set_node(Object* p_object);
     AnimationTrackEditTypeAnimation();
 };
 
@@ -159,16 +218,30 @@ public:
     virtual void draw_bg(int p_clip_left, int p_clip_right);
     virtual void draw_fg(int p_clip_left, int p_clip_right);
     virtual int get_key_height() const;
-    virtual void draw_key_link(int p_index, float p_pixels_sec, int p_x, int p_next_x, int p_clip_left, int p_clip_right);
+    virtual void draw_key_link(
+        int p_index,
+        float p_pixels_sec,
+        int p_x,
+        int p_next_x,
+        int p_clip_left,
+        int p_clip_right
+    );
 };
 
 class AnimationTrackEditDefaultPlugin : public AnimationTrackEditPlugin {
     GDCLASS(AnimationTrackEditDefaultPlugin, AnimationTrackEditPlugin);
 
 public:
-    virtual AnimationTrackEdit *create_value_track_edit(Object *p_object, Variant::Type p_type, const String &p_property, PropertyHint p_hint, const String &p_hint_string, int p_usage);
-    virtual AnimationTrackEdit *create_audio_track_edit();
-    virtual AnimationTrackEdit *create_animation_track_edit(Object *p_object);
+    virtual AnimationTrackEdit* create_value_track_edit(
+        Object* p_object,
+        Variant::Type p_type,
+        const String& p_property,
+        PropertyHint p_hint,
+        const String& p_hint_string,
+        int p_usage
+    );
+    virtual AnimationTrackEdit* create_audio_track_edit();
+    virtual AnimationTrackEdit* create_animation_track_edit(Object* p_object);
 };
 
 #endif // ANIMATION_TRACK_EDITOR_PLUGINS_H

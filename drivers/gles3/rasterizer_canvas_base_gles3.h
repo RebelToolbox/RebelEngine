@@ -47,10 +47,12 @@ public:
         uint8_t padding[12];
     };
 
-    RasterizerSceneGLES3 *scene_render;
+    RasterizerSceneGLES3* scene_render;
 
     struct Data {
-        enum { NUM_QUAD_ARRAY_VARIATIONS = 8 };
+        enum {
+            NUM_QUAD_ARRAY_VARIATIONS = 8
+        };
 
         GLuint canvas_quad_vertices;
         GLuint canvas_quad_array;
@@ -85,7 +87,7 @@ public:
 
         RID current_tex;
         RID current_normal;
-        RasterizerStorageGLES3::Texture *current_tex_ptr;
+        RasterizerStorageGLES3::Texture* current_tex_ptr;
 
         Transform vp;
 
@@ -98,7 +100,7 @@ public:
 
     } state;
 
-    RasterizerStorageGLES3 *storage;
+    RasterizerStorageGLES3* storage;
 
     // allow user to choose api usage
     GLenum _buffer_upload_usage_flag;
@@ -125,36 +127,95 @@ public:
     RID_Owner<LightInternal> light_internal_owner;
 
     virtual RID light_internal_create();
-    virtual void light_internal_update(RID p_rid, Light *p_light);
+    virtual void light_internal_update(RID p_rid, Light* p_light);
     virtual void light_internal_free(RID p_rid);
 
     virtual void canvas_begin();
     virtual void canvas_end();
 
-    void _set_texture_rect_mode(bool p_enable, bool p_ninepatch = false, bool p_light_angle = false, bool p_modulate = false, bool p_large_vertex = false);
-    RasterizerStorageGLES3::Texture *_bind_canvas_texture(const RID &p_texture, const RID &p_normal_map, bool p_force = false);
+    void _set_texture_rect_mode(
+        bool p_enable,
+        bool p_ninepatch = false,
+        bool p_light_angle = false,
+        bool p_modulate = false,
+        bool p_large_vertex = false
+    );
+    RasterizerStorageGLES3::Texture* _bind_canvas_texture(
+        const RID& p_texture,
+        const RID& p_normal_map,
+        bool p_force = false
+    );
 
-    void _draw_gui_primitive(int p_points, const Vector2 *p_vertices, const Color *p_colors, const Vector2 *p_uvs, const float *p_light_angles = nullptr);
-    void _draw_polygon(const int *p_indices, int p_index_count, int p_vertex_count, const Vector2 *p_vertices, const Vector2 *p_uvs, const Color *p_colors, bool p_singlecolor, const int *p_bones, const float *p_weights);
-    void _draw_generic(GLuint p_primitive, int p_vertex_count, const Vector2 *p_vertices, const Vector2 *p_uvs, const Color *p_colors, bool p_singlecolor);
-    void _draw_generic_indices(GLuint p_primitive, const int *p_indices, int p_index_count, int p_vertex_count, const Vector2 *p_vertices, const Vector2 *p_uvs, const Color *p_colors, bool p_singlecolor);
+    void _draw_gui_primitive(
+        int p_points,
+        const Vector2* p_vertices,
+        const Color* p_colors,
+        const Vector2* p_uvs,
+        const float* p_light_angles = nullptr
+    );
+    void _draw_polygon(
+        const int* p_indices,
+        int p_index_count,
+        int p_vertex_count,
+        const Vector2* p_vertices,
+        const Vector2* p_uvs,
+        const Color* p_colors,
+        bool p_singlecolor,
+        const int* p_bones,
+        const float* p_weights
+    );
+    void _draw_generic(
+        GLuint p_primitive,
+        int p_vertex_count,
+        const Vector2* p_vertices,
+        const Vector2* p_uvs,
+        const Color* p_colors,
+        bool p_singlecolor
+    );
+    void _draw_generic_indices(
+        GLuint p_primitive,
+        const int* p_indices,
+        int p_index_count,
+        int p_vertex_count,
+        const Vector2* p_vertices,
+        const Vector2* p_uvs,
+        const Color* p_colors,
+        bool p_singlecolor
+    );
 
-    void _copy_texscreen(const Rect2 &p_rect);
+    void _copy_texscreen(const Rect2& p_rect);
 
-    virtual void canvas_debug_viewport_shadows(Light *p_lights_with_shadow);
+    virtual void canvas_debug_viewport_shadows(Light* p_lights_with_shadow);
 
-    virtual void canvas_light_shadow_buffer_update(RID p_buffer, const Transform2D &p_light_xform, int p_light_mask, float p_near, float p_far, LightOccluderInstance *p_occluders, CameraMatrix *p_xform_cache);
+    virtual void canvas_light_shadow_buffer_update(
+        RID p_buffer,
+        const Transform2D& p_light_xform,
+        int p_light_mask,
+        float p_near,
+        float p_far,
+        LightOccluderInstance* p_occluders,
+        CameraMatrix* p_xform_cache
+    );
 
     virtual void reset_canvas();
 
-    void draw_generic_textured_rect(const Rect2 &p_rect, const Rect2 &p_src);
-    void draw_lens_distortion_rect(const Rect2 &p_rect, float p_k1, float p_k2, const Vector2 &p_eye_center, float p_oversample);
-    void render_rect_nvidia_workaround(const Item::CommandRect *p_rect, const RasterizerStorageGLES3::Texture *p_texture);
+    void draw_generic_textured_rect(const Rect2& p_rect, const Rect2& p_src);
+    void draw_lens_distortion_rect(
+        const Rect2& p_rect,
+        float p_k1,
+        float p_k2,
+        const Vector2& p_eye_center,
+        float p_oversample
+    );
+    void render_rect_nvidia_workaround(
+        const Item::CommandRect* p_rect,
+        const RasterizerStorageGLES3::Texture* p_texture
+    );
 
     void initialize();
     void finalize();
 
-    virtual void draw_window_margins(int *black_margin, RID *black_image);
+    virtual void draw_window_margins(int* black_margin, RID* black_image);
 
     RasterizerCanvasBaseGLES3();
 };

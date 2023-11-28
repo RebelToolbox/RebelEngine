@@ -41,49 +41,70 @@
 
 // JavaScript functions defined in library_godot_editor_tools.js
 extern "C" {
-extern void godot_js_os_download_buffer(const uint8_t *p_buf, int p_buf_size, const char *p_name, const char *p_mime);
+extern void godot_js_os_download_buffer(
+    const uint8_t* p_buf,
+    int p_buf_size,
+    const char* p_name,
+    const char* p_mime
+);
 }
 
 static void _javascript_editor_init_callback() {
-    EditorNode::get_singleton()->add_editor_plugin(memnew(JavaScriptToolsEditorPlugin(EditorNode::get_singleton())));
+    EditorNode::get_singleton()->add_editor_plugin(
+        memnew(JavaScriptToolsEditorPlugin(EditorNode::get_singleton()))
+    );
 }
 
 void JavaScriptToolsEditorPlugin::initialize() {
     EditorNode::add_init_callback(_javascript_editor_init_callback);
 }
 
-JavaScriptToolsEditorPlugin::JavaScriptToolsEditorPlugin(EditorNode *p_editor) {
+JavaScriptToolsEditorPlugin::JavaScriptToolsEditorPlugin(EditorNode* p_editor) {
     Variant v;
     add_tool_menu_item("Download Project Source", this, "_download_zip", v);
 }
 
 void JavaScriptToolsEditorPlugin::_download_zip(Variant p_v) {
-    if (!Engine::get_singleton() || !Engine::get_singleton()->is_editor_hint()) {
+    if (!Engine::get_singleton()
+        || !Engine::get_singleton()->is_editor_hint()) {
         WARN_PRINT("Project download is only available in Editor mode");
         return;
     }
-    String resource_path = ProjectSettings::get_singleton()->get_resource_path();
+    String resource_path =
+        ProjectSettings::get_singleton()->get_resource_path();
 
-    FileAccess *src_f;
+    FileAccess* src_f;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
     zipFile zip = zipOpen2("/tmp/project.zip", APPEND_STATUS_CREATE, NULL, &io);
     String base_path = resource_path.substr(0, resource_path.rfind("/")) + "/";
     _zip_recursive(resource_path, base_path, zip);
     zipClose(zip, NULL);
-    FileAccess *f = FileAccess::open("/tmp/project.zip", FileAccess::READ);
+    FileAccess* f = FileAccess::open("/tmp/project.zip", FileAccess::READ);
     ERR_FAIL_COND_MSG(!f, "Unable to create zip file");
     Vector<uint8_t> buf;
     buf.resize(f->get_len());
     f->get_buffer(buf.ptrw(), buf.size());
-    godot_js_os_download_buffer(buf.ptr(), buf.size(), "project.zip", "application/zip");
+    godot_js_os_download_buffer(
+        buf.ptr(),
+        buf.size(),
+        "project.zip",
+        "application/zip"
+    );
 }
 
 void JavaScriptToolsEditorPlugin::_bind_methods() {
-    ClassDB::bind_method("_download_zip", &JavaScriptToolsEditorPlugin::_download_zip);
+    ClassDB::bind_method(
+        "_download_zip",
+        &JavaScriptToolsEditorPlugin::_download_zip
+    );
 }
 
-void JavaScriptToolsEditorPlugin::_zip_file(String p_path, String p_base_path, zipFile p_zip) {
-    FileAccess *f = FileAccess::open(p_path, FileAccess::READ);
+void JavaScriptToolsEditorPlugin::_zip_file(
+    String p_path,
+    String p_base_path,
+    zipFile p_zip
+) {
+    FileAccess* f = FileAccess::open(p_path, FileAccess::READ);
     if (!f) {
         WARN_PRINT("Unable to open file for zipping: " + p_path);
         return;
@@ -96,45 +117,54 @@ void JavaScriptToolsEditorPlugin::_zip_file(String p_path, String p_base_path, z
     memdelete(f);
 
     String path = p_path.replace_first(p_base_path, "");
-    zipOpenNewFileInZip(p_zip,
-            path.utf8().get_data(),
-            NULL,
-            NULL,
-            0,
-            NULL,
-            0,
-            NULL,
-            Z_DEFLATED,
-            Z_DEFAULT_COMPRESSION);
+    zipOpenNewFileInZip(
+        p_zip,
+        path.utf8().get_data(),
+        NULL,
+        NULL,
+        0,
+        NULL,
+        0,
+        NULL,
+        Z_DEFLATED,
+        Z_DEFAULT_COMPRESSION
+    );
     zipWriteInFileInZip(p_zip, data.ptr(), data.size());
     zipCloseFileInZip(p_zip);
 }
 
-void JavaScriptToolsEditorPlugin::_zip_recursive(String p_path, String p_base_path, zipFile p_zip) {
-    DirAccess *dir = DirAccess::open(p_path);
+void JavaScriptToolsEditorPlugin::_zip_recursive(
+    String p_path,
+    String p_base_path,
+    zipFile p_zip
+) {
+    DirAccess* dir = DirAccess::open(p_path);
     if (!dir) {
         WARN_PRINT("Unable to open dir for zipping: " + p_path);
         return;
     }
     dir->list_dir_begin();
     String cur = dir->get_next();
-    String project_data_dir_name = ProjectSettings::get_singleton()->get_project_data_dir_name();
+    String project_data_dir_name =
+        ProjectSettings::get_singleton()->get_project_data_dir_name();
     while (!cur.empty()) {
         String cs = p_path.plus_file(cur);
         if (cur == "." || cur == ".." || cur == project_data_dir_name) {
             // Skip
         } else if (dir->current_is_dir()) {
             String path = cs.replace_first(p_base_path, "") + "/";
-            zipOpenNewFileInZip(p_zip,
-                    path.utf8().get_data(),
-                    NULL,
-                    NULL,
-                    0,
-                    NULL,
-                    0,
-                    NULL,
-                    Z_DEFLATED,
-                    Z_DEFAULT_COMPRESSION);
+            zipOpenNewFileInZip(
+                p_zip,
+                path.utf8().get_data(),
+                NULL,
+                NULL,
+                0,
+                NULL,
+                0,
+                NULL,
+                Z_DEFLATED,
+                Z_DEFAULT_COMPRESSION
+            );
             zipCloseFileInZip(p_zip);
             _zip_recursive(cs, p_base_path, p_zip);
         } else {

@@ -64,6 +64,7 @@ public class RebelEditText extends EditText {
 
     private static class EditHandler extends Handler {
         private final WeakReference<RebelEditText> rebelEditTextReference;
+
         public EditHandler(RebelEditText rebelEditText) {
             rebelEditTextReference = new WeakReference<>(rebelEditText);
         }
@@ -90,14 +91,20 @@ public class RebelEditText extends EditText {
         this.initView();
     }
 
-    public RebelEditText(final Context context, final AttributeSet attrs, final int defStyle) {
+    public RebelEditText(
+        final Context context,
+        final AttributeSet attrs,
+        final int defStyle
+    ) {
         super(context, attrs, defStyle);
         this.initView();
     }
 
     protected void initView() {
         this.setPadding(0, 0, 0, 0);
-        this.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_DONE);
+        this.setImeOptions(
+            EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_DONE
+        );
     }
 
     public boolean isMultiline() {
@@ -110,7 +117,9 @@ public class RebelEditText extends EditText {
                 RebelEditText rebelEditText = (RebelEditText)msg.obj;
                 String text = rebelEditText.mOriginText;
                 if (rebelEditText.requestFocus()) {
-                    rebelEditText.removeTextChangedListener(rebelEditText.rebelTextInputWrapper);
+                    rebelEditText.removeTextChangedListener(
+                        rebelEditText.rebelTextInputWrapper
+                    );
                     setMaxInputLength(rebelEditText);
                     rebelEditText.setText("");
                     rebelEditText.append(text);
@@ -128,8 +137,12 @@ public class RebelEditText extends EditText {
                     rebelEditText.setInputType(inputType);
 
                     rebelEditText.rebelTextInputWrapper.setOriginText(text);
-                    rebelEditText.addTextChangedListener(rebelEditText.rebelTextInputWrapper);
-                    final InputMethodManager imm = (InputMethodManager)rebelView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    rebelEditText.addTextChangedListener(
+                        rebelEditText.rebelTextInputWrapper
+                    );
+                    final InputMethodManager imm =
+                        (InputMethodManager)rebelView.getContext()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(rebelEditText, 0);
                 }
             } break;
@@ -138,7 +151,10 @@ public class RebelEditText extends EditText {
                 RebelEditText edit = (RebelEditText)msg.obj;
 
                 edit.removeTextChangedListener(rebelTextInputWrapper);
-                final InputMethodManager imm = (InputMethodManager)rebelView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                final InputMethodManager imm =
+                    (InputMethodManager)rebelView.getContext().getSystemService(
+                        Context.INPUT_METHOD_SERVICE
+                    );
                 imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
                 edit.rebelView.requestFocus();
             } break;
@@ -169,7 +185,8 @@ public class RebelEditText extends EditText {
     public boolean onKeyDown(final int keyCode, final KeyEvent keyEvent) {
         // Let SurfaceView get focus if back key is pressed
         // Handle special key events
-        if (isSpecialKey(keyCode, keyEvent) && rebelView.getRebelInputHandler().onKeyDown(keyCode, keyEvent)) {
+        if (isSpecialKey(keyCode, keyEvent)
+            && rebelView.getRebelInputHandler().onKeyDown(keyCode, keyEvent)) {
             return true;
         } else {
             return super.onKeyDown(keyCode, keyEvent);
@@ -178,7 +195,8 @@ public class RebelEditText extends EditText {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent keyEvent) {
-        if (isSpecialKey(keyCode, keyEvent) && rebelView.getRebelInputHandler().onKeyUp(keyCode, keyEvent)) {
+        if (isSpecialKey(keyCode, keyEvent)
+            && rebelView.getRebelInputHandler().onKeyUp(keyCode, keyEvent)) {
             return true;
         } else {
             return super.onKeyUp(keyCode, keyEvent);
@@ -186,28 +204,41 @@ public class RebelEditText extends EditText {
     }
 
     private boolean isSpecialKey(int keyCode, KeyEvent keyEvent) {
-        boolean isArrowKey = keyCode == KeyEvent.KEYCODE_DPAD_UP || keyCode == KeyEvent.KEYCODE_DPAD_DOWN ||
-                keyCode == KeyEvent.KEYCODE_DPAD_LEFT || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT;
-        boolean isModifiedKey = keyEvent.isAltPressed() || keyEvent.isCtrlPressed() || keyEvent.isSymPressed() ||
-                keyEvent.isFunctionPressed() || keyEvent.isMetaPressed();
-        return isArrowKey || keyCode == KeyEvent.KEYCODE_TAB || KeyEvent.isModifierKey(keyCode) ||
-                isModifiedKey;
+        boolean isArrowKey = keyCode == KeyEvent.KEYCODE_DPAD_UP
+                          || keyCode == KeyEvent.KEYCODE_DPAD_DOWN
+                          || keyCode == KeyEvent.KEYCODE_DPAD_LEFT
+                          || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT;
+        boolean isModifiedKey =
+            keyEvent.isAltPressed() || keyEvent.isCtrlPressed()
+            || keyEvent.isSymPressed() || keyEvent.isFunctionPressed()
+            || keyEvent.isMetaPressed();
+        return isArrowKey || keyCode == KeyEvent.KEYCODE_TAB
+     || KeyEvent.isModifierKey(keyCode) || isModifiedKey;
     }
 
     // ===========================================================
     // Methods
     // ===========================================================
-    public void showKeyboard(String p_existing_text, boolean p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end) {
-        int maxInputLength = (p_max_input_length <= 0) ? Integer.MAX_VALUE : p_max_input_length;
+    public void showKeyboard(
+        String p_existing_text,
+        boolean p_multiline,
+        int p_max_input_length,
+        int p_cursor_start,
+        int p_cursor_end
+    ) {
+        int maxInputLength =
+            (p_max_input_length <= 0) ? Integer.MAX_VALUE : p_max_input_length;
         if (p_cursor_start == -1) { // cursor position not given
             this.mOriginText = p_existing_text;
             this.mMaxInputLength = maxInputLength;
         } else if (p_cursor_end == -1) { // not text selection
             this.mOriginText = p_existing_text.substring(0, p_cursor_start);
-            this.mMaxInputLength = maxInputLength - (p_existing_text.length() - p_cursor_start);
+            this.mMaxInputLength =
+                maxInputLength - (p_existing_text.length() - p_cursor_start);
         } else {
             this.mOriginText = p_existing_text.substring(0, p_cursor_end);
-            this.mMaxInputLength = maxInputLength - (p_existing_text.length() - p_cursor_end);
+            this.mMaxInputLength =
+                maxInputLength - (p_existing_text.length() - p_cursor_end);
         }
 
         this.mMultiline = p_multiline;

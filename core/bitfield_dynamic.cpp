@@ -34,7 +34,7 @@
 
 #include <string.h>
 
-void BitFieldDynamic::copy_from(const BitFieldDynamic &p_source) {
+void BitFieldDynamic::copy_from(const BitFieldDynamic& p_source) {
     create(p_source.get_num_bits(), false);
     memcpy(_data, p_source.get_data(), p_source.get_num_bytes());
 }
@@ -46,7 +46,7 @@ void BitFieldDynamic::create(uint32_t p_num_bits, bool p_blank) {
     _num_bits = p_num_bits;
     if (p_num_bits) {
         _num_bytes = (p_num_bits / 8) + 1;
-        _data = (uint8_t *)memalloc(_num_bytes);
+        _data = (uint8_t*)memalloc(_num_bytes);
 
         if (p_blank) {
             blank(false);

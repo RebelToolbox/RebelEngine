@@ -39,12 +39,12 @@
 class EditorPath : public Button {
     GDCLASS(EditorPath, Button);
 
-    EditorHistory *history;
+    EditorHistory* history;
 
-    TextureRect *current_object_icon;
-    Label *current_object_label;
-    TextureRect *sub_objects_icon;
-    PopupMenu *sub_objects_menu;
+    TextureRect* current_object_icon;
+    Label* current_object_label;
+    TextureRect* sub_objects_icon;
+    PopupMenu* sub_objects_menu;
 
     Vector<ObjectID> objects;
     EditorPath();
@@ -52,7 +52,7 @@ class EditorPath : public Button {
     void _show_popup();
     void _id_pressed(int p_idx);
     void _about_to_show();
-    void _add_children_to_popup(Object *p_obj, int p_depth = 0);
+    void _add_children_to_popup(Object* p_obj, int p_depth = 0);
 
 protected:
     void _notification(int p_what);
@@ -63,7 +63,7 @@ public:
     void clear_path();
     void enable_path();
 
-    EditorPath(EditorHistory *p_history);
+    EditorPath(EditorHistory* p_history);
 };
 
 #endif // EDITOR_PATH_H

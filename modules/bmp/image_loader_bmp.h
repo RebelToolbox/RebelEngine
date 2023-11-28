@@ -37,7 +37,7 @@ class ImageLoaderBMP : public ImageFormatLoader {
 protected:
     static const unsigned BITMAP_SIGNATURE = 0x4d42;
 
-    static const unsigned BITMAP_FILE_HEADER_SIZE = 14; // bmp_file_header_s
+    static const unsigned BITMAP_FILE_HEADER_SIZE = 14;     // bmp_file_header_s
     static const unsigned BITMAP_INFO_HEADER_MIN_SIZE = 40; // bmp_info_header_s
 
     enum bmp_compression_s {
@@ -50,7 +50,7 @@ protected:
         BI_ALPHABITFIELDS = 0x06,
         BI_CMYK = 0x0b,
         BI_CMYKRLE8 = 0x0c, // compressed
-        BI_CMYKRLE4 = 0x0d // compressed
+        BI_CMYKRLE4 = 0x0d  // compressed
     };
 
     struct bmp_header_s {
@@ -76,16 +76,22 @@ protected:
         } bmp_info_header;
     };
 
-    static Error convert_to_image(Ref<Image> p_image,
-            const uint8_t *p_buffer,
-            const uint8_t *p_color_buffer,
-            const uint32_t color_table_size,
-            const bmp_header_s &p_header);
+    static Error convert_to_image(
+        Ref<Image> p_image,
+        const uint8_t* p_buffer,
+        const uint8_t* p_color_buffer,
+        const uint32_t color_table_size,
+        const bmp_header_s& p_header
+    );
 
 public:
-    virtual Error load_image(Ref<Image> p_image, FileAccess *f,
-            bool p_force_linear, float p_scale);
-    virtual void get_recognized_extensions(List<String> *p_extensions) const;
+    virtual Error load_image(
+        Ref<Image> p_image,
+        FileAccess* f,
+        bool p_force_linear,
+        float p_scale
+    );
+    virtual void get_recognized_extensions(List<String>* p_extensions) const;
     ImageLoaderBMP();
 };
 

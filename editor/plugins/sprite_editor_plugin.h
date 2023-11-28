@@ -48,16 +48,16 @@ class SpriteEditor : public Control {
 
     Menu selected_menu_item;
 
-    Sprite *node;
+    Sprite* node;
 
-    MenuButton *options;
+    MenuButton* options;
 
-    ConfirmationDialog *outline_dialog;
+    ConfirmationDialog* outline_dialog;
 
-    AcceptDialog *err_dialog;
+    AcceptDialog* err_dialog;
 
-    ConfirmationDialog *debug_uv_dialog;
-    Control *debug_uv;
+    ConfirmationDialog* debug_uv_dialog;
+    Control* debug_uv;
     Vector<Vector2> uv_lines;
     Vector<Vector<Vector2>> outline_lines;
     Vector<Vector<Vector2>> computed_outline_lines;
@@ -65,14 +65,14 @@ class SpriteEditor : public Control {
     Vector<Vector2> computed_uv;
     Vector<int> computed_indices;
 
-    SpinBox *simplification;
-    SpinBox *grow_pixels;
-    SpinBox *shrink_pixels;
-    Button *update_preview;
+    SpinBox* simplification;
+    SpinBox* grow_pixels;
+    SpinBox* shrink_pixels;
+    Button* update_preview;
 
     void _menu_option(int p_option);
 
-    //void _create_uv_lines();
+    // void _create_uv_lines();
     friend class SpriteEditorPlugin;
 
     void _debug_uv_draw();
@@ -84,31 +84,37 @@ class SpriteEditor : public Control {
     void _create_collision_polygon_2d_node();
     void _create_light_occluder_2d_node();
 
-    void _add_as_sibling_or_child(Node *p_own_node, Node *p_new_node);
+    void _add_as_sibling_or_child(Node* p_own_node, Node* p_new_node);
 
 protected:
-    void _node_removed(Node *p_node);
+    void _node_removed(Node* p_node);
     static void _bind_methods();
 
 public:
-    void edit(Sprite *p_sprite);
+    void edit(Sprite* p_sprite);
     SpriteEditor();
 };
 
 class SpriteEditorPlugin : public EditorPlugin {
     GDCLASS(SpriteEditorPlugin, EditorPlugin);
 
-    SpriteEditor *sprite_editor;
-    EditorNode *editor;
+    SpriteEditor* sprite_editor;
+    EditorNode* editor;
 
 public:
-    virtual String get_name() const { return "Sprite"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual String get_name() const {
+        return "Sprite";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
 
-    SpriteEditorPlugin(EditorNode *p_node);
+    SpriteEditorPlugin(EditorNode* p_node);
     ~SpriteEditorPlugin();
 };
 

@@ -39,10 +39,12 @@
 
 void AudioStreamEditor::_notification(int p_what) {
     if (p_what == NOTIFICATION_READY) {
-        AudioStreamPreviewGenerator::get_singleton()->connect("preview_updated", this, "_preview_changed");
+        AudioStreamPreviewGenerator::get_singleton()
+            ->connect("preview_updated", this, "_preview_changed");
     }
 
-    if (p_what == NOTIFICATION_THEME_CHANGED || p_what == NOTIFICATION_ENTER_TREE) {
+    if (p_what == NOTIFICATION_THEME_CHANGED
+        || p_what == NOTIFICATION_ENTER_TREE) {
         _play_button->set_icon(get_icon("MainPlay", "EditorIcons"));
         _stop_button->set_icon(get_icon("Stop", "EditorIcons"));
         _preview->set_frame_color(get_color("dark_color_2", "Editor"));
@@ -68,7 +70,8 @@ void AudioStreamEditor::_draw_preview() {
     Rect2 rect = _preview->get_rect();
     Size2 size = get_size();
 
-    Ref<AudioStreamPreview> preview = AudioStreamPreviewGenerator::get_singleton()->generate_preview(stream);
+    Ref<AudioStreamPreview> preview =
+        AudioStreamPreviewGenerator::get_singleton()->generate_preview(stream);
     float preview_len = preview->get_length();
 
     Vector<Vector2> lines;
@@ -81,14 +84,17 @@ void AudioStreamEditor::_draw_preview() {
         float min = preview->get_min(ofs, ofs_n) * 0.5 + 0.5;
 
         int idx = i;
-        lines.write[idx * 2 + 0] = Vector2(i + 1, rect.position.y + min * rect.size.y);
-        lines.write[idx * 2 + 1] = Vector2(i + 1, rect.position.y + max * rect.size.y);
+        lines.write[idx * 2 + 0] =
+            Vector2(i + 1, rect.position.y + min * rect.size.y);
+        lines.write[idx * 2 + 1] =
+            Vector2(i + 1, rect.position.y + max * rect.size.y);
     }
 
     Vector<Color> color;
     color.push_back(get_color("contrast_color_2", "Editor"));
 
-    VS::get_singleton()->canvas_item_add_multiline(_preview->get_canvas_item(), lines, color);
+    VS::get_singleton()
+        ->canvas_item_add_multiline(_preview->get_canvas_item(), lines, color);
 }
 
 void AudioStreamEditor::_preview_changed(ObjectID p_which) {
@@ -97,7 +103,10 @@ void AudioStreamEditor::_preview_changed(ObjectID p_which) {
     }
 }
 
-void AudioStreamEditor::_changed_callback(Object *p_changed, const char *p_prop) {
+void AudioStreamEditor::_changed_callback(
+    Object* p_changed,
+    const char* p_prop
+) {
     if (!is_visible()) {
         return;
     }
@@ -106,7 +115,8 @@ void AudioStreamEditor::_changed_callback(Object *p_changed, const char *p_prop)
 
 void AudioStreamEditor::_play() {
     if (_player->is_playing()) {
-        // '_pausing' variable indicates that we want to pause the audio player, not stop it. See '_on_finished()'.
+        // '_pausing' variable indicates that we want to pause the audio player,
+        // not stop it. See '_on_finished()'.
         _pausing = true;
         _player->stop();
         _play_button->set_icon(get_icon("MainPlay", "EditorIcons"));
@@ -146,11 +156,22 @@ void AudioStreamEditor::_draw_indicator() {
     float len = stream->get_length();
     float ofs_x = _current / len * rect.size.width;
     const Color color = get_color("accent_color", "Editor");
-    _indicator->draw_line(Point2(ofs_x, 0), Point2(ofs_x, rect.size.height), color, Math::round(2 * EDSCALE));
+    _indicator->draw_line(
+        Point2(ofs_x, 0),
+        Point2(ofs_x, rect.size.height),
+        color,
+        Math::round(2 * EDSCALE)
+    );
     _indicator->draw_texture(
-            get_icon("TimelineIndicator", "EditorIcons"),
-            Point2(ofs_x - get_icon("TimelineIndicator", "EditorIcons")->get_width() * 0.5, 0),
-            color);
+        get_icon("TimelineIndicator", "EditorIcons"),
+        Point2(
+            ofs_x
+                - get_icon("TimelineIndicator", "EditorIcons")->get_width()
+                      * 0.5,
+            0
+        ),
+        color
+    );
 
     _current_label->set_text(String::num(_current, 2).pad_decimals(2) + " /");
 }
@@ -199,13 +220,28 @@ void AudioStreamEditor::edit(Ref<AudioStream> p_stream) {
 }
 
 void AudioStreamEditor::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_preview_changed"), &AudioStreamEditor::_preview_changed);
+    ClassDB::bind_method(
+        D_METHOD("_preview_changed"),
+        &AudioStreamEditor::_preview_changed
+    );
     ClassDB::bind_method(D_METHOD("_play"), &AudioStreamEditor::_play);
     ClassDB::bind_method(D_METHOD("_stop"), &AudioStreamEditor::_stop);
-    ClassDB::bind_method(D_METHOD("_on_finished"), &AudioStreamEditor::_on_finished);
-    ClassDB::bind_method(D_METHOD("_draw_preview"), &AudioStreamEditor::_draw_preview);
-    ClassDB::bind_method(D_METHOD("_draw_indicator"), &AudioStreamEditor::_draw_indicator);
-    ClassDB::bind_method(D_METHOD("_on_input_indicator"), &AudioStreamEditor::_on_input_indicator);
+    ClassDB::bind_method(
+        D_METHOD("_on_finished"),
+        &AudioStreamEditor::_on_finished
+    );
+    ClassDB::bind_method(
+        D_METHOD("_draw_preview"),
+        &AudioStreamEditor::_draw_preview
+    );
+    ClassDB::bind_method(
+        D_METHOD("_draw_indicator"),
+        &AudioStreamEditor::_draw_indicator
+    );
+    ClassDB::bind_method(
+        D_METHOD("_on_input_indicator"),
+        &AudioStreamEditor::_on_input_indicator
+    );
 }
 
 AudioStreamEditor::AudioStreamEditor() {
@@ -215,7 +251,7 @@ AudioStreamEditor::AudioStreamEditor() {
     _player->connect("finished", this, "_on_finished");
     add_child(_player);
 
-    VBoxContainer *vbox = memnew(VBoxContainer);
+    VBoxContainer* vbox = memnew(VBoxContainer);
     vbox->set_anchors_and_margins_preset(PRESET_WIDE, PRESET_MODE_MINSIZE, 0);
     add_child(vbox);
 
@@ -230,7 +266,7 @@ AudioStreamEditor::AudioStreamEditor() {
     _indicator->connect("gui_input", this, "_on_input_indicator");
     _preview->add_child(_indicator);
 
-    HBoxContainer *hbox = memnew(HBoxContainer);
+    HBoxContainer* hbox = memnew(HBoxContainer);
     hbox->add_constant_override("separation", 0);
     vbox->add_child(hbox);
 
@@ -238,7 +274,11 @@ AudioStreamEditor::AudioStreamEditor() {
     hbox->add_child(_play_button);
     _play_button->set_focus_mode(Control::FOCUS_NONE);
     _play_button->connect("pressed", this, "_play");
-    _play_button->set_shortcut(ED_SHORTCUT("inspector/audio_preview_play_pause", TTR("Audio Preview Play/Pause"), KEY_SPACE));
+    _play_button->set_shortcut(ED_SHORTCUT(
+        "inspector/audio_preview_play_pause",
+        TTR("Audio Preview Play/Pause"),
+        KEY_SPACE
+    ));
 
     _stop_button = memnew(ToolButton);
     hbox->add_child(_stop_button);
@@ -248,17 +288,29 @@ AudioStreamEditor::AudioStreamEditor() {
     _current_label = memnew(Label);
     _current_label->set_align(Label::ALIGN_RIGHT);
     _current_label->set_h_size_flags(SIZE_EXPAND_FILL);
-    _current_label->add_font_override("font", EditorNode::get_singleton()->get_gui_base()->get_font("status_source", "EditorFonts"));
+    _current_label->add_font_override(
+        "font",
+        EditorNode::get_singleton()->get_gui_base()->get_font(
+            "status_source",
+            "EditorFonts"
+        )
+    );
     _current_label->set_modulate(Color(1, 1, 1, 0.5));
     hbox->add_child(_current_label);
 
     _duration_label = memnew(Label);
-    _duration_label->add_font_override("font", EditorNode::get_singleton()->get_gui_base()->get_font("status_source", "EditorFonts"));
+    _duration_label->add_font_override(
+        "font",
+        EditorNode::get_singleton()->get_gui_base()->get_font(
+            "status_source",
+            "EditorFonts"
+        )
+    );
     hbox->add_child(_duration_label);
 }
 
-void AudioStreamEditorPlugin::edit(Object *p_object) {
-    AudioStream *s = Object::cast_to<AudioStream>(p_object);
+void AudioStreamEditorPlugin::edit(Object* p_object) {
+    AudioStream* s = Object::cast_to<AudioStream>(p_object);
     if (!s) {
         return;
     }
@@ -266,7 +318,7 @@ void AudioStreamEditorPlugin::edit(Object *p_object) {
     audio_editor->edit(Ref<AudioStream>(s));
 }
 
-bool AudioStreamEditorPlugin::handles(Object *p_object) const {
+bool AudioStreamEditorPlugin::handles(Object* p_object) const {
     return p_object->is_class("AudioStream");
 }
 
@@ -274,12 +326,11 @@ void AudioStreamEditorPlugin::make_visible(bool p_visible) {
     audio_editor->set_visible(p_visible);
 }
 
-AudioStreamEditorPlugin::AudioStreamEditorPlugin(EditorNode *p_node) {
+AudioStreamEditorPlugin::AudioStreamEditorPlugin(EditorNode* p_node) {
     editor = p_node;
     audio_editor = memnew(AudioStreamEditor);
     add_control_to_container(CONTAINER_PROPERTY_EDITOR_BOTTOM, audio_editor);
     audio_editor->hide();
 }
 
-AudioStreamEditorPlugin::~AudioStreamEditorPlugin() {
-}
+AudioStreamEditorPlugin::~AudioStreamEditorPlugin() {}

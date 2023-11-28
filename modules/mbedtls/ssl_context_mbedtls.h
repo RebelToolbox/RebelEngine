@@ -82,11 +82,21 @@ public:
     Ref<CryptoKeyMbedTLS> pkey;
 
     Error _setup(int p_endpoint, int p_transport, int p_authmode);
-    Error init_server(int p_transport, int p_authmode, Ref<CryptoKeyMbedTLS> p_pkey, Ref<X509CertificateMbedTLS> p_cert, Ref<CookieContextMbedTLS> p_cookies = Ref<CookieContextMbedTLS>());
-    Error init_client(int p_transport, int p_authmode, Ref<X509CertificateMbedTLS> p_valid_cas);
+    Error init_server(
+        int p_transport,
+        int p_authmode,
+        Ref<CryptoKeyMbedTLS> p_pkey,
+        Ref<X509CertificateMbedTLS> p_cert,
+        Ref<CookieContextMbedTLS> p_cookies = Ref<CookieContextMbedTLS>()
+    );
+    Error init_client(
+        int p_transport,
+        int p_authmode,
+        Ref<X509CertificateMbedTLS> p_valid_cas
+    );
     void clear();
 
-    mbedtls_ssl_context *get_context();
+    mbedtls_ssl_context* get_context();
 
     SSLContextMbedTLS();
     ~SSLContextMbedTLS();

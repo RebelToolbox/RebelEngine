@@ -40,9 +40,25 @@ class WebSocketMultiplayerPeer : public NetworkedMultiplayerPeer {
     GDCLASS(WebSocketMultiplayerPeer, NetworkedMultiplayerPeer);
 
 private:
-    PoolVector<uint8_t> _make_pkt(uint8_t p_type, int32_t p_from, int32_t p_to, const uint8_t *p_data, uint32_t p_data_size);
-    void _store_pkt(int32_t p_source, int32_t p_dest, const uint8_t *p_data, uint32_t p_data_size);
-    Error _server_relay(int32_t p_from, int32_t p_to, const uint8_t *p_buffer, uint32_t p_buffer_size);
+    PoolVector<uint8_t> _make_pkt(
+        uint8_t p_type,
+        int32_t p_from,
+        int32_t p_to,
+        const uint8_t* p_data,
+        uint32_t p_data_size
+    );
+    void _store_pkt(
+        int32_t p_source,
+        int32_t p_dest,
+        const uint8_t* p_data,
+        uint32_t p_data_size
+    );
+    Error _server_relay(
+        int32_t p_from,
+        int32_t p_to,
+        const uint8_t* p_buffer,
+        uint32_t p_buffer_size
+    );
 
 protected:
     enum {
@@ -57,7 +73,7 @@ protected:
     struct Packet {
         int source;
         int destination;
-        uint8_t *data;
+        uint8_t* data;
         uint32_t size;
     };
 
@@ -73,7 +89,11 @@ protected:
     static void _bind_methods();
 
     void _send_add(int32_t p_peer_id);
-    void _send_sys(Ref<WebSocketPeer> p_peer, uint8_t p_type, int32_t p_peer_id);
+    void _send_sys(
+        Ref<WebSocketPeer> p_peer,
+        uint8_t p_type,
+        int32_t p_peer_id
+    );
     void _send_del(int32_t p_peer_id);
     int _gen_unique_id() const;
 
@@ -92,11 +112,16 @@ public:
     /* PacketPeer */
     virtual int get_available_packet_count() const;
     virtual int get_max_packet_size() const = 0;
-    virtual Error get_packet(const uint8_t **r_buffer, int &r_buffer_size);
-    virtual Error put_packet(const uint8_t *p_buffer, int p_buffer_size);
+    virtual Error get_packet(const uint8_t** r_buffer, int& r_buffer_size);
+    virtual Error put_packet(const uint8_t* p_buffer, int p_buffer_size);
 
     /* WebSocketPeer */
-    virtual Error set_buffers(int p_in_buffer, int p_in_packets, int p_out_buffer, int p_out_packets) = 0;
+    virtual Error set_buffers(
+        int p_in_buffer,
+        int p_in_packets,
+        int p_out_buffer,
+        int p_out_packets
+    ) = 0;
     virtual Ref<WebSocketPeer> get_peer(int p_peer_id) const = 0;
 
     void _process_multiplayer(Ref<WebSocketPeer> p_peer, uint32_t p_peer_id);

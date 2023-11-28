@@ -86,7 +86,7 @@ bool PowerWindows::GetPowerInfo_Windows() {
         const int pct = (int)status.BatteryLifePercent;
         const int secs = (int)status.BatteryLifeTime;
 
-        if (pct != 255) { /* 255 == unknown */
+        if (pct != 255) {                           /* 255 == unknown */
             percent_left = (pct > 100) ? 100 : pct; /* clamp between 0%, 100% */
         }
         if (secs != (int)0xFFFFFFFF) { /* ((DWORD)-1) == unknown */
@@ -122,10 +122,8 @@ int PowerWindows::get_power_percent_left() {
 }
 
 PowerWindows::PowerWindows() :
-        nsecs_left(-1),
-        percent_left(-1),
-        power_state(OS::POWERSTATE_UNKNOWN) {
-}
+    nsecs_left(-1),
+    percent_left(-1),
+    power_state(OS::POWERSTATE_UNKNOWN) {}
 
-PowerWindows::~PowerWindows() {
-}
+PowerWindows::~PowerWindows() {}

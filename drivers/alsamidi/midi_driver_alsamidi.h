@@ -45,11 +45,11 @@ class MIDIDriverALSAMidi : public MIDIDriver {
     Thread thread;
     Mutex mutex;
 
-    Vector<snd_rawmidi_t *> connected_inputs;
+    Vector<snd_rawmidi_t*> connected_inputs;
 
     bool exit_thread;
 
-    static void thread_func(void *p_udata);
+    static void thread_func(void* p_udata);
 
     void lock() const;
     void unlock() const;

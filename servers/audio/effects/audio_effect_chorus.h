@@ -47,10 +47,18 @@ class AudioEffectChorusInstance : public AudioEffectInstance {
     AudioFrame filter_h[4];
     uint64_t cycles[4];
 
-    void _process_chunk(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
+    void _process_chunk(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
 
 public:
-    virtual void process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
+    virtual void process(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
 };
 
 class AudioEffectChorus : public AudioEffect {
@@ -60,7 +68,6 @@ class AudioEffectChorus : public AudioEffect {
 
 public:
     enum {
-
         MAX_DELAY_MS = 50,
         MAX_DEPTH_MS = 20,
         MAX_WIDTH_MS = 50,
@@ -97,7 +104,7 @@ private:
     float dry;
 
 protected:
-    void _validate_property(PropertyInfo &property) const;
+    void _validate_property(PropertyInfo& property) const;
 
     static void _bind_methods();
 

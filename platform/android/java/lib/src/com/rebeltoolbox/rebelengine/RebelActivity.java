@@ -42,11 +42,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 /**
- * Base activity for Android apps intending to use a Rebel Game as the primary and only screen.
- * It's also a reference implementation for how to setup and use the {@link RebelFragment}
- * within an Android app.
+ * Base activity for Android apps intending to use a Rebel Game as the primary
+ * and only screen. It's also a reference implementation for how to setup and
+ * use the {@link RebelFragment} within an Android app.
  */
-public abstract class RebelActivity extends FragmentActivity implements RebelHost {
+public abstract class RebelActivity
+    extends FragmentActivity implements RebelHost {
     private static final String TAG = RebelActivity.class.getSimpleName();
 
     @Nullable
@@ -57,7 +58,8 @@ public abstract class RebelActivity extends FragmentActivity implements RebelHos
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rebel_fragment);
 
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.rebel_fragment);
+        Fragment currentFragment =
+            getSupportFragmentManager().findFragmentById(R.id.rebel_fragment);
         if (currentFragment instanceof RebelFragment) {
             Log.v(TAG, "Reusing existing Rebel Fragment.");
             rebelFragment = (RebelFragment)currentFragment;
@@ -65,7 +67,11 @@ public abstract class RebelActivity extends FragmentActivity implements RebelHos
             Log.v(TAG, "Creating new Rebel Fragment.");
             rebelFragment = createRebelFragment();
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.rebel_fragment, rebelFragment).setPrimaryNavigationFragment(rebelFragment).commitNowAllowingStateLoss();
+            getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.rebel_fragment, rebelFragment)
+                .setPrimaryNavigationFragment(rebelFragment)
+                .commitNowAllowingStateLoss();
         }
     }
 
@@ -87,18 +93,25 @@ public abstract class RebelActivity extends FragmentActivity implements RebelHos
         if (rebelFragment == restartFragment) {
             // HACK:
             //
-            // Currently it's very hard to properly terminate Rebel Engine on Android to restart the game
-            // from scratch. Therefore, we need to kill the whole app process and relaunch it.
+            // Currently it's very hard to properly terminate Rebel Engine on
+            // Android to restart the game from scratch. Therefore, we need to
+            // kill the whole app process and relaunch it.
             //
-            // Restarting only the activity, wouldn't be enough unless it did proper cleanup (including
-            // releasing and reloading native libs or resetting their state somehow and clearing statics).
+            // Restarting only the activity, wouldn't be enough unless it did
+            // proper cleanup (including releasing and reloading native libs or
+            // resetting their state somehow and clearing statics).
             //
-            // Using instrumentation is a way of making the whole app process restart, because Android
-            // will kill any process of the same package which was already running.
+            // Using instrumentation is a way of making the whole app process
+            // restart, because Android will kill any process of the same
+            // package which was already running.
             //
             Bundle args = new Bundle();
             args.putParcelable("intent", getIntent());
-            startInstrumentation(new ComponentName(this, RebelInstrumentation.class), null, args);
+            startInstrumentation(
+                new ComponentName(this, RebelInstrumentation.class),
+                null,
+                args
+            );
         }
     }
 
@@ -121,10 +134,19 @@ public abstract class RebelActivity extends FragmentActivity implements RebelHos
 
     @CallSuper
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void onRequestPermissionsResult(
+        int requestCode,
+        String[] permissions,
+        int[] grantResults
+    ) {
+        super
+            .onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (rebelFragment != null) {
-            rebelFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            rebelFragment.onRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+            );
         }
     }
 
@@ -138,7 +160,8 @@ public abstract class RebelActivity extends FragmentActivity implements RebelHos
     }
 
     /**
-     * Used to initialize the Rebel Engine instance in {@link RebelActivity#onCreate(Bundle)}.
+     * Used to initialize the Rebel Engine instance in {@link
+     * RebelActivity#onCreate(Bundle)}.
      */
     @NonNull
     protected RebelFragment createRebelFragment() {

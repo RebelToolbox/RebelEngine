@@ -37,16 +37,17 @@
 
 #include "core/object.h"
 
-namespace GDMonoInternals {
-void tie_managed_to_unmanaged(MonoObject *managed, Object *unmanaged);
+namespace GDMonoInternals
+{
+void tie_managed_to_unmanaged(MonoObject* managed, Object* unmanaged);
 
 /**
  * Do not call this function directly.
  * Use GDMonoUtils::debug_unhandled_exception(MonoException *) instead.
  */
-void unhandled_exception(MonoException *p_exc);
+void unhandled_exception(MonoException* p_exc);
 
-void gd_unhandled_exception_event(MonoException *p_exc);
+void gd_unhandled_exception_event(MonoException* p_exc);
 } // namespace GDMonoInternals
 
 #endif // GD_MONO_INTERNALS_H

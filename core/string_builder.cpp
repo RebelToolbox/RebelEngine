@@ -32,7 +32,7 @@
 
 #include <string.h>
 
-StringBuilder &StringBuilder::append(const String &p_string) {
+StringBuilder& StringBuilder::append(const String& p_string) {
     if (p_string == String()) {
         return *this;
     }
@@ -45,7 +45,7 @@ StringBuilder &StringBuilder::append(const String &p_string) {
     return *this;
 }
 
-StringBuilder &StringBuilder::append(const char *p_cstring) {
+StringBuilder& StringBuilder::append(const char* p_cstring) {
     int32_t len = strlen(p_cstring);
 
     c_strings.push_back(p_cstring);
@@ -61,7 +61,7 @@ String StringBuilder::as_string() const {
         return "";
     }
 
-    CharType *buffer = memnew_arr(CharType, string_length);
+    CharType* buffer = memnew_arr(CharType, string_length);
 
     int current_position = 0;
 
@@ -71,15 +71,19 @@ String StringBuilder::as_string() const {
     for (int i = 0; i < appended_strings.size(); i++) {
         if (appended_strings[i] == -1) {
             // Godot string
-            const String &s = strings[godot_string_elem];
+            const String& s = strings[godot_string_elem];
 
-            memcpy(buffer + current_position, s.ptr(), s.length() * sizeof(CharType));
+            memcpy(
+                buffer + current_position,
+                s.ptr(),
+                s.length() * sizeof(CharType)
+            );
 
             current_position += s.length();
 
             godot_string_elem++;
         } else {
-            const char *s = c_strings[c_string_elem];
+            const char* s = c_strings[c_string_elem];
 
             for (int32_t j = 0; j < appended_strings[i]; j++) {
                 buffer[current_position + j] = s[j];

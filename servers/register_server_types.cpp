@@ -66,36 +66,41 @@
 #include "visual/shader_types.h"
 #include "visual_server.h"
 
-static void _debugger_get_resource_usage(List<ScriptDebuggerRemote::ResourceUsage> *r_usage) {
+static void _debugger_get_resource_usage(
+    List<ScriptDebuggerRemote::ResourceUsage>* r_usage
+) {
     List<VS::TextureInfo> tinfo;
     VS::get_singleton()->texture_debug_usage(&tinfo);
 
-    for (List<VS::TextureInfo>::Element *E = tinfo.front(); E; E = E->next()) {
+    for (List<VS::TextureInfo>::Element* E = tinfo.front(); E; E = E->next()) {
         ScriptDebuggerRemote::ResourceUsage usage;
         usage.path = E->get().path;
         usage.vram = E->get().bytes;
         usage.id = E->get().texture;
         usage.type = "Texture";
         if (E->get().depth == 0) {
-            usage.format = itos(E->get().width) + "x" + itos(E->get().height) + " " + Image::get_format_name(E->get().format);
+            usage.format = itos(E->get().width) + "x" + itos(E->get().height)
+                         + " " + Image::get_format_name(E->get().format);
         } else {
-            usage.format = itos(E->get().width) + "x" + itos(E->get().height) + "x" + itos(E->get().depth) + " " + Image::get_format_name(E->get().format);
+            usage.format = itos(E->get().width) + "x" + itos(E->get().height)
+                         + "x" + itos(E->get().depth) + " "
+                         + Image::get_format_name(E->get().format);
         }
         r_usage->push_back(usage);
     }
 }
 
-ShaderTypes *shader_types = nullptr;
+ShaderTypes* shader_types = nullptr;
 
-PhysicsServer *_createGodotPhysicsCallback() {
+PhysicsServer* _createGodotPhysicsCallback() {
     return memnew(PhysicsServerSW);
 }
 
-Physics2DServer *_createGodotPhysics2DCallback() {
+Physics2DServer* _createGodotPhysics2DCallback() {
     return Physics2DServerWrapMT::init_server<Physics2DServerSW>();
 }
 
-static bool has_server_feature_callback(const String &p_feature) {
+static bool has_server_feature_callback(const String& p_feature) {
     if (VisualServer::get_singleton()) {
         if (VisualServer::get_singleton()->has_os_feature(p_feature)) {
             return true;
@@ -106,7 +111,9 @@ static bool has_server_feature_callback(const String &p_feature) {
 }
 
 void register_server_types() {
-    OS::get_singleton()->set_has_server_feature_callback(has_server_feature_callback);
+    OS::get_singleton()->set_has_server_feature_callback(
+        has_server_feature_callback
+    );
 
     ClassDB::register_virtual_class<VisualServer>();
     ClassDB::register_class<AudioServer>();
@@ -135,7 +142,7 @@ void register_server_types() {
     ClassDB::register_virtual_class<AudioStreamGeneratorPlayback>();
 
     {
-        //audio effects
+        // audio effects
         ClassDB::register_class<AudioEffectAmplify>();
 
         ClassDB::register_class<AudioEffectReverb>();
@@ -187,16 +194,38 @@ void register_server_types() {
 
     // Physics 2D
     GLOBAL_DEF(Physics2DServerManager::setting_property_name, "DEFAULT");
-    ProjectSettings::get_singleton()->set_custom_property_info(Physics2DServerManager::setting_property_name, PropertyInfo(Variant::STRING, Physics2DServerManager::setting_property_name, PROPERTY_HINT_ENUM, "DEFAULT"));
+    ProjectSettings::get_singleton()->set_custom_property_info(
+        Physics2DServerManager::setting_property_name,
+        PropertyInfo(
+            Variant::STRING,
+            Physics2DServerManager::setting_property_name,
+            PROPERTY_HINT_ENUM,
+            "DEFAULT"
+        )
+    );
 
-    Physics2DServerManager::register_server("GodotPhysics", &_createGodotPhysics2DCallback);
+    Physics2DServerManager::register_server(
+        "GodotPhysics",
+        &_createGodotPhysics2DCallback
+    );
     Physics2DServerManager::set_default_server("GodotPhysics");
 
     // Physics 3D
     GLOBAL_DEF(PhysicsServerManager::setting_property_name, "DEFAULT");
-    ProjectSettings::get_singleton()->set_custom_property_info(PhysicsServerManager::setting_property_name, PropertyInfo(Variant::STRING, PhysicsServerManager::setting_property_name, PROPERTY_HINT_ENUM, "DEFAULT"));
+    ProjectSettings::get_singleton()->set_custom_property_info(
+        PhysicsServerManager::setting_property_name,
+        PropertyInfo(
+            Variant::STRING,
+            PhysicsServerManager::setting_property_name,
+            PROPERTY_HINT_ENUM,
+            "DEFAULT"
+        )
+    );
 
-    PhysicsServerManager::register_server("GodotPhysics", &_createGodotPhysicsCallback);
+    PhysicsServerManager::register_server(
+        "GodotPhysics",
+        &_createGodotPhysicsCallback
+    );
     PhysicsServerManager::set_default_server("GodotPhysics");
 }
 
@@ -205,10 +234,22 @@ void unregister_server_types() {
 }
 
 void register_server_singletons() {
-    Engine::get_singleton()->add_singleton(Engine::Singleton("VisualServer", VisualServer::get_singleton()));
-    Engine::get_singleton()->add_singleton(Engine::Singleton("AudioServer", AudioServer::get_singleton()));
-    Engine::get_singleton()->add_singleton(Engine::Singleton("PhysicsServer", PhysicsServer::get_singleton()));
-    Engine::get_singleton()->add_singleton(Engine::Singleton("Physics2DServer", Physics2DServer::get_singleton()));
-    Engine::get_singleton()->add_singleton(Engine::Singleton("ARVRServer", ARVRServer::get_singleton()));
-    Engine::get_singleton()->add_singleton(Engine::Singleton("CameraServer", CameraServer::get_singleton()));
+    Engine::get_singleton()->add_singleton(
+        Engine::Singleton("VisualServer", VisualServer::get_singleton())
+    );
+    Engine::get_singleton()->add_singleton(
+        Engine::Singleton("AudioServer", AudioServer::get_singleton())
+    );
+    Engine::get_singleton()->add_singleton(
+        Engine::Singleton("PhysicsServer", PhysicsServer::get_singleton())
+    );
+    Engine::get_singleton()->add_singleton(
+        Engine::Singleton("Physics2DServer", Physics2DServer::get_singleton())
+    );
+    Engine::get_singleton()->add_singleton(
+        Engine::Singleton("ARVRServer", ARVRServer::get_singleton())
+    );
+    Engine::get_singleton()->add_singleton(
+        Engine::Singleton("CameraServer", CameraServer::get_singleton())
+    );
 }

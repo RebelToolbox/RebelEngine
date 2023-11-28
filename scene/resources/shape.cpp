@@ -35,7 +35,10 @@
 #include "scene/resources/mesh.h"
 #include "servers/physics_server.h"
 
-void Shape::add_vertices_to_array(PoolVector<Vector3> &array, const Transform &p_xform) {
+void Shape::add_vertices_to_array(
+    PoolVector<Vector3>& array,
+    const Transform& p_xform
+) {
     Vector<Vector3> toadd = get_debug_mesh_lines();
 
     if (toadd.size()) {
@@ -67,7 +70,7 @@ Ref<ArrayMesh> Shape::get_debug_mesh() {
     debug_mesh_cache = Ref<ArrayMesh>(memnew(ArrayMesh));
 
     if (!lines.empty()) {
-        //make mesh
+        // make mesh
         PoolVector<Vector3> array;
         array.resize(lines.size());
         {
@@ -81,12 +84,16 @@ Ref<ArrayMesh> Shape::get_debug_mesh() {
         arr.resize(Mesh::ARRAY_MAX);
         arr[Mesh::ARRAY_VERTEX] = array;
 
-        SceneTree *st = Object::cast_to<SceneTree>(OS::get_singleton()->get_main_loop());
+        SceneTree* st =
+            Object::cast_to<SceneTree>(OS::get_singleton()->get_main_loop());
 
         debug_mesh_cache->add_surface_from_arrays(Mesh::PRIMITIVE_LINES, arr);
 
         if (st) {
-            debug_mesh_cache->surface_set_material(0, st->get_debug_collision_material());
+            debug_mesh_cache->surface_set_material(
+                0,
+                st->get_debug_collision_material()
+            );
         }
     }
 
@@ -104,16 +111,23 @@ void Shape::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("get_debug_mesh"), &Shape::get_debug_mesh);
 
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "margin", PROPERTY_HINT_RANGE, "0.001,10,0.001"), "set_margin", "get_margin");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "margin",
+            PROPERTY_HINT_RANGE,
+            "0.001,10,0.001"
+        ),
+        "set_margin",
+        "get_margin"
+    );
 }
 
-Shape::Shape() :
-        margin(0.04) {
+Shape::Shape() : margin(0.04) {
     ERR_PRINT("Constructor must not be called!");
 }
 
-Shape::Shape(RID p_shape) :
-        margin(0.04) {
+Shape::Shape(RID p_shape) : margin(0.04) {
     shape = p_shape;
 }
 

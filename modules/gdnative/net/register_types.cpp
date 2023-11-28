@@ -39,5 +39,4 @@ void register_net_types() {
     ClassDB::register_class<StreamPeerGDNative>();
 }
 
-void unregister_net_types() {
-}
+void unregister_net_types() {}

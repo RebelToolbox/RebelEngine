@@ -33,7 +33,7 @@
 #include "navigation_mesh_editor_plugin.h"
 
 #ifdef TOOLS_ENABLED
-EditorNavigationMeshGenerator *_nav_mesh_generator = nullptr;
+EditorNavigationMeshGenerator* _nav_mesh_generator = nullptr;
 #endif
 
 void register_recast_types() {
@@ -46,7 +46,10 @@ void register_recast_types() {
 
     ClassDB::register_class<EditorNavigationMeshGenerator>();
 
-    Engine::get_singleton()->add_singleton(Engine::Singleton("NavigationMeshGenerator", EditorNavigationMeshGenerator::get_singleton()));
+    Engine::get_singleton()->add_singleton(Engine::Singleton(
+        "NavigationMeshGenerator",
+        EditorNavigationMeshGenerator::get_singleton()
+    ));
 
     ClassDB::set_current_api(prev_api);
 #endif

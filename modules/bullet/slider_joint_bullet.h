@@ -40,16 +40,23 @@
 class RigidBodyBullet;
 
 class SliderJointBullet : public JointBullet {
-    class btSliderConstraint *sliderConstraint;
+    class btSliderConstraint* sliderConstraint;
 
 public:
     /// Reference frame is A
-    SliderJointBullet(RigidBodyBullet *rbA, RigidBodyBullet *rbB, const Transform &frameInA, const Transform &frameInB);
+    SliderJointBullet(
+        RigidBodyBullet* rbA,
+        RigidBodyBullet* rbB,
+        const Transform& frameInA,
+        const Transform& frameInB
+    );
 
-    virtual PhysicsServer::JointType get_type() const { return PhysicsServer::JOINT_SLIDER; }
+    virtual PhysicsServer::JointType get_type() const {
+        return PhysicsServer::JOINT_SLIDER;
+    }
 
-    const RigidBodyBullet *getRigidBodyA() const;
-    const RigidBodyBullet *getRigidBodyB() const;
+    const RigidBodyBullet* getRigidBodyA() const;
+    const RigidBodyBullet* getRigidBodyB() const;
     const Transform getCalculatedTransformA() const;
     const Transform getCalculatedTransformB() const;
     const Transform getFrameOffsetA() const;

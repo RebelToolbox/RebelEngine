@@ -56,23 +56,23 @@
 #include <dlfcn.h>
 #import <sys/utsname.h>
 
-extern int gl_view_base_fb; // from gl_view.mm
+extern int gl_view_base_fb;  // from gl_view.mm
 extern bool gles3_available; // from gl_view.mm
 
 // Initialization order between compilation units is not guaranteed,
 // so we use this as a hack to ensure certain code is called before
 // everything else, but after all units are initialized.
 typedef void (*init_callback)();
-static init_callback *ios_init_callbacks = NULL;
+static init_callback* ios_init_callbacks = NULL;
 static int ios_init_callbacks_count = 0;
 static int ios_init_callbacks_capacity = 0;
-HashMap<String, void *> OSIPhone::dynamic_symbol_lookup_table;
+HashMap<String, void*> OSIPhone::dynamic_symbol_lookup_table;
 
 int OSIPhone::get_video_driver_count() const {
     return 2;
 };
 
-const char *OSIPhone::get_video_driver_name(int p_driver) const {
+const char* OSIPhone::get_video_driver_name(int p_driver) const {
     switch (p_driver) {
         case VIDEO_DRIVER_GLES3:
             return "GLES3";
@@ -82,20 +82,24 @@ const char *OSIPhone::get_video_driver_name(int p_driver) const {
     ERR_FAIL_V_MSG(NULL, "Invalid video driver index: " + itos(p_driver) + ".");
 };
 
-OSIPhone *OSIPhone::get_singleton() {
-    return (OSIPhone *)OS::get_singleton();
+OSIPhone* OSIPhone::get_singleton() {
+    return (OSIPhone*)OS::get_singleton();
 };
 
 void OSIPhone::set_data_dir(String p_dir) {
-    DirAccess *da = DirAccess::open(p_dir);
+    DirAccess* da = DirAccess::open(p_dir);
 
     data_dir = da->get_current_dir();
-    printf("setting data dir to %ls from %ls\n", data_dir.c_str(), p_dir.c_str());
+    printf(
+        "setting data dir to %ls from %ls\n",
+        data_dir.c_str(),
+        p_dir.c_str()
+    );
     memdelete(da);
 };
 
 String OSIPhone::get_unique_id() const {
-    NSString *uuid = [UIDevice currentDevice].identifierForVendor.UUIDString;
+    NSString* uuid = [UIDevice currentDevice].identifierForVendor.UUIDString;
     return String::utf8([uuid UTF8String]);
 };
 
@@ -117,8 +121,13 @@ void OSIPhone::start() {
     }
 }
 
-Error OSIPhone::initialize(const VideoMode &p_desired, int p_video_driver, int p_audio_driver) {
-    bool use_gl3 = GLOBAL_GET("rendering/quality/driver/driver_name") == "GLES3";
+Error OSIPhone::initialize(
+    const VideoMode& p_desired,
+    int p_video_driver,
+    int p_audio_driver
+) {
+    bool use_gl3 =
+        GLOBAL_GET("rendering/quality/driver/driver_name") == "GLES3";
     bool gl_initialization_error = false;
 
     while (true) {
@@ -150,8 +159,11 @@ Error OSIPhone::initialize(const VideoMode &p_desired, int p_video_driver, int p
     }
 
     if (gl_initialization_error) {
-        OS::get_singleton()->alert("Your device does not support any of the supported OpenGL versions.",
-                "Unable to initialize Video driver");
+        OS::get_singleton()->alert(
+            "Your device does not support any of the supported OpenGL "
+            "versions.",
+            "Unable to initialize Video driver"
+        );
         return ERR_UNAVAILABLE;
     }
 
@@ -163,9 +175,10 @@ Error OSIPhone::initialize(const VideoMode &p_desired, int p_video_driver, int p
     }
 
     visual_server->init();
-    //visual_server->cursor_set_visible(false, 0);
+    // visual_server->cursor_set_visible(false, 0);
 
-    // reset this to what it should be, it will have been set to 0 after visual_server->init() is called
+    // reset this to what it should be, it will have been set to 0 after
+    // visual_server->init() is called
     if (use_gl3) {
         RasterizerStorageGLES3::system_fbo = gl_view_base_fb;
     } else {
@@ -184,11 +197,11 @@ Error OSIPhone::initialize(const VideoMode &p_desired, int p_video_driver, int p
     return OK;
 };
 
-MainLoop *OSIPhone::get_main_loop() const {
+MainLoop* OSIPhone::get_main_loop() const {
     return main_loop;
 };
 
-void OSIPhone::set_main_loop(MainLoop *p_main_loop) {
+void OSIPhone::set_main_loop(MainLoop* p_main_loop) {
     main_loop = p_main_loop;
 
     if (main_loop) {
@@ -218,7 +231,13 @@ void OSIPhone::key(uint32_t p_key, bool p_pressed) {
     perform_event(ev);
 };
 
-void OSIPhone::pencil_press(int p_idx, int p_x, int p_y, bool p_pressed, bool p_doubleclick) {
+void OSIPhone::pencil_press(
+    int p_idx,
+    int p_x,
+    int p_y,
+    bool p_pressed,
+    bool p_doubleclick
+) {
     Ref<InputEventMouseButton> ev;
     ev.instance();
     ev->set_button_index(1);
@@ -229,7 +248,14 @@ void OSIPhone::pencil_press(int p_idx, int p_x, int p_y, bool p_pressed, bool p_
     perform_event(ev);
 };
 
-void OSIPhone::pencil_drag(int p_idx, int p_prev_x, int p_prev_y, int p_x, int p_y, float p_force) {
+void OSIPhone::pencil_drag(
+    int p_idx,
+    int p_prev_x,
+    int p_prev_y,
+    int p_x,
+    int p_y,
+    float p_force
+) {
     Ref<InputEventMouseMotion> ev;
     ev.instance();
     ev->set_pressure(p_force);
@@ -243,7 +269,13 @@ void OSIPhone::pencil_cancelled(int p_idx) {
     pencil_press(p_idx, -1, -1, false, false);
 }
 
-void OSIPhone::touch_press(int p_idx, int p_x, int p_y, bool p_pressed, bool p_doubleclick) {
+void OSIPhone::touch_press(
+    int p_idx,
+    int p_x,
+    int p_y,
+    bool p_pressed,
+    bool p_doubleclick
+) {
     if (GLOBAL_DEF("debug/disable_touch", false)) {
         return;
     }
@@ -257,7 +289,13 @@ void OSIPhone::touch_press(int p_idx, int p_x, int p_y, bool p_pressed, bool p_d
     perform_event(ev);
 };
 
-void OSIPhone::touch_drag(int p_idx, int p_prev_x, int p_prev_y, int p_x, int p_y) {
+void OSIPhone::touch_drag(
+    int p_idx,
+    int p_prev_x,
+    int p_prev_y,
+    int p_x,
+    int p_y
+) {
     if (GLOBAL_DEF("debug/disable_touch", false)) {
         return;
     }
@@ -270,7 +308,7 @@ void OSIPhone::touch_drag(int p_idx, int p_prev_x, int p_prev_y, int p_x, int p_
     perform_event(ev);
 }
 
-void OSIPhone::perform_event(const Ref<InputEvent> &p_event) {
+void OSIPhone::perform_event(const Ref<InputEvent>& p_event) {
     input->parse_input_event(p_event);
 }
 
@@ -286,7 +324,11 @@ void OSIPhone::update_gravity(float p_x, float p_y, float p_z) {
 
 void OSIPhone::update_accelerometer(float p_x, float p_y, float p_z) {
     // Found out the Z should not be negated! Pass as is!
-    input->set_accelerometer(Vector3(p_x / (float)ACCEL_RANGE, p_y / (float)ACCEL_RANGE, p_z / (float)ACCEL_RANGE));
+    input->set_accelerometer(Vector3(
+        p_x / (float)ACCEL_RANGE,
+        p_y / (float)ACCEL_RANGE,
+        p_z / (float)ACCEL_RANGE
+    ));
 };
 
 void OSIPhone::update_magnetometer(float p_x, float p_y, float p_z) {
@@ -301,7 +343,11 @@ int OSIPhone::get_unused_joy_id() {
     return input->get_unused_joy_id();
 };
 
-void OSIPhone::joy_connection_changed(int p_idx, bool p_connected, String p_name) {
+void OSIPhone::joy_connection_changed(
+    int p_idx,
+    bool p_connected,
+    String p_name
+) {
     input->joy_connection_changed(p_idx, p_connected, p_name);
 };
 
@@ -309,7 +355,11 @@ void OSIPhone::joy_button(int p_device, int p_button, bool p_pressed) {
     input->joy_button(p_device, p_button, p_pressed);
 };
 
-void OSIPhone::joy_axis(int p_device, int p_axis, const InputDefault::JoyAxis &p_value) {
+void OSIPhone::joy_axis(
+    int p_device,
+    int p_axis,
+    const InputDefault::JoyAxis& p_value
+) {
     input->joy_axis(p_device, p_axis, p_value);
 };
 
@@ -365,11 +415,11 @@ int OSIPhone::get_mouse_button_state() const {
     return 0;
 }
 
-void OSIPhone::set_window_title(const String &p_title) {
+void OSIPhone::set_window_title(const String& p_title) {
     // Not supported for iOS
 }
 
-void OSIPhone::alert(const String &p_alert, const String &p_title) {
+void OSIPhone::alert(const String& p_alert, const String& p_title) {
     const CharString utf8_alert = p_alert.utf8();
     const CharString utf8_title = p_title.utf8();
     iOS::alert(utf8_alert.get_data(), utf8_title.get_data());
@@ -377,37 +427,55 @@ void OSIPhone::alert(const String &p_alert, const String &p_title) {
 
 // MARK: Dynamic Libraries
 
-Error OSIPhone::open_dynamic_library(const String p_path, void *&p_library_handle, bool p_also_set_library_path) {
+Error OSIPhone::open_dynamic_library(
+    const String p_path,
+    void*& p_library_handle,
+    bool p_also_set_library_path
+) {
     if (p_path.length() == 0) {
         p_library_handle = RTLD_SELF;
         return OK;
     }
-    return OS_Unix::open_dynamic_library(p_path, p_library_handle, p_also_set_library_path);
+    return OS_Unix::open_dynamic_library(
+        p_path,
+        p_library_handle,
+        p_also_set_library_path
+    );
 }
 
-Error OSIPhone::close_dynamic_library(void *p_library_handle) {
+Error OSIPhone::close_dynamic_library(void* p_library_handle) {
     if (p_library_handle == RTLD_SELF) {
         return OK;
     }
     return OS_Unix::close_dynamic_library(p_library_handle);
 }
 
-void register_dynamic_symbol(char *name, void *address) {
+void register_dynamic_symbol(char* name, void* address) {
     OSIPhone::dynamic_symbol_lookup_table[String(name)] = address;
 }
 
-Error OSIPhone::get_dynamic_library_symbol_handle(void *p_library_handle, const String p_name, void *&p_symbol_handle, bool p_optional) {
+Error OSIPhone::get_dynamic_library_symbol_handle(
+    void* p_library_handle,
+    const String p_name,
+    void*& p_symbol_handle,
+    bool p_optional
+) {
     if (p_library_handle == RTLD_SELF) {
-        void **ptr = OSIPhone::dynamic_symbol_lookup_table.getptr(p_name);
+        void** ptr = OSIPhone::dynamic_symbol_lookup_table.getptr(p_name);
         if (ptr) {
             p_symbol_handle = *ptr;
             return OK;
         }
     }
-    return OS_Unix::get_dynamic_library_symbol_handle(p_library_handle, p_name, p_symbol_handle, p_optional);
+    return OS_Unix::get_dynamic_library_symbol_handle(
+        p_library_handle,
+        p_name,
+        p_symbol_handle,
+        p_optional
+    );
 }
 
-void OSIPhone::set_video_mode(const VideoMode &p_video_mode, int p_screen) {
+void OSIPhone::set_video_mode(const VideoMode& p_video_mode, int p_screen) {
     video_mode = p_video_mode;
 }
 
@@ -415,13 +483,15 @@ OS::VideoMode OSIPhone::get_video_mode(int p_screen) const {
     return video_mode;
 }
 
-void OSIPhone::get_fullscreen_mode_list(List<VideoMode> *p_list, int p_screen) const {
+void OSIPhone::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
+    const {
     p_list->push_back(video_mode);
 }
 
 bool OSIPhone::can_draw() const {
-    if (native_video_is_playing())
+    if (native_video_is_playing()) {
         return false;
+    }
     return true;
 }
 
@@ -436,14 +506,22 @@ bool OSIPhone::has_virtual_keyboard() const {
     return true;
 };
 
-void OSIPhone::show_virtual_keyboard(const String &p_existing_text, const Rect2 &p_screen_rect, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end) {
-    NSString *existingString = [[NSString alloc] initWithUTF8String:p_existing_text.utf8().get_data()];
+void OSIPhone::show_virtual_keyboard(
+    const String& p_existing_text,
+    const Rect2& p_screen_rect,
+    bool p_multiline,
+    int p_max_input_length,
+    int p_cursor_start,
+    int p_cursor_end
+) {
+    NSString* existingString =
+        [[NSString alloc] initWithUTF8String:p_existing_text.utf8().get_data()];
 
     [AppDelegate.viewController.keyboardView
-            becomeFirstResponderWithString:existingString
-                                 multiline:p_multiline
-                               cursorStart:p_cursor_start
-                                 cursorEnd:p_cursor_end];
+        becomeFirstResponderWithString:existingString
+                             multiline:p_multiline
+                           cursorStart:p_cursor_start
+                             cursorEnd:p_cursor_end];
 };
 
 void OSIPhone::hide_virtual_keyboard() {
@@ -459,8 +537,9 @@ int OSIPhone::get_virtual_keyboard_height() const {
 }
 
 Error OSIPhone::shell_open(String p_uri) {
-    NSString *urlPath = [[NSString alloc] initWithUTF8String:p_uri.utf8().get_data()];
-    NSURL *url = [NSURL URLWithString:urlPath];
+    NSString* urlPath =
+        [[NSString alloc] initWithUTF8String:p_uri.utf8().get_data()];
+    NSURL* url = [NSURL URLWithString:urlPath];
 
     if (![[UIApplication sharedApplication] canOpenURL:url]) {
         return ERR_CANT_OPEN;
@@ -468,7 +547,9 @@ Error OSIPhone::shell_open(String p_uri) {
 
     printf("opening url %s\n", p_uri.utf8().get_data());
 
-    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+    [[UIApplication sharedApplication] openURL:url
+                                       options:@{}
+                             completionHandler:nil];
 
     return OK;
 }
@@ -486,12 +567,13 @@ String OSIPhone::get_name() const {
     return "iOS";
 }
 
-void OSIPhone::set_clipboard(const String &p_text) {
-    [UIPasteboard generalPasteboard].string = [NSString stringWithUTF8String:p_text.utf8()];
+void OSIPhone::set_clipboard(const String& p_text) {
+    [UIPasteboard generalPasteboard].string =
+        [NSString stringWithUTF8String:p_text.utf8()];
 }
 
 String OSIPhone::get_clipboard() const {
-    NSString *text = [UIPasteboard generalPasteboard].string;
+    NSString* text = [UIPasteboard generalPasteboard].string;
 
     return String::utf8([text UTF8String]);
 }
@@ -513,13 +595,14 @@ int OSIPhone::get_screen_dpi(int p_screen) const {
     struct utsname systemInfo;
     uname(&systemInfo);
 
-    NSString *string = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    NSString* string = [NSString stringWithCString:systemInfo.machine
+                                          encoding:NSUTF8StringEncoding];
 
-    NSDictionary *iOSModelToDPI = [GodotDeviceMetrics dpiList];
+    NSDictionary* iOSModelToDPI = [GodotDeviceMetrics dpiList];
 
-    for (NSArray *keyArray in iOSModelToDPI) {
+    for (NSArray* keyArray in iOSModelToDPI) {
         if ([keyArray containsObject:string]) {
-            NSNumber *value = iOSModelToDPI[keyArray];
+            NSNumber* value = iOSModelToDPI[keyArray];
             return [value intValue];
         }
     }
@@ -549,7 +632,7 @@ int OSIPhone::get_screen_dpi(int p_screen) const {
 Rect2 OSIPhone::get_window_safe_area() const {
     if (@available(iOS 11, *)) {
         UIEdgeInsets insets = UIEdgeInsetsZero;
-        UIView *view = AppDelegate.viewController.godotView;
+        UIView* view = AppDelegate.viewController.godotView;
 
         if ([view respondsToSelector:@selector(safeAreaInsets)]) {
             insets = [view safeAreaInsets];
@@ -557,7 +640,9 @@ Rect2 OSIPhone::get_window_safe_area() const {
 
         float scale = [UIScreen mainScreen].nativeScale;
         Size2i insets_position = Size2i(insets.left, insets.top) * scale;
-        Size2i insets_size = Size2i(insets.left + insets.right, insets.top + insets.bottom) * scale;
+        Size2i insets_size =
+            Size2i(insets.left + insets.right, insets.top + insets.bottom)
+            * scale;
 
         return Rect2i(insets_position, get_window_size() - insets_size);
     } else {
@@ -570,18 +655,23 @@ bool OSIPhone::has_touchscreen_ui_hint() const {
 }
 
 String OSIPhone::get_locale() const {
-    NSString *preferedLanguage = [NSLocale preferredLanguages].firstObject;
+    NSString* preferedLanguage = [NSLocale preferredLanguages].firstObject;
 
     if (preferedLanguage) {
         return String::utf8([preferedLanguage UTF8String]).replace("-", "_");
     }
 
-    NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
+    NSString* localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
     return String::utf8([localeIdentifier UTF8String]).replace("-", "_");
 }
 
-Error OSIPhone::native_video_play(String p_path, float p_volume, String p_audio_track, String p_subtitle_track) {
-    FileAccess *f = FileAccess::open(p_path, FileAccess::READ);
+Error OSIPhone::native_video_play(
+    String p_path,
+    float p_volume,
+    String p_audio_track,
+    String p_subtitle_track
+) {
+    FileAccess* f = FileAccess::open(p_path, FileAccess::READ);
     bool exists = f && f->is_open();
 
     String user_data_dir = OSIPhone::get_singleton()->get_user_data_dir();
@@ -594,10 +684,17 @@ Error OSIPhone::native_video_play(String p_path, float p_volume, String p_audio_
 
     if (p_path.begins_with("res://")) {
         if (PackedData::get_singleton()->has_path(p_path)) {
-            printf("Unable to play %s using the native player as it resides in a .pck file\n", p_path.utf8().get_data());
+            printf(
+                "Unable to play %s using the native player as it resides in a "
+                ".pck file\n",
+                p_path.utf8().get_data()
+            );
             return ERR_INVALID_PARAMETER;
         } else {
-            p_path = p_path.replace("res:/", ProjectSettings::get_singleton()->get_resource_path());
+            p_path = p_path.replace(
+                "res:/",
+                ProjectSettings::get_singleton()->get_resource_path()
+            );
         }
     } else if (p_path.begins_with("user://")) {
         p_path = p_path.replace("user:/", user_data_dir);
@@ -609,9 +706,11 @@ Error OSIPhone::native_video_play(String p_path, float p_volume, String p_audio_
 
     String file_path = ProjectSettings::get_singleton()->globalize_path(p_path);
 
-    NSString *filePath = [[NSString alloc] initWithUTF8String:file_path.utf8().get_data()];
-    NSString *audioTrack = [NSString stringWithUTF8String:p_audio_track.utf8()];
-    NSString *subtitleTrack = [NSString stringWithUTF8String:p_subtitle_track.utf8()];
+    NSString* filePath =
+        [[NSString alloc] initWithUTF8String:file_path.utf8().get_data()];
+    NSString* audioTrack = [NSString stringWithUTF8String:p_audio_track.utf8()];
+    NSString* subtitleTrack =
+        [NSString stringWithUTF8String:p_subtitle_track.utf8()];
 
     if (![AppDelegate.viewController playVideoAtPath:filePath
                                               volume:p_volume
@@ -652,15 +751,15 @@ void OSIPhone::vibrate_handheld(int p_duration_ms) {
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
 
-bool OSIPhone::_check_internal_feature_support(const String &p_feature) {
+bool OSIPhone::_check_internal_feature_support(const String& p_feature) {
     return p_feature == "mobile";
 }
 
 void add_ios_init_callback(init_callback cb) {
     if (ios_init_callbacks_count == ios_init_callbacks_capacity) {
-        void *new_ptr = realloc(ios_init_callbacks, sizeof(cb) * 32);
+        void* new_ptr = realloc(ios_init_callbacks, sizeof(cb) * 32);
         if (new_ptr) {
-            ios_init_callbacks = (init_callback *)(new_ptr);
+            ios_init_callbacks = (init_callback*)(new_ptr);
             ios_init_callbacks_capacity += 32;
         }
     }
@@ -686,10 +785,11 @@ OSIPhone::OSIPhone(String p_data_dir) {
     // which is initialized in initialize_core
     data_dir = p_data_dir;
 
-    Vector<Logger *> loggers;
+    Vector<Logger*> loggers;
     loggers.push_back(memnew(SyslogLogger));
 #ifdef DEBUG_ENABLED
-    // it seems iOS app's stdout/stderr is only obtainable if you launch it from Xcode
+    // it seems iOS app's stdout/stderr is only obtainable if you launch it from
+    // Xcode
     loggers.push_back(memnew(StdLogger));
 #endif
     _set_logger(memnew(CompositeLogger(loggers)));
@@ -697,8 +797,7 @@ OSIPhone::OSIPhone(String p_data_dir) {
     AudioDriverManager::add_driver(&audio_driver);
 };
 
-OSIPhone::~OSIPhone() {
-}
+OSIPhone::~OSIPhone() {}
 
 void OSIPhone::on_focus_out() {
     if (is_focused) {

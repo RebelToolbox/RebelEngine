@@ -42,20 +42,20 @@ class Range : public Control {
         bool exp_ratio;
         bool allow_greater;
         bool allow_lesser;
-        Set<Range *> owners;
+        Set<Range*> owners;
         void emit_value_changed();
-        void emit_changed(const char *p_what = "");
+        void emit_changed(const char* p_what = "");
     };
 
-    Shared *shared;
+    Shared* shared;
 
-    void _ref_shared(Shared *p_shared);
+    void _ref_shared(Shared* p_shared);
     void _unref_shared();
 
-    void _share(Node *p_range);
+    void _share(Node* p_range);
 
     void _value_changed_notify();
-    void _changed_notify(const char *p_what = "");
+    void _changed_notify(const char* p_what = "");
 
 protected:
     virtual void _value_changed(double) {}
@@ -91,7 +91,7 @@ public:
     void set_allow_lesser(bool p_allow);
     bool is_lesser_allowed() const;
 
-    void share(Range *p_range);
+    void share(Range* p_range);
     void unshare();
 
     virtual String get_configuration_warning() const;

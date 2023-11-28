@@ -65,7 +65,7 @@ public:
         OVERRIDE_3D_1, // 3D Viewport 1
         OVERRIDE_3D_2, // 3D Viewport 2
         OVERRIDE_3D_3, // 3D Viewport 3
-        OVERRIDE_3D_4 // 3D Viewport 4
+        OVERRIDE_3D_4  // 3D Viewport 4
     };
 
 private:
@@ -82,16 +82,16 @@ private:
         ITEM_MENU_OPEN_SOURCE,
     };
 
-    AcceptDialog *msgdialog;
+    AcceptDialog* msgdialog;
 
-    Button *debugger_button;
+    Button* debugger_button;
 
-    LineEdit *clicked_ctrl;
-    LineEdit *clicked_ctrl_type;
-    LineEdit *live_edit_root;
-    Button *le_set;
-    Button *le_clear;
-    Button *export_csv;
+    LineEdit* clicked_ctrl;
+    LineEdit* clicked_ctrl_type;
+    LineEdit* live_edit_root;
+    Button* le_set;
+    Button* le_clear;
+    Button* export_csv;
 
     bool updating_scene_tree;
     float inspect_scene_tree_timeout;
@@ -99,23 +99,25 @@ private:
     bool auto_switch_remote_scene_tree;
     ObjectID inspected_object_id;
     String last_filter;
-    ScriptEditorDebuggerVariables *variables;
-    Map<ObjectID, ScriptEditorDebuggerInspectedObject *> remote_objects;
+    ScriptEditorDebuggerVariables* variables;
+    Map<ObjectID, ScriptEditorDebuggerInspectedObject*> remote_objects;
     Set<RES> remote_dependencies;
     Set<ObjectID> unfold_cache;
 
-    VBoxContainer *errors_tab;
-    Tree *error_tree;
-    Tree *inspect_scene_tree;
-    Button *clearbutton;
-    PopupMenu *item_menu;
+    VBoxContainer* errors_tab;
+    Tree* error_tree;
+    Tree* inspect_scene_tree;
+    Button* clearbutton;
+    PopupMenu* item_menu;
 
-    EditorFileDialog *file_dialog;
+    EditorFileDialog* file_dialog;
+
     enum FileDialogMode {
         SAVE_MONITORS_CSV,
         SAVE_VRAM_CSV,
         SAVE_NODE,
     };
+
     FileDialogMode file_dialog_mode;
 
     int error_count;
@@ -130,36 +132,36 @@ private:
     bool skip_breakpoints_value = false;
     Ref<Script> stack_script;
 
-    TabContainer *tabs;
+    TabContainer* tabs;
 
-    Label *reason;
+    Label* reason;
 
-    Button *skip_breakpoints;
-    Button *copy;
-    Button *step;
-    Button *next;
-    Button *back;
-    Button *forward;
-    Button *dobreak;
-    Button *docontinue;
+    Button* skip_breakpoints;
+    Button* copy;
+    Button* step;
+    Button* next;
+    Button* back;
+    Button* forward;
+    Button* dobreak;
+    Button* docontinue;
 
     List<Vector<float>> perf_history;
     Vector<float> perf_max;
-    Vector<TreeItem *> perf_items;
+    Vector<TreeItem*> perf_items;
 
     Map<int, String> profiler_signature;
 
-    Tree *perf_monitors;
-    Control *perf_draw;
-    Label *info_message;
+    Tree* perf_monitors;
+    Control* perf_draw;
+    Label* info_message;
 
-    Tree *vmem_tree;
-    Button *vmem_refresh;
-    Button *vmem_export;
-    LineEdit *vmem_total;
+    Tree* vmem_tree;
+    Button* vmem_refresh;
+    Button* vmem_export;
+    LineEdit* vmem_total;
 
-    Tree *stack_dump;
-    EditorInspector *inspector;
+    Tree* stack_dump;
+    EditorInspector* inspector;
 
     Ref<TCP_Server> server;
     Ref<StreamPeerTCP> connection;
@@ -173,10 +175,10 @@ private:
     int last_path_id;
     Map<String, int> res_path_cache;
 
-    EditorProfiler *profiler;
-    EditorNetworkProfiler *network_profiler;
+    EditorProfiler* profiler;
+    EditorNetworkProfiler* network_profiler;
 
-    EditorNode *editor;
+    EditorNode* editor;
 
     bool breaked;
 
@@ -189,29 +191,44 @@ private:
     void _stack_dump_frame_selected();
     void _output_clear();
 
-    void _scene_tree_folded(Object *obj);
+    void _scene_tree_folded(Object* obj);
     void _scene_tree_selected();
-    void _scene_tree_rmb_selected(const Vector2 &p_position);
-    void _file_selected(const String &p_file);
+    void _scene_tree_rmb_selected(const Vector2& p_position);
+    void _file_selected(const String& p_file);
     void _scene_tree_request();
-    void _parse_message(const String &p_msg, const Array &p_data);
-    void _set_reason_text(const String &p_reason, MessageType p_type);
+    void _parse_message(const String& p_msg, const Array& p_data);
+    void _set_reason_text(const String& p_reason, MessageType p_type);
     void _scene_tree_property_select_object(ObjectID p_object);
-    void _scene_tree_property_value_edited(const String &p_prop, const Variant &p_value);
-    int _update_scene_tree(TreeItem *parent, const Array &nodes, int current_index);
+    void _scene_tree_property_value_edited(
+        const String& p_prop,
+        const Variant& p_value
+    );
+    int _update_scene_tree(
+        TreeItem* parent,
+        const Array& nodes,
+        int current_index
+    );
 
     void _video_mem_request();
     void _video_mem_export();
 
-    int _get_node_path_cache(const NodePath &p_path);
+    int _get_node_path_cache(const NodePath& p_path);
 
-    int _get_res_path_cache(const String &p_path);
+    int _get_res_path_cache(const String& p_path);
 
     void _live_edit_set();
     void _live_edit_clear();
 
-    void _method_changed(Object *p_base, const StringName &p_name, VARIANT_ARG_DECLARE);
-    void _property_changed(Object *p_base, const StringName &p_property, const Variant &p_value);
+    void _method_changed(
+        Object* p_base,
+        const StringName& p_name,
+        VARIANT_ARG_DECLARE
+    );
+    void _property_changed(
+        Object* p_base,
+        const StringName& p_property,
+        const Variant& p_value
+    );
 
     void _error_activated();
     void _error_selected();
@@ -226,11 +243,14 @@ private:
 
     void _paused();
 
-    void _set_remote_object(ObjectID p_id, ScriptEditorDebuggerInspectedObject *p_obj);
+    void _set_remote_object(
+        ObjectID p_id,
+        ScriptEditorDebuggerInspectedObject* p_obj
+    );
     void _clear_remote_objects();
     void _clear_errors_list();
 
-    void _error_tree_item_rmb_selected(const Vector2 &p_pos);
+    void _error_tree_item_rmb_selected(const Vector2& p_pos);
     void _item_menu_id_pressed(int p_option);
     void _tab_changed(int p_tab);
 
@@ -256,25 +276,58 @@ public:
     void debug_break();
     void debug_continue();
 
-    String get_var_value(const String &p_var) const;
+    String get_var_value(const String& p_var) const;
 
     void set_live_debugging(bool p_enable);
 
-    static void _method_changeds(void *p_ud, Object *p_base, const StringName &p_name, VARIANT_ARG_DECLARE);
-    static void _property_changeds(void *p_ud, Object *p_base, const StringName &p_property, const Variant &p_value);
+    static void _method_changeds(
+        void* p_ud,
+        Object* p_base,
+        const StringName& p_name,
+        VARIANT_ARG_DECLARE
+    );
+    static void _property_changeds(
+        void* p_ud,
+        Object* p_base,
+        const StringName& p_property,
+        const Variant& p_value
+    );
 
-    void live_debug_create_node(const NodePath &p_parent, const String &p_type, const String &p_name);
-    void live_debug_instance_node(const NodePath &p_parent, const String &p_path, const String &p_name);
-    void live_debug_remove_node(const NodePath &p_at);
-    void live_debug_remove_and_keep_node(const NodePath &p_at, ObjectID p_keep_id);
-    void live_debug_restore_node(ObjectID p_id, const NodePath &p_at, int p_at_pos);
-    void live_debug_duplicate_node(const NodePath &p_at, const String &p_new_name);
-    void live_debug_reparent_node(const NodePath &p_at, const NodePath &p_new_place, const String &p_new_name, int p_at_pos);
+    void live_debug_create_node(
+        const NodePath& p_parent,
+        const String& p_type,
+        const String& p_name
+    );
+    void live_debug_instance_node(
+        const NodePath& p_parent,
+        const String& p_path,
+        const String& p_name
+    );
+    void live_debug_remove_node(const NodePath& p_at);
+    void live_debug_remove_and_keep_node(
+        const NodePath& p_at,
+        ObjectID p_keep_id
+    );
+    void live_debug_restore_node(
+        ObjectID p_id,
+        const NodePath& p_at,
+        int p_at_pos
+    );
+    void live_debug_duplicate_node(
+        const NodePath& p_at,
+        const String& p_new_name
+    );
+    void live_debug_reparent_node(
+        const NodePath& p_at,
+        const NodePath& p_new_place,
+        const String& p_new_name,
+        int p_at_pos
+    );
 
     CameraOverride get_camera_override() const;
     void set_camera_override(CameraOverride p_override);
 
-    void set_breakpoint(const String &p_path, int p_line, bool p_enabled);
+    void set_breakpoint(const String& p_path, int p_line, bool p_enabled);
 
     void update_live_edit_root();
 
@@ -286,14 +339,16 @@ public:
 
     Ref<Script> get_dump_stack_script() const;
 
-    void set_tool_button(Button *p_tb) { debugger_button = p_tb; }
+    void set_tool_button(Button* p_tb) {
+        debugger_button = p_tb;
+    }
 
     void reload_scripts();
 
     bool is_skip_breakpoints();
 
     virtual Size2 get_minimum_size() const;
-    ScriptEditorDebugger(EditorNode *p_editor = nullptr);
+    ScriptEditorDebugger(EditorNode* p_editor = nullptr);
     ~ScriptEditorDebugger();
 };
 

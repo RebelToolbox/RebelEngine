@@ -86,9 +86,9 @@ protected:
 public:
 #ifdef TOOLS_ENABLED
     virtual Dictionary _edit_get_state() const;
-    virtual void _edit_set_state(const Dictionary &p_state);
+    virtual void _edit_set_state(const Dictionary& p_state);
 
-    virtual void _edit_set_pivot(const Point2 &p_pivot);
+    virtual void _edit_set_pivot(const Point2& p_pivot);
     virtual Point2 _edit_get_pivot() const;
     virtual bool _edit_use_pivot() const;
     virtual Rect2 _edit_get_rect() const;
@@ -103,13 +103,13 @@ public:
     void set_editor_only(bool p_editor_only);
     bool is_editor_only() const;
 
-    void set_texture(const Ref<Texture> &p_texture);
+    void set_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_texture() const;
 
-    void set_texture_offset(const Vector2 &p_offset);
+    void set_texture_offset(const Vector2& p_offset);
     Vector2 get_texture_offset() const;
 
-    void set_color(const Color &p_color);
+    void set_color(const Color& p_color);
     Color get_color() const;
 
     void set_height(float p_height);
@@ -154,7 +154,7 @@ public:
     void set_shadow_filter(ShadowFilter p_filter);
     ShadowFilter get_shadow_filter() const;
 
-    void set_shadow_color(const Color &p_shadow_color);
+    void set_shadow_color(const Color& p_shadow_color);
     Color get_shadow_color() const;
 
     void set_shadow_smooth(float p_amount);

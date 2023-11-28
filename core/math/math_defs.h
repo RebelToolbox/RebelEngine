@@ -50,11 +50,11 @@
 #define MATH_CHECKS
 #endif
 
-//this epsilon is for values related to a unit size (scalar or vector len)
+// this epsilon is for values related to a unit size (scalar or vector len)
 #ifdef PRECISE_MATH_CHECKS
 #define UNIT_EPSILON 0.00001
 #else
-//tolerate some more floating point error normally
+// tolerate some more floating point error normally
 #define UNIT_EPSILON 0.001
 #endif
 
@@ -66,27 +66,23 @@ enum ClockDirection {
 };
 
 enum Orientation {
-
     HORIZONTAL,
     VERTICAL
 };
 
 enum HAlign {
-
     HALIGN_LEFT,
     HALIGN_CENTER,
     HALIGN_RIGHT
 };
 
 enum VAlign {
-
     VALIGN_TOP,
     VALIGN_CENTER,
     VALIGN_BOTTOM
 };
 
 enum Margin {
-
     MARGIN_LEFT,
     MARGIN_TOP,
     MARGIN_RIGHT,
@@ -94,7 +90,6 @@ enum Margin {
 };
 
 enum Corner {
-
     CORNER_TOP_LEFT,
     CORNER_TOP_RIGHT,
     CORNER_BOTTOM_RIGHT,

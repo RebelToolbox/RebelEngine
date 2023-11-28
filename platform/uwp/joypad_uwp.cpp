@@ -36,48 +36,87 @@ using namespace Windows::Foundation;
 
 void JoypadUWP::register_events() {
     Gamepad::GamepadAdded +=
-            ref new EventHandler<Gamepad ^>(this, &JoypadUWP::OnGamepadAdded);
+        ref new EventHandler<Gamepad ^>(this, &JoypadUWP::OnGamepadAdded);
     Gamepad::GamepadRemoved +=
-            ref new EventHandler<Gamepad ^>(this, &JoypadUWP::OnGamepadRemoved);
+        ref new EventHandler<Gamepad ^>(this, &JoypadUWP::OnGamepadRemoved);
 }
 
 void JoypadUWP::process_controllers() {
     for (int i = 0; i < MAX_CONTROLLERS; i++) {
-        ControllerDevice &joy = controllers[i];
+        ControllerDevice& joy = controllers[i];
 
-        if (!joy.connected)
+        if (!joy.connected) {
             break;
+        }
 
         switch (joy.type) {
             case ControllerType::GAMEPAD_CONTROLLER: {
-                GamepadReading reading = ((Gamepad ^) joy.controller_reference)->GetCurrentReading();
+                GamepadReading reading =
+                    ((Gamepad ^) joy.controller_reference)->GetCurrentReading();
 
                 int button_mask = (int)GamepadButtons::Menu;
                 for (int j = 0; j < 14; j++) {
-                    input->joy_button(joy.id, j, (int)reading.Buttons & button_mask);
+                    input->joy_button(
+                        joy.id,
+                        j,
+                        (int)reading.Buttons & button_mask
+                    );
                     button_mask *= 2;
                 }
 
-                input->joy_axis(joy.id, JOY_AXIS_0, axis_correct(reading.LeftThumbstickX));
-                input->joy_axis(joy.id, JOY_AXIS_1, axis_correct(reading.LeftThumbstickY, true));
-                input->joy_axis(joy.id, JOY_AXIS_2, axis_correct(reading.RightThumbstickX));
-                input->joy_axis(joy.id, JOY_AXIS_3, axis_correct(reading.RightThumbstickY, true));
-                input->joy_axis(joy.id, JOY_AXIS_4, axis_correct(reading.LeftTrigger, false, true));
-                input->joy_axis(joy.id, JOY_AXIS_5, axis_correct(reading.RightTrigger, false, true));
+                input->joy_axis(
+                    joy.id,
+                    JOY_AXIS_0,
+                    axis_correct(reading.LeftThumbstickX)
+                );
+                input->joy_axis(
+                    joy.id,
+                    JOY_AXIS_1,
+                    axis_correct(reading.LeftThumbstickY, true)
+                );
+                input->joy_axis(
+                    joy.id,
+                    JOY_AXIS_2,
+                    axis_correct(reading.RightThumbstickX)
+                );
+                input->joy_axis(
+                    joy.id,
+                    JOY_AXIS_3,
+                    axis_correct(reading.RightThumbstickY, true)
+                );
+                input->joy_axis(
+                    joy.id,
+                    JOY_AXIS_4,
+                    axis_correct(reading.LeftTrigger, false, true)
+                );
+                input->joy_axis(
+                    joy.id,
+                    JOY_AXIS_5,
+                    axis_correct(reading.RightTrigger, false, true)
+                );
 
                 uint64_t timestamp = input->get_joy_vibration_timestamp(joy.id);
                 if (timestamp > joy.ff_timestamp) {
-                    Vector2 strength = input->get_joy_vibration_strength(joy.id);
+                    Vector2 strength =
+                        input->get_joy_vibration_strength(joy.id);
                     float duration = input->get_joy_vibration_duration(joy.id);
                     if (strength.x == 0 && strength.y == 0) {
                         joypad_vibration_stop(i, timestamp);
                     } else {
-                        joypad_vibration_start(i, strength.x, strength.y, duration, timestamp);
+                        joypad_vibration_start(
+                            i,
+                            strength.x,
+                            strength.y,
+                            duration,
+                            timestamp
+                        );
                     }
                 } else if (joy.vibrating && joy.ff_end_timestamp != 0) {
-                    uint64_t current_time = OS::get_singleton()->get_ticks_usec();
-                    if (current_time >= joy.ff_end_timestamp)
+                    uint64_t current_time =
+                        OS::get_singleton()->get_ticks_usec();
+                    if (current_time >= joy.ff_end_timestamp) {
                         joypad_vibration_stop(i, current_time);
+                    }
                 }
 
                 break;
@@ -87,17 +126,21 @@ void JoypadUWP::process_controllers() {
 }
 
 JoypadUWP::JoypadUWP() {
-    for (int i = 0; i < MAX_CONTROLLERS; i++)
+    for (int i = 0; i < MAX_CONTROLLERS; i++) {
         controllers[i].id = i;
+    }
 }
 
-JoypadUWP::JoypadUWP(InputDefault *p_input) {
+JoypadUWP::JoypadUWP(InputDefault* p_input) {
     input = p_input;
 
     JoypadUWP();
 }
 
-void JoypadUWP::OnGamepadAdded(Platform::Object ^ sender, Windows::Gaming::Input::Gamepad ^ value) {
+void JoypadUWP::OnGamepadAdded(
+    Platform::Object ^ sender,
+    Windows::Gaming::Input::Gamepad ^ value
+) {
     short idx = -1;
 
     for (int i = 0; i < MAX_CONTROLLERS; i++) {
@@ -114,10 +157,18 @@ void JoypadUWP::OnGamepadAdded(Platform::Object ^ sender, Windows::Gaming::Input
     controllers[idx].id = idx;
     controllers[idx].type = ControllerType::GAMEPAD_CONTROLLER;
 
-    input->joy_connection_changed(controllers[idx].id, true, "Xbox Controller", "__UWP_GAMEPAD__");
+    input->joy_connection_changed(
+        controllers[idx].id,
+        true,
+        "Xbox Controller",
+        "__UWP_GAMEPAD__"
+    );
 }
 
-void JoypadUWP::OnGamepadRemoved(Platform::Object ^ sender, Windows::Gaming::Input::Gamepad ^ value) {
+void JoypadUWP::OnGamepadRemoved(
+    Platform::Object ^ sender,
+    Windows::Gaming::Input::Gamepad ^ value
+) {
     short idx = -1;
 
     for (int i = 0; i < MAX_CONTROLLERS; i++) {
@@ -134,7 +185,11 @@ void JoypadUWP::OnGamepadRemoved(Platform::Object ^ sender, Windows::Gaming::Inp
     input->joy_connection_changed(idx, false, "Xbox Controller");
 }
 
-InputDefault::JoyAxis JoypadUWP::axis_correct(double p_val, bool p_negate, bool p_trigger) const {
+InputDefault::JoyAxis JoypadUWP::axis_correct(
+    double p_val,
+    bool p_negate,
+    bool p_trigger
+) const {
     InputDefault::JoyAxis jx;
 
     jx.min = p_trigger ? 0 : -1;
@@ -143,8 +198,14 @@ InputDefault::JoyAxis JoypadUWP::axis_correct(double p_val, bool p_negate, bool 
     return jx;
 }
 
-void JoypadUWP::joypad_vibration_start(int p_device, float p_weak_magnitude, float p_strong_magnitude, float p_duration, uint64_t p_timestamp) {
-    ControllerDevice &joy = controllers[p_device];
+void JoypadUWP::joypad_vibration_start(
+    int p_device,
+    float p_weak_magnitude,
+    float p_strong_magnitude,
+    float p_duration,
+    uint64_t p_timestamp
+) {
+    ControllerDevice& joy = controllers[p_device];
     if (joy.connected) {
         GamepadVibration vibration;
         vibration.LeftMotor = p_strong_magnitude;
@@ -152,13 +213,15 @@ void JoypadUWP::joypad_vibration_start(int p_device, float p_weak_magnitude, flo
         ((Gamepad ^) joy.controller_reference)->Vibration = vibration;
 
         joy.ff_timestamp = p_timestamp;
-        joy.ff_end_timestamp = p_duration == 0 ? 0 : p_timestamp + (uint64_t)(p_duration * 1000000.0);
+        joy.ff_end_timestamp =
+            p_duration == 0 ? 0
+                            : p_timestamp + (uint64_t)(p_duration * 1000000.0);
         joy.vibrating = true;
     }
 }
 
 void JoypadUWP::joypad_vibration_stop(int p_device, uint64_t p_timestamp) {
-    ControllerDevice &joy = controllers[p_device];
+    ControllerDevice& joy = controllers[p_device];
     if (joy.connected) {
         GamepadVibration vibration;
         vibration.LeftMotor = 0.0;

@@ -38,8 +38,7 @@
 #include "editor/editor_node.h"
 #endif
 
-void OccluderShape::_bind_methods() {
-}
+void OccluderShape::_bind_methods() {}
 
 OccluderShape::OccluderShape(RID p_shape) {
     _shape = p_shape;
@@ -51,8 +50,13 @@ OccluderShape::~OccluderShape() {
     }
 }
 
-void OccluderShape::update_transform_to_visual_server(const Transform &p_global_xform) {
-    VisualServer::get_singleton()->occluder_set_transform(get_shape(), p_global_xform);
+void OccluderShape::update_transform_to_visual_server(
+    const Transform& p_global_xform
+) {
+    VisualServer::get_singleton()->occluder_set_transform(
+        get_shape(),
+        p_global_xform
+    );
 }
 
 void OccluderShape::update_active_to_visual_server(bool p_active) {
@@ -60,26 +64,58 @@ void OccluderShape::update_active_to_visual_server(bool p_active) {
 }
 
 void OccluderShape::notification_exit_world() {
-    VisualServer::get_singleton()->occluder_set_scenario(_shape, RID(), VisualServer::OCCLUDER_TYPE_UNDEFINED);
+    VisualServer::get_singleton()->occluder_set_scenario(
+        _shape,
+        RID(),
+        VisualServer::OCCLUDER_TYPE_UNDEFINED
+    );
 }
 
 //////////////////////////////////////////////
 
 void OccluderShapeSphere::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_spheres", "spheres"), &OccluderShapeSphere::set_spheres);
-    ClassDB::bind_method(D_METHOD("get_spheres"), &OccluderShapeSphere::get_spheres);
+    ClassDB::bind_method(
+        D_METHOD("set_spheres", "spheres"),
+        &OccluderShapeSphere::set_spheres
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_spheres"),
+        &OccluderShapeSphere::get_spheres
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sphere_position", "index", "position"), &OccluderShapeSphere::set_sphere_position);
-    ClassDB::bind_method(D_METHOD("set_sphere_radius", "index", "radius"), &OccluderShapeSphere::set_sphere_radius);
+    ClassDB::bind_method(
+        D_METHOD("set_sphere_position", "index", "position"),
+        &OccluderShapeSphere::set_sphere_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_sphere_radius", "index", "radius"),
+        &OccluderShapeSphere::set_sphere_radius
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "spheres", PROPERTY_HINT_NONE, itos(Variant::PLANE) + ":"), "set_spheres", "get_spheres");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::ARRAY,
+            "spheres",
+            PROPERTY_HINT_NONE,
+            itos(Variant::PLANE) + ":"
+        ),
+        "set_spheres",
+        "get_spheres"
+    );
 }
 
 void OccluderShapeSphere::update_shape_to_visual_server() {
-    VisualServer::get_singleton()->occluder_spheres_update(get_shape(), _spheres);
+    VisualServer::get_singleton()->occluder_spheres_update(
+        get_shape(),
+        _spheres
+    );
 }
 
-Transform OccluderShapeSphere::center_node(const Transform &p_global_xform, const Transform &p_parent_xform, real_t p_snap) {
+Transform OccluderShapeSphere::center_node(
+    const Transform& p_global_xform,
+    const Transform& p_parent_xform,
+    real_t p_snap
+) {
     if (!_spheres.size()) {
         return Transform();
     }
@@ -106,7 +142,7 @@ Transform OccluderShapeSphere::center_node(const Transform &p_global_xform, cons
 
     // new positions
     for (int n = 0; n < spheres_world_space.size(); n++) {
-        const Plane &sphere = spheres_world_space[n];
+        const Plane& sphere = spheres_world_space[n];
 
         // update aabb
         AABB sphere_bb(sphere.normal, Vector3());
@@ -142,7 +178,7 @@ Transform OccluderShapeSphere::center_node(const Transform &p_global_xform, cons
 
 #ifdef TOOLS_ENABLED
     if (Engine::get_singleton()->is_editor_hint()) {
-        UndoRedo *undo_redo = EditorNode::get_undo_redo();
+        UndoRedo* undo_redo = EditorNode::get_undo_redo();
 
         undo_redo->create_action(TTR("OccluderShapeSphere Set Spheres"));
         undo_redo->add_do_method(this, "set_spheres", spheres_world_space);
@@ -161,14 +197,19 @@ Transform OccluderShapeSphere::center_node(const Transform &p_global_xform, cons
 }
 
 void OccluderShapeSphere::notification_enter_world(RID p_scenario) {
-    VisualServer::get_singleton()->occluder_set_scenario(get_shape(), p_scenario, VisualServer::OCCLUDER_TYPE_SPHERE);
+    VisualServer::get_singleton()->occluder_set_scenario(
+        get_shape(),
+        p_scenario,
+        VisualServer::OCCLUDER_TYPE_SPHERE
+    );
 }
 
-void OccluderShapeSphere::set_spheres(const Vector<Plane> &p_spheres) {
+void OccluderShapeSphere::set_spheres(const Vector<Plane>& p_spheres) {
 #ifdef TOOLS_ENABLED
     // try and detect special circumstance of adding a new sphere in the editor
     bool adding_in_editor = false;
-    if ((p_spheres.size() == _spheres.size() + 1) && (p_spheres[p_spheres.size() - 1] == Plane())) {
+    if ((p_spheres.size() == _spheres.size() + 1)
+        && (p_spheres[p_spheres.size() - 1] == Plane())) {
         adding_in_editor = true;
     }
 #endif
@@ -193,7 +234,10 @@ void OccluderShapeSphere::set_spheres(const Vector<Plane> &p_spheres) {
     notify_change_to_owners();
 }
 
-void OccluderShapeSphere::set_sphere_position(int p_idx, const Vector3 &p_position) {
+void OccluderShapeSphere::set_sphere_position(
+    int p_idx,
+    const Vector3& p_position
+) {
     if ((p_idx >= 0) && (p_idx < _spheres.size())) {
         Plane p = _spheres[p_idx];
         p.normal = p_position;
@@ -212,5 +256,4 @@ void OccluderShapeSphere::set_sphere_radius(int p_idx, real_t p_radius) {
 }
 
 OccluderShapeSphere::OccluderShapeSphere() :
-        OccluderShape(VisualServer::get_singleton()->occluder_create()) {
-}
+    OccluderShape(VisualServer::get_singleton()->occluder_create()) {}

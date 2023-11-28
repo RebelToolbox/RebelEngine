@@ -41,13 +41,13 @@ class EditorNetworkProfiler : public VBoxContainer {
     GDCLASS(EditorNetworkProfiler, VBoxContainer)
 
 private:
-    Button *activate;
-    Button *clear_button;
-    Tree *counters_display;
-    LineEdit *incoming_bandwidth_text;
-    LineEdit *outgoing_bandwidth_text;
+    Button* activate;
+    Button* clear_button;
+    Tree* counters_display;
+    LineEdit* incoming_bandwidth_text;
+    LineEdit* outgoing_bandwidth_text;
 
-    Timer *frame_delay;
+    Timer* frame_delay;
 
     Map<ObjectID, MultiplayerAPI::ProfilingInfo> nodes_data;
 
@@ -68,4 +68,4 @@ public:
     EditorNetworkProfiler();
 };
 
-#endif //EDITORNETWORKPROFILER_H
+#endif // EDITORNETWORKPROFILER_H

@@ -41,8 +41,12 @@ enum SegmentIntersectionResult {
 };
 
 static SegmentIntersectionResult segment_intersection(
-        Vector2 a, Vector2 b, Vector2 c, Vector2 d,
-        Vector2 *out_intersection) {
+    Vector2 a,
+    Vector2 b,
+    Vector2 c,
+    Vector2 d,
+    Vector2* out_intersection
+) {
     // http://paulbourke.net/geometry/pointlineplane/ <-- Good stuff
     Vector2 cd = d - c;
     Vector2 ab = b - a;
@@ -52,8 +56,7 @@ static SegmentIntersectionResult segment_intersection(
         float ua = (cd.x * (a.y - c.y) - cd.y * (a.x - c.x)) / div;
         float ub = (ab.x * (a.y - c.y) - ab.y * (a.x - c.x)) / div;
         *out_intersection = a + ua * ab;
-        if (ua >= 0.f && ua <= 1.f &&
-                ub >= 0.f && ub <= 1.f) {
+        if (ua >= 0.f && ua <= 1.f && ub >= 0.f && ub <= 1.f) {
             return SEGMENT_INTERSECT;
         }
         return SEGMENT_NO_INTERSECT;
@@ -62,7 +65,7 @@ static SegmentIntersectionResult segment_intersection(
     return SEGMENT_PARALLEL;
 }
 
-static float calculate_total_distance(const Vector<Vector2> &points) {
+static float calculate_total_distance(const Vector<Vector2>& points) {
     float d = 0.f;
     for (int i = 1; i < points.size(); ++i) {
         d += points[i].distance_to(points[i - 1]);
@@ -70,15 +73,16 @@ static float calculate_total_distance(const Vector<Vector2> &points) {
     return d;
 }
 
-static inline Vector2 rotate90(const Vector2 &v) {
+static inline Vector2 rotate90(const Vector2& v) {
     // Note: the 2D referential is X-right, Y-down
     return Vector2(v.y, -v.x);
 }
 
-static inline Vector2 interpolate(const Rect2 &r, const Vector2 &v) {
+static inline Vector2 interpolate(const Rect2& r, const Vector2& v) {
     return Vector2(
-            Math::lerp(r.position.x, r.position.x + r.get_size().x, v.x),
-            Math::lerp(r.position.y, r.position.y + r.get_size().y, v.y));
+        Math::lerp(r.position.x, r.position.x + r.get_size().x, v.x),
+        Math::lerp(r.position.y, r.position.y + r.get_size().y, v.y)
+    );
 }
 
 //----------------------------------------------------------------------------
@@ -141,22 +145,24 @@ void LineBuilder::build() {
     float width_factor = 1.f;
     _interpolate_color = gradient != nullptr;
     bool retrieve_curve = curve != nullptr;
-    bool distance_required = _interpolate_color ||
-            retrieve_curve ||
-            texture_mode == Line2D::LINE_TEXTURE_TILE ||
-            texture_mode == Line2D::LINE_TEXTURE_STRETCH;
+    bool distance_required = _interpolate_color || retrieve_curve
+                          || texture_mode == Line2D::LINE_TEXTURE_TILE
+                          || texture_mode == Line2D::LINE_TEXTURE_STRETCH;
     if (distance_required) {
         total_distance = calculate_total_distance(points);
-        //Adjust totalDistance.
-        // The line's outer length will be a little higher due to begin and end caps
-        if (begin_cap_mode == Line2D::LINE_CAP_BOX || begin_cap_mode == Line2D::LINE_CAP_ROUND) {
+        // Adjust totalDistance.
+        //  The line's outer length will be a little higher due to begin and end
+        //  caps
+        if (begin_cap_mode == Line2D::LINE_CAP_BOX
+            || begin_cap_mode == Line2D::LINE_CAP_ROUND) {
             if (retrieve_curve) {
                 total_distance += width * curve->interpolate_baked(0.f) * 0.5f;
             } else {
                 total_distance += width * 0.5f;
             }
         }
-        if (end_cap_mode == Line2D::LINE_CAP_BOX || end_cap_mode == Line2D::LINE_CAP_ROUND) {
+        if (end_cap_mode == Line2D::LINE_CAP_BOX
+            || end_cap_mode == Line2D::LINE_CAP_ROUND) {
             if (retrieve_curve) {
                 total_distance += width * curve->interpolate_baked(1.f) * 0.5f;
             } else {
@@ -194,7 +200,13 @@ void LineBuilder::build() {
         } else if (texture_mode == Line2D::LINE_TEXTURE_STRETCH) {
             uvx0 = width * width_factor / total_distance;
         }
-        new_arc(pos0, pos_up0 - pos0, -Math_PI, color0, Rect2(0.f, 0.f, uvx0 * 2, 1.f));
+        new_arc(
+            pos0,
+            pos_up0 - pos0,
+            -Math_PI,
+            color0,
+            Rect2(0.f, 0.f, uvx0 * 2, 1.f)
+        );
         current_distance0 += hw * width_factor;
         current_distance1 = current_distance0;
     }
@@ -230,10 +242,13 @@ void LineBuilder::build() {
             current_distance1 += pos0.distance_to(pos1);
         }
         if (_interpolate_color) {
-            color1 = gradient->get_color_at_offset(current_distance1 / total_distance);
+            color1 = gradient->get_color_at_offset(
+                current_distance1 / total_distance
+            );
         }
         if (retrieve_curve) {
-            width_factor = curve->interpolate_baked(current_distance1 / total_distance);
+            width_factor =
+                curve->interpolate_baked(current_distance1 / total_distance);
         }
 
         Vector2 inner_normal0, inner_normal1;
@@ -251,20 +266,20 @@ void LineBuilder::build() {
          * 0                     /    1
          *                      /          /
          * --------------------x------    /
-         *                    /          /    (here shown with orientation == DOWN)
-         *                   /          /
-         *                  /          /
-         *                 /          /
-         *                     2     /
+         *                    /          /    (here shown with orientation ==
+         * DOWN) /          / /          / /          / 2     /
          *                          /
          */
 
         // Find inner intersection at the joint
         Vector2 corner_pos_in, corner_pos_out;
         SegmentIntersectionResult intersection_result = segment_intersection(
-                pos0 + inner_normal0, pos1 + inner_normal0,
-                pos1 + inner_normal1, pos2 + inner_normal1,
-                &corner_pos_in);
+            pos0 + inner_normal0,
+            pos1 + inner_normal0,
+            pos1 + inner_normal1,
+            pos2 + inner_normal1,
+            &corner_pos_in
+        );
 
         if (intersection_result == SEGMENT_INTERSECT) {
             // Inner parts of the segments intersect
@@ -288,9 +303,13 @@ void LineBuilder::build() {
 
         Vector2 pos_up1, pos_down1;
         if (intersection_result == SEGMENT_INTERSECT) {
-            // Fallback on bevel if sharp angle is too high (because it would produce very long miters)
+            // Fallback on bevel if sharp angle is too high (because it would
+            // produce very long miters)
             float width_factor_sq = width_factor * width_factor;
-            if (current_joint_mode == Line2D::LINE_JOINT_SHARP && corner_pos_out.distance_squared_to(pos1) / (hw_sq * width_factor_sq) > sharp_limit_sq) {
+            if (current_joint_mode == Line2D::LINE_JOINT_SHARP
+                && corner_pos_out.distance_squared_to(pos1)
+                           / (hw_sq * width_factor_sq)
+                       > sharp_limit_sq) {
                 current_joint_mode = Line2D::LINE_JOINT_BEVEL;
             }
             if (current_joint_mode == Line2D::LINE_JOINT_SHARP) {
@@ -311,7 +330,8 @@ void LineBuilder::build() {
         } else {
             // No intersection: fallback
             if (current_joint_mode == Line2D::LINE_JOINT_SHARP) {
-                // There is no fallback implementation for LINE_JOINT_SHARP so switch to the LINE_JOINT_BEVEL
+                // There is no fallback implementation for LINE_JOINT_SHARP so
+                // switch to the LINE_JOINT_BEVEL
                 current_joint_mode = Line2D::LINE_JOINT_BEVEL;
             }
             pos_up1 = corner_pos_up;
@@ -420,18 +440,31 @@ void LineBuilder::build() {
     // End cap (round)
     if (end_cap_mode == Line2D::LINE_CAP_ROUND) {
         // Note: color is not used in case we don't interpolate...
-        Color color = _interpolate_color ? gradient->get_color(gradient->get_points_count() - 1) : Color(0, 0, 0);
+        Color color = _interpolate_color
+                        ? gradient->get_color(gradient->get_points_count() - 1)
+                        : Color(0, 0, 0);
         float dist = 0;
         if (texture_mode == Line2D::LINE_TEXTURE_TILE) {
             dist = width_factor / tile_aspect;
         } else if (texture_mode == Line2D::LINE_TEXTURE_STRETCH) {
             dist = width * width_factor / total_distance;
         }
-        new_arc(pos1, pos_up1 - pos1, Math_PI, color, Rect2(uvx1 - 0.5f * dist, 0.f, dist, 1.f));
+        new_arc(
+            pos1,
+            pos_up1 - pos1,
+            Math_PI,
+            color,
+            Rect2(uvx1 - 0.5f * dist, 0.f, dist, 1.f)
+        );
     }
 }
 
-void LineBuilder::strip_begin(Vector2 up, Vector2 down, Color color, float uvx) {
+void LineBuilder::strip_begin(
+    Vector2 up,
+    Vector2 down,
+    Color color,
+    float uvx
+) {
     int vi = vertices.size();
 
     vertices.push_back(up);
@@ -451,7 +484,12 @@ void LineBuilder::strip_begin(Vector2 up, Vector2 down, Color color, float uvx) 
     _last_index[DOWN] = vi + 1;
 }
 
-void LineBuilder::strip_new_quad(Vector2 up, Vector2 down, Color color, float uvx) {
+void LineBuilder::strip_new_quad(
+    Vector2 up,
+    Vector2 down,
+    Color color,
+    float uvx
+) {
     int vi = vertices.size();
 
     vertices.push_back(vertices[_last_index[UP]]);
@@ -484,7 +522,12 @@ void LineBuilder::strip_new_quad(Vector2 up, Vector2 down, Color color, float uv
     _last_index[DOWN] = vi + 3;
 }
 
-void LineBuilder::strip_add_quad(Vector2 up, Vector2 down, Color color, float uvx) {
+void LineBuilder::strip_add_quad(
+    Vector2 up,
+    Vector2 down,
+    Color color,
+    float uvx
+) {
     int vi = vertices.size();
 
     vertices.push_back(up);
@@ -535,7 +578,11 @@ void LineBuilder::strip_add_tri(Vector2 up, Orientation orientation) {
     _last_index[opposite_orientation] = vi;
 }
 
-void LineBuilder::strip_add_arc(Vector2 center, float angle_delta, Orientation orientation) {
+void LineBuilder::strip_add_arc(
+    Vector2 center,
+    float angle_delta,
+    Orientation orientation
+) {
     // Take the two last vertices and extrude an arc made of triangles
     // that all share one of the initial vertices
 
@@ -560,11 +607,18 @@ void LineBuilder::strip_add_arc(Vector2 center, float angle_delta, Orientation o
     }
 
     // Last arc vertice
-    rpos = center + Vector2(Math::cos(end_angle), Math::sin(end_angle)) * radius;
+    rpos =
+        center + Vector2(Math::cos(end_angle), Math::sin(end_angle)) * radius;
     strip_add_tri(rpos, orientation);
 }
 
-void LineBuilder::new_arc(Vector2 center, Vector2 vbegin, float angle_delta, Color color, Rect2 uv_rect) {
+void LineBuilder::new_arc(
+    Vector2 center,
+    Vector2 vbegin,
+    float angle_delta,
+    Color color,
+    Rect2 uv_rect
+) {
     // Make a standalone arc that doesn't use existing vertices,
     // with undistorted UVs from within a square section
 
@@ -603,7 +657,8 @@ void LineBuilder::new_arc(Vector2 center, Vector2 vbegin, float angle_delta, Col
         }
         if (texture_mode != Line2D::LINE_TEXTURE_NONE) {
             Vector2 tsc = Vector2(Math::cos(tt), Math::sin(tt));
-            uvs.push_back(interpolate(uv_rect, 0.5f * (tsc + Vector2(1.f, 1.f))));
+            uvs.push_back(interpolate(uv_rect, 0.5f * (tsc + Vector2(1.f, 1.f)))
+            );
             tt += angle_step;
         }
     }

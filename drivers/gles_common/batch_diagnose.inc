@@ -4,18 +4,26 @@ void _debug_write_garbage() {
 #ifdef RASTERIZER_EXTRA_CHECKS
     int num_verts = MIN(bdata.vertices.max_size(), 32);
     for (int n = 0; n < num_verts; n++) {
-        bdata.vertices[n].pos.set(Math::random(-200.0f, 200.0f), Math::random(-200.0f, 200.0f));
-        bdata.vertices[n].uv.set(Math::random(0.0f, 1.0f), Math::random(0.0f, 1.0f));
+        bdata.vertices[n].pos.set(
+            Math::random(-200.0f, 200.0f),
+            Math::random(-200.0f, 200.0f)
+        );
+        bdata.vertices[n].uv.set(
+            Math::random(0.0f, 1.0f),
+            Math::random(0.0f, 1.0f)
+        );
     }
 
     int num_colors = MIN(bdata.vertex_colors.max_size(), 32);
     for (int n = 0; n < num_colors; n++) {
-        bdata.vertex_colors[n].set(Math::randf(), Math::randf(), Math::randf(), 1.0f);
+        bdata.vertex_colors[n]
+            .set(Math::randf(), Math::randf(), Math::randf(), 1.0f);
     }
 
     int num_modulates = MIN(bdata.vertex_modulates.max_size(), 32);
     for (int n = 0; n < num_modulates; n++) {
-        bdata.vertex_modulates[n].set(Math::randf(), Math::randf(), Math::randf(), 1.0f);
+        bdata.vertex_modulates[n]
+            .set(Math::randf(), Math::randf(), Math::randf(), 1.0f);
     }
 
     int num_light_angles = MIN(bdata.light_angles.max_size(), 32);
@@ -25,14 +33,23 @@ void _debug_write_garbage() {
 
     int num_transforms = MIN(bdata.vertex_transforms.max_size(), 32);
     for (int n = 0; n < num_transforms; n++) {
-        bdata.vertex_transforms[n].translate.set(Math::random(-200.0f, 200.0f), Math::random(-200.0f, 200.0f));
-        bdata.vertex_transforms[n].basis[0].set(Math::random(-2.0f, 2.0f), Math::random(-2.0f, 2.0f));
-        bdata.vertex_transforms[n].basis[1].set(Math::random(-2.0f, 2.0f), Math::random(-2.0f, 2.0f));
+        bdata.vertex_transforms[n].translate.set(
+            Math::random(-200.0f, 200.0f),
+            Math::random(-200.0f, 200.0f)
+        );
+        bdata.vertex_transforms[n].basis[0].set(
+            Math::random(-2.0f, 2.0f),
+            Math::random(-2.0f, 2.0f)
+        );
+        bdata.vertex_transforms[n].basis[1].set(
+            Math::random(-2.0f, 2.0f),
+            Math::random(-2.0f, 2.0f)
+        );
     }
 
     int num_unit_verts = MIN(bdata.unit_vertices.max_size(), 32);
     for (int n = 0; n < num_unit_verts; n++) {
-        uint8_t *data = bdata.unit_vertices.get_unit(n);
+        uint8_t* data = bdata.unit_vertices.get_unit(n);
         for (int b = 0; b > bdata.unit_vertices.get_unit_size_bytes(); b++) {
             data[b] = Math::random(0, 255);
         }
@@ -41,7 +58,7 @@ void _debug_write_garbage() {
 #endif
 }
 
-String _diagnose_make_item_joined_string(const BItemJoined &p_bij) const {
+String _diagnose_make_item_joined_string(const BItemJoined& p_bij) const {
     String sz;
     if (p_bij.use_attrib_transform()) {
         sz = "attrib_xform";
@@ -49,7 +66,8 @@ String _diagnose_make_item_joined_string(const BItemJoined &p_bij) const {
     sz += _diagnose_batch_flags_to_string(p_bij.flags);
 
     String sz_long;
-    sz_long = "\tjoined_item " + itos(p_bij.num_item_refs) + " refs, " + sz + "\n";
+    sz_long =
+        "\tjoined_item " + itos(p_bij.num_item_refs) + " refs, " + sz + "\n";
     if (p_bij.z_index != 0) {
         sz_long += "\t\t(z " + itos(p_bij.z_index) + ")\n";
     }
@@ -87,7 +105,8 @@ String _diagnose_batch_flags_to_string(uint32_t p_flags) const {
     return sz;
 }
 
-String get_command_type_string(const RasterizerCanvas::Item::Command &p_command) const {
+String get_command_type_string(const RasterizerCanvas::Item::Command& p_command
+) const {
     String sz = "";
 
     switch (p_command.type) {
@@ -127,8 +146,11 @@ String get_command_type_string(const RasterizerCanvas::Item::Command &p_command)
             sz = "t";
 
             // add a bit more info in debug build
-            const RasterizerCanvas::Item::CommandTransform *transform = static_cast<const RasterizerCanvas::Item::CommandTransform *>(&p_command);
-            const Transform2D &mat = transform->xform;
+            const RasterizerCanvas::Item::CommandTransform* transform =
+                static_cast<const RasterizerCanvas::Item::CommandTransform*>(
+                    &p_command
+                );
+            const Transform2D& mat = transform->xform;
 
             sz += " ";
             sz += String(Variant(mat.elements[2]));
@@ -144,7 +166,7 @@ String get_command_type_string(const RasterizerCanvas::Item::Command &p_command)
     return sz;
 }
 
-void diagnose_batches(RasterizerCanvas::Item::Command *const *p_commands) {
+void diagnose_batches(RasterizerCanvas::Item::Command* const* p_commands) {
     int num_batches = bdata.batches.size();
 
     BatchColor curr_color;
@@ -152,7 +174,7 @@ void diagnose_batches(RasterizerCanvas::Item::Command *const *p_commands) {
     bool first_color_change = true;
 
     for (int batch_num = 0; batch_num < num_batches; batch_num++) {
-        const Batch &batch = bdata.batches[batch_num];
+        const Batch& batch = bdata.batches[batch_num];
         bdata.frame_string += "\t\t\tbatch ";
 
         switch (batch.type) {
@@ -202,8 +224,10 @@ void diagnose_batches(RasterizerCanvas::Item::Command *const *p_commands) {
                 bdata.frame_string += itos(batch.first_command) + "-";
                 bdata.frame_string += itos(batch.num_commands);
 
-                int tex_id = (int)bdata.batch_textures[batch.batch_texture_id].RID_texture.get_id();
-                bdata.frame_string += " [" + itos(batch.batch_texture_id) + " - " + itos(tex_id) + "]";
+                int tex_id = (int)bdata.batch_textures[batch.batch_texture_id]
+                                 .RID_texture.get_id();
+                bdata.frame_string += " [" + itos(batch.batch_texture_id)
+                                    + " - " + itos(tex_id) + "]";
 
                 bdata.frame_string += " " + batch.color.to_string();
 
@@ -227,7 +251,8 @@ void diagnose_batches(RasterizerCanvas::Item::Command *const *p_commands) {
 
                 int num_show = MIN(batch.num_commands, 16);
                 for (int n = 0; n < num_show; n++) {
-                    const RasterizerCanvas::Item::Command &comm = *p_commands[batch.first_command + n];
+                    const RasterizerCanvas::Item::Command& comm =
+                        *p_commands[batch.first_command + n];
                     bdata.frame_string += get_command_type_string(comm) + " ";
                 }
 

@@ -45,18 +45,24 @@ int AudioRBResampler::get_channel_count() const {
 // Note that AudioStreamPlaybackResampled::mix has better algorithm,
 // but it wasn't obvious to integrate that with VideoPlayer
 template <int C>
-uint32_t AudioRBResampler::_resample(AudioFrame *p_dest, int p_todo, int32_t p_increment) {
+uint32_t AudioRBResampler::_resample(
+    AudioFrame* p_dest,
+    int p_todo,
+    int32_t p_increment
+) {
     uint32_t read = offset & MIX_FRAC_MASK;
 
     for (int i = 0; i < p_todo; i++) {
-        offset = (offset + p_increment) & (((1 << (rb_bits + MIX_FRAC_BITS)) - 1));
+        offset =
+            (offset + p_increment) & (((1 << (rb_bits + MIX_FRAC_BITS)) - 1));
         read += p_increment;
         uint32_t pos = offset >> MIX_FRAC_BITS;
         float frac = float(offset & MIX_FRAC_MASK) / float(MIX_FRAC_LEN);
         ERR_FAIL_COND_V(pos >= rb_len, 0);
         uint32_t pos_next = (pos + 1) & rb_mask;
 
-        // since this is a template with a known compile time value (C), conditionals go away when compiling.
+        // since this is a template with a known compile time value (C),
+        // conditionals go away when compiling.
         if (C == 1) {
             float v0 = rb[pos];
             float v0n = rb[pos_next];
@@ -98,10 +104,10 @@ uint32_t AudioRBResampler::_resample(AudioFrame *p_dest, int p_todo, int32_t p_i
         }
     }
 
-    return read >> MIX_FRAC_BITS; //rb_read_pos = offset >> MIX_FRAC_BITS;
+    return read >> MIX_FRAC_BITS; // rb_read_pos = offset >> MIX_FRAC_BITS;
 }
 
-bool AudioRBResampler::mix(AudioFrame *p_dest, int p_frames) {
+bool AudioRBResampler::mix(AudioFrame* p_dest, int p_frames) {
     if (!rb) {
         return false;
     }
@@ -133,10 +139,12 @@ bool AudioRBResampler::mix(AudioFrame *p_dest, int p_frames) {
 
         rb_read_pos.set((rb_read_pos.get() + src_read) & rb_mask);
 
-        // Create fadeout effect for the end of stream (note that it can be because of slow writer)
+        // Create fadeout effect for the end of stream (note that it can be
+        // because of slow writer)
         if (p_frames - target_todo > 0) {
             for (int i = 0; i < target_todo; i++) {
-                p_dest[i] = p_dest[i] * float(target_todo - i) / float(target_todo);
+                p_dest[i] =
+                    p_dest[i] * float(target_todo - i) / float(target_todo);
             }
         }
 
@@ -158,14 +166,28 @@ int AudioRBResampler::get_num_of_ready_frames() {
     return (int64_t(read_space) << MIX_FRAC_BITS) / increment;
 }
 
-Error AudioRBResampler::setup(int p_channels, int p_src_mix_rate, int p_target_mix_rate, int p_buffer_msec, int p_minbuff_needed) {
-    ERR_FAIL_COND_V(p_channels != 1 && p_channels != 2 && p_channels != 4 && p_channels != 6, ERR_INVALID_PARAMETER);
+Error AudioRBResampler::setup(
+    int p_channels,
+    int p_src_mix_rate,
+    int p_target_mix_rate,
+    int p_buffer_msec,
+    int p_minbuff_needed
+) {
+    ERR_FAIL_COND_V(
+        p_channels != 1 && p_channels != 2 && p_channels != 4
+            && p_channels != 6,
+        ERR_INVALID_PARAMETER
+    );
 
-    int desired_rb_bits = nearest_shift(MAX((p_buffer_msec / 1000.0) * p_src_mix_rate, p_minbuff_needed));
+    int desired_rb_bits = nearest_shift(
+        MAX((p_buffer_msec / 1000.0) * p_src_mix_rate, p_minbuff_needed)
+    );
 
     bool recreate = !rb;
 
-    if (rb && (uint32_t(desired_rb_bits) != rb_bits || channels != uint32_t(p_channels))) {
+    if (rb
+        && (uint32_t(desired_rb_bits) != rb_bits
+            || channels != uint32_t(p_channels))) {
         memdelete_arr(rb);
         memdelete_arr(read_buf);
         recreate = true;
@@ -176,8 +198,8 @@ Error AudioRBResampler::setup(int p_channels, int p_src_mix_rate, int p_target_m
         rb_bits = desired_rb_bits;
         rb_len = (1 << rb_bits);
         rb_mask = rb_len - 1;
-        rb = memnew_arr(float, rb_len *p_channels);
-        read_buf = memnew_arr(float, rb_len *p_channels);
+        rb = memnew_arr(float, rb_len* p_channels);
+        read_buf = memnew_arr(float, rb_len* p_channels);
     }
 
     src_mix_rate = p_src_mix_rate;
@@ -186,7 +208,7 @@ Error AudioRBResampler::setup(int p_channels, int p_src_mix_rate, int p_target_m
     rb_read_pos.set(0);
     rb_write_pos.set(0);
 
-    //avoid maybe strange noises upon load
+    // avoid maybe strange noises upon load
     for (unsigned int i = 0; i < (rb_len * channels); i++) {
         rb[i] = 0;
         read_buf[i] = 0;
@@ -200,7 +222,7 @@ void AudioRBResampler::clear() {
         return;
     }
 
-    //should be stopped at this point but just in case
+    // should be stopped at this point but just in case
     memdelete_arr(rb);
     memdelete_arr(read_buf);
     rb = nullptr;

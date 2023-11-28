@@ -51,18 +51,26 @@ class AudioEffectDelayInstance : public AudioEffectInstance {
     unsigned int feedback_buffer_pos;
 
     AudioFrame h;
-    void _process_chunk(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
+    void _process_chunk(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
 
 public:
-    virtual void process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
+    virtual void process(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
 };
 
 class AudioEffectDelay : public AudioEffect {
     GDCLASS(AudioEffectDelay, AudioEffect);
 
     friend class AudioEffectDelayInstance;
-    enum {
 
+    enum {
         MAX_DELAY_MS = 3000,
         MAX_TAPS = 2
     };

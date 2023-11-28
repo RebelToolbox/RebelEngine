@@ -42,9 +42,9 @@ class Container : public Control {
 
 protected:
     void queue_sort();
-    virtual void add_child_notify(Node *p_child);
-    virtual void move_child_notify(Node *p_child);
-    virtual void remove_child_notify(Node *p_child);
+    virtual void add_child_notify(Node* p_child);
+    virtual void move_child_notify(Node* p_child);
+    virtual void remove_child_notify(Node* p_child);
 
     void _notification(int p_what);
     static void _bind_methods();
@@ -54,7 +54,7 @@ public:
         NOTIFICATION_SORT_CHILDREN = 50
     };
 
-    void fit_child_in_rect(Control *p_child, const Rect2 &p_rect);
+    void fit_child_in_rect(Control* p_child, const Rect2& p_rect);
 
     virtual String get_configuration_warning() const;
 

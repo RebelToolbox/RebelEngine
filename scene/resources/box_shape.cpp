@@ -52,7 +52,7 @@ void BoxShape::_update_shape() {
     Shape::_update_shape();
 }
 
-void BoxShape::set_extents(const Vector3 &p_extents) {
+void BoxShape::set_extents(const Vector3& p_extents) {
     extents = p_extents;
     _update_shape();
     notify_change_to_owners();
@@ -64,13 +64,21 @@ Vector3 BoxShape::get_extents() const {
 }
 
 void BoxShape::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_extents", "extents"), &BoxShape::set_extents);
+    ClassDB::bind_method(
+        D_METHOD("set_extents", "extents"),
+        &BoxShape::set_extents
+    );
     ClassDB::bind_method(D_METHOD("get_extents"), &BoxShape::get_extents);
 
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "extents"), "set_extents", "get_extents");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::VECTOR3, "extents"),
+        "set_extents",
+        "get_extents"
+    );
 }
 
 BoxShape::BoxShape() :
-        Shape(PhysicsServer::get_singleton()->shape_create(PhysicsServer::SHAPE_BOX)) {
+    Shape(PhysicsServer::get_singleton()->shape_create(PhysicsServer::SHAPE_BOX)
+    ) {
     set_extents(Vector3(1, 1, 1));
 }

@@ -48,15 +48,23 @@ void MeshEditor::_gui_input(Ref<InputEvent> p_event) {
 
 void MeshEditor::_notification(int p_what) {
     if (p_what == NOTIFICATION_READY) {
-        //get_scene()->connect("node_removed",this,"_node_removed");
+        // get_scene()->connect("node_removed",this,"_node_removed");
 
         if (first_enter) {
-            //it's in propertyeditor so. could be moved around
+            // it's in propertyeditor so. could be moved around
 
-            light_1_switch->set_normal_texture(get_icon("MaterialPreviewLight1", "EditorIcons"));
-            light_1_switch->set_pressed_texture(get_icon("MaterialPreviewLight1Off", "EditorIcons"));
-            light_2_switch->set_normal_texture(get_icon("MaterialPreviewLight2", "EditorIcons"));
-            light_2_switch->set_pressed_texture(get_icon("MaterialPreviewLight2Off", "EditorIcons"));
+            light_1_switch->set_normal_texture(
+                get_icon("MaterialPreviewLight1", "EditorIcons")
+            );
+            light_1_switch->set_pressed_texture(
+                get_icon("MaterialPreviewLight1Off", "EditorIcons")
+            );
+            light_2_switch->set_normal_texture(
+                get_icon("MaterialPreviewLight2", "EditorIcons")
+            );
+            light_2_switch->set_pressed_texture(
+                get_icon("MaterialPreviewLight2Off", "EditorIcons")
+            );
             first_enter = false;
         }
     }
@@ -86,12 +94,12 @@ void MeshEditor::edit(Ref<Mesh> p_mesh) {
         Transform xform;
         xform.basis.scale(Vector3(m, m, m));
         xform.origin = -xform.basis.xform(ofs); //-ofs*m;
-        //xform.origin.z -= aabb.get_longest_axis_size() * 2;
+        // xform.origin.z -= aabb.get_longest_axis_size() * 2;
         mesh_instance->set_transform(xform);
     }
 }
 
-void MeshEditor::_button_pressed(Node *p_button) {
+void MeshEditor::_button_pressed(Node* p_button) {
     if (p_button == light_1_switch) {
         light1->set_visible(!light_1_switch->is_pressed());
     }
@@ -103,14 +111,17 @@ void MeshEditor::_button_pressed(Node *p_button) {
 
 void MeshEditor::_bind_methods() {
     ClassDB::bind_method(D_METHOD("_gui_input"), &MeshEditor::_gui_input);
-    ClassDB::bind_method(D_METHOD("_button_pressed"), &MeshEditor::_button_pressed);
+    ClassDB::bind_method(
+        D_METHOD("_button_pressed"),
+        &MeshEditor::_button_pressed
+    );
 }
 
 MeshEditor::MeshEditor() {
     viewport = memnew(Viewport);
     Ref<World> world;
     world.instance();
-    viewport->set_world(world); //use own world
+    viewport->set_world(world); // use own world
     add_child(viewport);
     viewport->set_disable_input(true);
     viewport->set_msaa(Viewport::MSAA_2X);
@@ -121,11 +132,15 @@ MeshEditor::MeshEditor() {
     viewport->add_child(camera);
 
     light1 = memnew(DirectionalLight);
-    light1->set_transform(Transform().looking_at(Vector3(-1, -1, -1), Vector3(0, 1, 0)));
+    light1->set_transform(
+        Transform().looking_at(Vector3(-1, -1, -1), Vector3(0, 1, 0))
+    );
     viewport->add_child(light1);
 
     light2 = memnew(DirectionalLight);
-    light2->set_transform(Transform().looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1)));
+    light2->set_transform(
+        Transform().looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1))
+    );
     light2->set_color(Color(0.7, 0.7, 0.7));
     viewport->add_child(light2);
 
@@ -136,24 +151,30 @@ MeshEditor::MeshEditor() {
 
     set_custom_minimum_size(Size2(1, 150) * EDSCALE);
 
-    HBoxContainer *hb = memnew(HBoxContainer);
+    HBoxContainer* hb = memnew(HBoxContainer);
     add_child(hb);
-    hb->set_anchors_and_margins_preset(Control::PRESET_WIDE, Control::PRESET_MODE_MINSIZE, 2);
+    hb->set_anchors_and_margins_preset(
+        Control::PRESET_WIDE,
+        Control::PRESET_MODE_MINSIZE,
+        2
+    );
 
     hb->add_spacer();
 
-    VBoxContainer *vb_light = memnew(VBoxContainer);
+    VBoxContainer* vb_light = memnew(VBoxContainer);
     hb->add_child(vb_light);
 
     light_1_switch = memnew(TextureButton);
     light_1_switch->set_toggle_mode(true);
     vb_light->add_child(light_1_switch);
-    light_1_switch->connect("pressed", this, "_button_pressed", varray(light_1_switch));
+    light_1_switch
+        ->connect("pressed", this, "_button_pressed", varray(light_1_switch));
 
     light_2_switch = memnew(TextureButton);
     light_2_switch->set_toggle_mode(true);
     vb_light->add_child(light_2_switch);
-    light_2_switch->connect("pressed", this, "_button_pressed", varray(light_2_switch));
+    light_2_switch
+        ->connect("pressed", this, "_button_pressed", varray(light_2_switch));
 
     first_enter = true;
 
@@ -163,23 +184,23 @@ MeshEditor::MeshEditor() {
 
 ///////////////////////
 
-bool EditorInspectorPluginMesh::can_handle(Object *p_object) {
+bool EditorInspectorPluginMesh::can_handle(Object* p_object) {
     return Object::cast_to<Mesh>(p_object) != nullptr;
 }
 
-void EditorInspectorPluginMesh::parse_begin(Object *p_object) {
-    Mesh *mesh = Object::cast_to<Mesh>(p_object);
+void EditorInspectorPluginMesh::parse_begin(Object* p_object) {
+    Mesh* mesh = Object::cast_to<Mesh>(p_object);
     if (!mesh) {
         return;
     }
     Ref<Mesh> m(mesh);
 
-    MeshEditor *editor = memnew(MeshEditor);
+    MeshEditor* editor = memnew(MeshEditor);
     editor->edit(m);
     add_custom_control(editor);
 }
 
-MeshEditorPlugin::MeshEditorPlugin(EditorNode *p_node) {
+MeshEditorPlugin::MeshEditorPlugin(EditorNode* p_node) {
     Ref<EditorInspectorPluginMesh> plugin;
     plugin.instance();
     add_inspector_plugin(plugin);

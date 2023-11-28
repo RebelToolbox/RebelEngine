@@ -39,7 +39,7 @@ struct GetSimpleTypeT {
 };
 
 template <class T>
-struct GetSimpleTypeT<T &> {
+struct GetSimpleTypeT<T&> {
     typedef T type_t;
 };
 

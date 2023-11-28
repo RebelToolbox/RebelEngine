@@ -46,24 +46,30 @@ static CharString get_default_log_level() {
 #endif
 }
 
-GDMonoLog *GDMonoLog::singleton = NULL;
+GDMonoLog* GDMonoLog::singleton = NULL;
 
 #ifdef GD_MONO_LOG_ENABLED
 
-static int get_log_level_id(const char *p_log_level) {
-    const char *valid_log_levels[] = { "error", "critical", "warning", "message", "info", "debug", NULL };
+static int get_log_level_id(const char* p_log_level) {
+    const char* valid_log_levels[] =
+        {"error", "critical", "warning", "message", "info", "debug", NULL};
 
     int i = 0;
     while (valid_log_levels[i]) {
-        if (!strcmp(valid_log_levels[i], p_log_level))
+        if (!strcmp(valid_log_levels[i], p_log_level)) {
             return i;
+        }
         i++;
     }
 
     return -1;
 }
 
-static String make_text(const char *log_domain, const char *log_level, const char *message) {
+static String make_text(
+    const char* log_domain,
+    const char* log_level,
+    const char* message
+) {
     String text(message);
     text += " (in domain ";
     text += log_domain;
@@ -75,10 +81,12 @@ static String make_text(const char *log_domain, const char *log_level, const cha
     return text;
 }
 
-void GDMonoLog::mono_log_callback(const char *log_domain, const char *log_level, const char *message, mono_bool fatal, void *) {
-    FileAccess *f = GDMonoLog::get_singleton()->log_file;
+void GDMonoLog::
+    mono_log_callback(const char* log_domain, const char* log_level, const char* message, mono_bool fatal, void*) {
+    FileAccess* f = GDMonoLog::get_singleton()->log_file;
 
-    if (GDMonoLog::get_singleton()->log_level_id >= get_log_level_id(log_level)) {
+    if (GDMonoLog::get_singleton()->log_level_id
+        >= get_log_level_id(log_level)) {
         String text = make_text(log_domain, log_level, message);
         text += "\n";
 
@@ -88,7 +96,10 @@ void GDMonoLog::mono_log_callback(const char *log_domain, const char *log_level,
 
     if (fatal) {
         String text = make_text(log_domain, log_level, message);
-        ERR_PRINT("Mono: FATAL ERROR '" + text + "', ABORTING! Logfile: '" + GDMonoLog::get_singleton()->log_file_path + "'.");
+        ERR_PRINT(
+            "Mono: FATAL ERROR '" + text + "', ABORTING! Logfile: '"
+            + GDMonoLog::get_singleton()->log_file_path + "'."
+        );
         // Make sure to flush before aborting
         f->flush();
         f->close();
@@ -98,36 +109,48 @@ void GDMonoLog::mono_log_callback(const char *log_domain, const char *log_level,
     }
 }
 
-bool GDMonoLog::_try_create_logs_dir(const String &p_logs_dir) {
+bool GDMonoLog::_try_create_logs_dir(const String& p_logs_dir) {
     if (!DirAccess::exists(p_logs_dir)) {
-        DirAccessRef diraccess = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+        DirAccessRef diraccess =
+            DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
         ERR_FAIL_COND_V(!diraccess, false);
         Error logs_mkdir_err = diraccess->make_dir_recursive(p_logs_dir);
-        ERR_FAIL_COND_V_MSG(logs_mkdir_err != OK, false, "Failed to create mono logs directory.");
+        ERR_FAIL_COND_V_MSG(
+            logs_mkdir_err != OK,
+            false,
+            "Failed to create mono logs directory."
+        );
     }
 
     return true;
 }
 
-void GDMonoLog::_delete_old_log_files(const String &p_logs_dir) {
+void GDMonoLog::_delete_old_log_files(const String& p_logs_dir) {
     static const uint64_t MAX_SECS = 5 * 86400; // 5 days
 
     DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     ERR_FAIL_COND(!da);
 
     Error err = da->change_dir(p_logs_dir);
-    ERR_FAIL_COND_MSG(err != OK, "Cannot change directory to '" + p_logs_dir + "'.");
+    ERR_FAIL_COND_MSG(
+        err != OK,
+        "Cannot change directory to '" + p_logs_dir + "'."
+    );
 
     ERR_FAIL_COND(da->list_dir_begin() != OK);
 
     String current;
     while ((current = da->get_next()).length()) {
-        if (da->current_is_dir())
+        if (da->current_is_dir()) {
             continue;
-        if (!current.ends_with(".txt"))
+        }
+        if (!current.ends_with(".txt")) {
             continue;
+        }
 
-        uint64_t modified_time = FileAccess::get_modified_time(da->get_current_dir().plus_file(current));
+        uint64_t modified_time = FileAccess::get_modified_time(
+            da->get_current_dir().plus_file(current)
+        );
 
         if (OS::get_singleton()->get_unix_time() - modified_time > MAX_SECS) {
             da->remove(current);
@@ -138,10 +161,16 @@ void GDMonoLog::_delete_old_log_files(const String &p_logs_dir) {
 }
 
 void GDMonoLog::initialize() {
-    CharString log_level = OS::get_singleton()->get_environment("GODOT_MONO_LOG_LEVEL").utf8();
+    CharString log_level =
+        OS::get_singleton()->get_environment("GODOT_MONO_LOG_LEVEL").utf8();
 
-    if (log_level.length() != 0 && get_log_level_id(log_level.get_data()) == -1) {
-        ERR_PRINT(String() + "Mono: Ignoring invalid log level (GODOT_MONO_LOG_LEVEL): '" + log_level.get_data() + "'.");
+    if (log_level.length() != 0
+        && get_log_level_id(log_level.get_data()) == -1) {
+        ERR_PRINT(
+            String()
+            + "Mono: Ignoring invalid log level (GODOT_MONO_LOG_LEVEL): '"
+            + log_level.get_data() + "'."
+        );
         log_level = CharString();
     }
 
@@ -157,11 +186,18 @@ void GDMonoLog::initialize() {
         OS::Date date_now = OS::get_singleton()->get_date();
         OS::Time time_now = OS::get_singleton()->get_time();
 
-        String log_file_name = str_format("%04d-%02d-%02d_%02d.%02d.%02d",
-                date_now.year, date_now.month, date_now.day,
-                time_now.hour, time_now.min, time_now.sec);
+        String log_file_name = str_format(
+            "%04d-%02d-%02d_%02d.%02d.%02d",
+            date_now.year,
+            date_now.month,
+            date_now.day,
+            time_now.hour,
+            time_now.min,
+            time_now.sec
+        );
 
-        log_file_name += str_format("_%d", OS::get_singleton()->get_process_id());
+        log_file_name +=
+            str_format("_%d", OS::get_singleton()->get_process_id());
 
         log_file_name += ".log";
 
@@ -177,10 +213,15 @@ void GDMonoLog::initialize() {
     log_level_id = get_log_level_id(log_level.get_data());
 
     if (log_file) {
-        OS::get_singleton()->print("Mono: Log file is: '%s'\n", log_file_path.utf8().get_data());
+        OS::get_singleton()->print(
+            "Mono: Log file is: '%s'\n",
+            log_file_path.utf8().get_data()
+        );
         mono_trace_set_log_handler(mono_log_callback, this);
     } else {
-        OS::get_singleton()->printerr("Mono: No log file, using default log handler\n");
+        OS::get_singleton()->printerr(
+            "Mono: No log file, using default log handler\n"
+        );
     }
 }
 

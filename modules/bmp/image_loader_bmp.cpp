@@ -32,11 +32,13 @@
 
 #include "core/io/file_access_memory.h"
 
-Error ImageLoaderBMP::convert_to_image(Ref<Image> p_image,
-        const uint8_t *p_buffer,
-        const uint8_t *p_color_buffer,
-        const uint32_t color_table_size,
-        const bmp_header_s &p_header) {
+Error ImageLoaderBMP::convert_to_image(
+    Ref<Image> p_image,
+    const uint8_t* p_buffer,
+    const uint8_t* p_color_buffer,
+    const uint32_t color_table_size,
+    const bmp_header_s& p_header
+) {
     Error err = OK;
 
     if (p_buffer == nullptr) {
@@ -53,20 +55,51 @@ Error ImageLoaderBMP::convert_to_image(Ref<Image> p_image,
 
         if (bits_per_pixel == 1) {
             // Requires bit unpacking...
-            ERR_FAIL_COND_V_MSG(width % 8 != 0, ERR_UNAVAILABLE,
-                    vformat("1-bpp BMP images must have a width that is a multiple of 8, but the imported BMP is %d pixels wide.", int(width)));
-            ERR_FAIL_COND_V_MSG(height % 8 != 0, ERR_UNAVAILABLE,
-                    vformat("1-bpp BMP images must have a height that is a multiple of 8, but the imported BMP is %d pixels tall.", int(height)));
+            ERR_FAIL_COND_V_MSG(
+                width % 8 != 0,
+                ERR_UNAVAILABLE,
+                vformat(
+                    "1-bpp BMP images must have a width that is a multiple of "
+                    "8, but the imported BMP is %d pixels wide.",
+                    int(width)
+                )
+            );
+            ERR_FAIL_COND_V_MSG(
+                height % 8 != 0,
+                ERR_UNAVAILABLE,
+                vformat(
+                    "1-bpp BMP images must have a height that is a multiple of "
+                    "8, but the imported BMP is %d pixels tall.",
+                    int(height)
+                )
+            );
 
         } else if (bits_per_pixel == 4) {
             // Requires bit unpacking...
-            ERR_FAIL_COND_V_MSG(width % 2 != 0, ERR_UNAVAILABLE,
-                    vformat("4-bpp BMP images must have a width that is a multiple of 2, but the imported BMP is %d pixels wide.", int(width)));
-            ERR_FAIL_COND_V_MSG(height % 2 != 0, ERR_UNAVAILABLE,
-                    vformat("4-bpp BMP images must have a height that is a multiple of 2, but the imported BMP is %d pixels tall.", int(height)));
+            ERR_FAIL_COND_V_MSG(
+                width % 2 != 0,
+                ERR_UNAVAILABLE,
+                vformat(
+                    "4-bpp BMP images must have a width that is a multiple of "
+                    "2, but the imported BMP is %d pixels wide.",
+                    int(width)
+                )
+            );
+            ERR_FAIL_COND_V_MSG(
+                height % 2 != 0,
+                ERR_UNAVAILABLE,
+                vformat(
+                    "4-bpp BMP images must have a height that is a multiple of "
+                    "2, but the imported BMP is %d pixels tall.",
+                    int(height)
+                )
+            );
 
         } else if (bits_per_pixel == 16) {
-            ERR_FAIL_V_MSG(ERR_UNAVAILABLE, "16-bpp BMP images are not supported.");
+            ERR_FAIL_V_MSG(
+                ERR_UNAVAILABLE,
+                "16-bpp BMP images are not supported."
+            );
         }
 
         // Image data (might be indexed)
@@ -78,11 +111,15 @@ Error ImageLoaderBMP::convert_to_image(Ref<Image> p_image,
         } else { // color
             data_len = width * height * 4;
         }
-        ERR_FAIL_COND_V_MSG(data_len == 0, ERR_BUG, "Couldn't parse the BMP image data.");
+        ERR_FAIL_COND_V_MSG(
+            data_len == 0,
+            ERR_BUG,
+            "Couldn't parse the BMP image data."
+        );
         err = data.resize(data_len);
 
         PoolVector<uint8_t>::Write data_w = data.write();
-        uint8_t *write_buffer = data_w.ptr();
+        uint8_t* write_buffer = data_w.ptr();
 
         const uint32_t width_bytes = width * bits_per_pixel / 8;
         const uint32_t line_width = (width_bytes + 3) & ~3;
@@ -90,11 +127,13 @@ Error ImageLoaderBMP::convert_to_image(Ref<Image> p_image,
         // The actual data traversal is determined by
         // the data width in case of 8/4/1 bit images
         const uint32_t w = bits_per_pixel >= 24 ? width : width_bytes;
-        const uint8_t *line = p_buffer + (line_width * (height - 1));
-        const uint8_t *end_buffer = p_buffer + p_header.bmp_file_header.bmp_file_size - p_header.bmp_file_header.bmp_file_offset;
+        const uint8_t* line = p_buffer + (line_width * (height - 1));
+        const uint8_t* end_buffer = p_buffer
+                                  + p_header.bmp_file_header.bmp_file_size
+                                  - p_header.bmp_file_header.bmp_file_offset;
 
         for (uint64_t i = 0; i < height; i++) {
-            const uint8_t *line_ptr = line;
+            const uint8_t* line_ptr = line;
 
             for (unsigned int j = 0; j < w; j++) {
                 ERR_FAIL_COND_V(line_ptr >= end_buffer, ERR_FILE_CORRUPT);
@@ -154,7 +193,8 @@ Error ImageLoaderBMP::convert_to_image(Ref<Image> p_image,
             line -= line_width;
         }
 
-        if (p_color_buffer == nullptr || color_table_size == 0) { // regular pixels
+        if (p_color_buffer == nullptr
+            || color_table_size == 0) { // regular pixels
 
             p_image->create(width, height, false, Image::FORMAT_RGBA8, data);
 
@@ -165,9 +205,9 @@ Error ImageLoaderBMP::convert_to_image(Ref<Image> p_image,
             palette_data.resize(color_table_size * 4);
 
             PoolVector<uint8_t>::Write palette_data_w = palette_data.write();
-            uint8_t *pal = palette_data_w.ptr();
+            uint8_t* pal = palette_data_w.ptr();
 
-            const uint8_t *cb = p_color_buffer;
+            const uint8_t* cb = p_color_buffer;
 
             for (unsigned int i = 0; i < color_table_size; ++i) {
                 pal[i * 4 + 0] = cb[2];
@@ -182,7 +222,7 @@ Error ImageLoaderBMP::convert_to_image(Ref<Image> p_image,
             extended_data.resize(data.size() * 4);
 
             PoolVector<uint8_t>::Write ex_w = extended_data.write();
-            uint8_t *dest = ex_w.ptr();
+            uint8_t* dest = ex_w.ptr();
 
             const int num_pixels = width * height;
 
@@ -194,14 +234,24 @@ Error ImageLoaderBMP::convert_to_image(Ref<Image> p_image,
 
                 dest += 4;
             }
-            p_image->create(width, height, false, Image::FORMAT_RGBA8, extended_data);
+            p_image->create(
+                width,
+                height,
+                false,
+                Image::FORMAT_RGBA8,
+                extended_data
+            );
         }
     }
     return err;
 }
 
-Error ImageLoaderBMP::load_image(Ref<Image> p_image, FileAccess *f,
-        bool p_force_linear, float p_scale) {
+Error ImageLoaderBMP::load_image(
+    Ref<Image> p_image,
+    FileAccess* f,
+    bool p_force_linear,
+    float p_scale
+) {
     bmp_header_s bmp_header;
     Error err = ERR_INVALID_DATA;
 
@@ -217,15 +267,30 @@ Error ImageLoaderBMP::load_image(Ref<Image> p_image, FileAccess *f,
 
             // Info Header
             bmp_header.bmp_info_header.bmp_header_size = f->get_32();
-            ERR_FAIL_COND_V_MSG(bmp_header.bmp_info_header.bmp_header_size < BITMAP_INFO_HEADER_MIN_SIZE, ERR_FILE_CORRUPT,
-                    vformat("Couldn't parse the BMP info header. The file is likely corrupt: %s", f->get_path()));
+            ERR_FAIL_COND_V_MSG(
+                bmp_header.bmp_info_header.bmp_header_size
+                    < BITMAP_INFO_HEADER_MIN_SIZE,
+                ERR_FILE_CORRUPT,
+                vformat(
+                    "Couldn't parse the BMP info header. The file is likely "
+                    "corrupt: %s",
+                    f->get_path()
+                )
+            );
 
             bmp_header.bmp_info_header.bmp_width = f->get_32();
             bmp_header.bmp_info_header.bmp_height = f->get_32();
 
             bmp_header.bmp_info_header.bmp_planes = f->get_16();
-            ERR_FAIL_COND_V_MSG(bmp_header.bmp_info_header.bmp_planes != 1, ERR_FILE_CORRUPT,
-                    vformat("Couldn't parse the BMP planes. The file is likely corrupt: %s", f->get_path()));
+            ERR_FAIL_COND_V_MSG(
+                bmp_header.bmp_info_header.bmp_planes != 1,
+                ERR_FILE_CORRUPT,
+                vformat(
+                    "Couldn't parse the BMP planes. The file is likely "
+                    "corrupt: %s",
+                    f->get_path()
+                )
+            );
 
             bmp_header.bmp_info_header.bmp_bit_count = f->get_16();
             bmp_header.bmp_info_header.bmp_compression = f->get_32();
@@ -242,13 +307,19 @@ Error ImageLoaderBMP::load_image(Ref<Image> p_image, FileAccess *f,
                 case BI_CMYKRLE4: {
                     // Stop parsing.
                     f->close();
-                    ERR_FAIL_V_MSG(ERR_UNAVAILABLE,
-                            vformat("Compressed BMP files are not supported: %s", f->get_path()));
+                    ERR_FAIL_V_MSG(
+                        ERR_UNAVAILABLE,
+                        vformat(
+                            "Compressed BMP files are not supported: %s",
+                            f->get_path()
+                        )
+                    );
                 } break;
             }
             // Don't rely on sizeof(bmp_file_header) as structure padding
             // adds 2 bytes offset leading to misaligned color table reading
-            uint32_t ct_offset = BITMAP_FILE_HEADER_SIZE + bmp_header.bmp_info_header.bmp_header_size;
+            uint32_t ct_offset = BITMAP_FILE_HEADER_SIZE
+                               + bmp_header.bmp_info_header.bmp_header_size;
             f->seek(ct_offset);
 
             uint32_t color_table_size = 0;
@@ -257,20 +328,30 @@ Error ImageLoaderBMP::load_image(Ref<Image> p_image, FileAccess *f,
             // for 4 and 1 bit images, so don't rely on this information
             if (bmp_header.bmp_info_header.bmp_bit_count <= 8) {
                 // Support 256 colors max
-                color_table_size = 1 << bmp_header.bmp_info_header.bmp_bit_count;
-                ERR_FAIL_COND_V_MSG(color_table_size == 0, ERR_BUG,
-                        vformat("Couldn't parse the BMP color table: %s", f->get_path()));
+                color_table_size = 1
+                                << bmp_header.bmp_info_header.bmp_bit_count;
+                ERR_FAIL_COND_V_MSG(
+                    color_table_size == 0,
+                    ERR_BUG,
+                    vformat(
+                        "Couldn't parse the BMP color table: %s",
+                        f->get_path()
+                    )
+                );
             }
 
             PoolVector<uint8_t> bmp_color_table;
             // Color table is usually 4 bytes per color -> [B][G][R][0]
             bmp_color_table.resize(color_table_size * 4);
-            PoolVector<uint8_t>::Write bmp_color_table_w = bmp_color_table.write();
+            PoolVector<uint8_t>::Write bmp_color_table_w =
+                bmp_color_table.write();
             f->get_buffer(bmp_color_table_w.ptr(), color_table_size * 4);
 
             f->seek(bmp_header.bmp_file_header.bmp_file_offset);
 
-            uint32_t bmp_buffer_size = (bmp_header.bmp_file_header.bmp_file_size - bmp_header.bmp_file_header.bmp_file_offset);
+            uint32_t bmp_buffer_size =
+                (bmp_header.bmp_file_header.bmp_file_size
+                 - bmp_header.bmp_file_header.bmp_file_offset);
 
             PoolVector<uint8_t> bmp_buffer;
             err = bmp_buffer.resize(bmp_buffer_size);
@@ -279,9 +360,15 @@ Error ImageLoaderBMP::load_image(Ref<Image> p_image, FileAccess *f,
                 f->get_buffer(bmp_buffer_w.ptr(), bmp_buffer_size);
 
                 PoolVector<uint8_t>::Read bmp_buffer_r = bmp_buffer.read();
-                PoolVector<uint8_t>::Read bmp_color_table_r = bmp_color_table.read();
-                err = convert_to_image(p_image, bmp_buffer_r.ptr(),
-                        bmp_color_table_r.ptr(), color_table_size, bmp_header);
+                PoolVector<uint8_t>::Read bmp_color_table_r =
+                    bmp_color_table.read();
+                err = convert_to_image(
+                    p_image,
+                    bmp_buffer_r.ptr(),
+                    bmp_color_table_r.ptr(),
+                    color_table_size,
+                    bmp_header
+                );
             }
             f->close();
         }
@@ -289,14 +376,19 @@ Error ImageLoaderBMP::load_image(Ref<Image> p_image, FileAccess *f,
     return err;
 }
 
-void ImageLoaderBMP::get_recognized_extensions(List<String> *p_extensions) const {
+void ImageLoaderBMP::get_recognized_extensions(List<String>* p_extensions
+) const {
     p_extensions->push_back("bmp");
 }
 
-static Ref<Image> _bmp_mem_loader_func(const uint8_t *p_bmp, int p_size) {
+static Ref<Image> _bmp_mem_loader_func(const uint8_t* p_bmp, int p_size) {
     FileAccessMemory memfile;
     Error open_memfile_error = memfile.open_custom(p_bmp, p_size);
-    ERR_FAIL_COND_V_MSG(open_memfile_error, Ref<Image>(), "Could not create memfile for BMP image buffer.");
+    ERR_FAIL_COND_V_MSG(
+        open_memfile_error,
+        Ref<Image>(),
+        "Could not create memfile for BMP image buffer."
+    );
     Ref<Image> img;
     img.instance();
     Error load_error = ImageLoaderBMP().load_image(img, &memfile, false, 1.0f);

@@ -56,7 +56,6 @@ public:
         RESULT_DOWNLOAD_FILE_WRITE_ERROR,
         RESULT_REDIRECT_LIMIT_REACHED,
         RESULT_TIMEOUT
-
     };
 
 private:
@@ -82,7 +81,7 @@ private:
 
     String download_to_file;
 
-    FileAccess *file;
+    FileAccess* file;
 
     int body_len;
     SafeNumeric<int> downloaded;
@@ -96,11 +95,11 @@ private:
 
     int timeout;
 
-    void _redirect_request(const String &p_new_url);
+    void _redirect_request(const String& p_new_url);
 
-    bool _handle_response(bool *ret_value);
+    bool _handle_response(bool* ret_value);
 
-    Error _parse_url(const String &p_url);
+    Error _parse_url(const String& p_url);
     Error _request();
 
     SafeFlag thread_done;
@@ -108,23 +107,40 @@ private:
 
     Thread thread;
 
-    void _request_done(int p_status, int p_code, const PoolStringArray &p_headers, const PoolByteArray &p_data);
-    static void _thread_func(void *p_userdata);
+    void _request_done(
+        int p_status,
+        int p_code,
+        const PoolStringArray& p_headers,
+        const PoolByteArray& p_data
+    );
+    static void _thread_func(void* p_userdata);
 
 protected:
     void _notification(int p_what);
     static void _bind_methods();
 
 public:
-    Error request(const String &p_url, const Vector<String> &p_custom_headers = Vector<String>(), bool p_ssl_validate_domain = true, HTTPClient::Method p_method = HTTPClient::METHOD_GET, const String &p_request_data = ""); //connects to a full url and perform request
-    Error request_raw(const String &p_url, const Vector<String> &p_custom_headers = Vector<String>(), bool p_ssl_validate_domain = true, HTTPClient::Method p_method = HTTPClient::METHOD_GET, const PoolVector<uint8_t> &p_request_data_raw = PoolVector<uint8_t>()); //connects to a full url and perform request
+    Error request(
+        const String& p_url,
+        const Vector<String>& p_custom_headers = Vector<String>(),
+        bool p_ssl_validate_domain = true,
+        HTTPClient::Method p_method = HTTPClient::METHOD_GET,
+        const String& p_request_data = ""
+    ); // connects to a full url and perform request
+    Error request_raw(
+        const String& p_url,
+        const Vector<String>& p_custom_headers = Vector<String>(),
+        bool p_ssl_validate_domain = true,
+        HTTPClient::Method p_method = HTTPClient::METHOD_GET,
+        const PoolVector<uint8_t>& p_request_data_raw = PoolVector<uint8_t>()
+    ); // connects to a full url and perform request
     void cancel_request();
     HTTPClient::Status get_http_client_status() const;
 
     void set_use_threads(bool p_use);
     bool is_using_threads() const;
 
-    void set_download_file(const String &p_file);
+    void set_download_file(const String& p_file);
     String get_download_file() const;
 
     void set_download_chunk_size(int p_chunk_size);
@@ -136,7 +152,7 @@ public:
     void set_max_redirects(int p_max);
     int get_max_redirects() const;
 
-    Timer *timer;
+    Timer* timer;
 
     void set_timeout(int p_timeout);
     int get_timeout();

@@ -39,14 +39,13 @@
 */
 
 btRayShape::btRayShape(btScalar length) :
-        btConvexInternalShape(),
-        m_shapeAxis(0, 0, 1) {
+    btConvexInternalShape(),
+    m_shapeAxis(0, 0, 1) {
     m_shapeType = CUSTOM_CONVEX_SHAPE_TYPE;
     setLength(length);
 }
 
-btRayShape::~btRayShape() {
-}
+btRayShape::~btRayShape() {}
 
 void btRayShape::setLength(btScalar p_length) {
     m_length = p_length;
@@ -62,11 +61,13 @@ void btRayShape::setSlipsOnSlope(bool p_slipsOnSlope) {
     slipsOnSlope = p_slipsOnSlope;
 }
 
-btVector3 btRayShape::localGetSupportingVertex(const btVector3 &vec) const {
-    return localGetSupportingVertexWithoutMargin(vec) + (m_shapeAxis * m_collisionMargin);
+btVector3 btRayShape::localGetSupportingVertex(const btVector3& vec) const {
+    return localGetSupportingVertexWithoutMargin(vec)
+         + (m_shapeAxis * m_collisionMargin);
 }
 
-btVector3 btRayShape::localGetSupportingVertexWithoutMargin(const btVector3 &vec) const {
+btVector3 btRayShape::localGetSupportingVertexWithoutMargin(const btVector3& vec
+) const {
     if (vec.z() > 0) {
         return m_shapeAxis * m_cacheScaledLength;
     } else {
@@ -74,19 +75,36 @@ btVector3 btRayShape::localGetSupportingVertexWithoutMargin(const btVector3 &vec
     }
 }
 
-void btRayShape::batchedUnitVectorGetSupportingVertexWithoutMargin(const btVector3 *vectors, btVector3 *supportVerticesOut, int numVectors) const {
+void btRayShape::batchedUnitVectorGetSupportingVertexWithoutMargin(
+    const btVector3* vectors,
+    btVector3* supportVerticesOut,
+    int numVectors
+) const {
     for (int i = 0; i < numVectors; ++i) {
-        supportVerticesOut[i] = localGetSupportingVertexWithoutMargin(vectors[i]);
+        supportVerticesOut[i] =
+            localGetSupportingVertexWithoutMargin(vectors[i]);
     }
 }
 
-void btRayShape::getAabb(const btTransform &t, btVector3 &aabbMin, btVector3 &aabbMax) const {
+void btRayShape::getAabb(
+    const btTransform& t,
+    btVector3& aabbMin,
+    btVector3& aabbMax
+) const {
     btVector3 localAabbMin(0, 0, 0);
     btVector3 localAabbMax(m_shapeAxis * m_cacheScaledLength);
-    btTransformAabb(localAabbMin, localAabbMax, m_collisionMargin, t, aabbMin, aabbMax);
+    btTransformAabb(
+        localAabbMin,
+        localAabbMax,
+        m_collisionMargin,
+        t,
+        aabbMin,
+        aabbMax
+    );
 }
 
-void btRayShape::calculateLocalInertia(btScalar mass, btVector3 &inertia) const {
+void btRayShape::calculateLocalInertia(btScalar mass, btVector3& inertia)
+    const {
     inertia.setZero();
 }
 
@@ -94,7 +112,10 @@ int btRayShape::getNumPreferredPenetrationDirections() const {
     return 0;
 }
 
-void btRayShape::getPreferredPenetrationDirection(int index, btVector3 &penetrationVector) const {
+void btRayShape::getPreferredPenetrationDirection(
+    int index,
+    btVector3& penetrationVector
+) const {
     penetrationVector.setZero();
 }
 

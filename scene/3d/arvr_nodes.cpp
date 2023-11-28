@@ -38,15 +38,17 @@
 void ARVRCamera::_notification(int p_what) {
     switch (p_what) {
         case NOTIFICATION_ENTER_TREE: {
-            // need to find our ARVROrigin parent and let it know we're its camera!
-            ARVROrigin *origin = Object::cast_to<ARVROrigin>(get_parent());
+            // need to find our ARVROrigin parent and let it know we're its
+            // camera!
+            ARVROrigin* origin = Object::cast_to<ARVROrigin>(get_parent());
             if (origin != nullptr) {
                 origin->set_tracked_camera(this);
             }
         }; break;
         case NOTIFICATION_EXIT_TREE: {
-            // need to find our ARVROrigin parent and let it know we're no longer its camera!
-            ARVROrigin *origin = Object::cast_to<ARVROrigin>(get_parent());
+            // need to find our ARVROrigin parent and let it know we're no
+            // longer its camera!
+            ARVROrigin* origin = Object::cast_to<ARVROrigin>(get_parent());
             if (origin != nullptr) {
                 origin->clear_tracked_camera_if(this);
             }
@@ -61,20 +63,21 @@ String ARVRCamera::get_configuration_warning() const {
 
     String warning = Camera::get_configuration_warning();
     // must be child node of ARVROrigin!
-    ARVROrigin *origin = Object::cast_to<ARVROrigin>(get_parent());
+    ARVROrigin* origin = Object::cast_to<ARVROrigin>(get_parent());
     if (origin == nullptr) {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("ARVRCamera must have an ARVROrigin node as its parent.");
+        warning +=
+            TTR("ARVRCamera must have an ARVROrigin node as its parent.");
     };
 
     return warning;
 };
 
-Vector3 ARVRCamera::project_local_ray_normal(const Point2 &p_pos) const {
+Vector3 ARVRCamera::project_local_ray_normal(const Point2& p_pos) const {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, Vector3());
 
     Ref<ARVRInterface> arvr_interface = arvr_server->get_primary_interface();
@@ -83,22 +86,37 @@ Vector3 ARVRCamera::project_local_ray_normal(const Point2 &p_pos) const {
         return Camera::project_local_ray_normal(p_pos);
     }
 
-    ERR_FAIL_COND_V_MSG(!is_inside_tree(), Vector3(), "Camera is not inside scene.");
+    ERR_FAIL_COND_V_MSG(
+        !is_inside_tree(),
+        Vector3(),
+        "Camera is not inside scene."
+    );
 
     Size2 viewport_size = get_viewport()->get_camera_rect_size();
     Vector2 cpos = get_viewport()->get_camera_coords(p_pos);
     Vector3 ray;
 
-    CameraMatrix cm = arvr_interface->get_projection_for_eye(ARVRInterface::EYE_MONO, viewport_size.aspect(), get_znear(), get_zfar());
+    CameraMatrix cm = arvr_interface->get_projection_for_eye(
+        ARVRInterface::EYE_MONO,
+        viewport_size.aspect(),
+        get_znear(),
+        get_zfar()
+    );
     Vector2 screen_he = cm.get_viewport_half_extents();
-    ray = Vector3(((cpos.x / viewport_size.width) * 2.0 - 1.0) * screen_he.x, ((1.0 - (cpos.y / viewport_size.height)) * 2.0 - 1.0) * screen_he.y, -get_znear()).normalized();
+    ray =
+        Vector3(
+            ((cpos.x / viewport_size.width) * 2.0 - 1.0) * screen_he.x,
+            ((1.0 - (cpos.y / viewport_size.height)) * 2.0 - 1.0) * screen_he.y,
+            -get_znear()
+        )
+            .normalized();
 
     return ray;
 };
 
-Point2 ARVRCamera::unproject_position(const Vector3 &p_pos) const {
+Point2 ARVRCamera::unproject_position(const Vector3& p_pos) const {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, Vector2());
 
     Ref<ARVRInterface> arvr_interface = arvr_server->get_primary_interface();
@@ -107,11 +125,20 @@ Point2 ARVRCamera::unproject_position(const Vector3 &p_pos) const {
         return Camera::unproject_position(p_pos);
     }
 
-    ERR_FAIL_COND_V_MSG(!is_inside_tree(), Vector2(), "Camera is not inside scene.");
+    ERR_FAIL_COND_V_MSG(
+        !is_inside_tree(),
+        Vector2(),
+        "Camera is not inside scene."
+    );
 
     Size2 viewport_size = get_viewport()->get_visible_rect().size;
 
-    CameraMatrix cm = arvr_interface->get_projection_for_eye(ARVRInterface::EYE_MONO, viewport_size.aspect(), get_znear(), get_zfar());
+    CameraMatrix cm = arvr_interface->get_projection_for_eye(
+        ARVRInterface::EYE_MONO,
+        viewport_size.aspect(),
+        get_znear(),
+        get_zfar()
+    );
 
     Plane p(get_camera_transform().xform_inv(p_pos), 1.0);
 
@@ -125,9 +152,10 @@ Point2 ARVRCamera::unproject_position(const Vector3 &p_pos) const {
     return res;
 };
 
-Vector3 ARVRCamera::project_position(const Point2 &p_point, float p_z_depth) const {
+Vector3 ARVRCamera::project_position(const Point2& p_point, float p_z_depth)
+    const {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, Vector3());
 
     Ref<ARVRInterface> arvr_interface = arvr_server->get_primary_interface();
@@ -136,11 +164,20 @@ Vector3 ARVRCamera::project_position(const Point2 &p_point, float p_z_depth) con
         return Camera::project_position(p_point, p_z_depth);
     }
 
-    ERR_FAIL_COND_V_MSG(!is_inside_tree(), Vector3(), "Camera is not inside scene.");
+    ERR_FAIL_COND_V_MSG(
+        !is_inside_tree(),
+        Vector3(),
+        "Camera is not inside scene."
+    );
 
     Size2 viewport_size = get_viewport()->get_visible_rect().size;
 
-    CameraMatrix cm = arvr_interface->get_projection_for_eye(ARVRInterface::EYE_MONO, viewport_size.aspect(), get_znear(), get_zfar());
+    CameraMatrix cm = arvr_interface->get_projection_for_eye(
+        ARVRInterface::EYE_MONO,
+        viewport_size.aspect(),
+        get_znear(),
+        get_zfar()
+    );
 
     Vector2 vp_he = cm.get_viewport_half_extents();
 
@@ -156,7 +193,7 @@ Vector3 ARVRCamera::project_position(const Point2 &p_point, float p_z_depth) con
 
 Vector<Plane> ARVRCamera::get_frustum() const {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, Vector<Plane>());
 
     Ref<ARVRInterface> arvr_interface = arvr_server->get_primary_interface();
@@ -168,7 +205,12 @@ Vector<Plane> ARVRCamera::get_frustum() const {
     ERR_FAIL_COND_V(!is_inside_world(), Vector<Plane>());
 
     Size2 viewport_size = get_viewport()->get_visible_rect().size;
-    CameraMatrix cm = arvr_interface->get_projection_for_eye(ARVRInterface::EYE_MONO, viewport_size.aspect(), get_znear(), get_zfar());
+    CameraMatrix cm = arvr_interface->get_projection_for_eye(
+        ARVRInterface::EYE_MONO,
+        viewport_size.aspect(),
+        get_znear(),
+        get_zfar()
+    );
     return cm.get_projection_planes(get_camera_transform());
 };
 
@@ -192,11 +234,15 @@ void ARVRController::_notification(int p_what) {
         }; break;
         case NOTIFICATION_INTERNAL_PROCESS: {
             // get our ARVRServer
-            ARVRServer *arvr_server = ARVRServer::get_singleton();
+            ARVRServer* arvr_server = ARVRServer::get_singleton();
             ERR_FAIL_NULL(arvr_server);
 
             // find the tracker for our controller
-            Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(ARVRServer::TRACKER_CONTROLLER, controller_id);
+            Ref<ARVRPositionalTracker> tracker =
+                arvr_server->find_by_type_and_id(
+                    ARVRServer::TRACKER_CONTROLLER,
+                    controller_id
+                );
             if (!tracker.is_valid()) {
                 // this controller is currently turned off
                 is_active = false;
@@ -211,7 +257,11 @@ void ARVRController::_notification(int p_what) {
                     // check button states
                     for (int i = 0; i < 16; i++) {
                         bool was_pressed = (button_states & mask) == mask;
-                        bool is_pressed = Input::get_singleton()->is_joy_button_pressed(joy_id, i);
+                        bool is_pressed =
+                            Input::get_singleton()->is_joy_button_pressed(
+                                joy_id,
+                                i
+                            );
 
                         if (!was_pressed && is_pressed) {
                             emit_signal("button_pressed", i);
@@ -242,34 +292,89 @@ void ARVRController::_notification(int p_what) {
 };
 
 void ARVRController::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_controller_id", "controller_id"), &ARVRController::set_controller_id);
-    ClassDB::bind_method(D_METHOD("get_controller_id"), &ARVRController::get_controller_id);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "controller_id", PROPERTY_HINT_RANGE, "0,32,1"), "set_controller_id", "get_controller_id");
-    ClassDB::bind_method(D_METHOD("get_controller_name"), &ARVRController::get_controller_name);
+    ClassDB::bind_method(
+        D_METHOD("set_controller_id", "controller_id"),
+        &ARVRController::set_controller_id
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_controller_id"),
+        &ARVRController::get_controller_id
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "controller_id",
+            PROPERTY_HINT_RANGE,
+            "0,32,1"
+        ),
+        "set_controller_id",
+        "get_controller_id"
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_controller_name"),
+        &ARVRController::get_controller_name
+    );
 
     // passthroughs to information about our related joystick
-    ClassDB::bind_method(D_METHOD("get_joystick_id"), &ARVRController::get_joystick_id);
-    ClassDB::bind_method(D_METHOD("is_button_pressed", "button"), &ARVRController::is_button_pressed);
-    ClassDB::bind_method(D_METHOD("get_joystick_axis", "axis"), &ARVRController::get_joystick_axis);
+    ClassDB::bind_method(
+        D_METHOD("get_joystick_id"),
+        &ARVRController::get_joystick_id
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_button_pressed", "button"),
+        &ARVRController::is_button_pressed
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_joystick_axis", "axis"),
+        &ARVRController::get_joystick_axis
+    );
 
-    ClassDB::bind_method(D_METHOD("get_is_active"), &ARVRController::get_is_active);
+    ClassDB::bind_method(
+        D_METHOD("get_is_active"),
+        &ARVRController::get_is_active
+    );
     ClassDB::bind_method(D_METHOD("get_hand"), &ARVRController::get_hand);
 
     ClassDB::bind_method(D_METHOD("get_rumble"), &ARVRController::get_rumble);
-    ClassDB::bind_method(D_METHOD("set_rumble", "rumble"), &ARVRController::set_rumble);
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "rumble", PROPERTY_HINT_RANGE, "0.0,1.0,0.01"), "set_rumble", "get_rumble");
+    ClassDB::bind_method(
+        D_METHOD("set_rumble", "rumble"),
+        &ARVRController::set_rumble
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "rumble",
+            PROPERTY_HINT_RANGE,
+            "0.0,1.0,0.01"
+        ),
+        "set_rumble",
+        "get_rumble"
+    );
     ADD_PROPERTY_DEFAULT("rumble", 0.0);
 
     ClassDB::bind_method(D_METHOD("get_mesh"), &ARVRController::get_mesh);
 
-    ADD_SIGNAL(MethodInfo("button_pressed", PropertyInfo(Variant::INT, "button")));
-    ADD_SIGNAL(MethodInfo("button_release", PropertyInfo(Variant::INT, "button")));
-    ADD_SIGNAL(MethodInfo("mesh_updated", PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh")));
+    ADD_SIGNAL(
+        MethodInfo("button_pressed", PropertyInfo(Variant::INT, "button"))
+    );
+    ADD_SIGNAL(
+        MethodInfo("button_release", PropertyInfo(Variant::INT, "button"))
+    );
+    ADD_SIGNAL(MethodInfo(
+        "mesh_updated",
+        PropertyInfo(
+            Variant::OBJECT,
+            "mesh",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Mesh"
+        )
+    ));
 };
 
 void ARVRController::set_controller_id(int p_controller_id) {
-    // We don't check any bounds here, this controller may not yet be active and just be a place holder until it is.
-    // Note that setting this to 0 means this node is not bound to a controller yet.
+    // We don't check any bounds here, this controller may not yet be active and
+    // just be a place holder until it is. Note that setting this to 0 means
+    // this node is not bound to a controller yet.
     controller_id = p_controller_id;
     update_configuration_warning();
 };
@@ -280,10 +385,13 @@ int ARVRController::get_controller_id() const {
 
 String ARVRController::get_controller_name() const {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, String());
 
-    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(ARVRServer::TRACKER_CONTROLLER, controller_id);
+    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(
+        ARVRServer::TRACKER_CONTROLLER,
+        controller_id
+    );
     if (!tracker.is_valid()) {
         return String("Not connected");
     };
@@ -293,10 +401,13 @@ String ARVRController::get_controller_name() const {
 
 int ARVRController::get_joystick_id() const {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, 0);
 
-    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(ARVRServer::TRACKER_CONTROLLER, controller_id);
+    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(
+        ARVRServer::TRACKER_CONTROLLER,
+        controller_id
+    );
     if (!tracker.is_valid()) {
         // No tracker? no joystick id... (0 is our first joystick)
         return -1;
@@ -325,10 +436,13 @@ float ARVRController::get_joystick_axis(int p_axis) const {
 
 real_t ARVRController::get_rumble() const {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, 0.0);
 
-    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(ARVRServer::TRACKER_CONTROLLER, controller_id);
+    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(
+        ARVRServer::TRACKER_CONTROLLER,
+        controller_id
+    );
     if (!tracker.is_valid()) {
         return 0.0;
     };
@@ -338,10 +452,13 @@ real_t ARVRController::get_rumble() const {
 
 void ARVRController::set_rumble(real_t p_rumble) {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
-    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(ARVRServer::TRACKER_CONTROLLER, controller_id);
+    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(
+        ARVRServer::TRACKER_CONTROLLER,
+        controller_id
+    );
     if (tracker.is_valid()) {
         tracker->set_rumble(p_rumble);
     };
@@ -357,10 +474,13 @@ bool ARVRController::get_is_active() const {
 
 ARVRPositionalTracker::TrackerHand ARVRController::get_hand() const {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, ARVRPositionalTracker::TRACKER_HAND_UNKNOWN);
 
-    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(ARVRServer::TRACKER_CONTROLLER, controller_id);
+    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(
+        ARVRServer::TRACKER_CONTROLLER,
+        controller_id
+    );
     if (!tracker.is_valid()) {
         return ARVRPositionalTracker::TRACKER_HAND_UNKNOWN;
     };
@@ -375,19 +495,22 @@ String ARVRController::get_configuration_warning() const {
 
     String warning = Spatial::get_configuration_warning();
     // must be child node of ARVROrigin!
-    ARVROrigin *origin = Object::cast_to<ARVROrigin>(get_parent());
+    ARVROrigin* origin = Object::cast_to<ARVROrigin>(get_parent());
     if (origin == nullptr) {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("ARVRController must have an ARVROrigin node as its parent.");
+        warning +=
+            TTR("ARVRController must have an ARVROrigin node as its parent.");
     };
 
     if (controller_id == 0) {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("The controller ID must not be 0 or this controller won't be bound to an actual controller.");
+        warning +=
+            TTR("The controller ID must not be 0 or this controller won't be "
+                "bound to an actual controller.");
     };
 
     return warning;
@@ -415,11 +538,15 @@ void ARVRAnchor::_notification(int p_what) {
         }; break;
         case NOTIFICATION_INTERNAL_PROCESS: {
             // get our ARVRServer
-            ARVRServer *arvr_server = ARVRServer::get_singleton();
+            ARVRServer* arvr_server = ARVRServer::get_singleton();
             ERR_FAIL_NULL(arvr_server);
 
             // find the tracker for our anchor
-            Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(ARVRServer::TRACKER_ANCHOR, anchor_id);
+            Ref<ARVRPositionalTracker> tracker =
+                arvr_server->find_by_type_and_id(
+                    ARVRServer::TRACKER_ANCHOR,
+                    anchor_id
+                );
             if (!tracker.is_valid()) {
                 // this anchor is currently not available
                 is_active = false;
@@ -432,10 +559,11 @@ void ARVRAnchor::_notification(int p_what) {
 
                 // get our info from our tracker
                 transform.basis = tracker->get_orientation();
-                transform.origin = tracker->get_position(); // <-- already adjusted to world scale
+                transform.origin = tracker->get_position(
+                ); // <-- already adjusted to world scale
 
-                // our basis is scaled to the size of the plane the anchor is tracking
-                // extract the size from our basis and reset the scale
+                // our basis is scaled to the size of the plane the anchor is
+                // tracking extract the size from our basis and reset the scale
                 size = transform.basis.get_scale() * world_scale;
                 transform.basis.orthonormalize();
 
@@ -456,10 +584,20 @@ void ARVRAnchor::_notification(int p_what) {
 };
 
 void ARVRAnchor::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_anchor_id", "anchor_id"), &ARVRAnchor::set_anchor_id);
+    ClassDB::bind_method(
+        D_METHOD("set_anchor_id", "anchor_id"),
+        &ARVRAnchor::set_anchor_id
+    );
     ClassDB::bind_method(D_METHOD("get_anchor_id"), &ARVRAnchor::get_anchor_id);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "anchor_id", PROPERTY_HINT_RANGE, "0,32,1"), "set_anchor_id", "get_anchor_id");
-    ClassDB::bind_method(D_METHOD("get_anchor_name"), &ARVRAnchor::get_anchor_name);
+    ADD_PROPERTY(
+        PropertyInfo(Variant::INT, "anchor_id", PROPERTY_HINT_RANGE, "0,32,1"),
+        "set_anchor_id",
+        "get_anchor_id"
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_anchor_name"),
+        &ARVRAnchor::get_anchor_name
+    );
 
     ClassDB::bind_method(D_METHOD("get_is_active"), &ARVRAnchor::get_is_active);
     ClassDB::bind_method(D_METHOD("get_size"), &ARVRAnchor::get_size);
@@ -467,12 +605,21 @@ void ARVRAnchor::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_plane"), &ARVRAnchor::get_plane);
 
     ClassDB::bind_method(D_METHOD("get_mesh"), &ARVRAnchor::get_mesh);
-    ADD_SIGNAL(MethodInfo("mesh_updated", PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh")));
+    ADD_SIGNAL(MethodInfo(
+        "mesh_updated",
+        PropertyInfo(
+            Variant::OBJECT,
+            "mesh",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Mesh"
+        )
+    ));
 };
 
 void ARVRAnchor::set_anchor_id(int p_anchor_id) {
-    // We don't check any bounds here, this anchor may not yet be active and just be a place holder until it is.
-    // Note that setting this to 0 means this node is not bound to an anchor yet.
+    // We don't check any bounds here, this anchor may not yet be active and
+    // just be a place holder until it is. Note that setting this to 0 means
+    // this node is not bound to an anchor yet.
     anchor_id = p_anchor_id;
     update_configuration_warning();
 };
@@ -487,10 +634,11 @@ Vector3 ARVRAnchor::get_size() const {
 
 String ARVRAnchor::get_anchor_name() const {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, String());
 
-    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(ARVRServer::TRACKER_ANCHOR, anchor_id);
+    Ref<ARVRPositionalTracker> tracker =
+        arvr_server->find_by_type_and_id(ARVRServer::TRACKER_ANCHOR, anchor_id);
     if (!tracker.is_valid()) {
         return String("Not connected");
     };
@@ -509,19 +657,22 @@ String ARVRAnchor::get_configuration_warning() const {
 
     String warning = Spatial::get_configuration_warning();
     // must be child node of ARVROrigin!
-    ARVROrigin *origin = Object::cast_to<ARVROrigin>(get_parent());
+    ARVROrigin* origin = Object::cast_to<ARVROrigin>(get_parent());
     if (origin == nullptr) {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("ARVRAnchor must have an ARVROrigin node as its parent.");
+        warning +=
+            TTR("ARVRAnchor must have an ARVROrigin node as its parent.");
     };
 
     if (anchor_id == 0) {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("The anchor ID must not be 0 or this anchor won't be bound to an actual anchor.");
+        warning +=
+            TTR("The anchor ID must not be 0 or this anchor won't be bound to "
+                "an actual anchor.");
     };
 
     return warning;
@@ -568,16 +719,26 @@ String ARVROrigin::get_configuration_warning() const {
 };
 
 void ARVROrigin::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_world_scale", "world_scale"), &ARVROrigin::set_world_scale);
-    ClassDB::bind_method(D_METHOD("get_world_scale"), &ARVROrigin::get_world_scale);
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "world_scale"), "set_world_scale", "get_world_scale");
+    ClassDB::bind_method(
+        D_METHOD("set_world_scale", "world_scale"),
+        &ARVROrigin::set_world_scale
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_world_scale"),
+        &ARVROrigin::get_world_scale
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "world_scale"),
+        "set_world_scale",
+        "get_world_scale"
+    );
 };
 
-void ARVROrigin::set_tracked_camera(ARVRCamera *p_tracked_camera) {
+void ARVROrigin::set_tracked_camera(ARVRCamera* p_tracked_camera) {
     tracked_camera = p_tracked_camera;
 };
 
-void ARVROrigin::clear_tracked_camera_if(ARVRCamera *p_tracked_camera) {
+void ARVROrigin::clear_tracked_camera_if(ARVRCamera* p_tracked_camera) {
     if (tracked_camera == p_tracked_camera) {
         tracked_camera = nullptr;
     };
@@ -585,7 +746,7 @@ void ARVROrigin::clear_tracked_camera_if(ARVRCamera *p_tracked_camera) {
 
 float ARVROrigin::get_world_scale() const {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, 1.0);
 
     return arvr_server->get_world_scale();
@@ -593,7 +754,7 @@ float ARVROrigin::get_world_scale() const {
 
 void ARVROrigin::set_world_scale(float p_world_scale) {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
     arvr_server->set_world_scale(p_world_scale);
@@ -601,7 +762,7 @@ void ARVROrigin::set_world_scale(float p_world_scale) {
 
 void ARVROrigin::_notification(int p_what) {
     // get our ARVRServer
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
     switch (p_what) {
@@ -616,10 +777,14 @@ void ARVROrigin::_notification(int p_what) {
             arvr_server->set_world_origin(get_global_transform());
 
             // check if we have a primary interface
-            Ref<ARVRInterface> arvr_interface = arvr_server->get_primary_interface();
+            Ref<ARVRInterface> arvr_interface =
+                arvr_server->get_primary_interface();
             if (arvr_interface.is_valid() && tracked_camera != nullptr) {
                 // get our positioning transform for our headset
-                Transform t = arvr_interface->get_transform_for_eye(ARVRInterface::EYE_MONO, Transform());
+                Transform t = arvr_interface->get_transform_for_eye(
+                    ARVRInterface::EYE_MONO,
+                    Transform()
+                );
 
                 // now apply this to our camera
                 tracked_camera->set_transform(t);
@@ -629,7 +794,8 @@ void ARVROrigin::_notification(int p_what) {
             break;
     };
 
-    // send our notification to all active ARVR interfaces, they may need to react to it also
+    // send our notification to all active ARVR interfaces, they may need to
+    // react to it also
     for (int i = 0; i < arvr_server->get_interface_count(); i++) {
         Ref<ARVRInterface> interface = arvr_server->get_interface(i);
         if (interface.is_valid() && interface->is_initialized()) {

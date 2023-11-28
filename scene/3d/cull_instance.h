@@ -38,21 +38,32 @@ class CullInstance : public Spatial {
 
 public:
     enum PortalMode {
-        PORTAL_MODE_STATIC, // not moving within a room
-        PORTAL_MODE_DYNAMIC, //  moving within room
+        PORTAL_MODE_STATIC,  // not moving within a room
+        PORTAL_MODE_DYNAMIC, // moving within room
         PORTAL_MODE_ROAMING, // moving between rooms
-        PORTAL_MODE_GLOBAL, // frustum culled only
-        PORTAL_MODE_IGNORE, // don't show at all - e.g. manual bounds, hidden portals
+        PORTAL_MODE_GLOBAL,  // frustum culled only
+        PORTAL_MODE_IGNORE,  // don't show at all - e.g. manual bounds, hidden
+                             // portals
     };
 
     void set_portal_mode(CullInstance::PortalMode p_mode);
     CullInstance::PortalMode get_portal_mode() const;
 
-    void set_include_in_bound(bool p_enable) { _include_in_bound = p_enable; }
-    bool get_include_in_bound() const { return _include_in_bound; }
+    void set_include_in_bound(bool p_enable) {
+        _include_in_bound = p_enable;
+    }
 
-    void set_portal_autoplace_priority(int p_priority) { _portal_autoplace_priority = p_priority; }
-    int get_portal_autoplace_priority() const { return _portal_autoplace_priority; }
+    bool get_include_in_bound() const {
+        return _include_in_bound;
+    }
+
+    void set_portal_autoplace_priority(int p_priority) {
+        _portal_autoplace_priority = p_priority;
+    }
+
+    int get_portal_autoplace_priority() const {
+        return _portal_autoplace_priority;
+    }
 
     CullInstance();
 
@@ -70,7 +81,8 @@ private:
     // to be autoplaced in outside RoomGroups, allowing a complete
     // exterior / interior of building in one reusable Scene.
     // The default value 0 gives no preference (chooses the highest priority).
-    // All other values will autoplace in the selected RoomGroup priority by preference.
+    // All other values will autoplace in the selected RoomGroup priority by
+    // preference.
     int _portal_autoplace_priority;
 };
 

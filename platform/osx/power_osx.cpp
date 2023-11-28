@@ -59,15 +59,20 @@ Adapted from corresponding SDL 2.0 code.
 #include <IOKit/ps/IOPSKeys.h>
 #include <IOKit/ps/IOPowerSources.h>
 
-//  CODE CHUNK IMPORTED FROM SDL 2.0
+// CODE CHUNK IMPORTED FROM SDL 2.0
 
 /* CoreFoundation is so verbose... */
 #define STRMATCH(a, b) (CFStringCompare(a, b, 0) == kCFCompareEqualTo)
-#define GETVAL(k, v) \
-    CFDictionaryGetValueIfPresent(dict, CFSTR(k), (const void **)v)
+#define GETVAL(k, v)                                                           \
+    CFDictionaryGetValueIfPresent(dict, CFSTR(k), (const void**)v)
 
 /* Note that AC power sources also include a laptop battery it is charging. */
-void PowerOSX::checkps(CFDictionaryRef dict, bool *have_ac, bool *have_battery, bool *charging) {
+void PowerOSX::checkps(
+    CFDictionaryRef dict,
+    bool* have_ac,
+    bool* have_battery,
+    bool* charging
+) {
     CFStringRef strval; /* don't CFRelease() this. */
     CFBooleanRef bval;
     CFNumberRef numval;
@@ -168,7 +173,7 @@ void PowerOSX::checkps(CFDictionaryRef dict, bool *have_ac, bool *have_battery, 
 #undef GETVAL
 #undef STRMATCH
 
-//  CODE CHUNK IMPORTED FROM SDL 2.0
+// CODE CHUNK IMPORTED FROM SDL 2.0
 bool PowerOSX::GetPowerInfo_MacOSX() {
     CFTypeRef blob = IOPSCopyPowerSourcesInfo();
 
@@ -243,10 +248,8 @@ int PowerOSX::get_power_percent_left() {
 }
 
 PowerOSX::PowerOSX() :
-        nsecs_left(-1),
-        percent_left(-1),
-        power_state(OS::POWERSTATE_UNKNOWN) {
-}
+    nsecs_left(-1),
+    percent_left(-1),
+    power_state(OS::POWERSTATE_UNKNOWN) {}
 
-PowerOSX::~PowerOSX() {
-}
+PowerOSX::~PowerOSX() {}

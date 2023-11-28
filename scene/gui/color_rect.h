@@ -43,7 +43,7 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_frame_color(const Color &p_color);
+    void set_frame_color(const Color& p_color);
     Color get_frame_color() const;
 
     ColorRect();

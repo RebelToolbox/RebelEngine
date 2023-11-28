@@ -55,7 +55,11 @@ protected:
     static void _bind_methods();
 
 public:
-    Error start(Mode p_mode, PoolByteArray p_key, PoolByteArray p_iv = PoolByteArray());
+    Error start(
+        Mode p_mode,
+        PoolByteArray p_key,
+        PoolByteArray p_iv = PoolByteArray()
+    );
     PoolByteArray update(PoolByteArray p_src);
     PoolByteArray get_iv_state();
     void finish();

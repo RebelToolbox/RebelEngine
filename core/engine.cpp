@@ -37,9 +37,13 @@
 #include "core/version_hash.gen.h"
 
 void Engine::set_iterations_per_second(int p_ips) {
-    ERR_FAIL_COND_MSG(p_ips <= 0, "Engine iterations per second must be greater than 0.");
+    ERR_FAIL_COND_MSG(
+        p_ips <= 0,
+        "Engine iterations per second must be greater than 0."
+    );
     ips = p_ips;
 }
+
 int Engine::get_iterations_per_second() const {
     return ips;
 }
@@ -104,13 +108,14 @@ Dictionary Engine::get_version_info() const {
     if ((int)dict["patch"] != 0) {
         stringver += "." + String(dict["patch"]);
     }
-    stringver += "-" + String(dict["status"]) + " (" + String(dict["build"]) + ")";
+    stringver +=
+        "-" + String(dict["status"]) + " (" + String(dict["build"]) + ")";
     dict["string"] = stringver;
 
     return dict;
 }
 
-static Array array_from_info(const char *const *info_list) {
+static Array array_from_info(const char* const* info_list) {
     Array arr;
     for (int i = 0; info_list[i] != nullptr; i++) {
         arr.push_back(String::utf8(info_list[i]));
@@ -118,7 +123,10 @@ static Array array_from_info(const char *const *info_list) {
     return arr;
 }
 
-static Array array_from_info_count(const char *const *info_list, int info_count) {
+static Array array_from_info_count(
+    const char* const* info_list,
+    int info_count
+) {
     Array arr;
     for (int i = 0; i < info_count; i++) {
         arr.push_back(String::utf8(info_list[i]));
@@ -136,16 +144,21 @@ Dictionary Engine::get_author_info() const {
 
 Array Engine::get_copyright_info() const {
     Array components;
-    for (int component_index = 0; component_index < COPYRIGHT_INFO_COUNT; component_index++) {
-        const ComponentCopyright &cp_info = COPYRIGHT_INFO[component_index];
+    for (int component_index = 0; component_index < COPYRIGHT_INFO_COUNT;
+         component_index++) {
+        const ComponentCopyright& cp_info = COPYRIGHT_INFO[component_index];
         Dictionary component_dict;
         component_dict["name"] = String::utf8(cp_info.name);
         Array parts;
         for (int i = 0; i < cp_info.part_count; i++) {
-            const ComponentCopyrightPart &cp_part = cp_info.parts[i];
+            const ComponentCopyrightPart& cp_part = cp_info.parts[i];
             Dictionary part_dict;
-            part_dict["files"] = array_from_info_count(cp_part.files, cp_part.file_count);
-            part_dict["copyright"] = array_from_info_count(cp_part.copyright_statements, cp_part.copyright_count);
+            part_dict["files"] =
+                array_from_info_count(cp_part.files, cp_part.file_count);
+            part_dict["copyright"] = array_from_info_count(
+                cp_part.copyright_statements,
+                cp_part.copyright_count
+            );
             part_dict["license"] = String::utf8(cp_part.license);
             parts.push_back(part_dict);
         }
@@ -183,30 +196,34 @@ bool Engine::is_printing_error_messages() const {
     return _print_error_enabled;
 }
 
-void Engine::add_singleton(const Singleton &p_singleton) {
+void Engine::add_singleton(const Singleton& p_singleton) {
     singletons.push_back(p_singleton);
     singleton_ptrs[p_singleton.name] = p_singleton.ptr;
 }
 
-Object *Engine::get_singleton_object(const String &p_name) const {
-    const Map<StringName, Object *>::Element *E = singleton_ptrs.find(p_name);
-    ERR_FAIL_COND_V_MSG(!E, nullptr, "Failed to retrieve non-existent singleton '" + p_name + "'.");
+Object* Engine::get_singleton_object(const String& p_name) const {
+    const Map<StringName, Object*>::Element* E = singleton_ptrs.find(p_name);
+    ERR_FAIL_COND_V_MSG(
+        !E,
+        nullptr,
+        "Failed to retrieve non-existent singleton '" + p_name + "'."
+    );
     return E->get();
 };
 
-bool Engine::has_singleton(const String &p_name) const {
+bool Engine::has_singleton(const String& p_name) const {
     return singleton_ptrs.has(p_name);
 };
 
-void Engine::get_singletons(List<Singleton> *p_singletons) {
-    for (List<Singleton>::Element *E = singletons.front(); E; E = E->next()) {
+void Engine::get_singletons(List<Singleton>* p_singletons) {
+    for (List<Singleton>::Element* E = singletons.front(); E; E = E->next()) {
         p_singletons->push_back(E->get());
     }
 }
 
-Engine *Engine::singleton = nullptr;
+Engine* Engine::singleton = nullptr;
 
-Engine *Engine::get_singleton() {
+Engine* Engine::get_singleton() {
     return singleton;
 }
 
@@ -230,13 +247,16 @@ Engine::Engine() {
     _portals_active = false;
 }
 
-Engine::Singleton::Singleton(const StringName &p_name, Object *p_ptr) :
-        name(p_name),
-        ptr(p_ptr) {
+Engine::Singleton::Singleton(const StringName& p_name, Object* p_ptr) :
+    name(p_name),
+    ptr(p_ptr) {
 #ifdef DEBUG_ENABLED
-    Reference *ref = Object::cast_to<Reference>(p_ptr);
+    Reference* ref = Object::cast_to<Reference>(p_ptr);
     if (ref && !ref->is_referenced()) {
-        WARN_PRINT("You must use Ref<> to ensure the lifetime of a Reference object intended to be used as a singleton.");
+        WARN_PRINT(
+            "You must use Ref<> to ensure the lifetime of a Reference object "
+            "intended to be used as a singleton."
+        );
     }
 #endif
 }

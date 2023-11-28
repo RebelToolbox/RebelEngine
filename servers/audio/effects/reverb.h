@@ -41,16 +41,13 @@ class Reverb {
 public:
     enum {
         INPUT_BUFFER_MAX_SIZE = 1024,
-
     };
 
 private:
     enum {
-
         MAX_COMBS = 8,
         MAX_ALLPASS = 4,
         MAX_ECHO_MS = 500
-
     };
 
     static const float comb_tunings[MAX_COMBS];
@@ -58,10 +55,10 @@ private:
 
     struct Comb {
         int size;
-        float *buffer;
+        float* buffer;
         float feedback;
-        float damp; //lowpass
-        float damp_h; //history
+        float damp;   // lowpass
+        float damp_h; // history
         int pos;
         int extra_spread_frames;
 
@@ -76,9 +73,10 @@ private:
 
     struct AllPass {
         int size;
-        float *buffer;
+        float* buffer;
         int pos;
         int extra_spread_frames;
+
         AllPass() {
             size = 0;
             buffer = nullptr;
@@ -88,8 +86,8 @@ private:
 
     Comb comb[MAX_COMBS];
     AllPass allpass[MAX_ALLPASS];
-    float *input_buffer;
-    float *echo_buffer;
+    float* input_buffer;
+    float* echo_buffer;
     int echo_buffer_size;
     int echo_buffer_pos;
 
@@ -117,14 +115,14 @@ public:
     void set_damp(float p_damp);
     void set_wet(float p_wet);
     void set_dry(float p_dry);
-    void set_predelay(float p_predelay); // in ms
+    void set_predelay(float p_predelay);             // in ms
     void set_predelay_feedback(float p_predelay_fb); // in ms
     void set_highpass(float p_frq);
     void set_mix_rate(float p_mix_rate);
     void set_extra_spread(float p_spread);
     void set_extra_spread_base(float p_sec);
 
-    void process(float *p_src, float *p_dst, int p_frames);
+    void process(float* p_src, float* p_dst, int p_frames);
 
     Reverb();
 

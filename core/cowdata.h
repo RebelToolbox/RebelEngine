@@ -59,39 +59,41 @@ class CowData {
     friend class VMap;
 
 private:
-    mutable T *_ptr;
+    mutable T* _ptr;
 
     // internal helpers
 
-    _FORCE_INLINE_ SafeNumeric<uint32_t> *_get_refcount() const {
+    _FORCE_INLINE_ SafeNumeric<uint32_t>* _get_refcount() const {
         if (!_ptr) {
             return nullptr;
         }
 
-        return reinterpret_cast<SafeNumeric<uint32_t> *>(_ptr) - 2;
+        return reinterpret_cast<SafeNumeric<uint32_t>*>(_ptr) - 2;
     }
 
-    _FORCE_INLINE_ uint32_t *_get_size() const {
+    _FORCE_INLINE_ uint32_t* _get_size() const {
         if (!_ptr) {
             return nullptr;
         }
 
-        return reinterpret_cast<uint32_t *>(_ptr) - 1;
+        return reinterpret_cast<uint32_t*>(_ptr) - 1;
     }
 
-    _FORCE_INLINE_ T *_get_data() const {
+    _FORCE_INLINE_ T* _get_data() const {
         if (!_ptr) {
             return nullptr;
         }
-        return reinterpret_cast<T *>(_ptr);
+        return reinterpret_cast<T*>(_ptr);
     }
 
     _FORCE_INLINE_ size_t _get_alloc_size(size_t p_elements) const {
-        //return nearest_power_of_2_templated(p_elements*sizeof(T)+sizeof(SafeRefCount)+sizeof(int));
+        // return
+        // nearest_power_of_2_templated(p_elements*sizeof(T)+sizeof(SafeRefCount)+sizeof(int));
         return next_power_of_2(p_elements * sizeof(T));
     }
 
-    _FORCE_INLINE_ bool _get_alloc_size_checked(size_t p_elements, size_t *out) const {
+    _FORCE_INLINE_ bool _get_alloc_size_checked(size_t p_elements, size_t* out)
+        const {
 #if defined(_add_overflow) && defined(_mul_overflow)
         size_t o;
         size_t p;
@@ -101,36 +103,38 @@ private:
         }
         *out = next_power_of_2(o);
         if (_add_overflow(o, static_cast<size_t>(32), &p)) {
-            return false; //no longer allocated here
+            return false; // no longer allocated here
         }
         return true;
 #else
-        // Speed is more important than correctness here, do the operations unchecked
-        // and hope the best
+        // Speed is more important than correctness here, do the operations
+        // unchecked and hope the best
         *out = _get_alloc_size(p_elements);
         return true;
 #endif
     }
 
-    void _unref(void *p_data);
-    void _ref(const CowData *p_from);
-    void _ref(const CowData &p_from);
+    void _unref(void* p_data);
+    void _ref(const CowData* p_from);
+    void _ref(const CowData& p_from);
     uint32_t _copy_on_write();
 
 public:
-    void operator=(const CowData<T> &p_from) { _ref(p_from); }
-
-    _FORCE_INLINE_ T *ptrw() {
-        _copy_on_write();
-        return (T *)_get_data();
+    void operator=(const CowData<T>& p_from) {
+        _ref(p_from);
     }
 
-    _FORCE_INLINE_ const T *ptr() const {
+    _FORCE_INLINE_ T* ptrw() {
+        _copy_on_write();
+        return (T*)_get_data();
+    }
+
+    _FORCE_INLINE_ const T* ptr() const {
         return _get_data();
     }
 
     _FORCE_INLINE_ int size() const {
-        uint32_t *size = (uint32_t *)_get_size();
+        uint32_t* size = (uint32_t*)_get_size();
         if (size) {
             return *size;
         } else {
@@ -138,22 +142,27 @@ public:
         }
     }
 
-    _FORCE_INLINE_ void clear() { resize(0); }
-    _FORCE_INLINE_ bool empty() const { return _ptr == nullptr; }
+    _FORCE_INLINE_ void clear() {
+        resize(0);
+    }
 
-    _FORCE_INLINE_ void set(int p_index, const T &p_elem) {
+    _FORCE_INLINE_ bool empty() const {
+        return _ptr == nullptr;
+    }
+
+    _FORCE_INLINE_ void set(int p_index, const T& p_elem) {
         CRASH_BAD_INDEX(p_index, size());
         _copy_on_write();
         _get_data()[p_index] = p_elem;
     }
 
-    _FORCE_INLINE_ T &get_m(int p_index) {
+    _FORCE_INLINE_ T& get_m(int p_index) {
         CRASH_BAD_INDEX(p_index, size());
         _copy_on_write();
         return _get_data()[p_index];
     }
 
-    _FORCE_INLINE_ const T &get(int p_index) const {
+    _FORCE_INLINE_ const T& get(int p_index) const {
         CRASH_BAD_INDEX(p_index, size());
 
         return _get_data()[p_index];
@@ -163,7 +172,7 @@ public:
 
     _FORCE_INLINE_ void remove(int p_index) {
         ERR_FAIL_INDEX(p_index, size());
-        T *p = ptrw();
+        T* p = ptrw();
         int len = size();
         for (int i = p_index; i < len - 1; i++) {
             p[i] = p[i + 1];
@@ -172,7 +181,7 @@ public:
         resize(len - 1);
     };
 
-    Error insert(int p_pos, const T &p_val) {
+    Error insert(int p_pos, const T& p_val) {
         ERR_FAIL_INDEX_V(p_pos, size() + 1, ERR_INVALID_PARAMETER);
         resize(size() + 1);
         for (int i = (size() - 1); i > p_pos; i--) {
@@ -183,20 +192,23 @@ public:
         return OK;
     };
 
-    int find(const T &p_val, int p_from = 0) const;
+    int find(const T& p_val, int p_from = 0) const;
 
     _FORCE_INLINE_ CowData();
     _FORCE_INLINE_ ~CowData();
-    _FORCE_INLINE_ CowData(CowData<T> &p_from) { _ref(p_from); };
+
+    _FORCE_INLINE_ CowData(CowData<T>& p_from) {
+        _ref(p_from);
+    };
 };
 
 template <class T>
-void CowData<T>::_unref(void *p_data) {
+void CowData<T>::_unref(void* p_data) {
     if (!p_data) {
         return;
     }
 
-    SafeNumeric<uint32_t> *refc = _get_refcount();
+    SafeNumeric<uint32_t>* refc = _get_refcount();
 
     if (refc->decrement() > 0) {
         return; // still in use
@@ -204,8 +216,8 @@ void CowData<T>::_unref(void *p_data) {
     // clean up
 
     if (!std::is_trivially_destructible<T>::value) {
-        uint32_t *count = _get_size();
-        T *data = (T *)(count + 1);
+        uint32_t* count = _get_size();
+        T* data = (T*)(count + 1);
 
         for (uint32_t i = 0; i < *count; ++i) {
             // call destructors
@@ -214,7 +226,7 @@ void CowData<T>::_unref(void *p_data) {
     }
 
     // free mem
-    Memory::free_static((uint8_t *)p_data, true);
+    Memory::free_static((uint8_t*)p_data, true);
 }
 
 template <class T>
@@ -223,19 +235,21 @@ uint32_t CowData<T>::_copy_on_write() {
         return 0;
     }
 
-    SafeNumeric<uint32_t> *refc = _get_refcount();
+    SafeNumeric<uint32_t>* refc = _get_refcount();
 
     uint32_t rc = refc->get();
     if (likely(rc > 1)) {
         /* in use by more than me */
         uint32_t current_size = *_get_size();
 
-        uint32_t *mem_new = (uint32_t *)Memory::alloc_static(_get_alloc_size(current_size), true);
+        uint32_t* mem_new = (uint32_t*)
+            Memory::alloc_static(_get_alloc_size(current_size), true);
 
-        new (mem_new - 2, sizeof(uint32_t), "") SafeNumeric<uint32_t>(1); //refcount
-        *(mem_new - 1) = current_size; //size
+        new (mem_new - 2, sizeof(uint32_t), "")
+            SafeNumeric<uint32_t>(1);  // refcount
+        *(mem_new - 1) = current_size; // size
 
-        T *_data = (T *)(mem_new);
+        T* _data = (T*)(mem_new);
 
         // initialize new elements
         if (std::is_trivially_copyable<T>::value) {
@@ -277,32 +291,39 @@ Error CowData<T>::resize(int p_size) {
 
     size_t current_alloc_size = _get_alloc_size(current_size);
     size_t alloc_size;
-    ERR_FAIL_COND_V(!_get_alloc_size_checked(p_size, &alloc_size), ERR_OUT_OF_MEMORY);
+    ERR_FAIL_COND_V(
+        !_get_alloc_size_checked(p_size, &alloc_size),
+        ERR_OUT_OF_MEMORY
+    );
 
     if (p_size > current_size) {
         if (alloc_size != current_alloc_size) {
             if (current_size == 0) {
                 // alloc from scratch
-                uint32_t *ptr = (uint32_t *)Memory::alloc_static(alloc_size, true);
+                uint32_t* ptr =
+                    (uint32_t*)Memory::alloc_static(alloc_size, true);
                 ERR_FAIL_COND_V(!ptr, ERR_OUT_OF_MEMORY);
-                *(ptr - 1) = 0; //size, currently none
-                new (ptr - 2, sizeof(uint32_t), "") SafeNumeric<uint32_t>(1); //refcount
+                *(ptr - 1) = 0; // size, currently none
+                new (ptr - 2, sizeof(uint32_t), "")
+                    SafeNumeric<uint32_t>(1); // refcount
 
-                _ptr = (T *)ptr;
+                _ptr = (T*)ptr;
 
             } else {
-                uint32_t *_ptrnew = (uint32_t *)Memory::realloc_static(_ptr, alloc_size, true);
+                uint32_t* _ptrnew =
+                    (uint32_t*)Memory::realloc_static(_ptr, alloc_size, true);
                 ERR_FAIL_COND_V(!_ptrnew, ERR_OUT_OF_MEMORY);
-                new (_ptrnew - 2, sizeof(uint32_t), "") SafeNumeric<uint32_t>(rc); //refcount
+                new (_ptrnew - 2, sizeof(uint32_t), "")
+                    SafeNumeric<uint32_t>(rc); // refcount
 
-                _ptr = (T *)(_ptrnew);
+                _ptr = (T*)(_ptrnew);
             }
         }
 
         // construct the newly created elements
 
         if (!std::is_trivially_constructible<T>::value) {
-            T *elems = _get_data();
+            T* elems = _get_data();
 
             for (int i = *_get_size(); i < p_size; i++) {
                 memnew_placement(&elems[i], T);
@@ -315,17 +336,19 @@ Error CowData<T>::resize(int p_size) {
         if (!std::is_trivially_destructible<T>::value) {
             // deinitialize no longer needed elements
             for (uint32_t i = p_size; i < *_get_size(); i++) {
-                T *t = &_get_data()[i];
+                T* t = &_get_data()[i];
                 t->~T();
             }
         }
 
         if (alloc_size != current_alloc_size) {
-            uint32_t *_ptrnew = (uint32_t *)Memory::realloc_static(_ptr, alloc_size, true);
+            uint32_t* _ptrnew =
+                (uint32_t*)Memory::realloc_static(_ptr, alloc_size, true);
             ERR_FAIL_COND_V(!_ptrnew, ERR_OUT_OF_MEMORY);
-            new (_ptrnew - 2, sizeof(uint32_t), "") SafeNumeric<uint32_t>(rc); //refcount
+            new (_ptrnew - 2, sizeof(uint32_t), "")
+                SafeNumeric<uint32_t>(rc); // refcount
 
-            _ptr = (T *)(_ptrnew);
+            _ptr = (T*)(_ptrnew);
         }
 
         *_get_size() = p_size;
@@ -335,7 +358,7 @@ Error CowData<T>::resize(int p_size) {
 }
 
 template <class T>
-int CowData<T>::find(const T &p_val, int p_from) const {
+int CowData<T>::find(const T& p_val, int p_from) const {
     int ret = -1;
 
     if (p_from < 0 || size() == 0) {
@@ -353,12 +376,12 @@ int CowData<T>::find(const T &p_val, int p_from) const {
 }
 
 template <class T>
-void CowData<T>::_ref(const CowData *p_from) {
+void CowData<T>::_ref(const CowData* p_from) {
     _ref(*p_from);
 }
 
 template <class T>
-void CowData<T>::_ref(const CowData &p_from) {
+void CowData<T>::_ref(const CowData& p_from) {
     if (_ptr == p_from._ptr) {
         return; // self assign, do nothing.
     }
@@ -367,10 +390,11 @@ void CowData<T>::_ref(const CowData &p_from) {
     _ptr = nullptr;
 
     if (!p_from._ptr) {
-        return; //nothing to do
+        return; // nothing to do
     }
 
-    if (p_from._get_refcount()->conditional_increment() > 0) { // could reference
+    if (p_from._get_refcount()->conditional_increment()
+        > 0) { // could reference
         _ptr = p_from._ptr;
     }
 }

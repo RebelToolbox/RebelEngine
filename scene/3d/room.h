@@ -51,9 +51,15 @@ class Room : public Spatial {
 
 public:
     struct SimplifyInfo {
-        SimplifyInfo() { set_simplify(0.5); }
+        SimplifyInfo() {
+            set_simplify(0.5);
+        }
+
         void set_simplify(real_t p_value, real_t p_room_size = 0.0);
-        bool add_plane_if_unique(LocalVector<Plane, int32_t> &r_planes, const Plane &p) const;
+        bool add_plane_if_unique(
+            LocalVector<Plane, int32_t>& r_planes,
+            const Plane& p
+        ) const;
         real_t _plane_simplify = 0.5;
         real_t _plane_simplify_dot = 0.98;
         real_t _plane_simplify_dist = 0.08;
@@ -63,17 +69,23 @@ public:
     ~Room();
 
     void set_room_simplify(real_t p_value);
-    real_t get_room_simplify() const { return _simplify_info._plane_simplify; }
+
+    real_t get_room_simplify() const {
+        return _simplify_info._plane_simplify;
+    }
 
     // whether to use the room manager default
     void set_use_default_simplify(bool p_use);
-    bool get_use_default_simplify() const { return _use_default_simplify; }
 
-    void set_points(const PoolVector<Vector3> &p_points);
+    bool get_use_default_simplify() const {
+        return _use_default_simplify;
+    }
+
+    void set_points(const PoolVector<Vector3>& p_points);
     PoolVector<Vector3> get_points() const;
 
     // primarily for the gizmo
-    void set_point(int p_idx, const Vector3 &p_point);
+    void set_point(int p_idx, const Vector3& p_point);
 
     // editor only
     PoolVector<Vector3> generate_points();
@@ -86,12 +98,20 @@ private:
 
     void _changed(bool p_regenerate_bounds = false);
     template <class T>
-    static bool detect_nodes_of_type(const Node *p_node, bool p_ignore_first_node = true);
+    static bool detect_nodes_of_type(
+        const Node* p_node,
+        bool p_ignore_first_node = true
+    );
     template <typename T>
-    static bool detect_nodes_using_lambda(const Node *p_node, T p_lambda, bool p_ignore_first_node = true);
+    static bool detect_nodes_using_lambda(
+        const Node* p_node,
+        T p_lambda,
+        bool p_ignore_first_node = true
+    );
 
-    // note this is client side, and does not use the final planes stored in the PortalRenderer
-    bool contains_point(const Vector3 &p_pt) const;
+    // note this is client side, and does not use the final planes stored in the
+    // PortalRenderer
+    bool contains_point(const Vector3& p_pt) const;
 
     // planes forming convex hull of room
     LocalVector<Plane, int32_t> _planes;
@@ -131,7 +151,8 @@ private:
     // a room may be in one or several roomgroups
     LocalVector<int, int32_t> _roomgroups;
 
-    // list of portal ids from or to this room, just used in conversion to determine room bound
+    // list of portal ids from or to this room, just used in conversion to
+    // determine room bound
     LocalVector<int, int32_t> _portals;
 
     // each room now stores simplification data
@@ -144,7 +165,7 @@ protected:
 };
 
 template <class T>
-bool Room::detect_nodes_of_type(const Node *p_node, bool p_ignore_first_node) {
+bool Room::detect_nodes_of_type(const Node* p_node, bool p_ignore_first_node) {
     if (Object::cast_to<T>(p_node) && (!p_ignore_first_node)) {
         return true;
     }
@@ -159,7 +180,11 @@ bool Room::detect_nodes_of_type(const Node *p_node, bool p_ignore_first_node) {
 }
 
 template <typename T>
-bool Room::detect_nodes_using_lambda(const Node *p_node, T p_lambda, bool p_ignore_first_node) {
+bool Room::detect_nodes_using_lambda(
+    const Node* p_node,
+    T p_lambda,
+    bool p_ignore_first_node
+) {
     if (p_lambda(p_node) && !p_ignore_first_node) {
         return true;
     }

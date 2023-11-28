@@ -47,31 +47,39 @@ class ResourcePreloaderEditor : public PanelContainer {
         BUTTON_REMOVE
     };
 
-    Button *load;
-    Button *paste;
-    Tree *tree;
+    Button* load;
+    Button* paste;
+    Tree* tree;
     bool loading_scene;
 
-    EditorFileDialog *file;
+    EditorFileDialog* file;
 
-    AcceptDialog *dialog;
+    AcceptDialog* dialog;
 
-    ResourcePreloader *preloader;
+    ResourcePreloader* preloader;
 
     void _load_pressed();
     void _load_scene_pressed();
-    void _files_load_request(const Vector<String> &p_paths);
+    void _files_load_request(const Vector<String>& p_paths);
     void _paste_pressed();
-    void _remove_resource(const String &p_to_remove);
+    void _remove_resource(const String& p_to_remove);
     void _update_library();
-    void _cell_button_pressed(Object *p_item, int p_column, int p_id);
+    void _cell_button_pressed(Object* p_item, int p_column, int p_id);
     void _item_edited();
 
-    UndoRedo *undo_redo;
+    UndoRedo* undo_redo;
 
-    Variant get_drag_data_fw(const Point2 &p_point, Control *p_from);
-    bool can_drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from) const;
-    void drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from);
+    Variant get_drag_data_fw(const Point2& p_point, Control* p_from);
+    bool can_drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    ) const;
+    void drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    );
 
 protected:
     void _notification(int p_what);
@@ -79,27 +87,35 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_undo_redo(UndoRedo *p_undo_redo) { undo_redo = p_undo_redo; }
+    void set_undo_redo(UndoRedo* p_undo_redo) {
+        undo_redo = p_undo_redo;
+    }
 
-    void edit(ResourcePreloader *p_preloader);
+    void edit(ResourcePreloader* p_preloader);
     ResourcePreloaderEditor();
 };
 
 class ResourcePreloaderEditorPlugin : public EditorPlugin {
     GDCLASS(ResourcePreloaderEditorPlugin, EditorPlugin);
 
-    ResourcePreloaderEditor *preloader_editor;
-    EditorNode *editor;
-    Button *button;
+    ResourcePreloaderEditor* preloader_editor;
+    EditorNode* editor;
+    Button* button;
 
 public:
-    virtual String get_name() const { return "ResourcePreloader"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual String get_name() const {
+        return "ResourcePreloader";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
 
-    ResourcePreloaderEditorPlugin(EditorNode *p_node);
+    ResourcePreloaderEditorPlugin(EditorNode* p_node);
     ~ResourcePreloaderEditorPlugin();
 };
 

@@ -40,7 +40,8 @@ void BodySW::_update_inertia() {
 
 void BodySW::_update_transform_dependant() {
     center_of_mass = get_transform().basis.xform(center_of_mass_local);
-    principal_inertia_axes = get_transform().basis * principal_inertia_axes_local;
+    principal_inertia_axes =
+        get_transform().basis * principal_inertia_axes_local;
 
     // update inertia tensor
     Basis tb = principal_inertia_axes;
@@ -55,7 +56,8 @@ void BodySW::update_inertias() {
 
     switch (mode) {
         case PhysicsServer::BODY_MODE_RIGID: {
-            // Update tensor for all shapes, not the best way but should be somehow OK. (inspired from bullet)
+            // Update tensor for all shapes, not the best way but should be
+            // somehow OK. (inspired from bullet)
             real_t total_area = 0;
 
             for (int i = 0; i < get_shape_count(); i++) {
@@ -79,8 +81,10 @@ void BodySW::update_inertias() {
 
                     real_t mass = area * this->mass / total_area;
 
-                    // NOTE: we assume that the shape origin is also its center of mass.
-                    center_of_mass_local += mass * get_shape_transform(i).origin;
+                    // NOTE: we assume that the shape origin is also its center
+                    // of mass.
+                    center_of_mass_local +=
+                        mass * get_shape_transform(i).origin;
                 }
 
                 center_of_mass_local /= mass;
@@ -103,19 +107,26 @@ void BodySW::update_inertias() {
 
                 inertia_set = true;
 
-                const ShapeSW *shape = get_shape(i);
+                const ShapeSW* shape = get_shape(i);
 
                 real_t mass = area * this->mass / total_area;
 
-                Basis shape_inertia_tensor = shape->get_moment_of_inertia(mass).to_diagonal_matrix();
+                Basis shape_inertia_tensor =
+                    shape->get_moment_of_inertia(mass).to_diagonal_matrix();
                 Transform shape_transform = get_shape_transform(i);
                 Basis shape_basis = shape_transform.basis.orthonormalized();
 
-                // NOTE: we don't take the scale of collision shapes into account when computing the inertia tensor!
-                shape_inertia_tensor = shape_basis * shape_inertia_tensor * shape_basis.transposed();
+                // NOTE: we don't take the scale of collision shapes into
+                // account when computing the inertia tensor!
+                shape_inertia_tensor = shape_basis * shape_inertia_tensor
+                                     * shape_basis.transposed();
 
-                Vector3 shape_origin = shape_transform.origin - center_of_mass_local;
-                inertia_tensor += shape_inertia_tensor + (Basis() * shape_origin.dot(shape_origin) - shape_origin.outer(shape_origin)) * mass;
+                Vector3 shape_origin =
+                    shape_transform.origin - center_of_mass_local;
+                inertia_tensor += shape_inertia_tensor
+                                + (Basis() * shape_origin.dot(shape_origin)
+                                   - shape_origin.outer(shape_origin))
+                                      * mass;
             }
 
             // Set the inertia to a valid value when there are no valid shapes.
@@ -124,7 +135,8 @@ void BodySW::update_inertias() {
             }
 
             // Compute the principal axes of inertia.
-            principal_inertia_axes_local = inertia_tensor.diagonalize().transposed();
+            principal_inertia_axes_local =
+                inertia_tensor.diagonalize().transposed();
             _inv_inertia = inertia_tensor.get_main_diagonal().inverse();
 
             if (mass) {
@@ -164,13 +176,13 @@ void BodySW::set_active(bool p_active) {
         }
     } else {
         if (mode == PhysicsServer::BODY_MODE_STATIC) {
-            return; //static bodies can't become active
+            return; // static bodies can't become active
         }
         if (get_space()) {
             get_space()->body_add_to_active_list(&active_list);
         }
 
-        //still_time=0;
+        // still_time=0;
     }
     /*
     if (!space)
@@ -246,14 +258,16 @@ void BodySW::set_mode(PhysicsServer::BodyMode p_mode) {
     mode = p_mode;
 
     switch (p_mode) {
-        //CLEAR UP EVERYTHING IN CASE IT NOT WORKS!
+        // CLEAR UP EVERYTHING IN CASE IT NOT WORKS!
         case PhysicsServer::BODY_MODE_STATIC:
         case PhysicsServer::BODY_MODE_KINEMATIC: {
             _set_inv_transform(get_transform().affine_inverse());
             _inv_mass = 0;
             _set_static(p_mode == PhysicsServer::BODY_MODE_STATIC);
-            //set_active(p_mode==PhysicsServer::BODY_MODE_KINEMATIC);
-            set_active(p_mode == PhysicsServer::BODY_MODE_KINEMATIC && contacts.size());
+            // set_active(p_mode==PhysicsServer::BODY_MODE_KINEMATIC);
+            set_active(
+                p_mode == PhysicsServer::BODY_MODE_KINEMATIC && contacts.size()
+            );
             linear_velocity = Vector3();
             angular_velocity = Vector3();
             if (mode == PhysicsServer::BODY_MODE_KINEMATIC && prev != mode) {
@@ -281,6 +295,7 @@ void BodySW::set_mode(PhysicsServer::BodyMode p_mode) {
         _update_queries();
     */
 }
+
 PhysicsServer::BodyMode BodySW::get_mode() const {
     return mode;
 }
@@ -289,12 +304,15 @@ void BodySW::_shapes_changed() {
     _update_inertia();
 }
 
-void BodySW::set_state(PhysicsServer::BodyState p_state, const Variant &p_variant) {
+void BodySW::set_state(
+    PhysicsServer::BodyState p_state,
+    const Variant& p_variant
+) {
     switch (p_state) {
         case PhysicsServer::BODY_STATE_TRANSFORM: {
             if (mode == PhysicsServer::BODY_MODE_KINEMATIC) {
                 new_transform = p_variant;
-                //wakeup_neighbours();
+                // wakeup_neighbours();
                 set_active(true);
                 if (first_time_kinematic) {
                     _set_transform(p_variant);
@@ -309,7 +327,8 @@ void BodySW::set_state(PhysicsServer::BodyState p_state, const Variant &p_varian
             } else {
                 Transform t = p_variant;
                 t.orthonormalize();
-                new_transform = get_transform(); //used as old to compute motion
+                new_transform = get_transform(); // used as old to compute
+                                                 // motion
                 if (new_transform == t) {
                     break;
                 }
@@ -338,15 +357,16 @@ void BodySW::set_state(PhysicsServer::BodyState p_state, const Variant &p_varian
         } break;
         case PhysicsServer::BODY_STATE_SLEEPING: {
             //?
-            if (mode == PhysicsServer::BODY_MODE_STATIC || mode == PhysicsServer::BODY_MODE_KINEMATIC) {
+            if (mode == PhysicsServer::BODY_MODE_STATIC
+                || mode == PhysicsServer::BODY_MODE_KINEMATIC) {
                 break;
             }
             bool do_sleep = p_variant;
             if (do_sleep) {
                 linear_velocity = Vector3();
-                //biased_linear_velocity=Vector3();
+                // biased_linear_velocity=Vector3();
                 angular_velocity = Vector3();
-                //biased_angular_velocity=Vector3();
+                // biased_angular_velocity=Vector3();
                 set_active(false);
             } else {
                 set_active(true);
@@ -354,13 +374,15 @@ void BodySW::set_state(PhysicsServer::BodyState p_state, const Variant &p_varian
         } break;
         case PhysicsServer::BODY_STATE_CAN_SLEEP: {
             can_sleep = p_variant;
-            if (mode == PhysicsServer::BODY_MODE_RIGID && !active && !can_sleep) {
+            if (mode == PhysicsServer::BODY_MODE_RIGID && !active
+                && !can_sleep) {
                 set_active(true);
             }
 
         } break;
     }
 }
+
 Variant BodySW::get_state(PhysicsServer::BodyState p_state) const {
     switch (p_state) {
         case PhysicsServer::BODY_STATE_TRANSFORM: {
@@ -383,16 +405,20 @@ Variant BodySW::get_state(PhysicsServer::BodyState p_state) const {
     return Variant();
 }
 
-void BodySW::set_space(SpaceSW *p_space) {
+void BodySW::set_space(SpaceSW* p_space) {
     if (get_space()) {
         if (inertia_update_list.in_list()) {
-            get_space()->body_remove_from_inertia_update_list(&inertia_update_list);
+            get_space()->body_remove_from_inertia_update_list(
+                &inertia_update_list
+            );
         }
         if (active_list.in_list()) {
             get_space()->body_remove_from_active_list(&active_list);
         }
         if (direct_state_query_list.in_list()) {
-            get_space()->body_remove_from_state_query_list(&direct_state_query_list);
+            get_space()->body_remove_from_state_query_list(
+                &direct_state_query_list
+            );
         }
     }
 
@@ -415,13 +441,25 @@ void BodySW::set_space(SpaceSW *p_space) {
     first_integration = true;
 }
 
-void BodySW::_compute_area_gravity_and_dampenings(const AreaSW *p_area) {
+void BodySW::_compute_area_gravity_and_dampenings(const AreaSW* p_area) {
     if (p_area->is_gravity_point()) {
         if (p_area->get_gravity_distance_scale() > 0) {
-            Vector3 v = p_area->get_transform().xform(p_area->get_gravity_vector()) - get_transform().get_origin();
-            gravity += v.normalized() * (p_area->get_gravity() / Math::pow(v.length() * p_area->get_gravity_distance_scale() + 1, 2));
+            Vector3 v =
+                p_area->get_transform().xform(p_area->get_gravity_vector())
+                - get_transform().get_origin();
+            gravity +=
+                v.normalized()
+                * (p_area->get_gravity()
+                   / Math::pow(
+                       v.length() * p_area->get_gravity_distance_scale() + 1,
+                       2
+                   ));
         } else {
-            gravity += (p_area->get_transform().xform(p_area->get_gravity_vector()) - get_transform().get_origin()).normalized() * p_area->get_gravity();
+            gravity +=
+                (p_area->get_transform().xform(p_area->get_gravity_vector())
+                 - get_transform().get_origin())
+                    .normalized()
+                * p_area->get_gravity();
         }
     } else {
         gravity += p_area->get_gravity_vector() * p_area->get_gravity();
@@ -448,7 +486,7 @@ void BodySW::integrate_forces(real_t p_step) {
         return;
     }
 
-    AreaSW *def_area = get_space()->get_default_area();
+    AreaSW* def_area = get_space()->get_default_area();
     // AreaSW *damp_area = def_area;
 
     ERR_FAIL_COND(!def_area);
@@ -460,15 +498,18 @@ void BodySW::integrate_forces(real_t p_step) {
     area_angular_damp = 0;
     if (ac) {
         areas.sort();
-        const AreaCMP *aa = &areas[0];
+        const AreaCMP* aa = &areas[0];
         // damp_area = aa[ac-1].area;
         for (int i = ac - 1; i >= 0 && !stopped; i--) {
-            PhysicsServer::AreaSpaceOverrideMode mode = aa[i].area->get_space_override_mode();
+            PhysicsServer::AreaSpaceOverrideMode mode =
+                aa[i].area->get_space_override_mode();
             switch (mode) {
                 case PhysicsServer::AREA_SPACE_OVERRIDE_COMBINE:
                 case PhysicsServer::AREA_SPACE_OVERRIDE_COMBINE_REPLACE: {
                     _compute_area_gravity_and_dampenings(aa[i].area);
-                    stopped = mode == PhysicsServer::AREA_SPACE_OVERRIDE_COMBINE_REPLACE;
+                    stopped =
+                        mode
+                        == PhysicsServer::AREA_SPACE_OVERRIDE_COMBINE_REPLACE;
                 } break;
                 case PhysicsServer::AREA_SPACE_OVERRIDE_REPLACE:
                 case PhysicsServer::AREA_SPACE_OVERRIDE_REPLACE_COMBINE: {
@@ -476,7 +517,8 @@ void BodySW::integrate_forces(real_t p_step) {
                     area_angular_damp = 0;
                     area_linear_damp = 0;
                     _compute_area_gravity_and_dampenings(aa[i].area);
-                    stopped = mode == PhysicsServer::AREA_SPACE_OVERRIDE_REPLACE;
+                    stopped =
+                        mode == PhysicsServer::AREA_SPACE_OVERRIDE_REPLACE;
                 } break;
                 default: {
                 }
@@ -511,13 +553,14 @@ void BodySW::integrate_forces(real_t p_step) {
     bool do_motion = false;
 
     if (mode == PhysicsServer::BODY_MODE_KINEMATIC) {
-        //compute motion, angular and etc. velocities from prev transform
+        // compute motion, angular and etc. velocities from prev transform
         motion = new_transform.origin - get_transform().origin;
         do_motion = true;
         linear_velocity = motion / p_step;
 
-        //compute a FAKE angular velocity, not so easy
-        Basis rot = new_transform.basis.orthonormalized() * get_transform().basis.orthonormalized().transposed();
+        // compute a FAKE angular velocity, not so easy
+        Basis rot = new_transform.basis.orthonormalized()
+                  * get_transform().basis.orthonormalized().transposed();
         Vector3 axis;
         real_t angle;
 
@@ -526,7 +569,7 @@ void BodySW::integrate_forces(real_t p_step) {
         angular_velocity = axis * (angle / p_step);
     } else {
         if (!omit_force_integration && !first_integration) {
-            //overridden by direct state query
+            // overridden by direct state query
 
             Vector3 force = gravity * mass;
             force += applied_force;
@@ -561,12 +604,12 @@ void BodySW::integrate_forces(real_t p_step) {
     applied_torque = Vector3();
     first_integration = false;
 
-    //motion=linear_velocity*p_step;
+    // motion=linear_velocity*p_step;
 
     biased_angular_velocity = Vector3();
     biased_linear_velocity = Vector3();
 
-    if (do_motion) { //shapes temporarily extend for raycast
+    if (do_motion) { // shapes temporarily extend for raycast
         _update_shapes_with_motion(motion);
     }
 
@@ -583,7 +626,7 @@ void BodySW::integrate_velocities(real_t p_step) {
         get_space()->body_add_to_state_query_list(&direct_state_query_list);
     }
 
-    //apply axis lock linear
+    // apply axis lock linear
     for (int i = 0; i < 3; i++) {
         if (is_axis_locked((PhysicsServer::BodyAxis)(1 << i))) {
             linear_velocity[i] = 0;
@@ -591,7 +634,7 @@ void BodySW::integrate_velocities(real_t p_step) {
             new_transform.origin[i] = get_transform().origin[i];
         }
     }
-    //apply axis lock angular
+    // apply axis lock angular
     for (int i = 0; i < 3; i++) {
         if (is_axis_locked((PhysicsServer::BodyAxis)(1 << (i + 3)))) {
             angular_velocity[i] = 0;
@@ -602,8 +645,9 @@ void BodySW::integrate_velocities(real_t p_step) {
     if (mode == PhysicsServer::BODY_MODE_KINEMATIC) {
         _set_transform(new_transform, false);
         _set_inv_transform(new_transform.affine_inverse());
-        if (contacts.size() == 0 && linear_velocity == Vector3() && angular_velocity == Vector3()) {
-            set_active(false); //stopped moving, deactivate
+        if (contacts.size() == 0 && linear_velocity == Vector3()
+            && angular_velocity == Vector3()) {
+            set_active(false); // stopped moving, deactivate
         }
 
         return;
@@ -618,7 +662,8 @@ void BodySW::integrate_velocities(real_t p_step) {
         Vector3 ang_vel_axis = total_angular_velocity / ang_vel;
         Basis rot(ang_vel_axis, ang_vel * p_step);
         Basis identity3(1, 0, 0, 0, 1, 0, 0, 0, 1);
-        transform.origin += ((identity3 - rot) * transform.basis).xform(center_of_mass_local);
+        transform.origin +=
+            ((identity3 - rot) * transform.basis).xform(center_of_mass_local);
         transform.basis = rot * transform.basis;
         transform.orthonormalize();
     }
@@ -659,16 +704,16 @@ void BodySW::simulate_motion(const Transform& p_xform,real_t p_step) {
     linear_velocity=(p_xform.origin - get_transform().origin)/p_step;
 
     //compute a FAKE angular velocity, not so easy
-    Basis rot=get_transform().basis.orthonormalized().transposed() * p_xform.basis.orthonormalized();
-    Vector3 axis;
-    real_t angle;
+    Basis rot=get_transform().basis.orthonormalized().transposed() *
+p_xform.basis.orthonormalized(); Vector3 axis; real_t angle;
 
     rot.get_axis_angle(axis,angle);
     axis.normalize();
     angular_velocity=axis.normalized() * (angle/p_step);
     linear_velocity = (p_xform.origin - get_transform().origin)/p_step;
 
-    if (!direct_state_query_list.in_list())// - callalways, so lv and av are cleared && (state_query || direct_state_query))
+    if (!direct_state_query_list.in_list())// - callalways, so lv and av are
+cleared && (state_query || direct_state_query))
         get_space()->body_add_to_state_query_list(&direct_state_query_list);
     simulated_motion=true;
     _set_transform(p_xform);
@@ -678,16 +723,17 @@ void BodySW::simulate_motion(const Transform& p_xform,real_t p_step) {
 */
 
 void BodySW::wakeup_neighbours() {
-    for (Map<ConstraintSW *, int>::Element *E = constraint_map.front(); E; E = E->next()) {
-        const ConstraintSW *c = E->key();
-        BodySW **n = c->get_body_ptr();
+    for (Map<ConstraintSW*, int>::Element* E = constraint_map.front(); E;
+         E = E->next()) {
+        const ConstraintSW* c = E->key();
+        BodySW** n = c->get_body_ptr();
         int bc = c->get_body_count();
 
         for (int i = 0; i < bc; i++) {
             if (i == E->get()) {
                 continue;
             }
-            BodySW *b = n[i];
+            BodySW* b = n[i];
             if (b->mode != PhysicsServer::BODY_MODE_RIGID) {
                 continue;
             }
@@ -701,16 +747,16 @@ void BodySW::wakeup_neighbours() {
 
 void BodySW::call_queries() {
     if (fi_callback) {
-        PhysicsDirectBodyStateSW *dbs = PhysicsDirectBodyStateSW::singleton;
+        PhysicsDirectBodyStateSW* dbs = PhysicsDirectBodyStateSW::singleton;
         dbs->body = this;
 
         Variant v = dbs;
 
-        Object *obj = ObjectDB::get_instance(fi_callback->id);
+        Object* obj = ObjectDB::get_instance(fi_callback->id);
         if (!obj) {
             set_force_integration_callback(0, StringName());
         } else {
-            const Variant *vp[2] = { &v, &fi_callback->udata };
+            const Variant* vp[2] = {&v, &fi_callback->udata};
 
             Variant::CallError ce;
             int argc = (fi_callback->udata.get_type() == Variant::NIL) ? 1 : 2;
@@ -720,7 +766,8 @@ void BodySW::call_queries() {
 }
 
 bool BodySW::sleep_test(real_t p_step) {
-    if (mode == PhysicsServer::BODY_MODE_STATIC || mode == PhysicsServer::BODY_MODE_KINEMATIC) {
+    if (mode == PhysicsServer::BODY_MODE_STATIC
+        || mode == PhysicsServer::BODY_MODE_KINEMATIC) {
         return true; //
     } else if (mode == PhysicsServer::BODY_MODE_CHARACTER) {
         return !active; // characters don't sleep unless asked to sleep
@@ -728,17 +775,25 @@ bool BodySW::sleep_test(real_t p_step) {
         return false;
     }
 
-    if (Math::abs(angular_velocity.length()) < get_space()->get_body_angular_velocity_sleep_threshold() && Math::abs(linear_velocity.length_squared()) < get_space()->get_body_linear_velocity_sleep_threshold() * get_space()->get_body_linear_velocity_sleep_threshold()) {
+    if (Math::abs(angular_velocity.length())
+            < get_space()->get_body_angular_velocity_sleep_threshold()
+        && Math::abs(linear_velocity.length_squared()
+           ) < get_space()->get_body_linear_velocity_sleep_threshold()
+                   * get_space()->get_body_linear_velocity_sleep_threshold()) {
         still_time += p_step;
 
         return still_time > get_space()->get_body_time_to_sleep();
     } else {
-        still_time = 0; //maybe this should be set to 0 on set_active?
+        still_time = 0; // maybe this should be set to 0 on set_active?
         return false;
     }
 }
 
-void BodySW::set_force_integration_callback(ObjectID p_id, const StringName &p_method, const Variant &p_udata) {
+void BodySW::set_force_integration_callback(
+    ObjectID p_id,
+    const StringName& p_method,
+    const Variant& p_udata
+) {
     if (fi_callback) {
         memdelete(fi_callback);
         fi_callback = nullptr;
@@ -757,11 +812,11 @@ void BodySW::set_kinematic_margin(real_t p_margin) {
 }
 
 BodySW::BodySW() :
-        CollisionObjectSW(TYPE_BODY),
-        locked_axis(0),
-        active_list(this),
-        inertia_update_list(this),
-        direct_state_query_list(this) {
+    CollisionObjectSW(TYPE_BODY),
+    locked_axis(0),
+    active_list(this),
+    inertia_update_list(this),
+    direct_state_query_list(this) {
     mode = PhysicsServer::BODY_MODE_RIGID;
     active = true;
 
@@ -772,7 +827,7 @@ BodySW::BodySW() :
     bounce = 0;
     friction = 1;
     omit_force_integration = false;
-    //applied_torque=0;
+    // applied_torque=0;
     island_step = 0;
     island_next = nullptr;
     island_list_next = nullptr;
@@ -799,8 +854,8 @@ BodySW::~BodySW() {
     }
 }
 
-PhysicsDirectBodyStateSW *PhysicsDirectBodyStateSW::singleton = nullptr;
+PhysicsDirectBodyStateSW* PhysicsDirectBodyStateSW::singleton = nullptr;
 
-PhysicsDirectSpaceState *PhysicsDirectBodyStateSW::get_space_state() {
+PhysicsDirectSpaceState* PhysicsDirectBodyStateSW::get_space_state() {
     return body->get_space()->get_direct_state();
 }

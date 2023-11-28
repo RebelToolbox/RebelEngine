@@ -33,14 +33,14 @@
 #include "editor_node.h"
 #include "editor_scale.h"
 
-void EditorPath::_add_children_to_popup(Object *p_obj, int p_depth) {
+void EditorPath::_add_children_to_popup(Object* p_obj, int p_depth) {
     if (p_depth > 8) {
         return;
     }
 
     List<PropertyInfo> pinfo;
     p_obj->get_property_list(&pinfo);
-    for (List<PropertyInfo>::Element *E = pinfo.front(); E; E = E->next()) {
+    for (List<PropertyInfo>::Element* E = pinfo.front(); E; E = E->next()) {
         if (!(E->get().usage & PROPERTY_USAGE_EDITOR)) {
             continue;
         }
@@ -52,7 +52,7 @@ void EditorPath::_add_children_to_popup(Object *p_obj, int p_depth) {
         if (value.get_type() != Variant::OBJECT) {
             continue;
         }
-        Object *obj = value;
+        Object* obj = value;
         if (!obj) {
             continue;
         }
@@ -87,13 +87,17 @@ void EditorPath::_show_popup() {
 
     sub_objects_menu->set_position(gp);
     sub_objects_menu->set_size(Size2(size.width, 1));
-    sub_objects_menu->set_parent_rect(Rect2(Point2(gp - sub_objects_menu->get_position()), size));
+    sub_objects_menu->set_parent_rect(
+        Rect2(Point2(gp - sub_objects_menu->get_position()), size)
+    );
 
     sub_objects_menu->popup();
 }
 
 void EditorPath::_about_to_show() {
-    Object *obj = ObjectDB::get_instance(history->get_path_object(history->get_path_size() - 1));
+    Object* obj = ObjectDB::get_instance(
+        history->get_path_object(history->get_path_size() - 1)
+    );
     if (!obj) {
         return;
     }
@@ -109,7 +113,7 @@ void EditorPath::_about_to_show() {
 
 void EditorPath::update_path() {
     for (int i = 0; i < history->get_path_size(); i++) {
-        Object *obj = ObjectDB::get_instance(history->get_path_object(i));
+        Object* obj = ObjectDB::get_instance(history->get_path_object(i));
         if (!obj) {
             continue;
         }
@@ -122,7 +126,7 @@ void EditorPath::update_path() {
         if (i == history->get_path_size() - 1) {
             String name;
             if (Object::cast_to<Resource>(obj)) {
-                Resource *r = Object::cast_to<Resource>(obj);
+                Resource* r = Object::cast_to<Resource>(obj);
                 if (r->get_path().is_resource_file()) {
                     name = r->get_path().get_file();
                 } else {
@@ -142,7 +146,9 @@ void EditorPath::update_path() {
                 name = obj->get_class();
             }
 
-            current_object_label->set_text(" " + name); // An extra space so the text is not too close of the icon.
+            current_object_label->set_text(
+                " " + name
+            ); // An extra space so the text is not too close of the icon.
             set_tooltip(obj->get_class());
         }
     }
@@ -165,7 +171,7 @@ void EditorPath::enable_path() {
 void EditorPath::_id_pressed(int p_idx) {
     ERR_FAIL_INDEX(p_idx, objects.size());
 
-    Object *obj = ObjectDB::get_instance(objects[p_idx]);
+    Object* obj = ObjectDB::get_instance(objects[p_idx]);
     if (!obj) {
         return;
     }
@@ -180,8 +186,13 @@ void EditorPath::_notification(int p_what) {
             update_path();
 
             // Button overrides Control's method, so we have to improvise.
-            sub_objects_icon->set_texture(sub_objects_icon->get_icon("select_arrow", "Tree"));
-            current_object_label->add_font_override("font", get_font("main", "EditorFonts"));
+            sub_objects_icon->set_texture(
+                sub_objects_icon->get_icon("select_arrow", "Tree")
+            );
+            current_object_label->add_font_override(
+                "font",
+                get_font("main", "EditorFonts")
+            );
         } break;
 
         case NOTIFICATION_READY: {
@@ -196,17 +207,17 @@ void EditorPath::_bind_methods() {
     ClassDB::bind_method("_id_pressed", &EditorPath::_id_pressed);
 }
 
-EditorPath::EditorPath(EditorHistory *p_history) {
+EditorPath::EditorPath(EditorHistory* p_history) {
     history = p_history;
 
-    MarginContainer *main_mc = memnew(MarginContainer);
+    MarginContainer* main_mc = memnew(MarginContainer);
     main_mc->set_anchors_and_margins_preset(PRESET_WIDE);
     main_mc->add_constant_override("margin_left", 4 * EDSCALE);
     main_mc->add_constant_override("margin_right", 6 * EDSCALE);
     main_mc->set_mouse_filter(MOUSE_FILTER_PASS);
     add_child(main_mc);
 
-    HBoxContainer *main_hb = memnew(HBoxContainer);
+    HBoxContainer* main_hb = memnew(HBoxContainer);
     main_mc->add_child(main_hb);
 
     current_object_icon = memnew(TextureRect);

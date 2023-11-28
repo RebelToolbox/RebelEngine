@@ -47,22 +47,22 @@ class EditorFileServer : public Object {
     };
 
     struct ClientData {
-        Thread *thread;
+        Thread* thread;
         Ref<StreamPeerTCP> connection;
-        Map<int, FileAccess *> files;
-        EditorFileServer *efs;
+        Map<int, FileAccess*> files;
+        EditorFileServer* efs;
         bool quit;
     };
 
     Ref<TCP_Server> server;
-    Set<Thread *> to_wait;
+    Set<Thread*> to_wait;
 
-    static void _close_client(ClientData *cd);
-    static void _subthread_start(void *s);
+    static void _close_client(ClientData* cd);
+    static void _subthread_start(void* s);
 
     Mutex wait_mutex;
     Thread thread;
-    static void _thread_start(void *);
+    static void _thread_start(void*);
     bool quit;
     Command cmd;
 

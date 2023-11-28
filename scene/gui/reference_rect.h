@@ -45,13 +45,13 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_border_color(const Color &p_color);
+    void set_border_color(const Color& p_color);
     Color get_border_color() const;
 
     void set_border_width(float p_width);
     float get_border_width() const;
 
-    void set_editor_only(const bool &p_enabled);
+    void set_editor_only(const bool& p_enabled);
     bool get_editor_only() const;
 };
 

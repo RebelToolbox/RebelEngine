@@ -30,7 +30,7 @@
 
 #include "portal_types.h"
 
-VSPortal::ClipResult VSPortal::clip_with_plane(const Plane &p) const {
+VSPortal::ClipResult VSPortal::clip_with_plane(const Plane& p) const {
     int nOutside = 0;
     int nPoints = _pts_world.size();
 
@@ -53,13 +53,19 @@ VSPortal::ClipResult VSPortal::clip_with_plane(const Plane &p) const {
     return CLIP_PARTIAL;
 }
 
-void VSPortal::add_pvs_planes(const VSPortal &p_first, bool p_first_outgoing, LocalVector<Plane, int32_t> &r_planes, bool p_outgoing) const {
+void VSPortal::add_pvs_planes(
+    const VSPortal& p_first,
+    bool p_first_outgoing,
+    LocalVector<Plane, int32_t>& r_planes,
+    bool p_outgoing
+) const {
     int num_a = p_first._pts_world.size();
     int num_b = _pts_world.size();
 
-    // get the world points of both in the correct order based on whether outgoing .. note this isn't very efficient...
-    Vector3 *pts_a = (Vector3 *)alloca(num_a * sizeof(Vector3));
-    Vector3 *pts_b = (Vector3 *)alloca(num_b * sizeof(Vector3));
+    // get the world points of both in the correct order based on whether
+    // outgoing .. note this isn't very efficient...
+    Vector3* pts_a = (Vector3*)alloca(num_a * sizeof(Vector3));
+    Vector3* pts_b = (Vector3*)alloca(num_b * sizeof(Vector3));
 
     if (p_first_outgoing) {
         // straight copy
@@ -89,9 +95,9 @@ void VSPortal::add_pvs_planes(const VSPortal &p_first, bool p_first_outgoing, Lo
             int pvC = (pvB + 1) % num_b;
 
             // three verts
-            const Vector3 &va = pts_a[pvA];
-            const Vector3 &vb = pts_b[pvB];
-            const Vector3 &vc = pts_b[pvC];
+            const Vector3& va = pts_a[pvA];
+            const Vector3& vb = pts_b[pvB];
+            const Vector3& vc = pts_b[pvC];
 
             // create plane
             Plane plane = Plane(va, vc, vb);
@@ -107,17 +113,20 @@ void VSPortal::add_pvs_planes(const VSPortal &p_first, bool p_first_outgoing, Lo
             }
 
         } // for pvB
-    } // for pvA
+    }     // for pvA
 }
 
-// typically we will end up with a bunch of duplicate planes being trying to be added for a portal.
-// we can remove any that are too similar
-bool VSPortal::_is_plane_duplicate(const Plane &p_plane, const LocalVector<Plane, int32_t> &p_planes) const {
+// typically we will end up with a bunch of duplicate planes being trying to be
+// added for a portal. we can remove any that are too similar
+bool VSPortal::_is_plane_duplicate(
+    const Plane& p_plane,
+    const LocalVector<Plane, int32_t>& p_planes
+) const {
     const real_t epsilon_d = 0.001;
     const real_t epsilon_dot = 0.98;
 
     for (int n = 0; n < p_planes.size(); n++) {
-        const Plane &p = p_planes[n];
+        const Plane& p = p_planes[n];
         if (Math::absf(p_plane.d - p.d) > epsilon_d) {
             continue;
         }
@@ -134,16 +143,18 @@ bool VSPortal::_is_plane_duplicate(const Plane &p_plane, const LocalVector<Plane
     return false;
 }
 
-bool VSPortal::_pvs_is_outside_planes(const LocalVector<Plane, int32_t> &p_planes) const {
+bool VSPortal::_pvs_is_outside_planes(
+    const LocalVector<Plane, int32_t>& p_planes
+) const {
     // short version
-    const Vector<Vector3> &pts = _pts_world;
+    const Vector<Vector3>& pts = _pts_world;
     int nPoints = pts.size();
 
     const real_t epsilon = 0.1;
 
     for (int p = 0; p < p_planes.size(); p++) {
         for (int n = 0; n < nPoints; n++) {
-            const Vector3 &pt = pts[n];
+            const Vector3& pt = pts[n];
             real_t dist = p_planes[p].distance_to(pt);
 
             if (dist < -epsilon) {
@@ -155,7 +166,13 @@ bool VSPortal::_pvs_is_outside_planes(const LocalVector<Plane, int32_t> &p_plane
     return true;
 }
 
-bool VSPortal::_test_pvs_plane(const Plane &p_plane, const Vector3 *pts_a, int num_a, const Vector3 *pts_b, int num_b) const {
+bool VSPortal::_test_pvs_plane(
+    const Plane& p_plane,
+    const Vector3* pts_a,
+    int num_a,
+    const Vector3* pts_b,
+    int num_b
+) const {
     const real_t epsilon = 0.1;
 
     for (int n = 0; n < num_a; n++) {
@@ -178,9 +195,13 @@ bool VSPortal::_test_pvs_plane(const Plane &p_plane, const Vector3 *pts_a, int n
 }
 
 // add clipping planes to the vector formed by each portal edge and the camera
-void VSPortal::add_planes(const Vector3 &p_cam, LocalVector<Plane> &r_planes, bool p_outgoing) const {
+void VSPortal::add_planes(
+    const Vector3& p_cam,
+    LocalVector<Plane>& r_planes,
+    bool p_outgoing
+) const {
     // short version
-    const Vector<Vector3> &pts = _pts_world;
+    const Vector<Vector3>& pts = _pts_world;
 
     int nPoints = pts.size();
     ERR_FAIL_COND(nPoints < 3);
@@ -229,6 +250,6 @@ void VSPortal::add_planes(const Vector3 &p_cam, LocalVector<Plane> &r_planes, bo
     // }
 }
 
-void VSPortal::debug_check_plane_validity(const Plane &p) const {
+void VSPortal::debug_check_plane_validity(const Plane& p) const {
     // DEV_ASSERT(p.distance_to(center) < 0.0);
 }

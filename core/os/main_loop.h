@@ -46,7 +46,7 @@ protected:
 
 public:
     enum {
-        //make sure these are replicated in Node
+        // make sure these are replicated in Node
         NOTIFICATION_WM_MOUSE_ENTER = 1002,
         NOTIFICATION_WM_MOUSE_EXIT = 1003,
         NOTIFICATION_WM_FOCUS_IN = 1004,
@@ -63,18 +63,21 @@ public:
         NOTIFICATION_APP_PAUSED = 1015,
     };
 
-    virtual void input_event(const Ref<InputEvent> &p_event);
-    virtual void input_text(const String &p_text);
+    virtual void input_event(const Ref<InputEvent>& p_event);
+    virtual void input_text(const String& p_text);
 
     virtual void init();
     virtual bool iteration(float p_time);
     virtual bool idle(float p_time);
     virtual void finish();
 
-    virtual void drop_files(const Vector<String> &p_files, int p_from_screen = 0);
-    virtual void global_menu_action(const Variant &p_id, const Variant &p_meta);
+    virtual void drop_files(
+        const Vector<String>& p_files,
+        int p_from_screen = 0
+    );
+    virtual void global_menu_action(const Variant& p_id, const Variant& p_meta);
 
-    void set_init_script(const Ref<Script> &p_init_script);
+    void set_init_script(const Ref<Script>& p_init_script);
 
     MainLoop();
     virtual ~MainLoop();

@@ -38,8 +38,8 @@
 class ScrollContainer : public Container {
     GDCLASS(ScrollContainer, Container);
 
-    HScrollBar *h_scroll;
-    VScrollBar *v_scroll;
+    HScrollBar* h_scroll;
+    VScrollBar* v_scroll;
 
     Size2 child_max_size;
     Size2 scroll;
@@ -68,8 +68,8 @@ class ScrollContainer : public Container {
 protected:
     Size2 get_minimum_size() const;
 
-    void _gui_input(const Ref<InputEvent> &p_gui_input);
-    void _gui_focus_changed(Control *p_control);
+    void _gui_input(const Ref<InputEvent>& p_gui_input);
+    void _gui_focus_changed(Control* p_control);
     void _notification(int p_what);
 
     void _scroll_moved(float);
@@ -96,9 +96,9 @@ public:
     bool is_following_focus() const;
     void set_follow_focus(bool p_follow);
 
-    HScrollBar *get_h_scrollbar();
-    VScrollBar *get_v_scrollbar();
-    void ensure_control_visible(Control *p_control);
+    HScrollBar* get_h_scrollbar();
+    VScrollBar* get_v_scrollbar();
+    void ensure_control_visible(Control* p_control);
 
     virtual bool clips_input() const;
 

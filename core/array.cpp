@@ -41,8 +41,8 @@ public:
     Vector<Variant> array;
 };
 
-void Array::_ref(const Array &p_from) const {
-    ArrayPrivate *_fp = p_from._p;
+void Array::_ref(const Array& p_from) const {
+    ArrayPrivate* _fp = p_from._p;
 
     ERR_FAIL_COND(!_fp); // should NOT happen.
 
@@ -70,25 +70,27 @@ void Array::_unref() const {
     _p = nullptr;
 }
 
-Variant &Array::operator[](int p_idx) {
+Variant& Array::operator[](int p_idx) {
     return _p->array.write[p_idx];
 }
 
-const Variant &Array::operator[](int p_idx) const {
+const Variant& Array::operator[](int p_idx) const {
     return _p->array[p_idx];
 }
 
 int Array::size() const {
     return _p->array.size();
 }
+
 bool Array::empty() const {
     return _p->array.empty();
 }
+
 void Array::clear() {
     _p->array.clear();
 }
 
-bool Array::operator==(const Array &p_array) const {
+bool Array::operator==(const Array& p_array) const {
     return _p == p_array._p;
 }
 
@@ -100,14 +102,16 @@ uint32_t Array::hash() const {
     }
     return h;
 }
-void Array::operator=(const Array &p_array) {
+
+void Array::operator=(const Array& p_array) {
     _ref(p_array);
 }
-void Array::push_back(const Variant &p_value) {
+
+void Array::push_back(const Variant& p_value) {
     _p->array.push_back(p_value);
 }
 
-void Array::append_array(const Array &p_array) {
+void Array::append_array(const Array& p_array) {
     _p->array.append_array(p_array._p->array);
 }
 
@@ -115,29 +119,37 @@ Error Array::resize(int p_new_size) {
     return _p->array.resize(p_new_size);
 }
 
-void Array::insert(int p_pos, const Variant &p_value) {
+void Array::insert(int p_pos, const Variant& p_value) {
     _p->array.insert(p_pos, p_value);
 }
 
-void Array::erase(const Variant &p_value) {
+void Array::erase(const Variant& p_value) {
     _p->array.erase(p_value);
 }
 
 Variant Array::front() const {
-    ERR_FAIL_COND_V_MSG(_p->array.size() == 0, Variant(), "Can't take value from empty array.");
+    ERR_FAIL_COND_V_MSG(
+        _p->array.size() == 0,
+        Variant(),
+        "Can't take value from empty array."
+    );
     return operator[](0);
 }
 
 Variant Array::back() const {
-    ERR_FAIL_COND_V_MSG(_p->array.size() == 0, Variant(), "Can't take value from empty array.");
+    ERR_FAIL_COND_V_MSG(
+        _p->array.size() == 0,
+        Variant(),
+        "Can't take value from empty array."
+    );
     return operator[](_p->array.size() - 1);
 }
 
-int Array::find(const Variant &p_value, int p_from) const {
+int Array::find(const Variant& p_value, int p_from) const {
     return _p->array.find(p_value, p_from);
 }
 
-int Array::rfind(const Variant &p_value, int p_from) const {
+int Array::rfind(const Variant& p_value, int p_from) const {
     if (_p->array.size() == 0) {
         return -1;
     }
@@ -160,11 +172,11 @@ int Array::rfind(const Variant &p_value, int p_from) const {
     return -1;
 }
 
-int Array::find_last(const Variant &p_value) const {
+int Array::find_last(const Variant& p_value) const {
     return rfind(p_value);
 }
 
-int Array::count(const Variant &p_value) const {
+int Array::count(const Variant& p_value) const {
     if (_p->array.size() == 0) {
         return 0;
     }
@@ -179,7 +191,7 @@ int Array::count(const Variant &p_value) const {
     return amount;
 }
 
-bool Array::has(const Variant &p_value) const {
+bool Array::has(const Variant& p_value) const {
     return _p->array.find(p_value, 0) != -1;
 }
 
@@ -187,11 +199,11 @@ void Array::remove(int p_pos) {
     _p->array.remove(p_pos);
 }
 
-void Array::set(int p_idx, const Variant &p_value) {
+void Array::set(int p_idx, const Variant& p_value) {
     operator[](p_idx) = p_value;
 }
 
-const Variant &Array::get(int p_idx) const {
+const Variant& Array::get(int p_idx) const {
     return operator[](p_idx);
 }
 
@@ -215,11 +227,16 @@ int Array::_clamp_slice_index(int p_index) const {
     return fixed_index;
 }
 
-Array Array::slice(int p_begin, int p_end, int p_step, bool p_deep) const { // like python, but inclusive on upper bound
+Array Array::slice(int p_begin, int p_end, int p_step, bool p_deep)
+    const { // like python, but inclusive on upper bound
 
     Array new_arr;
 
-    ERR_FAIL_COND_V_MSG(p_step == 0, new_arr, "Array slice step size cannot be zero.");
+    ERR_FAIL_COND_V_MSG(
+        p_step == 0,
+        new_arr,
+        "Array slice step size cannot be zero."
+    );
 
     if (empty()) { // Don't try to slice empty arrays.
         return new_arr;
@@ -243,14 +260,24 @@ Array Array::slice(int p_begin, int p_end, int p_step, bool p_deep) const { // l
     if (p_step > 0) {
         int dest_idx = 0;
         for (int idx = begin; idx <= end; idx += p_step) {
-            ERR_FAIL_COND_V_MSG(dest_idx < 0 || dest_idx >= new_arr_size, Array(), "Bug in Array slice()");
-            new_arr[dest_idx++] = p_deep ? get(idx).duplicate(p_deep) : get(idx);
+            ERR_FAIL_COND_V_MSG(
+                dest_idx < 0 || dest_idx >= new_arr_size,
+                Array(),
+                "Bug in Array slice()"
+            );
+            new_arr[dest_idx++] =
+                p_deep ? get(idx).duplicate(p_deep) : get(idx);
         }
     } else { // p_step < 0
         int dest_idx = 0;
         for (int idx = begin; idx >= end; idx += p_step) {
-            ERR_FAIL_COND_V_MSG(dest_idx < 0 || dest_idx >= new_arr_size, Array(), "Bug in Array slice()");
-            new_arr[dest_idx++] = p_deep ? get(idx).duplicate(p_deep) : get(idx);
+            ERR_FAIL_COND_V_MSG(
+                dest_idx < 0 || dest_idx >= new_arr_size,
+                Array(),
+                "Bug in Array slice()"
+            );
+            new_arr[dest_idx++] =
+                p_deep ? get(idx).duplicate(p_deep) : get(idx);
         }
     }
 
@@ -258,7 +285,8 @@ Array Array::slice(int p_begin, int p_end, int p_step, bool p_deep) const { // l
 }
 
 struct _ArrayVariantSort {
-    _FORCE_INLINE_ bool operator()(const Variant &p_l, const Variant &p_r) const {
+    _FORCE_INLINE_ bool operator()(const Variant& p_l, const Variant& p_r)
+        const {
         bool valid = false;
         Variant res;
         Variant::evaluate(Variant::OP_LESS, p_l, p_r, res, valid);
@@ -269,17 +297,18 @@ struct _ArrayVariantSort {
     }
 };
 
-Array &Array::sort() {
+Array& Array::sort() {
     _p->array.sort_custom<_ArrayVariantSort>();
     return *this;
 }
 
 struct _ArrayVariantSortCustom {
-    Object *obj;
+    Object* obj;
     StringName func;
 
-    _FORCE_INLINE_ bool operator()(const Variant &p_l, const Variant &p_r) const {
-        const Variant *args[2] = { &p_l, &p_r };
+    _FORCE_INLINE_ bool operator()(const Variant& p_l, const Variant& p_r)
+        const {
+        const Variant* args[2] = {&p_l, &p_r};
         Variant::CallError err;
         bool res = obj->call(func, args, 2, err);
         if (err.error != Variant::CallError::CALL_OK) {
@@ -288,7 +317,8 @@ struct _ArrayVariantSortCustom {
         return res;
     }
 };
-Array &Array::sort_custom(Object *p_obj, const StringName &p_function) {
+
+Array& Array::sort_custom(Object* p_obj, const StringName& p_function) {
     ERR_FAIL_NULL_V(p_obj, *this);
 
     SortArray<Variant, _ArrayVariantSortCustom, true> avs;
@@ -303,7 +333,7 @@ void Array::shuffle() {
     if (n < 2) {
         return;
     }
-    Variant *data = _p->array.ptrw();
+    Variant* data = _p->array.ptrw();
     for (int i = n - 1; i >= 1; i--) {
         const int j = Math::rand() % (i + 1);
         const Variant tmp = data[j];
@@ -313,7 +343,12 @@ void Array::shuffle() {
 }
 
 template <typename Less>
-_FORCE_INLINE_ int bisect(const Vector<Variant> &p_array, const Variant &p_value, bool p_before, const Less &p_less) {
+_FORCE_INLINE_ int bisect(
+    const Vector<Variant>& p_array,
+    const Variant& p_value,
+    bool p_before,
+    const Less& p_less
+) {
     int lo = 0;
     int hi = p_array.size();
     if (p_before) {
@@ -338,11 +373,16 @@ _FORCE_INLINE_ int bisect(const Vector<Variant> &p_array, const Variant &p_value
     return lo;
 }
 
-int Array::bsearch(const Variant &p_value, bool p_before) {
+int Array::bsearch(const Variant& p_value, bool p_before) {
     return bisect(_p->array, p_value, p_before, _ArrayVariantSort());
 }
 
-int Array::bsearch_custom(const Variant &p_value, Object *p_obj, const StringName &p_function, bool p_before) {
+int Array::bsearch_custom(
+    const Variant& p_value,
+    Object* p_obj,
+    const StringName& p_function,
+    bool p_before
+) {
     ERR_FAIL_NULL_V(p_obj, 0);
 
     _ArrayVariantSortCustom less;
@@ -352,12 +392,12 @@ int Array::bsearch_custom(const Variant &p_value, Object *p_obj, const StringNam
     return bisect(_p->array, p_value, p_before, less);
 }
 
-Array &Array::invert() {
+Array& Array::invert() {
     _p->array.invert();
     return *this;
 }
 
-void Array::push_front(const Variant &p_value) {
+void Array::push_front(const Variant& p_value) {
     _p->array.insert(0, p_value);
 }
 
@@ -382,7 +422,8 @@ Variant Array::pop_front() {
 
 Variant Array::pop_at(int p_pos) {
     if (_p->array.empty()) {
-        // Return `null` without printing an error to mimic `pop_back()` and `pop_front()` behavior.
+        // Return `null` without printing an error to mimic `pop_back()` and
+        // `pop_front()` behavior.
         return Variant();
     }
 
@@ -392,13 +433,16 @@ Variant Array::pop_at(int p_pos) {
     }
 
     ERR_FAIL_INDEX_V_MSG(
+        p_pos,
+        _p->array.size(),
+        Variant(),
+        vformat(
+            "The calculated index %s is out of bounds (the array has %s "
+            "elements). Leaving the array untouched and returning `null`.",
             p_pos,
-            _p->array.size(),
-            Variant(),
-            vformat(
-                    "The calculated index %s is out of bounds (the array has %s elements). Leaving the array untouched and returning `null`.",
-                    p_pos,
-                    _p->array.size()));
+            _p->array.size()
+        )
+    );
 
     const Variant ret = _p->array.get(p_pos);
     _p->array.remove(p_pos);
@@ -416,10 +460,10 @@ Variant Array::min() const {
             Variant test = get(i);
             Variant::evaluate(Variant::OP_LESS, test, minval, ret, valid);
             if (!valid) {
-                return Variant(); //not a valid comparison
+                return Variant(); // not a valid comparison
             }
             if (bool(ret)) {
-                //is less
+                // is less
                 minval = test;
             }
         }
@@ -438,10 +482,10 @@ Variant Array::max() const {
             Variant test = get(i);
             Variant::evaluate(Variant::OP_GREATER, test, maxval, ret, valid);
             if (!valid) {
-                return Variant(); //not a valid comparison
+                return Variant(); // not a valid comparison
             }
             if (bool(ret)) {
-                //is less
+                // is less
                 maxval = test;
             }
         }
@@ -449,11 +493,11 @@ Variant Array::max() const {
     return maxval;
 }
 
-const void *Array::id() const {
+const void* Array::id() const {
     return _p->array.ptr();
 }
 
-Array::Array(const Array &p_from) {
+Array::Array(const Array& p_from) {
     _p = nullptr;
     _ref(p_from);
 }
@@ -462,6 +506,7 @@ Array::Array() {
     _p = memnew(ArrayPrivate);
     _p->refcount.init();
 }
+
 Array::~Array() {
     _unref();
 }

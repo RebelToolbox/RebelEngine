@@ -35,5 +35,4 @@ void register_arvr_types() {
     ClassDB::register_class<ARVRInterfaceGDNative>();
 }
 
-void unregister_arvr_types() {
-}
+void unregister_arvr_types() {}

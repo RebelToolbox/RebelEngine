@@ -48,6 +48,7 @@ public:
         STRETCH_FIT,
         STRETCH_COVER,
     };
+
     enum AlignMode {
         ALIGN_BEGIN,
         ALIGN_CENTER,
@@ -62,16 +63,28 @@ private:
 
 public:
     void set_ratio(float p_ratio);
-    float get_ratio() const { return ratio; }
+
+    float get_ratio() const {
+        return ratio;
+    }
 
     void set_stretch_mode(StretchMode p_mode);
-    StretchMode get_stretch_mode() const { return stretch_mode; }
+
+    StretchMode get_stretch_mode() const {
+        return stretch_mode;
+    }
 
     void set_alignment_horizontal(AlignMode p_alignment_horizontal);
-    AlignMode get_alignment_horizontal() const { return alignment_horizontal; }
+
+    AlignMode get_alignment_horizontal() const {
+        return alignment_horizontal;
+    }
 
     void set_alignment_vertical(AlignMode p_alignment_vertical);
-    AlignMode get_alignment_vertical() const { return alignment_vertical; }
+
+    AlignMode get_alignment_vertical() const {
+        return alignment_vertical;
+    }
 };
 
 VARIANT_ENUM_CAST(AspectRatioContainer::StretchMode);

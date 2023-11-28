@@ -43,6 +43,7 @@ void unregister_iphone_api() {
 #else
 
 void register_iphone_api() {}
+
 void unregister_iphone_api() {}
 
 #endif

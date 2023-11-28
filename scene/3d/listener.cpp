@@ -32,14 +32,13 @@
 
 #include "scene/resources/mesh.h"
 
-void Listener::_update_audio_listener_state() {
-}
+void Listener::_update_audio_listener_state() {}
 
 void Listener::_request_listener_update() {
     _update_listener();
 }
 
-bool Listener::_set(const StringName &p_name, const Variant &p_value) {
+bool Listener::_set(const StringName& p_name, const Variant& p_value) {
     if (p_name == "current") {
         if (p_value.operator bool()) {
             make_current();
@@ -52,7 +51,8 @@ bool Listener::_set(const StringName &p_name, const Variant &p_value) {
 
     return true;
 }
-bool Listener::_get(const StringName &p_name, Variant &r_ret) const {
+
+bool Listener::_get(const StringName& p_name, Variant& r_ret) const {
     if (p_name == "current") {
         if (is_inside_tree() && get_tree()->is_node_being_edited(this)) {
             r_ret = current;
@@ -66,7 +66,7 @@ bool Listener::_get(const StringName &p_name, Variant &r_ret) const {
     return true;
 }
 
-void Listener::_get_property_list(List<PropertyInfo> *p_list) const {
+void Listener::_get_property_list(List<PropertyInfo>* p_list) const {
     p_list->push_back(PropertyInfo(Variant::BOOL, "current"));
 }
 
@@ -80,7 +80,8 @@ void Listener::_notification(int p_what) {
     switch (p_what) {
         case NOTIFICATION_ENTER_WORLD: {
             bool first_listener = get_viewport()->_listener_add(this);
-            if (!get_tree()->is_node_being_edited(this) && (current || first_listener)) {
+            if (!get_tree()->is_node_being_edited(this)
+                && (current || first_listener)) {
                 make_current();
             }
         } break;
@@ -91,7 +92,7 @@ void Listener::_notification(int p_what) {
             if (!get_tree()->is_node_being_edited(this)) {
                 if (is_current()) {
                     clear_current();
-                    current = true; //keep it true
+                    current = true; // keep it true
 
                 } else {
                     current = false;
@@ -144,7 +145,10 @@ void Listener::_bind_methods() {
     ClassDB::bind_method(D_METHOD("make_current"), &Listener::make_current);
     ClassDB::bind_method(D_METHOD("clear_current"), &Listener::clear_current);
     ClassDB::bind_method(D_METHOD("is_current"), &Listener::is_current);
-    ClassDB::bind_method(D_METHOD("get_listener_transform"), &Listener::get_listener_transform);
+    ClassDB::bind_method(
+        D_METHOD("get_listener_transform"),
+        &Listener::get_listener_transform
+    );
 }
 
 Listener::Listener() {
@@ -153,5 +157,4 @@ Listener::Listener() {
     set_notify_transform(true);
 }
 
-Listener::~Listener() {
-}
+Listener::~Listener() {}

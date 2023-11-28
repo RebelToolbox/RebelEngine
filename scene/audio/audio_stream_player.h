@@ -69,16 +69,19 @@ private:
 
     void _mix_internal(bool p_fadeout);
     void _mix_audio();
-    static void _mix_audios(void *self) { reinterpret_cast<AudioStreamPlayer *>(self)->_mix_audio(); }
+
+    static void _mix_audios(void* self) {
+        reinterpret_cast<AudioStreamPlayer*>(self)->_mix_audio();
+    }
 
     void _set_playing(bool p_enable);
     bool _is_active() const;
 
     void _bus_layout_changed();
-    void _mix_to_bus(const AudioFrame *p_frames, int p_amount);
+    void _mix_to_bus(const AudioFrame* p_frames, int p_amount);
 
 protected:
-    void _validate_property(PropertyInfo &property) const;
+    void _validate_property(PropertyInfo& property) const;
     void _notification(int p_what);
     static void _bind_methods();
 
@@ -98,7 +101,7 @@ public:
     bool is_playing() const;
     float get_playback_position();
 
-    void set_bus(const StringName &p_bus);
+    void set_bus(const StringName& p_bus);
     StringName get_bus() const;
 
     void set_autoplay(bool p_enable);

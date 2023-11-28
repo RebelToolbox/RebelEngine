@@ -48,7 +48,6 @@ public:
     };
 
     enum Parameter {
-
         PARAM_INITIAL_LINEAR_VELOCITY,
         PARAM_ANGULAR_VELOCITY,
         PARAM_ORBIT_VELOCITY,
@@ -114,7 +113,7 @@ private:
     PoolVector<int> particle_order;
 
     struct SortLifetime {
-        const Particle *particles;
+        const Particle* particles;
 
         bool operator()(int p_a, int p_b) const {
             return particles[p_a].time > particles[p_b].time;
@@ -122,10 +121,12 @@ private:
     };
 
     struct SortAxis {
-        const Particle *particles;
+        const Particle* particles;
         Vector3 axis;
+
         bool operator()(int p_a, int p_b) const {
-            return axis.dot(particles[p_a].transform.origin) < axis.dot(particles[p_b].transform.origin);
+            return axis.dot(particles[p_a].transform.origin)
+                 < axis.dot(particles[p_b].transform.origin);
         }
     };
 
@@ -193,7 +194,7 @@ private:
 protected:
     static void _bind_methods();
     void _notification(int p_what);
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
 public:
     AABB get_aabb() const;
@@ -207,7 +208,7 @@ public:
     void set_explosiveness_ratio(float p_ratio);
     void set_randomness_ratio(float p_ratio);
     void set_lifetime_randomness(float p_random);
-    void set_visibility_aabb(const AABB &p_aabb);
+    void set_visibility_aabb(const AABB& p_aabb);
     void set_use_local_coordinates(bool p_enable);
     void set_speed_scale(float p_scale);
 
@@ -235,7 +236,7 @@ public:
     void set_draw_passes(int p_count);
     int get_draw_passes() const;
 
-    void set_mesh(const Ref<Mesh> &p_mesh);
+    void set_mesh(const Ref<Mesh>& p_mesh);
     Ref<Mesh> get_mesh() const;
 
     ///////////////////
@@ -255,13 +256,13 @@ public:
     void set_param_randomness(Parameter p_param, float p_value);
     float get_param_randomness(Parameter p_param) const;
 
-    void set_param_curve(Parameter p_param, const Ref<Curve> &p_curve);
+    void set_param_curve(Parameter p_param, const Ref<Curve>& p_curve);
     Ref<Curve> get_param_curve(Parameter p_param) const;
 
-    void set_color(const Color &p_color);
+    void set_color(const Color& p_color);
     Color get_color() const;
 
-    void set_color_ramp(const Ref<Gradient> &p_ramp);
+    void set_color_ramp(const Ref<Gradient>& p_ramp);
     Ref<Gradient> get_color_ramp() const;
 
     void set_particle_flag(Flags p_flag, bool p_enable);
@@ -270,9 +271,9 @@ public:
     void set_emission_shape(EmissionShape p_shape);
     void set_emission_sphere_radius(float p_radius);
     void set_emission_box_extents(Vector3 p_extents);
-    void set_emission_points(const PoolVector<Vector3> &p_points);
-    void set_emission_normals(const PoolVector<Vector3> &p_normals);
-    void set_emission_colors(const PoolVector<Color> &p_colors);
+    void set_emission_points(const PoolVector<Vector3>& p_points);
+    void set_emission_normals(const PoolVector<Vector3>& p_normals);
+    void set_emission_colors(const PoolVector<Color>& p_colors);
     void set_emission_point_count(int p_count);
     void set_emission_ring_height(float p_height);
     void set_emission_ring_inner_radius(float p_inner_radius);
@@ -291,14 +292,14 @@ public:
     float get_emission_ring_radius() const;
     Vector3 get_emission_ring_axis() const;
 
-    void set_gravity(const Vector3 &p_gravity);
+    void set_gravity(const Vector3& p_gravity);
     Vector3 get_gravity() const;
 
     virtual String get_configuration_warning() const;
 
     void restart();
 
-    void convert_from_particles(Node *p_particles);
+    void convert_from_particles(Node* p_particles);
 
     CPUParticles();
     ~CPUParticles();

@@ -10,7 +10,7 @@ void _integrity_check_all() {
 }
 
 void _integrity_check_up(uint32_t p_node_id) {
-    TNode &node = _nodes[p_node_id];
+    TNode& node = _nodes[p_node_id];
 
     BVHABB_CLASS abb = node.aabb;
     node_update_aabb(node);
@@ -22,7 +22,7 @@ void _integrity_check_up(uint32_t p_node_id) {
 }
 
 void _integrity_check_down(uint32_t p_node_id) {
-    const TNode &node = _nodes[p_node_id];
+    const TNode& node = _nodes[p_node_id];
 
     if (node.is_leaf()) {
         _integrity_check_up(p_node_id);
@@ -33,7 +33,7 @@ void _integrity_check_down(uint32_t p_node_id) {
             uint32_t child_id = node.children[n];
 
             // check the children parent pointers are correct
-            TNode &child = _nodes[child_id];
+            TNode& child = _nodes[child_id];
             CRASH_COND(child.parent_id != p_node_id);
 
             _integrity_check_down(child_id);

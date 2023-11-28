@@ -48,16 +48,17 @@ class EditorHelpSearch : public ConfirmationDialog {
         SEARCH_CONSTANTS = 1 << 3,
         SEARCH_PROPERTIES = 1 << 4,
         SEARCH_THEME_ITEMS = 1 << 5,
-        SEARCH_ALL = SEARCH_CLASSES | SEARCH_METHODS | SEARCH_SIGNALS | SEARCH_CONSTANTS | SEARCH_PROPERTIES | SEARCH_THEME_ITEMS,
+        SEARCH_ALL = SEARCH_CLASSES | SEARCH_METHODS | SEARCH_SIGNALS
+                   | SEARCH_CONSTANTS | SEARCH_PROPERTIES | SEARCH_THEME_ITEMS,
         SEARCH_CASE_SENSITIVE = 1 << 29,
         SEARCH_SHOW_HIERARCHY = 1 << 30
     };
 
-    LineEdit *search_box;
-    ToolButton *case_sensitive_button;
-    ToolButton *hierarchy_button;
-    OptionButton *filter_combo;
-    Tree *results_tree;
+    LineEdit* search_box;
+    ToolButton* case_sensitive_button;
+    ToolButton* hierarchy_button;
+    OptionButton* filter_combo;
+    Tree* results_tree;
     bool old_search;
     String old_term;
 
@@ -67,8 +68,8 @@ class EditorHelpSearch : public ConfirmationDialog {
     void _update_icons();
     void _update_results();
 
-    void _search_box_gui_input(const Ref<InputEvent> &p_event);
-    void _search_box_text_changed(const String &p_text);
+    void _search_box_gui_input(const Ref<InputEvent>& p_event);
+    void _search_box_text_changed(const String& p_text);
     void _filter_combo_item_selected(int p_option);
     void _confirmed();
 
@@ -78,7 +79,7 @@ protected:
 
 public:
     void popup_dialog();
-    void popup_dialog(const String &p_term);
+    void popup_dialog(const String& p_term);
 
     EditorHelpSearch();
 };
@@ -94,39 +95,41 @@ class EditorHelpSearch::Runner : public Reference {
         PHASE_SELECT_MATCH,
         PHASE_MAX
     };
+
     int phase;
 
     struct ClassMatch {
-        DocData::ClassDoc *doc;
+        DocData::ClassDoc* doc;
         bool name;
-        Vector<DocData::MethodDoc *> methods;
-        Vector<DocData::MethodDoc *> signals;
-        Vector<DocData::ConstantDoc *> constants;
-        Vector<DocData::PropertyDoc *> properties;
-        Vector<DocData::ThemeItemDoc *> theme_properties;
+        Vector<DocData::MethodDoc*> methods;
+        Vector<DocData::MethodDoc*> signals;
+        Vector<DocData::ConstantDoc*> constants;
+        Vector<DocData::PropertyDoc*> properties;
+        Vector<DocData::ThemeItemDoc*> theme_properties;
 
         bool required() {
-            return name || methods.size() || signals.size() || constants.size() || properties.size() || theme_properties.size();
+            return name || methods.size() || signals.size() || constants.size()
+                || properties.size() || theme_properties.size();
         }
     };
 
-    Control *ui_service;
-    Tree *results_tree;
+    Control* ui_service;
+    Tree* results_tree;
     String term;
     int search_flags;
 
     Ref<Texture> empty_icon;
     Color disabled_color;
 
-    Map<String, DocData::ClassDoc>::Element *iterator_doc;
+    Map<String, DocData::ClassDoc>::Element* iterator_doc;
     Map<String, ClassMatch> matches;
-    Map<String, ClassMatch>::Element *iterator_match;
-    TreeItem *root_item;
-    Map<String, TreeItem *> class_items;
-    TreeItem *matched_item;
+    Map<String, ClassMatch>::Element* iterator_match;
+    TreeItem* root_item;
+    Map<String, TreeItem*> class_items;
+    TreeItem* matched_item;
     float match_highest_score = 0;
 
-    bool _is_class_disabled_by_feature_profile(const StringName &p_class);
+    bool _is_class_disabled_by_feature_profile(const StringName& p_class);
 
     bool _slice();
     bool _phase_match_classes_init();
@@ -137,21 +140,58 @@ class EditorHelpSearch::Runner : public Reference {
     bool _phase_member_items();
     bool _phase_select_match();
 
-    bool _match_string(const String &p_term, const String &p_string) const;
-    void _match_item(TreeItem *p_item, const String &p_text);
-    TreeItem *_create_class_hierarchy(const ClassMatch &p_match);
-    TreeItem *_create_class_item(TreeItem *p_parent, const DocData::ClassDoc *p_doc, bool p_gray);
-    TreeItem *_create_method_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::MethodDoc *p_doc);
-    TreeItem *_create_signal_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::MethodDoc *p_doc);
-    TreeItem *_create_constant_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::ConstantDoc *p_doc);
-    TreeItem *_create_property_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::PropertyDoc *p_doc);
-    TreeItem *_create_theme_property_item(TreeItem *p_parent, const DocData::ClassDoc *p_class_doc, const DocData::ThemeItemDoc *p_doc);
-    TreeItem *_create_member_item(TreeItem *p_parent, const String &p_class_name, const String &p_icon, const String &p_name, const String &p_type, const String &p_metatype, const String &p_tooltip);
+    bool _match_string(const String& p_term, const String& p_string) const;
+    void _match_item(TreeItem* p_item, const String& p_text);
+    TreeItem* _create_class_hierarchy(const ClassMatch& p_match);
+    TreeItem* _create_class_item(
+        TreeItem* p_parent,
+        const DocData::ClassDoc* p_doc,
+        bool p_gray
+    );
+    TreeItem* _create_method_item(
+        TreeItem* p_parent,
+        const DocData::ClassDoc* p_class_doc,
+        const DocData::MethodDoc* p_doc
+    );
+    TreeItem* _create_signal_item(
+        TreeItem* p_parent,
+        const DocData::ClassDoc* p_class_doc,
+        const DocData::MethodDoc* p_doc
+    );
+    TreeItem* _create_constant_item(
+        TreeItem* p_parent,
+        const DocData::ClassDoc* p_class_doc,
+        const DocData::ConstantDoc* p_doc
+    );
+    TreeItem* _create_property_item(
+        TreeItem* p_parent,
+        const DocData::ClassDoc* p_class_doc,
+        const DocData::PropertyDoc* p_doc
+    );
+    TreeItem* _create_theme_property_item(
+        TreeItem* p_parent,
+        const DocData::ClassDoc* p_class_doc,
+        const DocData::ThemeItemDoc* p_doc
+    );
+    TreeItem* _create_member_item(
+        TreeItem* p_parent,
+        const String& p_class_name,
+        const String& p_icon,
+        const String& p_name,
+        const String& p_type,
+        const String& p_metatype,
+        const String& p_tooltip
+    );
 
 public:
     bool work(uint64_t slot = 100000);
 
-    Runner(Control *p_icon_service, Tree *p_results_tree, const String &p_term, int p_search_flags);
+    Runner(
+        Control* p_icon_service,
+        Tree* p_results_tree,
+        const String& p_term,
+        int p_search_flags
+    );
 };
 
 #endif // EDITOR_HELP_SEARCH_H

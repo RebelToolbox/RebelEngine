@@ -42,12 +42,10 @@ class GridMapEditor : public VBoxContainer {
     GDCLASS(GridMapEditor, VBoxContainer);
 
     enum {
-
         GRID_CURSOR_SIZE = 50
     };
 
     enum InputAction {
-
         INPUT_NONE,
         INPUT_PAINT,
         INPUT_ERASE,
@@ -57,7 +55,6 @@ class GridMapEditor : public VBoxContainer {
     };
 
     enum ClipMode {
-
         CLIP_DISABLED,
         CLIP_ABOVE,
         CLIP_BELOW
@@ -68,21 +65,21 @@ class GridMapEditor : public VBoxContainer {
         DISPLAY_LIST
     };
 
-    UndoRedo *undo_redo;
+    UndoRedo* undo_redo;
     InputAction input_action;
-    Panel *panel;
-    MenuButton *options;
-    SpinBox *floor;
+    Panel* panel;
+    MenuButton* options;
+    SpinBox* floor;
     double accumulated_floor_delta;
-    ToolButton *mode_thumbnail;
-    ToolButton *mode_list;
-    LineEdit *search_box;
-    HSlider *size_slider;
-    HBoxContainer *spatial_editor_hb;
-    ConfirmationDialog *settings_dialog;
-    VBoxContainer *settings_vbc;
-    SpinBox *settings_pick_distance;
-    Label *spin_box_label;
+    ToolButton* mode_thumbnail;
+    ToolButton* mode_list;
+    LineEdit* search_box;
+    HSlider* size_slider;
+    HBoxContainer* spatial_editor_hb;
+    ConfirmationDialog* settings_dialog;
+    VBoxContainer* settings_vbc;
+    SpinBox* settings_pick_distance;
+    Label* spin_box_label;
 
     struct SetItem {
         Vector3 pos;
@@ -94,8 +91,8 @@ class GridMapEditor : public VBoxContainer {
 
     List<SetItem> set_items;
 
-    GridMap *node;
-    MeshLibrary *last_mesh_library;
+    GridMap* node;
+    MeshLibrary* last_mesh_library;
     ClipMode clip_mode;
 
     bool lock_view;
@@ -138,6 +135,7 @@ class GridMapEditor : public VBoxContainer {
         Vector3 end;
         bool active;
     } selection;
+
     Selection last_selection;
 
     struct PasteIndicator {
@@ -147,6 +145,7 @@ class GridMapEditor : public VBoxContainer {
         Vector3 end;
         int orientation;
     };
+
     PasteIndicator paste_indicator;
 
     bool cursor_visible;
@@ -159,7 +158,6 @@ class GridMapEditor : public VBoxContainer {
     int cursor_rot;
 
     enum Menu {
-
         MENU_OPTION_NEXT_LEVEL,
         MENU_OPTION_PREV_LEVEL,
         MENU_OPTION_LOCK_VIEW,
@@ -182,23 +180,22 @@ class GridMapEditor : public VBoxContainer {
         MENU_OPTION_SELECTION_CLEAR,
         MENU_OPTION_SELECTION_FILL,
         MENU_OPTION_GRIDMAP_SETTINGS
-
     };
 
-    SpatialEditorPlugin *spatial_editor;
+    SpatialEditorPlugin* spatial_editor;
 
     struct AreaDisplay {
         RID mesh;
         RID instance;
     };
 
-    ItemList *mesh_library_palette;
-    Label *info_message;
+    ItemList* mesh_library_palette;
+    Label* info_message;
 
-    EditorNode *editor;
+    EditorNode* editor;
 
     void update_grid(); // Change which and where the grid is displayed
-    void _draw_grids(const Vector3 &cell_size);
+    void _draw_grids(const Vector3& cell_size);
     void _configure();
     void _menu_option(int);
     void update_palette();
@@ -208,9 +205,9 @@ class GridMapEditor : public VBoxContainer {
     void _update_cursor_instance();
     void _update_clip();
 
-    void _text_changed(const String &p_text);
-    void _sbox_input(const Ref<InputEvent> &p_ie);
-    void _mesh_library_palette_input(const Ref<InputEvent> &p_ie);
+    void _text_changed(const String& p_text);
+    void _sbox_input(const Ref<InputEvent>& p_ie);
+    void _mesh_library_palette_input(const Ref<InputEvent>& p_ie);
 
     void _icon_size_changed(float p_value);
 
@@ -220,7 +217,11 @@ class GridMapEditor : public VBoxContainer {
     void _do_paste();
     void _update_selection_transform();
     void _validate_selection();
-    void _set_selection(bool p_active, const Vector3 &p_begin = Vector3(), const Vector3 &p_end = Vector3());
+    void _set_selection(
+        bool p_active,
+        const Vector3& p_begin = Vector3(),
+        const Vector3& p_end = Vector3()
+    );
 
     void _floor_changed(float p_value);
     void _floor_mouse_exited();
@@ -228,42 +229,59 @@ class GridMapEditor : public VBoxContainer {
     void _delete_selection();
     void _fill_selection();
 
-    bool do_input_action(Camera *p_camera, const Point2 &p_point, bool p_click);
+    bool do_input_action(Camera* p_camera, const Point2& p_point, bool p_click);
 
     friend class GridMapEditorPlugin;
 
 protected:
     void _notification(int p_what);
-    void _node_removed(Node *p_node);
+    void _node_removed(Node* p_node);
     static void _bind_methods();
 
 public:
-    bool forward_spatial_input_event(Camera *p_camera, const Ref<InputEvent> &p_event);
+    bool forward_spatial_input_event(
+        Camera* p_camera,
+        const Ref<InputEvent>& p_event
+    );
 
-    void edit(GridMap *p_gridmap);
+    void edit(GridMap* p_gridmap);
+
     GridMapEditor() {}
-    GridMapEditor(EditorNode *p_editor);
+
+    GridMapEditor(EditorNode* p_editor);
     ~GridMapEditor();
 };
 
 class GridMapEditorPlugin : public EditorPlugin {
     GDCLASS(GridMapEditorPlugin, EditorPlugin);
 
-    GridMapEditor *grid_map_editor;
-    EditorNode *editor;
+    GridMapEditor* grid_map_editor;
+    EditorNode* editor;
 
 protected:
     void _notification(int p_what);
 
 public:
-    virtual bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event) { return grid_map_editor->forward_spatial_input_event(p_camera, p_event); }
-    virtual String get_name() const { return "GridMap"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual bool forward_spatial_gui_input(
+        Camera* p_camera,
+        const Ref<InputEvent>& p_event
+    ) {
+        return grid_map_editor->forward_spatial_input_event(p_camera, p_event);
+    }
+
+    virtual String get_name() const {
+        return "GridMap";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
 
-    GridMapEditorPlugin(EditorNode *p_node);
+    GridMapEditorPlugin(EditorNode* p_node);
     ~GridMapEditorPlugin();
 };
 

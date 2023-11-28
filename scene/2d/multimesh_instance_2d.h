@@ -51,13 +51,13 @@ public:
     virtual Rect2 _edit_get_rect() const;
 #endif
 
-    void set_multimesh(const Ref<MultiMesh> &p_multimesh);
+    void set_multimesh(const Ref<MultiMesh>& p_multimesh);
     Ref<MultiMesh> get_multimesh() const;
 
-    void set_texture(const Ref<Texture> &p_texture);
+    void set_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_texture() const;
 
-    void set_normal_map(const Ref<Texture> &p_texture);
+    void set_normal_map(const Ref<Texture>& p_texture);
     Ref<Texture> get_normal_map() const;
 
     MultiMeshInstance2D();

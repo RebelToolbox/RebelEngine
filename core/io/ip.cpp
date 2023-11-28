@@ -72,7 +72,7 @@ struct _IP_ResolverPrivate {
     Semaphore sem;
 
     Thread thread;
-    //Semaphore* semaphore;
+    // Semaphore* semaphore;
     bool thread_abort;
 
     void resolve_queues() {
@@ -97,12 +97,15 @@ struct _IP_ResolverPrivate {
                 continue;
             }
             queue[i].response = response;
-            queue[i].status.set(response.empty() ? IP::RESOLVER_STATUS_ERROR : IP::RESOLVER_STATUS_DONE);
+            queue[i].status.set(
+                response.empty() ? IP::RESOLVER_STATUS_ERROR
+                                 : IP::RESOLVER_STATUS_DONE
+            );
         }
     }
 
-    static void _thread_function(void *self) {
-        _IP_ResolverPrivate *ipr = (_IP_ResolverPrivate *)self;
+    static void _thread_function(void* self) {
+        _IP_ResolverPrivate* ipr = (_IP_ResolverPrivate*)self;
 
         while (!ipr->thread_abort) {
             ipr->sem.wait();
@@ -117,7 +120,7 @@ struct _IP_ResolverPrivate {
     }
 };
 
-IP_Address IP::resolve_hostname(const String &p_hostname, IP::Type p_type) {
+IP_Address IP::resolve_hostname(const String& p_hostname, IP::Type p_type) {
     List<IP_Address> res;
     String key = _IP_ResolverPrivate::get_cache_key(p_hostname, p_type);
 
@@ -130,8 +133,8 @@ IP_Address IP::resolve_hostname(const String &p_hostname, IP::Type p_type) {
         resolver->mutex.unlock();
         _resolve_hostname(res, p_hostname, p_type);
         resolver->mutex.lock();
-        // We might be overriding another result, but we don't care (they are the
-        // same hostname).
+        // We might be overriding another result, but we don't care (they are
+        // the same hostname).
         resolver->cache[key] = res;
     }
     resolver->mutex.unlock();
@@ -144,7 +147,7 @@ IP_Address IP::resolve_hostname(const String &p_hostname, IP::Type p_type) {
     return IP_Address();
 }
 
-Array IP::resolve_hostname_addresses(const String &p_hostname, Type p_type) {
+Array IP::resolve_hostname_addresses(const String& p_hostname, Type p_type) {
     List<IP_Address> res;
     String key = _IP_ResolverPrivate::get_cache_key(p_hostname, p_type);
 
@@ -157,8 +160,8 @@ Array IP::resolve_hostname_addresses(const String &p_hostname, Type p_type) {
         resolver->mutex.unlock();
         _resolve_hostname(res, p_hostname, p_type);
         resolver->mutex.lock();
-        // We might be overriding another result, but we don't care (they are the
-        // same hostname).
+        // We might be overriding another result, but we don't care (they are
+        // the same hostname).
         resolver->cache[key] = res;
     }
     resolver->mutex.unlock();
@@ -172,7 +175,10 @@ Array IP::resolve_hostname_addresses(const String &p_hostname, Type p_type) {
     return result;
 }
 
-IP::ResolverID IP::resolve_hostname_queue_item(const String &p_hostname, IP::Type p_type) {
+IP::ResolverID IP::resolve_hostname_queue_item(
+    const String& p_hostname,
+    IP::Type p_type
+) {
     MutexLock lock(resolver->mutex);
 
     ResolverID id = resolver->find_empty_id();
@@ -218,7 +224,10 @@ IP_Address IP::get_resolve_item_address(ResolverID p_id) const {
     MutexLock lock(resolver->mutex);
 
     if (resolver->queue[p_id].status.get() != IP::RESOLVER_STATUS_DONE) {
-        ERR_PRINT("Resolve of '" + resolver->queue[p_id].hostname + "'' didn't complete yet.");
+        ERR_PRINT(
+            "Resolve of '" + resolver->queue[p_id].hostname
+            + "'' didn't complete yet."
+        );
         return IP_Address();
     }
 
@@ -238,7 +247,10 @@ Array IP::get_resolve_item_addresses(ResolverID p_id) const {
     MutexLock lock(resolver->mutex);
 
     if (resolver->queue[p_id].status.get() != IP::RESOLVER_STATUS_DONE) {
-        ERR_PRINT("Resolve of '" + resolver->queue[p_id].hostname + "'' didn't complete yet.");
+        ERR_PRINT(
+            "Resolve of '" + resolver->queue[p_id].hostname
+            + "'' didn't complete yet."
+        );
         return Array();
     }
 
@@ -259,16 +271,24 @@ void IP::erase_resolve_item(ResolverID p_id) {
     resolver->queue[p_id].status.set(IP::RESOLVER_STATUS_NONE);
 }
 
-void IP::clear_cache(const String &p_hostname) {
+void IP::clear_cache(const String& p_hostname) {
     MutexLock lock(resolver->mutex);
 
     if (p_hostname.empty()) {
         resolver->cache.clear();
     } else {
-        resolver->cache.erase(_IP_ResolverPrivate::get_cache_key(p_hostname, IP::TYPE_NONE));
-        resolver->cache.erase(_IP_ResolverPrivate::get_cache_key(p_hostname, IP::TYPE_IPV4));
-        resolver->cache.erase(_IP_ResolverPrivate::get_cache_key(p_hostname, IP::TYPE_IPV6));
-        resolver->cache.erase(_IP_ResolverPrivate::get_cache_key(p_hostname, IP::TYPE_ANY));
+        resolver->cache.erase(
+            _IP_ResolverPrivate::get_cache_key(p_hostname, IP::TYPE_NONE)
+        );
+        resolver->cache.erase(
+            _IP_ResolverPrivate::get_cache_key(p_hostname, IP::TYPE_IPV4)
+        );
+        resolver->cache.erase(
+            _IP_ResolverPrivate::get_cache_key(p_hostname, IP::TYPE_IPV6)
+        );
+        resolver->cache.erase(
+            _IP_ResolverPrivate::get_cache_key(p_hostname, IP::TYPE_ANY)
+        );
     }
 }
 
@@ -276,7 +296,8 @@ Array IP::_get_local_addresses() const {
     Array addresses;
     List<IP_Address> ip_addresses;
     get_local_addresses(&ip_addresses);
-    for (List<IP_Address>::Element *E = ip_addresses.front(); E; E = E->next()) {
+    for (List<IP_Address>::Element* E = ip_addresses.front(); E;
+         E = E->next()) {
         addresses.push_back(E->get());
     }
 
@@ -287,15 +308,17 @@ Array IP::_get_local_interfaces() const {
     Array results;
     Map<String, Interface_Info> interfaces;
     get_local_interfaces(&interfaces);
-    for (Map<String, Interface_Info>::Element *E = interfaces.front(); E; E = E->next()) {
-        Interface_Info &c = E->get();
+    for (Map<String, Interface_Info>::Element* E = interfaces.front(); E;
+         E = E->next()) {
+        Interface_Info& c = E->get();
         Dictionary rc;
         rc["name"] = c.name;
         rc["friendly"] = c.name_friendly;
         rc["index"] = c.index;
 
         Array ips;
-        for (const List<IP_Address>::Element *F = c.ip_addresses.front(); F; F = F->next()) {
+        for (const List<IP_Address>::Element* F = c.ip_addresses.front(); F;
+             F = F->next()) {
             ips.push_front(F->get());
         }
         rc["addresses"] = ips;
@@ -306,27 +329,64 @@ Array IP::_get_local_interfaces() const {
     return results;
 }
 
-void IP::get_local_addresses(List<IP_Address> *r_addresses) const {
+void IP::get_local_addresses(List<IP_Address>* r_addresses) const {
     Map<String, Interface_Info> interfaces;
     get_local_interfaces(&interfaces);
-    for (Map<String, Interface_Info>::Element *E = interfaces.front(); E; E = E->next()) {
-        for (const List<IP_Address>::Element *F = E->get().ip_addresses.front(); F; F = F->next()) {
+    for (Map<String, Interface_Info>::Element* E = interfaces.front(); E;
+         E = E->next()) {
+        for (const List<IP_Address>::Element* F = E->get().ip_addresses.front();
+             F;
+             F = F->next()) {
             r_addresses->push_front(F->get());
         }
     }
 }
 
 void IP::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("resolve_hostname", "host", "ip_type"), &IP::resolve_hostname, DEFVAL(IP::TYPE_ANY));
-    ClassDB::bind_method(D_METHOD("resolve_hostname_addresses", "host", "ip_type"), &IP::resolve_hostname_addresses, DEFVAL(IP::TYPE_ANY));
-    ClassDB::bind_method(D_METHOD("resolve_hostname_queue_item", "host", "ip_type"), &IP::resolve_hostname_queue_item, DEFVAL(IP::TYPE_ANY));
-    ClassDB::bind_method(D_METHOD("get_resolve_item_status", "id"), &IP::get_resolve_item_status);
-    ClassDB::bind_method(D_METHOD("get_resolve_item_address", "id"), &IP::get_resolve_item_address);
-    ClassDB::bind_method(D_METHOD("get_resolve_item_addresses", "id"), &IP::get_resolve_item_addresses);
-    ClassDB::bind_method(D_METHOD("erase_resolve_item", "id"), &IP::erase_resolve_item);
-    ClassDB::bind_method(D_METHOD("get_local_addresses"), &IP::_get_local_addresses);
-    ClassDB::bind_method(D_METHOD("get_local_interfaces"), &IP::_get_local_interfaces);
-    ClassDB::bind_method(D_METHOD("clear_cache", "hostname"), &IP::clear_cache, DEFVAL(""));
+    ClassDB::bind_method(
+        D_METHOD("resolve_hostname", "host", "ip_type"),
+        &IP::resolve_hostname,
+        DEFVAL(IP::TYPE_ANY)
+    );
+    ClassDB::bind_method(
+        D_METHOD("resolve_hostname_addresses", "host", "ip_type"),
+        &IP::resolve_hostname_addresses,
+        DEFVAL(IP::TYPE_ANY)
+    );
+    ClassDB::bind_method(
+        D_METHOD("resolve_hostname_queue_item", "host", "ip_type"),
+        &IP::resolve_hostname_queue_item,
+        DEFVAL(IP::TYPE_ANY)
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_resolve_item_status", "id"),
+        &IP::get_resolve_item_status
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_resolve_item_address", "id"),
+        &IP::get_resolve_item_address
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_resolve_item_addresses", "id"),
+        &IP::get_resolve_item_addresses
+    );
+    ClassDB::bind_method(
+        D_METHOD("erase_resolve_item", "id"),
+        &IP::erase_resolve_item
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_local_addresses"),
+        &IP::_get_local_addresses
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_local_interfaces"),
+        &IP::_get_local_interfaces
+    );
+    ClassDB::bind_method(
+        D_METHOD("clear_cache", "hostname"),
+        &IP::clear_cache,
+        DEFVAL("")
+    );
 
     BIND_ENUM_CONSTANT(RESOLVER_STATUS_NONE);
     BIND_ENUM_CONSTANT(RESOLVER_STATUS_WAITING);
@@ -342,15 +402,15 @@ void IP::_bind_methods() {
     BIND_ENUM_CONSTANT(TYPE_ANY);
 }
 
-IP *IP::singleton = nullptr;
+IP* IP::singleton = nullptr;
 
-IP *IP::get_singleton() {
+IP* IP::get_singleton() {
     return singleton;
 }
 
-IP *(*IP::_create)() = nullptr;
+IP* (*IP::_create)() = nullptr;
 
-IP *IP::create() {
+IP* IP::create() {
     ERR_FAIL_COND_V_MSG(singleton, nullptr, "IP singleton already exist.");
     ERR_FAIL_COND_V(!_create, nullptr);
     return _create();

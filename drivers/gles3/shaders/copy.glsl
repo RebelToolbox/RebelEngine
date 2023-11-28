@@ -51,7 +51,9 @@ void main() {
 #ifdef USE_COPY_SECTION
 
     uv_interp = copy_section.xy + uv_interp * copy_section.zw;
-    gl_Position.xy = (copy_section.xy + (gl_Position.xy * 0.5 + 0.5) * copy_section.zw) * 2.0 - 1.0;
+    gl_Position.xy =
+        (copy_section.xy + (gl_Position.xy * 0.5 + 0.5) * copy_section.zw) * 2.0
+        - 1.0;
 #elif defined(USE_DISPLAY_TRANSFORM)
 
     uv_interp = (display_transform * vec4(uv_in, 1.0, 1.0)).xy;
@@ -119,12 +121,11 @@ uniform float multiplier;
 uniform highp mat4 sky_transform;
 
 vec4 texturePanorama(vec3 normal, sampler2D pano) {
-    vec2 st = vec2(
-            atan(normal.x, normal.z),
-            acos(normal.y));
+    vec2 st = vec2(atan(normal.x, normal.z), acos(normal.y));
 
-    if (st.x < 0.0)
+    if (st.x < 0.0) {
         st.x += M_PI * 2.0;
+    }
 
     st /= vec2(M_PI * 2.0, M_PI);
 
@@ -145,14 +146,14 @@ uniform vec3 bcs;
 
 #ifdef USE_COLOR_CORRECTION
 
-uniform sampler2D color_correction; //texunit:1
+uniform sampler2D color_correction; // texunit:1
 
 #endif
 
 layout(location = 0) out vec4 frag_color;
 
 void main() {
-    //vec4 color = color_interp;
+    // vec4 color = color_interp;
 
 #ifdef USE_PANORAMA
 
@@ -165,14 +166,19 @@ void main() {
 
 #elif defined(USE_ASYM_PANO)
 
-    // When an asymmetrical projection matrix is used (applicable for stereoscopic rendering i.e. VR) we need to do this calculation per fragment to get a perspective correct result.
-    // Asymmetrical projection means the center of projection is no longer in the center of the screen but shifted.
-    // The Matrix[2][0] (= asym_proj.x) and Matrix[2][1] (= asym_proj.z) values are what provide the right shift in the image.
+    // When an asymmetrical projection matrix is used (applicable for
+    // stereoscopic rendering i.e. VR) we need to do this calculation per
+    // fragment to get a perspective correct result. Asymmetrical projection
+    // means the center of projection is no longer in the center of the screen
+    // but shifted. The Matrix[2][0] (= asym_proj.x) and Matrix[2][1] (=
+    // asym_proj.z) values are what provide the right shift in the image.
 
     vec3 cube_normal;
     cube_normal.z = -1.0;
-    cube_normal.x = (cube_normal.z * (-uv_interp.x - asym_proj.x)) / asym_proj.y;
-    cube_normal.y = (cube_normal.z * (-uv_interp.y - asym_proj.z)) / asym_proj.a;
+    cube_normal.x =
+        (cube_normal.z * (-uv_interp.x - asym_proj.x)) / asym_proj.y;
+    cube_normal.y =
+        (cube_normal.z * (-uv_interp.y - asym_proj.z)) / asym_proj.a;
     cube_normal = mat3(sky_transform) * mat3(pano_transform) * cube_normal;
     cube_normal.z = -cube_normal.z;
 
@@ -201,23 +207,30 @@ void main() {
 #ifdef LINEAR_TO_SRGB
     // regular Linear -> SRGB conversion
     vec3 a = vec3(0.055);
-    color.rgb = mix((vec3(1.0) + a) * pow(color.rgb, vec3(1.0 / 2.4)) - a, 12.92 * color.rgb, lessThan(color.rgb, vec3(0.0031308)));
+    color.rgb =
+        mix((vec3(1.0) + a) * pow(color.rgb, vec3(1.0 / 2.4)) - a,
+            12.92 * color.rgb,
+            lessThan(color.rgb, vec3(0.0031308)));
 
 #elif defined(YCBCR_TO_SRGB)
 
     // YCbCr -> SRGB conversion
     // Using BT.709 which is the standard for HDTV
     color.rgb = mat3(
-                        vec3(1.00000, 1.00000, 1.00000),
-                        vec3(0.00000, -0.18732, 1.85560),
-                        vec3(1.57481, -0.46813, 0.00000)) *
-            color.rgb;
+                    vec3(1.00000, 1.00000, 1.00000),
+                    vec3(0.00000, -0.18732, 1.85560),
+                    vec3(1.57481, -0.46813, 0.00000)
+                )
+              * color.rgb;
 
 #endif
 
 #ifdef SRGB_TO_LINEAR
 
-    color.rgb = mix(pow((color.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)), vec3(2.4)), color.rgb * (1.0 / 12.92), lessThan(color.rgb, vec3(0.04045)));
+    color.rgb =
+        mix(pow((color.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)), vec3(2.4)),
+            color.rgb * (1.0 / 12.92),
+            lessThan(color.rgb, vec3(0.04045)));
 #endif
 
 #ifdef DEBUG_GRADIENT
@@ -233,23 +246,28 @@ void main() {
     color *= 0.38774;
     color += texture(source, uv_interp + vec2(1.0, 0.0) * pixel_size) * 0.24477;
     color += texture(source, uv_interp + vec2(2.0, 0.0) * pixel_size) * 0.06136;
-    color += texture(source, uv_interp + vec2(-1.0, 0.0) * pixel_size) * 0.24477;
-    color += texture(source, uv_interp + vec2(-2.0, 0.0) * pixel_size) * 0.06136;
+    color +=
+        texture(source, uv_interp + vec2(-1.0, 0.0) * pixel_size) * 0.24477;
+    color +=
+        texture(source, uv_interp + vec2(-2.0, 0.0) * pixel_size) * 0.06136;
 #endif
 
 #ifdef GAUSSIAN_VERTICAL
     color *= 0.38774;
     color += texture(source, uv_interp + vec2(0.0, 1.0) * pixel_size) * 0.24477;
     color += texture(source, uv_interp + vec2(0.0, 2.0) * pixel_size) * 0.06136;
-    color += texture(source, uv_interp + vec2(0.0, -1.0) * pixel_size) * 0.24477;
-    color += texture(source, uv_interp + vec2(0.0, -2.0) * pixel_size) * 0.06136;
+    color +=
+        texture(source, uv_interp + vec2(0.0, -1.0) * pixel_size) * 0.24477;
+    color +=
+        texture(source, uv_interp + vec2(0.0, -2.0) * pixel_size) * 0.06136;
 #endif
 
 #ifdef USE_BCS
 
     color.rgb = mix(vec3(0.0), color.rgb, bcs.x);
     color.rgb = mix(vec3(0.5), color.rgb, bcs.y);
-    color.rgb = mix(vec3(dot(vec3(1.0), color.rgb) * 0.33333), color.rgb, bcs.z);
+    color.rgb =
+        mix(vec3(dot(vec3(1.0), color.rgb) * 0.33333), color.rgb, bcs.z);
 
 #endif
 

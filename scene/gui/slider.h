@@ -80,16 +80,18 @@ class HSlider : public Slider {
     GDCLASS(HSlider, Slider);
 
 public:
-    HSlider() :
-            Slider(HORIZONTAL) { set_v_size_flags(0); }
+    HSlider() : Slider(HORIZONTAL) {
+        set_v_size_flags(0);
+    }
 };
 
 class VSlider : public Slider {
     GDCLASS(VSlider, Slider);
 
 public:
-    VSlider() :
-            Slider(VERTICAL) { set_h_size_flags(0); }
+    VSlider() : Slider(VERTICAL) {
+        set_h_size_flags(0);
+    }
 };
 
 #endif // SLIDER_H

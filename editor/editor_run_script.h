@@ -34,21 +34,22 @@
 #include "core/reference.h"
 #include "editor_plugin.h"
 class EditorNode;
+
 class EditorScript : public Reference {
     GDCLASS(EditorScript, Reference);
 
-    EditorNode *editor;
+    EditorNode* editor;
 
 protected:
     static void _bind_methods();
 
 public:
-    void add_root_node(Node *p_node);
-    Node *get_scene();
-    EditorInterface *get_editor_interface();
+    void add_root_node(Node* p_node);
+    Node* get_scene();
+    EditorInterface* get_editor_interface();
     virtual void _run();
 
-    void set_editor(EditorNode *p_editor);
+    void set_editor(EditorNode* p_editor);
     EditorScript();
 };
 

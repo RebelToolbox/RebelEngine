@@ -44,7 +44,7 @@ public:
     };
 
 private:
-    void *ctx;
+    void* ctx;
     HashType type;
 
 protected:

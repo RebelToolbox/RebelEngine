@@ -38,7 +38,7 @@ struct _MinSizeCache {
     int final_size;
 };
 
-bool GraphNode::_set(const StringName &p_name, const Variant &p_value) {
+bool GraphNode::_set(const StringName& p_name, const Variant& p_value) {
     if (!p_name.operator String().begins_with("slot/")) {
         return false;
     }
@@ -67,12 +67,20 @@ bool GraphNode::_set(const StringName &p_name, const Variant &p_value) {
         return false;
     }
 
-    set_slot(idx, si.enable_left, si.type_left, si.color_left, si.enable_right, si.type_right, si.color_right);
+    set_slot(
+        idx,
+        si.enable_left,
+        si.type_left,
+        si.color_left,
+        si.enable_right,
+        si.type_right,
+        si.color_right
+    );
     update();
     return true;
 }
 
-bool GraphNode::_get(const StringName &p_name, Variant &r_ret) const {
+bool GraphNode::_get(const StringName& p_name, Variant& r_ret) const {
     if (!p_name.operator String().begins_with("slot/")) {
         return false;
     }
@@ -103,10 +111,11 @@ bool GraphNode::_get(const StringName &p_name, Variant &r_ret) const {
 
     return true;
 }
-void GraphNode::_get_property_list(List<PropertyInfo> *p_list) const {
+
+void GraphNode::_get_property_list(List<PropertyInfo>* p_list) const {
     int idx = 0;
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c || c->is_set_as_toplevel()) {
             continue;
         }
@@ -137,10 +146,10 @@ void GraphNode::_resort() {
     int stretch_min = 0;
     int stretch_avail = 0;
     float stretch_ratio_total = 0;
-    Map<Control *, _MinSizeCache> min_size_cache;
+    Map<Control*, _MinSizeCache> min_size_cache;
 
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c || !c->is_visible_in_tree()) {
             continue;
         }
@@ -171,19 +180,21 @@ void GraphNode::_resort() {
     int stretch_max = new_size.height - (children_count - 1) * sep;
     int stretch_diff = stretch_max - stretch_min;
     if (stretch_diff < 0) {
-        //avoid negative stretch space
+        // avoid negative stretch space
         stretch_diff = 0;
     }
 
-    stretch_avail += stretch_diff - sb->get_margin(MARGIN_BOTTOM) - sb->get_margin(MARGIN_TOP); //available stretch space.
-    /** Second, pass successively to discard elements that can't be stretched, this will run while stretchable
-        elements exist */
+    stretch_avail += stretch_diff - sb->get_margin(MARGIN_BOTTOM)
+                   - sb->get_margin(MARGIN_TOP); // available stretch space.
+    /** Second, pass successively to discard elements that can't be stretched,
+       this will run while stretchable elements exist */
 
-    while (stretch_ratio_total > 0) { // first of all, don't even be here if no stretchable objects exist
-        bool refit_successful = true; //assume refit-test will go well
+    while (stretch_ratio_total > 0
+    ) { // first of all, don't even be here if no stretchable objects exist
+        bool refit_successful = true; // assume refit-test will go well
 
         for (int i = 0; i < get_child_count(); i++) {
-            Control *c = Object::cast_to<Control>(get_child(i));
+            Control* c = Object::cast_to<Control>(get_child(i));
             if (!c || !c->is_visible_in_tree()) {
                 continue;
             }
@@ -192,15 +203,16 @@ void GraphNode::_resort() {
             }
 
             ERR_FAIL_COND(!min_size_cache.has(c));
-            _MinSizeCache &msc = min_size_cache[c];
+            _MinSizeCache& msc = min_size_cache[c];
 
-            if (msc.will_stretch) { //wants to stretch
-                //let's see if it can really stretch
+            if (msc.will_stretch) { // wants to stretch
+                // let's see if it can really stretch
 
-                int final_pixel_size = stretch_avail * c->get_stretch_ratio() / stretch_ratio_total;
+                int final_pixel_size = stretch_avail * c->get_stretch_ratio()
+                                     / stretch_ratio_total;
                 if (final_pixel_size < msc.min_size) {
-                    //if available stretching area is too small for widget,
-                    //then remove it from stretching area
+                    // if available stretching area is too small for widget,
+                    // then remove it from stretching area
                     msc.will_stretch = false;
                     stretch_ratio_total -= c->get_stretch_ratio();
                     refit_successful = false;
@@ -213,7 +225,7 @@ void GraphNode::_resort() {
             }
         }
 
-        if (refit_successful) { //uf refit went well, break
+        if (refit_successful) { // uf refit went well, break
             break;
         }
     }
@@ -228,7 +240,7 @@ void GraphNode::_resort() {
     int w = new_size.width - sb->get_minimum_size().x;
 
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c || !c->is_visible_in_tree()) {
             continue;
         }
@@ -236,7 +248,7 @@ void GraphNode::_resort() {
             continue;
         }
 
-        _MinSizeCache &msc = min_size_cache[c];
+        _MinSizeCache& msc = min_size_cache[c];
 
         if (first) {
             first = false;
@@ -248,8 +260,8 @@ void GraphNode::_resort() {
         int to = ofs + msc.final_size;
 
         if (msc.will_stretch && idx == children_count - 1) {
-            //adjust so the last one always fits perfect
-            //compensating for numerical imprecision
+            // adjust so the last one always fits perfect
+            // compensating for numerical imprecision
 
             to = new_size.height - sb->get_margin(MARGIN_BOTTOM);
         }
@@ -269,16 +281,18 @@ void GraphNode::_resort() {
     connpos_dirty = true;
 }
 
-bool GraphNode::has_point(const Point2 &p_point) const {
+bool GraphNode::has_point(const Point2& p_point) const {
     if (comment) {
         Ref<StyleBox> comment = get_stylebox("comment");
         Ref<Texture> resizer = get_icon("resizer");
 
-        if (Rect2(get_size() - resizer->get_size(), resizer->get_size()).has_point(p_point)) {
+        if (Rect2(get_size() - resizer->get_size(), resizer->get_size())
+                .has_point(p_point)) {
             return true;
         }
 
-        if (Rect2(0, 0, get_size().width, comment->get_margin(MARGIN_TOP)).has_point(p_point)) {
+        if (Rect2(0, 0, get_size().width, comment->get_margin(MARGIN_TOP))
+                .has_point(p_point)) {
             return true;
         }
 
@@ -301,8 +315,8 @@ void GraphNode::_notification(int p_what) {
                 sb = get_stylebox(selected ? "selectedframe" : "frame");
             }
 
-            //sb=sb->duplicate();
-            //sb->call("set_modulate",modulate);
+            // sb=sb->duplicate();
+            // sb->call("set_modulate",modulate);
             Ref<Texture> port = get_icon("port");
             Ref<Texture> close = get_icon("close");
             Ref<Texture> resizer = get_icon("resizer");
@@ -324,10 +338,16 @@ void GraphNode::_notification(int p_what) {
                 case OVERLAY_DISABLED: {
                 } break;
                 case OVERLAY_BREAKPOINT: {
-                    draw_style_box(get_stylebox("breakpoint"), Rect2(Point2(), get_size()));
+                    draw_style_box(
+                        get_stylebox("breakpoint"),
+                        Rect2(Point2(), get_size())
+                    );
                 } break;
                 case OVERLAY_POSITION: {
-                    draw_style_box(get_stylebox("position"), Rect2(Point2(), get_size()));
+                    draw_style_box(
+                        get_stylebox("position"),
+                        Rect2(Point2(), get_size())
+                    );
 
                 } break;
             }
@@ -338,9 +358,22 @@ void GraphNode::_notification(int p_what) {
                 w -= close->get_width();
             }
 
-            draw_string(title_font, Point2(sb->get_margin(MARGIN_LEFT) + title_h_offset, -title_font->get_height() + title_font->get_ascent() + title_offset), title, title_color, w);
+            draw_string(
+                title_font,
+                Point2(
+                    sb->get_margin(MARGIN_LEFT) + title_h_offset,
+                    -title_font->get_height() + title_font->get_ascent()
+                        + title_offset
+                ),
+                title,
+                title_color,
+                w
+            );
             if (show_close) {
-                Vector2 cpos = Point2(w + sb->get_margin(MARGIN_LEFT) + close_h_offset, -close->get_height() + close_offset);
+                Vector2 cpos = Point2(
+                    w + sb->get_margin(MARGIN_LEFT) + close_h_offset,
+                    -close->get_height() + close_offset
+                );
                 draw_texture(close, cpos, close_color);
                 close_rect.position = cpos;
                 close_rect.size = close->get_size();
@@ -348,33 +381,47 @@ void GraphNode::_notification(int p_what) {
                 close_rect = Rect2();
             }
 
-            for (Map<int, Slot>::Element *E = slot_info.front(); E; E = E->next()) {
+            for (Map<int, Slot>::Element* E = slot_info.front(); E;
+                 E = E->next()) {
                 if (E->key() < 0 || E->key() >= cache_y.size()) {
                     continue;
                 }
                 if (!slot_info.has(E->key())) {
                     continue;
                 }
-                const Slot &s = slot_info[E->key()];
-                //left
+                const Slot& s = slot_info[E->key()];
+                // left
                 if (s.enable_left) {
                     Ref<Texture> p = port;
                     if (s.custom_slot_left.is_valid()) {
                         p = s.custom_slot_left;
                     }
-                    p->draw(get_canvas_item(), icofs + Point2(edgeofs, cache_y[E->key()]), s.color_left);
+                    p->draw(
+                        get_canvas_item(),
+                        icofs + Point2(edgeofs, cache_y[E->key()]),
+                        s.color_left
+                    );
                 }
                 if (s.enable_right) {
                     Ref<Texture> p = port;
                     if (s.custom_slot_right.is_valid()) {
                         p = s.custom_slot_right;
                     }
-                    p->draw(get_canvas_item(), icofs + Point2(get_size().x - edgeofs, cache_y[E->key()]), s.color_right);
+                    p->draw(
+                        get_canvas_item(),
+                        icofs
+                            + Point2(get_size().x - edgeofs, cache_y[E->key()]),
+                        s.color_right
+                    );
                 }
             }
 
             if (resizable) {
-                draw_texture(resizer, get_size() - resizer->get_size(), resizer_color);
+                draw_texture(
+                    resizer,
+                    get_size() - resizer->get_size(),
+                    resizer_color
+                );
             }
         } break;
 
@@ -388,10 +435,25 @@ void GraphNode::_notification(int p_what) {
     }
 }
 
-void GraphNode::set_slot(int p_idx, bool p_enable_left, int p_type_left, const Color &p_color_left, bool p_enable_right, int p_type_right, const Color &p_color_right, const Ref<Texture> &p_custom_left, const Ref<Texture> &p_custom_right) {
-    ERR_FAIL_COND_MSG(p_idx < 0, vformat("Cannot set slot with p_idx (%d) lesser than zero.", p_idx));
+void GraphNode::set_slot(
+    int p_idx,
+    bool p_enable_left,
+    int p_type_left,
+    const Color& p_color_left,
+    bool p_enable_right,
+    int p_type_right,
+    const Color& p_color_right,
+    const Ref<Texture>& p_custom_left,
+    const Ref<Texture>& p_custom_right
+) {
+    ERR_FAIL_COND_MSG(
+        p_idx < 0,
+        vformat("Cannot set slot with p_idx (%d) lesser than zero.", p_idx)
+    );
 
-    if (!p_enable_left && p_type_left == 0 && p_color_left == Color(1, 1, 1, 1) && !p_enable_right && p_type_right == 0 && p_color_right == Color(1, 1, 1, 1)) {
+    if (!p_enable_left && p_type_left == 0 && p_color_left == Color(1, 1, 1, 1)
+        && !p_enable_right && p_type_right == 0
+        && p_color_right == Color(1, 1, 1, 1)) {
         slot_info.erase(p_idx);
         return;
     }
@@ -417,11 +479,13 @@ void GraphNode::clear_slot(int p_idx) {
     update();
     connpos_dirty = true;
 }
+
 void GraphNode::clear_all_slots() {
     slot_info.clear();
     update();
     connpos_dirty = true;
 }
+
 bool GraphNode::is_slot_enabled_left(int p_idx) const {
     if (!slot_info.has(p_idx)) {
         return false;
@@ -430,7 +494,14 @@ bool GraphNode::is_slot_enabled_left(int p_idx) const {
 }
 
 void GraphNode::set_slot_enabled_left(int p_idx, bool p_enable_left) {
-    ERR_FAIL_COND_MSG(p_idx < 0, vformat("Cannot set enable_left for the slot with p_idx (%d) lesser than zero.", p_idx));
+    ERR_FAIL_COND_MSG(
+        p_idx < 0,
+        vformat(
+            "Cannot set enable_left for the slot with p_idx (%d) lesser than "
+            "zero.",
+            p_idx
+        )
+    );
 
     slot_info[p_idx].enable_left = p_enable_left;
     update();
@@ -440,7 +511,14 @@ void GraphNode::set_slot_enabled_left(int p_idx, bool p_enable_left) {
 }
 
 void GraphNode::set_slot_type_left(int p_idx, int p_type_left) {
-    ERR_FAIL_COND_MSG(!slot_info.has(p_idx), vformat("Cannot set type_left for the slot '%d' because it hasn't been enabled.", p_idx));
+    ERR_FAIL_COND_MSG(
+        !slot_info.has(p_idx),
+        vformat(
+            "Cannot set type_left for the slot '%d' because it hasn't been "
+            "enabled.",
+            p_idx
+        )
+    );
 
     slot_info[p_idx].type_left = p_type_left;
     update();
@@ -456,8 +534,15 @@ int GraphNode::get_slot_type_left(int p_idx) const {
     return slot_info[p_idx].type_left;
 }
 
-void GraphNode::set_slot_color_left(int p_idx, const Color &p_color_left) {
-    ERR_FAIL_COND_MSG(!slot_info.has(p_idx), vformat("Cannot set color_left for the slot '%d' because it hasn't been enabled.", p_idx));
+void GraphNode::set_slot_color_left(int p_idx, const Color& p_color_left) {
+    ERR_FAIL_COND_MSG(
+        !slot_info.has(p_idx),
+        vformat(
+            "Cannot set color_left for the slot '%d' because it hasn't been "
+            "enabled.",
+            p_idx
+        )
+    );
 
     slot_info[p_idx].color_left = p_color_left;
     update();
@@ -481,7 +566,14 @@ bool GraphNode::is_slot_enabled_right(int p_idx) const {
 }
 
 void GraphNode::set_slot_enabled_right(int p_idx, bool p_enable_right) {
-    ERR_FAIL_COND_MSG(p_idx < 0, vformat("Cannot set enable_right for the slot with p_idx (%d) lesser than zero.", p_idx));
+    ERR_FAIL_COND_MSG(
+        p_idx < 0,
+        vformat(
+            "Cannot set enable_right for the slot with p_idx (%d) lesser than "
+            "zero.",
+            p_idx
+        )
+    );
 
     slot_info[p_idx].enable_right = p_enable_right;
     update();
@@ -491,7 +583,14 @@ void GraphNode::set_slot_enabled_right(int p_idx, bool p_enable_right) {
 }
 
 void GraphNode::set_slot_type_right(int p_idx, int p_type_right) {
-    ERR_FAIL_COND_MSG(!slot_info.has(p_idx), vformat("Cannot set type_right for the slot '%d' because it hasn't been enabled.", p_idx));
+    ERR_FAIL_COND_MSG(
+        !slot_info.has(p_idx),
+        vformat(
+            "Cannot set type_right for the slot '%d' because it hasn't been "
+            "enabled.",
+            p_idx
+        )
+    );
 
     slot_info[p_idx].type_right = p_type_right;
     update();
@@ -507,8 +606,15 @@ int GraphNode::get_slot_type_right(int p_idx) const {
     return slot_info[p_idx].type_right;
 }
 
-void GraphNode::set_slot_color_right(int p_idx, const Color &p_color_right) {
-    ERR_FAIL_COND_MSG(!slot_info.has(p_idx), vformat("Cannot set color_right for the slot '%d' because it hasn't been enabled.", p_idx));
+void GraphNode::set_slot_color_right(int p_idx, const Color& p_color_right) {
+    ERR_FAIL_COND_MSG(
+        !slot_info.has(p_idx),
+        vformat(
+            "Cannot set color_right for the slot '%d' because it hasn't been "
+            "enabled.",
+            p_idx
+        )
+    );
 
     slot_info[p_idx].color_right = p_color_right;
     update();
@@ -539,7 +645,7 @@ Size2 GraphNode::get_minimum_size() const {
     }
 
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c) {
             continue;
         }
@@ -562,7 +668,7 @@ Size2 GraphNode::get_minimum_size() const {
     return minsize + sb->get_minimum_size();
 }
 
-void GraphNode::set_title(const String &p_title) {
+void GraphNode::set_title(const String& p_title) {
     if (title == p_title) {
         return;
     }
@@ -576,7 +682,7 @@ String GraphNode::get_title() const {
     return title;
 }
 
-void GraphNode::set_offset(const Vector2 &p_offset) {
+void GraphNode::set_offset(const Vector2& p_offset) {
     offset = p_offset;
     emit_signal("offset_changed");
     update();
@@ -599,7 +705,7 @@ void GraphNode::set_drag(bool p_drag) {
     if (p_drag) {
         drag_from = get_offset();
     } else {
-        emit_signal("dragged", drag_from, get_offset()); //useful for undo/redo
+        emit_signal("dragged", drag_from, get_offset()); // useful for undo/redo
     }
 }
 
@@ -611,6 +717,7 @@ void GraphNode::set_show_close_button(bool p_enable) {
     show_close = p_enable;
     update();
 }
+
 bool GraphNode::is_close_button_visible() const {
     return show_close;
 }
@@ -627,7 +734,7 @@ void GraphNode::_connpos_update() {
     int idx = 0;
 
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c) {
             continue;
         }
@@ -672,6 +779,7 @@ int GraphNode::get_connection_input_count() {
 
     return conn_input_cache.size();
 }
+
 int GraphNode::get_connection_output_count() {
     if (connpos_dirty) {
         _connpos_update();
@@ -740,15 +848,18 @@ Color GraphNode::get_connection_output_color(int p_idx) {
     return conn_output_cache[p_idx].color;
 }
 
-void GraphNode::_gui_input(const Ref<InputEvent> &p_ev) {
+void GraphNode::_gui_input(const Ref<InputEvent>& p_ev) {
     Ref<InputEventMouseButton> mb = p_ev;
     if (mb.is_valid()) {
-        ERR_FAIL_COND_MSG(get_parent_control() == nullptr, "GraphNode must be the child of a GraphEdit node.");
+        ERR_FAIL_COND_MSG(
+            get_parent_control() == nullptr,
+            "GraphNode must be the child of a GraphEdit node."
+        );
 
         if (mb->is_pressed() && mb->get_button_index() == BUTTON_LEFT) {
             Vector2 mpos = Vector2(mb->get_position().x, mb->get_position().y);
             if (close_rect.size != Size2() && close_rect.has_point(mpos)) {
-                //send focus to parent
+                // send focus to parent
                 get_parent_control()->grab_focus();
                 emit_signal("close_request");
                 accept_event();
@@ -757,7 +868,8 @@ void GraphNode::_gui_input(const Ref<InputEvent> &p_ev) {
 
             Ref<Texture> resizer = get_icon("resizer");
 
-            if (resizable && mpos.x > get_size().x - resizer->get_width() && mpos.y > get_size().y - resizer->get_height()) {
+            if (resizable && mpos.x > get_size().x - resizer->get_width()
+                && mpos.y > get_size().y - resizer->get_height()) {
                 resizing = true;
                 resizing_from = mpos;
                 resizing_from_size = get_size();
@@ -815,70 +927,210 @@ void GraphNode::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_title"), &GraphNode::get_title);
     ClassDB::bind_method(D_METHOD("_gui_input"), &GraphNode::_gui_input);
 
-    ClassDB::bind_method(D_METHOD("set_slot", "idx", "enable_left", "type_left", "color_left", "enable_right", "type_right", "color_right", "custom_left", "custom_right"), &GraphNode::set_slot, DEFVAL(Ref<Texture>()), DEFVAL(Ref<Texture>()));
+    ClassDB::bind_method(
+        D_METHOD(
+            "set_slot",
+            "idx",
+            "enable_left",
+            "type_left",
+            "color_left",
+            "enable_right",
+            "type_right",
+            "color_right",
+            "custom_left",
+            "custom_right"
+        ),
+        &GraphNode::set_slot,
+        DEFVAL(Ref<Texture>()),
+        DEFVAL(Ref<Texture>())
+    );
     ClassDB::bind_method(D_METHOD("clear_slot", "idx"), &GraphNode::clear_slot);
-    ClassDB::bind_method(D_METHOD("clear_all_slots"), &GraphNode::clear_all_slots);
+    ClassDB::bind_method(
+        D_METHOD("clear_all_slots"),
+        &GraphNode::clear_all_slots
+    );
 
-    ClassDB::bind_method(D_METHOD("is_slot_enabled_left", "idx"), &GraphNode::is_slot_enabled_left);
-    ClassDB::bind_method(D_METHOD("set_slot_enabled_left", "idx", "enable_left"), &GraphNode::set_slot_enabled_left);
+    ClassDB::bind_method(
+        D_METHOD("is_slot_enabled_left", "idx"),
+        &GraphNode::is_slot_enabled_left
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_slot_enabled_left", "idx", "enable_left"),
+        &GraphNode::set_slot_enabled_left
+    );
 
-    ClassDB::bind_method(D_METHOD("set_slot_type_left", "idx", "type_left"), &GraphNode::set_slot_type_left);
-    ClassDB::bind_method(D_METHOD("get_slot_type_left", "idx"), &GraphNode::get_slot_type_left);
+    ClassDB::bind_method(
+        D_METHOD("set_slot_type_left", "idx", "type_left"),
+        &GraphNode::set_slot_type_left
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_slot_type_left", "idx"),
+        &GraphNode::get_slot_type_left
+    );
 
-    ClassDB::bind_method(D_METHOD("set_slot_color_left", "idx", "color_left"), &GraphNode::set_slot_color_left);
-    ClassDB::bind_method(D_METHOD("get_slot_color_left", "idx"), &GraphNode::get_slot_color_left);
+    ClassDB::bind_method(
+        D_METHOD("set_slot_color_left", "idx", "color_left"),
+        &GraphNode::set_slot_color_left
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_slot_color_left", "idx"),
+        &GraphNode::get_slot_color_left
+    );
 
-    ClassDB::bind_method(D_METHOD("is_slot_enabled_right", "idx"), &GraphNode::is_slot_enabled_right);
-    ClassDB::bind_method(D_METHOD("set_slot_enabled_right", "idx", "enable_right"), &GraphNode::set_slot_enabled_right);
+    ClassDB::bind_method(
+        D_METHOD("is_slot_enabled_right", "idx"),
+        &GraphNode::is_slot_enabled_right
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_slot_enabled_right", "idx", "enable_right"),
+        &GraphNode::set_slot_enabled_right
+    );
 
-    ClassDB::bind_method(D_METHOD("set_slot_type_right", "idx", "type_right"), &GraphNode::set_slot_type_right);
-    ClassDB::bind_method(D_METHOD("get_slot_type_right", "idx"), &GraphNode::get_slot_type_right);
+    ClassDB::bind_method(
+        D_METHOD("set_slot_type_right", "idx", "type_right"),
+        &GraphNode::set_slot_type_right
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_slot_type_right", "idx"),
+        &GraphNode::get_slot_type_right
+    );
 
-    ClassDB::bind_method(D_METHOD("set_slot_color_right", "idx", "color_right"), &GraphNode::set_slot_color_right);
-    ClassDB::bind_method(D_METHOD("get_slot_color_right", "idx"), &GraphNode::get_slot_color_right);
+    ClassDB::bind_method(
+        D_METHOD("set_slot_color_right", "idx", "color_right"),
+        &GraphNode::set_slot_color_right
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_slot_color_right", "idx"),
+        &GraphNode::get_slot_color_right
+    );
 
-    ClassDB::bind_method(D_METHOD("set_offset", "offset"), &GraphNode::set_offset);
+    ClassDB::bind_method(
+        D_METHOD("set_offset", "offset"),
+        &GraphNode::set_offset
+    );
     ClassDB::bind_method(D_METHOD("get_offset"), &GraphNode::get_offset);
 
-    ClassDB::bind_method(D_METHOD("set_comment", "comment"), &GraphNode::set_comment);
+    ClassDB::bind_method(
+        D_METHOD("set_comment", "comment"),
+        &GraphNode::set_comment
+    );
     ClassDB::bind_method(D_METHOD("is_comment"), &GraphNode::is_comment);
 
-    ClassDB::bind_method(D_METHOD("set_resizable", "resizable"), &GraphNode::set_resizable);
+    ClassDB::bind_method(
+        D_METHOD("set_resizable", "resizable"),
+        &GraphNode::set_resizable
+    );
     ClassDB::bind_method(D_METHOD("is_resizable"), &GraphNode::is_resizable);
 
-    ClassDB::bind_method(D_METHOD("set_selected", "selected"), &GraphNode::set_selected);
+    ClassDB::bind_method(
+        D_METHOD("set_selected", "selected"),
+        &GraphNode::set_selected
+    );
     ClassDB::bind_method(D_METHOD("is_selected"), &GraphNode::is_selected);
 
-    ClassDB::bind_method(D_METHOD("get_connection_output_count"), &GraphNode::get_connection_output_count);
-    ClassDB::bind_method(D_METHOD("get_connection_input_count"), &GraphNode::get_connection_input_count);
+    ClassDB::bind_method(
+        D_METHOD("get_connection_output_count"),
+        &GraphNode::get_connection_output_count
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_connection_input_count"),
+        &GraphNode::get_connection_input_count
+    );
 
-    ClassDB::bind_method(D_METHOD("get_connection_output_position", "idx"), &GraphNode::get_connection_output_position);
-    ClassDB::bind_method(D_METHOD("get_connection_output_type", "idx"), &GraphNode::get_connection_output_type);
-    ClassDB::bind_method(D_METHOD("get_connection_output_color", "idx"), &GraphNode::get_connection_output_color);
-    ClassDB::bind_method(D_METHOD("get_connection_input_position", "idx"), &GraphNode::get_connection_input_position);
-    ClassDB::bind_method(D_METHOD("get_connection_input_type", "idx"), &GraphNode::get_connection_input_type);
-    ClassDB::bind_method(D_METHOD("get_connection_input_color", "idx"), &GraphNode::get_connection_input_color);
+    ClassDB::bind_method(
+        D_METHOD("get_connection_output_position", "idx"),
+        &GraphNode::get_connection_output_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_connection_output_type", "idx"),
+        &GraphNode::get_connection_output_type
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_connection_output_color", "idx"),
+        &GraphNode::get_connection_output_color
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_connection_input_position", "idx"),
+        &GraphNode::get_connection_input_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_connection_input_type", "idx"),
+        &GraphNode::get_connection_input_type
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_connection_input_color", "idx"),
+        &GraphNode::get_connection_input_color
+    );
 
-    ClassDB::bind_method(D_METHOD("set_show_close_button", "show"), &GraphNode::set_show_close_button);
-    ClassDB::bind_method(D_METHOD("is_close_button_visible"), &GraphNode::is_close_button_visible);
+    ClassDB::bind_method(
+        D_METHOD("set_show_close_button", "show"),
+        &GraphNode::set_show_close_button
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_close_button_visible"),
+        &GraphNode::is_close_button_visible
+    );
 
-    ClassDB::bind_method(D_METHOD("set_overlay", "overlay"), &GraphNode::set_overlay);
+    ClassDB::bind_method(
+        D_METHOD("set_overlay", "overlay"),
+        &GraphNode::set_overlay
+    );
     ClassDB::bind_method(D_METHOD("get_overlay"), &GraphNode::get_overlay);
 
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "title"), "set_title", "get_title");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "offset"), "set_offset", "get_offset");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "show_close"), "set_show_close_button", "is_close_button_visible");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "resizable"), "set_resizable", "is_resizable");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "selected"), "set_selected", "is_selected");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "comment"), "set_comment", "is_comment");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "overlay", PROPERTY_HINT_ENUM, "Disabled,Breakpoint,Position"), "set_overlay", "get_overlay");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "title"),
+        "set_title",
+        "get_title"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::VECTOR2, "offset"),
+        "set_offset",
+        "get_offset"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "show_close"),
+        "set_show_close_button",
+        "is_close_button_visible"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "resizable"),
+        "set_resizable",
+        "is_resizable"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "selected"),
+        "set_selected",
+        "is_selected"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "comment"),
+        "set_comment",
+        "is_comment"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "overlay",
+            PROPERTY_HINT_ENUM,
+            "Disabled,Breakpoint,Position"
+        ),
+        "set_overlay",
+        "get_overlay"
+    );
 
     ADD_SIGNAL(MethodInfo("offset_changed"));
     ADD_SIGNAL(MethodInfo("slot_updated", PropertyInfo(Variant::INT, "idx")));
-    ADD_SIGNAL(MethodInfo("dragged", PropertyInfo(Variant::VECTOR2, "from"), PropertyInfo(Variant::VECTOR2, "to")));
+    ADD_SIGNAL(MethodInfo(
+        "dragged",
+        PropertyInfo(Variant::VECTOR2, "from"),
+        PropertyInfo(Variant::VECTOR2, "to")
+    ));
     ADD_SIGNAL(MethodInfo("raise_request"));
     ADD_SIGNAL(MethodInfo("close_request"));
-    ADD_SIGNAL(MethodInfo("resize_request", PropertyInfo(Variant::VECTOR2, "new_minsize")));
+    ADD_SIGNAL(MethodInfo(
+        "resize_request",
+        PropertyInfo(Variant::VECTOR2, "new_minsize")
+    ));
 
     BIND_ENUM_CONSTANT(OVERLAY_DISABLED);
     BIND_ENUM_CONSTANT(OVERLAY_BREAKPOINT);

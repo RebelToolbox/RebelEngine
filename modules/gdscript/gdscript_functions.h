@@ -129,8 +129,14 @@ public:
         FUNC_MAX
     };
 
-    static const char *get_func_name(Function p_func);
-    static void call(Function p_func, const Variant **p_args, int p_arg_count, Variant &r_ret, Variant::CallError &r_error);
+    static const char* get_func_name(Function p_func);
+    static void call(
+        Function p_func,
+        const Variant** p_args,
+        int p_arg_count,
+        Variant& r_ret,
+        Variant::CallError& r_error
+    );
     static bool is_deterministic(Function p_func);
     static MethodInfo get_info(Function p_func);
 };

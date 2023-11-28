@@ -53,6 +53,7 @@ private:
     Ref<ShortCut> shortcut;
 
     ActionMode action_mode;
+
     struct Status {
         bool pressed;
         bool hovering;
@@ -92,7 +93,7 @@ public:
 
     /* Signals */
 
-    bool is_pressed() const; ///< return whether button is pressed (toggled in)
+    bool is_pressed() const;  ///< return whether button is pressed (toggled in)
     bool is_pressing() const; ///< return whether button is pressed (toggled in)
     bool is_hovered() const;
 
@@ -119,12 +120,12 @@ public:
     void set_enabled_focus_mode(FocusMode p_mode);
     FocusMode get_enabled_focus_mode() const;
 
-    void set_shortcut(const Ref<ShortCut> &p_shortcut);
+    void set_shortcut(const Ref<ShortCut>& p_shortcut);
     Ref<ShortCut> get_shortcut() const;
 
-    virtual String get_tooltip(const Point2 &p_pos) const;
+    virtual String get_tooltip(const Point2& p_pos) const;
 
-    void set_button_group(const Ref<ButtonGroup> &p_group);
+    void set_button_group(const Ref<ButtonGroup>& p_group);
     Ref<ButtonGroup> get_button_group() const;
 
     BaseButton();
@@ -137,14 +138,14 @@ VARIANT_ENUM_CAST(BaseButton::ActionMode)
 class ButtonGroup : public Resource {
     GDCLASS(ButtonGroup, Resource);
     friend class BaseButton;
-    Set<BaseButton *> buttons;
+    Set<BaseButton*> buttons;
 
 protected:
     static void _bind_methods();
 
 public:
-    BaseButton *get_pressed_button();
-    void get_buttons(List<BaseButton *> *r_buttons);
+    BaseButton* get_pressed_button();
+    void get_buttons(List<BaseButton*>* r_buttons);
     Array _get_buttons();
     ButtonGroup();
 };

@@ -42,7 +42,8 @@ String ResourceImporterMP3::get_visible_name() const {
     return "MP3";
 }
 
-void ResourceImporterMP3::get_recognized_extensions(List<String> *p_extensions) const {
+void ResourceImporterMP3::get_recognized_extensions(List<String>* p_extensions
+) const {
     p_extensions->push_back("mp3");
 }
 
@@ -54,7 +55,10 @@ String ResourceImporterMP3::get_resource_type() const {
     return "AudioStreamMP3";
 }
 
-bool ResourceImporterMP3::get_option_visibility(const String &p_option, const Map<StringName, Variant> &p_options) const {
+bool ResourceImporterMP3::get_option_visibility(
+    const String& p_option,
+    const Map<StringName, Variant>& p_options
+) const {
     return true;
 }
 
@@ -66,16 +70,29 @@ String ResourceImporterMP3::get_preset_name(int p_idx) const {
     return String();
 }
 
-void ResourceImporterMP3::get_import_options(List<ImportOption> *r_options, int p_preset) const {
-    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "loop"), true));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::REAL, "loop_offset"), 0));
+void ResourceImporterMP3::get_import_options(
+    List<ImportOption>* r_options,
+    int p_preset
+) const {
+    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "loop"), true)
+    );
+    r_options->push_back(
+        ImportOption(PropertyInfo(Variant::REAL, "loop_offset"), 0)
+    );
 }
 
-Error ResourceImporterMP3::import(const String &p_source_file, const String &p_save_path, const Map<StringName, Variant> &p_options, List<String> *r_platform_variants, List<String> *r_gen_files, Variant *r_metadata) {
+Error ResourceImporterMP3::import(
+    const String& p_source_file,
+    const String& p_save_path,
+    const Map<StringName, Variant>& p_options,
+    List<String>* r_platform_variants,
+    List<String>* r_gen_files,
+    Variant* r_metadata
+) {
     bool loop = p_options["loop"];
     float loop_offset = p_options["loop_offset"];
 
-    FileAccess *f = FileAccess::open(p_source_file, FileAccess::READ);
+    FileAccess* f = FileAccess::open(p_source_file, FileAccess::READ);
 
     ERR_FAIL_COND_V(!f, ERR_CANT_OPEN);
 
@@ -100,5 +117,4 @@ Error ResourceImporterMP3::import(const String &p_source_file, const String &p_s
     return ResourceSaver::save(p_save_path + ".mp3str", mp3_stream);
 }
 
-ResourceImporterMP3::ResourceImporterMP3() {
-}
+ResourceImporterMP3::ResourceImporterMP3() {}

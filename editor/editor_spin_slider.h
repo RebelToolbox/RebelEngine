@@ -43,7 +43,7 @@ class EditorSpinSlider : public Range {
     bool hover_updown;
     bool mouse_hover;
 
-    TextureRect *grabber;
+    TextureRect* grabber;
     int grabber_range;
 
     bool mouse_over_spin;
@@ -62,14 +62,14 @@ class EditorSpinSlider : public Range {
     Vector2 grabbing_spinner_mouse_pos;
     double pre_grab_value;
 
-    LineEdit *value_input;
+    LineEdit* value_input;
     bool value_input_just_closed;
 
-    void _grabber_gui_input(const Ref<InputEvent> &p_event);
+    void _grabber_gui_input(const Ref<InputEvent>& p_event);
     void _value_input_closed();
-    void _value_input_entered(const String &);
+    void _value_input_entered(const String&);
     void _value_focus_exited();
-    void _value_input_gui_input(const Ref<InputEvent> &p_event);
+    void _value_input_gui_input(const Ref<InputEvent>& p_event);
     bool hide_slider;
     bool flat;
 
@@ -82,17 +82,17 @@ class EditorSpinSlider : public Range {
 
 protected:
     void _notification(int p_what);
-    void _gui_input(const Ref<InputEvent> &p_event);
+    void _gui_input(const Ref<InputEvent>& p_event);
     static void _bind_methods();
     void _grabber_mouse_entered();
     void _grabber_mouse_exited();
     void _focus_entered();
 
 public:
-    String get_tooltip(const Point2 &p_pos) const;
+    String get_tooltip(const Point2& p_pos) const;
 
     String get_text_value() const;
-    void set_label(const String &p_label);
+    void set_label(const String& p_label);
     String get_label() const;
 
     void set_hide_slider(bool p_hide);
@@ -104,10 +104,18 @@ public:
     void set_flat(bool p_enable);
     bool is_flat() const;
 
-    void set_custom_label_color(bool p_use_custom_label_color, Color p_custom_label_color);
+    void set_custom_label_color(
+        bool p_use_custom_label_color,
+        Color p_custom_label_color
+    );
 
-    void setup_and_show() { _focus_entered(); }
-    LineEdit *get_line_edit() { return value_input; }
+    void setup_and_show() {
+        _focus_entered();
+    }
+
+    LineEdit* get_line_edit() {
+        return value_input;
+    }
 
     virtual Size2 get_minimum_size() const;
     EditorSpinSlider();

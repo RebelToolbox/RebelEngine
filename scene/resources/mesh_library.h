@@ -46,6 +46,7 @@ public:
         Ref<Shape> shape;
         Transform local_transform;
     };
+
     struct Item {
         String name;
         Ref<Mesh> mesh;
@@ -58,25 +59,25 @@ public:
 
     Map<int, Item> item_map;
 
-    void _set_item_shapes(int p_item, const Array &p_shapes);
+    void _set_item_shapes(int p_item, const Array& p_shapes);
     Array _get_item_shapes(int p_item) const;
 
 protected:
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
 
     static void _bind_methods();
 
 public:
     void create_item(int p_item);
-    void set_item_name(int p_item, const String &p_name);
-    void set_item_mesh(int p_item, const Ref<Mesh> &p_mesh);
-    void set_item_mesh_transform(int p_item, const Transform &p_transform);
-    void set_item_navmesh(int p_item, const Ref<NavigationMesh> &p_navmesh);
-    void set_item_navmesh_transform(int p_item, const Transform &p_transform);
-    void set_item_shapes(int p_item, const Vector<ShapeData> &p_shapes);
-    void set_item_preview(int p_item, const Ref<Texture> &p_preview);
+    void set_item_name(int p_item, const String& p_name);
+    void set_item_mesh(int p_item, const Ref<Mesh>& p_mesh);
+    void set_item_mesh_transform(int p_item, const Transform& p_transform);
+    void set_item_navmesh(int p_item, const Ref<NavigationMesh>& p_navmesh);
+    void set_item_navmesh_transform(int p_item, const Transform& p_transform);
+    void set_item_shapes(int p_item, const Vector<ShapeData>& p_shapes);
+    void set_item_preview(int p_item, const Ref<Texture>& p_preview);
     String get_item_name(int p_item) const;
     Ref<Mesh> get_item_mesh(int p_item) const;
     Transform get_item_mesh_transform(int p_item) const;
@@ -90,7 +91,7 @@ public:
 
     void clear();
 
-    int find_item_by_name(const String &p_name) const;
+    int find_item_by_name(const String& p_name) const;
 
     Vector<int> get_item_list() const;
     int get_last_unused_item_id() const;

@@ -33,13 +33,14 @@
 #include "../editor_settings.h"
 #include "core/io/marshalls.h"
 
-//#define DEBUG_PRINT(m_p) print_line(m_p)
-//#define DEBUG_TIME(m_what) printf("MS: %s - %lu\n", m_what, OS::get_singleton()->get_ticks_usec());
+// #define DEBUG_PRINT(m_p) print_line(m_p)
+// #define DEBUG_TIME(m_what) printf("MS: %s - %lu\n", m_what,
+// OS::get_singleton()->get_ticks_usec());
 
 #define DEBUG_PRINT(m_what)
 #define DEBUG_TIME(m_what)
 
-void EditorFileServer::_close_client(ClientData *cd) {
+void EditorFileServer::_close_client(ClientData* cd) {
     cd->connection->disconnect_from_host();
     cd->efs->wait_mutex.lock();
     cd->efs->to_wait.insert(cd->thread);
@@ -51,8 +52,8 @@ void EditorFileServer::_close_client(ClientData *cd) {
     memdelete(cd);
 }
 
-void EditorFileServer::_subthread_start(void *s) {
-    ClientData *cd = (ClientData *)s;
+void EditorFileServer::_subthread_start(void* s) {
+    ClientData* cd = (ClientData*)s;
 
     cd->connection->set_no_delay(true);
     uint8_t buf4[8];
@@ -70,7 +71,7 @@ void EditorFileServer::_subthread_start(void *s) {
     } else if (passlen > 0) {
         Vector<char> passutf8;
         passutf8.resize(passlen + 1);
-        err = cd->connection->get_data((uint8_t *)passutf8.ptr(), passlen);
+        err = cd->connection->get_data((uint8_t*)passutf8.ptr(), passlen);
         if (err != OK) {
             _close_client(cd);
             ERR_FAIL_COND(err != OK);
@@ -101,7 +102,7 @@ void EditorFileServer::_subthread_start(void *s) {
     cd->connection->put_data(buf4, 4);
 
     while (!cd->quit) {
-        //wait for ID
+        // wait for ID
         err = cd->connection->get_data(buf4, 4);
         DEBUG_TIME("get_data")
 
@@ -111,7 +112,7 @@ void EditorFileServer::_subthread_start(void *s) {
         }
         int id = decode_uint32(buf4);
 
-        //wait for command
+        // wait for command
         err = cd->connection->get_data(buf4, 4);
         if (err != OK) {
             _close_client(cd);
@@ -133,7 +134,8 @@ void EditorFileServer::_subthread_start(void *s) {
                 int namelen = decode_uint32(buf4);
                 Vector<char> fileutf8;
                 fileutf8.resize(namelen + 1);
-                err = cd->connection->get_data((uint8_t *)fileutf8.ptr(), namelen);
+                err =
+                    cd->connection->get_data((uint8_t*)fileutf8.ptr(), namelen);
                 if (err != OK) {
                     _close_client(cd);
                     ERR_FAIL_COND(err != OK);
@@ -161,7 +163,10 @@ void EditorFileServer::_subthread_start(void *s) {
                 if (cmd == FileAccessNetwork::COMMAND_FILE_EXISTS) {
                     encode_uint32(id, buf4);
                     cd->connection->put_data(buf4, 4);
-                    encode_uint32(FileAccessNetwork::RESPONSE_FILE_EXISTS, buf4);
+                    encode_uint32(
+                        FileAccessNetwork::RESPONSE_FILE_EXISTS,
+                        buf4
+                    );
                     cd->connection->put_data(buf4, 4);
                     encode_uint32(FileAccess::exists(s2), buf4);
                     cd->connection->put_data(buf4, 4);
@@ -172,7 +177,10 @@ void EditorFileServer::_subthread_start(void *s) {
                 if (cmd == FileAccessNetwork::COMMAND_GET_MODTIME) {
                     encode_uint32(id, buf4);
                     cd->connection->put_data(buf4, 4);
-                    encode_uint32(FileAccessNetwork::RESPONSE_GET_MODTIME, buf4);
+                    encode_uint32(
+                        FileAccessNetwork::RESPONSE_GET_MODTIME,
+                        buf4
+                    );
                     cd->connection->put_data(buf4, 4);
                     encode_uint64(FileAccess::get_modified_time(s2), buf4);
                     cd->connection->put_data(buf4, 8);
@@ -180,9 +188,9 @@ void EditorFileServer::_subthread_start(void *s) {
                     break;
                 }
 
-                FileAccess *fa = FileAccess::open(s2, FileAccess::READ);
+                FileAccess* fa = FileAccess::open(s2, FileAccess::READ);
                 if (!fa) {
-                    //not found, continue
+                    // not found, continue
                     encode_uint32(id, buf4);
                     cd->connection->put_data(buf4, 4);
                     encode_uint32(FileAccessNetwork::RESPONSE_OPEN, buf4);
@@ -231,9 +239,12 @@ void EditorFileServer::_subthread_start(void *s) {
                 buf.resize(blocklen);
                 uint32_t read = cd->files[id]->get_buffer(buf.ptrw(), blocklen);
 
-                print_verbose("GET BLOCK - offset: " + itos(offset) + ", blocklen: " + itos(blocklen));
+                print_verbose(
+                    "GET BLOCK - offset: " + itos(offset)
+                    + ", blocklen: " + itos(blocklen)
+                );
 
-                //not found, continue
+                // not found, continue
                 encode_uint32(id, buf4);
                 cd->connection->put_data(buf4, 4);
                 encode_uint32(FileAccessNetwork::RESPONSE_DATA, buf4);
@@ -257,8 +268,8 @@ void EditorFileServer::_subthread_start(void *s) {
     _close_client(cd);
 }
 
-void EditorFileServer::_thread_start(void *s) {
-    EditorFileServer *self = (EditorFileServer *)s;
+void EditorFileServer::_thread_start(void* s) {
+    EditorFileServer* self = (EditorFileServer*)s;
     while (!self->quit) {
         if (self->cmd == CMD_ACTIVATE) {
             self->server->listen(self->port);
@@ -272,7 +283,7 @@ void EditorFileServer::_thread_start(void *s) {
 
         if (self->active) {
             if (self->server->is_connection_available()) {
-                ClientData *cd = memnew(ClientData);
+                ClientData* cd = memnew(ClientData);
                 cd->connection = self->server->take_connection();
                 cd->efs = self;
                 cd->quit = false;
@@ -283,7 +294,7 @@ void EditorFileServer::_thread_start(void *s) {
 
         self->wait_mutex.lock();
         while (self->to_wait.size()) {
-            Thread *w = self->to_wait.front()->get();
+            Thread* w = self->to_wait.front()->get();
             self->to_wait.erase(w);
             self->wait_mutex.unlock();
             w->wait_to_finish();

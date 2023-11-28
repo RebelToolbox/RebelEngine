@@ -46,47 +46,47 @@ class AnimationNodeBlendSpace2DEditor : public AnimationTreeNodeEditorPlugin {
 
     Ref<AnimationNodeBlendSpace2D> blend_space;
 
-    PanelContainer *panel;
-    ToolButton *tool_blend;
-    ToolButton *tool_select;
-    ToolButton *tool_create;
-    ToolButton *tool_triangle;
-    VSeparator *tool_erase_sep;
-    ToolButton *tool_erase;
-    ToolButton *snap;
-    SpinBox *snap_x;
-    SpinBox *snap_y;
-    OptionButton *interpolation;
+    PanelContainer* panel;
+    ToolButton* tool_blend;
+    ToolButton* tool_select;
+    ToolButton* tool_create;
+    ToolButton* tool_triangle;
+    VSeparator* tool_erase_sep;
+    ToolButton* tool_erase;
+    ToolButton* snap;
+    SpinBox* snap_x;
+    SpinBox* snap_y;
+    OptionButton* interpolation;
 
-    ToolButton *auto_triangles;
+    ToolButton* auto_triangles;
 
-    LineEdit *label_x;
-    LineEdit *label_y;
-    SpinBox *max_x_value;
-    SpinBox *min_x_value;
-    SpinBox *max_y_value;
-    SpinBox *min_y_value;
+    LineEdit* label_x;
+    LineEdit* label_y;
+    SpinBox* max_x_value;
+    SpinBox* min_x_value;
+    SpinBox* max_y_value;
+    SpinBox* min_y_value;
 
-    HBoxContainer *edit_hb;
-    SpinBox *edit_x;
-    SpinBox *edit_y;
-    Button *open_editor;
+    HBoxContainer* edit_hb;
+    SpinBox* edit_x;
+    SpinBox* edit_y;
+    Button* open_editor;
 
     int selected_point;
     int selected_triangle;
 
-    Control *blend_space_draw;
+    Control* blend_space_draw;
 
-    PanelContainer *error_panel;
-    Label *error_label;
+    PanelContainer* error_panel;
+    Label* error_label;
 
     bool updating;
 
-    UndoRedo *undo_redo;
+    UndoRedo* undo_redo;
 
-    static AnimationNodeBlendSpace2DEditor *singleton;
+    static AnimationNodeBlendSpace2DEditor* singleton;
 
-    void _blend_space_gui_input(const Ref<InputEvent> &p_event);
+    void _blend_space_gui_input(const Ref<InputEvent>& p_event);
     void _blend_space_draw();
 
     void _update_space();
@@ -95,8 +95,8 @@ class AnimationNodeBlendSpace2DEditor : public AnimationTreeNodeEditorPlugin {
     void _labels_changed(String);
     void _snap_toggled();
 
-    PopupMenu *menu;
-    PopupMenu *animations_menu;
+    PopupMenu* menu;
+    PopupMenu* animations_menu;
     Vector<String> animations_to_add;
     Vector2 add_point_pos;
     Vector<Vector2> points;
@@ -124,9 +124,9 @@ class AnimationNodeBlendSpace2DEditor : public AnimationTreeNodeEditorPlugin {
 
     StringName get_blend_position_path() const;
 
-    EditorFileDialog *open_file;
+    EditorFileDialog* open_file;
     Ref<AnimationNode> file_loaded;
-    void _file_opened(const String &p_file);
+    void _file_opened(const String& p_file);
 
     enum {
         MENU_LOAD_FILE = 1000,
@@ -141,9 +141,12 @@ protected:
     static void _bind_methods();
 
 public:
-    static AnimationNodeBlendSpace2DEditor *get_singleton() { return singleton; }
-    virtual bool can_edit(const Ref<AnimationNode> &p_node);
-    virtual void edit(const Ref<AnimationNode> &p_node);
+    static AnimationNodeBlendSpace2DEditor* get_singleton() {
+        return singleton;
+    }
+
+    virtual bool can_edit(const Ref<AnimationNode>& p_node);
+    virtual void edit(const Ref<AnimationNode>& p_node);
     AnimationNodeBlendSpace2DEditor();
 };
 

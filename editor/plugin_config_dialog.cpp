@@ -56,7 +56,7 @@ void PluginConfigDialog::_on_confirmed() {
     String path = "res://addons/" + subfolder_edit->get_text();
 
     if (!_edit_mode) {
-        DirAccess *d = DirAccess::create(DirAccess::ACCESS_RESOURCES);
+        DirAccess* d = DirAccess::create(DirAccess::ACCESS_RESOURCES);
         if (!d || d->make_dir_recursive(path) != OK) {
             return;
         }
@@ -77,26 +77,31 @@ void PluginConfigDialog::_on_confirmed() {
 
         Ref<Script> script;
 
-        // TODO Use script templates. Right now, this code won't add the 'tool' annotation to other languages.
-        // TODO Better support script languages with named classes (has_named_classes).
+        // TODO Use script templates. Right now, this code won't add the 'tool'
+        // annotation to other languages.
+        // TODO Better support script languages with named classes
+        // (has_named_classes).
 
-        // FIXME: It's hacky to have hardcoded access to the GDScript module here.
-        // The editor code should not have to know what languages are enabled.
+        // FIXME: It's hacky to have hardcoded access to the GDScript module
+        // here. The editor code should not have to know what languages are
+        // enabled.
 #ifdef MODULE_GDSCRIPT_ENABLED
         if (lang_name == GDScriptLanguage::get_singleton()->get_name()) {
-            // Hard-coded GDScript template to keep usability until we use script templates.
+            // Hard-coded GDScript template to keep usability until we use
+            // script templates.
             Ref<Script> gdscript = memnew(GDScript);
             gdscript->set_source_code(
-                    "tool\n"
-                    "extends EditorPlugin\n"
-                    "\n"
-                    "\n"
-                    "func _enter_tree()%VOID_RETURN%:\n"
-                    "%TS%pass\n"
-                    "\n"
-                    "\n"
-                    "func _exit_tree()%VOID_RETURN%:\n"
-                    "%TS%pass\n");
+                "tool\n"
+                "extends EditorPlugin\n"
+                "\n"
+                "\n"
+                "func _enter_tree()%VOID_RETURN%:\n"
+                "%TS%pass\n"
+                "\n"
+                "\n"
+                "func _exit_tree()%VOID_RETURN%:\n"
+                "%TS%pass\n"
+            );
             GDScriptLanguage::get_singleton()->make_template("", "", gdscript);
             String script_path = path.plus_file(script_edit->get_text());
             gdscript->set_path(script_path);
@@ -106,14 +111,21 @@ void PluginConfigDialog::_on_confirmed() {
 #endif
             String script_path = path.plus_file(script_edit->get_text());
             String class_name = script_path.get_file().get_basename();
-            script = ScriptServer::get_language(lang_idx)->get_template(class_name, "EditorPlugin");
+            script = ScriptServer::get_language(lang_idx)->get_template(
+                class_name,
+                "EditorPlugin"
+            );
             script->set_path(script_path);
             ResourceSaver::save(script_path, script);
 #ifdef MODULE_GDSCRIPT_ENABLED
         }
 #endif
 
-        emit_signal("plugin_ready", script.operator->(), active_edit->is_pressed() ? subfolder_edit->get_text() : "");
+        emit_signal(
+            "plugin_ready",
+            script.operator->(),
+            active_edit->is_pressed() ? subfolder_edit->get_text() : ""
+        );
     } else {
         EditorNode::get_singleton()->get_project_settings()->update_plugins();
     }
@@ -124,10 +136,14 @@ void PluginConfigDialog::_on_cancelled() {
     _clear_fields();
 }
 
-void PluginConfigDialog::_on_required_text_changed(const String &) {
+void PluginConfigDialog::_on_required_text_changed(const String&) {
     int lang_idx = script_option_edit->get_selected();
     String ext = ScriptServer::get_language(lang_idx)->get_extension();
-    get_ok()->set_disabled(script_edit->get_text().get_basename().empty() || script_edit->get_text().get_extension() != ext || name_edit->get_text().empty());
+    get_ok()->set_disabled(
+        script_edit->get_text().get_basename().empty()
+        || script_edit->get_text().get_extension() != ext
+        || name_edit->get_text().empty()
+    );
 }
 
 void PluginConfigDialog::_notification(int p_what) {
@@ -143,14 +159,19 @@ void PluginConfigDialog::_notification(int p_what) {
     }
 }
 
-void PluginConfigDialog::config(const String &p_config_path) {
+void PluginConfigDialog::config(const String& p_config_path) {
     if (p_config_path.length()) {
         Ref<ConfigFile> cf = memnew(ConfigFile);
         Error err = cf->load(p_config_path);
-        ERR_FAIL_COND_MSG(err != OK, "Cannot load config file from path '" + p_config_path + "'.");
+        ERR_FAIL_COND_MSG(
+            err != OK,
+            "Cannot load config file from path '" + p_config_path + "'."
+        );
 
         name_edit->set_text(cf->get_value("plugin", "name", ""));
-        subfolder_edit->set_text(p_config_path.get_base_dir().get_basename().get_file());
+        subfolder_edit->set_text(
+            p_config_path.get_base_dir().get_basename().get_file()
+        );
         desc_edit->set_text(cf->get_value("plugin", "description", ""));
         author_edit->set_text(cf->get_value("plugin", "author", ""));
         version_edit->set_text(cf->get_value("plugin", "version", ""));
@@ -158,17 +179,29 @@ void PluginConfigDialog::config(const String &p_config_path) {
 
         _edit_mode = true;
         active_edit->hide();
-        Object::cast_to<Label>(active_edit->get_parent()->get_child(active_edit->get_index() - 1))->hide();
+        Object::cast_to<Label>(
+            active_edit->get_parent()->get_child(active_edit->get_index() - 1)
+        )
+            ->hide();
         subfolder_edit->hide();
-        Object::cast_to<Label>(subfolder_edit->get_parent()->get_child(subfolder_edit->get_index() - 1))->hide();
+        Object::cast_to<Label>(subfolder_edit->get_parent()->get_child(
+                                   subfolder_edit->get_index() - 1
+                               ))
+            ->hide();
         set_title(TTR("Edit a Plugin"));
     } else {
         _clear_fields();
         _edit_mode = false;
         active_edit->show();
-        Object::cast_to<Label>(active_edit->get_parent()->get_child(active_edit->get_index() - 1))->show();
+        Object::cast_to<Label>(
+            active_edit->get_parent()->get_child(active_edit->get_index() - 1)
+        )
+            ->show();
         subfolder_edit->show();
-        Object::cast_to<Label>(subfolder_edit->get_parent()->get_child(subfolder_edit->get_index() - 1))->show();
+        Object::cast_to<Label>(subfolder_edit->get_parent()->get_child(
+                                   subfolder_edit->get_index() - 1
+                               ))
+            ->show();
         set_title(TTR("Create a Plugin"));
     }
     get_ok()->set_disabled(!_edit_mode);
@@ -176,21 +209,28 @@ void PluginConfigDialog::config(const String &p_config_path) {
 }
 
 void PluginConfigDialog::_bind_methods() {
-    ClassDB::bind_method("_on_required_text_changed", &PluginConfigDialog::_on_required_text_changed);
+    ClassDB::bind_method(
+        "_on_required_text_changed",
+        &PluginConfigDialog::_on_required_text_changed
+    );
     ClassDB::bind_method("_on_confirmed", &PluginConfigDialog::_on_confirmed);
     ClassDB::bind_method("_on_cancelled", &PluginConfigDialog::_on_cancelled);
-    ADD_SIGNAL(MethodInfo("plugin_ready", PropertyInfo(Variant::STRING, "script_path", PROPERTY_HINT_NONE, ""), PropertyInfo(Variant::STRING, "activate_name")));
+    ADD_SIGNAL(MethodInfo(
+        "plugin_ready",
+        PropertyInfo(Variant::STRING, "script_path", PROPERTY_HINT_NONE, ""),
+        PropertyInfo(Variant::STRING, "activate_name")
+    ));
 }
 
 PluginConfigDialog::PluginConfigDialog() {
     get_ok()->set_disabled(true);
     set_hide_on_ok(true);
 
-    GridContainer *grid = memnew(GridContainer);
+    GridContainer* grid = memnew(GridContainer);
     grid->set_columns(2);
     add_child(grid);
 
-    Label *name_lb = memnew(Label);
+    Label* name_lb = memnew(Label);
     name_lb->set_text(TTR("Plugin Name:"));
     grid->add_child(name_lb);
 
@@ -199,7 +239,7 @@ PluginConfigDialog::PluginConfigDialog() {
     name_edit->set_placeholder("MyPlugin");
     grid->add_child(name_edit);
 
-    Label *subfolder_lb = memnew(Label);
+    Label* subfolder_lb = memnew(Label);
     subfolder_lb->set_text(TTR("Subfolder:"));
     grid->add_child(subfolder_lb);
 
@@ -207,7 +247,7 @@ PluginConfigDialog::PluginConfigDialog() {
     subfolder_edit->set_placeholder("\"my_plugin\" -> res://addons/my_plugin");
     grid->add_child(subfolder_edit);
 
-    Label *desc_lb = memnew(Label);
+    Label* desc_lb = memnew(Label);
     desc_lb->set_text(TTR("Description:"));
     grid->add_child(desc_lb);
 
@@ -216,7 +256,7 @@ PluginConfigDialog::PluginConfigDialog() {
     desc_edit->set_wrap_enabled(true);
     grid->add_child(desc_edit);
 
-    Label *author_lb = memnew(Label);
+    Label* author_lb = memnew(Label);
     author_lb->set_text(TTR("Author:"));
     grid->add_child(author_lb);
 
@@ -224,7 +264,7 @@ PluginConfigDialog::PluginConfigDialog() {
     author_edit->set_placeholder("Godette");
     grid->add_child(author_edit);
 
-    Label *version_lb = memnew(Label);
+    Label* version_lb = memnew(Label);
     version_lb->set_text(TTR("Version:"));
     grid->add_child(version_lb);
 
@@ -232,14 +272,14 @@ PluginConfigDialog::PluginConfigDialog() {
     version_edit->set_placeholder("1.0");
     grid->add_child(version_edit);
 
-    Label *script_option_lb = memnew(Label);
+    Label* script_option_lb = memnew(Label);
     script_option_lb->set_text(TTR("Language:"));
     grid->add_child(script_option_lb);
 
     script_option_edit = memnew(OptionButton);
     int default_lang = 0;
     for (int i = 0; i < ScriptServer::get_language_count(); i++) {
-        ScriptLanguage *lang = ScriptServer::get_language(i);
+        ScriptLanguage* lang = ScriptServer::get_language(i);
         script_option_edit->add_item(lang->get_name());
 #ifdef MODULE_GDSCRIPT_ENABLED
         if (lang == GDScriptLanguage::get_singleton()) {
@@ -250,17 +290,20 @@ PluginConfigDialog::PluginConfigDialog() {
     script_option_edit->select(default_lang);
     grid->add_child(script_option_edit);
 
-    Label *script_lb = memnew(Label);
+    Label* script_lb = memnew(Label);
     script_lb->set_text(TTR("Script Name:"));
     grid->add_child(script_lb);
 
     script_edit = memnew(LineEdit);
     script_edit->connect("text_changed", this, "_on_required_text_changed");
-    script_edit->set_placeholder("\"plugin.gd\" -> res://addons/my_plugin/plugin.gd");
+    script_edit->set_placeholder(
+        "\"plugin.gd\" -> res://addons/my_plugin/plugin.gd"
+    );
     grid->add_child(script_edit);
 
-    // TODO Make this option work better with languages like C#. Right now, it does not work because the C# project must be compiled first.
-    Label *active_lb = memnew(Label);
+    // TODO Make this option work better with languages like C#. Right now, it
+    // does not work because the C# project must be compiled first.
+    Label* active_lb = memnew(Label);
     active_lb->set_text(TTR("Activate now?"));
     grid->add_child(active_lb);
 
@@ -269,5 +312,4 @@ PluginConfigDialog::PluginConfigDialog() {
     grid->add_child(active_edit);
 }
 
-PluginConfigDialog::~PluginConfigDialog() {
-}
+PluginConfigDialog::~PluginConfigDialog() {}

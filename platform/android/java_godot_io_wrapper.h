@@ -39,7 +39,8 @@
 
 #include "string_android.h"
 
-// Class that makes functions in java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
+// Class that makes functions in
+// java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
 class GodotIOJavaWrapper {
 private:
     jobject io_object;
@@ -60,12 +61,12 @@ private:
     jmethodID _get_system_dir = 0;
 
 public:
-    GodotIOJavaWrapper(JNIEnv *p_env, jobject io_object);
+    GodotIOJavaWrapper(JNIEnv* p_env, jobject io_object);
     ~GodotIOJavaWrapper();
 
     jobject get_instance();
 
-    Error open_uri(const String &p_uri);
+    Error open_uri(const String& p_uri);
     String get_cache_dir();
     String get_user_data_dir();
     String get_locale();
@@ -74,7 +75,13 @@ public:
     void get_window_safe_area(int (&p_rect_xywh)[4]);
     String get_unique_id();
     bool has_vk();
-    void show_vk(const String &p_existing, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end);
+    void show_vk(
+        const String& p_existing,
+        bool p_multiline,
+        int p_max_input_length,
+        int p_cursor_start,
+        int p_cursor_end
+    );
     void hide_vk();
     int get_vk_height();
     void set_vk_height(int p_height);

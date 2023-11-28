@@ -36,21 +36,20 @@
 #include "space_bullet.h"
 
 SoftBodyBullet::SoftBodyBullet() :
-        CollisionObjectBullet(CollisionObjectBullet::TYPE_SOFT_BODY),
-        bt_soft_body(nullptr),
-        isScratched(false),
-        simulation_precision(5),
-        total_mass(1.),
-        linear_stiffness(0.5),
-        areaAngular_stiffness(0.5),
-        volume_stiffness(0.5),
-        pressure_coefficient(0.),
-        pose_matching_coefficient(0.),
-        damping_coefficient(0.01),
-        drag_coefficient(0.) {}
+    CollisionObjectBullet(CollisionObjectBullet::TYPE_SOFT_BODY),
+    bt_soft_body(nullptr),
+    isScratched(false),
+    simulation_precision(5),
+    total_mass(1.),
+    linear_stiffness(0.5),
+    areaAngular_stiffness(0.5),
+    volume_stiffness(0.5),
+    pressure_coefficient(0.),
+    pose_matching_coefficient(0.),
+    damping_coefficient(0.01),
+    drag_coefficient(0.) {}
 
-SoftBodyBullet::~SoftBodyBullet() {
-}
+SoftBodyBullet::~SoftBodyBullet() {}
 
 void SoftBodyBullet::reload_body() {
     if (space) {
@@ -59,7 +58,7 @@ void SoftBodyBullet::reload_body() {
     }
 }
 
-void SoftBodyBullet::set_space(SpaceBullet *p_space) {
+void SoftBodyBullet::set_space(SpaceBullet* p_space) {
     if (space) {
         isScratched = false;
         space->remove_soft_body(this);
@@ -72,33 +71,42 @@ void SoftBodyBullet::set_space(SpaceBullet *p_space) {
     }
 }
 
-void SoftBodyBullet::on_enter_area(AreaBullet *p_area) {}
+void SoftBodyBullet::on_enter_area(AreaBullet* p_area) {}
 
-void SoftBodyBullet::on_exit_area(AreaBullet *p_area) {}
+void SoftBodyBullet::on_exit_area(AreaBullet* p_area) {}
 
-void SoftBodyBullet::update_visual_server(SoftBodyVisualServerHandler *p_visual_server_handler) {
+void SoftBodyBullet::update_visual_server(
+    SoftBodyVisualServerHandler* p_visual_server_handler
+) {
     if (!bt_soft_body) {
         return;
     }
 
     /// Update visual server vertices
-    const btSoftBody::tNodeArray &nodes(bt_soft_body->m_nodes);
+    const btSoftBody::tNodeArray& nodes(bt_soft_body->m_nodes);
     const int nodes_count = nodes.size();
 
-    const Vector<int> *vs_indices;
-    const void *vertex_position;
-    const void *vertex_normal;
+    const Vector<int>* vs_indices;
+    const void* vertex_position;
+    const void* vertex_normal;
 
     for (int vertex_index = 0; vertex_index < nodes_count; ++vertex_index) {
-        vertex_position = reinterpret_cast<const void *>(&nodes[vertex_index].m_x);
-        vertex_normal = reinterpret_cast<const void *>(&nodes[vertex_index].m_n);
+        vertex_position =
+            reinterpret_cast<const void*>(&nodes[vertex_index].m_x);
+        vertex_normal = reinterpret_cast<const void*>(&nodes[vertex_index].m_n);
 
         vs_indices = &indices_table[vertex_index];
 
         const int vs_indices_size(vs_indices->size());
         for (int x = 0; x < vs_indices_size; ++x) {
-            p_visual_server_handler->set_vertex((*vs_indices)[x], vertex_position);
-            p_visual_server_handler->set_normal((*vs_indices)[x], vertex_normal);
+            p_visual_server_handler->set_vertex(
+                (*vs_indices)[x],
+                vertex_position
+            );
+            p_visual_server_handler->set_normal(
+                (*vs_indices)[x],
+                vertex_normal
+            );
         }
     }
 
@@ -116,7 +124,7 @@ void SoftBodyBullet::update_visual_server(SoftBodyVisualServerHandler *p_visual_
     p_visual_server_handler->set_aabb(aabb);
 }
 
-void SoftBodyBullet::set_soft_mesh(const Ref<Mesh> &p_mesh) {
+void SoftBodyBullet::set_soft_mesh(const Ref<Mesh>& p_mesh) {
     if (p_mesh.is_null()) {
         soft_mesh.unref();
     } else {
@@ -147,12 +155,12 @@ void SoftBodyBullet::destroy_soft_body() {
     bt_soft_body = nullptr;
 }
 
-void SoftBodyBullet::set_soft_transform(const Transform &p_transform) {
+void SoftBodyBullet::set_soft_transform(const Transform& p_transform) {
     reset_all_node_positions();
     move_all_nodes(p_transform);
 }
 
-void SoftBodyBullet::move_all_nodes(const Transform &p_transform) {
+void SoftBodyBullet::move_all_nodes(const Transform& p_transform) {
     if (!bt_soft_body) {
         return;
     }
@@ -161,28 +169,37 @@ void SoftBodyBullet::move_all_nodes(const Transform &p_transform) {
     bt_soft_body->transform(bt_transf);
 }
 
-void SoftBodyBullet::set_node_position(int p_node_index, const Vector3 &p_global_position) {
+void SoftBodyBullet::set_node_position(
+    int p_node_index,
+    const Vector3& p_global_position
+) {
     btVector3 bt_pos;
     G_TO_B(p_global_position, bt_pos);
     set_node_position(p_node_index, bt_pos);
 }
 
-void SoftBodyBullet::set_node_position(int p_node_index, const btVector3 &p_global_position) {
+void SoftBodyBullet::set_node_position(
+    int p_node_index,
+    const btVector3& p_global_position
+) {
     if (bt_soft_body) {
         ERR_FAIL_INDEX(p_node_index, bt_soft_body->m_nodes.size());
-        bt_soft_body->m_nodes[p_node_index].m_q = bt_soft_body->m_nodes[p_node_index].m_x;
+        bt_soft_body->m_nodes[p_node_index].m_q =
+            bt_soft_body->m_nodes[p_node_index].m_x;
         bt_soft_body->m_nodes[p_node_index].m_x = p_global_position;
     }
 }
 
-void SoftBodyBullet::get_node_position(int p_node_index, Vector3 &r_position) const {
+void SoftBodyBullet::get_node_position(int p_node_index, Vector3& r_position)
+    const {
     if (bt_soft_body) {
         ERR_FAIL_INDEX(p_node_index, bt_soft_body->m_nodes.size());
         B_TO_G(bt_soft_body->m_nodes[p_node_index].m_x, r_position);
     }
 }
 
-void SoftBodyBullet::get_node_offset(int p_node_index, Vector3 &r_offset) const {
+void SoftBodyBullet::get_node_offset(int p_node_index, Vector3& r_offset)
+    const {
     if (soft_mesh.is_null()) {
         return;
     }
@@ -195,7 +212,8 @@ void SoftBodyBullet::get_node_offset(int p_node_index, Vector3 &r_offset) const 
     }
 }
 
-void SoftBodyBullet::get_node_offset(int p_node_index, btVector3 &r_offset) const {
+void SoftBodyBullet::get_node_offset(int p_node_index, btVector3& r_offset)
+    const {
     Vector3 off;
     get_node_offset(p_node_index, off);
     G_TO_B(off, r_offset);
@@ -240,10 +258,15 @@ void SoftBodyBullet::reset_all_node_positions() {
     PoolVector<Vector3> vs_vertices(arrays[VS::ARRAY_VERTEX]);
     PoolVector<Vector3>::Read vs_vertices_read = vs_vertices.read();
 
-    for (int vertex_index = bt_soft_body->m_nodes.size() - 1; 0 <= vertex_index; --vertex_index) {
-        G_TO_B(vs_vertices_read[indices_table[vertex_index][0]], bt_soft_body->m_nodes[vertex_index].m_x);
+    for (int vertex_index = bt_soft_body->m_nodes.size() - 1; 0 <= vertex_index;
+         --vertex_index) {
+        G_TO_B(
+            vs_vertices_read[indices_table[vertex_index][0]],
+            bt_soft_body->m_nodes[vertex_index].m_x
+        );
 
-        bt_soft_body->m_nodes[vertex_index].m_q = bt_soft_body->m_nodes[vertex_index].m_x;
+        bt_soft_body->m_nodes[vertex_index].m_q =
+            bt_soft_body->m_nodes[vertex_index].m_x;
         bt_soft_body->m_nodes[vertex_index].m_v = btVector3(0, 0, 0);
         bt_soft_body->m_nodes[vertex_index].m_f = btVector3(0, 0, 0);
     }
@@ -330,15 +353,21 @@ void SoftBodyBullet::set_drag_coefficient(real_t p_val) {
     }
 }
 
-void SoftBodyBullet::set_trimesh_body_shape(PoolVector<int> p_indices, PoolVector<Vector3> p_vertices) {
+void SoftBodyBullet::set_trimesh_body_shape(
+    PoolVector<int> p_indices,
+    PoolVector<Vector3> p_vertices
+) {
     /// Assert the current soft body is destroyed
     destroy_soft_body();
 
     /// Parse visual server indices to physical indices.
-    /// Merge all overlapping vertices and create a map of physical vertices to visual server
+    /// Merge all overlapping vertices and create a map of physical vertices to
+    /// visual server
 
     {
-        /// This is the map of visual server indices to physics indices (So it's the inverse of idices_map), Thanks to it I don't need make a heavy search in the indices_map
+        /// This is the map of visual server indices to physics indices (So it's
+        /// the inverse of idices_map), Thanks to it I don't need make a heavy
+        /// search in the indices_map
         Vector<int> vs_indices_to_physics_table;
 
         { // Map vertices
@@ -351,15 +380,18 @@ void SoftBodyBullet::set_trimesh_body_shape(PoolVector<int> p_indices, PoolVecto
 
             PoolVector<Vector3>::Read p_vertices_read = p_vertices.read();
 
-            for (int vs_vertex_index = 0; vs_vertex_index < vs_vertices_size; ++vs_vertex_index) {
-                Map<Vector3, int>::Element *e = unique_vertices.find(p_vertices_read[vs_vertex_index]);
+            for (int vs_vertex_index = 0; vs_vertex_index < vs_vertices_size;
+                 ++vs_vertex_index) {
+                Map<Vector3, int>::Element* e =
+                    unique_vertices.find(p_vertices_read[vs_vertex_index]);
                 int vertex_id;
                 if (e) {
                     // Already rxisting
                     vertex_id = e->value();
                 } else {
                     // Create new one
-                    unique_vertices[p_vertices_read[vs_vertex_index]] = vertex_id = index++;
+                    unique_vertices[p_vertices_read[vs_vertex_index]] =
+                        vertex_id = index++;
                     indices_table.push_back(Vector<int>());
                 }
 
@@ -378,9 +410,12 @@ void SoftBodyBullet::set_trimesh_body_shape(PoolVector<int> p_indices, PoolVecto
             PoolVector<Vector3>::Read p_vertices_read = p_vertices.read();
 
             for (int i = 0; i < indices_map_size; ++i) {
-                bt_vertices.write[3 * i + 0] = p_vertices_read[indices_table[i][0]].x;
-                bt_vertices.write[3 * i + 1] = p_vertices_read[indices_table[i][0]].y;
-                bt_vertices.write[3 * i + 2] = p_vertices_read[indices_table[i][0]].z;
+                bt_vertices.write[3 * i + 0] =
+                    p_vertices_read[indices_table[i][0]].x;
+                bt_vertices.write[3 * i + 1] =
+                    p_vertices_read[indices_table[i][0]].y;
+                bt_vertices.write[3 * i + 2] =
+                    p_vertices_read[indices_table[i][0]].z;
             }
         }
 
@@ -394,14 +429,23 @@ void SoftBodyBullet::set_trimesh_body_shape(PoolVector<int> p_indices, PoolVecto
             PoolVector<int>::Read p_indices_read = p_indices.read();
 
             for (int i = 0; i < triangles_size; ++i) {
-                bt_triangles.write[3 * i + 0] = vs_indices_to_physics_table[p_indices_read[3 * i + 2]];
-                bt_triangles.write[3 * i + 1] = vs_indices_to_physics_table[p_indices_read[3 * i + 1]];
-                bt_triangles.write[3 * i + 2] = vs_indices_to_physics_table[p_indices_read[3 * i + 0]];
+                bt_triangles.write[3 * i + 0] =
+                    vs_indices_to_physics_table[p_indices_read[3 * i + 2]];
+                bt_triangles.write[3 * i + 1] =
+                    vs_indices_to_physics_table[p_indices_read[3 * i + 1]];
+                bt_triangles.write[3 * i + 2] =
+                    vs_indices_to_physics_table[p_indices_read[3 * i + 0]];
             }
         }
 
         btSoftBodyWorldInfo fake_world_info;
-        bt_soft_body = btSoftBodyHelpers::CreateFromTriMesh(fake_world_info, &bt_vertices[0], &bt_triangles[0], triangles_size, false);
+        bt_soft_body = btSoftBodyHelpers::CreateFromTriMesh(
+            fake_world_info,
+            &bt_vertices[0],
+            &bt_triangles[0],
+            triangles_size,
+            false
+        );
         setup_soft_body();
     }
 }
@@ -415,7 +459,13 @@ void SoftBodyBullet::setup_soft_body() {
     setupBulletCollisionObject(bt_soft_body);
     bt_soft_body->m_worldInfo = nullptr; // Remove fake world info
     bt_soft_body->getCollisionShape()->setMargin(0.01);
-    bt_soft_body->setCollisionFlags(bt_soft_body->getCollisionFlags() & (~(btCollisionObject::CF_KINEMATIC_OBJECT | btCollisionObject::CF_STATIC_OBJECT)));
+    bt_soft_body->setCollisionFlags(
+        bt_soft_body->getCollisionFlags()
+        & (~(
+            btCollisionObject::CF_KINEMATIC_OBJECT
+            | btCollisionObject::CF_STATIC_OBJECT
+        ))
+    );
 
     // Space setup
     if (space) {
@@ -431,16 +481,19 @@ void SoftBodyBullet::setup_soft_body() {
     mat0->m_kAST = areaAngular_stiffness;
     mat0->m_kVST = volume_stiffness;
 
-    // Clusters allow to have Soft vs Soft collision but doesn't work well right now
+    // Clusters allow to have Soft vs Soft collision but doesn't work well right
+    // now
 
-    //bt_soft_body->m_cfg.kSRHR_CL = 1;// Soft vs rigid hardness [0,1] (cluster only)
-    //bt_soft_body->m_cfg.kSKHR_CL = 1;// Soft vs kinematic hardness [0,1] (cluster only)
-    //bt_soft_body->m_cfg.kSSHR_CL = 1;// Soft vs soft hardness [0,1] (cluster only)
-    //bt_soft_body->m_cfg.kSR_SPLT_CL = 1; // Soft vs rigid impulse split [0,1] (cluster only)
-    //bt_soft_body->m_cfg.kSK_SPLT_CL = 1; // Soft vs kinematic impulse split [0,1] (cluster only)
-    //bt_soft_body->m_cfg.kSS_SPLT_CL = 1; // Soft vs Soft impulse split [0,1] (cluster only)
-    //bt_soft_body->m_cfg.collisions = btSoftBody::fCollision::CL_SS + btSoftBody::fCollision::CL_RS + btSoftBody::fCollision::VF_SS;
-    //bt_soft_body->generateClusters(64);
+    // bt_soft_body->m_cfg.kSRHR_CL = 1;// Soft vs rigid hardness [0,1] (cluster
+    // only) bt_soft_body->m_cfg.kSKHR_CL = 1;// Soft vs kinematic hardness
+    // [0,1] (cluster only) bt_soft_body->m_cfg.kSSHR_CL = 1;// Soft vs soft
+    // hardness [0,1] (cluster only) bt_soft_body->m_cfg.kSR_SPLT_CL = 1; //
+    // Soft vs rigid impulse split [0,1] (cluster only)
+    // bt_soft_body->m_cfg.kSK_SPLT_CL = 1; // Soft vs kinematic impulse split
+    // [0,1] (cluster only) bt_soft_body->m_cfg.kSS_SPLT_CL = 1; // Soft vs Soft
+    // impulse split [0,1] (cluster only) bt_soft_body->m_cfg.collisions =
+    // btSoftBody::fCollision::CL_SS + btSoftBody::fCollision::CL_RS +
+    // btSoftBody::fCollision::VF_SS; bt_soft_body->generateClusters(64);
 
     bt_soft_body->m_cfg.piterations = simulation_precision;
     bt_soft_body->m_cfg.viterations = simulation_precision;
@@ -458,7 +511,9 @@ void SoftBodyBullet::setup_soft_body() {
     // Set pinned nodes
     for (int i = pinned_nodes.size() - 1; 0 <= i; --i) {
         const int node_index = pinned_nodes[i];
-        ERR_CONTINUE(0 > node_index || bt_soft_body->m_nodes.size() <= node_index);
+        ERR_CONTINUE(
+            0 > node_index || bt_soft_body->m_nodes.size() <= node_index
+        );
         bt_soft_body->setMass(node_index, 0);
     }
 }

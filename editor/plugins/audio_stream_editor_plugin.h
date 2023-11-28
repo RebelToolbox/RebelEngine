@@ -41,14 +41,14 @@ class AudioStreamEditor : public ColorRect {
     GDCLASS(AudioStreamEditor, ColorRect);
 
     Ref<AudioStream> stream;
-    AudioStreamPlayer *_player = nullptr;
-    ColorRect *_preview = nullptr;
-    Control *_indicator = nullptr;
-    Label *_current_label = nullptr;
-    Label *_duration_label = nullptr;
+    AudioStreamPlayer* _player = nullptr;
+    ColorRect* _preview = nullptr;
+    Control* _indicator = nullptr;
+    Label* _current_label = nullptr;
+    Label* _duration_label = nullptr;
 
-    ToolButton *_play_button = nullptr;
-    ToolButton *_stop_button = nullptr;
+    ToolButton* _play_button = nullptr;
+    ToolButton* _stop_button = nullptr;
 
     float _current = 0;
     bool _dragging = false;
@@ -64,7 +64,7 @@ protected:
     void _draw_indicator();
     void _on_input_indicator(Ref<InputEvent> p_event);
     void _seek_to(real_t p_x);
-    void _changed_callback(Object *p_changed, const char *p_prop);
+    void _changed_callback(Object* p_changed, const char* p_prop);
     static void _bind_methods();
 
 public:
@@ -75,17 +75,23 @@ public:
 class AudioStreamEditorPlugin : public EditorPlugin {
     GDCLASS(AudioStreamEditorPlugin, EditorPlugin);
 
-    AudioStreamEditor *audio_editor;
-    EditorNode *editor;
+    AudioStreamEditor* audio_editor;
+    EditorNode* editor;
 
 public:
-    virtual String get_name() const { return "Audio"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual String get_name() const {
+        return "Audio";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
 
-    AudioStreamEditorPlugin(EditorNode *p_node);
+    AudioStreamEditorPlugin(EditorNode* p_node);
     ~AudioStreamEditorPlugin();
 };
 

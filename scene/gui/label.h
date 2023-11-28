@@ -38,7 +38,6 @@ class Label : public Control {
 
 public:
     enum Align {
-
         ALIGN_LEFT,
         ALIGN_CENTER,
         ALIGN_RIGHT,
@@ -46,7 +45,6 @@ public:
     };
 
     enum VAlign {
-
         VALIGN_TOP,
         VALIGN_CENTER,
         VALIGN_BOTTOM,
@@ -71,11 +69,13 @@ private:
             CHAR_NEWLINE = -1,
             CHAR_WRAPLINE = -2
         };
+
         int char_pos; // if -1, then newline
         int word_len;
         int pixel_width;
         int space_count;
-        WordCache *next;
+        WordCache* next;
+
         WordCache() {
             char_pos = 0;
             word_len = 0;
@@ -90,7 +90,7 @@ private:
 
     float percent_visible;
 
-    WordCache *word_cache;
+    WordCache* word_cache;
     int total_char_cache;
     int visible_chars;
     int lines_skipped;
@@ -101,6 +101,7 @@ protected:
 
     static void _bind_methods();
     // bind helpers
+
 public:
     virtual Size2 get_minimum_size() const;
 
@@ -110,7 +111,7 @@ public:
     void set_valign(VAlign p_align);
     VAlign get_valign() const;
 
-    void set_text(const String &p_string);
+    void set_text(const String& p_string);
     String get_text() const;
 
     void set_autowrap(bool p_autowrap);
@@ -139,7 +140,7 @@ public:
     int get_line_count() const;
     int get_visible_line_count() const;
 
-    Label(const String &p_text = String());
+    Label(const String& p_text = String());
     ~Label();
 };
 

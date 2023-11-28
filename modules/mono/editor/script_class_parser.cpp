@@ -35,7 +35,7 @@
 
 #include "../utils/string_utils.h"
 
-const char *ScriptClassParser::token_names[ScriptClassParser::TK_MAX] = {
+const char* ScriptClassParser::token_names[ScriptClassParser::TK_MAX] = {
     "[",
     "]",
     "{",
@@ -106,7 +106,7 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                 return TK_PERIOD;
             };
             case '#': {
-                //compiler directive
+                // compiler directive
                 while (code[idx] != '\n' && code[idx] != 0) {
                     idx++;
                 }
@@ -160,15 +160,17 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                         error = true;
                         return TK_ERROR;
                     } else if (code[idx] == begin_str) {
-                        if (verbatim && code[idx + 1] == '"') { // '""' is verbatim string's '\"'
-                            idx += 2; // skip next '"' as well
+                        if (verbatim
+                            && code[idx + 1]
+                                   == '"') { // '""' is verbatim string's '\"'
+                            idx += 2;        // skip next '"' as well
                             continue;
                         }
 
                         idx += 1;
                         break;
                     } else if (code[idx] == '\\' && !verbatim) {
-                        //escaped characters...
+                        // escaped characters...
                         idx++;
                         CharType next = code[idx];
                         if (next == 0) {
@@ -208,8 +210,9 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                         tk_string += res;
 
                     } else {
-                        if (code[idx] == '\n')
+                        if (code[idx] == '\n') {
                             line++;
+                        }
                         tk_string += code[idx];
                     }
                     idx++;
@@ -225,15 +228,19 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                     break;
                 }
 
-                if ((code[idx] >= 33 && code[idx] <= 47) || (code[idx] >= 58 && code[idx] <= 63) || (code[idx] >= 91 && code[idx] <= 94) || code[idx] == 96 || (code[idx] >= 123 && code[idx] <= 127)) {
+                if ((code[idx] >= 33 && code[idx] <= 47)
+                    || (code[idx] >= 58 && code[idx] <= 63)
+                    || (code[idx] >= 91 && code[idx] <= 94) || code[idx] == 96
+                    || (code[idx] >= 123 && code[idx] <= 127)) {
                     value = String::chr(code[idx]);
                     idx++;
                     return TK_SYMBOL;
                 }
 
-                if (code[idx] == '-' || (code[idx] >= '0' && code[idx] <= '9')) {
-                    //a number
-                    const CharType *rptr;
+                if (code[idx] == '-'
+                    || (code[idx] >= '0' && code[idx] <= '9')) {
+                    // a number
+                    const CharType* rptr;
                     double number = String::to_double(&code[idx], &rptr);
                     idx += (rptr - &code[idx]);
                     value = number;
@@ -245,7 +252,11 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                     id += code[idx];
                     idx++;
 
-                    while (code[idx] == '_' || (code[idx] >= 'A' && code[idx] <= 'Z') || (code[idx] >= 'a' && code[idx] <= 'z') || (code[idx] >= '0' && code[idx] <= '9') || code[idx] > 127) {
+                    while (code[idx] == '_'
+                           || (code[idx] >= 'A' && code[idx] <= 'Z')
+                           || (code[idx] >= 'a' && code[idx] <= 'z')
+                           || (code[idx] >= '0' && code[idx] <= '9')
+                           || code[idx] > 127) {
                         id += code[idx];
                         idx++;
                     }
@@ -273,16 +284,21 @@ Error ScriptClassParser::_skip_generic_type_params() {
 
         if (tk == TK_IDENTIFIER) {
             tk = get_token();
-            // Type specifications can end with "?" to denote nullable types, such as IList<int?>
+            // Type specifications can end with "?" to denote nullable types,
+            // such as IList<int?>
             if (tk == TK_SYMBOL) {
                 tk = get_token();
                 if (value.operator String() != "?") {
-                    error_str = "Expected " + get_token_name(TK_IDENTIFIER) + ", found unexpected symbol '" + value + "'";
+                    error_str = "Expected " + get_token_name(TK_IDENTIFIER)
+                              + ", found unexpected symbol '" + value + "'";
                     error = true;
                     return ERR_PARSE_ERROR;
                 }
                 if (tk != TK_OP_GREATER && tk != TK_COMMA) {
-                    error_str = "Nullable type symbol '?' is only allowed after an identifier, but found " + get_token_name(tk) + " next.";
+                    error_str =
+                        "Nullable type symbol '?' is only allowed after an "
+                        "identifier, but found "
+                        + get_token_name(tk) + " next.";
                     error = true;
                     return ERR_PARSE_ERROR;
                 }
@@ -293,22 +309,25 @@ Error ScriptClassParser::_skip_generic_type_params() {
                     tk = get_token();
 
                     if (tk != TK_IDENTIFIER) {
-                        error_str = "Expected " + get_token_name(TK_IDENTIFIER) + ", found: " + get_token_name(tk);
+                        error_str = "Expected " + get_token_name(TK_IDENTIFIER)
+                                  + ", found: " + get_token_name(tk);
                         error = true;
                         return ERR_PARSE_ERROR;
                     }
 
                     tk = get_token();
 
-                    if (tk != TK_PERIOD)
+                    if (tk != TK_PERIOD) {
                         break;
+                    }
                 }
             }
 
             if (tk == TK_OP_LESS) {
                 Error err = _skip_generic_type_params();
-                if (err)
+                if (err) {
                     return err;
+                }
                 tk = get_token();
             }
 
@@ -320,7 +339,8 @@ Error ScriptClassParser::_skip_generic_type_params() {
                 return ERR_PARSE_ERROR;
             }
         } else if (tk == TK_OP_LESS) {
-            error_str = "Expected " + get_token_name(TK_IDENTIFIER) + ", found " + get_token_name(TK_OP_LESS);
+            error_str = "Expected " + get_token_name(TK_IDENTIFIER) + ", found "
+                      + get_token_name(TK_OP_LESS);
             error = true;
             return ERR_PARSE_ERROR;
         } else if (tk == TK_OP_GREATER) {
@@ -333,11 +353,12 @@ Error ScriptClassParser::_skip_generic_type_params() {
     }
 }
 
-Error ScriptClassParser::_parse_type_full_name(String &r_full_name) {
+Error ScriptClassParser::_parse_type_full_name(String& r_full_name) {
     Token tk = get_token();
 
     if (tk != TK_IDENTIFIER) {
-        error_str = "Expected " + get_token_name(TK_IDENTIFIER) + ", found: " + get_token_name(tk);
+        error_str = "Expected " + get_token_name(TK_IDENTIFIER)
+                  + ", found: " + get_token_name(tk);
         error = true;
         return ERR_PARSE_ERROR;
     }
@@ -347,14 +368,18 @@ Error ScriptClassParser::_parse_type_full_name(String &r_full_name) {
     if (code[idx] == '<') {
         idx++;
 
-        // We don't mind if the base is generic, but we skip it any ways since this information is not needed
+        // We don't mind if the base is generic, but we skip it any ways since
+        // this information is not needed
         Error err = _skip_generic_type_params();
-        if (err)
+        if (err) {
             return err;
+        }
     }
 
-    if (code[idx] != '.') // We only want to take the next token if it's a period
+    if (code[idx]
+        != '.') { // We only want to take the next token if it's a period
         return OK;
+    }
 
     tk = get_token();
 
@@ -365,26 +390,29 @@ Error ScriptClassParser::_parse_type_full_name(String &r_full_name) {
     return _parse_type_full_name(r_full_name);
 }
 
-Error ScriptClassParser::_parse_class_base(Vector<String> &r_base) {
+Error ScriptClassParser::_parse_class_base(Vector<String>& r_base) {
     String name;
 
     Error err = _parse_type_full_name(name);
-    if (err)
+    if (err) {
         return err;
+    }
 
     Token tk = get_token();
 
     if (tk == TK_COMMA) {
         err = _parse_class_base(r_base);
-        if (err)
+        if (err) {
             return err;
+        }
     } else if (tk == TK_IDENTIFIER && String(value) == "where") {
         err = _parse_type_constraints();
         if (err) {
             return err;
         }
 
-        // An open curly bracket was parsed by _parse_type_constraints, so we can exit
+        // An open curly bracket was parsed by _parse_type_constraints, so we
+        // can exit
     } else if (tk == TK_CURLY_BRACKET_OPEN) {
         // we are finished when we hit the open curly bracket
     } else {
@@ -426,15 +454,17 @@ Error ScriptClassParser::_parse_type_constraints() {
                     tk = get_token();
 
                     if (tk != TK_IDENTIFIER) {
-                        error_str = "Expected " + get_token_name(TK_IDENTIFIER) + ", found: " + get_token_name(tk);
+                        error_str = "Expected " + get_token_name(TK_IDENTIFIER)
+                                  + ", found: " + get_token_name(tk);
                         error = true;
                         return ERR_PARSE_ERROR;
                     }
 
                     tk = get_token();
 
-                    if (tk != TK_PERIOD)
+                    if (tk != TK_PERIOD) {
                         break;
+                    }
                 }
             }
         }
@@ -452,8 +482,9 @@ Error ScriptClassParser::_parse_type_constraints() {
             }
         } else if (tk == TK_OP_LESS) {
             Error err = _skip_generic_type_params();
-            if (err)
+            if (err) {
                 return err;
+            }
         } else if (tk == TK_CURLY_BRACKET_OPEN) {
             return OK;
         } else {
@@ -464,7 +495,10 @@ Error ScriptClassParser::_parse_type_constraints() {
     }
 }
 
-Error ScriptClassParser::_parse_namespace_name(String &r_name, int &r_curly_stack) {
+Error ScriptClassParser::_parse_namespace_name(
+    String& r_name,
+    int& r_curly_stack
+) {
     Token tk = get_token();
 
     if (tk == TK_IDENTIFIER) {
@@ -490,7 +524,7 @@ Error ScriptClassParser::_parse_namespace_name(String &r_name, int &r_curly_stac
     }
 }
 
-Error ScriptClassParser::parse(const String &p_code) {
+Error ScriptClassParser::parse(const String& p_code) {
     code = p_code;
     idx = 0;
     line = 0;
@@ -507,7 +541,8 @@ Error ScriptClassParser::parse(const String &p_code) {
 
     while (!error && tk != TK_EOF) {
         String identifier = value;
-        if (tk == TK_IDENTIFIER && (identifier == "class" || identifier == "struct")) {
+        if (tk == TK_IDENTIFIER
+            && (identifier == "class" || identifier == "struct")) {
             bool is_class = identifier == "class";
 
             tk = get_token();
@@ -518,12 +553,14 @@ Error ScriptClassParser::parse(const String &p_code) {
 
                 ClassDecl class_decl;
 
-                for (Map<int, NameDecl>::Element *E = name_stack.front(); E; E = E->next()) {
-                    const NameDecl &name_decl = E->value();
+                for (Map<int, NameDecl>::Element* E = name_stack.front(); E;
+                     E = E->next()) {
+                    const NameDecl& name_decl = E->value();
 
                     if (name_decl.type == NameDecl::NAMESPACE_DECL) {
-                        if (E != name_stack.front())
+                        if (E != name_stack.front()) {
                             class_decl.namespace_ += ".";
+                        }
                         class_decl.namespace_ += name_decl.name;
                     } else {
                         class_decl.name += name_decl.name + ".";
@@ -540,8 +577,9 @@ Error ScriptClassParser::parse(const String &p_code) {
 
                     if (tk == TK_COLON) {
                         Error err = _parse_class_base(class_decl.base);
-                        if (err)
+                        if (err) {
                             return err;
+                        }
 
                         curly_stack++;
                         type_curly_stack++;
@@ -555,15 +593,17 @@ Error ScriptClassParser::parse(const String &p_code) {
                         generic = true;
 
                         Error err = _skip_generic_type_params();
-                        if (err)
+                        if (err) {
                             return err;
+                        }
                     } else if (tk == TK_IDENTIFIER && String(value) == "where") {
                         Error err = _parse_type_constraints();
                         if (err) {
                             return err;
                         }
 
-                        // An open curly bracket was parsed by _parse_type_constraints, so we can exit
+                        // An open curly bracket was parsed by
+                        // _parse_type_constraints, so we can exit
                         curly_stack++;
                         type_curly_stack++;
                         break;
@@ -576,7 +616,8 @@ Error ScriptClassParser::parse(const String &p_code) {
 
                 NameDecl name_decl;
                 name_decl.name = name;
-                name_decl.type = is_class ? NameDecl::CLASS_DECL : NameDecl::STRUCT_DECL;
+                name_decl.type =
+                    is_class ? NameDecl::CLASS_DECL : NameDecl::STRUCT_DECL;
                 name_stack[at_level] = name_decl;
 
                 if (is_class) {
@@ -584,10 +625,14 @@ Error ScriptClassParser::parse(const String &p_code) {
                         classes.push_back(class_decl);
                     } else if (OS::get_singleton()->is_stdout_verbose()) {
                         String full_name = class_decl.namespace_;
-                        if (full_name.length())
+                        if (full_name.length()) {
                             full_name += ".";
+                        }
                         full_name += class_decl.name;
-                        OS::get_singleton()->print("Ignoring generic class declaration: %s\n", full_name.utf8().get_data());
+                        OS::get_singleton()->print(
+                            "Ignoring generic class declaration: %s\n",
+                            full_name.utf8().get_data()
+                        );
                     }
                 }
             }
@@ -602,8 +647,9 @@ Error ScriptClassParser::parse(const String &p_code) {
             int at_level = curly_stack;
 
             Error err = _parse_namespace_name(name, curly_stack);
-            if (err)
+            if (err) {
                 return err;
+            }
 
             NameDecl name_decl;
             name_decl.name = name;
@@ -614,8 +660,9 @@ Error ScriptClassParser::parse(const String &p_code) {
         } else if (tk == TK_CURLY_BRACKET_CLOSE) {
             curly_stack--;
             if (name_stack.has(curly_stack)) {
-                if (name_stack[curly_stack].type != NameDecl::NAMESPACE_DECL)
+                if (name_stack[curly_stack].type != NameDecl::NAMESPACE_DECL) {
                     type_curly_stack--;
+                }
                 name_stack.erase(curly_stack);
             }
         }
@@ -628,32 +675,35 @@ Error ScriptClassParser::parse(const String &p_code) {
         error = true;
     }
 
-    if (error)
+    if (error) {
         return ERR_PARSE_ERROR;
+    }
 
     return OK;
 }
 
-static String get_preprocessor_directive(const String &p_line, int p_from) {
+static String get_preprocessor_directive(const String& p_line, int p_from) {
     CRASH_COND(p_line[p_from] != '#');
     p_from++;
     int i = p_from;
-    while (i < p_line.length() && (p_line[i] == '_' || (p_line[i] >= 'A' && p_line[i] <= 'Z') || (p_line[i] >= 'a' && p_line[i] <= 'z') || p_line[i] > 127)) {
+    while (i < p_line.length()
+           && (p_line[i] == '_' || (p_line[i] >= 'A' && p_line[i] <= 'Z')
+               || (p_line[i] >= 'a' && p_line[i] <= 'z') || p_line[i] > 127)) {
         i++;
     }
     return p_line.substr(p_from, i - p_from);
 }
 
-static void run_dummy_preprocessor(String &r_source, const String &p_filepath) {
+static void run_dummy_preprocessor(String& r_source, const String& p_filepath) {
     Vector<String> lines = r_source.split("\n", /* p_allow_empty: */ true);
 
-    bool *include_lines = memnew_arr(bool, lines.size());
+    bool* include_lines = memnew_arr(bool, lines.size());
 
     int if_level = -1;
     Vector<bool> is_branch_being_compiled;
 
     for (int i = 0; i < lines.size(); i++) {
-        const String &line = lines[i];
+        const String& line = lines[i];
 
         const int line_len = line.length();
 
@@ -668,15 +718,30 @@ static void run_dummy_preprocessor(String &r_source, const String &p_filepath) {
 
                     if (directive == "if") {
                         if_level++;
-                        is_branch_being_compiled.push_back(if_level == 0 || is_branch_being_compiled[if_level - 1]);
+                        is_branch_being_compiled.push_back(
+                            if_level == 0
+                            || is_branch_being_compiled[if_level - 1]
+                        );
                     } else if (directive == "elif") {
-                        ERR_CONTINUE_MSG(if_level == -1, "Found unexpected '#elif' directive. File: '" + p_filepath + "'.");
+                        ERR_CONTINUE_MSG(
+                            if_level == -1,
+                            "Found unexpected '#elif' directive. File: '"
+                                + p_filepath + "'."
+                        );
                         is_branch_being_compiled.write[if_level] = false;
                     } else if (directive == "else") {
-                        ERR_CONTINUE_MSG(if_level == -1, "Found unexpected '#else' directive. File: '" + p_filepath + "'.");
+                        ERR_CONTINUE_MSG(
+                            if_level == -1,
+                            "Found unexpected '#else' directive. File: '"
+                                + p_filepath + "'."
+                        );
                         is_branch_being_compiled.write[if_level] = false;
                     } else if (directive == "endif") {
-                        ERR_CONTINUE_MSG(if_level == -1, "Found unexpected '#endif' directive. File: '" + p_filepath + "'.");
+                        ERR_CONTINUE_MSG(
+                            if_level == -1,
+                            "Found unexpected '#endif' directive. File: '"
+                                + p_filepath + "'."
+                        );
                         is_branch_being_compiled.remove(if_level);
                         if_level--;
                     }
@@ -684,7 +749,8 @@ static void run_dummy_preprocessor(String &r_source, const String &p_filepath) {
                     break;
                 } else {
                     // First non-whitespace char of the line is not '#'
-                    include_lines[i] = if_level == -1 || is_branch_being_compiled[if_level];
+                    include_lines[i] =
+                        if_level == -1 || is_branch_being_compiled[if_level];
                     break;
                 }
             }
@@ -693,7 +759,8 @@ static void run_dummy_preprocessor(String &r_source, const String &p_filepath) {
         if (j == line_len) {
             // Loop ended without finding a non-whitespace character.
             // Either the line was empty or it only contained whitespaces.
-            include_lines[i] = if_level == -1 || is_branch_being_compiled[if_level];
+            include_lines[i] =
+                if_level == -1 || is_branch_being_compiled[if_level];
         }
     }
 
@@ -701,8 +768,9 @@ static void run_dummy_preprocessor(String &r_source, const String &p_filepath) {
 
     // Custom join ignoring lines removed by the preprocessor
     for (int i = 0; i < lines.size(); i++) {
-        if (i > 0 && include_lines[i - 1])
+        if (i > 0 && include_lines[i - 1]) {
             r_source += '\n';
+        }
 
         if (include_lines[i]) {
             r_source += lines[i];
@@ -710,7 +778,7 @@ static void run_dummy_preprocessor(String &r_source, const String &p_filepath) {
     }
 }
 
-Error ScriptClassParser::parse_file(const String &p_filepath) {
+Error ScriptClassParser::parse_file(const String& p_filepath) {
     String source;
 
     Error ferr = read_all_file_utf8(p_filepath, source);

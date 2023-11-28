@@ -38,15 +38,27 @@
 CameraServer::CreateFunc CameraServer::create_func = nullptr;
 
 void CameraServer::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("get_feed", "index"), &CameraServer::get_feed);
-    ClassDB::bind_method(D_METHOD("get_feed_count"), &CameraServer::get_feed_count);
+    ClassDB::bind_method(
+        D_METHOD("get_feed", "index"),
+        &CameraServer::get_feed
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_feed_count"),
+        &CameraServer::get_feed_count
+    );
     ClassDB::bind_method(D_METHOD("feeds"), &CameraServer::get_feeds);
 
     ClassDB::bind_method(D_METHOD("add_feed", "feed"), &CameraServer::add_feed);
-    ClassDB::bind_method(D_METHOD("remove_feed", "feed"), &CameraServer::remove_feed);
+    ClassDB::bind_method(
+        D_METHOD("remove_feed", "feed"),
+        &CameraServer::remove_feed
+    );
 
-    ADD_SIGNAL(MethodInfo("camera_feed_added", PropertyInfo(Variant::INT, "id")));
-    ADD_SIGNAL(MethodInfo("camera_feed_removed", PropertyInfo(Variant::INT, "id")));
+    ADD_SIGNAL(MethodInfo("camera_feed_added", PropertyInfo(Variant::INT, "id"))
+    );
+    ADD_SIGNAL(
+        MethodInfo("camera_feed_removed", PropertyInfo(Variant::INT, "id"))
+    );
 
     BIND_ENUM_CONSTANT(FEED_RGBA_IMAGE);
     BIND_ENUM_CONSTANT(FEED_YCBCR_IMAGE);
@@ -54,9 +66,9 @@ void CameraServer::_bind_methods() {
     BIND_ENUM_CONSTANT(FEED_CBCR_IMAGE);
 };
 
-CameraServer *CameraServer::singleton = nullptr;
+CameraServer* CameraServer::singleton = nullptr;
 
-CameraServer *CameraServer::get_singleton() {
+CameraServer* CameraServer::get_singleton() {
     return singleton;
 };
 
@@ -98,7 +110,7 @@ Ref<CameraFeed> CameraServer::get_feed_by_id(int p_id) {
     }
 };
 
-void CameraServer::add_feed(const Ref<CameraFeed> &p_feed) {
+void CameraServer::add_feed(const Ref<CameraFeed>& p_feed) {
     ERR_FAIL_COND(p_feed.is_null());
 
     // add our feed
@@ -106,24 +118,32 @@ void CameraServer::add_feed(const Ref<CameraFeed> &p_feed) {
 
 // record for debugging
 #ifdef DEBUG_ENABLED
-    print_line("Registered camera " + p_feed->get_name() + " with id " + itos(p_feed->get_id()) + " position " + itos(p_feed->get_position()) + " at index " + itos(feeds.size() - 1));
+    print_line(
+        "Registered camera " + p_feed->get_name() + " with id "
+        + itos(p_feed->get_id()) + " position " + itos(p_feed->get_position())
+        + " at index " + itos(feeds.size() - 1)
+    );
 #endif
 
     // let whomever is interested know
     emit_signal("camera_feed_added", p_feed->get_id());
 };
 
-void CameraServer::remove_feed(const Ref<CameraFeed> &p_feed) {
+void CameraServer::remove_feed(const Ref<CameraFeed>& p_feed) {
     for (int i = 0; i < feeds.size(); i++) {
         if (feeds[i] == p_feed) {
             int feed_id = p_feed->get_id();
 
 // record for debugging
 #ifdef DEBUG_ENABLED
-            print_line("Removed camera " + p_feed->get_name() + " with id " + itos(feed_id) + " position " + itos(p_feed->get_position()));
+            print_line(
+                "Removed camera " + p_feed->get_name() + " with id "
+                + itos(feed_id) + " position " + itos(p_feed->get_position())
+            );
 #endif
 
-            // remove it from our array, if this results in our feed being unreferenced it will be destroyed
+            // remove it from our array, if this results in our feed being
+            // unreferenced it will be destroyed
             feeds.remove(i);
 
             // let whomever is interested know

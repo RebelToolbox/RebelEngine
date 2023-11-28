@@ -44,25 +44,36 @@
 #include "scene/gui/progress_bar.h"
 #include "scene/gui/tree.h"
 
-const char *FindInFiles::SIGNAL_RESULT_FOUND = "result_found";
-const char *FindInFiles::SIGNAL_FINISHED = "finished";
+const char* FindInFiles::SIGNAL_RESULT_FOUND = "result_found";
+const char* FindInFiles::SIGNAL_FINISHED = "finished";
 
 // TODO Would be nice in Vector and PoolVectors
 template <typename T>
-inline void pop_back(T &container) {
+inline void pop_back(T& container) {
     container.resize(container.size() - 1);
 }
 
-// TODO Copied from TextEdit private, would be nice to extract it in a single place
+// TODO Copied from TextEdit private, would be nice to extract it in a single
+// place
 static bool is_text_char(CharType c) {
-    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_';
+    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+        || (c >= '0' && c <= '9') || c == '_';
 }
 
-static bool find_next(const String &line, String pattern, int from, bool match_case, bool whole_words, int &out_begin, int &out_end) {
+static bool find_next(
+    const String& line,
+    String pattern,
+    int from,
+    bool match_case,
+    bool whole_words,
+    int& out_begin,
+    int& out_end
+) {
     int end = from;
 
     while (true) {
-        int begin = match_case ? line.find(pattern, end) : line.findn(pattern, end);
+        int begin =
+            match_case ? line.find(pattern, end) : line.findn(pattern, end);
 
         if (begin == -1) {
             return false;
@@ -108,7 +119,7 @@ void FindInFiles::set_folder(String folder) {
     _root_dir = folder;
 }
 
-void FindInFiles::set_filter(const Set<String> &exts) {
+void FindInFiles::set_filter(const Set<String>& exts) {
     _extension_filter = exts;
 }
 
@@ -152,7 +163,7 @@ void FindInFiles::stop() {
 void FindInFiles::_process() {
     // This part can be moved to a thread if needed
 
-    OS &os = *OS::get_singleton();
+    OS& os = *OS::get_singleton();
     uint64_t time_before = os.get_ticks_msec();
     while (is_processing()) {
         _iterate();
@@ -165,9 +176,11 @@ void FindInFiles::_process() {
 
 void FindInFiles::_iterate() {
     if (_folders_stack.size() != 0) {
-        // Scan folders first so we can build a list of files and have progress info later
+        // Scan folders first so we can build a list of files and have progress
+        // info later
 
-        PoolStringArray &folders_to_scan = _folders_stack.write[_folders_stack.size() - 1];
+        PoolStringArray& folders_to_scan =
+            _folders_stack.write[_folders_stack.size() - 1];
 
         if (folders_to_scan.size() != 0) {
             // Scan one folder below
@@ -212,12 +225,13 @@ void FindInFiles::_iterate() {
 
 float FindInFiles::get_progress() const {
     if (_initial_files_count != 0) {
-        return static_cast<float>(_initial_files_count - _files_to_scan.size()) / static_cast<float>(_initial_files_count);
+        return static_cast<float>(_initial_files_count - _files_to_scan.size())
+             / static_cast<float>(_initial_files_count);
     }
     return 0;
 }
 
-void FindInFiles::_scan_dir(String path, PoolStringArray &out_folders) {
+void FindInFiles::_scan_dir(String path, PoolStringArray& out_folders) {
     DirAccessRef dir = DirAccess::open(path);
     if (!dir) {
         print_verbose("Cannot open directory! " + path);
@@ -233,13 +247,15 @@ void FindInFiles::_scan_dir(String path, PoolStringArray &out_folders) {
             break;
         }
 
-        // If there is a .gdignore file in the directory, don't bother searching it
+        // If there is a .gdignore file in the directory, don't bother searching
+        // it
         if (file == ".gdignore") {
             break;
         }
 
         // Ignore special dirs (such as .git and project data directory)
-        String project_data_dir_name = ProjectSettings::get_singleton()->get_project_data_dir_name();
+        String project_data_dir_name =
+            ProjectSettings::get_singleton()->get_project_data_dir_name();
         if (file.begins_with(".") || file == project_data_dir_name) {
             continue;
         }
@@ -277,8 +293,23 @@ void FindInFiles::_scan_file(String fpath) {
 
         String line = f->get_line();
 
-        while (find_next(line, _pattern, end, _match_case, _whole_words, begin, end)) {
-            emit_signal(SIGNAL_RESULT_FOUND, fpath, line_number, begin, end, line);
+        while (find_next(
+            line,
+            _pattern,
+            end,
+            _match_case,
+            _whole_words,
+            begin,
+            end
+        )) {
+            emit_signal(
+                SIGNAL_RESULT_FOUND,
+                fpath,
+                line_number,
+                begin,
+                end,
+                line
+            );
         }
     }
 
@@ -286,49 +317,53 @@ void FindInFiles::_scan_file(String fpath) {
 }
 
 void FindInFiles::_bind_methods() {
-    ADD_SIGNAL(MethodInfo(SIGNAL_RESULT_FOUND,
-            PropertyInfo(Variant::STRING, "path"),
-            PropertyInfo(Variant::INT, "line_number"),
-            PropertyInfo(Variant::INT, "begin"),
-            PropertyInfo(Variant::INT, "end"),
-            PropertyInfo(Variant::STRING, "text")));
+    ADD_SIGNAL(MethodInfo(
+        SIGNAL_RESULT_FOUND,
+        PropertyInfo(Variant::STRING, "path"),
+        PropertyInfo(Variant::INT, "line_number"),
+        PropertyInfo(Variant::INT, "begin"),
+        PropertyInfo(Variant::INT, "end"),
+        PropertyInfo(Variant::STRING, "text")
+    ));
 
     ADD_SIGNAL(MethodInfo(SIGNAL_FINISHED));
 }
 
 //-----------------------------------------------------------------------------
-const char *FindInFilesDialog::SIGNAL_FIND_REQUESTED = "find_requested";
-const char *FindInFilesDialog::SIGNAL_REPLACE_REQUESTED = "replace_requested";
+const char* FindInFilesDialog::SIGNAL_FIND_REQUESTED = "find_requested";
+const char* FindInFilesDialog::SIGNAL_REPLACE_REQUESTED = "replace_requested";
 
 FindInFilesDialog::FindInFilesDialog() {
     set_custom_minimum_size(Size2(500 * EDSCALE, 0));
     set_title(TTR("Find in Files"));
 
-    VBoxContainer *vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
     vbc->set_anchor_and_margin(MARGIN_LEFT, ANCHOR_BEGIN, 8 * EDSCALE);
     vbc->set_anchor_and_margin(MARGIN_TOP, ANCHOR_BEGIN, 8 * EDSCALE);
     vbc->set_anchor_and_margin(MARGIN_RIGHT, ANCHOR_END, -8 * EDSCALE);
     vbc->set_anchor_and_margin(MARGIN_BOTTOM, ANCHOR_END, -8 * EDSCALE);
     add_child(vbc);
 
-    GridContainer *gc = memnew(GridContainer);
+    GridContainer* gc = memnew(GridContainer);
     gc->set_columns(2);
     vbc->add_child(gc);
 
-    Label *find_label = memnew(Label);
+    Label* find_label = memnew(Label);
     find_label->set_text(TTR("Find:"));
     gc->add_child(find_label);
 
     _search_text_line_edit = memnew(LineEdit);
     _search_text_line_edit->set_h_size_flags(SIZE_EXPAND_FILL);
-    _search_text_line_edit->connect("text_changed", this, "_on_search_text_modified");
-    _search_text_line_edit->connect("text_entered", this, "_on_search_text_entered");
+    _search_text_line_edit
+        ->connect("text_changed", this, "_on_search_text_modified");
+    _search_text_line_edit
+        ->connect("text_entered", this, "_on_search_text_entered");
     gc->add_child(_search_text_line_edit);
 
     gc->add_child(memnew(Control)); // Space to maintain the grid aligned.
 
     {
-        HBoxContainer *hbc = memnew(HBoxContainer);
+        HBoxContainer* hbc = memnew(HBoxContainer);
 
         _whole_words_checkbox = memnew(CheckBox);
         _whole_words_checkbox->set_text(TTR("Whole Words"));
@@ -341,14 +376,14 @@ FindInFilesDialog::FindInFilesDialog() {
         gc->add_child(hbc);
     }
 
-    Label *folder_label = memnew(Label);
+    Label* folder_label = memnew(Label);
     folder_label->set_text(TTR("Folder:"));
     gc->add_child(folder_label);
 
     {
-        HBoxContainer *hbc = memnew(HBoxContainer);
+        HBoxContainer* hbc = memnew(HBoxContainer);
 
-        Label *prefix_label = memnew(Label);
+        Label* prefix_label = memnew(Label);
         prefix_label->set_text("res://");
         hbc->add_child(prefix_label);
 
@@ -356,7 +391,7 @@ FindInFilesDialog::FindInFilesDialog() {
         _folder_line_edit->set_h_size_flags(SIZE_EXPAND_FILL);
         hbc->add_child(_folder_line_edit);
 
-        Button *folder_button = memnew(Button);
+        Button* folder_button = memnew(Button);
         folder_button->set_text("...");
         folder_button->connect("pressed", this, "_on_folder_button_pressed");
         hbc->add_child(folder_button);
@@ -369,9 +404,12 @@ FindInFilesDialog::FindInFilesDialog() {
         gc->add_child(hbc);
     }
 
-    Label *filter_label = memnew(Label);
+    Label* filter_label = memnew(Label);
     filter_label->set_text(TTR("Filters:"));
-    filter_label->set_tooltip(TTR("Include the files with the following extensions. Add or remove them in ProjectSettings."));
+    filter_label->set_tooltip(
+        TTR("Include the files with the following extensions. Add or remove "
+            "them in ProjectSettings.")
+    );
     gc->add_child(filter_label);
 
     _filters_container = memnew(HBoxContainer);
@@ -383,7 +421,7 @@ FindInFilesDialog::FindInFilesDialog() {
     _replace_button = add_button(TTR("Replace..."), false, "replace");
     _replace_button->set_disabled(true);
 
-    Button *cancel_button = get_ok();
+    Button* cancel_button = get_ok();
     cancel_button->set_text(TTR("Cancel"));
 }
 
@@ -411,10 +449,11 @@ String FindInFilesDialog::get_folder() const {
 }
 
 Set<String> FindInFilesDialog::get_filter() const {
-    // could check the _filters_preferences but it might not have been generated yet.
+    // could check the _filters_preferences but it might not have been generated
+    // yet.
     Set<String> filters;
     for (int i = 0; i < _filters_container->get_child_count(); ++i) {
-        CheckBox *cb = (CheckBox *)_filters_container->get_child(i);
+        CheckBox* cb = (CheckBox*)_filters_container->get_child(i);
         if (cb->is_pressed()) {
             filters.insert(cb->get_text());
         }
@@ -428,13 +467,16 @@ void FindInFilesDialog::_notification(int p_what) {
             // Doesn't work more than once if not deferred...
             _search_text_line_edit->call_deferred("grab_focus");
             _search_text_line_edit->select_all();
-            // Extensions might have changed in the meantime, we clean them and instance them again.
+            // Extensions might have changed in the meantime, we clean them and
+            // instance them again.
             for (int i = 0; i < _filters_container->get_child_count(); i++) {
                 _filters_container->get_child(i)->queue_delete();
             }
-            Array exts = ProjectSettings::get_singleton()->get("editor/search_in_file_extensions");
+            Array exts = ProjectSettings::get_singleton()->get(
+                "editor/search_in_file_extensions"
+            );
             for (int i = 0; i < exts.size(); ++i) {
-                CheckBox *cb = memnew(CheckBox);
+                CheckBox* cb = memnew(CheckBox);
                 cb->set_text(exts[i]);
                 if (!_filters_preferences.has(exts[i])) {
                     _filters_preferences[exts[i]] = true;
@@ -450,9 +492,9 @@ void FindInFilesDialog::_on_folder_button_pressed() {
     _folder_dialog->popup_centered_ratio();
 }
 
-void FindInFilesDialog::custom_action(const String &p_action) {
+void FindInFilesDialog::custom_action(const String& p_action) {
     for (int i = 0; i < _filters_container->get_child_count(); ++i) {
-        CheckBox *cb = (CheckBox *)_filters_container->get_child(i);
+        CheckBox* cb = (CheckBox*)_filters_container->get_child(i);
         _filters_preferences[cb->get_text()] = cb->is_pressed();
     }
     if (p_action == "find") {
@@ -488,26 +530,39 @@ void FindInFilesDialog::_on_folder_selected(String path) {
 }
 
 void FindInFilesDialog::_bind_methods() {
-    ClassDB::bind_method("_on_folder_button_pressed", &FindInFilesDialog::_on_folder_button_pressed);
-    ClassDB::bind_method("_on_folder_selected", &FindInFilesDialog::_on_folder_selected);
-    ClassDB::bind_method("_on_search_text_modified", &FindInFilesDialog::_on_search_text_modified);
-    ClassDB::bind_method("_on_search_text_entered", &FindInFilesDialog::_on_search_text_entered);
+    ClassDB::bind_method(
+        "_on_folder_button_pressed",
+        &FindInFilesDialog::_on_folder_button_pressed
+    );
+    ClassDB::bind_method(
+        "_on_folder_selected",
+        &FindInFilesDialog::_on_folder_selected
+    );
+    ClassDB::bind_method(
+        "_on_search_text_modified",
+        &FindInFilesDialog::_on_search_text_modified
+    );
+    ClassDB::bind_method(
+        "_on_search_text_entered",
+        &FindInFilesDialog::_on_search_text_entered
+    );
 
     ADD_SIGNAL(MethodInfo(SIGNAL_FIND_REQUESTED));
     ADD_SIGNAL(MethodInfo(SIGNAL_REPLACE_REQUESTED));
 }
 
 //-----------------------------------------------------------------------------
-const char *FindInFilesPanel::SIGNAL_RESULT_SELECTED = "result_selected";
-const char *FindInFilesPanel::SIGNAL_FILES_MODIFIED = "files_modified";
+const char* FindInFilesPanel::SIGNAL_RESULT_SELECTED = "result_selected";
+const char* FindInFilesPanel::SIGNAL_FILES_MODIFIED = "files_modified";
 
 FindInFilesPanel::FindInFilesPanel() {
     _finder = memnew(FindInFiles);
-    _finder->connect(FindInFiles::SIGNAL_RESULT_FOUND, this, "_on_result_found");
+    _finder
+        ->connect(FindInFiles::SIGNAL_RESULT_FOUND, this, "_on_result_found");
     _finder->connect(FindInFiles::SIGNAL_FINISHED, this, "_on_finished");
     add_child(_finder);
 
-    VBoxContainer *vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
     vbc->set_anchor_and_margin(MARGIN_LEFT, ANCHOR_BEGIN, 0);
     vbc->set_anchor_and_margin(MARGIN_TOP, ANCHOR_BEGIN, 0);
     vbc->set_anchor_and_margin(MARGIN_RIGHT, ANCHOR_END, 0);
@@ -515,14 +570,20 @@ FindInFilesPanel::FindInFilesPanel() {
     add_child(vbc);
 
     {
-        HBoxContainer *hbc = memnew(HBoxContainer);
+        HBoxContainer* hbc = memnew(HBoxContainer);
 
-        Label *find_label = memnew(Label);
+        Label* find_label = memnew(Label);
         find_label->set_text(TTR("Find: "));
         hbc->add_child(find_label);
 
         _search_text_label = memnew(Label);
-        _search_text_label->add_font_override("font", EditorNode::get_singleton()->get_gui_base()->get_font("source", "EditorFonts"));
+        _search_text_label->add_font_override(
+            "font",
+            EditorNode::get_singleton()->get_gui_base()->get_font(
+                "source",
+                "EditorFonts"
+            )
+        );
         hbc->add_child(_search_text_label);
 
         _progress_bar = memnew(ProgressBar);
@@ -550,7 +611,13 @@ FindInFilesPanel::FindInFilesPanel() {
     }
 
     _results_display = memnew(Tree);
-    _results_display->add_font_override("font", EditorNode::get_singleton()->get_gui_base()->get_font("source", "EditorFonts"));
+    _results_display->add_font_override(
+        "font",
+        EditorNode::get_singleton()->get_gui_base()->get_font(
+            "source",
+            "EditorFonts"
+        )
+    );
     _results_display->set_v_size_flags(SIZE_EXPAND_FILL);
     _results_display->connect("item_selected", this, "_on_result_selected");
     _results_display->connect("item_edited", this, "_on_item_edited");
@@ -565,18 +632,20 @@ FindInFilesPanel::FindInFilesPanel() {
     {
         _replace_container = memnew(HBoxContainer);
 
-        Label *replace_label = memnew(Label);
+        Label* replace_label = memnew(Label);
         replace_label->set_text(TTR("Replace: "));
         _replace_container->add_child(replace_label);
 
         _replace_line_edit = memnew(LineEdit);
         _replace_line_edit->set_h_size_flags(SIZE_EXPAND_FILL);
-        _replace_line_edit->connect("text_changed", this, "_on_replace_text_changed");
+        _replace_line_edit
+            ->connect("text_changed", this, "_on_replace_text_changed");
         _replace_container->add_child(_replace_line_edit);
 
         _replace_all_button = memnew(Button);
         _replace_all_button->set_text(TTR("Replace all (no undo)"));
-        _replace_all_button->connect("pressed", this, "_on_replace_all_clicked");
+        _replace_all_button
+            ->connect("pressed", this, "_on_replace_all_clicked");
         _replace_container->add_child(_replace_all_button);
 
         _replace_container->hide();
@@ -639,22 +708,35 @@ void FindInFilesPanel::_notification(int p_what) {
     if (p_what == NOTIFICATION_PROCESS) {
         _progress_bar->set_as_ratio(_finder->get_progress());
     } else if (p_what == NOTIFICATION_THEME_CHANGED) {
-        _search_text_label->add_font_override("font", get_font("source", "EditorFonts"));
-        _results_display->add_font_override("font", get_font("source", "EditorFonts"));
+        _search_text_label->add_font_override(
+            "font",
+            get_font("source", "EditorFonts")
+        );
+        _results_display->add_font_override(
+            "font",
+            get_font("source", "EditorFonts")
+        );
     }
 }
 
-void FindInFilesPanel::_on_result_found(String fpath, int line_number, int begin, int end, String text) {
-    TreeItem *file_item;
-    Map<String, TreeItem *>::Element *E = _file_items.find(fpath);
+void FindInFilesPanel::_on_result_found(
+    String fpath,
+    int line_number,
+    int begin,
+    int end,
+    String text
+) {
+    TreeItem* file_item;
+    Map<String, TreeItem*>::Element* E = _file_items.find(fpath);
 
     if (E == nullptr) {
         file_item = _results_display->create_item();
         file_item->set_text(0, fpath);
         file_item->set_metadata(0, fpath);
 
-        // The width of this column is restrained to checkboxes, but that doesn't make sense for the parent items,
-        // so we override their width so they can expand to full width
+        // The width of this column is restrained to checkboxes, but that
+        // doesn't make sense for the parent items, so we override their width
+        // so they can expand to full width
         file_item->set_expand_right(0, true);
 
         _file_items[fpath] = file_item;
@@ -665,7 +747,7 @@ void FindInFilesPanel::_on_result_found(String fpath, int line_number, int begin
 
     int text_index = _with_replace ? 1 : 0;
 
-    TreeItem *item = _results_display->create_item(file_item);
+    TreeItem* item = _results_display->create_item(file_item);
 
     // Do this first because it resets properties of the cell...
     item->set_cell_mode(text_index, TreeItem::CELL_MODE_CUSTOM);
@@ -693,13 +775,13 @@ void FindInFilesPanel::_on_result_found(String fpath, int line_number, int begin
     }
 }
 
-void FindInFilesPanel::draw_result_text(Object *item_obj, Rect2 rect) {
-    TreeItem *item = Object::cast_to<TreeItem>(item_obj);
+void FindInFilesPanel::draw_result_text(Object* item_obj, Rect2 rect) {
+    TreeItem* item = Object::cast_to<TreeItem>(item_obj);
     if (!item) {
         return;
     }
 
-    Map<TreeItem *, Result>::Element *E = _result_items.find(item);
+    Map<TreeItem*, Result>::Element* E = _result_items.find(item);
     if (!E) {
         return;
     }
@@ -708,19 +790,24 @@ void FindInFilesPanel::draw_result_text(Object *item_obj, Rect2 rect) {
     Ref<Font> font = _results_display->get_font("font");
 
     Rect2 match_rect = rect;
-    match_rect.position.x += font->get_string_size(item_text.left(r.begin_trimmed)).x;
+    match_rect.position.x +=
+        font->get_string_size(item_text.left(r.begin_trimmed)).x;
     match_rect.size.x = font->get_string_size(_search_text_label->get_text()).x;
     match_rect.position.y += 1 * EDSCALE;
     match_rect.size.y -= 2 * EDSCALE;
 
-    // Use the inverted accent color to help match rectangles stand out even on the currently selected line.
-    _results_display->draw_rect(match_rect, get_color("accent_color", "Editor").inverted() * Color(1, 1, 1, 0.5));
+    // Use the inverted accent color to help match rectangles stand out even on
+    // the currently selected line.
+    _results_display->draw_rect(
+        match_rect,
+        get_color("accent_color", "Editor").inverted() * Color(1, 1, 1, 0.5)
+    );
 
     // Text is drawn by Tree already.
 }
 
 void FindInFilesPanel::_on_item_edited() {
-    TreeItem *item = _results_display->get_selected();
+    TreeItem* item = _results_display->get_selected();
 
     if (item->is_checked(0)) {
         item->set_custom_color(1, _results_display->get_color("font_color"));
@@ -739,11 +826,14 @@ void FindInFilesPanel::_on_finished() {
     int file_count = _file_items.size();
 
     if (result_count == 1 && file_count == 1) {
-        results_text = vformat(TTR("%d match in %d file."), result_count, file_count);
+        results_text =
+            vformat(TTR("%d match in %d file."), result_count, file_count);
     } else if (result_count != 1 && file_count == 1) {
-        results_text = vformat(TTR("%d matches in %d file."), result_count, file_count);
+        results_text =
+            vformat(TTR("%d matches in %d file."), result_count, file_count);
     } else {
-        results_text = vformat(TTR("%d matches in %d files."), result_count, file_count);
+        results_text =
+            vformat(TTR("%d matches in %d files."), result_count, file_count);
     }
 
     _status_label->set_text(results_text);
@@ -762,15 +852,15 @@ void FindInFilesPanel::_on_cancel_button_clicked() {
 }
 
 void FindInFilesPanel::_on_result_selected() {
-    TreeItem *item = _results_display->get_selected();
-    Map<TreeItem *, Result>::Element *E = _result_items.find(item);
+    TreeItem* item = _results_display->get_selected();
+    Map<TreeItem*, Result>::Element* E = _result_items.find(item);
 
     if (E == nullptr) {
         return;
     }
     Result r = E->value();
 
-    TreeItem *file_item = item->get_parent();
+    TreeItem* file_item = item->get_parent();
     String fpath = file_item->get_metadata(0);
 
     emit_signal(SIGNAL_RESULT_SELECTED, fpath, r.line_number, r.begin, r.end);
@@ -785,17 +875,19 @@ void FindInFilesPanel::_on_replace_all_clicked() {
 
     PoolStringArray modified_files;
 
-    for (Map<String, TreeItem *>::Element *E = _file_items.front(); E; E = E->next()) {
-        TreeItem *file_item = E->value();
+    for (Map<String, TreeItem*>::Element* E = _file_items.front(); E;
+         E = E->next()) {
+        TreeItem* file_item = E->value();
         String fpath = file_item->get_metadata(0);
 
         Vector<Result> locations;
-        for (TreeItem *item = file_item->get_children(); item; item = item->get_next()) {
+        for (TreeItem* item = file_item->get_children(); item;
+             item = item->get_next()) {
             if (!item->is_checked(0)) {
                 continue;
             }
 
-            Map<TreeItem *, Result>::Element *F = _result_items.find(item);
+            Map<TreeItem*, Result>::Element* F = _result_items.find(item);
             ERR_FAIL_COND(F == nullptr);
             locations.push_back(F->value());
         }
@@ -807,7 +899,8 @@ void FindInFilesPanel::_on_replace_all_clicked() {
         }
     }
 
-    // Hide replace bar so we can't trigger the action twice without doing a new search
+    // Hide replace bar so we can't trigger the action twice without doing a new
+    // search
     _replace_container->hide();
 
     emit_signal(SIGNAL_FILES_MODIFIED, modified_files);
@@ -816,7 +909,7 @@ void FindInFilesPanel::_on_replace_all_clicked() {
 // Same as get_line, but preserves line ending characters
 class ConservativeGetLine {
 public:
-    String get_line(FileAccess *f) {
+    String get_line(FileAccess* f) {
         _line_buffer.clear();
 
         CharType c = f->get_8();
@@ -846,7 +939,11 @@ private:
     Vector<char> _line_buffer;
 };
 
-void FindInFilesPanel::apply_replaces_in_file(String fpath, const Vector<Result> &locations, String new_text) {
+void FindInFilesPanel::apply_replaces_in_file(
+    String fpath,
+    const Vector<Result>& locations,
+    String new_text
+) {
     // If the file is already open, I assume the editor will reload it.
     // If there are unsaved changes, the user will be asked on focus,
     // however that means either losing changes or losing replaces.
@@ -878,9 +975,22 @@ void FindInFilesPanel::apply_replaces_in_file(String fpath, const Vector<Result>
         int repl_end = locations[i].end + offset;
 
         int _;
-        if (!find_next(line, search_text, repl_begin, _finder->is_match_case(), _finder->is_whole_words(), _, _)) {
-            // Make sure the replace is still valid in case the file was tampered with.
-            print_verbose(String("Occurrence no longer matches, replace will be ignored in {0}: line {1}, col {2}").format(varray(fpath, repl_line_number, repl_begin)));
+        if (!find_next(
+                line,
+                search_text,
+                repl_begin,
+                _finder->is_match_case(),
+                _finder->is_whole_words(),
+                _,
+                _
+            )) {
+            // Make sure the replace is still valid in case the file was
+            // tampered with.
+            print_verbose(
+                String("Occurrence no longer matches, replace will be ignored "
+                       "in {0}: line {1}, col {2}")
+                    .format(varray(fpath, repl_line_number, repl_begin))
+            );
             continue;
         }
 
@@ -895,7 +1005,8 @@ void FindInFilesPanel::apply_replaces_in_file(String fpath, const Vector<Result>
         buffer += conservative.get_line(f);
     }
 
-    // Now the modified contents are in the buffer, rewrite the file with our changes
+    // Now the modified contents are in the buffer, rewrite the file with our
+    // changes
 
     Error err = f->reopen(fpath, FileAccess::WRITE);
     ERR_FAIL_COND_MSG(err != OK, "Cannot create file in path '" + fpath + "'.");
@@ -920,21 +1031,47 @@ void FindInFilesPanel::set_progress_visible(bool visible) {
 }
 
 void FindInFilesPanel::_bind_methods() {
-    ClassDB::bind_method("_on_result_found", &FindInFilesPanel::_on_result_found);
+    ClassDB::bind_method(
+        "_on_result_found",
+        &FindInFilesPanel::_on_result_found
+    );
     ClassDB::bind_method("_on_item_edited", &FindInFilesPanel::_on_item_edited);
     ClassDB::bind_method("_on_finished", &FindInFilesPanel::_on_finished);
-    ClassDB::bind_method("_on_refresh_button_clicked", &FindInFilesPanel::_on_refresh_button_clicked);
-    ClassDB::bind_method("_on_cancel_button_clicked", &FindInFilesPanel::_on_cancel_button_clicked);
-    ClassDB::bind_method("_on_result_selected", &FindInFilesPanel::_on_result_selected);
-    ClassDB::bind_method("_on_replace_text_changed", &FindInFilesPanel::_on_replace_text_changed);
-    ClassDB::bind_method("_on_replace_all_clicked", &FindInFilesPanel::_on_replace_all_clicked);
-    ClassDB::bind_method("_draw_result_text", &FindInFilesPanel::draw_result_text);
+    ClassDB::bind_method(
+        "_on_refresh_button_clicked",
+        &FindInFilesPanel::_on_refresh_button_clicked
+    );
+    ClassDB::bind_method(
+        "_on_cancel_button_clicked",
+        &FindInFilesPanel::_on_cancel_button_clicked
+    );
+    ClassDB::bind_method(
+        "_on_result_selected",
+        &FindInFilesPanel::_on_result_selected
+    );
+    ClassDB::bind_method(
+        "_on_replace_text_changed",
+        &FindInFilesPanel::_on_replace_text_changed
+    );
+    ClassDB::bind_method(
+        "_on_replace_all_clicked",
+        &FindInFilesPanel::_on_replace_all_clicked
+    );
+    ClassDB::bind_method(
+        "_draw_result_text",
+        &FindInFilesPanel::draw_result_text
+    );
 
-    ADD_SIGNAL(MethodInfo(SIGNAL_RESULT_SELECTED,
-            PropertyInfo(Variant::STRING, "path"),
-            PropertyInfo(Variant::INT, "line_number"),
-            PropertyInfo(Variant::INT, "begin"),
-            PropertyInfo(Variant::INT, "end")));
+    ADD_SIGNAL(MethodInfo(
+        SIGNAL_RESULT_SELECTED,
+        PropertyInfo(Variant::STRING, "path"),
+        PropertyInfo(Variant::INT, "line_number"),
+        PropertyInfo(Variant::INT, "begin"),
+        PropertyInfo(Variant::INT, "end")
+    ));
 
-    ADD_SIGNAL(MethodInfo(SIGNAL_FILES_MODIFIED, PropertyInfo(Variant::STRING, "paths")));
+    ADD_SIGNAL(MethodInfo(
+        SIGNAL_FILES_MODIFIED,
+        PropertyInfo(Variant::STRING, "paths")
+    ));
 }

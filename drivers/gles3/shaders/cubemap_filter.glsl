@@ -21,25 +21,26 @@ precision highp float;
 precision highp int;
 
 #ifdef USE_SOURCE_PANORAMA
-uniform sampler2D source_panorama; //texunit:0
+uniform sampler2D source_panorama; // texunit:0
 uniform float source_resolution;
 #endif
 
 #ifdef USE_SOURCE_DUAL_PARABOLOID_ARRAY
-uniform sampler2DArray source_dual_paraboloid_array; //texunit:0
+uniform sampler2DArray source_dual_paraboloid_array; // texunit:0
 uniform int source_array_index;
 #endif
 
 #ifdef USE_SOURCE_DUAL_PARABOLOID
-uniform sampler2D source_dual_paraboloid; //texunit:0
+uniform sampler2D source_dual_paraboloid; // texunit:0
 #endif
 
 #if defined(USE_SOURCE_DUAL_PARABOLOID) || defined(COMPUTE_IRRADIANCE)
 uniform float source_mip_level;
 #endif
 
-#if !defined(USE_SOURCE_DUAL_PARABOLOID_ARRAY) && !defined(USE_SOURCE_PANORAMA) && !defined(USE_SOURCE_DUAL_PARABOLOID)
-uniform samplerCube source_cube; //texunit:0
+#if !defined(USE_SOURCE_DUAL_PARABOLOID_ARRAY)                                 \
+    && !defined(USE_SOURCE_PANORAMA) && !defined(USE_SOURCE_DUAL_PARABOLOID)
+uniform samplerCube source_cube; // texunit:0
 #endif
 
 uniform int face_id;
@@ -86,17 +87,17 @@ vec3 texelCoordToVec(vec2 uv, int faceID) {
     */
 
     // -x
-    faceUvVectors[0][0] = vec3(0.0, 0.0, 1.0); // u -> +z
+    faceUvVectors[0][0] = vec3(0.0, 0.0, 1.0);  // u -> +z
     faceUvVectors[0][1] = vec3(0.0, -1.0, 0.0); // v -> -y
     faceUvVectors[0][2] = vec3(-1.0, 0.0, 0.0); // -x face
 
     // +x
     faceUvVectors[1][0] = vec3(0.0, 0.0, -1.0); // u -> -z
     faceUvVectors[1][1] = vec3(0.0, -1.0, 0.0); // v -> -y
-    faceUvVectors[1][2] = vec3(1.0, 0.0, 0.0); // +x face
+    faceUvVectors[1][2] = vec3(1.0, 0.0, 0.0);  // +x face
 
     // -y
-    faceUvVectors[2][0] = vec3(1.0, 0.0, 0.0); // u -> +x
+    faceUvVectors[2][0] = vec3(1.0, 0.0, 0.0);  // u -> +x
     faceUvVectors[2][1] = vec3(0.0, 0.0, -1.0); // v -> -z
     faceUvVectors[2][2] = vec3(0.0, -1.0, 0.0); // -y face
 
@@ -111,17 +112,19 @@ vec3 texelCoordToVec(vec2 uv, int faceID) {
     faceUvVectors[4][2] = vec3(0.0, 0.0, -1.0); // -z face
 
     // +z
-    faceUvVectors[5][0] = vec3(1.0, 0.0, 0.0); // u -> +x
+    faceUvVectors[5][0] = vec3(1.0, 0.0, 0.0);  // u -> +x
     faceUvVectors[5][1] = vec3(0.0, -1.0, 0.0); // v -> -y
-    faceUvVectors[5][2] = vec3(0.0, 0.0, 1.0); // +z face
+    faceUvVectors[5][2] = vec3(0.0, 0.0, 1.0);  // +z face
 
     // out = u * s_faceUv[0] + v * s_faceUv[1] + s_faceUv[2].
-    vec3 result = (faceUvVectors[faceID][0] * uv.x) + (faceUvVectors[faceID][1] * uv.y) + faceUvVectors[faceID][2];
+    vec3 result = (faceUvVectors[faceID][0] * uv.x)
+                + (faceUvVectors[faceID][1] * uv.y) + faceUvVectors[faceID][2];
     return normalize(result);
 }
 
 vec3 ImportanceSampleGGX(vec2 Xi, float Roughness, vec3 N) {
-    float a = Roughness * Roughness; // DISNEY'S ROUGHNESS [see Burley'12 siggraph]
+    float a =
+        Roughness * Roughness; // DISNEY'S ROUGHNESS [see Burley'12 siggraph]
 
     // Compute distribution direction
     float Phi = 2.0 * M_PI * Xi.x;
@@ -134,7 +137,8 @@ vec3 ImportanceSampleGGX(vec2 Xi, float Roughness, vec3 N) {
     H.y = SinTheta * sin(Phi);
     H.z = CosTheta;
 
-    vec3 UpVector = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+    vec3 UpVector =
+        abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
     vec3 TangentX = normalize(cross(UpVector, N));
     vec3 TangentY = cross(N, TangentX);
 
@@ -196,12 +200,11 @@ uniform bool z_flip;
 #ifdef USE_SOURCE_PANORAMA
 
 vec4 texturePanorama(vec3 normal, sampler2D pano, float mipLevel) {
-    vec2 st = vec2(
-            atan(normal.x, normal.z),
-            acos(normal.y));
+    vec2 st = vec2(atan(normal.x, normal.z), acos(normal.y));
 
-    if (st.x < 0.0)
+    if (st.x < 0.0) {
         st.x += M_PI * 2.0;
+    }
 
     st /= vec2(M_PI * 2.0, M_PI);
 
@@ -219,7 +222,11 @@ vec4 textureDualParaboloidArray(vec3 normal) {
     if (norm.z < 0.0) {
         norm.y = 0.5 - norm.y + 0.5;
     }
-    return textureLod(source_dual_paraboloid_array, vec3(norm.xy, float(source_array_index)), 0.0);
+    return textureLod(
+        source_dual_paraboloid_array,
+        vec3(norm.xy, float(source_array_index)),
+        0.0
+    );
 }
 
 #endif
@@ -245,7 +252,7 @@ void main() {
     N = normalize(N);
 
     if (z_flip) {
-        N.y = -N.y; //y is flipped to improve blending between both sides
+        N.y = -N.y; // y is flipped to improve blending between both sides
         N.z = -N.z;
     }
 
@@ -253,7 +260,7 @@ void main() {
     vec2 uv = (uv_interp * 2.0) - 1.0;
     vec3 N = texelCoordToVec(uv, face_id);
 #endif
-    //vec4 color = color_interp;
+    // vec4 color = color_interp;
 
 #ifdef USE_DIRECT_WRITE
 
@@ -272,7 +279,8 @@ void main() {
     frag_color = vec4(textureDualParaboloid(N).rgb, 1.0);
 #endif
 
-#if !defined(USE_SOURCE_DUAL_PARABOLOID_ARRAY) && !defined(USE_SOURCE_PANORAMA) && !defined(USE_SOURCE_DUAL_PARABOLOID)
+#if !defined(USE_SOURCE_DUAL_PARABOLOID_ARRAY)                                 \
+    && !defined(USE_SOURCE_PANORAMA) && !defined(USE_SOURCE_DUAL_PARABOLOID)
 
     N.y = -N.y;
     frag_color = vec4(texture(N, source_cube).rgb, 1.0);
@@ -294,9 +302,11 @@ void main() {
     for (float phi = 0.0; phi < 2.0 * M_PI; phi += SAMPLE_DELTA) {
         for (float theta = 0.0; theta < 0.5 * M_PI; theta += SAMPLE_DELTA) {
             // Calculate sample positions
-            vec3 tangentSample = vec3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
+            vec3 tangentSample =
+                vec3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
             // Find world vector of sample position
-            vec3 H = tangentSample.x * TangentX + tangentSample.y * TangentY + tangentSample.z * N;
+            vec3 H = tangentSample.x * TangentX + tangentSample.y * TangentY
+                   + tangentSample.z * N;
 
             vec2 st = vec2(atan(H.x, H.z), acos(H.y));
             if (st.x < 0.0) {
@@ -304,7 +314,8 @@ void main() {
             }
             st /= vec2(M_PI * 2.0, M_PI);
 
-            irradiance += textureLod(source_panorama, st, source_mip_level).rgb * cos(theta) * sin(theta);
+            irradiance += textureLod(source_panorama, st, source_mip_level).rgb
+                        * cos(theta) * sin(theta);
             num_samples++;
         }
     }
@@ -333,12 +344,15 @@ void main() {
             float hdotv = max(dot(H, V), 0.0);
             float pdf = D * ndoth / (4.0 * hdotv) + 0.0001;
 
-            float saTexel = 4.0 * M_PI / (6.0 * source_resolution * source_resolution);
+            float saTexel =
+                4.0 * M_PI / (6.0 * source_resolution * source_resolution);
             float saSample = 1.0 / (float(SAMPLE_COUNT) * pdf + 0.0001);
 
-            float mipLevel = roughness == 0.0 ? 0.0 : 0.5 * log2(saSample / saTexel);
+            float mipLevel =
+                roughness == 0.0 ? 0.0 : 0.5 * log2(saSample / saTexel);
 
-            sum.rgb += texturePanorama(L, source_panorama, mipLevel).rgb * ndotl;
+            sum.rgb +=
+                texturePanorama(L, source_panorama, mipLevel).rgb * ndotl;
 #endif
 
 #ifdef USE_SOURCE_DUAL_PARABOLOID_ARRAY
@@ -349,7 +363,8 @@ void main() {
             sum.rgb += textureDualParaboloid(L).rgb * ndotl;
 #endif
 
-#if !defined(USE_SOURCE_DUAL_PARABOLOID_ARRAY) && !defined(USE_SOURCE_PANORAMA) && !defined(USE_SOURCE_DUAL_PARABOLOID)
+#if !defined(USE_SOURCE_DUAL_PARABOLOID_ARRAY)                                 \
+    && !defined(USE_SOURCE_PANORAMA) && !defined(USE_SOURCE_DUAL_PARABOLOID)
             L.y = -L.y;
             sum.rgb += textureLod(source_cube, L, 0.0).rgb * ndotl;
 #endif

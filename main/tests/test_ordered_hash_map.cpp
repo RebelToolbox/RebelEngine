@@ -35,13 +35,15 @@
 #include "core/pair.h"
 #include "core/vector.h"
 
-namespace TestOrderedHashMap {
+namespace TestOrderedHashMap
+{
 
 bool test_insert() {
     OrderedHashMap<int, int> map;
     OrderedHashMap<int, int>::Element e = map.insert(42, 84);
 
-    return e && e.key() == 42 && e.get() == 84 && e.value() == 84 && map[42] == 84 && map.has(42) && map.find(42);
+    return e && e.key() == 42 && e.get() == 84 && e.value() == 84
+        && map[42] == 84 && map.has(42) && map.find(42);
 }
 
 bool test_insert_overwrite() {
@@ -102,7 +104,7 @@ bool test_iteration() {
     return true;
 }
 
-bool test_const_iteration(const OrderedHashMap<int, int> &map) {
+bool test_const_iteration(const OrderedHashMap<int, int>& map) {
     Vector<Pair<int, int>> expected;
     expected.push_back(Pair<int, int>(42, 84));
     expected.push_back(Pair<int, int>(123, 111111));
@@ -110,7 +112,8 @@ bool test_const_iteration(const OrderedHashMap<int, int> &map) {
     expected.push_back(Pair<int, int>(123485, 1238888));
 
     int idx = 0;
-    for (OrderedHashMap<int, int>::ConstElement E = map.front(); E; E = E.next()) {
+    for (OrderedHashMap<int, int>::ConstElement E = map.front(); E;
+         E = E.next()) {
         if (expected[idx] != Pair<int, int>(E.key(), E.value())) {
             return false;
         }
@@ -145,7 +148,7 @@ TestFunc test_funcs[] = {
 
 };
 
-MainLoop *test() {
+MainLoop* test() {
     int count = 0;
     int passed = 0;
 

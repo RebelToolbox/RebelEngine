@@ -57,7 +57,7 @@ class ViewportTexture : public Texture {
     NodePath path;
 
     friend class Viewport;
-    Viewport *vp;
+    Viewport* vp;
     uint32_t flags;
 
     RID proxy;
@@ -66,7 +66,7 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_viewport_path_in_scene(const NodePath &p_path);
+    void set_viewport_path_in_scene(const NodePath& p_path);
     NodePath get_viewport_path_in_scene() const;
 
     virtual void setup_local_to_scene();
@@ -93,7 +93,7 @@ class Viewport : public Node {
 public:
     enum UpdateMode {
         UPDATE_DISABLED,
-        UPDATE_ONCE, //then goes to disabled
+        UPDATE_ONCE,         // then goes to disabled
         UPDATE_WHEN_VISIBLE, // default
         UPDATE_ALWAYS
     };
@@ -107,7 +107,6 @@ public:
         SHADOW_ATLAS_QUADRANT_SUBDIV_256,
         SHADOW_ATLAS_QUADRANT_SUBDIV_1024,
         SHADOW_ATLAS_QUADRANT_SUBDIV_MAX,
-
     };
 
     enum MSAA {
@@ -126,7 +125,6 @@ public:
     };
 
     enum RenderInfo {
-
         RENDER_INFO_OBJECTS_IN_FRAME,
         RENDER_INFO_VERTICES_IN_FRAME,
         RENDER_INFO_MATERIAL_CHANGES_IN_FRAME,
@@ -146,7 +144,6 @@ public:
     };
 
     enum ClearMode {
-
         CLEAR_MODE_ALWAYS,
         CLEAR_MODE_NEVER,
         CLEAR_MODE_ONLY_NEXT_FRAME
@@ -155,19 +152,21 @@ public:
 private:
     friend class ViewportTexture;
 
-    Viewport *parent;
+    Viewport* parent;
 
-    Listener *listener;
-    Set<Listener *> listeners;
+    Listener* listener;
+    Set<Listener*> listeners;
 
     bool arvr;
 
     struct CameraOverrideData {
         Transform transform;
+
         enum Projection {
             PROJECTION_PERSPECTIVE,
             PROJECTION_ORTHOGONAL
         };
+
         Projection projection;
         float fov;
         float size;
@@ -180,10 +179,10 @@ private:
         }
     } camera_override;
 
-    Camera *camera;
-    Set<Camera *> cameras;
-    Listener2D *listener_2d = nullptr;
-    Set<CanvasLayer *> canvas_layers;
+    Camera* camera;
+    Set<Camera*> cameras;
+    Listener2D* listener_2d = nullptr;
+    Set<CanvasLayer*> canvas_layers;
 
     RID viewport;
     RID current_canvas;
@@ -233,6 +232,7 @@ private:
     ObjectID physics_last_id;
     bool physics_has_last_mousepos;
     Vector2 physics_last_mousepos;
+
     struct {
         bool alt;
         bool control;
@@ -242,7 +242,14 @@ private:
 
     } physics_last_mouse_state;
 
-    void _collision_object_input_event(CollisionObject *p_object, Camera *p_camera, const Ref<InputEvent> &p_input_event, const Vector3 &p_pos, const Vector3 &p_normal, int p_shape);
+    void _collision_object_input_event(
+        CollisionObject* p_object,
+        Camera* p_camera,
+        const Ref<InputEvent>& p_input_event,
+        const Vector3& p_pos,
+        const Vector3& p_normal,
+        int p_shape
+    );
 
     bool handle_input_locally;
     bool local_input_handled;
@@ -261,9 +268,9 @@ private:
     void _update_listener();
     void _update_listener_2d();
 
-    void _propagate_enter_world(Node *p_node);
-    void _propagate_exit_world(Node *p_node);
-    void _propagate_viewport_notification(Node *p_node, int p_what);
+    void _propagate_enter_world(Node* p_node);
+    void _propagate_exit_world(Node* p_node);
+    void _propagate_viewport_notification(Node* p_node, int p_what);
 
     void _update_stretch_transform();
     void _update_global_transform();
@@ -288,21 +295,21 @@ private:
     bool hdr;
 
     Ref<ViewportTexture> default_texture;
-    Set<ViewportTexture *> viewport_textures;
+    Set<ViewportTexture*> viewport_textures;
 
     struct GUI {
         // info used when this is a window
 
         bool key_event_accepted;
-        Control *mouse_focus;
-        Control *last_mouse_focus;
-        Control *mouse_click_grabber;
+        Control* mouse_focus;
+        Control* last_mouse_focus;
+        Control* mouse_click_grabber;
         int mouse_focus_mask;
-        Control *key_focus;
-        Control *mouse_over;
-        Control *tooltip_control;
-        Control *tooltip_popup;
-        Label *tooltip_label;
+        Control* key_focus;
+        Control* mouse_over;
+        Control* tooltip_control;
+        Control* tooltip_popup;
+        Label* tooltip_label;
         Point2 tooltip_pos;
         Point2 last_mouse_pos;
         Point2 drag_accum;
@@ -311,15 +318,15 @@ private:
         ObjectID drag_preview_id;
         Ref<SceneTreeTimer> tooltip_timer;
         float tooltip_delay;
-        List<Control *> modal_stack;
+        List<Control*> modal_stack;
         Transform2D focus_inv_xform;
         bool subwindow_order_dirty;
         bool subwindow_visibility_dirty;
-        List<Control *> subwindows; // visible subwindows
-        List<Control *> all_known_subwindows;
+        List<Control*> subwindows; // visible subwindows
+        List<Control*> all_known_subwindows;
         bool roots_order_dirty;
-        List<Control *> roots;
-        int canvas_sort_index; //for sorting items with canvas as root
+        List<Control*> roots;
+        int canvas_sort_index; // for sorting items with canvas as root
         bool dragging;
 
         GUI();
@@ -327,15 +334,20 @@ private:
 
     bool disable_input;
 
-    void _gui_call_input(Control *p_control, const Ref<InputEvent> &p_input);
-    void _gui_call_notification(Control *p_control, int p_what);
+    void _gui_call_input(Control* p_control, const Ref<InputEvent>& p_input);
+    void _gui_call_notification(Control* p_control, int p_what);
 
     void _gui_prepare_subwindows();
     void _gui_sort_subwindows();
     void _gui_sort_roots();
     void _gui_sort_modal_stack();
-    Control *_gui_find_control(const Point2 &p_global);
-    Control *_gui_find_control_at_pos(CanvasItem *p_node, const Point2 &p_global, const Transform2D &p_xform, Transform2D &r_inv_xform);
+    Control* _gui_find_control(const Point2& p_global);
+    Control* _gui_find_control_at_pos(
+        CanvasItem* p_node,
+        const Point2& p_global,
+        const Transform2D& p_xform,
+        Transform2D& r_inv_xform
+    );
 
     void _gui_input_event(Ref<InputEvent> p_event);
 
@@ -343,78 +355,89 @@ private:
 
     _FORCE_INLINE_ Transform2D _get_input_pre_xform() const;
 
-    void _vp_input(const Ref<InputEvent> &p_ev);
-    void _vp_input_text(const String &p_text);
-    void _vp_unhandled_input(const Ref<InputEvent> &p_ev);
-    Ref<InputEvent> _make_input_local(const Ref<InputEvent> &ev);
+    void _vp_input(const Ref<InputEvent>& p_ev);
+    void _vp_input_text(const String& p_text);
+    void _vp_unhandled_input(const Ref<InputEvent>& p_ev);
+    Ref<InputEvent> _make_input_local(const Ref<InputEvent>& ev);
 
     friend class Control;
 
-    List<Control *>::Element *_gui_add_root_control(Control *p_control);
-    List<Control *>::Element *_gui_add_subwindow_control(Control *p_control);
+    List<Control*>::Element* _gui_add_root_control(Control* p_control);
+    List<Control*>::Element* _gui_add_subwindow_control(Control* p_control);
 
     void _gui_set_subwindow_order_dirty();
     void _gui_set_root_order_dirty();
 
-    void _gui_remove_modal_control(List<Control *>::Element *MI);
-    void _gui_remove_from_modal_stack(List<Control *>::Element *MI, ObjectID p_prev_focus_owner);
-    void _gui_remove_root_control(List<Control *>::Element *RI);
-    void _gui_remove_subwindow_control(List<Control *>::Element *SI);
+    void _gui_remove_modal_control(List<Control*>::Element* MI);
+    void _gui_remove_from_modal_stack(
+        List<Control*>::Element* MI,
+        ObjectID p_prev_focus_owner
+    );
+    void _gui_remove_root_control(List<Control*>::Element* RI);
+    void _gui_remove_subwindow_control(List<Control*>::Element* SI);
 
-    String _gui_get_tooltip(Control *p_control, const Vector2 &p_pos, Control **r_tooltip_owner = nullptr);
+    String _gui_get_tooltip(
+        Control* p_control,
+        const Vector2& p_pos,
+        Control** r_tooltip_owner = nullptr
+    );
     void _gui_cancel_tooltip();
     void _gui_show_tooltip();
 
-    void _gui_remove_control(Control *p_control);
-    void _gui_hid_control(Control *p_control);
+    void _gui_remove_control(Control* p_control);
+    void _gui_hid_control(Control* p_control);
 
-    void _gui_force_drag(Control *p_base, const Variant &p_data, Control *p_control);
-    void _gui_set_drag_preview(Control *p_base, Control *p_control);
-    Control *_gui_get_drag_preview();
+    void _gui_force_drag(
+        Control* p_base,
+        const Variant& p_data,
+        Control* p_control
+    );
+    void _gui_set_drag_preview(Control* p_base, Control* p_control);
+    Control* _gui_get_drag_preview();
 
-    bool _gui_is_modal_on_top(const Control *p_control);
-    List<Control *>::Element *_gui_show_modal(Control *p_control);
+    bool _gui_is_modal_on_top(const Control* p_control);
+    List<Control*>::Element* _gui_show_modal(Control* p_control);
 
     void _gui_remove_focus();
-    void _gui_unfocus_control(Control *p_control);
-    bool _gui_control_has_focus(const Control *p_control);
-    void _gui_control_grab_focus(Control *p_control);
-    void _gui_grab_click_focus(Control *p_control);
+    void _gui_unfocus_control(Control* p_control);
+    bool _gui_control_has_focus(const Control* p_control);
+    void _gui_control_grab_focus(Control* p_control);
+    void _gui_grab_click_focus(Control* p_control);
     void _post_gui_grab_click_focus();
     void _gui_accept_event();
 
-    Control *_gui_get_focus_owner();
+    Control* _gui_get_focus_owner();
 
     Vector2 _get_window_offset() const;
 
-    bool _gui_drop(Control *p_at_control, Point2 p_at_pos, bool p_just_check);
+    bool _gui_drop(Control* p_at_control, Point2 p_at_pos, bool p_just_check);
 
     friend class Listener;
     void _listener_transform_changed_notify();
-    void _listener_set(Listener *p_listener);
-    bool _listener_add(Listener *p_listener); //true if first
-    void _listener_remove(Listener *p_listener);
-    void _listener_make_next_current(Listener *p_exclude);
+    void _listener_set(Listener* p_listener);
+    bool _listener_add(Listener* p_listener); // true if first
+    void _listener_remove(Listener* p_listener);
+    void _listener_make_next_current(Listener* p_exclude);
 
     friend class Camera;
     void _camera_transform_changed_notify();
-    void _camera_set(Camera *p_camera);
-    bool _camera_add(Camera *p_camera); //true if first
-    void _camera_remove(Camera *p_camera);
-    void _camera_make_next_current(Camera *p_exclude);
+    void _camera_set(Camera* p_camera);
+    bool _camera_add(Camera* p_camera); // true if first
+    void _camera_remove(Camera* p_camera);
+    void _camera_make_next_current(Camera* p_exclude);
 
     friend class Listener2D;
-    void _listener_2d_set(Listener2D *p_listener);
-    void _listener_2d_remove(Listener2D *p_listener);
+    void _listener_2d_set(Listener2D* p_listener);
+    void _listener_2d_remove(Listener2D* p_listener);
 
     friend class CanvasLayer;
-    void _canvas_layer_add(CanvasLayer *p_canvas_layer);
-    void _canvas_layer_remove(CanvasLayer *p_canvas_layer);
+    void _canvas_layer_add(CanvasLayer* p_canvas_layer);
+    void _canvas_layer_remove(CanvasLayer* p_canvas_layer);
 
     void _drop_mouse_focus();
     void _drop_physics_mouseover(bool p_paused_only = false);
 
-    void _update_canvas_items(Node *p_node);
+    void _update_canvas_items(Node* p_node);
 
     void _own_world_changed();
 
@@ -422,20 +445,28 @@ protected:
     void _notification(int p_what);
     void _process_picking(bool p_ignore_paused);
     static void _bind_methods();
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
 public:
-    Listener *get_listener() const;
-    Camera *get_camera() const;
+    Listener* get_listener() const;
+    Camera* get_camera() const;
 
     void enable_camera_override(bool p_enable);
     bool is_camera_override_enabled() const;
 
-    void set_camera_override_transform(const Transform &p_transform);
+    void set_camera_override_transform(const Transform& p_transform);
     Transform get_camera_override_transform() const;
 
-    void set_camera_override_perspective(float p_fovy_degrees, float p_z_near, float p_z_far);
-    void set_camera_override_orthogonal(float p_size, float p_z_near, float p_z_far);
+    void set_camera_override_perspective(
+        float p_fovy_degrees,
+        float p_z_near,
+        float p_z_far
+    );
+    void set_camera_override_orthogonal(
+        float p_size,
+        float p_z_near,
+        float p_z_far
+    );
 
     void set_use_arvr(bool p_use_arvr);
     bool use_arvr();
@@ -443,19 +474,19 @@ public:
     void set_as_audio_listener(bool p_enable);
     bool is_audio_listener() const;
 
-    Listener2D *get_listener_2d() const;
+    Listener2D* get_listener_2d() const;
     void set_as_audio_listener_2d(bool p_enable);
     bool is_audio_listener_2d() const;
 
-    void set_size(const Size2 &p_size);
+    void set_size(const Size2& p_size);
     void update_canvas_items();
 
     Size2 get_size() const;
     Rect2 get_visible_rect() const;
     RID get_viewport_rid() const;
 
-    void set_world(const Ref<World> &p_world);
-    void set_world_2d(const Ref<World2D> &p_world_2d);
+    void set_world(const Ref<World>& p_world);
+    void set_world_2d(const Ref<World2D>& p_world_2d);
     Ref<World> get_world() const;
     Ref<World> find_world() const;
 
@@ -465,13 +496,13 @@ public:
     void enable_canvas_transform_override(bool p_enable);
     bool is_canvas_transform_override_enbled() const;
 
-    void set_canvas_transform_override(const Transform2D &p_transform);
+    void set_canvas_transform_override(const Transform2D& p_transform);
     Transform2D get_canvas_transform_override() const;
 
-    void set_canvas_transform(const Transform2D &p_transform);
+    void set_canvas_transform(const Transform2D& p_transform);
     Transform2D get_canvas_transform() const;
 
-    void set_global_canvas_transform(const Transform2D &p_transform);
+    void set_global_canvas_transform(const Transform2D& p_transform);
     Transform2D get_global_canvas_transform() const;
 
     Transform2D get_final_transform() const;
@@ -479,7 +510,11 @@ public:
     void set_transparent_background(bool p_enable);
     bool has_transparent_background() const;
 
-    void set_size_override(bool p_enable, const Size2 &p_size = Size2(-1, -1), const Vector2 &p_margin = Vector2());
+    void set_size_override(
+        bool p_enable,
+        const Size2& p_size = Size2(-1, -1),
+        const Vector2& p_margin = Vector2()
+    );
     Size2 get_size_override() const;
 
     bool is_size_override_enabled() const;
@@ -499,8 +534,12 @@ public:
     void set_shadow_atlas_size(int p_size);
     int get_shadow_atlas_size() const;
 
-    void set_shadow_atlas_quadrant_subdiv(int p_quadrant, ShadowAtlasQuadrantSubdiv p_subdiv);
-    ShadowAtlasQuadrantSubdiv get_shadow_atlas_quadrant_subdiv(int p_quadrant) const;
+    void set_shadow_atlas_quadrant_subdiv(
+        int p_quadrant,
+        ShadowAtlasQuadrantSubdiv p_subdiv
+    );
+    ShadowAtlasQuadrantSubdiv get_shadow_atlas_quadrant_subdiv(int p_quadrant
+    ) const;
 
     void set_msaa(MSAA p_msaa);
     MSAA get_msaa() const;
@@ -517,14 +556,14 @@ public:
     void set_hdr(bool p_hdr);
     bool get_hdr() const;
 
-    Vector2 get_camera_coords(const Vector2 &p_viewport_coords) const;
+    Vector2 get_camera_coords(const Vector2& p_viewport_coords) const;
     Vector2 get_camera_rect_size() const;
 
     void set_use_own_world(bool p_world);
     bool is_using_own_world() const;
 
-    void input(const Ref<InputEvent> &p_event);
-    void unhandled_input(const Ref<InputEvent> &p_event);
+    void input(const Ref<InputEvent>& p_event);
+    void unhandled_input(const Ref<InputEvent>& p_event);
 
     void set_disable_input(bool p_disable);
     bool is_input_disabled() const;
@@ -535,14 +574,14 @@ public:
     void set_keep_3d_linear(bool p_keep_3d_linear);
     bool get_keep_3d_linear() const;
 
-    void set_attach_to_screen_rect(const Rect2 &p_rect);
+    void set_attach_to_screen_rect(const Rect2& p_rect);
     Rect2 get_attach_to_screen_rect() const;
 
     void set_use_render_direct_to_screen(bool p_render_direct_to_screen);
     bool is_using_render_direct_to_screen() const;
 
     Vector2 get_mouse_position() const;
-    void warp_mouse(const Vector2 &p_pos);
+    void warp_mouse(const Vector2& p_pos);
 
     void set_physics_object_picking(bool p_enable);
     bool get_physics_object_picking();
@@ -550,7 +589,7 @@ public:
     bool gui_has_modal_stack() const;
 
     Variant gui_get_drag_data() const;
-    Control *get_modal_stack_top() const;
+    Control* get_modal_stack_top() const;
 
     void gui_reset_canvas_sort_index();
     int gui_get_canvas_sort_index();

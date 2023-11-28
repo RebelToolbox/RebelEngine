@@ -39,7 +39,8 @@ class ConcavePolygonShape : public Shape {
     struct DrawEdge {
         Vector3 a;
         Vector3 b;
-        bool operator<(const DrawEdge &p_edge) const {
+
+        bool operator<(const DrawEdge& p_edge) const {
             if (a == p_edge.a) {
                 return b < p_edge.b;
             } else {
@@ -47,7 +48,10 @@ class ConcavePolygonShape : public Shape {
             }
         }
 
-        DrawEdge(const Vector3 &p_a = Vector3(), const Vector3 &p_b = Vector3()) {
+        DrawEdge(
+            const Vector3& p_a = Vector3(),
+            const Vector3& p_b = Vector3()
+        ) {
             a = p_a;
             b = p_b;
             if (a < b) {
@@ -62,7 +66,7 @@ protected:
     virtual void _update_shape();
 
 public:
-    void set_faces(const PoolVector<Vector3> &p_faces);
+    void set_faces(const PoolVector<Vector3>& p_faces);
     PoolVector<Vector3> get_faces() const;
 
     Vector<Vector3> get_debug_mesh_lines();

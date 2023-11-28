@@ -43,10 +43,10 @@ class AudioDriverPulseAudio : public AudioDriver {
     Thread thread;
     Mutex mutex;
 
-    pa_mainloop *pa_ml;
-    pa_context *pa_ctx;
-    pa_stream *pa_str;
-    pa_stream *pa_rec_str;
+    pa_mainloop* pa_ml;
+    pa_context* pa_ctx;
+    pa_stream* pa_str;
+    pa_stream* pa_rec_str;
     pa_channel_map pa_map;
     pa_channel_map pa_rec_map;
 
@@ -76,12 +76,36 @@ class AudioDriverPulseAudio : public AudioDriver {
 
     float latency;
 
-    static void pa_state_cb(pa_context *c, void *userdata);
-    static void pa_sink_info_cb(pa_context *c, const pa_sink_info *l, int eol, void *userdata);
-    static void pa_source_info_cb(pa_context *c, const pa_source_info *l, int eol, void *userdata);
-    static void pa_server_info_cb(pa_context *c, const pa_server_info *i, void *userdata);
-    static void pa_sinklist_cb(pa_context *c, const pa_sink_info *l, int eol, void *userdata);
-    static void pa_sourcelist_cb(pa_context *c, const pa_source_info *l, int eol, void *userdata);
+    static void pa_state_cb(pa_context* c, void* userdata);
+    static void pa_sink_info_cb(
+        pa_context* c,
+        const pa_sink_info* l,
+        int eol,
+        void* userdata
+    );
+    static void pa_source_info_cb(
+        pa_context* c,
+        const pa_source_info* l,
+        int eol,
+        void* userdata
+    );
+    static void pa_server_info_cb(
+        pa_context* c,
+        const pa_server_info* i,
+        void* userdata
+    );
+    static void pa_sinklist_cb(
+        pa_context* c,
+        const pa_sink_info* l,
+        int eol,
+        void* userdata
+    );
+    static void pa_sourcelist_cb(
+        pa_context* c,
+        const pa_source_info* l,
+        int eol,
+        void* userdata
+    );
 
     Error init_device();
     void finish_device();
@@ -91,10 +115,10 @@ class AudioDriverPulseAudio : public AudioDriver {
 
     Error detect_channels(bool capture = false);
 
-    static void thread_func(void *p_udata);
+    static void thread_func(void* p_udata);
 
 public:
-    const char *get_name() const {
+    const char* get_name() const {
         return "PulseAudio";
     };
 
@@ -108,7 +132,7 @@ public:
     virtual void set_device(String device);
 
     virtual Array capture_get_device_list();
-    virtual void capture_set_device(const String &p_name);
+    virtual void capture_set_device(const String& p_name);
     virtual String capture_get_device();
 
     virtual void lock();

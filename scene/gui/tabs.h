@@ -38,7 +38,6 @@ class Tabs : public Control {
 
 public:
     enum TabAlign {
-
         ALIGN_LEFT,
         ALIGN_CENTER,
         ALIGN_RIGHT,
@@ -46,7 +45,6 @@ public:
     };
 
     enum CloseButtonDisplayPolicy {
-
         CLOSE_BUTTON_SHOW_NEVER,
         CLOSE_BUTTON_SHOW_ACTIVE_ONLY,
         CLOSE_BUTTON_SHOW_ALWAYS,
@@ -104,28 +102,31 @@ private:
     void _on_mouse_exited();
 
 protected:
-    void _gui_input(const Ref<InputEvent> &p_event);
+    void _gui_input(const Ref<InputEvent>& p_event);
     void _notification(int p_what);
     static void _bind_methods();
 
-    Variant get_drag_data(const Point2 &p_point);
-    bool can_drop_data(const Point2 &p_point, const Variant &p_data) const;
-    void drop_data(const Point2 &p_point, const Variant &p_data);
-    int get_tab_idx_at_point(const Point2 &p_point) const;
+    Variant get_drag_data(const Point2& p_point);
+    bool can_drop_data(const Point2& p_point, const Variant& p_data) const;
+    void drop_data(const Point2& p_point, const Variant& p_data);
+    int get_tab_idx_at_point(const Point2& p_point) const;
 
 public:
-    void add_tab(const String &p_str = "", const Ref<Texture> &p_icon = Ref<Texture>());
+    void add_tab(
+        const String& p_str = "",
+        const Ref<Texture>& p_icon = Ref<Texture>()
+    );
 
-    void set_tab_title(int p_tab, const String &p_title);
+    void set_tab_title(int p_tab, const String& p_title);
     String get_tab_title(int p_tab) const;
 
-    void set_tab_icon(int p_tab, const Ref<Texture> &p_icon);
+    void set_tab_icon(int p_tab, const Ref<Texture>& p_icon);
     Ref<Texture> get_tab_icon(int p_tab) const;
 
     void set_tab_disabled(int p_tab, bool p_disabled);
     bool get_tab_disabled(int p_tab) const;
 
-    void set_tab_right_button(int p_tab, const Ref<Texture> &p_right_button);
+    void set_tab_right_button(int p_tab, const Ref<Texture>& p_right_button);
     Ref<Texture> get_tab_right_button(int p_tab) const;
 
     void set_tab_align(TabAlign p_align);

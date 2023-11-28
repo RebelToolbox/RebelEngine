@@ -39,11 +39,11 @@ Ref<NavigationPolygon> NavigationPolygonEditor::_ensure_navpoly() const {
     return navpoly;
 }
 
-Node2D *NavigationPolygonEditor::_get_node() const {
+Node2D* NavigationPolygonEditor::_get_node() const {
     return node;
 }
 
-void NavigationPolygonEditor::_set_node(Node *p_polygon) {
+void NavigationPolygonEditor::_set_node(Node* p_polygon) {
     node = Object::cast_to<NavigationPolygonInstance>(p_polygon);
 }
 
@@ -65,16 +65,21 @@ Variant NavigationPolygonEditor::_get_polygon(int p_idx) const {
     }
 }
 
-void NavigationPolygonEditor::_set_polygon(int p_idx, const Variant &p_polygon) const {
+void NavigationPolygonEditor::_set_polygon(int p_idx, const Variant& p_polygon)
+    const {
     Ref<NavigationPolygon> navpoly = _ensure_navpoly();
     navpoly->set_outline(p_idx, p_polygon);
     navpoly->make_polygons_from_outlines();
 }
 
-void NavigationPolygonEditor::_action_add_polygon(const Variant &p_polygon) {
+void NavigationPolygonEditor::_action_add_polygon(const Variant& p_polygon) {
     Ref<NavigationPolygon> navpoly = _ensure_navpoly();
     undo_redo->add_do_method(navpoly.ptr(), "add_outline", p_polygon);
-    undo_redo->add_undo_method(navpoly.ptr(), "remove_outline", navpoly->get_outline_count());
+    undo_redo->add_undo_method(
+        navpoly.ptr(),
+        "remove_outline",
+        navpoly->get_outline_count()
+    );
     undo_redo->add_do_method(navpoly.ptr(), "make_polygons_from_outlines");
     undo_redo->add_undo_method(navpoly.ptr(), "make_polygons_from_outlines");
 }
@@ -82,12 +87,21 @@ void NavigationPolygonEditor::_action_add_polygon(const Variant &p_polygon) {
 void NavigationPolygonEditor::_action_remove_polygon(int p_idx) {
     Ref<NavigationPolygon> navpoly = _ensure_navpoly();
     undo_redo->add_do_method(navpoly.ptr(), "remove_outline", p_idx);
-    undo_redo->add_undo_method(navpoly.ptr(), "add_outline_at_index", navpoly->get_outline(p_idx), p_idx);
+    undo_redo->add_undo_method(
+        navpoly.ptr(),
+        "add_outline_at_index",
+        navpoly->get_outline(p_idx),
+        p_idx
+    );
     undo_redo->add_do_method(navpoly.ptr(), "make_polygons_from_outlines");
     undo_redo->add_undo_method(navpoly.ptr(), "make_polygons_from_outlines");
 }
 
-void NavigationPolygonEditor::_action_set_polygon(int p_idx, const Variant &p_previous, const Variant &p_polygon) {
+void NavigationPolygonEditor::_action_set_polygon(
+    int p_idx,
+    const Variant& p_previous,
+    const Variant& p_polygon
+) {
     Ref<NavigationPolygon> navpoly = _ensure_navpoly();
     undo_redo->add_do_method(navpoly.ptr(), "set_outline", p_idx, p_polygon);
     undo_redo->add_undo_method(navpoly.ptr(), "set_outline", p_idx, p_previous);
@@ -105,18 +119,26 @@ void NavigationPolygonEditor::_create_resource() {
     }
 
     undo_redo->create_action(TTR("Create Navigation Polygon"));
-    undo_redo->add_do_method(node, "set_navigation_polygon", Ref<NavigationPolygon>(memnew(NavigationPolygon)));
+    undo_redo->add_do_method(
+        node,
+        "set_navigation_polygon",
+        Ref<NavigationPolygon>(memnew(NavigationPolygon))
+    );
     undo_redo->add_undo_method(node, "set_navigation_polygon", Variant(REF()));
     undo_redo->commit_action();
 
     _menu_option(MODE_CREATE);
 }
 
-NavigationPolygonEditor::NavigationPolygonEditor(EditorNode *p_editor) :
-        AbstractPolygon2DEditor(p_editor) {
+NavigationPolygonEditor::NavigationPolygonEditor(EditorNode* p_editor) :
+    AbstractPolygon2DEditor(p_editor) {
     node = nullptr;
 }
 
-NavigationPolygonEditorPlugin::NavigationPolygonEditorPlugin(EditorNode *p_node) :
-        AbstractPolygon2DEditorPlugin(p_node, memnew(NavigationPolygonEditor(p_node)), "NavigationPolygonInstance") {
-}
+NavigationPolygonEditorPlugin::NavigationPolygonEditorPlugin(EditorNode* p_node
+) :
+    AbstractPolygon2DEditorPlugin(
+        p_node,
+        memnew(NavigationPolygonEditor(p_node)),
+        "NavigationPolygonInstance"
+    ) {}

@@ -47,14 +47,14 @@ private:
     PoolVector<GLTFNodeIndex> roots;
 
     // The created Skeleton for the scene
-    Skeleton *godot_skeleton = nullptr;
+    Skeleton* godot_skeleton = nullptr;
 
     // Set of unique bone names for the skeleton
     Set<String> unique_names;
 
     Map<int32_t, GLTFNodeIndex> godot_bone_node;
 
-    PoolVector<BoneAttachment *> bone_attachments;
+    PoolVector<BoneAttachment*> bone_attachments;
 
 protected:
     static void _bind_methods();
@@ -66,7 +66,7 @@ public:
     PoolVector<GLTFNodeIndex> get_roots();
     void set_roots(PoolVector<GLTFNodeIndex> p_roots);
 
-    Skeleton *get_godot_skeleton();
+    Skeleton* get_godot_skeleton();
 
     // Skeleton *get_godot_skeleton() {
     // 	return this->godot_skeleton;
@@ -78,23 +78,23 @@ public:
     Array get_unique_names();
     void set_unique_names(Array p_unique_names);
 
-    //Map<int32_t, GLTFNodeIndex> get_godot_bone_node() {
+    // Map<int32_t, GLTFNodeIndex> get_godot_bone_node() {
     //	return this->godot_bone_node;
-    //}
-    //void set_godot_bone_node(Map<int32_t, GLTFNodeIndex> p_godot_bone_node) {
+    // }
+    // void set_godot_bone_node(Map<int32_t, GLTFNodeIndex> p_godot_bone_node) {
     //	this->godot_bone_node = p_godot_bone_node;
-    //}
+    // }
     Dictionary get_godot_bone_node();
     void set_godot_bone_node(Dictionary p_indict);
 
-    //Dictionary get_godot_bone_node() {
+    // Dictionary get_godot_bone_node() {
     //	return VariantConversion::to_dict(this->godot_bone_node);
-    //}
-    //void set_godot_bone_node(Dictionary p_indict) {
+    // }
+    // void set_godot_bone_node(Dictionary p_indict) {
     //	VariantConversion::set_from_dict(this->godot_bone_node, p_indict);
-    //}
+    // }
 
-    BoneAttachment *get_bone_attachment(int idx);
+    BoneAttachment* get_bone_attachment(int idx);
 
     int32_t get_bone_attachment_count();
 };

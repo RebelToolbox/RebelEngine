@@ -40,5 +40,4 @@ void register_mobile_vr_types() {
     ARVRServer::get_singleton()->add_interface(mobile_vr);
 }
 
-void unregister_mobile_vr_types() {
-}
+void unregister_mobile_vr_types() {}

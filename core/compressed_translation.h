@@ -36,12 +36,12 @@
 class PHashTranslation : public Translation {
     GDCLASS(PHashTranslation, Translation);
 
-    //this translation uses a sort of modified perfect hash algorithm
-    //it requires hashing strings twice and then does a binary search,
-    //so it's slower, but at the same time it has an extremely high chance
-    //of catching untranslated strings
+    // this translation uses a sort of modified perfect hash algorithm
+    // it requires hashing strings twice and then does a binary search,
+    // so it's slower, but at the same time it has an extremely high chance
+    // of catching untranslated strings
 
-    //load/store friendly types
+    // load/store friendly types
     PoolVector<int> hash_table;
     PoolVector<int> bucket_table;
     PoolVector<uint8_t> strings;
@@ -60,7 +60,7 @@ class PHashTranslation : public Translation {
         Elem elem[1];
     };
 
-    _FORCE_INLINE_ uint32_t hash(uint32_t d, const char *p_str) const {
+    _FORCE_INLINE_ uint32_t hash(uint32_t d, const char* p_str) const {
         if (d == 0) {
             d = 0x1000193;
         }
@@ -73,14 +73,15 @@ class PHashTranslation : public Translation {
     }
 
 protected:
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
     static void _bind_methods();
 
 public:
-    virtual StringName get_message(const StringName &p_src_text) const; //overridable for other implementations
-    void generate(const Ref<Translation> &p_from);
+    virtual StringName get_message(const StringName& p_src_text
+    ) const; // overridable for other implementations
+    void generate(const Ref<Translation>& p_from);
 
     PHashTranslation();
 };

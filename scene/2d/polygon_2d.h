@@ -67,7 +67,7 @@ class Polygon2D : public Node2D {
     ObjectID current_skeleton_id;
 
     Array _get_bones() const;
-    void _set_bones(const Array &p_bones);
+    void _set_bones(const Array& p_bones);
 
     void _skeleton_bone_setup_changed();
 
@@ -78,39 +78,42 @@ protected:
 public:
 #ifdef TOOLS_ENABLED
     virtual Dictionary _edit_get_state() const;
-    virtual void _edit_set_state(const Dictionary &p_state);
+    virtual void _edit_set_state(const Dictionary& p_state);
 
-    virtual void _edit_set_pivot(const Point2 &p_pivot);
+    virtual void _edit_set_pivot(const Point2& p_pivot);
     virtual Point2 _edit_get_pivot() const;
     virtual bool _edit_use_pivot() const;
     virtual Rect2 _edit_get_rect() const;
     virtual bool _edit_use_rect() const;
 
-    virtual bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const;
+    virtual bool _edit_is_selected_on_click(
+        const Point2& p_point,
+        double p_tolerance
+    ) const;
 #endif
 
-    void set_polygon(const PoolVector<Vector2> &p_polygon);
+    void set_polygon(const PoolVector<Vector2>& p_polygon);
     PoolVector<Vector2> get_polygon() const;
 
     void set_internal_vertex_count(int p_count);
     int get_internal_vertex_count() const;
 
-    void set_uv(const PoolVector<Vector2> &p_uv);
+    void set_uv(const PoolVector<Vector2>& p_uv);
     PoolVector<Vector2> get_uv() const;
 
-    void set_polygons(const Array &p_polygons);
+    void set_polygons(const Array& p_polygons);
     Array get_polygons() const;
 
-    void set_color(const Color &p_color);
+    void set_color(const Color& p_color);
     Color get_color() const;
 
-    void set_vertex_colors(const PoolVector<Color> &p_colors);
+    void set_vertex_colors(const PoolVector<Color>& p_colors);
     PoolVector<Color> get_vertex_colors() const;
 
-    void set_texture(const Ref<Texture> &p_texture);
+    void set_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_texture() const;
 
-    void set_texture_offset(const Vector2 &p_offset);
+    void set_texture_offset(const Vector2& p_offset);
     Vector2 get_texture_offset() const;
 
     void set_texture_rotation(float p_rot);
@@ -119,7 +122,7 @@ public:
     void set_texture_rotation_degrees(float p_rot);
     float get_texture_rotation_degrees() const;
 
-    void set_texture_scale(const Size2 &p_scale);
+    void set_texture_scale(const Size2& p_scale);
     Size2 get_texture_scale() const;
 
     void set_invert(bool p_invert);
@@ -131,19 +134,22 @@ public:
     void set_invert_border(float p_invert_border);
     float get_invert_border() const;
 
-    void set_offset(const Vector2 &p_offset);
+    void set_offset(const Vector2& p_offset);
     Vector2 get_offset() const;
 
-    void add_bone(const NodePath &p_path = NodePath(), const PoolVector<float> &p_weights = PoolVector<float>());
+    void add_bone(
+        const NodePath& p_path = NodePath(),
+        const PoolVector<float>& p_weights = PoolVector<float>()
+    );
     int get_bone_count() const;
     NodePath get_bone_path(int p_index) const;
     PoolVector<float> get_bone_weights(int p_index) const;
     void erase_bone(int p_idx);
     void clear_bones();
-    void set_bone_weights(int p_index, const PoolVector<float> &p_weights);
-    void set_bone_path(int p_index, const NodePath &p_path);
+    void set_bone_weights(int p_index, const PoolVector<float>& p_weights);
+    void set_bone_path(int p_index, const NodePath& p_path);
 
-    void set_skeleton(const NodePath &p_skeleton);
+    void set_skeleton(const NodePath& p_skeleton);
     NodePath get_skeleton() const;
 
     Polygon2D();

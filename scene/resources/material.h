@@ -48,18 +48,25 @@ class Material : public Resource {
     int render_priority;
 
 protected:
-    _FORCE_INLINE_ RID _get_material() const { return material; }
-    static void _bind_methods();
-    virtual bool _can_do_next_pass() const { return false; }
+    _FORCE_INLINE_ RID _get_material() const {
+        return material;
+    }
 
-    void _validate_property(PropertyInfo &property) const;
+    static void _bind_methods();
+
+    virtual bool _can_do_next_pass() const {
+        return false;
+    }
+
+    void _validate_property(PropertyInfo& property) const;
 
 public:
     enum {
         RENDER_PRIORITY_MAX = VS::MATERIAL_RENDER_PRIORITY_MAX,
         RENDER_PRIORITY_MIN = VS::MATERIAL_RENDER_PRIORITY_MIN,
     };
-    void set_next_pass(const Ref<Material> &p_pass);
+
+    void set_next_pass(const Ref<Material>& p_pass);
     Ref<Material> get_next_pass() const;
 
     void set_render_priority(int p_priority);
@@ -77,26 +84,30 @@ class ShaderMaterial : public Material {
     Ref<Shader> shader;
 
 protected:
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
-    bool property_can_revert(const String &p_name);
-    Variant property_get_revert(const String &p_name);
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
+    bool property_can_revert(const String& p_name);
+    Variant property_get_revert(const String& p_name);
 
     static void _bind_methods();
 
-    void get_argument_options(const StringName &p_function, int p_idx, List<String> *r_options) const;
+    void get_argument_options(
+        const StringName& p_function,
+        int p_idx,
+        List<String>* r_options
+    ) const;
 
     virtual bool _can_do_next_pass() const;
 
     void _shader_changed();
 
 public:
-    void set_shader(const Ref<Shader> &p_shader);
+    void set_shader(const Ref<Shader>& p_shader);
     Ref<Shader> get_shader() const;
 
-    void set_shader_param(const StringName &p_param, const Variant &p_value);
-    Variant get_shader_param(const StringName &p_param) const;
+    void set_shader_param(const StringName& p_param, const Variant& p_value);
+    Variant get_shader_param(const StringName& p_param) const;
 
     virtual Shader::Mode get_shader_mode() const;
 
@@ -126,7 +137,6 @@ public:
         TEXTURE_DETAIL_ALBEDO,
         TEXTURE_DETAIL_NORMAL,
         TEXTURE_MAX
-
     };
 
     enum DetailUV {
@@ -162,7 +172,6 @@ public:
         DEPTH_DRAW_ALWAYS,
         DEPTH_DRAW_DISABLED,
         DEPTH_DRAW_ALPHA_OPAQUE_PREPASS
-
     };
 
     enum CullMode {
@@ -262,7 +271,7 @@ private:
 
         uint64_t key;
 
-        bool operator<(const MaterialKey &p_key) const {
+        bool operator<(const MaterialKey& p_key) const {
             return key < p_key.key;
         }
     };
@@ -357,8 +366,8 @@ private:
     };
 
     static Mutex material_mutex;
-    static SelfList<SpatialMaterial>::List *dirty_materials;
-    static ShaderNames *shader_names;
+    static SelfList<SpatialMaterial>::List* dirty_materials;
+    static ShaderNames* shader_names;
 
     SelfList<SpatialMaterial> element;
 
@@ -437,21 +446,30 @@ private:
 
     bool force_vertex_shading = false;
 
-    _FORCE_INLINE_ void _validate_feature(const String &text, Feature feature, PropertyInfo &property) const;
+    _FORCE_INLINE_ void _validate_feature(
+        const String& text,
+        Feature feature,
+        PropertyInfo& property
+    ) const;
 
     static const int MAX_MATERIALS_FOR_2D = 128;
 
-    static Ref<SpatialMaterial> materials_for_2d[MAX_MATERIALS_FOR_2D]; //used by Sprite3D and other stuff
+    static Ref<SpatialMaterial>
+        materials_for_2d[MAX_MATERIALS_FOR_2D]; // used by Sprite3D and other
+                                                // stuff
 
-    void _validate_high_end(const String &text, PropertyInfo &property) const;
+    void _validate_high_end(const String& text, PropertyInfo& property) const;
 
 protected:
     static void _bind_methods();
-    void _validate_property(PropertyInfo &property) const;
-    virtual bool _can_do_next_pass() const { return true; }
+    void _validate_property(PropertyInfo& property) const;
+
+    virtual bool _can_do_next_pass() const {
+        return true;
+    }
 
 public:
-    void set_albedo(const Color &p_albedo);
+    void set_albedo(const Color& p_albedo);
     Color get_albedo() const;
 
     void set_specular(float p_specular);
@@ -463,7 +481,7 @@ public:
     void set_roughness(float p_roughness);
     float get_roughness() const;
 
-    void set_emission(const Color &p_emission);
+    void set_emission(const Color& p_emission);
     Color get_emission() const;
 
     void set_emission_energy(float p_emission_energy);
@@ -508,10 +526,12 @@ public:
     void set_depth_deep_parallax_flip_binormal(bool p_flip);
     bool get_depth_deep_parallax_flip_binormal() const;
 
-    void set_subsurface_scattering_strength(float p_subsurface_scattering_strength);
+    void set_subsurface_scattering_strength(
+        float p_subsurface_scattering_strength
+    );
     float get_subsurface_scattering_strength() const;
 
-    void set_transmission(const Color &p_transmission);
+    void set_transmission(const Color& p_transmission);
     Color get_transmission() const;
 
     void set_refraction(float p_refraction);
@@ -547,7 +567,7 @@ public:
     void set_flag(Flags p_flag, bool p_enabled);
     bool get_flag(Flags p_flag) const;
 
-    void set_texture(TextureParam p_param, const Ref<Texture> &p_texture);
+    void set_texture(TextureParam p_param, const Ref<Texture>& p_texture);
     Ref<Texture> get_texture(TextureParam p_param) const;
     // Used only for shader material conversion
     Ref<Texture> get_texture_by_name(StringName p_name) const;
@@ -555,19 +575,19 @@ public:
     void set_feature(Feature p_feature, bool p_enabled);
     bool get_feature(Feature p_feature) const;
 
-    void set_uv1_scale(const Vector3 &p_scale);
+    void set_uv1_scale(const Vector3& p_scale);
     Vector3 get_uv1_scale() const;
 
-    void set_uv1_offset(const Vector3 &p_offset);
+    void set_uv1_offset(const Vector3& p_offset);
     Vector3 get_uv1_offset() const;
 
     void set_uv1_triplanar_blend_sharpness(float p_sharpness);
     float get_uv1_triplanar_blend_sharpness() const;
 
-    void set_uv2_scale(const Vector3 &p_scale);
+    void set_uv2_scale(const Vector3& p_scale);
     Vector3 get_uv2_scale() const;
 
-    void set_uv2_offset(const Vector3 &p_offset);
+    void set_uv2_offset(const Vector3& p_offset);
     Vector3 get_uv2_offset() const;
 
     void set_uv2_triplanar_blend_sharpness(float p_sharpness);
@@ -626,7 +646,15 @@ public:
     static void finish_shaders();
     static void flush_changes();
 
-    static RID get_material_rid_for_2d(bool p_shaded, bool p_transparent, bool p_double_sided, bool p_cut_alpha, bool p_opaque_prepass, bool p_billboard = false, bool p_billboard_y = false);
+    static RID get_material_rid_for_2d(
+        bool p_shaded,
+        bool p_transparent,
+        bool p_double_sided,
+        bool p_cut_alpha,
+        bool p_opaque_prepass,
+        bool p_billboard = false,
+        bool p_billboard_y = false
+    );
 
     RID get_shader_rid() const;
 

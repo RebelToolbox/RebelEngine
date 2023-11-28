@@ -38,15 +38,13 @@ class CPUParticlesEditor : public ParticlesEditorBase {
     GDCLASS(CPUParticlesEditor, ParticlesEditorBase);
 
     enum Menu {
-
         MENU_OPTION_CREATE_EMISSION_VOLUME_FROM_NODE,
         MENU_OPTION_CREATE_EMISSION_VOLUME_FROM_MESH,
         MENU_OPTION_CLEAR_EMISSION_VOLUME,
         MENU_OPTION_RESTART
-
     };
 
-    CPUParticles *node;
+    CPUParticles* node;
 
     void _menu_option(int);
 
@@ -56,28 +54,34 @@ class CPUParticlesEditor : public ParticlesEditorBase {
 
 protected:
     void _notification(int p_notification);
-    void _node_removed(Node *p_node);
+    void _node_removed(Node* p_node);
     static void _bind_methods();
 
 public:
-    void edit(CPUParticles *p_particles);
+    void edit(CPUParticles* p_particles);
     CPUParticlesEditor();
 };
 
 class CPUParticlesEditorPlugin : public EditorPlugin {
     GDCLASS(CPUParticlesEditorPlugin, EditorPlugin);
 
-    CPUParticlesEditor *particles_editor;
-    EditorNode *editor;
+    CPUParticlesEditor* particles_editor;
+    EditorNode* editor;
 
 public:
-    virtual String get_name() const { return "CPUParticles"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual String get_name() const {
+        return "CPUParticles";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
 
-    CPUParticlesEditorPlugin(EditorNode *p_node);
+    CPUParticlesEditorPlugin(EditorNode* p_node);
     ~CPUParticlesEditorPlugin();
 };
 

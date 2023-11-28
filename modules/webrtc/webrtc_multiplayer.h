@@ -73,7 +73,7 @@ private:
 
     Map<int, Ref<ConnectedPeer>> peer_map;
 
-    void _peer_to_dict(Ref<ConnectedPeer> p_connected_peer, Dictionary &r_dict);
+    void _peer_to_dict(Ref<ConnectedPeer> p_connected_peer, Dictionary& r_dict);
     void _find_next_peer();
 
 public:
@@ -81,7 +81,11 @@ public:
     ~WebRTCMultiplayer();
 
     Error initialize(int p_self_id, bool p_server_compat = false);
-    Error add_peer(Ref<WebRTCPeerConnection> p_peer, int p_peer_id, int p_unreliable_lifetime = 1);
+    Error add_peer(
+        Ref<WebRTCPeerConnection> p_peer,
+        int p_peer_id,
+        int p_unreliable_lifetime = 1
+    );
     void remove_peer(int p_peer_id);
     bool has_peer(int p_peer_id);
     Dictionary get_peer(int p_peer_id);
@@ -89,8 +93,11 @@ public:
     void close();
 
     // PacketPeer
-    Error get_packet(const uint8_t **r_buffer, int &r_buffer_size); ///< buffer is GONE after next get_packet
-    Error put_packet(const uint8_t *p_buffer, int p_buffer_size);
+    Error get_packet(
+        const uint8_t** r_buffer,
+        int& r_buffer_size
+    ); ///< buffer is GONE after next get_packet
+    Error put_packet(const uint8_t* p_buffer, int p_buffer_size);
     int get_available_packet_count() const;
     int get_max_packet_size() const;
 

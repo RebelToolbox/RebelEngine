@@ -47,7 +47,7 @@
 #define JOIN_SYMBOLS(p_path, name) ((p_path) + SYMBOL_SEPERATOR + (name))
 #endif
 
-typedef HashMap<String, const lsp::DocumentSymbol *> ClassMembers;
+typedef HashMap<String, const lsp::DocumentSymbol*> ClassMembers;
 
 class ExtendGDScriptParser : public GDScriptParser {
     String path;
@@ -62,41 +62,83 @@ class ExtendGDScriptParser : public GDScriptParser {
     void update_diagnostics();
 
     void update_symbols();
-    void update_document_links(const String &p_code);
-    void parse_class_symbol(const GDScriptParser::ClassNode *p_class, lsp::DocumentSymbol &r_symbol);
-    void parse_function_symbol(const GDScriptParser::FunctionNode *p_func, lsp::DocumentSymbol &r_symbol);
+    void update_document_links(const String& p_code);
+    void parse_class_symbol(
+        const GDScriptParser::ClassNode* p_class,
+        lsp::DocumentSymbol& r_symbol
+    );
+    void parse_function_symbol(
+        const GDScriptParser::FunctionNode* p_func,
+        lsp::DocumentSymbol& r_symbol
+    );
 
-    Dictionary dump_function_api(const GDScriptParser::FunctionNode *p_func) const;
-    Dictionary dump_class_api(const GDScriptParser::ClassNode *p_class) const;
+    Dictionary dump_function_api(const GDScriptParser::FunctionNode* p_func
+    ) const;
+    Dictionary dump_class_api(const GDScriptParser::ClassNode* p_class) const;
 
     String parse_documentation(int p_line, bool p_docs_down = false);
-    const lsp::DocumentSymbol *search_symbol_defined_at_line(int p_line, const lsp::DocumentSymbol &p_parent) const;
+    const lsp::DocumentSymbol* search_symbol_defined_at_line(
+        int p_line,
+        const lsp::DocumentSymbol& p_parent
+    ) const;
 
     Array member_completions;
 
 public:
-    _FORCE_INLINE_ const String &get_path() const { return path; }
-    _FORCE_INLINE_ const Vector<String> &get_lines() const { return lines; }
-    _FORCE_INLINE_ const lsp::DocumentSymbol &get_symbols() const { return class_symbol; }
-    _FORCE_INLINE_ const Vector<lsp::Diagnostic> &get_diagnostics() const { return diagnostics; }
-    _FORCE_INLINE_ const ClassMembers &get_members() const { return members; }
-    _FORCE_INLINE_ const HashMap<String, ClassMembers> &get_inner_classes() const { return inner_classes; }
+    _FORCE_INLINE_ const String& get_path() const {
+        return path;
+    }
 
-    Error get_left_function_call(const lsp::Position &p_position, lsp::Position &r_func_pos, int &r_arg_index) const;
+    _FORCE_INLINE_ const Vector<String>& get_lines() const {
+        return lines;
+    }
 
-    String get_text_for_completion(const lsp::Position &p_cursor) const;
-    String get_text_for_lookup_symbol(const lsp::Position &p_cursor, const String &p_symbol = "", bool p_func_required = false) const;
-    String get_identifier_under_position(const lsp::Position &p_position, Vector2i &p_offset) const;
+    _FORCE_INLINE_ const lsp::DocumentSymbol& get_symbols() const {
+        return class_symbol;
+    }
+
+    _FORCE_INLINE_ const Vector<lsp::Diagnostic>& get_diagnostics() const {
+        return diagnostics;
+    }
+
+    _FORCE_INLINE_ const ClassMembers& get_members() const {
+        return members;
+    }
+
+    _FORCE_INLINE_ const HashMap<String, ClassMembers>& get_inner_classes(
+    ) const {
+        return inner_classes;
+    }
+
+    Error get_left_function_call(
+        const lsp::Position& p_position,
+        lsp::Position& r_func_pos,
+        int& r_arg_index
+    ) const;
+
+    String get_text_for_completion(const lsp::Position& p_cursor) const;
+    String get_text_for_lookup_symbol(
+        const lsp::Position& p_cursor,
+        const String& p_symbol = "",
+        bool p_func_required = false
+    ) const;
+    String get_identifier_under_position(
+        const lsp::Position& p_position,
+        Vector2i& p_offset
+    ) const;
     String get_uri() const;
 
-    const lsp::DocumentSymbol *get_symbol_defined_at_line(int p_line) const;
-    const lsp::DocumentSymbol *get_member_symbol(const String &p_name, const String &p_subclass = "") const;
-    const List<lsp::DocumentLink> &get_document_links() const;
+    const lsp::DocumentSymbol* get_symbol_defined_at_line(int p_line) const;
+    const lsp::DocumentSymbol* get_member_symbol(
+        const String& p_name,
+        const String& p_subclass = ""
+    ) const;
+    const List<lsp::DocumentLink>& get_document_links() const;
 
-    const Array &get_member_completions();
+    const Array& get_member_completions();
     Dictionary generate_api() const;
 
-    Error parse(const String &p_code, const String &p_path);
+    Error parse(const String& p_code, const String& p_path);
 };
 
 #endif

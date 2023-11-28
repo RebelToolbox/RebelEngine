@@ -43,11 +43,11 @@ class InterpolatedCamera : public Camera {
 protected:
     void _notification(int p_what);
     static void _bind_methods();
-    void _set_target(const Object *p_target);
+    void _set_target(const Object* p_target);
 
 public:
-    void set_target(const Spatial *p_target);
-    void set_target_path(const NodePath &p_path);
+    void set_target(const Spatial* p_target);
+    void set_target_path(const NodePath& p_path);
     NodePath get_target_path() const;
 
     void set_speed(real_t p_speed);

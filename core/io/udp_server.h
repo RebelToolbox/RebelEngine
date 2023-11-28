@@ -43,14 +43,15 @@ protected:
     };
 
     struct Peer {
-        PacketPeerUDP *peer;
+        PacketPeerUDP* peer;
         IP_Address ip;
         uint16_t port = 0;
 
-        bool operator==(const Peer &p_other) const {
+        bool operator==(const Peer& p_other) const {
             return (ip == p_other.ip && port == p_other.port);
         }
     };
+
     uint8_t recv_buffer[PACKET_BUFFER_SIZE];
 
     int bind_port = 0;
@@ -66,7 +67,10 @@ protected:
 
 public:
     void remove_peer(IP_Address p_ip, int p_port);
-    Error listen(uint16_t p_port, const IP_Address &p_bind_address = IP_Address("*"));
+    Error listen(
+        uint16_t p_port,
+        const IP_Address& p_bind_address = IP_Address("*")
+    );
     Error poll();
     bool is_listening() const;
     bool is_connection_available() const;

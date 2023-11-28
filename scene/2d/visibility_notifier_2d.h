@@ -34,20 +34,22 @@
 #include "scene/2d/node_2d.h"
 
 class Viewport;
+
 class VisibilityNotifier2D : public Node2D {
     GDCLASS(VisibilityNotifier2D, Node2D);
 
-    Set<Viewport *> viewports;
+    Set<Viewport*> viewports;
 
     Rect2 rect;
 
 protected:
     friend struct SpatialIndexer2D;
 
-    void _enter_viewport(Viewport *p_viewport);
-    void _exit_viewport(Viewport *p_viewport);
+    void _enter_viewport(Viewport* p_viewport);
+    void _exit_viewport(Viewport* p_viewport);
 
     virtual void _screen_enter() {}
+
     virtual void _screen_exit() {}
 
     void _notification(int p_what);
@@ -59,7 +61,7 @@ public:
     virtual bool _edit_use_rect() const;
 #endif
 
-    void set_rect(const Rect2 &p_rect);
+    void set_rect(const Rect2& p_rect);
     Rect2 get_rect() const;
 
     bool is_on_screen() const;
@@ -87,13 +89,13 @@ protected:
 
     bool visible;
 
-    void _find_nodes(Node *p_node);
+    void _find_nodes(Node* p_node);
 
-    Map<Node *, Variant> nodes;
-    void _node_removed(Node *p_node);
+    Map<Node*, Variant> nodes;
+    void _node_removed(Node* p_node);
     bool enabler[ENABLER_MAX];
 
-    void _change_node_state(Node *p_node, bool p_enabled);
+    void _change_node_state(Node* p_node, bool p_enabled);
 
     void _notification(int p_what);
     static void _bind_methods();

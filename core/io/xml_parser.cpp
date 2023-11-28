@@ -32,7 +32,7 @@
 
 #include "core/print_string.h"
 
-//#define DEBUG_XML
+// #define DEBUG_XML
 
 VARIANT_ENUM_CAST(XMLParser::NodeType);
 
@@ -41,11 +41,11 @@ static inline bool _is_white_space(char c) {
 }
 
 //! sets the state that text was found. Returns true if set should be set
-bool XMLParser::_set_text(char *start, char *end) {
+bool XMLParser::_set_text(char* start, char* end) {
     // check if text is more than 2 characters, and if not, check if there is
     // only white space, so that this text won't be reported
     if (end - start < 3) {
-        char *p = start;
+        char* p = start;
         for (; p != end; ++p) {
             if (!_is_white_space(*p)) {
                 break;
@@ -73,7 +73,7 @@ void XMLParser::_parse_closing_xml_element() {
     attributes.clear();
 
     ++P;
-    const char *pBeginClose = P;
+    const char* pBeginClose = P;
 
     while (*P && *P != '>') {
         ++P;
@@ -92,7 +92,7 @@ void XMLParser::_parse_closing_xml_element() {
 void XMLParser::_ignore_definition() {
     node_type = NODE_UNKNOWN;
 
-    char *F = P;
+    char* F = P;
     // move until end marked with '>' reached
     while (*P && *P != '>') {
         ++P;
@@ -123,14 +123,12 @@ bool XMLParser::_parse_cdata() {
         return true;
     }
 
-    char *cDataBegin = P;
-    char *cDataEnd = nullptr;
+    char* cDataBegin = P;
+    char* cDataEnd = nullptr;
 
     // find end of CDATA
     while (*P && !cDataEnd) {
-        if (*P == '>' &&
-                (*(P - 1) == ']') &&
-                (*(P - 2) == ']')) {
+        if (*P == '>' && (*(P - 1) == ']') && (*(P - 2) == ']')) {
             cDataEnd = P - 2;
         }
 
@@ -152,15 +150,17 @@ void XMLParser::_parse_comment() {
     node_type = NODE_COMMENT;
     P += 1;
 
-    char *pEndOfInput = data + length;
-    char *pCommentBegin;
-    char *pCommentEnd;
+    char* pEndOfInput = data + length;
+    char* pCommentBegin;
+    char* pCommentEnd;
 
     if (P + 1 < pEndOfInput && P[0] == '-' && P[1] == '-') {
         // Comment, use '-->' as end.
         pCommentBegin = P + 2;
-        for (pCommentEnd = pCommentBegin; pCommentEnd + 2 < pEndOfInput; pCommentEnd++) {
-            if (pCommentEnd[0] == '-' && pCommentEnd[1] == '-' && pCommentEnd[2] == '>') {
+        for (pCommentEnd = pCommentBegin; pCommentEnd + 2 < pEndOfInput;
+             pCommentEnd++) {
+            if (pCommentEnd[0] == '-' && pCommentEnd[1] == '-'
+                && pCommentEnd[2] == '>') {
                 break;
             }
         }
@@ -202,14 +202,14 @@ void XMLParser::_parse_opening_xml_element() {
     attributes.clear();
 
     // find name
-    const char *startName = P;
+    const char* startName = P;
 
     // find end of element
     while (*P && *P != '>' && !_is_white_space(*P)) {
         ++P;
     }
 
-    const char *endName = P;
+    const char* endName = P;
 
     // find attributes
     while (*P && *P != '>') {
@@ -220,7 +220,7 @@ void XMLParser::_parse_opening_xml_element() {
                 // we've got an attribute
 
                 // read the attribute names
-                const char *attributeNameBegin = P;
+                const char* attributeNameBegin = P;
 
                 while (*P && !_is_white_space(*P) && *P != '=') {
                     ++P;
@@ -230,7 +230,7 @@ void XMLParser::_parse_opening_xml_element() {
                     break;
                 }
 
-                const char *attributeNameEnd = P;
+                const char* attributeNameEnd = P;
                 ++P;
 
                 // read the attribute value
@@ -246,23 +246,27 @@ void XMLParser::_parse_opening_xml_element() {
                 const char attributeQuoteChar = *P;
 
                 ++P;
-                const char *attributeValueBegin = P;
+                const char* attributeValueBegin = P;
 
                 while (*P != attributeQuoteChar && *P) {
                     ++P;
                 }
 
-                const char *attributeValueEnd = P;
+                const char* attributeValueEnd = P;
                 if (*P) {
                     ++P;
                 }
 
                 Attribute attr;
-                attr.name = String::utf8(attributeNameBegin,
-                        (int)(attributeNameEnd - attributeNameBegin));
+                attr.name = String::utf8(
+                    attributeNameBegin,
+                    (int)(attributeNameEnd - attributeNameBegin)
+                );
 
-                String s = String::utf8(attributeValueBegin,
-                        (int)(attributeValueEnd - attributeValueBegin));
+                String s = String::utf8(
+                    attributeValueBegin,
+                    (int)(attributeValueEnd - attributeValueBegin)
+                );
 
                 attr.value = s.xml_unescape();
                 attributes.push_back(attr);
@@ -293,7 +297,7 @@ void XMLParser::_parse_opening_xml_element() {
 }
 
 void XMLParser::_parse_current_node() {
-    char *start = P;
+    char* start = P;
     node_offset = P - data;
 
     // more forward until '<' found
@@ -351,19 +355,47 @@ void XMLParser::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_node_type"), &XMLParser::get_node_type);
     ClassDB::bind_method(D_METHOD("get_node_name"), &XMLParser::get_node_name);
     ClassDB::bind_method(D_METHOD("get_node_data"), &XMLParser::get_node_data);
-    ClassDB::bind_method(D_METHOD("get_node_offset"), &XMLParser::get_node_offset);
-    ClassDB::bind_method(D_METHOD("get_attribute_count"), &XMLParser::get_attribute_count);
-    ClassDB::bind_method(D_METHOD("get_attribute_name", "idx"), &XMLParser::get_attribute_name);
-    ClassDB::bind_method(D_METHOD("get_attribute_value", "idx"), (String(XMLParser::*)(int) const) & XMLParser::get_attribute_value);
-    ClassDB::bind_method(D_METHOD("has_attribute", "name"), &XMLParser::has_attribute);
-    ClassDB::bind_method(D_METHOD("get_named_attribute_value", "name"), (String(XMLParser::*)(const String &) const) & XMLParser::get_attribute_value);
-    ClassDB::bind_method(D_METHOD("get_named_attribute_value_safe", "name"), &XMLParser::get_attribute_value_safe);
+    ClassDB::bind_method(
+        D_METHOD("get_node_offset"),
+        &XMLParser::get_node_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_attribute_count"),
+        &XMLParser::get_attribute_count
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_attribute_name", "idx"),
+        &XMLParser::get_attribute_name
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_attribute_value", "idx"),
+        (String(XMLParser::*)(int) const) & XMLParser::get_attribute_value
+    );
+    ClassDB::bind_method(
+        D_METHOD("has_attribute", "name"),
+        &XMLParser::has_attribute
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_named_attribute_value", "name"),
+        (String(XMLParser::*)(const String&) const)
+            & XMLParser::get_attribute_value
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_named_attribute_value_safe", "name"),
+        &XMLParser::get_attribute_value_safe
+    );
     ClassDB::bind_method(D_METHOD("is_empty"), &XMLParser::is_empty);
-    ClassDB::bind_method(D_METHOD("get_current_line"), &XMLParser::get_current_line);
+    ClassDB::bind_method(
+        D_METHOD("get_current_line"),
+        &XMLParser::get_current_line
+    );
     ClassDB::bind_method(D_METHOD("skip_section"), &XMLParser::skip_section);
     ClassDB::bind_method(D_METHOD("seek", "position"), &XMLParser::seek);
     ClassDB::bind_method(D_METHOD("open", "file"), &XMLParser::open);
-    ClassDB::bind_method(D_METHOD("open_buffer", "buffer"), &XMLParser::open_buffer);
+    ClassDB::bind_method(
+        D_METHOD("open_buffer", "buffer"),
+        &XMLParser::open_buffer
+    );
 
     BIND_ENUM_CONSTANT(NODE_NONE);
     BIND_ENUM_CONSTANT(NODE_ELEMENT);
@@ -387,6 +419,7 @@ Error XMLParser::read() {
 XMLParser::NodeType XMLParser::get_node_type() {
     return node_type;
 }
+
 String XMLParser::get_node_data() const {
     ERR_FAIL_COND_V(node_type != NODE_TEXT, "");
     return node_name;
@@ -396,18 +429,22 @@ String XMLParser::get_node_name() const {
     ERR_FAIL_COND_V(node_type == NODE_TEXT, "");
     return node_name;
 }
+
 int XMLParser::get_attribute_count() const {
     return attributes.size();
 }
+
 String XMLParser::get_attribute_name(int p_idx) const {
     ERR_FAIL_INDEX_V(p_idx, attributes.size(), "");
     return attributes[p_idx].name;
 }
+
 String XMLParser::get_attribute_value(int p_idx) const {
     ERR_FAIL_INDEX_V(p_idx, attributes.size(), "");
     return attributes[p_idx].value;
 }
-bool XMLParser::has_attribute(const String &p_name) const {
+
+bool XMLParser::has_attribute(const String& p_name) const {
     for (int i = 0; i < attributes.size(); i++) {
         if (attributes[i].name == p_name) {
             return true;
@@ -416,7 +453,8 @@ bool XMLParser::has_attribute(const String &p_name) const {
 
     return false;
 }
-String XMLParser::get_attribute_value(const String &p_name) const {
+
+String XMLParser::get_attribute_value(const String& p_name) const {
     int idx = -1;
     for (int i = 0; i < attributes.size(); i++) {
         if (attributes[i].name == p_name) {
@@ -430,7 +468,7 @@ String XMLParser::get_attribute_value(const String &p_name) const {
     return attributes[idx].value;
 }
 
-String XMLParser::get_attribute_value_safe(const String &p_name) const {
+String XMLParser::get_attribute_value_safe(const String& p_name) const {
     int idx = -1;
     for (int i = 0; i < attributes.size(); i++) {
         if (attributes[i].name == p_name) {
@@ -444,11 +482,12 @@ String XMLParser::get_attribute_value_safe(const String &p_name) const {
     }
     return attributes[idx].value;
 }
+
 bool XMLParser::is_empty() const {
     return node_empty;
 }
 
-Error XMLParser::open_buffer(const Vector<uint8_t> &p_buffer) {
+Error XMLParser::open_buffer(const Vector<uint8_t>& p_buffer) {
     ERR_FAIL_COND_V(p_buffer.size() == 0, ERR_INVALID_DATA);
 
     if (data) {
@@ -463,9 +502,9 @@ Error XMLParser::open_buffer(const Vector<uint8_t> &p_buffer) {
     return OK;
 }
 
-Error XMLParser::open(const String &p_path) {
+Error XMLParser::open(const String& p_path) {
     Error err;
-    FileAccess *file = FileAccess::open(p_path, FileAccess::READ, &err);
+    FileAccess* file = FileAccess::open(p_path, FileAccess::READ, &err);
 
     ERR_FAIL_COND_V_MSG(err != OK, err, "Cannot open file '" + p_path + "'.");
 
@@ -477,7 +516,7 @@ Error XMLParser::open(const String &p_path) {
     }
 
     data = memnew_arr(char, length + 1);
-    file->get_buffer((uint8_t *)data, length);
+    file->get_buffer((uint8_t*)data, length);
     data[length] = 0;
     P = data;
 
@@ -496,8 +535,7 @@ void XMLParser::skip_section() {
     int tagcount = 1;
 
     while (tagcount && read() == OK) {
-        if (get_node_type() == XMLParser::NODE_ELEMENT &&
-                !is_empty()) {
+        if (get_node_type() == XMLParser::NODE_ELEMENT && !is_empty()) {
             ++tagcount;
         } else if (get_node_type() == XMLParser::NODE_ELEMENT_END) {
             --tagcount;
@@ -521,8 +559,7 @@ int XMLParser::get_current_line() const {
     return 0;
 }
 
-XMLParser::XMLParser() {
-}
+XMLParser::XMLParser() {}
 
 XMLParser::~XMLParser() {
     if (data) {

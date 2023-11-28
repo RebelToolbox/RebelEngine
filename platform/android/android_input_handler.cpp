@@ -34,7 +34,7 @@
 
 #include "core/os/os.h"
 
-void AndroidInputHandler::process_joy_event(const JoypadEvent &p_event) {
+void AndroidInputHandler::process_joy_event(const JoypadEvent& p_event) {
     switch (p_event.type) {
         case JOY_EVENT_BUTTON:
             input->joy_button(p_event.device, p_event.index, p_event.pressed);
@@ -53,18 +53,25 @@ void AndroidInputHandler::process_joy_event(const JoypadEvent &p_event) {
     }
 }
 
-void AndroidInputHandler::_set_key_modifier_state(Ref<InputEventWithModifiers> ev) const {
+void AndroidInputHandler::_set_key_modifier_state(
+    Ref<InputEventWithModifiers> ev
+) const {
     ev->set_shift(shift_mem);
     ev->set_alt(alt_mem);
     ev->set_metakey(meta_mem);
     ev->set_control(control_mem);
 }
 
-void AndroidInputHandler::process_event(Ref<InputEvent> &p_event) {
+void AndroidInputHandler::process_event(Ref<InputEvent>& p_event) {
     input->parse_input_event(p_event);
 }
 
-void AndroidInputHandler::process_key_event(int p_keycode, int p_scancode, int p_unicode_char, bool p_pressed) {
+void AndroidInputHandler::process_key_event(
+    int p_keycode,
+    int p_scancode,
+    int p_unicode_char,
+    bool p_pressed
+) {
     Ref<InputEventKey> ev;
     ev.instance();
     int val = p_unicode_char;
@@ -103,19 +110,26 @@ void AndroidInputHandler::process_key_event(int p_keycode, int p_scancode, int p
         ev->set_scancode(KEY_ENTER);
         ev->set_unicode(KEY_ENTER);
     } else if (p_scancode == 4) {
-        if (MainLoop *main_loop = OS::get_singleton()->get_main_loop()) {
-            main_loop->call_deferred("notification", MainLoop::NOTIFICATION_WM_GO_BACK_REQUEST);
+        if (MainLoop* main_loop = OS::get_singleton()->get_main_loop()) {
+            main_loop->call_deferred(
+                "notification",
+                MainLoop::NOTIFICATION_WM_GO_BACK_REQUEST
+            );
         }
     }
 
     input->parse_input_event(ev);
 }
 
-void AndroidInputHandler::process_touch(int p_event, int p_pointer, const Vector<TouchPos> &p_points) {
+void AndroidInputHandler::process_touch(
+    int p_event,
+    int p_pointer,
+    const Vector<TouchPos>& p_points
+) {
     switch (p_event) {
-        case AMOTION_EVENT_ACTION_DOWN: { //gesture begin
+        case AMOTION_EVENT_ACTION_DOWN: { // gesture begin
             if (touch.size()) {
-                //end all if exist
+                // end all if exist
                 for (int i = 0; i < touch.size(); i++) {
                     Ref<InputEventScreenTouch> ev;
                     ev.instance();
@@ -132,7 +146,7 @@ void AndroidInputHandler::process_touch(int p_event, int p_pointer, const Vector
                 touch.write[i].pos = p_points[i].pos;
             }
 
-            //send touch
+            // send touch
             for (int i = 0; i < touch.size(); i++) {
                 Ref<InputEventScreenTouch> ev;
                 ev.instance();
@@ -143,7 +157,7 @@ void AndroidInputHandler::process_touch(int p_event, int p_pointer, const Vector
             }
 
         } break;
-        case AMOTION_EVENT_ACTION_MOVE: { //motion
+        case AMOTION_EVENT_ACTION_MOVE: { // motion
             ERR_FAIL_COND(touch.size() != p_points.size());
 
             for (int i = 0; i < touch.size(); i++) {
@@ -157,8 +171,9 @@ void AndroidInputHandler::process_touch(int p_event, int p_pointer, const Vector
 
                 ERR_CONTINUE(idx == -1);
 
-                if (touch[i].pos == p_points[idx].pos)
-                    continue; //no move unncesearily
+                if (touch[i].pos == p_points[idx].pos) {
+                    continue; // no move unncesearily
+                }
 
                 Ref<InputEventScreenDrag> ev;
                 ev.instance();
@@ -171,9 +186,9 @@ void AndroidInputHandler::process_touch(int p_event, int p_pointer, const Vector
 
         } break;
         case AMOTION_EVENT_ACTION_CANCEL:
-        case AMOTION_EVENT_ACTION_UP: { //release
+        case AMOTION_EVENT_ACTION_UP: { // release
             if (touch.size()) {
-                //end all if exist
+                // end all if exist
                 for (int i = 0; i < touch.size(); i++) {
                     Ref<InputEventScreenTouch> ev;
                     ev.instance();
@@ -224,8 +239,8 @@ void AndroidInputHandler::process_touch(int p_event, int p_pointer, const Vector
 void AndroidInputHandler::process_hover(int p_type, Point2 p_pos) {
     // https://developer.android.com/reference/android/view/MotionEvent.html#ACTION_HOVER_ENTER
     switch (p_type) {
-        case AMOTION_EVENT_ACTION_HOVER_MOVE: // hover move
-        case AMOTION_EVENT_ACTION_HOVER_ENTER: // hover enter
+        case AMOTION_EVENT_ACTION_HOVER_MOVE:   // hover move
+        case AMOTION_EVENT_ACTION_HOVER_ENTER:  // hover enter
         case AMOTION_EVENT_ACTION_HOVER_EXIT: { // hover exit
             Ref<InputEventMouseMotion> ev;
             ev.instance();
@@ -239,8 +254,15 @@ void AndroidInputHandler::process_hover(int p_type, Point2 p_pos) {
     }
 }
 
-void AndroidInputHandler::process_mouse_event(int event_action, int event_android_buttons_mask, Point2 event_pos, float event_vertical_factor, float event_horizontal_factor) {
-    int event_buttons_mask = _android_button_mask_to_godot_button_mask(event_android_buttons_mask);
+void AndroidInputHandler::process_mouse_event(
+    int event_action,
+    int event_android_buttons_mask,
+    Point2 event_pos,
+    float event_vertical_factor,
+    float event_horizontal_factor
+) {
+    int event_buttons_mask =
+        _android_button_mask_to_godot_button_mask(event_android_buttons_mask);
     switch (event_action) {
         case AMOTION_EVENT_ACTION_BUTTON_PRESS:
         case AMOTION_EVENT_ACTION_BUTTON_RELEASE: {
@@ -279,21 +301,46 @@ void AndroidInputHandler::process_mouse_event(int event_action, int event_androi
             ev->set_pressed(true);
             buttons_state = event_buttons_mask;
             if (event_vertical_factor > 0) {
-                _wheel_button_click(event_buttons_mask, ev, BUTTON_WHEEL_UP, event_vertical_factor);
+                _wheel_button_click(
+                    event_buttons_mask,
+                    ev,
+                    BUTTON_WHEEL_UP,
+                    event_vertical_factor
+                );
             } else if (event_vertical_factor < 0) {
-                _wheel_button_click(event_buttons_mask, ev, BUTTON_WHEEL_DOWN, -event_vertical_factor);
+                _wheel_button_click(
+                    event_buttons_mask,
+                    ev,
+                    BUTTON_WHEEL_DOWN,
+                    -event_vertical_factor
+                );
             }
 
             if (event_horizontal_factor > 0) {
-                _wheel_button_click(event_buttons_mask, ev, BUTTON_WHEEL_RIGHT, event_horizontal_factor);
+                _wheel_button_click(
+                    event_buttons_mask,
+                    ev,
+                    BUTTON_WHEEL_RIGHT,
+                    event_horizontal_factor
+                );
             } else if (event_horizontal_factor < 0) {
-                _wheel_button_click(event_buttons_mask, ev, BUTTON_WHEEL_LEFT, -event_horizontal_factor);
+                _wheel_button_click(
+                    event_buttons_mask,
+                    ev,
+                    BUTTON_WHEEL_LEFT,
+                    -event_horizontal_factor
+                );
             }
         } break;
     }
 }
 
-void AndroidInputHandler::_wheel_button_click(int event_buttons_mask, const Ref<InputEventMouseButton> &ev, int wheel_button, float factor) {
+void AndroidInputHandler::_wheel_button_click(
+    int event_buttons_mask,
+    const Ref<InputEventMouseButton>& ev,
+    int wheel_button,
+    float factor
+) {
     Ref<InputEventMouseButton> evd = ev->duplicate();
     evd->set_button_index(wheel_button);
     evd->set_button_mask(event_buttons_mask ^ (1 << (wheel_button - 1)));
@@ -305,8 +352,12 @@ void AndroidInputHandler::_wheel_button_click(int event_buttons_mask, const Ref<
     input->parse_input_event(evdd);
 }
 
-void AndroidInputHandler::process_double_tap(int event_android_button_mask, Point2 p_pos) {
-    int event_button_mask = _android_button_mask_to_godot_button_mask(event_android_button_mask);
+void AndroidInputHandler::process_double_tap(
+    int event_android_button_mask,
+    Point2 p_pos
+) {
+    int event_button_mask =
+        _android_button_mask_to_godot_button_mask(event_android_button_mask);
     Ref<InputEventMouseButton> ev;
     ev.instance();
     _set_key_modifier_state(ev);
@@ -346,7 +397,9 @@ int AndroidInputHandler::_button_index_from_mask(int button_mask) {
     }
 }
 
-int AndroidInputHandler::_android_button_mask_to_godot_button_mask(int android_button_mask) {
+int AndroidInputHandler::_android_button_mask_to_godot_button_mask(
+    int android_button_mask
+) {
     int godot_button_mask = 0;
     if (android_button_mask & AMOTION_EVENT_BUTTON_PRIMARY) {
         godot_button_mask |= BUTTON_MASK_LEFT;
@@ -367,6 +420,10 @@ int AndroidInputHandler::_android_button_mask_to_godot_button_mask(int android_b
     return godot_button_mask;
 }
 
-void AndroidInputHandler::joy_connection_changed(int p_device, bool p_connected, String p_name) {
+void AndroidInputHandler::joy_connection_changed(
+    int p_device,
+    bool p_connected,
+    String p_name
+) {
     input->joy_connection_changed(p_device, p_connected, p_name, "");
 }

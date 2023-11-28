@@ -101,18 +101,18 @@ class TileSetEditor : public HSplitContainer {
     };
 
     Ref<TileSet> tileset;
-    TilesetEditorContext *helper;
-    EditorNode *editor;
-    UndoRedo *undo_redo;
+    TilesetEditorContext* helper;
+    EditorNode* editor;
+    UndoRedo* undo_redo;
 
-    ConfirmationDialog *cd;
-    AcceptDialog *err_dialog;
-    EditorFileDialog *texture_dialog;
+    ConfirmationDialog* cd;
+    AcceptDialog* err_dialog;
+    EditorFileDialog* texture_dialog;
 
-    ItemList *texture_list;
+    ItemList* texture_list;
     int option;
-    ToolButton *tileset_toolbar_buttons[TOOL_TILESET_MAX];
-    MenuButton *tileset_toolbar_tools;
+    ToolButton* tileset_toolbar_buttons[TOOL_TILESET_MAX];
+    MenuButton* tileset_toolbar_tools;
     Map<String, Ref<Texture>> texture_map;
 
     bool creating_shape;
@@ -135,24 +135,24 @@ class TileSetEditor : public HSplitContainer {
     Ref<NavigationPolygon> edited_navigation_shape;
 
     int current_item_index;
-    Sprite *preview;
-    ScrollContainer *scroll;
-    Label *empty_message;
-    Control *workspace_container;
+    Sprite* preview;
+    ScrollContainer* scroll;
+    Label* empty_message;
+    Control* workspace_container;
     bool draw_handles;
-    Control *workspace_overlay;
-    Control *workspace;
-    Button *tool_workspacemode[WORKSPACE_MODE_MAX];
-    Button *tool_editmode[EDITMODE_MAX];
-    HSeparator *separator_editmode;
-    HBoxContainer *toolbar;
-    ToolButton *tools[TOOL_MAX];
-    VSeparator *separator_shape_toggle;
-    VSeparator *separator_bitmask;
-    VSeparator *separator_delete;
-    VSeparator *separator_grid;
-    SpinBox *spin_priority;
-    SpinBox *spin_z_index;
+    Control* workspace_overlay;
+    Control* workspace;
+    Button* tool_workspacemode[WORKSPACE_MODE_MAX];
+    Button* tool_editmode[EDITMODE_MAX];
+    HSeparator* separator_editmode;
+    HBoxContainer* toolbar;
+    ToolButton* tools[TOOL_MAX];
+    VSeparator* separator_shape_toggle;
+    VSeparator* separator_bitmask;
+    VSeparator* separator_delete;
+    VSeparator* separator_grid;
+    SpinBox* spin_priority;
+    SpinBox* spin_z_index;
     WorkspaceMode workspace_mode;
     EditMode edit_mode;
     int current_tile;
@@ -169,46 +169,68 @@ class TileSetEditor : public HSplitContainer {
 
     Ref<Texture> get_current_texture();
 
-    static void _import_node(Node *p_node, Ref<TileSet> p_library);
-    static void _import_scene(Node *p_scene, Ref<TileSet> p_library, bool p_merge);
-    void _undo_redo_import_scene(Node *p_scene, bool p_merge);
+    static void _import_node(Node* p_node, Ref<TileSet> p_library);
+    static void _import_scene(
+        Node* p_scene,
+        Ref<TileSet> p_library,
+        bool p_merge
+    );
+    void _undo_redo_import_scene(Node* p_scene, bool p_merge);
 
-    bool _is_drop_valid(const Dictionary &p_drag_data, const Dictionary &p_item_data) const;
-    Variant get_drag_data_fw(const Point2 &p_point, Control *p_from);
-    bool can_drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from) const;
-    void drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from);
-    void _file_load_request(const PoolVector<String> &p_path, int p_at_pos = -1);
+    bool _is_drop_valid(
+        const Dictionary& p_drag_data,
+        const Dictionary& p_item_data
+    ) const;
+    Variant get_drag_data_fw(const Point2& p_point, Control* p_from);
+    bool can_drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    ) const;
+    void drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    );
+    void _file_load_request(
+        const PoolVector<String>& p_path,
+        int p_at_pos = -1
+    );
 
 protected:
     static void _bind_methods();
     void _notification(int p_what);
 
 public:
-    void edit(const Ref<TileSet> &p_tileset);
-    static Error update_library_file(Node *p_base_scene, Ref<TileSet> ml, bool p_merge = true);
+    void edit(const Ref<TileSet>& p_tileset);
+    static Error update_library_file(
+        Node* p_base_scene,
+        Ref<TileSet> ml,
+        bool p_merge = true
+    );
 
-    TileSetEditor(EditorNode *p_editor);
+    TileSetEditor(EditorNode* p_editor);
     ~TileSetEditor();
 
 private:
     void _on_tileset_toolbar_button_pressed(int p_index);
     void _on_tileset_toolbar_confirm();
     void _on_texture_list_selected(int p_index);
-    void _on_textures_added(const PoolStringArray &p_paths);
+    void _on_textures_added(const PoolStringArray& p_paths);
     void _on_edit_mode_changed(int p_edit_mode);
     void _on_workspace_mode_changed(int p_workspace_mode);
     void _on_workspace_overlay_draw();
     void _on_workspace_draw();
     void _on_workspace_process();
-    void _on_scroll_container_input(const Ref<InputEvent> &p_event);
-    void _on_workspace_input(const Ref<InputEvent> &p_ie);
+    void _on_scroll_container_input(const Ref<InputEvent>& p_event);
+    void _on_workspace_input(const Ref<InputEvent>& p_ie);
     void _on_tool_clicked(int p_tool);
     void _on_priority_changed(float val);
     void _on_z_index_changed(float val);
     void _on_grid_snap_toggled(bool p_val);
-    Vector<Vector2> _get_collision_shape_points(const Ref<Shape2D> &p_shape);
+    Vector<Vector2> _get_collision_shape_points(const Ref<Shape2D>& p_shape);
     Vector<Vector2> _get_edited_shape_points();
-    void _set_edited_shape_points(const Vector<Vector2> &points);
+    void _set_edited_shape_points(const Vector<Vector2>& points);
     void _update_tile_data();
     void _update_toggle_shape_button();
     void _select_next_tile();
@@ -220,7 +242,7 @@ private:
     void _select_previous_subtile();
     void _select_next_shape();
     void _select_previous_shape();
-    void _set_edited_collision_shape(const Ref<Shape2D> &p_shape);
+    void _set_edited_collision_shape(const Ref<Shape2D>& p_shape);
     void _set_snap_step(Vector2 p_val);
     void _set_snap_off(Vector2 p_val);
     void _set_snap_sep(Vector2 p_val);
@@ -234,19 +256,25 @@ private:
     void _zoom_reset();
 
     void draw_highlight_current_tile();
-    void draw_highlight_subtile(Vector2 coord, const Vector<Vector2> &other_highlighted = Vector<Vector2>());
+    void draw_highlight_subtile(
+        Vector2 coord,
+        const Vector<Vector2>& other_highlighted = Vector<Vector2>()
+    );
     void draw_tile_subdivision(int p_id, Color p_color) const;
     void draw_edited_region_subdivision() const;
     void draw_grid_snap();
     void draw_polygon_shapes();
-    void close_shape(const Vector2 &shape_anchor);
-    void select_coord(const Vector2 &coord);
-    Vector2 snap_point(const Vector2 &point);
+    void close_shape(const Vector2& shape_anchor);
+    void select_coord(const Vector2& coord);
+    Vector2 snap_point(const Vector2& point);
     void update_workspace_tile_mode();
     void update_workspace_minsize();
-    void update_edited_region(const Vector2 &end_point);
-    int get_grabbed_point(const Vector2 &p_mouse_pos, real_t grab_threshold);
-    bool is_within_grabbing_distance_of_first_point(const Vector2 &p_pos, real_t p_grab_threshold);
+    void update_edited_region(const Vector2& end_point);
+    int get_grabbed_point(const Vector2& p_mouse_pos, real_t grab_threshold);
+    bool is_within_grabbing_distance_of_first_point(
+        const Vector2& p_pos,
+        real_t p_grab_threshold
+    );
 
     int get_current_tile() const;
     void set_current_tile(int p_id);
@@ -257,43 +285,52 @@ class TilesetEditorContext : public Object {
     GDCLASS(TilesetEditorContext, Object);
 
     Ref<TileSet> tileset;
-    TileSetEditor *tileset_editor;
+    TileSetEditor* tileset_editor;
     bool snap_options_visible;
 
 public:
-    bool _hide_script_from_inspector() { return true; }
-    void set_tileset(const Ref<TileSet> &p_tileset);
+    bool _hide_script_from_inspector() {
+        return true;
+    }
+
+    void set_tileset(const Ref<TileSet>& p_tileset);
 
 private:
     void set_snap_options_visible(bool p_visible);
 
 protected:
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
     static void _bind_methods();
 
 public:
-    TilesetEditorContext(TileSetEditor *p_tileset_editor);
+    TilesetEditorContext(TileSetEditor* p_tileset_editor);
 };
 
 class TileSetEditorPlugin : public EditorPlugin {
     GDCLASS(TileSetEditorPlugin, EditorPlugin);
 
-    TileSetEditor *tileset_editor;
-    Button *tileset_editor_button;
-    EditorNode *editor;
+    TileSetEditor* tileset_editor;
+    Button* tileset_editor_button;
+    EditorNode* editor;
 
 public:
-    virtual String get_name() const { return "TileSet"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_node);
-    virtual bool handles(Object *p_node) const;
+    virtual String get_name() const {
+        return "TileSet";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_node);
+    virtual bool handles(Object* p_node) const;
     virtual void make_visible(bool p_visible);
-    void set_state(const Dictionary &p_state);
+    void set_state(const Dictionary& p_state);
     Dictionary get_state() const;
 
-    TileSetEditorPlugin(EditorNode *p_node);
+    TileSetEditorPlugin(EditorNode* p_node);
 };
 
 #endif // TILE_SET_EDITOR_PLUGIN_H

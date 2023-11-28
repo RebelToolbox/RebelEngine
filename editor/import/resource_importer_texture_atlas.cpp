@@ -45,7 +45,10 @@ String ResourceImporterTextureAtlas::get_importer_name() const {
 String ResourceImporterTextureAtlas::get_visible_name() const {
     return "TextureAtlas";
 }
-void ResourceImporterTextureAtlas::get_recognized_extensions(List<String> *p_extensions) const {
+
+void ResourceImporterTextureAtlas::get_recognized_extensions(
+    List<String>* p_extensions
+) const {
     ImageLoader::get_recognized_extensions(p_extensions);
 }
 
@@ -57,33 +60,66 @@ String ResourceImporterTextureAtlas::get_resource_type() const {
     return "Texture";
 }
 
-bool ResourceImporterTextureAtlas::get_option_visibility(const String &p_option, const Map<StringName, Variant> &p_options) const {
+bool ResourceImporterTextureAtlas::get_option_visibility(
+    const String& p_option,
+    const Map<StringName, Variant>& p_options
+) const {
     return true;
 }
 
 int ResourceImporterTextureAtlas::get_preset_count() const {
     return 0;
 }
+
 String ResourceImporterTextureAtlas::get_preset_name(int p_idx) const {
     return String();
 }
 
-void ResourceImporterTextureAtlas::get_import_options(List<ImportOption> *r_options, int p_preset) const {
-    r_options->push_back(ImportOption(PropertyInfo(Variant::STRING, "atlas_file", PROPERTY_HINT_SAVE_FILE, "*.png"), ""));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "import_mode", PROPERTY_HINT_ENUM, "Region,Mesh2D"), 0));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "crop_to_region"), false));
+void ResourceImporterTextureAtlas::get_import_options(
+    List<ImportOption>* r_options,
+    int p_preset
+) const {
+    r_options->push_back(ImportOption(
+        PropertyInfo(
+            Variant::STRING,
+            "atlas_file",
+            PROPERTY_HINT_SAVE_FILE,
+            "*.png"
+        ),
+        ""
+    ));
+    r_options->push_back(ImportOption(
+        PropertyInfo(
+            Variant::INT,
+            "import_mode",
+            PROPERTY_HINT_ENUM,
+            "Region,Mesh2D"
+        ),
+        0
+    ));
+    r_options->push_back(
+        ImportOption(PropertyInfo(Variant::BOOL, "crop_to_region"), false)
+    );
 }
 
 String ResourceImporterTextureAtlas::get_option_group_file() const {
     return "atlas_file";
 }
 
-Error ResourceImporterTextureAtlas::import(const String &p_source_file, const String &p_save_path, const Map<StringName, Variant> &p_options, List<String> *r_platform_variants, List<String> *r_gen_files, Variant *r_metadata) {
-    /* If this happens, it's because the atlas_file field was not filled, so just import a broken texture */
+Error ResourceImporterTextureAtlas::import(
+    const String& p_source_file,
+    const String& p_save_path,
+    const Map<StringName, Variant>& p_options,
+    List<String>* r_platform_variants,
+    List<String>* r_gen_files,
+    Variant* r_metadata
+) {
+    /* If this happens, it's because the atlas_file field was not filled, so
+     * just import a broken texture */
 
-    //use an xpm because it's size independent, the editor images are vector and size dependent
-    //it's a simple hack
-    Ref<Image> broken = memnew(Image((const char **)atlas_import_failed_xpm));
+    // use an xpm because it's size independent, the editor images are vector
+    // and size dependent it's a simple hack
+    Ref<Image> broken = memnew(Image((const char**)atlas_import_failed_xpm));
     Ref<ImageTexture> broken_texture;
     broken_texture.instance();
     broken_texture->create_from_image(broken);
@@ -95,7 +131,13 @@ Error ResourceImporterTextureAtlas::import(const String &p_source_file, const St
     return OK;
 }
 
-static void _plot_triangle(Vector2 *vertices, const Vector2 &p_offset, bool p_transposed, Ref<Image> p_image, const Ref<Image> &p_src_image) {
+static void _plot_triangle(
+    Vector2* vertices,
+    const Vector2& p_offset,
+    bool p_transposed,
+    Ref<Image> p_image,
+    const Ref<Image>& p_src_image
+) {
     int width = p_image->get_width();
     int height = p_image->get_height();
     int src_width = p_src_image->get_width();
@@ -131,7 +173,9 @@ static void _plot_triangle(Vector2 *vertices, const Vector2 &p_offset, bool p_tr
     int max_y = MIN(y[2], height - p_offset.y - 1);
     for (int yi = y[0]; yi < max_y; yi++) {
         if (yi >= 0) {
-            for (int xi = (xf > 0 ? int(xf) : 0); xi < (xt <= src_width ? xt : src_width); xi++) {
+            for (int xi = (xf > 0 ? int(xf) : 0);
+                 xi < (xt <= src_width ? xt : src_width);
+                 xi++) {
                 int px = xi, py = yi;
                 int sx = px, sy = py;
                 sx = CLAMP(sx, 0, src_width - 1);
@@ -143,7 +187,7 @@ static void _plot_triangle(Vector2 *vertices, const Vector2 &p_offset, bool p_tr
                 px += p_offset.x;
                 py += p_offset.y;
 
-                //may have been cropped, so don't blit what is not visible?
+                // may have been cropped, so don't blit what is not visible?
                 if (px < 0 || px >= width) {
                     continue;
                 }
@@ -153,7 +197,9 @@ static void _plot_triangle(Vector2 *vertices, const Vector2 &p_offset, bool p_tr
                 p_image->set_pixel(px, py, color);
             }
 
-            for (int xi = (xf < src_width ? int(xf) : src_width - 1); xi >= (xt > 0 ? xt : 0); xi--) {
+            for (int xi = (xf < src_width ? int(xf) : src_width - 1);
+                 xi >= (xt > 0 ? xt : 0);
+                 xi--) {
                 int px = xi, py = yi;
                 int sx = px, sy = py;
                 sx = CLAMP(sx, 0, src_width - 1);
@@ -165,7 +211,7 @@ static void _plot_triangle(Vector2 *vertices, const Vector2 &p_offset, bool p_tr
                 px += p_offset.x;
                 py += p_offset.y;
 
-                //may have been cropped, so don't blit what is not visible?
+                // may have been cropped, so don't blit what is not visible?
                 if (px < 0 || px >= width) {
                     continue;
                 }
@@ -184,8 +230,15 @@ static void _plot_triangle(Vector2 *vertices, const Vector2 &p_offset, bool p_tr
     }
 }
 
-Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file, const Map<String, Map<StringName, Variant>> &p_source_file_options, const Map<String, String> &p_base_paths) {
-    ERR_FAIL_COND_V(p_source_file_options.size() == 0, ERR_BUG); //should never happen
+Error ResourceImporterTextureAtlas::import_group_file(
+    const String& p_group_file,
+    const Map<String, Map<StringName, Variant>>& p_source_file_options,
+    const Map<String, String>& p_base_paths
+) {
+    ERR_FAIL_COND_V(
+        p_source_file_options.size() == 0,
+        ERR_BUG
+    ); // should never happen
 
     Vector<EditorAtlasPacker::Chart> charts;
     Vector<PackData> pack_data_files;
@@ -193,10 +246,13 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
     pack_data_files.resize(p_source_file_options.size());
 
     int idx = 0;
-    for (const Map<String, Map<StringName, Variant>>::Element *E = p_source_file_options.front(); E; E = E->next(), idx++) {
-        PackData &pack_data = pack_data_files.write[idx];
-        const String &source = E->key();
-        const Map<StringName, Variant> &options = E->get();
+    for (const Map<String, Map<StringName, Variant>>::Element* E =
+             p_source_file_options.front();
+         E;
+         E = E->next(), idx++) {
+        PackData& pack_data = pack_data_files.write[idx];
+        const String& source = E->key();
+        const Map<StringName, Variant>& options = E->get();
 
         Ref<Image> image;
         image.instance();
@@ -213,14 +269,20 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
 
             EditorAtlasPacker::Chart chart;
 
-            //clip a region from the image
+            // clip a region from the image
             Rect2 used_rect = image->get_used_rect();
             pack_data.region = used_rect;
 
             chart.vertices.push_back(used_rect.position);
-            chart.vertices.push_back(used_rect.position + Vector2(used_rect.size.x, 0));
-            chart.vertices.push_back(used_rect.position + Vector2(used_rect.size.x, used_rect.size.y));
-            chart.vertices.push_back(used_rect.position + Vector2(0, used_rect.size.y));
+            chart.vertices.push_back(
+                used_rect.position + Vector2(used_rect.size.x, 0)
+            );
+            chart.vertices.push_back(
+                used_rect.position + Vector2(used_rect.size.x, used_rect.size.y)
+            );
+            chart.vertices.push_back(
+                used_rect.position + Vector2(0, used_rect.size.y)
+            );
             EditorAtlasPacker::Chart::Face f;
             f.vertex[0] = 0;
             f.vertex[1] = 1;
@@ -241,7 +303,9 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
             Ref<BitMap> bit_map;
             bit_map.instance();
             bit_map->create_from_image_alpha(image);
-            Vector<Vector<Vector2>> polygons = bit_map->clip_opaque_to_polygons(Rect2(0, 0, image->get_width(), image->get_height()));
+            Vector<Vector<Vector2>> polygons = bit_map->clip_opaque_to_polygons(
+                Rect2(0, 0, image->get_width(), image->get_height())
+            );
 
             for (int j = 0; j < polygons.size(); j++) {
                 EditorAtlasPacker::Chart chart;
@@ -265,11 +329,11 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
         }
     }
 
-    //pack the charts
+    // pack the charts
     int atlas_width, atlas_height;
     EditorAtlasPacker::chart_pack(charts, atlas_width, atlas_height);
 
-    //blit the atlas
+    // blit the atlas
     Ref<Image> new_atlas;
     new_atlas.instance();
     new_atlas->create(atlas_width, atlas_height, false, Image::FORMAT_RGBA8);
@@ -277,10 +341,11 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
     new_atlas->lock();
 
     for (int i = 0; i < pack_data_files.size(); i++) {
-        PackData &pack_data = pack_data_files.write[i];
+        PackData& pack_data = pack_data_files.write[i];
         pack_data.image->lock();
         for (int j = 0; j < pack_data.chart_pieces.size(); j++) {
-            const EditorAtlasPacker::Chart &chart = charts[pack_data.chart_pieces[j]];
+            const EditorAtlasPacker::Chart& chart =
+                charts[pack_data.chart_pieces[j]];
             for (int k = 0; k < chart.faces.size(); k++) {
                 Vector2 positions[3];
                 for (int l = 0; l < 3; l++) {
@@ -288,21 +353,27 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
                     positions[l] = chart.vertices[vertex_idx];
                 }
 
-                _plot_triangle(positions, chart.final_offset, chart.transposed, new_atlas, pack_data.image);
+                _plot_triangle(
+                    positions,
+                    chart.final_offset,
+                    chart.transposed,
+                    new_atlas,
+                    pack_data.image
+                );
             }
         }
         pack_data.image->unlock();
     }
     new_atlas->unlock();
 
-    //save the atlas
+    // save the atlas
 
     new_atlas->save_png(p_group_file);
 
-    //update cache if existing, else create
+    // update cache if existing, else create
     Ref<Texture> cache;
     if (ResourceCache::has(p_group_file)) {
-        Resource *resptr = ResourceCache::get(p_group_file);
+        Resource* resptr = ResourceCache::get(p_group_file);
         cache.reference_ptr(resptr);
     } else {
         Ref<ImageTexture> res_cache;
@@ -312,24 +383,31 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
         cache = res_cache;
     }
 
-    //save the images
+    // save the images
     idx = 0;
-    for (const Map<String, Map<StringName, Variant>>::Element *E = p_source_file_options.front(); E; E = E->next(), idx++) {
-        PackData &pack_data = pack_data_files.write[idx];
+    for (const Map<String, Map<StringName, Variant>>::Element* E =
+             p_source_file_options.front();
+         E;
+         E = E->next(), idx++) {
+        PackData& pack_data = pack_data_files.write[idx];
 
         Ref<Texture> texture;
 
         if (!pack_data.is_mesh) {
-            Vector2 offset = charts[pack_data.chart_pieces[0]].vertices[0] + charts[pack_data.chart_pieces[0]].final_offset;
+            Vector2 offset = charts[pack_data.chart_pieces[0]].vertices[0]
+                           + charts[pack_data.chart_pieces[0]].final_offset;
 
-            //region
+            // region
             Ref<AtlasTexture> atlas_texture;
             atlas_texture.instance();
             atlas_texture->set_atlas(cache);
             atlas_texture->set_region(Rect2(offset, pack_data.region.size));
 
             if (!pack_data.is_cropped) {
-                atlas_texture->set_margin(Rect2(pack_data.region.position, pack_data.image->get_size() - pack_data.region.size));
+                atlas_texture->set_margin(Rect2(
+                    pack_data.region.position,
+                    pack_data.image->get_size() - pack_data.region.size
+                ));
             }
 
             texture = atlas_texture;
@@ -338,7 +416,8 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
             mesh.instance();
 
             for (int i = 0; i < pack_data.chart_pieces.size(); i++) {
-                const EditorAtlasPacker::Chart &chart = charts[pack_data.chart_pieces[i]];
+                const EditorAtlasPacker::Chart& chart =
+                    charts[pack_data.chart_pieces[i]];
                 PoolVector<Vector2> vertices;
                 PoolVector<int> indices;
                 PoolVector<Vector2> uvs;
@@ -360,7 +439,8 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
                             SWAP(uv.x, uv.y);
                         }
                         uv += chart.final_offset;
-                        uv /= new_atlas->get_size(); //normalize uv to 0-1 range
+                        uv /= new_atlas->get_size(); // normalize uv to 0-1
+                                                     // range
                         uvw[j] = uv;
                     }
 
@@ -377,7 +457,10 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
                 arrays[Mesh::ARRAY_TEX_UV] = uvs;
                 arrays[Mesh::ARRAY_INDEX] = indices;
 
-                mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
+                mesh->add_surface_from_arrays(
+                    Mesh::PRIMITIVE_TRIANGLES,
+                    arrays
+                );
             }
 
             Ref<MeshTexture> mesh_texture;
@@ -387,7 +470,7 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
             mesh_texture->set_mesh(mesh);
 
             texture = mesh_texture;
-            //mesh
+            // mesh
         }
 
         String save_path = p_base_paths[E->key()] + ".res";
@@ -397,5 +480,4 @@ Error ResourceImporterTextureAtlas::import_group_file(const String &p_group_file
     return OK;
 }
 
-ResourceImporterTextureAtlas::ResourceImporterTextureAtlas() {
-}
+ResourceImporterTextureAtlas::ResourceImporterTextureAtlas() {}

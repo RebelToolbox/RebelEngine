@@ -37,7 +37,8 @@
 #include "core/version.h"
 #include "core/version_hash.gen.h"
 
-// The metadata key used to store and retrieve the version text to copy to the clipboard.
+// The metadata key used to store and retrieve the version text to copy to the
+// clipboard.
 static const String META_TEXT_TO_COPY = "text_to_copy";
 
 void EditorAbout::_notification(int p_what) {
@@ -48,49 +49,64 @@ void EditorAbout::_notification(int p_what) {
             _tpl_text->add_font_override("normal_font", font);
             _tpl_text->add_constant_override("line_separation", 6 * EDSCALE);
             _license_text->add_font_override("normal_font", font);
-            _license_text->add_constant_override("line_separation", 6 * EDSCALE);
+            _license_text->add_constant_override(
+                "line_separation",
+                6 * EDSCALE
+            );
             _logo->set_texture(get_icon("Logo", "EditorIcons"));
         } break;
     }
 }
 
 void EditorAbout::_license_tree_selected() {
-    TreeItem *selected = _tpl_tree->get_selected();
+    TreeItem* selected = _tpl_tree->get_selected();
     _tpl_text->scroll_to_line(0);
     _tpl_text->set_text(selected->get_metadata(0));
 }
 
 void EditorAbout::_version_button_pressed() {
-    OS::get_singleton()->set_clipboard(version_btn->get_meta(META_TEXT_TO_COPY));
+    OS::get_singleton()->set_clipboard(version_btn->get_meta(META_TEXT_TO_COPY)
+    );
 }
 
 void EditorAbout::_bind_methods() {
-    ClassDB::bind_method("_version_button_pressed", &EditorAbout::_version_button_pressed);
-    ClassDB::bind_method(D_METHOD("_license_tree_selected"), &EditorAbout::_license_tree_selected);
+    ClassDB::bind_method(
+        "_version_button_pressed",
+        &EditorAbout::_version_button_pressed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_license_tree_selected"),
+        &EditorAbout::_license_tree_selected
+    );
 }
 
-TextureRect *EditorAbout::get_logo() const {
+TextureRect* EditorAbout::get_logo() const {
     return _logo;
 }
 
-ScrollContainer *EditorAbout::_populate_list(const String &p_name, const List<String> &p_sections, const char *const *const p_src[], const int p_flag_single_column) {
-    ScrollContainer *sc = memnew(ScrollContainer);
+ScrollContainer* EditorAbout::_populate_list(
+    const String& p_name,
+    const List<String>& p_sections,
+    const char* const* const p_src[],
+    const int p_flag_single_column
+) {
+    ScrollContainer* sc = memnew(ScrollContainer);
     sc->set_name(p_name);
     sc->set_v_size_flags(Control::SIZE_EXPAND);
 
-    VBoxContainer *vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
     vbc->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     sc->add_child(vbc);
 
     for (int i = 0; i < p_sections.size(); i++) {
         bool single_column = p_flag_single_column & 1 << i;
-        const char *const *names_ptr = p_src[i];
+        const char* const* names_ptr = p_src[i];
         if (*names_ptr) {
-            Label *lbl = memnew(Label);
+            Label* lbl = memnew(Label);
             lbl->set_text(p_sections[i]);
             vbc->add_child(lbl);
 
-            ItemList *il = memnew(ItemList);
+            ItemList* il = memnew(ItemList);
             il->set_h_size_flags(Control::SIZE_EXPAND_FILL);
             il->set_same_column_width(true);
             il->set_auto_height(true);
@@ -99,10 +115,12 @@ ScrollContainer *EditorAbout::_populate_list(const String &p_name, const List<St
             while (*names_ptr) {
                 il->add_item(String::utf8(*names_ptr++), nullptr, false);
             }
-            il->set_max_columns(il->get_item_count() < 4 || single_column ? 1 : 16);
+            il->set_max_columns(
+                il->get_item_count() < 4 || single_column ? 1 : 16
+            );
             vbc->add_child(il);
 
-            HSeparator *hs = memnew(HSeparator);
+            HSeparator* hs = memnew(HSeparator);
             hs->set_modulate(Color(0, 0, 0, 0));
             vbc->add_child(hs);
         }
@@ -116,8 +134,8 @@ EditorAbout::EditorAbout() {
     set_hide_on_ok(true);
     set_resizable(true);
 
-    VBoxContainer *vbc = memnew(VBoxContainer);
-    HBoxContainer *hbc = memnew(HBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
+    HBoxContainer* hbc = memnew(HBoxContainer);
     hbc->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     hbc->set_alignment(BoxContainer::ALIGN_CENTER);
     hbc->add_constant_override("separation", 30 * EDSCALE);
@@ -127,10 +145,10 @@ EditorAbout::EditorAbout() {
     _logo = memnew(TextureRect);
     hbc->add_child(_logo);
 
-    VBoxContainer *version_info_vbc = memnew(VBoxContainer);
+    VBoxContainer* version_info_vbc = memnew(VBoxContainer);
 
     // Add a dummy control node for spacing.
-    Control *v_spacer = memnew(Control);
+    Control* v_spacer = memnew(Control);
     version_info_vbc->add_child(v_spacer);
 
     version_btn = memnew(LinkButton);
@@ -139,23 +157,27 @@ EditorAbout::EditorAbout() {
         hash = " " + vformat("[%s]", hash.left(9));
     }
     version_btn->set_text(VERSION_FULL_NAME + hash);
-    // Set the text to copy in metadata as it slightly differs from the button's text.
+    // Set the text to copy in metadata as it slightly differs from the button's
+    // text.
     version_btn->set_meta(META_TEXT_TO_COPY, "v" VERSION_FULL_BUILD + hash);
     version_btn->set_underline_mode(LinkButton::UNDERLINE_MODE_ON_HOVER);
     version_btn->set_tooltip(TTR("Click to copy."));
     version_btn->connect("pressed", this, "_version_button_pressed");
     version_info_vbc->add_child(version_btn);
 
-    Label *about_text = memnew(Label);
+    Label* about_text = memnew(Label);
     about_text->set_v_size_flags(Control::SIZE_SHRINK_CENTER);
     about_text->set_text(
-            TTR("Rebel Engine is Free and Open Source Software; released under the MIT license.\n") +
-            TTR("Games developed with Rebel Engine remain the property of the game developer."));
+        TTR("Rebel Engine is Free and Open Source Software; released under the "
+            "MIT license.\n")
+        + TTR("Games developed with Rebel Engine remain the property of the "
+              "game developer.")
+    );
     version_info_vbc->add_child(about_text);
 
     hbc->add_child(version_info_vbc);
 
-    TabContainer *tc = memnew(TabContainer);
+    TabContainer* tc = memnew(TabContainer);
     tc->set_custom_minimum_size(Size2(950, 400) * EDSCALE);
     tc->set_v_size_flags(Control::SIZE_EXPAND_FILL);
     vbc->add_child(tc);
@@ -164,15 +186,16 @@ EditorAbout::EditorAbout() {
 
     List<String> dev_sections;
     dev_sections.push_back(TTR("Rebel Contributors"));
-    const char *const *dev_src[] = { CONTRIBUTORS };
-    tc->add_child(_populate_list(TTR("Contributors"), dev_sections, dev_src, 1));
+    const char* const* dev_src[] = {CONTRIBUTORS};
+    tc->add_child(_populate_list(TTR("Contributors"), dev_sections, dev_src, 1)
+    );
 
     // Donors
 
     List<String> donor_sections;
     donor_sections.push_back(TTR("Sponsors"));
     donor_sections.push_back(TTR("Donors"));
-    const char *const *donor_src[] = { DONORS_SPONSOR, DONORS_DONOR };
+    const char* const* donor_src[] = {DONORS_SPONSOR, DONORS_DONOR};
     tc->add_child(_populate_list(TTR("Donors"), donor_sections, donor_src, 3));
 
     // License
@@ -186,19 +209,24 @@ EditorAbout::EditorAbout() {
 
     // Thirdparty License
 
-    VBoxContainer *license_thirdparty = memnew(VBoxContainer);
+    VBoxContainer* license_thirdparty = memnew(VBoxContainer);
     license_thirdparty->set_name(TTR("Third-party Licenses"));
     license_thirdparty->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     tc->add_child(license_thirdparty);
 
-    Label *tpl_label = memnew(Label);
+    Label* tpl_label = memnew(Label);
     tpl_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     tpl_label->set_autowrap(true);
-    tpl_label->set_text(TTR("Rebel Engine relies on a number of third-party free and open source libraries, all compatible with the terms of its MIT license. The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."));
+    tpl_label->set_text(TTR(
+        "Rebel Engine relies on a number of third-party free and open source "
+        "libraries, all compatible with the terms of its MIT license. The "
+        "following is an exhaustive list of all such third-party components "
+        "with their respective copyright statements and license terms."
+    ));
     tpl_label->set_size(Size2(630, 1) * EDSCALE);
     license_thirdparty->add_child(tpl_label);
 
-    HSplitContainer *tpl_hbc = memnew(HSplitContainer);
+    HSplitContainer* tpl_hbc = memnew(HSplitContainer);
     tpl_hbc->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     tpl_hbc->set_v_size_flags(Control::SIZE_EXPAND_FILL);
     tpl_hbc->set_split_offset(240 * EDSCALE);
@@ -206,32 +234,38 @@ EditorAbout::EditorAbout() {
 
     _tpl_tree = memnew(Tree);
     _tpl_tree->set_hide_root(true);
-    TreeItem *root = _tpl_tree->create_item();
-    TreeItem *tpl_ti_all = _tpl_tree->create_item(root);
+    TreeItem* root = _tpl_tree->create_item();
+    TreeItem* tpl_ti_all = _tpl_tree->create_item(root);
     tpl_ti_all->set_text(0, TTR("All Components"));
-    TreeItem *tpl_ti_tp = _tpl_tree->create_item(root);
+    TreeItem* tpl_ti_tp = _tpl_tree->create_item(root);
     tpl_ti_tp->set_text(0, TTR("Components"));
     tpl_ti_tp->set_selectable(0, false);
-    TreeItem *tpl_ti_lc = _tpl_tree->create_item(root);
+    TreeItem* tpl_ti_lc = _tpl_tree->create_item(root);
     tpl_ti_lc->set_text(0, TTR("Licenses"));
     tpl_ti_lc->set_selectable(0, false);
     String long_text = "";
-    for (int component_index = 0; component_index < COPYRIGHT_INFO_COUNT; component_index++) {
-        const ComponentCopyright &component = COPYRIGHT_INFO[component_index];
-        TreeItem *ti = _tpl_tree->create_item(tpl_ti_tp);
+    for (int component_index = 0; component_index < COPYRIGHT_INFO_COUNT;
+         component_index++) {
+        const ComponentCopyright& component = COPYRIGHT_INFO[component_index];
+        TreeItem* ti = _tpl_tree->create_item(tpl_ti_tp);
         String component_name = component.name;
         ti->set_text(0, component_name);
         String text = component_name + "\n";
         long_text += "- " + component_name + "\n";
-        for (int part_index = 0; part_index < component.part_count; part_index++) {
-            const ComponentCopyrightPart &part = component.parts[part_index];
+        for (int part_index = 0; part_index < component.part_count;
+             part_index++) {
+            const ComponentCopyrightPart& part = component.parts[part_index];
             text += "\n    Files:";
             for (int file_num = 0; file_num < part.file_count; file_num++) {
                 text += "\n        " + String(part.files[file_num]);
             }
             String copyright;
-            for (int copyright_index = 0; copyright_index < part.copyright_count; copyright_index++) {
-                copyright += String::utf8("\n    \xc2\xa9 ") + String::utf8(part.copyright_statements[copyright_index]);
+            for (int copyright_index = 0;
+                 copyright_index < part.copyright_count;
+                 copyright_index++) {
+                copyright +=
+                    String::utf8("\n    \xc2\xa9 ")
+                    + String::utf8(part.copyright_statements[copyright_index]);
             }
             text += copyright;
             long_text += copyright;
@@ -242,7 +276,7 @@ EditorAbout::EditorAbout() {
         ti->set_metadata(0, text);
     }
     for (int i = 0; i < LICENSE_COUNT; i++) {
-        TreeItem *ti = _tpl_tree->create_item(tpl_ti_lc);
+        TreeItem* ti = _tpl_tree->create_item(tpl_ti_lc);
         String licensename = String(LICENSE_NAMES[i]);
         ti->set_text(0, licensename);
         long_text += "- " + licensename + "\n\n";

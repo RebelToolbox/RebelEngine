@@ -49,15 +49,18 @@ class CameraFeed : public Reference {
 public:
     enum FeedDataType {
         FEED_NOIMAGE, // we don't have an image yet
-        FEED_RGB, // our texture will contain a normal RGB texture that can be used directly
-        FEED_YCBCR, // our texture will contain a YCbCr texture that needs to be converted to RGB before output
-        FEED_YCBCR_SEP // our camera is split into two textures, first plane contains Y data, second plane contains CbCr data
+        FEED_RGB,   // our texture will contain a normal RGB texture that can be
+                    // used directly
+        FEED_YCBCR, // our texture will contain a YCbCr texture that needs to be
+                    // converted to RGB before output
+        FEED_YCBCR_SEP // our camera is split into two textures, first plane
+                       // contains Y data, second plane contains CbCr data
     };
 
     enum FeedPosition {
         FEED_UNSPECIFIED, // we have no idea
-        FEED_FRONT, // this is a camera on the front of the device
-        FEED_BACK // this is a camera on the back of the device
+        FEED_FRONT,       // this is a camera on the front of the device
+        FEED_BACK         // this is a camera on the back of the device
     };
 
 private:
@@ -66,12 +69,13 @@ private:
     int base_height;
 
 protected:
-    String name; // name of our camera feed
+    String name;           // name of our camera feed
     FeedDataType datatype; // type of texture data stored
     FeedPosition position; // position of camera on the device
     Transform2D transform; // display transform
 
-    bool active; // only when active do we actually update the camera texture each frame
+    bool active; // only when active do we actually update the camera texture
+                 // each frame
     RID texture[CameraServer::FEED_IMAGES]; // texture images needed for this
 
     static void _bind_methods();
@@ -91,19 +95,31 @@ public:
     void set_position(FeedPosition p_position);
 
     Transform2D get_transform() const;
-    void set_transform(const Transform2D &p_transform);
+    void set_transform(const Transform2D& p_transform);
 
     RID get_texture(CameraServer::FeedImage p_which);
 
     CameraFeed();
-    CameraFeed(String p_name, FeedPosition p_position = CameraFeed::FEED_UNSPECIFIED);
+    CameraFeed(
+        String p_name,
+        FeedPosition p_position = CameraFeed::FEED_UNSPECIFIED
+    );
     virtual ~CameraFeed();
 
     FeedDataType get_datatype() const;
-    void set_RGB_img(const Ref<Image> &p_rgb_img);
-    void set_YCbCr_img(const Ref<Image> &p_ycbcr_img);
-    void set_YCbCr_imgs(const Ref<Image> &p_y_img, const Ref<Image> &p_cbcr_img);
-    void allocate_texture(int p_width, int p_height, Image::Format p_format, VisualServer::TextureType p_texture_type, FeedDataType p_data_type);
+    void set_RGB_img(const Ref<Image>& p_rgb_img);
+    void set_YCbCr_img(const Ref<Image>& p_ycbcr_img);
+    void set_YCbCr_imgs(
+        const Ref<Image>& p_y_img,
+        const Ref<Image>& p_cbcr_img
+    );
+    void allocate_texture(
+        int p_width,
+        int p_height,
+        Image::Format p_format,
+        VisualServer::TextureType p_texture_type,
+        FeedDataType p_data_type
+    );
 
     virtual bool activate_feed();
     virtual void deactivate_feed();

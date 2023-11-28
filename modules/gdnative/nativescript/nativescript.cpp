@@ -59,44 +59,108 @@
 #endif
 
 void NativeScript::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_class_name", "class_name"), &NativeScript::set_class_name);
-    ClassDB::bind_method(D_METHOD("get_class_name"), &NativeScript::get_class_name);
+    ClassDB::bind_method(
+        D_METHOD("set_class_name", "class_name"),
+        &NativeScript::set_class_name
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_class_name"),
+        &NativeScript::get_class_name
+    );
 
-    ClassDB::bind_method(D_METHOD("set_library", "library"), &NativeScript::set_library);
+    ClassDB::bind_method(
+        D_METHOD("set_library", "library"),
+        &NativeScript::set_library
+    );
     ClassDB::bind_method(D_METHOD("get_library"), &NativeScript::get_library);
 
-    ClassDB::bind_method(D_METHOD("set_script_class_name", "class_name"), &NativeScript::set_script_class_name);
-    ClassDB::bind_method(D_METHOD("get_script_class_name"), &NativeScript::get_script_class_name);
-    ClassDB::bind_method(D_METHOD("set_script_class_icon_path", "icon_path"), &NativeScript::set_script_class_icon_path);
-    ClassDB::bind_method(D_METHOD("get_script_class_icon_path"), &NativeScript::get_script_class_icon_path);
+    ClassDB::bind_method(
+        D_METHOD("set_script_class_name", "class_name"),
+        &NativeScript::set_script_class_name
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_script_class_name"),
+        &NativeScript::get_script_class_name
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_script_class_icon_path", "icon_path"),
+        &NativeScript::set_script_class_icon_path
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_script_class_icon_path"),
+        &NativeScript::get_script_class_icon_path
+    );
 
-    ClassDB::bind_method(D_METHOD("get_class_documentation"), &NativeScript::get_class_documentation);
-    ClassDB::bind_method(D_METHOD("get_method_documentation", "method"), &NativeScript::get_method_documentation);
-    ClassDB::bind_method(D_METHOD("get_signal_documentation", "signal_name"), &NativeScript::get_signal_documentation);
-    ClassDB::bind_method(D_METHOD("get_property_documentation", "path"), &NativeScript::get_property_documentation);
+    ClassDB::bind_method(
+        D_METHOD("get_class_documentation"),
+        &NativeScript::get_class_documentation
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_method_documentation", "method"),
+        &NativeScript::get_method_documentation
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_signal_documentation", "signal_name"),
+        &NativeScript::get_signal_documentation
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_property_documentation", "path"),
+        &NativeScript::get_property_documentation
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "class_name"), "set_class_name", "get_class_name");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "library", PROPERTY_HINT_RESOURCE_TYPE, "GDNativeLibrary"), "set_library", "get_library");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "class_name"),
+        "set_class_name",
+        "get_class_name"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "library",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "GDNativeLibrary"
+        ),
+        "set_library",
+        "get_library"
+    );
     ADD_GROUP("Script Class", "script_class_");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "script_class_name"), "set_script_class_name", "get_script_class_name");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "script_class_icon_path", PROPERTY_HINT_FILE), "set_script_class_icon_path", "get_script_class_icon_path");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "script_class_name"),
+        "set_script_class_name",
+        "get_script_class_name"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::STRING,
+            "script_class_icon_path",
+            PROPERTY_HINT_FILE
+        ),
+        "set_script_class_icon_path",
+        "get_script_class_icon_path"
+    );
 
-    ClassDB::bind_vararg_method(METHOD_FLAGS_DEFAULT, "new", &NativeScript::_new, MethodInfo("new"));
+    ClassDB::bind_vararg_method(
+        METHOD_FLAGS_DEFAULT,
+        "new",
+        &NativeScript::_new,
+        MethodInfo("new")
+    );
 }
 
 #define NSL NativeScriptLanguage::get_singleton()
 
 #ifdef TOOLS_ENABLED
 
-void NativeScript::_update_placeholder(PlaceHolderScriptInstance *p_placeholder) {
-    NativeScriptDesc *script_data = get_script_desc();
+void NativeScript::_update_placeholder(PlaceHolderScriptInstance* p_placeholder
+) {
+    NativeScriptDesc* script_data = get_script_desc();
 
     ERR_FAIL_COND(!script_data);
 
     List<PropertyInfo> info;
     get_script_property_list(&info);
     Map<StringName, Variant> values;
-    for (List<PropertyInfo>::Element *E = info.front(); E; E = E->next()) {
+    for (List<PropertyInfo>::Element* E = info.front(); E; E = E->next()) {
         Variant value;
         get_property_default_value(E->get().name, value);
         values[E->get().name] = value;
@@ -105,24 +169,25 @@ void NativeScript::_update_placeholder(PlaceHolderScriptInstance *p_placeholder)
     p_placeholder->update(info, values);
 }
 
-void NativeScript::_placeholder_erased(PlaceHolderScriptInstance *p_placeholder) {
+void NativeScript::_placeholder_erased(PlaceHolderScriptInstance* p_placeholder
+) {
     placeholders.erase(p_placeholder);
 }
 
 #endif
 
-bool NativeScript::inherits_script(const Ref<Script> &p_script) const {
+bool NativeScript::inherits_script(const Ref<Script>& p_script) const {
     Ref<NativeScript> ns = p_script;
     if (ns.is_null()) {
         return false;
     }
 
-    const NativeScriptDesc *other_s = ns->get_script_desc();
+    const NativeScriptDesc* other_s = ns->get_script_desc();
     if (!other_s) {
         return false;
     }
 
-    const NativeScriptDesc *s = get_script_desc();
+    const NativeScriptDesc* s = get_script_desc();
 
     while (s) {
         if (s == other_s) {
@@ -185,12 +250,12 @@ String NativeScript::get_script_class_icon_path() const {
 }
 
 bool NativeScript::can_instance() const {
-    NativeScriptDesc *script_data = get_script_desc();
+    NativeScriptDesc* script_data = get_script_desc();
 
 #ifdef TOOLS_ENABLED
     // Only valid if this is either a tool script or a "regular" script.
-    // (so an environment whre scripting is disabled (and not the editor) would not
-    // create objects).
+    // (so an environment whre scripting is disabled (and not the editor) would
+    // not create objects).
     return script_data && (is_tool() || ScriptServer::is_scripting_enabled());
 #else
     return script_data;
@@ -198,13 +263,13 @@ bool NativeScript::can_instance() const {
 }
 
 Ref<Script> NativeScript::get_base_script() const {
-    NativeScriptDesc *script_data = get_script_desc();
+    NativeScriptDesc* script_data = get_script_desc();
 
     if (!script_data) {
         return Ref<Script>();
     }
 
-    NativeScript *script = (NativeScript *)NSL->create_script();
+    NativeScript* script = (NativeScript*)NSL->create_script();
     Ref<NativeScript> ns = Ref<NativeScript>(script);
     ERR_FAIL_COND_V(!ns.is_valid(), Ref<Script>());
 
@@ -214,7 +279,7 @@ Ref<Script> NativeScript::get_base_script() const {
 }
 
 StringName NativeScript::get_instance_base_type() const {
-    NativeScriptDesc *script_data = get_script_desc();
+    NativeScriptDesc* script_data = get_script_desc();
 
     if (!script_data) {
         return "";
@@ -223,14 +288,14 @@ StringName NativeScript::get_instance_base_type() const {
     return script_data->base_native_type;
 }
 
-ScriptInstance *NativeScript::instance_create(Object *p_this) {
-    NativeScriptDesc *script_data = get_script_desc();
+ScriptInstance* NativeScript::instance_create(Object* p_this) {
+    NativeScriptDesc* script_data = get_script_desc();
 
     if (!script_data) {
         return nullptr;
     }
 
-    NativeScriptInstance *nsi = memnew(NativeScriptInstance);
+    NativeScriptInstance* nsi = memnew(NativeScriptInstance);
 
     nsi->owner = p_this;
     nsi->script = Ref<NativeScript>(this);
@@ -239,10 +304,16 @@ ScriptInstance *NativeScript::instance_create(Object *p_this) {
     if (!ScriptServer::is_scripting_enabled()) {
         nsi->userdata = NULL;
     } else {
-        nsi->userdata = script_data->create_func.create_func((godot_object *)p_this, script_data->create_func.method_data);
+        nsi->userdata = script_data->create_func.create_func(
+            (godot_object*)p_this,
+            script_data->create_func.method_data
+        );
     }
 #else
-    nsi->userdata = script_data->create_func.create_func((godot_object *)p_this, script_data->create_func.method_data);
+    nsi->userdata = script_data->create_func.create_func(
+        (godot_object*)p_this,
+        script_data->create_func.method_data
+    );
 #endif
 
     owners_lock.lock();
@@ -252,9 +323,12 @@ ScriptInstance *NativeScript::instance_create(Object *p_this) {
     return nsi;
 }
 
-PlaceHolderScriptInstance *NativeScript::placeholder_instance_create(Object *p_this) {
+PlaceHolderScriptInstance* NativeScript::placeholder_instance_create(
+    Object* p_this
+) {
 #ifdef TOOLS_ENABLED
-    PlaceHolderScriptInstance *sins = memnew(PlaceHolderScriptInstance(NSL, Ref<Script>(this), p_this));
+    PlaceHolderScriptInstance* sins =
+        memnew(PlaceHolderScriptInstance(NSL, Ref<Script>(this), p_this));
     placeholders.insert(sins);
 
     _update_placeholder(sins);
@@ -265,8 +339,8 @@ PlaceHolderScriptInstance *NativeScript::placeholder_instance_create(Object *p_t
 #endif
 }
 
-bool NativeScript::instance_has(const Object *p_this) const {
-    return instance_owners.has((Object *)p_this);
+bool NativeScript::instance_has(const Object* p_this) const {
+    return instance_owners.has((Object*)p_this);
 }
 
 bool NativeScript::has_source_code() const {
@@ -277,15 +351,14 @@ String NativeScript::get_source_code() const {
     return "";
 }
 
-void NativeScript::set_source_code(const String &p_code) {
-}
+void NativeScript::set_source_code(const String& p_code) {}
 
 Error NativeScript::reload(bool p_keep_state) {
     return FAILED;
 }
 
-bool NativeScript::has_method(const StringName &p_method) const {
-    NativeScriptDesc *script_data = get_script_desc();
+bool NativeScript::has_method(const StringName& p_method) const {
+    NativeScriptDesc* script_data = get_script_desc();
 
     while (script_data) {
         if (script_data->methods.has(p_method)) {
@@ -297,15 +370,16 @@ bool NativeScript::has_method(const StringName &p_method) const {
     return false;
 }
 
-MethodInfo NativeScript::get_method_info(const StringName &p_method) const {
-    NativeScriptDesc *script_data = get_script_desc();
+MethodInfo NativeScript::get_method_info(const StringName& p_method) const {
+    NativeScriptDesc* script_data = get_script_desc();
 
     if (!script_data) {
         return MethodInfo();
     }
 
     while (script_data) {
-        Map<StringName, NativeScriptDesc::Method>::Element *M = script_data->methods.find(p_method);
+        Map<StringName, NativeScriptDesc::Method>::Element* M =
+            script_data->methods.find(p_method);
 
         if (M) {
             return M->get().info;
@@ -321,7 +395,7 @@ bool NativeScript::is_valid() const {
 }
 
 bool NativeScript::is_tool() const {
-    NativeScriptDesc *script_data = get_script_desc();
+    NativeScriptDesc* script_data = get_script_desc();
 
     if (script_data) {
         return script_data->is_tool;
@@ -330,12 +404,12 @@ bool NativeScript::is_tool() const {
     return false;
 }
 
-ScriptLanguage *NativeScript::get_language() const {
+ScriptLanguage* NativeScript::get_language() const {
     return NativeScriptLanguage::get_singleton();
 }
 
-bool NativeScript::has_script_signal(const StringName &p_signal) const {
-    NativeScriptDesc *script_data = get_script_desc();
+bool NativeScript::has_script_signal(const StringName& p_signal) const {
+    NativeScriptDesc* script_data = get_script_desc();
 
     while (script_data) {
         if (script_data->signals_.has(p_signal)) {
@@ -346,8 +420,8 @@ bool NativeScript::has_script_signal(const StringName &p_signal) const {
     return false;
 }
 
-void NativeScript::get_script_signal_list(List<MethodInfo> *r_signals) const {
-    NativeScriptDesc *script_data = get_script_desc();
+void NativeScript::get_script_signal_list(List<MethodInfo>* r_signals) const {
+    NativeScriptDesc* script_data = get_script_desc();
 
     if (!script_data) {
         return;
@@ -356,20 +430,26 @@ void NativeScript::get_script_signal_list(List<MethodInfo> *r_signals) const {
     Set<MethodInfo> signals_;
 
     while (script_data) {
-        for (Map<StringName, NativeScriptDesc::Signal>::Element *S = script_data->signals_.front(); S; S = S->next()) {
+        for (Map<StringName, NativeScriptDesc::Signal>::Element* S =
+                 script_data->signals_.front();
+             S;
+             S = S->next()) {
             signals_.insert(S->get().signal);
         }
 
         script_data = script_data->base_data;
     }
 
-    for (Set<MethodInfo>::Element *E = signals_.front(); E; E = E->next()) {
+    for (Set<MethodInfo>::Element* E = signals_.front(); E; E = E->next()) {
         r_signals->push_back(E->get());
     }
 }
 
-bool NativeScript::get_property_default_value(const StringName &p_property, Variant &r_value) const {
-    NativeScriptDesc *script_data = get_script_desc();
+bool NativeScript::get_property_default_value(
+    const StringName& p_property,
+    Variant& r_value
+) const {
+    NativeScriptDesc* script_data = get_script_desc();
 
     OrderedHashMap<StringName, NativeScriptDesc::Property>::Element P;
     while (!P && script_data) {
@@ -384,11 +464,10 @@ bool NativeScript::get_property_default_value(const StringName &p_property, Vari
     return true;
 }
 
-void NativeScript::update_exports() {
-}
+void NativeScript::update_exports() {}
 
-void NativeScript::get_script_method_list(List<MethodInfo> *p_list) const {
-    NativeScriptDesc *script_data = get_script_desc();
+void NativeScript::get_script_method_list(List<MethodInfo>* p_list) const {
+    NativeScriptDesc* script_data = get_script_desc();
 
     if (!script_data) {
         return;
@@ -397,29 +476,36 @@ void NativeScript::get_script_method_list(List<MethodInfo> *p_list) const {
     Set<MethodInfo> methods;
 
     while (script_data) {
-        for (Map<StringName, NativeScriptDesc::Method>::Element *E = script_data->methods.front(); E; E = E->next()) {
+        for (Map<StringName, NativeScriptDesc::Method>::Element* E =
+                 script_data->methods.front();
+             E;
+             E = E->next()) {
             methods.insert(E->get().info);
         }
 
         script_data = script_data->base_data;
     }
 
-    for (Set<MethodInfo>::Element *E = methods.front(); E; E = E->next()) {
+    for (Set<MethodInfo>::Element* E = methods.front(); E; E = E->next()) {
         p_list->push_back(E->get());
     }
 }
 
-void NativeScript::get_script_property_list(List<PropertyInfo> *p_list) const {
-    NativeScriptDesc *script_data = get_script_desc();
+void NativeScript::get_script_property_list(List<PropertyInfo>* p_list) const {
+    NativeScriptDesc* script_data = get_script_desc();
 
     Set<StringName> existing_properties;
-    List<PropertyInfo>::Element *original_back = p_list->back();
+    List<PropertyInfo>::Element* original_back = p_list->back();
     while (script_data) {
-        List<PropertyInfo>::Element *insert_position = original_back;
+        List<PropertyInfo>::Element* insert_position = original_back;
 
-        for (OrderedHashMap<StringName, NativeScriptDesc::Property>::Element E = script_data->properties.front(); E; E = E.next()) {
+        for (OrderedHashMap<StringName, NativeScriptDesc::Property>::Element E =
+                 script_data->properties.front();
+             E;
+             E = E.next()) {
             if (!existing_properties.has(E.key())) {
-                insert_position = p_list->insert_after(insert_position, E.get().info);
+                insert_position =
+                    p_list->insert_after(insert_position, E.get().info);
                 existing_properties.insert(E.key());
             }
         }
@@ -428,20 +514,30 @@ void NativeScript::get_script_property_list(List<PropertyInfo> *p_list) const {
 }
 
 String NativeScript::get_class_documentation() const {
-    NativeScriptDesc *script_data = get_script_desc();
+    NativeScriptDesc* script_data = get_script_desc();
 
-    ERR_FAIL_COND_V_MSG(!script_data, "", "Attempt to get class documentation on invalid NativeScript.");
+    ERR_FAIL_COND_V_MSG(
+        !script_data,
+        "",
+        "Attempt to get class documentation on invalid NativeScript."
+    );
 
     return script_data->documentation;
 }
 
-String NativeScript::get_method_documentation(const StringName &p_method) const {
-    NativeScriptDesc *script_data = get_script_desc();
+String NativeScript::get_method_documentation(const StringName& p_method
+) const {
+    NativeScriptDesc* script_data = get_script_desc();
 
-    ERR_FAIL_COND_V_MSG(!script_data, "", "Attempt to get method documentation on invalid NativeScript.");
+    ERR_FAIL_COND_V_MSG(
+        !script_data,
+        "",
+        "Attempt to get method documentation on invalid NativeScript."
+    );
 
     while (script_data) {
-        Map<StringName, NativeScriptDesc::Method>::Element *method = script_data->methods.find(p_method);
+        Map<StringName, NativeScriptDesc::Method>::Element* method =
+            script_data->methods.find(p_method);
 
         if (method) {
             return method->get().documentation;
@@ -450,16 +546,25 @@ String NativeScript::get_method_documentation(const StringName &p_method) const 
         script_data = script_data->base_data;
     }
 
-    ERR_FAIL_V_MSG("", "Attempt to get method documentation for non-existent method.");
+    ERR_FAIL_V_MSG(
+        "",
+        "Attempt to get method documentation for non-existent method."
+    );
 }
 
-String NativeScript::get_signal_documentation(const StringName &p_signal_name) const {
-    NativeScriptDesc *script_data = get_script_desc();
+String NativeScript::get_signal_documentation(const StringName& p_signal_name
+) const {
+    NativeScriptDesc* script_data = get_script_desc();
 
-    ERR_FAIL_COND_V_MSG(!script_data, "", "Attempt to get signal documentation on invalid NativeScript.");
+    ERR_FAIL_COND_V_MSG(
+        !script_data,
+        "",
+        "Attempt to get signal documentation on invalid NativeScript."
+    );
 
     while (script_data) {
-        Map<StringName, NativeScriptDesc::Signal>::Element *signal = script_data->signals_.find(p_signal_name);
+        Map<StringName, NativeScriptDesc::Signal>::Element* signal =
+            script_data->signals_.find(p_signal_name);
 
         if (signal) {
             return signal->get().documentation;
@@ -468,16 +573,25 @@ String NativeScript::get_signal_documentation(const StringName &p_signal_name) c
         script_data = script_data->base_data;
     }
 
-    ERR_FAIL_V_MSG("", "Attempt to get signal documentation for non-existent signal.");
+    ERR_FAIL_V_MSG(
+        "",
+        "Attempt to get signal documentation for non-existent signal."
+    );
 }
 
-String NativeScript::get_property_documentation(const StringName &p_path) const {
-    NativeScriptDesc *script_data = get_script_desc();
+String NativeScript::get_property_documentation(const StringName& p_path
+) const {
+    NativeScriptDesc* script_data = get_script_desc();
 
-    ERR_FAIL_COND_V_MSG(!script_data, "", "Attempt to get property documentation on invalid NativeScript.");
+    ERR_FAIL_COND_V_MSG(
+        !script_data,
+        "",
+        "Attempt to get property documentation on invalid NativeScript."
+    );
 
     while (script_data) {
-        OrderedHashMap<StringName, NativeScriptDesc::Property>::Element property = script_data->properties.find(p_path);
+        OrderedHashMap<StringName, NativeScriptDesc::Property>::Element
+            property = script_data->properties.find(p_path);
 
         if (property) {
             return property.get().documentation;
@@ -486,16 +600,23 @@ String NativeScript::get_property_documentation(const StringName &p_path) const 
         script_data = script_data->base_data;
     }
 
-    ERR_FAIL_V_MSG("", "Attempt to get property documentation for non-existent signal.");
+    ERR_FAIL_V_MSG(
+        "",
+        "Attempt to get property documentation for non-existent signal."
+    );
 }
 
-Variant NativeScript::_new(const Variant **p_args, int p_argcount, Variant::CallError &r_error) {
+Variant NativeScript::_new(
+    const Variant** p_args,
+    int p_argcount,
+    Variant::CallError& r_error
+) {
     if (lib_path.empty() || class_name.empty() || library.is_null()) {
         r_error.error = Variant::CallError::CALL_ERROR_INSTANCE_IS_NULL;
         return Variant();
     }
 
-    NativeScriptDesc *script_data = get_script_desc();
+    NativeScriptDesc* script_data = get_script_desc();
 
     if (!script_data) {
         r_error.error = Variant::CallError::CALL_ERROR_INSTANCE_IS_NULL;
@@ -505,7 +626,7 @@ Variant NativeScript::_new(const Variant **p_args, int p_argcount, Variant::Call
     r_error.error = Variant::CallError::CALL_OK;
 
     REF ref;
-    Object *owner = nullptr;
+    Object* owner = nullptr;
 
     if (!(script_data->base_native_type == "")) {
         owner = ClassDB::instance(script_data->base_native_type);
@@ -518,18 +639,19 @@ Variant NativeScript::_new(const Variant **p_args, int p_argcount, Variant::Call
         return Variant();
     }
 
-    Reference *r = Object::cast_to<Reference>(owner);
+    Reference* r = Object::cast_to<Reference>(owner);
     if (r) {
         ref = REF(r);
     }
 
-    NativeScriptInstance *instance = (NativeScriptInstance *)instance_create(owner);
+    NativeScriptInstance* instance =
+        (NativeScriptInstance*)instance_create(owner);
 
     owner->set_script_instance(instance);
 
     if (!instance) {
         if (ref.is_null()) {
-            memdelete(owner); //no owner, sorry
+            memdelete(owner); // no owner, sorry
         }
         return Variant();
     }
@@ -553,43 +675,64 @@ NativeScript::~NativeScript() {
 
 #define GET_SCRIPT_DESC() script->get_script_desc()
 
-void NativeScriptInstance::_ml_call_reversed(NativeScriptDesc *script_data, const StringName &p_method, const Variant **p_args, int p_argcount) {
+void NativeScriptInstance::_ml_call_reversed(
+    NativeScriptDesc* script_data,
+    const StringName& p_method,
+    const Variant** p_args,
+    int p_argcount
+) {
     if (script_data->base_data) {
         _ml_call_reversed(script_data->base_data, p_method, p_args, p_argcount);
     }
 
-    Map<StringName, NativeScriptDesc::Method>::Element *E = script_data->methods.find(p_method);
+    Map<StringName, NativeScriptDesc::Method>::Element* E =
+        script_data->methods.find(p_method);
     if (E) {
-        godot_variant res = E->get().method.method((godot_object *)owner, E->get().method.method_data, userdata, p_argcount, (godot_variant **)p_args);
+        godot_variant res = E->get().method.method(
+            (godot_object*)owner,
+            E->get().method.method_data,
+            userdata,
+            p_argcount,
+            (godot_variant**)p_args
+        );
         godot_variant_destroy(&res);
     }
 }
 
-bool NativeScriptInstance::set(const StringName &p_name, const Variant &p_value) {
-    NativeScriptDesc *script_data = GET_SCRIPT_DESC();
+bool NativeScriptInstance::set(
+    const StringName& p_name,
+    const Variant& p_value
+) {
+    NativeScriptDesc* script_data = GET_SCRIPT_DESC();
 
     while (script_data) {
-        OrderedHashMap<StringName, NativeScriptDesc::Property>::Element P = script_data->properties.find(p_name);
+        OrderedHashMap<StringName, NativeScriptDesc::Property>::Element P =
+            script_data->properties.find(p_name);
         if (P) {
-            P.get().setter.set_func((godot_object *)owner,
-                    P.get().setter.method_data,
-                    userdata,
-                    (godot_variant *)&p_value);
+            P.get().setter.set_func(
+                (godot_object*)owner,
+                P.get().setter.method_data,
+                userdata,
+                (godot_variant*)&p_value
+            );
             return true;
         }
 
-        Map<StringName, NativeScriptDesc::Method>::Element *E = script_data->methods.find("_set");
+        Map<StringName, NativeScriptDesc::Method>::Element* E =
+            script_data->methods.find("_set");
         if (E) {
             Variant name = p_name;
-            const Variant *args[2] = { &name, &p_value };
+            const Variant* args[2] = {&name, &p_value};
 
             godot_variant result;
-            result = E->get().method.method((godot_object *)owner,
-                    E->get().method.method_data,
-                    userdata,
-                    2,
-                    (godot_variant **)args);
-            bool handled = *(Variant *)&result;
+            result = E->get().method.method(
+                (godot_object*)owner,
+                E->get().method.method_data,
+                userdata,
+                2,
+                (godot_variant**)args
+            );
+            bool handled = *(Variant*)&result;
             godot_variant_destroy(&result);
             if (handled) {
                 return true;
@@ -600,33 +743,40 @@ bool NativeScriptInstance::set(const StringName &p_name, const Variant &p_value)
     }
     return false;
 }
-bool NativeScriptInstance::get(const StringName &p_name, Variant &r_ret) const {
-    NativeScriptDesc *script_data = GET_SCRIPT_DESC();
+
+bool NativeScriptInstance::get(const StringName& p_name, Variant& r_ret) const {
+    NativeScriptDesc* script_data = GET_SCRIPT_DESC();
 
     while (script_data) {
-        OrderedHashMap<StringName, NativeScriptDesc::Property>::Element P = script_data->properties.find(p_name);
+        OrderedHashMap<StringName, NativeScriptDesc::Property>::Element P =
+            script_data->properties.find(p_name);
         if (P) {
             godot_variant value;
-            value = P.get().getter.get_func((godot_object *)owner,
-                    P.get().getter.method_data,
-                    userdata);
-            r_ret = *(Variant *)&value;
+            value = P.get().getter.get_func(
+                (godot_object*)owner,
+                P.get().getter.method_data,
+                userdata
+            );
+            r_ret = *(Variant*)&value;
             godot_variant_destroy(&value);
             return true;
         }
 
-        Map<StringName, NativeScriptDesc::Method>::Element *E = script_data->methods.find("_get");
+        Map<StringName, NativeScriptDesc::Method>::Element* E =
+            script_data->methods.find("_get");
         if (E) {
             Variant name = p_name;
-            const Variant *args[1] = { &name };
+            const Variant* args[1] = {&name};
 
             godot_variant result;
-            result = E->get().method.method((godot_object *)owner,
-                    E->get().method.method_data,
-                    userdata,
-                    1,
-                    (godot_variant **)args);
-            r_ret = *(Variant *)&result;
+            result = E->get().method.method(
+                (godot_object*)owner,
+                E->get().method.method_data,
+                userdata,
+                1,
+                (godot_variant**)args
+            );
+            r_ret = *(Variant*)&result;
             godot_variant_destroy(&result);
             if (r_ret.get_type() != Variant::NIL) {
                 return true;
@@ -638,24 +788,31 @@ bool NativeScriptInstance::get(const StringName &p_name, Variant &r_ret) const {
     return false;
 }
 
-void NativeScriptInstance::get_property_list(List<PropertyInfo> *p_properties) const {
+void NativeScriptInstance::get_property_list(List<PropertyInfo>* p_properties
+) const {
     script->get_script_property_list(p_properties);
 
-    NativeScriptDesc *script_data = GET_SCRIPT_DESC();
+    NativeScriptDesc* script_data = GET_SCRIPT_DESC();
 
     while (script_data) {
-        Map<StringName, NativeScriptDesc::Method>::Element *E = script_data->methods.find("_get_property_list");
+        Map<StringName, NativeScriptDesc::Method>::Element* E =
+            script_data->methods.find("_get_property_list");
         if (E) {
             godot_variant result;
-            result = E->get().method.method((godot_object *)owner,
-                    E->get().method.method_data,
-                    userdata,
-                    0,
-                    nullptr);
-            Variant res = *(Variant *)&result;
+            result = E->get().method.method(
+                (godot_object*)owner,
+                E->get().method.method_data,
+                userdata,
+                0,
+                nullptr
+            );
+            Variant res = *(Variant*)&result;
             godot_variant_destroy(&result);
 
-            ERR_FAIL_COND_MSG(res.get_type() != Variant::ARRAY, "_get_property_list must return an array of dictionaries.");
+            ERR_FAIL_COND_MSG(
+                res.get_type() != Variant::ARRAY,
+                "_get_property_list must return an array of dictionaries."
+            );
 
             Array arr = res;
             for (int i = 0; i < arr.size(); i++) {
@@ -667,7 +824,9 @@ void NativeScriptInstance::get_property_list(List<PropertyInfo> *p_properties) c
                 PropertyInfo info;
 
                 info.type = Variant::Type(d["type"].operator int64_t());
-                ERR_CONTINUE(info.type < 0 || info.type >= Variant::VARIANT_MAX);
+                ERR_CONTINUE(
+                    info.type < 0 || info.type >= Variant::VARIANT_MAX
+                );
 
                 info.name = d["name"];
                 ERR_CONTINUE(info.name == "");
@@ -693,11 +852,15 @@ void NativeScriptInstance::get_property_list(List<PropertyInfo> *p_properties) c
     return;
 }
 
-Variant::Type NativeScriptInstance::get_property_type(const StringName &p_name, bool *r_is_valid) const {
-    NativeScriptDesc *script_data = GET_SCRIPT_DESC();
+Variant::Type NativeScriptInstance::get_property_type(
+    const StringName& p_name,
+    bool* r_is_valid
+) const {
+    NativeScriptDesc* script_data = GET_SCRIPT_DESC();
 
     while (script_data) {
-        OrderedHashMap<StringName, NativeScriptDesc::Property>::Element P = script_data->properties.find(p_name);
+        OrderedHashMap<StringName, NativeScriptDesc::Property>::Element P =
+            script_data->properties.find(p_name);
         if (P) {
             *r_is_valid = true;
             return P.get().info.type;
@@ -708,19 +871,25 @@ Variant::Type NativeScriptInstance::get_property_type(const StringName &p_name, 
     return Variant::NIL;
 }
 
-void NativeScriptInstance::get_method_list(List<MethodInfo> *p_list) const {
+void NativeScriptInstance::get_method_list(List<MethodInfo>* p_list) const {
     script->get_script_method_list(p_list);
 }
 
-bool NativeScriptInstance::has_method(const StringName &p_method) const {
+bool NativeScriptInstance::has_method(const StringName& p_method) const {
     return script->has_method(p_method);
 }
 
-Variant NativeScriptInstance::call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error) {
-    NativeScriptDesc *script_data = GET_SCRIPT_DESC();
+Variant NativeScriptInstance::call(
+    const StringName& p_method,
+    const Variant** p_args,
+    int p_argcount,
+    Variant::CallError& r_error
+) {
+    NativeScriptDesc* script_data = GET_SCRIPT_DESC();
 
     while (script_data) {
-        Map<StringName, NativeScriptDesc::Method>::Element *E = script_data->methods.find(p_method);
+        Map<StringName, NativeScriptDesc::Method>::Element* E =
+            script_data->methods.find(p_method);
         if (E) {
             godot_variant result;
 
@@ -728,17 +897,19 @@ Variant NativeScriptInstance::call(const StringName &p_method, const Variant **p
             current_method_call = p_method;
 #endif
 
-            result = E->get().method.method((godot_object *)owner,
-                    E->get().method.method_data,
-                    userdata,
-                    p_argcount,
-                    (godot_variant **)p_args);
+            result = E->get().method.method(
+                (godot_object*)owner,
+                E->get().method.method_data,
+                userdata,
+                p_argcount,
+                (godot_variant**)p_args
+            );
 
 #ifdef DEBUG_ENABLED
             current_method_call = "";
 #endif
 
-            Variant res = *(Variant *)&result;
+            Variant res = *(Variant*)&result;
             godot_variant_destroy(&result);
             r_error.error = Variant::CallError::CALL_OK;
             return res;
@@ -755,27 +926,36 @@ void NativeScriptInstance::notification(int p_notification) {
 #ifdef DEBUG_ENABLED
     if (p_notification == MainLoop::NOTIFICATION_CRASH) {
         if (current_method_call != StringName("")) {
-            ERR_PRINT("NativeScriptInstance detected crash on method: " + current_method_call);
+            ERR_PRINT(
+                "NativeScriptInstance detected crash on method: "
+                + current_method_call
+            );
             current_method_call = "";
         }
     }
 #endif
 
     Variant value = p_notification;
-    const Variant *args[1] = { &value };
+    const Variant* args[1] = {&value};
     call_multilevel("_notification", args, 1);
 }
 
-String NativeScriptInstance::to_string(bool *r_valid) {
+String NativeScriptInstance::to_string(bool* r_valid) {
     if (has_method(CoreStringNames::get_singleton()->_to_string)) {
         Variant::CallError ce;
-        Variant ret = call(CoreStringNames::get_singleton()->_to_string, nullptr, 0, ce);
+        Variant ret =
+            call(CoreStringNames::get_singleton()->_to_string, nullptr, 0, ce);
         if (ce.error == Variant::CallError::CALL_OK) {
             if (ret.get_type() != Variant::STRING) {
                 if (r_valid) {
                     *r_valid = false;
                 }
-                ERR_FAIL_V_MSG(String(), "Wrong type for " + CoreStringNames::get_singleton()->_to_string + ", must be a String.");
+                ERR_FAIL_V_MSG(
+                    String(),
+                    "Wrong type for "
+                        + CoreStringNames::get_singleton()->_to_string
+                        + ", must be a String."
+                );
             }
             if (r_valid) {
                 *r_valid = true;
@@ -792,7 +972,8 @@ String NativeScriptInstance::to_string(bool *r_valid) {
 void NativeScriptInstance::refcount_incremented() {
     Variant::CallError err;
     call("_refcount_incremented", nullptr, 0, err);
-    if (err.error != Variant::CallError::CALL_OK && err.error != Variant::CallError::CALL_ERROR_INVALID_METHOD) {
+    if (err.error != Variant::CallError::CALL_OK
+        && err.error != Variant::CallError::CALL_ERROR_INVALID_METHOD) {
         ERR_PRINT("Failed to invoke _refcount_incremented - should not happen");
     }
 }
@@ -800,7 +981,8 @@ void NativeScriptInstance::refcount_incremented() {
 bool NativeScriptInstance::refcount_decremented() {
     Variant::CallError err;
     Variant ret = call("_refcount_decremented", nullptr, 0, err);
-    if (err.error != Variant::CallError::CALL_OK && err.error != Variant::CallError::CALL_ERROR_INVALID_METHOD) {
+    if (err.error != Variant::CallError::CALL_OK
+        && err.error != Variant::CallError::CALL_ERROR_INVALID_METHOD) {
         ERR_PRINT("Failed to invoke _refcount_decremented - should not happen");
         return true; // assume we can destroy the object
     }
@@ -815,11 +997,14 @@ Ref<Script> NativeScriptInstance::get_script() const {
     return script;
 }
 
-MultiplayerAPI::RPCMode NativeScriptInstance::get_rpc_mode(const StringName &p_method) const {
-    NativeScriptDesc *script_data = GET_SCRIPT_DESC();
+MultiplayerAPI::RPCMode NativeScriptInstance::get_rpc_mode(
+    const StringName& p_method
+) const {
+    NativeScriptDesc* script_data = GET_SCRIPT_DESC();
 
     while (script_data) {
-        Map<StringName, NativeScriptDesc::Method>::Element *E = script_data->methods.find(p_method);
+        Map<StringName, NativeScriptDesc::Method>::Element* E =
+            script_data->methods.find(p_method);
         if (E) {
             switch (E->get().rpc_mode) {
                 case GODOT_METHOD_RPC_MODE_DISABLED:
@@ -847,11 +1032,14 @@ MultiplayerAPI::RPCMode NativeScriptInstance::get_rpc_mode(const StringName &p_m
     return MultiplayerAPI::RPC_MODE_DISABLED;
 }
 
-MultiplayerAPI::RPCMode NativeScriptInstance::get_rset_mode(const StringName &p_variable) const {
-    NativeScriptDesc *script_data = GET_SCRIPT_DESC();
+MultiplayerAPI::RPCMode NativeScriptInstance::get_rset_mode(
+    const StringName& p_variable
+) const {
+    NativeScriptDesc* script_data = GET_SCRIPT_DESC();
 
     while (script_data) {
-        OrderedHashMap<StringName, NativeScriptDesc::Property>::Element E = script_data->properties.find(p_variable);
+        OrderedHashMap<StringName, NativeScriptDesc::Property>::Element E =
+            script_data->properties.find(p_variable);
         if (E) {
             switch (E.get().rset_mode) {
                 case GODOT_METHOD_RPC_MODE_DISABLED:
@@ -879,29 +1067,40 @@ MultiplayerAPI::RPCMode NativeScriptInstance::get_rset_mode(const StringName &p_
     return MultiplayerAPI::RPC_MODE_DISABLED;
 }
 
-ScriptLanguage *NativeScriptInstance::get_language() {
+ScriptLanguage* NativeScriptInstance::get_language() {
     return NativeScriptLanguage::get_singleton();
 }
 
-void NativeScriptInstance::call_multilevel(const StringName &p_method, const Variant **p_args, int p_argcount) {
-    NativeScriptDesc *script_data = GET_SCRIPT_DESC();
+void NativeScriptInstance::call_multilevel(
+    const StringName& p_method,
+    const Variant** p_args,
+    int p_argcount
+) {
+    NativeScriptDesc* script_data = GET_SCRIPT_DESC();
 
     while (script_data) {
-        Map<StringName, NativeScriptDesc::Method>::Element *E = script_data->methods.find(p_method);
+        Map<StringName, NativeScriptDesc::Method>::Element* E =
+            script_data->methods.find(p_method);
         if (E) {
-            godot_variant res = E->get().method.method((godot_object *)owner,
-                    E->get().method.method_data,
-                    userdata,
-                    p_argcount,
-                    (godot_variant **)p_args);
+            godot_variant res = E->get().method.method(
+                (godot_object*)owner,
+                E->get().method.method_data,
+                userdata,
+                p_argcount,
+                (godot_variant**)p_args
+            );
             godot_variant_destroy(&res);
         }
         script_data = script_data->base_data;
     }
 }
 
-void NativeScriptInstance::call_multilevel_reversed(const StringName &p_method, const Variant **p_args, int p_argcount) {
-    NativeScriptDesc *script_data = GET_SCRIPT_DESC();
+void NativeScriptInstance::call_multilevel_reversed(
+    const StringName& p_method,
+    const Variant** p_args,
+    int p_argcount
+) {
+    NativeScriptDesc* script_data = GET_SCRIPT_DESC();
 
     if (script_data) {
         _ml_call_reversed(script_data, p_method, p_args, p_argcount);
@@ -909,13 +1108,17 @@ void NativeScriptInstance::call_multilevel_reversed(const StringName &p_method, 
 }
 
 NativeScriptInstance::~NativeScriptInstance() {
-    NativeScriptDesc *script_data = GET_SCRIPT_DESC();
+    NativeScriptDesc* script_data = GET_SCRIPT_DESC();
 
     if (!script_data) {
         return;
     }
 
-    script_data->destroy_func.destroy_func((godot_object *)owner, script_data->destroy_func.method_data, userdata);
+    script_data->destroy_func.destroy_func(
+        (godot_object*)owner,
+        script_data->destroy_func.method_data,
+        userdata
+    );
 
     if (owner) {
         script->owners_lock.lock();
@@ -924,17 +1127,21 @@ NativeScriptInstance::~NativeScriptInstance() {
     }
 }
 
-NativeScriptLanguage *NativeScriptLanguage::singleton;
+NativeScriptLanguage* NativeScriptLanguage::singleton;
 
 void NativeScriptLanguage::_unload_stuff(bool p_reload) {
     Map<String, Ref<GDNative>> erase_and_unload;
 
-    for (Map<String, Map<StringName, NativeScriptDesc>>::Element *L = library_classes.front(); L; L = L->next()) {
+    for (Map<String, Map<StringName, NativeScriptDesc>>::Element* L =
+             library_classes.front();
+         L;
+         L = L->next()) {
         String lib_path = L->key();
         Map<StringName, NativeScriptDesc> classes = L->get();
 
         if (p_reload) {
-            Map<String, Ref<GDNative>>::Element *E = library_gdnatives.find(lib_path);
+            Map<String, Ref<GDNative>>::Element* E =
+                library_gdnatives.find(lib_path);
             Ref<GDNative> gdn;
 
             if (E) {
@@ -955,16 +1162,21 @@ void NativeScriptLanguage::_unload_stuff(bool p_reload) {
             }
         }
 
-        Map<String, Ref<GDNative>>::Element *E = library_gdnatives.find(lib_path);
+        Map<String, Ref<GDNative>>::Element* E =
+            library_gdnatives.find(lib_path);
         Ref<GDNative> gdn;
 
         if (E) {
             gdn = E->get();
         }
 
-        for (Map<StringName, NativeScriptDesc>::Element *C = classes.front(); C; C = C->next()) {
+        for (Map<StringName, NativeScriptDesc>::Element* C = classes.front(); C;
+             C = C->next()) {
             // free property stuff first
-            for (OrderedHashMap<StringName, NativeScriptDesc::Property>::Element P = C->get().properties.front(); P; P = P.next()) {
+            for (OrderedHashMap<StringName, NativeScriptDesc::Property>::Element
+                     P = C->get().properties.front();
+                 P;
+                 P = P.next()) {
                 if (P.get().getter.free_func) {
                     P.get().getter.free_func(P.get().getter.method_data);
                 }
@@ -975,7 +1187,10 @@ void NativeScriptLanguage::_unload_stuff(bool p_reload) {
             }
 
             // free method stuff
-            for (Map<StringName, NativeScriptDesc::Method>::Element *M = C->get().methods.front(); M; M = M->next()) {
+            for (Map<StringName, NativeScriptDesc::Method>::Element* M =
+                     C->get().methods.front();
+                 M;
+                 M = M->next()) {
                 if (M->get().method.free_func) {
                     M->get().method.free_func(M->get().method.method_data);
                 }
@@ -983,18 +1198,22 @@ void NativeScriptLanguage::_unload_stuff(bool p_reload) {
 
             // free constructor/destructor
             if (C->get().create_func.free_func) {
-                C->get().create_func.free_func(C->get().create_func.method_data);
+                C->get().create_func.free_func(C->get().create_func.method_data
+                );
             }
 
             if (C->get().destroy_func.free_func) {
-                C->get().destroy_func.free_func(C->get().destroy_func.method_data);
+                C->get().destroy_func.free_func(
+                    C->get().destroy_func.method_data
+                );
             }
         }
 
         erase_and_unload.insert(lib_path, gdn);
     }
 
-    for (Map<String, Ref<GDNative>>::Element *E = erase_and_unload.front(); E; E = E->next()) {
+    for (Map<String, Ref<GDNative>>::Element* E = erase_and_unload.front(); E;
+         E = E->next()) {
         String lib_path = E->key();
         Ref<GDNative> gdn = E->get();
 
@@ -1002,13 +1221,17 @@ void NativeScriptLanguage::_unload_stuff(bool p_reload) {
 
         if (gdn.is_valid() && gdn->get_library().is_valid()) {
             Ref<GDNativeLibrary> lib = gdn->get_library();
-            void *terminate_fn;
-            Error err = gdn->get_symbol(lib->get_symbol_prefix() + _terminate_call_name, terminate_fn, true);
+            void* terminate_fn;
+            Error err = gdn->get_symbol(
+                lib->get_symbol_prefix() + _terminate_call_name,
+                terminate_fn,
+                true
+            );
 
             if (err == OK) {
-                void (*terminate)(void *) = (void (*)(void *))terminate_fn;
+                void (*terminate)(void*) = (void (*)(void*))terminate_fn;
 
-                terminate((void *)&lib_path);
+                terminate((void*)&lib_path);
             }
         }
     }
@@ -1033,7 +1256,10 @@ NativeScriptLanguage::NativeScriptLanguage() {
 }
 
 NativeScriptLanguage::~NativeScriptLanguage() {
-    for (Map<String, Ref<GDNative>>::Element *L = NSL->library_gdnatives.front(); L; L = L->next()) {
+    for (Map<String, Ref<GDNative>>::Element* L =
+             NSL->library_gdnatives.front();
+         L;
+         L = L->next()) {
         Ref<GDNative> lib = L->get();
         // only shut down valid libs, duh!
         if (lib.is_valid()) {
@@ -1056,7 +1282,7 @@ String NativeScriptLanguage::get_name() const {
 
 void _add_reload_node() {
 #ifdef TOOLS_ENABLED
-    NativeReloadNode *rn = memnew(NativeReloadNode);
+    NativeReloadNode* rn = memnew(NativeReloadNode);
     EditorNode::get_singleton()->add_child(rn);
 #endif
 }
@@ -1066,7 +1292,7 @@ void NativeScriptLanguage::init() {
 
     List<String> args = OS::get_singleton()->get_cmdline_args();
 
-    List<String>::Element *E = args.find("--gdnative-generate-json-api");
+    List<String>::Element* E = args.find("--gdnative-generate-json-api");
 
     if (E && E->next()) {
         if (generate_c_api(E->next()->get()) != OK) {
@@ -1081,99 +1307,169 @@ void NativeScriptLanguage::init() {
     EditorNode::add_init_callback(&_add_reload_node);
 #endif
 }
+
 String NativeScriptLanguage::get_type() const {
     return "NativeScript";
 }
+
 String NativeScriptLanguage::get_extension() const {
     return "gdns";
 }
-Error NativeScriptLanguage::execute_file(const String &p_path) {
+
+Error NativeScriptLanguage::execute_file(const String& p_path) {
     return OK; // Qué?
 }
+
 void NativeScriptLanguage::finish() {
     _unload_stuff();
 }
-void NativeScriptLanguage::get_reserved_words(List<String> *p_words) const {
-}
+
+void NativeScriptLanguage::get_reserved_words(List<String>* p_words) const {}
+
 bool NativeScriptLanguage::is_control_flow_keyword(String p_keyword) const {
     return false;
 }
-void NativeScriptLanguage::get_comment_delimiters(List<String> *p_delimiters) const {
-}
-void NativeScriptLanguage::get_string_delimiters(List<String> *p_delimiters) const {
-}
 
-Ref<Script> NativeScriptLanguage::get_template(const String &p_class_name, const String &p_base_class_name) const {
-    NativeScript *s = memnew(NativeScript);
+void NativeScriptLanguage::get_comment_delimiters(List<String>* p_delimiters
+) const {}
+
+void NativeScriptLanguage::get_string_delimiters(List<String>* p_delimiters
+) const {}
+
+Ref<Script> NativeScriptLanguage::get_template(
+    const String& p_class_name,
+    const String& p_base_class_name
+) const {
+    NativeScript* s = memnew(NativeScript);
     s->set_class_name(p_class_name);
     return Ref<NativeScript>(s);
 }
-bool NativeScriptLanguage::validate(const String &p_script, int &r_line_error, int &r_col_error, String &r_test_error, const String &p_path, List<String> *r_functions, List<ScriptLanguage::Warning> *r_warnings, Set<int> *r_safe_lines) const {
+
+bool NativeScriptLanguage::validate(
+    const String& p_script,
+    int& r_line_error,
+    int& r_col_error,
+    String& r_test_error,
+    const String& p_path,
+    List<String>* r_functions,
+    List<ScriptLanguage::Warning>* r_warnings,
+    Set<int>* r_safe_lines
+) const {
     return true;
 }
 
-Script *NativeScriptLanguage::create_script() const {
-    NativeScript *script = memnew(NativeScript);
+Script* NativeScriptLanguage::create_script() const {
+    NativeScript* script = memnew(NativeScript);
     return script;
 }
+
 bool NativeScriptLanguage::has_named_classes() const {
     return true;
 }
+
 bool NativeScriptLanguage::supports_builtin_mode() const {
     return true;
 }
-int NativeScriptLanguage::find_function(const String &p_function, const String &p_code) const {
+
+int NativeScriptLanguage::find_function(
+    const String& p_function,
+    const String& p_code
+) const {
     return -1;
 }
-String NativeScriptLanguage::make_function(const String &p_class, const String &p_name, const PoolStringArray &p_args) const {
+
+String NativeScriptLanguage::make_function(
+    const String& p_class,
+    const String& p_name,
+    const PoolStringArray& p_args
+) const {
     return "";
 }
-void NativeScriptLanguage::auto_indent_code(String &p_code, int p_from_line, int p_to_line) const {
-}
-void NativeScriptLanguage::add_global_constant(const StringName &p_variable, const Variant &p_value) {
-}
+
+void NativeScriptLanguage::auto_indent_code(
+    String& p_code,
+    int p_from_line,
+    int p_to_line
+) const {}
+
+void NativeScriptLanguage::add_global_constant(
+    const StringName& p_variable,
+    const Variant& p_value
+) {}
 
 // Debugging stuff here. Not used for now.
 String NativeScriptLanguage::debug_get_error() const {
     return "";
 }
+
 int NativeScriptLanguage::debug_get_stack_level_count() const {
     return -1;
 }
+
 int NativeScriptLanguage::debug_get_stack_level_line(int p_level) const {
     return -1;
 }
+
 String NativeScriptLanguage::debug_get_stack_level_function(int p_level) const {
     return "";
 }
+
 String NativeScriptLanguage::debug_get_stack_level_source(int p_level) const {
     return "";
 }
-void NativeScriptLanguage::debug_get_stack_level_locals(int p_level, List<String> *p_locals, List<Variant> *p_values, int p_max_subitems, int p_max_depth) {
-}
-void NativeScriptLanguage::debug_get_stack_level_members(int p_level, List<String> *p_members, List<Variant> *p_values, int p_max_subitems, int p_max_depth) {
-}
-void NativeScriptLanguage::debug_get_globals(List<String> *p_locals, List<Variant> *p_values, int p_max_subitems, int p_max_depth) {
-}
-String NativeScriptLanguage::debug_parse_stack_level_expression(int p_level, const String &p_expression, int p_max_subitems, int p_max_depth) {
+
+void NativeScriptLanguage::debug_get_stack_level_locals(
+    int p_level,
+    List<String>* p_locals,
+    List<Variant>* p_values,
+    int p_max_subitems,
+    int p_max_depth
+) {}
+
+void NativeScriptLanguage::debug_get_stack_level_members(
+    int p_level,
+    List<String>* p_members,
+    List<Variant>* p_values,
+    int p_max_subitems,
+    int p_max_depth
+) {}
+
+void NativeScriptLanguage::debug_get_globals(
+    List<String>* p_locals,
+    List<Variant>* p_values,
+    int p_max_subitems,
+    int p_max_depth
+) {}
+
+String NativeScriptLanguage::debug_parse_stack_level_expression(
+    int p_level,
+    const String& p_expression,
+    int p_max_subitems,
+    int p_max_depth
+) {
     return "";
 }
+
 // Debugging stuff end.
 
-void NativeScriptLanguage::reload_all_scripts() {
-}
+void NativeScriptLanguage::reload_all_scripts() {}
 
-void NativeScriptLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft_reload) {
-}
-void NativeScriptLanguage::get_recognized_extensions(List<String> *p_extensions) const {
+void NativeScriptLanguage::reload_tool_script(
+    const Ref<Script>& p_script,
+    bool p_soft_reload
+) {}
+
+void NativeScriptLanguage::get_recognized_extensions(List<String>* p_extensions
+) const {
     p_extensions->push_back("gdns");
 }
 
-void NativeScriptLanguage::get_public_functions(List<MethodInfo> *p_functions) const {
-}
+void NativeScriptLanguage::get_public_functions(List<MethodInfo>* p_functions
+) const {}
 
-void NativeScriptLanguage::get_public_constants(List<Pair<String, Variant>> *p_constants) const {
-}
+void NativeScriptLanguage::get_public_constants(
+    List<Pair<String, Variant>>* p_constants
+) const {}
 
 void NativeScriptLanguage::profiling_start() {
 #ifdef DEBUG_ENABLED
@@ -1196,14 +1492,18 @@ void NativeScriptLanguage::profiling_stop() {
 #endif
 }
 
-int NativeScriptLanguage::profiling_get_accumulated_data(ProfilingInfo *p_info_arr, int p_info_max) {
+int NativeScriptLanguage::profiling_get_accumulated_data(
+    ProfilingInfo* p_info_arr,
+    int p_info_max
+) {
 #ifdef DEBUG_ENABLED
 #ifndef NO_THREADS
     MutexLock lock(mutex);
 #endif
     int current = 0;
 
-    for (Map<StringName, ProfileData>::Element *d = profile_data.front(); d; d = d->next()) {
+    for (Map<StringName, ProfileData>::Element* d = profile_data.front(); d;
+         d = d->next()) {
         if (current >= p_info_max) {
             break;
         }
@@ -1221,14 +1521,18 @@ int NativeScriptLanguage::profiling_get_accumulated_data(ProfilingInfo *p_info_a
 #endif
 }
 
-int NativeScriptLanguage::profiling_get_frame_data(ProfilingInfo *p_info_arr, int p_info_max) {
+int NativeScriptLanguage::profiling_get_frame_data(
+    ProfilingInfo* p_info_arr,
+    int p_info_max
+) {
 #ifdef DEBUG_ENABLED
 #ifndef NO_THREADS
     MutexLock lock(mutex);
 #endif
     int current = 0;
 
-    for (Map<StringName, ProfileData>::Element *d = profile_data.front(); d; d = d->next()) {
+    for (Map<StringName, ProfileData>::Element* d = profile_data.front(); d;
+         d = d->next()) {
         if (current >= p_info_max) {
             break;
         }
@@ -1248,13 +1552,16 @@ int NativeScriptLanguage::profiling_get_frame_data(ProfilingInfo *p_info_arr, in
 #endif
 }
 
-void NativeScriptLanguage::profiling_add_data(StringName p_signature, uint64_t p_time) {
+void NativeScriptLanguage::profiling_add_data(
+    StringName p_signature,
+    uint64_t p_time
+) {
 #ifdef DEBUG_ENABLED
 #ifndef NO_THREADS
     MutexLock lock(mutex);
 #endif
 
-    Map<StringName, ProfileData>::Element *d = profile_data.find(p_signature);
+    Map<StringName, ProfileData>::Element* d = profile_data.find(p_signature);
     if (d) {
         d->get().call_count += 1;
         d->get().total_time += p_time;
@@ -1279,7 +1586,9 @@ void NativeScriptLanguage::profiling_add_data(StringName p_signature, uint64_t p
 #endif
 }
 
-int NativeScriptLanguage::register_binding_functions(godot_instance_binding_functions p_binding_functions) {
+int NativeScriptLanguage::register_binding_functions(
+    godot_instance_binding_functions p_binding_functions
+) {
     // find index
 
     int idx = -1;
@@ -1307,27 +1616,43 @@ int NativeScriptLanguage::register_binding_functions(godot_instance_binding_func
 void NativeScriptLanguage::unregister_binding_functions(int p_idx) {
     ERR_FAIL_INDEX(p_idx, binding_functions.size());
 
-    for (Set<Vector<void *> *>::Element *E = binding_instances.front(); E; E = E->next()) {
-        Vector<void *> &binding_data = *E->get();
+    for (Set<Vector<void*>*>::Element* E = binding_instances.front(); E;
+         E = E->next()) {
+        Vector<void*>& binding_data = *E->get();
 
-        if (p_idx < binding_data.size() && binding_data[p_idx] && binding_functions[p_idx].second.free_instance_binding_data) {
-            binding_functions[p_idx].second.free_instance_binding_data(binding_functions[p_idx].second.data, binding_data[p_idx]);
+        if (p_idx < binding_data.size() && binding_data[p_idx]
+            && binding_functions[p_idx].second.free_instance_binding_data) {
+            binding_functions[p_idx].second.free_instance_binding_data(
+                binding_functions[p_idx].second.data,
+                binding_data[p_idx]
+            );
         }
     }
 
     binding_functions.write[p_idx].first = false;
 
     if (binding_functions[p_idx].second.free_func) {
-        binding_functions[p_idx].second.free_func(binding_functions[p_idx].second.data);
+        binding_functions[p_idx].second.free_func(
+            binding_functions[p_idx].second.data
+        );
     }
 }
 
-void *NativeScriptLanguage::get_instance_binding_data(int p_idx, Object *p_object) {
+void* NativeScriptLanguage::get_instance_binding_data(
+    int p_idx,
+    Object* p_object
+) {
     ERR_FAIL_INDEX_V(p_idx, binding_functions.size(), nullptr);
 
-    ERR_FAIL_COND_V_MSG(!binding_functions[p_idx].first, nullptr, "Tried to get binding data for a nativescript binding that does not exist.");
+    ERR_FAIL_COND_V_MSG(
+        !binding_functions[p_idx].first,
+        nullptr,
+        "Tried to get binding data for a nativescript binding that does not "
+        "exist."
+    );
 
-    Vector<void *> *binding_data = (Vector<void *> *)p_object->get_script_instance_binding(lang_idx);
+    Vector<void*>* binding_data =
+        (Vector<void*>*)p_object->get_script_instance_binding(lang_idx);
 
     if (!binding_data) {
         return nullptr; // should never happen.
@@ -1345,17 +1670,23 @@ void *NativeScriptLanguage::get_instance_binding_data(int p_idx, Object *p_objec
     }
 
     if (!(*binding_data)[p_idx]) {
-        const void *global_type_tag = get_global_type_tag(p_idx, p_object->get_class_name());
+        const void* global_type_tag =
+            get_global_type_tag(p_idx, p_object->get_class_name());
 
         // no binding data yet, soooooo alloc new one \o/
-        (*binding_data).write[p_idx] = binding_functions[p_idx].second.alloc_instance_binding_data(binding_functions[p_idx].second.data, global_type_tag, (godot_object *)p_object);
+        (*binding_data).write[p_idx] =
+            binding_functions[p_idx].second.alloc_instance_binding_data(
+                binding_functions[p_idx].second.data,
+                global_type_tag,
+                (godot_object*)p_object
+            );
     }
 
     return (*binding_data)[p_idx];
 }
 
-void *NativeScriptLanguage::alloc_instance_binding_data(Object *p_object) {
-    Vector<void *> *binding_data = new Vector<void *>;
+void* NativeScriptLanguage::alloc_instance_binding_data(Object* p_object) {
+    Vector<void*>* binding_data = new Vector<void*>;
 
     binding_data->resize(binding_functions.size());
 
@@ -1365,23 +1696,27 @@ void *NativeScriptLanguage::alloc_instance_binding_data(Object *p_object) {
 
     binding_instances.insert(binding_data);
 
-    return (void *)binding_data;
+    return (void*)binding_data;
 }
 
-void NativeScriptLanguage::free_instance_binding_data(void *p_data) {
+void NativeScriptLanguage::free_instance_binding_data(void* p_data) {
     if (!p_data) {
         return;
     }
 
-    Vector<void *> &binding_data = *(Vector<void *> *)p_data;
+    Vector<void*>& binding_data = *(Vector<void*>*)p_data;
 
     for (int i = 0; i < binding_data.size(); i++) {
         if (!binding_data[i]) {
             continue;
         }
 
-        if (binding_functions[i].first && binding_functions[i].second.free_instance_binding_data) {
-            binding_functions[i].second.free_instance_binding_data(binding_functions[i].second.data, binding_data[i]);
+        if (binding_functions[i].first
+            && binding_functions[i].second.free_instance_binding_data) {
+            binding_functions[i].second.free_instance_binding_data(
+                binding_functions[i].second.data,
+                binding_data[i]
+            );
         }
     }
 
@@ -1390,14 +1725,16 @@ void NativeScriptLanguage::free_instance_binding_data(void *p_data) {
     delete &binding_data;
 }
 
-void NativeScriptLanguage::refcount_incremented_instance_binding(Object *p_object) {
-    void *data = p_object->get_script_instance_binding(lang_idx);
+void NativeScriptLanguage::refcount_incremented_instance_binding(
+    Object* p_object
+) {
+    void* data = p_object->get_script_instance_binding(lang_idx);
 
     if (!data) {
         return;
     }
 
-    Vector<void *> &binding_data = *(Vector<void *> *)data;
+    Vector<void*>& binding_data = *(Vector<void*>*)data;
 
     for (int i = 0; i < binding_data.size(); i++) {
         if (!binding_data[i]) {
@@ -1409,19 +1746,24 @@ void NativeScriptLanguage::refcount_incremented_instance_binding(Object *p_objec
         }
 
         if (binding_functions[i].second.refcount_incremented_instance_binding) {
-            binding_functions[i].second.refcount_incremented_instance_binding(binding_data[i], p_object);
+            binding_functions[i].second.refcount_incremented_instance_binding(
+                binding_data[i],
+                p_object
+            );
         }
     }
 }
 
-bool NativeScriptLanguage::refcount_decremented_instance_binding(Object *p_object) {
-    void *data = p_object->get_script_instance_binding(lang_idx);
+bool NativeScriptLanguage::refcount_decremented_instance_binding(
+    Object* p_object
+) {
+    void* data = p_object->get_script_instance_binding(lang_idx);
 
     if (!data) {
         return true;
     }
 
-    Vector<void *> &binding_data = *(Vector<void *> *)data;
+    Vector<void*>& binding_data = *(Vector<void*>*)data;
 
     bool can_die = true;
 
@@ -1435,41 +1777,56 @@ bool NativeScriptLanguage::refcount_decremented_instance_binding(Object *p_objec
         }
 
         if (binding_functions[i].second.refcount_decremented_instance_binding) {
-            can_die = can_die && binding_functions[i].second.refcount_decremented_instance_binding(binding_data[i], p_object);
+            can_die = can_die
+                   && binding_functions[i]
+                          .second.refcount_decremented_instance_binding(
+                              binding_data[i],
+                              p_object
+                          );
         }
     }
 
     return can_die;
 }
 
-void NativeScriptLanguage::set_global_type_tag(int p_idx, StringName p_class_name, const void *p_type_tag) {
+void NativeScriptLanguage::set_global_type_tag(
+    int p_idx,
+    StringName p_class_name,
+    const void* p_type_tag
+) {
     if (!global_type_tags.has(p_idx)) {
-        global_type_tags.insert(p_idx, HashMap<StringName, const void *>());
+        global_type_tags.insert(p_idx, HashMap<StringName, const void*>());
     }
 
-    HashMap<StringName, const void *> &tags = global_type_tags[p_idx];
+    HashMap<StringName, const void*>& tags = global_type_tags[p_idx];
 
     tags.set(p_class_name, p_type_tag);
 }
 
-const void *NativeScriptLanguage::get_global_type_tag(int p_idx, StringName p_class_name) const {
+const void* NativeScriptLanguage::get_global_type_tag(
+    int p_idx,
+    StringName p_class_name
+) const {
     if (!global_type_tags.has(p_idx)) {
         return nullptr;
     }
 
-    const HashMap<StringName, const void *> &tags = global_type_tags[p_idx];
+    const HashMap<StringName, const void*>& tags = global_type_tags[p_idx];
 
     if (!tags.has(p_class_name)) {
         return nullptr;
     }
 
-    const void *tag = tags.get(p_class_name);
+    const void* tag = tags.get(p_class_name);
 
     return tag;
 }
 
 #ifndef NO_THREADS
-void NativeScriptLanguage::defer_init_library(Ref<GDNativeLibrary> lib, NativeScript *script) {
+void NativeScriptLanguage::defer_init_library(
+    Ref<GDNativeLibrary> lib,
+    NativeScript* script
+) {
     MutexLock lock(mutex);
     libs_to_init.insert(lib);
     scripts_to_register.insert(script);
@@ -1477,14 +1834,17 @@ void NativeScriptLanguage::defer_init_library(Ref<GDNativeLibrary> lib, NativeSc
 }
 #endif
 
-void NativeScriptLanguage::init_library(const Ref<GDNativeLibrary> &lib) {
+void NativeScriptLanguage::init_library(const Ref<GDNativeLibrary>& lib) {
 #ifndef NO_THREADS
     MutexLock lock(mutex);
 #endif
     // See if this library was "registered" already.
-    const String &lib_path = lib->get_current_library_path();
-    ERR_FAIL_COND_MSG(lib_path.length() == 0, lib->get_name() + " does not have a library for the current platform.");
-    Map<String, Ref<GDNative>>::Element *E = library_gdnatives.find(lib_path);
+    const String& lib_path = lib->get_current_library_path();
+    ERR_FAIL_COND_MSG(
+        lib_path.length() == 0,
+        lib->get_name() + " does not have a library for the current platform."
+    );
+    Map<String, Ref<GDNative>>::Element* E = library_gdnatives.find(lib_path);
 
     if (!E) {
         Ref<GDNative> gdn;
@@ -1499,75 +1859,108 @@ void NativeScriptLanguage::init_library(const Ref<GDNativeLibrary> &lib) {
         library_classes.insert(lib_path, Map<StringName, NativeScriptDesc>());
 
         if (!library_script_users.has(lib_path)) {
-            library_script_users.insert(lib_path, Set<NativeScript *>());
+            library_script_users.insert(lib_path, Set<NativeScript*>());
         }
 
-        void *proc_ptr;
+        void* proc_ptr;
 
-        Error err = gdn->get_symbol(lib->get_symbol_prefix() + _init_call_name, proc_ptr);
+        Error err = gdn->get_symbol(
+            lib->get_symbol_prefix() + _init_call_name,
+            proc_ptr
+        );
 
         if (err != OK) {
-            ERR_PRINT(String("No " + _init_call_name + " in \"" + lib_path + "\" found").utf8().get_data());
+            ERR_PRINT(String(
+                          "No " + _init_call_name + " in \"" + lib_path
+                          + "\" found"
+            )
+                          .utf8()
+                          .get_data());
         } else {
-            ((void (*)(godot_string *))proc_ptr)((godot_string *)&lib_path);
+            ((void (*)(godot_string*))proc_ptr)((godot_string*)&lib_path);
         }
     } else {
         // already initialized. Nice.
     }
 }
 
-void NativeScriptLanguage::register_script(NativeScript *script) {
+void NativeScriptLanguage::register_script(NativeScript* script) {
 #ifndef NO_THREADS
     MutexLock lock(mutex);
 #endif
     library_script_users[script->lib_path].insert(script);
 }
 
-void NativeScriptLanguage::unregister_script(NativeScript *script) {
+void NativeScriptLanguage::unregister_script(NativeScript* script) {
 #ifndef NO_THREADS
     MutexLock lock(mutex);
 #endif
-    Map<String, Set<NativeScript *>>::Element *S = library_script_users.find(script->lib_path);
+    Map<String, Set<NativeScript*>>::Element* S =
+        library_script_users.find(script->lib_path);
     if (S) {
         S->get().erase(script);
         if (S->get().size() == 0) {
             library_script_users.erase(S);
 
-            Map<String, Ref<GDNative>>::Element *G = library_gdnatives.find(script->lib_path);
+            Map<String, Ref<GDNative>>::Element* G =
+                library_gdnatives.find(script->lib_path);
             if (G && G->get()->get_library()->is_reloadable()) {
-                // ONLY if the library is marked as reloadable, and no more instances of its scripts exist do we unload the library
+                // ONLY if the library is marked as reloadable, and no more
+                // instances of its scripts exist do we unload the library
 
                 // First remove meta data related to the library
-                Map<String, Map<StringName, NativeScriptDesc>>::Element *L = library_classes.find(script->lib_path);
+                Map<String, Map<StringName, NativeScriptDesc>>::Element* L =
+                    library_classes.find(script->lib_path);
                 if (L) {
                     Map<StringName, NativeScriptDesc> classes = L->get();
 
-                    for (Map<StringName, NativeScriptDesc>::Element *C = classes.front(); C; C = C->next()) {
+                    for (Map<StringName, NativeScriptDesc>::Element* C =
+                             classes.front();
+                         C;
+                         C = C->next()) {
                         // free property stuff first
-                        for (OrderedHashMap<StringName, NativeScriptDesc::Property>::Element P = C->get().properties.front(); P; P = P.next()) {
+                        for (OrderedHashMap<
+                                 StringName,
+                                 NativeScriptDesc::Property>::Element P =
+                                 C->get().properties.front();
+                             P;
+                             P = P.next()) {
                             if (P.get().getter.free_func) {
-                                P.get().getter.free_func(P.get().getter.method_data);
+                                P.get().getter.free_func(
+                                    P.get().getter.method_data
+                                );
                             }
 
                             if (P.get().setter.free_func) {
-                                P.get().setter.free_func(P.get().setter.method_data);
+                                P.get().setter.free_func(
+                                    P.get().setter.method_data
+                                );
                             }
                         }
 
                         // free method stuff
-                        for (Map<StringName, NativeScriptDesc::Method>::Element *M = C->get().methods.front(); M; M = M->next()) {
+                        for (Map<StringName, NativeScriptDesc::Method>::Element*
+                                 M = C->get().methods.front();
+                             M;
+                             M = M->next()) {
                             if (M->get().method.free_func) {
-                                M->get().method.free_func(M->get().method.method_data);
+                                M->get().method.free_func(
+                                    M->get().method.method_data
+                                );
                             }
                         }
 
                         // free constructor/destructor
                         if (C->get().create_func.free_func) {
-                            C->get().create_func.free_func(C->get().create_func.method_data);
+                            C->get().create_func.free_func(
+                                C->get().create_func.method_data
+                            );
                         }
 
                         if (C->get().destroy_func.free_func) {
-                            C->get().destroy_func.free_func(C->get().destroy_func.method_data);
+                            C->get().destroy_func.free_func(
+                                C->get().destroy_func.method_data
+                            );
                         }
                     }
 
@@ -1585,16 +1978,21 @@ void NativeScriptLanguage::unregister_script(NativeScript *script) {
 #endif
 }
 
-void NativeScriptLanguage::call_libraries_cb(const StringName &name) {
-    // library_gdnatives is modified only from the main thread, so it's safe not to use mutex here
-    for (Map<String, Ref<GDNative>>::Element *L = library_gdnatives.front(); L; L = L->next()) {
+void NativeScriptLanguage::call_libraries_cb(const StringName& name) {
+    // library_gdnatives is modified only from the main thread, so it's safe not
+    // to use mutex here
+    for (Map<String, Ref<GDNative>>::Element* L = library_gdnatives.front(); L;
+         L = L->next()) {
         if (L->get().is_null()) {
             continue;
         }
 
         if (L->get()->is_initialized()) {
-            void *proc_ptr;
-            Error err = L->get()->get_symbol(L->get()->get_library()->get_symbol_prefix() + name, proc_ptr);
+            void* proc_ptr;
+            Error err = L->get()->get_symbol(
+                L->get()->get_library()->get_symbol_prefix() + name,
+                proc_ptr
+            );
 
             if (!err) {
                 ((void (*)())proc_ptr)();
@@ -1607,11 +2005,13 @@ void NativeScriptLanguage::frame() {
 #ifndef NO_THREADS
     if (has_objects_to_register.is_set()) {
         MutexLock lock(mutex);
-        for (Set<Ref<GDNativeLibrary>>::Element *L = libs_to_init.front(); L; L = L->next()) {
+        for (Set<Ref<GDNativeLibrary>>::Element* L = libs_to_init.front(); L;
+             L = L->next()) {
             init_library(L->get());
         }
         libs_to_init.clear();
-        for (Set<NativeScript *>::Element *S = scripts_to_register.front(); S; S = S->next()) {
+        for (Set<NativeScript*>::Element* S = scripts_to_register.front(); S;
+             S = S->next()) {
             register_script(S->get());
         }
         scripts_to_register.clear();
@@ -1625,7 +2025,8 @@ void NativeScriptLanguage::frame() {
         MutexLock lock(mutex);
 #endif
 
-        for (Map<StringName, ProfileData>::Element *d = profile_data.front(); d; d = d->next()) {
+        for (Map<StringName, ProfileData>::Element* d = profile_data.front(); d;
+             d = d->next()) {
             d->get().last_frame_call_count = d->get().frame_call_count;
             d->get().last_frame_self_time = d->get().frame_self_time;
             d->get().last_frame_total_time = d->get().frame_total_time;
@@ -1651,11 +2052,16 @@ void NativeScriptLanguage::thread_exit() {
 
 #endif // NO_THREADS
 
-bool NativeScriptLanguage::handles_global_class_type(const String &p_type) const {
+bool NativeScriptLanguage::handles_global_class_type(const String& p_type
+) const {
     return p_type == "NativeScript";
 }
 
-String NativeScriptLanguage::get_global_class_name(const String &p_path, String *r_base_type, String *r_icon_path) const {
+String NativeScriptLanguage::get_global_class_name(
+    const String& p_path,
+    String* r_base_type,
+    String* r_icon_path
+) const {
     if (!p_path.empty()) {
         Ref<NativeScript> script = ResourceLoader::load(p_path, "NativeScript");
         if (script.is_valid()) {
@@ -1678,7 +2084,10 @@ String NativeScriptLanguage::get_global_class_name(const String &p_path, String 
 }
 
 void NativeReloadNode::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_notification"), &NativeReloadNode::_notification);
+    ClassDB::bind_method(
+        D_METHOD("_notification"),
+        &NativeReloadNode::_notification
+    );
 }
 
 void NativeReloadNode::_notification(int p_what) {
@@ -1694,7 +2103,10 @@ void NativeReloadNode::_notification(int p_what) {
 #endif
             NSL->_unload_stuff(true);
 
-            for (Map<String, Ref<GDNative>>::Element *L = NSL->library_gdnatives.front(); L; L = L->next()) {
+            for (Map<String, Ref<GDNative>>::Element* L =
+                     NSL->library_gdnatives.front();
+                 L;
+                 L = L->next()) {
                 Ref<GDNative> gdn = L->get();
 
                 if (gdn.is_null()) {
@@ -1706,10 +2118,10 @@ void NativeReloadNode::_notification(int p_what) {
                     continue;
                 }
 
-                // singleton libraries might have alive pointers living inside the
-                // editor. Also reloading a singleton library would mean that
-                // the singleton entry will not be called again, as this only
-                // happens at engine startup.
+                // singleton libraries might have alive pointers living inside
+                // the editor. Also reloading a singleton library would mean
+                // that the singleton entry will not be called again, as this
+                // only happens at engine startup.
                 if (gdn->get_library()->is_singleton()) {
                     continue;
                 }
@@ -1729,7 +2141,10 @@ void NativeReloadNode::_notification(int p_what) {
             MutexLock lock(NSL->mutex);
 #endif
             Set<StringName> libs_to_remove;
-            for (Map<String, Ref<GDNative>>::Element *L = NSL->library_gdnatives.front(); L; L = L->next()) {
+            for (Map<String, Ref<GDNative>>::Element* L =
+                     NSL->library_gdnatives.front();
+                 L;
+                 L = L->next()) {
                 Ref<GDNative> gdn = L->get();
 
                 if (gdn.is_null()) {
@@ -1751,27 +2166,46 @@ void NativeReloadNode::_notification(int p_what) {
                     continue;
                 }
 
-                NSL->library_classes.insert(L->key(), Map<StringName, NativeScriptDesc>());
+                NSL->library_classes.insert(
+                    L->key(),
+                    Map<StringName, NativeScriptDesc>()
+                );
 
                 // here the library registers all the classes and stuff.
 
-                void *proc_ptr;
-                Error err = gdn->get_symbol(gdn->get_library()->get_symbol_prefix() + "nativescript_init", proc_ptr);
+                void* proc_ptr;
+                Error err = gdn->get_symbol(
+                    gdn->get_library()->get_symbol_prefix()
+                        + "nativescript_init",
+                    proc_ptr
+                );
                 if (err != OK) {
-                    ERR_PRINT(String("No godot_nativescript_init in \"" + L->key() + "\" found").utf8().get_data());
+                    ERR_PRINT(String(
+                                  "No godot_nativescript_init in \"" + L->key()
+                                  + "\" found"
+                    )
+                                  .utf8()
+                                  .get_data());
                 } else {
-                    ((void (*)(void *))proc_ptr)((void *)&L->key());
+                    ((void (*)(void*))proc_ptr)((void*)&L->key());
                 }
 
-                for (Map<String, Set<NativeScript *>>::Element *U = NSL->library_script_users.front(); U; U = U->next()) {
-                    for (Set<NativeScript *>::Element *S = U->get().front(); S; S = S->next()) {
-                        NativeScript *script = S->get();
+                for (Map<String, Set<NativeScript*>>::Element* U =
+                         NSL->library_script_users.front();
+                     U;
+                     U = U->next()) {
+                    for (Set<NativeScript*>::Element* S = U->get().front(); S;
+                         S = S->next()) {
+                        NativeScript* script = S->get();
 
                         if (script->placeholders.size() == 0) {
                             continue;
                         }
 
-                        for (Set<PlaceHolderScriptInstance *>::Element *P = script->placeholders.front(); P; P = P->next()) {
+                        for (Set<PlaceHolderScriptInstance*>::Element* P =
+                                 script->placeholders.front();
+                             P;
+                             P = P->next()) {
                             script->_update_placeholder(P->get());
                         }
                     }
@@ -1780,7 +2214,8 @@ void NativeReloadNode::_notification(int p_what) {
 
             unloaded = false;
 
-            for (Set<StringName>::Element *R = libs_to_remove.front(); R; R = R->next()) {
+            for (Set<StringName>::Element* R = libs_to_remove.front(); R;
+                 R = R->next()) {
                 NSL->library_gdnatives.erase(R->get());
             }
 
@@ -1791,19 +2226,28 @@ void NativeReloadNode::_notification(int p_what) {
 #endif
 }
 
-RES ResourceFormatLoaderNativeScript::load(const String &p_path, const String &p_original_path, Error *r_error) {
-    return ResourceFormatLoaderText::singleton->load(p_path, p_original_path, r_error);
+RES ResourceFormatLoaderNativeScript::load(
+    const String& p_path,
+    const String& p_original_path,
+    Error* r_error
+) {
+    return ResourceFormatLoaderText::singleton
+        ->load(p_path, p_original_path, r_error);
 }
 
-void ResourceFormatLoaderNativeScript::get_recognized_extensions(List<String> *p_extensions) const {
+void ResourceFormatLoaderNativeScript::get_recognized_extensions(
+    List<String>* p_extensions
+) const {
     p_extensions->push_back("gdns");
 }
 
-bool ResourceFormatLoaderNativeScript::handles_type(const String &p_type) const {
+bool ResourceFormatLoaderNativeScript::handles_type(const String& p_type
+) const {
     return (p_type == "Script" || p_type == "NativeScript");
 }
 
-String ResourceFormatLoaderNativeScript::get_resource_type(const String &p_path) const {
+String ResourceFormatLoaderNativeScript::get_resource_type(const String& p_path
+) const {
     String el = p_path.get_extension().to_lower();
     if (el == "gdns") {
         return "NativeScript";
@@ -1811,16 +2255,23 @@ String ResourceFormatLoaderNativeScript::get_resource_type(const String &p_path)
     return "";
 }
 
-Error ResourceFormatSaverNativeScript::save(const String &p_path, const RES &p_resource, uint32_t p_flags) {
+Error ResourceFormatSaverNativeScript::save(
+    const String& p_path,
+    const RES& p_resource,
+    uint32_t p_flags
+) {
     ResourceFormatSaverText rfst;
     return rfst.save(p_path, p_resource, p_flags);
 }
 
-bool ResourceFormatSaverNativeScript::recognize(const RES &p_resource) const {
+bool ResourceFormatSaverNativeScript::recognize(const RES& p_resource) const {
     return Object::cast_to<NativeScript>(*p_resource) != nullptr;
 }
 
-void ResourceFormatSaverNativeScript::get_recognized_extensions(const RES &p_resource, List<String> *p_extensions) const {
+void ResourceFormatSaverNativeScript::get_recognized_extensions(
+    const RES& p_resource,
+    List<String>* p_extensions
+) const {
     if (Object::cast_to<NativeScript>(*p_resource)) {
         p_extensions->push_back("gdns");
     }

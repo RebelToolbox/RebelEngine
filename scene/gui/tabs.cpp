@@ -41,7 +41,13 @@ Size2 Tabs::get_minimum_size() const {
     Ref<StyleBox> tab_disabled = get_stylebox("tab_disabled");
     Ref<Font> font = get_font("font");
 
-    Size2 ms(0, MAX(MAX(tab_bg->get_minimum_size().height, tab_fg->get_minimum_size().height), tab_disabled->get_minimum_size().height) + font->get_height());
+    Size2 ms(
+        0,
+        MAX(MAX(tab_bg->get_minimum_size().height,
+                tab_fg->get_minimum_size().height),
+            tab_disabled->get_minimum_size().height)
+            + font->get_height()
+    );
 
     for (int i = 0; i < tabs.size(); i++) {
         Ref<Texture> tex = tabs[i].icon;
@@ -67,15 +73,19 @@ Size2 Tabs::get_minimum_size() const {
             Size2 bms = rb->get_size();
             bms.width += get_constant("hseparation");
             ms.width += bms.width;
-            ms.height = MAX(bms.height + tab_bg->get_minimum_size().height, ms.height);
+            ms.height =
+                MAX(bms.height + tab_bg->get_minimum_size().height, ms.height);
         }
 
-        if (cb_displaypolicy == CLOSE_BUTTON_SHOW_ALWAYS || (cb_displaypolicy == CLOSE_BUTTON_SHOW_ACTIVE_ONLY && i == current)) {
+        if (cb_displaypolicy == CLOSE_BUTTON_SHOW_ALWAYS
+            || (cb_displaypolicy == CLOSE_BUTTON_SHOW_ACTIVE_ONLY
+                && i == current)) {
             Ref<Texture> cb = get_icon("close");
             Size2 bms = cb->get_size();
             bms.width += get_constant("hseparation");
             ms.width += bms.width;
-            ms.height = MAX(bms.height + tab_bg->get_minimum_size().height, ms.height);
+            ms.height =
+                MAX(bms.height + tab_bg->get_minimum_size().height, ms.height);
         }
     }
 
@@ -83,7 +93,7 @@ Size2 Tabs::get_minimum_size() const {
     return ms;
 }
 
-void Tabs::_gui_input(const Ref<InputEvent> &p_event) {
+void Tabs::_gui_input(const Ref<InputEvent>& p_event) {
     Ref<InputEventMouseMotion> mm = p_event;
 
     if (mm.is_valid()) {
@@ -93,7 +103,8 @@ void Tabs::_gui_input(const Ref<InputEvent> &p_event) {
             Ref<Texture> incr = get_icon("increment");
             Ref<Texture> decr = get_icon("decrement");
 
-            int limit = get_size().width - incr->get_width() - decr->get_width();
+            int limit =
+                get_size().width - incr->get_width() - decr->get_width();
 
             if (pos.x > limit + decr->get_width()) {
                 if (highlight_arrow != 1) {
@@ -118,7 +129,8 @@ void Tabs::_gui_input(const Ref<InputEvent> &p_event) {
     Ref<InputEventMouseButton> mb = p_event;
 
     if (mb.is_valid()) {
-        if (mb->is_pressed() && mb->get_button_index() == BUTTON_WHEEL_UP && !mb->get_command()) {
+        if (mb->is_pressed() && mb->get_button_index() == BUTTON_WHEEL_UP
+            && !mb->get_command()) {
             if (scrolling_enabled && buttons_visible) {
                 if (offset > 0) {
                     offset--;
@@ -127,17 +139,20 @@ void Tabs::_gui_input(const Ref<InputEvent> &p_event) {
             }
         }
 
-        if (mb->is_pressed() && mb->get_button_index() == BUTTON_WHEEL_DOWN && !mb->get_command()) {
+        if (mb->is_pressed() && mb->get_button_index() == BUTTON_WHEEL_DOWN
+            && !mb->get_command()) {
             if (scrolling_enabled && buttons_visible) {
                 if (missing_right) {
                     offset++;
-                    _ensure_no_over_offset(); // Avoid overreaching when scrolling fast.
+                    _ensure_no_over_offset(
+                    ); // Avoid overreaching when scrolling fast.
                     update();
                 }
             }
         }
 
-        if (rb_pressing && !mb->is_pressed() && mb->get_button_index() == BUTTON_LEFT) {
+        if (rb_pressing && !mb->is_pressed()
+            && mb->get_button_index() == BUTTON_LEFT) {
             if (rb_hover != -1) {
                 // Right mouse button pressed.
                 emit_signal("right_button_pressed", rb_hover);
@@ -147,7 +162,8 @@ void Tabs::_gui_input(const Ref<InputEvent> &p_event) {
             update();
         }
 
-        if (cb_pressing && !mb->is_pressed() && mb->get_button_index() == BUTTON_LEFT) {
+        if (cb_pressing && !mb->is_pressed()
+            && mb->get_button_index() == BUTTON_LEFT) {
             if (cb_hover != -1) {
                 // Close button pressed.
                 emit_signal("tab_close", cb_hover);
@@ -157,7 +173,10 @@ void Tabs::_gui_input(const Ref<InputEvent> &p_event) {
             update();
         }
 
-        if (mb->is_pressed() && (mb->get_button_index() == BUTTON_LEFT || (select_with_rmb && mb->get_button_index() == BUTTON_RIGHT))) {
+        if (mb->is_pressed()
+            && (mb->get_button_index() == BUTTON_LEFT
+                || (select_with_rmb && mb->get_button_index() == BUTTON_RIGHT)
+            )) {
             // Clicks.
             Point2 pos(mb->get_position().x, mb->get_position().y);
 
@@ -165,7 +184,8 @@ void Tabs::_gui_input(const Ref<InputEvent> &p_event) {
                 Ref<Texture> incr = get_icon("increment");
                 Ref<Texture> decr = get_icon("decrement");
 
-                int limit = get_size().width - incr->get_width() - decr->get_width();
+                int limit =
+                    get_size().width - incr->get_width() - decr->get_width();
 
                 if (pos.x > limit + decr->get_width()) {
                     if (missing_right) {
@@ -195,13 +215,17 @@ void Tabs::_gui_input(const Ref<InputEvent> &p_event) {
                     return;
                 }
 
-                if (tabs[i].cb_rect.has_point(pos) && (cb_displaypolicy == CLOSE_BUTTON_SHOW_ALWAYS || (cb_displaypolicy == CLOSE_BUTTON_SHOW_ACTIVE_ONLY && i == current))) {
+                if (tabs[i].cb_rect.has_point(pos)
+                    && (cb_displaypolicy == CLOSE_BUTTON_SHOW_ALWAYS
+                        || (cb_displaypolicy == CLOSE_BUTTON_SHOW_ACTIVE_ONLY
+                            && i == current))) {
                     cb_pressing = true;
                     update();
                     return;
                 }
 
-                if (pos.x >= tabs[i].ofs_cache && pos.x < tabs[i].ofs_cache + tabs[i].size_cache) {
+                if (pos.x >= tabs[i].ofs_cache
+                    && pos.x < tabs[i].ofs_cache + tabs[i].size_cache) {
                     if (!tabs[i].disabled) {
                         found = i;
                     }
@@ -268,7 +292,8 @@ void Tabs::_notification(int p_what) {
             Ref<Texture> incr_hl = get_icon("increment_highlight");
             Ref<Texture> decr_hl = get_icon("decrement_highlight");
 
-            int limit = get_size().width - incr->get_size().width - decr->get_size().width;
+            int limit = get_size().width - incr->get_size().width
+                      - decr->get_size().width;
 
             missing_right = false;
 
@@ -311,13 +336,34 @@ void Tabs::_notification(int p_what) {
                 Size2i sb_ms = sb->get_minimum_size();
                 Ref<Texture> icon = tabs[i].icon;
                 if (icon.is_valid()) {
-                    icon->draw(ci, Point2i(w, sb->get_margin(MARGIN_TOP) + ((sb_rect.size.y - sb_ms.y) - icon->get_height()) / 2));
+                    icon->draw(
+                        ci,
+                        Point2i(
+                            w,
+                            sb->get_margin(MARGIN_TOP)
+                                + ((sb_rect.size.y - sb_ms.y)
+                                   - icon->get_height())
+                                      / 2
+                        )
+                    );
                     if (tabs[i].text != "") {
                         w += icon->get_width() + get_constant("hseparation");
                     }
                 }
 
-                font->draw(ci, Point2i(w, sb->get_margin(MARGIN_TOP) + ((sb_rect.size.y - sb_ms.y) - font->get_height()) / 2 + font->get_ascent()), tabs[i].xl_text, col, tabs[i].size_text);
+                font->draw(
+                    ci,
+                    Point2i(
+                        w,
+                        sb->get_margin(MARGIN_TOP)
+                            + ((sb_rect.size.y - sb_ms.y) - font->get_height())
+                                  / 2
+                            + font->get_ascent()
+                    ),
+                    tabs[i].xl_text,
+                    col,
+                    tabs[i].size_text
+                );
 
                 w += tabs[i].size_text;
 
@@ -330,7 +376,9 @@ void Tabs::_notification(int p_what) {
                     Rect2 rb_rect;
                     rb_rect.size = style->get_minimum_size() + rb->get_size();
                     rb_rect.position.x = w;
-                    rb_rect.position.y = sb->get_margin(MARGIN_TOP) + ((sb_rect.size.y - sb_ms.y) - (rb_rect.size.y)) / 2;
+                    rb_rect.position.y =
+                        sb->get_margin(MARGIN_TOP)
+                        + ((sb_rect.size.y - sb_ms.y) - (rb_rect.size.y)) / 2;
 
                     if (rb_hover == i) {
                         if (rb_pressing) {
@@ -340,12 +388,20 @@ void Tabs::_notification(int p_what) {
                         }
                     }
 
-                    rb->draw(ci, Point2i(w + style->get_margin(MARGIN_LEFT), rb_rect.position.y + style->get_margin(MARGIN_TOP)));
+                    rb->draw(
+                        ci,
+                        Point2i(
+                            w + style->get_margin(MARGIN_LEFT),
+                            rb_rect.position.y + style->get_margin(MARGIN_TOP)
+                        )
+                    );
                     w += rb->get_width();
                     tabs.write[i].rb_rect = rb_rect;
                 }
 
-                if (cb_displaypolicy == CLOSE_BUTTON_SHOW_ALWAYS || (cb_displaypolicy == CLOSE_BUTTON_SHOW_ACTIVE_ONLY && i == current)) {
+                if (cb_displaypolicy == CLOSE_BUTTON_SHOW_ALWAYS
+                    || (cb_displaypolicy == CLOSE_BUTTON_SHOW_ACTIVE_ONLY
+                        && i == current)) {
                     Ref<StyleBox> style = get_stylebox("button");
                     Ref<Texture> cb = close;
 
@@ -354,7 +410,9 @@ void Tabs::_notification(int p_what) {
                     Rect2 cb_rect;
                     cb_rect.size = style->get_minimum_size() + cb->get_size();
                     cb_rect.position.x = w;
-                    cb_rect.position.y = sb->get_margin(MARGIN_TOP) + ((sb_rect.size.y - sb_ms.y) - (cb_rect.size.y)) / 2;
+                    cb_rect.position.y =
+                        sb->get_margin(MARGIN_TOP)
+                        + ((sb_rect.size.y - sb_ms.y) - (cb_rect.size.y)) / 2;
 
                     if (!tabs[i].disabled && cb_hover == i) {
                         if (cb_pressing) {
@@ -364,7 +422,13 @@ void Tabs::_notification(int p_what) {
                         }
                     }
 
-                    cb->draw(ci, Point2i(w + style->get_margin(MARGIN_LEFT), cb_rect.position.y + style->get_margin(MARGIN_TOP)));
+                    cb->draw(
+                        ci,
+                        Point2i(
+                            w + style->get_margin(MARGIN_LEFT),
+                            cb_rect.position.y + style->get_margin(MARGIN_TOP)
+                        )
+                    );
                     w += cb->get_width();
                     tabs.write[i].cb_rect = cb_rect;
                 }
@@ -376,15 +440,29 @@ void Tabs::_notification(int p_what) {
                 int vofs = (get_size().height - incr->get_size().height) / 2;
 
                 if (offset > 0) {
-                    draw_texture(highlight_arrow == 0 ? decr_hl : decr, Point2(limit, vofs));
+                    draw_texture(
+                        highlight_arrow == 0 ? decr_hl : decr,
+                        Point2(limit, vofs)
+                    );
                 } else {
-                    draw_texture(decr, Point2(limit, vofs), Color(1, 1, 1, 0.5));
+                    draw_texture(
+                        decr,
+                        Point2(limit, vofs),
+                        Color(1, 1, 1, 0.5)
+                    );
                 }
 
                 if (missing_right) {
-                    draw_texture(highlight_arrow == 1 ? incr_hl : incr, Point2(limit + decr->get_size().width, vofs));
+                    draw_texture(
+                        highlight_arrow == 1 ? incr_hl : incr,
+                        Point2(limit + decr->get_size().width, vofs)
+                    );
                 } else {
-                    draw_texture(incr, Point2(limit + decr->get_size().width, vofs), Color(1, 1, 1, 0.5));
+                    draw_texture(
+                        incr,
+                        Point2(limit + decr->get_size().width, vofs),
+                        Color(1, 1, 1, 0.5)
+                    );
                 }
 
                 buttons_visible = true;
@@ -435,7 +513,7 @@ bool Tabs::get_offset_buttons_visible() const {
     return buttons_visible;
 }
 
-void Tabs::set_tab_title(int p_tab, const String &p_title) {
+void Tabs::set_tab_title(int p_tab, const String& p_title) {
     ERR_FAIL_INDEX(p_tab, tabs.size());
     tabs.write[p_tab].text = p_title;
     tabs.write[p_tab].xl_text = tr(p_title);
@@ -448,7 +526,7 @@ String Tabs::get_tab_title(int p_tab) const {
     return tabs[p_tab].text;
 }
 
-void Tabs::set_tab_icon(int p_tab, const Ref<Texture> &p_icon) {
+void Tabs::set_tab_icon(int p_tab, const Ref<Texture>& p_icon) {
     ERR_FAIL_INDEX(p_tab, tabs.size());
     tabs.write[p_tab].icon = p_icon;
     update();
@@ -465,18 +543,20 @@ void Tabs::set_tab_disabled(int p_tab, bool p_disabled) {
     tabs.write[p_tab].disabled = p_disabled;
     update();
 }
+
 bool Tabs::get_tab_disabled(int p_tab) const {
     ERR_FAIL_INDEX_V(p_tab, tabs.size(), false);
     return tabs[p_tab].disabled;
 }
 
-void Tabs::set_tab_right_button(int p_tab, const Ref<Texture> &p_right_button) {
+void Tabs::set_tab_right_button(int p_tab, const Ref<Texture>& p_right_button) {
     ERR_FAIL_INDEX(p_tab, tabs.size());
     tabs.write[p_tab].right_button = p_right_button;
     _update_cache();
     update();
     minimum_size_changed();
 }
+
 Ref<Texture> Tabs::get_tab_right_button(int p_tab) const {
     ERR_FAIL_INDEX_V(p_tab, tabs.size(), Ref<Texture>());
     return tabs[p_tab].right_button;
@@ -487,7 +567,7 @@ void Tabs::_update_hover() {
         return;
     }
 
-    const Point2 &pos = get_local_mouse_position();
+    const Point2& pos = get_local_mouse_position();
     // Test hovering to display right or close button.
     int hover_now = -1;
     int hover_buttons = -1;
@@ -539,7 +619,8 @@ void Tabs::_update_cache() {
     for (int i = 0; i < tabs.size(); i++) {
         tabs.write[i].ofs_cache = mw;
         tabs.write[i].size_cache = get_tab_width(i);
-        tabs.write[i].size_text = Math::ceil(font->get_string_size(tabs[i].xl_text).width);
+        tabs.write[i].size_text =
+            Math::ceil(font->get_string_size(tabs[i].xl_text).width);
         mw += tabs[i].size_cache;
         if (tabs[i].size_cache <= min_width || i == current) {
             size_fixed += tabs[i].size_cache;
@@ -567,12 +648,16 @@ void Tabs::_update_cache() {
         int slen = tabs[i].size_text;
         if (min_width > 0 && mw > limit && i != current) {
             if (lsize > m_width) {
-                slen = m_width - (sb->get_margin(MARGIN_LEFT) + sb->get_margin(MARGIN_RIGHT));
+                slen = m_width
+                     - (sb->get_margin(MARGIN_LEFT)
+                        + sb->get_margin(MARGIN_RIGHT));
                 if (tabs[i].icon.is_valid()) {
                     slen -= tabs[i].icon->get_width();
                     slen -= get_constant("hseparation");
                 }
-                if (cb_displaypolicy == CLOSE_BUTTON_SHOW_ALWAYS || (cb_displaypolicy == CLOSE_BUTTON_SHOW_ACTIVE_ONLY && i == current)) {
+                if (cb_displaypolicy == CLOSE_BUTTON_SHOW_ALWAYS
+                    || (cb_displaypolicy == CLOSE_BUTTON_SHOW_ACTIVE_ONLY
+                        && i == current)) {
                     Ref<Texture> cb = get_icon("close");
                     slen -= cb->get_width();
                     slen -= get_constant("hseparation");
@@ -596,7 +681,7 @@ void Tabs::_on_mouse_exited() {
     update();
 }
 
-void Tabs::add_tab(const String &p_str, const Ref<Texture> &p_icon) {
+void Tabs::add_tab(const String& p_str, const Ref<Texture>& p_icon) {
     Tab t;
     t.text = p_str;
     t.xl_text = tr(p_str);
@@ -642,7 +727,7 @@ void Tabs::remove_tab(int p_idx) {
     _ensure_no_over_offset();
 }
 
-Variant Tabs::get_drag_data(const Point2 &p_point) {
+Variant Tabs::get_drag_data(const Point2& p_point) {
     if (!drag_to_rearrange_enabled) {
         return Variant();
     }
@@ -653,17 +738,17 @@ Variant Tabs::get_drag_data(const Point2 &p_point) {
         return Variant();
     }
 
-    HBoxContainer *drag_preview = memnew(HBoxContainer);
+    HBoxContainer* drag_preview = memnew(HBoxContainer);
 
     if (!tabs[tab_over].icon.is_null()) {
-        TextureRect *tf = memnew(TextureRect);
+        TextureRect* tf = memnew(TextureRect);
         tf->set_texture(tabs[tab_over].icon);
         drag_preview->add_child(tf);
     }
-    Label *label = memnew(Label(tabs[tab_over].xl_text));
+    Label* label = memnew(Label(tabs[tab_over].xl_text));
     drag_preview->add_child(label);
     if (!tabs[tab_over].right_button.is_null()) {
-        TextureRect *tf = memnew(TextureRect);
+        TextureRect* tf = memnew(TextureRect);
         tf->set_texture(tabs[tab_over].right_button);
         drag_preview->add_child(tf);
     }
@@ -676,7 +761,7 @@ Variant Tabs::get_drag_data(const Point2 &p_point) {
     return drag_data;
 }
 
-bool Tabs::can_drop_data(const Point2 &p_point, const Variant &p_data) const {
+bool Tabs::can_drop_data(const Point2& p_point, const Variant& p_data) const {
     if (!drag_to_rearrange_enabled) {
         return false;
     }
@@ -693,9 +778,11 @@ bool Tabs::can_drop_data(const Point2 &p_point, const Variant &p_data) const {
             return true;
         } else if (get_tabs_rearrange_group() != -1) {
             // Drag and drop between other Tabs.
-            Node *from_node = get_node(from_path);
-            Tabs *from_tabs = Object::cast_to<Tabs>(from_node);
-            if (from_tabs && from_tabs->get_tabs_rearrange_group() == get_tabs_rearrange_group()) {
+            Node* from_node = get_node(from_path);
+            Tabs* from_tabs = Object::cast_to<Tabs>(from_node);
+            if (from_tabs
+                && from_tabs->get_tabs_rearrange_group()
+                       == get_tabs_rearrange_group()) {
                 return true;
             }
         }
@@ -703,7 +790,7 @@ bool Tabs::can_drop_data(const Point2 &p_point, const Variant &p_data) const {
     return false;
 }
 
-void Tabs::drop_data(const Point2 &p_point, const Variant &p_data) {
+void Tabs::drop_data(const Point2& p_point, const Variant& p_data) {
     if (!drag_to_rearrange_enabled) {
         return;
     }
@@ -728,9 +815,11 @@ void Tabs::drop_data(const Point2 &p_point, const Variant &p_data) {
             set_current_tab(hover_now);
         } else if (get_tabs_rearrange_group() != -1) {
             // Drag and drop between Tabs.
-            Node *from_node = get_node(from_path);
-            Tabs *from_tabs = Object::cast_to<Tabs>(from_node);
-            if (from_tabs && from_tabs->get_tabs_rearrange_group() == get_tabs_rearrange_group()) {
+            Node* from_node = get_node(from_path);
+            Tabs* from_tabs = Object::cast_to<Tabs>(from_node);
+            if (from_tabs
+                && from_tabs->get_tabs_rearrange_group()
+                       == get_tabs_rearrange_group()) {
                 if (tab_from_id >= from_tabs->get_tab_count()) {
                     return;
                 }
@@ -749,7 +838,7 @@ void Tabs::drop_data(const Point2 &p_point, const Variant &p_data) {
     update();
 }
 
-int Tabs::get_tab_idx_at_point(const Point2 &p_point) const {
+int Tabs::get_tab_idx_at_point(const Point2& p_point) const {
     int hover_now = -1;
     for (int i = offset; i <= max_drawn_tab; i++) {
         Rect2 rect = get_tab_rect(i);
@@ -821,7 +910,9 @@ int Tabs::get_tab_width(int p_idx) const {
         x += get_constant("hseparation");
     }
 
-    if (cb_displaypolicy == CLOSE_BUTTON_SHOW_ALWAYS || (cb_displaypolicy == CLOSE_BUTTON_SHOW_ACTIVE_ONLY && p_idx == current)) {
+    if (cb_displaypolicy == CLOSE_BUTTON_SHOW_ALWAYS
+        || (cb_displaypolicy == CLOSE_BUTTON_SHOW_ACTIVE_ONLY
+            && p_idx == current)) {
         Ref<Texture> cb = get_icon("close");
         x += cb->get_width();
         x += get_constant("hseparation");
@@ -895,7 +986,12 @@ void Tabs::ensure_tab_visible(int p_idx) {
 
 Rect2 Tabs::get_tab_rect(int p_tab) const {
     ERR_FAIL_INDEX_V(p_tab, tabs.size(), Rect2());
-    return Rect2(tabs[p_tab].ofs_cache, 0, tabs[p_tab].size_cache, get_size().height);
+    return Rect2(
+        tabs[p_tab].ofs_cache,
+        0,
+        tabs[p_tab].size_cache,
+        get_size().height
+    );
 }
 
 void Tabs::set_tab_close_display_policy(CloseButtonDisplayPolicy p_policy) {
@@ -927,6 +1023,7 @@ void Tabs::set_drag_to_rearrange_enabled(bool p_enabled) {
 bool Tabs::get_drag_to_rearrange_enabled() const {
     return drag_to_rearrange_enabled;
 }
+
 void Tabs::set_tabs_rearrange_group(int p_group_id) {
     tabs_rearrange_group = p_group_id;
 }
@@ -948,48 +1045,157 @@ void Tabs::_bind_methods() {
     ClassDB::bind_method(D_METHOD("_update_hover"), &Tabs::_update_hover);
     ClassDB::bind_method(D_METHOD("_on_mouse_exited"), &Tabs::_on_mouse_exited);
     ClassDB::bind_method(D_METHOD("get_tab_count"), &Tabs::get_tab_count);
-    ClassDB::bind_method(D_METHOD("set_current_tab", "tab_idx"), &Tabs::set_current_tab);
+    ClassDB::bind_method(
+        D_METHOD("set_current_tab", "tab_idx"),
+        &Tabs::set_current_tab
+    );
     ClassDB::bind_method(D_METHOD("get_current_tab"), &Tabs::get_current_tab);
     ClassDB::bind_method(D_METHOD("get_previous_tab"), &Tabs::get_previous_tab);
-    ClassDB::bind_method(D_METHOD("set_tab_title", "tab_idx", "title"), &Tabs::set_tab_title);
-    ClassDB::bind_method(D_METHOD("get_tab_title", "tab_idx"), &Tabs::get_tab_title);
-    ClassDB::bind_method(D_METHOD("set_tab_icon", "tab_idx", "icon"), &Tabs::set_tab_icon);
-    ClassDB::bind_method(D_METHOD("get_tab_icon", "tab_idx"), &Tabs::get_tab_icon);
-    ClassDB::bind_method(D_METHOD("set_tab_disabled", "tab_idx", "disabled"), &Tabs::set_tab_disabled);
-    ClassDB::bind_method(D_METHOD("get_tab_disabled", "tab_idx"), &Tabs::get_tab_disabled);
+    ClassDB::bind_method(
+        D_METHOD("set_tab_title", "tab_idx", "title"),
+        &Tabs::set_tab_title
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_tab_title", "tab_idx"),
+        &Tabs::get_tab_title
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_tab_icon", "tab_idx", "icon"),
+        &Tabs::set_tab_icon
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_tab_icon", "tab_idx"),
+        &Tabs::get_tab_icon
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_tab_disabled", "tab_idx", "disabled"),
+        &Tabs::set_tab_disabled
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_tab_disabled", "tab_idx"),
+        &Tabs::get_tab_disabled
+    );
     ClassDB::bind_method(D_METHOD("remove_tab", "tab_idx"), &Tabs::remove_tab);
-    ClassDB::bind_method(D_METHOD("add_tab", "title", "icon"), &Tabs::add_tab, DEFVAL(""), DEFVAL(Ref<Texture>()));
-    ClassDB::bind_method(D_METHOD("set_tab_align", "align"), &Tabs::set_tab_align);
+    ClassDB::bind_method(
+        D_METHOD("add_tab", "title", "icon"),
+        &Tabs::add_tab,
+        DEFVAL(""),
+        DEFVAL(Ref<Texture>())
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_tab_align", "align"),
+        &Tabs::set_tab_align
+    );
     ClassDB::bind_method(D_METHOD("get_tab_align"), &Tabs::get_tab_align);
     ClassDB::bind_method(D_METHOD("get_tab_offset"), &Tabs::get_tab_offset);
-    ClassDB::bind_method(D_METHOD("get_offset_buttons_visible"), &Tabs::get_offset_buttons_visible);
-    ClassDB::bind_method(D_METHOD("ensure_tab_visible", "idx"), &Tabs::ensure_tab_visible);
-    ClassDB::bind_method(D_METHOD("get_tab_rect", "tab_idx"), &Tabs::get_tab_rect);
+    ClassDB::bind_method(
+        D_METHOD("get_offset_buttons_visible"),
+        &Tabs::get_offset_buttons_visible
+    );
+    ClassDB::bind_method(
+        D_METHOD("ensure_tab_visible", "idx"),
+        &Tabs::ensure_tab_visible
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_tab_rect", "tab_idx"),
+        &Tabs::get_tab_rect
+    );
     ClassDB::bind_method(D_METHOD("move_tab", "from", "to"), &Tabs::move_tab);
-    ClassDB::bind_method(D_METHOD("set_tab_close_display_policy", "policy"), &Tabs::set_tab_close_display_policy);
-    ClassDB::bind_method(D_METHOD("get_tab_close_display_policy"), &Tabs::get_tab_close_display_policy);
-    ClassDB::bind_method(D_METHOD("set_scrolling_enabled", "enabled"), &Tabs::set_scrolling_enabled);
-    ClassDB::bind_method(D_METHOD("get_scrolling_enabled"), &Tabs::get_scrolling_enabled);
-    ClassDB::bind_method(D_METHOD("set_drag_to_rearrange_enabled", "enabled"), &Tabs::set_drag_to_rearrange_enabled);
-    ClassDB::bind_method(D_METHOD("get_drag_to_rearrange_enabled"), &Tabs::get_drag_to_rearrange_enabled);
-    ClassDB::bind_method(D_METHOD("set_tabs_rearrange_group", "group_id"), &Tabs::set_tabs_rearrange_group);
-    ClassDB::bind_method(D_METHOD("get_tabs_rearrange_group"), &Tabs::get_tabs_rearrange_group);
+    ClassDB::bind_method(
+        D_METHOD("set_tab_close_display_policy", "policy"),
+        &Tabs::set_tab_close_display_policy
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_tab_close_display_policy"),
+        &Tabs::get_tab_close_display_policy
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_scrolling_enabled", "enabled"),
+        &Tabs::set_scrolling_enabled
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_scrolling_enabled"),
+        &Tabs::get_scrolling_enabled
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_drag_to_rearrange_enabled", "enabled"),
+        &Tabs::set_drag_to_rearrange_enabled
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_drag_to_rearrange_enabled"),
+        &Tabs::get_drag_to_rearrange_enabled
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_tabs_rearrange_group", "group_id"),
+        &Tabs::set_tabs_rearrange_group
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_tabs_rearrange_group"),
+        &Tabs::get_tabs_rearrange_group
+    );
 
-    ClassDB::bind_method(D_METHOD("set_select_with_rmb", "enabled"), &Tabs::set_select_with_rmb);
-    ClassDB::bind_method(D_METHOD("get_select_with_rmb"), &Tabs::get_select_with_rmb);
+    ClassDB::bind_method(
+        D_METHOD("set_select_with_rmb", "enabled"),
+        &Tabs::set_select_with_rmb
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_select_with_rmb"),
+        &Tabs::get_select_with_rmb
+    );
 
     ADD_SIGNAL(MethodInfo("tab_changed", PropertyInfo(Variant::INT, "tab")));
-    ADD_SIGNAL(MethodInfo("right_button_pressed", PropertyInfo(Variant::INT, "tab")));
+    ADD_SIGNAL(
+        MethodInfo("right_button_pressed", PropertyInfo(Variant::INT, "tab"))
+    );
     ADD_SIGNAL(MethodInfo("tab_close", PropertyInfo(Variant::INT, "tab")));
     ADD_SIGNAL(MethodInfo("tab_hover", PropertyInfo(Variant::INT, "tab")));
-    ADD_SIGNAL(MethodInfo("reposition_active_tab_request", PropertyInfo(Variant::INT, "idx_to")));
+    ADD_SIGNAL(MethodInfo(
+        "reposition_active_tab_request",
+        PropertyInfo(Variant::INT, "idx_to")
+    ));
     ADD_SIGNAL(MethodInfo("tab_clicked", PropertyInfo(Variant::INT, "tab")));
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "current_tab", PROPERTY_HINT_RANGE, "-1,4096,1", PROPERTY_USAGE_EDITOR), "set_current_tab", "get_current_tab");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "tab_align", PROPERTY_HINT_ENUM, "Left,Center,Right"), "set_tab_align", "get_tab_align");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "tab_close_display_policy", PROPERTY_HINT_ENUM, "Show Never,Show Active Only,Show Always"), "set_tab_close_display_policy", "get_tab_close_display_policy");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "scrolling_enabled"), "set_scrolling_enabled", "get_scrolling_enabled");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "drag_to_rearrange_enabled"), "set_drag_to_rearrange_enabled", "get_drag_to_rearrange_enabled");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "current_tab",
+            PROPERTY_HINT_RANGE,
+            "-1,4096,1",
+            PROPERTY_USAGE_EDITOR
+        ),
+        "set_current_tab",
+        "get_current_tab"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "tab_align",
+            PROPERTY_HINT_ENUM,
+            "Left,Center,Right"
+        ),
+        "set_tab_align",
+        "get_tab_align"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "tab_close_display_policy",
+            PROPERTY_HINT_ENUM,
+            "Show Never,Show Active Only,Show Always"
+        ),
+        "set_tab_close_display_policy",
+        "get_tab_close_display_policy"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "scrolling_enabled"),
+        "set_scrolling_enabled",
+        "get_scrolling_enabled"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "drag_to_rearrange_enabled"),
+        "set_drag_to_rearrange_enabled",
+        "get_drag_to_rearrange_enabled"
+    );
 
     BIND_ENUM_CONSTANT(ALIGN_LEFT);
     BIND_ENUM_CONSTANT(ALIGN_CENTER);

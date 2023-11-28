@@ -36,7 +36,6 @@
     @author AndreaCatania
 */
 
-JointBullet::JointBullet() :
-        ConstraintBullet() {}
+JointBullet::JointBullet() : ConstraintBullet() {}
 
 JointBullet::~JointBullet() {}

@@ -47,66 +47,102 @@ public:
     void affine_invert();
     Transform affine_inverse() const;
 
-    Transform rotated(const Vector3 &p_axis, real_t p_phi) const;
+    Transform rotated(const Vector3& p_axis, real_t p_phi) const;
 
-    void rotate(const Vector3 &p_axis, real_t p_phi);
-    void rotate_basis(const Vector3 &p_axis, real_t p_phi);
+    void rotate(const Vector3& p_axis, real_t p_phi);
+    void rotate_basis(const Vector3& p_axis, real_t p_phi);
 
-    void set_look_at(const Vector3 &p_eye, const Vector3 &p_target, const Vector3 &p_up);
-    Transform looking_at(const Vector3 &p_target, const Vector3 &p_up) const;
+    void set_look_at(
+        const Vector3& p_eye,
+        const Vector3& p_target,
+        const Vector3& p_up
+    );
+    Transform looking_at(const Vector3& p_target, const Vector3& p_up) const;
 
-    void scale(const Vector3 &p_scale);
-    Transform scaled(const Vector3 &p_scale) const;
-    void scale_basis(const Vector3 &p_scale);
+    void scale(const Vector3& p_scale);
+    Transform scaled(const Vector3& p_scale) const;
+    void scale_basis(const Vector3& p_scale);
     void translate(real_t p_tx, real_t p_ty, real_t p_tz);
-    void translate(const Vector3 &p_translation);
-    Transform translated(const Vector3 &p_translation) const;
+    void translate(const Vector3& p_translation);
+    Transform translated(const Vector3& p_translation) const;
 
-    const Basis &get_basis() const { return basis; }
-    void set_basis(const Basis &p_basis) { basis = p_basis; }
+    const Basis& get_basis() const {
+        return basis;
+    }
 
-    const Vector3 &get_origin() const { return origin; }
-    void set_origin(const Vector3 &p_origin) { origin = p_origin; }
+    void set_basis(const Basis& p_basis) {
+        basis = p_basis;
+    }
+
+    const Vector3& get_origin() const {
+        return origin;
+    }
+
+    void set_origin(const Vector3& p_origin) {
+        origin = p_origin;
+    }
 
     void orthonormalize();
     Transform orthonormalized() const;
-    bool is_equal_approx(const Transform &p_transform) const;
+    bool is_equal_approx(const Transform& p_transform) const;
 
-    bool operator==(const Transform &p_transform) const;
-    bool operator!=(const Transform &p_transform) const;
+    bool operator==(const Transform& p_transform) const;
+    bool operator!=(const Transform& p_transform) const;
 
-    _FORCE_INLINE_ Vector3 xform(const Vector3 &p_vector) const;
-    _FORCE_INLINE_ AABB xform(const AABB &p_aabb) const;
-    _FORCE_INLINE_ PoolVector<Vector3> xform(const PoolVector<Vector3> &p_array) const;
+    _FORCE_INLINE_ Vector3 xform(const Vector3& p_vector) const;
+    _FORCE_INLINE_ AABB xform(const AABB& p_aabb) const;
+    _FORCE_INLINE_ PoolVector<Vector3> xform(const PoolVector<Vector3>& p_array
+    ) const;
 
-    // NOTE: These are UNSAFE with non-uniform scaling, and will produce incorrect results.
-    // They use the transpose.
-    // For safe inverse transforms, xform by the affine_inverse.
-    _FORCE_INLINE_ Vector3 xform_inv(const Vector3 &p_vector) const;
-    _FORCE_INLINE_ AABB xform_inv(const AABB &p_aabb) const;
-    _FORCE_INLINE_ PoolVector<Vector3> xform_inv(const PoolVector<Vector3> &p_array) const;
+    // NOTE: These are UNSAFE with non-uniform scaling, and will produce
+    // incorrect results. They use the transpose. For safe inverse transforms,
+    // xform by the affine_inverse.
+    _FORCE_INLINE_ Vector3 xform_inv(const Vector3& p_vector) const;
+    _FORCE_INLINE_ AABB xform_inv(const AABB& p_aabb) const;
+    _FORCE_INLINE_ PoolVector<Vector3> xform_inv(
+        const PoolVector<Vector3>& p_array
+    ) const;
 
     // Safe with non-uniform scaling (uses affine_inverse).
-    _FORCE_INLINE_ Plane xform(const Plane &p_plane) const;
-    _FORCE_INLINE_ Plane xform_inv(const Plane &p_plane) const;
+    _FORCE_INLINE_ Plane xform(const Plane& p_plane) const;
+    _FORCE_INLINE_ Plane xform_inv(const Plane& p_plane) const;
 
-    // These fast versions use precomputed affine inverse, and should be used in bottleneck areas where
-    // multiple planes are to be transformed.
-    _FORCE_INLINE_ Plane xform_fast(const Plane &p_plane, const Basis &p_basis_inverse_transpose) const;
-    static _FORCE_INLINE_ Plane xform_inv_fast(const Plane &p_plane, const Transform &p_inverse, const Basis &p_basis_transpose);
+    // These fast versions use precomputed affine inverse, and should be used in
+    // bottleneck areas where multiple planes are to be transformed.
+    _FORCE_INLINE_ Plane xform_fast(
+        const Plane& p_plane,
+        const Basis& p_basis_inverse_transpose
+    ) const;
+    static _FORCE_INLINE_ Plane xform_inv_fast(
+        const Plane& p_plane,
+        const Transform& p_inverse,
+        const Basis& p_basis_transpose
+    );
 
-    void operator*=(const Transform &p_transform);
-    Transform operator*(const Transform &p_transform) const;
+    void operator*=(const Transform& p_transform);
+    Transform operator*(const Transform& p_transform) const;
 
-    Transform interpolate_with(const Transform &p_transform, real_t p_c) const;
+    Transform interpolate_with(const Transform& p_transform, real_t p_c) const;
 
-    _FORCE_INLINE_ Transform inverse_xform(const Transform &t) const {
+    _FORCE_INLINE_ Transform inverse_xform(const Transform& t) const {
         Vector3 v = t.origin - origin;
-        return Transform(basis.transpose_xform(t.basis),
-                basis.xform(v));
+        return Transform(basis.transpose_xform(t.basis), basis.xform(v));
     }
 
-    void set(real_t xx, real_t xy, real_t xz, real_t yx, real_t yy, real_t yz, real_t zx, real_t zy, real_t zz, real_t tx, real_t ty, real_t tz) {
+    void set(
+        real_t xx,
+        real_t xy,
+        real_t xz,
+        real_t yx,
+        real_t yy,
+        real_t yz,
+        real_t zx,
+        real_t zy,
+        real_t zz,
+        real_t tx,
+        real_t ty,
+        real_t tz
+    ) {
         basis.set(xx, xy, xz, yx, yy, yz, zx, zy, zz);
         origin.x = tx;
         origin.y = ty;
@@ -115,44 +151,63 @@ public:
 
     operator String() const;
 
-    Transform(real_t xx, real_t xy, real_t xz, real_t yx, real_t yy, real_t yz, real_t zx, real_t zy, real_t zz, real_t ox, real_t oy, real_t oz);
-    Transform(const Basis &p_basis, const Vector3 &p_origin = Vector3());
+    Transform(
+        real_t xx,
+        real_t xy,
+        real_t xz,
+        real_t yx,
+        real_t yy,
+        real_t yz,
+        real_t zx,
+        real_t zy,
+        real_t zz,
+        real_t ox,
+        real_t oy,
+        real_t oz
+    );
+    Transform(const Basis& p_basis, const Vector3& p_origin = Vector3());
+
     Transform() {}
 };
 
-_FORCE_INLINE_ Vector3 Transform::xform(const Vector3 &p_vector) const {
+_FORCE_INLINE_ Vector3 Transform::xform(const Vector3& p_vector) const {
     return Vector3(
-            basis[0].dot(p_vector) + origin.x,
-            basis[1].dot(p_vector) + origin.y,
-            basis[2].dot(p_vector) + origin.z);
+        basis[0].dot(p_vector) + origin.x,
+        basis[1].dot(p_vector) + origin.y,
+        basis[2].dot(p_vector) + origin.z
+    );
 }
 
-_FORCE_INLINE_ Vector3 Transform::xform_inv(const Vector3 &p_vector) const {
+_FORCE_INLINE_ Vector3 Transform::xform_inv(const Vector3& p_vector) const {
     Vector3 v = p_vector - origin;
 
     return Vector3(
-            (basis.elements[0][0] * v.x) + (basis.elements[1][0] * v.y) + (basis.elements[2][0] * v.z),
-            (basis.elements[0][1] * v.x) + (basis.elements[1][1] * v.y) + (basis.elements[2][1] * v.z),
-            (basis.elements[0][2] * v.x) + (basis.elements[1][2] * v.y) + (basis.elements[2][2] * v.z));
+        (basis.elements[0][0] * v.x) + (basis.elements[1][0] * v.y)
+            + (basis.elements[2][0] * v.z),
+        (basis.elements[0][1] * v.x) + (basis.elements[1][1] * v.y)
+            + (basis.elements[2][1] * v.z),
+        (basis.elements[0][2] * v.x) + (basis.elements[1][2] * v.y)
+            + (basis.elements[2][2] * v.z)
+    );
 }
 
 // Neither the plane regular xform or xform_inv are particularly efficient,
 // as they do a basis inverse. For xforming a large number
 // of planes it is better to pre-calculate the inverse transpose basis once
 // and reuse it for each plane, by using the 'fast' version of the functions.
-_FORCE_INLINE_ Plane Transform::xform(const Plane &p_plane) const {
+_FORCE_INLINE_ Plane Transform::xform(const Plane& p_plane) const {
     Basis b = basis.inverse();
     b.transpose();
     return xform_fast(p_plane, b);
 }
 
-_FORCE_INLINE_ Plane Transform::xform_inv(const Plane &p_plane) const {
+_FORCE_INLINE_ Plane Transform::xform_inv(const Plane& p_plane) const {
     Transform inv = affine_inverse();
     Basis basis_transpose = basis.transposed();
     return xform_inv_fast(p_plane, inv, basis_transpose);
 }
 
-_FORCE_INLINE_ AABB Transform::xform(const AABB &p_aabb) const {
+_FORCE_INLINE_ AABB Transform::xform(const AABB& p_aabb) const {
     /* http://dev.theomader.com/transform-bounding-boxes/ */
     Vector3 min = p_aabb.position;
     Vector3 max = p_aabb.position + p_aabb.size;
@@ -177,16 +232,44 @@ _FORCE_INLINE_ AABB Transform::xform(const AABB &p_aabb) const {
     return r_aabb;
 }
 
-_FORCE_INLINE_ AABB Transform::xform_inv(const AABB &p_aabb) const {
+_FORCE_INLINE_ AABB Transform::xform_inv(const AABB& p_aabb) const {
     /* define vertices */
     Vector3 vertices[8] = {
-        Vector3(p_aabb.position.x + p_aabb.size.x, p_aabb.position.y + p_aabb.size.y, p_aabb.position.z + p_aabb.size.z),
-        Vector3(p_aabb.position.x + p_aabb.size.x, p_aabb.position.y + p_aabb.size.y, p_aabb.position.z),
-        Vector3(p_aabb.position.x + p_aabb.size.x, p_aabb.position.y, p_aabb.position.z + p_aabb.size.z),
-        Vector3(p_aabb.position.x + p_aabb.size.x, p_aabb.position.y, p_aabb.position.z),
-        Vector3(p_aabb.position.x, p_aabb.position.y + p_aabb.size.y, p_aabb.position.z + p_aabb.size.z),
-        Vector3(p_aabb.position.x, p_aabb.position.y + p_aabb.size.y, p_aabb.position.z),
-        Vector3(p_aabb.position.x, p_aabb.position.y, p_aabb.position.z + p_aabb.size.z),
+        Vector3(
+            p_aabb.position.x + p_aabb.size.x,
+            p_aabb.position.y + p_aabb.size.y,
+            p_aabb.position.z + p_aabb.size.z
+        ),
+        Vector3(
+            p_aabb.position.x + p_aabb.size.x,
+            p_aabb.position.y + p_aabb.size.y,
+            p_aabb.position.z
+        ),
+        Vector3(
+            p_aabb.position.x + p_aabb.size.x,
+            p_aabb.position.y,
+            p_aabb.position.z + p_aabb.size.z
+        ),
+        Vector3(
+            p_aabb.position.x + p_aabb.size.x,
+            p_aabb.position.y,
+            p_aabb.position.z
+        ),
+        Vector3(
+            p_aabb.position.x,
+            p_aabb.position.y + p_aabb.size.y,
+            p_aabb.position.z + p_aabb.size.z
+        ),
+        Vector3(
+            p_aabb.position.x,
+            p_aabb.position.y + p_aabb.size.y,
+            p_aabb.position.z
+        ),
+        Vector3(
+            p_aabb.position.x,
+            p_aabb.position.y,
+            p_aabb.position.z + p_aabb.size.z
+        ),
         Vector3(p_aabb.position.x, p_aabb.position.y, p_aabb.position.z)
     };
 
@@ -201,7 +284,7 @@ _FORCE_INLINE_ AABB Transform::xform_inv(const AABB &p_aabb) const {
     return ret;
 }
 
-PoolVector<Vector3> Transform::xform(const PoolVector<Vector3> &p_array) const {
+PoolVector<Vector3> Transform::xform(const PoolVector<Vector3>& p_array) const {
     PoolVector<Vector3> array;
     array.resize(p_array.size());
 
@@ -214,7 +297,8 @@ PoolVector<Vector3> Transform::xform(const PoolVector<Vector3> &p_array) const {
     return array;
 }
 
-PoolVector<Vector3> Transform::xform_inv(const PoolVector<Vector3> &p_array) const {
+PoolVector<Vector3> Transform::xform_inv(const PoolVector<Vector3>& p_array
+) const {
     PoolVector<Vector3> array;
     array.resize(p_array.size());
 
@@ -227,7 +311,10 @@ PoolVector<Vector3> Transform::xform_inv(const PoolVector<Vector3> &p_array) con
     return array;
 }
 
-_FORCE_INLINE_ Plane Transform::xform_fast(const Plane &p_plane, const Basis &p_basis_inverse_transpose) const {
+_FORCE_INLINE_ Plane Transform::xform_fast(
+    const Plane& p_plane,
+    const Basis& p_basis_inverse_transpose
+) const {
     // Transform a single point on the plane.
     Vector3 point = p_plane.normal * p_plane.d;
     point = xform(point);
@@ -240,7 +327,11 @@ _FORCE_INLINE_ Plane Transform::xform_fast(const Plane &p_plane, const Basis &p_
     return Plane(normal, d);
 }
 
-_FORCE_INLINE_ Plane Transform::xform_inv_fast(const Plane &p_plane, const Transform &p_inverse, const Basis &p_basis_transpose) {
+_FORCE_INLINE_ Plane Transform::xform_inv_fast(
+    const Plane& p_plane,
+    const Transform& p_inverse,
+    const Basis& p_basis_transpose
+) {
     // Transform a single point on the plane.
     Vector3 point = p_plane.normal * p_plane.d;
     point = p_inverse.xform(point);

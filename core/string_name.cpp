@@ -33,15 +33,15 @@
 #include "core/os/os.h"
 #include "core/print_string.h"
 
-StaticCString StaticCString::create(const char *p_ptr) {
+StaticCString StaticCString::create(const char* p_ptr) {
     StaticCString scs;
     scs.ptr = p_ptr;
     return scs;
 }
 
-StringName::_Data *StringName::_table[STRING_TABLE_LEN];
+StringName::_Data* StringName::_table[STRING_TABLE_LEN];
 
-StringName _scs_create(const char *p_chr) {
+StringName _scs_create(const char* p_chr) {
     return (p_chr[0] ? StringName(StaticCString::create(p_chr)) : StringName());
 }
 
@@ -62,7 +62,7 @@ void StringName::cleanup() {
     int lost_strings = 0;
     for (int i = 0; i < STRING_TABLE_LEN; i++) {
         while (_table[i]) {
-            _Data *d = _table[i];
+            _Data* d = _table[i];
             lost_strings++;
             if (OS::get_singleton()->is_stdout_verbose()) {
                 if (d->cname) {
@@ -77,7 +77,10 @@ void StringName::cleanup() {
         }
     }
     if (lost_strings) {
-        print_verbose("StringName: " + itos(lost_strings) + " unclaimed string names at exit.");
+        print_verbose(
+            "StringName: " + itos(lost_strings)
+            + " unclaimed string names at exit."
+        );
     }
     lock.unlock();
 }
@@ -107,7 +110,7 @@ void StringName::unref() {
     _data = nullptr;
 }
 
-bool StringName::operator==(const String &p_name) const {
+bool StringName::operator==(const String& p_name) const {
     if (!_data) {
         return (p_name.length() == 0);
     }
@@ -115,7 +118,7 @@ bool StringName::operator==(const String &p_name) const {
     return (_data->get_name() == p_name);
 }
 
-bool StringName::operator==(const char *p_name) const {
+bool StringName::operator==(const char* p_name) const {
     if (!_data) {
         return (p_name[0] == 0);
     }
@@ -123,17 +126,17 @@ bool StringName::operator==(const char *p_name) const {
     return (_data->get_name() == p_name);
 }
 
-bool StringName::operator!=(const String &p_name) const {
+bool StringName::operator!=(const String& p_name) const {
     return !(operator==(p_name));
 }
 
-bool StringName::operator!=(const StringName &p_name) const {
+bool StringName::operator!=(const StringName& p_name) const {
     // the real magic of all this mess happens here.
     // this is why path comparisons are very fast
     return _data != p_name._data;
 }
 
-void StringName::operator=(const StringName &p_name) {
+void StringName::operator=(const StringName& p_name) {
     if (this == &p_name) {
         return;
     }
@@ -145,7 +148,7 @@ void StringName::operator=(const StringName &p_name) {
     }
 }
 
-StringName::StringName(const StringName &p_name) {
+StringName::StringName(const StringName& p_name) {
     _data = nullptr;
 
     ERR_FAIL_COND(!configured);
@@ -155,13 +158,13 @@ StringName::StringName(const StringName &p_name) {
     }
 }
 
-StringName::StringName(const char *p_name) {
+StringName::StringName(const char* p_name) {
     _data = nullptr;
 
     ERR_FAIL_COND(!configured);
 
     if (!p_name || p_name[0] == 0) {
-        return; //empty, ignore
+        return; // empty, ignore
     }
 
     lock.lock();
@@ -204,7 +207,7 @@ StringName::StringName(const char *p_name) {
     lock.unlock();
 }
 
-StringName::StringName(const StaticCString &p_static_string) {
+StringName::StringName(const StaticCString& p_static_string) {
     _data = nullptr;
 
     ERR_FAIL_COND(!configured);
@@ -251,7 +254,7 @@ StringName::StringName(const StaticCString &p_static_string) {
     lock.unlock();
 }
 
-StringName::StringName(const String &p_name) {
+StringName::StringName(const String& p_name) {
     _data = nullptr;
 
     ERR_FAIL_COND(!configured);
@@ -299,7 +302,7 @@ StringName::StringName(const String &p_name) {
     lock.unlock();
 }
 
-StringName StringName::search(const char *p_name) {
+StringName StringName::search(const char* p_name) {
     ERR_FAIL_COND_V(!configured, StringName());
 
     ERR_FAIL_COND_V(!p_name, StringName());
@@ -313,7 +316,7 @@ StringName StringName::search(const char *p_name) {
 
     uint32_t idx = hash & STRING_TABLE_MASK;
 
-    _Data *_data = _table[idx];
+    _Data* _data = _table[idx];
 
     while (_data) {
         // compare hash first
@@ -330,10 +333,10 @@ StringName StringName::search(const char *p_name) {
     }
 
     lock.unlock();
-    return StringName(); //does not exist
+    return StringName(); // does not exist
 }
 
-StringName StringName::search(const CharType *p_name) {
+StringName StringName::search(const CharType* p_name) {
     ERR_FAIL_COND_V(!configured, StringName());
 
     ERR_FAIL_COND_V(!p_name, StringName());
@@ -347,7 +350,7 @@ StringName StringName::search(const CharType *p_name) {
 
     uint32_t idx = hash & STRING_TABLE_MASK;
 
-    _Data *_data = _table[idx];
+    _Data* _data = _table[idx];
 
     while (_data) {
         // compare hash first
@@ -363,9 +366,10 @@ StringName StringName::search(const CharType *p_name) {
     }
 
     lock.unlock();
-    return StringName(); //does not exist
+    return StringName(); // does not exist
 }
-StringName StringName::search(const String &p_name) {
+
+StringName StringName::search(const String& p_name) {
     ERR_FAIL_COND_V(p_name == "", StringName());
 
     lock.lock();
@@ -374,7 +378,7 @@ StringName StringName::search(const String &p_name) {
 
     uint32_t idx = hash & STRING_TABLE_MASK;
 
-    _Data *_data = _table[idx];
+    _Data* _data = _table[idx];
 
     while (_data) {
         // compare hash first
@@ -390,7 +394,7 @@ StringName StringName::search(const String &p_name) {
     }
 
     lock.unlock();
-    return StringName(); //does not exist
+    return StringName(); // does not exist
 }
 
 StringName::StringName() {

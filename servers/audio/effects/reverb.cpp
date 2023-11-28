@@ -35,7 +35,7 @@
 #include <math.h>
 
 const float Reverb::comb_tunings[MAX_COMBS] = {
-    //freeverb comb tunings
+    // freeverb comb tunings
     0.025306122448979593f,
     0.026938775510204082f,
     0.028956916099773241f,
@@ -47,14 +47,14 @@ const float Reverb::comb_tunings[MAX_COMBS] = {
 };
 
 const float Reverb::allpass_tunings[MAX_ALLPASS] = {
-    //freeverb allpass tunings
+    // freeverb allpass tunings
     0.0051020408163265302f,
     0.007732426303854875f,
     0.01f,
     0.012607709750566893f
 };
 
-void Reverb::process(float *p_src, float *p_dst, int p_frames) {
+void Reverb::process(float* p_src, float* p_dst, int p_frames) {
     if (p_frames > INPUT_BUFFER_MAX_SIZE) {
         p_frames = INPUT_BUFFER_MAX_SIZE;
     }
@@ -77,19 +77,22 @@ void Reverb::process(float *p_src, float *p_dst, int p_frames) {
             read_pos += echo_buffer_size;
         }
 
-        float in = undenormalise(echo_buffer[read_pos] * params.predelay_fb + p_src[i]);
+        float in = undenormalise(
+            echo_buffer[read_pos] * params.predelay_fb + p_src[i]
+        );
 
         echo_buffer[echo_buffer_pos] = in;
 
         input_buffer[i] = in;
 
-        p_dst[i] = 0; //take the chance and clear this
+        p_dst[i] = 0; // take the chance and clear this
 
         echo_buffer_pos++;
     }
 
     if (params.hpf > 0) {
-        float hpaux = expf(-2.0 * Math_PI * params.hpf * 6000 / params.mix_rate);
+        float hpaux =
+            expf(-2.0 * Math_PI * params.hpf * 6000 / params.mix_rate);
         float hp_a1 = (1.0 + hpaux) / 2.0;
         float hp_a2 = -(1.0 + hpaux) / 2.0;
         float hp_b1 = hpaux;
@@ -103,16 +106,20 @@ void Reverb::process(float *p_src, float *p_dst, int p_frames) {
     }
 
     for (int i = 0; i < MAX_COMBS; i++) {
-        Comb &c = comb[i];
+        Comb& c = comb[i];
 
-        int size_limit = c.size - lrintf((float)c.extra_spread_frames * (1.0 - params.extra_spread));
+        int size_limit =
+            c.size
+            - lrintf(
+                (float)c.extra_spread_frames * (1.0 - params.extra_spread)
+            );
         for (int j = 0; j < p_frames; j++) {
-            if (c.pos >= size_limit) { //reset this now just in case
+            if (c.pos >= size_limit) { // reset this now just in case
                 c.pos = 0;
             }
 
             float out = undenormalise(c.buffer[c.pos] * c.feedback);
-            out = out * (1.0 - c.damp) + c.damp_h * c.damp; //lowpass
+            out = out * (1.0 - c.damp) + c.damp_h * c.damp; // lowpass
             c.damp_h = out;
             c.buffer[c.pos] = input_buffer[j] + out;
             p_dst[j] += out;
@@ -156,8 +163,12 @@ void Reverb::process(float *p_src, float *p_dst, int p_frames) {
     */
 
     for (int i = 0; i < MAX_ALLPASS; i++) {
-        AllPass &a = allpass[i];
-        int size_limit = a.size - lrintf((float)a.extra_spread_frames * (1.0 - params.extra_spread));
+        AllPass& a = allpass[i];
+        int size_limit =
+            a.size
+            - lrintf(
+                (float)a.extra_spread_frames * (1.0 - params.extra_spread)
+            );
 
         for (int j = 0; j < p_frames; j++) {
             if (a.pos >= size_limit) {
@@ -182,10 +193,12 @@ void Reverb::set_room_size(float p_size) {
     params.room_size = p_size;
     update_parameters();
 }
+
 void Reverb::set_damp(float p_damp) {
     params.damp = p_damp;
     update_parameters();
 }
+
 void Reverb::set_wet(float p_wet) {
     params.wet = p_wet;
 }
@@ -197,6 +210,7 @@ void Reverb::set_dry(float p_dry) {
 void Reverb::set_predelay(float p_predelay) {
     params.predelay = p_predelay;
 }
+
 void Reverb::set_predelay_feedback(float p_predelay_fb) {
     params.predelay_fb = p_predelay_fb;
 }
@@ -226,16 +240,18 @@ void Reverb::set_extra_spread_base(float p_sec) {
 }
 
 void Reverb::configure_buffers() {
-    clear_buffers(); //clear if necessary
+    clear_buffers(); // clear if necessary
 
     for (int i = 0; i < MAX_COMBS; i++) {
-        Comb &c = comb[i];
+        Comb& c = comb[i];
 
-        c.extra_spread_frames = lrint(params.extra_spread_base * params.mix_rate);
+        c.extra_spread_frames =
+            lrint(params.extra_spread_base * params.mix_rate);
 
-        int len = lrint(comb_tunings[i] * params.mix_rate) + c.extra_spread_frames;
+        int len =
+            lrint(comb_tunings[i] * params.mix_rate) + c.extra_spread_frames;
         if (len < 5) {
-            len = 5; //may this happen?
+            len = 5; // may this happen?
         }
 
         c.buffer = memnew_arr(float, len);
@@ -247,13 +263,15 @@ void Reverb::configure_buffers() {
     }
 
     for (int i = 0; i < MAX_ALLPASS; i++) {
-        AllPass &a = allpass[i];
+        AllPass& a = allpass[i];
 
-        a.extra_spread_frames = lrint(params.extra_spread_base * params.mix_rate);
+        a.extra_spread_frames =
+            lrint(params.extra_spread_base * params.mix_rate);
 
-        int len = lrint(allpass_tunings[i] * params.mix_rate) + a.extra_spread_frames;
+        int len =
+            lrint(allpass_tunings[i] * params.mix_rate) + a.extra_spread_frames;
         if (len < 5) {
-            len = 5; //may this happen?
+            len = 5; // may this happen?
         }
 
         a.buffer = memnew_arr(float, len);
@@ -264,7 +282,8 @@ void Reverb::configure_buffers() {
         a.size = len;
     }
 
-    echo_buffer_size = (int)(((float)MAX_ECHO_MS / 1000.0) * params.mix_rate + 1.0);
+    echo_buffer_size =
+        (int)(((float)MAX_ECHO_MS / 1000.0) * params.mix_rate + 1.0);
     echo_buffer = memnew_arr(float, echo_buffer_size);
     for (int i = 0; i < echo_buffer_size; i++) {
         echo_buffer[i] = 0;
@@ -274,12 +293,12 @@ void Reverb::configure_buffers() {
 }
 
 void Reverb::update_parameters() {
-    //more freeverb derived constants
+    // more freeverb derived constants
     static const float room_scale = 0.28f;
     static const float room_offset = 0.7f;
 
     for (int i = 0; i < MAX_COMBS; i++) {
-        Comb &c = comb[i];
+        Comb& c = comb[i];
         c.feedback = room_offset + params.room_size * room_scale;
         if (c.feedback < room_offset) {
             c.feedback = room_offset;
@@ -287,10 +306,13 @@ void Reverb::update_parameters() {
             c.feedback = (room_offset + room_scale);
         }
 
-        float auxdmp = params.damp / 2.0 + 0.5; //only half the range (0.5 .. 1.0 is enough)
+        float auxdmp = params.damp / 2.0
+                     + 0.5; // only half the range (0.5 .. 1.0 is enough)
         auxdmp *= auxdmp;
 
-        c.damp = expf(-2.0 * Math_PI * auxdmp * 10000 / params.mix_rate); // 0 .. 10khz
+        c.damp = expf(
+            -2.0 * Math_PI * auxdmp * 10000 / params.mix_rate
+        ); // 0 .. 10khz
     }
 }
 

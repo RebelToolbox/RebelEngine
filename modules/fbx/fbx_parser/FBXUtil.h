@@ -79,12 +79,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXTokenizer.h"
 #include <stdint.h>
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
-namespace Util {
+namespace Util
+{
 
 /** Get a string representation for a #TokenType. */
-const char *TokenTypeString(TokenType t);
+const char* TokenTypeString(TokenType t);
 
 /** Decode a single Base64-encoded character.
  *
@@ -97,7 +99,7 @@ uint8_t DecodeBase64(char ch);
  *  @param in Characters to decode.
  *  @param inLength Number of characters to decode.
  *  @return size of the decoded data (number of bytes)*/
-size_t ComputeDecodedSizeBase64(const char *in, size_t inLength);
+size_t ComputeDecodedSizeBase64(const char* in, size_t inLength);
 
 /** Decode a Base64-encoded string
  *
@@ -106,7 +108,12 @@ size_t ComputeDecodedSizeBase64(const char *in, size_t inLength);
  *  @param out Pointer where we will store the decoded data.
  *  @param maxOutLength Size of output buffer.
  *  @return size of the decoded data (number of bytes)*/
-size_t DecodeBase64(const char *in, size_t inLength, uint8_t *out, size_t maxOutLength);
+size_t DecodeBase64(
+    const char* in,
+    size_t inLength,
+    uint8_t* out,
+    size_t maxOutLength
+);
 
 char EncodeBase64(char byte);
 
@@ -115,7 +122,7 @@ char EncodeBase64(char byte);
  *  @param data Binary data to encode.
  *  @param inLength Number of bytes to encode.
  *  @return base64-encoded string*/
-std::string EncodeBase64(const char *data, size_t length);
+std::string EncodeBase64(const char* data, size_t length);
 
 } // namespace Util
 } // namespace FBXDocParser

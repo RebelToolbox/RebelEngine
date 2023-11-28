@@ -49,7 +49,7 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_shape(const Ref<OccluderShape> &p_shape);
+    void set_shape(const Ref<OccluderShape>& p_shape);
     Ref<OccluderShape> get_shape() const;
 
     String get_configuration_warning() const;

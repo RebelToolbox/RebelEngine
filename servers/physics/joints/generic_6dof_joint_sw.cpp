@@ -37,13 +37,17 @@ Bullet Continuous Collision Detection and Physics Library
 Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
 
 This software is provided 'as-is', without any express or implied warranty.
-In no event will the authors be held liable for any damages arising from the use of this software.
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it freely,
-subject to the following restrictions:
+In no event will the authors be held liable for any damages arising from the use
+of this software. Permission is granted to anyone to use this software for any
+purpose, including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
 
-1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
-2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+1. The origin of this software must not be misrepresented; you must not claim
+that you wrote the original software. If you use this software in a product, an
+acknowledgment in the product documentation would be appreciated but is not
+required.
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
 
@@ -58,31 +62,36 @@ http://gimpact.sf.net
 
 #define GENERIC_D6_DISABLE_WARMSTARTING 1
 
-//////////////////////////// G6DOFRotationalLimitMotorSW ////////////////////////////////////
+//////////////////////////// G6DOFRotationalLimitMotorSW
+///////////////////////////////////////
 
 int G6DOFRotationalLimitMotorSW::testLimitValue(real_t test_value) {
     if (m_loLimit > m_hiLimit) {
-        m_currentLimit = 0; //Free from violation
+        m_currentLimit = 0; // Free from violation
         return 0;
     }
 
     if (test_value < m_loLimit) {
-        m_currentLimit = 1; //low limit violation
+        m_currentLimit = 1; // low limit violation
         m_currentLimitError = test_value - m_loLimit;
         return 1;
     } else if (test_value > m_hiLimit) {
-        m_currentLimit = 2; //High limit violation
+        m_currentLimit = 2; // High limit violation
         m_currentLimitError = test_value - m_hiLimit;
         return 2;
     };
 
-    m_currentLimit = 0; //Free from violation
+    m_currentLimit = 0; // Free from violation
     return 0;
 }
 
 real_t G6DOFRotationalLimitMotorSW::solveAngularLimits(
-        real_t timeStep, Vector3 &axis, real_t jacDiagABInv,
-        BodySW *body0, BodySW *body1) {
+    real_t timeStep,
+    Vector3& axis,
+    real_t jacDiagABInv,
+    BodySW* body0,
+    BodySW* body1
+) {
     if (!needApplyTorques()) {
         return 0.0f;
     }
@@ -90,7 +99,7 @@ real_t G6DOFRotationalLimitMotorSW::solveAngularLimits(
     real_t target_velocity = m_targetVelocity;
     real_t maxMotorForce = m_maxMotorForce;
 
-    //current error correction
+    // current error correction
     if (m_currentLimit != 0) {
         target_velocity = -m_ERP * m_currentLimitError / (timeStep);
         maxMotorForce = m_maxLimitForce;
@@ -107,10 +116,11 @@ real_t G6DOFRotationalLimitMotorSW::solveAngularLimits(
     real_t rel_vel = axis.dot(vel_diff);
 
     // correction velocity
-    real_t motor_relvel = m_limitSoftness * (target_velocity - m_damping * rel_vel);
+    real_t motor_relvel =
+        m_limitSoftness * (target_velocity - m_damping * rel_vel);
 
     if (Math::is_zero_approx(motor_relvel)) {
-        return 0.0f; //no need for applying force
+        return 0.0f; // no need for applying force
     }
 
     // correction impulse
@@ -121,9 +131,13 @@ real_t G6DOFRotationalLimitMotorSW::solveAngularLimits(
 
     ///@todo: should clip against accumulated impulse
     if (unclippedMotorImpulse > 0.0f) {
-        clippedMotorImpulse = unclippedMotorImpulse > maxMotorForce ? maxMotorForce : unclippedMotorImpulse;
+        clippedMotorImpulse = unclippedMotorImpulse > maxMotorForce
+                                ? maxMotorForce
+                                : unclippedMotorImpulse;
     } else {
-        clippedMotorImpulse = unclippedMotorImpulse < -maxMotorForce ? -maxMotorForce : unclippedMotorImpulse;
+        clippedMotorImpulse = unclippedMotorImpulse < -maxMotorForce
+                                ? -maxMotorForce
+                                : unclippedMotorImpulse;
     }
 
     // sort with accumulated impulses
@@ -132,7 +146,8 @@ real_t G6DOFRotationalLimitMotorSW::solveAngularLimits(
 
     real_t oldaccumImpulse = m_accumulatedImpulse;
     real_t sum = oldaccumImpulse + clippedMotorImpulse;
-    m_accumulatedImpulse = sum > hi ? real_t(0.) : (sum < lo ? real_t(0.) : sum);
+    m_accumulatedImpulse =
+        sum > hi ? real_t(0.) : (sum < lo ? real_t(0.) : sum);
 
     clippedMotorImpulse = m_accumulatedImpulse - oldaccumImpulse;
 
@@ -146,20 +161,25 @@ real_t G6DOFRotationalLimitMotorSW::solveAngularLimits(
     return clippedMotorImpulse;
 }
 
-//////////////////////////// End G6DOFRotationalLimitMotorSW ////////////////////////////////////
+//////////////////////////// End G6DOFRotationalLimitMotorSW
+///////////////////////////////////////
 
-//////////////////////////// G6DOFTranslationalLimitMotorSW ////////////////////////////////////
+//////////////////////////// G6DOFTranslationalLimitMotorSW
+///////////////////////////////////////
 real_t G6DOFTranslationalLimitMotorSW::solveLinearAxis(
-        real_t timeStep,
-        real_t jacDiagABInv,
-        BodySW *body1, const Vector3 &pointInA,
-        BodySW *body2, const Vector3 &pointInB,
-        int limit_index,
-        const Vector3 &axis_normal_on_a,
-        const Vector3 &anchorPos) {
-    ///find relative velocity
-    //    Vector3 rel_pos1 = pointInA - body1->get_transform().origin;
-    //    Vector3 rel_pos2 = pointInB - body2->get_transform().origin;
+    real_t timeStep,
+    real_t jacDiagABInv,
+    BodySW* body1,
+    const Vector3& pointInA,
+    BodySW* body2,
+    const Vector3& pointInB,
+    int limit_index,
+    const Vector3& axis_normal_on_a,
+    const Vector3& anchorPos
+) {
+    /// find relative velocity
+    // Vector3 rel_pos1 = pointInA - body1->get_transform().origin;
+    // Vector3 rel_pos2 = pointInB - body2->get_transform().origin;
     Vector3 rel_pos1 = anchorPos - body1->get_transform().origin;
     Vector3 rel_pos2 = anchorPos - body2->get_transform().origin;
 
@@ -171,7 +191,7 @@ real_t G6DOFTranslationalLimitMotorSW::solveLinearAxis(
 
     /// apply displacement correction
 
-    //positional error (zeroth order error)
+    // positional error (zeroth order error)
     real_t depth = -(pointInA - pointInB).dot(axis_normal_on_a);
     real_t lo = real_t(-1e30);
     real_t hi = real_t(1e30);
@@ -179,7 +199,7 @@ real_t G6DOFTranslationalLimitMotorSW::solveLinearAxis(
     real_t minLimit = m_lowerLimit[limit_index];
     real_t maxLimit = m_upperLimit[limit_index];
 
-    //handle the limits
+    // handle the limits
     if (minLimit < maxLimit) {
         if (depth > maxLimit) {
             depth -= maxLimit;
@@ -195,11 +215,15 @@ real_t G6DOFTranslationalLimitMotorSW::solveLinearAxis(
         }
     }
 
-    real_t normalImpulse = m_limitSoftness[limit_index] * (m_restitution[limit_index] * depth / timeStep - m_damping[limit_index] * rel_vel) * jacDiagABInv;
+    real_t normalImpulse = m_limitSoftness[limit_index]
+                         * (m_restitution[limit_index] * depth / timeStep
+                            - m_damping[limit_index] * rel_vel)
+                         * jacDiagABInv;
 
     real_t oldNormalImpulse = m_accumulatedImpulse[limit_index];
     real_t sum = oldNormalImpulse + normalImpulse;
-    m_accumulatedImpulse[limit_index] = sum > hi ? real_t(0.) : (sum < lo ? real_t(0.) : sum);
+    m_accumulatedImpulse[limit_index] =
+        sum > hi ? real_t(0.) : (sum < lo ? real_t(0.) : sum);
     normalImpulse = m_accumulatedImpulse[limit_index] - oldNormalImpulse;
 
     Vector3 impulse_vector = axis_normal_on_a * normalImpulse;
@@ -208,13 +232,20 @@ real_t G6DOFTranslationalLimitMotorSW::solveLinearAxis(
     return normalImpulse;
 }
 
-//////////////////////////// G6DOFTranslationalLimitMotorSW ////////////////////////////////////
+//////////////////////////// G6DOFTranslationalLimitMotorSW
+///////////////////////////////////////
 
-Generic6DOFJointSW::Generic6DOFJointSW(BodySW *rbA, BodySW *rbB, const Transform &frameInA, const Transform &frameInB, bool useLinearReferenceFrameA) :
-        JointSW(_arr, 2),
-        m_frameInA(frameInA),
-        m_frameInB(frameInB),
-        m_useLinearReferenceFrameA(useLinearReferenceFrameA) {
+Generic6DOFJointSW::Generic6DOFJointSW(
+    BodySW* rbA,
+    BodySW* rbB,
+    const Transform& frameInA,
+    const Transform& frameInB,
+    bool useLinearReferenceFrameA
+) :
+    JointSW(_arr, 2),
+    m_frameInA(frameInA),
+    m_frameInB(frameInB),
+    m_useLinearReferenceFrameA(useLinearReferenceFrameA) {
     A = rbA;
     B = rbB;
     A->add_constraint(this, 0);
@@ -222,7 +253,8 @@ Generic6DOFJointSW::Generic6DOFJointSW(BodySW *rbA, BodySW *rbB, const Transform
 }
 
 void Generic6DOFJointSW::calculateAngleInfo() {
-    Basis relative_frame = m_calculatedTransformB.basis.inverse() * m_calculatedTransformA.basis;
+    Basis relative_frame =
+        m_calculatedTransformB.basis.inverse() * m_calculatedTransformA.basis;
 
     m_calculatedAxisAngleDiff = relative_frame.get_euler_xyz();
 
@@ -270,58 +302,69 @@ void Generic6DOFJointSW::calculateTransforms() {
 }
 
 void Generic6DOFJointSW::buildLinearJacobian(
-        JacobianEntrySW &jacLinear, const Vector3 &normalWorld,
-        const Vector3 &pivotAInW, const Vector3 &pivotBInW) {
+    JacobianEntrySW& jacLinear,
+    const Vector3& normalWorld,
+    const Vector3& pivotAInW,
+    const Vector3& pivotBInW
+) {
     memnew_placement(
-            &jacLinear,
-            JacobianEntrySW(
-                    A->get_principal_inertia_axes().transposed(),
-                    B->get_principal_inertia_axes().transposed(),
-                    pivotAInW - A->get_transform().origin - A->get_center_of_mass(),
-                    pivotBInW - B->get_transform().origin - B->get_center_of_mass(),
-                    normalWorld,
-                    A->get_inv_inertia(),
-                    A->get_inv_mass(),
-                    B->get_inv_inertia(),
-                    B->get_inv_mass()));
+        &jacLinear,
+        JacobianEntrySW(
+            A->get_principal_inertia_axes().transposed(),
+            B->get_principal_inertia_axes().transposed(),
+            pivotAInW - A->get_transform().origin - A->get_center_of_mass(),
+            pivotBInW - B->get_transform().origin - B->get_center_of_mass(),
+            normalWorld,
+            A->get_inv_inertia(),
+            A->get_inv_mass(),
+            B->get_inv_inertia(),
+            B->get_inv_mass()
+        )
+    );
 }
 
 void Generic6DOFJointSW::buildAngularJacobian(
-        JacobianEntrySW &jacAngular, const Vector3 &jointAxisW) {
+    JacobianEntrySW& jacAngular,
+    const Vector3& jointAxisW
+) {
     memnew_placement(
-            &jacAngular,
-            JacobianEntrySW(
-                    jointAxisW,
-                    A->get_principal_inertia_axes().transposed(),
-                    B->get_principal_inertia_axes().transposed(),
-                    A->get_inv_inertia(),
-                    B->get_inv_inertia()));
+        &jacAngular,
+        JacobianEntrySW(
+            jointAxisW,
+            A->get_principal_inertia_axes().transposed(),
+            B->get_principal_inertia_axes().transposed(),
+            A->get_inv_inertia(),
+            B->get_inv_inertia()
+        )
+    );
 }
 
 bool Generic6DOFJointSW::testAngularLimitMotor(int axis_index) {
     real_t angle = m_calculatedAxisAngleDiff[axis_index];
 
-    //test limits
+    // test limits
     m_angularLimits[axis_index].testLimitValue(angle);
     return m_angularLimits[axis_index].needApplyTorques();
 }
 
 bool Generic6DOFJointSW::setup(real_t p_timestep) {
-    if ((A->get_mode() <= PhysicsServer::BODY_MODE_KINEMATIC) && (B->get_mode() <= PhysicsServer::BODY_MODE_KINEMATIC)) {
+    if ((A->get_mode() <= PhysicsServer::BODY_MODE_KINEMATIC)
+        && (B->get_mode() <= PhysicsServer::BODY_MODE_KINEMATIC)) {
         return false;
     }
 
     // Clear accumulated impulses for the next simulation step
-    m_linearLimits.m_accumulatedImpulse = Vector3(real_t(0.), real_t(0.), real_t(0.));
+    m_linearLimits.m_accumulatedImpulse =
+        Vector3(real_t(0.), real_t(0.), real_t(0.));
     int i;
     for (i = 0; i < 3; i++) {
         m_angularLimits[i].m_accumulatedImpulse = real_t(0.);
     }
-    //calculates transform
+    // calculates transform
     calculateTransforms();
 
-    //  const Vector3& pivotAInW = m_calculatedTransformA.origin;
-    //  const Vector3& pivotBInW = m_calculatedTransformB.origin;
+    // const Vector3& pivotAInW = m_calculatedTransformA.origin;
+    // const Vector3& pivotBInW = m_calculatedTransformB.origin;
     calcAnchorPos();
     Vector3 pivotAInW = m_AnchorPos;
     Vector3 pivotBInW = m_AnchorPos;
@@ -331,7 +374,7 @@ bool Generic6DOFJointSW::setup(real_t p_timestep) {
     //    Vector3 rel_pos2 = pivotBInW - B->get_transform().origin;
 
     Vector3 normalWorld;
-    //linear part
+    // linear part
     for (i = 0; i < 3; i++) {
         if (m_linearLimits.enable_limit[i] && m_linearLimits.isLimited(i)) {
             if (m_useLinearReferenceFrameA) {
@@ -341,14 +384,17 @@ bool Generic6DOFJointSW::setup(real_t p_timestep) {
             }
 
             buildLinearJacobian(
-                    m_jacLinear[i], normalWorld,
-                    pivotAInW, pivotBInW);
+                m_jacLinear[i],
+                normalWorld,
+                pivotAInW,
+                pivotBInW
+            );
         }
     }
 
     // angular part
     for (i = 0; i < 3; i++) {
-        //calculates error angle
+        // calculates error angle
         if (m_angularLimits[i].m_enableLimit && testAngularLimitMotor(i)) {
             normalWorld = this->getAxis(i);
             // Create angular atom
@@ -362,7 +408,7 @@ bool Generic6DOFJointSW::setup(real_t p_timestep) {
 void Generic6DOFJointSW::solve(real_t p_timestep) {
     m_timeStep = p_timestep;
 
-    //calculateTransforms();
+    // calculateTransforms();
 
     int i;
 
@@ -384,11 +430,16 @@ void Generic6DOFJointSW::solve(real_t p_timestep) {
             }
 
             m_linearLimits.solveLinearAxis(
-                    m_timeStep,
-                    jacDiagABInv,
-                    A, pointInA,
-                    B, pointInB,
-                    i, linear_axis, m_AnchorPos);
+                m_timeStep,
+                jacDiagABInv,
+                A,
+                pointInA,
+                B,
+                pointInB,
+                i,
+                linear_axis,
+                m_AnchorPos
+            );
         }
     }
 
@@ -396,13 +447,20 @@ void Generic6DOFJointSW::solve(real_t p_timestep) {
     Vector3 angular_axis;
     real_t angularJacDiagABInv;
     for (i = 0; i < 3; i++) {
-        if (m_angularLimits[i].m_enableLimit && m_angularLimits[i].needApplyTorques()) {
+        if (m_angularLimits[i].m_enableLimit
+            && m_angularLimits[i].needApplyTorques()) {
             // get axis
             angular_axis = getAxis(i);
 
             angularJacDiagABInv = real_t(1.) / m_jacAng[i].getDiagonal();
 
-            m_angularLimits[i].solveAngularLimits(m_timeStep, angular_axis, angularJacDiagABInv, A, B);
+            m_angularLimits[i].solveAngularLimits(
+                m_timeStep,
+                angular_axis,
+                angularJacDiagABInv,
+                A,
+                B
+            );
         }
     }
 }
@@ -428,12 +486,16 @@ void Generic6DOFJointSW::calcAnchorPos() {
     } else {
         weight = imA / (imA + imB);
     }
-    const Vector3 &pA = m_calculatedTransformA.origin;
-    const Vector3 &pB = m_calculatedTransformB.origin;
+    const Vector3& pA = m_calculatedTransformA.origin;
+    const Vector3& pB = m_calculatedTransformB.origin;
     m_AnchorPos = pA * weight + pB * (real_t(1.0) - weight);
 } // Generic6DOFJointSW::calcAnchorPos()
 
-void Generic6DOFJointSW::set_param(Vector3::Axis p_axis, PhysicsServer::G6DOFJointAxisParam p_param, real_t p_value) {
+void Generic6DOFJointSW::set_param(
+    Vector3::Axis p_axis,
+    PhysicsServer::G6DOFJointAxisParam p_param,
+    real_t p_value
+) {
     ERR_FAIL_INDEX(p_axis, 3);
     switch (p_param) {
         case PhysicsServer::G6DOF_JOINT_LINEAR_LOWER_LIMIT: {
@@ -520,7 +582,10 @@ void Generic6DOFJointSW::set_param(Vector3::Axis p_axis, PhysicsServer::G6DOFJoi
     }
 }
 
-real_t Generic6DOFJointSW::get_param(Vector3::Axis p_axis, PhysicsServer::G6DOFJointAxisParam p_param) const {
+real_t Generic6DOFJointSW::get_param(
+    Vector3::Axis p_axis,
+    PhysicsServer::G6DOFJointAxisParam p_param
+) const {
     ERR_FAIL_INDEX_V(p_axis, 3, 0);
     switch (p_param) {
         case PhysicsServer::G6DOF_JOINT_LINEAR_LOWER_LIMIT: {
@@ -608,7 +673,11 @@ real_t Generic6DOFJointSW::get_param(Vector3::Axis p_axis, PhysicsServer::G6DOFJ
     return 0;
 }
 
-void Generic6DOFJointSW::set_flag(Vector3::Axis p_axis, PhysicsServer::G6DOFJointAxisFlag p_flag, bool p_value) {
+void Generic6DOFJointSW::set_flag(
+    Vector3::Axis p_axis,
+    PhysicsServer::G6DOFJointAxisFlag p_flag,
+    bool p_value
+) {
     ERR_FAIL_INDEX(p_axis, 3);
 
     switch (p_flag) {
@@ -634,7 +703,11 @@ void Generic6DOFJointSW::set_flag(Vector3::Axis p_axis, PhysicsServer::G6DOFJoin
             break; // Can't happen, but silences warning
     }
 }
-bool Generic6DOFJointSW::get_flag(Vector3::Axis p_axis, PhysicsServer::G6DOFJointAxisFlag p_flag) const {
+
+bool Generic6DOFJointSW::get_flag(
+    Vector3::Axis p_axis,
+    PhysicsServer::G6DOFJointAxisFlag p_flag
+) const {
     ERR_FAIL_INDEX_V(p_axis, 3, 0);
     switch (p_flag) {
         case PhysicsServer::G6DOF_JOINT_FLAG_ENABLE_LINEAR_LIMIT: {

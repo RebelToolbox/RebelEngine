@@ -50,11 +50,11 @@ public:
     };
 
 private:
-    ContextGL_X11_Private *p;
+    ContextGL_X11_Private* p;
     OS::VideoMode default_video_mode;
     //::Colormap x11_colormap;
-    ::Display *x11_display;
-    ::Window &x11_window;
+    ::Display* x11_display;
+    ::Window& x11_window;
     bool double_buffer;
     bool direct_render;
     int glx_minor, glx_major;
@@ -67,14 +67,19 @@ public:
     void swap_buffers();
     int get_window_width();
     int get_window_height();
-    void *get_glx_context();
+    void* get_glx_context();
 
     Error initialize();
 
     void set_use_vsync(bool p_use);
     bool is_using_vsync() const;
 
-    ContextGL_X11(::Display *p_x11_display, ::Window &p_x11_window, const OS::VideoMode &p_default_video_mode, ContextType p_context_type);
+    ContextGL_X11(
+        ::Display* p_x11_display,
+        ::Window& p_x11_window,
+        const OS::VideoMode& p_default_video_mode,
+        ContextType p_context_type
+    );
     ~ContextGL_X11();
 };
 

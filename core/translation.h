@@ -44,20 +44,27 @@ class Translation : public Resource {
     PoolVector<String> _get_message_list() const;
 
     PoolVector<String> _get_messages() const;
-    void _set_messages(const PoolVector<String> &p_messages);
+    void _set_messages(const PoolVector<String>& p_messages);
 
 protected:
     static void _bind_methods();
 
 public:
-    void set_locale(const String &p_locale);
-    _FORCE_INLINE_ String get_locale() const { return locale; }
+    void set_locale(const String& p_locale);
 
-    void add_message(const StringName &p_src_text, const StringName &p_xlated_text);
-    virtual StringName get_message(const StringName &p_src_text) const; //overridable for other implementations
-    void erase_message(const StringName &p_src_text);
+    _FORCE_INLINE_ String get_locale() const {
+        return locale;
+    }
 
-    void get_message_list(List<StringName> *r_messages) const;
+    void add_message(
+        const StringName& p_src_text,
+        const StringName& p_xlated_text
+    );
+    virtual StringName get_message(const StringName& p_src_text
+    ) const; // overridable for other implementations
+    void erase_message(const StringName& p_src_text);
+
+    void get_message_list(List<StringName>* r_messages) const;
     int get_message_count() const;
 
     Translation();
@@ -77,39 +84,46 @@ class TranslationServer : public Object {
 
     bool enabled;
 
-    static TranslationServer *singleton;
-    bool _load_translations(const String &p_from);
+    static TranslationServer* singleton;
+    bool _load_translations(const String& p_from);
 
     static void _bind_methods();
 
 public:
-    _FORCE_INLINE_ static TranslationServer *get_singleton() { return singleton; }
+    _FORCE_INLINE_ static TranslationServer* get_singleton() {
+        return singleton;
+    }
 
-    void set_enabled(bool p_enabled) { enabled = p_enabled; }
-    _FORCE_INLINE_ bool is_enabled() const { return enabled; }
+    void set_enabled(bool p_enabled) {
+        enabled = p_enabled;
+    }
 
-    void set_locale(const String &p_locale);
+    _FORCE_INLINE_ bool is_enabled() const {
+        return enabled;
+    }
+
+    void set_locale(const String& p_locale);
     String get_locale() const;
 
-    String get_locale_name(const String &p_locale) const;
+    String get_locale_name(const String& p_locale) const;
 
     Array get_loaded_locales() const;
 
-    void add_translation(const Ref<Translation> &p_translation);
-    void remove_translation(const Ref<Translation> &p_translation);
+    void add_translation(const Ref<Translation>& p_translation);
+    void remove_translation(const Ref<Translation>& p_translation);
 
-    StringName translate(const StringName &p_message) const;
+    StringName translate(const StringName& p_message) const;
 
     static Vector<String> get_all_locales();
     static Vector<String> get_all_locale_names();
-    static bool is_locale_valid(const String &p_locale);
-    static String standardize_locale(const String &p_locale);
-    static String get_language_code(const String &p_locale);
+    static bool is_locale_valid(const String& p_locale);
+    static String standardize_locale(const String& p_locale);
+    static String get_language_code(const String& p_locale);
 
-    void set_tool_translation(const Ref<Translation> &p_translation);
-    StringName tool_translate(const StringName &p_message) const;
-    void set_doc_translation(const Ref<Translation> &p_translation);
-    StringName doc_translate(const StringName &p_message) const;
+    void set_tool_translation(const Ref<Translation>& p_translation);
+    StringName tool_translate(const StringName& p_message) const;
+    void set_doc_translation(const Ref<Translation>& p_translation);
+    StringName doc_translate(const StringName& p_message) const;
 
     void setup();
 

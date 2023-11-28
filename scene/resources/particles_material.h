@@ -54,7 +54,8 @@ public:
         PARAM_MAX
     };
 
-    // When extending, make sure not to overflow the size of the MaterialKey below.
+    // When extending, make sure not to overflow the size of the MaterialKey
+    // below.
     enum Flags {
         FLAG_ALIGN_Y_TO_VELOCITY,
         FLAG_ROTATE_Y,
@@ -62,7 +63,8 @@ public:
         FLAG_MAX
     };
 
-    // When extending, make sure not to overflow the size of the MaterialKey below.
+    // When extending, make sure not to overflow the size of the MaterialKey
+    // below.
     enum EmissionShape {
         EMISSION_SHAPE_POINT,
         EMISSION_SHAPE_SPHERE,
@@ -90,7 +92,7 @@ private:
 
         uint32_t key;
 
-        bool operator<(const MaterialKey &p_key) const {
+        bool operator<(const MaterialKey& p_key) const {
             return key < p_key.key;
         }
     };
@@ -122,13 +124,14 @@ private:
         mk.emission_shape = emission_shape;
         mk.trail_color_texture = trail_color_modifier.is_valid() ? 1 : 0;
         mk.trail_size_texture = trail_size_modifier.is_valid() ? 1 : 0;
-        mk.has_emission_color = emission_shape >= EMISSION_SHAPE_POINTS && emission_color_texture.is_valid();
+        mk.has_emission_color = emission_shape >= EMISSION_SHAPE_POINTS
+                             && emission_color_texture.is_valid();
 
         return mk;
     }
 
     static Mutex material_mutex;
-    static SelfList<ParticlesMaterial>::List *dirty_materials;
+    static SelfList<ParticlesMaterial>::List* dirty_materials;
 
     struct ShaderNames {
         StringName direction;
@@ -195,7 +198,7 @@ private:
         StringName lifetime_randomness;
     };
 
-    static ShaderNames *shader_names;
+    static ShaderNames* shader_names;
 
     SelfList<ParticlesMaterial> element;
 
@@ -240,11 +243,11 @@ private:
 
     float lifetime_randomness;
 
-    //do not save emission points here
+    // do not save emission points here
 
 protected:
     static void _bind_methods();
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
 public:
     void set_direction(Vector3 p_direction);
@@ -262,13 +265,13 @@ public:
     void set_param_randomness(Parameter p_param, float p_value);
     float get_param_randomness(Parameter p_param) const;
 
-    void set_param_texture(Parameter p_param, const Ref<Texture> &p_texture);
+    void set_param_texture(Parameter p_param, const Ref<Texture>& p_texture);
     Ref<Texture> get_param_texture(Parameter p_param) const;
 
-    void set_color(const Color &p_color);
+    void set_color(const Color& p_color);
     Color get_color() const;
 
-    void set_color_ramp(const Ref<Texture> &p_texture);
+    void set_color_ramp(const Ref<Texture>& p_texture);
     Ref<Texture> get_color_ramp() const;
 
     void set_flag(Flags p_flag, bool p_enable);
@@ -277,9 +280,9 @@ public:
     void set_emission_shape(EmissionShape p_shape);
     void set_emission_sphere_radius(float p_radius);
     void set_emission_box_extents(Vector3 p_extents);
-    void set_emission_point_texture(const Ref<Texture> &p_points);
-    void set_emission_normal_texture(const Ref<Texture> &p_normals);
-    void set_emission_color_texture(const Ref<Texture> &p_colors);
+    void set_emission_point_texture(const Ref<Texture>& p_points);
+    void set_emission_normal_texture(const Ref<Texture>& p_normals);
+    void set_emission_color_texture(const Ref<Texture>& p_colors);
     void set_emission_point_count(int p_count);
     void set_emission_ring_radius(float p_radius);
     void set_emission_ring_inner_radius(float p_offset);
@@ -301,13 +304,16 @@ public:
     void set_trail_divisor(int p_divisor);
     int get_trail_divisor() const;
 
-    void set_trail_size_modifier(const Ref<CurveTexture> &p_trail_size_modifier);
+    void set_trail_size_modifier(const Ref<CurveTexture>& p_trail_size_modifier
+    );
     Ref<CurveTexture> get_trail_size_modifier() const;
 
-    void set_trail_color_modifier(const Ref<GradientTexture> &p_trail_color_modifier);
+    void set_trail_color_modifier(
+        const Ref<GradientTexture>& p_trail_color_modifier
+    );
     Ref<GradientTexture> get_trail_color_modifier() const;
 
-    void set_gravity(const Vector3 &p_gravity);
+    void set_gravity(const Vector3& p_gravity);
     Vector3 get_gravity() const;
 
     void set_lifetime_randomness(float p_lifetime);

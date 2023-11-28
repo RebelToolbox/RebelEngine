@@ -50,7 +50,7 @@ protected:
     BuildMode build_mode;
     Vector<Point2> polygon;
     uint32_t owner_id;
-    CollisionObject2D *parent;
+    CollisionObject2D* parent;
     bool disabled;
     bool one_way_collision;
     float one_way_collision_margin;
@@ -69,13 +69,16 @@ public:
 #ifdef TOOLS_ENABLED
     virtual Rect2 _edit_get_rect() const;
     virtual bool _edit_use_rect() const;
-    virtual bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const;
+    virtual bool _edit_is_selected_on_click(
+        const Point2& p_point,
+        double p_tolerance
+    ) const;
 #endif
 
     void set_build_mode(BuildMode p_mode);
     BuildMode get_build_mode() const;
 
-    void set_polygon(const Vector<Point2> &p_polygon);
+    void set_polygon(const Vector<Point2>& p_polygon);
     Vector<Point2> get_polygon() const;
 
     virtual String get_configuration_warning() const;

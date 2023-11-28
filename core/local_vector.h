@@ -43,14 +43,14 @@ class LocalVector {
 private:
     U count = 0;
     U capacity = 0;
-    T *data = nullptr;
+    T* data = nullptr;
 
 public:
-    T *ptr() {
+    T* ptr() {
         return data;
     }
 
-    const T *ptr() const {
+    const T* ptr() const {
         return data;
     }
 
@@ -61,7 +61,7 @@ public:
             } else {
                 capacity <<= 1;
             }
-            data = (T *)memrealloc(data, capacity * sizeof(T));
+            data = (T*)memrealloc(data, capacity * sizeof(T));
             CRASH_COND_MSG(!data, "Out of memory");
         }
 
@@ -96,7 +96,7 @@ public:
         }
     }
 
-    void erase(const T &p_val) {
+    void erase(const T& p_val) {
         int64_t idx = find(p_val);
         if (idx >= 0) {
             remove(idx);
@@ -109,7 +109,10 @@ public:
         }
     }
 
-    _FORCE_INLINE_ void clear() { resize(0); }
+    _FORCE_INLINE_ void clear() {
+        resize(0);
+    }
+
     _FORCE_INLINE_ void reset() {
         clear();
         if (data) {
@@ -118,17 +121,24 @@ public:
             capacity = 0;
         }
     }
-    _FORCE_INLINE_ bool empty() const { return count == 0; }
+
+    _FORCE_INLINE_ bool empty() const {
+        return count == 0;
+    }
+
     _FORCE_INLINE_ void reserve(U p_size) {
         p_size = nearest_power_of_2_templated(p_size);
         if (p_size > capacity) {
             capacity = p_size;
-            data = (T *)memrealloc(data, capacity * sizeof(T));
+            data = (T*)memrealloc(data, capacity * sizeof(T));
             CRASH_COND_MSG(!data, "Out of memory");
         }
     }
 
-    _FORCE_INLINE_ U size() const { return count; }
+    _FORCE_INLINE_ U size() const {
+        return count;
+    }
+
     void resize(U p_size) {
         if (p_size < count) {
             if (!std::is_trivially_destructible<T>::value && !force_trivial) {
@@ -145,7 +155,7 @@ public:
                 while (capacity < p_size) {
                     capacity <<= 1;
                 }
-                data = (T *)memrealloc(data, capacity * sizeof(T));
+                data = (T*)memrealloc(data, capacity * sizeof(T));
                 CRASH_COND_MSG(!data, "Out of memory");
             }
             if (!std::is_trivially_constructible<T>::value && !force_trivial) {
@@ -156,11 +166,13 @@ public:
             count = p_size;
         }
     }
-    _FORCE_INLINE_ const T &operator[](U p_index) const {
+
+    _FORCE_INLINE_ const T& operator[](U p_index) const {
         CRASH_BAD_UNSIGNED_INDEX(p_index, count);
         return data[p_index];
     }
-    _FORCE_INLINE_ T &operator[](U p_index) {
+
+    _FORCE_INLINE_ T& operator[](U p_index) {
         CRASH_BAD_UNSIGNED_INDEX(p_index, count);
         return data[p_index];
     }
@@ -178,7 +190,7 @@ public:
         }
     }
 
-    int64_t find(const T &p_val, U p_from = 0) const {
+    int64_t find(const T& p_val, U p_from = 0) const {
         for (U i = p_from; i < count; i++) {
             if (data[i] == p_val) {
                 return int64_t(i);
@@ -215,34 +227,38 @@ public:
     operator Vector<T>() const {
         Vector<T> ret;
         ret.resize(size());
-        T *w = ret.ptrw();
+        T* w = ret.ptrw();
         memcpy(w, data, sizeof(T) * count);
         return ret;
     }
 
-    Vector<uint8_t> to_byte_array() const { //useful to pass stuff to gpu or variant
+    Vector<uint8_t> to_byte_array(
+    ) const { // useful to pass stuff to gpu or variant
         Vector<uint8_t> ret;
         ret.resize(count * sizeof(T));
-        uint8_t *w = ret.ptrw();
+        uint8_t* w = ret.ptrw();
         memcpy(w, data, sizeof(T) * count);
         return ret;
     }
 
     _FORCE_INLINE_ LocalVector() {}
-    _FORCE_INLINE_ LocalVector(const LocalVector &p_from) {
+
+    _FORCE_INLINE_ LocalVector(const LocalVector& p_from) {
         resize(p_from.size());
         for (U i = 0; i < p_from.count; i++) {
             data[i] = p_from.data[i];
         }
     }
-    inline LocalVector &operator=(const LocalVector &p_from) {
+
+    inline LocalVector& operator=(const LocalVector& p_from) {
         resize(p_from.size());
         for (U i = 0; i < p_from.count; i++) {
             data[i] = p_from.data[i];
         }
         return *this;
     }
-    inline LocalVector &operator=(const Vector<T> &p_from) {
+
+    inline LocalVector& operator=(const Vector<T>& p_from) {
         resize(p_from.size());
         for (U i = 0; i < count; i++) {
             data[i] = p_from[i];

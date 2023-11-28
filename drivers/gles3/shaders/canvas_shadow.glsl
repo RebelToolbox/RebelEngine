@@ -12,7 +12,8 @@ layout(location = 0) in highp vec3 vertex;
 out highp vec4 position_interp;
 
 void main() {
-    gl_Position = projection_matrix * (light_matrix * (world_matrix * vec4(vertex, 1.0)));
+    gl_Position =
+        projection_matrix * (light_matrix * (world_matrix * vec4(vertex, 1.0)));
     position_interp = gl_Position;
 }
 
@@ -29,11 +30,13 @@ layout(location = 0) out highp float distance_buf;
 #endif
 
 void main() {
-    highp float depth = ((position_interp.z / position_interp.w) + 1.0) * 0.5 + 0.0; // bias
+    highp float depth =
+        ((position_interp.z / position_interp.w) + 1.0) * 0.5 + 0.0; // bias
 
 #ifdef USE_RGBA_SHADOWS
 
-    highp vec4 comp = fract(depth * vec4(255.0 * 255.0 * 255.0, 255.0 * 255.0, 255.0, 1.0));
+    highp vec4 comp =
+        fract(depth * vec4(255.0 * 255.0 * 255.0, 255.0 * 255.0, 255.0, 1.0));
     comp -= comp.xxyz * vec4(0.0, 1.0 / 255.0, 1.0 / 255.0, 1.0 / 255.0);
     distance_buf = comp;
 #else

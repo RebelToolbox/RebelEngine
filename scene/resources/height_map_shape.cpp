@@ -44,7 +44,11 @@ Vector<Vector3> HeightMapShape::get_debug_mesh_lines() {
         PoolRealArray::Read r = map_data.read();
 
         // reserve some memory for our points..
-        points.resize(((map_width - 1) * map_depth * 2) + (map_width * (map_depth - 1) * 2) + (map_width - 1) * (map_depth - 1) * 2);
+        points.resize(
+            ((map_width - 1) * map_depth * 2)
+            + (map_width * (map_depth - 1) * 2)
+            + (map_width - 1) * (map_depth - 1) * 2
+        );
 
         // now set our points
         int r_offset = 0;
@@ -57,17 +61,27 @@ Vector<Vector3> HeightMapShape::get_debug_mesh_lines() {
 
                 if (w != map_width - 1) {
                     points.write[w_offset++] = height;
-                    points.write[w_offset++] = Vector3(height.x + 1.0, r[r_offset], height.z);
+                    points.write[w_offset++] =
+                        Vector3(height.x + 1.0, r[r_offset], height.z);
                 }
 
                 if (d != map_depth - 1) {
                     points.write[w_offset++] = height;
-                    points.write[w_offset++] = Vector3(height.x, r[r_offset + map_width - 1], height.z + 1.0);
+                    points.write[w_offset++] = Vector3(
+                        height.x,
+                        r[r_offset + map_width - 1],
+                        height.z + 1.0
+                    );
                 }
 
                 if ((w != map_width - 1) && (d != map_depth - 1)) {
-                    points.write[w_offset++] = Vector3(height.x + 1.0, r[r_offset], height.z);
-                    points.write[w_offset++] = Vector3(height.x, r[r_offset + map_width - 1], height.z + 1.0);
+                    points.write[w_offset++] =
+                        Vector3(height.x + 1.0, r[r_offset], height.z);
+                    points.write[w_offset++] = Vector3(
+                        height.x,
+                        r[r_offset + map_width - 1],
+                        height.z + 1.0
+                    );
                 }
 
                 height.x += 1.0;
@@ -180,20 +194,62 @@ PoolRealArray HeightMapShape::get_map_data() const {
 }
 
 void HeightMapShape::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_map_width", "width"), &HeightMapShape::set_map_width);
-    ClassDB::bind_method(D_METHOD("get_map_width"), &HeightMapShape::get_map_width);
-    ClassDB::bind_method(D_METHOD("set_map_depth", "height"), &HeightMapShape::set_map_depth);
-    ClassDB::bind_method(D_METHOD("get_map_depth"), &HeightMapShape::get_map_depth);
-    ClassDB::bind_method(D_METHOD("set_map_data", "data"), &HeightMapShape::set_map_data);
-    ClassDB::bind_method(D_METHOD("get_map_data"), &HeightMapShape::get_map_data);
+    ClassDB::bind_method(
+        D_METHOD("set_map_width", "width"),
+        &HeightMapShape::set_map_width
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_map_width"),
+        &HeightMapShape::get_map_width
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_map_depth", "height"),
+        &HeightMapShape::set_map_depth
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_map_depth"),
+        &HeightMapShape::get_map_depth
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_map_data", "data"),
+        &HeightMapShape::set_map_data
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_map_data"),
+        &HeightMapShape::get_map_data
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "map_width", PROPERTY_HINT_RANGE, "1,4096,1"), "set_map_width", "get_map_width");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "map_depth", PROPERTY_HINT_RANGE, "1,4096,1"), "set_map_depth", "get_map_depth");
-    ADD_PROPERTY(PropertyInfo(Variant::POOL_REAL_ARRAY, "map_data"), "set_map_data", "get_map_data");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "map_width",
+            PROPERTY_HINT_RANGE,
+            "1,4096,1"
+        ),
+        "set_map_width",
+        "get_map_width"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "map_depth",
+            PROPERTY_HINT_RANGE,
+            "1,4096,1"
+        ),
+        "set_map_depth",
+        "get_map_depth"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::POOL_REAL_ARRAY, "map_data"),
+        "set_map_data",
+        "get_map_data"
+    );
 }
 
 HeightMapShape::HeightMapShape() :
-        Shape(PhysicsServer::get_singleton()->shape_create(PhysicsServer::SHAPE_HEIGHTMAP)) {
+    Shape(PhysicsServer::get_singleton()->shape_create(
+        PhysicsServer::SHAPE_HEIGHTMAP
+    )) {
     map_width = 2;
     map_depth = 2;
     map_data.resize(map_width * map_depth);

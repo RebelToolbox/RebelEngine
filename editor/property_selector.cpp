@@ -34,11 +34,11 @@
 #include "editor/editor_node.h"
 #include "editor_scale.h"
 
-void PropertySelector::_text_changed(const String &p_newtext) {
+void PropertySelector::_text_changed(const String& p_newtext) {
     _update_search();
 }
 
-void PropertySelector::_sbox_input(const Ref<InputEvent> &p_ie) {
+void PropertySelector::_sbox_input(const Ref<InputEvent>& p_ie) {
     Ref<InputEventKey> k = p_ie;
 
     if (k.is_valid()) {
@@ -50,14 +50,14 @@ void PropertySelector::_sbox_input(const Ref<InputEvent> &p_ie) {
                 search_options->call("_gui_input", k);
                 search_box->accept_event();
 
-                TreeItem *root = search_options->get_root();
+                TreeItem* root = search_options->get_root();
                 if (!root->get_children()) {
                     break;
                 }
 
-                TreeItem *current = search_options->get_selected();
+                TreeItem* current = search_options->get_selected();
 
-                TreeItem *item = search_options->get_next_selected(root);
+                TreeItem* item = search_options->get_next_selected(root);
                 while (item) {
                     item->deselect(0);
                     item = search_options->get_next_selected(item);
@@ -82,9 +82,10 @@ void PropertySelector::_update_search() {
     search_options->clear();
     help_bit->set_text("");
 
-    TreeItem *root = search_options->create_item();
+    TreeItem* root = search_options->create_item();
 
-    // Allow using spaces in place of underscores in the search string (makes the search more fault-tolerant).
+    // Allow using spaces in place of underscores in the search string (makes
+    // the search more fault-tolerant).
     const String search_text = search_box->get_text().replace(" ", "_");
 
     if (properties) {
@@ -99,21 +100,33 @@ void PropertySelector::_update_search() {
 
             v.get_property_list(&props);
         } else {
-            Object *obj = ObjectDB::get_instance(script);
+            Object* obj = ObjectDB::get_instance(script);
             if (Object::cast_to<Script>(obj)) {
-                props.push_back(PropertyInfo(Variant::NIL, "Script Variables", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_CATEGORY));
+                props.push_back(PropertyInfo(
+                    Variant::NIL,
+                    "Script Variables",
+                    PROPERTY_HINT_NONE,
+                    "",
+                    PROPERTY_USAGE_CATEGORY
+                ));
                 Object::cast_to<Script>(obj)->get_script_property_list(&props);
             }
 
             StringName base = base_type;
             while (base) {
-                props.push_back(PropertyInfo(Variant::NIL, base, PROPERTY_HINT_NONE, "", PROPERTY_USAGE_CATEGORY));
+                props.push_back(PropertyInfo(
+                    Variant::NIL,
+                    base,
+                    PROPERTY_HINT_NONE,
+                    "",
+                    PROPERTY_USAGE_CATEGORY
+                ));
                 ClassDB::get_property_list(base, &props, true);
                 base = ClassDB::get_parent_class(base);
             }
         }
 
-        TreeItem *category = nullptr;
+        TreeItem* category = nullptr;
 
         bool found = false;
 
@@ -147,10 +160,10 @@ void PropertySelector::_update_search() {
             Control::get_icon("PoolColorArray", "EditorIcons")
         };
 
-        for (List<PropertyInfo>::Element *E = props.front(); E; E = E->next()) {
+        for (List<PropertyInfo>::Element* E = props.front(); E; E = E->next()) {
             if (E->get().usage == PROPERTY_USAGE_CATEGORY) {
                 if (category && category->get_children() == nullptr) {
-                    memdelete(category); //old category was unused
+                    memdelete(category); // old category was unused
                 }
                 category = search_options->create_item(root);
                 category->set_text(0, E->get().name);
@@ -160,17 +173,21 @@ void PropertySelector::_update_search() {
                 if (E->get().name == "Script Variables") {
                     icon = get_icon("Script", "EditorIcons");
                 } else {
-                    icon = EditorNode::get_singleton()->get_class_icon(E->get().name);
+                    icon = EditorNode::get_singleton()->get_class_icon(
+                        E->get().name
+                    );
                 }
                 category->set_icon(0, icon);
                 continue;
             }
 
-            if (!(E->get().usage & PROPERTY_USAGE_EDITOR) && !(E->get().usage & PROPERTY_USAGE_SCRIPT_VARIABLE)) {
+            if (!(E->get().usage & PROPERTY_USAGE_EDITOR)
+                && !(E->get().usage & PROPERTY_USAGE_SCRIPT_VARIABLE)) {
                 continue;
             }
 
-            if (search_box->get_text() != String() && E->get().name.findn(search_text) == -1) {
+            if (search_box->get_text() != String()
+                && E->get().name.findn(search_text) == -1) {
                 continue;
             }
 
@@ -178,12 +195,14 @@ void PropertySelector::_update_search() {
                 continue;
             }
 
-            TreeItem *item = search_options->create_item(category ? category : root);
+            TreeItem* item =
+                search_options->create_item(category ? category : root);
             item->set_text(0, E->get().name);
             item->set_metadata(0, E->get().name);
             item->set_icon(0, type_icons[E->get().type]);
 
-            if (!found && search_box->get_text() != String() && E->get().name.findn(search_text) != -1) {
+            if (!found && search_box->get_text() != String()
+                && E->get().name.findn(search_text) != -1) {
                 item->select(0);
                 found = true;
             }
@@ -192,7 +211,7 @@ void PropertySelector::_update_search() {
         }
 
         if (category && category->get_children() == nullptr) {
-            memdelete(category); //old category was unused
+            memdelete(category); // old category was unused
         }
     } else {
         List<MethodInfo> methods;
@@ -203,7 +222,7 @@ void PropertySelector::_update_search() {
             v = Variant::construct(type, nullptr, 0, ce);
             v.get_method_list(&methods);
         } else {
-            Object *obj = ObjectDB::get_instance(script);
+            Object* obj = ObjectDB::get_instance(script);
             if (Object::cast_to<Script>(obj)) {
                 methods.push_back(MethodInfo("*Script Methods"));
                 Object::cast_to<Script>(obj)->get_script_method_list(&methods);
@@ -217,15 +236,15 @@ void PropertySelector::_update_search() {
             }
         }
 
-        TreeItem *category = nullptr;
+        TreeItem* category = nullptr;
 
         bool found = false;
         bool script_methods = false;
 
-        for (List<MethodInfo>::Element *E = methods.front(); E; E = E->next()) {
+        for (List<MethodInfo>::Element* E = methods.front(); E; E = E->next()) {
             if (E->get().name.begins_with("*")) {
                 if (category && category->get_children() == nullptr) {
-                    memdelete(category); //old category was unused
+                    memdelete(category); // old category was unused
                 }
                 category = search_options->create_item(root);
                 category->set_text(0, E->get().name.replace_first("*", ""));
@@ -246,7 +265,8 @@ void PropertySelector::_update_search() {
             }
 
             String name = E->get().name.get_slice(":", 0);
-            if (!script_methods && name.begins_with("_") && !(E->get().flags & METHOD_FLAG_VIRTUAL)) {
+            if (!script_methods && name.begins_with("_")
+                && !(E->get().flags & METHOD_FLAG_VIRTUAL)) {
                 continue;
             }
 
@@ -258,11 +278,13 @@ void PropertySelector::_update_search() {
                 continue;
             }
 
-            if (search_box->get_text() != String() && name.findn(search_text) == -1) {
+            if (search_box->get_text() != String()
+                && name.findn(search_text) == -1) {
                 continue;
             }
 
-            TreeItem *item = search_options->create_item(category ? category : root);
+            TreeItem* item =
+                search_options->create_item(category ? category : root);
 
             MethodInfo mi = E->get();
 
@@ -288,10 +310,15 @@ void PropertySelector::_update_search() {
                 if (mi.arguments[i].type == Variant::NIL) {
                     desc += ": Variant";
                 } else if (mi.arguments[i].name.find(":") != -1) {
-                    desc += vformat(": %s", mi.arguments[i].name.get_slice(":", 1));
-                    mi.arguments[i].name = mi.arguments[i].name.get_slice(":", 0);
+                    desc +=
+                        vformat(": %s", mi.arguments[i].name.get_slice(":", 1));
+                    mi.arguments[i].name =
+                        mi.arguments[i].name.get_slice(":", 0);
                 } else {
-                    desc += vformat(": %s", Variant::get_type_name(mi.arguments[i].type));
+                    desc += vformat(
+                        ": %s",
+                        Variant::get_type_name(mi.arguments[i].type)
+                    );
                 }
             }
 
@@ -309,14 +336,15 @@ void PropertySelector::_update_search() {
             item->set_metadata(0, name);
             item->set_selectable(0, true);
 
-            if (!found && search_box->get_text() != String() && name.findn(search_text) != -1) {
+            if (!found && search_box->get_text() != String()
+                && name.findn(search_text) != -1) {
                 item->select(0);
                 found = true;
             }
         }
 
         if (category && category->get_children() == nullptr) {
-            memdelete(category); //old category was unused
+            memdelete(category); // old category was unused
         }
     }
 
@@ -324,7 +352,7 @@ void PropertySelector::_update_search() {
 }
 
 void PropertySelector::_confirmed() {
-    TreeItem *ti = search_options->get_selected();
+    TreeItem* ti = search_options->get_selected();
     if (!ti) {
         return;
     }
@@ -335,7 +363,7 @@ void PropertySelector::_confirmed() {
 void PropertySelector::_item_selected() {
     help_bit->set_text("");
 
-    TreeItem *item = search_options->get_selected();
+    TreeItem* item = search_options->get_selected();
     if (!item) {
         return;
     }
@@ -350,11 +378,12 @@ void PropertySelector::_item_selected() {
         class_type = instance->get_class();
     }
 
-    DocData *dd = EditorHelp::get_doc_data();
+    DocData* dd = EditorHelp::get_doc_data();
     String text;
     if (properties) {
         while (class_type != String()) {
-            Map<String, DocData::ClassDoc>::Element *E = dd->class_list.find(class_type);
+            Map<String, DocData::ClassDoc>::Element* E =
+                dd->class_list.find(class_type);
             if (E) {
                 for (int i = 0; i < E->get().properties.size(); i++) {
                     if (E->get().properties[i].name == name) {
@@ -373,7 +402,8 @@ void PropertySelector::_item_selected() {
         }
     } else {
         while (class_type != String()) {
-            Map<String, DocData::ClassDoc>::Element *E = dd->class_list.find(class_type);
+            Map<String, DocData::ClassDoc>::Element* E =
+                dd->class_list.find(class_type);
             if (E) {
                 for (int i = 0; i < E->get().methods.size(); i++) {
                     if (E->get().methods[i].name == name) {
@@ -393,13 +423,18 @@ void PropertySelector::_item_selected() {
     }
 
     if (text != String()) {
-        // Display both property name and description, since the help bit may be displayed
-        // far away from the location (especially if the dialog was resized to be taller).
+        // Display both property name and description, since the help bit may be
+        // displayed far away from the location (especially if the dialog was
+        // resized to be taller).
         help_bit->set_text(vformat("[b]%s[/b]: %s", name, text));
         help_bit->get_rich_text()->set_self_modulate(Color(1, 1, 1, 1));
     } else {
-        // Use nested `vformat()` as translators shouldn't interfere with BBCode tags.
-        help_bit->set_text(vformat(TTR("No description available for %s."), vformat("[b]%s[/b]", name)));
+        // Use nested `vformat()` as translators shouldn't interfere with BBCode
+        // tags.
+        help_bit->set_text(vformat(
+            TTR("No description available for %s."),
+            vformat("[b]%s[/b]", name)
+        ));
         help_bit->get_rich_text()->set_self_modulate(Color(1, 1, 1, 0.5));
     }
 }
@@ -412,7 +447,11 @@ void PropertySelector::_notification(int p_what) {
     }
 }
 
-void PropertySelector::select_method_from_base_type(const String &p_base, const String &p_current, bool p_virtuals_only) {
+void PropertySelector::select_method_from_base_type(
+    const String& p_base,
+    const String& p_current,
+    bool p_virtuals_only
+) {
     base_type = p_base;
     selected = p_current;
     type = Variant::NIL;
@@ -427,7 +466,10 @@ void PropertySelector::select_method_from_base_type(const String &p_base, const 
     _update_search();
 }
 
-void PropertySelector::select_method_from_script(const Ref<Script> &p_script, const String &p_current) {
+void PropertySelector::select_method_from_script(
+    const Ref<Script>& p_script,
+    const String& p_current
+) {
     ERR_FAIL_COND(p_script.is_null());
     base_type = p_script->get_instance_base_type();
     selected = p_current;
@@ -442,7 +484,11 @@ void PropertySelector::select_method_from_script(const Ref<Script> &p_script, co
     search_box->grab_focus();
     _update_search();
 }
-void PropertySelector::select_method_from_basic_type(Variant::Type p_type, const String &p_current) {
+
+void PropertySelector::select_method_from_basic_type(
+    Variant::Type p_type,
+    const String& p_current
+) {
     ERR_FAIL_COND(p_type == Variant::NIL);
     base_type = "";
     selected = p_current;
@@ -458,7 +504,10 @@ void PropertySelector::select_method_from_basic_type(Variant::Type p_type, const
     _update_search();
 }
 
-void PropertySelector::select_method_from_instance(Object *p_instance, const String &p_current) {
+void PropertySelector::select_method_from_instance(
+    Object* p_instance,
+    const String& p_current
+) {
     base_type = p_instance->get_class();
     selected = p_current;
     type = Variant::NIL;
@@ -479,7 +528,10 @@ void PropertySelector::select_method_from_instance(Object *p_instance, const Str
     _update_search();
 }
 
-void PropertySelector::select_property_from_base_type(const String &p_base, const String &p_current) {
+void PropertySelector::select_property_from_base_type(
+    const String& p_base,
+    const String& p_current
+) {
     base_type = p_base;
     selected = p_current;
     type = Variant::NIL;
@@ -494,7 +546,10 @@ void PropertySelector::select_property_from_base_type(const String &p_base, cons
     _update_search();
 }
 
-void PropertySelector::select_property_from_script(const Ref<Script> &p_script, const String &p_current) {
+void PropertySelector::select_property_from_script(
+    const Ref<Script>& p_script,
+    const String& p_current
+) {
     ERR_FAIL_COND(p_script.is_null());
 
     base_type = p_script->get_instance_base_type();
@@ -511,7 +566,10 @@ void PropertySelector::select_property_from_script(const Ref<Script> &p_script, 
     _update_search();
 }
 
-void PropertySelector::select_property_from_basic_type(Variant::Type p_type, const String &p_current) {
+void PropertySelector::select_property_from_basic_type(
+    Variant::Type p_type,
+    const String& p_current
+) {
     ERR_FAIL_COND(p_type == Variant::NIL);
     base_type = "";
     selected = p_current;
@@ -527,7 +585,10 @@ void PropertySelector::select_property_from_basic_type(Variant::Type p_type, con
     _update_search();
 }
 
-void PropertySelector::select_property_from_instance(Object *p_instance, const String &p_current) {
+void PropertySelector::select_property_from_instance(
+    Object* p_instance,
+    const String& p_current
+) {
     base_type = "";
     selected = p_current;
     type = Variant::NIL;
@@ -542,23 +603,34 @@ void PropertySelector::select_property_from_instance(Object *p_instance, const S
     _update_search();
 }
 
-void PropertySelector::set_type_filter(const Vector<Variant::Type> &p_type_filter) {
+void PropertySelector::set_type_filter(
+    const Vector<Variant::Type>& p_type_filter
+) {
     type_filter = p_type_filter;
 }
 
 void PropertySelector::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_text_changed"), &PropertySelector::_text_changed);
+    ClassDB::bind_method(
+        D_METHOD("_text_changed"),
+        &PropertySelector::_text_changed
+    );
     ClassDB::bind_method(D_METHOD("_confirmed"), &PropertySelector::_confirmed);
-    ClassDB::bind_method(D_METHOD("_sbox_input"), &PropertySelector::_sbox_input);
-    ClassDB::bind_method(D_METHOD("_item_selected"), &PropertySelector::_item_selected);
+    ClassDB::bind_method(
+        D_METHOD("_sbox_input"),
+        &PropertySelector::_sbox_input
+    );
+    ClassDB::bind_method(
+        D_METHOD("_item_selected"),
+        &PropertySelector::_item_selected
+    );
 
     ADD_SIGNAL(MethodInfo("selected", PropertyInfo(Variant::STRING, "name")));
 }
 
 PropertySelector::PropertySelector() {
-    VBoxContainer *vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
     add_child(vbc);
-    //set_child_rect(vbc);
+    // set_child_rect(vbc);
     search_box = memnew(LineEdit);
     vbc->add_margin_child(TTR("Search:"), search_box);
     search_box->connect("text_changed", this, "_text_changed");

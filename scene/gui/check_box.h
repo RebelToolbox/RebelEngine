@@ -32,6 +32,7 @@
 #define CHECK_BOX_H
 
 #include "scene/gui/button.h"
+
 /**
 @author Mariano Suligoy <marianognu.esyrpg@gmail.com>
 */
@@ -46,7 +47,7 @@ protected:
     bool is_radio();
 
 public:
-    CheckBox(const String &p_text = String());
+    CheckBox(const String& p_text = String());
     ~CheckBox();
 };
 

@@ -34,8 +34,9 @@
 #include "main/input_default.h"
 
 uint8_t MIDIDriver::last_received_message = 0x00;
-MIDIDriver *MIDIDriver::singleton = nullptr;
-MIDIDriver *MIDIDriver::get_singleton() {
+MIDIDriver* MIDIDriver::singleton = nullptr;
+
+MIDIDriver* MIDIDriver::get_singleton() {
     return singleton;
 }
 
@@ -43,7 +44,11 @@ void MIDIDriver::set_singleton() {
     singleton = this;
 }
 
-void MIDIDriver::receive_input_packet(uint64_t timestamp, uint8_t *data, uint32_t length) {
+void MIDIDriver::receive_input_packet(
+    uint64_t timestamp,
+    uint8_t* data,
+    uint32_t length
+) {
     Ref<InputEventMIDI> event;
     event.instance();
     uint32_t param_position = 1;
@@ -88,7 +93,8 @@ void MIDIDriver::receive_input_packet(uint64_t timestamp, uint8_t *data, uint32_
                 event->set_pitch(data[param_position]);
                 event->set_velocity(data[param_position + 1]);
 
-                if (event->get_message() == MIDI_MESSAGE_NOTE_ON && event->get_velocity() == 0) {
+                if (event->get_message() == MIDI_MESSAGE_NOTE_ON
+                    && event->get_velocity() == 0) {
                     // https://www.midi.org/forum/228-writing-midi-software-send-note-off,-or-zero-velocity-note-on
                     event->set_message(MIDI_MESSAGE_NOTE_OFF);
                 }
@@ -97,7 +103,9 @@ void MIDIDriver::receive_input_packet(uint64_t timestamp, uint8_t *data, uint32_
 
         case MIDI_MESSAGE_PITCH_BEND:
             if (length >= 2 + param_position) {
-                event->set_pitch((data[param_position + 1] << 7) | data[param_position]);
+                event->set_pitch(
+                    (data[param_position + 1] << 7) | data[param_position]
+                );
             }
             break;
 
@@ -114,7 +122,7 @@ void MIDIDriver::receive_input_packet(uint64_t timestamp, uint8_t *data, uint32_
             break;
     }
 
-    InputDefault *id = Object::cast_to<InputDefault>(Input::get_singleton());
+    InputDefault* id = Object::cast_to<InputDefault>(Input::get_singleton());
     id->parse_input_event(event);
 }
 

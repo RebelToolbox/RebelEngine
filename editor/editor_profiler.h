@@ -56,7 +56,7 @@ public:
         struct Category {
             StringName signature;
             String name;
-            float total_time; //total for category
+            float total_time; // total for category
 
             struct Item {
                 StringName signature;
@@ -73,8 +73,8 @@ public:
 
         Vector<Category> categories;
 
-        Map<StringName, Category *> category_ptrs;
-        Map<StringName, Category::Item *> item_ptrs;
+        Map<StringName, Category*> category_ptrs;
+        Map<StringName, Category::Item*> item_ptrs;
 
         Metric() {
             valid = false;
@@ -95,20 +95,20 @@ public:
     };
 
 private:
-    Button *activate;
-    Button *clear_button;
-    TextureRect *graph;
+    Button* activate;
+    Button* clear_button;
+    TextureRect* graph;
     Ref<ImageTexture> graph_texture;
     PoolVector<uint8_t> graph_image;
-    Tree *variables;
-    HSplitContainer *h_split;
+    Tree* variables;
+    HSplitContainer* h_split;
 
     Set<StringName> plot_sigs;
 
-    OptionButton *display_mode;
-    OptionButton *display_time;
+    OptionButton* display_mode;
+    OptionButton* display_time;
 
-    SpinBox *cursor_metric_edit;
+    SpinBox* cursor_metric_edit;
 
     Vector<Metric> frame_metrics;
     int last_metric;
@@ -117,24 +117,24 @@ private:
 
     bool updating_frame;
 
-    //int cursor_metric;
+    // int cursor_metric;
     int hover_metric;
 
     float graph_height;
 
     bool seeking;
 
-    Timer *frame_delay;
-    Timer *plot_delay;
+    Timer* frame_delay;
+    Timer* plot_delay;
 
     void _update_frame();
 
     void _activate_pressed();
     void _clear_pressed();
 
-    String _get_time_as_text(const Metric &m, float p_time, int p_calls);
+    String _get_time_as_text(const Metric& m, float p_time, int p_calls);
 
-    void _make_metric_ptrs(Metric &m);
+    void _make_metric_ptrs(Metric& m);
     void _item_edited();
 
     void _update_plot();
@@ -142,11 +142,11 @@ private:
     void _graph_tex_mouse_exit();
 
     void _graph_tex_draw();
-    void _graph_tex_input(const Ref<InputEvent> &p_ev);
+    void _graph_tex_input(const Ref<InputEvent>& p_ev);
 
     int _get_cursor_index() const;
 
-    Color _get_color_from_signature(const StringName &p_signature) const;
+    Color _get_color_from_signature(const StringName& p_signature) const;
 
     void _cursor_metric_changed(double);
 
@@ -157,10 +157,14 @@ protected:
     static void _bind_methods();
 
 public:
-    void add_frame_metric(const Metric &p_metric, bool p_final = false);
+    void add_frame_metric(const Metric& p_metric, bool p_final = false);
     void set_enabled(bool p_enable);
     bool is_profiling();
-    bool is_seeking() { return seeking; }
+
+    bool is_seeking() {
+        return seeking;
+    }
+
     void disable_seeking();
 
     void clear();

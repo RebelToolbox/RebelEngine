@@ -30,11 +30,17 @@
 
 #include "core/math/transform_2d.h" // Includes rect2.h but Rect2 needs Transform2D
 
-bool Rect2::is_equal_approx(const Rect2 &p_rect) const {
-    return position.is_equal_approx(p_rect.position) && size.is_equal_approx(p_rect.size);
+bool Rect2::is_equal_approx(const Rect2& p_rect) const {
+    return position.is_equal_approx(p_rect.position)
+        && size.is_equal_approx(p_rect.size);
 }
 
-bool Rect2::intersects_segment(const Point2 &p_from, const Point2 &p_to, Point2 *r_pos, Point2 *r_normal) const {
+bool Rect2::intersects_segment(
+    const Point2& p_from,
+    const Point2& p_to,
+    Point2* r_pos,
+    Point2* r_normal
+) const {
     real_t min = 0, max = 1;
     int axis = 0;
     real_t sign = 0;
@@ -52,7 +58,8 @@ bool Rect2::intersects_segment(const Point2 &p_from, const Point2 &p_to, Point2 
                 return false;
             }
             real_t length = seg_to - seg_from;
-            cmin = (seg_from < box_begin) ? ((box_begin - seg_from) / length) : 0;
+            cmin =
+                (seg_from < box_begin) ? ((box_begin - seg_from) / length) : 0;
             cmax = (seg_to > box_end) ? ((box_end - seg_from) / length) : 1;
             csign = -1.0;
 
@@ -94,19 +101,29 @@ bool Rect2::intersects_segment(const Point2 &p_from, const Point2 &p_to, Point2 
     return true;
 }
 
-bool Rect2::intersects_transformed(const Transform2D &p_xform, const Rect2 &p_rect) const {
-    //SAT intersection between local and transformed rect2
+bool Rect2::intersects_transformed(
+    const Transform2D& p_xform,
+    const Rect2& p_rect
+) const {
+    // SAT intersection between local and transformed rect2
 
     Vector2 xf_points[4] = {
         p_xform.xform(p_rect.position),
-        p_xform.xform(Vector2(p_rect.position.x + p_rect.size.x, p_rect.position.y)),
-        p_xform.xform(Vector2(p_rect.position.x, p_rect.position.y + p_rect.size.y)),
-        p_xform.xform(Vector2(p_rect.position.x + p_rect.size.x, p_rect.position.y + p_rect.size.y)),
+        p_xform.xform(
+            Vector2(p_rect.position.x + p_rect.size.x, p_rect.position.y)
+        ),
+        p_xform.xform(
+            Vector2(p_rect.position.x, p_rect.position.y + p_rect.size.y)
+        ),
+        p_xform.xform(Vector2(
+            p_rect.position.x + p_rect.size.x,
+            p_rect.position.y + p_rect.size.y
+        )),
     };
 
     real_t low_limit;
 
-    //base rect2 first (faster)
+    // base rect2 first (faster)
 
     if (xf_points[0].y > position.y) {
         goto next1;

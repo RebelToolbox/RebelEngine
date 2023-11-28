@@ -46,10 +46,18 @@ class AudioEffectFilterInstance : public AudioEffectInstance {
     AudioFilterSW::Processor filter_process[2][4];
 
     template <int S>
-    void _process_filter(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
+    void _process_filter(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
 
 public:
-    virtual void process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
+    virtual void process(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
 
     AudioEffectFilterInstance();
 };
@@ -98,49 +106,47 @@ VARIANT_ENUM_CAST(AudioEffectFilter::FilterDB)
 class AudioEffectLowPassFilter : public AudioEffectFilter {
     GDCLASS(AudioEffectLowPassFilter, AudioEffectFilter);
 
-    void _validate_property(PropertyInfo &property) const {
+    void _validate_property(PropertyInfo& property) const {
         if (property.name == "gain") {
             property.usage = 0;
         }
     }
 
 public:
-    AudioEffectLowPassFilter() :
-            AudioEffectFilter(AudioFilterSW::LOWPASS) {}
+    AudioEffectLowPassFilter() : AudioEffectFilter(AudioFilterSW::LOWPASS) {}
 };
 
 class AudioEffectHighPassFilter : public AudioEffectFilter {
     GDCLASS(AudioEffectHighPassFilter, AudioEffectFilter);
-    void _validate_property(PropertyInfo &property) const {
+
+    void _validate_property(PropertyInfo& property) const {
         if (property.name == "gain") {
             property.usage = 0;
         }
     }
 
 public:
-    AudioEffectHighPassFilter() :
-            AudioEffectFilter(AudioFilterSW::HIGHPASS) {}
+    AudioEffectHighPassFilter() : AudioEffectFilter(AudioFilterSW::HIGHPASS) {}
 };
 
 class AudioEffectBandPassFilter : public AudioEffectFilter {
     GDCLASS(AudioEffectBandPassFilter, AudioEffectFilter);
-    void _validate_property(PropertyInfo &property) const {
+
+    void _validate_property(PropertyInfo& property) const {
         if (property.name == "gain") {
             property.usage = 0;
         }
     }
 
 public:
-    AudioEffectBandPassFilter() :
-            AudioEffectFilter(AudioFilterSW::BANDPASS) {}
+    AudioEffectBandPassFilter() : AudioEffectFilter(AudioFilterSW::BANDPASS) {}
 };
 
 class AudioEffectNotchFilter : public AudioEffectFilter {
     GDCLASS(AudioEffectNotchFilter, AudioEffectFilter);
 
 public:
-    AudioEffectNotchFilter() :
-            AudioEffectFilter(AudioFilterSW::NOTCH) {}
+    AudioEffectNotchFilter() : AudioEffectFilter(AudioFilterSW::NOTCH) {}
 };
 
 class AudioEffectBandLimitFilter : public AudioEffectFilter {
@@ -148,15 +154,14 @@ class AudioEffectBandLimitFilter : public AudioEffectFilter {
 
 public:
     AudioEffectBandLimitFilter() :
-            AudioEffectFilter(AudioFilterSW::BANDLIMIT) {}
+        AudioEffectFilter(AudioFilterSW::BANDLIMIT) {}
 };
 
 class AudioEffectLowShelfFilter : public AudioEffectFilter {
     GDCLASS(AudioEffectLowShelfFilter, AudioEffectFilter);
 
 public:
-    AudioEffectLowShelfFilter() :
-            AudioEffectFilter(AudioFilterSW::LOWSHELF) {}
+    AudioEffectLowShelfFilter() : AudioEffectFilter(AudioFilterSW::LOWSHELF) {}
 };
 
 class AudioEffectHighShelfFilter : public AudioEffectFilter {
@@ -164,7 +169,7 @@ class AudioEffectHighShelfFilter : public AudioEffectFilter {
 
 public:
     AudioEffectHighShelfFilter() :
-            AudioEffectFilter(AudioFilterSW::HIGHSHELF) {}
+        AudioEffectFilter(AudioFilterSW::HIGHSHELF) {}
 };
 
 #endif // AUDIOEFFECTFILTER_H

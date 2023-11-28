@@ -42,9 +42,11 @@
 
 The `dependencies` and fields are optional.
 - **linked**: dependencies that should only be linked.
-- **embedded**: dependencies that should be linked and embedded into application.
+- **embedded**: dependencies that should be linked and embedded into
+application.
 - **system**: system dependencies that should be linked.
-- **capabilities**: capabilities that would be used for `UIRequiredDeviceCapabilities` options in Info.plist file.
+- **capabilities**: capabilities that would be used for
+`UIRequiredDeviceCapabilities` options in Info.plist file.
 - **files**: files that would be copied into application
 
 The `plist` section are optional.
@@ -52,23 +54,23 @@ The `plist` section are optional.
  */
 
 struct PluginConfigIOS {
-    static const char *PLUGIN_CONFIG_EXT;
+    static const char* PLUGIN_CONFIG_EXT;
 
-    static const char *CONFIG_SECTION;
-    static const char *CONFIG_NAME_KEY;
-    static const char *CONFIG_BINARY_KEY;
-    static const char *CONFIG_INITIALIZE_KEY;
-    static const char *CONFIG_DEINITIALIZE_KEY;
+    static const char* CONFIG_SECTION;
+    static const char* CONFIG_NAME_KEY;
+    static const char* CONFIG_BINARY_KEY;
+    static const char* CONFIG_INITIALIZE_KEY;
+    static const char* CONFIG_DEINITIALIZE_KEY;
 
-    static const char *DEPENDENCIES_SECTION;
-    static const char *DEPENDENCIES_LINKED_KEY;
-    static const char *DEPENDENCIES_EMBEDDED_KEY;
-    static const char *DEPENDENCIES_SYSTEM_KEY;
-    static const char *DEPENDENCIES_CAPABILITIES_KEY;
-    static const char *DEPENDENCIES_FILES_KEY;
-    static const char *DEPENDENCIES_LINKER_FLAGS;
+    static const char* DEPENDENCIES_SECTION;
+    static const char* DEPENDENCIES_LINKED_KEY;
+    static const char* DEPENDENCIES_EMBEDDED_KEY;
+    static const char* DEPENDENCIES_SYSTEM_KEY;
+    static const char* DEPENDENCIES_CAPABILITIES_KEY;
+    static const char* DEPENDENCIES_FILES_KEY;
+    static const char* DEPENDENCIES_LINKER_FLAGS;
 
-    static const char *PLIST_SECTION;
+    static const char* PLIST_SECTION;
 
     enum PlistItemType {
         UNKNOWN,
@@ -108,30 +110,33 @@ struct PluginConfigIOS {
 
     // Optional plist section
     // String value is default value.
-    // Currently supports `string`, `boolean`, `integer`, `raw`, `string_input` types
-    // <name>:<type> = <value>
+    // Currently supports `string`, `boolean`, `integer`, `raw`, `string_input`
+    // types <name>:<type> = <value>
     HashMap<String, PlistItem> plist;
 };
 
-const char *PluginConfigIOS::PLUGIN_CONFIG_EXT = ".gdip";
+const char* PluginConfigIOS::PLUGIN_CONFIG_EXT = ".gdip";
 
-const char *PluginConfigIOS::CONFIG_SECTION = "config";
-const char *PluginConfigIOS::CONFIG_NAME_KEY = "name";
-const char *PluginConfigIOS::CONFIG_BINARY_KEY = "binary";
-const char *PluginConfigIOS::CONFIG_INITIALIZE_KEY = "initialization";
-const char *PluginConfigIOS::CONFIG_DEINITIALIZE_KEY = "deinitialization";
+const char* PluginConfigIOS::CONFIG_SECTION = "config";
+const char* PluginConfigIOS::CONFIG_NAME_KEY = "name";
+const char* PluginConfigIOS::CONFIG_BINARY_KEY = "binary";
+const char* PluginConfigIOS::CONFIG_INITIALIZE_KEY = "initialization";
+const char* PluginConfigIOS::CONFIG_DEINITIALIZE_KEY = "deinitialization";
 
-const char *PluginConfigIOS::DEPENDENCIES_SECTION = "dependencies";
-const char *PluginConfigIOS::DEPENDENCIES_LINKED_KEY = "linked";
-const char *PluginConfigIOS::DEPENDENCIES_EMBEDDED_KEY = "embedded";
-const char *PluginConfigIOS::DEPENDENCIES_SYSTEM_KEY = "system";
-const char *PluginConfigIOS::DEPENDENCIES_CAPABILITIES_KEY = "capabilities";
-const char *PluginConfigIOS::DEPENDENCIES_LINKER_FLAGS = "linker_flags";
-const char *PluginConfigIOS::DEPENDENCIES_FILES_KEY = "files";
+const char* PluginConfigIOS::DEPENDENCIES_SECTION = "dependencies";
+const char* PluginConfigIOS::DEPENDENCIES_LINKED_KEY = "linked";
+const char* PluginConfigIOS::DEPENDENCIES_EMBEDDED_KEY = "embedded";
+const char* PluginConfigIOS::DEPENDENCIES_SYSTEM_KEY = "system";
+const char* PluginConfigIOS::DEPENDENCIES_CAPABILITIES_KEY = "capabilities";
+const char* PluginConfigIOS::DEPENDENCIES_LINKER_FLAGS = "linker_flags";
+const char* PluginConfigIOS::DEPENDENCIES_FILES_KEY = "files";
 
-const char *PluginConfigIOS::PLIST_SECTION = "plist";
+const char* PluginConfigIOS::PLIST_SECTION = "plist";
 
-static inline String resolve_local_dependency_path(String plugin_config_dir, String dependency_path) {
+static inline String resolve_local_dependency_path(
+    String plugin_config_dir,
+    String dependency_path
+) {
     String absolute_path;
 
     if (dependency_path.empty()) {
@@ -142,7 +147,8 @@ static inline String resolve_local_dependency_path(String plugin_config_dir, Str
         return dependency_path;
     }
 
-    String res_path = ProjectSettings::get_singleton()->globalize_path("res://");
+    String res_path =
+        ProjectSettings::get_singleton()->globalize_path("res://");
     absolute_path = plugin_config_dir.plus_file(dependency_path);
 
     return absolute_path.replace(res_path, "res://");
@@ -164,11 +170,15 @@ static inline String resolve_system_dependency_path(String dependency_path) {
     return system_path.plus_file(dependency_path);
 }
 
-static inline Vector<String> resolve_local_dependencies(String plugin_config_dir, Vector<String> p_paths) {
+static inline Vector<String> resolve_local_dependencies(
+    String plugin_config_dir,
+    Vector<String> p_paths
+) {
     Vector<String> paths;
 
     for (int i = 0; i < p_paths.size(); i++) {
-        String path = resolve_local_dependency_path(plugin_config_dir, p_paths[i]);
+        String path =
+            resolve_local_dependency_path(plugin_config_dir, p_paths[i]);
 
         if (path.empty()) {
             continue;
@@ -180,7 +190,8 @@ static inline Vector<String> resolve_local_dependencies(String plugin_config_dir
     return paths;
 }
 
-static inline Vector<String> resolve_system_dependencies(Vector<String> p_paths) {
+static inline Vector<String> resolve_system_dependencies(Vector<String> p_paths
+) {
     Vector<String> paths;
 
     for (int i = 0; i < p_paths.size(); i++) {
@@ -196,13 +207,14 @@ static inline Vector<String> resolve_system_dependencies(Vector<String> p_paths)
     return paths;
 }
 
-static inline bool validate_plugin(PluginConfigIOS &plugin_config) {
+static inline bool validate_plugin(PluginConfigIOS& plugin_config) {
     bool valid_name = !plugin_config.name.empty();
     bool valid_binary_name = !plugin_config.binary.empty();
     bool valid_initialize = !plugin_config.initialization_method.empty();
     bool valid_deinitialize = !plugin_config.deinitialization_method.empty();
 
-    bool fields_value = valid_name && valid_binary_name && valid_initialize && valid_deinitialize;
+    bool fields_value = valid_name && valid_binary_name && valid_initialize
+                     && valid_deinitialize;
 
     if (!fields_value) {
         return false;
@@ -210,19 +222,25 @@ static inline bool validate_plugin(PluginConfigIOS &plugin_config) {
 
     String plugin_extension = plugin_config.binary.get_extension().to_lower();
 
-    if ((plugin_extension == "a" && FileAccess::exists(plugin_config.binary)) ||
-            (plugin_extension == "xcframework" && DirAccess::exists(plugin_config.binary))) {
+    if ((plugin_extension == "a" && FileAccess::exists(plugin_config.binary))
+        || (plugin_extension == "xcframework"
+            && DirAccess::exists(plugin_config.binary))) {
         plugin_config.valid_config = true;
         plugin_config.supports_targets = false;
     } else {
         String file_path = plugin_config.binary.get_base_dir();
         String file_name = plugin_config.binary.get_basename().get_file();
         String file_extension = plugin_config.binary.get_extension();
-        String release_file_name = file_path.plus_file(file_name + ".release." + file_extension);
-        String debug_file_name = file_path.plus_file(file_name + ".debug." + file_extension);
+        String release_file_name =
+            file_path.plus_file(file_name + ".release." + file_extension);
+        String debug_file_name =
+            file_path.plus_file(file_name + ".debug." + file_extension);
 
-        if ((plugin_extension == "a" && FileAccess::exists(release_file_name) && FileAccess::exists(debug_file_name)) ||
-                (plugin_extension == "xcframework" && DirAccess::exists(release_file_name) && DirAccess::exists(debug_file_name))) {
+        if ((plugin_extension == "a" && FileAccess::exists(release_file_name)
+             && FileAccess::exists(debug_file_name))
+            || (plugin_extension == "xcframework"
+                && DirAccess::exists(release_file_name)
+                && DirAccess::exists(debug_file_name))) {
             plugin_config.valid_config = true;
             plugin_config.supports_targets = true;
         }
@@ -231,7 +249,10 @@ static inline bool validate_plugin(PluginConfigIOS &plugin_config) {
     return plugin_config.valid_config;
 }
 
-static inline String get_plugin_main_binary(PluginConfigIOS &plugin_config, bool p_debug) {
+static inline String get_plugin_main_binary(
+    PluginConfigIOS& plugin_config,
+    bool p_debug
+) {
     if (!plugin_config.supports_targets) {
         return plugin_config.binary;
     }
@@ -239,31 +260,45 @@ static inline String get_plugin_main_binary(PluginConfigIOS &plugin_config, bool
     String plugin_binary_dir = plugin_config.binary.get_base_dir();
     String plugin_name_prefix = plugin_config.binary.get_basename().get_file();
     String plugin_extension = plugin_config.binary.get_extension();
-    String plugin_file = plugin_name_prefix + "." + (p_debug ? "debug" : "release") + "." + plugin_extension;
+    String plugin_file = plugin_name_prefix + "."
+                       + (p_debug ? "debug" : "release") + "."
+                       + plugin_extension;
 
     return plugin_binary_dir.plus_file(plugin_file);
 }
 
-static inline uint64_t get_plugin_modification_time(const PluginConfigIOS &plugin_config, const String &config_path) {
+static inline uint64_t get_plugin_modification_time(
+    const PluginConfigIOS& plugin_config,
+    const String& config_path
+) {
     uint64_t last_updated = FileAccess::get_modified_time(config_path);
 
     if (!plugin_config.supports_targets) {
-        last_updated = MAX(last_updated, FileAccess::get_modified_time(plugin_config.binary));
+        last_updated =
+            MAX(last_updated,
+                FileAccess::get_modified_time(plugin_config.binary));
     } else {
         String file_path = plugin_config.binary.get_base_dir();
         String file_name = plugin_config.binary.get_basename().get_file();
         String plugin_extension = plugin_config.binary.get_extension();
-        String release_file_name = file_path.plus_file(file_name + ".release." + plugin_extension);
-        String debug_file_name = file_path.plus_file(file_name + ".debug." + plugin_extension);
+        String release_file_name =
+            file_path.plus_file(file_name + ".release." + plugin_extension);
+        String debug_file_name =
+            file_path.plus_file(file_name + ".debug." + plugin_extension);
 
-        last_updated = MAX(last_updated, FileAccess::get_modified_time(release_file_name));
-        last_updated = MAX(last_updated, FileAccess::get_modified_time(debug_file_name));
+        last_updated =
+            MAX(last_updated, FileAccess::get_modified_time(release_file_name));
+        last_updated =
+            MAX(last_updated, FileAccess::get_modified_time(debug_file_name));
     }
 
     return last_updated;
 }
 
-static inline PluginConfigIOS load_plugin_config(Ref<ConfigFile> config_file, const String &path) {
+static inline PluginConfigIOS load_plugin_config(
+    Ref<ConfigFile> config_file,
+    const String& path
+) {
     PluginConfigIOS plugin_config = {};
 
     if (!config_file.is_valid()) {
@@ -280,28 +315,73 @@ static inline PluginConfigIOS load_plugin_config(Ref<ConfigFile> config_file, co
 
     String config_base_dir = path.get_base_dir();
 
-    plugin_config.name = config_file->get_value(PluginConfigIOS::CONFIG_SECTION, PluginConfigIOS::CONFIG_NAME_KEY, String());
-    plugin_config.initialization_method = config_file->get_value(PluginConfigIOS::CONFIG_SECTION, PluginConfigIOS::CONFIG_INITIALIZE_KEY, String());
-    plugin_config.deinitialization_method = config_file->get_value(PluginConfigIOS::CONFIG_SECTION, PluginConfigIOS::CONFIG_DEINITIALIZE_KEY, String());
+    plugin_config.name = config_file->get_value(
+        PluginConfigIOS::CONFIG_SECTION,
+        PluginConfigIOS::CONFIG_NAME_KEY,
+        String()
+    );
+    plugin_config.initialization_method = config_file->get_value(
+        PluginConfigIOS::CONFIG_SECTION,
+        PluginConfigIOS::CONFIG_INITIALIZE_KEY,
+        String()
+    );
+    plugin_config.deinitialization_method = config_file->get_value(
+        PluginConfigIOS::CONFIG_SECTION,
+        PluginConfigIOS::CONFIG_DEINITIALIZE_KEY,
+        String()
+    );
 
-    String binary_path = config_file->get_value(PluginConfigIOS::CONFIG_SECTION, PluginConfigIOS::CONFIG_BINARY_KEY, String());
-    plugin_config.binary = resolve_local_dependency_path(config_base_dir, binary_path);
+    String binary_path = config_file->get_value(
+        PluginConfigIOS::CONFIG_SECTION,
+        PluginConfigIOS::CONFIG_BINARY_KEY,
+        String()
+    );
+    plugin_config.binary =
+        resolve_local_dependency_path(config_base_dir, binary_path);
 
     if (config_file->has_section(PluginConfigIOS::DEPENDENCIES_SECTION)) {
-        Vector<String> linked_dependencies = config_file->get_value(PluginConfigIOS::DEPENDENCIES_SECTION, PluginConfigIOS::DEPENDENCIES_LINKED_KEY, Vector<String>());
-        Vector<String> embedded_dependencies = config_file->get_value(PluginConfigIOS::DEPENDENCIES_SECTION, PluginConfigIOS::DEPENDENCIES_EMBEDDED_KEY, Vector<String>());
-        Vector<String> system_dependencies = config_file->get_value(PluginConfigIOS::DEPENDENCIES_SECTION, PluginConfigIOS::DEPENDENCIES_SYSTEM_KEY, Vector<String>());
-        Vector<String> files = config_file->get_value(PluginConfigIOS::DEPENDENCIES_SECTION, PluginConfigIOS::DEPENDENCIES_FILES_KEY, Vector<String>());
+        Vector<String> linked_dependencies = config_file->get_value(
+            PluginConfigIOS::DEPENDENCIES_SECTION,
+            PluginConfigIOS::DEPENDENCIES_LINKED_KEY,
+            Vector<String>()
+        );
+        Vector<String> embedded_dependencies = config_file->get_value(
+            PluginConfigIOS::DEPENDENCIES_SECTION,
+            PluginConfigIOS::DEPENDENCIES_EMBEDDED_KEY,
+            Vector<String>()
+        );
+        Vector<String> system_dependencies = config_file->get_value(
+            PluginConfigIOS::DEPENDENCIES_SECTION,
+            PluginConfigIOS::DEPENDENCIES_SYSTEM_KEY,
+            Vector<String>()
+        );
+        Vector<String> files = config_file->get_value(
+            PluginConfigIOS::DEPENDENCIES_SECTION,
+            PluginConfigIOS::DEPENDENCIES_FILES_KEY,
+            Vector<String>()
+        );
 
-        plugin_config.linked_dependencies = resolve_local_dependencies(config_base_dir, linked_dependencies);
-        plugin_config.embedded_dependencies = resolve_local_dependencies(config_base_dir, embedded_dependencies);
-        plugin_config.system_dependencies = resolve_system_dependencies(system_dependencies);
+        plugin_config.linked_dependencies =
+            resolve_local_dependencies(config_base_dir, linked_dependencies);
+        plugin_config.embedded_dependencies =
+            resolve_local_dependencies(config_base_dir, embedded_dependencies);
+        plugin_config.system_dependencies =
+            resolve_system_dependencies(system_dependencies);
 
-        plugin_config.files_to_copy = resolve_local_dependencies(config_base_dir, files);
+        plugin_config.files_to_copy =
+            resolve_local_dependencies(config_base_dir, files);
 
-        plugin_config.capabilities = config_file->get_value(PluginConfigIOS::DEPENDENCIES_SECTION, PluginConfigIOS::DEPENDENCIES_CAPABILITIES_KEY, Vector<String>());
+        plugin_config.capabilities = config_file->get_value(
+            PluginConfigIOS::DEPENDENCIES_SECTION,
+            PluginConfigIOS::DEPENDENCIES_CAPABILITIES_KEY,
+            Vector<String>()
+        );
 
-        plugin_config.linker_flags = config_file->get_value(PluginConfigIOS::DEPENDENCIES_SECTION, PluginConfigIOS::DEPENDENCIES_LINKER_FLAGS, Vector<String>());
+        plugin_config.linker_flags = config_file->get_value(
+            PluginConfigIOS::DEPENDENCIES_SECTION,
+            PluginConfigIOS::DEPENDENCIES_LINKER_FLAGS,
+            Vector<String>()
+        );
     }
 
     if (config_file->has_section(PluginConfigIOS::PLIST_SECTION)) {
@@ -312,7 +392,8 @@ static inline PluginConfigIOS load_plugin_config(Ref<ConfigFile> config_file, co
             Vector<String> key_components = keys[i].split(":");
 
             String key_value = "";
-            PluginConfigIOS::PlistItemType key_type = PluginConfigIOS::PlistItemType::UNKNOWN;
+            PluginConfigIOS::PlistItemType key_type =
+                PluginConfigIOS::PlistItemType::UNKNOWN;
 
             if (key_components.size() == 1) {
                 key_value = key_components[0];
@@ -333,7 +414,8 @@ static inline PluginConfigIOS load_plugin_config(Ref<ConfigFile> config_file, co
                 }
             }
 
-            if (key_value.empty() || key_type == PluginConfigIOS::PlistItemType::UNKNOWN) {
+            if (key_value.empty()
+                || key_type == PluginConfigIOS::PlistItemType::UNKNOWN) {
                 continue;
             }
 
@@ -341,41 +423,63 @@ static inline PluginConfigIOS load_plugin_config(Ref<ConfigFile> config_file, co
 
             switch (key_type) {
                 case PluginConfigIOS::PlistItemType::STRING: {
-                    String raw_value = config_file->get_value(PluginConfigIOS::PLIST_SECTION, keys[i], String());
+                    String raw_value = config_file->get_value(
+                        PluginConfigIOS::PLIST_SECTION,
+                        keys[i],
+                        String()
+                    );
                     value = "<string>" + raw_value + "</string>";
                 } break;
                 case PluginConfigIOS::PlistItemType::INTEGER: {
-                    int raw_value = config_file->get_value(PluginConfigIOS::PLIST_SECTION, keys[i], 0);
+                    int raw_value = config_file->get_value(
+                        PluginConfigIOS::PLIST_SECTION,
+                        keys[i],
+                        0
+                    );
                     Dictionary value_dictionary;
                     String value_format = "<integer>$value</integer>";
                     value_dictionary["value"] = raw_value;
                     value = value_format.format(value_dictionary, "$_");
                 } break;
                 case PluginConfigIOS::PlistItemType::BOOLEAN:
-                    if (config_file->get_value(PluginConfigIOS::PLIST_SECTION, keys[i], false)) {
+                    if (config_file->get_value(
+                            PluginConfigIOS::PLIST_SECTION,
+                            keys[i],
+                            false
+                        )) {
                         value = "<true/>";
                     } else {
                         value = "<false/>";
                     }
                     break;
                 case PluginConfigIOS::PlistItemType::RAW: {
-                    String raw_value = config_file->get_value(PluginConfigIOS::PLIST_SECTION, keys[i], String());
+                    String raw_value = config_file->get_value(
+                        PluginConfigIOS::PLIST_SECTION,
+                        keys[i],
+                        String()
+                    );
                     value = raw_value;
                 } break;
                 case PluginConfigIOS::PlistItemType::STRING_INPUT: {
-                    String raw_value = config_file->get_value(PluginConfigIOS::PLIST_SECTION, keys[i], String());
+                    String raw_value = config_file->get_value(
+                        PluginConfigIOS::PLIST_SECTION,
+                        keys[i],
+                        String()
+                    );
                     value = raw_value;
                 } break;
                 default:
                     continue;
             }
 
-            plugin_config.plist[key_value] = PluginConfigIOS::PlistItem{ key_type, value };
+            plugin_config.plist[key_value] =
+                PluginConfigIOS::PlistItem{key_type, value};
         }
     }
 
     if (validate_plugin(plugin_config)) {
-        plugin_config.last_updated = get_plugin_modification_time(plugin_config, path);
+        plugin_config.last_updated =
+            get_plugin_modification_time(plugin_config, path);
     }
 
     return plugin_config;

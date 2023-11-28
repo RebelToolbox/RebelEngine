@@ -37,20 +37,25 @@ Bullet Continuous Collision Detection and Physics Library
 Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
 
 This software is provided 'as-is', without any express or implied warranty.
-In no event will the authors be held liable for any damages arising from the use of this software.
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it freely,
-subject to the following restrictions:
+In no event will the authors be held liable for any damages arising from the use
+of this software. Permission is granted to anyone to use this software for any
+purpose, including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
 
-1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
-2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+1. The origin of this software must not be misrepresented; you must not claim
+that you wrote the original software. If you use this software in a product, an
+acknowledgment in the product documentation would be appreciated but is not
+required.
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
 
 #include "pin_joint_sw.h"
 
 bool PinJointSW::setup(real_t p_step) {
-    if ((A->get_mode() <= PhysicsServer::BODY_MODE_KINEMATIC) && (B->get_mode() <= PhysicsServer::BODY_MODE_KINEMATIC)) {
+    if ((A->get_mode() <= PhysicsServer::BODY_MODE_KINEMATIC)
+        && (B->get_mode() <= PhysicsServer::BODY_MODE_KINEMATIC)) {
         return false;
     }
 
@@ -61,17 +66,21 @@ bool PinJointSW::setup(real_t p_step) {
     for (int i = 0; i < 3; i++) {
         normal[i] = 1;
         memnew_placement(
-                &m_jac[i],
-                JacobianEntrySW(
-                        A->get_principal_inertia_axes().transposed(),
-                        B->get_principal_inertia_axes().transposed(),
-                        A->get_transform().xform(m_pivotInA) - A->get_transform().origin - A->get_center_of_mass(),
-                        B->get_transform().xform(m_pivotInB) - B->get_transform().origin - B->get_center_of_mass(),
-                        normal,
-                        A->get_inv_inertia(),
-                        A->get_inv_mass(),
-                        B->get_inv_inertia(),
-                        B->get_inv_mass()));
+            &m_jac[i],
+            JacobianEntrySW(
+                A->get_principal_inertia_axes().transposed(),
+                B->get_principal_inertia_axes().transposed(),
+                A->get_transform().xform(m_pivotInA) - A->get_transform().origin
+                    - A->get_center_of_mass(),
+                B->get_transform().xform(m_pivotInB) - B->get_transform().origin
+                    - B->get_center_of_mass(),
+                normal,
+                A->get_inv_inertia(),
+                A->get_inv_mass(),
+                B->get_inv_inertia(),
+                B->get_inv_mass()
+            )
+        );
         normal[i] = 0;
     }
 
@@ -90,7 +99,7 @@ void PinJointSW::solve(real_t p_step) {
 
         Vector3 rel_pos1 = pivotAInW - A->get_transform().origin;
         Vector3 rel_pos2 = pivotBInW - B->get_transform().origin;
-        //this jacobian entry could be re-used for all iterations
+        // this jacobian entry could be re-used for all iterations
 
         Vector3 vel1 = A->get_velocity_in_local_point(rel_pos1);
         Vector3 vel2 = B->get_velocity_in_local_point(rel_pos2);
@@ -99,10 +108,13 @@ void PinJointSW::solve(real_t p_step) {
         real_t rel_vel;
         rel_vel = normal.dot(vel);
 
-        //positional error (zeroth order error)
-        real_t depth = -(pivotAInW - pivotBInW).dot(normal); //this is the error projected on the normal
+        // positional error (zeroth order error)
+        real_t depth =
+            -(pivotAInW - pivotBInW)
+                 .dot(normal); // this is the error projected on the normal
 
-        real_t impulse = depth * m_tau / p_step * jacDiagABInv - m_damping * rel_vel * jacDiagABInv;
+        real_t impulse = depth * m_tau / p_step * jacDiagABInv
+                       - m_damping * rel_vel * jacDiagABInv;
 
         real_t impulseClamp = m_impulseClamp;
         if (impulseClamp > 0) {
@@ -117,13 +129,19 @@ void PinJointSW::solve(real_t p_step) {
         m_appliedImpulse += impulse;
         Vector3 impulse_vector = normal * impulse;
         A->apply_impulse(pivotAInW - A->get_transform().origin, impulse_vector);
-        B->apply_impulse(pivotBInW - B->get_transform().origin, -impulse_vector);
+        B->apply_impulse(
+            pivotBInW - B->get_transform().origin,
+            -impulse_vector
+        );
 
         normal[i] = 0;
     }
 }
 
-void PinJointSW::set_param(PhysicsServer::PinJointParam p_param, real_t p_value) {
+void PinJointSW::set_param(
+    PhysicsServer::PinJointParam p_param,
+    real_t p_value
+) {
     switch (p_param) {
         case PhysicsServer::PIN_JOINT_BIAS:
             m_tau = p_value;
@@ -150,8 +168,13 @@ real_t PinJointSW::get_param(PhysicsServer::PinJointParam p_param) const {
     return 0;
 }
 
-PinJointSW::PinJointSW(BodySW *p_body_a, const Vector3 &p_pos_a, BodySW *p_body_b, const Vector3 &p_pos_b) :
-        JointSW(_arr, 2) {
+PinJointSW::PinJointSW(
+    BodySW* p_body_a,
+    const Vector3& p_pos_a,
+    BodySW* p_body_b,
+    const Vector3& p_pos_b
+) :
+    JointSW(_arr, 2) {
     A = p_body_a;
     B = p_body_b;
     m_pivotInA = p_pos_a;
@@ -166,5 +189,4 @@ PinJointSW::PinJointSW(BodySW *p_body_a, const Vector3 &p_pos_a, BodySW *p_body_
     B->add_constraint(this, 1);
 }
 
-PinJointSW::~PinJointSW() {
-}
+PinJointSW::~PinJointSW() {}

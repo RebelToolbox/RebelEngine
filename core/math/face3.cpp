@@ -32,7 +32,11 @@
 
 #include "core/math/geometry.h"
 
-int Face3::split_by_plane(const Plane &p_plane, Face3 p_res[3], bool p_is_point_over[3]) const {
+int Face3::split_by_plane(
+    const Plane& p_plane,
+    Face3 p_res[3],
+    bool p_is_point_over[3]
+) const {
     ERR_FAIL_COND_V(is_degenerate(), 0);
 
     Vector3 above[4];
@@ -51,12 +55,12 @@ int Face3::split_by_plane(const Plane &p_plane, Face3 p_res[3], bool p_is_point_
 
         } else {
             if (p_plane.is_point_over(vertex[i])) {
-                //Point is over
+                // Point is over
                 ERR_FAIL_COND_V(above_count >= 4, 0);
                 above[above_count++] = vertex[i];
 
             } else {
-                //Point is under
+                // Point is under
                 ERR_FAIL_COND_V(below_count >= 4, 0);
                 below[below_count++] = vertex[i];
             }
@@ -64,7 +68,11 @@ int Face3::split_by_plane(const Plane &p_plane, Face3 p_res[3], bool p_is_point_
             /* Check for Intersection between this and the next vertex*/
 
             Vector3 inters;
-            if (!p_plane.intersects_segment(vertex[i], vertex[(i + 1) % 3], &inters)) {
+            if (!p_plane.intersects_segment(
+                    vertex[i],
+                    vertex[(i + 1) % 3],
+                    &inters
+                )) {
                 continue;
             }
 
@@ -78,7 +86,7 @@ int Face3::split_by_plane(const Plane &p_plane, Face3 p_res[3], bool p_is_point_
 
     int polygons_created = 0;
 
-    ERR_FAIL_COND_V(above_count >= 4 && below_count >= 4, 0); //bug in the algo
+    ERR_FAIL_COND_V(above_count >= 4 && below_count >= 4, 0); // bug in the algo
 
     if (above_count >= 3) {
         p_res[polygons_created] = Face3(above[0], above[1], above[2]);
@@ -107,12 +115,34 @@ int Face3::split_by_plane(const Plane &p_plane, Face3 p_res[3], bool p_is_point_
     return polygons_created;
 }
 
-bool Face3::intersects_ray(const Vector3 &p_from, const Vector3 &p_dir, Vector3 *p_intersection) const {
-    return Geometry::ray_intersects_triangle(p_from, p_dir, vertex[0], vertex[1], vertex[2], p_intersection);
+bool Face3::intersects_ray(
+    const Vector3& p_from,
+    const Vector3& p_dir,
+    Vector3* p_intersection
+) const {
+    return Geometry::ray_intersects_triangle(
+        p_from,
+        p_dir,
+        vertex[0],
+        vertex[1],
+        vertex[2],
+        p_intersection
+    );
 }
 
-bool Face3::intersects_segment(const Vector3 &p_from, const Vector3 &p_dir, Vector3 *p_intersection) const {
-    return Geometry::segment_intersects_triangle(p_from, p_dir, vertex[0], vertex[1], vertex[2], p_intersection);
+bool Face3::intersects_segment(
+    const Vector3& p_from,
+    const Vector3& p_dir,
+    Vector3* p_intersection
+) const {
+    return Geometry::segment_intersects_triangle(
+        p_from,
+        p_dir,
+        vertex[0],
+        vertex[1],
+        vertex[2],
+        p_intersection
+    );
 }
 
 bool Face3::is_degenerate() const {
@@ -120,15 +150,16 @@ bool Face3::is_degenerate() const {
     return (normal.length_squared() < CMP_EPSILON2);
 }
 
-Face3::Side Face3::get_side_of(const Face3 &p_face, ClockDirection p_clock_dir) const {
+Face3::Side Face3::get_side_of(const Face3& p_face, ClockDirection p_clock_dir)
+    const {
     int over = 0, under = 0;
 
     Plane plane = get_plane(p_clock_dir);
 
     for (int i = 0; i < 3; i++) {
-        const Vector3 &v = p_face.vertex[i];
+        const Vector3& v = p_face.vertex[i];
 
-        if (plane.has_point(v)) { //coplanar, don't bother
+        if (plane.has_point(v)) { // coplanar, don't bother
             continue;
         }
 
@@ -169,37 +200,37 @@ Vector3 Face3::get_median_point() const {
 }
 
 real_t Face3::get_area() const {
-    return vec3_cross(vertex[0] - vertex[1], vertex[0] - vertex[2]).length() * 0.5;
+    return vec3_cross(vertex[0] - vertex[1], vertex[0] - vertex[2]).length()
+         * 0.5;
 }
 
 ClockDirection Face3::get_clock_dir() const {
     Vector3 normal = vec3_cross(vertex[0] - vertex[1], vertex[0] - vertex[2]);
-    //printf("normal is %g,%g,%g x %g,%g,%g- wtfu is %g\n",tofloat(normal.x),tofloat(normal.y),tofloat(normal.z),tofloat(vertex[0].x),tofloat(vertex[0].y),tofloat(vertex[0].z),tofloat( normal.dot( vertex[0] ) ) );
+    // printf("normal is %g,%g,%g x %g,%g,%g- wtfu is
+    // %g\n",tofloat(normal.x),tofloat(normal.y),tofloat(normal.z),tofloat(vertex[0].x),tofloat(vertex[0].y),tofloat(vertex[0].z),tofloat(
+    // normal.dot( vertex[0] ) ) );
     return (normal.dot(vertex[0]) >= 0) ? CLOCKWISE : COUNTERCLOCKWISE;
 }
 
-bool Face3::intersects_aabb(const AABB &p_aabb) const {
+bool Face3::intersects_aabb(const AABB& p_aabb) const {
     /** TEST PLANE **/
     if (!p_aabb.intersects_plane(get_plane())) {
         return false;
     }
 
-#define TEST_AXIS(m_ax)                                            \
-    /** TEST FACE AXIS */                                          \
-    {                                                              \
-        real_t aabb_min = p_aabb.position.m_ax;                    \
-        real_t aabb_max = p_aabb.position.m_ax + p_aabb.size.m_ax; \
-        real_t tri_min = vertex[0].m_ax;                           \
-        real_t tri_max = vertex[0].m_ax;                           \
-        for (int i = 1; i < 3; i++) {                              \
-            if (vertex[i].m_ax > tri_max)                          \
-                tri_max = vertex[i].m_ax;                          \
-            if (vertex[i].m_ax < tri_min)                          \
-                tri_min = vertex[i].m_ax;                          \
-        }                                                          \
-                                                                   \
-        if (tri_max < aabb_min || aabb_max < tri_min)              \
-            return false;                                          \
+#define TEST_AXIS(m_ax)                                                        \
+    /** TEST FACE AXIS */                                                      \
+    {                                                                          \
+        real_t aabb_min = p_aabb.position.m_ax;                                \
+        real_t aabb_max = p_aabb.position.m_ax + p_aabb.size.m_ax;             \
+        real_t tri_min = vertex[0].m_ax;                                       \
+        real_t tri_max = vertex[0].m_ax;                                       \
+        for (int i = 1; i < 3; i++) {                                          \
+            if (vertex[i].m_ax > tri_max) tri_max = vertex[i].m_ax;            \
+            if (vertex[i].m_ax < tri_min) tri_min = vertex[i].m_ax;            \
+        }                                                                      \
+                                                                               \
+        if (tri_max < aabb_min || aabb_max < tri_min) return false;            \
     }
 
     TEST_AXIS(x);
@@ -244,7 +275,12 @@ Face3::operator String() const {
     return String() + vertex[0] + ", " + vertex[1] + ", " + vertex[2];
 }
 
-void Face3::project_range(const Vector3 &p_normal, const Transform &p_transform, real_t &r_min, real_t &r_max) const {
+void Face3::project_range(
+    const Vector3& p_normal,
+    const Transform& p_transform,
+    real_t& r_min,
+    real_t& r_max
+) const {
     for (int i = 0; i < 3; i++) {
         Vector3 v = p_transform.xform(vertex[i]);
         real_t d = p_normal.dot(v);
@@ -259,7 +295,13 @@ void Face3::project_range(const Vector3 &p_normal, const Transform &p_transform,
     }
 }
 
-void Face3::get_support(const Vector3 &p_normal, const Transform &p_transform, Vector3 *p_vertices, int *p_count, int p_max) const {
+void Face3::get_support(
+    const Vector3& p_normal,
+    const Transform& p_transform,
+    Vector3* p_vertices,
+    int* p_count,
+    int p_max
+) const {
 #define _FACE_IS_VALID_SUPPORT_THRESHOLD 0.98
 #define _EDGE_IS_VALID_SUPPORT_THRESHOLD 0.05
 
@@ -319,7 +361,7 @@ void Face3::get_support(const Vector3 &p_normal, const Transform &p_transform, V
     p_vertices[0] = p_transform.xform(vertex[vert_support_idx]);
 }
 
-Vector3 Face3::get_closest_point_to(const Vector3 &p_point) const {
+Vector3 Face3::get_closest_point_to(const Vector3& p_point) const {
     Vector3 edge0 = vertex[1] - vertex[0];
     Vector3 edge1 = vertex[2] - vertex[0];
     Vector3 v0 = vertex[0] - p_point;

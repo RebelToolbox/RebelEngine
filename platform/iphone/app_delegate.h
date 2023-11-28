@@ -34,7 +34,7 @@
 
 @interface AppDelegate : NSObject <UIApplicationDelegate>
 
-@property(strong, nonatomic) UIWindow *window;
-@property(strong, class, readonly, nonatomic) ViewController *viewController;
+@property(strong, nonatomic) UIWindow* window;
+@property(strong, class, readonly, nonatomic) ViewController* viewController;
 
 @end

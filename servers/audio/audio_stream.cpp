@@ -36,26 +36,36 @@
 //////////////////////////////
 
 void AudioStreamPlaybackResampled::_begin_resample() {
-    //clear cubic interpolation history
+    // clear cubic interpolation history
     internal_buffer[0] = AudioFrame(0.0, 0.0);
     internal_buffer[1] = AudioFrame(0.0, 0.0);
     internal_buffer[2] = AudioFrame(0.0, 0.0);
     internal_buffer[3] = AudioFrame(0.0, 0.0);
-    //mix buffer
+    // mix buffer
     _mix_internal(internal_buffer + 4, INTERNAL_BUFFER_LEN);
     mix_offset = 0;
 }
 
-void AudioStreamPlaybackResampled::mix(AudioFrame *p_buffer, float p_rate_scale, int p_frames) {
+void AudioStreamPlaybackResampled::mix(
+    AudioFrame* p_buffer,
+    float p_rate_scale,
+    int p_frames
+) {
     float target_rate = AudioServer::get_singleton()->get_mix_rate();
-    float global_rate_scale = AudioServer::get_singleton()->get_global_rate_scale();
+    float global_rate_scale =
+        AudioServer::get_singleton()->get_global_rate_scale();
 
-    uint64_t mix_increment = uint64_t(((get_stream_sampling_rate() * p_rate_scale) / double(target_rate * global_rate_scale)) * double(FP_LEN));
+    uint64_t mix_increment = uint64_t(
+        ((get_stream_sampling_rate() * p_rate_scale)
+         / double(target_rate * global_rate_scale))
+        * double(FP_LEN)
+    );
 
     for (int i = 0; i < p_frames; i++) {
         uint32_t idx = CUBIC_INTERP_HISTORY + uint32_t(mix_offset >> FP_BITS);
-        //standard cubic interpolation (great quality/performance ratio)
-        //this used to be moved to a LUT for greater performance, but nowadays CPU speed is generally faster than memory.
+        // standard cubic interpolation (great quality/performance ratio)
+        // this used to be moved to a LUT for greater performance, but nowadays
+        // CPU speed is generally faster than memory.
         float mu = (mix_offset & FP_MASK) / float(FP_LEN);
         AudioFrame y0 = internal_buffer[idx - 3];
         AudioFrame y1 = internal_buffer[idx - 2];
@@ -80,7 +90,7 @@ void AudioStreamPlaybackResampled::mix(AudioFrame *p_buffer, float p_rate_scale,
             if (is_playing()) {
                 _mix_internal(internal_buffer + 4, INTERNAL_BUFFER_LEN);
             } else {
-                //fill with silence, not playing
+                // fill with silence, not playing
                 for (int j = 0; j < INTERNAL_BUFFER_LEN; ++j) {
                     internal_buffer[j + 4] = AudioFrame(0, 0);
                 }
@@ -104,16 +114,17 @@ Ref<AudioStreamPlayback> AudioStreamMicrophone::instance_playback() {
 
     playbacks.insert(playback.ptr());
 
-    playback->microphone = Ref<AudioStreamMicrophone>((AudioStreamMicrophone *)this);
+    playback->microphone =
+        Ref<AudioStreamMicrophone>((AudioStreamMicrophone*)this);
     playback->active = false;
 
     return playback;
 }
 
 String AudioStreamMicrophone::get_stream_name() const {
-    //if (audio_stream.is_valid()) {
-    //return "Random: " + audio_stream->get_name();
-    //}
+    // if (audio_stream.is_valid()) {
+    // return "Random: " + audio_stream->get_name();
+    // }
     return "Microphone";
 }
 
@@ -121,21 +132,24 @@ float AudioStreamMicrophone::get_length() const {
     return 0;
 }
 
-void AudioStreamMicrophone::_bind_methods() {
-}
+void AudioStreamMicrophone::_bind_methods() {}
 
-AudioStreamMicrophone::AudioStreamMicrophone() {
-}
+AudioStreamMicrophone::AudioStreamMicrophone() {}
 
-void AudioStreamPlaybackMicrophone::_mix_internal(AudioFrame *p_buffer, int p_frames) {
+void AudioStreamPlaybackMicrophone::_mix_internal(
+    AudioFrame* p_buffer,
+    int p_frames
+) {
     AudioDriver::get_singleton()->lock();
 
     Vector<int32_t> buf = AudioDriver::get_singleton()->get_input_buffer();
     unsigned int input_size = AudioDriver::get_singleton()->get_input_size();
     int mix_rate = AudioDriver::get_singleton()->get_mix_rate();
-    unsigned int playback_delay = MIN(((50 * mix_rate) / 1000) * 2, buf.size() >> 1);
+    unsigned int playback_delay =
+        MIN(((50 * mix_rate) / 1000) * 2, buf.size() >> 1);
 #ifdef DEBUG_ENABLED
-    unsigned int input_position = AudioDriver::get_singleton()->get_input_position();
+    unsigned int input_position =
+        AudioDriver::get_singleton()->get_input_position();
 #endif
 
     if (playback_delay > input_size) {
@@ -163,15 +177,24 @@ void AudioStreamPlaybackMicrophone::_mix_internal(AudioFrame *p_buffer, int p_fr
     }
 
 #ifdef DEBUG_ENABLED
-    if (input_ofs > input_position && (int)(input_ofs - input_position) < (p_frames * 2)) {
-        print_verbose(String(get_class_name()) + " buffer underrun: input_position=" + itos(input_position) + " input_ofs=" + itos(input_ofs) + " input_size=" + itos(input_size));
+    if (input_ofs > input_position
+        && (int)(input_ofs - input_position) < (p_frames * 2)) {
+        print_verbose(
+            String(get_class_name()) + " buffer underrun: input_position="
+            + itos(input_position) + " input_ofs=" + itos(input_ofs)
+            + " input_size=" + itos(input_size)
+        );
     }
 #endif
 
     AudioDriver::get_singleton()->unlock();
 }
 
-void AudioStreamPlaybackMicrophone::mix(AudioFrame *p_buffer, float p_rate_scale, int p_frames) {
+void AudioStreamPlaybackMicrophone::mix(
+    AudioFrame* p_buffer,
+    float p_rate_scale,
+    int p_frames
+) {
     AudioStreamPlaybackResampled::mix(p_buffer, p_rate_scale, p_frames);
 }
 
@@ -185,7 +208,10 @@ void AudioStreamPlaybackMicrophone::start(float p_from_pos) {
     }
 
     if (!GLOBAL_GET("audio/enable_audio_input")) {
-        WARN_PRINT("Need to enable Project settings > Audio > Enable Audio Input option to use capturing.");
+        WARN_PRINT(
+            "Need to enable Project settings > Audio > Enable Audio Input "
+            "option to use capturing."
+        );
         return;
     }
 
@@ -225,15 +251,19 @@ AudioStreamPlaybackMicrophone::~AudioStreamPlaybackMicrophone() {
     stop();
 }
 
-AudioStreamPlaybackMicrophone::AudioStreamPlaybackMicrophone() {
-}
+AudioStreamPlaybackMicrophone::AudioStreamPlaybackMicrophone() {}
 
 ////////////////////////////////
 
-void AudioStreamRandomPitch::set_audio_stream(const Ref<AudioStream> &p_audio_stream) {
+void AudioStreamRandomPitch::set_audio_stream(
+    const Ref<AudioStream>& p_audio_stream
+) {
     audio_stream = p_audio_stream;
     if (audio_stream.is_valid()) {
-        for (Set<AudioStreamPlaybackRandomPitch *>::Element *E = playbacks.front(); E; E = E->next()) {
+        for (Set<AudioStreamPlaybackRandomPitch*>::Element* E =
+                 playbacks.front();
+             E;
+             E = E->next()) {
             E->get()->playback = audio_stream->instance_playback();
         }
     }
@@ -262,7 +292,8 @@ Ref<AudioStreamPlayback> AudioStreamRandomPitch::instance_playback() {
     }
 
     playbacks.insert(playback.ptr());
-    playback->random_pitch = Ref<AudioStreamRandomPitch>((AudioStreamRandomPitch *)this);
+    playback->random_pitch =
+        Ref<AudioStreamRandomPitch>((AudioStreamRandomPitch*)this);
     return playback;
 }
 
@@ -282,14 +313,44 @@ float AudioStreamRandomPitch::get_length() const {
 }
 
 void AudioStreamRandomPitch::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_audio_stream", "stream"), &AudioStreamRandomPitch::set_audio_stream);
-    ClassDB::bind_method(D_METHOD("get_audio_stream"), &AudioStreamRandomPitch::get_audio_stream);
+    ClassDB::bind_method(
+        D_METHOD("set_audio_stream", "stream"),
+        &AudioStreamRandomPitch::set_audio_stream
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_audio_stream"),
+        &AudioStreamRandomPitch::get_audio_stream
+    );
 
-    ClassDB::bind_method(D_METHOD("set_random_pitch", "scale"), &AudioStreamRandomPitch::set_random_pitch);
-    ClassDB::bind_method(D_METHOD("get_random_pitch"), &AudioStreamRandomPitch::get_random_pitch);
+    ClassDB::bind_method(
+        D_METHOD("set_random_pitch", "scale"),
+        &AudioStreamRandomPitch::set_random_pitch
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_random_pitch"),
+        &AudioStreamRandomPitch::get_random_pitch
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "audio_stream", PROPERTY_HINT_RESOURCE_TYPE, "AudioStream"), "set_audio_stream", "get_audio_stream");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "random_pitch", PROPERTY_HINT_RANGE, "1,16,0.01"), "set_random_pitch", "get_random_pitch");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "audio_stream",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "AudioStream"
+        ),
+        "set_audio_stream",
+        "get_audio_stream"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "random_pitch",
+            PROPERTY_HINT_RANGE,
+            "1,16,0.01"
+        ),
+        "set_random_pitch",
+        "get_random_pitch"
+    );
 }
 
 AudioStreamRandomPitch::AudioStreamRandomPitch() {
@@ -314,6 +375,7 @@ void AudioStreamPlaybackRandomPitch::stop() {
         ;
     }
 }
+
 bool AudioStreamPlaybackRandomPitch::is_playing() const {
     if (playing.is_valid()) {
         return playing->is_playing();
@@ -337,13 +399,18 @@ float AudioStreamPlaybackRandomPitch::get_playback_position() const {
 
     return 0;
 }
+
 void AudioStreamPlaybackRandomPitch::seek(float p_time) {
     if (playing.is_valid()) {
         playing->seek(p_time);
     }
 }
 
-void AudioStreamPlaybackRandomPitch::mix(AudioFrame *p_buffer, float p_rate_scale, int p_frames) {
+void AudioStreamPlaybackRandomPitch::mix(
+    AudioFrame* p_buffer,
+    float p_rate_scale,
+    int p_frames
+) {
     if (playing.is_valid()) {
         playing->mix(p_buffer, p_rate_scale * pitch_scale, p_frames);
     } else {

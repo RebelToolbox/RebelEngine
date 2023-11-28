@@ -40,7 +40,7 @@ class RingBuffer {
     int write_pos;
     int size_mask;
 
-    inline int inc(int &p_var, int p_size) const {
+    inline int inc(int& p_var, int p_size) const {
         int ret = p_var;
         p_var += p_size;
         p_var = p_var & size_mask;
@@ -53,7 +53,7 @@ public:
         return data.ptr()[inc(read_pos, 1)];
     };
 
-    int read(T *p_buf, int p_size, bool p_advance = true) {
+    int read(T* p_buf, int p_size, bool p_advance = true) {
         int left = data_left();
         p_size = MIN(left, p_size);
         int pos = read_pos;
@@ -63,7 +63,7 @@ public:
             int end = pos + to_read;
             end = MIN(end, size());
             int total = end - pos;
-            const T *read = data.ptr();
+            const T* read = data.ptr();
             for (int i = 0; i < total; i++) {
                 p_buf[dst++] = read[pos + i];
             };
@@ -76,7 +76,7 @@ public:
         return p_size;
     };
 
-    int copy(T *p_buf, int p_offset, int p_size) const {
+    int copy(T* p_buf, int p_offset, int p_size) const {
         int left = data_left();
         if ((p_offset + p_size) > left) {
             p_size -= left - p_offset;
@@ -102,7 +102,7 @@ public:
         return p_size;
     };
 
-    int find(const T &t, int p_offset, int p_max_size) const {
+    int find(const T& t, int p_offset, int p_max_size) const {
         int left = data_left();
         if ((p_offset + p_max_size) > left) {
             p_max_size -= left - p_offset;
@@ -141,13 +141,13 @@ public:
         return p_n;
     }
 
-    Error write(const T &p_v) {
+    Error write(const T& p_v) {
         ERR_FAIL_COND_V(space_left() < 1, FAILED);
         data.write[inc(write_pos, 1)] = p_v;
         return OK;
     };
 
-    int write(const T *p_buf, int p_size) {
+    int write(const T* p_buf, int p_size) {
         int left = space_left();
         p_size = MIN(left, p_size);
 
@@ -180,6 +180,7 @@ public:
         };
         return left - 1;
     };
+
     inline int data_left() const {
         return size() - space_left() - 1;
     };
@@ -216,6 +217,7 @@ public:
         write_pos = 0;
         resize(p_power);
     };
+
     ~RingBuffer<T>(){};
 };
 

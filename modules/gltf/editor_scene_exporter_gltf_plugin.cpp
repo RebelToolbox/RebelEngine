@@ -47,7 +47,7 @@ bool SceneExporterGLTFPlugin::has_main_screen() const {
     return false;
 }
 
-SceneExporterGLTFPlugin::SceneExporterGLTFPlugin(EditorNode *p_node) {
+SceneExporterGLTFPlugin::SceneExporterGLTFPlugin(EditorNode* p_node) {
     editor = p_node;
     convert_gltf2.instance();
     file_export_lib = memnew(EditorFileDialog);
@@ -61,13 +61,21 @@ SceneExporterGLTFPlugin::SceneExporterGLTFPlugin(EditorNode *p_node) {
     file_export_lib->add_filter("*.gltf");
     file_export_lib->set_title(TTR("Export Mesh GLTF2"));
     String gltf_scene_name = TTR("Export GLTF...");
-    add_tool_menu_item(gltf_scene_name, this, "convert_scene_to_gltf2", DEFVAL(Variant()));
+    add_tool_menu_item(
+        gltf_scene_name,
+        this,
+        "convert_scene_to_gltf2",
+        DEFVAL(Variant())
+    );
 }
 
 void SceneExporterGLTFPlugin::_gltf2_dialog_action(String p_file) {
-    Node *root = editor->get_tree()->get_edited_scene_root();
+    Node* root = editor->get_tree()->get_edited_scene_root();
     if (!root) {
-        editor->show_accept(TTR("This operation can't be done without a scene."), TTR("OK"));
+        editor->show_accept(
+            TTR("This operation can't be done without a scene."),
+            TTR("OK")
+        );
         return;
     }
     List<String> deps;
@@ -76,14 +84,23 @@ void SceneExporterGLTFPlugin::_gltf2_dialog_action(String p_file) {
 }
 
 void SceneExporterGLTFPlugin::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("convert_scene_to_gltf2"), &SceneExporterGLTFPlugin::convert_scene_to_gltf2);
-    ClassDB::bind_method(D_METHOD("_gltf2_dialog_action", "file"), &SceneExporterGLTFPlugin::_gltf2_dialog_action);
+    ClassDB::bind_method(
+        D_METHOD("convert_scene_to_gltf2"),
+        &SceneExporterGLTFPlugin::convert_scene_to_gltf2
+    );
+    ClassDB::bind_method(
+        D_METHOD("_gltf2_dialog_action", "file"),
+        &SceneExporterGLTFPlugin::_gltf2_dialog_action
+    );
 }
 
 void SceneExporterGLTFPlugin::convert_scene_to_gltf2(Variant p_null) {
-    Node *root = editor->get_tree()->get_edited_scene_root();
+    Node* root = editor->get_tree()->get_edited_scene_root();
     if (!root) {
-        editor->show_accept(TTR("This operation can't be done without a scene."), TTR("OK"));
+        editor->show_accept(
+            TTR("This operation can't be done without a scene."),
+            TTR("OK")
+        );
         return;
     }
     String filename = String(root->get_filename().get_file().get_basename());

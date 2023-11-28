@@ -30,7 +30,10 @@
 
 #include "editor_atlas_packer.h"
 
-void EditorAtlasPacker::_plot_triangle(Ref<BitMap> p_bitmap, Vector2i *vertices) {
+void EditorAtlasPacker::_plot_triangle(
+    Ref<BitMap> p_bitmap,
+    Vector2i* vertices
+) {
     int width = p_bitmap->get_size().width;
     int height = p_bitmap->get_size().height;
     int x[3];
@@ -62,13 +65,17 @@ void EditorAtlasPacker::_plot_triangle(Ref<BitMap> p_bitmap, Vector2i *vertices)
     double xt = x[0] + dx_upper; // if y[0] == y[1], special case
     for (int yi = y[0]; yi <= (y[2] > height - 1 ? height - 1 : y[2]); yi++) {
         if (yi >= 0) {
-            for (int xi = (xf > 0 ? int(xf) : 0); xi <= (xt < width ? xt : width - 1); xi++) {
-                //pixels[int(x + y * width)] = color;
+            for (int xi = (xf > 0 ? int(xf) : 0);
+                 xi <= (xt < width ? xt : width - 1);
+                 xi++) {
+                // pixels[int(x + y * width)] = color;
 
                 p_bitmap->set_bit(Point2(xi, yi), true);
             }
 
-            for (int xi = (xf < width ? int(xf) : width - 1); xi >= (xt > 0 ? xt : 0); xi--) {
+            for (int xi = (xf < width ? int(xf) : width - 1);
+                 xi >= (xt > 0 ? xt : 0);
+                 xi--) {
                 p_bitmap->set_bit(Point2(xi, yi), true);
             }
         }
@@ -80,20 +87,27 @@ void EditorAtlasPacker::_plot_triangle(Ref<BitMap> p_bitmap, Vector2i *vertices)
         }
     }
 }
-void EditorAtlasPacker::chart_pack(Vector<Chart> &charts, int &r_width, int &r_height, int p_atlas_max_size, int p_cell_resolution) {
+
+void EditorAtlasPacker::chart_pack(
+    Vector<Chart>& charts,
+    int& r_width,
+    int& r_height,
+    int p_atlas_max_size,
+    int p_cell_resolution
+) {
     int divide_by = MIN(64, p_cell_resolution);
     Vector<PlottedBitmap> bitmaps;
 
     int max_w = 0;
 
     for (int i = 0; i < charts.size(); i++) {
-        const Chart &chart = charts[i];
+        const Chart& chart = charts[i];
 
-        //generate aabb
+        // generate aabb
 
         Rect2i aabb;
         int vertex_count = chart.vertices.size();
-        const Vector2 *vertices = chart.vertices.ptr();
+        const Vector2* vertices = chart.vertices.ptr();
 
         for (int j = 0; j < vertex_count; j++) {
             if (j == 0) {
@@ -110,7 +124,7 @@ void EditorAtlasPacker::chart_pack(Vector<Chart> &charts, int &r_width, int &r_h
         int w = src_bitmap->get_size().width;
         int h = src_bitmap->get_size().height;
 
-        //plot triangles, using divisor
+        // plot triangles, using divisor
 
         for (int j = 0; j < chart.faces.size(); j++) {
             Vector2i v[3];
@@ -124,9 +138,10 @@ void EditorAtlasPacker::chart_pack(Vector<Chart> &charts, int &r_width, int &r_h
             _plot_triangle(src_bitmap, v);
         }
 
-        //src_bitmap->convert_to_image()->save_png("bitmap" + itos(i) + ".png");
+        // src_bitmap->convert_to_image()->save_png("bitmap" + itos(i) +
+        // ".png");
 
-        //grow by 1 for each side
+        // grow by 1 for each side
 
         int bmw = src_bitmap->get_size().width + 2;
         int bmh = src_bitmap->get_size().height + 2;
@@ -193,7 +208,8 @@ void EditorAtlasPacker::chart_pack(Vector<Chart> &charts, int &r_width, int &r_h
 
         String row;
         for (int j = 0; j < top_heights.size(); j++) {
-            row += "(" + itos(top_heights[j]) + "-" + itos(bottom_heights[j]) + "),";
+            row += "(" + itos(top_heights[j]) + "-" + itos(bottom_heights[j])
+                 + "),";
         }
 
         PlottedBitmap plotted_bitmap;
@@ -209,28 +225,29 @@ void EditorAtlasPacker::chart_pack(Vector<Chart> &charts, int &r_width, int &r_h
 
     bitmaps.sort();
 
-    int atlas_max_width = nearest_power_of_2_templated(p_atlas_max_size) / divide_by;
+    int atlas_max_width =
+        nearest_power_of_2_templated(p_atlas_max_size) / divide_by;
     int atlas_w = nearest_power_of_2_templated(max_w);
     int atlas_h;
     while (true) {
         atlas_h = 0;
 
-        //do a tetris
+        // do a tetris
         Vector<int> heights;
         heights.resize(atlas_w);
         for (int i = 0; i < atlas_w; i++) {
             heights.write[i] = 0;
         }
 
-        int *atlas_ptr = heights.ptrw();
+        int* atlas_ptr = heights.ptrw();
 
         for (int i = 0; i < bitmaps.size(); i++) {
             int best_height = 0x7FFFFFFF;
             int best_height_offset = -1;
             int w = bitmaps[i].top_heights.size();
 
-            const int *top_heights = bitmaps[i].top_heights.ptr();
-            const int *bottom_heights = bitmaps[i].bottom_heights.ptr();
+            const int* top_heights = bitmaps[i].top_heights.ptr();
+            const int* bottom_heights = bitmaps[i].bottom_heights.ptr();
 
             for (int j = 0; j <= atlas_w - w; j++) {
                 int height = 0;
@@ -238,7 +255,7 @@ void EditorAtlasPacker::chart_pack(Vector<Chart> &charts, int &r_width, int &r_h
                 for (int k = 0; k < w; k++) {
                     int pixmap_h = bottom_heights[k];
                     if (pixmap_h == 0x7FFFFFFF) {
-                        continue; //no pixel here, anything is fine
+                        continue; // no pixel here, anything is fine
                     }
 
                     int h = MAX(0, atlas_ptr[j + k] - pixmap_h);
@@ -253,8 +270,8 @@ void EditorAtlasPacker::chart_pack(Vector<Chart> &charts, int &r_width, int &r_h
                 }
             }
 
-            for (int j = 0; j < w; j++) { //add
-                if (top_heights[j] == -1) { //unused
+            for (int j = 0; j < w; j++) {   // add
+                if (top_heights[j] == -1) { // unused
                     continue;
                 }
                 int height = best_height + top_heights[j] + 1;
@@ -268,16 +285,19 @@ void EditorAtlasPacker::chart_pack(Vector<Chart> &charts, int &r_width, int &r_h
                 SWAP(offset.x, offset.y);
             }
 
-            Vector2 final_pos = Vector2(best_height_offset * divide_by, best_height * divide_by) + Vector2(divide_by, divide_by) - offset;
+            Vector2 final_pos =
+                Vector2(best_height_offset * divide_by, best_height * divide_by)
+                + Vector2(divide_by, divide_by) - offset;
             charts.write[bitmaps[i].chart_index].final_offset = final_pos;
-            charts.write[bitmaps[i].chart_index].transposed = bitmaps[i].transposed;
+            charts.write[bitmaps[i].chart_index].transposed =
+                bitmaps[i].transposed;
         }
 
         if (atlas_h <= atlas_w * 2 || atlas_w >= atlas_max_width) {
-            break; //ok this one is enough
+            break; // ok this one is enough
         }
 
-        //try again
+        // try again
         atlas_w *= 2;
     }
 

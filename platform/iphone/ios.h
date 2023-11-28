@@ -39,7 +39,7 @@ class iOS : public Object {
     static void _bind_methods();
 
 public:
-    static void alert(const char *p_alert, const char *p_title);
+    static void alert(const char* p_alert, const char* p_title);
 
     String get_model() const;
     String get_rate_url(int p_app_id) const;

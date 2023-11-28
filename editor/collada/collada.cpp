@@ -32,8 +32,8 @@
 
 #include <stdio.h>
 
-//#define DEBUG_DEFAULT_ANIMATION
-//#define DEBUG_COLLADA
+// #define DEBUG_DEFAULT_ANIMATION
+// #define DEBUG_COLLADA
 #ifdef DEBUG_COLLADA
 #define COLLADA_PRINT(m_what) print_line(m_what)
 #else
@@ -44,8 +44,9 @@
 
 /* HELPERS */
 
-String Collada::Effect::get_texture_path(const String &p_source, Collada &state) const {
-    const String &image = p_source;
+String Collada::Effect::get_texture_path(const String& p_source, Collada& state)
+    const {
+    const String& image = p_source;
     ERR_FAIL_COND_V(!state.state.image_map.has(image), "");
     return state.state.image_map[image].path;
 }
@@ -53,18 +54,20 @@ String Collada::Effect::get_texture_path(const String &p_source, Collada &state)
 Transform Collada::get_root_transform() const {
     Transform unit_scale_transform;
 #ifndef COLLADA_IMPORT_SCALE_SCENE
-    unit_scale_transform.scale(Vector3(state.unit_scale, state.unit_scale, state.unit_scale));
+    unit_scale_transform.scale(
+        Vector3(state.unit_scale, state.unit_scale, state.unit_scale)
+    );
 #endif
     return unit_scale_transform;
 }
 
-void Collada::Vertex::fix_unit_scale(Collada &state) {
+void Collada::Vertex::fix_unit_scale(Collada& state) {
 #ifdef COLLADA_IMPORT_SCALE_SCENE
     vertex *= state.state.unit_scale;
 #endif
 }
 
-static String _uri_to_id(const String &p_uri) {
+static String _uri_to_id(const String& p_uri) {
     if (p_uri.begins_with("#")) {
         return p_uri.substr(1, p_uri.size() - 1);
     } else {
@@ -74,7 +77,7 @@ static String _uri_to_id(const String &p_uri) {
 
 /** HELPER FUNCTIONS **/
 
-Transform Collada::fix_transform(const Transform &p_transform) {
+Transform Collada::fix_transform(const Transform& p_transform) {
     Transform tr = p_transform;
 
 #ifndef NO_UP_AXIS_SWAP
@@ -97,14 +100,18 @@ Transform Collada::fix_transform(const Transform &p_transform) {
     }
 #endif
 
-    //tr.scale(Vector3(state.unit_scale.unit_scale.unit_scale));
+    // tr.scale(Vector3(state.unit_scale.unit_scale.unit_scale));
     return tr;
-    //return state.matrix_fix * p_transform;
+    // return state.matrix_fix * p_transform;
 }
 
-static Transform _read_transform_from_array(const Vector<float> &array, int ofs = 0) {
+static Transform _read_transform_from_array(
+    const Vector<float>& array,
+    int ofs = 0
+) {
     Transform tr;
-    // i wonder why collada matrices are transposed, given that's opposed to opengl..
+    // i wonder why collada matrices are transposed, given that's opposed to
+    // opengl..
     tr.basis.elements[0][0] = array[0 + ofs];
     tr.basis.elements[0][1] = array[1 + ofs];
     tr.basis.elements[0][2] = array[2 + ofs];
@@ -122,27 +129,32 @@ static Transform _read_transform_from_array(const Vector<float> &array, int ofs 
 
 /* STRUCTURES */
 
-Transform Collada::Node::compute_transform(Collada &state) const {
+Transform Collada::Node::compute_transform(Collada& state) const {
     Transform xform;
 
     for (int i = 0; i < xform_list.size(); i++) {
         Transform xform_step;
-        const XForm &xf = xform_list[i];
+        const XForm& xf = xform_list[i];
         switch (xf.op) {
             case XForm::OP_ROTATE: {
                 if (xf.data.size() >= 4) {
-                    xform_step.rotate(Vector3(xf.data[0], xf.data[1], xf.data[2]), Math::deg2rad(xf.data[3]));
+                    xform_step.rotate(
+                        Vector3(xf.data[0], xf.data[1], xf.data[2]),
+                        Math::deg2rad(xf.data[3])
+                    );
                 }
             } break;
             case XForm::OP_SCALE: {
                 if (xf.data.size() >= 3) {
-                    xform_step.scale(Vector3(xf.data[0], xf.data[1], xf.data[2]));
+                    xform_step.scale(Vector3(xf.data[0], xf.data[1], xf.data[2])
+                    );
                 }
 
             } break;
             case XForm::OP_TRANSLATE: {
                 if (xf.data.size() >= 3) {
-                    xform_step.origin = Vector3(xf.data[0], xf.data[1], xf.data[2]);
+                    xform_step.origin =
+                        Vector3(xf.data[0], xf.data[1], xf.data[2]);
                 }
 
             } break;
@@ -195,21 +207,24 @@ Vector<float> Collada::AnimationTrack::get_value_at_time(float p_time) const {
     }
 
     switch (keys[i].interp_type) {
-        case INTERP_BEZIER: //wait for bezier
+        case INTERP_BEZIER: // wait for bezier
         case INTERP_LINEAR: {
-            float c = (p_time - keys[i - 1].time) / (keys[i].time - keys[i - 1].time);
+            float c =
+                (p_time - keys[i - 1].time) / (keys[i].time - keys[i - 1].time);
 
             if (keys[i].data.size() == 16) {
-                //interpolate a matrix
+                // interpolate a matrix
                 Transform src = _read_transform_from_array(keys[i - 1].data);
                 Transform dst = _read_transform_from_array(keys[i].data);
 
-                Transform interp = c < 0.001 ? src : src.interpolate_with(dst, c);
+                Transform interp =
+                    c < 0.001 ? src : src.interpolate_with(dst, c);
 
                 Vector<float> ret;
                 ret.resize(16);
                 Transform tr;
-                // i wonder why collada matrices are transposed, given that's opposed to opengl..
+                // i wonder why collada matrices are transposed, given that's
+                // opposed to opengl..
                 ret.write[0] = interp.basis.elements[0][0];
                 ret.write[1] = interp.basis.elements[0][1];
                 ret.write[2] = interp.basis.elements[0][2];
@@ -232,10 +247,11 @@ Vector<float> Collada::AnimationTrack::get_value_at_time(float p_time) const {
                 Vector<float> dest;
                 dest.resize(keys[i].data.size());
                 for (int j = 0; j < dest.size(); j++) {
-                    dest.write[j] = keys[i].data[j] * c + keys[i - 1].data[j] * (1.0 - c);
+                    dest.write[j] =
+                        keys[i].data[j] * c + keys[i - 1].data[j] * (1.0 - c);
                 }
                 return dest;
-                //interpolate one by one
+                // interpolate one by one
             }
         } break;
     }
@@ -243,7 +259,7 @@ Vector<float> Collada::AnimationTrack::get_value_at_time(float p_time) const {
     ERR_FAIL_V(Vector<float>());
 }
 
-void Collada::_parse_asset(XMLParser &parser) {
+void Collada::_parse_asset(XMLParser& parser) {
     while (parser.read() == OK) {
         if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
             String name = parser.get_node_name();
@@ -262,17 +278,18 @@ void Collada::_parse_asset(XMLParser &parser) {
 
                 COLLADA_PRINT("up axis: " + parser.get_node_data());
             } else if (name == "unit") {
-                state.unit_scale = parser.get_attribute_value("meter").to_double();
+                state.unit_scale =
+                    parser.get_attribute_value("meter").to_double();
                 COLLADA_PRINT("unit scale: " + rtos(state.unit_scale));
             }
 
         } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "asset") {
-            break; //end of <asset>
+            break; // end of <asset>
         }
     }
 }
 
-void Collada::_parse_image(XMLParser &parser) {
+void Collada::_parse_image(XMLParser& parser) {
     String id = parser.get_attribute_value("id");
 
     if (!(state.import_flags & IMPORT_FLAG_SCENE)) {
@@ -288,8 +305,11 @@ void Collada::_parse_image(XMLParser &parser) {
         /* <1.4 */
         String path = parser.get_attribute_value("source").strip_edges();
         if (path.find("://") == -1 && path.is_rel_path()) {
-            // path is relative to file being loaded, so convert to a resource path
-            image.path = ProjectSettings::get_singleton()->localize_path(state.local_path.get_base_dir().plus_file(path.percent_decode()));
+            // path is relative to file being loaded, so convert to a resource
+            // path
+            image.path = ProjectSettings::get_singleton()->localize_path(
+                state.local_path.get_base_dir().plus_file(path.percent_decode())
+            );
         }
     } else {
         while (parser.read() == OK) {
@@ -298,15 +318,21 @@ void Collada::_parse_image(XMLParser &parser) {
 
                 if (name == "init_from") {
                     parser.read();
-                    String path = parser.get_node_data().strip_edges().percent_decode();
+                    String path =
+                        parser.get_node_data().strip_edges().percent_decode();
 
                     if (path.find("://") == -1 && path.is_rel_path()) {
-                        // path is relative to file being loaded, so convert to a resource path
-                        path = ProjectSettings::get_singleton()->localize_path(state.local_path.get_base_dir().plus_file(path));
+                        // path is relative to file being loaded, so convert to
+                        // a resource path
+                        path = ProjectSettings::get_singleton()->localize_path(
+                            state.local_path.get_base_dir().plus_file(path)
+                        );
 
                     } else if (path.find("file:///") == 0) {
                         path = path.replace_first("file:///", "");
-                        path = ProjectSettings::get_singleton()->localize_path(path);
+                        path =
+                            ProjectSettings::get_singleton()->localize_path(path
+                            );
                     }
 
                     image.path = path;
@@ -319,7 +345,7 @@ void Collada::_parse_image(XMLParser &parser) {
                 }
 
             } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "image") {
-                break; //end of <asset>
+                break; // end of <asset>
             }
         }
     }
@@ -327,7 +353,7 @@ void Collada::_parse_image(XMLParser &parser) {
     state.image_map[id] = image;
 }
 
-void Collada::_parse_material(XMLParser &parser) {
+void Collada::_parse_material(XMLParser& parser) {
     if (!(state.import_flags & IMPORT_FLAG_SCENE)) {
         if (!parser.is_empty()) {
             parser.skip_section();
@@ -347,10 +373,12 @@ void Collada::_parse_material(XMLParser &parser) {
         ERR_PRINT("Collada Materials < 1.4 are not supported (yet)");
     } else {
         while (parser.read() == OK) {
-            if (parser.get_node_type() == XMLParser::NODE_ELEMENT && parser.get_node_name() == "instance_effect") {
-                material.instance_effect = _uri_to_id(parser.get_attribute_value("url"));
+            if (parser.get_node_type() == XMLParser::NODE_ELEMENT
+                && parser.get_node_name() == "instance_effect") {
+                material.instance_effect =
+                    _uri_to_id(parser.get_attribute_value("url"));
             } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "material") {
-                break; //end of <asset>
+                break; // end of <asset>
             }
         }
     }
@@ -359,7 +387,7 @@ void Collada::_parse_material(XMLParser &parser) {
 }
 
 //! reads floats from inside of xml element until end of xml element
-Vector<float> Collada::_read_float_array(XMLParser &parser) {
+Vector<float> Collada::_read_float_array(XMLParser& parser) {
     if (parser.is_empty()) {
         return Vector<float>();
     }
@@ -379,7 +407,7 @@ Vector<float> Collada::_read_float_array(XMLParser &parser) {
             // parse float data
             String str = parser.get_node_data();
             array = str.split_floats_mk(splitters, false);
-            //array=str.split_floats(" ",false);
+            // array=str.split_floats(" ",false);
         } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END) {
             break; // end parsing text
         }
@@ -388,7 +416,7 @@ Vector<float> Collada::_read_float_array(XMLParser &parser) {
     return array;
 }
 
-Vector<String> Collada::_read_string_array(XMLParser &parser) {
+Vector<String> Collada::_read_string_array(XMLParser& parser) {
     if (parser.is_empty()) {
         return Vector<String>();
     }
@@ -410,7 +438,7 @@ Vector<String> Collada::_read_string_array(XMLParser &parser) {
     return array;
 }
 
-Transform Collada::_read_transform(XMLParser &parser) {
+Transform Collada::_read_transform(XMLParser& parser) {
     if (parser.is_empty()) {
         return Transform();
     }
@@ -439,7 +467,7 @@ Transform Collada::_read_transform(XMLParser &parser) {
     return _read_transform_from_array(farr);
 }
 
-String Collada::_read_empty_draw_type(XMLParser &parser) {
+String Collada::_read_empty_draw_type(XMLParser& parser) {
     String empty_draw_type = "";
 
     if (parser.is_empty()) {
@@ -456,7 +484,7 @@ String Collada::_read_empty_draw_type(XMLParser &parser) {
     return empty_draw_type;
 }
 
-Variant Collada::_parse_param(XMLParser &parser) {
+Variant Collada::_parse_param(XMLParser& parser) {
     if (parser.is_empty()) {
         return Variant();
     }
@@ -495,7 +523,8 @@ Variant Collada::_parse_param(XMLParser &parser) {
                         if (parser.get_node_name() == "source") {
                             parser.read();
 
-                            if (parser.get_node_type() == XMLParser::NODE_TEXT) {
+                            if (parser.get_node_type()
+                                == XMLParser::NODE_TEXT) {
                                 data = parser.get_node_data();
                             }
                         }
@@ -509,7 +538,8 @@ Variant Collada::_parse_param(XMLParser &parser) {
                         if (parser.get_node_name() == "init_from") {
                             parser.read();
 
-                            if (parser.get_node_type() == XMLParser::NODE_TEXT) {
+                            if (parser.get_node_type()
+                                == XMLParser::NODE_TEXT) {
                                 data = parser.get_node_data();
                             }
                         }
@@ -528,7 +558,11 @@ Variant Collada::_parse_param(XMLParser &parser) {
     return data;
 }
 
-void Collada::_parse_effect_material(XMLParser &parser, Effect &effect, String &id) {
+void Collada::_parse_effect_material(
+    XMLParser& parser,
+    Effect& effect,
+    String& id
+) {
     if (!(state.import_flags & IMPORT_FLAG_SCENE)) {
         if (!parser.is_empty()) {
             parser.skip_section();
@@ -542,7 +576,10 @@ void Collada::_parse_effect_material(XMLParser &parser, Effect &effect, String &
 
             COLLADA_PRINT("node name: " + parser.get_node_name());
 
-            if (!parser.is_empty() && (parser.get_node_name() == "profile_COMMON" || parser.get_node_name() == "technique" || parser.get_node_name() == "extra")) {
+            if (!parser.is_empty()
+                && (parser.get_node_name() == "profile_COMMON"
+                    || parser.get_node_name() == "technique"
+                    || parser.get_node_name() == "extra")) {
                 _parse_effect_material(parser, effect, id); // try again
 
             } else if (parser.get_node_name() == "newparam") {
@@ -560,20 +597,30 @@ void Collada::_parse_effect_material(XMLParser &parser, Effect &effect, String &
                     if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
                         String what = parser.get_node_name();
 
-                        if (what == "emission" ||
-                                what == "diffuse" ||
-                                what == "specular" ||
-                                what == "reflective") {
+                        if (what == "emission" || what == "diffuse"
+                            || what == "specular" || what == "reflective") {
                             // color or texture types
                             while (parser.read() == OK) {
-                                if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
+                                if (parser.get_node_type()
+                                    == XMLParser::NODE_ELEMENT) {
                                     if (parser.get_node_name() == "color") {
-                                        Vector<float> colorarr = _read_float_array(parser);
-                                        COLLADA_PRINT("colorarr size: " + rtos(colorarr.size()));
+                                        Vector<float> colorarr =
+                                            _read_float_array(parser);
+                                        COLLADA_PRINT(
+                                            "colorarr size: "
+                                            + rtos(colorarr.size())
+                                        );
 
                                         if (colorarr.size() >= 3) {
-                                            // alpha strangely not alright? maybe it needs to be multiplied by value as a channel intensity
-                                            Color color(colorarr[0], colorarr[1], colorarr[2], 1.0);
+                                            // alpha strangely not alright?
+                                            // maybe it needs to be multiplied
+                                            // by value as a channel intensity
+                                            Color color(
+                                                colorarr[0],
+                                                colorarr[1],
+                                                colorarr[2],
+                                                1.0
+                                            );
                                             if (what == "diffuse") {
                                                 effect.diffuse.color = color;
                                             }
@@ -584,36 +631,74 @@ void Collada::_parse_effect_material(XMLParser &parser, Effect &effect, String &
                                                 effect.emission.color = color;
                                             }
 
-                                            COLLADA_PRINT(what + " color: " + color);
+                                            COLLADA_PRINT(
+                                                what + " color: " + color
+                                            );
                                         }
 
                                     } else if (parser.get_node_name() == "texture") {
-                                        String sampler = parser.get_attribute_value("texture");
+                                        String sampler =
+                                            parser.get_attribute_value("texture"
+                                            );
                                         if (!effect.params.has(sampler)) {
-                                            ERR_PRINT(String("Couldn't find sampler: " + sampler + " in material:" + id).utf8().get_data());
+                                            ERR_PRINT(
+                                                String(
+                                                    "Couldn't find sampler: "
+                                                    + sampler
+                                                    + " in material:" + id
+                                                )
+                                                    .utf8()
+                                                    .get_data()
+                                            );
                                         } else {
-                                            String surface = effect.params[sampler];
+                                            String surface =
+                                                effect.params[sampler];
 
                                             if (!effect.params.has(surface)) {
-                                                ERR_PRINT(String("Couldn't find surface: " + surface + " in material:" + id).utf8().get_data());
+                                                ERR_PRINT(String(
+                                                              "Couldn't find "
+                                                              "surface: "
+                                                              + surface
+                                                              + " in material:"
+                                                              + id
+                                                )
+                                                              .utf8()
+                                                              .get_data());
                                             } else {
-                                                String uri = effect.params[surface];
+                                                String uri =
+                                                    effect.params[surface];
 
                                                 if (what == "diffuse") {
-                                                    effect.diffuse.texture = uri;
+                                                    effect.diffuse.texture =
+                                                        uri;
                                                 } else if (what == "specular") {
-                                                    effect.specular.texture = uri;
+                                                    effect.specular.texture =
+                                                        uri;
                                                 } else if (what == "emission") {
-                                                    effect.emission.texture = uri;
+                                                    effect.emission.texture =
+                                                        uri;
                                                 } else if (what == "bump") {
-                                                    if (parser.has_attribute("bumptype") && parser.get_attribute_value("bumptype") != "NORMALMAP") {
-                                                        WARN_PRINT("'bump' texture type is not NORMALMAP, only NORMALMAP is supported.");
+                                                    if (parser.has_attribute(
+                                                            "bumptype"
+                                                        )
+                                                        && parser.get_attribute_value(
+                                                               "bumptype"
+                                                           ) != "NORMALMAP") {
+                                                        WARN_PRINT(
+                                                            "'bump' texture "
+                                                            "type is not "
+                                                            "NORMALMAP, only "
+                                                            "NORMALMAP is "
+                                                            "supported."
+                                                        );
                                                     }
 
                                                     effect.bump.texture = uri;
                                                 }
 
-                                                COLLADA_PRINT(what + " texture: " + uri);
+                                                COLLADA_PRINT(
+                                                    what + " texture: " + uri
+                                                );
                                             }
                                         }
                                     } else if (!parser.is_empty()) {
@@ -628,11 +713,7 @@ void Collada::_parse_effect_material(XMLParser &parser, Effect &effect, String &
                         } else if (what == "shininess") {
                             effect.shininess = _parse_param(parser);
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END &&
-                            (parser.get_node_name() == "constant" ||
-                                    parser.get_node_name() == "lambert" ||
-                                    parser.get_node_name() == "phong" ||
-                                    parser.get_node_name() == "blinn")) {
+                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && (parser.get_node_name() == "constant" || parser.get_node_name() == "lambert" || parser.get_node_name() == "phong" || parser.get_node_name() == "blinn")) {
                         break;
                     }
                 }
@@ -642,7 +723,9 @@ void Collada::_parse_effect_material(XMLParser &parser, Effect &effect, String &
                 parser.read();
                 effect.found_double_sided = true;
                 effect.double_sided = parser.get_node_data().to_int();
-                COLLADA_PRINT("double sided: " + itos(parser.get_node_data().to_int()));
+                COLLADA_PRINT(
+                    "double sided: " + itos(parser.get_node_data().to_int())
+                );
             } else if (parser.get_node_name() == "unshaded") {
                 parser.read();
                 effect.unshaded = parser.get_node_data().to_int();
@@ -651,19 +734,37 @@ void Collada::_parse_effect_material(XMLParser &parser, Effect &effect, String &
                 while (parser.read() == OK) {
                     if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
                         if (parser.get_node_name() == "texture") {
-                            String sampler = parser.get_attribute_value("texture");
+                            String sampler =
+                                parser.get_attribute_value("texture");
                             if (!effect.params.has(sampler)) {
-                                ERR_PRINT(String("Couldn't find sampler: " + sampler + " in material:" + id).utf8().get_data());
+                                ERR_PRINT(String(
+                                              "Couldn't find sampler: "
+                                              + sampler + " in material:" + id
+                                )
+                                              .utf8()
+                                              .get_data());
                             } else {
                                 String surface = effect.params[sampler];
 
                                 if (!effect.params.has(surface)) {
-                                    ERR_PRINT(String("Couldn't find surface: " + surface + " in material:" + id).utf8().get_data());
+                                    ERR_PRINT(String(
+                                                  "Couldn't find surface: "
+                                                  + surface
+                                                  + " in material:" + id
+                                    )
+                                                  .utf8()
+                                                  .get_data());
                                 } else {
                                     String uri = effect.params[surface];
 
-                                    if (parser.has_attribute("bumptype") && parser.get_attribute_value("bumptype") != "NORMALMAP") {
-                                        WARN_PRINT("'bump' texture type is not NORMALMAP, only NORMALMAP is supported.");
+                                    if (parser.has_attribute("bumptype")
+                                        && parser.get_attribute_value("bumptype"
+                                           ) != "NORMALMAP") {
+                                        WARN_PRINT(
+                                            "'bump' texture type is not "
+                                            "NORMALMAP, only NORMALMAP is "
+                                            "supported."
+                                        );
                                     }
 
                                     effect.bump.texture = uri;
@@ -682,17 +783,13 @@ void Collada::_parse_effect_material(XMLParser &parser, Effect &effect, String &
             } else if (!parser.is_empty()) {
                 parser.skip_section();
             }
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END &&
-                (parser.get_node_name() == "effect" ||
-                        parser.get_node_name() == "profile_COMMON" ||
-                        parser.get_node_name() == "technique" ||
-                        parser.get_node_name() == "extra")) {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && (parser.get_node_name() == "effect" || parser.get_node_name() == "profile_COMMON" || parser.get_node_name() == "technique" || parser.get_node_name() == "extra")) {
             break;
         }
     }
 }
 
-void Collada::_parse_effect(XMLParser &parser) {
+void Collada::_parse_effect(XMLParser& parser) {
     if (!(state.import_flags & IMPORT_FLAG_SCENE)) {
         if (!parser.is_empty()) {
             parser.skip_section();
@@ -713,7 +810,7 @@ void Collada::_parse_effect(XMLParser &parser) {
     COLLADA_PRINT("Effect ID:" + id);
 }
 
-void Collada::_parse_camera(XMLParser &parser) {
+void Collada::_parse_camera(XMLParser& parser) {
     if (!(state.import_flags & IMPORT_FLAG_SCENE)) {
         if (!parser.is_empty()) {
             parser.skip_section();
@@ -724,7 +821,7 @@ void Collada::_parse_camera(XMLParser &parser) {
     String id = parser.get_attribute_value("id");
 
     state.camera_data_map[id] = CameraData();
-    CameraData &camera = state.camera_data_map[id];
+    CameraData& camera = state.camera_data_map[id];
 
     while (parser.read() == OK) {
         if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
@@ -762,14 +859,14 @@ void Collada::_parse_camera(XMLParser &parser) {
             }
 
         } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "camera") {
-            break; //end of <asset>
+            break; // end of <asset>
         }
     }
 
     COLLADA_PRINT("Camera ID:" + id);
 }
 
-void Collada::_parse_light(XMLParser &parser) {
+void Collada::_parse_light(XMLParser& parser) {
     if (!(state.import_flags & IMPORT_FLAG_SCENE)) {
         if (!parser.is_empty()) {
             parser.skip_section();
@@ -780,7 +877,7 @@ void Collada::_parse_light(XMLParser &parser) {
     String id = parser.get_attribute_value("id");
 
     state.light_data_map[id] = LightData();
-    LightData &light = state.light_data_map[id];
+    LightData& light = state.light_data_map[id];
 
     while (parser.read() == OK) {
         if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
@@ -800,7 +897,8 @@ void Collada::_parse_light(XMLParser &parser) {
                 COLLADA_PRINT("colorarr size: " + rtos(colorarr.size()));
 
                 if (colorarr.size() >= 4) {
-                    // alpha strangely not alright? maybe it needs to be multiplied by value as a channel intensity
+                    // alpha strangely not alright? maybe it needs to be
+                    // multiplied by value as a channel intensity
                     Color color(colorarr[0], colorarr[1], colorarr[2], 1.0);
                     light.color = color;
                 }
@@ -824,14 +922,18 @@ void Collada::_parse_light(XMLParser &parser) {
             }
 
         } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "light") {
-            break; //end of <asset>
+            break; // end of <asset>
         }
     }
 
     COLLADA_PRINT("Light ID:" + id);
 }
 
-void Collada::_parse_curve_geometry(XMLParser &parser, String p_id, String p_name) {
+void Collada::_parse_curve_geometry(
+    XMLParser& parser,
+    String p_id,
+    String p_name
+) {
     if (!(state.import_flags & IMPORT_FLAG_SCENE)) {
         if (!parser.is_empty()) {
             parser.skip_section();
@@ -839,11 +941,11 @@ void Collada::_parse_curve_geometry(XMLParser &parser, String p_id, String p_nam
         return;
     }
 
-    //load everything into a pre dictionary
+    // load everything into a pre dictionary
 
     state.curve_data_map[p_id] = CurveData();
 
-    CurveData &curvedata = state.curve_data_map[p_id];
+    CurveData& curvedata = state.curve_data_map[p_id];
     curvedata.name = p_name;
 
     COLLADA_PRINT("curve name: " + p_name);
@@ -868,34 +970,55 @@ void Collada::_parse_curve_geometry(XMLParser &parser, String p_id, String p_nam
             } else if (section == "float_array" || section == "array") {
                 // create a new array and read it.
                 if (curvedata.sources.has(current_source)) {
-                    curvedata.sources[current_source].array = _read_float_array(parser);
-                    COLLADA_PRINT("section: " + current_source + " read " + itos(curvedata.sources[current_source].array.size()) + " values.");
+                    curvedata.sources[current_source].array =
+                        _read_float_array(parser);
+                    COLLADA_PRINT(
+                        "section: " + current_source + " read "
+                        + itos(curvedata.sources[current_source].array.size())
+                        + " values."
+                    );
                 }
             } else if (section == "Name_array") {
                 // create a new array and read it.
                 if (curvedata.sources.has(current_source)) {
-                    curvedata.sources[current_source].sarray = _read_string_array(parser);
-                    COLLADA_PRINT("section: " + current_source + " read " + itos(curvedata.sources[current_source].array.size()) + " values.");
+                    curvedata.sources[current_source].sarray =
+                        _read_string_array(parser);
+                    COLLADA_PRINT(
+                        "section: " + current_source + " read "
+                        + itos(curvedata.sources[current_source].array.size())
+                        + " values."
+                    );
                 }
 
             } else if (section == "technique_common") {
-                //skip it
-            } else if (section == "accessor") { // child of source (below a technique tag)
+                // skip it
+            } else if (section == "accessor") { // child of source (below a
+                                                // technique tag)
 
                 if (curvedata.sources.has(current_source)) {
-                    curvedata.sources[current_source].stride = parser.get_attribute_value("stride").to_int();
-                    COLLADA_PRINT("section: " + current_source + " stride " + itos(curvedata.sources[current_source].stride));
+                    curvedata.sources[current_source].stride =
+                        parser.get_attribute_value("stride").to_int();
+                    COLLADA_PRINT(
+                        "section: " + current_source + " stride "
+                        + itos(curvedata.sources[current_source].stride)
+                    );
                 }
             } else if (section == "control_vertices") {
                 while (parser.read() == OK) {
                     if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
                         if (parser.get_node_name() == "input") {
-                            String semantic = parser.get_attribute_value("semantic");
-                            String source = _uri_to_id(parser.get_attribute_value("source"));
+                            String semantic =
+                                parser.get_attribute_value("semantic");
+                            String source =
+                                _uri_to_id(parser.get_attribute_value("source")
+                                );
 
                             curvedata.control_vertices[semantic] = source;
 
-                            COLLADA_PRINT(section + " input semantic: " + semantic + " source: " + source);
+                            COLLADA_PRINT(
+                                section + " input semantic: " + semantic
+                                + " source: " + source
+                            );
                         }
                     } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
                         break;
@@ -911,7 +1034,11 @@ void Collada::_parse_curve_geometry(XMLParser &parser, String p_id, String p_nam
     }
 }
 
-void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name) {
+void Collada::_parse_mesh_geometry(
+    XMLParser& parser,
+    String p_id,
+    String p_name
+) {
     if (!(state.import_flags & IMPORT_FLAG_SCENE)) {
         if (!parser.is_empty()) {
             parser.skip_section();
@@ -919,11 +1046,11 @@ void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name
         return;
     }
 
-    //load everything into a pre dictionary
+    // load everything into a pre dictionary
 
     state.mesh_data_map[p_id] = MeshData();
 
-    MeshData &meshdata = state.mesh_data_map[p_id];
+    MeshData& meshdata = state.mesh_data_map[p_id];
     meshdata.name = p_name;
 
     COLLADA_PRINT("mesh name: " + p_name);
@@ -948,16 +1075,26 @@ void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name
             } else if (section == "float_array" || section == "array") {
                 // create a new array and read it.
                 if (meshdata.sources.has(current_source)) {
-                    meshdata.sources[current_source].array = _read_float_array(parser);
-                    COLLADA_PRINT("section: " + current_source + " read " + itos(meshdata.sources[current_source].array.size()) + " values.");
+                    meshdata.sources[current_source].array =
+                        _read_float_array(parser);
+                    COLLADA_PRINT(
+                        "section: " + current_source + " read "
+                        + itos(meshdata.sources[current_source].array.size())
+                        + " values."
+                    );
                 }
             } else if (section == "technique_common") {
-                //skip it
-            } else if (section == "accessor") { // child of source (below a technique tag)
+                // skip it
+            } else if (section == "accessor") { // child of source (below a
+                                                // technique tag)
 
                 if (meshdata.sources.has(current_source)) {
-                    meshdata.sources[current_source].stride = parser.get_attribute_value("stride").to_int();
-                    COLLADA_PRINT("section: " + current_source + " stride " + itos(meshdata.sources[current_source].stride));
+                    meshdata.sources[current_source].stride =
+                        parser.get_attribute_value("stride").to_int();
+                    COLLADA_PRINT(
+                        "section: " + current_source + " stride "
+                        + itos(meshdata.sources[current_source].stride)
+                    );
                 }
             } else if (section == "vertices") {
                 MeshData::Vertices vert;
@@ -967,8 +1104,11 @@ void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name
                 while (parser.read() == OK) {
                     if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
                         if (parser.get_node_name() == "input") {
-                            String semantic = parser.get_attribute_value("semantic");
-                            String source = _uri_to_id(parser.get_attribute_value("source"));
+                            String semantic =
+                                parser.get_attribute_value("semantic");
+                            String source =
+                                _uri_to_id(parser.get_attribute_value("source")
+                                );
 
                             if (semantic == "TEXCOORD") {
                                 semantic = "TEXCOORD" + itos(last_ref++);
@@ -976,7 +1116,10 @@ void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name
 
                             vert.sources[semantic] = source;
 
-                            COLLADA_PRINT(section + " input semantic: " + semantic + " source: " + source);
+                            COLLADA_PRINT(
+                                section + " input semantic: " + semantic
+                                + " source: " + source
+                            );
                         }
                     } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
                         break;
@@ -988,7 +1131,12 @@ void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name
             } else if (section == "triangles" || section == "polylist" || section == "polygons") {
                 bool polygons = (section == "polygons");
                 if (polygons) {
-                    WARN_PRINT("Primitive type \"polygons\" is not well supported (concave shapes may fail). To ensure that the geometry is properly imported, please re-export using \"triangles\" or \"polylist\".");
+                    WARN_PRINT(
+                        "Primitive type \"polygons\" is not well supported "
+                        "(concave shapes may fail). To ensure that the "
+                        "geometry is properly imported, please re-export using "
+                        "\"triangles\" or \"polylist\"."
+                    );
                 }
                 MeshData::Primitives prim;
 
@@ -1002,8 +1150,11 @@ void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name
                 while (parser.read() == OK) {
                     if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
                         if (parser.get_node_name() == "input") {
-                            String semantic = parser.get_attribute_value("semantic");
-                            String source = _uri_to_id(parser.get_attribute_value("source"));
+                            String semantic =
+                                parser.get_attribute_value("semantic");
+                            String source =
+                                _uri_to_id(parser.get_attribute_value("source")
+                                );
 
                             if (semantic == "TEXCOORD") {
                                 /*
@@ -1013,22 +1164,30 @@ void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name
                                     semantic="TEXCOORD0";*/
                                 semantic = "TEXCOORD" + itos(last_ref++);
                             }
-                            int offset = parser.get_attribute_value("offset").to_int();
+                            int offset =
+                                parser.get_attribute_value("offset").to_int();
 
                             MeshData::Primitives::SourceRef sref;
                             sref.source = source;
                             sref.offset = offset;
                             prim.sources[semantic] = sref;
-                            prim.vertex_size = MAX(prim.vertex_size, offset + 1);
+                            prim.vertex_size =
+                                MAX(prim.vertex_size, offset + 1);
 
-                            COLLADA_PRINT(section + " input semantic: " + semantic + " source: " + source + " offset: " + itos(offset));
+                            COLLADA_PRINT(
+                                section + " input semantic: " + semantic
+                                + " source: " + source
+                                + " offset: " + itos(offset)
+                            );
 
-                        } else if (parser.get_node_name() == "p") { //indices
+                        } else if (parser.get_node_name() == "p") { // indices
 
                             Vector<float> values = _read_float_array(parser);
                             if (polygons) {
                                 ERR_CONTINUE(prim.vertex_size == 0);
-                                prim.polygons.push_back(values.size() / prim.vertex_size);
+                                prim.polygons.push_back(
+                                    values.size() / prim.vertex_size
+                                );
                                 int from = prim.indices.size();
                                 prim.indices.resize(from + values.size());
                                 for (int i = 0; i < values.size(); i++) {
@@ -1039,13 +1198,18 @@ void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name
                                 prim.indices = values;
                             }
 
-                            COLLADA_PRINT("read " + itos(values.size()) + " index values");
+                            COLLADA_PRINT(
+                                "read " + itos(values.size()) + " index values"
+                            );
 
                         } else if (parser.get_node_name() == "vcount") { // primitive
 
                             Vector<float> values = _read_float_array(parser);
                             prim.polygons = values;
-                            COLLADA_PRINT("read " + itos(values.size()) + " polygon values");
+                            COLLADA_PRINT(
+                                "read " + itos(values.size())
+                                + " polygon values"
+                            );
                         }
                     } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
                         break;
@@ -1060,7 +1224,10 @@ void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name
                 meshdata.double_sided = parser.get_node_data().to_int();
 
             } else if (parser.get_node_name() == "polygons") {
-                ERR_PRINT("Primitive type \"polygons\" not supported, re-export using \"polylist\" or \"triangles\".");
+                ERR_PRINT(
+                    "Primitive type \"polygons\" not supported, re-export "
+                    "using \"polylist\" or \"triangles\"."
+                );
             } else if (!parser.is_empty()) {
                 parser.skip_section();
             }
@@ -1070,9 +1237,9 @@ void Collada::_parse_mesh_geometry(XMLParser &parser, String p_id, String p_name
     }
 }
 
-void Collada::_parse_skin_controller(XMLParser &parser, String p_id) {
+void Collada::_parse_skin_controller(XMLParser& parser, String p_id) {
     state.skin_controller_data_map[p_id] = SkinControllerData();
-    SkinControllerData &skindata = state.skin_controller_data_map[p_id];
+    SkinControllerData& skindata = state.skin_controller_data_map[p_id];
 
     skindata.base = _uri_to_id(parser.get_attribute_value("source"));
 
@@ -1088,7 +1255,9 @@ void Collada::_parse_skin_controller(XMLParser &parser, String p_id) {
                 skindata.bind_shape.origin *= state.unit_scale;
 
 #endif
-                COLLADA_PRINT("skeleton bind shape transform: " + skindata.bind_shape);
+                COLLADA_PRINT(
+                    "skeleton bind shape transform: " + skindata.bind_shape
+                );
 
             } else if (section == "source") {
                 String id = parser.get_attribute_value("id");
@@ -1099,8 +1268,13 @@ void Collada::_parse_skin_controller(XMLParser &parser, String p_id) {
             } else if (section == "float_array" || section == "array") {
                 // create a new array and read it.
                 if (skindata.sources.has(current_source)) {
-                    skindata.sources[current_source].array = _read_float_array(parser);
-                    COLLADA_PRINT("section: " + current_source + " read " + itos(skindata.sources[current_source].array.size()) + " values.");
+                    skindata.sources[current_source].array =
+                        _read_float_array(parser);
+                    COLLADA_PRINT(
+                        "section: " + current_source + " read "
+                        + itos(skindata.sources[current_source].array.size())
+                        + " values."
+                    );
                 }
             } else if (section == "Name_array" || section == "IDREF_array") {
                 // create a new array and read it.
@@ -1109,18 +1283,25 @@ void Collada::_parse_skin_controller(XMLParser &parser, String p_id) {
                     skindata.use_idrefs = true;
                 }
                 if (skindata.sources.has(current_source)) {
-                    skindata.sources[current_source].sarray = _read_string_array(parser);
+                    skindata.sources[current_source].sarray =
+                        _read_string_array(parser);
                     if (section == "IDREF_array") {
-                        Vector<String> sa = skindata.sources[current_source].sarray;
+                        Vector<String> sa =
+                            skindata.sources[current_source].sarray;
                         for (int i = 0; i < sa.size(); i++) {
                             state.idref_joints.insert(sa[i]);
                         }
                     }
-                    COLLADA_PRINT("section: " + current_source + " read " + itos(skindata.sources[current_source].array.size()) + " values.");
+                    COLLADA_PRINT(
+                        "section: " + current_source + " read "
+                        + itos(skindata.sources[current_source].array.size())
+                        + " values."
+                    );
                 }
             } else if (section == "technique_common") {
-                //skip it
-            } else if (section == "accessor") { // child of source (below a technique tag)
+                // skip it
+            } else if (section == "accessor") { // child of source (below a
+                                                // technique tag)
 
                 if (skindata.sources.has(current_source)) {
                     int stride = 1;
@@ -1129,7 +1310,10 @@ void Collada::_parse_skin_controller(XMLParser &parser, String p_id) {
                     }
 
                     skindata.sources[current_source].stride = stride;
-                    COLLADA_PRINT("section: " + current_source + " stride " + itos(skindata.sources[current_source].stride));
+                    COLLADA_PRINT(
+                        "section: " + current_source + " stride "
+                        + itos(skindata.sources[current_source].stride)
+                    );
                 }
 
             } else if (section == "joints") {
@@ -1138,12 +1322,18 @@ void Collada::_parse_skin_controller(XMLParser &parser, String p_id) {
                 while (parser.read() == OK) {
                     if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
                         if (parser.get_node_name() == "input") {
-                            String semantic = parser.get_attribute_value("semantic");
-                            String source = _uri_to_id(parser.get_attribute_value("source"));
+                            String semantic =
+                                parser.get_attribute_value("semantic");
+                            String source =
+                                _uri_to_id(parser.get_attribute_value("source")
+                                );
 
                             joint.sources[semantic] = source;
 
-                            COLLADA_PRINT(section + " input semantic: " + semantic + " source: " + source);
+                            COLLADA_PRINT(
+                                section + " input semantic: " + semantic
+                                + " source: " + source
+                            );
                         }
                     } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
                         break;
@@ -1160,29 +1350,42 @@ void Collada::_parse_skin_controller(XMLParser &parser, String p_id) {
                 while (parser.read() == OK) {
                     if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
                         if (parser.get_node_name() == "input") {
-                            String semantic = parser.get_attribute_value("semantic");
-                            String source = _uri_to_id(parser.get_attribute_value("source"));
+                            String semantic =
+                                parser.get_attribute_value("semantic");
+                            String source =
+                                _uri_to_id(parser.get_attribute_value("source")
+                                );
 
-                            int offset = parser.get_attribute_value("offset").to_int();
+                            int offset =
+                                parser.get_attribute_value("offset").to_int();
 
                             SkinControllerData::Weights::SourceRef sref;
                             sref.source = source;
                             sref.offset = offset;
                             weights.sources[semantic] = sref;
 
-                            COLLADA_PRINT(section + " input semantic: " + semantic + " source: " + source + " offset: " + itos(offset));
+                            COLLADA_PRINT(
+                                section + " input semantic: " + semantic
+                                + " source: " + source
+                                + " offset: " + itos(offset)
+                            );
 
-                        } else if (parser.get_node_name() == "v") { //indices
+                        } else if (parser.get_node_name() == "v") { // indices
 
                             Vector<float> values = _read_float_array(parser);
                             weights.indices = values;
-                            COLLADA_PRINT("read " + itos(values.size()) + " index values");
+                            COLLADA_PRINT(
+                                "read " + itos(values.size()) + " index values"
+                            );
 
                         } else if (parser.get_node_name() == "vcount") { // weightsitive
 
                             Vector<float> values = _read_float_array(parser);
                             weights.sets = values;
-                            COLLADA_PRINT("read " + itos(values.size()) + " polygon values");
+                            COLLADA_PRINT(
+                                "read " + itos(values.size())
+                                + " polygon values"
+                            );
                         }
                     } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
                         break;
@@ -1213,14 +1416,17 @@ void Collada::_parse_skin_controller(XMLParser &parser, String p_id) {
     ERR_FAIL_COND(!skindata.sources.has(joint_arr));
     ERR_FAIL_COND(!skindata.sources.has(ibm));
 
-    SkinControllerData::Source &joint_source = skindata.sources[joint_arr];
-    SkinControllerData::Source &ibm_source = skindata.sources[ibm];
+    SkinControllerData::Source& joint_source = skindata.sources[joint_arr];
+    SkinControllerData::Source& ibm_source = skindata.sources[ibm];
 
     ERR_FAIL_COND(joint_source.sarray.size() != ibm_source.array.size() / 16);
 
     for (int i = 0; i < joint_source.sarray.size(); i++) {
         String name = joint_source.sarray[i];
-        Transform xform = _read_transform_from_array(ibm_source.array, i * 16); //<- this is a mistake, it must be applied to vertices
+        Transform xform = _read_transform_from_array(
+            ibm_source.array,
+            i * 16
+        ); //<- this is a mistake, it must be applied to vertices
         xform.affine_invert(); // inverse for rest, because it's an inverse
 #ifdef COLLADA_IMPORT_SCALE_SCENE
         xform.origin *= state.unit_scale;
@@ -1229,9 +1435,9 @@ void Collada::_parse_skin_controller(XMLParser &parser, String p_id) {
     }
 }
 
-void Collada::_parse_morph_controller(XMLParser &parser, String p_id) {
+void Collada::_parse_morph_controller(XMLParser& parser, String p_id) {
     state.morph_controller_data_map[p_id] = MorphControllerData();
-    MorphControllerData &morphdata = state.morph_controller_data_map[p_id];
+    MorphControllerData& morphdata = state.morph_controller_data_map[p_id];
 
     morphdata.mesh = _uri_to_id(parser.get_attribute_value("source"));
     morphdata.mode = parser.get_attribute_value("method");
@@ -1250,8 +1456,13 @@ void Collada::_parse_morph_controller(XMLParser &parser, String p_id) {
             } else if (section == "float_array" || section == "array") {
                 // create a new array and read it.
                 if (morphdata.sources.has(current_source)) {
-                    morphdata.sources[current_source].array = _read_float_array(parser);
-                    COLLADA_PRINT("section: " + current_source + " read " + itos(morphdata.sources[current_source].array.size()) + " values.");
+                    morphdata.sources[current_source].array =
+                        _read_float_array(parser);
+                    COLLADA_PRINT(
+                        "section: " + current_source + " read "
+                        + itos(morphdata.sources[current_source].array.size())
+                        + " values."
+                    );
                 }
             } else if (section == "Name_array" || section == "IDREF_array") {
                 // create a new array and read it.
@@ -1261,18 +1472,24 @@ void Collada::_parse_morph_controller(XMLParser &parser, String p_id) {
                     morphdata.use_idrefs=true;
                 */
                 if (morphdata.sources.has(current_source)) {
-                    morphdata.sources[current_source].sarray = _read_string_array(parser);
+                    morphdata.sources[current_source].sarray =
+                        _read_string_array(parser);
                     /*
                     if (section=="IDREF_array") {
-                        Vector<String> sa = morphdata.sources[current_source].sarray;
-                        for(int i=0;i<sa.size();i++)
-                            state.idref_joints.insert(sa[i]);
+                        Vector<String> sa =
+                    morphdata.sources[current_source].sarray; for(int
+                    i=0;i<sa.size();i++) state.idref_joints.insert(sa[i]);
                     }*/
-                    COLLADA_PRINT("section: " + current_source + " read " + itos(morphdata.sources[current_source].array.size()) + " values.");
+                    COLLADA_PRINT(
+                        "section: " + current_source + " read "
+                        + itos(morphdata.sources[current_source].array.size())
+                        + " values."
+                    );
                 }
             } else if (section == "technique_common") {
-                //skip it
-            } else if (section == "accessor") { // child of source (below a technique tag)
+                // skip it
+            } else if (section == "accessor") { // child of source (below a
+                                                // technique tag)
 
                 if (morphdata.sources.has(current_source)) {
                     int stride = 1;
@@ -1281,19 +1498,28 @@ void Collada::_parse_morph_controller(XMLParser &parser, String p_id) {
                     }
 
                     morphdata.sources[current_source].stride = stride;
-                    COLLADA_PRINT("section: " + current_source + " stride " + itos(morphdata.sources[current_source].stride));
+                    COLLADA_PRINT(
+                        "section: " + current_source + " stride "
+                        + itos(morphdata.sources[current_source].stride)
+                    );
                 }
 
             } else if (section == "targets") {
                 while (parser.read() == OK) {
                     if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
                         if (parser.get_node_name() == "input") {
-                            String semantic = parser.get_attribute_value("semantic");
-                            String source = _uri_to_id(parser.get_attribute_value("source"));
+                            String semantic =
+                                parser.get_attribute_value("semantic");
+                            String source =
+                                _uri_to_id(parser.get_attribute_value("source")
+                                );
 
                             morphdata.targets[semantic] = source;
 
-                            COLLADA_PRINT(section + " input semantic: " + semantic + " source: " + source);
+                            COLLADA_PRINT(
+                                section + " input semantic: " + semantic
+                                + " source: " + source
+                            );
                         }
                     } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
                         break;
@@ -1315,7 +1541,7 @@ void Collada::_parse_morph_controller(XMLParser &parser, String p_id) {
     }
 }
 
-void Collada::_parse_controller(XMLParser &parser) {
+void Collada::_parse_controller(XMLParser& parser) {
     String id = parser.get_attribute_value("id");
 
     if (parser.is_empty()) {
@@ -1337,13 +1563,13 @@ void Collada::_parse_controller(XMLParser &parser) {
     }
 }
 
-Collada::Node *Collada::_parse_visual_instance_geometry(XMLParser &parser) {
+Collada::Node* Collada::_parse_visual_instance_geometry(XMLParser& parser) {
     String type = parser.get_node_name();
-    NodeGeometry *geom = memnew(NodeGeometry);
+    NodeGeometry* geom = memnew(NodeGeometry);
     geom->controller = type == "instance_controller";
     geom->source = _uri_to_id(parser.get_attribute_value_safe("url"));
 
-    if (parser.is_empty()) { //nothing else to parse...
+    if (parser.is_empty()) { // nothing else to parse...
         return geom;
     }
     // try to find also many materials and skeletons!
@@ -1351,12 +1577,16 @@ Collada::Node *Collada::_parse_visual_instance_geometry(XMLParser &parser) {
         if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
             if (parser.get_node_name() == "instance_material") {
                 String symbol = parser.get_attribute_value("symbol");
-                String target = _uri_to_id(parser.get_attribute_value("target"));
+                String target =
+                    _uri_to_id(parser.get_attribute_value("target"));
 
                 NodeGeometry::Material mat;
                 mat.target = target;
                 geom->material_map[symbol] = mat;
-                COLLADA_PRINT("uses material: '" + target + "' on primitive'" + symbol + "'");
+                COLLADA_PRINT(
+                    "uses material: '" + target + "' on primitive'" + symbol
+                    + "'"
+                );
             } else if (parser.get_node_name() == "skeleton") {
                 parser.read();
                 String uri = _uri_to_id(parser.get_node_data());
@@ -1372,16 +1602,19 @@ Collada::Node *Collada::_parse_visual_instance_geometry(XMLParser &parser) {
 
     if (geom->controller) {
         if (geom->skeletons.empty()) {
-            //XSI style
+            // XSI style
 
             if (state.skin_controller_data_map.has(geom->source)) {
-                SkinControllerData *skin = &state.skin_controller_data_map[geom->source];
-                //case where skeletons reference bones with IDREF (XSI)
+                SkinControllerData* skin =
+                    &state.skin_controller_data_map[geom->source];
+                // case where skeletons reference bones with IDREF (XSI)
                 ERR_FAIL_COND_V(!skin->joints.sources.has("JOINT"), geom);
                 String joint_arr = skin->joints.sources["JOINT"];
                 ERR_FAIL_COND_V(!skin->sources.has(joint_arr), geom);
-                Collada::SkinControllerData::Source &joint_source = skin->sources[joint_arr];
-                geom->skeletons = joint_source.sarray; //quite crazy, but should work.
+                Collada::SkinControllerData::Source& joint_source =
+                    skin->sources[joint_arr];
+                geom->skeletons =
+                    joint_source.sarray; // quite crazy, but should work.
             }
         }
     }
@@ -1389,20 +1622,21 @@ Collada::Node *Collada::_parse_visual_instance_geometry(XMLParser &parser) {
     return geom;
 }
 
-Collada::Node *Collada::_parse_visual_instance_camera(XMLParser &parser) {
-    NodeCamera *cam = memnew(NodeCamera);
+Collada::Node* Collada::_parse_visual_instance_camera(XMLParser& parser) {
+    NodeCamera* cam = memnew(NodeCamera);
     cam->camera = _uri_to_id(parser.get_attribute_value_safe("url"));
 
-    if (state.up_axis == Vector3::AXIS_Z) { //collada weirdness
+    if (state.up_axis == Vector3::AXIS_Z) { // collada weirdness
         cam->post_transform.basis.rotate(Vector3(1, 0, 0), -Math_PI * 0.5);
     }
 
-    if (parser.is_empty()) { //nothing else to parse...
+    if (parser.is_empty()) { // nothing else to parse...
         return cam;
     }
 
     while (parser.read() == OK) {
-        if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "instance_camera") {
+        if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+            && parser.get_node_name() == "instance_camera") {
             break;
         }
     }
@@ -1410,20 +1644,21 @@ Collada::Node *Collada::_parse_visual_instance_camera(XMLParser &parser) {
     return cam;
 }
 
-Collada::Node *Collada::_parse_visual_instance_light(XMLParser &parser) {
-    NodeLight *cam = memnew(NodeLight);
+Collada::Node* Collada::_parse_visual_instance_light(XMLParser& parser) {
+    NodeLight* cam = memnew(NodeLight);
     cam->light = _uri_to_id(parser.get_attribute_value_safe("url"));
 
-    if (state.up_axis == Vector3::AXIS_Z) { //collada weirdness
+    if (state.up_axis == Vector3::AXIS_Z) { // collada weirdness
         cam->post_transform.basis.rotate(Vector3(1, 0, 0), -Math_PI * 0.5);
     }
 
-    if (parser.is_empty()) { //nothing else to parse...
+    if (parser.is_empty()) { // nothing else to parse...
         return cam;
     }
 
     while (parser.read() == OK) {
-        if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "instance_light") {
+        if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+            && parser.get_node_name() == "instance_light") {
             break;
         }
     }
@@ -1431,10 +1666,11 @@ Collada::Node *Collada::_parse_visual_instance_light(XMLParser &parser) {
     return cam;
 }
 
-Collada::Node *Collada::_parse_visual_node_instance_data(XMLParser &parser) {
+Collada::Node* Collada::_parse_visual_node_instance_data(XMLParser& parser) {
     String instance_type = parser.get_node_name();
 
-    if (instance_type == "instance_geometry" || instance_type == "instance_controller") {
+    if (instance_type == "instance_geometry"
+        || instance_type == "instance_controller") {
         return _parse_visual_instance_geometry(parser);
     } else if (instance_type == "instance_camera") {
         return _parse_visual_instance_camera(parser);
@@ -1442,12 +1678,13 @@ Collada::Node *Collada::_parse_visual_node_instance_data(XMLParser &parser) {
         return _parse_visual_instance_light(parser);
     }
 
-    if (parser.is_empty()) { //nothing else to parse...
+    if (parser.is_empty()) { // nothing else to parse...
         return nullptr;
     }
 
     while (parser.read() == OK) {
-        if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == instance_type) {
+        if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+            && parser.get_node_name() == instance_type) {
             break;
         }
     }
@@ -1455,7 +1692,7 @@ Collada::Node *Collada::_parse_visual_node_instance_data(XMLParser &parser) {
     return nullptr;
 }
 
-Collada::Node *Collada::_parse_visual_scene_node(XMLParser &parser) {
+Collada::Node* Collada::_parse_visual_scene_node(XMLParser& parser) {
     String name;
 
     String id = parser.get_attribute_value_safe("id");
@@ -1470,29 +1707,33 @@ Collada::Node *Collada::_parse_visual_scene_node(XMLParser &parser) {
     }
 
     Vector<Node::XForm> xform_list;
-    Vector<Node *> children;
+    Vector<Node*> children;
 
     String empty_draw_type = "";
 
-    Node *node = nullptr;
+    Node* node = nullptr;
 
-    name = parser.has_attribute("name") ? parser.get_attribute_value_safe("name") : parser.get_attribute_value_safe("id");
+    name = parser.has_attribute("name")
+             ? parser.get_attribute_value_safe("name")
+             : parser.get_attribute_value_safe("id");
     if (name == "") {
         name = id;
     } else {
         found_name = true;
     }
 
-    if ((parser.has_attribute("type") && parser.get_attribute_value("type") == "JOINT") || state.idref_joints.has(name)) {
+    if ((parser.has_attribute("type")
+         && parser.get_attribute_value("type") == "JOINT")
+        || state.idref_joints.has(name)) {
         // handle a bone
 
-        NodeJoint *joint = memnew(NodeJoint);
+        NodeJoint* joint = memnew(NodeJoint);
 
-        if (parser.has_attribute("sid")) { //bones may not have sid
+        if (parser.has_attribute("sid")) { // bones may not have sid
             joint->sid = parser.get_attribute_value("sid");
-            //state.bone_map[joint->sid]=joint;
+            // state.bone_map[joint->sid]=joint;
         } else if (state.idref_joints.has(name)) {
-            joint->sid = name; //kind of a cheat but..
+            joint->sid = name; // kind of a cheat but..
         } else if (parser.has_attribute("name")) {
             joint->sid = parser.get_attribute_value_safe("name");
         }
@@ -1579,7 +1820,7 @@ Collada::Node *Collada::_parse_visual_scene_node(XMLParser &parser) {
                 empty_draw_type = _read_empty_draw_type(parser);
             } else if (section == "technique" || section == "extra") {
             } else if (section != "node") {
-                //usually what defines the type of node
+                // usually what defines the type of node
                 if (section.begins_with("instance_")) {
                     if (!node) {
                         node = _parse_visual_node_instance_data(parser);
@@ -1592,7 +1833,7 @@ Collada::Node *Collada::_parse_visual_scene_node(XMLParser &parser) {
             } else {
                 /* Found a child node!! what to do..*/
 
-                Node *child = _parse_visual_scene_node(parser);
+                Node* child = _parse_visual_scene_node(parser);
                 children.push_back(child);
             }
 
@@ -1602,7 +1843,7 @@ Collada::Node *Collada::_parse_visual_scene_node(XMLParser &parser) {
     }
 
     if (!node) {
-        node = memnew(Node); //generic node, nothing of relevance found
+        node = memnew(Node); // generic node, nothing of relevance found
     }
 
     node->noname = !found_name;
@@ -1629,7 +1870,7 @@ Collada::Node *Collada::_parse_visual_scene_node(XMLParser &parser) {
     return node;
 }
 
-void Collada::_parse_visual_scene(XMLParser &parser) {
+void Collada::_parse_visual_scene(XMLParser& parser) {
     String id = parser.get_attribute_value("id");
 
     if (parser.is_empty()) {
@@ -1637,7 +1878,7 @@ void Collada::_parse_visual_scene(XMLParser &parser) {
     }
 
     state.visual_scene_map[id] = VisualScene();
-    VisualScene &vscene = state.visual_scene_map[id];
+    VisualScene& vscene = state.visual_scene_map[id];
 
     if (parser.has_attribute("name")) {
         vscene.name = parser.get_attribute_value("name");
@@ -1659,7 +1900,7 @@ void Collada::_parse_visual_scene(XMLParser &parser) {
     COLLADA_PRINT("Scene ID:" + id);
 }
 
-void Collada::_parse_animation(XMLParser &parser) {
+void Collada::_parse_animation(XMLParser& parser) {
     if (!(state.import_flags & IMPORT_FLAG_ANIMATION)) {
         if (!parser.is_empty()) {
             parser.skip_section();
@@ -1704,27 +1945,34 @@ void Collada::_parse_animation(XMLParser &parser) {
                 }
             } else if (name == "accessor") {
                 if (current_source != "" && parser.has_attribute("stride")) {
-                    source_strides[current_source] = parser.get_attribute_value("stride").to_int();
+                    source_strides[current_source] =
+                        parser.get_attribute_value("stride").to_int();
                 }
             } else if (name == "sampler") {
                 current_sampler = parser.get_attribute_value("id");
                 samplers[current_sampler] = Map<String, String>();
             } else if (name == "param") {
                 if (parser.has_attribute("name")) {
-                    source_param_names[current_source].push_back(parser.get_attribute_value("name"));
+                    source_param_names[current_source].push_back(
+                        parser.get_attribute_value("name")
+                    );
                 } else {
                     source_param_names[current_source].push_back("");
                 }
 
                 if (parser.has_attribute("type")) {
-                    source_param_types[current_source].push_back(parser.get_attribute_value("type"));
+                    source_param_types[current_source].push_back(
+                        parser.get_attribute_value("type")
+                    );
                 } else {
                     source_param_types[current_source].push_back("");
                 }
 
             } else if (name == "input") {
                 if (current_sampler != "") {
-                    samplers[current_sampler][parser.get_attribute_value("semantic")] = parser.get_attribute_value("source");
+                    samplers[current_sampler]
+                            [parser.get_attribute_value("semantic")] =
+                                parser.get_attribute_value("source");
                 }
 
             } else if (name == "channel") {
@@ -1733,7 +1981,7 @@ void Collada::_parse_animation(XMLParser &parser) {
             }
 
         } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "animation") {
-            break; //end of <asset>
+            break; // end of <asset>
         }
     }
 
@@ -1741,9 +1989,9 @@ void Collada::_parse_animation(XMLParser &parser) {
         String source = _uri_to_id(channel_sources[i]);
         String target = channel_targets[i];
         ERR_CONTINUE(!samplers.has(source));
-        Map<String, String> &sampler = samplers[source];
+        Map<String, String>& sampler = samplers[source];
 
-        ERR_CONTINUE(!sampler.has("INPUT")); //no input semantic? wtf?
+        ERR_CONTINUE(!sampler.has("INPUT")); // no input semantic? wtf?
         String input_id = _uri_to_id(sampler["INPUT"]);
         COLLADA_PRINT("input id is " + input_id);
         ERR_CONTINUE(!float_sources.has(input_id));
@@ -1754,25 +2002,26 @@ void Collada::_parse_animation(XMLParser &parser) {
 
         ERR_CONTINUE(!source_param_names.has(output_id));
 
-        Vector<String> &names = source_param_names[output_id];
+        Vector<String>& names = source_param_names[output_id];
 
         for (int l = 0; l < names.size(); l++) {
             String name = names[l];
 
-            Vector<float> &time_keys = float_sources[input_id];
+            Vector<float>& time_keys = float_sources[input_id];
             int key_count = time_keys.size();
 
-            AnimationTrack track; //begin crating track
+            AnimationTrack track; // begin crating track
             track.id = id;
 
             track.keys.resize(key_count);
 
             for (int j = 0; j < key_count; j++) {
                 track.keys.write[j].time = time_keys[j];
-                state.animation_length = MAX(state.animation_length, time_keys[j]);
+                state.animation_length =
+                    MAX(state.animation_length, time_keys[j]);
             }
 
-            //now read actual values
+            // now read actual values
 
             int stride = 1;
 
@@ -1784,52 +2033,65 @@ void Collada::_parse_animation(XMLParser &parser) {
             ERR_CONTINUE(output_len == 0);
             ERR_CONTINUE(!float_sources.has(output_id));
 
-            Vector<float> &output = float_sources[output_id];
+            Vector<float>& output = float_sources[output_id];
 
-            ERR_CONTINUE_MSG((output.size() / stride) != key_count, "Wrong number of keys in output.");
+            ERR_CONTINUE_MSG(
+                (output.size() / stride) != key_count,
+                "Wrong number of keys in output."
+            );
 
             for (int j = 0; j < key_count; j++) {
                 track.keys.write[j].data.resize(output_len);
                 for (int k = 0; k < output_len; k++) {
-                    track.keys.write[j].data.write[k] = output[l + j * stride + k]; //super weird but should work:
+                    track.keys.write[j].data.write[k] =
+                        output[l + j * stride + k]; // super weird but should
+                                                    // work:
                 }
             }
 
             if (sampler.has("INTERPOLATION")) {
                 String interp_id = _uri_to_id(sampler["INTERPOLATION"]);
                 ERR_CONTINUE(!string_sources.has(interp_id));
-                Vector<String> &interps = string_sources[interp_id];
+                Vector<String>& interps = string_sources[interp_id];
                 ERR_CONTINUE(interps.size() != key_count);
 
                 for (int j = 0; j < key_count; j++) {
                     if (interps[j] == "BEZIER") {
-                        track.keys.write[j].interp_type = AnimationTrack::INTERP_BEZIER;
+                        track.keys.write[j].interp_type =
+                            AnimationTrack::INTERP_BEZIER;
                     } else {
-                        track.keys.write[j].interp_type = AnimationTrack::INTERP_LINEAR;
+                        track.keys.write[j].interp_type =
+                            AnimationTrack::INTERP_LINEAR;
                     }
                 }
             }
 
             if (sampler.has("IN_TANGENT") && sampler.has("OUT_TANGENT")) {
-                //bezier control points..
+                // bezier control points..
                 String intangent_id = _uri_to_id(sampler["IN_TANGENT"]);
                 ERR_CONTINUE(!float_sources.has(intangent_id));
-                Vector<float> &intangents = float_sources[intangent_id];
+                Vector<float>& intangents = float_sources[intangent_id];
 
                 ERR_CONTINUE(intangents.size() != key_count * 2 * names.size());
 
                 String outangent_id = _uri_to_id(sampler["OUT_TANGENT"]);
                 ERR_CONTINUE(!float_sources.has(outangent_id));
-                Vector<float> &outangents = float_sources[outangent_id];
+                Vector<float>& outangents = float_sources[outangent_id];
                 ERR_CONTINUE(outangents.size() != key_count * 2 * names.size());
 
                 for (int j = 0; j < key_count; j++) {
-                    track.keys.write[j].in_tangent = Vector2(intangents[j * 2 * names.size() + 0 + l * 2], intangents[j * 2 * names.size() + 1 + l * 2]);
-                    track.keys.write[j].out_tangent = Vector2(outangents[j * 2 * names.size() + 0 + l * 2], outangents[j * 2 * names.size() + 1 + l * 2]);
+                    track.keys.write[j].in_tangent = Vector2(
+                        intangents[j * 2 * names.size() + 0 + l * 2],
+                        intangents[j * 2 * names.size() + 1 + l * 2]
+                    );
+                    track.keys.write[j].out_tangent = Vector2(
+                        outangents[j * 2 * names.size() + 0 + l * 2],
+                        outangents[j * 2 * names.size() + 1 + l * 2]
+                    );
                 }
             }
 
-            if (target.find("/") != -1) { //transform component
+            if (target.find("/") != -1) { // transform component
                 track.target = target.get_slicec('/', 0);
                 track.param = target.get_slicec('/', 1);
                 if (track.param.find(".") != -1) {
@@ -1837,8 +2099,9 @@ void Collada::_parse_animation(XMLParser &parser) {
                 }
                 track.param = track.param.get_slice(".", 0);
                 if (names.size() > 1 && track.component == "") {
-                    //this is a guess because the collada spec is ambiguous here...
-                    //i suppose if you have many names (outputs) you can't use a component and i should abide to that.
+                    // this is a guess because the collada spec is ambiguous
+                    // here... i suppose if you have many names (outputs) you
+                    // can't use a component and i should abide to that.
                     track.component = name;
                 }
             } else {
@@ -1851,14 +2114,18 @@ void Collada::_parse_animation(XMLParser &parser) {
                 state.referenced_tracks[target] = Vector<int>();
             }
 
-            state.referenced_tracks[target].push_back(state.animation_tracks.size() - 1);
+            state.referenced_tracks[target].push_back(
+                state.animation_tracks.size() - 1
+            );
 
             if (id != "") {
                 if (!state.by_id_tracks.has(id)) {
                     state.by_id_tracks[id] = Vector<int>();
                 }
 
-                state.by_id_tracks[id].push_back(state.animation_tracks.size() - 1);
+                state.by_id_tracks[id].push_back(
+                    state.animation_tracks.size() - 1
+                );
             }
 
             COLLADA_PRINT("loaded animation with " + itos(key_count) + " keys");
@@ -1866,7 +2133,7 @@ void Collada::_parse_animation(XMLParser &parser) {
     }
 }
 
-void Collada::_parse_animation_clip(XMLParser &parser) {
+void Collada::_parse_animation_clip(XMLParser& parser) {
     if (!(state.import_flags & IMPORT_FLAG_ANIMATION)) {
         if (!parser.is_empty()) {
             parser.skip_section();
@@ -1898,14 +2165,14 @@ void Collada::_parse_animation_clip(XMLParser &parser) {
             }
 
         } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "animation_clip") {
-            break; //end of <asset>
+            break; // end of <asset>
         }
     }
 
     state.animation_clips.push_back(clip);
 }
 
-void Collada::_parse_scene(XMLParser &parser) {
+void Collada::_parse_scene(XMLParser& parser) {
     if (parser.is_empty()) {
         return;
     }
@@ -1915,18 +2182,20 @@ void Collada::_parse_scene(XMLParser &parser) {
             String name = parser.get_node_name();
 
             if (name == "instance_visual_scene") {
-                state.root_visual_scene = _uri_to_id(parser.get_attribute_value("url"));
+                state.root_visual_scene =
+                    _uri_to_id(parser.get_attribute_value("url"));
             } else if (name == "instance_physics_scene") {
-                state.root_physics_scene = _uri_to_id(parser.get_attribute_value("url"));
+                state.root_physics_scene =
+                    _uri_to_id(parser.get_attribute_value("url"));
             }
 
         } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "scene") {
-            break; //end of <asset>
+            break; // end of <asset>
         }
     }
 }
 
-void Collada::_parse_library(XMLParser &parser) {
+void Collada::_parse_library(XMLParser& parser) {
     if (parser.is_empty()) {
         return;
     }
@@ -1951,10 +2220,12 @@ void Collada::_parse_library(XMLParser &parser) {
                 while (parser.read() == OK) {
                     if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
                         if (parser.get_node_name() == "mesh") {
-                            state.mesh_name_map[id] = (name2 != "") ? name2 : id;
+                            state.mesh_name_map[id] =
+                                (name2 != "") ? name2 : id;
                             _parse_mesh_geometry(parser, id, name2);
                         } else if (parser.get_node_name() == "spline") {
-                            state.mesh_name_map[id] = (name2 != "") ? name2 : id;
+                            state.mesh_name_map[id] =
+                                (name2 != "") ? name2 : id;
                             _parse_curve_geometry(parser, id, name2);
                         } else if (!parser.is_empty()) {
                             parser.skip_section();
@@ -1978,14 +2249,14 @@ void Collada::_parse_library(XMLParser &parser) {
             }
 
         } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name().begins_with("library_")) {
-            break; //end of <asset>
+            break; // end of <asset>
         }
     }
 }
 
-void Collada::_joint_set_owner(Collada::Node *p_node, NodeSkeleton *p_owner) {
+void Collada::_joint_set_owner(Collada::Node* p_node, NodeSkeleton* p_owner) {
     if (p_node->type == Node::TYPE_JOINT) {
-        NodeJoint *nj = static_cast<NodeJoint *>(p_node);
+        NodeJoint* nj = static_cast<NodeJoint*>(p_node);
         nj->owner = p_owner;
 
         for (int i = 0; i < nj->children.size(); i++) {
@@ -1994,13 +2265,16 @@ void Collada::_joint_set_owner(Collada::Node *p_node, NodeSkeleton *p_owner) {
     }
 }
 
-void Collada::_create_skeletons(Collada::Node **p_node, NodeSkeleton *p_skeleton) {
-    Node *node = *p_node;
+void Collada::_create_skeletons(
+    Collada::Node** p_node,
+    NodeSkeleton* p_skeleton
+) {
+    Node* node = *p_node;
 
     if (node->type == Node::TYPE_JOINT) {
         if (!p_skeleton) {
             // ohohohoohoo it's a joint node, time to work!
-            NodeSkeleton *sk = memnew(NodeSkeleton);
+            NodeSkeleton* sk = memnew(NodeSkeleton);
             *p_node = sk;
             sk->children.push_back(node);
             sk->parent = node->parent;
@@ -2008,7 +2282,7 @@ void Collada::_create_skeletons(Collada::Node **p_node, NodeSkeleton *p_skeleton
             p_skeleton = sk;
         }
 
-        NodeJoint *nj = static_cast<NodeJoint *>(node);
+        NodeJoint* nj = static_cast<NodeJoint*>(node);
         nj->owner = p_skeleton;
     } else {
         p_skeleton = nullptr;
@@ -2019,7 +2293,7 @@ void Collada::_create_skeletons(Collada::Node **p_node, NodeSkeleton *p_skeleton
     }
 }
 
-bool Collada::_remove_node(Node *p_parent, Node *p_node) {
+bool Collada::_remove_node(Node* p_parent, Node* p_node) {
     for (int i = 0; i < p_parent->children.size(); i++) {
         if (p_parent->children[i] == p_node) {
             p_parent->children.remove(i);
@@ -2033,7 +2307,7 @@ bool Collada::_remove_node(Node *p_parent, Node *p_node) {
     return false;
 }
 
-void Collada::_remove_node(VisualScene *p_vscene, Node *p_node) {
+void Collada::_remove_node(VisualScene* p_vscene, Node* p_node) {
     for (int i = 0; i < p_vscene->root_nodes.size(); i++) {
         if (p_vscene->root_nodes[i] == p_node) {
             p_vscene->root_nodes.remove(i);
@@ -2047,32 +2321,34 @@ void Collada::_remove_node(VisualScene *p_vscene, Node *p_node) {
     ERR_PRINT("ERROR: Not found node to remove?");
 }
 
-void Collada::_merge_skeletons(VisualScene *p_vscene, Node *p_node) {
+void Collada::_merge_skeletons(VisualScene* p_vscene, Node* p_node) {
     if (p_node->type == Node::TYPE_GEOMETRY) {
-        NodeGeometry *gnode = static_cast<NodeGeometry *>(p_node);
+        NodeGeometry* gnode = static_cast<NodeGeometry*>(p_node);
         if (gnode->controller) {
             // recount skeletons used
-            Set<NodeSkeleton *> skeletons;
+            Set<NodeSkeleton*> skeletons;
 
             for (int i = 0; i < gnode->skeletons.size(); i++) {
                 String nodeid = gnode->skeletons[i];
 
-                ERR_CONTINUE(!state.scene_map.has(nodeid)); //weird, it should have it...
+                ERR_CONTINUE(!state.scene_map.has(nodeid)
+                ); // weird, it should have it...
 
-                NodeJoint *nj = SAFE_CAST<NodeJoint *>(state.scene_map[nodeid]);
-                ERR_CONTINUE(!nj); //broken collada
-                ERR_CONTINUE(!nj->owner); //weird, node should have a skeleton owner
+                NodeJoint* nj = SAFE_CAST<NodeJoint*>(state.scene_map[nodeid]);
+                ERR_CONTINUE(!nj); // broken collada
+                ERR_CONTINUE(!nj->owner
+                ); // weird, node should have a skeleton owner
 
                 skeletons.insert(nj->owner);
             }
 
             if (skeletons.size() > 1) {
-                //do the merger!!
-                Set<NodeSkeleton *>::Element *E = skeletons.front();
-                NodeSkeleton *base = E->get();
+                // do the merger!!
+                Set<NodeSkeleton*>::Element* E = skeletons.front();
+                NodeSkeleton* base = E->get();
 
                 for (E = E->next(); E; E = E->next()) {
-                    NodeSkeleton *merged = E->get();
+                    NodeSkeleton* merged = E->get();
                     _remove_node(p_vscene, merged);
                     for (int i = 0; i < merged->children.size(); i++) {
                         _joint_set_owner(merged->children[i], base);
@@ -2080,7 +2356,7 @@ void Collada::_merge_skeletons(VisualScene *p_vscene, Node *p_node) {
                         merged->children[i]->parent = base;
                     }
 
-                    merged->children.clear(); //take children from it
+                    merged->children.clear(); // take children from it
                     memdelete(merged);
                 }
             }
@@ -2092,13 +2368,17 @@ void Collada::_merge_skeletons(VisualScene *p_vscene, Node *p_node) {
     }
 }
 
-void Collada::_merge_skeletons2(VisualScene *p_vscene) {
-    for (Map<String, SkinControllerData>::Element *E = state.skin_controller_data_map.front(); E; E = E->next()) {
-        SkinControllerData &cd = E->get();
+void Collada::_merge_skeletons2(VisualScene* p_vscene) {
+    for (Map<String, SkinControllerData>::Element* E =
+             state.skin_controller_data_map.front();
+         E;
+         E = E->next()) {
+        SkinControllerData& cd = E->get();
 
-        NodeSkeleton *skeleton = nullptr;
+        NodeSkeleton* skeleton = nullptr;
 
-        for (Map<String, Transform>::Element *F = cd.bone_rest_map.front(); F; F = F->next()) {
+        for (Map<String, Transform>::Element* F = cd.bone_rest_map.front(); F;
+             F = F->next()) {
             String name;
 
             if (!state.sid_to_node_map.has(F->key())) {
@@ -2109,14 +2389,14 @@ void Collada::_merge_skeletons2(VisualScene *p_vscene) {
 
             ERR_CONTINUE(!state.scene_map.has(name));
 
-            Node *node = state.scene_map[name];
+            Node* node = state.scene_map[name];
             ERR_CONTINUE(node->type != Node::TYPE_JOINT);
 
-            NodeSkeleton *sk = nullptr;
+            NodeSkeleton* sk = nullptr;
 
             while (node && !sk) {
                 if (node->type == Node::TYPE_SKELETON) {
-                    sk = static_cast<NodeSkeleton *>(node);
+                    sk = static_cast<NodeSkeleton*>(node);
                 }
                 node = node->parent;
             }
@@ -2129,7 +2409,7 @@ void Collada::_merge_skeletons2(VisualScene *p_vscene) {
             }
 
             if (skeleton != sk) {
-                //whoa.. wtf, merge.
+                // whoa.. wtf, merge.
                 _remove_node(p_vscene, sk);
                 for (int i = 0; i < sk->children.size(); i++) {
                     _joint_set_owner(sk->children[i], skeleton);
@@ -2137,21 +2417,24 @@ void Collada::_merge_skeletons2(VisualScene *p_vscene) {
                     sk->children[i]->parent = skeleton;
                 }
 
-                sk->children.clear(); //take children from it
+                sk->children.clear(); // take children from it
                 memdelete(sk);
             }
         }
     }
 }
 
-bool Collada::_optimize_skeletons(VisualScene *p_vscene, Node *p_node) {
-    Node *node = p_node;
+bool Collada::_optimize_skeletons(VisualScene* p_vscene, Node* p_node) {
+    Node* node = p_node;
 
-    if (node->type == Node::TYPE_SKELETON && node->parent && node->parent->type == Node::TYPE_NODE && node->parent->children.size() == 1) {
-        //replace parent by this...
-        Node *parent = node->parent;
+    if (node->type == Node::TYPE_SKELETON && node->parent
+        && node->parent->type == Node::TYPE_NODE
+        && node->parent->children.size() == 1) {
+        // replace parent by this...
+        Node* parent = node->parent;
 
-        //i wonder if this is alright.. i think it is since created skeleton (first joint) is already animated by bone..
+        // i wonder if this is alright.. i think it is since created skeleton
+        // (first joint) is already animated by bone..
         node->id = parent->id;
         node->name = parent->name;
         node->xform_list = parent->xform_list;
@@ -2161,7 +2444,7 @@ bool Collada::_optimize_skeletons(VisualScene *p_vscene, Node *p_node) {
         node->parent = parent->parent;
 
         if (parent->parent) {
-            Node *gp = parent->parent;
+            Node* gp = parent->parent;
             bool found = false;
             for (int i = 0; i < gp->children.size(); i++) {
                 if (gp->children[i] == parent) {
@@ -2195,34 +2478,45 @@ bool Collada::_optimize_skeletons(VisualScene *p_vscene, Node *p_node) {
 
     for (int i = 0; i < node->children.size(); i++) {
         if (_optimize_skeletons(p_vscene, node->children[i])) {
-            return false; //stop processing, go up
+            return false; // stop processing, go up
         }
     }
 
     return false;
 }
 
-bool Collada::_move_geometry_to_skeletons(VisualScene *p_vscene, Node *p_node, List<Node *> *p_mgeom) {
-    // Bind Shape Matrix scales the bones and makes them gigantic, so the matrix then shrinks the model?
-    // Solution: apply the Bind Shape Matrix to the VERTICES, and if the object comes scaled, it seems to be left alone!
+bool Collada::_move_geometry_to_skeletons(
+    VisualScene* p_vscene,
+    Node* p_node,
+    List<Node*>* p_mgeom
+) {
+    // Bind Shape Matrix scales the bones and makes them gigantic, so the matrix
+    // then shrinks the model? Solution: apply the Bind Shape Matrix to the
+    // VERTICES, and if the object comes scaled, it seems to be left alone!
 
     if (p_node->type == Node::TYPE_GEOMETRY) {
-        NodeGeometry *ng = static_cast<NodeGeometry *>(p_node);
+        NodeGeometry* ng = static_cast<NodeGeometry*>(p_node);
         if (ng->ignore_anim) {
-            return false; //already made child of skeleton and processeg
+            return false; // already made child of skeleton and processeg
         }
 
         if (ng->controller && ng->skeletons.size()) {
             String nodeid = ng->skeletons[0];
 
-            ERR_FAIL_COND_V(!state.scene_map.has(nodeid), false); //weird, it should have it...
-            NodeJoint *nj = SAFE_CAST<NodeJoint *>(state.scene_map[nodeid]);
+            ERR_FAIL_COND_V(
+                !state.scene_map.has(nodeid),
+                false
+            ); // weird, it should have it...
+            NodeJoint* nj = SAFE_CAST<NodeJoint*>(state.scene_map[nodeid]);
             ERR_FAIL_COND_V(!nj, false);
-            ERR_FAIL_COND_V(!nj->owner, false); //weird, node should have a skeleton owner
+            ERR_FAIL_COND_V(
+                !nj->owner,
+                false
+            ); // weird, node should have a skeleton owner
 
-            NodeSkeleton *sk = nj->owner;
+            NodeSkeleton* sk = nj->owner;
 
-            Node *p = sk->parent;
+            Node* p = sk->parent;
             bool node_is_parent_of_skeleton = false;
 
             while (p) {
@@ -2235,32 +2529,56 @@ bool Collada::_move_geometry_to_skeletons(VisualScene *p_vscene, Node *p_node, L
 
             ERR_FAIL_COND_V(node_is_parent_of_skeleton, false);
 
-            //this should be correct
-            ERR_FAIL_COND_V(!state.skin_controller_data_map.has(ng->source), false);
-            SkinControllerData &skin = state.skin_controller_data_map[ng->source];
+            // this should be correct
+            ERR_FAIL_COND_V(
+                !state.skin_controller_data_map.has(ng->source),
+                false
+            );
+            SkinControllerData& skin =
+                state.skin_controller_data_map[ng->source];
             Transform skel_inv = sk->get_global_transform().affine_inverse();
-            p_node->default_transform = skel_inv * (skin.bind_shape /* p_node->get_global_transform()*/); // i honestly have no idea what to do with a previous model xform.. most exporters ignore it
+            p_node->default_transform =
+                skel_inv
+                * (skin.bind_shape /* p_node->get_global_transform()*/
+                ); // i honestly have no idea what to do with a previous model
+                   // xform.. most exporters ignore it
 
-            //make rests relative to the skeleton (they seem to be always relative to world)
-            for (Map<String, Transform>::Element *E = skin.bone_rest_map.front(); E; E = E->next()) {
-                E->get() = skel_inv * E->get(); //make the bone rest local to the skeleton
-                state.bone_rest_map[E->key()] = E->get(); // make it remember where the bone is globally, now that it's relative
+            // make rests relative to the skeleton (they seem to be always
+            // relative to world)
+            for (Map<String, Transform>::Element* E =
+                     skin.bone_rest_map.front();
+                 E;
+                 E = E->next()) {
+                E->get() = skel_inv
+                         * E->get(); // make the bone rest local to the skeleton
+                state.bone_rest_map[E->key()] =
+                    E->get(); // make it remember where the bone is globally,
+                              // now that it's relative
             }
 
-            //but most exporters seem to work only if i do this..
-            //p_node->default_transform = p_node->get_global_transform();
+            // but most exporters seem to work only if i do this..
+            // p_node->default_transform = p_node->get_global_transform();
 
-            //p_node->default_transform=Transform(); //this seems to be correct, because bind shape makes the object local to the skeleton
-            p_node->ignore_anim = true; // collada may animate this later, if it does, then this is not supported (redo your original asset and don't animate the base mesh)
+            // p_node->default_transform=Transform(); //this seems to be
+            // correct, because bind shape makes the object local to the
+            // skeleton
+            p_node->ignore_anim =
+                true; // collada may animate this later, if it does, then this
+                      // is not supported (redo your original asset and don't
+                      // animate the base mesh)
             p_node->parent = sk;
-            //sk->children.push_back(0,p_node); //avoid INFINITE loop
+            // sk->children.push_back(0,p_node); //avoid INFINITE loop
             p_mgeom->push_back(p_node);
             return true;
         }
     }
 
     for (int i = 0; i < p_node->children.size(); i++) {
-        if (_move_geometry_to_skeletons(p_vscene, p_node->children[i], p_mgeom)) {
+        if (_move_geometry_to_skeletons(
+                p_vscene,
+                p_node->children[i],
+                p_mgeom
+            )) {
             p_node->children.remove(i);
             i--;
         }
@@ -2269,16 +2587,17 @@ bool Collada::_move_geometry_to_skeletons(VisualScene *p_vscene, Node *p_node, L
     return false;
 }
 
-void Collada::_find_morph_nodes(VisualScene *p_vscene, Node *p_node) {
+void Collada::_find_morph_nodes(VisualScene* p_vscene, Node* p_node) {
     if (p_node->type == Node::TYPE_GEOMETRY) {
-        NodeGeometry *nj = static_cast<NodeGeometry *>(p_node);
+        NodeGeometry* nj = static_cast<NodeGeometry*>(p_node);
 
         if (nj->controller) {
             String base = nj->source;
 
             while (base != "" && !state.mesh_data_map.has(base)) {
                 if (state.skin_controller_data_map.has(base)) {
-                    SkinControllerData &sk = state.skin_controller_data_map[base];
+                    SkinControllerData& sk =
+                        state.skin_controller_data_map[base];
                     base = sk.base;
                 } else if (state.morph_controller_data_map.has(base)) {
                     state.morph_ownership_map[base] = nj->id;
@@ -2296,8 +2615,10 @@ void Collada::_find_morph_nodes(VisualScene *p_vscene, Node *p_node) {
 }
 
 void Collada::_optimize() {
-    for (Map<String, VisualScene>::Element *E = state.visual_scene_map.front(); E; E = E->next()) {
-        VisualScene &vs = E->get();
+    for (Map<String, VisualScene>::Element* E = state.visual_scene_map.front();
+         E;
+         E = E->next()) {
+        VisualScene& vs = E->get();
         for (int i = 0; i < vs.root_nodes.size(); i++) {
             _create_skeletons(&vs.root_nodes.write[i]);
         }
@@ -2313,14 +2634,14 @@ void Collada::_optimize() {
         }
 
         for (int i = 0; i < vs.root_nodes.size(); i++) {
-            List<Node *> mgeom;
+            List<Node*> mgeom;
             if (_move_geometry_to_skeletons(&vs, vs.root_nodes[i], &mgeom)) {
                 vs.root_nodes.remove(i);
                 i--;
             }
 
             while (!mgeom.empty()) {
-                Node *n = mgeom.front()->get();
+                Node* n = mgeom.front()->get();
                 n->parent->children.push_back(n);
                 mgeom.pop_front();
             }
@@ -2342,9 +2663,9 @@ int Collada::get_uv_channel(String p_name) {
     return channel_map[p_name];
 }
 
-Error Collada::load(const String &p_path, int p_flags) {
+Error Collada::load(const String& p_path, int p_flags) {
     Ref<XMLParser> parserr = memnew(XMLParser);
-    XMLParser &parser = *parserr.ptr();
+    XMLParser& parser = *parserr.ptr();
     Error err = parser.open(p_path);
     ERR_FAIL_COND_V_MSG(err, err, "Cannot open Collada file '" + p_path + "'.");
 
@@ -2361,12 +2682,16 @@ Error Collada::load(const String &p_path, int p_flags) {
         }
     }
 
-    ERR_FAIL_COND_V_MSG(err != OK, ERR_FILE_CORRUPT, "Corrupted Collada file '" + p_path + "'.");
+    ERR_FAIL_COND_V_MSG(
+        err != OK,
+        ERR_FILE_CORRUPT,
+        "Corrupted Collada file '" + p_path + "'."
+    );
 
     /* Start loading Collada */
 
     {
-        //version
+        // version
         String version = parser.get_attribute_value("version");
         state.version.major = version.get_slice(".", 0).to_int();
         state.version.minor = version.get_slice(".", 1).to_int();
@@ -2378,7 +2703,7 @@ Error Collada::load(const String &p_path, int p_flags) {
         /* Read all the main sections.. */
 
         if (parser.get_node_type() != XMLParser::NODE_ELEMENT) {
-            continue; //no idea what this may be, but skipping anyway
+            continue; // no idea what this may be, but skipping anyway
         }
 
         String section = parser.get_node_name();
@@ -2401,5 +2726,4 @@ Error Collada::load(const String &p_path, int p_flags) {
     return OK;
 }
 
-Collada::Collada() {
-}
+Collada::Collada() {}

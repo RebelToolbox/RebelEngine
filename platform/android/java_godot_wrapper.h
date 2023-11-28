@@ -39,7 +39,9 @@
 
 #include "string_android.h"
 
-// Class that makes methods in java/src/lib/com/rebeltoolbox/rebelengine/RebelFragment.java class callable from C++
+// Class that makes methods in
+// java/src/lib/com/rebeltoolbox/rebelengine/RebelFragment.java class callable
+// from C++
 class GodotJavaWrapper {
 private:
     jobject godot_instance;
@@ -68,28 +70,36 @@ private:
     jmethodID _get_class_loader = 0;
 
 public:
-    GodotJavaWrapper(JNIEnv *p_env, jobject p_activity, jobject p_godot_instance);
+    GodotJavaWrapper(
+        JNIEnv* p_env,
+        jobject p_activity,
+        jobject p_godot_instance
+    );
     ~GodotJavaWrapper();
 
     jobject get_activity();
-    jobject get_member_object(const char *p_name, const char *p_class, JNIEnv *p_env = NULL);
+    jobject get_member_object(
+        const char* p_name,
+        const char* p_class,
+        JNIEnv* p_env = NULL
+    );
 
     jobject get_class_loader();
 
     void gfx_init(bool gl2);
-    void on_video_init(JNIEnv *p_env = NULL);
-    void on_setup_completed(JNIEnv *p_env = NULL);
-    void on_main_loop_started(JNIEnv *p_env = NULL);
-    void restart(JNIEnv *p_env = NULL);
-    void force_quit(JNIEnv *p_env = NULL);
+    void on_video_init(JNIEnv* p_env = NULL);
+    void on_setup_completed(JNIEnv* p_env = NULL);
+    void on_main_loop_started(JNIEnv* p_env = NULL);
+    void restart(JNIEnv* p_env = NULL);
+    void force_quit(JNIEnv* p_env = NULL);
     void set_keep_screen_on(bool p_enabled);
-    void alert(const String &p_message, const String &p_title);
+    void alert(const String& p_message, const String& p_title);
     int get_gles_version_code();
     bool has_get_clipboard();
     String get_clipboard();
     bool has_set_clipboard();
-    void set_clipboard(const String &p_text);
-    bool request_permission(const String &p_name);
+    void set_clipboard(const String& p_text);
+    bool request_permission(const String& p_name);
     bool request_permissions();
     Vector<String> get_granted_permissions() const;
     void init_input_devices();

@@ -57,15 +57,16 @@
 
 // Quit
 void OS_JavaScript::request_quit_callback() {
-    OS_JavaScript *os = get_singleton();
+    OS_JavaScript* os = get_singleton();
     if (os && os->get_main_loop()) {
-        os->get_main_loop()->notification(MainLoop::NOTIFICATION_WM_QUIT_REQUEST);
+        os->get_main_loop()->notification(MainLoop::NOTIFICATION_WM_QUIT_REQUEST
+        );
     }
 }
 
 // Files drop (implemented in JS for now).
-void OS_JavaScript::drop_files_callback(char **p_filev, int p_filec) {
-    OS_JavaScript *os = get_singleton();
+void OS_JavaScript::drop_files_callback(char** p_filev, int p_filec) {
+    OS_JavaScript* os = get_singleton();
     if (!os || !os->get_main_loop()) {
         return;
     }
@@ -77,14 +78,16 @@ void OS_JavaScript::drop_files_callback(char **p_filev, int p_filec) {
 }
 
 void OS_JavaScript::send_notification_callback(int p_notification) {
-    OS_JavaScript *os = get_singleton();
+    OS_JavaScript* os = get_singleton();
     if (!os) {
         return;
     }
-    if (p_notification == MainLoop::NOTIFICATION_WM_MOUSE_ENTER || p_notification == MainLoop::NOTIFICATION_WM_MOUSE_EXIT) {
-        os->cursor_inside_canvas = p_notification == MainLoop::NOTIFICATION_WM_MOUSE_ENTER;
+    if (p_notification == MainLoop::NOTIFICATION_WM_MOUSE_ENTER
+        || p_notification == MainLoop::NOTIFICATION_WM_MOUSE_EXIT) {
+        os->cursor_inside_canvas =
+            p_notification == MainLoop::NOTIFICATION_WM_MOUSE_ENTER;
     }
-    MainLoop *loop = os->get_main_loop();
+    MainLoop* loop = os->get_main_loop();
     if (loop) {
         loop->notification(p_notification);
     }
@@ -97,7 +100,7 @@ bool OS_JavaScript::check_size_force_redraw() {
 }
 
 void OS_JavaScript::fullscreen_change_callback(int p_fullscreen) {
-    OS_JavaScript *os = get_singleton();
+    OS_JavaScript* os = get_singleton();
     os->video_mode.fullscreen = p_fullscreen;
 }
 
@@ -105,7 +108,10 @@ void OS_JavaScript::window_blur_callback() {
     get_singleton()->input->release_pressed_events();
 }
 
-void OS_JavaScript::set_video_mode(const VideoMode &p_video_mode, int p_screen) {
+void OS_JavaScript::set_video_mode(
+    const VideoMode& p_video_mode,
+    int p_screen
+) {
     video_mode = p_video_mode;
 }
 
@@ -133,7 +139,9 @@ Size2 OS_JavaScript::get_window_size() const {
 }
 
 void OS_JavaScript::set_window_maximized(bool p_enabled) {
-    WARN_PRINT_ONCE("Maximizing windows is not supported for the HTML5 platform.");
+    WARN_PRINT_ONCE(
+        "Maximizing windows is not supported for the HTML5 platform."
+    );
 }
 
 bool OS_JavaScript::is_window_maximized() const {
@@ -149,9 +157,14 @@ void OS_JavaScript::set_window_fullscreen(bool p_enabled) {
     // fullscreen_change_callback.
     if (p_enabled) {
         int result = godot_js_display_fullscreen_request();
-        ERR_FAIL_COND_MSG(result, "The request was denied. Remember that enabling fullscreen is only possible from an input callback for the HTML5 platform.");
+        ERR_FAIL_COND_MSG(
+            result,
+            "The request was denied. Remember that enabling fullscreen is only "
+            "possible from an input callback for the HTML5 platform."
+        );
     } else {
-        // No logic allowed here, since exiting w/ ESC key won't use this function.
+        // No logic allowed here, since exiting w/ ESC key won't use this
+        // function.
         ERR_FAIL_COND(godot_js_display_fullscreen_exit());
     }
 }
@@ -160,7 +173,10 @@ bool OS_JavaScript::is_window_fullscreen() const {
     return video_mode.fullscreen;
 }
 
-void OS_JavaScript::get_fullscreen_mode_list(List<VideoMode> *p_list, int p_screen) const {
+void OS_JavaScript::get_fullscreen_mode_list(
+    List<VideoMode>* p_list,
+    int p_screen
+) const {
     Size2 screen = get_screen_size();
     p_list->push_back(OS::VideoMode(screen.width, screen.height, true));
 }
@@ -189,16 +205,20 @@ static void dom2godot_mod(Ref<InputEventWithModifiers> ev, int p_mod) {
 }
 
 void OS_JavaScript::key_callback(int p_pressed, int p_repeat, int p_modifiers) {
-    OS_JavaScript *os = get_singleton();
-    JSKeyEvent &key_event = os->key_event;
+    OS_JavaScript* os = get_singleton();
+    JSKeyEvent& key_event = os->key_event;
     // Resume audio context after input in case autoplay was denied.
     os->resume_audio();
 
     Ref<InputEventKey> ev;
     ev.instance();
     ev->set_echo(p_repeat);
-    ev->set_scancode(dom_code2godot_scancode(key_event.code, key_event.key, false));
-    ev->set_physical_scancode(dom_code2godot_scancode(key_event.code, key_event.key, true));
+    ev->set_scancode(
+        dom_code2godot_scancode(key_event.code, key_event.key, false)
+    );
+    ev->set_physical_scancode(
+        dom_code2godot_scancode(key_event.code, key_event.key, true)
+    );
     ev->set_pressed(p_pressed);
     dom2godot_mod(ev, p_modifiers);
 
@@ -208,7 +228,8 @@ void OS_JavaScript::key_callback(int p_pressed, int p_repeat, int p_modifiers) {
     }
     os->input->parse_input_event(ev);
 
-    // Make sure to flush all events so we can call restricted APIs inside the event.
+    // Make sure to flush all events so we can call restricted APIs inside the
+    // event.
     os->input->flush_buffered_events();
 }
 
@@ -222,8 +243,14 @@ int OS_JavaScript::get_mouse_button_state() const {
     return input->get_mouse_button_mask();
 }
 
-int OS_JavaScript::mouse_button_callback(int p_pressed, int p_button, double p_x, double p_y, int p_modifiers) {
-    OS_JavaScript *os = get_singleton();
+int OS_JavaScript::mouse_button_callback(
+    int p_pressed,
+    int p_button,
+    double p_x,
+    double p_y,
+    int p_modifiers
+) {
+    OS_JavaScript* os = get_singleton();
 
     Ref<InputEventMouseButton> ev;
     ev.instance();
@@ -254,10 +281,13 @@ int OS_JavaScript::mouse_button_callback(int p_pressed, int p_button, double p_x
     }
 
     if (p_pressed) {
-        uint64_t diff = (OS::get_singleton()->get_ticks_usec() / 1000) - os->last_click_ms;
+        uint64_t diff =
+            (OS::get_singleton()->get_ticks_usec() / 1000) - os->last_click_ms;
 
         if (ev->get_button_index() == os->last_click_button_index) {
-            if (diff < 400 && Point2(os->last_click_pos).distance_to(ev->get_position()) < 5) {
+            if (diff < 400
+                && Point2(os->last_click_pos).distance_to(ev->get_position())
+                       < 5) {
                 os->last_click_ms = 0;
                 os->last_click_pos = Point2(-100, -100);
                 os->last_click_button_index = -1;
@@ -290,7 +320,8 @@ int OS_JavaScript::mouse_button_callback(int p_pressed, int p_button, double p_x
     // Resume audio context after input in case autoplay was denied.
     os->resume_audio();
 
-    // Make sure to flush all events so we can call restricted APIs inside the event.
+    // Make sure to flush all events so we can call restricted APIs inside the
+    // event.
     os->input->flush_buffered_events();
 
     // Prevent multi-click text selection and wheel-click scrolling anchor.
@@ -298,14 +329,21 @@ int OS_JavaScript::mouse_button_callback(int p_pressed, int p_button, double p_x
     return true;
 }
 
-void OS_JavaScript::mouse_move_callback(double p_x, double p_y, double p_rel_x, double p_rel_y, int p_modifiers) {
-    OS_JavaScript *os = get_singleton();
+void OS_JavaScript::mouse_move_callback(
+    double p_x,
+    double p_y,
+    double p_rel_x,
+    double p_rel_y,
+    int p_modifiers
+) {
+    OS_JavaScript* os = get_singleton();
 
     int input_mask = os->input->get_mouse_button_mask();
     // For motion outside the canvas, only read mouse movement if dragging
     // started inside the canvas; imitating desktop app behaviour.
-    if (!os->cursor_inside_canvas && !input_mask)
+    if (!os->cursor_inside_canvas && !input_mask) {
         return;
+    }
 
     Ref<InputEventMouseMotion> ev;
     ev.instance();
@@ -322,7 +360,7 @@ void OS_JavaScript::mouse_move_callback(double p_x, double p_y, double p_rel_x, 
     os->input->parse_input_event(ev);
 }
 
-static const char *godot2dom_cursor(OS::CursorShape p_shape) {
+static const char* godot2dom_cursor(OS::CursorShape p_shape) {
     switch (p_shape) {
         case OS::CURSOR_ARROW:
         default:
@@ -371,7 +409,11 @@ void OS_JavaScript::set_cursor_shape(CursorShape p_shape) {
     godot_js_display_cursor_set_shape(godot2dom_cursor(cursor_shape));
 }
 
-void OS_JavaScript::set_custom_mouse_cursor(const RES &p_cursor, CursorShape p_shape, const Vector2 &p_hotspot) {
+void OS_JavaScript::set_custom_mouse_cursor(
+    const RES& p_cursor,
+    CursorShape p_shape,
+    const Vector2& p_hotspot
+) {
     if (p_cursor.is_valid()) {
         Ref<Texture> texture = p_cursor;
         Ref<AtlasTexture> atlas_texture = p_cursor;
@@ -404,7 +446,10 @@ void OS_JavaScript::set_custom_mouse_cursor(const RES &p_cursor, CursorShape p_s
         ERR_FAIL_COND(!texture.is_valid());
         ERR_FAIL_COND(p_hotspot.x < 0 || p_hotspot.y < 0);
         ERR_FAIL_COND(texture_size.width > 256 || texture_size.height > 256);
-        ERR_FAIL_COND(p_hotspot.x > texture_size.width || p_hotspot.y > texture_size.height);
+        ERR_FAIL_COND(
+            p_hotspot.x > texture_size.width
+            || p_hotspot.y > texture_size.height
+        );
 
         image = texture->get_data();
 
@@ -412,12 +457,14 @@ void OS_JavaScript::set_custom_mouse_cursor(const RES &p_cursor, CursorShape p_s
 
         image = image->duplicate();
 
-        if (atlas_texture.is_valid())
+        if (atlas_texture.is_valid()) {
             image->crop_from_point(
-                    atlas_rect.position.x,
-                    atlas_rect.position.y,
-                    texture_size.width,
-                    texture_size.height);
+                atlas_rect.position.x,
+                atlas_rect.position.y,
+                texture_size.width,
+                texture_size.height
+            );
+        }
 
         if (image->get_format() != Image::FORMAT_RGBA8) {
             image->convert(Image::FORMAT_RGBA8);
@@ -433,26 +480,52 @@ void OS_JavaScript::set_custom_mouse_cursor(const RES &p_cursor, CursorShape p_s
         PoolByteArray png;
         size_t len;
         PoolByteArray::Read r = image->get_data().read();
-        ERR_FAIL_COND(!png_image_write_get_memory_size(png_meta, len, 0, r.ptr(), 0, NULL));
+        ERR_FAIL_COND(
+            !png_image_write_get_memory_size(png_meta, len, 0, r.ptr(), 0, NULL)
+        );
 
         png.resize(len);
         PoolByteArray::Write w = png.write();
-        ERR_FAIL_COND(!png_image_write_to_memory(&png_meta, w.ptr(), &len, 0, r.ptr(), 0, NULL));
+        ERR_FAIL_COND(!png_image_write_to_memory(
+            &png_meta,
+            w.ptr(),
+            &len,
+            0,
+            r.ptr(),
+            0,
+            NULL
+        ));
         w = PoolByteArray::Write();
 
         r = png.read();
-        godot_js_display_cursor_set_custom_shape(godot2dom_cursor(p_shape), r.ptr(), len, p_hotspot.x, p_hotspot.y);
+        godot_js_display_cursor_set_custom_shape(
+            godot2dom_cursor(p_shape),
+            r.ptr(),
+            len,
+            p_hotspot.x,
+            p_hotspot.y
+        );
         r = PoolByteArray::Read();
 
     } else {
-        godot_js_display_cursor_set_custom_shape(godot2dom_cursor(p_shape), NULL, 0, 0, 0);
+        godot_js_display_cursor_set_custom_shape(
+            godot2dom_cursor(p_shape),
+            NULL,
+            0,
+            0,
+            0
+        );
     }
 }
 
 void OS_JavaScript::set_mouse_mode(OS::MouseMode p_mode) {
-    ERR_FAIL_COND_MSG(p_mode == MOUSE_MODE_CONFINED, "MOUSE_MODE_CONFINED is not supported for the HTML5 platform.");
-    if (p_mode == get_mouse_mode())
+    ERR_FAIL_COND_MSG(
+        p_mode == MOUSE_MODE_CONFINED,
+        "MOUSE_MODE_CONFINED is not supported for the HTML5 platform."
+    );
+    if (p_mode == get_mouse_mode()) {
         return;
+    }
 
     if (p_mode == MOUSE_MODE_VISIBLE) {
         godot_js_display_cursor_set_visible(1);
@@ -481,7 +554,7 @@ OS::MouseMode OS_JavaScript::get_mouse_mode() const {
 // Wheel
 
 int OS_JavaScript::mouse_wheel_callback(double p_delta_x, double p_delta_y) {
-    OS_JavaScript *os = get_singleton();
+    OS_JavaScript* os = get_singleton();
 
     if (!godot_js_display_canvas_is_focused()) {
         if (os->cursor_inside_canvas) {
@@ -491,7 +564,7 @@ int OS_JavaScript::mouse_wheel_callback(double p_delta_x, double p_delta_y) {
         }
     }
 
-    InputDefault *input = os->input;
+    InputDefault* input = os->input;
     Ref<InputEventMouseButton> ev;
     ev.instance();
     ev->set_position(input->get_mouse_position());
@@ -538,11 +611,11 @@ bool OS_JavaScript::has_touchscreen_ui_hint() const {
 }
 
 void OS_JavaScript::touch_callback(int p_type, int p_count) {
-    OS_JavaScript *os = get_singleton();
+    OS_JavaScript* os = get_singleton();
     // Resume audio context after input in case autoplay was denied.
     os->resume_audio();
 
-    const JSTouchEvent &touch_event = os->touch_event;
+    const JSTouchEvent& touch_event = os->touch_event;
     for (int i = 0; i < p_count; i++) {
         Point2 point(touch_event.coords[i * 2], touch_event.coords[i * 2 + 1]);
         if (p_type == 2) {
@@ -552,7 +625,7 @@ void OS_JavaScript::touch_callback(int p_type, int p_count) {
             ev->set_index(touch_event.identifier[i]);
             ev->set_position(point);
 
-            Point2 &prev = os->touches[i];
+            Point2& prev = os->touches[i];
             ev->set_relative(ev->get_position() - prev);
             prev = ev->get_position();
 
@@ -568,17 +641,28 @@ void OS_JavaScript::touch_callback(int p_type, int p_count) {
 
             os->input->parse_input_event(ev);
 
-            // Make sure to flush all events so we can call restricted APIs inside the event.
+            // Make sure to flush all events so we can call restricted APIs
+            // inside the event.
             os->input->flush_buffered_events();
         }
     }
 }
 
 // Gamepad
-void OS_JavaScript::gamepad_callback(int p_index, int p_connected, const char *p_id, const char *p_guid) {
-    InputDefault *input = get_singleton()->input;
+void OS_JavaScript::gamepad_callback(
+    int p_index,
+    int p_connected,
+    const char* p_id,
+    const char* p_guid
+) {
+    InputDefault* input = get_singleton()->input;
     if (p_connected) {
-        input->joy_connection_changed(p_index, true, String::utf8(p_id), String::utf8(p_guid));
+        input->joy_connection_changed(
+            p_index,
+            true,
+            String::utf8(p_id),
+            String::utf8(p_guid)
+        );
     } else {
         input->joy_connection_changed(p_index, false, "");
     }
@@ -592,7 +676,14 @@ void OS_JavaScript::process_joypads() {
     float s_btns[16];
     float s_axes[10];
     for (int idx = 0; idx < pads; idx++) {
-        int err = godot_js_input_gamepad_sample_get(idx, s_btns, &s_btns_num, s_axes, &s_axes_num, &s_standard);
+        int err = godot_js_input_gamepad_sample_get(
+            idx,
+            s_btns,
+            &s_btns_num,
+            s_axes,
+            &s_axes_num,
+            &s_standard
+        );
         if (err) {
             continue;
         }
@@ -633,7 +724,7 @@ int OS_JavaScript::get_video_driver_count() const {
     return VIDEO_DRIVER_MAX;
 }
 
-const char *OS_JavaScript::get_video_driver_name(int p_driver) const {
+const char* OS_JavaScript::get_video_driver_name(int p_driver) const {
     switch (p_driver) {
         case VIDEO_DRIVER_GLES3:
             return "GLES3";
@@ -649,7 +740,7 @@ int OS_JavaScript::get_audio_driver_count() const {
     return audio_drivers.size();
 }
 
-const char *OS_JavaScript::get_audio_driver_name(int p_driver) const {
+const char* OS_JavaScript::get_audio_driver_name(int p_driver) const {
     if (audio_drivers.size() <= p_driver) {
         return "Unknown";
     }
@@ -657,12 +748,12 @@ const char *OS_JavaScript::get_audio_driver_name(int p_driver) const {
 }
 
 // Clipboard
-void OS_JavaScript::update_clipboard_callback(const char *p_text) {
+void OS_JavaScript::update_clipboard_callback(const char* p_text) {
     // Only call set_clipboard from OS (sets local clipboard)
     get_singleton()->OS::set_clipboard(String::utf8(p_text));
 }
 
-void OS_JavaScript::set_clipboard(const String &p_text) {
+void OS_JavaScript::set_clipboard(const String& p_text) {
     OS::set_clipboard(p_text);
     int err = godot_js_display_clipboard_set(p_text.utf8().get_data());
     ERR_FAIL_COND_MSG(err, "Clipboard API is not supported.");
@@ -682,18 +773,29 @@ void OS_JavaScript::initialize_core() {
     OS_Unix::initialize_core();
 }
 
-Error OS_JavaScript::initialize(const VideoMode &p_desired, int p_video_driver, int p_audio_driver) {
+Error OS_JavaScript::initialize(
+    const VideoMode& p_desired,
+    int p_video_driver,
+    int p_audio_driver
+) {
     video_mode = p_desired;
-    // fullscreen_change_callback will correct this if the request is successful.
+    // fullscreen_change_callback will correct this if the request is
+    // successful.
     video_mode.fullscreen = false;
     // Handle contextmenu, webglcontextlost, initial canvas setup.
-    godot_js_display_setup_canvas(video_mode.width, video_mode.height, video_mode.fullscreen, is_hidpi_allowed() ? 1 : 0);
+    godot_js_display_setup_canvas(
+        video_mode.width,
+        video_mode.height,
+        video_mode.fullscreen,
+        is_hidpi_allowed() ? 1 : 0
+    );
 
     swap_ok_cancel = godot_js_display_is_swap_ok_cancel() == 1;
 
     EmscriptenWebGLContextAttributes attributes;
     emscripten_webgl_init_context_attributes(&attributes);
-    attributes.alpha = GLOBAL_GET("display/window/per_pixel_transparency/allowed");
+    attributes.alpha =
+        GLOBAL_GET("display/window/per_pixel_transparency/allowed");
     attributes.antialias = false;
     attributes.explicitSwapControl = true;
     ERR_FAIL_INDEX_V(p_video_driver, VIDEO_DRIVER_MAX, ERR_INVALID_PARAMETER);
@@ -711,7 +813,8 @@ Error OS_JavaScript::initialize(const VideoMode &p_desired, int p_video_driver, 
 
     while (true) {
         if (gles3) {
-            if (godot_js_display_has_webgl(2) && RasterizerGLES3::is_viable() == OK) {
+            if (godot_js_display_has_webgl(2)
+                && RasterizerGLES3::is_viable() == OK) {
                 attributes.majorVersion = 2;
                 RasterizerGLES3::register_config();
                 RasterizerGLES3::make_current();
@@ -727,7 +830,8 @@ Error OS_JavaScript::initialize(const VideoMode &p_desired, int p_video_driver, 
                 }
             }
         } else {
-            if (godot_js_display_has_webgl(1) && RasterizerGLES2::is_viable() == OK) {
+            if (godot_js_display_has_webgl(1)
+                && RasterizerGLES2::is_viable() == OK) {
                 attributes.majorVersion = 1;
                 RasterizerGLES2::register_config();
                 RasterizerGLES2::make_current();
@@ -740,14 +844,18 @@ Error OS_JavaScript::initialize(const VideoMode &p_desired, int p_video_driver, 
     }
 
     webgl_ctx = emscripten_webgl_create_context(canvas_id, &attributes);
-    if (emscripten_webgl_make_context_current(webgl_ctx) != EMSCRIPTEN_RESULT_SUCCESS) {
+    if (emscripten_webgl_make_context_current(webgl_ctx)
+        != EMSCRIPTEN_RESULT_SUCCESS) {
         gl_initialization_error = true;
     }
 
     if (gl_initialization_error) {
-        OS::get_singleton()->alert("Your browser does not support any of the supported WebGL versions.\n"
-                                   "Please update your browser version.",
-                "Unable to initialize Video driver");
+        OS::get_singleton()->alert(
+            "Your browser does not support any of the supported WebGL "
+            "versions.\n"
+            "Please update your browser version.",
+            "Unable to initialize Video driver"
+        );
         return ERR_UNAVAILABLE;
     }
 
@@ -764,8 +872,16 @@ Error OS_JavaScript::initialize(const VideoMode &p_desired, int p_video_driver, 
     godot_js_input_mouse_button_cb(&OS_JavaScript::mouse_button_callback);
     godot_js_input_mouse_move_cb(&OS_JavaScript::mouse_move_callback);
     godot_js_input_mouse_wheel_cb(&OS_JavaScript::mouse_wheel_callback);
-    godot_js_input_touch_cb(&OS_JavaScript::touch_callback, touch_event.identifier, touch_event.coords);
-    godot_js_input_key_cb(&OS_JavaScript::key_callback, key_event.code, key_event.key);
+    godot_js_input_touch_cb(
+        &OS_JavaScript::touch_callback,
+        touch_event.identifier,
+        touch_event.coords
+    );
+    godot_js_input_key_cb(
+        &OS_JavaScript::key_callback,
+        key_event.code,
+        key_event.key
+    );
     godot_js_input_gamepad_cb(&OS_JavaScript::gamepad_callback);
     godot_js_input_paste_cb(&OS_JavaScript::update_clipboard_callback);
     godot_js_input_drop_files_cb(&OS_JavaScript::drop_files_callback);
@@ -773,11 +889,13 @@ Error OS_JavaScript::initialize(const VideoMode &p_desired, int p_video_driver, 
     // JS Display interface (js/libs/library_godot_display.js)
     godot_js_display_fullscreen_cb(&OS_JavaScript::fullscreen_change_callback);
     godot_js_display_window_blur_cb(&window_blur_callback);
-    godot_js_display_notification_cb(&OS_JavaScript::send_notification_callback,
-            MainLoop::NOTIFICATION_WM_MOUSE_ENTER,
-            MainLoop::NOTIFICATION_WM_MOUSE_EXIT,
-            MainLoop::NOTIFICATION_WM_FOCUS_IN,
-            MainLoop::NOTIFICATION_WM_FOCUS_OUT);
+    godot_js_display_notification_cb(
+        &OS_JavaScript::send_notification_callback,
+        MainLoop::NOTIFICATION_WM_MOUSE_ENTER,
+        MainLoop::NOTIFICATION_WM_MOUSE_EXIT,
+        MainLoop::NOTIFICATION_WM_FOCUS_IN,
+        MainLoop::NOTIFICATION_WM_FOCUS_OUT
+    );
     godot_js_display_vk_cb(&input_text_callback);
 
     visual_server->init();
@@ -785,8 +903,8 @@ Error OS_JavaScript::initialize(const VideoMode &p_desired, int p_video_driver, 
     return OK;
 }
 
-void OS_JavaScript::input_text_callback(const char *p_text, int p_cursor) {
-    OS_JavaScript *os = OS_JavaScript::get_singleton();
+void OS_JavaScript::input_text_callback(const char* p_text, int p_cursor) {
+    OS_JavaScript* os = OS_JavaScript::get_singleton();
     if (!os || !os->get_main_loop()) {
         return;
     }
@@ -810,8 +928,20 @@ bool OS_JavaScript::has_virtual_keyboard() const {
     return godot_js_display_vk_available() != 0;
 }
 
-void OS_JavaScript::show_virtual_keyboard(const String &p_existing_text, const Rect2 &p_screen_rect, bool p_multiline, int p_max_input_length, int p_cursor_start, int p_cursor_end) {
-    godot_js_display_vk_show(p_existing_text.utf8().get_data(), p_multiline, p_cursor_start, p_cursor_end);
+void OS_JavaScript::show_virtual_keyboard(
+    const String& p_existing_text,
+    const Rect2& p_screen_rect,
+    bool p_multiline,
+    int p_max_input_length,
+    int p_cursor_start,
+    int p_cursor_end
+) {
+    godot_js_display_vk_show(
+        p_existing_text.utf8().get_data(),
+        p_multiline,
+        p_cursor_start,
+        p_cursor_end
+    );
 }
 
 void OS_JavaScript::hide_virtual_keyboard() {
@@ -826,12 +956,12 @@ void OS_JavaScript::swap_buffers() {
     emscripten_webgl_commit_frame();
 }
 
-void OS_JavaScript::set_main_loop(MainLoop *p_main_loop) {
+void OS_JavaScript::set_main_loop(MainLoop* p_main_loop) {
     main_loop = p_main_loop;
     input->set_main_loop(p_main_loop);
 }
 
-MainLoop *OS_JavaScript::get_main_loop() const {
+MainLoop* OS_JavaScript::get_main_loop() const {
     return main_loop;
 }
 
@@ -890,30 +1020,51 @@ void OS_JavaScript::finalize() {
 
 // Miscellaneous
 
-Error OS_JavaScript::execute(const String &p_path, const List<String> &p_arguments, bool p_blocking, ProcessID *r_child_id, String *r_pipe, int *r_exitcode, bool read_stderr, Mutex *p_pipe_mutex) {
+Error OS_JavaScript::execute(
+    const String& p_path,
+    const List<String>& p_arguments,
+    bool p_blocking,
+    ProcessID* r_child_id,
+    String* r_pipe,
+    int* r_exitcode,
+    bool read_stderr,
+    Mutex* p_pipe_mutex
+) {
     Array args;
-    for (const List<String>::Element *E = p_arguments.front(); E; E = E->next()) {
+    for (const List<String>::Element* E = p_arguments.front(); E;
+         E = E->next()) {
         args.push_back(E->get());
     }
     String json_args = JSON::print(args);
     int failed = godot_js_os_execute(json_args.utf8().get_data());
-    ERR_FAIL_COND_V_MSG(failed, ERR_UNAVAILABLE, "OS::execute() must be implemented in Javascript via 'engine.setOnExecute' if required.");
+    ERR_FAIL_COND_V_MSG(
+        failed,
+        ERR_UNAVAILABLE,
+        "OS::execute() must be implemented in Javascript via "
+        "'engine.setOnExecute' if required."
+    );
     return OK;
 }
 
-Error OS_JavaScript::kill(const ProcessID &p_pid) {
-    ERR_FAIL_V_MSG(ERR_UNAVAILABLE, "OS::kill() is not available on the HTML5 platform.");
+Error OS_JavaScript::kill(const ProcessID& p_pid) {
+    ERR_FAIL_V_MSG(
+        ERR_UNAVAILABLE,
+        "OS::kill() is not available on the HTML5 platform."
+    );
 }
 
 int OS_JavaScript::get_process_id() const {
-    ERR_FAIL_V_MSG(0, "OS::get_process_id() is not available on the HTML5 platform.");
+    ERR_FAIL_V_MSG(
+        0,
+        "OS::get_process_id() is not available on the HTML5 platform."
+    );
 }
 
 int OS_JavaScript::get_processor_count() const {
     return godot_js_os_hw_concurrency_get();
 }
 
-bool OS_JavaScript::_check_internal_feature_support(const String &p_feature) {
+bool OS_JavaScript::_check_internal_feature_support(const String& p_feature) {
     if (p_feature == "HTML5" || p_feature == "web") {
         return true;
     }
@@ -937,15 +1088,15 @@ bool OS_JavaScript::_check_internal_feature_support(const String &p_feature) {
     return false;
 }
 
-void OS_JavaScript::alert(const String &p_alert, const String &p_title) {
+void OS_JavaScript::alert(const String& p_alert, const String& p_title) {
     godot_js_display_alert(p_alert.utf8().get_data());
 }
 
-void OS_JavaScript::set_window_title(const String &p_title) {
+void OS_JavaScript::set_window_title(const String& p_title) {
     godot_js_display_window_title_set(p_title.utf8().get_data());
 }
 
-void OS_JavaScript::set_icon(const Ref<Image> &p_icon) {
+void OS_JavaScript::set_icon(const Ref<Image>& p_icon) {
     ERR_FAIL_COND(p_icon.is_null());
     Ref<Image> icon = p_icon;
     if (icon->is_compressed()) {
@@ -953,8 +1104,9 @@ void OS_JavaScript::set_icon(const Ref<Image> &p_icon) {
         ERR_FAIL_COND(icon->decompress() != OK);
     }
     if (icon->get_format() != Image::FORMAT_RGBA8) {
-        if (icon == p_icon)
+        if (icon == p_icon) {
             icon = icon->duplicate();
+        }
         icon->convert(Image::FORMAT_RGBA8);
     }
 
@@ -968,11 +1120,21 @@ void OS_JavaScript::set_icon(const Ref<Image> &p_icon) {
     PoolByteArray png;
     size_t len;
     PoolByteArray::Read r = icon->get_data().read();
-    ERR_FAIL_COND(!png_image_write_get_memory_size(png_meta, len, 0, r.ptr(), 0, NULL));
+    ERR_FAIL_COND(
+        !png_image_write_get_memory_size(png_meta, len, 0, r.ptr(), 0, NULL)
+    );
 
     png.resize(len);
     PoolByteArray::Write w = png.write();
-    ERR_FAIL_COND(!png_image_write_to_memory(&png_meta, w.ptr(), &len, 0, r.ptr(), 0, NULL));
+    ERR_FAIL_COND(!png_image_write_to_memory(
+        &png_meta,
+        w.ptr(),
+        &len,
+        0,
+        r.ptr(),
+        0,
+        NULL
+    ));
     w = PoolByteArray::Write();
 
     r = png.read();
@@ -1014,22 +1176,34 @@ String OS_JavaScript::get_data_path() const {
 }
 
 OS::PowerState OS_JavaScript::get_power_state() {
-    WARN_PRINT_ONCE("Power management is not supported for the HTML5 platform, defaulting to POWERSTATE_UNKNOWN");
+    WARN_PRINT_ONCE(
+        "Power management is not supported for the HTML5 platform, defaulting "
+        "to POWERSTATE_UNKNOWN"
+    );
     return OS::POWERSTATE_UNKNOWN;
 }
 
 int OS_JavaScript::get_power_seconds_left() {
-    WARN_PRINT_ONCE("Power management is not supported for the HTML5 platform, defaulting to -1");
+    WARN_PRINT_ONCE(
+        "Power management is not supported for the HTML5 platform, defaulting "
+        "to -1"
+    );
     return -1;
 }
 
 int OS_JavaScript::get_power_percent_left() {
-    WARN_PRINT_ONCE("Power management is not supported for the HTML5 platform, defaulting to -1");
+    WARN_PRINT_ONCE(
+        "Power management is not supported for the HTML5 platform, defaulting "
+        "to -1"
+    );
     return -1;
 }
 
-void OS_JavaScript::file_access_close_callback(const String &p_file, int p_flags) {
-    OS_JavaScript *os = get_singleton();
+void OS_JavaScript::file_access_close_callback(
+    const String& p_file,
+    int p_flags
+) {
+    OS_JavaScript* os = get_singleton();
 
     if (!(os->is_userfs_persistent() && p_flags & FileAccess::WRITE)) {
         return; // FS persistence is not working or we are not writing.
@@ -1037,7 +1211,8 @@ void OS_JavaScript::file_access_close_callback(const String &p_file, int p_flags
     bool is_file_persistent = p_file.begins_with("/userfs");
 #ifdef TOOLS_ENABLED
     // Hack for editor persistence (can we track).
-    is_file_persistent = is_file_persistent || p_file.begins_with("/home/web_user/");
+    is_file_persistent =
+        is_file_persistent || p_file.begins_with("/home/web_user/");
 #endif
     if (is_file_persistent) {
         os->idb_needs_sync = true;
@@ -1048,15 +1223,23 @@ bool OS_JavaScript::is_userfs_persistent() const {
     return idb_available;
 }
 
-Error OS_JavaScript::open_dynamic_library(const String p_path, void *&p_library_handle, bool p_also_set_library_path) {
+Error OS_JavaScript::open_dynamic_library(
+    const String p_path,
+    void*& p_library_handle,
+    bool p_also_set_library_path
+) {
     String path = p_path.get_file();
     p_library_handle = dlopen(path.utf8().get_data(), RTLD_NOW);
-    ERR_FAIL_COND_V_MSG(!p_library_handle, ERR_CANT_OPEN, "Can't open dynamic library: " + p_path + ". Error: " + dlerror());
+    ERR_FAIL_COND_V_MSG(
+        !p_library_handle,
+        ERR_CANT_OPEN,
+        "Can't open dynamic library: " + p_path + ". Error: " + dlerror()
+    );
     return OK;
 }
 
-OS_JavaScript *OS_JavaScript::get_singleton() {
-    return static_cast<OS_JavaScript *>(OS::get_singleton());
+OS_JavaScript* OS_JavaScript::get_singleton() {
+    return static_cast<OS_JavaScript*>(OS::get_singleton());
 }
 
 OS_JavaScript::OS_JavaScript() {
@@ -1092,7 +1275,7 @@ OS_JavaScript::OS_JavaScript() {
         AudioDriverManager::add_driver(audio_drivers[i]);
     }
 
-    Vector<Logger *> loggers;
+    Vector<Logger*> loggers;
     loggers.push_back(memnew(StdLogger));
     _set_logger(memnew(CompositeLogger(loggers)));
 

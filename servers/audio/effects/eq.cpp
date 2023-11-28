@@ -38,8 +38,14 @@
 #define POW2(v) ((v) * (v))
 
 /* Helper */
-static int solve_quadratic(double a, double b, double c, double *r1, double *r2) {
-    //solves quadractic and returns number of roots
+static int solve_quadratic(
+    double a,
+    double b,
+    double c,
+    double* r1,
+    double* r2
+) {
+    // solves quadractic and returns number of roots
 
     double base = 2 * a;
     if (base == 0.0f) {
@@ -92,17 +98,25 @@ void EQ::recalculate_band_coefficients() {
         double th = 2.0 * Math_PI * frq / mix_rate;
         double th_l = 2.0 * Math_PI * frq_l / mix_rate;
 
-        double c2a = side_gain2 * POW2(cos(th)) - 2.0 * side_gain2 * cos(th_l) * cos(th) + side_gain2 - POW2(sin(th_l));
+        double c2a = side_gain2 * POW2(cos(th))
+                   - 2.0 * side_gain2 * cos(th_l) * cos(th) + side_gain2
+                   - POW2(sin(th_l));
 
-        double c2b = 2.0 * side_gain2 * POW2(cos(th_l)) + side_gain2 * POW2(cos(th)) - 2.0 * side_gain2 * cos(th_l) * cos(th) - side_gain2 + POW2(sin(th_l));
+        double c2b = 2.0 * side_gain2 * POW2(cos(th_l))
+                   + side_gain2 * POW2(cos(th))
+                   - 2.0 * side_gain2 * cos(th_l) * cos(th) - side_gain2
+                   + POW2(sin(th_l));
 
-        double c2c = 0.25 * side_gain2 * POW2(cos(th)) - 0.5 * side_gain2 * cos(th_l) * cos(th) + 0.25 * side_gain2 - 0.25 * POW2(sin(th_l));
+        double c2c = 0.25 * side_gain2 * POW2(cos(th))
+                   - 0.5 * side_gain2 * cos(th_l) * cos(th) + 0.25 * side_gain2
+                   - 0.25 * POW2(sin(th_l));
 
-        //printf("band %i, precoefs = %f,%f,%f\n",i,c2a,c2b,c2c);
+        // printf("band %i, precoefs = %f,%f,%f\n",i,c2a,c2b,c2c);
 
-        // Default initializing to silence compiler warning about potential uninitialized use.
-        // Both variables are properly set in _solve_quadratic before use, or we continue if roots == 0.
-        double r1 = 0, r2 = 0; //roots
+        // Default initializing to silence compiler warning about potential
+        // uninitialized use. Both variables are properly set in
+        // _solve_quadratic before use, or we continue if roots == 0.
+        double r1 = 0, r2 = 0; // roots
         int roots = solve_quadratic(c2a, c2b, c2c, &r1, &r2);
 
         ERR_CONTINUE(roots == 0);
@@ -110,49 +124,59 @@ void EQ::recalculate_band_coefficients() {
         band.write[i].c1 = 2.0 * ((0.5 - r1) / 2.0);
         band.write[i].c2 = 2.0 * r1;
         band.write[i].c3 = 2.0 * (0.5 + r1) * cos(th);
-        //printf("band %i, coefs = %f,%f,%f\n",i,(float)bands[i].c1,(float)bands[i].c2,(float)bands[i].c3);
+        // printf("band %i, coefs =
+        // %f,%f,%f\n",i,(float)bands[i].c1,(float)bands[i].c2,(float)bands[i].c3);
     }
 }
 
 void EQ::set_preset_band_mode(Preset p_preset) {
     band.clear();
 
-#define PUSH_BANDS(m_bands)             \
-    for (int i = 0; i < m_bands; i++) { \
-        Band b;                         \
-        b.freq = bands[i];              \
-        b.c1 = b.c2 = b.c3 = 0;         \
-        band.push_back(b);              \
+#define PUSH_BANDS(m_bands)                                                    \
+    for (int i = 0; i < m_bands; i++) {                                        \
+        Band b;                                                                \
+        b.freq = bands[i];                                                     \
+        b.c1 = b.c2 = b.c3 = 0;                                                \
+        band.push_back(b);                                                     \
     }
 
     switch (p_preset) {
         case PRESET_6_BANDS: {
-            static const double bands[] = { 32, 100, 320, 1e3, 3200, 10e3 };
+            static const double bands[] = {32, 100, 320, 1e3, 3200, 10e3};
             PUSH_BANDS(6);
 
         } break;
 
         case PRESET_8_BANDS: {
-            static const double bands[] = { 32, 72, 192, 512, 1200, 3000, 7500, 16e3 };
+            static const double bands[] =
+                {32, 72, 192, 512, 1200, 3000, 7500, 16e3};
 
             PUSH_BANDS(8);
         } break;
 
         case PRESET_10_BANDS: {
-            static const double bands[] = { 31.25, 62.5, 125, 250, 500, 1e3, 2e3, 4e3, 8e3, 16e3 };
+            static const double bands[] =
+                {31.25, 62.5, 125, 250, 500, 1e3, 2e3, 4e3, 8e3, 16e3};
 
             PUSH_BANDS(10);
 
         } break;
 
         case PRESET_21_BANDS: {
-            static const double bands[] = { 22, 32, 44, 63, 90, 125, 175, 250, 350, 500, 700, 1e3, 1400, 2e3, 2800, 4e3, 5600, 8e3, 11e3, 16e3, 22e3 };
+            static const double bands[] = {22,   32,   44,   63,  90,   125,
+                                           175,  250,  350,  500, 700,  1e3,
+                                           1400, 2e3,  2800, 4e3, 5600, 8e3,
+                                           11e3, 16e3, 22e3};
             PUSH_BANDS(21);
 
         } break;
 
         case PRESET_31_BANDS: {
-            static const double bands[] = { 20, 25, 31.5, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1e3, 1250, 1600, 2e3, 2500, 3150, 4e3, 5e3, 6300, 8e3, 10e3, 12500, 16e3, 20e3 };
+            static const double bands[] = {
+                20,   25,  31.5, 40,   50,  63,   80,    100,  125,  160, 200,
+                250,  315, 400,  500,  630, 800,  1e3,   1250, 1600, 2e3, 2500,
+                3150, 4e3, 5e3,  6300, 8e3, 10e3, 12500, 16e3, 20e3
+            };
             PUSH_BANDS(31);
         } break;
     };
@@ -163,11 +187,13 @@ void EQ::set_preset_band_mode(Preset p_preset) {
 int EQ::get_band_count() const {
     return band.size();
 }
+
 float EQ::get_band_frequency(int p_band) {
     ERR_FAIL_INDEX_V(p_band, band.size(), 0);
     return band[p_band].freq;
 }
-void EQ::set_bands(const Vector<float> &p_bands) {
+
+void EQ::set_bands(const Vector<float>& p_bands) {
     band.resize(p_bands.size());
     for (int i = 0; i < p_bands.size(); i++) {
         band.write[i].freq = p_bands[i];
@@ -197,5 +223,4 @@ EQ::EQ() {
     mix_rate = 44100;
 }
 
-EQ::~EQ() {
-}
+EQ::~EQ() {}

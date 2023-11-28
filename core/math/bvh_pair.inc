@@ -3,12 +3,13 @@ public:
 // depends which works best for cache.
 struct ItemPairs {
     struct Link {
-        void set(BVHHandle h, void *ud) {
+        void set(BVHHandle h, void* ud) {
             handle = h;
             userdata = ud;
         }
+
         BVHHandle handle;
-        void *userdata;
+        void* userdata;
     };
 
     void clear() {
@@ -23,7 +24,7 @@ struct ItemPairs {
     int32_t num_pairs;
     LocalVector<Link> extended_pairs;
 
-    void add_pair_to(BVHHandle h, void *p_userdata) {
+    void add_pair_to(BVHHandle h, void* p_userdata) {
         Link temp;
         temp.set(h, p_userdata);
 
@@ -45,8 +46,8 @@ struct ItemPairs {
     }
 
     // return success
-    void *remove_pair_to(BVHHandle h) {
-        void *userdata = nullptr;
+    void* remove_pair_to(BVHHandle h) {
+        void* userdata = nullptr;
 
         for (int n = 0; n < num_pairs; n++) {
             if (extended_pairs[n].handle == h) {
@@ -61,8 +62,9 @@ struct ItemPairs {
     }
 
     // experiment : scale the pairing expansion by the number of pairs.
-    // when the number of pairs is high, the density is high and a lower collision margin is better.
-    // when there are few local pairs, a larger margin is more optimal.
+    // when the number of pairs is high, the density is high and a lower
+    // collision margin is better. when there are few local pairs, a larger
+    // margin is more optimal.
     real_t scale_expansion_margin(real_t p_margin) const {
         real_t x = real_t(num_pairs) * (1.0 / 9.0);
         x = MIN(x, 1.0);

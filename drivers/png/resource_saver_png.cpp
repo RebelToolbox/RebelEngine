@@ -35,11 +35,23 @@
 #include "drivers/png/png_driver_common.h"
 #include "scene/resources/texture.h"
 
-Error ResourceSaverPNG::save(const String &p_path, const RES &p_resource, uint32_t p_flags) {
+Error ResourceSaverPNG::save(
+    const String& p_path,
+    const RES& p_resource,
+    uint32_t p_flags
+) {
     Ref<ImageTexture> texture = p_resource;
 
-    ERR_FAIL_COND_V_MSG(!texture.is_valid(), ERR_INVALID_PARAMETER, "Can't save invalid texture as PNG.");
-    ERR_FAIL_COND_V_MSG(!texture->get_width(), ERR_INVALID_PARAMETER, "Can't save empty texture as PNG.");
+    ERR_FAIL_COND_V_MSG(
+        !texture.is_valid(),
+        ERR_INVALID_PARAMETER,
+        "Can't save invalid texture as PNG."
+    );
+    ERR_FAIL_COND_V_MSG(
+        !texture->get_width(),
+        ERR_INVALID_PARAMETER,
+        "Can't save empty texture as PNG."
+    );
 
     Ref<Image> img = texture->get_data();
 
@@ -48,12 +60,19 @@ Error ResourceSaverPNG::save(const String &p_path, const RES &p_resource, uint32
     return err;
 };
 
-Error ResourceSaverPNG::save_image(const String &p_path, const Ref<Image> &p_img) {
+Error ResourceSaverPNG::save_image(
+    const String& p_path,
+    const Ref<Image>& p_img
+) {
     PoolVector<uint8_t> buffer;
     Error err = PNGDriverCommon::image_to_png(p_img, buffer);
     ERR_FAIL_COND_V_MSG(err, err, "Can't convert image to PNG.");
-    FileAccess *file = FileAccess::open(p_path, FileAccess::WRITE, &err);
-    ERR_FAIL_COND_V_MSG(err, err, vformat("Can't save PNG at path: '%s'.", p_path));
+    FileAccess* file = FileAccess::open(p_path, FileAccess::WRITE, &err);
+    ERR_FAIL_COND_V_MSG(
+        err,
+        err,
+        vformat("Can't save PNG at path: '%s'.", p_path)
+    );
 
     PoolVector<uint8_t>::Read reader = buffer.read();
 
@@ -69,18 +88,27 @@ Error ResourceSaverPNG::save_image(const String &p_path, const Ref<Image> &p_img
     return OK;
 }
 
-PoolVector<uint8_t> ResourceSaverPNG::save_image_to_buffer(const Ref<Image> &p_img) {
+PoolVector<uint8_t> ResourceSaverPNG::save_image_to_buffer(
+    const Ref<Image>& p_img
+) {
     PoolVector<uint8_t> buffer;
     Error err = PNGDriverCommon::image_to_png(p_img, buffer);
-    ERR_FAIL_COND_V_MSG(err, PoolVector<uint8_t>(), "Can't convert image to PNG.");
+    ERR_FAIL_COND_V_MSG(
+        err,
+        PoolVector<uint8_t>(),
+        "Can't convert image to PNG."
+    );
     return buffer;
 }
 
-bool ResourceSaverPNG::recognize(const RES &p_resource) const {
+bool ResourceSaverPNG::recognize(const RES& p_resource) const {
     return (p_resource.is_valid() && p_resource->is_class("ImageTexture"));
 }
 
-void ResourceSaverPNG::get_recognized_extensions(const RES &p_resource, List<String> *p_extensions) const {
+void ResourceSaverPNG::get_recognized_extensions(
+    const RES& p_resource,
+    List<String>* p_extensions
+) const {
     if (Object::cast_to<ImageTexture>(*p_resource)) {
         p_extensions->push_back("png");
     }

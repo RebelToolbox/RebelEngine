@@ -39,11 +39,11 @@
  */
 
 class MIDIDriver {
-    static MIDIDriver *singleton;
+    static MIDIDriver* singleton;
     static uint8_t last_received_message;
 
 public:
-    static MIDIDriver *get_singleton();
+    static MIDIDriver* get_singleton();
     void set_singleton();
 
     virtual Error open() = 0;
@@ -51,9 +51,14 @@ public:
 
     virtual PoolStringArray get_connected_inputs();
 
-    static void receive_input_packet(uint64_t timestamp, uint8_t *data, uint32_t length);
+    static void receive_input_packet(
+        uint64_t timestamp,
+        uint8_t* data,
+        uint32_t length
+    );
 
     MIDIDriver();
+
     virtual ~MIDIDriver() {}
 };
 

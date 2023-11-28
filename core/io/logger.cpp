@@ -56,12 +56,19 @@ void Logger::set_flush_stdout_on_print(bool value) {
     _flush_stdout_on_print = value;
 }
 
-void Logger::log_error(const char *p_function, const char *p_file, int p_line, const char *p_code, const char *p_rationale, ErrorType p_type) {
+void Logger::log_error(
+    const char* p_function,
+    const char* p_file,
+    int p_line,
+    const char* p_code,
+    const char* p_rationale,
+    ErrorType p_type
+) {
     if (!should_log(true)) {
         return;
     }
 
-    const char *err_type = "ERROR";
+    const char* err_type = "ERROR";
     switch (p_type) {
         case ERR_ERROR:
             err_type = "ERROR";
@@ -80,7 +87,7 @@ void Logger::log_error(const char *p_function, const char *p_file, int p_line, c
             break;
     }
 
-    const char *err_details;
+    const char* err_details;
     if (p_rationale && *p_rationale) {
         err_details = p_rationale;
     } else {
@@ -91,7 +98,7 @@ void Logger::log_error(const char *p_function, const char *p_file, int p_line, c
     logf_error("   at: %s (%s:%i) - %s\n", p_function, p_file, p_line, p_code);
 }
 
-void Logger::logf(const char *p_format, ...) {
+void Logger::logf(const char* p_format, ...) {
     if (!should_log(false)) {
         return;
     }
@@ -104,7 +111,7 @@ void Logger::logf(const char *p_format, ...) {
     va_end(argp);
 }
 
-void Logger::logf_error(const char *p_format, ...) {
+void Logger::logf_error(const char* p_format, ...) {
     if (!should_log(true)) {
         return;
     }
@@ -132,7 +139,7 @@ void RotatedFileLogger::clear_old_backups() {
     String basename = base_path.get_file().get_basename();
     String extension = base_path.get_extension();
 
-    DirAccess *da = DirAccess::open(base_path.get_base_dir());
+    DirAccess* da = DirAccess::open(base_path.get_base_dir());
     if (!da) {
         return;
     }
@@ -141,7 +148,8 @@ void RotatedFileLogger::clear_old_backups() {
     String f = da->get_next();
     Set<String> backups;
     while (f != String()) {
-        if (!da->current_is_dir() && f.begins_with(basename) && f.get_extension() == extension && f != base_path.get_file()) {
+        if (!da->current_is_dir() && f.begins_with(basename)
+            && f.get_extension() == extension && f != base_path.get_file()) {
             backups.insert(f);
         }
         f = da->get_next();
@@ -149,10 +157,11 @@ void RotatedFileLogger::clear_old_backups() {
     da->list_dir_end();
 
     if (backups.size() > max_backups) {
-        // since backups are appended with timestamp and Set iterates them in sorted order,
-        // first backups are the oldest
+        // since backups are appended with timestamp and Set iterates them in
+        // sorted order, first backups are the oldest
         int to_delete = backups.size() - max_backups;
-        for (Set<String>::Element *E = backups.front(); E && to_delete > 0; E = E->next(), --to_delete) {
+        for (Set<String>::Element* E = backups.front(); E && to_delete > 0;
+             E = E->next(), --to_delete) {
             da->remove(E->get());
         }
     }
@@ -168,14 +177,24 @@ void RotatedFileLogger::rotate_file() {
             char timestamp[21];
             OS::Date date = OS::get_singleton()->get_date();
             OS::Time time = OS::get_singleton()->get_time();
-            snprintf(timestamp, 21, "_%04d-%02d-%02d_%02d.%02d.%02d", date.year, date.month, date.day, time.hour, time.min, time.sec);
+            snprintf(
+                timestamp,
+                21,
+                "_%04d-%02d-%02d_%02d.%02d.%02d",
+                date.year,
+                date.month,
+                date.day,
+                time.hour,
+                time.min,
+                time.sec
+            );
 
             String backup_name = base_path.get_basename() + timestamp;
             if (base_path.get_extension() != String()) {
                 backup_name += "." + base_path.get_extension();
             }
 
-            DirAccess *da = DirAccess::open(base_path.get_base_dir());
+            DirAccess* da = DirAccess::open(base_path.get_base_dir());
             if (da) {
                 da->copy(base_path, backup_name);
                 memdelete(da);
@@ -183,7 +202,7 @@ void RotatedFileLogger::rotate_file() {
             clear_old_backups();
         }
     } else {
-        DirAccess *da = DirAccess::create(DirAccess::ACCESS_USERDATA);
+        DirAccess* da = DirAccess::create(DirAccess::ACCESS_USERDATA);
         if (da) {
             da->make_dir_recursive(base_path.get_base_dir());
             memdelete(da);
@@ -193,14 +212,17 @@ void RotatedFileLogger::rotate_file() {
     file = FileAccess::open(base_path, FileAccess::WRITE);
 }
 
-RotatedFileLogger::RotatedFileLogger(const String &p_base_path, int p_max_files) :
-        base_path(p_base_path.simplify_path()),
-        max_files(p_max_files > 0 ? p_max_files : 1),
-        file(nullptr) {
+RotatedFileLogger::RotatedFileLogger(
+    const String& p_base_path,
+    int p_max_files
+) :
+    base_path(p_base_path.simplify_path()),
+    max_files(p_max_files > 0 ? p_max_files : 1),
+    file(nullptr) {
     rotate_file();
 }
 
-void RotatedFileLogger::logv(const char *p_format, va_list p_list, bool p_err) {
+void RotatedFileLogger::logv(const char* p_format, va_list p_list, bool p_err) {
     if (!should_log(p_err)) {
         return;
     }
@@ -208,16 +230,16 @@ void RotatedFileLogger::logv(const char *p_format, va_list p_list, bool p_err) {
     if (file) {
         const int static_buf_size = 512;
         char static_buf[static_buf_size];
-        char *buf = static_buf;
+        char* buf = static_buf;
         va_list list_copy;
         va_copy(list_copy, p_list);
         int len = vsnprintf(buf, static_buf_size, p_format, p_list);
         if (len >= static_buf_size) {
-            buf = (char *)Memory::alloc_static(len + 1);
+            buf = (char*)Memory::alloc_static(len + 1);
             vsnprintf(buf, len + 1, p_format, list_copy);
         }
         va_end(list_copy);
-        file->store_buffer((uint8_t *)buf, len);
+        file->store_buffer((uint8_t*)buf, len);
 
         if (len >= static_buf_size) {
             Memory::free_static(buf);
@@ -235,7 +257,7 @@ RotatedFileLogger::~RotatedFileLogger() {
     close_file();
 }
 
-void StdLogger::logv(const char *p_format, va_list p_list, bool p_err) {
+void StdLogger::logv(const char* p_format, va_list p_list, bool p_err) {
     if (!should_log(p_err)) {
         return;
     }
@@ -254,11 +276,10 @@ void StdLogger::logv(const char *p_format, va_list p_list, bool p_err) {
 
 StdLogger::~StdLogger() {}
 
-CompositeLogger::CompositeLogger(Vector<Logger *> p_loggers) :
-        loggers(p_loggers) {
-}
+CompositeLogger::CompositeLogger(Vector<Logger*> p_loggers) :
+    loggers(p_loggers) {}
 
-void CompositeLogger::logv(const char *p_format, va_list p_list, bool p_err) {
+void CompositeLogger::logv(const char* p_format, va_list p_list, bool p_err) {
     if (!should_log(p_err)) {
         return;
     }
@@ -271,17 +292,31 @@ void CompositeLogger::logv(const char *p_format, va_list p_list, bool p_err) {
     }
 }
 
-void CompositeLogger::log_error(const char *p_function, const char *p_file, int p_line, const char *p_code, const char *p_rationale, ErrorType p_type) {
+void CompositeLogger::log_error(
+    const char* p_function,
+    const char* p_file,
+    int p_line,
+    const char* p_code,
+    const char* p_rationale,
+    ErrorType p_type
+) {
     if (!should_log(true)) {
         return;
     }
 
     for (int i = 0; i < loggers.size(); ++i) {
-        loggers[i]->log_error(p_function, p_file, p_line, p_code, p_rationale, p_type);
+        loggers[i]->log_error(
+            p_function,
+            p_file,
+            p_line,
+            p_code,
+            p_rationale,
+            p_type
+        );
     }
 }
 
-void CompositeLogger::add_logger(Logger *p_logger) {
+void CompositeLogger::add_logger(Logger* p_logger) {
     loggers.push_back(p_logger);
 }
 

@@ -40,12 +40,13 @@ FileDialog::GetIconFunc FileDialog::get_large_icon_func = nullptr;
 FileDialog::RegisterFunc FileDialog::register_func = nullptr;
 FileDialog::RegisterFunc FileDialog::unregister_func = nullptr;
 
-VBoxContainer *FileDialog::get_vbox() {
+VBoxContainer* FileDialog::get_vbox() {
     return vbox;
 }
 
 void FileDialog::_notification(int p_what) {
-    if (p_what == NOTIFICATION_ENTER_TREE || p_what == NOTIFICATION_THEME_CHANGED) {
+    if (p_what == NOTIFICATION_ENTER_TREE
+        || p_what == NOTIFICATION_THEME_CHANGED) {
         if (p_what == NOTIFICATION_ENTER_TREE) {
             dir_up->set_icon(get_icon("parent_folder"));
             refresh->set_icon(get_icon("reload"));
@@ -55,7 +56,8 @@ void FileDialog::_notification(int p_what) {
         Color font_color = get_color("font_color", "ToolButton");
         Color font_color_hover = get_color("font_color_hover", "ToolButton");
         Color font_color_focus = get_color("font_color_focus", "ToolButton");
-        Color font_color_pressed = get_color("font_color_pressed", "ToolButton");
+        Color font_color_pressed =
+            get_color("font_color_pressed", "ToolButton");
 
         dir_up->add_color_override("icon_color_normal", font_color);
         dir_up->add_color_override("icon_color_hover", font_color_hover);
@@ -70,14 +72,17 @@ void FileDialog::_notification(int p_what) {
         show_hidden->add_color_override("icon_color_normal", font_color);
         show_hidden->add_color_override("icon_color_hover", font_color_hover);
         show_hidden->add_color_override("font_color_focus", font_color_focus);
-        show_hidden->add_color_override("icon_color_pressed", font_color_pressed);
+        show_hidden->add_color_override(
+            "icon_color_pressed",
+            font_color_pressed
+        );
 
     } else if (p_what == NOTIFICATION_POPUP_HIDE) {
         set_process_unhandled_input(false);
     }
 }
 
-void FileDialog::_unhandled_input(const Ref<InputEvent> &p_event) {
+void FileDialog::_unhandled_input(const Ref<InputEvent>& p_event) {
     Ref<InputEventKey> k = p_event;
     if (k.is_valid() && is_window_modal_on_top()) {
         if (k->is_pressed()) {
@@ -117,9 +122,10 @@ void FileDialog::set_enable_multiple_selection(bool p_enable) {
 Vector<String> FileDialog::get_selected_files() const {
     Vector<String> list;
 
-    TreeItem *item = tree->get_root();
+    TreeItem* item = tree->get_root();
     while ((item = tree->get_next_selected(item))) {
-        list.push_back(dir_access->get_current_dir().plus_file(item->get_text(0)));
+        list.push_back(dir_access->get_current_dir().plus_file(item->get_text(0)
+        ));
     };
 
     return list;
@@ -132,7 +138,8 @@ void FileDialog::update_dir() {
         drives->select(dir_access->get_current_drive());
     }
 
-    // Deselect any item, to make "Select Current Folder" button text by default.
+    // Deselect any item, to make "Select Current Folder" button text by
+    // default.
     deselect_items();
 }
 
@@ -143,7 +150,7 @@ void FileDialog::_dir_entered(String p_dir) {
     update_dir();
 }
 
-void FileDialog::_file_entered(const String &p_file) {
+void FileDialog::_file_entered(const String& p_file) {
     _action_pressed();
 }
 
@@ -178,7 +185,7 @@ void FileDialog::_post_popup() {
 
 void FileDialog::_action_pressed() {
     if (mode == MODE_OPEN_FILES) {
-        TreeItem *ti = tree->get_next_selected(nullptr);
+        TreeItem* ti = tree->get_next_selected(nullptr);
         String fbase = dir_access->get_current_dir();
 
         PoolVector<String> files;
@@ -197,14 +204,15 @@ void FileDialog::_action_pressed() {
 
     String f = dir_access->get_current_dir().plus_file(file->get_text());
 
-    if ((mode == MODE_OPEN_ANY || mode == MODE_OPEN_FILE) && dir_access->file_exists(f)) {
+    if ((mode == MODE_OPEN_ANY || mode == MODE_OPEN_FILE)
+        && dir_access->file_exists(f)) {
         emit_signal("file_selected", f);
         hide();
     } else if (mode == MODE_OPEN_ANY || mode == MODE_OPEN_DIR) {
         String path = dir_access->get_current_dir();
 
         path = path.replace("\\", "/");
-        TreeItem *item = tree->get_selected();
+        TreeItem* item = tree->get_selected();
         if (item) {
             Dictionary d = item->get_metadata(0);
             if (d["dir"] && d["name"] != "..") {
@@ -289,9 +297,9 @@ bool FileDialog::_is_open_should_be_disabled() {
         return false;
     }
 
-    TreeItem *ti = tree->get_next_selected(tree->get_root());
+    TreeItem* ti = tree->get_next_selected(tree->get_root());
     while (ti) {
-        TreeItem *prev_ti = ti;
+        TreeItem* prev_ti = ti;
         ti = tree->get_next_selected(tree->get_root());
         if (ti == prev_ti) {
             break;
@@ -299,14 +307,16 @@ bool FileDialog::_is_open_should_be_disabled() {
     }
     // We have something that we can't select?
     if (!ti) {
-        return mode != MODE_OPEN_DIR; // In "Open folder" mode, having nothing selected picks the current folder.
+        return mode != MODE_OPEN_DIR; // In "Open folder" mode, having nothing
+                                      // selected picks the current folder.
     }
 
     Dictionary d = ti->get_metadata(0);
 
     // Opening a file, but selected a folder? Forbidden.
-    return ((mode == MODE_OPEN_FILE || mode == MODE_OPEN_FILES) && d["dir"]) || // Flipped case, also forbidden.
-            (mode == MODE_OPEN_DIR && !d["dir"]);
+    return ((mode == MODE_OPEN_FILE || mode == MODE_OPEN_FILES) && d["dir"])
+        || // Flipped case, also forbidden.
+           (mode == MODE_OPEN_DIR && !d["dir"]);
 }
 
 void FileDialog::_go_up() {
@@ -333,18 +343,23 @@ void FileDialog::deselect_items() {
                 break;
             case MODE_OPEN_ANY:
             case MODE_SAVE_FILE:
-                // FIXME: Implement, or refactor to avoid duplication with set_mode
+                // FIXME: Implement, or refactor to avoid duplication with
+                // set_mode
                 break;
         }
     }
 }
 
-void FileDialog::_tree_multi_selected(Object *p_object, int p_cell, bool p_selected) {
+void FileDialog::_tree_multi_selected(
+    Object* p_object,
+    int p_cell,
+    bool p_selected
+) {
     _tree_selected();
 }
 
 void FileDialog::_tree_selected() {
-    TreeItem *ti = tree->get_selected();
+    TreeItem* ti = tree->get_selected();
     if (!ti) {
         return;
     }
@@ -360,7 +375,7 @@ void FileDialog::_tree_selected() {
 }
 
 void FileDialog::_tree_item_activated() {
-    TreeItem *ti = tree->get_selected();
+    TreeItem* ti = tree->get_selected();
     if (!ti) {
         return;
     }
@@ -369,7 +384,8 @@ void FileDialog::_tree_item_activated() {
 
     if (d["dir"]) {
         dir_access->change_dir(d["name"]);
-        if (mode == MODE_OPEN_FILE || mode == MODE_OPEN_FILES || mode == MODE_OPEN_DIR || mode == MODE_OPEN_ANY) {
+        if (mode == MODE_OPEN_FILE || mode == MODE_OPEN_FILES
+            || mode == MODE_OPEN_DIR || mode == MODE_OPEN_ANY) {
             file->set_text("");
         }
         call_deferred("_update_file_list");
@@ -381,7 +397,9 @@ void FileDialog::_tree_item_activated() {
 
 void FileDialog::update_file_name() {
     int idx = filter->get_selected() - 1;
-    if ((idx == -1 && filter->get_item_count() == 2) || (filter->get_item_count() > 2 && idx >= 0 && idx < filter->get_item_count() - 2)) {
+    if ((idx == -1 && filter->get_item_count() == 2)
+        || (filter->get_item_count() > 2 && idx >= 0
+            && idx < filter->get_item_count() - 2)) {
         if (idx == -1) {
             idx += 1;
         }
@@ -401,7 +419,7 @@ void FileDialog::update_file_list() {
 
     dir_access->list_dir_begin();
 
-    TreeItem *root = tree->create_item();
+    TreeItem* root = tree->create_item();
     Ref<Texture> folder = get_icon("folder");
     Ref<Texture> file_icon = get_icon("file");
     const Color folder_color = get_color("folder_icon_modulate");
@@ -432,8 +450,8 @@ void FileDialog::update_file_list() {
     files.sort_custom<NaturalNoCaseComparator>();
 
     while (!dirs.empty()) {
-        String &dir_name = dirs.front()->get();
-        TreeItem *ti = tree->create_item(root);
+        String& dir_name = dirs.front()->get();
+        TreeItem* ti = tree->create_item(root);
         ti->set_text(0, dir_name);
         ti->set_icon(0, folder);
         ti->set_icon_modulate(0, folder_color);
@@ -479,7 +497,7 @@ void FileDialog::update_file_list() {
         bool match = patterns.empty();
         String match_str;
 
-        for (List<String>::Element *E = patterns.front(); E; E = E->next()) {
+        for (List<String>::Element* E = patterns.front(); E; E = E->next()) {
             if (files.front()->get().matchn(E->get())) {
                 match_str = E->get();
                 match = true;
@@ -488,11 +506,12 @@ void FileDialog::update_file_list() {
         }
 
         if (match) {
-            TreeItem *ti = tree->create_item(root);
+            TreeItem* ti = tree->create_item(root);
             ti->set_text(0, files.front()->get());
 
             if (get_icon_func) {
-                Ref<Texture> icon = get_icon_func(base_dir.plus_file(files.front()->get()));
+                Ref<Texture> icon =
+                    get_icon_func(base_dir.plus_file(files.front()->get()));
                 ti->set_icon(0, icon);
             } else {
                 ti->set_icon(0, file_icon);
@@ -508,7 +527,8 @@ void FileDialog::update_file_list() {
             d["dir"] = false;
             ti->set_metadata(0, d);
 
-            if (file->get_text() == files.front()->get() || match_str == files.front()->get()) {
+            if (file->get_text() == files.front()->get()
+                || match_str == files.front()->get()) {
                 ti->select(0);
             }
         }
@@ -516,7 +536,8 @@ void FileDialog::update_file_list() {
         files.pop_front();
     }
 
-    if (tree->get_root() && tree->get_root()->get_children() && tree->get_selected() == nullptr) {
+    if (tree->get_root() && tree->get_root()->get_children()
+        && tree->get_selected() == nullptr) {
         tree->get_root()->get_children()->select(0);
     }
 }
@@ -566,14 +587,18 @@ void FileDialog::clear_filters() {
     update_filters();
     invalidate();
 }
-void FileDialog::add_filter(const String &p_filter) {
-    ERR_FAIL_COND_MSG(p_filter.begins_with("."), "Filter must be \"filename.extension\", can't start with dot.");
+
+void FileDialog::add_filter(const String& p_filter) {
+    ERR_FAIL_COND_MSG(
+        p_filter.begins_with("."),
+        "Filter must be \"filename.extension\", can't start with dot."
+    );
     filters.push_back(p_filter);
     update_filters();
     invalidate();
 }
 
-void FileDialog::set_filters(const Vector<String> &p_filters) {
+void FileDialog::set_filters(const Vector<String>& p_filters) {
     filters = p_filters;
     update_filters();
     invalidate();
@@ -586,18 +611,22 @@ Vector<String> FileDialog::get_filters() const {
 String FileDialog::get_current_dir() const {
     return dir->get_text();
 }
+
 String FileDialog::get_current_file() const {
     return file->get_text();
 }
+
 String FileDialog::get_current_path() const {
     return dir->get_text().plus_file(file->get_text());
 }
-void FileDialog::set_current_dir(const String &p_dir) {
+
+void FileDialog::set_current_dir(const String& p_dir) {
     dir_access->change_dir(p_dir);
     update_dir();
     invalidate();
 }
-void FileDialog::set_current_file(const String &p_file) {
+
+void FileDialog::set_current_file(const String& p_file) {
     file->set_text(p_file);
     update_dir();
     invalidate();
@@ -609,7 +638,8 @@ void FileDialog::set_current_file(const String &p_file) {
         }
     }
 }
-void FileDialog::set_current_path(const String &p_path) {
+
+void FileDialog::set_current_path(const String& p_path) {
     if (!p_path.size()) {
         return;
     }
@@ -754,11 +784,12 @@ void FileDialog::_update_drives() {
         drives->hide();
     } else {
         drives->clear();
-        Node *dp = drives->get_parent();
+        Node* dp = drives->get_parent();
         if (dp) {
             dp->remove_child(drives);
         }
-        dp = dir_access->drives_are_shortcuts() ? shortcuts_container : drives_container;
+        dp = dir_access->drives_are_shortcuts() ? shortcuts_container
+                                                : drives_container;
         dp->add_child(drives);
         drives->show();
 
@@ -773,61 +804,184 @@ void FileDialog::_update_drives() {
 bool FileDialog::default_show_hidden_files = false;
 
 void FileDialog::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_unhandled_input"), &FileDialog::_unhandled_input);
+    ClassDB::bind_method(
+        D_METHOD("_unhandled_input"),
+        &FileDialog::_unhandled_input
+    );
 
-    ClassDB::bind_method(D_METHOD("_tree_multi_selected"), &FileDialog::_tree_multi_selected);
-    ClassDB::bind_method(D_METHOD("_tree_selected"), &FileDialog::_tree_selected);
-    ClassDB::bind_method(D_METHOD("_tree_item_activated"), &FileDialog::_tree_item_activated);
+    ClassDB::bind_method(
+        D_METHOD("_tree_multi_selected"),
+        &FileDialog::_tree_multi_selected
+    );
+    ClassDB::bind_method(
+        D_METHOD("_tree_selected"),
+        &FileDialog::_tree_selected
+    );
+    ClassDB::bind_method(
+        D_METHOD("_tree_item_activated"),
+        &FileDialog::_tree_item_activated
+    );
     ClassDB::bind_method(D_METHOD("_dir_entered"), &FileDialog::_dir_entered);
     ClassDB::bind_method(D_METHOD("_file_entered"), &FileDialog::_file_entered);
-    ClassDB::bind_method(D_METHOD("_action_pressed"), &FileDialog::_action_pressed);
-    ClassDB::bind_method(D_METHOD("_cancel_pressed"), &FileDialog::_cancel_pressed);
-    ClassDB::bind_method(D_METHOD("_filter_selected"), &FileDialog::_filter_selected);
-    ClassDB::bind_method(D_METHOD("_save_confirm_pressed"), &FileDialog::_save_confirm_pressed);
+    ClassDB::bind_method(
+        D_METHOD("_action_pressed"),
+        &FileDialog::_action_pressed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_cancel_pressed"),
+        &FileDialog::_cancel_pressed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_filter_selected"),
+        &FileDialog::_filter_selected
+    );
+    ClassDB::bind_method(
+        D_METHOD("_save_confirm_pressed"),
+        &FileDialog::_save_confirm_pressed
+    );
 
     ClassDB::bind_method(D_METHOD("clear_filters"), &FileDialog::clear_filters);
-    ClassDB::bind_method(D_METHOD("add_filter", "filter"), &FileDialog::add_filter);
-    ClassDB::bind_method(D_METHOD("set_filters", "filters"), &FileDialog::set_filters);
+    ClassDB::bind_method(
+        D_METHOD("add_filter", "filter"),
+        &FileDialog::add_filter
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_filters", "filters"),
+        &FileDialog::set_filters
+    );
     ClassDB::bind_method(D_METHOD("get_filters"), &FileDialog::get_filters);
-    ClassDB::bind_method(D_METHOD("get_current_dir"), &FileDialog::get_current_dir);
-    ClassDB::bind_method(D_METHOD("get_current_file"), &FileDialog::get_current_file);
-    ClassDB::bind_method(D_METHOD("get_current_path"), &FileDialog::get_current_path);
-    ClassDB::bind_method(D_METHOD("set_current_dir", "dir"), &FileDialog::set_current_dir);
-    ClassDB::bind_method(D_METHOD("set_current_file", "file"), &FileDialog::set_current_file);
-    ClassDB::bind_method(D_METHOD("set_current_path", "path"), &FileDialog::set_current_path);
-    ClassDB::bind_method(D_METHOD("set_mode_overrides_title", "override"), &FileDialog::set_mode_overrides_title);
-    ClassDB::bind_method(D_METHOD("is_mode_overriding_title"), &FileDialog::is_mode_overriding_title);
+    ClassDB::bind_method(
+        D_METHOD("get_current_dir"),
+        &FileDialog::get_current_dir
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_current_file"),
+        &FileDialog::get_current_file
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_current_path"),
+        &FileDialog::get_current_path
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_current_dir", "dir"),
+        &FileDialog::set_current_dir
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_current_file", "file"),
+        &FileDialog::set_current_file
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_current_path", "path"),
+        &FileDialog::set_current_path
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_mode_overrides_title", "override"),
+        &FileDialog::set_mode_overrides_title
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_mode_overriding_title"),
+        &FileDialog::is_mode_overriding_title
+    );
     ClassDB::bind_method(D_METHOD("set_mode", "mode"), &FileDialog::set_mode);
     ClassDB::bind_method(D_METHOD("get_mode"), &FileDialog::get_mode);
     ClassDB::bind_method(D_METHOD("get_vbox"), &FileDialog::get_vbox);
     ClassDB::bind_method(D_METHOD("get_line_edit"), &FileDialog::get_line_edit);
-    ClassDB::bind_method(D_METHOD("set_access", "access"), &FileDialog::set_access);
+    ClassDB::bind_method(
+        D_METHOD("set_access", "access"),
+        &FileDialog::set_access
+    );
     ClassDB::bind_method(D_METHOD("get_access"), &FileDialog::get_access);
-    ClassDB::bind_method(D_METHOD("set_show_hidden_files", "show"), &FileDialog::set_show_hidden_files);
-    ClassDB::bind_method(D_METHOD("is_showing_hidden_files"), &FileDialog::is_showing_hidden_files);
+    ClassDB::bind_method(
+        D_METHOD("set_show_hidden_files", "show"),
+        &FileDialog::set_show_hidden_files
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_showing_hidden_files"),
+        &FileDialog::is_showing_hidden_files
+    );
     ClassDB::bind_method(D_METHOD("_select_drive"), &FileDialog::_select_drive);
     ClassDB::bind_method(D_METHOD("_make_dir"), &FileDialog::_make_dir);
-    ClassDB::bind_method(D_METHOD("_make_dir_confirm"), &FileDialog::_make_dir_confirm);
-    ClassDB::bind_method(D_METHOD("_update_file_name"), &FileDialog::update_file_name);
-    ClassDB::bind_method(D_METHOD("_update_file_list"), &FileDialog::update_file_list);
+    ClassDB::bind_method(
+        D_METHOD("_make_dir_confirm"),
+        &FileDialog::_make_dir_confirm
+    );
+    ClassDB::bind_method(
+        D_METHOD("_update_file_name"),
+        &FileDialog::update_file_name
+    );
+    ClassDB::bind_method(
+        D_METHOD("_update_file_list"),
+        &FileDialog::update_file_list
+    );
     ClassDB::bind_method(D_METHOD("_update_dir"), &FileDialog::update_dir);
     ClassDB::bind_method(D_METHOD("_go_up"), &FileDialog::_go_up);
-    ClassDB::bind_method(D_METHOD("deselect_items"), &FileDialog::deselect_items);
+    ClassDB::bind_method(
+        D_METHOD("deselect_items"),
+        &FileDialog::deselect_items
+    );
 
     ClassDB::bind_method(D_METHOD("invalidate"), &FileDialog::invalidate);
 
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "mode_overrides_title"), "set_mode_overrides_title", "is_mode_overriding_title");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "mode", PROPERTY_HINT_ENUM, "Open File,Open Files,Open Folder,Open Any,Save"), "set_mode", "get_mode");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "access", PROPERTY_HINT_ENUM, "Resources,User data,File system"), "set_access", "get_access");
-    ADD_PROPERTY(PropertyInfo(Variant::POOL_STRING_ARRAY, "filters"), "set_filters", "get_filters");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "show_hidden_files"), "set_show_hidden_files", "is_showing_hidden_files");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "current_dir"), "set_current_dir", "get_current_dir");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "current_file"), "set_current_file", "get_current_file");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "current_path"), "set_current_path", "get_current_path");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "mode_overrides_title"),
+        "set_mode_overrides_title",
+        "is_mode_overriding_title"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "mode",
+            PROPERTY_HINT_ENUM,
+            "Open File,Open Files,Open Folder,Open Any,Save"
+        ),
+        "set_mode",
+        "get_mode"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "access",
+            PROPERTY_HINT_ENUM,
+            "Resources,User data,File system"
+        ),
+        "set_access",
+        "get_access"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::POOL_STRING_ARRAY, "filters"),
+        "set_filters",
+        "get_filters"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "show_hidden_files"),
+        "set_show_hidden_files",
+        "is_showing_hidden_files"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "current_dir"),
+        "set_current_dir",
+        "get_current_dir"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "current_file"),
+        "set_current_file",
+        "get_current_file"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "current_path"),
+        "set_current_path",
+        "get_current_path"
+    );
 
-    ADD_SIGNAL(MethodInfo("file_selected", PropertyInfo(Variant::STRING, "path")));
-    ADD_SIGNAL(MethodInfo("files_selected", PropertyInfo(Variant::POOL_STRING_ARRAY, "paths")));
-    ADD_SIGNAL(MethodInfo("dir_selected", PropertyInfo(Variant::STRING, "dir")));
+    ADD_SIGNAL(
+        MethodInfo("file_selected", PropertyInfo(Variant::STRING, "path"))
+    );
+    ADD_SIGNAL(MethodInfo(
+        "files_selected",
+        PropertyInfo(Variant::POOL_STRING_ARRAY, "paths")
+    ));
+    ADD_SIGNAL(MethodInfo("dir_selected", PropertyInfo(Variant::STRING, "dir"))
+    );
 
     BIND_ENUM_CONSTANT(MODE_OPEN_FILE);
     BIND_ENUM_CONSTANT(MODE_OPEN_FILES);
@@ -858,13 +1012,13 @@ FileDialog::FileDialog() {
 
     mode_overrides_title = true;
 
-    VBoxContainer *vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
     add_child(vbc);
 
     mode = MODE_SAVE_FILE;
     set_title(RTR("Save a File"));
 
-    HBoxContainer *hbc = memnew(HBoxContainer);
+    HBoxContainer* hbc = memnew(HBoxContainer);
 
     dir_up = memnew(ToolButton);
     dir_up->set_tooltip(RTR("Go to parent folder."));
@@ -927,8 +1081,20 @@ FileDialog::FileDialog() {
     _update_drives();
 
     connect("confirmed", this, "_action_pressed");
-    tree->connect("multi_selected", this, "_tree_multi_selected", varray(), CONNECT_DEFERRED);
-    tree->connect("cell_selected", this, "_tree_selected", varray(), CONNECT_DEFERRED);
+    tree->connect(
+        "multi_selected",
+        this,
+        "_tree_multi_selected",
+        varray(),
+        CONNECT_DEFERRED
+    );
+    tree->connect(
+        "cell_selected",
+        this,
+        "_tree_selected",
+        varray(),
+        CONNECT_DEFERRED
+    );
     tree->connect("item_activated", this, "_tree_item_activated", varray());
     tree->connect("nothing_selected", this, "deselect_items");
     dir->connect("text_entered", this, "_dir_entered");
@@ -943,7 +1109,7 @@ FileDialog::FileDialog() {
 
     makedialog = memnew(ConfirmationDialog);
     makedialog->set_title(RTR("Create Folder"));
-    VBoxContainer *makevb = memnew(VBoxContainer);
+    VBoxContainer* makevb = memnew(VBoxContainer);
     makedialog->add_child(makevb);
 
     makedirname = memnew(LineEdit);
@@ -981,12 +1147,21 @@ FileDialog::~FileDialog() {
 void LineEditFileChooser::_bind_methods() {
     ClassDB::bind_method(D_METHOD("_browse"), &LineEditFileChooser::_browse);
     ClassDB::bind_method(D_METHOD("_chosen"), &LineEditFileChooser::_chosen);
-    ClassDB::bind_method(D_METHOD("get_button"), &LineEditFileChooser::get_button);
-    ClassDB::bind_method(D_METHOD("get_line_edit"), &LineEditFileChooser::get_line_edit);
-    ClassDB::bind_method(D_METHOD("get_file_dialog"), &LineEditFileChooser::get_file_dialog);
+    ClassDB::bind_method(
+        D_METHOD("get_button"),
+        &LineEditFileChooser::get_button
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_line_edit"),
+        &LineEditFileChooser::get_line_edit
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_file_dialog"),
+        &LineEditFileChooser::get_file_dialog
+    );
 }
 
-void LineEditFileChooser::_chosen(const String &p_text) {
+void LineEditFileChooser::_chosen(const String& p_text) {
     line_edit->set_text(p_text);
     line_edit->emit_signal("text_entered", p_text);
 }

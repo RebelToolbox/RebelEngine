@@ -43,16 +43,31 @@ import javax.microedition.khronos.egl.EGLDisplay;
  */
 public class OvrContextFactory implements GLSurfaceView.EGLContextFactory {
     private static final int[] CONTEXT_ATTRIBS = {
-        EGL14.EGL_CONTEXT_CLIENT_VERSION, 3, EGL10.EGL_NONE
+        EGL14.EGL_CONTEXT_CLIENT_VERSION,
+        3,
+        EGL10.EGL_NONE
     };
 
     @Override
-    public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
-        return egl.eglCreateContext(display, eglConfig, EGL10.EGL_NO_CONTEXT, CONTEXT_ATTRIBS);
+    public EGLContext createContext(
+        EGL10 egl,
+        EGLDisplay display,
+        EGLConfig eglConfig
+    ) {
+        return egl.eglCreateContext(
+            display,
+            eglConfig,
+            EGL10.EGL_NO_CONTEXT,
+            CONTEXT_ATTRIBS
+        );
     }
 
     @Override
-    public void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context) {
+    public void destroyContext(
+        EGL10 egl,
+        EGLDisplay display,
+        EGLContext context
+    ) {
         egl.eglDestroyContext(display, context);
     }
 }

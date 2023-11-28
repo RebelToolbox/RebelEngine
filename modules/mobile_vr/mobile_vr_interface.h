@@ -37,14 +37,16 @@
 /**
     @author Bastiaan Olij <mux213@gmail.com>
 
-    The mobile interface is a native VR interface that can be used on Android and iOS phones.
-    It contains a basic implementation supporting 3DOF tracking if a gyroscope and accelerometer are
-    present and sets up the proper projection matrices based on the values provided.
+    The mobile interface is a native VR interface that can be used on Android
+   and iOS phones. It contains a basic implementation supporting 3DOF tracking
+   if a gyroscope and accelerometer are present and sets up the proper
+   projection matrices based on the values provided.
 
-    We're planning to eventually do separate interfaces towards mobile SDKs that have far more capabilities and
-    do not rely on the user providing most of these settings (though enhancing this with auto detection features
-    based on the device we're running on would be cool). I'm mostly adding this as an example or base plate for
-    more advanced interfaces.
+    We're planning to eventually do separate interfaces towards mobile SDKs that
+   have far more capabilities and do not rely on the user providing most of
+   these settings (though enhancing this with auto detection features based on
+   the device we're running on would be cool). I'm mostly adding this as an
+   example or base plate for more advanced interfaces.
 */
 
 class MobileVRInterface : public ARVRInterface {
@@ -66,12 +68,13 @@ private:
     real_t k2;
 
     /*
-        logic for processing our sensor data, this was originally in our positional tracker logic but I think
-        that doesn't make sense in hindsight. It only makes marginally more sense to park it here for now,
+        logic for processing our sensor data, this was originally in our
+       positional tracker logic but I think that doesn't make sense in
+       hindsight. It only makes marginally more sense to park it here for now,
         this probably deserves an object of its own
     */
-    Vector3 scale_magneto(const Vector3 &p_magnetometer);
-    Basis combine_acc_mag(const Vector3 &p_grav, const Vector3 &p_magneto);
+    Vector3 scale_magneto(const Vector3& p_magnetometer);
+    Basis combine_acc_mag(const Vector3& p_grav, const Vector3& p_magneto);
 
     int mag_count;
     bool has_gyro;
@@ -83,22 +86,40 @@ private:
     Vector3 mag_next_min;
     Vector3 mag_next_max;
 
-    ///@TODO a few support functions for trackers, most are math related and should likely be moved elsewhere
+    ///@TODO a few support functions for trackers, most are math related and
+    /// should likely be moved elsewhere
     float floor_decimals(float p_value, float p_decimals) {
         float power_of_10 = pow(10.0f, p_decimals);
         return floor(p_value * power_of_10) / power_of_10;
     };
 
-    Vector3 floor_decimals(const Vector3 &p_vector, float p_decimals) {
-        return Vector3(floor_decimals(p_vector.x, p_decimals), floor_decimals(p_vector.y, p_decimals), floor_decimals(p_vector.z, p_decimals));
+    Vector3 floor_decimals(const Vector3& p_vector, float p_decimals) {
+        return Vector3(
+            floor_decimals(p_vector.x, p_decimals),
+            floor_decimals(p_vector.y, p_decimals),
+            floor_decimals(p_vector.z, p_decimals)
+        );
     };
 
-    Vector3 low_pass(const Vector3 &p_vector, const Vector3 &p_last_vector, float p_factor) {
+    Vector3 low_pass(
+        const Vector3& p_vector,
+        const Vector3& p_last_vector,
+        float p_factor
+    ) {
         return p_vector + (p_factor * (p_last_vector - p_vector));
     };
 
-    Vector3 scrub(const Vector3 &p_vector, const Vector3 &p_last_vector, float p_decimals, float p_factor) {
-        return low_pass(floor_decimals(p_vector, p_decimals), p_last_vector, p_factor);
+    Vector3 scrub(
+        const Vector3& p_vector,
+        const Vector3& p_last_vector,
+        float p_decimals,
+        float p_factor
+    ) {
+        return low_pass(
+            floor_decimals(p_vector, p_decimals),
+            p_last_vector,
+            p_factor
+        );
     };
 
     void set_position_from_sensors();
@@ -137,9 +158,21 @@ public:
 
     virtual Size2 get_render_targetsize();
     virtual bool is_stereo();
-    virtual Transform get_transform_for_eye(ARVRInterface::Eyes p_eye, const Transform &p_cam_transform);
-    virtual CameraMatrix get_projection_for_eye(ARVRInterface::Eyes p_eye, real_t p_aspect, real_t p_z_near, real_t p_z_far);
-    virtual void commit_for_eye(ARVRInterface::Eyes p_eye, RID p_render_target, const Rect2 &p_screen_rect);
+    virtual Transform get_transform_for_eye(
+        ARVRInterface::Eyes p_eye,
+        const Transform& p_cam_transform
+    );
+    virtual CameraMatrix get_projection_for_eye(
+        ARVRInterface::Eyes p_eye,
+        real_t p_aspect,
+        real_t p_z_near,
+        real_t p_z_far
+    );
+    virtual void commit_for_eye(
+        ARVRInterface::Eyes p_eye,
+        RID p_render_target,
+        const Rect2& p_screen_rect
+    );
 
     virtual void process();
     virtual void notification(int p_what);

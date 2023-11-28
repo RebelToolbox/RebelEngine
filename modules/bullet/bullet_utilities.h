@@ -35,12 +35,11 @@
     @author AndreaCatania
 */
 
-#define bulletnew(cl) \
-    new cl
+#define bulletnew(cl) new cl
 
-#define bulletdelete(cl) \
-    {                    \
-        delete cl;       \
-        cl = NULL;       \
+#define bulletdelete(cl)                                                       \
+    {                                                                          \
+        delete cl;                                                             \
+        cl = NULL;                                                             \
     }
 #endif

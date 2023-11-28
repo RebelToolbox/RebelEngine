@@ -37,24 +37,24 @@
 class NodeDock : public VBoxContainer {
     GDCLASS(NodeDock, VBoxContainer);
 
-    ToolButton *connections_button;
-    ToolButton *groups_button;
+    ToolButton* connections_button;
+    ToolButton* groups_button;
 
-    ConnectionsDock *connections;
-    GroupsEditor *groups;
+    ConnectionsDock* connections;
+    GroupsEditor* groups;
 
-    HBoxContainer *mode_hb;
+    HBoxContainer* mode_hb;
 
-    Label *select_a_node;
+    Label* select_a_node;
 
 protected:
     static void _bind_methods();
     void _notification(int p_what);
 
 public:
-    static NodeDock *singleton;
+    static NodeDock* singleton;
 
-    void set_node(Node *p_node);
+    void set_node(Node* p_node);
 
     void show_groups();
     void show_connections();

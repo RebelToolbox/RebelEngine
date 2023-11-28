@@ -49,7 +49,7 @@ class RayCast : public Spatial {
     uint32_t collision_mask;
     bool exclude_parent_body;
 
-    Node *debug_shape;
+    Node* debug_shape;
     Ref<Material> debug_material;
     Color debug_shape_custom_color = Color(0.0, 0.0, 0.0);
     int debug_shape_thickness = 2;
@@ -80,7 +80,7 @@ public:
     void set_enabled(bool p_enabled);
     bool is_enabled() const;
 
-    void set_cast_to(const Vector3 &p_point);
+    void set_cast_to(const Vector3& p_point);
     Vector3 get_cast_to() const;
 
     void set_collision_mask(uint32_t p_mask);
@@ -92,11 +92,11 @@ public:
     void set_exclude_parent_body(bool p_exclude_parent_body);
     bool get_exclude_parent_body() const;
 
-    const Color &get_debug_shape_custom_color() const;
-    void set_debug_shape_custom_color(const Color &p_color);
+    const Color& get_debug_shape_custom_color() const;
+    void set_debug_shape_custom_color(const Color& p_color);
 
-    const Vector<Vector3> &get_debug_shape_vertices() const;
-    const Vector<Vector3> &get_debug_line_vertices() const;
+    const Vector<Vector3>& get_debug_shape_vertices() const;
+    const Vector<Vector3>& get_debug_line_vertices() const;
 
     Ref<SpatialMaterial> get_debug_material();
 
@@ -105,15 +105,15 @@ public:
 
     void force_raycast_update();
     bool is_colliding() const;
-    Object *get_collider() const;
+    Object* get_collider() const;
     int get_collider_shape() const;
     Vector3 get_collision_point() const;
     Vector3 get_collision_normal() const;
 
-    void add_exception_rid(const RID &p_rid);
-    void add_exception(const Object *p_object);
-    void remove_exception_rid(const RID &p_rid);
-    void remove_exception(const Object *p_object);
+    void add_exception_rid(const RID& p_rid);
+    void add_exception(const Object* p_object);
+    void remove_exception_rid(const RID& p_rid);
+    void remove_exception(const Object* p_object);
     void clear_exceptions();
 
     RayCast();

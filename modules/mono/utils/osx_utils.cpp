@@ -37,9 +37,14 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
 
-bool osx_is_app_bundle_installed(const String &p_bundle_id) {
-    CFStringRef bundle_id = CFStringCreateWithCString(nullptr, p_bundle_id.utf8(), kCFStringEncodingUTF8);
-    CFArrayRef result = LSCopyApplicationURLsForBundleIdentifier(bundle_id, nullptr);
+bool osx_is_app_bundle_installed(const String& p_bundle_id) {
+    CFStringRef bundle_id = CFStringCreateWithCString(
+        nullptr,
+        p_bundle_id.utf8(),
+        kCFStringEncodingUTF8
+    );
+    CFArrayRef result =
+        LSCopyApplicationURLsForBundleIdentifier(bundle_id, nullptr);
     CFRelease(bundle_id);
 
     if (result) {

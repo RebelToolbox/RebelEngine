@@ -43,5 +43,4 @@ Panel::Panel() {
     set_mouse_filter(MOUSE_FILTER_STOP);
 }
 
-Panel::~Panel() {
-}
+Panel::~Panel() {}

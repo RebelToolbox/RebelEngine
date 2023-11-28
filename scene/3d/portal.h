@@ -51,7 +51,7 @@ class Portal : public Spatial {
 
 public:
     // ui interface .. will have no effect after room conversion
-    void set_linked_room(const NodePath &link_path);
+    void set_linked_room(const NodePath& link_path);
     NodePath get_linked_room() const;
 
     // open and close doors
@@ -63,7 +63,10 @@ public:
         _settings_two_way = p_two_way;
         _changed();
     }
-    bool is_two_way() const { return _settings_two_way; }
+
+    bool is_two_way() const {
+        return _settings_two_way;
+    }
 
     // call during each conversion
     void clear();
@@ -72,47 +75,65 @@ public:
     void set_use_default_margin(bool p_use);
     bool get_use_default_margin() const;
 
-    // custom portal margin (per portal) .. only valid if use_default_margin is off
+    // custom portal margin (per portal) .. only valid if use_default_margin is
+    // off
     void set_portal_margin(real_t p_margin);
     real_t get_portal_margin() const;
 
-    // either the default margin or the custom portal margin, depending on the setting
+    // either the default margin or the custom portal margin, depending on the
+    // setting
     real_t get_active_portal_margin() const;
 
     // the raw points are used for the IDE Inspector, and also to allow the user
-    // to edit the geometry of the portal at runtime (they can also just change the portal node transform)
-    void set_points(const PoolVector<Vector2> &p_points);
+    // to edit the geometry of the portal at runtime (they can also just change
+    // the portal node transform)
+    void set_points(const PoolVector<Vector2>& p_points);
     PoolVector<Vector2> get_points() const;
 
     // primarily for the gizmo
-    void set_point(int p_idx, const Vector2 &p_point);
+    void set_point(int p_idx, const Vector2& p_point);
 
     String get_configuration_warning() const;
 
     Portal();
     ~Portal();
 
-    // whether the convention is that the normal of the portal points outward (false) or inward (true)
-    // normally I'd recommend portal normal faces outward. But you may make a booboo, so this can work
-    // with either convention.
+    // whether the convention is that the normal of the portal points outward
+    // (false) or inward (true) normally I'd recommend portal normal faces
+    // outward. But you may make a booboo, so this can work with either
+    // convention.
     static bool _portal_plane_convention;
 
 private:
-    // updates world coords when the transform changes, and updates the visual server
+    // updates world coords when the transform changes, and updates the visual
+    // server
     void portal_update();
 
-    void set_linked_room_internal(const NodePath &link_path);
-    bool try_set_unique_name(const String &p_name);
-    bool is_portal_internal(int p_room_outer) const { return _internal && (_linkedroom_ID[0] != p_room_outer); }
+    void set_linked_room_internal(const NodePath& link_path);
+    bool try_set_unique_name(const String& p_name);
 
-    bool create_from_mesh_instance(const MeshInstance *p_mi);
+    bool is_portal_internal(int p_room_outer) const {
+        return _internal && (_linkedroom_ID[0] != p_room_outer);
+    }
+
+    bool create_from_mesh_instance(const MeshInstance* p_mi);
     void flip();
     void _sanitize_points();
     void _update_aabb();
-    static Vector3 _vec2to3(const Vector2 &p_pt) { return Vector3(p_pt.x, p_pt.y, 0.0); }
-    void _sort_verts_clockwise(const Vector3 &p_portal_normal, Vector<Vector3> &r_verts);
-    Plane _plane_from_points_newell(const Vector<Vector3> &p_pts);
-    void resolve_links(const LocalVector<Room *, int32_t> &p_rooms, const RID &p_from_room_rid);
+
+    static Vector3 _vec2to3(const Vector2& p_pt) {
+        return Vector3(p_pt.x, p_pt.y, 0.0);
+    }
+
+    void _sort_verts_clockwise(
+        const Vector3& p_portal_normal,
+        Vector<Vector3>& r_verts
+    );
+    Plane _plane_from_points_newell(const Vector<Vector3>& p_pts);
+    void resolve_links(
+        const LocalVector<Room*, int32_t>& p_rooms,
+        const RID& p_from_room_rid
+    );
     void _changed();
 
     // nodepath to the room this outgoing portal leads to

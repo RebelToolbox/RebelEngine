@@ -40,12 +40,12 @@ class LightmapDenoiserOIDN : public LightmapDenoiser {
     GDCLASS(LightmapDenoiserOIDN, LightmapDenoiser);
 
 protected:
-    void *device = nullptr;
+    void* device = nullptr;
 
 public:
-    static LightmapDenoiser *create_oidn_denoiser();
+    static LightmapDenoiser* create_oidn_denoiser();
 
-    Ref<Image> denoise_image(const Ref<Image> &p_image);
+    Ref<Image> denoise_image(const Ref<Image>& p_image);
 
     static void make_default_denoiser();
 

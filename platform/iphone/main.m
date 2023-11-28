@@ -34,16 +34,17 @@
 #include <stdio.h>
 
 int gargc;
-char **gargv;
+char** gargv;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     printf("*********** main.m\n");
     gargc = argc;
     gargv = argv;
 
     printf("running app main\n");
     @autoreleasepool {
-        NSString *className = NSStringFromClass([GodotApplicalitionDelegate class]);
+        NSString* className =
+            NSStringFromClass([GodotApplicalitionDelegate class]);
         UIApplicationMain(argc, argv, nil, className);
     }
     printf("main done\n");

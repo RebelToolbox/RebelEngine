@@ -42,7 +42,9 @@ class VisualScriptExpression : public VisualScriptNode {
         Variant::Type type;
         String name;
 
-        Input() { type = Variant::NIL; }
+        Input() {
+            type = Variant::NIL;
+        }
     };
 
     Vector<Input> inputs;
@@ -97,13 +99,14 @@ class VisualScriptExpression : public VisualScriptNode {
         TK_MAX
     };
 
-    static const char *token_name[TK_MAX];
+    static const char* token_name[TK_MAX];
+
     struct Token {
         TokenType type;
         Variant value;
     };
 
-    void _set_error(const String &p_err) {
+    void _set_error(const String& p_err) {
         if (error_set) {
             return;
         }
@@ -111,7 +114,7 @@ class VisualScriptExpression : public VisualScriptNode {
         error_set = true;
     }
 
-    Error _get_token(Token &r_token);
+    Error _get_token(Token& r_token);
 
     String error_str;
     bool error_set;
@@ -131,11 +134,14 @@ class VisualScriptExpression : public VisualScriptNode {
             TYPE_CALL
         };
 
-        ENode *next;
+        ENode* next;
 
         Type type;
 
-        ENode() { next = nullptr; }
+        ENode() {
+            next = nullptr;
+        }
+
         virtual ~ENode() {
             if (next) {
                 memdelete(next);
@@ -145,16 +151,18 @@ class VisualScriptExpression : public VisualScriptNode {
 
     struct Expression {
         bool is_op;
+
         union {
             Variant::Operator op;
-            ENode *node;
+            ENode* node;
         };
     };
 
-    ENode *_parse_expression();
+    ENode* _parse_expression();
 
     struct InputNode : public ENode {
         int index;
+
         InputNode() {
             type = TYPE_INPUT;
         }
@@ -162,6 +170,7 @@ class VisualScriptExpression : public VisualScriptNode {
 
     struct ConstantNode : public ENode {
         Variant value;
+
         ConstantNode() {
             type = TYPE_CONSTANT;
         }
@@ -170,7 +179,7 @@ class VisualScriptExpression : public VisualScriptNode {
     struct OperatorNode : public ENode {
         Variant::Operator op;
 
-        ENode *nodes[2];
+        ENode* nodes[2];
 
         OperatorNode() {
             type = TYPE_OPERATOR;
@@ -184,8 +193,8 @@ class VisualScriptExpression : public VisualScriptNode {
     };
 
     struct IndexNode : public ENode {
-        ENode *base;
-        ENode *index;
+        ENode* base;
+        ENode* index;
 
         IndexNode() {
             type = TYPE_INDEX;
@@ -193,7 +202,7 @@ class VisualScriptExpression : public VisualScriptNode {
     };
 
     struct NamedIndexNode : public ENode {
-        ENode *base;
+        ENode* base;
         StringName name;
 
         NamedIndexNode() {
@@ -203,7 +212,7 @@ class VisualScriptExpression : public VisualScriptNode {
 
     struct ConstructorNode : public ENode {
         Variant::Type data_type;
-        Vector<ENode *> arguments;
+        Vector<ENode*> arguments;
 
         ConstructorNode() {
             type = TYPE_CONSTRUCTOR;
@@ -211,9 +220,9 @@ class VisualScriptExpression : public VisualScriptNode {
     };
 
     struct CallNode : public ENode {
-        ENode *base;
+        ENode* base;
         StringName method;
-        Vector<ENode *> arguments;
+        Vector<ENode*> arguments;
 
         CallNode() {
             type = TYPE_CALL;
@@ -221,14 +230,16 @@ class VisualScriptExpression : public VisualScriptNode {
     };
 
     struct ArrayNode : public ENode {
-        Vector<ENode *> array;
+        Vector<ENode*> array;
+
         ArrayNode() {
             type = TYPE_ARRAY;
         }
     };
 
     struct DictionaryNode : public ENode {
-        Vector<ENode *> dict;
+        Vector<ENode*> dict;
+
         DictionaryNode() {
             type = TYPE_DICTIONARY;
         }
@@ -236,27 +247,28 @@ class VisualScriptExpression : public VisualScriptNode {
 
     struct BuiltinFuncNode : public ENode {
         VisualScriptBuiltinFunc::BuiltinFunc func;
-        Vector<ENode *> arguments;
+        Vector<ENode*> arguments;
+
         BuiltinFuncNode() {
             type = TYPE_BUILTIN_FUNC;
         }
     };
 
     template <class T>
-    T *alloc_node() {
-        T *node = memnew(T);
+    T* alloc_node() {
+        T* node = memnew(T);
         node->next = nodes;
         nodes = node;
         return node;
     }
 
-    ENode *root;
-    ENode *nodes;
+    ENode* root;
+    ENode* nodes;
 
 protected:
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
 
 public:
     virtual int get_output_sequence_port_count() const;
@@ -272,9 +284,13 @@ public:
 
     virtual String get_caption() const;
     virtual String get_text() const;
-    virtual String get_category() const { return "operators"; }
 
-    virtual VisualScriptNodeInstance *instance(VisualScriptInstance *p_instance);
+    virtual String get_category() const {
+        return "operators";
+    }
+
+    virtual VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    );
 
     VisualScriptExpression();
     ~VisualScriptExpression();

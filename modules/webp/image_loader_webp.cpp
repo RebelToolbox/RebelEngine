@@ -39,8 +39,14 @@
 #include <webp/decode.h>
 #include <webp/encode.h>
 
-static PoolVector<uint8_t> _webp_lossy_pack(const Ref<Image> &p_image, float p_quality) {
-    ERR_FAIL_COND_V(p_image.is_null() || p_image->empty(), PoolVector<uint8_t>());
+static PoolVector<uint8_t> _webp_lossy_pack(
+    const Ref<Image>& p_image,
+    float p_quality
+) {
+    ERR_FAIL_COND_V(
+        p_image.is_null() || p_image->empty(),
+        PoolVector<uint8_t>()
+    );
 
     Ref<Image> img = p_image->duplicate();
     if (img->detect_alpha()) {
@@ -53,12 +59,26 @@ static PoolVector<uint8_t> _webp_lossy_pack(const Ref<Image> &p_image, float p_q
     PoolVector<uint8_t> data = img->get_data();
     PoolVector<uint8_t>::Read r = data.read();
 
-    uint8_t *dst_buff = nullptr;
+    uint8_t* dst_buff = nullptr;
     size_t dst_size = 0;
     if (img->get_format() == Image::FORMAT_RGB8) {
-        dst_size = WebPEncodeRGB(r.ptr(), s.width, s.height, 3 * s.width, CLAMP(p_quality * 100.0, 0, 100.0), &dst_buff);
+        dst_size = WebPEncodeRGB(
+            r.ptr(),
+            s.width,
+            s.height,
+            3 * s.width,
+            CLAMP(p_quality * 100.0, 0, 100.0),
+            &dst_buff
+        );
     } else {
-        dst_size = WebPEncodeRGBA(r.ptr(), s.width, s.height, 4 * s.width, CLAMP(p_quality * 100.0, 0, 100.0), &dst_buff);
+        dst_size = WebPEncodeRGBA(
+            r.ptr(),
+            s.width,
+            s.height,
+            4 * s.width,
+            CLAMP(p_quality * 100.0, 0, 100.0),
+            &dst_buff
+        );
     }
 
     ERR_FAIL_COND_V(dst_size == 0, PoolVector<uint8_t>());
@@ -75,10 +95,15 @@ static PoolVector<uint8_t> _webp_lossy_pack(const Ref<Image> &p_image, float p_q
     return dst;
 }
 
-static PoolVector<uint8_t> _webp_lossless_pack(const Ref<Image> &p_image) {
-    ERR_FAIL_COND_V(p_image.is_null() || p_image->empty(), PoolVector<uint8_t>());
+static PoolVector<uint8_t> _webp_lossless_pack(const Ref<Image>& p_image) {
+    ERR_FAIL_COND_V(
+        p_image.is_null() || p_image->empty(),
+        PoolVector<uint8_t>()
+    );
 
-    int compression_level = ProjectSettings::get_singleton()->get("rendering/misc/lossless_compression/webp_compression_level");
+    int compression_level = ProjectSettings::get_singleton()->get(
+        "rendering/misc/lossless_compression/webp_compression_level"
+    );
     compression_level = CLAMP(compression_level, 0, 9);
 
     Ref<Image> img = p_image->duplicate();
@@ -92,11 +117,14 @@ static PoolVector<uint8_t> _webp_lossless_pack(const Ref<Image> &p_image) {
     PoolVector<uint8_t> data = img->get_data();
     PoolVector<uint8_t>::Read r = data.read();
 
-    // we need to use the more complex API in order to access the 'exact' flag...
+    // we need to use the more complex API in order to access the 'exact'
+    // flag...
 
     WebPConfig config;
     WebPPicture pic;
-    if (!WebPConfigInit(&config) || !WebPConfigLosslessPreset(&config, compression_level) || !WebPPictureInit(&pic)) {
+    if (!WebPConfigInit(&config)
+        || !WebPConfigLosslessPreset(&config, compression_level)
+        || !WebPPictureInit(&pic)) {
         ERR_FAIL_V(PoolVector<uint8_t>());
     }
 
@@ -141,12 +169,15 @@ static PoolVector<uint8_t> _webp_lossless_pack(const Ref<Image> &p_image) {
     return dst;
 }
 
-static Ref<Image> _webp_lossy_unpack(const PoolVector<uint8_t> &p_buffer) {
+static Ref<Image> _webp_lossy_unpack(const PoolVector<uint8_t>& p_buffer) {
     int size = p_buffer.size() - 4;
     ERR_FAIL_COND_V(size <= 0, Ref<Image>());
     PoolVector<uint8_t>::Read r = p_buffer.read();
 
-    ERR_FAIL_COND_V(r[0] != 'W' || r[1] != 'E' || r[2] != 'B' || r[3] != 'P', Ref<Image>());
+    ERR_FAIL_COND_V(
+        r[0] != 'W' || r[1] != 'E' || r[2] != 'B' || r[3] != 'P',
+        Ref<Image>()
+    );
     WebPBitstreamFeatures features;
     if (WebPGetFeatures(&r[4], size, &features) != VP8_STATUS_OK) {
         ERR_FAIL_V_MSG(Ref<Image>(), "Error unpacking WEBP image.");
@@ -159,27 +190,52 @@ static Ref<Image> _webp_lossy_unpack(const PoolVector<uint8_t> &p_buffer) {
     */
 
     PoolVector<uint8_t> dst_image;
-    int datasize = features.width * features.height * (features.has_alpha ? 4 : 3);
+    int datasize =
+        features.width * features.height * (features.has_alpha ? 4 : 3);
     dst_image.resize(datasize);
 
     PoolVector<uint8_t>::Write dst_w = dst_image.write();
 
     bool errdec = false;
     if (features.has_alpha) {
-        errdec = WebPDecodeRGBAInto(&r[4], size, dst_w.ptr(), datasize, 4 * features.width) == nullptr;
+        errdec = WebPDecodeRGBAInto(
+                     &r[4],
+                     size,
+                     dst_w.ptr(),
+                     datasize,
+                     4 * features.width
+                 )
+              == nullptr;
     } else {
-        errdec = WebPDecodeRGBInto(&r[4], size, dst_w.ptr(), datasize, 3 * features.width) == nullptr;
+        errdec = WebPDecodeRGBInto(
+                     &r[4],
+                     size,
+                     dst_w.ptr(),
+                     datasize,
+                     3 * features.width
+                 )
+              == nullptr;
     }
 
     ERR_FAIL_COND_V_MSG(errdec, Ref<Image>(), "Failed decoding WebP image.");
 
     dst_w.release();
 
-    Ref<Image> img = memnew(Image(features.width, features.height, 0, features.has_alpha ? Image::FORMAT_RGBA8 : Image::FORMAT_RGB8, dst_image));
+    Ref<Image> img = memnew(Image(
+        features.width,
+        features.height,
+        0,
+        features.has_alpha ? Image::FORMAT_RGBA8 : Image::FORMAT_RGB8,
+        dst_image
+    ));
     return img;
 }
 
-Error webp_load_image_from_buffer(Image *p_image, const uint8_t *p_buffer, int p_buffer_len) {
+Error webp_load_image_from_buffer(
+    Image* p_image,
+    const uint8_t* p_buffer,
+    int p_buffer_len
+) {
     ERR_FAIL_NULL_V(p_image, ERR_INVALID_PARAMETER);
 
     WebPBitstreamFeatures features;
@@ -188,26 +244,51 @@ Error webp_load_image_from_buffer(Image *p_image, const uint8_t *p_buffer, int p
     }
 
     PoolVector<uint8_t> dst_image;
-    int datasize = features.width * features.height * (features.has_alpha ? 4 : 3);
+    int datasize =
+        features.width * features.height * (features.has_alpha ? 4 : 3);
     dst_image.resize(datasize);
     PoolVector<uint8_t>::Write dst_w = dst_image.write();
 
     bool errdec = false;
     if (features.has_alpha) {
-        errdec = WebPDecodeRGBAInto(p_buffer, p_buffer_len, dst_w.ptr(), datasize, 4 * features.width) == nullptr;
+        errdec = WebPDecodeRGBAInto(
+                     p_buffer,
+                     p_buffer_len,
+                     dst_w.ptr(),
+                     datasize,
+                     4 * features.width
+                 )
+              == nullptr;
     } else {
-        errdec = WebPDecodeRGBInto(p_buffer, p_buffer_len, dst_w.ptr(), datasize, 3 * features.width) == nullptr;
+        errdec = WebPDecodeRGBInto(
+                     p_buffer,
+                     p_buffer_len,
+                     dst_w.ptr(),
+                     datasize,
+                     3 * features.width
+                 )
+              == nullptr;
     }
     dst_w.release();
 
-    ERR_FAIL_COND_V_MSG(errdec, ERR_FILE_CORRUPT, "Failed decoding WebP image.");
+    ERR_FAIL_COND_V_MSG(
+        errdec,
+        ERR_FILE_CORRUPT,
+        "Failed decoding WebP image."
+    );
 
-    p_image->create(features.width, features.height, false, features.has_alpha ? Image::FORMAT_RGBA8 : Image::FORMAT_RGB8, dst_image);
+    p_image->create(
+        features.width,
+        features.height,
+        false,
+        features.has_alpha ? Image::FORMAT_RGBA8 : Image::FORMAT_RGB8,
+        dst_image
+    );
 
     return OK;
 }
 
-static Ref<Image> _webp_mem_loader_func(const uint8_t *p_png, int p_size) {
+static Ref<Image> _webp_mem_loader_func(const uint8_t* p_png, int p_size) {
     Ref<Image> img;
     img.instance();
     Error err = webp_load_image_from_buffer(img.ptr(), p_png, p_size);
@@ -215,7 +296,12 @@ static Ref<Image> _webp_mem_loader_func(const uint8_t *p_png, int p_size) {
     return img;
 }
 
-Error ImageLoaderWEBP::load_image(Ref<Image> p_image, FileAccess *f, bool p_force_linear, float p_scale) {
+Error ImageLoaderWEBP::load_image(
+    Ref<Image> p_image,
+    FileAccess* f,
+    bool p_force_linear,
+    float p_scale
+) {
     PoolVector<uint8_t> src_image;
     uint64_t src_image_len = f->get_len();
     ERR_FAIL_COND_V(src_image_len == 0, ERR_FILE_CORRUPT);
@@ -227,12 +313,14 @@ Error ImageLoaderWEBP::load_image(Ref<Image> p_image, FileAccess *f, bool p_forc
 
     f->close();
 
-    Error err = webp_load_image_from_buffer(p_image.ptr(), w.ptr(), src_image_len);
+    Error err =
+        webp_load_image_from_buffer(p_image.ptr(), w.ptr(), src_image_len);
 
     return err;
 }
 
-void ImageLoaderWEBP::get_recognized_extensions(List<String> *p_extensions) const {
+void ImageLoaderWEBP::get_recognized_extensions(List<String>* p_extensions
+) const {
     p_extensions->push_back("webp");
 }
 

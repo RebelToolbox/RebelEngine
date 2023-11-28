@@ -50,7 +50,7 @@ protected:
 public:
     static void initialize();
 
-    JavaScriptToolsEditorPlugin(EditorNode *p_editor);
+    JavaScriptToolsEditorPlugin(EditorNode* p_editor);
 };
 #else
 class JavaScriptToolsEditorPlugin {

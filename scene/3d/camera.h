@@ -41,7 +41,6 @@ class Camera : public Spatial {
 
 public:
     enum Projection {
-
         PROJECTION_PERSPECTIVE,
         PROJECTION_ORTHOGONAL,
         PROJECTION_FRUSTUM
@@ -61,7 +60,7 @@ public:
 private:
     bool force_change;
     bool current;
-    Viewport *viewport;
+    Viewport* viewport;
 
     Projection mode;
 
@@ -76,13 +75,13 @@ private:
     RID camera;
     RID scenario_id;
 
-    //String camera_group;
+    // String camera_group;
 
     uint32_t layers;
 
     Ref<Environment> environment;
 
-    //void _camera_make_current(Node *p_camera);
+    // void _camera_make_current(Node *p_camera);
     friend class Viewport;
     void _update_audio_listener_state();
 
@@ -95,20 +94,24 @@ protected:
     void _update_camera_mode();
 
     void _notification(int p_what);
-    virtual void _validate_property(PropertyInfo &p_property) const;
+    virtual void _validate_property(PropertyInfo& p_property) const;
 
     static void _bind_methods();
 
 public:
     enum {
-
         NOTIFICATION_BECAME_CURRENT = 50,
         NOTIFICATION_LOST_CURRENT = 51
     };
 
     void set_perspective(float p_fovy_degrees, float p_z_near, float p_z_far);
     void set_orthogonal(float p_size, float p_z_near, float p_z_far);
-    void set_frustum(float p_size, Vector2 p_offset, float p_z_near, float p_z_far);
+    void set_frustum(
+        float p_size,
+        Vector2 p_offset,
+        float p_z_near,
+        float p_z_far
+    );
     void set_projection(Camera::Projection p_mode);
 
     void make_current();
@@ -134,12 +137,13 @@ public:
 
     virtual Transform get_camera_transform() const;
 
-    virtual Vector3 project_ray_normal(const Point2 &p_pos) const;
-    virtual Vector3 project_ray_origin(const Point2 &p_pos) const;
-    virtual Vector3 project_local_ray_normal(const Point2 &p_pos) const;
-    virtual Point2 unproject_position(const Vector3 &p_pos) const;
-    bool is_position_behind(const Vector3 &p_pos) const;
-    virtual Vector3 project_position(const Point2 &p_point, float p_z_depth) const;
+    virtual Vector3 project_ray_normal(const Point2& p_pos) const;
+    virtual Vector3 project_ray_origin(const Point2& p_pos) const;
+    virtual Vector3 project_local_ray_normal(const Point2& p_pos) const;
+    virtual Point2 unproject_position(const Vector3& p_pos) const;
+    bool is_position_behind(const Vector3& p_pos) const;
+    virtual Vector3 project_position(const Point2& p_point, float p_z_depth)
+        const;
 
     Vector<Vector3> get_near_plane_points() const;
 
@@ -151,7 +155,7 @@ public:
 
     virtual Vector<Plane> get_frustum() const;
 
-    void set_environment(const Ref<Environment> &p_environment);
+    void set_environment(const Ref<Environment>& p_environment);
     Ref<Environment> get_environment() const;
 
     void set_keep_aspect_mode(KeepAspect p_aspect);
@@ -222,10 +226,10 @@ public:
     void set_collision_mask_bit(int p_bit, bool p_value);
     bool get_collision_mask_bit(int p_bit) const;
 
-    void add_exception_rid(const RID &p_rid);
-    void add_exception(const Object *p_object);
-    void remove_exception_rid(const RID &p_rid);
-    void remove_exception(const Object *p_object);
+    void add_exception_rid(const RID& p_rid);
+    void add_exception(const Object* p_object);
+    void remove_exception_rid(const RID& p_rid);
+    void remove_exception(const Object* p_object);
     void clear_exceptions();
 
     float get_clip_offset() const;

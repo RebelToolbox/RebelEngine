@@ -43,9 +43,9 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_shortcut(const Ref<InputEvent> &p_shortcut);
+    void set_shortcut(const Ref<InputEvent>& p_shortcut);
     Ref<InputEvent> get_shortcut() const;
-    bool is_shortcut(const Ref<InputEvent> &p_event) const;
+    bool is_shortcut(const Ref<InputEvent>& p_event) const;
     bool is_valid() const;
 
     String get_as_text() const;

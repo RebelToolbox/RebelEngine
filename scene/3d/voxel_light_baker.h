@@ -55,16 +55,16 @@ public:
 private:
     enum {
         CHILD_EMPTY = 0xFFFFFFFF
-
     };
 
     struct Cell {
         uint32_t children[8];
-        float albedo[3]; //albedo in RGB24
-        float emission[3]; //accumulated light in 16:16 fixed point (needs to be integer for moving lights fast)
+        float albedo[3];   // albedo in RGB24
+        float emission[3]; // accumulated light in 16:16 fixed point (needs to
+                           // be integer for moving lights fast)
         float normal[3];
         uint32_t used_sides;
-        float alpha; //used for upsampling
+        float alpha; // used for upsampling
         int level;
 
         Cell() {
@@ -88,9 +88,10 @@ private:
 
     struct Light {
         int x, y, z;
-        float accum[6][3]; //rgb anisotropic
-        float direct_accum[6][3]; //for direct bake
+        float accum[6][3];        // rgb anisotropic
+        float direct_accum[6][3]; // for direct bake
         int next_leaf;
+
         Light() {
             x = y = z = 0;
             for (int i = 0; i < 6; i++) {
@@ -108,7 +109,7 @@ private:
     Vector<Light> bake_light;
 
     struct MaterialCache {
-        //128x128 textures
+        // 128x128 textures
         Vector<Color> albedo;
         Vector<Color> emission;
     };
@@ -132,25 +133,87 @@ private:
 
     int max_original_cells;
 
-    void _init_light_plot(int p_idx, int p_level, int p_x, int p_y, int p_z, uint32_t p_parent);
+    void _init_light_plot(
+        int p_idx,
+        int p_level,
+        int p_x,
+        int p_y,
+        int p_z,
+        uint32_t p_parent
+    );
 
-    Vector<Color> _get_bake_texture(Ref<Image> p_image, const Color &p_color_mul, const Color &p_color_add);
+    Vector<Color> _get_bake_texture(
+        Ref<Image> p_image,
+        const Color& p_color_mul,
+        const Color& p_color_add
+    );
     MaterialCache _get_material_cache(Ref<Material> p_material);
 
-    void _plot_face(int p_idx, int p_level, int p_x, int p_y, int p_z, const Vector3 *p_vtx, const Vector3 *p_normal, const Vector2 *p_uv, const MaterialCache &p_material, const AABB &p_aabb);
+    void _plot_face(
+        int p_idx,
+        int p_level,
+        int p_x,
+        int p_y,
+        int p_z,
+        const Vector3* p_vtx,
+        const Vector3* p_normal,
+        const Vector2* p_uv,
+        const MaterialCache& p_material,
+        const AABB& p_aabb
+    );
     void _fixup_plot(int p_idx, int p_level);
-    void _debug_mesh(int p_idx, int p_level, const AABB &p_aabb, Ref<MultiMesh> &p_multimesh, int &idx, DebugMode p_mode);
+    void _debug_mesh(
+        int p_idx,
+        int p_level,
+        const AABB& p_aabb,
+        Ref<MultiMesh>& p_multimesh,
+        int& idx,
+        DebugMode p_mode
+    );
     void _check_init_light();
 
-    uint32_t _find_cell_at_pos(const Cell *cells, int x, int y, int z);
+    uint32_t _find_cell_at_pos(const Cell* cells, int x, int y, int z);
 
 public:
-    void begin_bake(int p_subdiv, const AABB &p_bounds);
-    void plot_mesh(const Transform &p_xform, Ref<Mesh> &p_mesh, const Vector<Ref<Material>> &p_materials, const Ref<Material> &p_override_material);
-    void begin_bake_light(BakeQuality p_quality = BAKE_QUALITY_MEDIUM, float p_propagation = 0.85);
-    void plot_light_directional(const Vector3 &p_direction, const Color &p_color, float p_energy, float p_indirect_energy, bool p_direct);
-    void plot_light_omni(const Vector3 &p_pos, const Color &p_color, float p_energy, float p_indirect_energy, float p_radius, float p_attenutation, bool p_direct);
-    void plot_light_spot(const Vector3 &p_pos, const Vector3 &p_axis, const Color &p_color, float p_energy, float p_indirect_energy, float p_radius, float p_attenutation, float p_spot_angle, float p_spot_attenuation, bool p_direct);
+    void begin_bake(int p_subdiv, const AABB& p_bounds);
+    void plot_mesh(
+        const Transform& p_xform,
+        Ref<Mesh>& p_mesh,
+        const Vector<Ref<Material>>& p_materials,
+        const Ref<Material>& p_override_material
+    );
+    void begin_bake_light(
+        BakeQuality p_quality = BAKE_QUALITY_MEDIUM,
+        float p_propagation = 0.85
+    );
+    void plot_light_directional(
+        const Vector3& p_direction,
+        const Color& p_color,
+        float p_energy,
+        float p_indirect_energy,
+        bool p_direct
+    );
+    void plot_light_omni(
+        const Vector3& p_pos,
+        const Color& p_color,
+        float p_energy,
+        float p_indirect_energy,
+        float p_radius,
+        float p_attenutation,
+        bool p_direct
+    );
+    void plot_light_spot(
+        const Vector3& p_pos,
+        const Vector3& p_axis,
+        const Color& p_color,
+        float p_energy,
+        float p_indirect_energy,
+        float p_radius,
+        float p_attenutation,
+        float p_spot_angle,
+        float p_spot_attenuation,
+        bool p_direct
+    );
     void end_bake();
 
     struct LightMapData {

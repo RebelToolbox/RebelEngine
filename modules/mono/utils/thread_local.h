@@ -72,15 +72,15 @@
 #endif
 
 struct ThreadLocalStorage {
-    void *get_value() const;
-    void set_value(void *p_value) const;
+    void* get_value() const;
+    void set_value(void* p_value) const;
 
-    void alloc(void(_CALLBACK_FUNC_ *p_destr_callback)(void *));
+    void alloc(void(_CALLBACK_FUNC_* p_destr_callback)(void*));
     void free();
 
 private:
     struct Impl;
-    Impl *pimpl;
+    Impl* pimpl;
 };
 
 template <typename T>
@@ -89,24 +89,25 @@ class ThreadLocal {
 
     T init_val;
 
-    static void _CALLBACK_FUNC_ destr_callback(void *tls_data) {
-        memdelete(static_cast<T *>(tls_data));
+    static void _CALLBACK_FUNC_ destr_callback(void* tls_data) {
+        memdelete(static_cast<T*>(tls_data));
     }
 
-    T *_tls_get_value() const {
-        void *tls_data = storage.get_value();
+    T* _tls_get_value() const {
+        void* tls_data = storage.get_value();
 
-        if (tls_data)
-            return static_cast<T *>(tls_data);
+        if (tls_data) {
+            return static_cast<T*>(tls_data);
+        }
 
-        T *data = memnew(T(init_val));
+        T* data = memnew(T(init_val));
 
         storage.set_value(data);
 
         return data;
     }
 
-    void _initialize(const T &p_init_val) {
+    void _initialize(const T& p_init_val) {
         init_val = p_init_val;
         storage.alloc(&destr_callback);
     }
@@ -116,11 +117,11 @@ public:
         _initialize(T());
     }
 
-    ThreadLocal(const T &p_init_val) {
+    ThreadLocal(const T& p_init_val) {
         _initialize(p_init_val);
     }
 
-    ThreadLocal(const ThreadLocal &other) {
+    ThreadLocal(const ThreadLocal& other) {
         _initialize(*other._tls_get_value());
     }
 
@@ -128,24 +129,23 @@ public:
         storage.free();
     }
 
-    _FORCE_INLINE_ T *operator&() const {
+    _FORCE_INLINE_ T* operator&() const {
         return _tls_get_value();
     }
 
-    _FORCE_INLINE_ operator T &() const {
+    _FORCE_INLINE_ operator T&() const {
         return *_tls_get_value();
     }
 
-    _FORCE_INLINE_ ThreadLocal &operator=(const T &val) {
-        T *ptr = _tls_get_value();
+    _FORCE_INLINE_ ThreadLocal& operator=(const T& val) {
+        T* ptr = _tls_get_value();
         *ptr = val;
         return *this;
     }
 };
 
 struct FlagScopeGuard {
-    FlagScopeGuard(bool &p_flag) :
-            flag(p_flag) {
+    FlagScopeGuard(bool& p_flag) : flag(p_flag) {
         flag = !flag;
     }
 
@@ -154,21 +154,19 @@ struct FlagScopeGuard {
     }
 
 private:
-    bool &flag;
+    bool& flag;
 };
 
 #undef _CALLBACK_FUNC_
 
-#define _TLS_RECURSION_GUARD_V_(m_ret)                    \
-    static _THREAD_LOCAL_(bool) _recursion_flag_ = false; \
-    if (_recursion_flag_)                                 \
-        return m_ret;                                     \
+#define _TLS_RECURSION_GUARD_V_(m_ret)                                         \
+    static _THREAD_LOCAL_(bool) _recursion_flag_ = false;                      \
+    if (_recursion_flag_) return m_ret;                                        \
     FlagScopeGuard _recursion_guard_(_recursion_flag_);
 
-#define _TLS_RECURSION_GUARD_                             \
-    static _THREAD_LOCAL_(bool) _recursion_flag_ = false; \
-    if (_recursion_flag_)                                 \
-        return;                                           \
+#define _TLS_RECURSION_GUARD_                                                  \
+    static _THREAD_LOCAL_(bool) _recursion_flag_ = false;                      \
+    if (_recursion_flag_) return;                                              \
     FlagScopeGuard _recursion_guard_(_recursion_flag_);
 
 #endif // THREAD_LOCAL_H

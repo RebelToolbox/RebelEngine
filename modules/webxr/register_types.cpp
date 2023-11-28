@@ -43,5 +43,4 @@ void register_webxr_types() {
 #endif
 }
 
-void unregister_webxr_types() {
-}
+void unregister_webxr_types() {}

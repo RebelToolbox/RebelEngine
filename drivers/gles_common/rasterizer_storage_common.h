@@ -62,7 +62,8 @@ public:
         BT_LINE = 2,
         BT_LINE_AA = 3,
         BT_POLY = 4,
-        BT_DUMMY = 5, // dummy batch is just used to keep the batch creation loop simple
+        BT_DUMMY = 5, // dummy batch is just used to keep the batch creation
+                      // loop simple
     };
 
     enum BatchTypeFlags : uint32_t {

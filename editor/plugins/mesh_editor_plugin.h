@@ -45,19 +45,19 @@ class MeshEditor : public ViewportContainer {
     float rot_x;
     float rot_y;
 
-    Viewport *viewport;
-    MeshInstance *mesh_instance;
-    Spatial *rotation;
-    DirectionalLight *light1;
-    DirectionalLight *light2;
-    Camera *camera;
+    Viewport* viewport;
+    MeshInstance* mesh_instance;
+    Spatial* rotation;
+    DirectionalLight* light1;
+    DirectionalLight* light2;
+    Camera* camera;
 
     Ref<Mesh> mesh;
 
-    TextureButton *light_1_switch;
-    TextureButton *light_2_switch;
+    TextureButton* light_1_switch;
+    TextureButton* light_2_switch;
 
-    void _button_pressed(Node *p_button);
+    void _button_pressed(Node* p_button);
     bool first_enter;
 
     void _update_rotation();
@@ -76,17 +76,19 @@ class EditorInspectorPluginMesh : public EditorInspectorPlugin {
     GDCLASS(EditorInspectorPluginMesh, EditorInspectorPlugin);
 
 public:
-    virtual bool can_handle(Object *p_object);
-    virtual void parse_begin(Object *p_object);
+    virtual bool can_handle(Object* p_object);
+    virtual void parse_begin(Object* p_object);
 };
 
 class MeshEditorPlugin : public EditorPlugin {
     GDCLASS(MeshEditorPlugin, EditorPlugin);
 
 public:
-    virtual String get_name() const { return "Mesh"; }
+    virtual String get_name() const {
+        return "Mesh";
+    }
 
-    MeshEditorPlugin(EditorNode *p_node);
+    MeshEditorPlugin(EditorNode* p_node);
 };
 
 #endif

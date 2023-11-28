@@ -70,7 +70,9 @@ private:
 
         Size2 get_icon_size() const;
 
-        bool operator<(const Item &p_another) const { return text < p_another.text; }
+        bool operator<(const Item& p_another) const {
+            return text < p_another.text;
+        }
     };
 
     int current;
@@ -88,7 +90,7 @@ private:
 
     SelectMode select_mode;
     IconMode icon_mode;
-    VScrollBar *scroll_bar;
+    VScrollBar* scroll_bar;
 
     uint64_t search_time_msec;
     String search_string;
@@ -113,32 +115,36 @@ private:
     bool do_autoscroll_to_bottom;
 
     Array _get_items() const;
-    void _set_items(const Array &p_items);
+    void _set_items(const Array& p_items);
 
     void _scroll_changed(double);
-    void _gui_input(const Ref<InputEvent> &p_event);
+    void _gui_input(const Ref<InputEvent>& p_event);
 
 protected:
     void _notification(int p_what);
     static void _bind_methods();
 
 public:
-    void add_item(const String &p_item, const Ref<Texture> &p_texture = Ref<Texture>(), bool p_selectable = true);
-    void add_icon_item(const Ref<Texture> &p_item, bool p_selectable = true);
+    void add_item(
+        const String& p_item,
+        const Ref<Texture>& p_texture = Ref<Texture>(),
+        bool p_selectable = true
+    );
+    void add_icon_item(const Ref<Texture>& p_item, bool p_selectable = true);
 
-    void set_item_text(int p_idx, const String &p_text);
+    void set_item_text(int p_idx, const String& p_text);
     String get_item_text(int p_idx) const;
 
-    void set_item_icon(int p_idx, const Ref<Texture> &p_icon);
+    void set_item_icon(int p_idx, const Ref<Texture>& p_icon);
     Ref<Texture> get_item_icon(int p_idx) const;
 
     void set_item_icon_transposed(int p_idx, const bool transposed);
     bool is_item_icon_transposed(int p_idx) const;
 
-    void set_item_icon_region(int p_idx, const Rect2 &p_region);
+    void set_item_icon_region(int p_idx, const Rect2& p_region);
     Rect2 get_item_icon_region(int p_idx) const;
 
-    void set_item_icon_modulate(int p_idx, const Color &p_modulate);
+    void set_item_icon_modulate(int p_idx, const Color& p_modulate);
     Color get_item_icon_modulate(int p_idx) const;
 
     void set_item_selectable(int p_idx, bool p_selectable);
@@ -147,22 +153,22 @@ public:
     void set_item_disabled(int p_idx, bool p_disabled);
     bool is_item_disabled(int p_idx) const;
 
-    void set_item_metadata(int p_idx, const Variant &p_metadata);
+    void set_item_metadata(int p_idx, const Variant& p_metadata);
     Variant get_item_metadata(int p_idx) const;
 
-    void set_item_tag_icon(int p_idx, const Ref<Texture> &p_tag_icon);
+    void set_item_tag_icon(int p_idx, const Ref<Texture>& p_tag_icon);
     Ref<Texture> get_item_tag_icon(int p_idx) const;
 
     void set_item_tooltip_enabled(int p_idx, const bool p_enabled);
     bool is_item_tooltip_enabled(int p_idx) const;
 
-    void set_item_tooltip(int p_idx, const String &p_tooltip);
+    void set_item_tooltip(int p_idx, const String& p_tooltip);
     String get_item_tooltip(int p_idx) const;
 
-    void set_item_custom_bg_color(int p_idx, const Color &p_custom_bg_color);
+    void set_item_custom_bg_color(int p_idx, const Color& p_custom_bg_color);
     Color get_item_custom_bg_color(int p_idx) const;
 
-    void set_item_custom_fg_color(int p_idx, const Color &p_custom_fg_color);
+    void set_item_custom_fg_color(int p_idx, const Color& p_custom_fg_color);
     Color get_item_custom_fg_color(int p_idx) const;
 
     void select(int p_idx, bool p_single = true);
@@ -200,7 +206,7 @@ public:
     void set_icon_mode(IconMode p_mode);
     IconMode get_icon_mode() const;
 
-    void set_fixed_icon_size(const Size2 &p_size);
+    void set_fixed_icon_size(const Size2& p_size);
     Size2 get_fixed_icon_size() const;
 
     void set_allow_rmb_select(bool p_allow);
@@ -212,11 +218,11 @@ public:
     void ensure_current_is_visible();
 
     void sort_items_by_text();
-    int find_metadata(const Variant &p_metadata) const;
+    int find_metadata(const Variant& p_metadata) const;
 
-    virtual String get_tooltip(const Point2 &p_pos) const;
-    int get_item_at_position(const Point2 &p_pos, bool p_exact = false) const;
-    bool is_pos_at_end_of_items(const Point2 &p_pos) const;
+    virtual String get_tooltip(const Point2& p_pos) const;
+    int get_item_at_position(const Point2& p_pos, bool p_exact = false) const;
+    bool is_pos_at_end_of_items(const Point2& p_pos) const;
 
     void set_icon_scale(real_t p_scale);
     real_t get_icon_scale() const;
@@ -228,7 +234,9 @@ public:
 
     void set_autoscroll_to_bottom(const bool p_enable);
 
-    VScrollBar *get_v_scroll() { return scroll_bar; }
+    VScrollBar* get_v_scroll() {
+        return scroll_bar;
+    }
 
     ItemList();
     ~ItemList();

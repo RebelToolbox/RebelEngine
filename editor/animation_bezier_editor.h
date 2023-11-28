@@ -49,12 +49,13 @@ class AnimationBezierTrackEdit : public Control {
     };
 
     HandleMode handle_mode;
-    OptionButton *handle_mode_option;
+    OptionButton* handle_mode_option;
 
-    AnimationTimelineEdit *timeline;
-    UndoRedo *undo_redo;
-    Node *root;
-    Control *play_position; //separate control used to draw so updates for only position changed are much faster
+    AnimationTimelineEdit* timeline;
+    UndoRedo* undo_redo;
+    Node* root;
+    Control* play_position; // separate control used to draw so updates for only
+                            // position changed are much faster
     float play_position_pos;
 
     Ref<Animation> animation;
@@ -73,14 +74,15 @@ class AnimationBezierTrackEdit : public Control {
     float v_scroll;
     float v_zoom;
 
-    PopupMenu *menu;
+    PopupMenu* menu;
 
     void _zoom_changed();
 
-    void _gui_input(const Ref<InputEvent> &p_event);
+    void _gui_input(const Ref<InputEvent>& p_event);
     void _menu_selected(int p_index);
 
-    bool *block_animation_update_ptr; //used to block all tracks re-gen (speed up)
+    bool* block_animation_update_ptr; // used to block all tracks re-gen (speed
+                                      // up)
 
     void _play_position_draw();
 
@@ -99,14 +101,18 @@ class AnimationBezierTrackEdit : public Control {
     Vector2 box_selection_from;
     Vector2 box_selection_to;
 
-    int moving_handle; //0 no move -1 or +1 out
+    int moving_handle; // 0 no move -1 or +1 out
     int moving_handle_key;
     Vector2 moving_handle_left;
     Vector2 moving_handle_right;
 
     void _clear_selection();
-    void _clear_selection_for_anim(const Ref<Animation> &p_anim);
-    void _select_at_anim(const Ref<Animation> &p_anim, int p_track, float p_pos);
+    void _clear_selection_for_anim(const Ref<Animation>& p_anim);
+    void _select_at_anim(
+        const Ref<Animation>& p_anim,
+        int p_track,
+        float p_pos
+    );
 
     Vector2 menu_insert_key;
 
@@ -117,7 +123,7 @@ class AnimationBezierTrackEdit : public Control {
         float transition;
     };
 
-    AnimationTrackEditor *editor;
+    AnimationTrackEditor* editor;
 
     struct EditPoint {
         Rect2 point_rect;
@@ -133,8 +139,14 @@ class AnimationBezierTrackEdit : public Control {
     float panning_timeline_from;
     float panning_timeline_at;
 
-    void _draw_line_clipped(const Vector2 &p_from, const Vector2 &p_to, const Color &p_color, int p_clip_left, int p_clip_right);
-    void _draw_track(int p_track, const Color &p_color);
+    void _draw_line_clipped(
+        const Vector2& p_from,
+        const Vector2& p_to,
+        const Color& p_color,
+        int p_clip_left,
+        int p_clip_right
+    );
+    void _draw_track(int p_track, const Color& p_color);
 
     float _bezier_h_to_pixel(float p_h);
 
@@ -143,19 +155,22 @@ protected:
     void _notification(int p_what);
 
 public:
-    virtual String get_tooltip(const Point2 &p_pos) const;
+    virtual String get_tooltip(const Point2& p_pos) const;
 
     Ref<Animation> get_animation() const;
 
-    void set_animation_and_track(const Ref<Animation> &p_animation, int p_track);
+    void set_animation_and_track(
+        const Ref<Animation>& p_animation,
+        int p_track
+    );
     virtual Size2 get_minimum_size() const;
 
-    void set_undo_redo(UndoRedo *p_undo_redo);
-    void set_timeline(AnimationTimelineEdit *p_timeline);
-    void set_editor(AnimationTrackEditor *p_editor);
-    void set_root(Node *p_root);
+    void set_undo_redo(UndoRedo* p_undo_redo);
+    void set_timeline(AnimationTimelineEdit* p_timeline);
+    void set_editor(AnimationTrackEditor* p_editor);
+    void set_root(Node* p_root);
 
-    void set_block_animation_update_ptr(bool *p_block_ptr);
+    void set_block_animation_update_ptr(bool* p_block_ptr);
 
     void set_play_position(float p_pos);
     void update_play_position();

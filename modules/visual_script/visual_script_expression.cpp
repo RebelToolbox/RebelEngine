@@ -30,7 +30,10 @@
 
 #include "visual_script_expression.h"
 
-bool VisualScriptExpression::_set(const StringName &p_name, const Variant &p_value) {
+bool VisualScriptExpression::_set(
+    const StringName& p_name,
+    const Variant& p_value
+) {
     if (String(p_name) == "expression") {
         expression = p_value;
         expression_dirty = true;
@@ -89,7 +92,8 @@ bool VisualScriptExpression::_set(const StringName &p_name, const Variant &p_val
     return false;
 }
 
-bool VisualScriptExpression::_get(const StringName &p_name, Variant &r_ret) const {
+bool VisualScriptExpression::_get(const StringName& p_name, Variant& r_ret)
+    const {
     if (String(p_name) == "expression") {
         r_ret = expression;
         return true;
@@ -129,26 +133,46 @@ bool VisualScriptExpression::_get(const StringName &p_name, Variant &r_ret) cons
 
     return false;
 }
-void VisualScriptExpression::_get_property_list(List<PropertyInfo> *p_list) const {
+
+void VisualScriptExpression::_get_property_list(List<PropertyInfo>* p_list
+) const {
     String argt = "Any";
     for (int i = 1; i < Variant::VARIANT_MAX; i++) {
         argt += "," + Variant::get_type_name(Variant::Type(i));
     }
 
-    p_list->push_back(PropertyInfo(Variant::STRING, "expression", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR));
-    p_list->push_back(PropertyInfo(Variant::INT, "out_type", PROPERTY_HINT_ENUM, argt));
-    p_list->push_back(PropertyInfo(Variant::INT, "input_count", PROPERTY_HINT_RANGE, "0,64,1"));
+    p_list->push_back(PropertyInfo(
+        Variant::STRING,
+        "expression",
+        PROPERTY_HINT_NONE,
+        "",
+        PROPERTY_USAGE_NOEDITOR
+    ));
+    p_list->push_back(
+        PropertyInfo(Variant::INT, "out_type", PROPERTY_HINT_ENUM, argt)
+    );
+    p_list->push_back(
+        PropertyInfo(Variant::INT, "input_count", PROPERTY_HINT_RANGE, "0,64,1")
+    );
     p_list->push_back(PropertyInfo(Variant::BOOL, "sequenced"));
 
     for (int i = 0; i < inputs.size(); i++) {
-        p_list->push_back(PropertyInfo(Variant::INT, "input_" + itos(i) + "/type", PROPERTY_HINT_ENUM, argt));
-        p_list->push_back(PropertyInfo(Variant::STRING, "input_" + itos(i) + "/name"));
+        p_list->push_back(PropertyInfo(
+            Variant::INT,
+            "input_" + itos(i) + "/type",
+            PROPERTY_HINT_ENUM,
+            argt
+        ));
+        p_list->push_back(
+            PropertyInfo(Variant::STRING, "input_" + itos(i) + "/name")
+        );
     }
 }
 
 int VisualScriptExpression::get_output_sequence_port_count() const {
     return sequenced ? 1 : 0;
 }
+
 bool VisualScriptExpression::has_input_sequence_port() const {
     return sequenced;
 }
@@ -160,25 +184,30 @@ String VisualScriptExpression::get_output_sequence_port_text(int p_port) const {
 int VisualScriptExpression::get_input_value_port_count() const {
     return inputs.size();
 }
+
 int VisualScriptExpression::get_output_value_port_count() const {
     return 1;
 }
 
-PropertyInfo VisualScriptExpression::get_input_value_port_info(int p_idx) const {
+PropertyInfo VisualScriptExpression::get_input_value_port_info(int p_idx
+) const {
     return PropertyInfo(inputs[p_idx].type, inputs[p_idx].name);
 }
-PropertyInfo VisualScriptExpression::get_output_value_port_info(int p_idx) const {
+
+PropertyInfo VisualScriptExpression::get_output_value_port_info(int p_idx
+) const {
     return PropertyInfo(output_type, "result");
 }
 
 String VisualScriptExpression::get_caption() const {
     return "Expression";
 }
+
 String VisualScriptExpression::get_text() const {
     return expression;
 }
 
-Error VisualScriptExpression::_get_token(Token &r_token) {
+Error VisualScriptExpression::_get_token(Token& r_token) {
     while (true) {
 #define GET_CHAR() (str_ofs >= expression.length() ? 0 : expression[str_ofs++])
 
@@ -333,7 +362,7 @@ Error VisualScriptExpression::_get_token(Token &r_token) {
                     } else if (ch == '"') {
                         break;
                     } else if (ch == '\\') {
-                        //escaped characters...
+                        // escaped characters...
 
                         CharType next = GET_CHAR();
                         if (next == 0) {
@@ -360,7 +389,7 @@ Error VisualScriptExpression::_get_token(Token &r_token) {
                                 res = 13;
                                 break;
                             case 'u': {
-                                //hexnumbarh - oct is deprecated
+                                // hexnumbarh - oct is deprecated
 
                                 for (int j = 0; j < 4; j++) {
                                     CharType c = GET_CHAR();
@@ -370,8 +399,12 @@ Error VisualScriptExpression::_get_token(Token &r_token) {
                                         r_token.type = TK_ERROR;
                                         return ERR_PARSE_ERROR;
                                     }
-                                    if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
-                                        _set_error("Malformed hex constant in string");
+                                    if (!((c >= '0' && c <= '9')
+                                          || (c >= 'a' && c <= 'f')
+                                          || (c >= 'A' && c <= 'F'))) {
+                                        _set_error(
+                                            "Malformed hex constant in string"
+                                        );
                                         r_token.type = TK_ERROR;
                                         return ERR_PARSE_ERROR;
                                     }
@@ -394,13 +427,13 @@ Error VisualScriptExpression::_get_token(Token &r_token) {
                                 }
 
                             } break;
-                            //case '\"': res='\"'; break;
-                            //case '\\': res='\\'; break;
-                            //case '/': res='/'; break;
+                            // case '\"': res='\"'; break;
+                            // case '\\': res='\\'; break;
+                            // case '/': res='/'; break;
                             default: {
                                 res = next;
-                                //r_err_str="Invalid escape sequence";
-                                //return ERR_PARSE_ERROR;
+                                // r_err_str="Invalid escape sequence";
+                                // return ERR_PARSE_ERROR;
                             } break;
                         }
 
@@ -422,7 +455,7 @@ Error VisualScriptExpression::_get_token(Token &r_token) {
                 }
 
                 if (cchar >= '0' && cchar <= '9') {
-                    //a number
+                    // a number
 
                     String num;
 #define READING_SIGN 0
@@ -441,7 +474,7 @@ Error VisualScriptExpression::_get_token(Token &r_token) {
                         switch (reading) {
                             case READING_INT: {
                                 if (c >= '0' && c <= '9') {
-                                    //pass
+                                    // pass
                                 } else if (c == '.') {
                                     reading = READING_DEC;
                                     is_float = true;
@@ -500,13 +533,15 @@ Error VisualScriptExpression::_get_token(Token &r_token) {
                     String id;
                     bool first = true;
 
-                    while ((cchar >= 'A' && cchar <= 'Z') || (cchar >= 'a' && cchar <= 'z') || cchar == '_' || (!first && cchar >= '0' && cchar <= '9')) {
+                    while ((cchar >= 'A' && cchar <= 'Z')
+                           || (cchar >= 'a' && cchar <= 'z') || cchar == '_'
+                           || (!first && cchar >= '0' && cchar <= '9')) {
                         id += String::chr(cchar);
                         cchar = GET_CHAR();
                         first = false;
                     }
 
-                    str_ofs--; //go back one
+                    str_ofs--; // go back one
 
                     if (id == "in") {
                         r_token.type = TK_OP_IN;
@@ -541,14 +576,16 @@ Error VisualScriptExpression::_get_token(Token &r_token) {
                         r_token.type = TK_SELF;
                     } else {
                         for (int i = 0; i < Variant::VARIANT_MAX; i++) {
-                            if (id == Variant::get_type_name(Variant::Type(i))) {
+                            if (id
+                                == Variant::get_type_name(Variant::Type(i))) {
                                 r_token.type = TK_BASIC_TYPE;
                                 r_token.value = i;
                                 return OK;
                             }
                         }
 
-                        VisualScriptBuiltinFunc::BuiltinFunc bifunc = VisualScriptBuiltinFunc::find_function(id);
+                        VisualScriptBuiltinFunc::BuiltinFunc bifunc =
+                            VisualScriptBuiltinFunc::find_function(id);
                         if (bifunc != VisualScriptBuiltinFunc::FUNC_MAX) {
                             r_token.type = TK_BUILTIN_FUNC;
                             r_token.value = bifunc;
@@ -573,7 +610,7 @@ Error VisualScriptExpression::_get_token(Token &r_token) {
     return ERR_PARSE_ERROR;
 }
 
-const char *VisualScriptExpression::token_name[TK_MAX] = {
+const char* VisualScriptExpression::token_name[TK_MAX] = {
     "CURLY BRACKET OPEN",
     "CURLY BRACKET CLOSE",
     "BRACKET OPEN",
@@ -613,12 +650,12 @@ const char *VisualScriptExpression::token_name[TK_MAX] = {
     "ERROR"
 };
 
-VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
+VisualScriptExpression::ENode* VisualScriptExpression::_parse_expression() {
     Vector<Expression> expression;
 
     while (true) {
-        //keep appending stuff to expression
-        ENode *expr = nullptr;
+        // keep appending stuff to expression
+        ENode* expr = nullptr;
 
         Token tk;
         _get_token(tk);
@@ -628,8 +665,8 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
 
         switch (tk.type) {
             case TK_CURLY_BRACKET_OPEN: {
-                //a dictionary
-                DictionaryNode *dn = alloc_node<DictionaryNode>();
+                // a dictionary
+                DictionaryNode* dn = alloc_node<DictionaryNode>();
 
                 while (true) {
                     int cofs = str_ofs;
@@ -637,9 +674,9 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     if (tk.type == TK_CURLY_BRACKET_CLOSE) {
                         break;
                     }
-                    str_ofs = cofs; //revert
-                    //parse an expression
-                    ENode *expr2 = _parse_expression();
+                    str_ofs = cofs; // revert
+                    // parse an expression
+                    ENode* expr2 = _parse_expression();
                     if (!expr2) {
                         return nullptr;
                     }
@@ -661,7 +698,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     cofs = str_ofs;
                     _get_token(tk);
                     if (tk.type == TK_COMMA) {
-                        //all good
+                        // all good
                     } else if (tk.type == TK_CURLY_BRACKET_CLOSE) {
                         str_ofs = cofs;
                     } else {
@@ -672,9 +709,9 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                 expr = dn;
             } break;
             case TK_BRACKET_OPEN: {
-                //an array
+                // an array
 
-                ArrayNode *an = alloc_node<ArrayNode>();
+                ArrayNode* an = alloc_node<ArrayNode>();
 
                 while (true) {
                     int cofs = str_ofs;
@@ -682,9 +719,9 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     if (tk.type == TK_BRACKET_CLOSE) {
                         break;
                     }
-                    str_ofs = cofs; //revert
-                    //parse an expression
-                    ENode *expr2 = _parse_expression();
+                    str_ofs = cofs; // revert
+                    // parse an expression
+                    ENode* expr2 = _parse_expression();
                     if (!expr2) {
                         return nullptr;
                     }
@@ -693,7 +730,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     cofs = str_ofs;
                     _get_token(tk);
                     if (tk.type == TK_COMMA) {
-                        //all good
+                        // all good
                     } else if (tk.type == TK_BRACKET_CLOSE) {
                         str_ofs = cofs;
                     } else {
@@ -704,8 +741,8 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                 expr = an;
             } break;
             case TK_PARENTHESIS_OPEN: {
-                //a suexpression
-                ENode *e = _parse_expression();
+                // a suexpression
+                ENode* e = _parse_expression();
                 if (error_set) {
                     return nullptr;
                 }
@@ -729,7 +766,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                 }
 
                 if (index != -1) {
-                    InputNode *input = alloc_node<InputNode>();
+                    InputNode* input = alloc_node<InputNode>();
                     input->index = index;
                     expr = input;
                 } else {
@@ -738,16 +775,16 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                 }
             } break;
             case TK_SELF: {
-                SelfNode *self = alloc_node<SelfNode>();
+                SelfNode* self = alloc_node<SelfNode>();
                 expr = self;
             } break;
             case TK_CONSTANT: {
-                ConstantNode *constant = alloc_node<ConstantNode>();
+                ConstantNode* constant = alloc_node<ConstantNode>();
                 constant->value = tk.value;
                 expr = constant;
             } break;
             case TK_BASIC_TYPE: {
-                //constructor..
+                // constructor..
 
                 Variant::Type bt = Variant::Type(int(tk.value));
                 _get_token(tk);
@@ -756,7 +793,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     return nullptr;
                 }
 
-                ConstructorNode *constructor = alloc_node<ConstructorNode>();
+                ConstructorNode* constructor = alloc_node<ConstructorNode>();
                 constructor->data_type = bt;
 
                 while (true) {
@@ -765,9 +802,9 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     if (tk.type == TK_PARENTHESIS_CLOSE) {
                         break;
                     }
-                    str_ofs = cofs; //revert
-                    //parse an expression
-                    ENode *expr2 = _parse_expression();
+                    str_ofs = cofs; // revert
+                    // parse an expression
+                    ENode* expr2 = _parse_expression();
                     if (!expr2) {
                         return nullptr;
                     }
@@ -777,7 +814,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     cofs = str_ofs;
                     _get_token(tk);
                     if (tk.type == TK_COMMA) {
-                        //all good
+                        // all good
                     } else if (tk.type == TK_PARENTHESIS_CLOSE) {
                         str_ofs = cofs;
                     } else {
@@ -789,7 +826,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
 
             } break;
             case TK_BUILTIN_FUNC: {
-                //builtin function
+                // builtin function
 
                 _get_token(tk);
                 if (tk.type != TK_PARENTHESIS_OPEN) {
@@ -797,8 +834,9 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     return nullptr;
                 }
 
-                BuiltinFuncNode *bifunc = alloc_node<BuiltinFuncNode>();
-                bifunc->func = VisualScriptBuiltinFunc::BuiltinFunc(int(tk.value));
+                BuiltinFuncNode* bifunc = alloc_node<BuiltinFuncNode>();
+                bifunc->func =
+                    VisualScriptBuiltinFunc::BuiltinFunc(int(tk.value));
 
                 while (true) {
                     int cofs = str_ofs;
@@ -806,9 +844,9 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     if (tk.type == TK_PARENTHESIS_CLOSE) {
                         break;
                     }
-                    str_ofs = cofs; //revert
-                    //parse an expression
-                    ENode *expr2 = _parse_expression();
+                    str_ofs = cofs; // revert
+                    // parse an expression
+                    ENode* expr2 = _parse_expression();
                     if (!expr2) {
                         return nullptr;
                     }
@@ -818,7 +856,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     cofs = str_ofs;
                     _get_token(tk);
                     if (tk.type == TK_COMMA) {
-                        //all good
+                        // all good
                     } else if (tk.type == TK_PARENTHESIS_CLOSE) {
                         str_ofs = cofs;
                     } else {
@@ -826,9 +864,16 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     }
                 }
 
-                int expected_args = VisualScriptBuiltinFunc::get_func_argument_count(bifunc->func);
+                int expected_args =
+                    VisualScriptBuiltinFunc::get_func_argument_count(
+                        bifunc->func
+                    );
                 if (bifunc->arguments.size() != expected_args) {
-                    _set_error("Builtin func '" + VisualScriptBuiltinFunc::get_func_name(bifunc->func) + "' expects " + itos(expected_args) + " arguments.");
+                    _set_error(
+                        "Builtin func '"
+                        + VisualScriptBuiltinFunc::get_func_name(bifunc->func)
+                        + "' expects " + itos(expected_args) + " arguments."
+                    );
                 }
 
                 expr = bifunc;
@@ -855,7 +900,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
             } break;
         }
 
-        //before going to operators, must check indexing!
+        // before going to operators, must check indexing!
 
         while (true) {
             int cofs2 = str_ofs;
@@ -868,12 +913,12 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
 
             switch (tk.type) {
                 case TK_BRACKET_OPEN: {
-                    //value indexing
+                    // value indexing
 
-                    IndexNode *index = alloc_node<IndexNode>();
+                    IndexNode* index = alloc_node<IndexNode>();
                     index->base = expr;
 
-                    ENode *what = _parse_expression();
+                    ENode* what = _parse_expression();
                     if (!what) {
                         return nullptr;
                     }
@@ -889,7 +934,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
 
                 } break;
                 case TK_PERIOD: {
-                    //named indexing or function call
+                    // named indexing or function call
                     _get_token(tk);
                     if (tk.type != TK_IDENTIFIER) {
                         _set_error("Expected identifier after '.'");
@@ -901,8 +946,8 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     int cofs = str_ofs;
                     _get_token(tk);
                     if (tk.type == TK_PARENTHESIS_OPEN) {
-                        //function call
-                        CallNode *func_call = alloc_node<CallNode>();
+                        // function call
+                        CallNode* func_call = alloc_node<CallNode>();
                         func_call->method = identifier;
                         func_call->base = expr;
 
@@ -912,9 +957,9 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                             if (tk.type == TK_PARENTHESIS_CLOSE) {
                                 break;
                             }
-                            str_ofs = cofs3; //revert
-                            //parse an expression
-                            ENode *expr2 = _parse_expression();
+                            str_ofs = cofs3; // revert
+                            // parse an expression
+                            ENode* expr2 = _parse_expression();
                             if (!expr2) {
                                 return nullptr;
                             }
@@ -924,7 +969,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                             cofs3 = str_ofs;
                             _get_token(tk);
                             if (tk.type == TK_COMMA) {
-                                //all good
+                                // all good
                             } else if (tk.type == TK_PARENTHESIS_CLOSE) {
                                 str_ofs = cofs3;
                             } else {
@@ -934,10 +979,10 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
 
                         expr = func_call;
                     } else {
-                        //named indexing
+                        // named indexing
                         str_ofs = cofs;
 
-                        NamedIndexNode *index = alloc_node<NamedIndexNode>();
+                        NamedIndexNode* index = alloc_node<NamedIndexNode>();
                         index->base = expr;
                         index->name = identifier;
                         expr = index;
@@ -955,7 +1000,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
             }
         }
 
-        //push expression
+        // push expression
         {
             Expression e;
             e.is_op = false;
@@ -963,7 +1008,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
             expression.push_back(e);
         }
 
-        //ok finally look for an operator
+        // ok finally look for an operator
 
         int cofs = str_ofs;
         _get_token(tk);
@@ -1041,12 +1086,12 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
             };
         }
 
-        if (op == Variant::OP_MAX) { //stop appending stuff
+        if (op == Variant::OP_MAX) { // stop appending stuff
             str_ofs = cofs;
             break;
         }
 
-        //push operator and go on
+        // push operator and go on
         {
             Expression e;
             e.is_op = true;
@@ -1055,7 +1100,8 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
         }
     }
 
-    /* Reduce the set set of expressions and place them in an operator tree, respecting precedence */
+    /* Reduce the set set of expressions and place them in an operator tree,
+     * respecting precedence */
 
     while (expression.size() > 1) {
         int next_op = -1;
@@ -1151,7 +1197,10 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                     break;
 
                 default: {
-                    _set_error("Parser bug, invalid operator in expression: " + itos(expression[i].op));
+                    _set_error(
+                        "Parser bug, invalid operator in expression: "
+                        + itos(expression[i].op)
+                    );
                     return nullptr;
                 }
             }
@@ -1177,15 +1226,15 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
             while (expression[expr_pos].is_op) {
                 expr_pos++;
                 if (expr_pos == expression.size()) {
-                    //can happen..
+                    // can happen..
                     _set_error("Unexpected end of expression...");
                     return nullptr;
                 }
             }
 
-            //consecutively do unary operators
+            // consecutively do unary operators
             for (int i = expr_pos - 1; i >= next_op; i--) {
-                OperatorNode *op = alloc_node<OperatorNode>();
+                OperatorNode* op = alloc_node<OperatorNode>();
                 op->op = expression[i].op;
                 op->nodes[0] = expression[i + 1].node;
                 op->nodes[1] = nullptr;
@@ -1200,7 +1249,7 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                 ERR_FAIL_V(nullptr);
             }
 
-            OperatorNode *op = alloc_node<OperatorNode>();
+            OperatorNode* op = alloc_node<OperatorNode>();
             op->op = expression[next_op].op;
 
             if (expression[next_op - 1].is_op) {
@@ -1212,16 +1261,19 @@ VisualScriptExpression::ENode *VisualScriptExpression::_parse_expression() {
                 // this is not invalid and can really appear
                 // but it becomes invalid anyway because no binary op
                 // can be followed by a unary op in a valid combination,
-                // due to how precedence works, unaries will always disappear first
+                // due to how precedence works, unaries will always disappear
+                // first
 
                 _set_error("Unexpected two consecutive operators.");
                 return nullptr;
             }
 
-            op->nodes[0] = expression[next_op - 1].node; //expression goes as left
-            op->nodes[1] = expression[next_op + 1].node; //next expression goes as right
+            op->nodes[0] =
+                expression[next_op - 1].node; // expression goes as left
+            op->nodes[1] =
+                expression[next_op + 1].node; // next expression goes as right
 
-            //replace all 3 nodes by this operator and make it an expression
+            // replace all 3 nodes by this operator and make it an expression
             expression.write[next_op - 1].node = op;
             expression.remove(next_op);
             expression.remove(next_op);
@@ -1263,19 +1315,30 @@ bool VisualScriptExpression::_compile_expression() {
 
 class VisualScriptNodeInstanceExpression : public VisualScriptNodeInstance {
 public:
-    VisualScriptInstance *instance;
-    VisualScriptExpression *expression;
+    VisualScriptInstance* instance;
+    VisualScriptExpression* expression;
 
-    //virtual int get_working_memory_size() const { return 0; }
-    //execute by parsing the tree directly
-    virtual bool _execute(const Variant **p_inputs, VisualScriptExpression::ENode *p_node, Variant &r_ret, String &r_error_str, Variant::CallError &ce) {
+    // virtual int get_working_memory_size() const { return 0; }
+    // execute by parsing the tree directly
+    virtual bool _execute(
+        const Variant** p_inputs,
+        VisualScriptExpression::ENode* p_node,
+        Variant& r_ret,
+        String& r_error_str,
+        Variant::CallError& ce
+    ) {
         switch (p_node->type) {
             case VisualScriptExpression::ENode::TYPE_INPUT: {
-                const VisualScriptExpression::InputNode *in = static_cast<const VisualScriptExpression::InputNode *>(p_node);
+                const VisualScriptExpression::InputNode* in =
+                    static_cast<const VisualScriptExpression::InputNode*>(p_node
+                    );
                 r_ret = *p_inputs[in->index];
             } break;
             case VisualScriptExpression::ENode::TYPE_CONSTANT: {
-                const VisualScriptExpression::ConstantNode *c = static_cast<const VisualScriptExpression::ConstantNode *>(p_node);
+                const VisualScriptExpression::ConstantNode* c =
+                    static_cast<const VisualScriptExpression::ConstantNode*>(
+                        p_node
+                    );
                 r_ret = c->value;
 
             } break;
@@ -1283,7 +1346,10 @@ public:
                 r_ret = instance->get_owner_ptr();
             } break;
             case VisualScriptExpression::ENode::TYPE_OPERATOR: {
-                const VisualScriptExpression::OperatorNode *op = static_cast<const VisualScriptExpression::OperatorNode *>(p_node);
+                const VisualScriptExpression::OperatorNode* op =
+                    static_cast<const VisualScriptExpression::OperatorNode*>(
+                        p_node
+                    );
 
                 Variant a;
                 bool ret = _execute(p_inputs, op->nodes[0], a, r_error_str, ce);
@@ -1303,16 +1369,22 @@ public:
                 bool valid = true;
                 Variant::evaluate(op->op, a, b, r_ret, valid);
                 if (!valid) {
-                    r_error_str = "Invalid operands to operator " + Variant::get_operator_name(op->op) + ": " + Variant::get_type_name(a.get_type()) + " and " + Variant::get_type_name(b.get_type()) + ".";
+                    r_error_str = "Invalid operands to operator "
+                                + Variant::get_operator_name(op->op) + ": "
+                                + Variant::get_type_name(a.get_type()) + " and "
+                                + Variant::get_type_name(b.get_type()) + ".";
                     return true;
                 }
 
             } break;
             case VisualScriptExpression::ENode::TYPE_INDEX: {
-                const VisualScriptExpression::IndexNode *index = static_cast<const VisualScriptExpression::IndexNode *>(p_node);
+                const VisualScriptExpression::IndexNode* index =
+                    static_cast<const VisualScriptExpression::IndexNode*>(p_node
+                    );
 
                 Variant base;
-                bool ret = _execute(p_inputs, index->base, base, r_error_str, ce);
+                bool ret =
+                    _execute(p_inputs, index->base, base, r_error_str, ce);
                 if (ret) {
                     return true;
                 }
@@ -1327,16 +1399,23 @@ public:
                 bool valid;
                 r_ret = base.get(idx, &valid);
                 if (!valid) {
-                    r_error_str = "Invalid index of type " + Variant::get_type_name(idx.get_type()) + " for base of type " + Variant::get_type_name(base.get_type()) + ".";
+                    r_error_str = "Invalid index of type "
+                                + Variant::get_type_name(idx.get_type())
+                                + " for base of type "
+                                + Variant::get_type_name(base.get_type()) + ".";
                     return true;
                 }
 
             } break;
             case VisualScriptExpression::ENode::TYPE_NAMED_INDEX: {
-                const VisualScriptExpression::NamedIndexNode *index = static_cast<const VisualScriptExpression::NamedIndexNode *>(p_node);
+                const VisualScriptExpression::NamedIndexNode* index =
+                    static_cast<const VisualScriptExpression::NamedIndexNode*>(
+                        p_node
+                    );
 
                 Variant base;
-                bool ret = _execute(p_inputs, index->base, base, r_error_str, ce);
+                bool ret =
+                    _execute(p_inputs, index->base, base, r_error_str, ce);
                 if (ret) {
                     return true;
                 }
@@ -1344,19 +1423,29 @@ public:
                 bool valid;
                 r_ret = base.get_named(index->name, &valid);
                 if (!valid) {
-                    r_error_str = "Invalid index '" + String(index->name) + "' for base of type " + Variant::get_type_name(base.get_type()) + ".";
+                    r_error_str = "Invalid index '" + String(index->name)
+                                + "' for base of type "
+                                + Variant::get_type_name(base.get_type()) + ".";
                     return true;
                 }
 
             } break;
             case VisualScriptExpression::ENode::TYPE_ARRAY: {
-                const VisualScriptExpression::ArrayNode *array = static_cast<const VisualScriptExpression::ArrayNode *>(p_node);
+                const VisualScriptExpression::ArrayNode* array =
+                    static_cast<const VisualScriptExpression::ArrayNode*>(p_node
+                    );
 
                 Array arr;
                 arr.resize(array->array.size());
                 for (int i = 0; i < array->array.size(); i++) {
                     Variant value;
-                    bool ret = _execute(p_inputs, array->array[i], value, r_error_str, ce);
+                    bool ret = _execute(
+                        p_inputs,
+                        array->array[i],
+                        value,
+                        r_error_str,
+                        ce
+                    );
                     if (ret) {
                         return true;
                     }
@@ -1367,18 +1456,33 @@ public:
 
             } break;
             case VisualScriptExpression::ENode::TYPE_DICTIONARY: {
-                const VisualScriptExpression::DictionaryNode *dictionary = static_cast<const VisualScriptExpression::DictionaryNode *>(p_node);
+                const VisualScriptExpression::DictionaryNode* dictionary =
+                    static_cast<const VisualScriptExpression::DictionaryNode*>(
+                        p_node
+                    );
 
                 Dictionary d;
                 for (int i = 0; i < dictionary->dict.size(); i += 2) {
                     Variant key;
-                    bool ret = _execute(p_inputs, dictionary->dict[i + 0], key, r_error_str, ce);
+                    bool ret = _execute(
+                        p_inputs,
+                        dictionary->dict[i + 0],
+                        key,
+                        r_error_str,
+                        ce
+                    );
                     if (ret) {
                         return true;
                     }
 
                     Variant value;
-                    ret = _execute(p_inputs, dictionary->dict[i + 1], value, r_error_str, ce);
+                    ret = _execute(
+                        p_inputs,
+                        dictionary->dict[i + 1],
+                        value,
+                        r_error_str,
+                        ce
+                    );
                     if (ret) {
                         return true;
                     }
@@ -1389,16 +1493,25 @@ public:
                 r_ret = d;
             } break;
             case VisualScriptExpression::ENode::TYPE_CONSTRUCTOR: {
-                const VisualScriptExpression::ConstructorNode *constructor = static_cast<const VisualScriptExpression::ConstructorNode *>(p_node);
+                const VisualScriptExpression::ConstructorNode* constructor =
+                    static_cast<const VisualScriptExpression::ConstructorNode*>(
+                        p_node
+                    );
 
                 Vector<Variant> arr;
-                Vector<const Variant *> argp;
+                Vector<const Variant*> argp;
                 arr.resize(constructor->arguments.size());
                 argp.resize(constructor->arguments.size());
 
                 for (int i = 0; i < constructor->arguments.size(); i++) {
                     Variant value;
-                    bool ret = _execute(p_inputs, constructor->arguments[i], value, r_error_str, ce);
+                    bool ret = _execute(
+                        p_inputs,
+                        constructor->arguments[i],
+                        value,
+                        r_error_str,
+                        ce
+                    );
                     if (ret) {
                         return true;
                     }
@@ -1406,25 +1519,41 @@ public:
                     argp.write[i] = &arr[i];
                 }
 
-                r_ret = Variant::construct(constructor->data_type, (const Variant **)argp.ptr(), argp.size(), ce);
+                r_ret = Variant::construct(
+                    constructor->data_type,
+                    (const Variant**)argp.ptr(),
+                    argp.size(),
+                    ce
+                );
 
                 if (ce.error != Variant::CallError::CALL_OK) {
-                    r_error_str = "Invalid arguments to construct '" + Variant::get_type_name(constructor->data_type) + "'.";
+                    r_error_str = "Invalid arguments to construct '"
+                                + Variant::get_type_name(constructor->data_type)
+                                + "'.";
                     return true;
                 }
 
             } break;
             case VisualScriptExpression::ENode::TYPE_BUILTIN_FUNC: {
-                const VisualScriptExpression::BuiltinFuncNode *bifunc = static_cast<const VisualScriptExpression::BuiltinFuncNode *>(p_node);
+                const VisualScriptExpression::BuiltinFuncNode* bifunc =
+                    static_cast<const VisualScriptExpression::BuiltinFuncNode*>(
+                        p_node
+                    );
 
                 Vector<Variant> arr;
-                Vector<const Variant *> argp;
+                Vector<const Variant*> argp;
                 arr.resize(bifunc->arguments.size());
                 argp.resize(bifunc->arguments.size());
 
                 for (int i = 0; i < bifunc->arguments.size(); i++) {
                     Variant value;
-                    bool ret = _execute(p_inputs, bifunc->arguments[i], value, r_error_str, ce);
+                    bool ret = _execute(
+                        p_inputs,
+                        bifunc->arguments[i],
+                        value,
+                        r_error_str,
+                        ce
+                    );
                     if (ret) {
                         return true;
                     }
@@ -1432,7 +1561,13 @@ public:
                     argp.write[i] = &arr[i];
                 }
 
-                VisualScriptBuiltinFunc::exec_func(bifunc->func, (const Variant **)argp.ptr(), &r_ret, ce, r_error_str);
+                VisualScriptBuiltinFunc::exec_func(
+                    bifunc->func,
+                    (const Variant**)argp.ptr(),
+                    &r_ret,
+                    ce,
+                    r_error_str
+                );
 
                 if (ce.error != Variant::CallError::CALL_OK) {
                     r_error_str = "Builtin Call Failed. " + r_error_str;
@@ -1441,22 +1576,31 @@ public:
 
             } break;
             case VisualScriptExpression::ENode::TYPE_CALL: {
-                const VisualScriptExpression::CallNode *call = static_cast<const VisualScriptExpression::CallNode *>(p_node);
+                const VisualScriptExpression::CallNode* call =
+                    static_cast<const VisualScriptExpression::CallNode*>(p_node
+                    );
 
                 Variant base;
-                bool ret = _execute(p_inputs, call->base, base, r_error_str, ce);
+                bool ret =
+                    _execute(p_inputs, call->base, base, r_error_str, ce);
                 if (ret) {
                     return true;
                 }
 
                 Vector<Variant> arr;
-                Vector<const Variant *> argp;
+                Vector<const Variant*> argp;
                 arr.resize(call->arguments.size());
                 argp.resize(call->arguments.size());
 
                 for (int i = 0; i < call->arguments.size(); i++) {
                     Variant value;
-                    bool ret2 = _execute(p_inputs, call->arguments[i], value, r_error_str, ce);
+                    bool ret2 = _execute(
+                        p_inputs,
+                        call->arguments[i],
+                        value,
+                        r_error_str,
+                        ce
+                    );
                     if (ret2) {
                         return true;
                     }
@@ -1464,7 +1608,12 @@ public:
                     argp.write[i] = &arr[i];
                 }
 
-                r_ret = base.call(call->method, (const Variant **)argp.ptr(), argp.size(), ce);
+                r_ret = base.call(
+                    call->method,
+                    (const Variant**)argp.ptr(),
+                    argp.size(),
+                    ce
+                );
 
                 if (ce.error != Variant::CallError::CALL_OK) {
                     r_error_str = "On call to '" + String(call->method) + "':";
@@ -1476,21 +1625,41 @@ public:
         return false;
     }
 
-    virtual int step(const Variant **p_inputs, Variant **p_outputs, StartMode p_start_mode, Variant *p_working_mem, Variant::CallError &r_error, String &r_error_str) {
+    virtual int step(
+        const Variant** p_inputs,
+        Variant** p_outputs,
+        StartMode p_start_mode,
+        Variant* p_working_mem,
+        Variant::CallError& r_error,
+        String& r_error_str
+    ) {
         if (!expression->root || expression->error_set) {
             r_error_str = expression->error_str;
             r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
             return 0;
         }
 
-        bool error = _execute(p_inputs, expression->root, *p_outputs[0], r_error_str, r_error);
+        bool error = _execute(
+            p_inputs,
+            expression->root,
+            *p_outputs[0],
+            r_error_str,
+            r_error
+        );
         if (error && r_error.error == Variant::CallError::CALL_OK) {
             r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
         }
 
 #ifdef DEBUG_ENABLED
-        if (!error && expression->output_type != Variant::NIL && !Variant::can_convert_strict(p_outputs[0]->get_type(), expression->output_type)) {
-            r_error_str += "Can't convert expression result from " + Variant::get_type_name(p_outputs[0]->get_type()) + " to " + Variant::get_type_name(expression->output_type) + ".";
+        if (!error && expression->output_type != Variant::NIL
+            && !Variant::can_convert_strict(
+                p_outputs[0]->get_type(),
+                expression->output_type
+            )) {
+            r_error_str +=
+                "Can't convert expression result from "
+                + Variant::get_type_name(p_outputs[0]->get_type()) + " to "
+                + Variant::get_type_name(expression->output_type) + ".";
             r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
         }
 #endif
@@ -1499,9 +1668,12 @@ public:
     }
 };
 
-VisualScriptNodeInstance *VisualScriptExpression::instance(VisualScriptInstance *p_instance) {
+VisualScriptNodeInstance* VisualScriptExpression::instance(
+    VisualScriptInstance* p_instance
+) {
     _compile_expression();
-    VisualScriptNodeInstanceExpression *instance = memnew(VisualScriptNodeInstanceExpression);
+    VisualScriptNodeInstanceExpression* instance =
+        memnew(VisualScriptNodeInstanceExpression);
     instance->instance = p_instance;
     instance->expression = this;
     return instance;
@@ -1523,5 +1695,6 @@ VisualScriptExpression::~VisualScriptExpression() {
 }
 
 void register_visual_script_expression_node() {
-    VisualScriptLanguage::singleton->add_register_func("operators/expression", create_node_generic<VisualScriptExpression>);
+    VisualScriptLanguage::singleton
+        ->add_register_func("operators/expression", create_node_generic<VisualScriptExpression>);
 }

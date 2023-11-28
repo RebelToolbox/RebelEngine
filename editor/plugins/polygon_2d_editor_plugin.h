@@ -60,36 +60,36 @@ class Polygon2DEditor : public AbstractPolygon2DEditor {
         UV_MODE_MAX
     };
 
-    ToolButton *uv_edit_mode[4];
+    ToolButton* uv_edit_mode[4];
     Ref<ButtonGroup> uv_edit_group;
 
-    Polygon2D *node;
+    Polygon2D* node;
 
     UVMode uv_mode;
-    AcceptDialog *uv_edit;
-    ToolButton *uv_button[UV_MODE_MAX];
-    ToolButton *b_snap_enable;
-    ToolButton *b_snap_grid;
-    Panel *uv_edit_draw;
-    HSlider *uv_zoom;
-    SpinBox *uv_zoom_value;
-    HScrollBar *uv_hscroll;
-    VScrollBar *uv_vscroll;
-    MenuButton *uv_menu;
-    TextureRect *uv_icon_zoom;
+    AcceptDialog* uv_edit;
+    ToolButton* uv_button[UV_MODE_MAX];
+    ToolButton* b_snap_enable;
+    ToolButton* b_snap_grid;
+    Panel* uv_edit_draw;
+    HSlider* uv_zoom;
+    SpinBox* uv_zoom_value;
+    HScrollBar* uv_hscroll;
+    VScrollBar* uv_vscroll;
+    MenuButton* uv_menu;
+    TextureRect* uv_icon_zoom;
 
-    VBoxContainer *bone_scroll_main_vb;
-    ScrollContainer *bone_scroll;
-    VBoxContainer *bone_scroll_vb;
-    Button *sync_bones;
-    HSlider *bone_paint_strength;
-    SpinBox *bone_paint_radius;
-    Label *bone_paint_radius_label;
+    VBoxContainer* bone_scroll_main_vb;
+    ScrollContainer* bone_scroll;
+    VBoxContainer* bone_scroll_vb;
+    Button* sync_bones;
+    HSlider* bone_paint_strength;
+    SpinBox* bone_paint_radius;
+    Label* bone_paint_radius_label;
     bool bone_painting;
     int bone_painting_bone;
     PoolVector<float> prev_weights;
     Vector2 bone_paint_pos;
-    AcceptDialog *grid_settings;
+    AcceptDialog* grid_settings;
 
     void _sync_bones();
     void _update_bone_list();
@@ -113,9 +113,9 @@ class Polygon2DEditor : public AbstractPolygon2DEditor {
     Vector2 uv_drag_from;
     bool updating_uv_scroll;
 
-    AcceptDialog *error;
+    AcceptDialog* error;
 
-    ToolButton *button_uv;
+    ToolButton* button_uv;
 
     bool use_snap;
     bool snap_show_grid;
@@ -128,7 +128,7 @@ class Polygon2DEditor : public AbstractPolygon2DEditor {
     void _update_polygon_editing_state();
 
     void _uv_scroll_changed(float);
-    void _uv_input(const Ref<InputEvent> &p_input);
+    void _uv_input(const Ref<InputEvent>& p_input);
     void _uv_draw();
     void _uv_mode(int p_mode);
 
@@ -146,12 +146,15 @@ class Polygon2DEditor : public AbstractPolygon2DEditor {
     int _get_polygon_count() const;
 
 protected:
-    virtual Node2D *_get_node() const;
-    virtual void _set_node(Node *p_polygon);
+    virtual Node2D* _get_node() const;
+    virtual void _set_node(Node* p_polygon);
 
     virtual Vector2 _get_offset(int p_idx) const;
 
-    virtual bool _has_uv() const { return true; };
+    virtual bool _has_uv() const {
+        return true;
+    };
+
     virtual void _commit_action();
 
     void _notification(int p_what);
@@ -160,14 +163,14 @@ protected:
     Vector2 snap_point(Vector2 p_target) const;
 
 public:
-    Polygon2DEditor(EditorNode *p_editor);
+    Polygon2DEditor(EditorNode* p_editor);
 };
 
 class Polygon2DEditorPlugin : public AbstractPolygon2DEditorPlugin {
     GDCLASS(Polygon2DEditorPlugin, AbstractPolygon2DEditorPlugin);
 
 public:
-    Polygon2DEditorPlugin(EditorNode *p_node);
+    Polygon2DEditorPlugin(EditorNode* p_node);
 };
 
 #endif // POLYGON_2D_EDITOR_PLUGIN_H

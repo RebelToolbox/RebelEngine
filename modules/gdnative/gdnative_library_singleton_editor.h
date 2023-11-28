@@ -39,12 +39,14 @@ class GDNativeLibrarySingletonEditor : public VBoxContainer {
     GDCLASS(GDNativeLibrarySingletonEditor, VBoxContainer);
 
 private:
-    Tree *libraries;
-    UndoRedo *undo_redo;
+    Tree* libraries;
+    UndoRedo* undo_redo;
 
     bool updating;
 
-    static Set<String> _find_singletons_recursive(EditorFileSystemDirectory *p_dir);
+    static Set<String> _find_singletons_recursive(
+        EditorFileSystemDirectory* p_dir
+    );
 
 protected:
     void _notification(int p_what);

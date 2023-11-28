@@ -38,10 +38,11 @@ extern "C" {
 #include <stdint.h>
 #include <wchar.h>
 
-#define GODOT_STRING_NAME_SIZE sizeof(void *)
+#define GODOT_STRING_NAME_SIZE sizeof(void*)
 
 #ifndef GODOT_CORE_API_GODOT_STRING_NAME_TYPE_DEFINED
 #define GODOT_CORE_API_GODOT_STRING_NAME_TYPE_DEFINED
+
 typedef struct {
     uint8_t _dont_touch_that[GODOT_STRING_NAME_SIZE];
 } godot_string_name;
@@ -58,18 +59,28 @@ typedef struct {
 extern "C" {
 #endif
 
-void GDAPI godot_string_name_new(godot_string_name *r_dest, const godot_string *p_name);
-void GDAPI godot_string_name_new_data(godot_string_name *r_dest, const char *p_name);
+void GDAPI
+godot_string_name_new(godot_string_name* r_dest, const godot_string* p_name);
+void GDAPI
+godot_string_name_new_data(godot_string_name* r_dest, const char* p_name);
 
-godot_string GDAPI godot_string_name_get_name(const godot_string_name *p_self);
+godot_string GDAPI godot_string_name_get_name(const godot_string_name* p_self);
 
-uint32_t GDAPI godot_string_name_get_hash(const godot_string_name *p_self);
-const void GDAPI *godot_string_name_get_data_unique_pointer(const godot_string_name *p_self);
+uint32_t GDAPI godot_string_name_get_hash(const godot_string_name* p_self);
+const void GDAPI* godot_string_name_get_data_unique_pointer(
+    const godot_string_name* p_self
+);
 
-godot_bool GDAPI godot_string_name_operator_equal(const godot_string_name *p_self, const godot_string_name *p_other);
-godot_bool GDAPI godot_string_name_operator_less(const godot_string_name *p_self, const godot_string_name *p_other);
+godot_bool GDAPI godot_string_name_operator_equal(
+    const godot_string_name* p_self,
+    const godot_string_name* p_other
+);
+godot_bool GDAPI godot_string_name_operator_less(
+    const godot_string_name* p_self,
+    const godot_string_name* p_other
+);
 
-void GDAPI godot_string_name_destroy(godot_string_name *p_self);
+void GDAPI godot_string_name_destroy(godot_string_name* p_self);
 
 #ifdef __cplusplus
 }

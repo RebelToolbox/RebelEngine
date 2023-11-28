@@ -43,16 +43,16 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_bounds(const AABB &p_bounds);
+    void set_bounds(const AABB& p_bounds);
     AABB get_bounds() const;
 
     void set_cell_size(float p_size);
     float get_cell_size() const;
 
-    void set_to_cell_xform(const Transform &p_xform);
+    void set_to_cell_xform(const Transform& p_xform);
     Transform get_to_cell_xform() const;
 
-    void set_dynamic_data(const PoolVector<int> &p_data);
+    void set_dynamic_data(const PoolVector<int>& p_data);
     PoolVector<int> get_dynamic_data() const;
 
     void set_dynamic_range(int p_range);
@@ -92,11 +92,10 @@ public:
         SUBDIV_256,
         SUBDIV_512,
         SUBDIV_MAX
-
     };
 
     typedef void (*BakeBeginFunc)(int);
-    typedef void (*BakeStepFunc)(int, const String &);
+    typedef void (*BakeStepFunc)(int, const String&);
     typedef void (*BakeEndFunc)();
 
 private:
@@ -121,7 +120,7 @@ private:
         Transform local_xform;
     };
 
-    void _find_meshes(Node *p_at_node, List<PlotMesh> &plot_meshes);
+    void _find_meshes(Node* p_at_node, List<PlotMesh>& plot_meshes);
     void _debug_bake();
 
 protected:
@@ -132,13 +131,13 @@ public:
     static BakeStepFunc bake_step_function;
     static BakeEndFunc bake_end_function;
 
-    void set_probe_data(const Ref<GIProbeData> &p_data);
+    void set_probe_data(const Ref<GIProbeData>& p_data);
     Ref<GIProbeData> get_probe_data() const;
 
     void set_subdiv(Subdiv p_subdiv);
     Subdiv get_subdiv() const;
 
-    void set_extents(const Vector3 &p_extents);
+    void set_extents(const Vector3& p_extents);
     Vector3 get_extents() const;
 
     void set_dynamic_range(int p_dynamic_range);
@@ -162,7 +161,7 @@ public:
     void set_compress(bool p_enable);
     bool is_compressed() const;
 
-    void bake(Node *p_from_node = nullptr, bool p_create_visual_debug = false);
+    void bake(Node* p_from_node = nullptr, bool p_create_visual_debug = false);
 
     virtual AABB get_aabb() const;
     virtual PoolVector<Face3> get_faces(uint32_t p_usage_flags) const;

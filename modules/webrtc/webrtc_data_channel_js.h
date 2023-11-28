@@ -54,10 +54,15 @@ private:
     int queue_count;
     uint8_t packet_buffer[PACKET_BUFFER_SIZE];
 
-    static void _on_open(void *p_obj);
-    static void _on_close(void *p_obj);
-    static void _on_error(void *p_obj);
-    static void _on_message(void *p_obj, const uint8_t *p_data, int p_size, int p_is_string);
+    static void _on_open(void* p_obj);
+    static void _on_close(void* p_obj);
+    static void _on_error(void* p_obj);
+    static void _on_message(
+        void* p_obj,
+        const uint8_t* p_data,
+        int p_size,
+        int p_is_string
+    );
 
 public:
     virtual void set_write_mode(WriteMode mode);
@@ -79,8 +84,11 @@ public:
 
     /** Inherited from PacketPeer: **/
     virtual int get_available_packet_count() const;
-    virtual Error get_packet(const uint8_t **r_buffer, int &r_buffer_size); ///< buffer is GONE after next get_packet
-    virtual Error put_packet(const uint8_t *p_buffer, int p_buffer_size);
+    virtual Error get_packet(
+        const uint8_t** r_buffer,
+        int& r_buffer_size
+    ); ///< buffer is GONE after next get_packet
+    virtual Error put_packet(const uint8_t* p_buffer, int p_buffer_size);
 
     virtual int get_max_packet_size() const;
 

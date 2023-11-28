@@ -40,7 +40,7 @@
 
 class JoypadIPhone {
 private:
-    JoypadIPhoneObserver *observer;
+    JoypadIPhoneObserver* observer;
 
 public:
     JoypadIPhone();

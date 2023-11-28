@@ -33,7 +33,8 @@
 #include "core/core_string_names.h"
 
 template <class T>
-static _FORCE_INLINE_ T _bezier_interp(real_t t, T start, T control_1, T control_2, T end) {
+static _FORCE_INLINE_ T
+_bezier_interp(real_t t, T start, T control_1, T control_2, T end) {
     /* Formula from Wikipedia article on Bezier curves. */
     real_t omt = (1.0 - t);
     real_t omt2 = omt * omt;
@@ -41,10 +42,11 @@ static _FORCE_INLINE_ T _bezier_interp(real_t t, T start, T control_1, T control
     real_t t2 = t * t;
     real_t t3 = t2 * t;
 
-    return start * omt3 + control_1 * omt2 * t * 3.0 + control_2 * omt * t2 * 3.0 + end * t3;
+    return start * omt3 + control_1 * omt2 * t * 3.0
+         + control_2 * omt * t2 * 3.0 + end * t3;
 }
 
-const char *Curve::SIGNAL_RANGE_CHANGED = "range_changed";
+const char* Curve::SIGNAL_RANGE_CHANGED = "range_changed";
 
 Curve::Curve() {
     _bake_resolution = 100;
@@ -54,7 +56,13 @@ Curve::Curve() {
     _minmax_set_once = 0b00;
 }
 
-int Curve::add_point(Vector2 p_pos, real_t left_tangent, real_t right_tangent, TangentMode left_mode, TangentMode right_mode) {
+int Curve::add_point(
+    Vector2 p_pos,
+    real_t left_tangent,
+    real_t right_tangent,
+    TangentMode left_mode,
+    TangentMode right_mode
+) {
     // Add a point and preserve order
 
     // Curve bounds is in 0..1
@@ -67,7 +75,9 @@ int Curve::add_point(Vector2 p_pos, real_t left_tangent, real_t right_tangent, T
     int ret = -1;
 
     if (_points.size() == 0) {
-        _points.push_back(Point(p_pos, left_tangent, right_tangent, left_mode, right_mode));
+        _points.push_back(
+            Point(p_pos, left_tangent, right_tangent, left_mode, right_mode)
+        );
         ret = 0;
 
     } else if (_points.size() == 1) {
@@ -76,10 +86,15 @@ int Curve::add_point(Vector2 p_pos, real_t left_tangent, real_t right_tangent, T
         real_t diff = p_pos.x - _points[0].pos.x;
 
         if (diff > 0) {
-            _points.push_back(Point(p_pos, left_tangent, right_tangent, left_mode, right_mode));
+            _points.push_back(
+                Point(p_pos, left_tangent, right_tangent, left_mode, right_mode)
+            );
             ret = 1;
         } else {
-            _points.insert(0, Point(p_pos, left_tangent, right_tangent, left_mode, right_mode));
+            _points.insert(
+                0,
+                Point(p_pos, left_tangent, right_tangent, left_mode, right_mode)
+            );
             ret = 0;
         }
 
@@ -88,12 +103,18 @@ int Curve::add_point(Vector2 p_pos, real_t left_tangent, real_t right_tangent, T
 
         if (i == 0 && p_pos.x < _points[0].pos.x) {
             // Insert before anything else
-            _points.insert(0, Point(p_pos, left_tangent, right_tangent, left_mode, right_mode));
+            _points.insert(
+                0,
+                Point(p_pos, left_tangent, right_tangent, left_mode, right_mode)
+            );
             ret = 0;
         } else {
             // Insert between i and i+1
             ++i;
-            _points.insert(i, Point(p_pos, left_tangent, right_tangent, left_mode, right_mode));
+            _points.insert(
+                i,
+                Point(p_pos, left_tangent, right_tangent, left_mode, right_mode)
+            );
             ret = i;
         }
     }
@@ -255,7 +276,7 @@ Curve::Point Curve::get_point(int p_index) const {
 }
 
 void Curve::update_auto_tangents(int i) {
-    Point &p = _points.write[i];
+    Point& p = _points.write[i];
 
     if (i > 0) {
         if (p.left_mode == TANGENT_LINEAR) {
@@ -408,7 +429,7 @@ void Curve::set_data(Array input) {
     _points.resize(input.size() / ELEMS);
 
     for (int j = 0; j < _points.size(); ++j) {
-        Point &p = _points.write[j];
+        Point& p = _points.write[j];
         int i = j * ELEMS;
 
         p.pos = input[i];
@@ -437,7 +458,8 @@ void Curve::bake() {
 
     if (_points.size() != 0) {
         _baked_cache.write[0] = _points[0].pos.y;
-        _baked_cache.write[_baked_cache.size() - 1] = _points[_points.size() - 1].pos.y;
+        _baked_cache.write[_baked_cache.size() - 1] =
+            _points[_points.size() - 1].pos.y;
     }
 
     _baked_cache_dirty = false;
@@ -497,37 +519,142 @@ void Curve::ensure_default_setup(float p_min, float p_max) {
 
 void Curve::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_point_count"), &Curve::get_point_count);
-    ClassDB::bind_method(D_METHOD("add_point", "position", "left_tangent", "right_tangent", "left_mode", "right_mode"), &Curve::add_point, DEFVAL(0), DEFVAL(0), DEFVAL(TANGENT_FREE), DEFVAL(TANGENT_FREE));
-    ClassDB::bind_method(D_METHOD("remove_point", "index"), &Curve::remove_point);
+    ClassDB::bind_method(
+        D_METHOD(
+            "add_point",
+            "position",
+            "left_tangent",
+            "right_tangent",
+            "left_mode",
+            "right_mode"
+        ),
+        &Curve::add_point,
+        DEFVAL(0),
+        DEFVAL(0),
+        DEFVAL(TANGENT_FREE),
+        DEFVAL(TANGENT_FREE)
+    );
+    ClassDB::bind_method(
+        D_METHOD("remove_point", "index"),
+        &Curve::remove_point
+    );
     ClassDB::bind_method(D_METHOD("clear_points"), &Curve::clear_points);
-    ClassDB::bind_method(D_METHOD("get_point_position", "index"), &Curve::get_point_position);
-    ClassDB::bind_method(D_METHOD("set_point_value", "index", "y"), &Curve::set_point_value);
-    ClassDB::bind_method(D_METHOD("set_point_offset", "index", "offset"), &Curve::set_point_offset);
-    ClassDB::bind_method(D_METHOD("interpolate", "offset"), &Curve::interpolate);
-    ClassDB::bind_method(D_METHOD("interpolate_baked", "offset"), &Curve::interpolate_baked);
-    ClassDB::bind_method(D_METHOD("get_point_left_tangent", "index"), &Curve::get_point_left_tangent);
-    ClassDB::bind_method(D_METHOD("get_point_right_tangent", "index"), &Curve::get_point_right_tangent);
-    ClassDB::bind_method(D_METHOD("get_point_left_mode", "index"), &Curve::get_point_left_mode);
-    ClassDB::bind_method(D_METHOD("get_point_right_mode", "index"), &Curve::get_point_right_mode);
-    ClassDB::bind_method(D_METHOD("set_point_left_tangent", "index", "tangent"), &Curve::set_point_left_tangent);
-    ClassDB::bind_method(D_METHOD("set_point_right_tangent", "index", "tangent"), &Curve::set_point_right_tangent);
-    ClassDB::bind_method(D_METHOD("set_point_left_mode", "index", "mode"), &Curve::set_point_left_mode);
-    ClassDB::bind_method(D_METHOD("set_point_right_mode", "index", "mode"), &Curve::set_point_right_mode);
+    ClassDB::bind_method(
+        D_METHOD("get_point_position", "index"),
+        &Curve::get_point_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_value", "index", "y"),
+        &Curve::set_point_value
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_offset", "index", "offset"),
+        &Curve::set_point_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("interpolate", "offset"),
+        &Curve::interpolate
+    );
+    ClassDB::bind_method(
+        D_METHOD("interpolate_baked", "offset"),
+        &Curve::interpolate_baked
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_left_tangent", "index"),
+        &Curve::get_point_left_tangent
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_right_tangent", "index"),
+        &Curve::get_point_right_tangent
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_left_mode", "index"),
+        &Curve::get_point_left_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_right_mode", "index"),
+        &Curve::get_point_right_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_left_tangent", "index", "tangent"),
+        &Curve::set_point_left_tangent
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_right_tangent", "index", "tangent"),
+        &Curve::set_point_right_tangent
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_left_mode", "index", "mode"),
+        &Curve::set_point_left_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_right_mode", "index", "mode"),
+        &Curve::set_point_right_mode
+    );
     ClassDB::bind_method(D_METHOD("get_min_value"), &Curve::get_min_value);
-    ClassDB::bind_method(D_METHOD("set_min_value", "min"), &Curve::set_min_value);
+    ClassDB::bind_method(
+        D_METHOD("set_min_value", "min"),
+        &Curve::set_min_value
+    );
     ClassDB::bind_method(D_METHOD("get_max_value"), &Curve::get_max_value);
-    ClassDB::bind_method(D_METHOD("set_max_value", "max"), &Curve::set_max_value);
+    ClassDB::bind_method(
+        D_METHOD("set_max_value", "max"),
+        &Curve::set_max_value
+    );
     ClassDB::bind_method(D_METHOD("clean_dupes"), &Curve::clean_dupes);
     ClassDB::bind_method(D_METHOD("bake"), &Curve::bake);
-    ClassDB::bind_method(D_METHOD("get_bake_resolution"), &Curve::get_bake_resolution);
-    ClassDB::bind_method(D_METHOD("set_bake_resolution", "resolution"), &Curve::set_bake_resolution);
+    ClassDB::bind_method(
+        D_METHOD("get_bake_resolution"),
+        &Curve::get_bake_resolution
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_bake_resolution", "resolution"),
+        &Curve::set_bake_resolution
+    );
     ClassDB::bind_method(D_METHOD("_get_data"), &Curve::get_data);
     ClassDB::bind_method(D_METHOD("_set_data", "data"), &Curve::set_data);
 
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "min_value", PROPERTY_HINT_RANGE, "-1024,1024,0.01"), "set_min_value", "get_min_value");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "max_value", PROPERTY_HINT_RANGE, "-1024,1024,0.01"), "set_max_value", "get_max_value");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "bake_resolution", PROPERTY_HINT_RANGE, "1,1000,1"), "set_bake_resolution", "get_bake_resolution");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "_data", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR | PROPERTY_USAGE_INTERNAL), "_set_data", "_get_data");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "min_value",
+            PROPERTY_HINT_RANGE,
+            "-1024,1024,0.01"
+        ),
+        "set_min_value",
+        "get_min_value"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "max_value",
+            PROPERTY_HINT_RANGE,
+            "-1024,1024,0.01"
+        ),
+        "set_max_value",
+        "get_max_value"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "bake_resolution",
+            PROPERTY_HINT_RANGE,
+            "1,1000,1"
+        ),
+        "set_bake_resolution",
+        "get_bake_resolution"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "_data",
+            PROPERTY_HINT_NONE,
+            "",
+            PROPERTY_USAGE_NOEDITOR | PROPERTY_USAGE_INTERNAL
+        ),
+        "_set_data",
+        "_get_data"
+    );
 
     ADD_SIGNAL(MethodInfo(SIGNAL_RANGE_CHANGED));
 
@@ -539,7 +666,13 @@ void Curve::_bind_methods() {
 int Curve2D::get_point_count() const {
     return points.size();
 }
-void Curve2D::add_point(const Vector2 &p_pos, const Vector2 &p_in, const Vector2 &p_out, int p_atpos) {
+
+void Curve2D::add_point(
+    const Vector2& p_pos,
+    const Vector2& p_in,
+    const Vector2& p_out,
+    int p_atpos
+) {
     Point n;
     n.pos = p_pos;
     n.in = p_in;
@@ -554,31 +687,33 @@ void Curve2D::add_point(const Vector2 &p_pos, const Vector2 &p_in, const Vector2
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
 
-void Curve2D::set_point_position(int p_index, const Vector2 &p_pos) {
+void Curve2D::set_point_position(int p_index, const Vector2& p_pos) {
     ERR_FAIL_INDEX(p_index, points.size());
 
     points.write[p_index].pos = p_pos;
     baked_cache_dirty = true;
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
+
 Vector2 Curve2D::get_point_position(int p_index) const {
     ERR_FAIL_INDEX_V(p_index, points.size(), Vector2());
     return points[p_index].pos;
 }
 
-void Curve2D::set_point_in(int p_index, const Vector2 &p_in) {
+void Curve2D::set_point_in(int p_index, const Vector2& p_in) {
     ERR_FAIL_INDEX(p_index, points.size());
 
     points.write[p_index].in = p_in;
     baked_cache_dirty = true;
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
+
 Vector2 Curve2D::get_point_in(int p_index) const {
     ERR_FAIL_INDEX_V(p_index, points.size(), Vector2());
     return points[p_index].in;
 }
 
-void Curve2D::set_point_out(int p_index, const Vector2 &p_out) {
+void Curve2D::set_point_out(int p_index, const Vector2& p_out) {
     ERR_FAIL_INDEX(p_index, points.size());
 
     points.write[p_index].out = p_out;
@@ -634,7 +769,18 @@ Vector2 Curve2D::interpolatef(real_t p_findex) const {
     return interpolate((int)p_findex, Math::fmod(p_findex, (real_t)1.0));
 }
 
-void Curve2D::_bake_segment2d(Map<float, Vector2> &r_bake, float p_begin, float p_end, const Vector2 &p_a, const Vector2 &p_out, const Vector2 &p_b, const Vector2 &p_in, int p_depth, int p_max_depth, float p_tol) const {
+void Curve2D::_bake_segment2d(
+    Map<float, Vector2>& r_bake,
+    float p_begin,
+    float p_end,
+    const Vector2& p_a,
+    const Vector2& p_out,
+    const Vector2& p_b,
+    const Vector2& p_in,
+    int p_depth,
+    int p_max_depth,
+    float p_tol
+) const {
     float mp = p_begin + (p_end - p_begin) * 0.5;
     Vector2 beg = _bezier_interp(p_begin, p_a, p_a + p_out, p_b + p_in, p_b);
     Vector2 mid = _bezier_interp(mp, p_a, p_a + p_out, p_b + p_in, p_b);
@@ -649,8 +795,30 @@ void Curve2D::_bake_segment2d(Map<float, Vector2> &r_bake, float p_begin, float 
     }
 
     if (p_depth < p_max_depth) {
-        _bake_segment2d(r_bake, p_begin, mp, p_a, p_out, p_b, p_in, p_depth + 1, p_max_depth, p_tol);
-        _bake_segment2d(r_bake, mp, p_end, p_a, p_out, p_b, p_in, p_depth + 1, p_max_depth, p_tol);
+        _bake_segment2d(
+            r_bake,
+            p_begin,
+            mp,
+            p_a,
+            p_out,
+            p_b,
+            p_in,
+            p_depth + 1,
+            p_max_depth,
+            p_tol
+        );
+        _bake_segment2d(
+            r_bake,
+            mp,
+            p_end,
+            p_a,
+            p_out,
+            p_b,
+            p_in,
+            p_depth + 1,
+            p_max_depth,
+            p_tol
+        );
     }
 }
 
@@ -676,7 +844,7 @@ void Curve2D::_bake() const {
     Vector2 pos = points[0].pos;
     List<Vector2> pointlist;
 
-    pointlist.push_back(pos); //start always from origin
+    pointlist.push_back(pos); // start always from origin
 
     for (int i = 0; i < points.size() - 1; i++) {
         float step = 0.1; // at least 10 substeps ought to be enough?
@@ -688,20 +856,33 @@ void Curve2D::_bake() const {
                 np = 1.0;
             }
 
-            Vector2 npp = _bezier_interp(np, points[i].pos, points[i].pos + points[i].out, points[i + 1].pos + points[i + 1].in, points[i + 1].pos);
+            Vector2 npp = _bezier_interp(
+                np,
+                points[i].pos,
+                points[i].pos + points[i].out,
+                points[i + 1].pos + points[i + 1].in,
+                points[i + 1].pos
+            );
             float d = pos.distance_to(npp);
 
             if (d > bake_interval) {
-                // OK! between P and NP there _has_ to be Something, let's go searching!
+                // OK! between P and NP there _has_ to be Something, let's go
+                // searching!
 
-                int iterations = 10; //lots of detail!
+                int iterations = 10; // lots of detail!
 
                 float low = p;
                 float hi = np;
                 float mid = low + (hi - low) * 0.5;
 
                 for (int j = 0; j < iterations; j++) {
-                    npp = _bezier_interp(mid, points[i].pos, points[i].pos + points[i].out, points[i + 1].pos + points[i + 1].in, points[i + 1].pos);
+                    npp = _bezier_interp(
+                        mid,
+                        points[i].pos,
+                        points[i].pos + points[i].out,
+                        points[i + 1].pos + points[i + 1].in,
+                        points[i + 1].pos
+                    );
                     d = pos.distance_to(npp);
 
                     if (bake_interval < d) {
@@ -731,7 +912,7 @@ void Curve2D::_bake() const {
     PoolVector2Array::Write w = baked_point_cache.write();
     int idx = 0;
 
-    for (List<Vector2>::Element *E = pointlist.front(); E; E = E->next()) {
+    for (List<Vector2>::Element* E = pointlist.front(); E; E = E->next()) {
         w[idx] = E->get();
         idx++;
     }
@@ -744,12 +925,13 @@ float Curve2D::get_baked_length() const {
 
     return baked_max_ofs;
 }
+
 Vector2 Curve2D::interpolate_baked(float p_offset, bool p_cubic) const {
     if (baked_cache_dirty) {
         _bake();
     }
 
-    //validate//
+    // validate//
     int pc = baked_point_cache.size();
     ERR_FAIL_COND_V_MSG(pc == 0, Vector2(), "No points in Curve2D.");
 
@@ -807,14 +989,14 @@ float Curve2D::get_bake_interval() const {
     return bake_interval;
 }
 
-Vector2 Curve2D::get_closest_point(const Vector2 &p_to_point) const {
+Vector2 Curve2D::get_closest_point(const Vector2& p_to_point) const {
     // Brute force method
 
     if (baked_cache_dirty) {
         _bake();
     }
 
-    //validate//
+    // validate//
     int pc = baked_point_cache.size();
     ERR_FAIL_COND_V_MSG(pc == 0, Vector2(), "No points in Curve2D.");
 
@@ -831,7 +1013,8 @@ Vector2 Curve2D::get_closest_point(const Vector2 &p_to_point) const {
         Vector2 origin = r[i];
         Vector2 direction = (r[i + 1] - origin) / bake_interval;
 
-        float d = CLAMP((p_to_point - origin).dot(direction), 0.0f, bake_interval);
+        float d =
+            CLAMP((p_to_point - origin).dot(direction), 0.0f, bake_interval);
         Vector2 proj = origin + direction * d;
 
         float dist = proj.distance_squared_to(p_to_point);
@@ -845,14 +1028,14 @@ Vector2 Curve2D::get_closest_point(const Vector2 &p_to_point) const {
     return nearest;
 }
 
-float Curve2D::get_closest_offset(const Vector2 &p_to_point) const {
+float Curve2D::get_closest_offset(const Vector2& p_to_point) const {
     // Brute force method
 
     if (baked_cache_dirty) {
         _bake();
     }
 
-    //validate//
+    // validate//
     int pc = baked_point_cache.size();
     ERR_FAIL_COND_V_MSG(pc == 0, 0.0f, "No points in Curve2D.");
 
@@ -870,7 +1053,8 @@ float Curve2D::get_closest_offset(const Vector2 &p_to_point) const {
         Vector2 origin = r[i];
         Vector2 direction = (r[i + 1] - origin) / bake_interval;
 
-        float d = CLAMP((p_to_point - origin).dot(direction), 0.0f, bake_interval);
+        float d =
+            CLAMP((p_to_point - origin).dot(direction), 0.0f, bake_interval);
         Vector2 proj = origin + direction * d;
 
         float dist = proj.distance_squared_to(p_to_point);
@@ -905,7 +1089,8 @@ Dictionary Curve2D::_get_data() const {
 
     return dc;
 }
-void Curve2D::_set_data(const Dictionary &p_data) {
+
+void Curve2D::_set_data(const Dictionary& p_data) {
     ERR_FAIL_COND(!p_data.has("points"));
 
     PoolVector2Array rp = p_data["points"];
@@ -923,7 +1108,8 @@ void Curve2D::_set_data(const Dictionary &p_data) {
     baked_cache_dirty = true;
 }
 
-PoolVector2Array Curve2D::tessellate(int p_max_stages, float p_tolerance) const {
+PoolVector2Array Curve2D::tessellate(int p_max_stages, float p_tolerance)
+    const {
     PoolVector2Array tess;
 
     if (points.size() == 0) {
@@ -935,7 +1121,18 @@ PoolVector2Array Curve2D::tessellate(int p_max_stages, float p_tolerance) const 
 
     int pc = 1;
     for (int i = 0; i < points.size() - 1; i++) {
-        _bake_segment2d(midpoints.write[i], 0, 1, points[i].pos, points[i].out, points[i + 1].pos, points[i + 1].in, 0, p_max_stages, p_tolerance);
+        _bake_segment2d(
+            midpoints.write[i],
+            0,
+            1,
+            points[i].pos,
+            points[i].out,
+            points[i + 1].pos,
+            points[i + 1].in,
+            0,
+            p_max_stages,
+            p_tolerance
+        );
         pc++;
         pc += midpoints[i].size();
     }
@@ -946,7 +1143,8 @@ PoolVector2Array Curve2D::tessellate(int p_max_stages, float p_tolerance) const 
     int pidx = 0;
 
     for (int i = 0; i < points.size() - 1; i++) {
-        for (Map<float, Vector2>::Element *E = midpoints[i].front(); E; E = E->next()) {
+        for (Map<float, Vector2>::Element* E = midpoints[i].front(); E;
+             E = E->next()) {
             pidx++;
             bpw[pidx] = E->get();
         }
@@ -961,34 +1159,116 @@ PoolVector2Array Curve2D::tessellate(int p_max_stages, float p_tolerance) const 
 }
 
 void Curve2D::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("get_point_count"), &Curve2D::get_point_count);
-    ClassDB::bind_method(D_METHOD("add_point", "position", "in", "out", "at_position"), &Curve2D::add_point, DEFVAL(Vector2()), DEFVAL(Vector2()), DEFVAL(-1));
-    ClassDB::bind_method(D_METHOD("set_point_position", "idx", "position"), &Curve2D::set_point_position);
-    ClassDB::bind_method(D_METHOD("get_point_position", "idx"), &Curve2D::get_point_position);
-    ClassDB::bind_method(D_METHOD("set_point_in", "idx", "position"), &Curve2D::set_point_in);
-    ClassDB::bind_method(D_METHOD("get_point_in", "idx"), &Curve2D::get_point_in);
-    ClassDB::bind_method(D_METHOD("set_point_out", "idx", "position"), &Curve2D::set_point_out);
-    ClassDB::bind_method(D_METHOD("get_point_out", "idx"), &Curve2D::get_point_out);
-    ClassDB::bind_method(D_METHOD("remove_point", "idx"), &Curve2D::remove_point);
+    ClassDB::bind_method(
+        D_METHOD("get_point_count"),
+        &Curve2D::get_point_count
+    );
+    ClassDB::bind_method(
+        D_METHOD("add_point", "position", "in", "out", "at_position"),
+        &Curve2D::add_point,
+        DEFVAL(Vector2()),
+        DEFVAL(Vector2()),
+        DEFVAL(-1)
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_position", "idx", "position"),
+        &Curve2D::set_point_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_position", "idx"),
+        &Curve2D::get_point_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_in", "idx", "position"),
+        &Curve2D::set_point_in
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_in", "idx"),
+        &Curve2D::get_point_in
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_out", "idx", "position"),
+        &Curve2D::set_point_out
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_out", "idx"),
+        &Curve2D::get_point_out
+    );
+    ClassDB::bind_method(
+        D_METHOD("remove_point", "idx"),
+        &Curve2D::remove_point
+    );
     ClassDB::bind_method(D_METHOD("clear_points"), &Curve2D::clear_points);
-    ClassDB::bind_method(D_METHOD("interpolate", "idx", "t"), &Curve2D::interpolate);
-    ClassDB::bind_method(D_METHOD("interpolatef", "fofs"), &Curve2D::interpolatef);
-    //ClassDB::bind_method(D_METHOD("bake","subdivs"),&Curve2D::bake,DEFVAL(10));
-    ClassDB::bind_method(D_METHOD("set_bake_interval", "distance"), &Curve2D::set_bake_interval);
-    ClassDB::bind_method(D_METHOD("get_bake_interval"), &Curve2D::get_bake_interval);
+    ClassDB::bind_method(
+        D_METHOD("interpolate", "idx", "t"),
+        &Curve2D::interpolate
+    );
+    ClassDB::bind_method(
+        D_METHOD("interpolatef", "fofs"),
+        &Curve2D::interpolatef
+    );
+    // ClassDB::bind_method(D_METHOD("bake","subdivs"),&Curve2D::bake,DEFVAL(10));
+    ClassDB::bind_method(
+        D_METHOD("set_bake_interval", "distance"),
+        &Curve2D::set_bake_interval
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_bake_interval"),
+        &Curve2D::get_bake_interval
+    );
 
-    ClassDB::bind_method(D_METHOD("get_baked_length"), &Curve2D::get_baked_length);
-    ClassDB::bind_method(D_METHOD("interpolate_baked", "offset", "cubic"), &Curve2D::interpolate_baked, DEFVAL(false));
-    ClassDB::bind_method(D_METHOD("get_baked_points"), &Curve2D::get_baked_points);
-    ClassDB::bind_method(D_METHOD("get_closest_point", "to_point"), &Curve2D::get_closest_point);
-    ClassDB::bind_method(D_METHOD("get_closest_offset", "to_point"), &Curve2D::get_closest_offset);
-    ClassDB::bind_method(D_METHOD("tessellate", "max_stages", "tolerance_degrees"), &Curve2D::tessellate, DEFVAL(5), DEFVAL(4));
+    ClassDB::bind_method(
+        D_METHOD("get_baked_length"),
+        &Curve2D::get_baked_length
+    );
+    ClassDB::bind_method(
+        D_METHOD("interpolate_baked", "offset", "cubic"),
+        &Curve2D::interpolate_baked,
+        DEFVAL(false)
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_baked_points"),
+        &Curve2D::get_baked_points
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_closest_point", "to_point"),
+        &Curve2D::get_closest_point
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_closest_offset", "to_point"),
+        &Curve2D::get_closest_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("tessellate", "max_stages", "tolerance_degrees"),
+        &Curve2D::tessellate,
+        DEFVAL(5),
+        DEFVAL(4)
+    );
 
     ClassDB::bind_method(D_METHOD("_get_data"), &Curve2D::_get_data);
     ClassDB::bind_method(D_METHOD("_set_data"), &Curve2D::_set_data);
 
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "bake_interval", PROPERTY_HINT_RANGE, "0.01,512,0.01"), "set_bake_interval", "get_bake_interval");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "_data", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR | PROPERTY_USAGE_INTERNAL), "_set_data", "_get_data");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "bake_interval",
+            PROPERTY_HINT_RANGE,
+            "0.01,512,0.01"
+        ),
+        "set_bake_interval",
+        "get_bake_interval"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "_data",
+            PROPERTY_HINT_NONE,
+            "",
+            PROPERTY_USAGE_NOEDITOR | PROPERTY_USAGE_INTERNAL
+        ),
+        "_set_data",
+        "_get_data"
+    );
 }
 
 Curve2D::Curve2D() {
@@ -1010,7 +1290,13 @@ Curve2D::Curve2D() {
 int Curve3D::get_point_count() const {
     return points.size();
 }
-void Curve3D::add_point(const Vector3 &p_pos, const Vector3 &p_in, const Vector3 &p_out, int p_atpos) {
+
+void Curve3D::add_point(
+    const Vector3& p_pos,
+    const Vector3& p_in,
+    const Vector3& p_out,
+    int p_atpos
+) {
     Point n;
     n.pos = p_pos;
     n.in = p_in;
@@ -1024,13 +1310,15 @@ void Curve3D::add_point(const Vector3 &p_pos, const Vector3 &p_in, const Vector3
     baked_cache_dirty = true;
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
-void Curve3D::set_point_position(int p_index, const Vector3 &p_pos) {
+
+void Curve3D::set_point_position(int p_index, const Vector3& p_pos) {
     ERR_FAIL_INDEX(p_index, points.size());
 
     points.write[p_index].pos = p_pos;
     baked_cache_dirty = true;
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
+
 Vector3 Curve3D::get_point_position(int p_index) const {
     ERR_FAIL_INDEX_V(p_index, points.size(), Vector3());
     return points[p_index].pos;
@@ -1043,24 +1331,26 @@ void Curve3D::set_point_tilt(int p_index, float p_tilt) {
     baked_cache_dirty = true;
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
+
 float Curve3D::get_point_tilt(int p_index) const {
     ERR_FAIL_INDEX_V(p_index, points.size(), 0);
     return points[p_index].tilt;
 }
 
-void Curve3D::set_point_in(int p_index, const Vector3 &p_in) {
+void Curve3D::set_point_in(int p_index, const Vector3& p_in) {
     ERR_FAIL_INDEX(p_index, points.size());
 
     points.write[p_index].in = p_in;
     baked_cache_dirty = true;
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
+
 Vector3 Curve3D::get_point_in(int p_index) const {
     ERR_FAIL_INDEX_V(p_index, points.size(), Vector3());
     return points[p_index].in;
 }
 
-void Curve3D::set_point_out(int p_index, const Vector3 &p_out) {
+void Curve3D::set_point_out(int p_index, const Vector3& p_out) {
     ERR_FAIL_INDEX(p_index, points.size());
 
     points.write[p_index].out = p_out;
@@ -1116,7 +1406,18 @@ Vector3 Curve3D::interpolatef(real_t p_findex) const {
     return interpolate((int)p_findex, Math::fmod(p_findex, (real_t)1.0));
 }
 
-void Curve3D::_bake_segment3d(Map<float, Vector3> &r_bake, float p_begin, float p_end, const Vector3 &p_a, const Vector3 &p_out, const Vector3 &p_b, const Vector3 &p_in, int p_depth, int p_max_depth, float p_tol) const {
+void Curve3D::_bake_segment3d(
+    Map<float, Vector3>& r_bake,
+    float p_begin,
+    float p_end,
+    const Vector3& p_a,
+    const Vector3& p_out,
+    const Vector3& p_b,
+    const Vector3& p_in,
+    int p_depth,
+    int p_max_depth,
+    float p_tol
+) const {
     float mp = p_begin + (p_end - p_begin) * 0.5;
     Vector3 beg = _bezier_interp(p_begin, p_a, p_a + p_out, p_b + p_in, p_b);
     Vector3 mid = _bezier_interp(mp, p_a, p_a + p_out, p_b + p_in, p_b);
@@ -1130,8 +1431,30 @@ void Curve3D::_bake_segment3d(Map<float, Vector3> &r_bake, float p_begin, float 
         r_bake[mp] = mid;
     }
     if (p_depth < p_max_depth) {
-        _bake_segment3d(r_bake, p_begin, mp, p_a, p_out, p_b, p_in, p_depth + 1, p_max_depth, p_tol);
-        _bake_segment3d(r_bake, mp, p_end, p_a, p_out, p_b, p_in, p_depth + 1, p_max_depth, p_tol);
+        _bake_segment3d(
+            r_bake,
+            p_begin,
+            mp,
+            p_a,
+            p_out,
+            p_b,
+            p_in,
+            p_depth + 1,
+            p_max_depth,
+            p_tol
+        );
+        _bake_segment3d(
+            r_bake,
+            mp,
+            p_end,
+            p_a,
+            p_out,
+            p_b,
+            p_in,
+            p_depth + 1,
+            p_max_depth,
+            p_tol
+        );
     }
 }
 
@@ -1180,20 +1503,33 @@ void Curve3D::_bake() const {
                 np = 1.0;
             }
 
-            Vector3 npp = _bezier_interp(np, points[i].pos, points[i].pos + points[i].out, points[i + 1].pos + points[i + 1].in, points[i + 1].pos);
+            Vector3 npp = _bezier_interp(
+                np,
+                points[i].pos,
+                points[i].pos + points[i].out,
+                points[i + 1].pos + points[i + 1].in,
+                points[i + 1].pos
+            );
             float d = pos.distance_to(npp);
 
             if (d > bake_interval) {
-                // OK! between P and NP there _has_ to be Something, let's go searching!
+                // OK! between P and NP there _has_ to be Something, let's go
+                // searching!
 
-                int iterations = 10; //lots of detail!
+                int iterations = 10; // lots of detail!
 
                 float low = p;
                 float hi = np;
                 float mid = low + (hi - low) * 0.5;
 
                 for (int j = 0; j < iterations; j++) {
-                    npp = _bezier_interp(mid, points[i].pos, points[i].pos + points[i].out, points[i + 1].pos + points[i + 1].in, points[i + 1].pos);
+                    npp = _bezier_interp(
+                        mid,
+                        points[i].pos,
+                        points[i].pos + points[i].out,
+                        points[i + 1].pos + points[i + 1].in,
+                        points[i + 1].pos
+                    );
                     d = pos.distance_to(npp);
 
                     if (bake_interval < d) {
@@ -1241,7 +1577,7 @@ void Curve3D::_bake() const {
     Vector3 prev_up = Vector3(0, 1, 0);
     Vector3 prev_forward = Vector3(0, 0, 1);
 
-    for (List<Plane>::Element *E = pointlist.front(); E; E = E->next()) {
+    for (List<Plane>::Element* E = pointlist.front(); E; E = E->next()) {
         w[idx] = E->get().normal;
         wt[idx] = E->get().d;
 
@@ -1286,12 +1622,13 @@ float Curve3D::get_baked_length() const {
 
     return baked_max_ofs;
 }
+
 Vector3 Curve3D::interpolate_baked(float p_offset, bool p_cubic) const {
     if (baked_cache_dirty) {
         _bake();
     }
 
-    //validate//
+    // validate//
     int pc = baked_point_cache.size();
     ERR_FAIL_COND_V_MSG(pc == 0, Vector3(), "No points in Curve3D.");
 
@@ -1336,7 +1673,7 @@ float Curve3D::interpolate_baked_tilt(float p_offset) const {
         _bake();
     }
 
-    //validate//
+    // validate//
     int pc = baked_tilt_cache.size();
     ERR_FAIL_COND_V_MSG(pc == 0, 0, "No tilts in Curve3D.");
 
@@ -1370,15 +1707,20 @@ float Curve3D::interpolate_baked_tilt(float p_offset) const {
     return Math::lerp(r[idx], r[idx + 1], frac);
 }
 
-Vector3 Curve3D::interpolate_baked_up_vector(float p_offset, bool p_apply_tilt) const {
+Vector3 Curve3D::interpolate_baked_up_vector(float p_offset, bool p_apply_tilt)
+    const {
     if (baked_cache_dirty) {
         _bake();
     }
 
-    //validate//
-    // curve may not have baked up vectors
+    // validate//
+    //  curve may not have baked up vectors
     int count = baked_up_vector_cache.size();
-    ERR_FAIL_COND_V_MSG(count == 0, Vector3(0, 1, 0), "No up vectors in Curve3D.");
+    ERR_FAIL_COND_V_MSG(
+        count == 0,
+        Vector3(0, 1, 0),
+        "No up vectors in Curve3D."
+    );
 
     if (count == 1) {
         return baked_up_vector_cache.get(0);
@@ -1394,7 +1736,9 @@ Vector3 Curve3D::interpolate_baked_up_vector(float p_offset, bool p_apply_tilt) 
     float frac = Math::fmod(offset, bake_interval) / bake_interval;
 
     if (idx == count - 1) {
-        return p_apply_tilt ? r[idx].rotated((rp[idx] - rp[idx - 1]).normalized(), rt[idx]) : r[idx];
+        return p_apply_tilt
+                 ? r[idx].rotated((rp[idx] - rp[idx - 1]).normalized(), rt[idx])
+                 : r[idx];
     }
 
     Vector3 forward = (rp[idx + 1] - rp[idx]).normalized();
@@ -1403,7 +1747,11 @@ Vector3 Curve3D::interpolate_baked_up_vector(float p_offset, bool p_apply_tilt) 
 
     if (p_apply_tilt) {
         up.rotate(forward, rt[idx]);
-        up1.rotate(idx + 2 >= count ? forward : (rp[idx + 2] - rp[idx + 1]).normalized(), rt[idx + 1]);
+        up1.rotate(
+            idx + 2 >= count ? forward
+                             : (rp[idx + 2] - rp[idx + 1]).normalized(),
+            rt[idx + 1]
+        );
     }
 
     Vector3 axis = up.cross(up1);
@@ -1441,14 +1789,14 @@ PoolVector3Array Curve3D::get_baked_up_vectors() const {
     return baked_up_vector_cache;
 }
 
-Vector3 Curve3D::get_closest_point(const Vector3 &p_to_point) const {
+Vector3 Curve3D::get_closest_point(const Vector3& p_to_point) const {
     // Brute force method
 
     if (baked_cache_dirty) {
         _bake();
     }
 
-    //validate//
+    // validate//
     int pc = baked_point_cache.size();
     ERR_FAIL_COND_V_MSG(pc == 0, Vector3(), "No points in Curve3D.");
 
@@ -1465,7 +1813,8 @@ Vector3 Curve3D::get_closest_point(const Vector3 &p_to_point) const {
         Vector3 origin = r[i];
         Vector3 direction = (r[i + 1] - origin) / bake_interval;
 
-        float d = CLAMP((p_to_point - origin).dot(direction), 0.0f, bake_interval);
+        float d =
+            CLAMP((p_to_point - origin).dot(direction), 0.0f, bake_interval);
         Vector3 proj = origin + direction * d;
 
         float dist = proj.distance_squared_to(p_to_point);
@@ -1479,14 +1828,14 @@ Vector3 Curve3D::get_closest_point(const Vector3 &p_to_point) const {
     return nearest;
 }
 
-float Curve3D::get_closest_offset(const Vector3 &p_to_point) const {
+float Curve3D::get_closest_offset(const Vector3& p_to_point) const {
     // Brute force method
 
     if (baked_cache_dirty) {
         _bake();
     }
 
-    //validate//
+    // validate//
     int pc = baked_point_cache.size();
     ERR_FAIL_COND_V_MSG(pc == 0, 0.0f, "No points in Curve3D.");
 
@@ -1504,7 +1853,8 @@ float Curve3D::get_closest_offset(const Vector3 &p_to_point) const {
         Vector3 origin = r[i];
         Vector3 direction = (r[i + 1] - origin) / bake_interval;
 
-        float d = CLAMP((p_to_point - origin).dot(direction), 0.0f, bake_interval);
+        float d =
+            CLAMP((p_to_point - origin).dot(direction), 0.0f, bake_interval);
         Vector3 proj = origin + direction * d;
 
         float dist = proj.distance_squared_to(p_to_point);
@@ -1565,7 +1915,8 @@ Dictionary Curve3D::_get_data() const {
 
     return dc;
 }
-void Curve3D::_set_data(const Dictionary &p_data) {
+
+void Curve3D::_set_data(const Dictionary& p_data) {
     ERR_FAIL_COND(!p_data.has("points"));
     ERR_FAIL_COND(!p_data.has("tilts"));
 
@@ -1587,7 +1938,8 @@ void Curve3D::_set_data(const Dictionary &p_data) {
     baked_cache_dirty = true;
 }
 
-PoolVector3Array Curve3D::tessellate(int p_max_stages, float p_tolerance) const {
+PoolVector3Array Curve3D::tessellate(int p_max_stages, float p_tolerance)
+    const {
     PoolVector3Array tess;
 
     if (points.size() == 0) {
@@ -1599,7 +1951,18 @@ PoolVector3Array Curve3D::tessellate(int p_max_stages, float p_tolerance) const 
 
     int pc = 1;
     for (int i = 0; i < points.size() - 1; i++) {
-        _bake_segment3d(midpoints.write[i], 0, 1, points[i].pos, points[i].out, points[i + 1].pos, points[i + 1].in, 0, p_max_stages, p_tolerance);
+        _bake_segment3d(
+            midpoints.write[i],
+            0,
+            1,
+            points[i].pos,
+            points[i].out,
+            points[i + 1].pos,
+            points[i + 1].in,
+            0,
+            p_max_stages,
+            p_tolerance
+        );
         pc++;
         pc += midpoints[i].size();
     }
@@ -1610,7 +1973,8 @@ PoolVector3Array Curve3D::tessellate(int p_max_stages, float p_tolerance) const 
     int pidx = 0;
 
     for (int i = 0; i < points.size() - 1; i++) {
-        for (Map<float, Vector3>::Element *E = midpoints[i].front(); E; E = E->next()) {
+        for (Map<float, Vector3>::Element* E = midpoints[i].front(); E;
+             E = E->next()) {
             pidx++;
             bpw[pidx] = E->get();
         }
@@ -1625,44 +1989,152 @@ PoolVector3Array Curve3D::tessellate(int p_max_stages, float p_tolerance) const 
 }
 
 void Curve3D::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("get_point_count"), &Curve3D::get_point_count);
-    ClassDB::bind_method(D_METHOD("add_point", "position", "in", "out", "at_position"), &Curve3D::add_point, DEFVAL(Vector3()), DEFVAL(Vector3()), DEFVAL(-1));
-    ClassDB::bind_method(D_METHOD("set_point_position", "idx", "position"), &Curve3D::set_point_position);
-    ClassDB::bind_method(D_METHOD("get_point_position", "idx"), &Curve3D::get_point_position);
-    ClassDB::bind_method(D_METHOD("set_point_tilt", "idx", "tilt"), &Curve3D::set_point_tilt);
-    ClassDB::bind_method(D_METHOD("get_point_tilt", "idx"), &Curve3D::get_point_tilt);
-    ClassDB::bind_method(D_METHOD("set_point_in", "idx", "position"), &Curve3D::set_point_in);
-    ClassDB::bind_method(D_METHOD("get_point_in", "idx"), &Curve3D::get_point_in);
-    ClassDB::bind_method(D_METHOD("set_point_out", "idx", "position"), &Curve3D::set_point_out);
-    ClassDB::bind_method(D_METHOD("get_point_out", "idx"), &Curve3D::get_point_out);
-    ClassDB::bind_method(D_METHOD("remove_point", "idx"), &Curve3D::remove_point);
+    ClassDB::bind_method(
+        D_METHOD("get_point_count"),
+        &Curve3D::get_point_count
+    );
+    ClassDB::bind_method(
+        D_METHOD("add_point", "position", "in", "out", "at_position"),
+        &Curve3D::add_point,
+        DEFVAL(Vector3()),
+        DEFVAL(Vector3()),
+        DEFVAL(-1)
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_position", "idx", "position"),
+        &Curve3D::set_point_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_position", "idx"),
+        &Curve3D::get_point_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_tilt", "idx", "tilt"),
+        &Curve3D::set_point_tilt
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_tilt", "idx"),
+        &Curve3D::get_point_tilt
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_in", "idx", "position"),
+        &Curve3D::set_point_in
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_in", "idx"),
+        &Curve3D::get_point_in
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_point_out", "idx", "position"),
+        &Curve3D::set_point_out
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_out", "idx"),
+        &Curve3D::get_point_out
+    );
+    ClassDB::bind_method(
+        D_METHOD("remove_point", "idx"),
+        &Curve3D::remove_point
+    );
     ClassDB::bind_method(D_METHOD("clear_points"), &Curve3D::clear_points);
-    ClassDB::bind_method(D_METHOD("interpolate", "idx", "t"), &Curve3D::interpolate);
-    ClassDB::bind_method(D_METHOD("interpolatef", "fofs"), &Curve3D::interpolatef);
-    //ClassDB::bind_method(D_METHOD("bake","subdivs"),&Curve3D::bake,DEFVAL(10));
-    ClassDB::bind_method(D_METHOD("set_bake_interval", "distance"), &Curve3D::set_bake_interval);
-    ClassDB::bind_method(D_METHOD("get_bake_interval"), &Curve3D::get_bake_interval);
-    ClassDB::bind_method(D_METHOD("set_up_vector_enabled", "enable"), &Curve3D::set_up_vector_enabled);
-    ClassDB::bind_method(D_METHOD("is_up_vector_enabled"), &Curve3D::is_up_vector_enabled);
+    ClassDB::bind_method(
+        D_METHOD("interpolate", "idx", "t"),
+        &Curve3D::interpolate
+    );
+    ClassDB::bind_method(
+        D_METHOD("interpolatef", "fofs"),
+        &Curve3D::interpolatef
+    );
+    // ClassDB::bind_method(D_METHOD("bake","subdivs"),&Curve3D::bake,DEFVAL(10));
+    ClassDB::bind_method(
+        D_METHOD("set_bake_interval", "distance"),
+        &Curve3D::set_bake_interval
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_bake_interval"),
+        &Curve3D::get_bake_interval
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_up_vector_enabled", "enable"),
+        &Curve3D::set_up_vector_enabled
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_up_vector_enabled"),
+        &Curve3D::is_up_vector_enabled
+    );
 
-    ClassDB::bind_method(D_METHOD("get_baked_length"), &Curve3D::get_baked_length);
-    ClassDB::bind_method(D_METHOD("interpolate_baked", "offset", "cubic"), &Curve3D::interpolate_baked, DEFVAL(false));
-    ClassDB::bind_method(D_METHOD("interpolate_baked_up_vector", "offset", "apply_tilt"), &Curve3D::interpolate_baked_up_vector, DEFVAL(false));
-    ClassDB::bind_method(D_METHOD("get_baked_points"), &Curve3D::get_baked_points);
-    ClassDB::bind_method(D_METHOD("get_baked_tilts"), &Curve3D::get_baked_tilts);
-    ClassDB::bind_method(D_METHOD("get_baked_up_vectors"), &Curve3D::get_baked_up_vectors);
-    ClassDB::bind_method(D_METHOD("get_closest_point", "to_point"), &Curve3D::get_closest_point);
-    ClassDB::bind_method(D_METHOD("get_closest_offset", "to_point"), &Curve3D::get_closest_offset);
-    ClassDB::bind_method(D_METHOD("tessellate", "max_stages", "tolerance_degrees"), &Curve3D::tessellate, DEFVAL(5), DEFVAL(4));
+    ClassDB::bind_method(
+        D_METHOD("get_baked_length"),
+        &Curve3D::get_baked_length
+    );
+    ClassDB::bind_method(
+        D_METHOD("interpolate_baked", "offset", "cubic"),
+        &Curve3D::interpolate_baked,
+        DEFVAL(false)
+    );
+    ClassDB::bind_method(
+        D_METHOD("interpolate_baked_up_vector", "offset", "apply_tilt"),
+        &Curve3D::interpolate_baked_up_vector,
+        DEFVAL(false)
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_baked_points"),
+        &Curve3D::get_baked_points
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_baked_tilts"),
+        &Curve3D::get_baked_tilts
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_baked_up_vectors"),
+        &Curve3D::get_baked_up_vectors
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_closest_point", "to_point"),
+        &Curve3D::get_closest_point
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_closest_offset", "to_point"),
+        &Curve3D::get_closest_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("tessellate", "max_stages", "tolerance_degrees"),
+        &Curve3D::tessellate,
+        DEFVAL(5),
+        DEFVAL(4)
+    );
 
     ClassDB::bind_method(D_METHOD("_get_data"), &Curve3D::_get_data);
     ClassDB::bind_method(D_METHOD("_set_data"), &Curve3D::_set_data);
 
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "bake_interval", PROPERTY_HINT_RANGE, "0.01,512,0.01"), "set_bake_interval", "get_bake_interval");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "_data", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR | PROPERTY_USAGE_INTERNAL), "_set_data", "_get_data");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "bake_interval",
+            PROPERTY_HINT_RANGE,
+            "0.01,512,0.01"
+        ),
+        "set_bake_interval",
+        "get_bake_interval"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "_data",
+            PROPERTY_HINT_NONE,
+            "",
+            PROPERTY_USAGE_NOEDITOR | PROPERTY_USAGE_INTERNAL
+        ),
+        "_set_data",
+        "_get_data"
+    );
 
     ADD_GROUP("Up Vector", "up_vector_");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "up_vector_enabled"), "set_up_vector_enabled", "is_up_vector_enabled");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "up_vector_enabled"),
+        "set_up_vector_enabled",
+        "is_up_vector_enabled"
+    );
 }
 
 Curve3D::Curve3D() {

@@ -61,9 +61,9 @@ private:
 
     VisibilityMode visibility;
 
-    void _input(const Ref<InputEvent> &p_event);
+    void _input(const Ref<InputEvent>& p_event);
 
-    bool _is_point_inside(const Point2 &p_point);
+    bool _is_point_inside(const Point2& p_point);
 
     void _press(int p_finger_pressed);
     void _release(bool p_exiting_tree = false);
@@ -78,16 +78,16 @@ public:
     virtual bool _edit_use_rect() const;
 #endif
 
-    void set_texture(const Ref<Texture> &p_texture);
+    void set_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_texture() const;
 
-    void set_texture_pressed(const Ref<Texture> &p_texture_pressed);
+    void set_texture_pressed(const Ref<Texture>& p_texture_pressed);
     Ref<Texture> get_texture_pressed() const;
 
-    void set_bitmask(const Ref<BitMap> &p_bitmask);
+    void set_bitmask(const Ref<BitMap>& p_bitmask);
     Ref<BitMap> get_bitmask() const;
 
-    void set_shape(const Ref<Shape2D> &p_shape);
+    void set_shape(const Ref<Shape2D>& p_shape);
     Ref<Shape2D> get_shape() const;
 
     void set_shape_centered(bool p_shape_centered);
@@ -96,7 +96,7 @@ public:
     void set_shape_visible(bool p_shape_visible);
     bool is_shape_visible() const;
 
-    void set_action(const String &p_action);
+    void set_action(const String& p_action);
     String get_action() const;
 
     void set_passby_press(bool p_enable);

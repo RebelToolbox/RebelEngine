@@ -33,7 +33,7 @@
 #include "core/io/stream_peer_ssl.h"
 #include "core/version.h"
 
-const char *HTTPClient::_methods[METHOD_MAX] = {
+const char* HTTPClient::_methods[METHOD_MAX] = {
     "GET",
     "HEAD",
     "POST",
@@ -46,7 +46,12 @@ const char *HTTPClient::_methods[METHOD_MAX] = {
 };
 
 #ifndef JAVASCRIPT_ENABLED
-Error HTTPClient::connect_to_host(const String &p_host, int p_port, bool p_ssl, bool p_verify_host) {
+Error HTTPClient::connect_to_host(
+    const String& p_host,
+    int p_port,
+    bool p_ssl,
+    bool p_verify_host
+) {
     close();
 
     conn_port = p_port;
@@ -79,7 +84,8 @@ Error HTTPClient::connect_to_host(const String &p_host, int p_port, bool p_ssl, 
 
     if (conn_host.is_valid_ip_address()) {
         // Host contains valid IP
-        Error err = tcp_connection->connect_to_host(IP_Address(conn_host), p_port);
+        Error err =
+            tcp_connection->connect_to_host(IP_Address(conn_host), p_port);
         if (err) {
             status = STATUS_CANT_CONNECT;
             return err;
@@ -95,12 +101,17 @@ Error HTTPClient::connect_to_host(const String &p_host, int p_port, bool p_ssl, 
     return OK;
 }
 
-void HTTPClient::set_connection(const Ref<StreamPeer> &p_connection) {
-    ERR_FAIL_COND_MSG(p_connection.is_null(), "Connection is not a reference to a valid StreamPeer object.");
+void HTTPClient::set_connection(const Ref<StreamPeer>& p_connection) {
+    ERR_FAIL_COND_MSG(
+        p_connection.is_null(),
+        "Connection is not a reference to a valid StreamPeer object."
+    );
 
     if (ssl) {
-        ERR_FAIL_NULL_MSG(Object::cast_to<StreamPeerSSL>(p_connection.ptr()),
-                "Connection is not a reference to a valid StreamPeerSSL object.");
+        ERR_FAIL_NULL_MSG(
+            Object::cast_to<StreamPeerSSL>(p_connection.ptr()),
+            "Connection is not a reference to a valid StreamPeerSSL object."
+        );
     }
 
     if (connection == p_connection) {
@@ -116,7 +127,10 @@ Ref<StreamPeer> HTTPClient::get_connection() const {
     return connection;
 }
 
-static bool _check_request_url(HTTPClient::Method p_method, const String &p_url) {
+static bool _check_request_url(
+    HTTPClient::Method p_method,
+    const String& p_url
+) {
     switch (p_method) {
         case HTTPClient::METHOD_CONNECT: {
             // Authority in host:port format, as in RFC7231
@@ -131,13 +145,22 @@ static bool _check_request_url(HTTPClient::Method p_method, const String &p_url)
         }
         default:
             // Absolute path or absolute URL
-            return p_url.begins_with("/") || p_url.begins_with("http://") || p_url.begins_with("https://");
+            return p_url.begins_with("/") || p_url.begins_with("http://")
+                || p_url.begins_with("https://");
     }
 }
 
-Error HTTPClient::request_raw(Method p_method, const String &p_url, const Vector<String> &p_headers, const PoolVector<uint8_t> &p_body) {
+Error HTTPClient::request_raw(
+    Method p_method,
+    const String& p_url,
+    const Vector<String>& p_headers,
+    const PoolVector<uint8_t>& p_body
+) {
     ERR_FAIL_INDEX_V(p_method, METHOD_MAX, ERR_INVALID_PARAMETER);
-    ERR_FAIL_COND_V(!_check_request_url(p_method, p_url), ERR_INVALID_PARAMETER);
+    ERR_FAIL_COND_V(
+        !_check_request_url(p_method, p_url),
+        ERR_INVALID_PARAMETER
+    );
     ERR_FAIL_COND_V(status != STATUS_CONNECTED, ERR_INVALID_PARAMETER);
     ERR_FAIL_COND_V(connection.is_null(), ERR_INVALID_DATA);
 
@@ -162,7 +185,8 @@ Error HTTPClient::request_raw(Method p_method, const String &p_url, const Vector
         }
     }
     if (add_host) {
-        if ((ssl && conn_port == PORT_HTTPS) || (!ssl && conn_port == PORT_HTTP)) {
+        if ((ssl && conn_port == PORT_HTTPS)
+            || (!ssl && conn_port == PORT_HTTP)) {
             // Don't append the standard ports
             request += "Host: " + conn_host + "\r\n";
         } else {
@@ -174,7 +198,8 @@ Error HTTPClient::request_raw(Method p_method, const String &p_url, const Vector
         // Should it add utf8 encoding?
     }
     if (add_uagent) {
-        request += "User-Agent: GodotEngine/" + String(VERSION_FULL_BUILD) + " (" + OS::get_singleton()->get_name() + ")\r\n";
+        request += "User-Agent: GodotEngine/" + String(VERSION_FULL_BUILD)
+                 + " (" + OS::get_singleton()->get_name() + ")\r\n";
     }
     if (add_accept) {
         request += "Accept: */*\r\n";
@@ -208,9 +233,17 @@ Error HTTPClient::request_raw(Method p_method, const String &p_url, const Vector
     return OK;
 }
 
-Error HTTPClient::request(Method p_method, const String &p_url, const Vector<String> &p_headers, const String &p_body) {
+Error HTTPClient::request(
+    Method p_method,
+    const String& p_url,
+    const Vector<String>& p_headers,
+    const String& p_body
+) {
     ERR_FAIL_INDEX_V(p_method, METHOD_MAX, ERR_INVALID_PARAMETER);
-    ERR_FAIL_COND_V(!_check_request_url(p_method, p_url), ERR_INVALID_PARAMETER);
+    ERR_FAIL_COND_V(
+        !_check_request_url(p_method, p_url),
+        ERR_INVALID_PARAMETER
+    );
     ERR_FAIL_COND_V(status != STATUS_CONNECTED, ERR_INVALID_PARAMETER);
     ERR_FAIL_COND_V(connection.is_null(), ERR_INVALID_DATA);
 
@@ -235,7 +268,8 @@ Error HTTPClient::request(Method p_method, const String &p_url, const Vector<Str
         }
     }
     if (add_host) {
-        if ((ssl && conn_port == PORT_HTTPS) || (!ssl && conn_port == PORT_HTTP)) {
+        if ((ssl && conn_port == PORT_HTTPS)
+            || (!ssl && conn_port == PORT_HTTP)) {
             // Don't append the standard ports
             request += "Host: " + conn_host + "\r\n";
         } else {
@@ -247,7 +281,8 @@ Error HTTPClient::request(Method p_method, const String &p_url, const Vector<Str
         // Should it add utf8 encoding?
     }
     if (add_uagent) {
-        request += "User-Agent: GodotEngine/" + String(VERSION_FULL_BUILD) + " (" + OS::get_singleton()->get_name() + ")\r\n";
+        request += "User-Agent: GodotEngine/" + String(VERSION_FULL_BUILD)
+                 + " (" + OS::get_singleton()->get_name() + ")\r\n";
     }
     if (add_accept) {
         request += "Accept: */*\r\n";
@@ -256,7 +291,7 @@ Error HTTPClient::request(Method p_method, const String &p_url, const Vector<Str
     request += p_body;
 
     CharString cs = request.utf8();
-    Error err = connection->put_data((const uint8_t *)cs.ptr(), cs.length());
+    Error err = connection->put_data((const uint8_t*)cs.ptr(), cs.length());
     if (err) {
         close();
         status = STATUS_CONNECTION_ERROR;
@@ -281,7 +316,7 @@ int HTTPClient::get_response_code() const {
     return response_num;
 }
 
-Error HTTPClient::get_response_headers(List<String> *r_response) {
+Error HTTPClient::get_response_headers(List<String>* r_response) {
     if (!response_headers.size()) {
         return ERR_INVALID_PARAMETER;
     }
@@ -325,19 +360,26 @@ Error HTTPClient::poll() {
         case STATUS_RESOLVING: {
             ERR_FAIL_COND_V(resolving == IP::RESOLVER_INVALID_ID, ERR_BUG);
 
-            IP::ResolverStatus rstatus = IP::get_singleton()->get_resolve_item_status(resolving);
+            IP::ResolverStatus rstatus =
+                IP::get_singleton()->get_resolve_item_status(resolving);
             switch (rstatus) {
                 case IP::RESOLVER_STATUS_WAITING:
                     return OK; // Still resolving
 
                 case IP::RESOLVER_STATUS_DONE: {
-                    ip_candidates = IP::get_singleton()->get_resolve_item_addresses(resolving);
+                    ip_candidates =
+                        IP::get_singleton()->get_resolve_item_addresses(
+                            resolving
+                        );
                     IP::get_singleton()->erase_resolve_item(resolving);
                     resolving = IP::RESOLVER_INVALID_ID;
 
                     Error err = ERR_BUG; // Should be at least one entry.
                     while (ip_candidates.size() > 0) {
-                        err = tcp_connection->connect_to_host(ip_candidates.pop_front(), conn_port);
+                        err = tcp_connection->connect_to_host(
+                            ip_candidates.pop_front(),
+                            conn_port
+                        );
                         if (err == OK) {
                             break;
                         }
@@ -372,7 +414,11 @@ Error HTTPClient::poll() {
                             // Connect the StreamPeerSSL and start handshaking
                             ssl = Ref<StreamPeerSSL>(StreamPeerSSL::create());
                             ssl->set_blocking_handshake_enabled(false);
-                            Error err = ssl->connect_to_stream(tcp_connection, ssl_verify_host, conn_host);
+                            Error err = ssl->connect_to_stream(
+                                tcp_connection,
+                                ssl_verify_host,
+                                conn_host
+                            );
                             if (err != OK) {
                                 close();
                                 status = STATUS_SSL_HANDSHAKE_ERROR;
@@ -381,7 +427,8 @@ Error HTTPClient::poll() {
                             connection = ssl;
                             handshaking = true;
                         } else {
-                            // We are already handshaking, which means we can use your already active SSL connection
+                            // We are already handshaking, which means we can
+                            // use your already active SSL connection
                             ssl = static_cast<Ref<StreamPeerSSL>>(connection);
                             if (ssl.is_null()) {
                                 close();
@@ -392,7 +439,8 @@ Error HTTPClient::poll() {
                             ssl->poll(); // Try to finish the handshake
                         }
 
-                        if (ssl->get_status() == StreamPeerSSL::STATUS_CONNECTED) {
+                        if (ssl->get_status()
+                            == StreamPeerSSL::STATUS_CONNECTED) {
                             // Handshake has been successful
                             handshaking = false;
                             ip_candidates.clear();
@@ -416,7 +464,10 @@ Error HTTPClient::poll() {
                     Error err = ERR_CANT_CONNECT;
                     while (ip_candidates.size() > 0) {
                         tcp_connection->disconnect_from_host();
-                        err = tcp_connection->connect_to_host(ip_candidates.pop_front(), conn_port);
+                        err = tcp_connection->connect_to_host(
+                            ip_candidates.pop_front(),
+                            conn_port
+                        );
                         if (err == OK) {
                             return OK;
                         }
@@ -461,13 +512,16 @@ Error HTTPClient::poll() {
 
                 response_str.push_back(byte);
                 int rs = response_str.size();
-                if (
-                        (rs >= 2 && response_str[rs - 2] == '\n' && response_str[rs - 1] == '\n') ||
-                        (rs >= 4 && response_str[rs - 4] == '\r' && response_str[rs - 3] == '\n' && response_str[rs - 2] == '\r' && response_str[rs - 1] == '\n')) {
+                if ((rs >= 2 && response_str[rs - 2] == '\n'
+                     && response_str[rs - 1] == '\n')
+                    || (rs >= 4 && response_str[rs - 4] == '\r'
+                        && response_str[rs - 3] == '\n'
+                        && response_str[rs - 2] == '\r'
+                        && response_str[rs - 1] == '\n')) {
                     // End of response, parse.
                     response_str.push_back(0);
                     String response;
-                    response.parse_utf8((const char *)response_str.ptr());
+                    response.parse_utf8((const char*)response_str.ptr());
                     Vector<String> responses = response.split("\n");
                     body_size = -1;
                     chunked = false;
@@ -480,8 +534,8 @@ Error HTTPClient::poll() {
                     response_num = RESPONSE_OK;
 
                     // Per the HTTP 1.1 spec, keep-alive is the default.
-                    // Not following that specification breaks standard implementations.
-                    // Broken web servers should be fixed.
+                    // Not following that specification breaks standard
+                    // implementations. Broken web servers should be fixed.
                     bool keep_alive = true;
 
                     for (int i = 0; i < responses.size(); i++) {
@@ -491,11 +545,18 @@ Error HTTPClient::poll() {
                             continue;
                         }
                         if (s.begins_with("content-length:")) {
-                            body_size = s.substr(s.find(":") + 1, s.length()).strip_edges().to_int64();
+                            body_size = s.substr(s.find(":") + 1, s.length())
+                                            .strip_edges()
+                                            .to_int64();
                             body_left = body_size;
 
                         } else if (s.begins_with("transfer-encoding:")) {
-                            String encoding = header.substr(header.find(":") + 1, header.length()).strip_edges();
+                            String encoding = header
+                                                  .substr(
+                                                      header.find(":") + 1,
+                                                      header.length()
+                                                  )
+                                                  .strip_edges();
                             if (encoding == "chunked") {
                                 chunked = true;
                             }
@@ -560,7 +621,8 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
     if (chunked) {
         while (true) {
             if (chunk_trailer_part) {
-                // We need to consume the trailer part too or keep-alive will break
+                // We need to consume the trailer part too or keep-alive will
+                // break
                 uint8_t b;
                 int rec = 0;
                 err = _get_http_data(&b, 1, rec);
@@ -571,7 +633,8 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
 
                 chunk.push_back(b);
                 int cs = chunk.size();
-                if ((cs >= 2 && chunk[cs - 2] == '\r' && chunk[cs - 1] == '\n')) {
+                if ((cs >= 2 && chunk[cs - 2] == '\r' && chunk[cs - 1] == '\n'
+                    )) {
                     if (cs == 2) {
                         // Finally over
                         chunk_trailer_part = false;
@@ -601,7 +664,8 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
                     break;
                 }
 
-                if (chunk.size() > 2 && chunk[chunk.size() - 2] == '\r' && chunk[chunk.size() - 1] == '\n') {
+                if (chunk.size() > 2 && chunk[chunk.size() - 2] == '\r'
+                    && chunk[chunk.size() - 1] == '\n') {
                     int len = 0;
                     for (int i = 0; i < chunk.size() - 2; i++) {
                         char c = chunk[i];
@@ -638,14 +702,19 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
                 }
             } else {
                 int rec = 0;
-                err = _get_http_data(&chunk.write[chunk.size() - chunk_left], chunk_left, rec);
+                err = _get_http_data(
+                    &chunk.write[chunk.size() - chunk_left],
+                    chunk_left,
+                    rec
+                );
                 if (rec == 0) {
                     break;
                 }
                 chunk_left -= rec;
 
                 if (chunk_left == 0) {
-                    if (chunk[chunk.size() - 2] != '\r' || chunk[chunk.size() - 1] != '\n') {
+                    if (chunk[chunk.size() - 2] != '\r'
+                        || chunk[chunk.size() - 1] != '\n') {
                         ERR_PRINT("HTTP Invalid chunk terminator (not \\r\\n)");
                         status = STATUS_CONNECTION_ERROR;
                         break;
@@ -662,7 +731,8 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
         }
 
     } else {
-        int to_read = !read_until_eof ? MIN(body_left, read_chunk_size) : read_chunk_size;
+        int to_read =
+            !read_until_eof ? MIN(body_left, read_chunk_size) : read_chunk_size;
         ret.resize(to_read);
         int _offset = 0;
         while (to_read > 0) {
@@ -715,16 +785,21 @@ bool HTTPClient::is_blocking_mode_enabled() const {
     return blocking;
 }
 
-Error HTTPClient::_get_http_data(uint8_t *p_buffer, int p_bytes, int &r_received) {
+Error HTTPClient::_get_http_data(
+    uint8_t* p_buffer,
+    int p_bytes,
+    int& r_received
+) {
     if (blocking) {
-        // We can't use StreamPeer.get_data, since when reaching EOF we will get an
-        // error without knowing how many bytes we received.
+        // We can't use StreamPeer.get_data, since when reaching EOF we will get
+        // an error without knowing how many bytes we received.
         Error err = ERR_FILE_EOF;
         int read = 0;
         int left = p_bytes;
         r_received = 0;
         while (left > 0) {
-            err = connection->get_partial_data(p_buffer + r_received, left, read);
+            err =
+                connection->get_partial_data(p_buffer + r_received, left, read);
             if (err == OK) {
                 r_received += read;
             } else if (err == ERR_FILE_EOF) {
@@ -766,16 +841,16 @@ HTTPClient::HTTPClient() {
     ssl = false;
     blocking = false;
     handshaking = false;
-    // 64 KiB by default (favors fast download speeds at the cost of memory usage).
+    // 64 KiB by default (favors fast download speeds at the cost of memory
+    // usage).
     read_chunk_size = 65536;
 }
 
-HTTPClient::~HTTPClient() {
-}
+HTTPClient::~HTTPClient() {}
 
 #endif // #ifndef JAVASCRIPT_ENABLED
 
-String HTTPClient::query_string_from_dict(const Dictionary &p_dict) {
+String HTTPClient::query_string_from_dict(const Dictionary& p_dict) {
     String query = "";
     Array keys = p_dict.keys();
     for (int i = 0; i < keys.size(); ++i) {
@@ -786,7 +861,8 @@ String HTTPClient::query_string_from_dict(const Dictionary &p_dict) {
                 // Repeat the key with every values
                 Array values = value;
                 for (int j = 0; j < values.size(); ++j) {
-                    query += "&" + encoded_key + "=" + String(values[j]).http_escape();
+                    query += "&" + encoded_key + "="
+                           + String(values[j]).http_escape();
                 }
                 break;
             }
@@ -809,8 +885,8 @@ Dictionary HTTPClient::_get_response_headers_as_dictionary() {
     List<String> rh;
     get_response_headers(&rh);
     Dictionary ret;
-    for (const List<String>::Element *E = rh.front(); E; E = E->next()) {
-        const String &s = E->get();
+    for (const List<String>::Element* E = rh.front(); E; E = E->next()) {
+        const String& s = E->get();
         int sp = s.find(":");
         if (sp == -1) {
             continue;
@@ -829,7 +905,7 @@ PoolStringArray HTTPClient::_get_response_headers() {
     PoolStringArray ret;
     ret.resize(rh.size());
     int idx = 0;
-    for (const List<String>::Element *E = rh.front(); E; E = E->next()) {
+    for (const List<String>::Element* E = rh.front(); E; E = E->next()) {
         ret.set(idx++, E->get());
     }
 
@@ -837,34 +913,109 @@ PoolStringArray HTTPClient::_get_response_headers() {
 }
 
 void HTTPClient::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("connect_to_host", "host", "port", "use_ssl", "verify_host"), &HTTPClient::connect_to_host, DEFVAL(-1), DEFVAL(false), DEFVAL(true));
-    ClassDB::bind_method(D_METHOD("set_connection", "connection"), &HTTPClient::set_connection);
-    ClassDB::bind_method(D_METHOD("get_connection"), &HTTPClient::get_connection);
-    ClassDB::bind_method(D_METHOD("request_raw", "method", "url", "headers", "body"), &HTTPClient::request_raw);
-    ClassDB::bind_method(D_METHOD("request", "method", "url", "headers", "body"), &HTTPClient::request, DEFVAL(String()));
+    ClassDB::bind_method(
+        D_METHOD("connect_to_host", "host", "port", "use_ssl", "verify_host"),
+        &HTTPClient::connect_to_host,
+        DEFVAL(-1),
+        DEFVAL(false),
+        DEFVAL(true)
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_connection", "connection"),
+        &HTTPClient::set_connection
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_connection"),
+        &HTTPClient::get_connection
+    );
+    ClassDB::bind_method(
+        D_METHOD("request_raw", "method", "url", "headers", "body"),
+        &HTTPClient::request_raw
+    );
+    ClassDB::bind_method(
+        D_METHOD("request", "method", "url", "headers", "body"),
+        &HTTPClient::request,
+        DEFVAL(String())
+    );
     ClassDB::bind_method(D_METHOD("close"), &HTTPClient::close);
 
     ClassDB::bind_method(D_METHOD("has_response"), &HTTPClient::has_response);
-    ClassDB::bind_method(D_METHOD("is_response_chunked"), &HTTPClient::is_response_chunked);
-    ClassDB::bind_method(D_METHOD("get_response_code"), &HTTPClient::get_response_code);
-    ClassDB::bind_method(D_METHOD("get_response_headers"), &HTTPClient::_get_response_headers);
-    ClassDB::bind_method(D_METHOD("get_response_headers_as_dictionary"), &HTTPClient::_get_response_headers_as_dictionary);
-    ClassDB::bind_method(D_METHOD("get_response_body_length"), &HTTPClient::get_response_body_length);
-    ClassDB::bind_method(D_METHOD("read_response_body_chunk"), &HTTPClient::read_response_body_chunk);
-    ClassDB::bind_method(D_METHOD("set_read_chunk_size", "bytes"), &HTTPClient::set_read_chunk_size);
-    ClassDB::bind_method(D_METHOD("get_read_chunk_size"), &HTTPClient::get_read_chunk_size);
+    ClassDB::bind_method(
+        D_METHOD("is_response_chunked"),
+        &HTTPClient::is_response_chunked
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_response_code"),
+        &HTTPClient::get_response_code
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_response_headers"),
+        &HTTPClient::_get_response_headers
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_response_headers_as_dictionary"),
+        &HTTPClient::_get_response_headers_as_dictionary
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_response_body_length"),
+        &HTTPClient::get_response_body_length
+    );
+    ClassDB::bind_method(
+        D_METHOD("read_response_body_chunk"),
+        &HTTPClient::read_response_body_chunk
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_read_chunk_size", "bytes"),
+        &HTTPClient::set_read_chunk_size
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_read_chunk_size"),
+        &HTTPClient::get_read_chunk_size
+    );
 
-    ClassDB::bind_method(D_METHOD("set_blocking_mode", "enabled"), &HTTPClient::set_blocking_mode);
-    ClassDB::bind_method(D_METHOD("is_blocking_mode_enabled"), &HTTPClient::is_blocking_mode_enabled);
+    ClassDB::bind_method(
+        D_METHOD("set_blocking_mode", "enabled"),
+        &HTTPClient::set_blocking_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_blocking_mode_enabled"),
+        &HTTPClient::is_blocking_mode_enabled
+    );
 
     ClassDB::bind_method(D_METHOD("get_status"), &HTTPClient::get_status);
     ClassDB::bind_method(D_METHOD("poll"), &HTTPClient::poll);
 
-    ClassDB::bind_method(D_METHOD("query_string_from_dict", "fields"), &HTTPClient::query_string_from_dict);
+    ClassDB::bind_method(
+        D_METHOD("query_string_from_dict", "fields"),
+        &HTTPClient::query_string_from_dict
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "blocking_mode_enabled"), "set_blocking_mode", "is_blocking_mode_enabled");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "connection", PROPERTY_HINT_RESOURCE_TYPE, "StreamPeer", 0), "set_connection", "get_connection");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "read_chunk_size", PROPERTY_HINT_RANGE, "256,16777216"), "set_read_chunk_size", "get_read_chunk_size");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "blocking_mode_enabled"),
+        "set_blocking_mode",
+        "is_blocking_mode_enabled"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "connection",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "StreamPeer",
+            0
+        ),
+        "set_connection",
+        "get_connection"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "read_chunk_size",
+            PROPERTY_HINT_RANGE,
+            "256,16777216"
+        ),
+        "set_read_chunk_size",
+        "get_read_chunk_size"
+    );
 
     BIND_ENUM_CONSTANT(METHOD_GET);
     BIND_ENUM_CONSTANT(METHOD_HEAD);
@@ -878,13 +1029,15 @@ void HTTPClient::_bind_methods() {
     BIND_ENUM_CONSTANT(METHOD_MAX);
 
     BIND_ENUM_CONSTANT(STATUS_DISCONNECTED);
-    BIND_ENUM_CONSTANT(STATUS_RESOLVING); // Resolving hostname (if hostname was passed in)
+    BIND_ENUM_CONSTANT(STATUS_RESOLVING
+    ); // Resolving hostname (if hostname was passed in)
     BIND_ENUM_CONSTANT(STATUS_CANT_RESOLVE);
     BIND_ENUM_CONSTANT(STATUS_CONNECTING); // Connecting to IP
     BIND_ENUM_CONSTANT(STATUS_CANT_CONNECT);
-    BIND_ENUM_CONSTANT(STATUS_CONNECTED); // Connected, now accepting requests
+    BIND_ENUM_CONSTANT(STATUS_CONNECTED);  // Connected, now accepting requests
     BIND_ENUM_CONSTANT(STATUS_REQUESTING); // Request in progress
-    BIND_ENUM_CONSTANT(STATUS_BODY); // Request resulted in body which must be read
+    BIND_ENUM_CONSTANT(STATUS_BODY
+    ); // Request resulted in body which must be read
     BIND_ENUM_CONSTANT(STATUS_CONNECTION_ERROR);
     BIND_ENUM_CONSTANT(STATUS_SSL_HANDSHAKE_ERROR);
 

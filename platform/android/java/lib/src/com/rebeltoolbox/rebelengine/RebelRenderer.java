@@ -57,7 +57,8 @@ class RebelRenderer implements GLSurfaceView.Renderer {
         for (int i = 0; i < RebelFragment.singleton_count; i++) {
             RebelFragment.singletons[i].onGLDrawFrame(gl);
         }
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             rebelPlugin.onGLDrawFrame(gl);
         }
     }
@@ -67,21 +68,24 @@ class RebelRenderer implements GLSurfaceView.Renderer {
         for (int i = 0; i < RebelFragment.singleton_count; i++) {
             RebelFragment.singletons[i].onGLSurfaceChanged(gl, width, height);
         }
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             rebelPlugin.onGLSurfaceChanged(gl, width, height);
         }
     }
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         RebelEngine.newcontext(GLUtils.use_32);
-        for (RebelPlugin rebelPlugin : rebelPluginRegistry.getAllRebelPlugins()) {
+        for (RebelPlugin rebelPlugin :
+             rebelPluginRegistry.getAllRebelPlugins()) {
             rebelPlugin.onGLSurfaceCreated(gl, config);
         }
     }
 
     void onActivityResumed() {
-        // We defer invoking RebelEngine.onRendererResumed() until the first draw frame call.
-        // This ensures we have a valid GL context and surface when we do so.
+        // We defer invoking RebelEngine.onRendererResumed() until the first
+        // draw frame call. This ensures we have a valid GL context and surface
+        // when we do so.
         activityJustResumed = true;
     }
 

@@ -35,20 +35,21 @@
 #include <png.h>
 #include <string.h>
 
-namespace PNGDriverCommon {
+namespace PNGDriverCommon
+{
 
 // Print any warnings.
 // On error, set explain and return true.
 // Call should be wrapped in ERR_FAIL_COND
-static bool check_error(const png_image &image) {
+static bool check_error(const png_image& image) {
     const png_uint_32 failed = PNG_IMAGE_FAILED(image);
     if (failed & PNG_IMAGE_ERROR) {
         return true;
     } else if (failed) {
 #ifdef TOOLS_ENABLED
         // suppress this warning, to avoid log spam when opening assetlib
-        const static char *const noisy = "iCCP: known incorrect sRGB profile";
-        const Engine *const eng = Engine::get_singleton();
+        const static char* const noisy = "iCCP: known incorrect sRGB profile";
+        const Engine* const eng = Engine::get_singleton();
         if (eng && eng->is_editor_hint() && !strcmp(image.message, noisy)) {
             return false;
         }
@@ -58,24 +59,35 @@ static bool check_error(const png_image &image) {
     return false;
 }
 
-Error png_to_image(const uint8_t *p_source, size_t p_size, bool p_force_linear, Ref<Image> p_image) {
+Error png_to_image(
+    const uint8_t* p_source,
+    size_t p_size,
+    bool p_force_linear,
+    Ref<Image> p_image
+) {
     png_image png_img;
     memset(&png_img, 0, sizeof(png_img));
     png_img.version = PNG_IMAGE_VERSION;
 
     // fetch image properties
     int success = png_image_begin_read_from_memory(&png_img, p_source, p_size);
-    ERR_FAIL_COND_V_MSG(check_error(png_img), ERR_FILE_CORRUPT, png_img.message);
+    ERR_FAIL_COND_V_MSG(
+        check_error(png_img),
+        ERR_FILE_CORRUPT,
+        png_img.message
+    );
     ERR_FAIL_COND_V(!success, ERR_FILE_CORRUPT);
 
     // flags to be masked out of input format to give target format
     const png_uint_32 format_mask = ~(
-            // convert component order to RGBA
-            PNG_FORMAT_FLAG_BGR | PNG_FORMAT_FLAG_AFIRST
-            // convert 16 bit components to 8 bit
-            | PNG_FORMAT_FLAG_LINEAR
-            // convert indexed image to direct color
-            | PNG_FORMAT_FLAG_COLORMAP);
+        // convert component order to RGBA
+        PNG_FORMAT_FLAG_BGR
+        | PNG_FORMAT_FLAG_AFIRST
+        // convert 16 bit components to 8 bit
+        | PNG_FORMAT_FLAG_LINEAR
+        // convert indexed image to direct color
+        | PNG_FORMAT_FLAG_COLORMAP
+    );
 
     png_img.format &= format_mask;
 
@@ -94,7 +106,8 @@ Error png_to_image(const uint8_t *p_source, size_t p_size, bool p_force_linear, 
             dest_format = Image::FORMAT_RGBA8;
             break;
         default:
-            png_image_free(&png_img); // only required when we return before finish_read
+            png_image_free(&png_img
+            ); // only required when we return before finish_read
             ERR_PRINT("Unsupported png format.");
             return ERR_UNAVAILABLE;
     }
@@ -108,14 +121,20 @@ Error png_to_image(const uint8_t *p_source, size_t p_size, bool p_force_linear, 
     PoolVector<uint8_t> buffer;
     Error err = buffer.resize(PNG_IMAGE_BUFFER_SIZE(png_img, stride));
     if (err) {
-        png_image_free(&png_img); // only required when we return before finish_read
+        png_image_free(&png_img
+        ); // only required when we return before finish_read
         return err;
     }
     PoolVector<uint8_t>::Write writer = buffer.write();
 
     // read image data to buffer and release libpng resources
-    success = png_image_finish_read(&png_img, nullptr, writer.ptr(), stride, nullptr);
-    ERR_FAIL_COND_V_MSG(check_error(png_img), ERR_FILE_CORRUPT, png_img.message);
+    success =
+        png_image_finish_read(&png_img, nullptr, writer.ptr(), stride, nullptr);
+    ERR_FAIL_COND_V_MSG(
+        check_error(png_img),
+        ERR_FILE_CORRUPT,
+        png_img.message
+    );
     ERR_FAIL_COND_V(!success, ERR_FILE_CORRUPT);
 
     p_image->create(png_img.width, png_img.height, false, dest_format, buffer);
@@ -123,7 +142,7 @@ Error png_to_image(const uint8_t *p_source, size_t p_size, bool p_force_linear, 
     return OK;
 }
 
-Error image_to_png(const Ref<Image> &p_image, PoolVector<uint8_t> &p_buffer) {
+Error image_to_png(const Ref<Image>& p_image, PoolVector<uint8_t>& p_buffer) {
     Ref<Image> source_image = p_image->duplicate();
 
     if (source_image->is_compressed()) {
@@ -164,7 +183,8 @@ Error image_to_png(const Ref<Image> &p_image, PoolVector<uint8_t> &p_buffer) {
     const PoolVector<uint8_t> image_data = source_image->get_data();
     const PoolVector<uint8_t>::Read reader = image_data.read();
 
-    // we may be passed a buffer with existing content we're expected to append to
+    // we may be passed a buffer with existing content we're expected to append
+    // to
     const int buffer_offset = p_buffer.size();
 
     const size_t png_size_estimate = PNG_IMAGE_PNG_SIZE_MAX(png_img);
@@ -177,8 +197,15 @@ Error image_to_png(const Ref<Image> &p_image, PoolVector<uint8_t> &p_buffer) {
         ERR_FAIL_COND_V(err, err);
 
         PoolVector<uint8_t>::Write writer = p_buffer.write();
-        success = png_image_write_to_memory(&png_img, &writer[buffer_offset],
-                &compressed_size, 0, reader.ptr(), 0, nullptr);
+        success = png_image_write_to_memory(
+            &png_img,
+            &writer[buffer_offset],
+            &compressed_size,
+            0,
+            reader.ptr(),
+            0,
+            nullptr
+        );
         ERR_FAIL_COND_V_MSG(check_error(png_img), FAILED, png_img.message);
     }
     if (!success) {
@@ -190,8 +217,15 @@ Error image_to_png(const Ref<Image> &p_image, PoolVector<uint8_t> &p_buffer) {
         ERR_FAIL_COND_V(err, err);
 
         PoolVector<uint8_t>::Write writer = p_buffer.write();
-        success = png_image_write_to_memory(&png_img, &writer[buffer_offset],
-                &compressed_size, 0, reader.ptr(), 0, nullptr);
+        success = png_image_write_to_memory(
+            &png_img,
+            &writer[buffer_offset],
+            &compressed_size,
+            0,
+            reader.ptr(),
+            0,
+            nullptr
+        );
         ERR_FAIL_COND_V_MSG(check_error(png_img), FAILED, png_img.message);
         ERR_FAIL_COND_V(!success, FAILED);
     }

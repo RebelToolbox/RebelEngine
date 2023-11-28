@@ -48,5 +48,4 @@ void register_minimp3_types() {
     ClassDB::register_class<AudioStreamMP3>();
 }
 
-void unregister_minimp3_types() {
-}
+void unregister_minimp3_types() {}

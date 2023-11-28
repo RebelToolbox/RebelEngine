@@ -34,16 +34,20 @@ void RunSettingsDialog::popup_run_settings() {
     popup_centered(Size2(300, 150));
 }
 
-void RunSettingsDialog::set_custom_arguments(const String &p_arguments) {
+void RunSettingsDialog::set_custom_arguments(const String& p_arguments) {
     arguments->set_text(p_arguments);
 }
+
 String RunSettingsDialog::get_custom_arguments() const {
     return arguments->get_text();
 }
 
 void RunSettingsDialog::_bind_methods() {
-    ClassDB::bind_method("_run_mode_changed", &RunSettingsDialog::_run_mode_changed);
-    //ClassDB::bind_method("_browse_selected_file",&RunSettingsDialog::_browse_selected_file);
+    ClassDB::bind_method(
+        "_run_mode_changed",
+        &RunSettingsDialog::_run_mode_changed
+    );
+    // ClassDB::bind_method("_browse_selected_file",&RunSettingsDialog::_browse_selected_file);
 }
 
 void RunSettingsDialog::_run_mode_changed(int idx) {
@@ -66,9 +70,9 @@ void RunSettingsDialog::set_run_mode(int p_run_mode) {
 RunSettingsDialog::RunSettingsDialog() {
     /* SNAP DIALOG */
 
-    VBoxContainer *vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc = memnew(VBoxContainer);
     add_child(vbc);
-    //set_child_rect(vbc);
+    // set_child_rect(vbc);
 
     run_mode = memnew(OptionButton);
     vbc->add_margin_child(TTR("Run Mode:"), run_mode);

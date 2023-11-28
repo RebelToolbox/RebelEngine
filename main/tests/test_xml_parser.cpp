@@ -32,16 +32,19 @@
 
 #include "core/os/os.h"
 
-namespace TestXMLParser {
-#define CHECK(X)                                          \
-    if (!(X)) {                                           \
-        OS::get_singleton()->print("\tFAIL at %s\n", #X); \
-        return false;                                     \
-    } else {                                              \
-        OS::get_singleton()->print("\tPASS\n");           \
+namespace TestXMLParser
+{
+#define CHECK(X)                                                               \
+    if (!(X)) {                                                                \
+        OS::get_singleton()->print("\tFAIL at %s\n", #X);                      \
+        return false;                                                          \
+    } else {                                                                   \
+        OS::get_singleton()->print("\tPASS\n");                                \
     }
+
 bool test_1() {
-    String source = "<?xml version = \"1.0\" encoding=\"UTF-8\" ?>\
+    String source =
+        "<?xml version = \"1.0\" encoding=\"UTF-8\" ?>\
 <top attr=\"attr value\">\
   Text&lt;&#65;&#x42;&gt;\
 </top>";
@@ -75,12 +78,9 @@ bool test_1() {
 }
 
 typedef bool (*TestFunc)();
-TestFunc test_funcs[] = {
-    test_1,
-    nullptr
-};
+TestFunc test_funcs[] = {test_1, nullptr};
 
-MainLoop *test() {
+MainLoop* test() {
     int count = 0;
     int passed = 0;
 

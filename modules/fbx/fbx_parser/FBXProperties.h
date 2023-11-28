@@ -82,7 +82,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
 // Forward declarations
 class Element;
@@ -103,20 +104,19 @@ public:
 
 public:
     template <typename T>
-    const T *As() const {
-        return dynamic_cast<const T *>(this);
+    const T* As() const {
+        return dynamic_cast<const T*>(this);
     }
 };
 
 template <typename T>
 class TypedProperty : public Property {
 public:
-    explicit TypedProperty(const T &value) :
-            value(value) {
+    explicit TypedProperty(const T& value) : value(value) {
         // empty
     }
 
-    const T &Value() const {
+    const T& Value() const {
         return value;
     }
 
@@ -125,38 +125,39 @@ private:
 };
 
 #define new_Property new Property
-typedef Property *PropertyPtr;
+typedef Property* PropertyPtr;
 typedef std::map<std::string, PropertyPtr> DirectPropertyMap;
 typedef std::map<std::string, PropertyPtr> PropertyMap;
 typedef std::map<std::string, ElementPtr> LazyPropertyMap;
 
 /**
- *  Represents a property table as can be found in the newer FBX files (Properties60, Properties70)
+ *  Represents a property table as can be found in the newer FBX files
+ * (Properties60, Properties70)
  */
 class PropertyTable {
 public:
     // in-memory property table with no source element
     PropertyTable();
-    PropertyTable(const PropertyTable *templateProps);
-    PropertyTable(const ElementPtr element, const PropertyTable *templateProps);
+    PropertyTable(const PropertyTable* templateProps);
+    PropertyTable(const ElementPtr element, const PropertyTable* templateProps);
     ~PropertyTable();
 
-    PropertyPtr Get(const std::string &name) const;
+    PropertyPtr Get(const std::string& name) const;
 
     // PropertyTable's need not be coupled with FBX elements so this can be NULL
     ElementPtr GetElement() const {
         return element;
     }
 
-    const PropertyMap &GetProperties() const {
+    const PropertyMap& GetProperties() const {
         return props;
     }
 
-    const LazyPropertyMap &GetLazyProperties() const {
+    const LazyPropertyMap& GetLazyProperties() const {
         return lazyProps;
     }
 
-    const PropertyTable *TemplateProps() const {
+    const PropertyTable* TemplateProps() const {
         return templateProps;
     }
 
@@ -165,20 +166,24 @@ public:
 private:
     LazyPropertyMap lazyProps;
     mutable PropertyMap props;
-    const PropertyTable *templateProps = nullptr;
+    const PropertyTable* templateProps = nullptr;
     const ElementPtr element = nullptr;
 };
 
 // ------------------------------------------------------------------------------------------------
 template <typename T>
-inline T PropertyGet(const PropertyTable *in, const std::string &name, const T &defaultValue) {
+inline T PropertyGet(
+    const PropertyTable* in,
+    const std::string& name,
+    const T& defaultValue
+) {
     PropertyPtr prop = in->Get(name);
     if (nullptr == prop) {
         return defaultValue;
     }
 
     // strong typing, no need to be lenient
-    const TypedProperty<T> *const tprop = prop->As<TypedProperty<T>>();
+    const TypedProperty<T>* const tprop = prop->As<TypedProperty<T>>();
     if (nullptr == tprop) {
         return defaultValue;
     }
@@ -188,14 +193,19 @@ inline T PropertyGet(const PropertyTable *in, const std::string &name, const T &
 
 // ------------------------------------------------------------------------------------------------
 template <typename T>
-inline T PropertyGet(const PropertyTable *in, const std::string &name, bool &result, bool useTemplate = false) {
+inline T PropertyGet(
+    const PropertyTable* in,
+    const std::string& name,
+    bool& result,
+    bool useTemplate = false
+) {
     PropertyPtr prop = in->Get(name);
     if (nullptr == prop) {
         if (!useTemplate) {
             result = false;
             return T();
         }
-        const PropertyTable *templ = in->TemplateProps();
+        const PropertyTable* templ = in->TemplateProps();
         if (nullptr == templ) {
             result = false;
             return T();
@@ -208,7 +218,7 @@ inline T PropertyGet(const PropertyTable *in, const std::string &name, bool &res
     }
 
     // strong typing, no need to be lenient
-    const TypedProperty<T> *const tprop = prop->As<TypedProperty<T>>();
+    const TypedProperty<T>* const tprop = prop->As<TypedProperty<T>>();
     if (nullptr == tprop) {
         result = false;
         return T();

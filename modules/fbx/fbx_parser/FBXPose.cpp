@@ -78,20 +78,30 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXParser.h"
 #include <iostream>
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
 class FbxPoseNode;
-// ------------------------------------------------------------------------------------------------
-FbxPose::FbxPose(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-        Object(id, element, name) {
-    const ScopePtr sc = GetRequiredScope(element);
-    //const std::string &classname = ParseTokenAsString(GetRequiredToken(element, 2));
 
-    const ElementCollection &PoseNodes = sc->GetCollection("PoseNode");
-    for (ElementMap::const_iterator it = PoseNodes.first; it != PoseNodes.second; ++it) {
+// ------------------------------------------------------------------------------------------------
+FbxPose::FbxPose(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Object(id, element, name) {
+    const ScopePtr sc = GetRequiredScope(element);
+    // const std::string &classname =
+    // ParseTokenAsString(GetRequiredToken(element, 2));
+
+    const ElementCollection& PoseNodes = sc->GetCollection("PoseNode");
+    for (ElementMap::const_iterator it = PoseNodes.first;
+         it != PoseNodes.second;
+         ++it) {
         std::string entry_name = (*it).first;
         ElementPtr some_element = (*it).second;
-        FbxPoseNode *pose_node = new FbxPoseNode(some_element, doc, entry_name);
+        FbxPoseNode* pose_node = new FbxPoseNode(some_element, doc, entry_name);
         pose_nodes.push_back(pose_node);
     }
 }

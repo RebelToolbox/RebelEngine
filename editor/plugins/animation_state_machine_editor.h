@@ -46,47 +46,55 @@ class AnimationNodeStateMachineEditor : public AnimationTreeNodeEditorPlugin {
 
     Ref<AnimationNodeStateMachine> state_machine;
 
-    ToolButton *tool_select;
-    ToolButton *tool_create;
-    ToolButton *tool_connect;
-    LineEdit *name_edit;
+    ToolButton* tool_select;
+    ToolButton* tool_create;
+    ToolButton* tool_connect;
+    LineEdit* name_edit;
 
-    HBoxContainer *tool_erase_hb;
-    ToolButton *tool_erase;
-    ToolButton *tool_autoplay;
-    ToolButton *tool_end;
+    HBoxContainer* tool_erase_hb;
+    ToolButton* tool_erase;
+    ToolButton* tool_autoplay;
+    ToolButton* tool_end;
 
-    OptionButton *transition_mode;
-    OptionButton *play_mode;
+    OptionButton* transition_mode;
+    OptionButton* play_mode;
 
-    PanelContainer *panel;
+    PanelContainer* panel;
 
     StringName selected_node;
 
-    HScrollBar *h_scroll;
-    VScrollBar *v_scroll;
+    HScrollBar* h_scroll;
+    VScrollBar* v_scroll;
 
-    Control *state_machine_draw;
-    Control *state_machine_play_pos;
+    Control* state_machine_draw;
+    Control* state_machine_play_pos;
 
-    PanelContainer *error_panel;
-    Label *error_label;
+    PanelContainer* error_panel;
+    Label* error_label;
 
     bool updating;
 
-    UndoRedo *undo_redo;
+    UndoRedo* undo_redo;
 
-    static AnimationNodeStateMachineEditor *singleton;
+    static AnimationNodeStateMachineEditor* singleton;
 
-    void _state_machine_gui_input(const Ref<InputEvent> &p_event);
-    void _connection_draw(const Vector2 &p_from, const Vector2 &p_to, AnimationNodeStateMachineTransition::SwitchMode p_mode, bool p_enabled, bool p_selected, bool p_travel, bool p_auto_advance);
+    void _state_machine_gui_input(const Ref<InputEvent>& p_event);
+    void _connection_draw(
+        const Vector2& p_from,
+        const Vector2& p_to,
+        AnimationNodeStateMachineTransition::SwitchMode p_mode,
+        bool p_enabled,
+        bool p_selected,
+        bool p_travel,
+        bool p_auto_advance
+    );
     void _state_machine_draw();
     void _state_machine_pos_draw();
 
     void _update_graph();
 
-    PopupMenu *menu;
-    PopupMenu *animations_menu;
+    PopupMenu* menu;
+    PopupMenu* animations_menu;
     Vector<String> animations_to_add;
 
     Vector2 add_node_pos;
@@ -141,13 +149,21 @@ class AnimationNodeStateMachineEditor : public AnimationTreeNodeEditorPlugin {
     int over_node_what;
 
     String prev_name;
-    void _name_edited(const String &p_text);
+    void _name_edited(const String& p_text);
     void _name_edited_focus_out();
-    void _open_editor(const String &p_name);
+    void _open_editor(const String& p_name);
     void _scroll_changed(double);
 
-    void _clip_src_line_to_rect(Vector2 &r_from, Vector2 &r_to, const Rect2 &p_rect);
-    void _clip_dst_line_to_rect(Vector2 &r_from, Vector2 &r_to, const Rect2 &p_rect);
+    void _clip_src_line_to_rect(
+        Vector2& r_from,
+        Vector2& r_to,
+        const Rect2& p_rect
+    );
+    void _clip_dst_line_to_rect(
+        Vector2& r_from,
+        Vector2& r_to,
+        const Rect2& p_rect
+    );
 
     void _erase_selected();
     void _update_mode();
@@ -165,9 +181,9 @@ class AnimationNodeStateMachineEditor : public AnimationTreeNodeEditorPlugin {
     float error_time;
     String error_text;
 
-    EditorFileDialog *open_file;
+    EditorFileDialog* open_file;
     Ref<AnimationNode> file_loaded;
-    void _file_opened(const String &p_file);
+    void _file_opened(const String& p_file);
 
     enum {
         MENU_LOAD_FILE = 1000,
@@ -180,9 +196,12 @@ protected:
     static void _bind_methods();
 
 public:
-    static AnimationNodeStateMachineEditor *get_singleton() { return singleton; }
-    virtual bool can_edit(const Ref<AnimationNode> &p_node);
-    virtual void edit(const Ref<AnimationNode> &p_node);
+    static AnimationNodeStateMachineEditor* get_singleton() {
+        return singleton;
+    }
+
+    virtual bool can_edit(const Ref<AnimationNode>& p_node);
+    virtual void edit(const Ref<AnimationNode>& p_node);
     AnimationNodeStateMachineEditor();
 };
 

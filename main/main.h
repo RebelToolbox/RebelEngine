@@ -36,7 +36,7 @@
 #include "core/typedefs.h"
 
 class Main {
-    static void print_help(const char *p_binary);
+    static void print_help(const char* p_binary);
     static uint64_t last_ticks;
     static uint32_t frames;
     static uint32_t frame;
@@ -47,7 +47,12 @@ class Main {
 public:
     static bool is_project_manager();
 
-    static Error setup(const char *execpath, int argc, char *argv[], bool p_second_phase = true);
+    static Error setup(
+        const char* execpath,
+        int argc,
+        char* argv[],
+        bool p_second_phase = true
+    );
     static Error setup2(Thread::ID p_main_tid_override = 0);
     static bool start();
 

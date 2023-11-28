@@ -68,11 +68,15 @@ bool Line2D::_edit_use_rect() const {
     return true;
 }
 
-bool Line2D::_edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const {
+bool Line2D::_edit_is_selected_on_click(
+    const Point2& p_point,
+    double p_tolerance
+) const {
     const real_t d = _width / 2 + p_tolerance;
     PoolVector<Vector2>::Read points = _points.read();
     for (int i = 0; i < _points.size() - 1; i++) {
-        Vector2 p = Geometry::get_closest_point_to_segment_2d(p_point, &points[i]);
+        Vector2 p =
+            Geometry::get_closest_point_to_segment_2d(p_point, &points[i]);
         if (p.distance_to(p_point) <= d) {
             return true;
         }
@@ -82,7 +86,7 @@ bool Line2D::_edit_is_selected_on_click(const Point2 &p_point, double p_toleranc
 }
 #endif
 
-void Line2D::set_points(const PoolVector<Vector2> &p_points) {
+void Line2D::set_points(const PoolVector<Vector2>& p_points) {
     _points = p_points;
     update();
 }
@@ -99,17 +103,25 @@ float Line2D::get_width() const {
     return _width;
 }
 
-void Line2D::set_curve(const Ref<Curve> &p_curve) {
+void Line2D::set_curve(const Ref<Curve>& p_curve) {
     // Cleanup previous connection if any
     if (_curve.is_valid()) {
-        _curve->disconnect(CoreStringNames::get_singleton()->changed, this, "_curve_changed");
+        _curve->disconnect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            "_curve_changed"
+        );
     }
 
     _curve = p_curve;
 
     // Connect to the curve so the line will update when it is changed
     if (_curve.is_valid()) {
-        _curve->connect(CoreStringNames::get_singleton()->changed, this, "_curve_changed");
+        _curve->connect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            "_curve_changed"
+        );
     }
 
     update();
@@ -169,17 +181,26 @@ Color Line2D::get_default_color() const {
     return _default_color;
 }
 
-void Line2D::set_gradient(const Ref<Gradient> &p_gradient) {
+void Line2D::set_gradient(const Ref<Gradient>& p_gradient) {
     // Cleanup previous connection if any
     if (_gradient.is_valid()) {
-        _gradient->disconnect(CoreStringNames::get_singleton()->changed, this, "_gradient_changed");
+        _gradient->disconnect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            "_gradient_changed"
+        );
     }
 
     _gradient = p_gradient;
 
-    // Connect to the gradient so the line will update when the ColorRamp is changed
+    // Connect to the gradient so the line will update when the ColorRamp is
+    // changed
     if (_gradient.is_valid()) {
-        _gradient->connect(CoreStringNames::get_singleton()->changed, this, "_gradient_changed");
+        _gradient->connect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            "_gradient_changed"
+        );
     }
 
     update();
@@ -189,7 +210,7 @@ Ref<Gradient> Line2D::get_gradient() const {
     return _gradient;
 }
 
-void Line2D::set_texture(const Ref<Texture> &p_texture) {
+void Line2D::set_texture(const Ref<Texture>& p_texture) {
     _texture = p_texture;
     update();
 }
@@ -292,7 +313,8 @@ void Line2D::_draw() {
         }
     }
 
-    // TODO Maybe have it as member rather than copying parameters and allocating memory?
+    // TODO Maybe have it as member rather than copying parameters and
+    // allocating memory?
     LineBuilder lb;
     lb.points = points;
     lb.default_color = _default_color;
@@ -316,13 +338,19 @@ void Line2D::_draw() {
     lb.build();
 
     VS::get_singleton()->canvas_item_add_triangle_array(
-            get_canvas_item(),
-            lb.indices,
-            lb.vertices,
-            lb.colors,
-            lb.uvs, Vector<int>(), Vector<float>(),
-            texture_rid, -1, RID(),
-            _antialiased, true);
+        get_canvas_item(),
+        lb.indices,
+        lb.vertices,
+        lb.colors,
+        lb.uvs,
+        Vector<int>(),
+        Vector<float>(),
+        texture_rid,
+        -1,
+        RID(),
+        _antialiased,
+        true
+    );
 
     // DEBUG
     // Draw wireframe
@@ -358,12 +386,22 @@ void Line2D::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_points", "points"), &Line2D::set_points);
     ClassDB::bind_method(D_METHOD("get_points"), &Line2D::get_points);
 
-    ClassDB::bind_method(D_METHOD("set_point_position", "i", "position"), &Line2D::set_point_position);
-    ClassDB::bind_method(D_METHOD("get_point_position", "i"), &Line2D::get_point_position);
+    ClassDB::bind_method(
+        D_METHOD("set_point_position", "i", "position"),
+        &Line2D::set_point_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_point_position", "i"),
+        &Line2D::get_point_position
+    );
 
     ClassDB::bind_method(D_METHOD("get_point_count"), &Line2D::get_point_count);
 
-    ClassDB::bind_method(D_METHOD("add_point", "position", "at_position"), &Line2D::add_point, DEFVAL(-1));
+    ClassDB::bind_method(
+        D_METHOD("add_point", "position", "at_position"),
+        &Line2D::add_point,
+        DEFVAL(-1)
+    );
     ClassDB::bind_method(D_METHOD("remove_point", "i"), &Line2D::remove_point);
 
     ClassDB::bind_method(D_METHOD("clear_points"), &Line2D::clear_points);
@@ -374,52 +412,184 @@ void Line2D::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_curve", "curve"), &Line2D::set_curve);
     ClassDB::bind_method(D_METHOD("get_curve"), &Line2D::get_curve);
 
-    ClassDB::bind_method(D_METHOD("set_default_color", "color"), &Line2D::set_default_color);
-    ClassDB::bind_method(D_METHOD("get_default_color"), &Line2D::get_default_color);
+    ClassDB::bind_method(
+        D_METHOD("set_default_color", "color"),
+        &Line2D::set_default_color
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_default_color"),
+        &Line2D::get_default_color
+    );
 
-    ClassDB::bind_method(D_METHOD("set_gradient", "color"), &Line2D::set_gradient);
+    ClassDB::bind_method(
+        D_METHOD("set_gradient", "color"),
+        &Line2D::set_gradient
+    );
     ClassDB::bind_method(D_METHOD("get_gradient"), &Line2D::get_gradient);
 
-    ClassDB::bind_method(D_METHOD("set_texture", "texture"), &Line2D::set_texture);
+    ClassDB::bind_method(
+        D_METHOD("set_texture", "texture"),
+        &Line2D::set_texture
+    );
     ClassDB::bind_method(D_METHOD("get_texture"), &Line2D::get_texture);
 
-    ClassDB::bind_method(D_METHOD("set_texture_mode", "mode"), &Line2D::set_texture_mode);
-    ClassDB::bind_method(D_METHOD("get_texture_mode"), &Line2D::get_texture_mode);
+    ClassDB::bind_method(
+        D_METHOD("set_texture_mode", "mode"),
+        &Line2D::set_texture_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_texture_mode"),
+        &Line2D::get_texture_mode
+    );
 
-    ClassDB::bind_method(D_METHOD("set_joint_mode", "mode"), &Line2D::set_joint_mode);
+    ClassDB::bind_method(
+        D_METHOD("set_joint_mode", "mode"),
+        &Line2D::set_joint_mode
+    );
     ClassDB::bind_method(D_METHOD("get_joint_mode"), &Line2D::get_joint_mode);
 
-    ClassDB::bind_method(D_METHOD("set_begin_cap_mode", "mode"), &Line2D::set_begin_cap_mode);
-    ClassDB::bind_method(D_METHOD("get_begin_cap_mode"), &Line2D::get_begin_cap_mode);
+    ClassDB::bind_method(
+        D_METHOD("set_begin_cap_mode", "mode"),
+        &Line2D::set_begin_cap_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_begin_cap_mode"),
+        &Line2D::get_begin_cap_mode
+    );
 
-    ClassDB::bind_method(D_METHOD("set_end_cap_mode", "mode"), &Line2D::set_end_cap_mode);
-    ClassDB::bind_method(D_METHOD("get_end_cap_mode"), &Line2D::get_end_cap_mode);
+    ClassDB::bind_method(
+        D_METHOD("set_end_cap_mode", "mode"),
+        &Line2D::set_end_cap_mode
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_end_cap_mode"),
+        &Line2D::get_end_cap_mode
+    );
 
-    ClassDB::bind_method(D_METHOD("set_sharp_limit", "limit"), &Line2D::set_sharp_limit);
+    ClassDB::bind_method(
+        D_METHOD("set_sharp_limit", "limit"),
+        &Line2D::set_sharp_limit
+    );
     ClassDB::bind_method(D_METHOD("get_sharp_limit"), &Line2D::get_sharp_limit);
 
-    ClassDB::bind_method(D_METHOD("set_round_precision", "precision"), &Line2D::set_round_precision);
-    ClassDB::bind_method(D_METHOD("get_round_precision"), &Line2D::get_round_precision);
+    ClassDB::bind_method(
+        D_METHOD("set_round_precision", "precision"),
+        &Line2D::set_round_precision
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_round_precision"),
+        &Line2D::get_round_precision
+    );
 
-    ClassDB::bind_method(D_METHOD("set_antialiased", "antialiased"), &Line2D::set_antialiased);
+    ClassDB::bind_method(
+        D_METHOD("set_antialiased", "antialiased"),
+        &Line2D::set_antialiased
+    );
     ClassDB::bind_method(D_METHOD("get_antialiased"), &Line2D::get_antialiased);
 
-    ADD_PROPERTY(PropertyInfo(Variant::POOL_VECTOR2_ARRAY, "points"), "set_points", "get_points");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "width"), "set_width", "get_width");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "width_curve", PROPERTY_HINT_RESOURCE_TYPE, "Curve"), "set_curve", "get_curve");
-    ADD_PROPERTY(PropertyInfo(Variant::COLOR, "default_color"), "set_default_color", "get_default_color");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::POOL_VECTOR2_ARRAY, "points"),
+        "set_points",
+        "get_points"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "width"),
+        "set_width",
+        "get_width"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "width_curve",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Curve"
+        ),
+        "set_curve",
+        "get_curve"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::COLOR, "default_color"),
+        "set_default_color",
+        "get_default_color"
+    );
     ADD_GROUP("Fill", "");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "gradient", PROPERTY_HINT_RESOURCE_TYPE, "Gradient"), "set_gradient", "get_gradient");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture"), "set_texture", "get_texture");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "texture_mode", PROPERTY_HINT_ENUM, "None,Tile,Stretch"), "set_texture_mode", "get_texture_mode");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "gradient",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Gradient"
+        ),
+        "set_gradient",
+        "get_gradient"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "texture",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Texture"
+        ),
+        "set_texture",
+        "get_texture"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "texture_mode",
+            PROPERTY_HINT_ENUM,
+            "None,Tile,Stretch"
+        ),
+        "set_texture_mode",
+        "get_texture_mode"
+    );
     ADD_GROUP("Capping", "");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "joint_mode", PROPERTY_HINT_ENUM, "Sharp,Bevel,Round"), "set_joint_mode", "get_joint_mode");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "begin_cap_mode", PROPERTY_HINT_ENUM, "None,Box,Round"), "set_begin_cap_mode", "get_begin_cap_mode");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "end_cap_mode", PROPERTY_HINT_ENUM, "None,Box,Round"), "set_end_cap_mode", "get_end_cap_mode");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "joint_mode",
+            PROPERTY_HINT_ENUM,
+            "Sharp,Bevel,Round"
+        ),
+        "set_joint_mode",
+        "get_joint_mode"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "begin_cap_mode",
+            PROPERTY_HINT_ENUM,
+            "None,Box,Round"
+        ),
+        "set_begin_cap_mode",
+        "get_begin_cap_mode"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "end_cap_mode",
+            PROPERTY_HINT_ENUM,
+            "None,Box,Round"
+        ),
+        "set_end_cap_mode",
+        "get_end_cap_mode"
+    );
     ADD_GROUP("Border", "");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "sharp_limit"), "set_sharp_limit", "get_sharp_limit");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "round_precision"), "set_round_precision", "get_round_precision");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "antialiased"), "set_antialiased", "get_antialiased");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "sharp_limit"),
+        "set_sharp_limit",
+        "get_sharp_limit"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::INT, "round_precision"),
+        "set_round_precision",
+        "get_round_precision"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "antialiased"),
+        "set_antialiased",
+        "get_antialiased"
+    );
 
     BIND_ENUM_CONSTANT(LINE_JOINT_SHARP);
     BIND_ENUM_CONSTANT(LINE_JOINT_BEVEL);
@@ -433,6 +603,9 @@ void Line2D::_bind_methods() {
     BIND_ENUM_CONSTANT(LINE_TEXTURE_TILE);
     BIND_ENUM_CONSTANT(LINE_TEXTURE_STRETCH);
 
-    ClassDB::bind_method(D_METHOD("_gradient_changed"), &Line2D::_gradient_changed);
+    ClassDB::bind_method(
+        D_METHOD("_gradient_changed"),
+        &Line2D::_gradient_changed
+    );
     ClassDB::bind_method(D_METHOD("_curve_changed"), &Line2D::_curve_changed);
 }

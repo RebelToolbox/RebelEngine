@@ -33,9 +33,12 @@
 void GridContainer::_notification(int p_what) {
     switch (p_what) {
         case NOTIFICATION_SORT_CHILDREN: {
-            Map<int, int> col_minw; // Max of min_width of all controls in each col (indexed by col).
-            Map<int, int> row_minh; // Max of min_height of all controls in each row (indexed by row).
-            Set<int> col_expanded; // Columns which have the SIZE_EXPAND flag set.
+            Map<int, int> col_minw; // Max of min_width of all controls in each
+                                    // col (indexed by col).
+            Map<int, int> row_minh; // Max of min_height of all controls in each
+                                    // row (indexed by row).
+            Set<int>
+                col_expanded; // Columns which have the SIZE_EXPAND flag set.
             Set<int> row_expanded; // Rows which have the SIZE_EXPAND flag set.
 
             int hsep = get_constant("hseparation");
@@ -46,7 +49,7 @@ void GridContainer::_notification(int p_what) {
             // Compute the per-column/per-row data.
             int valid_controls_index = 0;
             for (int i = 0; i < get_child_count(); i++) {
-                Control *c = Object::cast_to<Control>(get_child(i));
+                Control* c = Object::cast_to<Control>(get_child(i));
                 if (!c || !c->is_visible_in_tree()) {
                     continue;
                 }
@@ -82,13 +85,15 @@ void GridContainer::_notification(int p_what) {
 
             // Evaluate the remaining space for expanded columns/rows.
             Size2 remaining_space = get_size();
-            for (Map<int, int>::Element *E = col_minw.front(); E; E = E->next()) {
+            for (Map<int, int>::Element* E = col_minw.front(); E;
+                 E = E->next()) {
                 if (!col_expanded.has(E->key())) {
                     remaining_space.width -= E->get();
                 }
             }
 
-            for (Map<int, int>::Element *E = row_minh.front(); E; E = E->next()) {
+            for (Map<int, int>::Element* E = row_minh.front(); E;
+                 E = E->next()) {
                 if (!row_expanded.has(E->key())) {
                     remaining_space.height -= E->get();
                 }
@@ -98,14 +103,18 @@ void GridContainer::_notification(int p_what) {
 
             bool can_fit = false;
             while (!can_fit && col_expanded.size() > 0) {
-                // Check if all minwidth constraints are OK if we use the remaining space.
+                // Check if all minwidth constraints are OK if we use the
+                // remaining space.
                 can_fit = true;
                 int max_index = col_expanded.front()->get();
-                for (Set<int>::Element *E = col_expanded.front(); E; E = E->next()) {
+                for (Set<int>::Element* E = col_expanded.front(); E;
+                     E = E->next()) {
                     if (col_minw[E->get()] > col_minw[max_index]) {
                         max_index = E->get();
                     }
-                    if (can_fit && (remaining_space.width / col_expanded.size()) < col_minw[E->get()]) {
+                    if (can_fit
+                        && (remaining_space.width / col_expanded.size())
+                               < col_minw[E->get()]) {
                         can_fit = false;
                     }
                 }
@@ -119,14 +128,18 @@ void GridContainer::_notification(int p_what) {
 
             can_fit = false;
             while (!can_fit && row_expanded.size() > 0) {
-                // Check if all minheight constraints are OK if we use the remaining space.
+                // Check if all minheight constraints are OK if we use the
+                // remaining space.
                 can_fit = true;
                 int max_index = row_expanded.front()->get();
-                for (Set<int>::Element *E = row_expanded.front(); E; E = E->next()) {
+                for (Set<int>::Element* E = row_expanded.front(); E;
+                     E = E->next()) {
                     if (row_minh[E->get()] > row_minh[max_index]) {
                         max_index = E->get();
                     }
-                    if (can_fit && (remaining_space.height / row_expanded.size()) < row_minh[E->get()]) {
+                    if (can_fit
+                        && (remaining_space.height / row_expanded.size())
+                               < row_minh[E->get()]) {
                         can_fit = false;
                     }
                 }
@@ -139,15 +152,19 @@ void GridContainer::_notification(int p_what) {
             }
 
             // Finally, fit the nodes.
-            int col_expand = col_expanded.size() > 0 ? remaining_space.width / col_expanded.size() : 0;
-            int row_expand = row_expanded.size() > 0 ? remaining_space.height / row_expanded.size() : 0;
+            int col_expand = col_expanded.size() > 0
+                               ? remaining_space.width / col_expanded.size()
+                               : 0;
+            int row_expand = row_expanded.size() > 0
+                               ? remaining_space.height / row_expanded.size()
+                               : 0;
 
             int col_ofs = 0;
             int row_ofs = 0;
 
             valid_controls_index = 0;
             for (int i = 0; i < get_child_count(); i++) {
-                Control *c = Object::cast_to<Control>(get_child(i));
+                Control* c = Object::cast_to<Control>(get_child(i));
                 if (!c || !c->is_visible_in_tree()) {
                     continue;
                 }
@@ -158,12 +175,18 @@ void GridContainer::_notification(int p_what) {
                 if (col == 0) {
                     col_ofs = 0;
                     if (row > 0) {
-                        row_ofs += (row_expanded.has(row - 1) ? row_expand : row_minh[row - 1]) + vsep;
+                        row_ofs +=
+                            (row_expanded.has(row - 1) ? row_expand
+                                                       : row_minh[row - 1])
+                            + vsep;
                     }
                 }
 
                 Point2 p(col_ofs, row_ofs);
-                Size2 s(col_expanded.has(col) ? col_expand : col_minw[col], row_expanded.has(row) ? row_expand : row_minh[row]);
+                Size2 s(
+                    col_expanded.has(col) ? col_expand : col_minw[col],
+                    row_expanded.has(row) ? row_expand : row_minh[row]
+                );
 
                 fit_child_in_rect(c, Rect2(p, s));
 
@@ -189,10 +212,17 @@ int GridContainer::get_columns() const {
 }
 
 void GridContainer::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_columns", "columns"), &GridContainer::set_columns);
+    ClassDB::bind_method(
+        D_METHOD("set_columns", "columns"),
+        &GridContainer::set_columns
+    );
     ClassDB::bind_method(D_METHOD("get_columns"), &GridContainer::get_columns);
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "columns", PROPERTY_HINT_RANGE, "1,1024,1"), "set_columns", "get_columns");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::INT, "columns", PROPERTY_HINT_RANGE, "1,1024,1"),
+        "set_columns",
+        "get_columns"
+    );
 }
 
 Size2 GridContainer::get_minimum_size() const {
@@ -207,7 +237,7 @@ Size2 GridContainer::get_minimum_size() const {
 
     int valid_controls_index = 0;
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c || !c->is_visible()) {
             continue;
         }
@@ -233,11 +263,11 @@ Size2 GridContainer::get_minimum_size() const {
 
     Size2 ms;
 
-    for (Map<int, int>::Element *E = col_minw.front(); E; E = E->next()) {
+    for (Map<int, int>::Element* E = col_minw.front(); E; E = E->next()) {
         ms.width += E->get();
     }
 
-    for (Map<int, int>::Element *E = row_minh.front(); E; E = E->next()) {
+    for (Map<int, int>::Element* E = row_minh.front(); E; E = E->next()) {
         ms.height += E->get();
     }
 

@@ -41,7 +41,6 @@ class Environment : public Resource {
 
 public:
     enum BGMode {
-
         BG_CLEAR_COLOR,
         BG_COLOR,
         BG_SKY,
@@ -180,19 +179,19 @@ private:
 
 protected:
     static void _bind_methods();
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
 public:
     void set_background(BGMode p_bg);
-    void set_sky(const Ref<Sky> &p_sky);
+    void set_sky(const Ref<Sky>& p_sky);
     void set_sky_custom_fov(float p_scale);
-    void set_sky_orientation(const Basis &p_orientation);
-    void set_sky_rotation(const Vector3 &p_euler_rad);
-    void set_sky_rotation_degrees(const Vector3 &p_euler_deg);
-    void set_bg_color(const Color &p_color);
+    void set_sky_orientation(const Basis& p_orientation);
+    void set_sky_rotation(const Vector3& p_euler_rad);
+    void set_sky_rotation_degrees(const Vector3& p_euler_deg);
+    void set_bg_color(const Color& p_color);
     void set_bg_energy(float p_energy);
     void set_canvas_max_layer(int p_max_layer);
-    void set_ambient_light_color(const Color &p_color);
+    void set_ambient_light_color(const Color& p_color);
     void set_ambient_light_energy(float p_energy);
     void set_ambient_light_sky_contribution(float p_energy);
     void set_camera_feed_id(int p_camera_feed_id);
@@ -247,7 +246,7 @@ public:
     void set_adjustment_saturation(float p_saturation);
     float get_adjustment_saturation() const;
 
-    void set_adjustment_color_correction(const Ref<Texture> &p_ramp);
+    void set_adjustment_color_correction(const Ref<Texture>& p_ramp);
     Ref<Texture> get_adjustment_color_correction() const;
 
     void set_ssr_enabled(bool p_enable);
@@ -292,7 +291,7 @@ public:
     void set_ssao_ao_channel_affect(float p_ao_channel_affect);
     float get_ssao_ao_channel_affect() const;
 
-    void set_ssao_color(const Color &p_color);
+    void set_ssao_color(const Color& p_color);
     Color get_ssao_color() const;
 
     void set_ssao_blur(SSAOBlur p_blur);
@@ -370,10 +369,10 @@ public:
     void set_fog_enabled(bool p_enabled);
     bool is_fog_enabled() const;
 
-    void set_fog_color(const Color &p_color);
+    void set_fog_color(const Color& p_color);
     Color get_fog_color() const;
 
-    void set_fog_sun_color(const Color &p_color);
+    void set_fog_sun_color(const Color& p_color);
     Color get_fog_sun_color() const;
 
     void set_fog_sun_amount(float p_amount);

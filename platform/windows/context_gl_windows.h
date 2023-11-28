@@ -41,8 +41,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-typedef bool(APIENTRY *PFNWGLSWAPINTERVALEXTPROC)(int interval);
-typedef int(APIENTRY *PFNWGLGETSWAPINTERVALEXTPROC)(void);
+typedef bool(APIENTRY* PFNWGLSWAPINTERVALEXTPROC)(int interval);
+typedef int(APIENTRY* PFNWGLGETSWAPINTERVALEXTPROC)(void);
 
 class ContextGL_Windows {
     HDC hDC;

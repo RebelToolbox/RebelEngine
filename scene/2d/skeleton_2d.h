@@ -43,8 +43,8 @@ class Bone2D : public Node2D {
     friend class AnimatedValuesBackup;
 #endif
 
-    Bone2D *parent_bone;
-    Skeleton2D *skeleton;
+    Bone2D* parent_bone;
+    Skeleton2D* skeleton;
     Transform2D rest;
     float default_length;
 
@@ -55,7 +55,7 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_rest(const Transform2D &p_rest);
+    void set_rest(const Transform2D& p_rest);
     Transform2D get_rest() const;
     void apply_rest();
     Transform2D get_skeleton_rest() const;
@@ -79,10 +79,11 @@ class Skeleton2D : public Node2D {
 #endif
 
     struct Bone {
-        bool operator<(const Bone &p_bone) const {
+        bool operator<(const Bone& p_bone) const {
             return p_bone.bone->is_greater_than(bone);
         }
-        Bone2D *bone;
+
+        Bone2D* bone;
         int parent_index;
         Transform2D accum_transform;
         Transform2D rest_inverse;
@@ -106,7 +107,7 @@ protected:
 
 public:
     int get_bone_count() const;
-    Bone2D *get_bone(int p_idx);
+    Bone2D* get_bone(int p_idx);
 
     RID get_skeleton() const;
     Skeleton2D();

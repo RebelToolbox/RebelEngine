@@ -47,7 +47,7 @@ class World : public Resource {
 private:
     RID space;
     RID scenario;
-    SpatialIndexer *indexer;
+    SpatialIndexer* indexer;
     Ref<Environment> environment;
     Ref<Environment> fallback_environment;
 
@@ -57,13 +57,13 @@ protected:
     friend class Camera;
     friend class VisibilityNotifier;
 
-    void _register_camera(Camera *p_camera);
-    void _update_camera(Camera *p_camera);
-    void _remove_camera(Camera *p_camera);
+    void _register_camera(Camera* p_camera);
+    void _update_camera(Camera* p_camera);
+    void _remove_camera(Camera* p_camera);
 
-    void _register_notifier(VisibilityNotifier *p_notifier, const AABB &p_rect);
-    void _update_notifier(VisibilityNotifier *p_notifier, const AABB &p_rect);
-    void _remove_notifier(VisibilityNotifier *p_notifier);
+    void _register_notifier(VisibilityNotifier* p_notifier, const AABB& p_rect);
+    void _update_notifier(VisibilityNotifier* p_notifier, const AABB& p_rect);
+    void _remove_notifier(VisibilityNotifier* p_notifier);
     friend class Viewport;
     void _update(uint64_t p_frame);
 
@@ -71,15 +71,15 @@ public:
     RID get_space() const;
     RID get_scenario() const;
 
-    void set_environment(const Ref<Environment> &p_environment);
+    void set_environment(const Ref<Environment>& p_environment);
     Ref<Environment> get_environment() const;
 
-    void set_fallback_environment(const Ref<Environment> &p_environment);
+    void set_fallback_environment(const Ref<Environment>& p_environment);
     Ref<Environment> get_fallback_environment() const;
 
-    void get_camera_list(List<Camera *> *r_cameras);
+    void get_camera_list(List<Camera*>* r_cameras);
 
-    PhysicsDirectSpaceState *get_direct_space_state();
+    PhysicsDirectSpaceState* get_direct_space_state();
 
     World();
     ~World();

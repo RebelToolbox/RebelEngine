@@ -35,9 +35,12 @@
 
 #include "core/ustring.h"
 
-namespace gdmono {
-namespace android {
-namespace support {
+namespace gdmono
+{
+namespace android
+{
+namespace support
+{
 
 String get_app_native_lib_dir();
 

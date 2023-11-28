@@ -41,7 +41,7 @@
 class SceneTreeEditor : public Control {
     GDCLASS(SceneTreeEditor, Control);
 
-    EditorSelection *editor_selection;
+    EditorSelection* editor_selection;
 
     enum {
         BUTTON_SUBSCENE = 0,
@@ -55,36 +55,40 @@ class SceneTreeEditor : public Control {
         BUTTON_PIN = 8,
     };
 
-    Tree *tree;
-    Node *selected;
+    Tree* tree;
+    Node* selected;
     ObjectID instance_node;
 
     String filter;
 
-    AcceptDialog *error;
-    AcceptDialog *warning;
+    AcceptDialog* error;
+    AcceptDialog* warning;
 
     bool connect_to_script_mode;
     bool connecting_signal;
 
     int blocked;
 
-    void _compute_hash(Node *p_node, uint64_t &hash);
+    void _compute_hash(Node* p_node, uint64_t& hash);
 
-    bool _add_nodes(Node *p_node, TreeItem *p_parent, bool p_scroll_to_selected = false);
+    bool _add_nodes(
+        Node* p_node,
+        TreeItem* p_parent,
+        bool p_scroll_to_selected = false
+    );
     void _test_update_tree();
     void _update_tree(bool p_scroll_to_selected = false);
     void _tree_changed();
-    void _node_removed(Node *p_node);
-    void _node_renamed(Node *p_node);
+    void _node_removed(Node* p_node);
+    void _node_renamed(Node* p_node);
 
-    TreeItem *_find(TreeItem *p_node, const NodePath &p_path);
+    TreeItem* _find(TreeItem* p_node, const NodePath& p_path);
     void _notification(int p_what);
     void _selected_changed();
     void _deselect_items();
-    void _rename_node(ObjectID p_node, const String &p_name);
+    void _rename_node(ObjectID p_node, const String& p_name);
 
-    void _cell_collapsed(Object *p_obj);
+    void _cell_collapsed(Object* p_obj);
 
     uint64_t last_hash;
 
@@ -94,9 +98,9 @@ class SceneTreeEditor : public Control {
     bool show_enabled_subscene;
 
     void _renamed();
-    UndoRedo *undo_redo;
+    UndoRedo* undo_redo;
 
-    Set<Node *> marked;
+    Set<Node*> marked;
     bool marked_selectable;
     bool marked_children_selectable;
     bool display_foreign;
@@ -104,83 +108,123 @@ class SceneTreeEditor : public Control {
     bool pending_test_update;
     static void _bind_methods();
 
-    void _cell_button_pressed(Object *p_item, int p_column, int p_id);
-    void _toggle_visible(Node *p_node);
-    void _cell_multi_selected(Object *p_object, int p_cell, bool p_selected);
-    void _update_selection(TreeItem *item);
-    void _node_script_changed(Node *p_node);
-    void _node_visibility_changed(Node *p_node);
-    void _update_visibility_color(Node *p_node, TreeItem *p_item);
+    void _cell_button_pressed(Object* p_item, int p_column, int p_id);
+    void _toggle_visible(Node* p_node);
+    void _cell_multi_selected(Object* p_object, int p_cell, bool p_selected);
+    void _update_selection(TreeItem* item);
+    void _node_script_changed(Node* p_node);
+    void _node_visibility_changed(Node* p_node);
+    void _update_visibility_color(Node* p_node, TreeItem* p_item);
 
-    void _node_replace_owner(Node *p_base, Node *p_node, Node *p_root);
+    void _node_replace_owner(Node* p_base, Node* p_node, Node* p_root);
 
     void _selection_changed();
-    Node *get_scene_node();
+    Node* get_scene_node();
 
-    Variant get_drag_data_fw(const Point2 &p_point, Control *p_from);
-    bool can_drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from) const;
-    void drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from);
+    Variant get_drag_data_fw(const Point2& p_point, Control* p_from);
+    bool can_drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    ) const;
+    void drop_data_fw(
+        const Point2& p_point,
+        const Variant& p_data,
+        Control* p_from
+    );
 
-    void _rmb_select(const Vector2 &p_pos);
+    void _rmb_select(const Vector2& p_pos);
 
-    void _warning_changed(Node *p_for_node);
+    void _warning_changed(Node* p_for_node);
 
-    Timer *update_timer;
+    Timer* update_timer;
 
-    List<StringName> *script_types;
-    bool _is_script_type(const StringName &p_type) const;
+    List<StringName>* script_types;
+    bool _is_script_type(const StringName& p_type) const;
 
     Vector<StringName> valid_types;
 
 public:
-    void set_filter(const String &p_filter);
+    void set_filter(const String& p_filter);
     String get_filter() const;
 
-    void set_undo_redo(UndoRedo *p_undo_redo) { undo_redo = p_undo_redo; };
+    void set_undo_redo(UndoRedo* p_undo_redo) {
+        undo_redo = p_undo_redo;
+    };
+
     void set_display_foreign_nodes(bool p_display);
     bool get_display_foreign_nodes() const;
 
-    void set_marked(const Set<Node *> &p_marked, bool p_selectable = false, bool p_children_selectable = true);
-    void set_marked(Node *p_marked, bool p_selectable = false, bool p_children_selectable = true);
-    void set_selected(Node *p_node, bool p_emit_selected = true);
-    Node *get_selected();
-    void set_can_rename(bool p_can_rename) { can_rename = p_can_rename; }
-    void set_editor_selection(EditorSelection *p_selection);
+    void set_marked(
+        const Set<Node*>& p_marked,
+        bool p_selectable = false,
+        bool p_children_selectable = true
+    );
+    void set_marked(
+        Node* p_marked,
+        bool p_selectable = false,
+        bool p_children_selectable = true
+    );
+    void set_selected(Node* p_node, bool p_emit_selected = true);
+    Node* get_selected();
 
-    void set_show_enabled_subscene(bool p_show) { show_enabled_subscene = p_show; }
-    void set_valid_types(const Vector<StringName> &p_valid);
+    void set_can_rename(bool p_can_rename) {
+        can_rename = p_can_rename;
+    }
 
-    void update_tree() { _update_tree(); }
+    void set_editor_selection(EditorSelection* p_selection);
+
+    void set_show_enabled_subscene(bool p_show) {
+        show_enabled_subscene = p_show;
+    }
+
+    void set_valid_types(const Vector<StringName>& p_valid);
+
+    void update_tree() {
+        _update_tree();
+    }
 
     void set_connect_to_script_mode(bool p_enable);
     void set_connecting_signal(bool p_enable);
 
-    Tree *get_scene_tree() { return tree; }
+    Tree* get_scene_tree() {
+        return tree;
+    }
 
-    SceneTreeEditor(bool p_label = true, bool p_can_rename = false, bool p_can_open_instance = false);
+    SceneTreeEditor(
+        bool p_label = true,
+        bool p_can_rename = false,
+        bool p_can_open_instance = false
+    );
     ~SceneTreeEditor();
 };
 
 class SceneTreeDialog : public ConfirmationDialog {
     GDCLASS(SceneTreeDialog, ConfirmationDialog);
 
-    SceneTreeEditor *tree;
-    //Button *select;
-    //Button *cancel;
-    LineEdit *filter;
+    SceneTreeEditor* tree;
+    // Button *select;
+    // Button *cancel;
+    LineEdit* filter;
 
     void update_tree();
     void _select();
     void _cancel();
-    void _filter_changed(const String &p_filter);
+    void _filter_changed(const String& p_filter);
 
 protected:
     void _notification(int p_what);
     static void _bind_methods();
 
 public:
-    SceneTreeEditor *get_scene_tree() { return tree; }
-    LineEdit *get_filter_line_edit() { return filter; }
+    SceneTreeEditor* get_scene_tree() {
+        return tree;
+    }
+
+    LineEdit* get_filter_line_edit() {
+        return filter;
+    }
+
     SceneTreeDialog();
     ~SceneTreeDialog();
 };

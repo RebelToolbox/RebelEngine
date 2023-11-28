@@ -50,8 +50,8 @@
 #include "test_transform.h"
 #include "test_xml_parser.h"
 
-const char **tests_get_names() {
-    static const char *test_names[] = {
+const char** tests_get_names() {
+    static const char* test_names[] = {
         "string",
         "math",
         "basis",
@@ -75,7 +75,7 @@ const char **tests_get_names() {
     return test_names;
 }
 
-MainLoop *test_main(String p_test, const List<String> &p_args) {
+MainLoop* test_main(String p_test, const List<String>& p_args) {
     if (p_test == "string") {
         return TestString::test();
     }
@@ -156,15 +156,13 @@ MainLoop *test_main(String p_test, const List<String> &p_args) {
 
 #else
 
-const char **tests_get_names() {
-    static const char *test_names[] = {
-        NULL
-    };
+const char** tests_get_names() {
+    static const char* test_names[] = {NULL};
 
     return test_names;
 }
 
-MainLoop *test_main(String p_test, const List<String> &p_args) {
+MainLoop* test_main(String p_test, const List<String>& p_args) {
     return NULL;
 }
 

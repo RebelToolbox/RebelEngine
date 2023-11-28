@@ -32,7 +32,7 @@
 
 #include "denoise_wrapper.h"
 
-LightmapDenoiser *LightmapDenoiserOIDN::create_oidn_denoiser() {
+LightmapDenoiser* LightmapDenoiserOIDN::create_oidn_denoiser() {
     return memnew(LightmapDenoiserOIDN);
 }
 
@@ -40,7 +40,7 @@ void LightmapDenoiserOIDN::make_default_denoiser() {
     create_function = create_oidn_denoiser;
 }
 
-Ref<Image> LightmapDenoiserOIDN::denoise_image(const Ref<Image> &p_image) {
+Ref<Image> LightmapDenoiserOIDN::denoise_image(const Ref<Image>& p_image) {
     Ref<Image> img = p_image->duplicate();
 
     img->convert(Image::FORMAT_RGBF);
@@ -48,12 +48,23 @@ Ref<Image> LightmapDenoiserOIDN::denoise_image(const Ref<Image> &p_image) {
     PoolByteArray data = img->get_data();
     {
         PoolByteArray::Write w = data.write();
-        if (!oidn_denoise(device, (float *)w.ptr(), img->get_width(), img->get_height())) {
+        if (!oidn_denoise(
+                device,
+                (float*)w.ptr(),
+                img->get_width(),
+                img->get_height()
+            )) {
             return p_image;
         }
     }
 
-    img->create(img->get_width(), img->get_height(), false, img->get_format(), data);
+    img->create(
+        img->get_width(),
+        img->get_height(),
+        false,
+        img->get_format(),
+        data
+    );
     return img;
 }
 

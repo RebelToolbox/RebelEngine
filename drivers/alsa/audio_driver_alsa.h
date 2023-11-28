@@ -43,7 +43,7 @@ class AudioDriverALSA : public AudioDriver {
     Thread thread;
     Mutex mutex;
 
-    snd_pcm_t *pcm_handle;
+    snd_pcm_t* pcm_handle;
 
     String device_name;
     String new_device;
@@ -54,7 +54,7 @@ class AudioDriverALSA : public AudioDriver {
     Error init_device();
     void finish_device();
 
-    static void thread_func(void *p_udata);
+    static void thread_func(void* p_udata);
 
     unsigned int mix_rate;
     SpeakerMode speaker_mode;
@@ -69,7 +69,7 @@ class AudioDriverALSA : public AudioDriver {
     mutable bool exit_thread;
 
 public:
-    const char *get_name() const {
+    const char* get_name() const {
         return "ALSA";
     };
 

@@ -33,16 +33,16 @@
 #include "scene/scene_string_names.h"
 
 void Container::_child_minsize_changed() {
-    //Size2 ms = get_combined_minimum_size();
-    //if (ms.width > get_size().width || ms.height > get_size().height) {
+    // Size2 ms = get_combined_minimum_size();
+    // if (ms.width > get_size().width || ms.height > get_size().height) {
     minimum_size_changed();
     queue_sort();
 }
 
-void Container::add_child_notify(Node *p_child) {
+void Container::add_child_notify(Node* p_child) {
     Control::add_child_notify(p_child);
 
-    Control *control = Object::cast_to<Control>(p_child);
+    Control* control = Object::cast_to<Control>(p_child);
     if (!control) {
         return;
     }
@@ -55,7 +55,7 @@ void Container::add_child_notify(Node *p_child) {
     queue_sort();
 }
 
-void Container::move_child_notify(Node *p_child) {
+void Container::move_child_notify(Node* p_child) {
     Control::move_child_notify(p_child);
 
     if (!Object::cast_to<Control>(p_child)) {
@@ -66,10 +66,10 @@ void Container::move_child_notify(Node *p_child) {
     queue_sort();
 }
 
-void Container::remove_child_notify(Node *p_child) {
+void Container::remove_child_notify(Node* p_child) {
     Control::remove_child_notify(p_child);
 
-    Control *control = Object::cast_to<Control>(p_child);
+    Control* control = Object::cast_to<Control>(p_child);
     if (!control) {
         return;
     }
@@ -92,7 +92,7 @@ void Container::_sort_children() {
     pending_sort = false;
 }
 
-void Container::fit_child_in_rect(Control *p_child, const Rect2 &p_rect) {
+void Container::fit_child_in_rect(Control* p_child, const Rect2& p_rect) {
     ERR_FAIL_COND(!p_child);
     ERR_FAIL_COND(p_child->get_parent() != this);
 
@@ -171,17 +171,29 @@ String Container::get_configuration_warning() const {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("Container by itself serves no purpose unless a script configures its children placement behavior.\nIf you don't intend to add a script, use a plain Control node instead.");
+        warning +=
+            TTR("Container by itself serves no purpose unless a script "
+                "configures its children placement behavior.\nIf you don't "
+                "intend to add a script, use a plain Control node instead.");
     }
     return warning;
 }
 
 void Container::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_sort_children"), &Container::_sort_children);
-    ClassDB::bind_method(D_METHOD("_child_minsize_changed"), &Container::_child_minsize_changed);
+    ClassDB::bind_method(
+        D_METHOD("_sort_children"),
+        &Container::_sort_children
+    );
+    ClassDB::bind_method(
+        D_METHOD("_child_minsize_changed"),
+        &Container::_child_minsize_changed
+    );
 
     ClassDB::bind_method(D_METHOD("queue_sort"), &Container::queue_sort);
-    ClassDB::bind_method(D_METHOD("fit_child_in_rect", "child", "rect"), &Container::fit_child_in_rect);
+    ClassDB::bind_method(
+        D_METHOD("fit_child_in_rect", "child", "rect"),
+        &Container::fit_child_in_rect
+    );
 
     BIND_CONSTANT(NOTIFICATION_SORT_CHILDREN);
     ADD_SIGNAL(MethodInfo("sort_children"));

@@ -31,7 +31,11 @@
 #include "audio_effect_compressor.h"
 #include "servers/audio_server.h"
 
-void AudioEffectCompressorInstance::process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count) {
+void AudioEffectCompressorInstance::process(
+    const AudioFrame* p_src_frames,
+    AudioFrame* p_dst_frames,
+    int p_frame_count
+) {
     float threshold = Math::db2linear(base->threshold);
     float sample_rate = AudioServer::get_singleton()->get_mix_rate();
 
@@ -47,18 +51,23 @@ void AudioEffectCompressorInstance::process(const AudioFrame *p_src_frames, Audi
     float mix = base->mix;
     float gr_meter_decay = exp(1 / (1 * sample_rate));
 
-    const AudioFrame *src = p_src_frames;
+    const AudioFrame* src = p_src_frames;
 
     if (base->sidechain != StringName() && current_channel != -1) {
-        int bus = AudioServer::get_singleton()->thread_find_bus_index(base->sidechain);
+        int bus =
+            AudioServer::get_singleton()->thread_find_bus_index(base->sidechain
+            );
         if (bus >= 0) {
-            src = AudioServer::get_singleton()->thread_get_channel_mix_buffer(bus, current_channel);
+            src = AudioServer::get_singleton()->thread_get_channel_mix_buffer(
+                bus,
+                current_channel
+            );
         }
     }
 
     for (int i = 0; i < p_frame_count; i++) {
         AudioFrame s = src[i];
-        //convert to positive
+        // convert to positive
         s.l = Math::abs(s.l);
         s.r = Math::abs(s.r);
 
@@ -66,7 +75,7 @@ void AudioEffectCompressorInstance::process(const AudioFrame *p_src_frames, Audi
 
         float overdb = 2.08136898f * Math::linear2db(peak / threshold);
 
-        if (overdb < 0.0) { //we only care about what goes over to compress
+        if (overdb < 0.0) { // we only care about what goes over to compress
             overdb = 0.0;
         }
 
@@ -87,7 +96,7 @@ void AudioEffectCompressorInstance::process(const AudioFrame *p_src_frames, Audi
 
         float cratio;
 
-        if (false) { //rato all-in
+        if (false) { // rato all-in
             cratio = 12 + averatio;
         } else {
             cratio = base->ratio;
@@ -96,7 +105,10 @@ void AudioEffectCompressorInstance::process(const AudioFrame *p_src_frames, Audi
         float gr = -overdb * (cratio - 1) / cratio;
         float grv = Math::db2linear(gr);
 
-        runmax = maxover + relcoef * (runmax - maxover); // highest peak for setting att/rel decays in reltime
+        runmax = maxover
+               + relcoef
+                     * (runmax - maxover
+                     ); // highest peak for setting att/rel decays in reltime
         maxover = runmax;
 
         if (grv < gr_meter) {
@@ -108,7 +120,8 @@ void AudioEffectCompressorInstance::process(const AudioFrame *p_src_frames, Audi
             }
         }
 
-        p_dst_frames[i] = p_src_frames[i] * grv * makeup * mix + p_src_frames[i] * (1.0 - mix);
+        p_dst_frames[i] = p_src_frames[i] * grv * makeup * mix
+                        + p_src_frames[i] * (1.0 - mix);
     }
 }
 
@@ -137,6 +150,7 @@ float AudioEffectCompressor::get_threshold() const {
 void AudioEffectCompressor::set_ratio(float p_ratio) {
     ratio = p_ratio;
 }
+
 float AudioEffectCompressor::get_ratio() const {
     return ratio;
 }
@@ -144,6 +158,7 @@ float AudioEffectCompressor::get_ratio() const {
 void AudioEffectCompressor::set_gain(float p_gain) {
     gain = p_gain;
 }
+
 float AudioEffectCompressor::get_gain() const {
     return gain;
 }
@@ -151,6 +166,7 @@ float AudioEffectCompressor::get_gain() const {
 void AudioEffectCompressor::set_attack_us(float p_attack_us) {
     attack_us = p_attack_us;
 }
+
 float AudioEffectCompressor::get_attack_us() const {
     return attack_us;
 }
@@ -158,6 +174,7 @@ float AudioEffectCompressor::get_attack_us() const {
 void AudioEffectCompressor::set_release_ms(float p_release_ms) {
     release_ms = p_release_ms;
 }
+
 float AudioEffectCompressor::get_release_ms() const {
     return release_ms;
 }
@@ -165,11 +182,12 @@ float AudioEffectCompressor::get_release_ms() const {
 void AudioEffectCompressor::set_mix(float p_mix) {
     mix = p_mix;
 }
+
 float AudioEffectCompressor::get_mix() const {
     return mix;
 }
 
-void AudioEffectCompressor::set_sidechain(const StringName &p_sidechain) {
+void AudioEffectCompressor::set_sidechain(const StringName& p_sidechain) {
     AudioServer::get_singleton()->lock();
     sidechain = p_sidechain;
     AudioServer::get_singleton()->unlock();
@@ -179,10 +197,11 @@ StringName AudioEffectCompressor::get_sidechain() const {
     return sidechain;
 }
 
-void AudioEffectCompressor::_validate_property(PropertyInfo &property) const {
+void AudioEffectCompressor::_validate_property(PropertyInfo& property) const {
     if (property.name == "sidechain") {
         String buses = "";
-        for (int i = 0; i < AudioServer::get_singleton()->get_bus_count(); i++) {
+        for (int i = 0; i < AudioServer::get_singleton()->get_bus_count();
+             i++) {
             buses += ",";
             buses += AudioServer::get_singleton()->get_bus_name(i);
         }
@@ -192,34 +211,116 @@ void AudioEffectCompressor::_validate_property(PropertyInfo &property) const {
 }
 
 void AudioEffectCompressor::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_threshold", "threshold"), &AudioEffectCompressor::set_threshold);
-    ClassDB::bind_method(D_METHOD("get_threshold"), &AudioEffectCompressor::get_threshold);
+    ClassDB::bind_method(
+        D_METHOD("set_threshold", "threshold"),
+        &AudioEffectCompressor::set_threshold
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_threshold"),
+        &AudioEffectCompressor::get_threshold
+    );
 
-    ClassDB::bind_method(D_METHOD("set_ratio", "ratio"), &AudioEffectCompressor::set_ratio);
-    ClassDB::bind_method(D_METHOD("get_ratio"), &AudioEffectCompressor::get_ratio);
+    ClassDB::bind_method(
+        D_METHOD("set_ratio", "ratio"),
+        &AudioEffectCompressor::set_ratio
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_ratio"),
+        &AudioEffectCompressor::get_ratio
+    );
 
-    ClassDB::bind_method(D_METHOD("set_gain", "gain"), &AudioEffectCompressor::set_gain);
-    ClassDB::bind_method(D_METHOD("get_gain"), &AudioEffectCompressor::get_gain);
+    ClassDB::bind_method(
+        D_METHOD("set_gain", "gain"),
+        &AudioEffectCompressor::set_gain
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_gain"),
+        &AudioEffectCompressor::get_gain
+    );
 
-    ClassDB::bind_method(D_METHOD("set_attack_us", "attack_us"), &AudioEffectCompressor::set_attack_us);
-    ClassDB::bind_method(D_METHOD("get_attack_us"), &AudioEffectCompressor::get_attack_us);
+    ClassDB::bind_method(
+        D_METHOD("set_attack_us", "attack_us"),
+        &AudioEffectCompressor::set_attack_us
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_attack_us"),
+        &AudioEffectCompressor::get_attack_us
+    );
 
-    ClassDB::bind_method(D_METHOD("set_release_ms", "release_ms"), &AudioEffectCompressor::set_release_ms);
-    ClassDB::bind_method(D_METHOD("get_release_ms"), &AudioEffectCompressor::get_release_ms);
+    ClassDB::bind_method(
+        D_METHOD("set_release_ms", "release_ms"),
+        &AudioEffectCompressor::set_release_ms
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_release_ms"),
+        &AudioEffectCompressor::get_release_ms
+    );
 
-    ClassDB::bind_method(D_METHOD("set_mix", "mix"), &AudioEffectCompressor::set_mix);
+    ClassDB::bind_method(
+        D_METHOD("set_mix", "mix"),
+        &AudioEffectCompressor::set_mix
+    );
     ClassDB::bind_method(D_METHOD("get_mix"), &AudioEffectCompressor::get_mix);
 
-    ClassDB::bind_method(D_METHOD("set_sidechain", "sidechain"), &AudioEffectCompressor::set_sidechain);
-    ClassDB::bind_method(D_METHOD("get_sidechain"), &AudioEffectCompressor::get_sidechain);
+    ClassDB::bind_method(
+        D_METHOD("set_sidechain", "sidechain"),
+        &AudioEffectCompressor::set_sidechain
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_sidechain"),
+        &AudioEffectCompressor::get_sidechain
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "threshold", PROPERTY_HINT_RANGE, "-60,0,0.1"), "set_threshold", "get_threshold");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "ratio", PROPERTY_HINT_RANGE, "1,48,0.1"), "set_ratio", "get_ratio");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "gain", PROPERTY_HINT_RANGE, "-20,20,0.1"), "set_gain", "get_gain");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "attack_us", PROPERTY_HINT_RANGE, "20,2000,1"), "set_attack_us", "get_attack_us");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "release_ms", PROPERTY_HINT_RANGE, "20,2000,1"), "set_release_ms", "get_release_ms");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "mix", PROPERTY_HINT_RANGE, "0,1,0.01"), "set_mix", "get_mix");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "sidechain", PROPERTY_HINT_ENUM), "set_sidechain", "get_sidechain");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "threshold",
+            PROPERTY_HINT_RANGE,
+            "-60,0,0.1"
+        ),
+        "set_threshold",
+        "get_threshold"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "ratio", PROPERTY_HINT_RANGE, "1,48,0.1"),
+        "set_ratio",
+        "get_ratio"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "gain", PROPERTY_HINT_RANGE, "-20,20,0.1"),
+        "set_gain",
+        "get_gain"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "attack_us",
+            PROPERTY_HINT_RANGE,
+            "20,2000,1"
+        ),
+        "set_attack_us",
+        "get_attack_us"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "release_ms",
+            PROPERTY_HINT_RANGE,
+            "20,2000,1"
+        ),
+        "set_release_ms",
+        "get_release_ms"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "mix", PROPERTY_HINT_RANGE, "0,1,0.01"),
+        "set_mix",
+        "get_mix"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "sidechain", PROPERTY_HINT_ENUM),
+        "set_sidechain",
+        "get_sidechain"
+    );
 }
 
 AudioEffectCompressor::AudioEffectCompressor() {

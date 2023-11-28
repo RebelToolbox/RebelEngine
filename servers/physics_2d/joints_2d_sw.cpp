@@ -32,7 +32,7 @@
 
 #include "space_2d_sw.h"
 
-//based on chipmunk joint constraints
+// based on chipmunk joint constraints
 
 /* Copyright (c) 2007 Scott Lembcke
  *
@@ -55,7 +55,13 @@
  * SOFTWARE.
  */
 
-static inline real_t k_scalar(Body2DSW *a, Body2DSW *b, const Vector2 &rA, const Vector2 &rB, const Vector2 &n) {
+static inline real_t k_scalar(
+    Body2DSW* a,
+    Body2DSW* b,
+    const Vector2& rA,
+    const Vector2& rB,
+    const Vector2& n
+) {
     real_t value = 0;
 
     {
@@ -73,27 +79,40 @@ static inline real_t k_scalar(Body2DSW *a, Body2DSW *b, const Vector2 &rA, const
     return value;
 }
 
-static inline Vector2
-relative_velocity(Body2DSW *a, Body2DSW *b, Vector2 rA, Vector2 rB) {
-    Vector2 sum = a->get_linear_velocity() - rA.tangent() * a->get_angular_velocity();
+static inline Vector2 relative_velocity(
+    Body2DSW* a,
+    Body2DSW* b,
+    Vector2 rA,
+    Vector2 rB
+) {
+    Vector2 sum =
+        a->get_linear_velocity() - rA.tangent() * a->get_angular_velocity();
     if (b) {
-        return (b->get_linear_velocity() - rB.tangent() * b->get_angular_velocity()) - sum;
+        return (b->get_linear_velocity()
+                - rB.tangent() * b->get_angular_velocity())
+             - sum;
     } else {
         return -sum;
     }
 }
 
-static inline real_t
-normal_relative_velocity(Body2DSW *a, Body2DSW *b, Vector2 rA, Vector2 rB, Vector2 n) {
+static inline real_t normal_relative_velocity(
+    Body2DSW* a,
+    Body2DSW* b,
+    Vector2 rA,
+    Vector2 rB,
+    Vector2 n
+) {
     return relative_velocity(a, b, rA, rB).dot(n);
 }
 
 bool PinJoint2DSW::setup(real_t p_step) {
-    if ((A->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC) && (B->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC)) {
+    if ((A->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC)
+        && (B->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC)) {
         return false;
     }
 
-    Space2DSW *space = A->get_space();
+    Space2DSW* space = A->get_space();
     ERR_FAIL_COND_V(!space, false);
 
     rA = A->get_transform().basis_xform(anchor_A);
@@ -138,7 +157,9 @@ bool PinJoint2DSW::setup(real_t p_step) {
 
     Vector2 delta = gB - gA;
 
-    bias = delta * -(get_bias() == 0 ? space->get_constraint_bias() : get_bias()) * (1.0 / p_step);
+    bias = delta
+         * -(get_bias() == 0 ? space->get_constraint_bias() : get_bias())
+         * (1.0 / p_step);
 
     // apply accumulated impulse
     A->apply_impulse(rA, -P);
@@ -149,22 +170,25 @@ bool PinJoint2DSW::setup(real_t p_step) {
     return true;
 }
 
-inline Vector2 custom_cross(const Vector2 &p_vec, real_t p_other) {
+inline Vector2 custom_cross(const Vector2& p_vec, real_t p_other) {
     return Vector2(p_other * p_vec.y, -p_other * p_vec.x);
 }
 
 void PinJoint2DSW::solve(real_t p_step) {
     // compute relative velocity
-    Vector2 vA = A->get_linear_velocity() - custom_cross(rA, A->get_angular_velocity());
+    Vector2 vA =
+        A->get_linear_velocity() - custom_cross(rA, A->get_angular_velocity());
 
     Vector2 rel_vel;
     if (B) {
-        rel_vel = B->get_linear_velocity() - custom_cross(rB, B->get_angular_velocity()) - vA;
+        rel_vel = B->get_linear_velocity()
+                - custom_cross(rB, B->get_angular_velocity()) - vA;
     } else {
         rel_vel = -vA;
     }
 
-    Vector2 impulse = M.basis_xform(bias - rel_vel - Vector2(softness, softness) * P);
+    Vector2 impulse =
+        M.basis_xform(bias - rel_vel - Vector2(softness, softness) * P);
 
     A->apply_impulse(rA, -impulse);
     if (B) {
@@ -174,7 +198,10 @@ void PinJoint2DSW::solve(real_t p_step) {
     P += impulse;
 }
 
-void PinJoint2DSW::set_param(Physics2DServer::PinJointParam p_param, real_t p_value) {
+void PinJoint2DSW::set_param(
+    Physics2DServer::PinJointParam p_param,
+    real_t p_value
+) {
     if (p_param == Physics2DServer::PIN_JOINT_SOFTNESS) {
         softness = p_value;
     }
@@ -187,8 +214,12 @@ real_t PinJoint2DSW::get_param(Physics2DServer::PinJointParam p_param) const {
     ERR_FAIL_V(0);
 }
 
-PinJoint2DSW::PinJoint2DSW(const Vector2 &p_pos, Body2DSW *p_body_a, Body2DSW *p_body_b) :
-        Joint2DSW(_arr, p_body_b ? 2 : 1) {
+PinJoint2DSW::PinJoint2DSW(
+    const Vector2& p_pos,
+    Body2DSW* p_body_a,
+    Body2DSW* p_body_b
+) :
+    Joint2DSW(_arr, p_body_b ? 2 : 1) {
     A = p_body_a;
     B = p_body_b;
     anchor_A = p_body_a->get_inv_transform().xform(p_pos);
@@ -215,10 +246,17 @@ PinJoint2DSW::~PinJoint2DSW() {
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 
-static inline void
-k_tensor(Body2DSW *a, Body2DSW *b, Vector2 r1, Vector2 r2, Vector2 *k1, Vector2 *k2) {
+static inline void k_tensor(
+    Body2DSW* a,
+    Body2DSW* b,
+    Vector2 r1,
+    Vector2 r2,
+    Vector2* k1,
+    Vector2* k2
+) {
     // calculate mass matrix
-    // If I wasn't lazy and wrote a proper matrix class, this wouldn't be so gross...
+    // If I wasn't lazy and wrote a proper matrix class, this wouldn't be so
+    // gross...
     real_t k11, k12, k21, k22;
     real_t m_sum = a->get_inv_mass() + b->get_inv_mass();
 
@@ -258,19 +296,20 @@ k_tensor(Body2DSW *a, Body2DSW *b, Vector2 r1, Vector2 r2, Vector2 *k1, Vector2 
 }
 
 static _FORCE_INLINE_ Vector2
-mult_k(const Vector2 &vr, const Vector2 &k1, const Vector2 &k2) {
+mult_k(const Vector2& vr, const Vector2& k1, const Vector2& k2) {
     return Vector2(vr.dot(k1), vr.dot(k2));
 }
 
 bool GrooveJoint2DSW::setup(real_t p_step) {
-    if ((A->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC) && (B->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC)) {
+    if ((A->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC)
+        && (B->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC)) {
         return false;
     }
 
     // calculate endpoints in worldspace
     Vector2 ta = A->get_transform().xform(A_groove_1);
     Vector2 tb = A->get_transform().xform(A_groove_2);
-    Space2DSW *space = A->get_space();
+    Space2DSW* space = A->get_space();
 
     // calculate axis
     Vector2 n = -(tb - ta).tangent().normalized();
@@ -290,7 +329,8 @@ bool GrooveJoint2DSW::setup(real_t p_step) {
         rA = tb - A->get_transform().get_origin();
     } else {
         clamp = 0.0f;
-        //joint->r1 = cpvsub(cpvadd(cpvmult(cpvperp(n), -td), cpvmult(n, d)), a->p);
+        // joint->r1 = cpvsub(cpvadd(cpvmult(cpvperp(n), -td), cpvmult(n, d)),
+        // a->p);
         rA = ((-n.tangent() * -td) + n * d) - A->get_transform().get_origin();
     }
 
@@ -301,13 +341,17 @@ bool GrooveJoint2DSW::setup(real_t p_step) {
     jn_max = get_max_force() * p_step;
 
     // calculate bias velocity
-    //cpVect delta = cpvsub(cpvadd(b->p, joint->r2), cpvadd(a->p, joint->r1));
-    //joint->bias = cpvclamp(cpvmult(delta, -joint->constraint.biasCoef*dt_inv), joint->constraint.maxBias);
+    // cpVect delta = cpvsub(cpvadd(b->p, joint->r2), cpvadd(a->p, joint->r1));
+    // joint->bias = cpvclamp(cpvmult(delta,
+    // -joint->constraint.biasCoef*dt_inv), joint->constraint.maxBias);
 
-    Vector2 delta = (B->get_transform().get_origin() + rB) - (A->get_transform().get_origin() + rA);
+    Vector2 delta = (B->get_transform().get_origin() + rB)
+                  - (A->get_transform().get_origin() + rA);
 
     real_t _b = get_bias();
-    gbias = (delta * -(_b == 0 ? space->get_constraint_bias() : _b) * (1.0 / p_step)).clamped(get_max_bias());
+    gbias = (delta * -(_b == 0 ? space->get_constraint_bias() : _b)
+             * (1.0 / p_step))
+                .clamped(get_max_bias());
 
     // apply accumulated impulse
     A->apply_impulse(rA, -jn_acc);
@@ -325,7 +369,8 @@ void GrooveJoint2DSW::solve(real_t p_step) {
     Vector2 jOld = jn_acc;
     j += jOld;
 
-    jn_acc = (((clamp * j.cross(xf_normal)) > 0) ? j : j.project(xf_normal)).clamped(jn_max);
+    jn_acc = (((clamp * j.cross(xf_normal)) > 0) ? j : j.project(xf_normal))
+                 .clamped(jn_max);
 
     j = jn_acc - jOld;
 
@@ -333,8 +378,14 @@ void GrooveJoint2DSW::solve(real_t p_step) {
     B->apply_impulse(rB, j);
 }
 
-GrooveJoint2DSW::GrooveJoint2DSW(const Vector2 &p_a_groove1, const Vector2 &p_a_groove2, const Vector2 &p_b_anchor, Body2DSW *p_body_a, Body2DSW *p_body_b) :
-        Joint2DSW(_arr, 2) {
+GrooveJoint2DSW::GrooveJoint2DSW(
+    const Vector2& p_a_groove1,
+    const Vector2& p_a_groove2,
+    const Vector2& p_b_anchor,
+    Body2DSW* p_body_a,
+    Body2DSW* p_body_b
+) :
+    Joint2DSW(_arr, 2) {
     A = p_body_a;
     B = p_body_b;
 
@@ -357,14 +408,16 @@ GrooveJoint2DSW::~GrooveJoint2DSW() {
 //////////////////////////////////////////////
 
 bool DampedSpringJoint2DSW::setup(real_t p_step) {
-    if ((A->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC) && (B->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC)) {
+    if ((A->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC)
+        && (B->get_mode() <= Physics2DServer::BODY_MODE_KINEMATIC)) {
         return false;
     }
 
     rA = A->get_transform().basis_xform(anchor_A);
     rB = B->get_transform().basis_xform(anchor_B);
 
-    Vector2 delta = (B->get_transform().get_origin() + rB) - (A->get_transform().get_origin() + rA);
+    Vector2 delta = (B->get_transform().get_origin() + rB)
+                  - (A->get_transform().get_origin() + rA);
     real_t dist = delta.length();
 
     if (dist) {
@@ -403,7 +456,10 @@ void DampedSpringJoint2DSW::solve(real_t p_step) {
     B->apply_impulse(rB, j);
 }
 
-void DampedSpringJoint2DSW::set_param(Physics2DServer::DampedStringParam p_param, real_t p_value) {
+void DampedSpringJoint2DSW::set_param(
+    Physics2DServer::DampedStringParam p_param,
+    real_t p_value
+) {
     switch (p_param) {
         case Physics2DServer::DAMPED_STRING_REST_LENGTH: {
             rest_length = p_value;
@@ -417,7 +473,9 @@ void DampedSpringJoint2DSW::set_param(Physics2DServer::DampedStringParam p_param
     }
 }
 
-real_t DampedSpringJoint2DSW::get_param(Physics2DServer::DampedStringParam p_param) const {
+real_t DampedSpringJoint2DSW::get_param(
+    Physics2DServer::DampedStringParam p_param
+) const {
     switch (p_param) {
         case Physics2DServer::DAMPED_STRING_REST_LENGTH: {
             return rest_length;
@@ -433,8 +491,13 @@ real_t DampedSpringJoint2DSW::get_param(Physics2DServer::DampedStringParam p_par
     ERR_FAIL_V(0);
 }
 
-DampedSpringJoint2DSW::DampedSpringJoint2DSW(const Vector2 &p_anchor_a, const Vector2 &p_anchor_b, Body2DSW *p_body_a, Body2DSW *p_body_b) :
-        Joint2DSW(_arr, 2) {
+DampedSpringJoint2DSW::DampedSpringJoint2DSW(
+    const Vector2& p_anchor_a,
+    const Vector2& p_anchor_b,
+    Body2DSW* p_body_a,
+    Body2DSW* p_body_b
+) :
+    Joint2DSW(_arr, 2) {
     A = p_body_a;
     B = p_body_b;
     anchor_A = A->get_inv_transform().xform(p_anchor_a);

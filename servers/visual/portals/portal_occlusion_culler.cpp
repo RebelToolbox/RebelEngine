@@ -33,7 +33,12 @@
 #include "core/project_settings.h"
 #include "portal_renderer.h"
 
-void PortalOcclusionCuller::prepare_generic(PortalRenderer &p_portal_renderer, const LocalVector<uint32_t, uint32_t> &p_occluder_pool_ids, const Vector3 &pt_camera, const LocalVector<Plane> &p_planes) {
+void PortalOcclusionCuller::prepare_generic(
+    PortalRenderer& p_portal_renderer,
+    const LocalVector<uint32_t, uint32_t>& p_occluder_pool_ids,
+    const Vector3& pt_camera,
+    const LocalVector<Plane>& p_planes
+) {
     _num_spheres = 0;
     _pt_camera = pt_camera;
 
@@ -52,11 +57,12 @@ void PortalOcclusionCuller::prepare_generic(PortalRenderer &p_portal_renderer, c
     // find sphere occluders
     for (unsigned int o = 0; o < p_occluder_pool_ids.size(); o++) {
         int id = p_occluder_pool_ids[o];
-        VSOccluder &occ = p_portal_renderer.get_pool_occluder(id);
+        VSOccluder& occ = p_portal_renderer.get_pool_occluder(id);
 
         // is it active?
         // in the case of rooms, they will always be active, as inactive
-        // are removed from rooms. But for whole scene mode, some may be inactive.
+        // are removed from rooms. But for whole scene mode, some may be
+        // inactive.
         if (!occ.active) {
             continue;
         }
@@ -72,17 +78,23 @@ void PortalOcclusionCuller::prepare_generic(PortalRenderer &p_portal_renderer, c
 
             // multiple spheres
             for (int n = 0; n < occ.list_ids.size(); n++) {
-                const Occlusion::Sphere &occluder_sphere = p_portal_renderer.get_pool_occluder_sphere(occ.list_ids[n]).world;
+                const Occlusion::Sphere& occluder_sphere =
+                    p_portal_renderer.get_pool_occluder_sphere(occ.list_ids[n])
+                        .world;
 
                 // is the occluder sphere culled?
-                if (is_sphere_culled(occluder_sphere.pos, occluder_sphere.radius, p_planes)) {
+                if (is_sphere_culled(
+                        occluder_sphere.pos,
+                        occluder_sphere.radius,
+                        p_planes
+                    )) {
                     continue;
                 }
 
                 real_t dist = (occluder_sphere.pos - pt_camera).length();
 
-                // calculate the goodness of fit .. smaller distance better, and larger radius
-                // calculate adjusted radius at 100.0
+                // calculate the goodness of fit .. smaller distance better, and
+                // larger radius calculate adjusted radius at 100.0
                 real_t fit = 100 / MAX(dist, 0.01);
                 fit *= occluder_sphere.radius;
 
@@ -116,7 +128,8 @@ void PortalOcclusionCuller::prepare_generic(PortalRenderer &p_portal_renderer, c
                             _sphere_closest_dist = dist;
                         }
 
-                        // the weakest may have changed (this could be done more efficiently)
+                        // the weakest may have changed (this could be done more
+                        // efficiently)
                         weakest_fit = FLT_MAX;
                         for (int s = 0; s < _max_spheres; s++) {
                             if (goodness_of_fit[s] < weakest_fit) {
@@ -128,16 +141,17 @@ void PortalOcclusionCuller::prepare_generic(PortalRenderer &p_portal_renderer, c
                 }
             }
         } // sphere
-    } // for o
+    }     // for o
 
     // force the sphere closest distance to above zero to prevent
     // divide by zero in the quick reject
     _sphere_closest_dist = MAX(_sphere_closest_dist, 0.001);
 
     // sphere self occlusion.
-    // we could avoid testing the closest sphere, but the complexity isn't worth any speed benefit
+    // we could avoid testing the closest sphere, but the complexity isn't worth
+    // any speed benefit
     for (int n = 0; n < _num_spheres; n++) {
-        const Occlusion::Sphere &sphere = _spheres[n];
+        const Occlusion::Sphere& sphere = _spheres[n];
 
         // is it occluded by another sphere?
         if (cull_sphere(sphere.pos, sphere.radius, n)) {
@@ -152,7 +166,11 @@ void PortalOcclusionCuller::prepare_generic(PortalRenderer &p_portal_renderer, c
     }
 }
 
-bool PortalOcclusionCuller::cull_sphere(const Vector3 &p_occludee_center, real_t p_occludee_radius, int p_ignore_sphere) const {
+bool PortalOcclusionCuller::cull_sphere(
+    const Vector3& p_occludee_center,
+    real_t p_occludee_radius,
+    int p_ignore_sphere
+) const {
     if (!_num_spheres) {
         return false;
     }
@@ -164,19 +182,21 @@ bool PortalOcclusionCuller::cull_sphere(const Vector3 &p_occludee_center, real_t
     // account for occludee radius
     real_t dist_to_occludee = dist_to_occludee_raw - p_occludee_radius;
 
-    // prevent divide by zero, and the occludee cannot be occluded if we are WITHIN
-    // its bounding sphere... so no need to check
+    // prevent divide by zero, and the occludee cannot be occluded if we are
+    // WITHIN its bounding sphere... so no need to check
     if (dist_to_occludee < _sphere_closest_dist) {
         return false;
     }
 
     // normalize ray
-    // hopefully by this point, dist_to_occludee_raw cannot possibly be zero due to above check
+    // hopefully by this point, dist_to_occludee_raw cannot possibly be zero due
+    // to above check
     ray_dir *= 1.0 / dist_to_occludee_raw;
 
-    // this can probably be done cheaper with dot products but the math might be a bit fiddly to get right
+    // this can probably be done cheaper with dot products but the math might be
+    // a bit fiddly to get right
     for (int s = 0; s < _num_spheres; s++) {
-        //  first get the sphere distance
+        // first get the sphere distance
         real_t occluder_dist_to_cam = _sphere_distances[s];
         if (dist_to_occludee < occluder_dist_to_cam) {
             // can't occlude
@@ -184,10 +204,12 @@ bool PortalOcclusionCuller::cull_sphere(const Vector3 &p_occludee_center, real_t
         }
 
         // the perspective adjusted occludee radius
-        real_t adjusted_occludee_radius = p_occludee_radius * (occluder_dist_to_cam / dist_to_occludee);
+        real_t adjusted_occludee_radius =
+            p_occludee_radius * (occluder_dist_to_cam / dist_to_occludee);
 
-        const Occlusion::Sphere &occluder_sphere = _spheres[s];
-        real_t occluder_radius = occluder_sphere.radius - adjusted_occludee_radius;
+        const Occlusion::Sphere& occluder_sphere = _spheres[s];
+        real_t occluder_radius =
+            occluder_sphere.radius - adjusted_occludee_radius;
 
         if (occluder_radius > 0.0) {
             occluder_radius = occluder_radius * occluder_radius;
@@ -195,7 +217,12 @@ bool PortalOcclusionCuller::cull_sphere(const Vector3 &p_occludee_center, real_t
             // distance to hit
             real_t dist;
 
-            if (occluder_sphere.intersect_ray(_pt_camera, ray_dir, dist, occluder_radius)) {
+            if (occluder_sphere.intersect_ray(
+                    _pt_camera,
+                    ray_dir,
+                    dist,
+                    occluder_radius
+                )) {
                 if ((dist < dist_to_occludee) && (s != p_ignore_sphere)) {
                     // occluded
                     return true;
@@ -208,5 +235,6 @@ bool PortalOcclusionCuller::cull_sphere(const Vector3 &p_occludee_center, real_t
 }
 
 PortalOcclusionCuller::PortalOcclusionCuller() {
-    _max_spheres = GLOBAL_GET("rendering/misc/occlusion_culling/max_active_spheres");
+    _max_spheres =
+        GLOBAL_GET("rendering/misc/occlusion_culling/max_active_spheres");
 }

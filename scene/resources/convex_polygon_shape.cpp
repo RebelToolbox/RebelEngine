@@ -58,7 +58,7 @@ void ConvexPolygonShape::_update_shape() {
     Shape::_update_shape();
 }
 
-void ConvexPolygonShape::set_points(const PoolVector<Vector3> &p_points) {
+void ConvexPolygonShape::set_points(const PoolVector<Vector3>& p_points) {
     points = p_points;
     _update_shape();
     notify_change_to_owners();
@@ -69,12 +69,23 @@ PoolVector<Vector3> ConvexPolygonShape::get_points() const {
 }
 
 void ConvexPolygonShape::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_points", "points"), &ConvexPolygonShape::set_points);
-    ClassDB::bind_method(D_METHOD("get_points"), &ConvexPolygonShape::get_points);
+    ClassDB::bind_method(
+        D_METHOD("set_points", "points"),
+        &ConvexPolygonShape::set_points
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_points"),
+        &ConvexPolygonShape::get_points
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "points"), "set_points", "get_points");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::ARRAY, "points"),
+        "set_points",
+        "get_points"
+    );
 }
 
 ConvexPolygonShape::ConvexPolygonShape() :
-        Shape(PhysicsServer::get_singleton()->shape_create(PhysicsServer::SHAPE_CONVEX_POLYGON)) {
-}
+    Shape(PhysicsServer::get_singleton()->shape_create(
+        PhysicsServer::SHAPE_CONVEX_POLYGON
+    )) {}

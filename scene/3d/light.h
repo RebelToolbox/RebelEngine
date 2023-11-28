@@ -86,12 +86,14 @@ protected:
 
     static void _bind_methods();
     void _notification(int p_what);
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
     Light(VisualServer::LightType p_type);
 
 public:
-    VS::LightType get_light_type() const { return type; }
+    VS::LightType get_light_type() const {
+        return type;
+    }
 
     void set_editor_only(bool p_editor_only);
     bool is_editor_only() const;
@@ -108,10 +110,10 @@ public:
     void set_cull_mask(uint32_t p_cull_mask);
     uint32_t get_cull_mask() const;
 
-    void set_color(const Color &p_color);
+    void set_color(const Color& p_color);
     Color get_color() const;
 
-    void set_shadow_color(const Color &p_shadow_color);
+    void set_shadow_color(const Color& p_shadow_color);
     Color get_shadow_color() const;
 
     void set_shadow_reverse_cull_face(bool p_enable);
@@ -141,8 +143,10 @@ public:
     };
 
     enum ShadowDepthRange {
-        SHADOW_DEPTH_RANGE_STABLE = VS::LIGHT_DIRECTIONAL_SHADOW_DEPTH_RANGE_STABLE,
-        SHADOW_DEPTH_RANGE_OPTIMIZED = VS::LIGHT_DIRECTIONAL_SHADOW_DEPTH_RANGE_OPTIMIZED,
+        SHADOW_DEPTH_RANGE_STABLE =
+            VS::LIGHT_DIRECTIONAL_SHADOW_DEPTH_RANGE_STABLE,
+        SHADOW_DEPTH_RANGE_OPTIMIZED =
+            VS::LIGHT_DIRECTIONAL_SHADOW_DEPTH_RANGE_OPTIMIZED,
     };
 
 private:
@@ -214,8 +218,7 @@ protected:
 public:
     virtual String get_configuration_warning() const;
 
-    SpotLight() :
-            Light(VisualServer::LIGHT_SPOT) {}
+    SpotLight() : Light(VisualServer::LIGHT_SPOT) {}
 };
 
 #endif

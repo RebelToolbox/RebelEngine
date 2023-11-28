@@ -42,13 +42,14 @@ class VideoPlayer : public Control {
     struct Output {
         AudioFrame vol;
         int bus_index;
-        Viewport *viewport; //pointer only used for reference to previous mix
+        Viewport* viewport; // pointer only used for reference to previous mix
     };
+
     Ref<VideoStreamPlayback> playback;
     Ref<VideoStream> stream;
 
     int sp_get_channel_count() const;
-    bool mix(AudioFrame *p_buffer, int p_frames);
+    bool mix(AudioFrame* p_buffer, int p_frames);
 
     RID stream_rid;
 
@@ -71,13 +72,17 @@ class VideoPlayer : public Control {
     StringName bus;
 
     void _mix_audio();
-    static int _audio_mix_callback(void *p_udata, const float *p_data, int p_frames);
-    static void _mix_audios(void *p_self);
+    static int _audio_mix_callback(
+        void* p_udata,
+        const float* p_data,
+        int p_frames
+    );
+    static void _mix_audios(void* p_self);
 
 protected:
     static void _bind_methods();
     void _notification(int p_notification);
-    void _validate_property(PropertyInfo &p_property) const;
+    void _validate_property(PropertyInfo& p_property) const;
 
 public:
     Size2 get_minimum_size() const;
@@ -86,7 +91,7 @@ public:
 
     Ref<Texture> get_video_texture() const;
 
-    void set_stream(const Ref<VideoStream> &p_stream);
+    void set_stream(const Ref<VideoStream>& p_stream);
     Ref<VideoStream> get_stream() const;
 
     void play();
@@ -115,7 +120,7 @@ public:
     void set_buffering_msec(int p_msec);
     int get_buffering_msec() const;
 
-    void set_bus(const StringName &p_bus);
+    void set_bus(const StringName& p_bus);
     StringName get_bus() const;
 
     VideoPlayer();

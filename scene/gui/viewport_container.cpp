@@ -39,7 +39,7 @@ Size2 ViewportContainer::get_minimum_size() const {
     }
     Size2 ms;
     for (int i = 0; i < get_child_count(); i++) {
-        Viewport *c = Object::cast_to<Viewport>(get_child(i));
+        Viewport* c = Object::cast_to<Viewport>(get_child(i));
         if (!c) {
             continue;
         }
@@ -75,7 +75,7 @@ void ViewportContainer::set_stretch_shrink(int p_shrink) {
     }
 
     for (int i = 0; i < get_child_count(); i++) {
-        Viewport *c = Object::cast_to<Viewport>(get_child(i));
+        Viewport* c = Object::cast_to<Viewport>(get_child(i));
         if (!c) {
             continue;
         }
@@ -97,7 +97,7 @@ void ViewportContainer::_notification(int p_what) {
         }
 
         for (int i = 0; i < get_child_count(); i++) {
-            Viewport *c = Object::cast_to<Viewport>(get_child(i));
+            Viewport* c = Object::cast_to<Viewport>(get_child(i));
             if (!c) {
                 continue;
             }
@@ -106,9 +106,10 @@ void ViewportContainer::_notification(int p_what) {
         }
     }
 
-    if (p_what == NOTIFICATION_ENTER_TREE || p_what == NOTIFICATION_VISIBILITY_CHANGED) {
+    if (p_what == NOTIFICATION_ENTER_TREE
+        || p_what == NOTIFICATION_VISIBILITY_CHANGED) {
         for (int i = 0; i < get_child_count(); i++) {
-            Viewport *c = Object::cast_to<Viewport>(get_child(i));
+            Viewport* c = Object::cast_to<Viewport>(get_child(i));
             if (!c) {
                 continue;
             }
@@ -119,27 +120,34 @@ void ViewportContainer::_notification(int p_what) {
                 c->set_update_mode(Viewport::UPDATE_DISABLED);
             }
 
-            c->set_handle_input_locally(false); //do not handle input locally here
+            c->set_handle_input_locally(false
+            ); // do not handle input locally here
         }
     }
 
     if (p_what == NOTIFICATION_DRAW) {
         for (int i = 0; i < get_child_count(); i++) {
-            Viewport *c = Object::cast_to<Viewport>(get_child(i));
+            Viewport* c = Object::cast_to<Viewport>(get_child(i));
             if (!c) {
                 continue;
             }
 
             if (stretch) {
-                draw_texture_rect(c->get_texture(), Rect2(Vector2(), get_size() * Size2(1, -1)));
+                draw_texture_rect(
+                    c->get_texture(),
+                    Rect2(Vector2(), get_size() * Size2(1, -1))
+                );
             } else {
-                draw_texture_rect(c->get_texture(), Rect2(Vector2(), c->get_size() * Size2(1, -1)));
+                draw_texture_rect(
+                    c->get_texture(),
+                    Rect2(Vector2(), c->get_size() * Size2(1, -1))
+                );
             }
         }
     }
 }
 
-void ViewportContainer::_input(const Ref<InputEvent> &p_event) {
+void ViewportContainer::_input(const Ref<InputEvent>& p_event) {
     ERR_FAIL_COND(p_event.is_null());
 
     if (Engine::get_singleton()->is_editor_hint()) {
@@ -157,7 +165,7 @@ void ViewportContainer::_input(const Ref<InputEvent> &p_event) {
     Ref<InputEvent> ev = p_event->xformed_by(xform.affine_inverse());
 
     for (int i = 0; i < get_child_count(); i++) {
-        Viewport *c = Object::cast_to<Viewport>(get_child(i));
+        Viewport* c = Object::cast_to<Viewport>(get_child(i));
         if (!c || c->is_input_disabled()) {
             continue;
         }
@@ -166,7 +174,7 @@ void ViewportContainer::_input(const Ref<InputEvent> &p_event) {
     }
 }
 
-void ViewportContainer::_unhandled_input(const Ref<InputEvent> &p_event) {
+void ViewportContainer::_unhandled_input(const Ref<InputEvent>& p_event) {
     ERR_FAIL_COND(p_event.is_null());
 
     if (Engine::get_singleton()->is_editor_hint()) {
@@ -184,7 +192,7 @@ void ViewportContainer::_unhandled_input(const Ref<InputEvent> &p_event) {
     Ref<InputEvent> ev = p_event->xformed_by(xform.affine_inverse());
 
     for (int i = 0; i < get_child_count(); i++) {
-        Viewport *c = Object::cast_to<Viewport>(get_child(i));
+        Viewport* c = Object::cast_to<Viewport>(get_child(i));
         if (!c || c->is_input_disabled()) {
             continue;
         }
@@ -194,16 +202,42 @@ void ViewportContainer::_unhandled_input(const Ref<InputEvent> &p_event) {
 }
 
 void ViewportContainer::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_unhandled_input", "event"), &ViewportContainer::_unhandled_input);
-    ClassDB::bind_method(D_METHOD("_input", "event"), &ViewportContainer::_input);
-    ClassDB::bind_method(D_METHOD("set_stretch", "enable"), &ViewportContainer::set_stretch);
-    ClassDB::bind_method(D_METHOD("is_stretch_enabled"), &ViewportContainer::is_stretch_enabled);
+    ClassDB::bind_method(
+        D_METHOD("_unhandled_input", "event"),
+        &ViewportContainer::_unhandled_input
+    );
+    ClassDB::bind_method(
+        D_METHOD("_input", "event"),
+        &ViewportContainer::_input
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_stretch", "enable"),
+        &ViewportContainer::set_stretch
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_stretch_enabled"),
+        &ViewportContainer::is_stretch_enabled
+    );
 
-    ClassDB::bind_method(D_METHOD("set_stretch_shrink", "amount"), &ViewportContainer::set_stretch_shrink);
-    ClassDB::bind_method(D_METHOD("get_stretch_shrink"), &ViewportContainer::get_stretch_shrink);
+    ClassDB::bind_method(
+        D_METHOD("set_stretch_shrink", "amount"),
+        &ViewportContainer::set_stretch_shrink
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_stretch_shrink"),
+        &ViewportContainer::get_stretch_shrink
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "stretch"), "set_stretch", "is_stretch_enabled");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "stretch_shrink"), "set_stretch_shrink", "get_stretch_shrink");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "stretch"),
+        "set_stretch",
+        "is_stretch_enabled"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::INT, "stretch_shrink"),
+        "set_stretch_shrink",
+        "get_stretch_shrink"
+    );
 }
 
 ViewportContainer::ViewportContainer() {

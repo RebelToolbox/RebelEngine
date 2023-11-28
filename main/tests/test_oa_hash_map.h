@@ -33,9 +33,10 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestOAHashMap {
+namespace TestOAHashMap
+{
 
-MainLoop *test();
-}
+MainLoop* test();
+} // namespace TestOAHashMap
 
 #endif // TEST_OA_HASH_MAP_H

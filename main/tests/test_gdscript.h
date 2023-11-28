@@ -33,7 +33,8 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestGDScript {
+namespace TestGDScript
+{
 
 enum TestType {
     TEST_TOKENIZER,
@@ -42,7 +43,7 @@ enum TestType {
     TEST_BYTECODE,
 };
 
-MainLoop *test(TestType p_type);
+MainLoop* test(TestType p_type);
 } // namespace TestGDScript
 
 #endif // TEST_GDSCRIPT_H

@@ -46,7 +46,7 @@ class NodePath {
         mutable uint32_t hash_cache;
     };
 
-    mutable Data *data;
+    mutable Data* data;
     void unref();
 
     void _update_hash_cache() const;
@@ -69,7 +69,7 @@ public:
     Vector<StringName> get_subnames() const;
     StringName get_concatenated_subnames() const;
 
-    NodePath rel_path_to(const NodePath &p_np) const;
+    NodePath rel_path_to(const NodePath& p_np) const;
     NodePath get_as_property_path() const;
 
     void prepend_period();
@@ -87,17 +87,21 @@ public:
     operator String() const;
     bool is_empty() const;
 
-    bool operator==(const NodePath &p_path) const;
-    bool operator!=(const NodePath &p_path) const;
-    void operator=(const NodePath &p_path);
+    bool operator==(const NodePath& p_path) const;
+    bool operator!=(const NodePath& p_path) const;
+    void operator=(const NodePath& p_path);
 
     void simplify();
     NodePath simplified() const;
 
-    NodePath(const Vector<StringName> &p_path, bool p_absolute);
-    NodePath(const Vector<StringName> &p_path, const Vector<StringName> &p_subpath, bool p_absolute);
-    NodePath(const NodePath &p_path);
-    NodePath(const String &p_path);
+    NodePath(const Vector<StringName>& p_path, bool p_absolute);
+    NodePath(
+        const Vector<StringName>& p_path,
+        const Vector<StringName>& p_subpath,
+        bool p_absolute
+    );
+    NodePath(const NodePath& p_path);
+    NodePath(const String& p_path);
     NodePath();
     ~NodePath();
 };

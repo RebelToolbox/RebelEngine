@@ -58,39 +58,42 @@ void FileAccessWindows::check_errors() const {
     }
 }
 
-Error FileAccessWindows::_open(const String &p_path, int p_mode_flags) {
+Error FileAccessWindows::_open(const String& p_path, int p_mode_flags) {
     path_src = p_path;
     path = fix_path(p_path);
-    if (f)
+    if (f) {
         close();
+    }
 
-    const wchar_t *mode_string;
+    const wchar_t* mode_string;
 
-    if (p_mode_flags == READ)
+    if (p_mode_flags == READ) {
         mode_string = L"rb";
-    else if (p_mode_flags == WRITE)
+    } else if (p_mode_flags == WRITE) {
         mode_string = L"wb";
-    else if (p_mode_flags == READ_WRITE)
+    } else if (p_mode_flags == READ_WRITE) {
         mode_string = L"rb+";
-    else if (p_mode_flags == WRITE_READ)
+    } else if (p_mode_flags == WRITE_READ) {
         mode_string = L"wb+";
-    else
+    } else {
         return ERR_INVALID_PARAMETER;
+    }
 
     /* pretty much every implementation that uses fopen as primary
        backend supports utf8 encoding */
 
     struct _stat st;
     if (_wstat(path.c_str(), &st) == 0) {
-        if (!S_ISREG(st.st_mode))
+        if (!S_ISREG(st.st_mode)) {
             return ERR_FILE_CANT_OPEN;
+        }
     };
 
 #ifdef TOOLS_ENABLED
     // Windows is case insensitive, but all other platforms are sensitive to it
-    // To ease cross-platform development, we issue a warning if users try to access
-    // a file using the wrong case (which *works* on Windows, but won't on other
-    // platforms).
+    // To ease cross-platform development, we issue a warning if users try to
+    // access a file using the wrong case (which *works* on Windows, but won't
+    // on other platforms).
     if (p_mode_flags == READ) {
         WIN32_FIND_DATAW d;
         HANDLE f = FindFirstFileW(path.c_str(), &d);
@@ -107,7 +110,8 @@ Error FileAccessWindows::_open(const String &p_path, int p_mode_flags) {
     }
 #endif
 
-    if (is_backup_save_enabled() && p_mode_flags & WRITE && !(p_mode_flags & READ)) {
+    if (is_backup_save_enabled() && p_mode_flags & WRITE
+        && !(p_mode_flags & READ)) {
         save_path = path;
         path = path + ".tmp";
     }
@@ -132,8 +136,9 @@ Error FileAccessWindows::_open(const String &p_path, int p_mode_flags) {
 }
 
 void FileAccessWindows::close() {
-    if (!f)
+    if (!f) {
         return;
+    }
 
     fclose(f);
     f = NULL;
@@ -142,9 +147,10 @@ void FileAccessWindows::close() {
         bool rename_error = true;
         int attempts = 4;
         while (rename_error && attempts) {
-            // This workaround of trying multiple times is added to deal with paranoid Windows
-            // antiviruses that love reading just written files even if they are not executable, thus
-            // locking the file and preventing renaming from happening.
+            // This workaround of trying multiple times is added to deal with
+            // paranoid Windows antiviruses that love reading just written files
+            // even if they are not executable, thus locking the file and
+            // preventing renaming from happening.
 
 #ifdef UWP_ENABLED
             // UWP has no PathFileExists, so we check attributes instead
@@ -155,15 +161,25 @@ void FileAccessWindows::close() {
 #else
             if (!PathFileExistsW(save_path.c_str())) {
 #endif
-                //creating new file
-                rename_error = _wrename((save_path + ".tmp").c_str(), save_path.c_str()) != 0;
+                // creating new file
+                rename_error =
+                    _wrename((save_path + ".tmp").c_str(), save_path.c_str())
+                    != 0;
             } else {
-                //atomic replace for existing file
-                rename_error = !ReplaceFileW(save_path.c_str(), (save_path + ".tmp").c_str(), NULL, 2 | 4, NULL, NULL);
+                // atomic replace for existing file
+                rename_error = !ReplaceFileW(
+                    save_path.c_str(),
+                    (save_path + ".tmp").c_str(),
+                    NULL,
+                    2 | 4,
+                    NULL,
+                    NULL
+                );
             }
             if (rename_error) {
                 attempts--;
-                OS::get_singleton()->delay_usec(100000); // wait 100msec and try again
+                OS::get_singleton()->delay_usec(100000
+                ); // wait 100msec and try again
             }
         }
 
@@ -175,7 +191,14 @@ void FileAccessWindows::close() {
 
         save_path = "";
 
-        ERR_FAIL_COND_MSG(rename_error, "Safe save failed. This may be a permissions problem, but also may happen because you are running a paranoid antivirus. If this is the case, please switch to Windows Defender or disable the 'safe save' option in editor settings. This makes it work, but increases the risk of file corruption in a crash.");
+        ERR_FAIL_COND_MSG(
+            rename_error,
+            "Safe save failed. This may be a permissions problem, but also may "
+            "happen because you are running a paranoid antivirus. If this is "
+            "the case, please switch to Windows Defender or disable the 'safe "
+            "save' option in editor settings. This makes it work, but "
+            "increases the risk of file corruption in a crash."
+        );
     }
 }
 
@@ -195,15 +218,17 @@ void FileAccessWindows::seek(uint64_t p_position) {
     ERR_FAIL_COND(!f);
 
     last_error = OK;
-    if (_fseeki64(f, p_position, SEEK_SET))
+    if (_fseeki64(f, p_position, SEEK_SET)) {
         check_errors();
+    }
     prev_op = 0;
 }
 
 void FileAccessWindows::seek_end(int64_t p_position) {
     ERR_FAIL_COND(!f);
-    if (_fseeki64(f, p_position, SEEK_END))
+    if (_fseeki64(f, p_position, SEEK_END)) {
         check_errors();
+    }
     prev_op = 0;
 }
 
@@ -248,7 +273,8 @@ uint8_t FileAccessWindows::get_8() const {
     return b;
 }
 
-uint64_t FileAccessWindows::get_buffer(uint8_t *p_dst, uint64_t p_length) const {
+uint64_t FileAccessWindows::get_buffer(uint8_t* p_dst, uint64_t p_length)
+    const {
     ERR_FAIL_COND_V(!p_dst && p_length > 0, -1);
     ERR_FAIL_COND_V(!f, -1);
 
@@ -270,8 +296,9 @@ Error FileAccessWindows::get_error() const {
 void FileAccessWindows::flush() {
     ERR_FAIL_COND(!f);
     fflush(f);
-    if (prev_op == WRITE)
+    if (prev_op == WRITE) {
         prev_op = 0;
+    }
 }
 
 void FileAccessWindows::store_8(uint8_t p_dest) {
@@ -287,7 +314,7 @@ void FileAccessWindows::store_8(uint8_t p_dest) {
     fwrite(&p_dest, 1, 1, f);
 }
 
-void FileAccessWindows::store_buffer(const uint8_t *p_src, uint64_t p_length) {
+void FileAccessWindows::store_buffer(const uint8_t* p_src, uint64_t p_length) {
     ERR_FAIL_COND(!f);
     ERR_FAIL_COND(!p_src && p_length > 0);
     if (flags == READ_WRITE || flags == WRITE_READ) {
@@ -301,9 +328,9 @@ void FileAccessWindows::store_buffer(const uint8_t *p_src, uint64_t p_length) {
     ERR_FAIL_COND(fwrite(p_src, 1, p_length, f) != (size_t)p_length);
 }
 
-bool FileAccessWindows::file_exists(const String &p_name) {
+bool FileAccessWindows::file_exists(const String& p_name) {
     String filename = fix_path(p_name);
-    FILE *g = _wfsopen((LPCWSTR)(filename.c_str()), L"rb", _SH_DENYNO);
+    FILE* g = _wfsopen((LPCWSTR)(filename.c_str()), L"rb", _SH_DENYNO);
     if (g == nullptr) {
         return false;
     } else {
@@ -312,10 +339,11 @@ bool FileAccessWindows::file_exists(const String &p_name) {
     }
 }
 
-uint64_t FileAccessWindows::_get_modified_time(const String &p_file) {
+uint64_t FileAccessWindows::_get_modified_time(const String& p_file) {
     String file = fix_path(p_file);
-    if (file.ends_with("/") && file != "/")
+    if (file.ends_with("/") && file != "/") {
         file = file.substr(0, file.length() - 1);
+    }
 
     struct _stat st;
     int rv = _wstat(file.c_str(), &st);
@@ -328,20 +356,23 @@ uint64_t FileAccessWindows::_get_modified_time(const String &p_file) {
     }
 }
 
-uint32_t FileAccessWindows::_get_unix_permissions(const String &p_file) {
+uint32_t FileAccessWindows::_get_unix_permissions(const String& p_file) {
     return 0;
 }
 
-Error FileAccessWindows::_set_unix_permissions(const String &p_file, uint32_t p_permissions) {
+Error FileAccessWindows::_set_unix_permissions(
+    const String& p_file,
+    uint32_t p_permissions
+) {
     return ERR_UNAVAILABLE;
 }
 
 FileAccessWindows::FileAccessWindows() :
-        f(NULL),
-        flags(0),
-        prev_op(0),
-        last_error(OK) {
-}
+    f(NULL),
+    flags(0),
+    prev_op(0),
+    last_error(OK) {}
+
 FileAccessWindows::~FileAccessWindows() {
     close();
 }

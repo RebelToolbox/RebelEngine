@@ -37,5 +37,4 @@ void register_regex_types() {
     ClassDB::register_class<RegEx>();
 }
 
-void unregister_regex_types() {
-}
+void unregister_regex_types() {}

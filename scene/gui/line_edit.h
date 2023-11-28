@@ -39,7 +39,6 @@ class LineEdit : public Control {
 
 public:
     enum Align {
-
         ALIGN_LEFT,
         ALIGN_CENTER,
         ALIGN_RIGHT,
@@ -55,7 +54,6 @@ public:
         MENU_UNDO,
         MENU_REDO,
         MENU_MAX
-
     };
 
 private:
@@ -77,7 +75,7 @@ private:
     bool selecting_enabled;
 
     bool context_menu_enabled;
-    PopupMenu *menu;
+    PopupMenu* menu;
 
     int cursor_pos;
     int scroll_offset;
@@ -111,15 +109,16 @@ private:
         int cached_width;
         String text;
     };
+
     List<TextOperation> undo_stack;
-    List<TextOperation>::Element *undo_stack_pos;
+    List<TextOperation>::Element* undo_stack_pos;
 
     struct ClearButtonStatus {
         bool press_attempt;
         bool pressing_inside;
     } clear_button_status;
 
-    bool _is_over_clear_button(const Point2 &p_pos) const;
+    bool _is_over_clear_button(const Point2& p_pos) const;
 
     void _clear_undo_stack();
     void _clear_redo();
@@ -127,7 +126,7 @@ private:
 
     void _generate_context_menu();
 
-    Timer *caret_blink_timer;
+    Timer* caret_blink_timer;
 
     void _text_changed();
     void _emit_text_change();
@@ -168,16 +167,17 @@ public:
     void set_align(Align p_align);
     Align get_align() const;
 
-    virtual Variant get_drag_data(const Point2 &p_point);
-    virtual bool can_drop_data(const Point2 &p_point, const Variant &p_data) const;
-    virtual void drop_data(const Point2 &p_point, const Variant &p_data);
+    virtual Variant get_drag_data(const Point2& p_point);
+    virtual bool can_drop_data(const Point2& p_point, const Variant& p_data)
+        const;
+    virtual void drop_data(const Point2& p_point, const Variant& p_data);
 
-    virtual CursorShape get_cursor_shape(const Point2 &p_pos) const;
+    virtual CursorShape get_cursor_shape(const Point2& p_pos) const;
 
     void menu_option(int p_option);
     void set_context_menu_enabled(bool p_enable);
     bool is_context_menu_enabled();
-    PopupMenu *get_menu() const;
+    PopupMenu* get_menu() const;
 
     void select(int p_from = 0, int p_to = -1);
     void select_all();
@@ -219,7 +219,7 @@ public:
     void set_secret(bool p_secret);
     bool is_secret() const;
 
-    void set_secret_character(const String &p_string);
+    void set_secret_character(const String& p_string);
     String get_secret_character() const;
 
     virtual Size2 get_minimum_size() const;
@@ -239,7 +239,7 @@ public:
     void set_selecting_enabled(bool p_enabled);
     bool is_selecting_enabled() const;
 
-    void set_right_icon(const Ref<Texture> &p_icon);
+    void set_right_icon(const Ref<Texture>& p_icon);
     Ref<Texture> get_right_icon();
 
     virtual bool is_text_field() const;

@@ -36,7 +36,7 @@ RandomPCG Math::default_rand(RandomPCG::DEFAULT_SEED, RandomPCG::DEFAULT_INC);
 
 #define PHI 0x9e3779b9
 
-uint32_t Math::rand_from_seed(uint64_t *seed) {
+uint32_t Math::rand_from_seed(uint64_t* seed) {
     RandomPCG rng = RandomPCG(*seed, RandomPCG::DEFAULT_INC);
     uint32_t r = rng.rand();
     *seed = rng.get_seed();
@@ -91,7 +91,10 @@ int Math::range_step_decimals(double p_step) {
 }
 
 double Math::dectime(double p_value, double p_amount, double p_step) {
-    WARN_DEPRECATED_MSG("The `dectime()` function has been deprecated and will be removed in Godot 4.0. Use `move_toward()` instead.");
+    WARN_DEPRECATED_MSG(
+        "The `dectime()` function has been deprecated and will be removed in "
+        "Godot 4.0. Use `move_toward()` instead."
+    );
     double sgn = p_value < 0 ? -1.0 : 1.0;
     double val = Math::abs(p_value);
     val -= p_amount * p_step;
@@ -114,7 +117,7 @@ double Math::ease(double p_x, double p_c) {
             return Math::pow(p_x, p_c);
         }
     } else if (p_c < 0) {
-        //inout ease
+        // inout ease
 
         if (p_x < 0.5) {
             return Math::pow(p_x * 2.0, -p_c) * 0.5;
@@ -135,36 +138,11 @@ double Math::stepify(double p_value, double p_step) {
 
 uint32_t Math::larger_prime(uint32_t p_val) {
     static const uint32_t primes[] = {
-        5,
-        13,
-        23,
-        47,
-        97,
-        193,
-        389,
-        769,
-        1543,
-        3079,
-        6151,
-        12289,
-        24593,
-        49157,
-        98317,
-        196613,
-        393241,
-        786433,
-        1572869,
-        3145739,
-        6291469,
-        12582917,
-        25165843,
-        50331653,
-        100663319,
-        201326611,
-        402653189,
-        805306457,
-        1610612741,
-        0,
+        5,         13,        23,        47,        97,         193,
+        389,       769,       1543,      3079,      6151,       12289,
+        24593,     49157,     98317,     196613,    393241,     786433,
+        1572869,   3145739,   6291469,   12582917,  25165843,   50331653,
+        100663319, 201326611, 402653189, 805306457, 1610612741, 0,
     };
 
     int idx = 0;

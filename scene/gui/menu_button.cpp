@@ -39,12 +39,17 @@ void MenuButton::_unhandled_key_input(Ref<InputEvent> p_event) {
         return;
     }
 
-    if (p_event->is_pressed() && !p_event->is_echo() && (Object::cast_to<InputEventKey>(p_event.ptr()) || Object::cast_to<InputEventJoypadButton>(p_event.ptr()) || Object::cast_to<InputEventAction>(*p_event))) {
+    if (p_event->is_pressed() && !p_event->is_echo()
+        && (Object::cast_to<InputEventKey>(p_event.ptr())
+            || Object::cast_to<InputEventJoypadButton>(p_event.ptr())
+            || Object::cast_to<InputEventAction>(*p_event))) {
         if (!get_parent() || !is_visible_in_tree() || is_disabled()) {
             return;
         }
 
-        bool global_only = (get_viewport()->get_modal_stack_top() && !get_viewport()->get_modal_stack_top()->is_a_parent_of(this));
+        bool global_only =
+            (get_viewport()->get_modal_stack_top()
+             && !get_viewport()->get_modal_stack_top()->is_a_parent_of(this));
 
         if (popup->activate_item_by_event(p_event, global_only)) {
             accept_event();
@@ -57,10 +62,14 @@ void MenuButton::pressed() {
     Size2 size = get_size();
 
     Point2 gp = get_global_position();
-    popup->set_global_position(gp + Size2(0, size.height * get_global_transform().get_scale().y));
+    popup->set_global_position(
+        gp + Size2(0, size.height * get_global_transform().get_scale().y)
+    );
     popup->set_size(Size2(size.width, 0));
     popup->set_scale(get_global_transform().get_scale());
-    popup->set_parent_rect(Rect2(Point2(gp - popup->get_global_position()), get_size()));
+    popup->set_parent_rect(
+        Rect2(Point2(gp - popup->get_global_position()), get_size())
+    );
     popup->popup();
 }
 
@@ -68,11 +77,11 @@ void MenuButton::_gui_input(Ref<InputEvent> p_event) {
     BaseButton::_gui_input(p_event);
 }
 
-PopupMenu *MenuButton::get_popup() const {
+PopupMenu* MenuButton::get_popup() const {
     return popup;
 }
 
-void MenuButton::_set_items(const Array &p_items) {
+void MenuButton::_set_items(const Array& p_items) {
     popup->set("items", p_items);
 }
 
@@ -98,15 +107,41 @@ void MenuButton::_notification(int p_what) {
 
 void MenuButton::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_popup"), &MenuButton::get_popup);
-    ClassDB::bind_method(D_METHOD("_unhandled_key_input"), &MenuButton::_unhandled_key_input);
+    ClassDB::bind_method(
+        D_METHOD("_unhandled_key_input"),
+        &MenuButton::_unhandled_key_input
+    );
     ClassDB::bind_method(D_METHOD("_set_items"), &MenuButton::_set_items);
     ClassDB::bind_method(D_METHOD("_get_items"), &MenuButton::_get_items);
-    ClassDB::bind_method(D_METHOD("set_switch_on_hover", "enable"), &MenuButton::set_switch_on_hover);
-    ClassDB::bind_method(D_METHOD("is_switch_on_hover"), &MenuButton::is_switch_on_hover);
-    ClassDB::bind_method(D_METHOD("set_disable_shortcuts", "disabled"), &MenuButton::set_disable_shortcuts);
+    ClassDB::bind_method(
+        D_METHOD("set_switch_on_hover", "enable"),
+        &MenuButton::set_switch_on_hover
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_switch_on_hover"),
+        &MenuButton::is_switch_on_hover
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_disable_shortcuts", "disabled"),
+        &MenuButton::set_disable_shortcuts
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "items", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR | PROPERTY_USAGE_INTERNAL), "_set_items", "_get_items");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "switch_on_hover"), "set_switch_on_hover", "is_switch_on_hover");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::ARRAY,
+            "items",
+            PROPERTY_HINT_NONE,
+            "",
+            PROPERTY_USAGE_NOEDITOR | PROPERTY_USAGE_INTERNAL
+        ),
+        "_set_items",
+        "_get_items"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "switch_on_hover"),
+        "set_switch_on_hover",
+        "is_switch_on_hover"
+    );
 
     ADD_SIGNAL(MethodInfo("about_to_show"));
 }
@@ -128,9 +163,13 @@ MenuButton::MenuButton() {
     popup->hide();
     add_child(popup);
     popup->set_pass_on_modal_close_click(false);
-    popup->connect("about_to_show", this, "set_pressed", varray(true)); // For when switching from another MenuButton.
+    popup->connect(
+        "about_to_show",
+        this,
+        "set_pressed",
+        varray(true)
+    ); // For when switching from another MenuButton.
     popup->connect("popup_hide", this, "set_pressed", varray(false));
 }
 
-MenuButton::~MenuButton() {
-}
+MenuButton::~MenuButton() {}

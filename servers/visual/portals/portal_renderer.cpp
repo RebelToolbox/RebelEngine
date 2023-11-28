@@ -36,9 +36,14 @@
 
 bool PortalRenderer::use_occlusion_culling = true;
 
-OcclusionHandle PortalRenderer::instance_moving_create(VSInstance *p_instance, RID p_instance_rid, bool p_global, AABB p_aabb) {
+OcclusionHandle PortalRenderer::instance_moving_create(
+    VSInstance* p_instance,
+    RID p_instance_rid,
+    bool p_global,
+    AABB p_aabb
+) {
     uint32_t pool_id = 0;
-    Moving *moving = _moving_pool.request(pool_id);
+    Moving* moving = _moving_pool.request(pool_id);
     moving->global = p_global;
     moving->pool_id = pool_id;
     moving->instance = p_instance;
@@ -63,18 +68,24 @@ OcclusionHandle PortalRenderer::instance_moving_create(VSInstance *p_instance, R
     return handle;
 }
 
-void PortalRenderer::instance_moving_update(OcclusionHandle p_handle, const AABB &p_aabb, bool p_force_reinsert) {
+void PortalRenderer::instance_moving_update(
+    OcclusionHandle p_handle,
+    const AABB& p_aabb,
+    bool p_force_reinsert
+) {
     p_handle--;
-    Moving &moving = _moving_pool[p_handle];
+    Moving& moving = _moving_pool[p_handle];
     moving.exact_aabb = p_aabb;
 
-    // globals (e.g. interface elements) need their aabb updated irrespective of whether the system is loaded
+    // globals (e.g. interface elements) need their aabb updated irrespective of
+    // whether the system is loaded
     if (!_loaded || moving.global) {
         return;
     }
 
     // we can ignore these, they are statics / dynamics, and don't need updating
-    // .. these should have been filtered out before calling the visual server...
+    // .. these should have been filtered out before calling the visual
+    // server...
     DEV_CHECK_ONCE(!_occlusion_handle_is_in_room(p_handle));
 
     // quick reject for most roaming cases
@@ -102,12 +113,12 @@ void PortalRenderer::instance_moving_update(OcclusionHandle p_handle, const AABB
 }
 
 void PortalRenderer::_rghost_remove_from_rooms(uint32_t p_pool_id) {
-    RGhost &moving = _rghost_pool[p_pool_id];
+    RGhost& moving = _rghost_pool[p_pool_id];
 
     // if we have unloaded the rooms and we try this, it will crash
     if (_loaded) {
         for (int n = 0; n < moving._rooms.size(); n++) {
-            VSRoom &room = get_room(moving._rooms[n]);
+            VSRoom& room = get_room(moving._rooms[n]);
             room.remove_rghost(p_pool_id);
         }
     }
@@ -117,20 +128,20 @@ void PortalRenderer::_rghost_remove_from_rooms(uint32_t p_pool_id) {
 }
 
 void PortalRenderer::_occluder_remove_from_rooms(uint32_t p_pool_id) {
-    VSOccluder &occ = _occluder_pool[p_pool_id];
+    VSOccluder& occ = _occluder_pool[p_pool_id];
     if (_loaded && (occ.room_id != -1)) {
-        VSRoom &room = get_room(occ.room_id);
+        VSRoom& room = get_room(occ.room_id);
         room.remove_occluder(p_pool_id);
     }
 }
 
 void PortalRenderer::_moving_remove_from_rooms(uint32_t p_moving_pool_id) {
-    Moving &moving = _moving_pool[p_moving_pool_id];
+    Moving& moving = _moving_pool[p_moving_pool_id];
 
     // if we have unloaded the rooms and we try this, it will crash
     if (_loaded) {
         for (int n = 0; n < moving._rooms.size(); n++) {
-            VSRoom &room = get_room(moving._rooms[n]);
+            VSRoom& room = get_room(moving._rooms[n]);
             room.remove_roamer(p_moving_pool_id);
         }
     }
@@ -143,7 +154,7 @@ void PortalRenderer::_debug_print_global_list() {
     _log("globals:");
     for (int n = 0; n < _moving_list_global.size(); n++) {
         uint32_t id = _moving_list_global[n];
-        const Moving &moving = _moving_pool[id];
+        const Moving& moving = _moving_pool[id];
         _log("\t" + _addr_to_string(&moving));
     }
 }
@@ -161,9 +172,9 @@ void PortalRenderer::_log(String p_string, int p_priority) {
 void PortalRenderer::instance_moving_destroy(OcclusionHandle p_handle) {
     // deleting an instance that is assigned to a room (STATIC or DYNAMIC)
     // is special, it must set the PortalRenderer into unloaded state, because
-    // there will now be a dangling reference to the instance that was destroyed.
-    // The alternative is to remove the reference, but this is not currently supported
-    // (it would mean rejigging rooms etc)
+    // there will now be a dangling reference to the instance that was
+    // destroyed. The alternative is to remove the reference, but this is not
+    // currently supported (it would mean rejigging rooms etc)
     if (_occlusion_handle_is_in_room(p_handle)) {
         _ensure_unloaded("deleting STATIC or DYNAMIC");
         return;
@@ -171,7 +182,7 @@ void PortalRenderer::instance_moving_destroy(OcclusionHandle p_handle) {
 
     p_handle--;
 
-    Moving *moving = &_moving_pool[p_handle];
+    Moving* moving = &_moving_pool[p_handle];
 
     // if a roamer, remove from any current rooms
     if (!moving->global) {
@@ -187,7 +198,7 @@ void PortalRenderer::instance_moving_destroy(OcclusionHandle p_handle) {
         // keep the replacement moving in sync with the correct list Id
         if (list_id < (uint32_t)_moving_list_global.size()) {
             uint32_t replacement_id = _moving_list_global[list_id];
-            Moving &replacement = _moving_pool[replacement_id];
+            Moving& replacement = _moving_pool[replacement_id];
             replacement.list_id = list_id;
         }
     } else {
@@ -196,7 +207,7 @@ void PortalRenderer::instance_moving_destroy(OcclusionHandle p_handle) {
         // keep the replacement moving in sync with the correct list Id
         if (list_id < (uint32_t)_moving_list_roaming.size()) {
             uint32_t replacement_id = _moving_list_roaming[list_id];
-            Moving &replacement = _moving_pool[replacement_id];
+            Moving& replacement = _moving_pool[replacement_id];
             replacement.list_id = list_id;
         }
     }
@@ -209,7 +220,7 @@ void PortalRenderer::instance_moving_destroy(OcclusionHandle p_handle) {
 
 PortalHandle PortalRenderer::portal_create() {
     uint32_t pool_id = 0;
-    VSPortal *portal = _portal_pool.request(pool_id);
+    VSPortal* portal = _portal_pool.request(pool_id);
 
     // explicit constructor
     portal->create();
@@ -230,7 +241,7 @@ void PortalRenderer::portal_destroy(PortalHandle p_portal) {
     p_portal--;
 
     // remove from list of valid portals
-    VSPortal &portal = _portal_pool[p_portal];
+    VSPortal& portal = _portal_pool[p_portal];
     int portal_id = portal._portal_id;
 
     // we need to replace the last element in the list
@@ -239,7 +250,7 @@ void PortalRenderer::portal_destroy(PortalHandle p_portal) {
     // and reset the id of the portal that was the replacement
     if (portal_id < _portal_pool_ids.size()) {
         int replacement_pool_id = _portal_pool_ids[portal_id];
-        VSPortal &replacement = _portal_pool[replacement_pool_id];
+        VSPortal& replacement = _portal_pool[replacement_pool_id];
         replacement._portal_id = portal_id;
     }
 
@@ -250,10 +261,14 @@ void PortalRenderer::portal_destroy(PortalHandle p_portal) {
     _portal_pool.free(p_portal);
 }
 
-void PortalRenderer::portal_set_geometry(PortalHandle p_portal, const Vector<Vector3> &p_points, real_t p_margin) {
+void PortalRenderer::portal_set_geometry(
+    PortalHandle p_portal,
+    const Vector<Vector3>& p_points,
+    real_t p_margin
+) {
     ERR_FAIL_COND(!p_portal);
     p_portal--; // plus 1 based
-    VSPortal &portal = _portal_pool[p_portal];
+    VSPortal& portal = _portal_pool[p_portal];
 
     portal._pts_world = p_points;
     portal._margin = p_margin;
@@ -269,14 +284,21 @@ void PortalRenderer::portal_set_geometry(PortalHandle p_portal, const Vector<Vec
     // first calculate average normal
     Vector3 average_normal = Vector3(0, 0, 0);
     for (int t = 2; t < (int)portal._pts_world.size(); t++) {
-        Plane p = Plane(portal._pts_world[0], portal._pts_world[t - 1], portal._pts_world[t]);
+        Plane p = Plane(
+            portal._pts_world[0],
+            portal._pts_world[t - 1],
+            portal._pts_world[t]
+        );
         average_normal += p.normal;
     }
     // average normal
     average_normal /= portal._pts_world.size() - 2;
 
     // detect user error
-    ERR_FAIL_COND_MSG(average_normal.length() < 0.1, "Nonsense portal detected, normals should be consistent");
+    ERR_FAIL_COND_MSG(
+        average_normal.length() < 0.1,
+        "Nonsense portal detected, normals should be consistent"
+    );
     if (average_normal.length() < 0.7) {
         WARN_PRINT("Wonky portal detected, you may see culling errors");
     }
@@ -305,7 +327,7 @@ void PortalRenderer::portal_set_geometry(PortalHandle p_portal, const Vector<Vec
     portal._plane = Plane(average_pt, average_normal);
 
     // aabb
-    AABB &bb = portal._aabb;
+    AABB& bb = portal._aabb;
     bb.position = p_points[0];
     bb.size = Vector3(0, 0, 0);
 
@@ -314,18 +336,23 @@ void PortalRenderer::portal_set_geometry(PortalHandle p_portal, const Vector<Vec
     }
 }
 
-void PortalRenderer::portal_link(PortalHandle p_portal, RoomHandle p_room_from, RoomHandle p_room_to, bool p_two_way) {
+void PortalRenderer::portal_link(
+    PortalHandle p_portal,
+    RoomHandle p_room_from,
+    RoomHandle p_room_to,
+    bool p_two_way
+) {
     ERR_FAIL_COND(!p_portal);
     p_portal--; // plus 1 based
-    VSPortal &portal = _portal_pool[p_portal];
+    VSPortal& portal = _portal_pool[p_portal];
 
     ERR_FAIL_COND(!p_room_from);
     p_room_from--;
-    VSRoom &room_from = _room_pool[p_room_from];
+    VSRoom& room_from = _room_pool[p_room_from];
 
     ERR_FAIL_COND(!p_room_to);
     p_room_to--;
-    VSRoom &room_to = _room_pool[p_room_to];
+    VSRoom& room_to = _room_pool[p_room_to];
 
     portal._linkedroom_ID[0] = room_from._room_ID;
     portal._linkedroom_ID[1] = room_to._room_ID;
@@ -339,11 +366,13 @@ void PortalRenderer::portal_link(PortalHandle p_portal, RoomHandle p_room_from, 
         room_to._contains_internal_rooms = true;
     }
 
-    // _log("portal_link from room " + itos(room_from._room_ID) + " to room " + itos(room_to._room_ID));
+    // _log("portal_link from room " + itos(room_from._room_ID) + " to room " +
+    // itos(room_to._room_ID));
 
     room_from._portal_ids.push_back(portal._portal_id);
 
-    // one way portals simply aren't added to the destination room, so they don't get seen through
+    // one way portals simply aren't added to the destination room, so they
+    // don't get seen through
     if (p_two_way) {
         room_to._portal_ids.push_back(portal._portal_id);
     }
@@ -352,14 +381,14 @@ void PortalRenderer::portal_link(PortalHandle p_portal, RoomHandle p_room_from, 
 void PortalRenderer::portal_set_active(PortalHandle p_portal, bool p_active) {
     ERR_FAIL_COND(!p_portal);
     p_portal--; // plus 1 based
-    VSPortal &portal = _portal_pool[p_portal];
+    VSPortal& portal = _portal_pool[p_portal];
 
     portal._active = p_active;
 }
 
 RoomGroupHandle PortalRenderer::roomgroup_create() {
     uint32_t pool_id = 0;
-    VSRoomGroup *rg = _roomgroup_pool.request(pool_id);
+    VSRoomGroup* rg = _roomgroup_pool.request(pool_id);
 
     // explicit constructor
     rg->create();
@@ -369,10 +398,13 @@ RoomGroupHandle PortalRenderer::roomgroup_create() {
     return pool_id;
 }
 
-void PortalRenderer::roomgroup_prepare(RoomGroupHandle p_roomgroup, ObjectID p_roomgroup_object_id) {
+void PortalRenderer::roomgroup_prepare(
+    RoomGroupHandle p_roomgroup,
+    ObjectID p_roomgroup_object_id
+) {
     // plus one based
     p_roomgroup--;
-    VSRoomGroup &rg = _roomgroup_pool[p_roomgroup];
+    VSRoomGroup& rg = _roomgroup_pool[p_roomgroup];
     rg._godot_instance_ID = p_roomgroup_object_id;
 }
 
@@ -383,7 +415,7 @@ void PortalRenderer::roomgroup_destroy(RoomGroupHandle p_roomgroup) {
     // plus one based
     p_roomgroup--;
 
-    VSRoomGroup &rg = _roomgroup_pool[p_roomgroup];
+    VSRoomGroup& rg = _roomgroup_pool[p_roomgroup];
 
     // explicitly run destructor
     rg.destroy();
@@ -392,10 +424,13 @@ void PortalRenderer::roomgroup_destroy(RoomGroupHandle p_roomgroup) {
     _roomgroup_pool.free(p_roomgroup);
 }
 
-void PortalRenderer::roomgroup_add_room(RoomGroupHandle p_roomgroup, RoomHandle p_room) {
+void PortalRenderer::roomgroup_add_room(
+    RoomGroupHandle p_roomgroup,
+    RoomHandle p_room
+) {
     // plus one based
     p_roomgroup--;
-    VSRoomGroup &rg = _roomgroup_pool[p_roomgroup];
+    VSRoomGroup& rg = _roomgroup_pool[p_roomgroup];
 
     p_room--;
 
@@ -403,14 +438,17 @@ void PortalRenderer::roomgroup_add_room(RoomGroupHandle p_roomgroup, RoomHandle 
     rg._room_ids.push_back(p_room);
 
     // add the room group to the room
-    VSRoom &room = _room_pool[p_room];
+    VSRoom& room = _room_pool[p_room];
     room._roomgroup_ids.push_back(p_roomgroup);
 }
 
 // Cull Instances
-RGhostHandle PortalRenderer::rghost_create(ObjectID p_object_id, const AABB &p_aabb) {
+RGhostHandle PortalRenderer::rghost_create(
+    ObjectID p_object_id,
+    const AABB& p_aabb
+) {
     uint32_t pool_id = 0;
-    RGhost *moving = _rghost_pool.request(pool_id);
+    RGhost* moving = _rghost_pool.request(pool_id);
     moving->pool_id = pool_id;
     moving->object_id = p_object_id;
     moving->room_id = -1;
@@ -420,13 +458,17 @@ RGhostHandle PortalRenderer::rghost_create(ObjectID p_object_id, const AABB &p_a
     return handle;
 }
 
-void PortalRenderer::rghost_update(RGhostHandle p_handle, const AABB &p_aabb, bool p_force_reinsert) {
+void PortalRenderer::rghost_update(
+    RGhostHandle p_handle,
+    const AABB& p_aabb,
+    bool p_force_reinsert
+) {
     if (!_loaded) {
         return;
     }
 
     p_handle--;
-    RGhost &moving = _rghost_pool[p_handle];
+    RGhost& moving = _rghost_pool[p_handle];
     moving.exact_aabb = p_aabb;
 
     // quick reject for most roaming cases
@@ -456,7 +498,7 @@ void PortalRenderer::rghost_update(RGhostHandle p_handle, const AABB &p_aabb, bo
 void PortalRenderer::rghost_destroy(RGhostHandle p_handle) {
     p_handle--;
 
-    RGhost *moving = &_rghost_pool[p_handle];
+    RGhost* moving = &_rghost_pool[p_handle];
 
     // if a roamer, remove from any current rooms
     _rghost_remove_from_rooms(p_handle);
@@ -469,7 +511,7 @@ void PortalRenderer::rghost_destroy(RGhostHandle p_handle) {
 
 OccluderHandle PortalRenderer::occluder_create(VSOccluder::Type p_type) {
     uint32_t pool_id = 0;
-    VSOccluder *occ = _occluder_pool.request(pool_id);
+    VSOccluder* occ = _occluder_pool.request(pool_id);
     occ->create();
 
     // specific type
@@ -480,9 +522,12 @@ OccluderHandle PortalRenderer::occluder_create(VSOccluder::Type p_type) {
     return handle;
 }
 
-void PortalRenderer::occluder_set_active(OccluderHandle p_handle, bool p_active) {
+void PortalRenderer::occluder_set_active(
+    OccluderHandle p_handle,
+    bool p_active
+) {
     p_handle--;
-    VSOccluder &occ = _occluder_pool[p_handle];
+    VSOccluder& occ = _occluder_pool[p_handle];
 
     if (occ.active == p_active) {
         return;
@@ -493,9 +538,12 @@ void PortalRenderer::occluder_set_active(OccluderHandle p_handle, bool p_active)
     occluder_refresh_room_within(p_handle);
 }
 
-void PortalRenderer::occluder_set_transform(OccluderHandle p_handle, const Transform &p_xform) {
+void PortalRenderer::occluder_set_transform(
+    OccluderHandle p_handle,
+    const Transform& p_xform
+) {
     p_handle--;
-    VSOccluder &occ = _occluder_pool[p_handle];
+    VSOccluder& occ = _occluder_pool[p_handle];
     occ.xform = p_xform;
 
     // mark as dirty as the world space spheres will be out of date
@@ -504,7 +552,7 @@ void PortalRenderer::occluder_set_transform(OccluderHandle p_handle, const Trans
 }
 
 void PortalRenderer::occluder_refresh_room_within(uint32_t p_occluder_pool_id) {
-    VSOccluder &occ = _occluder_pool[p_occluder_pool_id];
+    VSOccluder& occ = _occluder_pool[p_occluder_pool_id];
 
     // if we aren't loaded, the room within can't be valid
     if (!_loaded) {
@@ -541,18 +589,22 @@ void PortalRenderer::occluder_refresh_room_within(uint32_t p_occluder_pool_id) {
         occ.room_id = new_room;
 
         if (new_room != -1) {
-            VSRoom &room = get_room(new_room);
+            VSRoom& room = get_room(new_room);
             room.add_occluder(p_occluder_pool_id);
         }
     }
 }
 
-void PortalRenderer::occluder_update_spheres(OccluderHandle p_handle, const Vector<Plane> &p_spheres) {
+void PortalRenderer::occluder_update_spheres(
+    OccluderHandle p_handle,
+    const Vector<Plane>& p_spheres
+) {
     p_handle--;
-    VSOccluder &occ = _occluder_pool[p_handle];
+    VSOccluder& occ = _occluder_pool[p_handle];
     ERR_FAIL_COND(occ.type != VSOccluder::OT_SPHERE);
 
-    // first deal with the situation where the number of spheres has changed (rare)
+    // first deal with the situation where the number of spheres has changed
+    // (rare)
     if (occ.list_ids.size() != p_spheres.size()) {
         // not the most efficient, but works...
         // remove existing
@@ -565,7 +617,7 @@ void PortalRenderer::occluder_update_spheres(OccluderHandle p_handle, const Vect
         // create new
         for (int n = 0; n < p_spheres.size(); n++) {
             uint32_t id;
-            VSOccluder_Sphere *sphere = _occluder_sphere_pool.request(id);
+            VSOccluder_Sphere* sphere = _occluder_sphere_pool.request(id);
             sphere->create();
             occ.list_ids.push_back(id);
         }
@@ -574,7 +626,7 @@ void PortalRenderer::occluder_update_spheres(OccluderHandle p_handle, const Vect
     // new positions
     for (int n = 0; n < occ.list_ids.size(); n++) {
         uint32_t id = occ.list_ids[n];
-        VSOccluder_Sphere &sphere = _occluder_sphere_pool[id];
+        VSOccluder_Sphere& sphere = _occluder_sphere_pool[id];
         sphere.local.from_plane(p_spheres[n]);
     }
 
@@ -586,7 +638,7 @@ void PortalRenderer::occluder_destroy(OccluderHandle p_handle) {
     p_handle--;
 
     // depending on the occluder type, remove the spheres etc
-    VSOccluder &occ = _occluder_pool[p_handle];
+    VSOccluder& occ = _occluder_pool[p_handle];
     switch (occ.type) {
         case VSOccluder::OT_SPHERE: {
             occluder_update_spheres(p_handle + 1, Vector<Plane>());
@@ -602,7 +654,7 @@ void PortalRenderer::occluder_destroy(OccluderHandle p_handle) {
 // Rooms
 RoomHandle PortalRenderer::room_create() {
     uint32_t pool_id = 0;
-    VSRoom *room = _room_pool.request(pool_id);
+    VSRoom* room = _room_pool.request(pool_id);
 
     // explicit constructor
     room->create();
@@ -624,7 +676,7 @@ void PortalRenderer::room_destroy(RoomHandle p_room) {
     p_room--;
 
     // remove from list of valid rooms
-    VSRoom &room = _room_pool[p_room];
+    VSRoom& room = _room_pool[p_room];
     int room_id = room._room_ID;
 
     // we need to replace the last element in the list
@@ -633,7 +685,7 @@ void PortalRenderer::room_destroy(RoomHandle p_room) {
     // and reset the id of the portal that was the replacement
     if (room_id < _room_pool_ids.size()) {
         int replacement_pool_id = _room_pool_ids[room_id];
-        VSRoom &replacement = _room_pool[replacement_pool_id];
+        VSRoom& replacement = _room_pool[replacement_pool_id];
         replacement._room_ID = room_id;
     }
 
@@ -644,7 +696,11 @@ void PortalRenderer::room_destroy(RoomHandle p_room) {
     _room_pool.free(p_room);
 }
 
-OcclusionHandle PortalRenderer::room_add_ghost(RoomHandle p_room, ObjectID p_object_id, const AABB &p_aabb) {
+OcclusionHandle PortalRenderer::room_add_ghost(
+    RoomHandle p_room,
+    ObjectID p_object_id,
+    const AABB& p_aabb
+) {
     ERR_FAIL_COND_V(!p_room, 0);
     p_room--; // plus one based
 
@@ -674,10 +730,16 @@ OcclusionHandle PortalRenderer::room_add_ghost(RoomHandle p_room, ObjectID p_obj
     return OCCLUSION_HANDLE_ROOM_BIT;
 }
 
-OcclusionHandle PortalRenderer::room_add_instance(RoomHandle p_room, RID p_instance, const AABB &p_aabb, bool p_dynamic, const Vector<Vector3> &p_object_pts) {
+OcclusionHandle PortalRenderer::room_add_instance(
+    RoomHandle p_room,
+    RID p_instance,
+    const AABB& p_aabb,
+    bool p_dynamic,
+    const Vector<Vector3>& p_object_pts
+) {
     ERR_FAIL_COND_V(!p_room, 0);
     p_room--; // plus one based
-    VSRoom &room = _room_pool[p_room];
+    VSRoom& room = _room_pool[p_room];
 
     VSStatic stat;
     stat.instance = p_instance;
@@ -698,14 +760,19 @@ OcclusionHandle PortalRenderer::room_add_instance(RoomHandle p_room, RID p_insta
         int static_id = _statics.size() - 1;
 
         // pop last static
-        const VSStatic &st = _statics[static_id];
+        const VSStatic& st = _statics[static_id];
 
         // create a bitfield to indicate which rooms have been
         // visited already, to prevent visiting rooms multiple times
         _bitfield_rooms.blank();
 
         if (p_object_pts.size()) {
-            if (sprawl_static_geometry(static_id, st, st.source_room_id, p_object_pts)) {
+            if (sprawl_static_geometry(
+                    static_id,
+                    st,
+                    st.source_room_id,
+                    p_object_pts
+                )) {
                 _log("\t\tSPRAWLED");
             }
         } else {
@@ -721,14 +788,20 @@ OcclusionHandle PortalRenderer::room_add_instance(RoomHandle p_room, RID p_insta
 void PortalRenderer::room_prepare(RoomHandle p_room, int32_t p_priority) {
     ERR_FAIL_COND(!p_room);
     p_room--; // plus one based
-    VSRoom &room = _room_pool[p_room];
+    VSRoom& room = _room_pool[p_room];
     room._priority = p_priority;
 }
 
-void PortalRenderer::room_set_bound(RoomHandle p_room, ObjectID p_room_object_id, const Vector<Plane> &p_convex, const AABB &p_aabb, const Vector<Vector3> &p_verts) {
+void PortalRenderer::room_set_bound(
+    RoomHandle p_room,
+    ObjectID p_room_object_id,
+    const Vector<Plane>& p_convex,
+    const AABB& p_aabb,
+    const Vector<Vector3>& p_verts
+) {
     ERR_FAIL_COND(!p_room);
     p_room--; // plus one based
-    VSRoom &room = _room_pool[p_room];
+    VSRoom& room = _room_pool[p_room];
 
     room._planes = p_convex;
     room._verts = p_verts;
@@ -736,19 +809,23 @@ void PortalRenderer::room_set_bound(RoomHandle p_room, ObjectID p_room_object_id
     room._godot_instance_ID = p_room_object_id;
 }
 
-void PortalRenderer::_add_portal_to_convex_hull(LocalVector<Plane, int32_t> &p_planes, const Plane &p) {
+void PortalRenderer::_add_portal_to_convex_hull(
+    LocalVector<Plane, int32_t>& p_planes,
+    const Plane& p
+) {
     for (int n = 0; n < p_planes.size(); n++) {
-        Plane &o = p_planes[n];
+        Plane& o = p_planes[n];
 
-        // this is a fudge factor for how close the portal can be to an existing plane
-        // to be to be considered the same ...
-        // to prevent needless extra checks.
+        // this is a fudge factor for how close the portal can be to an existing
+        // plane to be to be considered the same ... to prevent needless extra
+        // checks.
 
-        // the epsilons should probably be more exact here than for the convex hull simplification, as it is
-        // fairly crucial that the portal planes are reasonably accurate for determining the hull.
+        // the epsilons should probably be more exact here than for the convex
+        // hull simplification, as it is fairly crucial that the portal planes
+        // are reasonably accurate for determining the hull.
 
-        // and because the portal plane is more important, we will REPLACE the existing similar plane
-        // with the portal plane.
+        // and because the portal plane is more important, we will REPLACE the
+        // existing similar plane with the portal plane.
         const real_t d = 0.03; // 0.08f
 
         if (Math::abs(p.d - o.d) > d) {
@@ -767,16 +844,17 @@ void PortalRenderer::_add_portal_to_convex_hull(LocalVector<Plane, int32_t> &p_p
         return;
     }
 
-    // there is no existing plane that is similar, create a new one especially for the portal
+    // there is no existing plane that is similar, create a new one especially
+    // for the portal
     p_planes.push_back(p);
 }
 
 void PortalRenderer::_rooms_add_portals_to_convex_hulls() {
     for (int n = 0; n < get_num_rooms(); n++) {
-        VSRoom &room = get_room(n);
+        VSRoom& room = get_room(n);
 
         for (int p = 0; p < room._portal_ids.size(); p++) {
-            const VSPortal &portal = get_portal(room._portal_ids[p]);
+            const VSPortal& portal = get_portal(room._portal_ids[p]);
 
             // everything depends on whether the portal is incoming or outgoing.
             // if incoming we reverse the logic.
@@ -805,27 +883,44 @@ void PortalRenderer::_rooms_add_portals_to_convex_hulls() {
     }
 }
 
-void PortalRenderer::rooms_finalize(bool p_generate_pvs, bool p_cull_using_pvs, bool p_use_secondary_pvs, bool p_use_signals, String p_pvs_filename, bool p_use_simple_pvs, bool p_log_pvs_generation) {
+void PortalRenderer::rooms_finalize(
+    bool p_generate_pvs,
+    bool p_cull_using_pvs,
+    bool p_use_secondary_pvs,
+    bool p_use_signals,
+    String p_pvs_filename,
+    bool p_use_simple_pvs,
+    bool p_log_pvs_generation
+) {
     _gameplay_monitor.set_params(p_use_secondary_pvs, p_use_signals);
 
-    // portals should also bound the rooms, the room geometry may extend past the portal
+    // portals should also bound the rooms, the room geometry may extend past
+    // the portal
     _rooms_add_portals_to_convex_hulls();
 
-    // the trace results can never have more hits than the number of static objects
+    // the trace results can never have more hits than the number of static
+    // objects
     _trace_results.create(_statics.size());
 
-    // precreate a useful bitfield of rooms for use in sprawling, if not created already
-    // (may not be necessary but just in case, rooms with no statics etc)
+    // precreate a useful bitfield of rooms for use in sprawling, if not created
+    // already (may not be necessary but just in case, rooms with no statics
+    // etc)
     _bitfield_rooms.create(_room_pool_ids.size());
 
-    // the rooms looksup is a pre-calced grid structure for faster lookup of the nearest room
-    // from position
+    // the rooms looksup is a pre-calced grid structure for faster lookup of the
+    // nearest room from position
     _rooms_lookup_bsp.create(*this);
 
     // calculate PVS
     if (p_generate_pvs) {
         PVSBuilder pvs;
-        pvs.calculate_pvs(*this, p_pvs_filename, _tracer.get_depth_limit(), p_use_simple_pvs, p_log_pvs_generation);
+        pvs.calculate_pvs(
+            *this,
+            p_pvs_filename,
+            _tracer.get_depth_limit(),
+            p_use_simple_pvs,
+            p_log_pvs_generation
+        );
         _cull_using_pvs = p_cull_using_pvs; // hard code to on for test
     } else {
         _cull_using_pvs = false;
@@ -846,28 +941,46 @@ void PortalRenderer::rooms_finalize(bool p_generate_pvs, bool p_cull_using_pvs, 
     // as this will worst case give wrong result for a frame
     Engine::get_singleton()->set_portals_active(true);
 
-    print_line("Room conversion complete. " + itos(_room_pool_ids.size()) + " rooms, " + itos(_portal_pool_ids.size()) + " portals.");
+    print_line(
+        "Room conversion complete. " + itos(_room_pool_ids.size()) + " rooms, "
+        + itos(_portal_pool_ids.size()) + " portals."
+    );
 }
 
-bool PortalRenderer::sprawl_static_geometry(int p_static_id, const VSStatic &p_static, int p_room_id, const Vector<Vector3> &p_object_pts) {
+bool PortalRenderer::sprawl_static_geometry(
+    int p_static_id,
+    const VSStatic& p_static,
+    int p_room_id,
+    const Vector<Vector3>& p_object_pts
+) {
     // set, and if room already done, ignore
-    if (!_bitfield_rooms.check_and_set(p_room_id))
+    if (!_bitfield_rooms.check_and_set(p_room_id)) {
         return false;
+    }
 
-    VSRoom &room = get_room(p_room_id);
+    VSRoom& room = get_room(p_room_id);
     room._static_ids.push_back(p_static_id);
 
     bool sprawled = false;
 
     // go through portals
     for (int p = 0; p < room._portal_ids.size(); p++) {
-        const VSPortal &portal = get_portal(room._portal_ids[p]);
+        const VSPortal& portal = get_portal(room._portal_ids[p]);
 
-        int room_to_id = portal.geometry_crosses_portal(p_room_id, p_static.aabb, p_object_pts);
+        int room_to_id = portal.geometry_crosses_portal(
+            p_room_id,
+            p_static.aabb,
+            p_object_pts
+        );
 
         if (room_to_id != -1) {
             // _log(String(Variant(p_static.aabb)) + " crosses portal");
-            sprawl_static_geometry(p_static_id, p_static, room_to_id, p_object_pts);
+            sprawl_static_geometry(
+                p_static_id,
+                p_static,
+                room_to_id,
+                p_object_pts
+            );
             sprawled = true;
         }
     }
@@ -875,20 +988,24 @@ bool PortalRenderer::sprawl_static_geometry(int p_static_id, const VSStatic &p_s
     return sprawled;
 }
 
-bool PortalRenderer::sprawl_static_ghost(int p_ghost_id, const AABB &p_aabb, int p_room_id) {
+bool PortalRenderer::sprawl_static_ghost(
+    int p_ghost_id,
+    const AABB& p_aabb,
+    int p_room_id
+) {
     // set, and if room already done, ignore
     if (!_bitfield_rooms.check_and_set(p_room_id)) {
         return false;
     }
 
-    VSRoom &room = get_room(p_room_id);
+    VSRoom& room = get_room(p_room_id);
     room._static_ghost_ids.push_back(p_ghost_id);
 
     bool sprawled = false;
 
     // go through portals
     for (int p = 0; p < room._portal_ids.size(); p++) {
-        const VSPortal &portal = get_portal(room._portal_ids[p]);
+        const VSPortal& portal = get_portal(room._portal_ids[p]);
 
         int room_to_id = portal.crosses_portal(p_room_id, p_aabb, true);
 
@@ -902,20 +1019,24 @@ bool PortalRenderer::sprawl_static_ghost(int p_ghost_id, const AABB &p_aabb, int
     return sprawled;
 }
 
-bool PortalRenderer::sprawl_static(int p_static_id, const VSStatic &p_static, int p_room_id) {
+bool PortalRenderer::sprawl_static(
+    int p_static_id,
+    const VSStatic& p_static,
+    int p_room_id
+) {
     // set, and if room already done, ignore
     if (!_bitfield_rooms.check_and_set(p_room_id)) {
         return false;
     }
 
-    VSRoom &room = get_room(p_room_id);
+    VSRoom& room = get_room(p_room_id);
     room._static_ids.push_back(p_static_id);
 
     bool sprawled = false;
 
     // go through portals
     for (int p = 0; p < room._portal_ids.size(); p++) {
-        const VSPortal &portal = get_portal(room._portal_ids[p]);
+        const VSPortal& portal = get_portal(room._portal_ids[p]);
 
         int room_to_id = portal.crosses_portal(p_room_id, p_static.aabb, true);
 
@@ -933,42 +1054,47 @@ void PortalRenderer::_load_finalize_roaming() {
     for (int n = 0; n < _moving_list_roaming.size(); n++) {
         uint32_t pool_id = _moving_list_roaming[n];
 
-        Moving &moving = _moving_pool[pool_id];
-        const AABB &aabb = moving.exact_aabb;
+        Moving& moving = _moving_pool[pool_id];
+        const AABB& aabb = moving.exact_aabb;
 
         OcclusionHandle handle = pool_id + 1;
         instance_moving_update(handle, aabb, true);
     }
 
     for (int n = 0; n < _rghost_pool.active_size(); n++) {
-        RGhost &moving = _rghost_pool.get_active(n);
-        const AABB &aabb = moving.exact_aabb;
+        RGhost& moving = _rghost_pool.get_active(n);
+        const AABB& aabb = moving.exact_aabb;
 
         rghost_update(_rghost_pool.get_active_id(n) + 1, aabb, true);
     }
 
     for (int n = 0; n < _occluder_pool.active_size(); n++) {
-        VSOccluder &occ = _occluder_pool.get_active(n);
+        VSOccluder& occ = _occluder_pool.get_active(n);
         int occluder_id = _occluder_pool.get_active_id(n);
 
         // make sure occluder is in the correct room
         occ.room_id = find_room_within(occ.pt_center, -1);
 
         if (occ.room_id != -1) {
-            VSRoom &room = get_room(occ.room_id);
+            VSRoom& room = get_room(occ.room_id);
             room.add_occluder(occluder_id);
         }
     }
 }
 
-void PortalRenderer::sprawl_roaming(uint32_t p_mover_pool_id, MovingBase &r_moving, int p_room_id, bool p_moving_or_ghost) {
+void PortalRenderer::sprawl_roaming(
+    uint32_t p_mover_pool_id,
+    MovingBase& r_moving,
+    int p_room_id,
+    bool p_moving_or_ghost
+) {
     // set, and if room already done, ignore
     if (!_bitfield_rooms.check_and_set(p_room_id)) {
         return;
     }
 
     // add to the room
-    VSRoom &room = get_room(p_room_id);
+    VSRoom& room = get_room(p_room_id);
 
     if (p_moving_or_ghost) {
         room.add_roamer(p_mover_pool_id);
@@ -981,13 +1107,19 @@ void PortalRenderer::sprawl_roaming(uint32_t p_mover_pool_id, MovingBase &r_movi
 
     // go through portals
     for (int p = 0; p < room._portal_ids.size(); p++) {
-        const VSPortal &portal = get_portal(room._portal_ids[p]);
+        const VSPortal& portal = get_portal(room._portal_ids[p]);
 
-        int room_to_id = portal.crosses_portal(p_room_id, r_moving.expanded_aabb);
+        int room_to_id =
+            portal.crosses_portal(p_room_id, r_moving.expanded_aabb);
 
         if (room_to_id != -1) {
             // _log(String(Variant(p_static.aabb)) + " crosses portal");
-            sprawl_roaming(p_mover_pool_id, r_moving, room_to_id, p_moving_or_ghost);
+            sprawl_roaming(
+                p_mover_pool_id,
+                r_moving,
+                room_to_id,
+                p_moving_or_ghost
+            );
         }
     }
 }
@@ -1007,8 +1139,8 @@ void PortalRenderer::_ensure_unloaded(String p_reason) {
 
         _log(str, 1);
 
-        // this should probably have some thread protection, but I doubt it matters
-        // as this will worst case give wrong result for a frame
+        // this should probably have some thread protection, but I doubt it
+        // matters as this will worst case give wrong result for a frame
         Engine::get_singleton()->set_portals_active(false);
     }
 }
@@ -1016,14 +1148,13 @@ void PortalRenderer::_ensure_unloaded(String p_reason) {
 void PortalRenderer::rooms_and_portals_clear() {
     _loaded = false;
 
-    // N.B. We want to make sure all the tick counters on movings rooms etc to zero,
-    // so that on loading the next level gameplay entered signals etc will be
-    // correctly sent and everything is fresh.
-    // This is mostly done by the gameplay_monitor, but rooms_and_portals_clear()
-    // will also clear tick counters where possible
-    // (there is no TrackedList for the RoomGroup pool for example).
-    // This could be made neater by moving everything to TrackedPooledLists, but this
-    // may be overkill.
+    // N.B. We want to make sure all the tick counters on movings rooms etc to
+    // zero, so that on loading the next level gameplay entered signals etc will
+    // be correctly sent and everything is fresh. This is mostly done by the
+    // gameplay_monitor, but rooms_and_portals_clear() will also clear tick
+    // counters where possible (there is no TrackedList for the RoomGroup pool
+    // for example). This could be made neater by moving everything to
+    // TrackedPooledLists, but this may be overkill.
     _gameplay_monitor.unload(*this);
 
     _statics.clear();
@@ -1039,12 +1170,12 @@ void PortalRenderer::rooms_and_portals_clear() {
 
     // clear the portals out of each existing room
     for (int n = 0; n < get_num_rooms(); n++) {
-        VSRoom &room = get_room(n);
+        VSRoom& room = get_room(n);
         room.rooms_and_portals_clear();
     }
 
     for (int n = 0; n < get_num_portals(); n++) {
-        VSPortal &portal = get_portal(n);
+        VSPortal& portal = get_portal(n);
         portal.rooms_and_portals_clear();
     }
 
@@ -1052,23 +1183,27 @@ void PortalRenderer::rooms_and_portals_clear() {
     // we want to remove all references to old rooms in the moving
     // objects, to prevent dangling references.
     for (int n = 0; n < get_num_moving_globals(); n++) {
-        Moving &moving = get_pool_moving(_moving_list_global[n]);
+        Moving& moving = get_pool_moving(_moving_list_global[n]);
         moving.rooms_and_portals_clear();
     }
     for (int n = 0; n < _moving_list_roaming.size(); n++) {
-        Moving &moving = get_pool_moving(_moving_list_roaming[n]);
+        Moving& moving = get_pool_moving(_moving_list_roaming[n]);
         moving.rooms_and_portals_clear();
     }
 
     for (int n = 0; n < _rghost_pool.active_size(); n++) {
-        RGhost &moving = _rghost_pool.get_active(n);
+        RGhost& moving = _rghost_pool.get_active(n);
         moving.rooms_and_portals_clear();
     }
 
     _pvs.clear();
 }
 
-void PortalRenderer::rooms_override_camera(bool p_override, const Vector3 &p_point, const Vector<Plane> *p_convex) {
+void PortalRenderer::rooms_override_camera(
+    bool p_override,
+    const Vector3& p_point,
+    const Vector<Plane>* p_convex
+) {
     _override_camera = p_override;
     _override_camera_pos = p_point;
     if (p_convex) {
@@ -1076,16 +1211,19 @@ void PortalRenderer::rooms_override_camera(bool p_override, const Vector3 &p_poi
     }
 }
 
-void PortalRenderer::rooms_update_gameplay_monitor(const Vector<Vector3> &p_camera_positions) {
+void PortalRenderer::rooms_update_gameplay_monitor(
+    const Vector<Vector3>& p_camera_positions
+) {
     // is the pvs loaded?
     if (!_loaded || !_pvs.is_loaded()) {
         if (!_pvs.is_loaded()) {
-            WARN_PRINT_ONCE("RoomManager PVS is required for this functionality");
+            WARN_PRINT_ONCE("RoomManager PVS is required for this functionality"
+            );
         }
         return;
     }
 
-    int *source_rooms = (int *)alloca(sizeof(int) * p_camera_positions.size());
+    int* source_rooms = (int*)alloca(sizeof(int) * p_camera_positions.size());
     int num_source_rooms = 0;
 
     for (int n = 0; n < p_camera_positions.size(); n++) {
@@ -1100,7 +1238,14 @@ void PortalRenderer::rooms_update_gameplay_monitor(const Vector<Vector3> &p_came
     _gameplay_monitor.update_gameplay(*this, source_rooms, num_source_rooms);
 }
 
-int PortalRenderer::cull_convex_implementation(const Vector3 &p_point, const Vector<Plane> &p_convex, VSInstance **p_result_array, int p_result_max, uint32_t p_mask, int32_t &r_previous_room_id_hint) {
+int PortalRenderer::cull_convex_implementation(
+    const Vector3& p_point,
+    const Vector<Plane>& p_convex,
+    VSInstance** p_result_array,
+    int p_result_max,
+    uint32_t p_mask,
+    int32_t& r_previous_room_id_hint
+) {
     // start room
     int start_room_id = find_room_within(p_point, r_previous_room_id_hint);
 
@@ -1120,9 +1265,16 @@ int PortalRenderer::cull_convex_implementation(const Vector3 &p_point, const Vec
     _trace_results.clear();
 
     if (!_debug_sprawl) {
-        _tracer.trace(*this, p_point, planes, start_room_id, _trace_results); //, near_and_far_planes);
+        _tracer.trace(
+            *this,
+            p_point,
+            planes,
+            start_room_id,
+            _trace_results
+        ); //, near_and_far_planes);
     } else {
-        _tracer.trace_debug_sprawl(*this, p_point, start_room_id, _trace_results);
+        _tracer
+            .trace_debug_sprawl(*this, p_point, start_room_id, _trace_results);
     }
 
     int num_results = _trace_results.visible_static_ids.size();
@@ -1131,7 +1283,7 @@ int PortalRenderer::cull_convex_implementation(const Vector3 &p_point, const Vec
     for (int n = 0; n < num_results; n++) {
         uint32_t static_id = _trace_results.visible_static_ids[n];
         RID static_rid = _statics[static_id].instance;
-        VSInstance *instance = VSG::scene->_instance_get_from_rid(static_rid);
+        VSInstance* instance = VSG::scene->_instance_get_from_rid(static_rid);
 
         if (VSG::scene->_instance_cull_check(instance, p_mask)) {
             p_result_array[out_count++] = instance;
@@ -1153,7 +1305,8 @@ int PortalRenderer::cull_convex_implementation(const Vector3 &p_point, const Vec
 
     // translate
     for (int n = 0; n < num_roam_hits; n++) {
-        const Moving &moving = get_pool_moving(_trace_results.visible_roamer_pool_ids[n]);
+        const Moving& moving =
+            get_pool_moving(_trace_results.visible_roamer_pool_ids[n]);
 
         if (VSG::scene->_instance_cull_check(moving.instance, p_mask)) {
             p_result_array[out_count++] = moving.instance;
@@ -1168,7 +1321,14 @@ int PortalRenderer::cull_convex_implementation(const Vector3 &p_point, const Vec
         return out_count;
     }
 
-    out_count = _tracer.trace_globals(planes, p_result_array, out_count, p_result_max, p_mask, _override_camera);
+    out_count = _tracer.trace_globals(
+        planes,
+        p_result_array,
+        out_count,
+        p_result_max,
+        p_mask,
+        _override_camera
+    );
 
     return out_count;
 }
@@ -1177,6 +1337,6 @@ String PortalRenderer::_rid_to_string(RID p_rid) {
     return _addr_to_string(p_rid.get_data());
 }
 
-String PortalRenderer::_addr_to_string(const void *p_addr) {
+String PortalRenderer::_addr_to_string(const void* p_addr) {
     return String::num_uint64((uint64_t)p_addr, 16);
 }

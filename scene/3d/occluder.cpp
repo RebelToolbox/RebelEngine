@@ -40,7 +40,7 @@ void Occluder::resource_changed(RES res) {
     }
 }
 
-void Occluder::set_shape(const Ref<OccluderShape> &p_shape) {
+void Occluder::set_shape(const Ref<OccluderShape>& p_shape) {
     if (p_shape == _shape) {
         return;
     }
@@ -60,7 +60,8 @@ void Occluder::set_shape(const Ref<OccluderShape> &p_shape) {
             _shape->update_shape_to_visual_server();
             if (is_inside_tree()) {
                 _shape->update_active_to_visual_server(is_visible_in_tree());
-                _shape->update_transform_to_visual_server(get_global_transform());
+                _shape->update_transform_to_visual_server(get_global_transform()
+                );
             }
         }
     }
@@ -68,6 +69,7 @@ void Occluder::set_shape(const Ref<OccluderShape> &p_shape) {
     update_gizmo();
     update_configuration_warning();
 }
+
 Ref<OccluderShape> Occluder::get_shape() const {
     return _shape;
 }
@@ -85,8 +87,8 @@ String Occluder::get_configuration_warning() const {
     Transform tr = get_global_transform();
     Vector3 scale = tr.basis.get_scale();
 
-    if ((!Math::is_equal_approx(scale.x, scale.y, 0.01f)) ||
-            (!Math::is_equal_approx(scale.x, scale.z, 0.01f))) {
+    if ((!Math::is_equal_approx(scale.x, scale.y, 0.01f))
+        || (!Math::is_equal_approx(scale.x, scale.z, 0.01f))) {
         if (!warning.empty()) {
             warning += "\n\n";
         }
@@ -104,7 +106,8 @@ void Occluder::_notification(int p_what) {
                 _shape->notification_enter_world(get_world()->get_scenario());
                 _shape->update_active_to_visual_server(is_visible_in_tree());
                 _shape->update_shape_to_visual_server();
-                _shape->update_transform_to_visual_server(get_global_transform());
+                _shape->update_transform_to_visual_server(get_global_transform()
+                );
             }
         } break;
         case NOTIFICATION_EXIT_WORLD: {
@@ -119,7 +122,8 @@ void Occluder::_notification(int p_what) {
         } break;
         case NOTIFICATION_TRANSFORM_CHANGED: {
             if (_shape.is_valid()) {
-                _shape->update_transform_to_visual_server(get_global_transform());
+                _shape->update_transform_to_visual_server(get_global_transform()
+                );
 
 #ifdef TOOLS_ENABLED
                 if (Engine::get_singleton()->is_editor_hint()) {
@@ -132,11 +136,23 @@ void Occluder::_notification(int p_what) {
 }
 
 void Occluder::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("resource_changed", "resource"), &Occluder::resource_changed);
+    ClassDB::bind_method(
+        D_METHOD("resource_changed", "resource"),
+        &Occluder::resource_changed
+    );
     ClassDB::bind_method(D_METHOD("set_shape", "shape"), &Occluder::set_shape);
     ClassDB::bind_method(D_METHOD("get_shape"), &Occluder::get_shape);
 
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "shape", PROPERTY_HINT_RESOURCE_TYPE, "OccluderShape"), "set_shape", "get_shape");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "shape",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "OccluderShape"
+        ),
+        "set_shape",
+        "get_shape"
+    );
 }
 
 Occluder::Occluder() {

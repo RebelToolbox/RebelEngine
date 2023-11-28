@@ -33,10 +33,19 @@
 #include "core/os/os.h"
 #include "core/print_string.h"
 
-Error ImageLoaderHDR::load_image(Ref<Image> p_image, FileAccess *f, bool p_force_linear, float p_scale) {
+Error ImageLoaderHDR::load_image(
+    Ref<Image> p_image,
+    FileAccess* f,
+    bool p_force_linear,
+    float p_scale
+) {
     String header = f->get_token();
 
-    ERR_FAIL_COND_V_MSG(header != "#?RADIANCE" && header != "#?RGBE", ERR_FILE_UNRECOGNIZED, "Unsupported header information in HDR: " + header + ".");
+    ERR_FAIL_COND_V_MSG(
+        header != "#?RADIANCE" && header != "#?RGBE",
+        ERR_FILE_UNRECOGNIZED,
+        "Unsupported header information in HDR: " + header + "."
+    );
 
     while (true) {
         String line = f->get_line();
@@ -44,10 +53,17 @@ Error ImageLoaderHDR::load_image(Ref<Image> p_image, FileAccess *f, bool p_force
         if (line == "") { // empty line indicates end of header
             break;
         }
-        if (line.begins_with("FORMAT=")) { // leave option to implement other commands
-            ERR_FAIL_COND_V_MSG(line != "FORMAT=32-bit_rle_rgbe", ERR_FILE_UNRECOGNIZED, "Only 32-bit_rle_rgbe is supported for HDR files.");
+        if (line.begins_with("FORMAT="
+            )) { // leave option to implement other commands
+            ERR_FAIL_COND_V_MSG(
+                line != "FORMAT=32-bit_rle_rgbe",
+                ERR_FILE_UNRECOGNIZED,
+                "Only 32-bit_rle_rgbe is supported for HDR files."
+            );
         } else if (!line.begins_with("#")) { // not comment
-            WARN_PRINT("Ignoring unsupported header information in HDR: " + line + ".");
+            WARN_PRINT(
+                "Ignoring unsupported header information in HDR: " + line + "."
+            );
         }
     }
 
@@ -70,7 +86,7 @@ Error ImageLoaderHDR::load_image(Ref<Image> p_image, FileAccess *f, bool p_force
     {
         PoolVector<uint8_t>::Write w = imgdata.write();
 
-        uint8_t *ptr = (uint8_t *)w.ptr();
+        uint8_t* ptr = (uint8_t*)w.ptr();
 
         if (width < 8 || width >= 32768) {
             // Read flat data
@@ -84,8 +100,9 @@ Error ImageLoaderHDR::load_image(Ref<Image> p_image, FileAccess *f, bool p_force
                 int c2 = f->get_8();
                 int len = f->get_8();
                 if (c1 != 2 || c2 != 2 || (len & 0x80)) {
-                    // not run-length encoded, so we have to actually use THIS data as a decoded
-                    // pixel (note this can't be a valid pixel--one of RGB must be >= 128)
+                    // not run-length encoded, so we have to actually use THIS
+                    // data as a decoded pixel (note this can't be a valid
+                    // pixel--one of RGB must be >= 128)
 
                     ptr[(j * width) * 4 + 0] = uint8_t(c1);
                     ptr[(j * width) * 4 + 1] = uint8_t(c2);
@@ -98,7 +115,11 @@ Error ImageLoaderHDR::load_image(Ref<Image> p_image, FileAccess *f, bool p_force
                 len <<= 8;
                 len |= f->get_8();
 
-                ERR_FAIL_COND_V_MSG(len != width, ERR_FILE_CORRUPT, "Invalid decoded scanline length, corrupt HDR.");
+                ERR_FAIL_COND_V_MSG(
+                    len != width,
+                    ERR_FILE_CORRUPT,
+                    "Invalid decoded scanline length, corrupt HDR."
+                );
 
                 for (int k = 0; k < 4; ++k) {
                     int i = 0;
@@ -122,20 +143,21 @@ Error ImageLoaderHDR::load_image(Ref<Image> p_image, FileAccess *f, bool p_force
             }
         }
 
-        //convert
+        // convert
         for (int i = 0; i < width * height; i++) {
             float exp = pow(2.0f, ptr[3] - 128.0f);
 
             Color c(
-                    ptr[0] * exp / 255.0,
-                    ptr[1] * exp / 255.0,
-                    ptr[2] * exp / 255.0);
+                ptr[0] * exp / 255.0,
+                ptr[1] * exp / 255.0,
+                ptr[2] * exp / 255.0
+            );
 
             if (p_force_linear) {
                 c = c.to_linear();
             }
 
-            *(uint32_t *)ptr = c.to_rgbe9995();
+            *(uint32_t*)ptr = c.to_rgbe9995();
             ptr += 4;
         }
     }
@@ -145,9 +167,9 @@ Error ImageLoaderHDR::load_image(Ref<Image> p_image, FileAccess *f, bool p_force
     return OK;
 }
 
-void ImageLoaderHDR::get_recognized_extensions(List<String> *p_extensions) const {
+void ImageLoaderHDR::get_recognized_extensions(List<String>* p_extensions
+) const {
     p_extensions->push_back("hdr");
 }
 
-ImageLoaderHDR::ImageLoaderHDR() {
-}
+ImageLoaderHDR::ImageLoaderHDR() {}

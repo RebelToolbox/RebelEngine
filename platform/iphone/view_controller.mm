@@ -39,25 +39,25 @@
 
 @interface ViewController () <GodotViewDelegate>
 
-@property(strong, nonatomic) GodotViewRenderer *renderer;
-@property(strong, nonatomic) GodotNativeVideoView *videoView;
-@property(strong, nonatomic) GodotKeyboardInputView *keyboardView;
+@property(strong, nonatomic) GodotViewRenderer* renderer;
+@property(strong, nonatomic) GodotNativeVideoView* videoView;
+@property(strong, nonatomic) GodotKeyboardInputView* keyboardView;
 
-@property(strong, nonatomic) UIView *godotLoadingOverlay;
+@property(strong, nonatomic) UIView* godotLoadingOverlay;
 
 @end
 
 @implementation ViewController
 
-- (GodotView *)godotView {
-    return (GodotView *)self.view;
+- (GodotView*)godotView {
+    return (GodotView*)self.view;
 }
 
 - (void)loadView {
-    GodotView *view = [[GodotView alloc] init];
+    GodotView* view = [[GodotView alloc] init];
     [view initializeRendering];
 
-    GodotViewRenderer *renderer = [[GodotViewRenderer alloc] init];
+    GodotViewRenderer* renderer = [[GodotViewRenderer alloc] init];
 
     self.renderer = renderer;
     self.view = view;
@@ -66,7 +66,8 @@
     view.delegate = self;
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if (self) {
@@ -76,7 +77,7 @@
     return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder*)coder {
     self = [super initWithCoder:coder];
 
     if (self) {
@@ -113,36 +114,39 @@
 
     printf("******** adding observer for keyboard show/hide\n");
     [[NSNotificationCenter defaultCenter]
-            addObserver:self
-               selector:@selector(keyboardOnScreen:)
-                   name:UIKeyboardDidShowNotification
-                 object:nil];
+        addObserver:self
+           selector:@selector(keyboardOnScreen:)
+               name:UIKeyboardDidShowNotification
+             object:nil];
     [[NSNotificationCenter defaultCenter]
-            addObserver:self
-               selector:@selector(keyboardHidden:)
-                   name:UIKeyboardDidHideNotification
-                 object:nil];
+        addObserver:self
+           selector:@selector(keyboardHidden:)
+               name:UIKeyboardDidHideNotification
+             object:nil];
 }
 
 - (void)displayLoadingOverlay {
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *storyboardName = @"Launch Screen";
+    NSBundle* bundle = [NSBundle mainBundle];
+    NSString* storyboardName = @"Launch Screen";
 
     if ([bundle pathForResource:storyboardName ofType:@"storyboardc"] == nil) {
         return;
     }
 
-    UIStoryboard *launchStoryboard = [UIStoryboard storyboardWithName:storyboardName bundle:bundle];
+    UIStoryboard* launchStoryboard =
+        [UIStoryboard storyboardWithName:storyboardName bundle:bundle];
 
-    UIViewController *controller = [launchStoryboard instantiateInitialViewController];
+    UIViewController* controller =
+        [launchStoryboard instantiateInitialViewController];
     self.godotLoadingOverlay = controller.view;
     self.godotLoadingOverlay.frame = self.view.bounds;
-    self.godotLoadingOverlay.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.godotLoadingOverlay.autoresizingMask =
+        UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
     [self.view addSubview:self.godotLoadingOverlay];
 }
 
-- (BOOL)godotViewFinishedSetup:(GodotView *)view {
+- (BOOL)godotViewFinishedSetup:(GodotView*)view {
     [self.godotLoadingOverlay removeFromSuperview];
     self.godotLoadingOverlay = nil;
 
@@ -201,7 +205,8 @@
         case OS::SCREEN_SENSOR_LANDSCAPE:
             return UIInterfaceOrientationMaskLandscape;
         case OS::SCREEN_SENSOR_PORTRAIT:
-            return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+            return UIInterfaceOrientationMaskPortrait
+                 | UIInterfaceOrientationMaskPortraitUpsideDown;
         case OS::SCREEN_SENSOR:
             return UIInterfaceOrientationMaskAll;
         case OS::SCREEN_LANDSCAPE:
@@ -223,19 +228,21 @@
 
 // MARK: Keyboard
 
-- (void)keyboardOnScreen:(NSNotification *)notification {
-    NSDictionary *info = notification.userInfo;
-    NSValue *value = info[UIKeyboardFrameEndUserInfoKey];
+- (void)keyboardOnScreen:(NSNotification*)notification {
+    NSDictionary* info = notification.userInfo;
+    NSValue* value = info[UIKeyboardFrameEndUserInfoKey];
 
     CGRect rawFrame = [value CGRectValue];
     CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
 
     if (OSIPhone::get_singleton()) {
-        OSIPhone::get_singleton()->set_virtual_keyboard_height(keyboardFrame.size.height);
+        OSIPhone::get_singleton()->set_virtual_keyboard_height(
+            keyboardFrame.size.height
+        );
     }
 }
 
-- (void)keyboardHidden:(NSNotification *)notification {
+- (void)keyboardHidden:(NSNotification*)notification {
     if (OSIPhone::get_singleton()) {
         OSIPhone::get_singleton()->set_virtual_keyboard_height(0);
     }
@@ -243,19 +250,30 @@
 
 // MARK: Native Video Player
 
-- (BOOL)playVideoAtPath:(NSString *)filePath volume:(float)videoVolume audio:(NSString *)audioTrack subtitle:(NSString *)subtitleTrack {
+- (BOOL)playVideoAtPath:(NSString*)filePath
+                 volume:(float)videoVolume
+                  audio:(NSString*)audioTrack
+               subtitle:(NSString*)subtitleTrack {
     // If we are showing some video already, reuse existing view for new video.
     if (self.videoView) {
-        return [self.videoView playVideoAtPath:filePath volume:videoVolume audio:audioTrack subtitle:subtitleTrack];
+        return [self.videoView playVideoAtPath:filePath
+                                        volume:videoVolume
+                                         audio:audioTrack
+                                      subtitle:subtitleTrack];
     } else {
         // Create autoresizing view for video playback.
-        GodotNativeVideoView *videoView = [[GodotNativeVideoView alloc] initWithFrame:self.view.bounds];
-        videoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        GodotNativeVideoView* videoView =
+            [[GodotNativeVideoView alloc] initWithFrame:self.view.bounds];
+        videoView.autoresizingMask =
+            UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:videoView];
 
         self.videoView = videoView;
 
-        return [self.videoView playVideoAtPath:filePath volume:videoVolume audio:audioTrack subtitle:subtitleTrack];
+        return [self.videoView playVideoAtPath:filePath
+                                        volume:videoVolume
+                                         audio:audioTrack
+                                      subtitle:subtitleTrack];
     }
 }
 

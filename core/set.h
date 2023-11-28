@@ -50,30 +50,35 @@ public:
     private:
         friend class Set<T, C, A>;
         int color;
-        Element *right;
-        Element *left;
-        Element *parent;
-        Element *_next;
-        Element *_prev;
+        Element* right;
+        Element* left;
+        Element* parent;
+        Element* _next;
+        Element* _prev;
         T value;
         //_Data *data;
 
     public:
-        const Element *next() const {
+        const Element* next() const {
             return _next;
         }
-        Element *next() {
+
+        Element* next() {
             return _next;
         }
-        const Element *prev() const {
+
+        const Element* prev() const {
             return _prev;
         }
-        Element *prev() {
+
+        Element* prev() {
             return _prev;
         }
-        const T &get() const {
+
+        const T& get() const {
             return value;
         };
+
         Element() {
             color = RED;
             right = nullptr;
@@ -86,8 +91,8 @@ public:
 
 private:
     struct _Data {
-        Element *_root;
-        Element *_nil;
+        Element* _root;
+        Element* _nil;
         int size_cache;
 
         _FORCE_INLINE_ _Data() {
@@ -96,7 +101,7 @@ private:
             _nil->parent = _nil->left = _nil->right = _nil;
             _nil->color = BLACK;
 #else
-            _nil = (Element *)&_GlobalNilClass::_nil;
+            _nil = (Element*)&_GlobalNilClass::_nil;
 #endif
             _root = nullptr;
             size_cache = 0;
@@ -126,13 +131,13 @@ private:
 
     _Data _data;
 
-    inline void _set_color(Element *p_node, int p_color) {
+    inline void _set_color(Element* p_node, int p_color) {
         ERR_FAIL_COND(p_node == _data._nil && p_color == RED);
         p_node->color = p_color;
     }
 
-    inline void _rotate_left(Element *p_node) {
-        Element *r = p_node->right;
+    inline void _rotate_left(Element* p_node) {
+        Element* r = p_node->right;
         p_node->right = r->left;
         if (r->left != _data._nil) {
             r->left->parent = p_node;
@@ -148,8 +153,8 @@ private:
         p_node->parent = r;
     }
 
-    inline void _rotate_right(Element *p_node) {
-        Element *l = p_node->left;
+    inline void _rotate_right(Element* p_node) {
+        Element* l = p_node->left;
         p_node->left = l->right;
         if (l->right != _data._nil) {
             l->right->parent = p_node;
@@ -165,12 +170,13 @@ private:
         p_node->parent = l;
     }
 
-    inline Element *_successor(Element *p_node) const {
-        Element *node = p_node;
+    inline Element* _successor(Element* p_node) const {
+        Element* node = p_node;
 
         if (node->right != _data._nil) {
             node = node->right;
-            while (node->left != _data._nil) { /* returns the minimum of the right subtree of node */
+            while (node->left != _data._nil
+            ) { /* returns the minimum of the right subtree of node */
                 node = node->left;
             }
             return node;
@@ -186,12 +192,13 @@ private:
         }
     }
 
-    inline Element *_predecessor(Element *p_node) const {
-        Element *node = p_node;
+    inline Element* _predecessor(Element* p_node) const {
+        Element* node = p_node;
 
         if (node->left != _data._nil) {
             node = node->left;
-            while (node->right != _data._nil) { /* returns the minimum of the left subtree of node */
+            while (node->right != _data._nil
+            ) { /* returns the minimum of the left subtree of node */
                 node = node->right;
             }
             return node;
@@ -207,8 +214,8 @@ private:
         }
     }
 
-    Element *_find(const T &p_value) const {
-        Element *node = _data._root->left;
+    Element* _find(const T& p_value) const {
+        Element* node = _data._root->left;
         C less;
 
         while (node != _data._nil) {
@@ -224,9 +231,9 @@ private:
         return nullptr;
     }
 
-    Element *_lower_bound(const T &p_value) const {
-        Element *node = _data._root->left;
-        Element *prev = nullptr;
+    Element* _lower_bound(const T& p_value) const {
+        Element* node = _data._root->left;
+        Element* prev = nullptr;
         C less;
 
         while (node != _data._nil) {
@@ -252,10 +259,10 @@ private:
         return prev;
     }
 
-    void _insert_rb_fix(Element *p_new_node) {
-        Element *node = p_new_node;
-        Element *nparent = node->parent;
-        Element *ngrand_parent;
+    void _insert_rb_fix(Element* p_new_node) {
+        Element* node = p_new_node;
+        Element* nparent = node->parent;
+        Element* ngrand_parent;
 
         while (nparent->color == RED) {
             ngrand_parent = nparent->parent;
@@ -300,9 +307,9 @@ private:
         _set_color(_data._root->left, BLACK);
     }
 
-    Element *_insert(const T &p_value) {
-        Element *new_parent = _data._root;
-        Element *node = _data._root->left;
+    Element* _insert(const T& p_value) {
+        Element* new_parent = _data._root;
+        Element* node = _data._root->left;
         C less;
 
         while (node != _data._nil) {
@@ -317,12 +324,12 @@ private:
             }
         }
 
-        Element *new_node = memnew_allocator(Element, A);
+        Element* new_node = memnew_allocator(Element, A);
         new_node->parent = new_parent;
         new_node->right = _data._nil;
         new_node->left = _data._nil;
         new_node->value = p_value;
-        //new_node->data=_data;
+        // new_node->data=_data;
 
         if (new_parent == _data._root || less(p_value, new_parent->value)) {
             new_parent->left = new_node;
@@ -344,11 +351,11 @@ private:
         return new_node;
     }
 
-    void _erase_fix_rb(Element *p_node) {
-        Element *root = _data._root->left;
-        Element *node = _data._nil;
-        Element *sibling = p_node;
-        Element *parent = sibling->parent;
+    void _erase_fix_rb(Element* p_node) {
+        Element* root = _data._root->left;
+        Element* node = _data._nil;
+        Element* sibling = p_node;
+        Element* parent = sibling->parent;
 
         while (node != root) { // If red node found, will exit at a break
             if (sibling->color == RED) {
@@ -362,7 +369,8 @@ private:
                     _rotate_right(parent);
                 }
             }
-            if ((sibling->left->color == BLACK) && (sibling->right->color == BLACK)) {
+            if ((sibling->left->color == BLACK)
+                && (sibling->right->color == BLACK)) {
                 _set_color(sibling, RED);
                 if (parent->color == RED) {
                     _set_color(parent, BLACK);
@@ -370,7 +378,8 @@ private:
                 } else { // loop: haven't found any red nodes yet
                     node = parent;
                     parent = node->parent;
-                    sibling = (node == parent->left) ? parent->right : parent->left;
+                    sibling =
+                        (node == parent->left) ? parent->right : parent->left;
                 }
             } else {
                 if (sibling == parent->right) {
@@ -405,11 +414,14 @@ private:
         ERR_FAIL_COND(_data._nil->color != BLACK);
     }
 
-    void _erase(Element *p_node) {
-        Element *rp = ((p_node->left == _data._nil) || (p_node->right == _data._nil)) ? p_node : p_node->_next;
-        Element *node = (rp->left == _data._nil) ? rp->right : rp->left;
+    void _erase(Element* p_node) {
+        Element* rp =
+            ((p_node->left == _data._nil) || (p_node->right == _data._nil))
+                ? p_node
+                : p_node->_next;
+        Element* node = (rp->left == _data._nil) ? rp->right : rp->left;
 
-        Element *sibling;
+        Element* sibling;
         if (rp == rp->parent->left) {
             rp->parent->left = node;
             sibling = rp->parent->right;
@@ -458,7 +470,7 @@ private:
         ERR_FAIL_COND(_data._nil->color == RED);
     }
 
-    void _calculate_depth(Element *p_element, int &max_d, int d) const {
+    void _calculate_depth(Element* p_element, int& max_d, int d) const {
         if (p_element == _data._nil) {
             return;
         }
@@ -471,7 +483,7 @@ private:
         }
     }
 
-    void _cleanup_tree(Element *p_element) {
+    void _cleanup_tree(Element* p_element) {
         if (p_element == _data._nil) {
             return;
         }
@@ -481,52 +493,52 @@ private:
         memdelete_allocator<Element, A>(p_element);
     }
 
-    void _copy_from(const Set &p_set) {
+    void _copy_from(const Set& p_set) {
         clear();
         // not the fastest way, but safeset to write.
-        for (Element *I = p_set.front(); I; I = I->next()) {
+        for (Element* I = p_set.front(); I; I = I->next()) {
             insert(I->get());
         }
     }
 
 public:
-    const Element *find(const T &p_value) const {
+    const Element* find(const T& p_value) const {
         if (!_data._root) {
             return nullptr;
         }
 
-        const Element *res = _find(p_value);
+        const Element* res = _find(p_value);
         return res;
     }
 
-    Element *find(const T &p_value) {
+    Element* find(const T& p_value) {
         if (!_data._root) {
             return nullptr;
         }
 
-        Element *res = _find(p_value);
+        Element* res = _find(p_value);
         return res;
     }
 
-    Element *lower_bound(const T &p_value) const {
+    Element* lower_bound(const T& p_value) const {
         if (!_data._root) {
             return nullptr;
         }
         return _lower_bound(p_value);
     }
 
-    bool has(const T &p_value) const {
+    bool has(const T& p_value) const {
         return find(p_value) != nullptr;
     }
 
-    Element *insert(const T &p_value) {
+    Element* insert(const T& p_value) {
         if (!_data._root) {
             _data._create_root();
         }
         return _insert(p_value);
     }
 
-    void erase(Element *p_element) {
+    void erase(Element* p_element) {
         if (!_data._root || !p_element) {
             return;
         }
@@ -537,12 +549,12 @@ public:
         }
     }
 
-    bool erase(const T &p_value) {
+    bool erase(const T& p_value) {
         if (!_data._root) {
             return false;
         }
 
-        Element *e = find(p_value);
+        Element* e = find(p_value);
         if (!e) {
             return false;
         }
@@ -554,12 +566,12 @@ public:
         return true;
     }
 
-    Element *front() const {
+    Element* front() const {
         if (!_data._root) {
             return nullptr;
         }
 
-        Element *e = _data._root->left;
+        Element* e = _data._root->left;
         if (e == _data._nil) {
             return nullptr;
         }
@@ -571,12 +583,12 @@ public:
         return e;
     }
 
-    Element *back() const {
+    Element* back() const {
         if (!_data._root) {
             return nullptr;
         }
 
-        Element *e = _data._root->left;
+        Element* e = _data._root->left;
         if (e == _data._nil) {
             return nullptr;
         }
@@ -588,8 +600,13 @@ public:
         return e;
     }
 
-    inline bool empty() const { return _data.size_cache == 0; }
-    inline int size() const { return _data.size_cache; }
+    inline bool empty() const {
+        return _data.size_cache == 0;
+    }
+
+    inline int size() const {
+        return _data.size_cache;
+    }
 
     int calculate_depth() const {
         // used for debug mostly
@@ -613,16 +630,15 @@ public:
         _data._free_root();
     }
 
-    void operator=(const Set &p_set) {
+    void operator=(const Set& p_set) {
         _copy_from(p_set);
     }
 
-    Set(const Set &p_set) {
+    Set(const Set& p_set) {
         _copy_from(p_set);
     }
 
-    _FORCE_INLINE_ Set() {
-    }
+    _FORCE_INLINE_ Set() {}
 
     ~Set() {
         clear();

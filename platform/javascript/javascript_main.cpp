@@ -37,7 +37,7 @@
 #include <emscripten/emscripten.h>
 #include <stdlib.h>
 
-static OS_JavaScript *os = NULL;
+static OS_JavaScript* os = NULL;
 static uint64_t target_ticks = 0;
 
 void exit_callback() {
@@ -46,7 +46,9 @@ void exit_callback() {
     int exit_code = OS_JavaScript::get_singleton()->get_exit_code();
     memdelete(os);
     os = NULL;
-    emscripten_force_exit(exit_code); // No matter that we call cancel_main_loop, regular "exit" will not work, forcing.
+    emscripten_force_exit(exit_code
+    ); // No matter that we call cancel_main_loop, regular "exit" will not work,
+       // forcing.
 }
 
 void cleanup_after_sync() {
@@ -66,20 +68,22 @@ void main_loop_callback() {
     int target_fps = Engine::get_singleton()->get_target_fps();
     if (target_fps > 0) {
         if (current_ticks - target_ticks > 1000000) {
-            // When the window loses focus, we stop getting updates and accumulate delay.
-            // For this reason, if the difference is too big, we reset target ticks to the current ticks.
+            // When the window loses focus, we stop getting updates and
+            // accumulate delay. For this reason, if the difference is too big,
+            // we reset target ticks to the current ticks.
             target_ticks = current_ticks;
         }
         target_ticks += (uint64_t)(1000000 / target_fps);
     }
     if (os->main_loop_iterate()) {
-        emscripten_cancel_main_loop(); // Cancel current loop and wait for finalize_async.
+        emscripten_cancel_main_loop(
+        ); // Cancel current loop and wait for finalize_async.
         os->get_main_loop()->finish();
         godot_js_os_finish_async(cleanup_after_sync);
     }
 }
 
-extern EMSCRIPTEN_KEEPALIVE int godot_js_main(int argc, char *argv[]) {
+extern EMSCRIPTEN_KEEPALIVE int godot_js_main(int argc, char* argv[]) {
     // Set locale
     char locale_ptr[16];
     godot_js_config_locale_get(locale_ptr, sizeof(locale_ptr));
@@ -101,7 +105,8 @@ extern EMSCRIPTEN_KEEPALIVE int godot_js_main(int argc, char *argv[]) {
 #endif
     emscripten_set_main_loop(main_loop_callback, -1, false);
     // Immediately run the first iteration.
-    // We are inside an animation frame, we want to immediately draw on the newly setup canvas.
+    // We are inside an animation frame, we want to immediately draw on the
+    // newly setup canvas.
     main_loop_callback();
 
     return 0;

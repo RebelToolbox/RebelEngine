@@ -66,7 +66,7 @@ public:
 
     virtual AABB get_transformed_aabb() const; // helper
 
-    void set_base(const RID &p_base);
+    void set_base(const RID& p_base);
     RID get_base() const;
 
     void set_layer_mask(uint32_t p_mask);
@@ -85,7 +85,8 @@ class GeometryInstance : public VisualInstance {
 public:
     enum Flags {
         FLAG_USE_BAKED_LIGHT = VS::INSTANCE_FLAG_USE_BAKED_LIGHT,
-        FLAG_DRAW_NEXT_FRAME_IF_VISIBLE = VS::INSTANCE_FLAG_DRAW_NEXT_FRAME_IF_VISIBLE,
+        FLAG_DRAW_NEXT_FRAME_IF_VISIBLE =
+            VS::INSTANCE_FLAG_DRAW_NEXT_FRAME_IF_VISIBLE,
         FLAG_MAX = VS::INSTANCE_FLAG_MAX,
     };
 
@@ -100,8 +101,10 @@ public:
     enum ShadowCastingSetting {
         SHADOW_CASTING_SETTING_OFF = VS::SHADOW_CASTING_SETTING_OFF,
         SHADOW_CASTING_SETTING_ON = VS::SHADOW_CASTING_SETTING_ON,
-        SHADOW_CASTING_SETTING_DOUBLE_SIDED = VS::SHADOW_CASTING_SETTING_DOUBLE_SIDED,
-        SHADOW_CASTING_SETTING_SHADOWS_ONLY = VS::SHADOW_CASTING_SETTING_SHADOWS_ONLY
+        SHADOW_CASTING_SETTING_DOUBLE_SIDED =
+            VS::SHADOW_CASTING_SETTING_DOUBLE_SIDED,
+        SHADOW_CASTING_SETTING_SHADOWS_ONLY =
+            VS::SHADOW_CASTING_SETTING_SHADOWS_ONLY
     };
 
 private:
@@ -125,7 +128,8 @@ public:
     void set_flag(Flags p_flag, bool p_value);
     bool get_flag(Flags p_flag) const;
 
-    void set_cast_shadows_setting(ShadowCastingSetting p_shadow_casting_setting);
+    void set_cast_shadows_setting(ShadowCastingSetting p_shadow_casting_setting
+    );
     ShadowCastingSetting get_cast_shadows_setting() const;
 
     void set_bake_cast_shadows(bool p_enabled);
@@ -149,7 +153,7 @@ public:
     void set_lod_max_hysteresis(float p_dist);
     float get_lod_max_hysteresis() const;
 
-    virtual void set_material_override(const Ref<Material> &p_material);
+    virtual void set_material_override(const Ref<Material>& p_material);
     Ref<Material> get_material_override() const;
 
     void set_extra_cull_margin(float p_margin);

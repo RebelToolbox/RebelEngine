@@ -31,7 +31,8 @@
 #include "root_motion_view.h"
 #include "scene/animation/animation_tree.h"
 #include "scene/resources/material.h"
-void RootMotionView::set_animation_path(const NodePath &p_path) {
+
+void RootMotionView::set_animation_path(const NodePath& p_path) {
     path = p_path;
     first = true;
 }
@@ -40,7 +41,7 @@ NodePath RootMotionView::get_animation_path() const {
     return path;
 }
 
-void RootMotionView::set_color(const Color &p_color) {
+void RootMotionView::set_color(const Color& p_color) {
     color = p_color;
     first = true;
 }
@@ -77,24 +78,39 @@ bool RootMotionView::get_zero_y() const {
 
 void RootMotionView::_notification(int p_what) {
     if (p_what == NOTIFICATION_ENTER_TREE) {
-        VS::get_singleton()->immediate_set_material(immediate, SpatialMaterial::get_material_rid_for_2d(false, true, false, false, false));
+        VS::get_singleton()->immediate_set_material(
+            immediate,
+            SpatialMaterial::get_material_rid_for_2d(
+                false,
+                true,
+                false,
+                false,
+                false
+            )
+        );
         first = true;
     }
 
-    if (p_what == NOTIFICATION_INTERNAL_PROCESS || p_what == NOTIFICATION_INTERNAL_PHYSICS_PROCESS) {
+    if (p_what == NOTIFICATION_INTERNAL_PROCESS
+        || p_what == NOTIFICATION_INTERNAL_PHYSICS_PROCESS) {
         Transform transform;
 
         if (has_node(path)) {
-            Node *node = get_node(path);
+            Node* node = get_node(path);
 
-            AnimationTree *tree = Object::cast_to<AnimationTree>(node);
-            if (tree && tree->is_active() && tree->get_root_motion_track() != NodePath()) {
-                if (is_processing_internal() && tree->get_process_mode() == AnimationTree::ANIMATION_PROCESS_PHYSICS) {
+            AnimationTree* tree = Object::cast_to<AnimationTree>(node);
+            if (tree && tree->is_active()
+                && tree->get_root_motion_track() != NodePath()) {
+                if (is_processing_internal()
+                    && tree->get_process_mode()
+                           == AnimationTree::ANIMATION_PROCESS_PHYSICS) {
                     set_process_internal(false);
                     set_physics_process_internal(true);
                 }
 
-                if (is_physics_processing_internal() && tree->get_process_mode() == AnimationTree::ANIMATION_PROCESS_IDLE) {
+                if (is_physics_processing_internal()
+                    && tree->get_process_mode()
+                           == AnimationTree::ANIMATION_PROCESS_IDLE) {
                     set_process_internal(true);
                     set_physics_process_internal(false);
                 }
@@ -109,7 +125,7 @@ void RootMotionView::_notification(int p_what) {
 
         first = false;
 
-        transform.orthonormalize(); //don't want scale, too imprecise
+        transform.orthonormalize(); // don't want scale, too imprecise
         transform.affine_invert();
 
         accumulated = transform * accumulated;
@@ -157,33 +173,93 @@ void RootMotionView::_notification(int p_what) {
 }
 
 AABB RootMotionView::get_aabb() const {
-    return AABB(Vector3(-radius, 0, -radius), Vector3(radius * 2, 0.001, radius * 2));
+    return AABB(
+        Vector3(-radius, 0, -radius),
+        Vector3(radius * 2, 0.001, radius * 2)
+    );
 }
+
 PoolVector<Face3> RootMotionView::get_faces(uint32_t p_usage_flags) const {
     return PoolVector<Face3>();
 }
 
 void RootMotionView::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_animation_path", "path"), &RootMotionView::set_animation_path);
-    ClassDB::bind_method(D_METHOD("get_animation_path"), &RootMotionView::get_animation_path);
+    ClassDB::bind_method(
+        D_METHOD("set_animation_path", "path"),
+        &RootMotionView::set_animation_path
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_animation_path"),
+        &RootMotionView::get_animation_path
+    );
 
-    ClassDB::bind_method(D_METHOD("set_color", "color"), &RootMotionView::set_color);
+    ClassDB::bind_method(
+        D_METHOD("set_color", "color"),
+        &RootMotionView::set_color
+    );
     ClassDB::bind_method(D_METHOD("get_color"), &RootMotionView::get_color);
 
-    ClassDB::bind_method(D_METHOD("set_cell_size", "size"), &RootMotionView::set_cell_size);
-    ClassDB::bind_method(D_METHOD("get_cell_size"), &RootMotionView::get_cell_size);
+    ClassDB::bind_method(
+        D_METHOD("set_cell_size", "size"),
+        &RootMotionView::set_cell_size
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_cell_size"),
+        &RootMotionView::get_cell_size
+    );
 
-    ClassDB::bind_method(D_METHOD("set_radius", "size"), &RootMotionView::set_radius);
+    ClassDB::bind_method(
+        D_METHOD("set_radius", "size"),
+        &RootMotionView::set_radius
+    );
     ClassDB::bind_method(D_METHOD("get_radius"), &RootMotionView::get_radius);
 
-    ClassDB::bind_method(D_METHOD("set_zero_y", "enable"), &RootMotionView::set_zero_y);
+    ClassDB::bind_method(
+        D_METHOD("set_zero_y", "enable"),
+        &RootMotionView::set_zero_y
+    );
     ClassDB::bind_method(D_METHOD("get_zero_y"), &RootMotionView::get_zero_y);
 
-    ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "animation_path", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "AnimationTree"), "set_animation_path", "get_animation_path");
-    ADD_PROPERTY(PropertyInfo(Variant::COLOR, "color"), "set_color", "get_color");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "cell_size", PROPERTY_HINT_RANGE, "0.1,16,0.01,or_greater"), "set_cell_size", "get_cell_size");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "radius", PROPERTY_HINT_RANGE, "0.1,16,0.01,or_greater"), "set_radius", "get_radius");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "zero_y"), "set_zero_y", "get_zero_y");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::NODE_PATH,
+            "animation_path",
+            PROPERTY_HINT_NODE_PATH_VALID_TYPES,
+            "AnimationTree"
+        ),
+        "set_animation_path",
+        "get_animation_path"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::COLOR, "color"),
+        "set_color",
+        "get_color"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "cell_size",
+            PROPERTY_HINT_RANGE,
+            "0.1,16,0.01,or_greater"
+        ),
+        "set_cell_size",
+        "get_cell_size"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "radius",
+            PROPERTY_HINT_RANGE,
+            "0.1,16,0.01,or_greater"
+        ),
+        "set_radius",
+        "get_radius"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "zero_y"),
+        "set_zero_y",
+        "get_zero_y"
+    );
 }
 
 RootMotionView::RootMotionView() {

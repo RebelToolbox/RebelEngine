@@ -37,21 +37,21 @@
 class CollisionPolygon2DEditor : public AbstractPolygon2DEditor {
     GDCLASS(CollisionPolygon2DEditor, AbstractPolygon2DEditor);
 
-    CollisionPolygon2D *node;
+    CollisionPolygon2D* node;
 
 protected:
-    virtual Node2D *_get_node() const;
-    virtual void _set_node(Node *p_polygon);
+    virtual Node2D* _get_node() const;
+    virtual void _set_node(Node* p_polygon);
 
 public:
-    CollisionPolygon2DEditor(EditorNode *p_editor);
+    CollisionPolygon2DEditor(EditorNode* p_editor);
 };
 
 class CollisionPolygon2DEditorPlugin : public AbstractPolygon2DEditorPlugin {
     GDCLASS(CollisionPolygon2DEditorPlugin, AbstractPolygon2DEditorPlugin);
 
 public:
-    CollisionPolygon2DEditorPlugin(EditorNode *p_node);
+    CollisionPolygon2DEditorPlugin(EditorNode* p_node);
 };
 
 #endif // COLLISION_POLYGON_2D_EDITOR_PLUGIN_H

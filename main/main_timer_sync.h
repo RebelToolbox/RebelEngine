@@ -34,10 +34,10 @@
 #include "core/engine.h"
 
 // define these to get more debugging logs for the delta smoothing
-//#define GODOT_DEBUG_DELTA_SMOOTHER
+// #define GODOT_DEBUG_DELTA_SMOOTHER
 
 struct MainFrameTime {
-    float idle_step; // time to advance idles for (argument to process())
+    float idle_step;   // time to advance idles for (argument to process())
     int physics_steps; // number of times to iterate the physics engine
     float interpolation_fraction; // fraction through the current physics tick
 
@@ -57,14 +57,15 @@ class MainTimerSync {
         // estimated vsync delta (monitor refresh rate)
         int64_t _vsync_delta = 16666;
 
-        // keep track of accumulated time so we know how many vsyncs to advance by
+        // keep track of accumulated time so we know how many vsyncs to advance
+        // by
         int64_t _leftover_time = 0;
 
         // keep a rough measurement of the FPS as we run.
-        // If this drifts a long way below or above the refresh rate, the machine
-        // is struggling to keep up, and we can switch off smoothing. This
-        // also deals with the case that the user has overridden the vsync in the GPU settings,
-        // in which case we don't want to try smoothing.
+        // If this drifts a long way below or above the refresh rate, the
+        // machine is struggling to keep up, and we can switch off smoothing.
+        // This also deals with the case that the user has overridden the vsync
+        // in the GPU settings, in which case we don't want to try smoothing.
         static const int MEASURE_FPS_OVER_NUM_FRAMES = 64;
 
         int64_t _measurement_time = 0;
@@ -74,7 +75,8 @@ class MainTimerSync {
         bool _measurement_allows_smoothing = true;
 
         // we can estimate the fps by growing it on condition
-        // that a large proportion of frames are higher than the current estimate.
+        // that a large proportion of frames are higher than the current
+        // estimate.
         int32_t _estimated_fps = 0;
         int32_t _hits_at_estimated = 0;
         int32_t _hits_above_estimated = 0;
@@ -115,16 +117,17 @@ class MainTimerSync {
     // current difference between wall clock time and reported sum of idle_steps
     float time_deficit;
 
-    // number of frames back for keeping accumulated physics steps roughly constant.
-    // value of 12 chosen because that is what is required to make 144 Hz monitors
-    // behave well with 60 Hz physics updates. The only worse commonly available refresh
-    // would be 85, requiring CONTROL_STEPS = 17.
+    // number of frames back for keeping accumulated physics steps roughly
+    // constant. value of 12 chosen because that is what is required to make 144
+    // Hz monitors behave well with 60 Hz physics updates. The only worse
+    // commonly available refresh would be 85, requiring CONTROL_STEPS = 17.
     static const int CONTROL_STEPS = 12;
 
     // sum of physics steps done over the last (i+1) frames
     int accumulated_physics_steps[CONTROL_STEPS];
 
-    // typical value for accumulated_physics_steps[i] is either this or this plus one
+    // typical value for accumulated_physics_steps[i] is either this or this
+    // plus one
     int typical_physics_steps[CONTROL_STEPS];
 
     int fixed_fps;
@@ -135,15 +138,25 @@ protected:
     // the typical values as defined by typical_physics_steps
     float get_physics_jitter_fix();
 
-    // gets our best bet for the average number of physics steps per render frame
-    // return value: number of frames back this data is consistent
-    int get_average_physics_steps(float &p_min, float &p_max);
+    // gets our best bet for the average number of physics steps per render
+    // frame return value: number of frames back this data is consistent
+    int get_average_physics_steps(float& p_min, float& p_max);
 
-    // advance physics clock by p_idle_step, return appropriate number of steps to simulate
-    MainFrameTime advance_core(float p_frame_slice, int p_iterations_per_second, float p_idle_step);
+    // advance physics clock by p_idle_step, return appropriate number of steps
+    // to simulate
+    MainFrameTime advance_core(
+        float p_frame_slice,
+        int p_iterations_per_second,
+        float p_idle_step
+    );
 
-    // calls advance_core, keeps track of deficit it adds to animaption_step, make sure the deficit sum stays close to zero
-    MainFrameTime advance_checked(float p_frame_slice, int p_iterations_per_second, float p_idle_step);
+    // calls advance_core, keeps track of deficit it adds to animaption_step,
+    // make sure the deficit sum stays close to zero
+    MainFrameTime advance_checked(
+        float p_frame_slice,
+        int p_iterations_per_second,
+        float p_idle_step
+    );
 
     // determine wall clock step since last iteration
     float get_cpu_idle_step();
@@ -155,7 +168,7 @@ public:
     void init(uint64_t p_cpu_ticks_usec);
     // set measured wall clock time
     void set_cpu_ticks_usec(uint64_t p_cpu_ticks_usec);
-    //set fixed fps
+    // set fixed fps
     void set_fixed_fps(int p_fixed_fps);
 
     // advance one frame, return timesteps to take

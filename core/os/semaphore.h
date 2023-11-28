@@ -80,9 +80,16 @@ public:
 class Semaphore {
 public:
     _ALWAYS_INLINE_ void post() const {}
+
     _ALWAYS_INLINE_ void wait() const {}
-    _ALWAYS_INLINE_ bool try_wait() const { return true; }
-    _ALWAYS_INLINE_ int get() const { return 1; }
+
+    _ALWAYS_INLINE_ bool try_wait() const {
+        return true;
+    }
+
+    _ALWAYS_INLINE_ int get() const {
+        return 1;
+    }
 };
 
 #endif

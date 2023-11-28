@@ -64,12 +64,12 @@ class ScrollBar : public Range {
     double get_grabber_min_size() const;
     double get_area_size() const;
     double get_area_offset() const;
-    double get_click_pos(const Point2 &p_pos) const;
+    double get_click_pos(const Point2& p_pos) const;
     double get_grabber_offset() const;
 
     static void set_can_focus_by_default(bool p_can_focus);
 
-    Node *drag_node;
+    Node* drag_node;
     NodePath drag_node_path;
     bool drag_node_enabled;
 
@@ -88,7 +88,7 @@ class ScrollBar : public Range {
     bool smooth_scroll_enabled;
 
     void _drag_node_exit();
-    void _drag_node_input(const Ref<InputEvent> &p_input);
+    void _drag_node_input(const Ref<InputEvent>& p_input);
 
     void _gui_input(Ref<InputEvent> p_event);
 
@@ -101,7 +101,7 @@ public:
     void set_custom_step(float p_custom_step);
     float get_custom_step() const;
 
-    void set_drag_node(const NodePath &p_path);
+    void set_drag_node(const NodePath& p_path);
     NodePath get_drag_node() const;
     void set_drag_node_enabled(bool p_enable);
 
@@ -117,16 +117,18 @@ class HScrollBar : public ScrollBar {
     GDCLASS(HScrollBar, ScrollBar);
 
 public:
-    HScrollBar() :
-            ScrollBar(HORIZONTAL) { set_v_size_flags(0); }
+    HScrollBar() : ScrollBar(HORIZONTAL) {
+        set_v_size_flags(0);
+    }
 };
 
 class VScrollBar : public ScrollBar {
     GDCLASS(VScrollBar, ScrollBar);
 
 public:
-    VScrollBar() :
-            ScrollBar(VERTICAL) { set_h_size_flags(0); }
+    VScrollBar() : ScrollBar(VERTICAL) {
+        set_h_size_flags(0);
+    }
 };
 
 #endif

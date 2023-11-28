@@ -46,8 +46,7 @@ class JavaClass : public Reference {
     GDCLASS(JavaClass, Reference);
 
 #ifdef ANDROID_ENABLED
-    enum ArgumentType{
-
+    enum ArgumentType {
         ARG_TYPE_VOID,
         ARG_TYPE_BOOLEAN,
         ARG_TYPE_BYTE,
@@ -57,7 +56,7 @@ class JavaClass : public Reference {
         ARG_TYPE_LONG,
         ARG_TYPE_FLOAT,
         ARG_TYPE_DOUBLE,
-        ARG_TYPE_STRING, //special case
+        ARG_TYPE_STRING, // special case
         ARG_TYPE_CLASS,
         ARG_ARRAY_BIT = 1 << 16,
         ARG_NUMBER_CLASS_BIT = 1 << 17,
@@ -74,7 +73,11 @@ class JavaClass : public Reference {
         jmethodID method;
     };
 
-    _FORCE_INLINE_ static void _convert_to_variant_type(int p_sig, Variant::Type &r_type, float &likelihood) {
+    _FORCE_INLINE_ static void _convert_to_variant_type(
+        int p_sig,
+        Variant::Type& r_type,
+        float& likelihood
+    ) {
         likelihood = 1.0;
         r_type = Variant::NIL;
 
@@ -170,9 +173,21 @@ class JavaClass : public Reference {
         }
     }
 
-    _FORCE_INLINE_ static bool _convert_object_to_variant(JNIEnv *env, jobject obj, Variant &var, uint32_t p_sig);
+    _FORCE_INLINE_ static bool _convert_object_to_variant(
+        JNIEnv* env,
+        jobject obj,
+        Variant& var,
+        uint32_t p_sig
+    );
 
-    bool _call_method(JavaObject *p_instance, const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error, Variant &ret);
+    bool _call_method(
+        JavaObject* p_instance,
+        const StringName& p_method,
+        const Variant** p_args,
+        int p_argcount,
+        Variant::CallError& r_error,
+        Variant& ret
+    );
 
     friend class JavaClassWrapper;
     Map<StringName, List<MethodInfo>> methods;
@@ -180,7 +195,12 @@ class JavaClass : public Reference {
 #endif
 
 public:
-    virtual Variant call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error);
+    virtual Variant call(
+        const StringName& p_method,
+        const Variant** p_args,
+        int p_argcount,
+        Variant::CallError& r_error
+    );
 
     JavaClass();
 };
@@ -196,10 +216,15 @@ class JavaObject : public Reference {
 #endif
 
 public:
-    virtual Variant call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error);
+    virtual Variant call(
+        const StringName& p_method,
+        const Variant** p_args,
+        int p_argcount,
+        Variant::CallError& r_error
+    );
 
 #ifdef ANDROID_ENABLED
-    JavaObject(const Ref<JavaClass> &p_base, jobject *p_instance);
+    JavaObject(const Ref<JavaClass>& p_base, jobject* p_instance);
     ~JavaObject();
 #endif
 };
@@ -232,18 +257,20 @@ class JavaClassWrapper : public Object {
     jmethodID Double_doubleValue;
     jobject classLoader;
 
-    bool _get_type_sig(JNIEnv *env, jobject obj, uint32_t &sig, String &strsig);
+    bool _get_type_sig(JNIEnv* env, jobject obj, uint32_t& sig, String& strsig);
 #endif
 
-    static JavaClassWrapper *singleton;
+    static JavaClassWrapper* singleton;
 
 protected:
     static void _bind_methods();
 
 public:
-    static JavaClassWrapper *get_singleton() { return singleton; }
+    static JavaClassWrapper* get_singleton() {
+        return singleton;
+    }
 
-    Ref<JavaClass> wrap(const String &p_class);
+    Ref<JavaClass> wrap(const String& p_class);
 
 #ifdef ANDROID_ENABLED
     JavaClassWrapper(jobject p_activity = NULL);

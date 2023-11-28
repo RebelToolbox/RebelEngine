@@ -73,9 +73,10 @@ class GLTFState : public Resource {
     Vector<Ref<GLTFBufferView>> buffer_views;
     Vector<Ref<GLTFAccessor>> accessors;
 
-    Vector<Ref<GLTFMesh>> meshes; // meshes are loaded directly, no reason not to.
+    Vector<Ref<GLTFMesh>>
+        meshes; // meshes are loaded directly, no reason not to.
 
-    Vector<AnimationPlayer *> animation_players;
+    Vector<AnimationPlayer*> animation_players;
     Map<Ref<Material>, GLTFMaterialIndex> material_cache;
     Vector<Ref<Material>> materials;
 
@@ -93,10 +94,11 @@ class GLTFState : public Resource {
     Vector<Ref<GLTFSkeleton>> skeletons;
     Map<GLTFSkeletonIndex, GLTFNodeIndex> skeleton_to_node;
     Vector<Ref<GLTFAnimation>> animations;
-    Map<GLTFNodeIndex, Node *> scene_nodes;
+    Map<GLTFNodeIndex, Node*> scene_nodes;
 
     Map<ObjectID, GLTFSkeletonIndex> skeleton3d_to_gltf_skeleton;
-    Map<ObjectID, Map<ObjectID, GLTFSkinIndex>> skin_and_skeleton3d_to_gltf_skin;
+    Map<ObjectID, Map<ObjectID, GLTFSkinIndex>>
+        skin_and_skeleton3d_to_gltf_skin;
 
 protected:
     static void _bind_methods();
@@ -171,25 +173,25 @@ public:
     Array get_animations();
     void set_animations(Array p_animations);
 
-    Node *get_scene_node(GLTFNodeIndex idx);
+    Node* get_scene_node(GLTFNodeIndex idx);
 
     int get_animation_players_count(int idx);
 
-    AnimationPlayer *get_animation_player(int idx);
+    AnimationPlayer* get_animation_player(int idx);
 
-    //void set_scene_nodes(Map<GLTFNodeIndex, Node *> p_scene_nodes) {
+    // void set_scene_nodes(Map<GLTFNodeIndex, Node *> p_scene_nodes) {
     //	this->scene_nodes = p_scene_nodes;
-    //}
+    // }
 
-    //void set_animation_players(Vector<AnimationPlayer *> p_animation_players) {
-    //	this->animation_players = p_animation_players;
-    //}
+    // void set_animation_players(Vector<AnimationPlayer *> p_animation_players)
+    // { 	this->animation_players = p_animation_players;
+    // }
 
-    //Map<Ref<Material>, GLTFMaterialIndex> get_material_cache() {
+    // Map<Ref<Material>, GLTFMaterialIndex> get_material_cache() {
     //	return this->material_cache;
-    //}
-    //void set_material_cache(Map<Ref<Material>, GLTFMaterialIndex> p_material_cache) {
-    //	this->material_cache = p_material_cache;
-    //}
+    // }
+    // void set_material_cache(Map<Ref<Material>, GLTFMaterialIndex>
+    // p_material_cache) { 	this->material_cache = p_material_cache;
+    // }
 };
 #endif // GLTF_STATE_H

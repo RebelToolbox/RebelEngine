@@ -45,6 +45,7 @@ public:
     struct File {
         int package;
         unz_file_pos file_pos;
+
         File() {
             package = -1;
         };
@@ -55,11 +56,12 @@ private:
         String filename;
         unzFile zfile;
     };
+
     Vector<Package> packages;
 
     Map<String, File> files;
 
-    static ZipArchive *instance;
+    static ZipArchive* instance;
 
     FileAccess::CreateFunc fa_create_func;
 
@@ -71,10 +73,14 @@ public:
 
     bool file_exists(String p_name) const;
 
-    virtual bool try_open_pack(const String &p_path, bool p_replace_files, uint64_t p_offset);
-    FileAccess *get_file(const String &p_path, PackedData::PackedFile *p_file);
+    virtual bool try_open_pack(
+        const String& p_path,
+        bool p_replace_files,
+        uint64_t p_offset
+    );
+    FileAccess* get_file(const String& p_path, PackedData::PackedFile* p_file);
 
-    static ZipArchive *get_singleton();
+    static ZipArchive* get_singleton();
 
     ZipArchive();
     ~ZipArchive();
@@ -87,32 +93,49 @@ class FileAccessZip : public FileAccess {
     mutable bool at_eof;
 
 public:
-    virtual Error _open(const String &p_path, int p_mode_flags); ///< open a file
-    virtual void close(); ///< close a file
+    virtual Error _open(
+        const String& p_path,
+        int p_mode_flags
+    );                            ///< open a file
+    virtual void close();         ///< close a file
     virtual bool is_open() const; ///< true when file is open
 
     virtual void seek(uint64_t p_position); ///< seek to a given position
-    virtual void seek_end(int64_t p_position = 0); ///< seek from the end of file
+    virtual void seek_end(
+        int64_t p_position = 0
+    );                                     ///< seek from the end of file
     virtual uint64_t get_position() const; ///< get position in the file
-    virtual uint64_t get_len() const; ///< get size of the file
+    virtual uint64_t get_len() const;      ///< get size of the file
 
     virtual bool eof_reached() const; ///< reading passed EOF
 
     virtual uint8_t get_8() const; ///< get a byte
-    virtual uint64_t get_buffer(uint8_t *p_dst, uint64_t p_length) const;
+    virtual uint64_t get_buffer(uint8_t* p_dst, uint64_t p_length) const;
 
     virtual Error get_error() const; ///< get last error
 
     virtual void flush();
     virtual void store_8(uint8_t p_dest); ///< store a byte
 
-    virtual bool file_exists(const String &p_name); ///< return true if a file exists
+    virtual bool file_exists(const String& p_name
+    ); ///< return true if a file exists
 
-    virtual uint64_t _get_modified_time(const String &p_file) { return 0; } // todo
-    virtual uint32_t _get_unix_permissions(const String &p_file) { return 0; }
-    virtual Error _set_unix_permissions(const String &p_file, uint32_t p_permissions) { return FAILED; }
+    virtual uint64_t _get_modified_time(const String& p_file) {
+        return 0;
+    } // todo
 
-    FileAccessZip(const String &p_path, const PackedData::PackedFile &p_file);
+    virtual uint32_t _get_unix_permissions(const String& p_file) {
+        return 0;
+    }
+
+    virtual Error _set_unix_permissions(
+        const String& p_file,
+        uint32_t p_permissions
+    ) {
+        return FAILED;
+    }
+
+    FileAccessZip(const String& p_path, const PackedData::PackedFile& p_file);
     ~FileAccessZip();
 };
 

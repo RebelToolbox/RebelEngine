@@ -39,18 +39,22 @@
 class EditorDirDialog : public ConfirmationDialog {
     GDCLASS(EditorDirDialog, ConfirmationDialog);
 
-    ConfirmationDialog *makedialog;
-    LineEdit *makedirname;
-    AcceptDialog *mkdirerr;
+    ConfirmationDialog* makedialog;
+    LineEdit* makedirname;
+    AcceptDialog* mkdirerr;
 
-    Button *makedir;
+    Button* makedir;
     Set<String> opened_paths;
 
-    Tree *tree;
+    Tree* tree;
     bool updating;
 
-    void _item_collapsed(Object *p_item);
-    void _update_dir(TreeItem *p_item, EditorFileSystemDirectory *p_dir, const String &p_select_path = String());
+    void _item_collapsed(Object* p_item);
+    void _update_dir(
+        TreeItem* p_item,
+        EditorFileSystemDirectory* p_dir,
+        const String& p_select_path = String()
+    );
 
     void _make_dir();
     void _make_dir_confirm();
@@ -64,7 +68,7 @@ protected:
     static void _bind_methods();
 
 public:
-    void reload(const String &p_path = "");
+    void reload(const String& p_path = "");
     EditorDirDialog();
 };
 

@@ -66,22 +66,69 @@ public:
     CharFXTransform();
     ~CharFXTransform();
 
-    uint64_t get_relative_index() { return relative_index; }
-    void set_relative_index(uint64_t p_index) { relative_index = p_index; }
-    uint64_t get_absolute_index() { return absolute_index; }
-    void set_absolute_index(uint64_t p_index) { absolute_index = p_index; }
-    float get_elapsed_time() { return elapsed_time; }
-    void set_elapsed_time(float p_elapsed_time) { elapsed_time = p_elapsed_time; }
-    bool is_visible() { return visibility; }
-    void set_visibility(bool p_vis) { visibility = p_vis; }
-    Point2 get_offset() { return offset; }
-    void set_offset(Point2 p_offset) { offset = p_offset; }
-    Color get_color() { return color; }
-    void set_color(Color p_color) { color = p_color; }
-    int get_character() { return (int)character; }
-    void set_character(int p_char) { character = (CharType)p_char; }
-    Dictionary get_environment() { return environment; }
-    void set_environment(Dictionary p_environment) { environment = p_environment; }
+    uint64_t get_relative_index() {
+        return relative_index;
+    }
+
+    void set_relative_index(uint64_t p_index) {
+        relative_index = p_index;
+    }
+
+    uint64_t get_absolute_index() {
+        return absolute_index;
+    }
+
+    void set_absolute_index(uint64_t p_index) {
+        absolute_index = p_index;
+    }
+
+    float get_elapsed_time() {
+        return elapsed_time;
+    }
+
+    void set_elapsed_time(float p_elapsed_time) {
+        elapsed_time = p_elapsed_time;
+    }
+
+    bool is_visible() {
+        return visibility;
+    }
+
+    void set_visibility(bool p_vis) {
+        visibility = p_vis;
+    }
+
+    Point2 get_offset() {
+        return offset;
+    }
+
+    void set_offset(Point2 p_offset) {
+        offset = p_offset;
+    }
+
+    Color get_color() {
+        return color;
+    }
+
+    void set_color(Color p_color) {
+        color = p_color;
+    }
+
+    int get_character() {
+        return (int)character;
+    }
+
+    void set_character(int p_char) {
+        character = (CharType)p_char;
+    }
+
+    Dictionary get_environment() {
+        return environment;
+    }
+
+    void set_environment(Dictionary p_environment) {
+        environment = p_environment;
+    }
 };
 
 #endif // RICH_TEXT_EFFECT_H

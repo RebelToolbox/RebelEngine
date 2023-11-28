@@ -37,21 +37,27 @@
 #include "gd_mono_marshal.h"
 #include "gd_mono_utils.h"
 
-void GDMonoField::set_value_raw(MonoObject *p_object, void *p_ptr) {
+void GDMonoField::set_value_raw(MonoObject* p_object, void* p_ptr) {
     mono_field_set_value(p_object, mono_field, &p_ptr);
 }
 
-void GDMonoField::set_value_from_variant(MonoObject *p_object, const Variant &p_value) {
-#define SET_FROM_STRUCT(m_type)                                                               \
-    {                                                                                         \
-        GDMonoMarshal::M_##m_type from = MARSHALLED_OUT(m_type, p_value.operator ::m_type()); \
-        mono_field_set_value(p_object, mono_field, &from);                                    \
+void GDMonoField::set_value_from_variant(
+    MonoObject* p_object,
+    const Variant& p_value
+) {
+#define SET_FROM_STRUCT(m_type)                                                \
+    {                                                                          \
+        GDMonoMarshal::M_##m_type from =                                       \
+            MARSHALLED_OUT(m_type, p_value.operator ::m_type());               \
+        mono_field_set_value(p_object, mono_field, &from);                     \
     }
 
-#define SET_FROM_ARRAY(m_type)                                                                   \
-    {                                                                                            \
-        MonoArray *managed = GDMonoMarshal::m_type##_to_mono_array(p_value.operator ::m_type()); \
-        mono_field_set_value(p_object, mono_field, managed);                                     \
+#define SET_FROM_ARRAY(m_type)                                                 \
+    {                                                                          \
+        MonoArray* managed =                                                   \
+            GDMonoMarshal::m_type##_to_mono_array(p_value.operator ::m_type()  \
+            );                                                                 \
+        mono_field_set_value(p_object, mono_field, managed);                   \
     }
 
     switch (type.type_encoding) {
@@ -112,16 +118,17 @@ void GDMonoField::set_value_from_variant(MonoObject *p_object, const Variant &p_
         case MONO_TYPE_STRING: {
             if (p_value.get_type() == Variant::NIL) {
                 // Otherwise, Variant -> String would return the string "Null"
-                MonoString *mono_string = NULL;
+                MonoString* mono_string = NULL;
                 mono_field_set_value(p_object, mono_field, mono_string);
             } else {
-                MonoString *mono_string = GDMonoMarshal::mono_string_from_godot(p_value);
+                MonoString* mono_string =
+                    GDMonoMarshal::mono_string_from_godot(p_value);
                 mono_field_set_value(p_object, mono_field, mono_string);
             }
         } break;
 
         case MONO_TYPE_VALUETYPE: {
-            GDMonoClass *tclass = type.type_class;
+            GDMonoClass* tclass = type.type_class;
 
             if (tclass == CACHED_CLASS(Vector2)) {
                 SET_FROM_STRUCT(Vector2);
@@ -174,7 +181,8 @@ void GDMonoField::set_value_from_variant(MonoObject *p_object, const Variant &p_
             }
 
             if (mono_class_is_enum(tclass->get_mono_ptr())) {
-                MonoType *enum_basetype = mono_class_enum_basetype(tclass->get_mono_ptr());
+                MonoType* enum_basetype =
+                    mono_class_enum_basetype(tclass->get_mono_ptr());
                 switch (mono_type_get_type(enum_basetype)) {
                     case MONO_TYPE_BOOLEAN: {
                         MonoBoolean val = p_value.operator bool();
@@ -227,19 +235,27 @@ void GDMonoField::set_value_from_variant(MonoObject *p_object, const Variant &p_
                         break;
                     }
                     default: {
-                        ERR_FAIL_MSG("Attempted to convert Variant to a managed enum value of unmarshallable base type.");
+                        ERR_FAIL_MSG(
+                            "Attempted to convert Variant to a managed enum "
+                            "value of unmarshallable base type."
+                        );
                     }
                 }
 
                 break;
             }
 
-            ERR_FAIL_MSG("Attempted to set the value of a field of unmarshallable type: '" + tclass->get_name() + "'.");
+            ERR_FAIL_MSG(
+                "Attempted to set the value of a field of unmarshallable type: "
+                "'"
+                + tclass->get_name() + "'."
+            );
         } break;
 
         case MONO_TYPE_ARRAY:
         case MONO_TYPE_SZARRAY: {
-            MonoArrayType *array_type = mono_type_get_array_type(type.type_class->get_mono_type());
+            MonoArrayType* array_type =
+                mono_type_get_array_type(type.type_class->get_mono_type());
 
             if (array_type->eklass == CACHED_CLASS_RAW(MonoObject)) {
                 SET_FROM_ARRAY(Array);
@@ -291,55 +307,79 @@ void GDMonoField::set_value_from_variant(MonoObject *p_object, const Variant &p_
                 break;
             }
 
-            GDMonoClass *array_type_class = GDMono::get_singleton()->get_class(array_type->eklass);
-            if (CACHED_CLASS(GodotObject)->is_assignable_from(array_type_class)) {
-                MonoArray *managed = GDMonoMarshal::Array_to_mono_array(p_value.operator ::Array(), array_type_class);
+            GDMonoClass* array_type_class =
+                GDMono::get_singleton()->get_class(array_type->eklass);
+            if (CACHED_CLASS(GodotObject)
+                    ->is_assignable_from(array_type_class)) {
+                MonoArray* managed = GDMonoMarshal::Array_to_mono_array(
+                    p_value.operator ::Array(),
+                    array_type_class
+                );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
-            ERR_FAIL_MSG("Attempted to convert Variant to a managed array of unmarshallable element type.");
+            ERR_FAIL_MSG(
+                "Attempted to convert Variant to a managed array of "
+                "unmarshallable element type."
+            );
         } break;
 
         case MONO_TYPE_CLASS: {
-            GDMonoClass *type_class = type.type_class;
+            GDMonoClass* type_class = type.type_class;
 
             // GodotObject
             if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
-                MonoObject *managed = GDMonoUtils::unmanaged_get_managed(p_value.operator Object *());
+                MonoObject* managed = GDMonoUtils::unmanaged_get_managed(
+                    p_value.operator Object*()
+                );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
             if (CACHED_CLASS(NodePath) == type_class) {
-                MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator NodePath());
+                MonoObject* managed =
+                    GDMonoUtils::create_managed_from(p_value.operator NodePath()
+                    );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
             if (CACHED_CLASS(RID) == type_class) {
-                MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator RID());
+                MonoObject* managed =
+                    GDMonoUtils::create_managed_from(p_value.operator RID());
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
             // Godot.Collections.Dictionary or IDictionary
-            if (CACHED_CLASS(Dictionary) == type_class || type_class == CACHED_CLASS(System_Collections_IDictionary)) {
-                MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator Dictionary(), CACHED_CLASS(Dictionary));
+            if (CACHED_CLASS(Dictionary) == type_class
+                || type_class == CACHED_CLASS(System_Collections_IDictionary)) {
+                MonoObject* managed = GDMonoUtils::create_managed_from(
+                    p_value.operator Dictionary(),
+                    CACHED_CLASS(Dictionary)
+                );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
             // Godot.Collections.Array or ICollection or IEnumerable
-            if (CACHED_CLASS(Array) == type_class ||
-                    type_class == CACHED_CLASS(System_Collections_ICollection) ||
-                    type_class == CACHED_CLASS(System_Collections_IEnumerable)) {
-                MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator Array(), CACHED_CLASS(Array));
+            if (CACHED_CLASS(Array) == type_class
+                || type_class == CACHED_CLASS(System_Collections_ICollection)
+                || type_class == CACHED_CLASS(System_Collections_IEnumerable)) {
+                MonoObject* managed = GDMonoUtils::create_managed_from(
+                    p_value.operator Array(),
+                    CACHED_CLASS(Array)
+                );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
-            ERR_FAIL_MSG("Attempted to set the value of a field of unmarshallable type: '" + type_class->get_name() + "'.");
+            ERR_FAIL_MSG(
+                "Attempted to set the value of a field of unmarshallable type: "
+                "'"
+                + type_class->get_name() + "'."
+            );
         } break;
 
         case MONO_TYPE_OBJECT: {
@@ -363,7 +403,8 @@ void GDMonoField::set_value_from_variant(MonoObject *p_object, const Variant &p_
 #endif
                 } break;
                 case Variant::STRING: {
-                    MonoString *mono_string = GDMonoMarshal::mono_string_from_godot(p_value);
+                    MonoString* mono_string =
+                        GDMonoMarshal::mono_string_from_godot(p_value);
                     mono_field_set_value(p_object, mono_field, mono_string);
                 } break;
                 case Variant::VECTOR2: {
@@ -397,24 +438,36 @@ void GDMonoField::set_value_from_variant(MonoObject *p_object, const Variant &p_
                     SET_FROM_STRUCT(Color);
                 } break;
                 case Variant::NODE_PATH: {
-                    MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator NodePath());
+                    MonoObject* managed = GDMonoUtils::create_managed_from(
+                        p_value.operator NodePath()
+                    );
                     mono_field_set_value(p_object, mono_field, managed);
                 } break;
                 case Variant::_RID: {
-                    MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator RID());
+                    MonoObject* managed =
+                        GDMonoUtils::create_managed_from(p_value.operator RID()
+                        );
                     mono_field_set_value(p_object, mono_field, managed);
                 } break;
                 case Variant::OBJECT: {
-                    MonoObject *managed = GDMonoUtils::unmanaged_get_managed(p_value.operator Object *());
+                    MonoObject* managed = GDMonoUtils::unmanaged_get_managed(
+                        p_value.operator Object*()
+                    );
                     mono_field_set_value(p_object, mono_field, managed);
                     break;
                 }
                 case Variant::DICTIONARY: {
-                    MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator Dictionary(), CACHED_CLASS(Dictionary));
+                    MonoObject* managed = GDMonoUtils::create_managed_from(
+                        p_value.operator Dictionary(),
+                        CACHED_CLASS(Dictionary)
+                    );
                     mono_field_set_value(p_object, mono_field, managed);
                 } break;
                 case Variant::ARRAY: {
-                    MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator Array(), CACHED_CLASS(Array));
+                    MonoObject* managed = GDMonoUtils::create_managed_from(
+                        p_value.operator Array(),
+                        CACHED_CLASS(Array)
+                    );
                     mono_field_set_value(p_object, mono_field, managed);
                 } break;
                 case Variant::POOL_BYTE_ARRAY: {
@@ -444,76 +497,127 @@ void GDMonoField::set_value_from_variant(MonoObject *p_object, const Variant &p_
         } break;
 
         case MONO_TYPE_GENERICINST: {
-            MonoReflectionType *reftype = mono_type_get_object(mono_domain_get(), type.type_class->get_mono_type());
+            MonoReflectionType* reftype = mono_type_get_object(
+                mono_domain_get(),
+                type.type_class->get_mono_type()
+            );
 
             // Godot.Collections.Dictionary<TKey, TValue>
             if (GDMonoUtils::Marshal::type_is_generic_dictionary(reftype)) {
-                MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator Dictionary(), type.type_class);
+                MonoObject* managed = GDMonoUtils::create_managed_from(
+                    p_value.operator Dictionary(),
+                    type.type_class
+                );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
             // Godot.Collections.Array<T>
             if (GDMonoUtils::Marshal::type_is_generic_array(reftype)) {
-                MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator Array(), type.type_class);
+                MonoObject* managed = GDMonoUtils::create_managed_from(
+                    p_value.operator Array(),
+                    type.type_class
+                );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
             // System.Collections.Generic.Dictionary<TKey, TValue>
-            if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(reftype)) {
-                MonoReflectionType *key_reftype = nullptr;
-                MonoReflectionType *value_reftype = nullptr;
-                GDMonoUtils::Marshal::dictionary_get_key_value_types(reftype, &key_reftype, &value_reftype);
-                MonoObject *managed = GDMonoMarshal::Dictionary_to_system_generic_dict(p_value.operator Dictionary(),
-                        type.type_class, key_reftype, value_reftype);
+            if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(reftype
+                )) {
+                MonoReflectionType* key_reftype = nullptr;
+                MonoReflectionType* value_reftype = nullptr;
+                GDMonoUtils::Marshal::dictionary_get_key_value_types(
+                    reftype,
+                    &key_reftype,
+                    &value_reftype
+                );
+                MonoObject* managed =
+                    GDMonoMarshal::Dictionary_to_system_generic_dict(
+                        p_value.operator Dictionary(),
+                        type.type_class,
+                        key_reftype,
+                        value_reftype
+                    );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
             // System.Collections.Generic.List<T>
             if (GDMonoUtils::Marshal::type_is_system_generic_list(reftype)) {
-                MonoReflectionType *elem_reftype = nullptr;
-                GDMonoUtils::Marshal::array_get_element_type(reftype, &elem_reftype);
-                MonoObject *managed = GDMonoMarshal::Array_to_system_generic_list(p_value.operator Array(),
-                        type.type_class, elem_reftype);
+                MonoReflectionType* elem_reftype = nullptr;
+                GDMonoUtils::Marshal::array_get_element_type(
+                    reftype,
+                    &elem_reftype
+                );
+                MonoObject* managed =
+                    GDMonoMarshal::Array_to_system_generic_list(
+                        p_value.operator Array(),
+                        type.type_class,
+                        elem_reftype
+                    );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
             // IDictionary<TKey, TValue>
             if (GDMonoUtils::Marshal::type_is_generic_idictionary(reftype)) {
-                MonoReflectionType *key_reftype;
-                MonoReflectionType *value_reftype;
-                GDMonoUtils::Marshal::dictionary_get_key_value_types(reftype, &key_reftype, &value_reftype);
-                GDMonoClass *godot_dict_class = GDMonoUtils::Marshal::make_generic_dictionary_type(key_reftype, value_reftype);
+                MonoReflectionType* key_reftype;
+                MonoReflectionType* value_reftype;
+                GDMonoUtils::Marshal::dictionary_get_key_value_types(
+                    reftype,
+                    &key_reftype,
+                    &value_reftype
+                );
+                GDMonoClass* godot_dict_class =
+                    GDMonoUtils::Marshal::make_generic_dictionary_type(
+                        key_reftype,
+                        value_reftype
+                    );
 
-                MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator Dictionary(), godot_dict_class);
+                MonoObject* managed = GDMonoUtils::create_managed_from(
+                    p_value.operator Dictionary(),
+                    godot_dict_class
+                );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
             // ICollection<T> or IEnumerable<T>
-            if (GDMonoUtils::Marshal::type_is_generic_icollection(reftype) || GDMonoUtils::Marshal::type_is_generic_ienumerable(reftype)) {
-                MonoReflectionType *elem_reftype;
-                GDMonoUtils::Marshal::array_get_element_type(reftype, &elem_reftype);
-                GDMonoClass *godot_array_class = GDMonoUtils::Marshal::make_generic_array_type(elem_reftype);
+            if (GDMonoUtils::Marshal::type_is_generic_icollection(reftype)
+                || GDMonoUtils::Marshal::type_is_generic_ienumerable(reftype)) {
+                MonoReflectionType* elem_reftype;
+                GDMonoUtils::Marshal::array_get_element_type(
+                    reftype,
+                    &elem_reftype
+                );
+                GDMonoClass* godot_array_class =
+                    GDMonoUtils::Marshal::make_generic_array_type(elem_reftype);
 
-                MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator Array(), godot_array_class);
+                MonoObject* managed = GDMonoUtils::create_managed_from(
+                    p_value.operator Array(),
+                    godot_array_class
+                );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
             // GodotObject
-            GDMonoClass *type_class = type.type_class;
+            GDMonoClass* type_class = type.type_class;
             if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
-                MonoObject *managed = GDMonoUtils::unmanaged_get_managed(p_value.operator Object *());
+                MonoObject* managed = GDMonoUtils::unmanaged_get_managed(
+                    p_value.operator Object*()
+                );
                 mono_field_set_value(p_object, mono_field, managed);
             }
         } break;
 
         default: {
-            ERR_PRINT("Attempted to set the value of a field of unexpected type encoding: " + itos(type.type_encoding) + ".");
+            ERR_PRINT(
+                "Attempted to set the value of a field of unexpected type "
+                "encoding: "
+                + itos(type.type_encoding) + "."
+            );
         } break;
     }
 
@@ -521,50 +625,55 @@ void GDMonoField::set_value_from_variant(MonoObject *p_object, const Variant &p_
 #undef SET_FROM_STRUCT_AND_BREAK
 }
 
-MonoObject *GDMonoField::get_value(MonoObject *p_object) {
+MonoObject* GDMonoField::get_value(MonoObject* p_object) {
     return mono_field_get_value_object(mono_domain_get(), mono_field, p_object);
 }
 
-bool GDMonoField::get_bool_value(MonoObject *p_object) {
+bool GDMonoField::get_bool_value(MonoObject* p_object) {
     return (bool)GDMonoMarshal::unbox<MonoBoolean>(get_value(p_object));
 }
 
-int GDMonoField::get_int_value(MonoObject *p_object) {
+int GDMonoField::get_int_value(MonoObject* p_object) {
     return GDMonoMarshal::unbox<int32_t>(get_value(p_object));
 }
 
-String GDMonoField::get_string_value(MonoObject *p_object) {
-    MonoObject *val = get_value(p_object);
-    return GDMonoMarshal::mono_string_to_godot((MonoString *)val);
+String GDMonoField::get_string_value(MonoObject* p_object) {
+    MonoObject* val = get_value(p_object);
+    return GDMonoMarshal::mono_string_to_godot((MonoString*)val);
 }
 
-bool GDMonoField::has_attribute(GDMonoClass *p_attr_class) {
+bool GDMonoField::has_attribute(GDMonoClass* p_attr_class) {
     ERR_FAIL_NULL_V(p_attr_class, false);
 
-    if (!attrs_fetched)
+    if (!attrs_fetched) {
         fetch_attributes();
+    }
 
-    if (!attributes)
+    if (!attributes) {
         return false;
+    }
 
     return mono_custom_attrs_has_attr(attributes, p_attr_class->get_mono_ptr());
 }
 
-MonoObject *GDMonoField::get_attribute(GDMonoClass *p_attr_class) {
+MonoObject* GDMonoField::get_attribute(GDMonoClass* p_attr_class) {
     ERR_FAIL_NULL_V(p_attr_class, NULL);
 
-    if (!attrs_fetched)
+    if (!attrs_fetched) {
         fetch_attributes();
+    }
 
-    if (!attributes)
+    if (!attributes) {
         return NULL;
+    }
 
     return mono_custom_attrs_get_attr(attributes, p_attr_class->get_mono_ptr());
 }
 
 void GDMonoField::fetch_attributes() {
     ERR_FAIL_COND(attributes != NULL);
-    attributes = mono_custom_attrs_from_field(owner->get_mono_ptr(), mono_field);
+    attributes =
+        mono_custom_attrs_from_field(owner->get_mono_ptr(), mono_field);
     attrs_fetched = true;
 }
 
@@ -573,7 +682,8 @@ bool GDMonoField::is_static() {
 }
 
 IMonoClassMember::Visibility GDMonoField::get_visibility() {
-    switch (mono_field_get_flags(mono_field) & MONO_FIELD_ATTR_FIELD_ACCESS_MASK) {
+    switch (mono_field_get_flags(mono_field) & MONO_FIELD_ATTR_FIELD_ACCESS_MASK
+    ) {
         case MONO_FIELD_ATTR_PRIVATE:
             return IMonoClassMember::PRIVATE;
         case MONO_FIELD_ATTR_FAM_AND_ASSEM:
@@ -589,13 +699,13 @@ IMonoClassMember::Visibility GDMonoField::get_visibility() {
     }
 }
 
-GDMonoField::GDMonoField(MonoClassField *p_mono_field, GDMonoClass *p_owner) {
+GDMonoField::GDMonoField(MonoClassField* p_mono_field, GDMonoClass* p_owner) {
     owner = p_owner;
     mono_field = p_mono_field;
     name = String::utf8(mono_field_get_name(mono_field));
-    MonoType *field_type = mono_field_get_type(mono_field);
+    MonoType* field_type = mono_field_get_type(mono_field);
     type.type_encoding = mono_type_get_type(field_type);
-    MonoClass *field_type_class = mono_class_from_mono_type(field_type);
+    MonoClass* field_type_class = mono_class_from_mono_type(field_type);
     type.type_class = GDMono::get_singleton()->get_class(field_type_class);
 
     attrs_fetched = false;

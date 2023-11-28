@@ -52,5 +52,4 @@ void register_csg_types() {
 #endif
 }
 
-void unregister_csg_types() {
-}
+void unregister_csg_types() {}

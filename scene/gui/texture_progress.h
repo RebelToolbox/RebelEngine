@@ -70,16 +70,16 @@ public:
     void set_fill_degrees(float p_angle);
     float get_fill_degrees();
 
-    void set_radial_center_offset(const Point2 &p_off);
+    void set_radial_center_offset(const Point2& p_off);
     Point2 get_radial_center_offset();
 
-    void set_under_texture(const Ref<Texture> &p_texture);
+    void set_under_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_under_texture() const;
 
-    void set_progress_texture(const Ref<Texture> &p_texture);
+    void set_progress_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_progress_texture() const;
 
-    void set_over_texture(const Ref<Texture> &p_texture);
+    void set_over_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_over_texture() const;
 
     void set_stretch_margin(Margin p_margin, int p_size);
@@ -88,13 +88,13 @@ public:
     void set_nine_patch_stretch(bool p_stretch);
     bool get_nine_patch_stretch() const;
 
-    void set_tint_under(const Color &p_tint);
+    void set_tint_under(const Color& p_tint);
     Color get_tint_under() const;
 
-    void set_tint_progress(const Color &p_tint);
+    void set_tint_progress(const Color& p_tint);
     Color get_tint_progress() const;
 
-    void set_tint_over(const Color &p_tint);
+    void set_tint_over(const Color& p_tint);
     Color get_tint_over() const;
 
     Size2 get_minimum_size() const;
@@ -113,7 +113,12 @@ private:
 
     Point2 unit_val_to_uv(float val);
     Point2 get_relative_center();
-    void draw_nine_patch_stretched(const Ref<Texture> &p_texture, FillMode p_mode, double p_ratio, const Color &p_modulate);
+    void draw_nine_patch_stretched(
+        const Ref<Texture>& p_texture,
+        FillMode p_mode,
+        double p_ratio,
+        const Color& p_modulate
+    );
 };
 
 VARIANT_ENUM_CAST(TextureProgress::FillMode);

@@ -42,31 +42,32 @@
 #include "scene/gui/popup_menu.h"
 
 class ImportDockParameters;
+
 class ImportDock : public VBoxContainer {
     GDCLASS(ImportDock, VBoxContainer);
 
-    Label *imported;
-    OptionButton *import_as;
-    MenuButton *preset;
-    EditorInspector *import_opts;
+    Label* imported;
+    OptionButton* import_as;
+    MenuButton* preset;
+    EditorInspector* import_opts;
 
     List<PropertyInfo> properties;
     Map<StringName, Variant> property_values;
 
-    ConfirmationDialog *reimport_confirm;
-    Label *label_warning;
-    Button *import;
+    ConfirmationDialog* reimport_confirm;
+    Label* label_warning;
+    Button* import;
 
-    ImportDockParameters *params;
+    ImportDockParameters* params;
 
     void _preset_selected(int p_idx);
     void _importer_selected(int i_idx);
-    void _update_options(const Ref<ConfigFile> &p_config = Ref<ConfigFile>());
+    void _update_options(const Ref<ConfigFile>& p_config = Ref<ConfigFile>());
     void _update_preset_menu();
-    void _add_keep_import_option(const String &p_importer_name);
+    void _add_keep_import_option(const String& p_importer_name);
 
-    void _property_edited(const StringName &p_prop);
-    void _property_toggled(const StringName &p_prop, bool p_checked);
+    void _property_edited(const StringName& p_prop);
+    void _property_toggled(const StringName& p_prop, bool p_checked);
     void _set_dirty(bool p_dirty);
     void _reimport_attempt();
     void _reimport_and_restart();
@@ -83,8 +84,8 @@ protected:
     void _notification(int p_what);
 
 public:
-    void set_edit_path(const String &p_path);
-    void set_edit_multiple_paths(const Vector<String> &p_paths);
+    void set_edit_path(const String& p_path);
+    void set_edit_multiple_paths(const Vector<String>& p_paths);
     void initialize_import_options() const;
     void clear();
 

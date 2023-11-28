@@ -45,9 +45,12 @@ String ResourceImporterWAV::get_importer_name() const {
 String ResourceImporterWAV::get_visible_name() const {
     return "Microsoft WAV";
 }
-void ResourceImporterWAV::get_recognized_extensions(List<String> *p_extensions) const {
+
+void ResourceImporterWAV::get_recognized_extensions(List<String>* p_extensions
+) const {
     p_extensions->push_back("wav");
 }
+
 String ResourceImporterWAV::get_save_extension() const {
     return "sample";
 }
@@ -56,7 +59,10 @@ String ResourceImporterWAV::get_resource_type() const {
     return "AudioStreamSample";
 }
 
-bool ResourceImporterWAV::get_option_visibility(const String &p_option, const Map<StringName, Variant> &p_options) const {
+bool ResourceImporterWAV::get_option_visibility(
+    const String& p_option,
+    const Map<StringName, Variant>& p_options
+) const {
     if (p_option == "force/max_rate_hz" && !bool(p_options["force/max_rate"])) {
         return false;
     }
@@ -67,33 +73,83 @@ bool ResourceImporterWAV::get_option_visibility(const String &p_option, const Ma
 int ResourceImporterWAV::get_preset_count() const {
     return 0;
 }
+
 String ResourceImporterWAV::get_preset_name(int p_idx) const {
     return String();
 }
 
-void ResourceImporterWAV::get_import_options(List<ImportOption> *r_options, int p_preset) const {
-    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "force/8_bit"), false));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "force/mono"), false));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "force/max_rate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED), false));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::REAL, "force/max_rate_hz", PROPERTY_HINT_EXP_RANGE, "11025,192000,1"), 44100));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "edit/trim"), false));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "edit/normalize"), false));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "edit/loop"), false));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "compress/mode", PROPERTY_HINT_ENUM, "Disabled,RAM (Ima-ADPCM)"), 0));
+void ResourceImporterWAV::get_import_options(
+    List<ImportOption>* r_options,
+    int p_preset
+) const {
+    r_options->push_back(
+        ImportOption(PropertyInfo(Variant::BOOL, "force/8_bit"), false)
+    );
+    r_options->push_back(
+        ImportOption(PropertyInfo(Variant::BOOL, "force/mono"), false)
+    );
+    r_options->push_back(ImportOption(
+        PropertyInfo(
+            Variant::BOOL,
+            "force/max_rate",
+            PROPERTY_HINT_NONE,
+            "",
+            PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
+        ),
+        false
+    ));
+    r_options->push_back(ImportOption(
+        PropertyInfo(
+            Variant::REAL,
+            "force/max_rate_hz",
+            PROPERTY_HINT_EXP_RANGE,
+            "11025,192000,1"
+        ),
+        44100
+    ));
+    r_options->push_back(
+        ImportOption(PropertyInfo(Variant::BOOL, "edit/trim"), false)
+    );
+    r_options->push_back(
+        ImportOption(PropertyInfo(Variant::BOOL, "edit/normalize"), false)
+    );
+    r_options->push_back(
+        ImportOption(PropertyInfo(Variant::BOOL, "edit/loop"), false)
+    );
+    r_options->push_back(ImportOption(
+        PropertyInfo(
+            Variant::INT,
+            "compress/mode",
+            PROPERTY_HINT_ENUM,
+            "Disabled,RAM (Ima-ADPCM)"
+        ),
+        0
+    ));
 }
 
-Error ResourceImporterWAV::import(const String &p_source_file, const String &p_save_path, const Map<StringName, Variant> &p_options, List<String> *r_platform_variants, List<String> *r_gen_files, Variant *r_metadata) {
+Error ResourceImporterWAV::import(
+    const String& p_source_file,
+    const String& p_save_path,
+    const Map<StringName, Variant>& p_options,
+    List<String>* r_platform_variants,
+    List<String>* r_gen_files,
+    Variant* r_metadata
+) {
     /* STEP 1, READ WAVE FILE */
 
     Error err;
-    FileAccess *file = FileAccess::open(p_source_file, FileAccess::READ, &err);
+    FileAccess* file = FileAccess::open(p_source_file, FileAccess::READ, &err);
 
-    ERR_FAIL_COND_V_MSG(err != OK, ERR_CANT_OPEN, "Cannot open file '" + p_source_file + "'.");
+    ERR_FAIL_COND_V_MSG(
+        err != OK,
+        ERR_CANT_OPEN,
+        "Cannot open file '" + p_source_file + "'."
+    );
 
     /* CHECK RIFF */
     char riff[5];
     riff[4] = 0;
-    file->get_buffer((uint8_t *)&riff, 4); //RIFF
+    file->get_buffer((uint8_t*)&riff, 4); // RIFF
 
     if (riff[0] != 'R' || riff[1] != 'I' || riff[2] != 'F' || riff[3] != 'F') {
         file->close();
@@ -108,12 +164,15 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
 
     char wave[4];
 
-    file->get_buffer((uint8_t *)&wave, 4); //RIFF
+    file->get_buffer((uint8_t*)&wave, 4); // RIFF
 
     if (wave[0] != 'W' || wave[1] != 'A' || wave[2] != 'V' || wave[3] != 'E') {
         file->close();
         memdelete(file);
-        ERR_FAIL_V_MSG(ERR_FILE_UNRECOGNIZED, "Not a WAV file (no WAVE RIFF header).");
+        ERR_FAIL_V_MSG(
+            ERR_FILE_UNRECOGNIZED,
+            "Not a WAV file (no WAVE RIFF header)."
+        );
     }
 
     int format_bits = 0;
@@ -133,53 +192,68 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
     while (!file->eof_reached()) {
         /* chunk */
         char chunkID[4];
-        file->get_buffer((uint8_t *)&chunkID, 4); //RIFF
+        file->get_buffer((uint8_t*)&chunkID, 4); // RIFF
 
         /* chunk size */
         uint32_t chunksize = file->get_32();
-        uint32_t file_pos = file->get_position(); //save file pos, so we can skip to next chunk safely
+        uint32_t file_pos = file->get_position(
+        ); // save file pos, so we can skip to next chunk safely
 
         if (file->eof_reached()) {
-            //ERR_PRINT("EOF REACH");
+            // ERR_PRINT("EOF REACH");
             break;
         }
 
-        if (chunkID[0] == 'f' && chunkID[1] == 'm' && chunkID[2] == 't' && chunkID[3] == ' ' && !format_found) {
+        if (chunkID[0] == 'f' && chunkID[1] == 'm' && chunkID[2] == 't'
+            && chunkID[3] == ' ' && !format_found) {
             /* IS FORMAT CHUNK */
 
-            //Issue: #7755 : Not a bug - usage of other formats (format codes) are unsupported in current importer version.
-            //Consider revision for engine version 3.0
+            // Issue: #7755 : Not a bug - usage of other formats (format codes)
+            // are unsupported in current importer version. Consider revision
+            // for engine version 3.0
             compression_code = file->get_16();
             if (compression_code != 1 && compression_code != 3) {
                 file->close();
                 memdelete(file);
-                ERR_FAIL_V_MSG(ERR_INVALID_DATA, "Format not supported for WAVE file (not PCM). Save WAVE files as uncompressed PCM instead.");
+                ERR_FAIL_V_MSG(
+                    ERR_INVALID_DATA,
+                    "Format not supported for WAVE file (not PCM). Save WAVE "
+                    "files as uncompressed PCM instead."
+                );
             }
 
             format_channels = file->get_16();
             if (format_channels != 1 && format_channels != 2) {
                 file->close();
                 memdelete(file);
-                ERR_FAIL_V_MSG(ERR_INVALID_DATA, "Format not supported for WAVE file (not stereo or mono).");
+                ERR_FAIL_V_MSG(
+                    ERR_INVALID_DATA,
+                    "Format not supported for WAVE file (not stereo or mono)."
+                );
             }
 
-            format_freq = file->get_32(); //sampling rate
+            format_freq = file->get_32(); // sampling rate
 
-            file->get_32(); // average bits/second (unused)
-            file->get_16(); // block align (unused)
+            file->get_32();               // average bits/second (unused)
+            file->get_16();               // block align (unused)
             format_bits = file->get_16(); // bits per sample
 
             if (format_bits % 8 || format_bits == 0) {
                 file->close();
                 memdelete(file);
-                ERR_FAIL_V_MSG(ERR_INVALID_DATA, "Invalid amount of bits in the sample (should be one of 8, 16, 24 or 32).");
+                ERR_FAIL_V_MSG(
+                    ERR_INVALID_DATA,
+                    "Invalid amount of bits in the sample (should be one of 8, "
+                    "16, 24 or 32)."
+                );
             }
 
             /* Don't need anything else, continue */
             format_found = true;
         }
 
-        if (chunkID[0] == 'd' && chunkID[1] == 'a' && chunkID[2] == 't' && chunkID[3] == 'a' && !data_found) {
+        if (chunkID[0] == 'd' && chunkID[1] == 'a' && chunkID[2] == 't'
+            && chunkID[3] == 'a' && !data_found) {
             /* IS DATA CHUNK */
             data_found = true;
 
@@ -213,20 +287,20 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
                 }
             } else if (format_bits == 32 && compression_code == 3) {
                 for (int i = 0; i < frames * format_channels; i++) {
-                    //32 bit IEEE Float
+                    // 32 bit IEEE Float
 
                     data.write[i] = file->get_float();
                 }
             } else if (format_bits == 16) {
                 for (int i = 0; i < frames * format_channels; i++) {
-                    //16 bit SIGNED
+                    // 16 bit SIGNED
 
                     data.write[i] = int16_t(file->get_16()) / 32768.f;
                 }
             } else {
                 for (int i = 0; i < frames * format_channels; i++) {
-                    //16+ bits samples are SIGNED
-                    // if sample is > 16 bits, just read extra bytes
+                    // 16+ bits samples are SIGNED
+                    //  if sample is > 16 bits, just read extra bytes
 
                     uint32_t s = 0;
                     for (int b = 0; b < (format_bits >> 3); b++) {
@@ -245,8 +319,9 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
             }
         }
 
-        if (chunkID[0] == 's' && chunkID[1] == 'm' && chunkID[2] == 'p' && chunkID[3] == 'l') {
-            //loop point info!
+        if (chunkID[0] == 's' && chunkID[1] == 'm' && chunkID[2] == 'p'
+            && chunkID[3] == 'l') {
+            // loop point info!
 
             /**
              *	Consider exploring next document:
@@ -258,12 +333,15 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
              **/
 
             for (int i = 0; i < 10; i++) {
-                file->get_32(); // i wish to know why should i do this... no doc!
+                file->get_32(
+                ); // i wish to know why should i do this... no doc!
             }
 
-            // only read 0x00 (loop forward), 0x01 (loop ping-pong) and 0x02 (loop backward)
-            // Skip anything else because it's not supported, reserved for future uses or sampler specific
-            // from https://sites.google.com/site/musicgapi/technical-documents/wav-file-format#smpl (loop type values table)
+            // only read 0x00 (loop forward), 0x01 (loop ping-pong) and 0x02
+            // (loop backward) Skip anything else because it's not supported,
+            // reserved for future uses or sampler specific from
+            // https://sites.google.com/site/musicgapi/technical-documents/wav-file-format#smpl
+            // (loop type values table)
             int loop_type = file->get_32();
             if (loop_type == 0x00 || loop_type == 0x01 || loop_type == 0x02) {
                 if (loop_type == 0x00) {
@@ -299,13 +377,14 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
     print_line("\tloop end: " + itos(loop_end));
     */
 
-    //apply frequency limit
+    // apply frequency limit
 
     bool limit_rate = p_options["force/max_rate"];
     int limit_rate_hz = p_options["force/max_rate_hz"];
     if (limit_rate && rate > limit_rate_hz && rate > 0 && frames > 0) {
         // resample!
-        int new_data_frames = (int)(frames * (float)limit_rate_hz / (float)rate);
+        int new_data_frames =
+            (int)(frames * (float)limit_rate_hz / (float)rate);
 
         Vector<float> new_data;
         new_data.resize(new_data_frames * format_channels);
@@ -314,14 +393,16 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
             int ipos = 0;
 
             for (int i = 0; i < new_data_frames; i++) {
-                //simple cubic interpolation should be enough.
+                // simple cubic interpolation should be enough.
 
                 float mu = frac;
 
                 float y0 = data[MAX(0, ipos - 1) * format_channels + c];
                 float y1 = data[ipos * format_channels + c];
-                float y2 = data[MIN(frames - 1, ipos + 1) * format_channels + c];
-                float y3 = data[MIN(frames - 1, ipos + 2) * format_channels + c];
+                float y2 =
+                    data[MIN(frames - 1, ipos + 1) * format_channels + c];
+                float y3 =
+                    data[MIN(frames - 1, ipos + 2) * format_channels + c];
 
                 float mu2 = mu * mu;
                 float a0 = y3 - y2 - y0 + y1;
@@ -333,8 +414,9 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
 
                 new_data.write[i * format_channels + c] = res;
 
-                // update position and always keep fractional part within ]0...1]
-                // in order to avoid 32bit floating point precision errors
+                // update position and always keep fractional part within
+                // ]0...1] in order to avoid 32bit floating point precision
+                // errors
 
                 frac += (float)rate / (float)limit_rate_hz;
                 int tpos = (int)Math::floor(frac);
@@ -344,7 +426,8 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
         }
 
         if (loop) {
-            loop_begin = (int)(loop_begin * (float)new_data_frames / (float)frames);
+            loop_begin =
+                (int)(loop_begin * (float)new_data_frames / (float)frames);
             loop_end = (int)(loop_end * (float)new_data_frames / (float)frames);
         }
 
@@ -405,11 +488,13 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
                 float fadeOutMult = 1;
 
                 if (last - i < TRIM_FADE_OUT_FRAMES) {
-                    fadeOutMult = ((float)(last - i - 1) / (float)TRIM_FADE_OUT_FRAMES);
+                    fadeOutMult =
+                        ((float)(last - i - 1) / (float)TRIM_FADE_OUT_FRAMES);
                 }
 
                 for (int j = 0; j < format_channels; j++) {
-                    new_data.write[((i - first) * format_channels) + j] = data[(i * format_channels) + j] * fadeOutMult;
+                    new_data.write[((i - first) * format_channels) + j] =
+                        data[(i * format_channels) + j] * fadeOutMult;
                 }
             }
 
@@ -453,7 +538,7 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
         if (format_channels == 1) {
             _compress_ima_adpcm(data, dst_data);
         } else {
-            //byte interleave
+            // byte interleave
             Vector<float> left;
             Vector<float> right;
 
@@ -486,7 +571,8 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
         }
 
     } else {
-        dst_format = is16 ? AudioStreamSample::FORMAT_16_BITS : AudioStreamSample::FORMAT_8_BITS;
+        dst_format = is16 ? AudioStreamSample::FORMAT_16_BITS
+                          : AudioStreamSample::FORMAT_8_BITS;
         dst_data.resize(data.size() * (is16 ? 2 : 1));
         {
             PoolVector<uint8_t>::Write w = dst_data.write();
@@ -519,5 +605,4 @@ Error ResourceImporterWAV::import(const String &p_source_file, const String &p_s
     return OK;
 }
 
-ResourceImporterWAV::ResourceImporterWAV() {
-}
+ResourceImporterWAV::ResourceImporterWAV() {}

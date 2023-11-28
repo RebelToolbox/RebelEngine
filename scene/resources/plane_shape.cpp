@@ -77,13 +77,22 @@ Plane PlaneShape::get_plane() const {
 }
 
 void PlaneShape::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_plane", "plane"), &PlaneShape::set_plane);
+    ClassDB::bind_method(
+        D_METHOD("set_plane", "plane"),
+        &PlaneShape::set_plane
+    );
     ClassDB::bind_method(D_METHOD("get_plane"), &PlaneShape::get_plane);
 
-    ADD_PROPERTY(PropertyInfo(Variant::PLANE, "plane"), "set_plane", "get_plane");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::PLANE, "plane"),
+        "set_plane",
+        "get_plane"
+    );
 }
 
 PlaneShape::PlaneShape() :
-        Shape(PhysicsServer::get_singleton()->shape_create(PhysicsServer::SHAPE_PLANE)) {
+    Shape(
+        PhysicsServer::get_singleton()->shape_create(PhysicsServer::SHAPE_PLANE)
+    ) {
     set_plane(Plane(0, 1, 0, 0));
 }

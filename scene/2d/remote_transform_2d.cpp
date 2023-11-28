@@ -34,8 +34,9 @@
 void RemoteTransform2D::_update_cache() {
     cache = 0;
     if (has_node(remote_node)) {
-        Node *node = get_node(remote_node);
-        if (!node || this == node || node->is_a_parent_of(this) || this->is_a_parent_of(node)) {
+        Node* node = get_node(remote_node);
+        if (!node || this == node || node->is_a_parent_of(this)
+            || this->is_a_parent_of(node)) {
             return;
         }
 
@@ -52,7 +53,7 @@ void RemoteTransform2D::_update_remote() {
         return;
     }
 
-    Node2D *n = Object::cast_to<Node2D>(ObjectDB::get_instance(cache));
+    Node2D* n = Object::cast_to<Node2D>(ObjectDB::get_instance(cache));
     if (!n) {
         return;
     }
@@ -61,9 +62,10 @@ void RemoteTransform2D::_update_remote() {
         return;
     }
 
-    //todo make faster
+    // todo make faster
     if (use_global_coordinates) {
-        if (update_remote_position && update_remote_rotation && update_remote_scale) {
+        if (update_remote_position && update_remote_rotation
+            && update_remote_scale) {
             n->set_global_transform(get_global_transform());
         } else {
             Transform2D n_trans = n->get_global_transform();
@@ -87,7 +89,8 @@ void RemoteTransform2D::_update_remote() {
         }
 
     } else {
-        if (update_remote_position && update_remote_rotation && update_remote_scale) {
+        if (update_remote_position && update_remote_rotation
+            && update_remote_scale) {
             n->set_transform(get_transform());
         } else {
             Transform2D n_trans = n->get_transform();
@@ -131,7 +134,7 @@ void RemoteTransform2D::_notification(int p_what) {
     }
 }
 
-void RemoteTransform2D::set_remote_node(const NodePath &p_remote_node) {
+void RemoteTransform2D::set_remote_node(const NodePath& p_remote_node) {
     remote_node = p_remote_node;
     if (is_inside_tree()) {
         _update_cache();
@@ -187,38 +190,98 @@ void RemoteTransform2D::force_update_cache() {
 
 String RemoteTransform2D::get_configuration_warning() const {
     String warning = Node2D::get_configuration_warning();
-    if (!has_node(remote_node) || !Object::cast_to<Node2D>(get_node(remote_node))) {
+    if (!has_node(remote_node)
+        || !Object::cast_to<Node2D>(get_node(remote_node))) {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("Path property must point to a valid Node2D node to work.");
+        warning +=
+            TTR("Path property must point to a valid Node2D node to work.");
     }
 
     return warning;
 }
 
 void RemoteTransform2D::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_remote_node", "path"), &RemoteTransform2D::set_remote_node);
-    ClassDB::bind_method(D_METHOD("get_remote_node"), &RemoteTransform2D::get_remote_node);
-    ClassDB::bind_method(D_METHOD("force_update_cache"), &RemoteTransform2D::force_update_cache);
+    ClassDB::bind_method(
+        D_METHOD("set_remote_node", "path"),
+        &RemoteTransform2D::set_remote_node
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_remote_node"),
+        &RemoteTransform2D::get_remote_node
+    );
+    ClassDB::bind_method(
+        D_METHOD("force_update_cache"),
+        &RemoteTransform2D::force_update_cache
+    );
 
-    ClassDB::bind_method(D_METHOD("set_use_global_coordinates", "use_global_coordinates"), &RemoteTransform2D::set_use_global_coordinates);
-    ClassDB::bind_method(D_METHOD("get_use_global_coordinates"), &RemoteTransform2D::get_use_global_coordinates);
+    ClassDB::bind_method(
+        D_METHOD("set_use_global_coordinates", "use_global_coordinates"),
+        &RemoteTransform2D::set_use_global_coordinates
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_use_global_coordinates"),
+        &RemoteTransform2D::get_use_global_coordinates
+    );
 
-    ClassDB::bind_method(D_METHOD("set_update_position", "update_remote_position"), &RemoteTransform2D::set_update_position);
-    ClassDB::bind_method(D_METHOD("get_update_position"), &RemoteTransform2D::get_update_position);
-    ClassDB::bind_method(D_METHOD("set_update_rotation", "update_remote_rotation"), &RemoteTransform2D::set_update_rotation);
-    ClassDB::bind_method(D_METHOD("get_update_rotation"), &RemoteTransform2D::get_update_rotation);
-    ClassDB::bind_method(D_METHOD("set_update_scale", "update_remote_scale"), &RemoteTransform2D::set_update_scale);
-    ClassDB::bind_method(D_METHOD("get_update_scale"), &RemoteTransform2D::get_update_scale);
+    ClassDB::bind_method(
+        D_METHOD("set_update_position", "update_remote_position"),
+        &RemoteTransform2D::set_update_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_update_position"),
+        &RemoteTransform2D::get_update_position
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_update_rotation", "update_remote_rotation"),
+        &RemoteTransform2D::set_update_rotation
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_update_rotation"),
+        &RemoteTransform2D::get_update_rotation
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_update_scale", "update_remote_scale"),
+        &RemoteTransform2D::set_update_scale
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_update_scale"),
+        &RemoteTransform2D::get_update_scale
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "remote_path", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node2D"), "set_remote_node", "get_remote_node");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_global_coordinates"), "set_use_global_coordinates", "get_use_global_coordinates");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::NODE_PATH,
+            "remote_path",
+            PROPERTY_HINT_NODE_PATH_VALID_TYPES,
+            "Node2D"
+        ),
+        "set_remote_node",
+        "get_remote_node"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "use_global_coordinates"),
+        "set_use_global_coordinates",
+        "get_use_global_coordinates"
+    );
 
     ADD_GROUP("Update", "update_");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "update_position"), "set_update_position", "get_update_position");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "update_rotation"), "set_update_rotation", "get_update_rotation");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "update_scale"), "set_update_scale", "get_update_scale");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "update_position"),
+        "set_update_position",
+        "get_update_position"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "update_rotation"),
+        "set_update_rotation",
+        "get_update_rotation"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "update_scale"),
+        "set_update_scale",
+        "get_update_scale"
+    );
 }
 
 RemoteTransform2D::RemoteTransform2D() {

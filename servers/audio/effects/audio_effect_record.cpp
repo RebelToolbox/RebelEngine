@@ -30,7 +30,11 @@
 
 #include "audio_effect_record.h"
 
-void AudioEffectRecordInstance::process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count) {
+void AudioEffectRecordInstance::process(
+    const AudioFrame* p_src_frames,
+    AudioFrame* p_dst_frames,
+    int p_frame_count
+) {
     if (!is_recording) {
         for (int i = 0; i < p_frame_count; i++) {
             p_dst_frames[i] = p_src_frames[i];
@@ -38,9 +42,9 @@ void AudioEffectRecordInstance::process(const AudioFrame *p_src_frames, AudioFra
         return;
     }
 
-    //Add incoming audio frames to the IO ring buffer
-    const AudioFrame *src = p_src_frames;
-    AudioFrame *rb_buf = ring_buffer.ptrw();
+    // Add incoming audio frames to the IO ring buffer
+    const AudioFrame* src = p_src_frames;
+    AudioFrame* rb_buf = ring_buffer.ptrw();
     for (int i = 0; i < p_frame_count; i++) {
         p_dst_frames[i] = p_src_frames[i];
         rb_buf[ring_buffer_pos & ring_buffer_mask] = src[i];
@@ -49,15 +53,15 @@ void AudioEffectRecordInstance::process(const AudioFrame *p_src_frames, AudioFra
 }
 
 void AudioEffectRecordInstance::_update_buffer() {
-    //Case: Frames are remaining in the buffer
+    // Case: Frames are remaining in the buffer
     while (ring_buffer_read_pos < ring_buffer_pos) {
-        //Read from the buffer into recording_data
+        // Read from the buffer into recording_data
         _io_store_buffer();
     }
 }
 
-void AudioEffectRecordInstance::_update(void *userdata) {
-    AudioEffectRecordInstance *ins = (AudioEffectRecordInstance *)userdata;
+void AudioEffectRecordInstance::_update(void* userdata) {
+    AudioEffectRecordInstance* ins = (AudioEffectRecordInstance*)userdata;
     ins->_update_buffer();
 }
 
@@ -69,7 +73,7 @@ void AudioEffectRecordInstance::_io_thread_process() {
     thread_active = true;
 
     while (is_recording) {
-        //Check: The current recording has been requested to stop
+        // Check: The current recording has been requested to stop
         if (!base->recording_active) {
             is_recording = false;
         }
@@ -77,7 +81,7 @@ void AudioEffectRecordInstance::_io_thread_process() {
         _update_buffer();
 
         if (is_recording) {
-            //Wait to avoid too much busy-wait
+            // Wait to avoid too much busy-wait
             OS::get_singleton()->delay_usec(500);
         }
     }
@@ -88,10 +92,11 @@ void AudioEffectRecordInstance::_io_thread_process() {
 void AudioEffectRecordInstance::_io_store_buffer() {
     int to_read = ring_buffer_pos - ring_buffer_read_pos;
 
-    AudioFrame *rb_buf = ring_buffer.ptrw();
+    AudioFrame* rb_buf = ring_buffer.ptrw();
 
     while (to_read) {
-        AudioFrame buffered_frame = rb_buf[ring_buffer_read_pos & ring_buffer_mask];
+        AudioFrame buffered_frame =
+            rb_buf[ring_buffer_read_pos & ring_buffer_mask];
         recording_data.push_back(buffered_frame.l);
         recording_data.push_back(buffered_frame.r);
 
@@ -100,23 +105,27 @@ void AudioEffectRecordInstance::_io_store_buffer() {
     }
 }
 
-void AudioEffectRecordInstance::_thread_callback(void *_instance) {
-    AudioEffectRecordInstance *aeri = reinterpret_cast<AudioEffectRecordInstance *>(_instance);
+void AudioEffectRecordInstance::_thread_callback(void* _instance) {
+    AudioEffectRecordInstance* aeri =
+        reinterpret_cast<AudioEffectRecordInstance*>(_instance);
 
     aeri->_io_thread_process();
 }
 
 void AudioEffectRecordInstance::init() {
-    //Reset recorder status
+    // Reset recorder status
     ring_buffer_pos = 0;
     ring_buffer_read_pos = 0;
 
-    //We start a new recording
-    recording_data.resize(0); //Clear data completely and reset length
+    // We start a new recording
+    recording_data.resize(0); // Clear data completely and reset length
     is_recording = true;
 
 #ifdef NO_THREADS
-    AudioServer::get_singleton()->add_update_callback(&AudioEffectRecordInstance::_update, this);
+    AudioServer::get_singleton()->add_update_callback(
+        &AudioEffectRecordInstance::_update,
+        this
+    );
 #else
     io_thread.start(_thread_callback, this);
 #endif
@@ -124,7 +133,10 @@ void AudioEffectRecordInstance::init() {
 
 void AudioEffectRecordInstance::finish() {
 #ifdef NO_THREADS
-    AudioServer::get_singleton()->remove_update_callback(&AudioEffectRecordInstance::_update, this);
+    AudioServer::get_singleton()->remove_update_callback(
+        &AudioEffectRecordInstance::_update,
+        this
+    );
 #else
     if (thread_active) {
         io_thread.wait_to_finish();
@@ -142,9 +154,9 @@ Ref<AudioEffectInstance> AudioEffectRecord::instance() {
     ins->base = Ref<AudioEffectRecord>(this);
     ins->is_recording = false;
 
-    //Re-using the buffer size calculations from audio_effect_delay.cpp
+    // Re-using the buffer size calculations from audio_effect_delay.cpp
     float ring_buffer_max_size = IO_BUFFER_SIZE_MS;
-    ring_buffer_max_size /= 1000.0; //convert to seconds
+    ring_buffer_max_size /= 1000.0; // convert to seconds
     ring_buffer_max_size *= AudioServer::get_singleton()->get_mix_rate();
 
     int ringbuff_size = ring_buffer_max_size;
@@ -183,7 +195,10 @@ void AudioEffectRecord::ensure_thread_stopped() {
 void AudioEffectRecord::set_recording_active(bool p_record) {
     if (p_record) {
         if (current_instance == nullptr) {
-            WARN_PRINT("Recording should not be set as active before Godot has initialized.");
+            WARN_PRINT(
+                "Recording should not be set as active before Godot has "
+                "initialized."
+            );
             recording_active = false;
             return;
         }
@@ -210,7 +225,7 @@ AudioStreamSample::Format AudioEffectRecord::get_format() const {
 
 Ref<AudioStreamSample> AudioEffectRecord::get_recording() const {
     AudioStreamSample::Format dst_format = format;
-    bool stereo = true; //forcing mono is not implemented
+    bool stereo = true; // forcing mono is not implemented
 
     PoolVector<uint8_t> dst_data;
 
@@ -223,7 +238,8 @@ Ref<AudioStreamSample> AudioEffectRecord::get_recording() const {
         PoolVector<uint8_t>::Write w = dst_data.write();
 
         for (int i = 0; i < data_size; i++) {
-            int8_t v = CLAMP(current_instance->recording_data[i] * 128, -128, 127);
+            int8_t v =
+                CLAMP(current_instance->recording_data[i] * 128, -128, 127);
             w[i] = v;
         }
     } else if (dst_format == AudioStreamSample::FORMAT_16_BITS) {
@@ -232,11 +248,15 @@ Ref<AudioStreamSample> AudioEffectRecord::get_recording() const {
         PoolVector<uint8_t>::Write w = dst_data.write();
 
         for (int i = 0; i < data_size; i++) {
-            int16_t v = CLAMP(current_instance->recording_data[i] * 32768, -32768, 32767);
+            int16_t v = CLAMP(
+                current_instance->recording_data[i] * 32768,
+                -32768,
+                32767
+            );
             encode_uint16(v, &w[i * 2]);
         }
     } else if (dst_format == AudioStreamSample::FORMAT_IMA_ADPCM) {
-        //byte interleave
+        // byte interleave
         Vector<float> left;
         Vector<float> right;
 
@@ -284,13 +304,37 @@ Ref<AudioStreamSample> AudioEffectRecord::get_recording() const {
 }
 
 void AudioEffectRecord::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_recording_active", "record"), &AudioEffectRecord::set_recording_active);
-    ClassDB::bind_method(D_METHOD("is_recording_active"), &AudioEffectRecord::is_recording_active);
-    ClassDB::bind_method(D_METHOD("set_format", "format"), &AudioEffectRecord::set_format);
-    ClassDB::bind_method(D_METHOD("get_format"), &AudioEffectRecord::get_format);
-    ClassDB::bind_method(D_METHOD("get_recording"), &AudioEffectRecord::get_recording);
+    ClassDB::bind_method(
+        D_METHOD("set_recording_active", "record"),
+        &AudioEffectRecord::set_recording_active
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_recording_active"),
+        &AudioEffectRecord::is_recording_active
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_format", "format"),
+        &AudioEffectRecord::set_format
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_format"),
+        &AudioEffectRecord::get_format
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_recording"),
+        &AudioEffectRecord::get_recording
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "format", PROPERTY_HINT_ENUM, "8-Bit,16-Bit,IMA-ADPCM"), "set_format", "get_format");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "format",
+            PROPERTY_HINT_ENUM,
+            "8-Bit,16-Bit,IMA-ADPCM"
+        ),
+        "set_format",
+        "get_format"
+    );
 }
 
 AudioEffectRecord::AudioEffectRecord() {

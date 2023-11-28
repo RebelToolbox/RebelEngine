@@ -45,9 +45,9 @@ class AnimationPlayerEditorPlugin;
 class AnimationPlayerEditor : public VBoxContainer {
     GDCLASS(AnimationPlayerEditor, VBoxContainer);
 
-    EditorNode *editor;
-    AnimationPlayerEditorPlugin *plugin;
-    AnimationPlayer *player;
+    EditorNode* editor;
+    AnimationPlayerEditorPlugin* plugin;
+    AnimationPlayer* player;
 
     enum {
         TOOL_NEW_ANIM,
@@ -87,49 +87,49 @@ class AnimationPlayerEditor : public VBoxContainer {
         RESOURCE_SAVE
     };
 
-    OptionButton *animation;
-    Button *stop;
-    Button *play;
-    Button *play_from;
-    Button *play_bw;
-    Button *play_bw_from;
-    Button *autoplay;
+    OptionButton* animation;
+    Button* stop;
+    Button* play;
+    Button* play_from;
+    Button* play_bw;
+    Button* play_bw_from;
+    Button* autoplay;
 
-    MenuButton *tool_anim;
-    ToolButton *onion_toggle;
-    MenuButton *onion_skinning;
-    ToolButton *pin;
-    SpinBox *frame;
-    LineEdit *scale;
-    LineEdit *name;
-    Label *name_title;
-    UndoRedo *undo_redo;
+    MenuButton* tool_anim;
+    ToolButton* onion_toggle;
+    MenuButton* onion_skinning;
+    ToolButton* pin;
+    SpinBox* frame;
+    LineEdit* scale;
+    LineEdit* name;
+    Label* name_title;
+    UndoRedo* undo_redo;
     Ref<Texture> autoplay_icon;
     Ref<Texture> reset_icon;
     Ref<Texture> autoplay_reset_icon;
     bool last_active;
     float timeline_position;
 
-    EditorFileDialog *file;
-    AcceptDialog *accept;
-    ConfirmationDialog *delete_dialog;
+    EditorFileDialog* file;
+    AcceptDialog* accept;
+    ConfirmationDialog* delete_dialog;
     int current_option;
 
     struct BlendEditor {
-        AcceptDialog *dialog;
-        Tree *tree;
-        OptionButton *next;
+        AcceptDialog* dialog;
+        Tree* tree;
+        OptionButton* next;
 
     } blend_editor;
 
-    ConfirmationDialog *name_dialog;
-    ConfirmationDialog *error_dialog;
+    ConfirmationDialog* name_dialog;
+    ConfirmationDialog* error_dialog;
     bool renaming;
 
     bool updating;
     bool updating_blends;
 
-    AnimationTrackEditor *track_editor;
+    AnimationTrackEditor* track_editor;
 
     // Onion skinning.
     struct {
@@ -144,7 +144,8 @@ class AnimationPlayerEditor : public VBoxContainer {
 
         int get_needed_capture_count() const {
             // 'Differences only' needs a capture of the present.
-            return (past && future ? 2 * steps : steps) + (differences_only ? 1 : 0);
+            return (past && future ? 2 * steps : steps)
+                 + (differences_only ? 1 : 0);
         }
 
         // Rendering.
@@ -153,6 +154,7 @@ class AnimationPlayerEditor : public VBoxContainer {
         Size2 capture_size;
         Vector<RID> captures;
         Vector<bool> captures_valid;
+
         struct {
             RID canvas;
             RID canvas_item;
@@ -161,7 +163,7 @@ class AnimationPlayerEditor : public VBoxContainer {
         } capture;
     } onion;
 
-    void _select_anim_by_name(const String &p_anim);
+    void _select_anim_by_name(const String& p_anim);
     double _get_editor_step() const;
     void _play_pressed();
     void _play_from_pressed();
@@ -175,9 +177,12 @@ class AnimationPlayerEditor : public VBoxContainer {
     void _animation_name_edited();
     void _animation_load();
 
-    void _animation_save_in_path(const Ref<Resource> &p_resource, const String &p_path);
-    void _animation_save(const Ref<Resource> &p_resource);
-    void _animation_save_as(const Ref<Resource> &p_resource);
+    void _animation_save_in_path(
+        const Ref<Resource>& p_resource,
+        const String& p_path
+    );
+    void _animation_save(const Ref<Resource>& p_resource);
+    void _animation_save_as(const Ref<Resource>& p_resource);
 
     void _animation_remove();
     void _animation_remove_confirmed();
@@ -185,9 +190,9 @@ class AnimationPlayerEditor : public VBoxContainer {
     void _animation_edit();
     void _animation_duplicate();
     void _animation_resource_edit();
-    void _scale_changed(const String &p_scale);
+    void _scale_changed(const String& p_scale);
     void _dialog_action(String p_file);
-    void _seek_frame_changed(const String &p_frame);
+    void _seek_frame_changed(const String& p_frame);
     void _seek_value_changed(float p_value, bool p_set = false);
     void _blend_editor_next_changed(const int p_idx);
 
@@ -196,12 +201,12 @@ class AnimationPlayerEditor : public VBoxContainer {
     void _update_player();
     void _blend_edited();
 
-    void _animation_player_changed(Object *p_pl);
+    void _animation_player_changed(Object* p_pl);
 
     void _animation_key_editor_seek(float p_pos, bool p_drag);
     void _animation_key_editor_anim_len_changed(float p_len);
 
-    void _unhandled_key_input(const Ref<InputEvent> &p_ev);
+    void _unhandled_key_input(const Ref<InputEvent>& p_ev);
     void _animation_tool_menu(int p_option);
     void _onion_skinning_menu(int p_option);
 
@@ -221,51 +226,82 @@ class AnimationPlayerEditor : public VBoxContainer {
 
 protected:
     void _notification(int p_what);
-    void _node_removed(Node *p_node);
+    void _node_removed(Node* p_node);
     static void _bind_methods();
 
 public:
-    AnimationPlayer *get_player() const;
-    static AnimationPlayerEditor *singleton;
+    AnimationPlayer* get_player() const;
+    static AnimationPlayerEditor* singleton;
 
-    bool is_pinned() const { return pin->is_pressed(); }
-    void unpin() { pin->set_pressed(false); }
-    AnimationTrackEditor *get_track_editor() { return track_editor; }
+    bool is_pinned() const {
+        return pin->is_pressed();
+    }
+
+    void unpin() {
+        pin->set_pressed(false);
+    }
+
+    AnimationTrackEditor* get_track_editor() {
+        return track_editor;
+    }
+
     Dictionary get_state() const;
-    void set_state(const Dictionary &p_state);
+    void set_state(const Dictionary& p_state);
 
     void ensure_visibility();
 
-    void set_undo_redo(UndoRedo *p_undo_redo) { undo_redo = p_undo_redo; }
-    void edit(AnimationPlayer *p_player);
-    void forward_force_draw_over_viewport(Control *p_overlay);
+    void set_undo_redo(UndoRedo* p_undo_redo) {
+        undo_redo = p_undo_redo;
+    }
 
-    AnimationPlayerEditor(EditorNode *p_editor, AnimationPlayerEditorPlugin *p_plugin);
+    void edit(AnimationPlayer* p_player);
+    void forward_force_draw_over_viewport(Control* p_overlay);
+
+    AnimationPlayerEditor(
+        EditorNode* p_editor,
+        AnimationPlayerEditorPlugin* p_plugin
+    );
 };
 
 class AnimationPlayerEditorPlugin : public EditorPlugin {
     GDCLASS(AnimationPlayerEditorPlugin, EditorPlugin);
 
-    AnimationPlayerEditor *anim_editor;
-    EditorNode *editor;
+    AnimationPlayerEditor* anim_editor;
+    EditorNode* editor;
 
 protected:
     void _notification(int p_what);
 
 public:
-    virtual Dictionary get_state() const { return anim_editor->get_state(); }
-    virtual void set_state(const Dictionary &p_state) { anim_editor->set_state(p_state); }
+    virtual Dictionary get_state() const {
+        return anim_editor->get_state();
+    }
 
-    virtual String get_name() const { return "Anim"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual void set_state(const Dictionary& p_state) {
+        anim_editor->set_state(p_state);
+    }
+
+    virtual String get_name() const {
+        return "Anim";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
 
-    virtual void forward_canvas_force_draw_over_viewport(Control *p_overlay) { anim_editor->forward_force_draw_over_viewport(p_overlay); }
-    virtual void forward_spatial_force_draw_over_viewport(Control *p_overlay) { anim_editor->forward_force_draw_over_viewport(p_overlay); }
+    virtual void forward_canvas_force_draw_over_viewport(Control* p_overlay) {
+        anim_editor->forward_force_draw_over_viewport(p_overlay);
+    }
 
-    AnimationPlayerEditorPlugin(EditorNode *p_node);
+    virtual void forward_spatial_force_draw_over_viewport(Control* p_overlay) {
+        anim_editor->forward_force_draw_over_viewport(p_overlay);
+    }
+
+    AnimationPlayerEditorPlugin(EditorNode* p_node);
     ~AnimationPlayerEditorPlugin();
 };
 

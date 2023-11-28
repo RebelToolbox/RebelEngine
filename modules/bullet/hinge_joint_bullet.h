@@ -38,13 +38,27 @@
 */
 
 class HingeJointBullet : public JointBullet {
-    class btHingeConstraint *hingeConstraint;
+    class btHingeConstraint* hingeConstraint;
 
 public:
-    HingeJointBullet(RigidBodyBullet *rbA, RigidBodyBullet *rbB, const Transform &frameA, const Transform &frameB);
-    HingeJointBullet(RigidBodyBullet *rbA, RigidBodyBullet *rbB, const Vector3 &pivotInA, const Vector3 &pivotInB, const Vector3 &axisInA, const Vector3 &axisInB);
+    HingeJointBullet(
+        RigidBodyBullet* rbA,
+        RigidBodyBullet* rbB,
+        const Transform& frameA,
+        const Transform& frameB
+    );
+    HingeJointBullet(
+        RigidBodyBullet* rbA,
+        RigidBodyBullet* rbB,
+        const Vector3& pivotInA,
+        const Vector3& pivotInB,
+        const Vector3& axisInA,
+        const Vector3& axisInB
+    );
 
-    virtual PhysicsServer::JointType get_type() const { return PhysicsServer::JOINT_HINGE; }
+    virtual PhysicsServer::JointType get_type() const {
+        return PhysicsServer::JOINT_HINGE;
+    }
 
     real_t get_hinge_angle();
 

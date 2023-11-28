@@ -35,7 +35,7 @@
 #include "jni_singleton.h"
 
 #if !defined(ANDROID_ENABLED)
-static JavaClassWrapper *java_class_wrapper = nullptr;
+static JavaClassWrapper* java_class_wrapper = nullptr;
 #endif
 
 void register_android_api() {
@@ -49,7 +49,9 @@ void register_android_api() {
 
     ClassDB::register_class<JavaClass>();
     ClassDB::register_class<JavaClassWrapper>();
-    Engine::get_singleton()->add_singleton(Engine::Singleton("JavaClassWrapper", JavaClassWrapper::get_singleton()));
+    Engine::get_singleton()->add_singleton(
+        Engine::Singleton("JavaClassWrapper", JavaClassWrapper::get_singleton())
+    );
 }
 
 void unregister_android_api() {
@@ -64,20 +66,21 @@ void JavaClassWrapper::_bind_methods() {
 
 #if !defined(ANDROID_ENABLED)
 
-Variant JavaClass::call(const StringName &, const Variant **, int, Variant::CallError &) {
+Variant JavaClass::
+    call(const StringName&, const Variant**, int, Variant::CallError&) {
     return Variant();
 }
 
-JavaClass::JavaClass() {
-}
+JavaClass::JavaClass() {}
 
-Variant JavaObject::call(const StringName &, const Variant **, int, Variant::CallError &) {
+Variant JavaObject::
+    call(const StringName&, const Variant**, int, Variant::CallError&) {
     return Variant();
 }
 
-JavaClassWrapper *JavaClassWrapper::singleton = nullptr;
+JavaClassWrapper* JavaClassWrapper::singleton = nullptr;
 
-Ref<JavaClass> JavaClassWrapper::wrap(const String &) {
+Ref<JavaClass> JavaClassWrapper::wrap(const String&) {
     return Ref<JavaClass>();
 }
 

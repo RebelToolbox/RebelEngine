@@ -33,7 +33,10 @@
 #include "scene/3d/physics_body.h"
 
 void PhysicalBoneEditor::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_on_toggle_button_transform_joint", "is_pressed"), &PhysicalBoneEditor::_on_toggle_button_transform_joint);
+    ClassDB::bind_method(
+        D_METHOD("_on_toggle_button_transform_joint", "is_pressed"),
+        &PhysicalBoneEditor::_on_toggle_button_transform_joint
+    );
 }
 
 void PhysicalBoneEditor::_on_toggle_button_transform_joint(bool p_is_pressed) {
@@ -46,13 +49,14 @@ void PhysicalBoneEditor::_set_move_joint() {
     }
 }
 
-PhysicalBoneEditor::PhysicalBoneEditor(EditorNode *p_editor) :
-        editor(p_editor),
-        selected(nullptr) {
+PhysicalBoneEditor::PhysicalBoneEditor(EditorNode* p_editor) :
+    editor(p_editor),
+    selected(nullptr) {
     spatial_editor_hb = memnew(HBoxContainer);
     spatial_editor_hb->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     spatial_editor_hb->set_alignment(BoxContainer::ALIGN_BEGIN);
-    SpatialEditor::get_singleton()->add_control_to_menu_panel(spatial_editor_hb);
+    SpatialEditor::get_singleton()->add_control_to_menu_panel(spatial_editor_hb
+    );
 
     spatial_editor_hb->add_child(memnew(VSeparator));
 
@@ -60,16 +64,19 @@ PhysicalBoneEditor::PhysicalBoneEditor(EditorNode *p_editor) :
     spatial_editor_hb->add_child(button_transform_joint);
 
     button_transform_joint->set_text(TTR("Move Joint"));
-    button_transform_joint->set_icon(SpatialEditor::get_singleton()->get_icon("PhysicalBone", "EditorIcons"));
+    button_transform_joint->set_icon(
+        SpatialEditor::get_singleton()->get_icon("PhysicalBone", "EditorIcons")
+    );
     button_transform_joint->set_toggle_mode(true);
-    button_transform_joint->connect("toggled", this, "_on_toggle_button_transform_joint");
+    button_transform_joint
+        ->connect("toggled", this, "_on_toggle_button_transform_joint");
 
     hide();
 }
 
 PhysicalBoneEditor::~PhysicalBoneEditor() {}
 
-void PhysicalBoneEditor::set_selected(PhysicalBone *p_pb) {
+void PhysicalBoneEditor::set_selected(PhysicalBone* p_pb) {
     button_transform_joint->set_pressed(false);
 
     _set_move_joint();
@@ -85,10 +92,10 @@ void PhysicalBoneEditor::show() {
     spatial_editor_hb->show();
 }
 
-PhysicalBonePlugin::PhysicalBonePlugin(EditorNode *p_editor) :
-        editor(p_editor),
-        selected(nullptr),
-        physical_bone_editor(editor) {}
+PhysicalBonePlugin::PhysicalBonePlugin(EditorNode* p_editor) :
+    editor(p_editor),
+    selected(nullptr),
+    physical_bone_editor(editor) {}
 
 void PhysicalBonePlugin::make_visible(bool p_visible) {
     if (p_visible) {
@@ -100,8 +107,8 @@ void PhysicalBonePlugin::make_visible(bool p_visible) {
     }
 }
 
-void PhysicalBonePlugin::edit(Object *p_node) {
-    selected = static_cast<PhysicalBone *>(p_node); // Trust it
+void PhysicalBonePlugin::edit(Object* p_node) {
+    selected = static_cast<PhysicalBone*>(p_node); // Trust it
     ERR_FAIL_COND(!selected);
 
     physical_bone_editor.set_selected(selected);

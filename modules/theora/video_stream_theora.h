@@ -43,7 +43,7 @@
 #include <theora/theoradec.h>
 #include <vorbis/codec.h>
 
-//#define THEORA_USE_THREAD_STREAMING
+// #define THEORA_USE_THREAD_STREAMING
 
 class VideoStreamPlaybackTheora : public VideoStreamPlayback {
     GDCLASS(VideoStreamPlaybackTheora, VideoStreamPlayback);
@@ -52,17 +52,17 @@ class VideoStreamPlaybackTheora : public VideoStreamPlayback {
         MAX_FRAMES = 4,
     };
 
-    //Image frames[MAX_FRAMES];
+    // Image frames[MAX_FRAMES];
     Image::Format format;
     PoolVector<uint8_t> frame_data;
     int frames_pending;
-    FileAccess *file;
+    FileAccess* file;
     String file_name;
     int audio_frames_wrote;
     Point2i size;
 
     int buffer_data();
-    int queue_page(ogg_page *page);
+    int queue_page(ogg_page* page);
     void video_write();
     float get_time() const;
 
@@ -75,7 +75,7 @@ class VideoStreamPlaybackTheora : public VideoStreamPlayback {
     ogg_stream_state to;
     th_info ti;
     th_comment tc;
-    th_dec_ctx *td;
+    th_dec_ctx* td;
     vorbis_info vi;
     vorbis_dsp_state vd;
     vorbis_block vb;
@@ -100,7 +100,7 @@ class VideoStreamPlaybackTheora : public VideoStreamPlayback {
     Ref<ImageTexture> texture;
 
     AudioMixCallback mix_callback;
-    void *mix_udata;
+    void* mix_udata;
     bool paused;
 
 #ifdef THEORA_USE_THREAD_STREAMING
@@ -116,7 +116,7 @@ class VideoStreamPlaybackTheora : public VideoStreamPlayback {
     Thread thread;
     SafeFlag thread_exit;
 
-    static void _streaming_thread(void *ud);
+    static void _streaming_thread(void* ud);
 
 #endif
 
@@ -145,12 +145,15 @@ public:
     virtual float get_playback_position() const;
     virtual void seek(float p_time);
 
-    void set_file(const String &p_file);
+    void set_file(const String& p_file);
 
     virtual Ref<Texture> get_texture() const;
     virtual void update(float p_delta);
 
-    virtual void set_mix_callback(AudioMixCallback p_callback, void *p_userdata);
+    virtual void set_mix_callback(
+        AudioMixCallback p_callback,
+        void* p_userdata
+    );
     virtual int get_channels() const;
     virtual int get_mix_rate() const;
 
@@ -177,19 +180,33 @@ public:
         return pb;
     }
 
-    void set_file(const String &p_file) { file = p_file; }
-    String get_file() { return file; }
-    void set_audio_track(int p_track) { audio_track = p_track; }
+    void set_file(const String& p_file) {
+        file = p_file;
+    }
 
-    VideoStreamTheora() { audio_track = 0; }
+    String get_file() {
+        return file;
+    }
+
+    void set_audio_track(int p_track) {
+        audio_track = p_track;
+    }
+
+    VideoStreamTheora() {
+        audio_track = 0;
+    }
 };
 
 class ResourceFormatLoaderTheora : public ResourceFormatLoader {
 public:
-    virtual RES load(const String &p_path, const String &p_original_path = "", Error *r_error = nullptr);
-    virtual void get_recognized_extensions(List<String> *p_extensions) const;
-    virtual bool handles_type(const String &p_type) const;
-    virtual String get_resource_type(const String &p_path) const;
+    virtual RES load(
+        const String& p_path,
+        const String& p_original_path = "",
+        Error* r_error = nullptr
+    );
+    virtual void get_recognized_extensions(List<String>* p_extensions) const;
+    virtual bool handles_type(const String& p_type) const;
+    virtual String get_resource_type(const String& p_path) const;
 };
 
 #endif

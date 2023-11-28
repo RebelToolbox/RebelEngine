@@ -37,7 +37,11 @@
 void WSLClient::_do_handshake() {
     if (_requested < _request.size() - 1) {
         int sent = 0;
-        Error err = _connection->put_partial_data(((const uint8_t *)_request.get_data() + _requested), _request.size() - _requested - 1, sent);
+        Error err = _connection->put_partial_data(
+            ((const uint8_t*)_request.get_data() + _requested),
+            _request.size() - _requested - 1,
+            sent
+        );
         // Sending handshake failed
         if (err != OK) {
             disconnect_from_host();
@@ -55,7 +59,8 @@ void WSLClient::_do_handshake() {
                 _on_error();
                 ERR_FAIL_MSG("Response headers too big.");
             }
-            Error err = _connection->get_partial_data(&_resp_buf[_resp_pos], 1, read);
+            Error err =
+                _connection->get_partial_data(&_resp_buf[_resp_pos], 1, read);
             if (err == ERR_FILE_EOF) {
                 // We got a disconnect.
                 disconnect_from_host();
@@ -71,9 +76,10 @@ void WSLClient::_do_handshake() {
                 break;
             }
             // Check "\r\n\r\n" header terminator
-            char *r = (char *)_resp_buf;
+            char* r = (char*)_resp_buf;
             int l = _resp_pos;
-            if (l > 3 && r[l] == '\n' && r[l - 1] == '\r' && r[l - 2] == '\n' && r[l - 3] == '\r') {
+            if (l > 3 && r[l] == '\n' && r[l - 1] == '\r' && r[l - 2] == '\n'
+                && r[l - 3] == '\r') {
                 r[l - 3] = '\0';
                 String protocol;
                 // Response is over, verify headers and create peer.
@@ -83,13 +89,19 @@ void WSLClient::_do_handshake() {
                     ERR_FAIL_MSG("Invalid response headers.");
                 }
                 // Create peer.
-                WSLPeer::PeerData *data = memnew(struct WSLPeer::PeerData);
+                WSLPeer::PeerData* data = memnew(struct WSLPeer::PeerData);
                 data->obj = this;
                 data->conn = _connection;
                 data->tcp = _tcp;
                 data->is_server = false;
                 data->id = 1;
-                _peer->make_context(data, _in_buf_size, _in_pkt_size, _out_buf_size, _out_pkt_size);
+                _peer->make_context(
+                    data,
+                    _in_buf_size,
+                    _in_pkt_size,
+                    _out_buf_size,
+                    _out_pkt_size
+                );
                 _peer->set_no_delay(true);
                 _on_connect(protocol);
                 break;
@@ -99,22 +111,38 @@ void WSLClient::_do_handshake() {
     }
 }
 
-bool WSLClient::_verify_headers(String &r_protocol) {
-    String s = (char *)_resp_buf;
+bool WSLClient::_verify_headers(String& r_protocol) {
+    String s = (char*)_resp_buf;
     Vector<String> psa = s.split("\r\n");
     int len = psa.size();
-    ERR_FAIL_COND_V_MSG(len < 4, false, "Not enough response headers, got: " + itos(len) + ", expected >= 4.");
+    ERR_FAIL_COND_V_MSG(
+        len < 4,
+        false,
+        "Not enough response headers, got: " + itos(len) + ", expected >= 4."
+    );
 
     Vector<String> req = psa[0].split(" ", false);
-    ERR_FAIL_COND_V_MSG(req.size() < 2, false, "Invalid protocol or status code.");
+    ERR_FAIL_COND_V_MSG(
+        req.size() < 2,
+        false,
+        "Invalid protocol or status code."
+    );
 
     // Wrong protocol
-    ERR_FAIL_COND_V_MSG(req[0] != "HTTP/1.1" || req[1] != "101", false, "Invalid protocol or status code.");
+    ERR_FAIL_COND_V_MSG(
+        req[0] != "HTTP/1.1" || req[1] != "101",
+        false,
+        "Invalid protocol or status code."
+    );
 
     Map<String, String> headers;
     for (int i = 1; i < len; i++) {
         Vector<String> header = psa[i].split(":", false, 1);
-        ERR_FAIL_COND_V_MSG(header.size() != 2, false, "Invalid header -> " + psa[i] + ".");
+        ERR_FAIL_COND_V_MSG(
+            header.size() != 2,
+            false,
+            "Invalid header -> " + psa[i] + "."
+        );
         String name = header[0].to_lower();
         String value = header[1].strip_edges();
         if (headers.has(name)) {
@@ -124,12 +152,20 @@ bool WSLClient::_verify_headers(String &r_protocol) {
         }
     }
 
-#define _WSL_CHECK(NAME, VALUE)                                                         \
-    ERR_FAIL_COND_V_MSG(!headers.has(NAME) || headers[NAME].to_lower() != VALUE, false, \
-            "Missing or invalid header '" + String(NAME) + "'. Expected value '" + VALUE + "'.");
-#define _WSL_CHECK_NC(NAME, VALUE)                                           \
-    ERR_FAIL_COND_V_MSG(!headers.has(NAME) || headers[NAME] != VALUE, false, \
-            "Missing or invalid header '" + String(NAME) + "'. Expected value '" + VALUE + "'.");
+#define _WSL_CHECK(NAME, VALUE)                                                \
+    ERR_FAIL_COND_V_MSG(                                                       \
+        !headers.has(NAME) || headers[NAME].to_lower() != VALUE,               \
+        false,                                                                 \
+        "Missing or invalid header '" + String(NAME) + "'. Expected value '"   \
+            + VALUE + "'."                                                     \
+    );
+#define _WSL_CHECK_NC(NAME, VALUE)                                             \
+    ERR_FAIL_COND_V_MSG(                                                       \
+        !headers.has(NAME) || headers[NAME] != VALUE,                          \
+        false,                                                                 \
+        "Missing or invalid header '" + String(NAME) + "'. Expected value '"   \
+            + VALUE + "'."                                                     \
+    );
     _WSL_CHECK("connection", "upgrade");
     _WSL_CHECK("upgrade", "websocket");
     _WSL_CHECK_NC("sec-websocket-accept", WSLPeer::compute_key_response(_key));
@@ -156,7 +192,14 @@ bool WSLClient::_verify_headers(String &r_protocol) {
     return true;
 }
 
-Error WSLClient::connect_to_host(String p_host, String p_path, uint16_t p_port, bool p_ssl, const Vector<String> p_protocols, const Vector<String> p_custom_headers) {
+Error WSLClient::connect_to_host(
+    String p_host,
+    String p_path,
+    uint16_t p_port,
+    bool p_ssl,
+    const Vector<String> p_protocols,
+    const Vector<String> p_custom_headers
+) {
     ERR_FAIL_COND_V(_connection.is_valid(), ERR_ALREADY_IN_USE);
     ERR_FAIL_COND_V(p_path.empty(), ERR_INVALID_PARAMETER);
 
@@ -194,7 +237,7 @@ Error WSLClient::connect_to_host(String p_host, String p_path, uint16_t p_port, 
     _port = p_port;
     // Strip edges from protocols.
     _protocols.resize(p_protocols.size());
-    String *pw = _protocols.ptrw();
+    String* pw = _protocols.ptrw();
     for (int i = 0; i < p_protocols.size(); i++) {
         pw[i] = p_protocols[i].strip_edges();
     }
@@ -257,9 +300,18 @@ void WSLClient::poll() {
                 if (_connection == _tcp) {
                     // Start SSL handshake
                     ssl = Ref<StreamPeerSSL>(StreamPeerSSL::create());
-                    ERR_FAIL_COND_MSG(ssl.is_null(), "SSL is not available in this build.");
+                    ERR_FAIL_COND_MSG(
+                        ssl.is_null(),
+                        "SSL is not available in this build."
+                    );
                     ssl->set_blocking_handshake_enabled(false);
-                    if (ssl->connect_to_stream(_tcp, verify_ssl, _host, ssl_cert) != OK) {
+                    if (ssl->connect_to_stream(
+                            _tcp,
+                            verify_ssl,
+                            _host,
+                            ssl_cert
+                        )
+                        != OK) {
                         disconnect_from_host();
                         _on_error();
                         return;
@@ -284,7 +336,8 @@ void WSLClient::poll() {
         case StreamPeerTCP::STATUS_ERROR:
             while (ip_candidates.size() > 0) {
                 _tcp->disconnect_from_host();
-                if (_tcp->connect_to_host(ip_candidates.pop_front(), _port) == OK) {
+                if (_tcp->connect_to_host(ip_candidates.pop_front(), _port)
+                    == OK) {
                     return;
                 }
             }
@@ -302,7 +355,8 @@ Ref<WebSocketPeer> WSLClient::get_peer(int p_peer_id) const {
     return _peer;
 }
 
-NetworkedMultiplayerPeer::ConnectionStatus WSLClient::get_connection_status() const {
+NetworkedMultiplayerPeer::ConnectionStatus WSLClient::get_connection_status(
+) const {
     if (_peer->is_connected_to_host()) {
         return CONNECTION_CONNECTED;
     }
@@ -343,8 +397,17 @@ uint16_t WSLClient::get_connected_port() const {
     return _peer->get_connected_port();
 }
 
-Error WSLClient::set_buffers(int p_in_buffer, int p_in_packets, int p_out_buffer, int p_out_packets) {
-    ERR_FAIL_COND_V_MSG(_connection.is_valid(), FAILED, "Buffers sizes can only be set before listening or connecting.");
+Error WSLClient::set_buffers(
+    int p_in_buffer,
+    int p_in_packets,
+    int p_out_buffer,
+    int p_out_packets
+) {
+    ERR_FAIL_COND_V_MSG(
+        _connection.is_valid(),
+        FAILED,
+        "Buffers sizes can only be set before listening or connecting."
+    );
 
     _in_buf_size = nearest_shift(p_in_buffer - 1) + 10;
     _in_pkt_size = nearest_shift(p_in_packets - 1);

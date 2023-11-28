@@ -41,11 +41,13 @@ class PopupMenu : public Popup {
         String text;
         String xl_text;
         bool checked;
+
         enum {
             CHECKABLE_TYPE_NONE,
             CHECKABLE_TYPE_CHECK_BOX,
             CHECKABLE_TYPE_RADIO_BUTTON,
         } checkable_type;
+
         int max_states;
         int state;
         bool separator;
@@ -76,7 +78,7 @@ class PopupMenu : public Popup {
         }
     };
 
-    Timer *submenu_timer;
+    Timer* submenu_timer;
     List<Rect2> autohide_areas;
     Vector<Item> items;
     int initial_button_mask;
@@ -85,10 +87,10 @@ class PopupMenu : public Popup {
     int submenu_over;
     Rect2 parent_rect;
     String _get_accel_text(int p_item) const;
-    int _get_mouse_over(const Point2 &p_over) const;
+    int _get_mouse_over(const Point2& p_over) const;
     virtual Size2 get_minimum_size() const;
-    void _scroll(float p_factor, const Point2 &p_over);
-    void _gui_input(const Ref<InputEvent> &p_event);
+    void _scroll(float p_factor, const Point2& p_over);
+    void _gui_input(const Ref<InputEvent>& p_event);
     void _activate_submenu(int over);
     void _submenu_timeout();
 
@@ -100,7 +102,7 @@ class PopupMenu : public Popup {
     Vector2 moved;
 
     Array _get_items() const;
-    void _set_items(const Array &p_items);
+    void _set_items(const Array& p_items);
 
     Map<Ref<ShortCut>, int> shortcut_refcount;
 
@@ -112,44 +114,108 @@ class PopupMenu : public Popup {
     String search_string;
 
 protected:
-    virtual bool has_point(const Point2 &p_point) const;
+    virtual bool has_point(const Point2& p_point) const;
 
     friend class MenuButton;
     void _notification(int p_what);
     static void _bind_methods();
 
 public:
-    void add_item(const String &p_label, int p_id = -1, uint32_t p_accel = 0);
-    void add_icon_item(const Ref<Texture> &p_icon, const String &p_label, int p_id = -1, uint32_t p_accel = 0);
-    void add_check_item(const String &p_label, int p_id = -1, uint32_t p_accel = 0);
-    void add_icon_check_item(const Ref<Texture> &p_icon, const String &p_label, int p_id = -1, uint32_t p_accel = 0);
-    void add_radio_check_item(const String &p_label, int p_id = -1, uint32_t p_accel = 0);
-    void add_icon_radio_check_item(const Ref<Texture> &p_icon, const String &p_label, int p_id = -1, uint32_t p_accel = 0);
+    void add_item(const String& p_label, int p_id = -1, uint32_t p_accel = 0);
+    void add_icon_item(
+        const Ref<Texture>& p_icon,
+        const String& p_label,
+        int p_id = -1,
+        uint32_t p_accel = 0
+    );
+    void add_check_item(
+        const String& p_label,
+        int p_id = -1,
+        uint32_t p_accel = 0
+    );
+    void add_icon_check_item(
+        const Ref<Texture>& p_icon,
+        const String& p_label,
+        int p_id = -1,
+        uint32_t p_accel = 0
+    );
+    void add_radio_check_item(
+        const String& p_label,
+        int p_id = -1,
+        uint32_t p_accel = 0
+    );
+    void add_icon_radio_check_item(
+        const Ref<Texture>& p_icon,
+        const String& p_label,
+        int p_id = -1,
+        uint32_t p_accel = 0
+    );
 
-    void add_multistate_item(const String &p_label, int p_max_states, int p_default_state = 0, int p_id = -1, uint32_t p_accel = 0);
+    void add_multistate_item(
+        const String& p_label,
+        int p_max_states,
+        int p_default_state = 0,
+        int p_id = -1,
+        uint32_t p_accel = 0
+    );
 
-    void add_shortcut(const Ref<ShortCut> &p_shortcut, int p_id = -1, bool p_global = false);
-    void add_icon_shortcut(const Ref<Texture> &p_icon, const Ref<ShortCut> &p_shortcut, int p_id = -1, bool p_global = false);
-    void add_check_shortcut(const Ref<ShortCut> &p_shortcut, int p_id = -1, bool p_global = false);
-    void add_icon_check_shortcut(const Ref<Texture> &p_icon, const Ref<ShortCut> &p_shortcut, int p_id = -1, bool p_global = false);
-    void add_radio_check_shortcut(const Ref<ShortCut> &p_shortcut, int p_id = -1, bool p_global = false);
-    void add_icon_radio_check_shortcut(const Ref<Texture> &p_icon, const Ref<ShortCut> &p_shortcut, int p_id = -1, bool p_global = false);
+    void add_shortcut(
+        const Ref<ShortCut>& p_shortcut,
+        int p_id = -1,
+        bool p_global = false
+    );
+    void add_icon_shortcut(
+        const Ref<Texture>& p_icon,
+        const Ref<ShortCut>& p_shortcut,
+        int p_id = -1,
+        bool p_global = false
+    );
+    void add_check_shortcut(
+        const Ref<ShortCut>& p_shortcut,
+        int p_id = -1,
+        bool p_global = false
+    );
+    void add_icon_check_shortcut(
+        const Ref<Texture>& p_icon,
+        const Ref<ShortCut>& p_shortcut,
+        int p_id = -1,
+        bool p_global = false
+    );
+    void add_radio_check_shortcut(
+        const Ref<ShortCut>& p_shortcut,
+        int p_id = -1,
+        bool p_global = false
+    );
+    void add_icon_radio_check_shortcut(
+        const Ref<Texture>& p_icon,
+        const Ref<ShortCut>& p_shortcut,
+        int p_id = -1,
+        bool p_global = false
+    );
 
-    void add_submenu_item(const String &p_label, const String &p_submenu, int p_id = -1);
+    void add_submenu_item(
+        const String& p_label,
+        const String& p_submenu,
+        int p_id = -1
+    );
 
-    void set_item_text(int p_idx, const String &p_text);
-    void set_item_icon(int p_idx, const Ref<Texture> &p_icon);
+    void set_item_text(int p_idx, const String& p_text);
+    void set_item_icon(int p_idx, const Ref<Texture>& p_icon);
     void set_item_checked(int p_idx, bool p_checked);
     void set_item_id(int p_idx, int p_id);
     void set_item_accelerator(int p_idx, uint32_t p_accel);
-    void set_item_metadata(int p_idx, const Variant &p_meta);
+    void set_item_metadata(int p_idx, const Variant& p_meta);
     void set_item_disabled(int p_idx, bool p_disabled);
-    void set_item_submenu(int p_idx, const String &p_submenu);
+    void set_item_submenu(int p_idx, const String& p_submenu);
     void set_item_as_separator(int p_idx, bool p_separator);
     void set_item_as_checkable(int p_idx, bool p_checkable);
     void set_item_as_radio_checkable(int p_idx, bool p_radio_checkable);
-    void set_item_tooltip(int p_idx, const String &p_tooltip);
-    void set_item_shortcut(int p_idx, const Ref<ShortCut> &p_shortcut, bool p_global = false);
+    void set_item_tooltip(int p_idx, const String& p_tooltip);
+    void set_item_shortcut(
+        int p_idx,
+        const Ref<ShortCut>& p_shortcut,
+        bool p_global = false
+    );
     void set_item_h_offset(int p_idx, int p_offset);
     void set_item_multistate(int p_idx, int p_state);
     void toggle_item_multistate(int p_idx);
@@ -158,7 +224,7 @@ public:
     void toggle_item_checked(int p_idx);
 
     String get_item_text(int p_idx) const;
-    int get_item_idx_from_text(const String &text) const;
+    int get_item_idx_from_text(const String& text) const;
     Ref<Texture> get_item_icon(int p_idx) const;
     bool is_item_checked(int p_idx) const;
     int get_item_id(int p_idx) const;
@@ -178,22 +244,25 @@ public:
     int get_current_index() const;
     int get_item_count() const;
 
-    bool activate_item_by_event(const Ref<InputEvent> &p_event, bool p_for_global_only = false);
+    bool activate_item_by_event(
+        const Ref<InputEvent>& p_event,
+        bool p_for_global_only = false
+    );
     void activate_item(int p_item);
 
     void remove_item(int p_idx);
 
-    void add_separator(const String &p_text = String(), int p_id = -1);
+    void add_separator(const String& p_text = String(), int p_id = -1);
 
     void clear();
 
-    void set_parent_rect(const Rect2 &p_rect);
+    void set_parent_rect(const Rect2& p_rect);
 
-    virtual String get_tooltip(const Point2 &p_pos) const;
+    virtual String get_tooltip(const Point2& p_pos) const;
 
-    virtual void get_translatable_strings(List<String> *p_strings) const;
+    virtual void get_translatable_strings(List<String>* p_strings) const;
 
-    void add_autohide_area(const Rect2 &p_area);
+    void add_autohide_area(const Rect2& p_area);
     void clear_autohide_areas();
 
     void set_hide_on_item_selection(bool p_enabled);
@@ -211,7 +280,7 @@ public:
     void set_allow_search(bool p_allow);
     bool get_allow_search() const;
 
-    virtual void popup(const Rect2 &p_bounds = Rect2());
+    virtual void popup(const Rect2& p_bounds = Rect2());
 
     void set_hide_on_window_lose_focus(bool p_enabled);
     bool is_hide_on_window_lose_focus() const;

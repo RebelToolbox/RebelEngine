@@ -57,8 +57,8 @@ void main() {
     }
     */
 
-    //normal.z = sqrt(1.0 - dot(normal.xy, normal.xy));
-    //normal.xy *= 1.0 + normal.z;
+    // normal.z = sqrt(1.0 - dot(normal.xy, normal.xy));
+    // normal.xy *= 1.0 + normal.z;
 
     normal.z = 0.5 - 0.5 * ((normal.x * normal.x) + (normal.y * normal.y));
     normal = normalize(normal);
@@ -71,10 +71,11 @@ void main() {
         normal.z = -normal.z;
     }
 
-    //normal = normalize(vec3( uv_interp * 2.0 - 1.0, 1.0 ));
+    // normal = normalize(vec3( uv_interp * 2.0 - 1.0, 1.0 ));
     float depth = textureCube(source_cube, normal).r;
 
-    // absolute values for direction cosines, bigger value equals closer to basis axis
+    // absolute values for direction cosines, bigger value equals closer to
+    // basis axis
     vec3 unorm = abs(normal);
 
     if ((unorm.x >= unorm.y) && (unorm.x >= unorm.z)) {
@@ -95,6 +96,7 @@ void main() {
     float depth_fix = 1.0 / dot(normal, unorm);
 
     depth = 2.0 * depth - 1.0;
-    float linear_depth = 2.0 * z_near * z_far / (z_far + z_near - depth * (z_far - z_near));
+    float linear_depth =
+        2.0 * z_near * z_far / (z_far + z_near - depth * (z_far - z_near));
     gl_FragDepth = (linear_depth * depth_fix + bias) / z_far;
 }

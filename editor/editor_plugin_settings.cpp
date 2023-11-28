@@ -42,7 +42,11 @@ void EditorPluginSettings::_notification(int p_what) {
     if (p_what == MainLoop::NOTIFICATION_WM_FOCUS_IN) {
         update_plugins();
     } else if (p_what == Node::NOTIFICATION_READY) {
-        plugin_config_dialog->connect("plugin_ready", EditorNode::get_singleton(), "_on_plugin_ready");
+        plugin_config_dialog->connect(
+            "plugin_ready",
+            EditorNode::get_singleton(),
+            "_on_plugin_ready"
+        );
         plugin_list->connect("button_pressed", this, "_cell_button_pressed");
     }
 }
@@ -50,7 +54,7 @@ void EditorPluginSettings::_notification(int p_what) {
 void EditorPluginSettings::update_plugins() {
     plugin_list->clear();
     updating = true;
-    TreeItem *root = plugin_list->create_item();
+    TreeItem* root = plugin_list->create_item();
 
     Vector<String> plugins = _get_plugins("res://addons");
     plugins.sort();
@@ -72,19 +76,27 @@ void EditorPluginSettings::update_plugins() {
                 key_missing = true;
             }
             if (!cf->has_section_key("plugin", "author")) {
-                WARN_PRINT("Plugin config misses \"plugin/author\" key: " + path);
+                WARN_PRINT(
+                    "Plugin config misses \"plugin/author\" key: " + path
+                );
                 key_missing = true;
             }
             if (!cf->has_section_key("plugin", "version")) {
-                WARN_PRINT("Plugin config misses \"plugin/version\" key: " + path);
+                WARN_PRINT(
+                    "Plugin config misses \"plugin/version\" key: " + path
+                );
                 key_missing = true;
             }
             if (!cf->has_section_key("plugin", "description")) {
-                WARN_PRINT("Plugin config misses \"plugin/description\" key: " + path);
+                WARN_PRINT(
+                    "Plugin config misses \"plugin/description\" key: " + path
+                );
                 key_missing = true;
             }
             if (!cf->has_section_key("plugin", "script")) {
-                WARN_PRINT("Plugin config misses \"plugin/script\" key: " + path);
+                WARN_PRINT(
+                    "Plugin config misses \"plugin/script\" key: " + path
+                );
                 key_missing = true;
             }
 
@@ -95,9 +107,14 @@ void EditorPluginSettings::update_plugins() {
                 String description = cf->get_value("plugin", "description");
                 String script = cf->get_value("plugin", "script");
 
-                TreeItem *item = plugin_list->create_item(root);
+                TreeItem* item = plugin_list->create_item(root);
                 item->set_text(0, name);
-                item->set_tooltip(0, TTR("Name:") + " " + name + "\n" + TTR("Path:") + " " + path + "\n" + TTR("Main Script:") + " " + script + "\n" + TTR("Description:") + " " + description);
+                item->set_tooltip(
+                    0,
+                    TTR("Name:") + " " + name + "\n" + TTR("Path:") + " " + path
+                        + "\n" + TTR("Main Script:") + " " + script + "\n"
+                        + TTR("Description:") + " " + description
+                );
                 item->set_metadata(0, path);
                 item->set_text(1, version);
                 item->set_metadata(1, script);
@@ -105,10 +122,17 @@ void EditorPluginSettings::update_plugins() {
                 item->set_metadata(2, description);
                 item->set_cell_mode(3, TreeItem::CELL_MODE_CHECK);
                 item->set_text(3, TTR("Enable"));
-                bool is_active = EditorNode::get_singleton()->is_addon_plugin_enabled(path);
+                bool is_active =
+                    EditorNode::get_singleton()->is_addon_plugin_enabled(path);
                 item->set_checked(3, is_active);
                 item->set_editable(3, true);
-                item->add_button(4, get_icon("Edit", "EditorIcons"), BUTTON_PLUGIN_EDIT, false, TTR("Edit Plugin"));
+                item->add_button(
+                    4,
+                    get_icon("Edit", "EditorIcons"),
+                    BUTTON_PLUGIN_EDIT,
+                    false,
+                    TTR("Edit Plugin")
+                );
             }
         }
     }
@@ -121,7 +145,7 @@ void EditorPluginSettings::_plugin_activity_changed() {
         return;
     }
 
-    TreeItem *ti = plugin_list->get_edited();
+    TreeItem* ti = plugin_list->get_edited();
     ERR_FAIL_COND(!ti);
     bool active = ti->is_checked(3);
     String name = ti->get_metadata(0);
@@ -142,8 +166,12 @@ void EditorPluginSettings::_create_clicked() {
     plugin_config_dialog->popup_centered();
 }
 
-void EditorPluginSettings::_cell_button_pressed(Object *p_item, int p_column, int p_id) {
-    TreeItem *item = Object::cast_to<TreeItem>(p_item);
+void EditorPluginSettings::_cell_button_pressed(
+    Object* p_item,
+    int p_column,
+    int p_id
+) {
+    TreeItem* item = Object::cast_to<TreeItem>(p_item);
     if (!item) {
         return;
     }
@@ -156,7 +184,7 @@ void EditorPluginSettings::_cell_button_pressed(Object *p_item, int p_column, in
     }
 }
 
-Vector<String> EditorPluginSettings::_get_plugins(const String &p_dir) {
+Vector<String> EditorPluginSettings::_get_plugins(const String& p_dir) {
     DirAccessRef da = DirAccess::create(DirAccess::ACCESS_RESOURCES);
     Error err = da->change_dir(p_dir);
     if (err != OK) {
@@ -165,7 +193,8 @@ Vector<String> EditorPluginSettings::_get_plugins(const String &p_dir) {
 
     Vector<String> plugins;
     da->list_dir_begin();
-    for (String path = da->get_next(); path != String(); path = da->get_next()) {
+    for (String path = da->get_next(); path != String();
+         path = da->get_next()) {
         if (path[0] == '.' || !da->current_is_dir()) {
             continue;
         }
@@ -184,10 +213,22 @@ Vector<String> EditorPluginSettings::_get_plugins(const String &p_dir) {
 }
 
 void EditorPluginSettings::_bind_methods() {
-    ClassDB::bind_method("update_plugins", &EditorPluginSettings::update_plugins);
-    ClassDB::bind_method("_create_clicked", &EditorPluginSettings::_create_clicked);
-    ClassDB::bind_method("_plugin_activity_changed", &EditorPluginSettings::_plugin_activity_changed);
-    ClassDB::bind_method("_cell_button_pressed", &EditorPluginSettings::_cell_button_pressed);
+    ClassDB::bind_method(
+        "update_plugins",
+        &EditorPluginSettings::update_plugins
+    );
+    ClassDB::bind_method(
+        "_create_clicked",
+        &EditorPluginSettings::_create_clicked
+    );
+    ClassDB::bind_method(
+        "_plugin_activity_changed",
+        &EditorPluginSettings::_plugin_activity_changed
+    );
+    ClassDB::bind_method(
+        "_cell_button_pressed",
+        &EditorPluginSettings::_cell_button_pressed
+    );
 }
 
 EditorPluginSettings::EditorPluginSettings() {
@@ -195,7 +236,7 @@ EditorPluginSettings::EditorPluginSettings() {
     plugin_config_dialog->config("");
     add_child(plugin_config_dialog);
 
-    HBoxContainer *title_hb = memnew(HBoxContainer);
+    HBoxContainer* title_hb = memnew(HBoxContainer);
     title_hb->add_child(memnew(Label(TTR("Installed Plugins:"))));
     title_hb->add_spacer();
     create_plugin = memnew(Button(TTR("Create")));
@@ -227,7 +268,7 @@ EditorPluginSettings::EditorPluginSettings() {
     plugin_list->set_hide_root(true);
     plugin_list->connect("item_edited", this, "_plugin_activity_changed");
 
-    VBoxContainer *mc = memnew(VBoxContainer);
+    VBoxContainer* mc = memnew(VBoxContainer);
     mc->add_child(plugin_list);
     mc->set_v_size_flags(SIZE_EXPAND_FILL);
     mc->set_h_size_flags(SIZE_EXPAND_FILL);

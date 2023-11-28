@@ -41,17 +41,20 @@
 #include <unistd.h>
 
 class DirAccessUnix : public DirAccess {
-    DIR *dir_stream;
+    DIR* dir_stream;
 
-    static DirAccess *create_fs();
+    static DirAccess* create_fs();
 
     String current_dir;
     bool _cisdir;
     bool _cishidden;
 
 protected:
-    virtual String fix_unicode_name(const char *p_name) const { return String::utf8(p_name); }
-    virtual bool is_hidden(const String &p_name);
+    virtual String fix_unicode_name(const char* p_name) const {
+        return String::utf8(p_name);
+    }
+
+    virtual bool is_hidden(const String& p_name);
 
 public:
     virtual Error list_dir_begin(); ///< This starts dir listing
@@ -65,7 +68,8 @@ public:
     virtual String get_drive(int p_drive);
     virtual bool drives_are_shortcuts();
 
-    virtual Error change_dir(String p_dir); ///< can be relative or absolute, return false on success
+    virtual Error change_dir(String p_dir
+    ); ///< can be relative or absolute, return false on success
     virtual String get_current_dir(); ///< return current dir location
     virtual Error make_dir(String p_dir);
 
@@ -89,5 +93,5 @@ public:
     ~DirAccessUnix();
 };
 
-#endif //UNIX ENABLED
+#endif // UNIX ENABLED
 #endif

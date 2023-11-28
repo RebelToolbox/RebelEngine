@@ -47,7 +47,8 @@ public interface RebelPluginInfoProvider {
     /**
      * Returns the paths for the plugin's gdnative libraries (if any).
      *
-     * The paths must be relative to the 'assets' directory and point to a '*.gdnlib' file.
+     * The paths must be relative to the 'assets' directory and point to a
+     * '*.gdnlib' file.
      */
     @NonNull
     default Set<String> getPluginGDNativeLibrariesPaths() {
@@ -55,9 +56,8 @@ public interface RebelPluginInfoProvider {
     }
 
     /**
-     * This is invoked on the render thread when the plugin described by this instance has been
-     * registered.
+     * This is invoked on the render thread when the plugin described by this
+     * instance has been registered.
      */
-    default void onPluginRegistered() {
-    }
+    default void onPluginRegistered() {}
 }

@@ -34,7 +34,9 @@
 
 #include "editor/editor_node.h"
 
-Set<String> GDNativeLibrarySingletonEditor::_find_singletons_recursive(EditorFileSystemDirectory *p_dir) {
+Set<String> GDNativeLibrarySingletonEditor::_find_singletons_recursive(
+    EditorFileSystemDirectory* p_dir
+) {
     Set<String> file_paths;
 
     // check children
@@ -47,7 +49,8 @@ Set<String> GDNativeLibrarySingletonEditor::_find_singletons_recursive(EditorFil
             continue;
         }
 
-        Ref<GDNativeLibrary> lib = ResourceLoader::load(p_dir->get_file_path(i));
+        Ref<GDNativeLibrary> lib =
+            ResourceLoader::load(p_dir->get_file_path(i));
         if (lib.is_valid() && lib->is_singleton()) {
             file_paths.insert(p_dir->get_file_path(i));
         }
@@ -57,7 +60,7 @@ Set<String> GDNativeLibrarySingletonEditor::_find_singletons_recursive(EditorFil
     for (int i = 0; i < p_dir->get_subdir_count(); i++) {
         Set<String> paths = _find_singletons_recursive(p_dir->get_subdir(i));
 
-        for (Set<String>::Element *E = paths.front(); E; E = E->next()) {
+        for (Set<String>::Element* E = paths.front(); E; E = E->next()) {
             file_paths.insert(E->get());
         }
     }
@@ -66,17 +69,19 @@ Set<String> GDNativeLibrarySingletonEditor::_find_singletons_recursive(EditorFil
 }
 
 void GDNativeLibrarySingletonEditor::_discover_singletons() {
-    EditorFileSystemDirectory *dir = EditorFileSystem::get_singleton()->get_filesystem();
+    EditorFileSystemDirectory* dir =
+        EditorFileSystem::get_singleton()->get_filesystem();
 
     Set<String> file_paths = _find_singletons_recursive(dir);
 
     bool changed = false;
     Array current_files;
     if (ProjectSettings::get_singleton()->has_setting("gdnative/singletons")) {
-        current_files = ProjectSettings::get_singleton()->get("gdnative/singletons");
+        current_files =
+            ProjectSettings::get_singleton()->get("gdnative/singletons");
     }
     Array files;
-    for (Set<String>::Element *E = file_paths.front(); E; E = E->next()) {
+    for (Set<String>::Element* E = file_paths.front(); E; E = E->next()) {
         if (!current_files.has(E->get())) {
             changed = true;
         }
@@ -108,11 +113,16 @@ void GDNativeLibrarySingletonEditor::_update_libraries() {
 
     Array singletons;
     if (ProjectSettings::get_singleton()->has_setting("gdnative/singletons")) {
-        singletons = ProjectSettings::get_singleton()->get("gdnative/singletons");
+        singletons =
+            ProjectSettings::get_singleton()->get("gdnative/singletons");
     }
     Array singletons_disabled;
-    if (ProjectSettings::get_singleton()->has_setting("gdnative/singletons_disabled")) {
-        singletons_disabled = ProjectSettings::get_singleton()->get("gdnative/singletons_disabled");
+    if (ProjectSettings::get_singleton()->has_setting(
+            "gdnative/singletons_disabled"
+        )) {
+        singletons_disabled =
+            ProjectSettings::get_singleton()->get("gdnative/singletons_disabled"
+            );
     }
 
     Array updated_disabled;
@@ -123,7 +133,7 @@ void GDNativeLibrarySingletonEditor::_update_libraries() {
             enabled = false;
             updated_disabled.push_back(path);
         }
-        TreeItem *ti = libraries->create_item(libraries->get_root());
+        TreeItem* ti = libraries->create_item(libraries->get_root());
         ti->set_text(0, path.get_file());
         ti->set_tooltip(0, path);
         ti->set_metadata(0, path);
@@ -136,7 +146,10 @@ void GDNativeLibrarySingletonEditor::_update_libraries() {
 
     // The singletons list changed, we must update the settings
     if (updated_disabled.size() != singletons_disabled.size()) {
-        ProjectSettings::get_singleton()->set("gdnative/singletons_disabled", updated_disabled);
+        ProjectSettings::get_singleton()->set(
+            "gdnative/singletons_disabled",
+            updated_disabled
+        );
     }
 
     updating = false;
@@ -147,7 +160,7 @@ void GDNativeLibrarySingletonEditor::_item_edited() {
         return;
     }
 
-    TreeItem *item = libraries->get_edited();
+    TreeItem* item = libraries->get_edited();
     if (!item) {
         return;
     }
@@ -157,8 +170,12 @@ void GDNativeLibrarySingletonEditor::_item_edited() {
 
     Array disabled_paths;
     Array undo_paths;
-    if (ProjectSettings::get_singleton()->has_setting("gdnative/singletons_disabled")) {
-        disabled_paths = ProjectSettings::get_singleton()->get("gdnative/singletons_disabled");
+    if (ProjectSettings::get_singleton()->has_setting(
+            "gdnative/singletons_disabled"
+        )) {
+        disabled_paths =
+            ProjectSettings::get_singleton()->get("gdnative/singletons_disabled"
+            );
         // Duplicate so redo works (not a reference)
         disabled_paths = disabled_paths.duplicate();
         // For undo, so we can reset the property.
@@ -173,10 +190,21 @@ void GDNativeLibrarySingletonEditor::_item_edited() {
         }
     }
 
-    undo_redo->create_action(enabled ? TTR("Enabled GDNative Singleton") : TTR("Disabled GDNative Singleton"));
-    undo_redo->add_do_property(ProjectSettings::get_singleton(), "gdnative/singletons_disabled", disabled_paths);
+    undo_redo->create_action(
+        enabled ? TTR("Enabled GDNative Singleton")
+                : TTR("Disabled GDNative Singleton")
+    );
+    undo_redo->add_do_property(
+        ProjectSettings::get_singleton(),
+        "gdnative/singletons_disabled",
+        disabled_paths
+    );
     undo_redo->add_do_method(this, "_update_libraries");
-    undo_redo->add_undo_property(ProjectSettings::get_singleton(), "gdnative/singletons_disabled", undo_paths);
+    undo_redo->add_undo_property(
+        ProjectSettings::get_singleton(),
+        "gdnative/singletons_disabled",
+        undo_paths
+    );
     undo_redo->add_undo_method(this, "_update_libraries");
     undo_redo->commit_action();
 }
@@ -190,9 +218,18 @@ void GDNativeLibrarySingletonEditor::_notification(int p_what) {
 }
 
 void GDNativeLibrarySingletonEditor::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_item_edited"), &GDNativeLibrarySingletonEditor::_item_edited);
-    ClassDB::bind_method(D_METHOD("_discover_singletons"), &GDNativeLibrarySingletonEditor::_discover_singletons);
-    ClassDB::bind_method(D_METHOD("_update_libraries"), &GDNativeLibrarySingletonEditor::_update_libraries);
+    ClassDB::bind_method(
+        D_METHOD("_item_edited"),
+        &GDNativeLibrarySingletonEditor::_item_edited
+    );
+    ClassDB::bind_method(
+        D_METHOD("_discover_singletons"),
+        &GDNativeLibrarySingletonEditor::_discover_singletons
+    );
+    ClassDB::bind_method(
+        D_METHOD("_update_libraries"),
+        &GDNativeLibrarySingletonEditor::_update_libraries
+    );
 }
 
 GDNativeLibrarySingletonEditor::GDNativeLibrarySingletonEditor() {
@@ -206,7 +243,8 @@ GDNativeLibrarySingletonEditor::GDNativeLibrarySingletonEditor() {
     add_margin_child(TTR("Libraries: "), libraries, true);
     updating = false;
     libraries->connect("item_edited", this, "_item_edited");
-    EditorFileSystem::get_singleton()->connect("filesystem_changed", this, "_discover_singletons");
+    EditorFileSystem::get_singleton()
+        ->connect("filesystem_changed", this, "_discover_singletons");
 }
 
 #endif // TOOLS_ENABLED

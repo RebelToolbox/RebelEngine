@@ -44,13 +44,13 @@ class ImportDefaultsEditorSettings;
 class ImportDefaultsEditor : public VBoxContainer {
     GDCLASS(ImportDefaultsEditor, VBoxContainer)
 
-    OptionButton *importers;
-    Button *save_defaults;
-    Button *reset_defaults;
+    OptionButton* importers;
+    Button* save_defaults;
+    Button* reset_defaults;
 
-    EditorInspector *inspector;
+    EditorInspector* inspector;
 
-    ImportDefaultsEditorSettings *settings;
+    ImportDefaultsEditorSettings* settings;
 
     void _update_importer();
     void _importer_selected(int p_index);

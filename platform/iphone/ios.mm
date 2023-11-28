@@ -37,36 +37,45 @@
 #include <sys/sysctl.h>
 
 void iOS::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("get_rate_url", "app_id"), &iOS::get_rate_url);
+    ClassDB::bind_method(
+        D_METHOD("get_rate_url", "app_id"),
+        &iOS::get_rate_url
+    );
 };
 
-void iOS::alert(const char *p_alert, const char *p_title) {
-    NSString *title = [NSString stringWithUTF8String:p_title];
-    NSString *message = [NSString stringWithUTF8String:p_alert];
+void iOS::alert(const char* p_alert, const char* p_title) {
+    NSString* title = [NSString stringWithUTF8String:p_title];
+    NSString* message = [NSString stringWithUTF8String:p_alert];
 
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *button = [UIAlertAction actionWithTitle:@"OK"
-                                                     style:UIAlertActionStyleCancel
-                                                   handler:^(id){
-                                                   }];
+    UIAlertController* alert = [UIAlertController
+        alertControllerWithTitle:title
+                         message:message
+                  preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* button =
+        [UIAlertAction actionWithTitle:@"OK"
+                                 style:UIAlertActionStyleCancel
+                               handler:^(id){}];
 
     [alert addAction:button];
 
-    [AppDelegate.viewController presentViewController:alert animated:YES completion:nil];
+    [AppDelegate.viewController presentViewController:alert
+                                             animated:YES
+                                           completion:nil];
 }
 
 String iOS::get_model() const {
     // [[UIDevice currentDevice] model] only returns "iPad" or "iPhone".
     size_t size;
     sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-    char *model = (char *)malloc(size);
+    char* model = (char*)malloc(size);
     if (model == NULL) {
         return "";
     }
     sysctlbyname("hw.machine", model, &size, NULL, 0);
-    NSString *platform = [NSString stringWithCString:model encoding:NSUTF8StringEncoding];
+    NSString* platform = [NSString stringWithCString:model
+                                            encoding:NSUTF8StringEncoding];
     free(model);
-    const char *str = [platform UTF8String];
+    const char* str = [platform UTF8String];
     return String::utf8(str != nullptr ? str : "");
 }
 

@@ -41,7 +41,7 @@ class EditorVCSInterface : public Object {
     bool is_initialized;
 
 protected:
-    static EditorVCSInterface *singleton;
+    static EditorVCSInterface* singleton;
 
     static void _bind_methods();
 
@@ -58,8 +58,8 @@ protected:
     virtual String _get_vcs_name();
 
 public:
-    static EditorVCSInterface *get_singleton();
-    static void set_singleton(EditorVCSInterface *p_singleton);
+    static EditorVCSInterface* get_singleton();
+    static void set_singleton(EditorVCSInterface* p_singleton);
 
     bool is_addon_ready();
 

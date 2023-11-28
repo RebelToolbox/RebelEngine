@@ -37,19 +37,19 @@ class TextEditor : public ScriptEditorBase {
     GDCLASS(TextEditor, ScriptEditorBase);
 
 private:
-    CodeTextEditor *code_editor;
+    CodeTextEditor* code_editor;
 
     Ref<TextFile> text_file;
     bool editor_enabled;
 
-    HBoxContainer *edit_hb;
-    MenuButton *edit_menu;
-    PopupMenu *highlighter_menu;
-    MenuButton *search_menu;
-    PopupMenu *bookmarks_menu;
-    PopupMenu *context_menu;
+    HBoxContainer* edit_hb;
+    MenuButton* edit_menu;
+    PopupMenu* highlighter_menu;
+    MenuButton* search_menu;
+    PopupMenu* bookmarks_menu;
+    PopupMenu* context_menu;
 
-    GotoLineDialog *goto_line_dialog;
+    GotoLineDialog* goto_line_dialog;
 
     struct ColorsCache {
         Color font_color;
@@ -100,11 +100,16 @@ protected:
     static void _bind_methods();
 
     void _edit_option(int p_op);
-    void _make_context_menu(bool p_selection, bool p_can_fold, bool p_is_folded, Vector2 p_position);
-    void _text_edit_gui_input(const Ref<InputEvent> &ev);
+    void _make_context_menu(
+        bool p_selection,
+        bool p_can_fold,
+        bool p_is_folded,
+        Vector2 p_position
+    );
+    void _text_edit_gui_input(const Ref<InputEvent>& ev);
     void _prepare_edit_menu();
 
-    Map<String, SyntaxHighlighter *> highlighters;
+    Map<String, SyntaxHighlighter*> highlighters;
     void _change_syntax_highlighter(int p_idx);
     void _load_theme_settings();
 
@@ -116,21 +121,21 @@ protected:
     void _bookmark_item_pressed(int p_idx);
 
 public:
-    virtual void add_syntax_highlighter(SyntaxHighlighter *p_highlighter);
-    virtual void set_syntax_highlighter(SyntaxHighlighter *p_highlighter);
+    virtual void add_syntax_highlighter(SyntaxHighlighter* p_highlighter);
+    virtual void set_syntax_highlighter(SyntaxHighlighter* p_highlighter);
 
     virtual String get_name();
     virtual Ref<Texture> get_icon();
     virtual RES get_edited_resource() const;
-    virtual void set_edited_resource(const RES &p_res);
+    virtual void set_edited_resource(const RES& p_res);
     virtual void enable_editor();
     virtual void reload_text();
     virtual void apply_code();
     virtual bool is_unsaved();
     virtual Variant get_edit_state();
-    virtual void set_edit_state(const Variant &p_state);
+    virtual void set_edit_state(const Variant& p_state);
     virtual Vector<String> get_functions();
-    virtual void get_breakpoints(List<int> *p_breakpoints);
+    virtual void get_breakpoints(List<int>* p_breakpoints);
     virtual void goto_line(int p_line, bool p_with_error = false);
     void goto_line_selection(int p_line, int p_begin, int p_end);
     virtual void set_executing_line(int p_line);
@@ -143,12 +148,16 @@ public:
     virtual void tag_saved_version();
     virtual void update_settings();
     virtual bool show_members_overview();
-    virtual bool can_lose_focus_on_node_selection() { return true; }
-    virtual void set_debugger_active(bool p_active);
-    virtual void set_tooltip_request_func(String p_method, Object *p_obj);
-    virtual void add_callback(const String &p_function, PoolStringArray p_args);
 
-    virtual Control *get_edit_menu();
+    virtual bool can_lose_focus_on_node_selection() {
+        return true;
+    }
+
+    virtual void set_debugger_active(bool p_active);
+    virtual void set_tooltip_request_func(String p_method, Object* p_obj);
+    virtual void add_callback(const String& p_function, PoolStringArray p_args);
+
+    virtual Control* get_edit_menu();
     virtual void clear_edit_menu();
 
     virtual void validate();

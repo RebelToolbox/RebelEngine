@@ -40,32 +40,86 @@ void MultiMeshInstance2D::_notification(int p_what) {
 }
 
 void MultiMeshInstance2D::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_multimesh", "multimesh"), &MultiMeshInstance2D::set_multimesh);
-    ClassDB::bind_method(D_METHOD("get_multimesh"), &MultiMeshInstance2D::get_multimesh);
+    ClassDB::bind_method(
+        D_METHOD("set_multimesh", "multimesh"),
+        &MultiMeshInstance2D::set_multimesh
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_multimesh"),
+        &MultiMeshInstance2D::get_multimesh
+    );
 
-    ClassDB::bind_method(D_METHOD("set_texture", "texture"), &MultiMeshInstance2D::set_texture);
-    ClassDB::bind_method(D_METHOD("get_texture"), &MultiMeshInstance2D::get_texture);
+    ClassDB::bind_method(
+        D_METHOD("set_texture", "texture"),
+        &MultiMeshInstance2D::set_texture
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_texture"),
+        &MultiMeshInstance2D::get_texture
+    );
 
-    ClassDB::bind_method(D_METHOD("set_normal_map", "normal_map"), &MultiMeshInstance2D::set_normal_map);
-    ClassDB::bind_method(D_METHOD("get_normal_map"), &MultiMeshInstance2D::get_normal_map);
+    ClassDB::bind_method(
+        D_METHOD("set_normal_map", "normal_map"),
+        &MultiMeshInstance2D::set_normal_map
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_normal_map"),
+        &MultiMeshInstance2D::get_normal_map
+    );
 
     ADD_SIGNAL(MethodInfo("texture_changed"));
 
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "multimesh", PROPERTY_HINT_RESOURCE_TYPE, "MultiMesh"), "set_multimesh", "get_multimesh");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture"), "set_texture", "get_texture");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "normal_map", PROPERTY_HINT_RESOURCE_TYPE, "Texture"), "set_normal_map", "get_normal_map");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "multimesh",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "MultiMesh"
+        ),
+        "set_multimesh",
+        "get_multimesh"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "texture",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Texture"
+        ),
+        "set_texture",
+        "get_texture"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "normal_map",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Texture"
+        ),
+        "set_normal_map",
+        "get_normal_map"
+    );
 }
 
-void MultiMeshInstance2D::set_multimesh(const Ref<MultiMesh> &p_multimesh) {
+void MultiMeshInstance2D::set_multimesh(const Ref<MultiMesh>& p_multimesh) {
     // Cleanup previous connection if any.
     if (multimesh.is_valid()) {
-        multimesh->disconnect(CoreStringNames::get_singleton()->changed, this, "update");
+        multimesh->disconnect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            "update"
+        );
     }
     multimesh = p_multimesh;
 
-    // Connect to the multimesh so the AABB can update when instance transforms are changed.
+    // Connect to the multimesh so the AABB can update when instance transforms
+    // are changed.
     if (multimesh.is_valid()) {
-        multimesh->connect(CoreStringNames::get_singleton()->changed, this, "update");
+        multimesh->connect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            "update"
+        );
     }
     update();
 }
@@ -74,7 +128,7 @@ Ref<MultiMesh> MultiMeshInstance2D::get_multimesh() const {
     return multimesh;
 }
 
-void MultiMeshInstance2D::set_texture(const Ref<Texture> &p_texture) {
+void MultiMeshInstance2D::set_texture(const Ref<Texture>& p_texture) {
     if (p_texture == texture) {
         return;
     }
@@ -88,7 +142,7 @@ Ref<Texture> MultiMeshInstance2D::get_texture() const {
     return texture;
 }
 
-void MultiMeshInstance2D::set_normal_map(const Ref<Texture> &p_texture) {
+void MultiMeshInstance2D::set_normal_map(const Ref<Texture>& p_texture) {
     normal_map = p_texture;
     update();
 }
@@ -101,15 +155,18 @@ Ref<Texture> MultiMeshInstance2D::get_normal_map() const {
 Rect2 MultiMeshInstance2D::_edit_get_rect() const {
     if (multimesh.is_valid()) {
         AABB aabb = multimesh->get_aabb();
-        return Rect2(aabb.position.x, aabb.position.y, aabb.size.x, aabb.size.y);
+        return Rect2(
+            aabb.position.x,
+            aabb.position.y,
+            aabb.size.x,
+            aabb.size.y
+        );
     }
 
     return Node2D::_edit_get_rect();
 }
 #endif
 
-MultiMeshInstance2D::MultiMeshInstance2D() {
-}
+MultiMeshInstance2D::MultiMeshInstance2D() {}
 
-MultiMeshInstance2D::~MultiMeshInstance2D() {
-}
+MultiMeshInstance2D::~MultiMeshInstance2D() {}

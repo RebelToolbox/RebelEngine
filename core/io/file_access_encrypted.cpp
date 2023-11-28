@@ -38,8 +38,17 @@
 
 #define COMP_MAGIC 0x43454447
 
-Error FileAccessEncrypted::open_and_parse(FileAccess *p_base, const Vector<uint8_t> &p_key, Mode p_mode) {
-    ERR_FAIL_COND_V_MSG(file != nullptr, ERR_ALREADY_IN_USE, "Can't open file while another file from path '" + file->get_path_absolute() + "' is open.");
+Error FileAccessEncrypted::open_and_parse(
+    FileAccess* p_base,
+    const Vector<uint8_t>& p_key,
+    Mode p_mode
+) {
+    ERR_FAIL_COND_V_MSG(
+        file != nullptr,
+        ERR_ALREADY_IN_USE,
+        "Can't open file while another file from path '"
+            + file->get_path_absolute() + "' is open."
+    );
     ERR_FAIL_COND_V(p_key.size() != 32, ERR_INVALID_PARAMETER);
 
     pos = 0;
@@ -87,9 +96,18 @@ Error FileAccessEncrypted::open_and_parse(FileAccess *p_base, const Vector<uint8
         data.resize(length);
 
         unsigned char hash[16];
-        ERR_FAIL_COND_V(CryptoCore::md5(data.ptr(), data.size(), hash) != OK, ERR_BUG);
+        ERR_FAIL_COND_V(
+            CryptoCore::md5(data.ptr(), data.size(), hash) != OK,
+            ERR_BUG
+        );
 
-        ERR_FAIL_COND_V_MSG(String::md5(hash) != String::md5(md5d), ERR_FILE_CORRUPT, "The MD5 sum of the decrypted file does not match the expected value. It could be that the file is corrupt, or that the provided decryption key is invalid.");
+        ERR_FAIL_COND_V_MSG(
+            String::md5(hash) != String::md5(md5d),
+            ERR_FILE_CORRUPT,
+            "The MD5 sum of the decrypted file does not match the expected "
+            "value. It could be that the file is corrupt, or that the provided "
+            "decryption key is invalid."
+        );
 
         file = p_base;
     }
@@ -97,7 +115,11 @@ Error FileAccessEncrypted::open_and_parse(FileAccess *p_base, const Vector<uint8
     return OK;
 }
 
-Error FileAccessEncrypted::open_and_parse_password(FileAccess *p_base, const String &p_key, Mode p_mode) {
+Error FileAccessEncrypted::open_and_parse_password(
+    FileAccess* p_base,
+    const String& p_key,
+    Mode p_mode
+) {
     String cs = p_key.md5_text();
     ERR_FAIL_COND_V(cs.length() != 32, ERR_INVALID_PARAMETER);
     Vector<uint8_t> key;
@@ -109,9 +131,10 @@ Error FileAccessEncrypted::open_and_parse_password(FileAccess *p_base, const Str
     return open_and_parse(p_base, key, p_mode);
 }
 
-Error FileAccessEncrypted::_open(const String &p_path, int p_mode_flags) {
+Error FileAccessEncrypted::_open(const String& p_path, int p_mode_flags) {
     return OK;
 }
+
 void FileAccessEncrypted::close() {
     if (!file) {
         return;
@@ -125,7 +148,9 @@ void FileAccessEncrypted::close() {
         }
 
         unsigned char hash[16];
-        ERR_FAIL_COND(CryptoCore::md5(data.ptr(), data.size(), hash) != OK); // Bug?
+        ERR_FAIL_COND(
+            CryptoCore::md5(data.ptr(), data.size(), hash) != OK
+        ); // Bug?
 
         compressed.resize(len);
         memset(compressed.ptrw(), 0, len);
@@ -217,7 +242,8 @@ uint8_t FileAccessEncrypted::get_8() const {
     return b;
 }
 
-uint64_t FileAccessEncrypted::get_buffer(uint8_t *p_dst, uint64_t p_length) const {
+uint64_t FileAccessEncrypted::get_buffer(uint8_t* p_dst, uint64_t p_length)
+    const {
     ERR_FAIL_COND_V(!p_dst && p_length > 0, -1);
     ERR_FAIL_COND_V_MSG(writing, -1, "File has not been opened in read mode.");
 
@@ -237,7 +263,10 @@ Error FileAccessEncrypted::get_error() const {
     return eofed ? ERR_FILE_EOF : OK;
 }
 
-void FileAccessEncrypted::store_buffer(const uint8_t *p_src, uint64_t p_length) {
+void FileAccessEncrypted::store_buffer(
+    const uint8_t* p_src,
+    uint64_t p_length
+) {
     ERR_FAIL_COND_MSG(!writing, "File has not been opened in write mode.");
     ERR_FAIL_COND(!p_src && p_length > 0);
 
@@ -272,8 +301,8 @@ void FileAccessEncrypted::store_8(uint8_t p_dest) {
     }
 }
 
-bool FileAccessEncrypted::file_exists(const String &p_name) {
-    FileAccess *fa = FileAccess::open(p_name, FileAccess::READ);
+bool FileAccessEncrypted::file_exists(const String& p_name) {
+    FileAccess* fa = FileAccess::open(p_name, FileAccess::READ);
     if (!fa) {
         return false;
     }
@@ -281,16 +310,21 @@ bool FileAccessEncrypted::file_exists(const String &p_name) {
     return true;
 }
 
-uint64_t FileAccessEncrypted::_get_modified_time(const String &p_file) {
+uint64_t FileAccessEncrypted::_get_modified_time(const String& p_file) {
     return 0;
 }
 
-uint32_t FileAccessEncrypted::_get_unix_permissions(const String &p_file) {
+uint32_t FileAccessEncrypted::_get_unix_permissions(const String& p_file) {
     return 0;
 }
 
-Error FileAccessEncrypted::_set_unix_permissions(const String &p_file, uint32_t p_permissions) {
-    ERR_PRINT("Setting UNIX permissions on encrypted files is not implemented yet.");
+Error FileAccessEncrypted::_set_unix_permissions(
+    const String& p_file,
+    uint32_t p_permissions
+) {
+    ERR_PRINT(
+        "Setting UNIX permissions on encrypted files is not implemented yet."
+    );
     return ERR_UNAVAILABLE;
 }
 

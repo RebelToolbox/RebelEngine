@@ -57,24 +57,29 @@ public:
     }
 };
 
-// This is written this way instead of being a template to overcome a limitation of C++ pre-17
-// that would require MutexLock to be used like this: MutexLock<Mutex> lock;
+// This is written this way instead of being a template to overcome a limitation
+// of C++ pre-17 that would require MutexLock to be used like this:
+// MutexLock<Mutex> lock;
 class MutexLock {
     union {
-        std::recursive_mutex *recursive_mutex;
-        std::mutex *mutex;
+        std::recursive_mutex* recursive_mutex;
+        std::mutex* mutex;
     };
+
     bool recursive;
 
 public:
-    _ALWAYS_INLINE_ explicit MutexLock(const MutexImpl<std::recursive_mutex> &p_mutex) :
-            recursive_mutex(&p_mutex.mutex),
-            recursive(true) {
+    _ALWAYS_INLINE_ explicit MutexLock(
+        const MutexImpl<std::recursive_mutex>& p_mutex
+    ) :
+        recursive_mutex(&p_mutex.mutex),
+        recursive(true) {
         recursive_mutex->lock();
     }
-    _ALWAYS_INLINE_ explicit MutexLock(const MutexImpl<std::mutex> &p_mutex) :
-            mutex(&p_mutex.mutex),
-            recursive(false) {
+
+    _ALWAYS_INLINE_ explicit MutexLock(const MutexImpl<std::mutex>& p_mutex) :
+        mutex(&p_mutex.mutex),
+        recursive(false) {
         mutex->lock();
     }
 
@@ -103,13 +108,17 @@ template <class MutexT>
 class MutexImpl {
 public:
     _ALWAYS_INLINE_ void lock() const {}
+
     _ALWAYS_INLINE_ void unlock() const {}
-    _ALWAYS_INLINE_ Error try_lock() const { return OK; }
+
+    _ALWAYS_INLINE_ Error try_lock() const {
+        return OK;
+    }
 };
 
 class MutexLock {
 public:
-    explicit MutexLock(const MutexImpl<FakeMutex> &p_mutex) {}
+    explicit MutexLock(const MutexImpl<FakeMutex>& p_mutex) {}
 };
 
 using Mutex = MutexImpl<FakeMutex>;

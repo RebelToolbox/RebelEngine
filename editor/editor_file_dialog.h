@@ -67,8 +67,8 @@ public:
         MODE_SAVE_FILE
     };
 
-    typedef Ref<Texture> (*GetIconFunc)(const String &);
-    typedef void (*RegisterFunc)(EditorFileDialog *);
+    typedef Ref<Texture> (*GetIconFunc)(const String&);
+    typedef void (*RegisterFunc)(EditorFileDialog*);
 
     static GetIconFunc get_icon_func;
     static GetIconFunc get_large_icon_func;
@@ -84,49 +84,49 @@ private:
         ITEM_MENU_SHOW_IN_EXPLORER
     };
 
-    ConfirmationDialog *makedialog;
-    LineEdit *makedirname;
+    ConfirmationDialog* makedialog;
+    LineEdit* makedirname;
 
-    Button *makedir;
+    Button* makedir;
     Access access;
-    //Button *action;
-    VBoxContainer *vbox;
+    // Button *action;
+    VBoxContainer* vbox;
     Mode mode;
     bool can_create_dir;
-    LineEdit *dir;
+    LineEdit* dir;
 
-    ToolButton *dir_prev;
-    ToolButton *dir_next;
-    ToolButton *dir_up;
+    ToolButton* dir_prev;
+    ToolButton* dir_next;
+    ToolButton* dir_up;
 
-    HBoxContainer *drives_container;
-    HBoxContainer *shortcuts_container;
-    OptionButton *drives;
-    ItemList *item_list;
-    PopupMenu *item_menu;
-    TextureRect *preview;
-    VBoxContainer *preview_vb;
-    HSplitContainer *list_hb;
-    HBoxContainer *file_box;
-    LineEdit *file;
-    OptionButton *filter;
-    AcceptDialog *mkdirerr;
-    DirAccess *dir_access;
-    ConfirmationDialog *confirm_save;
-    DependencyRemoveDialog *remove_dialog;
+    HBoxContainer* drives_container;
+    HBoxContainer* shortcuts_container;
+    OptionButton* drives;
+    ItemList* item_list;
+    PopupMenu* item_menu;
+    TextureRect* preview;
+    VBoxContainer* preview_vb;
+    HSplitContainer* list_hb;
+    HBoxContainer* file_box;
+    LineEdit* file;
+    OptionButton* filter;
+    AcceptDialog* mkdirerr;
+    DirAccess* dir_access;
+    ConfirmationDialog* confirm_save;
+    DependencyRemoveDialog* remove_dialog;
 
-    ToolButton *mode_thumbnails;
-    ToolButton *mode_list;
+    ToolButton* mode_thumbnails;
+    ToolButton* mode_list;
 
-    ToolButton *refresh;
-    ToolButton *favorite;
-    ToolButton *show_hidden;
+    ToolButton* refresh;
+    ToolButton* favorite;
+    ToolButton* show_hidden;
 
-    ToolButton *fav_up;
-    ToolButton *fav_down;
+    ToolButton* fav_up;
+    ToolButton* fav_down;
 
-    ItemList *favorites;
-    ItemList *recent;
+    ItemList* favorites;
+    ItemList* recent;
 
     Vector<String> local_history;
     int local_history_pos;
@@ -163,13 +163,13 @@ private:
     void _items_clear_selection();
     void _item_dc_selected(int p_item);
 
-    void _item_list_item_rmb_selected(int p_item, const Vector2 &p_pos);
-    void _item_list_rmb_clicked(const Vector2 &p_pos);
+    void _item_list_item_rmb_selected(int p_item, const Vector2& p_pos);
+    void _item_list_rmb_clicked(const Vector2& p_pos);
     void _item_menu_id_pressed(int p_option);
 
     void _select_drive(int p_idx);
     void _dir_entered(String p_dir);
-    void _file_entered(const String &p_file);
+    void _file_entered(const String& p_file);
     void _action_pressed();
     void _save_confirm_pressed();
     void _cancel_pressed();
@@ -188,23 +188,35 @@ private:
     virtual void _post_popup();
 
     void _save_to_recent();
-    //callback function is callback(String p_path,Ref<Texture> preview,Variant udata) preview null if could not load
+    // callback function is callback(String p_path,Ref<Texture> preview,Variant
+    // udata) preview null if could not load
 
-    void _thumbnail_result(const String &p_path, const Ref<Texture> &p_preview, const Ref<Texture> &p_small_preview, const Variant &p_udata);
-    void _thumbnail_done(const String &p_path, const Ref<Texture> &p_preview, const Ref<Texture> &p_small_preview, const Variant &p_udata);
-    void _request_single_thumbnail(const String &p_path);
+    void _thumbnail_result(
+        const String& p_path,
+        const Ref<Texture>& p_preview,
+        const Ref<Texture>& p_small_preview,
+        const Variant& p_udata
+    );
+    void _thumbnail_done(
+        const String& p_path,
+        const Ref<Texture>& p_preview,
+        const Ref<Texture>& p_small_preview,
+        const Variant& p_udata
+    );
+    void _request_single_thumbnail(const String& p_path);
 
-    void _unhandled_input(const Ref<InputEvent> &p_event);
+    void _unhandled_input(const Ref<InputEvent>& p_event);
 
     bool _is_open_should_be_disabled();
 
 protected:
     void _notification(int p_what);
     static void _bind_methods();
-    //bind helpers
+    // bind helpers
+
 public:
     void clear_filters();
-    void add_filter(const String &p_filter);
+    void add_filter(const String& p_filter);
 
     void set_enable_multiple_selection(bool p_enable);
     Vector<String> get_selected_files() const;
@@ -212,9 +224,9 @@ public:
     String get_current_dir() const;
     String get_current_file() const;
     String get_current_path() const;
-    void set_current_dir(const String &p_dir);
-    void set_current_file(const String &p_file);
-    void set_current_path(const String &p_path);
+    void set_current_dir(const String& p_dir);
+    void set_current_file(const String& p_file);
+    void set_current_path(const String& p_path);
 
     void set_display_mode(DisplayMode p_mode);
     DisplayMode get_display_mode() const;
@@ -222,8 +234,11 @@ public:
     void set_mode(Mode p_mode);
     Mode get_mode() const;
 
-    VBoxContainer *get_vbox();
-    LineEdit *get_line_edit() { return file; }
+    VBoxContainer* get_vbox();
+
+    LineEdit* get_line_edit() {
+        return file;
+    }
 
     void set_access(Access p_access);
     Access get_access() const;
@@ -245,11 +260,11 @@ public:
 
 class EditorLineEditFileChooser : public HBoxContainer {
     GDCLASS(EditorLineEditFileChooser, HBoxContainer);
-    Button *button;
-    LineEdit *line_edit;
-    EditorFileDialog *dialog;
+    Button* button;
+    LineEdit* line_edit;
+    EditorFileDialog* dialog;
 
-    void _chosen(const String &p_text);
+    void _chosen(const String& p_text);
     void _browse();
 
 protected:
@@ -257,9 +272,17 @@ protected:
     static void _bind_methods();
 
 public:
-    Button *get_button() { return button; }
-    LineEdit *get_line_edit() { return line_edit; }
-    EditorFileDialog *get_file_dialog() { return dialog; }
+    Button* get_button() {
+        return button;
+    }
+
+    LineEdit* get_line_edit() {
+        return line_edit;
+    }
+
+    EditorFileDialog* get_file_dialog() {
+        return dialog;
+    }
 
     EditorLineEditFileChooser();
 };

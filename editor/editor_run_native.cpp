@@ -36,8 +36,11 @@
 
 void EditorRunNative::_notification(int p_what) {
     if (p_what == NOTIFICATION_ENTER_TREE) {
-        for (int i = 0; i < EditorExport::get_singleton()->get_export_platform_count(); i++) {
-            Ref<EditorExportPlatform> eep = EditorExport::get_singleton()->get_export_platform(i);
+        for (int i = 0;
+             i < EditorExport::get_singleton()->get_export_platform_count();
+             i++) {
+            Ref<EditorExportPlatform> eep =
+                EditorExport::get_singleton()->get_export_platform(i);
             if (eep.is_null()) {
                 continue;
             }
@@ -51,8 +54,9 @@ void EditorRunNative::_notification(int p_what) {
                     Ref<ImageTexture> small_icon;
                     small_icon.instance();
                     small_icon->create_from_image(im, 0);
-                    MenuButton *mb = memnew(MenuButton);
-                    mb->get_popup()->connect("id_pressed", this, "_run_native", varray(i));
+                    MenuButton* mb = memnew(MenuButton);
+                    mb->get_popup()
+                        ->connect("id_pressed", this, "_run_native", varray(i));
                     mb->connect("pressed", this, "_run_native", varray(-1, i));
                     mb->set_icon(small_icon);
                     add_child(mb);
@@ -63,12 +67,16 @@ void EditorRunNative::_notification(int p_what) {
     }
 
     if (p_what == NOTIFICATION_PROCESS) {
-        bool changed = EditorExport::get_singleton()->poll_export_platforms() || first;
+        bool changed =
+            EditorExport::get_singleton()->poll_export_platforms() || first;
 
         if (changed) {
-            for (Map<int, MenuButton *>::Element *E = menus.front(); E; E = E->next()) {
-                Ref<EditorExportPlatform> eep = EditorExport::get_singleton()->get_export_platform(E->key());
-                MenuButton *mb = E->get();
+            for (Map<int, MenuButton*>::Element* E = menus.front(); E;
+                 E = E->next()) {
+                Ref<EditorExportPlatform> eep =
+                    EditorExport::get_singleton()->get_export_platform(E->key()
+                    );
+                MenuButton* mb = E->get();
                 int dc = eep->get_options_count();
 
                 if (dc == 0) {
@@ -81,8 +89,14 @@ void EditorRunNative::_notification(int p_what) {
                     } else {
                         mb->set_tooltip(eep->get_options_tooltip());
                         for (int i = 0; i < dc; i++) {
-                            mb->get_popup()->add_icon_item(eep->get_option_icon(i), eep->get_option_label(i));
-                            mb->get_popup()->set_item_tooltip(mb->get_popup()->get_item_count() - 1, eep->get_option_tooltip(i));
+                            mb->get_popup()->add_icon_item(
+                                eep->get_option_icon(i),
+                                eep->get_option_label(i)
+                            );
+                            mb->get_popup()->set_item_tooltip(
+                                mb->get_popup()->get_item_count() - 1,
+                                eep->get_option_tooltip(i)
+                            );
                         }
                     }
                 }
@@ -100,7 +114,8 @@ void EditorRunNative::_run_native(int p_idx, int p_platform) {
         return;
     }
 
-    Ref<EditorExportPlatform> eep = EditorExport::get_singleton()->get_export_platform(p_platform);
+    Ref<EditorExportPlatform> eep =
+        EditorExport::get_singleton()->get_export_platform(p_platform);
     ERR_FAIL_COND(eep.is_null());
 
     if (p_idx == -1) {
@@ -114,8 +129,11 @@ void EditorRunNative::_run_native(int p_idx, int p_platform) {
 
     Ref<EditorExportPreset> preset;
 
-    for (int i = 0; i < EditorExport::get_singleton()->get_export_preset_count(); i++) {
-        Ref<EditorExportPreset> ep = EditorExport::get_singleton()->get_export_preset(i);
+    for (int i = 0;
+         i < EditorExport::get_singleton()->get_export_preset_count();
+         i++) {
+        Ref<EditorExportPreset> ep =
+            EditorExport::get_singleton()->get_export_preset(i);
         if (ep->is_runnable() && ep->get_platform() == eep) {
             preset = ep;
             break;
@@ -123,7 +141,11 @@ void EditorRunNative::_run_native(int p_idx, int p_platform) {
     }
 
     if (preset.is_null()) {
-        EditorNode::get_singleton()->show_warning(TTR("No runnable export preset found for this platform.\nPlease add a runnable preset in the Export menu or define an existing preset as runnable."));
+        EditorNode::get_singleton()->show_warning(
+            TTR("No runnable export preset found for this platform.\nPlease "
+                "add a runnable preset in the Export menu or define an "
+                "existing preset as runnable.")
+        );
         return;
     }
 

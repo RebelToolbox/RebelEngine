@@ -43,13 +43,13 @@ class BoneAttachment : public Spatial {
     void _check_unbind();
 
 protected:
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
     void _notification(int p_what);
 
     static void _bind_methods();
 
 public:
-    void set_bone_name(const String &p_name);
+    void set_bone_name(const String& p_name);
     String get_bone_name() const;
 
     BoneAttachment();

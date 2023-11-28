@@ -75,8 +75,15 @@ public class RebelView extends GLSurfaceView {
     private final GestureDetector gestureDetector;
     private final RebelRenderer rebelRenderer;
 
-    public RebelView(Context context, RebelFragment rebelFragment, XRMode xrMode, boolean p_use_gl3,
-            boolean p_use_32_bits, boolean p_use_debug_opengl, boolean p_translucent) {
+    public RebelView(
+        Context context,
+        RebelFragment rebelFragment,
+        XRMode xrMode,
+        boolean p_use_gl3,
+        boolean p_use_32_bits,
+        boolean p_use_debug_opengl,
+        boolean p_translucent
+    ) {
         super(context);
         GLUtils.use_gl3 = p_use_gl3;
         GLUtils.use_32 = p_use_32_bits;
@@ -84,7 +91,8 @@ public class RebelView extends GLSurfaceView {
 
         this.rebelFragment = rebelFragment;
         this.rebelInputHandler = new RebelInputHandler(this);
-        this.gestureDetector = new GestureDetector(context, new RebelGestureListener(this));
+        this.gestureDetector =
+            new GestureDetector(context, new RebelGestureListener(this));
         this.rebelRenderer = new RebelRenderer();
 
         init(xrMode, p_translucent, 16, 0);
@@ -104,20 +112,28 @@ public class RebelView extends GLSurfaceView {
 
     @Override
     public boolean onKeyUp(final int keyCode, KeyEvent event) {
-        return rebelInputHandler.onKeyUp(keyCode, event) || super.onKeyUp(keyCode, event);
+        return rebelInputHandler.onKeyUp(keyCode, event)
+     || super.onKeyUp(keyCode, event);
     }
 
     @Override
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
-        return rebelInputHandler.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
+        return rebelInputHandler.onKeyDown(keyCode, event)
+     || super.onKeyDown(keyCode, event);
     }
 
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
-        return rebelInputHandler.onGenericMotionEvent(event) || super.onGenericMotionEvent(event);
+        return rebelInputHandler.onGenericMotionEvent(event)
+     || super.onGenericMotionEvent(event);
     }
 
-    private void init(XRMode xrMode, boolean translucent, int depth, int stencil) {
+    private void init(
+        XRMode xrMode,
+        boolean translucent,
+        int depth,
+        int stencil
+    ) {
         setPreserveEGLContextOnPause(true);
         setFocusableInTouchMode(true);
         switch (xrMode) {
@@ -138,7 +154,8 @@ public class RebelView extends GLSurfaceView {
                 /* By default, GLSurfaceView() creates a RGB_565 opaque surface.
                  * If we want a translucent one, we should change the surface's
                  * format here, using PixelFormat.TRANSLUCENT for GL Surfaces
-                 * is interpreted as any 32-bit surface with alpha by SurfaceFlinger.
+                 * is interpreted as any 32-bit surface with alpha by
+                 * SurfaceFlinger.
                  */
                 if (translucent) {
                     this.setZOrderOnTop(true);
@@ -157,16 +174,40 @@ public class RebelView extends GLSurfaceView {
                  */
 
                 if (GLUtils.use_32) {
-                    setEGLConfigChooser(translucent
-                                    ? new RegularFallbackConfigChooser(8, 8, 8, 8, 24, stencil,
-                                              new RegularConfigChooser(8, 8, 8, 8, 16, stencil))
-                                    : new RegularFallbackConfigChooser(8, 8, 8, 8, 24, stencil,
-                                              new RegularConfigChooser(5, 6, 5, 0, 16, stencil)));
+                    setEGLConfigChooser(
+                        translucent ? new RegularFallbackConfigChooser(
+                            8,
+                            8,
+                            8,
+                            8,
+                            24,
+                            stencil,
+                            new RegularConfigChooser(8, 8, 8, 8, 16, stencil)
+                        )
+                                    : new RegularFallbackConfigChooser(
+                                        8,
+                                        8,
+                                        8,
+                                        8,
+                                        24,
+                                        stencil,
+                                        new RegularConfigChooser(
+                                            5,
+                                            6,
+                                            5,
+                                            0,
+                                            16,
+                                            stencil
+                                        )
+                                    )
+                    );
 
                 } else {
-                    setEGLConfigChooser(translucent
-                                    ? new RegularConfigChooser(8, 8, 8, 8, 16, stencil)
-                                    : new RegularConfigChooser(5, 6, 5, 0, 16, stencil));
+                    setEGLConfigChooser(
+                        translucent
+                            ? new RegularConfigChooser(8, 8, 8, 8, 16, stencil)
+                            : new RegularConfigChooser(5, 6, 5, 0, 16, stencil)
+                    );
                 }
                 break;
         }

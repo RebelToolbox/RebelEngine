@@ -42,7 +42,7 @@ struct FBXBone : public Reference {
     uint64_t parent_bone_id = 0;
     uint64_t bone_id = 0;
 
-    bool valid_parent = false; // if the parent bone id is set up.
+    bool valid_parent = false;   // if the parent bone id is set up.
     String bone_name = String(); // bone name
 
     bool is_root_bone() const {
@@ -52,14 +52,14 @@ struct FBXBone : public Reference {
     // Godot specific data
     int godot_bone_id = -2; // godot internal bone id assigned after import
 
-    // if a bone / armature is the root then FBX skeleton will contain the bone not any other skeleton.
-    // this is to support joints by themselves in scenes
+    // if a bone / armature is the root then FBX skeleton will contain the bone
+    // not any other skeleton. this is to support joints by themselves in scenes
     bool valid_armature_id = false;
     uint64_t armature_id = 0;
 
     /* link node is the parent bone */
-    mutable const FBXDocParser::Geometry *geometry = nullptr;
-    mutable const FBXDocParser::ModelLimbNode *limb_node = nullptr;
+    mutable const FBXDocParser::Geometry* geometry = nullptr;
+    mutable const FBXDocParser::ModelLimbNode* limb_node = nullptr;
 
     void set_node(Ref<FBXNode> p_node) {
         node = p_node;
@@ -73,10 +73,16 @@ struct FBXBone : public Reference {
 };
 
 struct FBXSkinDeformer {
-    FBXSkinDeformer(Ref<FBXBone> p_bone, const FBXDocParser::Cluster *p_cluster) :
-            cluster(p_cluster), bone(p_bone) {}
+    FBXSkinDeformer(
+        Ref<FBXBone> p_bone,
+        const FBXDocParser::Cluster* p_cluster
+    ) :
+        cluster(p_cluster),
+        bone(p_bone) {}
+
     ~FBXSkinDeformer() {}
-    const FBXDocParser::Cluster *cluster;
+
+    const FBXDocParser::Cluster* cluster;
     Ref<FBXBone> bone;
 
     /* get associate model - the model can be invalid sometimes */
@@ -84,7 +90,7 @@ struct FBXSkinDeformer {
         return bone->parent_bone;
     }
 
-    Ref<FBXNode> get_link(const ImportState &state) const;
+    Ref<FBXNode> get_link(const ImportState& state) const;
 };
 
 #endif // FBX_BONE_H

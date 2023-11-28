@@ -41,7 +41,7 @@ Size2 PanelContainer::get_minimum_size() const {
 
     Size2 ms;
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c || !c->is_visible_in_tree()) {
             continue;
         }
@@ -91,7 +91,7 @@ void PanelContainer::_notification(int p_what) {
         }
 
         for (int i = 0; i < get_child_count(); i++) {
-            Control *c = Object::cast_to<Control>(get_child(i));
+            Control* c = Object::cast_to<Control>(get_child(i));
             if (!c || !c->is_visible_in_tree()) {
                 continue;
             }
@@ -104,5 +104,4 @@ void PanelContainer::_notification(int p_what) {
     }
 }
 
-PanelContainer::PanelContainer() {
-}
+PanelContainer::PanelContainer() {}

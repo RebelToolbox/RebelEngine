@@ -41,7 +41,7 @@ public:
     static const int MIN_X = 0.f;
     static const int MAX_X = 1.f;
 
-    static const char *SIGNAL_RANGE_CHANGED;
+    static const char* SIGNAL_RANGE_CHANGED;
 
     enum TangentMode {
         TANGENT_FREE = 0,
@@ -63,11 +63,13 @@ public:
             right_mode = TANGENT_FREE;
         }
 
-        Point(Vector2 p_pos,
-                real_t p_left = 0,
-                real_t p_right = 0,
-                TangentMode p_left_mode = TANGENT_FREE,
-                TangentMode p_right_mode = TANGENT_FREE) {
+        Point(
+            Vector2 p_pos,
+            real_t p_left = 0,
+            real_t p_right = 0,
+            TangentMode p_left_mode = TANGENT_FREE,
+            TangentMode p_right_mode = TANGENT_FREE
+        ) {
             pos = p_pos;
             left_tangent = p_left;
             right_tangent = p_right;
@@ -78,13 +80,17 @@ public:
 
     Curve();
 
-    int get_point_count() const { return _points.size(); }
+    int get_point_count() const {
+        return _points.size();
+    }
 
-    int add_point(Vector2 p_pos,
-            real_t left_tangent = 0,
-            real_t right_tangent = 0,
-            TangentMode left_mode = TANGENT_FREE,
-            TangentMode right_mode = TANGENT_FREE);
+    int add_point(
+        Vector2 p_pos,
+        real_t left_tangent = 0,
+        real_t right_tangent = 0,
+        TangentMode left_mode = TANGENT_FREE,
+        TangentMode right_mode = TANGENT_FREE
+    );
 
     void remove_point(int p_index);
     void clear_points();
@@ -97,10 +103,16 @@ public:
 
     Point get_point(int p_index) const;
 
-    float get_min_value() const { return _min_value; }
+    float get_min_value() const {
+        return _min_value;
+    }
+
     void set_min_value(float p_min);
 
-    float get_max_value() const { return _max_value; }
+    float get_max_value() const {
+        return _max_value;
+    }
+
     void set_max_value(float p_max);
 
     real_t interpolate(real_t offset) const;
@@ -124,7 +136,11 @@ public:
     void set_data(Array input);
 
     void bake();
-    int get_bake_resolution() const { return _bake_resolution; }
+
+    int get_bake_resolution() const {
+        return _bake_resolution;
+    }
+
     void set_bake_resolution(int p_resolution);
     real_t interpolate_baked(real_t offset);
 
@@ -142,7 +158,8 @@ private:
     int _bake_resolution;
     float _min_value;
     float _max_value;
-    int _minmax_set_once; // Encodes whether min and max have been set a first time, first bit for min and second for max.
+    int _minmax_set_once; // Encodes whether min and max have been set a first
+                          // time, first bit for min and second for max.
 };
 
 VARIANT_ENUM_CAST(Curve::TangentMode)
@@ -171,21 +188,37 @@ class Curve2D : public Resource {
 
     float bake_interval;
 
-    void _bake_segment2d(Map<float, Vector2> &r_bake, float p_begin, float p_end, const Vector2 &p_a, const Vector2 &p_out, const Vector2 &p_b, const Vector2 &p_in, int p_depth, int p_max_depth, float p_tol) const;
+    void _bake_segment2d(
+        Map<float, Vector2>& r_bake,
+        float p_begin,
+        float p_end,
+        const Vector2& p_a,
+        const Vector2& p_out,
+        const Vector2& p_b,
+        const Vector2& p_in,
+        int p_depth,
+        int p_max_depth,
+        float p_tol
+    ) const;
     Dictionary _get_data() const;
-    void _set_data(const Dictionary &p_data);
+    void _set_data(const Dictionary& p_data);
 
 protected:
     static void _bind_methods();
 
 public:
     int get_point_count() const;
-    void add_point(const Vector2 &p_pos, const Vector2 &p_in = Vector2(), const Vector2 &p_out = Vector2(), int p_atpos = -1);
-    void set_point_position(int p_index, const Vector2 &p_pos);
+    void add_point(
+        const Vector2& p_pos,
+        const Vector2& p_in = Vector2(),
+        const Vector2& p_out = Vector2(),
+        int p_atpos = -1
+    );
+    void set_point_position(int p_index, const Vector2& p_pos);
     Vector2 get_point_position(int p_index) const;
-    void set_point_in(int p_index, const Vector2 &p_in);
+    void set_point_in(int p_index, const Vector2& p_in);
     Vector2 get_point_in(int p_index) const;
-    void set_point_out(int p_index, const Vector2 &p_out);
+    void set_point_out(int p_index, const Vector2& p_out);
     Vector2 get_point_out(int p_index) const;
     void remove_point(int p_index);
     void clear_points();
@@ -198,11 +231,12 @@ public:
 
     float get_baked_length() const;
     Vector2 interpolate_baked(float p_offset, bool p_cubic = false) const;
-    PoolVector2Array get_baked_points() const; //useful for going through
-    Vector2 get_closest_point(const Vector2 &p_to_point) const;
-    float get_closest_offset(const Vector2 &p_to_point) const;
+    PoolVector2Array get_baked_points() const; // useful for going through
+    Vector2 get_closest_point(const Vector2& p_to_point) const;
+    float get_closest_offset(const Vector2& p_to_point) const;
 
-    PoolVector2Array tessellate(int p_max_stages = 5, float p_tolerance = 4) const; //useful for display
+    PoolVector2Array tessellate(int p_max_stages = 5, float p_tolerance = 4)
+        const; // useful for display
 
     Curve2D();
 };
@@ -216,7 +250,9 @@ class Curve3D : public Resource {
         Vector3 pos;
         float tilt;
 
-        Point() { tilt = 0; }
+        Point() {
+            tilt = 0;
+        }
     };
 
     Vector<Point> points;
@@ -237,23 +273,39 @@ class Curve3D : public Resource {
     float bake_interval;
     bool up_vector_enabled;
 
-    void _bake_segment3d(Map<float, Vector3> &r_bake, float p_begin, float p_end, const Vector3 &p_a, const Vector3 &p_out, const Vector3 &p_b, const Vector3 &p_in, int p_depth, int p_max_depth, float p_tol) const;
+    void _bake_segment3d(
+        Map<float, Vector3>& r_bake,
+        float p_begin,
+        float p_end,
+        const Vector3& p_a,
+        const Vector3& p_out,
+        const Vector3& p_b,
+        const Vector3& p_in,
+        int p_depth,
+        int p_max_depth,
+        float p_tol
+    ) const;
     Dictionary _get_data() const;
-    void _set_data(const Dictionary &p_data);
+    void _set_data(const Dictionary& p_data);
 
 protected:
     static void _bind_methods();
 
 public:
     int get_point_count() const;
-    void add_point(const Vector3 &p_pos, const Vector3 &p_in = Vector3(), const Vector3 &p_out = Vector3(), int p_atpos = -1);
-    void set_point_position(int p_index, const Vector3 &p_pos);
+    void add_point(
+        const Vector3& p_pos,
+        const Vector3& p_in = Vector3(),
+        const Vector3& p_out = Vector3(),
+        int p_atpos = -1
+    );
+    void set_point_position(int p_index, const Vector3& p_pos);
     Vector3 get_point_position(int p_index) const;
     void set_point_tilt(int p_index, float p_tilt);
     float get_point_tilt(int p_index) const;
-    void set_point_in(int p_index, const Vector3 &p_in);
+    void set_point_in(int p_index, const Vector3& p_in);
     Vector3 get_point_in(int p_index) const;
-    void set_point_out(int p_index, const Vector3 &p_out);
+    void set_point_out(int p_index, const Vector3& p_out);
     Vector3 get_point_out(int p_index) const;
     void remove_point(int p_index);
     void clear_points();
@@ -269,14 +321,18 @@ public:
     float get_baked_length() const;
     Vector3 interpolate_baked(float p_offset, bool p_cubic = false) const;
     float interpolate_baked_tilt(float p_offset) const;
-    Vector3 interpolate_baked_up_vector(float p_offset, bool p_apply_tilt = false) const;
-    PoolVector3Array get_baked_points() const; //useful for going through
-    PoolRealArray get_baked_tilts() const; //useful for going through
+    Vector3 interpolate_baked_up_vector(
+        float p_offset,
+        bool p_apply_tilt = false
+    ) const;
+    PoolVector3Array get_baked_points() const; // useful for going through
+    PoolRealArray get_baked_tilts() const;     // useful for going through
     PoolVector3Array get_baked_up_vectors() const;
-    Vector3 get_closest_point(const Vector3 &p_to_point) const;
-    float get_closest_offset(const Vector3 &p_to_point) const;
+    Vector3 get_closest_point(const Vector3& p_to_point) const;
+    float get_closest_offset(const Vector3& p_to_point) const;
 
-    PoolVector3Array tessellate(int p_max_stages = 5, float p_tolerance = 4) const; //useful for display
+    PoolVector3Array tessellate(int p_max_stages = 5, float p_tolerance = 4)
+        const; // useful for display
 
     Curve3D();
 };

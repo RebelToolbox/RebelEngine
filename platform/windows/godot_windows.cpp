@@ -39,17 +39,14 @@
 #ifndef TOOLS_ENABLED
 #if defined _MSC_VER
 #pragma section("pck", read)
-__declspec(allocate("pck")) static const char dummy[8] = { 0 };
+__declspec(allocate("pck")) static const char dummy[8] = {0};
 #elif defined __GNUC__
-static const char dummy[8] __attribute__((section("pck"), used)) = { 0 };
+static const char dummy[8] __attribute__((section("pck"), used)) = {0};
 #endif
 #endif
 
-PCHAR *
-CommandLineToArgvA(
-        PCHAR CmdLine,
-        int *_argc) {
-    PCHAR *argv;
+PCHAR* CommandLineToArgvA(PCHAR CmdLine, int* _argc) {
+    PCHAR* argv;
     PCHAR _argv;
     ULONG len;
     ULONG argc;
@@ -63,8 +60,7 @@ CommandLineToArgvA(
     len = strlen(CmdLine);
     i = ((len + 2) / 2) * sizeof(PVOID) + sizeof(PVOID);
 
-    argv = (PCHAR *)GlobalAlloc(GMEM_FIXED,
-            i + (len + 2) * sizeof(CHAR));
+    argv = (PCHAR*)GlobalAlloc(GMEM_FIXED, i + (len + 2) * sizeof(CHAR));
 
     _argv = (PCHAR)(((PUCHAR)argv) + i);
 
@@ -127,25 +123,25 @@ CommandLineToArgvA(
     return argv;
 }
 
-char *wc_to_utf8(const wchar_t *wc) {
+char* wc_to_utf8(const wchar_t* wc) {
     int ulen = WideCharToMultiByte(CP_UTF8, 0, wc, -1, NULL, 0, NULL, NULL);
-    char *ubuf = new char[ulen + 1];
+    char* ubuf = new char[ulen + 1];
     WideCharToMultiByte(CP_UTF8, 0, wc, -1, ubuf, ulen, NULL, NULL);
     ubuf[ulen] = 0;
     return ubuf;
 }
 
-__declspec(dllexport) int widechar_main(int argc, wchar_t **argv) {
+__declspec(dllexport) int widechar_main(int argc, wchar_t** argv) {
     OS_Windows os(NULL);
 
     setlocale(LC_CTYPE, "");
 
 #ifndef TOOLS_ENABLED
     // Workaround to prevent LTCG (MSVC LTO) from removing "pck" section
-    const char *dummy_guard = dummy;
+    const char* dummy_guard = dummy;
 #endif
 
-    char **argv_utf8 = new char *[argc];
+    char** argv_utf8 = new char*[argc];
 
     for (int i = 0; i < argc; ++i) {
         argv_utf8[i] = wc_to_utf8(argv[i]);
@@ -161,8 +157,9 @@ __declspec(dllexport) int widechar_main(int argc, wchar_t **argv) {
         return 255;
     }
 
-    if (Main::start())
+    if (Main::start()) {
         os.run();
+    }
     Main::cleanup();
 
     for (int i = 0; i < argc; ++i) {
@@ -174,7 +171,7 @@ __declspec(dllexport) int widechar_main(int argc, wchar_t **argv) {
 };
 
 __declspec(dllexport) int _main() {
-    LPWSTR *wc_argv;
+    LPWSTR* wc_argv;
     int argc;
     int result;
 
@@ -191,7 +188,7 @@ __declspec(dllexport) int _main() {
     return result;
 }
 
-__declspec(dllexport) int main(int _argc, char **_argv) {
+__declspec(dllexport) int main(int _argc, char** _argv) {
     // _argc and _argv are ignored
     // we are going to use the WideChar version of them instead
 
@@ -208,7 +205,12 @@ __declspec(dllexport) int main(int _argc, char **_argv) {
 
 HINSTANCE godot_hinstance = NULL;
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+int WINAPI WinMain(
+    HINSTANCE hInstance,
+    HINSTANCE hPrevInstance,
+    LPSTR lpCmdLine,
+    int nCmdShow
+) {
     godot_hinstance = hInstance;
     return main(0, NULL);
 }

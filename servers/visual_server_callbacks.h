@@ -53,10 +53,21 @@ public:
     void unlock();
     void flush();
 
-    void push_message(const Message &p_message) { messages.push_back(p_message); }
-    int32_t get_num_messages() const { return messages.size(); }
-    const Message &get_message(int p_index) const { return messages[p_index]; }
-    void clear() { messages.clear(); }
+    void push_message(const Message& p_message) {
+        messages.push_back(p_message);
+    }
+
+    int32_t get_num_messages() const {
+        return messages.size();
+    }
+
+    const Message& get_message(int p_index) const {
+        return messages[p_index];
+    }
+
+    void clear() {
+        messages.clear();
+    }
 
 private:
     LocalVector<Message, int32_t> messages;

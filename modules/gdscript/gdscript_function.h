@@ -44,6 +44,7 @@ class GDScript;
 
 struct GDScriptDataType {
     bool has_type;
+
     enum {
         UNINITIALIZED,
         BUILTIN,
@@ -51,12 +52,16 @@ struct GDScriptDataType {
         SCRIPT,
         GDSCRIPT,
     } kind;
+
     Variant::Type builtin_type;
     StringName native_type;
-    Script *script_type;
+    Script* script_type;
     Ref<Script> script_type_ref;
 
-    bool is_type(const Variant &p_variant, bool p_allow_implicit_conversion = false) const {
+    bool is_type(
+        const Variant& p_variant,
+        bool p_allow_implicit_conversion = false
+    ) const {
         if (!has_type) {
             return true; // Can't type check
         }
@@ -80,15 +85,21 @@ struct GDScriptDataType {
                     return false;
                 }
 
-                Object *obj = p_variant.operator Object *();
+                Object* obj = p_variant.operator Object*();
                 if (!obj) {
                     return false;
                 }
 
-                if (!ClassDB::is_parent_class(obj->get_class_name(), native_type)) {
+                if (!ClassDB::is_parent_class(
+                        obj->get_class_name(),
+                        native_type
+                    )) {
                     // Try with underscore prefix
                     StringName underscore_native_type = "_" + native_type;
-                    if (!ClassDB::is_parent_class(obj->get_class_name(), underscore_native_type)) {
+                    if (!ClassDB::is_parent_class(
+                            obj->get_class_name(),
+                            underscore_native_type
+                        )) {
                         return false;
                     }
                 }
@@ -103,12 +114,14 @@ struct GDScriptDataType {
                     return false;
                 }
 
-                Object *obj = p_variant.operator Object *();
+                Object* obj = p_variant.operator Object*();
                 if (!obj) {
                     return false;
                 }
 
-                Ref<Script> base = obj && obj->get_script_instance() ? obj->get_script_instance()->get_script() : nullptr;
+                Ref<Script> base = obj && obj->get_script_instance()
+                                     ? obj->get_script_instance()->get_script()
+                                     : nullptr;
                 bool valid = false;
                 while (base.is_valid()) {
                     if (base == script_type) {
@@ -150,10 +163,10 @@ struct GDScriptDataType {
     }
 
     GDScriptDataType() :
-            has_type(false),
-            kind(UNINITIALIZED),
-            builtin_type(Variant::NIL),
-            script_type(nullptr) {}
+        has_type(false),
+        kind(UNINITIALIZED),
+        builtin_type(Variant::NIL),
+        script_type(nullptr) {}
 };
 
 class GDScriptFunction {
@@ -177,7 +190,7 @@ public:
         OPCODE_CAST_TO_BUILTIN,
         OPCODE_CAST_TO_NATIVE,
         OPCODE_CAST_TO_SCRIPT,
-        OPCODE_CONSTRUCT, //only for basic types!!
+        OPCODE_CONSTRUCT, // only for basic types!!
         OPCODE_CONSTRUCT_ARRAY,
         OPCODE_CONSTRUCT_DICTIONARY,
         OPCODE_CALL,
@@ -230,17 +243,17 @@ private:
     StringName source;
 
     mutable Variant nil;
-    mutable Variant *_constants_ptr;
+    mutable Variant* _constants_ptr;
     int _constant_count;
-    const StringName *_global_names_ptr;
+    const StringName* _global_names_ptr;
     int _global_names_count;
 #ifdef TOOLS_ENABLED
-    const StringName *_named_globals_ptr;
+    const StringName* _named_globals_ptr;
     int _named_globals_count;
 #endif
-    const int *_default_arg_ptr;
+    const int* _default_arg_ptr;
     int _default_arg_count;
-    const int *_code_ptr;
+    const int* _code_ptr;
     int _code_size;
     int _argument_count;
     int _stack_size;
@@ -249,7 +262,7 @@ private:
     bool _static;
     MultiplayerAPI::RPCMode rpc_mode;
 
-    GDScript *_script;
+    GDScript* _script;
 
     StringName name;
     Vector<Variant> constants;
@@ -268,15 +281,27 @@ private:
 
     List<StackDebug> stack_debug;
 
-    _FORCE_INLINE_ Variant *_get_variant(int p_address, GDScriptInstance *p_instance, GDScript *p_script, Variant &self, Variant &static_ref, Variant *p_stack, String &r_error) const;
-    _FORCE_INLINE_ String _get_call_error(const Variant::CallError &p_err, const String &p_where, const Variant **argptrs) const;
+    _FORCE_INLINE_ Variant* _get_variant(
+        int p_address,
+        GDScriptInstance* p_instance,
+        GDScript* p_script,
+        Variant& self,
+        Variant& static_ref,
+        Variant* p_stack,
+        String& r_error
+    ) const;
+    _FORCE_INLINE_ String _get_call_error(
+        const Variant::CallError& p_err,
+        const String& p_where,
+        const Variant** argptrs
+    ) const;
 
     friend class GDScriptLanguage;
 
     SelfList<GDScriptFunction> function_list;
 #ifdef DEBUG_ENABLED
     CharString func_cname;
-    const char *_func_cname;
+    const char* _func_cname;
 
     struct Profile {
         StringName signature;
@@ -295,8 +320,8 @@ private:
 
 public:
     struct CallState {
-        GDScript *script;
-        GDScriptInstance *instance;
+        GDScript* script;
+        GDScriptInstance* instance;
 #ifdef DEBUG_ENABLED
         StringName function_name;
         String script_path;
@@ -311,9 +336,11 @@ public:
         Variant result;
     };
 
-    _FORCE_INLINE_ bool is_static() const { return _static; }
+    _FORCE_INLINE_ bool is_static() const {
+        return _static;
+    }
 
-    const int *get_code() const; //used for debug
+    const int* get_code() const; // used for debug
     int get_code_size() const;
     Variant get_constant(int p_idx) const;
     StringName get_global_name(int p_idx) const;
@@ -323,14 +350,28 @@ public:
     int get_default_argument_addr(int p_idx) const;
     GDScriptDataType get_return_type() const;
     GDScriptDataType get_argument_type(int p_idx) const;
-    GDScript *get_script() const { return _script; }
-    StringName get_source() const { return source; }
 
-    void debug_get_stack_member_state(int p_line, List<Pair<StringName, int>> *r_stackvars) const;
+    GDScript* get_script() const {
+        return _script;
+    }
 
-    _FORCE_INLINE_ bool is_empty() const { return _code_size == 0; }
+    StringName get_source() const {
+        return source;
+    }
 
-    int get_argument_count() const { return _argument_count; }
+    void debug_get_stack_member_state(
+        int p_line,
+        List<Pair<StringName, int>>* r_stackvars
+    ) const;
+
+    _FORCE_INLINE_ bool is_empty() const {
+        return _code_size == 0;
+    }
+
+    int get_argument_count() const {
+        return _argument_count;
+    }
+
     StringName get_argument_name(int p_idx) const {
 #ifdef TOOLS_ENABLED
         ERR_FAIL_INDEX_V(p_idx, arg_names.size(), StringName());
@@ -339,14 +380,24 @@ public:
         return StringName();
 #endif
     }
+
     Variant get_default_argument(int p_idx) const {
         ERR_FAIL_INDEX_V(p_idx, default_arguments.size(), Variant());
         return default_arguments[p_idx];
     }
 
-    Variant call(GDScriptInstance *p_instance, const Variant **p_args, int p_argcount, Variant::CallError &r_err, CallState *p_state = nullptr);
+    Variant call(
+        GDScriptInstance* p_instance,
+        const Variant** p_args,
+        int p_argcount,
+        Variant::CallError& r_err,
+        CallState* p_state = nullptr
+    );
 
-    _FORCE_INLINE_ MultiplayerAPI::RPCMode get_rpc_mode() const { return rpc_mode; }
+    _FORCE_INLINE_ MultiplayerAPI::RPCMode get_rpc_mode() const {
+        return rpc_mode;
+    }
+
     GDScriptFunction();
     ~GDScriptFunction();
 };
@@ -354,9 +405,13 @@ public:
 class GDScriptFunctionState : public Reference {
     GDCLASS(GDScriptFunctionState, Reference);
     friend class GDScriptFunction;
-    GDScriptFunction *function;
+    GDScriptFunction* function;
     GDScriptFunction::CallState state;
-    Variant _signal_callback(const Variant **p_args, int p_argcount, Variant::CallError &r_error);
+    Variant _signal_callback(
+        const Variant** p_args,
+        int p_argcount,
+        Variant::CallError& r_error
+    );
     Ref<GDScriptFunctionState> first_state;
 
     SelfList<GDScriptFunctionState> scripts_list;
@@ -367,7 +422,7 @@ protected:
 
 public:
     bool is_valid(bool p_extended_check = false) const;
-    Variant resume(const Variant &p_arg = Variant());
+    Variant resume(const Variant& p_arg = Variant());
 
     void _clear_stack();
 

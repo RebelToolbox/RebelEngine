@@ -44,7 +44,7 @@
 #define _MKSTR(m_x) _STR(m_x)
 #endif
 
-//should always inline no matter what
+// should always inline no matter what
 #ifndef _ALWAYS_INLINE_
 
 #if defined(__GNUC__) && (__GNUC__ >= 4)
@@ -69,15 +69,14 @@
 
 #endif
 
-//custom, gcc-safe offsetof, because gcc complains a lot.
+// custom, gcc-safe offsetof, because gcc complains a lot.
 template <class T>
-T *_nullptr() {
-    T *t = NULL;
+T* _nullptr() {
+    T* t = NULL;
     return t;
 }
 
-#define OFFSET_OF(st, m) \
-    ((size_t)((char *)&(_nullptr<st>()->m) - (char *)0))
+#define OFFSET_OF(st, m) ((size_t)((char*)&(_nullptr<st>()->m) - (char*)0))
 /**
  * Some platforms (devices) don't define NULL
  */
@@ -91,14 +90,14 @@ T *_nullptr() {
  */
 
 #ifdef _WIN32
-#undef min // override standard definition
-#undef max // override standard definition
-#undef ERROR // override (really stupid) wingdi.h standard definition
+#undef min    // override standard definition
+#undef max    // override standard definition
+#undef ERROR  // override (really stupid) wingdi.h standard definition
 #undef DELETE // override (another really stupid) winnt.h standard definition
 #undef MessageBox // override winuser.h standard definition
-#undef MIN // override standard definition
-#undef MAX // override standard definition
-#undef CLAMP // override standard definition
+#undef MIN        // override standard definition
+#undef MAX        // override standard definition
+#undef CLAMP      // override standard definition
 #undef Error
 #undef OK
 #undef CONNECT_DEFERRED // override from Windows SDK, clashes with Object enum
@@ -129,28 +128,30 @@ T *_nullptr() {
 #endif
 
 #ifndef CLAMP
-#define CLAMP(m_a, m_min, m_max) (((m_a) < (m_min)) ? (m_min) : (((m_a) > (m_max)) ? m_max : m_a))
+#define CLAMP(m_a, m_min, m_max)                                               \
+    (((m_a) < (m_min)) ? (m_min) : (((m_a) > (m_max)) ? m_max : m_a))
 #endif
 
 /** Generic swap template */
 #ifndef SWAP
 
 #define SWAP(m_x, m_y) __swap_tmpl((m_x), (m_y))
+
 template <class T>
-inline void __swap_tmpl(T &x, T &y) {
+inline void __swap_tmpl(T& x, T& y) {
     T aux = x;
     x = y;
     y = aux;
 }
 
-#endif //swap
+#endif // swap
 
-/* clang-format off */
-#define HEX2CHR(m_hex) \
-	((m_hex >= '0' && m_hex <= '9') ? (m_hex - '0') : \
-	((m_hex >= 'A' && m_hex <= 'F') ? (10 + m_hex - 'A') : \
-	((m_hex >= 'a' && m_hex <= 'f') ? (10 + m_hex - 'a') : 0)))
-/* clang-format on */
+#define HEX2CHR(m_hex)                                                         \
+    ((m_hex >= '0' && m_hex <= '9')                                            \
+         ? (m_hex - '0')                                                       \
+         : ((m_hex >= 'A' && m_hex <= 'F')                                     \
+                ? (10 + m_hex - 'A')                                           \
+                : ((m_hex >= 'a' && m_hex <= 'f') ? (10 + m_hex - 'a') : 0)))
 
 // Macro to check whether we are compiled by clang
 // and we have a specific builtin
@@ -160,11 +161,13 @@ inline void __swap_tmpl(T &x, T &y) {
 #define _llvm_has_builtin(x) 0
 #endif
 
-#if (defined(__GNUC__) && (__GNUC__ >= 5)) || _llvm_has_builtin(__builtin_mul_overflow)
+#if (defined(__GNUC__) && (__GNUC__ >= 5))                                     \
+    || _llvm_has_builtin(__builtin_mul_overflow)
 #define _mul_overflow __builtin_mul_overflow
 #endif
 
-#if (defined(__GNUC__) && (__GNUC__ >= 5)) || _llvm_has_builtin(__builtin_add_overflow)
+#if (defined(__GNUC__) && (__GNUC__ >= 5))                                     \
+    || _llvm_has_builtin(__builtin_add_overflow)
 #define _add_overflow __builtin_add_overflow
 #endif
 
@@ -260,7 +263,10 @@ static inline uint16_t BSWAP16(uint16_t x) {
 #define BSWAP32(x) __builtin_bswap32(x)
 #else
 static inline uint32_t BSWAP32(uint32_t x) {
-    return ((x << 24) | ((x << 8) & 0x00FF0000) | ((x >> 8) & 0x0000FF00) | (x >> 24));
+    return (
+        (x << 24) | ((x << 8) & 0x00FF0000) | ((x >> 8) & 0x0000FF00)
+        | (x >> 24)
+    );
 }
 #endif
 
@@ -283,15 +289,22 @@ static inline uint64_t BSWAP64(uint64_t x) {
 
 template <class T>
 struct Comparator {
-    _ALWAYS_INLINE_ bool operator()(const T &p_a, const T &p_b) const { return (p_a < p_b); }
+    _ALWAYS_INLINE_ bool operator()(const T& p_a, const T& p_b) const {
+        return (p_a < p_b);
+    }
 };
 
 void _global_lock();
 void _global_unlock();
 
 struct _GlobalLock {
-    _GlobalLock() { _global_lock(); }
-    ~_GlobalLock() { _global_unlock(); }
+    _GlobalLock() {
+        _global_lock();
+    }
+
+    ~_GlobalLock() {
+        _global_unlock();
+    }
 };
 
 #define GLOBAL_LOCK_FUNCTION _GlobalLock _global_lock_;
@@ -326,7 +339,7 @@ struct _GlobalLock {
 /** This is needed due to a strange OpenGL API that expects a pointer
  *  type for an argument that is actually an offset.
  */
-#define CAST_INT_TO_UCHAR_PTR(ptr) ((uint8_t *)(uintptr_t)(ptr))
+#define CAST_INT_TO_UCHAR_PTR(ptr) ((uint8_t*)(uintptr_t)(ptr))
 
 /** Hint for compilers that this fallthrough in a switch is intentional.
  *  Can be replaced by [[fallthrough]] annotation if we move to C++17.

@@ -47,13 +47,16 @@ public:
     RoomGroup();
     ~RoomGroup();
 
-    void add_room(Room *p_room);
+    void add_room(Room* p_room);
 
     void set_roomgroup_priority(int p_priority) {
         _settings_priority = p_priority;
         _changed();
     }
-    int get_roomgroup_priority() const { return _settings_priority; }
+
+    int get_roomgroup_priority() const {
+        return _settings_priority;
+    }
 
     String get_configuration_warning() const;
 
@@ -64,9 +67,9 @@ private:
     // roomgroup ID during conversion
     int _roomgroup_ID;
 
-    // the roomgroup can be used to set a number of rooms to a different priority
-    // to allow a group of rooms WITHIN another room / rooms.
-    // This is for e.g. buildings on landscape.
+    // the roomgroup can be used to set a number of rooms to a different
+    // priority to allow a group of rooms WITHIN another room / rooms. This is
+    // for e.g. buildings on landscape.
     int _settings_priority = 0;
 
     // makes sure lrooms are not converted more than once per

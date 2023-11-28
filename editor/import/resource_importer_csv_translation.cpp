@@ -42,35 +42,62 @@ String ResourceImporterCSVTranslation::get_importer_name() const {
 String ResourceImporterCSVTranslation::get_visible_name() const {
     return "CSV Translation";
 }
-void ResourceImporterCSVTranslation::get_recognized_extensions(List<String> *p_extensions) const {
+
+void ResourceImporterCSVTranslation::get_recognized_extensions(
+    List<String>* p_extensions
+) const {
     p_extensions->push_back("csv");
 }
 
 String ResourceImporterCSVTranslation::get_save_extension() const {
-    return ""; //does not save a single resource
+    return ""; // does not save a single resource
 }
 
 String ResourceImporterCSVTranslation::get_resource_type() const {
     return "Translation";
 }
 
-bool ResourceImporterCSVTranslation::get_option_visibility(const String &p_option, const Map<StringName, Variant> &p_options) const {
+bool ResourceImporterCSVTranslation::get_option_visibility(
+    const String& p_option,
+    const Map<StringName, Variant>& p_options
+) const {
     return true;
 }
 
 int ResourceImporterCSVTranslation::get_preset_count() const {
     return 0;
 }
+
 String ResourceImporterCSVTranslation::get_preset_name(int p_idx) const {
     return "";
 }
 
-void ResourceImporterCSVTranslation::get_import_options(List<ImportOption> *r_options, int p_preset) const {
-    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "compress"), true));
-    r_options->push_back(ImportOption(PropertyInfo(Variant::INT, "delimiter", PROPERTY_HINT_ENUM, "Comma,Semicolon,Tab"), 0));
+void ResourceImporterCSVTranslation::get_import_options(
+    List<ImportOption>* r_options,
+    int p_preset
+) const {
+    r_options->push_back(
+        ImportOption(PropertyInfo(Variant::BOOL, "compress"), true)
+    );
+    r_options->push_back(ImportOption(
+        PropertyInfo(
+            Variant::INT,
+            "delimiter",
+            PROPERTY_HINT_ENUM,
+            "Comma,Semicolon,Tab"
+        ),
+        0
+    ));
 }
 
-Error ResourceImporterCSVTranslation::import(const String &p_source_file, const String &p_save_path, const Map<StringName, Variant> &p_options, List<String> *r_platform_variants, List<String> *r_gen_files, Variant *r_metadata) {
+Error ResourceImporterCSVTranslation::import(
+    const String& p_source_file,
+    const String& p_save_path,
+    const Map<StringName, Variant>& p_options,
+    List<String>* r_platform_variants,
+    List<String>* r_gen_files,
+    Variant* r_metadata
+) {
     bool compress = p_options["compress"];
 
     String delimiter;
@@ -88,7 +115,11 @@ Error ResourceImporterCSVTranslation::import(const String &p_source_file, const 
 
     FileAccessRef f = FileAccess::open(p_source_file, FileAccess::READ);
 
-    ERR_FAIL_COND_V_MSG(!f, ERR_INVALID_PARAMETER, "Cannot open file from path '" + p_source_file + "'.");
+    ERR_FAIL_COND_V_MSG(
+        !f,
+        ERR_INVALID_PARAMETER,
+        "Cannot open file from path '" + p_source_file + "'."
+    );
 
     Vector<String> line = f->get_csv_line(delimiter);
     ERR_FAIL_COND_V(line.size() <= 1, ERR_PARSE_ERROR);
@@ -98,7 +129,12 @@ Error ResourceImporterCSVTranslation::import(const String &p_source_file, const 
 
     for (int i = 1; i < line.size(); i++) {
         String locale = line[i];
-        ERR_FAIL_COND_V_MSG(!TranslationServer::is_locale_valid(locale), ERR_PARSE_ERROR, "Error importing CSV translation: '" + locale + "' is not a valid locale.");
+        ERR_FAIL_COND_V_MSG(
+            !TranslationServer::is_locale_valid(locale),
+            ERR_PARSE_ERROR,
+            "Error importing CSV translation: '" + locale
+                + "' is not a valid locale."
+        );
 
         locales.push_back(locale);
         Ref<Translation> translation;
@@ -113,7 +149,10 @@ Error ResourceImporterCSVTranslation::import(const String &p_source_file, const 
         String key = line[0];
         if (key != "") {
             for (int i = 1; i < line.size(); i++) {
-                translations.write[i - 1]->add_message(key, line[i].c_unescape());
+                translations.write[i - 1]->add_message(
+                    key,
+                    line[i].c_unescape()
+                );
             }
         }
 
@@ -129,7 +168,8 @@ Error ResourceImporterCSVTranslation::import(const String &p_source_file, const 
             xlt = cxl;
         }
 
-        String save_path = p_source_file.get_basename() + "." + translations[i]->get_locale() + ".translation";
+        String save_path = p_source_file.get_basename() + "."
+                         + translations[i]->get_locale() + ".translation";
 
         ResourceSaver::save(save_path, xlt);
         if (r_gen_files) {
@@ -140,5 +180,4 @@ Error ResourceImporterCSVTranslation::import(const String &p_source_file, const 
     return OK;
 }
 
-ResourceImporterCSVTranslation::ResourceImporterCSVTranslation() {
-}
+ResourceImporterCSVTranslation::ResourceImporterCSVTranslation() {}

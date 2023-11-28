@@ -47,8 +47,9 @@
 typedef void VSInstance;
 typedef void VSGhost;
 
-// the handles are just IDs, but nicer to be specific on what they are in the code.
-// Also - the handles are plus one based (i.e. 0 is unset, 1 is id 0, 2 is id 1 etc.
+// the handles are just IDs, but nicer to be specific on what they are in the
+// code. Also - the handles are plus one based (i.e. 0 is unset, 1 is id 0, 2 is
+// id 1 etc.
 typedef uint32_t PortalHandle;
 typedef uint32_t RoomHandle;
 typedef uint32_t RoomGroupHandle;
@@ -87,20 +88,43 @@ struct VSPortal {
         _pts_world.reset();
     }
 
-    VSPortal::ClipResult clip_with_plane(const Plane &p) const;
-    void add_planes(const Vector3 &p_cam, LocalVector<Plane> &r_planes, bool p_outgoing) const;
-    void debug_check_plane_validity(const Plane &p) const;
+    VSPortal::ClipResult clip_with_plane(const Plane& p) const;
+    void add_planes(
+        const Vector3& p_cam,
+        LocalVector<Plane>& r_planes,
+        bool p_outgoing
+    ) const;
+    void debug_check_plane_validity(const Plane& p) const;
 
-    void add_pvs_planes(const VSPortal &p_first, bool p_first_outgoing, LocalVector<Plane, int32_t> &r_planes, bool p_outgoing) const;
-    bool _pvs_is_outside_planes(const LocalVector<Plane, int32_t> &p_planes) const;
+    void add_pvs_planes(
+        const VSPortal& p_first,
+        bool p_first_outgoing,
+        LocalVector<Plane, int32_t>& r_planes,
+        bool p_outgoing
+    ) const;
+    bool _pvs_is_outside_planes(const LocalVector<Plane, int32_t>& p_planes
+    ) const;
 
 private:
-    bool _test_pvs_plane(const Plane &p_plane, const Vector3 *pts_a, int num_a, const Vector3 *pts_b, int num_b) const;
-    bool _is_plane_duplicate(const Plane &p_plane, const LocalVector<Plane, int32_t> &p_planes) const;
+    bool _test_pvs_plane(
+        const Plane& p_plane,
+        const Vector3* pts_a,
+        int num_a,
+        const Vector3* pts_b,
+        int num_b
+    ) const;
+    bool _is_plane_duplicate(
+        const Plane& p_plane,
+        const LocalVector<Plane, int32_t>& p_planes
+    ) const;
 
 public:
     // returns the room to if if crosses, or else returns -1
-    int geometry_crosses_portal(int p_room_from, const AABB &p_aabb, const Vector<Vector3> &p_pts) const {
+    int geometry_crosses_portal(
+        int p_room_from,
+        const AABB& p_aabb,
+        const Vector<Vector3>& p_pts
+    ) const {
         // first aabb check
         if (!p_aabb.intersects(_aabb)) {
             return -1;
@@ -108,8 +132,8 @@ public:
 
         // disallow sprawling from outer to inner rooms.
         // This is a convenience feature that stops e.g. terrain sprawling into
-        // a building. If you want geometry to feature in the inner room and the outer,
-        // simply place it in the inner room.
+        // a building. If you want geometry to feature in the inner room and the
+        // outer, simply place it in the inner room.
         if (_internal && (_linkedroom_ID[0] != p_room_from)) {
             return -1;
         }
@@ -144,7 +168,12 @@ public:
     }
 
     // returns the room to if if crosses, or else returns -1
-    int crosses_portal(int p_room_from, const AABB &p_aabb, bool p_disallow_crossing_internal = false, bool p_accurate_check = false) const {
+    int crosses_portal(
+        int p_room_from,
+        const AABB& p_aabb,
+        bool p_disallow_crossing_internal = false,
+        bool p_accurate_check = false
+    ) const {
         // first aabb check
         if (!p_aabb.intersects(_aabb)) {
             return -1;
@@ -152,9 +181,10 @@ public:
 
         // disallow sprawling from outer to inner rooms.
         // This is a convenience feature that stops e.g. terrain sprawling into
-        // a building. If you want geometry to feature in the inner room and the outer,
-        // simply place it in the inner room.
-        if (p_disallow_crossing_internal && _internal && (_linkedroom_ID[0] != p_room_from)) {
+        // a building. If you want geometry to feature in the inner room and the
+        // outer, simply place it in the inner room.
+        if (p_disallow_crossing_internal && _internal
+            && (_linkedroom_ID[0] != p_room_from)) {
             return -1;
         }
 
@@ -163,7 +193,7 @@ public:
         real_t r_min, r_max;
         p_aabb.project_range_in_plane(_plane, r_min, r_max);
 
-        const real_t epsilon = _margin; //10.0;
+        const real_t epsilon = _margin; // 10.0;
 
         if (p_room_from == _linkedroom_ID[0]) {
             if (r_max > epsilon) {
@@ -219,8 +249,7 @@ public:
 };
 
 struct VSRoomGroup {
-    void create() {
-    }
+    void create() {}
 
     void destroy() {
         _room_ids.reset();
@@ -267,12 +296,14 @@ struct VSRoom {
     void rooms_and_portals_clear() {
         destroy();
         _aabb = AABB();
-        // don't unset the room_ID here, because rooms may be accessed after this is called
+        // don't unset the room_ID here, because rooms may be accessed after
+        // this is called
     }
 
-    // this isn't just useful for checking whether a point is within (i.e. returned value is 0 or less)
-    // it is useful for finding the CLOSEST room to a point (by plane distance, doesn't take into account corners etc)
-    real_t is_point_within(const Vector3 &p_pos) const {
+    // this isn't just useful for checking whether a point is within (i.e.
+    // returned value is 0 or less) it is useful for finding the CLOSEST room to
+    // a point (by plane distance, doesn't take into account corners etc)
+    real_t is_point_within(const Vector3& p_pos) const {
         // inside by default
         real_t closest_dist = -FLT_MAX;
 
@@ -360,7 +391,8 @@ struct VSRoom {
     LocalVector<Plane, int32_t> _planes;
 
     // vertices of the corners of the hull, passed from the scene tree
-    // (note these don't take account of any final portal planes adjusted by the portal renderer)
+    // (note these don't take account of any final portal planes adjusted by the
+    // portal renderer)
     LocalVector<Vector3, int32_t> _verts;
 
     // which portals are in the room (ingoing and outgoing)
@@ -417,19 +449,28 @@ struct VSOccluder {
     LocalVector<uint32_t, int32_t> list_ids;
 };
 
-namespace Occlusion {
+namespace Occlusion
+{
 struct Sphere {
     Vector3 pos;
     real_t radius;
 
-    void create() { radius = 0.0; }
-    void from_plane(const Plane &p_plane) {
+    void create() {
+        radius = 0.0;
+    }
+
+    void from_plane(const Plane& p_plane) {
         pos = p_plane.normal;
         // Disallow negative radius. Even zero radius should not really be sent.
         radius = MAX(p_plane.d, 0.0);
     }
 
-    bool intersect_ray(const Vector3 &p_ray_origin, const Vector3 &p_ray_dir, real_t &r_dist, real_t radius_squared) const {
+    bool intersect_ray(
+        const Vector3& p_ray_origin,
+        const Vector3& p_ray_dir,
+        real_t& r_dist,
+        real_t radius_squared
+    ) const {
         Vector3 offset = pos - p_ray_origin;
         real_t c2 = offset.length_squared();
 

@@ -37,7 +37,8 @@ public class Crypt {
     public static String md5(String input) {
         try {
             // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            MessageDigest digest =
+                java.security.MessageDigest.getInstance("MD5");
             digest.update(input.getBytes());
             byte[] messageDigest = digest.digest();
 

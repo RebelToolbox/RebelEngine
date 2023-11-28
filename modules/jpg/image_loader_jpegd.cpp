@@ -36,7 +36,11 @@
 #include <jpgd.h>
 #include <string.h>
 
-Error jpeg_load_image_from_buffer(Image *p_image, const uint8_t *p_buffer, int p_buffer_len) {
+Error jpeg_load_image_from_buffer(
+    Image* p_image,
+    const uint8_t* p_buffer,
+    int p_buffer_len
+) {
     jpgd::jpeg_decoder_mem_stream mem_stream(p_buffer, p_buffer_len);
 
     jpgd::jpeg_decoder decoder(&mem_stream);
@@ -64,22 +68,24 @@ Error jpeg_load_image_from_buffer(Image *p_image, const uint8_t *p_buffer, int p
 
     PoolVector<uint8_t>::Write dw = data.write();
 
-    jpgd::uint8 *pImage_data = (jpgd::uint8 *)dw.ptr();
+    jpgd::uint8* pImage_data = (jpgd::uint8*)dw.ptr();
 
     for (int y = 0; y < image_height; y++) {
-        const jpgd::uint8 *pScan_line;
+        const jpgd::uint8* pScan_line;
         jpgd::uint scan_line_len;
-        if (decoder.decode((const void **)&pScan_line, &scan_line_len) != jpgd::JPGD_SUCCESS) {
+        if (decoder.decode((const void**)&pScan_line, &scan_line_len)
+            != jpgd::JPGD_SUCCESS) {
             return ERR_FILE_CORRUPT;
         }
 
-        jpgd::uint8 *pDst = pImage_data + y * dst_bpl;
+        jpgd::uint8* pDst = pImage_data + y * dst_bpl;
 
         if (comps == 1) {
             memcpy(pDst, pScan_line, dst_bpl);
         } else {
-            // For images with more than 1 channel pScan_line will always point to a buffer
-            // containing 32-bit RGBA pixels. Alpha is always 255 and we ignore it.
+            // For images with more than 1 channel pScan_line will always point
+            // to a buffer containing 32-bit RGBA pixels. Alpha is always 255
+            // and we ignore it.
             for (int x = 0; x < image_width; x++) {
                 pDst[0] = pScan_line[x * 4 + 0];
                 pDst[1] = pScan_line[x * 4 + 1];
@@ -89,7 +95,7 @@ Error jpeg_load_image_from_buffer(Image *p_image, const uint8_t *p_buffer, int p
         }
     }
 
-    //all good
+    // all good
 
     Image::Format fmt;
     if (comps == 1) {
@@ -104,7 +110,12 @@ Error jpeg_load_image_from_buffer(Image *p_image, const uint8_t *p_buffer, int p
     return OK;
 }
 
-Error ImageLoaderJPG::load_image(Ref<Image> p_image, FileAccess *f, bool p_force_linear, float p_scale) {
+Error ImageLoaderJPG::load_image(
+    Ref<Image> p_image,
+    FileAccess* f,
+    bool p_force_linear,
+    float p_scale
+) {
     PoolVector<uint8_t> src_image;
     uint64_t src_image_len = f->get_len();
     ERR_FAIL_COND_V(src_image_len == 0, ERR_FILE_CORRUPT);
@@ -116,17 +127,19 @@ Error ImageLoaderJPG::load_image(Ref<Image> p_image, FileAccess *f, bool p_force
 
     f->close();
 
-    Error err = jpeg_load_image_from_buffer(p_image.ptr(), w.ptr(), src_image_len);
+    Error err =
+        jpeg_load_image_from_buffer(p_image.ptr(), w.ptr(), src_image_len);
 
     return err;
 }
 
-void ImageLoaderJPG::get_recognized_extensions(List<String> *p_extensions) const {
+void ImageLoaderJPG::get_recognized_extensions(List<String>* p_extensions
+) const {
     p_extensions->push_back("jpg");
     p_extensions->push_back("jpeg");
 }
 
-static Ref<Image> _jpegd_mem_loader_func(const uint8_t *p_png, int p_size) {
+static Ref<Image> _jpegd_mem_loader_func(const uint8_t* p_png, int p_size) {
     Ref<Image> img;
     img.instance();
     Error err = jpeg_load_image_from_buffer(img.ptr(), p_png, p_size);

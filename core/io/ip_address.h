@@ -45,12 +45,12 @@ private:
     bool wildcard;
 
 protected:
-    void _parse_ipv6(const String &p_string);
-    void _parse_ipv4(const String &p_string, int p_start, uint8_t *p_ret);
+    void _parse_ipv6(const String& p_string);
+    void _parse_ipv4(const String& p_string, int p_start, uint8_t* p_ret);
 
 public:
-    //operator Variant() const;
-    bool operator==(const IP_Address &p_ip) const {
+    // operator Variant() const;
+    bool operator==(const IP_Address& p_ip) const {
         if (p_ip.valid != valid) {
             return false;
         }
@@ -64,7 +64,8 @@ public:
         }
         return true;
     }
-    bool operator!=(const IP_Address &p_ip) const {
+
+    bool operator!=(const IP_Address& p_ip) const {
         if (p_ip.valid != valid) {
             return true;
         }
@@ -80,19 +81,35 @@ public:
     }
 
     void clear();
-    bool is_wildcard() const { return wildcard; }
-    bool is_valid() const { return valid; }
-    bool is_ipv4() const;
-    const uint8_t *get_ipv4() const;
-    void set_ipv4(const uint8_t *p_ip);
 
-    const uint8_t *get_ipv6() const;
-    void set_ipv6(const uint8_t *p_buf);
+    bool is_wildcard() const {
+        return wildcard;
+    }
+
+    bool is_valid() const {
+        return valid;
+    }
+
+    bool is_ipv4() const;
+    const uint8_t* get_ipv4() const;
+    void set_ipv4(const uint8_t* p_ip);
+
+    const uint8_t* get_ipv6() const;
+    void set_ipv6(const uint8_t* p_buf);
 
     operator String() const;
-    IP_Address(const String &p_string);
-    IP_Address(uint32_t p_a, uint32_t p_b, uint32_t p_c, uint32_t p_d, bool is_v6 = false);
-    IP_Address() { clear(); }
+    IP_Address(const String& p_string);
+    IP_Address(
+        uint32_t p_a,
+        uint32_t p_b,
+        uint32_t p_c,
+        uint32_t p_d,
+        bool is_v6 = false
+    );
+
+    IP_Address() {
+        clear();
+    }
 };
 
 #endif // IP_ADDRESS_H

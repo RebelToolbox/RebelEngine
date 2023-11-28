@@ -64,7 +64,7 @@ public:
 public:
     bool get_loop() const;
     void set_loop(bool p_val);
-    Map<int, GLTFAnimation::Track> &get_tracks();
+    Map<int, GLTFAnimation::Track>& get_tracks();
     GLTFAnimation();
 
 private:

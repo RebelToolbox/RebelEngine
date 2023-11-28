@@ -48,24 +48,24 @@ class ColorPicker : public BoxContainer {
 
 private:
     static List<Color> preset_cache;
-    Control *screen;
-    Control *uv_edit;
-    Control *w_edit;
-    TextureRect *sample;
-    TextureRect *preset;
-    HBoxContainer *preset_container;
-    HBoxContainer *preset_container2;
-    HSeparator *preset_separator;
-    Button *bt_add_preset;
+    Control* screen;
+    Control* uv_edit;
+    Control* w_edit;
+    TextureRect* sample;
+    TextureRect* preset;
+    HBoxContainer* preset_container;
+    HBoxContainer* preset_container2;
+    HSeparator* preset_separator;
+    Button* bt_add_preset;
     List<Color> presets;
-    ToolButton *btn_pick;
-    CheckButton *btn_hsv;
-    CheckButton *btn_raw;
-    HSlider *scroll[4];
-    SpinBox *values[4];
-    Label *labels[4];
-    Button *text_type;
-    LineEdit *c_text;
+    ToolButton* btn_pick;
+    CheckButton* btn_hsv;
+    CheckButton* btn_raw;
+    HSlider* scroll[4];
+    SpinBox* values[4];
+    Label* labels[4];
+    Button* text_type;
+    LineEdit* c_text;
     bool edit_alpha;
     Size2i ms;
     bool text_is_constructor;
@@ -84,21 +84,21 @@ private:
     float h, s, v;
     Color last_hsv;
 
-    void _html_entered(const String &p_html);
+    void _html_entered(const String& p_html);
     void _value_changed(double);
     void _update_controls();
     void _update_color(bool p_update_sliders = true);
     void _update_presets();
     void _update_text_value();
     void _text_type_toggled();
-    void _sample_input(const Ref<InputEvent> &p_event);
+    void _sample_input(const Ref<InputEvent>& p_event);
     void _sample_draw();
-    void _hsv_draw(int p_which, Control *c);
+    void _hsv_draw(int p_which, Control* c);
 
-    void _uv_input(const Ref<InputEvent> &p_event);
-    void _w_input(const Ref<InputEvent> &p_event);
-    void _preset_input(const Ref<InputEvent> &p_event);
-    void _screen_input(const Ref<InputEvent> &p_event);
+    void _uv_input(const Ref<InputEvent>& p_event);
+    void _w_input(const Ref<InputEvent>& p_event);
+    void _preset_input(const Ref<InputEvent>& p_event);
+    void _screen_input(const Ref<InputEvent>& p_event);
     void _add_preset_pressed();
     void _screen_pick_pressed();
     void _focus_enter();
@@ -113,16 +113,16 @@ public:
     void set_edit_alpha(bool p_show);
     bool is_editing_alpha() const;
 
-    void _set_pick_color(const Color &p_color, bool p_update_sliders);
-    void set_pick_color(const Color &p_color);
+    void _set_pick_color(const Color& p_color, bool p_update_sliders);
+    void set_pick_color(const Color& p_color);
     Color get_pick_color() const;
-    void set_old_color(const Color &p_color);
+    void set_old_color(const Color& p_color);
 
     void set_display_old_color(bool p_enabled);
     bool is_displaying_old_color() const;
 
-    void add_preset(const Color &p_color);
-    void erase_preset(const Color &p_color);
+    void add_preset(const Color& p_color);
+    void erase_preset(const Color& p_color);
     PoolColorArray get_presets() const;
 
     void set_hsv_mode(bool p_enabled);
@@ -148,13 +148,13 @@ public:
 class ColorPickerButton : public Button {
     GDCLASS(ColorPickerButton, Button);
 
-    PopupPanel *popup;
-    ColorPicker *picker;
+    PopupPanel* popup;
+    ColorPicker* picker;
     Color color;
     bool edit_alpha;
 
     void _about_to_show();
-    void _color_changed(const Color &p_color);
+    void _color_changed(const Color& p_color);
     void _modal_closed();
 
     virtual void pressed();
@@ -166,14 +166,14 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_pick_color(const Color &p_color);
+    void set_pick_color(const Color& p_color);
     Color get_pick_color() const;
 
     void set_edit_alpha(bool p_show);
     bool is_editing_alpha() const;
 
-    ColorPicker *get_picker();
-    PopupPanel *get_popup();
+    ColorPicker* get_picker();
+    PopupPanel* get_popup();
 
     ColorPickerButton();
 };

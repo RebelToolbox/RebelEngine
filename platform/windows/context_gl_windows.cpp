@@ -45,10 +45,11 @@
 
 #if defined(__GNUC__)
 // Workaround GCC warning from -Wcast-function-type.
-#define wglGetProcAddress (void *)wglGetProcAddress
+#define wglGetProcAddress (void*)wglGetProcAddress
 #endif
 
-typedef HGLRC(APIENTRY *PFNWGLCREATECONTEXTATTRIBSARBPROC)(HDC, HGLRC, const int *);
+typedef HGLRC(APIENTRY*
+                  PFNWGLCREATECONTEXTATTRIBSARBPROC)(HDC, HGLRC, const int*);
 
 void ContextGL_Windows::release_current() {
     wglMakeCurrent(hDC, NULL);
@@ -75,7 +76,8 @@ int ContextGL_Windows::get_window_height() {
 }
 
 bool ContextGL_Windows::should_vsync_via_compositor() {
-    if (OS::get_singleton()->is_window_fullscreen() || !OS::get_singleton()->is_vsync_via_compositor_enabled()) {
+    if (OS::get_singleton()->is_window_fullscreen()
+        || !OS::get_singleton()->is_vsync_via_compositor_enabled()) {
         return false;
     }
 
@@ -130,22 +132,33 @@ Error ContextGL_Windows::initialize() {
     static PIXELFORMATDESCRIPTOR pfd = {
         sizeof(PIXELFORMATDESCRIPTOR), // Size Of This Pixel Format Descriptor
         1,
-        PFD_DRAW_TO_WINDOW | // Format Must Support Window
-                PFD_SUPPORT_OPENGL | // Format Must Support OpenGL
-                PFD_DOUBLEBUFFER,
+        PFD_DRAW_TO_WINDOW |     // Format Must Support Window
+            PFD_SUPPORT_OPENGL | // Format Must Support OpenGL
+            PFD_DOUBLEBUFFER,
         (BYTE)PFD_TYPE_RGBA,
         (BYTE)(OS::get_singleton()->is_layered_allowed() ? 32 : 24),
-        (BYTE)0, (BYTE)0, (BYTE)0, (BYTE)0, (BYTE)0, (BYTE)0, // Color Bits Ignored
-        (BYTE)(OS::get_singleton()->is_layered_allowed() ? 8 : 0), // Alpha Buffer
+        (BYTE)0,
+        (BYTE)0,
+        (BYTE)0,
+        (BYTE)0,
+        (BYTE)0,
+        (BYTE)0, // Color Bits Ignored
+        (BYTE)(OS::get_singleton()->is_layered_allowed() ? 8 : 0
+        ),       // Alpha Buffer
         (BYTE)0, // Shift Bit Ignored
         (BYTE)0, // No Accumulation Buffer
-        (BYTE)0, (BYTE)0, (BYTE)0, (BYTE)0, // Accumulation Bits Ignored
-        (BYTE)24, // 24Bit Z-Buffer (Depth Buffer)
-        (BYTE)0, // No Stencil Buffer
-        (BYTE)0, // No Auxiliary Buffer
+        (BYTE)0,
+        (BYTE)0,
+        (BYTE)0,
+        (BYTE)0,              // Accumulation Bits Ignored
+        (BYTE)24,             // 24Bit Z-Buffer (Depth Buffer)
+        (BYTE)0,              // No Stencil Buffer
+        (BYTE)0,              // No Auxiliary Buffer
         (BYTE)PFD_MAIN_PLANE, // Main Drawing Layer
-        (BYTE)0, // Reserved
-        0, 0, 0 // Layer Masks Ignored
+        (BYTE)0,              // Reserved
+        0,
+        0,
+        0 // Layer Masks Ignored
     };
 
     hDC = GetDC(hWnd);
@@ -175,18 +188,27 @@ Error ContextGL_Windows::initialize() {
 
     if (opengl_3_context) {
         int attribs[] = {
-            WGL_CONTEXT_MAJOR_VERSION_ARB, 3, //we want a 3.3 context
-            WGL_CONTEXT_MINOR_VERSION_ARB, 3,
-            //and it shall be forward compatible so that we can only use up to date functionality
-            WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
-            WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB /*| _WGL_CONTEXT_DEBUG_BIT_ARB*/,
+            WGL_CONTEXT_MAJOR_VERSION_ARB,
+            3, // we want a 3.3 context
+            WGL_CONTEXT_MINOR_VERSION_ARB,
+            3,
+            // and it shall be forward compatible so that we can only use up to
+            // date functionality
+            WGL_CONTEXT_PROFILE_MASK_ARB,
+            WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+            WGL_CONTEXT_FLAGS_ARB,
+            WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB /*|
+                                                      _WGL_CONTEXT_DEBUG_BIT_ARB*/
+            ,
             0
-        }; //zero indicates the end of the array
+        }; // zero indicates the end of the array
 
-        PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = NULL; //pointer to the method
-        wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)wglGetProcAddress("wglCreateContextAttribsARB");
+        PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB =
+            NULL; // pointer to the method
+        wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC
+        )wglGetProcAddress("wglCreateContextAttribsARB");
 
-        if (wglCreateContextAttribsARB == NULL) //OpenGL 3.0 is not supported
+        if (wglCreateContextAttribsARB == NULL) // OpenGL 3.0 is not supported
         {
             wglDeleteContext(hRC);
             return ERR_CANT_CREATE;
@@ -207,9 +229,11 @@ Error ContextGL_Windows::initialize() {
         }
     }
 
-    wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
-    wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
-    //glWrapperInit(wrapper_get_proc_address);
+    wglSwapIntervalEXT =
+        (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+    wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC
+    )wglGetProcAddress("wglGetSwapIntervalEXT");
+    // glWrapperInit(wrapper_get_proc_address);
 
     return OK;
 }
@@ -221,7 +245,6 @@ ContextGL_Windows::ContextGL_Windows(HWND hwnd, bool p_opengl_3_context) {
     vsync_via_compositor = false;
 }
 
-ContextGL_Windows::~ContextGL_Windows() {
-}
+ContextGL_Windows::~ContextGL_Windows() {}
 
 #endif

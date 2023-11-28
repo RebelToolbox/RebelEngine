@@ -37,5 +37,4 @@ void register_denoise_types() {
     LightmapDenoiserOIDN::make_default_denoiser();
 }
 
-void unregister_denoise_types() {
-}
+void unregister_denoise_types() {}

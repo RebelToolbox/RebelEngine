@@ -35,35 +35,54 @@
 #include "core/project_settings.h"
 #include "emscripten.h"
 
-void EMWSClient::_esws_on_connect(void *obj, char *proto) {
-    EMWSClient *client = static_cast<EMWSClient *>(obj);
+void EMWSClient::_esws_on_connect(void* obj, char* proto) {
+    EMWSClient* client = static_cast<EMWSClient*>(obj);
     client->_is_connecting = false;
     client->_on_connect(String(proto));
 }
 
-void EMWSClient::_esws_on_message(void *obj, const uint8_t *p_data, int p_data_size, int p_is_string) {
-    EMWSClient *client = static_cast<EMWSClient *>(obj);
+void EMWSClient::_esws_on_message(
+    void* obj,
+    const uint8_t* p_data,
+    int p_data_size,
+    int p_is_string
+) {
+    EMWSClient* client = static_cast<EMWSClient*>(obj);
 
-    Error err = static_cast<EMWSPeer *>(*client->get_peer(1))->read_msg(p_data, p_data_size, p_is_string == 1);
-    if (err == OK)
+    Error err = static_cast<EMWSPeer*>(*client->get_peer(1))
+                    ->read_msg(p_data, p_data_size, p_is_string == 1);
+    if (err == OK) {
         client->_on_peer_packet();
+    }
 }
 
-void EMWSClient::_esws_on_error(void *obj) {
-    EMWSClient *client = static_cast<EMWSClient *>(obj);
+void EMWSClient::_esws_on_error(void* obj) {
+    EMWSClient* client = static_cast<EMWSClient*>(obj);
     client->_is_connecting = false;
     client->_on_error();
 }
 
-void EMWSClient::_esws_on_close(void *obj, int code, const char *reason, int was_clean) {
-    EMWSClient *client = static_cast<EMWSClient *>(obj);
+void EMWSClient::_esws_on_close(
+    void* obj,
+    int code,
+    const char* reason,
+    int was_clean
+) {
+    EMWSClient* client = static_cast<EMWSClient*>(obj);
     client->_on_close_request(code, String(reason));
     client->_is_connecting = false;
     client->disconnect_from_host();
     client->_on_disconnect(was_clean != 0);
 }
 
-Error EMWSClient::connect_to_host(String p_host, String p_path, uint16_t p_port, bool p_ssl, const Vector<String> p_protocols, const Vector<String> p_custom_headers) {
+Error EMWSClient::connect_to_host(
+    String p_host,
+    String p_path,
+    uint16_t p_port,
+    bool p_ssl,
+    const Vector<String> p_protocols,
+    const Vector<String> p_custom_headers
+) {
     if (_js_id) {
         godot_js_websocket_destroy(_js_id);
         _js_id = 0;
@@ -71,46 +90,60 @@ Error EMWSClient::connect_to_host(String p_host, String p_path, uint16_t p_port,
 
     String proto_string;
     for (int i = 0; i < p_protocols.size(); i++) {
-        if (i != 0)
+        if (i != 0) {
             proto_string += ",";
+        }
         proto_string += p_protocols[i];
     }
 
     String str = "ws://";
 
     if (p_custom_headers.size()) {
-        WARN_PRINT_ONCE("Custom headers are not supported in in HTML5 platform.");
+        WARN_PRINT_ONCE("Custom headers are not supported in in HTML5 platform."
+        );
     }
     if (p_ssl) {
         str = "wss://";
         if (ssl_cert.is_valid()) {
-            WARN_PRINT_ONCE("Custom SSL certificate is not supported in HTML5 platform.");
+            WARN_PRINT_ONCE(
+                "Custom SSL certificate is not supported in HTML5 platform."
+            );
         }
     }
     str += p_host + ":" + itos(p_port) + p_path;
     _is_connecting = true;
 
-    _js_id = godot_js_websocket_create(this, str.utf8().get_data(), proto_string.utf8().get_data(), &_esws_on_connect, &_esws_on_message, &_esws_on_error, &_esws_on_close);
+    _js_id = godot_js_websocket_create(
+        this,
+        str.utf8().get_data(),
+        proto_string.utf8().get_data(),
+        &_esws_on_connect,
+        &_esws_on_message,
+        &_esws_on_error,
+        &_esws_on_close
+    );
     if (!_js_id) {
         return FAILED;
     }
 
-    static_cast<Ref<EMWSPeer>>(_peer)->set_sock(_js_id, _in_buf_size, _in_pkt_size, _out_buf_size);
+    static_cast<Ref<EMWSPeer>>(_peer)
+        ->set_sock(_js_id, _in_buf_size, _in_pkt_size, _out_buf_size);
 
     return OK;
 }
 
-void EMWSClient::poll() {
-}
+void EMWSClient::poll() {}
 
 Ref<WebSocketPeer> EMWSClient::get_peer(int p_peer_id) const {
     return _peer;
 }
 
-NetworkedMultiplayerPeer::ConnectionStatus EMWSClient::get_connection_status() const {
+NetworkedMultiplayerPeer::ConnectionStatus EMWSClient::get_connection_status(
+) const {
     if (_peer->is_connected_to_host()) {
-        if (_is_connecting)
+        if (_is_connecting) {
             return CONNECTION_CONNECTING;
+        }
         return CONNECTION_CONNECTED;
     }
 
@@ -133,7 +166,12 @@ int EMWSClient::get_max_packet_size() const {
     return (1 << _in_buf_size) - PROTO_SIZE;
 }
 
-Error EMWSClient::set_buffers(int p_in_buffer, int p_in_packets, int p_out_buffer, int p_out_packets) {
+Error EMWSClient::set_buffers(
+    int p_in_buffer,
+    int p_in_packets,
+    int p_out_buffer,
+    int p_out_packets
+) {
     _in_buf_size = nearest_shift(p_in_buffer - 1) + 10;
     _in_pkt_size = nearest_shift(p_in_packets - 1);
     _out_buf_size = nearest_shift(p_out_buffer - 1) + 10;

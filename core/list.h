@@ -53,79 +53,90 @@ public:
         friend class List<T, A>;
 
         T value;
-        Element *next_ptr;
-        Element *prev_ptr;
-        _Data *data;
+        Element* next_ptr;
+        Element* prev_ptr;
+        _Data* data;
 
     public:
         /**
          * Get NEXT Element iterator, for constant lists.
          */
-        _FORCE_INLINE_ const Element *next() const {
+        _FORCE_INLINE_ const Element* next() const {
             return next_ptr;
         };
+
         /**
          * Get NEXT Element iterator,
          */
-        _FORCE_INLINE_ Element *next() {
+        _FORCE_INLINE_ Element* next() {
             return next_ptr;
         };
 
         /**
          * Get PREV Element iterator, for constant lists.
          */
-        _FORCE_INLINE_ const Element *prev() const {
-            return prev_ptr;
-        };
-        /**
-         * Get PREV Element iterator,
-         */
-        _FORCE_INLINE_ Element *prev() {
+        _FORCE_INLINE_ const Element* prev() const {
             return prev_ptr;
         };
 
         /**
-         * * operator, for using as *iterator, when iterators are defined on stack.
+         * Get PREV Element iterator,
          */
-        _FORCE_INLINE_ const T &operator*() const {
+        _FORCE_INLINE_ Element* prev() {
+            return prev_ptr;
+        };
+
+        /**
+         * * operator, for using as *iterator, when iterators are defined on
+         * stack.
+         */
+        _FORCE_INLINE_ const T& operator*() const {
             return value;
         };
+
         /**
-         * operator->, for using as iterator->, when iterators are defined on stack, for constant lists.
+         * operator->, for using as iterator->, when iterators are defined on
+         * stack, for constant lists.
          */
-        _FORCE_INLINE_ const T *operator->() const {
+        _FORCE_INLINE_ const T* operator->() const {
             return &value;
         };
+
         /**
-         * * operator, for using as *iterator, when iterators are defined on stack,
+         * * operator, for using as *iterator, when iterators are defined on
+         * stack,
          */
-        _FORCE_INLINE_ T &operator*() {
+        _FORCE_INLINE_ T& operator*() {
             return value;
         };
+
         /**
-         * operator->, for using as iterator->, when iterators are defined on stack, for constant lists.
+         * operator->, for using as iterator->, when iterators are defined on
+         * stack, for constant lists.
          */
-        _FORCE_INLINE_ T *operator->() {
+        _FORCE_INLINE_ T* operator->() {
             return &value;
         };
 
         /**
          * get the value stored in this element.
          */
-        _FORCE_INLINE_ T &get() {
+        _FORCE_INLINE_ T& get() {
             return value;
         };
+
         /**
          * get the value stored in this element, for constant lists
          */
-        _FORCE_INLINE_ const T &get() const {
+        _FORCE_INLINE_ const T& get() const {
             return value;
         };
+
         /**
          * set the value stored in this element.
          */
-        _FORCE_INLINE_ void set(const T &p_value) {
-            value = (T &)p_value;
+        _FORCE_INLINE_ void set(const T& p_value) {
+            value = (T&)p_value;
         };
 
         void erase() {
@@ -141,11 +152,11 @@ public:
 
 private:
     struct _Data {
-        Element *first;
-        Element *last;
+        Element* first;
+        Element* last;
         int size_cache;
 
-        bool erase(const Element *p_I) {
+        bool erase(const Element* p_I) {
             ERR_FAIL_COND_V(!p_I, false);
             ERR_FAIL_COND_V(p_I->data != this, false);
 
@@ -165,48 +176,48 @@ private:
                 p_I->next_ptr->prev_ptr = p_I->prev_ptr;
             }
 
-            memdelete_allocator<Element, A>(const_cast<Element *>(p_I));
+            memdelete_allocator<Element, A>(const_cast<Element*>(p_I));
             size_cache--;
 
             return true;
         }
     };
 
-    _Data *_data;
+    _Data* _data;
 
 public:
     /**
      * return a const iterator to the beginning of the list.
      */
-    _FORCE_INLINE_ const Element *front() const {
+    _FORCE_INLINE_ const Element* front() const {
         return _data ? _data->first : nullptr;
     };
 
     /**
      * return an iterator to the beginning of the list.
      */
-    _FORCE_INLINE_ Element *front() {
+    _FORCE_INLINE_ Element* front() {
         return _data ? _data->first : nullptr;
     };
 
     /**
      * return a const iterator to the last member of the list.
      */
-    _FORCE_INLINE_ const Element *back() const {
+    _FORCE_INLINE_ const Element* back() const {
         return _data ? _data->last : nullptr;
     };
 
     /**
      * return an iterator to the last member of the list.
      */
-    _FORCE_INLINE_ Element *back() {
+    _FORCE_INLINE_ Element* back() {
         return _data ? _data->last : nullptr;
     };
 
     /**
      * store a new element at the end of the list
      */
-    Element *push_back(const T &value) {
+    Element* push_back(const T& value) {
         if (!_data) {
             _data = memnew_allocator(_Data, A);
             _data->first = nullptr;
@@ -214,8 +225,8 @@ public:
             _data->size_cache = 0;
         }
 
-        Element *n = memnew_allocator(Element, A);
-        n->value = (T &)value;
+        Element* n = memnew_allocator(Element, A);
+        n->value = (T&)value;
 
         n->prev_ptr = _data->last;
         n->next_ptr = nullptr;
@@ -245,7 +256,7 @@ public:
     /**
      * store a new element at the beginning of the list
      */
-    Element *push_front(const T &value) {
+    Element* push_front(const T& value) {
         if (!_data) {
             _data = memnew_allocator(_Data, A);
             _data->first = nullptr;
@@ -253,8 +264,8 @@ public:
             _data->size_cache = 0;
         }
 
-        Element *n = memnew_allocator(Element, A);
-        n->value = (T &)value;
+        Element* n = memnew_allocator(Element, A);
+        n->value = (T&)value;
         n->prev_ptr = nullptr;
         n->next_ptr = _data->first;
         n->data = _data;
@@ -280,15 +291,15 @@ public:
         }
     }
 
-    Element *insert_after(Element *p_element, const T &p_value) {
+    Element* insert_after(Element* p_element, const T& p_value) {
         CRASH_COND(p_element && (!_data || p_element->data != _data));
 
         if (!p_element) {
             return push_back(p_value);
         }
 
-        Element *n = memnew_allocator(Element, A);
-        n->value = (T &)p_value;
+        Element* n = memnew_allocator(Element, A);
+        n->value = (T&)p_value;
         n->prev_ptr = p_element;
         n->next_ptr = p_element->next_ptr;
         n->data = _data;
@@ -306,15 +317,15 @@ public:
         return n;
     }
 
-    Element *insert_before(Element *p_element, const T &p_value) {
+    Element* insert_before(Element* p_element, const T& p_value) {
         CRASH_COND(p_element && (!_data || p_element->data != _data));
 
         if (!p_element) {
             return push_back(p_value);
         }
 
-        Element *n = memnew_allocator(Element, A);
-        n->value = (T &)p_value;
+        Element* n = memnew_allocator(Element, A);
+        n->value = (T&)p_value;
         n->prev_ptr = p_element->prev_ptr;
         n->next_ptr = p_element;
         n->data = _data;
@@ -336,8 +347,8 @@ public:
      * find an element in the list,
      */
     template <class T_v>
-    Element *find(const T_v &p_val) {
-        Element *it = front();
+    Element* find(const T_v& p_val) {
+        Element* it = front();
         while (it) {
             if (it->value == p_val) {
                 return it;
@@ -349,9 +360,10 @@ public:
     };
 
     /**
-     * erase an element in the list, by iterator pointing to it. Return true if it was found/erased.
+     * erase an element in the list, by iterator pointing to it. Return true if
+     * it was found/erased.
      */
-    bool erase(const Element *p_I) {
+    bool erase(const Element* p_I) {
         if (_data) {
             bool ret = _data->erase(p_I);
 
@@ -369,8 +381,8 @@ public:
     /**
      * erase the first element in the list, that contains value
      */
-    bool erase(const T &value) {
-        Element *I = find(value);
+    bool erase(const T& value) {
+        Element* I = find(value);
         return erase(I);
     };
 
@@ -394,7 +406,7 @@ public:
         return _data ? _data->size_cache : 0;
     }
 
-    void swap(Element *p_A, Element *p_B) {
+    void swap(Element* p_A, Element* p_B) {
         ERR_FAIL_COND(!p_A || !p_B);
         ERR_FAIL_COND(p_A->data != _data);
         ERR_FAIL_COND(p_B->data != _data);
@@ -402,10 +414,10 @@ public:
         if (p_A == p_B) {
             return;
         }
-        Element *A_prev = p_A->prev_ptr;
-        Element *A_next = p_A->next_ptr;
-        Element *B_prev = p_B->prev_ptr;
-        Element *B_next = p_B->next_ptr;
+        Element* A_prev = p_A->prev_ptr;
+        Element* A_next = p_A->next_ptr;
+        Element* B_prev = p_B->prev_ptr;
+        Element* B_next = p_B->next_ptr;
 
         if (A_prev) {
             A_prev->next_ptr = p_B;
@@ -432,22 +444,23 @@ public:
         p_B->prev_ptr = B_next == p_A ? p_A : A_prev;
         p_B->next_ptr = A_next == p_B ? p_A : A_next;
     }
+
     /**
      * copy the list
      */
-    void operator=(const List &p_list) {
+    void operator=(const List& p_list) {
         clear();
-        const Element *it = p_list.front();
+        const Element* it = p_list.front();
         while (it) {
             push_back(it->get());
             it = it->next();
         }
     }
 
-    T &operator[](int p_index) {
+    T& operator[](int p_index) {
         CRASH_BAD_INDEX(p_index, size());
 
-        Element *I = front();
+        Element* I = front();
         int c = 0;
         while (I) {
             if (c == p_index) {
@@ -460,10 +473,10 @@ public:
         CRASH_NOW(); // bug!!
     }
 
-    const T &operator[](int p_index) const {
+    const T& operator[](int p_index) const {
         CRASH_BAD_INDEX(p_index, size());
 
-        const Element *I = front();
+        const Element* I = front();
         int c = 0;
         while (I) {
             if (c == p_index) {
@@ -476,7 +489,7 @@ public:
         CRASH_NOW(); // bug!!
     }
 
-    void move_to_back(Element *p_I) {
+    void move_to_back(Element* p_I) {
         ERR_FAIL_COND(p_I->data != _data);
         if (!p_I->next_ptr) {
             return;
@@ -504,8 +517,8 @@ public:
 
     void invert() {
         int s = size() / 2;
-        Element *F = front();
-        Element *B = back();
+        Element* F = front();
+        Element* B = back();
         for (int i = 0; i < s; i++) {
             SWAP(F->value, B->value);
             F = F->next();
@@ -513,7 +526,7 @@ public:
         }
     }
 
-    void move_to_front(Element *p_I) {
+    void move_to_front(Element* p_I) {
         ERR_FAIL_COND(p_I->data != _data);
         if (!p_I->prev_ptr) {
             return;
@@ -539,7 +552,7 @@ public:
         _data->first = p_I;
     }
 
-    void move_before(Element *value, Element *where) {
+    void move_before(Element* value, Element* where) {
         if (value->prev_ptr) {
             value->prev_ptr->next_ptr = value->next_ptr;
         } else {
@@ -583,18 +596,18 @@ public:
             return;
         }
 
-        Element *from = front();
-        Element *current = from;
-        Element *to = from;
+        Element* from = front();
+        Element* current = from;
+        Element* to = from;
 
         while (current) {
-            Element *next = current->next_ptr;
+            Element* next = current->next_ptr;
 
             if (from != current) {
                 current->prev_ptr = NULL;
                 current->next_ptr = from;
 
-                Element *find = from;
+                Element* find = from;
                 C less;
                 while (find && less(find->value, current->value)) {
                     current->prev_ptr = find;
@@ -627,30 +640,32 @@ public:
     template <class C>
     struct AuxiliaryComparator {
         C compare;
-        _FORCE_INLINE_ bool operator()(const Element *a, const Element *b) const {
+
+        _FORCE_INLINE_ bool operator()(const Element* a, const Element* b)
+            const {
             return compare(a->value, b->value);
         }
     };
 
     template <class C>
     void sort_custom() {
-        //this version uses auxiliary memory for speed.
-        //if you don't want to use auxiliary memory, use the in_place version
+        // this version uses auxiliary memory for speed.
+        // if you don't want to use auxiliary memory, use the in_place version
 
         int s = size();
         if (s < 2) {
             return;
         }
 
-        Element **aux_buffer = memnew_arr(Element *, s);
+        Element** aux_buffer = memnew_arr(Element*, s);
 
         int idx = 0;
-        for (Element *E = front(); E; E = E->next_ptr) {
+        for (Element* E = front(); E; E = E->next_ptr) {
             aux_buffer[idx] = E;
             idx++;
         }
 
-        SortArray<Element *, AuxiliaryComparator<C>> sort;
+        SortArray<Element*, AuxiliaryComparator<C>> sort;
         sort.sort(aux_buffer, s);
 
         _data->first = aux_buffer[0];
@@ -669,16 +684,16 @@ public:
         memdelete_arr(aux_buffer);
     }
 
-    const void *id() const {
-        return (void *)_data;
+    const void* id() const {
+        return (void*)_data;
     }
 
     /**
      * copy constructor for the list
      */
-    List(const List &p_list) {
+    List(const List& p_list) {
         _data = nullptr;
-        const Element *it = p_list.front();
+        const Element* it = p_list.front();
         while (it) {
             push_back(it->get());
             it = it->next();
@@ -688,6 +703,7 @@ public:
     List() {
         _data = nullptr;
     };
+
     ~List() {
         clear();
         if (_data) {

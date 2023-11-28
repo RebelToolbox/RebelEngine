@@ -1,5 +1,14 @@
 public:
-BVHHandle item_add(T *p_userdata, bool p_active, const BOUNDS &p_aabb, int32_t p_subindex, bool p_pairable, uint32_t p_pairable_type, uint32_t p_pairable_mask, bool p_invisible = false) {
+BVHHandle item_add(
+    T* p_userdata,
+    bool p_active,
+    const BOUNDS& p_aabb,
+    int32_t p_subindex,
+    bool p_pairable,
+    uint32_t p_pairable_type,
+    uint32_t p_pairable_mask,
+    bool p_invisible = false
+) {
 #ifdef BVH_VERBOSE_TREE
     VERBOSE_PRINT("\nitem_add BEFORE");
     _debug_recursive_print_tree(p_tree_id);
@@ -11,10 +20,9 @@ BVHHandle item_add(T *p_userdata, bool p_active, const BOUNDS &p_aabb, int32_t p
 
     // NOTE that we do not expand the AABB for the first create even if
     // leaf expansion is switched on. This is for two reasons:
-    // (1) We don't know if this object will move in future, in which case a non-expanded
-    // bound would be better...
-    // (2) We don't yet know how many objects will be paired, which is used to modify
-    // the expansion margin.
+    // (1) We don't know if this object will move in future, in which case a
+    // non-expanded bound would be better... (2) We don't yet know how many
+    // objects will be paired, which is used to modify the expansion margin.
 
     // handle to be filled with the new item ref
     BVHHandle handle;
@@ -23,17 +31,17 @@ BVHHandle item_add(T *p_userdata, bool p_active, const BOUNDS &p_aabb, int32_t p
     uint32_t ref_id;
 
     // this should never fail
-    ItemRef *ref = _refs.request(ref_id);
+    ItemRef* ref = _refs.request(ref_id);
 
     // the extra data should be parallel list to the references
     uint32_t extra_id;
-    ItemExtra *extra = _extra.request(extra_id);
+    ItemExtra* extra = _extra.request(extra_id);
     BVH_ASSERT(extra_id == ref_id);
 
     // pairs info
     if (USE_PAIRS) {
         uint32_t pairs_id;
-        ItemPairs *pairs = _pairs.request(pairs_id);
+        ItemPairs* pairs = _pairs.request(pairs_id);
         pairs->clear();
         BVH_ASSERT(pairs_id == ref_id);
     }
@@ -43,7 +51,8 @@ BVHHandle item_add(T *p_userdata, bool p_active, const BOUNDS &p_aabb, int32_t p
     extra->last_updated_tick = 0;
 
     // add an active reference to the list for slow incremental optimize
-    // this list must be kept in sync with the references as they are added or removed.
+    // this list must be kept in sync with the references as they are added or
+    // removed.
     extra->active_ref_id = _active_refs.size();
     _active_refs.push_back(ref_id);
 
@@ -69,13 +78,14 @@ BVHHandle item_add(T *p_userdata, bool p_active, const BOUNDS &p_aabb, int32_t p
 
     // we must choose where to add to tree
     if (p_active) {
-        ref->tnode_id = _logic_choose_item_add_node(_root_node_id[tree_id], abb);
+        ref->tnode_id =
+            _logic_choose_item_add_node(_root_node_id[tree_id], abb);
 
         bool refit = _node_add_item(ref->tnode_id, ref_id, abb);
 
         if (refit) {
             // only need to refit from the parent
-            const TNode &add_node = _nodes[ref->tnode_id];
+            const TNode& add_node = _nodes[ref->tnode_id];
             if (add_node.parent_id != BVHCommon::INVALID) {
                 refit_upward_and_balance(add_node.parent_id, tree_id);
             }
@@ -90,8 +100,14 @@ BVHHandle item_add(T *p_userdata, bool p_active, const BOUNDS &p_aabb, int32_t p
     mem += _nodes.estimate_memory_use();
 
     String sz = _debug_aabb_to_string(abb);
-    VERBOSE_PRINT("\titem_add [" + itos(ref_id) + "] " + itos(_refs.used_size()) + " refs,\t" + itos(_nodes.used_size()) + " nodes " + sz);
-    VERBOSE_PRINT("mem use : " + itos(mem) + ", num nodes reserved : " + itos(_nodes.reserved_size()));
+    VERBOSE_PRINT(
+        "\titem_add [" + itos(ref_id) + "] " + itos(_refs.used_size())
+        + " refs,\t" + itos(_nodes.used_size()) + " nodes " + sz
+    );
+    VERBOSE_PRINT(
+        "mem use : " + itos(mem)
+        + ", num nodes reserved : " + itos(_nodes.reserved_size())
+    );
 
 #endif
 
@@ -102,19 +118,21 @@ void _debug_print_refs() {
 #ifdef BVH_VERBOSE_TREE
     print_line("refs.....");
     for (int n = 0; n < _refs.size(); n++) {
-        const ItemRef &ref = _refs[n];
-        print_line("tnode_id " + itos(ref.tnode_id) + ", item_id " + itos(ref.item_id));
+        const ItemRef& ref = _refs[n];
+        print_line(
+            "tnode_id " + itos(ref.tnode_id) + ", item_id " + itos(ref.item_id)
+        );
     }
 
 #endif
 }
 
 // returns false if noop
-bool item_move(BVHHandle p_handle, const BOUNDS &p_aabb) {
+bool item_move(BVHHandle p_handle, const BOUNDS& p_aabb) {
     uint32_t ref_id = p_handle.id();
 
     // get the reference
-    ItemRef &ref = _refs[ref_id];
+    ItemRef& ref = _refs[ref_id];
     if (!ref.is_active()) {
         return false;
     }
@@ -132,25 +150,26 @@ bool item_move(BVHHandle p_handle, const BOUNDS &p_aabb) {
 #endif
 
     BVH_ASSERT(ref.tnode_id != BVHCommon::INVALID);
-    TNode &tnode = _nodes[ref.tnode_id];
+    TNode& tnode = _nodes[ref.tnode_id];
 
     // does it fit within the current leaf aabb?
     if (tnode.aabb.is_other_within(abb)) {
         // do nothing .. fast path .. not moved enough to need refit
 
-        // however we WILL update the exact aabb in the leaf, as this will be needed
-        // for accurate collision detection
-        TLeaf &leaf = _node_get_leaf(tnode);
+        // however we WILL update the exact aabb in the leaf, as this will be
+        // needed for accurate collision detection
+        TLeaf& leaf = _node_get_leaf(tnode);
 
-        BVHABB_CLASS &leaf_abb = leaf.get_aabb(ref.item_id);
+        BVHABB_CLASS& leaf_abb = leaf.get_aabb(ref.item_id);
 
         // no change?
 #ifdef BVH_EXPAND_LEAF_AABBS
         BOUNDS leaf_aabb;
         leaf_abb.to(leaf_aabb);
 
-        // This test should pass in a lot of cases, and by returning false we can avoid
-        // collision pairing checks later, which greatly reduces processing.
+        // This test should pass in a lot of cases, and by returning false we
+        // can avoid collision pairing checks later, which greatly reduces
+        // processing.
         if (expanded_aabb_encloses_not_shrink(leaf_aabb, p_aabb)) {
             return false;
         }
@@ -161,7 +180,10 @@ bool item_move(BVHHandle p_handle, const BOUNDS &p_aabb) {
 #endif
 
 #ifdef BVH_VERBOSE_MOVES
-        print_line("item_move " + itos(p_handle.id()) + "(within tnode aabb) : " + _debug_aabb_to_string(abb));
+        print_line(
+            "item_move " + itos(p_handle.id())
+            + "(within tnode aabb) : " + _debug_aabb_to_string(abb)
+        );
 #endif
 
         leaf_abb = abb;
@@ -171,7 +193,10 @@ bool item_move(BVHHandle p_handle, const BOUNDS &p_aabb) {
     }
 
 #ifdef BVH_VERBOSE_MOVES
-    print_line("item_move " + itos(p_handle.id()) + "(outside tnode aabb) : " + _debug_aabb_to_string(abb));
+    print_line(
+        "item_move " + itos(p_handle.id())
+        + "(outside tnode aabb) : " + _debug_aabb_to_string(abb)
+    );
 #endif
 
     uint32_t tree_id = _handle_get_tree_id(p_handle);
@@ -188,12 +213,13 @@ bool item_move(BVHHandle p_handle, const BOUNDS &p_aabb) {
     // only need to refit from the PARENT
     if (needs_refit) {
         // only need to refit from the parent
-        const TNode &add_node = _nodes[ref.tnode_id];
+        const TNode& add_node = _nodes[ref.tnode_id];
         if (add_node.parent_id != BVHCommon::INVALID) {
-            // not sure we need to rebalance all the time, this can be done less often
+            // not sure we need to rebalance all the time, this can be done less
+            // often
             refit_upward(add_node.parent_id);
         }
-        //refit_upward_and_balance(add_node.parent_id);
+        // refit_upward_and_balance(add_node.parent_id);
     }
 
     return true;
@@ -208,7 +234,8 @@ void item_remove(BVHHandle p_handle) {
 
     ////////////////////////////////////////
     // remove the active reference from the list for slow incremental optimize
-    // this list must be kept in sync with the references as they are added or removed.
+    // this list must be kept in sync with the references as they are added or
+    // removed.
     uint32_t active_ref_id = _extra[ref_id].active_ref_id;
     uint32_t ref_id_moved_back = _active_refs[_active_refs.size() - 1];
 
@@ -233,7 +260,7 @@ void item_remove(BVHHandle p_handle) {
     }
 
     // don't think refit_all is necessary?
-    //refit_all(_tree_id);
+    // refit_all(_tree_id);
 
 #ifdef BVH_VERBOSE_TREE
     _debug_recursive_print_tree(tree_id);
@@ -241,9 +268,9 @@ void item_remove(BVHHandle p_handle) {
 }
 
 // returns success
-bool item_activate(BVHHandle p_handle, const BOUNDS &p_aabb) {
+bool item_activate(BVHHandle p_handle, const BOUNDS& p_aabb) {
     uint32_t ref_id = p_handle.id();
-    ItemRef &ref = _refs[ref_id];
+    ItemRef& ref = _refs[ref_id];
     if (ref.is_active()) {
         // noop
         return false;
@@ -267,7 +294,7 @@ bool item_activate(BVHHandle p_handle, const BOUNDS &p_aabb) {
 // returns success
 bool item_deactivate(BVHHandle p_handle) {
     uint32_t ref_id = p_handle.id();
-    ItemRef &ref = _refs[ref_id];
+    ItemRef& ref = _refs[ref_id];
     if (!ref.is_active()) {
         // noop
         return false;
@@ -286,14 +313,15 @@ bool item_deactivate(BVHHandle p_handle) {
 
 bool item_get_active(BVHHandle p_handle) const {
     uint32_t ref_id = p_handle.id();
-    const ItemRef &ref = _refs[ref_id];
+    const ItemRef& ref = _refs[ref_id];
     return ref.is_active();
 }
 
-// during collision testing, we want to set the mask and whether pairable for the item testing from
-void item_fill_cullparams(BVHHandle p_handle, CullParams &r_params) const {
+// during collision testing, we want to set the mask and whether pairable for
+// the item testing from
+void item_fill_cullparams(BVHHandle p_handle, CullParams& r_params) const {
     uint32_t ref_id = p_handle.id();
-    const ItemExtra &extra = _extra[ref_id];
+    const ItemExtra& extra = _extra[ref_id];
 
     // testing from a non pairable item, we only want to test pairable items
     r_params.test_pairable_only = extra.pairable == 0;
@@ -303,41 +331,48 @@ void item_fill_cullparams(BVHHandle p_handle, CullParams &r_params) const {
     r_params.pairable_type = extra.pairable_type;
 }
 
-bool item_is_pairable(const BVHHandle &p_handle) {
+bool item_is_pairable(const BVHHandle& p_handle) {
     uint32_t ref_id = p_handle.id();
-    const ItemExtra &extra = _extra[ref_id];
+    const ItemExtra& extra = _extra[ref_id];
     return extra.pairable != 0;
 }
 
-void item_get_ABB(const BVHHandle &p_handle, BVHABB_CLASS &r_abb) {
+void item_get_ABB(const BVHHandle& p_handle, BVHABB_CLASS& r_abb) {
     // change tree?
     uint32_t ref_id = p_handle.id();
-    const ItemRef &ref = _refs[ref_id];
+    const ItemRef& ref = _refs[ref_id];
 
-    TNode &tnode = _nodes[ref.tnode_id];
-    TLeaf &leaf = _node_get_leaf(tnode);
+    TNode& tnode = _nodes[ref.tnode_id];
+    TLeaf& leaf = _node_get_leaf(tnode);
 
     r_abb = leaf.get_aabb(ref.item_id);
 }
 
-bool item_set_pairable(const BVHHandle &p_handle, bool p_pairable, uint32_t p_pairable_type, uint32_t p_pairable_mask) {
+bool item_set_pairable(
+    const BVHHandle& p_handle,
+    bool p_pairable,
+    uint32_t p_pairable_type,
+    uint32_t p_pairable_mask
+) {
     // change tree?
     uint32_t ref_id = p_handle.id();
 
-    ItemExtra &ex = _extra[ref_id];
-    ItemRef &ref = _refs[ref_id];
+    ItemExtra& ex = _extra[ref_id];
+    ItemRef& ref = _refs[ref_id];
 
     bool active = ref.is_active();
     bool pairable_changed = (ex.pairable != 0) != p_pairable;
-    bool state_changed = pairable_changed || (ex.pairable_type != p_pairable_type) || (ex.pairable_mask != p_pairable_mask);
+    bool state_changed = pairable_changed
+                      || (ex.pairable_type != p_pairable_type)
+                      || (ex.pairable_mask != p_pairable_mask);
 
     ex.pairable_type = p_pairable_type;
     ex.pairable_mask = p_pairable_mask;
 
     if (active && pairable_changed) {
         // record abb
-        TNode &tnode = _nodes[ref.tnode_id];
-        TLeaf &leaf = _node_get_leaf(tnode);
+        TNode& tnode = _nodes[ref.tnode_id];
+        TLeaf& leaf = _node_get_leaf(tnode);
         BVHABB_CLASS abb = leaf.get_aabb(ref.item_id);
 
         // make sure current tree is correct prior to changing
@@ -361,7 +396,7 @@ bool item_set_pairable(const BVHHandle &p_handle, bool p_pairable, uint32_t p_pa
         // only need to refit from the PARENT
         if (needs_refit) {
             // only need to refit from the parent
-            const TNode &add_node = _nodes[ref.tnode_id];
+            const TNode& add_node = _nodes[ref.tnode_id];
             if (add_node.parent_id != BVHCommon::INVALID) {
                 refit_upward_and_balance(add_node.parent_id, tree_id);
             }
@@ -376,8 +411,8 @@ bool item_set_pairable(const BVHHandle &p_handle, bool p_pairable, uint32_t p_pa
 
 void incremental_optimize() {
     // first update all aabbs as one off step..
-    // this is cheaper than doing it on each move as each leaf may get touched multiple times
-    // in a frame.
+    // this is cheaper than doing it on each move as each leaf may get touched
+    // multiple times in a frame.
     for (int n = 0; n < NUM_TREES; n++) {
         if (_root_node_id[n] != BVHCommon::INVALID) {
             refit_branch(_root_node_id[n]);
@@ -420,7 +455,7 @@ void update() {
     incremental_optimize();
 
     // keep the expansion values up to date with the world bound
-//#define BVH_ALLOW_AUTO_EXPANSION
+// #define BVH_ALLOW_AUTO_EXPANSION
 #ifdef BVH_ALLOW_AUTO_EXPANSION
     if (_auto_node_expansion || _auto_pairing_expansion) {
         BVHABB_CLASS world_bound;
@@ -472,11 +507,16 @@ void params_set_pairing_expansion(real_t p_value) {
 
     // calculate shrinking threshold
     const real_t fudge_factor = 1.1;
-    _aabb_shrinkage_threshold = _pairing_expansion * POINT::AXIS_COUNT * 2.0 * fudge_factor;
+    _aabb_shrinkage_threshold =
+        _pairing_expansion * POINT::AXIS_COUNT * 2.0 * fudge_factor;
 }
 
-// This routine is not just an enclose check, it also checks for special case of shrinkage
-bool expanded_aabb_encloses_not_shrink(const BOUNDS &p_expanded_aabb, const BOUNDS &p_aabb) const {
+// This routine is not just an enclose check, it also checks for special case of
+// shrinkage
+bool expanded_aabb_encloses_not_shrink(
+    const BOUNDS& p_expanded_aabb,
+    const BOUNDS& p_aabb
+) const {
     if (!p_expanded_aabb.encloses(p_aabb)) {
         return false;
     }
@@ -484,8 +524,8 @@ bool expanded_aabb_encloses_not_shrink(const BOUNDS &p_expanded_aabb, const BOUN
     // Check for special case of shrinkage. If the aabb has shrunk
     // significantly we want to create a new expanded bound, because
     // the previous expanded bound will have diverged significantly.
-    const POINT &exp_size = p_expanded_aabb.size;
-    const POINT &new_size = p_aabb.size;
+    const POINT& exp_size = p_expanded_aabb.size;
+    const POINT& new_size = p_aabb.size;
 
     real_t exp_l = 0.0;
     real_t new_l = 0.0;

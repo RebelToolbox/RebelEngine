@@ -47,7 +47,8 @@
 
 #include "core/method_ptrcall.h"
 
-namespace TestMath {
+namespace TestMath
+{
 
 class GetClassAndNamespace {
     String code;
@@ -116,7 +117,7 @@ class GetClassAndNamespace {
                     return TK_PERIOD;
                 };
                 case '#': {
-                    //compiler directive
+                    // compiler directive
                     while (code[idx] != '\n' && code[idx] != 0) {
                         idx++;
                     }
@@ -173,7 +174,7 @@ class GetClassAndNamespace {
                             idx++;
                             break;
                         } else if (code[idx] == '\\') {
-                            //escaped characters...
+                            // escaped characters...
                             idx++;
                             CharType next = code[idx];
                             if (next == 0) {
@@ -232,15 +233,19 @@ class GetClassAndNamespace {
                         break;
                     }
 
-                    if ((code[idx] >= 33 && code[idx] <= 47) || (code[idx] >= 58 && code[idx] <= 64) || (code[idx] >= 91 && code[idx] <= 96) || (code[idx] >= 123 && code[idx] <= 127)) {
+                    if ((code[idx] >= 33 && code[idx] <= 47)
+                        || (code[idx] >= 58 && code[idx] <= 64)
+                        || (code[idx] >= 91 && code[idx] <= 96)
+                        || (code[idx] >= 123 && code[idx] <= 127)) {
                         value = String::chr(code[idx]);
                         idx++;
                         return TK_SYMBOL;
                     }
 
-                    if (code[idx] == '-' || (code[idx] >= '0' && code[idx] <= '9')) {
-                        //a number
-                        const CharType *rptr;
+                    if (code[idx] == '-'
+                        || (code[idx] >= '0' && code[idx] <= '9')) {
+                        // a number
+                        const CharType* rptr;
                         double number = String::to_double(&code[idx], &rptr);
                         idx += (rptr - &code[idx]);
                         value = number;
@@ -249,7 +254,9 @@ class GetClassAndNamespace {
                     } else if ((code[idx] >= 'A' && code[idx] <= 'Z') || (code[idx] >= 'a' && code[idx] <= 'z') || code[idx] > 127) {
                         String id;
 
-                        while ((code[idx] >= 'A' && code[idx] <= 'Z') || (code[idx] >= 'a' && code[idx] <= 'z') || code[idx] > 127) {
+                        while ((code[idx] >= 'A' && code[idx] <= 'Z')
+                               || (code[idx] >= 'a' && code[idx] <= 'z')
+                               || code[idx] > 127) {
                             id += code[idx];
                             idx++;
                         }
@@ -267,7 +274,10 @@ class GetClassAndNamespace {
     }
 
 public:
-    Error parse(const String &p_code, const String &p_known_class_name = String()) {
+    Error parse(
+        const String& p_code,
+        const String& p_known_class_name = String()
+    ) {
         code = p_code;
         idx = 0;
         line = 0;
@@ -295,7 +305,10 @@ public:
                 if (tk == TK_IDENTIFIER) {
                     String name = value;
                     if (use_next_class || p_known_class_name == name) {
-                        for (Map<int, String>::Element *E = namespace_stack.front(); E; E = E->next()) {
+                        for (Map<int, String>::Element* E =
+                                 namespace_stack.front();
+                             E;
+                             E = E->next()) {
                             class_name += E->get() + ".";
                         }
                         class_name += String(value);
@@ -319,7 +332,7 @@ public:
                         curly_stack++;
                         break;
                     } else {
-                        break; //whatever else
+                        break; // whatever else
                     }
                 }
 
@@ -393,7 +406,7 @@ uint32_t ihash3(uint32_t a) {
     return a;
 }
 
-MainLoop *test() {
+MainLoop* test() {
     {
         float r = 1;
         float g = 0.5;
@@ -411,9 +424,11 @@ MainLoop *test() {
 
         float cMax = MAX(cRed, MAX(cGreen, cBlue));
 
-        float expp = MAX(-B - 1.0f, floor(Math::log(cMax) / Math_LN2)) + 1.0f + B;
+        float expp =
+            MAX(-B - 1.0f, floor(Math::log(cMax) / Math_LN2)) + 1.0f + B;
 
-        float sMax = (float)floor((cMax / Math::pow(2.0f, expp - B - N)) + 0.5f);
+        float sMax =
+            (float)floor((cMax / Math::pow(2.0f, expp - B - N)) + 0.5f);
 
         float exps = expp + 1.0f;
 
@@ -425,9 +440,15 @@ MainLoop *test() {
         float sGreen = Math::floor((cGreen / pow(2.0f, exps - B - N)) + 0.5f);
         float sBlue = Math::floor((cBlue / pow(2.0f, exps - B - N)) + 0.5f);
 
-        print_line("R: " + rtos(sRed) + " G: " + rtos(sGreen) + " B: " + rtos(sBlue) + " EXP: " + rtos(exps));
+        print_line(
+            "R: " + rtos(sRed) + " G: " + rtos(sGreen) + " B: " + rtos(sBlue)
+            + " EXP: " + rtos(exps)
+        );
 
-        uint32_t rgbe = (Math::fast_ftoi(sRed) & 0x1FF) | ((Math::fast_ftoi(sGreen) & 0x1FF) << 9) | ((Math::fast_ftoi(sBlue) & 0x1FF) << 18) | ((Math::fast_ftoi(exps) & 0x1F) << 27);
+        uint32_t rgbe = (Math::fast_ftoi(sRed) & 0x1FF)
+                      | ((Math::fast_ftoi(sGreen) & 0x1FF) << 9)
+                      | ((Math::fast_ftoi(sBlue) & 0x1FF) << 18)
+                      | ((Math::fast_ftoi(exps) & 0x1F) << 27);
 
         float rb = rgbe & 0x1ff;
         float gb = (rgbe >> 9) & 0x1ff;
@@ -472,7 +493,7 @@ MainLoop *test() {
     List<String> cmdlargs = OS::get_singleton()->get_cmdline_args();
 
     if (cmdlargs.empty()) {
-        //try editor!
+        // try editor!
         return nullptr;
     }
 
@@ -483,7 +504,7 @@ MainLoop *test() {
         return nullptr;
     }
 
-    FileAccess *fa = FileAccess::open(test, FileAccess::READ);
+    FileAccess* fa = FileAccess::open(test, FileAccess::READ);
     ERR_FAIL_COND_V_MSG(!fa, nullptr, "Could not open file: " + test);
 
     Vector<uint8_t> buf;
@@ -493,7 +514,7 @@ MainLoop *test() {
     buf.write[flen] = 0;
 
     String code;
-    code.parse_utf8((const char *)&buf[0]);
+    code.parse_utf8((const char*)&buf[0]);
 
     GetClassAndNamespace getclass;
     if (getclass.parse(code)) {
@@ -507,7 +528,7 @@ MainLoop *test() {
         List<StringName> tl;
         ClassDB::get_class_list(&tl);
 
-        for (List<StringName>::Element *E = tl.front(); E; E = E->next()) {
+        for (List<StringName>::Element* E = tl.front(); E; E = E->next()) {
             Vector<uint8_t> m5b = E->get().operator String().md5_buffer();
             hashes.push_back(hashes.size());
         }
@@ -519,7 +540,8 @@ MainLoop *test() {
                 success = true;
 
                 for (int j = 0; j < hashes.size(); j++) {
-                    uint32_t eh = ihash2(ihash3(hashes[j] + ihash(s) + s)) & ((1 << i) - 1);
+                    uint32_t eh = ihash2(ihash3(hashes[j] + ihash(s) + s))
+                                & ((1 << i) - 1);
                     if (existing.has(eh)) {
                         success = false;
                         break;
@@ -528,7 +550,11 @@ MainLoop *test() {
                 }
 
                 if (success) {
-                    print_line("success at " + itos(i) + "/" + itos(nearest_shift(hashes.size())) + " shift " + itos(s));
+                    print_line(
+                        "success at " + itos(i) + "/"
+                        + itos(nearest_shift(hashes.size())) + " shift "
+                        + itos(s)
+                    );
                     break;
                 }
             }
@@ -540,9 +566,7 @@ MainLoop *test() {
         print_line("DONE");
     }
 
-    {
-        print_line("NUM: " + itos(-128));
-    }
+    { print_line("NUM: " + itos(-128)); }
 
     {
         Vector3 v(1, 2, 3);
@@ -575,7 +599,8 @@ MainLoop *test() {
 
     List<String> args;
     args.push_back("-l");
-    Error err = OS::get_singleton()->execute("/bin/ls", args, true, nullptr, &ret);
+    Error err =
+        OS::get_singleton()->execute("/bin/ls", args, true, nullptr, &ret);
     print_line("error: " + itos(err));
     print_line(ret);
 
@@ -585,7 +610,9 @@ MainLoop *test() {
     m3.rotate(Vector3(0, 0, 1), 212);
     Basis m32;
     m32.set_euler(m3.get_euler());
-    print_line("ELEULEEEEEEEEEEEEEEEEEER: " + m3.get_euler() + " vs " + m32.get_euler());
+    print_line(
+        "ELEULEEEEEEEEEEEEEEEEEER: " + m3.get_euler() + " vs " + m32.get_euler()
+    );
 
     {
         Dictionary d;
@@ -594,13 +621,26 @@ MainLoop *test() {
         b["44"] = 4;
     }
 
-    print_line("inters: " + rtos(Geometry::segment_intersects_circle(Vector2(-5, 0), Vector2(-2, 0), Vector2(), 1.0)));
+    print_line(
+        "inters: "
+        + rtos(Geometry::segment_intersects_circle(
+            Vector2(-5, 0),
+            Vector2(-2, 0),
+            Vector2(),
+            1.0
+        ))
+    );
 
     print_line("cross: " + Vector3(1, 2, 3).cross(Vector3(4, 5, 7)));
     print_line("dot: " + rtos(Vector3(1, 2, 3).dot(Vector3(4, 5, 7))));
     print_line("abs: " + Vector3(-1, 2, -3).abs());
-    print_line("distance_to: " + rtos(Vector3(1, 2, 3).distance_to(Vector3(4, 5, 7))));
-    print_line("distance_squared_to: " + rtos(Vector3(1, 2, 3).distance_squared_to(Vector3(4, 5, 7))));
+    print_line(
+        "distance_to: " + rtos(Vector3(1, 2, 3).distance_to(Vector3(4, 5, 7)))
+    );
+    print_line(
+        "distance_squared_to: "
+        + rtos(Vector3(1, 2, 3).distance_squared_to(Vector3(4, 5, 7)))
+    );
     print_line("plus: " + (Vector3(1, 2, 3) + Vector3(Vector3(4, 5, 7))));
     print_line("minus: " + (Vector3(1, 2, 3) - Vector3(Vector3(4, 5, 7))));
     print_line("mul: " + (Vector3(1, 2, 3) * Vector3(Vector3(4, 5, 7))));

@@ -36,26 +36,28 @@
 #include "core/os/os.h"
 #include "core/project_settings.h"
 
-FileAccess::CreateFunc FileAccess::create_func[ACCESS_MAX] = { nullptr, nullptr };
+FileAccess::CreateFunc FileAccess::create_func[ACCESS_MAX] = {nullptr, nullptr};
 
 FileAccess::FileCloseFailNotify FileAccess::close_fail_notify = nullptr;
 
 bool FileAccess::backup_save = false;
 
-FileAccess *FileAccess::create(AccessType p_access) {
+FileAccess* FileAccess::create(AccessType p_access) {
     ERR_FAIL_INDEX_V(p_access, ACCESS_MAX, nullptr);
 
-    FileAccess *ret = create_func[p_access]();
+    FileAccess* ret = create_func[p_access]();
     ret->_set_access_type(p_access);
     return ret;
 }
 
-bool FileAccess::exists(const String &p_name) {
-    if (PackedData::get_singleton() && !PackedData::get_singleton()->is_disabled() && PackedData::get_singleton()->has_path(p_name)) {
+bool FileAccess::exists(const String& p_name) {
+    if (PackedData::get_singleton()
+        && !PackedData::get_singleton()->is_disabled()
+        && PackedData::get_singleton()->has_path(p_name)) {
         return true;
     }
 
-    FileAccess *f = open(p_name, READ);
+    FileAccess* f = open(p_name, READ);
     if (!f) {
         return false;
     }
@@ -67,8 +69,8 @@ void FileAccess::_set_access_type(AccessType p_access) {
     _access_type = p_access;
 };
 
-FileAccess *FileAccess::create_for_path(const String &p_path) {
-    FileAccess *ret = nullptr;
+FileAccess* FileAccess::create_for_path(const String& p_path) {
+    FileAccess* ret = nullptr;
     if (p_path.begins_with("res://")) {
         ret = create(ACCESS_RESOURCES);
     } else if (p_path.begins_with("user://")) {
@@ -81,15 +83,20 @@ FileAccess *FileAccess::create_for_path(const String &p_path) {
     return ret;
 }
 
-Error FileAccess::reopen(const String &p_path, int p_mode_flags) {
+Error FileAccess::reopen(const String& p_path, int p_mode_flags) {
     return _open(p_path, p_mode_flags);
 };
 
-FileAccess *FileAccess::open(const String &p_path, int p_mode_flags, Error *r_error) {
-    //try packed data first
+FileAccess* FileAccess::open(
+    const String& p_path,
+    int p_mode_flags,
+    Error* r_error
+) {
+    // try packed data first
 
-    FileAccess *ret = nullptr;
-    if (!(p_mode_flags & WRITE) && PackedData::get_singleton() && !PackedData::get_singleton()->is_disabled()) {
+    FileAccess* ret = nullptr;
+    if (!(p_mode_flags & WRITE) && PackedData::get_singleton()
+        && !PackedData::get_singleton()->is_disabled()) {
         ret = PackedData::get_singleton()->try_open_path(p_path);
         if (ret) {
             if (r_error) {
@@ -117,8 +124,8 @@ FileAccess::CreateFunc FileAccess::get_create_func(AccessType p_access) {
     return create_func[p_access];
 };
 
-String FileAccess::fix_path(const String &p_path) const {
-    //helper used by file accesses that use a single filesystem
+String FileAccess::fix_path(const String& p_path) const {
+    // helper used by file accesses that use a single filesystem
 
     String r_path = p_path.replace("\\", "/");
 
@@ -126,7 +133,8 @@ String FileAccess::fix_path(const String &p_path) const {
         case ACCESS_RESOURCES: {
             if (ProjectSettings::get_singleton()) {
                 if (r_path.begins_with("res://")) {
-                    String resource_path = ProjectSettings::get_singleton()->get_resource_path();
+                    String resource_path =
+                        ProjectSettings::get_singleton()->get_resource_path();
                     if (resource_path != "") {
                         return r_path.replace("res:/", resource_path);
                     };
@@ -174,6 +182,7 @@ uint16_t FileAccess::get_16() const {
 
     return res;
 }
+
 uint32_t FileAccess::get_32() const {
     uint32_t res;
     uint16_t a, b;
@@ -191,6 +200,7 @@ uint32_t FileAccess::get_32() const {
 
     return res;
 }
+
 uint64_t FileAccess::get_64() const {
     uint64_t res;
     uint32_t a, b;
@@ -252,7 +262,7 @@ class CharBuffer {
     Vector<char> vector;
     char stack_buffer[256];
 
-    char *buffer;
+    char* buffer;
     int capacity;
     int written;
 
@@ -277,10 +287,9 @@ class CharBuffer {
 
 public:
     _FORCE_INLINE_ CharBuffer() :
-            buffer(stack_buffer),
-            capacity(sizeof(stack_buffer) / sizeof(char)),
-            written(0) {
-    }
+        buffer(stack_buffer),
+        capacity(sizeof(stack_buffer) / sizeof(char)),
+        written(0) {}
 
     _FORCE_INLINE_ void push_back(char c) {
         if (written >= capacity) {
@@ -290,7 +299,7 @@ public:
         buffer[written++] = c;
     }
 
-    _FORCE_INLINE_ const char *get_data() const {
+    _FORCE_INLINE_ const char* get_data() const {
         return buffer;
     }
 };
@@ -314,9 +323,18 @@ String FileAccess::get_line() const {
     return String::utf8(line.get_data());
 }
 
-Vector<String> FileAccess::get_csv_line(const String &p_delim) const {
-    ERR_FAIL_COND_V_MSG(p_delim.length() != 1, Vector<String>(), "Only single character delimiters are supported to parse CSV lines.");
-    ERR_FAIL_COND_V_MSG(p_delim[0] == '"', Vector<String>(), "The double quotation mark character (\") is not supported as a delimiter for CSV lines.");
+Vector<String> FileAccess::get_csv_line(const String& p_delim) const {
+    ERR_FAIL_COND_V_MSG(
+        p_delim.length() != 1,
+        Vector<String>(),
+        "Only single character delimiters are supported to parse CSV lines."
+    );
+    ERR_FAIL_COND_V_MSG(
+        p_delim[0] == '"',
+        Vector<String>(),
+        "The double quotation mark character (\") is not supported as a "
+        "delimiter for CSV lines."
+    );
 
     String line;
 
@@ -367,7 +385,7 @@ Vector<String> FileAccess::get_csv_line(const String &p_delim) const {
     return strings;
 }
 
-uint64_t FileAccess::get_buffer(uint8_t *p_dst, uint64_t p_length) const {
+uint64_t FileAccess::get_buffer(uint8_t* p_dst, uint64_t p_length) const {
     ERR_FAIL_COND_V(!p_dst && p_length > 0, -1);
 
     uint64_t i = 0;
@@ -389,7 +407,7 @@ String FileAccess::get_as_utf8_string() const {
     w[len] = 0;
 
     String s;
-    if (s.parse_utf8((const char *)w.ptr())) {
+    if (s.parse_utf8((const char*)w.ptr())) {
         return String();
     }
     return s;
@@ -408,6 +426,7 @@ void FileAccess::store_16(uint16_t p_dest) {
     store_8(a);
     store_8(b);
 }
+
 void FileAccess::store_32(uint32_t p_dest) {
     uint16_t a, b;
 
@@ -421,6 +440,7 @@ void FileAccess::store_32(uint32_t p_dest) {
     store_16(a);
     store_16(b);
 }
+
 void FileAccess::store_64(uint64_t p_dest) {
     uint32_t a, b;
 
@@ -455,65 +475,89 @@ void FileAccess::store_double(double p_dest) {
     store_64(m.l);
 };
 
-uint64_t FileAccess::get_modified_time(const String &p_file) {
-    if (PackedData::get_singleton() && !PackedData::get_singleton()->is_disabled() && (PackedData::get_singleton()->has_path(p_file) || PackedData::get_singleton()->has_directory(p_file))) {
+uint64_t FileAccess::get_modified_time(const String& p_file) {
+    if (PackedData::get_singleton()
+        && !PackedData::get_singleton()->is_disabled()
+        && (PackedData::get_singleton()->has_path(p_file)
+            || PackedData::get_singleton()->has_directory(p_file))) {
         return 0;
     }
 
-    FileAccess *fa = create_for_path(p_file);
-    ERR_FAIL_COND_V_MSG(!fa, 0, "Cannot create FileAccess for path '" + p_file + "'.");
+    FileAccess* fa = create_for_path(p_file);
+    ERR_FAIL_COND_V_MSG(
+        !fa,
+        0,
+        "Cannot create FileAccess for path '" + p_file + "'."
+    );
 
     uint64_t mt = fa->_get_modified_time(p_file);
     memdelete(fa);
     return mt;
 }
 
-uint32_t FileAccess::get_unix_permissions(const String &p_file) {
-    if (PackedData::get_singleton() && !PackedData::get_singleton()->is_disabled() && (PackedData::get_singleton()->has_path(p_file) || PackedData::get_singleton()->has_directory(p_file))) {
+uint32_t FileAccess::get_unix_permissions(const String& p_file) {
+    if (PackedData::get_singleton()
+        && !PackedData::get_singleton()->is_disabled()
+        && (PackedData::get_singleton()->has_path(p_file)
+            || PackedData::get_singleton()->has_directory(p_file))) {
         return 0;
     }
 
-    FileAccess *fa = create_for_path(p_file);
-    ERR_FAIL_COND_V_MSG(!fa, 0, "Cannot create FileAccess for path '" + p_file + "'.");
+    FileAccess* fa = create_for_path(p_file);
+    ERR_FAIL_COND_V_MSG(
+        !fa,
+        0,
+        "Cannot create FileAccess for path '" + p_file + "'."
+    );
 
     uint32_t mt = fa->_get_unix_permissions(p_file);
     memdelete(fa);
     return mt;
 }
 
-Error FileAccess::set_unix_permissions(const String &p_file, uint32_t p_permissions) {
-    if (PackedData::get_singleton() && !PackedData::get_singleton()->is_disabled() && (PackedData::get_singleton()->has_path(p_file) || PackedData::get_singleton()->has_directory(p_file))) {
+Error FileAccess::set_unix_permissions(
+    const String& p_file,
+    uint32_t p_permissions
+) {
+    if (PackedData::get_singleton()
+        && !PackedData::get_singleton()->is_disabled()
+        && (PackedData::get_singleton()->has_path(p_file)
+            || PackedData::get_singleton()->has_directory(p_file))) {
         return ERR_UNAVAILABLE;
     }
 
-    FileAccess *fa = create_for_path(p_file);
-    ERR_FAIL_COND_V_MSG(!fa, ERR_CANT_CREATE, "Cannot create FileAccess for path '" + p_file + "'.");
+    FileAccess* fa = create_for_path(p_file);
+    ERR_FAIL_COND_V_MSG(
+        !fa,
+        ERR_CANT_CREATE,
+        "Cannot create FileAccess for path '" + p_file + "'."
+    );
 
     Error err = fa->_set_unix_permissions(p_file, p_permissions);
     memdelete(fa);
     return err;
 }
 
-void FileAccess::store_string(const String &p_string) {
+void FileAccess::store_string(const String& p_string) {
     if (p_string.length() == 0) {
         return;
     }
 
     CharString cs = p_string.utf8();
-    store_buffer((uint8_t *)&cs[0], cs.length());
+    store_buffer((uint8_t*)&cs[0], cs.length());
 }
 
-void FileAccess::store_pascal_string(const String &p_string) {
+void FileAccess::store_pascal_string(const String& p_string) {
     CharString cs = p_string.utf8();
     store_32(cs.length());
-    store_buffer((uint8_t *)&cs[0], cs.length());
+    store_buffer((uint8_t*)&cs[0], cs.length());
 };
 
 String FileAccess::get_pascal_string() {
     uint32_t sl = get_32();
     CharString cs;
     cs.resize(sl + 1);
-    get_buffer((uint8_t *)cs.ptr(), sl);
+    get_buffer((uint8_t*)cs.ptr(), sl);
     cs[sl] = 0;
 
     String ret;
@@ -522,12 +566,15 @@ String FileAccess::get_pascal_string() {
     return ret;
 };
 
-void FileAccess::store_line(const String &p_line) {
+void FileAccess::store_line(const String& p_line) {
     store_string(p_line);
     store_8('\n');
 }
 
-void FileAccess::store_csv_line(const Vector<String> &p_values, const String &p_delim) {
+void FileAccess::store_csv_line(
+    const Vector<String>& p_values,
+    const String& p_delim
+) {
     ERR_FAIL_COND(p_delim.length() != 1);
 
     String line = "";
@@ -535,7 +582,8 @@ void FileAccess::store_csv_line(const Vector<String> &p_values, const String &p_
     for (int i = 0; i < size; ++i) {
         String value = p_values[i];
 
-        if (value.find("\"") != -1 || value.find(p_delim) != -1 || value.find("\n") != -1) {
+        if (value.find("\"") != -1 || value.find(p_delim) != -1
+            || value.find("\n") != -1) {
             value = "\"" + value.replace("\"", "\"\"") + "\"";
         }
         if (i < size - 1) {
@@ -548,20 +596,26 @@ void FileAccess::store_csv_line(const Vector<String> &p_values, const String &p_
     store_line(line);
 }
 
-void FileAccess::store_buffer(const uint8_t *p_src, uint64_t p_length) {
+void FileAccess::store_buffer(const uint8_t* p_src, uint64_t p_length) {
     ERR_FAIL_COND(!p_src && p_length > 0);
     for (uint64_t i = 0; i < p_length; i++) {
         store_8(p_src[i]);
     }
 }
 
-Vector<uint8_t> FileAccess::get_file_as_array(const String &p_path, Error *r_error) {
-    FileAccess *f = FileAccess::open(p_path, READ, r_error);
+Vector<uint8_t> FileAccess::get_file_as_array(
+    const String& p_path,
+    Error* r_error
+) {
+    FileAccess* f = FileAccess::open(p_path, READ, r_error);
     if (!f) {
         if (r_error) { // if error requested, do not throw error
             return Vector<uint8_t>();
         }
-        ERR_FAIL_V_MSG(Vector<uint8_t>(), "Can't open file from path '" + String(p_path) + "'.");
+        ERR_FAIL_V_MSG(
+            Vector<uint8_t>(),
+            "Can't open file from path '" + String(p_path) + "'."
+        );
     }
     Vector<uint8_t> data;
     data.resize(f->get_len());
@@ -570,7 +624,7 @@ Vector<uint8_t> FileAccess::get_file_as_array(const String &p_path, Error *r_err
     return data;
 }
 
-String FileAccess::get_file_as_string(const String &p_path, Error *r_error) {
+String FileAccess::get_file_as_string(const String& p_path, Error* r_error) {
     Error err;
     Vector<uint8_t> array = get_file_as_array(p_path, &err);
     if (r_error) {
@@ -580,16 +634,19 @@ String FileAccess::get_file_as_string(const String &p_path, Error *r_error) {
         if (r_error) {
             return String();
         }
-        ERR_FAIL_V_MSG(String(), "Can't get file as string from path '" + String(p_path) + "'.");
+        ERR_FAIL_V_MSG(
+            String(),
+            "Can't get file as string from path '" + String(p_path) + "'."
+        );
     }
 
     String ret;
-    ret.parse_utf8((const char *)array.ptr(), array.size());
+    ret.parse_utf8((const char*)array.ptr(), array.size());
     return ret;
 }
 
-String FileAccess::get_md5(const String &p_file) {
-    FileAccess *f = FileAccess::open(p_file, READ);
+String FileAccess::get_md5(const String& p_file) {
+    FileAccess* f = FileAccess::open(p_file, READ);
     if (!f) {
         return String();
     }
@@ -617,12 +674,12 @@ String FileAccess::get_md5(const String &p_file) {
     return String::md5(hash);
 }
 
-String FileAccess::get_multiple_md5(const Vector<String> &p_file) {
+String FileAccess::get_multiple_md5(const Vector<String>& p_file) {
     CryptoCore::MD5Context ctx;
     ctx.start();
 
     for (int i = 0; i < p_file.size(); i++) {
-        FileAccess *f = FileAccess::open(p_file[i], READ);
+        FileAccess* f = FileAccess::open(p_file[i], READ);
         ERR_CONTINUE(!f);
 
         unsigned char step[32768];
@@ -645,8 +702,8 @@ String FileAccess::get_multiple_md5(const Vector<String> &p_file) {
     return String::md5(hash);
 }
 
-String FileAccess::get_sha256(const String &p_file) {
-    FileAccess *f = FileAccess::open(p_file, READ);
+String FileAccess::get_sha256(const String& p_file) {
+    FileAccess* f = FileAccess::open(p_file, READ);
     if (!f) {
         return String();
     }

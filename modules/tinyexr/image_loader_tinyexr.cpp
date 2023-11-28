@@ -35,28 +35,33 @@
 
 #include "thirdparty/tinyexr/tinyexr.h"
 
-Error ImageLoaderTinyEXR::load_image(Ref<Image> p_image, FileAccess *f, bool p_force_linear, float p_scale) {
+Error ImageLoaderTinyEXR::load_image(
+    Ref<Image> p_image,
+    FileAccess* f,
+    bool p_force_linear,
+    float p_scale
+) {
     PoolVector<uint8_t> src_image;
     uint64_t src_image_len = f->get_len();
     ERR_FAIL_COND_V(src_image_len == 0, ERR_FILE_CORRUPT);
     src_image.resize(src_image_len);
 
     PoolVector<uint8_t>::Write img_write = src_image.write();
-    uint8_t *w = img_write.ptr();
+    uint8_t* w = img_write.ptr();
 
     f->get_buffer(&w[0], src_image_len);
 
     f->close();
 
-    // Re-implementation of tinyexr's LoadEXRFromMemory using Godot types to store the Image data
-    // and Godot's error codes.
-    // When debugging after updating the thirdparty library, check that we're still in sync with
+    // Re-implementation of tinyexr's LoadEXRFromMemory using Godot types to
+    // store the Image data and Godot's error codes. When debugging after
+    // updating the thirdparty library, check that we're still in sync with
     // their API usage in LoadEXRFromMemory.
 
     EXRVersion exr_version;
     EXRImage exr_image;
     EXRHeader exr_header;
-    const char *err = nullptr;
+    const char* err = nullptr;
 
     InitEXRHeader(&exr_header);
 
@@ -65,7 +70,13 @@ Error ImageLoaderTinyEXR::load_image(Ref<Image> p_image, FileAccess *f, bool p_f
         return ERR_FILE_CORRUPT;
     }
 
-    ret = ParseEXRHeaderFromMemory(&exr_header, &exr_version, w, src_image_len, &err);
+    ret = ParseEXRHeaderFromMemory(
+        &exr_header,
+        &exr_version,
+        w,
+        src_image_len,
+        &err
+    );
     if (ret != TINYEXR_SUCCESS) {
         if (err) {
             ERR_PRINT(String(err));
@@ -83,7 +94,8 @@ Error ImageLoaderTinyEXR::load_image(Ref<Image> p_image, FileAccess *f, bool p_f
     }
 
     InitEXRImage(&exr_image);
-    ret = LoadEXRImageFromMemory(&exr_image, &exr_header, w, src_image_len, &err);
+    ret =
+        LoadEXRImageFromMemory(&exr_image, &exr_header, w, src_image_len, &err);
     if (ret != TINYEXR_SUCCESS) {
         if (err) {
             ERR_PRINT(String(err));
@@ -120,23 +132,31 @@ Error ImageLoaderTinyEXR::load_image(Ref<Image> p_image, FileAccess *f, bool p_f
 
     int channel_size = use_float16 ? 2 : 4;
     if (idxA != -1) {
-        imgdata.resize(exr_image.width * exr_image.height * 4 * channel_size); //RGBA
+        imgdata.resize(
+            exr_image.width * exr_image.height * 4 * channel_size
+        ); // RGBA
         format = use_float16 ? Image::FORMAT_RGBAH : Image::FORMAT_RGBAF;
         output_channels = 4;
     } else if (idxB != -1) {
         ERR_FAIL_COND_V(idxG == -1, ERR_FILE_CORRUPT);
         ERR_FAIL_COND_V(idxR == -1, ERR_FILE_CORRUPT);
-        imgdata.resize(exr_image.width * exr_image.height * 3 * channel_size); //RGB
+        imgdata.resize(
+            exr_image.width * exr_image.height * 3 * channel_size
+        ); // RGB
         format = use_float16 ? Image::FORMAT_RGBH : Image::FORMAT_RGBF;
         output_channels = 3;
     } else if (idxG != -1) {
         ERR_FAIL_COND_V(idxR == -1, ERR_FILE_CORRUPT);
-        imgdata.resize(exr_image.width * exr_image.height * 2 * channel_size); //RG
+        imgdata.resize(
+            exr_image.width * exr_image.height * 2 * channel_size
+        ); // RG
         format = use_float16 ? Image::FORMAT_RGH : Image::FORMAT_RGF;
         output_channels = 2;
     } else {
         ERR_FAIL_COND_V(idxR == -1, ERR_FILE_CORRUPT);
-        imgdata.resize(exr_image.width * exr_image.height * 1 * channel_size); //R
+        imgdata.resize(
+            exr_image.width * exr_image.height * 1 * channel_size
+        ); // R
         format = use_float16 ? Image::FORMAT_RH : Image::FORMAT_RF;
         output_channels = 1;
     }
@@ -146,7 +166,7 @@ Error ImageLoaderTinyEXR::load_image(Ref<Image> p_image, FileAccess *f, bool p_f
     int tile_width = 0;
     int tile_height = 0;
 
-    const EXRTile *exr_tiles;
+    const EXRTile* exr_tiles;
 
     if (!exr_header.tiled) {
         single_image_tile.images = exr_image.images;
@@ -168,43 +188,55 @@ Error ImageLoaderTinyEXR::load_image(Ref<Image> p_image, FileAccess *f, bool p_f
         exr_tiles = exr_image.tiles;
     }
 
-    //print_line("reading format: " + Image::get_format_name(format));
+    // print_line("reading format: " + Image::get_format_name(format));
     {
         PoolVector<uint8_t>::Write imgdata_write = imgdata.write();
-        uint8_t *wd = imgdata_write.ptr();
-        uint16_t *iw16 = (uint16_t *)wd;
-        float *iw32 = (float *)wd;
+        uint8_t* wd = imgdata_write.ptr();
+        uint16_t* iw16 = (uint16_t*)wd;
+        float* iw32 = (float*)wd;
 
         // Assume `out_rgba` have enough memory allocated.
         for (int tile_index = 0; tile_index < num_tiles; tile_index++) {
-            const EXRTile &tile = exr_tiles[tile_index];
+            const EXRTile& tile = exr_tiles[tile_index];
 
             int tw = tile.width;
             int th = tile.height;
 
-            const float *r_channel_start = reinterpret_cast<const float *>(tile.images[idxR]);
-            const float *g_channel_start = nullptr;
-            const float *b_channel_start = nullptr;
-            const float *a_channel_start = nullptr;
+            const float* r_channel_start =
+                reinterpret_cast<const float*>(tile.images[idxR]);
+            const float* g_channel_start = nullptr;
+            const float* b_channel_start = nullptr;
+            const float* a_channel_start = nullptr;
 
             if (idxG != -1) {
-                g_channel_start = reinterpret_cast<const float *>(tile.images[idxG]);
+                g_channel_start =
+                    reinterpret_cast<const float*>(tile.images[idxG]);
             }
             if (idxB != -1) {
-                b_channel_start = reinterpret_cast<const float *>(tile.images[idxB]);
+                b_channel_start =
+                    reinterpret_cast<const float*>(tile.images[idxB]);
             }
             if (idxA != -1) {
-                a_channel_start = reinterpret_cast<const float *>(tile.images[idxA]);
+                a_channel_start =
+                    reinterpret_cast<const float*>(tile.images[idxA]);
             }
 
-            uint16_t *first_row_w16 = iw16 + (tile.offset_y * tile_height * exr_image.width + tile.offset_x * tile_width) * output_channels;
-            float *first_row_w32 = iw32 + (tile.offset_y * tile_height * exr_image.width + tile.offset_x * tile_width) * output_channels;
+            uint16_t* first_row_w16 =
+                iw16
+                + (tile.offset_y * tile_height * exr_image.width
+                   + tile.offset_x * tile_width)
+                      * output_channels;
+            float* first_row_w32 =
+                iw32
+                + (tile.offset_y * tile_height * exr_image.width
+                   + tile.offset_x * tile_width)
+                      * output_channels;
 
             for (int y = 0; y < th; y++) {
-                const float *r_channel = r_channel_start + y * tile_width;
-                const float *g_channel = nullptr;
-                const float *b_channel = nullptr;
-                const float *a_channel = nullptr;
+                const float* r_channel = r_channel_start + y * tile_width;
+                const float* g_channel = nullptr;
+                const float* b_channel = nullptr;
+                const float* a_channel = nullptr;
                 if (g_channel_start) {
                     g_channel = g_channel_start + y * tile_width;
                 }
@@ -216,7 +248,8 @@ Error ImageLoaderTinyEXR::load_image(Ref<Image> p_image, FileAccess *f, bool p_f
                 }
 
                 if (use_float16) {
-                    uint16_t *row_w = first_row_w16 + (y * exr_image.width * output_channels);
+                    uint16_t* row_w =
+                        first_row_w16 + (y * exr_image.width * output_channels);
 
                     for (int x = 0; x < tw; x++) {
                         Color color;
@@ -247,7 +280,8 @@ Error ImageLoaderTinyEXR::load_image(Ref<Image> p_image, FileAccess *f, bool p_f
                         }
                     }
                 } else {
-                    float *row_w = first_row_w32 + (y * exr_image.width * output_channels);
+                    float* row_w =
+                        first_row_w32 + (y * exr_image.width * output_channels);
 
                     for (int x = 0; x < tw; x++) {
                         Color color;
@@ -292,9 +326,9 @@ Error ImageLoaderTinyEXR::load_image(Ref<Image> p_image, FileAccess *f, bool p_f
     return OK;
 }
 
-void ImageLoaderTinyEXR::get_recognized_extensions(List<String> *p_extensions) const {
+void ImageLoaderTinyEXR::get_recognized_extensions(List<String>* p_extensions
+) const {
     p_extensions->push_back("exr");
 }
 
-ImageLoaderTinyEXR::ImageLoaderTinyEXR() {
-}
+ImageLoaderTinyEXR::ImageLoaderTinyEXR() {}

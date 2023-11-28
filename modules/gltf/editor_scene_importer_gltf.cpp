@@ -50,53 +50,115 @@ uint32_t EditorSceneImporterGLTF::get_import_flags() const {
     return ImportFlags::IMPORT_SCENE | ImportFlags::IMPORT_ANIMATION;
 }
 
-void EditorSceneImporterGLTF::get_extensions(List<String> *r_extensions) const {
+void EditorSceneImporterGLTF::get_extensions(List<String>* r_extensions) const {
     r_extensions->push_back("gltf");
     r_extensions->push_back("glb");
 }
 
-Node *EditorSceneImporterGLTF::import_scene(const String &p_path,
-        uint32_t p_flags, int p_bake_fps, uint32_t p_compress_flags,
-        List<String> *r_missing_deps,
-        Error *r_err) {
+Node* EditorSceneImporterGLTF::import_scene(
+    const String& p_path,
+    uint32_t p_flags,
+    int p_bake_fps,
+    uint32_t p_compress_flags,
+    List<String>* r_missing_deps,
+    Error* r_err
+) {
     Ref<PackedSceneGLTF> importer;
     importer.instance();
-    return importer->import_scene(p_path, p_flags, p_bake_fps, p_compress_flags, r_missing_deps, r_err, Ref<GLTFState>());
+    return importer->import_scene(
+        p_path,
+        p_flags,
+        p_bake_fps,
+        p_compress_flags,
+        r_missing_deps,
+        r_err,
+        Ref<GLTFState>()
+    );
 }
 
-Ref<Animation> EditorSceneImporterGLTF::import_animation(const String &p_path,
-        uint32_t p_flags,
-        int p_bake_fps) {
+Ref<Animation> EditorSceneImporterGLTF::import_animation(
+    const String& p_path,
+    uint32_t p_flags,
+    int p_bake_fps
+) {
     return Ref<Animation>();
 }
 
 void PackedSceneGLTF::_bind_methods() {
     ClassDB::bind_method(
-            D_METHOD("export_gltf", "node", "path", "flags", "bake_fps"),
-            &PackedSceneGLTF::export_gltf, DEFVAL(0), DEFVAL(1000.0f));
-    ClassDB::bind_method(D_METHOD("pack_gltf", "path", "flags", "bake_fps", "compress_flags", "state"),
-            &PackedSceneGLTF::pack_gltf, DEFVAL(0), DEFVAL(1000.0f), DEFVAL(Mesh::ARRAY_COMPRESS_DEFAULT), DEFVAL(Ref<GLTFState>()));
-    ClassDB::bind_method(D_METHOD("import_gltf_scene", "path", "flags", "bake_fps", "compress_flags", "state"),
-            &PackedSceneGLTF::import_gltf_scene, DEFVAL(0), DEFVAL(1000.0f), DEFVAL(Mesh::ARRAY_COMPRESS_DEFAULT), DEFVAL(Ref<GLTFState>()));
-}
-Node *PackedSceneGLTF::import_gltf_scene(const String &p_path, uint32_t p_flags, float p_bake_fps, uint32_t p_compress_flags, Ref<GLTFState> r_state) {
-    Error err = FAILED;
-    List<String> deps;
-    return import_scene(p_path, p_flags, p_bake_fps, p_compress_flags, &deps, &err, r_state);
+        D_METHOD("export_gltf", "node", "path", "flags", "bake_fps"),
+        &PackedSceneGLTF::export_gltf,
+        DEFVAL(0),
+        DEFVAL(1000.0f)
+    );
+    ClassDB::bind_method(
+        D_METHOD(
+            "pack_gltf",
+            "path",
+            "flags",
+            "bake_fps",
+            "compress_flags",
+            "state"
+        ),
+        &PackedSceneGLTF::pack_gltf,
+        DEFVAL(0),
+        DEFVAL(1000.0f),
+        DEFVAL(Mesh::ARRAY_COMPRESS_DEFAULT),
+        DEFVAL(Ref<GLTFState>())
+    );
+    ClassDB::bind_method(
+        D_METHOD(
+            "import_gltf_scene",
+            "path",
+            "flags",
+            "bake_fps",
+            "compress_flags",
+            "state"
+        ),
+        &PackedSceneGLTF::import_gltf_scene,
+        DEFVAL(0),
+        DEFVAL(1000.0f),
+        DEFVAL(Mesh::ARRAY_COMPRESS_DEFAULT),
+        DEFVAL(Ref<GLTFState>())
+    );
 }
 
-Node *PackedSceneGLTF::import_scene(const String &p_path, uint32_t p_flags,
-        int p_bake_fps, uint32_t p_compress_flags,
-        List<String> *r_missing_deps,
-        Error *r_err,
-        Ref<GLTFState> r_state) {
+Node* PackedSceneGLTF::import_gltf_scene(
+    const String& p_path,
+    uint32_t p_flags,
+    float p_bake_fps,
+    uint32_t p_compress_flags,
+    Ref<GLTFState> r_state
+) {
+    Error err = FAILED;
+    List<String> deps;
+    return import_scene(
+        p_path,
+        p_flags,
+        p_bake_fps,
+        p_compress_flags,
+        &deps,
+        &err,
+        r_state
+    );
+}
+
+Node* PackedSceneGLTF::import_scene(
+    const String& p_path,
+    uint32_t p_flags,
+    int p_bake_fps,
+    uint32_t p_compress_flags,
+    List<String>* r_missing_deps,
+    Error* r_err,
+    Ref<GLTFState> r_state
+) {
     if (r_state == Ref<GLTFState>()) {
         r_state.instance();
     }
     r_state->use_named_skin_binds =
-            p_flags & EditorSceneImporter::IMPORT_USE_NAMED_SKIN_BINDS;
+        p_flags & EditorSceneImporter::IMPORT_USE_NAMED_SKIN_BINDS;
     r_state->use_legacy_names =
-            p_flags & EditorSceneImporter::IMPORT_USE_LEGACY_NAMES;
+        p_flags & EditorSceneImporter::IMPORT_USE_LEGACY_NAMES;
     r_state->compress_flags = p_compress_flags;
 
     Ref<GLTFDocument> gltf_document;
@@ -105,18 +167,25 @@ Node *PackedSceneGLTF::import_scene(const String &p_path, uint32_t p_flags,
     *r_err = err;
     ERR_FAIL_COND_V(err != Error::OK, nullptr);
 
-    Spatial *root = memnew(Spatial);
+    Spatial* root = memnew(Spatial);
     if (r_state->use_legacy_names) {
-        root->set_name(gltf_document->_legacy_validate_node_name(r_state->scene_name));
+        root->set_name(
+            gltf_document->_legacy_validate_node_name(r_state->scene_name)
+        );
     } else {
         root->set_name(r_state->scene_name);
     }
     for (int32_t root_i = 0; root_i < r_state->root_nodes.size(); root_i++) {
-        gltf_document->_generate_scene_node(r_state, root, root, r_state->root_nodes[root_i]);
+        gltf_document->_generate_scene_node(
+            r_state,
+            root,
+            root,
+            r_state->root_nodes[root_i]
+        );
     }
     gltf_document->_process_mesh_instances(r_state, root);
     if (r_state->animations.size()) {
-        AnimationPlayer *ap = memnew(AnimationPlayer);
+        AnimationPlayer* ap = memnew(AnimationPlayer);
         root->add_child(ap);
         ap->set_owner(root);
         for (int i = 0; i < r_state->animations.size(); i++) {
@@ -127,19 +196,37 @@ Node *PackedSceneGLTF::import_scene(const String &p_path, uint32_t p_flags,
     return cast_to<Spatial>(root);
 }
 
-void PackedSceneGLTF::pack_gltf(String p_path, int32_t p_flags,
-        real_t p_bake_fps, uint32_t p_compress_flags, Ref<GLTFState> r_state) {
+void PackedSceneGLTF::pack_gltf(
+    String p_path,
+    int32_t p_flags,
+    real_t p_bake_fps,
+    uint32_t p_compress_flags,
+    Ref<GLTFState> r_state
+) {
     Error err = FAILED;
     List<String> deps;
-    Node *root = import_scene(p_path, p_flags, p_bake_fps, p_compress_flags, &deps, &err, r_state);
+    Node* root = import_scene(
+        p_path,
+        p_flags,
+        p_bake_fps,
+        p_compress_flags,
+        &deps,
+        &err,
+        r_state
+    );
     ERR_FAIL_COND(err != OK);
     pack(root);
 }
 
-void PackedSceneGLTF::save_scene(Node *p_node, const String &p_path,
-        const String &p_src_path, uint32_t p_flags,
-        int p_bake_fps, List<String> *r_missing_deps,
-        Error *r_err) {
+void PackedSceneGLTF::save_scene(
+    Node* p_node,
+    const String& p_path,
+    const String& p_src_path,
+    uint32_t p_flags,
+    int p_bake_fps,
+    List<String>* r_missing_deps,
+    Error* r_err
+) {
     Error err = FAILED;
     if (r_err) {
         *r_err = err;
@@ -168,9 +255,12 @@ void PackedSceneGLTF::_build_parent_hierachy(Ref<GLTFState> state) {
     }
 }
 
-Error PackedSceneGLTF::export_gltf(Node *p_root, String p_path,
-        int32_t p_flags,
-        real_t p_bake_fps) {
+Error PackedSceneGLTF::export_gltf(
+    Node* p_root,
+    String p_path,
+    int32_t p_flags,
+    real_t p_bake_fps
+) {
     ERR_FAIL_COND_V(!p_root, FAILED);
     List<String> deps;
     Error err;

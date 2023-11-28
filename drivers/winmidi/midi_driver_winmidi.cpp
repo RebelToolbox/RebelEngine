@@ -34,9 +34,15 @@
 
 #include "core/print_string.h"
 
-void MIDIDriverWinMidi::read(HMIDIIN hMidiIn, UINT wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2) {
+void MIDIDriverWinMidi::read(
+    HMIDIIN hMidiIn,
+    UINT wMsg,
+    DWORD_PTR dwInstance,
+    DWORD_PTR dwParam1,
+    DWORD_PTR dwParam2
+) {
     if (wMsg == MIM_DATA) {
-        receive_input_packet((uint64_t)dwParam2, (uint8_t *)&dwParam1, 3);
+        receive_input_packet((uint64_t)dwParam2, (uint8_t*)&dwParam1, 3);
     }
 }
 
@@ -44,7 +50,13 @@ Error MIDIDriverWinMidi::open() {
     for (UINT i = 0; i < midiInGetNumDevs(); i++) {
         HMIDIIN midi_in;
 
-        MMRESULT res = midiInOpen(&midi_in, i, (DWORD_PTR)read, (DWORD_PTR)this, CALLBACK_FUNCTION);
+        MMRESULT res = midiInOpen(
+            &midi_in,
+            i,
+            (DWORD_PTR)read,
+            (DWORD_PTR)this,
+            CALLBACK_FUNCTION
+        );
         if (res == MMSYSERR_NOERROR) {
             midiInStart(midi_in);
             connected_sources.insert(i, midi_in);
@@ -56,7 +68,10 @@ Error MIDIDriverWinMidi::open() {
             MIDIINCAPS caps;
             res = midiInGetDevCaps(i, &caps, sizeof(MIDIINCAPS));
             if (res == MMSYSERR_NOERROR) {
-                ERR_PRINT("Can't open MIDI device \"" + String(caps.szPname) + "\", is it being used by another application?");
+                ERR_PRINT(
+                    "Can't open MIDI device \"" + String(caps.szPname)
+                    + "\", is it being used by another application?"
+                );
             }
         }
     }
@@ -92,8 +107,7 @@ void MIDIDriverWinMidi::close() {
     connected_sources.clear();
 }
 
-MIDIDriverWinMidi::MIDIDriverWinMidi() {
-}
+MIDIDriverWinMidi::MIDIDriverWinMidi() {}
 
 MIDIDriverWinMidi::~MIDIDriverWinMidi() {
     close();

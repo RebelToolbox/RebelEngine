@@ -60,8 +60,14 @@ struct CSGBrush {
     inline void _regen_face_aabbs();
 
     // Create a brush from faces.
-    void build_from_faces(const PoolVector<Vector3> &p_vertices, const PoolVector<Vector2> &p_uvs, const PoolVector<bool> &p_smooth, const PoolVector<Ref<Material>> &p_materials, const PoolVector<bool> &p_invert_faces);
-    void copy_from(const CSGBrush &p_brush, const Transform &p_xform);
+    void build_from_faces(
+        const PoolVector<Vector3>& p_vertices,
+        const PoolVector<Vector2>& p_uvs,
+        const PoolVector<bool>& p_smooth,
+        const PoolVector<Ref<Material>>& p_materials,
+        const PoolVector<bool>& p_invert_faces
+    );
+    void copy_from(const CSGBrush& p_brush, const Transform& p_xform);
 };
 
 struct CSGBrushOperation {
@@ -71,7 +77,13 @@ struct CSGBrushOperation {
         OPERATION_SUBTRACTION,
     };
 
-    void merge_brushes(Operation p_operation, const CSGBrush &p_brush_a, const CSGBrush &p_brush_b, CSGBrush &r_merged_brush, float p_vertex_snap);
+    void merge_brushes(
+        Operation p_operation,
+        const CSGBrush& p_brush_a,
+        const CSGBrush& p_brush_b,
+        CSGBrush& r_merged_brush,
+        float p_vertex_snap
+    );
 
     struct MeshMerge {
         struct Face {
@@ -94,25 +106,36 @@ struct CSGBrushOperation {
         };
 
         struct FaceBVHCmpX {
-            _FORCE_INLINE_ bool operator()(const FaceBVH *p_left, const FaceBVH *p_right) const {
+            _FORCE_INLINE_ bool operator()(
+                const FaceBVH* p_left,
+                const FaceBVH* p_right
+            ) const {
                 return p_left->center.x < p_right->center.x;
             }
         };
 
         struct FaceBVHCmpY {
-            _FORCE_INLINE_ bool operator()(const FaceBVH *p_left, const FaceBVH *p_right) const {
+            _FORCE_INLINE_ bool operator()(
+                const FaceBVH* p_left,
+                const FaceBVH* p_right
+            ) const {
                 return p_left->center.y < p_right->center.y;
             }
         };
+
         struct FaceBVHCmpZ {
-            _FORCE_INLINE_ bool operator()(const FaceBVH *p_left, const FaceBVH *p_right) const {
+            _FORCE_INLINE_ bool operator()(
+                const FaceBVH* p_left,
+                const FaceBVH* p_right
+            ) const {
                 return p_left->center.z < p_right->center.z;
             }
         };
 
         struct VertexKey {
             int32_t x, y, z;
-            _FORCE_INLINE_ bool operator<(const VertexKey &p_key) const {
+
+            _FORCE_INLINE_ bool operator<(const VertexKey& p_key) const {
                 if (x == p_key.x) {
                     if (y == p_key.y) {
                         return z < p_key.z;
@@ -124,13 +147,13 @@ struct CSGBrushOperation {
                 }
             }
 
-            _FORCE_INLINE_ bool operator==(const VertexKey &p_key) const {
+            _FORCE_INLINE_ bool operator==(const VertexKey& p_key) const {
                 return (x == p_key.x && y == p_key.y && z == p_key.z);
             }
         };
 
         struct VertexKeyHash {
-            static _FORCE_INLINE_ uint32_t hash(const VertexKey &p_vk) {
+            static _FORCE_INLINE_ uint32_t hash(const VertexKey& p_vk) {
                 uint32_t h = hash_djb2_one_32(p_vk.x);
                 h = hash_djb2_one_32(p_vk.y, h);
                 h = hash_djb2_one_32(p_vk.z, h);
@@ -145,11 +168,36 @@ struct CSGBrushOperation {
         OAHashMap<VertexKey, int, VertexKeyHash> snap_cache;
         float vertex_snap;
 
-        inline void _add_distance(List<real_t> &r_intersectionsA, List<real_t> &r_intersectionsB, bool p_from_B, real_t p_distance) const;
-        inline bool _bvh_inside(FaceBVH *facebvhptr, int p_max_depth, int p_bvh_first, int p_face_idx) const;
-        inline int _create_bvh(FaceBVH *facebvhptr, FaceBVH **facebvhptrptr, int p_from, int p_size, int p_depth, int &r_max_depth, int &r_max_alloc);
+        inline void _add_distance(
+            List<real_t>& r_intersectionsA,
+            List<real_t>& r_intersectionsB,
+            bool p_from_B,
+            real_t p_distance
+        ) const;
+        inline bool _bvh_inside(
+            FaceBVH* facebvhptr,
+            int p_max_depth,
+            int p_bvh_first,
+            int p_face_idx
+        ) const;
+        inline int _create_bvh(
+            FaceBVH* facebvhptr,
+            FaceBVH** facebvhptrptr,
+            int p_from,
+            int p_size,
+            int p_depth,
+            int& r_max_depth,
+            int& r_max_alloc
+        );
 
-        void add_face(const Vector3 p_points[3], const Vector2 p_uvs[3], bool p_smooth, bool p_invert, const Ref<Material> &p_material, bool p_from_b);
+        void add_face(
+            const Vector3 p_points[3],
+            const Vector2 p_uvs[3],
+            bool p_smooth,
+            bool p_invert,
+            const Ref<Material>& p_material,
+            bool p_from_b
+        );
         void mark_inside_faces();
     };
 
@@ -170,18 +218,35 @@ struct CSGBrushOperation {
         Transform to_3D;
         float vertex_snap2;
 
-        inline int _get_point_idx(const Vector2 &p_point);
-        inline int _add_vertex(const Vertex2D &p_vertex);
-        inline void _add_vertex_idx_sorted(Vector<int> &r_vertex_indices, int p_new_vertex_index);
-        inline void _merge_faces(const Vector<int> &p_segment_indices);
-        inline void _find_edge_intersections(const Vector2 p_segment_points[2], Vector<int> &r_segment_indices);
-        inline int _insert_point(const Vector2 &p_point);
+        inline int _get_point_idx(const Vector2& p_point);
+        inline int _add_vertex(const Vertex2D& p_vertex);
+        inline void _add_vertex_idx_sorted(
+            Vector<int>& r_vertex_indices,
+            int p_new_vertex_index
+        );
+        inline void _merge_faces(const Vector<int>& p_segment_indices);
+        inline void _find_edge_intersections(
+            const Vector2 p_segment_points[2],
+            Vector<int>& r_segment_indices
+        );
+        inline int _insert_point(const Vector2& p_point);
 
-        void insert(const CSGBrush &p_brush, int p_brush_face);
-        void addFacesToMesh(MeshMerge &r_mesh_merge, bool p_smooth, bool p_invert, const Ref<Material> &p_material, bool p_from_b);
+        void insert(const CSGBrush& p_brush, int p_brush_face);
+        void addFacesToMesh(
+            MeshMerge& r_mesh_merge,
+            bool p_smooth,
+            bool p_invert,
+            const Ref<Material>& p_material,
+            bool p_from_b
+        );
 
         Build2DFaces() {}
-        Build2DFaces(const CSGBrush &p_brush, int p_brush_face, float p_vertex_snap2);
+
+        Build2DFaces(
+            const CSGBrush& p_brush,
+            int p_brush_face,
+            float p_vertex_snap2
+        );
     };
 
     struct Build2DFaceCollection {
@@ -189,7 +254,14 @@ struct CSGBrushOperation {
         Map<int, Build2DFaces> build2DFacesB;
     };
 
-    void update_faces(const CSGBrush &p_brush_a, const int p_face_idx_a, const CSGBrush &p_brush_b, const int p_face_idx_b, Build2DFaceCollection &p_collection, float p_vertex_snap);
+    void update_faces(
+        const CSGBrush& p_brush_a,
+        const int p_face_idx_a,
+        const CSGBrush& p_brush_b,
+        const int p_face_idx_b,
+        Build2DFaceCollection& p_collection,
+        float p_vertex_snap
+    );
 };
 
 #endif // CSG_H

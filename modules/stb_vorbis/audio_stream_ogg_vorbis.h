@@ -41,7 +41,7 @@ class AudioStreamOGGVorbis;
 class AudioStreamPlaybackOGGVorbis : public AudioStreamPlaybackResampled {
     GDCLASS(AudioStreamPlaybackOGGVorbis, AudioStreamPlaybackResampled);
 
-    stb_vorbis *ogg_stream;
+    stb_vorbis* ogg_stream;
     stb_vorbis_alloc ogg_alloc;
     uint32_t frames_mixed;
     bool active;
@@ -52,7 +52,7 @@ class AudioStreamPlaybackOGGVorbis : public AudioStreamPlaybackResampled {
     Ref<AudioStreamOGGVorbis> vorbis_stream;
 
 protected:
-    virtual void _mix_internal(AudioFrame *p_buffer, int p_frames);
+    virtual void _mix_internal(AudioFrame* p_buffer, int p_frames);
     virtual float get_stream_sampling_rate();
 
 public:
@@ -60,23 +60,25 @@ public:
     virtual void stop();
     virtual bool is_playing() const;
 
-    virtual int get_loop_count() const; //times it looped
+    virtual int get_loop_count() const; // times it looped
 
     virtual float get_playback_position() const;
     virtual void seek(float p_time);
 
     AudioStreamPlaybackOGGVorbis() {}
+
     ~AudioStreamPlaybackOGGVorbis();
 };
 
 class AudioStreamOGGVorbis : public AudioStream {
     GDCLASS(AudioStreamOGGVorbis, AudioStream);
-    OBJ_SAVE_TYPE(AudioStream); // Saves derived classes with common type so they can be interchanged.
+    OBJ_SAVE_TYPE(AudioStream
+    ); // Saves derived classes with common type so they can be interchanged.
     RES_BASE_EXTENSION("oggstr");
 
     friend class AudioStreamPlaybackOGGVorbis;
 
-    void *data;
+    void* data;
     uint32_t data_len;
 
     int decode_mem_size;
@@ -100,10 +102,10 @@ public:
     virtual Ref<AudioStreamPlayback> instance_playback();
     virtual String get_stream_name() const;
 
-    void set_data(const PoolVector<uint8_t> &p_data);
+    void set_data(const PoolVector<uint8_t>& p_data);
     PoolVector<uint8_t> get_data() const;
 
-    virtual float get_length() const; //if supported, otherwise return 0
+    virtual float get_length() const; // if supported, otherwise return 0
 
     AudioStreamOGGVorbis();
     virtual ~AudioStreamOGGVorbis();

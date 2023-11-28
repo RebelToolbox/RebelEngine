@@ -43,17 +43,18 @@ void BoxContainer::_resort() {
 
     Size2i new_size = get_size();
 
-    int sep = get_constant("separation"); //,vertical?"VBoxContainer":"HBoxContainer");
+    int sep = get_constant("separation"
+    ); //,vertical?"VBoxContainer":"HBoxContainer");
 
     bool first = true;
     int children_count = 0;
     int stretch_min = 0;
     int stretch_avail = 0;
     float stretch_ratio_total = 0;
-    Map<Control *, _MinSizeCache> min_size_cache;
+    Map<Control*, _MinSizeCache> min_size_cache;
 
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c || !c->is_visible_in_tree()) {
             continue;
         }
@@ -88,26 +89,28 @@ void BoxContainer::_resort() {
         return;
     }
 
-    int stretch_max = (vertical ? new_size.height : new_size.width) - (children_count - 1) * sep;
+    int stretch_max = (vertical ? new_size.height : new_size.width)
+                    - (children_count - 1) * sep;
     int stretch_diff = stretch_max - stretch_min;
     if (stretch_diff < 0) {
-        //avoid negative stretch space
+        // avoid negative stretch space
         stretch_diff = 0;
     }
 
-    stretch_avail += stretch_diff; //available stretch space.
-    /** Second, pass successively to discard elements that can't be stretched, this will run while stretchable
-        elements exist */
+    stretch_avail += stretch_diff; // available stretch space.
+    /** Second, pass successively to discard elements that can't be stretched,
+       this will run while stretchable elements exist */
 
     bool has_stretched = false;
-    while (stretch_ratio_total > 0) { // first of all, don't even be here if no stretchable objects exist
+    while (stretch_ratio_total > 0
+    ) { // first of all, don't even be here if no stretchable objects exist
 
         has_stretched = true;
-        bool refit_successful = true; //assume refit-test will go well
+        bool refit_successful = true; // assume refit-test will go well
         float error = 0; // Keep track of accumulated error in pixels
 
         for (int i = 0; i < get_child_count(); i++) {
-            Control *c = Object::cast_to<Control>(get_child(i));
+            Control* c = Object::cast_to<Control>(get_child(i));
             if (!c || !c->is_visible_in_tree()) {
                 continue;
             }
@@ -116,16 +119,17 @@ void BoxContainer::_resort() {
             }
 
             ERR_FAIL_COND(!min_size_cache.has(c));
-            _MinSizeCache &msc = min_size_cache[c];
+            _MinSizeCache& msc = min_size_cache[c];
 
-            if (msc.will_stretch) { //wants to stretch
-                //let's see if it can really stretch
-                float final_pixel_size = stretch_avail * c->get_stretch_ratio() / stretch_ratio_total;
+            if (msc.will_stretch) { // wants to stretch
+                // let's see if it can really stretch
+                float final_pixel_size = stretch_avail * c->get_stretch_ratio()
+                                       / stretch_ratio_total;
                 // Add leftover fractional pixels to error accumulator
                 error += final_pixel_size - (int)final_pixel_size;
                 if (final_pixel_size < msc.min_size) {
-                    //if available stretching area is too small for widget,
-                    //then remove it from stretching area
+                    // if available stretching area is too small for widget,
+                    // then remove it from stretching area
                     msc.will_stretch = false;
                     stretch_ratio_total -= c->get_stretch_ratio();
                     refit_successful = false;
@@ -143,7 +147,7 @@ void BoxContainer::_resort() {
             }
         }
 
-        if (refit_successful) { //uf refit went well, break
+        if (refit_successful) { // uf refit went well, break
             break;
         }
     }
@@ -168,7 +172,7 @@ void BoxContainer::_resort() {
     int idx = 0;
 
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c || !c->is_visible_in_tree()) {
             continue;
         }
@@ -176,7 +180,7 @@ void BoxContainer::_resort() {
             continue;
         }
 
-        _MinSizeCache &msc = min_size_cache[c];
+        _MinSizeCache& msc = min_size_cache[c];
 
         if (first) {
             first = false;
@@ -188,8 +192,8 @@ void BoxContainer::_resort() {
         int to = ofs + msc.final_size;
 
         if (msc.will_stretch && idx == children_count - 1) {
-            //adjust so the last one always fits perfect
-            //compensating for numerical imprecision
+            // adjust so the last one always fits perfect
+            // compensating for numerical imprecision
 
             to = vertical ? new_size.height : new_size.width;
         }
@@ -215,12 +219,13 @@ Size2 BoxContainer::get_minimum_size() const {
     /* Calculate MINIMUM SIZE */
 
     Size2i minimum;
-    int sep = get_constant("separation"); //,vertical?"VBoxContainer":"HBoxContainer");
+    int sep = get_constant("separation"
+    ); //,vertical?"VBoxContainer":"HBoxContainer");
 
     bool first = true;
 
     for (int i = 0; i < get_child_count(); i++) {
-        Control *c = Object::cast_to<Control>(get_child(i));
+        Control* c = Object::cast_to<Control>(get_child(i));
         if (!c) {
             continue;
         }
@@ -278,8 +283,8 @@ BoxContainer::AlignMode BoxContainer::get_alignment() const {
 }
 
 void BoxContainer::add_spacer(bool p_begin) {
-    Control *c = memnew(Control);
-    c->set_mouse_filter(MOUSE_FILTER_PASS); //allow spacer to pass mouse events
+    Control* c = memnew(Control);
+    c->set_mouse_filter(MOUSE_FILTER_PASS); // allow spacer to pass mouse events
 
     if (vertical) {
         c->set_v_size_flags(SIZE_EXPAND_FILL);
@@ -296,27 +301,49 @@ void BoxContainer::add_spacer(bool p_begin) {
 BoxContainer::BoxContainer(bool p_vertical) {
     vertical = p_vertical;
     align = ALIGN_BEGIN;
-    //set_ignore_mouse(true);
+    // set_ignore_mouse(true);
     set_mouse_filter(MOUSE_FILTER_PASS);
 }
 
 void BoxContainer::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("add_spacer", "begin"), &BoxContainer::add_spacer);
-    ClassDB::bind_method(D_METHOD("get_alignment"), &BoxContainer::get_alignment);
-    ClassDB::bind_method(D_METHOD("set_alignment", "alignment"), &BoxContainer::set_alignment);
+    ClassDB::bind_method(
+        D_METHOD("add_spacer", "begin"),
+        &BoxContainer::add_spacer
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_alignment"),
+        &BoxContainer::get_alignment
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_alignment", "alignment"),
+        &BoxContainer::set_alignment
+    );
 
     BIND_ENUM_CONSTANT(ALIGN_BEGIN);
     BIND_ENUM_CONSTANT(ALIGN_CENTER);
     BIND_ENUM_CONSTANT(ALIGN_END);
 
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "alignment", PROPERTY_HINT_ENUM, "Begin,Center,End"), "set_alignment", "get_alignment");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "alignment",
+            PROPERTY_HINT_ENUM,
+            "Begin,Center,End"
+        ),
+        "set_alignment",
+        "get_alignment"
+    );
 }
 
-MarginContainer *VBoxContainer::add_margin_child(const String &p_label, Control *p_control, bool p_expand) {
-    Label *l = memnew(Label);
+MarginContainer* VBoxContainer::add_margin_child(
+    const String& p_label,
+    Control* p_control,
+    bool p_expand
+) {
+    Label* l = memnew(Label);
     l->set_text(p_label);
     add_child(l);
-    MarginContainer *mc = memnew(MarginContainer);
+    MarginContainer* mc = memnew(MarginContainer);
     mc->add_constant_override("margin_left", 0);
     mc->add_child(p_control);
     add_child(mc);

@@ -42,17 +42,22 @@
 // - No automatic conversions or arithmetic operators,
 //   to keep explicit the use of atomics everywhere.
 // - Using acquire-release semantics, even to set the first value.
-//   The first value may be set relaxedly in many cases, but adding the distinction
-//   between relaxed and unrelaxed operation to the interface would make it needlessly
-//   flexible. There's negligible waste in having release semantics for the initial
-//   value and, as an important benefit, you can be sure the value is properly synchronized
-//   even with threads that are already running.
+//   The first value may be set relaxedly in many cases, but adding the
+//   distinction between relaxed and unrelaxed operation to the interface would
+//   make it needlessly flexible. There's negligible waste in having release
+//   semantics for the initial value and, as an important benefit, you can be
+//   sure the value is properly synchronized even with threads that are already
+//   running.
 
-// This is used in very specific areas of the engine where it's critical that these guarantees are held
-#define SAFE_NUMERIC_TYPE_PUN_GUARANTEES(m_type)                        \
-    static_assert(sizeof(SafeNumeric<m_type>) == sizeof(m_type), "");   \
-    static_assert(alignof(SafeNumeric<m_type>) == alignof(m_type), ""); \
-    static_assert(std::is_trivially_destructible<std::atomic<m_type>>::value, "");
+// This is used in very specific areas of the engine where it's critical that
+// these guarantees are held
+#define SAFE_NUMERIC_TYPE_PUN_GUARANTEES(m_type)                               \
+    static_assert(sizeof(SafeNumeric<m_type>) == sizeof(m_type), "");          \
+    static_assert(alignof(SafeNumeric<m_type>) == alignof(m_type), "");        \
+    static_assert(                                                             \
+        std::is_trivially_destructible<std::atomic<m_type>>::value,            \
+        ""                                                                     \
+    );
 
 #if defined(DEBUG_ENABLED)
 void check_lockless_atomics();
@@ -113,7 +118,11 @@ public:
             if (tmp >= p_value) {
                 return tmp; // already greater, or equal
             }
-            if (value.compare_exchange_weak(tmp, p_value, std::memory_order_acq_rel)) {
+            if (value.compare_exchange_weak(
+                    tmp,
+                    p_value,
+                    std::memory_order_acq_rel
+                )) {
                 return p_value;
             }
         }
@@ -125,7 +134,11 @@ public:
             if (c == 0) {
                 return 0;
             }
-            if (value.compare_exchange_weak(c, c + 1, std::memory_order_acq_rel)) {
+            if (value.compare_exchange_weak(
+                    c,
+                    c + 1,
+                    std::memory_order_acq_rel
+                )) {
                 return c + 1;
             }
         }
@@ -258,8 +271,7 @@ public:
     }
 
     _ALWAYS_INLINE_ explicit SafeNumeric<T>(T p_value = static_cast<T>(0)) :
-            value(p_value) {
-    }
+        value(p_value) {}
 };
 
 class SafeFlag {
@@ -283,8 +295,7 @@ public:
         flag = p_value;
     }
 
-    _ALWAYS_INLINE_ explicit SafeFlag(bool p_value = false) :
-            flag(p_value) {}
+    _ALWAYS_INLINE_ explicit SafeFlag(bool p_value = false) : flag(p_value) {}
 };
 
 class SafeRefCount {
@@ -324,8 +335,7 @@ public:
         count = p_value;
     }
 
-    SafeRefCount() :
-            count(0) {}
+    SafeRefCount() : count(0) {}
 };
 
 #endif

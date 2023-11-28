@@ -36,14 +36,15 @@ real_t AABB::get_area() const {
     return size.x * size.y * size.z;
 }
 
-bool AABB::operator==(const AABB &p_rval) const {
+bool AABB::operator==(const AABB& p_rval) const {
     return ((position == p_rval.position) && (size == p_rval.size));
 }
-bool AABB::operator!=(const AABB &p_rval) const {
+
+bool AABB::operator!=(const AABB& p_rval) const {
     return ((position != p_rval.position) || (size != p_rval.size));
 }
 
-bool AABB::create_from_points(const Vector<Vector3> &p_points) {
+bool AABB::create_from_points(const Vector<Vector3>& p_points) {
     if (!p_points.size()) {
         return false;
     }
@@ -52,7 +53,7 @@ bool AABB::create_from_points(const Vector<Vector3> &p_points) {
     Vector3 end = begin;
 
     for (int n = 1; n < p_points.size(); n++) {
-        const Vector3 &pt = p_points[n];
+        const Vector3& pt = p_points[n];
 
         if (pt.x < begin.x) {
             begin.x = pt.x;
@@ -81,7 +82,7 @@ bool AABB::create_from_points(const Vector<Vector3> &p_points) {
     return true;
 }
 
-void AABB::merge_with(const AABB &p_aabb) {
+void AABB::merge_with(const AABB& p_aabb) {
     Vector3 beg_1, beg_2;
     Vector3 end_1, end_2;
     Vector3 min, max;
@@ -103,11 +104,12 @@ void AABB::merge_with(const AABB &p_aabb) {
     size = max - min;
 }
 
-bool AABB::is_equal_approx(const AABB &p_aabb) const {
-    return position.is_equal_approx(p_aabb.position) && size.is_equal_approx(p_aabb.size);
+bool AABB::is_equal_approx(const AABB& p_aabb) const {
+    return position.is_equal_approx(p_aabb.position)
+        && size.is_equal_approx(p_aabb.size);
 }
 
-AABB AABB::intersection(const AABB &p_aabb) const {
+AABB AABB::intersection(const AABB& p_aabb) const {
     Vector3 src_min = position;
     Vector3 src_max = position + size;
     Vector3 dst_min = p_aabb.position;
@@ -139,7 +141,12 @@ AABB AABB::intersection(const AABB &p_aabb) const {
     return AABB(min, max - min);
 }
 
-bool AABB::intersects_ray(const Vector3 &p_from, const Vector3 &p_dir, Vector3 *r_clip, Vector3 *r_normal) const {
+bool AABB::intersects_ray(
+    const Vector3& p_from,
+    const Vector3& p_dir,
+    Vector3* r_clip,
+    Vector3* r_normal
+) const {
     Vector3 c1, c2;
     Vector3 end = position + size;
     real_t near = -1e20;
@@ -182,7 +189,12 @@ bool AABB::intersects_ray(const Vector3 &p_from, const Vector3 &p_dir, Vector3 *
     return true;
 }
 
-bool AABB::intersects_segment(const Vector3 &p_from, const Vector3 &p_to, Vector3 *r_clip, Vector3 *r_normal) const {
+bool AABB::intersects_segment(
+    const Vector3& p_from,
+    const Vector3& p_to,
+    Vector3* r_clip,
+    Vector3* r_normal
+) const {
     real_t min = 0, max = 1;
     int axis = 0;
     real_t sign = 0;
@@ -200,7 +212,8 @@ bool AABB::intersects_segment(const Vector3 &p_from, const Vector3 &p_to, Vector
                 return false;
             }
             real_t length = seg_to - seg_from;
-            cmin = (seg_from < box_begin) ? ((box_begin - seg_from) / length) : 0;
+            cmin =
+                (seg_from < box_begin) ? ((box_begin - seg_from) / length) : 0;
             cmax = (seg_to > box_end) ? ((box_end - seg_from) / length) : 1;
             csign = -1.0;
 
@@ -242,7 +255,7 @@ bool AABB::intersects_segment(const Vector3 &p_from, const Vector3 &p_to, Vector
     return true;
 }
 
-bool AABB::intersects_plane(const Plane &p_plane) const {
+bool AABB::intersects_plane(const Plane& p_plane) const {
     Vector3 points[8] = {
         Vector3(position.x, position.y, position.z),
         Vector3(position.x, position.y, position.z + size.z),
@@ -283,6 +296,7 @@ Vector3 AABB::get_longest_axis() const {
 
     return axis;
 }
+
 int AABB::get_longest_axis_index() const {
     int axis = 0;
     real_t max_size = size.x;
@@ -314,6 +328,7 @@ Vector3 AABB::get_shortest_axis() const {
 
     return axis;
 }
+
 int AABB::get_shortest_axis_index() const {
     int axis = 0;
     real_t max_size = size.x;
@@ -330,23 +345,25 @@ int AABB::get_shortest_axis_index() const {
     return axis;
 }
 
-AABB AABB::merge(const AABB &p_with) const {
+AABB AABB::merge(const AABB& p_with) const {
     AABB aabb = *this;
     aabb.merge_with(p_with);
     return aabb;
 }
-AABB AABB::expand(const Vector3 &p_vector) const {
+
+AABB AABB::expand(const Vector3& p_vector) const {
     AABB aabb = *this;
     aabb.expand_to(p_vector);
     return aabb;
 }
+
 AABB AABB::grow(real_t p_by) const {
     AABB aabb = *this;
     aabb.grow_by(p_by);
     return aabb;
 }
 
-void AABB::get_edge(int p_edge, Vector3 &r_from, Vector3 &r_to) const {
+void AABB::get_edge(int p_edge, Vector3& r_from, Vector3& r_to) const {
     ERR_FAIL_INDEX(p_edge, 12);
     switch (p_edge) {
         case 0: {
@@ -354,12 +371,14 @@ void AABB::get_edge(int p_edge, Vector3 &r_from, Vector3 &r_to) const {
             r_to = Vector3(position.x, position.y, position.z);
         } break;
         case 1: {
-            r_from = Vector3(position.x + size.x, position.y, position.z + size.z);
+            r_from =
+                Vector3(position.x + size.x, position.y, position.z + size.z);
             r_to = Vector3(position.x + size.x, position.y, position.z);
         } break;
         case 2: {
             r_from = Vector3(position.x, position.y, position.z + size.z);
-            r_to = Vector3(position.x + size.x, position.y, position.z + size.z);
+            r_to =
+                Vector3(position.x + size.x, position.y, position.z + size.z);
 
         } break;
         case 3: {
@@ -369,25 +388,38 @@ void AABB::get_edge(int p_edge, Vector3 &r_from, Vector3 &r_to) const {
         } break;
         case 4: {
             r_from = Vector3(position.x, position.y + size.y, position.z);
-            r_to = Vector3(position.x + size.x, position.y + size.y, position.z);
+            r_to =
+                Vector3(position.x + size.x, position.y + size.y, position.z);
         } break;
         case 5: {
-            r_from = Vector3(position.x + size.x, position.y + size.y, position.z);
-            r_to = Vector3(position.x + size.x, position.y + size.y, position.z + size.z);
+            r_from =
+                Vector3(position.x + size.x, position.y + size.y, position.z);
+            r_to = Vector3(
+                position.x + size.x,
+                position.y + size.y,
+                position.z + size.z
+            );
         } break;
         case 6: {
-            r_from = Vector3(position.x + size.x, position.y + size.y, position.z + size.z);
-            r_to = Vector3(position.x, position.y + size.y, position.z + size.z);
+            r_from = Vector3(
+                position.x + size.x,
+                position.y + size.y,
+                position.z + size.z
+            );
+            r_to =
+                Vector3(position.x, position.y + size.y, position.z + size.z);
 
         } break;
         case 7: {
-            r_from = Vector3(position.x, position.y + size.y, position.z + size.z);
+            r_from =
+                Vector3(position.x, position.y + size.y, position.z + size.z);
             r_to = Vector3(position.x, position.y + size.y, position.z);
 
         } break;
         case 8: {
             r_from = Vector3(position.x, position.y, position.z + size.z);
-            r_to = Vector3(position.x, position.y + size.y, position.z + size.z);
+            r_to =
+                Vector3(position.x, position.y + size.y, position.z + size.z);
 
         } break;
         case 9: {
@@ -397,12 +429,18 @@ void AABB::get_edge(int p_edge, Vector3 &r_from, Vector3 &r_to) const {
         } break;
         case 10: {
             r_from = Vector3(position.x + size.x, position.y, position.z);
-            r_to = Vector3(position.x + size.x, position.y + size.y, position.z);
+            r_to =
+                Vector3(position.x + size.x, position.y + size.y, position.z);
 
         } break;
         case 11: {
-            r_from = Vector3(position.x + size.x, position.y, position.z + size.z);
-            r_to = Vector3(position.x + size.x, position.y + size.y, position.z + size.z);
+            r_from =
+                Vector3(position.x + size.x, position.y, position.z + size.z);
+            r_to = Vector3(
+                position.x + size.x,
+                position.y + size.y,
+                position.z + size.z
+            );
 
         } break;
     }

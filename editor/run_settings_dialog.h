@@ -46,8 +46,8 @@ public:
     };
 
 private:
-    OptionButton *run_mode;
-    LineEdit *arguments;
+    OptionButton* run_mode;
+    LineEdit* arguments;
 
     void _run_mode_changed(int idx);
 
@@ -58,7 +58,7 @@ public:
     int get_run_mode() const;
     void set_run_mode(int p_run_mode);
 
-    void set_custom_arguments(const String &p_arguments);
+    void set_custom_arguments(const String& p_arguments);
     String get_custom_arguments() const;
 
     void popup_run_settings();

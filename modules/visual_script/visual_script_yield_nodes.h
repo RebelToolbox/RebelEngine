@@ -42,7 +42,6 @@ public:
         YIELD_FRAME,
         YIELD_PHYSICS_FRAME,
         YIELD_WAIT
-
     };
 
 private:
@@ -50,7 +49,7 @@ private:
     float wait_time;
 
 protected:
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
     static void _bind_methods();
 
@@ -68,7 +67,10 @@ public:
 
     virtual String get_caption() const;
     virtual String get_text() const;
-    virtual String get_category() const { return "functions"; }
+
+    virtual String get_category() const {
+        return "functions";
+    }
 
     void set_yield_mode(YieldMode p_mode);
     YieldMode get_yield_mode();
@@ -76,7 +78,8 @@ public:
     void set_wait_time(float p_time);
     float get_wait_time();
 
-    virtual VisualScriptNodeInstance *instance(VisualScriptInstance *p_instance);
+    virtual VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    );
 
     VisualScriptYield();
 };
@@ -90,7 +93,6 @@ public:
         CALL_MODE_SELF,
         CALL_MODE_NODE_PATH,
         CALL_MODE_INSTANCE,
-
     };
 
 private:
@@ -99,11 +101,11 @@ private:
     NodePath base_path;
     StringName signal;
 
-    Node *_get_base_node() const;
+    Node* _get_base_node() const;
     StringName _get_base_type() const;
 
 protected:
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
 
     static void _bind_methods();
 
@@ -121,21 +123,25 @@ public:
 
     virtual String get_caption() const;
     virtual String get_text() const;
-    virtual String get_category() const { return "functions"; }
 
-    void set_base_type(const StringName &p_type);
+    virtual String get_category() const {
+        return "functions";
+    }
+
+    void set_base_type(const StringName& p_type);
     StringName get_base_type() const;
 
-    void set_signal(const StringName &p_type);
+    void set_signal(const StringName& p_type);
     StringName get_signal() const;
 
-    void set_base_path(const NodePath &p_type);
+    void set_base_path(const NodePath& p_type);
     NodePath get_base_path() const;
 
     void set_call_mode(CallMode p_mode);
     CallMode get_call_mode() const;
 
-    virtual VisualScriptNodeInstance *instance(VisualScriptInstance *p_instance);
+    virtual VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    );
 
     VisualScriptYieldSignal();
 };

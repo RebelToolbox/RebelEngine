@@ -66,7 +66,7 @@ public:
     void set_enabled(bool p_enabled);
     bool is_enabled() const;
 
-    void set_cast_to(const Vector2 &p_point);
+    void set_cast_to(const Vector2& p_point);
     Vector2 get_cast_to() const;
 
     void set_collision_mask(uint32_t p_mask);
@@ -81,15 +81,15 @@ public:
     void force_raycast_update();
 
     bool is_colliding() const;
-    Object *get_collider() const;
+    Object* get_collider() const;
     int get_collider_shape() const;
     Vector2 get_collision_point() const;
     Vector2 get_collision_normal() const;
 
-    void add_exception_rid(const RID &p_rid);
-    void add_exception(const Object *p_object);
-    void remove_exception_rid(const RID &p_rid);
-    void remove_exception(const Object *p_object);
+    void add_exception_rid(const RID& p_rid);
+    void add_exception(const Object* p_object);
+    void remove_exception_rid(const RID& p_rid);
+    void remove_exception(const Object* p_object);
     void clear_exceptions();
 
     RayCast2D();

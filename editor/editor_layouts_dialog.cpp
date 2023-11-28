@@ -36,7 +36,7 @@
 #include "scene/gui/item_list.h"
 #include "scene/gui/line_edit.h"
 
-void EditorLayoutsDialog::_line_gui_input(const Ref<InputEvent> &p_event) {
+void EditorLayoutsDialog::_line_gui_input(const Ref<InputEvent>& p_event) {
     Ref<InputEventKey> k = p_event;
 
     if (k.is_valid()) {
@@ -62,16 +62,24 @@ void EditorLayoutsDialog::_line_gui_input(const Ref<InputEvent> &p_event) {
 }
 
 void EditorLayoutsDialog::_bind_methods() {
-    ClassDB::bind_method("_line_gui_input", &EditorLayoutsDialog::_line_gui_input);
+    ClassDB::bind_method(
+        "_line_gui_input",
+        &EditorLayoutsDialog::_line_gui_input
+    );
 
-    ADD_SIGNAL(MethodInfo("name_confirmed", PropertyInfo(Variant::STRING, "name")));
+    ADD_SIGNAL(
+        MethodInfo("name_confirmed", PropertyInfo(Variant::STRING, "name"))
+    );
 }
 
 void EditorLayoutsDialog::ok_pressed() {
     if (layout_names->is_anything_selected()) {
         Vector<int> const selected_items = layout_names->get_selected_items();
         for (int i = 0; i < selected_items.size(); ++i) {
-            emit_signal("name_confirmed", layout_names->get_item_text(selected_items[i]));
+            emit_signal(
+                "name_confirmed",
+                layout_names->get_item_text(selected_items[i])
+            );
         }
     } else if (name->is_visible() && name->get_text() != "") {
         emit_signal("name_confirmed", name->get_text());
@@ -85,7 +93,9 @@ void EditorLayoutsDialog::_post_popup() {
 
     Ref<ConfigFile> config;
     config.instance();
-    Error err = config->load(EditorSettings::get_singleton()->get_editor_layouts_config());
+    Error err = config->load(
+        EditorSettings::get_singleton()->get_editor_layouts_config()
+    );
     if (err != OK) {
         return;
     }
@@ -93,7 +103,7 @@ void EditorLayoutsDialog::_post_popup() {
     List<String> layouts;
     config.ptr()->get_sections(&layouts);
 
-    for (List<String>::Element *E = layouts.front(); E; E = E->next()) {
+    for (List<String>::Element* E = layouts.front(); E; E = E->next()) {
         layout_names->add_item(**E);
     }
 }

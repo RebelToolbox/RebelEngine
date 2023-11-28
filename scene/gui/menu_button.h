@@ -40,11 +40,11 @@ class MenuButton : public Button {
     bool clicked;
     bool switch_on_hover;
     bool disable_shortcuts;
-    PopupMenu *popup;
+    PopupMenu* popup;
 
     void _unhandled_key_input(Ref<InputEvent> p_event);
     Array _get_items() const;
-    void _set_items(const Array &p_items);
+    void _set_items(const Array& p_items);
 
     void _gui_input(Ref<InputEvent> p_event);
 
@@ -55,7 +55,7 @@ protected:
 public:
     virtual void pressed();
 
-    PopupMenu *get_popup() const;
+    PopupMenu* get_popup() const;
     void set_switch_on_hover(bool p_enabled);
     bool is_switch_on_hover();
     void set_disable_shortcuts(bool p_disabled);

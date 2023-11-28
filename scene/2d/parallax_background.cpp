@@ -44,7 +44,10 @@ void ParallaxBackground::_notification(int p_what) {
     }
 }
 
-void ParallaxBackground::_camera_moved(const Transform2D &p_transform, const Point2 &p_screen_offset) {
+void ParallaxBackground::_camera_moved(
+    const Transform2D& p_transform,
+    const Point2& p_screen_offset
+) {
     screen_offset = p_screen_offset;
 
     set_scroll_scale(p_transform.get_scale().dot(Vector2(0.5, 0.5)));
@@ -59,7 +62,7 @@ float ParallaxBackground::get_scroll_scale() const {
     return scale;
 }
 
-void ParallaxBackground::set_scroll_offset(const Point2 &p_ofs) {
+void ParallaxBackground::set_scroll_offset(const Point2& p_ofs) {
     offset = p_ofs;
 
     _update_scroll();
@@ -95,13 +98,17 @@ void ParallaxBackground::_update_scroll() {
     final_offset = ofs;
 
     for (int i = 0; i < get_child_count(); i++) {
-        ParallaxLayer *l = Object::cast_to<ParallaxLayer>(get_child(i));
+        ParallaxLayer* l = Object::cast_to<ParallaxLayer>(get_child(i));
         if (!l) {
             continue;
         }
 
         if (ignore_camera_zoom) {
-            l->set_base_offset_and_scale((ofs + screen_offset * (scale - 1)) / scale, 1.0, screen_offset);
+            l->set_base_offset_and_scale(
+                (ofs + screen_offset * (scale - 1)) / scale,
+                1.0,
+                screen_offset
+            );
         } else {
             l->set_base_offset_and_scale(ofs, scale, screen_offset);
         }
@@ -112,7 +119,7 @@ Point2 ParallaxBackground::get_scroll_offset() const {
     return offset;
 }
 
-void ParallaxBackground::set_scroll_base_offset(const Point2 &p_ofs) {
+void ParallaxBackground::set_scroll_base_offset(const Point2& p_ofs) {
     base_offset = p_ofs;
     _update_scroll();
 }
@@ -121,7 +128,7 @@ Point2 ParallaxBackground::get_scroll_base_offset() const {
     return base_offset;
 }
 
-void ParallaxBackground::set_scroll_base_scale(const Point2 &p_ofs) {
+void ParallaxBackground::set_scroll_base_scale(const Point2& p_ofs) {
     base_scale = p_ofs;
     _update_scroll();
 }
@@ -130,7 +137,7 @@ Point2 ParallaxBackground::get_scroll_base_scale() const {
     return base_scale;
 }
 
-void ParallaxBackground::set_limit_begin(const Point2 &p_ofs) {
+void ParallaxBackground::set_limit_begin(const Point2& p_ofs) {
     limit_begin = p_ofs;
     _update_scroll();
 }
@@ -139,7 +146,7 @@ Point2 ParallaxBackground::get_limit_begin() const {
     return limit_begin;
 }
 
-void ParallaxBackground::set_limit_end(const Point2 &p_ofs) {
+void ParallaxBackground::set_limit_end(const Point2& p_ofs) {
     limit_end = p_ofs;
     _update_scroll();
 }
@@ -161,32 +168,95 @@ Vector2 ParallaxBackground::get_final_offset() const {
 }
 
 void ParallaxBackground::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("_camera_moved"), &ParallaxBackground::_camera_moved);
-    ClassDB::bind_method(D_METHOD("set_scroll_offset", "ofs"), &ParallaxBackground::set_scroll_offset);
-    ClassDB::bind_method(D_METHOD("get_scroll_offset"), &ParallaxBackground::get_scroll_offset);
-    ClassDB::bind_method(D_METHOD("set_scroll_base_offset", "ofs"), &ParallaxBackground::set_scroll_base_offset);
-    ClassDB::bind_method(D_METHOD("get_scroll_base_offset"), &ParallaxBackground::get_scroll_base_offset);
-    ClassDB::bind_method(D_METHOD("set_scroll_base_scale", "scale"), &ParallaxBackground::set_scroll_base_scale);
-    ClassDB::bind_method(D_METHOD("get_scroll_base_scale"), &ParallaxBackground::get_scroll_base_scale);
-    ClassDB::bind_method(D_METHOD("set_limit_begin", "ofs"), &ParallaxBackground::set_limit_begin);
-    ClassDB::bind_method(D_METHOD("get_limit_begin"), &ParallaxBackground::get_limit_begin);
-    ClassDB::bind_method(D_METHOD("set_limit_end", "ofs"), &ParallaxBackground::set_limit_end);
-    ClassDB::bind_method(D_METHOD("get_limit_end"), &ParallaxBackground::get_limit_end);
-    ClassDB::bind_method(D_METHOD("set_ignore_camera_zoom", "ignore"), &ParallaxBackground::set_ignore_camera_zoom);
-    ClassDB::bind_method(D_METHOD("is_ignore_camera_zoom"), &ParallaxBackground::is_ignore_camera_zoom);
+    ClassDB::bind_method(
+        D_METHOD("_camera_moved"),
+        &ParallaxBackground::_camera_moved
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_scroll_offset", "ofs"),
+        &ParallaxBackground::set_scroll_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_scroll_offset"),
+        &ParallaxBackground::get_scroll_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_scroll_base_offset", "ofs"),
+        &ParallaxBackground::set_scroll_base_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_scroll_base_offset"),
+        &ParallaxBackground::get_scroll_base_offset
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_scroll_base_scale", "scale"),
+        &ParallaxBackground::set_scroll_base_scale
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_scroll_base_scale"),
+        &ParallaxBackground::get_scroll_base_scale
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_limit_begin", "ofs"),
+        &ParallaxBackground::set_limit_begin
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_limit_begin"),
+        &ParallaxBackground::get_limit_begin
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_limit_end", "ofs"),
+        &ParallaxBackground::set_limit_end
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_limit_end"),
+        &ParallaxBackground::get_limit_end
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_ignore_camera_zoom", "ignore"),
+        &ParallaxBackground::set_ignore_camera_zoom
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_ignore_camera_zoom"),
+        &ParallaxBackground::is_ignore_camera_zoom
+    );
 
     ADD_GROUP("Scroll", "scroll_");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "scroll_offset"), "set_scroll_offset", "get_scroll_offset");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "scroll_base_offset"), "set_scroll_base_offset", "get_scroll_base_offset");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "scroll_base_scale"), "set_scroll_base_scale", "get_scroll_base_scale");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "scroll_limit_begin"), "set_limit_begin", "get_limit_begin");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "scroll_limit_end"), "set_limit_end", "get_limit_end");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "scroll_ignore_camera_zoom"), "set_ignore_camera_zoom", "is_ignore_camera_zoom");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::VECTOR2, "scroll_offset"),
+        "set_scroll_offset",
+        "get_scroll_offset"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::VECTOR2, "scroll_base_offset"),
+        "set_scroll_base_offset",
+        "get_scroll_base_offset"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::VECTOR2, "scroll_base_scale"),
+        "set_scroll_base_scale",
+        "get_scroll_base_scale"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::VECTOR2, "scroll_limit_begin"),
+        "set_limit_begin",
+        "get_limit_begin"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::VECTOR2, "scroll_limit_end"),
+        "set_limit_end",
+        "get_limit_end"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "scroll_ignore_camera_zoom"),
+        "set_ignore_camera_zoom",
+        "is_ignore_camera_zoom"
+    );
 }
 
 ParallaxBackground::ParallaxBackground() {
     scale = 1.0;
-    set_layer(-100); //behind all by default
+    set_layer(-100); // behind all by default
 
     base_scale = Vector2(1, 1);
     ignore_camera_zoom = false;

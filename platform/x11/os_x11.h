@@ -72,7 +72,7 @@ typedef struct _xrr_monitor_info {
     int height;
     int mwidth;
     int mheight;
-    RROutput *outputs;
+    RROutput* outputs;
 } xrr_monitor_info;
 
 #undef CursorShape
@@ -91,25 +91,28 @@ class OS_X11 : public OS_Unix {
     int xdnd_version;
 
 #if defined(OPENGL_ENABLED)
-    ContextGL_X11 *context_gl;
+    ContextGL_X11* context_gl;
 #endif
-    //Rasterizer *rasterizer;
-    VisualServer *visual_server;
+    // Rasterizer *rasterizer;
+    VisualServer* visual_server;
     VideoMode current_videomode;
     List<String> args;
     Window x11_window;
     Window xdnd_source_window;
-    MainLoop *main_loop;
-    ::Display *x11_display;
-    char *xmbstring;
+    MainLoop* main_loop;
+    ::Display* x11_display;
+    char* xmbstring;
     int xmblen;
     unsigned long last_timestamp;
     ::Time last_keyrelease_time;
     ::XIC xic;
     ::XIM xim;
     ::XIMStyle xim_style;
-    static void xim_destroy_callback(::XIM im, ::XPointer client_data,
-            ::XPointer call_data);
+    static void xim_destroy_callback(
+        ::XIM im,
+        ::XPointer client_data,
+        ::XPointer call_data
+    );
 
     // IME
     bool im_active;
@@ -148,19 +151,35 @@ class OS_X11 : public OS_Unix {
 
     bool refresh_device_info();
 
-    unsigned int get_mouse_button_state(unsigned int p_x11_button, int p_x11_type);
-    void get_key_modifier_state(unsigned int p_x11_state, Ref<InputEventWithModifiers> state);
+    unsigned int get_mouse_button_state(
+        unsigned int p_x11_button,
+        int p_x11_type
+    );
+    void get_key_modifier_state(
+        unsigned int p_x11_state,
+        Ref<InputEventWithModifiers> state
+    );
     void flush_mouse_motion();
 
     MouseMode mouse_mode;
     Point2i center;
 
-    void _handle_key_event(XKeyEvent *p_event, LocalVector<XEvent> &p_events, uint32_t &p_event_index, bool p_echo = false);
+    void _handle_key_event(
+        XKeyEvent* p_event,
+        LocalVector<XEvent>& p_events,
+        uint32_t& p_event_index,
+        bool p_echo = false
+    );
 
-    Atom _process_selection_request_target(Atom p_target, Window p_requestor, Atom p_property) const;
-    void _handle_selection_request_event(XSelectionRequestEvent *p_event) const;
+    Atom _process_selection_request_target(
+        Atom p_target,
+        Window p_requestor,
+        Atom p_property
+    ) const;
+    void _handle_selection_request_event(XSelectionRequestEvent* p_event) const;
 
-    String _get_clipboard_impl(Atom p_source, Window x11_window, Atom target) const;
+    String _get_clipboard_impl(Atom p_source, Window x11_window, Atom target)
+        const;
     String _get_clipboard(Atom p_source, Window x11_window) const;
     void _clipboard_transfer_ownership(Atom p_source, Window x11_window) const;
 
@@ -168,15 +187,31 @@ class OS_X11 : public OS_Unix {
     Thread events_thread;
     bool events_thread_done = false;
     LocalVector<XEvent> polled_events;
-    static void _poll_events_thread(void *ud);
+    static void _poll_events_thread(void* ud);
     bool _wait_for_events() const;
     void _poll_events();
-    void _check_pending_events(LocalVector<XEvent> &r_events);
+    void _check_pending_events(LocalVector<XEvent>& r_events);
 
-    static Bool _predicate_all_events(Display *display, XEvent *event, XPointer arg);
-    static Bool _predicate_clipboard_selection(Display *display, XEvent *event, XPointer arg);
-    static Bool _predicate_clipboard_incr(Display *display, XEvent *event, XPointer arg);
-    static Bool _predicate_clipboard_save_targets(Display *display, XEvent *event, XPointer arg);
+    static Bool _predicate_all_events(
+        Display* display,
+        XEvent* event,
+        XPointer arg
+    );
+    static Bool _predicate_clipboard_selection(
+        Display* display,
+        XEvent* event,
+        XPointer arg
+    );
+    static Bool _predicate_clipboard_incr(
+        Display* display,
+        XEvent* event,
+        XPointer arg
+    );
+    static Bool _predicate_clipboard_save_targets(
+        Display* display,
+        XEvent* event,
+        XPointer arg
+    );
 
     void process_xevents();
     virtual void delete_main_loop();
@@ -186,18 +221,18 @@ class OS_X11 : public OS_Unix {
     bool window_has_focus;
     bool do_mouse_warp;
 
-    const char *cursor_theme;
+    const char* cursor_theme;
     int cursor_size;
-    XcursorImage *img[CURSOR_MAX];
+    XcursorImage* img[CURSOR_MAX];
     Cursor cursors[CURSOR_MAX];
     Cursor null_cursor;
     CursorShape current_cursor;
     Map<CursorShape, Vector<Variant>> cursors_cache;
 
-    InputDefault *input;
+    InputDefault* input;
 
 #ifdef JOYDEV_ENABLED
-    JoypadLinux *joypad;
+    JoypadLinux* joypad;
 #endif
 
 #ifdef ALSA_ENABLED
@@ -212,7 +247,7 @@ class OS_X11 : public OS_Unix {
     AudioDriverPulseAudio driver_pulseaudio;
 #endif
 
-    PowerX11 *power_manager;
+    PowerX11* power_manager;
 
     bool layered_window;
 
@@ -221,29 +256,38 @@ class OS_X11 : public OS_Unix {
     int video_driver_index;
     bool maximized;
     bool window_focused;
-    //void set_wm_border(bool p_enabled);
+    // void set_wm_border(bool p_enabled);
     void set_wm_fullscreen(bool p_enabled);
     void set_wm_above(bool p_enabled);
 
-    typedef xrr_monitor_info *(*xrr_get_monitors_t)(Display *dpy, Window window, Bool get_active, int *nmonitors);
-    typedef void (*xrr_free_monitors_t)(xrr_monitor_info *monitors);
+    typedef xrr_monitor_info* (*xrr_get_monitors_t)(
+        Display* dpy,
+        Window window,
+        Bool get_active,
+        int* nmonitors
+    );
+    typedef void (*xrr_free_monitors_t)(xrr_monitor_info* monitors);
     xrr_get_monitors_t xrr_get_monitors;
     xrr_free_monitors_t xrr_free_monitors;
-    void *xrandr_handle;
+    void* xrandr_handle;
     Bool xrandr_ext_ok;
 
 protected:
     virtual int get_current_video_driver() const;
 
     virtual void initialize_core();
-    virtual Error initialize(const VideoMode &p_desired, int p_video_driver, int p_audio_driver);
+    virtual Error initialize(
+        const VideoMode& p_desired,
+        int p_video_driver,
+        int p_audio_driver
+    );
     virtual void finalize();
 
-    virtual void set_main_loop(MainLoop *p_main_loop);
+    virtual void set_main_loop(MainLoop* p_main_loop);
 
-    void _window_changed(XEvent *event);
+    void _window_changed(XEvent* event);
 
-    bool window_maximize_check(const char *p_atom_name) const;
+    bool window_maximize_check(const char* p_atom_name) const;
     bool window_fullscreen_check() const;
     bool is_window_maximize_allowed() const;
 
@@ -252,24 +296,28 @@ public:
 
     virtual void set_cursor_shape(CursorShape p_shape);
     virtual CursorShape get_cursor_shape() const;
-    virtual void set_custom_mouse_cursor(const RES &p_cursor, CursorShape p_shape, const Vector2 &p_hotspot);
+    virtual void set_custom_mouse_cursor(
+        const RES& p_cursor,
+        CursorShape p_shape,
+        const Vector2& p_hotspot
+    );
 
     void set_mouse_mode(MouseMode p_mode);
     MouseMode get_mouse_mode() const;
 
-    virtual void warp_mouse_position(const Point2 &p_to);
+    virtual void warp_mouse_position(const Point2& p_to);
     virtual Point2 get_mouse_position() const;
     virtual int get_mouse_button_state() const;
-    virtual void set_window_title(const String &p_title);
-    virtual void set_window_mouse_passthrough(const PoolVector2Array &p_region);
+    virtual void set_window_title(const String& p_title);
+    virtual void set_window_mouse_passthrough(const PoolVector2Array& p_region);
 
-    virtual void set_icon(const Ref<Image> &p_icon);
+    virtual void set_icon(const Ref<Image>& p_icon);
 
-    virtual MainLoop *get_main_loop() const;
+    virtual MainLoop* get_main_loop() const;
 
     virtual bool can_draw() const;
 
-    virtual void set_clipboard(const String &p_text);
+    virtual void set_clipboard(const String& p_text);
     virtual String get_clipboard() const;
 
     virtual void release_rendering_thread();
@@ -280,13 +328,20 @@ public:
     virtual String get_data_path() const;
     virtual String get_cache_path() const;
 
-    virtual String get_system_dir(SystemDir p_dir, bool p_shared_storage = true) const;
+    virtual String get_system_dir(SystemDir p_dir, bool p_shared_storage = true)
+        const;
 
     virtual Error shell_open(String p_uri);
 
-    virtual void set_video_mode(const VideoMode &p_video_mode, int p_screen = 0);
+    virtual void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    );
     virtual VideoMode get_video_mode(int p_screen = 0) const;
-    virtual void get_fullscreen_mode_list(List<VideoMode> *p_list, int p_screen = 0) const;
+    virtual void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const;
 
     virtual int get_screen_count() const;
     virtual int get_current_screen() const;
@@ -295,7 +350,7 @@ public:
     virtual Size2 get_screen_size(int p_screen = -1) const;
     virtual int get_screen_dpi(int p_screen = -1) const;
     virtual Point2 get_window_position() const;
-    virtual void set_window_position(const Point2 &p_position);
+    virtual void set_window_position(const Point2& p_position);
     virtual Size2 get_window_size() const;
     virtual Size2 get_real_window_size() const;
     virtual Size2 get_max_window_size() const;
@@ -315,7 +370,7 @@ public:
     virtual bool is_window_always_on_top() const;
     virtual bool is_window_focused() const;
     virtual void request_attention();
-    virtual void *get_native_handle(int p_handle_type);
+    virtual void* get_native_handle(int p_handle_type);
 
     virtual void set_borderless_window(bool p_borderless);
     virtual bool get_borderless_window();
@@ -324,12 +379,12 @@ public:
     virtual void set_window_per_pixel_transparency_enabled(bool p_enabled);
 
     virtual void set_ime_active(const bool p_active);
-    virtual void set_ime_position(const Point2 &p_pos);
+    virtual void set_ime_position(const Point2& p_pos);
 
     virtual String get_unique_id() const;
 
     virtual void move_window_to_foreground();
-    virtual void alert(const String &p_alert, const String &p_title = "ALERT!");
+    virtual void alert(const String& p_alert, const String& p_title = "ALERT!");
 
     virtual bool is_joy_known(int p_device);
     virtual String get_joy_guid(int p_device) const;
@@ -337,13 +392,13 @@ public:
     virtual void set_context(int p_context);
 
     virtual void _set_use_vsync(bool p_enable);
-    //virtual bool is_vsync_enabled() const;
+    // virtual bool is_vsync_enabled() const;
 
     virtual OS::PowerState get_power_state();
     virtual int get_power_seconds_left();
     virtual int get_power_percent_left();
 
-    virtual bool _check_internal_feature_support(const String &p_feature);
+    virtual bool _check_internal_feature_support(const String& p_feature);
 
     virtual void force_process_input();
     void run();
@@ -351,7 +406,7 @@ public:
     void disable_crash_handler();
     bool is_disable_crash_handler() const;
 
-    virtual Error move_to_trash(const String &p_path);
+    virtual Error move_to_trash(const String& p_path);
 
     virtual LatinKeyboardVariant get_latin_keyboard_variant() const;
     virtual int keyboard_get_layout_count() const;

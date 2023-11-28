@@ -47,13 +47,14 @@ class RemoteTransform2D : public Node2D {
 
     void _update_remote();
     void _update_cache();
-    //void _node_exited_scene();
+    // void _node_exited_scene();
+
 protected:
     static void _bind_methods();
     void _notification(int p_what);
 
 public:
-    void set_remote_node(const NodePath &p_remote_node);
+    void set_remote_node(const NodePath& p_remote_node);
     NodePath get_remote_node() const;
 
     void set_use_global_coordinates(const bool p_enable);

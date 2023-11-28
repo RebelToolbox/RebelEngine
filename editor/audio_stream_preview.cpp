@@ -35,6 +35,7 @@
 float AudioStreamPreview::get_length() const {
     return length;
 }
+
 float AudioStreamPreview::get_max(float p_time, float p_time_next) const {
     if (length == 0) {
         return 0;
@@ -61,6 +62,7 @@ float AudioStreamPreview::get_max(float p_time, float p_time_next) const {
 
     return (vmax / 255.0) * 2.0 - 1.0;
 }
+
 float AudioStreamPreview::get_min(float p_time, float p_time_next) const {
     if (length == 0) {
         return 0;
@@ -98,26 +100,33 @@ void AudioStreamPreviewGenerator::_update_emit(ObjectID p_id) {
     emit_signal("preview_updated", p_id);
 }
 
-void AudioStreamPreviewGenerator::_preview_thread(void *p_preview) {
-    Preview *preview = (Preview *)p_preview;
+void AudioStreamPreviewGenerator::_preview_thread(void* p_preview) {
+    Preview* preview = (Preview*)p_preview;
 
     float muxbuff_chunk_s = 0.25;
 
-    int mixbuff_chunk_frames = AudioServer::get_singleton()->get_mix_rate() * muxbuff_chunk_s;
+    int mixbuff_chunk_frames =
+        AudioServer::get_singleton()->get_mix_rate() * muxbuff_chunk_s;
 
     Vector<AudioFrame> mix_chunk;
     mix_chunk.resize(mixbuff_chunk_frames);
 
-    int frames_total = AudioServer::get_singleton()->get_mix_rate() * preview->preview->length;
+    int frames_total =
+        AudioServer::get_singleton()->get_mix_rate() * preview->preview->length;
     int frames_todo = frames_total;
 
     preview->playback->start();
 
     while (frames_todo) {
-        int ofs_write = uint64_t(frames_total - frames_todo) * uint64_t(preview->preview->preview.size() / 2) / uint64_t(frames_total);
+        int ofs_write = uint64_t(frames_total - frames_todo)
+                      * uint64_t(preview->preview->preview.size() / 2)
+                      / uint64_t(frames_total);
         int to_read = MIN(frames_todo, mixbuff_chunk_frames);
-        int to_write = uint64_t(to_read) * uint64_t(preview->preview->preview.size() / 2) / uint64_t(frames_total);
-        to_write = MIN(to_write, (preview->preview->preview.size() / 2) - ofs_write);
+        int to_write = uint64_t(to_read)
+                     * uint64_t(preview->preview->preview.size() / 2)
+                     / uint64_t(frames_total);
+        to_write =
+            MIN(to_write, (preview->preview->preview.size() / 2) - ofs_write);
 
         preview->playback->mix(mix_chunk.ptrw(), 1.0, to_read);
 
@@ -156,18 +165,20 @@ void AudioStreamPreviewGenerator::_preview_thread(void *p_preview) {
     preview->generating.clear();
 }
 
-Ref<AudioStreamPreview> AudioStreamPreviewGenerator::generate_preview(const Ref<AudioStream> &p_stream) {
+Ref<AudioStreamPreview> AudioStreamPreviewGenerator::generate_preview(
+    const Ref<AudioStream>& p_stream
+) {
     ERR_FAIL_COND_V(p_stream.is_null(), Ref<AudioStreamPreview>());
 
     if (previews.has(p_stream->get_instance_id())) {
         return previews[p_stream->get_instance_id()].preview;
     }
 
-    //no preview exists
+    // no preview exists
 
     previews[p_stream->get_instance_id()] = Preview();
 
-    Preview *preview = &previews[p_stream->get_instance_id()];
+    Preview* preview = &previews[p_stream->get_instance_id()];
     preview->base_stream = p_stream;
     preview->playback = preview->base_stream->instance_playback();
     preview->generating.set();
@@ -175,7 +186,7 @@ Ref<AudioStreamPreview> AudioStreamPreviewGenerator::generate_preview(const Ref<
 
     float len_s = preview->base_stream->get_length();
     if (len_s == 0) {
-        len_s = 60 * 5; //five minutes
+        len_s = 60 * 5; // five minutes
     }
 
     int frames = AudioServer::get_singleton()->get_mix_rate() * len_s;
@@ -184,7 +195,7 @@ Ref<AudioStreamPreview> AudioStreamPreviewGenerator::generate_preview(const Ref<
     int pw = frames / 20;
     maxmin.resize(pw * 2);
     {
-        uint8_t *ptr = maxmin.ptrw();
+        uint8_t* ptr = maxmin.ptrw();
         for (int i = 0; i < pw * 2; i++) {
             ptr[i] = 127;
         }
@@ -203,25 +214,35 @@ Ref<AudioStreamPreview> AudioStreamPreviewGenerator::generate_preview(const Ref<
 }
 
 void AudioStreamPreviewGenerator::_bind_methods() {
-    ClassDB::bind_method("_update_emit", &AudioStreamPreviewGenerator::_update_emit);
-    ClassDB::bind_method(D_METHOD("generate_preview", "stream"), &AudioStreamPreviewGenerator::generate_preview);
+    ClassDB::bind_method(
+        "_update_emit",
+        &AudioStreamPreviewGenerator::_update_emit
+    );
+    ClassDB::bind_method(
+        D_METHOD("generate_preview", "stream"),
+        &AudioStreamPreviewGenerator::generate_preview
+    );
 
-    ADD_SIGNAL(MethodInfo("preview_updated", PropertyInfo(Variant::INT, "obj_id")));
+    ADD_SIGNAL(
+        MethodInfo("preview_updated", PropertyInfo(Variant::INT, "obj_id"))
+    );
 }
 
-AudioStreamPreviewGenerator *AudioStreamPreviewGenerator::singleton = nullptr;
+AudioStreamPreviewGenerator* AudioStreamPreviewGenerator::singleton = nullptr;
 
 void AudioStreamPreviewGenerator::_notification(int p_what) {
     if (p_what == NOTIFICATION_PROCESS) {
         List<ObjectID> to_erase;
-        for (Map<ObjectID, Preview>::Element *E = previews.front(); E; E = E->next()) {
+        for (Map<ObjectID, Preview>::Element* E = previews.front(); E;
+             E = E->next()) {
             if (!E->get().generating.is_set()) {
                 if (E->get().thread) {
                     E->get().thread->wait_to_finish();
                     memdelete(E->get().thread);
                     E->get().thread = nullptr;
                 }
-                if (!ObjectDB::get_instance(E->key())) { //no longer in use, get rid of preview
+                if (!ObjectDB::get_instance(E->key()
+                    )) { // no longer in use, get rid of preview
                     to_erase.push_back(E->key());
                 }
             }

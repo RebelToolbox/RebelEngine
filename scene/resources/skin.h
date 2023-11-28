@@ -44,26 +44,29 @@ class Skin : public Resource {
 
     Vector<Bind> binds;
 
-    Bind *binds_ptr;
+    Bind* binds_ptr;
     int bind_count;
 
 protected:
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
 
     static void _bind_methods();
 
 public:
     void set_bind_count(int p_size);
-    inline int get_bind_count() const { return bind_count; }
 
-    void add_bind(int p_bone, const Transform &p_pose);
-    void add_named_bind(const String &p_name, const Transform &p_pose);
+    inline int get_bind_count() const {
+        return bind_count;
+    }
+
+    void add_bind(int p_bone, const Transform& p_pose);
+    void add_named_bind(const String& p_name, const Transform& p_pose);
 
     void set_bind_bone(int p_index, int p_bone);
-    void set_bind_pose(int p_index, const Transform &p_pose);
-    void set_bind_name(int p_index, const StringName &p_name);
+    void set_bind_pose(int p_index, const Transform& p_pose);
+    void set_bind_name(int p_index, const StringName& p_name);
 
     inline int get_bind_bone(int p_index) const {
 #ifdef DEBUG_ENABLED

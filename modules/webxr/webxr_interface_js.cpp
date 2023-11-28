@@ -39,31 +39,36 @@
 #include "servers/visual/visual_server_globals.h"
 #include <stdlib.h>
 
-void _emwebxr_on_session_supported(char *p_session_mode, int p_supported) {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+void _emwebxr_on_session_supported(char* p_session_mode, int p_supported) {
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
     Ref<ARVRInterface> interface = arvr_server->find_interface("WebXR");
     ERR_FAIL_COND(interface.is_null());
 
     String session_mode = String(p_session_mode);
-    interface->emit_signal("session_supported", session_mode, p_supported ? true : false);
+    interface->emit_signal(
+        "session_supported",
+        session_mode,
+        p_supported ? true : false
+    );
 }
 
-void _emwebxr_on_session_started(char *p_reference_space_type) {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+void _emwebxr_on_session_started(char* p_reference_space_type) {
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
     Ref<ARVRInterface> interface = arvr_server->find_interface("WebXR");
     ERR_FAIL_COND(interface.is_null());
 
     String reference_space_type = String(p_reference_space_type);
-    ((WebXRInterfaceJS *)interface.ptr())->_set_reference_space_type(reference_space_type);
+    ((WebXRInterfaceJS*)interface.ptr())
+        ->_set_reference_space_type(reference_space_type);
     interface->emit_signal("session_started");
 }
 
 void _emwebxr_on_session_ended() {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
     Ref<ARVRInterface> interface = arvr_server->find_interface("WebXR");
@@ -73,8 +78,8 @@ void _emwebxr_on_session_ended() {
     interface->emit_signal("session_ended");
 }
 
-void _emwebxr_on_session_failed(char *p_message) {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+void _emwebxr_on_session_failed(char* p_message) {
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
     Ref<ARVRInterface> interface = arvr_server->find_interface("WebXR");
@@ -87,17 +92,20 @@ void _emwebxr_on_session_failed(char *p_message) {
 }
 
 void _emwebxr_on_controller_changed() {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
     Ref<ARVRInterface> interface = arvr_server->find_interface("WebXR");
     ERR_FAIL_COND(interface.is_null());
 
-    ((WebXRInterfaceJS *)interface.ptr())->_on_controller_changed();
+    ((WebXRInterfaceJS*)interface.ptr())->_on_controller_changed();
 }
 
-extern "C" EMSCRIPTEN_KEEPALIVE void _emwebxr_on_input_event(char *p_signal_name, int p_input_source) {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+extern "C" EMSCRIPTEN_KEEPALIVE void _emwebxr_on_input_event(
+    char* p_signal_name,
+    int p_input_source
+) {
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
     Ref<ARVRInterface> interface = arvr_server->find_interface("WebXR");
@@ -107,8 +115,10 @@ extern "C" EMSCRIPTEN_KEEPALIVE void _emwebxr_on_input_event(char *p_signal_name
     interface->emit_signal(signal_name, p_input_source + 1);
 }
 
-extern "C" EMSCRIPTEN_KEEPALIVE void _emwebxr_on_simple_event(char *p_signal_name) {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+extern "C" EMSCRIPTEN_KEEPALIVE void _emwebxr_on_simple_event(
+    char* p_signal_name
+) {
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
     Ref<ARVRInterface> interface = arvr_server->find_interface("WebXR");
@@ -118,8 +128,11 @@ extern "C" EMSCRIPTEN_KEEPALIVE void _emwebxr_on_simple_event(char *p_signal_nam
     interface->emit_signal(signal_name);
 }
 
-void WebXRInterfaceJS::is_session_supported(const String &p_session_mode) {
-    godot_webxr_is_session_supported(p_session_mode.utf8().get_data(), &_emwebxr_on_session_supported);
+void WebXRInterfaceJS::is_session_supported(const String& p_session_mode) {
+    godot_webxr_is_session_supported(
+        p_session_mode.utf8().get_data(),
+        &_emwebxr_on_session_supported
+    );
 }
 
 void WebXRInterfaceJS::set_session_mode(String p_session_mode) {
@@ -146,7 +159,9 @@ String WebXRInterfaceJS::get_optional_features() const {
     return optional_features;
 }
 
-void WebXRInterfaceJS::set_requested_reference_space_types(String p_requested_reference_space_types) {
+void WebXRInterfaceJS::set_requested_reference_space_types(
+    String p_requested_reference_space_types
+) {
     requested_reference_space_types = p_requested_reference_space_types;
 }
 
@@ -154,7 +169,8 @@ String WebXRInterfaceJS::get_requested_reference_space_types() const {
     return requested_reference_space_types;
 }
 
-void WebXRInterfaceJS::_set_reference_space_type(String p_reference_space_type) {
+void WebXRInterfaceJS::_set_reference_space_type(String p_reference_space_type
+) {
     reference_space_type = p_reference_space_type;
 }
 
@@ -162,15 +178,19 @@ String WebXRInterfaceJS::get_reference_space_type() const {
     return reference_space_type;
 }
 
-Ref<ARVRPositionalTracker> WebXRInterfaceJS::get_controller(int p_controller_id) const {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+Ref<ARVRPositionalTracker> WebXRInterfaceJS::get_controller(int p_controller_id
+) const {
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, nullptr);
 
-    return arvr_server->find_by_type_and_id(ARVRServer::TRACKER_CONTROLLER, p_controller_id);
+    return arvr_server->find_by_type_and_id(
+        ARVRServer::TRACKER_CONTROLLER,
+        p_controller_id
+    );
 }
 
 String WebXRInterfaceJS::get_visibility_state() const {
-    char *c_str = godot_webxr_get_visibility_state();
+    char* c_str = godot_webxr_get_visibility_state();
     if (c_str) {
         String visibility_state = String(c_str);
         free(c_str);
@@ -183,11 +203,11 @@ String WebXRInterfaceJS::get_visibility_state() const {
 PoolVector3Array WebXRInterfaceJS::get_bounds_geometry() const {
     PoolVector3Array ret;
 
-    int *js_bounds = godot_webxr_get_bounds_geometry();
+    int* js_bounds = godot_webxr_get_bounds_geometry();
     if (js_bounds) {
         ret.resize(js_bounds[0]);
         for (int i = 0; i < js_bounds[0]; i++) {
-            float *js_vector3 = ((float *)js_bounds) + (i * 3) + 1;
+            float* js_vector3 = ((float*)js_bounds) + (i * 3) + 1;
             ret.set(i, Vector3(js_vector3[0], js_vector3[1], js_vector3[2]));
         }
         free(js_bounds);
@@ -213,7 +233,7 @@ bool WebXRInterfaceJS::is_initialized() const {
 };
 
 bool WebXRInterfaceJS::initialize() {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, false);
 
     if (!initialized) {
@@ -237,16 +257,17 @@ bool WebXRInterfaceJS::initialize() {
         initialized = true;
 
         godot_webxr_initialize(
-                session_mode.utf8().get_data(),
-                required_features.utf8().get_data(),
-                optional_features.utf8().get_data(),
-                requested_reference_space_types.utf8().get_data(),
-                &_emwebxr_on_session_started,
-                &_emwebxr_on_session_ended,
-                &_emwebxr_on_session_failed,
-                &_emwebxr_on_controller_changed,
-                &_emwebxr_on_input_event,
-                &_emwebxr_on_simple_event);
+            session_mode.utf8().get_data(),
+            required_features.utf8().get_data(),
+            optional_features.utf8().get_data(),
+            requested_reference_space_types.utf8().get_data(),
+            &_emwebxr_on_session_started,
+            &_emwebxr_on_session_ended,
+            &_emwebxr_on_session_failed,
+            &_emwebxr_on_controller_changed,
+            &_emwebxr_on_input_event,
+            &_emwebxr_on_simple_event
+        );
     };
 
     return true;
@@ -254,7 +275,7 @@ bool WebXRInterfaceJS::initialize() {
 
 void WebXRInterfaceJS::uninitialize() {
     if (initialized) {
-        ARVRServer *arvr_server = ARVRServer::get_singleton();
+        ARVRServer* arvr_server = ARVRServer::get_singleton();
         if (arvr_server != NULL) {
             // no longer our primary interface
             arvr_server->clear_primary_interface_if(this);
@@ -267,7 +288,7 @@ void WebXRInterfaceJS::uninitialize() {
     };
 };
 
-Transform WebXRInterfaceJS::_js_matrix_to_transform(float *p_js_matrix) {
+Transform WebXRInterfaceJS::_js_matrix_to_transform(float* p_js_matrix) {
     Transform transform;
 
     transform.basis.elements[0].x = p_js_matrix[0];
@@ -291,9 +312,10 @@ Size2 WebXRInterfaceJS::get_render_targetsize() {
         return render_targetsize;
     }
 
-    int *js_size = godot_webxr_get_render_targetsize();
+    int* js_size = godot_webxr_get_render_targetsize();
     if (!initialized || js_size == nullptr) {
-        // As a temporary default (until WebXR is fully initialized), use half the window size.
+        // As a temporary default (until WebXR is fully initialized), use half
+        // the window size.
         Size2 temp = OS::get_singleton()->get_window_size();
         temp.width /= 2.0;
         return temp;
@@ -307,13 +329,16 @@ Size2 WebXRInterfaceJS::get_render_targetsize() {
     return render_targetsize;
 };
 
-Transform WebXRInterfaceJS::get_transform_for_eye(ARVRInterface::Eyes p_eye, const Transform &p_cam_transform) {
+Transform WebXRInterfaceJS::get_transform_for_eye(
+    ARVRInterface::Eyes p_eye,
+    const Transform& p_cam_transform
+) {
     Transform transform_for_eye;
 
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, transform_for_eye);
 
-    float *js_matrix = godot_webxr_get_transform_for_eye(p_eye);
+    float* js_matrix = godot_webxr_get_transform_for_eye(p_eye);
     if (!initialized || js_matrix == nullptr) {
         transform_for_eye = p_cam_transform;
         return transform_for_eye;
@@ -322,13 +347,19 @@ Transform WebXRInterfaceJS::get_transform_for_eye(ARVRInterface::Eyes p_eye, con
     transform_for_eye = _js_matrix_to_transform(js_matrix);
     free(js_matrix);
 
-    return p_cam_transform * arvr_server->get_reference_frame() * transform_for_eye;
+    return p_cam_transform * arvr_server->get_reference_frame()
+         * transform_for_eye;
 };
 
-CameraMatrix WebXRInterfaceJS::get_projection_for_eye(ARVRInterface::Eyes p_eye, real_t p_aspect, real_t p_z_near, real_t p_z_far) {
+CameraMatrix WebXRInterfaceJS::get_projection_for_eye(
+    ARVRInterface::Eyes p_eye,
+    real_t p_aspect,
+    real_t p_z_near,
+    real_t p_z_far
+) {
     CameraMatrix eye;
 
-    float *js_matrix = godot_webxr_get_projection_for_eye(p_eye);
+    float* js_matrix = godot_webxr_get_projection_for_eye(p_eye);
     if (!initialized || js_matrix == nullptr) {
         return eye;
     }
@@ -349,14 +380,20 @@ CameraMatrix WebXRInterfaceJS::get_projection_for_eye(ARVRInterface::Eyes p_eye,
     return eye;
 }
 
-unsigned int WebXRInterfaceJS::get_external_texture_for_eye(ARVRInterface::Eyes p_eye) {
+unsigned int WebXRInterfaceJS::get_external_texture_for_eye(
+    ARVRInterface::Eyes p_eye
+) {
     if (!initialized) {
         return 0;
     }
     return godot_webxr_get_external_texture_for_eye(p_eye);
 }
 
-void WebXRInterfaceJS::commit_for_eye(ARVRInterface::Eyes p_eye, RID p_render_target, const Rect2 &p_screen_rect) {
+void WebXRInterfaceJS::commit_for_eye(
+    ARVRInterface::Eyes p_eye,
+    RID p_render_target,
+    const Rect2& p_screen_rect
+) {
     if (!initialized) {
         return;
     }
@@ -379,10 +416,13 @@ void WebXRInterfaceJS::process() {
 };
 
 void WebXRInterfaceJS::_update_tracker(int p_controller_id) {
-    ARVRServer *arvr_server = ARVRServer::get_singleton();
+    ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL(arvr_server);
 
-    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(ARVRServer::TRACKER_CONTROLLER, p_controller_id + 1);
+    Ref<ARVRPositionalTracker> tracker = arvr_server->find_by_type_and_id(
+        ARVRServer::TRACKER_CONTROLLER,
+        p_controller_id + 1
+    );
     if (godot_webxr_is_controller_connected(p_controller_id)) {
         if (tracker.is_null()) {
             tracker.instance();
@@ -390,16 +430,21 @@ void WebXRInterfaceJS::_update_tracker(int p_controller_id) {
             // Controller id's 0 and 1 are always the left and right hands.
             if (p_controller_id < 2) {
                 tracker->set_name(p_controller_id == 0 ? "Left" : "Right");
-                tracker->set_hand(p_controller_id == 0 ? ARVRPositionalTracker::TRACKER_LEFT_HAND : ARVRPositionalTracker::TRACKER_RIGHT_HAND);
+                tracker->set_hand(
+                    p_controller_id == 0
+                        ? ARVRPositionalTracker::TRACKER_LEFT_HAND
+                        : ARVRPositionalTracker::TRACKER_RIGHT_HAND
+                );
             }
             // Use the ids we're giving to our "virtual" gamepads.
             tracker->set_joy_id(p_controller_id + 100);
             arvr_server->add_tracker(tracker);
         }
 
-        InputDefault *input = (InputDefault *)Input::get_singleton();
+        InputDefault* input = (InputDefault*)Input::get_singleton();
 
-        float *tracker_matrix = godot_webxr_get_controller_transform(p_controller_id);
+        float* tracker_matrix =
+            godot_webxr_get_controller_transform(p_controller_id);
         if (tracker_matrix) {
             Transform transform = _js_matrix_to_transform(tracker_matrix);
             tracker->set_position(transform.origin);
@@ -407,20 +452,24 @@ void WebXRInterfaceJS::_update_tracker(int p_controller_id) {
             free(tracker_matrix);
         }
 
-        int *buttons = godot_webxr_get_controller_buttons(p_controller_id);
+        int* buttons = godot_webxr_get_controller_buttons(p_controller_id);
         if (buttons) {
             for (int i = 0; i < buttons[0]; i++) {
-                input->joy_button(p_controller_id + 100, i, *((float *)buttons + (i + 1)));
+                input->joy_button(
+                    p_controller_id + 100,
+                    i,
+                    *((float*)buttons + (i + 1))
+                );
             }
             free(buttons);
         }
 
-        int *axes = godot_webxr_get_controller_axes(p_controller_id);
+        int* axes = godot_webxr_get_controller_axes(p_controller_id);
         if (axes) {
             for (int i = 0; i < axes[0]; i++) {
                 InputDefault::JoyAxis joy_axis;
                 joy_axis.min = -1;
-                joy_axis.value = *((float *)axes + (i + 1));
+                joy_axis.value = *((float*)axes + (i + 1));
                 input->joy_axis(p_controller_id + 100, i, joy_axis);
             }
             free(axes);
@@ -436,7 +485,12 @@ void WebXRInterfaceJS::_on_controller_changed() {
     for (int i = 0; i < 2; i++) {
         bool controller_connected = godot_webxr_is_controller_connected(i);
         if (controllers_state[i] != controller_connected) {
-            Input::get_singleton()->joy_connection_changed(i + 100, controller_connected, i == 0 ? "Left" : "Right", "");
+            Input::get_singleton()->joy_connection_changed(
+                i + 100,
+                controller_connected,
+                i == 0 ? "Left" : "Right",
+                ""
+            );
             controllers_state[i] = controller_connected;
         }
     }

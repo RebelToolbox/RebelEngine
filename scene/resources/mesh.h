@@ -41,7 +41,7 @@
 class Mesh : public Resource {
     GDCLASS(Mesh, Resource);
 
-    mutable Ref<TriangleMesh> triangle_mesh; //cached
+    mutable Ref<TriangleMesh> triangle_mesh; // cached
     mutable Vector<Vector3> debug_lines;
     Size2 lightmap_size_hint;
 
@@ -50,13 +50,11 @@ protected:
 
 public:
     enum {
-
         NO_INDEX_ARRAY = VisualServer::NO_INDEX_ARRAY,
         ARRAY_WEIGHTS_SIZE = VisualServer::ARRAY_WEIGHTS_SIZE
     };
 
     enum ArrayType {
-
         ARRAY_VERTEX = VisualServer::ARRAY_VERTEX,
         ARRAY_NORMAL = VisualServer::ARRAY_NORMAL,
         ARRAY_TANGENT = VisualServer::ARRAY_TANGENT,
@@ -67,7 +65,6 @@ public:
         ARRAY_WEIGHTS = VisualServer::ARRAY_WEIGHTS,
         ARRAY_INDEX = VisualServer::ARRAY_INDEX,
         ARRAY_MAX = VisualServer::ARRAY_MAX
-
     };
 
     enum ArrayFormat {
@@ -83,7 +80,8 @@ public:
         ARRAY_FORMAT_INDEX = 1 << ARRAY_INDEX,
 
         ARRAY_COMPRESS_BASE = (ARRAY_INDEX + 1),
-        ARRAY_COMPRESS_VERTEX = 1 << (ARRAY_VERTEX + ARRAY_COMPRESS_BASE), // mandatory
+        ARRAY_COMPRESS_VERTEX =
+            1 << (ARRAY_VERTEX + ARRAY_COMPRESS_BASE), // mandatory
         ARRAY_COMPRESS_NORMAL = 1 << (ARRAY_NORMAL + ARRAY_COMPRESS_BASE),
         ARRAY_COMPRESS_TANGENT = 1 << (ARRAY_TANGENT + ARRAY_COMPRESS_BASE),
         ARRAY_COMPRESS_COLOR = 1 << (ARRAY_COLOR + ARRAY_COMPRESS_BASE),
@@ -98,8 +96,10 @@ public:
         ARRAY_FLAG_USE_DYNAMIC_UPDATE = ARRAY_COMPRESS_INDEX << 3,
         ARRAY_FLAG_USE_OCTAHEDRAL_COMPRESSION = ARRAY_COMPRESS_INDEX << 4,
 
-        ARRAY_COMPRESS_DEFAULT = ARRAY_COMPRESS_NORMAL | ARRAY_COMPRESS_TANGENT | ARRAY_COMPRESS_COLOR | ARRAY_COMPRESS_TEX_UV | ARRAY_COMPRESS_TEX_UV2 | ARRAY_COMPRESS_WEIGHTS | ARRAY_FLAG_USE_OCTAHEDRAL_COMPRESSION
-
+        ARRAY_COMPRESS_DEFAULT = ARRAY_COMPRESS_NORMAL | ARRAY_COMPRESS_TANGENT
+                               | ARRAY_COMPRESS_COLOR | ARRAY_COMPRESS_TEX_UV
+                               | ARRAY_COMPRESS_TEX_UV2 | ARRAY_COMPRESS_WEIGHTS
+                               | ARRAY_FLAG_USE_OCTAHEDRAL_COMPRESSION
     };
 
     enum PrimitiveType {
@@ -113,7 +113,6 @@ public:
     };
 
     enum BlendShapeMode {
-
         BLEND_SHAPE_MODE_NORMALIZED = VS::BLEND_SHAPE_MODE_NORMALIZED,
         BLEND_SHAPE_MODE_RELATIVE = VS::BLEND_SHAPE_MODE_RELATIVE,
     };
@@ -126,29 +125,43 @@ public:
     virtual Array surface_get_blend_shape_arrays(int p_surface) const = 0;
     virtual uint32_t surface_get_format(int p_idx) const = 0;
     virtual PrimitiveType surface_get_primitive_type(int p_idx) const = 0;
-    virtual void surface_set_material(int p_idx, const Ref<Material> &p_material) = 0;
+    virtual void surface_set_material(
+        int p_idx,
+        const Ref<Material>& p_material
+    ) = 0;
     virtual Ref<Material> surface_get_material(int p_idx) const = 0;
     virtual int get_blend_shape_count() const = 0;
     virtual StringName get_blend_shape_name(int p_index) const = 0;
-    virtual void set_blend_shape_name(int p_index, const StringName &p_name) = 0;
+    virtual void set_blend_shape_name(
+        int p_index,
+        const StringName& p_name
+    ) = 0;
 
     PoolVector<Face3> get_faces() const;
     Ref<TriangleMesh> generate_triangle_mesh() const;
-    void generate_debug_mesh_lines(Vector<Vector3> &r_lines);
-    void generate_debug_mesh_indices(Vector<Vector3> &r_points);
+    void generate_debug_mesh_lines(Vector<Vector3>& r_lines);
+    void generate_debug_mesh_indices(Vector<Vector3>& r_points);
 
     Ref<Shape> create_trimesh_shape() const;
-    Ref<Shape> create_convex_shape(bool p_clean = true, bool p_simplify = false) const;
+    Ref<Shape> create_convex_shape(bool p_clean = true, bool p_simplify = false)
+        const;
 
     Ref<Mesh> create_outline(float p_margin) const;
 
     virtual AABB get_aabb() const = 0;
 
-    void set_lightmap_size_hint(const Vector2 &p_size);
+    void set_lightmap_size_hint(const Vector2& p_size);
     Size2 get_lightmap_size_hint() const;
     void clear_cache() const;
 
-    typedef Vector<PoolVector<Vector3>> (*ConvexDecompositionFunc)(const real_t *p_vertices, int p_vertex_count, const uint32_t *p_triangles, int p_triangle_count, int p_max_convex_hulls, Vector<PoolVector<uint32_t>> *r_convex_indices);
+    typedef Vector<PoolVector<Vector3>> (*ConvexDecompositionFunc)(
+        const real_t* p_vertices,
+        int p_vertex_count,
+        const uint32_t* p_triangles,
+        int p_triangle_count,
+        int p_max_convex_hulls,
+        Vector<PoolVector<uint32_t>>* r_convex_indices
+    );
 
     static ConvexDecompositionFunc convex_decomposition_function;
 
@@ -168,6 +181,7 @@ private:
         Ref<Material> material;
         bool is_2d;
     };
+
     Vector<Surface> surfaces;
     RID mesh;
     AABB aabb;
@@ -178,37 +192,62 @@ private:
     void _recompute_aabb();
 
 protected:
-    virtual bool _is_generated() const { return false; }
+    virtual bool _is_generated() const {
+        return false;
+    }
 
-    bool _set(const StringName &p_name, const Variant &p_value);
-    bool _get(const StringName &p_name, Variant &r_ret) const;
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _set(const StringName& p_name, const Variant& p_value);
+    bool _get(const StringName& p_name, Variant& r_ret) const;
+    void _get_property_list(List<PropertyInfo>* p_list) const;
 
     static void _bind_methods();
 
 public:
-    void add_surface_from_arrays(PrimitiveType p_primitive, const Array &p_arrays, const Array &p_blend_shapes = Array(), uint32_t p_flags = ARRAY_COMPRESS_DEFAULT);
-    void add_surface(uint32_t p_format, PrimitiveType p_primitive, const PoolVector<uint8_t> &p_array, int p_vertex_count, const PoolVector<uint8_t> &p_index_array, int p_index_count, const AABB &p_aabb, const Vector<PoolVector<uint8_t>> &p_blend_shapes = Vector<PoolVector<uint8_t>>(), const Vector<AABB> &p_bone_aabbs = Vector<AABB>());
+    void add_surface_from_arrays(
+        PrimitiveType p_primitive,
+        const Array& p_arrays,
+        const Array& p_blend_shapes = Array(),
+        uint32_t p_flags = ARRAY_COMPRESS_DEFAULT
+    );
+    void add_surface(
+        uint32_t p_format,
+        PrimitiveType p_primitive,
+        const PoolVector<uint8_t>& p_array,
+        int p_vertex_count,
+        const PoolVector<uint8_t>& p_index_array,
+        int p_index_count,
+        const AABB& p_aabb,
+        const Vector<PoolVector<uint8_t>>& p_blend_shapes =
+            Vector<PoolVector<uint8_t>>(),
+        const Vector<AABB>& p_bone_aabbs = Vector<AABB>()
+    );
 
     Array surface_get_arrays(int p_surface) const;
     Array surface_get_blend_shape_arrays(int p_surface) const;
 
-    void add_blend_shape(const StringName &p_name);
+    void add_blend_shape(const StringName& p_name);
     int get_blend_shape_count() const;
     StringName get_blend_shape_name(int p_index) const;
-    void set_blend_shape_name(int p_index, const StringName &p_name);
+    void set_blend_shape_name(int p_index, const StringName& p_name);
     void clear_blend_shapes();
 
     void set_blend_shape_mode(BlendShapeMode p_mode);
     BlendShapeMode get_blend_shape_mode() const;
 
-    void surface_update_region(int p_surface, int p_offset, const PoolVector<uint8_t> &p_data);
+    void surface_update_region(
+        int p_surface,
+        int p_offset,
+        const PoolVector<uint8_t>& p_data
+    );
 
     int get_surface_count() const;
     void surface_remove(int p_idx);
     void clear_surfaces();
 
-    void surface_set_custom_aabb(int p_idx, const AABB &p_aabb); //only recognized by driver
+    void surface_set_custom_aabb(
+        int p_idx,
+        const AABB& p_aabb
+    ); // only recognized by driver
 
     int surface_get_array_len(int p_idx) const;
     int surface_get_array_index_len(int p_idx) const;
@@ -216,16 +255,19 @@ public:
     PrimitiveType surface_get_primitive_type(int p_idx) const;
     bool surface_is_alpha_sorting_enabled(int p_idx) const;
 
-    virtual void surface_set_material(int p_idx, const Ref<Material> &p_material);
+    virtual void surface_set_material(
+        int p_idx,
+        const Ref<Material>& p_material
+    );
     virtual Ref<Material> surface_get_material(int p_idx) const;
 
-    int surface_find_by_name(const String &p_name) const;
-    void surface_set_name(int p_idx, const String &p_name);
+    int surface_find_by_name(const String& p_name) const;
+    void surface_set_name(int p_idx, const String& p_name);
     String surface_get_name(int p_idx) const;
 
-    void add_surface_from_mesh_data(const Geometry::MeshData &p_mesh_data);
+    void add_surface_from_mesh_data(const Geometry::MeshData& p_mesh_data);
 
-    void set_custom_aabb(const AABB &p_custom);
+    void set_custom_aabb(const AABB& p_custom);
     AABB get_custom_aabb() const;
 
     AABB get_aabb() const;
@@ -233,8 +275,17 @@ public:
 
     void regen_normalmaps();
 
-    Error lightmap_unwrap(const Transform &p_base_transform = Transform(), float p_texel_size = 0.05);
-    Error lightmap_unwrap_cached(int *&r_cache_data, unsigned int &r_cache_size, bool &r_used_cache, const Transform &p_base_transform = Transform(), float p_texel_size = 0.05);
+    Error lightmap_unwrap(
+        const Transform& p_base_transform = Transform(),
+        float p_texel_size = 0.05
+    );
+    Error lightmap_unwrap_cached(
+        int*& r_cache_data,
+        unsigned int& r_cache_size,
+        bool& r_used_cache,
+        const Transform& p_base_transform = Transform(),
+        float p_texel_size = 0.05
+    );
 
     virtual void reload_from_file();
 

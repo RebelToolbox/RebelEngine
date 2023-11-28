@@ -33,8 +33,9 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestTransform {
-MainLoop *test();
-}
+namespace TestTransform
+{
+MainLoop* test();
+} // namespace TestTransform
 
 #endif

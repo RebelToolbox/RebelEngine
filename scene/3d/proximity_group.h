@@ -54,7 +54,7 @@ private:
 
     void _clear_groups();
     void _update_groups();
-    void _add_groups(int *p_cell, String p_base, int p_depth);
+    void _add_groups(int* p_cell, String p_base, int p_depth);
     void _new_group(StringName p_name);
 
     void _proximity_group_broadcast(String p_method, Variant p_parameters);
@@ -65,18 +65,19 @@ protected:
     static void _bind_methods();
 
 public:
-    void set_group_name(const String &p_group_name);
+    void set_group_name(const String& p_group_name);
     String get_group_name() const;
 
     void set_dispatch_mode(DispatchMode p_mode);
     DispatchMode get_dispatch_mode() const;
 
-    void set_grid_radius(const Vector3 &p_radius);
+    void set_grid_radius(const Vector3& p_radius);
     Vector3 get_grid_radius() const;
 
     void broadcast(String p_method, Variant p_parameters);
 
     ProximityGroup();
+
     ~ProximityGroup() {}
 };
 

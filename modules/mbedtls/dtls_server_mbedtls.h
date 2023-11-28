@@ -36,7 +36,7 @@
 
 class DTLSServerMbedTLS : public DTLSServer {
 private:
-    static DTLSServer *_create_func();
+    static DTLSServer* _create_func();
     Ref<CryptoKey> _key;
     Ref<X509Certificate> _cert;
     Ref<X509Certificate> _ca_chain;
@@ -46,7 +46,11 @@ public:
     static void initialize();
     static void finalize();
 
-    virtual Error setup(Ref<CryptoKey> p_key, Ref<X509Certificate> p_cert, Ref<X509Certificate> p_ca_chain = Ref<X509Certificate>());
+    virtual Error setup(
+        Ref<CryptoKey> p_key,
+        Ref<X509Certificate> p_cert,
+        Ref<X509Certificate> p_ca_chain = Ref<X509Certificate>()
+    );
     virtual void stop();
     virtual Ref<PacketPeerDTLS> take_connection(Ref<PacketPeerUDP> p_peer);
 

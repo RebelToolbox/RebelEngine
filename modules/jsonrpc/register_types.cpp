@@ -36,5 +36,4 @@ void register_jsonrpc_types() {
     ClassDB::register_class<JSONRPC>();
 }
 
-void unregister_jsonrpc_types() {
-}
+void unregister_jsonrpc_types() {}

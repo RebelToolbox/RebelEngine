@@ -34,21 +34,30 @@ MultiplayerPeerGDNative::MultiplayerPeerGDNative() {
     interface = nullptr;
 }
 
-MultiplayerPeerGDNative::~MultiplayerPeerGDNative() {
-}
+MultiplayerPeerGDNative::~MultiplayerPeerGDNative() {}
 
-void MultiplayerPeerGDNative::set_native_multiplayer_peer(const godot_net_multiplayer_peer *p_interface) {
+void MultiplayerPeerGDNative::set_native_multiplayer_peer(
+    const godot_net_multiplayer_peer* p_interface
+) {
     interface = p_interface;
 }
 
-Error MultiplayerPeerGDNative::get_packet(const uint8_t **r_buffer, int &r_buffer_size) {
+Error MultiplayerPeerGDNative::get_packet(
+    const uint8_t** r_buffer,
+    int& r_buffer_size
+) {
     ERR_FAIL_COND_V(interface == nullptr, ERR_UNCONFIGURED);
-    return (Error)interface->get_packet(interface->data, r_buffer, &r_buffer_size);
+    return (Error
+    )interface->get_packet(interface->data, r_buffer, &r_buffer_size);
 }
 
-Error MultiplayerPeerGDNative::put_packet(const uint8_t *p_buffer, int p_buffer_size) {
+Error MultiplayerPeerGDNative::put_packet(
+    const uint8_t* p_buffer,
+    int p_buffer_size
+) {
     ERR_FAIL_COND_V(interface == nullptr, ERR_UNCONFIGURED);
-    return (Error)interface->put_packet(interface->data, p_buffer, p_buffer_size);
+    return (Error
+    )interface->put_packet(interface->data, p_buffer, p_buffer_size);
 }
 
 int MultiplayerPeerGDNative::get_max_packet_size() const {
@@ -67,7 +76,8 @@ void MultiplayerPeerGDNative::set_transfer_mode(TransferMode p_mode) {
     interface->set_transfer_mode(interface->data, (godot_int)p_mode);
 }
 
-NetworkedMultiplayerPeer::TransferMode MultiplayerPeerGDNative::get_transfer_mode() const {
+NetworkedMultiplayerPeer::TransferMode MultiplayerPeerGDNative::
+    get_transfer_mode() const {
     ERR_FAIL_COND_V(interface == nullptr, TRANSFER_MODE_UNRELIABLE);
     return (TransferMode)interface->get_transfer_mode(interface->data);
 }
@@ -107,7 +117,8 @@ bool MultiplayerPeerGDNative::is_refusing_new_connections() const {
     return interface->is_refusing_new_connections(interface->data);
 }
 
-NetworkedMultiplayerPeer::ConnectionStatus MultiplayerPeerGDNative::get_connection_status() const {
+NetworkedMultiplayerPeer::ConnectionStatus MultiplayerPeerGDNative::
+    get_connection_status() const {
     ERR_FAIL_COND_V(interface == nullptr, CONNECTION_DISCONNECTED);
     return (ConnectionStatus)interface->get_connection_status(interface->data);
 }
@@ -119,7 +130,10 @@ void MultiplayerPeerGDNative::_bind_methods() {
 
 extern "C" {
 
-void GDAPI godot_net_bind_multiplayer_peer(godot_object *p_obj, const godot_net_multiplayer_peer *p_impl) {
-    ((MultiplayerPeerGDNative *)p_obj)->set_native_multiplayer_peer(p_impl);
+void GDAPI godot_net_bind_multiplayer_peer(
+    godot_object* p_obj,
+    const godot_net_multiplayer_peer* p_impl
+) {
+    ((MultiplayerPeerGDNative*)p_obj)->set_native_multiplayer_peer(p_impl);
 }
 }

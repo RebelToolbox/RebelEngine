@@ -74,7 +74,7 @@ void post_process_preview(Ref<Image> p_image) {
     p_image->unlock();
 }
 
-bool EditorTexturePreviewPlugin::handles(const String &p_type) const {
+bool EditorTexturePreviewPlugin::handles(const String& p_type) const {
     return ClassDB::is_parent_class(p_type, "Texture");
 }
 
@@ -82,7 +82,10 @@ bool EditorTexturePreviewPlugin::generate_small_preview_automatically() const {
     return true;
 }
 
-Ref<Texture> EditorTexturePreviewPlugin::generate(const RES &p_from, const Size2 &p_size) const {
+Ref<Texture> EditorTexturePreviewPlugin::generate(
+    const RES& p_from,
+    const Size2& p_size
+) const {
     Ref<Image> img;
     Ref<AtlasTexture> atex = p_from;
     Ref<LargeTexture> ltex = p_from;
@@ -142,16 +145,18 @@ Ref<Texture> EditorTexturePreviewPlugin::generate(const RES &p_from, const Size2
     return ptex;
 }
 
-EditorTexturePreviewPlugin::EditorTexturePreviewPlugin() {
-}
+EditorTexturePreviewPlugin::EditorTexturePreviewPlugin() {}
 
 ////////////////////////////////////////////////////////////////////////////
 
-bool EditorImagePreviewPlugin::handles(const String &p_type) const {
+bool EditorImagePreviewPlugin::handles(const String& p_type) const {
     return p_type == "Image";
 }
 
-Ref<Texture> EditorImagePreviewPlugin::generate(const RES &p_from, const Size2 &p_size) const {
+Ref<Texture> EditorImagePreviewPlugin::generate(
+    const RES& p_from,
+    const Size2& p_size
+) const {
     Ref<Image> img = p_from;
 
     if (img.is_null() || img->empty()) {
@@ -187,19 +192,22 @@ Ref<Texture> EditorImagePreviewPlugin::generate(const RES &p_from, const Size2 &
     return ptex;
 }
 
-EditorImagePreviewPlugin::EditorImagePreviewPlugin() {
-}
+EditorImagePreviewPlugin::EditorImagePreviewPlugin() {}
 
 bool EditorImagePreviewPlugin::generate_small_preview_automatically() const {
     return true;
 }
+
 ////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////
-bool EditorBitmapPreviewPlugin::handles(const String &p_type) const {
+bool EditorBitmapPreviewPlugin::handles(const String& p_type) const {
     return ClassDB::is_parent_class(p_type, "BitMap");
 }
 
-Ref<Texture> EditorBitmapPreviewPlugin::generate(const RES &p_from, const Size2 &p_size) const {
+Ref<Texture> EditorBitmapPreviewPlugin::generate(
+    const RES& p_from,
+    const Size2& p_size
+) const {
     Ref<BitMap> bm = p_from;
 
     if (bm->get_size() == Size2()) {
@@ -226,7 +234,13 @@ Ref<Texture> EditorBitmapPreviewPlugin::generate(const RES &p_from, const Size2 
 
     Ref<Image> img;
     img.instance();
-    img->create(bm->get_size().width, bm->get_size().height, false, Image::FORMAT_L8, data);
+    img->create(
+        bm->get_size().width,
+        bm->get_size().height,
+        false,
+        Image::FORMAT_L8,
+        data
+    );
 
     if (img->is_compressed()) {
         if (img->decompress() != OK) {
@@ -257,24 +271,31 @@ bool EditorBitmapPreviewPlugin::generate_small_preview_automatically() const {
     return true;
 }
 
-EditorBitmapPreviewPlugin::EditorBitmapPreviewPlugin() {
-}
+EditorBitmapPreviewPlugin::EditorBitmapPreviewPlugin() {}
 
 ///////////////////////////////////////////////////////////////////////////
 
-bool EditorPackedScenePreviewPlugin::handles(const String &p_type) const {
+bool EditorPackedScenePreviewPlugin::handles(const String& p_type) const {
     return ClassDB::is_parent_class(p_type, "PackedScene");
 }
-Ref<Texture> EditorPackedScenePreviewPlugin::generate(const RES &p_from, const Size2 &p_size) const {
+
+Ref<Texture> EditorPackedScenePreviewPlugin::generate(
+    const RES& p_from,
+    const Size2& p_size
+) const {
     return generate_from_path(p_from->get_path(), p_size);
 }
 
-Ref<Texture> EditorPackedScenePreviewPlugin::generate_from_path(const String &p_path, const Size2 &p_size) const {
+Ref<Texture> EditorPackedScenePreviewPlugin::generate_from_path(
+    const String& p_path,
+    const Size2& p_size
+) const {
     String temp_path = EditorSettings::get_singleton()->get_cache_dir();
-    String cache_base = ProjectSettings::get_singleton()->globalize_path(p_path).md5_text();
+    String cache_base =
+        ProjectSettings::get_singleton()->globalize_path(p_path).md5_text();
     cache_base = temp_path.plus_file("resthumb-" + cache_base);
 
-    //does not have it, try to load a cached thumbnail
+    // does not have it, try to load a cached thumbnail
 
     String path = cache_base + ".png";
 
@@ -297,44 +318,58 @@ Ref<Texture> EditorPackedScenePreviewPlugin::generate_from_path(const String &p_
     }
 }
 
-EditorPackedScenePreviewPlugin::EditorPackedScenePreviewPlugin() {
-}
+EditorPackedScenePreviewPlugin::EditorPackedScenePreviewPlugin() {}
 
 //////////////////////////////////////////////////////////////////
 
-void EditorMaterialPreviewPlugin::_preview_done(const Variant &p_udata) {
+void EditorMaterialPreviewPlugin::_preview_done(const Variant& p_udata) {
     preview_done.set();
 }
 
 void EditorMaterialPreviewPlugin::_bind_methods() {
-    ClassDB::bind_method("_preview_done", &EditorMaterialPreviewPlugin::_preview_done);
+    ClassDB::bind_method(
+        "_preview_done",
+        &EditorMaterialPreviewPlugin::_preview_done
+    );
 }
 
-bool EditorMaterialPreviewPlugin::handles(const String &p_type) const {
-    return ClassDB::is_parent_class(p_type, "Material"); //any material
+bool EditorMaterialPreviewPlugin::handles(const String& p_type) const {
+    return ClassDB::is_parent_class(p_type, "Material"); // any material
 }
 
 bool EditorMaterialPreviewPlugin::generate_small_preview_automatically() const {
     return true;
 }
 
-Ref<Texture> EditorMaterialPreviewPlugin::generate(const RES &p_from, const Size2 &p_size) const {
+Ref<Texture> EditorMaterialPreviewPlugin::generate(
+    const RES& p_from,
+    const Size2& p_size
+) const {
     Ref<Material> material = p_from;
     ERR_FAIL_COND_V(material.is_null(), Ref<Texture>());
 
     if (material->get_shader_mode() == Shader::MODE_SPATIAL) {
-        VS::get_singleton()->mesh_surface_set_material(sphere, 0, material->get_rid());
+        VS::get_singleton()
+            ->mesh_surface_set_material(sphere, 0, material->get_rid());
 
-        VS::get_singleton()->viewport_set_update_mode(viewport, VS::VIEWPORT_UPDATE_ONCE); //once used for capture
+        VS::get_singleton()->viewport_set_update_mode(
+            viewport,
+            VS::VIEWPORT_UPDATE_ONCE
+        ); // once used for capture
 
         preview_done.clear();
-        VS::get_singleton()->request_frame_drawn_callback(const_cast<EditorMaterialPreviewPlugin *>(this), "_preview_done", Variant());
+        VS::get_singleton()->request_frame_drawn_callback(
+            const_cast<EditorMaterialPreviewPlugin*>(this),
+            "_preview_done",
+            Variant()
+        );
 
         while (!preview_done.is_set()) {
             OS::get_singleton()->delay_usec(10);
         }
 
-        Ref<Image> img = VS::get_singleton()->texture_get_data(viewport_texture);
+        Ref<Image> img =
+            VS::get_singleton()->texture_get_data(viewport_texture);
         VS::get_singleton()->mesh_surface_set_material(sphere, 0, RID());
 
         ERR_FAIL_COND_V(!img.is_valid(), Ref<ImageTexture>());
@@ -355,7 +390,10 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
     scenario = VS::get_singleton()->scenario_create();
 
     viewport = VS::get_singleton()->viewport_create();
-    VS::get_singleton()->viewport_set_update_mode(viewport, VS::VIEWPORT_UPDATE_DISABLED);
+    VS::get_singleton()->viewport_set_update_mode(
+        viewport,
+        VS::VIEWPORT_UPDATE_DISABLED
+    );
     VS::get_singleton()->viewport_set_scenario(viewport, scenario);
     VS::get_singleton()->viewport_set_size(viewport, 128, 128);
     VS::get_singleton()->viewport_set_transparent_background(viewport, true);
@@ -365,20 +403,29 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
 
     camera = VS::get_singleton()->camera_create();
     VS::get_singleton()->viewport_attach_camera(viewport, camera);
-    VS::get_singleton()->camera_set_transform(camera, Transform(Basis(), Vector3(0, 0, 3)));
+    VS::get_singleton()->camera_set_transform(
+        camera,
+        Transform(Basis(), Vector3(0, 0, 3))
+    );
     VS::get_singleton()->camera_set_perspective(camera, 45, 0.1, 10);
 
     light = VS::get_singleton()->directional_light_create();
     light_instance = VS::get_singleton()->instance_create2(light, scenario);
-    VS::get_singleton()->instance_set_transform(light_instance, Transform().looking_at(Vector3(-1, -1, -1), Vector3(0, 1, 0)));
+    VS::get_singleton()->instance_set_transform(
+        light_instance,
+        Transform().looking_at(Vector3(-1, -1, -1), Vector3(0, 1, 0))
+    );
 
     light2 = VS::get_singleton()->directional_light_create();
     VS::get_singleton()->light_set_color(light2, Color(0.7, 0.7, 0.7));
-    //VS::get_singleton()->light_set_color(light2, Color(0.7, 0.7, 0.7));
+    // VS::get_singleton()->light_set_color(light2, Color(0.7, 0.7, 0.7));
 
     light_instance2 = VS::get_singleton()->instance_create2(light2, scenario);
 
-    VS::get_singleton()->instance_set_transform(light_instance2, Transform().looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1)));
+    VS::get_singleton()->instance_set_transform(
+        light_instance2,
+        Transform().looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1))
+    );
 
     sphere = VS::get_singleton()->mesh_create();
     sphere_instance = VS::get_singleton()->instance_create2(sphere, scenario);
@@ -418,22 +465,25 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
                 Vector3(x0 * zr0, z0, y0 * zr0)
             };
 
-#define ADD_POINT(m_idx)                                                                       \
-    normals.push_back(v[m_idx]);                                                               \
-    vertices.push_back(v[m_idx] * radius);                                                     \
-    {                                                                                          \
-        Vector2 uv(Math::atan2(v[m_idx].x, v[m_idx].z), Math::atan2(-v[m_idx].y, v[m_idx].z)); \
-        uv /= Math_PI;                                                                         \
-        uv *= 4.0;                                                                             \
-        uv = uv * 0.5 + Vector2(0.5, 0.5);                                                     \
-        uvs.push_back(uv);                                                                     \
-    }                                                                                          \
-    {                                                                                          \
-        Vector3 t = tt.xform(v[m_idx]);                                                        \
-        tangents.push_back(t.x);                                                               \
-        tangents.push_back(t.y);                                                               \
-        tangents.push_back(t.z);                                                               \
-        tangents.push_back(1.0);                                                               \
+#define ADD_POINT(m_idx)                                                       \
+    normals.push_back(v[m_idx]);                                               \
+    vertices.push_back(v[m_idx] * radius);                                     \
+    {                                                                          \
+        Vector2 uv(                                                            \
+            Math::atan2(v[m_idx].x, v[m_idx].z),                               \
+            Math::atan2(-v[m_idx].y, v[m_idx].z)                               \
+        );                                                                     \
+        uv /= Math_PI;                                                         \
+        uv *= 4.0;                                                             \
+        uv = uv * 0.5 + Vector2(0.5, 0.5);                                     \
+        uvs.push_back(uv);                                                     \
+    }                                                                          \
+    {                                                                          \
+        Vector3 t = tt.xform(v[m_idx]);                                        \
+        tangents.push_back(t.x);                                               \
+        tangents.push_back(t.y);                                               \
+        tangents.push_back(t.z);                                               \
+        tangents.push_back(1.0);                                               \
     }
 
             ADD_POINT(0);
@@ -452,7 +502,8 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
     arr[VS::ARRAY_NORMAL] = normals;
     arr[VS::ARRAY_TANGENT] = tangents;
     arr[VS::ARRAY_TEX_UV] = uvs;
-    VS::get_singleton()->mesh_add_surface_from_arrays(sphere, VS::PRIMITIVE_TRIANGLES, arr);
+    VS::get_singleton()
+        ->mesh_add_surface_from_arrays(sphere, VS::PRIMITIVE_TRIANGLES, arr);
 }
 
 EditorMaterialPreviewPlugin::~EditorMaterialPreviewPlugin() {
@@ -470,14 +521,18 @@ EditorMaterialPreviewPlugin::~EditorMaterialPreviewPlugin() {
 ///////////////////////////////////////////////////////////////////////////
 
 static bool _is_text_char(CharType c) {
-    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_';
+    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+        || (c >= '0' && c <= '9') || c == '_';
 }
 
-bool EditorScriptPreviewPlugin::handles(const String &p_type) const {
+bool EditorScriptPreviewPlugin::handles(const String& p_type) const {
     return ClassDB::is_parent_class(p_type, "Script");
 }
 
-Ref<Texture> EditorScriptPreviewPlugin::generate(const RES &p_from, const Size2 &p_size) const {
+Ref<Texture> EditorScriptPreviewPlugin::generate(
+    const RES& p_from,
+    const Size2& p_size
+) const {
     Ref<Script> scr = p_from;
     if (scr.is_null()) {
         return Ref<Texture>();
@@ -494,7 +549,7 @@ Ref<Texture> EditorScriptPreviewPlugin::generate(const RES &p_from, const Size2 
     Set<String> control_flow_keywords;
     Set<String> keywords;
 
-    for (List<String>::Element *E = kwors.front(); E; E = E->next()) {
+    for (List<String>::Element* E = kwors.front(); E; E = E->next()) {
         if (scr->get_language()->is_control_flow_keyword(E->get())) {
             control_flow_keywords.insert(E->get());
         } else {
@@ -509,12 +564,24 @@ Ref<Texture> EditorScriptPreviewPlugin::generate(const RES &p_from, const Size2 
     int thumbnail_size = MAX(p_size.x, p_size.y);
     img->create(thumbnail_size, thumbnail_size, false, Image::FORMAT_RGBA8);
 
-    Color bg_color = EditorSettings::get_singleton()->get("text_editor/highlighting/background_color");
-    Color keyword_color = EditorSettings::get_singleton()->get("text_editor/highlighting/keyword_color");
-    Color control_flow_keyword_color = EditorSettings::get_singleton()->get("text_editor/highlighting/control_flow_keyword_color");
-    Color text_color = EditorSettings::get_singleton()->get("text_editor/highlighting/text_color");
-    Color symbol_color = EditorSettings::get_singleton()->get("text_editor/highlighting/symbol_color");
-    Color comment_color = EditorSettings::get_singleton()->get("text_editor/highlighting/comment_color");
+    Color bg_color = EditorSettings::get_singleton()->get(
+        "text_editor/highlighting/background_color"
+    );
+    Color keyword_color = EditorSettings::get_singleton()->get(
+        "text_editor/highlighting/keyword_color"
+    );
+    Color control_flow_keyword_color = EditorSettings::get_singleton()->get(
+        "text_editor/highlighting/control_flow_keyword_color"
+    );
+    Color text_color = EditorSettings::get_singleton()->get(
+        "text_editor/highlighting/text_color"
+    );
+    Color symbol_color = EditorSettings::get_singleton()->get(
+        "text_editor/highlighting/symbol_color"
+    );
+    Color comment_color = EditorSettings::get_singleton()->get(
+        "text_editor/highlighting/comment_color"
+    );
 
     img->lock();
 
@@ -551,8 +618,11 @@ Ref<Texture> EditorScriptPreviewPlugin::generate(const RES &p_from, const Size2 
                 if (in_comment) {
                     color = comment_color;
                 } else {
-                    if (c != '_' && ((c >= '!' && c <= '/') || (c >= ':' && c <= '@') || (c >= '[' && c <= '`') || (c >= '{' && c <= '~') || c == '\t')) {
-                        //make symbol a little visible
+                    if (c != '_'
+                        && ((c >= '!' && c <= '/') || (c >= ':' && c <= '@')
+                            || (c >= '[' && c <= '`') || (c >= '{' && c <= '~')
+                            || c == '\t')) {
+                        // make symbol a little visible
                         color = symbol_color;
                         in_control_flow_keyword = false;
                         in_keyword = false;
@@ -622,15 +692,18 @@ Ref<Texture> EditorScriptPreviewPlugin::generate(const RES &p_from, const Size2 
     return ptex;
 }
 
-EditorScriptPreviewPlugin::EditorScriptPreviewPlugin() {
-}
+EditorScriptPreviewPlugin::EditorScriptPreviewPlugin() {}
+
 ///////////////////////////////////////////////////////////////////
 
-bool EditorAudioStreamPreviewPlugin::handles(const String &p_type) const {
+bool EditorAudioStreamPreviewPlugin::handles(const String& p_type) const {
     return ClassDB::is_parent_class(p_type, "AudioStream");
 }
 
-Ref<Texture> EditorAudioStreamPreviewPlugin::generate(const RES &p_from, const Size2 &p_size) const {
+Ref<Texture> EditorAudioStreamPreviewPlugin::generate(
+    const RES& p_from,
+    const Size2& p_size
+) const {
     Ref<AudioStream> stream = p_from;
     ERR_FAIL_COND_V(stream.is_null(), Ref<Texture>());
 
@@ -641,14 +714,14 @@ Ref<Texture> EditorAudioStreamPreviewPlugin::generate(const RES &p_from, const S
     img.resize(w * h * 3);
 
     PoolVector<uint8_t>::Write imgdata = img.write();
-    uint8_t *imgw = imgdata.ptr();
+    uint8_t* imgw = imgdata.ptr();
 
     Ref<AudioStreamPlayback> playback = stream->instance_playback();
     ERR_FAIL_COND_V(playback.is_null(), Ref<Texture>());
 
     float len_s = stream->get_length();
     if (len_s == 0) {
-        len_s = 60; //one minute audio if no length specified
+        len_s = 60; // one minute audio if no length specified
     }
     int frame_length = AudioServer::get_singleton()->get_mix_rate() * len_s;
 
@@ -682,7 +755,7 @@ Ref<Texture> EditorAudioStreamPreviewPlugin::generate(const RES &p_from, const S
         int pto = CLAMP((max * 0.5 + 0.5) * h / 2, 0, h / 2) + h / 4;
 
         for (int j = 0; j < h; j++) {
-            uint8_t *p = &imgw[(j * w + i) * 3];
+            uint8_t* p = &imgw[(j * w + i) * 3];
             if (j < pfrom || j > pto) {
                 p[0] = 100;
                 p[1] = 100;
@@ -696,7 +769,7 @@ Ref<Texture> EditorAudioStreamPreviewPlugin::generate(const RES &p_from, const S
     }
 
     imgdata.release();
-    //post_process_preview(img);
+    // post_process_preview(img);
 
     Ref<ImageTexture> ptex = Ref<ImageTexture>(memnew(ImageTexture));
     Ref<Image> image;
@@ -706,23 +779,29 @@ Ref<Texture> EditorAudioStreamPreviewPlugin::generate(const RES &p_from, const S
     return ptex;
 }
 
-EditorAudioStreamPreviewPlugin::EditorAudioStreamPreviewPlugin() {
-}
+EditorAudioStreamPreviewPlugin::EditorAudioStreamPreviewPlugin() {}
 
 ///////////////////////////////////////////////////////////////////////////
 
-void EditorMeshPreviewPlugin::_preview_done(const Variant &p_udata) {
+void EditorMeshPreviewPlugin::_preview_done(const Variant& p_udata) {
     preview_done.set();
 }
 
 void EditorMeshPreviewPlugin::_bind_methods() {
-    ClassDB::bind_method("_preview_done", &EditorMeshPreviewPlugin::_preview_done);
-}
-bool EditorMeshPreviewPlugin::handles(const String &p_type) const {
-    return ClassDB::is_parent_class(p_type, "Mesh"); //any Mesh
+    ClassDB::bind_method(
+        "_preview_done",
+        &EditorMeshPreviewPlugin::_preview_done
+    );
 }
 
-Ref<Texture> EditorMeshPreviewPlugin::generate(const RES &p_from, const Size2 &p_size) const {
+bool EditorMeshPreviewPlugin::handles(const String& p_type) const {
+    return ClassDB::is_parent_class(p_type, "Mesh"); // any Mesh
+}
+
+Ref<Texture> EditorMeshPreviewPlugin::generate(
+    const RES& p_from,
+    const Size2& p_size
+) const {
     Ref<Mesh> mesh = p_from;
     ERR_FAIL_COND_V(mesh.is_null(), Ref<Texture>());
 
@@ -733,7 +812,8 @@ Ref<Texture> EditorMeshPreviewPlugin::generate(const RES &p_from, const Size2 &p
     aabb.position -= ofs;
     Transform xform;
     xform.basis = Basis().rotated(Vector3(0, 1, 0), -Math_PI * 0.125);
-    xform.basis = Basis().rotated(Vector3(1, 0, 0), Math_PI * 0.125) * xform.basis;
+    xform.basis =
+        Basis().rotated(Vector3(1, 0, 0), Math_PI * 0.125) * xform.basis;
     AABB rot_aabb = xform.xform(aabb);
     float m = MAX(rot_aabb.size.x, rot_aabb.size.y) * 0.5;
     if (m == 0) {
@@ -746,10 +826,17 @@ Ref<Texture> EditorMeshPreviewPlugin::generate(const RES &p_from, const Size2 &p
     xform.origin.z -= rot_aabb.size.z * 2;
     VS::get_singleton()->instance_set_transform(mesh_instance, xform);
 
-    VS::get_singleton()->viewport_set_update_mode(viewport, VS::VIEWPORT_UPDATE_ONCE); //once used for capture
+    VS::get_singleton()->viewport_set_update_mode(
+        viewport,
+        VS::VIEWPORT_UPDATE_ONCE
+    ); // once used for capture
 
     preview_done.clear();
-    VS::get_singleton()->request_frame_drawn_callback(const_cast<EditorMeshPreviewPlugin *>(this), "_preview_done", Variant());
+    VS::get_singleton()->request_frame_drawn_callback(
+        const_cast<EditorMeshPreviewPlugin*>(this),
+        "_preview_done",
+        Variant()
+    );
 
     while (!preview_done.is_set()) {
         OS::get_singleton()->delay_usec(10);
@@ -782,7 +869,10 @@ EditorMeshPreviewPlugin::EditorMeshPreviewPlugin() {
     scenario = VS::get_singleton()->scenario_create();
 
     viewport = VS::get_singleton()->viewport_create();
-    VS::get_singleton()->viewport_set_update_mode(viewport, VS::VIEWPORT_UPDATE_DISABLED);
+    VS::get_singleton()->viewport_set_update_mode(
+        viewport,
+        VS::VIEWPORT_UPDATE_DISABLED
+    );
     VS::get_singleton()->viewport_set_vflip(viewport, true);
     VS::get_singleton()->viewport_set_scenario(viewport, scenario);
     VS::get_singleton()->viewport_set_size(viewport, 128, 128);
@@ -792,28 +882,38 @@ EditorMeshPreviewPlugin::EditorMeshPreviewPlugin() {
 
     camera = VS::get_singleton()->camera_create();
     VS::get_singleton()->viewport_attach_camera(viewport, camera);
-    VS::get_singleton()->camera_set_transform(camera, Transform(Basis(), Vector3(0, 0, 3)));
-    //VS::get_singleton()->camera_set_perspective(camera,45,0.1,10);
+    VS::get_singleton()->camera_set_transform(
+        camera,
+        Transform(Basis(), Vector3(0, 0, 3))
+    );
+    // VS::get_singleton()->camera_set_perspective(camera,45,0.1,10);
     VS::get_singleton()->camera_set_orthogonal(camera, 1.0, 0.01, 1000.0);
 
     light = VS::get_singleton()->directional_light_create();
     light_instance = VS::get_singleton()->instance_create2(light, scenario);
-    VS::get_singleton()->instance_set_transform(light_instance, Transform().looking_at(Vector3(-1, -1, -1), Vector3(0, 1, 0)));
+    VS::get_singleton()->instance_set_transform(
+        light_instance,
+        Transform().looking_at(Vector3(-1, -1, -1), Vector3(0, 1, 0))
+    );
 
     light2 = VS::get_singleton()->directional_light_create();
     VS::get_singleton()->light_set_color(light2, Color(0.7, 0.7, 0.7));
-    //VS::get_singleton()->light_set_color(light2, VS::LIGHT_COLOR_SPECULAR, Color(0.0, 0.0, 0.0));
+    // VS::get_singleton()->light_set_color(light2, VS::LIGHT_COLOR_SPECULAR,
+    // Color(0.0, 0.0, 0.0));
     light_instance2 = VS::get_singleton()->instance_create2(light2, scenario);
 
-    VS::get_singleton()->instance_set_transform(light_instance2, Transform().looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1)));
+    VS::get_singleton()->instance_set_transform(
+        light_instance2,
+        Transform().looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1))
+    );
 
-    //sphere = VS::get_singleton()->mesh_create();
+    // sphere = VS::get_singleton()->mesh_create();
     mesh_instance = VS::get_singleton()->instance_create();
     VS::get_singleton()->instance_set_scenario(mesh_instance, scenario);
 }
 
 EditorMeshPreviewPlugin::~EditorMeshPreviewPlugin() {
-    //VS::get_singleton()->free(sphere);
+    // VS::get_singleton()->free(sphere);
     VS::get_singleton()->free(mesh_instance);
     VS::get_singleton()->free(viewport);
     VS::get_singleton()->free(light);
@@ -826,20 +926,28 @@ EditorMeshPreviewPlugin::~EditorMeshPreviewPlugin() {
 
 ///////////////////////////////////////////////////////////////////////////
 
-void EditorFontPreviewPlugin::_preview_done(const Variant &p_udata) {
+void EditorFontPreviewPlugin::_preview_done(const Variant& p_udata) {
     preview_done.set();
 }
 
 void EditorFontPreviewPlugin::_bind_methods() {
-    ClassDB::bind_method("_preview_done", &EditorFontPreviewPlugin::_preview_done);
+    ClassDB::bind_method(
+        "_preview_done",
+        &EditorFontPreviewPlugin::_preview_done
+    );
 }
 
-bool EditorFontPreviewPlugin::handles(const String &p_type) const {
-    return ClassDB::is_parent_class(p_type, "DynamicFontData") || ClassDB::is_parent_class(p_type, "DynamicFont");
+bool EditorFontPreviewPlugin::handles(const String& p_type) const {
+    return ClassDB::is_parent_class(p_type, "DynamicFontData")
+        || ClassDB::is_parent_class(p_type, "DynamicFont");
 }
 
-Ref<Texture> EditorFontPreviewPlugin::generate_from_path(const String &p_path, const Size2 &p_size) const {
-    Ref<ResourceInteractiveLoader> ril = ResourceLoader::load_interactive(p_path);
+Ref<Texture> EditorFontPreviewPlugin::generate_from_path(
+    const String& p_path,
+    const Size2& p_size
+) const {
+    Ref<ResourceInteractiveLoader> ril =
+        ResourceLoader::load_interactive(p_path);
     ril.ptr()->wait();
     RES res = ril.ptr()->get_resource();
     Ref<DynamicFont> sampled_font;
@@ -870,8 +978,15 @@ Ref<Texture> EditorFontPreviewPlugin::generate_from_path(const String &p_path, c
     font->draw(canvas_item, pos, sampled_text);
 
     preview_done.clear();
-    VS::get_singleton()->viewport_set_update_mode(viewport, VS::VIEWPORT_UPDATE_ONCE); //once used for capture
-    VS::get_singleton()->request_frame_drawn_callback(const_cast<EditorFontPreviewPlugin *>(this), "_preview_done", Variant());
+    VS::get_singleton()->viewport_set_update_mode(
+        viewport,
+        VS::VIEWPORT_UPDATE_ONCE
+    ); // once used for capture
+    VS::get_singleton()->request_frame_drawn_callback(
+        const_cast<EditorFontPreviewPlugin*>(this),
+        "_preview_done",
+        Variant()
+    );
 
     while (!preview_done.is_set()) {
         OS::get_singleton()->delay_usec(10);
@@ -901,7 +1016,10 @@ Ref<Texture> EditorFontPreviewPlugin::generate_from_path(const String &p_path, c
     return ptex;
 }
 
-Ref<Texture> EditorFontPreviewPlugin::generate(const RES &p_from, const Size2 &p_size) const {
+Ref<Texture> EditorFontPreviewPlugin::generate(
+    const RES& p_from,
+    const Size2& p_size
+) const {
     String path = p_from->get_path();
     if (!FileAccess::exists(path)) {
         return Ref<Texture>();
@@ -911,7 +1029,10 @@ Ref<Texture> EditorFontPreviewPlugin::generate(const RES &p_from, const Size2 &p
 
 EditorFontPreviewPlugin::EditorFontPreviewPlugin() {
     viewport = VS::get_singleton()->viewport_create();
-    VS::get_singleton()->viewport_set_update_mode(viewport, VS::VIEWPORT_UPDATE_DISABLED);
+    VS::get_singleton()->viewport_set_update_mode(
+        viewport,
+        VS::VIEWPORT_UPDATE_DISABLED
+    );
     VS::get_singleton()->viewport_set_vflip(viewport, true);
     VS::get_singleton()->viewport_set_size(viewport, 128, 128);
     VS::get_singleton()->viewport_set_active(viewport, true);

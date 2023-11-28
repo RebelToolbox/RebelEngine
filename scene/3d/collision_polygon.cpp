@@ -45,13 +45,14 @@ void CollisionPolygon::_build_polygon() {
         return;
     }
 
-    Vector<Vector<Vector2>> decomp = Geometry::decompose_polygon_in_convex(polygon);
+    Vector<Vector<Vector2>> decomp =
+        Geometry::decompose_polygon_in_convex(polygon);
     if (decomp.size() == 0) {
         return;
     }
 
-    //here comes the sun, lalalala
-    //decompose concave into multiple convex polygons and add them
+    // here comes the sun, lalalala
+    // decompose concave into multiple convex polygons and add them
 
     for (int i = 0; i < decomp.size(); i++) {
         Ref<ConvexPolygonShape> convex = memnew(ConvexPolygonShape);
@@ -115,7 +116,7 @@ void CollisionPolygon::_notification(int p_what) {
     }
 }
 
-void CollisionPolygon::set_polygon(const Vector<Point2> &p_polygon) {
+void CollisionPolygon::set_polygon(const Vector<Point2>& p_polygon) {
     polygon = p_polygon;
     if (parent) {
         _build_polygon();
@@ -172,7 +173,11 @@ String CollisionPolygon::get_configuration_warning() const {
         if (warning != String()) {
             warning += "\n\n";
         }
-        warning += TTR("CollisionPolygon only serves to provide a collision shape to a CollisionObject derived node. Please only use it as a child of Area, StaticBody, RigidBody, KinematicBody, etc. to give them a shape.");
+        warning +=
+            TTR("CollisionPolygon only serves to provide a collision shape to "
+                "a CollisionObject derived node. Please only use it as a child "
+                "of Area, StaticBody, RigidBody, KinematicBody, etc. to give "
+                "them a shape.");
     }
 
     if (polygon.empty()) {
@@ -188,25 +193,68 @@ String CollisionPolygon::get_configuration_warning() const {
 bool CollisionPolygon::_is_editable_3d_polygon() const {
     return true;
 }
+
 void CollisionPolygon::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_depth", "depth"), &CollisionPolygon::set_depth);
+    ClassDB::bind_method(
+        D_METHOD("set_depth", "depth"),
+        &CollisionPolygon::set_depth
+    );
     ClassDB::bind_method(D_METHOD("get_depth"), &CollisionPolygon::get_depth);
 
-    ClassDB::bind_method(D_METHOD("set_polygon", "polygon"), &CollisionPolygon::set_polygon);
-    ClassDB::bind_method(D_METHOD("get_polygon"), &CollisionPolygon::get_polygon);
+    ClassDB::bind_method(
+        D_METHOD("set_polygon", "polygon"),
+        &CollisionPolygon::set_polygon
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_polygon"),
+        &CollisionPolygon::get_polygon
+    );
 
-    ClassDB::bind_method(D_METHOD("set_disabled", "disabled"), &CollisionPolygon::set_disabled);
-    ClassDB::bind_method(D_METHOD("is_disabled"), &CollisionPolygon::is_disabled);
+    ClassDB::bind_method(
+        D_METHOD("set_disabled", "disabled"),
+        &CollisionPolygon::set_disabled
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_disabled"),
+        &CollisionPolygon::is_disabled
+    );
 
-    ClassDB::bind_method(D_METHOD("set_margin", "margin"), &CollisionPolygon::set_margin);
+    ClassDB::bind_method(
+        D_METHOD("set_margin", "margin"),
+        &CollisionPolygon::set_margin
+    );
     ClassDB::bind_method(D_METHOD("get_margin"), &CollisionPolygon::get_margin);
 
-    ClassDB::bind_method(D_METHOD("_is_editable_3d_polygon"), &CollisionPolygon::_is_editable_3d_polygon);
+    ClassDB::bind_method(
+        D_METHOD("_is_editable_3d_polygon"),
+        &CollisionPolygon::_is_editable_3d_polygon
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "depth"), "set_depth", "get_depth");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "disabled"), "set_disabled", "is_disabled");
-    ADD_PROPERTY(PropertyInfo(Variant::POOL_VECTOR2_ARRAY, "polygon"), "set_polygon", "get_polygon");
-    ADD_PROPERTY(PropertyInfo(Variant::REAL, "margin", PROPERTY_HINT_RANGE, "0.001,10,0.001"), "set_margin", "get_margin");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::REAL, "depth"),
+        "set_depth",
+        "get_depth"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "disabled"),
+        "set_disabled",
+        "is_disabled"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::POOL_VECTOR2_ARRAY, "polygon"),
+        "set_polygon",
+        "get_polygon"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::REAL,
+            "margin",
+            PROPERTY_HINT_RANGE,
+            "0.001,10,0.001"
+        ),
+        "set_margin",
+        "get_margin"
+    );
 }
 
 CollisionPolygon::CollisionPolygon() {

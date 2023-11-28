@@ -45,6 +45,7 @@ public:
     virtual void free() = 0;
 
     SpatialGizmo();
+
     virtual ~SpatialGizmo() {}
 };
 
@@ -54,9 +55,9 @@ class Spatial : public Node {
 
 public:
     enum SpatialFlags {
-        // this is cached, and only currently kept up to date in visual instances
-        // this is set if a visual instance is
-        // (a) in the tree AND (b) visible via is_visible_in_tree() call
+        // this is cached, and only currently kept up to date in visual
+        // instances this is set if a visual instance is (a) in the tree AND (b)
+        // visible via is_visible_in_tree() call
         SPATIAL_FLAG_VI_VISIBLE = 1 << 0,
     };
 
@@ -81,16 +82,16 @@ private:
 
         mutable int dirty;
 
-        Viewport *viewport;
+        Viewport* viewport;
 
         bool toplevel_active;
         bool toplevel;
         bool inside_world;
 
         int children_lock;
-        Spatial *parent;
-        List<Spatial *> children;
-        List<Spatial *>::Element *C;
+        Spatial* parent;
+        List<Spatial*> children;
+        List<Spatial*>::Element* C;
 
         bool ignore_notification;
         bool notify_local_transform;
@@ -109,17 +110,25 @@ private:
 
     void _update_gizmo();
     void _notify_dirty();
-    void _propagate_transform_changed(Spatial *p_origin);
+    void _propagate_transform_changed(Spatial* p_origin);
 
     void _propagate_visibility_changed();
 
 protected:
-    _FORCE_INLINE_ void set_ignore_transform_notification(bool p_ignore) { data.ignore_notification = p_ignore; }
+    _FORCE_INLINE_ void set_ignore_transform_notification(bool p_ignore) {
+        data.ignore_notification = p_ignore;
+    }
 
     _FORCE_INLINE_ void _update_local_transform() const;
 
-    uint32_t _get_spatial_flags() const { return data.spatial_flags; }
-    void _replace_spatial_flags(uint32_t p_flags) { data.spatial_flags = p_flags; }
+    uint32_t _get_spatial_flags() const {
+        return data.spatial_flags;
+    }
+
+    void _replace_spatial_flags(uint32_t p_flags) {
+        data.spatial_flags = p_flags;
+    }
+
     void _set_spatial_flag(uint32_t p_flag, bool p_set) {
         if (p_set) {
             data.spatial_flags |= p_flag;
@@ -133,8 +142,8 @@ protected:
 
 public:
     enum {
-
-        NOTIFICATION_TRANSFORM_CHANGED = SceneTree::NOTIFICATION_TRANSFORM_CHANGED,
+        NOTIFICATION_TRANSFORM_CHANGED =
+            SceneTree::NOTIFICATION_TRANSFORM_CHANGED,
         NOTIFICATION_ENTER_WORLD = 41,
         NOTIFICATION_EXIT_WORLD = 42,
         NOTIFICATION_VISIBILITY_CHANGED = 43,
@@ -144,22 +153,22 @@ public:
     };
 
     virtual void notification_callback(int p_message_type);
-    Spatial *get_parent_spatial() const;
+    Spatial* get_parent_spatial() const;
 
     Ref<World> get_world() const;
 
-    void set_translation(const Vector3 &p_translation);
-    void set_rotation(const Vector3 &p_euler_rad);
-    void set_rotation_degrees(const Vector3 &p_euler_deg);
-    void set_scale(const Vector3 &p_scale);
+    void set_translation(const Vector3& p_translation);
+    void set_rotation(const Vector3& p_euler_rad);
+    void set_rotation_degrees(const Vector3& p_euler_deg);
+    void set_scale(const Vector3& p_scale);
 
     Vector3 get_translation() const;
     Vector3 get_rotation() const;
     Vector3 get_rotation_degrees() const;
     Vector3 get_scale() const;
 
-    void set_transform(const Transform &p_transform);
-    void set_global_transform(const Transform &p_transform);
+    void set_transform(const Transform& p_transform);
+    void set_global_transform(const Transform& p_transform);
 
     Transform get_transform() const;
     Transform get_global_transform() const;
@@ -177,30 +186,36 @@ public:
 
     void set_disable_gizmo(bool p_enabled);
     void update_gizmo();
-    void set_gizmo(const Ref<SpatialGizmo> &p_gizmo);
+    void set_gizmo(const Ref<SpatialGizmo>& p_gizmo);
     Ref<SpatialGizmo> get_gizmo() const;
 
-    _FORCE_INLINE_ bool is_inside_world() const { return data.inside_world; }
+    _FORCE_INLINE_ bool is_inside_world() const {
+        return data.inside_world;
+    }
 
-    Transform get_relative_transform(const Node *p_parent) const;
+    Transform get_relative_transform(const Node* p_parent) const;
 
-    void rotate(const Vector3 &p_axis, float p_angle);
+    void rotate(const Vector3& p_axis, float p_angle);
     void rotate_x(float p_angle);
     void rotate_y(float p_angle);
     void rotate_z(float p_angle);
-    void translate(const Vector3 &p_offset);
-    void scale(const Vector3 &p_ratio);
+    void translate(const Vector3& p_offset);
+    void scale(const Vector3& p_ratio);
 
-    void rotate_object_local(const Vector3 &p_axis, float p_angle);
-    void scale_object_local(const Vector3 &p_scale);
-    void translate_object_local(const Vector3 &p_offset);
+    void rotate_object_local(const Vector3& p_axis, float p_angle);
+    void scale_object_local(const Vector3& p_scale);
+    void translate_object_local(const Vector3& p_offset);
 
-    void global_rotate(const Vector3 &p_axis, float p_angle);
-    void global_scale(const Vector3 &p_scale);
-    void global_translate(const Vector3 &p_offset);
+    void global_rotate(const Vector3& p_axis, float p_angle);
+    void global_scale(const Vector3& p_scale);
+    void global_translate(const Vector3& p_offset);
 
-    void look_at(const Vector3 &p_target, const Vector3 &p_up);
-    void look_at_from_position(const Vector3 &p_pos, const Vector3 &p_target, const Vector3 &p_up);
+    void look_at(const Vector3& p_target, const Vector3& p_up);
+    void look_at_from_position(
+        const Vector3& p_pos,
+        const Vector3& p_target,
+        const Vector3& p_up
+    );
 
     Vector3 to_local(Vector3 p_global) const;
     Vector3 to_global(Vector3 p_local) const;

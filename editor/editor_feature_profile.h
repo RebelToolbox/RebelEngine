@@ -64,34 +64,43 @@ private:
     Set<StringName> collapsed_classes;
 
     bool features_disabled[FEATURE_MAX];
-    static const char *feature_names[FEATURE_MAX];
-    static const char *feature_descriptions[FEATURE_MAX];
-    static const char *feature_identifiers[FEATURE_MAX];
+    static const char* feature_names[FEATURE_MAX];
+    static const char* feature_descriptions[FEATURE_MAX];
+    static const char* feature_identifiers[FEATURE_MAX];
 
-    String _get_feature_name(Feature p_feature) { return get_feature_name(p_feature); }
+    String _get_feature_name(Feature p_feature) {
+        return get_feature_name(p_feature);
+    }
 
 protected:
     static void _bind_methods();
 
 public:
-    void set_disable_class(const StringName &p_class, bool p_disabled);
-    bool is_class_disabled(const StringName &p_class) const;
+    void set_disable_class(const StringName& p_class, bool p_disabled);
+    bool is_class_disabled(const StringName& p_class) const;
 
-    void set_disable_class_editor(const StringName &p_class, bool p_disabled);
-    bool is_class_editor_disabled(const StringName &p_class) const;
+    void set_disable_class_editor(const StringName& p_class, bool p_disabled);
+    bool is_class_editor_disabled(const StringName& p_class) const;
 
-    void set_disable_class_property(const StringName &p_class, const StringName &p_property, bool p_disabled);
-    bool is_class_property_disabled(const StringName &p_class, const StringName &p_property) const;
-    bool has_class_properties_disabled(const StringName &p_class) const;
+    void set_disable_class_property(
+        const StringName& p_class,
+        const StringName& p_property,
+        bool p_disabled
+    );
+    bool is_class_property_disabled(
+        const StringName& p_class,
+        const StringName& p_property
+    ) const;
+    bool has_class_properties_disabled(const StringName& p_class) const;
 
-    void set_item_collapsed(const StringName &p_class, bool p_collapsed);
-    bool is_item_collapsed(const StringName &p_class) const;
+    void set_item_collapsed(const StringName& p_class, bool p_collapsed);
+    bool is_item_collapsed(const StringName& p_class) const;
 
     void set_disable_feature(Feature p_feature, bool p_disable);
     bool is_feature_disabled(Feature p_feature) const;
 
-    Error save_to_file(const String &p_path);
-    Error load_from_file(const String &p_path);
+    Error save_to_file(const String& p_path);
+    Error load_from_file(const String& p_path);
 
     static String get_feature_name(Feature p_feature);
     static String get_feature_description(Feature p_feature);
@@ -118,33 +127,37 @@ class EditorFeatureProfileManager : public AcceptDialog {
         CLASS_OPTION_DISABLE_EDITOR
     };
 
-    ConfirmationDialog *erase_profile_dialog;
-    ConfirmationDialog *new_profile_dialog;
-    LineEdit *new_profile_name;
+    ConfirmationDialog* erase_profile_dialog;
+    ConfirmationDialog* new_profile_dialog;
+    LineEdit* new_profile_name;
 
-    LineEdit *current_profile_name;
-    OptionButton *profile_list;
-    Button *profile_actions[PROFILE_MAX];
+    LineEdit* current_profile_name;
+    OptionButton* profile_list;
+    Button* profile_actions[PROFILE_MAX];
 
-    HSplitContainer *h_split;
+    HSplitContainer* h_split;
 
-    VBoxContainer *class_list_vbc;
-    Tree *class_list;
-    VBoxContainer *property_list_vbc;
-    Tree *property_list;
-    EditorHelpBit *description_bit;
-    Label *no_profile_selected_help;
+    VBoxContainer* class_list_vbc;
+    Tree* class_list;
+    VBoxContainer* property_list_vbc;
+    Tree* property_list;
+    EditorHelpBit* description_bit;
+    Label* no_profile_selected_help;
 
-    EditorFileDialog *import_profiles;
-    EditorFileDialog *export_profile;
+    EditorFileDialog* import_profiles;
+    EditorFileDialog* export_profile;
 
     void _profile_action(int p_action);
     void _profile_selected(int p_what);
 
     String current_profile;
-    void _update_profile_list(const String &p_select_profile = String());
+    void _update_profile_list(const String& p_select_profile = String());
     void _update_selected_profile();
-    void _fill_classes_from(TreeItem *p_parent, const String &p_class, const String &p_selected);
+    void _fill_classes_from(
+        TreeItem* p_parent,
+        const String& p_class,
+        const String& p_selected
+    );
 
     Ref<EditorFeatureProfile> current;
     Ref<EditorFeatureProfile> edited;
@@ -153,21 +166,21 @@ class EditorFeatureProfileManager : public AcceptDialog {
     void _create_new_profile();
     String _get_selected_profile();
 
-    void _import_profiles(const Vector<String> &p_paths);
-    void _export_profile(const String &p_path);
+    void _import_profiles(const Vector<String>& p_paths);
+    void _export_profile(const String& p_path);
 
     bool updating_features;
 
     void _class_list_item_selected();
     void _class_list_item_edited();
-    void _class_list_item_collapsed(Object *p_item);
+    void _class_list_item_collapsed(Object* p_item);
     void _property_item_edited();
     void _save_and_update();
 
-    Timer *update_timer;
+    Timer* update_timer;
     void _emit_current_profile_changed();
 
-    static EditorFeatureProfileManager *singleton;
+    static EditorFeatureProfileManager* singleton;
 
 protected:
     static void _bind_methods();
@@ -177,7 +190,10 @@ public:
     Ref<EditorFeatureProfile> get_current_profile();
     void notify_changed();
 
-    static EditorFeatureProfileManager *get_singleton() { return singleton; }
+    static EditorFeatureProfileManager* get_singleton() {
+        return singleton;
+    }
+
     EditorFeatureProfileManager();
 };
 

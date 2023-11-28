@@ -45,9 +45,9 @@ struct FBXBone;
 struct FBXSkeleton : Reference {
     Ref<FBXNode> fbx_node = Ref<FBXNode>();
     Vector<Ref<FBXBone>> skeleton_bones = Vector<Ref<FBXBone>>();
-    Skeleton *skeleton = nullptr;
+    Skeleton* skeleton = nullptr;
 
-    void init_skeleton(const ImportState &state);
+    void init_skeleton(const ImportState& state);
 };
 
 #endif // FBX_SKELETON_H

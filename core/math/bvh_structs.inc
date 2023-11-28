@@ -2,9 +2,12 @@
 public:
 struct ItemRef {
     uint32_t tnode_id; // -1 is invalid
-    uint32_t item_id; // in the leaf
+    uint32_t item_id;  // in the leaf
 
-    bool is_active() const { return tnode_id != BVHCommon::INACTIVE; }
+    bool is_active() const {
+        return tnode_id != BVHCommon::INACTIVE;
+    }
+
     void set_inactive() {
         tnode_id = BVHCommon::INACTIVE;
         item_id = BVHCommon::INACTIVE;
@@ -26,7 +29,7 @@ struct ItemExtra {
     // slow optimize.
     uint32_t active_ref_id;
 
-    T *userdata;
+    T* userdata;
 };
 
 // tree leaf
@@ -41,20 +44,38 @@ private:
 
 public:
     // accessors
-    BVHABB_CLASS &get_aabb(uint32_t p_id) { return aabbs[p_id]; }
-    const BVHABB_CLASS &get_aabb(uint32_t p_id) const { return aabbs[p_id]; }
+    BVHABB_CLASS& get_aabb(uint32_t p_id) {
+        return aabbs[p_id];
+    }
 
-    uint32_t &get_item_ref_id(uint32_t p_id) { return item_ref_ids[p_id]; }
-    const uint32_t &get_item_ref_id(uint32_t p_id) const { return item_ref_ids[p_id]; }
+    const BVHABB_CLASS& get_aabb(uint32_t p_id) const {
+        return aabbs[p_id];
+    }
 
-    bool is_dirty() const { return dirty; }
-    void set_dirty(bool p) { dirty = p; }
+    uint32_t& get_item_ref_id(uint32_t p_id) {
+        return item_ref_ids[p_id];
+    }
+
+    const uint32_t& get_item_ref_id(uint32_t p_id) const {
+        return item_ref_ids[p_id];
+    }
+
+    bool is_dirty() const {
+        return dirty;
+    }
+
+    void set_dirty(bool p) {
+        dirty = p;
+    }
 
     void clear() {
         num_items = 0;
         set_dirty(true);
     }
-    bool is_full() const { return num_items >= MAX_ITEMS; }
+
+    bool is_full() const {
+        return num_items >= MAX_ITEMS;
+    }
 
     void remove_item_unordered(uint32_t p_id) {
         BVH_ASSERT(p_id < num_items);
@@ -76,12 +97,14 @@ public:
 // tree node
 struct TNode {
     BVHABB_CLASS aabb;
+
     // either number of children if positive
     // or leaf id if negative (leaf id 0 is disallowed)
     union {
         int32_t num_children;
         int32_t neg_leaf_id;
     };
+
     uint32_t parent_id; // or -1
     uint16_t children[MAX_CHILDREN];
 
@@ -89,9 +112,17 @@ struct TNode {
     // (or the highest where there is a tie off)
     int32_t height;
 
-    bool is_leaf() const { return num_children < 0; }
-    void set_leaf_id(int id) { neg_leaf_id = -id; }
-    int get_leaf_id() const { return -neg_leaf_id; }
+    bool is_leaf() const {
+        return num_children < 0;
+    }
+
+    void set_leaf_id(int id) {
+        neg_leaf_id = -id;
+    }
+
+    int get_leaf_id() const {
+        return -neg_leaf_id;
+    }
 
     void clear() {
         num_children = 0;
@@ -104,7 +135,9 @@ struct TNode {
         // other members are not blanked for speed .. they may be uninitialized
     }
 
-    bool is_full_of_children() const { return num_children >= MAX_CHILDREN; }
+    bool is_full_of_children() const {
+        return num_children >= MAX_CHILDREN;
+    }
 
     void remove_child_internal(uint32_t child_num) {
         children[child_num] = children[num_children - 1];
@@ -137,7 +170,8 @@ PooledList<TLeaf, true> _leaves;
 
 // we can maintain an un-ordered list of which references are active,
 // in order to do a slow incremental optimize of the tree over each frame.
-// This will work best if dynamic objects and static objects are in a different tree.
+// This will work best if dynamic objects and static objects are in a different
+// tree.
 LocalVector<uint32_t, uint32_t, true> _active_refs;
 uint32_t _current_active_ref = 0;
 
@@ -149,12 +183,14 @@ LocalVector<uint32_t, uint32_t, true> _cull_hits;
 // we now have multiple root nodes, allowing us to store
 // more than 1 tree. This can be more efficient, while sharing the same
 // common lists
-enum { NUM_TREES = 2,
+enum {
+    NUM_TREES = 2,
 };
 
 // Tree 0 - Non pairable
 // Tree 1 - Pairable
-// This is more efficient because in physics we only need check non pairable against the pairable tree.
+// This is more efficient because in physics we only need check non pairable
+// against the pairable tree.
 uint32_t _root_node_id[NUM_TREES];
 
 // these values may need tweaking according to the project
@@ -163,13 +199,15 @@ uint32_t _root_node_id[NUM_TREES];
 // node expansion is important in the rendering tree
 // larger values give less re-insertion as items move...
 // but on the other hand over estimates the bounding box of nodes.
-// we can either use auto mode, where the expansion is based on the root node size, or specify manually
+// we can either use auto mode, where the expansion is based on the root node
+// size, or specify manually
 real_t _node_expansion = 0.5;
 bool _auto_node_expansion = true;
 
 // pairing expansion important for physics pairing
-// larger values gives more 'sticky' pairing, and is less likely to exhibit tunneling
-// we can either use auto mode, where the expansion is based on the root node size, or specify manually
+// larger values gives more 'sticky' pairing, and is less likely to exhibit
+// tunneling we can either use auto mode, where the expansion is based on the
+// root node size, or specify manually
 real_t _pairing_expansion = 0.1;
 
 #ifdef BVH_ALLOW_AUTO_EXPANSION
@@ -177,8 +215,8 @@ bool _auto_pairing_expansion = true;
 #endif
 
 // when using an expanded bound, we must detect the condition where a new AABB
-// is significantly smaller than the expanded bound, as this is a special case where we
-// should override the optimization and create a new expanded bound.
-// This threshold is derived from the _pairing_expansion, and should be recalculated
-// if _pairing_expansion is changed.
+// is significantly smaller than the expanded bound, as this is a special case
+// where we should override the optimization and create a new expanded bound.
+// This threshold is derived from the _pairing_expansion, and should be
+// recalculated if _pairing_expansion is changed.
 real_t _aabb_shrinkage_threshold = 0.0;

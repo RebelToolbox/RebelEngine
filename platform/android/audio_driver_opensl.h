@@ -42,15 +42,14 @@ class AudioDriverOpenSL : public AudioDriver {
     Mutex mutex;
 
     enum {
-
         BUFFER_COUNT = 2
     };
 
     bool pause;
 
     uint32_t buffer_size;
-    int16_t *buffers[BUFFER_COUNT];
-    int32_t *mixdown_buffer;
+    int16_t* buffers[BUFFER_COUNT];
+    int32_t* mixdown_buffer;
     int last_free;
 
     Vector<int16_t> rec_buffer;
@@ -71,28 +70,28 @@ class AudioDriverOpenSL : public AudioDriver {
     SLDataLocator_OutputMix locator_outputmix;
     SLBufferQueueState state;
 
-    static AudioDriverOpenSL *s_ad;
+    static AudioDriverOpenSL* s_ad;
 
-    void _buffer_callback(
-            SLAndroidSimpleBufferQueueItf queueItf);
+    void _buffer_callback(SLAndroidSimpleBufferQueueItf queueItf);
 
     static void _buffer_callbacks(
-            SLAndroidSimpleBufferQueueItf queueItf,
-            void *pContext);
+        SLAndroidSimpleBufferQueueItf queueItf,
+        void* pContext
+    );
 
-    void _record_buffer_callback(
-            SLAndroidSimpleBufferQueueItf queueItf);
+    void _record_buffer_callback(SLAndroidSimpleBufferQueueItf queueItf);
 
     static void _record_buffer_callbacks(
-            SLAndroidSimpleBufferQueueItf queueItf,
-            void *pContext);
+        SLAndroidSimpleBufferQueueItf queueItf,
+        void* pContext
+    );
 
     virtual Error capture_init_device();
 
 public:
     void set_singleton();
 
-    virtual const char *get_name() const;
+    virtual const char* get_name() const;
 
     virtual Error init();
     virtual void start();

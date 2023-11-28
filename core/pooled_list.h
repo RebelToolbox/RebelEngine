@@ -31,17 +31,18 @@
 #pragma once
 
 // Simple template to provide a pool with O(1) allocate and free.
-// The freelist could alternatively be a linked list placed within the unused elements
-// to use less memory, however a separate freelist is probably more cache friendly.
+// The freelist could alternatively be a linked list placed within the unused
+// elements to use less memory, however a separate freelist is probably more
+// cache friendly.
 
-// NOTE : Take great care when using this with non POD types. The construction and destruction
-// is done in the LocalVector, NOT as part of the pool. So requesting a new item does not guarantee
-// a constructor is run, and free does not guarantee a destructor.
-// You should generally handle clearing
-// an item explicitly after a request, as it may contain 'leftovers'.
-// This is by design for fastest use in the BVH. If you want a more general pool
-// that does call constructors / destructors on request / free, this should probably be
-// a separate template.
+// NOTE : Take great care when using this with non POD types. The construction
+// and destruction is done in the LocalVector, NOT as part of the pool. So
+// requesting a new item does not guarantee a constructor is run, and free does
+// not guarantee a destructor. You should generally handle clearing an item
+// explicitly after a request, as it may contain 'leftovers'. This is by design
+// for fastest use in the BVH. If you want a more general pool that does call
+// constructors / destructors on request / free, this should probably be a
+// separate template.
 
 #include "core/local_vector.h"
 
@@ -62,16 +63,19 @@ public:
         return (list.size() * sizeof(T)) + (freelist.size() * sizeof(uint32_t));
     }
 
-    const T &operator[](uint32_t p_index) const {
-        return list[p_index];
-    }
-    T &operator[](uint32_t p_index) {
+    const T& operator[](uint32_t p_index) const {
         return list[p_index];
     }
 
-    int size() const { return _used_size; }
+    T& operator[](uint32_t p_index) {
+        return list[p_index];
+    }
 
-    T *request(uint32_t &r_id) {
+    int size() const {
+        return _used_size;
+    }
+
+    T* request(uint32_t& r_id) {
         _used_size++;
 
         if (freelist.size()) {
@@ -86,7 +90,8 @@ public:
         list.resize(r_id + 1);
         return &list[r_id];
     }
-    void free(const uint32_t &p_id) {
+
+    void free(const uint32_t& p_id) {
         // should not be on free list already
         CRASH_COND(p_id >= list.size());
         freelist.push_back(p_id);
@@ -98,30 +103,36 @@ public:
 template <class T, bool force_trivial = false>
 class TrackedPooledList {
 public:
-    int pool_size() const { return _pool.size(); }
-    int active_size() const { return _active_list.size(); }
+    int pool_size() const {
+        return _pool.size();
+    }
+
+    int active_size() const {
+        return _active_list.size();
+    }
 
     uint32_t get_active_id(uint32_t p_index) const {
         return _active_list[p_index];
     }
 
-    const T &get_active(uint32_t p_index) const {
+    const T& get_active(uint32_t p_index) const {
         return _pool[get_active_id(p_index)];
     }
 
-    T &get_active(uint32_t p_index) {
+    T& get_active(uint32_t p_index) {
         return _pool[get_active_id(p_index)];
     }
 
-    const T &operator[](uint32_t p_index) const {
-        return _pool[p_index];
-    }
-    T &operator[](uint32_t p_index) {
+    const T& operator[](uint32_t p_index) const {
         return _pool[p_index];
     }
 
-    T *request(uint32_t &r_id) {
-        T *item = _pool.request(r_id);
+    T& operator[](uint32_t p_index) {
+        return _pool[p_index];
+    }
+
+    T* request(uint32_t& r_id) {
+        T* item = _pool.request(r_id);
 
         // add to the active list
         uint32_t active_list_id = _active_list.size();
@@ -138,7 +149,7 @@ public:
         return item;
     }
 
-    void free(const uint32_t &p_id) {
+    void free(const uint32_t& p_id) {
         _pool.free(p_id);
 
         // remove from the active list.
@@ -159,7 +170,9 @@ public:
         }
     }
 
-    const LocalVector<uint32_t, uint32_t> &get_active_list() const { return _active_list; }
+    const LocalVector<uint32_t, uint32_t>& get_active_list() const {
+        return _active_list;
+    }
 
 private:
     PooledList<T, force_trivial> _pool;

@@ -54,17 +54,20 @@ protected:
     void _update_joint(bool p_only_free = false);
 
     void _notification(int p_what);
-    virtual RID _configure_joint(PhysicsBody2D *body_a, PhysicsBody2D *body_b) = 0;
+    virtual RID _configure_joint(
+        PhysicsBody2D* body_a,
+        PhysicsBody2D* body_b
+    ) = 0;
 
     static void _bind_methods();
 
 public:
     virtual String get_configuration_warning() const;
 
-    void set_node_a(const NodePath &p_node_a);
+    void set_node_a(const NodePath& p_node_a);
     NodePath get_node_a() const;
 
-    void set_node_b(const NodePath &p_node_b);
+    void set_node_b(const NodePath& p_node_b);
     NodePath get_node_b() const;
 
     void set_bias(real_t p_bias);
@@ -73,7 +76,10 @@ public:
     void set_exclude_nodes_from_collision(bool p_enable);
     bool get_exclude_nodes_from_collision() const;
 
-    RID get_joint() const { return joint; }
+    RID get_joint() const {
+        return joint;
+    }
+
     Joint2D();
 };
 
@@ -84,7 +90,7 @@ class PinJoint2D : public Joint2D {
 
 protected:
     void _notification(int p_what);
-    virtual RID _configure_joint(PhysicsBody2D *body_a, PhysicsBody2D *body_b);
+    virtual RID _configure_joint(PhysicsBody2D* body_a, PhysicsBody2D* body_b);
     static void _bind_methods();
 
 public:
@@ -102,7 +108,7 @@ class GrooveJoint2D : public Joint2D {
 
 protected:
     void _notification(int p_what);
-    virtual RID _configure_joint(PhysicsBody2D *body_a, PhysicsBody2D *body_b);
+    virtual RID _configure_joint(PhysicsBody2D* body_a, PhysicsBody2D* body_b);
     static void _bind_methods();
 
 public:
@@ -125,7 +131,7 @@ class DampedSpringJoint2D : public Joint2D {
 
 protected:
     void _notification(int p_what);
-    virtual RID _configure_joint(PhysicsBody2D *body_a, PhysicsBody2D *body_b);
+    virtual RID _configure_joint(PhysicsBody2D* body_a, PhysicsBody2D* body_b);
     static void _bind_methods();
 
 public:

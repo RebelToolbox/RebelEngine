@@ -44,6 +44,7 @@ public:
             ;
         }
     }
+
     _ALWAYS_INLINE_ void unlock() {
         locked.clear(std::memory_order_release);
     }

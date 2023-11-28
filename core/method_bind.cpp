@@ -39,7 +39,9 @@ PropertyInfo MethodBind::get_argument_info(int p_argument) const {
     ERR_FAIL_INDEX_V(p_argument, get_argument_count(), PropertyInfo());
 
     PropertyInfo info = _gen_argument_type_info(p_argument);
-    info.name = p_argument < arg_names.size() ? String(arg_names[p_argument]) : String("arg" + itos(p_argument));
+    info.name = p_argument < arg_names.size()
+                  ? String(arg_names[p_argument])
+                  : String("arg" + itos(p_argument));
     return info;
 }
 
@@ -59,21 +61,23 @@ void MethodBind::_set_returns(bool p_returns) {
 StringName MethodBind::get_name() const {
     return name;
 }
-void MethodBind::set_name(const StringName &p_name) {
+
+void MethodBind::set_name(const StringName& p_name) {
     name = p_name;
 }
 
 #ifdef DEBUG_METHODS_ENABLED
-void MethodBind::set_argument_names(const Vector<StringName> &p_names) {
+void MethodBind::set_argument_names(const Vector<StringName>& p_names) {
     arg_names = p_names;
 }
+
 Vector<StringName> MethodBind::get_argument_names() const {
     return arg_names;
 }
 
 #endif
 
-void MethodBind::set_default_arguments(const Vector<Variant> &p_defargs) {
+void MethodBind::set_default_arguments(const Vector<Variant>& p_defargs) {
     default_arguments = p_defargs;
     default_argument_count = default_arguments.size();
 }
@@ -82,7 +86,7 @@ void MethodBind::set_default_arguments(const Vector<Variant> &p_defargs) {
 void MethodBind::_generate_argument_types(int p_count) {
     set_argument_count(p_count);
 
-    Variant::Type *argt = memnew_arr(Variant::Type, p_count + 1);
+    Variant::Type* argt = memnew_arr(Variant::Type, p_count + 1);
     argt[0] = _gen_argument_type(-1); // return type
 
     for (int i = 0; i < p_count; i++) {

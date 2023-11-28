@@ -30,8 +30,7 @@
 
 #include "rid.h"
 
-RID_Data::~RID_Data() {
-}
+RID_Data::~RID_Data() {}
 
 SafeRefCount RID_OwnerBase::refcount;
 

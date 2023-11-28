@@ -33,7 +33,7 @@
 
 class DefaultControllerMappings {
 public:
-    static const char *mappings[];
+    static const char* mappings[];
 };
 
 #endif // DEFAULT_CONTROLLER_MAPPINGS_H

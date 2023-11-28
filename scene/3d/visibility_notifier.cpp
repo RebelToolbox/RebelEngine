@@ -38,7 +38,7 @@
 #include "scene/animation/animation_tree_player.h"
 #include "scene/scene_string_names.h"
 
-void VisibilityNotifier::_enter_camera(Camera *p_camera) {
+void VisibilityNotifier::_enter_camera(Camera* p_camera) {
     ERR_FAIL_COND(cameras.has(p_camera));
     cameras.insert(p_camera);
 
@@ -55,7 +55,7 @@ void VisibilityNotifier::_enter_camera(Camera *p_camera) {
     emit_signal(SceneStringNames::get_singleton()->camera_entered, p_camera);
 }
 
-void VisibilityNotifier::_exit_camera(Camera *p_camera) {
+void VisibilityNotifier::_exit_camera(Camera* p_camera) {
     ERR_FAIL_COND(!cameras.has(p_camera));
     cameras.erase(p_camera);
 
@@ -72,7 +72,7 @@ void VisibilityNotifier::_exit_camera(Camera *p_camera) {
     }
 }
 
-void VisibilityNotifier::set_aabb(const AABB &p_aabb) {
+void VisibilityNotifier::set_aabb(const AABB& p_aabb) {
     if (aabb == p_aabb) {
         return;
     }
@@ -98,12 +98,19 @@ void VisibilityNotifier::_refresh_portal_mode() {
     if (get_portal_mode() == PORTAL_MODE_ROAMING) {
         if (is_inside_world()) {
             if (_cull_instance_rid == RID()) {
-                _cull_instance_rid = VisualServer::get_singleton()->ghost_create();
+                _cull_instance_rid =
+                    VisualServer::get_singleton()->ghost_create();
             }
 
-            if (is_inside_world() && get_world().is_valid() && get_world()->get_scenario().is_valid() && is_inside_tree()) {
+            if (is_inside_world() && get_world().is_valid()
+                && get_world()->get_scenario().is_valid() && is_inside_tree()) {
                 AABB world_aabb = get_global_transform().xform(aabb);
-                VisualServer::get_singleton()->ghost_set_scenario(_cull_instance_rid, get_world()->get_scenario(), get_instance_id(), world_aabb);
+                VisualServer::get_singleton()->ghost_set_scenario(
+                    _cull_instance_rid,
+                    get_world()->get_scenario(),
+                    get_instance_id(),
+                    world_aabb
+                );
             }
         } else {
             if (_cull_instance_rid != RID()) {
@@ -135,7 +142,10 @@ void VisibilityNotifier::_notification(int p_what) {
             world->_update_notifier(this, world_aabb);
 
             if (_cull_instance_rid != RID()) {
-                VisualServer::get_singleton()->ghost_update(_cull_instance_rid, world_aabb);
+                VisualServer::get_singleton()->ghost_update(
+                    _cull_instance_rid,
+                    world_aabb
+                );
             }
         } break;
         case NOTIFICATION_EXIT_WORLD: {
@@ -143,19 +153,26 @@ void VisibilityNotifier::_notification(int p_what) {
             world->_remove_notifier(this);
 
             if (_cull_instance_rid != RID()) {
-                VisualServer::get_singleton()->ghost_set_scenario(_cull_instance_rid, RID(), get_instance_id(), AABB());
+                VisualServer::get_singleton()->ghost_set_scenario(
+                    _cull_instance_rid,
+                    RID(),
+                    get_instance_id(),
+                    AABB()
+                );
             }
         } break;
         case NOTIFICATION_ENTER_GAMEPLAY: {
             _in_gameplay = true;
-            if (cameras.size() && Engine::get_singleton()->are_portals_active()) {
+            if (cameras.size()
+                && Engine::get_singleton()->are_portals_active()) {
                 emit_signal(SceneStringNames::get_singleton()->screen_entered);
                 _screen_enter();
             }
         } break;
         case NOTIFICATION_EXIT_GAMEPLAY: {
             _in_gameplay = false;
-            if (cameras.size() && Engine::get_singleton()->are_portals_active()) {
+            if (cameras.size()
+                && Engine::get_singleton()->are_portals_active()) {
                 emit_signal(SceneStringNames::get_singleton()->screen_exited);
                 _screen_exit();
             }
@@ -172,14 +189,36 @@ bool VisibilityNotifier::is_on_screen() const {
 }
 
 void VisibilityNotifier::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_aabb", "rect"), &VisibilityNotifier::set_aabb);
+    ClassDB::bind_method(
+        D_METHOD("set_aabb", "rect"),
+        &VisibilityNotifier::set_aabb
+    );
     ClassDB::bind_method(D_METHOD("get_aabb"), &VisibilityNotifier::get_aabb);
-    ClassDB::bind_method(D_METHOD("is_on_screen"), &VisibilityNotifier::is_on_screen);
+    ClassDB::bind_method(
+        D_METHOD("is_on_screen"),
+        &VisibilityNotifier::is_on_screen
+    );
 
     ADD_PROPERTY(PropertyInfo(Variant::AABB, "aabb"), "set_aabb", "get_aabb");
 
-    ADD_SIGNAL(MethodInfo("camera_entered", PropertyInfo(Variant::OBJECT, "camera", PROPERTY_HINT_RESOURCE_TYPE, "Camera")));
-    ADD_SIGNAL(MethodInfo("camera_exited", PropertyInfo(Variant::OBJECT, "camera", PROPERTY_HINT_RESOURCE_TYPE, "Camera")));
+    ADD_SIGNAL(MethodInfo(
+        "camera_entered",
+        PropertyInfo(
+            Variant::OBJECT,
+            "camera",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Camera"
+        )
+    ));
+    ADD_SIGNAL(MethodInfo(
+        "camera_exited",
+        PropertyInfo(
+            Variant::OBJECT,
+            "camera",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Camera"
+        )
+    ));
     ADD_SIGNAL(MethodInfo("screen_entered"));
     ADD_SIGNAL(MethodInfo("screen_exited"));
 }
@@ -199,7 +238,7 @@ VisibilityNotifier::~VisibilityNotifier() {
 //////////////////////////////////////
 
 void VisibilityEnabler::_screen_enter() {
-    for (Map<Node *, Variant>::Element *E = nodes.front(); E; E = E->next()) {
+    for (Map<Node*, Variant>::Element* E = nodes.front(); E; E = E->next()) {
         _change_node_state(E->key(), true);
     }
 
@@ -207,53 +246,65 @@ void VisibilityEnabler::_screen_enter() {
 }
 
 void VisibilityEnabler::_screen_exit() {
-    for (Map<Node *, Variant>::Element *E = nodes.front(); E; E = E->next()) {
+    for (Map<Node*, Variant>::Element* E = nodes.front(); E; E = E->next()) {
         _change_node_state(E->key(), false);
     }
 
     visible = false;
 }
 
-void VisibilityEnabler::_find_nodes(Node *p_node) {
+void VisibilityEnabler::_find_nodes(Node* p_node) {
     bool add = false;
     Variant meta;
 
     {
-        RigidBody *rb = Object::cast_to<RigidBody>(p_node);
-        if (rb && ((rb->get_mode() == RigidBody::MODE_CHARACTER || rb->get_mode() == RigidBody::MODE_RIGID))) {
+        RigidBody* rb = Object::cast_to<RigidBody>(p_node);
+        if (rb
+            && ((
+                rb->get_mode() == RigidBody::MODE_CHARACTER
+                || rb->get_mode() == RigidBody::MODE_RIGID
+            ))) {
             add = true;
             meta = rb->get_mode();
         }
     }
 
-    if (Object::cast_to<AnimationPlayer>(p_node) || Object::cast_to<AnimationTree>(p_node) || Object::cast_to<AnimationTreePlayer>(p_node)) {
+    if (Object::cast_to<AnimationPlayer>(p_node)
+        || Object::cast_to<AnimationTree>(p_node)
+        || Object::cast_to<AnimationTreePlayer>(p_node)) {
         add = true;
     }
 
     {
-        AnimationTree *at = Object::cast_to<AnimationTree>(p_node);
+        AnimationTree* at = Object::cast_to<AnimationTree>(p_node);
         if (at) {
             add = true;
         }
     }
 
     {
-        AnimationTreePlayer *atp = Object::cast_to<AnimationTreePlayer>(p_node);
+        AnimationTreePlayer* atp = Object::cast_to<AnimationTreePlayer>(p_node);
         if (atp) {
             add = true;
         }
     }
 
     if (add) {
-        p_node->connect(SceneStringNames::get_singleton()->tree_exiting, this, "_node_removed", varray(p_node), CONNECT_ONESHOT);
+        p_node->connect(
+            SceneStringNames::get_singleton()->tree_exiting,
+            this,
+            "_node_removed",
+            varray(p_node),
+            CONNECT_ONESHOT
+        );
         nodes[p_node] = meta;
         _change_node_state(p_node, false);
     }
 
     for (int i = 0; i < p_node->get_child_count(); i++) {
-        Node *c = p_node->get_child(i);
+        Node* c = p_node->get_child(i);
         if (c->get_filename() != String()) {
-            continue; //skip, instance
+            continue; // skip, instance
         }
 
         _find_nodes(c);
@@ -266,8 +317,8 @@ void VisibilityEnabler::_notification(int p_what) {
             return;
         }
 
-        Node *from = this;
-        //find where current scene starts
+        Node* from = this;
+        // find where current scene starts
         while (from->get_parent() && from->get_filename() == String()) {
             from = from->get_parent();
         }
@@ -280,37 +331,43 @@ void VisibilityEnabler::_notification(int p_what) {
             return;
         }
 
-        for (Map<Node *, Variant>::Element *E = nodes.front(); E; E = E->next()) {
+        for (Map<Node*, Variant>::Element* E = nodes.front(); E;
+             E = E->next()) {
             if (!visible) {
                 _change_node_state(E->key(), true);
             }
-            E->key()->disconnect(SceneStringNames::get_singleton()->tree_exiting, this, "_node_removed");
+            E->key()->disconnect(
+                SceneStringNames::get_singleton()->tree_exiting,
+                this,
+                "_node_removed"
+            );
         }
 
         nodes.clear();
     }
 }
 
-void VisibilityEnabler::_change_node_state(Node *p_node, bool p_enabled) {
+void VisibilityEnabler::_change_node_state(Node* p_node, bool p_enabled) {
     ERR_FAIL_COND(!nodes.has(p_node));
 
     if (enabler[ENABLER_FREEZE_BODIES]) {
-        RigidBody *rb = Object::cast_to<RigidBody>(p_node);
+        RigidBody* rb = Object::cast_to<RigidBody>(p_node);
         if (rb) {
             rb->set_sleeping(!p_enabled);
         }
     }
 
     if (enabler[ENABLER_PAUSE_ANIMATIONS]) {
-        AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(p_node);
+        AnimationPlayer* ap = Object::cast_to<AnimationPlayer>(p_node);
         if (ap) {
             ap->set_active(p_enabled);
         } else {
-            AnimationTree *at = Object::cast_to<AnimationTree>(p_node);
+            AnimationTree* at = Object::cast_to<AnimationTree>(p_node);
             if (at) {
                 at->set_active(p_enabled);
             } else {
-                AnimationTreePlayer *atp = Object::cast_to<AnimationTreePlayer>(p_node);
+                AnimationTreePlayer* atp =
+                    Object::cast_to<AnimationTreePlayer>(p_node);
                 if (atp) {
                     atp->set_active(p_enabled);
                 }
@@ -319,7 +376,7 @@ void VisibilityEnabler::_change_node_state(Node *p_node, bool p_enabled) {
     }
 }
 
-void VisibilityEnabler::_node_removed(Node *p_node) {
+void VisibilityEnabler::_node_removed(Node* p_node) {
     if (!visible) {
         _change_node_state(p_node, true);
     }
@@ -327,12 +384,31 @@ void VisibilityEnabler::_node_removed(Node *p_node) {
 }
 
 void VisibilityEnabler::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_enabler", "enabler", "enabled"), &VisibilityEnabler::set_enabler);
-    ClassDB::bind_method(D_METHOD("is_enabler_enabled", "enabler"), &VisibilityEnabler::is_enabler_enabled);
-    ClassDB::bind_method(D_METHOD("_node_removed"), &VisibilityEnabler::_node_removed);
+    ClassDB::bind_method(
+        D_METHOD("set_enabler", "enabler", "enabled"),
+        &VisibilityEnabler::set_enabler
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_enabler_enabled", "enabler"),
+        &VisibilityEnabler::is_enabler_enabled
+    );
+    ClassDB::bind_method(
+        D_METHOD("_node_removed"),
+        &VisibilityEnabler::_node_removed
+    );
 
-    ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "pause_animations"), "set_enabler", "is_enabler_enabled", ENABLER_PAUSE_ANIMATIONS);
-    ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "freeze_bodies"), "set_enabler", "is_enabler_enabled", ENABLER_FREEZE_BODIES);
+    ADD_PROPERTYI(
+        PropertyInfo(Variant::BOOL, "pause_animations"),
+        "set_enabler",
+        "is_enabler_enabled",
+        ENABLER_PAUSE_ANIMATIONS
+    );
+    ADD_PROPERTYI(
+        PropertyInfo(Variant::BOOL, "freeze_bodies"),
+        "set_enabler",
+        "is_enabler_enabled",
+        ENABLER_FREEZE_BODIES
+    );
 
     BIND_ENUM_CONSTANT(ENABLER_PAUSE_ANIMATIONS);
     BIND_ENUM_CONSTANT(ENABLER_FREEZE_BODIES);
@@ -343,6 +419,7 @@ void VisibilityEnabler::set_enabler(Enabler p_enabler, bool p_enable) {
     ERR_FAIL_INDEX(p_enabler, ENABLER_MAX);
     enabler[p_enabler] = p_enable;
 }
+
 bool VisibilityEnabler::is_enabler_enabled(Enabler p_enabler) const {
     ERR_FAIL_INDEX_V(p_enabler, ENABLER_MAX, false);
     return enabler[p_enabler];

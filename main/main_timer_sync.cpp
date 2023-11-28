@@ -43,14 +43,16 @@ void MainFrameTime::clamp_idle(float min_idle_step, float max_idle_step) {
 
 /////////////////////////////////
 
-void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta) {
+void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
+) {
     // the calling code should prevent 0 or negative values of delta
     // (preventing divide by zero)
 
-    // note that if the estimate gets locked, and something external changes this
-    // (e.g. user changes to non-vsync in the OS), then the results may be less than ideal,
-    // but usually it will detect this via the FPS measurement and not attempt smoothing.
-    // This should be a rare occurrence anyway, and will be cured next time user restarts game.
+    // note that if the estimate gets locked, and something external changes
+    // this (e.g. user changes to non-vsync in the OS), then the results may be
+    // less than ideal, but usually it will detect this via the FPS measurement
+    // and not attempt smoothing. This should be a rare occurrence anyway, and
+    // will be cured next time user restarts game.
     if (_estimate_locked) {
         return;
     }
@@ -76,15 +78,17 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
 
     int fps = Math::round(1000000.0 / p_delta);
 
-    // initial estimation, to speed up converging, special case we will estimate the refresh rate
-    // from the first average FPS reading
+    // initial estimation, to speed up converging, special case we will estimate
+    // the refresh rate from the first average FPS reading
     if (_estimated_fps == 0) {
         // below 50 might be chugging loading stuff, or else
         // dropping loads of frames, so the estimate will be inaccurate
         if (fps >= 50) {
             _estimated_fps = fps;
 #ifdef GODOT_DEBUG_DELTA_SMOOTHER
-            print_line("initial guess (average measured) refresh rate: " + itos(fps));
+            print_line(
+                "initial guess (average measured) refresh rate: " + itos(fps)
+            );
 #endif
         } else {
             // can't get started until above 50
@@ -106,8 +110,9 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
             return;
         }
 
-        // if we are getting pretty confident in this estimate, decide it is complete
-        // (it can still be increased later, and possibly lowered but only for a short time)
+        // if we are getting pretty confident in this estimate, decide it is
+        // complete (it can still be increased later, and possibly lowered but
+        // only for a short time)
         if ((!_estimate_complete) && (_hits_at_estimated > 2)) {
             // when the estimate is complete we turn on smoothing
             if (_estimated_fps) {
@@ -115,14 +120,21 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
                 _vsync_delta = 1000000 / _estimated_fps;
 
 #ifdef GODOT_DEBUG_DELTA_SMOOTHER
-                print_line("estimate complete. vsync_delta " + itos(_vsync_delta) + ", fps " + itos(_estimated_fps));
+                print_line(
+                    "estimate complete. vsync_delta " + itos(_vsync_delta)
+                    + ", fps " + itos(_estimated_fps)
+                );
 #endif
             }
         }
 
 #ifdef GODOT_DEBUG_DELTA_SMOOTHER
         if ((_hits_at_estimated % (400 / NUM_READINGS)) == 0) {
-            String sz = "hits at estimated : " + itos(_hits_at_estimated) + ", above : " + itos(_hits_above_estimated) + "( " + itos(_hits_one_above_estimated) + " ), below : " + itos(_hits_below_estimated) + " (" + itos(_hits_one_below_estimated) + " )";
+            String sz = "hits at estimated : " + itos(_hits_at_estimated)
+                      + ", above : " + itos(_hits_above_estimated) + "( "
+                      + itos(_hits_one_above_estimated)
+                      + " ), below : " + itos(_hits_below_estimated) + " ("
+                      + itos(_hits_one_below_estimated) + " )";
 
             print_line(sz);
         }
@@ -141,7 +153,8 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
         if (fps == (_estimated_fps - 1)) {
             _hits_one_below_estimated++;
 
-            if ((_hits_one_below_estimated > _hits_at_estimated) && (_hits_one_below_estimated > SIGNIFICANCE_DOWN)) {
+            if ((_hits_one_below_estimated > _hits_at_estimated)
+                && (_hits_one_below_estimated > SIGNIFICANCE_DOWN)) {
                 _estimated_fps--;
                 made_new_estimate();
             }
@@ -150,14 +163,17 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
         } else {
             _hits_below_estimated++;
 
-            // don't allow large lowering if we are established at a refresh rate, as it will probably be dropped frames
+            // don't allow large lowering if we are established at a refresh
+            // rate, as it will probably be dropped frames
             bool established = _estimate_complete && (_hits_at_estimated > 10);
 
             // macro changes
-            // note there is a large barrier to macro lowering. That is because it is more likely to be dropped frames
-            // than mis-estimation of the refresh rate.
+            // note there is a large barrier to macro lowering. That is because
+            // it is more likely to be dropped frames than mis-estimation of the
+            // refresh rate.
             if (!established) {
-                if (((_hits_below_estimated / 8) > _hits_at_estimated) && (_hits_below_estimated > SIGNIFICANCE_DOWN)) {
+                if (((_hits_below_estimated / 8) > _hits_at_estimated)
+                    && (_hits_below_estimated > SIGNIFICANCE_DOWN)) {
                     // decrease the estimate
                     _estimated_fps--;
                     made_new_estimate();
@@ -173,7 +189,8 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
     if (fps == (_estimated_fps + 1)) {
         _hits_one_above_estimated++;
 
-        if ((_hits_one_above_estimated > _hits_at_estimated) && (_hits_one_above_estimated > SIGNIFICANCE_UP)) {
+        if ((_hits_one_above_estimated > _hits_at_estimated)
+            && (_hits_one_above_estimated > SIGNIFICANCE_UP)) {
             _estimated_fps++;
             made_new_estimate();
         }
@@ -182,7 +199,8 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
         _hits_above_estimated++;
 
         // macro changes
-        if ((_hits_above_estimated > _hits_at_estimated) && (_hits_above_estimated > SIGNIFICANCE_UP)) {
+        if ((_hits_above_estimated > _hits_at_estimated)
+            && (_hits_above_estimated > SIGNIFICANCE_UP)) {
             // increase the estimate
             int change = fps - _estimated_fps;
             change /= 2;
@@ -212,7 +230,7 @@ bool MainTimerSync::DeltaSmoother::fps_allows_smoothing(int64_t p_delta) {
                 double fps = 1000000.0 / time_passed;
                 double ratio = fps / (double)_estimated_fps;
 
-                //print_line("ratio : " + String(Variant(ratio)));
+                // print_line("ratio : " + String(Variant(ratio)));
 
                 if ((ratio > 0.95) && (ratio < 1.05)) {
                     _measurement_allows_smoothing = true;
@@ -232,11 +250,13 @@ bool MainTimerSync::DeltaSmoother::fps_allows_smoothing(int64_t p_delta) {
 
 int64_t MainTimerSync::DeltaSmoother::smooth_delta(int64_t p_delta) {
     // Conditions to disable smoothing.
-    // Note that vsync is a request, it cannot be relied on, the OS may override this.
-    // If the OS turns vsync on without vsync in the app, smoothing will not be enabled.
-    // If the OS turns vsync off with sync enabled in the app, the smoothing must detect this
-    // via the error metric and switch off.
-    if (!OS::get_singleton()->is_delta_smoothing_enabled() || !OS::get_singleton()->is_vsync_enabled() || Engine::get_singleton()->is_editor_hint()) {
+    // Note that vsync is a request, it cannot be relied on, the OS may override
+    // this. If the OS turns vsync on without vsync in the app, smoothing will
+    // not be enabled. If the OS turns vsync off with sync enabled in the app,
+    // the smoothing must detect this via the error metric and switch off.
+    if (!OS::get_singleton()->is_delta_smoothing_enabled()
+        || !OS::get_singleton()->is_vsync_enabled()
+        || Engine::get_singleton()->is_editor_hint()) {
         return p_delta;
     }
 
@@ -254,13 +274,15 @@ int64_t MainTimerSync::DeltaSmoother::smooth_delta(int64_t p_delta) {
 
     // we can't cope with negative deltas .. OS bug on some hardware
     // and also very small deltas caused by vsync being off.
-    // This could possibly be part of a hiccup, this value isn't fixed in stone...
+    // This could possibly be part of a hiccup, this value isn't fixed in
+    // stone...
     if (p_delta < 1000) {
         return p_delta;
     }
 
     // note still some vsync off will still get through to this point...
-    // and we need to cope with it by not converging the estimator / and / or not smoothing
+    // and we need to cope with it by not converging the estimator / and / or
+    // not smoothing
     update_refresh_rate_estimator(p_delta);
 
     // no smoothing until we know what the refresh rate is
@@ -275,12 +297,14 @@ int64_t MainTimerSync::DeltaSmoother::smooth_delta(int64_t p_delta) {
     int64_t units = _leftover_time / _vsync_delta;
 
     // a delta must include minimum 1 vsync
-    // (if it is less than that, it is either random error or we are no longer running at the vsync rate,
-    // in which case we should switch off delta smoothing, or re-estimate the refresh rate)
+    // (if it is less than that, it is either random error or we are no longer
+    // running at the vsync rate, in which case we should switch off delta
+    // smoothing, or re-estimate the refresh rate)
     units = MAX(units, 1);
 
     _leftover_time -= units * _vsync_delta;
-    // print_line("units " + itos(units) + ", leftover " + itos(_leftover_time/1000) + " ms");
+    // print_line("units " + itos(units) + ", leftover " +
+    // itos(_leftover_time/1000) + " ms");
 
     return units * _vsync_delta;
 }
@@ -296,7 +320,7 @@ float MainTimerSync::get_physics_jitter_fix() {
 
 // gets our best bet for the average number of physics steps per render frame
 // return value: number of frames back this data is consistent
-int MainTimerSync::get_average_physics_steps(float &p_min, float &p_max) {
+int MainTimerSync::get_average_physics_steps(float& p_min, float& p_max) {
     p_min = typical_physics_steps[0];
     p_max = p_min + 1;
 
@@ -304,7 +328,8 @@ int MainTimerSync::get_average_physics_steps(float &p_min, float &p_max) {
         const float typical_lower = typical_physics_steps[i];
         const float current_min = typical_lower / (i + 1);
         if (current_min > p_max) {
-            return i; // bail out if further restrictions would void the interval
+            return i; // bail out if further restrictions would void the
+                      // interval
         } else if (current_min > p_min) {
             p_min = current_min;
         }
@@ -319,8 +344,13 @@ int MainTimerSync::get_average_physics_steps(float &p_min, float &p_max) {
     return CONTROL_STEPS;
 }
 
-// advance physics clock by p_idle_step, return appropriate number of steps to simulate
-MainFrameTime MainTimerSync::advance_core(float p_frame_slice, int p_iterations_per_second, float p_idle_step) {
+// advance physics clock by p_idle_step, return appropriate number of steps to
+// simulate
+MainFrameTime MainTimerSync::advance_core(
+    float p_frame_slice,
+    int p_iterations_per_second,
+    float p_idle_step
+) {
     MainFrameTime ret;
 
     ret.idle_step = p_idle_step;
@@ -332,14 +362,15 @@ MainFrameTime MainTimerSync::advance_core(float p_frame_slice, int p_iterations_
     int min_typical_steps = typical_physics_steps[0];
     int max_typical_steps = min_typical_steps + 1;
 
-    // given the past recorded steps and typical steps to match, calculate bounds for this
-    // step to be typical
+    // given the past recorded steps and typical steps to match, calculate
+    // bounds for this step to be typical
     bool update_typical = false;
 
     for (int i = 0; i < CONTROL_STEPS - 1; ++i) {
-        int steps_left_to_match_typical = typical_physics_steps[i + 1] - accumulated_physics_steps[i];
-        if (steps_left_to_match_typical > max_typical_steps ||
-                steps_left_to_match_typical + 1 < min_typical_steps) {
+        int steps_left_to_match_typical =
+            typical_physics_steps[i + 1] - accumulated_physics_steps[i];
+        if (steps_left_to_match_typical > max_typical_steps
+            || steps_left_to_match_typical + 1 < min_typical_steps) {
             update_typical = true;
             break;
         }
@@ -354,13 +385,18 @@ MainFrameTime MainTimerSync::advance_core(float p_frame_slice, int p_iterations_
 
 #ifdef DEBUG_ENABLED
     if (max_typical_steps < 0) {
-        WARN_PRINT_ONCE("`max_typical_steps` is negative. This could hint at an engine bug or system timer misconfiguration.");
+        WARN_PRINT_ONCE(
+            "`max_typical_steps` is negative. This could hint at an engine bug "
+            "or system timer misconfiguration."
+        );
     }
 #endif
 
     // try to keep it consistent with previous iterations
     if (ret.physics_steps < min_typical_steps) {
-        const int max_possible_steps = floor((time_accum)*p_iterations_per_second + get_physics_jitter_fix());
+        const int max_possible_steps = floor(
+            (time_accum)*p_iterations_per_second + get_physics_jitter_fix()
+        );
         if (max_possible_steps < min_typical_steps) {
             ret.physics_steps = max_possible_steps;
             update_typical = true;
@@ -368,7 +404,9 @@ MainFrameTime MainTimerSync::advance_core(float p_frame_slice, int p_iterations_
             ret.physics_steps = min_typical_steps;
         }
     } else if (ret.physics_steps > max_typical_steps) {
-        const int min_possible_steps = floor((time_accum)*p_iterations_per_second - get_physics_jitter_fix());
+        const int min_possible_steps = floor(
+            (time_accum)*p_iterations_per_second - get_physics_jitter_fix()
+        );
         if (min_possible_steps > max_typical_steps) {
             ret.physics_steps = min_possible_steps;
             update_typical = true;
@@ -385,7 +423,8 @@ MainFrameTime MainTimerSync::advance_core(float p_frame_slice, int p_iterations_
 
     // keep track of accumulated step counts
     for (int i = CONTROL_STEPS - 2; i >= 0; --i) {
-        accumulated_physics_steps[i + 1] = accumulated_physics_steps[i] + ret.physics_steps;
+        accumulated_physics_steps[i + 1] =
+            accumulated_physics_steps[i] + ret.physics_steps;
     }
     accumulated_physics_steps[0] = ret.physics_steps;
 
@@ -402,8 +441,13 @@ MainFrameTime MainTimerSync::advance_core(float p_frame_slice, int p_iterations_
     return ret;
 }
 
-// calls advance_core, keeps track of deficit it adds to animaption_step, make sure the deficit sum stays close to zero
-MainFrameTime MainTimerSync::advance_checked(float p_frame_slice, int p_iterations_per_second, float p_idle_step) {
+// calls advance_core, keeps track of deficit it adds to animaption_step, make
+// sure the deficit sum stays close to zero
+MainFrameTime MainTimerSync::advance_checked(
+    float p_frame_slice,
+    int p_iterations_per_second,
+    float p_idle_step
+) {
     if (fixed_fps != -1) {
         p_idle_step = 1.0 / fixed_fps;
     }
@@ -414,30 +458,44 @@ MainFrameTime MainTimerSync::advance_checked(float p_frame_slice, int p_iteratio
     // compensate for last deficit
     p_idle_step += time_deficit;
 
-    MainFrameTime ret = advance_core(p_frame_slice, p_iterations_per_second, p_idle_step);
+    MainFrameTime ret =
+        advance_core(p_frame_slice, p_iterations_per_second, p_idle_step);
 
-    // we will do some clamping on ret.idle_step and need to sync those changes to time_accum,
-    // that's easiest if we just remember their fixed difference now
+    // we will do some clamping on ret.idle_step and need to sync those changes
+    // to time_accum, that's easiest if we just remember their fixed difference
+    // now
     const double idle_minus_accum = ret.idle_step - time_accum;
 
-    // first, least important clamping: keep ret.idle_step consistent with typical_physics_steps.
-    // this smoothes out the idle steps and culls small but quick variations.
+    // first, least important clamping: keep ret.idle_step consistent with
+    // typical_physics_steps. this smoothes out the idle steps and culls small
+    // but quick variations.
     {
         float min_average_physics_steps, max_average_physics_steps;
-        int consistent_steps = get_average_physics_steps(min_average_physics_steps, max_average_physics_steps);
+        int consistent_steps = get_average_physics_steps(
+            min_average_physics_steps,
+            max_average_physics_steps
+        );
         if (consistent_steps > 3) {
-            ret.clamp_idle(min_average_physics_steps * p_frame_slice, max_average_physics_steps * p_frame_slice);
+            ret.clamp_idle(
+                min_average_physics_steps * p_frame_slice,
+                max_average_physics_steps * p_frame_slice
+            );
         }
     }
 
     // second clamping: keep abs(time_deficit) < jitter_fix * frame_slise
     float max_clock_deviation = get_physics_jitter_fix() * p_frame_slice;
-    ret.clamp_idle(p_idle_step - max_clock_deviation, p_idle_step + max_clock_deviation);
+    ret.clamp_idle(
+        p_idle_step - max_clock_deviation,
+        p_idle_step + max_clock_deviation
+    );
 
-    // last clamping: make sure time_accum is between 0 and p_frame_slice for consistency between physics and idle
+    // last clamping: make sure time_accum is between 0 and p_frame_slice for
+    // consistency between physics and idle
     ret.clamp_idle(idle_minus_accum, idle_minus_accum + p_frame_slice);
 
-    // all the operations above may have turned ret.idle_step negative or zero, keep a minimal value
+    // all the operations above may have turned ret.idle_step negative or zero,
+    // keep a minimal value
     if (ret.idle_step < min_output_step) {
         ret.idle_step = min_output_step;
     }
@@ -449,22 +507,33 @@ MainFrameTime MainTimerSync::advance_checked(float p_frame_slice, int p_iteratio
     // promise that time_accum is between 0 and p_frame_slice
 #ifdef DEBUG_ENABLED
     if (time_accum < -1E-7) {
-        WARN_PRINT_ONCE("Intermediate value of `time_accum` is negative. This could hint at an engine bug or system timer misconfiguration.");
+        WARN_PRINT_ONCE(
+            "Intermediate value of `time_accum` is negative. This could hint "
+            "at an engine bug or system timer misconfiguration."
+        );
     }
 #endif
 
     if (time_accum > p_frame_slice) {
-        const int extra_physics_steps = floor(time_accum * p_iterations_per_second);
+        const int extra_physics_steps =
+            floor(time_accum * p_iterations_per_second);
         time_accum -= extra_physics_steps * p_frame_slice;
         ret.physics_steps += extra_physics_steps;
     }
 
 #ifdef DEBUG_ENABLED
     if (time_accum < -1E-7) {
-        WARN_PRINT_ONCE("Final value of `time_accum` is negative. It should always be between 0 and `p_physics_step`. This hints at an engine bug.");
+        WARN_PRINT_ONCE(
+            "Final value of `time_accum` is negative. It should always be "
+            "between 0 and `p_physics_step`. This hints at an engine bug."
+        );
     }
     if (time_accum > p_frame_slice + 1E-7) {
-        WARN_PRINT_ONCE("Final value of `time_accum` is larger than `p_frame_slice`. It should always be between 0 and `p_frame_slice`. This hints at an engine bug.");
+        WARN_PRINT_ONCE(
+            "Final value of `time_accum` is larger than `p_frame_slice`. It "
+            "should always be between 0 and `p_frame_slice`. This hints at an "
+            "engine bug."
+        );
     }
 #endif
 
@@ -489,11 +558,11 @@ float MainTimerSync::get_cpu_idle_step() {
 }
 
 MainTimerSync::MainTimerSync() :
-        last_cpu_ticks_usec(0),
-        current_cpu_ticks_usec(0),
-        time_accum(0),
-        time_deficit(0),
-        fixed_fps(0) {
+    last_cpu_ticks_usec(0),
+    current_cpu_ticks_usec(0),
+    time_accum(0),
+    time_deficit(0),
+    fixed_fps(0) {
     for (int i = CONTROL_STEPS - 1; i >= 0; --i) {
         typical_physics_steps[i] = i;
         accumulated_physics_steps[i] = i;
@@ -515,8 +584,15 @@ void MainTimerSync::set_fixed_fps(int p_fixed_fps) {
 }
 
 // advance one frame, return timesteps to take
-MainFrameTime MainTimerSync::advance(float p_frame_slice, int p_iterations_per_second) {
+MainFrameTime MainTimerSync::advance(
+    float p_frame_slice,
+    int p_iterations_per_second
+) {
     float cpu_idle_step = get_cpu_idle_step();
 
-    return advance_checked(p_frame_slice, p_iterations_per_second, cpu_idle_step);
+    return advance_checked(
+        p_frame_slice,
+        p_iterations_per_second,
+        cpu_idle_step
+    );
 }

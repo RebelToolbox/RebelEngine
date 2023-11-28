@@ -39,6 +39,7 @@
 #include "servers/audio_server.h"
 
 class Camera;
+
 class AudioStreamPlayer3D : public Spatial {
     GDCLASS(AudioStreamPlayer3D, Spatial);
 
@@ -65,7 +66,6 @@ private:
     enum {
         MAX_OUTPUTS = 8,
         MAX_INTERSECT_AREAS = 32
-
     };
 
     struct Output {
@@ -77,7 +77,7 @@ private:
         int bus_index;
         int reverb_bus_index;
         AudioFrame reverb_vol[4];
-        Viewport *viewport; //pointer only used for reference to previous mix
+        Viewport* viewport; // pointer only used for reference to previous mix
 
         Output() {
             filter_gain = 0;
@@ -91,7 +91,8 @@ private:
     SafeNumeric<int> output_count;
     SafeFlag output_ready;
 
-    //these are used by audio thread to have a reference of previous volumes (for ramping volume and avoiding clicks)
+    // these are used by audio thread to have a reference of previous volumes
+    // (for ramping volume and avoiding clicks)
     Output prev_outputs[MAX_OUTPUTS];
     int prev_output_count;
 
@@ -114,9 +115,16 @@ private:
     bool stream_paused_fade_out;
     StringName bus;
 
-    static void _calc_output_vol(const Vector3 &source_dir, real_t tightness, Output &output);
+    static void _calc_output_vol(
+        const Vector3& source_dir,
+        real_t tightness,
+        Output& output
+    );
     void _mix_audio();
-    static void _mix_audios(void *self) { reinterpret_cast<AudioStreamPlayer3D *>(self)->_mix_audio(); }
+
+    static void _mix_audios(void* self) {
+        reinterpret_cast<AudioStreamPlayer3D*>(self)->_mix_audio();
+    }
 
     void _set_playing(bool p_enable);
     bool _is_active() const;
@@ -142,7 +150,7 @@ private:
     float _get_attenuation_db(float p_distance) const;
 
 protected:
-    void _validate_property(PropertyInfo &property) const;
+    void _validate_property(PropertyInfo& property) const;
     void _notification(int p_what);
     static void _bind_methods();
 
@@ -168,7 +176,7 @@ public:
     bool is_playing() const;
     float get_playback_position();
 
-    void set_bus(const StringName &p_bus);
+    void set_bus(const StringName& p_bus);
     StringName get_bus() const;
 
     void set_autoplay(bool p_enable);

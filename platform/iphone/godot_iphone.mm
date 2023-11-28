@@ -36,33 +36,36 @@
 #include <string.h>
 #include <unistd.h>
 
-static OSIPhone *os = NULL;
+static OSIPhone* os = NULL;
 
-int add_path(int p_argc, char **p_args) {
-    NSString *str = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"godot_path"];
+int add_path(int p_argc, char** p_args) {
+    NSString* str =
+        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"godot_path"];
     if (!str) {
         return p_argc;
     }
 
-    p_args[p_argc++] = (char *)"--path";
-    p_args[p_argc++] = (char *)[str cStringUsingEncoding:NSUTF8StringEncoding];
+    p_args[p_argc++] = (char*)"--path";
+    p_args[p_argc++] = (char*)[str cStringUsingEncoding:NSUTF8StringEncoding];
     p_args[p_argc] = NULL;
 
     return p_argc;
 }
 
-int add_cmdline(int p_argc, char **p_args) {
-    NSArray *arr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"godot_cmdline"];
+int add_cmdline(int p_argc, char** p_args) {
+    NSArray* arr =
+        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"godot_cmdline"];
     if (!arr) {
         return p_argc;
     }
 
     for (NSUInteger i = 0; i < [arr count]; i++) {
-        NSString *str = [arr objectAtIndex:i];
+        NSString* str = [arr objectAtIndex:i];
         if (!str) {
             continue;
         }
-        p_args[p_argc++] = (char *)[str cStringUsingEncoding:NSUTF8StringEncoding];
+        p_args[p_argc++] =
+            (char*)[str cStringUsingEncoding:NSUTF8StringEncoding];
     }
 
     p_args[p_argc] = NULL;
@@ -70,12 +73,13 @@ int add_cmdline(int p_argc, char **p_args) {
     return p_argc;
 }
 
-int iphone_main(int argc, char **argv, String data_dir) {
+int iphone_main(int argc, char** argv, String data_dir) {
     size_t len = strlen(argv[0]);
 
     while (len--) {
-        if (argv[0][len] == '/')
+        if (argv[0][len] == '/') {
             break;
+        }
     }
 
     if (len >= 0) {
@@ -92,7 +96,7 @@ int iphone_main(int argc, char **argv, String data_dir) {
     printf("cwd %s\n", cwd);
     os = new OSIPhone(data_dir);
 
-    char *fargv[64];
+    char* fargv[64];
     for (int i = 0; i < argc; i++) {
         fargv[i] = argv[i];
     }

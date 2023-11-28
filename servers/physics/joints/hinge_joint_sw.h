@@ -43,28 +43,33 @@ Bullet Continuous Collision Detection and Physics Library
 Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
 
 This software is provided 'as-is', without any express or implied warranty.
-In no event will the authors be held liable for any damages arising from the use of this software.
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it freely,
-subject to the following restrictions:
+In no event will the authors be held liable for any damages arising from the use
+of this software. Permission is granted to anyone to use this software for any
+purpose, including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
 
-1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
-2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+1. The origin of this software must not be misrepresented; you must not claim
+that you wrote the original software. If you use this software in a product, an
+acknowledgment in the product documentation would be appreciated but is not
+required.
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
 
 class HingeJointSW : public JointSW {
     union {
         struct {
-            BodySW *A;
-            BodySW *B;
+            BodySW* A;
+            BodySW* B;
         };
 
-        BodySW *_arr[2];
+        BodySW* _arr[2];
     };
 
-    JacobianEntrySW m_jac[3]; //3 orthogonal linear constraints
-    JacobianEntrySW m_jacAng[3]; //2 orthogonal angular constraints+ 1 for limit/motor
+    JacobianEntrySW m_jac[3]; // 3 orthogonal linear constraints
+    JacobianEntrySW
+        m_jacAng[3]; // 2 orthogonal angular constraints+ 1 for limit/motor
 
     Transform m_rbAFrame; // constraint axii. Assumes z is hinge axis.
     Transform m_rbBFrame;
@@ -96,7 +101,9 @@ class HingeJointSW : public JointSW {
     real_t m_appliedImpulse;
 
 public:
-    virtual PhysicsServer::JointType get_type() const { return PhysicsServer::JOINT_HINGE; }
+    virtual PhysicsServer::JointType get_type() const {
+        return PhysicsServer::JOINT_HINGE;
+    }
 
     virtual bool setup(real_t p_step);
     virtual void solve(real_t p_step);
@@ -109,8 +116,20 @@ public:
     void set_flag(PhysicsServer::HingeJointFlag p_flag, bool p_value);
     bool get_flag(PhysicsServer::HingeJointFlag p_flag) const;
 
-    HingeJointSW(BodySW *rbA, BodySW *rbB, const Transform &frameA, const Transform &frameB);
-    HingeJointSW(BodySW *rbA, BodySW *rbB, const Vector3 &pivotInA, const Vector3 &pivotInB, const Vector3 &axisInA, const Vector3 &axisInB);
+    HingeJointSW(
+        BodySW* rbA,
+        BodySW* rbB,
+        const Transform& frameA,
+        const Transform& frameB
+    );
+    HingeJointSW(
+        BodySW* rbA,
+        BodySW* rbB,
+        const Vector3& pivotInA,
+        const Vector3& pivotInB,
+        const Vector3& axisInA,
+        const Vector3& axisInB
+    );
 };
 
 #endif // HINGE_JOINT_SW_H

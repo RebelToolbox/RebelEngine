@@ -40,8 +40,13 @@
     @author AndreaCatania
 */
 
-ConeTwistJointBullet::ConeTwistJointBullet(RigidBodyBullet *rbA, RigidBodyBullet *rbB, const Transform &rbAFrame, const Transform &rbBFrame) :
-        JointBullet() {
+ConeTwistJointBullet::ConeTwistJointBullet(
+    RigidBodyBullet* rbA,
+    RigidBodyBullet* rbB,
+    const Transform& rbAFrame,
+    const Transform& rbBFrame
+) :
+    JointBullet() {
     Transform scaled_AFrame(rbAFrame.scaled(rbA->get_body_scale()));
     scaled_AFrame.basis.rotref_posscale_decomposition(scaled_AFrame.basis);
 
@@ -55,14 +60,24 @@ ConeTwistJointBullet::ConeTwistJointBullet(RigidBodyBullet *rbA, RigidBodyBullet
         btTransform btFrameB;
         G_TO_B(scaled_BFrame, btFrameB);
 
-        coneConstraint = bulletnew(btConeTwistConstraint(*rbA->get_bt_rigid_body(), *rbB->get_bt_rigid_body(), btFrameA, btFrameB));
+        coneConstraint = bulletnew(btConeTwistConstraint(
+            *rbA->get_bt_rigid_body(),
+            *rbB->get_bt_rigid_body(),
+            btFrameA,
+            btFrameB
+        ));
     } else {
-        coneConstraint = bulletnew(btConeTwistConstraint(*rbA->get_bt_rigid_body(), btFrameA));
+        coneConstraint =
+            bulletnew(btConeTwistConstraint(*rbA->get_bt_rigid_body(), btFrameA)
+            );
     }
     setup(coneConstraint);
 }
 
-void ConeTwistJointBullet::set_param(PhysicsServer::ConeTwistJointParam p_param, real_t p_value) {
+void ConeTwistJointBullet::set_param(
+    PhysicsServer::ConeTwistJointParam p_param,
+    real_t p_value
+) {
     switch (p_param) {
         case PhysicsServer::CONE_TWIST_JOINT_SWING_SPAN:
             coneConstraint->setLimit(5, p_value);
@@ -72,21 +87,46 @@ void ConeTwistJointBullet::set_param(PhysicsServer::ConeTwistJointParam p_param,
             coneConstraint->setLimit(3, p_value);
             break;
         case PhysicsServer::CONE_TWIST_JOINT_BIAS:
-            coneConstraint->setLimit(coneConstraint->getSwingSpan1(), coneConstraint->getSwingSpan2(), coneConstraint->getTwistSpan(), coneConstraint->getLimitSoftness(), p_value, coneConstraint->getRelaxationFactor());
+            coneConstraint->setLimit(
+                coneConstraint->getSwingSpan1(),
+                coneConstraint->getSwingSpan2(),
+                coneConstraint->getTwistSpan(),
+                coneConstraint->getLimitSoftness(),
+                p_value,
+                coneConstraint->getRelaxationFactor()
+            );
             break;
         case PhysicsServer::CONE_TWIST_JOINT_SOFTNESS:
-            coneConstraint->setLimit(coneConstraint->getSwingSpan1(), coneConstraint->getSwingSpan2(), coneConstraint->getTwistSpan(), p_value, coneConstraint->getBiasFactor(), coneConstraint->getRelaxationFactor());
+            coneConstraint->setLimit(
+                coneConstraint->getSwingSpan1(),
+                coneConstraint->getSwingSpan2(),
+                coneConstraint->getTwistSpan(),
+                p_value,
+                coneConstraint->getBiasFactor(),
+                coneConstraint->getRelaxationFactor()
+            );
             break;
         case PhysicsServer::CONE_TWIST_JOINT_RELAXATION:
-            coneConstraint->setLimit(coneConstraint->getSwingSpan1(), coneConstraint->getSwingSpan2(), coneConstraint->getTwistSpan(), coneConstraint->getLimitSoftness(), coneConstraint->getBiasFactor(), p_value);
+            coneConstraint->setLimit(
+                coneConstraint->getSwingSpan1(),
+                coneConstraint->getSwingSpan2(),
+                coneConstraint->getTwistSpan(),
+                coneConstraint->getLimitSoftness(),
+                coneConstraint->getBiasFactor(),
+                p_value
+            );
             break;
         default:
-            WARN_DEPRECATED_MSG("The parameter " + itos(p_param) + " is deprecated.");
+            WARN_DEPRECATED_MSG(
+                "The parameter " + itos(p_param) + " is deprecated."
+            );
             break;
     }
 }
 
-real_t ConeTwistJointBullet::get_param(PhysicsServer::ConeTwistJointParam p_param) const {
+real_t ConeTwistJointBullet::get_param(
+    PhysicsServer::ConeTwistJointParam p_param
+) const {
     switch (p_param) {
         case PhysicsServer::CONE_TWIST_JOINT_SWING_SPAN:
             return coneConstraint->getSwingSpan1();
@@ -99,7 +139,9 @@ real_t ConeTwistJointBullet::get_param(PhysicsServer::ConeTwistJointParam p_para
         case PhysicsServer::CONE_TWIST_JOINT_RELAXATION:
             return coneConstraint->getRelaxationFactor();
         default:
-            WARN_DEPRECATED_MSG("The parameter " + itos(p_param) + " is deprecated.");
+            WARN_DEPRECATED_MSG(
+                "The parameter " + itos(p_param) + " is deprecated."
+            );
             return 0;
     }
 }

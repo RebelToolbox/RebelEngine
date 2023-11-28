@@ -39,7 +39,7 @@
 class Performance : public Object {
     GDCLASS(Performance, Object);
 
-    static Performance *singleton;
+    static Performance* singleton;
     static void _bind_methods();
 
     float _get_node_count() const;
@@ -49,7 +49,6 @@ class Performance : public Object {
 
 public:
     enum Monitor {
-
         TIME_FPS,
         TIME_PROCESS,
         TIME_PHYSICS_PROCESS,
@@ -80,7 +79,7 @@ public:
         PHYSICS_3D_ACTIVE_OBJECTS,
         PHYSICS_3D_COLLISION_PAIRS,
         PHYSICS_3D_ISLAND_COUNT,
-        //physics
+        // physics
         AUDIO_OUTPUT_LATENCY,
         MONITOR_MAX
     };
@@ -99,7 +98,9 @@ public:
     void set_process_time(float p_pt);
     void set_physics_process_time(float p_pt);
 
-    static Performance *get_singleton() { return singleton; }
+    static Performance* get_singleton() {
+        return singleton;
+    }
 
     Performance();
 };

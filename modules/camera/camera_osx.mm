@@ -28,7 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-///@TODO this is a near duplicate of CameraIOS, we should find a way to combine those to minimize code duplication!!!!
+///@TODO this is a near duplicate of CameraIOS, we should find a way to combine
+/// those to minimize code duplication!!!!
 // If you fix something here, make sure you fix it there as well!
 
 #include "camera_osx.h"
@@ -39,23 +40,24 @@
 //////////////////////////////////////////////////////////////////////////
 // MyCaptureSession - This is a little helper class so we can capture our frames
 
-@interface MyCaptureSession : AVCaptureSession <AVCaptureVideoDataOutputSampleBufferDelegate> {
+@interface MyCaptureSession :
+    AVCaptureSession <AVCaptureVideoDataOutputSampleBufferDelegate> {
     Ref<CameraFeed> feed;
     size_t width[2];
     size_t height[2];
     PoolVector<uint8_t> img_data[2];
 
-    AVCaptureDeviceInput *input;
-    AVCaptureVideoDataOutput *output;
+    AVCaptureDeviceInput* input;
+    AVCaptureVideoDataOutput* output;
 }
 
 @end
 
 @implementation MyCaptureSession
 
-- (id)initForFeed:(Ref<CameraFeed>)p_feed andDevice:(AVCaptureDevice *)p_device {
+- (id)initForFeed:(Ref<CameraFeed>)p_feed andDevice:(AVCaptureDevice*)p_device {
     if (self = [super init]) {
-        NSError *error;
+        NSError* error;
         feed = p_feed;
         width[0] = 0;
         height[0] = 0;
@@ -64,7 +66,8 @@
 
         [self beginConfiguration];
 
-        input = [AVCaptureDeviceInput deviceInputWithDevice:p_device error:&error];
+        input = [AVCaptureDeviceInput deviceInputWithDevice:p_device
+                                                      error:&error];
         if (!input) {
             print_line("Couldn't get input device for camera");
         } else {
@@ -75,14 +78,19 @@
         if (!output) {
             print_line("Couldn't get output device for camera");
         } else {
-            NSDictionary *settings = @{ (NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange) };
+            NSDictionary* settings = @{
+                (NSString*)kCVPixelBufferPixelFormatTypeKey :
+                    @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)
+            };
             output.videoSettings = settings;
 
-            // discard if the data output queue is blocked (as we process the still image)
+            // discard if the data output queue is blocked (as we process the
+            // still image)
             [output setAlwaysDiscardsLateVideoFrames:YES];
 
             // now set ourselves as the delegate to receive new frames.
-            [output setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+            [output setSampleBufferDelegate:self
+                                      queue:dispatch_get_main_queue()];
 
             // this takes ownership
             [self addOutput:output];
@@ -126,22 +134,29 @@
     [super dealloc];
 }
 
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+- (void)captureOutput:(AVCaptureOutput*)captureOutput
+    didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
+           fromConnection:(AVCaptureConnection*)connection {
     // This gets called every time our camera has a new image for us to process.
-    // May need to investigate in a way to throttle this if we get more images then we're rendering frames..
+    // May need to investigate in a way to throttle this if we get more images
+    // then we're rendering frames..
 
-    // For now, version 1, we're just doing the bare minimum to make this work...
+    // For now, version 1, we're just doing the bare minimum to make this
+    // work...
     CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     // int _width = CVPixelBufferGetWidth(pixelBuffer);
     // int _height = CVPixelBufferGetHeight(pixelBuffer);
 
-    // It says that we need to lock this on the documentation pages but it's not in the samples
-    // need to lock our base address so we can access our pixel buffers, better safe then sorry?
+    // It says that we need to lock this on the documentation pages but it's not
+    // in the samples need to lock our base address so we can access our pixel
+    // buffers, better safe then sorry?
     CVPixelBufferLockBaseAddress(pixelBuffer, kCVPixelBufferLock_ReadOnly);
 
     // get our buffers
-    unsigned char *dataY = (unsigned char *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
-    unsigned char *dataCbCr = (unsigned char *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
+    unsigned char* dataY =
+        (unsigned char*)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
+    unsigned char* dataCbCr =
+        (unsigned char*)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
     if (dataY == NULL) {
         print_line("Couldn't access Y pixel buffer data");
     } else if (dataCbCr == NULL) {
@@ -164,7 +179,13 @@
             memcpy(w.ptr(), dataY, new_width * new_height);
 
             img[0].instance();
-            img[0]->create(new_width, new_height, 0, Image::FORMAT_R8, img_data[0]);
+            img[0]->create(
+                new_width,
+                new_height,
+                0,
+                Image::FORMAT_R8,
+                img_data[0]
+            );
         }
 
         {
@@ -181,9 +202,16 @@
             PoolVector<uint8_t>::Write w = img_data[1].write();
             memcpy(w.ptr(), dataCbCr, 2 * new_width * new_height);
 
-            ///TODO GLES2 doesn't support FORMAT_RG8, need to do some form of conversion
+            /// TODO GLES2 doesn't support FORMAT_RG8, need to do some form of
+            /// conversion
             img[1].instance();
-            img[1]->create(new_width, new_height, 0, Image::FORMAT_RG8, img_data[1]);
+            img[1]->create(
+                new_width,
+                new_height,
+                0,
+                Image::FORMAT_RG8,
+                img_data[1]
+            );
         }
 
         // set our texture...
@@ -201,22 +229,22 @@
 
 class CameraFeedOSX : public CameraFeed {
 private:
-    AVCaptureDevice *device;
-    MyCaptureSession *capture_session;
+    AVCaptureDevice* device;
+    MyCaptureSession* capture_session;
 
 public:
-    AVCaptureDevice *get_device() const;
+    AVCaptureDevice* get_device() const;
 
     CameraFeedOSX();
     ~CameraFeedOSX();
 
-    void set_device(AVCaptureDevice *p_device);
+    void set_device(AVCaptureDevice* p_device);
 
     bool activate_feed();
     void deactivate_feed();
 };
 
-AVCaptureDevice *CameraFeedOSX::get_device() const {
+AVCaptureDevice* CameraFeedOSX::get_device() const {
     return device;
 };
 
@@ -225,12 +253,12 @@ CameraFeedOSX::CameraFeedOSX() {
     capture_session = NULL;
 };
 
-void CameraFeedOSX::set_device(AVCaptureDevice *p_device) {
+void CameraFeedOSX::set_device(AVCaptureDevice* p_device) {
     device = p_device;
     [device retain];
 
     // get some info
-    NSString *device_name = p_device.localizedName;
+    NSString* device_name = p_device.localizedName;
     name = String::utf8(device_name.UTF8String);
     position = CameraFeed::FEED_UNSPECIFIED;
     if ([p_device position] == AVCaptureDevicePositionBack) {
@@ -258,20 +286,26 @@ bool CameraFeedOSX::activate_feed() {
     } else {
         // Start camera capture, check permission.
         if (@available(macOS 10.14, *)) {
-            AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+            AVAuthorizationStatus status = [AVCaptureDevice
+                authorizationStatusForMediaType:AVMediaTypeVideo];
             if (status == AVAuthorizationStatusAuthorized) {
-                capture_session = [[MyCaptureSession alloc] initForFeed:this andDevice:device];
+                capture_session = [[MyCaptureSession alloc] initForFeed:this
+                                                              andDevice:device];
             } else if (status == AVAuthorizationStatusNotDetermined) {
                 // Request permission.
                 [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo
                                          completionHandler:^(BOOL granted) {
                                              if (granted) {
-                                                 capture_session = [[MyCaptureSession alloc] initForFeed:this andDevice:device];
+                                                 capture_session =
+                                                     [[MyCaptureSession alloc]
+                                                         initForFeed:this
+                                                           andDevice:device];
                                              }
                                          }];
             }
         } else {
-            capture_session = [[MyCaptureSession alloc] initForFeed:this andDevice:device];
+            capture_session = [[MyCaptureSession alloc] initForFeed:this
+                                                          andDevice:device];
         }
     };
 
@@ -292,48 +326,68 @@ void CameraFeedOSX::deactivate_feed() {
 // when devices are connected/disconnected
 
 @interface MyDeviceNotifications : NSObject {
-    CameraOSX *camera_server;
+    CameraOSX* camera_server;
 }
 
 @end
 
 @implementation MyDeviceNotifications
 
-- (void)devices_changed:(NSNotification *)notification {
+- (void)devices_changed:(NSNotification*)notification {
     camera_server->update_feeds();
 }
 
-- (id)initForServer:(CameraOSX *)p_server {
+- (id)initForServer:(CameraOSX*)p_server {
     if (self = [super init]) {
         camera_server = p_server;
 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(devices_changed:) name:AVCaptureDeviceWasConnectedNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(devices_changed:) name:AVCaptureDeviceWasDisconnectedNotification object:nil];
+        [[NSNotificationCenter defaultCenter]
+            addObserver:self
+               selector:@selector(devices_changed:)
+                   name:AVCaptureDeviceWasConnectedNotification
+                 object:nil];
+        [[NSNotificationCenter defaultCenter]
+            addObserver:self
+               selector:@selector(devices_changed:)
+                   name:AVCaptureDeviceWasDisconnectedNotification
+                 object:nil];
     };
     return self;
 }
 
 - (void)dealloc {
     // remove notifications
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceWasConnectedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceWasDisconnectedNotification object:nil];
+    [[NSNotificationCenter defaultCenter]
+        removeObserver:self
+                  name:AVCaptureDeviceWasConnectedNotification
+                object:nil];
+    [[NSNotificationCenter defaultCenter]
+        removeObserver:self
+                  name:AVCaptureDeviceWasDisconnectedNotification
+                object:nil];
 
     [super dealloc];
 }
 
 @end
 
-MyDeviceNotifications *device_notifications = nil;
+MyDeviceNotifications* device_notifications = nil;
 
 //////////////////////////////////////////////////////////////////////////
 // CameraOSX - Subclass for our camera server on OSX
 
 void CameraOSX::update_feeds() {
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 101500
-    AVCaptureDeviceDiscoverySession *session = [AVCaptureDeviceDiscoverySession discoverySessionWithDeviceTypes:[NSArray arrayWithObjects:AVCaptureDeviceTypeExternalUnknown, AVCaptureDeviceTypeBuiltInWideAngleCamera, nil] mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionUnspecified];
-    NSArray *devices = session.devices;
+    AVCaptureDeviceDiscoverySession* session = [AVCaptureDeviceDiscoverySession
+        discoverySessionWithDeviceTypes:
+            [NSArray arrayWithObjects:AVCaptureDeviceTypeExternalUnknown,
+                                      AVCaptureDeviceTypeBuiltInWideAngleCamera,
+                                      nil]
+                              mediaType:AVMediaTypeVideo
+                               position:AVCaptureDevicePositionUnspecified];
+    NSArray* devices = session.devices;
 #else
-    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    NSArray* devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
 #endif
 
     // remove devices that are gone..
@@ -347,7 +401,7 @@ void CameraOSX::update_feeds() {
     };
 
     // add new devices..
-    for (AVCaptureDevice *device in devices) {
+    for (AVCaptureDevice* device in devices) {
         bool found = false;
         for (int i = 0; i < feeds.size() && !found; i++) {
             Ref<CameraFeedOSX> feed = (Ref<CameraFeedOSX>)feeds[i];

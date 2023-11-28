@@ -34,7 +34,8 @@
 #include "core/ustring.h"
 #include "core/variant.h"
 
-namespace gdmono {
+namespace gdmono
+{
 
 enum class CompletionKind {
     INPUT_ACTIONS = 0,
@@ -49,7 +50,10 @@ enum class CompletionKind {
     THEME_STYLES
 };
 
-PoolStringArray get_code_completion(CompletionKind p_kind, const String &p_script_file);
+PoolStringArray get_code_completion(
+    CompletionKind p_kind,
+    const String& p_script_file
+);
 
 } // namespace gdmono
 

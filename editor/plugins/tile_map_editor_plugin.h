@@ -45,7 +45,6 @@ class TileMapEditor : public VBoxContainer {
     GDCLASS(TileMapEditor, VBoxContainer);
 
     enum Tool {
-
         TOOL_NONE,
         TOOL_PAINTING,
         TOOL_ERASING,
@@ -60,48 +59,47 @@ class TileMapEditor : public VBoxContainer {
     };
 
     enum Options {
-
         OPTION_COPY,
         OPTION_ERASE_SELECTION,
         OPTION_FIX_INVALID,
         OPTION_CUT
     };
 
-    TileMap *node;
+    TileMap* node;
     bool manual_autotile;
     bool priority_atlastile;
     Vector2 manual_position;
 
-    EditorNode *editor;
-    UndoRedo *undo_redo;
-    Control *canvas_item_editor_viewport;
+    EditorNode* editor;
+    UndoRedo* undo_redo;
+    Control* canvas_item_editor_viewport;
 
-    LineEdit *search_box;
-    HSlider *size_slider;
-    ItemList *palette;
-    ItemList *manual_palette;
+    LineEdit* search_box;
+    HSlider* size_slider;
+    ItemList* palette;
+    ItemList* manual_palette;
 
-    Label *info_message;
+    Label* info_message;
 
-    HBoxContainer *toolbar;
-    HBoxContainer *toolbar_right;
+    HBoxContainer* toolbar;
+    HBoxContainer* toolbar_right;
 
-    Label *tile_info;
-    MenuButton *options;
+    Label* tile_info;
+    MenuButton* options;
 
-    ToolButton *paint_button;
-    ToolButton *bucket_fill_button;
-    ToolButton *picker_button;
-    ToolButton *select_button;
+    ToolButton* paint_button;
+    ToolButton* bucket_fill_button;
+    ToolButton* picker_button;
+    ToolButton* select_button;
 
-    ToolButton *flip_horizontal_button;
-    ToolButton *flip_vertical_button;
-    ToolButton *rotate_left_button;
-    ToolButton *rotate_right_button;
-    ToolButton *clear_transform_button;
+    ToolButton* flip_horizontal_button;
+    ToolButton* flip_vertical_button;
+    ToolButton* rotate_left_button;
+    ToolButton* rotate_right_button;
+    ToolButton* clear_transform_button;
 
-    CheckBox *manual_button;
-    CheckBox *priority_button;
+    CheckBox* manual_button;
+    CheckBox* priority_button;
 
     Tool tool;
     Tool last_tool;
@@ -120,7 +118,7 @@ class TileMapEditor : public VBoxContainer {
     Point2i over_tile;
     bool refocus_over_tile;
 
-    bool *bucket_cache_visited;
+    bool* bucket_cache_visited;
     Rect2i bucket_cache_rect;
     int bucket_cache_tile;
     PoolVector<Vector2> bucket_cache;
@@ -134,10 +132,10 @@ class TileMapEditor : public VBoxContainer {
         Vector2 ac;
 
         CellOp() :
-                idx(TileMap::INVALID_CELL),
-                xf(false),
-                yf(false),
-                tr(false) {}
+            idx(TileMap::INVALID_CELL),
+            xf(false),
+            yf(false),
+            tr(false) {}
     };
 
     Map<Point2i, CellOp> paint_undo;
@@ -151,10 +149,10 @@ class TileMapEditor : public VBoxContainer {
         Point2i autotile_coord;
 
         TileData() :
-                cell(TileMap::INVALID_CELL),
-                flip_h(false),
-                flip_v(false),
-                transpose(false) {}
+            cell(TileMap::INVALID_CELL),
+            flip_h(false),
+            flip_v(false),
+            transpose(false) {}
     };
 
     List<TileData> copydata;
@@ -162,18 +160,43 @@ class TileMapEditor : public VBoxContainer {
     Map<Point2i, CellOp> undo_data;
     Vector<int> invalid_cell;
 
-    void _pick_tile(const Point2 &p_pos);
+    void _pick_tile(const Point2& p_pos);
 
-    PoolVector<Vector2> _bucket_fill(const Point2i &p_start, bool erase = false, bool preview = false);
+    PoolVector<Vector2> _bucket_fill(
+        const Point2i& p_start,
+        bool erase = false,
+        bool preview = false
+    );
 
-    void _fill_points(const PoolVector<Vector2> &p_points, const Dictionary &p_op);
-    void _erase_points(const PoolVector<Vector2> &p_points);
+    void _fill_points(
+        const PoolVector<Vector2>& p_points,
+        const Dictionary& p_op
+    );
+    void _erase_points(const PoolVector<Vector2>& p_points);
 
-    void _select(const Point2i &p_from, const Point2i &p_to);
+    void _select(const Point2i& p_from, const Point2i& p_to);
     void _erase_selection();
 
-    void _draw_cell(Control *p_viewport, int p_cell, const Point2i &p_point, bool p_flip_h, bool p_flip_v, bool p_transpose, const Point2i &p_autotile_coord, const Transform2D &p_xform);
-    void _draw_fill_preview(Control *p_viewport, int p_cell, const Point2i &p_point, bool p_flip_h, bool p_flip_v, bool p_transpose, const Point2i &p_autotile_coord, const Transform2D &p_xform);
+    void _draw_cell(
+        Control* p_viewport,
+        int p_cell,
+        const Point2i& p_point,
+        bool p_flip_h,
+        bool p_flip_v,
+        bool p_transpose,
+        const Point2i& p_autotile_coord,
+        const Transform2D& p_xform
+    );
+    void _draw_fill_preview(
+        Control* p_viewport,
+        int p_cell,
+        const Point2i& p_point,
+        bool p_flip_h,
+        bool p_flip_v,
+        bool p_transpose,
+        const Point2i& p_autotile_coord,
+        const Transform2D& p_xform
+    );
     void _clear_bucket_cache();
 
     void _update_copydata();
@@ -183,22 +206,39 @@ class TileMapEditor : public VBoxContainer {
 
     void _manual_toggled(bool p_enabled);
     void _priority_toggled(bool p_enabled);
-    void _text_entered(const String &p_text);
-    void _text_changed(const String &p_text);
-    void _sbox_input(const Ref<InputEvent> &p_ie);
+    void _text_entered(const String& p_text);
+    void _text_changed(const String& p_text);
+    void _sbox_input(const Ref<InputEvent>& p_ie);
     void _update_palette();
     void _update_button_tool();
     void _button_tool_select(int p_tool);
     void _menu_option(int p_option);
     void _palette_selected(int index);
     void _palette_multi_selected(int index, bool selected);
-    void _palette_input(const Ref<InputEvent> &p_event);
+    void _palette_input(const Ref<InputEvent>& p_event);
 
-    Dictionary _create_cell_dictionary(int tile, bool flip_x, bool flip_y, bool transpose, Vector2 autotile_coord);
-    void _start_undo(const String &p_action);
+    Dictionary _create_cell_dictionary(
+        int tile,
+        bool flip_x,
+        bool flip_y,
+        bool transpose,
+        Vector2 autotile_coord
+    );
+    void _start_undo(const String& p_action);
     void _finish_undo();
-    void _create_set_cell_undo_redo(const Vector2 &p_vec, const CellOp &p_cell_old, const CellOp &p_cell_new);
-    void _set_cell(const Point2i &p_pos, Vector<int> p_values, bool p_flip_h = false, bool p_flip_v = false, bool p_transpose = false, const Point2i &p_autotile_coord = Point2());
+    void _create_set_cell_undo_redo(
+        const Vector2& p_vec,
+        const CellOp& p_cell_old,
+        const CellOp& p_cell_new
+    );
+    void _set_cell(
+        const Point2i& p_pos,
+        Vector<int> p_values,
+        bool p_flip_h = false,
+        bool p_flip_v = false,
+        bool p_transpose = false,
+        const Point2i& p_autotile_coord = Point2()
+    );
 
     void _canvas_mouse_enter();
     void _canvas_mouse_exit();
@@ -212,43 +252,62 @@ class TileMapEditor : public VBoxContainer {
 
 protected:
     void _notification(int p_what);
-    void _node_removed(Node *p_node);
+    void _node_removed(Node* p_node);
     static void _bind_methods();
-    CellOp _get_op_from_cell(const Point2i &p_pos);
+    CellOp _get_op_from_cell(const Point2i& p_pos);
 
 public:
-    HBoxContainer *get_toolbar() const { return toolbar; }
-    HBoxContainer *get_toolbar_right() const { return toolbar_right; }
-    Label *get_tile_info() const { return tile_info; }
+    HBoxContainer* get_toolbar() const {
+        return toolbar;
+    }
 
-    bool forward_gui_input(const Ref<InputEvent> &p_event);
-    void forward_canvas_draw_over_viewport(Control *p_overlay);
+    HBoxContainer* get_toolbar_right() const {
+        return toolbar_right;
+    }
 
-    void edit(Node *p_tile_map);
+    Label* get_tile_info() const {
+        return tile_info;
+    }
 
-    TileMapEditor(EditorNode *p_editor);
+    bool forward_gui_input(const Ref<InputEvent>& p_event);
+    void forward_canvas_draw_over_viewport(Control* p_overlay);
+
+    void edit(Node* p_tile_map);
+
+    TileMapEditor(EditorNode* p_editor);
     ~TileMapEditor();
 };
 
 class TileMapEditorPlugin : public EditorPlugin {
     GDCLASS(TileMapEditorPlugin, EditorPlugin);
 
-    TileMapEditor *tile_map_editor;
+    TileMapEditor* tile_map_editor;
 
 protected:
     void _notification(int p_what);
 
 public:
-    virtual bool forward_canvas_gui_input(const Ref<InputEvent> &p_event) { return tile_map_editor->forward_gui_input(p_event); }
-    virtual void forward_canvas_draw_over_viewport(Control *p_overlay) { tile_map_editor->forward_canvas_draw_over_viewport(p_overlay); }
+    virtual bool forward_canvas_gui_input(const Ref<InputEvent>& p_event) {
+        return tile_map_editor->forward_gui_input(p_event);
+    }
 
-    virtual String get_name() const { return "TileMap"; }
-    bool has_main_screen() const { return false; }
-    virtual void edit(Object *p_object);
-    virtual bool handles(Object *p_object) const;
+    virtual void forward_canvas_draw_over_viewport(Control* p_overlay) {
+        tile_map_editor->forward_canvas_draw_over_viewport(p_overlay);
+    }
+
+    virtual String get_name() const {
+        return "TileMap";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
     virtual void make_visible(bool p_visible);
 
-    TileMapEditorPlugin(EditorNode *p_node);
+    TileMapEditorPlugin(EditorNode* p_node);
     ~TileMapEditorPlugin();
 };
 

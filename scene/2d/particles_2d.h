@@ -71,7 +71,7 @@ private:
 
 protected:
     static void _bind_methods();
-    virtual void _validate_property(PropertyInfo &property) const;
+    virtual void _validate_property(PropertyInfo& property) const;
     void _notification(int p_what);
 
 public:
@@ -82,9 +82,9 @@ public:
     void set_pre_process_time(float p_time);
     void set_explosiveness_ratio(float p_ratio);
     void set_randomness_ratio(float p_ratio);
-    void set_visibility_rect(const Rect2 &p_visibility_rect);
+    void set_visibility_rect(const Rect2& p_visibility_rect);
     void set_use_local_coordinates(bool p_enable);
-    void set_process_material(const Ref<Material> &p_material);
+    void set_process_material(const Ref<Material>& p_material);
     void set_speed_scale(float p_scale);
 
     bool is_emitting() const;
@@ -108,10 +108,10 @@ public:
     void set_draw_order(DrawOrder p_order);
     DrawOrder get_draw_order() const;
 
-    void set_texture(const Ref<Texture> &p_texture);
+    void set_texture(const Ref<Texture>& p_texture);
     Ref<Texture> get_texture() const;
 
-    void set_normal_map(const Ref<Texture> &p_normal_map);
+    void set_normal_map(const Ref<Texture>& p_normal_map);
     Ref<Texture> get_normal_map() const;
 
     virtual String get_configuration_warning() const;

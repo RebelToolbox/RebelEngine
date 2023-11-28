@@ -35,15 +35,13 @@
 
 #include <stdlib.h>
 
-bool UPNP::is_common_device(const String &dev) const {
-    return dev.empty() ||
-            dev.find("InternetGatewayDevice") >= 0 ||
-            dev.find("WANIPConnection") >= 0 ||
-            dev.find("WANPPPConnection") >= 0 ||
-            dev.find("rootdevice") >= 0;
+bool UPNP::is_common_device(const String& dev) const {
+    return dev.empty() || dev.find("InternetGatewayDevice") >= 0
+        || dev.find("WANIPConnection") >= 0 || dev.find("WANPPPConnection") >= 0
+        || dev.find("rootdevice") >= 0;
 }
 
-int UPNP::discover(int timeout, int ttl, const String &device_filter) {
+int UPNP::discover(int timeout, int ttl, const String& device_filter) {
     ERR_FAIL_COND_V(timeout < 0, UPNP_RESULT_INVALID_PARAM);
     ERR_FAIL_COND_V(ttl < 0, UPNP_RESULT_INVALID_PARAM);
     ERR_FAIL_COND_V(ttl > 255, UPNP_RESULT_INVALID_PARAM);
@@ -51,14 +49,30 @@ int UPNP::discover(int timeout, int ttl, const String &device_filter) {
     devices.clear();
 
     int error = 0;
-    struct UPNPDev *devlist;
+    struct UPNPDev* devlist;
 
     CharString cs = discover_multicast_if.utf8();
-    const char *m_if = cs.length() ? cs.get_data() : nullptr;
+    const char* m_if = cs.length() ? cs.get_data() : nullptr;
     if (is_common_device(device_filter)) {
-        devlist = upnpDiscover(timeout, m_if, nullptr, discover_local_port, discover_ipv6, ttl, &error);
+        devlist = upnpDiscover(
+            timeout,
+            m_if,
+            nullptr,
+            discover_local_port,
+            discover_ipv6,
+            ttl,
+            &error
+        );
     } else {
-        devlist = upnpDiscoverAll(timeout, m_if, nullptr, discover_local_port, discover_ipv6, ttl, &error);
+        devlist = upnpDiscoverAll(
+            timeout,
+            m_if,
+            nullptr,
+            discover_local_port,
+            discover_ipv6,
+            ttl,
+            &error
+        );
     }
 
     if (error != UPNPDISCOVER_SUCCESS) {
@@ -76,10 +90,11 @@ int UPNP::discover(int timeout, int ttl, const String &device_filter) {
         return UPNP_RESULT_NO_DEVICES;
     }
 
-    struct UPNPDev *dev = devlist;
+    struct UPNPDev* dev = devlist;
 
     while (dev) {
-        if (device_filter.empty() || strstr(dev->st, device_filter.utf8().get_data())) {
+        if (device_filter.empty()
+            || strstr(dev->st, device_filter.utf8().get_data())) {
             add_device_to_list(dev, devlist);
         }
 
@@ -91,7 +106,7 @@ int UPNP::discover(int timeout, int ttl, const String &device_filter) {
     return UPNP_RESULT_SUCCESS;
 }
 
-void UPNP::add_device_to_list(UPNPDev *dev, UPNPDev *devlist) {
+void UPNP::add_device_to_list(UPNPDev* dev, UPNPDev* devlist) {
     Ref<UPNPDevice> new_device;
     new_device.instance();
 
@@ -103,14 +118,16 @@ void UPNP::add_device_to_list(UPNPDev *dev, UPNPDev *devlist) {
     devices.push_back(new_device);
 }
 
-char *UPNP::load_description(const String &url, int *size, int *status_code) const {
-    return (char *)miniwget(url.utf8().get_data(), size, 0, status_code);
+char* UPNP::load_description(const String& url, int* size, int* status_code)
+    const {
+    return (char*)miniwget(url.utf8().get_data(), size, 0, status_code);
 }
 
-void UPNP::parse_igd(Ref<UPNPDevice> dev, UPNPDev *devlist) {
+void UPNP::parse_igd(Ref<UPNPDevice> dev, UPNPDev* devlist) {
     int size = 0;
     int status_code = -1;
-    char *xml = load_description(dev->get_description_url(), &size, &status_code);
+    char* xml =
+        load_description(dev->get_description_url(), &size, &status_code);
 
     if (status_code != 200) {
         dev->set_igd_status(UPNPDevice::IGD_STATUS_HTTP_ERROR);
@@ -122,7 +139,7 @@ void UPNP::parse_igd(Ref<UPNPDevice> dev, UPNPDev *devlist) {
         return;
     }
 
-    struct UPNPUrls *urls = (UPNPUrls *)malloc(sizeof(struct UPNPUrls));
+    struct UPNPUrls* urls = (UPNPUrls*)malloc(sizeof(struct UPNPUrls));
 
     if (!urls) {
         dev->set_igd_status(UPNPDevice::IGD_STATUS_MALLOC_ERROR);
@@ -145,7 +162,7 @@ void UPNP::parse_igd(Ref<UPNPDevice> dev, UPNPDev *devlist) {
     }
 
     char addr[16];
-    int i = UPNP_GetValidIGD(devlist, urls, &data, (char *)&addr, 16);
+    int i = UPNP_GetValidIGD(devlist, urls, &data, (char*)&addr, 16);
 
     if (i != 1) {
         FreeUPNPUrls(urls);
@@ -279,7 +296,7 @@ Ref<UPNPDevice> UPNP::get_gateway() const {
     return nullptr;
 }
 
-void UPNP::set_discover_multicast_if(const String &m_if) {
+void UPNP::set_discover_multicast_if(const String& m_if) {
     discover_multicast_if = m_if;
 }
 
@@ -313,7 +330,13 @@ String UPNP::query_external_address() const {
     return dev->query_external_address();
 }
 
-int UPNP::add_port_mapping(int port, int port_internal, String desc, String proto, int duration) const {
+int UPNP::add_port_mapping(
+    int port,
+    int port_internal,
+    String desc,
+    String proto,
+    int duration
+) const {
     Ref<UPNPDevice> dev = get_gateway();
 
     if (dev == nullptr) {
@@ -339,30 +362,95 @@ void UPNP::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_device_count"), &UPNP::get_device_count);
     ClassDB::bind_method(D_METHOD("get_device", "index"), &UPNP::get_device);
     ClassDB::bind_method(D_METHOD("add_device", "device"), &UPNP::add_device);
-    ClassDB::bind_method(D_METHOD("set_device", "index", "device"), &UPNP::set_device);
-    ClassDB::bind_method(D_METHOD("remove_device", "index"), &UPNP::remove_device);
+    ClassDB::bind_method(
+        D_METHOD("set_device", "index", "device"),
+        &UPNP::set_device
+    );
+    ClassDB::bind_method(
+        D_METHOD("remove_device", "index"),
+        &UPNP::remove_device
+    );
     ClassDB::bind_method(D_METHOD("clear_devices"), &UPNP::clear_devices);
 
     ClassDB::bind_method(D_METHOD("get_gateway"), &UPNP::get_gateway);
 
-    ClassDB::bind_method(D_METHOD("discover", "timeout", "ttl", "device_filter"), &UPNP::discover, DEFVAL(2000), DEFVAL(2), DEFVAL("InternetGatewayDevice"));
+    ClassDB::bind_method(
+        D_METHOD("discover", "timeout", "ttl", "device_filter"),
+        &UPNP::discover,
+        DEFVAL(2000),
+        DEFVAL(2),
+        DEFVAL("InternetGatewayDevice")
+    );
 
-    ClassDB::bind_method(D_METHOD("query_external_address"), &UPNP::query_external_address);
+    ClassDB::bind_method(
+        D_METHOD("query_external_address"),
+        &UPNP::query_external_address
+    );
 
-    ClassDB::bind_method(D_METHOD("add_port_mapping", "port", "port_internal", "desc", "proto", "duration"), &UPNP::add_port_mapping, DEFVAL(0), DEFVAL(""), DEFVAL("UDP"), DEFVAL(0));
-    ClassDB::bind_method(D_METHOD("delete_port_mapping", "port", "proto"), &UPNP::delete_port_mapping, DEFVAL("UDP"));
+    ClassDB::bind_method(
+        D_METHOD(
+            "add_port_mapping",
+            "port",
+            "port_internal",
+            "desc",
+            "proto",
+            "duration"
+        ),
+        &UPNP::add_port_mapping,
+        DEFVAL(0),
+        DEFVAL(""),
+        DEFVAL("UDP"),
+        DEFVAL(0)
+    );
+    ClassDB::bind_method(
+        D_METHOD("delete_port_mapping", "port", "proto"),
+        &UPNP::delete_port_mapping,
+        DEFVAL("UDP")
+    );
 
-    ClassDB::bind_method(D_METHOD("set_discover_multicast_if", "m_if"), &UPNP::set_discover_multicast_if);
-    ClassDB::bind_method(D_METHOD("get_discover_multicast_if"), &UPNP::get_discover_multicast_if);
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "discover_multicast_if"), "set_discover_multicast_if", "get_discover_multicast_if");
+    ClassDB::bind_method(
+        D_METHOD("set_discover_multicast_if", "m_if"),
+        &UPNP::set_discover_multicast_if
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_discover_multicast_if"),
+        &UPNP::get_discover_multicast_if
+    );
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "discover_multicast_if"),
+        "set_discover_multicast_if",
+        "get_discover_multicast_if"
+    );
 
-    ClassDB::bind_method(D_METHOD("set_discover_local_port", "port"), &UPNP::set_discover_local_port);
-    ClassDB::bind_method(D_METHOD("get_discover_local_port"), &UPNP::get_discover_local_port);
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "discover_local_port", PROPERTY_HINT_RANGE, "0,65535"), "set_discover_local_port", "get_discover_local_port");
+    ClassDB::bind_method(
+        D_METHOD("set_discover_local_port", "port"),
+        &UPNP::set_discover_local_port
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_discover_local_port"),
+        &UPNP::get_discover_local_port
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::INT,
+            "discover_local_port",
+            PROPERTY_HINT_RANGE,
+            "0,65535"
+        ),
+        "set_discover_local_port",
+        "get_discover_local_port"
+    );
 
-    ClassDB::bind_method(D_METHOD("set_discover_ipv6", "ipv6"), &UPNP::set_discover_ipv6);
+    ClassDB::bind_method(
+        D_METHOD("set_discover_ipv6", "ipv6"),
+        &UPNP::set_discover_ipv6
+    );
     ClassDB::bind_method(D_METHOD("is_discover_ipv6"), &UPNP::is_discover_ipv6);
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "discover_ipv6"), "set_discover_ipv6", "is_discover_ipv6");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "discover_ipv6"),
+        "set_discover_ipv6",
+        "is_discover_ipv6"
+    );
 
     BIND_ENUM_CONSTANT(UPNP_RESULT_SUCCESS);
     BIND_ENUM_CONSTANT(UPNP_RESULT_NOT_AUTHORIZED);
@@ -401,5 +489,4 @@ UPNP::UPNP() {
     discover_ipv6 = false;
 }
 
-UPNP::~UPNP() {
-}
+UPNP::~UPNP() {}

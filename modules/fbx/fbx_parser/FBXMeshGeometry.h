@@ -86,28 +86,34 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define AI_MAX_NUMBER_OF_TEXTURECOORDS 4
 #define AI_MAX_NUMBER_OF_COLOR_SETS 8
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
 /*
  * DOM base class for all kinds of FBX geometry
  */
 class Geometry : public Object {
 public:
-    Geometry(uint64_t id, const ElementPtr element, const std::string &name, const Document &doc);
+    Geometry(
+        uint64_t id,
+        const ElementPtr element,
+        const std::string& name,
+        const Document& doc
+    );
     virtual ~Geometry();
 
     /** Get the Skin attached to this geometry or NULL */
-    const Skin *DeformerSkin() const;
+    const Skin* DeformerSkin() const;
 
-    const std::vector<const BlendShape *> &get_blend_shapes() const;
+    const std::vector<const BlendShape*>& get_blend_shapes() const;
 
     size_t get_blend_shape_count() const {
         return blendShapes.size();
     }
 
 private:
-    const Skin *skin = nullptr;
-    std::vector<const BlendShape *> blendShapes;
+    const Skin* skin = nullptr;
+    std::vector<const BlendShape*> blendShapes;
 };
 
 typedef std::vector<int> MatIndexArray;
@@ -117,28 +123,37 @@ typedef std::vector<int> MatIndexArray;
 /// # FBX doc.
 /// ## Reference type declared:
 /// 	- Direct (directly related to the mapping information type)
-/// 	- IndexToDirect (Map with key value, meaning depends on the MappingInformationType)
+/// 	- IndexToDirect (Map with key value, meaning depends on the
+/// MappingInformationType)
 ///
 /// ## Map Type:
 /// 	* None The mapping is undetermined.
-/// 	* ByVertex There will be one mapping coordinate for each surface control point/vertex (ControlPoint is a vertex).
+/// 	* ByVertex There will be one mapping coordinate for each surface control
+/// point/vertex (ControlPoint is a vertex).
 /// 		* If you have direct reference type vertices[x]
 /// 		* If you have IndexToDirect reference type the UV
-/// 	* ByPolygonVertex There will be one mapping coordinate for each vertex, for every polygon of which it is a part. This means that a vertex will have as many mapping coordinates as polygons of which it is a part. (Sorted by polygon, referencing vertex)
-/// 	* ByPolygon There can be only one mapping coordinate for the whole polygon.
+/// 	* ByPolygonVertex There will be one mapping coordinate for each vertex,
+/// for every polygon of which it is a part. This means that a vertex will have
+/// as many mapping coordinates as polygons of which it is a part. (Sorted by
+/// polygon, referencing vertex)
+/// 	* ByPolygon There can be only one mapping coordinate for the whole
+/// polygon.
 /// 		* One mapping per polygon polygon x has this normal x
 /// 		* For each vertex of the polygon then set the normal to x
-/// 	* ByEdge There will be one mapping coordinate for each unique edge in the mesh. This is meant to be used with smoothing layer elements. (Mapping is referencing the edge id)
-/// 	* AllSame There can be only one mapping coordinate for the whole surface.
+/// 	* ByEdge There will be one mapping coordinate for each unique edge in
+/// the mesh. This is meant to be used with smoothing layer elements. (Mapping
+/// is referencing the edge id)
+/// 	* AllSame There can be only one mapping coordinate for the whole
+/// surface.
 class MeshGeometry : public Geometry {
 public:
     enum class MapType {
-        none = 0, // No mapping type. Stored as "None".
-        vertex, // Maps per vertex. Stored as "ByVertice".
+        none = 0,       // No mapping type. Stored as "None".
+        vertex,         // Maps per vertex. Stored as "ByVertice".
         polygon_vertex, // Maps per polygon vertex. Stored as "ByPolygonVertex".
-        polygon, // Maps per polygon. Stored as "ByPolygon".
-        edge, // Maps per edge. Stored as "ByEdge".
-        all_the_same // Uaps to everything. Stored as "AllSame".
+        polygon,        // Maps per polygon. Stored as "ByPolygon".
+        edge,           // Maps per edge. Stored as "ByEdge".
+        all_the_same    // Uaps to everything. Stored as "AllSame".
     };
 
     enum class ReferenceType {
@@ -157,38 +172,49 @@ public:
         std::vector<int> index;
 
         String debug_info() const {
-            return "indexes: " + itos(index.size()) + " data: " + itos(data.size());
+            return "indexes: " + itos(index.size())
+                 + " data: " + itos(data.size());
         }
     };
 
     struct Edge {
         int vertex_0 = 0, vertex_1 = 0;
-        Edge(int v0, int v1) :
-                vertex_0(v0), vertex_1(v1) {}
+
+        Edge(int v0, int v1) : vertex_0(v0), vertex_1(v1) {}
+
         Edge() {}
     };
 
 public:
-    MeshGeometry(uint64_t id, const ElementPtr element, const std::string &name, const Document &doc);
+    MeshGeometry(
+        uint64_t id,
+        const ElementPtr element,
+        const std::string& name,
+        const Document& doc
+    );
 
     virtual ~MeshGeometry();
 
-    const std::vector<Vector3> &get_vertices() const;
-    const std::vector<Edge> &get_edge_map() const;
-    const std::vector<int> &get_polygon_indices() const;
-    const std::vector<int> &get_edges() const;
-    const MappingData<Vector3> &get_normals() const;
-    const MappingData<Vector2> &get_uv_0() const;
-    const MappingData<Vector2> &get_uv_1() const;
-    const MappingData<Color> &get_colors() const;
-    const MappingData<int> &get_material_allocation_id() const;
+    const std::vector<Vector3>& get_vertices() const;
+    const std::vector<Edge>& get_edge_map() const;
+    const std::vector<int>& get_polygon_indices() const;
+    const std::vector<int>& get_edges() const;
+    const MappingData<Vector3>& get_normals() const;
+    const MappingData<Vector2>& get_uv_0() const;
+    const MappingData<Vector2>& get_uv_1() const;
+    const MappingData<Color>& get_colors() const;
+    const MappingData<int>& get_material_allocation_id() const;
 
     /// Returns -1 if the vertices doesn't form an edge. Vertex order, doesn't
     // matter.
-    static int get_edge_id(const std::vector<Edge> &p_map, int p_vertex_a, int p_vertex_b);
+    static int get_edge_id(
+        const std::vector<Edge>& p_map,
+        int p_vertex_a,
+        int p_vertex_b
+    );
     // Returns the edge point bu that ID, or the edge with -1 vertices if the
     // id is not valid.
-    static Edge get_edge(const std::vector<Edge> &p_map, int p_id);
+    static Edge get_edge(const std::vector<Edge>& p_map, int p_id);
 
 private:
     // Read directly from the FBX file.
@@ -197,18 +223,19 @@ private:
     std::vector<int> m_face_indices;
     std::vector<int> m_edges;
     MappingData<Vector3> m_normals;
-    MappingData<Vector2> m_uv_0; // first uv coordinates
-    MappingData<Vector2> m_uv_1; // second uv coordinates
-    MappingData<Color> m_colors; // colors for the mesh
+    MappingData<Vector2> m_uv_0;                // first uv coordinates
+    MappingData<Vector2> m_uv_1;                // second uv coordinates
+    MappingData<Color> m_colors;                // colors for the mesh
     MappingData<int> m_material_allocation_ids; // slot of material used
 
     template <class T>
     MappingData<T> resolve_vertex_data_array(
-            const ScopePtr source,
-            const std::string &MappingInformationType,
-            const std::string &ReferenceInformationType,
-            const std::string &dataElementName,
-            const std::string &indexOverride = "");
+        const ScopePtr source,
+        const std::string& MappingInformationType,
+        const std::string& ReferenceInformationType,
+        const std::string& dataElementName,
+        const std::string& indexOverride = ""
+    );
 };
 
 /*
@@ -217,42 +244,53 @@ private:
 class ShapeGeometry : public Geometry {
 public:
     /** The class constructor */
-    ShapeGeometry(uint64_t id, const ElementPtr element, const std::string &name, const Document &doc);
+    ShapeGeometry(
+        uint64_t id,
+        const ElementPtr element,
+        const std::string& name,
+        const Document& doc
+    );
 
     /** The class destructor */
     virtual ~ShapeGeometry();
 
     /** Get a list of all vertex points, non-unique*/
-    const std::vector<Vector3> &GetVertices() const;
+    const std::vector<Vector3>& GetVertices() const;
 
     /** Get a list of all vertex normals or an empty array if
      *  no normals are specified. */
-    const std::vector<Vector3> &GetNormals() const;
+    const std::vector<Vector3>& GetNormals() const;
 
     /** Return list of vertex indices. */
-    const std::vector<unsigned int> &GetIndices() const;
+    const std::vector<unsigned int>& GetIndices() const;
 
 private:
     std::vector<Vector3> m_vertices;
     std::vector<Vector3> m_normals;
     std::vector<unsigned int> m_indices;
 };
+
 /**
  *  DOM class for FBX geometry of type "Line"
  */
 class LineGeometry : public Geometry {
 public:
     /** The class constructor */
-    LineGeometry(uint64_t id, const ElementPtr element, const std::string &name, const Document &doc);
+    LineGeometry(
+        uint64_t id,
+        const ElementPtr element,
+        const std::string& name,
+        const Document& doc
+    );
 
     /** The class destructor */
     virtual ~LineGeometry();
 
     /** Get a list of all vertex points, non-unique*/
-    const std::vector<Vector3> &GetVertices() const;
+    const std::vector<Vector3>& GetVertices() const;
 
     /** Return list of vertex indices. */
-    const std::vector<int> &GetIndices() const;
+    const std::vector<int>& GetIndices() const;
 
 private:
     std::vector<Vector3> m_vertices;

@@ -46,40 +46,40 @@ class AnimationNodeBlendSpace1DEditor : public AnimationTreeNodeEditorPlugin {
 
     Ref<AnimationNodeBlendSpace1D> blend_space;
 
-    HBoxContainer *goto_parent_hb;
-    ToolButton *goto_parent;
+    HBoxContainer* goto_parent_hb;
+    ToolButton* goto_parent;
 
-    PanelContainer *panel;
-    ToolButton *tool_blend;
-    ToolButton *tool_select;
-    ToolButton *tool_create;
-    VSeparator *tool_erase_sep;
-    ToolButton *tool_erase;
-    ToolButton *snap;
-    SpinBox *snap_value;
+    PanelContainer* panel;
+    ToolButton* tool_blend;
+    ToolButton* tool_select;
+    ToolButton* tool_create;
+    VSeparator* tool_erase_sep;
+    ToolButton* tool_erase;
+    ToolButton* snap;
+    SpinBox* snap_value;
 
-    LineEdit *label_value;
-    SpinBox *max_value;
-    SpinBox *min_value;
+    LineEdit* label_value;
+    SpinBox* max_value;
+    SpinBox* min_value;
 
-    HBoxContainer *edit_hb;
-    SpinBox *edit_value;
-    Button *open_editor;
+    HBoxContainer* edit_hb;
+    SpinBox* edit_value;
+    Button* open_editor;
 
     int selected_point;
 
-    Control *blend_space_draw;
+    Control* blend_space_draw;
 
-    PanelContainer *error_panel;
-    Label *error_label;
+    PanelContainer* error_panel;
+    Label* error_label;
 
     bool updating;
 
-    UndoRedo *undo_redo;
+    UndoRedo* undo_redo;
 
-    static AnimationNodeBlendSpace1DEditor *singleton;
+    static AnimationNodeBlendSpace1DEditor* singleton;
 
-    void _blend_space_gui_input(const Ref<InputEvent> &p_event);
+    void _blend_space_gui_input(const Ref<InputEvent>& p_event);
     void _blend_space_draw();
 
     void _update_space();
@@ -88,8 +88,8 @@ class AnimationNodeBlendSpace1DEditor : public AnimationTreeNodeEditorPlugin {
     void _labels_changed(String);
     void _snap_toggled();
 
-    PopupMenu *menu;
-    PopupMenu *animations_menu;
+    PopupMenu* menu;
+    PopupMenu* animations_menu;
     Vector<String> animations_to_add;
     float add_point_pos;
     Vector<float> points;
@@ -111,9 +111,9 @@ class AnimationNodeBlendSpace1DEditor : public AnimationTreeNodeEditorPlugin {
 
     void _goto_parent();
 
-    EditorFileDialog *open_file;
+    EditorFileDialog* open_file;
     Ref<AnimationNode> file_loaded;
-    void _file_opened(const String &p_file);
+    void _file_opened(const String& p_file);
 
     enum {
         MENU_LOAD_FILE = 1000,
@@ -128,9 +128,12 @@ protected:
     static void _bind_methods();
 
 public:
-    static AnimationNodeBlendSpace1DEditor *get_singleton() { return singleton; }
-    virtual bool can_edit(const Ref<AnimationNode> &p_node);
-    virtual void edit(const Ref<AnimationNode> &p_node);
+    static AnimationNodeBlendSpace1DEditor* get_singleton() {
+        return singleton;
+    }
+
+    virtual bool can_edit(const Ref<AnimationNode>& p_node);
+    virtual void edit(const Ref<AnimationNode>& p_node);
     AnimationNodeBlendSpace1DEditor();
 };
 

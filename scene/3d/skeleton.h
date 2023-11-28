@@ -47,13 +47,13 @@ class SkinReference : public Reference {
     GDCLASS(SkinReference, Reference)
     friend class Skeleton;
 
-    Skeleton *skeleton_node = nullptr;
+    Skeleton* skeleton_node = nullptr;
     RID skeleton;
     Ref<Skin> skin;
     uint32_t bind_count = 0;
     uint64_t skeleton_version = 0;
     Vector<uint32_t> skin_bone_indices;
-    uint32_t *skin_bone_indices_ptrs = nullptr;
+    uint32_t* skin_bone_indices_ptrs = nullptr;
     void _skin_changed();
 
 protected:
@@ -61,7 +61,7 @@ protected:
 
 public:
     RID get_skeleton() const;
-    Skeleton *get_skeleton_node() const;
+    Skeleton* get_skeleton_node() const;
     Ref<Skin> get_skin() const;
     ~SkinReference();
 };
@@ -72,7 +72,7 @@ class Skeleton : public Spatial {
 private:
     friend class SkinReference;
 
-    Set<SkinReference *> skin_bindings;
+    Set<SkinReference*> skin_bindings;
 
     void _skin_changed();
 
@@ -81,7 +81,7 @@ private:
 
         bool enabled;
         int parent;
-        int sort_index; //used for re-sorting process order
+        int sort_index; // used for re-sorting process order
 
         bool disable_rest;
         Transform rest;
@@ -98,8 +98,8 @@ private:
         Transform global_pose_override;
 
 #ifndef _3D_DISABLED
-        PhysicalBone *physical_bone;
-        PhysicalBone *cache_parent_physical_bone;
+        PhysicalBone* physical_bone;
+        PhysicalBone* cache_parent_physical_bone;
 #endif // _3D_DISABLED
 
         List<uint32_t> nodes_bound;
@@ -130,7 +130,7 @@ private:
     // bind helpers
     Array _get_bound_child_nodes_to_bone(int p_bone) const {
         Array bound;
-        List<Node *> children;
+        List<Node*> children;
         get_bound_child_nodes_to_bone(p_bone, &children);
 
         for (int i = 0; i < children.size(); i++) {
@@ -142,23 +142,22 @@ private:
     void _update_process_order();
 
 protected:
-    bool _get(const StringName &p_path, Variant &r_ret) const;
-    bool _set(const StringName &p_path, const Variant &p_value);
-    void _get_property_list(List<PropertyInfo> *p_list) const;
+    bool _get(const StringName& p_path, Variant& r_ret) const;
+    bool _set(const StringName& p_path, const Variant& p_value);
+    void _get_property_list(List<PropertyInfo>* p_list) const;
     void _notification(int p_what);
     static void _bind_methods();
 
 public:
     enum {
-
         NOTIFICATION_UPDATE_SKELETON = 50
     };
 
     // skeleton creation api
-    void add_bone(const String &p_name);
-    int find_bone(const String &p_name) const;
+    void add_bone(const String& p_name);
+    int find_bone(const String& p_name) const;
     String get_bone_name(int p_bone) const;
-    void set_bone_name(int p_bone, const String &p_name);
+    void set_bone_name(int p_bone, const String& p_name);
 
     bool is_bone_parent_of(int p_bone_id, int p_parent_bone_id) const;
 
@@ -172,53 +171,58 @@ public:
 
     int get_bone_count() const;
 
-    void set_bone_rest(int p_bone, const Transform &p_rest);
+    void set_bone_rest(int p_bone, const Transform& p_rest);
     Transform get_bone_rest(int p_bone) const;
     Transform get_bone_global_pose(int p_bone) const;
     Transform get_bone_global_pose_no_override(int p_bone) const;
 
     void clear_bones_global_pose_override();
-    void set_bone_global_pose_override(int p_bone, const Transform &p_pose, float p_amount, bool p_persistent = false);
+    void set_bone_global_pose_override(
+        int p_bone,
+        const Transform& p_pose,
+        float p_amount,
+        bool p_persistent = false
+    );
 
     void set_bone_enabled(int p_bone, bool p_enabled);
     bool is_bone_enabled(int p_bone) const;
 
-    void bind_child_node_to_bone(int p_bone, Node *p_node);
-    void unbind_child_node_from_bone(int p_bone, Node *p_node);
-    void get_bound_child_nodes_to_bone(int p_bone, List<Node *> *p_bound) const;
+    void bind_child_node_to_bone(int p_bone, Node* p_node);
+    void unbind_child_node_from_bone(int p_bone, Node* p_node);
+    void get_bound_child_nodes_to_bone(int p_bone, List<Node*>* p_bound) const;
 
     void clear_bones();
 
     // posing api
 
-    void set_bone_pose(int p_bone, const Transform &p_pose);
+    void set_bone_pose(int p_bone, const Transform& p_pose);
     Transform get_bone_pose(int p_bone) const;
 
-    void set_bone_custom_pose(int p_bone, const Transform &p_custom_pose);
+    void set_bone_custom_pose(int p_bone, const Transform& p_custom_pose);
     Transform get_bone_custom_pose(int p_bone) const;
 
     void localize_rests(); // used for loaders and tools
     int get_process_order(int p_idx);
 
-    Ref<SkinReference> register_skin(const Ref<Skin> &p_skin);
+    Ref<SkinReference> register_skin(const Ref<Skin>& p_skin);
 
 #ifndef _3D_DISABLED
     // Physical bone API
 
-    void bind_physical_bone_to_bone(int p_bone, PhysicalBone *p_physical_bone);
+    void bind_physical_bone_to_bone(int p_bone, PhysicalBone* p_physical_bone);
     void unbind_physical_bone_from_bone(int p_bone);
 
-    PhysicalBone *get_physical_bone(int p_bone);
-    PhysicalBone *get_physical_bone_parent(int p_bone);
+    PhysicalBone* get_physical_bone(int p_bone);
+    PhysicalBone* get_physical_bone_parent(int p_bone);
 
 private:
     /// This is a slow API os it's cached
-    PhysicalBone *_get_physical_bone_parent(int p_bone);
+    PhysicalBone* _get_physical_bone_parent(int p_bone);
     void _rebuild_physical_bones_cache();
 
 public:
     void physical_bones_stop_simulation();
-    void physical_bones_start_simulation_on(const Array &p_bones);
+    void physical_bones_start_simulation_on(const Array& p_bones);
     void physical_bones_add_collision_exception(RID p_exception);
     void physical_bones_remove_collision_exception(RID p_exception);
 #endif // _3D_DISABLED

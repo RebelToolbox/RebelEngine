@@ -41,13 +41,17 @@
 #include "pluginscript_script.h"
 #include <pluginscript/godot_pluginscript.h>
 
-static List<PluginScriptLanguage *> pluginscript_languages;
+static List<PluginScriptLanguage*> pluginscript_languages;
 
-static Error _check_language_desc(const godot_pluginscript_language_desc *desc) {
+static Error _check_language_desc(const godot_pluginscript_language_desc* desc
+) {
     ERR_FAIL_COND_V(!desc->name || desc->name == String(), ERR_BUG);
     ERR_FAIL_COND_V(!desc->type || desc->type == String(), ERR_BUG);
     ERR_FAIL_COND_V(!desc->extension || desc->extension == String(), ERR_BUG);
-    ERR_FAIL_COND_V(!desc->recognized_extensions || !desc->recognized_extensions[0], ERR_BUG);
+    ERR_FAIL_COND_V(
+        !desc->recognized_extensions || !desc->recognized_extensions[0],
+        ERR_BUG
+    );
     ERR_FAIL_COND_V(!desc->init, ERR_BUG);
     ERR_FAIL_COND_V(!desc->finish, ERR_BUG);
 
@@ -94,12 +98,15 @@ static Error _check_language_desc(const godot_pluginscript_language_desc *desc) 
     return OK;
 }
 
-void GDAPI godot_pluginscript_register_language(const godot_pluginscript_language_desc *language_desc) {
+void GDAPI godot_pluginscript_register_language(
+    const godot_pluginscript_language_desc* language_desc
+) {
     Error ret = _check_language_desc(language_desc);
     if (ret) {
         ERR_FAIL();
     }
-    PluginScriptLanguage *language = memnew(PluginScriptLanguage(language_desc));
+    PluginScriptLanguage* language =
+        memnew(PluginScriptLanguage(language_desc));
     ScriptServer::register_language(language);
     ResourceLoader::add_resource_format_loader(language->get_resource_loader());
     ResourceSaver::add_resource_format_saver(language->get_resource_saver());
@@ -111,11 +118,18 @@ void register_pluginscript_types() {
 }
 
 void unregister_pluginscript_types() {
-    for (List<PluginScriptLanguage *>::Element *e = pluginscript_languages.front(); e; e = e->next()) {
-        PluginScriptLanguage *language = e->get();
+    for (List<PluginScriptLanguage*>::Element* e =
+             pluginscript_languages.front();
+         e;
+         e = e->next()) {
+        PluginScriptLanguage* language = e->get();
         ScriptServer::unregister_language(language);
-        ResourceLoader::remove_resource_format_loader(language->get_resource_loader());
-        ResourceSaver::remove_resource_format_saver(language->get_resource_saver());
+        ResourceLoader::remove_resource_format_loader(
+            language->get_resource_loader()
+        );
+        ResourceSaver::remove_resource_format_saver(
+            language->get_resource_saver()
+        );
         memdelete(language);
     }
 }

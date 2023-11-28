@@ -36,8 +36,8 @@ void GIProbeEditorPlugin::_bake() {
     }
 }
 
-void GIProbeEditorPlugin::edit(Object *p_object) {
-    GIProbe *s = Object::cast_to<GIProbe>(p_object);
+void GIProbeEditorPlugin::edit(Object* p_object) {
+    GIProbe* s = Object::cast_to<GIProbe>(p_object);
     if (!s) {
         return;
     }
@@ -45,7 +45,7 @@ void GIProbeEditorPlugin::edit(Object *p_object) {
     gi_probe = s;
 }
 
-bool GIProbeEditorPlugin::handles(Object *p_object) const {
+bool GIProbeEditorPlugin::handles(Object* p_object) const {
     return p_object->is_class("GIProbe");
 }
 
@@ -57,15 +57,19 @@ void GIProbeEditorPlugin::make_visible(bool p_visible) {
     }
 }
 
-EditorProgress *GIProbeEditorPlugin::tmp_progress = nullptr;
+EditorProgress* GIProbeEditorPlugin::tmp_progress = nullptr;
 
 void GIProbeEditorPlugin::bake_func_begin(int p_steps) {
     ERR_FAIL_COND(tmp_progress != nullptr);
 
-    tmp_progress = memnew(EditorProgress("bake_gi", TTR("Bake GI Probe"), p_steps));
+    tmp_progress =
+        memnew(EditorProgress("bake_gi", TTR("Bake GI Probe"), p_steps));
 }
 
-void GIProbeEditorPlugin::bake_func_step(int p_step, const String &p_description) {
+void GIProbeEditorPlugin::bake_func_step(
+    int p_step,
+    const String& p_description
+) {
     ERR_FAIL_COND(tmp_progress == nullptr);
     tmp_progress->step(p_description, p_step, false);
 }
@@ -80,7 +84,7 @@ void GIProbeEditorPlugin::_bind_methods() {
     ClassDB::bind_method("_bake", &GIProbeEditorPlugin::_bake);
 }
 
-GIProbeEditorPlugin::GIProbeEditorPlugin(EditorNode *p_node) {
+GIProbeEditorPlugin::GIProbeEditorPlugin(EditorNode* p_node) {
     editor = p_node;
     bake = memnew(ToolButton);
     bake->set_icon(editor->get_gui_base()->get_icon("Bake", "EditorIcons"));
@@ -95,5 +99,4 @@ GIProbeEditorPlugin::GIProbeEditorPlugin(EditorNode *p_node) {
     GIProbe::bake_end_function = bake_func_end;
 }
 
-GIProbeEditorPlugin::~GIProbeEditorPlugin() {
-}
+GIProbeEditorPlugin::~GIProbeEditorPlugin() {}

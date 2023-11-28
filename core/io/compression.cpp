@@ -38,7 +38,12 @@
 #include <zlib.h>
 #include <zstd.h>
 
-int Compression::compress(uint8_t *p_dst, const uint8_t *p_src, int p_src_size, Mode p_mode) {
+int Compression::compress(
+    uint8_t* p_dst,
+    const uint8_t* p_src,
+    int p_src_size,
+    Mode p_mode
+) {
     switch (p_mode) {
         case MODE_FASTLZ: {
             if (p_src_size < 16) {
@@ -60,7 +65,14 @@ int Compression::compress(uint8_t *p_dst, const uint8_t *p_src, int p_src_size, 
             strm.zfree = zipio_free;
             strm.opaque = Z_NULL;
             int level = p_mode == MODE_DEFLATE ? zlib_level : gzip_level;
-            int err = deflateInit2(&strm, level, Z_DEFLATED, window_bits, 8, Z_DEFAULT_STRATEGY);
+            int err = deflateInit2(
+                &strm,
+                level,
+                Z_DEFLATED,
+                window_bits,
+                8,
+                Z_DEFAULT_STRATEGY
+            );
             if (err != Z_OK) {
                 return -1;
             }
@@ -68,7 +80,7 @@ int Compression::compress(uint8_t *p_dst, const uint8_t *p_src, int p_src_size, 
             strm.avail_in = p_src_size;
             int aout = deflateBound(&strm, p_src_size);
             strm.avail_out = aout;
-            strm.next_in = (Bytef *)p_src;
+            strm.next_in = (Bytef*)p_src;
             strm.next_out = p_dst;
             deflate(&strm, Z_FINISH);
             aout = aout - strm.avail_out;
@@ -77,14 +89,30 @@ int Compression::compress(uint8_t *p_dst, const uint8_t *p_src, int p_src_size, 
 
         } break;
         case MODE_ZSTD: {
-            ZSTD_CCtx *cctx = ZSTD_createCCtx();
+            ZSTD_CCtx* cctx = ZSTD_createCCtx();
             ZSTD_CCtx_setParameter(cctx, ZSTD_c_compressionLevel, zstd_level);
             if (zstd_long_distance_matching) {
-                ZSTD_CCtx_setParameter(cctx, ZSTD_c_enableLongDistanceMatching, 1);
-                ZSTD_CCtx_setParameter(cctx, ZSTD_c_windowLog, zstd_window_log_size);
+                ZSTD_CCtx_setParameter(
+                    cctx,
+                    ZSTD_c_enableLongDistanceMatching,
+                    1
+                );
+                ZSTD_CCtx_setParameter(
+                    cctx,
+                    ZSTD_c_windowLog,
+                    zstd_window_log_size
+                );
             }
-            int max_dst_size = get_max_compressed_buffer_size(p_src_size, MODE_ZSTD);
-            int ret = ZSTD_compressCCtx(cctx, p_dst, max_dst_size, p_src, p_src_size, zstd_level);
+            int max_dst_size =
+                get_max_compressed_buffer_size(p_src_size, MODE_ZSTD);
+            int ret = ZSTD_compressCCtx(
+                cctx,
+                p_dst,
+                max_dst_size,
+                p_src,
+                p_src_size,
+                zstd_level
+            );
             ZSTD_freeCCtx(cctx);
             return ret;
         } break;
@@ -111,7 +139,14 @@ int Compression::get_max_compressed_buffer_size(int p_src_size, Mode p_mode) {
             strm.zalloc = zipio_alloc;
             strm.zfree = zipio_free;
             strm.opaque = Z_NULL;
-            int err = deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, window_bits, 8, Z_DEFAULT_STRATEGY);
+            int err = deflateInit2(
+                &strm,
+                Z_DEFAULT_COMPRESSION,
+                Z_DEFLATED,
+                window_bits,
+                8,
+                Z_DEFAULT_STRATEGY
+            );
             if (err != Z_OK) {
                 return -1;
             }
@@ -127,7 +162,13 @@ int Compression::get_max_compressed_buffer_size(int p_src_size, Mode p_mode) {
     ERR_FAIL_V(-1);
 }
 
-int Compression::decompress(uint8_t *p_dst, int p_dst_max_size, const uint8_t *p_src, int p_src_size, Mode p_mode) {
+int Compression::decompress(
+    uint8_t* p_dst,
+    int p_dst_max_size,
+    const uint8_t* p_src,
+    int p_src_size,
+    Mode p_mode
+) {
     switch (p_mode) {
         case MODE_FASTLZ: {
             int ret_size = 0;
@@ -138,7 +179,8 @@ int Compression::decompress(uint8_t *p_dst, int p_dst_max_size, const uint8_t *p
                 memcpy(p_dst, dst, p_dst_max_size);
                 ret_size = p_dst_max_size;
             } else {
-                ret_size = fastlz_decompress(p_src, p_src_size, p_dst, p_dst_max_size);
+                ret_size =
+                    fastlz_decompress(p_src, p_src_size, p_dst, p_dst_max_size);
             }
             return ret_size;
         } break;
@@ -157,7 +199,7 @@ int Compression::decompress(uint8_t *p_dst, int p_dst_max_size, const uint8_t *p
 
             strm.avail_in = p_src_size;
             strm.avail_out = p_dst_max_size;
-            strm.next_in = (Bytef *)p_src;
+            strm.next_in = (Bytef*)p_src;
             strm.next_out = p_dst;
 
             err = inflate(&strm, Z_FINISH);
@@ -167,11 +209,21 @@ int Compression::decompress(uint8_t *p_dst, int p_dst_max_size, const uint8_t *p
             return total;
         } break;
         case MODE_ZSTD: {
-            ZSTD_DCtx *dctx = ZSTD_createDCtx();
+            ZSTD_DCtx* dctx = ZSTD_createDCtx();
             if (zstd_long_distance_matching) {
-                ZSTD_DCtx_setParameter(dctx, ZSTD_d_windowLogMax, zstd_window_log_size);
+                ZSTD_DCtx_setParameter(
+                    dctx,
+                    ZSTD_d_windowLogMax,
+                    zstd_window_log_size
+                );
             }
-            int ret = ZSTD_decompressDCtx(dctx, p_dst, p_dst_max_size, p_src, p_src_size);
+            int ret = ZSTD_decompressDCtx(
+                dctx,
+                p_dst,
+                p_dst_max_size,
+                p_src,
+                p_src_size
+            );
             ZSTD_freeDCtx(dctx);
             return ret;
         } break;
@@ -181,13 +233,22 @@ int Compression::decompress(uint8_t *p_dst, int p_dst_max_size, const uint8_t *p
 }
 
 /**
-    This will handle both Gzip and Deflat streams. It will automatically allocate the output buffer into the provided p_dst_vect Vector.
-    This is required for compressed data who's final uncompressed size is unknown, as is the case for HTTP response bodies.
-    This is much slower however than using Compression::decompress because it may result in multiple full copies of the output buffer.
+    This will handle both Gzip and Deflat streams. It will automatically
+   allocate the output buffer into the provided p_dst_vect Vector. This is
+   required for compressed data who's final uncompressed size is unknown, as is
+   the case for HTTP response bodies. This is much slower however than using
+   Compression::decompress because it may result in multiple full copies of the
+   output buffer.
 */
-int Compression::decompress_dynamic(PoolVector<uint8_t> *p_dst, int p_max_dst_size, const uint8_t *p_src, int p_src_size, Mode p_mode) {
+int Compression::decompress_dynamic(
+    PoolVector<uint8_t>* p_dst,
+    int p_max_dst_size,
+    const uint8_t* p_src,
+    int p_src_size,
+    Mode p_mode
+) {
     int ret;
-    uint8_t *dst = nullptr;
+    uint8_t* dst = nullptr;
     int out_mark = 0;
     z_stream strm;
 
@@ -208,7 +269,7 @@ int Compression::decompress_dynamic(PoolVector<uint8_t> *p_dst, int p_max_dst_si
     ERR_FAIL_COND_V(err != Z_OK, -1);
 
     // Setup the stream inputs
-    strm.next_in = (Bytef *)p_src;
+    strm.next_in = (Bytef*)p_src;
     strm.avail_in = p_src_size;
 
     // Ensure the destination buffer is empty
@@ -227,8 +288,8 @@ int Compression::decompress_dynamic(PoolVector<uint8_t> *p_dst, int p_max_dst_si
         strm.next_out = &(dst[out_mark]);
         strm.avail_out = gzip_chunk;
 
-        // run inflate() on input until output buffer is full and needs to be resized
-        // or input runs out
+        // run inflate() on input until output buffer is full and needs to be
+        // resized or input runs out
         do {
             ret = inflate(&strm, Z_SYNC_FLUSH);
 
@@ -259,7 +320,8 @@ int Compression::decompress_dynamic(PoolVector<uint8_t> *p_dst, int p_max_dst_si
         }
     } while (ret != Z_STREAM_END);
 
-    // If all done successfully, resize the output if it's larger than the actual output
+    // If all done successfully, resize the output if it's larger than the
+    // actual output
     if (ret == Z_STREAM_END && (unsigned long)p_dst->size() > strm.total_out) {
         p_dst->resize(strm.total_out);
     }

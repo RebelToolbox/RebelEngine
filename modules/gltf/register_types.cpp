@@ -84,5 +84,4 @@ void register_gltf_types() {
 #endif
 }
 
-void unregister_gltf_types() {
-}
+void unregister_gltf_types() {}

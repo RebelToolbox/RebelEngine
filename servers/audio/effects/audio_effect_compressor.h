@@ -44,8 +44,15 @@ class AudioEffectCompressorInstance : public AudioEffectInstance {
     int current_channel;
 
 public:
-    void set_current_channel(int p_channel) { current_channel = p_channel; }
-    virtual void process(const AudioFrame *p_src_frames, AudioFrame *p_dst_frames, int p_frame_count);
+    void set_current_channel(int p_channel) {
+        current_channel = p_channel;
+    }
+
+    virtual void process(
+        const AudioFrame* p_src_frames,
+        AudioFrame* p_dst_frames,
+        int p_frame_count
+    );
 };
 
 class AudioEffectCompressor : public AudioEffect {
@@ -61,7 +68,7 @@ class AudioEffectCompressor : public AudioEffect {
     StringName sidechain;
 
 protected:
-    void _validate_property(PropertyInfo &property) const;
+    void _validate_property(PropertyInfo& property) const;
     static void _bind_methods();
 
 public:
@@ -85,7 +92,7 @@ public:
     void set_mix(float p_mix);
     float get_mix() const;
 
-    void set_sidechain(const StringName &p_sidechain);
+    void set_sidechain(const StringName& p_sidechain);
     StringName get_sidechain() const;
 
     AudioEffectCompressor();

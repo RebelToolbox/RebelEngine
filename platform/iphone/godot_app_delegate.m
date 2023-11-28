@@ -38,9 +38,9 @@
 
 @implementation GodotApplicalitionDelegate
 
-static NSMutableArray<ApplicationDelegateService *> *services = nil;
+static NSMutableArray<ApplicationDelegateService*>* services = nil;
 
-+ (NSArray<ApplicationDelegateService *> *)services {
++ (NSArray<ApplicationDelegateService*>*)services {
     return services;
 }
 
@@ -49,26 +49,27 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     [services addObject:[AppDelegate new]];
 }
 
-+ (void)addService:(ApplicationDelegateService *)service {
++ (void)addService:(ApplicationDelegateService*)service {
     if (!services || !service) {
         return;
     }
     [services addObject:service];
 }
 
-// UIApplicationDelegate documentation can be found here: https://developer.apple.com/documentation/uikit/uiapplicationdelegate
+// UIApplicationDelegate documentation can be found here:
+// https://developer.apple.com/documentation/uikit/uiapplicationdelegate
 
 // MARK: Window
 
-- (UIWindow *)window {
-    UIWindow *result = nil;
+- (UIWindow*)window {
+    UIWindow* result = nil;
 
-    for (ApplicationDelegateService *service in services) {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        UIWindow *value = [service window];
+        UIWindow* value = [service window];
 
         if (value) {
             result = value;
@@ -80,15 +81,18 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
 
 // MARK: Initializing
 
-- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions {
+- (BOOL)application:(UIApplication*)application
+    willFinishLaunchingWithOptions:
+        (NSDictionary<UIApplicationLaunchOptionsKey, id>*)launchOptions {
     BOOL result = NO;
 
-    for (ApplicationDelegateService *service in services) {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        if ([service application:application willFinishLaunchingWithOptions:launchOptions]) {
+        if ([service application:application
+                willFinishLaunchingWithOptions:launchOptions]) {
             result = YES;
         }
     }
@@ -96,15 +100,18 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     return result;
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions {
+- (BOOL)application:(UIApplication*)application
+    didFinishLaunchingWithOptions:
+        (NSDictionary<UIApplicationLaunchOptionsKey, id>*)launchOptions {
     BOOL result = NO;
 
-    for (ApplicationDelegateService *service in services) {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        if ([service application:application didFinishLaunchingWithOptions:launchOptions]) {
+        if ([service application:application
+                didFinishLaunchingWithOptions:launchOptions]) {
             result = YES;
         }
     }
@@ -116,16 +123,19 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
 
 // MARK: Scene
 
-- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options {}
+- (UISceneConfiguration *)application:(UIApplication *)application
+configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession
+options:(UISceneConnectionOptions *)options {}
 
-- (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {}
+- (void)application:(UIApplication *)application
+didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {}
 
 */
 
 // MARK: Life-Cycle
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    for (ApplicationDelegateService *service in services) {
+- (void)applicationDidBecomeActive:(UIApplication*)application {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -134,8 +144,8 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     }
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    for (ApplicationDelegateService *service in services) {
+- (void)applicationWillResignActive:(UIApplication*)application {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -144,8 +154,8 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     }
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    for (ApplicationDelegateService *service in services) {
+- (void)applicationDidEnterBackground:(UIApplication*)application {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -154,8 +164,8 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     }
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    for (ApplicationDelegateService *service in services) {
+- (void)applicationWillEnterForeground:(UIApplication*)application {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -164,8 +174,8 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     }
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application {
-    for (ApplicationDelegateService *service in services) {
+- (void)applicationWillTerminate:(UIApplication*)application {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -176,8 +186,8 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
 
 // MARK: Environment Changes
 
-- (void)applicationProtectedDataDidBecomeAvailable:(UIApplication *)application {
-    for (ApplicationDelegateService *service in services) {
+- (void)applicationProtectedDataDidBecomeAvailable:(UIApplication*)application {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -186,8 +196,9 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     }
 }
 
-- (void)applicationProtectedDataWillBecomeUnavailable:(UIApplication *)application {
-    for (ApplicationDelegateService *service in services) {
+- (void
+)applicationProtectedDataWillBecomeUnavailable:(UIApplication*)application {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -196,8 +207,8 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     }
 }
 
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    for (ApplicationDelegateService *service in services) {
+- (void)applicationDidReceiveMemoryWarning:(UIApplication*)application {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -206,8 +217,8 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     }
 }
 
-- (void)applicationSignificantTimeChange:(UIApplication *)application {
-    for (ApplicationDelegateService *service in services) {
+- (void)applicationSignificantTimeChange:(UIApplication*)application {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -218,15 +229,17 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
 
 // MARK: App State Restoration
 
-- (BOOL)application:(UIApplication *)application shouldSaveSecureApplicationState:(NSCoder *)coder API_AVAILABLE(ios(13.2)) {
+- (BOOL)application:(UIApplication*)application
+    shouldSaveSecureApplicationState:(NSCoder*)coder API_AVAILABLE(ios(13.2)) {
     BOOL result = NO;
 
-    for (ApplicationDelegateService *service in services) {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        if ([service application:application shouldSaveSecureApplicationState:coder]) {
+        if ([service application:application
+                shouldSaveSecureApplicationState:coder]) {
             result = YES;
         }
     }
@@ -234,15 +247,18 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     return result;
 }
 
-- (BOOL)application:(UIApplication *)application shouldRestoreSecureApplicationState:(NSCoder *)coder API_AVAILABLE(ios(13.2)) {
+- (BOOL)application:(UIApplication*)application
+    shouldRestoreSecureApplicationState:(NSCoder*)coder
+    API_AVAILABLE(ios(13.2)) {
     BOOL result = NO;
 
-    for (ApplicationDelegateService *service in services) {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        if ([service application:application shouldRestoreSecureApplicationState:coder]) {
+        if ([service application:application
+                shouldRestoreSecureApplicationState:coder]) {
             result = YES;
         }
     }
@@ -250,13 +266,18 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     return result;
 }
 
-- (UIViewController *)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray<NSString *> *)identifierComponents coder:(NSCoder *)coder {
-    for (ApplicationDelegateService *service in services) {
+- (UIViewController*)application:(UIApplication*)application
+    viewControllerWithRestorationIdentifierPath:
+        (NSArray<NSString*>*)identifierComponents
+                                          coder:(NSCoder*)coder {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        UIViewController *controller = [service application:application viewControllerWithRestorationIdentifierPath:identifierComponents coder:coder];
+        UIViewController* controller = [service application:application
+                viewControllerWithRestorationIdentifierPath:identifierComponents
+                                                      coder:coder];
 
         if (controller) {
             return controller;
@@ -266,35 +287,43 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     return nil;
 }
 
-- (void)application:(UIApplication *)application willEncodeRestorableStateWithCoder:(NSCoder *)coder {
-    for (ApplicationDelegateService *service in services) {
+- (void)application:(UIApplication*)application
+    willEncodeRestorableStateWithCoder:(NSCoder*)coder {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        [service application:application willEncodeRestorableStateWithCoder:coder];
+        [service application:application
+            willEncodeRestorableStateWithCoder:coder];
     }
 }
 
-- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder {
-    for (ApplicationDelegateService *service in services) {
+- (void)application:(UIApplication*)application
+    didDecodeRestorableStateWithCoder:(NSCoder*)coder {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        [service application:application didDecodeRestorableStateWithCoder:coder];
+        [service application:application
+            didDecodeRestorableStateWithCoder:coder];
     }
 }
 
 // MARK: Download Data in Background
 
-- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
-    for (ApplicationDelegateService *service in services) {
+- (void)application:(UIApplication*)application
+    handleEventsForBackgroundURLSession:(NSString*)identifier
+                      completionHandler:(void (^)(void))completionHandler {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        [service application:application handleEventsForBackgroundURLSession:identifier completionHandler:completionHandler];
+        [service application:application
+            handleEventsForBackgroundURLSession:identifier
+                              completionHandler:completionHandler];
     }
 
     completionHandler();
@@ -306,15 +335,17 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
 
 // MARK: User Activity and Handling Quick Actions
 
-- (BOOL)application:(UIApplication *)application willContinueUserActivityWithType:(NSString *)userActivityType {
+- (BOOL)application:(UIApplication*)application
+    willContinueUserActivityWithType:(NSString*)userActivityType {
     BOOL result = NO;
 
-    for (ApplicationDelegateService *service in services) {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        if ([service application:application willContinueUserActivityWithType:userActivityType]) {
+        if ([service application:application
+                willContinueUserActivityWithType:userActivityType]) {
             result = YES;
         }
     }
@@ -322,15 +353,21 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     return result;
 }
 
-- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> *restorableObjects))restorationHandler {
+- (BOOL)application:(UIApplication*)application
+    continueUserActivity:(NSUserActivity*)userActivity
+      restorationHandler:
+          (void (^)(NSArray<id<UIUserActivityRestoring>>* restorableObjects)
+          )restorationHandler {
     BOOL result = NO;
 
-    for (ApplicationDelegateService *service in services) {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        if ([service application:application continueUserActivity:userActivity restorationHandler:restorationHandler]) {
+        if ([service application:application
+                continueUserActivity:userActivity
+                  restorationHandler:restorationHandler]) {
             result = YES;
         }
     }
@@ -338,8 +375,9 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     return result;
 }
 
-- (void)application:(UIApplication *)application didUpdateUserActivity:(NSUserActivity *)userActivity {
-    for (ApplicationDelegateService *service in services) {
+- (void)application:(UIApplication*)application
+    didUpdateUserActivity:(NSUserActivity*)userActivity {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -348,42 +386,55 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
     }
 }
 
-- (void)application:(UIApplication *)application didFailToContinueUserActivityWithType:(NSString *)userActivityType error:(NSError *)error {
-    for (ApplicationDelegateService *service in services) {
+- (void)application:(UIApplication*)application
+    didFailToContinueUserActivityWithType:(NSString*)userActivityType
+                                    error:(NSError*)error {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        [service application:application didFailToContinueUserActivityWithType:userActivityType error:error];
+        [service application:application
+            didFailToContinueUserActivityWithType:userActivityType
+                                            error:error];
     }
 }
 
-- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler {
-    for (ApplicationDelegateService *service in services) {
+- (void)application:(UIApplication*)application
+    performActionForShortcutItem:(UIApplicationShortcutItem*)shortcutItem
+               completionHandler:(void (^)(BOOL succeeded))completionHandler {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        [service application:application performActionForShortcutItem:shortcutItem completionHandler:completionHandler];
+        [service application:application
+            performActionForShortcutItem:shortcutItem
+                       completionHandler:completionHandler];
     }
 }
 
 // MARK: WatchKit
 
-- (void)application:(UIApplication *)application handleWatchKitExtensionRequest:(NSDictionary *)userInfo reply:(void (^)(NSDictionary *replyInfo))reply {
-    for (ApplicationDelegateService *service in services) {
+- (void)application:(UIApplication*)application
+    handleWatchKitExtensionRequest:(NSDictionary*)userInfo
+                             reply:(void (^)(NSDictionary* replyInfo))reply {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        [service application:application handleWatchKitExtensionRequest:userInfo reply:reply];
+        [service application:application
+            handleWatchKitExtensionRequest:userInfo
+                                     reply:reply];
     }
 }
 
 // MARK: HealthKit
 
-- (void)applicationShouldRequestHealthAuthorization:(UIApplication *)application {
-    for (ApplicationDelegateService *service in services) {
+- (void
+)applicationShouldRequestHealthAuthorization:(UIApplication*)application {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -394,8 +445,10 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
 
 // MARK: Opening an URL
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
-    for (ApplicationDelegateService *service in services) {
+- (BOOL)application:(UIApplication*)app
+            openURL:(NSURL*)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey, id>*)options {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -410,15 +463,18 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
 
 // MARK: Disallowing Specified App Extension Types
 
-- (BOOL)application:(UIApplication *)application shouldAllowExtensionPointIdentifier:(UIApplicationExtensionPointIdentifier)extensionPointIdentifier {
+- (BOOL)application:(UIApplication*)application
+    shouldAllowExtensionPointIdentifier:(UIApplicationExtensionPointIdentifier
+                                        )extensionPointIdentifier {
     BOOL result = NO;
 
-    for (ApplicationDelegateService *service in services) {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        if ([service application:application shouldAllowExtensionPointIdentifier:extensionPointIdentifier]) {
+        if ([service application:application
+                shouldAllowExtensionPointIdentifier:extensionPointIdentifier]) {
             result = YES;
         }
     }
@@ -428,8 +484,9 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
 
 // MARK: SiriKit
 
-- (id)application:(UIApplication *)application handlerForIntent:(INIntent *)intent API_AVAILABLE(ios(14.0)) {
-    for (ApplicationDelegateService *service in services) {
+- (id)application:(UIApplication*)application
+    handlerForIntent:(INIntent*)intent API_AVAILABLE(ios(14.0)) {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
@@ -446,13 +503,16 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
 
 // MARK: CloudKit
 
-- (void)application:(UIApplication *)application userDidAcceptCloudKitShareWithMetadata:(CKShareMetadata *)cloudKitShareMetadata {
-    for (ApplicationDelegateService *service in services) {
+- (void)application:(UIApplication*)application
+    userDidAcceptCloudKitShareWithMetadata:
+        (CKShareMetadata*)cloudKitShareMetadata {
+    for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
         }
 
-        [service application:application userDidAcceptCloudKitShareWithMetadata:cloudKitShareMetadata];
+        [service application:application
+            userDidAcceptCloudKitShareWithMetadata:cloudKitShareMetadata];
     }
 }
 
@@ -460,7 +520,8 @@ static NSMutableArray<ApplicationDelegateService *> *services = nil;
 
 // MARK: Interface Geometry
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {}
+- (UIInterfaceOrientationMask)application:(UIApplication *)application
+supportedInterfaceOrientationsForWindow:(UIWindow *)window {}
 
 */
 

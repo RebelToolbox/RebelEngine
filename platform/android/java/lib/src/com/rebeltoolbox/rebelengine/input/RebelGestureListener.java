@@ -40,7 +40,8 @@ import android.view.MotionEvent;
  * Handles gesture input related events for the {@link RebelView}.
  * https://developer.android.com/reference/android/view/GestureDetector.SimpleOnGestureListener
  */
-public class RebelGestureListener extends GestureDetector.SimpleOnGestureListener {
+public class RebelGestureListener
+    extends GestureDetector.SimpleOnGestureListener {
     private final RebelView rebelView;
 
     public RebelGestureListener(RebelView rebelView) {
@@ -64,8 +65,7 @@ public class RebelGestureListener extends GestureDetector.SimpleOnGestureListene
     }
 
     @Override
-    public void onLongPress(MotionEvent event) {
-    }
+    public void onLongPress(MotionEvent event) {}
 
     @Override
     public boolean onDoubleTap(MotionEvent event) {
@@ -77,7 +77,12 @@ public class RebelGestureListener extends GestureDetector.SimpleOnGestureListene
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+    public boolean onScroll(
+        MotionEvent e1,
+        MotionEvent e2,
+        float distanceX,
+        float distanceY
+    ) {
         final int x = Math.round(distanceX);
         final int y = Math.round(distanceY);
         RebelEngine.scroll(x, y);
@@ -85,7 +90,12 @@ public class RebelGestureListener extends GestureDetector.SimpleOnGestureListene
     }
 
     @Override
-    public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+    public boolean onFling(
+        MotionEvent event1,
+        MotionEvent event2,
+        float velocityX,
+        float velocityY
+    ) {
         return true;
     }
 }

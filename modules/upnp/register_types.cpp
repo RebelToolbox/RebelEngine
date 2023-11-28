@@ -40,5 +40,4 @@ void register_upnp_types() {
     ClassDB::register_class<UPNPDevice>();
 }
 
-void unregister_upnp_types() {
-}
+void unregister_upnp_types() {}

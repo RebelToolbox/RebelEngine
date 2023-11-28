@@ -39,18 +39,24 @@
 #include "servers/visual/visual_server_globals.h"
 #include "skeleton.h"
 
-bool MeshInstance::_set(const StringName &p_name, const Variant &p_value) {
-    //this is not _too_ bad performance wise, really. it only arrives here if the property was not set anywhere else.
-    //add to it that it's probably found on first call to _set anyway.
+bool MeshInstance::_set(const StringName& p_name, const Variant& p_value) {
+    // this is not _too_ bad performance wise, really. it only arrives here if
+    // the property was not set anywhere else. add to it that it's probably
+    // found on first call to _set anyway.
 
     if (!get_instance().is_valid()) {
         return false;
     }
 
-    Map<StringName, BlendShapeTrack>::Element *E = blend_shape_tracks.find(p_name);
+    Map<StringName, BlendShapeTrack>::Element* E =
+        blend_shape_tracks.find(p_name);
     if (E) {
         E->get().value = p_value;
-        VisualServer::get_singleton()->instance_set_blend_shape_weight(get_instance(), E->get().idx, E->get().value);
+        VisualServer::get_singleton()->instance_set_blend_shape_weight(
+            get_instance(),
+            E->get().idx,
+            E->get().value
+        );
         return true;
     }
 
@@ -67,12 +73,13 @@ bool MeshInstance::_set(const StringName &p_name, const Variant &p_value) {
     return false;
 }
 
-bool MeshInstance::_get(const StringName &p_name, Variant &r_ret) const {
+bool MeshInstance::_get(const StringName& p_name, Variant& r_ret) const {
     if (!get_instance().is_valid()) {
         return false;
     }
 
-    const Map<StringName, BlendShapeTrack>::Element *E = blend_shape_tracks.find(p_name);
+    const Map<StringName, BlendShapeTrack>::Element* E =
+        blend_shape_tracks.find(p_name);
     if (E) {
         r_ret = E->get().value;
         return true;
@@ -89,37 +96,56 @@ bool MeshInstance::_get(const StringName &p_name, Variant &r_ret) const {
     return false;
 }
 
-void MeshInstance::_get_property_list(List<PropertyInfo> *p_list) const {
+void MeshInstance::_get_property_list(List<PropertyInfo>* p_list) const {
     List<String> ls;
-    for (const Map<StringName, BlendShapeTrack>::Element *E = blend_shape_tracks.front(); E; E = E->next()) {
+    for (const Map<StringName, BlendShapeTrack>::Element* E =
+             blend_shape_tracks.front();
+         E;
+         E = E->next()) {
         ls.push_back(E->key());
     }
 
     ls.sort();
 
-    for (List<String>::Element *E = ls.front(); E; E = E->next()) {
-        p_list->push_back(PropertyInfo(Variant::REAL, E->get(), PROPERTY_HINT_RANGE, "-1,1,0.00001"));
+    for (List<String>::Element* E = ls.front(); E; E = E->next()) {
+        p_list->push_back(PropertyInfo(
+            Variant::REAL,
+            E->get(),
+            PROPERTY_HINT_RANGE,
+            "-1,1,0.00001"
+        ));
     }
 
     if (mesh.is_valid()) {
         for (int i = 0; i < mesh->get_surface_count(); i++) {
-            p_list->push_back(PropertyInfo(Variant::OBJECT, "material/" + itos(i), PROPERTY_HINT_RESOURCE_TYPE, "ShaderMaterial,SpatialMaterial"));
+            p_list->push_back(PropertyInfo(
+                Variant::OBJECT,
+                "material/" + itos(i),
+                PROPERTY_HINT_RESOURCE_TYPE,
+                "ShaderMaterial,SpatialMaterial"
+            ));
         }
     }
 }
 
-void MeshInstance::set_mesh(const Ref<Mesh> &p_mesh) {
+void MeshInstance::set_mesh(const Ref<Mesh>& p_mesh) {
     if (mesh == p_mesh) {
         return;
     }
 
     if (mesh.is_valid()) {
-        mesh->disconnect(CoreStringNames::get_singleton()->changed, this, SceneStringNames::get_singleton()->_mesh_changed);
+        mesh->disconnect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            SceneStringNames::get_singleton()->_mesh_changed
+        );
     }
 
-    if (skin_ref.is_valid() && mesh.is_valid() && _is_software_skinning_enabled() && is_visible_in_tree()) {
+    if (skin_ref.is_valid() && mesh.is_valid()
+        && _is_software_skinning_enabled() && is_visible_in_tree()) {
         ERR_FAIL_COND(!skin_ref->get_skeleton_node());
-        skin_ref->get_skeleton_node()->disconnect("skeleton_updated", this, "_update_skinning");
+        skin_ref->get_skeleton_node()
+            ->disconnect("skeleton_updated", this, "_update_skinning");
     }
 
     if (software_skinning) {
@@ -135,10 +161,15 @@ void MeshInstance::set_mesh(const Ref<Mesh> &p_mesh) {
             BlendShapeTrack mt;
             mt.idx = i;
             mt.value = 0;
-            blend_shape_tracks["blend_shapes/" + String(mesh->get_blend_shape_name(i))] = mt;
+            blend_shape_tracks
+                ["blend_shapes/" + String(mesh->get_blend_shape_name(i))] = mt;
         }
 
-        mesh->connect(CoreStringNames::get_singleton()->changed, this, SceneStringNames::get_singleton()->_mesh_changed);
+        mesh->connect(
+            CoreStringNames::get_singleton()->changed,
+            this,
+            SceneStringNames::get_singleton()->_mesh_changed
+        );
         materials.resize(mesh->get_surface_count());
 
         _initialize_skinning(false, false);
@@ -150,6 +181,7 @@ void MeshInstance::set_mesh(const Ref<Mesh> &p_mesh) {
 
     _change_notify();
 }
+
 Ref<Mesh> MeshInstance::get_mesh() const {
     return mesh;
 }
@@ -158,20 +190,22 @@ void MeshInstance::_resolve_skeleton_path() {
     Ref<SkinReference> new_skin_reference;
 
     if (!skeleton_path.is_empty()) {
-        Skeleton *skeleton = Object::cast_to<Skeleton>(get_node(skeleton_path));
+        Skeleton* skeleton = Object::cast_to<Skeleton>(get_node(skeleton_path));
         if (skeleton) {
             new_skin_reference = skeleton->register_skin(skin_internal);
             if (skin_internal.is_null()) {
-                //a skin was created for us
+                // a skin was created for us
                 skin_internal = new_skin_reference->get_skin();
                 _change_notify();
             }
         }
     }
 
-    if (skin_ref.is_valid() && mesh.is_valid() && _is_software_skinning_enabled() && is_visible_in_tree()) {
+    if (skin_ref.is_valid() && mesh.is_valid()
+        && _is_software_skinning_enabled() && is_visible_in_tree()) {
         ERR_FAIL_COND(!skin_ref->get_skeleton_node());
-        skin_ref->get_skeleton_node()->disconnect("skeleton_updated", this, "_update_skinning");
+        skin_ref->get_skeleton_node()
+            ->disconnect("skeleton_updated", this, "_update_skinning");
     }
 
     skin_ref = new_skin_reference;
@@ -198,17 +232,22 @@ bool MeshInstance::_is_global_software_skinning_enabled() {
 
 bool MeshInstance::_is_software_skinning_enabled() const {
     // Using static local variable which will be initialized only once,
-    // so _is_global_software_skinning_enabled can be only called once on first use.
-    static bool global_software_skinning = _is_global_software_skinning_enabled();
+    // so _is_global_software_skinning_enabled can be only called once on first
+    // use.
+    static bool global_software_skinning =
+        _is_global_software_skinning_enabled();
     return global_software_skinning;
 }
 
-void MeshInstance::_initialize_skinning(bool p_force_reset, bool p_call_attach_skeleton) {
+void MeshInstance::_initialize_skinning(
+    bool p_force_reset,
+    bool p_call_attach_skeleton
+) {
     if (mesh.is_null()) {
         return;
     }
 
-    VisualServer *visual_server = VisualServer::get_singleton();
+    VisualServer* visual_server = VisualServer::get_singleton();
 
     bool update_mesh = false;
 
@@ -216,8 +255,13 @@ void MeshInstance::_initialize_skinning(bool p_force_reset, bool p_call_attach_s
         if (_is_software_skinning_enabled()) {
             if (is_visible_in_tree()) {
                 ERR_FAIL_COND(!skin_ref->get_skeleton_node());
-                if (!skin_ref->get_skeleton_node()->is_connected("skeleton_updated", this, "_update_skinning")) {
-                    skin_ref->get_skeleton_node()->connect("skeleton_updated", this, "_update_skinning");
+                if (!skin_ref->get_skeleton_node()->is_connected(
+                        "skeleton_updated",
+                        this,
+                        "_update_skinning"
+                    )) {
+                    skin_ref->get_skeleton_node()
+                        ->connect("skeleton_updated", this, "_update_skinning");
                 }
             }
 
@@ -230,7 +274,9 @@ void MeshInstance::_initialize_skinning(bool p_force_reset, bool p_call_attach_s
                 software_skinning = memnew(SoftwareSkinning);
 
                 if (mesh->get_blend_shape_count() > 0) {
-                    ERR_PRINT("Blend shapes are not supported for software skinning.");
+                    ERR_PRINT(
+                        "Blend shapes are not supported for software skinning."
+                    );
                 }
 
                 Ref<ArrayMesh> software_mesh;
@@ -240,10 +286,15 @@ void MeshInstance::_initialize_skinning(bool p_force_reset, bool p_call_attach_s
                 // Initialize mesh for dynamic update.
                 int surface_count = mesh->get_surface_count();
                 software_skinning->surface_data.resize(surface_count);
-                for (int surface_index = 0; surface_index < surface_count; ++surface_index) {
-                    ERR_CONTINUE(Mesh::PRIMITIVE_TRIANGLES != mesh->surface_get_primitive_type(surface_index));
+                for (int surface_index = 0; surface_index < surface_count;
+                     ++surface_index) {
+                    ERR_CONTINUE(
+                        Mesh::PRIMITIVE_TRIANGLES
+                        != mesh->surface_get_primitive_type(surface_index)
+                    );
 
-                    SoftwareSkinning::SurfaceData &surface_data = software_skinning->surface_data[surface_index];
+                    SoftwareSkinning::SurfaceData& surface_data =
+                        software_skinning->surface_data[surface_index];
                     surface_data.transform_tangents = false;
                     surface_data.ensure_correct_normals = false;
 
@@ -257,61 +308,109 @@ void MeshInstance::_initialize_skinning(bool p_force_reset, bool p_call_attach_s
                     format &= ~Mesh::ARRAY_COMPRESS_WEIGHTS;
                     format &= ~Mesh::ARRAY_FLAG_USE_16_BIT_BONES;
 
-                    Array write_arrays = mesh->surface_get_arrays(surface_index);
+                    Array write_arrays =
+                        mesh->surface_get_arrays(surface_index);
                     Array read_arrays;
                     read_arrays.resize(Mesh::ARRAY_MAX);
 
-                    read_arrays[Mesh::ARRAY_VERTEX] = write_arrays[Mesh::ARRAY_VERTEX];
-                    read_arrays[Mesh::ARRAY_BONES] = write_arrays[Mesh::ARRAY_BONES];
-                    read_arrays[Mesh::ARRAY_WEIGHTS] = write_arrays[Mesh::ARRAY_WEIGHTS];
+                    read_arrays[Mesh::ARRAY_VERTEX] =
+                        write_arrays[Mesh::ARRAY_VERTEX];
+                    read_arrays[Mesh::ARRAY_BONES] =
+                        write_arrays[Mesh::ARRAY_BONES];
+                    read_arrays[Mesh::ARRAY_WEIGHTS] =
+                        write_arrays[Mesh::ARRAY_WEIGHTS];
 
                     write_arrays[Mesh::ARRAY_BONES] = Variant();
                     write_arrays[Mesh::ARRAY_WEIGHTS] = Variant();
 
-                    if (software_skinning_flags & SoftwareSkinning::FLAG_TRANSFORM_NORMALS) {
+                    if (software_skinning_flags
+                        & SoftwareSkinning::FLAG_TRANSFORM_NORMALS) {
                         ERR_CONTINUE(0 == (format & Mesh::ARRAY_FORMAT_NORMAL));
                         format &= ~Mesh::ARRAY_COMPRESS_NORMAL;
 
-                        read_arrays[Mesh::ARRAY_NORMAL] = write_arrays[Mesh::ARRAY_NORMAL];
+                        read_arrays[Mesh::ARRAY_NORMAL] =
+                            write_arrays[Mesh::ARRAY_NORMAL];
 
                         Ref<Material> mat = get_active_material(surface_index);
                         if (mat.is_valid()) {
                             Ref<SpatialMaterial> spatial_mat = mat;
                             if (spatial_mat.is_valid()) {
-                                // Spatial material, check from material settings.
-                                surface_data.transform_tangents = spatial_mat->get_feature(SpatialMaterial::FEATURE_NORMAL_MAPPING);
-                                surface_data.ensure_correct_normals = spatial_mat->get_flag(SpatialMaterial::FLAG_ENSURE_CORRECT_NORMALS);
+                                // Spatial material, check from material
+                                // settings.
+                                surface_data.transform_tangents =
+                                    spatial_mat->get_feature(
+                                        SpatialMaterial::FEATURE_NORMAL_MAPPING
+                                    );
+                                surface_data.ensure_correct_normals =
+                                    spatial_mat->get_flag(
+                                        SpatialMaterial::
+                                            FLAG_ENSURE_CORRECT_NORMALS
+                                    );
                             } else {
                                 // Custom shader, must check for compiled flags.
-                                surface_data.transform_tangents = VSG::storage->material_uses_tangents(mat->get_rid());
-                                surface_data.ensure_correct_normals = VSG::storage->material_uses_ensure_correct_normals(mat->get_rid());
+                                surface_data.transform_tangents =
+                                    VSG::storage->material_uses_tangents(
+                                        mat->get_rid()
+                                    );
+                                surface_data.ensure_correct_normals =
+                                    VSG::storage
+                                        ->material_uses_ensure_correct_normals(
+                                            mat->get_rid()
+                                        );
                             }
                         }
 
                         if (surface_data.transform_tangents) {
-                            ERR_CONTINUE(0 == (format & Mesh::ARRAY_FORMAT_TANGENT));
+                            ERR_CONTINUE(
+                                0 == (format & Mesh::ARRAY_FORMAT_TANGENT)
+                            );
                             format &= ~Mesh::ARRAY_COMPRESS_TANGENT;
 
-                            read_arrays[Mesh::ARRAY_TANGENT] = write_arrays[Mesh::ARRAY_TANGENT];
+                            read_arrays[Mesh::ARRAY_TANGENT] =
+                                write_arrays[Mesh::ARRAY_TANGENT];
                         }
                     }
 
-                    // 1. Temporarily add surface with bone data to create the read buffer.
-                    software_mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, read_arrays, Array(), format);
+                    // 1. Temporarily add surface with bone data to create the
+                    // read buffer.
+                    software_mesh->add_surface_from_arrays(
+                        Mesh::PRIMITIVE_TRIANGLES,
+                        read_arrays,
+                        Array(),
+                        format
+                    );
 
-                    PoolByteArray buffer_read = visual_server->mesh_surface_get_array(mesh_rid, surface_index);
+                    PoolByteArray buffer_read =
+                        visual_server->mesh_surface_get_array(
+                            mesh_rid,
+                            surface_index
+                        );
                     surface_data.source_buffer.append_array(buffer_read);
-                    surface_data.source_format = software_mesh->surface_get_format(surface_index);
+                    surface_data.source_format =
+                        software_mesh->surface_get_format(surface_index);
 
                     software_mesh->surface_remove(surface_index);
 
-                    // 2. Create the surface again without the bone data for the write buffer.
-                    software_mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, write_arrays, Array(), format);
+                    // 2. Create the surface again without the bone data for the
+                    // write buffer.
+                    software_mesh->add_surface_from_arrays(
+                        Mesh::PRIMITIVE_TRIANGLES,
+                        write_arrays,
+                        Array(),
+                        format
+                    );
 
-                    Ref<Material> material = mesh->surface_get_material(surface_index);
-                    software_mesh->surface_set_material(surface_index, material);
+                    Ref<Material> material =
+                        mesh->surface_get_material(surface_index);
+                    software_mesh->surface_set_material(
+                        surface_index,
+                        material
+                    );
 
-                    surface_data.buffer = visual_server->mesh_surface_get_array(mesh_rid, surface_index);
+                    surface_data.buffer = visual_server->mesh_surface_get_array(
+                        mesh_rid,
+                        surface_index
+                    );
                     surface_data.buffer_write = surface_data.buffer.write();
                 }
 
@@ -323,18 +422,28 @@ void MeshInstance::_initialize_skinning(bool p_force_reset, bool p_call_attach_s
                 visual_server->instance_attach_skeleton(get_instance(), RID());
             }
 
-            if (is_visible_in_tree() && (software_skinning_flags & SoftwareSkinning::FLAG_BONES_READY)) {
+            if (is_visible_in_tree()
+                && (software_skinning_flags & SoftwareSkinning::FLAG_BONES_READY
+                )) {
                 // Initialize from current skeleton pose.
                 _update_skinning();
             }
         } else {
             ERR_FAIL_COND(!skin_ref->get_skeleton_node());
-            if (skin_ref->get_skeleton_node()->is_connected("skeleton_updated", this, "_update_skinning")) {
-                skin_ref->get_skeleton_node()->disconnect("skeleton_updated", this, "_update_skinning");
+            if (skin_ref->get_skeleton_node()->is_connected(
+                    "skeleton_updated",
+                    this,
+                    "_update_skinning"
+                )) {
+                skin_ref->get_skeleton_node()
+                    ->disconnect("skeleton_updated", this, "_update_skinning");
             }
 
             if (p_call_attach_skeleton) {
-                visual_server->instance_attach_skeleton(get_instance(), skin_ref->get_skeleton());
+                visual_server->instance_attach_skeleton(
+                    get_instance(),
+                    skin_ref->get_skeleton()
+                );
             }
 
             if (software_skinning) {
@@ -354,15 +463,22 @@ void MeshInstance::_initialize_skinning(bool p_force_reset, bool p_call_attach_s
         }
     }
 
-    RID render_mesh = software_skinning ? software_skinning->mesh_instance->get_rid() : mesh->get_rid();
+    RID render_mesh = software_skinning
+                        ? software_skinning->mesh_instance->get_rid()
+                        : mesh->get_rid();
     if (update_mesh || (render_mesh != get_base())) {
         set_base(render_mesh);
 
         // Update instance materials after switching mesh.
         int surface_count = mesh->get_surface_count();
-        for (int surface_index = 0; surface_index < surface_count; ++surface_index) {
+        for (int surface_index = 0; surface_index < surface_count;
+             ++surface_index) {
             if (materials[surface_index].is_valid()) {
-                visual_server->instance_set_surface_material(get_instance(), surface_index, materials[surface_index]->get_rid());
+                visual_server->instance_set_surface_material(
+                    get_instance(),
+                    surface_index,
+                    materials[surface_index]->get_rid()
+                );
             }
         }
     }
@@ -393,37 +509,58 @@ void MeshInstance::_update_skinning() {
     Vector3 aabb_min = Vector3(FLT_MAX, FLT_MAX, FLT_MAX);
     Vector3 aabb_max = Vector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
-    VisualServer *visual_server = VisualServer::get_singleton();
+    VisualServer* visual_server = VisualServer::get_singleton();
 
     // Prepare bone transforms.
     const int num_bones = visual_server->skeleton_get_bone_count(skeleton);
     ERR_FAIL_COND(num_bones <= 0);
-    Transform *bone_transforms = (Transform *)alloca(sizeof(Transform) * num_bones);
+    Transform* bone_transforms =
+        (Transform*)alloca(sizeof(Transform) * num_bones);
     for (int bone_index = 0; bone_index < num_bones; ++bone_index) {
-        bone_transforms[bone_index] = visual_server->skeleton_bone_get_transform(skeleton, bone_index);
+        bone_transforms[bone_index] =
+            visual_server->skeleton_bone_get_transform(skeleton, bone_index);
     }
 
     // Apply skinning.
     int surface_count = software_skinning_mesh->get_surface_count();
-    for (int surface_index = 0; surface_index < surface_count; ++surface_index) {
-        ERR_CONTINUE((uint32_t)surface_index >= software_skinning->surface_data.size());
-        const SoftwareSkinning::SurfaceData &surface_data = software_skinning->surface_data[surface_index];
+    for (int surface_index = 0; surface_index < surface_count;
+         ++surface_index) {
+        ERR_CONTINUE(
+            (uint32_t)surface_index >= software_skinning->surface_data.size()
+        );
+        const SoftwareSkinning::SurfaceData& surface_data =
+            software_skinning->surface_data[surface_index];
         const bool transform_tangents = surface_data.transform_tangents;
         const bool ensure_correct_normals = surface_data.ensure_correct_normals;
 
-        const uint32_t format_write = software_skinning_mesh->surface_get_format(surface_index);
+        const uint32_t format_write =
+            software_skinning_mesh->surface_get_format(surface_index);
 
-        const int vertex_count_write = software_skinning_mesh->surface_get_array_len(surface_index);
-        const int index_count_write = software_skinning_mesh->surface_get_array_index_len(surface_index);
+        const int vertex_count_write =
+            software_skinning_mesh->surface_get_array_len(surface_index);
+        const int index_count_write =
+            software_skinning_mesh->surface_get_array_index_len(surface_index);
 
         uint32_t array_offsets_write[Mesh::ARRAY_MAX];
         uint32_t array_strides_write[Mesh::ARRAY_MAX];
-        visual_server->mesh_surface_make_offsets_from_format(format_write, vertex_count_write, index_count_write, array_offsets_write, array_strides_write);
-        ERR_FAIL_COND(array_strides_write[Mesh::ARRAY_VERTEX] != array_strides_write[Mesh::ARRAY_NORMAL]);
+        visual_server->mesh_surface_make_offsets_from_format(
+            format_write,
+            vertex_count_write,
+            index_count_write,
+            array_offsets_write,
+            array_strides_write
+        );
+        ERR_FAIL_COND(
+            array_strides_write[Mesh::ARRAY_VERTEX]
+            != array_strides_write[Mesh::ARRAY_NORMAL]
+        );
         const uint32_t stride_write = array_strides_write[Mesh::ARRAY_VERTEX];
-        const uint32_t offset_vertices_write = array_offsets_write[Mesh::ARRAY_VERTEX];
-        const uint32_t offset_normals_write = array_offsets_write[Mesh::ARRAY_NORMAL];
-        const uint32_t offset_tangents_write = array_offsets_write[Mesh::ARRAY_TANGENT];
+        const uint32_t offset_vertices_write =
+            array_offsets_write[Mesh::ARRAY_VERTEX];
+        const uint32_t offset_normals_write =
+            array_offsets_write[Mesh::ARRAY_NORMAL];
+        const uint32_t offset_tangents_write =
+            array_offsets_write[Mesh::ARRAY_TANGENT];
 
         PoolByteArray buffer_source = surface_data.source_buffer;
         PoolByteArray::Read buffer_read = buffer_source.read();
@@ -434,14 +571,24 @@ void MeshInstance::_update_skinning() {
         ERR_CONTINUE(0 == (format_read & Mesh::ARRAY_FORMAT_WEIGHTS));
 
         const int vertex_count = mesh->surface_get_array_len(surface_index);
-        const int index_count = mesh->surface_get_array_index_len(surface_index);
+        const int index_count =
+            mesh->surface_get_array_index_len(surface_index);
 
         ERR_CONTINUE(vertex_count != vertex_count_write);
 
         uint32_t array_offsets[Mesh::ARRAY_MAX];
         uint32_t array_strides[Mesh::ARRAY_MAX];
-        visual_server->mesh_surface_make_offsets_from_format(format_read, vertex_count, index_count, array_offsets, array_strides);
-        ERR_FAIL_COND(array_strides[Mesh::ARRAY_VERTEX] != array_strides[Mesh::ARRAY_NORMAL]);
+        visual_server->mesh_surface_make_offsets_from_format(
+            format_read,
+            vertex_count,
+            index_count,
+            array_offsets,
+            array_strides
+        );
+        ERR_FAIL_COND(
+            array_strides[Mesh::ARRAY_VERTEX]
+            != array_strides[Mesh::ARRAY_NORMAL]
+        );
         const uint32_t stride = array_strides[Mesh::ARRAY_VERTEX];
         const uint32_t offset_vertices = array_offsets[Mesh::ARRAY_VERTEX];
         const uint32_t offset_normals = array_offsets[Mesh::ARRAY_NORMAL];
@@ -452,53 +599,62 @@ void MeshInstance::_update_skinning() {
         PoolByteArray buffer = surface_data.buffer;
         PoolByteArray::Write buffer_write = surface_data.buffer_write;
 
-        for (int vertex_index = 0; vertex_index < vertex_count; ++vertex_index) {
+        for (int vertex_index = 0; vertex_index < vertex_count;
+             ++vertex_index) {
             const uint32_t vertex_offset = vertex_index * stride;
             const uint32_t vertex_offset_write = vertex_index * stride_write;
 
             float bone_weights[4];
-            const float *weight_ptr = (const float *)(buffer_read.ptr() + offset_weights + vertex_offset);
+            const float* weight_ptr =
+                (const float*)(buffer_read.ptr() + offset_weights
+                               + vertex_offset);
             bone_weights[0] = weight_ptr[0];
             bone_weights[1] = weight_ptr[1];
             bone_weights[2] = weight_ptr[2];
             bone_weights[3] = weight_ptr[3];
 
-            const uint8_t *bones_ptr = buffer_read.ptr() + offset_bones + vertex_offset;
+            const uint8_t* bones_ptr =
+                buffer_read.ptr() + offset_bones + vertex_offset;
             const int b0 = bones_ptr[0];
             const int b1 = bones_ptr[1];
             const int b2 = bones_ptr[2];
             const int b3 = bones_ptr[3];
 
             Transform transform;
-            transform.origin =
-                    bone_weights[0] * bone_transforms[b0].origin +
-                    bone_weights[1] * bone_transforms[b1].origin +
-                    bone_weights[2] * bone_transforms[b2].origin +
-                    bone_weights[3] * bone_transforms[b3].origin;
+            transform.origin = bone_weights[0] * bone_transforms[b0].origin
+                             + bone_weights[1] * bone_transforms[b1].origin
+                             + bone_weights[2] * bone_transforms[b2].origin
+                             + bone_weights[3] * bone_transforms[b3].origin;
 
-            transform.basis =
-                    bone_transforms[b0].basis * bone_weights[0] +
-                    bone_transforms[b1].basis * bone_weights[1] +
-                    bone_transforms[b2].basis * bone_weights[2] +
-                    bone_transforms[b3].basis * bone_weights[3];
+            transform.basis = bone_transforms[b0].basis * bone_weights[0]
+                            + bone_transforms[b1].basis * bone_weights[1]
+                            + bone_transforms[b2].basis * bone_weights[2]
+                            + bone_transforms[b3].basis * bone_weights[3];
 
-            const Vector3 &vertex_read = (const Vector3 &)buffer_read[vertex_offset + offset_vertices];
-            Vector3 &vertex = (Vector3 &)buffer_write[vertex_offset_write + offset_vertices_write];
+            const Vector3& vertex_read =
+                (const Vector3&)buffer_read[vertex_offset + offset_vertices];
+            Vector3& vertex = (Vector3&)
+                buffer_write[vertex_offset_write + offset_vertices_write];
             vertex = transform.xform(vertex_read);
 
-            if (software_skinning_flags & SoftwareSkinning::FLAG_TRANSFORM_NORMALS) {
+            if (software_skinning_flags
+                & SoftwareSkinning::FLAG_TRANSFORM_NORMALS) {
                 if (ensure_correct_normals) {
                     transform.basis.invert();
                     transform.basis.transpose();
                 }
 
-                const Vector3 &normal_read = (const Vector3 &)buffer_read[vertex_offset + offset_normals];
-                Vector3 &normal = (Vector3 &)buffer_write[vertex_offset_write + offset_normals_write];
+                const Vector3& normal_read =
+                    (const Vector3&)buffer_read[vertex_offset + offset_normals];
+                Vector3& normal = (Vector3&)
+                    buffer_write[vertex_offset_write + offset_normals_write];
                 normal = transform.basis.xform(normal_read);
 
                 if (transform_tangents) {
-                    const Vector3 &tangent_read = (const Vector3 &)buffer_read[vertex_offset + offset_tangents];
-                    Vector3 &tangent = (Vector3 &)buffer_write[vertex_offset_write + offset_tangents_write];
+                    const Vector3& tangent_read = (const Vector3&)
+                        buffer_read[vertex_offset + offset_tangents];
+                    Vector3& tangent = (Vector3&)buffer_write
+                        [vertex_offset_write + offset_tangents_write];
                     tangent = transform.basis.xform(tangent_read);
                 }
             }
@@ -511,15 +667,19 @@ void MeshInstance::_update_skinning() {
             aabb_max.z = MAX(aabb_max.z, vertex.z);
         }
 
-        visual_server->mesh_surface_update_region(mesh_rid, surface_index, 0, buffer);
+        visual_server
+            ->mesh_surface_update_region(mesh_rid, surface_index, 0, buffer);
     }
 
-    visual_server->mesh_set_custom_aabb(mesh_rid, AABB(aabb_min, aabb_max - aabb_min));
+    visual_server->mesh_set_custom_aabb(
+        mesh_rid,
+        AABB(aabb_min, aabb_max - aabb_min)
+    );
 
     software_skinning_flags |= SoftwareSkinning::FLAG_BONES_READY;
 }
 
-void MeshInstance::set_skin(const Ref<Skin> &p_skin) {
+void MeshInstance::set_skin(const Ref<Skin>& p_skin) {
     skin_internal = p_skin;
     skin = p_skin;
     if (!is_inside_tree()) {
@@ -532,7 +692,7 @@ Ref<Skin> MeshInstance::get_skin() const {
     return skin;
 }
 
-void MeshInstance::set_skeleton_path(const NodePath &p_skeleton) {
+void MeshInstance::set_skeleton_path(const NodePath& p_skeleton) {
     skeleton_path = p_skeleton;
     if (!is_inside_tree()) {
         return;
@@ -564,7 +724,7 @@ PoolVector<Face3> MeshInstance::get_faces(uint32_t p_usage_flags) const {
     return mesh->get_faces();
 }
 
-Node *MeshInstance::create_trimesh_collision_node() {
+Node* MeshInstance::create_trimesh_collision_node() {
     if (mesh.is_null()) {
         return nullptr;
     }
@@ -574,27 +734,29 @@ Node *MeshInstance::create_trimesh_collision_node() {
         return nullptr;
     }
 
-    StaticBody *static_body = memnew(StaticBody);
-    CollisionShape *cshape = memnew(CollisionShape);
+    StaticBody* static_body = memnew(StaticBody);
+    CollisionShape* cshape = memnew(CollisionShape);
     cshape->set_shape(shape);
     static_body->add_child(cshape);
     return static_body;
 }
 
 void MeshInstance::create_trimesh_collision() {
-    StaticBody *static_body = Object::cast_to<StaticBody>(create_trimesh_collision_node());
+    StaticBody* static_body =
+        Object::cast_to<StaticBody>(create_trimesh_collision_node());
     ERR_FAIL_COND(!static_body);
     static_body->set_name(String(get_name()) + "_col");
 
     add_child(static_body);
     if (get_owner()) {
-        CollisionShape *cshape = Object::cast_to<CollisionShape>(static_body->get_child(0));
+        CollisionShape* cshape =
+            Object::cast_to<CollisionShape>(static_body->get_child(0));
         static_body->set_owner(get_owner());
         cshape->set_owner(get_owner());
     }
 }
 
-Node *MeshInstance::create_multiple_convex_collisions_node() {
+Node* MeshInstance::create_multiple_convex_collisions_node() {
     if (mesh.is_null()) {
         return nullptr;
     }
@@ -604,9 +766,9 @@ Node *MeshInstance::create_multiple_convex_collisions_node() {
         return nullptr;
     }
 
-    StaticBody *static_body = memnew(StaticBody);
+    StaticBody* static_body = memnew(StaticBody);
     for (int i = 0; i < shapes.size(); i++) {
-        CollisionShape *cshape = memnew(CollisionShape);
+        CollisionShape* cshape = memnew(CollisionShape);
         cshape->set_shape(shapes[i]);
         static_body->add_child(cshape);
     }
@@ -614,7 +776,8 @@ Node *MeshInstance::create_multiple_convex_collisions_node() {
 }
 
 void MeshInstance::create_multiple_convex_collisions() {
-    StaticBody *static_body = Object::cast_to<StaticBody>(create_multiple_convex_collisions_node());
+    StaticBody* static_body =
+        Object::cast_to<StaticBody>(create_multiple_convex_collisions_node());
     ERR_FAIL_COND(!static_body);
     static_body->set_name(String(get_name()) + "_col");
 
@@ -623,13 +786,17 @@ void MeshInstance::create_multiple_convex_collisions() {
         static_body->set_owner(get_owner());
         int count = static_body->get_child_count();
         for (int i = 0; i < count; i++) {
-            CollisionShape *cshape = Object::cast_to<CollisionShape>(static_body->get_child(i));
+            CollisionShape* cshape =
+                Object::cast_to<CollisionShape>(static_body->get_child(i));
             cshape->set_owner(get_owner());
         }
     }
 }
 
-Node *MeshInstance::create_convex_collision_node(bool p_clean, bool p_simplify) {
+Node* MeshInstance::create_convex_collision_node(
+    bool p_clean,
+    bool p_simplify
+) {
     if (mesh.is_null()) {
         return nullptr;
     }
@@ -639,21 +806,24 @@ Node *MeshInstance::create_convex_collision_node(bool p_clean, bool p_simplify) 
         return nullptr;
     }
 
-    StaticBody *static_body = memnew(StaticBody);
-    CollisionShape *cshape = memnew(CollisionShape);
+    StaticBody* static_body = memnew(StaticBody);
+    CollisionShape* cshape = memnew(CollisionShape);
     cshape->set_shape(shape);
     static_body->add_child(cshape);
     return static_body;
 }
 
 void MeshInstance::create_convex_collision(bool p_clean, bool p_simplify) {
-    StaticBody *static_body = Object::cast_to<StaticBody>(create_convex_collision_node(p_clean, p_simplify));
+    StaticBody* static_body = Object::cast_to<StaticBody>(
+        create_convex_collision_node(p_clean, p_simplify)
+    );
     ERR_FAIL_COND(!static_body);
     static_body->set_name(String(get_name()) + "_col");
 
     add_child(static_body);
     if (get_owner()) {
-        CollisionShape *cshape = Object::cast_to<CollisionShape>(static_body->get_child(0));
+        CollisionShape* cshape =
+            Object::cast_to<CollisionShape>(static_body->get_child(0));
         static_body->set_owner(get_owner());
         cshape->set_owner(get_owner());
     }
@@ -665,12 +835,15 @@ void MeshInstance::_notification(int p_what) {
     }
 
     if (p_what == NOTIFICATION_VISIBILITY_CHANGED) {
-        if (skin_ref.is_valid() && mesh.is_valid() && _is_software_skinning_enabled()) {
+        if (skin_ref.is_valid() && mesh.is_valid()
+            && _is_software_skinning_enabled()) {
             ERR_FAIL_COND(!skin_ref->get_skeleton_node());
             if (is_visible_in_tree()) {
-                skin_ref->get_skeleton_node()->connect("skeleton_updated", this, "_update_skinning");
+                skin_ref->get_skeleton_node()
+                    ->connect("skeleton_updated", this, "_update_skinning");
             } else {
-                skin_ref->get_skeleton_node()->disconnect("skeleton_updated", this, "_update_skinning");
+                skin_ref->get_skeleton_node()
+                    ->disconnect("skeleton_updated", this, "_update_skinning");
             }
         }
     }
@@ -680,15 +853,23 @@ int MeshInstance::get_surface_material_count() const {
     return materials.size();
 }
 
-void MeshInstance::set_surface_material(int p_surface, const Ref<Material> &p_material) {
+void MeshInstance::set_surface_material(
+    int p_surface,
+    const Ref<Material>& p_material
+) {
     ERR_FAIL_INDEX(p_surface, materials.size());
 
     materials.write[p_surface] = p_material;
 
     if (materials[p_surface].is_valid()) {
-        VS::get_singleton()->instance_set_surface_material(get_instance(), p_surface, materials[p_surface]->get_rid());
+        VS::get_singleton()->instance_set_surface_material(
+            get_instance(),
+            p_surface,
+            materials[p_surface]->get_rid()
+        );
     } else {
-        VS::get_singleton()->instance_set_surface_material(get_instance(), p_surface, RID());
+        VS::get_singleton()
+            ->instance_set_surface_material(get_instance(), p_surface, RID());
     }
 
     if (software_skinning) {
@@ -721,7 +902,7 @@ Ref<Material> MeshInstance::get_active_material(int p_surface) const {
     return Ref<Material>();
 }
 
-void MeshInstance::set_material_override(const Ref<Material> &p_material) {
+void MeshInstance::set_material_override(const Ref<Material>& p_material) {
     if (p_material == get_material_override()) {
         return;
     }
@@ -750,7 +931,8 @@ void MeshInstance::set_software_skinning_transform_normals(bool p_enabled) {
 }
 
 bool MeshInstance::is_software_skinning_transform_normals_enabled() const {
-    return 0 != (software_skinning_flags & SoftwareSkinning::FLAG_TRANSFORM_NORMALS);
+    return 0
+        != (software_skinning_flags & SoftwareSkinning::FLAG_TRANSFORM_NORMALS);
 }
 
 void MeshInstance::_mesh_changed() {
@@ -786,23 +968,27 @@ void MeshInstance::create_debug_tangents() {
         for (int j = 0; j < verts.size(); j++) {
             Vector3 v = verts[j];
             Vector3 n = norms[j];
-            Vector3 t = Vector3(tangents[j * 4 + 0], tangents[j * 4 + 1], tangents[j * 4 + 2]);
+            Vector3 t = Vector3(
+                tangents[j * 4 + 0],
+                tangents[j * 4 + 1],
+                tangents[j * 4 + 2]
+            );
             Vector3 b = (n.cross(t)).normalized() * tangents[j * 4 + 3];
 
-            lines.push_back(v); //normal
-            colors.push_back(Color(0, 0, 1)); //color
-            lines.push_back(v + n * 0.04); //normal
-            colors.push_back(Color(0, 0, 1)); //color
+            lines.push_back(v);               // normal
+            colors.push_back(Color(0, 0, 1)); // color
+            lines.push_back(v + n * 0.04);    // normal
+            colors.push_back(Color(0, 0, 1)); // color
 
-            lines.push_back(v); //tangent
-            colors.push_back(Color(1, 0, 0)); //color
-            lines.push_back(v + t * 0.04); //tangent
-            colors.push_back(Color(1, 0, 0)); //color
+            lines.push_back(v);               // tangent
+            colors.push_back(Color(1, 0, 0)); // color
+            lines.push_back(v + t * 0.04);    // tangent
+            colors.push_back(Color(1, 0, 0)); // color
 
-            lines.push_back(v); //binormal
-            colors.push_back(Color(0, 1, 0)); //color
-            lines.push_back(v + b * 0.04); //binormal
-            colors.push_back(Color(0, 1, 0)); //color
+            lines.push_back(v);               // binormal
+            colors.push_back(Color(0, 1, 0)); // color
+            lines.push_back(v + b * 0.04);    // binormal
+            colors.push_back(Color(0, 1, 0)); // color
         }
     }
 
@@ -824,7 +1010,7 @@ void MeshInstance::create_debug_tangents() {
         am->add_surface_from_arrays(Mesh::PRIMITIVE_LINES, a);
         am->surface_set_material(0, sm);
 
-        MeshInstance *mi = memnew(MeshInstance);
+        MeshInstance* mi = memnew(MeshInstance);
         mi->set_mesh(am);
         mi->set_name("DebugTangents");
         add_child(mi);
@@ -839,7 +1025,7 @@ void MeshInstance::create_debug_tangents() {
     }
 }
 
-bool MeshInstance::is_mergeable_with(const MeshInstance &p_other) {
+bool MeshInstance::is_mergeable_with(const MeshInstance& p_other) {
     if (!get_mesh().is_valid() || !p_other.get_mesh().is_valid()) {
         return false;
     }
@@ -868,12 +1054,12 @@ bool MeshInstance::is_mergeable_with(const MeshInstance &p_other) {
     }
 
     // NOTE : These three commented out sections below are more conservative
-    // checks for whether to allow mesh merging. I am not absolutely sure a priori
-    // how conservative we need to be, so we can further enable this if testing
-    // shows they are required.
+    // checks for whether to allow mesh merging. I am not absolutely sure a
+    // priori how conservative we need to be, so we can further enable this if
+    // testing shows they are required.
 
-    //	if (get_surface_material_count() != p_other.get_surface_material_count()) {
-    //		return false;
+    //	if (get_surface_material_count() !=
+    // p_other.get_surface_material_count()) { 		return false;
     //	}
 
     //	for (int n = 0; n < get_surface_material_count(); n++) {
@@ -890,7 +1076,17 @@ bool MeshInstance::is_mergeable_with(const MeshInstance &p_other) {
     return true;
 }
 
-void MeshInstance::_merge_into_mesh_data(const MeshInstance &p_mi, int p_surface_id, PoolVector<Vector3> &r_verts, PoolVector<Vector3> &r_norms, PoolVector<real_t> &r_tangents, PoolVector<Color> &r_colors, PoolVector<Vector2> &r_uvs, PoolVector<Vector2> &r_uv2s, PoolVector<int> &r_inds) {
+void MeshInstance::_merge_into_mesh_data(
+    const MeshInstance& p_mi,
+    int p_surface_id,
+    PoolVector<Vector3>& r_verts,
+    PoolVector<Vector3>& r_norms,
+    PoolVector<real_t>& r_tangents,
+    PoolVector<Color>& r_colors,
+    PoolVector<Vector2>& r_uvs,
+    PoolVector<Vector2>& r_uv2s,
+    PoolVector<int>& r_inds
+) {
     _merge_log("\t\t\tmesh data from " + p_mi.get_name());
 
     // get the mesh verts in local space
@@ -910,16 +1106,22 @@ void MeshInstance::_merge_into_mesh_data(const MeshInstance &p_mi, int p_surface
     PoolVector<Vector2> uv2s = arrays[VS::ARRAY_TEX_UV2];
     PoolVector<int> indices = arrays[VS::ARRAY_INDEX];
 
-    // NEW .. the checking for valid triangles should be on WORLD SPACE vertices,
-    // NOT model space
+    // NEW .. the checking for valid triangles should be on WORLD SPACE
+    // vertices, NOT model space
 
     // special case, if no indices, create some
     int num_indices_before = indices.size();
     if (!_ensure_indices_valid(indices, verts)) {
-        _merge_log("\tignoring INVALID TRIANGLES (duplicate indices or zero area triangle) detected in " + p_mi.get_name() + ", num inds before / after " + itos(num_indices_before) + " / " + itos(indices.size()));
+        _merge_log(
+            "\tignoring INVALID TRIANGLES (duplicate indices or zero area "
+            "triangle) detected in "
+            + p_mi.get_name() + ", num inds before / after "
+            + itos(num_indices_before) + " / " + itos(indices.size())
+        );
     }
 
-    // the first index of this mesh is offset from the verts we already have stored in the merged mesh
+    // the first index of this mesh is offset from the verts we already have
+    // stored in the merged mesh
     int first_index = r_verts.size();
 
     // transform verts to world space
@@ -941,7 +1143,11 @@ void MeshInstance::_merge_into_mesh_data(const MeshInstance &p_mi, int p_surface
 
         if (tangents.size()) {
             int tstart = n * 4;
-            Vector3 pt_tangent = Vector3(tangents[tstart], tangents[tstart + 1], tangents[tstart + 2]);
+            Vector3 pt_tangent = Vector3(
+                tangents[tstart],
+                tangents[tstart + 1],
+                tangents[tstart + 2]
+            );
             real_t fourth = tangents[tstart + 3];
 
             pt_tangent = normal_basis.xform(pt_tangent);
@@ -972,15 +1178,19 @@ void MeshInstance::_merge_into_mesh_data(const MeshInstance &p_mi, int p_surface
     }
 }
 
-bool MeshInstance::_ensure_indices_valid(PoolVector<int> &r_indices, const PoolVector<Vector3> &p_verts) {
+bool MeshInstance::_ensure_indices_valid(
+    PoolVector<int>& r_indices,
+    const PoolVector<Vector3>& p_verts
+) {
     // no indices? create some
     if (!r_indices.size()) {
         _merge_log("\t\t\t\tindices are blank, creating...");
 
-        // indices are blank!! let's create some, assuming the mesh is using triangles
+        // indices are blank!! let's create some, assuming the mesh is using
+        // triangles
         r_indices.resize(p_verts.size());
         PoolVector<int>::Write write = r_indices.write();
-        int *pi = write.ptr();
+        int* pi = write.ptr();
 
         // this is assuming each triangle vertex is unique
         for (int n = 0; n < p_verts.size(); n++) {
@@ -996,7 +1206,7 @@ bool MeshInstance::_ensure_indices_valid(PoolVector<int> &r_indices, const PoolV
         // copy the new indices
         r_indices.resize(new_inds.size());
         PoolVector<int>::Write write = r_indices.write();
-        int *pi = write.ptr();
+        int* pi = write.ptr();
 
         for (int n = 0; n < new_inds.size(); n++) {
             pi[n] = new_inds[n];
@@ -1008,8 +1218,13 @@ bool MeshInstance::_ensure_indices_valid(PoolVector<int> &r_indices, const PoolV
     return true;
 }
 
-// check for invalid tris, or make a list of the valid triangles, depending on whether r_inds is set
-bool MeshInstance::_check_for_valid_indices(const PoolVector<int> &p_inds, const PoolVector<Vector3> &p_verts, LocalVector<int, int32_t> *r_inds) {
+// check for invalid tris, or make a list of the valid triangles, depending on
+// whether r_inds is set
+bool MeshInstance::_check_for_valid_indices(
+    const PoolVector<int>& p_inds,
+    const PoolVector<Vector3>& p_verts,
+    LocalVector<int, int32_t>* r_inds
+) {
     int nTris = p_inds.size();
     nTris /= 3;
     int indCount = 0;
@@ -1035,11 +1250,12 @@ bool MeshInstance::_check_for_valid_indices(const PoolVector<int> &p_inds, const
         // check positions
         if (ok) {
             // vertex positions
-            const Vector3 &p0 = p_verts[i0];
-            const Vector3 &p1 = p_verts[i1];
-            const Vector3 &p2 = p_verts[i2];
+            const Vector3& p0 = p_verts[i0];
+            const Vector3& p1 = p_verts[i1];
+            const Vector3& p2 = p_verts[i2];
 
-            // if the area is zero, the triangle is invalid (and will crash xatlas if we use it)
+            // if the area is zero, the triangle is invalid (and will crash
+            // xatlas if we use it)
             if (_triangle_is_degenerate(p0, p1, p2, 0.00001)) {
                 _merge_log("\t\tdetected zero area triangle, ignoring");
                 ok = false;
@@ -1064,7 +1280,12 @@ bool MeshInstance::_check_for_valid_indices(const PoolVector<int> &p_inds, const
     return true;
 }
 
-bool MeshInstance::_triangle_is_degenerate(const Vector3 &p_a, const Vector3 &p_b, const Vector3 &p_c, real_t p_epsilon) {
+bool MeshInstance::_triangle_is_degenerate(
+    const Vector3& p_a,
+    const Vector3& p_b,
+    const Vector3& p_c,
+    real_t p_epsilon
+) {
     // not interested in the actual area, but numerical stability
     Vector3 edge1 = p_b - p_a;
     Vector3 edge2 = p_c - p_a;
@@ -1083,7 +1304,7 @@ bool MeshInstance::_triangle_is_degenerate(const Vector3 &p_a, const Vector3 &p_
     return false;
 }
 
-bool MeshInstance::create_by_merging(Vector<MeshInstance *> p_list) {
+bool MeshInstance::create_by_merging(Vector<MeshInstance*> p_list) {
     // must be at least 2 meshes to merge
     if (p_list.size() < 2) {
         // should not happen but just in case
@@ -1091,7 +1312,7 @@ bool MeshInstance::create_by_merging(Vector<MeshInstance *> p_list) {
     }
 
     // use the first mesh instance to get common data like number of surfaces
-    const MeshInstance *first = p_list[0];
+    const MeshInstance* first = p_list[0];
 
     Ref<ArrayMesh> am;
     am.instance();
@@ -1106,7 +1327,17 @@ bool MeshInstance::create_by_merging(Vector<MeshInstance *> p_list) {
         PoolVector<int> inds;
 
         for (int n = 0; n < p_list.size(); n++) {
-            _merge_into_mesh_data(*p_list[n], s, verts, normals, tangents, colors, uvs, uv2s, inds);
+            _merge_into_mesh_data(
+                *p_list[n],
+                s,
+                verts,
+                normals,
+                tangents,
+                colors,
+                uvs,
+                uv2s,
+                inds
+            );
         } // for n through source meshes
 
         if (!verts.size()) {
@@ -1117,7 +1348,9 @@ bool MeshInstance::create_by_merging(Vector<MeshInstance *> p_list) {
         for (int n = 0; n < inds.size(); n++) {
             int i = inds[n];
             if (i >= verts.size()) {
-                WARN_PRINT_ONCE("Mesh index out of range, invalid mesh, aborting");
+                WARN_PRINT_ONCE(
+                    "Mesh index out of range, invalid mesh, aborting"
+                );
                 return false;
             }
         }
@@ -1142,7 +1375,12 @@ bool MeshInstance::create_by_merging(Vector<MeshInstance *> p_list) {
         }
         arr[Mesh::ARRAY_INDEX] = inds;
 
-        am->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arr, Array(), Mesh::ARRAY_COMPRESS_DEFAULT);
+        am->add_surface_from_arrays(
+            Mesh::PRIMITIVE_TRIANGLES,
+            arr,
+            Array(),
+            Mesh::ARRAY_COMPRESS_DEFAULT
+        );
     } // for s through surfaces
 
     // set all the surfaces on the mesh
@@ -1164,37 +1402,128 @@ void MeshInstance::_merge_log(String p_string) {
 void MeshInstance::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_mesh", "mesh"), &MeshInstance::set_mesh);
     ClassDB::bind_method(D_METHOD("get_mesh"), &MeshInstance::get_mesh);
-    ClassDB::bind_method(D_METHOD("set_skeleton_path", "skeleton_path"), &MeshInstance::set_skeleton_path);
-    ClassDB::bind_method(D_METHOD("get_skeleton_path"), &MeshInstance::get_skeleton_path);
+    ClassDB::bind_method(
+        D_METHOD("set_skeleton_path", "skeleton_path"),
+        &MeshInstance::set_skeleton_path
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_skeleton_path"),
+        &MeshInstance::get_skeleton_path
+    );
     ClassDB::bind_method(D_METHOD("set_skin", "skin"), &MeshInstance::set_skin);
     ClassDB::bind_method(D_METHOD("get_skin"), &MeshInstance::get_skin);
 
-    ClassDB::bind_method(D_METHOD("get_surface_material_count"), &MeshInstance::get_surface_material_count);
-    ClassDB::bind_method(D_METHOD("set_surface_material", "surface", "material"), &MeshInstance::set_surface_material);
-    ClassDB::bind_method(D_METHOD("get_surface_material", "surface"), &MeshInstance::get_surface_material);
-    ClassDB::bind_method(D_METHOD("get_active_material", "surface"), &MeshInstance::get_active_material);
+    ClassDB::bind_method(
+        D_METHOD("get_surface_material_count"),
+        &MeshInstance::get_surface_material_count
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_surface_material", "surface", "material"),
+        &MeshInstance::set_surface_material
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_surface_material", "surface"),
+        &MeshInstance::get_surface_material
+    );
+    ClassDB::bind_method(
+        D_METHOD("get_active_material", "surface"),
+        &MeshInstance::get_active_material
+    );
 
-    ClassDB::bind_method(D_METHOD("set_software_skinning_transform_normals", "enabled"), &MeshInstance::set_software_skinning_transform_normals);
-    ClassDB::bind_method(D_METHOD("is_software_skinning_transform_normals_enabled"), &MeshInstance::is_software_skinning_transform_normals_enabled);
+    ClassDB::bind_method(
+        D_METHOD("set_software_skinning_transform_normals", "enabled"),
+        &MeshInstance::set_software_skinning_transform_normals
+    );
+    ClassDB::bind_method(
+        D_METHOD("is_software_skinning_transform_normals_enabled"),
+        &MeshInstance::is_software_skinning_transform_normals_enabled
+    );
 
-    ClassDB::bind_method(D_METHOD("create_trimesh_collision"), &MeshInstance::create_trimesh_collision);
-    ClassDB::set_method_flags("MeshInstance", "create_trimesh_collision", METHOD_FLAGS_DEFAULT);
-    ClassDB::bind_method(D_METHOD("create_multiple_convex_collisions"), &MeshInstance::create_multiple_convex_collisions);
-    ClassDB::set_method_flags("MeshInstance", "create_multiple_convex_collisions", METHOD_FLAGS_DEFAULT);
-    ClassDB::bind_method(D_METHOD("create_convex_collision", "clean", "simplify"), &MeshInstance::create_convex_collision, DEFVAL(true), DEFVAL(false));
-    ClassDB::set_method_flags("MeshInstance", "create_convex_collision", METHOD_FLAGS_DEFAULT);
-    ClassDB::bind_method(D_METHOD("_mesh_changed"), &MeshInstance::_mesh_changed);
-    ClassDB::bind_method(D_METHOD("_update_skinning"), &MeshInstance::_update_skinning);
+    ClassDB::bind_method(
+        D_METHOD("create_trimesh_collision"),
+        &MeshInstance::create_trimesh_collision
+    );
+    ClassDB::set_method_flags(
+        "MeshInstance",
+        "create_trimesh_collision",
+        METHOD_FLAGS_DEFAULT
+    );
+    ClassDB::bind_method(
+        D_METHOD("create_multiple_convex_collisions"),
+        &MeshInstance::create_multiple_convex_collisions
+    );
+    ClassDB::set_method_flags(
+        "MeshInstance",
+        "create_multiple_convex_collisions",
+        METHOD_FLAGS_DEFAULT
+    );
+    ClassDB::bind_method(
+        D_METHOD("create_convex_collision", "clean", "simplify"),
+        &MeshInstance::create_convex_collision,
+        DEFVAL(true),
+        DEFVAL(false)
+    );
+    ClassDB::set_method_flags(
+        "MeshInstance",
+        "create_convex_collision",
+        METHOD_FLAGS_DEFAULT
+    );
+    ClassDB::bind_method(
+        D_METHOD("_mesh_changed"),
+        &MeshInstance::_mesh_changed
+    );
+    ClassDB::bind_method(
+        D_METHOD("_update_skinning"),
+        &MeshInstance::_update_skinning
+    );
 
-    ClassDB::bind_method(D_METHOD("create_debug_tangents"), &MeshInstance::create_debug_tangents);
-    ClassDB::set_method_flags("MeshInstance", "create_debug_tangents", METHOD_FLAGS_DEFAULT | METHOD_FLAG_EDITOR);
+    ClassDB::bind_method(
+        D_METHOD("create_debug_tangents"),
+        &MeshInstance::create_debug_tangents
+    );
+    ClassDB::set_method_flags(
+        "MeshInstance",
+        "create_debug_tangents",
+        METHOD_FLAGS_DEFAULT | METHOD_FLAG_EDITOR
+    );
 
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh"), "set_mesh", "get_mesh");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "skin", PROPERTY_HINT_RESOURCE_TYPE, "Skin"), "set_skin", "get_skin");
-    ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "skeleton", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Skeleton"), "set_skeleton_path", "get_skeleton_path");
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "mesh",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Mesh"
+        ),
+        "set_mesh",
+        "get_mesh"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "skin",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "Skin"
+        ),
+        "set_skin",
+        "get_skin"
+    );
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::NODE_PATH,
+            "skeleton",
+            PROPERTY_HINT_NODE_PATH_VALID_TYPES,
+            "Skeleton"
+        ),
+        "set_skeleton_path",
+        "get_skeleton_path"
+    );
 
     ADD_GROUP("Software Skinning", "software_skinning");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "software_skinning_transform_normals"), "set_software_skinning_transform_normals", "is_software_skinning_transform_normals_enabled");
+    ADD_PROPERTY(
+        PropertyInfo(Variant::BOOL, "software_skinning_transform_normals"),
+        "set_software_skinning_transform_normals",
+        "is_software_skinning_transform_normals_enabled"
+    );
 }
 
 MeshInstance::MeshInstance() {

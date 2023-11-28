@@ -1,11 +1,12 @@
 public:
 #ifdef BVH_VERBOSE
 void _debug_recursive_print_tree(int p_tree_id) const {
-    if (_root_node_id[p_tree_id] != BVHCommon::INVALID)
+    if (_root_node_id[p_tree_id] != BVHCommon::INVALID) {
         _debug_recursive_print_tree_node(_root_node_id[p_tree_id]);
+    }
 }
 
-String _debug_aabb_to_string(const BVHABB_CLASS &aabb) const {
+String _debug_aabb_to_string(const BVHABB_CLASS& aabb) const {
     POINT size = aabb.calculate_size();
 
     String sz;
@@ -27,7 +28,7 @@ String _debug_aabb_to_string(const BVHABB_CLASS &aabb) const {
 }
 
 void _debug_recursive_print_tree_node(uint32_t p_node_id, int depth = 0) const {
-    const TNode &tnode = _nodes[p_node_id];
+    const TNode& tnode = _nodes[p_node_id];
 
     String sz = "";
     for (int n = 0; n < depth; n++) {
@@ -38,12 +39,13 @@ void _debug_recursive_print_tree_node(uint32_t p_node_id, int depth = 0) const {
     if (tnode.is_leaf()) {
         sz += " L";
         sz += itos(tnode.height) + " ";
-        const TLeaf &leaf = _node_get_leaf(tnode);
+        const TLeaf& leaf = _node_get_leaf(tnode);
 
         sz += "[";
         for (int n = 0; n < leaf.num_items; n++) {
-            if (n)
+            if (n) {
                 sz += ", ";
+            }
             sz += "r";
             sz += itos(leaf.get_item_ref_id(n));
         }

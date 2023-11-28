@@ -40,8 +40,8 @@ public:
     enum Visibility {
         PRIVATE,
         PROTECTED_AND_INTERNAL, // FAM_AND_ASSEM
-        INTERNAL, // ASSEMBLY
-        PROTECTED, // FAMILY
+        INTERNAL,               // ASSEMBLY
+        PROTECTED,              // FAMILY
         PUBLIC
     };
 
@@ -53,7 +53,7 @@ public:
 
     virtual ~IMonoClassMember() {}
 
-    virtual GDMonoClass *get_enclosing_class() const = 0;
+    virtual GDMonoClass* get_enclosing_class() const = 0;
 
     virtual MemberType get_member_type() const = 0;
 
@@ -63,8 +63,8 @@ public:
 
     virtual Visibility get_visibility() = 0;
 
-    virtual bool has_attribute(GDMonoClass *p_attr_class) = 0;
-    virtual MonoObject *get_attribute(GDMonoClass *p_attr_class) = 0;
+    virtual bool has_attribute(GDMonoClass* p_attr_class) = 0;
+    virtual MonoObject* get_attribute(GDMonoClass* p_attr_class) = 0;
 };
 
 #endif // I_MONO_CLASS_MEMBER_H
