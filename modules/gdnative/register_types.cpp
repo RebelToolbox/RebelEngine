@@ -197,13 +197,13 @@ void GDNativeExportPlugin::_export_file(
             // Register symbols in the "fake" dynamic lookup table, because
             // dlsym does not work well on iOS.
             LibrarySymbol expected_symbols[] = {
-                {"gdnative_init", true},
-                {"gdnative_terminate", false},
-                {"nativescript_init", false},
-                {"nativescript_frame", false},
+                {"gdnative_init",             true },
+                {"gdnative_terminate",        false},
+                {"nativescript_init",         false},
+                {"nativescript_frame",        false},
                 {"nativescript_thread_enter", false},
-                {"nativescript_thread_exit", false},
-                {"gdnative_singleton", false}
+                {"nativescript_thread_exit",  false},
+                {"gdnative_singleton",        false}
             };
             String declare_pattern = "extern \"C\" void $name(void)$weak;\n";
             String additional_code =

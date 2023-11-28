@@ -2322,16 +2322,16 @@ TileMapEditor::CellOp TileMapEditor::_get_op_from_cell(const Point2i& p_pos) {
 void TileMapEditor::_rotate(int steps) {
     const bool normal_rotation_matrix[][3] = {
         {false, false, false},
-        {true, true, false},
-        {false, true, true},
-        {true, false, true}
+        {true,  true,  false},
+        {false, true,  true },
+        {true,  false, true }
     };
 
     const bool mirrored_rotation_matrix[][3] = {
-        {false, true, false},
-        {true, true, true},
-        {false, false, true},
-        {true, false, false}
+        {false, true,  false},
+        {true,  true,  true },
+        {false, false, true },
+        {true,  false, false}
     };
 
     if (transpose ^ flip_h ^ flip_v) {

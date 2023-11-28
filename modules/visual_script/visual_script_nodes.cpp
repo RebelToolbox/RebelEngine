@@ -964,35 +964,35 @@ String VisualScriptOperator::get_output_sequence_port_text(int p_port) const {
 
 PropertyInfo VisualScriptOperator::get_input_value_port_info(int p_idx) const {
     static const Variant::Type port_types[Variant::OP_MAX][2] = {
-        {Variant::NIL, Variant::NIL}, // OP_EQUAL,
-        {Variant::NIL, Variant::NIL}, // OP_NOT_EQUAL,
-        {Variant::NIL, Variant::NIL}, // OP_LESS,
-        {Variant::NIL, Variant::NIL}, // OP_LESS_EQUAL,
-        {Variant::NIL, Variant::NIL}, // OP_GREATER,
-        {Variant::NIL, Variant::NIL}, // OP_GREATER_EQUAL,
-        // mathematic
-        {Variant::NIL, Variant::NIL},       // OP_ADD,
-        {Variant::NIL, Variant::NIL},       // OP_SUBTRACT,
-        {Variant::NIL, Variant::NIL},       // OP_MULTIPLY,
-        {Variant::NIL, Variant::NIL},       // OP_DIVIDE,
-        {Variant::NIL, Variant::NIL},       // OP_NEGATE,
-        {Variant::NIL, Variant::NIL},       // OP_POSITIVE,
-        {Variant::INT, Variant::INT},       // OP_MODULE,
+        {Variant::NIL,    Variant::NIL   }, // OP_EQUAL,
+        {Variant::NIL,    Variant::NIL   }, // OP_NOT_EQUAL,
+        {Variant::NIL,    Variant::NIL   }, // OP_LESS,
+        {Variant::NIL,    Variant::NIL   }, // OP_LESS_EQUAL,
+        {Variant::NIL,    Variant::NIL   }, // OP_GREATER,
+        {Variant::NIL,    Variant::NIL   }, // OP_GREATER_EQUAL,
+  // mathematic
+        {Variant::NIL,    Variant::NIL   }, // OP_ADD,
+        {Variant::NIL,    Variant::NIL   }, // OP_SUBTRACT,
+        {Variant::NIL,    Variant::NIL   }, // OP_MULTIPLY,
+        {Variant::NIL,    Variant::NIL   }, // OP_DIVIDE,
+        {Variant::NIL,    Variant::NIL   }, // OP_NEGATE,
+        {Variant::NIL,    Variant::NIL   }, // OP_POSITIVE,
+        {Variant::INT,    Variant::INT   }, // OP_MODULE,
         {Variant::STRING, Variant::STRING}, // OP_STRING_CONCAT,
-        // bitwise
-        {Variant::INT, Variant::INT}, // OP_SHIFT_LEFT,
-        {Variant::INT, Variant::INT}, // OP_SHIFT_RIGHT,
-        {Variant::INT, Variant::INT}, // OP_BIT_AND,
-        {Variant::INT, Variant::INT}, // OP_BIT_OR,
-        {Variant::INT, Variant::INT}, // OP_BIT_XOR,
-        {Variant::INT, Variant::INT}, // OP_BIT_NEGATE,
-        // logic
-        {Variant::BOOL, Variant::BOOL}, // OP_AND,
-        {Variant::BOOL, Variant::BOOL}, // OP_OR,
-        {Variant::BOOL, Variant::BOOL}, // OP_XOR,
-        {Variant::BOOL, Variant::BOOL}, // OP_NOT,
-        // containment
-        {Variant::NIL, Variant::NIL} // OP_IN,
+  // bitwise
+        {Variant::INT,    Variant::INT   }, // OP_SHIFT_LEFT,
+        {Variant::INT,    Variant::INT   }, // OP_SHIFT_RIGHT,
+        {Variant::INT,    Variant::INT   }, // OP_BIT_AND,
+        {Variant::INT,    Variant::INT   }, // OP_BIT_OR,
+        {Variant::INT,    Variant::INT   }, // OP_BIT_XOR,
+        {Variant::INT,    Variant::INT   }, // OP_BIT_NEGATE,
+  // logic
+        {Variant::BOOL,   Variant::BOOL  }, // OP_AND,
+        {Variant::BOOL,   Variant::BOOL  }, // OP_OR,
+        {Variant::BOOL,   Variant::BOOL  }, // OP_XOR,
+        {Variant::BOOL,   Variant::BOOL  }, // OP_NOT,
+  // containment
+        {Variant::NIL,    Variant::NIL   }  // OP_IN,
     };
 
     ERR_FAIL_INDEX_V(p_idx, 2, PropertyInfo());

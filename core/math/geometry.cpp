@@ -525,7 +525,6 @@ static inline void _build_faces(
         {0, 2, 3, 1},
         {0, 1, 5, 4},
         {0, 4, 6, 2},
-
     };
 
     for (int i = 0; i < 6; i++) {

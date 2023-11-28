@@ -170,13 +170,11 @@ static void _generate_contacts_from_supports(
 
     static const GenerateContactsFunc generate_contacts_func_table[2][2] = {
         {
-            _generate_contacts_point_point,
-            _generate_contacts_point_edge,
-        },
+         _generate_contacts_point_point, _generate_contacts_point_edge,
+         },
         {
-            nullptr,
-            _generate_contacts_edge_edge,
-        }
+         nullptr,                              _generate_contacts_edge_edge,
+         }
     };
 
     int pointcount_B;
@@ -1831,21 +1829,16 @@ bool sat_2d_calculate_penetration(
          _collision_circle_capsule<false, false, false>,
          _collision_circle_convex_polygon<false, false, false>},
         {nullptr,
-         nullptr,
-         _collision_rectangle_rectangle<false, false, false>,
+         nullptr, _collision_rectangle_rectangle<false, false, false>,
          _collision_rectangle_capsule<false, false, false>,
          _collision_rectangle_convex_polygon<false, false, false>},
         {nullptr,
-         nullptr,
-         nullptr,
+         nullptr, nullptr,
          _collision_capsule_capsule<false, false, false>,
          _collision_capsule_convex_polygon<false, false, false>},
         {nullptr,
-         nullptr,
-         nullptr,
-         nullptr,
-         _collision_convex_polygon_convex_polygon<false, false, false>}
-
+         nullptr, nullptr,
+         nullptr, _collision_convex_polygon_convex_polygon<false, false, false>}
     };
 
     static const CollisionFunc collision_table_castA[5][5] = {
@@ -1860,21 +1853,16 @@ bool sat_2d_calculate_penetration(
          _collision_circle_capsule<true, false, false>,
          _collision_circle_convex_polygon<true, false, false>},
         {nullptr,
-         nullptr,
-         _collision_rectangle_rectangle<true, false, false>,
+         nullptr, _collision_rectangle_rectangle<true, false, false>,
          _collision_rectangle_capsule<true, false, false>,
          _collision_rectangle_convex_polygon<true, false, false>},
         {nullptr,
-         nullptr,
-         nullptr,
+         nullptr, nullptr,
          _collision_capsule_capsule<true, false, false>,
          _collision_capsule_convex_polygon<true, false, false>},
         {nullptr,
-         nullptr,
-         nullptr,
-         nullptr,
-         _collision_convex_polygon_convex_polygon<true, false, false>}
-
+         nullptr, nullptr,
+         nullptr, _collision_convex_polygon_convex_polygon<true, false, false>}
     };
 
     static const CollisionFunc collision_table_castB[5][5] = {
@@ -1889,21 +1877,16 @@ bool sat_2d_calculate_penetration(
          _collision_circle_capsule<false, true, false>,
          _collision_circle_convex_polygon<false, true, false>},
         {nullptr,
-         nullptr,
-         _collision_rectangle_rectangle<false, true, false>,
+         nullptr, _collision_rectangle_rectangle<false, true, false>,
          _collision_rectangle_capsule<false, true, false>,
          _collision_rectangle_convex_polygon<false, true, false>},
         {nullptr,
-         nullptr,
-         nullptr,
+         nullptr, nullptr,
          _collision_capsule_capsule<false, true, false>,
          _collision_capsule_convex_polygon<false, true, false>},
         {nullptr,
-         nullptr,
-         nullptr,
-         nullptr,
-         _collision_convex_polygon_convex_polygon<false, true, false>}
-
+         nullptr, nullptr,
+         nullptr, _collision_convex_polygon_convex_polygon<false, true, false>}
     };
 
     static const CollisionFunc collision_table_castA_castB[5][5] = {
@@ -1918,21 +1901,16 @@ bool sat_2d_calculate_penetration(
          _collision_circle_capsule<true, true, false>,
          _collision_circle_convex_polygon<true, true, false>},
         {nullptr,
-         nullptr,
-         _collision_rectangle_rectangle<true, true, false>,
+         nullptr, _collision_rectangle_rectangle<true, true, false>,
          _collision_rectangle_capsule<true, true, false>,
          _collision_rectangle_convex_polygon<true, true, false>},
         {nullptr,
-         nullptr,
-         nullptr,
+         nullptr, nullptr,
          _collision_capsule_capsule<true, true, false>,
          _collision_capsule_convex_polygon<true, true, false>},
         {nullptr,
-         nullptr,
-         nullptr,
-         nullptr,
-         _collision_convex_polygon_convex_polygon<true, true, false>}
-
+         nullptr, nullptr,
+         nullptr, _collision_convex_polygon_convex_polygon<true, true, false>}
     };
 
     static const CollisionFunc collision_table_margin[5][5] = {
@@ -1947,21 +1925,16 @@ bool sat_2d_calculate_penetration(
          _collision_circle_capsule<false, false, true>,
          _collision_circle_convex_polygon<false, false, true>},
         {nullptr,
-         nullptr,
-         _collision_rectangle_rectangle<false, false, true>,
+         nullptr, _collision_rectangle_rectangle<false, false, true>,
          _collision_rectangle_capsule<false, false, true>,
          _collision_rectangle_convex_polygon<false, false, true>},
         {nullptr,
-         nullptr,
-         nullptr,
+         nullptr, nullptr,
          _collision_capsule_capsule<false, false, true>,
          _collision_capsule_convex_polygon<false, false, true>},
         {nullptr,
-         nullptr,
-         nullptr,
-         nullptr,
-         _collision_convex_polygon_convex_polygon<false, false, true>}
-
+         nullptr, nullptr,
+         nullptr, _collision_convex_polygon_convex_polygon<false, false, true>}
     };
 
     static const CollisionFunc collision_table_castA_margin[5][5] = {
@@ -1976,21 +1949,16 @@ bool sat_2d_calculate_penetration(
          _collision_circle_capsule<true, false, true>,
          _collision_circle_convex_polygon<true, false, true>},
         {nullptr,
-         nullptr,
-         _collision_rectangle_rectangle<true, false, true>,
+         nullptr, _collision_rectangle_rectangle<true, false, true>,
          _collision_rectangle_capsule<true, false, true>,
          _collision_rectangle_convex_polygon<true, false, true>},
         {nullptr,
-         nullptr,
-         nullptr,
+         nullptr, nullptr,
          _collision_capsule_capsule<true, false, true>,
          _collision_capsule_convex_polygon<true, false, true>},
         {nullptr,
-         nullptr,
-         nullptr,
-         nullptr,
-         _collision_convex_polygon_convex_polygon<true, false, true>}
-
+         nullptr, nullptr,
+         nullptr, _collision_convex_polygon_convex_polygon<true, false, true>}
     };
 
     static const CollisionFunc collision_table_castB_margin[5][5] = {
@@ -2005,21 +1973,16 @@ bool sat_2d_calculate_penetration(
          _collision_circle_capsule<false, true, true>,
          _collision_circle_convex_polygon<false, true, true>},
         {nullptr,
-         nullptr,
-         _collision_rectangle_rectangle<false, true, true>,
+         nullptr, _collision_rectangle_rectangle<false, true, true>,
          _collision_rectangle_capsule<false, true, true>,
          _collision_rectangle_convex_polygon<false, true, true>},
         {nullptr,
-         nullptr,
-         nullptr,
+         nullptr, nullptr,
          _collision_capsule_capsule<false, true, true>,
          _collision_capsule_convex_polygon<false, true, true>},
         {nullptr,
-         nullptr,
-         nullptr,
-         nullptr,
-         _collision_convex_polygon_convex_polygon<false, true, true>}
-
+         nullptr, nullptr,
+         nullptr, _collision_convex_polygon_convex_polygon<false, true, true>}
     };
 
     static const CollisionFunc collision_table_castA_castB_margin[5][5] = {
@@ -2034,21 +1997,16 @@ bool sat_2d_calculate_penetration(
          _collision_circle_capsule<true, true, true>,
          _collision_circle_convex_polygon<true, true, true>},
         {nullptr,
-         nullptr,
-         _collision_rectangle_rectangle<true, true, true>,
+         nullptr, _collision_rectangle_rectangle<true, true, true>,
          _collision_rectangle_capsule<true, true, true>,
          _collision_rectangle_convex_polygon<true, true, true>},
         {nullptr,
-         nullptr,
-         nullptr,
+         nullptr, nullptr,
          _collision_capsule_capsule<true, true, true>,
          _collision_capsule_convex_polygon<true, true, true>},
         {nullptr,
-         nullptr,
-         nullptr,
-         nullptr,
-         _collision_convex_polygon_convex_polygon<true, true, true>}
-
+         nullptr, nullptr,
+         nullptr, _collision_convex_polygon_convex_polygon<true, true, true>}
     };
 
     _CollectorCallback2D callback;

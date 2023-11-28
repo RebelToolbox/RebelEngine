@@ -369,13 +369,13 @@ bool CameraMatrix::get_endpoints(
 ) const {
     Vector<Plane> planes = get_projection_planes(Transform());
     const Planes intersections[8][3] = {
-        {PLANE_FAR, PLANE_LEFT, PLANE_TOP},
-        {PLANE_FAR, PLANE_LEFT, PLANE_BOTTOM},
-        {PLANE_FAR, PLANE_RIGHT, PLANE_TOP},
-        {PLANE_FAR, PLANE_RIGHT, PLANE_BOTTOM},
-        {PLANE_NEAR, PLANE_LEFT, PLANE_TOP},
-        {PLANE_NEAR, PLANE_LEFT, PLANE_BOTTOM},
-        {PLANE_NEAR, PLANE_RIGHT, PLANE_TOP},
+        {PLANE_FAR,  PLANE_LEFT,  PLANE_TOP   },
+        {PLANE_FAR,  PLANE_LEFT,  PLANE_BOTTOM},
+        {PLANE_FAR,  PLANE_RIGHT, PLANE_TOP   },
+        {PLANE_FAR,  PLANE_RIGHT, PLANE_BOTTOM},
+        {PLANE_NEAR, PLANE_LEFT,  PLANE_TOP   },
+        {PLANE_NEAR, PLANE_LEFT,  PLANE_BOTTOM},
+        {PLANE_NEAR, PLANE_RIGHT, PLANE_TOP   },
         {PLANE_NEAR, PLANE_RIGHT, PLANE_BOTTOM},
     };
 

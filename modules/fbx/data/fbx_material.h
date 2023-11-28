@@ -114,104 +114,101 @@ struct FBXMaterial : public Reference {
     // TODO make this static?
     const std::map<std::string, SpatialMaterial::Feature>
         fbx_feature_mapping_desc = {
-            /* Transparent */
+  /* Transparent */
             {"TransparentColor", SpatialMaterial::Feature::FEATURE_TRANSPARENT},
-            {"Maya|opacity", SpatialMaterial::Feature::FEATURE_TRANSPARENT}
-        };
+            {"Maya|opacity",     SpatialMaterial::Feature::FEATURE_TRANSPARENT}
+    };
 
     // TODO make this static?
     const std::map<std::string, SpatialMaterial::TextureParam>
         fbx_texture_mapping_desc = {
-            /* Diffuse */
-            {"Maya|base", SpatialMaterial::TextureParam::TEXTURE_ALBEDO},
-            {"DiffuseColor", SpatialMaterial::TextureParam::TEXTURE_ALBEDO},
+  /* Diffuse */
+            {"Maya|base",                        SpatialMaterial::TextureParam::TEXTURE_ALBEDO  },
+            {"DiffuseColor",                     SpatialMaterial::TextureParam::TEXTURE_ALBEDO  },
             {"Maya|DiffuseTexture",
-             SpatialMaterial::TextureParam::TEXTURE_ALBEDO},
-            {"Maya|baseColor", SpatialMaterial::TextureParam::TEXTURE_ALBEDO},
+             SpatialMaterial::TextureParam::TEXTURE_ALBEDO                                      },
+            {"Maya|baseColor",                   SpatialMaterial::TextureParam::TEXTURE_ALBEDO  },
             {"Maya|baseColor|file",
-             SpatialMaterial::TextureParam::TEXTURE_ALBEDO},
+             SpatialMaterial::TextureParam::TEXTURE_ALBEDO                                      },
             {"3dsMax|Parameters|base_color_map",
-             SpatialMaterial::TextureParam::TEXTURE_ALBEDO},
+             SpatialMaterial::TextureParam::TEXTURE_ALBEDO                                      },
             {"Maya|TEX_color_map|file",
-             SpatialMaterial::TextureParam::TEXTURE_ALBEDO},
-            {"Maya|TEX_color_map", SpatialMaterial::TextureParam::TEXTURE_ALBEDO
+             SpatialMaterial::TextureParam::TEXTURE_ALBEDO                                      },
+            {"Maya|TEX_color_map",               SpatialMaterial::TextureParam::TEXTURE_ALBEDO
             },
-            /* Emission */
-            {"EmissiveColor", SpatialMaterial::TextureParam::TEXTURE_EMISSION},
-            {"EmissiveFactor", SpatialMaterial::TextureParam::TEXTURE_EMISSION},
+ /* Emission */
+            {"EmissiveColor",                    SpatialMaterial::TextureParam::TEXTURE_EMISSION},
+            {"EmissiveFactor",                   SpatialMaterial::TextureParam::TEXTURE_EMISSION},
             {"Maya|emissionColor",
-             SpatialMaterial::TextureParam::TEXTURE_EMISSION},
+             SpatialMaterial::TextureParam::TEXTURE_EMISSION                                    },
             {"Maya|emissionColor|file",
-             SpatialMaterial::TextureParam::TEXTURE_EMISSION},
+             SpatialMaterial::TextureParam::TEXTURE_EMISSION                                    },
             {"3dsMax|Parameters|emission_map",
-             SpatialMaterial::TextureParam::TEXTURE_EMISSION},
+             SpatialMaterial::TextureParam::TEXTURE_EMISSION                                    },
             {"Maya|TEX_emissive_map",
-             SpatialMaterial::TextureParam::TEXTURE_EMISSION},
+             SpatialMaterial::TextureParam::TEXTURE_EMISSION                                    },
             {"Maya|TEX_emissive_map|file",
-             SpatialMaterial::TextureParam::TEXTURE_EMISSION},
-            /* Metallic */
-            {"Maya|metalness", SpatialMaterial::TextureParam::TEXTURE_METALLIC},
+             SpatialMaterial::TextureParam::TEXTURE_EMISSION                                    },
+ /* Metallic */
+            {"Maya|metalness",                   SpatialMaterial::TextureParam::TEXTURE_METALLIC},
             {"Maya|metalness|file",
-             SpatialMaterial::TextureParam::TEXTURE_METALLIC},
+             SpatialMaterial::TextureParam::TEXTURE_METALLIC                                    },
             {"3dsMax|Parameters|metalness_map",
-             SpatialMaterial::TextureParam::TEXTURE_METALLIC},
+             SpatialMaterial::TextureParam::TEXTURE_METALLIC                                    },
             {"Maya|TEX_metallic_map",
-             SpatialMaterial::TextureParam::TEXTURE_METALLIC},
+             SpatialMaterial::TextureParam::TEXTURE_METALLIC                                    },
             {"Maya|TEX_metallic_map|file",
-             SpatialMaterial::TextureParam::TEXTURE_METALLIC},
-            {"SpecularColor", SpatialMaterial::TextureParam::TEXTURE_METALLIC},
+             SpatialMaterial::TextureParam::TEXTURE_METALLIC                                    },
+            {"SpecularColor",                    SpatialMaterial::TextureParam::TEXTURE_METALLIC},
             {"Maya|specularColor",
-             SpatialMaterial::TextureParam::TEXTURE_METALLIC},
+             SpatialMaterial::TextureParam::TEXTURE_METALLIC                                    },
             {"Maya|SpecularTexture",
-             SpatialMaterial::TextureParam::TEXTURE_METALLIC},
+             SpatialMaterial::TextureParam::TEXTURE_METALLIC                                    },
             {"Maya|SpecularTexture|file",
-             SpatialMaterial::TextureParam::TEXTURE_METALLIC},
-
-            /* Roughness */
-            // Arnold Roughness Map
+             SpatialMaterial::TextureParam::TEXTURE_METALLIC                                    },
+ /* Roughness */
+  // Arnold Roughness Map
             {"Maya|specularRoughness",
-             SpatialMaterial::TextureParam::TEXTURE_ROUGHNESS},
-
+             SpatialMaterial::TextureParam::TEXTURE_ROUGHNESS                                   },
             {"3dsMax|Parameters|roughness_map",
-             SpatialMaterial::TextureParam::TEXTURE_ROUGHNESS},
+             SpatialMaterial::TextureParam::TEXTURE_ROUGHNESS                                   },
             {"Maya|TEX_roughness_map",
-             SpatialMaterial::TextureParam::TEXTURE_ROUGHNESS},
+             SpatialMaterial::TextureParam::TEXTURE_ROUGHNESS                                   },
             {"Maya|TEX_roughness_map|file",
-             SpatialMaterial::TextureParam::TEXTURE_ROUGHNESS},
-
-            /* Normal */
-            {"NormalMap", SpatialMaterial::TextureParam::TEXTURE_NORMAL},
-            //{ "Bump", SpatialMaterial::TextureParam::TEXTURE_NORMAL },
-            //{ "3dsMax|Parameters|bump_map",
-            // SpatialMaterial::TextureParam::TEXTURE_NORMAL },
-            {"Maya|NormalTexture", SpatialMaterial::TextureParam::TEXTURE_NORMAL
+             SpatialMaterial::TextureParam::TEXTURE_ROUGHNESS                                   },
+ /* Normal */
+            {"NormalMap",                        SpatialMaterial::TextureParam::TEXTURE_NORMAL  },
+ //{ "Bump", SpatialMaterial::TextureParam::TEXTURE_NORMAL },
+  //{ "3dsMax|Parameters|bump_map",
+  // SpatialMaterial::TextureParam::TEXTURE_NORMAL },
+            {"Maya|NormalTexture",               SpatialMaterial::TextureParam::TEXTURE_NORMAL
             },
-            //{ "Maya|normalCamera",
-            // SpatialMaterial::TextureParam::TEXTURE_NORMAL }, {
-            //"Maya|normalCamera|file",
-            // SpatialMaterial::TextureParam::TEXTURE_NORMAL },
+ //{ "Maya|normalCamera",
+  // SpatialMaterial::TextureParam::TEXTURE_NORMAL }, {
+  //"Maya|normalCamera|file",
+  // SpatialMaterial::TextureParam::TEXTURE_NORMAL },
             {"Maya|TEX_normal_map",
-             SpatialMaterial::TextureParam::TEXTURE_NORMAL},
+             SpatialMaterial::TextureParam::TEXTURE_NORMAL                                      },
             {"Maya|TEX_normal_map|file",
-             SpatialMaterial::TextureParam::TEXTURE_NORMAL},
-            /* AO */
+             SpatialMaterial::TextureParam::TEXTURE_NORMAL                                      },
+ /* AO */
             {"Maya|TEX_ao_map",
-             SpatialMaterial::TextureParam::TEXTURE_AMBIENT_OCCLUSION},
+             SpatialMaterial::TextureParam::TEXTURE_AMBIENT_OCCLUSION                           },
             {"Maya|TEX_ao_map|file",
-             SpatialMaterial::TextureParam::TEXTURE_AMBIENT_OCCLUSION},
+             SpatialMaterial::TextureParam::TEXTURE_AMBIENT_OCCLUSION                           },
 
-            //{ "Maya|diffuseRoughness",
-            // SpatialMaterial::TextureParam::UNSUPPORTED }, {
-            //"Maya|diffuseRoughness|file",
-            // SpatialMaterial::TextureParam::UNSUPPORTED }, {
-            //"ShininessExponent", SpatialMaterial::TextureParam::UNSUPPORTED },
-            //{ "ReflectionFactor", SpatialMaterial::TextureParam::UNSUPPORTED
-            //}, {
-            //"TransparentColor",SpatialMaterial::TextureParam::TEXTURE_CHANNEL_ALPHA
-            //}, {
-            //"TransparencyFactor",SpatialMaterial::TextureParam::TEXTURE_CHANNEL_ALPHA
-            //}
-        };
+ //{ "Maya|diffuseRoughness",
+  // SpatialMaterial::TextureParam::UNSUPPORTED }, {
+  //"Maya|diffuseRoughness|file",
+  // SpatialMaterial::TextureParam::UNSUPPORTED }, {
+  //"ShininessExponent", SpatialMaterial::TextureParam::UNSUPPORTED },
+  //{ "ReflectionFactor", SpatialMaterial::TextureParam::UNSUPPORTED
+  //}, {
+  //"TransparentColor",SpatialMaterial::TextureParam::TEXTURE_CHANNEL_ALPHA
+  //}, {
+  //"TransparencyFactor",SpatialMaterial::TextureParam::TEXTURE_CHANNEL_ALPHA
+  //}
+    };
 
     // TODO make this static?
     enum PropertyDesc {
@@ -231,68 +228,68 @@ struct FBXMaterial : public Reference {
     };
 
     const std::map<std::string, PropertyDesc> fbx_properties_desc = {
-        /* Albedo */
-        {"DiffuseColor", PROPERTY_DESC_ALBEDO_COLOR},
-        {"Maya|baseColor", PROPERTY_DESC_ALBEDO_COLOR},
+  /* Albedo */
+        {"DiffuseColor",             PROPERTY_DESC_ALBEDO_COLOR  },
+        {"Maya|baseColor",           PROPERTY_DESC_ALBEDO_COLOR  },
 
-        /* Specular */
-        {"Maya|specular", PROPERTY_DESC_SPECULAR},
-        {"Maya|specularColor", PROPERTY_DESC_SPECULAR_COLOR},
+ /* Specular */
+        {"Maya|specular",            PROPERTY_DESC_SPECULAR      },
+        {"Maya|specularColor",       PROPERTY_DESC_SPECULAR_COLOR},
 
-        /* Specular roughness - arnold roughness map */
-        {"Maya|specularRoughness", PROPERTY_DESC_ROUGHNESS},
+ /* Specular roughness - arnold roughness map */
+        {"Maya|specularRoughness",   PROPERTY_DESC_ROUGHNESS     },
 
-        /* Transparent */
-        {"Opacity", PROPERTY_DESC_TRANSPARENT},
-        {"TransparencyFactor", PROPERTY_DESC_TRANSPARENT},
-        {"Maya|opacity", PROPERTY_DESC_TRANSPARENT},
+ /* Transparent */
+        {"Opacity",                  PROPERTY_DESC_TRANSPARENT   },
+        {"TransparencyFactor",       PROPERTY_DESC_TRANSPARENT   },
+        {"Maya|opacity",             PROPERTY_DESC_TRANSPARENT   },
 
-        /* Metallic */
-        {"Shininess", PROPERTY_DESC_METALLIC},
-        {"Reflectivity", PROPERTY_DESC_METALLIC},
-        {"Maya|metalness", PROPERTY_DESC_METALLIC},
-        {"Maya|metallic", PROPERTY_DESC_METALLIC},
+ /* Metallic */
+        {"Shininess",                PROPERTY_DESC_METALLIC      },
+        {"Reflectivity",             PROPERTY_DESC_METALLIC      },
+        {"Maya|metalness",           PROPERTY_DESC_METALLIC      },
+        {"Maya|metallic",            PROPERTY_DESC_METALLIC      },
 
-        /* Roughness */
-        {"Maya|roughness", PROPERTY_DESC_ROUGHNESS},
+ /* Roughness */
+        {"Maya|roughness",           PROPERTY_DESC_ROUGHNESS     },
 
-        /* Coat */
-        //{ "Maya|coat", PROPERTY_DESC_COAT },
+ /* Coat */
+  //{ "Maya|coat", PROPERTY_DESC_COAT },
 
-        /* Coat roughness */
-        //{ "Maya|coatRoughness", PROPERTY_DESC_COAT_ROUGHNESS },
+  /* Coat roughness */
+  //{ "Maya|coatRoughness", PROPERTY_DESC_COAT_ROUGHNESS },
 
-        /* Emissive */
-        {"Maya|emission", PROPERTY_DESC_EMISSIVE},
-        {"Maya|emissive", PROPERTY_DESC_EMISSIVE},
+  /* Emissive */
+        {"Maya|emission",            PROPERTY_DESC_EMISSIVE      },
+        {"Maya|emissive",            PROPERTY_DESC_EMISSIVE      },
 
-        /* Emissive color */
-        {"EmissiveColor", PROPERTY_DESC_EMISSIVE_COLOR},
-        {"Maya|emissionColor", PROPERTY_DESC_EMISSIVE_COLOR},
+ /* Emissive color */
+        {"EmissiveColor",            PROPERTY_DESC_EMISSIVE_COLOR},
+        {"Maya|emissionColor",       PROPERTY_DESC_EMISSIVE_COLOR},
 
-        /* Ignore */
-        {"Maya|diffuseRoughness", PROPERTY_DESC_IGNORE},
-        {"Maya", PROPERTY_DESC_IGNORE},
-        {"Diffuse", PROPERTY_DESC_ALBEDO_COLOR},
-        {"Maya|TypeId", PROPERTY_DESC_IGNORE},
-        {"Ambient", PROPERTY_DESC_IGNORE},
-        {"AmbientColor", PROPERTY_DESC_IGNORE},
-        {"ShininessExponent", PROPERTY_DESC_IGNORE},
-        {"Specular", PROPERTY_DESC_IGNORE},
-        {"SpecularColor", PROPERTY_DESC_IGNORE},
-        {"SpecularFactor", PROPERTY_DESC_IGNORE},
-        //{ "BumpFactor", PROPERTY_DESC_IGNORE },
-        {"Maya|exitToBackground", PROPERTY_DESC_IGNORE},
-        {"Maya|indirectDiffuse", PROPERTY_DESC_IGNORE},
-        {"Maya|indirectSpecular", PROPERTY_DESC_IGNORE},
-        {"Maya|internalReflections", PROPERTY_DESC_IGNORE},
-        {"DiffuseFactor", PROPERTY_DESC_IGNORE},
-        {"AmbientFactor", PROPERTY_DESC_IGNORE},
-        {"ReflectionColor", PROPERTY_DESC_IGNORE},
-        {"Emissive", PROPERTY_DESC_IGNORE},
-        {"Maya|coatColor", PROPERTY_DESC_IGNORE},
-        {"Maya|coatNormal", PROPERTY_DESC_IGNORE},
-        {"Maya|coatIOR", PROPERTY_DESC_IGNORE},
+ /* Ignore */
+        {"Maya|diffuseRoughness",    PROPERTY_DESC_IGNORE        },
+        {"Maya",                     PROPERTY_DESC_IGNORE        },
+        {"Diffuse",                  PROPERTY_DESC_ALBEDO_COLOR  },
+        {"Maya|TypeId",              PROPERTY_DESC_IGNORE        },
+        {"Ambient",                  PROPERTY_DESC_IGNORE        },
+        {"AmbientColor",             PROPERTY_DESC_IGNORE        },
+        {"ShininessExponent",        PROPERTY_DESC_IGNORE        },
+        {"Specular",                 PROPERTY_DESC_IGNORE        },
+        {"SpecularColor",            PROPERTY_DESC_IGNORE        },
+        {"SpecularFactor",           PROPERTY_DESC_IGNORE        },
+ //{ "BumpFactor", PROPERTY_DESC_IGNORE },
+        {"Maya|exitToBackground",    PROPERTY_DESC_IGNORE        },
+        {"Maya|indirectDiffuse",     PROPERTY_DESC_IGNORE        },
+        {"Maya|indirectSpecular",    PROPERTY_DESC_IGNORE        },
+        {"Maya|internalReflections", PROPERTY_DESC_IGNORE        },
+        {"DiffuseFactor",            PROPERTY_DESC_IGNORE        },
+        {"AmbientFactor",            PROPERTY_DESC_IGNORE        },
+        {"ReflectionColor",          PROPERTY_DESC_IGNORE        },
+        {"Emissive",                 PROPERTY_DESC_IGNORE        },
+        {"Maya|coatColor",           PROPERTY_DESC_IGNORE        },
+        {"Maya|coatNormal",          PROPERTY_DESC_IGNORE        },
+        {"Maya|coatIOR",             PROPERTY_DESC_IGNORE        },
     };
 
     struct TextureFileMapping {

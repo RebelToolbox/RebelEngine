@@ -378,18 +378,18 @@ Variant::Type get_jni_type(const String& p_type) {
         const char* name;
         Variant::Type type;
     } _type_to_vtype[] = {
-        {"void", Variant::NIL},
-        {"boolean", Variant::BOOL},
-        {"int", Variant::INT},
-        {"float", Variant::REAL},
-        {"double", Variant::REAL},
-        {"java.lang.String", Variant::STRING},
-        {"[I", Variant::POOL_INT_ARRAY},
-        {"[B", Variant::POOL_BYTE_ARRAY},
-        {"[F", Variant::POOL_REAL_ARRAY},
-        {"[Ljava.lang.String;", Variant::POOL_STRING_ARRAY},
-        {"org.godotengine.godot.Dictionary", Variant::DICTIONARY},
-        {NULL, Variant::NIL}
+        {"void",                             Variant::NIL              },
+        {"boolean",                          Variant::BOOL             },
+        {"int",                              Variant::INT              },
+        {"float",                            Variant::REAL             },
+        {"double",                           Variant::REAL             },
+        {"java.lang.String",                 Variant::STRING           },
+        {"[I",                               Variant::POOL_INT_ARRAY   },
+        {"[B",                               Variant::POOL_BYTE_ARRAY  },
+        {"[F",                               Variant::POOL_REAL_ARRAY  },
+        {"[Ljava.lang.String;",              Variant::POOL_STRING_ARRAY},
+        {"org.godotengine.godot.Dictionary", Variant::DICTIONARY       },
+        {NULL,                               Variant::NIL              }
     };
 
     int idx = 0;
@@ -410,19 +410,19 @@ const char* get_jni_sig(const String& p_type) {
         const char* name;
         const char* sig;
     } _type_to_vtype[] = {
-        {"void", "V"},
-        {"boolean", "Z"},
-        {"int", "I"},
-        {"float", "F"},
-        {"double", "D"},
-        {"java.lang.String", "Ljava/lang/String;"},
+        {"void",                                    "V"                  },
+        {"boolean",                                 "Z"                  },
+        {"int",                                     "I"                  },
+        {"float",                                   "F"                  },
+        {"double",                                  "D"                  },
+        {"java.lang.String",                        "Ljava/lang/String;" },
         {"com.rebeltoolbox.rebelengine.Dictionary",
-         "Lcom/rebeltoolbox/rebelengine/Dictionary;"},
-        {"[I", "[I"},
-        {"[B", "[B"},
-        {"[F", "[F"},
-        {"[Ljava.lang.String;", "[Ljava/lang/String;"},
-        {NULL, "V"}
+         "Lcom/rebeltoolbox/rebelengine/Dictionary;"                     },
+        {"[I",                                      "[I"                 },
+        {"[B",                                      "[B"                 },
+        {"[F",                                      "[F"                 },
+        {"[Ljava.lang.String;",                     "[Ljava/lang/String;"},
+        {NULL,                                      "V"                  }
     };
 
     int idx = 0;

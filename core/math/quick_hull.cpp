@@ -152,8 +152,12 @@ Error QuickHull::build(
     List<Face> faces;
 
     for (int i = 0; i < 4; i++) {
-        static const int face_order[4][3] =
-            {{0, 1, 2}, {0, 1, 3}, {0, 2, 3}, {1, 2, 3}};
+        static const int face_order[4][3] = {
+            {0, 1, 2},
+            {0, 1, 3},
+            {0, 2, 3},
+            {1, 2, 3}
+        };
 
         Face f;
         for (int j = 0; j < 3; j++) {

@@ -57,15 +57,15 @@ struct vendor {
 };
 
 vendor vendormap[] = {
-    {"Advanced Micro Devices, Inc.", 30},
-    {"AMD", 30},
-    {"NVIDIA Corporation", 30},
-    {"X.Org", 30},
+    {"Advanced Micro Devices, Inc.",        30},
+    {"AMD",                                 30},
+    {"NVIDIA Corporation",                  30},
+    {"X.Org",                               30},
     {"Intel Open Source Technology Center", 20},
-    {"Intel", 20},
-    {"nouveau", 10},
-    {"Mesa Project", 0},
-    {nullptr, 0}
+    {"Intel",                               20},
+    {"nouveau",                             10},
+    {"Mesa Project",                        0 },
+    {nullptr,                               0 }
 };
 
 // Runs inside a child. Exiting will not quit the engine.

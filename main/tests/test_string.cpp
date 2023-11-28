@@ -496,9 +496,9 @@ struct test_27_data {
 bool test_27() {
     OS::get_singleton()->print("\n\nTest 27: begins_with\n");
     test_27_data tc[] = {
-        {"res://foobar", "res://", true},
-        {"res", "res://", false},
-        {"abc", "abc", true}
+        {"res://foobar", "res://", true },
+        {"res",          "res://", false},
+        {"abc",          "abc",    true }
     };
     size_t count = sizeof(tc) / sizeof(tc[0]);
     bool state = true;

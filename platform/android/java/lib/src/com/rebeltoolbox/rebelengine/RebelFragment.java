@@ -1025,10 +1025,10 @@ public class RebelFragment
 
         float[] adjustedValues = new float[3];
         final int[][] axisSwap = {
-            {1, -1, 0, 1},  // ROTATION_0
+            {1,  -1, 0, 1}, // ROTATION_0
             {-1, -1, 1, 0}, // ROTATION_90
-            {-1, 1, 0, 1},  // ROTATION_180
-            {1, 1, 1, 0}
+            {-1, 1,  0, 1}, // ROTATION_180
+            {1,  1,  1, 0}
         }; // ROTATION_270
 
         final int[] as = axisSwap[displayRotation];

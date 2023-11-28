@@ -541,7 +541,10 @@ static void decompress_pvrtc(
     // local neighbourhood of blocks
     PVRTCBlock* p_blocks[2][2];
 
-    PVRTCBlock* prev[2][2] = {{nullptr, nullptr}, {nullptr, nullptr}};
+    PVRTCBlock* prev[2][2] = {
+        {nullptr, nullptr},
+        {nullptr, nullptr}
+    };
 
     struct {
         int Reps[2][4];

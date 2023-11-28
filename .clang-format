@@ -7,7 +7,7 @@
 # BasedOnStyle: LLVM
 AccessModifierOffset: -4
 AlignAfterOpenBracket: BlockIndent
-# AlignArrayOfStructures: None
+AlignArrayOfStructures: Left
 # AlignConsecutiveAssignments:
 #   Enabled:          false
 #   AcrossEmptyLines: false

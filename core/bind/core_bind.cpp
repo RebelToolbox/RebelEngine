@@ -900,9 +900,9 @@ int64_t _OS::get_unix_time_from_datetime(Dictionary datetime) const {
 
     /// How many days come before each month (0-12)
     static const unsigned short int DAYS_PAST_THIS_YEAR_TABLE[2][13] = {
-        /* Normal years.  */
+  /* Normal years.  */
         {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365},
-        /* Leap years.  */
+ /* Leap years.  */
         {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366}
     };
 

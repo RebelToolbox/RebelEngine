@@ -4473,8 +4473,12 @@ void VisualServerScene::_setup_gi_probe(Instance* p_instance) {
                                        // minimum is always 0, (and those blocks
                                        // will map to 1, which will be zero)
 
-                uint8_t alpha_block[4][4] =
-                    {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+                uint8_t alpha_block[4][4] = {
+                    {0, 0, 0, 0},
+                    {0, 0, 0, 0},
+                    {0, 0, 0, 0},
+                    {0, 0, 0, 0}
+                };
 
                 for (uint32_t j = 0; j < k.source_count; j++) {
                     int alpha = (cells[k.sources[j]].level_alpha >> 8) & 0xFF;

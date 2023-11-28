@@ -40,8 +40,8 @@ bool LineShape2D::_edit_is_selected_on_click(
     Vector2 point = get_d() * get_normal();
     Vector2 l[2][2] = {
         {point - get_normal().tangent() * 100,
-         point + get_normal().tangent() * 100},
-        {point, point + get_normal() * 30}
+         point + get_normal().tangent() * 100                           },
+        {point,                                point + get_normal() * 30}
     };
 
     for (int i = 0; i < 2; i++) {

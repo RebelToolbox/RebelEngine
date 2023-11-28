@@ -177,10 +177,10 @@ Error save_exr(
     // Gimp and Blender are a bit annoying so order of channels isn't
     // straightforward.
     const int channel_mappings[4][4] = {
-        {0},         // R
-        {1, 0},      // GR
-        {2, 1, 0},   // BGR
-        {3, 2, 1, 0} // ABGR
+        {0}, // R
+        {1, 0}, // GR
+        {2, 1, 0}, // BGR
+        {3, 2, 1, 0}  // ABGR
     };
 
     int channel_count = get_channel_count(format);

@@ -200,31 +200,31 @@ static const char* launcher_adaptive_icon_background_option =
 
 static const LauncherIcon launcher_icons[icon_densities_count] = {
     {"res/mipmap-xxxhdpi-v4/icon.png", 192},
-    {"res/mipmap-xxhdpi-v4/icon.png", 144},
-    {"res/mipmap-xhdpi-v4/icon.png", 96},
-    {"res/mipmap-hdpi-v4/icon.png", 72},
-    {"res/mipmap-mdpi-v4/icon.png", 48},
-    {"res/mipmap/icon.png", 192}
+    {"res/mipmap-xxhdpi-v4/icon.png",  144},
+    {"res/mipmap-xhdpi-v4/icon.png",   96 },
+    {"res/mipmap-hdpi-v4/icon.png",    72 },
+    {"res/mipmap-mdpi-v4/icon.png",    48 },
+    {"res/mipmap/icon.png",            192}
 };
 
 static const LauncherIcon
     launcher_adaptive_icon_foregrounds[icon_densities_count] = {
         {"res/mipmap-xxxhdpi-v4/icon_foreground.png", 432},
-        {"res/mipmap-xxhdpi-v4/icon_foreground.png", 324},
-        {"res/mipmap-xhdpi-v4/icon_foreground.png", 216},
-        {"res/mipmap-hdpi-v4/icon_foreground.png", 162},
-        {"res/mipmap-mdpi-v4/icon_foreground.png", 108},
-        {"res/mipmap/icon_foreground.png", 432}
+        {"res/mipmap-xxhdpi-v4/icon_foreground.png",  324},
+        {"res/mipmap-xhdpi-v4/icon_foreground.png",   216},
+        {"res/mipmap-hdpi-v4/icon_foreground.png",    162},
+        {"res/mipmap-mdpi-v4/icon_foreground.png",    108},
+        {"res/mipmap/icon_foreground.png",            432}
 };
 
 static const LauncherIcon
     launcher_adaptive_icon_backgrounds[icon_densities_count] = {
         {"res/mipmap-xxxhdpi-v4/icon_background.png", 432},
-        {"res/mipmap-xxhdpi-v4/icon_background.png", 324},
-        {"res/mipmap-xhdpi-v4/icon_background.png", 216},
-        {"res/mipmap-hdpi-v4/icon_background.png", 162},
-        {"res/mipmap-mdpi-v4/icon_background.png", 108},
-        {"res/mipmap/icon_background.png", 432}
+        {"res/mipmap-xxhdpi-v4/icon_background.png",  324},
+        {"res/mipmap-xhdpi-v4/icon_background.png",   216},
+        {"res/mipmap-hdpi-v4/icon_background.png",    162},
+        {"res/mipmap-mdpi-v4/icon_background.png",    108},
+        {"res/mipmap/icon_background.png",            432}
 };
 
 static const int EXPORT_FORMAT_APK = 0;
