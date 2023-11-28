@@ -31,8 +31,8 @@
 #ifndef CLASS_DB_H
 #define CLASS_DB_H
 
+#include "core/hash_map.h"
 #include "core/method_bind.h"
-#include "core/object.h"
 #include "core/print_string.h"
 
 /**	To bind more then 6 parameters include this:

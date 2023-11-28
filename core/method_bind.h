@@ -33,7 +33,6 @@
 
 #include "core/list.h"
 #include "core/method_ptrcall.h"
-#include "core/object.h"
 #include "core/variant.h"
 
 #include <stdio.h>
@@ -115,9 +114,6 @@ struct VariantCaster<const T&> {
     };
 
 #endif
-
-// Object enum casts must go here
-VARIANT_ENUM_CAST(Object::ConnectFlags);
 
 template <typename T>
 struct VariantObjectClassChecker {

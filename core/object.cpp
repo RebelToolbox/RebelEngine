@@ -2553,3 +2553,5 @@ void ObjectDB::cleanup() {
     instance_checks.clear();
     rw_lock.write_unlock();
 }
+
+VARIANT_ENUM_CAST(Object::ConnectFlags);

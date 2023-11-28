@@ -28,8 +28,6 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-// object.h needs to be the first include *before* method_bind.h
-// FIXME: Find out why and fix potential cyclical dependencies.
 #include "method_bind.h"
 
 #include "core/object.h"
