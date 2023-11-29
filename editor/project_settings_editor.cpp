@@ -245,7 +245,7 @@ void ProjectSettingsEditor::_action_selected() {
         return;
     }
 
-    add_at = "input/" + ti->get_text(0);
+    add_at   = "input/" + ti->get_text(0);
     edit_idx = -1;
 }
 
@@ -289,7 +289,7 @@ void ProjectSettingsEditor::_action_edited() {
             return;
         }
 
-        int order = ProjectSettings::get_singleton()->get_order(add_at);
+        int order         = ProjectSettings::get_singleton()->get_order(add_at);
         Dictionary action = ProjectSettings::get_singleton()->get(add_at);
 
         setting = true;
@@ -334,9 +334,9 @@ void ProjectSettingsEditor::_action_edited() {
 
         add_at = action_prop;
     } else if (input_editor->get_selected_column() == 1) {
-        String name = "input/" + ti->get_text(0);
-        Dictionary old_action = ProjectSettings::get_singleton()->get(name);
-        Dictionary new_action = old_action.duplicate();
+        String name            = "input/" + ti->get_text(0);
+        Dictionary old_action  = ProjectSettings::get_singleton()->get(name);
+        Dictionary new_action  = old_action.duplicate();
         new_action["deadzone"] = ti->get_range(1);
 
         undo_redo->create_action(TTR("Change Action deadzone"));
@@ -360,11 +360,11 @@ void ProjectSettingsEditor::_action_edited() {
 
 void ProjectSettingsEditor::_device_input_add() {
     Ref<InputEvent> ie;
-    String name = add_at;
-    int idx = edit_idx;
+    String name        = add_at;
+    int idx            = edit_idx;
     Dictionary old_val = ProjectSettings::get_singleton()->get(name);
-    Dictionary action = old_val.duplicate();
-    Array events = action["events"].duplicate();
+    Dictionary action  = old_val.duplicate();
+    Array events       = action["events"].duplicate();
 
     switch (add_type) {
         case INPUT_MOUSE_BUTTON: {
@@ -495,11 +495,11 @@ void ProjectSettingsEditor::_press_a_key_confirm() {
     ie->set_metakey(last_wait_for_key->get_metakey());
 
     String name = add_at;
-    int idx = edit_idx;
+    int idx     = edit_idx;
 
     Dictionary old_val = ProjectSettings::get_singleton()->get(name);
-    Dictionary action = old_val.duplicate();
-    Array events = action["events"].duplicate();
+    Dictionary action  = old_val.duplicate();
+    Array events       = action["events"].duplicate();
 
     for (int i = 0; i < events.size(); i++) {
         Ref<InputEventKey> aie = events[i];
@@ -737,10 +737,10 @@ void ProjectSettingsEditor::_action_activated() {
         return;
     }
 
-    String name = "input/" + ti->get_parent()->get_text(0);
-    int idx = ti->get_metadata(0);
+    String name       = "input/" + ti->get_parent()->get_text(0);
+    int idx           = ti->get_metadata(0);
     Dictionary action = ProjectSettings::get_singleton()->get(name);
-    Array events = action["events"];
+    Array events      = action["events"];
 
     ERR_FAIL_INDEX(idx, events.size());
     Ref<InputEvent> event = events[idx];
@@ -748,7 +748,7 @@ void ProjectSettingsEditor::_action_activated() {
         return;
     }
 
-    add_at = name;
+    add_at   = name;
     edit_idx = idx;
     _edit_item(event);
 }
@@ -764,14 +764,14 @@ void ProjectSettingsEditor::_action_button_pressed(
 
     if (p_id == 1) {
         // Add action event
-        Point2 ofs = input_editor->get_global_position();
-        Rect2 ir = input_editor->get_item_rect(ti);
+        Point2 ofs     = input_editor->get_global_position();
+        Rect2 ir       = input_editor->get_item_rect(ti);
         ir.position.y -= input_editor->get_scroll().y;
-        ofs += ir.position + ir.size;
-        ofs.x -= 100;
+        ofs           += ir.position + ir.size;
+        ofs.x         -= 100;
         popup_add->set_position(ofs);
         popup_add->popup();
-        add_at = "input/" + ti->get_text(0);
+        add_at   = "input/" + ti->get_text(0);
         edit_idx = -1;
 
     } else if (p_id == 2) {
@@ -779,7 +779,7 @@ void ProjectSettingsEditor::_action_button_pressed(
 
         if (ti->get_parent() == input_editor->get_root()) {
             // Remove action
-            String name = "input/" + ti->get_text(0);
+            String name        = "input/" + ti->get_text(0);
             Dictionary old_val = ProjectSettings::get_singleton()->get(name);
             int order = ProjectSettings::get_singleton()->get_order(name);
 
@@ -809,10 +809,10 @@ void ProjectSettingsEditor::_action_button_pressed(
 
         } else {
             // Remove action event
-            String name = "input/" + ti->get_parent()->get_text(0);
+            String name        = "input/" + ti->get_parent()->get_text(0);
             Dictionary old_val = ProjectSettings::get_singleton()->get(name);
-            Dictionary action = old_val.duplicate();
-            int idx = ti->get_metadata(0);
+            Dictionary action  = old_val.duplicate();
+            int idx            = ti->get_metadata(0);
 
             Array events = action["events"].duplicate();
             ERR_FAIL_INDEX(idx, events.size());
@@ -848,8 +848,8 @@ void ProjectSettingsEditor::_action_button_pressed(
 
         } else {
             // Edit action event
-            String name = "input/" + ti->get_parent()->get_text(0);
-            int idx = ti->get_metadata(0);
+            String name       = "input/" + ti->get_parent()->get_text(0);
+            int idx           = ti->get_metadata(0);
             Dictionary action = ProjectSettings::get_singleton()->get(name);
 
             Array events = action["events"];
@@ -862,7 +862,7 @@ void ProjectSettingsEditor::_action_button_pressed(
             }
 
             ti->set_as_cursor(0);
-            add_at = name;
+            add_at   = name;
             edit_idx = idx;
             _edit_item(event);
         }
@@ -878,7 +878,7 @@ void ProjectSettingsEditor::_update_actions() {
 
     if (input_editor->get_root() && input_editor->get_root()->get_children()) {
         for (TreeItem* item = input_editor->get_root()->get_children(); item;
-             item = item->get_next()) {
+             item           = item->get_next()) {
             collapsed[item->get_text(0)] = item->is_collapsed();
         }
     }
@@ -902,7 +902,7 @@ void ProjectSettingsEditor::_update_actions() {
         }
 
         Dictionary action = ProjectSettings::get_singleton()->get(pi.name);
-        Array events = action["events"];
+        Array events      = action["events"];
 
         TreeItem* item = input_editor->create_item(root);
         item->set_text(0, name);
@@ -1012,10 +1012,10 @@ void ProjectSettingsEditor::_update_actions() {
             Ref<InputEventJoypadMotion> jm = event;
 
             if (jm.is_valid()) {
-                int ax = jm->get_axis();
-                int n = 2 * ax + (jm->get_axis_value() < 0 ? 0 : 1);
+                int ax      = jm->get_axis();
+                int n       = 2 * ax + (jm->get_axis_value() < 0 ? 0 : 1);
                 String desc = _axis_names[n];
-                String str = _get_device_string(jm->get_device()) + ", "
+                String str  = _get_device_string(jm->get_device()) + ", "
                            + TTR("Axis") + " " + itos(ax) + " "
                            + (jm->get_axis_value() < 0 ? "-" : "+") + desc
                            + ".";
@@ -1166,7 +1166,7 @@ void ProjectSettingsEditor::_item_del() {
     undo_redo->create_action(TTR("Delete Item"));
 
     Variant value = ProjectSettings::get_singleton()->get(property);
-    int order = ProjectSettings::get_singleton()->get_order(property);
+    int order     = ProjectSettings::get_singleton()->get_order(property);
 
     undo_redo
         ->add_do_method(ProjectSettings::get_singleton(), "clear", property);
@@ -1231,9 +1231,9 @@ void ProjectSettingsEditor::_action_adds(String) {
 
 void ProjectSettingsEditor::_action_add() {
     Dictionary action;
-    action["events"] = Array();
+    action["events"]   = Array();
     action["deadzone"] = 0.5f;
-    String name = "input/" + action_name->get_text();
+    String name        = "input/" + action_name->get_text();
     undo_redo->create_action(TTR("Add Input Action"));
     undo_redo
         ->add_do_method(ProjectSettings::get_singleton(), "set", name, action);
@@ -1359,10 +1359,10 @@ Variant ProjectSettingsEditor::get_drag_data_fw(
         return Variant();
     }
 
-    String name = selected->get_text(0);
+    String name       = selected->get_text(0);
     VBoxContainer* vb = memnew(VBoxContainer);
     HBoxContainer* hb = memnew(HBoxContainer);
-    Label* label = memnew(Label(name));
+    Label* label      = memnew(Label(name));
     hb->set_modulate(Color(1, 1, 1, 1.0f));
     hb->add_child(label);
     vb->add_child(hb);
@@ -1387,7 +1387,7 @@ bool ProjectSettingsEditor::can_drop_data_fw(
     }
 
     TreeItem* selected = input_editor->get_selected();
-    TreeItem* item = input_editor->get_item_at_position(p_point);
+    TreeItem* item     = input_editor->get_item_at_position(p_point);
     if (!selected || !item || item == selected
         || item->get_parent() == selected) {
         return false;
@@ -1406,7 +1406,7 @@ void ProjectSettingsEditor::drop_data_fw(
     }
 
     TreeItem* selected = input_editor->get_selected();
-    TreeItem* item = input_editor->get_item_at_position(p_point);
+    TreeItem* item     = input_editor->get_item_at_position(p_point);
     if (!item) {
         return;
     }
@@ -1419,8 +1419,8 @@ void ProjectSettingsEditor::drop_data_fw(
     String target_name = "input/" + target->get_text(0);
     int target_order = ProjectSettings::get_singleton()->get_order(target_name);
 
-    int order = old_order;
-    bool is_below = target_order > old_order;
+    int order          = old_order;
+    bool is_below      = target_order > old_order;
     TreeItem* iterator = is_below ? selected->get_next() : selected->get_prev();
 
     undo_redo->create_action(TTR("Moved Input Action Event"));
@@ -1440,7 +1440,7 @@ void ProjectSettingsEditor::drop_data_fw(
             iterator_name,
             iterator_order
         );
-        order = iterator_order;
+        order    = iterator_order;
         iterator = is_below ? iterator->get_next() : iterator->get_prev();
     }
 
@@ -1733,10 +1733,10 @@ void ProjectSettingsEditor::_translation_res_option_changed() {
     TreeItem* ed = translation_remap_options->get_edited();
     ERR_FAIL_COND(!ed);
 
-    String key = k->get_metadata(0);
-    int idx = ed->get_metadata(0);
+    String key  = k->get_metadata(0);
+    int idx     = ed->get_metadata(0);
     String path = ed->get_metadata(1);
-    int which = ed->get_range(1);
+    int which   = ed->get_range(1);
 
     Vector<String> langs = TranslationServer::get_all_locales();
 
@@ -1839,7 +1839,7 @@ void ProjectSettingsEditor::_translation_res_option_delete(
     ERR_FAIL_COND(!ed);
 
     String key = k->get_metadata(0);
-    int idx = ed->get_metadata(0);
+    int idx    = ed->get_metadata(0);
 
     ERR_FAIL_COND(!remaps.has(key));
     PoolStringArray r = remaps[key];
@@ -1866,10 +1866,10 @@ void ProjectSettingsEditor::_translation_res_option_delete(
 }
 
 void ProjectSettingsEditor::_translation_filter_option_changed() {
-    int sel_id = translation_locale_filter_mode->get_selected_id();
-    TreeItem* t = translation_filter->get_edited();
+    int sel_id    = translation_locale_filter_mode->get_selected_id();
+    TreeItem* t   = translation_filter->get_edited();
     String locale = t->get_tooltip(0);
-    bool checked = t->is_checked(0);
+    bool checked  = t->is_checked(0);
 
     Variant prev;
     Array f_locales_all;
@@ -1890,7 +1890,7 @@ void ProjectSettingsEditor::_translation_filter_option_changed() {
     }
 
     Array f_locales = f_locales_all[1];
-    int l_idx = f_locales.find(locale);
+    int l_idx       = f_locales.find(locale);
 
     if (checked) {
         if (l_idx == -1) {
@@ -2017,7 +2017,7 @@ void ProjectSettingsEditor::_update_translations() {
     }
 
     int filter_mode = l_filter_all[0];
-    Array l_filter = l_filter_all[1];
+    Array l_filter  = l_filter_all[1];
 
     int s = names.size();
     bool is_short_list_when_show_all_selected =
@@ -2036,8 +2036,8 @@ void ProjectSettingsEditor::_update_translations() {
         translation_filter->set_hide_root(true);
         translation_filter_treeitems.clear();
         for (int i = 0; i < s; i++) {
-            String n = names[i];
-            String l = langs[i];
+            String n        = names[i];
+            String l        = langs[i];
             bool is_checked = l_filter.has(l);
             if (filter_mode == SHOW_ONLY_SELECTED_LOCALES && !is_checked) {
                 continue;
@@ -2067,7 +2067,7 @@ void ProjectSettingsEditor::_update_translations() {
 
     translation_remap->clear();
     translation_remap_options->clear();
-    root = translation_remap->create_item(nullptr);
+    root            = translation_remap->create_item(nullptr);
     TreeItem* root2 = translation_remap_options->create_item(nullptr);
     translation_remap->set_hide_root(true);
     translation_remap_options->set_hide_root(true);
@@ -2078,7 +2078,7 @@ void ProjectSettingsEditor::_update_translations() {
     int fl_idx_count = translation_locales_idxs_remap.size();
 
     String langnames = "";
-    int l_idx = 0;
+    int l_idx        = 0;
     for (int i = 0; i < names.size(); i++) {
         if (filter_mode == SHOW_ONLY_SELECTED_LOCALES && fl_idx_count != 0) {
             if (l_filter.size() > 0) {
@@ -2086,8 +2086,8 @@ void ProjectSettingsEditor::_update_translations() {
                     if (langnames.length() > 0) {
                         langnames += ",";
                     }
-                    langnames += names[i];
-                    translation_locales_idxs_remap.write[l_idx] = i;
+                    langnames                                   += names[i];
+                    translation_locales_idxs_remap.write[l_idx]  = i;
                     l_idx++;
                 }
             }
@@ -2131,9 +2131,9 @@ void ProjectSettingsEditor::_update_translations() {
 
                 PoolStringArray selected = remaps[keys[i]];
                 for (int j = 0; j < selected.size(); j++) {
-                    String s2 = selected[j];
-                    int qp = s2.find_last(":");
-                    String path = s2.substr(0, qp);
+                    String s2     = selected[j];
+                    int qp        = s2.find_last(":");
+                    String path   = s2.substr(0, qp);
                     String locale = s2.substr(qp + 1, s2.length());
 
                     TreeItem* t2 =
@@ -2403,7 +2403,7 @@ ProjectSettingsEditor::ProjectSettingsEditor(EditorData* p_data) {
     set_title(TTR("Project Settings (project.rebel)"));
     set_resizable(true);
     undo_redo = &p_data->get_undo_redo();
-    data = p_data;
+    data      = p_data;
 
     tab_container = memnew(TabContainer);
     tab_container->set_tab_align(TabContainer::ALIGN_LEFT);
@@ -2650,7 +2650,7 @@ ProjectSettingsEditor::ProjectSettingsEditor(EditorData* p_data) {
     translations->set_name(TTR("Localization"));
     tab_container->add_child(translations);
     // remap for properly select language in popup
-    translation_locales_idxs_remap = Vector<int>();
+    translation_locales_idxs_remap   = Vector<int>();
     translation_locales_list_created = false;
 
     {

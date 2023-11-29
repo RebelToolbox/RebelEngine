@@ -44,7 +44,7 @@ Error WebRTCPeerConnectionGDNative::set_default_library(
 ) {
     if (default_library) {
         const godot_net_webrtc_library* old = default_library;
-        default_library = nullptr;
+        default_library                     = nullptr;
         old->unregistered();
     }
     default_library = p_lib;

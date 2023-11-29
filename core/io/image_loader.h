@@ -49,7 +49,7 @@ protected:
         FileAccess* p_fileaccess,
         bool p_force_linear,
         float p_scale
-    ) = 0;
+    )       = 0;
     virtual void get_recognized_extensions(List<String>* p_extensions
     ) const = 0;
     bool recognize(const String& p_extension) const;
@@ -69,8 +69,8 @@ public:
         String p_file,
         Ref<Image> p_image,
         FileAccess* p_custom = nullptr,
-        bool p_force_linear = false,
-        float p_scale = 1.0
+        bool p_force_linear  = false,
+        float p_scale        = 1.0
     );
     static void get_recognized_extensions(List<String>* p_extensions);
     static ImageFormatLoader* recognize(const String& p_extension);
@@ -88,7 +88,7 @@ public:
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
     virtual bool handles_type(const String& p_type) const;

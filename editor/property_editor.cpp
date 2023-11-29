@@ -60,17 +60,17 @@
 
 void EditorResourceConversionPlugin::_bind_methods() {
     MethodInfo mi;
-    mi.name = "_convert";
-    mi.return_val.type = Variant::OBJECT;
-    mi.return_val.class_name = "Resource";
-    mi.return_val.hint = PROPERTY_HINT_RESOURCE_TYPE;
+    mi.name                   = "_convert";
+    mi.return_val.type        = Variant::OBJECT;
+    mi.return_val.class_name  = "Resource";
+    mi.return_val.hint        = PROPERTY_HINT_RESOURCE_TYPE;
     mi.return_val.hint_string = "Resource";
     mi.arguments.push_back(mi.return_val);
     mi.arguments[0].name = "resource";
 
     BIND_VMETHOD(mi)
 
-    mi.name = "_handles";
+    mi.name       = "_handles";
     mi.return_val = PropertyInfo(Variant::BOOL, "");
 
     BIND_VMETHOD(MethodInfo(Variant::STRING, "_converts_to"));
@@ -157,13 +157,13 @@ void CustomPropertyEditor::_menu_option(int p_which) {
 
                     Set<String> valid_extensions;
                     for (List<String>::Element* E = extensions.front(); E;
-                         E = E->next()) {
+                         E                        = E->next()) {
                         valid_extensions.insert(E->get());
                     }
 
                     file->clear_filters();
                     for (Set<String>::Element* E = valid_extensions.front(); E;
-                         E = E->next()) {
+                         E                       = E->next()) {
                         file->add_filter(
                             "*." + E->get() + " ; " + E->get().to_upper()
                         );
@@ -187,7 +187,7 @@ void CustomPropertyEditor::_menu_option(int p_which) {
                 } break;
 
                 case OBJ_MENU_MAKE_UNIQUE: {
-                    RefPtr RefPtr = v;
+                    RefPtr RefPtr          = v;
                     Ref<Resource> res_orig = RefPtr;
                     if (res_orig.is_null()) {
                         return;
@@ -203,7 +203,7 @@ void CustomPropertyEditor::_menu_option(int p_which) {
                         Pair<String, Variant> p;
                         PropertyInfo& pi = E->get();
                         if (pi.usage & PROPERTY_USAGE_STORAGE) {
-                            p.first = pi.name;
+                            p.first  = pi.name;
                             p.second = res_orig->get(pi.name);
                         }
 
@@ -358,12 +358,12 @@ bool CustomPropertyEditor::edit(
     int p_hint,
     String p_hint_text
 ) {
-    owner = p_owner;
+    owner    = p_owner;
     updating = true;
-    name = p_name;
-    v = p_variant;
+    name     = p_name;
+    v        = p_variant;
     field_names.clear();
-    hint = p_hint;
+    hint      = p_hint;
     hint_text = p_hint_text;
     type_button->hide();
     if (color_picker) {
@@ -421,7 +421,7 @@ bool CustomPropertyEditor::edit(
         case Variant::INT:
         case Variant::REAL: {
             if (hint == PROPERTY_HINT_RANGE) {
-                int c = hint_text.get_slice_count(",");
+                int c     = hint_text.get_slice_count(",");
                 float min = 0, max = 100,
                       step = type == Variant::REAL ? .01 : 1;
                 if (c >= 1) {
@@ -459,7 +459,7 @@ bool CustomPropertyEditor::edit(
 
             } else if (hint == PROPERTY_HINT_ENUM) {
                 Vector<String> options = hint_text.split(",");
-                int current_val = 0;
+                int current_val        = 0;
                 for (int i = 0; i < options.size(); i++) {
                     Vector<String> text_split = options[i].split(":");
                     if (text_split.size() != 1) {
@@ -498,7 +498,7 @@ bool CustomPropertyEditor::edit(
                     Point2 ofs(4, 4);
                     ofs.y += 22 * i;
                     for (int j = 0; j < 10; j++) {
-                        int idx = i * 10 + j;
+                        int idx     = i * 10 + j;
                         CheckBox* c = checks20[idx];
                         c->set_text(ProjectSettings::get_singleton()->get(
                             basename + "/layer_" + itos(idx + 1)
@@ -648,7 +648,7 @@ bool CustomPropertyEditor::edit(
                 text_edit->deselect();
 
                 int button_margin = get_constant("button_margin", "Dialogs");
-                int margin = get_constant("margin", "Dialogs");
+                int margin        = get_constant("margin", "Dialogs");
 
                 action_buttons[0]->set_anchor(MARGIN_LEFT, ANCHOR_END);
                 action_buttons[0]->set_anchor(MARGIN_TOP, ANCHOR_END);
@@ -739,7 +739,7 @@ bool CustomPropertyEditor::edit(
             } else if (hint == PROPERTY_HINT_PROPERTY_OF_VARIANT_TYPE) {
                 MAKE_PROPSELECT
                 Variant::Type type = Variant::NIL;
-                String tname = hint_text;
+                String tname       = hint_text;
                 if (tname.find(".") != -1) {
                     tname = tname.get_slice(".", 0);
                 }
@@ -1023,7 +1023,7 @@ bool CustomPropertyEditor::edit(
                     }
 
                     for (Set<String>::Element* j = valid_inheritors.front(); j;
-                         j = j->next()) {
+                         j                       = j->next()) {
                         const String& t = j->get();
 
                         bool is_custom_resource = false;
@@ -1492,7 +1492,7 @@ void CustomPropertyEditor::_action_pressed(int p_which) {
                 );
                 file->clear_filters();
                 for (List<String>::Element* E = extensions.front(); E;
-                     E = E->next()) {
+                     E                        = E->next()) {
                     file->add_filter(
                         "*." + E->get() + " ; " + E->get().to_upper()
                     );
@@ -1513,7 +1513,7 @@ void CustomPropertyEditor::_action_pressed(int p_which) {
                 emit_signal("variant_changed");
                 hide();
             } else if (p_which == 4) {
-                RefPtr RefPtr = v;
+                RefPtr RefPtr          = v;
                 Ref<Resource> res_orig = RefPtr;
                 if (res_orig.is_null()) {
                     return;
@@ -1524,11 +1524,11 @@ void CustomPropertyEditor::_action_pressed(int p_which) {
                 List<Pair<String, Variant>> propvalues;
 
                 for (List<PropertyInfo>::Element* E = property_list.front(); E;
-                     E = E->next()) {
+                     E                              = E->next()) {
                     Pair<String, Variant> p;
                     PropertyInfo& pi = E->get();
                     if (pi.usage & PROPERTY_USAGE_STORAGE) {
-                        p.first = pi.name;
+                        p.first  = pi.name;
                         p.second = res_orig->get(pi.name);
                     }
 
@@ -1580,9 +1580,9 @@ void CustomPropertyEditor::_drag_easing(const Ref<InputEvent>& p_ev) {
             return;
         }
         bool sg = val < 0;
-        val = Math::absf(val);
+        val     = Math::absf(val);
 
-        val = Math::log(val) / Math::log((float)2.0);
+        val  = Math::log(val) / Math::log((float)2.0);
         // logspace
         val += rel * 0.05;
 
@@ -1608,20 +1608,20 @@ void CustomPropertyEditor::_draw_easing() {
     int points = 48;
 
     float prev = 1.0;
-    float exp = v;
-    bool flip = hint_text == "attenuation";
+    float exp  = v;
+    bool flip  = hint_text == "attenuation";
 
     Ref<Font> f = get_font("font", "Label");
     Color color = get_color("font_color", "Label");
 
     for (int i = 1; i <= points; i++) {
-        float ifl = i / float(points);
+        float ifl  = i / float(points);
         float iflp = (i - 1) / float(points);
 
         float h = 1.0 - Math::ease(ifl, exp);
 
         if (flip) {
-            ifl = 1.0 - ifl;
+            ifl  = 1.0 - ifl;
             iflp = 1.0 - iflp;
         }
 
@@ -1676,7 +1676,7 @@ void CustomPropertyEditor::_modified(String p_string) {
         case Variant::REAL: {
             if (hint != PROPERTY_HINT_EXP_EASING) {
                 String text = value_editor[0]->get_text();
-                v = _parse_real_expression(text);
+                v           = _parse_real_expression(text);
                 emit_signal("variant_changed");
             }
 
@@ -1689,7 +1689,7 @@ void CustomPropertyEditor::_modified(String p_string) {
             Vector2 vec;
             vec.x = _parse_real_expression(value_editor[0]->get_text());
             vec.y = _parse_real_expression(value_editor[1]->get_text());
-            v = vec;
+            v     = vec;
             _emit_changed_whole_or_field();
 
         } break;
@@ -1698,9 +1698,9 @@ void CustomPropertyEditor::_modified(String p_string) {
 
             r2.position.x = _parse_real_expression(value_editor[0]->get_text());
             r2.position.y = _parse_real_expression(value_editor[1]->get_text());
-            r2.size.x = _parse_real_expression(value_editor[2]->get_text());
-            r2.size.y = _parse_real_expression(value_editor[3]->get_text());
-            v = r2;
+            r2.size.x     = _parse_real_expression(value_editor[2]->get_text());
+            r2.size.y     = _parse_real_expression(value_editor[3]->get_text());
+            v             = r2;
             _emit_changed_whole_or_field();
 
         } break;
@@ -1710,7 +1710,7 @@ void CustomPropertyEditor::_modified(String p_string) {
             vec.x = _parse_real_expression(value_editor[0]->get_text());
             vec.y = _parse_real_expression(value_editor[1]->get_text());
             vec.z = _parse_real_expression(value_editor[2]->get_text());
-            v = vec;
+            v     = vec;
             _emit_changed_whole_or_field();
 
         } break;
@@ -1719,8 +1719,8 @@ void CustomPropertyEditor::_modified(String p_string) {
             pl.normal.x = _parse_real_expression(value_editor[0]->get_text());
             pl.normal.y = _parse_real_expression(value_editor[1]->get_text());
             pl.normal.z = _parse_real_expression(value_editor[2]->get_text());
-            pl.d = _parse_real_expression(value_editor[3]->get_text());
-            v = pl;
+            pl.d        = _parse_real_expression(value_editor[3]->get_text());
+            v           = pl;
             _emit_changed_whole_or_field();
 
         } break;
@@ -1730,7 +1730,7 @@ void CustomPropertyEditor::_modified(String p_string) {
             q.y = _parse_real_expression(value_editor[1]->get_text());
             q.z = _parse_real_expression(value_editor[2]->get_text());
             q.w = _parse_real_expression(value_editor[3]->get_text());
-            v = q;
+            v   = q;
             _emit_changed_whole_or_field();
 
         } break;
@@ -1738,13 +1738,13 @@ void CustomPropertyEditor::_modified(String p_string) {
             Vector3 pos;
             Vector3 size;
 
-            pos.x = _parse_real_expression(value_editor[0]->get_text());
-            pos.y = _parse_real_expression(value_editor[1]->get_text());
-            pos.z = _parse_real_expression(value_editor[2]->get_text());
+            pos.x  = _parse_real_expression(value_editor[0]->get_text());
+            pos.y  = _parse_real_expression(value_editor[1]->get_text());
+            pos.z  = _parse_real_expression(value_editor[2]->get_text());
             size.x = _parse_real_expression(value_editor[3]->get_text());
             size.y = _parse_real_expression(value_editor[4]->get_text());
             size.z = _parse_real_expression(value_editor[5]->get_text());
-            v = AABB(pos, size);
+            v      = AABB(pos, size);
             _emit_changed_whole_or_field();
 
         } break;
@@ -1892,14 +1892,14 @@ void CustomPropertyEditor::_focus_exit() {
 
 void CustomPropertyEditor::config_action_buttons(const List<String>& p_strings
 ) {
-    Ref<StyleBox> sb = get_stylebox("panel");
-    int margin_top = sb->get_margin(MARGIN_TOP);
-    int margin_left = sb->get_margin(MARGIN_LEFT);
+    Ref<StyleBox> sb  = get_stylebox("panel");
+    int margin_top    = sb->get_margin(MARGIN_TOP);
+    int margin_left   = sb->get_margin(MARGIN_LEFT);
     int margin_bottom = sb->get_margin(MARGIN_BOTTOM);
-    int margin_right = sb->get_margin(MARGIN_RIGHT);
+    int margin_right  = sb->get_margin(MARGIN_RIGHT);
 
     int max_width = 0;
-    int height = 0;
+    int height    = 0;
 
     for (int i = 0; i < MAX_ACTION_BUTTONS; i++) {
         if (i < p_strings.size()) {
@@ -1937,7 +1937,7 @@ void CustomPropertyEditor::config_value_editors(
     int p_label_w,
     const List<String>& p_strings
 ) {
-    int cell_width = 95;
+    int cell_width  = 95;
     int cell_height = 25;
     int cell_margin = 5;
     int hor_spacing = 5; // Spacing between labels and their values
@@ -2044,7 +2044,7 @@ void CustomPropertyEditor::_bind_methods() {
 
 CustomPropertyEditor::CustomPropertyEditor() {
     read_only = false;
-    updating = false;
+    updating  = false;
 
     for (int i = 0; i < MAX_VALUE_EDITORS; i++) {
         value_editor[i] = memnew(LineEdit);
@@ -2171,6 +2171,6 @@ CustomPropertyEditor::CustomPropertyEditor() {
     );
     slider->connect("value_changed", this, "_range_modified");
 
-    create_dialog = nullptr;
+    create_dialog   = nullptr;
     property_select = nullptr;
 }

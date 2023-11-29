@@ -1440,19 +1440,19 @@ void Variant::set_named(
             if (p_value.type == Variant::INT) {
                 Vector2* v = reinterpret_cast<Vector2*>(_data._mem);
                 if (p_index == CoreStringNames::singleton->x) {
-                    v->x = p_value._data._int;
+                    v->x  = p_value._data._int;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->y) {
-                    v->y = p_value._data._int;
+                    v->y  = p_value._data._int;
                     valid = true;
                 }
             } else if (p_value.type == Variant::REAL) {
                 Vector2* v = reinterpret_cast<Vector2*>(_data._mem);
                 if (p_index == CoreStringNames::singleton->x) {
-                    v->x = p_value._data._real;
+                    v->x  = p_value._data._real;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->y) {
-                    v->y = p_value._data._real;
+                    v->y  = p_value._data._real;
                     valid = true;
                 }
             }
@@ -1501,25 +1501,25 @@ void Variant::set_named(
             if (p_value.type == Variant::INT) {
                 Vector3* v = reinterpret_cast<Vector3*>(_data._mem);
                 if (p_index == CoreStringNames::singleton->x) {
-                    v->x = p_value._data._int;
+                    v->x  = p_value._data._int;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->y) {
-                    v->y = p_value._data._int;
+                    v->y  = p_value._data._int;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->z) {
-                    v->z = p_value._data._int;
+                    v->z  = p_value._data._int;
                     valid = true;
                 }
             } else if (p_value.type == Variant::REAL) {
                 Vector3* v = reinterpret_cast<Vector3*>(_data._mem);
                 if (p_index == CoreStringNames::singleton->x) {
-                    v->x = p_value._data._real;
+                    v->x  = p_value._data._real;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->y) {
-                    v->y = p_value._data._real;
+                    v->y  = p_value._data._real;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->z) {
-                    v->z = p_value._data._real;
+                    v->z  = p_value._data._real;
                     valid = true;
                 }
             }
@@ -1530,30 +1530,30 @@ void Variant::set_named(
                 Plane* v = reinterpret_cast<Plane*>(_data._mem);
                 if (p_index == CoreStringNames::singleton->x) {
                     v->normal.x = p_value._data._int;
-                    valid = true;
+                    valid       = true;
                 } else if (p_index == CoreStringNames::singleton->y) {
                     v->normal.y = p_value._data._int;
-                    valid = true;
+                    valid       = true;
                 } else if (p_index == CoreStringNames::singleton->z) {
                     v->normal.z = p_value._data._int;
-                    valid = true;
+                    valid       = true;
                 } else if (p_index == CoreStringNames::singleton->d) {
-                    v->d = p_value._data._int;
+                    v->d  = p_value._data._int;
                     valid = true;
                 }
             } else if (p_value.type == Variant::REAL) {
                 Plane* v = reinterpret_cast<Plane*>(_data._mem);
                 if (p_index == CoreStringNames::singleton->x) {
                     v->normal.x = p_value._data._real;
-                    valid = true;
+                    valid       = true;
                 } else if (p_index == CoreStringNames::singleton->y) {
                     v->normal.y = p_value._data._real;
-                    valid = true;
+                    valid       = true;
                 } else if (p_index == CoreStringNames::singleton->z) {
                     v->normal.z = p_value._data._real;
-                    valid = true;
+                    valid       = true;
                 } else if (p_index == CoreStringNames::singleton->d) {
-                    v->d = p_value._data._real;
+                    v->d  = p_value._data._real;
                     valid = true;
                 }
 
@@ -1571,31 +1571,31 @@ void Variant::set_named(
             if (p_value.type == Variant::INT) {
                 Quat* v = reinterpret_cast<Quat*>(_data._mem);
                 if (p_index == CoreStringNames::singleton->x) {
-                    v->x = p_value._data._int;
+                    v->x  = p_value._data._int;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->y) {
-                    v->y = p_value._data._int;
+                    v->y  = p_value._data._int;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->z) {
-                    v->z = p_value._data._int;
+                    v->z  = p_value._data._int;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->w) {
-                    v->w = p_value._data._int;
+                    v->w  = p_value._data._int;
                     valid = true;
                 }
             } else if (p_value.type == Variant::REAL) {
                 Quat* v = reinterpret_cast<Quat*>(_data._mem);
                 if (p_index == CoreStringNames::singleton->x) {
-                    v->x = p_value._data._real;
+                    v->x  = p_value._data._real;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->y) {
-                    v->y = p_value._data._real;
+                    v->y  = p_value._data._real;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->z) {
-                    v->z = p_value._data._real;
+                    v->z  = p_value._data._real;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->w) {
-                    v->w = p_value._data._real;
+                    v->w  = p_value._data._real;
                     valid = true;
                 }
             }
@@ -1650,7 +1650,7 @@ void Variant::set_named(
             if (p_value.type == Variant::BASIS
                 && p_index == CoreStringNames::singleton->basis) {
                 _data._transform->basis = *p_value._data._basis;
-                valid = true;
+                valid                   = true;
             } else if (p_value.type == Variant::VECTOR3 && p_index == CoreStringNames::singleton->origin) {
                 _data._transform->origin =
                     *reinterpret_cast<const Vector3*>(p_value._data._mem);
@@ -1662,28 +1662,28 @@ void Variant::set_named(
             if (p_value.type == Variant::INT) {
                 Color* v = reinterpret_cast<Color*>(_data._mem);
                 if (p_index == CoreStringNames::singleton->r) {
-                    v->r = p_value._data._int;
+                    v->r  = p_value._data._int;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->g) {
-                    v->g = p_value._data._int;
+                    v->g  = p_value._data._int;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->b) {
-                    v->b = p_value._data._int;
+                    v->b  = p_value._data._int;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->a) {
-                    v->a = p_value._data._int;
+                    v->a  = p_value._data._int;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->r8) {
-                    v->r = p_value._data._int / 255.0;
+                    v->r  = p_value._data._int / 255.0;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->g8) {
-                    v->g = p_value._data._int / 255.0;
+                    v->g  = p_value._data._int / 255.0;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->b8) {
-                    v->b = p_value._data._int / 255.0;
+                    v->b  = p_value._data._int / 255.0;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->a8) {
-                    v->a = p_value._data._int / 255.0;
+                    v->a  = p_value._data._int / 255.0;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->h) {
                     v->set_hsv(
@@ -1713,28 +1713,28 @@ void Variant::set_named(
             } else if (p_value.type == Variant::REAL) {
                 Color* v = reinterpret_cast<Color*>(_data._mem);
                 if (p_index == CoreStringNames::singleton->r) {
-                    v->r = p_value._data._real;
+                    v->r  = p_value._data._real;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->g) {
-                    v->g = p_value._data._real;
+                    v->g  = p_value._data._real;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->b) {
-                    v->b = p_value._data._real;
+                    v->b  = p_value._data._real;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->a) {
-                    v->a = p_value._data._real;
+                    v->a  = p_value._data._real;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->r8) {
-                    v->r = p_value._data._real / 255.0;
+                    v->r  = p_value._data._real / 255.0;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->g8) {
-                    v->g = p_value._data._real / 255.0;
+                    v->g  = p_value._data._real / 255.0;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->b8) {
-                    v->b = p_value._data._real / 255.0;
+                    v->b  = p_value._data._real / 255.0;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->a8) {
-                    v->a = p_value._data._real / 255.0;
+                    v->a  = p_value._data._real / 255.0;
                     valid = true;
                 } else if (p_index == CoreStringNames::singleton->h) {
                     v->set_hsv(
@@ -1952,7 +1952,7 @@ Variant Variant::get_named(const StringName& p_index, bool* r_valid) const {
                                                                                \
         if (p_index.get_type() == Variant::INT                                 \
             || p_index.get_type() == Variant::REAL) {                          \
-            int index = p_index;                                               \
+            int index   = p_index;                                             \
             m_type* arr = reinterpret_cast<m_type*>(_data._mem);               \
                                                                                \
             if (index < 0) index += arr->size();                               \
@@ -1981,7 +1981,7 @@ void Variant::set(
     static bool _dummy = false;
 
     bool& valid = r_valid ? *r_valid : _dummy;
-    valid = false;
+    valid       = false;
 
     switch (type) {
         case NIL: {
@@ -2001,9 +2001,9 @@ void Variant::set(
                 return;
             }
 
-            int idx = p_index;
+            int idx     = p_index;
             String* str = reinterpret_cast<String*>(_data._mem);
-            int len = str->length();
+            int len     = str->length();
             if (idx < 0) {
                 idx += len;
             }
@@ -2020,7 +2020,7 @@ void Variant::set(
                 return;
             }
 
-            *str = str->substr(0, idx) + chr + str->substr(idx + 1, len);
+            *str  = str->substr(0, idx) + chr + str->substr(idx + 1, len);
             valid = true;
             return;
 
@@ -2040,8 +2040,8 @@ void Variant::set(
                 }
                 if (idx >= 0 && idx < 2) {
                     Vector2* v = reinterpret_cast<Vector2*>(_data._mem);
-                    valid = true;
-                    (*v)[idx] = p_value;
+                    valid      = true;
+                    (*v)[idx]  = p_value;
                     return;
                 }
             } else if (p_index.get_type() == Variant::STRING) {
@@ -2052,11 +2052,11 @@ void Variant::set(
                 Vector2* v = reinterpret_cast<Vector2*>(_data._mem);
                 if (*str == "x") {
                     valid = true;
-                    v->x = p_value;
+                    v->x  = p_value;
                     return;
                 } else if (*str == "y") {
                     valid = true;
-                    v->y = p_value;
+                    v->y  = p_value;
                     return;
                 }
             }
@@ -2074,15 +2074,15 @@ void Variant::set(
                     reinterpret_cast<const String*>(p_index._data._mem);
                 Rect2* v = reinterpret_cast<Rect2*>(_data._mem);
                 if (*str == "position") {
-                    valid = true;
+                    valid       = true;
                     v->position = p_value;
                     return;
                 } else if (*str == "size") {
-                    valid = true;
+                    valid   = true;
                     v->size = p_value;
                     return;
                 } else if (*str == "end") {
-                    valid = true;
+                    valid   = true;
                     v->size = Vector2(p_value) - v->position;
                     return;
                 }
@@ -2103,7 +2103,7 @@ void Variant::set(
                 if (index >= 0 && index < 3) {
                     Transform2D* v = _data._transform2d;
 
-                    valid = true;
+                    valid              = true;
                     v->elements[index] = p_value;
                     return;
                 }
@@ -2113,15 +2113,15 @@ void Variant::set(
                     reinterpret_cast<const String*>(p_index._data._mem);
                 Transform2D* v = _data._transform2d;
                 if (*str == "x") {
-                    valid = true;
+                    valid          = true;
                     v->elements[0] = p_value;
                     return;
                 } else if (*str == "y") {
-                    valid = true;
+                    valid          = true;
                     v->elements[1] = p_value;
                     return;
                 } else if (*str == "origin") {
-                    valid = true;
+                    valid          = true;
                     v->elements[2] = p_value;
                     return;
                 }
@@ -2142,8 +2142,8 @@ void Variant::set(
                 }
                 if (idx >= 0 && idx < 3) {
                     Vector3* v = reinterpret_cast<Vector3*>(_data._mem);
-                    valid = true;
-                    (*v)[idx] = p_value;
+                    valid      = true;
+                    (*v)[idx]  = p_value;
                     return;
                 }
             } else if (p_index.get_type() == Variant::STRING) {
@@ -2153,15 +2153,15 @@ void Variant::set(
                 Vector3* v = reinterpret_cast<Vector3*>(_data._mem);
                 if (*str == "x") {
                     valid = true;
-                    v->x = p_value;
+                    v->x  = p_value;
                     return;
                 } else if (*str == "y") {
                     valid = true;
-                    v->y = p_value;
+                    v->y  = p_value;
                     return;
                 } else if (*str == "z") {
                     valid = true;
-                    v->z = p_value;
+                    v->z  = p_value;
                     return;
                 }
             }
@@ -2179,7 +2179,7 @@ void Variant::set(
                         return;
                     }
 
-                    valid = true;
+                    valid       = true;
                     v->normal.x = p_value;
                     return;
                 } else if (*str == "y") {
@@ -2188,7 +2188,7 @@ void Variant::set(
                         return;
                     }
 
-                    valid = true;
+                    valid       = true;
                     v->normal.y = p_value;
                     return;
                 } else if (*str == "z") {
@@ -2197,7 +2197,7 @@ void Variant::set(
                         return;
                     }
 
-                    valid = true;
+                    valid       = true;
                     v->normal.z = p_value;
                     return;
                 } else if (*str == "normal") {
@@ -2205,12 +2205,12 @@ void Variant::set(
                         return;
                     }
 
-                    valid = true;
+                    valid     = true;
                     v->normal = p_value;
                     return;
                 } else if (*str == "d") {
                     valid = true;
-                    v->d = p_value;
+                    v->d  = p_value;
                     return;
                 }
             }
@@ -2227,19 +2227,19 @@ void Variant::set(
                 Quat* v = reinterpret_cast<Quat*>(_data._mem);
                 if (*str == "x") {
                     valid = true;
-                    v->x = p_value;
+                    v->x  = p_value;
                     return;
                 } else if (*str == "y") {
                     valid = true;
-                    v->y = p_value;
+                    v->y  = p_value;
                     return;
                 } else if (*str == "z") {
                     valid = true;
-                    v->z = p_value;
+                    v->z  = p_value;
                     return;
                 } else if (*str == "w") {
                     valid = true;
-                    v->w = p_value;
+                    v->w  = p_value;
                     return;
                 }
             }
@@ -2257,15 +2257,15 @@ void Variant::set(
                     reinterpret_cast<const String*>(p_index._data._mem);
                 ::AABB* v = _data._aabb;
                 if (*str == "position") {
-                    valid = true;
+                    valid       = true;
                     v->position = p_value;
                     return;
                 } else if (*str == "size") {
-                    valid = true;
+                    valid   = true;
                     v->size = p_value;
                     return;
                 } else if (*str == "end") {
-                    valid = true;
+                    valid   = true;
                     v->size = Vector3(p_value) - v->position;
                     return;
                 }
@@ -2325,7 +2325,7 @@ void Variant::set(
                 }
                 if (index >= 0 && index < 4) {
                     Transform* v = _data._transform;
-                    valid = true;
+                    valid        = true;
                     if (index == 3) {
                         v->origin = p_value;
                     } else {
@@ -2342,7 +2342,7 @@ void Variant::set(
                     if (p_value.type != Variant::BASIS) {
                         return;
                     }
-                    valid = true;
+                    valid    = true;
                     v->basis = p_value;
                     return;
                 }
@@ -2350,7 +2350,7 @@ void Variant::set(
                     if (p_value.type != Variant::VECTOR3) {
                         return;
                     }
-                    valid = true;
+                    valid     = true;
                     v->origin = p_value;
                     return;
                 }
@@ -2368,19 +2368,19 @@ void Variant::set(
                 Color* v = reinterpret_cast<Color*>(_data._mem);
                 if (*str == "r") {
                     valid = true;
-                    v->r = p_value;
+                    v->r  = p_value;
                     return;
                 } else if (*str == "g") {
                     valid = true;
-                    v->g = p_value;
+                    v->g  = p_value;
                     return;
                 } else if (*str == "b") {
                     valid = true;
-                    v->b = p_value;
+                    v->b  = p_value;
                     return;
                 } else if (*str == "a") {
                     valid = true;
-                    v->a = p_value;
+                    v->a  = p_value;
                     return;
                 } else if (*str == "h") {
                     valid = true;
@@ -2396,19 +2396,19 @@ void Variant::set(
                     return;
                 } else if (*str == "r8") {
                     valid = true;
-                    v->r = float(p_value) / 255.0;
+                    v->r  = float(p_value) / 255.0;
                     return;
                 } else if (*str == "g8") {
                     valid = true;
-                    v->g = float(p_value) / 255.0;
+                    v->g  = float(p_value) / 255.0;
                     return;
                 } else if (*str == "b8") {
                     valid = true;
-                    v->b = float(p_value) / 255.0;
+                    v->b  = float(p_value) / 255.0;
                     return;
                 } else if (*str == "a8") {
                     valid = true;
-                    v->a = float(p_value) / 255.0;
+                    v->a  = float(p_value) / 255.0;
                     return;
                 }
             } else if (p_index.get_type() == Variant::INT) {
@@ -2417,9 +2417,9 @@ void Variant::set(
                     idx += 4;
                 }
                 if (idx >= 0 && idx < 4) {
-                    Color* v = reinterpret_cast<Color*>(_data._mem);
+                    Color* v  = reinterpret_cast<Color*>(_data._mem);
                     (*v)[idx] = p_value;
-                    valid = true;
+                    valid     = true;
                 }
             }
 
@@ -2522,7 +2522,7 @@ Variant Variant::get(const Variant& p_index, bool* r_valid) const {
                 || p_index.get_type() == Variant::REAL) {
                 // string index
 
-                int idx = p_index;
+                int idx           = p_index;
                 const String* str = reinterpret_cast<const String*>(_data._mem);
                 if (idx < 0) {
                     idx += str->length();
@@ -2752,7 +2752,7 @@ Variant Variant::get(const Variant& p_index, bool* r_valid) const {
                 }
                 if (index >= 0 && index < 4) {
                     const Transform* v = _data._transform;
-                    valid = true;
+                    valid              = true;
                     return index == 3 ? v->origin : v->basis.get_axis(index);
                 }
             } else if (p_index.get_type() == Variant::STRING) {
@@ -2817,7 +2817,7 @@ Variant Variant::get(const Variant& p_index, bool* r_valid) const {
                 }
                 if (idx >= 0 && idx < 4) {
                     const Color* v = reinterpret_cast<const Color*>(_data._mem);
-                    valid = true;
+                    valid          = true;
                     return (*v)[idx];
                 }
             }
@@ -2880,7 +2880,7 @@ bool Variant::in(const Variant& p_index, bool* r_valid) const {
         case STRING: {
             if (p_index.get_type() == Variant::STRING) {
                 // string index
-                String idx = p_index;
+                String idx        = p_index;
                 const String* str = reinterpret_cast<const String*>(_data._mem);
 
                 return str->find(idx) != -1;
@@ -2917,7 +2917,7 @@ bool Variant::in(const Variant& p_index, bool* r_valid) const {
         } break; // 20
         case ARRAY: {
             const Array* arr = reinterpret_cast<const Array*>(_data._mem);
-            int l = arr->size();
+            int l            = arr->size();
             if (l) {
                 for (int i = 0; i < l; i++) {
                     if (evaluate(OP_EQUAL, (*arr)[i], p_index)) {
@@ -3204,7 +3204,7 @@ bool Variant::iter_init(Variant& r_iter, bool& valid) const {
         } break;
         case VECTOR2: {
             int64_t from = reinterpret_cast<const Vector2*>(_data._mem)->x;
-            int64_t to = reinterpret_cast<const Vector2*>(_data._mem)->y;
+            int64_t to   = reinterpret_cast<const Vector2*>(_data._mem)->y;
 
             r_iter = from;
 
@@ -3212,7 +3212,7 @@ bool Variant::iter_init(Variant& r_iter, bool& valid) const {
         } break;
         case VECTOR3: {
             int64_t from = reinterpret_cast<const Vector3*>(_data._mem)->x;
-            int64_t to = reinterpret_cast<const Vector3*>(_data._mem)->y;
+            int64_t to   = reinterpret_cast<const Vector3*>(_data._mem)->y;
             int64_t step = reinterpret_cast<const Vector3*>(_data._mem)->z;
 
             r_iter = from;
@@ -3241,9 +3241,9 @@ bool Variant::iter_init(Variant& r_iter, bool& valid) const {
             ce.error = Variant::CallError::CALL_OK;
             Array ref;
             ref.push_back(r_iter);
-            Variant vref = ref;
+            Variant vref          = ref;
             const Variant* refp[] = {&vref};
-            Variant ret = obj->call(
+            Variant ret           = obj->call(
                 CoreStringNames::get_singleton()->_iter_init,
                 refp,
                 1,
@@ -3275,7 +3275,7 @@ bool Variant::iter_init(Variant& r_iter, bool& valid) const {
             }
 
             const Variant* next = dic->next(nullptr);
-            r_iter = *next;
+            r_iter              = *next;
             return true;
 
         } break;
@@ -3397,11 +3397,11 @@ bool Variant::iter_next(Variant& r_iter, bool& valid) const {
             return true;
         } break;
         case VECTOR3: {
-            int64_t to = reinterpret_cast<const Vector3*>(_data._mem)->y;
+            int64_t to   = reinterpret_cast<const Vector3*>(_data._mem)->y;
             int64_t step = reinterpret_cast<const Vector3*>(_data._mem)->z;
 
-            int64_t idx = r_iter;
-            idx += step;
+            int64_t idx  = r_iter;
+            idx         += step;
 
             if (step < 0 && idx <= to) {
                 return false;
@@ -3431,9 +3431,9 @@ bool Variant::iter_next(Variant& r_iter, bool& valid) const {
             ce.error = Variant::CallError::CALL_OK;
             Array ref;
             ref.push_back(r_iter);
-            Variant vref = ref;
+            Variant vref          = ref;
             const Variant* refp[] = {&vref};
-            Variant ret = obj->call(
+            Variant ret           = obj->call(
                 CoreStringNames::get_singleton()->_iter_next,
                 refp,
                 1,
@@ -3452,7 +3452,7 @@ bool Variant::iter_next(Variant& r_iter, bool& valid) const {
 
         case STRING: {
             const String* str = reinterpret_cast<const String*>(_data._mem);
-            int idx = r_iter;
+            int idx           = r_iter;
             idx++;
             if (idx >= str->length()) {
                 return false;
@@ -3474,7 +3474,7 @@ bool Variant::iter_next(Variant& r_iter, bool& valid) const {
         } break;
         case ARRAY: {
             const Array* arr = reinterpret_cast<const Array*>(_data._mem);
-            int idx = r_iter;
+            int idx          = r_iter;
             idx++;
             if (idx >= arr->size()) {
                 return false;
@@ -3599,9 +3599,9 @@ Variant Variant::iter_get(const Variant& r_iter, bool& r_valid) const {
                 return Variant();
             }
             Variant::CallError ce;
-            ce.error = Variant::CallError::CALL_OK;
+            ce.error              = Variant::CallError::CALL_OK;
             const Variant* refp[] = {&r_iter};
-            Variant ret = obj->call(
+            Variant ret           = obj->call(
                 CoreStringNames::get_singleton()->_iter_get,
                 refp,
                 1,
@@ -3628,7 +3628,7 @@ Variant Variant::iter_get(const Variant& r_iter, bool& r_valid) const {
         } break;
         case ARRAY: {
             const Array* arr = reinterpret_cast<const Array*>(_data._mem);
-            int idx = r_iter;
+            int idx          = r_iter;
 #ifdef DEBUG_ENABLED
             if (idx < 0 || idx >= arr->size()) {
                 r_valid = false;
@@ -3761,7 +3761,7 @@ void Variant::blend(
         if (a.is_num() && b.is_num()) {
             real_t va = a;
             real_t vb = b;
-            r_dst = va + vb * c;
+            r_dst     = va + vb * c;
         } else {
             r_dst = a;
         }
@@ -3776,13 +3776,13 @@ void Variant::blend(
         case INT: {
             int64_t va = a._data._int;
             int64_t vb = b._data._int;
-            r_dst = int(va + vb * c + 0.5);
+            r_dst      = int(va + vb * c + 0.5);
         }
             return;
         case REAL: {
             double ra = a._data._real;
             double rb = b._data._real;
-            r_dst = ra + rb * c;
+            r_dst     = ra + rb * c;
         }
             return;
         case VECTOR2: {
@@ -3805,7 +3805,7 @@ void Variant::blend(
         case AABB: {
             const ::AABB* ra = reinterpret_cast<const ::AABB*>(a._data._mem);
             const ::AABB* rb = reinterpret_cast<const ::AABB*>(b._data._mem);
-            r_dst = ::AABB(
+            r_dst            = ::AABB(
                 ra->position + rb->position * c,
                 ra->size + rb->size * c
             );
@@ -3815,21 +3815,21 @@ void Variant::blend(
             Quat empty_rot;
             const Quat* qa = reinterpret_cast<const Quat*>(a._data._mem);
             const Quat* qb = reinterpret_cast<const Quat*>(b._data._mem);
-            r_dst = *qa * empty_rot.slerp(*qb, c);
+            r_dst          = *qa * empty_rot.slerp(*qb, c);
         }
             return;
         case COLOR: {
             const Color* ca = reinterpret_cast<const Color*>(a._data._mem);
             const Color* cb = reinterpret_cast<const Color*>(b._data._mem);
-            float new_r = ca->r + cb->r * c;
-            float new_g = ca->g + cb->g * c;
-            float new_b = ca->b + cb->b * c;
-            float new_a = ca->a + cb->a * c;
-            new_r = new_r > 1.0 ? 1.0 : new_r;
-            new_g = new_g > 1.0 ? 1.0 : new_g;
-            new_b = new_b > 1.0 ? 1.0 : new_b;
-            new_a = new_a > 1.0 ? 1.0 : new_a;
-            r_dst = Color(new_r, new_g, new_b, new_a);
+            float new_r     = ca->r + cb->r * c;
+            float new_g     = ca->g + cb->g * c;
+            float new_b     = ca->b + cb->b * c;
+            float new_a     = ca->a + cb->a * c;
+            new_r           = new_r > 1.0 ? 1.0 : new_r;
+            new_g           = new_g > 1.0 ? 1.0 : new_g;
+            new_b           = new_b > 1.0 ? 1.0 : new_b;
+            new_a           = new_a > 1.0 ? 1.0 : new_a;
+            r_dst           = Color(new_r, new_g, new_b, new_a);
         }
             return;
         default: {
@@ -3850,7 +3850,7 @@ void Variant::interpolate(
             // not as efficient but..
             real_t va = a;
             real_t vb = b;
-            r_dst = va + (vb - va) * c;
+            r_dst     = va + (vb - va) * c;
 
         } else {
             r_dst = a;
@@ -3870,13 +3870,13 @@ void Variant::interpolate(
         case INT: {
             int64_t va = a._data._int;
             int64_t vb = b._data._int;
-            r_dst = int(va + (vb - va) * c);
+            r_dst      = int(va + (vb - va) * c);
         }
             return;
         case REAL: {
             real_t va = a._data._real;
             real_t vb = b._data._real;
-            r_dst = va + (vb - va) * c;
+            r_dst     = va + (vb - va) * c;
         }
             return;
         case STRING: {
@@ -3887,14 +3887,14 @@ void Variant::interpolate(
             String dst;
             int sa_len = sa.length();
             int sb_len = sb.length();
-            int csize = sa_len + (sb_len - sa_len) * c;
+            int csize  = sa_len + (sb_len - sa_len) * c;
             if (csize == 0) {
                 r_dst = "";
                 return;
             }
             dst.resize(csize + 1);
             dst[csize] = 0;
-            int split = csize / 2;
+            int split  = csize / 2;
 
             for (int i = 0; i < csize; i++) {
                 CharType chr = ' ';
@@ -4031,8 +4031,8 @@ void Variant::interpolate(
                 v.resize(sz);
                 {
                     PoolVector<int>::Write vw = v.write();
-                    PoolVector<int>::Read ar = arr_a->read();
-                    PoolVector<int>::Read br = arr_b->read();
+                    PoolVector<int>::Read ar  = arr_a->read();
+                    PoolVector<int>::Read br  = arr_b->read();
 
                     Variant va;
                     for (int i = 0; i < sz; i++) {
@@ -4057,8 +4057,8 @@ void Variant::interpolate(
                 v.resize(sz);
                 {
                     PoolVector<real_t>::Write vw = v.write();
-                    PoolVector<real_t>::Read ar = arr_a->read();
-                    PoolVector<real_t>::Read br = arr_b->read();
+                    PoolVector<real_t>::Read ar  = arr_a->read();
+                    PoolVector<real_t>::Read br  = arr_b->read();
 
                     Variant va;
                     for (int i = 0; i < sz; i++) {
@@ -4087,8 +4087,8 @@ void Variant::interpolate(
                 v.resize(sz);
                 {
                     PoolVector<Vector2>::Write vw = v.write();
-                    PoolVector<Vector2>::Read ar = arr_a->read();
-                    PoolVector<Vector2>::Read br = arr_b->read();
+                    PoolVector<Vector2>::Read ar  = arr_a->read();
+                    PoolVector<Vector2>::Read br  = arr_b->read();
 
                     for (int i = 0; i < sz; i++) {
                         vw[i] = ar[i].linear_interpolate(br[i], c);
@@ -4111,8 +4111,8 @@ void Variant::interpolate(
                 v.resize(sz);
                 {
                     PoolVector<Vector3>::Write vw = v.write();
-                    PoolVector<Vector3>::Read ar = arr_a->read();
-                    PoolVector<Vector3>::Read br = arr_b->read();
+                    PoolVector<Vector3>::Read ar  = arr_a->read();
+                    PoolVector<Vector3>::Read br  = arr_b->read();
 
                     for (int i = 0; i < sz; i++) {
                         vw[i] = ar[i].linear_interpolate(br[i], c);
@@ -4135,8 +4135,8 @@ void Variant::interpolate(
                 v.resize(sz);
                 {
                     PoolVector<Color>::Write vw = v.write();
-                    PoolVector<Color>::Read ar = arr_a->read();
-                    PoolVector<Color>::Read br = arr_b->read();
+                    PoolVector<Color>::Read ar  = arr_a->read();
+                    PoolVector<Color>::Read br  = arr_b->read();
 
                     for (int i = 0; i < sz; i++) {
                         vw[i] = ar[i].linear_interpolate(br[i], c);

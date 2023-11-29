@@ -62,7 +62,7 @@ void AnimationNodeAnimation::_validate_property(PropertyInfo& property) const {
             anims += String(names[i]);
         }
         if (anims != String()) {
-            property.hint = PROPERTY_HINT_ENUM;
+            property.hint        = PROPERTY_HINT_ENUM;
             property.hint_string = anims;
         }
     }
@@ -146,8 +146,8 @@ void AnimationNodeAnimation::_bind_methods() {
 
 AnimationNodeAnimation::AnimationNodeAnimation() {
     last_version = 0;
-    skip = false;
-    time = "time";
+    skip         = false;
+    time         = "time";
 }
 
 ////////////////////////////////////////////////////////
@@ -238,10 +238,10 @@ bool AnimationNodeOneShot::has_filter() const {
 }
 
 float AnimationNodeOneShot::process(float p_time, bool p_seek) {
-    bool active = get_parameter(this->active);
-    bool prev_active = get_parameter(this->prev_active);
-    float time = get_parameter(this->time);
-    float remaining = get_parameter(this->remaining);
+    bool active           = get_parameter(this->active);
+    bool prev_active      = get_parameter(this->prev_active);
+    float time            = get_parameter(this->time);
+    float remaining       = get_parameter(this->remaining);
     float time_to_restart = get_parameter(this->time_to_restart);
 
     if (!active) {
@@ -272,7 +272,7 @@ float AnimationNodeOneShot::process(float p_time, bool p_seek) {
     bool do_start = !prev_active;
 
     if (do_start) {
-        time = 0;
+        time    = 0;
         os_seek = true;
         set_parameter(this->prev_active, true);
     }
@@ -318,8 +318,8 @@ float AnimationNodeOneShot::process(float p_time, bool p_seek) {
     }
 
     if (!p_seek) {
-        time += p_time;
-        remaining = os_rem;
+        time      += p_time;
+        remaining  = os_rem;
         if (remaining <= 0) {
             set_parameter(this->active, false);
             set_parameter(this->prev_active, false);
@@ -479,19 +479,19 @@ AnimationNodeOneShot::AnimationNodeOneShot() {
     add_input("in");
     add_input("shot");
 
-    fade_in = 0.1;
-    fade_out = 0.1;
-    autorestart = false;
-    autorestart_delay = 1;
+    fade_in                  = 0.1;
+    fade_out                 = 0.1;
+    autorestart              = false;
+    autorestart_delay        = 1;
     autorestart_random_delay = 0;
 
-    mix = MIX_MODE_BLEND;
+    mix  = MIX_MODE_BLEND;
     sync = false;
 
-    active = "active";
-    prev_active = "prev_active";
-    time = "time";
-    remaining = "remaining";
+    active          = "active";
+    prev_active     = "prev_active";
+    time            = "time";
+    remaining       = "remaining";
     time_to_restart = "time_to_restart";
 }
 
@@ -527,7 +527,7 @@ bool AnimationNodeAdd2::has_filter() const {
 
 float AnimationNodeAdd2::process(float p_time, bool p_seek) {
     float amount = get_parameter(add_amount);
-    float rem0 = blend_input(0, p_time, p_seek, 1.0, FILTER_IGNORE, !sync);
+    float rem0   = blend_input(0, p_time, p_seek, 1.0, FILTER_IGNORE, !sync);
     blend_input(1, p_time, p_seek, amount, FILTER_PASS, !sync);
 
     return rem0;
@@ -941,11 +941,11 @@ float AnimationNodeTransition::get_cross_fade_time() const {
 }
 
 float AnimationNodeTransition::process(float p_time, bool p_seek) {
-    int current = get_parameter(this->current);
-    int prev = get_parameter(this->prev);
+    int current      = get_parameter(this->current);
+    int prev         = get_parameter(this->prev);
     int prev_current = get_parameter(this->prev_current);
 
-    float time = get_parameter(this->time);
+    float time         = get_parameter(this->time);
     float prev_xfading = get_parameter(this->prev_xfading);
 
     bool switched = current != prev_current;
@@ -954,10 +954,10 @@ float AnimationNodeTransition::process(float p_time, bool p_seek) {
         set_parameter(this->prev_current, current);
         set_parameter(this->prev, prev_current);
 
-        prev = prev_current;
+        prev         = prev_current;
         prev_xfading = xfade;
-        time = 0;
-        switched = true;
+        time         = 0;
+        switched     = true;
     }
 
     if (current < 0 || current >= enabled_inputs || prev >= enabled_inputs) {
@@ -1010,7 +1010,7 @@ float AnimationNodeTransition::process(float p_time, bool p_seek) {
             time = p_time;
         } else {
             blend_input(prev, p_time, false, blend, FILTER_IGNORE, false);
-            time += p_time;
+            time         += p_time;
             prev_xfading -= p_time;
             if (prev_xfading < 0) {
                 set_parameter(this->prev, -1);
@@ -1127,16 +1127,16 @@ void AnimationNodeTransition::_bind_methods() {
 
 AnimationNodeTransition::AnimationNodeTransition() {
     prev_xfading = "prev_xfading";
-    prev = "prev";
-    time = "time";
-    current = "current";
+    prev         = "prev";
+    time         = "time";
+    current      = "current";
     prev_current = "prev_current";
-    xfade = 0.0;
+    xfade        = 0.0;
 
     enabled_inputs = 0;
     for (int i = 0; i < MAX_INPUTS; i++) {
         inputs[i].auto_advance = false;
-        inputs[i].name = "state " + itos(i);
+        inputs[i].name         = "state " + itos(i);
     }
 }
 
@@ -1166,7 +1166,7 @@ void AnimationNodeBlendTree::add_node(
     ERR_FAIL_COND(String(p_name).find("/") != -1);
 
     Node n;
-    n.node = p_node;
+    n.node     = p_node;
     n.position = p_position;
     n.connections.resize(n.node->get_input_count());
     nodes[p_name] = n;
@@ -1398,7 +1398,7 @@ void AnimationNodeBlendTree::get_node_connections(
             StringName output = E->get().connections[i];
             if (output != StringName()) {
                 NodeConnection nc;
-                nc.input_node = E->key();
+                nc.input_node  = E->key();
                 nc.input_index = i;
                 nc.output_node = output;
                 r_connections->push_back(nc);
@@ -1452,7 +1452,7 @@ bool AnimationNodeBlendTree::_set(
     String name = p_name;
     if (name.begins_with("nodes/")) {
         String node_name = name.get_slicec('/', 1);
-        String what = name.get_slicec('/', 2);
+        String what      = name.get_slicec('/', 2);
 
         if (what == "node") {
             Ref<AnimationNode> anode = p_value;
@@ -1486,7 +1486,7 @@ bool AnimationNodeBlendTree::_get(const StringName& p_name, Variant& r_ret)
     String name = p_name;
     if (name.begins_with("nodes/")) {
         String node_name = name.get_slicec('/', 1);
-        String what = name.get_slicec('/', 2);
+        String what      = name.get_slicec('/', 2);
 
         if (what == "node") {
             if (nodes.has(node_name)) {
@@ -1650,7 +1650,7 @@ AnimationNodeBlendTree::AnimationNodeBlendTree() {
     Ref<AnimationNodeOutput> output;
     output.instance();
     Node n;
-    n.node = output;
+    n.node     = output;
     n.position = Vector2(300, 150);
     n.connections.resize(1);
     nodes["output"] = n;

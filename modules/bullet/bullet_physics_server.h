@@ -153,7 +153,7 @@ public:
         RID p_area,
         RID p_shape,
         const Transform& p_transform = Transform(),
-        bool p_disabled = false
+        bool p_disabled              = false
     );
     virtual void area_set_shape(RID p_area, int p_shape_idx, RID p_shape);
     virtual void area_set_shape_transform(
@@ -208,7 +208,7 @@ public:
     /* RIGID BODY API */
 
     virtual RID body_create(
-        BodyMode p_mode = BODY_MODE_RIGID,
+        BodyMode p_mode      = BODY_MODE_RIGID,
         bool p_init_sleeping = false
     );
 
@@ -222,7 +222,7 @@ public:
         RID p_body,
         RID p_shape,
         const Transform& p_transform = Transform(),
-        bool p_disabled = false
+        bool p_disabled              = false
     );
     // Not supported, Please remove and add new shape
     virtual void body_set_shape(RID p_body, int p_shape_idx, RID p_shape);
@@ -358,9 +358,9 @@ public:
         const Transform& p_from,
         const Vector3& p_motion,
         bool p_infinite_inertia,
-        MotionResult* r_result = nullptr,
+        MotionResult* r_result        = nullptr,
         bool p_exclude_raycast_shapes = true,
-        const Set<RID>& p_exclude = Set<RID>()
+        const Set<RID>& p_exclude     = Set<RID>()
     );
     virtual int body_test_ray_separation(
         RID p_body,

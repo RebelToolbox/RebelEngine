@@ -71,7 +71,7 @@ struct GDScriptDataType {
                 break;
             case BUILTIN: {
                 Variant::Type var_type = p_variant.get_type();
-                bool valid = builtin_type == var_type;
+                bool valid             = builtin_type == var_type;
                 if (!valid && p_allow_implicit_conversion) {
                     valid = Variant::can_convert_strict(var_type, builtin_type);
                 }
@@ -122,7 +122,7 @@ struct GDScriptDataType {
                 Ref<Script> base = obj && obj->get_script_instance()
                                      ? obj->get_script_instance()->get_script()
                                      : nullptr;
-                bool valid = false;
+                bool valid       = false;
                 while (base.is_valid()) {
                     if (base == script_type) {
                         valid = true;
@@ -146,17 +146,17 @@ struct GDScriptDataType {
                     info.type = builtin_type;
                 } break;
                 case NATIVE: {
-                    info.type = Variant::OBJECT;
+                    info.type       = Variant::OBJECT;
                     info.class_name = native_type;
                 } break;
                 case SCRIPT:
                 case GDSCRIPT: {
-                    info.type = Variant::OBJECT;
+                    info.type       = Variant::OBJECT;
                     info.class_name = script_type->get_instance_base_type();
                 } break;
             }
         } else {
-            info.type = Variant::NIL;
+            info.type   = Variant::NIL;
             info.usage |= PROPERTY_USAGE_NIL_IS_VARIANT;
         }
         return info;
@@ -215,19 +215,19 @@ public:
     };
 
     enum Address {
-        ADDR_BITS = 24,
-        ADDR_MASK = ((1 << ADDR_BITS) - 1),
-        ADDR_TYPE_MASK = ~ADDR_MASK,
-        ADDR_TYPE_SELF = 0,
-        ADDR_TYPE_CLASS = 1,
-        ADDR_TYPE_MEMBER = 2,
+        ADDR_BITS                = 24,
+        ADDR_MASK                = ((1 << ADDR_BITS) - 1),
+        ADDR_TYPE_MASK           = ~ADDR_MASK,
+        ADDR_TYPE_SELF           = 0,
+        ADDR_TYPE_CLASS          = 1,
+        ADDR_TYPE_MEMBER         = 2,
         ADDR_TYPE_CLASS_CONSTANT = 3,
         ADDR_TYPE_LOCAL_CONSTANT = 4,
-        ADDR_TYPE_STACK = 5,
+        ADDR_TYPE_STACK          = 5,
         ADDR_TYPE_STACK_VARIABLE = 6,
-        ADDR_TYPE_GLOBAL = 7,
-        ADDR_TYPE_NAMED_GLOBAL = 8,
-        ADDR_TYPE_NIL = 9
+        ADDR_TYPE_GLOBAL         = 7,
+        ADDR_TYPE_NAMED_GLOBAL   = 8,
+        ADDR_TYPE_NIL            = 9
     };
 
     struct StackDebug {

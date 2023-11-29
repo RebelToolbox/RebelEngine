@@ -246,15 +246,15 @@ void StyleBoxTexture::draw(RID p_canvas_item, const Rect2& p_rect) const {
         return;
     }
 
-    Rect2 rect = p_rect;
+    Rect2 rect     = p_rect;
     Rect2 src_rect = region_rect;
 
     texture->get_rect_region(rect, src_rect, rect, src_rect);
 
     rect.position.x -= expand_margin[MARGIN_LEFT];
     rect.position.y -= expand_margin[MARGIN_TOP];
-    rect.size.x += expand_margin[MARGIN_LEFT] + expand_margin[MARGIN_RIGHT];
-    rect.size.y += expand_margin[MARGIN_TOP] + expand_margin[MARGIN_BOTTOM];
+    rect.size.x     += expand_margin[MARGIN_LEFT] + expand_margin[MARGIN_RIGHT];
+    rect.size.y     += expand_margin[MARGIN_TOP] + expand_margin[MARGIN_BOTTOM];
 
     RID normal_rid;
     if (normal_map.is_valid()) {
@@ -308,9 +308,9 @@ void StyleBoxTexture::set_expand_margin_size_individual(
     float p_right,
     float p_bottom
 ) {
-    expand_margin[MARGIN_LEFT] = p_left;
-    expand_margin[MARGIN_TOP] = p_top;
-    expand_margin[MARGIN_RIGHT] = p_right;
+    expand_margin[MARGIN_LEFT]   = p_left;
+    expand_margin[MARGIN_TOP]    = p_top;
+    expand_margin[MARGIN_RIGHT]  = p_right;
     expand_margin[MARGIN_BOTTOM] = p_bottom;
     emit_changed();
 }
@@ -628,11 +628,11 @@ void StyleBoxTexture::_bind_methods() {
 
 StyleBoxTexture::StyleBoxTexture() {
     for (int i = 0; i < 4; i++) {
-        margin[i] = 0;
+        margin[i]        = 0;
         expand_margin[i] = 0;
     }
     draw_center = true;
-    modulate = Color(1, 1, 1, 1);
+    modulate    = Color(1, 1, 1, 1);
 
     axis_h = AXIS_STRETCH_MODE_STRETCH;
     axis_v = AXIS_STRETCH_MODE_STRETCH;
@@ -753,9 +753,9 @@ void StyleBoxFlat::set_expand_margin_size_individual(
     float p_right,
     float p_bottom
 ) {
-    expand_margin[MARGIN_LEFT] = p_left;
-    expand_margin[MARGIN_TOP] = p_top;
-    expand_margin[MARGIN_RIGHT] = p_right;
+    expand_margin[MARGIN_LEFT]   = p_left;
+    expand_margin[MARGIN_TOP]    = p_top;
+    expand_margin[MARGIN_RIGHT]  = p_right;
     expand_margin[MARGIN_BOTTOM] = p_bottom;
     emit_changed();
 }
@@ -846,7 +846,7 @@ inline void set_inner_corner_radius(
     real_t* inner_corner_radius
 ) {
     real_t border_left = inner_rect.position.x - style_rect.position.x;
-    real_t border_top = inner_rect.position.y - style_rect.position.y;
+    real_t border_top  = inner_rect.position.y - style_rect.position.y;
     real_t border_right =
         style_rect.size.width - inner_rect.size.width - border_left;
     real_t border_bottom =
@@ -855,19 +855,19 @@ inline void set_inner_corner_radius(
     real_t rad;
 
     // Top left.
-    rad = MIN(border_top, border_left);
+    rad                    = MIN(border_top, border_left);
     inner_corner_radius[0] = MAX(corner_radius[0] - rad, 0);
 
     // Top right;
-    rad = MIN(border_top, border_right);
+    rad                    = MIN(border_top, border_right);
     inner_corner_radius[1] = MAX(corner_radius[1] - rad, 0);
 
     // Bottom right.
-    rad = MIN(border_bottom, border_right);
+    rad                    = MIN(border_bottom, border_right);
     inner_corner_radius[2] = MAX(corner_radius[2] - rad, 0);
 
     // Bottom left.
-    rad = MIN(border_bottom, border_left);
+    rad                    = MIN(border_bottom, border_left);
     inner_corner_radius[3] = MAX(corner_radius[3] - rad, 0);
 }
 
@@ -956,12 +956,12 @@ inline void draw_ring(
                 Color color;
                 Point2 corner_point;
                 if (inner_outer == 0) {
-                    radius = inner_corner_radius[corner_index];
-                    color = inner_color;
+                    radius       = inner_corner_radius[corner_index];
+                    color        = inner_color;
                     corner_point = inner_points[corner_index];
                 } else {
-                    radius = ring_corner_radius[corner_index];
-                    color = outer_color;
+                    radius       = ring_corner_radius[corner_index];
+                    color        = outer_color;
                     corner_point = outer_points[corner_index];
                 }
                 float x = radius
@@ -1054,9 +1054,9 @@ Rect2 StyleBoxFlat::get_draw_rect(const Rect2& p_rect) const {
     );
 
     if (shadow_size > 0) {
-        Rect2 shadow_rect = draw_rect.grow(shadow_size);
+        Rect2 shadow_rect     = draw_rect.grow(shadow_size);
         shadow_rect.position += shadow_offset;
-        draw_rect = draw_rect.merge(shadow_rect);
+        draw_rect             = draw_rect.merge(shadow_rect);
     }
 
     return draw_rect;
@@ -1093,8 +1093,8 @@ void StyleBoxFlat::draw(RID p_canvas_item, const Rect2& p_rect) const {
     Color border_color_inner = blend_on ? border_color_blend : border_color;
 
     // Adapt borders (prevent weird overlapping/glitchy drawings).
-    real_t width = MAX(style_rect.size.width, 0);
-    real_t height = MAX(style_rect.size.height, 0);
+    real_t width             = MAX(style_rect.size.width, 0);
+    real_t height            = MAX(style_rect.size.height, 0);
     real_t adapted_border[4] = {1000000.0, 1000000.0, 1000000.0, 1000000.0};
     adapt_values(
         MARGIN_TOP,
@@ -1178,10 +1178,10 @@ void StyleBoxFlat::draw(RID p_canvas_item, const Rect2& p_rect) const {
 
     // Create shadow
     if (draw_shadow) {
-        Rect2 shadow_inner_rect = style_rect;
+        Rect2 shadow_inner_rect     = style_rect;
         shadow_inner_rect.position += shadow_offset;
 
-        Rect2 shadow_rect = style_rect.grow(shadow_size);
+        Rect2 shadow_rect     = style_rect.grow(shadow_size);
         shadow_rect.position += shadow_offset;
 
         Color shadow_color_transparent =
@@ -1257,16 +1257,16 @@ void StyleBoxFlat::draw(RID p_canvas_item, const Rect2& p_rect) const {
             for (int i = 0; i < 4; i++) {
                 if (border_width[i] > 0) {
                     aa_border_width[i] = aa_size;
-                    aa_fill_width[i] = 0;
+                    aa_fill_width[i]   = 0;
                 } else {
                     aa_border_width[i] = 0;
-                    aa_fill_width[i] = aa_size;
+                    aa_fill_width[i]   = aa_size;
                 }
             }
         } else {
             for (int i = 0; i < 4; i++) {
                 aa_border_width[i] = 0;
-                aa_fill_width[i] = aa_size;
+                aa_fill_width[i]   = aa_size;
             }
         }
 
@@ -1783,18 +1783,18 @@ void StyleBoxFlat::_bind_methods() {
 }
 
 StyleBoxFlat::StyleBoxFlat() {
-    bg_color = Color(0.6, 0.6, 0.6);
+    bg_color     = Color(0.6, 0.6, 0.6);
     shadow_color = Color(0, 0, 0, 0.6);
     border_color = Color(0.8, 0.8, 0.8);
 
     blend_border = false;
-    draw_center = true;
+    draw_center  = true;
     anti_aliased = true;
 
-    shadow_size = 0;
+    shadow_size   = 0;
     shadow_offset = Point2(0, 0);
     corner_detail = 8;
-    aa_size = 0.625;
+    aa_size       = 0.625;
 
     border_width[0] = 0;
     border_width[1] = 0;
@@ -1949,16 +1949,16 @@ Size2 StyleBoxLine::get_center_size() const {
 
 void StyleBoxLine::draw(RID p_canvas_item, const Rect2& p_rect) const {
     VisualServer* vs = VisualServer::get_singleton();
-    Rect2i r = p_rect;
+    Rect2i r         = p_rect;
 
     if (vertical) {
         r.position.y -= grow_begin;
-        r.size.y += (grow_begin + grow_end);
-        r.size.x = thickness;
+        r.size.y     += (grow_begin + grow_end);
+        r.size.x      = thickness;
     } else {
         r.position.x -= grow_begin;
-        r.size.x += (grow_begin + grow_end);
-        r.size.y = thickness;
+        r.size.x     += (grow_begin + grow_end);
+        r.size.y      = thickness;
     }
 
     vs->canvas_item_add_rect(p_canvas_item, r, color);
@@ -1966,10 +1966,10 @@ void StyleBoxLine::draw(RID p_canvas_item, const Rect2& p_rect) const {
 
 StyleBoxLine::StyleBoxLine() {
     grow_begin = 1.0;
-    grow_end = 1.0;
-    thickness = 1;
-    color = Color(0.0, 0.0, 0.0);
-    vertical = false;
+    grow_end   = 1.0;
+    thickness  = 1;
+    color      = Color(0.0, 0.0, 0.0);
+    vertical   = false;
 }
 
 StyleBoxLine::~StyleBoxLine() {}

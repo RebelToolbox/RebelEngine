@@ -120,7 +120,7 @@ VideoStreamPlaybackWebm::~VideoStreamPlaybackWebm() {
 
 bool VideoStreamPlaybackWebm::open_file(const String& p_file) {
     file_name = p_file;
-    webm = memnew(WebMDemuxer(new MkvReader(file_name), 0, audio_track));
+    webm      = memnew(WebMDemuxer(new MkvReader(file_name), 0, audio_track));
     if (webm->isOpen()) {
         video =
             memnew(VPXDecoder(*webm, OS::get_singleton()->get_processor_count())
@@ -129,7 +129,7 @@ bool VideoStreamPlaybackWebm::open_file(const String& p_file) {
             audio = memnew(OpusVorbisDecoder(*webm));
             if (audio->isOpen()) {
                 audio_frame = memnew(WebMFrame);
-                pcm = (float*)memalloc(
+                pcm         = (float*)memalloc(
                     sizeof(float) * audio->getBufferSamples()
                     * webm->getChannels()
                 );
@@ -162,7 +162,7 @@ void VideoStreamPlaybackWebm::stop() {
 
         pcm = nullptr;
 
-        audio_frame = nullptr;
+        audio_frame  = nullptr;
         video_frames = nullptr;
 
         video = nullptr;
@@ -171,11 +171,11 @@ void VideoStreamPlaybackWebm::stop() {
         open_file(file_name); // Should not fail here...
 
         video_frames_capacity = video_frames_pos = 0;
-        num_decoded_samples = 0;
-        samples_offset = -1;
+        num_decoded_samples                      = 0;
+        samples_offset                           = -1;
         video_frame_delay = video_pos = 0.0;
     }
-    time = 0.0;
+    time    = 0.0;
     playing = false;
 }
 
@@ -252,14 +252,14 @@ void VideoStreamPlaybackWebm::update(float p_delta) {
     if (samples_offset > -1) {
         // Mix remaining samples
         const int to_read = num_decoded_samples - samples_offset;
-        const int mixed = mix_callback(
+        const int mixed   = mix_callback(
             mix_udata,
             pcm + samples_offset * webm->getChannels(),
             to_read
         );
         if (mixed != to_read) {
-            samples_offset += mixed;
-            audio_buffer_full = true;
+            samples_offset    += mixed;
+            audio_buffer_full  = true;
         } else {
             samples_offset = -1;
         }
@@ -274,7 +274,7 @@ void VideoStreamPlaybackWebm::update(float p_delta) {
             const int mixed = mix_callback(mix_udata, pcm, num_decoded_samples);
 
             if (mixed != num_decoded_samples) {
-                samples_offset = mixed;
+                samples_offset    = mixed;
                 audio_buffer_full = true;
             }
         }
@@ -319,11 +319,11 @@ void VideoStreamPlaybackWebm::update(float p_delta) {
                         && image.w == webm->getWidth()
                         && image.h == webm->getHeight()) {
                         PoolVector<uint8_t>::Write w = frame_data.write();
-                        bool converted = false;
+                        bool converted               = false;
 
                         if (image.chromaShiftW == 0 && image.chromaShiftH == 0
                             && image.cs == VPX_CS_SRGB) {
-                            uint8_t* wp = w.ptr();
+                            uint8_t* wp         = w.ptr();
                             unsigned char* rRow = image.planes[2];
                             unsigned char* gRow = image.planes[0];
                             unsigned char* bRow = image.planes[1];
@@ -437,7 +437,7 @@ void VideoStreamPlaybackWebm::set_mix_callback(
     void* p_userdata
 ) {
     mix_callback = p_callback;
-    mix_udata = p_userdata;
+    mix_udata    = p_userdata;
 }
 
 int VideoStreamPlaybackWebm::get_channels() const {

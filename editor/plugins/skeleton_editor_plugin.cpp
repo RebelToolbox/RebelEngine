@@ -51,9 +51,9 @@ void SkeletonEditor::_on_click_option(int p_option) {
 
 void SkeletonEditor::create_physical_skeleton() {
     UndoRedo* ur = EditorNode::get_singleton()->get_undo_redo();
-    Node* owner = skeleton == get_tree()->get_edited_scene_root()
-                    ? skeleton
-                    : skeleton->get_owner();
+    Node* owner  = skeleton == get_tree()->get_edited_scene_root()
+                     ? skeleton
+                     : skeleton->get_owner();
 
     const int bc = skeleton->get_bone_count();
 
@@ -180,7 +180,7 @@ void SkeletonEditor::_bind_methods() {
 
 SkeletonEditor::SkeletonEditor() {
     skeleton = nullptr;
-    options = memnew(MenuButton);
+    options  = memnew(MenuButton);
     SpatialEditor::get_singleton()->add_control_to_menu_panel(options);
 
     options->set_text(TTR("Skeleton"));
@@ -218,7 +218,7 @@ void SkeletonEditorPlugin::make_visible(bool p_visible) {
 }
 
 SkeletonEditorPlugin::SkeletonEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor          = p_node;
     skeleton_editor = memnew(SkeletonEditor);
     editor->get_viewport()->add_child(skeleton_editor);
 }

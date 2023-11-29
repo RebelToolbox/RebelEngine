@@ -138,9 +138,9 @@ static void _plot_triangle(
     Ref<Image> p_image,
     const Ref<Image>& p_src_image
 ) {
-    int width = p_image->get_width();
-    int height = p_image->get_height();
-    int src_width = p_src_image->get_width();
+    int width      = p_image->get_width();
+    int height     = p_image->get_height();
+    int src_width  = p_src_image->get_width();
     int src_height = p_src_image->get_height();
 
     int x[3];
@@ -165,12 +165,12 @@ static void _plot_triangle(
         SWAP(y[1], y[2]);
     }
 
-    double dx_far = double(x[2] - x[0]) / (y[2] - y[0] + 1);
+    double dx_far   = double(x[2] - x[0]) / (y[2] - y[0] + 1);
     double dx_upper = double(x[1] - x[0]) / (y[1] - y[0] + 1);
-    double dx_low = double(x[2] - x[1]) / (y[2] - y[1] + 1);
-    double xf = x[0];
-    double xt = x[0] + dx_upper; // if y[0] == y[1], special case
-    int max_y = MIN(y[2], height - p_offset.y - 1);
+    double dx_low   = double(x[2] - x[1]) / (y[2] - y[1] + 1);
+    double xf       = x[0];
+    double xt       = x[0] + dx_upper; // if y[0] == y[1], special case
+    int max_y       = MIN(y[2], height - p_offset.y - 1);
     for (int yi = y[0]; yi < max_y; yi++) {
         if (yi >= 0) {
             for (int xi = (xf > 0 ? int(xf) : 0);
@@ -178,8 +178,8 @@ static void _plot_triangle(
                  xi++) {
                 int px = xi, py = yi;
                 int sx = px, sy = py;
-                sx = CLAMP(sx, 0, src_width - 1);
-                sy = CLAMP(sy, 0, src_height - 1);
+                sx          = CLAMP(sx, 0, src_width - 1);
+                sy          = CLAMP(sy, 0, src_height - 1);
                 Color color = p_src_image->get_pixel(sx, sy);
                 if (p_transposed) {
                     SWAP(px, py);
@@ -202,8 +202,8 @@ static void _plot_triangle(
                  xi--) {
                 int px = xi, py = yi;
                 int sx = px, sy = py;
-                sx = CLAMP(sx, 0, src_width - 1);
-                sy = CLAMP(sy, 0, src_height - 1);
+                sx          = CLAMP(sx, 0, src_width - 1);
+                sy          = CLAMP(sy, 0, src_height - 1);
                 Color color = p_src_image->get_pixel(sx, sy);
                 if (p_transposed) {
                     SWAP(px, py);
@@ -250,8 +250,8 @@ Error ResourceImporterTextureAtlas::import_group_file(
              p_source_file_options.front();
          E;
          E = E->next(), idx++) {
-        PackData& pack_data = pack_data_files.write[idx];
-        const String& source = E->key();
+        PackData& pack_data                     = pack_data_files.write[idx];
+        const String& source                    = E->key();
         const Map<StringName, Variant>& options = E->get();
 
         Ref<Image> image;
@@ -259,7 +259,7 @@ Error ResourceImporterTextureAtlas::import_group_file(
         Error err = ImageLoader::load_image(source, image);
         ERR_CONTINUE(err != OK);
 
-        pack_data.image = image;
+        pack_data.image      = image;
         pack_data.is_cropped = options["crop_to_region"];
 
         int mode = options["import_mode"];
@@ -270,7 +270,7 @@ Error ResourceImporterTextureAtlas::import_group_file(
             EditorAtlasPacker::Chart chart;
 
             // clip a region from the image
-            Rect2 used_rect = image->get_used_rect();
+            Rect2 used_rect  = image->get_used_rect();
             pack_data.region = used_rect;
 
             chart.vertices.push_back(used_rect.position);
@@ -309,7 +309,7 @@ Error ResourceImporterTextureAtlas::import_group_file(
 
             for (int j = 0; j < polygons.size(); j++) {
                 EditorAtlasPacker::Chart chart;
-                chart.vertices = polygons[j];
+                chart.vertices      = polygons[j];
                 chart.can_transpose = true;
 
                 Vector<int> poly = Geometry::triangulate_polygon(polygons[j]);
@@ -350,7 +350,7 @@ Error ResourceImporterTextureAtlas::import_group_file(
                 Vector2 positions[3];
                 for (int l = 0; l < 3; l++) {
                     int vertex_idx = chart.faces[k].vertex[l];
-                    positions[l] = chart.vertices[vertex_idx];
+                    positions[l]   = chart.vertices[vertex_idx];
                 }
 
                 _plot_triangle(
@@ -428,20 +428,20 @@ Error ResourceImporterTextureAtlas::import_group_file(
                 indices.resize(fc * 3);
 
                 {
-                    PoolVector<Vector2>::Write vw = vertices.write();
-                    PoolVector<int>::Write iw = indices.write();
+                    PoolVector<Vector2>::Write vw  = vertices.write();
+                    PoolVector<int>::Write iw      = indices.write();
                     PoolVector<Vector2>::Write uvw = uvs.write();
 
                     for (int j = 0; j < vc; j++) {
-                        vw[j] = chart.vertices[j];
+                        vw[j]      = chart.vertices[j];
                         Vector2 uv = chart.vertices[j];
                         if (chart.transposed) {
                             SWAP(uv.x, uv.y);
                         }
-                        uv += chart.final_offset;
-                        uv /= new_atlas->get_size(); // normalize uv to 0-1
-                                                     // range
-                        uvw[j] = uv;
+                        uv     += chart.final_offset;
+                        uv     /= new_atlas->get_size(); // normalize uv to 0-1
+                                                         // range
+                        uvw[j]  = uv;
                     }
 
                     for (int j = 0; j < fc; j++) {
@@ -455,7 +455,7 @@ Error ResourceImporterTextureAtlas::import_group_file(
                 arrays.resize(Mesh::ARRAY_MAX);
                 arrays[Mesh::ARRAY_VERTEX] = vertices;
                 arrays[Mesh::ARRAY_TEX_UV] = uvs;
-                arrays[Mesh::ARRAY_INDEX] = indices;
+                arrays[Mesh::ARRAY_INDEX]  = indices;
 
                 mesh->add_surface_from_arrays(
                     Mesh::PRIMITIVE_TRIANGLES,

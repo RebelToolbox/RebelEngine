@@ -67,7 +67,7 @@
 
 #ifdef TOOLS_ENABLED
 static bool _create_project_solution_if_needed() {
-    String sln_path = GodotSharpDirs::get_project_sln_path();
+    String sln_path    = GodotSharpDirs::get_project_sln_path();
     String csproj_path = GodotSharpDirs::get_project_csproj_path();
 
     if (!FileAccess::exists(sln_path) || !FileAccess::exists(csproj_path)) {
@@ -173,9 +173,9 @@ void CSharpLanguage::finish() {
 
 #ifdef DEBUG_ENABLED
     for (Map<ObjectID, int>::Element* E = unsafe_object_references.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         const ObjectID& id = E->key();
-        Object* obj = ObjectDB::get_instance(id);
+        Object* obj        = ObjectDB::get_instance(id);
 
         if (obj) {
             ERR_PRINT("Leaked unsafe reference to object: " + obj->to_string());
@@ -399,7 +399,7 @@ void CSharpLanguage::make_template(
     const String& p_base_class_name,
     Ref<Script>& p_script
 ) {
-    String src = p_script->get_source_code();
+    String src                  = p_script->get_source_code();
     String class_name_no_spaces = p_class_name.replace(" ", "_");
     String base_class_name =
         get_base_class_name(p_base_class_name, class_name_no_spaces);
@@ -628,7 +628,7 @@ Vector<ScriptLanguage::StackInfo> CSharpLanguage::debug_get_current_stack_info(
     );
 
     MonoBoolean need_file_info = true;
-    void* ctor_args[1] = {&need_file_info};
+    void* ctor_args[1]         = {&need_file_info};
 
     CACHED_METHOD(System_Diagnostics_StackTrace, ctor_bool)
         ->invoke_raw(stack_trace, ctor_args);
@@ -670,7 +670,7 @@ Vector<ScriptLanguage::StackInfo> CSharpLanguage::stack_trace_get_info(
     si.resize(frame_count);
 
     for (int i = 0; i < frame_count; i++) {
-        StackInfo& sif = si.write[i];
+        StackInfo& sif    = si.write[i];
         MonoObject* frame = mono_array_get(frames, MonoObject*, i);
 
         MonoString* file_name;
@@ -709,7 +709,7 @@ void CSharpLanguage::post_unsafe_reference(Object* p_obj) {
 void CSharpLanguage::pre_unsafe_unreference(Object* p_obj) {
 #ifdef DEBUG_ENABLED
     MutexLock lock(unsafe_object_references_lock);
-    ObjectID id = p_obj->get_instance_id();
+    ObjectID id                       = p_obj->get_instance_id();
     Map<ObjectID, int>::Element* elem = unsafe_object_references.find(id);
     ERR_FAIL_NULL(elem);
     if (--elem->value() == 0) {
@@ -852,7 +852,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
         MutexLock lock(script_instances_mutex);
 
         for (SelfList<CSharpScript>* elem = script_list.first(); elem;
-             elem = elem->next()) {
+             elem                         = elem->next()) {
             // Cast to CSharpScript to avoid being erased by accident
             scripts.push_back(Ref<CSharpScript>(elem->self()));
         }
@@ -880,7 +880,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
     ); // Update in inheritance dependency order
 
     for (List<Ref<CSharpScript>>::Element* E = scripts.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         Ref<CSharpScript>& script = E->get();
         // If someone removes a script from a node, deletes the script, builds,
         // adds a script to the same node, then builds again, the script might
@@ -904,7 +904,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
         // need to keep a copy before that happens.
 
         for (Set<Object*>::Element* F = script->instances.front(); F;
-             F = F->next()) {
+             F                        = F->next()) {
             Object* obj = F->get();
             script->pending_reload_instances.insert(obj->get_instance_id());
 
@@ -934,7 +934,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
             script->pending_reload_state;
 
         for (Set<Object*>::Element* F = script->instances.front(); F;
-             F = F->next()) {
+             F                        = F->next()) {
             Object* obj = F->get();
 
             ERR_CONTINUE(!obj->get_script_instance());
@@ -965,7 +965,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
     // After the state of all instances is saved, clear scripts and script
     // instances
     for (List<Ref<CSharpScript>>::Element* E = scripts.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         Ref<CSharpScript>& script = E->get();
 
         while (script->instances.front()) {
@@ -983,7 +983,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
         // Failed to reload the scripts domain
         // Make sure to add the scripts back to their owners before returning
         for (List<Ref<CSharpScript>>::Element* E = to_reload.front(); E;
-             E = E->next()) {
+             E                                   = E->next()) {
             Ref<CSharpScript> scr = E->get();
 
             for (const Map<ObjectID, CSharpScript::StateBackup>::Element* F =
@@ -1037,7 +1037,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
     List<Ref<CSharpScript>> to_reload_state;
 
     for (List<Ref<CSharpScript>>::Element* E = to_reload.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         Ref<CSharpScript> script = E->get();
 
         if (!script->get_path().empty()) {
@@ -1114,7 +1114,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
                  F;
                  F = F->next()) {
                 ObjectID obj_id = F->get();
-                Object* obj = ObjectDB::get_instance(obj_id);
+                Object* obj     = ObjectDB::get_instance(obj_id);
 
                 if (!obj) {
                     script->pending_reload_state.erase(obj_id);
@@ -1176,7 +1176,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
     }
 
     for (List<Ref<CSharpScript>>::Element* E = to_reload_state.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         Ref<CSharpScript> script = E->get();
 
         for (Set<ObjectID>::Element* F =
@@ -1184,7 +1184,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
              F;
              F = F->next()) {
             ObjectID obj_id = F->get();
-            Object* obj = ObjectDB::get_instance(obj_id);
+            Object* obj     = ObjectDB::get_instance(obj_id);
 
             if (!obj) {
                 script->pending_reload_state.erase(obj_id);
@@ -1275,7 +1275,7 @@ void CSharpLanguage::_load_scripts_metadata() {
             return;
         }
 
-        scripts_metadata = old_dict_var.operator Dictionary();
+        scripts_metadata             = old_dict_var.operator Dictionary();
         scripts_metadata_invalidated = false;
 
         print_verbose("Successfully loaded scripts metadata");
@@ -1333,7 +1333,7 @@ bool CSharpLanguage::debug_break_parse(
         && Thread::get_caller_id() == Thread::get_main_id()) {
         _debug_parse_err_line = p_line;
         _debug_parse_err_file = p_file;
-        _debug_error = p_error;
+        _debug_error          = p_error;
         ScriptDebugger::get_singleton()->debug(this, false, true);
         return true;
     } else {
@@ -1346,7 +1346,7 @@ bool CSharpLanguage::debug_break(const String& p_error, bool p_allow_continue) {
         && Thread::get_caller_id() == Thread::get_main_id()) {
         _debug_parse_err_line = -1;
         _debug_parse_err_file = "";
-        _debug_error = p_error;
+        _debug_error          = p_error;
         ScriptDebugger::get_singleton()->debug(this, p_allow_continue);
         return true;
     } else {
@@ -1360,7 +1360,7 @@ void CSharpLanguage::_on_scripts_domain_unloaded() {
          E;
          E = E->next()) {
         CSharpScriptBinding& script_binding = E->value();
-        script_binding.inited = false;
+        script_binding.inited               = false;
     }
 
     scripts_metadata_invalidated = true;
@@ -1503,11 +1503,11 @@ bool CSharpLanguage::setup_csharp_script_binding(
 
     ERR_FAIL_NULL_V(mono_object, false);
 
-    r_script_binding.inited = true;
-    r_script_binding.type_name = type_name;
+    r_script_binding.inited        = true;
+    r_script_binding.type_name     = type_name;
     r_script_binding.wrapper_class = type_class; // cache
-    r_script_binding.gchandle = MonoGCHandle::create_strong(mono_object);
-    r_script_binding.owner = p_object;
+    r_script_binding.gchandle      = MonoGCHandle::create_strong(mono_object);
+    r_script_binding.owner         = p_object;
 
     // Tie managed to unmanaged
     Reference* ref = Object::cast_to<Reference>(p_object);
@@ -1691,8 +1691,8 @@ CSharpInstance* CSharpInstance::create_for_managed_type(
     Reference* ref = Object::cast_to<Reference>(p_owner);
 
     instance->base_ref = ref != NULL;
-    instance->script = Ref<CSharpScript>(p_script);
-    instance->owner = p_owner;
+    instance->script   = Ref<CSharpScript>(p_script);
+    instance->owner    = p_owner;
     instance->gchandle = p_gchandle;
 
     if (instance->base_ref) {
@@ -1755,7 +1755,7 @@ bool CSharpInstance::set(const StringName& p_name, const Variant& p_value) {
         GDMonoMethod* method = top->get_method(CACHED_STRING_NAME(_set), 2);
 
         if (method) {
-            Variant name = p_name;
+            Variant name           = p_name;
             const Variant* args[2] = {&name, &p_value};
 
             MonoObject* ret = method->invoke(mono_object, args);
@@ -1788,7 +1788,7 @@ bool CSharpInstance::get(const StringName& p_name, Variant& r_ret) const {
 
         if (field) {
             MonoObject* value = field->get_value(mono_object);
-            r_ret = GDMonoMarshal::mono_object_to_variant(value);
+            r_ret             = GDMonoMarshal::mono_object_to_variant(value);
             return true;
         }
 
@@ -1796,7 +1796,7 @@ bool CSharpInstance::get(const StringName& p_name, Variant& r_ret) const {
 
         if (property) {
             MonoException* exc = NULL;
-            MonoObject* value = property->get_value(mono_object, &exc);
+            MonoObject* value  = property->get_value(mono_object, &exc);
             if (exc) {
                 r_ret = Variant();
                 GDMonoUtils::set_pending_exception(exc);
@@ -1817,7 +1817,7 @@ bool CSharpInstance::get(const StringName& p_name, Variant& r_ret) const {
         GDMonoMethod* method = top->get_method(CACHED_STRING_NAME(_get), 1);
 
         if (method) {
-            Variant name = p_name;
+            Variant name           = p_name;
             const Variant* args[1] = {&name};
 
             MonoObject* ret = method->invoke(mono_object, args);
@@ -1849,7 +1849,7 @@ void CSharpInstance::get_properties_state_for_reloading(
         ManagedType managedType;
 
         GDMonoField* field = nullptr;
-        GDMonoClass* top = script->script_class;
+        GDMonoClass* top   = script->script_class;
         while (top && top != script->native) {
             field = top->get_field(state_pair.first);
             if (field) {
@@ -2408,8 +2408,8 @@ void CSharpInstance::_call_notification(int p_notification) {
 
     // Custom version of _call_multilevel, optimized for _notification
 
-    uint32_t arg = p_notification;
-    void* args[1] = {&arg};
+    uint32_t arg           = p_notification;
+    void* args[1]          = {&arg};
     StringName method_name = CACHED_STRING_NAME(_notification);
 
     GDMonoClass* top = script->script_class;
@@ -2594,7 +2594,7 @@ void CSharpScript::_update_exports_values(
     }
 
     for (List<PropertyInfo>::Element* E = exported_members_cache.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         propnames.push_back(E->get());
     }
 }
@@ -2685,8 +2685,8 @@ bool CSharpScript::_update_exports(
         member_info.clear();
 
 #ifdef TOOLS_ENABLED
-        MonoObject* tmp_object = nullptr;
-        Object* tmp_native = nullptr;
+        MonoObject* tmp_object       = nullptr;
+        Object* tmp_native           = nullptr;
         uint32_t tmp_pinned_gchandle = 0;
 
         if (is_editor) {
@@ -3149,13 +3149,13 @@ int CSharpScript::_try_get_member_export_hint(
             MonoClassField* field = fields[i];
 
             if (i > 0) {
-                r_hint_string += ",";
+                r_hint_string         += ",";
                 name_only_hint_string += ",";
             }
 
-            String enum_field_name = String::utf8(mono_field_get_name(field));
-            r_hint_string += enum_field_name;
-            name_only_hint_string += enum_field_name;
+            String enum_field_name  = String::utf8(mono_field_get_name(field));
+            r_hint_string          += enum_field_name;
+            name_only_hint_string  += enum_field_name;
 
             // TODO:
             // Instead of using mono_field_get_value_object, we can do this
@@ -3201,7 +3201,7 @@ int CSharpScript::_try_get_member_export_hint(
             GDMonoUtils::get_class_native_base(p_type.type_class);
         CRASH_COND(field_native_class == NULL);
 
-        r_hint = PROPERTY_HINT_RESOURCE_TYPE;
+        r_hint        = PROPERTY_HINT_RESOURCE_TYPE;
         r_hint_string = NATIVE_GDMONOCLASS_NAME(field_native_class);
     } else if (p_allow_generics && p_variant_type == Variant::ARRAY) {
         // Nested arrays are not supported in the inspector
@@ -3275,12 +3275,12 @@ int CSharpScript::_try_get_member_export_hint(
 #endif
 
 void CSharpScript::_clear() {
-    tool = false;
-    valid = false;
+    tool               = false;
+    valid              = false;
     reload_invalidated = true;
 
-    base = NULL;
-    native = NULL;
+    base         = NULL;
+    native       = NULL;
     script_class = NULL;
 }
 
@@ -3392,9 +3392,9 @@ void CSharpScript::initialize_for_managed_type(
 
     CRASH_COND(p_class == NULL);
 
-    p_script->name = p_class->get_name();
+    p_script->name         = p_class->get_name();
     p_script->script_class = p_class;
-    p_script->native = p_native;
+    p_script->native       = p_native;
 
     CRASH_COND(p_script->native == NULL);
 
@@ -3564,9 +3564,9 @@ CSharpInstance* CSharpScript::_create_instance(
     }
 
     CSharpInstance* instance = memnew(CSharpInstance);
-    instance->base_ref = p_isref;
-    instance->script = Ref<CSharpScript>(this);
-    instance->owner = p_owner;
+    instance->base_ref       = p_isref;
+    instance->script         = Ref<CSharpScript>(this);
+    instance->owner          = p_owner;
     instance->owner->set_script_instance(instance);
 
     /* STEP 2, INITIALIZE AND CONSTRUCT */
@@ -3577,7 +3577,7 @@ CSharpInstance* CSharpScript::_create_instance(
     if (!mono_object) {
         // Important to clear this before destroying the script instance here
         instance->script = Ref<CSharpScript>();
-        instance->owner = NULL;
+        instance->owner  = NULL;
 
         bool die = instance->_unreference_owner_unsafe();
         // Not ok for the owner to die here. If there is a situation where this
@@ -3838,7 +3838,7 @@ Error CSharpScript::reload(bool p_keep_state) {
 
             if (!tool) {
                 GDMonoClass* nesting_class = script_class->get_nesting_class();
-                tool = nesting_class
+                tool                       = nesting_class
                     && nesting_class->has_attribute(CACHED_CLASS(ToolAttribute)
                     );
             }
@@ -4015,9 +4015,9 @@ CSharpScript::CSharpScript() : script_list(this) {
     _clear();
 
 #ifdef TOOLS_ENABLED
-    source_changed_cache = false;
+    source_changed_cache         = false;
     placeholder_fallback_enabled = false;
-    exports_invalidated = true;
+    exports_invalidated          = true;
 #endif
 
     signals_invalidated = true;
@@ -4043,7 +4043,7 @@ void CSharpScript::get_members(Set<StringName>* p_members) {
 #if defined(TOOLS_ENABLED) || defined(DEBUG_ENABLED)
     if (p_members) {
         for (Set<StringName>::Element* E = exported_members_names.front(); E;
-             E = E->next()) {
+             E                           = E->next()) {
             p_members->insert(E->get());
         }
     }
@@ -4177,13 +4177,13 @@ bool ResourceFormatSaverCSharpScript::recognize(const RES& p_resource) const {
 }
 
 CSharpLanguage::StringNameCache::StringNameCache() {
-    _signal_callback = StaticCString::create("_signal_callback");
-    _set = StaticCString::create("_set");
-    _get = StaticCString::create("_get");
-    _get_property_list = StaticCString::create("_get_property_list");
-    _notification = StaticCString::create("_notification");
-    _script_source = StaticCString::create("script/source");
-    on_before_serialize = StaticCString::create("OnBeforeSerialize");
+    _signal_callback     = StaticCString::create("_signal_callback");
+    _set                 = StaticCString::create("_set");
+    _get                 = StaticCString::create("_get");
+    _get_property_list   = StaticCString::create("_get_property_list");
+    _notification        = StaticCString::create("_notification");
+    _script_source       = StaticCString::create("script/source");
+    on_before_serialize  = StaticCString::create("OnBeforeSerialize");
     on_after_deserialize = StaticCString::create("OnAfterDeserialize");
-    dotctor = StaticCString::create(".ctor");
+    dotctor              = StaticCString::create(".ctor");
 }

@@ -242,7 +242,7 @@ void ExportTemplateManager::_download_template_completed(
                 String path = download_templates->get_download_file();
 
                 is_downloading_templates = false;
-                bool ret = _install_file_selected(path, true);
+                bool ret                 = _install_file_selected(path, true);
                 if (ret) {
                     // Clean up downloaded file.
                     DirAccessRef da =
@@ -381,29 +381,29 @@ bool ExportTemplateManager::_humanize_http_status(
     int* r_downloaded_bytes,
     int* r_total_bytes
 ) {
-    *r_status = "";
+    *r_status           = "";
     *r_downloaded_bytes = -1;
-    *r_total_bytes = -1;
-    bool success = true;
+    *r_total_bytes      = -1;
+    bool success        = true;
 
     switch (p_request->get_http_client_status()) {
         case HTTPClient::STATUS_DISCONNECTED:
             *r_status = TTR("Disconnected");
-            success = false;
+            success   = false;
             break;
         case HTTPClient::STATUS_RESOLVING:
             *r_status = TTR("Resolving");
             break;
         case HTTPClient::STATUS_CANT_RESOLVE:
             *r_status = TTR("Can't Resolve");
-            success = false;
+            success   = false;
             break;
         case HTTPClient::STATUS_CONNECTING:
             *r_status = TTR("Connecting...");
             break;
         case HTTPClient::STATUS_CANT_CONNECT:
             *r_status = TTR("Can't Connect");
-            success = false;
+            success   = false;
             break;
         case HTTPClient::STATUS_CONNECTED:
             *r_status = TTR("Connected");
@@ -412,9 +412,9 @@ bool ExportTemplateManager::_humanize_http_status(
             *r_status = TTR("Requesting...");
             break;
         case HTTPClient::STATUS_BODY:
-            *r_status = TTR("Downloading");
+            *r_status           = TTR("Downloading");
             *r_downloaded_bytes = p_request->get_downloaded_bytes();
-            *r_total_bytes = p_request->get_body_size();
+            *r_total_bytes      = p_request->get_body_size();
 
             if (p_request->get_body_size() > 0) {
                 *r_status +=
@@ -429,11 +429,11 @@ bool ExportTemplateManager::_humanize_http_status(
             break;
         case HTTPClient::STATUS_CONNECTION_ERROR:
             *r_status = TTR("Connection Error");
-            success = false;
+            success   = false;
             break;
         case HTTPClient::STATUS_SSL_HANDSHAKE_ERROR:
             *r_status = TTR("SSL Handshake Error");
-            success = false;
+            success   = false;
             break;
     }
 
@@ -486,7 +486,7 @@ bool ExportTemplateManager::_install_file_selected(
 ) {
     // unzClose() will take care of closing the file stored in the unzFile,
     // so we don't need to `memdelete(fa)` in this method.
-    FileAccess* fa = nullptr;
+    FileAccess* fa       = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&fa);
 
     unzFile pkg = unzOpen2(p_file.utf8().get_data(), &io);
@@ -584,7 +584,7 @@ bool ExportTemplateManager::_install_file_selected(
         );
     }
 
-    fc = 0;
+    fc  = 0;
     ret = unzGoToFirstFile(pkg);
     while (ret == UNZ_OK) {
         // Get filename.
@@ -867,7 +867,7 @@ Error ExportTemplateManager::install_android_template_from_file(
 
     // Uncompress source template.
 
-    FileAccess* src_f = nullptr;
+    FileAccess* src_f    = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
 
     unzFile pkg = unzOpen2(p_file.utf8().get_data(), &io);
@@ -877,7 +877,7 @@ Error ExportTemplateManager::install_android_template_from_file(
         "Android sources not in ZIP format."
     );
 
-    int ret = unzGoToFirstFile(pkg);
+    int ret         = unzGoToFirstFile(pkg);
     int total_files = 0;
     // Count files to unzip.
     while (ret == UNZ_OK) {
@@ -909,7 +909,7 @@ Error ExportTemplateManager::install_android_template_from_file(
             0
         );
 
-        String path = String::utf8(fpath);
+        String path     = String::utf8(fpath);
         String base_dir = path.get_base_dir();
 
         if (!path.ends_with("/")) {
@@ -929,7 +929,7 @@ Error ExportTemplateManager::install_android_template_from_file(
             }
 
             String to_write = String("res://android/build").plus_file(path);
-            FileAccess* f = FileAccess::open(to_write, FileAccess::WRITE);
+            FileAccess* f   = FileAccess::open(to_write, FileAccess::WRITE);
             if (f) {
                 f->store_buffer(data.ptr(), data.size());
                 memdelete(f);

@@ -59,7 +59,7 @@ static ViewController* mainViewController = nil;
     didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     // Create a full-screen window
     CGRect windowBounds = [[UIScreen mainScreen] bounds];
-    self.window = [[UIWindow alloc] initWithFrame:windowBounds];
+    self.window         = [[UIWindow alloc] initWithFrame:windowBounds];
 
     NSArray* paths = NSSearchPathForDirectoriesInDomains(
         NSDocumentDirectory,

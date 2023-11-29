@@ -49,12 +49,12 @@ class AnimationCache : public Object {
         bool valid;
 
         Path() {
-            object = nullptr;
+            object   = nullptr;
             skeleton = nullptr;
-            node = nullptr;
+            node     = nullptr;
             bone_idx = -1;
-            valid = false;
-            spatial = nullptr;
+            valid    = false;
+            spatial  = nullptr;
         }
     };
 

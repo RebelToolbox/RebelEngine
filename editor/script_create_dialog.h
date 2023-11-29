@@ -135,7 +135,7 @@ public:
         const String& p_base_name,
         const String& p_base_path,
         bool p_built_in_enabled = true,
-        bool p_load_enabled = true
+        bool p_load_enabled     = true
     );
     void set_inheritance_base_type(const String& p_base);
     ScriptCreateDialog();

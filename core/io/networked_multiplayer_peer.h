@@ -42,7 +42,7 @@ protected:
 public:
     enum {
         TARGET_PEER_BROADCAST = 0,
-        TARGET_PEER_SERVER = 1
+        TARGET_PEER_SERVER    = 1
     };
 
     enum TransferMode {
@@ -58,8 +58,8 @@ public:
     };
 
     virtual void set_transfer_mode(TransferMode p_mode) = 0;
-    virtual TransferMode get_transfer_mode() const = 0;
-    virtual void set_target_peer(int p_peer_id) = 0;
+    virtual TransferMode get_transfer_mode() const      = 0;
+    virtual void set_target_peer(int p_peer_id)         = 0;
 
     virtual int get_packet_peer() const = 0;
 
@@ -70,7 +70,7 @@ public:
     virtual int get_unique_id() const = 0;
 
     virtual void set_refuse_new_connections(bool p_enable) = 0;
-    virtual bool is_refusing_new_connections() const = 0;
+    virtual bool is_refusing_new_connections() const       = 0;
 
     virtual ConnectionStatus get_connection_status() const = 0;
 

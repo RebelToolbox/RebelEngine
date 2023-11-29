@@ -49,7 +49,7 @@ String DirAccessOSX::fix_unicode_name(const char* p_name) const {
 int DirAccessOSX::get_drive_count() {
     NSArray* res_keys = [NSArray
         arrayWithObjects:NSURLVolumeURLKey, NSURLIsSystemImmutableKey, nil];
-    NSArray* vols = [[NSFileManager defaultManager]
+    NSArray* vols     = [[NSFileManager defaultManager]
         mountedVolumeURLsIncludingResourceValuesForKeys:res_keys
                                                 options:
                                                     NSVolumeEnumerationSkipHiddenVolumes];
@@ -60,11 +60,11 @@ int DirAccessOSX::get_drive_count() {
 String DirAccessOSX::get_drive(int p_drive) {
     NSArray* res_keys = [NSArray
         arrayWithObjects:NSURLVolumeURLKey, NSURLIsSystemImmutableKey, nil];
-    NSArray* vols = [[NSFileManager defaultManager]
+    NSArray* vols     = [[NSFileManager defaultManager]
         mountedVolumeURLsIncludingResourceValuesForKeys:res_keys
                                                 options:
                                                     NSVolumeEnumerationSkipHiddenVolumes];
-    int count = [vols count];
+    int count         = [vols count];
 
     ERR_FAIL_INDEX_V(p_drive, count, "");
 
@@ -77,8 +77,8 @@ String DirAccessOSX::get_drive(int p_drive) {
 }
 
 bool DirAccessOSX::is_hidden(const String& p_name) {
-    String f = get_current_dir().plus_file(p_name);
-    NSURL* url = [NSURL fileURLWithPath:@(f.utf8().get_data())];
+    String f         = get_current_dir().plus_file(p_name);
+    NSURL* url       = [NSURL fileURLWithPath:@(f.utf8().get_data())];
     NSNumber* hidden = nil;
     if (![url getResourceValue:&hidden forKey:NSURLIsHiddenKey error:nil]) {
         return DirAccessUnix::is_hidden(p_name);

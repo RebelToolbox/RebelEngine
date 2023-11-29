@@ -298,7 +298,7 @@ Node* MultiplayerAPI::_process_get_node(
     int p_packet_len
 ) {
     uint32_t target = decode_uint32(&p_packet[1]);
-    Node* node = nullptr;
+    Node* node      = nullptr;
 
     if (target & 0x80000000) {
         // Use full path (not cached yet).
@@ -419,8 +419,8 @@ void MultiplayerAPI::_process_rpc(
             "Invalid packet received. Unable to decode RPC argument."
         );
 
-        argp.write[i] = &args[i];
-        p_offset += vlen;
+        argp.write[i]  = &args[i];
+        p_offset      += vlen;
     }
 
     Variant::CallError ce;
@@ -525,14 +525,14 @@ void MultiplayerAPI::_process_simplify_path(
     }
 
     PathGetCache::NodeInfo ni;
-    ni.path = path;
+    ni.path     = path;
     ni.instance = 0;
 
     path_get_cache[p_from].nodes[id] = ni;
 
     // Encode path to send ack.
     CharString pname = String(path).utf8();
-    int len = encode_cstring(pname.get_data(), nullptr);
+    int len          = encode_cstring(pname.get_data(), nullptr);
 
     Vector<uint8_t> packet;
 
@@ -613,7 +613,7 @@ bool MultiplayerAPI::_send_confirm_path(
     for (List<int>::Element* E = peers_to_add.front(); E; E = E->next()) {
         // Encode function name.
         CharString pname = String(p_path).utf8();
-        int len = encode_cstring(pname.get_data(), nullptr);
+        int len          = encode_cstring(pname.get_data(), nullptr);
 
         Vector<uint8_t> packet;
 
@@ -691,8 +691,8 @@ void MultiplayerAPI::_send_rpc(
     if (!psc) {
         // Path is not cached, create.
         path_send_cache[from_path] = PathSentCache();
-        psc = path_send_cache.getptr(from_path);
-        psc->id = last_send_cache_id++;
+        psc                        = path_send_cache.getptr(from_path);
+        psc->id                    = last_send_cache_id++;
     }
 
     // Create base packet, lots of hardcode because it must be tight.
@@ -715,7 +715,7 @@ void MultiplayerAPI::_send_rpc(
 
     // Encode function name.
     CharString name = String(p_name).utf8();
-    int len = encode_cstring(name.get_data(), nullptr);
+    int len         = encode_cstring(name.get_data(), nullptr);
     MAKE_ROOM(ofs + len);
     encode_cstring(name.get_data(), &(packet_cache.write[ofs]));
     ofs += len;
@@ -744,8 +744,8 @@ void MultiplayerAPI::_send_rpc(
     } else {
         // Call arguments.
         MAKE_ROOM(ofs + 1);
-        packet_cache.write[ofs] = p_argcount;
-        ofs += 1;
+        packet_cache.write[ofs]  = p_argcount;
+        ofs                     += 1;
         for (int i = 0; i < p_argcount; i++) {
             Error err = encode_variant(
                 *p_arg[i],
@@ -803,7 +803,7 @@ void MultiplayerAPI::_send_rpc(
 
         // Append path at the end, since we will need it for some packets.
         CharString pname = String(from_path).utf8();
-        int path_len = encode_cstring(pname.get_data(), nullptr);
+        int path_len     = encode_cstring(pname.get_data(), nullptr);
         MAKE_ROOM(ofs + path_len);
         encode_cstring(pname.get_data(), &(packet_cache.write[ofs]));
 
@@ -894,11 +894,11 @@ void MultiplayerAPI::rpcp(
         "Trying to call an RPC via a network peer which is not connected."
     );
 
-    int node_id = network_peer->get_unique_id();
-    bool skip_rpc = node_id == p_peer_id;
+    int node_id            = network_peer->get_unique_id();
+    bool skip_rpc          = node_id == p_peer_id;
     bool call_local_native = false;
     bool call_local_script = false;
-    bool is_master = p_node->is_network_master();
+    bool is_master         = p_node->is_network_master();
 
     if (p_peer_id == 0 || p_peer_id == node_id
         || (p_peer_id < 0 && p_peer_id != -node_id)) {
@@ -943,7 +943,7 @@ void MultiplayerAPI::rpcp(
     }
 
     if (call_local_native) {
-        int temp_id = rpc_sender_id;
+        int temp_id   = rpc_sender_id;
         rpc_sender_id = get_network_unique_id();
         Variant::CallError ce;
         p_node->call(p_method, p_arg, p_argcount, ce);
@@ -963,7 +963,7 @@ void MultiplayerAPI::rpcp(
     }
 
     if (call_local_script) {
-        int temp_id = rpc_sender_id;
+        int temp_id   = rpc_sender_id;
         rpc_sender_id = get_network_unique_id();
         Variant::CallError ce;
         ce.error = Variant::CallError::CALL_OK;
@@ -1010,7 +1010,7 @@ void MultiplayerAPI::rsetp(
         "Trying to send an RSET via a network peer which is not connected."
     );
 
-    int node_id = network_peer->get_unique_id();
+    int node_id    = network_peer->get_unique_id();
     bool is_master = p_node->is_network_master();
     bool skip_rset = node_id == p_peer_id;
     bool set_local = false;
@@ -1112,7 +1112,7 @@ Error MultiplayerAPI::send_bytes(
 
     MAKE_ROOM(p_data.size() + 1);
     PoolVector<uint8_t>::Read r = p_data.read();
-    packet_cache.write[0] = NETWORK_COMMAND_RAW;
+    packet_cache.write[0]       = NETWORK_COMMAND_RAW;
     memcpy(&packet_cache.write[1], &r[0], p_data.size());
 
     network_peer->set_target_peer(p_to);
@@ -1264,7 +1264,7 @@ int MultiplayerAPI::_get_bandwidth_usage(
 ) {
     int total_bandwidth = 0;
 
-    uint64_t timestamp = OS::get_singleton()->get_ticks_msec();
+    uint64_t timestamp       = OS::get_singleton()->get_ticks_msec();
     uint64_t final_timestamp = timestamp - 1000;
 
     int i = (p_pointer + p_buffer.size() - 1) % p_buffer.size();
@@ -1274,7 +1274,7 @@ int MultiplayerAPI::_get_bandwidth_usage(
             return total_bandwidth;
         }
         total_bandwidth += p_buffer[i].packet_size;
-        i = (i + p_buffer.size() - 1) % p_buffer.size();
+        i                = (i + p_buffer.size() - 1) % p_buffer.size();
     }
 
     ERR_FAIL_COND_V_MSG(
@@ -1294,9 +1294,9 @@ void MultiplayerAPI::_init_node_profile(ObjectID p_node) {
     profiler_frame_data[p_node].node = p_node;
     profiler_frame_data[p_node].node_path =
         Object::cast_to<Node>(ObjectDB::get_instance(p_node))->get_path();
-    profiler_frame_data[p_node].incoming_rpc = 0;
+    profiler_frame_data[p_node].incoming_rpc  = 0;
     profiler_frame_data[p_node].incoming_rset = 0;
-    profiler_frame_data[p_node].outgoing_rpc = 0;
+    profiler_frame_data[p_node].outgoing_rpc  = 0;
     profiler_frame_data[p_node].outgoing_rset = 0;
 }
 #endif
@@ -1447,7 +1447,7 @@ void MultiplayerAPI::_bind_methods() {
 
 MultiplayerAPI::MultiplayerAPI() : allow_object_decoding(false) {
     rpc_sender_id = 0;
-    root_node = nullptr;
+    root_node     = nullptr;
 #ifdef DEBUG_ENABLED
     profiling = false;
 #endif

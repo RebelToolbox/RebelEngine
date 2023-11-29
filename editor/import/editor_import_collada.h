@@ -45,7 +45,7 @@ public:
         int p_bake_fps,
         uint32_t p_compress_flags,
         List<String>* r_missing_deps = nullptr,
-        Error* r_err = nullptr
+        Error* r_err                 = nullptr
     );
     virtual Ref<Animation> import_animation(
         const String& p_path,

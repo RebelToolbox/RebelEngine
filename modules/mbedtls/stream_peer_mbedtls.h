@@ -64,8 +64,8 @@ public:
     );
     virtual Error connect_to_stream(
         Ref<StreamPeer> p_base,
-        bool p_validate_certs = false,
-        const String& p_for_hostname = String(),
+        bool p_validate_certs             = false,
+        const String& p_for_hostname      = String(),
         Ref<X509Certificate> p_valid_cert = Ref<X509Certificate>()
     );
     virtual Status get_status() const;

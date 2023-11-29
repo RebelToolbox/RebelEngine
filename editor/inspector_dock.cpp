@@ -88,7 +88,7 @@ void InspectorDock::_menu_option(int p_option) {
                 current->get_property_list(&props);
                 Map<RES, RES> duplicates;
                 for (List<PropertyInfo>::Element* E = props.front(); E;
-                     E = E->next()) {
+                     E                              = E->next()) {
                     if (!(E->get().usage & PROPERTY_USAGE_STORAGE)) {
                         continue;
                     }
@@ -488,9 +488,9 @@ void InspectorDock::update(Object* p_object) {
 
     current = p_object;
 
-    const bool is_object = p_object != nullptr;
+    const bool is_object   = p_object != nullptr;
     const bool is_resource = is_object && p_object->is_class("Resource");
-    const bool is_node = is_object && p_object->is_class("Node");
+    const bool is_node     = is_object && p_object->is_class("Node");
 
     object_menu->set_disabled(!is_object);
     search->set_editable(is_object);
@@ -554,9 +554,9 @@ void InspectorDock::update(Object* p_object) {
     p_object->get_method_list(&methods);
 
     if (!methods.empty()) {
-        bool found = false;
+        bool found                   = false;
         List<MethodInfo>::Element* I = methods.front();
-        int i = 0;
+        int i                        = 0;
         while (I) {
             if (I->get().flags & METHOD_FLAG_EDITOR) {
                 if (!found) {
@@ -597,7 +597,7 @@ InspectorDock::InspectorDock(EditorNode* p_editor, EditorData& p_editor_data) {
     set_name("Inspector");
     set_theme(p_editor->get_gui_base()->get_theme());
 
-    editor = p_editor;
+    editor      = p_editor;
     editor_data = &p_editor_data;
 
     HBoxContainer* general_options_hb = memnew(HBoxContainer);

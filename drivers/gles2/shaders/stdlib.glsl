@@ -388,7 +388,7 @@ highp float determinant(highp mat4 m) {
     highp float s03 = m[2].x * m[3].w - m[3].x * m[2].w;
     highp float s04 = m[2].x * m[3].z - m[3].x * m[2].z;
     highp float s05 = m[2].x * m[3].y - m[3].x * m[2].y;
-    highp vec4 c = vec4(
+    highp vec4 c    = vec4(
         (m[1].y * s00 - m[1].z * s01 + m[1].w * s02),
         -(m[1].x * s00 - m[1].z * s03 + m[1].w * s04),
         (m[1].x * s01 - m[1].y * s03 + m[1].w * s05),
@@ -410,7 +410,7 @@ highp mat3 inverse(highp mat3 m) {
     highp float c01 = m[2].z * m[1].y - m[1].z * m[2].y;
     highp float c11 = -m[2].z * m[1].x + m[1].z * m[2].x;
     highp float c21 = m[2].y * m[1].x - m[1].y * m[2].x;
-    highp float d = 1.0 / (m[0].x * c01 + m[0].y * c11 + m[0].z * c21);
+    highp float d   = 1.0 / (m[0].x * c01 + m[0].y * c11 + m[0].z * c21);
 
     return mat3(
                c01,
@@ -477,7 +477,7 @@ highp mat4 inverse(highp mat4 m) {
     vec4 d0 = vec4(m[0] * r0);
 
     highp float d1 = (d0.x + d0.y) + (d0.z + d0.w);
-    highp float d = 1.0 / d1;
+    highp float d  = 1.0 / d1;
 
     return inv * d;
 }

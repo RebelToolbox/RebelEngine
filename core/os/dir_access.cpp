@@ -171,7 +171,7 @@ Error DirAccess::make_dir_recursive(String p_dir) {
 
     String curpath = base;
     for (int i = 0; i < subdirs.size(); i++) {
-        curpath = curpath.plus_file(subdirs[i]);
+        curpath   = curpath.plus_file(subdirs[i]);
         Error err = make_dir(curpath);
         if (err != OK && err != ERR_ALREADY_EXISTS) {
             ERR_FAIL_V_MSG(err, "Could not create directory: " + curpath);
@@ -396,7 +396,7 @@ Error DirAccess::_copy_dir(
     list_dir_end();
 
     for (List<String>::Element* E = dirs.front(); E; E = E->next()) {
-        String rel_path = E->get();
+        String rel_path   = E->get();
         String target_dir = p_to + rel_path;
         if (!p_target_da->dir_exists(target_dir)) {
             Error err = p_target_da->make_dir(target_dir);
@@ -475,7 +475,7 @@ Error DirAccess::copy_dir(
 
 bool DirAccess::exists(String p_dir) {
     DirAccess* da = DirAccess::create_for_path(p_dir);
-    bool valid = da->change_dir(p_dir) == OK;
+    bool valid    = da->change_dir(p_dir) == OK;
     memdelete(da);
     return valid;
 }

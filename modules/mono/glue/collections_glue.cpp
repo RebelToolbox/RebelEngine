@@ -142,7 +142,7 @@ Array* godot_icall_Array_Duplicate(Array* ptr, MonoBoolean deep) {
 }
 
 Array* godot_icall_Array_Concatenate(Array* left, Array* right) {
-    int count = left->size() + right->size();
+    int count        = left->size() + right->size();
     Array* new_array = memnew(Array(left->duplicate(false)));
     new_array->resize(count);
     for (unsigned int i = 0; i < (unsigned int)right->size(); i++) {
@@ -199,7 +199,7 @@ void godot_icall_Array_Generic_GetElementTypeInfo(
 ) {
     MonoType* elem_type = mono_reflection_type_get_type(refltype);
 
-    *type_encoding = mono_type_get_type(elem_type);
+    *type_encoding            = mono_type_get_type(elem_type);
     MonoClass* type_class_raw = mono_class_from_mono_type(elem_type);
     *type_class = GDMono::get_singleton()->get_class(type_class_raw);
 }
@@ -291,7 +291,7 @@ int32_t godot_icall_Dictionary_KeyValuePairs(
     Array** keys,
     Array** values
 ) {
-    *keys = godot_icall_Dictionary_Keys(ptr);
+    *keys   = godot_icall_Dictionary_Keys(ptr);
     *values = godot_icall_Dictionary_Values(ptr);
     return godot_icall_Dictionary_Count(ptr);
 }
@@ -329,7 +329,7 @@ void godot_icall_Dictionary_Add(
     MonoObject* value
 ) {
     Variant varKey = GDMonoMarshal::mono_object_to_variant(key);
-    Variant* ret = ptr->getptr(varKey);
+    Variant* ret   = ptr->getptr(varKey);
     if (ret != NULL) {
         GDMonoUtils::set_pending_exception(mono_get_exception_argument(
             "key",
@@ -429,7 +429,7 @@ void godot_icall_Dictionary_Generic_GetValueTypeInfo(
 ) {
     MonoType* value_type = mono_reflection_type_get_type(refltype);
 
-    *type_encoding = mono_type_get_type(value_type);
+    *type_encoding            = mono_type_get_type(value_type);
     MonoClass* type_class_raw = mono_class_from_mono_type(value_type);
     *type_class = GDMono::get_singleton()->get_class(type_class_raw);
 }

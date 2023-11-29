@@ -50,10 +50,10 @@ void AudioDriverJavaScript::_latency_update_callback(float p_latency) {
 
 void AudioDriverJavaScript::_audio_driver_process(int p_from, int p_samples) {
     int32_t* stream_buffer = reinterpret_cast<int32_t*>(output_rb);
-    const int max_samples = memarr_len(output_rb);
+    const int max_samples  = memarr_len(output_rb);
 
     int write_pos = p_from;
-    int to_write = p_samples;
+    int to_write  = p_samples;
     if (to_write == 0) {
         to_write = max_samples;
     }
@@ -67,8 +67,8 @@ void AudioDriverJavaScript::_audio_driver_process(int p_from, int p_samples) {
         for (int i = write_pos; i < max_samples; i++) {
             output_rb[i] = float(stream_buffer[i] >> 16) / 32768.f;
         }
-        to_write -= samples_high;
-        write_pos = 0;
+        to_write  -= samples_high;
+        write_pos  = 0;
     }
     // Leftover
     audio_server_process(to_write / channel_count, &stream_buffer[write_pos]);
@@ -84,7 +84,7 @@ void AudioDriverJavaScript::_audio_driver_capture(int p_from, int p_samples) {
     const int max_samples = memarr_len(input_rb);
 
     int read_pos = p_from;
-    int to_read = p_samples;
+    int to_read  = p_samples;
     if (to_read == 0) {
         to_read = max_samples;
     }
@@ -94,8 +94,8 @@ void AudioDriverJavaScript::_audio_driver_capture(int p_from, int p_samples) {
         for (int i = read_pos; i < max_samples; i++) {
             input_buffer_write(int32_t(input_rb[i] * 32768.f) * (1U << 16));
         }
-        to_read -= samples_high;
-        read_pos = 0;
+        to_read  -= samples_high;
+        read_pos  = 0;
     }
     // Leftover
     for (int i = read_pos; i < read_pos + to_read; i++) {
@@ -106,7 +106,7 @@ void AudioDriverJavaScript::_audio_driver_capture(int p_from, int p_samples) {
 Error AudioDriverJavaScript::init() {
     int latency = GLOBAL_GET("audio/output_latency");
     if (!audio_context.inited) {
-        audio_context.mix_rate = GLOBAL_GET("audio/mix_rate");
+        audio_context.mix_rate      = GLOBAL_GET("audio/mix_rate");
         audio_context.channel_count = godot_audio_init(
             &audio_context.mix_rate,
             latency,
@@ -115,10 +115,10 @@ Error AudioDriverJavaScript::init() {
         );
         audio_context.inited = true;
     }
-    mix_rate = audio_context.mix_rate;
+    mix_rate      = audio_context.mix_rate;
     channel_count = audio_context.channel_count;
     buffer_length = closest_power_of_2((latency * mix_rate / 1000));
-    Error err = create(buffer_length, channel_count);
+    Error err     = create(buffer_length, channel_count);
     if (err != OK) {
         return err;
     }
@@ -265,13 +265,13 @@ void AudioDriverWorklet::_capture_callback(int p_pos, int p_samples) {
 /// AudioWorkletNode implementation (threads)
 void AudioDriverWorklet::_audio_thread_func(void* p_data) {
     AudioDriverWorklet* driver = static_cast<AudioDriverWorklet*>(p_data);
-    const int out_samples = memarr_len(driver->get_output_rb());
-    const int in_samples = memarr_len(driver->get_input_rb());
-    int wpos = 0;
-    int to_write = out_samples;
-    int rpos = 0;
-    int to_read = 0;
-    int32_t step = 0;
+    const int out_samples      = memarr_len(driver->get_output_rb());
+    const int in_samples       = memarr_len(driver->get_input_rb());
+    int wpos                   = 0;
+    int to_write               = out_samples;
+    int rpos                   = 0;
+    int to_read                = 0;
+    int32_t step               = 0;
     while (!driver->quit) {
         if (to_read) {
             driver->lock();

@@ -159,12 +159,12 @@ void Range::set_as_ratio(double p_value) {
         double exp_min =
             get_min() == 0 ? 0.0 : Math::log(get_min()) / Math::log((double)2);
         double exp_max = Math::log(get_max()) / Math::log((double)2);
-        v = Math::pow(2, exp_min + (exp_max - exp_min) * p_value);
+        v              = Math::pow(2, exp_min + (exp_max - exp_min) * p_value);
     } else {
         double percent = (get_max() - get_min()) * p_value;
         if (get_step() > 0) {
             double steps = round(percent / get_step());
-            v = steps * get_step() + get_min();
+            v            = steps * get_step() + get_min();
         } else {
             v = percent + get_min();
         }
@@ -183,8 +183,8 @@ double Range::get_as_ratio() const {
         double exp_min =
             get_min() == 0 ? 0.0 : Math::log(get_min()) / Math::log((double)2);
         double exp_max = Math::log(get_max()) / Math::log((double)2);
-        float value = CLAMP(get_value(), shared->min, shared->max);
-        double v = Math::log(value) / Math::log((double)2);
+        float value    = CLAMP(get_value(), shared->min, shared->max);
+        double v       = Math::log(value) / Math::log((double)2);
 
         return CLAMP((v - exp_min) / (exp_max - exp_min), 0, 1);
 
@@ -209,15 +209,15 @@ void Range::share(Range* p_range) {
 }
 
 void Range::unshare() {
-    Shared* nshared = memnew(Shared);
-    nshared->min = shared->min;
-    nshared->max = shared->max;
-    nshared->val = shared->val;
-    nshared->step = shared->step;
-    nshared->page = shared->page;
-    nshared->exp_ratio = shared->exp_ratio;
+    Shared* nshared        = memnew(Shared);
+    nshared->min           = shared->min;
+    nshared->max           = shared->max;
+    nshared->val           = shared->val;
+    nshared->step          = shared->step;
+    nshared->page          = shared->page;
+    nshared->exp_ratio     = shared->exp_ratio;
     nshared->allow_greater = shared->allow_greater;
-    nshared->allow_lesser = shared->allow_lesser;
+    nshared->allow_lesser  = shared->allow_lesser;
     _unref_shared();
     _ref_shared(nshared);
 }
@@ -380,16 +380,16 @@ bool Range::is_lesser_allowed() const {
 }
 
 Range::Range() {
-    shared = memnew(Shared);
-    shared->min = 0;
-    shared->max = 100;
-    shared->val = 0;
+    shared       = memnew(Shared);
+    shared->min  = 0;
+    shared->max  = 100;
+    shared->val  = 0;
     shared->step = 1;
     shared->page = 0;
     shared->owners.insert(this);
-    shared->exp_ratio = false;
+    shared->exp_ratio     = false;
     shared->allow_greater = false;
-    shared->allow_lesser = false;
+    shared->allow_lesser  = false;
 
     _rounded_values = false;
 }

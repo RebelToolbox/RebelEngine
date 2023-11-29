@@ -120,7 +120,7 @@ Vector<MonoClassField*> GDMonoClass::get_enum_fields() {
 
     Vector<MonoClassField*> enum_fields;
 
-    void* iter = NULL;
+    void* iter                = NULL;
     MonoClassField* raw_field = NULL;
     while ((raw_field = mono_class_get_fields(get_mono_ptr(), &iter)) != NULL) {
         uint32_t field_flags = mono_field_get_flags(raw_field);
@@ -173,7 +173,7 @@ MonoObject* GDMonoClass::get_attribute(GDMonoClass* p_attr_class) {
 void GDMonoClass::fetch_attributes() {
     ERR_FAIL_COND(attributes != NULL);
 
-    attributes = mono_custom_attrs_from_class(get_mono_ptr());
+    attributes    = mono_custom_attrs_from_class(get_mono_ptr());
     attrs_fetched = true;
 }
 
@@ -185,7 +185,7 @@ void GDMonoClass::fetch_methods_with_godot_api_checks(GDMonoClass* p_native_base
         return;
     }
 
-    void* iter = NULL;
+    void* iter             = NULL;
     MonoMethod* raw_method = NULL;
     while ((raw_method = mono_class_get_methods(get_mono_ptr(), &iter)) != NULL
     ) {
@@ -366,7 +366,7 @@ GDMonoMethod* GDMonoClass::get_method(
 GDMonoMethod* GDMonoClass::get_method(MonoMethod* p_raw_method) {
     MonoMethodSignature* sig = mono_method_signature(p_raw_method);
 
-    int params_count = mono_signature_get_param_count(sig);
+    int params_count       = mono_signature_get_param_count(sig);
     StringName method_name = String::utf8(mono_method_get_name(p_raw_method));
 
     return get_method(p_raw_method, method_name, params_count);
@@ -377,7 +377,7 @@ GDMonoMethod* GDMonoClass::get_method(
     const StringName& p_name
 ) {
     MonoMethodSignature* sig = mono_method_signature(p_raw_method);
-    int params_count = mono_signature_get_param_count(sig);
+    int params_count         = mono_signature_get_param_count(sig);
     return get_method(p_raw_method, p_name, params_count);
 }
 
@@ -453,7 +453,7 @@ const Vector<GDMonoField*>& GDMonoClass::get_all_fields() {
         return fields_list;
     }
 
-    void* iter = NULL;
+    void* iter                = NULL;
     MonoClassField* raw_field = NULL;
     while ((raw_field = mono_class_get_fields(mono_class, &iter)) != NULL) {
         StringName name = String::utf8(mono_field_get_name(raw_field));
@@ -505,7 +505,7 @@ const Vector<GDMonoProperty*>& GDMonoClass::get_all_properties() {
         return properties_list;
     }
 
-    void* iter = NULL;
+    void* iter                 = NULL;
     MonoProperty* raw_property = NULL;
     while ((raw_property = mono_class_get_properties(mono_class, &iter)) != NULL
     ) {
@@ -534,7 +534,7 @@ const Vector<GDMonoClass*>& GDMonoClass::get_all_delegates() {
         return delegates_list;
     }
 
-    void* iter = NULL;
+    void* iter           = NULL;
     MonoClass* raw_class = NULL;
     while ((raw_class = mono_class_get_nested_types(mono_class, &iter)) != NULL
     ) {
@@ -566,7 +566,7 @@ const Vector<GDMonoClass*>& GDMonoClass::get_all_delegates() {
 
 const Vector<GDMonoMethod*>& GDMonoClass::get_all_methods() {
     if (!method_list_fetched) {
-        void* iter = NULL;
+        void* iter             = NULL;
         MonoMethod* raw_method = NULL;
         while ((raw_method = mono_class_get_methods(get_mono_ptr(), &iter))
                != NULL) {
@@ -589,18 +589,18 @@ GDMonoClass::GDMonoClass(
     GDMonoAssembly* p_assembly
 ) {
     namespace_name = p_namespace;
-    class_name = p_name;
-    mono_class = p_class;
-    assembly = p_assembly;
+    class_name     = p_name;
+    mono_class     = p_class;
+    assembly       = p_assembly;
 
     attrs_fetched = false;
-    attributes = NULL;
+    attributes    = NULL;
 
-    methods_fetched = false;
+    methods_fetched     = false;
     method_list_fetched = false;
-    fields_fetched = false;
-    properties_fetched = false;
-    delegates_fetched = false;
+    fields_fetched      = false;
+    properties_fetched  = false;
+    delegates_fetched   = false;
 }
 
 GDMonoClass::~GDMonoClass() {
@@ -609,12 +609,12 @@ GDMonoClass::~GDMonoClass() {
     }
 
     for (Map<StringName, GDMonoField*>::Element* E = fields.front(); E;
-         E = E->next()) {
+         E                                         = E->next()) {
         memdelete(E->value());
     }
 
     for (Map<StringName, GDMonoProperty*>::Element* E = properties.front(); E;
-         E = E->next()) {
+         E                                            = E->next()) {
         memdelete(E->value());
     }
 

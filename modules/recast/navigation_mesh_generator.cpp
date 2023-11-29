@@ -95,11 +95,11 @@ void EditorNavigationMeshGenerator::_add_mesh(
         Array a = p_mesh->surface_get_arrays(i);
 
         PoolVector<Vector3> mesh_vertices = a[Mesh::ARRAY_VERTEX];
-        PoolVector<Vector3>::Read vr = mesh_vertices.read();
+        PoolVector<Vector3>::Read vr      = mesh_vertices.read();
 
         if (p_mesh->surface_get_format(i) & Mesh::ARRAY_FORMAT_INDEX) {
             PoolVector<int> mesh_indices = a[Mesh::ARRAY_INDEX];
-            PoolVector<int>::Read ir = mesh_indices.read();
+            PoolVector<int>::Read ir     = mesh_indices.read();
 
             for (int j = 0; j < mesh_vertices.size(); j++) {
                 _add_vertex(p_xform.xform(vr[j]), p_verticies);
@@ -132,7 +132,7 @@ void EditorNavigationMeshGenerator::_add_faces(
     Vector<float>& p_verticies,
     Vector<int>& p_indices
 ) {
-    int face_count = p_faces.size() / 3;
+    int face_count           = p_faces.size() / 3;
     int current_vertex_count = p_verticies.size() / 3;
 
     for (int j = 0; j < face_count; j++) {
@@ -159,7 +159,7 @@ void EditorNavigationMeshGenerator::_parse_geometry(
         && p_generate_from
                != NavigationMesh::PARSED_GEOMETRY_STATIC_COLLIDERS) {
         MeshInstance* mesh_instance = Object::cast_to<MeshInstance>(p_node);
-        Ref<Mesh> mesh = mesh_instance->get_mesh();
+        Ref<Mesh> mesh              = mesh_instance->get_mesh();
         if (mesh.is_valid()) {
             _add_mesh(
                 mesh,
@@ -175,7 +175,7 @@ void EditorNavigationMeshGenerator::_parse_geometry(
         && p_generate_from
                != NavigationMesh::PARSED_GEOMETRY_STATIC_COLLIDERS) {
         CSGShape* csg_shape = Object::cast_to<CSGShape>(p_node);
-        Array meshes = csg_shape->get_meshes();
+        Array meshes        = csg_shape->get_meshes();
         if (!meshes.empty()) {
             Ref<Mesh> mesh = meshes[1];
             if (mesh.is_valid()) {
@@ -307,8 +307,8 @@ void EditorNavigationMeshGenerator::_parse_geometry(
         && p_generate_from
                != NavigationMesh::PARSED_GEOMETRY_STATIC_COLLIDERS) {
         GridMap* gridmap_instance = Object::cast_to<GridMap>(p_node);
-        Array meshes = gridmap_instance->get_meshes();
-        Transform xform = gridmap_instance->get_transform();
+        Array meshes              = gridmap_instance->get_meshes();
+        Transform xform           = gridmap_instance->get_transform();
         for (int i = 0; i < meshes.size(); i += 2) {
             Ref<Mesh> mesh = meshes[i + 1];
             if (mesh.is_valid()) {
@@ -358,10 +358,10 @@ void EditorNavigationMeshGenerator::
     p_nav_mesh->set_vertices(nav_vertices);
 
     for (int i = 0; i < p_detail_mesh->nmeshes; i++) {
-        const unsigned int* m = &p_detail_mesh->meshes[i * 4];
+        const unsigned int* m     = &p_detail_mesh->meshes[i * 4];
         const unsigned int bverts = m[0];
-        const unsigned int btris = m[2];
-        const unsigned int ntris = m[3];
+        const unsigned int btris  = m[2];
+        const unsigned int ntris  = m[3];
         const unsigned char* tris = &p_detail_mesh->tris[btris * 4];
         for (unsigned int j = 0; j < ntris; j++) {
             Vector<int> nav_indices;
@@ -390,9 +390,9 @@ void EditorNavigationMeshGenerator::_build_recast_navigation_mesh(
     ep->step(TTR("Setting up Configuration..."), 1);
 
     const float* verts = vertices.ptr();
-    const int nverts = vertices.size() / 3;
-    const int* tris = indices.ptr();
-    const int ntris = indices.size() / 3;
+    const int nverts   = vertices.size() / 3;
+    const int* tris    = indices.ptr();
+    const int ntris    = indices.size() / 3;
 
     float bmin[3], bmax[3];
     rcCalcBounds(verts, nverts, bmin, bmax);
@@ -400,8 +400,8 @@ void EditorNavigationMeshGenerator::_build_recast_navigation_mesh(
     rcConfig cfg;
     memset(&cfg, 0, sizeof(cfg));
 
-    cfg.cs = p_nav_mesh->get_cell_size();
-    cfg.ch = p_nav_mesh->get_cell_height();
+    cfg.cs                 = p_nav_mesh->get_cell_size();
+    cfg.ch                 = p_nav_mesh->get_cell_height();
     cfg.walkableSlopeAngle = p_nav_mesh->get_agent_max_slope();
     cfg.walkableHeight =
         (int)Math::ceil(p_nav_mesh->get_agent_height() / cfg.ch);
@@ -412,16 +412,16 @@ void EditorNavigationMeshGenerator::_build_recast_navigation_mesh(
     cfg.maxEdgeLen =
         (int)(p_nav_mesh->get_edge_max_length() / p_nav_mesh->get_cell_size());
     cfg.maxSimplificationError = p_nav_mesh->get_edge_max_error();
-    cfg.minRegionArea = (int)(p_nav_mesh->get_region_min_size()
+    cfg.minRegionArea          = (int)(p_nav_mesh->get_region_min_size()
                               * p_nav_mesh->get_region_min_size());
-    cfg.mergeRegionArea = (int)(p_nav_mesh->get_region_merge_size()
+    cfg.mergeRegionArea        = (int)(p_nav_mesh->get_region_merge_size()
                                 * p_nav_mesh->get_region_merge_size());
-    cfg.maxVertsPerPoly = (int)p_nav_mesh->get_verts_per_poly();
-    cfg.detailSampleDist = p_nav_mesh->get_detail_sample_distance() < 0.9f
-                             ? 0
-                             : p_nav_mesh->get_cell_size()
+    cfg.maxVertsPerPoly        = (int)p_nav_mesh->get_verts_per_poly();
+    cfg.detailSampleDist       = p_nav_mesh->get_detail_sample_distance() < 0.9f
+                                   ? 0
+                                   : p_nav_mesh->get_cell_size()
                                    * p_nav_mesh->get_detail_sample_distance();
-    cfg.detailSampleMaxError = p_nav_mesh->get_cell_height()
+    cfg.detailSampleMaxError   = p_nav_mesh->get_cell_height()
                              * p_nav_mesh->get_detail_sample_max_error();
 
     cfg.bmin[0] = bmin[0];
@@ -622,11 +622,11 @@ void EditorNavigationMeshGenerator::bake(
     Transform navmesh_xform =
         Object::cast_to<Spatial>(p_node)->get_transform().affine_inverse();
     for (const List<Node*>::Element* E = parse_nodes.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         NavigationMesh::ParsedGeometryType geometry_type =
             p_nav_mesh->get_parsed_geometry_type();
         uint32_t collision_mask = p_nav_mesh->get_collision_mask();
-        bool recurse_children = p_nav_mesh->get_source_geometry_mode()
+        bool recurse_children   = p_nav_mesh->get_source_geometry_mode()
                              != NavigationMesh::SOURCE_GEOMETRY_GROUPS_EXPLICIT;
         _parse_geometry(
             navmesh_xform,
@@ -640,10 +640,10 @@ void EditorNavigationMeshGenerator::bake(
     }
 
     if (vertices.size() > 0 && indices.size() > 0) {
-        rcHeightfield* hf = nullptr;
-        rcCompactHeightfield* chf = nullptr;
-        rcContourSet* cset = nullptr;
-        rcPolyMesh* poly_mesh = nullptr;
+        rcHeightfield* hf             = nullptr;
+        rcCompactHeightfield* chf     = nullptr;
+        rcContourSet* cset            = nullptr;
+        rcPolyMesh* poly_mesh         = nullptr;
         rcPolyMeshDetail* detail_mesh = nullptr;
 
         _build_recast_navigation_mesh(

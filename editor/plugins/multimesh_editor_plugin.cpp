@@ -133,7 +133,7 @@ void MultiMeshEditor::_populate() {
 
     // make all faces local
 
-    int gc = geometry.size();
+    int gc                     = geometry.size();
     PoolVector<Face3>::Write w = geometry.write();
 
     for (int i = 0; i < gc; i++) {
@@ -145,7 +145,7 @@ void MultiMeshEditor::_populate() {
     w.release();
 
     PoolVector<Face3> faces = geometry;
-    int facecount = faces.size();
+    int facecount           = faces.size();
     ERR_FAIL_COND_MSG(!facecount, "Parent has no solid faces to populate.");
 
     PoolVector<Face3>::Read r = faces.read();
@@ -157,8 +157,8 @@ void MultiMeshEditor::_populate() {
         if (area < CMP_EPSILON) {
             continue;
         }
-        triangle_area_map[area_accum] = i;
-        area_accum += area;
+        triangle_area_map[area_accum]  = i;
+        area_accum                    += area;
     }
 
     ERR_FAIL_COND_MSG(triangle_area_map.size() == 0, "Couldn't map area.");
@@ -173,11 +173,11 @@ void MultiMeshEditor::_populate() {
     multimesh->set_color_format(MultiMesh::COLOR_NONE);
     multimesh->set_instance_count(instance_count);
 
-    float _tilt_random = populate_tilt_random->get_value();
+    float _tilt_random   = populate_tilt_random->get_value();
     float _rotate_random = populate_rotate_random->get_value();
-    float _scale_random = populate_scale_random->get_value();
-    float _scale = populate_scale->get_value();
-    int axis = populate_axis->get_selected();
+    float _scale_random  = populate_scale_random->get_value();
+    float _scale         = populate_scale->get_value();
+    int axis             = populate_axis->get_selected();
 
     Transform axis_xform;
     if (axis == Vector3::AXIS_Z) {
@@ -199,8 +199,8 @@ void MultiMeshEditor::_populate() {
         Face3 face = r[index];
         // now compute some position inside the face...
 
-        Vector3 pos = face.get_random_point_inside();
-        Vector3 normal = face.get_plane().normal;
+        Vector3 pos     = face.get_random_point_inside();
+        Vector3 normal  = face.get_plane().normal;
         Vector3 op_axis = (face.vertex[0] - face.vertex[1]).normalized();
 
         Transform xform;
@@ -324,7 +324,7 @@ MultiMeshEditor::MultiMeshEditor() {
 
     vbc->add_margin_child(TTR("Target Surface:"), hbc);
 
-    hbc = memnew(HBoxContainer);
+    hbc         = memnew(HBoxContainer);
     mesh_source = memnew(LineEdit);
     hbc->add_child(mesh_source);
     mesh_source->set_h_size_flags(SIZE_EXPAND_FILL);
@@ -407,7 +407,7 @@ void MultiMeshEditorPlugin::make_visible(bool p_visible) {
 }
 
 MultiMeshEditorPlugin::MultiMeshEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor           = p_node;
     multimesh_editor = memnew(MultiMeshEditor);
     editor->get_viewport()->add_child(multimesh_editor);
 

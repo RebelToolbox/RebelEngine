@@ -58,19 +58,19 @@ PCHAR* CommandLineToArgvA(PCHAR CmdLine, int* _argc) {
     BOOLEAN in_SPACE;
 
     len = strlen(CmdLine);
-    i = ((len + 2) / 2) * sizeof(PVOID) + sizeof(PVOID);
+    i   = ((len + 2) / 2) * sizeof(PVOID) + sizeof(PVOID);
 
     argv = (PCHAR*)GlobalAlloc(GMEM_FIXED, i + (len + 2) * sizeof(CHAR));
 
     _argv = (PCHAR)(((PUCHAR)argv) + i);
 
-    argc = 0;
+    argc       = 0;
     argv[argc] = _argv;
-    in_QM = FALSE;
-    in_TEXT = FALSE;
-    in_SPACE = TRUE;
-    i = 0;
-    j = 0;
+    in_QM      = FALSE;
+    in_TEXT    = FALSE;
+    in_SPACE   = TRUE;
+    i          = 0;
+    j          = 0;
 
     while ((a = CmdLine[i])) {
         if (in_QM) {
@@ -83,7 +83,7 @@ PCHAR* CommandLineToArgvA(PCHAR CmdLine, int* _argc) {
         } else {
             switch (a) {
                 case '\"':
-                    in_QM = TRUE;
+                    in_QM   = TRUE;
                     in_TEXT = TRUE;
                     if (in_SPACE) {
                         argv[argc] = _argv + j;
@@ -99,7 +99,7 @@ PCHAR* CommandLineToArgvA(PCHAR CmdLine, int* _argc) {
                         _argv[j] = '\0';
                         j++;
                     }
-                    in_TEXT = FALSE;
+                    in_TEXT  = FALSE;
                     in_SPACE = TRUE;
                     break;
                 default:
@@ -116,7 +116,7 @@ PCHAR* CommandLineToArgvA(PCHAR CmdLine, int* _argc) {
         }
         i++;
     }
-    _argv[j] = '\0';
+    _argv[j]   = '\0';
     argv[argc] = NULL;
 
     (*_argc) = argc;
@@ -124,7 +124,7 @@ PCHAR* CommandLineToArgvA(PCHAR CmdLine, int* _argc) {
 }
 
 char* wc_to_utf8(const wchar_t* wc) {
-    int ulen = WideCharToMultiByte(CP_UTF8, 0, wc, -1, NULL, 0, NULL, NULL);
+    int ulen   = WideCharToMultiByte(CP_UTF8, 0, wc, -1, NULL, 0, NULL, NULL);
     char* ubuf = new char[ulen + 1];
     WideCharToMultiByte(CP_UTF8, 0, wc, -1, ubuf, ulen, NULL, NULL);
     ubuf[ulen] = 0;

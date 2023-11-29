@@ -74,10 +74,10 @@ static int get_message_size(uint8_t message) {
 
 void MIDIDriverALSAMidi::thread_func(void* p_udata) {
     MIDIDriverALSAMidi* md = (MIDIDriverALSAMidi*)p_udata;
-    uint64_t timestamp = 0;
+    uint64_t timestamp     = 0;
     uint8_t buffer[256];
     int expected_size = 255;
-    int bytes = 0;
+    int bytes         = 0;
 
     while (!md->exit_thread) {
         int ret;
@@ -88,7 +88,7 @@ void MIDIDriverALSAMidi::thread_func(void* p_udata) {
             snd_rawmidi_t* midi_in = md->connected_inputs[i];
             do {
                 uint8_t byte = 0;
-                ret = snd_rawmidi_read(midi_in, &byte, 1);
+                ret          = snd_rawmidi_read(midi_in, &byte, 1);
                 if (ret < 0) {
                     if (ret != -EAGAIN) {
                         ERR_PRINT(

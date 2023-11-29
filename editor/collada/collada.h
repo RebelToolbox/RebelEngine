@@ -39,7 +39,7 @@
 class Collada {
 public:
     enum ImportFlags {
-        IMPORT_FLAG_SCENE = 1,
+        IMPORT_FLAG_SCENE     = 1,
         IMPORT_FLAG_ANIMATION = 2
     };
 
@@ -75,11 +75,11 @@ public:
         String get_texture_path(const String& p_source, Collada& state) const;
 
         Effect() {
-            diffuse.color = Color(1, 1, 1, 1);
-            double_sided = true;
+            diffuse.color      = Color(1, 1, 1, 1);
+            double_sided       = true;
             found_double_sided = false;
-            shininess = 40;
-            unshaded = false;
+            shininess          = 40;
+            unshaded           = false;
         }
     };
 
@@ -183,7 +183,7 @@ public:
 
         MeshData() {
             found_double_sided = false;
-            double_sided = true;
+            double_sided       = true;
         }
     };
 
@@ -409,9 +409,9 @@ public:
         bool ignore_anim;
 
         Node() {
-            noname = false;
-            type = TYPE_NODE;
-            parent = nullptr;
+            noname      = false;
+            type        = TYPE_NODE;
+            parent      = nullptr;
             ignore_anim = false;
         }
 
@@ -433,7 +433,7 @@ public:
         String sid;
 
         NodeJoint() {
-            type = TYPE_JOINT;
+            type  = TYPE_JOINT;
             owner = nullptr;
         }
     };
@@ -489,7 +489,7 @@ public:
 
         AnimationClip() {
             begin = 0;
-            end = 1;
+            end   = 1;
         }
     };
 
@@ -555,7 +555,7 @@ public:
             Version(int p_major = 0, int p_minor = 0, int p_rev = 0) {
                 major = p_major;
                 minor = p_minor;
-                rev = p_rev;
+                rev   = p_rev;
             }
         } version;
 

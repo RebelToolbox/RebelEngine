@@ -116,32 +116,32 @@ struct Color {
 
     _FORCE_INLINE_ Color darkened(float p_amount) const {
         Color res = *this;
-        res.r = res.r * (1.0f - p_amount);
-        res.g = res.g * (1.0f - p_amount);
-        res.b = res.b * (1.0f - p_amount);
+        res.r     = res.r * (1.0f - p_amount);
+        res.g     = res.g * (1.0f - p_amount);
+        res.b     = res.b * (1.0f - p_amount);
         return res;
     }
 
     _FORCE_INLINE_ Color lightened(float p_amount) const {
         Color res = *this;
-        res.r = res.r + (1.0f - res.r) * p_amount;
-        res.g = res.g + (1.0f - res.g) * p_amount;
-        res.b = res.b + (1.0f - res.b) * p_amount;
+        res.r     = res.r + (1.0f - res.r) * p_amount;
+        res.g     = res.g + (1.0f - res.g) * p_amount;
+        res.b     = res.b + (1.0f - res.b) * p_amount;
         return res;
     }
 
     _FORCE_INLINE_ uint32_t to_rgbe9995() const {
         const float pow2to9 = 512.0f;
-        const float B = 15.0f;
+        const float B       = 15.0f;
         // const float Emax = 31.0f;
-        const float N = 9.0f;
+        const float N       = 9.0f;
 
         float sharedexp = 65408.000f; //(( pow2to9  - 1.0f)/
                                       // pow2to9)*powf( 2.0f, 31.0f - 15.0f);
 
-        float cRed = MAX(0.0f, MIN(sharedexp, r));
+        float cRed   = MAX(0.0f, MIN(sharedexp, r));
         float cGreen = MAX(0.0f, MIN(sharedexp, g));
-        float cBlue = MAX(0.0f, MIN(sharedexp, b));
+        float cBlue  = MAX(0.0f, MIN(sharedexp, b));
 
         float cMax = MAX(cRed, MAX(cGreen, cBlue));
 
@@ -159,9 +159,9 @@ struct Color {
             exps = expp;
         }
 
-        float sRed = Math::floor((cRed / pow(2.0f, exps - B - N)) + 0.5f);
+        float sRed   = Math::floor((cRed / pow(2.0f, exps - B - N)) + 0.5f);
         float sGreen = Math::floor((cGreen / pow(2.0f, exps - B - N)) + 0.5f);
-        float sBlue = Math::floor((cBlue / pow(2.0f, exps - B - N)) + 0.5f);
+        float sBlue  = Math::floor((cBlue / pow(2.0f, exps - B - N)) + 0.5f);
 
         return (uint32_t(Math::fast_ftoi(sRed)) & 0x1FF)
              | ((uint32_t(Math::fast_ftoi(sGreen)) & 0x1FF) << 9)
@@ -172,7 +172,7 @@ struct Color {
     _FORCE_INLINE_ Color blend(const Color& p_over) const {
         Color res;
         float sa = 1.0 - p_over.a;
-        res.a = a * sa + p_over.a;
+        res.a    = a * sa + p_over.a;
         if (res.a == 0) {
             return Color(0, 0, 0, 0);
         } else {

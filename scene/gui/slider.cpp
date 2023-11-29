@@ -34,10 +34,10 @@
 
 Size2 Slider::get_minimum_size() const {
     Ref<StyleBox> style = get_stylebox("slider");
-    Size2i ss = style->get_minimum_size() + style->get_center_size();
+    Size2i ss           = style->get_minimum_size() + style->get_center_size();
 
     Ref<Texture> grabber = get_icon("grabber");
-    Size2i rs = grabber->get_size();
+    Size2i rs            = grabber->get_size();
 
     if (orientation == HORIZONTAL) {
         return Size2i(ss.width, MAX(ss.height, rs.height));
@@ -63,11 +63,11 @@ void Slider::_gui_input(Ref<InputEvent> p_event) {
                 grab.pos = orientation == VERTICAL ? mb->get_position().y
                                                    : mb->get_position().x;
 
-                double grab_width = (double)grabber->get_size().width;
+                double grab_width  = (double)grabber->get_size().width;
                 double grab_height = (double)grabber->get_size().height;
-                double max = orientation == VERTICAL
-                               ? get_size().height - grab_height
-                               : get_size().width - grab_width;
+                double max         = orientation == VERTICAL
+                                       ? get_size().height - grab_height
+                                       : get_size().width - grab_width;
                 if (orientation == VERTICAL) {
                     set_as_ratio(
                         1 - (((double)grab.pos - (grab_height / 2.0)) / max)
@@ -95,7 +95,7 @@ void Slider::_gui_input(Ref<InputEvent> p_event) {
 
     if (mm.is_valid()) {
         if (grab.active) {
-            Size2i size = get_size();
+            Size2i size          = get_size();
             Ref<Texture> grabber = get_icon("grabber");
             float motion = (orientation == VERTICAL ? mm->get_position().y
                                                     : mm->get_position().x)
@@ -175,13 +175,13 @@ void Slider::_notification(int p_what) {
         case NOTIFICATION_VISIBILITY_CHANGED: // fallthrough
         case NOTIFICATION_EXIT_TREE: {
             mouse_inside = false;
-            grab.active = false;
+            grab.active  = false;
         } break;
         case NOTIFICATION_DRAW: {
-            RID ci = get_canvas_item();
-            Size2i size = get_size();
-            Ref<StyleBox> style = get_stylebox("slider");
-            bool highlighted = mouse_inside || has_focus();
+            RID ci                     = get_canvas_item();
+            Size2i size                = get_size();
+            Ref<StyleBox> style        = get_stylebox("slider");
+            bool highlighted           = mouse_inside || has_focus();
             Ref<StyleBox> grabber_area = get_stylebox(
                 highlighted ? "grabber_area_highlight" : "grabber_area"
             );
@@ -388,13 +388,13 @@ void Slider::_bind_methods() {
 }
 
 Slider::Slider(Orientation p_orientation) {
-    orientation = p_orientation;
-    mouse_inside = false;
-    grab.active = false;
-    ticks = 0;
+    orientation      = p_orientation;
+    mouse_inside     = false;
+    grab.active      = false;
+    ticks            = 0;
     ticks_on_borders = false;
-    custom_step = -1;
-    editable = true;
-    scrollable = true;
+    custom_step      = -1;
+    editable         = true;
+    scrollable       = true;
     set_focus_mode(FOCUS_ALL);
 }

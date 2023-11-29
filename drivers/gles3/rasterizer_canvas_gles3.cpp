@@ -110,7 +110,7 @@ void RasterizerCanvasGLES3::_legacy_canvas_render_item(
             p_ci->distance_field
         );
         r_ris.prev_distance_field = p_ci->distance_field;
-        r_ris.rebind_shader = true;
+        r_ris.rebind_shader       = true;
     }
 
     if (r_ris.current_clip != p_ci->final_clip_owner) {
@@ -233,7 +233,7 @@ void RasterizerCanvasGLES3::_legacy_canvas_render_item(
                 glBindBufferBase(GL_UNIFORM_BUFFER, 2, material_ptr->ubo_id);
             }
 
-            int tc = material_ptr->textures.size();
+            int tc        = material_ptr->textures.size();
             RID* textures = material_ptr->textures.ptrw();
             ShaderLanguage::ShaderNode::Uniform::Hint* texture_hints =
                 shader_ptr->texture_hints.ptrw();
@@ -306,7 +306,7 @@ void RasterizerCanvasGLES3::_legacy_canvas_render_item(
         r_ris.shader_cache = shader_ptr;
 
         r_ris.canvas_last_material = material;
-        r_ris.rebind_shader = false;
+        r_ris.rebind_shader        = false;
     }
 
     int blend_mode =
@@ -454,7 +454,7 @@ void RasterizerCanvasGLES3::_legacy_canvas_render_item(
                  );
 
     state.final_transform = p_ci->final_transform;
-    state.extra_matrix = Transform2D();
+    state.extra_matrix    = Transform2D();
 
     if (state.using_skeleton) {
         state.canvas_shader.set_uniform(
@@ -514,8 +514,8 @@ void RasterizerCanvasGLES3::_legacy_canvas_render_item(
                 == RasterizerStorageGLES3::Shader::CanvasItem::
                     BLEND_MODE_PMALPHA)
         && r_ris.item_group_light && !unshaded) {
-        Light* light = r_ris.item_group_light;
-        bool light_used = false;
+        Light* light             = r_ris.item_group_light;
+        bool light_used          = false;
         VS::CanvasLightMode mode = VS::CANVAS_LIGHT_MODE_ADD;
         state.canvas_item_modulate =
             p_ci->final_modulate; // remove the canvas modulate
@@ -929,7 +929,7 @@ void RasterizerCanvasGLES3::render_batches(
 #endif
 
                                 if (pline->multiline) {
-                                    int todo = pline->lines.size() / 2;
+                                    int todo         = pline->lines.size() / 2;
                                     int max_per_call = data.polygon_buffer_size
                                                      / (sizeof(real_t) * 4);
                                     int offset = 0;
@@ -947,7 +947,7 @@ void RasterizerCanvasGLES3::render_batches(
                                                 )[offset],
                                             pline->line_colors.size() == 1
                                         );
-                                        todo -= to_draw;
+                                        todo   -= to_draw;
                                         offset += to_draw * 2;
                                     }
 
@@ -2159,7 +2159,7 @@ void RasterizerCanvasGLES3::render_joined_item(
             p_ci->distance_field
         );
         r_ris.prev_distance_field = p_ci->distance_field;
-        r_ris.rebind_shader = true;
+        r_ris.rebind_shader       = true;
     }
 
     if (r_ris.current_clip != p_ci->final_clip_owner) {
@@ -2283,7 +2283,7 @@ void RasterizerCanvasGLES3::render_joined_item(
                 glBindBufferBase(GL_UNIFORM_BUFFER, 2, material_ptr->ubo_id);
             }
 
-            int tc = material_ptr->textures.size();
+            int tc        = material_ptr->textures.size();
             RID* textures = material_ptr->textures.ptrw();
             ShaderLanguage::ShaderNode::Uniform::Hint* texture_hints =
                 shader_ptr->texture_hints.ptrw();
@@ -2356,7 +2356,7 @@ void RasterizerCanvasGLES3::render_joined_item(
         r_ris.shader_cache = shader_ptr;
 
         r_ris.canvas_last_material = material;
-        r_ris.rebind_shader = false;
+        r_ris.rebind_shader        = false;
     }
 
     int blend_mode =
@@ -2508,7 +2508,7 @@ void RasterizerCanvasGLES3::render_joined_item(
     // baked verts, or large fvf where the transform is done in the shader from
     // transform stored in the fvf.)
     if (!p_bij.is_single_item()) {
-        state.final_transform = Transform2D();
+        state.final_transform      = Transform2D();
         // final_modulate will be baked per item ref so the final_modulate can
         // be an identity color
         state.canvas_item_modulate = Color(1, 1, 1, 1);
@@ -2583,8 +2583,8 @@ void RasterizerCanvasGLES3::render_joined_item(
                 == RasterizerStorageGLES3::Shader::CanvasItem::
                     BLEND_MODE_PMALPHA)
         && r_ris.item_group_light && !unshaded) {
-        Light* light = r_ris.item_group_light;
-        bool light_used = false;
+        Light* light             = r_ris.item_group_light;
+        bool light_used          = false;
         VS::CanvasLightMode mode = VS::CANVAS_LIGHT_MODE_ADD;
 
         // we leave this set to 1, 1, 1, 1 if using software because the colors
@@ -2900,12 +2900,12 @@ bool RasterizerCanvasGLES3::try_join_item(
     // we also set r_batch_break to true if we don't want this item joined to
     // the next (e.g. an item that must not be joined at all)
     r_batch_break = false;
-    bool join = true;
+    bool join     = true;
 
     // light_masked objects we just don't currently support for joining
     // (this could possibly be improved at a later date)
     if (p_ci->light_masked) {
-        join = false;
+        join          = false;
         r_batch_break = true;
     }
 
@@ -2918,7 +2918,7 @@ bool RasterizerCanvasGLES3::try_join_item(
 
     if (r_ris.current_clip != p_ci->final_clip_owner) {
         r_ris.current_clip = p_ci->final_clip_owner;
-        join = false;
+        join               = false;
     }
 
     // TODO: copy back buffer
@@ -2949,13 +2949,13 @@ bool RasterizerCanvasGLES3::try_join_item(
 
             r_ris.prev_use_skeleton = use_skeleton;
             //			join = false;
-            skeleton_prevent_join = true;
+            skeleton_prevent_join   = true;
         }
 
         if (skeleton) {
             //			join = false;
             skeleton_prevent_join = true;
-            state.using_skeleton = true;
+            state.using_skeleton  = true;
         } else {
             state.using_skeleton = false;
         }
@@ -2974,7 +2974,7 @@ bool RasterizerCanvasGLES3::try_join_item(
         storage->material_owner.getornull(material);
 
     if (material != r_ris.canvas_last_material || r_ris.rebind_shader) {
-        join = false;
+        join                                       = false;
         RasterizerStorageGLES3::Shader* shader_ptr = nullptr;
 
         if (material_ptr) {
@@ -2982,7 +2982,7 @@ bool RasterizerCanvasGLES3::try_join_item(
 
             // special case, if the user has made an error in the shader code
             if (shader_ptr && !shader_ptr->valid) {
-                join = false;
+                join          = false;
                 r_batch_break = true;
             }
 
@@ -3030,7 +3030,7 @@ bool RasterizerCanvasGLES3::try_join_item(
                  : (p_ci->final_modulate * r_ris.item_group_modulate);
 
     if (r_ris.last_blend_mode != blend_mode) {
-        join = false;
+        join                  = false;
         r_ris.last_blend_mode = blend_mode;
     }
 
@@ -3107,9 +3107,9 @@ bool RasterizerCanvasGLES3::try_join_item(
             // do light joining...
 
             // first calculate the light bitfield
-            uint64_t light_bitfield = 0;
+            uint64_t light_bitfield  = 0;
             uint64_t shadow_bitfield = 0;
-            Light* light = r_ris.item_group_light;
+            Light* light             = r_ris.item_group_light;
 
             int light_count = -1;
             while (light) {
@@ -3149,7 +3149,7 @@ bool RasterizerCanvasGLES3::try_join_item(
                 || (r_ris.light_region.shadow_bitfield != shadow_bitfield)) {
                 light_allow_join = false;
 
-                r_ris.light_region.light_bitfield = light_bitfield;
+                r_ris.light_region.light_bitfield  = light_bitfield;
                 r_ris.light_region.shadow_bitfield = shadow_bitfield;
             } else {
                 // only do these checks if necessary
@@ -3198,7 +3198,7 @@ bool RasterizerCanvasGLES3::try_join_item(
 
         if (!light_allow_join) {
             // can't join
-            join = false;
+            join          = false;
             // we also dont want to allow joining this item with the next item,
             // because the next item could have no lights!
             r_batch_break = true;
@@ -3214,7 +3214,7 @@ bool RasterizerCanvasGLES3::try_join_item(
             // setting these to zero ensures that any following item with lights
             // will, by definition, be affected by a different set of lights,
             // and thus prevent a join
-            r_ris.light_region.light_bitfield = 0;
+            r_ris.light_region.light_bitfield  = 0;
             r_ris.light_region.shadow_bitfield = 0;
         }
     }
@@ -3227,7 +3227,7 @@ bool RasterizerCanvasGLES3::try_join_item(
     // changes, detect this
     if (!r_batch_break
         && _detect_item_batch_break(r_ris, p_ci, r_batch_break)) {
-        join = false;
+        join          = false;
         r_batch_break = true;
     }
 
@@ -3243,11 +3243,11 @@ void RasterizerCanvasGLES3::canvas_render_items_implementation(
 ) {
     // parameters are easier to pass around in a structure
     RenderItemState ris;
-    ris.item_group_z = p_z;
-    ris.item_group_modulate = p_modulate;
-    ris.item_group_light = p_light;
+    ris.item_group_z              = p_z;
+    ris.item_group_modulate       = p_modulate;
+    ris.item_group_light          = p_light;
     ris.item_group_base_transform = p_base_transform;
-    ris.prev_distance_field = false;
+    ris.prev_distance_field       = false;
 
     glBindBuffer(GL_UNIFORM_BUFFER, state.canvas_item_ubo);
     glBufferData(
@@ -3258,9 +3258,9 @@ void RasterizerCanvasGLES3::canvas_render_items_implementation(
     );
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    state.current_tex = RID();
+    state.current_tex     = RID();
     state.current_tex_ptr = nullptr;
-    state.current_normal = RID();
+    state.current_normal  = RID();
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, storage->resources.white_tex);
 
@@ -3403,8 +3403,8 @@ void RasterizerCanvasGLES3::_batch_render_lines(
 void RasterizerCanvasGLES3::_batch_render_prepare() {
     // const bool &colored_verts = bdata.use_colored_vertices;
     const bool& use_light_angles = bdata.use_light_angles;
-    const bool& use_modulate = bdata.use_modulate;
-    const bool& use_large_verts = bdata.use_large_verts;
+    const bool& use_modulate     = bdata.use_modulate;
+    const bool& use_large_verts  = bdata.use_large_verts;
 
     _set_texture_rect_mode(
         false,
@@ -3447,9 +3447,9 @@ void RasterizerCanvasGLES3::_batch_render_generic(
     ERR_FAIL_COND(p_batch.num_commands <= 0);
 
     const bool& use_light_angles = bdata.use_light_angles;
-    const bool& use_modulate = bdata.use_modulate;
-    const bool& use_large_verts = bdata.use_large_verts;
-    const bool& colored_verts = bdata.use_colored_vertices | use_light_angles
+    const bool& use_modulate     = bdata.use_modulate;
+    const bool& use_large_verts  = bdata.use_large_verts;
+    const bool& colored_verts    = bdata.use_colored_vertices | use_light_angles
                               | use_modulate | use_large_verts;
 
     _set_texture_rect_mode(
@@ -3684,10 +3684,10 @@ void RasterizerCanvasGLES3::initialize() {
         );
 
         // optional attributes
-        bool a_color = false;
+        bool a_color       = false;
         bool a_light_angle = false;
-        bool a_modulate = false;
-        bool a_large = false;
+        bool a_modulate    = false;
+        bool a_large       = false;
 
         switch (vao) {
             case 0:
@@ -3696,19 +3696,19 @@ void RasterizerCanvasGLES3::initialize() {
                 a_color = true;
             } break;
             case 2: {
-                a_color = true;
+                a_color       = true;
                 a_light_angle = true;
             } break;
             case 3: {
-                a_color = true;
+                a_color       = true;
                 a_light_angle = true;
-                a_modulate = true;
+                a_modulate    = true;
             } break;
             case 4: {
-                a_color = true;
+                a_color       = true;
                 a_light_angle = true;
-                a_modulate = true;
-                a_large = true;
+                a_modulate    = true;
+                a_large       = true;
             } break;
         }
 

@@ -202,7 +202,7 @@ _FORCE_INLINE_ Plane Transform::xform(const Plane& p_plane) const {
 }
 
 _FORCE_INLINE_ Plane Transform::xform_inv(const Plane& p_plane) const {
-    Transform inv = affine_inverse();
+    Transform inv         = affine_inverse();
     Basis basis_transpose = basis.transposed();
     return xform_inv_fast(p_plane, inv, basis_transpose);
 }
@@ -228,7 +228,7 @@ _FORCE_INLINE_ AABB Transform::xform(const AABB& p_aabb) const {
     }
     AABB r_aabb;
     r_aabb.position = tmin;
-    r_aabb.size = tmax - tmin;
+    r_aabb.size     = tmax - tmin;
     return r_aabb;
 }
 
@@ -288,7 +288,7 @@ PoolVector<Vector3> Transform::xform(const PoolVector<Vector3>& p_array) const {
     PoolVector<Vector3> array;
     array.resize(p_array.size());
 
-    PoolVector<Vector3>::Read r = p_array.read();
+    PoolVector<Vector3>::Read r  = p_array.read();
     PoolVector<Vector3>::Write w = array.write();
 
     for (int i = 0; i < p_array.size(); ++i) {
@@ -302,7 +302,7 @@ PoolVector<Vector3> Transform::xform_inv(const PoolVector<Vector3>& p_array
     PoolVector<Vector3> array;
     array.resize(p_array.size());
 
-    PoolVector<Vector3>::Read r = p_array.read();
+    PoolVector<Vector3>::Read r  = p_array.read();
     PoolVector<Vector3>::Write w = array.write();
 
     for (int i = 0; i < p_array.size(); ++i) {
@@ -317,7 +317,7 @@ _FORCE_INLINE_ Plane Transform::xform_fast(
 ) const {
     // Transform a single point on the plane.
     Vector3 point = p_plane.normal * p_plane.d;
-    point = xform(point);
+    point         = xform(point);
 
     // Use inverse transpose for correct normals with non-uniform scaling.
     Vector3 normal = p_basis_inverse_transpose.xform(p_plane.normal);
@@ -334,7 +334,7 @@ _FORCE_INLINE_ Plane Transform::xform_inv_fast(
 ) {
     // Transform a single point on the plane.
     Vector3 point = p_plane.normal * p_plane.d;
-    point = p_inverse.xform(point);
+    point         = p_inverse.xform(point);
 
     // Note that instead of precalculating the transpose, an alternative
     // would be to use the transpose for the basis transform.

@@ -49,8 +49,8 @@ Ref<LightmapRaycaster> LightmapRaycaster::create() {
 }
 
 Lightmapper::CreateFunc Lightmapper::create_custom = nullptr;
-Lightmapper::CreateFunc Lightmapper::create_gpu = nullptr;
-Lightmapper::CreateFunc Lightmapper::create_cpu = nullptr;
+Lightmapper::CreateFunc Lightmapper::create_gpu    = nullptr;
+Lightmapper::CreateFunc Lightmapper::create_cpu    = nullptr;
 
 Ref<Lightmapper> Lightmapper::create() {
     Lightmapper* lm = nullptr;

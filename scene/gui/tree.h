@@ -100,10 +100,10 @@ private:
             String tooltip;
 
             Button() {
-                id = 0;
+                id       = 0;
                 disabled = false;
-                color = Color(1, 1, 1, 1);
-                tooltip = "";
+                color    = Color(1, 1, 1, 1);
+                tooltip  = "";
             }
         };
 
@@ -111,30 +111,30 @@ private:
 
         Cell() {
             custom_draw_obj = 0;
-            custom_button = false;
-            mode = TreeItem::CELL_MODE_STRING;
-            min = 0;
-            max = 100;
-            step = 1;
-            val = 0;
-            checked = false;
-            editable = false;
-            selected = false;
-            selectable = true;
-            custom_color = false;
+            custom_button   = false;
+            mode            = TreeItem::CELL_MODE_STRING;
+            min             = 0;
+            max             = 100;
+            step            = 1;
+            val             = 0;
+            checked         = false;
+            editable        = false;
+            selected        = false;
+            selectable      = true;
+            custom_color    = false;
             custom_bg_color = false;
-            expr = false;
-            icon_max_w = 0;
-            text_align = ALIGN_LEFT;
-            expand_right = false;
-            icon_color = Color(1, 1, 1);
+            expr            = false;
+            icon_max_w      = 0;
+            text_align      = ALIGN_LEFT;
+            expand_right    = false;
+            icon_color      = Color(1, 1, 1);
         }
 
         Size2 get_icon_size() const;
         void draw_icon(
             const RID& p_where,
             const Point2& p_pos,
-            const Size2& p_size = Size2(),
+            const Size2& p_size  = Size2(),
             const Color& p_color = Color()
         ) const;
     };
@@ -165,8 +165,8 @@ protected:
         Dictionary d;
         double min = 0.0, max = 0.0, step = 0.0;
         get_range_config(p_column, min, max, step);
-        d["min"] = min;
-        d["max"] = max;
+        d["min"]  = min;
+        d["max"]  = max;
         d["step"] = step;
         d["expr"] = false;
 
@@ -213,8 +213,8 @@ public:
     void add_button(
         int p_column,
         const Ref<Texture>& p_button,
-        int p_id = -1,
-        bool p_disabled = false,
+        int p_id                = -1,
+        bool p_disabled         = false,
         const String& p_tooltip = ""
     );
     int get_button_count(int p_column) const;
@@ -340,8 +340,8 @@ public:
     };
 
     enum DropModeFlags {
-        DROP_MODE_DISABLED = 0,
-        DROP_MODE_ON_ITEM = 1,
+        DROP_MODE_DISABLED  = 0,
+        DROP_MODE_ON_ITEM   = 1,
         DROP_MODE_INBETWEEN = 2
     };
 
@@ -392,7 +392,7 @@ private:
 
         ColumnInfo() {
             min_width = 1;
-            expand = true;
+            expand    = true;
         }
     };
 
@@ -430,8 +430,8 @@ private:
         TreeItem* p_selected,
         TreeItem* p_current,
         int p_col,
-        TreeItem* p_prev = nullptr,
-        bool* r_in_range = nullptr,
+        TreeItem* p_prev      = nullptr,
+        bool* r_in_range      = nullptr,
         bool p_force_deselect = false
     );
     int propagate_mouse_event(
@@ -660,7 +660,7 @@ public:
     // and wraps around.
     TreeItem* search_item_text(
         const String& p_find,
-        int* r_col = nullptr,
+        int* r_col        = nullptr,
         bool p_selectable = false
     );
     // First item that matches the whole text, from the first item down.

@@ -253,7 +253,7 @@ bool WebXRInterfaceJS::initialize() {
         // Clear render_targetsize to make sure it gets reset to the new size.
         // Clearing in uninitialize() doesn't work because a frame can still be
         // rendered after it's called, which will fill render_targetsize again.
-        render_targetsize.width = 0;
+        render_targetsize.width  = 0;
         render_targetsize.height = 0;
 
         initialized = true;
@@ -286,7 +286,7 @@ void WebXRInterfaceJS::uninitialize() {
         godot_webxr_uninitialize();
 
         reference_space_type = "";
-        initialized = false;
+        initialized          = false;
     };
 };
 
@@ -302,9 +302,9 @@ Transform WebXRInterfaceJS::_js_matrix_to_transform(float* p_js_matrix) {
     transform.basis.elements[0].z = p_js_matrix[8];
     transform.basis.elements[1].z = p_js_matrix[9];
     transform.basis.elements[2].z = p_js_matrix[10];
-    transform.origin.x = p_js_matrix[12];
-    transform.origin.y = p_js_matrix[13];
-    transform.origin.z = p_js_matrix[14];
+    transform.origin.x            = p_js_matrix[12];
+    transform.origin.y            = p_js_matrix[13];
+    transform.origin.z            = p_js_matrix[14];
 
     return transform;
 }
@@ -318,12 +318,12 @@ Size2 WebXRInterfaceJS::get_render_targetsize() {
     if (!initialized || js_size == nullptr) {
         // As a temporary default (until WebXR is fully initialized), use half
         // the window size.
-        Size2 temp = OS::get_singleton()->get_window_size();
+        Size2 temp  = OS::get_singleton()->get_window_size();
         temp.width /= 2.0;
         return temp;
     }
 
-    render_targetsize.width = js_size[0];
+    render_targetsize.width  = js_size[0];
     render_targetsize.height = js_size[1];
 
     free(js_size);
@@ -470,7 +470,7 @@ void WebXRInterfaceJS::_update_tracker(int p_controller_id) {
         if (axes) {
             for (int i = 0; i < axes[0]; i++) {
                 InputDefault::JoyAxis joy_axis;
-                joy_axis.min = -1;
+                joy_axis.min   = -1;
                 joy_axis.value = *((float*)axes + (i + 1));
                 input->joy_axis(p_controller_id + 100, i, joy_axis);
             }
@@ -503,8 +503,8 @@ void WebXRInterfaceJS::notification(int p_what) {
 }
 
 WebXRInterfaceJS::WebXRInterfaceJS() {
-    initialized = false;
-    session_mode = "inline";
+    initialized                     = false;
+    session_mode                    = "inline";
     requested_reference_space_types = "local";
 };
 

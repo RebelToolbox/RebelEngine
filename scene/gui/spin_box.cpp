@@ -34,7 +34,7 @@
 #include "core/os/input.h"
 
 Size2 SpinBox::get_minimum_size() const {
-    Size2 ms = line_edit->get_combined_minimum_size();
+    Size2 ms  = line_edit->get_combined_minimum_size();
     ms.width += last_w;
     return ms;
 }
@@ -120,7 +120,7 @@ void SpinBox::_gui_input(const Ref<InputEvent>& p_event) {
                 range_click_timer->set_one_shot(true);
                 range_click_timer->start();
 
-                drag.allowed = true;
+                drag.allowed     = true;
                 drag.capture_pos = mb->get_position();
             } break;
             case BUTTON_RIGHT: {
@@ -162,9 +162,9 @@ void SpinBox::_gui_input(const Ref<InputEvent>& p_event) {
             );
         } else if (drag.allowed && drag.capture_pos.distance_to(mm->get_position()) > 2) {
             Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
-            drag.enabled = true;
+            drag.enabled  = true;
             drag.base_val = get_value();
-            drag.diff_y = 0;
+            drag.diff_y   = 0;
         }
     }
 }
@@ -192,7 +192,7 @@ void SpinBox::_notification(int p_what) {
 
         _adjust_width_for_icon(updown);
 
-        RID ci = get_canvas_item();
+        RID ci      = get_canvas_item();
         Size2i size = get_size();
 
         updown->draw(
@@ -318,7 +318,7 @@ void SpinBox::_bind_methods() {
 }
 
 SpinBox::SpinBox() {
-    last_w = 0;
+    last_w    = 0;
     line_edit = memnew(LineEdit);
     add_child(line_edit);
 

@@ -80,10 +80,10 @@ RES ResourceFormatPKM::load(
         "Invalid or unsupported PKM texture file '" + p_path + "'."
     );
 
-    h.format = f->get_16();
-    h.texWidth = f->get_16();
-    h.texHeight = f->get_16();
-    h.origWidth = f->get_16();
+    h.format     = f->get_16();
+    h.texWidth   = f->get_16();
+    h.texHeight  = f->get_16();
+    h.origWidth  = f->get_16();
     h.origHeight = f->get_16();
 
     PoolVector<uint8_t> src_data;
@@ -95,8 +95,8 @@ RES ResourceFormatPKM::load(
     wb.release();
 
     int mipmaps = h.format;
-    int width = h.origWidth;
-    int height = h.origHeight;
+    int width   = h.origWidth;
+    int height  = h.origHeight;
 
     Ref<Image> img =
         memnew(Image(width, height, mipmaps, Image::FORMAT_ETC, src_data));

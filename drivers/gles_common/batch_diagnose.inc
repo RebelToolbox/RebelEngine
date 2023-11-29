@@ -174,7 +174,7 @@ void diagnose_batches(RasterizerCanvas::Item::Command* const* p_commands) {
     bool first_color_change = true;
 
     for (int batch_num = 0; batch_num < num_batches; batch_num++) {
-        const Batch& batch = bdata.batches[batch_num];
+        const Batch& batch  = bdata.batches[batch_num];
         bdata.frame_string += "\t\t\tbatch ";
 
         switch (batch.type) {

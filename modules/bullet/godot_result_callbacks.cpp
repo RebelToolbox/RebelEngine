@@ -166,11 +166,11 @@ btScalar GodotAllConvexResultCallback::addSingleResult(
     result.shape = convexResult.m_localShapeInfo
                        ->m_triangleIndex; // "m_triangleIndex" Is a odd name but
                                           // contains the compound shape ID
-    result.rid = gObj->get_self();
+    result.rid         = gObj->get_self();
     result.collider_id = gObj->get_instance_id();
-    result.collider = 0 == result.collider_id
-                        ? nullptr
-                        : ObjectDB::get_instance(result.collider_id);
+    result.collider    = 0 == result.collider_id
+                           ? nullptr
+                           : ObjectDB::get_instance(result.collider_id);
 
     ++count;
     return 1; // not used by bullet
@@ -336,10 +336,10 @@ btScalar GodotAllContactResultCallback::addSingleResult(
         }
 
         result.collider_id = colObj->get_instance_id();
-        result.collider = 0 == result.collider_id
-                            ? nullptr
-                            : ObjectDB::get_instance(result.collider_id);
-        result.rid = colObj->get_self();
+        result.collider    = 0 == result.collider_id
+                               ? nullptr
+                               : ObjectDB::get_instance(result.collider_id);
+        result.rid         = colObj->get_self();
         ++m_count;
     }
 
@@ -464,7 +464,7 @@ btScalar GodotRestInfoContactResultCallback::addSingleResult(
             m_result->shape = cp.m_index1;
             B_TO_G(cp.getPositionWorldOnB(), m_result->point);
             B_TO_G(cp.m_normalWorldOnB, m_result->normal);
-            m_rest_info_bt_point = cp.getPositionWorldOnB();
+            m_rest_info_bt_point         = cp.getPositionWorldOnB();
             m_rest_info_collision_object = colObj1Wrap->getCollisionObject();
         } else {
             colObj = static_cast<CollisionObjectBullet*>(
@@ -472,12 +472,12 @@ btScalar GodotRestInfoContactResultCallback::addSingleResult(
             );
             m_result->shape = cp.m_index0;
             B_TO_G(cp.m_normalWorldOnB * -1, m_result->normal);
-            m_rest_info_bt_point = cp.getPositionWorldOnA();
+            m_rest_info_bt_point         = cp.getPositionWorldOnA();
             m_rest_info_collision_object = colObj0Wrap->getCollisionObject();
         }
 
         m_result->collider_id = colObj->get_instance_id();
-        m_result->rid = colObj->get_self();
+        m_result->rid         = colObj->get_self();
 
         m_collided = true;
     }
@@ -494,11 +494,11 @@ void GodotDeepPenetrationContactResultCallback::addContactPoint(
 
         const bool isSwapped =
             m_manifoldPtr->getBody0() != m_body0Wrap->getCollisionObject();
-        m_penetration_distance = depth;
+        m_penetration_distance       = depth;
         m_other_compound_shape_index = isSwapped ? m_index0 : m_index1;
-        m_pointWorld = isSwapped
-                         ? (pointInWorldOnB + (normalOnBInWorld * depth))
-                         : pointInWorldOnB;
+        m_pointWorld                 = isSwapped
+                                         ? (pointInWorldOnB + (normalOnBInWorld * depth))
+                                         : pointInWorldOnB;
 
         m_pointNormalWorld =
             isSwapped ? normalOnBInWorld * -1 : normalOnBInWorld;

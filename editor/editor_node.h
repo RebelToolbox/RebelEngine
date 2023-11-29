@@ -669,7 +669,7 @@ private:
     void _toggle_distraction_free_mode();
 
     enum {
-        MAX_INIT_CALLBACKS = 128,
+        MAX_INIT_CALLBACKS  = 128,
         MAX_BUILD_CALLBACKS = 128
     };
 
@@ -853,7 +853,7 @@ public:
     void push_item(
         Object* p_object,
         const String& p_property = "",
-        bool p_inspector_only = false
+        bool p_inspector_only    = false
     );
     void edit_item(Object* p_object);
     void edit_item_resource(RES p_resource);
@@ -891,11 +891,11 @@ public:
     int new_scene();
     Error load_scene(
         const String& p_scene,
-        bool p_ignore_broken_deps = false,
-        bool p_set_inherited = false,
-        bool p_clear_errors = true,
+        bool p_ignore_broken_deps  = false,
+        bool p_set_inherited       = false,
+        bool p_clear_errors        = true,
         bool p_force_open_imported = false,
-        bool p_silent_change_tab = false
+        bool p_silent_change_tab   = false
     );
     Error load_resource(
         const String& p_resource,
@@ -1003,7 +1003,7 @@ public:
     static bool progress_task_step(
         const String& p_task,
         const String& p_state,
-        int p_step = -1,
+        int p_step           = -1,
         bool p_force_refresh = true
     );
     static void progress_end_task(const String& p_task);
@@ -1082,7 +1082,7 @@ public:
         const String& p_title,
         const String& p_path,
         const List<String>& p_arguments,
-        bool p_close_on_ok = true,
+        bool p_close_on_ok     = true,
         bool p_close_on_errors = false
     );
 
@@ -1121,7 +1121,7 @@ struct EditorProgress {
 
     bool step(
         const String& p_state,
-        int p_step = -1,
+        int p_step           = -1,
         bool p_force_refresh = true
     ) {
         return EditorNode::progress_task_step(

@@ -76,7 +76,7 @@ String ProjectSettings::localize_path(const String& p_path) const {
 
     if (dir->change_dir(path) == OK) {
         String cwd = dir->get_current_dir();
-        cwd = cwd.replace("\\", "/");
+        cwd        = cwd.replace("\\", "/");
 
         memdelete(dir);
 
@@ -267,7 +267,7 @@ void ProjectSettings::_get_property_list(List<PropertyInfo>* p_list) const {
     Set<_VCSort> vclist;
 
     for (Map<StringName, VariantContainer>::Element* E = props.front(); E;
-         E = E->next()) {
+         E                                             = E->next()) {
         const VariantContainer* v = &E->get();
 
         if (v->hide_from_editor) {
@@ -275,9 +275,9 @@ void ProjectSettings::_get_property_list(List<PropertyInfo>* p_list) const {
         }
 
         _VCSort vc;
-        vc.name = E->key();
+        vc.name  = E->key();
         vc.order = v->order;
-        vc.type = v->variant.get_type();
+        vc.type  = v->variant.get_type();
         if (vc.name.begins_with("input/") || vc.name.begins_with("import/")
             || vc.name.begins_with("export/") || vc.name.begins_with("/remap")
             || vc.name.begins_with("/locale")
@@ -295,15 +295,15 @@ void ProjectSettings::_get_property_list(List<PropertyInfo>* p_list) const {
 
     for (Set<_VCSort>::Element* E = vclist.front(); E; E = E->next()) {
         String prop_info_name = E->get().name;
-        int dot = prop_info_name.find(".");
+        int dot               = prop_info_name.find(".");
         if (dot != -1) {
             prop_info_name = prop_info_name.substr(0, dot);
         }
 
         if (custom_prop_info.has(prop_info_name)) {
             PropertyInfo pi = custom_prop_info[prop_info_name];
-            pi.name = E->get().name;
-            pi.usage = E->get().flags;
+            pi.name         = E->get().name;
+            pi.usage        = E->get().flags;
             p_list->push_back(pi);
         } else {
             p_list->push_back(PropertyInfo(
@@ -355,8 +355,8 @@ void ProjectSettings::_convert_to_last_version(int p_from_version) {
                 Array array = value;
                 Dictionary action;
                 action["deadzone"] = Variant(0.5f);
-                action["events"] = array;
-                E->get().variant = action;
+                action["events"]   = array;
+                E->get().variant   = action;
             }
         }
     }
@@ -440,7 +440,7 @@ Error ProjectSettings::_setup(
 
         // Attempt with exec_name.pck.
         // (This is the usual case when distributing a Godot game.)
-        String exec_dir = exec_path.get_base_dir();
+        String exec_dir      = exec_path.get_base_dir();
         String exec_filename = exec_path.get_file();
         String exec_basename = exec_filename.get_basename();
 
@@ -536,8 +536,8 @@ Error ProjectSettings::_setup(
     d->change_dir(p_path);
 
     String current_dir = d->get_current_dir();
-    String candidate = current_dir;
-    bool found = false;
+    String candidate   = current_dir;
+    bool found         = false;
     Error err;
 
     while (true) {
@@ -549,7 +549,7 @@ Error ProjectSettings::_setup(
             // Optional, we don't mind if it fails.
             _load_settings_text(current_dir.plus_file("override.cfg"));
             candidate = current_dir;
-            found = true;
+            found     = true;
             break;
         }
 
@@ -858,7 +858,7 @@ Error ProjectSettings::_save_settings_binary(
     int count = 0;
 
     for (Map<String, List<String>>::Element* E = props.front(); E;
-         E = E->next()) {
+         E                                     = E->next()) {
         for (List<String>::Element* F = E->get().front(); F; F = F->next()) {
             count++;
         }
@@ -894,7 +894,7 @@ Error ProjectSettings::_save_settings_binary(
     }
 
     for (Map<String, List<String>>::Element* E = props.front(); E;
-         E = E->next()) {
+         E                                     = E->next()) {
         for (List<String>::Element* F = E->get().front(); F; F = F->next()) {
             String key = F->get();
             if (E->key() != "") {
@@ -976,7 +976,7 @@ Error ProjectSettings::_save_settings_text(
     file->store_string("\n");
 
     for (Map<String, List<String>>::Element* E = props.front(); E;
-         E = E->next()) {
+         E                                     = E->next()) {
         if (E != props.front()) {
             file->store_string("\n");
         }
@@ -1032,7 +1032,7 @@ Error ProjectSettings::save_custom(
 
     if (p_merge_with_current) {
         for (Map<StringName, VariantContainer>::Element* G = props.front(); G;
-             G = G->next()) {
+             G                                             = G->next()) {
             const VariantContainer* v = &G->get();
 
             if (v->hide_from_editor) {
@@ -1044,9 +1044,9 @@ Error ProjectSettings::save_custom(
             }
 
             _VCSort vc;
-            vc.name = G->key(); //*k;
+            vc.name  = G->key(); //*k;
             vc.order = v->order;
-            vc.type = v->variant.get_type();
+            vc.type  = v->variant.get_type();
             vc.flags = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE;
             if (v->variant == v->initial) {
                 continue;
@@ -1057,15 +1057,15 @@ Error ProjectSettings::save_custom(
     }
 
     for (const Map<String, Variant>::Element* E = p_custom.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         // Lookup global prop to store in the same order
         Map<StringName, VariantContainer>::Element* global_prop =
             props.find(E->key());
 
         _VCSort vc;
-        vc.name = E->key();
+        vc.name  = E->key();
         vc.order = global_prop ? global_prop->get().order : 0xFFFFFFF;
-        vc.type = E->get().get_type();
+        vc.type  = E->get().get_type();
         vc.flags = PROPERTY_USAGE_STORAGE;
         vclist.insert(vc);
     }
@@ -1074,7 +1074,7 @@ Error ProjectSettings::save_custom(
 
     for (Set<_VCSort>::Element* E = vclist.front(); E; E = E->next()) {
         String category = E->get().name;
-        String name = E->get().name;
+        String name     = E->get().name;
 
         int div = category.find("/");
 
@@ -1082,7 +1082,7 @@ Error ProjectSettings::save_custom(
             category = "";
         } else {
             category = category.substr(0, div);
-            name = name.substr(div + 1, name.size());
+            name     = name.substr(div + 1, name.size());
         }
         props[category].push_back(name);
     }
@@ -1094,7 +1094,7 @@ Error ProjectSettings::save_custom(
             custom_features += ",";
         }
 
-        String f = p_custom_features[i].strip_edges().replace("\"", "");
+        String f         = p_custom_features[i].strip_edges().replace("\"", "");
         custom_features += f;
     }
 
@@ -1196,7 +1196,7 @@ void ProjectSettings::set_custom_property_info(
     const PropertyInfo& p_info
 ) {
     ERR_FAIL_COND(!props.has(p_prop));
-    custom_prop_info[p_prop] = p_info;
+    custom_prop_info[p_prop]      = p_info;
     custom_prop_info[p_prop].name = p_prop;
 }
 
@@ -1309,11 +1309,11 @@ ProjectSettings::ProjectSettings() {
     // so that the values can be overridden from project.rebel or
     // project.binary.
 
-    singleton = this;
-    last_order = NO_BUILTIN_ORDER_BASE;
-    last_builtin_order = 0;
+    singleton                 = this;
+    last_order                = NO_BUILTIN_ORDER_BASE;
+    last_builtin_order        = 0;
     disable_feature_overrides = false;
-    registering_order = true;
+    registering_order         = true;
 
     Array events;
     Dictionary action;
@@ -1374,9 +1374,9 @@ ProjectSettings::ProjectSettings() {
         PROPERTY_HINT_DIR
     );
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_ENTER);
     events.push_back(key);
@@ -1393,9 +1393,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_accept", action);
     input_presets.push_back("input/ui_accept");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_SPACE);
     events.push_back(key);
@@ -1406,9 +1406,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_select", action);
     input_presets.push_back("input/ui_select");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_ESCAPE);
     events.push_back(key);
@@ -1419,9 +1419,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_cancel", action);
     input_presets.push_back("input/ui_cancel");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_TAB);
     events.push_back(key);
@@ -1429,9 +1429,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_focus_next", action);
     input_presets.push_back("input/ui_focus_next");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_TAB);
     key->set_shift(true);
@@ -1440,9 +1440,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_focus_prev", action);
     input_presets.push_back("input/ui_focus_prev");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_LEFT);
     events.push_back(key);
@@ -1453,9 +1453,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_left", action);
     input_presets.push_back("input/ui_left");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_RIGHT);
     events.push_back(key);
@@ -1466,9 +1466,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_right", action);
     input_presets.push_back("input/ui_right");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_UP);
     events.push_back(key);
@@ -1479,9 +1479,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_up", action);
     input_presets.push_back("input/ui_up");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_DOWN);
     events.push_back(key);
@@ -1492,9 +1492,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_down", action);
     input_presets.push_back("input/ui_down");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_PAGEUP);
     events.push_back(key);
@@ -1502,9 +1502,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_page_up", action);
     input_presets.push_back("input/ui_page_up");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_PAGEDOWN);
     events.push_back(key);
@@ -1512,9 +1512,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_page_down", action);
     input_presets.push_back("input/ui_page_down");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_HOME);
     events.push_back(key);
@@ -1522,9 +1522,9 @@ ProjectSettings::ProjectSettings() {
     GLOBAL_DEF("input/ui_home", action);
     input_presets.push_back("input/ui_home");
 
-    action = Dictionary();
+    action             = Dictionary();
     action["deadzone"] = Variant(0.5f);
-    events = Array();
+    events             = Array();
     key.instance();
     key->set_scancode(KEY_END);
     events.push_back(key);

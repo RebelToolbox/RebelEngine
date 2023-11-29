@@ -170,10 +170,10 @@ Ref<Image> ProceduralSky::_generate_sky() {
 
         uint32_t* ptr = (uint32_t*)dataw.ptr();
 
-        Color sky_top_linear = sky_top_color.to_linear();
+        Color sky_top_linear     = sky_top_color.to_linear();
         Color sky_horizon_linear = sky_horizon_color.to_linear();
 
-        Color ground_bottom_linear = ground_bottom_color.to_linear();
+        Color ground_bottom_linear  = ground_bottom_color.to_linear();
         Color ground_horizon_linear = ground_horizon_color.to_linear();
 
         Color sun_linear;
@@ -189,11 +189,11 @@ Ref<Image> ProceduralSky::_generate_sky() {
         sun.normalize();
 
         for (int i = 0; i < w; i++) {
-            float u = float(i) / (w - 1);
+            float u   = float(i) / (w - 1);
             float phi = u * 2.0 * Math_PI;
 
             for (int j = 0; j < h; j++) {
-                float v = float(j) / (h - 1);
+                float v     = float(j) / (h - 1);
                 float theta = v * Math_PI;
 
                 Vector3 normal(
@@ -212,7 +212,7 @@ Ref<Image> ProceduralSky::_generate_sky() {
                     // ground
 
                     float c = (v_angle - (Math_PI * 0.5)) / (Math_PI * 0.5);
-                    color = ground_horizon_linear.linear_interpolate(
+                    color   = ground_horizon_linear.linear_interpolate(
                         ground_bottom_linear,
                         Math::ease(c, ground_curve)
                     );
@@ -221,7 +221,7 @@ Ref<Image> ProceduralSky::_generate_sky() {
                     color.b *= ground_energy;
                 } else {
                     float c = v_angle / (Math_PI * 0.5);
-                    color = sky_horizon_linear.linear_interpolate(
+                    color   = sky_horizon_linear.linear_interpolate(
                         sky_top_linear,
                         Math::ease(1.0 - c, sky_curve)
                     );
@@ -769,19 +769,19 @@ void ProceduralSky::_bind_methods() {
 }
 
 ProceduralSky::ProceduralSky(bool p_desaturate) {
-    sky = VS::get_singleton()->sky_create();
+    sky     = VS::get_singleton()->sky_create();
     texture = VS::get_singleton()->texture_create();
 
-    update_queued = false;
-    sky_top_color = Color::hex(0xa5d6f1ff);
+    update_queued     = false;
+    sky_top_color     = Color::hex(0xa5d6f1ff);
     sky_horizon_color = Color::hex(0xd6eafaff);
-    sky_curve = 0.09;
-    sky_energy = 1;
+    sky_curve         = 0.09;
+    sky_energy        = 1;
 
-    ground_bottom_color = Color::hex(0x282f36ff);
+    ground_bottom_color  = Color::hex(0x282f36ff);
     ground_horizon_color = Color::hex(0x6c655fff);
-    ground_curve = 0.02;
-    ground_energy = 1;
+    ground_curve         = 0.02;
+    ground_energy        = 1;
 
     if (p_desaturate) {
         sky_top_color.set_hsv(sky_top_color.get_h(), 0, sky_top_color.get_v());
@@ -798,17 +798,17 @@ ProceduralSky::ProceduralSky(bool p_desaturate) {
             ground_horizon_color.get_v()
         );
     }
-    sun_color = Color(1, 1, 1);
-    sun_latitude = 35;
+    sun_color     = Color(1, 1, 1);
+    sun_latitude  = 35;
     sun_longitude = 0;
     sun_angle_min = 1;
     sun_angle_max = 100;
-    sun_curve = 0.05;
-    sun_energy = 1;
+    sun_curve     = 0.05;
+    sun_energy    = 1;
 
     texture_size = TEXTURE_SIZE_1024;
     regen_queued = false;
-    first_time = true;
+    first_time   = true;
 
     _queue_update();
 }

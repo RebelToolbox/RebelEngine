@@ -94,7 +94,7 @@ public:
     void environment_set_ambient_light(
         RID p_env,
         const Color& p_color,
-        float p_energy = 1.0,
+        float p_energy           = 1.0,
         float p_sky_contribution = 0.0
     ) {}
 
@@ -385,15 +385,15 @@ public:
         int p_depth_3d,
         Image::Format p_format,
         VisualServer::TextureType p_type = VS::TEXTURE_TYPE_2D,
-        uint32_t p_flags = VS::TEXTURE_FLAGS_DEFAULT
+        uint32_t p_flags                 = VS::TEXTURE_FLAGS_DEFAULT
     ) {
         DummyTexture* t = texture_owner.getornull(p_texture);
         ERR_FAIL_COND(!t);
-        t->width = p_width;
+        t->width  = p_width;
         t->height = p_height;
-        t->flags = p_flags;
+        t->flags  = p_flags;
         t->format = p_format;
-        t->image = Ref<Image>(memnew(Image));
+        t->image  = Ref<Image>(memnew(Image));
         t->image->create(p_width, p_height, false, p_format);
     }
 
@@ -404,7 +404,7 @@ public:
     ) {
         DummyTexture* t = texture_owner.getornull(p_texture);
         ERR_FAIL_COND(!t);
-        t->width = p_image->get_width();
+        t->width  = p_image->get_width();
         t->height = p_image->get_height();
         t->format = p_image->get_format();
         t->image->create(
@@ -656,7 +656,7 @@ public:
         DummyMesh* mesh = memnew(DummyMesh);
         ERR_FAIL_COND_V(!mesh, RID());
         mesh->blend_shape_count = 0;
-        mesh->blend_shape_mode = VS::BLEND_SHAPE_MODE_NORMALIZED;
+        mesh->blend_shape_mode  = VS::BLEND_SHAPE_MODE_NORMALIZED;
         return mesh_owner.make_rid(mesh);
     }
 
@@ -678,15 +678,15 @@ public:
 
         m->surfaces.push_back(DummySurface());
         DummySurface* s = &m->surfaces.write[m->surfaces.size() - 1];
-        s->format = p_format;
-        s->primitive = p_primitive;
-        s->array = p_array;
+        s->format       = p_format;
+        s->primitive    = p_primitive;
+        s->array        = p_array;
         s->vertex_count = p_vertex_count;
-        s->index_array = p_index_array;
-        s->index_count = p_index_count;
-        s->aabb = p_aabb;
+        s->index_array  = p_index_array;
+        s->index_count  = p_index_count;
+        s->aabb         = p_aabb;
         s->blend_shapes = p_blend_shapes;
-        s->bone_aabbs = p_bone_aabbs;
+        s->bone_aabbs   = p_bone_aabbs;
     }
 
     void mesh_set_blend_shape_count(RID p_mesh, int p_amount) {
@@ -1313,7 +1313,7 @@ public:
         SelfList<RasterizerScene::InstanceBase>::List instance_list;
 
         _FORCE_INLINE_ void instance_change_notify(
-            bool p_aabb = true,
+            bool p_aabb      = true,
             bool p_materials = true
         ) {
             SelfList<RasterizerScene::InstanceBase>* instances =
@@ -1348,7 +1348,7 @@ public:
         float energy;
 
         LightmapCapture() {
-            energy = 1.0;
+            energy      = 1.0;
             cell_subdiv = 1;
         }
     };

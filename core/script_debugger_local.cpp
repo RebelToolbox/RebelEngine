@@ -58,7 +58,7 @@ void ScriptDebuggerLocal::debug(
     );
     print_line("Enter \"help\" for assistance.");
     int current_frame = 0;
-    int total_frames = p_script->debug_get_stack_level_count();
+    int total_frames  = p_script->debug_get_stack_level_count();
     while (true) {
         OS::get_singleton()->print("debug> ");
         String line = OS::get_singleton()->get_stdin_string().strip_edges();
@@ -124,13 +124,13 @@ void ScriptDebuggerLocal::debug(
         } else if (line.begins_with("set")) {
             if (line.get_slice_count(" ") == 1) {
                 for (Map<String, String>::Element* E = options.front(); E;
-                     E = E->next()) {
+                     E                               = E->next()) {
                     print_line("\t" + E->key() + "=" + E->value());
                 }
 
             } else {
                 String key_value = line.get_slicec(' ', 1);
-                int value_pos = key_value.find("=");
+                int value_pos    = key_value.find("=");
 
                 if (value_pos < 0) {
                     print_line("Error: Invalid set format. Use: set key=value");
@@ -177,7 +177,7 @@ void ScriptDebuggerLocal::debug(
                 print_line("Usage: print <expre>");
             } else {
                 String expr = line.get_slicec(' ', 2);
-                String res = p_script->debug_parse_stack_level_expression(
+                String res  = p_script->debug_parse_stack_level_expression(
                     current_frame,
                     expr
                 );
@@ -232,7 +232,7 @@ void ScriptDebuggerLocal::debug(
                 Pair<String, int> breakpoint = to_breakpoint(line);
 
                 String source = breakpoint.first;
-                int linenr = breakpoint.second;
+                int linenr    = breakpoint.second;
 
                 if (source.empty()) {
                     continue;
@@ -260,7 +260,7 @@ void ScriptDebuggerLocal::debug(
                 Pair<String, int> breakpoint = to_breakpoint(line);
 
                 String source = breakpoint.first;
-                int linenr = breakpoint.second;
+                int linenr    = breakpoint.second;
 
                 if (source.empty()) {
                     continue;
@@ -362,9 +362,9 @@ void ScriptDebuggerLocal::profiling_set_frame_times(
     float p_physics_time,
     float p_physics_frame_time
 ) {
-    frame_time = p_frame_time;
-    idle_time = p_idle_time;
-    physics_time = p_physics_time;
+    frame_time         = p_frame_time;
+    idle_time          = p_idle_time;
+    physics_time       = p_physics_time;
     physics_frame_time = p_physics_frame_time;
 }
 
@@ -434,9 +434,9 @@ void ScriptDebuggerLocal::profiling_start() {
     print_line("BEGIN PROFILING");
     profiling = true;
     pinfo.resize(32768);
-    frame_time = 0;
-    physics_time = 0;
-    idle_time = 0;
+    frame_time         = 0;
+    physics_time       = 0;
+    idle_time          = 0;
     physics_frame_time = 0;
 }
 
@@ -503,7 +503,7 @@ void ScriptDebuggerLocal::send_error(
 }
 
 ScriptDebuggerLocal::ScriptDebuggerLocal() {
-    profiling = false;
-    idle_accum = OS::get_singleton()->get_ticks_usec();
+    profiling                  = false;
+    idle_accum                 = OS::get_singleton()->get_ticks_usec();
     options["variable_prefix"] = "";
 }

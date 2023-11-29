@@ -58,7 +58,7 @@ bool XMLParser::_set_text(char* start, char* end) {
     }
 
     // set current text to the parsed text, and replace xml special characters
-    String s = String::utf8(start, (int)(end - start));
+    String s  = String::utf8(start, (int)(end - start));
     node_name = s.xml_unescape();
 
     // current XML node type is text
@@ -68,7 +68,7 @@ bool XMLParser::_set_text(char* start, char* end) {
 }
 
 void XMLParser::_parse_closing_xml_element() {
-    node_type = NODE_ELEMENT_END;
+    node_type  = NODE_ELEMENT_END;
     node_empty = false;
     attributes.clear();
 
@@ -124,7 +124,7 @@ bool XMLParser::_parse_cdata() {
     }
 
     char* cDataBegin = P;
-    char* cDataEnd = nullptr;
+    char* cDataEnd   = nullptr;
 
     // find end of CDATA
     while (*P && !cDataEnd) {
@@ -147,8 +147,8 @@ bool XMLParser::_parse_cdata() {
 }
 
 void XMLParser::_parse_comment() {
-    node_type = NODE_COMMENT;
-    P += 1;
+    node_type  = NODE_COMMENT;
+    P         += 1;
 
     char* pEndOfInput = data + length;
     char* pCommentBegin;
@@ -197,7 +197,7 @@ void XMLParser::_parse_comment() {
 }
 
 void XMLParser::_parse_opening_xml_element() {
-    node_type = NODE_ELEMENT;
+    node_type  = NODE_ELEMENT;
     node_empty = false;
     attributes.clear();
 
@@ -495,10 +495,10 @@ Error XMLParser::open_buffer(const Vector<uint8_t>& p_buffer) {
     }
 
     length = p_buffer.size();
-    data = memnew_arr(char, length + 1);
+    data   = memnew_arr(char, length + 1);
     memcpy(data, p_buffer.ptr(), length);
     data[length] = 0;
-    P = data;
+    P            = data;
     return OK;
 }
 
@@ -518,7 +518,7 @@ Error XMLParser::open(const String& p_path) {
     data = memnew_arr(char, length + 1);
     file->get_buffer((uint8_t*)data, length);
     data[length] = 0;
-    P = data;
+    P            = data;
 
     memdelete(file);
 
@@ -547,11 +547,11 @@ void XMLParser::close() {
     if (data) {
         memdelete_arr(data);
     }
-    data = nullptr;
-    length = 0;
-    P = nullptr;
-    node_empty = false;
-    node_type = NODE_NONE;
+    data        = nullptr;
+    length      = 0;
+    P           = nullptr;
+    node_empty  = false;
+    node_type   = NODE_NONE;
     node_offset = 0;
 }
 

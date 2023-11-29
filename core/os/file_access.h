@@ -91,13 +91,13 @@ public:
     virtual void _set_access_type(AccessType p_access);
 
     enum ModeFlags {
-        READ = 1,
-        WRITE = 2,
+        READ       = 1,
+        WRITE      = 2,
         READ_WRITE = 3,
         WRITE_READ = 7,
     };
 
-    virtual void close() = 0;         ///< close a file
+    virtual void close()         = 0; ///< close a file
     virtual bool is_open() const = 0; ///< true when file is open
 
     virtual String get_path() const {
@@ -113,7 +113,7 @@ public:
         int64_t p_position = 0
     ) = 0; ///< seek from the end of file with negative offset
     virtual uint64_t get_position() const = 0; ///< get position in the file
-    virtual uint64_t get_len() const = 0;      ///< get size of the file
+    virtual uint64_t get_len() const      = 0; ///< get size of the file
 
     virtual bool eof_reached() const = 0; ///< reading passed EOF
 
@@ -148,7 +148,7 @@ public:
 
     virtual Error get_error() const = 0; ///< get last error
 
-    virtual void flush() = 0;
+    virtual void flush()                 = 0;
     virtual void store_8(uint8_t p_dest) = 0; ///< store a byte
     virtual void store_16(uint16_t p_dest);   ///< store 16 bits uint
     virtual void store_32(uint32_t p_dest);   ///< store 32 bits uint

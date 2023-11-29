@@ -120,7 +120,7 @@ protected:
 public:
     void create_action(
         const String& p_name = "",
-        MergeMode p_mode = MERGE_DISABLE
+        MergeMode p_mode     = MERGE_DISABLE
     );
 
     void add_do_method(

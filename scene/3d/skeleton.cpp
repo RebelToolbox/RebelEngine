@@ -81,7 +81,7 @@ bool Skeleton::_set(const StringName& p_path, const Variant& p_value) {
         return false;
     }
 
-    int which = path.get_slicec('/', 1).to_int();
+    int which   = path.get_slicec('/', 1).to_int();
     String what = path.get_slicec('/', 2);
 
     if (which == bones.size() && what == "name") {
@@ -127,7 +127,7 @@ bool Skeleton::_get(const StringName& p_path, Variant& r_ret) const {
         return false;
     }
 
-    int which = path.get_slicec('/', 1).to_int();
+    int which   = path.get_slicec('/', 1).to_int();
     String what = path.get_slicec('/', 2);
 
     ERR_FAIL_INDEX_V(which, bones.size(), false);
@@ -195,7 +195,7 @@ void Skeleton::_update_process_order() {
     }
 
     Bone* bonesptr = bones.ptrw();
-    int len = bones.size();
+    int len        = bones.size();
 
     process_order.resize(len);
     int* order = process_order.ptrw();
@@ -208,7 +208,7 @@ void Skeleton::_update_process_order() {
             );
             bonesptr[i].parent = -1;
         }
-        order[i] = i;
+        order[i]               = i;
         bonesptr[i].sort_index = i;
     }
     // now check process order
@@ -226,7 +226,7 @@ void Skeleton::_update_process_order() {
             // swap indices
             int parent_order = bonesptr[parent_idx].sort_index;
             if (parent_order > i) {
-                bonesptr[order[i]].sort_index = parent_order;
+                bonesptr[order[i]].sort_index   = parent_order;
                 bonesptr[parent_idx].sort_index = i;
                 // swap order
                 SWAP(order[i], order[parent_order]);
@@ -251,8 +251,8 @@ void Skeleton::_notification(int p_what) {
     switch (p_what) {
         case NOTIFICATION_UPDATE_SKELETON: {
             VisualServer* vs = VisualServer::get_singleton();
-            Bone* bonesptr = bones.ptrw();
-            int len = bones.size();
+            Bone* bonesptr   = bones.ptrw();
+            int len          = bones.size();
 
             _update_process_order();
 
@@ -274,7 +274,7 @@ void Skeleton::_notification(int p_what) {
                                 bonesptr[b.parent].pose_global_no_override
                                 * pose;
                         } else {
-                            b.pose_global = pose;
+                            b.pose_global             = pose;
                             b.pose_global_no_override = pose;
                         }
                     } else {
@@ -283,7 +283,7 @@ void Skeleton::_notification(int p_what) {
                             b.pose_global_no_override =
                                 bonesptr[b.parent].pose_global_no_override;
                         } else {
-                            b.pose_global = Transform();
+                            b.pose_global             = Transform();
                             b.pose_global_no_override = Transform();
                         }
                     }
@@ -300,7 +300,7 @@ void Skeleton::_notification(int p_what) {
                                 bonesptr[b.parent].pose_global_no_override
                                 * (b.rest * pose);
                         } else {
-                            b.pose_global = b.rest * pose;
+                            b.pose_global             = b.rest * pose;
                             b.pose_global_no_override = b.rest * pose;
                         }
                     } else {
@@ -311,7 +311,7 @@ void Skeleton::_notification(int p_what) {
                                 bonesptr[b.parent].pose_global_no_override
                                 * b.rest;
                         } else {
-                            b.pose_global = b.rest;
+                            b.pose_global             = b.rest;
                             b.pose_global_no_override = b.rest;
                         }
                     }
@@ -329,7 +329,7 @@ void Skeleton::_notification(int p_what) {
                 }
 
                 for (List<uint32_t>::Element* E = b.nodes_bound.front(); E;
-                     E = E->next()) {
+                     E                          = E->next()) {
                     Object* obj = ObjectDB::get_instance(E->get());
                     ERR_CONTINUE(!obj);
                     Spatial* sp = Object::cast_to<Spatial>(obj);
@@ -340,9 +340,9 @@ void Skeleton::_notification(int p_what) {
 
             // update skins
             for (Set<SkinReference*>::Element* E = skin_bindings.front(); E;
-                 E = E->next()) {
-                const Skin* skin = E->get()->skin.operator->();
-                RID skeleton = E->get()->skeleton;
+                 E                               = E->next()) {
+                const Skin* skin    = E->get()->skin.operator->();
+                RID skeleton        = E->get()->skeleton;
                 uint32_t bind_count = skin->get_bind_count();
 
                 if (E->get()->bind_count != bind_count) {
@@ -366,7 +366,7 @@ void Skeleton::_notification(int p_what) {
                             for (int j = 0; j < len; j++) {
                                 if (bonesptr[j].name == bind_name) {
                                     E->get()->skin_bone_indices_ptrs[i] = j;
-                                    found = true;
+                                    found                               = true;
                                     break;
                                 }
                             }
@@ -422,7 +422,7 @@ void Skeleton::_notification(int p_what) {
 void Skeleton::clear_bones_global_pose_override() {
     for (int i = 0; i < bones.size(); i += 1) {
         bones.write[i].global_pose_override_amount = 0;
-        bones.write[i].global_pose_override_reset = true;
+        bones.write[i].global_pose_override_reset  = true;
     }
     _make_dirty();
 }
@@ -435,8 +435,8 @@ void Skeleton::set_bone_global_pose_override(
 ) {
     ERR_FAIL_INDEX(p_bone, bones.size());
     bones.write[p_bone].global_pose_override_amount = p_amount;
-    bones.write[p_bone].global_pose_override = p_pose;
-    bones.write[p_bone].global_pose_override_reset = !p_persistent;
+    bones.write[p_bone].global_pose_override        = p_pose;
+    bones.write[p_bone].global_pose_override_reset  = !p_persistent;
     _make_dirty();
 }
 
@@ -527,7 +527,7 @@ void Skeleton::set_bone_parent(int p_bone, int p_parent) {
     ERR_FAIL_COND(p_bone == p_parent);
 
     bones.write[p_bone].parent = p_parent;
-    process_order_dirty = true;
+    process_order_dirty        = true;
     _make_dirty();
 }
 
@@ -539,11 +539,11 @@ void Skeleton::unparent_bone_and_rest(int p_bone) {
     int parent = bones[p_bone].parent;
     while (parent >= 0) {
         bones.write[p_bone].rest = bones[parent].rest * bones[p_bone].rest;
-        parent = bones[parent].parent;
+        parent                   = bones[parent].parent;
     }
 
     bones.write[p_bone].parent = -1;
-    process_order_dirty = true;
+    process_order_dirty        = true;
 
     _make_dirty();
 }
@@ -658,7 +658,7 @@ void Skeleton::set_bone_custom_pose(
     // ERR_FAIL_COND( !is_inside_scene() );
 
     bones.write[p_bone].custom_pose_enable = (p_custom_pose != Transform());
-    bones.write[p_bone].custom_pose = p_custom_pose;
+    bones.write[p_bone].custom_pose        = p_custom_pose;
 
     _make_dirty();
 }
@@ -879,7 +879,7 @@ void Skeleton::_skin_changed() {
 
 Ref<SkinReference> Skeleton::register_skin(const Ref<Skin>& p_skin) {
     for (Set<SkinReference*>::Element* E = skin_bindings.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         if (E->get()->skin == p_skin) {
             return Ref<SkinReference>(E->get());
         }
@@ -898,8 +898,8 @@ Ref<SkinReference> Skeleton::register_skin(const Ref<Skin>& p_skin) {
 
         // pose changed, rebuild cache of inverses
         const Bone* bonesptr = bones.ptr();
-        int len = bones.size();
-        const int* order = process_order.ptr();
+        int len              = bones.size();
+        const int* order     = process_order.ptr();
 
         // calculate global rests and invert them
         for (int i = 0; i < len; i++) {
@@ -927,10 +927,10 @@ Ref<SkinReference> Skeleton::register_skin(const Ref<Skin>& p_skin) {
     skin_ref.instance();
 
     skin_ref->skeleton_node = this;
-    skin_ref->bind_count = 0;
-    skin_ref->skeleton = VisualServer::get_singleton()->skeleton_create();
+    skin_ref->bind_count    = 0;
+    skin_ref->skeleton      = VisualServer::get_singleton()->skeleton_create();
     skin_ref->skeleton_node = this;
-    skin_ref->skin = skin;
+    skin_ref->skin          = skin;
 
     skin_bindings.insert(skin_ref.operator->());
 
@@ -1077,15 +1077,15 @@ void Skeleton::_bind_methods() {
 }
 
 Skeleton::Skeleton() {
-    dirty = false;
-    version = 1;
+    dirty               = false;
+    version             = 1;
     process_order_dirty = true;
 }
 
 Skeleton::~Skeleton() {
     // some skins may remain bound
     for (Set<SkinReference*>::Element* E = skin_bindings.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         E->get()->skeleton_node = nullptr;
     }
 }

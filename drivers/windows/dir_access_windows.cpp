@@ -63,7 +63,7 @@ struct DirAccessWindowsPrivate {
 // CreateFolderAsync
 
 Error DirAccessWindows::list_dir_begin() {
-    _cisdir = false;
+    _cisdir    = false;
     _cishidden = false;
 
     list_dir_end();
@@ -84,7 +84,7 @@ String DirAccessWindows::get_next() {
         return "";
     }
 
-    _cisdir = (p->fu.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY);
+    _cisdir    = (p->fu.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY);
     _cishidden = (p->fu.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN);
 
     String name = p->fu.cFileName;
@@ -176,7 +176,7 @@ Error DirAccessWindows::make_dir(String p_dir) {
     // https://msdn.microsoft.com/en-us/library/windows/desktop/aa363855(v=vs.85).aspx
 
     success = CreateDirectoryW(p_dir.c_str(), NULL);
-    err = GetLastError();
+    err     = GetLastError();
 
     if (success) {
         return OK;
@@ -384,9 +384,9 @@ String DirAccessWindows::get_filesystem_type() const {
 
     WCHAR szVolumeName[100];
     WCHAR szFileSystemName[10];
-    DWORD dwSerialNumber = 0;
+    DWORD dwSerialNumber      = 0;
     DWORD dwMaxFileNameLength = 0;
-    DWORD dwFileSystemFlags = 0;
+    DWORD dwFileSystemFlags   = 0;
 
     if (::GetVolumeInformationW(
             unit.c_str(),
@@ -406,8 +406,8 @@ String DirAccessWindows::get_filesystem_type() const {
 }
 
 DirAccessWindows::DirAccessWindows() {
-    p = memnew(DirAccessWindowsPrivate);
-    p->h = INVALID_HANDLE_VALUE;
+    p           = memnew(DirAccessWindowsPrivate);
+    p->h        = INVALID_HANDLE_VALUE;
     current_dir = ".";
 
     drive_count = 0;

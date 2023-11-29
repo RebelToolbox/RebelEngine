@@ -98,9 +98,9 @@ class InputDefault : public Input {
             for (int i = 0; i < JOY_BUTTON_MAX + 12; i++) {
                 last_buttons[i] = false;
             }
-            connected = false;
-            last_hat = HAT_MASK_CENTER;
-            mapping = -1;
+            connected   = false;
+            last_hat    = HAT_MASK_CENTER;
+            mapping     = -1;
             hat_current = 0;
         }
     };
@@ -115,10 +115,10 @@ class InputDefault : public Input {
 public:
     enum HatMask {
         HAT_MASK_CENTER = 0,
-        HAT_MASK_UP = 1,
-        HAT_MASK_RIGHT = 2,
-        HAT_MASK_DOWN = 4,
-        HAT_MASK_LEFT = 8,
+        HAT_MASK_UP     = 1,
+        HAT_MASK_RIGHT  = 2,
+        HAT_MASK_DOWN   = 4,
+        HAT_MASK_LEFT   = 8,
     };
 
     enum HatDir {
@@ -148,7 +148,7 @@ private:
 
     enum JoyAxisRange {
         NEGATIVE_HALF_AXIS = -1,
-        FULL_AXIS = 0,
+        FULL_AXIS          = 0,
         POSITIVE_HALF_AXIS = 1
     };
 
@@ -329,7 +329,7 @@ public:
     virtual CursorShape get_current_cursor_shape() const;
     virtual void set_custom_mouse_cursor(
         const RES& p_cursor,
-        CursorShape p_shape = Input::CURSOR_ARROW,
+        CursorShape p_shape      = Input::CURSOR_ARROW,
         const Vector2& p_hotspot = Vector2()
     );
 

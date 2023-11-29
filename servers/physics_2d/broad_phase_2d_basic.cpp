@@ -39,8 +39,8 @@ BroadPhase2DBasic::ID BroadPhase2DBasic::create(
     current++;
 
     Element e;
-    e.owner = p_object_;
-    e._static = false;
+    e.owner    = p_object_;
+    e._static  = false;
     e.subindex = p_subindex;
 
     element_map[current] = e;
@@ -99,7 +99,7 @@ int BroadPhase2DBasic::cull_segment(
     for (Map<ID, Element>::Element* E = element_map.front(); E; E = E->next()) {
         const Rect2 aabb = E->get().aabb;
         if (aabb.intersects_segment(p_from, p_to)) {
-            p_results[rc] = E->get().owner;
+            p_results[rc]        = E->get().owner;
             p_result_indices[rc] = E->get().subindex;
             rc++;
             if (rc >= p_max_results) {
@@ -122,7 +122,7 @@ int BroadPhase2DBasic::cull_aabb(
     for (Map<ID, Element>::Element* E = element_map.front(); E; E = E->next()) {
         const Rect2 aabb = E->get().aabb;
         if (aabb.intersects(p_aabb)) {
-            p_results[rc] = E->get().owner;
+            p_results[rc]        = E->get().owner;
             p_result_indices[rc] = E->get().subindex;
             rc++;
             if (rc >= p_max_results) {
@@ -207,9 +207,9 @@ BroadPhase2DSW* BroadPhase2DBasic::_create() {
 }
 
 BroadPhase2DBasic::BroadPhase2DBasic() {
-    current = 1;
+    current         = 1;
     unpair_callback = nullptr;
     unpair_userdata = nullptr;
-    pair_callback = nullptr;
-    pair_userdata = nullptr;
+    pair_callback   = nullptr;
+    pair_userdata   = nullptr;
 }

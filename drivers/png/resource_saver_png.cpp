@@ -115,6 +115,6 @@ void ResourceSaverPNG::get_recognized_extensions(
 }
 
 ResourceSaverPNG::ResourceSaverPNG() {
-    Image::save_png_func = &save_image;
+    Image::save_png_func        = &save_image;
     Image::save_png_buffer_func = &save_image_to_buffer;
 };

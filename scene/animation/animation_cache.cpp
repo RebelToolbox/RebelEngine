@@ -108,7 +108,7 @@ void AnimationCache::_update_cache() {
 
             if (np.get_subname_count() == 1) {
                 StringName property = np.get_subname(0);
-                String ps = property;
+                String ps           = property;
 
                 Skeleton* sk = Object::cast_to<Skeleton>(node);
                 if (!sk) {
@@ -159,12 +159,12 @@ void AnimationCache::_update_cache() {
                 } else {
                     path.node = node;
                 }
-                path.object = res2.is_valid() ? res2.ptr() : (Object*)node;
+                path.object  = res2.is_valid() ? res2.ptr() : (Object*)node;
                 path.subpath = leftover_subpath;
 
             } else {
-                path.node = node;
-                path.object = node;
+                path.node    = node;
+                path.object  = node;
                 path.subpath = np.get_subnames();
             }
         }
@@ -317,7 +317,7 @@ void AnimationCache::set_all(float p_time, float p_delta) {
                     );
 
                     for (List<int>::Element* E = indices.front(); E;
-                         E = E->next()) {
+                         E                     = E->next()) {
                         Variant v = animation->track_get_key_value(i, E->get());
                         set_track_value(i, v);
                     }
@@ -334,7 +334,7 @@ void AnimationCache::set_all(float p_time, float p_delta) {
                 );
 
                 for (List<int>::Element* E = indices.front(); E;
-                     E = E->next()) {
+                     E                     = E->next()) {
                     Vector<Variant> args =
                         animation->method_track_get_params(i, E->get());
                     StringName name =
@@ -398,7 +398,7 @@ void AnimationCache::set_root(Node* p_root) {
 }
 
 AnimationCache::AnimationCache() {
-    root = nullptr;
+    root        = nullptr;
     cache_dirty = true;
     cache_valid = false;
 }

@@ -315,7 +315,7 @@ void AreaBullet::set_event_callback(
 ) {
     InOutEventCallback& ev =
         eventsCallbacks[static_cast<int>(p_callbackObjectType)];
-    ev.event_callback_id = p_id;
+    ev.event_callback_id     = p_id;
     ev.event_callback_method = p_method;
 
     /// Set if monitoring

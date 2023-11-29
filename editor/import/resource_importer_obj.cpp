@@ -82,18 +82,18 @@ static Error _parse_material_library(
             Vector<String> v = l.split(" ", false);
             ERR_FAIL_COND_V(v.size() < 4, ERR_INVALID_DATA);
             Color c = current->get_albedo();
-            c.r = v[1].to_float();
-            c.g = v[2].to_float();
-            c.b = v[3].to_float();
+            c.r     = v[1].to_float();
+            c.g     = v[2].to_float();
+            c.b     = v[3].to_float();
             current->set_albedo(c);
         } else if (l.begins_with("Ks ")) {
             // normal
             ERR_FAIL_COND_V(current.is_null(), ERR_FILE_CORRUPT);
             Vector<String> v = l.split(" ", false);
             ERR_FAIL_COND_V(v.size() < 4, ERR_INVALID_DATA);
-            float r = v[1].to_float();
-            float g = v[2].to_float();
-            float b = v[3].to_float();
+            float r         = v[1].to_float();
+            float g         = v[2].to_float();
+            float b         = v[3].to_float();
             float metalness = MAX(r, MAX(g, b));
             current->set_metallic(metalness);
         } else if (l.begins_with("Ns ")) {
@@ -110,7 +110,7 @@ static Error _parse_material_library(
             ERR_FAIL_COND_V(v.size() != 2, ERR_INVALID_DATA);
             float d = v[1].to_float();
             Color c = current->get_albedo();
-            c.a = d;
+            c.a     = d;
             current->set_albedo(c);
             if (c.a < 0.99) {
                 current->set_feature(
@@ -125,7 +125,7 @@ static Error _parse_material_library(
             ERR_FAIL_COND_V(v.size() != 2, ERR_INVALID_DATA);
             float d = v[1].to_float();
             Color c = current->get_albedo();
-            c.a = 1.0 - d;
+            c.a     = 1.0 - d;
             current->set_albedo(c);
             if (c.a < 0.99) {
                 current->set_feature(
@@ -257,8 +257,8 @@ static Error _parse_obj(
     mesh.instance();
 
     bool generate_tangents = p_generate_tangents;
-    Vector3 scale_mesh = p_scale_mesh;
-    Vector3 offset_mesh = p_offset_mesh;
+    Vector3 scale_mesh     = p_scale_mesh;
+    Vector3 offset_mesh    = p_offset_mesh;
 
     Vector<Vector3> vertices;
     Vector<Vector3> normals;
@@ -277,8 +277,8 @@ static Error _parse_obj(
     while (true) {
         String l = f->get_line().strip_edges();
         while (l.length() && l[l.length() - 1] == '\\') {
-            String add = f->get_line().strip_edges();
-            l += add;
+            String add  = f->get_line().strip_edges();
+            l          += add;
             if (add == String()) {
                 break;
             }
@@ -447,7 +447,7 @@ static Error _parse_obj(
                     mesh->set_name(name);
                     r_meshes.push_back(mesh);
                     mesh.instance();
-                    current_group = "";
+                    current_group    = "";
                     current_material = "";
                 }
             }

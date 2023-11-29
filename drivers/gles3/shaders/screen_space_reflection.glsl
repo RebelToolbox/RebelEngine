@@ -9,8 +9,8 @@ out vec2 uv_interp;
 out vec2 pos_interp;
 
 void main() {
-    uv_interp = uv_in;
-    gl_Position = vertex_attrib;
+    uv_interp     = uv_in;
+    gl_Position   = vertex_attrib;
     pos_interp.xy = gl_Position.xy;
 }
 
@@ -44,17 +44,17 @@ uniform float curve_fade_in;
 layout(location = 0) out vec4 frag_color;
 
 vec2 view_to_screen(vec3 view_pos, out float w) {
-    vec4 projected = projection * vec4(view_pos, 1.0);
-    projected.xyz /= projected.w;
-    projected.xy = projected.xy * 0.5 + 0.5;
-    w = projected.w;
+    vec4 projected  = projection * vec4(view_pos, 1.0);
+    projected.xyz  /= projected.w;
+    projected.xy    = projected.xy * 0.5 + 0.5;
+    w               = projected.w;
     return projected.xy;
 }
 
 #define M_PI 3.14159265359
 
 void main() {
-    vec4 diffuse = texture(source_diffuse, uv_interp);
+    vec4 diffuse          = texture(source_diffuse, uv_interp);
     vec4 normal_roughness = texture(source_normal_roughness, uv_interp);
 
     vec3 normal;
@@ -69,7 +69,7 @@ void main() {
     vec3 vertex = world_pos.xyz / world_pos.w;
 
     vec3 view_dir = normalize(vertex);
-    vec3 ray_dir = normalize(reflect(view_dir, normal));
+    vec3 ray_dir  = normalize(reflect(view_dir, normal));
 
     if (dot(ray_dir, normal) < 0.001) {
         frag_color = vec4(0.0);
@@ -85,7 +85,7 @@ void main() {
     float ray_len = (vertex.z + ray_dir.z * camera_z_far) > -camera_z_near
                       ? (-camera_z_near - vertex.z) / ray_dir.z
                       : camera_z_far;
-    vec3 ray_end = vertex + ray_dir * ray_len;
+    vec3 ray_end  = vertex + ray_dir * ray_len;
 
     float w_begin;
     vec2 vp_line_begin = view_to_screen(vertex, w_begin);
@@ -96,15 +96,15 @@ void main() {
     // we need to interpolate w along the ray, to generate perspective correct
     // reflections
     w_begin = 1.0 / w_begin;
-    w_end = 1.0 / w_end;
+    w_end   = 1.0 / w_end;
 
     float z_begin = vertex.z * w_begin;
-    float z_end = ray_end.z * w_end;
+    float z_end   = ray_end.z * w_end;
 
     vec2 line_begin = vp_line_begin / pixel_size;
-    vec2 line_dir = vp_line_dir / pixel_size;
-    float z_dir = z_end - z_begin;
-    float w_dir = w_end - w_begin;
+    vec2 line_dir   = vp_line_dir / pixel_size;
+    float z_dir     = z_end - z_begin;
+    float w_dir     = w_end - w_begin;
 
     // clip the line to the viewport edges
 
@@ -119,28 +119,28 @@ void main() {
     float line_clip =
         min(scale_max_x, scale_max_y) * min(scale_min_x, scale_min_y);
     line_dir *= line_clip;
-    z_dir *= line_clip;
-    w_dir *= line_clip;
+    z_dir    *= line_clip;
+    w_dir    *= line_clip;
 
     // clip z and w advance to line advance
     vec2 line_advance = normalize(line_dir); // down to pixel
-    float step_size = length(line_advance) / length(line_dir);
-    float z_advance = z_dir * step_size; // adapt z advance to line advance
-    float w_advance = w_dir * step_size; // adapt w advance to line advance
+    float step_size   = length(line_advance) / length(line_dir);
+    float z_advance   = z_dir * step_size; // adapt z advance to line advance
+    float w_advance   = w_dir * step_size; // adapt w advance to line advance
 
     // make line advance faster if direction is closer to pixel edges (this
     // avoids sampling the same pixel twice)
     float advance_angle_adj =
         1.0 / max(abs(line_advance.x), abs(line_advance.y));
     line_advance *= advance_angle_adj; // adapt z advance to line advance
-    z_advance *= advance_angle_adj;
-    w_advance *= advance_angle_adj;
+    z_advance    *= advance_angle_adj;
+    w_advance    *= advance_angle_adj;
 
-    vec2 pos = line_begin;
-    float z = z_begin;
-    float w = w_begin;
+    vec2 pos     = line_begin;
+    float z      = z_begin;
+    float w      = w_begin;
     float z_from = z / w;
-    float z_to = z_from;
+    float z_to   = z_from;
     float depth;
     vec2 prev_pos = pos;
 
@@ -150,8 +150,8 @@ void main() {
 
     for (int i = 0; i < num_steps; i++) {
         pos += line_advance;
-        z += z_advance;
-        w += w_advance;
+        z   += z_advance;
+        w   += w_advance;
 
         // convert to linear depth
 
@@ -170,7 +170,7 @@ void main() {
         depth = -depth;
 
         z_from = z_to;
-        z_to = z / w;
+        z_to   = z / w;
 
         if (depth > z_to) {
             // if depth was surpassed
@@ -183,7 +183,7 @@ void main() {
         }
 
         steps_taken += 1.0;
-        prev_pos = pos;
+        prev_pos     = pos;
     }
 
     if (found) {
@@ -217,7 +217,7 @@ void main() {
         }
 
         vec2 final_pos;
-        float grad = (steps_taken + 1.0) / float(num_steps);
+        float grad         = (steps_taken + 1.0) / float(num_steps);
         float initial_fade = curve_fade_in == 0.0
                                ? 1.0
                                : pow(clamp(grad, 0.0, 1.0), curve_fade_in);
@@ -234,17 +234,17 @@ void main() {
             // use a blurred version (in consecutive mipmaps) of the screen to
             // simulate roughness
 
-            float gloss = 1.0 - roughness;
+            float gloss      = 1.0 - roughness;
             float cone_angle = roughness * M_PI * 0.5;
-            vec2 cone_dir = final_pos - line_begin;
-            float cone_len = length(cone_dir);
+            vec2 cone_dir    = final_pos - line_begin;
+            float cone_len   = length(cone_dir);
             cone_dir =
                 normalize(cone_dir); // will be used normalized from now on
             float max_mipmap = filter_mipmap_levels - 1.0;
             float gloss_mult = gloss;
 
             float rem_alpha = 1.0;
-            final_color = vec4(0.0);
+            final_color     = vec4(0.0);
 
             for (int i = 0; i < 7; i++) {
                 float op_len = 2.0 * tan(cone_angle)
@@ -260,11 +260,11 @@ void main() {
                     // as it avoids bleeding from beyond the reflection as much
                     // as possible. As a plus it also makes the rough reflection
                     // more elongated.
-                    float a = op_len;
-                    float h = cone_len;
-                    float a2 = a * a;
+                    float a   = op_len;
+                    float h   = cone_len;
+                    float a2  = a * a;
                     float fh2 = 4.0f * h * h;
-                    radius = (a * (sqrt(a2 + fh2) - a)) / (4.0f * h);
+                    radius    = (a * (sqrt(a2 + fh2) - a)) / (4.0f * h);
                 }
 
                 // find the place where screen must be sampled
@@ -285,7 +285,7 @@ void main() {
 
                 // multiply by gloss
                 sample_color.rgb *= gloss_mult;
-                sample_color.a = gloss_mult;
+                sample_color.a    = gloss_mult;
 
                 rem_alpha -= sample_color.a;
                 if (rem_alpha < 0.0) {

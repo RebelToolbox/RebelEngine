@@ -45,13 +45,13 @@
 DocData* EditorHelp::doc = nullptr;
 
 void EditorHelp::_init_colors() {
-    title_color = get_color("accent_color", "Editor");
-    text_color = get_color("default_color", "RichTextLabel");
-    headline_color = get_color("headline_color", "EditorHelp");
+    title_color     = get_color("accent_color", "Editor");
+    text_color      = get_color("default_color", "RichTextLabel");
+    headline_color  = get_color("headline_color", "EditorHelp");
     base_type_color = title_color.linear_interpolate(text_color, 0.5);
-    comment_color = text_color * Color(1, 1, 1, 0.6);
-    symbol_color = comment_color;
-    value_color = text_color * Color(1, 1, 1, 0.6);
+    comment_color   = text_color * Color(1, 1, 1, 0.6);
+    symbol_color    = comment_color;
+    value_color     = text_color * Color(1, 1, 1, 0.6);
     qualifier_color = text_color * Color(1, 1, 1, 0.8);
     type_color =
         get_color("accent_color", "Editor").linear_interpolate(text_color, 0.5);
@@ -96,7 +96,7 @@ void EditorHelp::_class_desc_select(const String& p_select) {
         String class_name;
         if (select.find(".") != -1) {
             class_name = select.get_slice(".", 0);
-            select = select.get_slice(".", 1);
+            select     = select.get_slice(".", 1);
         } else {
             class_name = "@GlobalScope";
         }
@@ -191,8 +191,8 @@ void EditorHelp::_class_desc_input(const Ref<InputEvent>& p_input) {}
 void EditorHelp::_class_desc_resized() {
     // Add extra horizontal margins for better readability.
     // The margins increase as the width of the editor help container increases.
-    Ref<Font> doc_code_font = get_font("doc_source", "EditorFonts");
-    real_t char_width = doc_code_font->get_char_size('x').width;
+    Ref<Font> doc_code_font  = get_font("doc_source", "EditorFonts");
+    real_t char_width        = doc_code_font->get_char_size('x').width;
     const int display_margin = MAX(30 * EDSCALE,
                                    get_parent_anchorable_rect().size.width
                                        - char_width * 120 * EDSCALE)
@@ -390,11 +390,11 @@ void EditorHelp::_update_doc() {
         doc->class_list[edited_class]; // make a copy, so we can sort without
                                        // worrying
 
-    Ref<Font> doc_font = get_font("doc", "EditorFonts");
-    Ref<Font> doc_bold_font = get_font("doc_bold", "EditorFonts");
+    Ref<Font> doc_font       = get_font("doc", "EditorFonts");
+    Ref<Font> doc_bold_font  = get_font("doc_bold", "EditorFonts");
     Ref<Font> doc_title_font = get_font("doc_title", "EditorFonts");
-    Ref<Font> doc_code_font = get_font("doc_source", "EditorFonts");
-    String link_color_text = title_color.to_html(false);
+    Ref<Font> doc_code_font  = get_font("doc_source", "EditorFonts");
+    String link_color_text   = title_color.to_html(false);
 
     // Class name
     section_line.push_back(Pair<String, int>(TTR("Top"), 0));
@@ -436,7 +436,7 @@ void EditorHelp::_update_doc() {
     // Descendents
     if (ClassDB::class_exists(cd.name)) {
         bool found = false;
-        bool prev = false;
+        bool prev  = false;
 
         class_desc->push_font(doc_font);
         for (Map<String, DocData::ClassDoc>::Element* E =
@@ -524,10 +524,10 @@ void EditorHelp::_update_doc() {
 
         for (int i = 0; i < cd.tutorials.size(); i++) {
             const String link = DTR(cd.tutorials[i].link);
-            String linktxt = (cd.tutorials[i].title.empty())
-                               ? link
-                               : DTR(cd.tutorials[i].title);
-            const int seppos = linktxt.find("//");
+            String linktxt    = (cd.tutorials[i].title.empty())
+                                  ? link
+                                  : DTR(cd.tutorials[i].title);
+            const int seppos  = linktxt.find("//");
             if (seppos != -1) {
                 linktxt = link.right(seppos + 2);
             }
@@ -703,7 +703,7 @@ void EditorHelp::_update_doc() {
             String group_prefix;
             for (int i = 0; i < m.size(); i++) {
                 const String new_prefix = m[i].name.substr(0, 3);
-                bool is_new_group = false;
+                bool is_new_group       = false;
 
                 if (i < m.size() - 1 && new_prefix == m[i + 1].name.substr(0, 3)
                     && new_prefix != group_prefix) {
@@ -757,11 +757,11 @@ void EditorHelp::_update_doc() {
 
         String theme_data_type;
         Map<String, String> data_type_names;
-        data_type_names["color"] = TTR("Colors");
+        data_type_names["color"]    = TTR("Colors");
         data_type_names["constant"] = TTR("Constants");
-        data_type_names["font"] = TTR("Fonts");
-        data_type_names["icon"] = TTR("Icons");
-        data_type_names["style"] = TTR("Styles");
+        data_type_names["font"]     = TTR("Fonts");
+        data_type_names["icon"]     = TTR("Icons");
+        data_type_names["style"]    = TTR("Styles");
 
         for (int i = 0; i < cd.theme_properties.size(); i++) {
             theme_property_line[cd.theme_properties[i].name] =
@@ -1387,14 +1387,14 @@ static void _add_text_to_rt(const String& p_bbcode, RichTextLabel* p_rt) {
     DocData* doc = EditorHelp::get_doc_data();
     String base_path;
 
-    Ref<Font> doc_font = p_rt->get_font("doc", "EditorFonts");
+    Ref<Font> doc_font      = p_rt->get_font("doc", "EditorFonts");
     Ref<Font> doc_bold_font = p_rt->get_font("doc_bold", "EditorFonts");
     Ref<Font> doc_code_font = p_rt->get_font("doc_source", "EditorFonts");
 
     Color font_color_hl = p_rt->get_color("headline_color", "EditorHelp");
-    Color accent_color = p_rt->get_color("accent_color", "Editor");
-    Color link_color = accent_color.linear_interpolate(font_color_hl, 0.8);
-    Color code_color = accent_color.linear_interpolate(font_color_hl, 0.6);
+    Color accent_color  = p_rt->get_color("accent_color", "Editor");
+    Color link_color    = accent_color.linear_interpolate(font_color_hl, 0.8);
+    Color code_color    = accent_color.linear_interpolate(font_color_hl, 0.6);
 
     String bbcode =
         p_bbcode.dedent().replace("\t", "").replace("\r", "").strip_edges();
@@ -1504,7 +1504,7 @@ static void _add_text_to_rt(const String& p_bbcode, RichTextLabel* p_rt) {
             p_rt->push_font(doc_code_font);
             p_rt->push_color(code_color);
             code_tag = true;
-            pos = brk_end + 1;
+            pos      = brk_end + 1;
             tag_stack.push_front(tag);
         } else if (tag == "center") {
             // align to center
@@ -1929,7 +1929,7 @@ bool FindBar::search_prev() {
 
 bool FindBar::_search(bool p_search_previous) {
     String stext = search_text->get_text();
-    bool keep = prev_search == stext;
+    bool keep    = prev_search == stext;
 
     bool ret = rich_text_label->search(stext, keep, p_search_previous);
     if (!ret) {

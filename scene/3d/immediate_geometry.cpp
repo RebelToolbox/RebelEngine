@@ -68,8 +68,8 @@ void ImmediateGeometry::add_vertex(const Vector3& p_vertex) {
     VS::get_singleton()->immediate_vertex(im, p_vertex);
     if (empty) {
         aabb.position = p_vertex;
-        aabb.size = Vector3();
-        empty = false;
+        aabb.size     = Vector3();
+        empty         = false;
     } else {
         aabb.expand_to(p_vertex);
     }
@@ -101,21 +101,21 @@ void ImmediateGeometry::add_sphere(
 ) {
     for (int i = 1; i <= p_lats; i++) {
         double lat0 = Math_PI * (-0.5 + (double)(i - 1) / p_lats);
-        double z0 = Math::sin(lat0);
-        double zr0 = Math::cos(lat0);
+        double z0   = Math::sin(lat0);
+        double zr0  = Math::cos(lat0);
 
         double lat1 = Math_PI * (-0.5 + (double)i / p_lats);
-        double z1 = Math::sin(lat1);
-        double zr1 = Math::cos(lat1);
+        double z1   = Math::sin(lat1);
+        double zr1  = Math::cos(lat1);
 
         for (int j = p_lons; j >= 1; j--) {
             double lng0 = 2 * Math_PI * (double)(j - 1) / p_lons;
-            double x0 = Math::cos(lng0);
-            double y0 = Math::sin(lng0);
+            double x0   = Math::cos(lng0);
+            double y0   = Math::sin(lng0);
 
             double lng1 = 2 * Math_PI * (double)(j) / p_lons;
-            double x1 = Math::cos(lng1);
-            double y1 = Math::sin(lng1);
+            double x1   = Math::cos(lng1);
+            double y1   = Math::sin(lng1);
 
             Vector3 v[4] = {
                 Vector3(x1 * zr0, z0, y1 * zr0),

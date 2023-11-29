@@ -156,14 +156,14 @@ public:
             uint32_t _2d_draw_call_count;
 
             void reset() {
-                object_count = 0;
-                draw_call_count = 0;
+                object_count          = 0;
+                draw_call_count       = 0;
                 material_switch_count = 0;
-                surface_switch_count = 0;
-                shader_rebind_count = 0;
-                vertices_count = 0;
-                _2d_item_count = 0;
-                _2d_draw_call_count = 0;
+                surface_switch_count  = 0;
+                shader_rebind_count   = 0;
+                vertices_count        = 0;
+                _2d_item_count        = 0;
+                _2d_draw_call_count   = 0;
             }
         } render, render_final, snap;
 
@@ -229,7 +229,7 @@ public:
 
         Geometry() {
             last_pass = 0;
-            index = 0;
+            index     = 0;
         }
     };
 
@@ -332,7 +332,7 @@ public:
             }
 
             for (Set<Texture*>::Element* E = proxy_owners.front(); E;
-                 E = E->next()) {
+                 E                         = E->next()) {
                 E->get()->proxy = nullptr;
             }
 
@@ -579,11 +579,11 @@ public:
         bool uses_fragment_time;
 
         Shader() : dirty_list(this) {
-            shader = nullptr;
-            valid = false;
+            shader         = nullptr;
+            valid          = false;
             custom_code_id = 0;
-            version = 1;
-            last_pass = 0;
+            version        = 1;
+            last_pass      = 0;
         }
     };
 
@@ -648,11 +648,11 @@ public:
 
         Material() : list(this), dirty_list(this) {
             can_cast_shadow_cache = false;
-            is_animated_cache = false;
-            shader = nullptr;
-            line_width = 1.0;
-            last_pass = 0;
-            render_priority = 0;
+            is_animated_cache     = false;
+            shader                = nullptr;
+            line_width            = 1.0;
+            last_pass             = 0;
+            render_priority       = 0;
         }
     };
 
@@ -1020,7 +1020,7 @@ public:
         AABB aabb;
 
         Immediate() {
-            type = GEOMETRY_IMMEDIATE;
+            type     = GEOMETRY_IMMEDIATE;
             building = false;
         }
     };
@@ -1348,9 +1348,9 @@ public:
         SelfList<LightmapCapture> update_list;
 
         LightmapCapture() : update_list(this) {
-            energy = 1.0;
+            energy      = 1.0;
             cell_subdiv = 1;
-            interior = false;
+            interior    = false;
         }
     };
 
@@ -1679,8 +1679,8 @@ public:
         unsigned int p_offset_bytes,
         unsigned int p_data_size_bytes,
         const void* p_data,
-        GLenum p_target = GL_ARRAY_BUFFER,
-        GLenum p_usage = GL_DYNAMIC_DRAW,
+        GLenum p_target        = GL_ARRAY_BUFFER,
+        GLenum p_usage         = GL_DYNAMIC_DRAW,
         bool p_optional_orphan = false
     ) const;
     bool safe_buffer_sub_data(
@@ -1736,7 +1736,7 @@ inline void RasterizerStorageGLES2::buffer_orphan_and_upload(
         // fill with garbage off the end of the array
         if (p_buffer_size_bytes) {
             unsigned int start = p_offset_bytes + p_data_size_bytes;
-            unsigned int end = start + 1024;
+            unsigned int end   = start + 1024;
             if (end < p_buffer_size_bytes) {
                 uint8_t* garbage = (uint8_t*)alloca(1024);
                 for (int n = 0; n < 1024; n++) {

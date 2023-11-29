@@ -133,15 +133,15 @@ private:
     String connecting_target_to;
     int connecting_target_index;
     bool just_disconnected = false;
-    bool connecting_valid = false;
+    bool connecting_valid  = false;
     Vector2 click_pos;
 
-    bool dragging = false;
-    bool just_selected = false;
+    bool dragging         = false;
+    bool just_selected    = false;
     bool moving_selection = false;
     Vector2 drag_accum;
 
-    float zoom = 1.0f;
+    float zoom      = 1.0f;
     float zoom_step = 1.2;
     float zoom_min;
     float zoom_max;
@@ -151,16 +151,16 @@ private:
     void _zoom_plus();
     void _update_zoom_label();
 
-    bool box_selecting = false;
+    bool box_selecting               = false;
     bool box_selection_mode_additive = false;
     Point2 box_selecting_from;
     Point2 box_selecting_to;
     Rect2 box_selecting_rect;
     List<GraphNode*> previous_selected;
 
-    bool setting_scroll_ofs = false;
-    bool right_disconnects = false;
-    bool updating = false;
+    bool setting_scroll_ofs            = false;
+    bool right_disconnects             = false;
+    bool updating                      = false;
     bool awaiting_scroll_offset_update = false;
     List<Connection> connections;
 
@@ -188,7 +188,7 @@ private:
         const Vector2& p_to,
         const Color& p_color,
         const Color& p_to_color,
-        float p_width = 2.0,
+        float p_width        = 2.0,
         float p_bezier_ratio = 1.0
     );
 

@@ -57,41 +57,41 @@ static void smbFft(float* fftBuffer, long fftFrameSize, long sign)
             j <<= 1;
         }
         if (i < j) {
-            p1 = fftBuffer + i;
-            p2 = fftBuffer + j;
-            temp = *p1;
+            p1      = fftBuffer + i;
+            p2      = fftBuffer + j;
+            temp    = *p1;
             *(p1++) = *p2;
             *(p2++) = temp;
-            temp = *p1;
-            *p1 = *p2;
-            *p2 = temp;
+            temp    = *p1;
+            *p1     = *p2;
+            *p2     = temp;
         }
     }
     for (k = 0, le = 2; k < (long)(log((double)fftFrameSize) / log(2.) + .5);
          k++) {
-        le <<= 1;
-        le2 = le >> 1;
-        ur = 1.0;
-        ui = 0.0;
-        arg = Math_PI / (le2 >> 1);
-        wr = cos(arg);
-        wi = sign * sin(arg);
+        le  <<= 1;
+        le2   = le >> 1;
+        ur    = 1.0;
+        ui    = 0.0;
+        arg   = Math_PI / (le2 >> 1);
+        wr    = cos(arg);
+        wi    = sign * sin(arg);
         for (j = 0; j < le2; j += 2) {
             p1r = fftBuffer + j;
             p1i = p1r + 1;
             p2r = p1r + le2;
             p2i = p2r + 1;
             for (i = j; i < 2 * fftFrameSize; i += le) {
-                tr = *p2r * ur - *p2i * ui;
-                ti = *p2r * ui + *p2i * ur;
-                *p2r = *p1r - tr;
-                *p2i = *p1i - ti;
+                tr    = *p2r * ur - *p2i * ui;
+                ti    = *p2r * ui + *p2i * ur;
+                *p2r  = *p1r - tr;
+                *p2i  = *p1i - ti;
                 *p1r += tr;
                 *p1i += ti;
-                p1r += le;
-                p1i += le;
-                p2r += le;
-                p2i += le;
+                p1r  += le;
+                p1i  += le;
+                p2r  += le;
+                p2i  += le;
             }
             tr = ur * wr - ui * wi;
             ui = ur * wi + ui * wr;
@@ -115,7 +115,7 @@ void AudioEffectSpectrumAnalyzerInstance::process(
     // capture spectrum
     while (p_frame_count) {
         int to_fill = fft_size * 2 - temporal_fft_pos;
-        to_fill = MIN(to_fill, p_frame_count);
+        to_fill     = MIN(to_fill, p_frame_count);
 
         float* fftw = temporal_fft.ptrw();
         for (int i = 0; i < to_fill; i++) { // left and right buffers
@@ -125,7 +125,7 @@ void AudioEffectSpectrumAnalyzerInstance::process(
                                  / (double)fft_size
                              )
                          + 0.5;
-            fftw[temporal_fft_pos * 2] = window * p_src_frames->l;
+            fftw[temporal_fft_pos * 2]     = window * p_src_frames->l;
             fftw[temporal_fft_pos * 2 + 1] = 0;
             fftw[(temporal_fft_pos + fft_size * 2) * 2] =
                 window * p_src_frames->r;
@@ -157,7 +157,7 @@ void AudioEffectSpectrumAnalyzerInstance::process(
                         / float(fft_size);
             }
 
-            fft_pos = next; // swap
+            fft_pos          = next; // swap
             temporal_fft_pos = 0;
         }
     }
@@ -194,13 +194,13 @@ Vector2 AudioEffectSpectrumAnalyzerInstance::get_magnitude_for_frequency_range(
     uint64_t time = OS::get_singleton()->get_ticks_usec();
     float diff =
         double(time - last_fft_time) / 1000000.0 + base->get_tap_back_pos();
-    diff -= AudioServer::get_singleton()->get_output_latency();
-    float fft_time_size = float(fft_size) / mix_rate;
+    diff                -= AudioServer::get_singleton()->get_output_latency();
+    float fft_time_size  = float(fft_size) / mix_rate;
 
     int fft_index = fft_pos;
 
     while (diff > fft_time_size) {
-        diff -= fft_time_size;
+        diff      -= fft_time_size;
         fft_index -= 1;
         if (fft_index < 0) {
             fft_index = fft_count - 1;
@@ -208,10 +208,10 @@ Vector2 AudioEffectSpectrumAnalyzerInstance::get_magnitude_for_frequency_range(
     }
 
     int begin_pos = p_begin * fft_size / (mix_rate * 0.5);
-    int end_pos = p_end * fft_size / (mix_rate * 0.5);
+    int end_pos   = p_end * fft_size / (mix_rate * 0.5);
 
     begin_pos = CLAMP(begin_pos, 0, fft_size - 1);
-    end_pos = CLAMP(end_pos, 0, fft_size - 1);
+    end_pos   = CLAMP(end_pos, 0, fft_size - 1);
 
     if (begin_pos > end_pos) {
         SWAP(begin_pos, end_pos);
@@ -245,11 +245,11 @@ Ref<AudioEffectInstance> AudioEffectSpectrumAnalyzer::instance() {
     ins.instance();
     ins->base = Ref<AudioEffectSpectrumAnalyzer>(this);
     static const int fft_sizes[FFT_SIZE_MAX] = {256, 512, 1024, 2048, 4096};
-    ins->fft_size = fft_sizes[fft_size];
+    ins->fft_size                            = fft_sizes[fft_size];
     ins->mix_rate = AudioServer::get_singleton()->get_mix_rate();
     ins->fft_count =
         (buffer_length / (float(ins->fft_size) / ins->mix_rate)) + 1;
-    ins->fft_pos = 0;
+    ins->fft_pos       = 0;
     ins->last_fft_time = 0;
     ins->fft_history.resize(ins->fft_count);
     ins->temporal_fft.resize(
@@ -361,6 +361,6 @@ void AudioEffectSpectrumAnalyzer::_bind_methods() {
 
 AudioEffectSpectrumAnalyzer::AudioEffectSpectrumAnalyzer() {
     buffer_length = 2;
-    tapback_pos = 0.01;
-    fft_size = FFT_SIZE_1024;
+    tapback_pos   = 0.01;
+    fft_size      = FFT_SIZE_1024;
 }

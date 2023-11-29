@@ -100,8 +100,8 @@ public:
     Ref<UPNPDevice> get_gateway() const;
 
     int discover(
-        int timeout = 2000,
-        int ttl = 2,
+        int timeout                 = 2000,
+        int ttl                     = 2,
         const String& device_filter = "InternetGatewayDevice"
     );
 
@@ -110,9 +110,9 @@ public:
     int add_port_mapping(
         int port,
         int port_internal = 0,
-        String desc = "",
-        String proto = "UDP",
-        int duration = 0
+        String desc       = "",
+        String proto      = "UDP",
+        int duration      = 0
     ) const;
     int delete_port_mapping(int port, String proto = "UDP") const;
 

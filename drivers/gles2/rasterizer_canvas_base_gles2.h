@@ -133,7 +133,7 @@ public:
         const Color* p_colors,
         bool p_singlecolor,
         const float* p_weights = nullptr,
-        const int* p_bones = nullptr
+        const int* p_bones     = nullptr
     );
     void _draw_generic(
         GLuint p_primitive,
@@ -186,8 +186,8 @@ public:
     );
     void _set_texture_rect_mode(
         bool p_texture_rect,
-        bool p_light_angle = false,
-        bool p_modulate = false,
+        bool p_light_angle  = false,
+        bool p_modulate     = false,
         bool p_large_vertex = false
     );
 

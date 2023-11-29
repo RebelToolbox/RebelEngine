@@ -93,7 +93,7 @@ Model::Model(
 ) :
     Object(id, element, name),
     shading("Y") {
-    const ScopePtr sc = GetRequiredScope(element);
+    const ScopePtr sc        = GetRequiredScope(element);
     const ElementPtr Shading = sc->GetElement("Shading");
     const ElementPtr Culling = sc->GetElement("Culling");
 

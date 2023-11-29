@@ -231,7 +231,7 @@ bool Shape2D::is_collision_outline_enabled() {
 }
 
 Shape2D::Shape2D(const RID& p_rid) {
-    shape = p_rid;
+    shape       = p_rid;
     custom_bias = 0;
 }
 

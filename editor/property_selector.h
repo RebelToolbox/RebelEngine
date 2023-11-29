@@ -70,7 +70,7 @@ public:
     void select_method_from_base_type(
         const String& p_base,
         const String& p_current = "",
-        bool p_virtuals_only = false
+        bool p_virtuals_only    = false
     );
     void select_method_from_script(
         const Ref<Script>& p_script,

@@ -139,7 +139,7 @@ public:
 
     _FORCE_INLINE_ ThreadLocal& operator=(const T& val) {
         T* ptr = _tls_get_value();
-        *ptr = val;
+        *ptr   = val;
         return *this;
     }
 };

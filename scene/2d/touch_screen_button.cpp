@@ -135,7 +135,7 @@ void TouchScreenButton::_notification(int p_what) {
 
                 Vector2 size = texture.is_null() ? shape->get_rect().size
                                                  : texture->get_size();
-                Vector2 pos = shape_centered ? size * 0.5f : Vector2();
+                Vector2 pos  = shape_centered ? size * 0.5f : Vector2();
                 draw_set_transform_matrix(get_canvas_transform().translated(pos)
                 );
                 shape->draw(get_canvas_item(), draw_col);
@@ -216,7 +216,7 @@ void TouchScreenButton::_input(const Ref<InputEvent>& p_event) {
         }
 
         if ((st && st->is_pressed()) || sd) {
-            int index = st ? st->get_index() : sd->get_index();
+            int index    = st ? st->get_index() : sd->get_index();
             Point2 coord = st ? st->get_position() : sd->get_position();
 
             if (finger_pressed == -1 || index == finger_pressed) {
@@ -256,7 +256,7 @@ bool TouchScreenButton::_is_point_inside(const Point2& p_point) {
     Point2 coord =
         (get_global_transform_with_canvas()).affine_inverse().xform(p_point);
 
-    bool touched = false;
+    bool touched    = false;
     bool check_rect = true;
 
     if (shape.is_valid()) {
@@ -267,7 +267,7 @@ bool TouchScreenButton::_is_point_inside(const Point2& p_point) {
         Transform2D xform = shape_centered
                               ? Transform2D().translated(size * 0.5f)
                               : Transform2D();
-        touched = shape->collide(
+        touched           = shape->collide(
             xform,
             unit_rect,
             Transform2D(0, coord + Vector2(0.5, 0.5))
@@ -534,10 +534,10 @@ void TouchScreenButton::_bind_methods() {
 
 TouchScreenButton::TouchScreenButton() {
     finger_pressed = -1;
-    passby_press = false;
-    visibility = VISIBILITY_ALWAYS;
+    passby_press   = false;
+    visibility     = VISIBILITY_ALWAYS;
     shape_centered = true;
-    shape_visible = true;
-    unit_rect = Ref<RectangleShape2D>(memnew(RectangleShape2D));
+    shape_visible  = true;
+    unit_rect      = Ref<RectangleShape2D>(memnew(RectangleShape2D));
     unit_rect->set_extents(Vector2(0.5, 0.5));
 }

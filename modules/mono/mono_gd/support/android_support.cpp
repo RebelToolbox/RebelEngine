@@ -91,7 +91,7 @@ struct ScopedLocalRef {
         return local_ref != nullptr;
     }
 
-    ScopedLocalRef(const ScopedLocalRef&) = delete;
+    ScopedLocalRef(const ScopedLocalRef&)            = delete;
     ScopedLocalRef& operator=(const ScopedLocalRef&) = delete;
 
     ScopedLocalRef(JNIEnv* p_env, T p_local_ref) :
@@ -191,9 +191,9 @@ int gd_mono_convert_dl_flags(int flags) {
 #endif
 
 const char* mono_so_name = GD_MONO_SO_NAME;
-const char* lib_so_name = "librebel_android.so";
+const char* lib_so_name  = "librebel_android.so";
 
-void* mono_dl_handle = NULL;
+void* mono_dl_handle  = NULL;
 void* godot_dl_handle = NULL;
 
 void* _try_dlopen_file_path(const String& p_so_path, int p_flags) {
@@ -302,8 +302,8 @@ void* gd_mono_android_dlopen(
         String app_native_lib_dir = get_app_native_lib_dir();
 
         String orig_so_name = name.get_file();
-        String so_name = "lib-aot-" + orig_so_name;
-        String so_path = path::join(app_native_lib_dir, so_name);
+        String so_name      = "lib-aot-" + orig_so_name;
+        String so_path      = path::join(app_native_lib_dir, so_name);
 
         return try_dlopen(so_path, p_flags);
     }
@@ -543,7 +543,7 @@ void initialize() {
     );
 
     String app_native_lib_dir = get_app_native_lib_dir();
-    String so_path = path::join(app_native_lib_dir, lib_so_name);
+    String so_path            = path::join(app_native_lib_dir, lib_so_name);
 
     godot_dl_handle =
         try_dlopen(so_path, gd_mono_convert_dl_flags(MONO_DL_LAZY));
@@ -942,7 +942,7 @@ GD_PINVOKE_EXPORT int32_t _monodroid_get_dns_servers(void** r_dns_servers_array
     }
 
     if (dns_servers_count > 0) {
-        size_t ret_size = sizeof(char*) * (size_t)dns_servers_count;
+        size_t ret_size      = sizeof(char*) * (size_t)dns_servers_count;
         *r_dns_servers_array = malloc(ret_size); // freed by the BCL
         ERR_FAIL_NULL_V_MSG(*r_dns_servers_array, -1, "Out of memory.");
         memcpy(*r_dns_servers_array, dns_servers, ret_size);

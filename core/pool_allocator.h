@@ -57,7 +57,7 @@ public:
 private:
     enum {
         CHECK_BITS = 8,
-        CHECK_LEN = (1 << CHECK_BITS),
+        CHECK_LEN  = (1 << CHECK_BITS),
         CHECK_MASK = CHECK_LEN - 1
     };
 
@@ -68,9 +68,9 @@ private:
         unsigned int check;
 
         inline void clear() {
-            pos = 0;
-            len = 0;
-            lock = 0;
+            pos   = 0;
+            len   = 0;
+            lock  = 0;
             check = 0;
         }
 
@@ -150,20 +150,20 @@ public:
     PoolAllocator(
         int p_size,
         bool p_needs_locking = false,
-        int p_max_entries = DEFAULT_MAX_ALLOCS
+        int p_max_entries    = DEFAULT_MAX_ALLOCS
     );
     PoolAllocator(
         void* p_mem,
         int p_size,
-        int p_align = 1,
+        int p_align          = 1,
         bool p_needs_locking = false,
-        int p_max_entries = DEFAULT_MAX_ALLOCS
+        int p_max_entries    = DEFAULT_MAX_ALLOCS
     );
     PoolAllocator(
         int p_align,
         int p_size,
         bool p_needs_locking = false,
-        int p_max_entries = DEFAULT_MAX_ALLOCS
+        int p_max_entries    = DEFAULT_MAX_ALLOCS
     );
 
     virtual ~PoolAllocator();

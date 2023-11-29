@@ -208,8 +208,8 @@ String CryptoCore::b64_encode_str(const uint8_t* p_src, int p_src_len) {
     PoolVector<uint8_t> b64buff;
     b64buff.resize(b64len);
     PoolVector<uint8_t>::Write w64 = b64buff.write();
-    size_t strlen = 0;
-    int ret = b64_encode(&w64[0], b64len, &strlen, p_src, p_src_len);
+    size_t strlen                  = 0;
+    int ret     = b64_encode(&w64[0], b64len, &strlen, p_src, p_src_len);
     w64[strlen] = 0;
     return ret ? String() : (const char*)&w64[0];
 }

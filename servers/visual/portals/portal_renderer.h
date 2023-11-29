@@ -68,7 +68,7 @@ struct VSStatic {
 struct VSStaticGhost {
     ObjectID object_id;
 
-    uint32_t last_tick_hit = 0;
+    uint32_t last_tick_hit      = 0;
     uint32_t last_room_tick_hit = 0;
 };
 
@@ -93,7 +93,7 @@ public:
             _rooms.clear();
             room_id = -1;
 
-            last_tick_hit = 0;
+            last_tick_hit          = 0;
             last_gameplay_tick_hit = 0;
         }
 
@@ -111,7 +111,7 @@ public:
         // id in the allocation pool
         uint32_t pool_id;
 
-        uint32_t last_tick_hit = 0;
+        uint32_t last_tick_hit          = 0;
         uint32_t last_gameplay_tick_hit = 0;
 
         // room ids of rooms this moving object is sprawled into
@@ -504,8 +504,8 @@ private:
 
     PVS _pvs;
 
-    bool _active = true;
-    bool _loaded = false;
+    bool _active       = true;
+    bool _loaded       = false;
     bool _debug_sprawl = false;
 
     // if the pvs is generated, we can either cull using dynamic portals or PVS
@@ -547,7 +547,7 @@ inline void PortalRenderer::occluder_ensure_up_to_date_sphere(
     const Transform& tr = r_occluder.xform;
 
     Vector3 scale3 = tr.basis.get_scale_abs();
-    real_t scale = (scale3.x + scale3.y + scale3.z) / 3.0;
+    real_t scale   = (scale3.x + scale3.y + scale3.z) / 3.0;
 
     // update the AABB
     Vector3 bb_min = Vector3(FLT_MAX, FLT_MAX, FLT_MAX);
@@ -555,11 +555,11 @@ inline void PortalRenderer::occluder_ensure_up_to_date_sphere(
 
     // transform spheres
     for (int n = 0; n < r_occluder.list_ids.size(); n++) {
-        uint32_t pool_id = r_occluder.list_ids[n];
+        uint32_t pool_id           = r_occluder.list_ids[n];
         VSOccluder_Sphere& osphere = _occluder_sphere_pool[pool_id];
 
         // transform position and radius
-        osphere.world.pos = tr.xform(osphere.local.pos);
+        osphere.world.pos    = tr.xform(osphere.local.pos);
         osphere.world.radius = osphere.local.radius * scale;
 
         Vector3 bradius = Vector3(
@@ -579,7 +579,7 @@ inline void PortalRenderer::occluder_ensure_up_to_date_sphere(
     }
 
     r_occluder.aabb.position = bb_min;
-    r_occluder.aabb.size = bb_max - bb_min;
+    r_occluder.aabb.size     = bb_max - bb_min;
 }
 
 #endif

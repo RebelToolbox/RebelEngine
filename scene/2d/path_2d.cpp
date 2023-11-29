@@ -48,7 +48,7 @@ Rect2 Path2D::_edit_get_rect() const {
     for (int i = 0; i < curve->get_point_count(); i++) {
         for (int j = 0; j <= 8; j++) {
             real_t frac = j / 8.0;
-            Vector2 p = curve->interpolate(i, frac);
+            Vector2 p   = curve->interpolate(i, frac);
             aabb.expand_to(p);
         }
     }
@@ -74,7 +74,7 @@ bool Path2D::_edit_is_selected_on_click(
 
         for (int j = 1; j <= 8; j++) {
             real_t frac = j / 8.0;
-            s[1] = curve->interpolate(i, frac);
+            s[1]        = curve->interpolate(i, frac);
 
             Vector2 p = Geometry::get_closest_point_to_segment_2d(p_point, s);
             if (p.distance_to(p_point) <= p_tolerance) {
@@ -110,7 +110,7 @@ void Path2D::_notification(int p_what) {
 
             for (int j = 1; j <= 8; j++) {
                 real_t frac = j / 8.0;
-                Vector2 p = curve->interpolate(i, frac);
+                Vector2 p   = curve->interpolate(i, frac);
                 draw_line(prev_p, p, color, line_width, true);
                 prev_p = p;
             }
@@ -198,7 +198,7 @@ void PathFollow2D::_update_transform() {
             int point_count = c->get_point_count();
             if (point_count > 0) {
                 Vector2 start_point = c->get_point_position(0);
-                Vector2 end_point = c->get_point_position(point_count - 1);
+                Vector2 end_point   = c->get_point_position(point_count - 1);
                 if (start_point == end_point) {
                     // Since the path is closed we want to 'smooth off'
                     // the corner at the start/end.
@@ -489,12 +489,12 @@ bool PathFollow2D::has_loop() const {
 }
 
 PathFollow2D::PathFollow2D() {
-    offset = 0;
-    h_offset = 0;
-    v_offset = 0;
-    path = nullptr;
-    rotate = true;
-    cubic = true;
-    loop = true;
+    offset    = 0;
+    h_offset  = 0;
+    v_offset  = 0;
+    path      = nullptr;
+    rotate    = true;
+    cubic     = true;
+    loop      = true;
     lookahead = 4;
 }

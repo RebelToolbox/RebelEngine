@@ -97,9 +97,9 @@ Vector<Vector3> HeightMapShape::get_debug_mesh_lines() {
 
 void HeightMapShape::_update_shape() {
     Dictionary d;
-    d["width"] = map_width;
-    d["depth"] = map_depth;
-    d["heights"] = map_data;
+    d["width"]      = map_width;
+    d["depth"]      = map_depth;
+    d["heights"]    = map_data;
     d["min_height"] = min_height;
     d["max_height"] = max_height;
     PhysicsServer::get_singleton()->shape_set_data(get_shape(), d);
@@ -111,7 +111,7 @@ void HeightMapShape::set_map_width(int p_new) {
         // ignore
     } else if (map_width != p_new) {
         int was_size = map_width * map_depth;
-        map_width = p_new;
+        map_width    = p_new;
 
         int new_size = map_width * map_depth;
         map_data.resize(map_width * map_depth);
@@ -137,7 +137,7 @@ void HeightMapShape::set_map_depth(int p_new) {
         // ignore
     } else if (map_depth != p_new) {
         int was_size = map_width * map_depth;
-        map_depth = p_new;
+        map_depth    = p_new;
 
         int new_size = map_width * map_depth;
         map_data.resize(new_size);
@@ -167,10 +167,10 @@ void HeightMapShape::set_map_data(PoolRealArray p_new) {
 
     // copy
     PoolRealArray::Write w = map_data.write();
-    PoolRealArray::Read r = p_new.read();
+    PoolRealArray::Read r  = p_new.read();
     for (int i = 0; i < size; i++) {
         float val = r[i];
-        w[i] = val;
+        w[i]      = val;
         if (i == 0) {
             min_height = val;
             max_height = val;
@@ -255,12 +255,12 @@ HeightMapShape::HeightMapShape() :
     map_depth = 2;
     map_data.resize(map_width * map_depth);
     PoolRealArray::Write w = map_data.write();
-    w[0] = 0.0;
-    w[1] = 0.0;
-    w[2] = 0.0;
-    w[3] = 0.0;
-    min_height = 0.0;
-    max_height = 0.0;
+    w[0]                   = 0.0;
+    w[1]                   = 0.0;
+    w[2]                   = 0.0;
+    w[3]                   = 0.0;
+    min_height             = 0.0;
+    max_height             = 0.0;
 
     _update_shape();
 }

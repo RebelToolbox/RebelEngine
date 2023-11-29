@@ -49,7 +49,7 @@ public class RebelEditText extends EditText {
     // ===========================================================
     // Constants
     // ===========================================================
-    private final static int HANDLER_OPEN_IME_KEYBOARD = 2;
+    private final static int HANDLER_OPEN_IME_KEYBOARD  = 2;
     private final static int HANDLER_CLOSE_IME_KEYBOARD = 3;
 
     // ===========================================================
@@ -60,7 +60,7 @@ public class RebelEditText extends EditText {
     private final EditHandler editHandler = new EditHandler(this);
     private String mOriginText;
     private int mMaxInputLength = Integer.MAX_VALUE;
-    private boolean mMultiline = false;
+    private boolean mMultiline  = false;
 
     private static class EditHandler extends Handler {
         private final WeakReference<RebelEditText> rebelEditTextReference;
@@ -115,7 +115,7 @@ public class RebelEditText extends EditText {
         switch (msg.what) {
             case HANDLER_OPEN_IME_KEYBOARD: {
                 RebelEditText rebelEditText = (RebelEditText)msg.obj;
-                String text = rebelEditText.mOriginText;
+                String text                 = rebelEditText.mOriginText;
                 if (rebelEditText.requestFocus()) {
                     rebelEditText.removeTextChangedListener(
                         rebelEditText.rebelTextInputWrapper
@@ -229,7 +229,7 @@ public class RebelEditText extends EditText {
         int maxInputLength =
             (p_max_input_length <= 0) ? Integer.MAX_VALUE : p_max_input_length;
         if (p_cursor_start == -1) { // cursor position not given
-            this.mOriginText = p_existing_text;
+            this.mOriginText     = p_existing_text;
             this.mMaxInputLength = maxInputLength;
         } else if (p_cursor_end == -1) { // not text selection
             this.mOriginText = p_existing_text.substring(0, p_cursor_start);
@@ -244,17 +244,17 @@ public class RebelEditText extends EditText {
         this.mMultiline = p_multiline;
 
         final Message msg = new Message();
-        msg.what = HANDLER_OPEN_IME_KEYBOARD;
-        msg.obj = this;
-        msg.arg1 = p_cursor_start;
-        msg.arg2 = p_cursor_end;
+        msg.what          = HANDLER_OPEN_IME_KEYBOARD;
+        msg.obj           = this;
+        msg.arg1          = p_cursor_start;
+        msg.arg2          = p_cursor_end;
         editHandler.sendMessage(msg);
     }
 
     public void hideKeyboard() {
         final Message msg = new Message();
-        msg.what = HANDLER_CLOSE_IME_KEYBOARD;
-        msg.obj = this;
+        msg.what          = HANDLER_CLOSE_IME_KEYBOARD;
+        msg.obj           = this;
         editHandler.sendMessage(msg);
     }
 

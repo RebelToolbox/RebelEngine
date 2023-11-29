@@ -55,13 +55,13 @@ protected:
 
 public:
     enum GetFacesFlags {
-        FACES_SOLID = 1, // solid geometry
+        FACES_SOLID     = 1, // solid geometry
         FACES_ENCLOSING = 2,
-        FACES_DYNAMIC = 4 // dynamic object geometry
+        FACES_DYNAMIC   = 4 // dynamic object geometry
     };
 
     RID get_instance() const;
-    virtual AABB get_aabb() const = 0;
+    virtual AABB get_aabb() const                                     = 0;
     virtual PoolVector<Face3> get_faces(uint32_t p_usage_flags) const = 0;
 
     virtual AABB get_transformed_aabb() const; // helper
@@ -100,7 +100,7 @@ public:
 
     enum ShadowCastingSetting {
         SHADOW_CASTING_SETTING_OFF = VS::SHADOW_CASTING_SETTING_OFF,
-        SHADOW_CASTING_SETTING_ON = VS::SHADOW_CASTING_SETTING_ON,
+        SHADOW_CASTING_SETTING_ON  = VS::SHADOW_CASTING_SETTING_ON,
         SHADOW_CASTING_SETTING_DOUBLE_SIDED =
             VS::SHADOW_CASTING_SETTING_DOUBLE_SIDED,
         SHADOW_CASTING_SETTING_SHADOWS_ONLY =

@@ -206,9 +206,9 @@ void EditorNode::disambiguate_filenames(
         while (iset.size() > 1) {
             // Append the parent folder to each scene name
             for (Set<int>::Element* E = iset.front(); E; E = E->next()) {
-                int set_idx = E->get();
+                int set_idx       = E->get();
                 String scene_name = r_filenames[set_idx];
-                String full_path = p_full_paths[set_idx];
+                String full_path  = p_full_paths[set_idx];
 
                 // Get rid of file extensions and res:// prefixes
                 if (scene_name.rfind(".") >= 0) {
@@ -222,8 +222,8 @@ void EditorNode::disambiguate_filenames(
                 }
 
                 int scene_name_size = scene_name.size();
-                int full_path_size = full_path.size();
-                int difference = full_path_size - scene_name_size;
+                int full_path_size  = full_path.size();
+                int difference      = full_path_size - scene_name_size;
 
                 // Find just the parent folder of the current path and append
                 // it. If the current name is foo.tscn, and the full path is
@@ -233,7 +233,7 @@ void EditorNode::disambiguate_filenames(
                 if (difference > 0) {
                     String parent = full_path.substr(0, difference);
                     int slash_idx = parent.rfind("/");
-                    slash_idx = parent.rfind("/", slash_idx - 1);
+                    slash_idx     = parent.rfind("/", slash_idx - 1);
                     parent =
                         slash_idx >= 0 ? parent.substr(slash_idx + 1) : parent;
                     r_filenames.write[set_idx] = parent + r_filenames[set_idx];
@@ -241,10 +241,10 @@ void EditorNode::disambiguate_filenames(
             }
 
             // Loop back through scene names and remove non-ambiguous names
-            bool can_proceed = false;
+            bool can_proceed     = false;
             Set<int>::Element* E = iset.front();
             while (E) {
-                String scene_name = r_filenames[E->get()];
+                String scene_name    = r_filenames[E->get()];
                 bool duplicate_found = false;
                 for (Set<int>::Element* F = iset.front(); F; F = F->next()) {
                     if (E->get() == F->get()) {
@@ -425,14 +425,14 @@ void EditorNode::_unhandled_input(const Ref<InputEvent>& p_event) {
         EditorPlugin* old_editor = editor_plugin_screen;
 
         if (ED_IS_SHORTCUT("editor/next_tab", p_event)) {
-            int next_tab = editor_data.get_edited_scene() + 1;
-            next_tab %= editor_data.get_edited_scene_count();
+            int next_tab  = editor_data.get_edited_scene() + 1;
+            next_tab     %= editor_data.get_edited_scene_count();
             _scene_tab_changed(next_tab);
         }
         if (ED_IS_SHORTCUT("editor/prev_tab", p_event)) {
             int next_tab = editor_data.get_edited_scene() - 1;
-            next_tab = next_tab >= 0 ? next_tab
-                                     : editor_data.get_edited_scene_count() - 1;
+            next_tab     = next_tab >= 0 ? next_tab
+                                         : editor_data.get_edited_scene_count() - 1;
             _scene_tab_changed(next_tab);
         }
         if (ED_IS_SHORTCUT("editor/filter_files", p_event)) {
@@ -486,7 +486,7 @@ void EditorNode::_notification(int p_what) {
 
             // Update the animation frame of the update spinner.
             uint64_t frame = Engine::get_singleton()->get_frames_drawn();
-            uint64_t tick = OS::get_singleton()->get_ticks_msec();
+            uint64_t tick  = OS::get_singleton()->get_ticks_msec();
 
             if (frame != update_spinner_step_frame
                 && (tick - update_spinner_step_msec) > (1000 / 8)) {
@@ -495,7 +495,7 @@ void EditorNode::_notification(int p_what) {
                     update_spinner_step = 0;
                 }
 
-                update_spinner_step_msec = tick;
+                update_spinner_step_msec  = tick;
                 update_spinner_step_frame = frame + 1;
 
                 // Update the icon itself only when the spinner is visible.
@@ -719,9 +719,9 @@ void EditorNode::_notification(int p_what) {
 
             // update_icons
             for (int i = 0; i < singleton->main_editor_buttons.size(); i++) {
-                ToolButton* tb = singleton->main_editor_buttons[i];
+                ToolButton* tb         = singleton->main_editor_buttons[i];
                 EditorPlugin* p_editor = singleton->editor_table[i];
-                Ref<Texture> icon = p_editor->get_icon();
+                Ref<Texture> icon      = p_editor->get_icon();
 
                 if (icon.is_valid()) {
                     tb->set_icon(icon);
@@ -862,7 +862,7 @@ void EditorNode::_on_plugin_ready(
 }
 
 void EditorNode::_remove_plugin_from_enabled(const String& p_name) {
-    ProjectSettings* ps = ProjectSettings::get_singleton();
+    ProjectSettings* ps             = ProjectSettings::get_singleton();
     PoolStringArray enabled_plugins = ps->get("editor_plugins/enabled");
     for (int i = 0; i < enabled_plugins.size(); ++i) {
         if (enabled_plugins.get(i) == p_name) {
@@ -905,7 +905,7 @@ void EditorNode::_resources_changed(const PoolVector<String>& p_resources) {
 
     if (changed.size()) {
         for (List<Ref<Resource>>::Element* E = changed.front(); E;
-             E = E->next()) {
+             E                               = E->next()) {
             E->get()->reload_from_file();
         }
     }
@@ -913,12 +913,12 @@ void EditorNode::_resources_changed(const PoolVector<String>& p_resources) {
 
 void EditorNode::_fs_changed() {
     for (Set<FileDialog*>::Element* E = file_dialogs.front(); E;
-         E = E->next()) {
+         E                            = E->next()) {
         E->get()->invalidate();
     }
 
     for (Set<EditorFileDialog*>::Element* E = editor_file_dialogs.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         E->get()->invalidate();
     }
 
@@ -929,7 +929,7 @@ void EditorNode::_fs_changed() {
     String export_error;
     if (export_defer.preset != ""
         && !EditorFileSystem::get_singleton()->is_scanning()) {
-        String preset_name = export_defer.preset;
+        String preset_name  = export_defer.preset;
         // Ensures export_project does not loop infinitely, because
         // notifications may come during the export.
         export_defer.preset = "";
@@ -974,9 +974,9 @@ void EditorNode::_fs_changed() {
             }
         } else {
             Ref<EditorExportPlatform> platform = preset->get_platform();
-            const String export_path = export_defer.path.empty()
-                                         ? preset->get_export_path()
-                                         : export_defer.path;
+            const String export_path           = export_defer.path.empty()
+                                                   ? preset->get_export_path()
+                                                   : export_defer.path;
             if (export_path.empty()) {
                 export_error = vformat(
                     "Export preset \"%s\" doesn't have a default export path, "
@@ -1256,7 +1256,7 @@ Error EditorNode::load_resource(
         // current_option = -1;
         Vector<String> errors;
         for (Set<String>::Element* E = dependency_errors[p_resource].front(); E;
-             E = E->next()) {
+             E                       = E->next()) {
             errors.push_back(E->get());
         }
         dependency_error
@@ -1287,7 +1287,7 @@ void EditorNode::save_resource_in_path(
     }
 
     String path = ProjectSettings::get_singleton()->localize_path(p_path);
-    Error err = ResourceSaver::save(
+    Error err   = ResourceSaver::save(
         path,
         p_resource,
         flg | ResourceSaver::FLAG_REPLACE_SUBRESOURCE_PATHS
@@ -1321,7 +1321,7 @@ void EditorNode::save_resource_as(
 ) {
     {
         String path = p_resource->get_path();
-        int srpos = path.find("::");
+        int srpos   = path.find("::");
         if (srpos != -1) {
             String base = path.substr(0, srpos);
             if (!get_edited_scene()
@@ -1617,10 +1617,10 @@ bool EditorNode::_find_and_save_edited_subresources(
             } break;
             case Variant::ARRAY: {
                 Array varray = obj->get(E->get().name);
-                int len = varray.size();
+                int len      = varray.size();
                 for (int i = 0; i < len; i++) {
                     const Variant& v = varray.get(i);
-                    RES res = v;
+                    RES res          = v;
                     if (_find_and_save_resource(res, processed, flags)) {
                         ret_changed = true;
                     }
@@ -1632,9 +1632,9 @@ bool EditorNode::_find_and_save_edited_subresources(
                 List<Variant> keys;
                 d.get_key_list(&keys);
                 for (List<Variant>::Element* F = keys.front(); F;
-                     F = F->next()) {
+                     F                         = F->next()) {
                     Variant v = d[F->get()];
-                    RES res = v;
+                    RES res   = v;
                     if (_find_and_save_resource(res, processed, flags)) {
                         ret_changed = true;
                     }
@@ -1742,15 +1742,15 @@ void EditorNode::_save_scene_with_preview(String p_file, int p_idx) {
 
             // consider a square region
             int vp_size = MIN(img->get_width(), img->get_height());
-            int x = (img->get_width() - vp_size) / 2;
-            int y = (img->get_height() - vp_size) / 2;
+            int x       = (img->get_width() - vp_size) / 2;
+            int y       = (img->get_height() - vp_size) / 2;
 
             if (vp_size < preview_size) {
                 // just square it.
                 img->crop_from_point(x, y, vp_size, vp_size);
             } else {
                 int ratio = vp_size / preview_size;
-                int size = preview_size * MAX(1, ratio / 2);
+                int size  = preview_size * MAX(1, ratio / 2);
 
                 x = (img->get_width() - size) / 2;
                 y = (img->get_height() - size) / 2;
@@ -1875,7 +1875,7 @@ int EditorNode::_save_external_resources() {
     // different resources, which will be shared until the next reload
 
     for (Set<Ref<Resource>>::Element* E = edited_subresources.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         Ref<Resource> res = E->get();
         res->set_edited(false);
     }
@@ -1975,7 +1975,7 @@ void EditorNode::_save_scene(String p_file, int idx) {
     editor_data.save_editor_external_data();
 
     for (List<Ref<AnimatedValuesBackup>>::Element* E = anim_backups.front(); E;
-         E = E->next()) {
+         E                                           = E->next()) {
         E->get()->restore();
     }
 
@@ -2231,7 +2231,7 @@ void EditorNode::_dialog_action(String p_file) {
         case RESOURCE_SAVE_AS: {
             ERR_FAIL_COND(saving_resource.is_null());
             save_resource_in_path(saving_resource, p_file);
-            saving_resource = Ref<Resource>();
+            saving_resource  = Ref<Resource>();
             ObjectID current = editor_history.get_current();
             Object* current_obj =
                 current > 0 ? ObjectDB::get_instance(current) : nullptr;
@@ -2487,7 +2487,7 @@ void EditorNode::_edit_current() {
     bool disable_folding =
         bool(EDITOR_GET("interface/inspector/disable_folding"));
     bool is_resource = current_obj->is_class("Resource");
-    bool is_node = current_obj->is_class("Node");
+    bool is_node     = current_obj->is_class("Node");
 
     String editable_warning; // none by default
 
@@ -2858,8 +2858,8 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
                 && (current_option != FILE_CLOSE_RIGHT
                     || editor_data.get_edited_scene()
                            < editor_data.get_edited_scene_count() - 1)) {
-                int next_tab = editor_data.get_edited_scene() + 1;
-                next_tab %= editor_data.get_edited_scene_count();
+                int next_tab  = editor_data.get_edited_scene() + 1;
+                next_tab     %= editor_data.get_edited_scene_count();
                 _scene_tab_closed(next_tab, current_option);
             } else {
                 if (current_option != FILE_CLOSE_ALL) {
@@ -2914,7 +2914,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
         case SCENE_TAB_CLOSE:
         case FILE_SAVE_SCENE: {
             int scene_idx = (p_option == FILE_SAVE_SCENE) ? -1 : tab_closing;
-            Node* scene = editor_data.get_edited_scene_root(scene_idx);
+            Node* scene   = editor_data.get_edited_scene_root(scene_idx);
             if (scene && scene->get_filename() != "") {
                 if (DirAccess::exists(scene->get_filename().get_base_dir())) {
                     if (scene_idx != editor_data.get_edited_scene()) {
@@ -3045,7 +3045,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
             ResourceSaver::get_recognized_extensions(ml, &extensions);
             file_export_lib->clear_filters();
             for (List<String>::Element* E = extensions.front(); E;
-                 E = E->next()) {
+                 E                        = E->next()) {
                 file_export_lib->add_filter("*." + E->get());
             }
 
@@ -3069,7 +3069,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
             ResourceSaver::get_recognized_extensions(ml, &extensions);
             file_export_lib->clear_filters();
             for (List<String>::Element* E = extensions.front(); E;
-                 E = E->next()) {
+                 E                        = E->next()) {
                 file_export_lib->add_filter("*." + E->get());
             }
 
@@ -3103,7 +3103,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
             }
 
             bool oprev = opening_prev;
-            Error err = load_scene(external_file);
+            Error err  = load_scene(external_file);
             if (err == OK && oprev) {
                 previous_scenes.pop_back();
                 opening_prev = false;
@@ -3657,7 +3657,7 @@ void EditorNode::_tool_menu_option(int p_idx) {
 
                 Object* handler = ObjectDB::get_instance(params[0]);
                 String callback = params[1];
-                Variant* ud = &params[2];
+                Variant* ud     = &params[2];
                 Variant::CallError ce;
 
                 handler->call(callback, (const Variant**)&ud, 1, ce);
@@ -4014,7 +4014,7 @@ void EditorNode::_update_addon_config() {
     Vector<String> enabled_addons;
 
     for (Map<String, EditorPlugin*>::Element* E = plugin_addons.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         enabled_addons.push_back(E->key());
     }
 
@@ -4086,7 +4086,7 @@ void EditorNode::set_addon_plugin_enabled(
     // init script.
     if (script_path.length() > 0) {
         script_path = p_addon.get_base_dir().plus_file(script_path);
-        script = ResourceLoader::load(script_path);
+        script      = ResourceLoader::load(script_path);
 
         if (script.is_null()) {
             show_warning(vformat(
@@ -4213,14 +4213,14 @@ int EditorNode::_get_current_main_editor() {
 
 Dictionary EditorNode::_get_main_scene_state() {
     Dictionary state;
-    state["main_tab"] = _get_current_main_editor();
+    state["main_tab"]          = _get_current_main_editor();
     state["scene_tree_offset"] = scene_tree_dock->get_tree_editor()
                                      ->get_scene_tree()
                                      ->get_vscroll_bar()
                                      ->get_value();
     state["property_edit_offset"] = get_inspector()->get_scroll_offset();
-    state["saved_version"] = saved_version;
-    state["node_filter"] = scene_tree_dock->get_filter();
+    state["saved_version"]        = saved_version;
+    state["node_filter"]          = scene_tree_dock->get_filter();
     return state;
 }
 
@@ -4443,7 +4443,7 @@ Error EditorNode::load_scene(
     }
 
     int prev = editor_data.get_edited_scene();
-    int idx = editor_data.add_edited_scene(-1);
+    int idx  = editor_data.add_edited_scene(-1);
 
     if (!editor_data.get_edited_scene_root()
         && editor_data.get_edited_scene_count() == 2) {
@@ -4473,7 +4473,7 @@ Error EditorNode::load_scene(
         current_option = -1;
         Vector<String> errors;
         for (Set<String>::Element* E = dependency_errors[lpath].front(); E;
-             E = E->next()) {
+             E                       = E->next()) {
             errors.push_back(E->get());
         }
         dependency_error
@@ -4490,7 +4490,7 @@ Error EditorNode::load_scene(
     dependency_errors.erase(lpath); // at least not self path
 
     for (Map<String, Set<String>>::Element* E = dependency_errors.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         String txt =
             vformat(TTR("Scene '%s' has broken dependencies:"), E->key())
             + "\n";
@@ -4867,7 +4867,7 @@ Ref<ImageTexture> EditorNode::_load_custom_class_icon(const String& p_path
 ) const {
     if (p_path.length()) {
         Ref<Image> img = memnew(Image);
-        Error err = ImageLoader::load_image(p_path, img);
+        Error err      = ImageLoader::load_image(p_path, img);
         if (err == OK) {
             Ref<ImageTexture> icon = memnew(ImageTexture);
             img->resize(16 * EDSCALE, 16 * EDSCALE, Image::INTERPOLATE_LANCZOS);
@@ -5143,11 +5143,11 @@ Error EditorNode::export_preset(
     bool p_debug,
     bool p_pack_only
 ) {
-    export_defer.preset = p_preset;
-    export_defer.path = p_path;
-    export_defer.debug = p_debug;
+    export_defer.preset    = p_preset;
+    export_defer.path      = p_path;
+    export_defer.debug     = p_debug;
     export_defer.pack_only = p_pack_only;
-    cmdline_export_mode = true;
+    cmdline_export_mode    = true;
     return OK;
 }
 
@@ -5299,21 +5299,21 @@ void EditorNode::_dock_move_right() {
 }
 
 void EditorNode::_dock_select_draw() {
-    Size2 s = dock_select->get_size();
-    s.y /= 2.0;
-    s.x /= 6.0;
+    Size2 s  = dock_select->get_size();
+    s.y     /= 2.0;
+    s.x     /= 6.0;
 
-    Color used = Color(0.6, 0.6, 0.6, 0.8);
+    Color used          = Color(0.6, 0.6, 0.6, 0.8);
     Color used_selected = Color(0.8, 0.8, 0.8, 0.8);
-    Color tab_selected = theme_base->get_color("mono_color", "Editor");
-    Color unused = used;
-    unused.a = 0.4;
-    Color unusable = unused;
-    unusable.a = 0.1;
+    Color tab_selected  = theme_base->get_color("mono_color", "Editor");
+    Color unused        = used;
+    unused.a            = 0.4;
+    Color unusable      = unused;
+    unusable.a          = 0.1;
 
     Rect2 unr(s.x * 2, 0, s.x * 2, s.y * 2);
     unr.position += Vector2(2, 5);
-    unr.size -= Vector2(4, 7);
+    unr.size     -= Vector2(4, 7);
 
     dock_select->draw_rect(unr, unusable);
 
@@ -5361,15 +5361,15 @@ void EditorNode::_dock_select_draw() {
             } break;
             case DOCK_SLOT_RIGHT_BR: {
                 ofs.x += s.x * 4;
-                ofs += s;
+                ofs   += s;
 
             } break;
         }
 
         Rect2 r(ofs, s);
-        dock_select_rect[i] = r;
-        r.position += Vector2(2, 5);
-        r.size -= Vector2(4, 7);
+        dock_select_rect[i]  = r;
+        r.position          += Vector2(2, 5);
+        r.size              -= Vector2(4, 7);
 
         if (i == dock_select_rect_over) {
             dock_select->draw_rect(r, used_selected);
@@ -5381,7 +5381,7 @@ void EditorNode::_dock_select_draw() {
 
         for (int j = 0; j < MIN(3, dock_slot[i]->get_child_count()); j++) {
             int xofs = (r.size.width / 3) * j;
-            Color c = used;
+            Color c  = used;
             if (i == dock_popup_selected
                 && (dock_slot[i]->get_current_tab() > 3
                     || dock_slot[i]->get_current_tab() == j)) {
@@ -5618,9 +5618,9 @@ void EditorNode::_load_docks_from_config(
                 .split(",");
 
         for (int j = 0; j < names.size(); j++) {
-            String name = names[j];
+            String name   = names[j];
             // find it, in a horribly inefficient way
-            int atidx = -1;
+            int atidx     = -1;
             Control* node = nullptr;
             for (int k = 0; k < DOCK_SLOT_MAX; k++) {
                 if (!dock_slot[k]->has_node(name)) {
@@ -5961,8 +5961,8 @@ void EditorNode::_scene_tab_script_edited(int p_tab) {
 
 void EditorNode::_scene_tab_closed(int p_tab, int option) {
     current_option = option;
-    tab_closing = p_tab;
-    Node* scene = editor_data.get_edited_scene_root(p_tab);
+    tab_closing    = p_tab;
+    Node* scene    = editor_data.get_edited_scene_root(p_tab);
     if (!scene) {
         _discard_changes();
         return;
@@ -6094,14 +6094,14 @@ void EditorNode::_scene_tab_input(const Ref<InputEvent>& p_input) {
         }
         if (mb->get_button_index() == BUTTON_WHEEL_UP && mb->is_pressed()) {
             int previous_tab = editor_data.get_edited_scene() - 1;
-            previous_tab = previous_tab >= 0
-                             ? previous_tab
-                             : editor_data.get_edited_scene_count() - 1;
+            previous_tab     = previous_tab >= 0
+                                 ? previous_tab
+                                 : editor_data.get_edited_scene_count() - 1;
             _scene_tab_changed(previous_tab);
         }
         if (mb->get_button_index() == BUTTON_WHEEL_DOWN && mb->is_pressed()) {
-            int next_tab = editor_data.get_edited_scene() + 1;
-            next_tab %= editor_data.get_edited_scene_count();
+            int next_tab  = editor_data.get_edited_scene() + 1;
+            next_tab     %= editor_data.get_edited_scene_count();
             _scene_tab_changed(next_tab);
         }
     }
@@ -6120,7 +6120,7 @@ void EditorNode::_thumbnail_done(
 ) {
     int p_tab = p_udata.operator signed int();
     if (p_preview.is_valid()) {
-        Rect2 rect = scene_tabs->get_tab_rect(p_tab);
+        Rect2 rect     = scene_tabs->get_tab_rect(p_tab);
         rect.position += scene_tabs->get_global_position();
         tab_preview->set_texture(p_preview);
         tab_preview_panel->set_position(
@@ -6184,9 +6184,9 @@ ToolButton* EditorNode::add_bottom_panel_item(String p_text, Control* p_item) {
     p_item->set_v_size_flags(Control::SIZE_EXPAND_FILL);
     p_item->hide();
     BottomPanelItem bpi;
-    bpi.button = tb;
+    bpi.button  = tb;
     bpi.control = p_item;
-    bpi.name = p_text;
+    bpi.name    = p_text;
     bottom_panel_items.push_back(bpi);
 
     return tb;
@@ -6393,9 +6393,9 @@ void EditorNode::remove_control_from_dock(Control* p_control) {
 }
 
 Variant EditorNode::drag_resource(const Ref<Resource>& p_res, Control* p_from) {
-    Control* drag_control = memnew(Control);
+    Control* drag_control     = memnew(Control);
     TextureRect* drag_preview = memnew(TextureRect);
-    Label* label = memnew(Label);
+    Label* label              = memnew(Label);
 
     Ref<Texture> preview;
 
@@ -6404,7 +6404,7 @@ Variant EditorNode::drag_resource(const Ref<Resource>& p_res, Control* p_from) {
         Ref<ImageTexture> pic =
             gui_base->get_icon("FileBigThumb", "EditorIcons");
         Ref<Image> img = pic->get_data();
-        img = img->duplicate();
+        img            = img->duplicate();
         img->resize(48, 48); // meh
         Ref<ImageTexture> resized_pic = Ref<ImageTexture>(memnew(ImageTexture));
         resized_pic->create_from_image(img);
@@ -6431,9 +6431,9 @@ Variant EditorNode::drag_resource(const Ref<Resource>& p_res, Control* p_from) {
     ));
 
     Dictionary drag_data;
-    drag_data["type"] = "resource";
+    drag_data["type"]     = "resource";
     drag_data["resource"] = p_res;
-    drag_data["from"] = p_from;
+    drag_data["from"]     = p_from;
 
     return drag_data;
 }
@@ -6443,11 +6443,11 @@ Variant EditorNode::drag_files_and_dirs(
     Control* p_from
 ) {
     bool has_folder = false;
-    bool has_file = false;
+    bool has_file   = false;
     for (int i = 0; i < p_paths.size(); i++) {
-        bool is_folder = p_paths[i].ends_with("/");
-        has_folder |= is_folder;
-        has_file |= !is_folder;
+        bool is_folder  = p_paths[i].ends_with("/");
+        has_folder     |= is_folder;
+        has_file       |= !is_folder;
     }
 
     int max_rows = 6;
@@ -6459,8 +6459,8 @@ Variant EditorNode::drag_files_and_dirs(
     VBoxContainer* vbox = memnew(VBoxContainer);
     for (int i = 0; i < num_rows; i++) {
         HBoxContainer* hbox = memnew(HBoxContainer);
-        TextureRect* icon = memnew(TextureRect);
-        Label* label = memnew(Label);
+        TextureRect* icon   = memnew(TextureRect);
+        Label* label        = memnew(Label);
 
         if (p_paths[i].ends_with("/")) {
             label->set_text(
@@ -6499,9 +6499,9 @@ Variant EditorNode::drag_files_and_dirs(
     p_from->set_drag_preview(vbox); // wait until it enters scene
 
     Dictionary drag_data;
-    drag_data["type"] = has_folder ? "files_and_dirs" : "files";
+    drag_data["type"]  = has_folder ? "files_and_dirs" : "files";
     drag_data["files"] = p_paths;
-    drag_data["from"] = p_from;
+    drag_data["from"]  = p_from;
     return drag_data;
 }
 
@@ -6591,7 +6591,7 @@ void EditorNode::_add_dropped_files_recursive(
 
     for (int i = 0; i < p_files.size(); i++) {
         String from = p_files[i];
-        String to = to_path.plus_file(from.get_file());
+        String to   = to_path.plus_file(from.get_file());
 
         if (dir->dir_exists(from)) {
             Vector<String> sub_files;
@@ -7134,7 +7134,7 @@ void EditorNode::_print_handler(
 
 static void _execute_thread(void* p_ud) {
     EditorNode::ExecuteThreadArgs* eta = (EditorNode::ExecuteThreadArgs*)p_ud;
-    Error err = OS::get_singleton()->execute(
+    Error err                          = OS::get_singleton()->execute(
         eta->path,
         eta->args,
         true,
@@ -7166,8 +7166,8 @@ int EditorNode::execute_and_show_output(
     execute_output_dialog->popup_centered_ratio();
 
     ExecuteThreadArgs eta;
-    eta.path = p_path;
-    eta.args = p_arguments;
+    eta.path     = p_path;
+    eta.args     = p_arguments;
     eta.exitcode = 255;
 
     int prev_len = 0;
@@ -7178,7 +7178,7 @@ int EditorNode::execute_and_show_output(
         eta.execute_output_mutex.lock();
         if (prev_len != eta.output.length()) {
             String to_add = eta.output.substr(prev_len, eta.output.length());
-            prev_len = eta.output.length();
+            prev_len      = eta.output.length();
             execute_outputs->add_text(to_add);
             Main::iteration();
         }
@@ -7232,17 +7232,17 @@ EditorNode::EditorNode() {
         id->set_custom_mouse_cursor(RES());
     }
 
-    singleton = this;
-    exiting = false;
-    dimmed = false;
+    singleton            = this;
+    exiting              = false;
+    dimmed               = false;
     last_checked_version = 0;
-    changing_scene = false;
+    changing_scene       = false;
     _initializing_addons = false;
-    docks_visible = true;
-    restoring_scenes = false;
-    cmdline_export_mode = false;
-    scene_distraction = false;
-    script_distraction = false;
+    docks_visible        = true;
+    restoring_scenes     = false;
+    cmdline_export_mode  = false;
+    scene_distraction    = false;
+    script_distraction   = false;
 
     TranslationServer::get_singleton()->set_enabled(false);
     // load settings
@@ -7402,12 +7402,12 @@ EditorNode::EditorNode() {
     add_child(efs);
 
     // used for previews
-    FileDialog::get_icon_func = _file_dialog_get_icon;
-    FileDialog::register_func = _file_dialog_register;
+    FileDialog::get_icon_func   = _file_dialog_get_icon;
+    FileDialog::register_func   = _file_dialog_register;
     FileDialog::unregister_func = _file_dialog_unregister;
 
-    EditorFileDialog::get_icon_func = _file_dialog_get_icon;
-    EditorFileDialog::register_func = _editor_file_dialog_register;
+    EditorFileDialog::get_icon_func   = _file_dialog_get_icon;
+    EditorFileDialog::register_func   = _editor_file_dialog_register;
     EditorFileDialog::unregister_func = _editor_file_dialog_unregister;
 
     editor_export = memnew(EditorExport);
@@ -7570,7 +7570,7 @@ EditorNode::EditorNode() {
     dock_select_popup->add_child(dock_vb);
 
     HBoxContainer* dock_hb = memnew(HBoxContainer);
-    dock_tab_move_left = memnew(ToolButton);
+    dock_tab_move_left     = memnew(ToolButton);
     dock_tab_move_left->set_icon(theme->get_icon("Back", "EditorIcons"));
     dock_tab_move_left->set_focus_mode(Control::FOCUS_NONE);
     dock_tab_move_left->connect("pressed", this, "_dock_move_left");
@@ -7600,7 +7600,7 @@ EditorNode::EditorNode() {
 
     dock_select_popup->set_as_minsize();
     dock_select_rect_over = -1;
-    dock_popup_selected = -1;
+    dock_popup_selected   = -1;
     for (int i = 0; i < DOCK_SLOT_MAX; i++) {
         dock_slot[i]->set_custom_minimum_size(Size2(170, 0) * EDSCALE);
         dock_slot[i]->set_v_size_flags(Control::SIZE_EXPAND_FILL);
@@ -8524,8 +8524,8 @@ EditorNode::EditorNode() {
     scene_tree_dock =
         memnew(SceneTreeDock(this, scene_root, editor_selection, editor_data));
     inspector_dock = memnew(InspectorDock(this, editor_data));
-    import_dock = memnew(ImportDock);
-    node_dock = memnew(NodeDock);
+    import_dock    = memnew(ImportDock);
+    node_dock      = memnew(NodeDock);
 
     filesystem_dock = memnew(FileSystemDock(this));
     filesystem_dock->connect("inherit", this, "_inherit_request");
@@ -8584,7 +8584,7 @@ EditorNode::EditorNode() {
     // Define corresponding default layout
 
     const String docks_section = "docks";
-    overridden_default_layout = -1;
+    overridden_default_layout  = -1;
     default_layout.instance();
     // Dock numbers are based on DockSlot enum value + 1
     default_layout->set_value(docks_section, "dock_3", "Scene,Import");
@@ -8667,7 +8667,7 @@ EditorNode::EditorNode() {
     bottom_panel_raise->set_toggle_mode(true);
     bottom_panel_raise->connect("toggled", this, "_bottom_panel_raise_toggled");
 
-    log = memnew(EditorLog);
+    log                       = memnew(EditorLog);
     ToolButton* output_button = add_bottom_panel_item(TTR("Output"), log);
     log->set_tool_button(output_button);
 
@@ -8967,13 +8967,13 @@ EditorNode::EditorNode() {
         vshader_convert.instance();
         resource_conversion_plugins.push_back(vshader_convert);
     }
-    update_spinner_step_msec = OS::get_singleton()->get_ticks_msec();
+    update_spinner_step_msec  = OS::get_singleton()->get_ticks_msec();
     update_spinner_step_frame = Engine::get_singleton()->get_frames_drawn();
-    update_spinner_step = 0;
+    update_spinner_step       = 0;
 
-    editor_plugin_screen = nullptr;
-    editor_plugins_over = memnew(EditorPluginList);
-    editor_plugins_force_over = memnew(EditorPluginList);
+    editor_plugin_screen                  = nullptr;
+    editor_plugins_over                   = memnew(EditorPluginList);
+    editor_plugins_force_over             = memnew(EditorPluginList);
     editor_plugins_force_input_forwarding = memnew(EditorPluginList);
 
     Ref<EditorExportTextSceneToBinaryPlugin> export_text_to_binary_plugin;
@@ -8984,10 +8984,10 @@ EditorNode::EditorNode() {
     );
 
     _edit_current();
-    current = nullptr;
+    current         = nullptr;
     saving_resource = Ref<Resource>();
 
-    reference_resource_mem = true;
+    reference_resource_mem      = true;
     save_external_resources_mem = true;
 
     set_process(true);
@@ -9003,8 +9003,8 @@ EditorNode::EditorNode() {
     open_imported->connect("custom_action", this, "_inherit_imported");
     gui_base->add_child(open_imported);
 
-    saved_version = 1;
-    unsaved_cache = true;
+    saved_version         = 1;
+    unsaved_cache         = true;
     _last_instanced_scene = nullptr;
 
     quick_open = memnew(EditorQuickOpen);
@@ -9018,12 +9018,12 @@ EditorNode::EditorNode() {
     _update_recent_scenes();
 
     editor_data.restore_editor_global_states();
-    convert_old = false;
+    convert_old  = false;
     opening_prev = false;
     set_process_unhandled_input(true);
     _playing_edited = false;
 
-    load_errors = memnew(RichTextLabel);
+    load_errors       = memnew(RichTextLabel);
     load_error_dialog = memnew(AcceptDialog);
     load_error_dialog->add_child(load_errors);
     load_error_dialog->set_title(TTR("Load Errors"));
@@ -9085,7 +9085,7 @@ EditorNode::EditorNode() {
     waiting_for_first_scan = true;
 
     print_handler.printfunc = _print_handler;
-    print_handler.userdata = this;
+    print_handler.userdata  = this;
     add_print_handler(&print_handler);
 
     ResourceSaver::set_save_callback(_resource_saved);

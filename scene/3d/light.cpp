@@ -130,7 +130,7 @@ AABB Light::get_aabb() const {
         );
 
     } else if (type == VisualServer::LIGHT_SPOT) {
-        float len = param[PARAM_RANGE];
+        float len  = param[PARAM_RANGE];
         float size = Math::tan(Math::deg2rad(param[PARAM_SPOT_ANGLE])) * len;
         return AABB(
             Vector3(-size, -size, -len),
@@ -445,7 +445,7 @@ Light::Light(VisualServer::LightType p_type) {
     VS::get_singleton()->instance_set_base(get_instance(), light);
 
     reverse_cull = false;
-    bake_mode = BAKE_INDIRECT;
+    bake_mode    = BAKE_INDIRECT;
 
     editor_only = false;
     set_color(Color(1, 1, 1, 1));

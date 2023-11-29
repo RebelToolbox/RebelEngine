@@ -104,7 +104,7 @@ private:
         VisualServerCallbacks::CALLBACK_NOTIFICATION_EXIT_GAMEPLAY;
 
     bool _use_secondary_pvs = false;
-    bool _use_signals = false;
+    bool _use_signals       = false;
 };
 
 #endif

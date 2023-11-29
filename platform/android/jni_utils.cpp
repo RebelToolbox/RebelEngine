@@ -41,13 +41,13 @@ jvalret _variant_to_jvalue(
     switch (p_type) {
         case Variant::BOOL: {
             if (force_jobject) {
-                jclass bclass = env->FindClass("java/lang/Boolean");
+                jclass bclass  = env->FindClass("java/lang/Boolean");
                 jmethodID ctor = env->GetMethodID(bclass, "<init>", "(Z)V");
                 jvalue val;
-                val.z = (bool)(*p_arg);
+                val.z       = (bool)(*p_arg);
                 jobject obj = env->NewObjectA(bclass, ctor, &val);
-                v.val.l = obj;
-                v.obj = obj;
+                v.val.l     = obj;
+                v.obj       = obj;
                 env->DeleteLocalRef(bclass);
             } else {
                 v.val.z = *p_arg;
@@ -55,13 +55,13 @@ jvalret _variant_to_jvalue(
         } break;
         case Variant::INT: {
             if (force_jobject) {
-                jclass bclass = env->FindClass("java/lang/Integer");
+                jclass bclass  = env->FindClass("java/lang/Integer");
                 jmethodID ctor = env->GetMethodID(bclass, "<init>", "(I)V");
                 jvalue val;
-                val.i = (int)(*p_arg);
+                val.i       = (int)(*p_arg);
                 jobject obj = env->NewObjectA(bclass, ctor, &val);
-                v.val.l = obj;
-                v.obj = obj;
+                v.val.l     = obj;
+                v.obj       = obj;
                 env->DeleteLocalRef(bclass);
 
             } else {
@@ -70,13 +70,13 @@ jvalret _variant_to_jvalue(
         } break;
         case Variant::REAL: {
             if (force_jobject) {
-                jclass bclass = env->FindClass("java/lang/Double");
+                jclass bclass  = env->FindClass("java/lang/Double");
                 jmethodID ctor = env->GetMethodID(bclass, "<init>", "(D)V");
                 jvalue val;
-                val.d = (double)(*p_arg);
+                val.d       = (double)(*p_arg);
                 jobject obj = env->NewObjectA(bclass, ctor, &val);
-                v.val.l = obj;
-                v.obj = obj;
+                v.val.l     = obj;
+                v.obj       = obj;
                 env->DeleteLocalRef(bclass);
 
             } else {
@@ -84,14 +84,14 @@ jvalret _variant_to_jvalue(
             };
         } break;
         case Variant::STRING: {
-            String s = *p_arg;
+            String s     = *p_arg;
             jstring jStr = env->NewStringUTF(s.utf8().get_data());
-            v.val.l = jStr;
-            v.obj = jStr;
+            v.val.l      = jStr;
+            v.obj        = jStr;
         } break;
         case Variant::POOL_STRING_ARRAY: {
             PoolVector<String> sarray = *p_arg;
-            jobjectArray arr = env->NewObjectArray(
+            jobjectArray arr          = env->NewObjectArray(
                 sarray.size(),
                 env->FindClass("java/lang/String"),
                 env->NewStringUTF("")
@@ -103,7 +103,7 @@ jvalret _variant_to_jvalue(
                 env->DeleteLocalRef(str);
             }
             v.val.l = arr;
-            v.obj = arr;
+            v.obj   = arr;
 
         } break;
 
@@ -112,7 +112,7 @@ jvalret _variant_to_jvalue(
             jclass dclass =
                 env->FindClass("com/rebeltoolbox/rebelengine/Dictionary");
             jmethodID ctor = env->GetMethodID(dclass, "<init>", "()V");
-            jobject jdict = env->NewObject(dclass, ctor);
+            jobject jdict  = env->NewObject(dclass, ctor);
 
             Array keys = dict.keys();
 
@@ -161,21 +161,21 @@ jvalret _variant_to_jvalue(
             env->DeleteLocalRef(dclass);
 
             v.val.l = jdict;
-            v.obj = jdict;
+            v.obj   = jdict;
         } break;
 
         case Variant::POOL_INT_ARRAY: {
-            PoolVector<int> array = *p_arg;
-            jintArray arr = env->NewIntArray(array.size());
+            PoolVector<int> array   = *p_arg;
+            jintArray arr           = env->NewIntArray(array.size());
             PoolVector<int>::Read r = array.read();
             env->SetIntArrayRegion(arr, 0, array.size(), r.ptr());
             v.val.l = arr;
-            v.obj = arr;
+            v.obj   = arr;
 
         } break;
         case Variant::POOL_BYTE_ARRAY: {
-            PoolVector<uint8_t> array = *p_arg;
-            jbyteArray arr = env->NewByteArray(array.size());
+            PoolVector<uint8_t> array   = *p_arg;
+            jbyteArray arr              = env->NewByteArray(array.size());
             PoolVector<uint8_t>::Read r = array.read();
             env->SetByteArrayRegion(
                 arr,
@@ -184,16 +184,16 @@ jvalret _variant_to_jvalue(
                 reinterpret_cast<const signed char*>(r.ptr())
             );
             v.val.l = arr;
-            v.obj = arr;
+            v.obj   = arr;
 
         } break;
         case Variant::POOL_REAL_ARRAY: {
-            PoolVector<float> array = *p_arg;
-            jfloatArray arr = env->NewFloatArray(array.size());
+            PoolVector<float> array   = *p_arg;
+            jfloatArray arr           = env->NewFloatArray(array.size());
             PoolVector<float>::Read r = array.read();
             env->SetFloatArrayRegion(arr, 0, array.size(), r.ptr());
             v.val.l = arr;
-            v.obj = arr;
+            v.obj   = arr;
 
         } break;
         default: {
@@ -211,8 +211,8 @@ String _get_class_name(JNIEnv* env, jclass cls, bool* array) {
 
     if (array) {
         jmethodID isArray = env->GetMethodID(cclass, "isArray", "()Z");
-        jboolean isarr = env->CallBooleanMethod(cls, isArray);
-        (*array) = isarr ? true : false;
+        jboolean isarr    = env->CallBooleanMethod(cls, isArray);
+        (*array)          = isarr ? true : false;
     }
     String name = jstring_to_string(clsName, env);
     env->DeleteLocalRef(clsName);
@@ -235,7 +235,7 @@ Variant _jobject_to_variant(JNIEnv* env, jobject obj) {
 
     if (name == "[Ljava.lang.String;") {
         jobjectArray arr = (jobjectArray)obj;
-        int stringCount = env->GetArrayLength(arr);
+        int stringCount  = env->GetArrayLength(arr);
         PoolVector<String> sarr;
 
         for (int i = 0; i < stringCount; i++) {
@@ -249,20 +249,20 @@ Variant _jobject_to_variant(JNIEnv* env, jobject obj) {
 
     if (name == "java.lang.Boolean") {
         jmethodID boolValue = env->GetMethodID(c, "booleanValue", "()Z");
-        bool ret = env->CallBooleanMethod(obj, boolValue);
+        bool ret            = env->CallBooleanMethod(obj, boolValue);
         return ret;
     };
 
     if (name == "java.lang.Integer" || name == "java.lang.Long") {
-        jclass nclass = env->FindClass("java/lang/Number");
+        jclass nclass       = env->FindClass("java/lang/Number");
         jmethodID longValue = env->GetMethodID(nclass, "longValue", "()J");
-        jlong ret = env->CallLongMethod(obj, longValue);
+        jlong ret           = env->CallLongMethod(obj, longValue);
         return ret;
     };
 
     if (name == "[I") {
         jintArray arr = (jintArray)obj;
-        int fCount = env->GetArrayLength(arr);
+        int fCount    = env->GetArrayLength(arr);
         PoolVector<int> sarr;
         sarr.resize(fCount);
 
@@ -274,7 +274,7 @@ Variant _jobject_to_variant(JNIEnv* env, jobject obj) {
 
     if (name == "[B") {
         jbyteArray arr = (jbyteArray)obj;
-        int fCount = env->GetArrayLength(arr);
+        int fCount     = env->GetArrayLength(arr);
         PoolVector<uint8_t> sarr;
         sarr.resize(fCount);
 
@@ -290,15 +290,15 @@ Variant _jobject_to_variant(JNIEnv* env, jobject obj) {
     };
 
     if (name == "java.lang.Float" || name == "java.lang.Double") {
-        jclass nclass = env->FindClass("java/lang/Number");
+        jclass nclass         = env->FindClass("java/lang/Number");
         jmethodID doubleValue = env->GetMethodID(nclass, "doubleValue", "()D");
-        double ret = env->CallDoubleMethod(obj, doubleValue);
+        double ret            = env->CallDoubleMethod(obj, doubleValue);
         return ret;
     };
 
     if (name == "[D") {
         jdoubleArray arr = (jdoubleArray)obj;
-        int fCount = env->GetArrayLength(arr);
+        int fCount       = env->GetArrayLength(arr);
         PoolRealArray sarr;
         sarr.resize(fCount);
 
@@ -314,7 +314,7 @@ Variant _jobject_to_variant(JNIEnv* env, jobject obj) {
 
     if (name == "[F") {
         jfloatArray arr = (jfloatArray)obj;
-        int fCount = env->GetArrayLength(arr);
+        int fCount      = env->GetArrayLength(arr);
         PoolRealArray sarr;
         sarr.resize(fCount);
 
@@ -330,12 +330,12 @@ Variant _jobject_to_variant(JNIEnv* env, jobject obj) {
 
     if (name == "[Ljava.lang.Object;") {
         jobjectArray arr = (jobjectArray)obj;
-        int objCount = env->GetArrayLength(arr);
+        int objCount     = env->GetArrayLength(arr);
         Array varr;
 
         for (int i = 0; i < objCount; i++) {
             jobject jobj = env->GetObjectArrayElement(arr, i);
-            Variant v = _jobject_to_variant(env, jobj);
+            Variant v    = _jobject_to_variant(env, jobj);
             varr.push_back(v);
             env->DeleteLocalRef(jobj);
         }

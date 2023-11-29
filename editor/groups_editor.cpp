@@ -62,8 +62,8 @@ void GroupDialog::_load_nodes(Node* p_current) {
             String(p_current->get_parent()->get_name()) + "/" + item_name;
     }
 
-    bool keep = true;
-    Node* root = scene_tree->get_edited_scene_root();
+    bool keep   = true;
+    Node* root  = scene_tree->get_edited_scene_root();
     Node* owner = p_current->get_owner();
     if (owner != root && p_current != root && !owner
         && !root->is_editable_instance(owner)) {
@@ -112,7 +112,7 @@ void GroupDialog::_load_nodes(Node* p_current) {
 }
 
 bool GroupDialog::_can_edit(Node* p_node, String p_group) {
-    Node* n = p_node;
+    Node* n       = p_node;
     bool can_edit = true;
     while (n) {
         Ref<SceneState> ss =
@@ -737,7 +737,7 @@ void GroupsEditor::update_tree() {
             continue;
         }
 
-        Node* n = node;
+        Node* n             = node;
         bool can_be_deleted = true;
 
         while (n) {

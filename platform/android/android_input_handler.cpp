@@ -40,7 +40,7 @@ void AndroidInputHandler::process_joy_event(const JoypadEvent& p_event) {
             break;
         case JOY_EVENT_AXIS:
             InputDefault::JoyAxis value;
-            value.min = -1;
+            value.min   = -1;
             value.value = p_event.value;
             input->joy_axis(p_event.device, p_event.index, value);
             break;
@@ -73,8 +73,8 @@ void AndroidInputHandler::process_key_event(
 ) {
     Ref<InputEventKey> ev;
     ev.instance();
-    int val = p_unicode_char;
-    unsigned int scancode = android_get_keysym(p_keycode);
+    int val                   = p_unicode_char;
+    unsigned int scancode     = android_get_keysym(p_keycode);
     unsigned int phy_scancode = android_get_keysym(p_scancode);
 
     switch (scancode) {
@@ -141,7 +141,7 @@ void AndroidInputHandler::process_touch(
 
             touch.resize(p_points.size());
             for (int i = 0; i < p_points.size(); i++) {
-                touch.write[i].id = p_points[i].id;
+                touch.write[i].id  = p_points[i].id;
                 touch.write[i].pos = p_points[i].pos;
             }
 

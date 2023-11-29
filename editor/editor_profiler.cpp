@@ -100,8 +100,8 @@ void EditorProfiler::clear() {
     ); // Doesn't make much sense, but we can't have min == max. Doesn't hurt.
     cursor_metric_edit->set_value(0);
     updating_frame = false;
-    hover_metric = -1;
-    seeking = false;
+    hover_metric   = -1;
+    seeking        = false;
 }
 
 static String _get_percent_txt(float p_value, float p_total) {
@@ -138,7 +138,7 @@ String EditorProfiler::_get_time_as_text(
 
 Color EditorProfiler::_get_color_from_signature(const StringName& p_signature
 ) const {
-    Color bc = get_color("error_color", "Editor");
+    Color bc   = get_color("error_color", "Editor");
     double rot = ABS(double(p_signature.hash()) / double(0x7FFFFFFF));
     Color c;
     c.set_hsv(rot, bc.get_s(), bc.get_v());
@@ -155,7 +155,7 @@ void EditorProfiler::_item_edited() {
         return;
     }
     StringName signature = item->get_metadata(0);
-    bool checked = item->is_checked(0);
+    bool checked         = item->is_checked(0);
 
     if (checked) {
         plot_sigs.insert(signature);
@@ -172,9 +172,9 @@ void EditorProfiler::_item_edited() {
 }
 
 void EditorProfiler::_update_plot() {
-    const int w = graph->get_size().width;
-    const int h = graph->get_size().height;
-    bool reset_texture = false;
+    const int w           = graph->get_size().width;
+    const int h           = graph->get_size().height;
+    bool reset_texture    = false;
     const int desired_len = w * h * 4;
 
     if (graph_image.size() != desired_len) {
@@ -183,7 +183,7 @@ void EditorProfiler::_update_plot() {
     }
 
     PoolVector<uint8_t>::Write wr = graph_image.write();
-    const Color background_color = get_color("dark_color_2", "Editor");
+    const Color background_color  = get_color("dark_color_2", "Editor");
 
     // Clear the previous frame and set the background color.
     for (int i = 0; i < desired_len; i += 4) {
@@ -196,7 +196,7 @@ void EditorProfiler::_update_plot() {
     // find highest value
 
     const bool use_self = display_time->get_selected() == DISPLAY_SELF_TIME;
-    float highest = 0;
+    float highest       = 0;
 
     for (int i = 0; i < frame_metrics.size(); i++) {
         const Metric& m = frame_metrics[i];
@@ -205,7 +205,7 @@ void EditorProfiler::_update_plot() {
         }
 
         for (Set<StringName>::Element* E = plot_sigs.front(); E;
-             E = E->next()) {
+             E                           = E->next()) {
             const Map<StringName, Metric::Category*>::Element* F =
                 m.category_ptrs.find(E->get());
             if (F) {
@@ -226,8 +226,8 @@ void EditorProfiler::_update_plot() {
 
     if (highest > 0) {
         // means some data exists..
-        highest *= 1.2; // leave some upper room
-        graph_height = highest;
+        highest      *= 1.2; // leave some upper room
+        graph_height  = highest;
 
         Vector<int> columnv;
         columnv.resize(h * 4);
@@ -243,7 +243,7 @@ void EditorProfiler::_update_plot() {
             }
 
             int current = i * frame_metrics.size() / w;
-            int next = (i + 1) * frame_metrics.size() / w;
+            int next    = (i + 1) * frame_metrics.size() / w;
             if (next > frame_metrics.size()) {
                 next = frame_metrics.size();
             }
@@ -252,7 +252,7 @@ void EditorProfiler::_update_plot() {
             }
 
             for (Set<StringName>::Element* E = plot_sigs.front(); E;
-                 E = E->next()) {
+                 E                           = E->next()) {
                 int plot_pos = -1;
 
                 for (int j = current; j < next; j++) {
@@ -291,11 +291,11 @@ void EditorProfiler::_update_plot() {
                             plot_pos);
                 }
 
-                int prev_plot = plot_pos;
+                int prev_plot                    = plot_pos;
                 Map<StringName, int>::Element* H = plot_prev.find(E->get());
                 if (H) {
                     prev_plot = H->get();
-                    H->get() = plot_pos;
+                    H->get()  = plot_pos;
                 } else {
                     plot_prev[E->get()] = plot_pos;
                 }
@@ -313,7 +313,7 @@ void EditorProfiler::_update_plot() {
                     prev_plot = plot_pos;
                 }
 
-                plot_pos = h - plot_pos - 1;
+                plot_pos  = h - plot_pos - 1;
                 prev_plot = h - prev_plot - 1;
 
                 if (prev_plot > plot_pos) {
@@ -341,11 +341,11 @@ void EditorProfiler::_update_plot() {
                     column[j + 2] /= a;
                 }
 
-                const uint8_t red = uint8_t(column[j + 0]);
-                const uint8_t green = uint8_t(column[j + 1]);
-                const uint8_t blue = uint8_t(column[j + 2]);
+                const uint8_t red    = uint8_t(column[j + 0]);
+                const uint8_t green  = uint8_t(column[j + 1]);
+                const uint8_t blue   = uint8_t(column[j + 2]);
                 const bool is_filled = red >= 1 || green >= 1 || blue >= 1;
-                const int widx = ((j >> 2) * w + i) * 4;
+                const int widx       = ((j >> 2) * w + i) * 4;
 
                 // If the pixel isn't filled by any profiler line, apply the
                 // background color instead.
@@ -394,7 +394,7 @@ void EditorProfiler::_update_frame() {
     updating_frame = true;
     variables->clear();
 
-    TreeItem* root = variables->create_item();
+    TreeItem* root  = variables->create_item();
     const Metric& m = frame_metrics[cursor_metric];
 
     int dtime = display_time->get_selected();
@@ -482,7 +482,7 @@ void EditorProfiler::_graph_tex_draw() {
     }
     if (seeking) {
         int max_frames = frame_metrics.size();
-        int frame = cursor_metric_edit->get_value()
+        int frame      = cursor_metric_edit->get_value()
                   - (frame_metrics[last_metric].frame_number - max_frames + 1);
         if (frame < 0) {
             frame = 0;
@@ -499,7 +499,7 @@ void EditorProfiler::_graph_tex_draw() {
 
     if (hover_metric != -1 && frame_metrics[hover_metric].valid) {
         int max_frames = frame_metrics.size();
-        int frame = frame_metrics[hover_metric].frame_number
+        int frame      = frame_metrics[hover_metric].frame_number
                   - (frame_metrics[last_metric].frame_number - max_frames + 1);
         if (frame < 0) {
             frame = 0;
@@ -534,7 +534,7 @@ void EditorProfiler::_graph_tex_input(const Ref<InputEvent>& p_ev) {
         return;
     }
 
-    Ref<InputEventMouse> me = p_ev;
+    Ref<InputEventMouse> me       = p_ev;
     Ref<InputEventMouseButton> mb = p_ev;
     Ref<InputEventMouseMotion> mm = p_ev;
 
@@ -542,7 +542,7 @@ void EditorProfiler::_graph_tex_input(const Ref<InputEvent>& p_ev) {
          && mb->is_pressed())
         || (mm.is_valid())) {
         int x = me->get_position().x;
-        x = x * frame_metrics.size() / graph->get_size().width;
+        x     = x * frame_metrics.size() / graph->get_size().width;
 
         bool show_hover = x >= 0 && x < frame_metrics.size();
 
@@ -555,7 +555,7 @@ void EditorProfiler::_graph_tex_input(const Ref<InputEvent>& p_ev) {
         }
 
         int metric = frame_metrics.size() - x - 1;
-        metric = last_metric - metric;
+        metric     = last_metric - metric;
         while (metric < 0) {
             metric += frame_metrics.size();
         }
@@ -731,9 +731,9 @@ Vector<Vector<String>> EditorProfiler::get_data_as_csv() const {
     signatures.resize(possible_signatures.size());
     int sig_index = 0;
     for (const Set<StringName>::Element* E = possible_signatures.front(); E;
-         E = E->next()) {
+         E                                 = E->next()) {
         signatures.write[sig_index] = E->get();
-        sig_map[E->get()] = sig_index;
+        sig_map[E->get()]           = sig_index;
         sig_index++;
     }
     res.push_back(signatures);
@@ -871,7 +871,7 @@ EditorProfiler::EditorProfiler() {
         1024
     );
     frame_metrics.resize(metric_size);
-    last_metric = -1;
+    last_metric  = -1;
     hover_metric = -1;
 
     EDITOR_DEF("debugger/profiler_frame_max_functions", 512);
@@ -891,6 +891,6 @@ EditorProfiler::EditorProfiler() {
     plot_sigs.insert("physics_frame_time");
     plot_sigs.insert("category_frame_time");
 
-    seeking = false;
+    seeking      = false;
     graph_height = 1;
 }

@@ -41,8 +41,8 @@ import java.util.List;
 class Joystick {
     int device_id;
     String name;
-    List<Integer> axes = new ArrayList<>();
-    protected boolean hasAxisHat = false;
+    List<Integer> axes                            = new ArrayList<>();
+    protected boolean hasAxisHat                  = false;
     /*
      * Keep track of values so we can prevent flooding the engine with useless
      * events.

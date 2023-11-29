@@ -88,8 +88,8 @@ class PinJoint : public Joint {
 
 public:
     enum Param {
-        PARAM_BIAS = PhysicsServer::PIN_JOINT_BIAS,
-        PARAM_DAMPING = PhysicsServer::PIN_JOINT_DAMPING,
+        PARAM_BIAS          = PhysicsServer::PIN_JOINT_BIAS,
+        PARAM_DAMPING       = PhysicsServer::PIN_JOINT_DAMPING,
         PARAM_IMPULSE_CLAMP = PhysicsServer::PIN_JOINT_IMPULSE_CLAMP
     };
 
@@ -112,22 +112,22 @@ class HingeJoint : public Joint {
 
 public:
     enum Param {
-        PARAM_BIAS = PhysicsServer::HINGE_JOINT_BIAS,
-        PARAM_LIMIT_UPPER = PhysicsServer::HINGE_JOINT_LIMIT_UPPER,
-        PARAM_LIMIT_LOWER = PhysicsServer::HINGE_JOINT_LIMIT_LOWER,
-        PARAM_LIMIT_BIAS = PhysicsServer::HINGE_JOINT_LIMIT_BIAS,
-        PARAM_LIMIT_SOFTNESS = PhysicsServer::HINGE_JOINT_LIMIT_SOFTNESS,
+        PARAM_BIAS             = PhysicsServer::HINGE_JOINT_BIAS,
+        PARAM_LIMIT_UPPER      = PhysicsServer::HINGE_JOINT_LIMIT_UPPER,
+        PARAM_LIMIT_LOWER      = PhysicsServer::HINGE_JOINT_LIMIT_LOWER,
+        PARAM_LIMIT_BIAS       = PhysicsServer::HINGE_JOINT_LIMIT_BIAS,
+        PARAM_LIMIT_SOFTNESS   = PhysicsServer::HINGE_JOINT_LIMIT_SOFTNESS,
         PARAM_LIMIT_RELAXATION = PhysicsServer::HINGE_JOINT_LIMIT_RELAXATION,
         PARAM_MOTOR_TARGET_VELOCITY =
             PhysicsServer::HINGE_JOINT_MOTOR_TARGET_VELOCITY,
         PARAM_MOTOR_MAX_IMPULSE = PhysicsServer::HINGE_JOINT_MOTOR_MAX_IMPULSE,
-        PARAM_MAX = PhysicsServer::HINGE_JOINT_MAX
+        PARAM_MAX               = PhysicsServer::HINGE_JOINT_MAX
     };
 
     enum Flag {
-        FLAG_USE_LIMIT = PhysicsServer::HINGE_JOINT_FLAG_USE_LIMIT,
+        FLAG_USE_LIMIT    = PhysicsServer::HINGE_JOINT_FLAG_USE_LIMIT,
         FLAG_ENABLE_MOTOR = PhysicsServer::HINGE_JOINT_FLAG_ENABLE_MOTOR,
-        FLAG_MAX = PhysicsServer::HINGE_JOINT_FLAG_MAX
+        FLAG_MAX          = PhysicsServer::HINGE_JOINT_FLAG_MAX
     };
 
 protected:

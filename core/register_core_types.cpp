@@ -80,12 +80,12 @@ static Ref<ResourceFormatSaverCrypto> resource_format_saver_crypto;
 static Ref<ResourceFormatLoaderCrypto> resource_format_loader_crypto;
 
 static _ResourceLoader* _resource_loader = nullptr;
-static _ResourceSaver* _resource_saver = nullptr;
-static _OS* _os = nullptr;
-static _Engine* _engine = nullptr;
-static _ClassDB* _classdb = nullptr;
-static _Marshalls* _marshalls = nullptr;
-static _JSON* _json = nullptr;
+static _ResourceSaver* _resource_saver   = nullptr;
+static _OS* _os                          = nullptr;
+static _Engine* _engine                  = nullptr;
+static _ClassDB* _classdb                = nullptr;
+static _Marshalls* _marshalls            = nullptr;
+static _JSON* _json                      = nullptr;
 
 static IP* ip = nullptr;
 
@@ -216,12 +216,12 @@ void register_core_types() {
     _geometry = memnew(_Geometry);
 
     _resource_loader = memnew(_ResourceLoader);
-    _resource_saver = memnew(_ResourceSaver);
-    _os = memnew(_OS);
-    _engine = memnew(_Engine);
-    _classdb = memnew(_ClassDB);
-    _marshalls = memnew(_Marshalls);
-    _json = memnew(_JSON);
+    _resource_saver  = memnew(_ResourceSaver);
+    _os              = memnew(_OS);
+    _engine          = memnew(_Engine);
+    _classdb         = memnew(_ClassDB);
+    _marshalls       = memnew(_Marshalls);
+    _json            = memnew(_JSON);
 }
 
 void register_core_settings() {

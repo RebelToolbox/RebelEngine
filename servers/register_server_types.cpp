@@ -76,7 +76,7 @@ static void _debugger_get_resource_usage(
         ScriptDebuggerRemote::ResourceUsage usage;
         usage.path = E->get().path;
         usage.vram = E->get().bytes;
-        usage.id = E->get().texture;
+        usage.id   = E->get().texture;
         usage.type = "Texture";
         if (E->get().depth == 0) {
             usage.format = itos(E->get().width) + "x" + itos(E->get().height)

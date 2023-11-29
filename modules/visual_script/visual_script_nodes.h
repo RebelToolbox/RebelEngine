@@ -77,8 +77,8 @@ public:
     void add_argument(
         Variant::Type p_type,
         const String& p_name,
-        int p_index = -1,
-        const PropertyHint p_hint = PROPERTY_HINT_NONE,
+        int p_index                 = -1,
+        const PropertyHint p_hint   = PROPERTY_HINT_NONE,
         const String& p_hint_string = String("")
     );
     void set_argument_type(int p_argidx, Variant::Type p_type);
@@ -125,12 +125,12 @@ protected:
     Vector<Port> outputports;
 
     enum {
-        OUTPUT_EDITABLE = 0x0001,
+        OUTPUT_EDITABLE      = 0x0001,
         OUTPUT_NAME_EDITABLE = 0x0002,
         OUTPUT_TYPE_EDITABLE = 0x0004,
-        INPUT_EDITABLE = 0x0008,
-        INPUT_NAME_EDITABLE = 0x000F,
-        INPUT_TYPE_EDITABLE = 0x0010,
+        INPUT_EDITABLE       = 0x0008,
+        INPUT_NAME_EDITABLE  = 0x000F,
+        INPUT_TYPE_EDITABLE  = 0x0010,
     };
 
     int flags;
@@ -163,8 +163,8 @@ public:
     virtual PropertyInfo get_input_value_port_info(int p_idx) const;
     virtual PropertyInfo get_output_value_port_info(int p_idx) const;
 
-    virtual String get_caption() const = 0;
-    virtual String get_text() const = 0;
+    virtual String get_caption() const  = 0;
+    virtual String get_text() const     = 0;
     virtual String get_category() const = 0;
 
     void add_input_data_port(
@@ -858,13 +858,13 @@ public:
     };
 
     enum { // replicated for step
-        STEP_SHIFT = 1 << 24,
-        STEP_MASK = STEP_SHIFT - 1,
+        STEP_SHIFT          = 1 << 24,
+        STEP_MASK           = STEP_SHIFT - 1,
         STEP_PUSH_STACK_BIT = STEP_SHIFT,      // push bit to stack
-        STEP_GO_BACK_BIT = STEP_SHIFT << 1,    // go back to previous node
+        STEP_GO_BACK_BIT    = STEP_SHIFT << 1, // go back to previous node
         STEP_NO_ADVANCE_BIT = STEP_SHIFT << 2, // do not advance past this node
         STEP_EXIT_FUNCTION_BIT = STEP_SHIFT << 3, // return from function
-        STEP_YIELD_BIT = STEP_SHIFT
+        STEP_YIELD_BIT         = STEP_SHIFT
                       << 4, // yield (will find VisualScriptFunctionState state
                             // in first working memory)
     };

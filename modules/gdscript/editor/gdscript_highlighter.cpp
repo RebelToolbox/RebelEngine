@@ -63,30 +63,30 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
     _get_line_syntax_highlighting(int p_line) {
     Map<int, TextEdit::HighlighterInfo> color_map;
 
-    Type next_type = NONE;
-    Type current_type = NONE;
+    Type next_type     = NONE;
+    Type current_type  = NONE;
     Type previous_type = NONE;
 
     String previous_text = "";
-    int previous_column = 0;
+    int previous_column  = 0;
 
-    bool prev_is_char = false;
-    bool prev_is_number = false;
-    bool in_keyword = false;
-    bool in_word = false;
-    bool in_function_name = false;
+    bool prev_is_char            = false;
+    bool prev_is_number          = false;
+    bool in_keyword              = false;
+    bool in_word                 = false;
+    bool in_function_name        = false;
     bool in_variable_declaration = false;
-    bool in_function_args = false;
-    bool in_member_variable = false;
-    bool in_node_path = false;
-    bool is_hex_notation = false;
-    bool is_bin_notation = false;
-    bool expect_type = false;
+    bool in_function_args        = false;
+    bool in_member_variable      = false;
+    bool in_node_path            = false;
+    bool is_hex_notation         = false;
+    bool is_bin_notation         = false;
+    bool expect_type             = false;
     Color keyword_color;
     Color color;
 
     int in_region = text_editor->_is_line_in_region(p_line);
-    int deregion = 0;
+    int deregion  = 0;
 
     const Map<int, TextEdit::Text::ColorRegionInfo> cri_map =
         text_editor->_get_line_color_region_info(p_line);
@@ -104,16 +104,16 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
 
         if (deregion != 0) {
             if (color != prev_color) {
-                prev_color = color;
+                prev_color             = color;
                 highlighter_info.color = color;
-                color_map[j] = highlighter_info;
+                color_map[j]           = highlighter_info;
             }
             continue;
         }
 
         color = font_color;
 
-        bool is_char = _is_text_char(str[j]);
+        bool is_char   = _is_text_char(str[j]);
         bool is_symbol = _is_symbol(str[j]);
         bool is_number = _is_number(str[j]);
 
@@ -129,7 +129,7 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
             is_number = true;
         } else if (is_bin_notation) {
             is_bin_notation = false;
-            is_number = false;
+            is_number       = false;
         } else {
             is_bin_notation = false;
         }
@@ -141,7 +141,7 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
             && !in_word && prev_is_number && !is_number) {
             is_number = true;
             is_symbol = false;
-            is_char = false;
+            is_char   = false;
 
             if (str[j] == 'x' && str[j - 1] == '0') {
                 is_hex_notation = true;
@@ -193,7 +193,7 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
             }
 
             String word = str.substr(j, to - j);
-            Color col = Color();
+            Color col   = Color();
             if (text_editor->has_keyword_color(word)) {
                 col = text_editor->get_keyword_color(word);
             } else if (text_editor->has_member_color(word)) {
@@ -210,7 +210,7 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
                     }
                 }
                 if (col != Color()) {
-                    in_keyword = true;
+                    in_keyword    = true;
                     keyword_color = col;
                 }
             }
@@ -279,8 +279,8 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
             }
 
             in_variable_declaration = false;
-            in_function_name = false;
-            in_member_variable = false;
+            in_function_name        = false;
+            in_member_variable      = false;
         }
 
         if (!in_node_path && in_region == -1 && str[j] == '$') {
@@ -291,16 +291,16 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
 
         if (in_region >= 0) {
             next_type = REGION;
-            color = text_editor->_get_color_region(in_region).color;
+            color     = text_editor->_get_color_region(in_region).color;
         } else if (in_node_path) {
             next_type = NODE_PATH;
-            color = node_path_color;
+            color     = node_path_color;
         } else if (in_keyword) {
             next_type = KEYWORD;
-            color = keyword_color;
+            color     = keyword_color;
         } else if (in_member_variable) {
             next_type = MEMBER;
-            color = member_color;
+            color     = member_color;
         } else if (in_function_name) {
             next_type = FUNCTION;
 
@@ -314,13 +314,13 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
             }
         } else if (is_symbol) {
             next_type = SYMBOL;
-            color = symbol_color;
+            color     = symbol_color;
         } else if (is_number) {
             next_type = NUMBER;
-            color = number_color;
+            color     = number_color;
         } else if (expect_type) {
             next_type = TYPE;
-            color = type_color;
+            color     = type_color;
         } else {
             next_type = IDENTIFIER;
         }
@@ -330,11 +330,11 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
                 current_type = next_type;
             } else {
                 previous_type = current_type;
-                current_type = next_type;
+                current_type  = next_type;
 
                 // no need to store regions...
                 if (previous_type == REGION) {
-                    previous_text = "";
+                    previous_text   = "";
                     previous_column = j;
                 } else {
                     String text =
@@ -350,13 +350,13 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
             }
         }
 
-        prev_is_char = is_char;
+        prev_is_char   = is_char;
         prev_is_number = is_number;
 
         if (color != prev_color) {
-            prev_color = color;
+            prev_color             = color;
             highlighter_info.color = color;
-            color_map[j] = highlighter_info;
+            color_map[j]           = highlighter_info;
         }
     }
     return color_map;
@@ -373,11 +373,11 @@ List<String> GDScriptSyntaxHighlighter::get_supported_languages() {
 }
 
 void GDScriptSyntaxHighlighter::_update_cache() {
-    font_color = text_editor->get_color("font_color");
-    symbol_color = text_editor->get_color("symbol_color");
+    font_color     = text_editor->get_color("font_color");
+    symbol_color   = text_editor->get_color("symbol_color");
     function_color = text_editor->get_color("function_color");
-    number_color = text_editor->get_color("number_color");
-    member_color = text_editor->get_color("member_variable_color");
+    number_color   = text_editor->get_color("number_color");
+    member_color   = text_editor->get_color("member_variable_color");
 
     const String text_editor_color_theme =
         EditorSettings::get_singleton()->get("text_editor/theme/color_theme");
@@ -385,10 +385,10 @@ void GDScriptSyntaxHighlighter::_update_cache() {
 
     if (default_theme || EditorSettings::get_singleton()->is_dark_theme()) {
         function_definition_color = Color(0.4, 0.9, 1.0);
-        node_path_color = Color(0.39, 0.76, 0.35);
+        node_path_color           = Color(0.39, 0.76, 0.35);
     } else {
         function_definition_color = Color(0.0, 0.65, 0.73);
-        node_path_color = Color(0.32, 0.55, 0.29);
+        node_path_color           = Color(0.32, 0.55, 0.29);
     }
 
     EDITOR_DEF(

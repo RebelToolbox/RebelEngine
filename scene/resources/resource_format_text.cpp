@@ -209,12 +209,12 @@ Ref<PackedScene> ResourceInteractiveLoaderText::_parse_node_tag(
 
     while (true) {
         if (next_tag.name == "node") {
-            int parent = -1;
-            int owner = -1;
-            int type = -1;
-            int name = -1;
+            int parent   = -1;
+            int owner    = -1;
+            int type     = -1;
+            int name     = -1;
             int instance = -1;
-            int index = -1;
+            int index    = -1;
             // int base_scene=-1;
 
             if (next_tag.fields.has("name")) {
@@ -322,7 +322,7 @@ Ref<PackedScene> ResourceInteractiveLoaderText::_parse_node_tag(
                 }
 
                 if (assign != String()) {
-                    int nameidx = packed_scene->get_state()->add_name(assign);
+                    int nameidx  = packed_scene->get_state()->add_name(assign);
                     int valueidx = packed_scene->get_state()->add_value(value);
                     packed_scene->get_state()
                         ->add_node_property(node_id, nameidx, valueidx);
@@ -333,34 +333,34 @@ Ref<PackedScene> ResourceInteractiveLoaderText::_parse_node_tag(
             }
         } else if (next_tag.name == "connection") {
             if (!next_tag.fields.has("from")) {
-                error = ERR_FILE_CORRUPT;
+                error      = ERR_FILE_CORRUPT;
                 error_text = "missing 'from' field from connection tag";
                 return Ref<PackedScene>();
             }
 
             if (!next_tag.fields.has("to")) {
-                error = ERR_FILE_CORRUPT;
+                error      = ERR_FILE_CORRUPT;
                 error_text = "missing 'to' field from connection tag";
                 return Ref<PackedScene>();
             }
 
             if (!next_tag.fields.has("signal")) {
-                error = ERR_FILE_CORRUPT;
+                error      = ERR_FILE_CORRUPT;
                 error_text = "missing 'signal' field from connection tag";
                 return Ref<PackedScene>();
             }
 
             if (!next_tag.fields.has("method")) {
-                error = ERR_FILE_CORRUPT;
+                error      = ERR_FILE_CORRUPT;
                 error_text = "missing 'method' field from connection tag";
                 return Ref<PackedScene>();
             }
 
-            NodePath from = next_tag.fields["from"];
-            NodePath to = next_tag.fields["to"];
+            NodePath from     = next_tag.fields["from"];
+            NodePath to       = next_tag.fields["to"];
             StringName method = next_tag.fields["method"];
             StringName signal = next_tag.fields["signal"];
-            int flags = CONNECT_PERSIST;
+            int flags         = CONNECT_PERSIST;
             Array binds;
 
             if (next_tag.fields.has("flags")) {
@@ -405,7 +405,7 @@ Ref<PackedScene> ResourceInteractiveLoaderText::_parse_node_tag(
             }
         } else if (next_tag.name == "editable") {
             if (!next_tag.fields.has("path")) {
-                error = ERR_FILE_CORRUPT;
+                error      = ERR_FILE_CORRUPT;
                 error_text = "missing 'path' field from connection tag";
                 _printerr();
                 return Ref<PackedScene>();
@@ -448,21 +448,21 @@ Error ResourceInteractiveLoaderText::poll() {
 
     if (next_tag.name == "ext_resource") {
         if (!next_tag.fields.has("path")) {
-            error = ERR_FILE_CORRUPT;
+            error      = ERR_FILE_CORRUPT;
             error_text = "Missing 'path' in external resource tag";
             _printerr();
             return error;
         }
 
         if (!next_tag.fields.has("type")) {
-            error = ERR_FILE_CORRUPT;
+            error      = ERR_FILE_CORRUPT;
             error_text = "Missing 'type' in external resource tag";
             _printerr();
             return error;
         }
 
         if (!next_tag.fields.has("id")) {
-            error = ERR_FILE_CORRUPT;
+            error      = ERR_FILE_CORRUPT;
             error_text = "Missing 'id' in external resource tag";
             _printerr();
             return error;
@@ -470,7 +470,7 @@ Error ResourceInteractiveLoaderText::poll() {
 
         String path = next_tag.fields["path"];
         String type = next_tag.fields["type"];
-        int index = next_tag.fields["id"];
+        int index   = next_tag.fields["id"];
 
         if (path.find("://") == -1 && path.is_rel_path()) {
             // path is relative to file being loaded, so convert to a resource
@@ -505,9 +505,9 @@ Error ResourceInteractiveLoaderText::poll() {
         }
 
         ExtResource er;
-        er.cache = res;
-        er.path = path;
-        er.type = type;
+        er.cache             = res;
+        er.path              = path;
+        er.type              = type;
         ext_resources[index] = er;
 
         error =
@@ -522,21 +522,21 @@ Error ResourceInteractiveLoaderText::poll() {
 
     } else if (next_tag.name == "sub_resource") {
         if (!next_tag.fields.has("type")) {
-            error = ERR_FILE_CORRUPT;
+            error      = ERR_FILE_CORRUPT;
             error_text = "Missing 'type' in external resource tag";
             _printerr();
             return error;
         }
 
         if (!next_tag.fields.has("id")) {
-            error = ERR_FILE_CORRUPT;
+            error      = ERR_FILE_CORRUPT;
             error_text = "Missing 'index' in external resource tag";
             _printerr();
             return error;
         }
 
         String type = next_tag.fields["type"];
-        int id = next_tag.fields["id"];
+        int id      = next_tag.fields["id"];
 
         String path = local_path + "::" + itos(id);
 
@@ -547,7 +547,7 @@ Error ResourceInteractiveLoaderText::poll() {
         if (ResourceCache::has(path)) {
             // cached, do not assign
             Resource* r = ResourceCache::get(path);
-            res = Ref<Resource>(r);
+            res         = Ref<Resource>(r);
         } else {
             // create
             Object* obj = ClassDB::instance(type);
@@ -569,7 +569,7 @@ Error ResourceInteractiveLoaderText::poll() {
                 return error;
             }
 
-            res = Ref<Resource>(r);
+            res       = Ref<Resource>(r);
             do_assign = true;
         }
 
@@ -679,7 +679,7 @@ Error ResourceInteractiveLoaderText::poll() {
                 resource->set(assign, value);
                 // it's assignment
             } else if (next_tag.name != String()) {
-                error = ERR_FILE_CORRUPT;
+                error      = ERR_FILE_CORRUPT;
                 error_text = "Extra tag found when parsing main resource file";
                 _printerr();
                 return error;
@@ -705,7 +705,7 @@ Error ResourceInteractiveLoaderText::poll() {
             return error;
         }
 
-        error = ERR_FILE_EOF;
+        error    = ERR_FILE_EOF;
         // get it here
         resource = packed_scene;
         if (!ResourceCache::has(res_path)) {
@@ -755,14 +755,14 @@ void ResourceInteractiveLoaderText::get_dependencies(
 
     while (next_tag.name == "ext_resource") {
         if (!next_tag.fields.has("type")) {
-            error = ERR_FILE_CORRUPT;
+            error      = ERR_FILE_CORRUPT;
             error_text = "Missing 'type' in external resource tag";
             _printerr();
             return;
         }
 
         if (!next_tag.fields.has("id")) {
-            error = ERR_FILE_CORRUPT;
+            error      = ERR_FILE_CORRUPT;
             error_text = "Missing 'index' in external resource tag";
             _printerr();
             return;
@@ -858,18 +858,18 @@ Error ResourceInteractiveLoaderText::rename_dependencies(
             }
 
             String path = next_tag.fields["path"];
-            int index = next_tag.fields["id"];
+            int index   = next_tag.fields["id"];
             String type = next_tag.fields["type"];
 
             bool relative = false;
             if (!path.begins_with("res://")) {
-                path = base_path.plus_file(path).simplify_path();
+                path     = base_path.plus_file(path).simplify_path();
                 relative = true;
             }
 
             if (p_map.has(path)) {
                 String np = p_map[path];
-                path = np;
+                path      = np;
             }
 
             if (relative) {
@@ -923,12 +923,12 @@ void ResourceInteractiveLoaderText::open(
     error = OK;
 
     lines = 1;
-    f = p_f;
+    f     = p_f;
 
-    stream.f = f;
-    is_scene = false;
+    stream.f                = f;
+    is_scene                = false;
     ignore_resource_parsing = false;
-    resource_current = 0;
+    resource_current        = 0;
 
     VariantParser::Tag tag;
     Error err = VariantParser::parse_tag(&stream, lines, error_text, tag);
@@ -1050,21 +1050,21 @@ Error ResourceInteractiveLoaderText::save_as_binary(
 
     while (next_tag.name == "ext_resource") {
         if (!next_tag.fields.has("path")) {
-            error = ERR_FILE_CORRUPT;
+            error      = ERR_FILE_CORRUPT;
             error_text = "Missing 'path' in external resource tag";
             _printerr();
             return error;
         }
 
         if (!next_tag.fields.has("type")) {
-            error = ERR_FILE_CORRUPT;
+            error      = ERR_FILE_CORRUPT;
             error_text = "Missing 'type' in external resource tag";
             _printerr();
             return error;
         }
 
         if (!next_tag.fields.has("id")) {
-            error = ERR_FILE_CORRUPT;
+            error      = ERR_FILE_CORRUPT;
             error_text = "Missing 'id' in external resource tag";
             _printerr();
             return error;
@@ -1072,7 +1072,7 @@ Error ResourceInteractiveLoaderText::save_as_binary(
 
         String path = next_tag.fields["path"];
         String type = next_tag.fields["type"];
-        int index = next_tag.fields["id"];
+        int index   = next_tag.fields["id"];
 
         bs_save_unicode_string(wf.f, type);
         bs_save_unicode_string(wf.f, path);
@@ -1083,7 +1083,7 @@ Error ResourceInteractiveLoaderText::save_as_binary(
         dr->set_path(
             "res://dummy" + itos(lindex)
         ); // anything is good to detect it for saving as external
-        dummy_read.external_resources[dr] = lindex;
+        dummy_read.external_resources[dr]        = lindex;
         dummy_read.rev_external_resources[index] = dr;
 
         error =
@@ -1105,7 +1105,7 @@ Error ResourceInteractiveLoaderText::save_as_binary(
     uint64_t sub_res_count_pos = wf->get_position();
     wf->store_32(0); // zero sub resources, still parsing them
 
-    String temp_file = p_path + ".temp";
+    String temp_file  = p_path + ".temp";
     FileAccessRef wf2 = FileAccess::open(temp_file, FileAccess::WRITE);
     if (!wf2) {
         return ERR_CANT_OPEN;
@@ -1121,25 +1121,25 @@ Error ResourceInteractiveLoaderText::save_as_binary(
 
         if (next_tag.name == "sub_resource") {
             if (!next_tag.fields.has("type")) {
-                error = ERR_FILE_CORRUPT;
+                error      = ERR_FILE_CORRUPT;
                 error_text = "Missing 'type' in external resource tag";
                 _printerr();
                 return error;
             }
 
             if (!next_tag.fields.has("id")) {
-                error = ERR_FILE_CORRUPT;
+                error      = ERR_FILE_CORRUPT;
                 error_text = "Missing 'index' in external resource tag";
                 _printerr();
                 return error;
             }
 
-            type = next_tag.fields["type"];
-            id = next_tag.fields["id"];
+            type     = next_tag.fields["type"];
+            id       = next_tag.fields["id"];
             main_res = false;
         } else {
-            type = res_type;
-            id = 0; // used for last anyway
+            type     = res_type;
+            id       = 0; // used for last anyway
             main_res = true;
         }
 
@@ -1245,7 +1245,7 @@ Error ResourceInteractiveLoaderText::save_as_binary(
                 continue;
             }
 
-            String name = E->get().name;
+            String name   = E->get().name;
             Variant value = packed_scene->get(name);
 
             Map<StringName, int> empty_string_map; // unused
@@ -1296,7 +1296,7 @@ String ResourceInteractiveLoaderText::recognize(FileAccess* p_f) {
     error = OK;
 
     lines = 1;
-    f = p_f;
+    f     = p_f;
 
     stream.f = f;
 
@@ -1358,9 +1358,9 @@ Ref<ResourceInteractiveLoader> ResourceFormatLoaderText::load_interactive(
 
     Ref<ResourceInteractiveLoaderText> ria =
         memnew(ResourceInteractiveLoaderText);
-    String path = p_original_path != "" ? p_original_path : p_path;
+    String path     = p_original_path != "" ? p_original_path : p_path;
     ria->local_path = ProjectSettings::get_singleton()->localize_path(path);
-    ria->res_path = ria->local_path;
+    ria->res_path   = ria->local_path;
     // ria->set_local_path(
     // ProjectSettings::get_singleton()->localize_path(p_path) );
     ria->open(f);
@@ -1413,10 +1413,10 @@ String ResourceFormatLoaderText::get_resource_type(const String& p_path) const {
     Ref<ResourceInteractiveLoaderText> ria =
         memnew(ResourceInteractiveLoaderText);
     ria->local_path = ProjectSettings::get_singleton()->localize_path(p_path);
-    ria->res_path = ria->local_path;
+    ria->res_path   = ria->local_path;
     // ria->set_local_path(
     // ProjectSettings::get_singleton()->localize_path(p_path) );
-    String r = ria->recognize(f);
+    String r        = ria->recognize(f);
     return r;
 }
 
@@ -1433,7 +1433,7 @@ void ResourceFormatLoaderText::get_dependencies(
     Ref<ResourceInteractiveLoaderText> ria =
         memnew(ResourceInteractiveLoaderText);
     ria->local_path = ProjectSettings::get_singleton()->localize_path(p_path);
-    ria->res_path = ria->local_path;
+    ria->res_path   = ria->local_path;
     // ria->set_local_path(
     // ProjectSettings::get_singleton()->localize_path(p_path) );
     ria->get_dependencies(f, p_dependencies, p_add_types);
@@ -1451,7 +1451,7 @@ Error ResourceFormatLoaderText::rename_dependencies(
     Ref<ResourceInteractiveLoaderText> ria =
         memnew(ResourceInteractiveLoaderText);
     ria->local_path = ProjectSettings::get_singleton()->localize_path(p_path);
-    ria->res_path = ria->local_path;
+    ria->res_path   = ria->local_path;
     // ria->set_local_path(
     // ProjectSettings::get_singleton()->localize_path(p_path) );
     return ria->rename_dependencies(f, p_path, p_map);
@@ -1475,8 +1475,8 @@ Error ResourceFormatLoaderText::convert_file_to_binary(
     Ref<ResourceInteractiveLoaderText> ria =
         memnew(ResourceInteractiveLoaderText);
     const String& path = p_src_path;
-    ria->local_path = ProjectSettings::get_singleton()->localize_path(path);
-    ria->res_path = ria->local_path;
+    ria->local_path    = ProjectSettings::get_singleton()->localize_path(path);
+    ria->res_path      = ria->local_path;
     // ria->set_local_path(
     // ProjectSettings::get_singleton()->localize_path(p_path) );
     ria->open(f);
@@ -1548,7 +1548,7 @@ void ResourceFormatSaverTextInstance::_find_resources(
                     );
                     return;
                 }
-                int index = external_resources.size();
+                int index               = external_resources.size();
                 external_resources[res] = index;
                 return;
             }
@@ -1574,8 +1574,8 @@ void ResourceFormatSaverTextInstance::_find_resources(
                         RES sres = v;
                         if (sres.is_valid()) {
                             NonPersistentKey npk;
-                            npk.base = res;
-                            npk.property = pi.name;
+                            npk.base                = res;
+                            npk.property            = pi.name;
                             non_persistent_map[npk] = sres;
                             resource_set.insert(sres);
                             saved_resources.push_back(sres);
@@ -1595,7 +1595,7 @@ void ResourceFormatSaverTextInstance::_find_resources(
         } break;
         case Variant::ARRAY: {
             Array varray = p_variant;
-            int len = varray.size();
+            int len      = varray.size();
             for (int i = 0; i < len; i++) {
                 const Variant& v = varray.get(i);
                 _find_resources(v);
@@ -1636,10 +1636,10 @@ Error ResourceFormatSaverTextInstance::save(
 
     local_path = ProjectSettings::get_singleton()->localize_path(p_path);
 
-    relative_paths = p_flags & ResourceSaver::FLAG_RELATIVE_PATHS;
-    skip_editor = p_flags & ResourceSaver::FLAG_OMIT_EDITOR_PROPERTIES;
+    relative_paths   = p_flags & ResourceSaver::FLAG_RELATIVE_PATHS;
+    skip_editor      = p_flags & ResourceSaver::FLAG_OMIT_EDITOR_PROPERTIES;
     bundle_resources = p_flags & ResourceSaver::FLAG_BUNDLE_RESOURCES;
-    takeover_paths = p_flags & ResourceSaver::FLAG_REPLACE_SUBRESOURCE_PATHS;
+    takeover_paths   = p_flags & ResourceSaver::FLAG_REPLACE_SUBRESOURCE_PATHS;
     if (!p_path.begins_with("res://")) {
         takeover_paths = false;
     }
@@ -1657,7 +1657,7 @@ Error ResourceFormatSaverTextInstance::save(
             Ref<PackedScene> instance =
                 packed_scene->get_state()->get_node_instance(i);
             if (instance.is_valid() && !external_resources.has(instance)) {
-                int index = external_resources.size();
+                int index                    = external_resources.size();
                 external_resources[instance] = index;
             }
         }
@@ -1689,7 +1689,7 @@ Error ResourceFormatSaverTextInstance::save(
     // keep order from cached ids
     Set<int> cached_ids_found;
     for (Map<RES, int>::Element* E = external_resources.front(); E;
-         E = E->next()) {
+         E                         = E->next()) {
         int cached_id = E->key()->get_id_for_path(local_path);
         if (cached_id < 0 || cached_ids_found.has(cached_id)) {
             E->get() = -1; // reset
@@ -1700,7 +1700,7 @@ Error ResourceFormatSaverTextInstance::save(
     }
     // create IDs for non cached resources
     for (Map<RES, int>::Element* E = external_resources.front(); E;
-         E = E->next()) {
+         E                         = E->next()) {
         if (cached_ids_found.has(E->get())) { // already cached, go on
             continue;
         }
@@ -1711,7 +1711,7 @@ Error ResourceFormatSaverTextInstance::save(
         }
 
         cached_ids_found.insert(attempt);
-        E->get() = attempt;
+        E->get()          = attempt;
         // update also in resource
         Ref<Resource> res = E->key();
         res->set_id_for_path(local_path, attempt);
@@ -1719,7 +1719,7 @@ Error ResourceFormatSaverTextInstance::save(
 #else
     // make sure to start from one, as it makes format more readable
     for (Map<RES, int>::Element* E = external_resources.front(); E;
-         E = E->next()) {
+         E                         = E->next()) {
         E->get() = E->get() + 1;
     }
 #endif
@@ -1727,10 +1727,10 @@ Error ResourceFormatSaverTextInstance::save(
     Vector<ResourceSort> sorted_er;
 
     for (Map<RES, int>::Element* E = external_resources.front(); E;
-         E = E->next()) {
+         E                         = E->next()) {
         ResourceSort rs;
         rs.resource = E->key();
-        rs.index = E->get();
+        rs.index    = E->get();
         sorted_er.push_back(rs);
     }
 
@@ -1789,8 +1789,8 @@ Error ResourceFormatSaverTextInstance::save(
                 used_indices.insert(new_subindex);
             }
 
-            int idx = res->get_subindex();
-            line += "type=\"" + res->get_class() + "\" id=" + itos(idx);
+            int idx  = res->get_subindex();
+            line    += "type=\"" + res->get_class() + "\" id=" + itos(idx);
             f->store_line(line + "]");
             if (takeover_paths) {
                 res->set_path(p_path + "::" + itos(idx), true);
@@ -1806,7 +1806,7 @@ Error ResourceFormatSaverTextInstance::save(
         res->get_property_list(&property_list);
         // property_list.sort();
         for (List<PropertyInfo>::Element* PE = property_list.front(); PE;
-             PE = PE->next()) {
+             PE                              = PE->next()) {
             if (skip_editor && PE->get().name.begins_with("__editor")) {
                 continue;
             }
@@ -1816,7 +1816,7 @@ Error ResourceFormatSaverTextInstance::save(
                 Variant value;
                 if (PE->get().usage & PROPERTY_USAGE_RESOURCE_NOT_PERSISTENT) {
                     NonPersistentKey npk;
-                    npk.base = res;
+                    npk.base     = res;
                     npk.property = name;
                     if (non_persistent_map.has(npk)) {
                         value = non_persistent_map[npk];
@@ -1866,18 +1866,18 @@ Error ResourceFormatSaverTextInstance::save(
         // if this is a scene, save nodes and connections!
         Ref<SceneState> state = packed_scene->get_state();
         for (int i = 0; i < state->get_node_count(); i++) {
-            StringName type = state->get_node_type(i);
-            StringName name = state->get_node_name(i);
-            int index = state->get_node_index(i);
-            NodePath path = state->get_node_path(i, true);
-            NodePath owner = state->get_node_owner_path(i);
+            StringName type           = state->get_node_type(i);
+            StringName name           = state->get_node_name(i);
+            int index                 = state->get_node_index(i);
+            NodePath path             = state->get_node_path(i, true);
+            NodePath owner            = state->get_node_owner_path(i);
             Ref<PackedScene> instance = state->get_node_instance(i);
             String instance_placeholder =
                 state->get_node_instance_placeholder(i);
             Vector<StringName> groups = state->get_node_groups(i);
 
-            String header = "[node";
-            header += " name=\"" + String(name).c_escape() + "\"";
+            String header  = "[node";
+            header        += " name=\"" + String(name).c_escape() + "\"";
             if (type != StringName()) {
                 header += " type=\"" + String(type) + "\"";
             }
@@ -1907,7 +1907,7 @@ Error ResourceFormatSaverTextInstance::save(
                     }
                 }
                 sgroups += "]";
-                header += sgroups;
+                header  += sgroups;
             }
 
             f->store_string(header);

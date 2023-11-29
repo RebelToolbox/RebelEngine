@@ -38,7 +38,7 @@ static ErrorHandlerList* error_handler_list = nullptr;
 
 void add_error_handler(ErrorHandlerList* p_handler) {
     _global_lock();
-    p_handler->next = error_handler_list;
+    p_handler->next    = error_handler_list;
     error_handler_list = p_handler;
     _global_unlock();
 }
@@ -47,7 +47,7 @@ void remove_error_handler(ErrorHandlerList* p_handler) {
     _global_lock();
 
     ErrorHandlerList* prev = nullptr;
-    ErrorHandlerList* l = error_handler_list;
+    ErrorHandlerList* l    = error_handler_list;
 
     while (l) {
         if (l == p_handler) {
@@ -59,7 +59,7 @@ void remove_error_handler(ErrorHandlerList* p_handler) {
             break;
         }
         prev = l;
-        l = l->next;
+        l    = l->next;
     }
 
     _global_unlock();

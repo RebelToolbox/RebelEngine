@@ -39,7 +39,7 @@ PoolVector<String> EditorFolding::_get_unfolds(const Object* p_object) {
     sections.resize(p_object->editor_get_section_folding().size());
     if (sections.size()) {
         PoolVector<String>::Write w = sections.write();
-        int idx = 0;
+        int idx                     = 0;
         for (const Set<String>::Element* E =
                  p_object->editor_get_section_folding().front();
              E;
@@ -72,7 +72,7 @@ void EditorFolding::_set_unfolds(
     Object* p_object,
     const PoolVector<String>& p_unfolds
 ) {
-    int uc = p_unfolds.size();
+    int uc                     = p_unfolds.size();
     PoolVector<String>::Read r = p_unfolds.read();
     p_object->editor_clear_section_folding();
     for (int i = 0; i < uc; i++) {
@@ -235,9 +235,9 @@ void EditorFolding::load_scene_folding(Node* p_scene, const String& p_path) {
     ERR_FAIL_COND(res_unfolds.size() & 1);
 
     for (int i = 0; i < unfolds.size(); i += 2) {
-        NodePath path2 = unfolds[i];
+        NodePath path2        = unfolds[i];
         PoolVector<String> un = unfolds[i + 1];
-        Node* node = p_scene->get_node_or_null(path2);
+        Node* node            = p_scene->get_node_or_null(path2);
         if (!node) {
             continue;
         }
@@ -286,11 +286,11 @@ void EditorFolding::_do_object_unfolds(Object* p_object, Set<RES>& resources) {
 
     for (List<PropertyInfo>::Element* E = plist.front(); E; E = E->next()) {
         if (E->get().usage & PROPERTY_USAGE_CATEGORY) {
-            group = "";
+            group      = "";
             group_base = "";
         }
         if (E->get().usage & PROPERTY_USAGE_GROUP) {
-            group = E->get().name;
+            group      = E->get().name;
             group_base = E->get().hint_string;
             if (group_base.ends_with("_")) {
                 group_base = group_base.substr(0, group_base.length() - 1);

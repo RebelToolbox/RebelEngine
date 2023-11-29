@@ -143,7 +143,7 @@ Error PacketPeer::put_var(const Variant& p_packet, bool p_full_objects) {
     }
 
     PoolVector<uint8_t>::Write w = encode_buffer.write();
-    err = encode_variant(
+    err                          = encode_variant(
         p_packet,
         w.ptr(),
         len,
@@ -320,20 +320,20 @@ int PacketPeerStream::get_available_packet_count() const {
 
     uint32_t remaining = ring_buffer.data_left();
 
-    int ofs = 0;
+    int ofs   = 0;
     int count = 0;
 
     while (remaining >= 4) {
         uint8_t lbuf[4];
         ring_buffer.copy(lbuf, ofs, 4);
-        uint32_t len = decode_uint32(lbuf);
-        remaining -= 4;
-        ofs += 4;
+        uint32_t len  = decode_uint32(lbuf);
+        remaining    -= 4;
+        ofs          += 4;
         if (len > remaining) {
             break;
         }
         remaining -= len;
-        ofs += len;
+        ofs       += len;
         count++;
     }
 
@@ -351,15 +351,15 @@ Error PacketPeerStream::get_packet(
     ERR_FAIL_COND_V(remaining < 4, ERR_UNAVAILABLE);
     uint8_t lbuf[4];
     ring_buffer.copy(lbuf, 0, 4);
-    remaining -= 4;
-    uint32_t len = decode_uint32(lbuf);
+    remaining    -= 4;
+    uint32_t len  = decode_uint32(lbuf);
     ERR_FAIL_COND_V(remaining < (int)len, ERR_UNAVAILABLE);
 
     ERR_FAIL_COND_V(input_buffer.size() < (int)len, ERR_UNAVAILABLE);
     ring_buffer.read(lbuf, 4);                  // get rid of first 4 bytes
     ring_buffer.read(input_buffer.ptrw(), len); // read packet
 
-    *r_buffer = &input_buffer[0];
+    *r_buffer     = &input_buffer[0];
     r_buffer_size = len;
     return OK;
 }

@@ -38,7 +38,7 @@ void ProximityGroup::_clear_groups() {
 
     do {
         StringName remove_list[size];
-        E = groups.front();
+        E       = groups.front();
         int num = 0;
         while (E && num < size) {
             if (E->get() != group_version) {
@@ -60,9 +60,9 @@ void ProximityGroup::_update_groups() {
 
     ++group_version;
 
-    Vector3 pos = get_global_transform().get_origin();
+    Vector3 pos   = get_global_transform().get_origin();
     Vector3 vcell = pos / cell_size;
-    int cell[3] = {
+    int cell[3]   = {
         Math::fast_ftoi(vcell.x),
         Math::fast_ftoi(vcell.y),
         Math::fast_ftoi(vcell.z)
@@ -84,7 +84,7 @@ void ProximityGroup::_add_groups(int* p_cell, String p_base, int p_depth) {
     }
 
     int start = p_cell[p_depth] - grid_radius[p_depth];
-    int end = p_cell[p_depth] + grid_radius[p_depth];
+    int end   = p_cell[p_depth] + grid_radius[p_depth];
 
     for (int i = start; i <= end; i++) {
         String gname = p_base + itos(i);
@@ -239,7 +239,7 @@ ProximityGroup::ProximityGroup() {
     group_version = 0;
     dispatch_mode = MODE_PROXY;
 
-    cell_size = 1.0;
+    cell_size   = 1.0;
     grid_radius = Vector3(1, 1, 1);
     set_notify_transform(true);
 }

@@ -88,19 +88,19 @@ void CachedData::clear_corlib_cache() {
     corlib_cache_updated = false;
 
     class_MonoObject = NULL;
-    class_bool = NULL;
-    class_int8_t = NULL;
-    class_int16_t = NULL;
-    class_int32_t = NULL;
-    class_int64_t = NULL;
-    class_uint8_t = NULL;
-    class_uint16_t = NULL;
-    class_uint32_t = NULL;
-    class_uint64_t = NULL;
-    class_float = NULL;
-    class_double = NULL;
-    class_String = NULL;
-    class_IntPtr = NULL;
+    class_bool       = NULL;
+    class_int8_t     = NULL;
+    class_int16_t    = NULL;
+    class_int32_t    = NULL;
+    class_int64_t    = NULL;
+    class_uint8_t    = NULL;
+    class_uint16_t   = NULL;
+    class_uint32_t   = NULL;
+    class_uint64_t   = NULL;
+    class_float      = NULL;
+    class_double     = NULL;
+    class_String     = NULL;
+    class_IntPtr     = NULL;
 
     class_System_Collections_IEnumerable = NULL;
     class_System_Collections_ICollection = NULL;
@@ -109,7 +109,7 @@ void CachedData::clear_corlib_cache() {
 #ifdef DEBUG_ENABLED
     class_System_Diagnostics_StackTrace = NULL;
     methodthunk_System_Diagnostics_StackTrace_GetFrames.nullify();
-    method_System_Diagnostics_StackTrace_ctor_bool = NULL;
+    method_System_Diagnostics_StackTrace_ctor_bool           = NULL;
     method_System_Diagnostics_StackTrace_ctor_Exception_bool = NULL;
 #endif
 
@@ -121,27 +121,27 @@ void CachedData::clear_godot_api_cache() {
 
     rawclass_Dictionary = NULL;
 
-    class_Vector2 = NULL;
-    class_Rect2 = NULL;
-    class_Transform2D = NULL;
-    class_Vector3 = NULL;
-    class_Basis = NULL;
-    class_Quat = NULL;
-    class_Transform = NULL;
-    class_AABB = NULL;
-    class_Color = NULL;
-    class_Plane = NULL;
-    class_NodePath = NULL;
-    class_RID = NULL;
-    class_GodotObject = NULL;
-    class_GodotResource = NULL;
-    class_Node = NULL;
-    class_Control = NULL;
-    class_Spatial = NULL;
-    class_WeakRef = NULL;
-    class_Array = NULL;
-    class_Dictionary = NULL;
-    class_MarshalUtils = NULL;
+    class_Vector2                = NULL;
+    class_Rect2                  = NULL;
+    class_Transform2D            = NULL;
+    class_Vector3                = NULL;
+    class_Basis                  = NULL;
+    class_Quat                   = NULL;
+    class_Transform              = NULL;
+    class_AABB                   = NULL;
+    class_Color                  = NULL;
+    class_Plane                  = NULL;
+    class_NodePath               = NULL;
+    class_RID                    = NULL;
+    class_GodotObject            = NULL;
+    class_GodotResource          = NULL;
+    class_Node                   = NULL;
+    class_Control                = NULL;
+    class_Spatial                = NULL;
+    class_WeakRef                = NULL;
+    class_Array                  = NULL;
+    class_Dictionary             = NULL;
+    class_MarshalUtils           = NULL;
     class_ISerializationListener = NULL;
 
 #ifdef DEBUG_ENABLED
@@ -149,26 +149,26 @@ void CachedData::clear_godot_api_cache() {
     methodthunk_DebuggingUtils_GetStackFrameInfo.nullify();
 #endif
 
-    class_ExportAttribute = NULL;
-    field_ExportAttribute_hint = NULL;
-    field_ExportAttribute_hintString = NULL;
-    class_SignalAttribute = NULL;
-    class_ToolAttribute = NULL;
-    class_RemoteAttribute = NULL;
-    class_SyncAttribute = NULL;
-    class_MasterAttribute = NULL;
-    class_PuppetAttribute = NULL;
-    class_SlaveAttribute = NULL;
-    class_RemoteSyncAttribute = NULL;
-    class_MasterSyncAttribute = NULL;
-    class_PuppetSyncAttribute = NULL;
-    class_GodotMethodAttribute = NULL;
+    class_ExportAttribute                 = NULL;
+    field_ExportAttribute_hint            = NULL;
+    field_ExportAttribute_hintString      = NULL;
+    class_SignalAttribute                 = NULL;
+    class_ToolAttribute                   = NULL;
+    class_RemoteAttribute                 = NULL;
+    class_SyncAttribute                   = NULL;
+    class_MasterAttribute                 = NULL;
+    class_PuppetAttribute                 = NULL;
+    class_SlaveAttribute                  = NULL;
+    class_RemoteSyncAttribute             = NULL;
+    class_MasterSyncAttribute             = NULL;
+    class_PuppetSyncAttribute             = NULL;
+    class_GodotMethodAttribute            = NULL;
     field_GodotMethodAttribute_methodName = NULL;
 
     field_GodotObject_ptr = NULL;
-    field_NodePath_ptr = NULL;
-    field_Image_ptr = NULL;
-    field_RID_ptr = NULL;
+    field_NodePath_ptr    = NULL;
+    field_Image_ptr       = NULL;
+    field_RID_ptr         = NULL;
 
     methodthunk_GodotObject_Dispose.nullify();
     methodthunk_Array_GetPtr.nullify();

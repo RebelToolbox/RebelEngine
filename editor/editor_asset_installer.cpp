@@ -64,7 +64,7 @@ void EditorAssetInstaller::_uncheck_parent(TreeItem* p_item) {
     }
 
     bool any_checked = false;
-    TreeItem* item = p_item->get_children();
+    TreeItem* item   = p_item->get_children();
     while (item) {
         if (item->is_checked(0)) {
             any_checked = true;
@@ -111,7 +111,7 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
     package_path = p_path;
     Set<String> files_sorted;
 
-    FileAccess* src_f = nullptr;
+    FileAccess* src_f    = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
 
     unzFile pkg = unzOpen2(p_path.utf8().get_data(), &io);
@@ -139,15 +139,15 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
 
     Map<String, Ref<Texture>> extension_guess;
     {
-        extension_guess["bmp"] = tree->get_icon("ImageTexture", "EditorIcons");
-        extension_guess["dds"] = tree->get_icon("ImageTexture", "EditorIcons");
-        extension_guess["exr"] = tree->get_icon("ImageTexture", "EditorIcons");
-        extension_guess["hdr"] = tree->get_icon("ImageTexture", "EditorIcons");
-        extension_guess["jpg"] = tree->get_icon("ImageTexture", "EditorIcons");
+        extension_guess["bmp"]  = tree->get_icon("ImageTexture", "EditorIcons");
+        extension_guess["dds"]  = tree->get_icon("ImageTexture", "EditorIcons");
+        extension_guess["exr"]  = tree->get_icon("ImageTexture", "EditorIcons");
+        extension_guess["hdr"]  = tree->get_icon("ImageTexture", "EditorIcons");
+        extension_guess["jpg"]  = tree->get_icon("ImageTexture", "EditorIcons");
         extension_guess["jpeg"] = tree->get_icon("ImageTexture", "EditorIcons");
-        extension_guess["png"] = tree->get_icon("ImageTexture", "EditorIcons");
-        extension_guess["svg"] = tree->get_icon("ImageTexture", "EditorIcons");
-        extension_guess["tga"] = tree->get_icon("ImageTexture", "EditorIcons");
+        extension_guess["png"]  = tree->get_icon("ImageTexture", "EditorIcons");
+        extension_guess["svg"]  = tree->get_icon("ImageTexture", "EditorIcons");
+        extension_guess["tga"]  = tree->get_icon("ImageTexture", "EditorIcons");
         extension_guess["webp"] = tree->get_icon("ImageTexture", "EditorIcons");
 
         extension_guess["wav"] =
@@ -157,16 +157,16 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
         extension_guess["mp3"] =
             tree->get_icon("AudioStreamMP3", "EditorIcons");
 
-        extension_guess["scn"] = tree->get_icon("PackedScene", "EditorIcons");
+        extension_guess["scn"]  = tree->get_icon("PackedScene", "EditorIcons");
         extension_guess["tscn"] = tree->get_icon("PackedScene", "EditorIcons");
         extension_guess["escn"] = tree->get_icon("PackedScene", "EditorIcons");
-        extension_guess["dae"] = tree->get_icon("PackedScene", "EditorIcons");
+        extension_guess["dae"]  = tree->get_icon("PackedScene", "EditorIcons");
         extension_guess["gltf"] = tree->get_icon("PackedScene", "EditorIcons");
-        extension_guess["glb"] = tree->get_icon("PackedScene", "EditorIcons");
+        extension_guess["glb"]  = tree->get_icon("PackedScene", "EditorIcons");
 
         extension_guess["gdshader"] = tree->get_icon("Shader", "EditorIcons");
-        extension_guess["shader"] = tree->get_icon("Shader", "EditorIcons");
-        extension_guess["gd"] = tree->get_icon("GDScript", "EditorIcons");
+        extension_guess["shader"]   = tree->get_icon("Shader", "EditorIcons");
+        extension_guess["gd"]       = tree->get_icon("GDScript", "EditorIcons");
         if (Engine::get_singleton()->has_singleton("GodotSharp")) {
             extension_guess["cs"] =
                 tree->get_icon("CSharpScript", "EditorIcons");
@@ -176,7 +176,7 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
         }
         extension_guess["vs"] = tree->get_icon("VisualScript", "EditorIcons");
 
-        extension_guess["res"] = tree->get_icon("Resource", "EditorIcons");
+        extension_guess["res"]  = tree->get_icon("Resource", "EditorIcons");
         extension_guess["tres"] = tree->get_icon("Resource", "EditorIcons");
         extension_guess["atlastex"] =
             tree->get_icon("AtlasTexture", "EditorIcons");
@@ -184,15 +184,15 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
         // PackedScenes.
         extension_guess["obj"] = tree->get_icon("Mesh", "EditorIcons");
 
-        extension_guess["txt"] = tree->get_icon("TextFile", "EditorIcons");
-        extension_guess["md"] = tree->get_icon("TextFile", "EditorIcons");
-        extension_guess["rst"] = tree->get_icon("TextFile", "EditorIcons");
+        extension_guess["txt"]  = tree->get_icon("TextFile", "EditorIcons");
+        extension_guess["md"]   = tree->get_icon("TextFile", "EditorIcons");
+        extension_guess["rst"]  = tree->get_icon("TextFile", "EditorIcons");
         extension_guess["json"] = tree->get_icon("TextFile", "EditorIcons");
-        extension_guess["yml"] = tree->get_icon("TextFile", "EditorIcons");
+        extension_guess["yml"]  = tree->get_icon("TextFile", "EditorIcons");
         extension_guess["yaml"] = tree->get_icon("TextFile", "EditorIcons");
         extension_guess["toml"] = tree->get_icon("TextFile", "EditorIcons");
-        extension_guess["cfg"] = tree->get_icon("TextFile", "EditorIcons");
-        extension_guess["ini"] = tree->get_icon("TextFile", "EditorIcons");
+        extension_guess["cfg"]  = tree->get_icon("TextFile", "EditorIcons");
+        extension_guess["ini"]  = tree->get_icon("TextFile", "EditorIcons");
     }
 
     Ref<Texture> generic_extension = get_icon("Object", "EditorIcons");
@@ -213,8 +213,8 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
 
     for (Set<String>::Element* E = files_sorted.front(); E; E = E->next()) {
         String path = E->get();
-        int depth = p_depth;
-        bool skip = false;
+        int depth   = p_depth;
+        bool skip   = false;
         while (depth > 0) {
             int pp = path.find("/");
             if (pp == -1) {
@@ -233,7 +233,7 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
 
         if (path.ends_with("/")) {
             // a directory
-            path = path.substr(0, path.length() - 1);
+            path  = path.substr(0, path.length() - 1);
             isdir = true;
         }
 
@@ -258,7 +258,7 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
             ti->set_icon(0, get_icon("folder", "FileDialog"));
             ti->set_metadata(0, String());
         } else {
-            String file = path.get_file();
+            String file      = path.get_file();
             String extension = file.get_extension().to_lower();
             if (extension_guess.has(extension)) {
                 ti->set_icon(0, extension_guess[extension]);
@@ -306,7 +306,7 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
 }
 
 void EditorAssetInstaller::ok_pressed() {
-    FileAccess* src_f = nullptr;
+    FileAccess* src_f    = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
 
     unzFile pkg = unzOpen2(package_path.utf8().get_data(), &io);
@@ -354,7 +354,7 @@ void EditorAssetInstaller::ok_pressed() {
                 TreeItem* t = status_map[name];
                 while (t) {
                     dirpath = t->get_text(0) + dirpath;
-                    t = t->get_parent();
+                    t       = t->get_parent();
                 }
 
                 if (dirpath.ends_with("/")) {

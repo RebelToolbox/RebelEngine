@@ -65,7 +65,7 @@ bool test_aabb_regular() {
     bool pass = true;
 
     Transform tr;
-    tr.basis = Basis(Vector3(Math_PI, 0, 0));
+    tr.basis  = Basis(Vector3(Math_PI, 0, 0));
     tr.origin = Vector3(1, 2, 3);
 
     AABB bb(Vector3(1, 1, 1), Vector3(2, 3, 4));
@@ -127,7 +127,7 @@ bool test_aabb_non_uniform_scale() {
     // Now test inverse.
     // This will fail if using the transpose and not the affine_inverse.
     bb2.position = Vector3(1, 2, 3);
-    bb2.size = Vector3(2, 6, 12);
+    bb2.size     = Vector3(2, 6, 12);
 
     AABB bb3 = tr.xform_inv(bb2);
 
@@ -178,7 +178,7 @@ bool test_vector3_regular() {
     Transform tr;
 
     RandomNumberGenerator rng;
-    const real_t range = 1800.0;
+    const real_t range     = 1800.0;
     const real_t range_rot = Math_PI;
 
     bool passed_multi = true;
@@ -201,7 +201,7 @@ bool test_vector3_regular() {
         ));
 
         Vector3 pt = tr.xform(pt_test);
-        pt = tr.xform_inv(pt);
+        pt         = tr.xform_inv(pt);
 
         if (!pt.is_equal_approx(pt_test, 0.1)) {
             passed_multi = false;
@@ -252,7 +252,7 @@ bool test_vector3_non_uniform_scale() {
         pass = false;
     }
 
-    pt = Vector3(1, 2, 3);
+    pt  = Vector3(1, 2, 3);
     res = tr.xform_inv(pt);
     if (!res.is_equal_approx(Vector3(1, 1, 1))) {
         OS::get_singleton()->print(

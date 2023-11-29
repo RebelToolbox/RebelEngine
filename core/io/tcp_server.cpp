@@ -113,7 +113,7 @@ Ref<StreamPeerTCP> TCP_Server::take_connection() {
     Ref<NetSocket> ns;
     IP_Address ip;
     uint16_t port = 0;
-    ns = _sock->accept(ip, port);
+    ns            = _sock->accept(ip, port);
     if (!ns.is_valid()) {
         return conn;
     }

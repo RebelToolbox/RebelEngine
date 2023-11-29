@@ -148,7 +148,7 @@ public:
 
     EditorAudioBus(
         EditorAudioBuses* p_buses = nullptr,
-        bool p_is_master = false
+        bool p_is_master          = false
     );
 };
 
@@ -238,21 +238,21 @@ private:
 
         _FORCE_INLINE_ AudioNotch(float r_pos, float db_v, bool rndr_val) {
             relative_position = r_pos;
-            db_value = db_v;
-            render_db_value = rndr_val;
+            db_value          = db_v;
+            render_db_value   = rndr_val;
         }
 
         _FORCE_INLINE_ AudioNotch(const AudioNotch& n) {
             relative_position = n.relative_position;
-            db_value = n.db_value;
-            render_db_value = n.render_db_value;
+            db_value          = n.db_value;
+            render_db_value   = n.render_db_value;
         }
 
         _FORCE_INLINE_ AudioNotch
         operator=(const EditorAudioMeterNotches::AudioNotch& n) {
             relative_position = n.relative_position;
-            db_value = n.db_value;
-            render_db_value = n.render_db_value;
+            db_value          = n.db_value;
+            render_db_value   = n.render_db_value;
             return *this;
         }
 

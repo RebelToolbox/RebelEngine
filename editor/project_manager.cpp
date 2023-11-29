@@ -110,11 +110,11 @@ private:
 
     void set_message(
         const String& p_msg,
-        MessageType p_type = MESSAGE_SUCCESS,
+        MessageType p_type   = MESSAGE_SUCCESS,
         InputType input_type = PROJECT_PATH
     ) {
         msg->set_text(p_msg);
-        Ref<Texture> current_path_icon = status_rect->get_texture();
+        Ref<Texture> current_path_icon    = status_rect->get_texture();
         Ref<Texture> current_install_icon = install_status_rect->get_texture();
         Ref<Texture> new_icon;
 
@@ -202,7 +202,7 @@ private:
         if (mode == MODE_IMPORT || mode == MODE_RENAME) {
             if (valid_path != "" && !d->file_exists("project.rebel")) {
                 if (valid_path.ends_with(".zip")) {
-                    FileAccess* src_f = nullptr;
+                    FileAccess* src_f    = nullptr;
                     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
 
                     unzFile pkg = unzOpen2(valid_path.utf8().get_data(), &io);
@@ -258,7 +258,7 @@ private:
                     // though this is not an error, it is good to check here
                     d->list_dir_begin();
                     bool is_empty = true;
-                    String n = d->get_next();
+                    String n      = d->get_next();
                     while (n != String()) {
                         if (!n.begins_with(".")) {
                             // Allow `.`, `..` (reserved current/parent folder
@@ -312,7 +312,7 @@ private:
             // an error, it is good to check here
             d->list_dir_begin();
             bool is_empty = true;
-            String n = d->get_next();
+            String n      = d->get_next();
             while (n != String()) {
                 if (!n.begins_with(".")) {
                     // Allow `.`, `..` (reserved current/parent folder names)
@@ -353,7 +353,7 @@ private:
             if (project_name->get_text().strip_edges() == ""
                 || project_name->get_text().strip_edges()
                        == TTR("New Game Project")) {
-                sp = sp.replace("\\", "/");
+                sp       = sp.replace("\\", "/");
                 int lidx = sp.find_last("/");
 
                 if (lidx != -1) {
@@ -617,11 +617,11 @@ private:
 
                 } else if (mode == MODE_INSTALL) {
                     if (project_path->get_text().ends_with(".zip")) {
-                        dir = install_path->get_text();
+                        dir      = install_path->get_text();
                         zip_path = project_path->get_text();
                     }
 
-                    FileAccess* src_f = nullptr;
+                    FileAccess* src_f    = nullptr;
                     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
 
                     unzFile pkg = unzOpen2(zip_path.utf8().get_data(), &io);
@@ -686,7 +686,7 @@ private:
                             //
                         } else if (path.ends_with("/")) { // a dir
 
-                            path = path.substr(0, path.length() - 1);
+                            path            = path.substr(0, path.length() - 1);
                             String rel_path = path.substr(zip_root.length());
 
                             DirAccess* da =
@@ -1119,10 +1119,10 @@ public:
     bool hover;
 
     ProjectListItemControl() {
-        favorite_button = nullptr;
-        icon = nullptr;
+        favorite_button   = nullptr;
+        icon              = nullptr;
         icon_needs_reload = true;
-        hover = false;
+        hover             = false;
 
         set_focus_mode(FocusMode::FOCUS_ALL);
     }
@@ -1198,18 +1198,18 @@ public:
             bool p_missing,
             int p_version
         ) {
-            project_key = p_project;
-            project_name = p_name;
-            description = p_description;
-            path = p_path;
-            icon = p_icon;
-            main_scene = p_main_scene;
+            project_key   = p_project;
+            project_name  = p_name;
+            description   = p_description;
+            path          = p_path;
+            icon          = p_icon;
+            main_scene    = p_main_scene;
             last_modified = p_last_modified;
-            favorite = p_favorite;
-            grayed = p_grayed;
-            missing = p_missing;
-            version = p_version;
-            control = nullptr;
+            favorite      = p_favorite;
+            grayed        = p_grayed;
+            missing       = p_missing;
+            version       = p_version;
+            control       = nullptr;
         }
 
         _FORCE_INLINE_ bool operator==(const Item& l) const {
@@ -1361,15 +1361,15 @@ void ProjectList::load_project_data(
     Item& p_item,
     bool p_favorite
 ) {
-    String path = EditorSettings::get_singleton()->get(p_property_key);
-    String conf = path.plus_file("project.rebel");
-    bool grayed = false;
+    String path  = EditorSettings::get_singleton()->get(p_property_key);
+    String conf  = path.plus_file("project.rebel");
+    bool grayed  = false;
     bool missing = false;
 
     Ref<ConfigFile> cf = memnew(ConfigFile);
-    Error cf_err = cf->load(conf);
+    Error cf_err       = cf->load(conf);
 
-    int config_version = 0;
+    int config_version  = 0;
     String project_name = TTR("Unnamed Project");
     if (cf_err == OK) {
         String cf_project_name =
@@ -1387,8 +1387,8 @@ void ProjectList::load_project_data(
     }
 
     String description = cf->get_value("application", "config/description", "");
-    String icon = cf->get_value("application", "config/icon", "");
-    String main_scene = cf->get_value("application", "run/main_scene", "");
+    String icon        = cf->get_value("application", "config/icon", "");
+    String main_scene  = cf->get_value("application", "run/main_scene", "");
 
     uint64_t last_modified = 0;
     if (FileAccess::exists(conf)) {
@@ -1402,7 +1402,7 @@ void ProjectList::load_project_data(
             }
         }
     } else {
-        grayed = true;
+        grayed  = true;
         missing = true;
         print_line("Project is missing: " + conf);
     }
@@ -1450,7 +1450,7 @@ void ProjectList::load_projects() {
     Set<String> favorites;
     // Find favourites...
     for (List<PropertyInfo>::Element* E = properties.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         String property_key = E->get().name;
         if (property_key.begins_with("favorite_projects/")) {
             favorites.insert(property_key);
@@ -1458,7 +1458,7 @@ void ProjectList::load_projects() {
     }
 
     for (List<PropertyInfo>::Element* E = properties.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         // This is actually something like
         // "projects/C:::Documents::Godot::Projects::MyGame"
         String property_key = E->get().name;
@@ -1467,7 +1467,7 @@ void ProjectList::load_projects() {
         }
 
         String project_key = property_key.get_slice("/", 1);
-        bool favorite = favorites.has("favorite_projects/" + project_key);
+        bool favorite      = favorites.has("favorite_projects/" + project_key);
 
         Item item;
         load_project_data(property_key, item, favorite);
@@ -1492,7 +1492,7 @@ void ProjectList::load_projects() {
 void ProjectList::update_dock_menu() {
     OS::get_singleton()->global_menu_clear("_dock");
 
-    int favs_added = 0;
+    int favs_added  = 0;
     int total_added = 0;
     for (int i = 0; i < _projects.size(); ++i) {
         if (!_projects[i].grayed && !_projects[i].missing) {
@@ -1532,7 +1532,7 @@ void ProjectList::create_project_item_control(int p_index) {
     ERR_FAIL_COND(item.control != nullptr); // Already created
 
     Ref<Texture> favorite_icon = get_icon("Favorites", "EditorIcons");
-    Color font_color = get_color("font_color", "Tree");
+    Color font_color           = get_color("font_color", "Tree");
 
     ProjectListItemControl* hb = memnew(ProjectListItemControl);
     hb->connect("draw", this, "_panel_draw", varray(hb));
@@ -1760,7 +1760,7 @@ void ProjectList::erase_missing_projects() {
         return;
     }
 
-    int deleted_count = 0;
+    int deleted_count   = 0;
     int remaining_count = 0;
 
     for (int i = 0; i < _projects.size(); ++i) {
@@ -1793,9 +1793,9 @@ int ProjectList::refresh_project(const String& dir_path) {
     String project_key = get_project_key_from_path(dir_path);
 
     // Read project manager settings
-    bool is_favourite = false;
+    bool is_favourite      = false;
     bool should_be_in_list = false;
-    String property_key = "projects/" + project_key;
+    String property_key    = "projects/" + project_key;
     {
         List<PropertyInfo> properties;
         EditorSettings::get_singleton()->get_property_list(&properties);
@@ -1803,7 +1803,7 @@ int ProjectList::refresh_project(const String& dir_path) {
 
         bool found = false;
         for (List<PropertyInfo>::Element* E = properties.front(); E;
-             E = E->next()) {
+             E                              = E->next()) {
             String prop = E->get().name;
             if (!found && prop == property_key) {
                 found = true;
@@ -1873,8 +1873,8 @@ void ProjectList::select_project(int p_index) {
 inline void sort(int& a, int& b) {
     if (a > b) {
         int temp = a;
-        a = b;
-        b = temp;
+        a        = b;
+        b        = temp;
     }
 }
 
@@ -1953,8 +1953,8 @@ void ProjectList::_panel_draw(Node* p_hb) {
 // Input for each item in the list
 void ProjectList::_panel_input(const Ref<InputEvent>& p_ev, Node* p_hb) {
     Ref<InputEventMouseButton> mb = p_ev;
-    int clicked_index = p_hb->get_index();
-    const Item& clicked_project = _projects[clicked_index];
+    int clicked_index             = p_hb->get_index();
+    const Item& clicked_project   = _projects[clicked_index];
 
     if (mb.is_valid() && mb->is_pressed()
         && mb->get_button_index() == BUTTON_LEFT) {
@@ -2032,7 +2032,7 @@ void ProjectList::_show_project(const String& p_path) {
 }
 
 const char* ProjectList::SIGNAL_SELECTION_CHANGED = "selection_changed";
-const char* ProjectList::SIGNAL_PROJECT_ASK_OPEN = "project_ask_open";
+const char* ProjectList::SIGNAL_PROJECT_ASK_OPEN  = "project_ask_open";
 
 void ProjectList::_bind_methods() {
     ClassDB::bind_method("_panel_draw", &ProjectList::_panel_draw);
@@ -2085,7 +2085,7 @@ void ProjectManager::_dim_window() {
     // Dim the project manager window while it's quitting to make it clearer
     // that it's busy. No transition is applied, as the effect needs to be
     // visible immediately
-    float c = 0.5f;
+    float c         = 0.5f;
     Color dim_color = Color(c, c, c);
     gui_base->set_modulate(dim_color);
 }
@@ -2273,7 +2273,7 @@ void ProjectManager::_open_selected_projects() {
         _project_list->get_selected_project_keys();
 
     for (const Set<String>::Element* E = selected_list.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         const String& selected = E->get();
         String path =
             EditorSettings::get_singleton()->get("projects/" + selected);
@@ -2341,7 +2341,7 @@ void ProjectManager::_open_selected_projects_ask() {
     }
 
     // Update the project settings or don't open
-    String conf = project.path.plus_file("project.rebel");
+    String conf        = project.path.plus_file("project.rebel");
     int config_version = project.version;
 
     // Check if the config_version property was empty or 0
@@ -2461,7 +2461,7 @@ void ProjectManager::_run_project() {
 
 void ProjectManager::_scan_dir(const String& path, List<String>* r_projects) {
     DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
-    Error error = da->change_dir(path);
+    Error error     = da->change_dir(path);
     ERR_FAIL_COND_MSG(error != OK, "Could not scan directory at: " + path);
     da->list_dir_begin();
     String n = da->get_next();
@@ -2586,9 +2586,9 @@ void ProjectManager::_language_selected(int p_id) {
 
 void ProjectManager::_restart_confirm() {
     List<String> args = OS::get_singleton()->get_cmdline_args();
-    String exec = OS::get_singleton()->get_executable_path();
+    String exec       = OS::get_singleton()->get_executable_path();
     OS::ProcessID pid = 0;
-    Error err = OS::get_singleton()->execute(exec, args, false, &pid);
+    Error err         = OS::get_singleton()->execute(exec, args, false, &pid);
     ERR_FAIL_COND(err);
 
     _dim_window();
@@ -2895,7 +2895,7 @@ ProjectManager::ProjectManager() {
     tabs->connect("tab_changed", this, "_on_tab_changed");
 
     HBoxContainer* tree_hb = memnew(HBoxContainer);
-    projects_hb = tree_hb;
+    projects_hb            = tree_hb;
 
     projects_hb->set_name(TTR("Local Projects"));
 
@@ -2906,7 +2906,7 @@ ProjectManager::ProjectManager() {
     search_tree_vb->set_h_size_flags(SIZE_EXPAND_FILL);
 
     HBoxContainer* sort_filters = memnew(HBoxContainer);
-    loading_label = memnew(Label(TTR("Loading, please wait...")));
+    loading_label               = memnew(Label(TTR("Loading, please wait...")));
     loading_label->add_font_override("font", get_font("bold", "EditorFonts"));
     loading_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     sort_filters->add_child(loading_label);
@@ -3119,7 +3119,7 @@ ProjectManager::ProjectManager() {
         &editor_settings_properties
     );
     for (List<PropertyInfo>::Element* E = editor_settings_properties.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         PropertyInfo& pi = E->get();
         if (pi.name == "interface/editor/editor_language") {
             editor_languages = pi.hint_string.split(",");
@@ -3358,7 +3358,7 @@ void ProjectListFilter::set_filter_size(int h_size) {
 
 ProjectListFilter::ProjectListFilter() {
     _current_filter = FILTER_NAME;
-    has_search_box = false;
+    has_search_box  = false;
 }
 
 void ProjectListFilter::clear() {

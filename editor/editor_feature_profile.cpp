@@ -191,7 +191,7 @@ Error EditorFeatureProfile::save_to_file(const String& p_path) {
     json["type"] = "feature_profile";
     Array dis_classes;
     for (Set<StringName>::Element* E = disabled_classes.front(); E;
-         E = E->next()) {
+         E                           = E->next()) {
         dis_classes.push_back(String(E->get()));
     }
     dis_classes.sort();
@@ -199,7 +199,7 @@ Error EditorFeatureProfile::save_to_file(const String& p_path) {
 
     Array dis_editors;
     for (Set<StringName>::Element* E = disabled_editors.front(); E;
-         E = E->next()) {
+         E                           = E->next()) {
         dis_editors.push_back(String(E->get()));
     }
     dis_editors.sort();
@@ -304,7 +304,7 @@ Error EditorFeatureProfile::load_from_file(const String& p_path) {
         Array disabled_features_arr = json["disabled_features"];
         for (int i = 0; i < FEATURE_MAX; i++) {
             bool found = false;
-            String f = feature_identifiers[i];
+            String f   = feature_identifiers[i];
             for (int j = 0; j < disabled_features_arr.size(); j++) {
                 String fd = disabled_features_arr[j];
                 if (fd == f) {
@@ -533,7 +533,7 @@ void EditorFeatureProfileManager::_profile_action(int p_action) {
             );
             EditorSettings::get_singleton()->save();
             current_profile = selected;
-            current = edited;
+            current         = edited;
 
             _update_profile_list();
             _emit_current_profile_changed();
@@ -634,8 +634,8 @@ void EditorFeatureProfileManager::_fill_classes_from(
     );
     String text = p_class;
 
-    bool disabled = edited->is_class_disabled(p_class);
-    bool disabled_editor = edited->is_class_editor_disabled(p_class);
+    bool disabled            = edited->is_class_disabled(p_class);
+    bool disabled_editor     = edited->is_class_editor_disabled(p_class);
     bool disabled_properties = edited->has_class_properties_disabled(p_class);
     if (disabled) {
         class_item->set_custom_color(
@@ -672,7 +672,7 @@ void EditorFeatureProfileManager::_fill_classes_from(
     child_classes.sort_custom<StringName::AlphCompare>();
 
     for (List<StringName>::Element* E = child_classes.front(); E;
-         E = E->next()) {
+         E                            = E->next()) {
         String name = E->get();
         if (name.begins_with("Editor")
             || ClassDB::get_api_type(name) != ClassDB::API_CORE) {
@@ -726,7 +726,7 @@ void EditorFeatureProfileManager::_class_list_item_selected() {
     }
 
     updating_features = true;
-    TreeItem* root = property_list->create_item();
+    TreeItem* root    = property_list->create_item();
     TreeItem* options = property_list->create_item(root);
     options->set_text(0, TTR("Class Options:"));
 
@@ -817,7 +817,7 @@ void EditorFeatureProfileManager::_class_list_item_collapsed(Object* p_item) {
     }
 
     String class_name = md;
-    bool collapsed = item->is_collapsed();
+    bool collapsed    = item->is_collapsed();
     edited->set_item_collapsed(class_name, collapsed);
 }
 
@@ -921,7 +921,7 @@ void EditorFeatureProfileManager::_update_selected_profile() {
         if (i == EditorFeatureProfile::FEATURE_IMPORT_DOCK) {
             feature = class_list->create_item(last_feature);
         } else {
-            feature = class_list->create_item(features);
+            feature      = class_list->create_item(features);
             last_feature = feature;
         }
         feature->set_cell_mode(0, TreeItem::CELL_MODE_CHECK);
@@ -960,7 +960,7 @@ void EditorFeatureProfileManager::_import_profiles(const Vector<String>& p_paths
     for (int i = 0; i < p_paths.size(); i++) {
         Ref<EditorFeatureProfile> profile;
         profile.instance();
-        Error err = profile->load_from_file(p_paths[i]);
+        Error err       = profile->load_from_file(p_paths[i]);
         String basefile = p_paths[i].get_file();
         if (err != OK) {
             EditorNode::get_singleton()->show_warning(vformat(
@@ -1103,7 +1103,7 @@ EditorFeatureProfileManager::EditorFeatureProfileManager() {
     add_child(main_vbc);
 
     HBoxContainer* name_hbc = memnew(HBoxContainer);
-    current_profile_name = memnew(LineEdit);
+    current_profile_name    = memnew(LineEdit);
     name_hbc->add_child(current_profile_name);
     current_profile_name->set_text(TTR("(none)"));
     current_profile_name->set_editable(false);
@@ -1119,7 +1119,7 @@ EditorFeatureProfileManager::EditorFeatureProfileManager() {
     main_vbc->add_child(memnew(HSeparator));
 
     HBoxContainer* profiles_hbc = memnew(HBoxContainer);
-    profile_list = memnew(OptionButton);
+    profile_list                = memnew(OptionButton);
     profile_list->set_h_size_flags(SIZE_EXPAND_FILL);
     profiles_hbc->add_child(profile_list);
     profile_list->connect("item_selected", this, "_profile_selected");
@@ -1219,7 +1219,7 @@ EditorFeatureProfileManager::EditorFeatureProfileManager() {
         "Create or import a profile to edit available classes and properties."
     )));
     // Add some spacing above the help label.
-    Ref<StyleBoxEmpty> sb = memnew(StyleBoxEmpty);
+    Ref<StyleBoxEmpty> sb    = memnew(StyleBoxEmpty);
     sb->set_default_margin(MARGIN_TOP, 20 * EDSCALE);
     no_profile_selected_help->add_style_override("normal", sb);
     no_profile_selected_help->set_align(Label::ALIGN_CENTER);

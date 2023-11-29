@@ -107,9 +107,9 @@ Error PCKPacker::add_file(const String& p_file, const String& p_src) {
     };
 
     File pf;
-    pf.path = p_file;
-    pf.src_path = p_src;
-    pf.size = f->get_len();
+    pf.path          = p_file;
+    pf.src_path      = p_src;
+    pf.size          = f->get_len();
     pf.offset_offset = 0;
 
     files.push_back(pf);
@@ -145,12 +145,12 @@ Error PCKPacker::flush(bool p_verbose) {
     };
 
     uint64_t ofs = file->get_position();
-    ofs = _align(ofs, alignment);
+    ofs          = _align(ofs, alignment);
 
     _pad(file, ofs - file->get_position());
 
     const uint32_t buf_max = 65536;
-    uint8_t* buf = memnew_arr(uint8_t, buf_max);
+    uint8_t* buf           = memnew_arr(uint8_t, buf_max);
 
     int count = 0;
     for (int i = 0; i < files.size(); i++) {
@@ -173,8 +173,8 @@ Error PCKPacker::flush(bool p_verbose) {
 
         src->close();
         memdelete(src);
-        count += 1;
-        const int file_num = files.size();
+        count              += 1;
+        const int file_num  = files.size();
         if (p_verbose && (file_num > 0)) {
             print_line(vformat(
                 "[%d/%d - %d%%] PCKPacker flush: %s -> %s",

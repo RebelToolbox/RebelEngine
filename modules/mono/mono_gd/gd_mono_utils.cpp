@@ -307,7 +307,7 @@ MonoObject* create_managed_from(const Array& p_from, GDMonoClass* p_class) {
     while ((m = mono_class_get_methods(p_class->get_mono_ptr(), &iter))) {
         if (strcmp(mono_method_get_name(m), ".ctor") == 0) {
             MonoMethodSignature* sig = mono_method_signature(m);
-            void* front = NULL;
+            void* front              = NULL;
             if (mono_signature_get_param_count(sig) == 1
                 && mono_class_from_mono_type(
                        mono_signature_get_params(sig, &front)
@@ -320,7 +320,7 @@ MonoObject* create_managed_from(const Array& p_from, GDMonoClass* p_class) {
     CRASH_COND(m == NULL);
 
     Array* new_array = memnew(Array(p_from));
-    void* args[1] = {&new_array};
+    void* args[1]    = {&new_array};
 
     MonoException* exc = NULL;
     GDMonoUtils::runtime_invoke(m, mono_object, args, &exc);
@@ -343,7 +343,7 @@ MonoObject* create_managed_from(
     while ((m = mono_class_get_methods(p_class->get_mono_ptr(), &iter))) {
         if (strcmp(mono_method_get_name(m), ".ctor") == 0) {
             MonoMethodSignature* sig = mono_method_signature(m);
-            void* front = NULL;
+            void* front              = NULL;
             if (mono_signature_get_param_count(sig) == 1
                 && mono_class_from_mono_type(
                        mono_signature_get_params(sig, &front)
@@ -356,7 +356,7 @@ MonoObject* create_managed_from(
     CRASH_COND(m == NULL);
 
     Dictionary* new_dict = memnew(Dictionary(p_from));
-    void* args[1] = {&new_dict};
+    void* args[1]        = {&new_dict};
 
     MonoException* exc = NULL;
     GDMonoUtils::runtime_invoke(m, mono_object, args, &exc);
@@ -397,10 +397,10 @@ String get_exception_name_and_message(MonoException* p_exc) {
     String res;
 
     MonoClass* klass = mono_object_get_class((MonoObject*)p_exc);
-    MonoType* type = mono_class_get_type(klass);
+    MonoType* type   = mono_class_get_type(klass);
 
-    char* full_name = mono_type_full_name(type);
-    res += full_name;
+    char* full_name  = mono_type_full_name(type);
+    res             += full_name;
     mono_free(full_name);
 
     res += ": ";
@@ -414,10 +414,10 @@ String get_exception_name_and_message(MonoException* p_exc) {
 }
 
 void set_exception_message(MonoException* p_exc, String message) {
-    MonoClass* klass = mono_object_get_class((MonoObject*)p_exc);
+    MonoClass* klass   = mono_object_get_class((MonoObject*)p_exc);
     MonoProperty* prop = mono_class_get_property_from_name(klass, "Message");
-    MonoString* msg = GDMonoMarshal::mono_string_from_godot(message);
-    void* params[1] = {msg};
+    MonoString* msg    = GDMonoMarshal::mono_string_from_godot(message);
+    void* params[1]    = {msg};
     property_set_value(prop, (MonoObject*)p_exc, params, NULL);
 }
 
@@ -454,7 +454,7 @@ void debug_send_unhandled_exception_error(MonoException* p_exc) {
             mono_object_new(mono_domain_get(), st_klass->get_mono_ptr());
 
         MonoBoolean need_file_info = true;
-        void* ctor_args[2] = {p_exc, &need_file_info};
+        void* ctor_args[2]         = {p_exc, &need_file_info};
 
         MonoException* unexpected_exc = NULL;
         CACHED_METHOD(System_Diagnostics_StackTrace, ctor_Exception_bool)
@@ -492,9 +492,9 @@ void debug_send_unhandled_exception_error(MonoException* p_exc) {
         p_exc = (MonoException*)inner_exc;
     }
 
-    String file = si.size() ? si[0].file : __FILE__;
-    String func = si.size() ? si[0].func : FUNCTION_STR;
-    int line = si.size() ? si[0].line : __LINE__;
+    String file      = si.size() ? si[0].file : __FILE__;
+    String func      = si.size() ? si[0].func : FUNCTION_STR;
+    int line         = si.size() ? si[0].line : __LINE__;
     String error_msg = "Unhandled exception";
 
     ScriptDebugger::get_singleton()->send_error(
@@ -658,7 +658,7 @@ namespace Marshal
 bool type_is_generic_array(MonoReflectionType* p_reftype) {
     NO_GLUE_RET(false);
     MonoException* exc = NULL;
-    MonoBoolean res = CACHED_METHOD_THUNK(MarshalUtils, TypeIsGenericArray)
+    MonoBoolean res    = CACHED_METHOD_THUNK(MarshalUtils, TypeIsGenericArray)
                           .invoke(p_reftype, &exc);
     UNHANDLED_EXCEPTION(exc);
     return (bool)res;

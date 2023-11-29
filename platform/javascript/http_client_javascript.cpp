@@ -38,9 +38,9 @@ extern "C" {
 
 typedef enum {
     GODOT_JS_FETCH_STATE_REQUESTING = 0,
-    GODOT_JS_FETCH_STATE_BODY = 1,
-    GODOT_JS_FETCH_STATE_DONE = 2,
-    GODOT_JS_FETCH_STATE_ERROR = -1,
+    GODOT_JS_FETCH_STATE_BODY       = 1,
+    GODOT_JS_FETCH_STATE_DONE       = 2,
+    GODOT_JS_FETCH_STATE_ERROR      = -1,
 } godot_js_fetch_state_t;
 
 extern int godot_js_fetch_create(
@@ -92,7 +92,7 @@ Error HTTPClient::connect_to_host(
         );
     }
 
-    port = p_port;
+    port    = p_port;
     use_tls = p_ssl;
 
     host = p_host;
@@ -102,7 +102,7 @@ Error HTTPClient::connect_to_host(
         host = host.substr(7, host.length() - 7);
     } else if (host_lower.begins_with("https://")) {
         use_tls = true;
-        host = host.substr(8, host.length() - 8);
+        host    = host.substr(8, host.length() - 8);
     }
 
     ERR_FAIL_COND_V(host.length() < HOST_MIN_LEN, ERR_INVALID_PARAMETER);
@@ -210,10 +210,10 @@ Error HTTPClient::request(
 }
 
 void HTTPClient::close() {
-    host = "";
-    port = -1;
-    use_tls = false;
-    status = STATUS_DISCONNECTED;
+    host                 = "";
+    port                 = -1;
+    use_tls              = false;
+    status               = STATUS_DISCONNECTED;
     polled_response_code = 0;
     response_headers.resize(0);
     response_buffer.resize(0);

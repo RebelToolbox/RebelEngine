@@ -554,16 +554,16 @@ void _rgba8_to_packbits_encode(
                     result.write[res_size++] = (uint8_t)(buf_size - 1);
                     memcpy(&result.write[res_size], &buf, buf_size);
                     res_size += buf_size;
-                    buf_size = 0;
+                    buf_size  = 0;
                 }
 
-                uint8_t lim = i + 130 >= src_len ? src_len - i - 1 : 130;
+                uint8_t lim  = i + 130 >= src_len ? src_len - i - 1 : 130;
                 bool hit_lim = true;
 
                 for (int j = 3; j <= lim; j++) {
                     if (p_source.read()[(i + j) * 4 + p_ch] != cur) {
-                        hit_lim = false;
-                        i = i + j - 1;
+                        hit_lim                  = false;
+                        i                        = i + j - 1;
                         result.write[res_size++] = (uint8_t)(j - 3 + 0x80);
                         result.write[res_size++] = cur;
                         break;
@@ -572,7 +572,7 @@ void _rgba8_to_packbits_encode(
                 if (hit_lim) {
                     result.write[res_size++] = (uint8_t)(lim - 3 + 0x80);
                     result.write[res_size++] = cur;
-                    i = i + lim;
+                    i                        = i + lim;
                 }
             } else {
                 buf[buf_size++] = cur;
@@ -580,15 +580,15 @@ void _rgba8_to_packbits_encode(
                     result.write[res_size++] = (uint8_t)(buf_size - 1);
                     memcpy(&result.write[res_size], &buf, buf_size);
                     res_size += buf_size;
-                    buf_size = 0;
+                    buf_size  = 0;
                 }
             }
         } else {
-            buf[buf_size++] = cur;
+            buf[buf_size++]          = cur;
             result.write[res_size++] = (uint8_t)(buf_size - 1);
             memcpy(&result.write[res_size], &buf, buf_size);
             res_size += buf_size;
-            buf_size = 0;
+            buf_size  = 0;
         }
 
         i++;
@@ -660,13 +660,13 @@ void EditorExportPlatformOSX::_make_icon(
                 ERR_FAIL();
             }
 
-            int ofs = data.size();
+            int ofs      = data.size();
             uint64_t len = f->get_len();
             data.resize(data.size() + len + 8);
             f->get_buffer(&data.write[ofs + 8], len);
             memdelete(f);
             len += 8;
-            len = BSWAP32(len);
+            len  = BSWAP32(len);
             memcpy(&data.write[ofs], icon_infos[i].name, 4);
             encode_uint32(len, &data.write[ofs + 4]);
 
@@ -701,7 +701,7 @@ void EditorExportPlatformOSX::_make_icon(
                 ); // encode B
 
                 int len = data.size() - ofs;
-                len = BSWAP32(len);
+                len     = BSWAP32(len);
                 memcpy(&data.write[ofs], icon_infos[i].name, 4);
                 encode_uint32(len, &data.write[ofs + 4]);
             }
@@ -716,7 +716,7 @@ void EditorExportPlatformOSX::_make_icon(
                     data.write[ofs + 8 + j] = src_data.read()[j * 4 + 3];
                 }
                 len += 8;
-                len = BSWAP32(len);
+                len  = BSWAP32(len);
                 memcpy(&data.write[ofs], icon_infos[i].mask_name, 4);
                 encode_uint32(len, &data.write[ofs + 4]);
             }
@@ -724,7 +724,7 @@ void EditorExportPlatformOSX::_make_icon(
     }
 
     uint32_t total_len = data.size();
-    total_len = BSWAP32(total_len);
+    total_len          = BSWAP32(total_len);
     encode_uint32(total_len, &data.write[4]);
 
     p_data = data;
@@ -1011,7 +1011,7 @@ Error EditorExportPlatformOSX::export_project(
         return ERR_FILE_BAD_PATH;
     }
 
-    FileAccess* src_f = nullptr;
+    FileAccess* src_f    = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
 
     if (ep.step("Creating app", 0)) {
@@ -1153,8 +1153,8 @@ Error EditorExportPlatformOSX::export_project(
                 continue; // skip
             }
             found_binary = true;
-            is_execute = true;
-            file = "Contents/MacOS/" + pkg_name;
+            is_execute   = true;
+            file         = "Contents/MacOS/" + pkg_name;
         }
 
         if (file == "Contents/Resources/icon.icns") {
@@ -1623,9 +1623,9 @@ Error EditorExportPlatformOSX::export_project(
                     OS::get_singleton()->move_to_trash(p_path);
                 }
 
-                FileAccess* dst_f = nullptr;
+                FileAccess* dst_f        = nullptr;
                 zlib_filefunc_def io_dst = zipio_create_io_from_file(&dst_f);
-                zipFile zip = zipOpen2(
+                zipFile zip              = zipOpen2(
                     p_path.utf8().get_data(),
                     APPEND_STATUS_CREATE,
                     nullptr,
@@ -1683,20 +1683,20 @@ void EditorExportPlatformOSX::_zip_folder_recursive(
             zip_fileinfo zipfi;
             zipfi.tmz_date.tm_hour = time.hour;
             zipfi.tmz_date.tm_mday = date.day;
-            zipfi.tmz_date.tm_min = time.min;
+            zipfi.tmz_date.tm_min  = time.min;
             zipfi.tmz_date.tm_mon =
                 date.month
                 - 1; // Note: "tm" month range - 0..11, Godot month range
                      // - 1..12, http://www.cplusplus.com/reference/ctime/tm/
-            zipfi.tmz_date.tm_sec = time.sec;
+            zipfi.tmz_date.tm_sec  = time.sec;
             zipfi.tmz_date.tm_year = date.year;
-            zipfi.dosDate = 0;
+            zipfi.dosDate          = 0;
             // 0120000: symbolic link type
             // 0000755: permissions rwxr-xr-x
             // 0000644: permissions rw-r--r--
-            uint32_t _mode = 0120644;
-            zipfi.external_fa = (_mode << 16L) | !(_mode & 0200);
-            zipfi.internal_fa = 0;
+            uint32_t _mode         = 0120644;
+            zipfi.external_fa      = (_mode << 16L) | !(_mode & 0200);
+            zipfi.internal_fa      = 0;
 
             zipOpenNewFileInZip4(
                 p_zip,
@@ -1745,20 +1745,20 @@ void EditorExportPlatformOSX::_zip_folder_recursive(
             zip_fileinfo zipfi;
             zipfi.tmz_date.tm_hour = time.hour;
             zipfi.tmz_date.tm_mday = date.day;
-            zipfi.tmz_date.tm_min = time.min;
+            zipfi.tmz_date.tm_min  = time.min;
             zipfi.tmz_date.tm_mon =
                 date.month
                 - 1; // Note: "tm" month range - 0..11, Godot month range
                      // - 1..12, http://www.cplusplus.com/reference/ctime/tm/
-            zipfi.tmz_date.tm_sec = time.sec;
+            zipfi.tmz_date.tm_sec  = time.sec;
             zipfi.tmz_date.tm_year = date.year;
-            zipfi.dosDate = 0;
+            zipfi.dosDate          = 0;
             // 0100000: regular file type
             // 0000755: permissions rwxr-xr-x
             // 0000644: permissions rw-r--r--
-            uint32_t _mode = (is_executable ? 0100755 : 0100644);
-            zipfi.external_fa = (_mode << 16L) | !(_mode & 0200);
-            zipfi.internal_fa = 0;
+            uint32_t _mode         = (is_executable ? 0100755 : 0100644);
+            zipfi.external_fa      = (_mode << 16L) | !(_mode & 0200);
+            zipfi.internal_fa      = 0;
 
             zipOpenNewFileInZip4(
                 p_zip,
@@ -1836,31 +1836,31 @@ bool EditorExportPlatformOSX::can_export(
         }
     }
 
-    valid = dvalid || rvalid;
+    valid               = dvalid || rvalid;
     r_missing_templates = !valid;
 
     String identifier = p_preset->get("application/identifier");
     String pn_err;
     if (!is_package_name_valid(identifier, &pn_err)) {
-        err += TTR("Invalid bundle identifier:") + " " + pn_err + "\n";
-        valid = false;
+        err   += TTR("Invalid bundle identifier:") + " " + pn_err + "\n";
+        valid  = false;
     }
 
     bool sign_enabled = p_preset->get("codesign/enable");
     bool noto_enabled = p_preset->get("notarization/enable");
     if (noto_enabled) {
         if (!sign_enabled) {
-            err += TTR("Notarization: code signing required.") + "\n";
-            valid = false;
+            err   += TTR("Notarization: code signing required.") + "\n";
+            valid  = false;
         }
         bool hr_enabled = p_preset->get("codesign/hardened_runtime");
         if (!hr_enabled) {
-            err += TTR("Notarization: hardened runtime required.") + "\n";
-            valid = false;
+            err   += TTR("Notarization: hardened runtime required.") + "\n";
+            valid  = false;
         }
         if (p_preset->get("notarization/apple_id_name") == "") {
-            err += TTR("Notarization: Apple ID name not specified.") + "\n";
-            valid = false;
+            err   += TTR("Notarization: Apple ID name not specified.") + "\n";
+            valid  = false;
         }
         if (p_preset->get("notarization/apple_id_password") == "") {
             err += TTR("Notarization: Apple ID password not specified.") + "\n";

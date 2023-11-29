@@ -42,8 +42,8 @@ class BroadPhase2DHashGrid : public BroadPhase2DSW {
 
         PairData() {
             colliding = false;
-            rc = 1;
-            ud = nullptr;
+            rc        = 1;
+            ud        = nullptr;
         }
     };
 
@@ -169,12 +169,12 @@ class BroadPhase2DHashGrid : public BroadPhase2DSW {
 
         _FORCE_INLINE_ uint32_t hash() const {
             uint64_t k = key;
-            k = (~k) + (k << 18); // k = (k << 18) - k - 1;
-            k = k ^ (k >> 31);
-            k = k * 21; // k = (k + (k << 2)) + (k << 4);
-            k = k ^ (k >> 11);
-            k = k + (k << 6);
-            k = k ^ (k >> 22);
+            k          = (~k) + (k << 18); // k = (k << 18) - k - 1;
+            k          = k ^ (k >> 31);
+            k          = k * 21; // k = (k + (k << 2)) + (k << 4);
+            k          = k ^ (k >> 11);
+            k          = k + (k << 6);
+            k          = k ^ (k >> 22);
             return k;
         }
 
@@ -205,9 +205,9 @@ class BroadPhase2DHashGrid : public BroadPhase2DSW {
 public:
     virtual ID create(
         CollisionObject2DSW* p_object,
-        int p_subindex = 0,
+        int p_subindex      = 0,
         const Rect2& p_aabb = Rect2(),
-        bool p_static = false
+        bool p_static       = false
     );
     virtual void move(ID p_id, const Rect2& p_aabb);
     virtual void recheck_pairs(ID p_id);

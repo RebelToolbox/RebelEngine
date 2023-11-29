@@ -48,7 +48,7 @@ Color SpriteBase3D::_get_color_accum() {
     color_accum.g *= modulate.g;
     color_accum.b *= modulate.b;
     color_accum.a *= modulate.a;
-    color_dirty = false;
+    color_dirty    = false;
     return color_accum;
 }
 
@@ -80,7 +80,7 @@ void SpriteBase3D::_notification(int p_what) {
     if (p_what == NOTIFICATION_EXIT_TREE) {
         if (parent_sprite) {
             parent_sprite->children.erase(pI);
-            pI = nullptr;
+            pI            = nullptr;
             parent_sprite = nullptr;
         }
     }
@@ -236,7 +236,7 @@ Ref<TriangleMesh> SpriteBase3D::generate_triangle_mesh() const {
         Vector3 vtx;
         vtx[x_axis] = vertices[i][0];
         vtx[y_axis] = vertices[i][1];
-        facesw[j] = vtx;
+        facesw[j]   = vtx;
     }
 
     facesw.release();
@@ -470,24 +470,24 @@ void SpriteBase3D::_bind_methods() {
 }
 
 SpriteBase3D::SpriteBase3D() {
-    color_dirty = true;
-    centered = true;
-    hflip = false;
-    vflip = false;
+    color_dirty   = true;
+    centered      = true;
+    hflip         = false;
+    vflip         = false;
     parent_sprite = nullptr;
-    pI = nullptr;
+    pI            = nullptr;
 
     for (int i = 0; i < FLAG_MAX; i++) {
         flags[i] = i == FLAG_TRANSPARENT || i == FLAG_DOUBLE_SIDED;
     }
 
-    alpha_cut = ALPHA_CUT_DISABLED;
+    alpha_cut      = ALPHA_CUT_DISABLED;
     billboard_mode = SpatialMaterial::BILLBOARD_DISABLED;
-    axis = Vector3::AXIS_Z;
-    pixel_size = 0.01;
-    modulate = Color(1, 1, 1, 1);
+    axis           = Vector3::AXIS_Z;
+    pixel_size     = 0.01;
+    modulate       = Color(1, 1, 1, 1);
     pending_update = false;
-    opacity = 1.0;
+    opacity        = 1.0;
 
     material = VisualServer::get_singleton()->material_create();
     // Set defaults for material, names need to match up those in
@@ -524,23 +524,23 @@ SpriteBase3D::SpriteBase3D() {
 
     // create basic mesh and store format information
     for (int i = 0; i < 4; i++) {
-        mesh_normals.write()[i] = Vector3(0.0, 0.0, 1.0);
+        mesh_normals.write()[i]          = Vector3(0.0, 0.0, 1.0);
         mesh_tangents.write()[i * 4 + 0] = 0.0;
         mesh_tangents.write()[i * 4 + 1] = 0.0;
         mesh_tangents.write()[i * 4 + 2] = 1.0;
         mesh_tangents.write()[i * 4 + 3] = 1.0;
-        mesh_colors.write()[i] = Color(1.0, 1.0, 1.0, 1.0);
-        mesh_uvs.write()[i] = Vector2(0.0, 0.0);
-        mesh_vertices.write()[i] = Vector3(0.0, 0.0, 0.0);
+        mesh_colors.write()[i]           = Color(1.0, 1.0, 1.0, 1.0);
+        mesh_uvs.write()[i]              = Vector2(0.0, 0.0);
+        mesh_vertices.write()[i]         = Vector3(0.0, 0.0, 0.0);
     }
 
     Array mesh_array;
     mesh_array.resize(VS::ARRAY_MAX);
-    mesh_array[VS::ARRAY_VERTEX] = mesh_vertices;
-    mesh_array[VS::ARRAY_NORMAL] = mesh_normals;
+    mesh_array[VS::ARRAY_VERTEX]  = mesh_vertices;
+    mesh_array[VS::ARRAY_NORMAL]  = mesh_normals;
     mesh_array[VS::ARRAY_TANGENT] = mesh_tangents;
-    mesh_array[VS::ARRAY_COLOR] = mesh_colors;
-    mesh_array[VS::ARRAY_TEX_UV] = mesh_uvs;
+    mesh_array[VS::ARRAY_COLOR]   = mesh_colors;
+    mesh_array[VS::ARRAY_TEX_UV]  = mesh_uvs;
 
     uint32_t compress_format =
         (VS::ARRAY_COMPRESS_DEFAULT & ~VS::ARRAY_COMPRESS_TEX_UV)
@@ -559,7 +559,7 @@ SpriteBase3D::SpriteBase3D() {
         VS::get_singleton()->mesh_surface_get_array_index_len(mesh, 0);
 
     mesh_surface_format = VS::get_singleton()->mesh_surface_get_format(mesh, 0);
-    mesh_buffer = VS::get_singleton()->mesh_surface_get_array(mesh, 0);
+    mesh_buffer         = VS::get_singleton()->mesh_surface_get_array(mesh, 0);
     VS::get_singleton()->mesh_surface_make_offsets_from_format(
         mesh_surface_format,
         surface_vertex_len,
@@ -597,9 +597,9 @@ void Sprite3D::_draw() {
         base_rect = Rect2(0, 0, texture->get_width(), texture->get_height());
     }
 
-    Size2 frame_size = base_rect.size / Size2(hframes, vframes);
-    Point2 frame_offset = Point2(frame % hframes, frame / hframes);
-    frame_offset *= frame_size;
+    Size2 frame_size     = base_rect.size / Size2(hframes, vframes);
+    Point2 frame_offset  = Point2(frame % hframes, frame / hframes);
+    frame_offset        *= frame_size;
 
     Point2 dest_offset = get_offset();
     if (is_centered()) {
@@ -623,8 +623,8 @@ void Sprite3D::_draw() {
         return;
     }
 
-    Color color = _get_color_accum();
-    color.a *= get_opacity();
+    Color color  = _get_color_accum();
+    color.a     *= get_opacity();
 
     float pixel_size = get_pixel_size();
 
@@ -665,7 +665,7 @@ void Sprite3D::_draw() {
     }
 
     Vector3 normal;
-    int axis = get_axis();
+    int axis     = get_axis();
     normal[axis] = 1.0;
 
     Plane tangent;
@@ -719,7 +719,7 @@ void Sprite3D::_draw() {
         vtx[y_axis] = vertices[i][1];
         if (i == 0) {
             aabb.position = vtx;
-            aabb.size = Vector3();
+            aabb.size     = Vector3();
         } else {
             aabb.expand_to(vtx);
         }
@@ -837,7 +837,7 @@ bool Sprite3D::is_region() const {
 
 void Sprite3D::set_region_rect(const Rect2& p_region_rect) {
     bool changed = region_rect != p_region_rect;
-    region_rect = p_region_rect;
+    region_rect  = p_region_rect;
     if (region && changed) {
         _queue_update();
     }
@@ -928,9 +928,9 @@ Rect2 Sprite3D::get_item_rect() const {
 
 void Sprite3D::_validate_property(PropertyInfo& property) const {
     if (property.name == "frame") {
-        property.hint = PROPERTY_HINT_RANGE;
-        property.hint_string = "0," + itos(vframes * hframes - 1) + ",1";
-        property.usage |= PROPERTY_USAGE_KEYING_INCREMENTS;
+        property.hint         = PROPERTY_HINT_RANGE;
+        property.hint_string  = "0," + itos(vframes * hframes - 1) + ",1";
+        property.usage       |= PROPERTY_USAGE_KEYING_INCREMENTS;
     }
 
     if (property.name == "frame_coords") {
@@ -1033,8 +1033,8 @@ void Sprite3D::_bind_methods() {
 }
 
 Sprite3D::Sprite3D() {
-    region = false;
-    frame = 0;
+    region  = false;
+    frame   = 0;
     vframes = 1;
     hframes = 1;
 }
@@ -1093,8 +1093,8 @@ void AnimatedSprite3D::_draw() {
         return;
     }
 
-    Color color = _get_color_accum();
-    color.a *= get_opacity();
+    Color color  = _get_color_accum();
+    color.a     *= get_opacity();
 
     float pixel_size = get_pixel_size();
 
@@ -1135,7 +1135,7 @@ void AnimatedSprite3D::_draw() {
     }
 
     Vector3 normal;
-    int axis = get_axis();
+    int axis     = get_axis();
     normal[axis] = 1.0;
 
     Plane tangent;
@@ -1189,7 +1189,7 @@ void AnimatedSprite3D::_draw() {
         vtx[y_axis] = vertices[i][1];
         if (i == 0) {
             aabb.position = vtx;
-            aabb.size = Vector3();
+            aabb.size     = Vector3();
         } else {
             aabb.expand_to(vtx);
         }
@@ -1351,9 +1351,9 @@ void AnimatedSprite3D::_notification(int p_what) {
                     );
                 }
 
-                float to_process = MIN(timeout, remaining);
-                remaining -= to_process;
-                timeout -= to_process;
+                float to_process  = MIN(timeout, remaining);
+                remaining        -= to_process;
+                timeout          -= to_process;
             }
         } break;
     }
@@ -1599,8 +1599,8 @@ void AnimatedSprite3D::_bind_methods() {
 }
 
 AnimatedSprite3D::AnimatedSprite3D() {
-    frame = 0;
-    playing = false;
+    frame     = 0;
+    playing   = false;
     animation = "default";
-    timeout = 0;
+    timeout   = 0;
 }

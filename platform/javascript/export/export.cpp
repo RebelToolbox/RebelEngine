@@ -50,17 +50,17 @@ private:
     Ref<StreamPeer> peer;
     Ref<CryptoKey> key;
     Ref<X509Certificate> cert;
-    bool use_ssl = false;
+    bool use_ssl  = false;
     uint64_t time = 0;
     uint8_t req_buf[4096];
     int req_pos = 0;
 
     void _clear_client() {
         peer = Ref<StreamPeer>();
-        ssl = Ref<StreamPeerSSL>();
-        tcp = Ref<StreamPeerTCP>();
+        ssl  = Ref<StreamPeerSSL>();
+        tcp  = Ref<StreamPeerTCP>();
         memset(req_buf, 0, sizeof(req_buf));
-        time = 0;
+        time    = 0;
         req_pos = 0;
     }
 
@@ -72,7 +72,7 @@ private:
         bool regen =
             !FileAccess::exists(key_path) || !FileAccess::exists(crt_path);
         if (!regen) {
-            key = Ref<CryptoKey>(CryptoKey::create());
+            key  = Ref<CryptoKey>(CryptoKey::create());
             cert = Ref<X509Certificate>(X509Certificate::create());
             if (key->load(key_path) != OK || cert->load(crt_path) != OK) {
                 regen = true;
@@ -94,11 +94,11 @@ private:
 public:
     EditorHTTPServer() {
         mimes["html"] = "text/html";
-        mimes["js"] = "application/javascript";
+        mimes["js"]   = "application/javascript";
         mimes["json"] = "application/json";
-        mimes["pck"] = "application/octet-stream";
-        mimes["png"] = "image/png";
-        mimes["svg"] = "image/svg";
+        mimes["pck"]  = "application/octet-stream";
+        mimes["png"]  = "image/png";
+        mimes["svg"]  = "image/svg";
         mimes["wasm"] = "application/wasm";
         server.instance();
         stop();
@@ -123,11 +123,11 @@ public:
                 return ERR_UNAVAILABLE;
             }
             if (!p_ssl_key.empty() && !p_ssl_cert.empty()) {
-                key = Ref<CryptoKey>(CryptoKey::create());
+                key       = Ref<CryptoKey>(CryptoKey::create());
                 Error err = key->load(p_ssl_key);
                 ERR_FAIL_COND_V(err != OK, err);
                 cert = Ref<X509Certificate>(X509Certificate::create());
-                err = cert->load(p_ssl_cert);
+                err  = cert->load(p_ssl_cert);
                 ERR_FAIL_COND_V(err != OK, err);
             } else {
                 _set_internal_certs(crypto);
@@ -142,7 +142,7 @@ public:
 
     void _send_response() {
         Vector<String> psa = String((char*)req_buf).split("\r\n");
-        int len = psa.size();
+        int len            = psa.size();
         ERR_FAIL_COND_MSG(
             len < 4,
             "Not enough response headers, got: " + itos(len)
@@ -163,16 +163,16 @@ public:
             (query_index == -1) ? req[1] : req[1].substr(0, query_index);
 
         const String req_file = path.get_file();
-        const String req_ext = path.get_extension();
+        const String req_ext  = path.get_extension();
         const String cache_path =
             EditorSettings::get_singleton()->get_cache_dir().plus_file("web");
         const String filepath = cache_path.plus_file(req_file);
 
         if (!mimes.has(req_ext) || !FileAccess::exists(filepath)) {
-            String s = "HTTP/1.1 404 Not Found\r\n";
-            s += "Connection: Close\r\n";
-            s += "\r\n";
-            CharString cs = s.utf8();
+            String s       = "HTTP/1.1 404 Not Found\r\n";
+            s             += "Connection: Close\r\n";
+            s             += "\r\n";
+            CharString cs  = s.utf8();
             peer->put_data((const uint8_t*)cs.get_data(), cs.size() - 1);
             return;
         }
@@ -180,15 +180,15 @@ public:
 
         FileAccess* f = FileAccess::open(filepath, FileAccess::READ);
         ERR_FAIL_COND(!f);
-        String s = "HTTP/1.1 200 OK\r\n";
-        s += "Connection: Close\r\n";
-        s += "Content-Type: " + ctype + "\r\n";
-        s += "Access-Control-Allow-Origin: *\r\n";
-        s += "Cross-Origin-Opener-Policy: same-origin\r\n";
-        s += "Cross-Origin-Embedder-Policy: require-corp\r\n";
-        s += "Cache-Control: no-store, max-age=0\r\n";
-        s += "\r\n";
-        CharString cs = s.utf8();
+        String s       = "HTTP/1.1 200 OK\r\n";
+        s             += "Connection: Close\r\n";
+        s             += "Content-Type: " + ctype + "\r\n";
+        s             += "Access-Control-Allow-Origin: *\r\n";
+        s             += "Cross-Origin-Opener-Policy: same-origin\r\n";
+        s             += "Cross-Origin-Embedder-Policy: require-corp\r\n";
+        s             += "Cache-Control: no-store, max-age=0\r\n";
+        s             += "\r\n";
+        CharString cs  = s.utf8();
         Error err =
             peer->put_data((const uint8_t*)cs.get_data(), cs.size() - 1);
         if (err != OK) {
@@ -219,7 +219,7 @@ public:
             if (!server->is_connection_available()) {
                 return;
             }
-            tcp = server->take_connection();
+            tcp  = server->take_connection();
             peer = tcp;
             time = OS::get_singleton()->get_ticks_usec();
         }
@@ -233,7 +233,7 @@ public:
 
         if (use_ssl) {
             if (ssl.is_null()) {
-                ssl = Ref<StreamPeerSSL>(StreamPeerSSL::create());
+                ssl  = Ref<StreamPeerSSL>(StreamPeerSSL::create());
                 peer = ssl;
                 ssl->set_blocking_handshake_enabled(false);
                 if (ssl->accept_stream(tcp, key, cert) != OK) {
@@ -254,7 +254,7 @@ public:
 
         while (true) {
             char* r = (char*)req_buf;
-            int l = req_pos - 1;
+            int l   = req_pos - 1;
             if (l > 3 && r[l] == '\n' && r[l - 1] == '\r' && r[l - 2] == '\n'
                 && r[l - 3] == '\r') {
                 _send_response();
@@ -292,8 +292,8 @@ class EditorExportPlatformJavaScript : public EditorExportPlatform {
     Thread server_thread;
 
     enum ExportMode {
-        EXPORT_MODE_NORMAL = 0,
-        EXPORT_MODE_THREADS = 1,
+        EXPORT_MODE_NORMAL   = 0,
+        EXPORT_MODE_THREADS  = 1,
         EXPORT_MODE_GDNATIVE = 2,
     };
 
@@ -446,9 +446,9 @@ Error EditorExportPlatformJavaScript::_extract_template(
     const String& p_name,
     bool pwa
 ) {
-    FileAccess* src_f = nullptr;
+    FileAccess* src_f    = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
-    unzFile pkg = unzOpen2(p_template.utf8().get_data(), &io);
+    unzFile pkg          = unzOpen2(p_template.utf8().get_data(), &io);
 
     if (!pkg) {
         EditorNode::get_singleton()->show_warning(
@@ -488,7 +488,7 @@ Error EditorExportPlatformJavaScript::_extract_template(
         unzCloseCurrentFile(pkg);
 
         // write
-        String dst = p_dir.plus_file(file.replace("rebel", p_name));
+        String dst    = p_dir.plus_file(file.replace("rebel", p_name));
         FileAccess* f = FileAccess::open(dst, FileAccess::WRITE);
         if (!f) {
             EditorNode::get_singleton()->show_warning(
@@ -535,7 +535,7 @@ void EditorExportPlatformJavaScript::_replace_strings(
     for (int i = 0; i < lines.size(); i++) {
         String current_line = lines[i];
         for (Map<String, String>::Element* E = p_replaces.front(); E;
-             E = E->next()) {
+             E                               = E->next()) {
             current_line = current_line.replace(E->key(), E->get());
         }
         out += current_line + "\n";
@@ -574,11 +574,11 @@ void EditorExportPlatformJavaScript::_fix_html(
     config["canvasResizePolicy"] = p_preset->get("html/canvas_resize_policy");
     config["experimentalVK"] =
         p_preset->get("html/experimental_virtual_keyboard");
-    config["focusCanvas"] = p_preset->get("html/focus_canvas_on_start");
+    config["focusCanvas"]  = p_preset->get("html/focus_canvas_on_start");
     config["gdnativeLibs"] = libs;
-    config["executable"] = p_name;
-    config["args"] = args;
-    config["fileSizes"] = p_file_sizes;
+    config["executable"]   = p_name;
+    config["args"]         = args;
+    config["fileSizes"]    = p_file_sizes;
 
     String head_include;
     if (p_preset->get("html/export_icon")) {
@@ -600,7 +600,7 @@ void EditorExportPlatformJavaScript::_fix_html(
     }
 
     // Replaces HTML string
-    const String str_config = JSON::print(config);
+    const String str_config          = JSON::print(config);
     const String custom_head_include = p_preset->get("html/head_include");
     Map<String, String> replaces;
     replaces["$GAME_URL"] = p_name + ".js";
@@ -608,7 +608,7 @@ void EditorExportPlatformJavaScript::_fix_html(
         ProjectSettings::get_singleton()->get_setting("application/config/name"
         );
     replaces["$HEAD_INCLUDE"] = head_include + custom_head_include;
-    replaces["$GAME_CONFIG"] = str_config;
+    replaces["$GAME_CONFIG"]  = str_config;
     _replace_strings(replaces, p_html);
 }
 
@@ -618,7 +618,7 @@ Error EditorExportPlatformJavaScript::_add_manifest_icon(
     int p_size,
     Array& r_arr
 ) {
-    const String name = p_path.get_file().get_basename();
+    const String name      = p_path.get_file().get_basename();
     const String icon_name = vformat("%s.%dx%d.png", name, p_size, p_size);
     const String icon_dest = p_path.get_base_dir().plus_file(icon_name);
 
@@ -648,8 +648,8 @@ Error EditorExportPlatformJavaScript::_add_manifest_icon(
     }
     Dictionary icon_dict;
     icon_dict["sizes"] = vformat("%dx%d", p_size, p_size);
-    icon_dict["type"] = "image/png";
-    icon_dict["src"] = icon_name;
+    icon_dict["type"]  = "image/png";
+    icon_dict["src"]   = icon_name;
     r_arr.push_back(icon_dict);
     return err;
 }
@@ -660,14 +660,14 @@ Error EditorExportPlatformJavaScript::_build_pwa(
     const Vector<SharedObject>& p_shared_objects
 ) {
     // Service worker
-    const String dir = p_path.get_base_dir();
+    const String dir  = p_path.get_base_dir();
     const String name = p_path.get_file().get_basename();
     const ExportMode mode =
         (ExportMode)(int)p_preset->get("variant/export_type");
     Map<String, String> replaces;
     replaces["@REBEL_VERSION@"] = "1";
-    replaces["@REBEL_NAME@"] = name;
-    replaces["@OFFLINE_PAGE@"] = name + ".offline.html";
+    replaces["@REBEL_NAME@"]    = name;
+    replaces["@OFFLINE_PAGE@"]  = name + ".offline.html";
     Array files;
     replaces["@REBEL_OPT_CACHE@"] = JSON::print(files);
     files.push_back(name + ".html");
@@ -721,7 +721,7 @@ Error EditorExportPlatformJavaScript::_build_pwa(
     if (!offline_page.empty()) {
         DirAccess* da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
         const String offline_dest = dir.plus_file(name + ".offline.html");
-        err = da->copy(
+        err                       = da->copy(
             ProjectSettings::get_singleton()->globalize_path(offline_page),
             offline_dest
         );
@@ -749,9 +749,9 @@ Error EditorExportPlatformJavaScript::_build_pwa(
     if (proj_name.empty()) {
         proj_name = "Rebel Game";
     }
-    manifest["name"] = proj_name;
-    manifest["start_url"] = "./" + name + ".html";
-    manifest["display"] = String::utf8(modes[display]);
+    manifest["name"]        = proj_name;
+    manifest["start_url"]   = "./" + name + ".html";
+    manifest["display"]     = String::utf8(modes[display]);
     manifest["orientation"] = String::utf8(orientations[orientation]);
     manifest["background_color"] =
         "#"
@@ -782,7 +782,7 @@ Error EditorExportPlatformJavaScript::_build_pwa(
     manifest["icons"] = icons_arr;
 
     CharString cs = JSON::print(manifest).utf8();
-    err = _write_or_error(
+    err           = _write_or_error(
         (const uint8_t*)cs.get_data(),
         cs.length(),
         dir.plus_file(name + ".manifest.json")
@@ -988,7 +988,7 @@ bool EditorExportPlatformJavaScript::can_export(
     bool& r_missing_templates
 ) const {
     String err;
-    bool valid = false;
+    bool valid      = false;
     ExportMode mode = (ExportMode)(int)p_preset->get("variant/export_type");
 
     // Look for export templates (first official, and if defined custom
@@ -1009,7 +1009,7 @@ bool EditorExportPlatformJavaScript::can_export(
         }
     }
 
-    valid = dvalid || rvalid;
+    valid               = dvalid || rvalid;
     r_missing_templates = !valid;
 
     // Validate the rest of the configuration.
@@ -1017,8 +1017,8 @@ bool EditorExportPlatformJavaScript::can_export(
     if (p_preset->get("vram_texture_compression/for_mobile")) {
         String etc_error = test_etc2();
         if (etc_error != String()) {
-            valid = false;
-            err += etc_error;
+            valid  = false;
+            err   += etc_error;
         }
     }
 
@@ -1045,19 +1045,19 @@ Error EditorExportPlatformJavaScript::export_project(
 ) {
     ExportNotifier notifier(*this, p_preset, p_debug, p_path, p_flags);
 
-    const String custom_debug = p_preset->get("custom_template/debug");
+    const String custom_debug   = p_preset->get("custom_template/debug");
     const String custom_release = p_preset->get("custom_template/release");
-    const String custom_html = p_preset->get("html/custom_html_shell");
-    const bool export_icon = p_preset->get("html/export_icon");
-    const bool pwa = p_preset->get("progressive_web_app/enabled");
+    const String custom_html    = p_preset->get("html/custom_html_shell");
+    const bool export_icon      = p_preset->get("html/export_icon");
+    const bool pwa              = p_preset->get("progressive_web_app/enabled");
 
-    const String base_dir = p_path.get_base_dir();
+    const String base_dir  = p_path.get_base_dir();
     const String base_path = p_path.get_basename();
     const String base_name = p_path.get_file().get_basename();
 
     // Find the correct template
     String template_path = p_debug ? custom_debug : custom_release;
-    template_path = template_path.strip_edges();
+    template_path        = template_path.strip_edges();
     if (template_path == String()) {
         ExportMode mode = (ExportMode)(int)p_preset->get("variant/export_type");
         template_path = find_export_template(_get_template_name(mode, p_debug));
@@ -1077,7 +1077,7 @@ Error EditorExportPlatformJavaScript::export_project(
     // Export pck and shared objects
     Vector<SharedObject> shared_objects;
     String pck_path = base_path + ".pck";
-    Error error = save_pack(p_preset, pck_path, &shared_objects);
+    Error error     = save_pack(p_preset, pck_path, &shared_objects);
     if (error != OK) {
         EditorNode::get_singleton()->show_warning(
             TTR("Could not write file:") + "\n" + pck_path
@@ -1087,7 +1087,7 @@ Error EditorExportPlatformJavaScript::export_project(
     DirAccess* da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     for (int i = 0; i < shared_objects.size(); i++) {
         String dst = base_dir.plus_file(shared_objects[i].path.get_file());
-        error = da->copy(shared_objects[i].path, dst);
+        error      = da->copy(shared_objects[i].path, dst);
         if (error != OK) {
             EditorNode::get_singleton()->show_warning(
                 TTR("Could not write file:") + "\n"
@@ -1110,7 +1110,7 @@ Error EditorExportPlatformJavaScript::export_project(
     // loading bar).
     Dictionary file_sizes;
     FileAccess* f = nullptr;
-    f = FileAccess::open(pck_path, FileAccess::READ);
+    f             = FileAccess::open(pck_path, FileAccess::READ);
     if (f) {
         file_sizes[pck_path.get_file()] = (uint64_t)f->get_len();
         memdelete(f);
@@ -1156,7 +1156,7 @@ Error EditorExportPlatformJavaScript::export_project(
     html.resize(0);
 
     // Export splash (why?)
-    Ref<Image> splash = _get_project_splash();
+    Ref<Image> splash            = _get_project_splash();
     const String splash_png_path = base_path + ".png";
     if (splash->save_png(splash_png_path) != OK) {
         EditorNode::get_singleton()->show_warning(
@@ -1169,7 +1169,7 @@ Error EditorExportPlatformJavaScript::export_project(
     // finish loading. This way, the favicon can be displayed immediately when
     // loading the page.
     if (export_icon) {
-        Ref<Image> favicon = _get_project_icon();
+        Ref<Image> favicon            = _get_project_icon();
         const String favicon_png_path = base_path + ".icon.png";
         if (favicon->save_png(favicon_png_path) != OK) {
             EditorNode::get_singleton()->show_warning(
@@ -1212,7 +1212,7 @@ bool EditorExportPlatformJavaScript::poll_export() {
         }
     }
 
-    int prev = menu_options;
+    int prev     = menu_options;
     menu_options = preset.is_valid();
     if (server->is_listening()) {
         if (menu_options == 0) {
@@ -1280,7 +1280,7 @@ Error EditorExportPlatformJavaScript::run(
 
     const uint16_t bind_port = EDITOR_GET("export/web/http_port");
     // Resolve host if needed.
-    const String bind_host = EDITOR_GET("export/web/http_host");
+    const String bind_host   = EDITOR_GET("export/web/http_host");
     IP_Address bind_ip;
     if (bind_host.is_valid_ip_address()) {
         bind_ip = bind_host;
@@ -1294,8 +1294,8 @@ Error EditorExportPlatformJavaScript::run(
             + "'. Try using '127.0.0.1'."
     );
 
-    const bool use_ssl = EDITOR_GET("export/web/use_ssl");
-    const String ssl_key = EDITOR_GET("export/web/ssl_key");
+    const bool use_ssl    = EDITOR_GET("export/web/use_ssl");
+    const String ssl_key  = EDITOR_GET("export/web/ssl_key");
     const String ssl_cert = EDITOR_GET("export/web/ssl_certificate");
 
     // Restart server.

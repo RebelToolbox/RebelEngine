@@ -129,8 +129,8 @@ class AnimationNodeBlendSpace2DEditor : public AnimationTreeNodeEditorPlugin {
     void _file_opened(const String& p_file);
 
     enum {
-        MENU_LOAD_FILE = 1000,
-        MENU_PASTE = 1001,
+        MENU_LOAD_FILE         = 1000,
+        MENU_PASTE             = 1001,
         MENU_LOAD_FILE_CONFIRM = 1002
     };
 

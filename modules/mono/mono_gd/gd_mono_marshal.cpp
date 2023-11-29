@@ -341,7 +341,7 @@ bool try_get_dictionary_key_value_types(
                     &value_reftype
                 );
 
-                r_key_type = ManagedType::from_reftype(key_reftype);
+                r_key_type   = ManagedType::from_reftype(key_reftype);
                 r_value_type = ManagedType::from_reftype(value_reftype);
                 return true;
             }
@@ -948,7 +948,7 @@ MonoObject* variant_to_mono_object(
                 if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(
                         reftype
                     )) {
-                    MonoReflectionType* key_reftype = nullptr;
+                    MonoReflectionType* key_reftype   = nullptr;
                     MonoReflectionType* value_reftype = nullptr;
                     GDMonoUtils::Marshal::dictionary_get_key_value_types(
                         reftype,
@@ -1280,7 +1280,7 @@ Variant mono_object_to_variant_impl(
             // Godot.Collections.Dictionary<TKey, TValue>
             if (GDMonoUtils::Marshal::type_is_generic_dictionary(reftype)) {
                 MonoException* exc = NULL;
-                MonoObject* ret = p_type.type_class->get_method("GetPtr")
+                MonoObject* ret    = p_type.type_class->get_method("GetPtr")
                                       ->invoke(p_obj, &exc);
                 UNHANDLED_EXCEPTION(exc);
                 return *unbox<Dictionary*>(ret);
@@ -1289,7 +1289,7 @@ Variant mono_object_to_variant_impl(
             // Godot.Collections.Array<T>
             if (GDMonoUtils::Marshal::type_is_generic_array(reftype)) {
                 MonoException* exc = NULL;
-                MonoObject* ret = p_type.type_class->get_method("GetPtr")
+                MonoObject* ret    = p_type.type_class->get_method("GetPtr")
                                       ->invoke(p_obj, &exc);
                 UNHANDLED_EXCEPTION(exc);
                 return *unbox<Array*>(ret);
@@ -1298,7 +1298,7 @@ Variant mono_object_to_variant_impl(
             // System.Collections.Generic.Dictionary<TKey, TValue>
             if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(reftype
                 )) {
-                MonoReflectionType* key_reftype = nullptr;
+                MonoReflectionType* key_reftype   = nullptr;
                 MonoReflectionType* value_reftype = nullptr;
                 GDMonoUtils::Marshal::dictionary_get_key_value_types(
                     reftype,
@@ -1398,7 +1398,7 @@ String mono_object_to_variant_string(MonoObject* p_obj, MonoException** r_exc) {
 
     if (var.get_type() == Variant::NIL && p_obj != NULL) {
         // Cannot convert MonoObject* to Variant; fallback to 'ToString()'.
-        MonoException* exc = NULL;
+        MonoException* exc   = NULL;
         MonoString* mono_str = GDMonoUtils::object_to_string(p_obj, &exc);
 
         if (exc) {
@@ -1522,7 +1522,7 @@ Variant system_generic_list_to_Array_variant(
     CRASH_COND(to_array == nullptr);
 
     MonoException* exc = nullptr;
-    MonoObject* array = to_array->invoke_raw(p_obj, nullptr, &exc);
+    MonoObject* array  = to_array->invoke_raw(p_obj, nullptr, &exc);
     UNHANDLED_EXCEPTION(exc);
 
     ERR_FAIL_NULL_V(array, Variant());
@@ -1555,7 +1555,7 @@ MonoArray* Array_to_mono_array(
     const Array& p_array,
     GDMonoClass* p_array_type_class
 ) {
-    int length = p_array.size();
+    int length     = p_array.size();
     MonoArray* ret = mono_array_new(
         mono_domain_get(),
         p_array_type_class->get_mono_ptr(),
@@ -1580,7 +1580,7 @@ Array mono_array_to_Array(MonoArray* p_array) {
 
     for (int i = 0; i < length; i++) {
         MonoObject* elem = mono_array_get(p_array, MonoObject*, i);
-        ret[i] = mono_object_to_variant(elem);
+        ret[i]           = mono_object_to_variant(elem);
     }
 
     return ret;
@@ -1709,7 +1709,7 @@ PoolStringArray mono_array_to_PoolStringArray(MonoArray* p_array) {
 
     for (int i = 0; i < length; i++) {
         MonoString* elem = mono_array_get(p_array, MonoString*, i);
-        w[i] = mono_string_to_godot(elem);
+        w[i]             = mono_string_to_godot(elem);
     }
 
     return ret;

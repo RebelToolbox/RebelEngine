@@ -234,7 +234,7 @@ String get_drive_letter(const String& p_norm_path) {
 
 String relative_to(const String& p_path, const String& p_relative_to) {
     String relative_to_abs_norm = abspath(p_relative_to);
-    String path_abs_norm = abspath(p_path);
+    String path_abs_norm        = abspath(p_path);
 
 #ifdef WINDOWS_ENABLED
     if (get_drive_letter(relative_to_abs_norm)

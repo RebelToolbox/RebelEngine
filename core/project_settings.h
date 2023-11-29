@@ -114,13 +114,13 @@ protected:
     Error _save_settings_text(
         const String& p_file,
         const Map<String, List<String>>& props,
-        const CustomMap& p_custom = CustomMap(),
+        const CustomMap& p_custom       = CustomMap(),
         const String& p_custom_features = String()
     );
     Error _save_settings_binary(
         const String& p_file,
         const Map<String, List<String>>& props,
-        const CustomMap& p_custom = CustomMap(),
+        const CustomMap& p_custom       = CustomMap(),
         const String& p_custom_features = String()
     );
 
@@ -131,7 +131,7 @@ protected:
     bool _load_resource_pack(
         const String& p_pack,
         bool p_replace_files = true,
-        int p_offset = 0
+        int p_offset         = 0
     );
 
     void _add_property_info_bind(const Dictionary& p_info);
@@ -180,10 +180,10 @@ public:
     );
 
     Error save_custom(
-        const String& p_path = "",
-        const CustomMap& p_custom = CustomMap(),
+        const String& p_path                    = "",
+        const CustomMap& p_custom               = CustomMap(),
         const Vector<String>& p_custom_features = Vector<String>(),
-        bool p_merge_with_current = true
+        bool p_merge_with_current               = true
     );
     Error save();
     void set_custom_property_info(
@@ -218,7 +218,7 @@ public:
 Variant _GLOBAL_DEF(
     const String& p_var,
     const Variant& p_default,
-    bool p_restart_if_changed = false,
+    bool p_restart_if_changed   = false,
     bool p_ignore_value_in_docs = false
 );
 Variant _GLOBAL_DEF_ALIAS(

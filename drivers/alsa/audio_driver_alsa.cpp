@@ -44,16 +44,16 @@ extern int initialize_pulse(int verbose);
 #endif
 
 Error AudioDriverALSA::init_device() {
-    mix_rate = GLOBAL_GET("audio/mix_rate");
+    mix_rate     = GLOBAL_GET("audio/mix_rate");
     speaker_mode = SPEAKER_MODE_STEREO;
-    channels = 2;
+    channels     = 2;
 
     // If there is a specified device check that it is really present
     if (device_name != "Default") {
         Array list = get_device_list();
         if (list.find(device_name) == -1) {
             device_name = "Default";
-            new_device = "Default";
+            new_device  = "Default";
         }
     }
 
@@ -84,7 +84,7 @@ Error AudioDriverALSA::init_device() {
         );
     } else {
         String device = device_name;
-        int pos = device.find(";");
+        int pos       = device.find(";");
         if (pos != -1) {
             device = device.substr(0, pos);
         }
@@ -134,10 +134,10 @@ Error AudioDriverALSA::init_device() {
     // actual latency Ref:
     // https://www.alsa-project.org/main/index.php/FramesPeriods
     unsigned int periods = 2;
-    int latency = GLOBAL_GET("audio/output_latency");
-    buffer_frames = closest_power_of_2(latency * mix_rate / 1000);
-    buffer_size = buffer_frames * periods;
-    period_size = buffer_frames;
+    int latency          = GLOBAL_GET("audio/output_latency");
+    buffer_frames        = closest_power_of_2(latency * mix_rate / 1000);
+    buffer_size          = buffer_frames * periods;
+    period_size          = buffer_frames;
 
     // set buffer size from project settings
     status = snd_pcm_hw_params_set_buffer_size_near(
@@ -209,9 +209,9 @@ Error AudioDriverALSA::init() {
         return ERR_CANT_OPEN;
     }
 
-    active = false;
+    active        = false;
     thread_exited = false;
-    exit_thread = false;
+    exit_thread   = false;
 
     Error err = init_device();
     if (err == OK) {
@@ -241,12 +241,12 @@ void AudioDriverALSA::thread_func(void* p_udata) {
             }
         }
 
-        int todo = ad->period_size;
+        int todo  = ad->period_size;
         int total = 0;
 
         while (todo && !ad->exit_thread) {
             int16_t* src = (int16_t*)ad->samples_out.ptr();
-            int wrote = snd_pcm_writei(
+            int wrote    = snd_pcm_writei(
                 ad->pcm_handle,
                 (void*)(src + (total * ad->channels)),
                 todo
@@ -254,7 +254,7 @@ void AudioDriverALSA::thread_func(void* p_udata) {
 
             if (wrote > 0) {
                 total += wrote;
-                todo -= wrote;
+                todo  -= wrote;
             } else if (wrote == -EAGAIN) {
                 ad->stop_counting_ticks();
                 ad->unlock();
@@ -270,7 +270,7 @@ void AudioDriverALSA::thread_func(void* p_udata) {
                         "ALSA: Failed and can't recover: "
                         + String(snd_strerror(wrote))
                     );
-                    ad->active = false;
+                    ad->active      = false;
                     ad->exit_thread = true;
                 }
             }
@@ -286,11 +286,11 @@ void AudioDriverALSA::thread_func(void* p_udata) {
             if (err != OK) {
                 ERR_PRINT("ALSA: init_device error");
                 ad->device_name = "Default";
-                ad->new_device = "Default";
+                ad->new_device  = "Default";
 
                 err = ad->init_device();
                 if (err != OK) {
-                    ad->active = false;
+                    ad->active      = false;
                     ad->exit_thread = true;
                 }
             }

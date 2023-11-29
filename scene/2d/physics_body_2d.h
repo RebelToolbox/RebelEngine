@@ -149,7 +149,7 @@ private:
         ShapePair() {}
 
         ShapePair(int p_bs, int p_ls) {
-            body_shape = p_bs;
+            body_shape  = p_bs;
             local_shape = p_ls;
         }
     };
@@ -187,7 +187,7 @@ private:
     bool _test_motion(
         const Vector2& p_motion,
         bool p_infinite_inertia = true,
-        float p_margin = 0.08,
+        float p_margin          = 0.08,
         const Ref<Physics2DTestMotionResult>& p_result =
             Ref<Physics2DTestMotionResult>()
     );
@@ -323,9 +323,9 @@ private:
 
     Ref<KinematicCollision2D> _move(
         const Vector2& p_motion,
-        bool p_infinite_inertia = true,
+        bool p_infinite_inertia       = true,
         bool p_exclude_raycast_shapes = true,
-        bool p_test_only = false
+        bool p_test_only              = false
     );
     Ref<KinematicCollision2D> _get_slide_collision(int p_bounce);
     Ref<KinematicCollision2D> _get_last_slide_collision();
@@ -336,10 +336,10 @@ private:
         const Vector2& p_linear_velocity,
         const Vector2& p_snap,
         const Vector2& p_up_direction = Vector2(0, 0),
-        bool p_stop_on_slope = false,
-        int p_max_slides = 4,
-        float p_floor_max_angle = Math::deg2rad((float)45),
-        bool p_infinite_inertia = true
+        bool p_stop_on_slope          = false,
+        int p_max_slides              = 4,
+        float p_floor_max_angle       = Math::deg2rad((float)45),
+        bool p_infinite_inertia       = true
     );
     void _set_collision_direction(
         const Collision& p_collision,
@@ -357,9 +357,9 @@ public:
         bool p_infinite_inertia,
         Collision& r_collision,
         bool p_exclude_raycast_shapes = true,
-        bool p_test_only = false,
-        bool p_cancel_sliding = true,
-        const Set<RID>& p_exclude = Set<RID>()
+        bool p_test_only              = false,
+        bool p_cancel_sliding         = true,
+        const Set<RID>& p_exclude     = Set<RID>()
     );
 
     bool test_move(
@@ -379,19 +379,19 @@ public:
     Vector2 move_and_slide(
         const Vector2& p_linear_velocity,
         const Vector2& p_up_direction = Vector2(0, 0),
-        bool p_stop_on_slope = false,
-        int p_max_slides = 4,
-        float p_floor_max_angle = Math::deg2rad((float)45),
-        bool p_infinite_inertia = true
+        bool p_stop_on_slope          = false,
+        int p_max_slides              = 4,
+        float p_floor_max_angle       = Math::deg2rad((float)45),
+        bool p_infinite_inertia       = true
     );
     Vector2 move_and_slide_with_snap(
         const Vector2& p_linear_velocity,
         const Vector2& p_snap,
         const Vector2& p_up_direction = Vector2(0, 0),
-        bool p_stop_on_slope = false,
-        int p_max_slides = 4,
-        float p_floor_max_angle = Math::deg2rad((float)45),
-        bool p_infinite_inertia = true
+        bool p_stop_on_slope          = false,
+        int p_max_slides              = 4,
+        float p_floor_max_angle       = Math::deg2rad((float)45),
+        bool p_infinite_inertia       = true
     );
     bool is_on_floor() const;
     bool is_on_wall() const;

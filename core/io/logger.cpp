@@ -136,7 +136,7 @@ void RotatedFileLogger::close_file() {
 void RotatedFileLogger::clear_old_backups() {
     int max_backups = max_files - 1; // -1 for the current file
 
-    String basename = base_path.get_file().get_basename();
+    String basename  = base_path.get_file().get_basename();
     String extension = base_path.get_extension();
 
     DirAccess* da = DirAccess::open(base_path.get_base_dir());
@@ -161,7 +161,7 @@ void RotatedFileLogger::clear_old_backups() {
         // sorted order, first backups are the oldest
         int to_delete = backups.size() - max_backups;
         for (Set<String>::Element* E = backups.front(); E && to_delete > 0;
-             E = E->next(), --to_delete) {
+             E                       = E->next(), --to_delete) {
             da->remove(E->get());
         }
     }

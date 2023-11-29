@@ -34,7 +34,7 @@
 #include "main/input_default.h"
 
 uint8_t MIDIDriver::last_received_message = 0x00;
-MIDIDriver* MIDIDriver::singleton = nullptr;
+MIDIDriver* MIDIDriver::singleton         = nullptr;
 
 MIDIDriver* MIDIDriver::get_singleton() {
     return singleton;
@@ -67,7 +67,7 @@ void MIDIDriver::receive_input_packet(
         } else {
             event->set_channel(data[0] & 0xF);
             event->set_message(data[0] >> 4);
-            param_position = 1;
+            param_position        = 1;
             last_received_message = data[0];
         }
     }

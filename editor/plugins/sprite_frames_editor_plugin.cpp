@@ -62,8 +62,8 @@ int SpriteFramesEditor::_sheet_preview_position_to_frame_index(
     }
 
     Size2i texture_size = split_sheet_preview->get_texture()->get_size();
-    int h = split_sheet_h->get_value();
-    int v = split_sheet_v->get_value();
+    int h               = split_sheet_h->get_value();
+    int v               = split_sheet_v->get_value();
     if (h > texture_size.width || v > texture_size.height) {
         return -1;
     }
@@ -78,10 +78,10 @@ int SpriteFramesEditor::_sheet_preview_position_to_frame_index(
 
 void SpriteFramesEditor::_sheet_preview_draw() {
     Size2i texture_size = split_sheet_preview->get_texture()->get_size();
-    int h = split_sheet_h->get_value();
-    int v = split_sheet_v->get_value();
+    int h               = split_sheet_h->get_value();
+    int v               = split_sheet_v->get_value();
 
-    real_t width = (texture_size.width / h) * sheet_zoom;
+    real_t width  = (texture_size.width / h) * sheet_zoom;
     real_t height = (texture_size.height / v) * sheet_zoom;
     const float a = 0.3;
 
@@ -117,9 +117,9 @@ void SpriteFramesEditor::_sheet_preview_draw() {
     Color accent = get_color("accent_color", "Editor");
 
     for (Set<int>::Element* E = frames_selected.front(); E; E = E->next()) {
-        int idx = E->get();
-        int xp = idx % h;
-        int yp = idx / h;
+        int idx  = E->get();
+        int xp   = idx % h;
+        int yp   = idx / h;
         real_t x = xp * width;
         real_t y = yp * height;
 
@@ -177,7 +177,7 @@ void SpriteFramesEditor::_sheet_preview_input(const Ref<InputEvent>& p_event) {
             if (mb->get_shift() && last_frame_selected >= 0) {
                 // select multiple
                 int from = idx;
-                int to = last_frame_selected;
+                int to   = last_frame_selected;
                 if (from > to) {
                     SWAP(from, to);
                 }
@@ -264,8 +264,8 @@ void SpriteFramesEditor::_sheet_scroll_input(const Ref<InputEvent>& p_event) {
 
 void SpriteFramesEditor::_sheet_add_frames() {
     Size2i texture_size = split_sheet_preview->get_texture()->get_size();
-    int frame_count_x = split_sheet_h->get_value();
-    int frame_count_y = split_sheet_v->get_value();
+    int frame_count_x   = split_sheet_h->get_value();
+    int frame_count_y   = split_sheet_v->get_value();
     Size2 frame_size(
         texture_size.width / frame_count_x,
         texture_size.height / frame_count_y
@@ -314,16 +314,16 @@ void SpriteFramesEditor::_sheet_add_frames() {
 
 void SpriteFramesEditor::_sheet_zoom_in() {
     if (sheet_zoom < max_sheet_zoom) {
-        sheet_zoom *= scale_ratio;
-        Size2 texture_size = split_sheet_preview->get_texture()->get_size();
+        sheet_zoom         *= scale_ratio;
+        Size2 texture_size  = split_sheet_preview->get_texture()->get_size();
         split_sheet_preview->set_custom_minimum_size(texture_size * sheet_zoom);
     }
 }
 
 void SpriteFramesEditor::_sheet_zoom_out() {
     if (sheet_zoom > min_sheet_zoom) {
-        sheet_zoom /= scale_ratio;
-        Size2 texture_size = split_sheet_preview->get_texture()->get_size();
+        sheet_zoom         /= scale_ratio;
+        Size2 texture_size  = split_sheet_preview->get_texture()->get_size();
         split_sheet_preview->set_custom_minimum_size(texture_size * sheet_zoom);
     }
 }
@@ -331,7 +331,7 @@ void SpriteFramesEditor::_sheet_zoom_out() {
 void SpriteFramesEditor::_sheet_zoom_reset() {
     // Default the zoom to match the editor scale, but don't dezoom on editor
     // scales below 100% to prevent pixel art from looking bad.
-    sheet_zoom = MAX(1.0f, EDSCALE);
+    sheet_zoom         = MAX(1.0f, EDSCALE);
     Size2 texture_size = split_sheet_preview->get_texture()->get_size();
     split_sheet_preview->set_custom_minimum_size(texture_size * sheet_zoom);
 }
@@ -537,7 +537,7 @@ void SpriteFramesEditor::_empty_pressed() {
 
     if (tree->get_current() >= 0) {
         from = tree->get_current();
-        sel = from;
+        sel  = from;
 
     } else {
         from = frames->get_frame_count(edited_anim);
@@ -560,7 +560,7 @@ void SpriteFramesEditor::_empty2_pressed() {
 
     if (tree->get_current() >= 0) {
         from = tree->get_current();
-        sel = from;
+        sel  = from;
 
     } else {
         from = frames->get_frame_count(edited_anim);
@@ -588,7 +588,7 @@ void SpriteFramesEditor::_up_pressed() {
         return;
     }
 
-    sel = to_move;
+    sel  = to_move;
     sel -= 1;
 
     undo_redo->create_action(TTR("Delete Resource"));
@@ -637,7 +637,7 @@ void SpriteFramesEditor::_down_pressed() {
         return;
     }
 
-    sel = to_move;
+    sel  = to_move;
     sel += 1;
 
     undo_redo->create_action(TTR("Delete Resource"));
@@ -948,8 +948,8 @@ void SpriteFramesEditor::_zoom_in() {
         return;
     }
     if (thumbnail_zoom < max_thumbnail_zoom) {
-        thumbnail_zoom *= scale_ratio;
-        int thumbnail_size = (int)(thumbnail_default_size * thumbnail_zoom);
+        thumbnail_zoom     *= scale_ratio;
+        int thumbnail_size  = (int)(thumbnail_default_size * thumbnail_zoom);
         tree->set_fixed_column_width(thumbnail_size * 3 / 2);
         tree->set_fixed_icon_size(Size2(thumbnail_size, thumbnail_size));
     }
@@ -961,8 +961,8 @@ void SpriteFramesEditor::_zoom_out() {
         return;
     }
     if (thumbnail_zoom > min_thumbnail_zoom) {
-        thumbnail_zoom /= scale_ratio;
-        int thumbnail_size = (int)(thumbnail_default_size * thumbnail_zoom);
+        thumbnail_zoom     /= scale_ratio;
+        int thumbnail_size  = (int)(thumbnail_default_size * thumbnail_zoom);
         tree->set_fixed_column_width(thumbnail_size * 3 / 2);
         tree->set_fixed_icon_size(Size2(thumbnail_size, thumbnail_size));
     }
@@ -991,7 +991,7 @@ void SpriteFramesEditor::_update_library(bool p_skip_selector) {
         anim_names.sort_custom<StringName::AlphCompare>();
 
         for (List<StringName>::Element* E = anim_names.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             String name = E->get();
 
             TreeItem* it = animations->create_item(anim_root);
@@ -1538,7 +1538,7 @@ SpriteFramesEditor::SpriteFramesEditor() {
     file->connect("files_selected", this, "_file_load_request");
     tree->connect("gui_input", this, "_tree_input");
     loading_scene = false;
-    sel = -1;
+    sel           = -1;
 
     updating = false;
 
@@ -1641,16 +1641,16 @@ SpriteFramesEditor::SpriteFramesEditor() {
     file_split_sheet->connect("file_selected", this, "_prepare_sprite_sheet");
 
     // Config scale.
-    scale_ratio = 1.2f;
+    scale_ratio            = 1.2f;
     thumbnail_default_size = 96 * MAX(1, EDSCALE);
-    thumbnail_zoom = MAX(1.0f, EDSCALE);
-    max_thumbnail_zoom = 8.0f * MAX(1.0f, EDSCALE);
-    min_thumbnail_zoom = 0.1f * MAX(1.0f, EDSCALE);
+    thumbnail_zoom         = MAX(1.0f, EDSCALE);
+    max_thumbnail_zoom     = 8.0f * MAX(1.0f, EDSCALE);
+    min_thumbnail_zoom     = 0.1f * MAX(1.0f, EDSCALE);
     // Default the zoom to match the editor scale, but don't dezoom on editor
     // scales below 100% to prevent pixel art from looking bad.
-    sheet_zoom = MAX(1.0f, EDSCALE);
-    max_sheet_zoom = 16.0f * MAX(1.0f, EDSCALE);
-    min_sheet_zoom = 0.01f * MAX(1.0f, EDSCALE);
+    sheet_zoom             = MAX(1.0f, EDSCALE);
+    max_sheet_zoom         = 16.0f * MAX(1.0f, EDSCALE);
+    min_sheet_zoom         = 0.01f * MAX(1.0f, EDSCALE);
     _zoom_reset();
 }
 
@@ -1690,7 +1690,7 @@ void SpriteFramesEditorPlugin::make_visible(bool p_visible) {
 }
 
 SpriteFramesEditorPlugin::SpriteFramesEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor        = p_node;
     frames_editor = memnew(SpriteFramesEditor);
     frames_editor->set_custom_minimum_size(Size2(0, 300) * EDSCALE);
     button = editor->add_bottom_panel_item(TTR("SpriteFrames"), frames_editor);

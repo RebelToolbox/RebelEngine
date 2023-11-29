@@ -52,7 +52,7 @@ class RayCast : public Spatial {
     Node* debug_shape;
     Ref<Material> debug_material;
     Color debug_shape_custom_color = Color(0.0, 0.0, 0.0);
-    int debug_shape_thickness = 2;
+    int debug_shape_thickness      = 2;
     Vector<Vector3> debug_shape_vertices;
     Vector<Vector3> debug_line_vertices;
 

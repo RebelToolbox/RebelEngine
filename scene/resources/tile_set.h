@@ -51,7 +51,7 @@ public:
         float one_way_collision_margin;
 
         ShapeData() {
-            one_way_collision = false;
+            one_way_collision        = false;
             one_way_collision_margin = 1.0;
         }
     };
@@ -63,24 +63,24 @@ public:
     };
 
     enum AutotileBindings {
-        BIND_TOPLEFT = 1,
-        BIND_TOP = 2,
-        BIND_TOPRIGHT = 4,
-        BIND_LEFT = 8,
-        BIND_CENTER = 16,
-        BIND_RIGHT = 32,
-        BIND_BOTTOMLEFT = 64,
-        BIND_BOTTOM = 128,
+        BIND_TOPLEFT     = 1,
+        BIND_TOP         = 2,
+        BIND_TOPRIGHT    = 4,
+        BIND_LEFT        = 8,
+        BIND_CENTER      = 16,
+        BIND_RIGHT       = 32,
+        BIND_BOTTOMLEFT  = 64,
+        BIND_BOTTOM      = 128,
         BIND_BOTTOMRIGHT = 256,
 
-        BIND_IGNORE_TOPLEFT = 1 << 16,
-        BIND_IGNORE_TOP = 1 << 17,
-        BIND_IGNORE_TOPRIGHT = 1 << 18,
-        BIND_IGNORE_LEFT = 1 << 19,
-        BIND_IGNORE_CENTER = 1 << 20,
-        BIND_IGNORE_RIGHT = 1 << 21,
-        BIND_IGNORE_BOTTOMLEFT = 1 << 22,
-        BIND_IGNORE_BOTTOM = 1 << 23,
+        BIND_IGNORE_TOPLEFT     = 1 << 16,
+        BIND_IGNORE_TOP         = 1 << 17,
+        BIND_IGNORE_TOPRIGHT    = 1 << 18,
+        BIND_IGNORE_LEFT        = 1 << 19,
+        BIND_IGNORE_CENTER      = 1 << 20,
+        BIND_IGNORE_RIGHT       = 1 << 21,
+        BIND_IGNORE_BOTTOMLEFT  = 1 << 22,
+        BIND_IGNORE_BOTTOM      = 1 << 23,
         BIND_IGNORE_BOTTOMRIGHT = 1 << 24
     };
 
@@ -199,12 +199,12 @@ public:
     Vector2 autotile_get_subtile_for_bitmask(
         int p_id,
         uint16_t p_bitmask,
-        const Node* p_tilemap_node = nullptr,
+        const Node* p_tilemap_node     = nullptr,
         const Vector2& p_tile_location = Vector2()
     );
     Vector2 atlastile_get_subtile_by_priority(
         int p_id,
-        const Node* p_tilemap_node = nullptr,
+        const Node* p_tilemap_node     = nullptr,
         const Vector2& p_tile_location = Vector2()
     );
 
@@ -240,7 +240,7 @@ public:
         int p_id,
         const Ref<Shape2D>& p_shape,
         const Transform2D& p_transform,
-        bool p_one_way = false,
+        bool p_one_way                  = false,
         const Vector2& p_autotile_coord = Vector2()
     );
     int tile_get_shape_count(int p_id) const;

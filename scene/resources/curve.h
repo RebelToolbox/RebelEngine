@@ -57,24 +57,24 @@ public:
         TangentMode right_mode;
 
         Point() {
-            left_tangent = 0;
+            left_tangent  = 0;
             right_tangent = 0;
-            left_mode = TANGENT_FREE;
-            right_mode = TANGENT_FREE;
+            left_mode     = TANGENT_FREE;
+            right_mode    = TANGENT_FREE;
         }
 
         Point(
             Vector2 p_pos,
-            real_t p_left = 0,
-            real_t p_right = 0,
-            TangentMode p_left_mode = TANGENT_FREE,
+            real_t p_left            = 0,
+            real_t p_right           = 0,
+            TangentMode p_left_mode  = TANGENT_FREE,
             TangentMode p_right_mode = TANGENT_FREE
         ) {
-            pos = p_pos;
-            left_tangent = p_left;
+            pos           = p_pos;
+            left_tangent  = p_left;
             right_tangent = p_right;
-            left_mode = p_left_mode;
-            right_mode = p_right_mode;
+            left_mode     = p_left_mode;
+            right_mode    = p_right_mode;
         }
     };
 
@@ -86,9 +86,9 @@ public:
 
     int add_point(
         Vector2 p_pos,
-        real_t left_tangent = 0,
-        real_t right_tangent = 0,
-        TangentMode left_mode = TANGENT_FREE,
+        real_t left_tangent    = 0,
+        real_t right_tangent   = 0,
+        TangentMode left_mode  = TANGENT_FREE,
         TangentMode right_mode = TANGENT_FREE
     );
 
@@ -210,9 +210,9 @@ public:
     int get_point_count() const;
     void add_point(
         const Vector2& p_pos,
-        const Vector2& p_in = Vector2(),
+        const Vector2& p_in  = Vector2(),
         const Vector2& p_out = Vector2(),
-        int p_atpos = -1
+        int p_atpos          = -1
     );
     void set_point_position(int p_index, const Vector2& p_pos);
     Vector2 get_point_position(int p_index) const;
@@ -295,9 +295,9 @@ public:
     int get_point_count() const;
     void add_point(
         const Vector3& p_pos,
-        const Vector3& p_in = Vector3(),
+        const Vector3& p_in  = Vector3(),
         const Vector3& p_out = Vector3(),
-        int p_atpos = -1
+        int p_atpos          = -1
     );
     void set_point_position(int p_index, const Vector3& p_pos);
     Vector3 get_point_position(int p_index) const;

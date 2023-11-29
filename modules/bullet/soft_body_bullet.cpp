@@ -499,10 +499,10 @@ void SoftBodyBullet::setup_soft_body() {
     bt_soft_body->m_cfg.viterations = simulation_precision;
     bt_soft_body->m_cfg.diterations = simulation_precision;
     bt_soft_body->m_cfg.citerations = simulation_precision;
-    bt_soft_body->m_cfg.kDP = damping_coefficient;
-    bt_soft_body->m_cfg.kDG = drag_coefficient;
-    bt_soft_body->m_cfg.kPR = pressure_coefficient;
-    bt_soft_body->m_cfg.kMT = pose_matching_coefficient;
+    bt_soft_body->m_cfg.kDP         = damping_coefficient;
+    bt_soft_body->m_cfg.kDG         = drag_coefficient;
+    bt_soft_body->m_cfg.kPR         = pressure_coefficient;
+    bt_soft_body->m_cfg.kMT         = pose_matching_coefficient;
     bt_soft_body->setTotalMass(total_mass);
 
     btSoftBodyHelpers::ReoptimizeLinkOrder(bt_soft_body);

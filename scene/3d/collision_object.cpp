@@ -41,7 +41,7 @@ void CollisionObject::_notification(int p_what) {
             if (_are_collision_shapes_visible()) {
                 debug_shape_old_transform = get_global_transform();
                 for (Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-                     E = E->next()) {
+                     E                                    = E->next()) {
                     debug_shapes_to_update.insert(E->key());
                 }
                 _update_debug_shapes();
@@ -282,8 +282,8 @@ void CollisionObject::_update_shape_data(uint32_t p_owner) {
 
 void CollisionObject::_shape_changed(const Ref<Shape>& p_shape) {
     for (Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-         E = E->next()) {
-        ShapeData& shapedata = E->get();
+         E                                    = E->next()) {
+        ShapeData& shapedata         = E->get();
         ShapeData::ShapeBase* shapes = shapedata.shapes.ptrw();
         for (int i = 0; i < shapedata.shapes.size(); i++) {
             ShapeData::ShapeBase& s = shapes[i];
@@ -308,7 +308,7 @@ void CollisionObject::_update_debug_shapes() {
          shapedata_idx;
          shapedata_idx = shapedata_idx->next()) {
         if (shapes.has(shapedata_idx->get())) {
-            ShapeData& shapedata = shapes[shapedata_idx->get()];
+            ShapeData& shapedata         = shapes[shapedata_idx->get()];
             ShapeData::ShapeBase* shapes = shapedata.shapes.ptrw();
             for (int i = 0; i < shapedata.shapes.size(); i++) {
                 ShapeData::ShapeBase& s = shapes[i];
@@ -364,8 +364,8 @@ void CollisionObject::_update_debug_shapes() {
 
 void CollisionObject::_clear_debug_shapes() {
     for (Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-         E = E->next()) {
-        ShapeData& shapedata = E->get();
+         E                                    = E->next()) {
+        ShapeData& shapedata         = E->get();
         ShapeData::ShapeBase* shapes = shapedata.shapes.ptrw();
         for (int i = 0; i < shapedata.shapes.size(); i++) {
             ShapeData::ShapeBase& s = shapes[i];
@@ -389,8 +389,8 @@ void CollisionObject::_on_transform_changed() {
         && !debug_shape_old_transform.is_equal_approx(get_global_transform())) {
         debug_shape_old_transform = get_global_transform();
         for (Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-             E = E->next()) {
-            ShapeData& shapedata = E->get();
+             E                                    = E->next()) {
+            ShapeData& shapedata               = E->get();
             const ShapeData::ShapeBase* shapes = shapedata.shapes.ptr();
             for (int i = 0; i < shapedata.shapes.size(); i++) {
                 VS::get_singleton()->instance_set_transform(
@@ -656,7 +656,7 @@ bool CollisionObject::is_shape_owner_disabled(uint32_t p_owner) const {
 
 void CollisionObject::get_shape_owners(List<uint32_t>* r_owners) {
     for (Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         r_owners->push_back(E->key());
     }
 }
@@ -664,7 +664,7 @@ void CollisionObject::get_shape_owners(List<uint32_t>* r_owners) {
 Array CollisionObject::_get_shape_owners() {
     Array ret;
     for (Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         ret.push_back(E->key());
     }
 
@@ -678,7 +678,7 @@ void CollisionObject::shape_owner_set_transform(
     ERR_FAIL_COND(!shapes.has(p_owner));
 
     ShapeData& sd = shapes[p_owner];
-    sd.xform = p_transform;
+    sd.xform      = p_transform;
     for (int i = 0; i < sd.shapes.size(); i++) {
         if (area) {
             PhysicsServer::get_singleton()->area_set_shape_transform(
@@ -763,7 +763,7 @@ void CollisionObject::shape_owner_remove_shape(uint32_t p_owner, int p_shape) {
     ERR_FAIL_INDEX(p_shape, shapes[p_owner].shapes.size());
 
     ShapeData::ShapeBase& s = shapes[p_owner].shapes.write[p_shape];
-    int index_to_remove = s.index;
+    int index_to_remove     = s.index;
 
     if (area) {
         PhysicsServer::get_singleton()->area_remove_shape(rid, index_to_remove);
@@ -783,7 +783,7 @@ void CollisionObject::shape_owner_remove_shape(uint32_t p_owner, int p_shape) {
     shapes[p_owner].shapes.remove(p_shape);
 
     for (Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         for (int i = 0; i < E->get().shapes.size(); i++) {
             if (E->get().shapes[i].index > index_to_remove) {
                 E->get().shapes.write[i].index -= 1;
@@ -806,7 +806,7 @@ uint32_t CollisionObject::shape_find_owner(int p_shape_index) const {
     ERR_FAIL_INDEX_V(p_shape_index, total_subshapes, UINT32_MAX);
 
     for (const Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         for (int i = 0; i < E->get().shapes.size(); i++) {
             if (E->get().shapes[i].index == p_shape_index) {
                 return E->key();
@@ -822,10 +822,10 @@ uint32_t CollisionObject::shape_find_owner(int p_shape_index) const {
 }
 
 CollisionObject::CollisionObject(RID p_rid, bool p_area) {
-    rid = p_rid;
-    area = p_area;
+    rid                   = p_rid;
+    area                  = p_area;
     capture_input_on_drag = false;
-    ray_pickable = true;
+    ray_pickable          = true;
     set_notify_transform(true);
     total_subshapes = 0;
 
@@ -869,7 +869,7 @@ String CollisionObject::get_configuration_warning() const {
 
 CollisionObject::CollisionObject() {
     capture_input_on_drag = false;
-    ray_pickable = true;
+    ray_pickable          = true;
     set_notify_transform(true);
     // owner=
 

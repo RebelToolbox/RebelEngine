@@ -36,7 +36,7 @@ void BitMap::create(const Size2& p_size) {
     ERR_FAIL_COND(p_size.width < 1);
     ERR_FAIL_COND(p_size.height < 1);
 
-    width = p_size.width;
+    width  = p_size.width;
     height = p_size.height;
     bitmask.resize((((width * height) - 1) / 8) + 1);
     memset(bitmask.ptrw(), 0, bitmask.size());
@@ -54,11 +54,11 @@ void BitMap::create_from_image_alpha(
     create(Size2(img->get_width(), img->get_height()));
 
     PoolVector<uint8_t>::Read r = img->get_data().read();
-    uint8_t* w = bitmask.ptrw();
+    uint8_t* w                  = bitmask.ptrw();
 
     for (int i = 0; i < width * height; i++) {
         int bbyte = i / 8;
-        int bbit = i % 8;
+        int bbit  = i % 8;
         if (r[i * 2 + 1] / 255.0 > p_threshold) {
             w[bbyte] |= (1 << bbit);
         }
@@ -67,16 +67,16 @@ void BitMap::create_from_image_alpha(
 
 void BitMap::set_bit_rect(const Rect2& p_rect, bool p_value) {
     Rect2i current = Rect2i(0, 0, width, height).clip(p_rect);
-    uint8_t* data = bitmask.ptrw();
+    uint8_t* data  = bitmask.ptrw();
 
     for (int i = current.position.x; i < current.position.x + current.size.x;
          i++) {
         for (int j = current.position.y;
              j < current.position.y + current.size.y;
              j++) {
-            int ofs = width * j + i;
+            int ofs   = width * j + i;
             int bbyte = ofs / 8;
-            int bbit = ofs % 8;
+            int bbit  = ofs % 8;
 
             uint8_t b = data[bbyte];
 
@@ -92,9 +92,9 @@ void BitMap::set_bit_rect(const Rect2& p_rect, bool p_value) {
 }
 
 int BitMap::get_true_bit_count() const {
-    int ds = bitmask.size();
+    int ds           = bitmask.size();
     const uint8_t* d = bitmask.ptr();
-    int c = 0;
+    int c            = 0;
 
     // fast, almost branchless version
 
@@ -119,9 +119,9 @@ void BitMap::set_bit(const Point2& p_pos, bool p_value) {
     ERR_FAIL_INDEX(x, width);
     ERR_FAIL_INDEX(y, height);
 
-    int ofs = width * y + x;
+    int ofs   = width * y + x;
     int bbyte = ofs / 8;
-    int bbit = ofs % 8;
+    int bbit  = ofs % 8;
 
     uint8_t b = bitmask[bbyte];
 
@@ -140,9 +140,9 @@ bool BitMap::get_bit(const Point2& p_pos) const {
     ERR_FAIL_INDEX_V(x, width, false);
     ERR_FAIL_INDEX_V(y, height, false);
 
-    int ofs = width * y + x;
+    int ofs   = width * y + x;
     int bbyte = ofs / 8;
-    int bbit = ofs % 8;
+    int bbit  = ofs % 8;
 
     return (bitmask[bbyte] & (1 << bbit)) != 0;
 }
@@ -168,14 +168,14 @@ Dictionary BitMap::_get_data() const {
 
 Vector<Vector2> BitMap::_march_square(const Rect2i& rect, const Point2i& start)
     const {
-    int stepx = 0;
-    int stepy = 0;
-    int prevx = 0;
-    int prevy = 0;
-    int startx = start.x;
-    int starty = start.y;
-    int curx = startx;
-    int cury = starty;
+    int stepx          = 0;
+    int stepy          = 0;
+    int prevx          = 0;
+    int prevy          = 0;
+    int startx         = start.x;
+    int starty         = start.y;
+    int curx           = startx;
+    int cury           = starty;
     unsigned int count = 0;
     Set<Point2i> case9s;
     Set<Point2i> case6s;
@@ -193,14 +193,14 @@ Vector<Vector2> BitMap::_march_square(const Rect2i& rect, const Point2i& start)
             | 4 | 8 | <- current pixel (curx,cury)
             +---+---+
             */
-            Point2i tl = Point2i(curx - 1, cury - 1);
-            sv += (rect.has_point(tl) && get_bit(tl)) ? 1 : 0;
-            Point2i tr = Point2i(curx, cury - 1);
-            sv += (rect.has_point(tr) && get_bit(tr)) ? 2 : 0;
-            Point2i bl = Point2i(curx - 1, cury);
-            sv += (rect.has_point(bl) && get_bit(bl)) ? 4 : 0;
-            Point2i br = Point2i(curx, cury);
-            sv += (rect.has_point(br) && get_bit(br)) ? 8 : 0;
+            Point2i tl  = Point2i(curx - 1, cury - 1);
+            sv         += (rect.has_point(tl) && get_bit(tl)) ? 1 : 0;
+            Point2i tr  = Point2i(curx, cury - 1);
+            sv         += (rect.has_point(tr) && get_bit(tr)) ? 2 : 0;
+            Point2i bl  = Point2i(curx - 1, cury);
+            sv         += (rect.has_point(bl) && get_bit(bl)) ? 4 : 0;
+            Point2i br  = Point2i(curx, cury);
+            sv         += (rect.has_point(br) && get_bit(br)) ? 8 : 0;
             ERR_FAIL_COND_V(sv == 0 || sv == 15, Vector<Vector2>());
         }
 
@@ -352,9 +352,9 @@ static float perpendicular_distance(
     } else if (start.y == end.y) {
         res = Math::absf(i.y - end.y);
     } else {
-        slope = (end.y - start.y) / (end.x - start.x);
+        slope     = (end.y - start.y) / (end.x - start.x);
         intercept = start.y - (slope * start.x);
-        res = Math::absf(slope * i.x - i.y + intercept)
+        res       = Math::absf(slope * i.x - i.y + intercept)
             / Math::sqrt(Math::pow(slope, 2.0f) + 1.0);
     }
     return res;
@@ -365,13 +365,13 @@ static Vector<Vector2> rdp(const Vector<Vector2>& v, float optimization) {
         return v;
     }
 
-    int index = -1;
+    int index  = -1;
     float dist = 0;
     // not looping first and last point
     for (size_t i = 1, size = v.size(); i < size - 1; ++i) {
         float cdist = perpendicular_distance(v[i], v[0], v[v.size() - 1]);
         if (cdist > dist) {
-            dist = cdist;
+            dist  = cdist;
             index = static_cast<int>(i);
         }
     }
@@ -416,8 +416,8 @@ static Vector<Vector2> reduce(
         return points;
     }
 
-    float maxEp = MIN(rect.size.width, rect.size.height);
-    float ep = CLAMP(epsilon, 0.0, maxEp / 2);
+    float maxEp            = MIN(rect.size.width, rect.size.height);
+    float ep               = CLAMP(epsilon, 0.0, maxEp / 2);
     Vector<Vector2> result = rdp(points, ep);
 
     Vector2 last = result[result.size() - 1];
@@ -448,15 +448,15 @@ static void fill_bits(
     int stack_size = 0;
 
     Point2i pos = p_pos;
-    int next_i = 0;
-    int next_j = 0;
+    int next_i  = 0;
+    int next_j  = 0;
 
     bool reenter = true;
-    bool popped = false;
+    bool popped  = false;
     do {
         if (reenter) {
-            next_i = pos.x - 1;
-            next_j = pos.y - 1;
+            next_i  = pos.x - 1;
+            next_j  = pos.y - 1;
             reenter = false;
         }
 
@@ -489,7 +489,7 @@ static void fill_bits(
                     stack.set(stack_size, se);
                     stack_size++;
 
-                    pos = Point2i(i, j);
+                    pos     = Point2i(i, j);
                     reenter = true;
                     break;
                 }
@@ -502,7 +502,7 @@ static void fill_bits(
             if (stack_size) {
                 FillBitsStackEntry se = stack.get(stack_size - 1);
                 stack_size--;
-                pos = se.pos;
+                pos    = se.pos;
                 next_i = se.i;
                 next_j = se.j;
                 popped = true;
@@ -555,7 +555,7 @@ void BitMap::grow_mask(int p_pixels, const Rect2& p_rect) {
     }
 
     bool bit_value = p_pixels > 0;
-    p_pixels = Math::abs(p_pixels);
+    p_pixels       = Math::abs(p_pixels);
 
     Rect2i r = Rect2i(0, 0, width, height).clip(p_rect);
 
@@ -654,8 +654,8 @@ void BitMap::resize(const Size2& p_new_size) {
         }
     }
 
-    width = new_bitmap->width;
-    height = new_bitmap->height;
+    width   = new_bitmap->width;
+    height  = new_bitmap->height;
     bitmask = new_bitmap->bitmask;
 }
 
@@ -754,7 +754,7 @@ void BitMap::_bind_methods() {
 }
 
 BitMap::BitMap() {
-    width = 0;
+    width  = 0;
     height = 0;
 }
 

@@ -58,7 +58,7 @@ Error GDScriptLanguageProtocol::LSPeer::handle_data() {
                 return ERR_BUSY;
             }
             char* r = (char*)req_buf;
-            int l = req_pos;
+            int l   = req_pos;
 
             // End of headers
             if (l > 3 && r[l] == '\n' && r[l - 1] == '\r' && r[l - 2] == '\n'
@@ -67,8 +67,8 @@ Error GDScriptLanguageProtocol::LSPeer::handle_data() {
                 String header;
                 header.parse_utf8(r);
                 content_length = header.substr(16).to_int();
-                has_header = true;
-                req_pos = 0;
+                has_header     = true;
+                req_pos        = 0;
                 break;
             }
             req_pos++;
@@ -77,7 +77,7 @@ Error GDScriptLanguageProtocol::LSPeer::handle_data() {
     if (has_header) {
         while (req_pos < content_length) {
             if (req_pos >= LSP_MAX_BUFFER_SIZE) {
-                req_pos = 0;
+                req_pos    = 0;
                 has_header = false;
                 ERR_FAIL_COND_V_MSG(
                     req_pos >= LSP_MAX_BUFFER_SIZE,
@@ -100,7 +100,7 @@ Error GDScriptLanguageProtocol::LSPeer::handle_data() {
         msg.parse_utf8((const char*)req_buf, req_pos);
 
         // Reset to read again
-        req_pos = 0;
+        req_pos    = 0;
         has_header = false;
 
         // Response
@@ -173,11 +173,11 @@ String GDScriptLanguageProtocol::process_message(const String& p_text) {
 }
 
 String GDScriptLanguageProtocol::format_output(const String& p_text) {
-    String header = "Content-Length: ";
-    CharString charstr = p_text.utf8();
-    size_t len = charstr.length();
-    header += itos(len);
-    header += "\r\n\r\n";
+    String header       = "Content-Length: ";
+    CharString charstr  = p_text.utf8();
+    size_t len          = charstr.length();
+    header             += itos(len);
+    header             += "\r\n\r\n";
 
     return header + p_text;
 }
@@ -227,7 +227,7 @@ Dictionary GDScriptLanguageProtocol::initialize(const Dictionary& p_params) {
     lsp::InitializeResult ret;
 
     String root_uri = p_params["rootUri"];
-    String root = p_params["rootPath"];
+    String root     = p_params["rootPath"];
     bool is_same_workspace;
 #ifndef WINDOWS_ENABLED
     is_same_workspace = root.to_lower() == workspace->root.to_lower();
@@ -257,7 +257,7 @@ Dictionary GDScriptLanguageProtocol::initialize(const Dictionary& p_params) {
         Ref<LSPeer> peer = clients.get(latest_client_id);
         if (peer != nullptr) {
             String msg = JSON::print(request);
-            msg = format_output(msg);
+            msg        = format_output(msg);
             (*peer)->res_queue.push_back(msg.utf8());
         }
     }
@@ -279,7 +279,7 @@ void GDScriptLanguageProtocol::initialized(const Variant& p_params) {
          E;
          E = E->next()) {
         lsp::GodotNativeClassInfo gdclass;
-        gdclass.name = E->get().name;
+        gdclass.name      = E->get().name;
         gdclass.class_doc = &(E->get());
         if (ClassDB::ClassInfo* ptr =
                 ClassDB::classes.getptr(StringName(E->get().name))) {
@@ -297,7 +297,7 @@ void GDScriptLanguageProtocol::poll() {
     }
     const int* id = nullptr;
     while ((id = clients.next(id))) {
-        Ref<LSPeer> peer = clients.get(*id);
+        Ref<LSPeer> peer             = clients.get(*id);
         StreamPeerTCP::Status status = peer->connection->get_status();
         if (status == StreamPeerTCP::STATUS_NONE
             || status == StreamPeerTCP::STATUS_ERROR) {
@@ -306,7 +306,7 @@ void GDScriptLanguageProtocol::poll() {
         } else {
             if (peer->connection->get_available_bytes() > 0) {
                 latest_client_id = *id;
-                Error err = peer->handle_data();
+                Error err        = peer->handle_data();
                 if (err != OK && err != ERR_BUSY) {
                     on_client_disconnected(*id);
                     id = nullptr;
@@ -352,8 +352,8 @@ void GDScriptLanguageProtocol::notify_client(
     ERR_FAIL_COND(peer == nullptr);
 
     Dictionary message = make_notification(p_method, p_params);
-    String msg = JSON::print(message);
-    msg = format_output(msg);
+    String msg         = JSON::print(message);
+    msg                = format_output(msg);
     peer->res_queue.push_back(msg.utf8());
 }
 
@@ -376,7 +376,7 @@ void GDScriptLanguageProtocol::request_client(
     Dictionary message = make_request(p_method, p_params, next_server_id);
     next_server_id++;
     String msg = JSON::print(message);
-    msg = format_output(msg);
+    msg        = format_output(msg);
     peer->res_queue.push_back(msg.utf8());
 }
 

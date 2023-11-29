@@ -58,15 +58,15 @@ public:
     virtual Ref<WebRTCDataChannel> create_data_channel(
         String p_label,
         Dictionary p_options = Dictionary()
-    ) = 0;
-    virtual Error create_offer() = 0;
+    )                                                             = 0;
+    virtual Error create_offer()                                  = 0;
     virtual Error set_remote_description(String type, String sdp) = 0;
-    virtual Error set_local_description(String type, String sdp) = 0;
+    virtual Error set_local_description(String type, String sdp)  = 0;
     virtual Error add_ice_candidate(
         String sdpMidName,
         int sdpMlineIndexName,
         String sdpName
-    ) = 0;
+    )                    = 0;
     virtual Error poll() = 0;
     virtual void close() = 0;
 

@@ -52,7 +52,7 @@ class Shape2DSW;
 
 class ShapeOwner2DSW : public RID_Data {
 public:
-    virtual void _shape_changed() = 0;
+    virtual void _shape_changed()                 = 0;
     virtual void remove_shape(Shape2DSW* p_shape) = 0;
 
     virtual ~ShapeOwner2DSW() {}
@@ -121,9 +121,9 @@ public:
         Vector2& r_normal
     ) const = 0;
     virtual real_t get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-        const = 0;
+        const                                    = 0;
     virtual void set_data(const Variant& p_data) = 0;
-    virtual Variant get_data() const = 0;
+    virtual Variant get_data() const             = 0;
 
     _FORCE_INLINE_ void set_custom_bias(real_t p_bias) {
         custom_bias = p_bias;
@@ -158,7 +158,7 @@ public:
             if (Math::abs(p_normal.dot(p_cast.normalized()))
                 < (1.0 - _SEGMENT_IS_VALID_SUPPORT_THRESHOLD)) {
                 // make line because they are parallel
-                r_amount = 2;
+                r_amount      = 2;
                 r_supports[1] = r_supports[0] + p_cast;
             } else if (p_cast.dot(p_normal) > 0) {
                 // normal points towards cast, add cast
@@ -208,7 +208,7 @@ public:
     ) const {                                                                  \
         real_t mina, maxa;                                                     \
         real_t minb, maxb;                                                     \
-        Transform2D ofsb = p_transform;                                        \
+        Transform2D ofsb  = p_transform;                                       \
         ofsb.elements[2] += p_cast;                                            \
         project_range(p_normal, p_transform, mina, maxa);                      \
         project_range(p_normal, ofsb, minb, maxb);                             \
@@ -498,7 +498,7 @@ public:
 
         // figure out scale at point
         Vector2 local_normal = p_transform.basis_xform_inv(p_normal);
-        real_t scale = local_normal.length();
+        real_t scale         = local_normal.length();
 
         r_min = d - (radius)*scale;
         r_max = d + (radius)*scale;
@@ -675,9 +675,9 @@ public:
     ) const {
         // no matter the angle, the box is mirrored anyway
         Vector2 n = p_transform.basis_xform_inv(p_normal).normalized();
-        real_t h = (n.y > 0) ? height : -height;
+        real_t h  = (n.y > 0) ? height : -height;
 
-        n *= radius;
+        n   *= radius;
         n.y += h * 0.5;
 
         r_max = p_normal.dot(p_transform.xform(n));

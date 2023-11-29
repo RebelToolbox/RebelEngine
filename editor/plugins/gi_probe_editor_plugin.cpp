@@ -86,7 +86,7 @@ void GIProbeEditorPlugin::_bind_methods() {
 
 GIProbeEditorPlugin::GIProbeEditorPlugin(EditorNode* p_node) {
     editor = p_node;
-    bake = memnew(ToolButton);
+    bake   = memnew(ToolButton);
     bake->set_icon(editor->get_gui_base()->get_icon("Bake", "EditorIcons"));
     bake->set_text(TTR("Bake GI Probe"));
     bake->hide();
@@ -95,8 +95,8 @@ GIProbeEditorPlugin::GIProbeEditorPlugin(EditorNode* p_node) {
     gi_probe = nullptr;
 
     GIProbe::bake_begin_function = bake_func_begin;
-    GIProbe::bake_step_function = bake_func_step;
-    GIProbe::bake_end_function = bake_func_end;
+    GIProbe::bake_step_function  = bake_func_step;
+    GIProbe::bake_end_function   = bake_func_end;
 }
 
 GIProbeEditorPlugin::~GIProbeEditorPlugin() {}

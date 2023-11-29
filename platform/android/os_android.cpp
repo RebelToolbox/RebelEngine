@@ -138,7 +138,7 @@ Error OS_Android::initialize(
     int p_audio_driver
 ) {
     bool use_gl3 = godot_java->get_gles_version_code() >= 0x00030000;
-    use_gl3 = use_gl3
+    use_gl3      = use_gl3
            && (GLOBAL_GET("rendering/quality/driver/driver_name") == "GLES3");
     bool gl_initialization_error = false;
 
@@ -152,7 +152,7 @@ Error OS_Android::initialize(
             } else {
                 if (GLOBAL_GET("rendering/quality/driver/fallback_to_gles2")) {
                     p_video_driver = VIDEO_DRIVER_GLES2;
-                    use_gl3 = false;
+                    use_gl3        = false;
                     continue;
                 } else {
                     gl_initialization_error = true;
@@ -418,14 +418,14 @@ void OS_Android::hide_virtual_keyboard() {
 }
 
 void OS_Android::init_video_mode(int p_video_width, int p_video_height) {
-    default_videomode.width = p_video_width;
-    default_videomode.height = p_video_height;
+    default_videomode.width      = p_video_width;
+    default_videomode.height     = p_video_height;
     default_videomode.fullscreen = true;
-    default_videomode.resizable = false;
+    default_videomode.resizable  = false;
 }
 
 void OS_Android::set_display_size(Size2 p_size) {
-    default_videomode.width = p_size.x;
+    default_videomode.width  = p_size.x;
     default_videomode.height = p_size.y;
 }
 
@@ -576,18 +576,18 @@ OS_Android::OS_Android(
     GodotIOJavaWrapper* p_godot_io_java,
     bool p_use_apk_expansion
 ) {
-    use_apk_expansion = p_use_apk_expansion;
-    default_videomode.width = 800;
-    default_videomode.height = 600;
+    use_apk_expansion            = p_use_apk_expansion;
+    default_videomode.width      = 800;
+    default_videomode.height     = 600;
     default_videomode.fullscreen = true;
-    default_videomode.resizable = false;
+    default_videomode.resizable  = false;
 
-    main_loop = NULL;
+    main_loop     = NULL;
     gl_extensions = NULL;
     // rasterizer = NULL;
-    use_gl2 = false;
+    use_gl2       = false;
 
-    godot_java = p_godot_java;
+    godot_java    = p_godot_java;
     godot_io_java = p_godot_io_java;
 
     Vector<Logger*> loggers;

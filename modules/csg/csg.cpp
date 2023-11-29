@@ -79,8 +79,8 @@ inline static Vector2 interpolate_triangle_uv(
         return p_uvs[2];
     }
 
-    Vector2 edge1 = p_vertices[1] - p_vertices[0];
-    Vector2 edge2 = p_vertices[2] - p_vertices[0];
+    Vector2 edge1         = p_vertices[1] - p_vertices[0];
+    Vector2 edge2         = p_vertices[2] - p_vertices[0];
     Vector2 interpolation = p_interpolation_point - p_vertices[0];
 
     float edge1_on_edge1 = edge1.dot(edge1);
@@ -114,8 +114,8 @@ static inline bool ray_intersects_triangle(
 ) {
     Vector3 edge1 = p_vertices[1] - p_vertices[0];
     Vector3 edge2 = p_vertices[2] - p_vertices[0];
-    Vector3 h = p_dir.cross(edge2);
-    real_t a = edge1.dot(h);
+    Vector3 h     = p_dir.cross(edge2);
+    real_t a      = edge1.dot(h);
     // Check if ray is parallel to triangle.
     if (Math::is_zero_approx(a)) {
         return false;
@@ -123,13 +123,13 @@ static inline bool ray_intersects_triangle(
     real_t f = 1.0 / a;
 
     Vector3 s = p_from - p_vertices[0];
-    real_t u = f * s.dot(h);
+    real_t u  = f * s.dot(h);
     if (u < 0.0 - p_tolerance || u > 1.0 + p_tolerance) {
         return false;
     }
 
     Vector3 q = s.cross(edge1);
-    real_t v = f * p_dir.dot(q);
+    real_t v  = f * p_dir.dot(q);
     if (v < 0.0 - p_tolerance || u + v > 1.0 + p_tolerance) {
         return false;
     }
@@ -160,8 +160,8 @@ inline bool is_point_in_triangle(
             return false;
         }
         Vector3 shift_by;
-        shift_by[p_shifted] = 1;
-        Vector3 shifted_point = p_point + shift_by;
+        shift_by[p_shifted]         = 1;
+        Vector3 shifted_point       = p_point + shift_by;
         Vector3 shifted_vertices[3] = {
             p_vertices[0] + shift_by,
             p_vertices[1] + shift_by,
@@ -211,10 +211,10 @@ inline static bool are_segements_parallel(
     const Vector2 p_segment2_points[2],
     float p_vertex_snap2
 ) {
-    Vector2 segment1 = p_segment1_points[1] - p_segment1_points[0];
-    Vector2 segment2 = p_segment2_points[1] - p_segment2_points[0];
-    real_t segment1_length2 = segment1.dot(segment1);
-    real_t segment2_length2 = segment2.dot(segment2);
+    Vector2 segment1            = p_segment1_points[1] - p_segment1_points[0];
+    Vector2 segment2            = p_segment2_points[1] - p_segment2_points[0];
+    real_t segment1_length2     = segment1.dot(segment1);
+    real_t segment2_length2     = segment2.dot(segment2);
     real_t segment_onto_segment = segment2.dot(segment1);
 
     if (segment1_length2 < p_vertex_snap2
@@ -240,7 +240,7 @@ inline static bool are_segements_parallel(
 
 void CSGBrush::_regen_face_aabbs() {
     for (int i = 0; i < faces.size(); i++) {
-        faces.write[i].aabb = AABB();
+        faces.write[i].aabb          = AABB();
         faces.write[i].aabb.position = faces[i].vertices[0];
         faces.write[i].aabb.expand_to(faces[i].vertices[1]);
         faces.write[i].aabb.expand_to(faces[i].vertices[2]);
@@ -260,22 +260,22 @@ void CSGBrush::build_from_faces(
 
     ERR_FAIL_COND((vc % 3) != 0);
 
-    PoolVector<Vector3>::Read rv = p_vertices.read();
-    int uvc = p_uvs.size();
-    PoolVector<Vector2>::Read ruv = p_uvs.read();
-    int sc = p_smooth.size();
-    PoolVector<bool>::Read rs = p_smooth.read();
-    int mc = p_materials.size();
+    PoolVector<Vector3>::Read rv       = p_vertices.read();
+    int uvc                            = p_uvs.size();
+    PoolVector<Vector2>::Read ruv      = p_uvs.read();
+    int sc                             = p_smooth.size();
+    PoolVector<bool>::Read rs          = p_smooth.read();
+    int mc                             = p_materials.size();
     PoolVector<Ref<Material>>::Read rm = p_materials.read();
-    int ic = p_invert_faces.size();
-    PoolVector<bool>::Read ri = p_invert_faces.read();
+    int ic                             = p_invert_faces.size();
+    PoolVector<bool>::Read ri          = p_invert_faces.read();
 
     Map<Ref<Material>, int> material_map;
 
     faces.resize(p_vertices.size() / 3);
 
     for (int i = 0; i < faces.size(); i++) {
-        Face& f = faces.write[i];
+        Face& f       = faces.write[i];
         f.vertices[0] = rv[i * 3 + 0];
         f.vertices[1] = rv[i * 3 + 1];
         f.vertices[2] = rv[i * 3 + 2];
@@ -307,7 +307,7 @@ void CSGBrush::build_from_faces(
                 if (E) {
                     f.material = E->get();
                 } else {
-                    f.material = material_map.size();
+                    f.material        = material_map.size();
                     material_map[mat] = f.material;
                 }
 
@@ -319,7 +319,7 @@ void CSGBrush::build_from_faces(
 
     materials.resize(material_map.size());
     for (Map<Ref<Material>, int>::Element* E = material_map.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         materials.write[E->get()] = E->key();
     }
 
@@ -327,7 +327,7 @@ void CSGBrush::build_from_faces(
 }
 
 void CSGBrush::copy_from(const CSGBrush& p_brush, const Transform& p_xform) {
-    faces = p_brush.faces;
+    faces     = p_brush.faces;
     materials = p_brush.materials;
 
     for (int i = 0; i < faces.size(); i++) {
@@ -391,7 +391,7 @@ void CSGBrushOperation::merge_brushes(
             Vector2 uvs[3];
             for (int j = 0; j < 3; j++) {
                 points[j] = p_brush_a.faces[i].vertices[j];
-                uvs[j] = p_brush_a.faces[i].uvs[j];
+                uvs[j]    = p_brush_a.faces[i].uvs[j];
             }
             mesh_merge.add_face(
                 points,
@@ -423,7 +423,7 @@ void CSGBrushOperation::merge_brushes(
             Vector2 uvs[3];
             for (int j = 0; j < 3; j++) {
                 points[j] = p_brush_b.faces[i].vertices[j];
-                uvs[j] = p_brush_b.faces[i].uvs[j];
+                uvs[j]    = p_brush_b.faces[i].uvs[j];
             }
             mesh_merge.add_face(
                 points,
@@ -666,14 +666,14 @@ int CSGBrushOperation::MeshMerge::_create_bvh(
         r_max_alloc
     );
 
-    int index = r_max_alloc++;
+    int index     = r_max_alloc++;
     FaceBVH* _new = &facebvhptr[index];
-    _new->aabb = aabb;
-    _new->center = aabb.position + aabb.size * 0.5;
-    _new->face = -1;
-    _new->left = left;
-    _new->right = right;
-    _new->next = -1;
+    _new->aabb    = aabb;
+    _new->center  = aabb.position + aabb.size * 0.5;
+    _new->face    = -1;
+    _new->left    = left;
+    _new->right   = right;
+    _new->next    = -1;
 
     return index;
 }
@@ -689,7 +689,7 @@ void CSGBrushOperation::MeshMerge::_add_distance(
 
     // Check if distance exists.
     for (const List<real_t>::Element* E = intersections.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         if (Math::is_equal_approx(**E, p_distance)) {
             return;
         }
@@ -704,7 +704,7 @@ bool CSGBrushOperation::MeshMerge::_bvh_inside(
     int p_bvh_first,
     int p_face_idx
 ) const {
-    Face face = faces[p_face_idx];
+    Face face              = faces[p_face_idx];
     Vector3 face_points[3] = {
         points[face.points[0]],
         points[face.points[1]],
@@ -718,26 +718,26 @@ bool CSGBrushOperation::MeshMerge::_bvh_inside(
     uint32_t* stack = (uint32_t*)alloca(sizeof(int) * p_max_depth);
 
     enum {
-        TEST_AABB_BIT = 0,
-        VISIT_LEFT_BIT = 1,
-        VISIT_RIGHT_BIT = 2,
-        VISIT_DONE_BIT = 3,
+        TEST_AABB_BIT     = 0,
+        VISIT_LEFT_BIT    = 1,
+        VISIT_RIGHT_BIT   = 2,
+        VISIT_DONE_BIT    = 3,
         VISITED_BIT_SHIFT = 29,
-        NODE_IDX_MASK = (1 << VISITED_BIT_SHIFT) - 1,
-        VISITED_BIT_MASK = ~NODE_IDX_MASK
+        NODE_IDX_MASK     = (1 << VISITED_BIT_SHIFT) - 1,
+        VISITED_BIT_MASK  = ~NODE_IDX_MASK
     };
 
     List<real_t> intersectionsA;
     List<real_t> intersectionsB;
 
     int level = 0;
-    int pos = p_bvh_first;
-    stack[0] = pos;
+    int pos   = p_bvh_first;
+    stack[0]  = pos;
 
     while (true) {
-        uint32_t node = stack[level] & NODE_IDX_MASK;
+        uint32_t node                     = stack[level] & NODE_IDX_MASK;
         const FaceBVH* current_facebvhptr = &(facebvhptr[node]);
-        bool done = false;
+        bool done                         = false;
 
         switch (stack[level] >> VISITED_BIT_SHIFT) {
             case TEST_AABB_BIT: {
@@ -830,7 +830,7 @@ bool CSGBrushOperation::MeshMerge::_bvh_inside(
             }
 
             case VISIT_RIGHT_BIT: {
-                stack[level] = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
+                stack[level]     = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
                 stack[level + 1] = current_facebvhptr->right | TEST_AABB_BIT;
                 level++;
                 continue;
@@ -874,9 +874,9 @@ void CSGBrushOperation::MeshMerge::mark_inside_faces() {
     bool first_b = true;
 
     for (int i = 0; i < faces.size(); i++) {
-        facebvh[i].left = -1;
-        facebvh[i].right = -1;
-        facebvh[i].face = i;
+        facebvh[i].left          = -1;
+        facebvh[i].right         = -1;
+        facebvh[i].face          = i;
         facebvh[i].aabb.position = points[faces[i].points[0]];
         facebvh[i].aabb.expand_to(points[faces[i].points[1]]);
         facebvh[i].aabb.expand_to(points[faces[i].points[2]]);
@@ -887,14 +887,14 @@ void CSGBrushOperation::MeshMerge::mark_inside_faces() {
 
         if (faces[i].from_b) {
             if (first_b) {
-                aabb_b = facebvh[i].aabb;
+                aabb_b  = facebvh[i].aabb;
                 first_b = false;
             } else {
                 aabb_b.merge_with(facebvh[i].aabb);
             }
         } else {
             if (first_a) {
-                aabb_a = facebvh[i].aabb;
+                aabb_a  = facebvh[i].aabb;
                 first_a = false;
             } else {
                 aabb_a.merge_with(facebvh[i].aabb);
@@ -977,7 +977,7 @@ void CSGBrushOperation::MeshMerge::add_face(
 
     if (p_material.is_valid()) {
         if (!materials.has(p_material)) {
-            face.material_idx = materials.size();
+            face.material_idx     = materials.size();
             materials[p_material] = face.material_idx;
         } else {
             face.material_idx = materials[p_material];
@@ -988,7 +988,7 @@ void CSGBrushOperation::MeshMerge::add_face(
 
     for (int k = 0; k < 3; k++) {
         face.points[k] = indices[k];
-        face.uvs[k] = p_uvs[k];
+        face.uvs[k]    = p_uvs[k];
     }
 
     faces.push_back(face);
@@ -1038,7 +1038,7 @@ void CSGBrushOperation::Build2DFaces::_add_vertex_idx_sorted(
         // The second vertex.
         if (r_vertex_indices.size() == 1) {
             Vector2 first_point = vertices[r_vertex_indices[0]].point;
-            Vector2 new_point = vertices[p_new_vertex_index].point;
+            Vector2 new_point   = vertices[p_new_vertex_index].point;
 
             // Sort along the axis with the greatest difference.
             int axis = 0;
@@ -1098,7 +1098,7 @@ void CSGBrushOperation::Build2DFaces::_merge_faces(
     // first vertex.
     for (int sorted_idx = 1; sorted_idx < segments; ++sorted_idx) {
         int closest_idx = 0;
-        int inner_idx = p_segment_indices[sorted_idx];
+        int inner_idx   = p_segment_indices[sorted_idx];
 
         if (sorted_idx > segments / 2) {
             // Merge to other segment end.
@@ -1180,7 +1180,7 @@ void CSGBrushOperation::Build2DFaces::_merge_faces(
 
         // Split faces using degenerate points.
         for (int face_idx = 0; face_idx < faces.size(); ++face_idx) {
-            Face2D face = faces[face_idx];
+            Face2D face               = faces[face_idx];
             Vertex2D face_vertices[3] = {
                 vertices[face.vertex_idx[0]],
                 vertices[face.vertex_idx[1]],
@@ -1195,7 +1195,7 @@ void CSGBrushOperation::Build2DFaces::_merge_faces(
             for (int point_idx = 0; point_idx < degenerate_points.size();
                  ++point_idx) {
                 int degenerate_idx = degenerate_points[point_idx];
-                Vector2 point_2D = vertices[degenerate_idx].point;
+                Vector2 point_2D   = vertices[degenerate_idx].point;
 
                 // Check if point is existing face vertex.
                 bool existing = false;
@@ -1271,7 +1271,7 @@ void CSGBrushOperation::Build2DFaces::_find_edge_intersections(
 ) {
     // For each face.
     for (int face_idx = 0; face_idx < faces.size(); ++face_idx) {
-        Face2D face = faces[face_idx];
+        Face2D face               = faces[face_idx];
         Vertex2D face_vertices[3] = {
             vertices[face.vertex_idx[0]],
             vertices[face.vertex_idx[1]],
@@ -1335,7 +1335,7 @@ void CSGBrushOperation::Build2DFaces::_find_edge_intersections(
                 // Add the intersection point as a new vertex.
                 Vertex2D new_vertex;
                 new_vertex.point = intersection_point;
-                new_vertex.uv = interpolate_segment_uv(
+                new_vertex.uv    = interpolate_segment_uv(
                     edge_points,
                     edge_uvs,
                     intersection_point
@@ -1397,7 +1397,7 @@ int CSGBrushOperation::Build2DFaces::_insert_point(const Vector2& p_point) {
     int new_vertex_idx = -1;
 
     for (int face_idx = 0; face_idx < faces.size(); ++face_idx) {
-        Face2D face = faces[face_idx];
+        Face2D face               = faces[face_idx];
         Vertex2D face_vertices[3] = {
             vertices[face.vertex_idx[0]],
             vertices[face.vertex_idx[1]],
@@ -1518,8 +1518,8 @@ int CSGBrushOperation::Build2DFaces::_insert_point(const Vector2& p_point) {
             // Add the point as a new vertex.
             Vertex2D new_vertex;
             new_vertex.point = p_point;
-            new_vertex.uv = interpolate_triangle_uv(points, uvs, p_point);
-            new_vertex_idx = _add_vertex(new_vertex);
+            new_vertex.uv    = interpolate_triangle_uv(points, uvs, p_point);
+            new_vertex_idx   = _add_vertex(new_vertex);
 
             // Create three new faces around this point and remove this face.
             // The new vertex is the last vertex.
@@ -1565,8 +1565,8 @@ void CSGBrushOperation::Build2DFaces::insert(
 
         if (plane.has_point(point_3D)) {
             // Point is in the plane, add it.
-            Vector3 point_2D = plane.project(point_3D);
-            point_2D = to_2D.xform(point_2D);
+            Vector3 point_2D          = plane.project(point_3D);
+            point_2D                  = to_2D.xform(point_2D);
             points_2D[points_count++] = Vector2(point_2D.x, point_2D.y);
 
         } else {
@@ -1585,7 +1585,7 @@ void CSGBrushOperation::Build2DFaces::insert(
             // Edge crosses the plane, find and add the intersection point.
             Vector3 point_2D;
             if (plane.intersects_segment(point_3D, next_point_3D, &point_2D)) {
-                point_2D = to_2D.xform(point_2D);
+                point_2D                  = to_2D.xform(point_2D);
                 points_2D[points_count++] = Vector2(point_2D.x, point_2D.y);
             }
         }
@@ -1637,7 +1637,7 @@ void CSGBrushOperation::Build2DFaces::addFacesToMesh(
     bool p_from_b
 ) {
     for (int face_idx = 0; face_idx < faces.size(); ++face_idx) {
-        Face2D face = faces[face_idx];
+        Face2D face    = faces[face_idx];
         Vertex2D fv[3] = {
             vertices[face.vertex_idx[0]],
             vertices[face.vertex_idx[1]],
@@ -1650,7 +1650,7 @@ void CSGBrushOperation::Build2DFaces::addFacesToMesh(
         for (int i = 0; i < 3; ++i) {
             Vector3 point_2D(fv[i].point.x, fv[i].point.y, 0);
             points_3D[i] = to_3D.xform(point_2D);
-            uvs[i] = fv[i].uv;
+            uvs[i]       = fv[i].uv;
         }
 
         r_mesh_merge
@@ -1671,7 +1671,7 @@ CSGBrushOperation::Build2DFaces::Build2DFaces(
         p_brush.faces[p_face_idx].vertices[2],
     };
 
-    plane = Plane(points_3D[0], points_3D[1], points_3D[2]);
+    plane        = Plane(points_3D[0], points_3D[1], points_3D[2]);
     to_3D.origin = points_3D[0];
     to_3D.basis.set_axis(2, plane.normal);
     to_3D.basis.set_axis(0, (points_3D[1] - points_3D[2]).normalized());
@@ -1685,9 +1685,9 @@ CSGBrushOperation::Build2DFaces::Build2DFaces(
     for (int i = 0; i < 3; i++) {
         Vertex2D vertex;
         Vector3 point_2D = to_2D.xform(points_3D[i]);
-        vertex.point.x = point_2D.x;
-        vertex.point.y = point_2D.y;
-        vertex.uv = p_brush.faces[p_face_idx].uvs[i];
+        vertex.point.x   = point_2D.x;
+        vertex.point.y   = point_2D.y;
+        vertex.uv        = p_brush.faces[p_face_idx].uvs[i];
         vertices.push_back(vertex);
         face.vertex_idx[i] = i;
     }
@@ -1720,14 +1720,14 @@ void CSGBrushOperation::update_faces(
         || is_snapable(vertices_a[0], vertices_a[2], p_vertex_snap)
         || is_snapable(vertices_a[1], vertices_a[2], p_vertex_snap)) {
         p_collection.build2DFacesA[p_face_idx_a] = Build2DFaces();
-        has_degenerate = true;
+        has_degenerate                           = true;
     }
 
     if (is_snapable(vertices_b[0], vertices_b[1], p_vertex_snap)
         || is_snapable(vertices_b[0], vertices_b[2], p_vertex_snap)
         || is_snapable(vertices_b[1], vertices_b[2], p_vertex_snap)) {
         p_collection.build2DFacesB[p_face_idx_b] = Build2DFaces();
-        has_degenerate = true;
+        has_degenerate                           = true;
     }
     if (has_degenerate) {
         return;
@@ -1756,7 +1756,7 @@ void CSGBrushOperation::update_faces(
     }
 
     // Ensure A has points either side of or in the plane of B.
-    over_count = 0;
+    over_count  = 0;
     under_count = 0;
     Plane plane_b(vertices_b[0], vertices_b[1], vertices_b[2]);
     ERR_FAIL_COND_MSG(
@@ -1800,11 +1800,11 @@ void CSGBrushOperation::update_faces(
 
                 for (int k = 0; k < 3; k++) {
                     real_t d = sep_axis.dot(vertices_a[k]);
-                    min_a = MIN(min_a, d);
-                    max_a = MAX(max_a, d);
-                    d = sep_axis.dot(vertices_b[k]);
-                    min_b = MIN(min_b, d);
-                    max_b = MAX(max_b, d);
+                    min_a    = MIN(min_a, d);
+                    max_a    = MAX(max_a, d);
+                    d        = sep_axis.dot(vertices_b[k]);
+                    min_b    = MIN(min_b, d);
+                    max_b    = MAX(max_b, d);
                 }
 
                 min_b -= (max_a - min_a) * 0.5;

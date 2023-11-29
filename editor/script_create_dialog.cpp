@@ -85,7 +85,7 @@ void ScriptCreateDialog::_notification(int p_what) {
 void ScriptCreateDialog::_path_hbox_sorted() {
     if (is_visible()) {
         int filename_start_pos = initial_bp.find_last("/") + 1;
-        int filename_end_pos = initial_bp.length();
+        int filename_end_pos   = initial_bp.length();
 
         if (!is_built_in) {
             file_path->select(filename_start_pos, filename_end_pos);
@@ -130,7 +130,7 @@ void ScriptCreateDialog::config(
     file_path->deselect();
 
     built_in_enabled = p_built_in_enabled;
-    load_enabled = p_load_enabled;
+    load_enabled     = p_load_enabled;
 
     _lang_changed(current_language);
     _class_name_changed("");
@@ -373,7 +373,7 @@ void ScriptCreateDialog::_create_new() {
 }
 
 void ScriptCreateDialog::_load_exist() {
-    String path = file_path->get_text();
+    String path  = file_path->get_text();
     RES p_script = ResourceLoader::load(path, "Script");
     if (p_script.is_null()) {
         alert->set_text(vformat(TTR("Error loading script from %s"), path));
@@ -388,16 +388,16 @@ void ScriptCreateDialog::_load_exist() {
 void ScriptCreateDialog::_lang_changed(int l) {
     ScriptLanguage* language = ScriptServer::get_language(l);
 
-    has_named_classes = language->has_named_classes();
+    has_named_classes     = language->has_named_classes();
     can_inherit_from_file = language->can_inherit_from_file();
-    supports_built_in = language->supports_builtin_mode();
+    supports_built_in     = language->supports_builtin_mode();
     if (!supports_built_in) {
         is_built_in = false;
     }
 
     String selected_ext = "." + language->get_extension();
-    String path = file_path->get_text();
-    String extension = "";
+    String path         = file_path->get_text();
+    String extension    = "";
     if (path != "") {
         if (path.find(".") != -1) {
             extension = path.get_extension();
@@ -418,7 +418,7 @@ void ScriptCreateDialog::_lang_changed(int l) {
             }
 
             for (List<String>::Element* E = extensions.front(); E;
-                 E = E->next()) {
+                 E                        = E->next()) {
                 if (E->get().nocasecmp_to(extension) == 0) {
                     path = path.get_basename() + selected_ext;
                     _path_changed(path);
@@ -477,7 +477,7 @@ void ScriptCreateDialog::_lang_changed(int l) {
             String item_name = templates[i].name.capitalize();
             template_menu->add_item(item_name);
 
-            int new_id = template_menu->get_item_count() - 1;
+            int new_id      = template_menu->get_item_count() - 1;
             templates[i].id = new_id;
         }
         // Disable overridden
@@ -561,9 +561,9 @@ void ScriptCreateDialog::_update_script_templates(const String& p_extension) {
 
         for (int j = 0; j < list.size(); j++) {
             ScriptTemplateInfo sinfo;
-            sinfo.origin = ScriptOrigin(i);
-            sinfo.dir = dirs[i];
-            sinfo.name = list[j];
+            sinfo.origin    = ScriptOrigin(i);
+            sinfo.dir       = dirs[i];
+            sinfo.name      = list[j];
             sinfo.extension = p_extension;
             template_list.push_back(sinfo);
 
@@ -581,7 +581,7 @@ void ScriptCreateDialog::_update_script_templates(const String& p_extension) {
 
 void ScriptCreateDialog::_built_in_pressed() {
     if (internal->is_pressed()) {
-        is_built_in = true;
+        is_built_in           = true;
         is_new_script_created = true;
     } else {
         is_built_in = false;
@@ -626,7 +626,7 @@ void ScriptCreateDialog::_file_selected(const String& p_file) {
         file_path->set_text(p);
         _path_changed(p);
 
-        String filename = p.get_file().get_basename();
+        String filename  = p.get_file().get_basename();
         int select_start = p.find_last(filename);
         file_path->select(select_start, select_start + filename.length());
         file_path->set_cursor_position(select_start + filename.length());
@@ -649,7 +649,7 @@ void ScriptCreateDialog::_path_changed(const String& p_path) {
         return;
     }
 
-    is_path_valid = false;
+    is_path_valid         = false;
     is_new_script_created = true;
 
     String path_error = _validate_path(p_path, false);
@@ -1049,15 +1049,15 @@ ScriptCreateDialog::ScriptCreateDialog() {
     set_title(TTR("Attach Node Script"));
 
     is_parent_name_valid = false;
-    is_class_name_valid = false;
-    is_path_valid = false;
+    is_class_name_valid  = false;
+    is_path_valid        = false;
 
-    has_named_classes = false;
-    supports_built_in = false;
+    has_named_classes     = false;
+    supports_built_in     = false;
     can_inherit_from_file = false;
-    is_built_in = false;
-    built_in_enabled = true;
-    load_enabled = true;
+    is_built_in           = false;
+    built_in_enabled      = true;
+    load_enabled          = true;
 
     is_new_script_created = true;
 }

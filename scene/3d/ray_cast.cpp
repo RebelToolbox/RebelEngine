@@ -242,14 +242,14 @@ void RayCast::_update_raycast_state() {
             collide_with_bodies,
             collide_with_areas
         )) {
-        collided = true;
-        against = rr.collider_id;
-        collision_point = rr.position;
+        collided         = true;
+        against          = rr.collider_id;
+        collision_point  = rr.position;
         collision_normal = rr.normal;
-        against_shape = rr.shape;
+        against_shape    = rr.shape;
     } else {
-        collided = false;
-        against = 0;
+        collided      = false;
+        against       = 0;
         against_shape = 0;
     }
 }
@@ -510,13 +510,13 @@ void RayCast::_update_debug_shape_vertices() {
     debug_line_vertices.push_back(cast_to);
 
     if (debug_shape_thickness > 1) {
-        float scale_factor = 100.0;
-        Vector3 dir = Vector3(cast_to).normalized();
+        float scale_factor  = 100.0;
+        Vector3 dir         = Vector3(cast_to).normalized();
         // Draw truncated pyramid
-        Vector3 normal = (fabs(dir.x) + fabs(dir.y) > CMP_EPSILON)
-                           ? Vector3(-dir.y, dir.x, 0).normalized()
-                           : Vector3(0, -dir.z, dir.y).normalized();
-        normal *= debug_shape_thickness / scale_factor;
+        Vector3 normal      = (fabs(dir.x) + fabs(dir.y) > CMP_EPSILON)
+                                ? Vector3(-dir.y, dir.x, 0).normalized()
+                                : Vector3(0, -dir.z, dir.y).normalized();
+        normal             *= debug_shape_thickness / scale_factor;
         int vertices_strip_order[14] =
             {4, 5, 0, 1, 2, 5, 6, 4, 7, 0, 3, 2, 7, 6};
         for (int v = 0; v < 14; v++) {
@@ -582,7 +582,7 @@ void RayCast::_create_debug_shape() {
 void RayCast::_update_debug_shape_material(bool p_check_collision) {
     if (!debug_material.is_valid()) {
         Ref<SpatialMaterial> material = memnew(SpatialMaterial);
-        debug_material = material;
+        debug_material                = material;
 
         material->set_flag(SpatialMaterial::FLAG_UNSHADED, true);
         material->set_feature(SpatialMaterial::FEATURE_TRANSPARENT, true);
@@ -623,7 +623,7 @@ void RayCast::_update_debug_shape() {
         _create_debug_shape();
     }
 
-    MeshInstance* mi = static_cast<MeshInstance*>(debug_shape);
+    MeshInstance* mi    = static_cast<MeshInstance*>(debug_shape);
     Ref<ArrayMesh> mesh = mi->get_mesh();
     if (!mesh.is_valid()) {
         return;
@@ -636,7 +636,7 @@ void RayCast::_update_debug_shape() {
     Array a;
     a.resize(Mesh::ARRAY_MAX);
 
-    uint32_t flags = 0;
+    uint32_t flags    = 0;
     int surface_count = 0;
 
     if (!debug_line_vertices.empty()) {
@@ -675,14 +675,14 @@ void RayCast::_clear_debug_shape() {
 }
 
 RayCast::RayCast() {
-    enabled = false;
-    against = 0;
-    collided = false;
-    against_shape = 0;
-    collision_mask = 1;
-    cast_to = Vector3(0, -1, 0);
-    debug_shape = nullptr;
+    enabled             = false;
+    against             = 0;
+    collided            = false;
+    against_shape       = 0;
+    collision_mask      = 1;
+    cast_to             = Vector3(0, -1, 0);
+    debug_shape         = nullptr;
     exclude_parent_body = true;
-    collide_with_areas = false;
+    collide_with_areas  = false;
     collide_with_bodies = true;
 }

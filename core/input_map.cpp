@@ -107,7 +107,7 @@ String InputMap::suggest_actions(const StringName& p_action) const {
         const float similarity = String(E->get()).similarity(p_action);
 
         if (similarity > closest_similarity) {
-            closest_action = E->get();
+            closest_action     = E->get();
             closest_similarity = similarity;
         }
     }
@@ -128,9 +128,9 @@ void InputMap::add_action(const StringName& p_action, float p_deadzone) {
         input_map.has(p_action),
         "InputMap already has action \"" + String(p_action) + "\"."
     );
-    input_map[p_action] = Action();
-    static int last_id = 1;
-    input_map[p_action].id = last_id;
+    input_map[p_action]          = Action();
+    static int last_id           = 1;
+    input_map[p_action].id       = last_id;
     input_map[p_action].deadzone = p_deadzone;
     last_id++;
 }
@@ -149,7 +149,7 @@ Array InputMap::_get_actions() {
     }
 
     for (const List<StringName>::Element* E = actions.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         ret.push_back(E->get());
     }
 
@@ -163,7 +163,7 @@ List<StringName> InputMap::get_actions() const {
     }
 
     for (Map<StringName, Action>::Element* E = input_map.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         actions.push_back(E->key());
     }
 
@@ -181,7 +181,7 @@ List<Ref<InputEvent>>::Element* InputMap::_find_event(
     ERR_FAIL_COND_V(!p_event.is_valid(), nullptr);
 
     for (List<Ref<InputEvent>>::Element* E = p_action.inputs.front(); E;
-         E = E->next()) {
+         E                                 = E->next()) {
         const Ref<InputEvent> e = E->get();
 
         // if (e.type != Ref<InputEvent>::KEY && e.device != p_event.device) --
@@ -280,7 +280,7 @@ Array InputMap::_get_action_list(const StringName& p_action) {
     const List<Ref<InputEvent>>* al = get_action_list(p_action);
     if (al) {
         for (const List<Ref<InputEvent>>::Element* E = al->front(); E;
-             E = E->next()) {
+             E                                       = E->next()) {
             ret.push_back(E->get());
         }
     }

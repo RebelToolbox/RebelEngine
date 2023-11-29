@@ -37,7 +37,7 @@
 
 void WSLClient::_do_handshake() {
     if (_requested < _request.size() - 1) {
-        int sent = 0;
+        int sent  = 0;
         Error err = _connection->put_partial_data(
             ((const uint8_t*)_request.get_data() + _requested),
             _request.size() - _requested - 1,
@@ -78,7 +78,7 @@ void WSLClient::_do_handshake() {
             }
             // Check "\r\n\r\n" header terminator
             char* r = (char*)_resp_buf;
-            int l = _resp_pos;
+            int l   = _resp_pos;
             if (l > 3 && r[l] == '\n' && r[l - 1] == '\r' && r[l - 2] == '\n'
                 && r[l - 3] == '\r') {
                 r[l - 3] = '\0';
@@ -91,11 +91,11 @@ void WSLClient::_do_handshake() {
                 }
                 // Create peer.
                 WSLPeer::PeerData* data = memnew(struct WSLPeer::PeerData);
-                data->obj = this;
-                data->conn = _connection;
-                data->tcp = _tcp;
-                data->is_server = false;
-                data->id = 1;
+                data->obj               = this;
+                data->conn              = _connection;
+                data->tcp               = _tcp;
+                data->is_server         = false;
+                data->id                = 1;
                 _peer->make_context(
                     data,
                     _in_buf_size,
@@ -113,9 +113,9 @@ void WSLClient::_do_handshake() {
 }
 
 bool WSLClient::_verify_headers(String& r_protocol) {
-    String s = (char*)_resp_buf;
+    String s           = (char*)_resp_buf;
     Vector<String> psa = s.split("\r\n");
-    int len = psa.size();
+    int len            = psa.size();
     ERR_FAIL_COND_V_MSG(
         len < 4,
         false,
@@ -144,7 +144,7 @@ bool WSLClient::_verify_headers(String& r_protocol) {
             false,
             "Invalid header -> " + psa[i] + "."
         );
-        String name = header[0].to_lower();
+        String name  = header[0].to_lower();
         String value = header[1].strip_edges();
         if (headers.has(name)) {
             headers[name] += "," + value;
@@ -233,9 +233,9 @@ Error WSLClient::connect_to_host(
         return err;
     }
     _connection = _tcp;
-    _use_ssl = p_ssl;
-    _host = p_host;
-    _port = p_port;
+    _use_ssl    = p_ssl;
+    _host       = p_host;
+    _port       = p_port;
     // Strip edges from protocols.
     _protocols.resize(p_protocols.size());
     String* pw = _protocols.ptrw();
@@ -243,14 +243,14 @@ Error WSLClient::connect_to_host(
         pw[i] = p_protocols[i].strip_edges();
     }
 
-    _key = WSLPeer::generate_key();
+    _key            = WSLPeer::generate_key();
     // TODO custom extra headers (allow overriding this too?)
-    String request = "GET " + p_path + " HTTP/1.1\r\n";
-    request += "Host: " + p_host + port + "\r\n";
-    request += "Upgrade: websocket\r\n";
-    request += "Connection: Upgrade\r\n";
-    request += "Sec-WebSocket-Key: " + _key + "\r\n";
-    request += "Sec-WebSocket-Version: 13\r\n";
+    String request  = "GET " + p_path + " HTTP/1.1\r\n";
+    request        += "Host: " + p_host + port + "\r\n";
+    request        += "Upgrade: websocket\r\n";
+    request        += "Connection: Upgrade\r\n";
+    request        += "Sec-WebSocket-Key: " + _key + "\r\n";
+    request        += "Sec-WebSocket-Version: 13\r\n";
     if (p_protocols.size() > 0) {
         request += "Sec-WebSocket-Protocol: ";
         for (int i = 0; i < p_protocols.size(); i++) {
@@ -264,8 +264,8 @@ Error WSLClient::connect_to_host(
     for (int i = 0; i < p_custom_headers.size(); i++) {
         request += p_custom_headers[i] + "\r\n";
     }
-    request += "\r\n";
-    _request = request.utf8();
+    request  += "\r\n";
+    _request  = request.utf8();
 
     return OK;
 }
@@ -372,14 +372,14 @@ NetworkedMultiplayerPeer::ConnectionStatus WSLClient::get_connection_status(
 void WSLClient::disconnect_from_host(int p_code, String p_reason) {
     _peer->close(p_code, p_reason);
     _connection = Ref<StreamPeer>(nullptr);
-    _tcp = Ref<StreamPeerTCP>(memnew(StreamPeerTCP));
+    _tcp        = Ref<StreamPeerTCP>(memnew(StreamPeerTCP));
 
-    _key = "";
+    _key  = "";
     _host = "";
     _protocols.clear();
     _use_ssl = false;
 
-    _request = "";
+    _request   = "";
     _requested = 0;
 
     memset(_resp_buf, 0, sizeof(_resp_buf));
@@ -410,16 +410,16 @@ Error WSLClient::set_buffers(
         "Buffers sizes can only be set before listening or connecting."
     );
 
-    _in_buf_size = nearest_shift(p_in_buffer - 1) + 10;
-    _in_pkt_size = nearest_shift(p_in_packets - 1);
+    _in_buf_size  = nearest_shift(p_in_buffer - 1) + 10;
+    _in_pkt_size  = nearest_shift(p_in_packets - 1);
     _out_buf_size = nearest_shift(p_out_buffer - 1) + 10;
     _out_pkt_size = nearest_shift(p_out_packets - 1);
     return OK;
 }
 
 WSLClient::WSLClient() {
-    _in_buf_size = nearest_shift((int)GLOBAL_GET(WSC_IN_BUF) - 1) + 10;
-    _in_pkt_size = nearest_shift((int)GLOBAL_GET(WSC_IN_PKT) - 1);
+    _in_buf_size  = nearest_shift((int)GLOBAL_GET(WSC_IN_BUF) - 1) + 10;
+    _in_pkt_size  = nearest_shift((int)GLOBAL_GET(WSC_IN_PKT) - 1);
     _out_buf_size = nearest_shift((int)GLOBAL_GET(WSC_OUT_BUF) - 1) + 10;
     _out_pkt_size = nearest_shift((int)GLOBAL_GET(WSC_OUT_PKT) - 1);
 

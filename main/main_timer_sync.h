@@ -68,33 +68,33 @@ class MainTimerSync {
         // in the GPU settings, in which case we don't want to try smoothing.
         static const int MEASURE_FPS_OVER_NUM_FRAMES = 64;
 
-        int64_t _measurement_time = 0;
-        int64_t _measurement_frame_count = 0;
-        int64_t _measurement_end_frame = MEASURE_FPS_OVER_NUM_FRAMES;
-        int64_t _measurement_start_time = 0;
+        int64_t _measurement_time          = 0;
+        int64_t _measurement_frame_count   = 0;
+        int64_t _measurement_end_frame     = MEASURE_FPS_OVER_NUM_FRAMES;
+        int64_t _measurement_start_time    = 0;
         bool _measurement_allows_smoothing = true;
 
         // we can estimate the fps by growing it on condition
         // that a large proportion of frames are higher than the current
         // estimate.
-        int32_t _estimated_fps = 0;
-        int32_t _hits_at_estimated = 0;
-        int32_t _hits_above_estimated = 0;
-        int32_t _hits_below_estimated = 0;
+        int32_t _estimated_fps            = 0;
+        int32_t _hits_at_estimated        = 0;
+        int32_t _hits_above_estimated     = 0;
+        int32_t _hits_below_estimated     = 0;
         int32_t _hits_one_above_estimated = 0;
         int32_t _hits_one_below_estimated = 0;
-        bool _estimate_complete = false;
-        bool _estimate_locked = false;
+        bool _estimate_complete           = false;
+        bool _estimate_locked             = false;
 
         // data for averaging the delta over a second or so
         // to prevent spurious values
-        int64_t _estimator_total_delta = 0;
+        int64_t _estimator_total_delta    = 0;
         int32_t _estimator_delta_readings = 0;
 
         void made_new_estimate() {
-            _hits_above_estimated = 0;
-            _hits_at_estimated = 0;
-            _hits_below_estimated = 0;
+            _hits_above_estimated     = 0;
+            _hits_at_estimated        = 0;
+            _hits_below_estimated     = 0;
             _hits_one_above_estimated = 0;
             _hits_one_below_estimated = 0;
 

@@ -140,7 +140,7 @@ void EditorQuickOpen::_parse_fs(
     Vector<String> base_types = String(base_type).split(String(","));
     for (int i = 0; i < efsd->get_file_count(); i++) {
         String file = efsd->get_file_path(i);
-        file = file.substr(6, file.length());
+        file        = file.substr(6, file.length());
 
         StringName file_type = efsd->get_file_type(i);
         // Iterate all possible base types.
@@ -179,13 +179,13 @@ Vector<Pair<String, Ref<Texture>>> EditorQuickOpen::_sort_fs(
 
     while (list.size() > 0) {
         float best_score = 0.0f;
-        int best_idx = 0;
+        int best_idx     = 0;
 
         for (int i = 0; i < list.size(); i++) {
             float current_score = scores[i];
             if (current_score > best_score) {
                 best_score = current_score;
-                best_idx = i;
+                best_idx   = i;
             }
         }
 

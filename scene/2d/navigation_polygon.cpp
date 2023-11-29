@@ -38,12 +38,12 @@
 #ifdef TOOLS_ENABLED
 Rect2 NavigationPolygon::_edit_get_rect() const {
     if (rect_cache_dirty) {
-        item_rect = Rect2();
+        item_rect  = Rect2();
         bool first = true;
 
         for (int i = 0; i < outlines.size(); i++) {
             const PoolVector<Vector2>& outline = outlines[i];
-            const int outline_size = outline.size();
+            const int outline_size             = outline.size();
             if (outline_size < 3) {
                 continue;
             }
@@ -51,7 +51,7 @@ Rect2 NavigationPolygon::_edit_get_rect() const {
             for (int j = 0; j < outline_size; j++) {
                 if (first) {
                     item_rect = Rect2(p[j], Vector2(0, 0));
-                    first = false;
+                    first     = false;
                 } else {
                     item_rect.expand_to(p[j]);
                 }
@@ -69,7 +69,7 @@ bool NavigationPolygon::_edit_is_selected_on_click(
 ) const {
     for (int i = 0; i < outlines.size(); i++) {
         const PoolVector<Vector2>& outline = outlines[i];
-        const int outline_size = outline.size();
+        const int outline_size             = outline.size();
         if (outline_size < 3) {
             continue;
         }
@@ -82,7 +82,7 @@ bool NavigationPolygon::_edit_is_selected_on_click(
 #endif
 
 void NavigationPolygon::set_vertices(const PoolVector<Vector2>& p_vertices) {
-    vertices = p_vertices;
+    vertices         = p_vertices;
     rect_cache_dirty = true;
 }
 
@@ -167,7 +167,7 @@ void NavigationPolygon::set_outline(
 ) {
     ERR_FAIL_INDEX(p_idx, outlines.size());
     outlines.write[p_idx] = p_outline;
-    rect_cache_dirty = true;
+    rect_cache_dirty      = true;
 }
 
 void NavigationPolygon::remove_outline(int p_idx) {
@@ -193,7 +193,7 @@ void NavigationPolygon::make_polygons_from_outlines() {
 
     for (int i = 0; i < outlines.size(); i++) {
         PoolVector<Vector2> ol = outlines[i];
-        int olsize = ol.size();
+        int olsize             = ol.size();
         if (olsize < 3) {
             continue;
         }
@@ -208,7 +208,7 @@ void NavigationPolygon::make_polygons_from_outlines() {
 
     for (int i = 0; i < outlines.size(); i++) {
         PoolVector<Vector2> ol = outlines[i];
-        int olsize = ol.size();
+        int olsize             = ol.size();
         if (olsize < 3) {
             continue;
         }
@@ -222,7 +222,7 @@ void NavigationPolygon::make_polygons_from_outlines() {
             }
 
             PoolVector<Vector2> ol2 = outlines[k];
-            int olsize2 = ol2.size();
+            int olsize2             = ol2.size();
             if (olsize2 < 3) {
                 continue;
             }
@@ -270,7 +270,7 @@ void NavigationPolygon::make_polygons_from_outlines() {
 
     Map<Vector2, int> points;
     for (List<TriangulatorPoly>::Element* I = out_poly.front(); I;
-         I = I->next()) {
+         I                                  = I->next()) {
         TriangulatorPoly& tp = I->get();
 
         struct Polygon p;
@@ -503,7 +503,7 @@ void NavigationPolygonInstance::_notification(int p_what) {
                     || get_tree()->is_debugging_navigation_hint())
                 && navpoly.is_valid()) {
                 PoolVector<Vector2> verts = navpoly->get_vertices();
-                int vsize = verts.size();
+                int vsize                 = verts.size();
                 if (vsize < 3) {
                     return;
                 }
@@ -522,7 +522,7 @@ void NavigationPolygonInstance::_notification(int p_what) {
                     PoolVector<Vector2>::Read vr = verts.read();
                     for (int i = 0; i < vsize; i++) {
                         vertices.write[i] = vr[i];
-                        colors.write[i] = color;
+                        colors.write[i]   = color;
                     }
                 }
 
@@ -681,7 +681,7 @@ void NavigationPolygonInstance::_bind_methods() {
 
 NavigationPolygonInstance::NavigationPolygonInstance() {
     navigation = nullptr;
-    nav_id = -1;
-    enabled = true;
+    nav_id     = -1;
+    enabled    = true;
     set_notify_transform(true);
 }

@@ -71,7 +71,7 @@ void PluginConfigDialog::_on_confirmed() {
     cf->save(path.plus_file("plugin.cfg"));
 
     if (!_edit_mode) {
-        int lang_idx = script_option_edit->get_selected();
+        int lang_idx     = script_option_edit->get_selected();
         String lang_name = ScriptServer::get_language(lang_idx)->get_name();
 
         Ref<Script> script;
@@ -109,7 +109,7 @@ void PluginConfigDialog::_on_confirmed() {
         } else {
 #endif
             String script_path = path.plus_file(script_edit->get_text());
-            String class_name = script_path.get_file().get_basename();
+            String class_name  = script_path.get_file().get_basename();
             script = ScriptServer::get_language(lang_idx)->get_template(
                 class_name,
                 "EditorPlugin"
@@ -137,7 +137,7 @@ void PluginConfigDialog::_on_cancelled() {
 
 void PluginConfigDialog::_on_required_text_changed(const String&) {
     int lang_idx = script_option_edit->get_selected();
-    String ext = ScriptServer::get_language(lang_idx)->get_extension();
+    String ext   = ScriptServer::get_language(lang_idx)->get_extension();
     get_ok()->set_disabled(
         script_edit->get_text().get_basename().empty()
         || script_edit->get_text().get_extension() != ext
@@ -161,7 +161,7 @@ void PluginConfigDialog::_notification(int p_what) {
 void PluginConfigDialog::config(const String& p_config_path) {
     if (p_config_path.length()) {
         Ref<ConfigFile> cf = memnew(ConfigFile);
-        Error err = cf->load(p_config_path);
+        Error err          = cf->load(p_config_path);
         ERR_FAIL_COND_MSG(
             err != OK,
             "Cannot load config file from path '" + p_config_path + "'."
@@ -276,7 +276,7 @@ PluginConfigDialog::PluginConfigDialog() {
     grid->add_child(script_option_lb);
 
     script_option_edit = memnew(OptionButton);
-    int default_lang = 0;
+    int default_lang   = 0;
     for (int i = 0; i < ScriptServer::get_language_count(); i++) {
         ScriptLanguage* lang = ScriptServer::get_language(i);
         script_option_edit->add_item(lang->get_name());

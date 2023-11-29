@@ -87,13 +87,13 @@ struct Position {
     int character = 0;
 
     _FORCE_INLINE_ void load(const Dictionary& p_params) {
-        line = p_params["line"];
+        line      = p_params["line"];
         character = p_params["character"];
     }
 
     _FORCE_INLINE_ Dictionary to_json() const {
         Dictionary dict;
-        dict["line"] = line;
+        dict["line"]      = line;
         dict["character"] = character;
         return dict;
     }
@@ -125,7 +125,7 @@ struct Range {
     _FORCE_INLINE_ Dictionary to_json() const {
         Dictionary dict;
         dict["start"] = start.to_json();
-        dict["end"] = end.to_json();
+        dict["end"]   = end.to_json();
         return dict;
     }
 };
@@ -144,7 +144,7 @@ struct Location {
 
     _FORCE_INLINE_ Dictionary to_json() const {
         Dictionary dict;
-        dict["uri"] = uri;
+        dict["uri"]   = uri;
         dict["range"] = range.to_json();
         return dict;
     }
@@ -206,7 +206,7 @@ struct TextDocumentPositionParams {
     _FORCE_INLINE_ Dictionary to_json() const {
         Dictionary dict;
         dict["textDocument"] = textDocument.to_json();
-        dict["position"] = position.to_json();
+        dict["position"]     = position.to_json();
         return dict;
     }
 };
@@ -239,7 +239,7 @@ struct DocumentLink {
 
     Dictionary to_json() const {
         Dictionary dict;
-        dict["range"] = range.to_json();
+        dict["range"]  = range.to_json();
         dict["target"] = target;
         return dict;
     }
@@ -286,11 +286,11 @@ struct WorkspaceEdit {
 
         Dictionary out_changes;
         for (Map<String, Vector<TextEdit>>::Element* E = changes.front(); E;
-             E = E->next()) {
+             E                                         = E->next()) {
             Array edits;
             for (int i = 0; i < E->get().size(); ++i) {
                 Dictionary text_edit;
-                text_edit["range"] = E->get()[i].range.to_json();
+                text_edit["range"]   = E->get()[i].range.to_json();
                 text_edit["newText"] = E->get()[i].newText;
                 edits.push_back(text_edit);
             }
@@ -319,11 +319,11 @@ struct WorkspaceEdit {
         }
 
         TextEdit new_edit;
-        new_edit.newText = new_text;
-        new_edit.range.start.line = line;
+        new_edit.newText               = new_text;
+        new_edit.range.start.line      = line;
         new_edit.range.start.character = start_character;
-        new_edit.range.end.line = line;
-        new_edit.range.end.character = end_character;
+        new_edit.range.end.line        = line;
+        new_edit.range.end.character   = end_character;
 
         if (Map<String, Vector<TextEdit>>::Element* E = changes.find(uri)) {
             E->value().push_back(new_edit);
@@ -361,7 +361,7 @@ struct Command {
 
     Dictionary to_json() const {
         Dictionary dict;
-        dict["title"] = title;
+        dict["title"]   = title;
         dict["command"] = command;
         if (arguments.size()) {
             dict["arguments"] = arguments;
@@ -418,7 +418,7 @@ struct CompletionOptions {
 
     Dictionary to_json() const {
         Dictionary dict;
-        dict["resolveProvider"] = resolveProvider;
+        dict["resolveProvider"]   = resolveProvider;
         dict["triggerCharacters"] = triggerCharacters;
         return dict;
     }
@@ -577,10 +577,10 @@ struct TextDocumentSyncOptions {
     Dictionary to_json() {
         Dictionary dict;
         dict["willSaveWaitUntil"] = willSaveWaitUntil;
-        dict["willSave"] = willSave;
-        dict["openClose"] = openClose;
-        dict["change"] = change;
-        dict["save"] = save.to_json();
+        dict["willSave"]          = willSave;
+        dict["openClose"]         = openClose;
+        dict["change"]            = change;
+        dict["save"]              = save.to_json();
         return dict;
     }
 };
@@ -613,7 +613,7 @@ struct DocumentOnTypeFormattingOptions {
     Dictionary to_json() {
         Dictionary dict;
         dict["firstTriggerCharacter"] = firstTriggerCharacter;
-        dict["moreTriggerCharacter"] = moreTriggerCharacter;
+        dict["moreTriggerCharacter"]  = moreTriggerCharacter;
         return dict;
     }
 };
@@ -641,18 +641,18 @@ struct TextDocumentItem {
     String text;
 
     void load(const Dictionary& p_dict) {
-        uri = p_dict["uri"];
+        uri        = p_dict["uri"];
         languageId = p_dict["languageId"];
-        version = p_dict["version"];
-        text = p_dict["text"];
+        version    = p_dict["version"];
+        text       = p_dict["text"];
     }
 
     Dictionary to_json() const {
         Dictionary dict;
-        dict["uri"] = uri;
+        dict["uri"]        = uri;
         dict["languageId"] = languageId;
-        dict["version"] = version;
-        dict["text"] = text;
+        dict["version"]    = version;
+        dict["text"]       = text;
         return dict;
     }
 };
@@ -678,7 +678,7 @@ struct TextDocumentContentChangeEvent {
     String text;
 
     void load(const Dictionary& p_params) {
-        text = p_params["text"];
+        text        = p_params["text"];
         rangeLength = p_params["rangeLength"];
         range.load(p_params["range"]);
     }
@@ -690,11 +690,11 @@ namespace DiagnosticSeverity
 /**
  * Reports an error.
  */
-static const int Error = 1;
+static const int Error       = 1;
 /**
  * Reports a warning.
  */
-static const int Warning = 2;
+static const int Warning     = 2;
 /**
  * Reports an information.
  */
@@ -702,7 +702,7 @@ static const int Information = 3;
 /**
  * Reports a hint.
  */
-static const int Hint = 4;
+static const int Hint        = 4;
 }; // namespace DiagnosticSeverity
 
 /**
@@ -768,11 +768,11 @@ struct Diagnostic {
 
     Dictionary to_json() const {
         Dictionary dict;
-        dict["range"] = range.to_json();
-        dict["code"] = code;
+        dict["range"]    = range.to_json();
+        dict["code"]     = code;
         dict["severity"] = severity;
-        dict["message"] = message;
-        dict["source"] = source;
+        dict["message"]  = message;
+        dict["source"]   = source;
         if (!relatedInformation.empty()) {
             Array arr;
             arr.resize(relatedInformation.size());
@@ -796,7 +796,7 @@ struct Diagnostic {
 namespace MarkupKind
 {
 static const String PlainText = "plaintext";
-static const String Markdown = "markdown";
+static const String Markdown  = "markdown";
 }; // namespace MarkupKind
 
 /**
@@ -843,12 +843,12 @@ struct MarkupContent {
 
     MarkupContent(const String& p_value) {
         value = p_value;
-        kind = MarkupKind::Markdown;
+        kind  = MarkupKind::Markdown;
     }
 
     Dictionary to_json() const {
         Dictionary dict;
-        dict["kind"] = kind;
+        dict["kind"]  = kind;
         dict["value"] = value;
         return dict;
     }
@@ -863,30 +863,30 @@ struct MarkupContent {
  */
 namespace CompletionItemKind
 {
-static const int Text = 1;
-static const int Method = 2;
-static const int Function = 3;
-static const int Constructor = 4;
-static const int Field = 5;
-static const int Variable = 6;
-static const int Class = 7;
-static const int Interface = 8;
-static const int Module = 9;
-static const int Property = 10;
-static const int Unit = 11;
-static const int Value = 12;
-static const int Enum = 13;
-static const int Keyword = 14;
-static const int Snippet = 15;
-static const int Color = 16;
-static const int File = 17;
-static const int Reference = 18;
-static const int Folder = 19;
-static const int EnumMember = 20;
-static const int Constant = 21;
-static const int Struct = 22;
-static const int Event = 23;
-static const int Operator = 24;
+static const int Text          = 1;
+static const int Method        = 2;
+static const int Function      = 3;
+static const int Constructor   = 4;
+static const int Field         = 5;
+static const int Variable      = 6;
+static const int Class         = 7;
+static const int Interface     = 8;
+static const int Module        = 9;
+static const int Property      = 10;
+static const int Unit          = 11;
+static const int Value         = 12;
+static const int Enum          = 13;
+static const int Keyword       = 14;
+static const int Snippet       = 15;
+static const int Color         = 16;
+static const int File          = 17;
+static const int Reference     = 18;
+static const int Folder        = 19;
+static const int EnumMember    = 20;
+static const int Constant      = 21;
+static const int Struct        = 22;
+static const int Event         = 23;
+static const int Operator      = 24;
 static const int TypeParameter = 25;
 }; // namespace CompletionItemKind
 
@@ -1031,16 +1031,16 @@ struct CompletionItem {
     _FORCE_INLINE_ Dictionary to_json(bool resolved = false) const {
         Dictionary dict;
         dict["label"] = label;
-        dict["kind"] = kind;
-        dict["data"] = data;
+        dict["kind"]  = kind;
+        dict["data"]  = data;
         if (resolved) {
-            dict["insertText"] = insertText;
-            dict["detail"] = detail;
+            dict["insertText"]    = insertText;
+            dict["detail"]        = detail;
             dict["documentation"] = documentation.to_json();
-            dict["deprecated"] = deprecated;
-            dict["preselect"] = preselect;
-            dict["sortText"] = sortText;
-            dict["filterText"] = filterText;
+            dict["deprecated"]    = deprecated;
+            dict["preselect"]     = preselect;
+            dict["sortText"]      = sortText;
+            dict["filterText"]    = filterText;
             if (commitCharacters.size()) {
                 dict["commitCharacters"] = commitCharacters;
             }
@@ -1064,7 +1064,7 @@ struct CompletionItem {
             if (doc.get_type() == Variant::STRING) {
                 documentation.value = doc;
             } else if (doc.get_type() == Variant::DICTIONARY) {
-                Dictionary v = doc;
+                Dictionary v        = doc;
                 documentation.value = v["value"];
             }
         }
@@ -1115,31 +1115,31 @@ struct CompletionList {
  */
 namespace SymbolKind
 {
-static const int File = 1;
-static const int Module = 2;
-static const int Namespace = 3;
-static const int Package = 4;
-static const int Class = 5;
-static const int Method = 6;
-static const int Property = 7;
-static const int Field = 8;
-static const int Constructor = 9;
-static const int Enum = 10;
-static const int Interface = 11;
-static const int Function = 12;
-static const int Variable = 13;
-static const int Constant = 14;
-static const int String = 15;
-static const int Number = 16;
-static const int Boolean = 17;
-static const int Array = 18;
-static const int Object = 19;
-static const int Key = 20;
-static const int Null = 21;
-static const int EnumMember = 22;
-static const int Struct = 23;
-static const int Event = 24;
-static const int Operator = 25;
+static const int File          = 1;
+static const int Module        = 2;
+static const int Namespace     = 3;
+static const int Package       = 4;
+static const int Class         = 5;
+static const int Method        = 6;
+static const int Property      = 7;
+static const int Field         = 8;
+static const int Constructor   = 9;
+static const int Enum          = 10;
+static const int Interface     = 11;
+static const int Function      = 12;
+static const int Variable      = 13;
+static const int Constant      = 14;
+static const int String        = 15;
+static const int Number        = 16;
+static const int Boolean       = 17;
+static const int Array         = 18;
+static const int Object        = 19;
+static const int Key           = 20;
+static const int Null          = 21;
+static const int EnumMember    = 22;
+static const int Struct        = 23;
+static const int Event         = 24;
+static const int Operator      = 25;
 static const int TypeParameter = 26;
 }; // namespace SymbolKind
 
@@ -1186,10 +1186,10 @@ struct SymbolInformation {
 
     _FORCE_INLINE_ Dictionary to_json() const {
         Dictionary dict;
-        dict["name"] = name;
-        dict["kind"] = kind;
-        dict["deprecated"] = deprecated;
-        dict["location"] = location.to_json();
+        dict["name"]          = name;
+        dict["kind"]          = kind;
+        dict["deprecated"]    = deprecated;
+        dict["location"]      = location.to_json();
         dict["containerName"] = containerName;
         return dict;
     }
@@ -1270,15 +1270,15 @@ struct DocumentSymbol {
 
     Dictionary to_json(bool with_doc = false) const {
         Dictionary dict;
-        dict["name"] = name;
-        dict["detail"] = detail;
-        dict["kind"] = kind;
-        dict["deprecated"] = deprecated;
-        dict["range"] = range.to_json();
+        dict["name"]           = name;
+        dict["detail"]         = detail;
+        dict["kind"]           = kind;
+        dict["deprecated"]     = deprecated;
+        dict["range"]          = range.to_json();
         dict["selectionRange"] = selectionRange.to_json();
         if (with_doc) {
             dict["documentation"] = documentation;
-            dict["native_class"] = native_class;
+            dict["native_class"]  = native_class;
         }
         Array arr;
         arr.resize(children.size());
@@ -1293,7 +1293,7 @@ struct DocumentSymbol {
         const String& p_uri,
         Vector<DocumentedSymbolInformation>& r_list,
         const String& p_container = "",
-        bool p_join_name = false
+        bool p_join_name          = false
     ) const {
         DocumentedSymbolInformation si;
         if (p_join_name && !p_container.empty()) {
@@ -1301,13 +1301,13 @@ struct DocumentSymbol {
         } else {
             si.name = name;
         }
-        si.kind = kind;
-        si.containerName = p_container;
-        si.deprecated = deprecated;
-        si.location.uri = p_uri;
+        si.kind           = kind;
+        si.containerName  = p_container;
+        si.deprecated     = deprecated;
+        si.location.uri   = p_uri;
         si.location.range = range;
-        si.detail = detail;
-        si.documentation = documentation;
+        si.detail         = detail;
+        si.documentation  = documentation;
         r_list.push_back(si);
         for (int i = 0; i < children.size(); i++) {
             children[i]
@@ -1391,7 +1391,7 @@ struct NativeSymbolInspectParams {
 
     void load(const Dictionary& p_params) {
         native_class = p_params["native_class"];
-        symbol_name = p_params["symbol_name"];
+        symbol_name  = p_params["symbol_name"];
     }
 };
 
@@ -1411,7 +1411,7 @@ static const String Imports = "imports";
 /**
  * Folding range for a region (e.g. `#region`)
  */
-static const String Region = "region";
+static const String Region  = "region";
 } // namespace FoldingRangeKind
 
 /**
@@ -1450,10 +1450,10 @@ struct FoldingRange {
 
     _FORCE_INLINE_ Dictionary to_json() const {
         Dictionary dict;
-        dict["startLine"] = startLine;
+        dict["startLine"]      = startLine;
         dict["startCharacter"] = startCharacter;
-        dict["endLine"] = endLine;
-        dict["endCharacter"] = endCharacter;
+        dict["endLine"]        = endLine;
+        dict["endCharacter"]   = endCharacter;
         return dict;
     }
 };
@@ -1500,7 +1500,7 @@ struct CompletionContext {
     String triggerCharacter;
 
     void load(const Dictionary& p_params) {
-        triggerKind = int(p_params["triggerKind"]);
+        triggerKind      = int(p_params["triggerKind"]);
         triggerCharacter = p_params["triggerCharacter"];
     }
 };
@@ -1536,7 +1536,7 @@ struct Hover {
 
     _FORCE_INLINE_ Dictionary to_json() const {
         Dictionary dict;
-        dict["range"] = range.to_json();
+        dict["range"]    = range.to_json();
         dict["contents"] = contents.to_json();
         return dict;
     }
@@ -1569,7 +1569,7 @@ struct ParameterInformation {
 
     Dictionary to_json() const {
         Dictionary dict;
-        dict["label"] = label;
+        dict["label"]         = label;
         dict["documentation"] = documentation.to_json();
         return dict;
     }
@@ -1600,7 +1600,7 @@ struct SignatureInformation {
 
     Dictionary to_json() const {
         Dictionary dict;
-        dict["label"] = label;
+        dict["label"]         = label;
         dict["documentation"] = documentation.to_json();
         Array args;
         for (int i = 0; i < parameters.size(); i++) {
@@ -1650,7 +1650,7 @@ struct SignatureHelp {
         for (int i = 0; i < signatures.size(); i++) {
             sigs.push_back(signatures[i].to_json());
         }
-        dict["signatures"] = sigs;
+        dict["signatures"]      = sigs;
         dict["activeSignature"] = activeSignature;
         dict["activeParameter"] = activeParameter;
         return dict;
@@ -1677,7 +1677,7 @@ struct FileOperationPattern {
     Dictionary to_json() const {
         Dictionary dict;
 
-        dict["glob"] = glob;
+        dict["glob"]    = glob;
         dict["matches"] = matches;
 
         return dict;
@@ -1900,7 +1900,7 @@ struct ServerCapabilities {
 
     _FORCE_INLINE_ Dictionary to_json() {
         Dictionary dict;
-        dict["textDocumentSync"] = textDocumentSync.to_json();
+        dict["textDocumentSync"]   = textDocumentSync.to_json();
         dict["completionProvider"] = completionProvider.to_json();
         signatureHelpProvider.triggerCharacters.push_back(",");
         signatureHelpProvider.triggerCharacters.push_back("(");
@@ -1908,21 +1908,21 @@ struct ServerCapabilities {
         // dict["codeLensProvider"] = codeLensProvider.to_json();
         dict["documentOnTypeFormattingProvider"] =
             documentOnTypeFormattingProvider.to_json();
-        dict["renameProvider"] = renameProvider.to_json();
+        dict["renameProvider"]       = renameProvider.to_json();
         dict["documentLinkProvider"] = documentLinkProvider.to_json();
-        dict["colorProvider"] = false;        // colorProvider.to_json();
+        dict["colorProvider"]        = false; // colorProvider.to_json();
         dict["foldingRangeProvider"] = false; // foldingRangeProvider.to_json();
-        dict["executeCommandProvider"] = executeCommandProvider.to_json();
-        dict["hoverProvider"] = hoverProvider;
-        dict["definitionProvider"] = definitionProvider;
-        dict["typeDefinitionProvider"] = typeDefinitionProvider;
-        dict["implementationProvider"] = implementationProvider;
-        dict["referencesProvider"] = referencesProvider;
-        dict["documentHighlightProvider"] = documentHighlightProvider;
-        dict["documentSymbolProvider"] = documentSymbolProvider;
-        dict["workspaceSymbolProvider"] = workspaceSymbolProvider;
-        dict["workspace"] = workspace.to_json();
-        dict["codeActionProvider"] = codeActionProvider;
+        dict["executeCommandProvider"]     = executeCommandProvider.to_json();
+        dict["hoverProvider"]              = hoverProvider;
+        dict["definitionProvider"]         = definitionProvider;
+        dict["typeDefinitionProvider"]     = typeDefinitionProvider;
+        dict["implementationProvider"]     = implementationProvider;
+        dict["referencesProvider"]         = referencesProvider;
+        dict["documentHighlightProvider"]  = documentHighlightProvider;
+        dict["documentSymbolProvider"]     = documentSymbolProvider;
+        dict["workspaceSymbolProvider"]    = workspaceSymbolProvider;
+        dict["workspace"]                  = workspace.to_json();
+        dict["codeActionProvider"]         = codeActionProvider;
         dict["documentFormattingProvider"] = documentFormattingProvider;
         dict["documentRangeFormattingProvider"] =
             documentRangeFormattingProvider;
@@ -1946,12 +1946,12 @@ struct InitializeResult {
 
 struct GodotNativeClassInfo {
     String name;
-    const DocData::ClassDoc* class_doc = nullptr;
+    const DocData::ClassDoc* class_doc   = nullptr;
     const ClassDB::ClassInfo* class_info = nullptr;
 
     Dictionary to_json() {
         Dictionary dict;
-        dict["name"] = name;
+        dict["name"]     = name;
         dict["inherits"] = class_doc->inherits;
         return dict;
     }
@@ -1968,7 +1968,7 @@ struct GodotCapabilities {
         Dictionary dict;
         Array classes;
         for (List<GodotNativeClassInfo>::Element* E = native_classes.front(); E;
-             E = E->next()) {
+             E                                      = E->next()) {
             classes.push_back(E->get().to_json());
         }
         dict["native_classes"] = classes;
@@ -1980,24 +1980,24 @@ struct GodotCapabilities {
 static String marked_documentation(const String& p_bbcode) {
     String markdown = p_bbcode.strip_edges();
 
-    Vector<String> lines = markdown.split("\n");
-    bool in_code_block = false;
+    Vector<String> lines  = markdown.split("\n");
+    bool in_code_block    = false;
     int code_block_indent = -1;
 
     markdown = "";
     for (int i = 0; i < lines.size(); i++) {
-        String line = lines[i];
+        String line     = lines[i];
         int block_start = line.find("[codeblock]");
         if (block_start != -1) {
             code_block_indent = block_start;
-            in_code_block = true;
-            line = "\n";
+            in_code_block     = true;
+            line              = "\n";
         } else if (in_code_block) {
             line = "\t" + line.substr(code_block_indent, line.length());
         }
 
         if (in_code_block && line.find("[/codeblock]") != -1) {
-            line = "\n";
+            line          = "\n";
             in_code_block = false;
         }
 

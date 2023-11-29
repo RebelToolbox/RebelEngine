@@ -93,7 +93,7 @@ class EditorExportPlatformIOS : public EditorExportPlatform {
         ExportArchitecture() : name(""), is_default(false) {}
 
         ExportArchitecture(String p_name, bool p_is_default) {
-            name = p_name;
+            name       = p_name;
             is_default = p_is_default;
         }
     };
@@ -386,7 +386,7 @@ public:
         Vector<PluginConfigIOS> all_plugins = get_plugins();
         for (int i = 0; i < all_plugins.size(); i++) {
             PluginConfigIOS plugin = all_plugins[i];
-            bool enabled = p_presets->get("plugins/" + plugin.name);
+            bool enabled           = p_presets->get("plugins/" + plugin.name);
             if (enabled) {
                 enabled_plugins.push_back(plugin);
             }
@@ -616,10 +616,10 @@ void EditorExportPlatformIOS::get_export_options(List<ExportOption>* r_options
     for (int i = 0; i < found_plugins.size(); i++) {
         // Editable plugin plist values
         PluginConfigIOS plugin = found_plugins[i];
-        const String* K = nullptr;
+        const String* K        = nullptr;
 
         while ((K = plugin.plist.next(K))) {
-            String key = *K;
+            String key                      = *K;
             PluginConfigIOS::PlistItem item = plugin.plist[key];
             switch (item.type) {
                 case PluginConfigIOS::PlistItemType::STRING_INPUT: {
@@ -1046,12 +1046,12 @@ void EditorExportPlatformIOS::_fix_config_file(
                 )
                 + "\n";
         } else if (lines[i].find("$entitlements_push_notifications") != -1) {
-            bool is_on = p_preset->get("capabilities/push_notifications");
-            strnew += lines[i].replace(
+            bool is_on  = p_preset->get("capabilities/push_notifications");
+            strnew     += lines[i].replace(
                           "$entitlements_push_notifications",
                           is_on ? "<key>aps-environment</"
-                                  "key><string>development</string>"
-                                : ""
+                                      "key><string>development</string>"
+                                    : ""
                       )
                     + "\n";
         } else if (lines[i].find("$required_device_capabilities") != -1) {
@@ -1240,18 +1240,18 @@ void EditorExportPlatformIOS::_fix_config_file(
                 lines[i].replace("$launch_screen_image_mode", value) + "\n";
         } else if (lines[i].find("$launch_screen_background_color") != -1) {
             bool use_custom = p_preset->get("storyboard/use_custom_bg_color");
-            Color color = use_custom
-                            ? p_preset->get("storyboard/custom_bg_color")
-                            : ProjectSettings::get_singleton()->get(
+            Color color     = use_custom
+                                ? p_preset->get("storyboard/custom_bg_color")
+                                : ProjectSettings::get_singleton()->get(
                                 "application/boot_splash/bg_color"
                             );
             const String value_format =
                 "red=\"$red\" green=\"$green\" blue=\"$blue\" alpha=\"$alpha\"";
 
             Dictionary value_dictionary;
-            value_dictionary["red"] = color.r;
+            value_dictionary["red"]   = color.r;
             value_dictionary["green"] = color.g;
-            value_dictionary["blue"] = color.b;
+            value_dictionary["blue"]  = color.b;
             value_dictionary["alpha"] = color.a;
             String value = value_format.format(value_dictionary, "$_");
 
@@ -1342,10 +1342,10 @@ void EditorExportPlatformIOS::_blend_and_rotate(
             Color sc = p_rot ? p_src->get_pixel(p_src->get_width() - y - 1, x)
                              : p_src->get_pixel(x, y);
             Color dc = p_dst->get_pixel(x_pos + x, y_pos + y);
-            dc.r = (double)(sc.a * sc.r + dc.a * (1.0 - sc.a) * dc.r);
-            dc.g = (double)(sc.a * sc.g + dc.a * (1.0 - sc.a) * dc.g);
-            dc.b = (double)(sc.a * sc.b + dc.a * (1.0 - sc.a) * dc.b);
-            dc.a = (double)(sc.a + dc.a * (1.0 - sc.a));
+            dc.r     = (double)(sc.a * sc.r + dc.a * (1.0 - sc.a) * dc.r);
+            dc.g     = (double)(sc.a * sc.g + dc.a * (1.0 - sc.a) * dc.g);
+            dc.b     = (double)(sc.a * sc.b + dc.a * (1.0 - sc.a) * dc.b);
+            dc.a     = (double)(sc.a + dc.a * (1.0 - sc.a));
             p_dst->set_pixel(x_pos + x, y_pos + y, dc);
         }
     }
@@ -1429,8 +1429,8 @@ Error EditorExportPlatformIOS::_export_icons(
 
     for (uint64_t i = 0; i < (sizeof(icon_infos) / sizeof(icon_infos[0]));
          ++i) {
-        IconInfo info = icon_infos[i];
-        int side_size = String(info.actual_size_side).to_int();
+        IconInfo info    = icon_infos[i];
+        int side_size    = String(info.actual_size_side).to_int();
         String icon_path = p_preset->get(info.preset_key);
         if (icon_path.length() == 0) {
             if ((bool)p_preset->get("icons/generate_missing")) {
@@ -1439,7 +1439,7 @@ Error EditorExportPlatformIOS::_export_icons(
                     "application/config/icon"
                 );
                 Ref<Image> img = memnew(Image);
-                Error err = ImageLoader::load_image(icon_path, img);
+                Error err      = ImageLoader::load_image(icon_path, img);
                 if (err != OK) {
                     ERR_PRINT(
                         "Invalid icon (" + String(info.preset_key) + "): '"
@@ -1473,7 +1473,7 @@ Error EditorExportPlatformIOS::_export_icons(
         } else {
             // Load custom icon
             Ref<Image> img = memnew(Image);
-            Error err = ImageLoader::load_image(icon_path, img);
+            Error err      = ImageLoader::load_image(icon_path, img);
             if (err != OK) {
                 ERR_PRINT(
                     "Invalid icon (" + String(info.preset_key) + "): '"
@@ -1630,12 +1630,12 @@ Error EditorExportPlatformIOS::_export_loading_screen_images(
     for (uint64_t i = 0;
          i < sizeof(loading_screen_infos) / sizeof(loading_screen_infos[0]);
          ++i) {
-        LoadingScreenInfo info = loading_screen_infos[i];
+        LoadingScreenInfo info     = loading_screen_infos[i];
         String loading_screen_file = p_preset->get(info.preset_key);
         if (loading_screen_file.size() > 0) {
             // Load custom loading screens
             Ref<Image> img = memnew(Image);
-            Error err = ImageLoader::load_image(loading_screen_file, img);
+            Error err      = ImageLoader::load_image(loading_screen_file, img);
             if (err != OK) {
                 ERR_PRINT(
                     "Invalid loading screen (" + String(info.preset_key)
@@ -1831,7 +1831,7 @@ private:
         ret.resize(sizeof(num) * 2);
         for (uint64_t i = 0; i < sizeof(num) * 2; ++i) {
             uint8_t four_bits = (num >> (sizeof(num) * 8 - (i + 1) * 4)) & 0xF;
-            ret.write[i] = _hex_char(four_bits);
+            ret.write[i]      = _hex_char(four_bits);
         }
         return String::utf8(ret.ptr(), ret.size());
     }
@@ -1890,8 +1890,8 @@ void EditorExportPlatformIOS::_add_assets_to_project(
     for (int i = 0; i < p_additional_assets.size(); ++i) {
         String additional_asset_info_format = file_info_format;
 
-        String build_id = (++current_id).str();
-        String ref_id = (++current_id).str();
+        String build_id     = (++current_id).str();
+        String ref_id       = (++current_id).str();
         String framework_id = "";
 
         const IOSExportAsset& asset = p_additional_assets[i];
@@ -1902,7 +1902,7 @@ void EditorExportPlatformIOS::_add_assets_to_project(
                 additional_asset_info_format +=
                     "$framework_id = {isa = PBXBuildFile; fileRef = $ref_id; "
                     "settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };\n";
-                framework_id = (++current_id).str();
+                framework_id            = (++current_id).str();
                 pbx_embeded_frameworks += framework_id + ",\n";
             }
 
@@ -1912,7 +1912,7 @@ void EditorExportPlatformIOS::_add_assets_to_project(
                 additional_asset_info_format +=
                     "$framework_id = {isa = PBXBuildFile; fileRef = $ref_id; "
                     "settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };\n";
-                framework_id = (++current_id).str();
+                framework_id            = (++current_id).str();
                 pbx_embeded_frameworks += framework_id + ",\n";
             }
 
@@ -1932,15 +1932,15 @@ void EditorExportPlatformIOS::_add_assets_to_project(
 
         if (pbx_build.length() > 0) {
             pbx_build += ",\n";
-            pbx_refs += ",\n";
+            pbx_refs  += ",\n";
         }
         pbx_build += build_id;
-        pbx_refs += ref_id;
+        pbx_refs  += ref_id;
 
         Dictionary format_dict;
-        format_dict["build_id"] = build_id;
-        format_dict["ref_id"] = ref_id;
-        format_dict["name"] = asset.exported_path.get_file();
+        format_dict["build_id"]  = build_id;
+        format_dict["ref_id"]    = ref_id;
+        format_dict["name"]      = asset.exported_path.get_file();
         format_dict["file_path"] = asset.exported_path;
         format_dict["file_type"] = type;
         if (framework_id.length() > 0) {
@@ -1994,7 +1994,7 @@ Error EditorExportPlatformIOS::_copy_asset(
         );
     }
     bool file_exists = da->file_exists(p_asset);
-    bool dir_exists = da->dir_exists(p_asset);
+    bool dir_exists  = da->dir_exists(p_asset);
     if (!file_exists && !dir_exists) {
         memdelete(da);
         memdelete(filesystem_da);
@@ -2023,9 +2023,9 @@ Error EditorExportPlatformIOS::_copy_asset(
 
         String framework_name = file_name + ".framework";
 
-        asset_path = asset_path.plus_file(framework_name);
-        destination_dir = p_out_dir.plus_file(asset_path);
-        destination = destination_dir.plus_file(file_name);
+        asset_path       = asset_path.plus_file(framework_name);
+        destination_dir  = p_out_dir.plus_file(asset_path);
+        destination      = destination_dir.plus_file(file_name);
         create_framework = true;
     } else if (p_is_framework && (p_asset.ends_with(".framework") || p_asset.ends_with(".xcframework"))) {
         asset_path = String("dylibs").plus_file(base_dir);
@@ -2038,9 +2038,9 @@ Error EditorExportPlatformIOS::_copy_asset(
             file_name = *p_custom_file_name;
         }
 
-        asset_path = asset_path.plus_file(file_name);
+        asset_path      = asset_path.plus_file(file_name);
         destination_dir = p_out_dir.plus_file(asset_path);
-        destination = destination_dir;
+        destination     = destination_dir;
     } else {
         asset_path = base_dir;
 
@@ -2053,8 +2053,8 @@ Error EditorExportPlatformIOS::_copy_asset(
         }
 
         destination_dir = p_out_dir.plus_file(asset_path);
-        asset_path = asset_path.plus_file(file_name);
-        destination = p_out_dir.plus_file(asset_path);
+        asset_path      = asset_path.plus_file(file_name);
+        destination     = p_out_dir.plus_file(asset_path);
     }
 
     if (!filesystem_da->dir_exists(destination_dir)) {
@@ -2306,7 +2306,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
         String plugin_binary_result_file = plugin.binary.get_file();
         // We shouldn't embed .xcframework that contains static libraries.
         // Static libraries are not embedded anyway.
-        err = _copy_asset(
+        err                              = _copy_asset(
             dest_dir,
             plugin_main_binary,
             &plugin_binary_result_file,
@@ -2321,7 +2321,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
         // Use separate container for names to check for duplicates.
         for (int j = 0; j < plugin.linked_dependencies.size(); j++) {
             String dependency = plugin.linked_dependencies[j];
-            String name = dependency.get_file();
+            String name       = dependency.get_file();
 
             if (added_linked_dependenciy_names.find(name) != -1) {
                 continue;
@@ -2333,7 +2333,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
 
         for (int j = 0; j < plugin.system_dependencies.size(); j++) {
             String dependency = plugin.system_dependencies[j];
-            String name = dependency.get_file();
+            String name       = dependency.get_file();
 
             if (added_linked_dependenciy_names.find(name) != -1) {
                 continue;
@@ -2345,7 +2345,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
 
         for (int j = 0; j < plugin.embedded_dependencies.size(); j++) {
             String dependency = plugin.embedded_dependencies[j];
-            String name = dependency.get_file();
+            String name       = dependency.get_file();
 
             if (added_embedded_dependenciy_names.find(name) != -1) {
                 continue;
@@ -2381,7 +2381,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
         const String* K = nullptr;
 
         while ((K = plugin.plist.next(K))) {
-            String key = *K;
+            String key                      = *K;
             PluginConfigIOS::PlistItem item = plugin.plist[key];
 
             String value;
@@ -2390,7 +2390,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
                 case PluginConfigIOS::PlistItemType::STRING_INPUT: {
                     String preset_name = "plugins_plist/" + key;
                     String input_value = p_preset->get(preset_name);
-                    value = "<string>" + input_value + "</string>";
+                    value              = "<string>" + input_value + "</string>";
                 } break;
                 default:
                     value = item.value;
@@ -2407,7 +2407,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
         }
 
         // CPP Code
-        String definition_comment = "// Plugin: " + plugin.name + "\n";
+        String definition_comment    = "// Plugin: " + plugin.name + "\n";
         String initialization_method = plugin.initialization_method + "();\n";
         String deinitialization_method =
             plugin.deinitialization_method + "();\n";
@@ -2416,7 +2416,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
                                     + initialization_method + "extern void "
                                     + deinitialization_method + "\n";
 
-        plugin_initialization_cpp_code += "\t" + initialization_method;
+        plugin_initialization_cpp_code   += "\t" + initialization_method;
         plugin_deinitialization_cpp_code += "\t" + deinitialization_method;
     }
 
@@ -2424,7 +2424,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
     {
         const String* K = nullptr;
         while ((K = plist_values.next(K))) {
-            String key = *K;
+            String key   = *K;
             String value = plist_values[key];
 
             if (key.empty() || value.empty()) {
@@ -2471,8 +2471,8 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
     // Update CPP
     {
         Dictionary plugin_format;
-        plugin_format["definition"] = plugin_definition_cpp_code;
-        plugin_format["initialization"] = plugin_initialization_cpp_code;
+        plugin_format["definition"]       = plugin_definition_cpp_code;
+        plugin_format["initialization"]   = plugin_initialization_cpp_code;
         plugin_format["deinitialization"] = plugin_deinitialization_cpp_code;
 
         String plugin_cpp_code =
@@ -2496,7 +2496,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
     {
         String result_linker_flags = " ";
         for (Set<String>::Element* E = plugin_linker_flags.front(); E;
-             E = E->next()) {
+             E                       = E->next()) {
             const String& flag = E->get();
 
             if (flag.length() == 0) {
@@ -2509,7 +2509,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
 
             result_linker_flags += flag;
         }
-        result_linker_flags = result_linker_flags.replace("\"", "\\\"");
+        result_linker_flags         = result_linker_flags.replace("\"", "\\\"");
         p_config_data.linker_flags += result_linker_flags;
     }
 
@@ -2525,7 +2525,7 @@ Error EditorExportPlatformIOS::export_project(
     ExportNotifier notifier(*this, p_preset, p_debug, p_path, p_flags);
 
     String src_pkg_name;
-    String dest_dir = p_path.get_base_dir() + "/";
+    String dest_dir    = p_path.get_base_dir() + "/";
     String binary_name = p_path.get_file().get_basename();
 
     EditorProgress ep("export", "Exporting for iOS", 5, true);
@@ -2648,9 +2648,9 @@ Error EditorExportPlatformIOS::export_project(
     ERR_FAIL_COND_V(!tmp_app_path, ERR_CANT_CREATE);
 
     print_line("Unzipping...");
-    FileAccess* src_f = nullptr;
+    FileAccess* src_f    = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
-    unzFile src_pkg_zip = unzOpen2(src_pkg_name.utf8().get_data(), &io);
+    unzFile src_pkg_zip  = unzOpen2(src_pkg_name.utf8().get_data(), &io);
     if (!src_pkg_zip) {
         EditorNode::add_io_error(
             "Could not open export template (not a zip file?):\n" + src_pkg_name
@@ -2987,7 +2987,7 @@ bool EditorExportPlatformIOS::can_export(
         }
     }
 
-    valid = dvalid || rvalid;
+    valid               = dvalid || rvalid;
     r_missing_templates = !valid;
 
     // Validate the rest of the configuration.
@@ -3003,13 +3003,13 @@ bool EditorExportPlatformIOS::can_export(
     String identifier = p_preset->get("application/identifier");
     String pn_err;
     if (!is_package_name_valid(identifier, &pn_err)) {
-        err += TTR("Invalid Identifier:") + " " + pn_err + "\n";
-        valid = false;
+        err   += TTR("Invalid Identifier:") + " " + pn_err + "\n";
+        valid  = false;
     }
 
     for (uint64_t i = 0; i < (sizeof(icon_infos) / sizeof(icon_infos[0]));
          ++i) {
-        IconInfo info = icon_infos[i];
+        IconInfo info    = icon_infos[i];
         String icon_path = p_preset->get(info.preset_key);
         if (icon_path.length() == 0) {
             if (info.is_required) {
@@ -3023,8 +3023,8 @@ bool EditorExportPlatformIOS::can_export(
 
     String etc_error = test_etc2_or_pvrtc();
     if (etc_error != String()) {
-        valid = false;
-        err += etc_error;
+        valid  = false;
+        err   += etc_error;
     }
 
     if (!err.empty()) {

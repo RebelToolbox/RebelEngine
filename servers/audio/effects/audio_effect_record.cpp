@@ -44,9 +44,9 @@ void AudioEffectRecordInstance::process(
 
     // Add incoming audio frames to the IO ring buffer
     const AudioFrame* src = p_src_frames;
-    AudioFrame* rb_buf = ring_buffer.ptrw();
+    AudioFrame* rb_buf    = ring_buffer.ptrw();
     for (int i = 0; i < p_frame_count; i++) {
-        p_dst_frames[i] = p_src_frames[i];
+        p_dst_frames[i]                            = p_src_frames[i];
         rb_buf[ring_buffer_pos & ring_buffer_mask] = src[i];
         ring_buffer_pos++;
     }
@@ -114,7 +114,7 @@ void AudioEffectRecordInstance::_thread_callback(void* _instance) {
 
 void AudioEffectRecordInstance::init() {
     // Reset recorder status
-    ring_buffer_pos = 0;
+    ring_buffer_pos      = 0;
     ring_buffer_read_pos = 0;
 
     // We start a new recording
@@ -151,13 +151,13 @@ AudioEffectRecordInstance::~AudioEffectRecordInstance() {
 Ref<AudioEffectInstance> AudioEffectRecord::instance() {
     Ref<AudioEffectRecordInstance> ins;
     ins.instance();
-    ins->base = Ref<AudioEffectRecord>(this);
+    ins->base         = Ref<AudioEffectRecord>(this);
     ins->is_recording = false;
 
     // Re-using the buffer size calculations from audio_effect_delay.cpp
-    float ring_buffer_max_size = IO_BUFFER_SIZE_MS;
-    ring_buffer_max_size /= 1000.0; // convert to seconds
-    ring_buffer_max_size *= AudioServer::get_singleton()->get_mix_rate();
+    float ring_buffer_max_size  = IO_BUFFER_SIZE_MS;
+    ring_buffer_max_size       /= 1000.0; // convert to seconds
+    ring_buffer_max_size       *= AudioServer::get_singleton()->get_mix_rate();
 
     int ringbuff_size = ring_buffer_max_size;
 
@@ -168,9 +168,9 @@ Ref<AudioEffectInstance> AudioEffectRecord::instance() {
         ringbuff_size /= 2;
     }
 
-    ringbuff_size = 1 << bits;
+    ringbuff_size         = 1 << bits;
     ins->ring_buffer_mask = ringbuff_size - 1;
-    ins->ring_buffer_pos = 0;
+    ins->ring_buffer_pos  = 0;
 
     ins->ring_buffer.resize(ringbuff_size);
 
@@ -338,6 +338,6 @@ void AudioEffectRecord::_bind_methods() {
 }
 
 AudioEffectRecord::AudioEffectRecord() {
-    format = AudioStreamSample::FORMAT_16_BITS;
+    format           = AudioStreamSample::FORMAT_16_BITS;
     recording_active = false;
 }

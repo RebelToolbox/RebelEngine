@@ -35,7 +35,7 @@
 
 bool ItemListPlugin::_set(const StringName& p_name, const Variant& p_value) {
     String name = p_name;
-    int idx = name.get_slice("/", 0).to_int();
+    int idx     = name.get_slice("/", 0).to_int();
     String what = name.get_slice("/", 1);
 
     if (what == "text") {
@@ -71,7 +71,7 @@ bool ItemListPlugin::_set(const StringName& p_name, const Variant& p_value) {
 
 bool ItemListPlugin::_get(const StringName& p_name, Variant& r_ret) const {
     String name = p_name;
-    int idx = name.get_slice("/", 0).to_int();
+    int idx     = name.get_slice("/", 0).to_int();
     String what = name.get_slice("/", 1);
 
     if (what == "text") {
@@ -347,7 +347,7 @@ void ItemListEditor::_bind_methods() {
 
 ItemListEditor::ItemListEditor() {
     selected_idx = -1;
-    item_list = nullptr;
+    item_list    = nullptr;
 
     toolbar_button = memnew(ToolButton);
     toolbar_button->set_text(TTR("Items"));
@@ -407,7 +407,7 @@ void ItemListEditorPlugin::make_visible(bool p_visible) {
 }
 
 ItemListEditorPlugin::ItemListEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor           = p_node;
     item_list_editor = memnew(ItemListEditor);
     CanvasItemEditor::get_singleton()->add_control_to_menu_panel(
         item_list_editor

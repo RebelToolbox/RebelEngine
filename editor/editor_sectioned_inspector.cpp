@@ -79,7 +79,7 @@ class SectionedInspectorFilter : public Object {
         edited->get_property_list(&pinfo);
         for (List<PropertyInfo>::Element* E = pinfo.front(); E; E = E->next()) {
             PropertyInfo pi = E->get();
-            int sp = pi.name.find("/");
+            int sp          = pi.name.find("/");
 
             if (pi.name == "resource_path" || pi.name == "resource_name"
                 || pi.name == "resource_local_to_scene"
@@ -125,7 +125,7 @@ protected:
 
 public:
     void set_section(const String& p_section, bool p_allow_sub) {
-        section = p_section;
+        section   = p_section;
         allow_sub = p_allow_sub;
         _change_notify();
     }
@@ -243,7 +243,7 @@ void SectionedInspector::update_category_list() {
 
     section_map.clear();
 
-    TreeItem* root = sections->create_item();
+    TreeItem* root  = sections->create_item();
     section_map[""] = root;
 
     String filter;
@@ -296,7 +296,7 @@ void SectionedInspector::update_category_list() {
             }
 
             if (!section_map.has(metasection)) {
-                TreeItem* ms = sections->create_item(parent);
+                TreeItem* ms             = sections->create_item(parent);
                 section_map[metasection] = ms;
                 ms->set_text(0, sectionarr[i].capitalize());
                 ms->set_metadata(0, metasection);

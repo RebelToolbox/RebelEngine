@@ -76,8 +76,8 @@ struct ErrorHandlerList {
     ErrorHandlerList* next;
 
     ErrorHandlerList() {
-        errfunc = nullptr;
-        next = nullptr;
+        errfunc  = nullptr;
+        next     = nullptr;
         userdata = nullptr;
     }
 };
@@ -140,7 +140,7 @@ void _err_print_index_error(
     const char* p_index_str,
     const char* p_size_str,
     const char* p_message = "",
-    bool fatal = false
+    bool fatal            = false
 );
 void _err_print_index_error(
     const char* p_function,

@@ -52,7 +52,7 @@ void BroadPhase2DHashGrid::_pair_attempt(Element* p_elem, Element* p_with) {
     ERR_FAIL_COND(p_elem->_static && p_with->_static);
 
     if (!E) {
-        PairData* pd = memnew(PairData);
+        PairData* pd           = memnew(PairData);
         p_elem->paired[p_with] = pd;
         p_with->paired[p_elem] = pd;
     } else {
@@ -101,7 +101,7 @@ void BroadPhase2DHashGrid::_unpair_attempt(Element* p_elem, Element* p_with) {
 
 void BroadPhase2DHashGrid::_check_motion(Element* p_elem) {
     for (Map<Element*, PairData*>::Element* E = p_elem->paired.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         bool physical_collision = p_elem->aabb.intersects(E->key()->aabb);
         bool logical_collision =
             p_elem->owner->test_collision_mask(E->key()->owner);
@@ -147,7 +147,7 @@ void BroadPhase2DHashGrid::_enter_grid(
     if (sz.width * sz.height > large_object_min_surface) {
         // large object, do not use grid, must check against all elements
         for (Map<ID, Element>::Element* E = element_map.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             if (E->key() == p_elem->self) {
                 continue; // do not pair against itself
             }
@@ -162,7 +162,7 @@ void BroadPhase2DHashGrid::_enter_grid(
     }
 
     Point2i from = (p_rect.position / cell_size).floor();
-    Point2i to = ((p_rect.position + p_rect.size) / cell_size).floor();
+    Point2i to   = ((p_rect.position + p_rect.size) / cell_size).floor();
 
     for (int i = from.x; i <= to.x; i++) {
         for (int j = from.y; j <= to.y; j++) {
@@ -171,7 +171,7 @@ void BroadPhase2DHashGrid::_enter_grid(
             pk.y = j;
 
             uint32_t idx = pk.hash() % hash_table_size;
-            PosBin* pb = hash_table[idx];
+            PosBin* pb   = hash_table[idx];
 
             while (pb) {
                 if (pb->key == pk) {
@@ -185,9 +185,9 @@ void BroadPhase2DHashGrid::_enter_grid(
 
             if (!pb) {
                 // does not exist, create!
-                pb = memnew(PosBin);
-                pb->key = pk;
-                pb->next = hash_table[idx];
+                pb              = memnew(PosBin);
+                pb->key         = pk;
+                pb->next        = hash_table[idx];
                 hash_table[idx] = pb;
             }
 
@@ -203,7 +203,7 @@ void BroadPhase2DHashGrid::_enter_grid(
 
             if (entered) {
                 for (Map<Element*, RC>::Element* E = pb->object_set.front(); E;
-                     E = E->next()) {
+                     E                             = E->next()) {
                     _pair_attempt(p_elem, E->key());
                 }
 
@@ -222,7 +222,7 @@ void BroadPhase2DHashGrid::_enter_grid(
     // pair separatedly with large elements
 
     for (Map<Element*, RC>::Element* E = large_elements.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         if (E->key() == p_elem) {
             continue; // do not pair against itself
         }
@@ -257,7 +257,7 @@ void BroadPhase2DHashGrid::_exit_grid(
     }
 
     Point2i from = (p_rect.position / cell_size).floor();
-    Point2i to = ((p_rect.position + p_rect.size) / cell_size).floor();
+    Point2i to   = ((p_rect.position + p_rect.size) / cell_size).floor();
 
     for (int i = from.x; i <= to.x; i++) {
         for (int j = from.y; j <= to.y; j++) {
@@ -266,7 +266,7 @@ void BroadPhase2DHashGrid::_exit_grid(
             pk.y = j;
 
             uint32_t idx = pk.hash() % hash_table_size;
-            PosBin* pb = hash_table[idx];
+            PosBin* pb   = hash_table[idx];
 
             while (pb) {
                 if (pb->key == pk) {
@@ -294,7 +294,7 @@ void BroadPhase2DHashGrid::_exit_grid(
 
             if (exited) {
                 for (Map<Element*, RC>::Element* E = pb->object_set.front(); E;
-                     E = E->next()) {
+                     E                             = E->next()) {
                     _unpair_attempt(p_elem, E->key());
                 }
 
@@ -332,7 +332,7 @@ void BroadPhase2DHashGrid::_exit_grid(
     }
 
     for (Map<Element*, RC>::Element* E = large_elements.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         if (E->key() == p_elem) {
             continue; // do not pair against itself
         }
@@ -353,13 +353,13 @@ BroadPhase2DHashGrid::ID BroadPhase2DHashGrid::create(
     current++;
 
     Element e;
-    e.owner = p_object;
-    e._static = false;
-    e.collision_mask = p_object->get_collision_mask();
+    e.owner           = p_object;
+    e._static         = false;
+    e.collision_mask  = p_object->get_collision_mask();
     e.collision_layer = p_object->get_collision_layer();
-    e.subindex = p_subindex;
-    e.self = current;
-    e.pass = 0;
+    e.subindex        = p_subindex;
+    e.self            = current;
+    e.pass            = 0;
 
     element_map[current] = e;
     return current;
@@ -369,15 +369,15 @@ void BroadPhase2DHashGrid::move(ID p_id, const Rect2& p_aabb) {
     Map<ID, Element>::Element* E = element_map.find(p_id);
     ERR_FAIL_COND(!E);
 
-    Element& e = E->get();
+    Element& e         = E->get();
     bool layer_changed = e.collision_mask != e.owner->get_collision_mask()
                       || e.collision_layer != e.owner->get_collision_layer();
 
     if (p_aabb != e.aabb || layer_changed) {
-        uint32_t old_mask = e.collision_mask;
+        uint32_t old_mask  = e.collision_mask;
         uint32_t old_layer = e.collision_layer;
         if (p_aabb != Rect2()) {
-            e.collision_mask = e.owner->get_collision_mask();
+            e.collision_mask  = e.owner->get_collision_mask();
             e.collision_layer = e.owner->get_collision_layer();
 
             _enter_grid(&e, p_aabb, e._static, layer_changed);
@@ -386,12 +386,12 @@ void BroadPhase2DHashGrid::move(ID p_id, const Rect2& p_aabb) {
         if (e.aabb != Rect2()) {
             // Need _exit_grid to remove from cells based on the old layer
             // values.
-            e.collision_mask = old_mask;
+            e.collision_mask  = old_mask;
             e.collision_layer = old_layer;
 
             _exit_grid(&e, e.aabb, e._static, layer_changed);
 
-            e.collision_mask = e.owner->get_collision_mask();
+            e.collision_mask  = e.owner->get_collision_mask();
             e.collision_layer = e.owner->get_collision_layer();
         }
 
@@ -478,7 +478,7 @@ void BroadPhase2DHashGrid::_cull(
     pk.y = p_cell.y;
 
     uint32_t idx = pk.hash() % hash_table_size;
-    PosBin* pb = hash_table[idx];
+    PosBin* pb   = hash_table[idx];
 
     while (pb) {
         if (pb->key == pk) {
@@ -493,7 +493,7 @@ void BroadPhase2DHashGrid::_cull(
     }
 
     for (Map<Element*, RC>::Element* E = pb->object_set.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         if (index >= p_max_results) {
             break;
         }
@@ -511,13 +511,13 @@ void BroadPhase2DHashGrid::_cull(
             continue;
         }
 
-        p_results[index] = E->key()->owner;
+        p_results[index]        = E->key()->owner;
         p_result_indices[index] = E->key()->subindex;
         index++;
     }
 
     for (Map<Element*, RC>::Element* E = pb->static_object_set.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         if (index >= p_max_results) {
             break;
         }
@@ -533,8 +533,8 @@ void BroadPhase2DHashGrid::_cull(
             continue;
         }
 
-        E->key()->pass = pass;
-        p_results[index] = E->key()->owner;
+        E->key()->pass          = pass;
+        p_results[index]        = E->key()->owner;
         p_result_indices[index] = E->key()->subindex;
         index++;
     }
@@ -642,7 +642,7 @@ int BroadPhase2DHashGrid::cull_segment(
     }
 
     for (Map<Element*, RC>::Element* E = large_elements.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         if (cullcount >= p_max_results) {
             break;
         }
@@ -661,7 +661,7 @@ int BroadPhase2DHashGrid::cull_segment(
             continue;
         }
 
-        p_results[cullcount] = E->key()->owner;
+        p_results[cullcount]        = E->key()->owner;
         p_result_indices[cullcount] = E->key()->subindex;
         cullcount++;
     }
@@ -677,8 +677,8 @@ int BroadPhase2DHashGrid::cull_aabb(
 ) {
     pass++;
 
-    Point2i from = (p_aabb.position / cell_size).floor();
-    Point2i to = ((p_aabb.position + p_aabb.size) / cell_size).floor();
+    Point2i from  = (p_aabb.position / cell_size).floor();
+    Point2i to    = ((p_aabb.position + p_aabb.size) / cell_size).floor();
     int cullcount = 0;
 
     for (int i = from.x; i <= to.x; i++) {
@@ -697,7 +697,7 @@ int BroadPhase2DHashGrid::cull_aabb(
     }
 
     for (Map<Element*, RC>::Element* E = large_elements.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         if (cullcount >= p_max_results) {
             break;
         }
@@ -716,7 +716,7 @@ int BroadPhase2DHashGrid::cull_aabb(
             continue;
         */
 
-        p_results[cullcount] = E->key()->owner;
+        p_results[cullcount]        = E->key()->owner;
         p_result_indices[cullcount] = E->key()->subindex;
         cullcount++;
     }
@@ -757,7 +757,7 @@ BroadPhase2DHashGrid::BroadPhase2DHashGrid() {
         )
     );
     hash_table_size = Math::larger_prime(hash_table_size);
-    hash_table = memnew_arr(PosBin*, hash_table_size);
+    hash_table      = memnew_arr(PosBin*, hash_table_size);
 
     cell_size = GLOBAL_GET("physics/2d/cell_size");
     ProjectSettings::get_singleton()->set_custom_property_info(
@@ -793,7 +793,7 @@ BroadPhase2DHashGrid::BroadPhase2DHashGrid() {
 BroadPhase2DHashGrid::~BroadPhase2DHashGrid() {
     for (uint32_t i = 0; i < hash_table_size; i++) {
         while (hash_table[i]) {
-            PosBin* pb = hash_table[i];
+            PosBin* pb    = hash_table[i];
             hash_table[i] = pb->next;
             memdelete(pb);
         }

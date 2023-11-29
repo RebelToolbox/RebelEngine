@@ -121,7 +121,7 @@ void GDNativeExportPlugin::_export_file(
         config->get_section_keys("dependencies", &dependency_keys);
 
         for (List<String>::Element* E = dependency_keys.front(); E;
-             E = E->next()) {
+             E                        = E->next()) {
             String key = E->get();
 
             Vector<String> tags = key.split(".");
@@ -217,10 +217,10 @@ void GDNativeExportPlugin::_export_file(
                 String full_name =
                     lib->get_symbol_prefix() + expected_symbols[i].name;
                 String code = declare_pattern.replace("$name", full_name);
-                code = code.replace(
+                code        = code.replace(
                     "$weak",
                     expected_symbols[i].is_required ? ""
-                                                    : " __attribute__((weak))"
+                                                           : " __attribute__((weak))"
                 );
                 additional_code += code;
 

@@ -34,7 +34,7 @@
 #include "core/os/keyboard.h"
 
 const int InputEvent::DEVICE_ID_TOUCH_MOUSE = -1;
-const int InputEvent::DEVICE_ID_INTERNAL = -2;
+const int InputEvent::DEVICE_ID_INTERNAL    = -2;
 
 void InputEvent::set_device(int p_device) {
     device = p_device;
@@ -363,10 +363,10 @@ void InputEventWithModifiers::_bind_methods() {
 }
 
 InputEventWithModifiers::InputEventWithModifiers() {
-    alt = false;
-    shift = false;
+    alt     = false;
+    shift   = false;
     control = false;
-    meta = false;
+    meta    = false;
 }
 
 //////////////////////////////////
@@ -454,13 +454,13 @@ bool InputEventKey::action_match(
 
     bool match = false;
     if (get_scancode() == 0) {
-        uint32_t code = get_physical_scancode_with_modifiers();
+        uint32_t code       = get_physical_scancode_with_modifiers();
         uint32_t event_code = key->get_physical_scancode_with_modifiers();
 
         match = get_physical_scancode() == key->get_physical_scancode()
              && (!key->is_pressed() || (code & event_code) == code);
     } else {
-        uint32_t code = get_scancode_with_modifiers();
+        uint32_t code       = get_scancode_with_modifiers();
         uint32_t event_code = key->get_scancode_with_modifiers();
 
         match = get_scancode() == key->get_scancode()
@@ -571,11 +571,11 @@ void InputEventKey::_bind_methods() {
 }
 
 InputEventKey::InputEventKey() {
-    pressed = false;
-    scancode = 0;
+    pressed           = false;
+    scancode          = 0;
     physical_scancode = 0;
-    unicode = 0; /// unicode
-    echo = false;
+    unicode           = 0; /// unicode
+    echo              = false;
 }
 
 ////////////////////////////////////////
@@ -854,10 +854,10 @@ void InputEventMouseButton::_bind_methods() {
 }
 
 InputEventMouseButton::InputEventMouseButton() {
-    factor = 1;
+    factor       = 1;
     button_index = 0;
-    pressed = false;
-    doubleclick = false;
+    pressed      = false;
+    doubleclick  = false;
 }
 
 ////////////////////////////////////////////
@@ -1170,7 +1170,7 @@ void InputEventJoypadMotion::_bind_methods() {
 }
 
 InputEventJoypadMotion::InputEventJoypadMotion() {
-    axis = 0;
+    axis       = 0;
     axis_value = 0;
 }
 
@@ -1293,8 +1293,8 @@ void InputEventJoypadButton::_bind_methods() {
 
 InputEventJoypadButton::InputEventJoypadButton() {
     button_index = 0;
-    pressure = 0;
-    pressed = false;
+    pressure     = 0;
+    pressed      = false;
 }
 
 //////////////////////////////////////////////
@@ -1382,7 +1382,7 @@ void InputEventScreenTouch::_bind_methods() {
 }
 
 InputEventScreenTouch::InputEventScreenTouch() {
-    index = 0;
+    index   = 0;
     pressed = false;
 }
 
@@ -1644,7 +1644,7 @@ void InputEventAction::_bind_methods() {
 }
 
 InputEventAction::InputEventAction() {
-    pressed = false;
+    pressed  = false;
     strength = 1.0f;
 }
 
@@ -1946,12 +1946,12 @@ void InputEventMIDI::_bind_methods() {
 }
 
 InputEventMIDI::InputEventMIDI() {
-    channel = 0;
-    message = 0;
-    pitch = 0;
-    velocity = 0;
-    instrument = 0;
-    pressure = 0;
+    channel           = 0;
+    message           = 0;
+    pitch             = 0;
+    velocity          = 0;
+    instrument        = 0;
+    pressure          = 0;
     controller_number = 0;
-    controller_value = 0;
+    controller_value  = 0;
 }

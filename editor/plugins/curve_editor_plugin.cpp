@@ -37,13 +37,13 @@
 #include "editor/editor_scale.h"
 
 CurveEditor::CurveEditor() {
-    _selected_point = -1;
-    _hover_point = -1;
+    _selected_point   = -1;
+    _hover_point      = -1;
     _selected_tangent = TANGENT_NONE;
-    _hover_radius = 6;
-    _tangents_length = 40;
-    _dragging = false;
-    _has_undo_data = false;
+    _hover_radius     = 6;
+    _tangents_length  = 40;
+    _dragging         = false;
+    _has_undo_data    = false;
 
     set_focus_mode(FOCUS_ALL);
     set_clip_contents(true);
@@ -92,8 +92,8 @@ void CurveEditor::set_curve(Ref<Curve> curve) {
             ->connect(Curve::SIGNAL_RANGE_CHANGED, this, "_curve_changed");
     }
 
-    _selected_point = -1;
-    _hover_point = -1;
+    _selected_point   = -1;
+    _hover_point      = -1;
     _selected_tangent = TANGENT_NONE;
 
     update();
@@ -181,7 +181,7 @@ void CurveEditor::on_gui_input(const Ref<InputEvent>& p_event) {
                 if (!_has_undo_data) {
                     // Save full curve state before dragging points,
                     // because this operation can modify their order
-                    _undo_data = curve.get_data();
+                    _undo_data     = curve.get_data();
                     _has_undo_data = true;
                 }
 
@@ -295,7 +295,7 @@ void CurveEditor::on_preset_item_selected(int preset_id) {
     ERR_FAIL_COND(preset_id < 0 || preset_id >= PRESET_COUNT);
     ERR_FAIL_COND(_curve_ref.is_null());
 
-    Curve& curve = **_curve_ref;
+    Curve& curve        = **_curve_ref;
     Array previous_data = curve.get_data();
 
     curve.clear_points();
@@ -468,7 +468,7 @@ int CurveEditor::get_point_at(Vector2 pos) const {
     const Curve& curve = **_curve_ref;
 
     const float true_hover_radius = Math::round(_hover_radius * EDSCALE);
-    const float r = true_hover_radius * true_hover_radius;
+    const float r                 = true_hover_radius * true_hover_radius;
 
     for (int i = 0; i < curve.get_point_count(); ++i) {
         Vector2 p = get_view_pos(curve.get_point_position(i));
@@ -630,7 +630,7 @@ void CurveEditor::set_hover_point_index(int index) {
 }
 
 void CurveEditor::update_view_transform() {
-    Ref<Font> font = get_font("font", "Label");
+    Ref<Font> font      = get_font("font", "Label");
     const real_t margin = font->get_height() + 2 * EDSCALE;
 
     float min_y = 0;
@@ -645,7 +645,7 @@ void CurveEditor::update_view_transform() {
         Rect2(Curve::MIN_X, min_y, Curve::MAX_X, max_y - min_y);
     const Size2 view_margin(margin, margin);
     const Size2 view_size = get_size() - view_margin * 2;
-    const Vector2 scale = view_size / world_rect.size;
+    const Vector2 scale   = view_size / world_rect.size;
 
     Transform2D world_trans;
     world_trans.translate(-world_rect.position - Vector2(0, world_rect.size.y));
@@ -665,7 +665,7 @@ Vector2 CurveEditor::get_tangent_view_pos(int i, TangentIndex tangent) const {
         dir = Vector2(1, _curve_ref->get_point_right_tangent(i));
     }
 
-    Vector2 point_pos = get_view_pos(_curve_ref->get_point_position(i));
+    Vector2 point_pos   = get_view_pos(_curve_ref->get_point_position(i));
     Vector2 control_pos = get_view_pos(_curve_ref->get_point_position(i) + dir);
 
     return point_pos
@@ -705,7 +705,7 @@ static void plot_curve_accurate(const Curve& curve, float step, T plot_func) {
             Vector2 a = curve.get_point_position(i - 1);
             Vector2 b = curve.get_point_position(i);
 
-            Vector2 pos = a;
+            Vector2 pos      = a;
             Vector2 prev_pos = a;
 
             float len = b.x - a.x;
@@ -781,8 +781,8 @@ void CurveEditor::_draw() {
     for (real_t x = 0; x < 1.0; x += grid_step.x) {
         draw_line(Vector2(x, min_edge.y), Vector2(x, max_edge.y), grid_color1);
     }
-    for (real_t y = curve.get_min_value(); y < curve.get_max_value();
-         y += grid_step.y) {
+    for (real_t y  = curve.get_min_value(); y < curve.get_max_value();
+         y        += grid_step.y) {
         draw_line(Vector2(min_edge.x, y), Vector2(max_edge.x, y), grid_color1);
     }
 
@@ -790,9 +790,9 @@ void CurveEditor::_draw() {
 
     draw_set_transform_matrix(Transform2D());
 
-    Ref<Font> font = get_font("font", "Label");
+    Ref<Font> font    = get_font("font", "Label");
     float font_height = font->get_height();
-    Color text_color = get_color("font_color", "Editor");
+    Color text_color  = get_color("font_color", "Editor");
 
     {
         // X axis
@@ -851,7 +851,7 @@ void CurveEditor::_draw() {
     if (_selected_point >= 0) {
         const Color tangent_color = get_color("accent_color", "Editor");
 
-        int i = _selected_point;
+        int i       = _selected_point;
         Vector2 pos = curve.get_point_position(i);
 
         if (i != 0) {
@@ -891,7 +891,7 @@ void CurveEditor::_draw() {
 
     draw_set_transform_matrix(_world_to_view);
 
-    const Color line_color = get_color("font_color", "Editor");
+    const Color line_color      = get_color("font_color", "Editor");
     const Color edge_line_color = get_color("highlight_color", "Editor");
 
     CanvasItemPlotCurve plot_func(*this, line_color, edge_line_color);
@@ -901,7 +901,7 @@ void CurveEditor::_draw() {
 
     draw_set_transform_matrix(Transform2D());
 
-    const Color point_color = get_color("font_color", "Editor");
+    const Color point_color          = get_color("font_color", "Editor");
     const Color selected_point_color = get_color("accent_color", "Editor");
 
     for (int i = 0; i < curve.get_point_count(); ++i) {
@@ -919,7 +919,7 @@ void CurveEditor::_draw() {
 
     if (_hover_point != -1) {
         const Color hover_color = line_color;
-        Vector2 pos = curve.get_point_position(_hover_point);
+        Vector2 pos             = curve.get_point_position(_hover_point);
         draw_rect(
             Rect2(get_view_pos(pos), Vector2(1, 1))
                 .grow(Math::round(_hover_radius * EDSCALE)),

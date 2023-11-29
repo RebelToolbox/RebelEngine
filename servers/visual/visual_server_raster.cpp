@@ -50,9 +50,9 @@ void VisualServerRaster::black_bars_set_margins(
     int p_right,
     int p_bottom
 ) {
-    black_margin[MARGIN_LEFT] = p_left;
-    black_margin[MARGIN_TOP] = p_top;
-    black_margin[MARGIN_RIGHT] = p_right;
+    black_margin[MARGIN_LEFT]   = p_left;
+    black_margin[MARGIN_TOP]    = p_top;
+    black_margin[MARGIN_RIGHT]  = p_right;
     black_margin[MARGIN_BOTTOM] = p_bottom;
 }
 
@@ -62,9 +62,9 @@ void VisualServerRaster::black_bars_set_images(
     RID p_right,
     RID p_bottom
 ) {
-    black_image[MARGIN_LEFT] = p_left;
-    black_image[MARGIN_TOP] = p_top;
-    black_image[MARGIN_RIGHT] = p_right;
+    black_image[MARGIN_LEFT]   = p_left;
+    black_image[MARGIN_TOP]    = p_top;
+    black_image[MARGIN_RIGHT]  = p_right;
     black_image[MARGIN_BOTTOM] = p_bottom;
 }
 
@@ -103,7 +103,7 @@ void VisualServerRaster::request_frame_drawn_callback(
     FrameDrawnCallbacks fdc;
     fdc.object = p_where->get_instance_id();
     fdc.method = p_method;
-    fdc.param = p_userdata;
+    fdc.param  = p_userdata;
 
     frame_drawn_callbacks.push_back(fdc);
 }
@@ -228,17 +228,17 @@ bool VisualServerRaster::is_low_end() const {
 }
 
 VisualServerRaster::VisualServerRaster() {
-    VSG::canvas = memnew(VisualServerCanvas);
-    VSG::viewport = memnew(VisualServerViewport);
-    VSG::scene = memnew(VisualServerScene);
-    VSG::rasterizer = Rasterizer::create();
-    VSG::storage = VSG::rasterizer->get_storage();
+    VSG::canvas        = memnew(VisualServerCanvas);
+    VSG::viewport      = memnew(VisualServerViewport);
+    VSG::scene         = memnew(VisualServerScene);
+    VSG::rasterizer    = Rasterizer::create();
+    VSG::storage       = VSG::rasterizer->get_storage();
     VSG::canvas_render = VSG::rasterizer->get_canvas();
-    VSG::scene_render = VSG::rasterizer->get_scene();
+    VSG::scene_render  = VSG::rasterizer->get_scene();
 
     for (int i = 0; i < 4; i++) {
         black_margin[i] = 0;
-        black_image[i] = RID();
+        black_image[i]  = RID();
     }
 }
 

@@ -72,7 +72,7 @@ class AudioEffectDelay : public AudioEffect {
 
     enum {
         MAX_DELAY_MS = 3000,
-        MAX_TAPS = 2
+        MAX_TAPS     = 2
     };
 
     float dry;

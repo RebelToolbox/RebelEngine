@@ -199,7 +199,7 @@ void ResourceImporterLayeredTexture::_save_tex(
                     // we have to use png here for backward compatibility.
                     // in 3.x, we don't store type information here
                     PoolVector<uint8_t> data = Image::png_packer(image);
-                    int data_len = data.size();
+                    int data_len             = data.size();
                     f->store_32(data_len);
 
                     PoolVector<uint8_t>::Read r = data.read();
@@ -222,7 +222,7 @@ void ResourceImporterLayeredTexture::_save_tex(
                 }
 
                 PoolVector<uint8_t> data = image->get_data();
-                int dl = data.size();
+                int dl                   = data.size();
 
                 PoolVector<uint8_t>::Read r = data.read();
                 f->store_buffer(r.ptr(), dl);
@@ -237,7 +237,7 @@ void ResourceImporterLayeredTexture::_save_tex(
                 }
 
                 PoolVector<uint8_t> data = image->get_data();
-                int dl = data.size();
+                int dl                   = data.size();
 
                 PoolVector<uint8_t>::Read r = data.read();
 
@@ -258,15 +258,15 @@ Error ResourceImporterLayeredTexture::import(
     List<String>* r_gen_files,
     Variant* r_metadata
 ) {
-    int compress_mode = p_options["compress/mode"];
+    int compress_mode  = p_options["compress/mode"];
     int no_bptc_if_rgb = p_options["compress/no_bptc_if_rgb"];
-    int repeat = p_options["flags/repeat"];
-    bool filter = p_options["flags/filter"];
-    bool mipmaps = p_options["flags/mipmaps"];
-    bool anisotropic = p_options["flags/anisotropic"];
-    int srgb = p_options["flags/srgb"];
-    int hslices = p_options["slices/horizontal"];
-    int vslices = p_options["slices/vertical"];
+    int repeat         = p_options["flags/repeat"];
+    bool filter        = p_options["flags/filter"];
+    bool mipmaps       = p_options["flags/mipmaps"];
+    bool anisotropic   = p_options["flags/anisotropic"];
+    int srgb           = p_options["flags/srgb"];
+    int hslices        = p_options["slices/horizontal"];
+    int vslices        = p_options["slices/vertical"];
 
     Ref<Image> image;
     image.instance();
@@ -317,8 +317,8 @@ Error ResourceImporterLayeredTexture::import(
 
     for (int i = 0; i < vslices; i++) {
         for (int j = 0; j < hslices; j++) {
-            int x = slice_w * j;
-            int y = slice_h * i;
+            int x            = slice_w * j;
+            int y            = slice_h * i;
             Ref<Image> slice = image->get_rect(Rect2(x, y, slice_w, slice_h));
             ERR_CONTINUE(slice.is_null() || slice->empty());
             if (slice->get_width() != slice_w
@@ -336,7 +336,7 @@ Error ResourceImporterLayeredTexture::import(
         // must import in all formats, in order of priority (so platform choses
         // the best supported one. IE, etc2 over etc). Android, GLES 2.x
 
-        bool ok_on_pc = false;
+        bool ok_on_pc    = false;
         bool encode_bptc = false;
 
         if (ProjectSettings::get_singleton()->get(
@@ -500,7 +500,7 @@ bool ResourceImporterLayeredTexture::are_import_settings_valid(
         formats_imported = metadata["imported_formats"];
     }
 
-    int index = 0;
+    int index  = 0;
     bool valid = true;
     while (compression_formats[index]) {
         String setting_path = "rendering/vram_compression/import_"
@@ -523,7 +523,7 @@ ResourceImporterLayeredTexture* ResourceImporterLayeredTexture::singleton =
 
 ResourceImporterLayeredTexture::ResourceImporterLayeredTexture() {
     singleton = this;
-    is_3d = true;
+    is_3d     = true;
 }
 
 ResourceImporterLayeredTexture::~ResourceImporterLayeredTexture() {}

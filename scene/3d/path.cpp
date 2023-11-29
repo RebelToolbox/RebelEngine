@@ -112,7 +112,7 @@ void PathFollow::_update_transform(bool p_update_xyz_rot) {
     if (bl == 0.0) {
         return;
     }
-    float bi = c->get_bake_interval();
+    float bi     = c->get_bake_interval();
     float o_next = offset + bi;
     float o_prev = offset - bi;
 
@@ -151,7 +151,7 @@ void PathFollow::_update_transform(bool p_update_xyz_rot) {
         Vector3 up = c->interpolate_baked_up_vector(offset, true);
 
         if (o_next < offset) {
-            Vector3 up1 = c->interpolate_baked_up_vector(o_next, true);
+            Vector3 up1  = c->interpolate_baked_up_vector(o_next, true);
             Vector3 axis = up.cross(up1);
 
             if (axis.length_squared() < CMP_EPSILON2) {
@@ -163,9 +163,9 @@ void PathFollow::_update_transform(bool p_update_xyz_rot) {
             up.rotate(axis, up.angle_to(up1) * 0.5f);
         }
 
-        Vector3 scale = t.basis.get_scale();
+        Vector3 scale    = t.basis.get_scale();
         Vector3 sideways = up.cross(forward).normalized();
-        up = forward.cross(sideways).normalized();
+        up               = forward.cross(sideways).normalized();
 
         t.basis.set(sideways, up, forward);
         t.basis.scale_local(scale);
@@ -191,8 +191,8 @@ void PathFollow::_update_transform(bool p_update_xyz_rot) {
                     .normalized();
 
             Vector3 axis = t_prev.cross(t_cur);
-            float dot = t_prev.dot(t_cur);
-            float angle = Math::acos(CLAMP(dot, -1, 1));
+            float dot    = t_prev.dot(t_cur);
+            float angle  = Math::acos(CLAMP(dot, -1, 1));
 
             if (likely(!Math::is_zero_approx(angle))) {
                 if (rotation_mode == ROTATION_Y) {
@@ -212,7 +212,7 @@ void PathFollow::_update_transform(bool p_update_xyz_rot) {
             }
 
             // do the additional tilting
-            float tilt_angle = c->interpolate_baked_tilt(offset);
+            float tilt_angle  = c->interpolate_baked_tilt(offset);
             Vector3 tilt_axis = t_cur; // not sure what tilt is supposed to do,
                                        // is this correct??
 
@@ -412,7 +412,7 @@ void PathFollow::_bind_methods() {
 
 void PathFollow::set_offset(float p_offset) {
     delta_offset = p_offset - offset;
-    offset = p_offset;
+    offset       = p_offset;
 
     if (path) {
         if (path->get_curve().is_valid()) {
@@ -497,12 +497,12 @@ bool PathFollow::has_loop() const {
 }
 
 PathFollow::PathFollow() {
-    offset = 0;
-    delta_offset = 0;
-    h_offset = 0;
-    v_offset = 0;
-    path = nullptr;
+    offset        = 0;
+    delta_offset  = 0;
+    h_offset      = 0;
+    v_offset      = 0;
+    path          = nullptr;
     rotation_mode = ROTATION_XYZ;
-    cubic = true;
-    loop = true;
+    cubic         = true;
+    loop          = true;
 }

@@ -51,31 +51,31 @@ void WindowDialog::_fix_size() {
     // windows go out of bounds...
 
     // Ensure the whole window is visible.
-    Point2i pos = get_global_position();
-    Size2i size = get_size();
+    Point2i pos          = get_global_position();
+    Size2i size          = get_size();
     Size2i viewport_size = get_viewport_rect().size;
 
     // Windows require additional padding to keep the window chrome visible.
     Ref<StyleBox> panel = get_stylebox("panel", "WindowDialog");
-    float top = 0;
-    float left = 0;
-    float bottom = 0;
-    float right = 0;
+    float top           = 0;
+    float left          = 0;
+    float bottom        = 0;
+    float right         = 0;
     // Check validity, because the theme could contain a different type of
     // StyleBox.
     if (panel->get_class() == "StyleBoxTexture") {
         Ref<StyleBoxTexture> panel_texture =
             Object::cast_to<StyleBoxTexture>(*panel);
-        top = panel_texture->get_expand_margin_size(MARGIN_TOP);
-        left = panel_texture->get_expand_margin_size(MARGIN_LEFT);
+        top    = panel_texture->get_expand_margin_size(MARGIN_TOP);
+        left   = panel_texture->get_expand_margin_size(MARGIN_LEFT);
         bottom = panel_texture->get_expand_margin_size(MARGIN_BOTTOM);
-        right = panel_texture->get_expand_margin_size(MARGIN_RIGHT);
+        right  = panel_texture->get_expand_margin_size(MARGIN_RIGHT);
     } else if (panel->get_class() == "StyleBoxFlat") {
         Ref<StyleBoxFlat> panel_flat = Object::cast_to<StyleBoxFlat>(*panel);
-        top = panel_flat->get_expand_margin_size(MARGIN_TOP);
-        left = panel_flat->get_expand_margin_size(MARGIN_LEFT);
+        top    = panel_flat->get_expand_margin_size(MARGIN_TOP);
+        left   = panel_flat->get_expand_margin_size(MARGIN_LEFT);
         bottom = panel_flat->get_expand_margin_size(MARGIN_BOTTOM);
-        right = panel_flat->get_expand_margin_size(MARGIN_RIGHT);
+        right  = panel_flat->get_expand_margin_size(MARGIN_RIGHT);
     }
 
     pos.x = MAX(left, MIN(pos.x, viewport_size.x - size.x - right));
@@ -93,16 +93,16 @@ bool WindowDialog::has_point(const Point2& p_point) const {
     Rect2 r(Point2(), get_size());
 
     // Enlarge upwards for title bar.
-    int title_height = get_constant("title_height", "WindowDialog");
-    r.position.y -= title_height;
-    r.size.y += title_height;
+    int title_height  = get_constant("title_height", "WindowDialog");
+    r.position.y     -= title_height;
+    r.size.y         += title_height;
 
     // Inflate by the resizable border thickness.
     if (resizable) {
         int scaleborder_size = get_constant("scaleborder_size", "WindowDialog");
-        r.position.x -= scaleborder_size;
-        r.size.width += scaleborder_size * 2;
-        r.position.y -= scaleborder_size;
+        r.position.x  -= scaleborder_size;
+        r.size.width  += scaleborder_size * 2;
+        r.position.y  -= scaleborder_size;
         r.size.height += scaleborder_size * 2;
     }
 
@@ -167,24 +167,24 @@ void WindowDialog::_gui_input(const Ref<InputEvent>& p_event) {
             global_pos.y =
                 MAX(global_pos.y, 0); // Ensure title bar stays visible.
 
-            Rect2 rect = get_rect();
+            Rect2 rect     = get_rect();
             Size2 min_size = get_combined_minimum_size();
 
             if (drag_type == DRAG_MOVE) {
                 rect.position = global_pos - drag_offset;
             } else {
                 if (drag_type & DRAG_RESIZE_TOP) {
-                    int bottom = rect.position.y + rect.size.height;
-                    int max_y = bottom - min_size.height;
-                    rect.position.y = MIN(global_pos.y - drag_offset.y, max_y);
+                    int bottom       = rect.position.y + rect.size.height;
+                    int max_y        = bottom - min_size.height;
+                    rect.position.y  = MIN(global_pos.y - drag_offset.y, max_y);
                     rect.size.height = bottom - rect.position.y;
                 } else if (drag_type & DRAG_RESIZE_BOTTOM) {
                     rect.size.height =
                         global_pos.y - rect.position.y + drag_offset_far.y;
                 }
                 if (drag_type & DRAG_RESIZE_LEFT) {
-                    int right = rect.position.x + rect.size.width;
-                    int max_x = right - min_size.width;
+                    int right       = rect.position.x + rect.size.width;
+                    int max_x       = right - min_size.width;
                     rect.position.x = MIN(global_pos.x - drag_offset.x, max_x);
                     rect.size.width = right - rect.position.x;
                 } else if (drag_type & DRAG_RESIZE_RIGHT) {
@@ -206,13 +206,13 @@ void WindowDialog::_notification(int p_what) {
 
             // Draw the background.
             Ref<StyleBox> panel = get_stylebox("panel");
-            Size2 size = get_size();
+            Size2 size          = get_size();
             panel->draw(canvas, Rect2(0, 0, size.x, size.y));
 
             // Draw the title bar text.
             Ref<Font> title_font = get_font("title_font", "WindowDialog");
-            Color title_color = get_color("title_color", "WindowDialog");
-            int title_height = get_constant("title_height", "WindowDialog");
+            Color title_color    = get_color("title_color", "WindowDialog");
+            int title_height     = get_constant("title_height", "WindowDialog");
             int font_height =
                 title_font->get_height() - title_font->get_descent() * 2;
             int x = (size.x - title_font->get_string_size(xl_title).x) / 2;
@@ -289,7 +289,7 @@ int WindowDialog::_drag_hit_test(const Point2& pos) const {
     int drag_type = DRAG_NONE;
 
     if (resizable) {
-        int title_height = get_constant("title_height", "WindowDialog");
+        int title_height     = get_constant("title_height", "WindowDialog");
         int scaleborder_size = get_constant("scaleborder_size", "WindowDialog");
 
         Rect2 rect = get_rect();
@@ -315,7 +315,7 @@ int WindowDialog::_drag_hit_test(const Point2& pos) const {
 
 void WindowDialog::set_title(const String& p_title) {
     if (title != p_title) {
-        title = p_title;
+        title    = p_title;
         xl_title = tr(p_title);
         minimum_size_changed();
         update();
@@ -338,9 +338,9 @@ Size2 WindowDialog::get_minimum_size() const {
     Ref<Font> font = get_font("title_font", "WindowDialog");
 
     const int button_width = close_button->get_combined_minimum_size().x;
-    const int title_width = font->get_string_size(xl_title).x;
-    const int padding = button_width / 2;
-    const int button_area = button_width + padding;
+    const int title_width  = font->get_string_size(xl_title).x;
+    const int padding      = button_width / 2;
+    const int button_area  = button_width + padding;
 
     // As the title gets centered, title_width + close_button_width is not
     // enough. We want a width w, such that w / 2 - title_width / 2 >=
@@ -399,8 +399,8 @@ void WindowDialog::_bind_methods() {
 }
 
 WindowDialog::WindowDialog() {
-    drag_type = DRAG_NONE;
-    resizable = false;
+    drag_type    = DRAG_NONE;
+    resizable    = false;
     close_button = memnew(TextureButton);
     add_child(close_button);
     close_button->connect("pressed", this, "_closed");
@@ -500,8 +500,8 @@ void AcceptDialog::_update_child_rects() {
     if (label->get_text().empty()) {
         label_size.height = 0;
     }
-    int margin = get_constant("margin", "Dialogs");
-    Size2 size = get_size();
+    int margin     = get_constant("margin", "Dialogs");
+    Size2 size     = get_size();
     Size2 hminsize = hbc->get_combined_minimum_size();
 
     Vector2 cpos(margin, margin + label_size.height);
@@ -525,15 +525,15 @@ void AcceptDialog::_update_child_rects() {
         c->set_size(csize);
     }
 
-    cpos.y += csize.y + margin;
-    csize.y = hminsize.y;
+    cpos.y  += csize.y + margin;
+    csize.y  = hminsize.y;
 
     hbc->set_position(cpos);
     hbc->set_size(csize);
 }
 
 Size2 AcceptDialog::get_minimum_size() const {
-    int margin = get_constant("margin", "Dialogs");
+    int margin    = get_constant("margin", "Dialogs");
     Size2 minsize = label->get_combined_minimum_size();
 
     for (int i = 0; i < get_child_count(); i++) {
@@ -549,18 +549,18 @@ Size2 AcceptDialog::get_minimum_size() const {
         }
 
         Size2 cminsize = c->get_combined_minimum_size();
-        minsize.x = MAX(cminsize.x, minsize.x);
-        minsize.y = MAX(cminsize.y, minsize.y);
+        minsize.x      = MAX(cminsize.x, minsize.x);
+        minsize.y      = MAX(cminsize.y, minsize.y);
     }
 
-    Size2 hminsize = hbc->get_combined_minimum_size();
-    minsize.x = MAX(hminsize.x, minsize.x);
-    minsize.y += hminsize.y;
-    minsize.x += margin * 2;
-    minsize.y += margin * 3; // one as separation between hbc and child
+    Size2 hminsize  = hbc->get_combined_minimum_size();
+    minsize.x       = MAX(hminsize.x, minsize.x);
+    minsize.y      += hminsize.y;
+    minsize.x      += margin * 2;
+    minsize.y      += margin * 3; // one as separation between hbc and child
 
     Size2 wmsize = WindowDialog::get_minimum_size();
-    minsize.x = MAX(wmsize.x, minsize.x);
+    minsize.x    = MAX(wmsize.x, minsize.x);
     return minsize;
 }
 
@@ -712,7 +712,7 @@ void AcceptDialog::set_swap_ok_cancel(bool p_swap) {
 }
 
 AcceptDialog::AcceptDialog() {
-    int margin = get_constant("margin", "Dialogs");
+    int margin        = get_constant("margin", "Dialogs");
     int button_margin = get_constant("button_margin", "Dialogs");
 
     label = memnew(Label);

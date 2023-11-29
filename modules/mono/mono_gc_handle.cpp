@@ -69,8 +69,8 @@ void MonoGCHandle::release() {
 
 MonoGCHandle::MonoGCHandle(uint32_t p_handle, HandleType p_handle_type) {
     released = false;
-    weak = p_handle_type == WEAK_HANDLE;
-    handle = p_handle;
+    weak     = p_handle_type == WEAK_HANDLE;
+    handle   = p_handle;
 }
 
 MonoGCHandle::~MonoGCHandle() {

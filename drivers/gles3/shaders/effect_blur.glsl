@@ -14,7 +14,7 @@ uniform vec4 blur_section;
 #endif
 
 void main() {
-    uv_interp = uv_in;
+    uv_interp   = uv_in;
     gl_Position = vertex_attrib;
 #ifdef USE_BLUR_SECTION
 
@@ -67,8 +67,8 @@ const float dof_kernel[5] =
 #endif
 
 #ifdef DOF_QUALITY_MEDIUM
-const int dof_kernel_size = 11;
-const int dof_kernel_from = 5;
+const int dof_kernel_size  = 11;
+const int dof_kernel_from  = 5;
 const float dof_kernel[11] = float[](
     0.055037,
     0.072806,
@@ -86,8 +86,8 @@ const float dof_kernel[11] = float[](
 #endif
 
 #ifdef DOF_QUALITY_HIGH
-const int dof_kernel_size = 21;
-const int dof_kernel_from = 10;
+const int dof_kernel_size  = 21;
+const int dof_kernel_from  = 10;
 const float dof_kernel[21] = float[](
     0.028174,
     0.032676,
@@ -150,8 +150,8 @@ uniform float camera_z_near;
 
 void main() {
 #ifdef GAUSSIAN_HORIZONTAL
-    vec2 pix_size = pixel_size;
-    pix_size *= 0.5; // reading from larger buffer, so use more samples
+    vec2 pix_size  = pixel_size;
+    pix_size      *= 0.5; // reading from larger buffer, so use more samples
     // sigma 2
     vec4 color =
         textureLod(source_color, uv_interp + vec2(0.0, 0.0) * pix_size, lod)
@@ -199,8 +199,8 @@ void main() {
     // glow uses larger sigma for a more rounded blur effect
 
 #ifdef GLOW_GAUSSIAN_HORIZONTAL
-    vec2 pix_size = pixel_size;
-    pix_size *= 0.5; // reading from larger buffer, so use more samples
+    vec2 pix_size  = pixel_size;
+    pix_size      *= 0.5; // reading from larger buffer, so use more samples
 
 #ifdef USE_GLOW_HIGH_QUALITY
     // Sample from two lines to capture single-pixel features.
@@ -286,8 +286,8 @@ void main() {
         * 0.106595;
 #endif // USE_GLOW_HIGH_QUALITY
 
-    color *= glow_strength;
-    frag_color = color;
+    color      *= glow_strength;
+    frag_color  = color;
 #endif // GLOW_GAUSSIAN_HORIZONTAL
 
 #ifdef GLOW_GAUSSIAN_VERTICAL
@@ -306,8 +306,8 @@ void main() {
     color +=
         textureLod(source_color, uv_interp + vec2(0.0, -2.0) * pixel_size, lod)
         * 0.122581;
-    color *= glow_strength;
-    frag_color = color;
+    color      *= glow_strength;
+    frag_color  = color;
 #endif
 
 #ifdef DOF_FAR_BLUR
@@ -315,7 +315,7 @@ void main() {
     vec4 color_accum = vec4(0.0);
 
     float depth = textureLod(dof_source_depth, uv_interp, 0.0).r;
-    depth = depth * 2.0 - 1.0;
+    depth       = depth * 2.0 - 1.0;
 #ifdef USE_ORTHOGONAL_PROJECTION
     depth = ((depth
               + (camera_z_far + camera_z_near) / (camera_z_far - camera_z_near))
@@ -327,7 +327,7 @@ void main() {
              - depth * (camera_z_far - camera_z_near));
 #endif
 
-    float amount = smoothstep(dof_begin, dof_end, depth);
+    float amount  = smoothstep(dof_begin, dof_end, depth);
     float k_accum = 0.0;
 
     for (int i = 0; i < dof_kernel_size; i++) {
@@ -338,7 +338,7 @@ void main() {
         float tap_k = dof_kernel[i];
 
         float tap_depth = texture(dof_source_depth, tap_uv, 0.0).r;
-        tap_depth = tap_depth * 2.0 - 1.0;
+        tap_depth       = tap_depth * 2.0 - 1.0;
 #ifdef USE_ORTHOGONAL_PROJECTION
         tap_depth =
             ((tap_depth
@@ -356,7 +356,7 @@ void main() {
 
         vec4 tap_color = textureLod(source_color, tap_uv, 0.0) * tap_k;
 
-        k_accum += tap_k * tap_amount;
+        k_accum     += tap_k * tap_amount;
         color_accum += tap_color * tap_amount;
     }
 
@@ -385,7 +385,7 @@ void main() {
         vec4 tap_color = textureLod(source_color, tap_uv, 0.0);
 
         float tap_depth = texture(dof_source_depth, tap_uv, 0.0).r;
-        tap_depth = tap_depth * 2.0 - 1.0;
+        tap_depth       = tap_depth * 2.0 - 1.0;
 #ifdef USE_ORTHOGONAL_PROJECTION
         tap_depth =
             ((tap_depth
@@ -416,7 +416,7 @@ void main() {
 #ifdef DOF_NEAR_BLUR_MERGE
 
     vec4 original = textureLod(source_dof_original, uv_interp, 0.0);
-    color_accum = mix(original, color_accum, color_accum.a);
+    color_accum   = mix(original, color_accum, color_accum.a);
 
 #endif
 

@@ -264,7 +264,7 @@ void VisibilityEnabler::_find_nodes(Node* p_node) {
                 rb->get_mode() == RigidBody::MODE_CHARACTER
                 || rb->get_mode() == RigidBody::MODE_RIGID
             ))) {
-            add = true;
+            add  = true;
             meta = rb->get_mode();
         }
     }
@@ -332,7 +332,7 @@ void VisibilityEnabler::_notification(int p_what) {
         }
 
         for (Map<Node*, Variant>::Element* E = nodes.front(); E;
-             E = E->next()) {
+             E                               = E->next()) {
             if (!visible) {
                 _change_node_state(E->key(), true);
             }

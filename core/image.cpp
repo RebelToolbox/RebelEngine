@@ -288,13 +288,13 @@ void Image::_get_mipmap_offset_and_size(
     int& r_width,
     int& r_height
 ) const {
-    int w = width;
-    int h = height;
+    int w   = width;
+    int h   = height;
     int ofs = 0;
 
-    int pixel_size = get_format_pixel_size(format);
+    int pixel_size   = get_format_pixel_size(format);
     int pixel_rshift = get_format_pixel_rshift(format);
-    int block = get_format_block_size(format);
+    int block        = get_format_block_size(format);
     int minw, minh;
     get_format_min_pixel_size(format, minw, minh);
 
@@ -304,15 +304,15 @@ void Image::_get_mipmap_offset_and_size(
 
         int s = bw * bh;
 
-        s *= pixel_size;
-        s >>= pixel_rshift;
-        ofs += s;
-        w = MAX(minw, w >> 1);
-        h = MAX(minh, h >> 1);
+        s    *= pixel_size;
+        s   >>= pixel_rshift;
+        ofs  += s;
+        w     = MAX(minw, w >> 1);
+        h     = MAX(minh, h >> 1);
     }
 
     r_offset = ofs;
-    r_width = w;
+    r_width  = w;
     r_height = h;
 }
 
@@ -330,7 +330,7 @@ void Image::get_mipmap_offset_and_size(int p_mipmap, int& r_ofs, int& r_size)
     _get_mipmap_offset_and_size(p_mipmap, ofs, w, h);
     int ofs2;
     _get_mipmap_offset_and_size(p_mipmap + 1, ofs2, w, h);
-    r_ofs = ofs;
+    r_ofs  = ofs;
     r_size = ofs2 - ofs;
 }
 
@@ -345,7 +345,7 @@ void Image::get_mipmap_offset_size_and_dimensions(
     _get_mipmap_offset_and_size(p_mipmap, ofs, w, h);
     int ofs2, w2, h2;
     _get_mipmap_offset_and_size(p_mipmap + 1, ofs2, w2, h2);
-    r_ofs = ofs;
+    r_ofs  = ofs;
     r_size = ofs2 - ofs;
 }
 
@@ -481,11 +481,11 @@ void Image::convert(Format p_new_format) {
 
     Image new_img(width, height, false, p_new_format);
 
-    PoolVector<uint8_t>::Read r = data.read();
+    PoolVector<uint8_t>::Read r  = data.read();
     PoolVector<uint8_t>::Write w = new_img.data.write();
 
     const uint8_t* rptr = r.ptr();
-    uint8_t* wptr = w.ptr();
+    uint8_t* wptr       = w.ptr();
 
     int conversion_type = format | p_new_format << 8;
 
@@ -712,8 +712,8 @@ static void _scale_cubic(
     uint32_t p_dst_height
 ) {
     // get source image size
-    int width = p_src_width;
-    int height = p_src_height;
+    int width   = p_src_width;
+    int height  = p_src_height;
     double xfac = (double)width / p_dst_width;
     double yfac = (double)height / p_dst_height;
     // coordinates of source points and coefficients
@@ -727,15 +727,15 @@ static void _scale_cubic(
 
     for (uint32_t y = 0; y < p_dst_height; y++) {
         // Y coordinates
-        oy = (double)y * yfac - 0.5f;
+        oy  = (double)y * yfac - 0.5f;
         oy1 = (int)oy;
-        dy = oy - (double)oy1;
+        dy  = oy - (double)oy1;
 
         for (uint32_t x = 0; x < p_dst_width; x++) {
             // X coordinates
-            ox = (double)x * xfac - 0.5f;
+            ox  = (double)x * xfac - 0.5f;
             ox1 = (int)ox;
-            dx = ox - (double)ox1;
+            dx  = ox - (double)ox1;
 
             // initial pixel value
 
@@ -808,7 +808,7 @@ static void _scale_bilinear(
 ) {
     enum {
         FRAC_BITS = 8,
-        FRAC_LEN = (1 << FRAC_BITS),
+        FRAC_LEN  = (1 << FRAC_BITS),
         FRAC_HALF = (FRAC_LEN >> 1),
         FRAC_MASK = FRAC_LEN - 1
     };
@@ -819,9 +819,9 @@ static void _scale_bilinear(
             (i + 0.5) * p_src_height * FRAC_LEN / p_dst_height;
         // Calculate nearest src pixel center above current, and truncate to get
         // y index
-        uint32_t src_yofs_up = src_yofs_up_fp >= FRAC_HALF
-                                 ? (src_yofs_up_fp - FRAC_HALF) >> FRAC_BITS
-                                 : 0;
+        uint32_t src_yofs_up   = src_yofs_up_fp >= FRAC_HALF
+                                   ? (src_yofs_up_fp - FRAC_HALF) >> FRAC_BITS
+                                   : 0;
         uint32_t src_yofs_down = (src_yofs_up_fp + FRAC_HALF) >> FRAC_BITS;
         if (src_yofs_down >= p_src_height) {
             src_yofs_down = p_src_height - 1;
@@ -831,7 +831,7 @@ static void _scale_bilinear(
         src_yofs_frac = src_yofs_frac >= FRAC_HALF ? src_yofs_frac - FRAC_HALF
                                                    : src_yofs_frac + FRAC_HALF;
 
-        uint32_t y_ofs_up = src_yofs_up * p_src_width * CC;
+        uint32_t y_ofs_up   = src_yofs_up * p_src_width * CC;
         uint32_t y_ofs_down = src_yofs_down * p_src_width * CC;
 
         for (uint32_t j = 0; j < p_dst_width; j++) {
@@ -847,11 +847,11 @@ static void _scale_bilinear(
                 src_xofs_right = p_src_width - 1;
             }
             uint32_t src_xofs_frac = src_xofs_left_fp & FRAC_MASK;
-            src_xofs_frac = src_xofs_frac >= FRAC_HALF
-                              ? src_xofs_frac - FRAC_HALF
-                              : src_xofs_frac + FRAC_HALF;
+            src_xofs_frac          = src_xofs_frac >= FRAC_HALF
+                                       ? src_xofs_frac - FRAC_HALF
+                                       : src_xofs_frac + FRAC_HALF;
 
-            src_xofs_left *= CC;
+            src_xofs_left  *= CC;
             src_xofs_right *= CC;
 
             for (uint32_t l = 0; l < CC; l++) {
@@ -873,14 +873,14 @@ static void _scale_bilinear(
                         interp_up
                         + (((interp_down - interp_up) * src_yofs_frac)
                            >> FRAC_BITS);
-                    interp >>= FRAC_BITS;
-                    p_dst[i * p_dst_width * CC + j * CC + l] = interp;
+                    interp                                   >>= FRAC_BITS;
+                    p_dst[i * p_dst_width * CC + j * CC + l]   = interp;
                 } else if (sizeof(T) == 2) { // half float
 
                     float xofs_frac = float(src_xofs_frac) / (1 << FRAC_BITS);
                     float yofs_frac = float(src_yofs_frac) / (1 << FRAC_BITS);
-                    const T* src = ((const T*)p_src);
-                    T* dst = ((T*)p_dst);
+                    const T* src    = ((const T*)p_src);
+                    T* dst          = ((T*)p_dst);
 
                     float p00 =
                         Math::half_to_float(src[y_ofs_up + src_xofs_left + l]);
@@ -893,7 +893,7 @@ static void _scale_bilinear(
                         Math::half_to_float(src[y_ofs_down + src_xofs_right + l]
                         );
 
-                    float interp_up = p00 + (p10 - p00) * xofs_frac;
+                    float interp_up   = p00 + (p10 - p00) * xofs_frac;
                     float interp_down = p01 + (p11 - p01) * xofs_frac;
                     float interp =
                         interp_up + ((interp_down - interp_up) * yofs_frac);
@@ -904,15 +904,15 @@ static void _scale_bilinear(
 
                     float xofs_frac = float(src_xofs_frac) / (1 << FRAC_BITS);
                     float yofs_frac = float(src_yofs_frac) / (1 << FRAC_BITS);
-                    const T* src = ((const T*)p_src);
-                    T* dst = ((T*)p_dst);
+                    const T* src    = ((const T*)p_src);
+                    T* dst          = ((T*)p_dst);
 
                     float p00 = src[y_ofs_up + src_xofs_left + l];
                     float p10 = src[y_ofs_up + src_xofs_right + l];
                     float p01 = src[y_ofs_down + src_xofs_left + l];
                     float p11 = src[y_ofs_down + src_xofs_right + l];
 
-                    float interp_up = p00 + (p10 - p00) * xofs_frac;
+                    float interp_up   = p00 + (p10 - p00) * xofs_frac;
                     float interp_down = p01 + (p11 - p01) * xofs_frac;
                     float interp =
                         interp_up + ((interp_down - interp_up) * yofs_frac);
@@ -935,15 +935,15 @@ static void _scale_nearest(
 ) {
     for (uint32_t i = 0; i < p_dst_height; i++) {
         uint32_t src_yofs = i * p_src_height / p_dst_height;
-        uint32_t y_ofs = src_yofs * p_src_width * CC;
+        uint32_t y_ofs    = src_yofs * p_src_width * CC;
 
         for (uint32_t j = 0; j < p_dst_width; j++) {
-            uint32_t src_xofs = j * p_src_width / p_dst_width;
-            src_xofs *= CC;
+            uint32_t src_xofs  = j * p_src_width / p_dst_width;
+            src_xofs          *= CC;
 
             for (uint32_t l = 0; l < CC; l++) {
                 const T* src = ((const T*)p_src);
-                T* dst = ((T*)p_dst);
+                T* dst       = ((T*)p_dst);
 
                 T p = src[y_ofs + src_xofs + l];
                 dst[i * p_dst_width * CC + j * CC + l] = p;
@@ -969,10 +969,10 @@ static void _scale_lanczos(
     uint32_t p_dst_width,
     uint32_t p_dst_height
 ) {
-    int32_t src_width = p_src_width;
+    int32_t src_width  = p_src_width;
     int32_t src_height = p_src_height;
     int32_t dst_height = p_dst_height;
-    int32_t dst_width = p_dst_width;
+    int32_t dst_width  = p_dst_width;
 
     uint32_t buffer_size = src_height * dst_width * CC;
     float* buffer =
@@ -995,7 +995,7 @@ static void _scale_lanczos(
                 (buffer_x + 0.5f)
                 * x_scale; // Offset by 0.5 so it uses the pixel's center
             int32_t start_x = MAX(0, int32_t(src_x) - half_kernel + 1);
-            int32_t end_x = MIN(src_width - 1, int32_t(src_x) + half_kernel);
+            int32_t end_x   = MIN(src_width - 1, int32_t(src_x) + half_kernel);
 
             // Create the kernel used by all the pixels of the column
             for (int32_t target_x = start_x; target_x <= end_x; target_x++) {
@@ -1005,12 +1005,12 @@ static void _scale_lanczos(
 
             for (int32_t buffer_y = 0; buffer_y < src_height; buffer_y++) {
                 float pixel[CC] = {0};
-                float weight = 0;
+                float weight    = 0;
 
                 for (int32_t target_x = start_x; target_x <= end_x;
                      target_x++) {
-                    float lanczos_val = kernel[target_x - start_x];
-                    weight += lanczos_val;
+                    float lanczos_val  = kernel[target_x - start_x];
+                    weight            += lanczos_val;
 
                     const T* __restrict src_data =
                         ((const T*)p_src)
@@ -1044,13 +1044,13 @@ static void _scale_lanczos(
 
         float y_scale = float(src_height) / float(dst_height);
 
-        float scale_factor = MAX(y_scale, 1);
+        float scale_factor  = MAX(y_scale, 1);
         int32_t half_kernel = LANCZOS_TYPE * scale_factor;
 
         float* kernel = memnew_arr(float, half_kernel * 2);
 
         for (int32_t dst_y = 0; dst_y < dst_height; dst_y++) {
-            float buffer_y = (dst_y + 0.5f) * y_scale;
+            float buffer_y  = (dst_y + 0.5f) * y_scale;
             int32_t start_y = MAX(0, int32_t(buffer_y) - half_kernel + 1);
             int32_t end_y =
                 MIN(src_height - 1, int32_t(buffer_y) + half_kernel);
@@ -1062,12 +1062,12 @@ static void _scale_lanczos(
 
             for (int32_t dst_x = 0; dst_x < dst_width; dst_x++) {
                 float pixel[CC] = {0};
-                float weight = 0;
+                float weight    = 0;
 
                 for (int32_t target_y = start_y; target_y <= end_y;
                      target_y++) {
-                    float lanczos_val = kernel[target_y - start_y];
-                    weight += lanczos_val;
+                    float lanczos_val  = kernel[target_y - start_y];
+                    weight            += lanczos_val;
 
                     float* buffer_data =
                         ((float*)buffer) + (target_y * dst_width + dst_x) * CC;
@@ -1179,8 +1179,8 @@ void Image::resize(int p_width, int p_height, Interpolation p_interpolation) {
 
     // Setup mipmap-aware scaling
     Image dst2;
-    int mip1 = 0;
-    int mip2 = 0;
+    int mip1          = 0;
+    int mip2          = 0;
     float mip1_weight = 0;
     if (mipmap_aware) {
         float avg_scale =
@@ -1189,8 +1189,8 @@ void Image::resize(int p_width, int p_height, Interpolation p_interpolation) {
             mipmap_aware = false;
         } else {
             float level = Math::log(1.0f / avg_scale) / Math::log(2.0f);
-            mip1 = CLAMP((int)Math::floor(level), 0, get_mipmap_count());
-            mip2 = CLAMP((int)Math::ceil(level), 0, get_mipmap_count());
+            mip1        = CLAMP((int)Math::floor(level), 0, get_mipmap_count());
+            mip2        = CLAMP((int)Math::ceil(level), 0, get_mipmap_count());
             mip1_weight = 1.0f - (level - mip1);
         }
     }
@@ -1206,10 +1206,10 @@ void Image::resize(int p_width, int p_height, Interpolation p_interpolation) {
     // --
 
     PoolVector<uint8_t>::Read r = data.read();
-    const unsigned char* r_ptr = r.ptr();
+    const unsigned char* r_ptr  = r.ptr();
 
     PoolVector<uint8_t>::Write w = dst.data.write();
-    unsigned char* w_ptr = w.ptr();
+    unsigned char* w_ptr         = w.ptr();
 
     switch (p_interpolation) {
         case INTERPOLATE_NEAREST: {
@@ -1356,9 +1356,9 @@ void Image::resize(int p_width, int p_height, Interpolation p_interpolation) {
                 if (!mipmap_aware) {
                     if (i == 0) {
                         // Standard behavior
-                        src_width = width;
+                        src_width  = width;
                         src_height = height;
-                        src_ptr = r_ptr;
+                        src_ptr    = r_ptr;
                     } else {
                         // No need for a second iteration
                         break;
@@ -1392,8 +1392,8 @@ void Image::resize(int p_width, int p_height, Interpolation p_interpolation) {
                         );
                         src_ptr = r_ptr + offs;
                         // Switch to write to the second destination image
-                        w = dst2.data.write();
-                        w_ptr = w.ptr();
+                        w       = dst2.data.write();
+                        w_ptr   = w.ptr();
                     }
                 }
 
@@ -1860,7 +1860,7 @@ void Image::crop_from_point(int p_x, int p_y, int p_width, int p_height) {
     Image dst(p_width, p_height, false, format);
 
     {
-        PoolVector<uint8_t>::Read r = data.read();
+        PoolVector<uint8_t>::Read r  = data.read();
         PoolVector<uint8_t>::Write w = dst.data.write();
 
         int m_h = p_y + p_height;
@@ -1964,13 +1964,13 @@ int Image::_get_dst_image_size(
     int p_mipmaps
 ) {
     int size = 0;
-    int w = p_width;
-    int h = p_height;
-    int mm = 0;
+    int w    = p_width;
+    int h    = p_height;
+    int mm   = 0;
 
-    int pixsize = get_format_pixel_size(p_format);
+    int pixsize  = get_format_pixel_size(p_format);
     int pixshift = get_format_pixel_rshift(p_format);
-    int block = get_format_block_size(p_format);
+    int block    = get_format_block_size(p_format);
     // technically, you can still compress up to 1 px no matter the format, so
     // commenting this int minw, minh; get_format_min_pixel_size(p_format, minw,
     // minh);
@@ -1982,7 +1982,7 @@ int Image::_get_dst_image_size(
 
         int s = bw * bh;
 
-        s *= pixsize;
+        s  *= pixsize;
         s >>= pixshift;
 
         size += s;
@@ -2029,13 +2029,13 @@ static void _generate_po2_mipmap(
     uint32_t dst_h = MAX(p_height >> 1, 1);
 
     int right_step = (p_width == 1) ? 0 : CC;
-    int down_step = (p_height == 1) ? 0 : (p_width * CC);
+    int down_step  = (p_height == 1) ? 0 : (p_width * CC);
 
     for (uint32_t i = 0; i < dst_h; i++) {
-        const Component* rup_ptr = &p_src[i * 2 * down_step];
+        const Component* rup_ptr   = &p_src[i * 2 * down_step];
         const Component* rdown_ptr = rup_ptr + down_step;
-        Component* dst_ptr = &p_dst[i * dst_w * CC];
-        uint32_t count = dst_w;
+        Component* dst_ptr         = &p_dst[i * dst_w * CC];
+        uint32_t count             = dst_w;
 
         while (count) {
             count--;
@@ -2053,8 +2053,8 @@ static void _generate_po2_mipmap(
                 renormalize_func(dst_ptr);
             }
 
-            dst_ptr += CC;
-            rup_ptr += right_step * 2;
+            dst_ptr   += CC;
+            rup_ptr   += right_step * 2;
             rdown_ptr += right_step * 2;
         }
     }
@@ -2082,7 +2082,7 @@ void Image::expand_x2_hq2x() {
     dest.resize(width * 2 * height * 2 * 4);
 
     {
-        PoolVector<uint8_t>::Read r = data.read();
+        PoolVector<uint8_t>::Read r  = data.read();
         PoolVector<uint8_t>::Write w = dest.write();
 
         ERR_FAIL_COND(!r.ptr());
@@ -2095,9 +2095,9 @@ void Image::expand_x2_hq2x() {
         );
     }
 
-    width *= 2;
+    width  *= 2;
     height *= 2;
-    data = dest;
+    data    = dest;
 
     if (current != FORMAT_RGBA8) {
         convert(current);
@@ -2130,14 +2130,14 @@ void Image::shrink_x2() {
 
         {
             PoolVector<uint8_t>::Write w = new_img.write();
-            PoolVector<uint8_t>::Read r = data.read();
+            PoolVector<uint8_t>::Read r  = data.read();
 
             memcpy(w.ptr(), &r[ofs], new_size);
         }
 
-        width = MAX(width / 2, 1);
+        width  = MAX(width / 2, 1);
         height = MAX(height / 2, 1);
-        data = new_img;
+        data   = new_img;
 
     } else {
         PoolVector<uint8_t> new_img;
@@ -2150,7 +2150,7 @@ void Image::shrink_x2() {
 
         {
             PoolVector<uint8_t>::Write w = new_img.write();
-            PoolVector<uint8_t>::Read r = data.read();
+            PoolVector<uint8_t>::Read r  = data.read();
 
             switch (format) {
                 case FORMAT_L8:
@@ -2344,9 +2344,9 @@ void Image::shrink_x2() {
             }
         }
 
-        width /= 2;
+        width  /= 2;
         height /= 2;
-        data = new_img;
+        data    = new_img;
     }
 }
 
@@ -2410,8 +2410,8 @@ Error Image::generate_mipmaps(bool p_renormalize) {
     PoolVector<uint8_t>::Write wp = data.write();
 
     int prev_ofs = 0;
-    int prev_h = height;
-    int prev_w = width;
+    int prev_h   = height;
+    int prev_w   = width;
 
     for (int i = 1; i <= mmcount; i++) {
         int ofs, w, h;
@@ -2698,8 +2698,8 @@ Error Image::generate_mipmaps(bool p_renormalize) {
         }
 
         prev_ofs = ofs;
-        prev_w = w;
-        prev_h = h;
+        prev_w   = w;
+        prev_h   = h;
     }
 
     mipmaps = true;
@@ -2757,7 +2757,7 @@ void Image::create(
         "Image format out of range, please see Image's Format enum."
     );
 
-    int mm = 0;
+    int mm   = 0;
     int size = _get_dst_image_size(
         p_width,
         p_height,
@@ -2771,10 +2771,10 @@ void Image::create(
         memset(w.ptr(), 0, size);
     }
 
-    width = p_width;
-    height = p_height;
+    width   = p_width;
+    height  = p_height;
     mipmaps = p_use_mipmaps;
-    format = p_format;
+    format  = p_format;
 }
 
 void Image::create(
@@ -2816,19 +2816,19 @@ void Image::create(
             + " bytes."
     );
 
-    height = p_height;
-    width = p_width;
-    format = p_format;
-    data = p_data;
+    height  = p_height;
+    width   = p_width;
+    format  = p_format;
+    data    = p_data;
     mipmaps = p_use_mipmaps;
 }
 
 void Image::create(const char** p_xpm) {
-    int size_width = 0;
+    int size_width  = 0;
     int size_height = 0;
-    int pixelchars = 0;
-    mipmaps = false;
-    bool has_alpha = false;
+    int pixelchars  = 0;
+    mipmaps         = false;
+    bool has_alpha  = false;
 
     enum Status {
         READING_HEADER,
@@ -2838,10 +2838,10 @@ void Image::create(const char** p_xpm) {
     };
 
     Status status = READING_HEADER;
-    int line = 0;
+    int line      = 0;
 
     HashMap<String, Color> colormap;
-    int colormap_size = 0;
+    int colormap_size   = 0;
     uint32_t pixel_size = 0;
     PoolVector<uint8_t>::Write w;
 
@@ -2853,10 +2853,10 @@ void Image::create(const char** p_xpm) {
                 String line_str = line_ptr;
                 line_str.replace("\t", " ");
 
-                size_width = line_str.get_slicec(' ', 0).to_int();
-                size_height = line_str.get_slicec(' ', 1).to_int();
+                size_width    = line_str.get_slicec(' ', 0).to_int();
+                size_height   = line_str.get_slicec(' ', 1).to_int();
                 colormap_size = line_str.get_slicec(' ', 2).to_int();
-                pixelchars = line_str.get_slicec(' ', 3).to_int();
+                pixelchars    = line_str.get_slicec(' ', 3).to_int();
                 ERR_FAIL_COND(colormap_size > 32766);
                 ERR_FAIL_COND(pixelchars > 5);
                 ERR_FAIL_COND(size_width > 32767);
@@ -2932,7 +2932,7 @@ void Image::create(const char** p_xpm) {
                         // magenta mask
                         if (col_r == 255 && col_g == 0 && col_b == 255) {
                             colormap[colorstring] = Color(0, 0, 0, 0);
-                            has_alpha = true;
+                            has_alpha             = true;
                         } else {
                             colormap[colorstring] = Color(
                                 col_r / 255.0,
@@ -2951,7 +2951,7 @@ void Image::create(const char** p_xpm) {
                         false,
                         has_alpha ? FORMAT_RGBA8 : FORMAT_RGB8
                     );
-                    w = data.write();
+                    w          = data.write();
                     pixel_size = has_alpha ? 4 : 3;
                 }
             } break;
@@ -3021,7 +3021,7 @@ bool Image::is_invisible() const {
     int w, h;
     _get_mipmap_offset_and_size(1, len, w, h);
 
-    PoolVector<uint8_t>::Read r = data.read();
+    PoolVector<uint8_t>::Read r   = data.read();
     const unsigned char* data_ptr = r.ptr();
 
     bool detected = false;
@@ -3063,10 +3063,10 @@ Image::AlphaMode Image::detect_alpha() const {
     int w, h;
     _get_mipmap_offset_and_size(1, len, w, h);
 
-    PoolVector<uint8_t>::Read r = data.read();
+    PoolVector<uint8_t>::Read r   = data.read();
     const unsigned char* data_ptr = r.ptr();
 
-    bool bit = false;
+    bool bit      = false;
     bool detected = false;
 
     switch (format) {
@@ -3246,19 +3246,19 @@ Error Image::compress(
 }
 
 Image::Image(const char** p_xpm) {
-    width = 0;
-    height = 0;
+    width   = 0;
+    height  = 0;
     mipmaps = false;
-    format = FORMAT_L8;
+    format  = FORMAT_L8;
 
     create(p_xpm);
 }
 
 Image::Image(int p_width, int p_height, bool p_use_mipmaps, Format p_format) {
-    width = 0;
-    height = 0;
+    width   = 0;
+    height  = 0;
     mipmaps = p_use_mipmaps;
-    format = FORMAT_L8;
+    format  = FORMAT_L8;
 
     create(p_width, p_height, p_use_mipmaps, p_format);
 }
@@ -3270,10 +3270,10 @@ Image::Image(
     Format p_format,
     const PoolVector<uint8_t>& p_data
 ) {
-    width = 0;
-    height = 0;
+    width   = 0;
+    height  = 0;
     mipmaps = p_mipmaps;
-    format = FORMAT_L8;
+    format  = FORMAT_L8;
 
     create(p_width, p_height, p_mipmaps, p_format, p_data);
 }
@@ -3339,7 +3339,7 @@ void Image::blit_rect(
         p_src.is_null(),
         "It's not a reference to a valid Image object."
     );
-    int dsize = data.size();
+    int dsize    = data.size();
     int srcdsize = p_src->data.size();
     ERR_FAIL_COND(dsize == 0);
     ERR_FAIL_COND(srcdsize == 0);
@@ -3370,10 +3370,10 @@ void Image::blit_rect(
             .clip(Rect2i(p_dest - src_underscan, clipped_src_rect.size));
 
     PoolVector<uint8_t>::Write wp = data.write();
-    uint8_t* dst_data_ptr = wp.ptr();
+    uint8_t* dst_data_ptr         = wp.ptr();
 
     PoolVector<uint8_t>::Read rp = p_src->data.read();
-    const uint8_t* src_data_ptr = rp.ptr();
+    const uint8_t* src_data_ptr  = rp.ptr();
 
     int pixel_size = get_format_pixel_size(format);
 
@@ -3410,8 +3410,8 @@ void Image::blit_rect_mask(
         p_mask.is_null(),
         "It's not a reference to a valid Image object."
     );
-    int dsize = data.size();
-    int srcdsize = p_src->data.size();
+    int dsize     = data.size();
+    int srcdsize  = p_src->data.size();
     int maskdsize = p_mask->data.size();
     ERR_FAIL_COND(dsize == 0);
     ERR_FAIL_COND(srcdsize == 0);
@@ -3447,10 +3447,10 @@ void Image::blit_rect_mask(
             .clip(Rect2i(p_dest - src_underscan, clipped_src_rect.size));
 
     PoolVector<uint8_t>::Write wp = data.write();
-    uint8_t* dst_data_ptr = wp.ptr();
+    uint8_t* dst_data_ptr         = wp.ptr();
 
     PoolVector<uint8_t>::Read rp = p_src->data.read();
-    const uint8_t* src_data_ptr = rp.ptr();
+    const uint8_t* src_data_ptr  = rp.ptr();
 
     int pixel_size = get_format_pixel_size(format);
 
@@ -3488,7 +3488,7 @@ void Image::blend_rect(
         p_src.is_null(),
         "It's not a reference to a valid Image object."
     );
-    int dsize = data.size();
+    int dsize    = data.size();
     int srcdsize = p_src->data.size();
     ERR_FAIL_COND(dsize == 0);
     ERR_FAIL_COND(srcdsize == 0);
@@ -3530,7 +3530,7 @@ void Image::blend_rect(
             Color sc = img->_get_pixel(src_ptr, src_x, src_y);
             if (sc.a != 0) {
                 Color dc = _get_pixel(dst_ptr, dst_x, dst_y);
-                dc = dc.blend(sc);
+                dc       = dc.blend(sc);
                 _set_pixel(dst_ptr, dst_x, dst_y, dc);
             }
         }
@@ -3553,8 +3553,8 @@ void Image::blend_rect_mask(
         p_mask.is_null(),
         "It's not a reference to a valid Image object."
     );
-    int dsize = data.size();
-    int srcdsize = p_src->data.size();
+    int dsize     = data.size();
+    int srcdsize  = p_src->data.size();
     int maskdsize = p_mask->data.size();
     ERR_FAIL_COND(dsize == 0);
     ERR_FAIL_COND(srcdsize == 0);
@@ -3604,10 +3604,10 @@ void Image::blend_rect_mask(
             if (msk->_get_pixel(msk_ptr, src_x, src_y).a != 0) {
                 int dst_x = dest_rect.position.x + j;
                 int dst_y = dest_rect.position.y + i;
-                Color sc = img->_get_pixel(src_ptr, src_x, src_y);
+                Color sc  = img->_get_pixel(src_ptr, src_x, src_y);
                 if (sc.a != 0) {
                     Color dc = _get_pixel(dst_ptr, dst_x, dst_y);
-                    dc = dc.blend(sc);
+                    dc       = dc.blend(sc);
                     _set_pixel(dst_ptr, dst_x, dst_y, dc);
                 }
             }
@@ -3628,7 +3628,7 @@ void Image::fill(const Color& c) {
     lock();
 
     PoolVector<uint8_t>::Write wp = data.write();
-    uint8_t* dst_data_ptr = wp.ptr();
+    uint8_t* dst_data_ptr         = wp.ptr();
 
     int pixel_size = get_format_pixel_size(format);
 
@@ -3648,33 +3648,33 @@ void Image::fill(const Color& c) {
     unlock();
 }
 
-ImageMemLoadFunc Image::_png_mem_loader_func = nullptr;
-ImageMemLoadFunc Image::_jpg_mem_loader_func = nullptr;
+ImageMemLoadFunc Image::_png_mem_loader_func  = nullptr;
+ImageMemLoadFunc Image::_jpg_mem_loader_func  = nullptr;
 ImageMemLoadFunc Image::_webp_mem_loader_func = nullptr;
-ImageMemLoadFunc Image::_tga_mem_loader_func = nullptr;
-ImageMemLoadFunc Image::_bmp_mem_loader_func = nullptr;
+ImageMemLoadFunc Image::_tga_mem_loader_func  = nullptr;
+ImageMemLoadFunc Image::_bmp_mem_loader_func  = nullptr;
 
 void (*Image::_image_compress_bc_func)(Image*, float, Image::CompressSource) =
     nullptr;
 void (*Image::_image_compress_bptc_func)(Image*, float, Image::CompressSource) =
     nullptr;
-void (*Image::_image_compress_pvrtc2_func)(Image*) = nullptr;
-void (*Image::_image_compress_pvrtc4_func)(Image*) = nullptr;
+void (*Image::_image_compress_pvrtc2_func)(Image*)      = nullptr;
+void (*Image::_image_compress_pvrtc4_func)(Image*)      = nullptr;
 void (*Image::_image_compress_etc1_func)(Image*, float) = nullptr;
 void (*Image::_image_compress_etc2_func)(Image*, float, Image::CompressSource) =
     nullptr;
 void (*Image::_image_decompress_pvrtc)(Image*) = nullptr;
-void (*Image::_image_decompress_bc)(Image*) = nullptr;
-void (*Image::_image_decompress_bptc)(Image*) = nullptr;
-void (*Image::_image_decompress_etc1)(Image*) = nullptr;
-void (*Image::_image_decompress_etc2)(Image*) = nullptr;
+void (*Image::_image_decompress_bc)(Image*)    = nullptr;
+void (*Image::_image_decompress_bptc)(Image*)  = nullptr;
+void (*Image::_image_decompress_etc1)(Image*)  = nullptr;
+void (*Image::_image_decompress_etc2)(Image*)  = nullptr;
 
 PoolVector<uint8_t> (*Image::webp_lossy_packer)(const Ref<Image>&, float) =
     nullptr;
 PoolVector<uint8_t> (*Image::webp_lossless_packer)(const Ref<Image>&) = nullptr;
-Ref<Image> (*Image::webp_unpacker)(const PoolVector<uint8_t>&) = nullptr;
-PoolVector<uint8_t> (*Image::png_packer)(const Ref<Image>&) = nullptr;
-Ref<Image> (*Image::png_unpacker)(const PoolVector<uint8_t>&) = nullptr;
+Ref<Image> (*Image::webp_unpacker)(const PoolVector<uint8_t>&)        = nullptr;
+PoolVector<uint8_t> (*Image::png_packer)(const Ref<Image>&)           = nullptr;
+Ref<Image> (*Image::png_unpacker)(const PoolVector<uint8_t>&)         = nullptr;
 
 void Image::_set_data(const Dictionary& p_data) {
     ERR_FAIL_COND(!p_data.has("width"));
@@ -3683,12 +3683,12 @@ void Image::_set_data(const Dictionary& p_data) {
     ERR_FAIL_COND(!p_data.has("mipmaps"));
     ERR_FAIL_COND(!p_data.has("data"));
 
-    int dwidth = p_data["width"];
-    int dheight = p_data["height"];
-    String dformat = p_data["format"];
-    bool dmipmaps = p_data["mipmaps"];
+    int dwidth                = p_data["width"];
+    int dheight               = p_data["height"];
+    String dformat            = p_data["format"];
+    bool dmipmaps             = p_data["mipmaps"];
     PoolVector<uint8_t> ddata = p_data["data"];
-    Format ddformat = FORMAT_MAX;
+    Format ddformat           = FORMAT_MAX;
     for (int i = 0; i < FORMAT_MAX; i++) {
         if (dformat == get_format_name(Format(i))) {
             ddformat = Format(i);
@@ -3703,11 +3703,11 @@ void Image::_set_data(const Dictionary& p_data) {
 
 Dictionary Image::_get_data() const {
     Dictionary d;
-    d["width"] = width;
-    d["height"] = height;
-    d["format"] = get_format_name(format);
+    d["width"]   = width;
+    d["height"]  = height;
+    d["format"]  = get_format_name(format);
     d["mipmaps"] = mipmaps;
-    d["data"] = data;
+    d["data"]    = data;
     return d;
 }
 
@@ -3773,18 +3773,18 @@ Color Image::_get_pixel(uint8_t* ptr, int p_x, int p_y) const {
         }
         case FORMAT_RGBA4444: {
             uint16_t u = ((uint16_t*)ptr)[ofs];
-            float r = ((u >> 12) & 0xF) / 15.0;
-            float g = ((u >> 8) & 0xF) / 15.0;
-            float b = ((u >> 4) & 0xF) / 15.0;
-            float a = (u & 0xF) / 15.0;
+            float r    = ((u >> 12) & 0xF) / 15.0;
+            float g    = ((u >> 8) & 0xF) / 15.0;
+            float b    = ((u >> 4) & 0xF) / 15.0;
+            float a    = (u & 0xF) / 15.0;
             return Color(r, g, b, a);
         }
         case FORMAT_RGBA5551: {
             uint16_t u = ((uint16_t*)ptr)[ofs];
-            float r = ((u >> 11) & 0x1F) / 15.0;
-            float g = ((u >> 6) & 0x1F) / 15.0;
-            float b = ((u >> 1) & 0x1F) / 15.0;
-            float a = (u & 0x1) / 1.0;
+            float r    = ((u >> 11) & 0x1F) / 15.0;
+            float g    = ((u >> 6) & 0x1F) / 15.0;
+            float b    = ((u >> 1) & 0x1F) / 15.0;
+            float a    = (u & 0x1) / 1.0;
             return Color(r, g, b, a);
         }
         case FORMAT_RF: {
@@ -3901,7 +3901,7 @@ void Image::_set_pixel(uint8_t* ptr, int p_x, int p_y, const Color& p_color) {
         case FORMAT_RGBA4444: {
             uint16_t rgba = 0;
 
-            rgba = uint16_t(CLAMP(p_color.r * 15.0, 0, 15)) << 12;
+            rgba  = uint16_t(CLAMP(p_color.r * 15.0, 0, 15)) << 12;
             rgba |= uint16_t(CLAMP(p_color.g * 15.0, 0, 15)) << 8;
             rgba |= uint16_t(CLAMP(p_color.b * 15.0, 0, 15)) << 4;
             rgba |= uint16_t(CLAMP(p_color.a * 15.0, 0, 15));
@@ -3912,7 +3912,7 @@ void Image::_set_pixel(uint8_t* ptr, int p_x, int p_y, const Color& p_color) {
         case FORMAT_RGBA5551: {
             uint16_t rgba = 0;
 
-            rgba = uint16_t(CLAMP(p_color.r * 31.0, 0, 31)) << 11;
+            rgba  = uint16_t(CLAMP(p_color.r * 31.0, 0, 31)) << 11;
             rgba |= uint16_t(CLAMP(p_color.g * 31.0, 0, 31)) << 6;
             rgba |= uint16_t(CLAMP(p_color.b * 31.0, 0, 31)) << 1;
             rgba |= uint16_t(p_color.a > 0.5 ? 1 : 0);
@@ -4289,9 +4289,9 @@ void Image::normalmap_to_xy() {
     convert(Image::FORMAT_RGBA8);
 
     {
-        int len = data.size() / 4;
+        int len                       = data.size() / 4;
         PoolVector<uint8_t>::Write wp = data.write();
-        unsigned char* data_ptr = wp.ptr();
+        unsigned char* data_ptr       = wp.ptr();
 
         for (int i = 0; i < len; i++) {
             data_ptr[(i << 2) + 3] = data_ptr[(i << 2) + 0]; // x to w
@@ -4350,13 +4350,13 @@ void Image::bumpmap_to_normalmap(float bump_scale) {
     result_image.resize(width * height * 4);
 
     {
-        PoolVector<uint8_t>::Read rp = data.read();
+        PoolVector<uint8_t>::Read rp  = data.read();
         PoolVector<uint8_t>::Write wp = result_image.write();
 
         ERR_FAIL_COND(!rp.ptr());
 
         unsigned char* write_ptr = wp.ptr();
-        float* read_ptr = (float*)rp.ptr();
+        float* read_ptr          = (float*)rp.ptr();
 
         for (int ty = 0; ty < height; ty++) {
             int py = ty + 1;
@@ -4369,10 +4369,10 @@ void Image::bumpmap_to_normalmap(float bump_scale) {
                 if (px >= width) {
                     px -= width;
                 }
-                float here = read_ptr[ty * width + tx];
+                float here     = read_ptr[ty * width + tx];
                 float to_right = read_ptr[ty * width + px];
-                float above = read_ptr[py * width + tx];
-                Vector3 up = Vector3(0, 1, (here - above) * bump_scale);
+                float above    = read_ptr[py * width + tx];
+                Vector3 up     = Vector3(0, 1, (here - above) * bump_scale);
                 Vector3 across = Vector3(1, 0, (to_right - here) * bump_scale);
 
                 Vector3 normal = across.cross(up);
@@ -4389,7 +4389,7 @@ void Image::bumpmap_to_normalmap(float bump_scale) {
         }
     }
     format = FORMAT_RGBA8;
-    data = result_image;
+    data   = result_image;
 }
 
 void Image::srgb_to_linear() {
@@ -4422,9 +4422,9 @@ void Image::srgb_to_linear() {
     ERR_FAIL_COND(format != FORMAT_RGB8 && format != FORMAT_RGBA8);
 
     if (format == FORMAT_RGBA8) {
-        int len = data.size() / 4;
+        int len                       = data.size() / 4;
         PoolVector<uint8_t>::Write wp = data.write();
-        unsigned char* data_ptr = wp.ptr();
+        unsigned char* data_ptr       = wp.ptr();
 
         for (int i = 0; i < len; i++) {
             data_ptr[(i << 2) + 0] = srgb2lin[data_ptr[(i << 2) + 0]];
@@ -4433,9 +4433,9 @@ void Image::srgb_to_linear() {
         }
 
     } else if (format == FORMAT_RGB8) {
-        int len = data.size() / 3;
+        int len                       = data.size() / 3;
         PoolVector<uint8_t>::Write wp = data.write();
-        unsigned char* data_ptr = wp.ptr();
+        unsigned char* data_ptr       = wp.ptr();
 
         for (int i = 0; i < len; i++) {
             data_ptr[(i * 3) + 0] = srgb2lin[data_ptr[(i * 3) + 0]];
@@ -4455,7 +4455,7 @@ void Image::premultiply_alpha() {
     }
 
     PoolVector<uint8_t>::Write wp = data.write();
-    unsigned char* data_ptr = wp.ptr();
+    unsigned char* data_ptr       = wp.ptr();
 
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -4483,21 +4483,21 @@ void Image::fix_alpha_edges() {
         return; // not needed
     }
 
-    PoolVector<uint8_t> dcopy = data;
+    PoolVector<uint8_t> dcopy    = data;
     PoolVector<uint8_t>::Read rp = dcopy.read();
-    const uint8_t* srcptr = rp.ptr();
+    const uint8_t* srcptr        = rp.ptr();
 
     PoolVector<uint8_t>::Write wp = data.write();
-    unsigned char* data_ptr = wp.ptr();
+    unsigned char* data_ptr       = wp.ptr();
 
-    const int max_radius = 4;
+    const int max_radius      = 4;
     const int alpha_threshold = 20;
-    const int max_dist = 0x7FFFFFFF;
+    const int max_dist        = 0x7FFFFFFF;
 
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             const uint8_t* rptr = &srcptr[(i * width + j) * 4];
-            uint8_t* wptr = &data_ptr[(i * width + j) * 4];
+            uint8_t* wptr       = &data_ptr[(i * width + j) * 4];
 
             if (rptr[3] >= alpha_threshold) {
                 continue;
@@ -4507,14 +4507,14 @@ void Image::fix_alpha_edges() {
             uint8_t closest_color[3];
 
             int from_x = MAX(0, j - max_radius);
-            int to_x = MIN(width - 1, j + max_radius);
+            int to_x   = MIN(width - 1, j + max_radius);
             int from_y = MAX(0, i - max_radius);
-            int to_y = MIN(height - 1, i + max_radius);
+            int to_y   = MIN(height - 1, i + max_radius);
 
             for (int k = from_y; k <= to_y; k++) {
                 for (int l = from_x; l <= to_x; l++) {
-                    int dy = i - k;
-                    int dx = j - l;
+                    int dy   = i - k;
+                    int dx   = j - l;
                     int dist = dy * dy + dx * dx;
                     if (dist >= closest_dist) {
                         continue;
@@ -4526,7 +4526,7 @@ void Image::fix_alpha_edges() {
                         continue;
                     }
 
-                    closest_dist = dist;
+                    closest_dist     = dist;
                     closest_color[0] = rp2[0];
                     closest_color[1] = rp2[1];
                     closest_color[2] = rp2[2];
@@ -4649,12 +4649,12 @@ void Image::renormalize_uint8(uint8_t* p_rgb) {
     n *= 2.0;
     n -= Vector3(1, 1, 1);
     n.normalize();
-    n += Vector3(1, 1, 1);
-    n *= 0.5;
-    n *= 255;
-    p_rgb[0] = CLAMP(int(n.x), 0, 255);
-    p_rgb[1] = CLAMP(int(n.y), 0, 255);
-    p_rgb[2] = CLAMP(int(n.z), 0, 255);
+    n        += Vector3(1, 1, 1);
+    n        *= 0.5;
+    n        *= 255;
+    p_rgb[0]  = CLAMP(int(n.x), 0, 255);
+    p_rgb[1]  = CLAMP(int(n.y), 0, 255);
+    p_rgb[2]  = CLAMP(int(n.z), 0, 255);
 }
 
 void Image::renormalize_float(float* p_rgb) {
@@ -4682,10 +4682,10 @@ void Image::renormalize_rgbe9995(uint32_t* p_rgb) {
 }
 
 Image::Image(const uint8_t* p_mem_png_jpg, int p_len) {
-    width = 0;
-    height = 0;
+    width   = 0;
+    height  = 0;
     mipmaps = false;
-    format = FORMAT_L8;
+    format  = FORMAT_L8;
 
     if (_png_mem_loader_func) {
         copy_internals_from(_png_mem_loader_func(p_mem_png_jpg, p_len));
@@ -4704,10 +4704,10 @@ Ref<Resource> Image::duplicate(bool p_subresources) const {
 }
 
 Image::Image() {
-    width = 0;
-    height = 0;
+    width   = 0;
+    height  = 0;
     mipmaps = false;
-    format = FORMAT_L8;
+    format  = FORMAT_L8;
 }
 
 Image::~Image() {

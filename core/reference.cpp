@@ -57,7 +57,7 @@ int Reference::reference_get_count() const {
 
 bool Reference::reference() {
     uint32_t rc_val = refcount.refval();
-    bool success = rc_val != 0;
+    bool success    = rc_val != 0;
 
     if (success && rc_val <= 2 /* higher is not relevant */) {
         if (get_script_instance()) {
@@ -79,12 +79,12 @@ bool Reference::reference() {
 
 bool Reference::unreference() {
     uint32_t rc_val = refcount.unrefval();
-    bool die = rc_val == 0;
+    bool die        = rc_val == 0;
 
     if (rc_val <= 1 /* higher is not relevant */) {
         if (get_script_instance()) {
             bool script_ret = get_script_instance()->refcount_decremented();
-            die = die && script_ret;
+            die             = die && script_ret;
         }
         if (instance_binding_count.get() > 0
             && !ScriptServer::are_languages_finished()) {

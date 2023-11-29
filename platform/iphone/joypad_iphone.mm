@@ -76,7 +76,7 @@ void JoypadIPhone::start_processing() {
 }
 
 - (void)godot_commonInit {
-    self.isObserving = NO;
+    self.isObserving  = NO;
     self.isProcessing = NO;
 }
 
@@ -98,7 +98,7 @@ void JoypadIPhone::start_processing() {
     self.isObserving = YES;
 
     self.connectedJoypads = [NSMutableDictionary dictionary];
-    self.joypadsQueue = [NSMutableArray array];
+    self.joypadsQueue     = [NSMutableArray array];
 
     // get told when controllers connect, this will be called right away for
     // already connected controllers
@@ -121,11 +121,11 @@ void JoypadIPhone::start_processing() {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
 
-    self.isObserving = NO;
+    self.isObserving  = NO;
     self.isProcessing = NO;
 
     self.connectedJoypads = nil;
-    self.joypadsQueue = nil;
+    self.joypadsQueue     = nil;
 }
 
 - (void)dealloc {

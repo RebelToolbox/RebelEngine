@@ -130,18 +130,18 @@ unzFile ZipArchive::get_file_handle(String p_file) const {
     zlib_filefunc_def io;
     memset(&io, 0, sizeof(io));
 
-    io.opaque = nullptr;
-    io.zopen_file = godot_open;
-    io.zread_file = godot_read;
+    io.opaque      = nullptr;
+    io.zopen_file  = godot_open;
+    io.zread_file  = godot_read;
     io.zwrite_file = godot_write;
 
-    io.ztell_file = godot_tell;
-    io.zseek_file = godot_seek;
+    io.ztell_file  = godot_tell;
+    io.zseek_file  = godot_seek;
     io.zclose_file = godot_close;
     io.zerror_file = godot_testerror;
 
     io.alloc_mem = godot_alloc;
-    io.free_mem = godot_free;
+    io.free_mem  = godot_free;
 
     unzFile pkg =
         unzOpen2(packages[file.package].filename.utf8().get_data(), &io);
@@ -183,13 +183,13 @@ bool ZipArchive::try_open_pack(
     zlib_filefunc_def io;
     memset(&io, 0, sizeof(io));
 
-    io.opaque = nullptr;
-    io.zopen_file = godot_open;
-    io.zread_file = godot_read;
+    io.opaque      = nullptr;
+    io.zopen_file  = godot_open;
+    io.zread_file  = godot_read;
     io.zwrite_file = godot_write;
 
-    io.ztell_file = godot_tell;
-    io.zseek_file = godot_seek;
+    io.ztell_file  = godot_tell;
+    io.zseek_file  = godot_seek;
     io.zclose_file = godot_close;
     io.zerror_file = godot_testerror;
 
@@ -202,7 +202,7 @@ bool ZipArchive::try_open_pack(
 
     Package pkg;
     pkg.filename = p_path;
-    pkg.zfile = zfile;
+    pkg.zfile    = zfile;
     packages.push_back(pkg);
     int pkg_num = packages.size() - 1;
 

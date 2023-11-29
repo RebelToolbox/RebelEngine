@@ -61,11 +61,11 @@ void add_item(
         "ProjectUtils"
     );
 
-    Variant project_path = p_project_path;
-    Variant item_type = p_item_type;
-    Variant include = p_include;
+    Variant project_path   = p_project_path;
+    Variant item_type      = p_item_type;
+    Variant include        = p_include;
     const Variant* args[3] = {&project_path, &item_type, &include};
-    MonoException* exc = NULL;
+    MonoException* exc     = NULL;
     klass->get_method("AddItemToProjectChecked", 3)->invoke(NULL, args, &exc);
 
     if (exc) {

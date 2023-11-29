@@ -72,7 +72,7 @@ void ShaderGLES3::bind_uniforms() {
     const Map<uint32_t, Variant>::Element* E = uniform_defaults.front();
 
     while (E) {
-        int idx = E->key();
+        int idx      = E->key();
         int location = version->uniform_location[idx];
 
         if (location < 0) {
@@ -112,7 +112,7 @@ bool ShaderGLES3::bind() {
     if (active != this || !version
         || new_conditional_version.key != conditional_version.key) {
         conditional_version = new_conditional_version;
-        version = get_current_version();
+        version             = get_current_version();
     } else {
         return false;
     }
@@ -129,7 +129,7 @@ bool ShaderGLES3::bind() {
 
     DEBUG_TEST_ERROR("Use Program");
 
-    active = this;
+    active         = this;
     uniforms_dirty = true;
     return true;
 }
@@ -138,7 +138,7 @@ void ShaderGLES3::unbind() {
     version = nullptr;
     glUseProgram(0);
     uniforms_dirty = true;
-    active = nullptr;
+    active         = nullptr;
 }
 
 static void _display_error_with_code(
@@ -241,7 +241,7 @@ ShaderGLES3::Version* ShaderGLES3::get_current_version() {
             !custom_code_map.has(conditional_version.code_version),
             nullptr
         );
-        cc = &custom_code_map[conditional_version.code_version];
+        cc             = &custom_code_map[conditional_version.code_version];
         v.code_version = cc->version;
     }
 
@@ -326,7 +326,7 @@ ShaderGLES3::Version* ShaderGLES3::get_current_version() {
                 iloglen = 4096; // buggy driver (Adreno 220+....)
             }
 
-            char* ilogmem = (char*)memalloc(iloglen + 1);
+            char* ilogmem    = (char*)memalloc(iloglen + 1);
             ilogmem[iloglen] = 0;
             glGetShaderInfoLog(v.vert_id, iloglen, &iloglen, ilogmem);
 
@@ -416,7 +416,7 @@ ShaderGLES3::Version* ShaderGLES3::get_current_version() {
                 iloglen = 4096; // buggy driver (Adreno 220+....)
             }
 
-            char* ilogmem = (char*)memalloc(iloglen + 1);
+            char* ilogmem    = (char*)memalloc(iloglen + 1);
             ilogmem[iloglen] = 0;
             glGetShaderInfoLog(v.frag_id, iloglen, &iloglen, ilogmem);
 
@@ -492,7 +492,7 @@ ShaderGLES3::Version* ShaderGLES3::get_current_version() {
             iloglen = 4096; // buggy driver (Adreno 220+....)
         }
 
-        char* ilogmem = (char*)Memory::alloc_static(iloglen + 1);
+        char* ilogmem    = (char*)Memory::alloc_static(iloglen + 1);
         ilogmem[iloglen] = 0;
         glGetProgramInfoLog(v.id, iloglen, &iloglen, ilogmem);
 
@@ -592,33 +592,33 @@ void ShaderGLES3::setup(
     int p_fragment_code_start
 ) {
     ERR_FAIL_COND(version);
-    conditional_version.key = 0;
+    conditional_version.key     = 0;
     new_conditional_version.key = 0;
-    uniform_count = p_uniform_count;
-    conditional_count = p_conditional_count;
-    conditional_defines = p_conditional_defines;
-    uniform_names = p_uniform_names;
-    vertex_code = p_vertex_code;
-    fragment_code = p_fragment_code;
-    texunit_pairs = p_texunit_pairs;
-    texunit_pair_count = p_texunit_pair_count;
-    vertex_code_start = p_vertex_code_start;
-    fragment_code_start = p_fragment_code_start;
-    attribute_pairs = p_attribute_pairs;
-    attribute_pair_count = p_attribute_count;
-    ubo_pairs = p_ubo_pairs;
-    ubo_count = p_ubo_pair_count;
-    feedbacks = p_feedback;
-    feedback_count = p_feedback_count;
+    uniform_count               = p_uniform_count;
+    conditional_count           = p_conditional_count;
+    conditional_defines         = p_conditional_defines;
+    uniform_names               = p_uniform_names;
+    vertex_code                 = p_vertex_code;
+    fragment_code               = p_fragment_code;
+    texunit_pairs               = p_texunit_pairs;
+    texunit_pair_count          = p_texunit_pair_count;
+    vertex_code_start           = p_vertex_code_start;
+    fragment_code_start         = p_fragment_code_start;
+    attribute_pairs             = p_attribute_pairs;
+    attribute_pair_count        = p_attribute_count;
+    ubo_pairs                   = p_ubo_pairs;
+    ubo_count                   = p_ubo_pair_count;
+    feedbacks                   = p_feedback;
+    feedback_count              = p_feedback_count;
 
     // split vertex and shader code (thank you, shader compiler programmers from
     // you know what company).
     {
-        String globals_tag = "\nVERTEX_SHADER_GLOBALS";
+        String globals_tag  = "\nVERTEX_SHADER_GLOBALS";
         String material_tag = "\nMATERIAL_UNIFORMS";
-        String code_tag = "\nVERTEX_SHADER_CODE";
-        String code = vertex_code;
-        int cpos = code.find(material_tag);
+        String code_tag     = "\nVERTEX_SHADER_CODE";
+        String code         = vertex_code;
+        int cpos            = code.find(material_tag);
         if (cpos == -1) {
             vertex_code0 = code.ascii();
         } else {
@@ -648,12 +648,12 @@ void ShaderGLES3::setup(
     }
 
     {
-        String globals_tag = "\nFRAGMENT_SHADER_GLOBALS";
-        String material_tag = "\nMATERIAL_UNIFORMS";
-        String code_tag = "\nFRAGMENT_SHADER_CODE";
+        String globals_tag    = "\nFRAGMENT_SHADER_GLOBALS";
+        String material_tag   = "\nMATERIAL_UNIFORMS";
+        String code_tag       = "\nFRAGMENT_SHADER_CODE";
         String light_code_tag = "\nLIGHT_SHADER_CODE";
-        String code = fragment_code;
-        int cpos = code.find(material_tag);
+        String code           = fragment_code;
+        int cpos              = code.find(material_tag);
         if (cpos == -1) {
             fragment_code0 = code.ascii();
         } else {
@@ -729,13 +729,13 @@ void ShaderGLES3::clear_caches() {
     version_map.clear();
 
     custom_code_map.clear();
-    version = nullptr;
+    version          = nullptr;
     last_custom_code = 1;
-    uniforms_dirty = true;
+    uniforms_dirty   = true;
 }
 
 uint32_t ShaderGLES3::create_custom_shader() {
-    custom_code_map[last_custom_code] = CustomCode();
+    custom_code_map[last_custom_code]         = CustomCode();
     custom_code_map[last_custom_code].version = 1;
     return last_custom_code++;
 }
@@ -754,14 +754,14 @@ void ShaderGLES3::set_custom_shader_code(
     ERR_FAIL_COND(!custom_code_map.has(p_code_id));
     CustomCode* cc = &custom_code_map[p_code_id];
 
-    cc->vertex = p_vertex;
-    cc->vertex_globals = p_vertex_globals;
-    cc->fragment = p_fragment;
+    cc->vertex           = p_vertex;
+    cc->vertex_globals   = p_vertex_globals;
+    cc->fragment         = p_fragment;
     cc->fragment_globals = p_fragment_globals;
-    cc->light = p_light;
+    cc->light            = p_light;
     cc->texture_uniforms = p_texture_uniforms;
-    cc->uniforms = p_uniforms;
-    cc->custom_defines = p_custom_defines;
+    cc->uniforms         = p_uniforms;
+    cc->custom_defines   = p_custom_defines;
     cc->version++;
 }
 
@@ -804,9 +804,9 @@ void ShaderGLES3::set_base_material_tex_index(int p_idx) {
 }
 
 ShaderGLES3::ShaderGLES3() {
-    version = nullptr;
-    last_custom_code = 1;
-    uniforms_dirty = true;
+    version                 = nullptr;
+    last_custom_code        = 1;
+    uniforms_dirty          = true;
     base_material_tex_index = 0;
 }
 

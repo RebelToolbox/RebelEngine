@@ -51,15 +51,15 @@ RES TranslationLoaderPO::load_translation(FileAccess* f, Error* r_error) {
     }
 
     Ref<Translation> translation = Ref<Translation>(memnew(Translation));
-    int line = 1;
-    bool skip_this = false;
-    bool skip_next = false;
-    bool is_eof = false;
-    const String path = f->get_path();
+    int line                     = 1;
+    bool skip_this               = false;
+    bool skip_next               = false;
+    bool is_eof                  = false;
+    const String path            = f->get_path();
 
     while (!is_eof) {
         String l = f->get_line().strip_edges();
-        is_eof = f->eof_reached();
+        is_eof   = f->eof_reached();
 
         // If we reached last line and it's not a content line, break, otherwise
         // let processing that last loop
@@ -94,10 +94,10 @@ RES TranslationLoaderPO::load_translation(FileAccess* f, Error* r_error) {
                 config = msg_str;
             }
 
-            l = l.substr(5, l.length()).strip_edges();
-            status = STATUS_READING_ID;
-            msg_id = "";
-            msg_str = "";
+            l         = l.substr(5, l.length()).strip_edges();
+            status    = STATUS_READING_ID;
+            msg_id    = "";
+            msg_str   = "";
             skip_this = skip_next;
             skip_next = false;
         }
@@ -112,7 +112,7 @@ RES TranslationLoaderPO::load_translation(FileAccess* f, Error* r_error) {
                 );
             }
 
-            l = l.substr(6, l.length()).strip_edges();
+            l      = l.substr(6, l.length()).strip_edges();
             status = STATUS_READING_STRING;
         }
 
@@ -133,11 +133,11 @@ RES TranslationLoaderPO::load_translation(FileAccess* f, Error* r_error) {
             );
         }
 
-        l = l.substr(1, l.length());
+        l                = l.substr(1, l.length());
         // Find final quote, ignoring escaped ones (\").
         // The escape_next logic is necessary to properly parse things like \\"
         // where the blackslash is the one being escaped, not the quote.
-        int end_pos = -1;
+        int end_pos      = -1;
         bool escape_next = false;
         for (int i = 0; i < l.length(); i++) {
             if (l[i] == '\\' && !escape_next) {
@@ -195,11 +195,11 @@ RES TranslationLoaderPO::load_translation(FileAccess* f, Error* r_error) {
     Vector<String> configs = config.split("\n");
     for (int i = 0; i < configs.size(); i++) {
         String c = configs[i].strip_edges();
-        int p = c.find(":");
+        int p    = c.find(":");
         if (p == -1) {
             continue;
         }
-        String prop = c.substr(0, p).strip_edges();
+        String prop  = c.substr(0, p).strip_edges();
         String value = c.substr(p + 1, c.length()).strip_edges();
 
         if (prop == "X-Language" || prop == "Language") {

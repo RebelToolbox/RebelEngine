@@ -33,7 +33,7 @@
 #include "core/map.h"
 
 uint32_t QuickHull::debug_stop_after = 0xFFFFFFFF;
-bool QuickHull::_flag_warnings = true;
+bool QuickHull::_flag_warnings       = true;
 
 Error QuickHull::build(
     const Vector<Vector3>& p_points,
@@ -80,12 +80,12 @@ Error QuickHull::build(
             real_t d = p_points[i][longest_axis];
             if (i == 0 || d < min) {
                 simplex[0] = i;
-                min = d;
+                min        = d;
             }
 
             if (i == 0 || d > max) {
                 simplex[1] = i;
-                max = d;
+                max        = d;
             }
         }
     }
@@ -93,7 +93,7 @@ Error QuickHull::build(
     // third vertex is one most further away from the line
 
     {
-        real_t maxd = 0;
+        real_t maxd   = 0;
         Vector3 rel12 = p_points[simplex[0]] - p_points[simplex[1]];
 
         for (int i = 0; i < p_points.size(); i++) {
@@ -108,7 +108,7 @@ Error QuickHull::build(
                 Math::abs(n.dot(p_points[simplex[0]]) - n.dot(p_points[i]));
 
             if (i == 0 || d > maxd) {
-                maxd = d;
+                maxd       = d;
                 simplex[2] = i;
             }
         }
@@ -132,7 +132,7 @@ Error QuickHull::build(
             real_t d = Math::abs(p.distance_to(p_points[i]));
 
             if (i == 0 || d > maxd) {
-                maxd = d;
+                maxd       = d;
                 simplex[3] = i;
             }
         }
@@ -229,7 +229,7 @@ Error QuickHull::build(
         Face& f = faces.back()->get();
 
         // find vertex most outside
-        int next = -1;
+        int next      = -1;
         real_t next_d = 0;
 
         for (int i = 0; i < f.points_over.size(); i++) {
@@ -237,7 +237,7 @@ Error QuickHull::build(
 
             if (d > next_d) {
                 next_d = d;
-                next = i;
+                next   = i;
             }
         }
 
@@ -279,7 +279,7 @@ Error QuickHull::build(
         List<List<Face>::Element*> new_faces; // new faces
 
         for (Map<Edge, FaceConnect>::Element* E = lit_edges.front(); E;
-             E = E->next()) {
+             E                                  = E->next()) {
             FaceConnect& fc = E->get();
             if (fc.left && fc.right) {
                 continue; // edge is uninteresting, not on horizont
@@ -311,7 +311,7 @@ Error QuickHull::build(
         // distribute points into new faces
 
         for (List<List<Face>::Element*>::Element* F = lit_faces.front(); F;
-             F = F->next()) {
+             F                                      = F->next()) {
             Face& lf = F->get()->get();
 
             for (int i = 0; i < lf.points_over.size(); i++) {
@@ -343,7 +343,7 @@ Error QuickHull::build(
         // put faces that contain no points on the front
 
         for (List<List<Face>::Element*>::Element* E = new_faces.front(); E;
-             E = E->next()) {
+             E                                      = E->next()) {
             Face& f2 = E->get()->get();
             if (f2.points_over.size() == 0) {
                 faces.move_to_front(E->get());
@@ -389,13 +389,13 @@ Error QuickHull::build(
 
     // fill faces
 
-    bool warning_f = false;
+    bool warning_f         = false;
     bool warning_o_equal_e = false;
-    bool warning_o = false;
-    bool warning_not_f2 = false;
+    bool warning_o         = false;
+    bool warning_not_f2    = false;
 
     for (List<Geometry::MeshData::Face>::Element* E = ret_faces.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         Geometry::MeshData::Face& f = E->get();
 
         for (int i = 0; i < f.indices.size(); i++) {
@@ -431,7 +431,7 @@ Error QuickHull::build(
                     if (O->get().indices[j] == a) {
                         // append the rest
                         for (int k = 0; k < ois; k++) {
-                            int idx = O->get().indices[(k + j) % ois];
+                            int idx  = O->get().indices[(k + j) % ois];
                             int idxn = O->get().indices[(k + j + 1) % ois];
                             if (idx == b && idxn == a) { // already have b!
                                 break;
@@ -502,16 +502,16 @@ Error QuickHull::build(
 
     int idx = 0;
     for (List<Geometry::MeshData::Face>::Element* E = ret_faces.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         r_mesh.faces.write[idx++] = E->get();
     }
     r_mesh.edges.resize(ret_edges.size());
     idx = 0;
     for (Map<Edge, RetFaceConnect>::Element* E = ret_edges.front(); E;
-         E = E->next()) {
+         E                                     = E->next()) {
         Geometry::MeshData::Edge e;
-        e.a = E->key().vertices[0];
-        e.b = E->key().vertices[1];
+        e.a                       = E->key().vertices[0];
+        e.b                       = E->key().vertices[1];
         r_mesh.edges.write[idx++] = e;
     }
 

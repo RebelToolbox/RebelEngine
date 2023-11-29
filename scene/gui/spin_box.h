@@ -54,8 +54,8 @@ class SpinBox : public Range {
 
     struct Drag {
         float base_val = 0;
-        bool allowed = false;
-        bool enabled = false;
+        bool allowed   = false;
+        bool enabled   = false;
         Vector2 capture_pos;
         float diff_y = 0;
     } drag;

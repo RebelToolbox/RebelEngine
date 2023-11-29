@@ -74,12 +74,12 @@ private:
 
             for (int i = 0; i < 3; i++) {
                 emission[i] = 0;
-                albedo[i] = 0;
-                normal[i] = 0;
+                albedo[i]   = 0;
+                normal[i]   = 0;
             }
-            alpha = 0;
+            alpha      = 0;
             used_sides = 0;
-            level = 0;
+            level      = 0;
         }
     };
 
@@ -96,7 +96,7 @@ private:
             x = y = z = 0;
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < 3; j++) {
-                    accum[i][j] = 0;
+                    accum[i][j]        = 0;
                     direct_accum[i][j] = 0;
                 }
             }
@@ -184,7 +184,7 @@ public:
     );
     void begin_bake_light(
         BakeQuality p_quality = BAKE_QUALITY_MEDIUM,
-        float p_propagation = 0.85
+        float p_propagation   = 0.85
     );
     void plot_light_directional(
         const Vector3& p_direction,

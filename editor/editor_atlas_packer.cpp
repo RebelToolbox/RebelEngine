@@ -34,7 +34,7 @@ void EditorAtlasPacker::_plot_triangle(
     Ref<BitMap> p_bitmap,
     Vector2i* vertices
 ) {
-    int width = p_bitmap->get_size().width;
+    int width  = p_bitmap->get_size().width;
     int height = p_bitmap->get_size().height;
     int x[3];
     int y[3];
@@ -58,11 +58,11 @@ void EditorAtlasPacker::_plot_triangle(
         SWAP(y[1], y[2]);
     }
 
-    double dx_far = double(x[2] - x[0]) / (y[2] - y[0] + 1);
+    double dx_far   = double(x[2] - x[0]) / (y[2] - y[0] + 1);
     double dx_upper = double(x[1] - x[0]) / (y[1] - y[0] + 1);
-    double dx_low = double(x[2] - x[1]) / (y[2] - y[1] + 1);
-    double xf = x[0];
-    double xt = x[0] + dx_upper; // if y[0] == y[1], special case
+    double dx_low   = double(x[2] - x[1]) / (y[2] - y[1] + 1);
+    double xf       = x[0];
+    double xt       = x[0] + dx_upper; // if y[0] == y[1], special case
     for (int yi = y[0]; yi <= (y[2] > height - 1 ? height - 1 : y[2]); yi++) {
         if (yi >= 0) {
             for (int xi = (xf > 0 ? int(xf) : 0);
@@ -106,7 +106,7 @@ void EditorAtlasPacker::chart_pack(
         // generate aabb
 
         Rect2i aabb;
-        int vertex_count = chart.vertices.size();
+        int vertex_count        = chart.vertices.size();
         const Vector2* vertices = chart.vertices.ptr();
 
         for (int j = 0; j < vertex_count; j++) {
@@ -129,10 +129,10 @@ void EditorAtlasPacker::chart_pack(
         for (int j = 0; j < chart.faces.size(); j++) {
             Vector2i v[3];
             for (int k = 0; k < 3; k++) {
-                Vector2 vtx = chart.vertices[chart.faces[j].vertex[k]];
-                vtx -= aabb.position;
-                vtx /= divide_by;
-                v[k] = vtx;
+                Vector2 vtx  = chart.vertices[chart.faces[j].vertex[k]];
+                vtx         -= aabb.position;
+                vtx         /= divide_by;
+                v[k]         = vtx;
             }
 
             _plot_triangle(src_bitmap, v);
@@ -147,10 +147,10 @@ void EditorAtlasPacker::chart_pack(
         int bmh = src_bitmap->get_size().height + 2;
 
         int heights_size = -1;
-        bool transpose = false;
+        bool transpose   = false;
         if (chart.can_transpose && bmh > bmw) {
             heights_size = bmh;
-            transpose = true;
+            transpose    = true;
         } else {
             heights_size = bmw;
         }
@@ -163,7 +163,7 @@ void EditorAtlasPacker::chart_pack(
         bottom_heights.resize(heights_size);
 
         for (int x = 0; x < heights_size; x++) {
-            top_heights.write[x] = -1;
+            top_heights.write[x]    = -1;
             bottom_heights.write[x] = 0x7FFFFFFF;
         }
 
@@ -213,12 +213,12 @@ void EditorAtlasPacker::chart_pack(
         }
 
         PlottedBitmap plotted_bitmap;
-        plotted_bitmap.offset = aabb.position;
-        plotted_bitmap.top_heights = top_heights;
+        plotted_bitmap.offset         = aabb.position;
+        plotted_bitmap.top_heights    = top_heights;
         plotted_bitmap.bottom_heights = bottom_heights;
-        plotted_bitmap.chart_index = i;
-        plotted_bitmap.transposed = transpose;
-        plotted_bitmap.area = bmw * bmh;
+        plotted_bitmap.chart_index    = i;
+        plotted_bitmap.transposed     = transpose;
+        plotted_bitmap.area           = bmw * bmh;
 
         bitmaps.push_back(plotted_bitmap);
     }
@@ -242,11 +242,11 @@ void EditorAtlasPacker::chart_pack(
         int* atlas_ptr = heights.ptrw();
 
         for (int i = 0; i < bitmaps.size(); i++) {
-            int best_height = 0x7FFFFFFF;
+            int best_height        = 0x7FFFFFFF;
             int best_height_offset = -1;
-            int w = bitmaps[i].top_heights.size();
+            int w                  = bitmaps[i].top_heights.size();
 
-            const int* top_heights = bitmaps[i].top_heights.ptr();
+            const int* top_heights    = bitmaps[i].top_heights.ptr();
             const int* bottom_heights = bitmaps[i].bottom_heights.ptr();
 
             for (int j = 0; j <= atlas_w - w; j++) {
@@ -265,7 +265,7 @@ void EditorAtlasPacker::chart_pack(
                 }
 
                 if (height < best_height) {
-                    best_height = height;
+                    best_height        = height;
                     best_height_offset = j;
                 }
             }
@@ -276,7 +276,7 @@ void EditorAtlasPacker::chart_pack(
                 }
                 int height = best_height + top_heights[j] + 1;
                 atlas_ptr[j + best_height_offset] = height;
-                atlas_h = MAX(atlas_h, height);
+                atlas_h                           = MAX(atlas_h, height);
             }
 
             // set
@@ -301,6 +301,6 @@ void EditorAtlasPacker::chart_pack(
         atlas_w *= 2;
     }
 
-    r_width = atlas_w * divide_by;
+    r_width  = atlas_w * divide_by;
     r_height = atlas_h * divide_by;
 }

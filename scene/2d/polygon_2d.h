@@ -138,7 +138,7 @@ public:
     Vector2 get_offset() const;
 
     void add_bone(
-        const NodePath& p_path = NodePath(),
+        const NodePath& p_path             = NodePath(),
         const PoolVector<float>& p_weights = PoolVector<float>()
     );
     int get_bone_count() const;

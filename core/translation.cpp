@@ -1082,7 +1082,7 @@ String TranslationServer::get_locale_name(const String& p_locale) const {
 Array TranslationServer::get_loaded_locales() const {
     Array locales;
     for (const Set<Ref<Translation>>::Element* E = translations.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         const Ref<Translation>& t = E->get();
         ERR_FAIL_COND_V(t.is_null(), Array());
         String l = t->get_locale();
@@ -1161,11 +1161,11 @@ StringName TranslationServer::translate(const StringName& p_message) const {
     // logic, so be sure to propagate changes there when changing things here.
 
     StringName res;
-    String lang = get_language_code(locale);
+    String lang     = get_language_code(locale);
     bool near_match = false;
 
     for (const Set<Ref<Translation>>::Element* E = translations.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         const Ref<Translation>& t = E->get();
         ERR_FAIL_COND_V(t.is_null(), p_message);
         String l = t->get_locale();
@@ -1197,10 +1197,10 @@ StringName TranslationServer::translate(const StringName& p_message) const {
     if (!res && fallback.length() >= 2) {
         // Try again with the fallback locale.
         String fallback_lang = get_language_code(fallback);
-        near_match = false;
+        near_match           = false;
 
         for (const Set<Ref<Translation>>::Element* E = translations.front(); E;
-             E = E->next()) {
+             E                                       = E->next()) {
             const Ref<Translation>& t = E->get();
             ERR_FAIL_COND_V(t.is_null(), p_message);
             String l = t->get_locale();
@@ -1264,7 +1264,7 @@ bool TranslationServer::_load_translations(const String& p_from) {
 
 void TranslationServer::setup() {
     String test = GLOBAL_DEF("locale/test", "");
-    test = test.strip_edges();
+    test        = test.strip_edges();
     if (test != "") {
         set_locale(test);
     } else {
@@ -1274,7 +1274,7 @@ void TranslationServer::setup() {
 #ifdef TOOLS_ENABLED
     {
         String options = "";
-        int idx = 0;
+        int idx        = 0;
         while (locale_list[idx]) {
             if (idx > 0) {
                 options += ",";

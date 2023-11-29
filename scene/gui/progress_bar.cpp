@@ -33,7 +33,7 @@
 Size2 ProgressBar::get_minimum_size() const {
     Ref<StyleBox> bg = get_stylebox("bg");
     Ref<StyleBox> fg = get_stylebox("fg");
-    Ref<Font> font = get_font("font");
+    Ref<Font> font   = get_font("font");
 
     Size2 minimum_size = bg->get_minimum_size();
     minimum_size.height =
@@ -44,7 +44,7 @@ Size2 ProgressBar::get_minimum_size() const {
             MAX(minimum_size.height,
                 bg->get_minimum_size().height + font->get_height());
     } else { // this is needed, else the progressbar will collapse
-        minimum_size.width = MAX(minimum_size.width, 1);
+        minimum_size.width  = MAX(minimum_size.width, 1);
         minimum_size.height = MAX(minimum_size.height, 1);
     }
     return minimum_size;
@@ -54,13 +54,13 @@ void ProgressBar::_notification(int p_what) {
     if (p_what == NOTIFICATION_DRAW) {
         Ref<StyleBox> bg = get_stylebox("bg");
         Ref<StyleBox> fg = get_stylebox("fg");
-        Ref<Font> font = get_font("font");
+        Ref<Font> font   = get_font("font");
         Color font_color = get_color("font_color");
 
         draw_style_box(bg, Rect2(Point2(), get_size()));
         float r = get_as_ratio();
-        int mp = fg->get_minimum_size().width;
-        int p = r * (get_size().width - mp);
+        int mp  = fg->get_minimum_size().width;
+        int p   = r * (get_size().width - mp);
         if (p > 0) {
             draw_style_box(
                 fg,

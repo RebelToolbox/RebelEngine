@@ -512,7 +512,7 @@ public:
 
     void set_size_override(
         bool p_enable,
-        const Size2& p_size = Size2(-1, -1),
+        const Size2& p_size     = Size2(-1, -1),
         const Vector2& p_margin = Vector2()
     );
     Size2 get_size_override() const;

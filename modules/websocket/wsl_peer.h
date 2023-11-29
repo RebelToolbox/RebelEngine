@@ -61,15 +61,15 @@ public:
         wslay_event_context_ptr ctx;
 
         PeerData() {
-            polling = false;
-            destroy = false;
-            valid = false;
+            polling   = false;
+            destroy   = false;
+            valid     = false;
             is_server = false;
-            id = 1;
-            ctx = nullptr;
-            obj = nullptr;
-            closing = false;
-            peer = nullptr;
+            id        = 1;
+            ctx       = nullptr;
+            obj       = nullptr;
+            closing   = false;
+            peer      = nullptr;
         }
     };
 

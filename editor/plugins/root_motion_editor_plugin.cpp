@@ -81,7 +81,7 @@ void EditorPropertyRootMotion::_node_assign() {
         player->get_animation_list(&animations);
 
         for (List<StringName>::Element* E = animations.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             Ref<Animation> anim = player->get_animation(E->get());
             for (int i = 0; i < anim->get_track_count(); i++) {
                 paths.insert(anim->track_get_path(i));
@@ -96,7 +96,7 @@ void EditorPropertyRootMotion::_node_assign() {
 
     for (Set<String>::Element* E = paths.front(); E; E = E->next()) {
         NodePath path = E->get();
-        TreeItem* ti = nullptr;
+        TreeItem* ti  = nullptr;
         String accum;
         for (int i = 0; i < path.get_name_count(); i++) {
             String name = path.get_name(i);
@@ -144,7 +144,7 @@ void EditorPropertyRootMotion::_node_assign() {
             if (skeleton && skeleton->find_bone(concat) != -1) {
                 // path in skeleton
                 const String& bone = concat;
-                int idx = skeleton->find_bone(bone);
+                int idx            = skeleton->find_bone(bone);
                 List<String> bone_path;
                 while (idx != -1) {
                     bone_path.push_front(skeleton->get_bone_name(idx));
@@ -153,14 +153,14 @@ void EditorPropertyRootMotion::_node_assign() {
 
                 accum += ":";
                 for (List<String>::Element* F = bone_path.front(); F;
-                     F = F->next()) {
+                     F                        = F->next()) {
                     if (F != bone_path.front()) {
                         accum += "/";
                     }
 
                     accum += F->get();
                     if (!parenthood.has(accum)) {
-                        ti = filters->create_item(ti);
+                        ti                = filters->create_item(ti);
                         parenthood[accum] = ti;
                         ti->set_text(0, F->get());
                         ti->set_selectable(0, true);

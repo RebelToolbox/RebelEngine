@@ -59,7 +59,7 @@ void FileAccessWindows::check_errors() const {
 
 Error FileAccessWindows::_open(const String& p_path, int p_mode_flags) {
     path_src = p_path;
-    path = fix_path(p_path);
+    path     = fix_path(p_path);
     if (f) {
         close();
     }
@@ -112,7 +112,7 @@ Error FileAccessWindows::_open(const String& p_path, int p_mode_flags) {
     if (is_backup_save_enabled() && p_mode_flags & WRITE
         && !(p_mode_flags & READ)) {
         save_path = path;
-        path = path + ".tmp";
+        path      = path + ".tmp";
     }
 
     f = _wfsopen((LPCWSTR)(path.c_str()), mode_string, _SH_DENYNO);
@@ -129,7 +129,7 @@ Error FileAccessWindows::_open(const String& p_path, int p_mode_flags) {
         return last_error;
     } else {
         last_error = OK;
-        flags = p_mode_flags;
+        flags      = p_mode_flags;
         return OK;
     }
 }
@@ -144,7 +144,7 @@ void FileAccessWindows::close() {
 
     if (save_path != "") {
         bool rename_error = true;
-        int attempts = 4;
+        int attempts      = 4;
         while (rename_error && attempts) {
             // This workaround of trying multiple times is added to deal with
             // paranoid Windows antiviruses that love reading just written files
@@ -329,7 +329,7 @@ void FileAccessWindows::store_buffer(const uint8_t* p_src, uint64_t p_length) {
 
 bool FileAccessWindows::file_exists(const String& p_name) {
     String filename = fix_path(p_name);
-    FILE* g = _wfsopen((LPCWSTR)(filename.c_str()), L"rb", _SH_DENYNO);
+    FILE* g         = _wfsopen((LPCWSTR)(filename.c_str()), L"rb", _SH_DENYNO);
     if (g == nullptr) {
         return false;
     } else {

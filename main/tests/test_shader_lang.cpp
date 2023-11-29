@@ -148,10 +148,10 @@ static String dump_node_code(SL::Node* p_node, int p_level) {
                      pnode->uniforms.front();
                  E;
                  E = E->next()) {
-                String ucode = "uniform ";
-                ucode += _prestr(E->get().precision);
-                ucode += _typestr(E->get().type);
-                ucode += " " + String(E->key());
+                String ucode  = "uniform ";
+                ucode        += _prestr(E->get().precision);
+                ucode        += _typestr(E->get().type);
+                ucode        += " " + String(E->key());
 
                 if (E->get().default_value.size()) {
                     ucode += " = "
@@ -183,10 +183,10 @@ static String dump_node_code(SL::Node* p_node, int p_level) {
                      pnode->varyings.front();
                  E;
                  E = E->next()) {
-                String vcode = "varying ";
-                vcode += _prestr(E->get().precision);
-                vcode += _typestr(E->get().type);
-                vcode += " " + String(E->key());
+                String vcode  = "varying ";
+                vcode        += _prestr(E->get().precision);
+                vcode        += _typestr(E->get().type);
+                vcode        += " " + String(E->key());
 
                 code += vcode + "\n";
             }
@@ -205,8 +205,8 @@ static String dump_node_code(SL::Node* p_node, int p_level) {
                 }
 
                 header += ")\n";
-                code += header;
-                code += dump_node_code(fnode->body, p_level + 1);
+                code   += header;
+                code   += dump_node_code(fnode->body, p_level + 1);
             }
 
             // code+=dump_node_code(pnode->body,p_level);
@@ -242,7 +242,7 @@ static String dump_node_code(SL::Node* p_node, int p_level) {
         } break;
         case SL::Node::TYPE_VARIABLE: {
             SL::VariableNode* vnode = (SL::VariableNode*)p_node;
-            code = vnode->name;
+            code                    = vnode->name;
 
         } break;
         case SL::Node::TYPE_VARIABLE_DECLARATION: {
@@ -250,7 +250,7 @@ static String dump_node_code(SL::Node* p_node, int p_level) {
         } break;
         case SL::Node::TYPE_ARRAY: {
             SL::ArrayNode* vnode = (SL::ArrayNode*)p_node;
-            code = vnode->name;
+            code                 = vnode->name;
         } break;
         case SL::Node::TYPE_ARRAY_DECLARATION: {
             // FIXME: Implement
@@ -386,7 +386,7 @@ MainLoop* test() {
 
     Map<StringName, SL::FunctionInfo> dt;
     dt["fragment"].built_ins["ALBEDO"] = SL::TYPE_VEC3;
-    dt["fragment"].can_discard = true;
+    dt["fragment"].can_discard         = true;
 
     Vector<StringName> rm;
     rm.push_back("popo");

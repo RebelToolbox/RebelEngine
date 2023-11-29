@@ -96,18 +96,18 @@ Size2 AnimationTreePlayerEditor::get_node_size(const StringName& p_node) const {
     AnimationTreePlayer::NodeType type = anim_tree->node_get_type(p_node);
 
     Ref<StyleBox> style = get_stylebox("panel", "PopupMenu");
-    Ref<Font> font = get_font("font", "PopupMenu");
+    Ref<Font> font      = get_font("font", "PopupMenu");
 
     Size2 size = style->get_minimum_size();
 
-    int count = 2; // title and name
-    int inputs = anim_tree->node_get_input_count(p_node);
-    count += inputs ? inputs : 1;
-    String name = p_node;
+    int count    = 2; // title and name
+    int inputs   = anim_tree->node_get_input_count(p_node);
+    count       += inputs ? inputs : 1;
+    String name  = p_node;
 
     float name_w = font->get_string_size(name).width;
     float type_w = font->get_string_size(String(_node_type_names[type])).width;
-    float max_w = MAX(name_w, type_w);
+    float max_w  = MAX(name_w, type_w);
 
     switch (type) {
         case AnimationTreePlayer::NODE_TIMESEEK:
@@ -155,7 +155,7 @@ void AnimationTreePlayerEditor::_edit_dialog_changed() {
         if (anim_tree->node_rename(edited_node, edit_line[0]->get_text())
             == OK) {
             for (List<StringName>::Element* E = order.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 if (E->get() == edited_node) {
                     E->get() = edit_line[0]->get_text();
                 }
@@ -305,7 +305,7 @@ void AnimationTreePlayerEditor::_popup_edit_dialog() {
     Point2 pos = anim_tree->node_get_position(edited_node)
                - Point2(h_scroll->get_value(), v_scroll->get_value());
     Ref<StyleBox> style = get_stylebox("panel", "PopupMenu");
-    Size2 size = get_node_size(edited_node);
+    Size2 size          = get_node_size(edited_node);
     Point2 popup_pos(
         pos.x + style->get_margin(MARGIN_LEFT),
         pos.y + size.y - style->get_margin(MARGIN_BOTTOM)
@@ -341,7 +341,7 @@ void AnimationTreePlayerEditor::_popup_edit_dialog() {
                     ap->get_animation_list(&sn);
                     sn.sort_custom<StringName::AlphCompare>();
                     for (List<StringName>::Element* E = sn.front(); E;
-                         E = E->next()) {
+                         E                            = E->next()) {
                         master_anim_popup->add_item(E->get());
                     }
 
@@ -526,15 +526,15 @@ void AnimationTreePlayerEditor::_popup_edit_dialog() {
 }
 
 void AnimationTreePlayerEditor::_draw_node(const StringName& p_node) {
-    RID ci = get_canvas_item();
+    RID ci                             = get_canvas_item();
     AnimationTreePlayer::NodeType type = anim_tree->node_get_type(p_node);
 
-    Ref<StyleBox> style = get_stylebox("panel", "PopupMenu");
-    Ref<Font> font = get_font("font", "PopupMenu");
-    Color font_color = get_color("font_color", "PopupMenu");
-    Color font_color_title = get_color("font_color_hover", "PopupMenu");
-    font_color_title.a *= 0.8;
-    Ref<Texture> slot_icon = get_icon("VisualShaderPort", "EditorIcons");
+    Ref<StyleBox> style     = get_stylebox("panel", "PopupMenu");
+    Ref<Font> font          = get_font("font", "PopupMenu");
+    Color font_color        = get_color("font_color", "PopupMenu");
+    Color font_color_title  = get_color("font_color_hover", "PopupMenu");
+    font_color_title.a     *= 0.8;
+    Ref<Texture> slot_icon  = get_icon("VisualShaderPort", "EditorIcons");
 
     Size2 size = get_node_size(p_node);
     Point2 pos = anim_tree->node_get_position(p_node);
@@ -558,8 +558,8 @@ void AnimationTreePlayerEditor::_draw_node(const StringName& p_node) {
     Point2 ofs = style->get_offset() + pos;
     Point2 ascofs(0, font->get_ascent());
 
-    Color bx = font_color_title;
-    bx.a *= 0.1;
+    Color bx  = font_color_title;
+    bx.a     *= 0.1;
     draw_rect(
         Rect2(
             ofs,
@@ -668,7 +668,7 @@ void AnimationTreePlayerEditor::_draw_node(const StringName& p_node) {
         ofs.y += h;
     }
 
-    Ref<StyleBox> pg_bg = get_stylebox("bg", "ProgressBar");
+    Ref<StyleBox> pg_bg   = get_stylebox("bg", "ProgressBar");
     Ref<StyleBox> pg_fill = get_stylebox("fill", "ProgressBar");
     Rect2 pg_rect(ofs, Size2(w, h));
 
@@ -732,7 +732,7 @@ AnimationTreePlayerEditor::ClickType AnimationTreePlayerEditor::_locate_click(
     int* p_slot_index
 ) const {
     Ref<StyleBox> style = get_stylebox("panel", "PopupMenu");
-    Ref<Font> font = get_font("font", "PopupMenu");
+    Ref<Font> font      = get_font("font", "PopupMenu");
 
     float h = (font->get_height() + get_constant("vseparation", "PopupMenu"));
 
@@ -764,7 +764,7 @@ AnimationTreePlayerEditor::ClickType AnimationTreePlayerEditor::_locate_click(
         y -= 2 * h;
 
         int inputs = anim_tree->node_get_input_count(node);
-        int count = MAX(inputs, 1);
+        int count  = MAX(inputs, 1);
 
         if (inputs == 0
             || (pos.x > size.width / 2
@@ -800,8 +800,8 @@ Point2 AnimationTreePlayerEditor::_get_slot_pos(
     bool p_input,
     int p_slot
 ) {
-    Ref<StyleBox> style = get_stylebox("panel", "PopupMenu");
-    Ref<Font> font = get_font("font", "PopupMenu");
+    Ref<StyleBox> style    = get_stylebox("panel", "PopupMenu");
+    Ref<Font> font         = get_font("font", "PopupMenu");
     Ref<Texture> slot_icon = get_icon("VisualShaderPort", "EditorIcons");
 
     Size2 size = get_node_size(p_node_id);
@@ -861,7 +861,7 @@ void AnimationTreePlayerEditor::_gui_input(Ref<InputEvent> p_event) {
                             _get_slot_pos(click_node, false, click_slot);
                     } break;
                     case CLICK_PARAMETER: {
-                        edited_node = click_node;
+                        edited_node   = click_node;
                         renaming_edit = false;
                         _popup_edit_dialog();
                         // open editor
@@ -1050,7 +1050,7 @@ void AnimationTreePlayerEditor::_notification(int p_what) {
                 ->draw(get_canvas_item(), Rect2(Point2(), get_size()));
 
             for (List<StringName>::Element* E = order.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 _draw_node(E->get());
             }
 
@@ -1072,8 +1072,8 @@ void AnimationTreePlayerEditor::_notification(int p_what) {
                  E = E->next()) {
                 const AnimationTreePlayer::Connection& c = E->get();
                 Point2 source = _get_slot_pos(c.src_node, false, 0);
-                Point2 dest = _get_slot_pos(c.dst_node, true, c.dst_input);
-                Color col = Color(1, 1, 0.5, 0.8);
+                Point2 dest   = _get_slot_pos(c.dst_node, true, c.dst_input);
+                Color col     = Color(1, 1, 0.5, 0.8);
                 /*
                 if (click_type==CLICK_NODE && click_node==c.src_node) {
 
@@ -1182,7 +1182,7 @@ void AnimationTreePlayerEditor::_node_menu_item(int p_item) {
         } break;
         case NODE_RENAME: {
             renaming_edit = true;
-            edited_node = rclick_node;
+            edited_node   = rclick_node;
             _popup_edit_dialog();
 
         } break;
@@ -1261,8 +1261,8 @@ StringName AnimationTreePlayerEditor::_add_node(int p_item) {
     order.push_back(name);
     last_x += 10;
     last_y += 10;
-    last_x = last_x % (int)get_size().width;
-    last_y = last_y % (int)get_size().height;
+    last_x  = last_x % (int)get_size().width;
+    last_y  = last_y % (int)get_size().height;
     update();
 
     return name;
@@ -1373,12 +1373,12 @@ void AnimationTreePlayerEditor::_edit_filters() {
 
     for (Set<String>::Element* E = npb.front(); E; E = E->next()) {
         TreeItem* parent = root;
-        String descr = E->get();
+        String descr     = E->get();
         if (base) {
             NodePath np = E->get();
 
             if (np.get_subname_count() == 1) {
-                Node* n = base->get_node(np);
+                Node* n     = base->get_node(np);
                 Skeleton* s = Object::cast_to<Skeleton>(n);
                 if (s) {
                     String skelbase = E->get().substr(0, E->get().find(":"));
@@ -1393,7 +1393,7 @@ void AnimationTreePlayerEditor::_edit_filters() {
                                 skelbase + ":" + s->get_bone_name(bparent);
                             if (pm.has(bpn)) {
                                 parent = pm[bpn];
-                                descr = np.get_subname(0);
+                                descr  = np.get_subname(0);
                             }
                         } else {
                             if (pm.has(skelbase)) {
@@ -1662,7 +1662,7 @@ void AnimationTreePlayerEditorPlugin::make_visible(bool p_visible) {
 AnimationTreePlayerEditorPlugin::AnimationTreePlayerEditorPlugin(
     EditorNode* p_node
 ) {
-    editor = p_node;
+    editor           = p_node;
     anim_tree_editor = memnew(AnimationTreePlayerEditor);
     anim_tree_editor->set_custom_minimum_size(Size2(0, 300) * EDSCALE);
 

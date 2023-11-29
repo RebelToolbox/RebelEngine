@@ -112,7 +112,7 @@ class BodySW : public CollisionObjectSW {
         _FORCE_INLINE_ AreaCMP() {}
 
         _FORCE_INLINE_ AreaCMP(AreaSW* p_area) {
-            area = p_area;
+            area     = p_area;
             refCount = 1;
         }
     };
@@ -362,7 +362,7 @@ public:
         const Vector3& p_force,
         const Vector3& p_pos
     ) {
-        applied_force += p_force;
+        applied_force  += p_force;
         applied_torque += p_pos.cross(p_force);
     }
 
@@ -512,10 +512,10 @@ void BodySW::add_contact(
         idx = contact_count++;
     } else {
         real_t least_depth = 1e20;
-        int least_deep = -1;
+        int least_deep     = -1;
         for (int i = 0; i < c_max; i++) {
             if (i == 0 || c[i].depth < least_depth) {
-                least_deep = i;
+                least_deep  = i;
                 least_depth = c[i].depth;
             }
         }
@@ -528,14 +528,14 @@ void BodySW::add_contact(
         }
     }
 
-    c[idx].local_pos = p_local_pos;
-    c[idx].local_normal = p_local_normal;
-    c[idx].depth = p_depth;
-    c[idx].local_shape = p_local_shape;
-    c[idx].collider_pos = p_collider_pos;
-    c[idx].collider_shape = p_collider_shape;
-    c[idx].collider_instance_id = p_collider_instance_id;
-    c[idx].collider = p_collider;
+    c[idx].local_pos                = p_local_pos;
+    c[idx].local_normal             = p_local_normal;
+    c[idx].depth                    = p_depth;
+    c[idx].local_shape              = p_local_shape;
+    c[idx].collider_pos             = p_collider_pos;
+    c[idx].collider_shape           = p_collider_shape;
+    c[idx].collider_instance_id     = p_collider_instance_id;
+    c[idx].collider                 = p_collider;
     c[idx].collider_velocity_at_pos = p_collider_velocity_at_pos;
 }
 
@@ -705,7 +705,7 @@ public:
 
     PhysicsDirectBodyStateSW() {
         singleton = this;
-        body = nullptr;
+        body      = nullptr;
     }
 };
 

@@ -131,12 +131,12 @@ void AnimationNode::blend_animation(
     ERR_FAIL_COND(!animation.is_valid());
 
     AnimationState anim_state;
-    anim_state.blend = p_blend;
+    anim_state.blend        = p_blend;
     anim_state.track_blends = &blends;
-    anim_state.delta = p_delta;
-    anim_state.time = p_time;
-    anim_state.animation = animation;
-    anim_state.seeked = p_seeked;
+    anim_state.delta        = p_delta;
+    anim_state.time         = p_time;
+    anim_state.animation    = animation;
+    anim_state.seeked       = p_seeked;
 
     state->animation_states.push_back(anim_state);
 }
@@ -149,15 +149,15 @@ float AnimationNode::_pre_process(
     bool p_seek,
     const Vector<StringName>& p_connections
 ) {
-    base_path = p_base_path;
-    parent = p_parent;
+    base_path   = p_base_path;
+    parent      = p_parent;
     connections = p_connections;
-    state = p_state;
+    state       = p_state;
 
     float t = process(p_time, p_seek);
 
-    state = nullptr;
-    parent = nullptr;
+    state     = nullptr;
+    parent    = nullptr;
     base_path = StringName();
     connections.clear();
 
@@ -204,7 +204,7 @@ float AnimationNode::blend_input(
 
     // inputs.write[p_input].last_pass = state->last_pass;
     float activity = 0;
-    float ret = _blend_node(
+    float ret      = _blend_node(
         node_name,
         blend_tree->get_node_connection_array(node_name),
         nullptr,
@@ -222,7 +222,7 @@ float AnimationNode::blend_input(
 
     if (activity_ptr && p_input < activity_ptr->size()) {
         activity_ptr->write[p_input].last_pass = state->last_pass;
-        activity_ptr->write[p_input].activity = activity;
+        activity_ptr->write[p_input].activity  = activity;
     }
     return ret;
 }
@@ -270,7 +270,7 @@ float AnimationNode::_blend_node(
         p_node->blends.resize(blend_count);
     }
 
-    float* blendw = p_node->blends.ptrw();
+    float* blendw       = p_node->blends.ptrw();
     const float* blendr = blends.ptr();
 
     bool any_valid = false;
@@ -285,7 +285,7 @@ float AnimationNode::_blend_node(
             if (!state->track_map.has(*K)) {
                 continue;
             }
-            int idx = state->track_map[*K];
+            int idx     = state->track_map[*K];
             blendw[idx] = 1.0; // filtered goes to one
         }
 
@@ -369,11 +369,11 @@ float AnimationNode::_blend_node(
     // allocations
     if (p_new_parent) {
         new_parent = p_new_parent;
-        new_path = String(base_path) + String(p_subpath) + "/";
+        new_path   = String(base_path) + String(p_subpath) + "/";
     } else {
         ERR_FAIL_COND_V(!parent, 0);
         new_parent = parent;
-        new_path = String(parent->base_path) + String(p_subpath) + "/";
+        new_path   = String(parent->base_path) + String(p_subpath) + "/";
     }
     return p_node->_pre_process(
         new_path,
@@ -644,8 +644,8 @@ void AnimationNode::_bind_methods() {
 }
 
 AnimationNode::AnimationNode() {
-    state = nullptr;
-    parent = nullptr;
+    state          = nullptr;
+    parent         = nullptr;
     filter_enabled = false;
 }
 
@@ -676,7 +676,7 @@ void AnimationTree::set_active(bool p_active) {
         return;
     }
 
-    active = p_active;
+    active  = p_active;
     started = active;
 
     if (process_mode == ANIMATION_PROCESS_IDLE) {
@@ -687,7 +687,7 @@ void AnimationTree::set_active(bool p_active) {
 
     if (!active && is_inside_tree()) {
         for (Set<TrackCache*>::Element* E = playing_caches.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             if (ObjectDB::get_instance(E->get()->object_id)) {
                 E->get()->object->call("stop");
             }
@@ -742,7 +742,7 @@ bool AnimationTree::_update_caches(AnimationPlayer* player) {
     for (List<StringName>::Element* E = sname.front(); E; E = E->next()) {
         Ref<Animation> anim = player->get_animation(E->get());
         for (int i = 0; i < anim->get_track_count(); i++) {
-            NodePath path = anim->track_get_path(i);
+            NodePath path                   = anim->track_get_path(i);
             Animation::TrackType track_type = anim->track_get_type(i);
 
             TrackCache* track = nullptr;
@@ -815,7 +815,7 @@ bool AnimationTree::_update_caches(AnimationPlayer* player) {
                         TrackCacheTransform* track_xform =
                             memnew(TrackCacheTransform);
 
-                        track_xform->spatial = spatial;
+                        track_xform->spatial  = spatial;
                         track_xform->skeleton = nullptr;
                         track_xform->bone_idx = -1;
 
@@ -921,7 +921,7 @@ bool AnimationTree::_update_caches(AnimationPlayer* player) {
 
     state.track_map.clear();
 
-    K = nullptr;
+    K       = nullptr;
     int idx = 0;
     while ((K = track_cache.next(K))) {
         state.track_map[*K] = idx;
@@ -1016,13 +1016,13 @@ void AnimationTree::_process_graph(float p_delta) {
 
         process_pass++;
 
-        state.valid = true;
+        state.valid           = true;
         state.invalid_reasons = "";
         state.animation_states.clear(); // will need to be re-created
-        state.valid = true;
-        state.player = player;
+        state.valid     = true;
+        state.player    = player;
         state.last_pass = process_pass;
-        state.tree = this;
+        state.tree      = this;
 
         // root source blends
 
@@ -1076,10 +1076,10 @@ void AnimationTree::_process_graph(float p_delta) {
             const AnimationNode::AnimationState& as = E->get();
 
             Ref<Animation> a = as.animation;
-            float time = as.time;
-            float delta = as.delta;
-            float weight = as.blend;
-            bool seeked = as.seeked;
+            float time       = as.time;
+            float delta      = as.delta;
+            float weight     = as.blend;
+            bool seeked      = as.seeked;
 
             for (int i = 0; i < a->get_track_count(); i++) {
                 NodePath path = a->track_get_path(i);
@@ -1111,11 +1111,11 @@ void AnimationTree::_process_graph(float p_delta) {
 
                         if (track->root_motion) {
                             if (t->process_pass != process_pass) {
-                                t->process_pass = process_pass;
-                                t->loc = Vector3();
-                                t->rot = Quat();
+                                t->process_pass    = process_pass;
+                                t->loc             = Vector3();
+                                t->rot             = Quat();
                                 t->rot_blend_accum = 0;
-                                t->scale = Vector3(1, 1, 1);
+                                t->scale           = Vector3(1, 1, 1);
                             }
 
                             float prev_time = time - delta;
@@ -1151,9 +1151,9 @@ void AnimationTree::_process_graph(float p_delta) {
                                     &scale[1]
                                 );
 
-                                t->loc += (loc[1] - loc[0]) * blend;
+                                t->loc   += (loc[1] - loc[0]) * blend;
                                 t->scale += (scale[1] - scale[0]) * blend;
-                                Quat q = Quat()
+                                Quat q    = Quat()
                                              .slerp(
                                                  rot[0].normalized().inverse()
                                                      * rot[1].normalized(),
@@ -1184,9 +1184,9 @@ void AnimationTree::_process_graph(float p_delta) {
                                 &scale[1]
                             );
 
-                            t->loc += (loc[1] - loc[0]) * blend;
+                            t->loc   += (loc[1] - loc[0]) * blend;
                             t->scale += (scale[1] - scale[0]) * blend;
-                            Quat q = Quat()
+                            Quat q    = Quat()
                                          .slerp(
                                              rot[0].normalized().inverse()
                                                  * rot[1].normalized(),
@@ -1213,11 +1213,11 @@ void AnimationTree::_process_graph(float p_delta) {
                             // be removed
 
                             if (t->process_pass != process_pass) {
-                                t->process_pass = process_pass;
-                                t->loc = loc;
-                                t->rot = rot;
+                                t->process_pass    = process_pass;
+                                t->loc             = loc;
+                                t->rot             = rot;
                                 t->rot_blend_accum = 0;
-                                t->scale = scale;
+                                t->scale           = scale;
                             }
 
                             if (err != OK) {
@@ -1226,11 +1226,11 @@ void AnimationTree::_process_graph(float p_delta) {
 
                             t->loc = t->loc.linear_interpolate(loc, blend);
                             if (t->rot_blend_accum == 0) {
-                                t->rot = rot;
+                                t->rot             = rot;
                                 t->rot_blend_accum = blend;
                             } else {
                                 float rot_total = t->rot_blend_accum + blend;
-                                t->rot = rot.slerp(
+                                t->rot          = rot.slerp(
                                                 t->rot,
                                                 t->rot_blend_accum / rot_total
                                 )
@@ -1261,7 +1261,7 @@ void AnimationTree::_process_graph(float p_delta) {
                             }
 
                             if (t->process_pass != process_pass) {
-                                t->value = value;
+                                t->value        = value;
                                 t->process_pass = process_pass;
                             }
 
@@ -1282,7 +1282,7 @@ void AnimationTree::_process_graph(float p_delta) {
                             );
 
                             for (List<int>::Element* F = indices.front(); F;
-                                 F = F->next()) {
+                                 F                     = F->next()) {
                                 Variant value =
                                     a->track_get_key_value(i, F->get());
                                 t->object->set_indexed(t->subpath, value);
@@ -1307,7 +1307,7 @@ void AnimationTree::_process_graph(float p_delta) {
                         );
 
                         for (List<int>::Element* F = indices.front(); F;
-                             F = F->next()) {
+                             F                     = F->next()) {
                             StringName method =
                                 a->method_track_get_name(i, F->get());
                             Vector<Variant> params =
@@ -1336,7 +1336,7 @@ void AnimationTree::_process_graph(float p_delta) {
                         float bezier = a->bezier_track_interpolate(i, time);
 
                         if (t->process_pass != process_pass) {
-                            t->value = bezier;
+                            t->value        = bezier;
                             t->process_pass = process_pass;
                         }
 
@@ -1752,7 +1752,7 @@ void AnimationTree::_update_properties_for_node(
         Vector<Activity> activity;
         for (int i = 0; i < node->get_input_count(); i++) {
             Activity a;
-            a.activity = 0;
+            a.activity  = 0;
             a.last_pass = 0;
             activity.push_back(a);
         }
@@ -1784,7 +1784,7 @@ void AnimationTree::_update_properties_for_node(
     node->get_child_nodes(&children);
 
     for (List<AnimationNode::ChildNode>::Element* E = children.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         _update_properties_for_node(
             p_base_path + E->get().name + "/",
             E->get().node
@@ -1849,7 +1849,7 @@ void AnimationTree::_get_property_list(List<PropertyInfo>* p_list) const {
     }
 
     for (const List<PropertyInfo>::Element* E = properties.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         p_list->push_back(E->get());
     }
 }
@@ -1860,7 +1860,7 @@ void AnimationTree::rename_parameter(
 ) {
     // rename values first
     for (const List<PropertyInfo>::Element* E = properties.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         if (E->get().name.begins_with(p_base)) {
             String new_name = E->get().name.replace_first(p_base, p_new_base);
             property_map[new_name] = property_map[E->get().name];
@@ -2013,13 +2013,13 @@ void AnimationTree::_bind_methods() {
 }
 
 AnimationTree::AnimationTree() {
-    process_mode = ANIMATION_PROCESS_IDLE;
-    active = false;
-    cache_valid = false;
-    setup_pass = 1;
-    process_pass = 1;
-    started = true;
-    properties_dirty = true;
+    process_mode          = ANIMATION_PROCESS_IDLE;
+    active                = false;
+    cache_valid           = false;
+    setup_pass            = 1;
+    process_pass          = 1;
+    started               = true;
+    properties_dirty      = true;
     last_animation_player = 0;
 }
 

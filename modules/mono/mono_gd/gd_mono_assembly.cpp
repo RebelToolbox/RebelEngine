@@ -190,7 +190,7 @@ MonoAssembly* GDMonoAssembly::_search_hook(
     void* user_data,
     bool refonly
 ) {
-    String name = String::utf8(mono_assembly_name_get_name(aname));
+    String name        = String::utf8(mono_assembly_name_get_name(aname));
     bool has_extension = name.ends_with(".dll") || name.ends_with(".exe");
 
     GDMonoAssembly* loaded_asm = GDMono::get_singleton()->get_loaded_assembly(
@@ -448,7 +448,7 @@ void GDMonoAssembly::unload() {
     ERR_FAIL_NULL(image); // Should not be called if already unloaded
 
     for (Map<MonoClass*, GDMonoClass*>::Element* E = cached_raw.front(); E;
-         E = E->next()) {
+         E                                         = E->next()) {
         memdelete(E->value());
     }
 
@@ -456,7 +456,7 @@ void GDMonoAssembly::unload() {
     cached_raw.clear();
 
     assembly = NULL;
-    image = NULL;
+    image    = NULL;
 }
 
 String GDMonoAssembly::get_path() const {
@@ -490,7 +490,7 @@ GDMonoClass* GDMonoAssembly::get_class(
     GDMonoClass* wrapped_class =
         memnew(GDMonoClass(p_namespace, p_name, mono_class, this));
 
-    cached_classes[key] = wrapped_class;
+    cached_classes[key]    = wrapped_class;
     cached_raw[mono_class] = wrapped_class;
 
     return wrapped_class;
@@ -514,7 +514,7 @@ GDMonoClass* GDMonoAssembly::get_class(MonoClass* p_mono_class) {
         memnew(GDMonoClass(namespace_name, class_name, p_mono_class, this));
 
     cached_classes[ClassKey(namespace_name, class_name)] = wrapped_class;
-    cached_raw[p_mono_class] = wrapped_class;
+    cached_raw[p_mono_class]                             = wrapped_class;
 
     return wrapped_class;
 }
@@ -642,7 +642,7 @@ GDMonoAssembly* GDMonoAssembly::load_from(
     // We need to manually call the search hook in this case, as it won't be
     // called in the next step
     MonoAssemblyName* aname = mono_assembly_name_new(p_name.utf8());
-    MonoAssembly* assembly = mono_assembly_invoke_search_hook(aname);
+    MonoAssembly* assembly  = mono_assembly_invoke_search_hook(aname);
     mono_assembly_name_free(aname);
     mono_free(aname);
 

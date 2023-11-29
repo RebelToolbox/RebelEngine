@@ -38,8 +38,8 @@ Error DTLSServerMbedTLS::setup(
     Ref<X509Certificate> p_ca_chain
 ) {
     ERR_FAIL_COND_V(_cookies->setup() != OK, ERR_ALREADY_IN_USE);
-    _key = p_key;
-    _cert = p_cert;
+    _key      = p_key;
+    _cert     = p_cert;
     _ca_chain = p_ca_chain;
     return OK;
 }
@@ -65,12 +65,12 @@ DTLSServer* DTLSServerMbedTLS::_create_func() {
 }
 
 void DTLSServerMbedTLS::initialize() {
-    _create = _create_func;
+    _create   = _create_func;
     available = true;
 }
 
 void DTLSServerMbedTLS::finalize() {
-    _create = nullptr;
+    _create   = nullptr;
     available = false;
 }
 

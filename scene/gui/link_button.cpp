@@ -36,7 +36,7 @@ void LinkButton::set_text(const String& p_text) {
     if (text == p_text) {
         return;
     }
-    text = p_text;
+    text    = p_text;
     xl_text = tr(p_text);
     update();
     _change_notify("text");
@@ -68,7 +68,7 @@ void LinkButton::_notification(int p_what) {
             update();
         } break;
         case NOTIFICATION_DRAW: {
-            RID ci = get_canvas_item();
+            RID ci     = get_canvas_item();
             Size2 size = get_size();
             Color color;
             bool do_underline = false;
@@ -94,12 +94,12 @@ void LinkButton::_notification(int p_what) {
 
                 } break;
                 case DRAW_HOVER: {
-                    color = get_color("font_color_hover");
+                    color        = get_color("font_color_hover");
                     do_underline = underline_mode != UNDERLINE_MODE_NEVER;
 
                 } break;
                 case DRAW_DISABLED: {
-                    color = get_color("font_color_disabled");
+                    color        = get_color("font_color_disabled");
                     do_underline = underline_mode == UNDERLINE_MODE_ALWAYS;
 
                 } break;
@@ -116,8 +116,8 @@ void LinkButton::_notification(int p_what) {
 
             if (do_underline) {
                 int underline_spacing = get_constant("underline_spacing");
-                int width = font->get_string_size(xl_text).width;
-                int y = font->get_ascent() + underline_spacing;
+                int width             = font->get_string_size(xl_text).width;
+                int y                 = font->get_ascent() + underline_spacing;
 
                 draw_line(Vector2(0, y), Vector2(width, y), color);
             }

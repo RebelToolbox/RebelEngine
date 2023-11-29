@@ -95,7 +95,7 @@ bool Path2DEditor::forward_gui_input(const Ref<InputEvent>& p_event) {
                 real_t dist_to_p_out = gpoint.distance_to(xform.xform(
                     curve->get_point_position(i) + curve->get_point_out(i)
                 ));
-                real_t dist_to_p_in = gpoint.distance_to(xform.xform(
+                real_t dist_to_p_in  = gpoint.distance_to(xform.xform(
                     curve->get_point_position(i) + curve->get_point_in(i)
                 ));
 
@@ -105,26 +105,26 @@ bool Path2DEditor::forward_gui_input(const Ref<InputEvent>& p_event) {
                         && dist_to_p < grab_threshold) {
                         // Points can only be moved in edit mode.
 
-                        action = ACTION_MOVING_POINT;
-                        action_point = i;
-                        moving_from = curve->get_point_position(i);
+                        action             = ACTION_MOVING_POINT;
+                        action_point       = i;
+                        moving_from        = curve->get_point_position(i);
                         moving_screen_from = gpoint;
                         return true;
                     } else if (mode == MODE_EDIT || mode == MODE_EDIT_CURVE) {
                         // In/out controls can be moved in multiple modes.
                         if (dist_to_p_out < grab_threshold
                             && i < (curve->get_point_count() - 1)) {
-                            action = ACTION_MOVING_OUT;
-                            action_point = i;
-                            moving_from = curve->get_point_out(i);
+                            action             = ACTION_MOVING_OUT;
+                            action_point       = i;
+                            moving_from        = curve->get_point_out(i);
                             moving_screen_from = gpoint;
                             orig_in_length =
                                 curve->get_point_in(action_point).length();
                             return true;
                         } else if (dist_to_p_in < grab_threshold && i > 0) {
-                            action = ACTION_MOVING_IN;
-                            action_point = i;
-                            moving_from = curve->get_point_in(i);
+                            action             = ACTION_MOVING_IN;
+                            action_point       = i;
+                            moving_from        = curve->get_point_in(i);
                             moving_screen_from = gpoint;
                             orig_out_length =
                                 curve->get_point_out(action_point).length();
@@ -235,9 +235,9 @@ bool Path2DEditor::forward_gui_input(const Ref<InputEvent>& p_event) {
             undo_redo->add_undo_method(canvas_item_editor, "update_viewport");
             undo_redo->commit_action();
 
-            action = ACTION_MOVING_POINT;
-            action_point = curve->get_point_count() - 1;
-            moving_from = curve->get_point_position(action_point);
+            action             = ACTION_MOVING_POINT;
+            action_point       = curve->get_point_count() - 1;
+            moving_from        = curve->get_point_position(action_point);
             moving_screen_from = gpoint;
 
             canvas_item_editor->update_viewport();
@@ -248,7 +248,7 @@ bool Path2DEditor::forward_gui_input(const Ref<InputEvent>& p_event) {
         // Check for segment split.
         if (mb->is_pressed() && mb->get_button_index() == BUTTON_LEFT
             && mode == MODE_EDIT && on_edge) {
-            Vector2 gpoint2 = mb->get_position();
+            Vector2 gpoint2    = mb->get_position();
             Ref<Curve2D> curve = node->get_curve();
 
             int insertion_point = -1;
@@ -288,9 +288,9 @@ bool Path2DEditor::forward_gui_input(const Ref<InputEvent>& p_event) {
             undo_redo->add_undo_method(canvas_item_editor, "update_viewport");
             undo_redo->commit_action();
 
-            action = ACTION_MOVING_POINT;
-            action_point = insertion_point + 1;
-            moving_from = curve->get_point_position(action_point);
+            action             = ACTION_MOVING_POINT;
+            action_point       = insertion_point + 1;
+            moving_from        = curve->get_point_position(action_point);
             moving_screen_from = gpoint2;
 
             canvas_item_editor->update_viewport();
@@ -460,7 +460,7 @@ bool Path2DEditor::forward_gui_input(const Ref<InputEvent>& p_event) {
             edge_point = xform.xform(curve->get_closest_point(
                 xform.affine_inverse().xform(mm->get_position())
             ));
-            on_edge = false;
+            on_edge    = false;
             if (edge_point.distance_to(gpoint) <= grab_threshold) {
                 on_edge = true;
             }
@@ -469,7 +469,7 @@ bool Path2DEditor::forward_gui_input(const Ref<InputEvent>& p_event) {
             int len = curve->get_point_count();
             for (int i = 0; i < len; i++) {
                 Vector2 pp = curve->get_point_position(i);
-                Vector2 p = xform.xform(pp);
+                Vector2 p  = xform.xform(pp);
                 if (p.distance_to(gpoint) <= grab_threshold) {
                     on_edge = false;
                     break;
@@ -577,13 +577,13 @@ void Path2DEditor::forward_canvas_draw_over_viewport(Control* p_overlay) {
 
     Ref<Curve2D> curve = node->get_curve();
 
-    int len = curve->get_point_count();
+    int len      = curve->get_point_count();
     Control* vpc = canvas_item_editor->get_viewport_control();
 
     for (int i = 0; i < len; i++) {
         Vector2 point = xform.xform(curve->get_point_position(i));
         // Determines the point icon to be used
-        bool smooth = false;
+        bool smooth   = false;
 
         if (i < len - 1) {
             Vector2 pointout = xform.xform(
@@ -759,7 +759,7 @@ void Path2DEditor::_mode_selected(int p_mode) {
         }
 
         Vector2 begin = node->get_curve()->get_point_position(0);
-        Vector2 end = node->get_curve()->get_point_position(
+        Vector2 end   = node->get_curve()->get_point_position(
             node->get_curve()->get_point_count() - 1
         );
         if (begin.distance_to(end) < CMP_EPSILON) {
@@ -788,13 +788,13 @@ void Path2DEditor::_handle_option_pressed(int p_option) {
 
     switch (p_option) {
         case HANDLE_OPTION_ANGLE: {
-            bool is_checked = pm->is_item_checked(HANDLE_OPTION_ANGLE);
+            bool is_checked     = pm->is_item_checked(HANDLE_OPTION_ANGLE);
             mirror_handle_angle = !is_checked;
             pm->set_item_checked(HANDLE_OPTION_ANGLE, mirror_handle_angle);
             pm->set_item_disabled(HANDLE_OPTION_LENGTH, !mirror_handle_angle);
         } break;
         case HANDLE_OPTION_LENGTH: {
-            bool is_checked = pm->is_item_checked(HANDLE_OPTION_LENGTH);
+            bool is_checked      = pm->is_item_checked(HANDLE_OPTION_LENGTH);
             mirror_handle_length = !is_checked;
             pm->set_item_checked(HANDLE_OPTION_LENGTH, mirror_handle_length);
         } break;
@@ -802,14 +802,14 @@ void Path2DEditor::_handle_option_pressed(int p_option) {
 }
 
 Path2DEditor::Path2DEditor(EditorNode* p_editor) {
-    canvas_item_editor = nullptr;
-    editor = p_editor;
-    undo_redo = editor->get_undo_redo();
-    mirror_handle_angle = true;
+    canvas_item_editor   = nullptr;
+    editor               = p_editor;
+    undo_redo            = editor->get_undo_redo();
+    mirror_handle_angle  = true;
     mirror_handle_length = true;
-    on_edge = false;
+    on_edge              = false;
 
-    mode = MODE_EDIT;
+    mode   = MODE_EDIT;
     action = ACTION_NONE;
 
     base_hb = memnew(HBoxContainer);
@@ -912,7 +912,7 @@ void Path2DEditorPlugin::make_visible(bool p_visible) {
 }
 
 Path2DEditorPlugin::Path2DEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor        = p_node;
     path2d_editor = memnew(Path2DEditor(p_node));
     CanvasItemEditor::get_singleton()->add_control_to_menu_panel(path2d_editor);
     path2d_editor->hide();

@@ -72,7 +72,7 @@ public:
     symbol(HANDLE process, DWORD64 address) :
         sym((sym_type*)::operator new(sizeof(*sym) + max_name_len)) {
         memset(sym, '\0', sizeof(*sym) + max_name_len);
-        sym->SizeOfStruct = sizeof(*sym);
+        sym->SizeOfStruct  = sizeof(*sym);
         sym->MaxNameLength = max_name_len;
         DWORD64 displacement;
 
@@ -111,7 +111,7 @@ public:
 
         GetModuleInformation(process, module, &mi, sizeof(mi));
         ret.base_address = mi.lpBaseOfDll;
-        ret.load_size = mi.SizeOfImage;
+        ret.load_size    = mi.SizeOfImage;
 
         GetModuleFileNameEx(process, module, temp, sizeof(temp));
         ret.image_name = temp;
@@ -132,10 +132,10 @@ public:
 };
 
 DWORD CrashHandlerException(EXCEPTION_POINTERS* ep) {
-    HANDLE process = GetCurrentProcess();
-    HANDLE hThread = GetCurrentThread();
+    HANDLE process           = GetCurrentProcess();
+    HANDLE hThread           = GetCurrentThread();
     DWORD offset_from_symbol = 0;
-    IMAGEHLP_LINE64 line = {0};
+    IMAGEHLP_LINE64 line     = {0};
     std::vector<module_data> modules;
     DWORD cbNeeded;
     std::vector<HMODULE> module_handles(1);
@@ -190,16 +190,16 @@ DWORD CrashHandlerException(EXCEPTION_POINTERS* ep) {
     STACKFRAME64 frame;
     bool skip_first = false;
 
-    frame.AddrPC.Mode = AddrModeFlat;
+    frame.AddrPC.Mode    = AddrModeFlat;
     frame.AddrStack.Mode = AddrModeFlat;
     frame.AddrFrame.Mode = AddrModeFlat;
 
 #ifdef _M_X64
-    frame.AddrPC.Offset = context->Rip;
+    frame.AddrPC.Offset    = context->Rip;
     frame.AddrStack.Offset = context->Rsp;
     frame.AddrFrame.Offset = context->Rbp;
 #else
-    frame.AddrPC.Offset = context->Eip;
+    frame.AddrPC.Offset    = context->Eip;
     frame.AddrStack.Offset = context->Esp;
     frame.AddrFrame.Offset = context->Ebp;
 
@@ -207,9 +207,9 @@ DWORD CrashHandlerException(EXCEPTION_POINTERS* ep) {
     skip_first = true;
 #endif
 
-    line.SizeOfStruct = sizeof(line);
+    line.SizeOfStruct   = sizeof(line);
     IMAGE_NT_HEADERS* h = ImageNtHeader(base);
-    DWORD image_type = h->FileHeader.Machine;
+    DWORD image_type    = h->FileHeader.Machine;
 
     String msg;
     const ProjectSettings* proj_settings = ProjectSettings::get_singleton();

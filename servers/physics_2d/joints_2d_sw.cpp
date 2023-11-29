@@ -65,15 +65,15 @@ static inline real_t k_scalar(
     real_t value = 0;
 
     {
-        value += a->get_inv_mass();
-        real_t rcn = rA.cross(n);
-        value += a->get_inv_inertia() * rcn * rcn;
+        value      += a->get_inv_mass();
+        real_t rcn  = rA.cross(n);
+        value      += a->get_inv_inertia() * rcn * rcn;
     }
 
     if (b) {
-        value += b->get_inv_mass();
-        real_t rcn = rB.cross(n);
-        value += b->get_inv_inertia() * rcn * rcn;
+        value      += b->get_inv_mass();
+        real_t rcn  = rB.cross(n);
+        value      += b->get_inv_inertia() * rcn * rcn;
     }
 
     return value;
@@ -220,8 +220,8 @@ PinJoint2DSW::PinJoint2DSW(
     Body2DSW* p_body_b
 ) :
     Joint2DSW(_arr, p_body_b ? 2 : 1) {
-    A = p_body_a;
-    B = p_body_b;
+    A        = p_body_a;
+    B        = p_body_b;
     anchor_A = p_body_a->get_inv_transform().xform(p_pos);
     anchor_B = p_body_b ? p_body_b->get_inv_transform().xform(p_pos) : p_pos;
 
@@ -267,32 +267,32 @@ static inline void k_tensor(
     k22 = m_sum;
 
     // add the influence from r1
-    real_t a_i_inv = a->get_inv_inertia();
-    real_t r1xsq = r1.x * r1.x * a_i_inv;
-    real_t r1ysq = r1.y * r1.y * a_i_inv;
-    real_t r1nxy = -r1.x * r1.y * a_i_inv;
-    k11 += r1ysq;
-    k12 += r1nxy;
-    k21 += r1nxy;
-    k22 += r1xsq;
+    real_t a_i_inv  = a->get_inv_inertia();
+    real_t r1xsq    = r1.x * r1.x * a_i_inv;
+    real_t r1ysq    = r1.y * r1.y * a_i_inv;
+    real_t r1nxy    = -r1.x * r1.y * a_i_inv;
+    k11            += r1ysq;
+    k12            += r1nxy;
+    k21            += r1nxy;
+    k22            += r1xsq;
 
     // add the influnce from r2
-    real_t b_i_inv = b->get_inv_inertia();
-    real_t r2xsq = r2.x * r2.x * b_i_inv;
-    real_t r2ysq = r2.y * r2.y * b_i_inv;
-    real_t r2nxy = -r2.x * r2.y * b_i_inv;
-    k11 += r2ysq;
-    k12 += r2nxy;
-    k21 += r2nxy;
-    k22 += r2xsq;
+    real_t b_i_inv  = b->get_inv_inertia();
+    real_t r2xsq    = r2.x * r2.x * b_i_inv;
+    real_t r2ysq    = r2.y * r2.y * b_i_inv;
+    real_t r2nxy    = -r2.x * r2.y * b_i_inv;
+    k11            += r2ysq;
+    k12            += r2nxy;
+    k21            += r2nxy;
+    k22            += r2xsq;
 
     // invert
     real_t determinant = k11 * k22 - k12 * k21;
     ERR_FAIL_COND(determinant == 0.0);
 
     real_t det_inv = 1.0f / determinant;
-    *k1 = Vector2(k22 * det_inv, -k12 * det_inv);
-    *k2 = Vector2(-k21 * det_inv, k11 * det_inv);
+    *k1            = Vector2(k22 * det_inv, -k12 * det_inv);
+    *k2            = Vector2(-k21 * det_inv, k11 * det_inv);
 }
 
 static _FORCE_INLINE_ Vector2
@@ -307,26 +307,26 @@ bool GrooveJoint2DSW::setup(real_t p_step) {
     }
 
     // calculate endpoints in worldspace
-    Vector2 ta = A->get_transform().xform(A_groove_1);
-    Vector2 tb = A->get_transform().xform(A_groove_2);
+    Vector2 ta       = A->get_transform().xform(A_groove_1);
+    Vector2 tb       = A->get_transform().xform(A_groove_2);
     Space2DSW* space = A->get_space();
 
     // calculate axis
     Vector2 n = -(tb - ta).tangent().normalized();
-    real_t d = ta.dot(n);
+    real_t d  = ta.dot(n);
 
     xf_normal = n;
-    rB = B->get_transform().basis_xform(B_anchor);
+    rB        = B->get_transform().basis_xform(B_anchor);
 
     // calculate tangential distance along the axis of rB
     real_t td = (B->get_transform().get_origin() + rB).cross(n);
     // calculate clamping factor and rB
     if (td <= ta.cross(n)) {
         clamp = 1.0f;
-        rA = ta - A->get_transform().get_origin();
+        rA    = ta - A->get_transform().get_origin();
     } else if (td >= tb.cross(n)) {
         clamp = -1.0f;
-        rA = tb - A->get_transform().get_origin();
+        rA    = tb - A->get_transform().get_origin();
     } else {
         clamp = 0.0f;
         // joint->r1 = cpvsub(cpvadd(cpvmult(cpvperp(n), -td), cpvmult(n, d)),
@@ -349,7 +349,7 @@ bool GrooveJoint2DSW::setup(real_t p_step) {
                   - (A->get_transform().get_origin() + rA);
 
     real_t _b = get_bias();
-    gbias = (delta * -(_b == 0 ? space->get_constraint_bias() : _b)
+    gbias     = (delta * -(_b == 0 ? space->get_constraint_bias() : _b)
              * (1.0 / p_step))
                 .clamped(get_max_bias());
 
@@ -365,9 +365,9 @@ void GrooveJoint2DSW::solve(real_t p_step) {
     // compute impulse
     Vector2 vr = relative_velocity(A, B, rA, rB);
 
-    Vector2 j = mult_k(gbias - vr, k1, k2);
-    Vector2 jOld = jn_acc;
-    j += jOld;
+    Vector2 j     = mult_k(gbias - vr, k1, k2);
+    Vector2 jOld  = jn_acc;
+    j            += jOld;
 
     jn_acc = (((clamp * j.cross(xf_normal)) > 0) ? j : j.project(xf_normal))
                  .clamped(jn_max);
@@ -389,9 +389,9 @@ GrooveJoint2DSW::GrooveJoint2DSW(
     A = p_body_a;
     B = p_body_b;
 
-    A_groove_1 = A->get_inv_transform().xform(p_a_groove1);
-    A_groove_2 = A->get_inv_transform().xform(p_a_groove2);
-    B_anchor = B->get_inv_transform().xform(p_b_anchor);
+    A_groove_1      = A->get_inv_transform().xform(p_a_groove1);
+    A_groove_2      = A->get_inv_transform().xform(p_a_groove2);
+    B_anchor        = B->get_inv_transform().xform(p_b_anchor);
     A_groove_normal = -(A_groove_2 - A_groove_1).normalized().tangent();
 
     A->add_constraint(this, 0);
@@ -427,14 +427,14 @@ bool DampedSpringJoint2DSW::setup(real_t p_step) {
     }
 
     real_t k = k_scalar(A, B, rA, rB, n);
-    n_mass = 1.0f / k;
+    n_mass   = 1.0f / k;
 
     target_vrn = 0.0f;
-    v_coef = 1.0f - Math::exp(-damping * (p_step)*k);
+    v_coef     = 1.0f - Math::exp(-damping * (p_step)*k);
 
     // apply spring force
     real_t f_spring = (rest_length - dist) * stiffness;
-    Vector2 j = n * f_spring * (p_step);
+    Vector2 j       = n * f_spring * (p_step);
 
     A->apply_impulse(rA, -j);
     B->apply_impulse(rB, j);
@@ -449,8 +449,8 @@ void DampedSpringJoint2DSW::solve(real_t p_step) {
     // compute velocity loss from drag
     // not 100% certain this is derived correctly, though it makes sense
     real_t v_damp = -vrn * v_coef;
-    target_vrn = vrn + v_damp;
-    Vector2 j = n * v_damp * n_mass;
+    target_vrn    = vrn + v_damp;
+    Vector2 j     = n * v_damp * n_mass;
 
     A->apply_impulse(rA, -j);
     B->apply_impulse(rB, j);
@@ -498,14 +498,14 @@ DampedSpringJoint2DSW::DampedSpringJoint2DSW(
     Body2DSW* p_body_b
 ) :
     Joint2DSW(_arr, 2) {
-    A = p_body_a;
-    B = p_body_b;
+    A        = p_body_a;
+    B        = p_body_b;
     anchor_A = A->get_inv_transform().xform(p_anchor_a);
     anchor_B = B->get_inv_transform().xform(p_anchor_b);
 
     rest_length = p_anchor_a.distance_to(p_anchor_b);
-    stiffness = 20;
-    damping = 1.5;
+    stiffness   = 20;
+    damping     = 1.5;
 
     A->add_constraint(this, 0);
     B->add_constraint(this, 1);

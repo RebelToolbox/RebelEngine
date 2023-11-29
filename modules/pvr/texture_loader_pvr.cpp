@@ -35,15 +35,15 @@
 static void _pvrtc_decompress(Image* p_img);
 
 enum PVRFLags {
-    PVR_HAS_MIPMAPS = 0x00000100,
-    PVR_TWIDDLED = 0x00000200,
-    PVR_NORMAL_MAP = 0x00000400,
-    PVR_BORDER = 0x00000800,
-    PVR_CUBE_MAP = 0x00001000,
-    PVR_FALSE_MIPMAPS = 0x00002000,
+    PVR_HAS_MIPMAPS     = 0x00000100,
+    PVR_TWIDDLED        = 0x00000200,
+    PVR_NORMAL_MAP      = 0x00000400,
+    PVR_BORDER          = 0x00000800,
+    PVR_CUBE_MAP        = 0x00001000,
+    PVR_FALSE_MIPMAPS   = 0x00002000,
     PVR_VOLUME_TEXTURES = 0x00004000,
-    PVR_HAS_ALPHA = 0x00008000,
-    PVR_VFLIP = 0x00010000
+    PVR_HAS_ALPHA       = 0x00008000,
+    PVR_VFLIP           = 0x00010000
 };
 
 RES ResourceFormatPVR::load(
@@ -72,10 +72,10 @@ RES ResourceFormatPVR::load(
     uint32_t hsize = f->get_32();
 
     ERR_FAIL_COND_V(hsize != 52, RES());
-    uint32_t height = f->get_32();
-    uint32_t width = f->get_32();
-    uint32_t mipmaps = f->get_32();
-    uint32_t flags = f->get_32();
+    uint32_t height   = f->get_32();
+    uint32_t width    = f->get_32();
+    uint32_t mipmaps  = f->get_32();
+    uint32_t flags    = f->get_32();
     uint32_t surfsize = f->get_32();
     f->seek(f->get_position() + 20); // bpp, rmask, gmask, bmask, amask
     uint8_t pvrid[5] = {0, 0, 0, 0, 0};
@@ -278,7 +278,7 @@ static void unpack_modulations(
     int p_x,
     int p_y
 ) {
-    int block_mod_mode = p_block->data[1] & 1;
+    int block_mod_mode       = p_block->data[1] & 1;
     uint32_t modulation_bits = p_block->data[0];
 
     if (p_2bit && block_mod_mode) {
@@ -287,8 +287,8 @@ static void unpack_modulations(
                 p_modulation_modes[y + p_y][x + p_x] = block_mod_mode;
 
                 if (((x ^ y) & 1) == 0) {
-                    p_modulation[y + p_y][x + p_x] = modulation_bits & 3;
-                    modulation_bits >>= 2;
+                    p_modulation[y + p_y][x + p_x]   = modulation_bits & 3;
+                    modulation_bits                >>= 2;
                 }
             }
         }
@@ -310,9 +310,9 @@ static void unpack_modulations(
     } else {
         for (int y = 0; y < BLK_Y_SIZE; y++) {
             for (int x = 0; x < BLK_X_4BPP; x++) {
-                p_modulation_modes[y + p_y][x + p_x] = block_mod_mode;
-                p_modulation[y + p_y][x + p_x] = modulation_bits & 3;
-                modulation_bits >>= 2;
+                p_modulation_modes[y + p_y][x + p_x]   = block_mod_mode;
+                p_modulation[y + p_y][x + p_x]         = modulation_bits & 3;
+                modulation_bits                      >>= 2;
             }
         }
     }
@@ -355,10 +355,10 @@ static void interpolate_colors(
     v = v - BLK_Y_SIZE / 2;
 
     if (p_2bit) {
-        u = u - BLK_X_2BPP / 2;
+        u      = u - BLK_X_2BPP / 2;
         uscale = 8;
     } else {
-        u = u - BLK_X_4BPP / 2;
+        u      = u - BLK_X_4BPP / 2;
         uscale = 4;
     }
 
@@ -477,10 +477,10 @@ static uint32_t twiddle_uv(
 
     if (p_height < p_width) {
         min_dimension = p_height;
-        max_value = p_x;
+        max_value     = p_x;
     } else {
         min_dimension = p_width;
-        max_value = p_y;
+        max_value     = p_y;
     }
 
     if (disable_twiddling) {
@@ -489,7 +489,7 @@ static uint32_t twiddle_uv(
 
     scr_bit_pos = 1;
     dst_bit_pos = 1;
-    twiddled = 0;
+    twiddled    = 0;
     shift_count = 0;
 
     while (scr_bit_pos < min_dimension) {
@@ -503,7 +503,7 @@ static uint32_t twiddle_uv(
 
         scr_bit_pos <<= 1;
         dst_bit_pos <<= 2;
-        shift_count += 1;
+        shift_count  += 1;
     }
 
     max_value >>= shift_count;
@@ -531,7 +531,7 @@ static void decompress_pvrtc(
 
     int p_x, p_y;
 
-    int p_modulation[8][16] = {{0}};
+    int p_modulation[8][16]       = {{0}};
     int p_modulation_modes[8][16] = {{0}};
 
     int Mod, DoPT;
@@ -560,22 +560,22 @@ static void decompress_pvrtc(
         x_block_size = BLK_X_4BPP;
     }
 
-    block_width = MAX(2, p_width / x_block_size);
+    block_width  = MAX(2, p_width / x_block_size);
     block_height = MAX(2, p_height / BLK_Y_SIZE);
 
     for (y = 0; y < p_height; y++) {
         for (x = 0; x < p_width; x++) {
             block_x = (x - x_block_size / 2);
-            blk_y = (y - BLK_Y_SIZE / 2);
+            blk_y   = (y - BLK_Y_SIZE / 2);
 
             block_x = LIMIT_COORD(block_x, p_width, p_tiled);
-            blk_y = LIMIT_COORD(blk_y, p_height, p_tiled);
+            blk_y   = LIMIT_COORD(blk_y, p_height, p_tiled);
 
             block_x /= x_block_size;
-            blk_y /= BLK_Y_SIZE;
+            blk_y   /= BLK_Y_SIZE;
 
             block_xp1 = LIMIT_COORD(block_x + 1, block_width, p_tiled);
-            blk_yp1 = LIMIT_COORD(blk_y + 1, block_height, p_tiled);
+            blk_yp1   = LIMIT_COORD(blk_y + 1, block_height, p_tiled);
 
             p_blocks[0][0] =
                 p_comp_img
@@ -648,7 +648,7 @@ static void decompress_pvrtc(
             );
 
             for (i = 0; i < 4; i++) {
-                r_result[i] = ASig[i] * 8 + Mod * (BSig[i] - ASig[i]);
+                r_result[i]   = ASig[i] * 8 + Mod * (BSig[i] - ASig[i]);
                 r_result[i] >>= 3;
             }
 
@@ -656,7 +656,7 @@ static void decompress_pvrtc(
                 r_result[3] = 0;
             }
 
-            u_pos = (x + y * p_width) << 2;
+            u_pos            = (x + y * p_width) << 2;
             p_dst[u_pos + 0] = (uint8_t)r_result[0];
             p_dst[u_pos + 1] = (uint8_t)r_result[1];
             p_dst[u_pos + 2] = (uint8_t)r_result[2];
@@ -677,7 +677,7 @@ static void _pvrtc_decompress(Image* p_img) {
         (p_img->get_format() == Image::FORMAT_PVRTC2
          || p_img->get_format() == Image::FORMAT_PVRTC2A);
 
-    PoolVector<uint8_t> data = p_img->get_data();
+    PoolVector<uint8_t> data    = p_img->get_data();
     PoolVector<uint8_t>::Read r = data.read();
 
     PoolVector<uint8_t> newdata;

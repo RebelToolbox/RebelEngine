@@ -96,8 +96,8 @@ Error ImageLoaderHDR::load_image(
             // Read RLE-encoded data
 
             for (int j = 0; j < height; ++j) {
-                int c1 = f->get_8();
-                int c2 = f->get_8();
+                int c1  = f->get_8();
+                int c2  = f->get_8();
                 int len = f->get_8();
                 if (c1 != 2 || c2 != 2 || (len & 0x80)) {
                     // not run-length encoded, so we have to actually use THIS
@@ -113,7 +113,7 @@ Error ImageLoaderHDR::load_image(
                     continue;
                 }
                 len <<= 8;
-                len |= f->get_8();
+                len  |= f->get_8();
 
                 ERR_FAIL_COND_V_MSG(
                     len != width,
@@ -127,8 +127,8 @@ Error ImageLoaderHDR::load_image(
                         int count = f->get_8();
                         if (count > 128) {
                             // Run
-                            int value = f->get_8();
-                            count -= 128;
+                            int value  = f->get_8();
+                            count     -= 128;
                             for (int z = 0; z < count; ++z) {
                                 ptr[(j * width + i++) * 4 + k] = uint8_t(value);
                             }
@@ -157,8 +157,8 @@ Error ImageLoaderHDR::load_image(
                 c = c.to_linear();
             }
 
-            *(uint32_t*)ptr = c.to_rgbe9995();
-            ptr += 4;
+            *(uint32_t*)ptr  = c.to_rgbe9995();
+            ptr             += 4;
         }
     }
 

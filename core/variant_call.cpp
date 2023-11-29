@@ -192,11 +192,11 @@ struct _VariantCall {
         const Arg& p_argtype5 = Arg()
     ) {
         FuncData funcdata;
-        funcdata.func = p_func;
+        funcdata.func         = p_func;
         funcdata.default_args = p_defaultarg;
-        funcdata._const = p_const;
-        funcdata.returns = p_has_return;
-        funcdata.return_type = p_return;
+        funcdata._const       = p_const;
+        funcdata.returns      = p_has_return;
+        funcdata.return_type  = p_return;
 
         if (p_argtype1.name) {
             funcdata.arg_types.push_back(p_argtype1.type);
@@ -248,7 +248,7 @@ struct _VariantCall {
 
     end:
 
-        funcdata.arg_count = funcdata.arg_types.size();
+        funcdata.arg_count                   = funcdata.arg_types.size();
         type_funcs[p_type].functions[p_name] = funcdata;
     }
 
@@ -849,7 +849,7 @@ struct _VariantCall {
     ) {
         PoolByteArray* ba = reinterpret_cast<PoolByteArray*>(p_self._data._mem);
         PoolByteArray decompressed;
-        int max_output_size = (int)(*p_args[0]);
+        int max_output_size    = (int)(*p_args[0]);
         Compression::Mode mode = (Compression::Mode)(int)(*p_args[1]);
 
         decompressed.resize(1024);
@@ -881,8 +881,8 @@ struct _VariantCall {
             return;
         }
         PoolByteArray::Read r = ba->read();
-        String s = String::hex_encode_buffer(&r[0], ba->size());
-        r_ret = s;
+        String s              = String::hex_encode_buffer(&r[0], ba->size());
+        r_ret                 = s;
     }
 
     VCALL_LOCALMEM0R(PoolByteArray, size);
@@ -1336,9 +1336,9 @@ struct _VariantCall {
 
     static void Transform2D_init3(Variant& r_ret, const Variant** p_args) {
         Transform2D m;
-        m[0] = *p_args[0];
-        m[1] = *p_args[1];
-        m[2] = *p_args[2];
+        m[0]  = *p_args[0];
+        m[1]  = *p_args[1];
+        m[2]  = *p_args[2];
         r_ret = m;
     }
 
@@ -1415,7 +1415,7 @@ struct _VariantCall {
         t.basis.set_axis(1, *p_args[1]);
         t.basis.set_axis(2, *p_args[2]);
         t.origin = *p_args[3];
-        r_ret = t;
+        r_ret    = t;
     }
 
     static void Transform_init2(Variant& r_ret, const Variant** p_args) {
@@ -1428,17 +1428,17 @@ struct _VariantCall {
     static void add_constructor(
         VariantConstructFunc p_func,
         const Variant::Type p_type,
-        const String& p_name1 = "",
+        const String& p_name1       = "",
         const Variant::Type p_type1 = Variant::NIL,
-        const String& p_name2 = "",
+        const String& p_name2       = "",
         const Variant::Type p_type2 = Variant::NIL,
-        const String& p_name3 = "",
+        const String& p_name3       = "",
         const Variant::Type p_type3 = Variant::NIL,
-        const String& p_name4 = "",
+        const String& p_name4       = "",
         const Variant::Type p_type4 = Variant::NIL
     ) {
         ConstructData cd;
-        cd.func = p_func;
+        cd.func      = p_func;
         cd.arg_count = 0;
 
         if (p_name1 == "") {
@@ -1510,9 +1510,9 @@ struct _VariantCall {
     }
 };
 
-_VariantCall::TypeFunc* _VariantCall::type_funcs = nullptr;
+_VariantCall::TypeFunc* _VariantCall::type_funcs           = nullptr;
 _VariantCall::ConstructFunc* _VariantCall::construct_funcs = nullptr;
-_VariantCall::ConstantData* _VariantCall::constant_data = nullptr;
+_VariantCall::ConstantData* _VariantCall::constant_data    = nullptr;
 
 Variant Variant::call(
     const StringName& p_method,
@@ -1909,7 +1909,7 @@ void Variant::get_constructor_list(
          E = E->next()) {
         const _VariantCall::ConstructData& cd = E->get();
         MethodInfo mi;
-        mi.name = Variant::get_type_name(p_type);
+        mi.name            = Variant::get_type_name(p_type);
         mi.return_val.type = p_type;
         for (int i = 0; i < cd.arg_count; i++) {
             PropertyInfo pi;
@@ -1949,22 +1949,22 @@ void Variant::get_constants_for_type(
 
 #ifdef DEBUG_ENABLED
     for (List<StringName>::Element* E = cd.value_ordered.front(); E;
-         E = E->next()) {
+         E                            = E->next()) {
         p_constants->push_back(E->get());
 #else
     for (Map<StringName, int>::Element* E = cd.value.front(); E;
-         E = E->next()) {
+         E                                = E->next()) {
         p_constants->push_back(E->key());
 #endif
     }
 
 #ifdef DEBUG_ENABLED
     for (List<StringName>::Element* E = cd.variant_value_ordered.front(); E;
-         E = E->next()) {
+         E                            = E->next()) {
         p_constants->push_back(E->get());
 #else
     for (Map<StringName, Variant>::Element* E = cd.variant_value.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         p_constants->push_back(E->key());
 #endif
     }
@@ -4165,7 +4165,7 @@ void register_variant_methods() {
 
     _populate_named_colors();
     for (Map<String, Color>::Element* color = _named_colors.front(); color;
-         color = color->next()) {
+         color                              = color->next()) {
         _VariantCall::add_variant_constant(
             Variant::COLOR,
             color->key(),
@@ -4288,9 +4288,9 @@ void register_variant_methods() {
     );
 
     Basis identity_basis = Basis();
-    Basis flip_x_basis = Basis(-1, 0, 0, 0, 1, 0, 0, 0, 1);
-    Basis flip_y_basis = Basis(1, 0, 0, 0, -1, 0, 0, 0, 1);
-    Basis flip_z_basis = Basis(1, 0, 0, 0, 1, 0, 0, 0, -1);
+    Basis flip_x_basis   = Basis(-1, 0, 0, 0, 1, 0, 0, 0, 1);
+    Basis flip_y_basis   = Basis(1, 0, 0, 0, -1, 0, 0, 0, 1);
+    Basis flip_z_basis   = Basis(1, 0, 0, 0, 1, 0, 0, 0, -1);
     _VariantCall::add_variant_constant(
         Variant::BASIS,
         "IDENTITY",

@@ -240,7 +240,7 @@ public:
     }
 
     _ALWAYS_INLINE_ T postadd(T p_value) {
-        T old = value;
+        T old  = value;
         value += p_value;
         return old;
     }
@@ -250,7 +250,7 @@ public:
     }
 
     _ALWAYS_INLINE_ T postsub(T p_value) {
-        T old = value;
+        T old  = value;
         value -= p_value;
         return old;
     }

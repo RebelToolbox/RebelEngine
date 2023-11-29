@@ -92,8 +92,8 @@ public:
         CallbackResult p_result_callback,
         void* p_userdata,
         Vector3* r_sep_axis = nullptr,
-        real_t p_margin_A = 0,
-        real_t p_margin_B = 0
+        real_t p_margin_A   = 0,
+        real_t p_margin_B   = 0
     );
     static bool solve_distance(
         const ShapeSW* p_shape_A,

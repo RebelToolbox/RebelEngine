@@ -63,9 +63,9 @@ private:
 protected:
     enum {
         SYS_NONE = 0,
-        SYS_ADD = 1,
-        SYS_DEL = 2,
-        SYS_ID = 3,
+        SYS_ADD  = 1,
+        SYS_DEL  = 2,
+        SYS_ID   = 3,
 
         PROTO_SIZE = 9
     };
@@ -121,7 +121,7 @@ public:
         int p_in_packets,
         int p_out_buffer,
         int p_out_packets
-    ) = 0;
+    )                                                        = 0;
     virtual Ref<WebSocketPeer> get_peer(int p_peer_id) const = 0;
 
     void _process_multiplayer(Ref<WebSocketPeer> p_peer, uint32_t p_peer_id);

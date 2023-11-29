@@ -72,7 +72,7 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterMethod(
 
     JNISingleton* s = jni_singletons.get(singname);
 
-    String mname = jstring_to_string(name, env);
+    String mname  = jstring_to_string(name, env);
     String retval = jstring_to_string(ret, env);
     Vector<Variant::Type> types;
     String cs = "(";
@@ -80,15 +80,15 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterMethod(
     int stringCount = env->GetArrayLength(args);
 
     for (int i = 0; i < stringCount; i++) {
-        jstring string = (jstring)env->GetObjectArrayElement(args, i);
+        jstring string         = (jstring)env->GetObjectArrayElement(args, i);
         const String rawString = jstring_to_string(string, env);
         types.push_back(get_jni_type(rawString));
         cs += get_jni_sig(rawString);
     }
 
-    cs += ")";
-    cs += get_jni_sig(retval);
-    jclass cls = env->GetObjectClass(s->get_instance());
+    cs         += ")";
+    cs         += get_jni_sig(retval);
+    jclass cls  = env->GetObjectClass(s->get_instance());
     jmethodID mid =
         env->GetMethodID(cls, mname.ascii().get_data(), cs.ascii().get_data());
     if (!mid) {
@@ -154,9 +154,9 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeEmitSignal(
     const Variant* args[VARIANT_ARG_MAX];
 
     for (int i = 0; i < count; i++) {
-        jobject j_param = env->GetObjectArrayElement(j_signal_params, i);
+        jobject j_param   = env->GetObjectArrayElement(j_signal_params, i);
         variant_params[i] = _jobject_to_variant(env, j_param);
-        args[i] = &variant_params[i];
+        args[i]           = &variant_params[i];
         env->DeleteLocalRef(j_param);
     };
 

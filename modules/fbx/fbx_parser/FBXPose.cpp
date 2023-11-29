@@ -100,7 +100,7 @@ FbxPose::FbxPose(
     for (ElementMap::const_iterator it = PoseNodes.first;
          it != PoseNodes.second;
          ++it) {
-        std::string entry_name = (*it).first;
+        std::string entry_name  = (*it).first;
         ElementPtr some_element = (*it).second;
         FbxPoseNode* pose_node = new FbxPoseNode(some_element, doc, entry_name);
         pose_nodes.push_back(pose_node);

@@ -38,7 +38,7 @@
 #ifdef TOOLS_ENABLED
 Dictionary Sprite::_edit_get_state() const {
     Dictionary state = Node2D::_edit_get_state();
-    state["offset"] = offset;
+    state["offset"]  = offset;
     return state;
 }
 
@@ -89,17 +89,17 @@ void Sprite::_get_rects(
 
     if (region) {
         r_filter_clip = region_filter_clip;
-        base_rect = region_rect;
+        base_rect     = region_rect;
     } else {
         r_filter_clip = false;
         base_rect = Rect2(0, 0, texture->get_width(), texture->get_height());
     }
 
-    Size2 frame_size = base_rect.size / Size2(hframes, vframes);
-    Point2 frame_offset = Point2(frame % hframes, frame / hframes);
-    frame_offset *= frame_size;
+    Size2 frame_size     = base_rect.size / Size2(hframes, vframes);
+    Point2 frame_offset  = Point2(frame % hframes, frame / hframes);
+    frame_offset        *= frame_size;
 
-    r_src_rect.size = frame_size;
+    r_src_rect.size     = frame_size;
     r_src_rect.position = base_rect.position + frame_offset;
 
     Point2 dest_offset = offset;
@@ -417,9 +417,9 @@ Rect2 Sprite::get_rect() const {
 
 void Sprite::_validate_property(PropertyInfo& property) const {
     if (property.name == "frame") {
-        property.hint = PROPERTY_HINT_RANGE;
-        property.hint_string = "0," + itos(vframes * hframes - 1) + ",1";
-        property.usage |= PROPERTY_USAGE_KEYING_INCREMENTS;
+        property.hint         = PROPERTY_HINT_RANGE;
+        property.hint_string  = "0," + itos(vframes * hframes - 1) + ",1";
+        property.usage       |= PROPERTY_USAGE_KEYING_INCREMENTS;
     }
 
     if (property.name == "frame_coords") {
@@ -607,10 +607,10 @@ void Sprite::_bind_methods() {
 }
 
 Sprite::Sprite() {
-    centered = true;
-    hflip = false;
-    vflip = false;
-    region = false;
+    centered           = true;
+    hflip              = false;
+    vflip              = false;
+    region             = false;
     region_filter_clip = false;
 
     frame = 0;

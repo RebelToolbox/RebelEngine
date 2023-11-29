@@ -45,9 +45,9 @@ void GDAPI godot_rect2_new_with_position_and_size(
     const godot_vector2* p_size
 ) {
     const Vector2* position = (const Vector2*)p_pos;
-    const Vector2* size = (const Vector2*)p_size;
-    Rect2* dest = (Rect2*)r_dest;
-    *dest = Rect2(*position, *size);
+    const Vector2* size     = (const Vector2*)p_size;
+    Rect2* dest             = (Rect2*)r_dest;
+    *dest                   = Rect2(*position, *size);
 }
 
 void GDAPI godot_rect2_new(
@@ -58,7 +58,7 @@ void GDAPI godot_rect2_new(
     const godot_real p_height
 ) {
     Rect2* dest = (Rect2*)r_dest;
-    *dest = Rect2(p_x, p_y, p_width, p_height);
+    *dest       = Rect2(p_x, p_y, p_width, p_height);
 }
 
 godot_string GDAPI godot_rect2_as_string(const godot_rect2* p_self) {
@@ -76,14 +76,14 @@ godot_real GDAPI godot_rect2_get_area(const godot_rect2* p_self) {
 godot_bool GDAPI
 godot_rect2_intersects(const godot_rect2* p_self, const godot_rect2* p_b) {
     const Rect2* self = (const Rect2*)p_self;
-    const Rect2* b = (const Rect2*)p_b;
+    const Rect2* b    = (const Rect2*)p_b;
     return self->intersects(*b);
 }
 
 godot_bool GDAPI
 godot_rect2_encloses(const godot_rect2* p_self, const godot_rect2* p_b) {
     const Rect2* self = (const Rect2*)p_self;
-    const Rect2* b = (const Rect2*)p_b;
+    const Rect2* b    = (const Rect2*)p_b;
     return self->encloses(*b);
 }
 
@@ -96,8 +96,8 @@ godot_rect2 GDAPI
 godot_rect2_clip(const godot_rect2* p_self, const godot_rect2* p_b) {
     godot_rect2 dest;
     const Rect2* self = (const Rect2*)p_self;
-    const Rect2* b = (const Rect2*)p_b;
-    *((Rect2*)&dest) = self->clip(*b);
+    const Rect2* b    = (const Rect2*)p_b;
+    *((Rect2*)&dest)  = self->clip(*b);
     return dest;
 }
 
@@ -105,14 +105,14 @@ godot_rect2 GDAPI
 godot_rect2_merge(const godot_rect2* p_self, const godot_rect2* p_b) {
     godot_rect2 dest;
     const Rect2* self = (const Rect2*)p_self;
-    const Rect2* b = (const Rect2*)p_b;
-    *((Rect2*)&dest) = self->merge(*b);
+    const Rect2* b    = (const Rect2*)p_b;
+    *((Rect2*)&dest)  = self->merge(*b);
     return dest;
 }
 
 godot_bool GDAPI
 godot_rect2_has_point(const godot_rect2* p_self, const godot_vector2* p_point) {
-    const Rect2* self = (const Rect2*)p_self;
+    const Rect2* self    = (const Rect2*)p_self;
     const Vector2* point = (const Vector2*)p_point;
     return self->has_point(*point);
 }
@@ -135,7 +135,7 @@ godot_rect2 GDAPI godot_rect2_grow_individual(
 ) {
     godot_rect2 dest;
     const Rect2* self = (const Rect2*)p_self;
-    *((Rect2*)&dest) = self->grow_individual(p_left, p_top, p_right, p_bottom);
+    *((Rect2*)&dest)  = self->grow_individual(p_left, p_top, p_right, p_bottom);
     return dest;
 }
 
@@ -146,14 +146,14 @@ godot_rect2 GDAPI godot_rect2_grow_margin(
 ) {
     godot_rect2 dest;
     const Rect2* self = (const Rect2*)p_self;
-    *((Rect2*)&dest) = self->grow_margin((Margin)p_margin, p_by);
+    *((Rect2*)&dest)  = self->grow_margin((Margin)p_margin, p_by);
     return dest;
 }
 
 godot_rect2 GDAPI godot_rect2_abs(const godot_rect2* p_self) {
     godot_rect2 dest;
     const Rect2* self = (const Rect2*)p_self;
-    *((Rect2*)&dest) = self->abs();
+    *((Rect2*)&dest)  = self->abs();
     return dest;
 }
 
@@ -162,43 +162,43 @@ godot_rect2_expand(const godot_rect2* p_self, const godot_vector2* p_to) {
     godot_rect2 dest;
     const Rect2* self = (const Rect2*)p_self;
     const Vector2* to = (const Vector2*)p_to;
-    *((Rect2*)&dest) = self->expand(*to);
+    *((Rect2*)&dest)  = self->expand(*to);
     return dest;
 }
 
 godot_bool GDAPI
 godot_rect2_operator_equal(const godot_rect2* p_self, const godot_rect2* p_b) {
     const Rect2* self = (const Rect2*)p_self;
-    const Rect2* b = (const Rect2*)p_b;
+    const Rect2* b    = (const Rect2*)p_b;
     return *self == *b;
 }
 
 godot_vector2 GDAPI godot_rect2_get_position(const godot_rect2* p_self) {
     godot_vector2 dest;
-    Vector2* d = (Vector2*)&dest;
+    Vector2* d        = (Vector2*)&dest;
     const Rect2* self = (const Rect2*)p_self;
-    *d = self->get_position();
+    *d                = self->get_position();
     return dest;
 }
 
 godot_vector2 GDAPI godot_rect2_get_size(const godot_rect2* p_self) {
     godot_vector2 dest;
-    Vector2* d = (Vector2*)&dest;
+    Vector2* d        = (Vector2*)&dest;
     const Rect2* self = (const Rect2*)p_self;
-    *d = self->get_size();
+    *d                = self->get_size();
     return dest;
 }
 
 void GDAPI
 godot_rect2_set_position(godot_rect2* p_self, const godot_vector2* p_pos) {
-    Rect2* self = (Rect2*)p_self;
+    Rect2* self             = (Rect2*)p_self;
     const Vector2* position = (const Vector2*)p_pos;
     self->set_position(*position);
 }
 
 void GDAPI
 godot_rect2_set_size(godot_rect2* p_self, const godot_vector2* p_size) {
-    Rect2* self = (Rect2*)p_self;
+    Rect2* self         = (Rect2*)p_self;
     const Vector2* size = (const Vector2*)p_size;
     self->set_size(*size);
 }

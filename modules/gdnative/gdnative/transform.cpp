@@ -53,7 +53,7 @@ void GDAPI godot_transform_new_with_axis_origin(
     const Vector3* y_axis = (const Vector3*)p_y_axis;
     const Vector3* z_axis = (const Vector3*)p_z_axis;
     const Vector3* origin = (const Vector3*)p_origin;
-    Transform* dest = (Transform*)r_dest;
+    Transform* dest       = (Transform*)r_dest;
     dest->basis.set_axis(0, *x_axis);
     dest->basis.set_axis(1, *y_axis);
     dest->basis.set_axis(2, *z_axis);
@@ -65,10 +65,10 @@ void GDAPI godot_transform_new(
     const godot_basis* p_basis,
     const godot_vector3* p_origin
 ) {
-    const Basis* basis = (const Basis*)p_basis;
+    const Basis* basis    = (const Basis*)p_basis;
     const Vector3* origin = (const Vector3*)p_origin;
-    Transform* dest = (Transform*)r_dest;
-    *dest = Transform(*basis, *origin);
+    Transform* dest       = (Transform*)r_dest;
+    *dest                 = Transform(*basis, *origin);
 }
 
 void GDAPI godot_transform_new_with_quat(
@@ -76,36 +76,36 @@ void GDAPI godot_transform_new_with_quat(
     const godot_quat* p_quat
 ) {
     const Quat* quat = (const Quat*)p_quat;
-    Transform* dest = (Transform*)r_dest;
-    *dest = Transform(*quat);
+    Transform* dest  = (Transform*)r_dest;
+    *dest            = Transform(*quat);
 }
 
 godot_basis GDAPI godot_transform_get_basis(const godot_transform* p_self) {
     godot_basis dest;
     const Transform* self = (const Transform*)p_self;
-    *((Basis*)&dest) = self->basis;
+    *((Basis*)&dest)      = self->basis;
     return dest;
 }
 
 void GDAPI
 godot_transform_set_basis(godot_transform* p_self, const godot_basis* p_v) {
     Transform* self = (Transform*)p_self;
-    const Basis* v = (const Basis*)p_v;
-    self->basis = *v;
+    const Basis* v  = (const Basis*)p_v;
+    self->basis     = *v;
 }
 
 godot_vector3 GDAPI godot_transform_get_origin(const godot_transform* p_self) {
     godot_vector3 dest;
     const Transform* self = (const Transform*)p_self;
-    *((Vector3*)&dest) = self->origin;
+    *((Vector3*)&dest)    = self->origin;
     return dest;
 }
 
 void GDAPI
 godot_transform_set_origin(godot_transform* p_self, const godot_vector3* p_v) {
-    Transform* self = (Transform*)p_self;
+    Transform* self  = (Transform*)p_self;
     const Vector3* v = (const Vector3*)p_v;
-    self->origin = *v;
+    self->origin     = *v;
 }
 
 godot_string GDAPI godot_transform_as_string(const godot_transform* p_self) {
@@ -118,7 +118,7 @@ godot_string GDAPI godot_transform_as_string(const godot_transform* p_self) {
 godot_transform GDAPI godot_transform_inverse(const godot_transform* p_self) {
     godot_transform dest;
     const Transform* self = (const Transform*)p_self;
-    *((Transform*)&dest) = self->inverse();
+    *((Transform*)&dest)  = self->inverse();
     return dest;
 }
 
@@ -126,7 +126,7 @@ godot_transform GDAPI
 godot_transform_affine_inverse(const godot_transform* p_self) {
     godot_transform dest;
     const Transform* self = (const Transform*)p_self;
-    *((Transform*)&dest) = self->affine_inverse();
+    *((Transform*)&dest)  = self->affine_inverse();
     return dest;
 }
 
@@ -134,7 +134,7 @@ godot_transform GDAPI
 godot_transform_orthonormalized(const godot_transform* p_self) {
     godot_transform dest;
     const Transform* self = (const Transform*)p_self;
-    *((Transform*)&dest) = self->orthonormalized();
+    *((Transform*)&dest)  = self->orthonormalized();
     return dest;
 }
 
@@ -145,8 +145,8 @@ godot_transform GDAPI godot_transform_rotated(
 ) {
     godot_transform dest;
     const Transform* self = (const Transform*)p_self;
-    const Vector3* axis = (const Vector3*)p_axis;
-    *((Transform*)&dest) = self->rotated(*axis, p_phi);
+    const Vector3* axis   = (const Vector3*)p_axis;
+    *((Transform*)&dest)  = self->rotated(*axis, p_phi);
     return dest;
 }
 
@@ -156,8 +156,8 @@ godot_transform GDAPI godot_transform_scaled(
 ) {
     godot_transform dest;
     const Transform* self = (const Transform*)p_self;
-    const Vector3* scale = (const Vector3*)p_scale;
-    *((Transform*)&dest) = self->scaled(*scale);
+    const Vector3* scale  = (const Vector3*)p_scale;
+    *((Transform*)&dest)  = self->scaled(*scale);
     return dest;
 }
 
@@ -167,8 +167,8 @@ godot_transform GDAPI godot_transform_translated(
 ) {
     godot_transform dest;
     const Transform* self = (const Transform*)p_self;
-    const Vector3* ofs = (const Vector3*)p_ofs;
-    *((Transform*)&dest) = self->translated(*ofs);
+    const Vector3* ofs    = (const Vector3*)p_ofs;
+    *((Transform*)&dest)  = self->translated(*ofs);
     return dest;
 }
 
@@ -180,8 +180,8 @@ godot_transform GDAPI godot_transform_looking_at(
     godot_transform dest;
     const Transform* self = (const Transform*)p_self;
     const Vector3* target = (const Vector3*)p_target;
-    const Vector3* up = (const Vector3*)p_up;
-    *((Transform*)&dest) = self->looking_at(*target, *up);
+    const Vector3* up     = (const Vector3*)p_up;
+    *((Transform*)&dest)  = self->looking_at(*target, *up);
     return dest;
 }
 
@@ -190,10 +190,10 @@ godot_plane GDAPI godot_transform_xform_plane(
     const godot_plane* p_v
 ) {
     godot_plane raw_dest;
-    Plane* dest = (Plane*)&raw_dest;
+    Plane* dest           = (Plane*)&raw_dest;
     const Transform* self = (const Transform*)p_self;
-    const Plane* v = (const Plane*)p_v;
-    *dest = self->xform(*v);
+    const Plane* v        = (const Plane*)p_v;
+    *dest                 = self->xform(*v);
     return raw_dest;
 }
 
@@ -202,16 +202,16 @@ godot_plane GDAPI godot_transform_xform_inv_plane(
     const godot_plane* p_v
 ) {
     godot_plane raw_dest;
-    Plane* dest = (Plane*)&raw_dest;
+    Plane* dest           = (Plane*)&raw_dest;
     const Transform* self = (const Transform*)p_self;
-    const Plane* v = (const Plane*)p_v;
-    *dest = self->xform_inv(*v);
+    const Plane* v        = (const Plane*)p_v;
+    *dest                 = self->xform_inv(*v);
     return raw_dest;
 }
 
 void GDAPI godot_transform_new_identity(godot_transform* r_dest) {
     Transform* dest = (Transform*)r_dest;
-    *dest = Transform();
+    *dest           = Transform();
 }
 
 godot_bool GDAPI godot_transform_operator_equal(
@@ -219,7 +219,7 @@ godot_bool GDAPI godot_transform_operator_equal(
     const godot_transform* p_b
 ) {
     const Transform* self = (const Transform*)p_self;
-    const Transform* b = (const Transform*)p_b;
+    const Transform* b    = (const Transform*)p_b;
     return *self == *b;
 }
 
@@ -228,10 +228,10 @@ godot_transform GDAPI godot_transform_operator_multiply(
     const godot_transform* p_b
 ) {
     godot_transform raw_dest;
-    Transform* dest = (Transform*)&raw_dest;
+    Transform* dest       = (Transform*)&raw_dest;
     const Transform* self = (const Transform*)p_self;
-    const Transform* b = (const Transform*)p_b;
-    *dest = *self * *b;
+    const Transform* b    = (const Transform*)p_b;
+    *dest                 = *self * *b;
     return raw_dest;
 }
 
@@ -240,10 +240,10 @@ godot_vector3 GDAPI godot_transform_xform_vector3(
     const godot_vector3* p_v
 ) {
     godot_vector3 raw_dest;
-    Vector3* dest = (Vector3*)&raw_dest;
+    Vector3* dest         = (Vector3*)&raw_dest;
     const Transform* self = (const Transform*)p_self;
-    const Vector3* v = (const Vector3*)p_v;
-    *dest = self->xform(*v);
+    const Vector3* v      = (const Vector3*)p_v;
+    *dest                 = self->xform(*v);
     return raw_dest;
 }
 
@@ -252,10 +252,10 @@ godot_vector3 GDAPI godot_transform_xform_inv_vector3(
     const godot_vector3* p_v
 ) {
     godot_vector3 raw_dest;
-    Vector3* dest = (Vector3*)&raw_dest;
+    Vector3* dest         = (Vector3*)&raw_dest;
     const Transform* self = (const Transform*)p_self;
-    const Vector3* v = (const Vector3*)p_v;
-    *dest = self->xform_inv(*v);
+    const Vector3* v      = (const Vector3*)p_v;
+    *dest                 = self->xform_inv(*v);
     return raw_dest;
 }
 
@@ -264,10 +264,10 @@ godot_aabb GDAPI godot_transform_xform_aabb(
     const godot_aabb* p_v
 ) {
     godot_aabb raw_dest;
-    AABB* dest = (AABB*)&raw_dest;
+    AABB* dest            = (AABB*)&raw_dest;
     const Transform* self = (const Transform*)p_self;
-    const AABB* v = (const AABB*)p_v;
-    *dest = self->xform(*v);
+    const AABB* v         = (const AABB*)p_v;
+    *dest                 = self->xform(*v);
     return raw_dest;
 }
 
@@ -276,10 +276,10 @@ godot_aabb GDAPI godot_transform_xform_inv_aabb(
     const godot_aabb* p_v
 ) {
     godot_aabb raw_dest;
-    AABB* dest = (AABB*)&raw_dest;
+    AABB* dest            = (AABB*)&raw_dest;
     const Transform* self = (const Transform*)p_self;
-    const AABB* v = (const AABB*)p_v;
-    *dest = self->xform_inv(*v);
+    const AABB* v         = (const AABB*)p_v;
+    *dest                 = self->xform_inv(*v);
     return raw_dest;
 }
 

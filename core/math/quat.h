@@ -75,7 +75,7 @@ public:
     void set_axis_angle(const Vector3& axis, const real_t& angle);
 
     _FORCE_INLINE_ void get_axis_angle(Vector3& r_axis, real_t& r_angle) const {
-        r_angle = 2 * Math::acos(w);
+        r_angle  = 2 * Math::acos(w);
         real_t r = ((real_t)1) / Math::sqrt(1 - w * w);
         r_axis.x = x * r;
         r_axis.y = y * r;
@@ -156,7 +156,7 @@ public:
     Quat(const Vector3& v0, const Vector3& v1) // shortest arc
     {
         Vector3 c = v0.cross(v1);
-        real_t d = v0.dot(v1);
+        real_t d  = v0.dot(v1);
 
         if (d < -1.0 + CMP_EPSILON) {
             x = 0;
@@ -164,7 +164,7 @@ public:
             z = 0;
             w = 0;
         } else {
-            real_t s = Math::sqrt((1.0 + d) * 2.0);
+            real_t s  = Math::sqrt((1.0 + d) * 2.0);
             real_t rs = 1.0 / s;
 
             x = c.x * rs;

@@ -76,7 +76,7 @@ static void handle_crash(int sig) {
     }
 
     void* bt_buffer[256];
-    size_t size = backtrace(bt_buffer, 256);
+    size_t size      = backtrace(bt_buffer, 256);
     String _execpath = OS::get_singleton()->get_executable_path();
 
     String msg;

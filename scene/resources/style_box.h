@@ -156,7 +156,7 @@ class StyleBoxFlat : public StyleBox {
     Color shadow_color;
     Color border_color;
 
-    real_t border_width[4] = {};
+    real_t border_width[4]  = {};
     real_t expand_margin[4] = {};
     real_t corner_radius[4] = {};
 

@@ -64,7 +64,7 @@ protected:
             return;
         }
         for (const List<PropertyInfo>::Element* E = properties.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             if (importer->get_option_visibility(E->get().name, values)) {
                 p_list->push_back(E->get());
             }
@@ -92,7 +92,7 @@ void ImportDefaultsEditor::_save() {
         Dictionary modified;
 
         for (Map<StringName, Variant>::Element* E = settings->values.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             if (E->get() != settings->default_values[E->key()]) {
                 modified[E->key()] = E->get();
             }
@@ -119,7 +119,7 @@ void ImportDefaultsEditor::_update_importer() {
     ResourceFormatImporter::get_singleton()->get_importers(&importer_list);
     Ref<ResourceImporter> importer;
     for (List<Ref<ResourceImporter>>::Element* E = importer_list.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         if (E->get()->get_visible_name()
             == importers->get_item_text(importers->get_selected())) {
             importer = E->get();
@@ -189,7 +189,7 @@ void ImportDefaultsEditor::clear() {
     ResourceFormatImporter::get_singleton()->get_importers(&importer_list);
     Vector<String> names;
     for (List<Ref<ResourceImporter>>::Element* E = importer_list.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         String vn = E->get()->get_visible_name();
         names.push_back(vn);
     }
@@ -232,7 +232,7 @@ ImportDefaultsEditor::ImportDefaultsEditor() {
     add_child(inspector);
     inspector->set_v_size_flags(SIZE_EXPAND_FILL);
     CenterContainer* cc = memnew(CenterContainer);
-    save_defaults = memnew(Button);
+    save_defaults       = memnew(Button);
     save_defaults->set_text(TTR("Save"));
     save_defaults->connect("pressed", this, "_save");
     cc->add_child(save_defaults);

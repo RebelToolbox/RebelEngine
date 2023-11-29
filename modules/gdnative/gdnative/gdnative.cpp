@@ -73,7 +73,7 @@ void GDAPI godot_method_bind_ptrcall(
     void* p_ret
 ) {
     MethodBind* mb = (MethodBind*)p_method_bind;
-    Object* o = (Object*)p_instance;
+    Object* o      = (Object*)p_instance;
     mb->ptrcall(o, p_args, p_ret);
 }
 
@@ -84,8 +84,8 @@ godot_variant GDAPI godot_method_bind_call(
     const int p_arg_count,
     godot_variant_call_error* p_call_error
 ) {
-    MethodBind* mb = (MethodBind*)p_method_bind;
-    Object* o = (Object*)p_instance;
+    MethodBind* mb       = (MethodBind*)p_method_bind;
+    Object* o            = (Object*)p_instance;
     const Variant** args = (const Variant**)p_args;
 
     godot_variant ret;
@@ -97,7 +97,7 @@ godot_variant GDAPI godot_method_bind_call(
     *ret_val = mb->call(o, args, p_arg_count, r_error);
 
     if (p_call_error) {
-        p_call_error->error = (godot_variant_call_error_error)r_error.error;
+        p_call_error->error    = (godot_variant_call_error_error)r_error.error;
         p_call_error->argument = r_error.argument;
         p_call_error->expected = (godot_variant_type)r_error.expected;
     }
@@ -118,11 +118,11 @@ godot_get_class_constructor(const char* p_classname) {
 godot_dictionary GDAPI godot_get_global_constants() {
     godot_dictionary constants;
     godot_dictionary_new(&constants);
-    Dictionary* p_constants = (Dictionary*)&constants;
+    Dictionary* p_constants   = (Dictionary*)&constants;
     const int constants_count = GlobalConstants::get_global_constant_count();
     for (int i = 0; i < constants_count; ++i) {
-        const char* name = GlobalConstants::get_global_constant_name(i);
-        int value = GlobalConstants::get_global_constant_value(i);
+        const char* name     = GlobalConstants::get_global_constant_name(i);
+        int value            = GlobalConstants::get_global_constant_value(i);
         (*p_constants)[name] = value;
     }
     return constants;
@@ -191,7 +191,7 @@ void _gdnative_report_version_mismatch(
     godot_gdnative_api_version p_want,
     godot_gdnative_api_version p_have
 ) {
-    String message = "Error loading GDNative file ";
+    String message           = "Error loading GDNative file ";
     GDNativeLibrary* library = (GDNativeLibrary*)p_library;
 
     message += library->get_current_library_path() + ": Extension \"" + p_ext
@@ -221,7 +221,7 @@ void _gdnative_report_loading_error(
     const godot_object* p_library,
     const char* p_what
 ) {
-    String message = "Error loading GDNative file ";
+    String message           = "Error loading GDNative file ";
     GDNativeLibrary* library = (GDNativeLibrary*)p_library;
 
     message += library->get_current_library_path() + ": " + p_what;
@@ -243,7 +243,7 @@ godot_object GDAPI* godot_instance_from_id(godot_int p_instance_id) {
 }
 
 void* godot_get_class_tag(const godot_string_name* p_class) {
-    StringName class_name = *(StringName*)p_class;
+    StringName class_name          = *(StringName*)p_class;
     ClassDB::ClassInfo* class_info = ClassDB::classes.getptr(class_name);
     return class_info ? class_info->class_ptr : nullptr;
 }

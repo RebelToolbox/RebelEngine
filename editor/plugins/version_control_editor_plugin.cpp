@@ -94,7 +94,7 @@ void VersionControlEditorPlugin::_bind_methods() {
 
 void VersionControlEditorPlugin::_selected_a_vcs(int p_id) {
     List<StringName> available_addons = get_available_vcs_names();
-    const StringName selected_vcs = set_up_choice->get_item_text(p_id);
+    const StringName selected_vcs     = set_up_choice->get_item_text(p_id);
 }
 
 void VersionControlEditorPlugin::_populate_available_vcs_names() {
@@ -120,10 +120,10 @@ void VersionControlEditorPlugin::popup_vcs_set_up_dialog(
     fetch_available_vcs_addon_names();
     List<StringName> available_addons = get_available_vcs_names();
     if (available_addons.size() >= 1) {
-        Size2 popup_size = Size2(400, 100);
+        Size2 popup_size  = Size2(400, 100);
         Size2 window_size = p_gui_base->get_viewport_rect().size;
-        popup_size.x = MIN(window_size.x * 0.5, popup_size.x);
-        popup_size.y = MIN(window_size.y * 0.5, popup_size.y);
+        popup_size.x      = MIN(window_size.x * 0.5, popup_size.x);
+        popup_size.y      = MIN(window_size.y * 0.5, popup_size.y);
 
         _populate_available_vcs_names();
 
@@ -145,10 +145,10 @@ void VersionControlEditorPlugin::_initialize_vcs() {
             + " is already active"
     );
 
-    const int id = set_up_choice->get_selected_id();
+    const int id          = set_up_choice->get_selected_id();
     String selected_addon = set_up_choice->get_item_text(id);
 
-    String path = ScriptServer::get_global_class_path(selected_addon);
+    String path        = ScriptServer::get_global_class_path(selected_addon);
     Ref<Script> script = ResourceLoader::load(path);
 
     ERR_FAIL_COND_MSG(!script.is_valid(), "VCS Addon path is invalid");
@@ -254,7 +254,7 @@ void VersionControlEditorPlugin::_stage_selected() {
     }
 
     staged_files_count = 0;
-    TreeItem* root = stage_files->get_root();
+    TreeItem* root     = stage_files->get_root();
     if (root) {
         TreeItem* file_entry = root->get_children();
         while (file_entry) {
@@ -300,7 +300,7 @@ void VersionControlEditorPlugin::_stage_all() {
     }
 
     staged_files_count = 0;
-    TreeItem* root = stage_files->get_root();
+    TreeItem* root     = stage_files->get_root();
     if (root) {
         TreeItem* file_entry = root->get_children();
         while (file_entry) {
@@ -508,7 +508,7 @@ const String VersionControlEditorPlugin::get_vcs_name() const {
 }
 
 VersionControlEditorPlugin::VersionControlEditorPlugin() {
-    singleton = this;
+    singleton          = this;
     staged_files_count = 0;
 
     version_control_actions = memnew(PopupMenu);
@@ -596,10 +596,10 @@ VersionControlEditorPlugin::VersionControlEditorPlugin() {
     stage_files->set_hide_root(true);
     commit_box_vbc->add_child(stage_files);
 
-    change_type_to_strings[CHANGE_TYPE_NEW] = TTR("New");
-    change_type_to_strings[CHANGE_TYPE_MODIFIED] = TTR("Modified");
-    change_type_to_strings[CHANGE_TYPE_RENAMED] = TTR("Renamed");
-    change_type_to_strings[CHANGE_TYPE_DELETED] = TTR("Deleted");
+    change_type_to_strings[CHANGE_TYPE_NEW]        = TTR("New");
+    change_type_to_strings[CHANGE_TYPE_MODIFIED]   = TTR("Modified");
+    change_type_to_strings[CHANGE_TYPE_RENAMED]    = TTR("Renamed");
+    change_type_to_strings[CHANGE_TYPE_DELETED]    = TTR("Deleted");
     change_type_to_strings[CHANGE_TYPE_TYPECHANGE] = TTR("Typechange");
 
     change_type_to_color[CHANGE_TYPE_NEW] =

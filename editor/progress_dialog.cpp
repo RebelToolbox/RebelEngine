@@ -46,7 +46,7 @@ void BackgroundProgress::_add_task(
         "Task '" + p_task + "' already exists."
     );
     BackgroundProgress::Task t;
-    t.hb = memnew(HBoxContainer);
+    t.hb     = memnew(HBoxContainer);
     Label* l = memnew(Label);
     l->set_text(p_label + " ");
     t.hb->add_child(l);
@@ -157,8 +157,8 @@ void ProgressDialog::_popup() {
     Size2 ms = main->get_combined_minimum_size();
     ms.width = MAX(500 * EDSCALE, ms.width);
 
-    Ref<StyleBox> style = get_stylebox("panel", "PopupMenu");
-    ms += style->get_minimum_size();
+    Ref<StyleBox> style  = get_stylebox("panel", "PopupMenu");
+    ms                  += style->get_minimum_size();
     main->set_margin(MARGIN_LEFT, style->get_margin(MARGIN_LEFT));
     main->set_margin(MARGIN_RIGHT, -style->get_margin(MARGIN_RIGHT));
     main->set_margin(MARGIN_TOP, style->get_margin(MARGIN_TOP));
@@ -187,7 +187,7 @@ void ProgressDialog::add_task(
         "Task '" + p_task + "' already exists."
     );
     ProgressDialog::Task t;
-    t.vb = memnew(VBoxContainer);
+    t.vb               = memnew(VBoxContainer);
     VBoxContainer* vb2 = memnew(VBoxContainer);
     t.vb->add_margin_child(p_label, vb2);
     t.progress = memnew(ProgressBar);

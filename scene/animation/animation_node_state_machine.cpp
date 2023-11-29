@@ -204,25 +204,25 @@ void AnimationNodeStateMachineTransition::_bind_methods() {
 }
 
 AnimationNodeStateMachineTransition::AnimationNodeStateMachineTransition() {
-    switch_mode = SWITCH_MODE_IMMEDIATE;
+    switch_mode  = SWITCH_MODE_IMMEDIATE;
     auto_advance = false;
-    xfade = 0;
-    disabled = false;
-    priority = 1;
+    xfade        = 0;
+    disabled     = false;
+    priority     = 1;
 }
 
 ////////////////////////////////////////////////////////
 
 void AnimationNodeStateMachinePlayback::travel(const StringName& p_state) {
     start_request_travel = true;
-    start_request = p_state;
-    stop_request = false;
+    start_request        = p_state;
+    stop_request         = false;
 }
 
 void AnimationNodeStateMachinePlayback::start(const StringName& p_state) {
     start_request_travel = false;
-    start_request = p_state;
-    stop_request = false;
+    start_request        = p_state;
+    stop_request         = false;
 }
 
 void AnimationNodeStateMachinePlayback::stop() {
@@ -268,7 +268,7 @@ bool AnimationNodeStateMachinePlayback::_travel(
     }
 
     Vector2 current_pos = p_state_machine->states[current].position;
-    Vector2 target_pos = p_state_machine->states[p_travel].position;
+    Vector2 target_pos  = p_state_machine->states[p_travel].position;
 
     Map<StringName, AStarCost> cost_map;
 
@@ -283,8 +283,8 @@ bool AnimationNodeStateMachinePlayback::_travel(
                     .position.distance_to(current_pos);
             cost *= p_state_machine->transitions[i].transition->get_priority();
             AStarCost ap;
-            ap.prev = current;
-            ap.distance = cost;
+            ap.prev                                      = current;
+            ap.distance                                  = cost;
             cost_map[p_state_machine->transitions[i].to] = ap;
 
             if (p_state_machine->transitions[i].to
@@ -304,7 +304,7 @@ bool AnimationNodeStateMachinePlayback::_travel(
 
         // find the last cost transition
         List<int>::Element* least_cost_transition = nullptr;
-        float least_cost = 1e20;
+        float least_cost                          = 1e20;
 
         for (List<int>::Element* E = open_list.front(); E; E = E->next()) {
             float cost =
@@ -315,7 +315,7 @@ bool AnimationNodeStateMachinePlayback::_travel(
 
             if (cost < least_cost) {
                 least_cost_transition = E;
-                least_cost = cost;
+                least_cost            = cost;
             }
         }
 
@@ -353,7 +353,7 @@ bool AnimationNodeStateMachinePlayback::_travel(
             } else {
                 // add to open list
                 AStarCost ac;
-                ac.prev = p_state_machine->transitions[i].from;
+                ac.prev     = p_state_machine->transitions[i].from;
                 ac.distance = distance;
                 cost_map[p_state_machine->transitions[i].to] = ac;
 
@@ -401,7 +401,7 @@ float AnimationNodeStateMachinePlayback::process(
 
     if (playing && stop_request) {
         stop_request = false;
-        playing = false;
+        playing      = false;
         return 0;
     }
 
@@ -413,13 +413,13 @@ float AnimationNodeStateMachinePlayback::process(
                 if (!stop_request && p_state_machine->start_node) {
                     // can restart, just postpone traveling
                     path.clear();
-                    current = p_state_machine->start_node;
-                    playing = true;
+                    current    = p_state_machine->start_node;
+                    playing    = true;
                     play_start = true;
                 } else {
                     // stopped, invalid state
                     String node_name = start_request;
-                    start_request = StringName(); // clear start request
+                    start_request    = StringName(); // clear start request
                     ERR_FAIL_V_MSG(0, "Can't travel to '" + node_name + "' if state machine is not playing. Maybe you need to enable Autoplay on Load for one of the nodes in your state machine or call .start() first?");
                 }
             } else {
@@ -434,13 +434,13 @@ float AnimationNodeStateMachinePlayback::process(
             // teleport to start
             if (p_state_machine->states.has(start_request)) {
                 path.clear();
-                current = start_request;
-                playing = true;
-                play_start = true;
+                current       = start_request;
+                playing       = true;
+                play_start    = true;
                 start_request = StringName(); // clear start request
             } else {
                 StringName node = start_request;
-                start_request = StringName(); // clear start request
+                start_request   = StringName(); // clear start request
                 ERR_FAIL_V_MSG(0, "No such node: '" + node + "'");
             }
         }
@@ -517,8 +517,8 @@ float AnimationNodeStateMachinePlayback::process(
 
     { // advance and loop check
         float next_pos = len_current - rem;
-        end_loop = next_pos < pos_current;
-        pos_current = next_pos; // looped
+        end_loop       = next_pos < pos_current;
+        pos_current    = next_pos; // looped
     }
 
     // find next
@@ -570,7 +570,7 @@ float AnimationNodeStateMachinePlayback::process(
         }
 
         if (auto_advance_to != -1) {
-            next = p_state_machine->transitions[auto_advance_to].to;
+            next       = p_state_machine->transitions[auto_advance_to].to;
             next_xfade = p_state_machine->transitions[auto_advance_to]
                              .transition->get_xfade_time();
             switch_mode = p_state_machine->transitions[auto_advance_to]
@@ -599,10 +599,10 @@ float AnimationNodeStateMachinePlayback::process(
                 // time to fade, baby
                 fading_from = current;
                 fading_time = next_xfade;
-                fading_pos = 0;
+                fading_pos  = 0;
             } else {
                 fading_from = StringName();
-                fading_pos = 0;
+                fading_pos  = 0;
             }
 
             if (path.size()) { // if it came from path, remove path
@@ -703,9 +703,9 @@ void AnimationNodeStateMachinePlayback::_bind_methods() {
 AnimationNodeStateMachinePlayback::AnimationNodeStateMachinePlayback() {
     set_local_to_scene(true); // only one per instanced scene
 
-    playing = false;
-    len_current = 0;
-    fading_time = 0;
+    playing      = false;
+    len_current  = 0;
+    fading_time  = 0;
     stop_request = false;
 }
 
@@ -730,7 +730,7 @@ void AnimationNodeStateMachine::get_parameter_list(List<PropertyInfo>* r_list
 
     advance_conditions.sort_custom<StringName::AlphCompare>();
     for (List<StringName>::Element* E = advance_conditions.front(); E;
-         E = E->next()) {
+         E                            = E->next()) {
         r_list->push_back(PropertyInfo(Variant::BOOL, E->get()));
     }
 }
@@ -757,7 +757,7 @@ void AnimationNodeStateMachine::add_node(
     ERR_FAIL_COND(String(p_name).find("/") != -1);
 
     State state;
-    state.node = p_node;
+    state.node     = p_node;
     state.position = p_position;
 
     states[p_name] = state;
@@ -814,7 +814,7 @@ StringName AnimationNodeStateMachine::get_node_name(
     const Ref<AnimationNode>& p_node
 ) const {
     for (Map<StringName, State>::Element* E = states.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         if (E->get().node == p_node) {
             return E->key();
         }
@@ -828,7 +828,7 @@ void AnimationNodeStateMachine::get_child_nodes(List<ChildNode>* r_child_nodes
     Vector<StringName> nodes;
 
     for (Map<StringName, State>::Element* E = states.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         nodes.push_back(E->key());
     }
 
@@ -927,7 +927,7 @@ void AnimationNodeStateMachine::rename_node(
 void AnimationNodeStateMachine::get_node_list(List<StringName>* r_nodes) const {
     List<StringName> nodes;
     for (Map<StringName, State>::Element* E = states.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         nodes.push_back(E->key());
     }
     nodes.sort_custom<StringName::AlphCompare>();
@@ -978,8 +978,8 @@ void AnimationNodeStateMachine::add_transition(
     }
 
     Transition tr;
-    tr.from = p_from;
-    tr.to = p_to;
+    tr.from       = p_from;
+    tr.to         = p_to;
     tr.transition = p_transition;
 
     tr.transition->connect(
@@ -1106,7 +1106,7 @@ bool AnimationNodeStateMachine::_set(
     String name = p_name;
     if (name.begins_with("states/")) {
         String node_name = name.get_slicec('/', 1);
-        String what = name.get_slicec('/', 2);
+        String what      = name.get_slicec('/', 2);
 
         if (what == "node") {
             Ref<AnimationNode> anode = p_value;
@@ -1149,7 +1149,7 @@ bool AnimationNodeStateMachine::_get(const StringName& p_name, Variant& r_ret)
     String name = p_name;
     if (name.begins_with("states/")) {
         String node_name = name.get_slicec('/', 1);
-        String what = name.get_slicec('/', 2);
+        String what      = name.get_slicec('/', 2);
 
         if (what == "node") {
             if (states.has(node_name)) {
@@ -1194,7 +1194,7 @@ void AnimationNodeStateMachine::_get_property_list(List<PropertyInfo>* p_list
 ) const {
     List<StringName> names;
     for (Map<StringName, State>::Element* E = states.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         names.push_back(E->key());
     }
     names.sort_custom<StringName::AlphCompare>();

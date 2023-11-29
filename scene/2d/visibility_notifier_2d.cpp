@@ -217,7 +217,7 @@ void VisibilityEnabler2D::_find_nodes(Node* p_node) {
                 rb2d->get_mode() == RigidBody2D::MODE_CHARACTER
                 || rb2d->get_mode() == RigidBody2D::MODE_RIGID
             ))) {
-            add = true;
+            add  = true;
             meta = rb2d->get_mode();
         }
     }
@@ -311,7 +311,7 @@ void VisibilityEnabler2D::_notification(int p_what) {
         }
 
         for (Map<Node*, Variant>::Element* E = nodes.front(); E;
-             E = E->next()) {
+             E                               = E->next()) {
             if (!visible) {
                 _change_node_state(E->key(), true);
             }
@@ -463,7 +463,7 @@ VisibilityEnabler2D::VisibilityEnabler2D() {
     for (int i = 0; i < ENABLER_MAX; i++) {
         enabler[i] = true;
     }
-    enabler[ENABLER_PARENT_PROCESS] = false;
+    enabler[ENABLER_PARENT_PROCESS]         = false;
     enabler[ENABLER_PARENT_PHYSICS_PROCESS] = false;
 
     visible = false;

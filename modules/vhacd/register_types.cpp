@@ -40,7 +40,7 @@ static Vector<PoolVector<Vector3>> convex_decompose(
     int p_vertex_count,
     const uint32_t* p_triangles,
     int p_triangle_count,
-    int p_max_convex_hulls = -1,
+    int p_max_convex_hulls                         = -1,
     Vector<PoolVector<uint32_t>>* r_convex_indices = nullptr
 ) {
     VHACD::IVHACD::Parameters params;

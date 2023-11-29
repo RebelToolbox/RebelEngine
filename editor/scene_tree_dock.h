@@ -342,7 +342,7 @@ public:
         Node* p_node,
         Node* p_by_node,
         bool p_keep_properties = true,
-        bool p_remove_old = true
+        bool p_remove_old      = true
     );
 
     void attach_script_to_selected(bool p_extend);

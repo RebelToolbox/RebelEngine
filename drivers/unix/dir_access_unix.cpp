@@ -170,7 +170,7 @@ void DirAccessUnix::list_dir_end() {
         closedir(dir_stream);
     }
     dir_stream = nullptr;
-    _cisdir = false;
+    _cisdir    = false;
 }
 
 #if defined(HAVE_MNTENT) && defined(X11_ENABLED)
@@ -312,8 +312,8 @@ Error DirAccessUnix::change_dir(String p_dir) {
     String try_dir = "";
     if (p_dir.is_rel_path()) {
         String next_dir = current_dir.plus_file(p_dir);
-        next_dir = next_dir.simplify_path();
-        try_dir = next_dir;
+        next_dir        = next_dir.simplify_path();
+        try_dir         = next_dir;
     } else {
         try_dir = p_dir;
     }
@@ -465,7 +465,7 @@ bool DirAccessUnix::is_hidden(const String& p_name) {
 
 DirAccessUnix::DirAccessUnix() {
     dir_stream = nullptr;
-    _cisdir = false;
+    _cisdir    = false;
 
     /* determine drive count */
 

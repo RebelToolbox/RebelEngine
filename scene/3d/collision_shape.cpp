@@ -49,7 +49,7 @@ void CollisionShape::make_convex_from_brothers() {
     }
 
     for (int i = 0; i < p->get_child_count(); i++) {
-        Node* n = p->get_child(i);
+        Node* n          = p->get_child(i);
         MeshInstance* mi = Object::cast_to<MeshInstance>(n);
         if (mi) {
             Ref<Mesh> m = mi->get_mesh();
@@ -96,7 +96,7 @@ void CollisionShape::_notification(int p_what) {
                 parent->remove_shape_owner(owner_id);
             }
             owner_id = 0;
-            parent = nullptr;
+            parent   = nullptr;
         } break;
     }
 }
@@ -240,7 +240,7 @@ bool CollisionShape::is_disabled() const {
 CollisionShape::CollisionShape() {
     // indicator = VisualServer::get_singleton()->mesh_create();
     disabled = false;
-    parent = nullptr;
+    parent   = nullptr;
     owner_id = 0;
     set_notify_local_transform(true);
 }

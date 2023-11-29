@@ -42,9 +42,9 @@ protected:
 
 private:
     enum {
-        CH_RELIABLE = 0,
-        CH_ORDERED = 1,
-        CH_UNRELIABLE = 2,
+        CH_RELIABLE     = 0,
+        CH_ORDERED      = 1,
+        CH_UNRELIABLE   = 2,
         CH_RESERVED_MAX = 3
     };
 

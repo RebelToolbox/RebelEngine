@@ -67,11 +67,11 @@ Error MessageQueue::push_call(
         );
     }
 
-    Message* msg = memnew_placement(&buffer[buffer_end], Message);
-    msg->args = p_argcount;
+    Message* msg     = memnew_placement(&buffer[buffer_end], Message);
+    msg->args        = p_argcount;
     msg->instance_id = p_id;
-    msg->target = p_method;
-    msg->type = TYPE_CALL;
+    msg->target      = p_method;
+    msg->type        = TYPE_CALL;
     if (p_show_error) {
         msg->type |= FLAG_SHOW_ERROR;
     }
@@ -79,9 +79,9 @@ Error MessageQueue::push_call(
     buffer_end += sizeof(Message);
 
     for (int i = 0; i < p_argcount; i++) {
-        Variant* v = memnew_placement(&buffer[buffer_end], Variant);
+        Variant* v  = memnew_placement(&buffer[buffer_end], Variant);
         buffer_end += sizeof(Variant);
-        *v = *p_args[i];
+        *v          = *p_args[i];
     }
 
     return OK;
@@ -131,17 +131,17 @@ Error MessageQueue::push_set(
         );
     }
 
-    Message* msg = memnew_placement(&buffer[buffer_end], Message);
-    msg->args = 1;
+    Message* msg     = memnew_placement(&buffer[buffer_end], Message);
+    msg->args        = 1;
     msg->instance_id = p_id;
-    msg->target = p_prop;
-    msg->type = TYPE_SET;
+    msg->target      = p_prop;
+    msg->type        = TYPE_SET;
 
     buffer_end += sizeof(Message);
 
-    Variant* v = memnew_placement(&buffer[buffer_end], Variant);
+    Variant* v  = memnew_placement(&buffer[buffer_end], Variant);
     buffer_end += sizeof(Variant);
-    *v = p_value;
+    *v          = p_value;
 
     return OK;
 }
@@ -168,8 +168,8 @@ Error MessageQueue::push_notification(ObjectID p_id, int p_notification) {
 
     Message* msg = memnew_placement(&buffer[buffer_end], Message);
 
-    msg->type = TYPE_NOTIFICATION;
-    msg->instance_id = p_id;
+    msg->type         = TYPE_NOTIFICATION;
+    msg->instance_id  = p_id;
     // msg->target;
     msg->notification = p_notification;
 
@@ -255,12 +255,12 @@ void MessageQueue::statistics() {
     print_line("NULL count: " + itos(null_count));
 
     for (Map<StringName, int>::Element* E = set_count.front(); E;
-         E = E->next()) {
+         E                                = E->next()) {
         print_line("SET " + E->key() + ": " + itos(E->get()));
     }
 
     for (Map<StringName, int>::Element* E = call_count.front(); E;
-         E = E->next()) {
+         E                                = E->next()) {
         print_line("CALL " + E->key() + ": " + itos(E->get()));
     }
 
@@ -379,7 +379,7 @@ void MessageQueue::flush() {
     }
 
     buffer_end = 0; // reset buffer
-    flushing = false;
+    flushing   = false;
     _THREAD_SAFE_UNLOCK_
 }
 
@@ -393,11 +393,11 @@ MessageQueue::MessageQueue() {
         "A MessageQueue singleton already exists."
     );
     singleton = this;
-    flushing = false;
+    flushing  = false;
 
-    buffer_end = 0;
+    buffer_end      = 0;
     buffer_max_used = 0;
-    buffer_size = GLOBAL_DEF_RST(
+    buffer_size     = GLOBAL_DEF_RST(
         "memory/limits/message_queue/max_size_kb",
         DEFAULT_QUEUE_SIZE_KB
     );
@@ -411,7 +411,7 @@ MessageQueue::MessageQueue() {
         )
     );
     buffer_size *= 1024;
-    buffer = memnew_arr(uint8_t, buffer_size);
+    buffer       = memnew_arr(uint8_t, buffer_size);
 }
 
 MessageQueue::~MessageQueue() {
@@ -419,8 +419,8 @@ MessageQueue::~MessageQueue() {
 
     while (read_pos < buffer_end) {
         Message* message = (Message*)&buffer[read_pos];
-        Variant* args = (Variant*)(message + 1);
-        int argc = message->args;
+        Variant* args    = (Variant*)(message + 1);
+        int argc         = message->args;
         if ((message->type & FLAG_MASK) != TYPE_NOTIFICATION) {
             for (int i = 0; i < argc; i++) {
                 args[i].~Variant();

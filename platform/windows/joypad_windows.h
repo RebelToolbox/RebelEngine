@@ -60,13 +60,13 @@ public:
 
 private:
     enum {
-        JOYPADS_MAX = 16,
-        JOY_AXIS_COUNT = 6,
-        MIN_JOY_AXIS = 10,
-        MAX_JOY_AXIS = 32768,
-        MAX_JOY_BUTTONS = 128,
+        JOYPADS_MAX           = 16,
+        JOY_AXIS_COUNT        = 6,
+        MIN_JOY_AXIS          = 10,
+        MAX_JOY_AXIS          = 32768,
+        MAX_JOY_BUTTONS       = 128,
         KEY_EVENT_BUFFER_SIZE = 512,
-        MAX_TRIGGER = 255
+        MAX_TRIGGER           = 255
     };
 
     struct dinput_gamepad {
@@ -81,9 +81,9 @@ private:
         GUID guid;
 
         dinput_gamepad() {
-            id = -1;
-            last_pad = -1;
-            attached = false;
+            id        = -1;
+            last_pad  = -1;
+            attached  = false;
             confirmed = false;
 
             for (int i = 0; i < MAX_JOY_BUTTONS; i++) {
@@ -102,11 +102,11 @@ private:
         uint64_t ff_end_timestamp;
 
         xinput_gamepad() {
-            attached = false;
-            vibrating = false;
-            ff_timestamp = 0;
+            attached         = false;
+            vibrating        = false;
+            ff_timestamp     = 0;
             ff_end_timestamp = 0;
-            last_packet = 0;
+            last_packet      = 0;
         }
     };
 
@@ -157,9 +157,9 @@ private:
 
     InputDefault::JoyAxis axis_correct(
         int p_val,
-        bool p_xinput = false,
+        bool p_xinput  = false,
         bool p_trigger = false,
-        bool p_negate = false
+        bool p_negate  = false
     ) const;
     XInputGetState_t xinput_get_state;
     XInputSetState_t xinput_set_state;

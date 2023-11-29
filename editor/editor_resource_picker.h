@@ -55,7 +55,7 @@ class EditorResourcePicker : public HBoxContainer {
     TextureRect* preview_rect;
     Button* edit_button;
     EditorFileDialog* file_dialog = nullptr;
-    EditorQuickOpen* quick_open = nullptr;
+    EditorQuickOpen* quick_open   = nullptr;
 
     enum MenuOption {
         OBJ_MENU_LOAD,
@@ -68,7 +68,7 @@ class EditorResourcePicker : public HBoxContainer {
         OBJ_MENU_PASTE,
         OBJ_MENU_SHOW_IN_FILE_SYSTEM,
 
-        TYPE_BASE_ID = 100,
+        TYPE_BASE_ID    = 100,
         CONVERT_BASE_ID = 1000,
     };
 
@@ -141,7 +141,7 @@ class EditorScriptPicker : public EditorResourcePicker {
     GDCLASS(EditorScriptPicker, EditorResourcePicker);
 
     enum ExtraMenuOption {
-        OBJ_MENU_NEW_SCRIPT = 10,
+        OBJ_MENU_NEW_SCRIPT    = 10,
         OBJ_MENU_EXTEND_SCRIPT = 11
     };
 

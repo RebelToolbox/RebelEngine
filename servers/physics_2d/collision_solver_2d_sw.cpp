@@ -52,7 +52,7 @@ bool CollisionSolver2DSW::solve_static_line(
 
     Vector2 n = p_transform_A.basis_xform(line->get_normal()).normalized();
     Vector2 p = p_transform_A.xform(line->get_normal() * line->get_d());
-    real_t d = n.dot(p);
+    real_t d  = n.dot(p);
 
     Vector2 supports[2];
     int support_count;
@@ -67,7 +67,7 @@ bool CollisionSolver2DSW::solve_static_line(
 
     for (int i = 0; i < support_count; i++) {
         supports[i] = p_transform_B.xform(supports[i]);
-        real_t pd = n.dot(supports[i]);
+        real_t pd   = n.dot(supports[i]);
         if (pd >= d) {
             continue;
         }
@@ -105,17 +105,17 @@ bool CollisionSolver2DSW::solve_raycast(
     }
 
     Vector2 from = p_transform_A.get_origin();
-    Vector2 to = from + p_transform_A[1] * (ray->get_length() + p_margin);
+    Vector2 to   = from + p_transform_A[1] * (ray->get_length() + p_margin);
     if (p_motion_A != Vector2()) {
         // not the best but should be enough
-        Vector2 normal = (to - from).normalized();
-        to += normal * MAX(0.0, normal.dot(p_motion_A));
+        Vector2 normal  = (to - from).normalized();
+        to             += normal * MAX(0.0, normal.dot(p_motion_A));
     }
     Vector2 support_A = to;
 
     Transform2D invb = p_transform_B.affine_inverse();
-    from = invb.xform(from);
-    to = invb.xform(to);
+    from             = invb.xform(from);
+    to               = invb.xform(to);
 
     Vector2 p, n;
     if (!p_shape_B->intersect_segment(from, to, p, n)) {
@@ -208,22 +208,22 @@ bool CollisionSolver2DSW::solve_concave(
         static_cast<const ConcaveShape2DSW*>(p_shape_B);
 
     _ConcaveCollisionInfo2D cinfo;
-    cinfo.transform_A = &p_transform_A;
-    cinfo.shape_A = p_shape_A;
-    cinfo.transform_B = &p_transform_B;
-    cinfo.motion_A = p_motion_A;
+    cinfo.transform_A     = &p_transform_A;
+    cinfo.shape_A         = p_shape_A;
+    cinfo.transform_B     = &p_transform_B;
+    cinfo.motion_A        = p_motion_A;
     cinfo.result_callback = p_result_callback;
-    cinfo.userdata = p_userdata;
-    cinfo.swap_result = p_swap_result;
-    cinfo.collided = false;
-    cinfo.collisions = 0;
-    cinfo.sep_axis = sep_axis;
-    cinfo.margin_A = p_margin_A;
-    cinfo.margin_B = p_margin_B;
+    cinfo.userdata        = p_userdata;
+    cinfo.swap_result     = p_swap_result;
+    cinfo.collided        = false;
+    cinfo.collisions      = 0;
+    cinfo.sep_axis        = sep_axis;
+    cinfo.margin_A        = p_margin_A;
+    cinfo.margin_B        = p_margin_B;
 
     cinfo.aabb_tests = 0;
 
-    Transform2D rel_transform = p_transform_A;
+    Transform2D rel_transform  = p_transform_A;
     rel_transform.elements[2] -= p_transform_B.get_origin();
 
     // quickly compute a local Rect2
@@ -231,8 +231,8 @@ bool CollisionSolver2DSW::solve_concave(
     Rect2 local_aabb;
     for (int i = 0; i < 2; i++) {
         Vector2 axis(p_transform_B.elements[i]);
-        real_t axis_scale = 1.0 / axis.length();
-        axis *= axis_scale;
+        real_t axis_scale  = 1.0 / axis.length();
+        axis              *= axis_scale;
 
         real_t smin, smax;
         p_shape_A->project_rangev(axis, rel_transform, smin, smax);
@@ -240,7 +240,7 @@ bool CollisionSolver2DSW::solve_concave(
         smax *= axis_scale;
 
         local_aabb.position[i] = smin;
-        local_aabb.size[i] = smax - smin;
+        local_aabb.size[i]     = smax - smin;
     }
 
     concave_B->cull(local_aabb, concave_callback, &cinfo);
@@ -263,8 +263,8 @@ bool CollisionSolver2DSW::solve(
 ) {
     Physics2DServer::ShapeType type_A = p_shape_A->get_type();
     Physics2DServer::ShapeType type_B = p_shape_B->get_type();
-    bool concave_A = p_shape_A->is_concave();
-    bool concave_B = p_shape_B->is_concave();
+    bool concave_A                    = p_shape_A->is_concave();
+    bool concave_B                    = p_shape_B->is_concave();
     real_t margin_A = p_margin_A, margin_B = p_margin_B;
 
     bool swap = false;

@@ -66,11 +66,11 @@ void AudioEffectPhaserInstance::process(
                 allpass[0][5].update(p_src_frames[i].l + h.l * base->feedback)
             )))
         ));
-        h.l = y;
+        h.l     = y;
 
         p_dst_frames[i].l = p_src_frames[i].l + y * base->depth;
 
-        y = allpass[1][0].update(allpass[1][1].update(
+        y   = allpass[1][0].update(allpass[1][1].update(
             allpass[1][2].update(allpass[1][3].update(allpass[1][4].update(
                 allpass[1][5].update(p_src_frames[i].r + h.r * base->feedback)
             )))
@@ -84,9 +84,9 @@ void AudioEffectPhaserInstance::process(
 Ref<AudioEffectInstance> AudioEffectPhaser::instance() {
     Ref<AudioEffectPhaserInstance> ins;
     ins.instance();
-    ins->base = Ref<AudioEffectPhaser>(this);
+    ins->base  = Ref<AudioEffectPhaser>(this);
     ins->phase = 0;
-    ins->h = AudioFrame(0, 0);
+    ins->h     = AudioFrame(0, 0);
 
     return ins;
 }
@@ -219,7 +219,7 @@ void AudioEffectPhaser::_bind_methods() {
 AudioEffectPhaser::AudioEffectPhaser() {
     range_min = 440;
     range_max = 1600;
-    rate = 0.5;
-    feedback = 0.7;
-    depth = 1;
+    rate      = 0.5;
+    feedback  = 0.7;
+    depth     = 1;
 }

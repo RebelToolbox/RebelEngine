@@ -189,8 +189,8 @@ Vector2 Transform2D::xform_inv(const Vector2& p_vec) const {
 }
 
 Rect2 Transform2D::xform(const Rect2& p_rect) const {
-    Vector2 x = elements[0] * p_rect.size.x;
-    Vector2 y = elements[1] * p_rect.size.y;
+    Vector2 x   = elements[0] * p_rect.size.x;
+    Vector2 y   = elements[1] * p_rect.size.y;
     Vector2 pos = xform(p_rect.position);
 
     Rect2 new_rect;
@@ -234,7 +234,7 @@ PoolVector<Vector2> Transform2D::xform(const PoolVector<Vector2>& p_array
     PoolVector<Vector2> array;
     array.resize(p_array.size());
 
-    PoolVector<Vector2>::Read r = p_array.read();
+    PoolVector<Vector2>::Read r  = p_array.read();
     PoolVector<Vector2>::Write w = array.write();
 
     for (int i = 0; i < p_array.size(); ++i) {
@@ -248,7 +248,7 @@ PoolVector<Vector2> Transform2D::xform_inv(const PoolVector<Vector2>& p_array
     PoolVector<Vector2> array;
     array.resize(p_array.size());
 
-    PoolVector<Vector2>::Read r = p_array.read();
+    PoolVector<Vector2>::Read r  = p_array.read();
     PoolVector<Vector2>::Write w = array.write();
 
     for (int i = 0; i < p_array.size(); ++i) {

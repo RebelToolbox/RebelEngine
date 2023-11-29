@@ -37,13 +37,13 @@ void AudioStreamPlaybackSample::start(float p_from_pos) {
     if (base->format == AudioStreamSample::FORMAT_IMA_ADPCM) {
         // no seeking in IMA_ADPCM
         for (int i = 0; i < 2; i++) {
-            ima_adpcm[i].step_index = 0;
-            ima_adpcm[i].predictor = 0;
+            ima_adpcm[i].step_index      = 0;
+            ima_adpcm[i].predictor       = 0;
             ima_adpcm[i].loop_step_index = 0;
-            ima_adpcm[i].loop_predictor = 0;
-            ima_adpcm[i].last_nibble = -1;
-            ima_adpcm[i].loop_pos = 0x7FFFFFFF;
-            ima_adpcm[i].window_ofs = 0;
+            ima_adpcm[i].loop_predictor  = 0;
+            ima_adpcm[i].last_nibble     = -1;
+            ima_adpcm[i].loop_pos        = 0x7FFFFFFF;
+            ima_adpcm[i].window_ofs      = 0;
         }
 
         offset = 0;
@@ -51,7 +51,7 @@ void AudioStreamPlaybackSample::start(float p_from_pos) {
         seek(p_from_pos);
     }
 
-    sign = 1;
+    sign   = 1;
     active = true;
 }
 
@@ -131,15 +131,15 @@ void AudioStreamPlaybackSample::do_resample(
                     int16_t nibble, diff, step;
 
                     ima_adpcm[i].last_nibble++;
-                    const uint8_t* src_ptr = (const uint8_t*)base->data;
-                    src_ptr += AudioStreamSample::DATA_PAD;
+                    const uint8_t* src_ptr  = (const uint8_t*)base->data;
+                    src_ptr                += AudioStreamSample::DATA_PAD;
 
                     uint8_t nbb = src_ptr
                         [(ima_adpcm[i].last_nibble >> 1) * (is_stereo ? 2 : 1)
                          + i];
                     nibble = (ima_adpcm[i].last_nibble & 1) ? (nbb >> 4)
                                                             : (nbb & 0xF);
-                    step = _ima_adpcm_step_table[ima_adpcm[i].step_index];
+                    step   = _ima_adpcm_step_table[ima_adpcm[i].step_index];
 
                     ima_adpcm[i].step_index += _ima_adpcm_index_table[nibble];
                     if (ima_adpcm[i].step_index < 0) {
@@ -173,7 +173,7 @@ void AudioStreamPlaybackSample::do_resample(
                     /* store loop if there */
                     if (ima_adpcm[i].last_nibble == ima_adpcm[i].loop_pos) {
                         ima_adpcm[i].loop_step_index = ima_adpcm[i].step_index;
-                        ima_adpcm[i].loop_predictor = ima_adpcm[i].predictor;
+                        ima_adpcm[i].loop_predictor  = ima_adpcm[i].predictor;
                     }
 
                     // printf("%i - %i - pred
@@ -201,7 +201,7 @@ void AudioStreamPlaybackSample::do_resample(
             }
 
             if (is_stereo) {
-                next = p_src[pos + 2];
+                next   = p_src[pos + 2];
                 next_r = p_src[pos + 3];
             } else {
                 next = p_src[pos + 1];
@@ -267,15 +267,15 @@ void AudioStreamPlaybackSample::mix(
     /* some 64-bit fixed point precaches */
 
     int64_t loop_begin_fp = ((int64_t)base->loop_begin << MIX_FRAC_BITS);
-    int64_t loop_end_fp = ((int64_t)base->loop_end << MIX_FRAC_BITS);
-    int64_t length_fp = ((int64_t)len << MIX_FRAC_BITS);
+    int64_t loop_end_fp   = ((int64_t)base->loop_end << MIX_FRAC_BITS);
+    int64_t length_fp     = ((int64_t)len << MIX_FRAC_BITS);
     int64_t begin_limit = (base->loop_mode != AudioStreamSample::LOOP_DISABLED)
                             ? loop_begin_fp
                             : 0;
-    int64_t end_limit = (base->loop_mode != AudioStreamSample::LOOP_DISABLED)
-                          ? loop_end_fp
-                          : length_fp;
-    bool is_stereo = base->stereo;
+    int64_t end_limit   = (base->loop_mode != AudioStreamSample::LOOP_DISABLED)
+                            ? loop_end_fp
+                            : length_fp;
+    bool is_stereo      = base->stereo;
 
     int32_t todo = p_frames;
 
@@ -287,33 +287,33 @@ void AudioStreamPlaybackSample::mix(
         AudioServer::get_singleton()->get_global_rate_scale();
     float base_rate =
         AudioServer::get_singleton()->get_mix_rate() * global_rate_scale;
-    float srate = base->mix_rate;
-    srate *= p_rate_scale;
-    float fincrement = srate / base_rate;
-    int32_t increment = int32_t(MAX(fincrement * MIX_FRAC_LEN, 1));
-    increment *= sign;
+    float srate        = base->mix_rate;
+    srate             *= p_rate_scale;
+    float fincrement   = srate / base_rate;
+    int32_t increment  = int32_t(MAX(fincrement * MIX_FRAC_LEN, 1));
+    increment         *= sign;
 
     // looping
 
     AudioStreamSample::LoopMode loop_format = base->loop_mode;
-    AudioStreamSample::Format format = base->format;
+    AudioStreamSample::Format format        = base->format;
 
     /* audio data */
 
-    uint8_t* dataptr = (uint8_t*)base->data;
-    const void* data = dataptr + AudioStreamSample::DATA_PAD;
+    uint8_t* dataptr     = (uint8_t*)base->data;
+    const void* data     = dataptr + AudioStreamSample::DATA_PAD;
     AudioFrame* dst_buff = p_buffer;
 
     if (format == AudioStreamSample::FORMAT_IMA_ADPCM) {
         if (loop_format != AudioStreamSample::LOOP_DISABLED) {
             ima_adpcm[0].loop_pos = loop_begin_fp >> MIX_FRAC_BITS;
             ima_adpcm[1].loop_pos = loop_begin_fp >> MIX_FRAC_BITS;
-            loop_format = AudioStreamSample::LOOP_FORWARD;
+            loop_format           = AudioStreamSample::LOOP_FORWARD;
         }
     }
 
     while (todo > 0) {
-        int64_t limit = 0;
+        int64_t limit  = 0;
         int32_t target = 0, aux = 0;
 
         /** LOOP CHECKING **/
@@ -326,9 +326,9 @@ void AudioStreamPlaybackSample::mix(
                 /* loopstart reached */
                 if (loop_format == AudioStreamSample::LOOP_PING_PONG) {
                     /* bounce ping pong */
-                    offset = loop_begin_fp + (loop_begin_fp - offset);
-                    increment = -increment;
-                    sign *= -1;
+                    offset     = loop_begin_fp + (loop_begin_fp - offset);
+                    increment  = -increment;
+                    sign      *= -1;
                 } else {
                     /* go to loop-end */
                     offset = loop_end_fp - (loop_begin_fp - offset);
@@ -348,9 +348,9 @@ void AudioStreamPlaybackSample::mix(
 
                 if (loop_format == AudioStreamSample::LOOP_PING_PONG) {
                     /* bounce ping pong */
-                    offset = loop_end_fp - (offset - loop_end_fp);
-                    increment = -increment;
-                    sign *= -1;
+                    offset     = loop_end_fp - (offset - loop_end_fp);
+                    increment  = -increment;
+                    sign      *= -1;
                 } else {
                     /* go to loop-begin */
 
@@ -478,7 +478,7 @@ void AudioStreamPlaybackSample::mix(
 AudioStreamPlaybackSample::AudioStreamPlaybackSample() {
     active = false;
     offset = 0;
-    sign = 1;
+    sign   = 1;
 }
 
 /////////////////////
@@ -557,14 +557,14 @@ void AudioStreamSample::set_data(const PoolVector<uint8_t>& p_data) {
     AudioServer::get_singleton()->lock();
     if (data) {
         AudioServer::get_singleton()->audio_data_free(data);
-        data = nullptr;
+        data       = nullptr;
         data_bytes = 0;
     }
 
     int datalen = p_data.size();
     if (datalen) {
         PoolVector<uint8_t>::Read r = p_data.read();
-        int alloc_len = datalen + DATA_PAD * 2;
+        int alloc_len               = datalen + DATA_PAD * 2;
         data = AudioServer::get_singleton()->audio_data_alloc(alloc_len
         ); // alloc with some padding for interpolation
         memset(data, 0, alloc_len);
@@ -583,7 +583,7 @@ PoolVector<uint8_t> AudioStreamSample::get_data() const {
         pv.resize(data_bytes);
         {
             PoolVector<uint8_t>::Write w = pv.write();
-            uint8_t* dataptr = (uint8_t*)data;
+            uint8_t* dataptr             = (uint8_t*)data;
             memcpy(w.ptr(), dataptr + DATA_PAD, data_bytes);
         }
     }
@@ -654,7 +654,7 @@ Error AudioStreamSample::save_to_wav(const String& p_path) {
     file->store_32(sub_chunk_2_size);   // Subchunk2Size
 
     // Add data
-    PoolVector<uint8_t> data = get_data();
+    PoolVector<uint8_t> data            = get_data();
     PoolVector<uint8_t>::Read read_data = data.read();
     switch (format) {
         case AudioStreamSample::FORMAT_8_BITS:
@@ -816,20 +816,20 @@ void AudioStreamSample::_bind_methods() {
 }
 
 AudioStreamSample::AudioStreamSample() {
-    format = FORMAT_8_BITS;
-    loop_mode = LOOP_DISABLED;
-    stereo = false;
+    format     = FORMAT_8_BITS;
+    loop_mode  = LOOP_DISABLED;
+    stereo     = false;
     loop_begin = 0;
-    loop_end = 0;
-    mix_rate = 44100;
-    data = nullptr;
+    loop_end   = 0;
+    mix_rate   = 44100;
+    data       = nullptr;
     data_bytes = 0;
 }
 
 AudioStreamSample::~AudioStreamSample() {
     if (data) {
         AudioServer::get_singleton()->audio_data_free(data);
-        data = nullptr;
+        data       = nullptr;
         data_bytes = 0;
     }
 }

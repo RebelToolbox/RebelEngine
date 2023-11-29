@@ -118,7 +118,7 @@ MainLoop* test() {
         map.set("Godot rocks", 42);
 
         for (OAHashMap<String, int>::Iterator it = map.iter(); it.valid;
-             it = map.next_iter(it)) {
+             it                                  = map.next_iter(it)) {
             OS::get_singleton()->print(
                 "map[\"%s\"] = %d\n",
                 it.key->utf8().get_data(),
@@ -130,8 +130,8 @@ MainLoop* test() {
     // stress test / test for issue #22928
     {
         OAHashMap<int, int> map;
-        int dummy = 0;
-        const int N = 1000;
+        int dummy      = 0;
+        const int N    = 1000;
         uint32_t* keys = new uint32_t[N];
 
         Math::seed(0);

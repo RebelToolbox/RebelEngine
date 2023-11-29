@@ -94,7 +94,7 @@ void PinJointSW::solve(real_t p_step) {
     Vector3 normal(0, 0, 0);
 
     for (int i = 0; i < 3; i++) {
-        normal[i] = 1;
+        normal[i]           = 1;
         real_t jacDiagABInv = real_t(1.) / m_jac[i].getDiagonal();
 
         Vector3 rel_pos1 = pivotAInW - A->get_transform().origin;
@@ -103,7 +103,7 @@ void PinJointSW::solve(real_t p_step) {
 
         Vector3 vel1 = A->get_velocity_in_local_point(rel_pos1);
         Vector3 vel2 = B->get_velocity_in_local_point(rel_pos2);
-        Vector3 vel = vel1 - vel2;
+        Vector3 vel  = vel1 - vel2;
 
         real_t rel_vel;
         rel_vel = normal.dot(vel);
@@ -126,8 +126,8 @@ void PinJointSW::solve(real_t p_step) {
             }
         }
 
-        m_appliedImpulse += impulse;
-        Vector3 impulse_vector = normal * impulse;
+        m_appliedImpulse       += impulse;
+        Vector3 impulse_vector  = normal * impulse;
         A->apply_impulse(pivotAInW - A->get_transform().origin, impulse_vector);
         B->apply_impulse(
             pivotBInW - B->get_transform().origin,
@@ -175,14 +175,14 @@ PinJointSW::PinJointSW(
     const Vector3& p_pos_b
 ) :
     JointSW(_arr, 2) {
-    A = p_body_a;
-    B = p_body_b;
+    A          = p_body_a;
+    B          = p_body_b;
     m_pivotInA = p_pos_a;
     m_pivotInB = p_pos_b;
 
-    m_tau = 0.3;
-    m_damping = 1;
-    m_impulseClamp = 0;
+    m_tau            = 0.3;
+    m_damping        = 1;
+    m_impulseClamp   = 0;
     m_appliedImpulse = 0;
 
     A->add_constraint(this, 0);

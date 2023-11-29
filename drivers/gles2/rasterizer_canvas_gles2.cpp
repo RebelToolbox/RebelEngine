@@ -186,9 +186,9 @@ void RasterizerCanvasGLES2::_batch_render_generic(
     ERR_FAIL_COND(p_batch.num_commands <= 0);
 
     const bool& use_light_angles = bdata.use_light_angles;
-    const bool& use_modulate = bdata.use_modulate;
-    const bool& use_large_verts = bdata.use_large_verts;
-    const bool& colored_verts = bdata.use_colored_vertices | use_light_angles
+    const bool& use_modulate     = bdata.use_modulate;
+    const bool& use_large_verts  = bdata.use_large_verts;
+    const bool& colored_verts    = bdata.use_colored_vertices | use_light_angles
                               | use_modulate | use_large_verts;
 
     int sizeof_vert;
@@ -1822,7 +1822,7 @@ void RasterizerCanvasGLES2::render_batches(
 #endif
 
                                 if (pline->multiline) {
-                                    int todo = pline->lines.size() / 2;
+                                    int todo         = pline->lines.size() / 2;
                                     int max_per_call = data.polygon_buffer_size
                                                      / (sizeof(real_t) * 4);
                                     int offset = 0;
@@ -1840,7 +1840,7 @@ void RasterizerCanvasGLES2::render_batches(
                                                 )[offset],
                                             pline->line_colors.size() == 1
                                         );
-                                        todo -= to_draw;
+                                        todo   -= to_draw;
                                         offset += to_draw * 2;
                                     }
                                 } else {
@@ -2047,16 +2047,16 @@ void RasterizerCanvasGLES2::canvas_render_items_implementation(
 ) {
     // parameters are easier to pass around in a structure
     RenderItemState ris;
-    ris.item_group_z = p_z;
-    ris.item_group_modulate = p_modulate;
-    ris.item_group_light = p_light;
+    ris.item_group_z              = p_z;
+    ris.item_group_modulate       = p_modulate;
+    ris.item_group_light          = p_light;
     ris.item_group_base_transform = p_base_transform;
 
     state.canvas_shader.set_conditional(CanvasShaderGLES2::USE_SKELETON, false);
 
-    state.current_tex = RID();
-    state.current_tex_ptr = nullptr;
-    state.current_normal = RID();
+    state.current_tex           = RID();
+    state.current_tex_ptr       = nullptr;
+    state.current_normal        = RID();
     state.canvas_texscreen_used = false;
 
     glActiveTexture(GL_TEXTURE0);
@@ -2101,12 +2101,12 @@ bool RasterizerCanvasGLES2::try_join_item(
     // we also set r_batch_break to true if we don't want this item joined to
     // the next (e.g. an item that must not be joined at all)
     r_batch_break = false;
-    bool join = true;
+    bool join     = true;
 
     // light_masked objects we just don't currently support for joining
     // (this could possibly be improved at a later date)
     if (p_ci->light_masked) {
-        join = false;
+        join          = false;
         r_batch_break = true;
     }
 
@@ -2119,7 +2119,7 @@ bool RasterizerCanvasGLES2::try_join_item(
 
     if (r_ris.current_clip != p_ci->final_clip_owner) {
         r_ris.current_clip = p_ci->final_clip_owner;
-        join = false;
+        join               = false;
     }
 
     // TODO: copy back buffer
@@ -2150,13 +2150,13 @@ bool RasterizerCanvasGLES2::try_join_item(
 
             r_ris.prev_use_skeleton = use_skeleton;
             //			join = false;
-            skeleton_prevent_join = true;
+            skeleton_prevent_join   = true;
         }
 
         if (skeleton) {
             //			join = false;
             skeleton_prevent_join = true;
-            state.using_skeleton = true;
+            state.using_skeleton  = true;
         } else {
             state.using_skeleton = false;
         }
@@ -2175,7 +2175,7 @@ bool RasterizerCanvasGLES2::try_join_item(
         storage->material_owner.getornull(material);
 
     if (material != r_ris.canvas_last_material || r_ris.rebind_shader) {
-        join = false;
+        join                                       = false;
         RasterizerStorageGLES2::Shader* shader_ptr = nullptr;
 
         if (material_ptr) {
@@ -2183,7 +2183,7 @@ bool RasterizerCanvasGLES2::try_join_item(
 
             // special case, if the user has made an error in the shader code
             if (shader_ptr && !shader_ptr->valid) {
-                join = false;
+                join          = false;
                 r_batch_break = true;
             }
 
@@ -2231,7 +2231,7 @@ bool RasterizerCanvasGLES2::try_join_item(
                  : (p_ci->final_modulate * r_ris.item_group_modulate);
 
     if (r_ris.last_blend_mode != blend_mode) {
-        join = false;
+        join                  = false;
         r_ris.last_blend_mode = blend_mode;
     }
 
@@ -2339,9 +2339,9 @@ bool RasterizerCanvasGLES2::try_join_item(
             // do light joining...
 
             // first calculate the light bitfield
-            uint64_t light_bitfield = 0;
+            uint64_t light_bitfield  = 0;
             uint64_t shadow_bitfield = 0;
-            Light* light = r_ris.item_group_light;
+            Light* light             = r_ris.item_group_light;
 
             int light_count = -1;
             while (light) {
@@ -2381,7 +2381,7 @@ bool RasterizerCanvasGLES2::try_join_item(
                 || (r_ris.light_region.shadow_bitfield != shadow_bitfield)) {
                 light_allow_join = false;
 
-                r_ris.light_region.light_bitfield = light_bitfield;
+                r_ris.light_region.light_bitfield  = light_bitfield;
                 r_ris.light_region.shadow_bitfield = shadow_bitfield;
             } else {
                 // only do these checks if necessary
@@ -2430,7 +2430,7 @@ bool RasterizerCanvasGLES2::try_join_item(
 
         if (!light_allow_join) {
             // can't join
-            join = false;
+            join          = false;
             // we also dont want to allow joining this item with the next item,
             // because the next item could have no lights!
             r_batch_break = true;
@@ -2446,7 +2446,7 @@ bool RasterizerCanvasGLES2::try_join_item(
             // setting these to zero ensures that any following item with lights
             // will, by definition, be affected by a different set of lights,
             // and thus prevent a join
-            r_ris.light_region.light_bitfield = 0;
+            r_ris.light_region.light_bitfield  = 0;
             r_ris.light_region.shadow_bitfield = 0;
         }
     }
@@ -2599,7 +2599,7 @@ void RasterizerCanvasGLES2::_legacy_canvas_render_item(
                 state.canvas_shader.bind();
             }
 
-            int tc = material_ptr->textures.size();
+            int tc                          = material_ptr->textures.size();
             Pair<StringName, RID>* textures = material_ptr->textures.ptrw();
 
             ShaderLanguage::ShaderNode::Uniform::Hint* texture_hints =
@@ -2797,7 +2797,7 @@ void RasterizerCanvasGLES2::_legacy_canvas_render_item(
                  );
 
     state.uniforms.modelview_matrix = p_ci->final_transform;
-    state.uniforms.extra_matrix = Transform2D();
+    state.uniforms.extra_matrix     = Transform2D();
 
     _set_uniforms();
 
@@ -2824,8 +2824,8 @@ void RasterizerCanvasGLES2::_legacy_canvas_render_item(
                 == RasterizerStorageGLES2::Shader::CanvasItem::
                     BLEND_MODE_PMALPHA)
         && r_ris.item_group_light && !unshaded) {
-        Light* light = r_ris.item_group_light;
-        bool light_used = false;
+        Light* light             = r_ris.item_group_light;
+        bool light_used          = false;
         VS::CanvasLightMode mode = VS::CANVAS_LIGHT_MODE_ADD;
         state.uniforms.final_modulate =
             p_ci->final_modulate; // remove the canvas modulate
@@ -2909,7 +2909,7 @@ void RasterizerCanvasGLES2::_legacy_canvas_render_item(
                 }
 
                 state.canvas_shader.bind();
-                state.using_light = light;
+                state.using_light  = light;
                 state.using_shadow = has_shadow;
 
                 // always re-set uniforms, since light parameters changed
@@ -3166,7 +3166,7 @@ void RasterizerCanvasGLES2::render_joined_item(
                 state.canvas_shader.bind();
             }
 
-            int tc = material_ptr->textures.size();
+            int tc                          = material_ptr->textures.size();
             Pair<StringName, RID>* textures = material_ptr->textures.ptrw();
 
             ShaderLanguage::ShaderNode::Uniform::Hint* texture_hints =
@@ -3362,7 +3362,7 @@ void RasterizerCanvasGLES2::render_joined_item(
         state.uniforms.modelview_matrix = Transform2D();
         // final_modulate will be baked per item ref so the final_modulate can
         // be an identity color
-        state.uniforms.final_modulate = Color(1, 1, 1, 1);
+        state.uniforms.final_modulate   = Color(1, 1, 1, 1);
     } else {
         state.uniforms.modelview_matrix = ci->final_transform;
         // could use the stored version of final_modulate in item ref? Test
@@ -3400,8 +3400,8 @@ void RasterizerCanvasGLES2::render_joined_item(
                 == RasterizerStorageGLES2::Shader::CanvasItem::
                     BLEND_MODE_PMALPHA)
         && r_ris.item_group_light && !unshaded) {
-        Light* light = r_ris.item_group_light;
-        bool light_used = false;
+        Light* light             = r_ris.item_group_light;
+        bool light_used          = false;
         VS::CanvasLightMode mode = VS::CANVAS_LIGHT_MODE_ADD;
 
         // we leave this set to 1, 1, 1, 1 if using software because the colors
@@ -3497,7 +3497,7 @@ void RasterizerCanvasGLES2::render_joined_item(
                 }
 
                 state.canvas_shader.bind();
-                state.using_light = light;
+                state.using_light  = light;
                 state.using_shadow = has_shadow;
 
                 // always re-set uniforms, since light parameters changed

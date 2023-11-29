@@ -406,8 +406,8 @@ String VisualShaderNodeTransformConstant::generate_code(
     Transform t = constant;
     t.basis.transpose();
 
-    String code = "\t" + p_output_vars[0] + " = mat4(";
-    code += vformat(
+    String code  = "\t" + p_output_vars[0] + " = mat4(";
+    code        += vformat(
         "vec4(%.6f, %.6f, %.6f, 0.0), ",
         t.basis[0].x,
         t.basis[0].y,
@@ -546,7 +546,7 @@ static String make_unique_id(
 Vector<VisualShader::DefaultTextureParam> VisualShaderNodeTexture::
     get_default_texture_parameters(VisualShader::Type p_type, int p_id) const {
     VisualShader::DefaultTextureParam dtp;
-    dtp.name = make_unique_id(p_type, p_id, "tex");
+    dtp.name  = make_unique_id(p_type, p_id, "tex");
     dtp.param = texture;
     Vector<VisualShader::DefaultTextureParam> ret;
     ret.push_back(dtp);
@@ -963,7 +963,7 @@ void VisualShaderNodeTexture::_bind_methods() {
 
 VisualShaderNodeTexture::VisualShaderNodeTexture() {
     texture_type = TYPE_DATA;
-    source = SOURCE_TEXTURE;
+    source       = SOURCE_TEXTURE;
 }
 
 ////////////// CubeMap
@@ -1021,7 +1021,7 @@ String VisualShaderNodeCubeMap::get_output_port_name(int p_port) const {
 Vector<VisualShader::DefaultTextureParam> VisualShaderNodeCubeMap::
     get_default_texture_parameters(VisualShader::Type p_type, int p_id) const {
     VisualShader::DefaultTextureParam dtp;
-    dtp.name = make_unique_id(p_type, p_id, "cube");
+    dtp.name  = make_unique_id(p_type, p_id, "cube");
     dtp.param = cube_map;
     Vector<VisualShader::DefaultTextureParam> ret;
     ret.push_back(dtp);
@@ -1232,8 +1232,8 @@ void VisualShaderNodeCubeMap::_bind_methods() {
 
 VisualShaderNodeCubeMap::VisualShaderNodeCubeMap() {
     texture_type = TYPE_DATA;
-    source = SOURCE_TEXTURE;
-    simple_decl = false;
+    source       = SOURCE_TEXTURE;
+    simple_decl  = false;
 }
 
 ////////////// Scalar Op
@@ -4197,7 +4197,7 @@ String VisualShaderNodeTextureUniform::generate_code(
     const String* p_output_vars,
     bool p_for_preview
 ) const {
-    String id = get_uniform_name();
+    String id   = get_uniform_name();
     String code = "\t{\n";
     if (p_input_vars[0] == String()) { // Use UV by default.
         if (p_input_vars[1] == String()) {
@@ -4307,9 +4307,9 @@ String VisualShaderNodeTextureUniform::get_input_port_default_hint(int p_port
 }
 
 VisualShaderNodeTextureUniform::VisualShaderNodeTextureUniform() {
-    texture_type = TYPE_DATA;
+    texture_type  = TYPE_DATA;
     color_default = COLOR_DEFAULT_WHITE;
-    simple_decl = false;
+    simple_decl   = false;
 }
 
 ////////////// Texture Uniform (Triplanar)
@@ -4406,7 +4406,7 @@ String VisualShaderNodeTextureUniformTriplanar::generate_code(
     const String* p_output_vars,
     bool p_for_preview
 ) const {
-    String id = get_uniform_name();
+    String id   = get_uniform_name();
     String code = "\t{\n";
 
     if (p_input_vars[0] == String() && p_input_vars[1] == String()) {
@@ -5208,8 +5208,8 @@ void VisualShaderNodeCompare::_bind_methods() {
 }
 
 VisualShaderNodeCompare::VisualShaderNodeCompare() {
-    ctype = CTYPE_SCALAR;
-    func = FUNC_EQUAL;
+    ctype     = CTYPE_SCALAR;
+    func      = FUNC_EQUAL;
     condition = COND_ALL;
     set_input_port_default_value(0, 0.0);
     set_input_port_default_value(1, 0.0);

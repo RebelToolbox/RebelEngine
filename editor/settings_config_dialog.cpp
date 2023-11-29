@@ -221,7 +221,7 @@ void EditorSettingsDialog::_update_shortcuts() {
 
     if (shortcuts->get_root() && shortcuts->get_root()->get_children()) {
         for (TreeItem* item = shortcuts->get_root()->get_children(); item;
-             item = item->get_next()) {
+             item           = item->get_next()) {
             collapsed[item->get_text(0)] = item->is_collapsed();
         }
     }
@@ -304,7 +304,7 @@ void EditorSettingsDialog::_update_shortcuts() {
 
     // remove sections with no shortcuts
     for (Map<String, TreeItem*>::Element* E = sections.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         TreeItem* section = E->get();
         if (section->get_children() == nullptr) {
             root->remove_child(section);
@@ -320,7 +320,7 @@ void EditorSettingsDialog::_shortcut_button_pressed(
     TreeItem* ti = Object::cast_to<TreeItem>(p_item);
     ERR_FAIL_COND(!ti);
 
-    String item = ti->get_metadata(0);
+    String item      = ti->get_metadata(0);
     Ref<ShortCut> sc = EditorSettings::get_singleton()->get_shortcut(item);
 
     if (p_idx == 0) {
@@ -410,7 +410,7 @@ void EditorSettingsDialog::_tabs_tab_changed(int p_tab) {
 }
 
 void EditorSettingsDialog::_focus_current_search_box() {
-    Control* tab = tabs->get_current_tab_control();
+    Control* tab                 = tabs->get_current_tab_control();
     LineEdit* current_search_box = nullptr;
     if (tab == tab_general) {
         current_search_box = search_box;

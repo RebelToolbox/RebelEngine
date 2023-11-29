@@ -106,7 +106,7 @@ public:
     const lsp::DocumentSymbol* resolve_symbol(
         const lsp::TextDocumentPositionParams& p_doc_pos,
         const String& p_symbol_name = "",
-        bool p_func_required = false
+        bool p_func_required        = false
     );
     void resolve_related_symbols(
         const lsp::TextDocumentPositionParams& p_doc_pos,

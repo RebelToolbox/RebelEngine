@@ -69,10 +69,10 @@ struct VSPortal {
     void create() {
         _linkedroom_ID[0] = -1;
         _linkedroom_ID[1] = -1;
-        _active = true;
-        _plane = Plane();
-        _portal_id = -1;
-        _aabb = AABB();
+        _active           = true;
+        _plane            = Plane();
+        _portal_id        = -1;
+        _aabb             = AABB();
     }
 
     void destroy() {
@@ -82,9 +82,9 @@ struct VSPortal {
     void rooms_and_portals_clear() {
         _linkedroom_ID[0] = -1;
         _linkedroom_ID[1] = -1;
-        _active = true;
-        _plane = Plane();
-        _aabb = AABB();
+        _active           = true;
+        _plane            = Plane();
+        _aabb             = AABB();
         _pts_world.reset();
     }
 
@@ -172,7 +172,7 @@ public:
         int p_room_from,
         const AABB& p_aabb,
         bool p_disallow_crossing_internal = false,
-        bool p_accurate_check = false
+        bool p_accurate_check             = false
     ) const {
         // first aabb check
         if (!p_aabb.intersects(_aabb)) {
@@ -268,7 +268,7 @@ struct VSRoom {
     // because we are using a pool so objects may be reused
     void create() {
         _room_ID = -1;
-        _aabb = AABB();
+        _aabb    = AABB();
     }
 
     void destroy() {
@@ -280,13 +280,13 @@ struct VSRoom {
         _roamer_pool_ids.reset();
         _rghost_pool_ids.reset();
         _roomgroup_ids.reset();
-        _pvs_first = 0;
-        _pvs_size = 0;
-        _secondary_pvs_first = 0;
-        _secondary_pvs_size = 0;
-        _priority = 0;
+        _pvs_first               = 0;
+        _pvs_size                = 0;
+        _secondary_pvs_first     = 0;
+        _secondary_pvs_size      = 0;
+        _priority                = 0;
         _contains_internal_rooms = false;
-        last_room_tick_hit = 0;
+        last_room_tick_hit       = 0;
     }
 
     void cleanup_after_conversion() {
@@ -368,7 +368,7 @@ struct VSRoom {
     // very rough
     AABB _aabb;
 
-    int32_t _room_ID = -1;
+    int32_t _room_ID            = -1;
     ObjectID _godot_instance_ID = 0;
 
     // rooms with a higher priority are internal rooms ..
@@ -379,9 +379,9 @@ struct VSRoom {
 
     bool _contains_internal_rooms = false;
 
-    int32_t _pvs_first = 0;
+    int32_t _pvs_first           = 0;
     int32_t _secondary_pvs_first = 0;
-    uint16_t _pvs_size = 0;
+    uint16_t _pvs_size           = 0;
     uint16_t _secondary_pvs_size = 0;
 
     // used for calculating gameplay notifications
@@ -413,10 +413,10 @@ struct VSRoom {
 
 struct VSOccluder {
     void create() {
-        type = OT_UNDEFINED;
+        type    = OT_UNDEFINED;
         room_id = -1;
-        dirty = false;
-        active = true;
+        dirty   = false;
+        active  = true;
     }
 
     // these should match the values in VisualServer::OccluderType
@@ -460,7 +460,7 @@ struct Sphere {
     }
 
     void from_plane(const Plane& p_plane) {
-        pos = p_plane.normal;
+        pos    = p_plane.normal;
         // Disallow negative radius. Even zero radius should not really be sent.
         radius = MAX(p_plane.d, 0.0);
     }
@@ -472,7 +472,7 @@ struct Sphere {
         real_t radius_squared
     ) const {
         Vector3 offset = pos - p_ray_origin;
-        real_t c2 = offset.length_squared();
+        real_t c2      = offset.length_squared();
 
         real_t v = offset.dot(p_ray_dir);
         real_t d = radius_squared - (c2 - (v * v));

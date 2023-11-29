@@ -112,7 +112,7 @@ HMACContext* HMACContext::create() {
 /// Crypto
 
 void (*Crypto::_load_default_certificates)(String p_path) = nullptr;
-Crypto* (*Crypto::_create)() = nullptr;
+Crypto* (*Crypto::_create)()                              = nullptr;
 
 Crypto* Crypto::create() {
     if (_create) {
@@ -158,8 +158,8 @@ bool Crypto::constant_time_compare(
 ) {
     const uint8_t* t = p_trusted.read().ptr();
     const uint8_t* r = p_received.read().ptr();
-    int tlen = p_trusted.size();
-    int rlen = p_received.size();
+    int tlen         = p_trusted.size();
+    int rlen         = p_received.size();
     // If the lengths are different then nothing else matters.
     if (tlen != rlen) {
         return false;
@@ -282,12 +282,12 @@ Error ResourceFormatSaverCrypto::save(
 ) {
     Error err;
     Ref<X509Certificate> cert = p_resource;
-    Ref<CryptoKey> key = p_resource;
+    Ref<CryptoKey> key        = p_resource;
     if (cert.is_valid()) {
         err = cert->save(p_path);
     } else if (key.is_valid()) {
         String el = p_path.get_extension().to_lower();
-        err = key->save(p_path, el == "pub");
+        err       = key->save(p_path, el == "pub");
     } else {
         ERR_FAIL_V(ERR_INVALID_PARAMETER);
     }
@@ -304,7 +304,7 @@ void ResourceFormatSaverCrypto::get_recognized_extensions(
     List<String>* p_extensions
 ) const {
     const X509Certificate* cert = Object::cast_to<X509Certificate>(*p_resource);
-    const CryptoKey* key = Object::cast_to<CryptoKey>(*p_resource);
+    const CryptoKey* key        = Object::cast_to<CryptoKey>(*p_resource);
     if (cert) {
         p_extensions->push_back("crt");
     }

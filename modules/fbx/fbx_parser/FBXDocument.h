@@ -119,12 +119,12 @@ public:
 
 private:
     const Document& doc;
-    ElementPtr element = nullptr;
+    ElementPtr element             = nullptr;
     std::shared_ptr<Object> object = nullptr;
-    const uint64_t id = 0;
+    const uint64_t id              = 0;
 
     enum Flags {
-        BEING_CONSTRUCTED = 0x1,
+        BEING_CONSTRUCTED   = 0x1,
         FAILED_TO_CONSTRUCT = 0x2
     };
 
@@ -264,7 +264,7 @@ public:
 
         // get pose node transform
         const ElementPtr Transform = GetRequiredElement(sc, "Matrix", element);
-        transform = ReadMatrix(Transform);
+        transform                  = ReadMatrix(Transform);
 
         // get node id this pose node is for
         const ElementPtr NodeId = sc->GetElement("Node");
@@ -752,7 +752,7 @@ public:
 
     uint8_t* RelinquishContent() {
         uint8_t* ptr = content;
-        content = nullptr;
+        content      = nullptr;
         return ptr;
     }
 
@@ -889,7 +889,7 @@ public:
         const std::string& name,
         const Document& doc,
         const char* const* target_prop_whitelist = nullptr,
-        size_t whitelist_size = 0
+        size_t whitelist_size                    = 0
     );
 
     virtual ~AnimationCurveNode();
@@ -955,7 +955,7 @@ public:
     to the animation layer. */
     const AnimationCurveNodeList Nodes(
         const char* const* target_prop_whitelist = nullptr,
-        size_t whitelist_size = 0
+        size_t whitelist_size                    = 0
     ) const;
 
 private:
@@ -1132,7 +1132,7 @@ public:
     // we then have an additive type
     enum SkinLinkMode {
         SkinLinkMode_Normalized = 0,
-        SkinLinkMode_Additive = 1
+        SkinLinkMode_Additive   = 1
     };
 
     SkinLinkMode GetLinkMode() {
@@ -1285,21 +1285,21 @@ public:
     fbx_simple_property(DefaultCamera, std::string, "");
 
     enum FrameRate {
-        FrameRate_DEFAULT = 0,
-        FrameRate_120 = 1,
-        FrameRate_100 = 2,
-        FrameRate_60 = 3,
-        FrameRate_50 = 4,
-        FrameRate_48 = 5,
-        FrameRate_30 = 6,
-        FrameRate_30_DROP = 7,
+        FrameRate_DEFAULT         = 0,
+        FrameRate_120             = 1,
+        FrameRate_100             = 2,
+        FrameRate_60              = 3,
+        FrameRate_50              = 4,
+        FrameRate_48              = 5,
+        FrameRate_30              = 6,
+        FrameRate_30_DROP         = 7,
         FrameRate_NTSC_DROP_FRAME = 8,
         FrameRate_NTSC_FULL_FRAME = 9,
-        FrameRate_PAL = 10,
-        FrameRate_CINEMA = 11,
-        FrameRate_1000 = 12,
-        FrameRate_CINEMA_ND = 13,
-        FrameRate_CUSTOM = 14,
+        FrameRate_PAL             = 10,
+        FrameRate_CINEMA          = 11,
+        FrameRate_1000            = 12,
+        FrameRate_CINEMA_ND       = 13,
+        FrameRate_CUSTOM          = 14,
 
         FrameRate_MAX // end-of-enum sentinel
     };
@@ -1465,7 +1465,7 @@ private:
     std::vector<uint64_t> materials;
     std::vector<uint64_t> skins;
     mutable std::vector<const AnimationStack*> animationStacksResolved;
-    PropertyTable* metadata_properties = nullptr;
+    PropertyTable* metadata_properties          = nullptr;
     std::shared_ptr<FileGlobalSettings> globals = nullptr;
 };
 
@@ -1481,9 +1481,9 @@ struct hash<const FBXDocParser::Video> {
         using std::string;
 
         size_t res = 17;
-        res = res * 31 + hash<string>()(video.Name());
-        res = res * 31 + hash<string>()(video.RelativeFilename());
-        res = res * 31 + hash<string>()(video.Type());
+        res        = res * 31 + hash<string>()(video.Name());
+        res        = res * 31 + hash<string>()(video.RelativeFilename());
+        res        = res * 31 + hash<string>()(video.Type());
 
         return res;
     }

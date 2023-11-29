@@ -42,7 +42,7 @@
 
 void Material::set_next_pass(const Ref<Material>& p_pass) {
     for (Ref<Material> pass_child = p_pass; pass_child != nullptr;
-         pass_child = pass_child->get_next_pass()) {
+         pass_child               = pass_child->get_next_pass()) {
         ERR_FAIL_COND_MSG(
             pass_child == this,
             "Can't set as next_pass one of its parents to prevent crashes due "
@@ -129,7 +129,7 @@ void Material::_bind_methods() {
 }
 
 Material::Material() {
-    material = VisualServer::get_singleton()->material_create();
+    material        = VisualServer::get_singleton()->material_create();
     render_priority = 0;
 }
 
@@ -325,7 +325,7 @@ void ShaderMaterial::get_argument_options(
             List<PropertyInfo> pl;
             shader->get_param_list(&pl);
             for (List<PropertyInfo>::Element* E = pl.front(); E;
-                 E = E->next()) {
+                 E                              = E->next()) {
                 r_options->push_back(
                     quote_style
                     + E->get().name.replace_first("shader_param/", "")
@@ -366,71 +366,71 @@ void SpatialMaterial::init_shaders() {
 
     shader_names = memnew(ShaderNames);
 
-    shader_names->albedo = "albedo";
-    shader_names->specular = "specular";
-    shader_names->roughness = "roughness";
-    shader_names->metallic = "metallic";
-    shader_names->emission = "emission";
+    shader_names->albedo          = "albedo";
+    shader_names->specular        = "specular";
+    shader_names->roughness       = "roughness";
+    shader_names->metallic        = "metallic";
+    shader_names->emission        = "emission";
     shader_names->emission_energy = "emission_energy";
-    shader_names->normal_scale = "normal_scale";
-    shader_names->rim = "rim";
-    shader_names->rim_tint = "rim_tint";
-    shader_names->clearcoat = "clearcoat";
+    shader_names->normal_scale    = "normal_scale";
+    shader_names->rim             = "rim";
+    shader_names->rim_tint        = "rim_tint";
+    shader_names->clearcoat       = "clearcoat";
     shader_names->clearcoat_gloss = "clearcoat_gloss";
-    shader_names->anisotropy = "anisotropy_ratio";
-    shader_names->depth_scale = "depth_scale";
+    shader_names->anisotropy      = "anisotropy_ratio";
+    shader_names->depth_scale     = "depth_scale";
     shader_names->subsurface_scattering_strength =
         "subsurface_scattering_strength";
-    shader_names->transmission = "transmission";
-    shader_names->refraction = "refraction";
-    shader_names->point_size = "point_size";
-    shader_names->uv1_scale = "uv1_scale";
-    shader_names->uv1_offset = "uv1_offset";
-    shader_names->uv2_scale = "uv2_scale";
-    shader_names->uv2_offset = "uv2_offset";
+    shader_names->transmission        = "transmission";
+    shader_names->refraction          = "refraction";
+    shader_names->point_size          = "point_size";
+    shader_names->uv1_scale           = "uv1_scale";
+    shader_names->uv1_offset          = "uv1_offset";
+    shader_names->uv2_scale           = "uv2_scale";
+    shader_names->uv2_offset          = "uv2_offset";
     shader_names->uv1_blend_sharpness = "uv1_blend_sharpness";
     shader_names->uv2_blend_sharpness = "uv2_blend_sharpness";
 
     shader_names->particles_anim_h_frames = "particles_anim_h_frames";
     shader_names->particles_anim_v_frames = "particles_anim_v_frames";
-    shader_names->particles_anim_loop = "particles_anim_loop";
-    shader_names->depth_min_layers = "depth_min_layers";
-    shader_names->depth_max_layers = "depth_max_layers";
-    shader_names->depth_flip = "depth_flip";
+    shader_names->particles_anim_loop     = "particles_anim_loop";
+    shader_names->depth_min_layers        = "depth_min_layers";
+    shader_names->depth_max_layers        = "depth_max_layers";
+    shader_names->depth_flip              = "depth_flip";
 
     shader_names->grow = "grow";
 
     shader_names->ao_light_affect = "ao_light_affect";
 
     shader_names->proximity_fade_distance = "proximity_fade_distance";
-    shader_names->distance_fade_min = "distance_fade_min";
-    shader_names->distance_fade_max = "distance_fade_max";
+    shader_names->distance_fade_min       = "distance_fade_min";
+    shader_names->distance_fade_max       = "distance_fade_max";
 
-    shader_names->metallic_texture_channel = "metallic_texture_channel";
-    shader_names->roughness_texture_channel = "roughness_texture_channel";
-    shader_names->ao_texture_channel = "ao_texture_channel";
-    shader_names->clearcoat_texture_channel = "clearcoat_texture_channel";
-    shader_names->rim_texture_channel = "rim_texture_channel";
-    shader_names->depth_texture_channel = "depth_texture_channel";
+    shader_names->metallic_texture_channel   = "metallic_texture_channel";
+    shader_names->roughness_texture_channel  = "roughness_texture_channel";
+    shader_names->ao_texture_channel         = "ao_texture_channel";
+    shader_names->clearcoat_texture_channel  = "clearcoat_texture_channel";
+    shader_names->rim_texture_channel        = "rim_texture_channel";
+    shader_names->depth_texture_channel      = "depth_texture_channel";
     shader_names->refraction_texture_channel = "refraction_texture_channel";
-    shader_names->alpha_scissor_threshold = "alpha_scissor_threshold";
+    shader_names->alpha_scissor_threshold    = "alpha_scissor_threshold";
 
-    shader_names->texture_names[TEXTURE_ALBEDO] = "texture_albedo";
-    shader_names->texture_names[TEXTURE_METALLIC] = "texture_metallic";
+    shader_names->texture_names[TEXTURE_ALBEDO]    = "texture_albedo";
+    shader_names->texture_names[TEXTURE_METALLIC]  = "texture_metallic";
     shader_names->texture_names[TEXTURE_ROUGHNESS] = "texture_roughness";
-    shader_names->texture_names[TEXTURE_EMISSION] = "texture_emission";
-    shader_names->texture_names[TEXTURE_NORMAL] = "texture_normal";
-    shader_names->texture_names[TEXTURE_RIM] = "texture_rim";
+    shader_names->texture_names[TEXTURE_EMISSION]  = "texture_emission";
+    shader_names->texture_names[TEXTURE_NORMAL]    = "texture_normal";
+    shader_names->texture_names[TEXTURE_RIM]       = "texture_rim";
     shader_names->texture_names[TEXTURE_CLEARCOAT] = "texture_clearcoat";
-    shader_names->texture_names[TEXTURE_FLOWMAP] = "texture_flowmap";
+    shader_names->texture_names[TEXTURE_FLOWMAP]   = "texture_flowmap";
     shader_names->texture_names[TEXTURE_AMBIENT_OCCLUSION] =
         "texture_ambient_occlusion";
     shader_names->texture_names[TEXTURE_DEPTH] = "texture_depth";
     shader_names->texture_names[TEXTURE_SUBSURFACE_SCATTERING] =
         "texture_subsurface_scattering";
     shader_names->texture_names[TEXTURE_TRANSMISSION] = "texture_transmission";
-    shader_names->texture_names[TEXTURE_REFRACTION] = "texture_refraction";
-    shader_names->texture_names[TEXTURE_DETAIL_MASK] = "texture_detail_mask";
+    shader_names->texture_names[TEXTURE_REFRACTION]   = "texture_refraction";
+    shader_names->texture_names[TEXTURE_DETAIL_MASK]  = "texture_detail_mask";
     shader_names->texture_names[TEXTURE_DETAIL_ALBEDO] =
         "texture_detail_albedo";
     shader_names->texture_names[TEXTURE_DETAIL_NORMAL] =
@@ -1333,7 +1333,7 @@ void SpatialMaterial::_update_shader() {
 
     ShaderData shader_data;
     shader_data.shader = VS::get_singleton()->shader_create();
-    shader_data.users = 1;
+    shader_data.users  = 1;
 
     VS::get_singleton()->shader_set_code(shader_data.shader, code);
 
@@ -1724,7 +1724,7 @@ void SpatialMaterial::set_texture(
 ) {
     ERR_FAIL_INDEX(p_param, TEXTURE_MAX);
     textures[p_param] = p_texture;
-    RID rid = p_texture.is_valid() ? p_texture->get_rid() : RID();
+    RID rid           = p_texture.is_valid() ? p_texture->get_rid() : RID();
     VS::get_singleton()->material_set_param(
         _get_material(),
         shader_names->texture_names[p_param],
@@ -3841,7 +3841,7 @@ SpatialMaterial::SpatialMaterial() : element(this) {
     emission_op = EMISSION_OP_ADD;
 
     proximity_fade_enabled = false;
-    distance_fade = DISTANCE_FADE_DISABLED;
+    distance_fade          = DISTANCE_FADE_DISABLED;
     set_proximity_fade_distance(1);
     set_distance_fade_min_distance(0);
     set_distance_fade_max_distance(10);
@@ -3856,18 +3856,18 @@ SpatialMaterial::SpatialMaterial() : element(this) {
     grow_enabled = false;
     set_grow(0.0);
 
-    deep_parallax = false;
-    depth_parallax_flip_tangent = false;
+    deep_parallax                = false;
+    depth_parallax_flip_tangent  = false;
     depth_parallax_flip_binormal = false;
     set_depth_deep_parallax_min_layers(8);
     set_depth_deep_parallax_max_layers(32);
     set_depth_deep_parallax_flip_tangent(false); // also sets binormal
 
-    detail_uv = DETAIL_UV_1;
-    blend_mode = BLEND_MODE_MIX;
+    detail_uv         = DETAIL_UV_1;
+    blend_mode        = BLEND_MODE_MIX;
     detail_blend_mode = BLEND_MODE_MIX;
-    depth_draw_mode = DEPTH_DRAW_OPAQUE_ONLY;
-    cull_mode = CULL_BACK;
+    depth_draw_mode   = DEPTH_DRAW_OPAQUE_ONLY;
+    cull_mode         = CULL_BACK;
     for (int i = 0; i < FLAG_MAX; i++) {
         flags[i] = false;
     }
@@ -3875,16 +3875,16 @@ SpatialMaterial::SpatialMaterial() : element(this) {
     force_vertex_shading =
         GLOBAL_GET("rendering/quality/shading/force_vertex_shading");
 
-    diffuse_mode = DIFFUSE_BURLEY;
+    diffuse_mode  = DIFFUSE_BURLEY;
     specular_mode = SPECULAR_SCHLICK_GGX;
 
     for (int i = 0; i < FEATURE_MAX; i++) {
         features[i] = false;
     }
 
-    current_key.key = 0;
+    current_key.key         = 0;
     current_key.invalid_key = 1;
-    is_initialized = true;
+    is_initialized          = true;
     _queue_shader_change();
 }
 

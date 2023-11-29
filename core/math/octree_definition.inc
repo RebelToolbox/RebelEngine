@@ -192,9 +192,9 @@ private:
 
         Octant() {
             children_count = 0;
-            parent_index = -1;
-            last_pass = 0;
-            parent = nullptr;
+            parent_index   = -1;
+            last_pass      = 0;
+            parent         = nullptr;
 #ifdef OCTREE_USE_CACHED_LISTS
             dirty = true;
 #endif
@@ -246,19 +246,19 @@ private:
                      octant_owners.front();
                  F;) {
                 Octant* o = F->get().octant;
-                o->dirty = true;
-                F = F->next();
+                o->dirty  = true;
+                F         = F->next();
             }
         }
 #endif
 
         Element() {
-            last_pass = 0;
-            _id = 0;
-            pairable = false;
-            subindex = 0;
-            userdata = nullptr;
-            octree = nullptr;
+            last_pass     = 0;
+            _id           = 0;
+            pairable      = false;
+            subindex      = 0;
+            userdata      = nullptr;
+            octree        = nullptr;
             pairable_mask = 0;
             pairable_type = 0;
             common_parent = nullptr;
@@ -345,13 +345,13 @@ private:
 
         if (!E) {
             PairData pdata;
-            pdata.refcount = 1;
-            pdata.A = p_A;
-            pdata.B = p_B;
+            pdata.refcount  = 1;
+            pdata.A         = p_A;
+            pdata.B         = p_B;
             pdata.intersect = false;
-            E = pair_map.insert(key, pdata);
-            E->get().eA = p_A->pair_list.push_back(&E->get());
-            E->get().eB = p_B->pair_list.push_back(&E->get());
+            E               = pair_map.insert(key, pdata);
+            E->get().eA     = p_A->pair_list.push_back(&E->get());
+            E->get().eB     = p_B->pair_list.push_back(&E->get());
 
             /*
             if (pair_callback)
@@ -421,13 +421,13 @@ private:
             if (root->children_count == 1) {
                 for (int i = 0; i < 8; i++) {
                     if (root->children[i]) {
-                        new_root = root->children[i];
+                        new_root          = root->children[i];
                         root->children[i] = nullptr;
                         break;
                     }
                 }
                 ERR_FAIL_COND(!new_root);
-                new_root->parent = nullptr;
+                new_root->parent       = nullptr;
                 new_root->parent_index = -1;
             }
 
@@ -511,18 +511,18 @@ private:
 public:
     OctreeElementID create(
         T* p_userdata,
-        const AABB& p_aabb = AABB(),
-        int p_subindex = 0,
-        bool p_pairable = false,
+        const AABB& p_aabb       = AABB(),
+        int p_subindex           = 0,
+        bool p_pairable          = false,
         uint32_t p_pairable_type = 0,
-        uint32_t pairable_mask = 1
+        uint32_t pairable_mask   = 1
     );
     void move(OctreeElementID p_id, const AABB& p_aabb);
     void set_pairable(
         OctreeElementID p_id,
-        bool p_pairable = false,
+        bool p_pairable          = false,
         uint32_t p_pairable_type = 0,
-        uint32_t pairable_mask = 1
+        uint32_t pairable_mask   = 1
     );
     void erase(OctreeElementID p_id);
 
@@ -542,7 +542,7 @@ public:
         T** p_result_array,
         int p_result_max,
         int* p_subindex_array = nullptr,
-        uint32_t p_mask = 0xFFFFFFFF
+        uint32_t p_mask       = 0xFFFFFFFF
     );
     int cull_segment(
         const Vector3& p_from,
@@ -550,7 +550,7 @@ public:
         T** p_result_array,
         int p_result_max,
         int* p_subindex_array = nullptr,
-        uint32_t p_mask = 0xFFFFFFFF
+        uint32_t p_mask       = 0xFFFFFFFF
     );
 
     int cull_point(
@@ -558,7 +558,7 @@ public:
         T** p_result_array,
         int p_result_max,
         int* p_subindex_array = nullptr,
-        uint32_t p_mask = 0xFFFFFFFF
+        uint32_t p_mask       = 0xFFFFFFFF
     );
 
     void set_pair_callback(PairCallback p_callback, void* p_userdata);
@@ -581,11 +581,11 @@ public:
     void set_balance(float p_bal) // 0.0 is optimized for multiple tests, 1.0 is
                                   // for multiple edits (moves etc)
     {
-        float v = CLAMP(p_bal, 0.0f, 1.0f);
-        v *= v;
-        v *= v;
-        v *= 8096.0f; // these values have been found empirically
-        int l = 0 + v;
+        float v  = CLAMP(p_bal, 0.0f, 1.0f);
+        v       *= v;
+        v       *= v;
+        v       *= 8096.0f; // these values have been found empirically
+        int l    = 0 + v;
         set_octant_elements_limit(l);
     }
 
@@ -666,7 +666,7 @@ OCTREE_FUNC(void)::_insert_element(Element* p_element, Octant* p_octant) {
         p_element->octant_owners.push_back(owner);
 
         if (p_element->common_parent == nullptr) {
-            p_element->common_parent = p_octant;
+            p_element->common_parent  = p_octant;
             p_element->container_aabb = p_octant->aabb;
         } else {
             p_element->container_aabb.merge_with(p_octant->aabb);
@@ -683,7 +683,7 @@ OCTREE_FUNC(void)::_insert_element(Element* p_element, Octant* p_octant) {
         }
     } else {
         /* not big enough, send it to subitems */
-        int splits = 0;
+        int splits     = 0;
         bool candidate = p_element->common_parent == nullptr;
 
         for (int i = 0; i < 8; i++) {
@@ -698,7 +698,7 @@ OCTREE_FUNC(void)::_insert_element(Element* p_element, Octant* p_octant) {
             } else {
                 /* check against AABB where child should be */
 
-                AABB aabb = p_octant->aabb;
+                AABB aabb  = p_octant->aabb;
                 aabb.size *= 0.5;
 
                 if (i & 1) {
@@ -714,10 +714,10 @@ OCTREE_FUNC(void)::_insert_element(Element* p_element, Octant* p_octant) {
                 if (aabb.intersects_inclusive(p_element->aabb)) {
                     /* if actually intersects, create the child */
 
-                    Octant* child = memnew_allocator(Octant, AL);
+                    Octant* child         = memnew_allocator(Octant, AL);
                     p_octant->children[i] = child;
-                    child->parent = p_octant;
-                    child->parent_index = i;
+                    child->parent         = p_octant;
+                    child->parent_index   = i;
 
                     child->aabb = aabb;
 
@@ -767,15 +767,15 @@ OCTREE_FUNC(void)::_ensure_valid_root(const AABB& p_aabb) {
                 base.size *= 2.0;
             } else {
                 base.position -= base.size;
-                base.size *= 2.0;
+                base.size     *= 2.0;
             }
         }
 
         root = memnew_allocator(Octant, AL);
 
-        root->parent = nullptr;
+        root->parent       = nullptr;
         root->parent_index = -1;
-        root->aabb = base;
+        root->aabb         = base;
 
         octant_count++;
 
@@ -795,21 +795,21 @@ OCTREE_FUNC(void)::_ensure_valid_root(const AABB& p_aabb) {
 
             if (ABS(base.position.x + base.size.x) <= ABS(base.position.x)) {
                 /* grow towards positive */
-                base.size *= 2.0;
-                gp->aabb = base;
-                gp->children[0] = root;
-                root->parent_index = 0;
+                base.size          *= 2.0;
+                gp->aabb            = base;
+                gp->children[0]     = root;
+                root->parent_index  = 0;
             } else {
                 base.position -= base.size;
-                base.size *= 2.0;
-                gp->aabb = base;
+                base.size     *= 2.0;
+                gp->aabb       = base;
                 gp->children[(1 << 0) | (1 << 1) | (1 << 2)] =
                     root; // add at all-positive
                 root->parent_index = (1 << 0) | (1 << 1) | (1 << 2);
             }
 
             gp->children_count = 1;
-            root = gp;
+            root               = gp;
         }
     }
 }
@@ -848,7 +848,7 @@ OCTREE_FUNC(bool)::_remove_element_pair_and_remove_empty_octants(
                 }
             }
             p_octant->last_pass = pass;
-            unpaired = true;
+            unpaired            = true;
         }
 
         bool removed = false;
@@ -871,7 +871,7 @@ OCTREE_FUNC(bool)::_remove_element_pair_and_remove_empty_octants(
 
             memdelete_allocator<Octant, AL>(p_octant);
             octant_count--;
-            removed = true;
+            removed        = true;
             octant_removed = true;
         }
 
@@ -1028,15 +1028,15 @@ OCTREE_FUNC(OctreeElementID)::create(
         element_map.insert(last_element_id++, Element());
     Element& e = E->get();
 
-    e.aabb = p_aabb;
-    e.userdata = p_userdata;
-    e.subindex = p_subindex;
-    e.last_pass = 0;
-    e.octree = this;
-    e.pairable = p_pairable;
+    e.aabb          = p_aabb;
+    e.userdata      = p_userdata;
+    e.subindex      = p_subindex;
+    e.last_pass     = 0;
+    e.octree        = this;
+    e.pairable      = p_pairable;
     e.pairable_type = p_pairable_type;
     e.pairable_mask = p_pairable_mask;
-    e._id = last_element_id - 1;
+    e._id           = last_element_id - 1;
 
     if (!e.aabb.has_no_surface()) {
         _ensure_valid_root(p_aabb);
@@ -1073,12 +1073,12 @@ OCTREE_FUNC(void)::move(OctreeElementID p_id, const AABB& p_aabb) {
         if (old_has_surf) {
             _remove_element(&e); // removing
             e.common_parent = nullptr;
-            e.aabb = AABB();
+            e.aabb          = AABB();
             _optimize();
         } else {
             _ensure_valid_root(p_aabb); // inserting
             e.common_parent = nullptr;
-            e.aabb = p_aabb;
+            e.aabb          = p_aabb;
             _insert_element(&e, root);
             if (use_pairs) {
                 _element_check_pairs(&e);
@@ -1130,7 +1130,7 @@ OCTREE_FUNC(void)::move(OctreeElementID p_id, const AABB& p_aabb) {
     // prepare for reinsert
     e.octant_owners.clear();
     e.common_parent = nullptr;
-    e.aabb = p_aabb;
+    e.aabb          = p_aabb;
 
     _insert_element(&e, common_parent); // reinsert from this point
 
@@ -1212,7 +1212,7 @@ OCTREE_FUNC(void)::set_pairable(
         _remove_element(&e);
     }
 
-    e.pairable = p_pairable;
+    e.pairable      = p_pairable;
     e.pairable_type = p_pairable_type;
     e.pairable_mask = p_pairable_mask;
     e.common_parent = nullptr;
@@ -1254,7 +1254,7 @@ OCTREE_FUNC(void)::_cull_convex(Octant* p_octant, _CullConvexData* p_cull) {
         int num_elements = p_octant->clist.elements.size();
         for (int n = 0; n < num_elements; n++) {
             const AABB& aabb = p_octant->clist.aabbs[n];
-            Element* e = p_octant->clist.elements[n];
+            Element* e       = p_octant->clist.elements[n];
 
             // in most cases with the cached linear  list tests we will do the
             // AABB checks BEFORE last pass and cull mask. The reason is that
@@ -1286,7 +1286,7 @@ OCTREE_FUNC(void)::_cull_convex(Octant* p_octant, _CullConvexData* p_cull) {
         I = p_octant->elements.front();
 
         for (; I; I = I->next()) {
-            Element* e = I->get();
+            Element* e       = I->get();
             const AABB& aabb = e->aabb;
 
             if (e->last_pass == pass
@@ -1321,7 +1321,7 @@ OCTREE_FUNC(void)::_cull_convex(Octant* p_octant, _CullConvexData* p_cull) {
         int num_elements = p_octant->clist_pairable.elements.size();
         for (int n = 0; n < num_elements; n++) {
             const AABB& aabb = p_octant->clist_pairable.aabbs[n];
-            Element* e = p_octant->clist_pairable.elements[n];
+            Element* e       = p_octant->clist_pairable.elements[n];
 
             if (aabb.intersects_convex_shape(
                     p_cull->planes,
@@ -1349,7 +1349,7 @@ OCTREE_FUNC(void)::_cull_convex(Octant* p_octant, _CullConvexData* p_cull) {
         I = p_octant->pairable_elements.front();
 
         for (; I; I = I->next()) {
-            Element* e = I->get();
+            Element* e       = I->get();
             const AABB& aabb = e->aabb;
 
             if (e->last_pass == pass
@@ -1410,7 +1410,7 @@ OCTREE_FUNC(void)::_cull_aabb(
         int num_elements = p_octant->clist.elements.size();
         for (int n = 0; n < num_elements; n++) {
             const AABB& aabb = p_octant->clist.aabbs[n];
-            Element* e = p_octant->clist.elements[n];
+            Element* e       = p_octant->clist.elements[n];
 
             if (p_aabb.intersects_inclusive(aabb)) {
                 if (e->last_pass == pass
@@ -1435,7 +1435,7 @@ OCTREE_FUNC(void)::_cull_aabb(
         typename List<Element*, AL>::Element* I;
         I = p_octant->elements.front();
         for (; I; I = I->next()) {
-            Element* e = I->get();
+            Element* e       = I->get();
             const AABB& aabb = e->aabb;
 
             if (p_aabb.intersects_inclusive(aabb)) {
@@ -1469,7 +1469,7 @@ OCTREE_FUNC(void)::_cull_aabb(
         int num_elements = p_octant->clist_pairable.elements.size();
         for (int n = 0; n < num_elements; n++) {
             const AABB& aabb = p_octant->clist_pairable.aabbs[n];
-            Element* e = p_octant->clist_pairable.elements[n];
+            Element* e       = p_octant->clist_pairable.elements[n];
 
             if (p_aabb.intersects_inclusive(aabb)) {
                 if (e->last_pass == pass
@@ -1494,7 +1494,7 @@ OCTREE_FUNC(void)::_cull_aabb(
         typename List<Element*, AL>::Element* I;
         I = p_octant->pairable_elements.front();
         for (; I; I = I->next()) {
-            Element* e = I->get();
+            Element* e       = I->get();
             const AABB& aabb = e->aabb;
 
             if (e->last_pass == pass
@@ -1557,7 +1557,7 @@ OCTREE_FUNC(void)::_cull_segment(
         int num_elements = p_octant->clist.elements.size();
         for (int n = 0; n < num_elements; n++) {
             const AABB& aabb = p_octant->clist.aabbs[n];
-            Element* e = p_octant->clist.elements[n];
+            Element* e       = p_octant->clist.elements[n];
 
             if (e->last_pass == pass
                 || (use_pairs && !(e->pairable_type & p_mask))) {
@@ -1583,7 +1583,7 @@ OCTREE_FUNC(void)::_cull_segment(
         typename List<Element*, AL>::Element* I;
         I = p_octant->elements.front();
         for (; I; I = I->next()) {
-            Element* e = I->get();
+            Element* e       = I->get();
             const AABB& aabb = e->aabb;
 
             if (e->last_pass == pass
@@ -1617,7 +1617,7 @@ OCTREE_FUNC(void)::_cull_segment(
         int num_elements = p_octant->clist_pairable.elements.size();
         for (int n = 0; n < num_elements; n++) {
             const AABB& aabb = p_octant->clist_pairable.aabbs[n];
-            Element* e = p_octant->clist_pairable.elements[n];
+            Element* e       = p_octant->clist_pairable.elements[n];
 
             if (e->last_pass == pass
                 || (use_pairs && !(e->pairable_type & p_mask))) {
@@ -1644,7 +1644,7 @@ OCTREE_FUNC(void)::_cull_segment(
         typename List<Element*, AL>::Element* I;
         I = p_octant->pairable_elements.front();
         for (; I; I = I->next()) {
-            Element* e = I->get();
+            Element* e       = I->get();
             const AABB& aabb = e->aabb;
 
             if (e->last_pass == pass
@@ -1710,7 +1710,7 @@ OCTREE_FUNC(void)::_cull_point(
         int num_elements = p_octant->clist.elements.size();
         for (int n = 0; n < num_elements; n++) {
             const AABB& aabb = p_octant->clist.aabbs[n];
-            Element* e = p_octant->clist.elements[n];
+            Element* e       = p_octant->clist.elements[n];
 
             if (aabb.has_point(p_point)) {
                 if (e->last_pass == pass
@@ -1735,7 +1735,7 @@ OCTREE_FUNC(void)::_cull_point(
         typename List<Element*, AL>::Element* I;
         I = p_octant->elements.front();
         for (; I; I = I->next()) {
-            Element* e = I->get();
+            Element* e       = I->get();
             const AABB& aabb = e->aabb;
 
             if (e->last_pass == pass
@@ -1769,7 +1769,7 @@ OCTREE_FUNC(void)::_cull_point(
         int num_elements = p_octant->clist_pairable.elements.size();
         for (int n = 0; n < num_elements; n++) {
             const AABB& aabb = p_octant->clist_pairable.aabbs[n];
-            Element* e = p_octant->clist_pairable.elements[n];
+            Element* e       = p_octant->clist_pairable.elements[n];
 
             if (aabb.has_point(p_point)) {
                 if (e->last_pass == pass
@@ -1796,7 +1796,7 @@ OCTREE_FUNC(void)::_cull_point(
         typename List<Element*, AL>::Element* I;
         I = p_octant->pairable_elements.front();
         for (; I; I = I->next()) {
-            Element* e = I->get();
+            Element* e       = I->get();
             const AABB& aabb = e->aabb;
 
             if (e->last_pass == pass
@@ -1859,14 +1859,14 @@ OCTREE_FUNC(int)::cull_convex(
     int result_count = 0;
     pass++;
     _CullConvexData cdata;
-    cdata.planes = &p_convex[0];
-    cdata.plane_count = p_convex.size();
-    cdata.points = &convex_points[0];
-    cdata.point_count = convex_points.size();
+    cdata.planes       = &p_convex[0];
+    cdata.plane_count  = p_convex.size();
+    cdata.points       = &convex_points[0];
+    cdata.point_count  = convex_points.size();
     cdata.result_array = p_result_array;
-    cdata.result_max = p_result_max;
-    cdata.result_idx = &result_count;
-    cdata.mask = p_mask;
+    cdata.result_max   = p_result_max;
+    cdata.result_idx   = &result_count;
+    cdata.mask         = p_mask;
 
     _cull_convex(root, &cdata);
 
@@ -1955,39 +1955,39 @@ OCTREE_FUNC(int)::cull_point(
 
 OCTREE_FUNC(void
 )::set_pair_callback(PairCallback p_callback, void* p_userdata) {
-    pair_callback = p_callback;
+    pair_callback          = p_callback;
     pair_callback_userdata = p_userdata;
 }
 
 OCTREE_FUNC(void
 )::set_unpair_callback(UnpairCallback p_callback, void* p_userdata) {
-    unpair_callback = p_callback;
+    unpair_callback          = p_callback;
     unpair_callback_userdata = p_userdata;
 }
 
 OCTREE_FUNC_CONSTRUCTOR::OCTREE_CLASS_NAME(real_t p_unit_size) {
     last_element_id = 1;
-    pass = 1;
-    unit_size = p_unit_size;
-    root = nullptr;
+    pass            = 1;
+    unit_size       = p_unit_size;
+    root            = nullptr;
 
-    octant_count = 0;
-    pair_count = 0;
+    octant_count          = 0;
+    pair_count            = 0;
     octant_elements_limit = OCTREE_DEFAULT_OCTANT_LIMIT;
 
-    pair_callback = nullptr;
-    unpair_callback = nullptr;
-    pair_callback_userdata = nullptr;
+    pair_callback            = nullptr;
+    unpair_callback          = nullptr;
+    pair_callback_userdata   = nullptr;
     unpair_callback_userdata = nullptr;
 }
 
 #ifdef TOOLS_ENABLED
 OCTREE_FUNC(String)::debug_aabb_to_string(const AABB& aabb) const {
     String sz;
-    sz = "( " + String(aabb.position);
-    sz += " ) - ( ";
-    Vector3 max = aabb.position + aabb.size;
-    sz += String(max) + " )";
+    sz           = "( " + String(aabb.position);
+    sz          += " ) - ( ";
+    Vector3 max  = aabb.position + aabb.size;
+    sz          += String(max) + " )";
     return sz;
 }
 

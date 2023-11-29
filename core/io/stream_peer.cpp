@@ -75,7 +75,7 @@ Array StreamPeer::_get_data(int p_bytes) {
     }
 
     PoolVector<uint8_t>::Write w = data.write();
-    Error err = get_data(&w[0], p_bytes);
+    Error err                    = get_data(&w[0], p_bytes);
     w.release();
     ret.push_back(err);
     ret.push_back(data);
@@ -185,7 +185,7 @@ void StreamPeer::put_float(float p_val) {
     encode_float(p_val, buf);
     if (big_endian) {
         uint32_t* p32 = (uint32_t*)buf;
-        *p32 = BSWAP32(*p32);
+        *p32          = BSWAP32(*p32);
     }
 
     put_data(buf, 4);
@@ -196,7 +196,7 @@ void StreamPeer::put_double(double p_val) {
     encode_double(p_val, buf);
     if (big_endian) {
         uint64_t* p64 = (uint64_t*)buf;
-        *p64 = BSWAP64(*p64);
+        *p64          = BSWAP64(*p64);
     }
     put_data(buf, 8);
 }
@@ -301,7 +301,7 @@ float StreamPeer::get_float() {
 
     if (big_endian) {
         uint32_t* p32 = (uint32_t*)buf;
-        *p32 = BSWAP32(*p32);
+        *p32          = BSWAP32(*p32);
     }
 
     return decode_float(buf);
@@ -313,7 +313,7 @@ double StreamPeer::get_double() {
 
     if (big_endian) {
         uint64_t* p64 = (uint64_t*)buf;
-        *p64 = BSWAP64(*p64);
+        *p64          = BSWAP64(*p64);
     }
 
     return decode_double(buf);
@@ -570,7 +570,7 @@ void StreamPeerBuffer::resize(int p_size) {
 }
 
 void StreamPeerBuffer::set_data_array(const PoolVector<uint8_t>& p_data) {
-    data = p_data;
+    data    = p_data;
     pointer = 0;
 }
 

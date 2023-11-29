@@ -47,7 +47,7 @@ void EditorRunNative::_notification(int p_what) {
             Ref<ImageTexture> icon = eep->get_run_icon();
             if (!icon.is_null()) {
                 Ref<Image> im = icon->get_data();
-                im = im->duplicate();
+                im            = im->duplicate();
                 im->clear_mipmaps();
                 if (!im->empty()) {
                     im->resize(16 * EDSCALE, 16 * EDSCALE);
@@ -72,12 +72,12 @@ void EditorRunNative::_notification(int p_what) {
 
         if (changed) {
             for (Map<int, MenuButton*>::Element* E = menus.front(); E;
-                 E = E->next()) {
+                 E                                 = E->next()) {
                 Ref<EditorExportPlatform> eep =
                     EditorExport::get_singleton()->get_export_platform(E->key()
                     );
                 MenuButton* mb = E->get();
-                int dc = eep->get_options_count();
+                int dc         = eep->get_options_count();
 
                 if (dc == 0) {
                     mb->hide();
@@ -109,7 +109,7 @@ void EditorRunNative::_notification(int p_what) {
 
 void EditorRunNative::_run_native(int p_idx, int p_platform) {
     if (!EditorNode::get_singleton()->ensure_main_scene(true)) {
-        resume_idx = p_idx;
+        resume_idx      = p_idx;
         resume_platform = p_platform;
         return;
     }
@@ -212,11 +212,11 @@ bool EditorRunNative::get_debug_navigation() const {
 
 EditorRunNative::EditorRunNative() {
     set_process(true);
-    first = true;
-    deploy_dumb = false;
+    first               = true;
+    deploy_dumb         = false;
     deploy_debug_remote = false;
-    debug_collisions = false;
-    debug_navigation = false;
-    resume_idx = 0;
-    resume_platform = 0;
+    debug_collisions    = false;
+    debug_navigation    = false;
+    resume_idx          = 0;
+    resume_platform     = 0;
 }

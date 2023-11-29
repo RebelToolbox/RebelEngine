@@ -137,7 +137,7 @@ void TextEditor::_load_theme_settings() {
         EDITOR_GET("text_editor/highlighting/search_result_color");
     Color search_result_border_color =
         EDITOR_GET("text_editor/highlighting/search_result_border_color");
-    Color symbol_color = EDITOR_GET("text_editor/highlighting/symbol_color");
+    Color symbol_color  = EDITOR_GET("text_editor/highlighting/symbol_color");
     Color keyword_color = EDITOR_GET("text_editor/highlighting/keyword_color");
     Color control_flow_keyword_color =
         EDITOR_GET("text_editor/highlighting/control_flow_keyword_color");
@@ -145,7 +145,7 @@ void TextEditor::_load_theme_settings() {
         EDITOR_GET("text_editor/highlighting/base_type_color");
     Color type_color = EDITOR_GET("text_editor/highlighting/engine_type_color");
     Color comment_color = EDITOR_GET("text_editor/highlighting/comment_color");
-    Color string_color = EDITOR_GET("text_editor/highlighting/string_color");
+    Color string_color  = EDITOR_GET("text_editor/highlighting/string_color");
 
     text_edit->add_color_override("background_color", background_color);
     text_edit->add_color_override(
@@ -210,14 +210,14 @@ void TextEditor::_load_theme_settings() {
         EDITOR_DEF("text_editor/theme/line_spacing", 6)
     );
 
-    colors_cache.font_color = text_color;
-    colors_cache.symbol_color = symbol_color;
-    colors_cache.keyword_color = keyword_color;
+    colors_cache.font_color                 = text_color;
+    colors_cache.symbol_color               = symbol_color;
+    colors_cache.keyword_color              = keyword_color;
     colors_cache.control_flow_keyword_color = control_flow_keyword_color;
-    colors_cache.basetype_color = basetype_color;
-    colors_cache.type_color = type_color;
-    colors_cache.comment_color = comment_color;
-    colors_cache.string_color = string_color;
+    colors_cache.basetype_color             = basetype_color;
+    colors_cache.type_color                 = type_color;
+    colors_cache.comment_color              = comment_color;
+    colors_cache.string_color               = string_color;
 }
 
 String TextEditor::get_name() {
@@ -284,10 +284,10 @@ void TextEditor::reload_text() {
     ERR_FAIL_COND(text_file.is_null());
 
     TextEdit* te = code_editor->get_text_edit();
-    int column = te->cursor_get_column();
-    int row = te->cursor_get_line();
-    int h = te->get_h_scroll();
-    int v = te->get_v_scroll();
+    int column   = te->cursor_get_column();
+    int row      = te->cursor_get_line();
+    int h        = te->get_h_scroll();
+    int v        = te->get_v_scroll();
 
     te->set_text(text_file->get_text());
     te->cursor_set_line(row);
@@ -627,15 +627,15 @@ void TextEditor::_text_edit_gui_input(const Ref<InputEvent>& ev) {
                     "text_editor/cursor/right_click_moves_caret"
                 )
             );
-            bool can_fold = tx->can_fold(row);
+            bool can_fold  = tx->can_fold(row);
             bool is_folded = tx->is_folded(row);
 
             if (tx->is_right_click_moving_caret()) {
                 if (tx->is_selection_active()) {
-                    int from_line = tx->get_selection_from_line();
-                    int to_line = tx->get_selection_to_line();
+                    int from_line   = tx->get_selection_from_line();
+                    int to_line     = tx->get_selection_to_line();
                     int from_column = tx->get_selection_from_column();
-                    int to_column = tx->get_selection_to_column();
+                    int to_column   = tx->get_selection_to_column();
 
                     if (row < from_line || row > to_line
                         || (row == from_line && col < from_column)
@@ -664,7 +664,7 @@ void TextEditor::_text_edit_gui_input(const Ref<InputEvent>& ev) {
     Ref<InputEventKey> k = ev;
     if (k.is_valid() && k->is_pressed() && k->get_scancode() == KEY_MENU) {
         TextEdit* tx = code_editor->get_text_edit();
-        int line = tx->cursor_get_line();
+        int line     = tx->cursor_get_line();
         _make_context_menu(
             tx->is_selection_active(),
             tx->can_fold(line),
@@ -678,7 +678,7 @@ void TextEditor::_text_edit_gui_input(const Ref<InputEvent>& ev) {
 
 void TextEditor::_prepare_edit_menu() {
     const TextEdit* tx = code_editor->get_text_edit();
-    PopupMenu* popup = edit_menu->get_popup();
+    PopupMenu* popup   = edit_menu->get_popup();
     popup->set_item_disabled(popup->get_item_index(EDIT_UNDO), !tx->has_undo());
     popup->set_item_disabled(popup->get_item_index(EDIT_REDO), !tx->has_redo());
 }
@@ -929,7 +929,7 @@ TextEditor::TextEditor() {
     convert_case->connect("id_pressed", this, "_edit_option");
 
     highlighters[TTR("Standard")] = NULL;
-    highlighter_menu = memnew(PopupMenu);
+    highlighter_menu              = memnew(PopupMenu);
     highlighter_menu->set_name("highlighter_menu");
     edit_menu->get_popup()->add_child(highlighter_menu);
     edit_menu->get_popup()->add_submenu_item(

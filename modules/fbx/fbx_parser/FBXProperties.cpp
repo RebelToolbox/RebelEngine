@@ -208,7 +208,7 @@ PropertyPtr PropertyTable::Get(const std::string& name) const {
         LazyPropertyMap::const_iterator lit = lazyProps.find(name);
         if (lit != lazyProps.end()) {
             props[name] = ReadTypedProperty(lit->second);
-            it = props.find(name);
+            it          = props.find(name);
 
             // ai_assert(it != props.end());
         }

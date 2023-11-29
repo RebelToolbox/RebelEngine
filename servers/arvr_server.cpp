@@ -329,7 +329,7 @@ Array ARVRServer::get_interfaces() const {
     for (int i = 0; i < interfaces.size(); i++) {
         Dictionary iface_info;
 
-        iface_info["id"] = i;
+        iface_info["id"]   = i;
         iface_info["name"] = interfaces[i]->get_name();
 
         ret.push_back(iface_info);
@@ -515,7 +515,7 @@ void ARVRServer::_mark_commit() {
 };
 
 ARVRServer::ARVRServer() {
-    singleton = this;
+    singleton   = this;
     world_scale = 1.0;
 };
 

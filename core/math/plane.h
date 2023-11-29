@@ -124,7 +124,7 @@ real_t Plane::distance_to(const Vector3& p_point) const {
 
 bool Plane::has_point(const Vector3& p_point, real_t _epsilon) const {
     real_t dist = normal.dot(p_point) - d;
-    dist = ABS(dist);
+    dist        = ABS(dist);
     return (dist <= _epsilon);
 }
 

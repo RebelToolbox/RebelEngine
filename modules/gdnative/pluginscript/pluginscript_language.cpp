@@ -108,7 +108,7 @@ Ref<Script> PluginScriptLanguage::get_template(
     const String& p_class_name,
     const String& p_base_class_name
 ) const {
-    Script* ns = create_script();
+    Script* ns         = create_script();
     Ref<Script> script = Ref<Script>(ns);
     if (_desc.get_template_source_code) {
         godot_string src = _desc.get_template_source_code(
@@ -288,7 +288,7 @@ void PluginScriptLanguage::get_public_constants(
         Dictionary constants;
         _desc.get_public_constants(_data, (godot_dictionary*)&constants);
         for (const Variant* key = constants.next(); key;
-             key = constants.next(key)) {
+             key                = constants.next(key)) {
             Variant value = constants[*key];
             p_constants->push_back(Pair<String, Variant>(*key, value));
         }
@@ -329,10 +329,10 @@ int PluginScriptLanguage::profiling_get_accumulated_data(
         info_count =
             _desc.profiling_get_accumulated_data(_data, info, p_info_max);
         for (int i = 0; i < info_count; ++i) {
-            p_info_arr[i].signature = *(StringName*)&info[i].signature;
+            p_info_arr[i].signature  = *(StringName*)&info[i].signature;
             p_info_arr[i].call_count = info[i].call_count;
             p_info_arr[i].total_time = info[i].total_time;
-            p_info_arr[i].self_time = info[i].self_time;
+            p_info_arr[i].self_time  = info[i].self_time;
             godot_string_name_destroy(&info[i].signature);
         }
     }
@@ -353,10 +353,10 @@ int PluginScriptLanguage::profiling_get_frame_data(
             );
         info_count = _desc.profiling_get_frame_data(_data, info, p_info_max);
         for (int i = 0; i < info_count; ++i) {
-            p_info_arr[i].signature = *(StringName*)&info[i].signature;
+            p_info_arr[i].signature  = *(StringName*)&info[i].signature;
             p_info_arr[i].call_count = info[i].call_count;
             p_info_arr[i].total_time = info[i].total_time;
-            p_info_arr[i].self_time = info[i].self_time;
+            p_info_arr[i].self_time  = info[i].self_time;
             godot_string_name_destroy(&info[i].signature);
         }
     }
@@ -377,7 +377,7 @@ void PluginScriptLanguage::frame() {
 String PluginScriptLanguage::debug_get_error() const {
     if (_desc.debug_get_error) {
         godot_string tmp = _desc.debug_get_error(_data);
-        String ret = *(String*)&tmp;
+        String ret       = *(String*)&tmp;
         godot_string_destroy(&tmp);
         return ret;
     }
@@ -401,7 +401,7 @@ int PluginScriptLanguage::debug_get_stack_level_line(int p_level) const {
 String PluginScriptLanguage::debug_get_stack_level_function(int p_level) const {
     if (_desc.debug_get_stack_level_function) {
         godot_string tmp = _desc.debug_get_stack_level_function(_data, p_level);
-        String ret = *(String*)&tmp;
+        String ret       = *(String*)&tmp;
         godot_string_destroy(&tmp);
         return ret;
     }
@@ -411,7 +411,7 @@ String PluginScriptLanguage::debug_get_stack_level_function(int p_level) const {
 String PluginScriptLanguage::debug_get_stack_level_source(int p_level) const {
     if (_desc.debug_get_stack_level_source) {
         godot_string tmp = _desc.debug_get_stack_level_source(_data, p_level);
-        String ret = *(String*)&tmp;
+        String ret       = *(String*)&tmp;
         godot_string_destroy(&tmp);
         return ret;
     }

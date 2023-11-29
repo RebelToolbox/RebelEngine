@@ -173,7 +173,7 @@ void ARVRPositionalTracker::set_orientation(const Basis& p_orientation) {
     _THREAD_SAFE_METHOD_
 
     tracks_orientation = true; // obviously we have this
-    orientation = p_orientation;
+    orientation        = p_orientation;
 };
 
 Basis ARVRPositionalTracker::get_orientation() const {
@@ -195,7 +195,7 @@ void ARVRPositionalTracker::set_position(const Vector3& p_position) {
     ERR_FAIL_COND(world_scale == 0);
 
     tracks_position = true; // obviously we have this
-    rw_position = p_position / world_scale;
+    rw_position     = p_position / world_scale;
 };
 
 Vector3 ARVRPositionalTracker::get_position() const {
@@ -212,7 +212,7 @@ void ARVRPositionalTracker::set_rw_position(const Vector3& p_rw_position) {
     _THREAD_SAFE_METHOD_
 
     tracks_position = true; // obviously we have this
-    rw_position = p_rw_position;
+    rw_position     = p_rw_position;
 };
 
 Vector3 ARVRPositionalTracker::get_rw_position() const {
@@ -268,7 +268,7 @@ Transform ARVRPositionalTracker::get_transform(bool p_adjust_by_reference_frame
 ) const {
     Transform new_transform;
 
-    new_transform.basis = get_orientation();
+    new_transform.basis  = get_orientation();
     new_transform.origin = get_position();
 
     if (p_adjust_by_reference_frame) {
@@ -294,14 +294,14 @@ void ARVRPositionalTracker::set_rumble(real_t p_rumble) {
 };
 
 ARVRPositionalTracker::ARVRPositionalTracker() {
-    type = ARVRServer::TRACKER_UNKNOWN;
-    name = "Unknown";
-    joy_id = -1;
-    tracker_id = 0;
+    type               = ARVRServer::TRACKER_UNKNOWN;
+    name               = "Unknown";
+    joy_id             = -1;
+    tracker_id         = 0;
     tracks_orientation = false;
-    tracks_position = false;
-    hand = TRACKER_HAND_UNKNOWN;
-    rumble = 0.0;
+    tracks_position    = false;
+    hand               = TRACKER_HAND_UNKNOWN;
+    rumble             = 0.0;
 };
 
 ARVRPositionalTracker::~ARVRPositionalTracker(){

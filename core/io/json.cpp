@@ -62,11 +62,11 @@ String JSON::_print_var(
     bool p_sort_keys,
     Set<const void*>& p_markers
 ) {
-    String colon = ":";
+    String colon         = ":";
     String end_statement = "";
 
     if (!p_indent.empty()) {
-        colon += " ";
+        colon         += " ";
         end_statement += "\n";
     }
 
@@ -83,9 +83,9 @@ String JSON::_print_var(
         case Variant::POOL_REAL_ARRAY:
         case Variant::POOL_STRING_ARRAY:
         case Variant::ARRAY: {
-            String s = "[";
-            s += end_statement;
-            Array a = p_var;
+            String s  = "[";
+            s        += end_statement;
+            Array a   = p_var;
 
             ERR_FAIL_COND_V_MSG(
                 p_markers.has(a.id()),
@@ -113,9 +113,9 @@ String JSON::_print_var(
             return s;
         };
         case Variant::DICTIONARY: {
-            String s = "{";
-            s += end_statement;
-            Dictionary d = p_var;
+            String s      = "{";
+            s            += end_statement;
+            Dictionary d  = p_var;
 
             ERR_FAIL_COND_V_MSG(
                 p_markers.has(d.id()),
@@ -277,10 +277,10 @@ Error JSON::_get_token(
                                     if (c >= '0' && c <= '9') {
                                         v = c - '0';
                                     } else if (c >= 'a' && c <= 'f') {
-                                        v = c - 'a';
+                                        v  = c - 'a';
                                         v += 10;
                                     } else if (c >= 'A' && c <= 'F') {
-                                        v = c - 'A';
+                                        v  = c - 'A';
                                         v += 10;
                                     } else {
                                         ERR_PRINT("BUG");
@@ -288,7 +288,7 @@ Error JSON::_get_token(
                                     }
 
                                     res <<= 4;
-                                    res |= v;
+                                    res  |= v;
                                 }
                                 index += 4; // will add at the end anyway
 
@@ -314,7 +314,7 @@ Error JSON::_get_token(
                     index++;
                 }
 
-                r_token.type = TK_STRING;
+                r_token.type  = TK_STRING;
                 r_token.value = str;
                 return OK;
 
@@ -329,10 +329,10 @@ Error JSON::_get_token(
                     || (p_str[index] >= '0' && p_str[index] <= '9')) {
                     // a number
                     const CharType* rptr;
-                    double number = String::to_double(&p_str[index], &rptr);
-                    index += (rptr - &p_str[index]);
-                    r_token.type = TK_NUMBER;
-                    r_token.value = number;
+                    double number  = String::to_double(&p_str[index], &rptr);
+                    index         += (rptr - &p_str[index]);
+                    r_token.type   = TK_NUMBER;
+                    r_token.value  = number;
                     return OK;
 
                 } else if ((p_str[index] >= 'A' && p_str[index] <= 'Z') || (p_str[index] >= 'a' && p_str[index] <= 'z')) {
@@ -344,7 +344,7 @@ Error JSON::_get_token(
                         index++;
                     }
 
-                    r_token.type = TK_IDENTIFIER;
+                    r_token.type  = TK_IDENTIFIER;
                     r_token.value = id;
                     return OK;
                 } else {
@@ -511,8 +511,8 @@ Error JSON::_parse_object(
                 return err;
             }
             object[key] = v;
-            need_comma = true;
-            at_key = true;
+            need_comma  = true;
+            at_key      = true;
         }
     }
 
@@ -527,8 +527,8 @@ Error JSON::parse(
     int& r_err_line
 ) {
     const CharType* str = p_json.ptr();
-    int idx = 0;
-    int len = p_json.length();
+    int idx             = 0;
+    int len             = p_json.length();
     Token token;
     r_err_line = 0;
     String aux_key;
@@ -548,7 +548,7 @@ Error JSON::parse(
         if (err || token.type != TK_EOF) {
             r_err_str = "Expected 'EOF'";
             // Reset return value to empty `Variant`
-            r_ret = Variant();
+            r_ret     = Variant();
             return ERR_PARSE_ERROR;
         }
     }

@@ -73,7 +73,7 @@ public:
     void popup_dialog(
         const StringName& p_base,
         bool p_enable_multi = false,
-        bool p_dontclear = false
+        bool p_dontclear    = false
     );
     EditorQuickOpen();
 };

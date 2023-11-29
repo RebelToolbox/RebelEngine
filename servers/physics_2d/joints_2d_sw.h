@@ -68,7 +68,7 @@ public:
 
     Joint2DSW(Body2DSW** p_body_ptr = nullptr, int p_body_count = 0) :
         Constraint2DSW(p_body_ptr, p_body_count) {
-        bias = 0;
+        bias      = 0;
         max_force = max_bias = 3.40282e+38;
     };
 };

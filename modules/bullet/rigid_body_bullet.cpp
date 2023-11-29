@@ -271,7 +271,7 @@ void RigidBodyBullet::KinematicUtilities::copyAllOwnerShapes() {
             continue;
         }
 
-        shapes.write[i].transform = shape_wrapper->transform;
+        shapes.write[i].transform              = shape_wrapper->transform;
         shapes.write[i].transform.getOrigin() *= owner_scale;
         switch (shape_wrapper->shape->get_type()) {
             case PhysicsServer::SHAPE_SPHERE:
@@ -389,7 +389,7 @@ void RigidBodyBullet::reload_body() {
 void RigidBodyBullet::set_space(SpaceBullet* p_space) {
     // Clear the old space if there is one
     if (space) {
-        can_integrate_forces = false;
+        can_integrate_forces                = false;
         isScratchedSpaceOverrideModificator = false;
         // Remove any constraints
         space->remove_rigid_body_constraints(this);
@@ -470,10 +470,10 @@ void RigidBodyBullet::set_force_integration_callback(
     }
 
     if (p_id != 0) {
-        force_integration_callback = memnew(ForceIntegrationCallback);
-        force_integration_callback->id = p_id;
+        force_integration_callback         = memnew(ForceIntegrationCallback);
+        force_integration_callback->id     = p_id;
         force_integration_callback->method = p_method;
-        force_integration_callback->udata = p_udata;
+        force_integration_callback->udata  = p_udata;
     }
 }
 
@@ -491,12 +491,12 @@ void RigidBodyBullet::on_collision_filters_change() {
 
 void RigidBodyBullet::on_collision_checker_start() {
     prev_collision_count = collisionsCount;
-    collisionsCount = 0;
+    collisionsCount      = 0;
 
     // Swap array
     Vector<RigidBodyBullet*>* s = prev_collision_traces;
-    prev_collision_traces = curr_collision_traces;
-    curr_collision_traces = s;
+    prev_collision_traces       = curr_collision_traces;
+    curr_collision_traces       = s;
 }
 
 void RigidBodyBullet::on_collision_checker_end() {
@@ -518,14 +518,14 @@ bool RigidBodyBullet::add_collision_object(
         return false;
     }
 
-    CollisionData& cd = collisions.write[collisionsCount];
-    cd.hitLocalLocation = p_hitLocalLocation;
-    cd.otherObject = p_otherObject;
-    cd.hitWorldLocation = p_hitWorldLocation;
-    cd.hitNormal = p_hitNormal;
-    cd.appliedImpulse = p_appliedImpulse;
+    CollisionData& cd     = collisions.write[collisionsCount];
+    cd.hitLocalLocation   = p_hitLocalLocation;
+    cd.otherObject        = p_otherObject;
+    cd.hitWorldLocation   = p_hitWorldLocation;
+    cd.hitNormal          = p_hitNormal;
+    cd.appliedImpulse     = p_appliedImpulse;
     cd.other_object_shape = p_other_shape_index;
-    cd.local_shape = p_local_shape_index;
+    cd.local_shape        = p_local_shape_index;
 
     curr_collision_traces->write[collisionsCount] = p_otherObject;
 
@@ -937,7 +937,7 @@ void RigidBodyBullet::reload_shapes() {
     RigidCollisionObjectBullet::reload_shapes();
 
     const btScalar invMass = btBody->getInvMass();
-    const btScalar mass = invMass == 0 ? 0 : 1 / invMass;
+    const btScalar mass    = invMass == 0 ? 0 : 1 / invMass;
 
     if (mainShape) {
         // inertia initialised zero here because some of bullet's collision
@@ -1034,7 +1034,7 @@ void RigidBodyBullet::reload_space_override_modificator() {
     }
 
     Vector3 newGravity(0.0, 0.0, 0.0);
-    real_t newLinearDamp = MAX(0.0, linearDamp);
+    real_t newLinearDamp  = MAX(0.0, linearDamp);
     real_t newAngularDamp = MAX(0.0, angularDamp);
 
     AreaBullet* currentArea;
@@ -1103,33 +1103,33 @@ void RigidBodyBullet::reload_space_override_modificator() {
                 /// This area adds its gravity/damp values to whatever has been
                 /// calculated so far. This way, many overlapping areas can
                 /// combine their physics to make interesting
-                newGravity += support_gravity;
-                newLinearDamp += currentArea->get_spOv_linearDamp();
+                newGravity     += support_gravity;
+                newLinearDamp  += currentArea->get_spOv_linearDamp();
                 newAngularDamp += currentArea->get_spOv_angularDamp();
                 break;
             case PhysicsServer::AREA_SPACE_OVERRIDE_COMBINE_REPLACE:
                 /// This area adds its gravity/damp values to whatever has been
                 /// calculated so far. Then stops taking into account the rest
                 /// of the areas, even the default one.
-                newGravity += support_gravity;
-                newLinearDamp += currentArea->get_spOv_linearDamp();
+                newGravity     += support_gravity;
+                newLinearDamp  += currentArea->get_spOv_linearDamp();
                 newAngularDamp += currentArea->get_spOv_angularDamp();
-                stopped = true;
+                stopped         = true;
                 break;
             case PhysicsServer::AREA_SPACE_OVERRIDE_REPLACE:
                 /// This area replaces any gravity/damp, even the default one,
                 /// and stops taking into account the rest of the areas.
-                newGravity = support_gravity;
-                newLinearDamp = currentArea->get_spOv_linearDamp();
+                newGravity     = support_gravity;
+                newLinearDamp  = currentArea->get_spOv_linearDamp();
                 newAngularDamp = currentArea->get_spOv_angularDamp();
-                stopped = true;
+                stopped        = true;
                 break;
             case PhysicsServer::AREA_SPACE_OVERRIDE_REPLACE_COMBINE:
                 /// This area replaces any gravity/damp calculated so far, but
                 /// keeps calculating the rest of the areas, down to the default
                 /// one.
-                newGravity = support_gravity;
-                newLinearDamp = currentArea->get_spOv_linearDamp();
+                newGravity     = support_gravity;
+                newLinearDamp  = currentArea->get_spOv_linearDamp();
                 newAngularDamp = currentArea->get_spOv_angularDamp();
                 break;
         }
@@ -1139,7 +1139,7 @@ void RigidBodyBullet::reload_space_override_modificator() {
     if (!stopped) {
         newGravity +=
             space->get_gravity_direction() * space->get_gravity_magnitude();
-        newLinearDamp += space->get_linear_damp();
+        newLinearDamp  += space->get_linear_damp();
         newAngularDamp += space->get_angular_damp();
     }
 

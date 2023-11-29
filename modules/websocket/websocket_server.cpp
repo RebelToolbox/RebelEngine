@@ -34,7 +34,7 @@ GDCINULL(WebSocketServer);
 
 WebSocketServer::WebSocketServer() {
     _peer_id = 1;
-    bind_ip = IP_Address("*");
+    bind_ip  = IP_Address("*");
 }
 
 WebSocketServer::~WebSocketServer() {}

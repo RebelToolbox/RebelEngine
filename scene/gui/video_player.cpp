@@ -69,7 +69,7 @@ int VideoPlayer::_audio_mix_callback(
     int todo = MIN(vp->resampler.get_writer_space(), p_frames);
 
     float* wb = vp->resampler.get_write_buffer();
-    int c = vp->resampler.get_channel_count();
+    int c     = vp->resampler.get_channel_count();
 
     for (int i = 0; i < todo * c; i++) {
         wb[i] = p_data[i];
@@ -95,7 +95,7 @@ void VideoPlayer::_mix_audio() {
     }
 
     AudioFrame* buffer = mix_buffer.ptrw();
-    int buffer_size = mix_buffer.size();
+    int buffer_size    = mix_buffer.size();
 
     // Resample
     if (!mix(buffer, buffer_size)) {
@@ -419,8 +419,8 @@ void VideoPlayer::_validate_property(PropertyInfo& p_property) const {
             if (i > 0) {
                 options += ",";
             }
-            String name = AudioServer::get_singleton()->get_bus_name(i);
-            options += name;
+            String name  = AudioServer::get_singleton()->get_bus_name(i);
+            options     += name;
         }
 
         p_property.hint_string = options;
@@ -602,14 +602,14 @@ void VideoPlayer::_bind_methods() {
 }
 
 VideoPlayer::VideoPlayer() {
-    volume = 1;
-    loops = false;
-    paused = false;
+    volume   = 1;
+    loops    = false;
+    paused   = false;
     autoplay = false;
-    expand = true;
+    expand   = true;
 
     audio_track = 0;
-    bus_index = 0;
+    bus_index   = 0;
 
     buffering_ms = 500;
 
@@ -617,7 +617,7 @@ VideoPlayer::VideoPlayer() {
     //	stream_rid=AudioServer::get_singleton()->audio_stream_create(&internal_stream);
     last_audio_time = 0;
 
-    wait_resampler = 0;
+    wait_resampler       = 0;
     wait_resampler_limit = 2;
 };
 

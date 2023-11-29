@@ -148,7 +148,7 @@ public abstract class RebelPlugin {
         nativeRegisterSingleton(pluginName, pluginObject);
 
         Set<Method> filteredMethods = new HashSet<>();
-        Class<?> clazz = pluginObject.getClass();
+        Class<?> clazz              = pluginObject.getClass();
 
         Method[] methods = clazz.getDeclaredMethods();
         for (Method method : methods) {

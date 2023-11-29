@@ -59,10 +59,10 @@
 - (id)initForFeed:(Ref<CameraFeed>)p_feed andDevice:(AVCaptureDevice*)p_device {
     if (self = [super init]) {
         NSError* error;
-        feed = p_feed;
-        width[0] = 0;
+        feed      = p_feed;
+        width[0]  = 0;
         height[0] = 0;
-        width[1] = 0;
+        width[1]  = 0;
         height[1] = 0;
 
         [self beginConfiguration];
@@ -167,11 +167,11 @@
 
         {
             // do Y
-            size_t new_width = CVPixelBufferGetWidthOfPlane(pixelBuffer, 0);
+            size_t new_width  = CVPixelBufferGetWidthOfPlane(pixelBuffer, 0);
             size_t new_height = CVPixelBufferGetHeightOfPlane(pixelBuffer, 0);
 
             if ((width[0] != new_width) || (height[0] != new_height)) {
-                width[0] = new_width;
+                width[0]  = new_width;
                 height[0] = new_height;
                 img_data[0].resize(new_width * new_height);
             }
@@ -191,11 +191,11 @@
 
         {
             // do CbCr
-            size_t new_width = CVPixelBufferGetWidthOfPlane(pixelBuffer, 1);
+            size_t new_width  = CVPixelBufferGetWidthOfPlane(pixelBuffer, 1);
             size_t new_height = CVPixelBufferGetHeightOfPlane(pixelBuffer, 1);
 
             if ((width[1] != new_width) || (height[1] != new_height)) {
-                width[1] = new_width;
+                width[1]  = new_width;
                 height[1] = new_height;
                 img_data[1].resize(2 * new_width * new_height);
             }
@@ -250,7 +250,7 @@ AVCaptureDevice* CameraFeedOSX::get_device() const {
 };
 
 CameraFeedOSX::CameraFeedOSX() {
-    device = NULL;
+    device          = NULL;
     capture_session = NULL;
 };
 
@@ -260,8 +260,8 @@ void CameraFeedOSX::set_device(AVCaptureDevice* p_device) {
 
     // get some info
     NSString* device_name = p_device.localizedName;
-    name = String::utf8(device_name.UTF8String);
-    position = CameraFeed::FEED_UNSPECIFIED;
+    name                  = String::utf8(device_name.UTF8String);
+    position              = CameraFeed::FEED_UNSPECIFIED;
     if ([p_device position] == AVCaptureDevicePositionBack) {
         position = CameraFeed::FEED_BACK;
     } else if ([p_device position] == AVCaptureDevicePositionFront) {
@@ -386,7 +386,7 @@ void CameraOSX::update_feeds() {
                                       nil]
                               mediaType:AVMediaTypeVideo
                                position:AVCaptureDevicePositionUnspecified];
-    NSArray* devices = session.devices;
+    NSArray* devices                         = session.devices;
 #else
     NSArray* devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
 #endif

@@ -78,9 +78,9 @@ public:
             memdelete_arr(_list);
             _list = nullptr;
         }
-        _size = 0;
-        _max_size = 0;
-        _max_size_bytes = 0;
+        _size            = 0;
+        _max_size        = 0;
+        _max_size_bytes  = 0;
         _unit_size_bytes = 0;
     }
 
@@ -88,8 +88,8 @@ public:
         free();
 
         _max_unit_size_bytes = p_max_unit_size_bytes;
-        _max_size = p_max_size_units;
-        _max_size_bytes = p_max_size_units * p_max_unit_size_bytes;
+        _max_size            = p_max_size_units;
+        _max_size_bytes      = p_max_size_units * p_max_unit_size_bytes;
 
         if (_max_size_bytes) {
             _list = memnew_arr(uint8_t, _max_size_bytes);
@@ -98,13 +98,13 @@ public:
 
     void prepare(int p_unit_size_bytes) {
         _unit_size_bytes = p_unit_size_bytes;
-        _size = 0;
+        _size            = 0;
     }
 
     // several items at a time
     uint8_t* request(int p_num_items = 1) {
-        int old_size = _size;
-        _size += p_num_items;
+        int old_size  = _size;
+        _size        += p_num_items;
 
         if (_size <= _max_size) {
             return get_unit(old_size);
@@ -128,8 +128,8 @@ template <class T>
 class RasterizerArray {
 public:
     RasterizerArray() {
-        _list = nullptr;
-        _size = 0;
+        _list     = nullptr;
+        _size     = 0;
         _max_size = 0;
     }
 
@@ -150,7 +150,7 @@ public:
             memdelete_arr(_list);
             _list = nullptr;
         }
-        _size = 0;
+        _size     = 0;
         _max_size = 0;
     }
 
@@ -159,7 +159,7 @@ public:
         if (p_size) {
             _list = memnew_arr(T, p_size);
         }
-        _size = 0;
+        _size     = 0;
         _max_size = p_size;
     }
 
@@ -186,8 +186,8 @@ public:
 
     // several items at a time
     T* request(int p_num_items) {
-        int old_size = _size;
-        _size += p_num_items;
+        int old_size  = _size;
+        _size        += p_num_items;
 
         if (_size <= _max_size) {
             return &_list[old_size];
@@ -239,8 +239,8 @@ public:
 
         unsigned int new_size = size();
         free();
-        _list = new_list;
-        _size = new_size;
+        _list     = new_list;
+        _size     = new_size;
         _max_size = new_max_size;
     }
 
@@ -343,9 +343,9 @@ public:
             memdelete_arr(_list);
             _list = nullptr;
         }
-        _size = 0;
-        _max_size = 0;
-        _max_size_bytes = 0;
+        _size            = 0;
+        _max_size        = 0;
+        _max_size_bytes  = 0;
         _unit_size_bytes = 0;
     }
 
@@ -353,8 +353,8 @@ public:
         free();
 
         _max_unit_size_bytes = p_max_unit_size_bytes;
-        _max_size = p_max_size_units;
-        _max_size_bytes = p_max_size_units * p_max_unit_size_bytes;
+        _max_size            = p_max_size_units;
+        _max_size_bytes      = p_max_size_units * p_max_unit_size_bytes;
 
         if (_max_size_bytes) {
             _list = memnew_arr(uint8_t, _max_size_bytes);
@@ -363,13 +363,13 @@ public:
 
     void prepare(int p_unit_size_bytes) {
         _unit_size_bytes = p_unit_size_bytes;
-        _size = 0;
+        _size            = 0;
     }
 
     // several items at a time
     uint8_t* request(int p_num_items = 1) {
-        int old_size = _size;
-        _size += p_num_items;
+        int old_size  = _size;
+        _size        += p_num_items;
 
         if (_size <= _max_size) {
             return get_unit(old_size);

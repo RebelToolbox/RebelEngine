@@ -220,7 +220,7 @@ Error ConfigFile::save_encrypted_pass(
     }
 
     FileAccessEncrypted* fae = memnew(FileAccessEncrypted);
-    err = fae->open_and_parse_password(
+    err                      = fae->open_and_parse_password(
         f,
         p_pass,
         FileAccessEncrypted::MODE_WRITE_AES256
@@ -245,7 +245,7 @@ Error ConfigFile::_internal_save(FileAccess* file) {
         file->store_string("[" + E.key() + "]\n\n");
 
         for (OrderedHashMap<String, Variant>::Element F = E.get().front(); F;
-             F = F.next()) {
+             F                                          = F.next()) {
             String vstr;
             VariantWriter::write_to_string(F.get(), vstr);
             file->store_string(

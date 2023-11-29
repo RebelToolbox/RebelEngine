@@ -320,21 +320,21 @@ Variant GDScriptFunction::call(
 
     uint32_t alloca_size = 0;
     GDScript* script;
-    int ip = 0;
+    int ip   = 0;
     int line = _initial_line;
 
     if (p_state) {
         // use existing (supplied) state (yielded)
-        stack = (Variant*)p_state->stack.ptr();
+        stack     = (Variant*)p_state->stack.ptr();
         call_args = (Variant**)&p_state->stack.ptr(
         )[sizeof(Variant) * p_state->stack_size]; // ptr() to avoid bounds check
-        line = p_state->line;
-        ip = p_state->ip;
+        line        = p_state->line;
+        ip          = p_state->ip;
         alloca_size = p_state->stack.size();
-        script = p_state->script;
-        p_instance = p_state->instance;
-        defarg = p_state->defarg;
-        self = p_state->self;
+        script      = p_state->script;
+        p_instance  = p_state->instance;
+        defarg      = p_state->defarg;
+        self        = p_state->self;
         // stack[p_state->result_pos]=p_state->result; //assign stack with
         // result
 
@@ -409,12 +409,12 @@ Variant GDScriptFunction::call(
             }
 
         } else {
-            stack = nullptr;
+            stack     = nullptr;
             call_args = nullptr;
         }
 
         if (p_instance) {
-            self = p_instance->owner;
+            self   = p_instance->owner;
             script = p_instance->script.ptr();
         } else {
             script = _script;
@@ -483,11 +483,11 @@ Variant GDScriptFunction::call(
 #ifdef DEBUG_ENABLED
 
     uint64_t function_start_time = 0;
-    uint64_t function_call_time = 0;
+    uint64_t function_call_time  = 0;
 
     if (GDScriptLanguage::get_singleton()->profiling) {
         function_start_time = OS::get_singleton()->get_ticks_usec();
-        function_call_time = 0;
+        function_call_time  = 0;
         profile.call_count++;
         profile.frame_call_count++;
     }
@@ -525,7 +525,7 @@ Variant GDScriptFunction::call(
                 if (!valid) {
                     if (ret.get_type() == Variant::STRING) {
                         // return a string when invalid with the error
-                        err_text = ret;
+                        err_text  = ret;
                         err_text += " in operator '"
                                   + Variant::get_operator_name(op) + "'.";
                     } else {
@@ -618,8 +618,8 @@ Variant GDScriptFunction::call(
                     }
                 }
 
-                *dst = extends_ok;
-                ip += 4;
+                *dst  = extends_ok;
+                ip   += 4;
             }
             DISPATCH_OPCODE;
 
@@ -632,8 +632,8 @@ Variant GDScriptFunction::call(
 
                 GD_ERR_BREAK(var_type < 0 || var_type >= Variant::VARIANT_MAX);
 
-                *dst = value->get_type() == var_type;
-                ip += 4;
+                *dst  = value->get_type() == var_type;
+                ip   += 4;
             }
             DISPATCH_OPCODE;
 
@@ -1129,7 +1129,7 @@ Variant GDScriptFunction::call(
             OPCODE(OPCODE_CONSTRUCT) {
                 CHECK_SPACE(2);
                 Variant::Type t = Variant::Type(_code_ptr[ip + 1]);
-                int argc = _code_ptr[ip + 2];
+                int argc        = _code_ptr[ip + 2];
                 CHECK_SPACE(argc + 2);
                 Variant** argptrs = call_args;
                 for (int i = 0; i < argc; i++) {
@@ -1256,7 +1256,7 @@ Variant GDScriptFunction::call(
 
                 if (err.error != Variant::CallError::CALL_OK) {
                     String methodstr = *methodname;
-                    String basestr = _get_var_type(base);
+                    String basestr   = _get_var_type(base);
 
                     if (methodstr == "call") {
                         if (argc >= 1) {
@@ -1390,7 +1390,7 @@ Variant GDScriptFunction::call(
                 const Map<StringName, GDScriptFunction*>::Element* E = nullptr;
                 while (gds->base.ptr()) {
                     gds = gds->base.ptr();
-                    E = gds->member_functions.find(*methodname);
+                    E   = gds->member_functions.find(*methodname);
                     if (E) {
                         break;
                     }
@@ -1438,7 +1438,7 @@ Variant GDScriptFunction::call(
 
                 if (err.error != Variant::CallError::CALL_OK) {
                     String methodstr = *methodname;
-                    err_text = _get_call_error(
+                    err_text         = _get_call_error(
                         err,
                         "function '" + methodstr + "'",
                         (const Variant**)argptrs
@@ -1462,7 +1462,7 @@ Variant GDScriptFunction::call(
                 }
 
                 Ref<GDScriptFunctionState> gdfs = memnew(GDScriptFunctionState);
-                gdfs->function = this;
+                gdfs->function                  = this;
 
                 gdfs->state.stack.resize(alloca_size);
                 // copy variant stack
@@ -1472,12 +1472,12 @@ Variant GDScriptFunction::call(
                         Variant(stack[i])
                     );
                 }
-                gdfs->state.stack_size = _stack_size;
-                gdfs->state.self = self;
+                gdfs->state.stack_size  = _stack_size;
+                gdfs->state.self        = self;
                 gdfs->state.alloca_size = alloca_size;
-                gdfs->state.ip = ip + ipofs;
-                gdfs->state.line = line;
-                gdfs->state.script = _script;
+                gdfs->state.ip          = ip + ipofs;
+                gdfs->state.line        = line;
+                gdfs->state.script      = _script;
                 GDScriptLanguage::singleton->lock.lock();
 
                 _script->pending_func_states.add(&gdfs->scripts_list);
@@ -1490,11 +1490,11 @@ Variant GDScriptFunction::call(
                 GDScriptLanguage::singleton->lock.unlock();
 #ifdef DEBUG_ENABLED
                 gdfs->state.function_name = name;
-                gdfs->state.script_path = _script->get_path();
+                gdfs->state.script_path   = _script->get_path();
 #endif
                 // gdfs->state.result_pos=ip+ipofs-1;
                 gdfs->state.defarg = defarg;
-                gdfs->function = this;
+                gdfs->function     = this;
 
                 retvalue = gdfs;
 
@@ -1517,7 +1517,7 @@ Variant GDScriptFunction::call(
                     }
 #endif
 
-                    Object* obj = argobj->operator Object*();
+                    Object* obj   = argobj->operator Object*();
                     String signal = argname->operator String();
 
                     if (argobj->is_invalid_object()) {
@@ -1577,8 +1577,8 @@ Variant GDScriptFunction::call(
                 }
 #endif
                 GET_VARIANT_PTR(result, 1);
-                *result = p_state->result;
-                ip += 2;
+                *result  = p_state->result;
+                ip      += 2;
             }
             DISPATCH_OPCODE;
 
@@ -1755,8 +1755,8 @@ Variant GDScriptFunction::call(
             OPCODE(OPCODE_LINE) {
                 CHECK_SPACE(2);
 
-                line = _code_ptr[ip + 1];
-                ip += 2;
+                line  = _code_ptr[ip + 1];
+                ip   += 2;
 
                 if (ScriptDebugger::get_singleton()) {
                     // line
@@ -1859,10 +1859,10 @@ Variant GDScriptFunction::call(
     if (GDScriptLanguage::get_singleton()->profiling) {
         uint64_t time_taken =
             OS::get_singleton()->get_ticks_usec() - function_start_time;
-        profile.total_time += time_taken;
-        profile.self_time += time_taken - function_call_time;
+        profile.total_time       += time_taken;
+        profile.self_time        += time_taken - function_call_time;
         profile.frame_total_time += time_taken;
-        profile.frame_self_time += time_taken - function_call_time;
+        profile.frame_self_time  += time_taken - function_call_time;
         GDScriptLanguage::get_singleton()->script_frame_time +=
             time_taken - function_call_time;
     }
@@ -1958,7 +1958,7 @@ void GDScriptFunction::debug_get_stack_member_state(
     int oc = 0;
     Map<StringName, _GDFKC> sdmap;
     for (const List<StackDebug>::Element* E = stack_debug.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         const StackDebug& sd = E->get();
         if (sd.line > p_line) {
             break;
@@ -1986,11 +1986,11 @@ void GDScriptFunction::debug_get_stack_member_state(
 
     List<_GDFKCS> stackpositions;
     for (Map<StringName, _GDFKC>::Element* E = sdmap.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         _GDFKCS spp;
-        spp.id = E->key();
+        spp.id    = E->key();
         spp.order = E->get().order;
-        spp.pos = E->get().pos.back()->get();
+        spp.pos   = E->get().pos.back()->get();
         stackpositions.push_back(spp);
     }
 
@@ -1998,7 +1998,7 @@ void GDScriptFunction::debug_get_stack_member_state(
 
     for (List<_GDFKCS>::Element* E = stackpositions.front(); E; E = E->next()) {
         Pair<StringName, int> p;
-        p.first = E->get().id;
+        p.first  = E->get().id;
         p.second = E->get().pos;
         r_stackvars->push_back(p);
     }
@@ -2006,9 +2006,9 @@ void GDScriptFunction::debug_get_stack_member_state(
 
 GDScriptFunction::GDScriptFunction() : function_list(this) {
     _stack_size = 0;
-    _call_size = 0;
-    rpc_mode = MultiplayerAPI::RPC_MODE_DISABLED;
-    name = "<anonymous>";
+    _call_size  = 0;
+    rpc_mode    = MultiplayerAPI::RPC_MODE_DISABLED;
+    name        = "<anonymous>";
 #ifdef DEBUG_ENABLED
     _func_cname = nullptr;
 
@@ -2016,14 +2016,14 @@ GDScriptFunction::GDScriptFunction() : function_list(this) {
     GDScriptLanguage::get_singleton()->function_list.add(&function_list);
     GDScriptLanguage::get_singleton()->lock.unlock();
 
-    profile.call_count = 0;
-    profile.self_time = 0;
-    profile.total_time = 0;
-    profile.frame_call_count = 0;
-    profile.frame_self_time = 0;
-    profile.frame_total_time = 0;
+    profile.call_count            = 0;
+    profile.self_time             = 0;
+    profile.total_time            = 0;
+    profile.frame_call_count      = 0;
+    profile.frame_self_time       = 0;
+    profile.frame_total_time      = 0;
     profile.last_frame_call_count = 0;
-    profile.last_frame_self_time = 0;
+    profile.last_frame_self_time  = 0;
     profile.last_frame_total_time = 0;
 
 #endif
@@ -2048,7 +2048,7 @@ Variant GDScriptFunctionState::_signal_callback(
     r_error.error = Variant::CallError::CALL_OK;
 
     if (p_argcount == 0) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 1;
         return Variant();
     } else if (p_argcount == 1) {
@@ -2066,7 +2066,7 @@ Variant GDScriptFunctionState::_signal_callback(
     Ref<GDScriptFunctionState> self = *p_args[p_argcount - 1];
 
     if (self.is_null()) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = p_argcount - 1;
         r_error.expected = Variant::OBJECT;
         return Variant();
@@ -2144,14 +2144,14 @@ Variant GDScriptFunctionState::resume(const Variant& p_arg) {
         GDScriptFunctionState* gdfs =
             Object::cast_to<GDScriptFunctionState>(ret);
         if (gdfs && gdfs->function == function) {
-            completed = false;
+            completed         = false;
             gdfs->first_state = first_state.is_valid()
                                   ? first_state
                                   : Ref<GDScriptFunctionState>(this);
         }
     }
 
-    function = nullptr; // cleaned up;
+    function     = nullptr; // cleaned up;
     state.result = Variant();
 
     if (completed) {

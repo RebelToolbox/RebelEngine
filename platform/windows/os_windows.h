@@ -165,10 +165,10 @@ typedef UINT32 PEN_MASK;
 #endif
 
 enum tagPOINTER_INPUT_TYPE {
-    PT_POINTER = 0x00000001,
-    PT_TOUCH = 0x00000002,
-    PT_PEN = 0x00000003,
-    PT_MOUSE = 0x00000004,
+    PT_POINTER  = 0x00000001,
+    PT_TOUCH    = 0x00000002,
+    PT_PEN      = 0x00000003,
+    PT_MOUSE    = 0x00000004,
     PT_TOUCHPAD = 0x00000005
 };
 
@@ -530,12 +530,12 @@ public:
     virtual Error execute(
         const String& p_path,
         const List<String>& p_arguments,
-        bool p_blocking = true,
+        bool p_blocking       = true,
         ProcessID* r_child_id = NULL,
-        String* r_pipe = NULL,
-        int* r_exitcode = NULL,
-        bool read_stderr = false,
-        Mutex* p_pipe_mutex = NULL
+        String* r_pipe        = NULL,
+        int* r_exitcode       = NULL,
+        bool read_stderr      = false,
+        Mutex* p_pipe_mutex   = NULL
     );
     virtual Error kill(const ProcessID& p_pid);
     virtual int get_process_id() const;

@@ -178,7 +178,7 @@ class TestPhysics2DMainLoop : public MainLoop {
     BodyShapeData body_shape_data[8];
 
     void _create_body_shape_data() {
-        VisualServer* vs = VisualServer::get_singleton();
+        VisualServer* vs    = VisualServer::get_singleton();
         Physics2DServer* ps = Physics2DServer::get_singleton();
 
         // SEGMENT
@@ -365,7 +365,7 @@ protected:
         Physics2DServer::ShapeType p_shape,
         const Transform2D& p_xform
     ) {
-        VisualServer* vs = VisualServer::get_singleton();
+        VisualServer* vs    = VisualServer::get_singleton();
         Physics2DServer* ps = Physics2DServer::get_singleton();
 
         RID body = ps->body_create();
@@ -428,7 +428,7 @@ protected:
         const Transform2D& p_xform = Transform2D()
     ) {
         Physics2DServer* ps = Physics2DServer::get_singleton();
-        VisualServer* vs = VisualServer::get_singleton();
+        VisualServer* vs    = VisualServer::get_singleton();
 
         RID concave = ps->concave_polygon_shape_create();
         ps->shape_set_data(concave, p_points);
@@ -513,7 +513,7 @@ protected:
 
 public:
     virtual void init() {
-        VisualServer* vs = VisualServer::get_singleton();
+        VisualServer* vs    = VisualServer::get_singleton();
         Physics2DServer* ps = Physics2DServer::get_singleton();
 
         space = ps->space_create();

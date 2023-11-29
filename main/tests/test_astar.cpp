@@ -72,23 +72,23 @@ public:
 bool test_abc() {
     ABCX abcx;
     PoolVector<int> path = abcx.get_id_path(ABCX::A, ABCX::C);
-    bool ok = path.size() == 3;
-    int i = 0;
-    ok = ok && path[i++] == ABCX::A;
-    ok = ok && path[i++] == ABCX::B;
-    ok = ok && path[i++] == ABCX::C;
+    bool ok              = path.size() == 3;
+    int i                = 0;
+    ok                   = ok && path[i++] == ABCX::A;
+    ok                   = ok && path[i++] == ABCX::B;
+    ok                   = ok && path[i++] == ABCX::C;
     return ok;
 }
 
 bool test_abcx() {
     ABCX abcx;
     PoolVector<int> path = abcx.get_id_path(ABCX::X, ABCX::C);
-    bool ok = path.size() == 4;
-    int i = 0;
-    ok = ok && path[i++] == ABCX::X;
-    ok = ok && path[i++] == ABCX::A;
-    ok = ok && path[i++] == ABCX::B;
-    ok = ok && path[i++] == ABCX::C;
+    bool ok              = path.size() == 4;
+    int i                = 0;
+    ok                   = ok && path[i++] == ABCX::X;
+    ok                   = ok && path[i++] == ABCX::A;
+    ok                   = ok && path[i++] == ABCX::B;
+    ok                   = ok && path[i++] == ABCX::C;
     return ok;
 }
 
@@ -417,7 +417,7 @@ TestFunc test_funcs[] =
     {test_abc, test_abcx, test_add_remove, test_solutions, nullptr};
 
 MainLoop* test() {
-    int count = 0;
+    int count  = 0;
     int passed = 0;
 
     while (true) {

@@ -99,7 +99,7 @@ ScrollContainer* EditorAbout::_populate_list(
     sc->add_child(vbc);
 
     for (int i = 0; i < p_sections.size(); i++) {
-        bool single_column = p_flag_single_column & 1 << i;
+        bool single_column           = p_flag_single_column & 1 << i;
         const char* const* names_ptr = p_src[i];
         if (*names_ptr) {
             Label* lbl = memnew(Label);
@@ -234,7 +234,7 @@ EditorAbout::EditorAbout() {
 
     _tpl_tree = memnew(Tree);
     _tpl_tree->set_hide_root(true);
-    TreeItem* root = _tpl_tree->create_item();
+    TreeItem* root       = _tpl_tree->create_item();
     TreeItem* tpl_ti_all = _tpl_tree->create_item(root);
     tpl_ti_all->set_text(0, TTR("All Components"));
     TreeItem* tpl_ti_tp = _tpl_tree->create_item(root);
@@ -247,15 +247,15 @@ EditorAbout::EditorAbout() {
     for (int component_index = 0; component_index < COPYRIGHT_INFO_COUNT;
          component_index++) {
         const ComponentCopyright& component = COPYRIGHT_INFO[component_index];
-        TreeItem* ti = _tpl_tree->create_item(tpl_ti_tp);
-        String component_name = component.name;
+        TreeItem* ti                        = _tpl_tree->create_item(tpl_ti_tp);
+        String component_name               = component.name;
         ti->set_text(0, component_name);
-        String text = component_name + "\n";
-        long_text += "- " + component_name + "\n";
+        String text  = component_name + "\n";
+        long_text   += "- " + component_name + "\n";
         for (int part_index = 0; part_index < component.part_count;
              part_index++) {
-            const ComponentCopyrightPart& part = component.parts[part_index];
-            text += "\n    Files:";
+            const ComponentCopyrightPart& part  = component.parts[part_index];
+            text                               += "\n    Files:";
             for (int file_num = 0; file_num < part.file_count; file_num++) {
                 text += "\n        " + String(part.files[file_num]);
             }
@@ -267,20 +267,20 @@ EditorAbout::EditorAbout() {
                     String::utf8("\n    \xc2\xa9 ")
                     + String::utf8(part.copyright_statements[copyright_index]);
             }
-            text += copyright;
-            long_text += copyright;
-            String license = "\n    License: " + String(part.license) + "\n";
-            text += license;
-            long_text += license + "\n";
+            text           += copyright;
+            long_text      += copyright;
+            String license  = "\n    License: " + String(part.license) + "\n";
+            text           += license;
+            long_text      += license + "\n";
         }
         ti->set_metadata(0, text);
     }
     for (int i = 0; i < LICENSE_COUNT; i++) {
-        TreeItem* ti = _tpl_tree->create_item(tpl_ti_lc);
+        TreeItem* ti       = _tpl_tree->create_item(tpl_ti_lc);
         String licensename = String(LICENSE_NAMES[i]);
         ti->set_text(0, licensename);
-        long_text += "- " + licensename + "\n\n";
-        String licensebody = String(LICENSE_BODIES[i]);
+        long_text          += "- " + licensename + "\n\n";
+        String licensebody  = String(LICENSE_BODIES[i]);
         ti->set_metadata(0, licensebody);
         long_text += "    " + licensebody.replace("\n", "\n    ") + "\n\n";
     }

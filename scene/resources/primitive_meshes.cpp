@@ -59,10 +59,10 @@ void PrimitiveMesh::_update() const {
 
     if (flip_faces) {
         PoolVector<Vector3> normals = arr[VS::ARRAY_NORMAL];
-        PoolVector<int> indices = arr[VS::ARRAY_INDEX];
+        PoolVector<int> indices     = arr[VS::ARRAY_INDEX];
         if (normals.size() && indices.size()) {
             {
-                int nc = normals.size();
+                int nc                       = normals.size();
                 PoolVector<Vector3>::Write w = normals.write();
                 for (int i = 0; i < nc; i++) {
                     w[i] = -w[i];
@@ -70,14 +70,14 @@ void PrimitiveMesh::_update() const {
             }
 
             {
-                int ic = indices.size();
+                int ic                   = indices.size();
                 PoolVector<int>::Write w = indices.write();
                 for (int i = 0; i < ic; i += 3) {
                     SWAP(w[i + 0], w[i + 1]);
                 }
             }
             arr[VS::ARRAY_NORMAL] = normals;
-            arr[VS::ARRAY_INDEX] = indices;
+            arr[VS::ARRAY_INDEX]  = indices;
         }
     }
 
@@ -311,7 +311,7 @@ bool PrimitiveMesh::get_flip_faces() const {
 PrimitiveMesh::PrimitiveMesh() {
     flip_faces = false;
     // defaults
-    mesh = VisualServer::get_singleton()->mesh_create();
+    mesh       = VisualServer::get_singleton()->mesh_create();
 
     // assume primitive triangles as the type, correct for all but one and it
     // will change this :)
@@ -332,7 +332,7 @@ PrimitiveMesh::~PrimitiveMesh() {
 void CapsuleMesh::_create_mesh_array(Array& p_arr) const {
     int i, j, prevrow, thisrow, point;
     float x, y, z, u, v, w;
-    float onethird = 1.0 / 3.0;
+    float onethird  = 1.0 / 3.0;
     float twothirds = 2.0 / 3.0;
 
     // note, this has been aligned with our collision shape but I've left the
@@ -358,11 +358,11 @@ void CapsuleMesh::_create_mesh_array(Array& p_arr) const {
         v = j;
 
         v /= (rings + 1);
-        w = sin(0.5 * Math_PI * v);
-        z = radius * cos(0.5 * Math_PI * v);
+        w  = sin(0.5 * Math_PI * v);
+        z  = radius * cos(0.5 * Math_PI * v);
 
         for (i = 0; i <= radial_segments; i++) {
-            u = i;
+            u  = i;
             u /= radial_segments;
 
             x = sin(u * (Math_PI * 2.0));
@@ -394,14 +394,14 @@ void CapsuleMesh::_create_mesh_array(Array& p_arr) const {
     thisrow = point;
     prevrow = 0;
     for (j = 0; j <= (rings + 1); j++) {
-        v = j;
+        v  = j;
         v /= (rings + 1);
 
         z = mid_height * v;
         z = (mid_height * 0.5) - z;
 
         for (i = 0; i <= radial_segments; i++) {
-            u = i;
+            u  = i;
             u /= radial_segments;
 
             x = sin(u * (Math_PI * 2.0));
@@ -437,12 +437,12 @@ void CapsuleMesh::_create_mesh_array(Array& p_arr) const {
 
         v /= (rings + 1);
         v += 1.0;
-        w = sin(0.5 * Math_PI * v);
-        z = radius * cos(0.5 * Math_PI * v);
+        w  = sin(0.5 * Math_PI * v);
+        z  = radius * cos(0.5 * Math_PI * v);
 
         for (i = 0; i <= radial_segments; i++) {
-            float u2 = i;
-            u2 /= radial_segments;
+            float u2  = i;
+            u2       /= radial_segments;
 
             x = sin(u2 * (Math_PI * 2.0));
             y = -cos(u2 * (Math_PI * 2.0));
@@ -469,11 +469,11 @@ void CapsuleMesh::_create_mesh_array(Array& p_arr) const {
         thisrow = point;
     };
 
-    p_arr[VS::ARRAY_VERTEX] = points;
-    p_arr[VS::ARRAY_NORMAL] = normals;
+    p_arr[VS::ARRAY_VERTEX]  = points;
+    p_arr[VS::ARRAY_NORMAL]  = normals;
     p_arr[VS::ARRAY_TANGENT] = tangents;
-    p_arr[VS::ARRAY_TEX_UV] = uvs;
-    p_arr[VS::ARRAY_INDEX] = indices;
+    p_arr[VS::ARRAY_TEX_UV]  = uvs;
+    p_arr[VS::ARRAY_INDEX]   = indices;
 }
 
 void CapsuleMesh::_bind_methods() {
@@ -585,10 +585,10 @@ int CapsuleMesh::get_rings() const {
 
 CapsuleMesh::CapsuleMesh() {
     // defaults
-    radius = 1.0;
-    mid_height = 1.0;
+    radius          = 1.0;
+    mid_height      = 1.0;
     radial_segments = 64;
-    rings = 8;
+    rings           = 8;
 }
 
 /**
@@ -598,7 +598,7 @@ CapsuleMesh::CapsuleMesh() {
 void CubeMesh::_create_mesh_array(Array& p_arr) const {
     int i, j, prevrow, thisrow, point;
     float x, y, z;
-    float onethird = 1.0 / 3.0;
+    float onethird  = 1.0 / 3.0;
     float twothirds = 2.0 / 3.0;
 
     Vector3 start_pos = size * -0.5;
@@ -619,16 +619,16 @@ void CubeMesh::_create_mesh_array(Array& p_arr) const {
     tangents.push_back(m_d);
 
     // front + back
-    y = start_pos.y;
+    y       = start_pos.y;
     thisrow = point;
     prevrow = 0;
     for (j = 0; j <= subdivide_h + 1; j++) {
         x = start_pos.x;
         for (i = 0; i <= subdivide_w + 1; i++) {
-            float u = i;
-            float v = j;
-            u /= (3.0 * (subdivide_w + 1.0));
-            v /= (2.0 * (subdivide_h + 1.0));
+            float u  = i;
+            float v  = j;
+            u       /= (3.0 * (subdivide_w + 1.0));
+            v       /= (2.0 * (subdivide_h + 1.0));
 
             // front
             points.push_back(Vector3(x, -y, -start_pos.z)
@@ -668,22 +668,22 @@ void CubeMesh::_create_mesh_array(Array& p_arr) const {
             x += size.x / (subdivide_w + 1.0);
         };
 
-        y += size.y / (subdivide_h + 1.0);
-        prevrow = thisrow;
-        thisrow = point;
+        y       += size.y / (subdivide_h + 1.0);
+        prevrow  = thisrow;
+        thisrow  = point;
     };
 
     // left + right
-    y = start_pos.y;
+    y       = start_pos.y;
     thisrow = point;
     prevrow = 0;
     for (j = 0; j <= (subdivide_h + 1); j++) {
         z = start_pos.z;
         for (i = 0; i <= (subdivide_d + 1); i++) {
-            float u = i;
-            float v = j;
-            u /= (3.0 * (subdivide_d + 1.0));
-            v /= (2.0 * (subdivide_h + 1.0));
+            float u  = i;
+            float v  = j;
+            u       /= (3.0 * (subdivide_d + 1.0));
+            v       /= (2.0 * (subdivide_h + 1.0));
 
             // right
             points.push_back(Vector3(-start_pos.x, -y, -z));
@@ -722,22 +722,22 @@ void CubeMesh::_create_mesh_array(Array& p_arr) const {
             z += size.z / (subdivide_d + 1.0);
         };
 
-        y += size.y / (subdivide_h + 1.0);
-        prevrow = thisrow;
-        thisrow = point;
+        y       += size.y / (subdivide_h + 1.0);
+        prevrow  = thisrow;
+        thisrow  = point;
     };
 
     // top + bottom
-    z = start_pos.z;
+    z       = start_pos.z;
     thisrow = point;
     prevrow = 0;
     for (j = 0; j <= (subdivide_d + 1); j++) {
         x = start_pos.x;
         for (i = 0; i <= (subdivide_w + 1); i++) {
-            float u = i;
-            float v = j;
-            u /= (3.0 * (subdivide_w + 1.0));
-            v /= (2.0 * (subdivide_d + 1.0));
+            float u  = i;
+            float v  = j;
+            u       /= (3.0 * (subdivide_w + 1.0));
+            v       /= (2.0 * (subdivide_d + 1.0));
 
             // top
             points.push_back(Vector3(-x, -start_pos.y, -z));
@@ -776,16 +776,16 @@ void CubeMesh::_create_mesh_array(Array& p_arr) const {
             x += size.x / (subdivide_w + 1.0);
         };
 
-        z += size.z / (subdivide_d + 1.0);
-        prevrow = thisrow;
-        thisrow = point;
+        z       += size.z / (subdivide_d + 1.0);
+        prevrow  = thisrow;
+        thisrow  = point;
     };
 
-    p_arr[VS::ARRAY_VERTEX] = points;
-    p_arr[VS::ARRAY_NORMAL] = normals;
+    p_arr[VS::ARRAY_VERTEX]  = points;
+    p_arr[VS::ARRAY_NORMAL]  = normals;
     p_arr[VS::ARRAY_TANGENT] = tangents;
-    p_arr[VS::ARRAY_TEX_UV] = uvs;
-    p_arr[VS::ARRAY_INDEX] = indices;
+    p_arr[VS::ARRAY_TEX_UV]  = uvs;
+    p_arr[VS::ARRAY_INDEX]   = indices;
 }
 
 void CubeMesh::_bind_methods() {
@@ -892,7 +892,7 @@ int CubeMesh::get_subdivide_depth() const {
 
 CubeMesh::CubeMesh() {
     // defaults
-    size = Vector3(2.0, 2.0, 2.0);
+    size        = Vector3(2.0, 2.0, 2.0);
     subdivide_w = 0;
     subdivide_h = 0;
     subdivide_d = 0;
@@ -922,7 +922,7 @@ void CylinderMesh::_create_mesh_array(Array& p_arr) const {
     thisrow = 0;
     prevrow = 0;
     for (j = 0; j <= (rings + 1); j++) {
-        v = j;
+        v  = j;
         v /= (rings + 1);
 
         radius = top_radius + ((bottom_radius - top_radius) * v);
@@ -931,7 +931,7 @@ void CylinderMesh::_create_mesh_array(Array& p_arr) const {
         y = (height * 0.5) - y;
 
         for (i = 0; i <= radial_segments; i++) {
-            u = i;
+            u  = i;
             u /= radial_segments;
 
             x = sin(u * (Math_PI * 2.0));
@@ -971,8 +971,8 @@ void CylinderMesh::_create_mesh_array(Array& p_arr) const {
         point++;
 
         for (i = 0; i <= radial_segments; i++) {
-            float r = i;
-            r /= radial_segments;
+            float r  = i;
+            r       /= radial_segments;
 
             x = sin(r * (Math_PI * 2.0));
             z = cos(r * (Math_PI * 2.0));
@@ -1007,8 +1007,8 @@ void CylinderMesh::_create_mesh_array(Array& p_arr) const {
         point++;
 
         for (i = 0; i <= radial_segments; i++) {
-            float r = i;
-            r /= radial_segments;
+            float r  = i;
+            r       /= radial_segments;
 
             x = sin(r * (Math_PI * 2.0));
             z = cos(r * (Math_PI * 2.0));
@@ -1031,11 +1031,11 @@ void CylinderMesh::_create_mesh_array(Array& p_arr) const {
         };
     };
 
-    p_arr[VS::ARRAY_VERTEX] = points;
-    p_arr[VS::ARRAY_NORMAL] = normals;
+    p_arr[VS::ARRAY_VERTEX]  = points;
+    p_arr[VS::ARRAY_NORMAL]  = normals;
     p_arr[VS::ARRAY_TANGENT] = tangents;
-    p_arr[VS::ARRAY_TEX_UV] = uvs;
-    p_arr[VS::ARRAY_INDEX] = indices;
+    p_arr[VS::ARRAY_TEX_UV]  = uvs;
+    p_arr[VS::ARRAY_INDEX]   = indices;
 }
 
 void CylinderMesh::_bind_methods() {
@@ -1174,11 +1174,11 @@ int CylinderMesh::get_rings() const {
 
 CylinderMesh::CylinderMesh() {
     // defaults
-    top_radius = 1.0;
-    bottom_radius = 1.0;
-    height = 2.0;
+    top_radius      = 1.0;
+    bottom_radius   = 1.0;
+    height          = 2.0;
     radial_segments = 64;
-    rings = 4;
+    rings           = 4;
 }
 
 /**
@@ -1205,16 +1205,16 @@ void PlaneMesh::_create_mesh_array(Array& p_arr) const {
     tangents.push_back(m_d);
 
     /* top + bottom */
-    z = start_pos.y;
+    z       = start_pos.y;
     thisrow = point;
     prevrow = 0;
     for (j = 0; j <= (subdivide_d + 1); j++) {
         x = start_pos.x;
         for (i = 0; i <= (subdivide_w + 1); i++) {
-            float u = i;
-            float v = j;
-            u /= (subdivide_w + 1.0);
-            v /= (subdivide_d + 1.0);
+            float u  = i;
+            float v  = j;
+            u       /= (subdivide_w + 1.0);
+            v       /= (subdivide_d + 1.0);
 
             points.push_back(Vector3(-x, 0.0, -z) + center_offset);
             normals.push_back(Vector3(0.0, 1.0, 0.0));
@@ -1235,16 +1235,16 @@ void PlaneMesh::_create_mesh_array(Array& p_arr) const {
             x += size.x / (subdivide_w + 1.0);
         };
 
-        z += size.y / (subdivide_d + 1.0);
-        prevrow = thisrow;
-        thisrow = point;
+        z       += size.y / (subdivide_d + 1.0);
+        prevrow  = thisrow;
+        thisrow  = point;
     };
 
-    p_arr[VS::ARRAY_VERTEX] = points;
-    p_arr[VS::ARRAY_NORMAL] = normals;
+    p_arr[VS::ARRAY_VERTEX]  = points;
+    p_arr[VS::ARRAY_NORMAL]  = normals;
     p_arr[VS::ARRAY_TANGENT] = tangents;
-    p_arr[VS::ARRAY_TEX_UV] = uvs;
-    p_arr[VS::ARRAY_INDEX] = indices;
+    p_arr[VS::ARRAY_TEX_UV]  = uvs;
+    p_arr[VS::ARRAY_INDEX]   = indices;
 }
 
 void PlaneMesh::_bind_methods() {
@@ -1346,9 +1346,9 @@ Vector3 PlaneMesh::get_center_offset() const {
 
 PlaneMesh::PlaneMesh() {
     // defaults
-    size = Size2(2.0, 2.0);
-    subdivide_w = 0;
-    subdivide_d = 0;
+    size          = Size2(2.0, 2.0);
+    subdivide_w   = 0;
+    subdivide_d   = 0;
     center_offset = Vector3(0.0, 0.0, 0.0);
 }
 
@@ -1359,7 +1359,7 @@ PlaneMesh::PlaneMesh() {
 void PrismMesh::_create_mesh_array(Array& p_arr) const {
     int i, j, prevrow, thisrow, point;
     float x, y, z;
-    float onethird = 1.0 / 3.0;
+    float onethird  = 1.0 / 3.0;
     float twothirds = 2.0 / 3.0;
 
     Vector3 start_pos = size * -0.5;
@@ -1380,22 +1380,22 @@ void PrismMesh::_create_mesh_array(Array& p_arr) const {
     tangents.push_back(m_d);
 
     /* front + back */
-    y = start_pos.y;
+    y       = start_pos.y;
     thisrow = point;
     prevrow = 0;
     for (j = 0; j <= (subdivide_h + 1); j++) {
-        float scale = (y - start_pos.y) / size.y;
+        float scale         = (y - start_pos.y) / size.y;
         float scaled_size_x = size.x * scale;
         float start_x = start_pos.x + (1.0 - scale) * size.x * left_to_right;
         float offset_front = (1.0 - scale) * onethird * left_to_right;
-        float offset_back = (1.0 - scale) * onethird * (1.0 - left_to_right);
+        float offset_back  = (1.0 - scale) * onethird * (1.0 - left_to_right);
 
         x = 0.0;
         for (i = 0; i <= (subdivide_w + 1); i++) {
-            float u = i;
-            float v = j;
-            u /= (3.0 * (subdivide_w + 1.0));
-            v /= (2.0 * (subdivide_h + 1.0));
+            float u  = i;
+            float v  = j;
+            u       /= (3.0 * (subdivide_w + 1.0));
+            v       /= (2.0 * (subdivide_h + 1.0));
 
             u *= scale;
 
@@ -1451,35 +1451,35 @@ void PrismMesh::_create_mesh_array(Array& p_arr) const {
             x += scale * size.x / (subdivide_w + 1.0);
         };
 
-        y += size.y / (subdivide_h + 1.0);
-        prevrow = thisrow;
-        thisrow = point;
+        y       += size.y / (subdivide_h + 1.0);
+        prevrow  = thisrow;
+        thisrow  = point;
     };
 
     /* left + right */
     Vector3 normal_left, normal_right;
 
-    normal_left = Vector3(-size.y, size.x * left_to_right, 0.0);
+    normal_left  = Vector3(-size.y, size.x * left_to_right, 0.0);
     normal_right = Vector3(size.y, size.x * (1.0 - left_to_right), 0.0);
     normal_left.normalize();
     normal_right.normalize();
 
-    y = start_pos.y;
+    y       = start_pos.y;
     thisrow = point;
     prevrow = 0;
     for (j = 0; j <= (subdivide_h + 1); j++) {
         float left, right;
         float scale = (y - start_pos.y) / size.y;
 
-        left = start_pos.x + (size.x * (1.0 - scale) * left_to_right);
+        left  = start_pos.x + (size.x * (1.0 - scale) * left_to_right);
         right = left + (size.x * scale);
 
         z = start_pos.z;
         for (i = 0; i <= (subdivide_d + 1); i++) {
-            float u = i;
-            float v = j;
-            u /= (3.0 * (subdivide_d + 1.0));
-            v /= (2.0 * (subdivide_h + 1.0));
+            float u  = i;
+            float v  = j;
+            u       /= (3.0 * (subdivide_d + 1.0));
+            v       /= (2.0 * (subdivide_h + 1.0));
 
             /* right */
             points.push_back(Vector3(right, -y, -z));
@@ -1518,22 +1518,22 @@ void PrismMesh::_create_mesh_array(Array& p_arr) const {
             z += size.z / (subdivide_d + 1.0);
         };
 
-        y += size.y / (subdivide_h + 1.0);
-        prevrow = thisrow;
-        thisrow = point;
+        y       += size.y / (subdivide_h + 1.0);
+        prevrow  = thisrow;
+        thisrow  = point;
     };
 
     /* bottom */
-    z = start_pos.z;
+    z       = start_pos.z;
     thisrow = point;
     prevrow = 0;
     for (j = 0; j <= (subdivide_d + 1); j++) {
         x = start_pos.x;
         for (i = 0; i <= (subdivide_w + 1); i++) {
-            float u = i;
-            float v = j;
-            u /= (3.0 * (subdivide_w + 1.0));
-            v /= (2.0 * (subdivide_d + 1.0));
+            float u  = i;
+            float v  = j;
+            u       /= (3.0 * (subdivide_w + 1.0));
+            v       /= (2.0 * (subdivide_d + 1.0));
 
             /* bottom */
             points.push_back(Vector3(x, start_pos.y, -z));
@@ -1555,16 +1555,16 @@ void PrismMesh::_create_mesh_array(Array& p_arr) const {
             x += size.x / (subdivide_w + 1.0);
         };
 
-        z += size.z / (subdivide_d + 1.0);
-        prevrow = thisrow;
-        thisrow = point;
+        z       += size.z / (subdivide_d + 1.0);
+        prevrow  = thisrow;
+        thisrow  = point;
     };
 
-    p_arr[VS::ARRAY_VERTEX] = points;
-    p_arr[VS::ARRAY_NORMAL] = normals;
+    p_arr[VS::ARRAY_VERTEX]  = points;
+    p_arr[VS::ARRAY_NORMAL]  = normals;
     p_arr[VS::ARRAY_TANGENT] = tangents;
-    p_arr[VS::ARRAY_TEX_UV] = uvs;
-    p_arr[VS::ARRAY_INDEX] = indices;
+    p_arr[VS::ARRAY_TEX_UV]  = uvs;
+    p_arr[VS::ARRAY_INDEX]   = indices;
 }
 
 void PrismMesh::_bind_methods() {
@@ -1700,10 +1700,10 @@ int PrismMesh::get_subdivide_depth() const {
 PrismMesh::PrismMesh() {
     // defaults
     left_to_right = 0.5;
-    size = Vector3(2.0, 2.0, 2.0);
-    subdivide_w = 0;
-    subdivide_h = 0;
-    subdivide_d = 0;
+    size          = Vector3(2.0, 2.0, 2.0);
+    subdivide_w   = 0;
+    subdivide_h   = 0;
+    subdivide_d   = 0;
 }
 
 /**
@@ -1751,10 +1751,10 @@ void QuadMesh::_create_mesh_array(Array& p_arr) const {
         uvs.set(i, quad_uv[j]);
     }
 
-    p_arr[VS::ARRAY_VERTEX] = faces;
-    p_arr[VS::ARRAY_NORMAL] = normals;
+    p_arr[VS::ARRAY_VERTEX]  = faces;
+    p_arr[VS::ARRAY_NORMAL]  = normals;
     p_arr[VS::ARRAY_TANGENT] = tangents;
-    p_arr[VS::ARRAY_TEX_UV] = uvs;
+    p_arr[VS::ARRAY_TEX_UV]  = uvs;
 }
 
 void QuadMesh::_bind_methods() {
@@ -1783,8 +1783,8 @@ void QuadMesh::_bind_methods() {
 
 QuadMesh::QuadMesh() {
     primitive_type = PRIMITIVE_TRIANGLES;
-    size = Size2(1.0, 1.0);
-    center_offset = Vector3(0.0, 0.0, 0.0);
+    size           = Size2(1.0, 1.0);
+    center_offset  = Vector3(0.0, 0.0, 0.0);
 }
 
 void QuadMesh::set_size(const Size2& p_size) {
@@ -1837,12 +1837,12 @@ void SphereMesh::_create_mesh_array(Array& p_arr) const {
         float w;
 
         v /= (rings + 1);
-        w = sin(Math_PI * v);
-        y = scale * cos(Math_PI * v);
+        w  = sin(Math_PI * v);
+        y  = scale * cos(Math_PI * v);
 
         for (i = 0; i <= radial_segments; i++) {
-            float u = i;
-            u /= radial_segments;
+            float u  = i;
+            u       /= radial_segments;
 
             x = sin(u * (Math_PI * 2.0));
             z = cos(u * (Math_PI * 2.0));
@@ -1876,11 +1876,11 @@ void SphereMesh::_create_mesh_array(Array& p_arr) const {
         thisrow = point;
     };
 
-    p_arr[VS::ARRAY_VERTEX] = points;
-    p_arr[VS::ARRAY_NORMAL] = normals;
+    p_arr[VS::ARRAY_VERTEX]  = points;
+    p_arr[VS::ARRAY_NORMAL]  = normals;
     p_arr[VS::ARRAY_TANGENT] = tangents;
-    p_arr[VS::ARRAY_TEX_UV] = uvs;
-    p_arr[VS::ARRAY_INDEX] = indices;
+    p_arr[VS::ARRAY_TEX_UV]  = uvs;
+    p_arr[VS::ARRAY_INDEX]   = indices;
 }
 
 void SphereMesh::_bind_methods() {
@@ -2012,11 +2012,11 @@ bool SphereMesh::get_is_hemisphere() const {
 
 SphereMesh::SphereMesh() {
     // defaults
-    radius = 1.0;
-    height = 2.0;
+    radius          = 1.0;
+    height          = 2.0;
     radial_segments = 64;
-    rings = 32;
-    is_hemisphere = false;
+    rings           = 32;
+    is_hemisphere   = false;
 }
 
 /**

@@ -120,7 +120,7 @@ public:
                 Object::cast_to<SceneTree>(OS::get_singleton()->get_main_loop()
                 );
             if (!tree) {
-                r_error_str = "Main Loop is not SceneTree";
+                r_error_str   = "Main Loop is not SceneTree";
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
                 return 0;
             }
@@ -161,7 +161,7 @@ VisualScriptNodeInstance* VisualScriptYield::instance(
     VisualScriptNodeInstanceYield* instance =
         memnew(VisualScriptNodeInstanceYield);
     // instance->instance=p_instance;
-    instance->mode = yield_mode;
+    instance->mode      = yield_mode;
     instance->wait_time = wait_time;
     return instance;
 }
@@ -242,7 +242,7 @@ void VisualScriptYield::_bind_methods() {
 
 VisualScriptYield::VisualScriptYield() {
     yield_mode = YIELD_FRAME;
-    wait_time = 1;
+    wait_time  = 1;
 }
 
 template <VisualScriptYield::YieldMode MODE>
@@ -304,7 +304,7 @@ Node* VisualScriptYieldSignal::_get_base_node() const {
         return nullptr;
     }
 
-    MainLoop* main_loop = OS::get_singleton()->get_main_loop();
+    MainLoop* main_loop   = OS::get_singleton()->get_main_loop();
     SceneTree* scene_tree = Object::cast_to<SceneTree>(main_loop);
 
     if (!scene_tree) {
@@ -693,11 +693,11 @@ VisualScriptNodeInstance* VisualScriptYieldSignal::instance(
 ) {
     VisualScriptNodeInstanceYieldSignal* instance =
         memnew(VisualScriptNodeInstanceYieldSignal);
-    instance->node = this;
-    instance->instance = p_instance;
-    instance->signal = signal;
-    instance->call_mode = call_mode;
-    instance->node_path = base_path;
+    instance->node        = this;
+    instance->instance    = p_instance;
+    instance->signal      = signal;
+    instance->call_mode   = call_mode;
+    instance->node_path   = base_path;
     instance->output_args = get_output_value_port_count();
     return instance;
 }

@@ -197,12 +197,12 @@ public:
         int end_line;
 
         ClassNode() {
-            tool = false;
-            type = TYPE_CLASS;
-            extends_used = false;
+            tool           = false;
+            type           = TYPE_CLASS;
+            extends_used   = false;
             classname_used = false;
-            end_line = -1;
-            owner = nullptr;
+            end_line       = -1;
+            owner          = nullptr;
         }
     };
 
@@ -234,10 +234,10 @@ public:
         }
 
         FunctionNode() {
-            type = TYPE_FUNCTION;
-            _static = false;
-            rpc_mode = MultiplayerAPI::RPC_MODE_DISABLED;
-            has_yield = false;
+            type                 = TYPE_FUNCTION;
+            _static              = false;
+            rpc_mode             = MultiplayerAPI::RPC_MODE_DISABLED;
+            has_yield            = false;
             has_unreachable_code = false;
         }
     };
@@ -247,8 +247,8 @@ public:
         BlockNode* parent_block;
         Vector<Node*> statements;
         Map<StringName, LocalVarNode*> variables;
-        bool has_return = false;
-        bool can_break = false;
+        bool has_return   = false;
+        bool can_break    = false;
         bool can_continue = false;
 
         Node* if_condition; // tiny hack to improve code completion on if ()
@@ -260,8 +260,8 @@ public:
 
         BlockNode() {
             if_condition = nullptr;
-            type = TYPE_BLOCK;
-            end_line = -1;
+            type         = TYPE_BLOCK;
+            end_line     = -1;
             parent_block = nullptr;
             parent_class = nullptr;
         }
@@ -298,7 +298,7 @@ public:
         }
 
         IdentifierNode() {
-            type = TYPE_IDENTIFIER;
+            type           = TYPE_IDENTIFIER;
             declared_block = nullptr;
         }
     };
@@ -320,11 +320,11 @@ public:
         }
 
         LocalVarNode() {
-            type = TYPE_LOCAL_VAR;
-            assign = nullptr;
-            assign_op = nullptr;
+            type        = TYPE_LOCAL_VAR;
+            assign      = nullptr;
+            assign_op   = nullptr;
             assignments = 0;
-            usages = 0;
+            usages      = 0;
         }
     };
 
@@ -358,9 +358,9 @@ public:
         }
 
         ArrayNode() {
-            type = TYPE_ARRAY;
-            datatype.has_type = true;
-            datatype.kind = DataType::BUILTIN;
+            type                  = TYPE_ARRAY;
+            datatype.has_type     = true;
+            datatype.kind         = DataType::BUILTIN;
             datatype.builtin_type = Variant::ARRAY;
         }
     };
@@ -383,9 +383,9 @@ public:
         }
 
         DictionaryNode() {
-            type = TYPE_DICTIONARY;
-            datatype.has_type = true;
-            datatype.kind = DataType::BUILTIN;
+            type                  = TYPE_DICTIONARY;
+            datatype.has_type     = true;
+            datatype.kind         = DataType::BUILTIN;
             datatype.builtin_type = Variant::DICTIONARY;
         }
     };
@@ -523,9 +523,9 @@ public:
         ControlFlowNode* _else; // used for if
 
         ControlFlowNode() {
-            type = TYPE_CONTROL_FLOW;
-            cf_type = CF_IF;
-            body = nullptr;
+            type      = TYPE_CONTROL_FLOW;
+            cf_type   = CF_IF;
+            body      = nullptr;
             body_else = nullptr;
         }
     };
@@ -679,7 +679,7 @@ private:
 #ifdef DEBUG_ENABLED
     void _add_warning(
         int p_code,
-        int p_line = -1,
+        int p_line              = -1,
         const String& p_symbol1 = String(),
         const String& p_symbol2 = String(),
         const String& p_symbol3 = String(),
@@ -701,7 +701,7 @@ private:
     Node* _parse_expression(
         Node* p_parent,
         bool p_static,
-        bool p_allow_assign = false,
+        bool p_allow_assign     = false,
         bool p_parsing_constant = false
     );
     Node* _reduce_expression(Node* p_node, bool p_to_const = false);
@@ -816,11 +816,11 @@ public:
     Error parse(
         const String& p_code,
         const String& p_base_path = "",
-        bool p_just_validate = false,
+        bool p_just_validate      = false,
         const String& p_self_path = "",
-        bool p_for_completion = false,
-        Set<int>* r_safe_lines = nullptr,
-        bool p_dependencies_only = false
+        bool p_for_completion     = false,
+        Set<int>* r_safe_lines    = nullptr,
+        bool p_dependencies_only  = false
     );
     Error parse_bytecode(
         const Vector<uint8_t>& p_bytecode,

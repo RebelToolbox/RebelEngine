@@ -132,7 +132,7 @@ void CollisionPolygon2D::_notification(int p_what) {
                 parent->remove_shape_owner(owner_id);
             }
             owner_id = 0;
-            parent = nullptr;
+            parent   = nullptr;
         } break;
 
         case NOTIFICATION_DRAW: {
@@ -211,7 +211,7 @@ void CollisionPolygon2D::set_polygon(const Vector<Point2>& p_polygon) {
             aabb = Rect2(-10, -10, 20, 20);
         } else {
             aabb.position -= aabb.size * 0.3;
-            aabb.size += aabb.size * 0.6;
+            aabb.size     += aabb.size * 0.6;
         }
     }
 
@@ -425,12 +425,12 @@ void CollisionPolygon2D::_bind_methods() {
 }
 
 CollisionPolygon2D::CollisionPolygon2D() {
-    aabb = Rect2(-10, -10, 20, 20);
+    aabb       = Rect2(-10, -10, 20, 20);
     build_mode = BUILD_SOLIDS;
     set_notify_local_transform(true);
-    parent = nullptr;
-    owner_id = 0;
-    disabled = false;
-    one_way_collision = false;
+    parent                   = nullptr;
+    owner_id                 = 0;
+    disabled                 = false;
+    one_way_collision        = false;
     one_way_collision_margin = 1.0;
 }

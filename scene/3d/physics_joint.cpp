@@ -33,7 +33,7 @@
 #include "scene/scene_string_names.h"
 
 void Joint::_disconnect_signals() {
-    Node* node_a = get_node_or_null(a);
+    Node* node_a        = get_node_or_null(a);
     PhysicsBody* body_a = Object::cast_to<PhysicsBody>(node_a);
     if (body_a) {
         body_a->disconnect(
@@ -43,7 +43,7 @@ void Joint::_disconnect_signals() {
         );
     }
 
-    Node* node_b = get_node_or_null(b);
+    Node* node_b        = get_node_or_null(b);
     PhysicsBody* body_b = Object::cast_to<PhysicsBody>(node_b);
     if (body_b) {
         body_b->disconnect(
@@ -74,8 +74,8 @@ void Joint::_update_joint(bool p_only_free) {
 
         PhysicsServer::get_singleton()->free(joint);
         joint = RID();
-        ba = RID();
-        bb = RID();
+        ba    = RID();
+        bb    = RID();
     }
 
     if (p_only_free || !is_inside_tree()) {
@@ -320,7 +320,7 @@ void Joint::_bind_methods() {
 
 Joint::Joint() {
     exclude_from_collision = true;
-    solver_priority = 1;
+    solver_priority        = 1;
     set_notify_transform(true);
 }
 
@@ -418,8 +418,8 @@ RID PinJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 }
 
 PinJoint::PinJoint() {
-    params[PARAM_BIAS] = 0.3;
-    params[PARAM_DAMPING] = 1;
+    params[PARAM_BIAS]          = 0.3;
+    params[PARAM_DAMPING]       = 1;
     params[PARAM_IMPULSE_CLAMP] = 0;
 }
 
@@ -632,7 +632,7 @@ bool HingeJoint::get_flag(Flag p_flag) const {
 }
 
 RID HingeJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
-    Transform gt = get_global_transform();
+    Transform gt   = get_global_transform();
     Transform ainv = body_a->get_global_transform().affine_inverse();
 
     Transform local_a = ainv * gt;
@@ -641,7 +641,7 @@ RID HingeJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 
     if (body_b) {
         Transform binv = body_b->get_global_transform().affine_inverse();
-        local_b = binv * gt;
+        local_b        = binv * gt;
     }
 
     local_b.orthonormalize();
@@ -671,16 +671,16 @@ RID HingeJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 }
 
 HingeJoint::HingeJoint() {
-    params[PARAM_BIAS] = 0.3;
-    params[PARAM_LIMIT_UPPER] = Math_PI * 0.5;
-    params[PARAM_LIMIT_LOWER] = -Math_PI * 0.5;
-    params[PARAM_LIMIT_BIAS] = 0.3;
-    params[PARAM_LIMIT_SOFTNESS] = 0.9;
-    params[PARAM_LIMIT_RELAXATION] = 1.0;
+    params[PARAM_BIAS]                  = 0.3;
+    params[PARAM_LIMIT_UPPER]           = Math_PI * 0.5;
+    params[PARAM_LIMIT_LOWER]           = -Math_PI * 0.5;
+    params[PARAM_LIMIT_BIAS]            = 0.3;
+    params[PARAM_LIMIT_SOFTNESS]        = 0.9;
+    params[PARAM_LIMIT_RELAXATION]      = 1.0;
     params[PARAM_MOTOR_TARGET_VELOCITY] = 1;
-    params[PARAM_MOTOR_MAX_IMPULSE] = 1;
+    params[PARAM_MOTOR_MAX_IMPULSE]     = 1;
 
-    flags[FLAG_USE_LIMIT] = false;
+    flags[FLAG_USE_LIMIT]    = false;
     flags[FLAG_ENABLE_MOTOR] = false;
 }
 
@@ -1020,7 +1020,7 @@ float SliderJoint::get_param(Param p_param) const {
 }
 
 RID SliderJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
-    Transform gt = get_global_transform();
+    Transform gt   = get_global_transform();
     Transform ainv = body_a->get_global_transform().affine_inverse();
 
     Transform local_a = ainv * gt;
@@ -1029,7 +1029,7 @@ RID SliderJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 
     if (body_b) {
         Transform binv = body_b->get_global_transform().affine_inverse();
-        local_b = binv * gt;
+        local_b        = binv * gt;
     }
 
     local_b.orthonormalize();
@@ -1052,29 +1052,29 @@ RID SliderJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 }
 
 SliderJoint::SliderJoint() {
-    params[PARAM_LINEAR_LIMIT_UPPER] = 1.0;
-    params[PARAM_LINEAR_LIMIT_LOWER] = -1.0;
-    params[PARAM_LINEAR_LIMIT_SOFTNESS] = 1.0;
-    params[PARAM_LINEAR_LIMIT_RESTITUTION] = 0.7;
-    params[PARAM_LINEAR_LIMIT_DAMPING] = 1.0;
-    params[PARAM_LINEAR_MOTION_SOFTNESS] = 1.0;
-    params[PARAM_LINEAR_MOTION_RESTITUTION] = 0.7;
-    params[PARAM_LINEAR_MOTION_DAMPING] = 0; // 1.0;
-    params[PARAM_LINEAR_ORTHOGONAL_SOFTNESS] = 1.0;
+    params[PARAM_LINEAR_LIMIT_UPPER]            = 1.0;
+    params[PARAM_LINEAR_LIMIT_LOWER]            = -1.0;
+    params[PARAM_LINEAR_LIMIT_SOFTNESS]         = 1.0;
+    params[PARAM_LINEAR_LIMIT_RESTITUTION]      = 0.7;
+    params[PARAM_LINEAR_LIMIT_DAMPING]          = 1.0;
+    params[PARAM_LINEAR_MOTION_SOFTNESS]        = 1.0;
+    params[PARAM_LINEAR_MOTION_RESTITUTION]     = 0.7;
+    params[PARAM_LINEAR_MOTION_DAMPING]         = 0; // 1.0;
+    params[PARAM_LINEAR_ORTHOGONAL_SOFTNESS]    = 1.0;
     params[PARAM_LINEAR_ORTHOGONAL_RESTITUTION] = 0.7;
-    params[PARAM_LINEAR_ORTHOGONAL_DAMPING] = 1.0;
+    params[PARAM_LINEAR_ORTHOGONAL_DAMPING]     = 1.0;
 
-    params[PARAM_ANGULAR_LIMIT_UPPER] = 0;
-    params[PARAM_ANGULAR_LIMIT_LOWER] = 0;
-    params[PARAM_ANGULAR_LIMIT_SOFTNESS] = 1.0;
-    params[PARAM_ANGULAR_LIMIT_RESTITUTION] = 0.7;
-    params[PARAM_ANGULAR_LIMIT_DAMPING] = 0; // 1.0;
-    params[PARAM_ANGULAR_MOTION_SOFTNESS] = 1.0;
-    params[PARAM_ANGULAR_MOTION_RESTITUTION] = 0.7;
-    params[PARAM_ANGULAR_MOTION_DAMPING] = 1.0;
-    params[PARAM_ANGULAR_ORTHOGONAL_SOFTNESS] = 1.0;
+    params[PARAM_ANGULAR_LIMIT_UPPER]            = 0;
+    params[PARAM_ANGULAR_LIMIT_LOWER]            = 0;
+    params[PARAM_ANGULAR_LIMIT_SOFTNESS]         = 1.0;
+    params[PARAM_ANGULAR_LIMIT_RESTITUTION]      = 0.7;
+    params[PARAM_ANGULAR_LIMIT_DAMPING]          = 0; // 1.0;
+    params[PARAM_ANGULAR_MOTION_SOFTNESS]        = 1.0;
+    params[PARAM_ANGULAR_MOTION_RESTITUTION]     = 0.7;
+    params[PARAM_ANGULAR_MOTION_DAMPING]         = 1.0;
+    params[PARAM_ANGULAR_ORTHOGONAL_SOFTNESS]    = 1.0;
     params[PARAM_ANGULAR_ORTHOGONAL_RESTITUTION] = 0.7;
-    params[PARAM_ANGULAR_ORTHOGONAL_DAMPING] = 1.0;
+    params[PARAM_ANGULAR_ORTHOGONAL_DAMPING]     = 1.0;
 }
 
 //////////////////////////////////
@@ -1218,7 +1218,7 @@ RID ConeTwistJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 
     if (body_b) {
         Transform binv = body_b->get_global_transform().affine_inverse();
-        local_b = binv * gt;
+        local_b        = binv * gt;
     }
 
     local_b.orthonormalize();
@@ -1243,8 +1243,8 @@ RID ConeTwistJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 ConeTwistJoint::ConeTwistJoint() {
     params[PARAM_SWING_SPAN] = Math_PI * 0.25;
     params[PARAM_TWIST_SPAN] = Math_PI;
-    params[PARAM_BIAS] = 0.3;
-    params[PARAM_SOFTNESS] = 0.8;
+    params[PARAM_BIAS]       = 0.3;
+    params[PARAM_SOFTNESS]   = 0.8;
     params[PARAM_RELAXATION] = 1.0;
 }
 
@@ -2193,7 +2193,7 @@ RID Generic6DOFJoint::_configure_joint(
 
     if (body_b) {
         Transform binv = body_b->get_global_transform().affine_inverse();
-        local_b = binv * gt;
+        local_b        = binv * gt;
     }
 
     local_b.orthonormalize();

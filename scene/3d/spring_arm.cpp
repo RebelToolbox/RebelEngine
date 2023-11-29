@@ -206,8 +206,8 @@ void SpringArm::process_spring() {
             mask
         );
         if (intersected) {
-            float dist = get_global_transform().origin.distance_to(r.position);
-            dist -= margin;
+            float dist  = get_global_transform().origin.distance_to(r.position);
+            dist       -= margin;
             motion_delta = dist / (spring_length);
         }
     } else {

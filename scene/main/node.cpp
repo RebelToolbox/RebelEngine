@@ -51,7 +51,7 @@ void Node::_notification(int p_notification) {
     switch (p_notification) {
         case NOTIFICATION_PROCESS: {
             if (get_script_instance()) {
-                Variant time = get_process_delta_time();
+                Variant time          = get_process_delta_time();
                 const Variant* ptr[1] = {&time};
                 get_script_instance()->call_multilevel(
                     SceneStringNames::get_singleton()->_process,
@@ -62,7 +62,7 @@ void Node::_notification(int p_notification) {
         } break;
         case NOTIFICATION_PHYSICS_PROCESS: {
             if (get_script_instance()) {
-                Variant time = get_physics_process_delta_time();
+                Variant time          = get_physics_process_delta_time();
                 const Variant* ptr[1] = {&time};
                 get_script_instance()->call_multilevel(
                     SceneStringNames::get_singleton()->_physics_process,
@@ -235,7 +235,7 @@ void Node::_propagate_enter_tree() {
     // this needs to happen to all children before any enter_tree
 
     if (data.parent) {
-        data.tree = data.parent->data.tree;
+        data.tree  = data.parent->data.tree;
         data.depth = data.parent->data.depth + 1;
     } else {
         data.depth = 1;
@@ -249,7 +249,7 @@ void Node::_propagate_enter_tree() {
     data.inside_tree = true;
 
     for (Map<StringName, GroupData>::Element* E = data.grouped.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         E->get().group = data.tree->add_to_group(E->key(), this);
     }
 
@@ -318,7 +318,7 @@ void Node::_propagate_exit_tree() {
             data.tree->live_edit_remove_list.find(this);
         if (F) {
             for (Map<ObjectID, Node*>::Element* G = F->get().front(); G;
-                 G = G->next()) {
+                 G                                = G->next()) {
                 memdelete(G->get());
             }
             data.tree->live_edit_remove_list.erase(F);
@@ -350,7 +350,7 @@ void Node::_propagate_exit_tree() {
     // exit groups
 
     for (Map<StringName, GroupData>::Element* E = data.grouped.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         data.tree->remove_from_group(E->key(), this);
         E->get().group = nullptr;
     }
@@ -361,10 +361,10 @@ void Node::_propagate_exit_tree() {
         data.tree->tree_changed();
     }
 
-    data.inside_tree = false;
+    data.inside_tree    = false;
     data.ready_notified = false;
-    data.tree = nullptr;
-    data.depth = -1;
+    data.tree           = nullptr;
+    data.depth          = -1;
 }
 
 void Node::move_child(Node* p_child, int p_pos) {
@@ -396,7 +396,7 @@ void Node::move_child(Node* p_child, int p_pos) {
     }
 
     int motion_from = MIN(p_pos, p_child->data.pos);
-    int motion_to = MAX(p_pos, p_child->data.pos);
+    int motion_to   = MAX(p_pos, p_child->data.pos);
 
     data.children.remove(p_child->data.pos);
     data.children.insert(p_pos, p_child);
@@ -493,7 +493,7 @@ void Node::set_pause_mode(PauseMode p_mode) {
     }
 
     bool prev_inherits = data.pause_mode == PAUSE_MODE_INHERIT;
-    data.pause_mode = p_mode;
+    data.pause_mode    = p_mode;
     if (!is_inside_tree()) {
         return; // pointless
     }
@@ -644,13 +644,13 @@ Variant Node::_rpc_bind(
     Variant::CallError& r_error
 ) {
     if (p_argcount < 1) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 1;
         return Variant();
     }
 
     if (p_args[0]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::STRING;
         return Variant();
@@ -670,26 +670,26 @@ Variant Node::_rpc_id_bind(
     Variant::CallError& r_error
 ) {
     if (p_argcount < 2) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 2;
         return Variant();
     }
 
     if (p_args[0]->get_type() != Variant::INT) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::INT;
         return Variant();
     }
 
     if (p_args[1]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 1;
         r_error.expected = Variant::STRING;
         return Variant();
     }
 
-    int peer_id = *p_args[0];
+    int peer_id       = *p_args[0];
     StringName method = *p_args[1];
 
     rpcp(peer_id, false, method, &p_args[2], p_argcount - 2);
@@ -704,13 +704,13 @@ Variant Node::_rpc_unreliable_bind(
     Variant::CallError& r_error
 ) {
     if (p_argcount < 1) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 1;
         return Variant();
     }
 
     if (p_args[0]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::STRING;
         return Variant();
@@ -730,26 +730,26 @@ Variant Node::_rpc_unreliable_id_bind(
     Variant::CallError& r_error
 ) {
     if (p_argcount < 2) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 2;
         return Variant();
     }
 
     if (p_args[0]->get_type() != Variant::INT) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::INT;
         return Variant();
     }
 
     if (p_args[1]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 1;
         r_error.expected = Variant::STRING;
         return Variant();
     }
 
-    int peer_id = *p_args[0];
+    int peer_id       = *p_args[0];
     StringName method = *p_args[1];
 
     rpcp(peer_id, true, method, &p_args[2], p_argcount - 2);
@@ -1106,7 +1106,7 @@ void Node::_validate_child_name(Node* p_child, bool p_force_human_readable) {
         } else {
             // check if exists
             Node** children = data.children.ptrw();
-            int cc = data.children.size();
+            int cc          = data.children.size();
 
             for (int i = 0; i < cc; i++) {
                 if (children[i] == p_child) {
@@ -1142,7 +1142,7 @@ String increase_numeric_string(const String& s) {
             res[i] = '0';
         } else {
             res[i] = s[i] + 1;
-            carry = false;
+            carry  = false;
         }
     }
 
@@ -1169,8 +1169,8 @@ void Node::_generate_serial_child_name(const Node* p_child, StringName& name)
                 break;
             case NAME_CASING_CAMEL_CASE: {
                 String n = name;
-                n[0] = n.to_lower()[0];
-                name = n;
+                n[0]     = n.to_lower()[0];
+                name     = n;
             } break;
             case NAME_CASING_SNAKE_CASE:
                 name = String(name).camelcase_to_underscore(true);
@@ -1179,7 +1179,7 @@ void Node::_generate_serial_child_name(const Node* p_child, StringName& name)
     }
 
     // quickly test if proposed name exists
-    int cc = data.children.size(); // children count
+    int cc                          = data.children.size(); // children count
     const Node* const* children_ptr = data.children.ptr();
 
     {
@@ -1212,7 +1212,7 @@ void Node::_generate_serial_child_name(const Node* p_child, StringName& name)
         }
     }
 
-    String nnsep = _get_name_num_separator();
+    String nnsep        = _get_name_num_separator();
     int name_last_index = name_string.length() - nnsep.length() - nums.length();
 
     // Assign the base name + separator to name if we have numbers preceded by a
@@ -1226,7 +1226,7 @@ void Node::_generate_serial_child_name(const Node* p_child, StringName& name)
 
     for (;;) {
         StringName attempt = name_string + nums;
-        bool exists = false;
+        bool exists        = false;
 
         for (int i = 0; i < cc; i++) {
             if (children_ptr[i] == p_child) {
@@ -1257,7 +1257,7 @@ void Node::_add_child_nocheck(Node* p_child, const StringName& p_name) {
     // add a child node quickly, without name validation
 
     p_child->data.name = p_name;
-    p_child->data.pos = data.children.size();
+    p_child->data.pos  = data.children.size();
     data.children.push_back(p_child);
     p_child->data.parent = this;
     p_child->notification(NOTIFICATION_PARENTED);
@@ -1334,7 +1334,7 @@ void Node::add_child_below_node(
 
 void Node::_propagate_validate_owner() {
     if (data.owner) {
-        bool found = false;
+        bool found   = false;
         Node* parent = data.parent;
 
         while (parent) {
@@ -1367,7 +1367,7 @@ void Node::remove_child(Node* p_child) {
 
     int child_count = data.children.size();
     Node** children = data.children.ptrw();
-    int idx = -1;
+    int idx         = -1;
 
     if (p_child->data.pos >= 0 && p_child->data.pos < child_count) {
         if (children[p_child->data.pos] == p_child) {
@@ -1407,7 +1407,7 @@ void Node::remove_child(Node* p_child) {
 
     // update pointer and size
     child_count = data.children.size();
-    children = data.children.ptrw();
+    children    = data.children.ptrw();
 
     for (int i = idx; i < child_count; i++) {
         children[i]->data.pos = i;
@@ -1415,7 +1415,7 @@ void Node::remove_child(Node* p_child) {
     }
 
     p_child->data.parent = nullptr;
-    p_child->data.pos = -1;
+    p_child->data.pos    = -1;
 
     // validate owner
     p_child->_propagate_validate_owner();
@@ -1436,7 +1436,7 @@ Node* Node::get_child(int p_index) const {
 }
 
 Node* Node::_get_child_by_name(const StringName& p_name) const {
-    int cc = data.children.size();
+    int cc          = data.children.size();
     Node* const* cd = data.children.ptr();
 
     for (int i = 0; i < cc; i++) {
@@ -1461,7 +1461,7 @@ Node* Node::get_node_or_null(const NodePath& p_path) const {
     );
 
     Node* current = nullptr;
-    Node* root = nullptr;
+    Node* root    = nullptr;
 
     if (!p_path.is_absolute()) {
         current = const_cast<Node*>(this); // start from this
@@ -1474,7 +1474,7 @@ Node* Node::get_node_or_null(const NodePath& p_path) const {
 
     for (int i = 0; i < p_path.get_name_count(); i++) {
         StringName name = p_path.get_name(i);
-        Node* next = nullptr;
+        Node* next      = nullptr;
 
         if (name == SceneStringNames::get_singleton()->dot) { // .
 
@@ -1548,7 +1548,7 @@ bool Node::has_node(const NodePath& p_path) const {
 Node* Node::find_node(const String& p_mask, bool p_recursive, bool p_owned)
     const {
     Node* const* cptr = data.children.ptr();
-    int ccount = data.children.size();
+    int ccount        = data.children.size();
     for (int i = 0; i < ccount; i++) {
         if (p_owned && !cptr[i]->data.owner) {
             continue;
@@ -1625,10 +1625,10 @@ bool Node::is_greater_than(const Node* p_node) const {
     while (n) {
         ERR_FAIL_INDEX_V(idx, data.depth, false);
         this_stack[idx--] = n->data.pos;
-        n = n->data.parent;
+        n                 = n->data.parent;
     }
     ERR_FAIL_COND_V(idx != -1, false);
-    n = p_node;
+    n   = p_node;
     idx = p_node->data.depth - 1;
     while (n) {
         ERR_FAIL_INDEX_V(idx, p_node->data.depth, false);
@@ -1685,7 +1685,7 @@ void Node::_set_owner_nocheck(Node* p_owner) {
 void Node::set_owner(Node* p_owner) {
     if (data.owner) {
         data.owner->data.owned.erase(data.OW);
-        data.OW = nullptr;
+        data.OW    = nullptr;
         data.owner = nullptr;
     }
 
@@ -1695,7 +1695,7 @@ void Node::set_owner(Node* p_owner) {
         return;
     }
 
-    Node* check = this->get_parent();
+    Node* check      = this->get_parent();
     bool owner_valid = false;
 
     while (check) {
@@ -1784,7 +1784,7 @@ NodePath Node::get_path_to(const Node* p_node) const {
         n = n->data.parent;
     }
 
-    n = this;
+    n             = this;
     StringName up = String("..");
 
     while (n != common_parent) {
@@ -1875,9 +1875,9 @@ Array Node::_get_groups() const {
 
 void Node::get_groups(List<GroupInfo>* p_groups) const {
     for (const Map<StringName, GroupData>::Element* E = data.grouped.front(); E;
-         E = E->next()) {
+         E                                            = E->next()) {
         GroupInfo gi;
-        gi.name = E->key();
+        gi.name       = E->key();
         gi.persistent = E->get().persistent;
         p_groups->push_back(gi);
     }
@@ -1887,7 +1887,7 @@ int Node::get_persistent_group_count() const {
     int count = 0;
 
     for (const Map<StringName, GroupData>::Element* E = data.grouped.front(); E;
-         E = E->next()) {
+         E                                            = E->next()) {
         if (E->get().persistent) {
             count += 1;
         }
@@ -2090,7 +2090,7 @@ Node* Node::get_deepest_editable_node(Node* p_start_node) const {
     ERR_FAIL_COND_V(!is_a_parent_of(p_start_node), p_start_node);
 
     Node const* iterated_item = p_start_node;
-    Node* node = p_start_node;
+    Node* node                = p_start_node;
 
     while (iterated_item->get_owner() && iterated_item->get_owner() != this) {
         if (!is_editable_instance(iterated_item->get_owner())) {
@@ -2203,7 +2203,7 @@ Node* Node::_duplicate(int p_flags, Map<const Node*, Node*>* r_duplimap) const {
         instance_roots.push_back(this);
 
         for (List<const Node*>::Element* N = node_tree.front(); N;
-             N = N->next()) {
+             N                             = N->next()) {
             for (int i = 0; i < N->get()->get_child_count(); ++i) {
                 Node* descendant = N->get()->get_child(i);
                 // Skip nodes not really belonging to the instanced hierarchy;
@@ -2233,7 +2233,7 @@ Node* Node::_duplicate(int p_flags, Map<const Node*, Node*>* r_duplimap) const {
         ERR_CONTINUE(!current_node);
 
         if (p_flags & DUPLICATE_SCRIPTS) {
-            bool is_valid = false;
+            bool is_valid  = false;
             Variant script = N->get()->get(script_property_name, &is_valid);
             if (is_valid) {
                 current_node->set(script_property_name, script);
@@ -2311,7 +2311,7 @@ Node* Node::_duplicate(int p_flags, Map<const Node*, Node*>* r_duplimap) const {
     }
 
     for (List<const Node*>::Element* E = hidden_roots.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         Node* parent = node->get_node(get_path_to(E->get()->data.parent));
         if (!parent) {
             memdelete(node);
@@ -2658,7 +2658,7 @@ void Node::replace_by(Node* p_node, bool p_keep_data) {
             if (!(E->get().usage & PROPERTY_USAGE_STORAGE)) {
                 continue;
             }
-            rd.name = E->get().name;
+            rd.name  = E->get().name;
             rd.value = get(rd.name);
         }
 
@@ -2678,7 +2678,7 @@ void Node::replace_by(Node* p_node, bool p_keep_data) {
         }
     }
 
-    Node* parent = data.parent;
+    Node* parent      = data.parent;
     int pos_in_parent = data.pos;
 
     if (data.parent) {
@@ -2708,7 +2708,7 @@ void Node::replace_by(Node* p_node, bool p_keep_data) {
     p_node->set_filename(get_filename());
 
     for (List<_NodeReplaceByPair>::Element* E = replace_data.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         p_node->set(E->get().name, E->get().value);
     }
 }
@@ -2814,8 +2814,8 @@ Node* Node::get_node_and_resource(
     Vector<StringName>& r_leftover_subpath,
     bool p_last_is_property
 ) const {
-    Node* node = get_node(p_path);
-    r_res = RES();
+    Node* node         = get_node(p_path);
+    r_res              = RES();
     r_leftover_subpath = Vector<StringName>();
     if (!node) {
         return nullptr;
@@ -3587,35 +3587,35 @@ String Node::_get_name_num_separator() {
 }
 
 Node::Node() {
-    data.pos = -1;
-    data.depth = -1;
-    data.blocked = 0;
-    data.parent = nullptr;
-    data.tree = nullptr;
-    data.physics_process = false;
-    data.idle_process = false;
-    data.process_priority = 0;
+    data.pos                      = -1;
+    data.depth                    = -1;
+    data.blocked                  = 0;
+    data.parent                   = nullptr;
+    data.tree                     = nullptr;
+    data.physics_process          = false;
+    data.idle_process             = false;
+    data.process_priority         = 0;
     data.physics_process_internal = false;
-    data.idle_process_internal = false;
-    data.inside_tree = false;
-    data.ready_notified = false;
+    data.idle_process_internal    = false;
+    data.inside_tree              = false;
+    data.ready_notified           = false;
 
-    data.owner = nullptr;
-    data.OW = nullptr;
-    data.input = false;
-    data.unhandled_input = false;
+    data.owner               = nullptr;
+    data.OW                  = nullptr;
+    data.input               = false;
+    data.unhandled_input     = false;
     data.unhandled_key_input = false;
-    data.pause_mode = PAUSE_MODE_INHERIT;
-    data.pause_owner = nullptr;
-    data.network_master = 1; // server by default
-    data.path_cache = nullptr;
-    data.parent_owned = false;
-    data.in_constructor = true;
-    data.viewport = nullptr;
-    data.use_placeholder = false;
-    data.display_folded = false;
-    data.ready_first = true;
-    data.editable_instance = false;
+    data.pause_mode          = PAUSE_MODE_INHERIT;
+    data.pause_owner         = nullptr;
+    data.network_master      = 1; // server by default
+    data.path_cache          = nullptr;
+    data.parent_owned        = false;
+    data.in_constructor      = true;
+    data.viewport            = nullptr;
+    data.use_placeholder     = false;
+    data.display_folded      = false;
+    data.ready_first         = true;
+    data.editable_instance   = false;
 
     orphan_node_count++;
 }

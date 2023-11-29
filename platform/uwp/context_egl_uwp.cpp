@@ -89,7 +89,7 @@ Error ContextEGL_UWP::initialize() {
 
     EGLint surfaceAttribList[] = {EGL_NONE, EGL_NONE};
 
-    EGLint numConfigs = 0;
+    EGLint numConfigs   = 0;
     EGLint majorVersion = 1;
     EGLint minorVersion;
     if (driver == GLES_2_0) {
@@ -100,7 +100,7 @@ Error ContextEGL_UWP::initialize() {
     EGLDisplay display = EGL_NO_DISPLAY;
     EGLContext context = EGL_NO_CONTEXT;
     EGLSurface surface = EGL_NO_SURFACE;
-    EGLConfig config = nullptr;
+    EGLConfig config   = nullptr;
     EGLint contextAttribs[3];
     if (driver == GLES_2_0) {
         contextAttribs[0] = EGL_CONTEXT_CLIENT_VERSION;

@@ -83,7 +83,7 @@ void Performance::_bind_methods() {
 }
 
 float Performance::_get_node_count() const {
-    MainLoop* ml = OS::get_singleton()->get_main_loop();
+    MainLoop* ml   = OS::get_singleton()->get_main_loop();
     SceneTree* sml = Object::cast_to<SceneTree>(ml);
     if (!sml) {
         return 0;
@@ -270,7 +270,7 @@ void Performance::set_physics_process_time(float p_pt) {
 }
 
 Performance::Performance() {
-    _process_time = 0;
+    _process_time         = 0;
     _physics_process_time = 0;
-    singleton = this;
+    singleton             = this;
 }

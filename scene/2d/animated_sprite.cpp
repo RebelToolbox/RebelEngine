@@ -38,7 +38,7 @@
 #ifdef TOOLS_ENABLED
 Dictionary AnimatedSprite::_edit_get_state() const {
     Dictionary state = Node2D::_edit_get_state();
-    state["offset"] = offset;
+    state["offset"]  = offset;
     return state;
 }
 
@@ -163,7 +163,7 @@ void SpriteFrames::add_animation(const StringName& p_anim) {
         "SpriteFrames already has animation '" + p_anim + "'."
     );
 
-    animations[p_anim] = Anim();
+    animations[p_anim]             = Anim();
     animations[p_anim].normal_name = String(p_anim) + NORMAL_SUFFIX;
 }
 
@@ -190,7 +190,7 @@ void SpriteFrames::rename_animation(
 
     Anim anim = animations[p_prev];
     animations.erase(p_prev);
-    animations[p_next] = anim;
+    animations[p_next]             = anim;
     animations[p_next].normal_name = String(p_next) + NORMAL_SUFFIX;
 }
 
@@ -207,7 +207,7 @@ Vector<String> SpriteFrames::_get_animation_list() const {
 
 void SpriteFrames::get_animation_list(List<StringName>* r_animations) const {
     for (const Map<StringName, Anim>::Element* E = animations.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         r_animations->push_back(E->key());
     }
 }
@@ -215,7 +215,7 @@ void SpriteFrames::get_animation_list(List<StringName>* r_animations) const {
 Vector<String> SpriteFrames::get_animation_names() const {
     Vector<String> names;
     for (const Map<StringName, Anim>::Element* E = animations.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         names.push_back(E->key());
     }
     names.sort();
@@ -277,11 +277,11 @@ Array SpriteFrames::_get_frames() const {
 Array SpriteFrames::_get_animations() const {
     Array anims;
     for (Map<StringName, Anim>::Element* E = animations.front(); E;
-         E = E->next()) {
+         E                                 = E->next()) {
         Dictionary d;
-        d["name"] = E->key();
+        d["name"]  = E->key();
         d["speed"] = E->get().speed;
-        d["loop"] = E->get().loop;
+        d["loop"]  = E->get().loop;
         Array frames;
         for (int i = 0; i < E->get().frames.size(); i++) {
             frames.push_back(E->get().frames[i]);
@@ -304,8 +304,8 @@ void SpriteFrames::_set_animations(const Array& p_animations) {
         ERR_CONTINUE(!d.has("frames"));
 
         Anim anim;
-        anim.speed = d["speed"];
-        anim.loop = d["loop"];
+        anim.speed   = d["speed"];
+        anim.loop    = d["loop"];
         Array frames = d["frames"];
         for (int j = 0; j < frames.size(); j++) {
             RES res = frames[j];
@@ -523,9 +523,9 @@ void AnimatedSprite::_notification(int p_what) {
                     );
                 }
 
-                float to_process = MIN(timeout, remaining);
-                remaining -= to_process;
-                timeout -= to_process;
+                float to_process  = MIN(timeout, remaining);
+                remaining        -= to_process;
+                timeout          -= to_process;
             }
         } break;
 
@@ -549,7 +549,7 @@ void AnimatedSprite::_notification(int p_what) {
 
             RID ci = get_canvas_item();
 
-            Size2 s = texture->get_size();
+            Size2 s    = texture->get_size();
             Point2 ofs = offset;
             if (centered) {
                 ofs -= s / 2;
@@ -930,14 +930,14 @@ void AnimatedSprite::_bind_methods() {
 
 AnimatedSprite::AnimatedSprite() {
     centered = true;
-    hflip = false;
-    vflip = false;
+    hflip    = false;
+    vflip    = false;
 
-    frame = 0;
+    frame       = 0;
     speed_scale = 1.0f;
-    playing = false;
-    backwards = false;
-    animation = "default";
-    timeout = 0;
-    is_over = false;
+    playing     = false;
+    backwards   = false;
+    animation   = "default";
+    timeout     = 0;
+    is_over     = false;
 }

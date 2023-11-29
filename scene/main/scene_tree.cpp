@@ -108,7 +108,7 @@ void SceneTreeTimer::release_connections() {
 }
 
 SceneTreeTimer::SceneTreeTimer() {
-    time_left = 0;
+    time_left     = 0;
     process_pause = true;
 }
 
@@ -175,7 +175,7 @@ void SceneTree::make_group_changed(const StringName& p_group) {
 void SceneTree::flush_transform_notifications() {
     SelfList<Node>* n = xform_change_list.first();
     while (n) {
-        Node* node = n->self();
+        Node* node         = n->self();
         SelfList<Node>* nx = n->next();
         xform_change_list.remove(n);
         n = nx;
@@ -219,7 +219,7 @@ void SceneTree::_update_group_order(Group& g, bool p_use_priority) {
         return;
     }
 
-    Node** nodes = g.nodes.ptrw();
+    Node** nodes   = g.nodes.ptrw();
     int node_count = g.nodes.size();
 
     if (p_use_priority) {
@@ -252,7 +252,7 @@ void SceneTree::call_group_flags(
         ERR_FAIL_COND(ugc_locked);
 
         UGCall ug;
-        ug.call = p_function;
+        ug.call  = p_function;
         ug.group = p_group;
 
         if (unique_group_calls.has(ug)) {
@@ -276,8 +276,8 @@ void SceneTree::call_group_flags(
     _update_group_order(g);
 
     Vector<Node*> nodes_copy = g.nodes;
-    Node** nodes = nodes_copy.ptrw();
-    int node_count = nodes_copy.size();
+    Node** nodes             = nodes_copy.ptrw();
+    int node_count           = nodes_copy.size();
 
     call_lock++;
 
@@ -341,8 +341,8 @@ void SceneTree::notify_group_flags(
     _update_group_order(g);
 
     Vector<Node*> nodes_copy = g.nodes;
-    Node** nodes = nodes_copy.ptrw();
-    int node_count = nodes_copy.size();
+    Node** nodes             = nodes_copy.ptrw();
+    int node_count           = nodes_copy.size();
 
     call_lock++;
 
@@ -403,8 +403,8 @@ void SceneTree::set_group_flags(
     _update_group_order(g);
 
     Vector<Node*> nodes_copy = g.nodes;
-    Node** nodes = nodes_copy.ptrw();
-    int node_count = nodes_copy.size();
+    Node** nodes             = nodes_copy.ptrw();
+    int node_count           = nodes_copy.size();
 
     call_lock++;
 
@@ -746,7 +746,7 @@ void SceneTree::finish() {
 
     // Cleanup timers.
     for (List<Ref<SceneTreeTimer>>::Element* E = timers.front(); E;
-         E = E->next()) {
+         E                                     = E->next()) {
         E->get()->release_connections();
     }
     timers.clear();
@@ -1001,7 +1001,7 @@ Ref<ArrayMesh> SceneTree::get_debug_contact_mesh() {
     Array arr;
     arr.resize(Mesh::ARRAY_MAX);
     arr[Mesh::ARRAY_VERTEX] = vertices;
-    arr[Mesh::ARRAY_INDEX] = indices;
+    arr[Mesh::ARRAY_INDEX]  = indices;
 
     debug_contact_mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arr);
     debug_contact_mesh->surface_set_material(0, mat);
@@ -1049,9 +1049,9 @@ void SceneTree::_call_input_pause(
     Vector<Node*> nodes_copy = g.nodes;
 
     int node_count = nodes_copy.size();
-    Node** nodes = nodes_copy.ptrw();
+    Node** nodes   = nodes_copy.ptrw();
 
-    Variant arg = p_input;
+    Variant arg         = p_input;
     const Variant* v[1] = {&arg};
 
     call_lock++;
@@ -1107,7 +1107,7 @@ void SceneTree::_notify_group_pause(
     Vector<Node*> nodes_copy = g.nodes;
 
     int node_count = nodes_copy.size();
-    Node** nodes = nodes_copy.ptrw();
+    Node** nodes   = nodes_copy.ptrw();
 
     call_lock++;
 
@@ -1158,8 +1158,8 @@ Variant SceneTree::_call_group_flags(
     ERR_FAIL_COND_V(p_args[1]->get_type() != Variant::STRING, Variant());
     ERR_FAIL_COND_V(p_args[2]->get_type() != Variant::STRING, Variant());
 
-    int flags = *p_args[0];
-    StringName group = *p_args[1];
+    int flags         = *p_args[0];
+    StringName group  = *p_args[1];
     StringName method = *p_args[2];
     Variant v[VARIANT_ARG_MAX];
 
@@ -1182,7 +1182,7 @@ Variant SceneTree::_call_group(
     ERR_FAIL_COND_V(p_args[0]->get_type() != Variant::STRING, Variant());
     ERR_FAIL_COND_V(p_args[1]->get_type() != Variant::STRING, Variant());
 
-    StringName group = *p_args[0];
+    StringName group  = *p_args[0];
     StringName method = *p_args[1];
     Variant v[VARIANT_ARG_MAX];
 
@@ -1296,14 +1296,14 @@ void SceneTree::_update_root_rect() {
     Size2 viewport_size;
     Size2 screen_size;
 
-    float viewport_aspect = desired_res.aspect();
+    float viewport_aspect   = desired_res.aspect();
     float video_mode_aspect = video_mode.aspect();
 
     if (stretch_aspect == STRETCH_ASPECT_IGNORE
         || Math::is_equal_approx(viewport_aspect, video_mode_aspect)) {
         // same aspect or ignore aspect
         viewport_size = desired_res;
-        screen_size = video_mode;
+        screen_size   = video_mode;
     } else if (viewport_aspect < video_mode_aspect) {
         // screen ratio is smaller vertically
 
@@ -1312,7 +1312,7 @@ void SceneTree::_update_root_rect() {
             // will stretch horizontally
             viewport_size.x = desired_res.y * video_mode_aspect;
             viewport_size.y = desired_res.y;
-            screen_size = video_mode;
+            screen_size     = video_mode;
 
         } else {
             // will need black bars
@@ -1327,7 +1327,7 @@ void SceneTree::_update_root_rect() {
             // will stretch horizontally
             viewport_size.x = desired_res.x;
             viewport_size.y = desired_res.x / video_mode_aspect;
-            screen_size = video_mode;
+            screen_size     = video_mode;
 
         } else {
             // will need black bars
@@ -1337,7 +1337,7 @@ void SceneTree::_update_root_rect() {
         }
     }
 
-    screen_size = screen_size.floor();
+    screen_size   = screen_size.floor();
     viewport_size = viewport_size.floor();
 
     Size2 margin;
@@ -1394,10 +1394,10 @@ void SceneTree::set_screen_stretch(
     const Size2& p_minsize,
     real_t p_scale
 ) {
-    stretch_mode = p_mode;
+    stretch_mode   = p_mode;
     stretch_aspect = p_aspect;
-    stretch_min = p_minsize;
-    stretch_scale = p_scale;
+    stretch_min    = p_minsize;
+    stretch_scale  = p_scale;
     _update_root_rect();
 }
 
@@ -1511,7 +1511,7 @@ void SceneTree::_live_edit_node_set_func(
     }
 
     NodePath np = live_edit_node_path_cache[p_id];
-    Node* base = nullptr;
+    Node* base  = nullptr;
     if (root->has_node(live_edit_root)) {
         base = root->get_node(live_edit_root);
     }
@@ -1560,7 +1560,7 @@ void SceneTree::_live_edit_node_call_func(
     }
 
     NodePath np = live_edit_node_path_cache[p_id];
-    Node* base = nullptr;
+    Node* base  = nullptr;
     if (root->has_node(live_edit_root)) {
         base = root->get_node(live_edit_root);
     }
@@ -1649,7 +1649,7 @@ void SceneTree::_live_edit_root_func(
     const NodePath& p_scene_path,
     const String& p_scene_from
 ) {
-    live_edit_root = p_scene_path;
+    live_edit_root  = p_scene_path;
     live_edit_scene = p_scene_from;
 }
 
@@ -2564,10 +2564,10 @@ SceneTree::SceneTree() {
     if (singleton == nullptr) {
         singleton = this;
     }
-    _quit = false;
-    accept_quit = true;
-    quit_on_go_back = true;
-    initialized = false;
+    _quit                 = false;
+    accept_quit           = true;
+    quit_on_go_back       = true;
+    initialized           = false;
     use_font_oversampling = false;
 #ifdef DEBUG_ENABLED
     debug_collisions_hint = false;
@@ -2603,23 +2603,23 @@ SceneTree::SceneTree() {
 
     GLOBAL_DEF("debug/shapes/collision/draw_2d_outlines", true);
 
-    tree_version = 1;
+    tree_version         = 1;
     physics_process_time = 1;
-    idle_process_time = 1;
+    idle_process_time    = 1;
 
-    root = nullptr;
-    input_handled = false;
-    pause = false;
-    current_frame = 0;
-    current_event = 0;
+    root              = nullptr;
+    input_handled     = false;
+    pause             = false;
+    current_frame     = 0;
+    current_event     = 0;
     tree_changed_name = "tree_changed";
-    node_added_name = "node_added";
+    node_added_name   = "node_added";
     node_removed_name = "node_removed";
     node_renamed_name = "node_renamed";
-    ugc_locked = false;
-    call_lock = 0;
-    root_lock = 0;
-    node_count = 0;
+    ugc_locked        = false;
+    call_lock         = 0;
+    root_lock         = 0;
+    node_count        = 0;
 
     // create with mainloop
 
@@ -2747,9 +2747,9 @@ SceneTree::SceneTree() {
         }
     }
 
-    stretch_mode = STRETCH_MODE_DISABLED;
+    stretch_mode   = STRETCH_MODE_DISABLED;
     stretch_aspect = STRETCH_ASPECT_IGNORE;
-    stretch_scale = 1.0;
+    stretch_scale  = 1.0;
 
     last_screen_size = Size2(
         OS::get_singleton()->get_window_size().width,

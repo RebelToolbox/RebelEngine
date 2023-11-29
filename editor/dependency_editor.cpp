@@ -48,7 +48,7 @@ void DependencyEditor::_searched(const String& p_path) {
 
 void DependencyEditor::_load_pressed(Object* p_item, int p_cell, int p_button) {
     TreeItem* ti = Object::cast_to<TreeItem>(p_item);
-    replacing = ti->get_text(1);
+    replacing    = ti->get_text(1);
 
     search->set_title(
         TTR("Search Replacement For:") + " " + replacing.get_file()
@@ -84,7 +84,7 @@ void DependencyEditor::_fix_and_find(
         String path = efsd->get_file_path(i);
 
         for (Map<String, String>::Element* E = candidates[file].front(); E;
-             E = E->next()) {
+             E                               = E->next()) {
             if (E->get() == String()) {
                 E->get() = path;
                 continue;
@@ -92,8 +92,8 @@ void DependencyEditor::_fix_and_find(
 
             // must match the best, using subdirs
             String existing = E->get().replace_first("res://", "");
-            String current = path.replace_first("res://", "");
-            String lost = E->key().replace_first("res://", "");
+            String current  = path.replace_first("res://", "");
+            String lost     = E->key().replace_first("res://", "");
 
             Vector<String> existingv = existing.split("/");
             existingv.invert();
@@ -103,7 +103,7 @@ void DependencyEditor::_fix_and_find(
             lostv.invert();
 
             int existing_score = 0;
-            int current_score = 0;
+            int current_score  = 0;
 
             for (int j = 0; j < lostv.size(); j++) {
                 if (j < existingv.size() && lostv[j] == existingv[j]) {
@@ -147,9 +147,9 @@ void DependencyEditor::_fix_all() {
     Map<String, String> remaps;
 
     for (Map<String, Map<String, String>>::Element* E = candidates.front(); E;
-         E = E->next()) {
+         E                                            = E->next()) {
         for (Map<String, String>::Element* F = E->get().front(); F;
-             F = F->next()) {
+             F                               = F->next()) {
             if (F->get() != String()) {
                 remaps[F->key()] = F->get();
             }
@@ -261,7 +261,7 @@ DependencyEditor::DependencyEditor() {
     tree->connect("button_pressed", this, "_load_pressed");
 
     HBoxContainer* hbc = memnew(HBoxContainer);
-    Label* label = memnew(Label(TTR("Dependencies:")));
+    Label* label       = memnew(Label(TTR("Dependencies:")));
     hbc->add_child(label);
     hbc->add_spacer();
     fixdeps = memnew(Button(TTR("Fix Broken")));
@@ -347,7 +347,7 @@ void DependencyEditorOwners::_fill_owners(EditorFileSystemDirectory* efsd) {
 
     for (int i = 0; i < efsd->get_file_count(); i++) {
         Vector<String> deps = efsd->get_file_deps(i);
-        bool found = false;
+        bool found          = false;
         for (int j = 0; j < deps.size(); j++) {
             if (deps[j] == editing) {
                 found = true;
@@ -439,9 +439,9 @@ void DependencyRemoveDialog::_find_all_removed_dependencies(
         for (int j = 0; j < all_deps.size(); ++j) {
             if (all_remove_files.has(all_deps[j])) {
                 RemovedDependency dep;
-                dep.file = path;
-                dep.file_type = efsd->get_file_type(i);
-                dep.dependency = all_deps[j];
+                dep.file              = path;
+                dep.file_type         = efsd->get_file_type(i);
+                dep.dependency        = all_deps[j];
                 dep.dependency_folder = all_remove_files[all_deps[j]];
                 p_removed.push_back(dep);
             }
@@ -711,7 +711,7 @@ void DependencyErrorDialog::show(
     const String& p_for_file,
     const Vector<String>& report
 ) {
-    mode = p_mode;
+    mode     = p_mode;
     for_file = p_for_file;
     set_title(TTR("Error loading:") + " " + p_for_file.get_file());
     files->clear();
@@ -720,7 +720,7 @@ void DependencyErrorDialog::show(
     for (int i = 0; i < report.size(); i++) {
         String dep;
         String type = "Object";
-        dep = report[i].get_slice("::", 0);
+        dep         = report[i].get_slice("::", 0);
         if (report[i].get_slice_count("::") > 0) {
             type = report[i].get_slice("::", 1);
         }

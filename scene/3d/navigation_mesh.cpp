@@ -44,16 +44,16 @@ void NavigationMesh::create_from_mesh(const Ref<Mesh>& p_mesh) {
             != Mesh::PRIMITIVE_TRIANGLES) {
             continue;
         }
-        Array arr = p_mesh->surface_get_arrays(i);
+        Array arr                = p_mesh->surface_get_arrays(i);
         PoolVector<Vector3> varr = arr[Mesh::ARRAY_VERTEX];
-        PoolVector<int> iarr = arr[Mesh::ARRAY_INDEX];
+        PoolVector<int> iarr     = arr[Mesh::ARRAY_INDEX];
         if (varr.size() == 0 || iarr.size() == 0) {
             continue;
         }
 
         int from = vertices.size();
         vertices.append_array(varr);
-        int rlen = iarr.size();
+        int rlen                = iarr.size();
         PoolVector<int>::Read r = iarr.read();
 
         for (int j = 0; j < rlen; j += 3) {
@@ -357,7 +357,7 @@ Ref<Mesh> NavigationMesh::get_debug_mesh() {
 
     {
         PoolVector<Vector3>::Write tw = tmeshfaces.write();
-        int tidx = 0;
+        int tidx                      = 0;
 
         for (List<Face3>::Element* E = faces.front(); E; E = E->next()) {
             const Face3& f = E->get();
@@ -399,7 +399,7 @@ Ref<Mesh> NavigationMesh::get_debug_mesh() {
     varr.resize(lines.size());
     {
         PoolVector<Vector3>::Write w = varr.write();
-        int idx = 0;
+        int idx                      = 0;
         for (List<Vector3>::Element* E = lines.front(); E; E = E->next()) {
             w[idx++] = E->get();
         }
@@ -909,27 +909,27 @@ void NavigationMesh::_validate_property(PropertyInfo& property) const {
 }
 
 NavigationMesh::NavigationMesh() {
-    cell_size = 0.3f;
-    cell_height = 0.2f;
-    agent_height = 2.0f;
-    agent_radius = 0.6f;
-    agent_max_climb = 0.9f;
-    agent_max_slope = 45.0f;
-    region_min_size = 8.0f;
-    region_merge_size = 20.0f;
-    edge_max_length = 12.0f;
-    edge_max_error = 1.3f;
-    verts_per_poly = 6.0f;
-    detail_sample_distance = 6.0f;
+    cell_size               = 0.3f;
+    cell_height             = 0.2f;
+    agent_height            = 2.0f;
+    agent_radius            = 0.6f;
+    agent_max_climb         = 0.9f;
+    agent_max_slope         = 45.0f;
+    region_min_size         = 8.0f;
+    region_merge_size       = 20.0f;
+    edge_max_length         = 12.0f;
+    edge_max_error          = 1.3f;
+    verts_per_poly          = 6.0f;
+    detail_sample_distance  = 6.0f;
     detail_sample_max_error = 1.0f;
 
-    partition_type = SAMPLE_PARTITION_WATERSHED;
-    parsed_geometry_type = PARSED_GEOMETRY_MESH_INSTANCES;
-    collision_mask = 0xFFFFFFFF;
-    source_geometry_mode = SOURCE_GEOMETRY_NAVMESH_CHILDREN;
-    source_group_name = "navmesh";
-    filter_low_hanging_obstacles = false;
-    filter_ledge_spans = false;
+    partition_type                   = SAMPLE_PARTITION_WATERSHED;
+    parsed_geometry_type             = PARSED_GEOMETRY_MESH_INSTANCES;
+    collision_mask                   = 0xFFFFFFFF;
+    source_geometry_mode             = SOURCE_GEOMETRY_NAVMESH_CHILDREN;
+    source_group_name                = "navmesh";
+    filter_low_hanging_obstacles     = false;
+    filter_ledge_spans               = false;
     filter_walkable_low_height_spans = false;
 }
 
@@ -1168,8 +1168,8 @@ void NavigationMeshInstance::_changed_callback(
 NavigationMeshInstance::NavigationMeshInstance() {
     debug_view = nullptr;
     navigation = nullptr;
-    nav_id = -1;
-    enabled = true;
+    nav_id     = -1;
+    enabled    = true;
     set_notify_transform(true);
 }
 

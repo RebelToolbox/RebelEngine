@@ -46,10 +46,10 @@ class ConstraintSW : public RID_Data {
 
 protected:
     ConstraintSW(BodySW** p_body_ptr = nullptr, int p_body_count = 0) {
-        _body_ptr = p_body_ptr;
-        _body_count = p_body_count;
-        island_step = 0;
-        priority = 1;
+        _body_ptr                          = p_body_ptr;
+        _body_count                        = p_body_count;
+        island_step                        = 0;
+        priority                           = 1;
         disabled_collisions_between_bodies = true;
     }
 

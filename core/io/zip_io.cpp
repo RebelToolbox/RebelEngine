@@ -111,15 +111,15 @@ void zipio_free(voidpf opaque, voidpf address) {
 
 zlib_filefunc_def zipio_create_io_from_file(FileAccess** p_file) {
     zlib_filefunc_def io;
-    io.opaque = p_file;
-    io.zopen_file = zipio_open;
-    io.zread_file = zipio_read;
+    io.opaque      = p_file;
+    io.zopen_file  = zipio_open;
+    io.zread_file  = zipio_read;
     io.zwrite_file = zipio_write;
-    io.ztell_file = zipio_tell;
-    io.zseek_file = zipio_seek;
+    io.ztell_file  = zipio_tell;
+    io.zseek_file  = zipio_seek;
     io.zclose_file = zipio_close;
     io.zerror_file = zipio_testerror;
-    io.alloc_mem = zipio_alloc;
-    io.free_mem = zipio_free;
+    io.alloc_mem   = zipio_alloc;
+    io.free_mem    = zipio_free;
     return io;
 }

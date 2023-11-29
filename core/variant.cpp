@@ -171,7 +171,7 @@ bool Variant::can_convert(Variant::Type p_type_from, Variant::Type p_type_to) {
         return (p_type_to == OBJECT);
     };
 
-    const Type* valid_types = nullptr;
+    const Type* valid_types   = nullptr;
     const Type* invalid_types = nullptr;
 
     switch (p_type_to) {
@@ -284,7 +284,7 @@ bool Variant::can_convert(Variant::Type p_type_from, Variant::Type p_type_to) {
         } break;
         case POOL_INT_ARRAY: {
             static const Type valid[] = {ARRAY, NIL};
-            valid_types = valid;
+            valid_types               = valid;
         } break;
         case POOL_REAL_ARRAY: {
             static const Type valid[] = {ARRAY, NIL};
@@ -293,16 +293,16 @@ bool Variant::can_convert(Variant::Type p_type_from, Variant::Type p_type_to) {
         } break;
         case POOL_STRING_ARRAY: {
             static const Type valid[] = {ARRAY, NIL};
-            valid_types = valid;
+            valid_types               = valid;
         } break;
         case POOL_VECTOR2_ARRAY: {
             static const Type valid[] = {ARRAY, NIL};
-            valid_types = valid;
+            valid_types               = valid;
 
         } break;
         case POOL_VECTOR3_ARRAY: {
             static const Type valid[] = {ARRAY, NIL};
-            valid_types = valid;
+            valid_types               = valid;
 
         } break;
         case POOL_COLOR_ARRAY: {
@@ -466,7 +466,7 @@ bool Variant::can_convert_strict(
         } break;
         case POOL_INT_ARRAY: {
             static const Type valid[] = {ARRAY, NIL};
-            valid_types = valid;
+            valid_types               = valid;
         } break;
         case POOL_REAL_ARRAY: {
             static const Type valid[] = {ARRAY, NIL};
@@ -475,16 +475,16 @@ bool Variant::can_convert_strict(
         } break;
         case POOL_STRING_ARRAY: {
             static const Type valid[] = {ARRAY, NIL};
-            valid_types = valid;
+            valid_types               = valid;
         } break;
         case POOL_VECTOR2_ARRAY: {
             static const Type valid[] = {ARRAY, NIL};
-            valid_types = valid;
+            valid_types               = valid;
 
         } break;
         case POOL_VECTOR3_ARRAY: {
             static const Type valid[] = {ARRAY, NIL};
-            valid_types = valid;
+            valid_types               = valid;
 
         } break;
         case POOL_COLOR_ARRAY: {
@@ -1436,7 +1436,7 @@ String Variant::stringify(List<const void*>& stack) const {
 
             for (List<Variant>::Element* E = keys.front(); E; E = E->next()) {
                 _VariantStrPair sp;
-                sp.key = E->get().stringify(stack);
+                sp.key   = E->get().stringify(stack);
                 sp.value = d[E->get()].stringify(stack);
 
                 pairs.push_back(sp);
@@ -1600,8 +1600,8 @@ Variant::operator Transform() const {
         m.basis.elements[1][0] = t.elements[0][1];
         m.basis.elements[0][1] = t.elements[1][0];
         m.basis.elements[1][1] = t.elements[1][1];
-        m.origin[0] = t.elements[2][0];
-        m.origin[1] = t.elements[2][1];
+        m.origin[0]            = t.elements[2][0];
+        m.origin[1]            = t.elements[2][1];
         return m;
     } else {
         return Transform();
@@ -1866,7 +1866,7 @@ Variant::operator Vector<Vector2>() const {
     }
     to.resize(len);
     PoolVector<Vector2>::Read r = from.read();
-    Vector2* w = to.ptrw();
+    Vector2* w                  = to.ptrw();
     for (int i = 0; i < len; i++) {
         w[i] = r[i];
     }
@@ -1900,7 +1900,7 @@ Variant::operator PoolVector<Face3>() const {
     }
 
     faces.resize(va_size / 3);
-    PoolVector<Face3>::Write w = faces.write();
+    PoolVector<Face3>::Write w  = faces.write();
     PoolVector<Vector3>::Read r = va.read();
 
     for (int i = 0; i < va_size; i++) {
@@ -2002,7 +2002,7 @@ Variant::operator Vector<Vector3>() const {
     }
     to.resize(len);
     PoolVector<Vector3>::Read r = from.read();
-    Vector3* w = to.ptrw();
+    Vector3* w                  = to.ptrw();
     for (int i = 0; i < len; i++) {
         w[i] = r[i];
     }
@@ -2018,7 +2018,7 @@ Variant::operator Vector<Color>() const {
     }
     to.resize(len);
     PoolVector<Color>::Read r = from.read();
-    Color* w = to.ptrw();
+    Color* w                  = to.ptrw();
     for (int i = 0; i < len; i++) {
         w[i] = r[i];
     }
@@ -2051,7 +2051,7 @@ Variant::operator IP_Address() const {
 }
 
 Variant::Variant(bool p_bool) {
-    type = BOOL;
+    type        = BOOL;
     _data._bool = p_bool;
 }
 
@@ -2064,65 +2064,65 @@ Variant::Variant(long unsigned int p_long) {
 */
 
 Variant::Variant(signed int p_int) {
-    type = INT;
+    type       = INT;
     _data._int = p_int;
 }
 
 Variant::Variant(unsigned int p_int) {
-    type = INT;
+    type       = INT;
     _data._int = p_int;
 }
 
 #ifdef NEED_LONG_INT
 
 Variant::Variant(signed long p_int) {
-    type = INT;
+    type       = INT;
     _data._int = p_int;
 }
 
 Variant::Variant(unsigned long p_int) {
-    type = INT;
+    type       = INT;
     _data._int = p_int;
 }
 #endif
 
 Variant::Variant(int64_t p_int) {
-    type = INT;
+    type       = INT;
     _data._int = p_int;
 }
 
 Variant::Variant(uint64_t p_int) {
-    type = INT;
+    type       = INT;
     _data._int = p_int;
 }
 
 Variant::Variant(signed short p_short) {
-    type = INT;
+    type       = INT;
     _data._int = p_short;
 }
 
 Variant::Variant(unsigned short p_short) {
-    type = INT;
+    type       = INT;
     _data._int = p_short;
 }
 
 Variant::Variant(signed char p_char) {
-    type = INT;
+    type       = INT;
     _data._int = p_char;
 }
 
 Variant::Variant(unsigned char p_char) {
-    type = INT;
+    type       = INT;
     _data._int = p_char;
 }
 
 Variant::Variant(float p_float) {
-    type = REAL;
+    type        = REAL;
     _data._real = p_float;
 }
 
 Variant::Variant(double p_double) {
-    type = REAL;
+    type        = REAL;
     _data._real = p_double;
 }
 
@@ -2167,12 +2167,12 @@ Variant::Variant(const Plane& p_plane) {
 }
 
 Variant::Variant(const ::AABB& p_aabb) {
-    type = AABB;
+    type        = AABB;
     _data._aabb = memnew(::AABB(p_aabb));
 }
 
 Variant::Variant(const Basis& p_matrix) {
-    type = BASIS;
+    type         = BASIS;
     _data._basis = memnew(Basis(p_matrix));
 }
 
@@ -2182,12 +2182,12 @@ Variant::Variant(const Quat& p_quat) {
 }
 
 Variant::Variant(const Transform& p_transform) {
-    type = TRANSFORM;
+    type             = TRANSFORM;
     _data._transform = memnew(Transform(p_transform));
 }
 
 Variant::Variant(const Transform2D& p_transform) {
-    type = TRANSFORM2D;
+    type               = TRANSFORM2D;
     _data._transform2d = memnew(Transform2D(p_transform));
 }
 
@@ -2204,7 +2204,7 @@ Variant::Variant(const NodePath& p_node_path) {
 Variant::Variant(const RefPtr& p_resource) {
     type = OBJECT;
     memnew_placement(_data._mem, ObjData);
-    _get_obj().rc = nullptr;
+    _get_obj().rc  = nullptr;
     _get_obj().ref = p_resource;
 }
 
@@ -2214,7 +2214,7 @@ Variant::Variant(const RID& p_rid) {
 }
 
 Variant::Variant(const Object* p_object) {
-    type = OBJECT;
+    type        = OBJECT;
     Object* obj = const_cast<Object*>(p_object);
 
     memnew_placement(_data._mem, ObjData);
@@ -2281,7 +2281,7 @@ Variant::Variant(const Vector<Vector2>& p_array) {
     if (len > 0) {
         v.resize(len);
         PoolVector<Vector2>::Write w = v.write();
-        const Vector2* r = p_array.ptr();
+        const Vector2* r             = p_array.ptr();
 
         for (int i = 0; i < len; i++) {
             w[i] = r[i];
@@ -2331,7 +2331,7 @@ Variant::Variant(const PoolVector<Face3>& p_face_array) {
     vertices.resize(face_count * 3);
 
     if (face_count) {
-        PoolVector<Face3>::Read r = p_face_array.read();
+        PoolVector<Face3>::Read r    = p_face_array.read();
         PoolVector<Vector3>::Write w = vertices.write();
 
         for (int i = 0; i < face_count; i++) {
@@ -2421,7 +2421,7 @@ Variant::Variant(const Vector<Vector3>& p_array) {
     if (len > 0) {
         v.resize(len);
         PoolVector<Vector3>::Write w = v.write();
-        const Vector3* r = p_array.ptr();
+        const Vector3* r             = p_array.ptr();
 
         for (int i = 0; i < len; i++) {
             w[i] = r[i];
@@ -3299,7 +3299,7 @@ String Variant::get_call_error_text(
         return "Call OK";
     }
 
-    String class_name = p_base->get_class();
+    String class_name  = p_base->get_class();
     Ref<Script> script = p_base->get_script();
     if (script.is_valid() && script->get_path().is_resource_file()) {
         class_name += "(" + script->get_path().get_file() + ")";

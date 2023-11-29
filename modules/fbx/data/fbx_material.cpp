@@ -222,8 +222,8 @@ FBXMaterial::MaterialInfo FBXMaterial::extract_material_info(
         );
         TextureFileMapping file_mapping;
         file_mapping.map_mode = mapping_mode;
-        file_mapping.name = texture_name;
-        file_mapping.texture = texture.second;
+        file_mapping.name     = texture_name;
+        file_mapping.texture  = texture.second;
         mat_info.textures.push_back(file_mapping);
 
         // Make sure to active the various features.
@@ -386,7 +386,7 @@ Ref<SpatialMaterial> FBXMaterial::import_material(ImportState& state) {
         ERR_CONTINUE_MSG(desc == PROPERTY_DESC_NOT_FOUND, "The FBX material parameter: `" + String(name.c_str()) + "` was not recognized. Please open an issue so we can add the support to it.");
 
         const FBXDocParser::PropertyTable* tbl = material->Props();
-        FBXDocParser::PropertyPtr prop = tbl->Get(name);
+        FBXDocParser::PropertyPtr prop         = tbl->Get(name);
 
         ERR_CONTINUE_MSG(
             prop == nullptr,
@@ -437,9 +437,9 @@ Ref<SpatialMaterial> FBXMaterial::import_material(ImportState& state) {
                     // Make sure to not lost any eventual opacity.
                     if (color != Vector3(0, 0, 0)) {
                         Color c = Color();
-                        c[0] = color[0];
-                        c[1] = color[1];
-                        c[2] = color[2];
+                        c[0]    = color[0];
+                        c[1]    = color[1];
+                        c[2]    = color[2];
                         spatial_material->set_albedo(c);
                     }
 
@@ -452,7 +452,7 @@ Ref<SpatialMaterial> FBXMaterial::import_material(ImportState& state) {
                     const real_t opacity = real_value->Value();
                     if (opacity < (1.0 - CMP_EPSILON)) {
                         Color c = spatial_material->get_albedo();
-                        c.a = opacity;
+                        c.a     = opacity;
                         spatial_material->set_albedo(c);
                         material_info.features.push_back(
                             SpatialMaterial::Feature::FEATURE_TRANSPARENT
@@ -708,7 +708,7 @@ Ref<SpatialMaterial> FBXMaterial::import_material(ImportState& state) {
                 const int32_t flags = Texture::FLAGS_DEFAULT;
                 image_texture->set_flags(flags);
 
-                texture = image_texture;
+                texture                                   = image_texture;
                 state.cached_image_searches[mapping.name] = texture;
                 print_verbose("Created texture from embedded image.");
             } else {

@@ -191,14 +191,14 @@ StringName::StringName(const char* p_name) {
         }
     }
 
-    _data = memnew(_Data);
+    _data       = memnew(_Data);
     _data->name = p_name;
     _data->refcount.init();
-    _data->hash = hash;
-    _data->idx = idx;
+    _data->hash  = hash;
+    _data->idx   = idx;
     _data->cname = nullptr;
-    _data->next = _table[idx];
-    _data->prev = nullptr;
+    _data->next  = _table[idx];
+    _data->prev  = nullptr;
     if (_table[idx]) {
         _table[idx]->prev = _data;
     }
@@ -241,11 +241,11 @@ StringName::StringName(const StaticCString& p_static_string) {
     _data = memnew(_Data);
 
     _data->refcount.init();
-    _data->hash = hash;
-    _data->idx = idx;
+    _data->hash  = hash;
+    _data->idx   = idx;
     _data->cname = p_static_string.ptr;
-    _data->next = _table[idx];
-    _data->prev = nullptr;
+    _data->next  = _table[idx];
+    _data->prev  = nullptr;
     if (_table[idx]) {
         _table[idx]->prev = _data;
     }
@@ -286,14 +286,14 @@ StringName::StringName(const String& p_name) {
         }
     }
 
-    _data = memnew(_Data);
+    _data       = memnew(_Data);
     _data->name = p_name;
     _data->refcount.init();
-    _data->hash = hash;
-    _data->idx = idx;
+    _data->hash  = hash;
+    _data->idx   = idx;
     _data->cname = nullptr;
-    _data->next = _table[idx];
-    _data->prev = nullptr;
+    _data->next  = _table[idx];
+    _data->prev  = nullptr;
     if (_table[idx]) {
         _table[idx]->prev = _data;
     }

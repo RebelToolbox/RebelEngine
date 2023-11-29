@@ -64,7 +64,7 @@ public:
 
 private:
     enum {
-        MAX_OUTPUTS = 8,
+        MAX_OUTPUTS         = 8,
         MAX_INTERSECT_AREAS = 32
     };
 
@@ -80,10 +80,10 @@ private:
         Viewport* viewport; // pointer only used for reference to previous mix
 
         Output() {
-            filter_gain = 0;
-            viewport = nullptr;
+            filter_gain      = 0;
+            viewport         = nullptr;
             reverb_bus_index = -1;
-            bus_index = -1;
+            bus_index        = -1;
         }
     };
 

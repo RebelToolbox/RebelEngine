@@ -100,15 +100,15 @@ struct SpatialIndexer2D {
         const Rect2& p_rect,
         bool p_add
     ) {
-        Point2i begin = p_rect.position;
-        begin /= cell_size;
-        Point2i end = p_rect.position + p_rect.size;
-        end /= cell_size;
+        Point2i begin  = p_rect.position;
+        begin         /= cell_size;
+        Point2i end    = p_rect.position + p_rect.size;
+        end           /= cell_size;
         for (int i = begin.x; i <= end.x; i++) {
             for (int j = begin.y; j <= end.y; j++) {
                 CellKey ck;
-                ck.x = i;
-                ck.y = j;
+                ck.x                               = i;
+                ck.y                               = j;
                 Map<CellKey, CellData>::Element* E = cells.find(ck);
 
                 if (p_add) {
@@ -150,7 +150,7 @@ struct SpatialIndexer2D {
         _notifier_update_cells(p_notifier, p_rect, true);
         _notifier_update_cells(p_notifier, E->get(), false);
         E->get() = p_rect;
-        changed = true;
+        changed  = true;
     }
 
     void _notifier_remove(VisibilityNotifier2D* p_notifier) {
@@ -162,7 +162,7 @@ struct SpatialIndexer2D {
 
         List<Viewport*> removed;
         for (Map<Viewport*, ViewportData>::Element* F = viewports.front(); F;
-             F = F->next()) {
+             F                                        = F->next()) {
             Map<VisibilityNotifier2D*, uint64_t>::Element* G =
                 F->get().notifiers.find(p_notifier);
 
@@ -183,9 +183,9 @@ struct SpatialIndexer2D {
     void _add_viewport(Viewport* p_viewport, const Rect2& p_rect) {
         ERR_FAIL_COND(viewports.has(p_viewport));
         ViewportData vd;
-        vd.rect = p_rect;
+        vd.rect               = p_rect;
         viewports[p_viewport] = vd;
-        changed = true;
+        changed               = true;
     }
 
     void _update_viewport(Viewport* p_viewport, const Rect2& p_rect) {
@@ -195,7 +195,7 @@ struct SpatialIndexer2D {
             return;
         }
         E->get().rect = p_rect;
-        changed = true;
+        changed       = true;
     }
 
     void _remove_viewport(Viewport* p_viewport) {
@@ -222,11 +222,11 @@ struct SpatialIndexer2D {
         }
 
         for (Map<Viewport*, ViewportData>::Element* E = viewports.front(); E;
-             E = E->next()) {
-            Point2i begin = E->get().rect.position;
-            begin /= cell_size;
-            Point2i end = E->get().rect.position + E->get().rect.size;
-            end /= cell_size;
+             E                                        = E->next()) {
+            Point2i begin  = E->get().rect.position;
+            begin         /= cell_size;
+            Point2i end    = E->get().rect.position + E->get().rect.size;
+            end           /= cell_size;
             pass++;
             List<VisibilityNotifier2D*> added;
             List<VisibilityNotifier2D*> removed;
@@ -240,7 +240,7 @@ struct SpatialIndexer2D {
                 // cell
 
                 for (Map<CellKey, CellData>::Element* F = cells.front(); F;
-                     F = F->next()) {
+                     F                                  = F->next()) {
                     const CellKey& ck = F->key();
 
                     if (ck.x < begin.x || ck.x > end.x) {
@@ -322,8 +322,8 @@ struct SpatialIndexer2D {
     }
 
     SpatialIndexer2D() {
-        pass = 0;
-        changed = false;
+        pass      = 0;
+        changed   = false;
         cell_size = GLOBAL_DEF("world/2d/cell_size", 100);
     }
 };
@@ -417,7 +417,7 @@ Physics2DDirectSpaceState* World2D::get_direct_space_state() {
 
 World2D::World2D() {
     canvas = VisualServer::get_singleton()->canvas_create();
-    space = Physics2DServer::get_singleton()->space_create();
+    space  = Physics2DServer::get_singleton()->space_create();
 
     // set space2D to be more friendly with pixels than meters, by adjusting
     // some constants

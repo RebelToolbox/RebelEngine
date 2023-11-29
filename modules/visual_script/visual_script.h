@@ -61,7 +61,7 @@ public:
     Ref<VisualScript> get_visual_script() const;
 
     virtual int get_output_sequence_port_count() const = 0;
-    virtual bool has_input_sequence_port() const = 0;
+    virtual bool has_input_sequence_port() const       = 0;
 
     virtual String get_output_sequence_port_text(int p_port) const = 0;
 
@@ -69,10 +69,10 @@ public:
         return false;
     }
 
-    virtual int get_input_value_port_count() const = 0;
+    virtual int get_input_value_port_count() const  = 0;
     virtual int get_output_value_port_count() const = 0;
 
-    virtual PropertyInfo get_input_value_port_info(int p_idx) const = 0;
+    virtual PropertyInfo get_input_value_port_info(int p_idx) const  = 0;
     virtual PropertyInfo get_output_value_port_info(int p_idx) const = 0;
 
     void set_default_input_value(int p_port, const Variant& p_value);
@@ -111,7 +111,7 @@ class VisualScriptNodeInstance {
 
     enum { // input argument addressing
         INPUT_SHIFT = 1 << 24,
-        INPUT_MASK = INPUT_SHIFT - 1,
+        INPUT_MASK  = INPUT_SHIFT - 1,
         INPUT_DEFAULT_VALUE_BIT =
             INPUT_SHIFT, // from unassigned input port, using default value
                          // (edited by user)
@@ -139,13 +139,13 @@ public:
     };
 
     enum {
-        STEP_SHIFT = 1 << 24,
-        STEP_MASK = STEP_SHIFT - 1,
-        STEP_FLAG_PUSH_STACK_BIT = STEP_SHIFT,   // push bit to stack
-        STEP_FLAG_GO_BACK_BIT = STEP_SHIFT << 1, // go back to previous node
+        STEP_SHIFT               = 1 << 24,
+        STEP_MASK                = STEP_SHIFT - 1,
+        STEP_FLAG_PUSH_STACK_BIT = STEP_SHIFT,      // push bit to stack
+        STEP_FLAG_GO_BACK_BIT    = STEP_SHIFT << 1, // go back to previous node
         STEP_NO_ADVANCE_BIT = STEP_SHIFT << 2, // do not advance past this node
         STEP_EXIT_FUNCTION_BIT = STEP_SHIFT << 3, // return from function
-        STEP_YIELD_BIT = STEP_SHIFT
+        STEP_YIELD_BIT         = STEP_SHIFT
                       << 4, // yield (will find VisualScriptFunctionState state
                             // in first working memory)
 
@@ -201,9 +201,9 @@ public:
     struct SequenceConnection {
         union {
             struct {
-                uint64_t from_node : 24;
+                uint64_t from_node   : 24;
                 uint64_t from_output : 16;
-                uint64_t to_node : 24;
+                uint64_t to_node     : 24;
             };
 
             uint64_t id;
@@ -219,8 +219,8 @@ public:
             struct {
                 uint64_t from_node : 24;
                 uint64_t from_port : 8;
-                uint64_t to_node : 24;
-                uint64_t to_port : 8;
+                uint64_t to_node   : 24;
+                uint64_t to_port   : 8;
             };
 
             uint64_t id;
@@ -393,7 +393,7 @@ public:
     void add_variable(
         const StringName& p_name,
         const Variant& p_default_value = Variant(),
-        bool p_export = false
+        bool p_export                  = false
     );
     bool has_variable(const StringName& p_name) const;
     void remove_variable(const StringName& p_name);
@@ -719,10 +719,10 @@ public:
             return;
         }
 
-        _call_stack[_debug_call_stack_pos].stack = p_stack;
-        _call_stack[_debug_call_stack_pos].instance = p_instance;
-        _call_stack[_debug_call_stack_pos].function = p_function;
-        _call_stack[_debug_call_stack_pos].work_mem = p_work_mem;
+        _call_stack[_debug_call_stack_pos].stack      = p_stack;
+        _call_stack[_debug_call_stack_pos].instance   = p_instance;
+        _call_stack[_debug_call_stack_pos].function   = p_function;
+        _call_stack[_debug_call_stack_pos].work_mem   = p_work_mem;
         _call_stack[_debug_call_stack_pos].current_id = current_id;
         _debug_call_stack_pos++;
     }
@@ -779,10 +779,10 @@ public:
         int& r_line_error,
         int& r_col_error,
         String& r_test_error,
-        const String& p_path = "",
-        List<String>* r_functions = nullptr,
+        const String& p_path                      = "",
+        List<String>* r_functions                 = nullptr,
         List<ScriptLanguage::Warning>* r_warnings = nullptr,
-        Set<int>* r_safe_lines = nullptr
+        Set<int>* r_safe_lines                    = nullptr
     ) const;
     virtual Script* create_script() const;
     virtual bool has_named_classes() const;
@@ -816,26 +816,26 @@ public:
         List<String>* p_locals,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
     virtual void debug_get_stack_level_members(
         int p_level,
         List<String>* p_members,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
     virtual void debug_get_globals(
         List<String>* p_locals,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
     virtual String debug_parse_stack_level_expression(
         int p_level,
         const String& p_expression,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
 
     virtual void reload_all_scripts();

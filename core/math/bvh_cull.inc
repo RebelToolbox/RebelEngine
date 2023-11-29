@@ -28,7 +28,7 @@ struct CullParams {
 private:
 void _cull_translate_hits(CullParams& p) {
     int num_hits = _cull_hits.size();
-    int left = p.result_max - p.result_count_overall;
+    int left     = p.result_max - p.result_count_overall;
 
     if (num_hits > left) {
         num_hits = left;
@@ -39,7 +39,7 @@ void _cull_translate_hits(CullParams& p) {
     for (int n = 0; n < num_hits; n++) {
         uint32_t ref_id = _cull_hits[n];
 
-        const ItemExtra& ex = _extra[ref_id];
+        const ItemExtra& ex   = _extra[ref_id];
         p.result_array[out_n] = ex.userdata;
 
         if (p.subindex_array) {
@@ -49,7 +49,7 @@ void _cull_translate_hits(CullParams& p) {
         out_n++;
     }
 
-    p.result_count = num_hits;
+    p.result_count          = num_hits;
     p.result_count_overall += num_hits;
 }
 
@@ -227,13 +227,13 @@ bool _cull_segment_iterative(uint32_t p_node_id, CullParams& r_params) {
         } else {
             // test children individually
             for (int n = 0; n < tnode.num_children; n++) {
-                uint32_t child_id = tnode.children[n];
+                uint32_t child_id             = tnode.children[n];
                 const BVHABB_CLASS& child_abb = _nodes[child_id].aabb;
 
                 if (child_abb.intersects_segment(r_params.segment)) {
                     // add to the stack
                     CullSegParams* child = ii.request();
-                    child->node_id = child_id;
+                    child->node_id       = child_id;
                 }
             }
         }
@@ -294,7 +294,7 @@ bool _cull_point_iterative(uint32_t p_node_id, CullParams& r_params) {
 
                 // add to the stack
                 CullPointParams* child = ii.request();
-                child->node_id = child_id;
+                child->node_id         = child_id;
             }
         }
 
@@ -323,7 +323,7 @@ bool _cull_aabb_iterative(
     ii.stack = (CullAABBParams*)alloca(ii.get_alloca_stacksize());
 
     // seed the stack
-    ii.get_first()->node_id = p_node_id;
+    ii.get_first()->node_id      = p_node_id;
     ii.get_first()->fully_within = p_fully_within;
 
     CullAABBParams cap;
@@ -365,7 +365,7 @@ bool _cull_aabb_iterative(
             if (!cap.fully_within) {
                 // test children individually
                 for (int n = 0; n < tnode.num_children; n++) {
-                    uint32_t child_id = tnode.children[n];
+                    uint32_t child_id             = tnode.children[n];
                     const BVHABB_CLASS& child_abb = _nodes[child_id].aabb;
 
                     if (child_abb.intersects(r_params.abb)) {
@@ -377,7 +377,7 @@ bool _cull_aabb_iterative(
                         CullAABBParams* child = ii.request();
 
                         // should always return valid child
-                        child->node_id = child_id;
+                        child->node_id      = child_id;
                         child->fully_within = fully_within;
                     }
                 }
@@ -389,7 +389,7 @@ bool _cull_aabb_iterative(
                     CullAABBParams* child = ii.request();
 
                     // should always return valid child
-                    child->node_id = child_id;
+                    child->node_id      = child_id;
                     child->fully_within = true;
                 }
             }
@@ -421,7 +421,7 @@ bool _cull_convex_iterative(
     ii.stack = (CullConvexParams*)alloca(ii.get_alloca_stacksize());
 
     // seed the stack
-    ii.get_first()->node_id = p_node_id;
+    ii.get_first()->node_id      = p_node_id;
     ii.get_first()->fully_within = p_fully_within;
 
     // preallocate these as a once off to be reused
@@ -551,7 +551,7 @@ bool _cull_convex_iterative(
                 CullConvexParams* child = ii.request();
 
                 // should always return valid child
-                child->node_id = child_id;
+                child->node_id      = child_id;
                 child->fully_within = ccp.fully_within;
             }
         }

@@ -84,7 +84,7 @@ double AudioDriver::get_time_since_last_mix() {
 
 double AudioDriver::get_time_to_next_mix() {
     lock();
-    uint64_t last_mix_time = _last_mix_time;
+    uint64_t last_mix_time   = _last_mix_time;
     uint64_t last_mix_frames = _last_mix_frames;
     unlock();
     double total =
@@ -97,7 +97,7 @@ void AudioDriver::input_buffer_init(int driver_buffer_frames) {
     const int input_buffer_channels = 2;
     input_buffer.resize(driver_buffer_frames * input_buffer_channels * 4);
     input_position = 0;
-    input_size = 0;
+    input_size     = 0;
 }
 
 void AudioDriver::input_buffer_write(int32_t sample) {
@@ -171,10 +171,10 @@ Array AudioDriver::capture_get_device_list() {
 }
 
 AudioDriver::AudioDriver() {
-    _last_mix_time = 0;
+    _last_mix_time   = 0;
     _last_mix_frames = 0;
-    input_position = 0;
-    input_size = 0;
+    input_position   = 0;
+    input_size       = 0;
 
 #ifdef DEBUG_ENABLED
     prof_time = 0;
@@ -280,7 +280,7 @@ void AudioServer::_driver_process(int p_frames, int32_t* p_buffer) {
 
         Bus* master = buses[0];
 
-        int from = buffer_size - to_mix;
+        int from     = buffer_size - to_mix;
         int from_buf = p_frames - todo;
 
         // master master, send to output
@@ -290,13 +290,13 @@ void AudioServer::_driver_process(int p_frames, int32_t* p_buffer) {
                 const AudioFrame* buf = master->channels[k].buffer.ptr();
 
                 for (int j = 0; j < to_copy; j++) {
-                    float l = CLAMP(buf[from + j].l, -1.0, 1.0);
-                    int32_t vl = l * ((1 << 20) - 1);
+                    float l     = CLAMP(buf[from + j].l, -1.0, 1.0);
+                    int32_t vl  = l * ((1 << 20) - 1);
                     int32_t vl2 = (vl < 0 ? -1 : 1) * (ABS(vl) << 11);
                     p_buffer[(from_buf + j) * (cs * 2) + k * 2 + 0] = vl2;
 
-                    float r = CLAMP(buf[from + j].r, -1.0, 1.0);
-                    int32_t vr = r * ((1 << 20) - 1);
+                    float r     = CLAMP(buf[from + j].r, -1.0, 1.0);
+                    int32_t vr  = r * ((1 << 20) - 1);
                     int32_t vr2 = (vr < 0 ? -1 : 1) * (ABS(vr) << 11);
                     p_buffer[(from_buf + j) * (cs * 2) + k * 2 + 1] = vr2;
                 }
@@ -309,7 +309,7 @@ void AudioServer::_driver_process(int p_frames, int32_t* p_buffer) {
             }
         }
 
-        todo -= to_copy;
+        todo   -= to_copy;
         to_mix -= to_copy;
     }
 
@@ -322,7 +322,7 @@ void AudioServer::_mix_step() {
     bool solo_mode = false;
 
     for (int i = 0; i < buses.size(); i++) {
-        Bus* bus = buses[i];
+        Bus* bus         = buses[i];
         bus->index_cache = i; // might be moved around by editor, so..
         for (int k = 0; k < bus->channels.size(); k++) {
             bus->channels.write[k].used = false;
@@ -330,7 +330,7 @@ void AudioServer::_mix_step() {
 
         if (bus->solo) {
             // solo chain
-            solo_mode = true;
+            solo_mode   = true;
             bus->soloed = true;
             do {
                 if (bus != buses[0]) {
@@ -339,7 +339,7 @@ void AudioServer::_mix_step() {
                         bus = buses[0]; // send to master
                     } else {
                         int prev_index_cache = bus->index_cache;
-                        bus = bus_map[bus->send];
+                        bus                  = bus_map[bus->send];
                         if (prev_index_cache
                             >= bus->index_cache) { // invalid, send to master
                             bus = buses[0];
@@ -505,7 +505,7 @@ void AudioServer::_mix_step() {
     }
 
     mix_frames += buffer_size;
-    to_mix = buffer_size;
+    to_mix      = buffer_size;
 }
 
 bool AudioServer::thread_has_channel_mix_buffer(int p_bus, int p_buffer) const {
@@ -529,7 +529,7 @@ AudioFrame* AudioServer::thread_get_channel_mix_buffer(
         buses.write[p_bus]->channels.write[p_buffer].buffer.ptrw();
 
     if (!buses[p_bus]->channels[p_buffer].used) {
-        buses.write[p_bus]->channels.write[p_buffer].used = true;
+        buses.write[p_bus]->channels.write[p_buffer].used   = true;
         buses.write[p_bus]->channels.write[p_buffer].active = true;
         buses.write[p_bus]->channels.write[p_buffer].last_mix_with_audio =
             mix_frames;
@@ -573,7 +573,7 @@ void AudioServer::set_bus_count(int p_count) {
 
     for (int i = cb; i < buses.size(); i++) {
         String attempt = "New Bus";
-        int attempts = 1;
+        int attempts   = 1;
         while (true) {
             bool name_free = true;
             for (int j = 0; j < i; j++) {
@@ -596,10 +596,10 @@ void AudioServer::set_bus_count(int p_count) {
         for (int j = 0; j < channel_count; j++) {
             buses.write[i]->channels.write[j].buffer.resize(buffer_size);
         }
-        buses[i]->name = attempt;
-        buses[i]->solo = false;
-        buses[i]->mute = false;
-        buses[i]->bypass = false;
+        buses[i]->name      = attempt;
+        buses[i]->solo      = false;
+        buses[i]->mute      = false;
+        buses[i]->bypass    = false;
         buses[i]->volume_db = 0;
         if (i > 0) {
             buses[i]->send = "Master";
@@ -642,7 +642,7 @@ void AudioServer::add_bus(int p_at_pos) {
     }
 
     String attempt = "New Bus";
-    int attempts = 1;
+    int attempts   = 1;
     while (true) {
         bool name_free = true;
         for (int j = 0; j < buses.size(); j++) {
@@ -665,10 +665,10 @@ void AudioServer::add_bus(int p_at_pos) {
     for (int j = 0; j < channel_count; j++) {
         bus->channels.write[j].buffer.resize(buffer_size);
     }
-    bus->name = attempt;
-    bus->solo = false;
-    bus->mute = false;
-    bus->bypass = false;
+    bus->name      = attempt;
+    bus->solo      = false;
+    bus->mute      = false;
+    bus->bypass    = false;
     bus->volume_db = 0;
 
     bus_map[attempt] = bus;
@@ -726,7 +726,7 @@ void AudioServer::set_bus_name(int p_bus, const String& p_name) {
     }
 
     String attempt = p_name;
-    int attempts = 1;
+    int attempts   = 1;
 
     while (true) {
         bool name_free = true;
@@ -746,7 +746,7 @@ void AudioServer::set_bus_name(int p_bus, const String& p_name) {
     }
     bus_map.erase(buses[p_bus]->name);
     buses[p_bus]->name = attempt;
-    bus_map[attempt] = buses[p_bus];
+    bus_map[attempt]   = buses[p_bus];
     unlock();
 
     emit_signal("bus_layout_changed");
@@ -870,7 +870,7 @@ void AudioServer::add_bus_effect(
     lock();
 
     Bus::Effect fx;
-    fx.effect = p_effect;
+    fx.effect  = p_effect;
     // fx.instance=p_effect->instance();
     fx.enabled = true;
 #ifdef DEBUG_ENABLED
@@ -1131,7 +1131,7 @@ void AudioServer::update() {
 #endif
 
     for (Set<CallbackItem>::Element* E = update_callbacks.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         E->get().callback(E->get().userdata);
     }
 }
@@ -1212,9 +1212,9 @@ void* AudioServer::audio_data_alloc(
     }
 
     audio_data_lock.lock();
-    audio_data[ad] = p_data_len;
+    audio_data[ad]        = p_data_len;
     audio_data_total_mem += p_data_len;
-    audio_data_max_mem = MAX(audio_data_total_mem, audio_data_max_mem);
+    audio_data_max_mem    = MAX(audio_data_total_mem, audio_data_max_mem);
     audio_data_lock.unlock();
 
     return ad;
@@ -1301,9 +1301,9 @@ void AudioServer::set_bus_layout(const Ref<AudioBusLayout>& p_bus_layout) {
             bus->send = p_bus_layout->buses[i].send;
         }
 
-        bus->solo = p_bus_layout->buses[i].solo;
-        bus->mute = p_bus_layout->buses[i].mute;
-        bus->bypass = p_bus_layout->buses[i].bypass;
+        bus->solo      = p_bus_layout->buses[i].solo;
+        bus->mute      = p_bus_layout->buses[i].mute;
+        bus->bypass    = p_bus_layout->buses[i].bypass;
         bus->volume_db = p_bus_layout->buses[i].volume_db;
 
         for (int j = 0; j < p_bus_layout->buses[i].effects.size(); j++) {
@@ -1311,14 +1311,14 @@ void AudioServer::set_bus_layout(const Ref<AudioBusLayout>& p_bus_layout) {
 
             if (fx.is_valid()) {
                 Bus::Effect bfx;
-                bfx.effect = fx;
+                bfx.effect  = fx;
                 bfx.enabled = p_bus_layout->buses[i].effects[j].enabled;
                 bus->effects.push_back(bfx);
             }
         }
 
         bus_map[bus->name] = bus;
-        buses.write[i] = bus;
+        buses.write[i]     = bus;
 
         buses[i]->channels.resize(channel_count);
         for (int j = 0; j < channel_count; j++) {
@@ -1339,15 +1339,15 @@ Ref<AudioBusLayout> AudioServer::generate_bus_layout() const {
     state->buses.resize(buses.size());
 
     for (int i = 0; i < buses.size(); i++) {
-        state->buses.write[i].name = buses[i]->name;
-        state->buses.write[i].send = buses[i]->send;
-        state->buses.write[i].mute = buses[i]->mute;
-        state->buses.write[i].solo = buses[i]->solo;
-        state->buses.write[i].bypass = buses[i]->bypass;
+        state->buses.write[i].name      = buses[i]->name;
+        state->buses.write[i].send      = buses[i]->send;
+        state->buses.write[i].mute      = buses[i]->mute;
+        state->buses.write[i].solo      = buses[i]->solo;
+        state->buses.write[i].bypass    = buses[i]->bypass;
         state->buses.write[i].volume_db = buses[i]->volume_db;
         for (int j = 0; j < buses[i]->effects.size(); j++) {
             AudioBusLayout::Bus::Effect fx;
-            fx.effect = buses[i]->effects[j].effect;
+            fx.effect  = buses[i]->effects[j].effect;
             fx.enabled = buses[i]->effects[j].enabled;
             state->buses.write[i].effects.push_back(fx);
         }
@@ -1600,17 +1600,17 @@ void AudioServer::_bind_methods() {
 }
 
 AudioServer::AudioServer() {
-    singleton = this;
+    singleton            = this;
     audio_data_total_mem = 0;
-    audio_data_max_mem = 0;
-    mix_frames = 0;
-    channel_count = 0;
-    to_mix = 0;
+    audio_data_max_mem   = 0;
+    mix_frames           = 0;
+    channel_count        = 0;
+    to_mix               = 0;
 #ifdef DEBUG_ENABLED
     prof_time = 0;
 #endif
-    mix_time = 0;
-    mix_size = 0;
+    mix_time          = 0;
+    mix_size          = 0;
     global_rate_scale = 1;
 }
 

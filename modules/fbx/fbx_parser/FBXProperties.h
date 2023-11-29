@@ -168,7 +168,7 @@ private:
     LazyPropertyMap lazyProps;
     mutable PropertyMap props;
     const PropertyTable* templateProps = nullptr;
-    const ElementPtr element = nullptr;
+    const ElementPtr element           = nullptr;
 };
 
 // ------------------------------------------------------------------------------------------------

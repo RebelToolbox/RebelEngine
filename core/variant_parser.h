@@ -38,9 +38,9 @@
 class VariantParser {
 public:
     struct Stream {
-        virtual CharType get_char() = 0;
+        virtual CharType get_char()  = 0;
         virtual bool is_utf8() const = 0;
-        virtual bool is_eof() const = 0;
+        virtual bool is_eof() const  = 0;
 
         CharType saved;
 
@@ -83,8 +83,8 @@ public:
     );
 
     struct ResourceParser {
-        void* userdata = nullptr;
-        ParseResourceFunc func = nullptr;
+        void* userdata             = nullptr;
+        ParseResourceFunc func     = nullptr;
         ParseResourceFunc ext_func = nullptr;
         ParseResourceFunc sub_func = nullptr;
     };
@@ -163,7 +163,7 @@ private:
         String& r_err_str,
         Tag& r_tag,
         ResourceParser* p_res_parser = nullptr,
-        bool p_simple_tag = false
+        bool p_simple_tag            = false
     );
 
 public:
@@ -173,7 +173,7 @@ public:
         String& r_err_str,
         Tag& r_tag,
         ResourceParser* p_res_parser = nullptr,
-        bool p_simple_tag = false
+        bool p_simple_tag            = false
     );
     static Error parse_tag_assign_eof(
         Stream* p_stream,
@@ -183,7 +183,7 @@ public:
         String& r_assign,
         Variant& r_value,
         ResourceParser* p_res_parser = nullptr,
-        bool p_simple_tag = false
+        bool p_simple_tag            = false
     );
 
     static Error parse_value(
@@ -225,7 +225,7 @@ public:
         const Variant& p_variant,
         String& r_string,
         EncodeResourceFunc p_encode_res_func = nullptr,
-        void* p_encode_res_ud = nullptr
+        void* p_encode_res_ud                = nullptr
     );
 };
 

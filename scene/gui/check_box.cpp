@@ -33,12 +33,12 @@
 #include "servers/visual_server.h"
 
 Size2 CheckBox::get_icon_size() const {
-    Ref<Texture> checked = Control::get_icon("checked");
-    Ref<Texture> checked_disabled = Control::get_icon("checked_disabled");
-    Ref<Texture> unchecked = Control::get_icon("unchecked");
+    Ref<Texture> checked            = Control::get_icon("checked");
+    Ref<Texture> checked_disabled   = Control::get_icon("checked_disabled");
+    Ref<Texture> unchecked          = Control::get_icon("unchecked");
     Ref<Texture> unchecked_disabled = Control::get_icon("unchecked_disabled");
-    Ref<Texture> radio_checked = Control::get_icon("radio_checked");
-    Ref<Texture> radio_unchecked = Control::get_icon("radio_unchecked");
+    Ref<Texture> radio_checked      = Control::get_icon("radio_checked");
+    Ref<Texture> radio_unchecked    = Control::get_icon("radio_unchecked");
 
     Size2 tex_size = Size2(0, 0);
     if (!checked.is_null()) {
@@ -66,9 +66,9 @@ Size2 CheckBox::get_icon_size() const {
 }
 
 Size2 CheckBox::get_minimum_size() const {
-    Size2 minsize = Button::get_minimum_size();
-    Size2 tex_size = get_icon_size();
-    minsize.width += tex_size.width;
+    Size2 minsize   = Button::get_minimum_size();
+    Size2 tex_size  = get_icon_size();
+    minsize.width  += tex_size.width;
     if (get_text().length() > 0) {
         minsize.width += get_constant("hseparation");
     }
@@ -87,7 +87,7 @@ void CheckBox::_notification(int p_what) {
     } else if (p_what == NOTIFICATION_DRAW) {
         RID ci = get_canvas_item();
 
-        Ref<Texture> on = Control::get_icon(vformat(
+        Ref<Texture> on  = Control::get_icon(vformat(
             "%s%s",
             is_radio() ? "radio_checked" : "checked",
             is_disabled() ? "_disabled" : ""

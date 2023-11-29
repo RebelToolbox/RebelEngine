@@ -132,7 +132,7 @@ public:
         const StringName& p_property,
         const Variant& p_value,
         const StringName& p_field = StringName(),
-        bool p_changing = false
+        bool p_changing           = false
     );
 
     virtual Size2 get_minimum_size() const;
@@ -371,13 +371,13 @@ class EditorInspector : public ScrollContainer {
         const String& p_path,
         const Variant& p_value,
         const String& p_name = "",
-        bool changing = false
+        bool changing        = false
     );
     void _property_changed_update_all(
         const String& p_path,
         const Variant& p_value,
         const String& p_name = "",
-        bool p_changing = false
+        bool p_changing      = false
     );
     void _multiple_properties_changed(Vector<String> p_paths, Array p_values);
     void _property_keyed(const String& p_path, bool p_advance);

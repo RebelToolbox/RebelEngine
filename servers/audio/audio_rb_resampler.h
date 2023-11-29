@@ -52,7 +52,7 @@ struct AudioRBResampler {
 
     enum {
         MIX_FRAC_BITS = 13,
-        MIX_FRAC_LEN = (1 << MIX_FRAC_BITS),
+        MIX_FRAC_LEN  = (1 << MIX_FRAC_BITS),
         MIX_FRAC_MASK = MIX_FRAC_LEN - 1,
     };
 
@@ -128,14 +128,14 @@ public:
             case 1: {
                 for (uint32_t i = 0; i < p_frames; i++) {
                     rb[wp] = read_buf[i];
-                    wp = (wp + 1) & rb_mask;
+                    wp     = (wp + 1) & rb_mask;
                 }
             } break;
             case 2: {
                 for (uint32_t i = 0; i < p_frames; i++) {
                     rb[(wp << 1) + 0] = read_buf[(i << 1) + 0];
                     rb[(wp << 1) + 1] = read_buf[(i << 1) + 1];
-                    wp = (wp + 1) & rb_mask;
+                    wp                = (wp + 1) & rb_mask;
                 }
             } break;
             case 4: {
@@ -144,7 +144,7 @@ public:
                     rb[(wp << 2) + 1] = read_buf[(i << 2) + 1];
                     rb[(wp << 2) + 2] = read_buf[(i << 2) + 2];
                     rb[(wp << 2) + 3] = read_buf[(i << 2) + 3];
-                    wp = (wp + 1) & rb_mask;
+                    wp                = (wp + 1) & rb_mask;
                 }
             } break;
             case 6: {
@@ -155,7 +155,7 @@ public:
                     rb[(wp * 6) + 3] = read_buf[(i * 6) + 3];
                     rb[(wp * 6) + 4] = read_buf[(i * 6) + 4];
                     rb[(wp * 6) + 5] = read_buf[(i * 6) + 5];
-                    wp = (wp + 1) & rb_mask;
+                    wp               = (wp + 1) & rb_mask;
                 }
             } break;
         }

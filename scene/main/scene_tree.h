@@ -343,10 +343,10 @@ public:
     };
 
     enum GroupCallFlags {
-        GROUP_CALL_DEFAULT = 0,
-        GROUP_CALL_REVERSE = 1,
-        GROUP_CALL_REALTIME = 2,
-        GROUP_CALL_UNIQUE = 4,
+        GROUP_CALL_DEFAULT    = 0,
+        GROUP_CALL_REVERSE    = 1,
+        GROUP_CALL_REALTIME   = 2,
+        GROUP_CALL_UNIQUE     = 4,
         GROUP_CALL_MULTILEVEL = 8,
     };
 

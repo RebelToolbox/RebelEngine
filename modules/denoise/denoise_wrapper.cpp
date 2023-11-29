@@ -43,7 +43,7 @@ void* oidn_denoiser_init() {
 
 bool oidn_denoise(void* deviceptr, float* p_floats, int p_width, int p_height) {
     OIDNDeviceImpl* device = (OIDNDeviceImpl*)deviceptr;
-    OIDNFilter filter = oidnNewFilter(device, "RTLightmap");
+    OIDNFilter filter      = oidnNewFilter(device, "RTLightmap");
     oidnSetSharedFilterImage(
         filter,
         "color",

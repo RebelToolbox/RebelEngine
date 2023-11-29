@@ -44,15 +44,15 @@ class SceneTreeEditor : public Control {
     EditorSelection* editor_selection;
 
     enum {
-        BUTTON_SUBSCENE = 0,
+        BUTTON_SUBSCENE   = 0,
         BUTTON_VISIBILITY = 1,
-        BUTTON_SCRIPT = 2,
-        BUTTON_LOCK = 3,
-        BUTTON_GROUP = 4,
-        BUTTON_WARNING = 5,
-        BUTTON_SIGNALS = 6,
-        BUTTON_GROUPS = 7,
-        BUTTON_PIN = 8,
+        BUTTON_SCRIPT     = 2,
+        BUTTON_LOCK       = 3,
+        BUTTON_GROUP      = 4,
+        BUTTON_WARNING    = 5,
+        BUTTON_SIGNALS    = 6,
+        BUTTON_GROUPS     = 7,
+        BUTTON_PIN        = 8,
     };
 
     Tree* tree;
@@ -157,12 +157,12 @@ public:
 
     void set_marked(
         const Set<Node*>& p_marked,
-        bool p_selectable = false,
+        bool p_selectable          = false,
         bool p_children_selectable = true
     );
     void set_marked(
         Node* p_marked,
-        bool p_selectable = false,
+        bool p_selectable          = false,
         bool p_children_selectable = true
     );
     void set_selected(Node* p_node, bool p_emit_selected = true);
@@ -192,8 +192,8 @@ public:
     }
 
     SceneTreeEditor(
-        bool p_label = true,
-        bool p_can_rename = false,
+        bool p_label             = true,
+        bool p_can_rename        = false,
         bool p_can_open_instance = false
     );
     ~SceneTreeEditor();

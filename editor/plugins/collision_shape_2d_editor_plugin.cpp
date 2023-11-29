@@ -179,7 +179,7 @@ void CollisionShape2DEditor::set_handle(int idx, Point2& p_point) {
         case RECTANGLE_SHAPE: {
             if (idx < 8) {
                 Ref<RectangleShape2D> rect = node->get_shape();
-                Vector2 extents = (Point2)original;
+                Vector2 extents            = (Point2)original;
 
                 if (RECT_HANDLES[idx].x != 0) {
                     extents.x = p_point.x * RECT_HANDLES[idx].x;
@@ -385,7 +385,7 @@ bool CollisionShape2DEditor::forward_canvas_gui_input(
     }
 
     Ref<InputEventMouseButton> mb = p_event;
-    Transform2D xform = canvas_item_editor->get_canvas_transform()
+    Transform2D xform             = canvas_item_editor->get_canvas_transform()
                       * node->get_global_transform();
 
     if (mb.is_valid()) {
@@ -407,10 +407,10 @@ bool CollisionShape2DEditor::forward_canvas_gui_input(
                     return false;
                 }
 
-                original = get_handle_value(edit_handle);
+                original           = get_handle_value(edit_handle);
                 original_transform = node->get_global_transform();
-                last_point = original;
-                pressed = true;
+                last_point         = original;
+                pressed            = true;
 
                 return true;
 
@@ -419,7 +419,7 @@ bool CollisionShape2DEditor::forward_canvas_gui_input(
                     commit_handle(edit_handle, original);
 
                     edit_handle = -1;
-                    pressed = false;
+                    pressed     = false;
 
                     return true;
                 }
@@ -441,7 +441,7 @@ bool CollisionShape2DEditor::forward_canvas_gui_input(
                 mm->get_position()
             )
         );
-        cpoint = original_transform.affine_inverse().xform(cpoint);
+        cpoint     = original_transform.affine_inverse().xform(cpoint);
         last_point = cpoint;
 
         set_handle(edit_handle, cpoint);
@@ -526,7 +526,7 @@ void CollisionShape2DEditor::forward_canvas_draw_over_viewport(
                    * node->get_global_transform();
 
     Ref<Texture> h = get_icon("EditorHandle", "EditorIcons");
-    Vector2 size = h->get_size() * 0.5;
+    Vector2 size   = h->get_size() * 0.5;
 
     handles.clear();
 
@@ -633,7 +633,7 @@ void CollisionShape2DEditor::edit(Node* p_node) {
 
     } else {
         edit_handle = -1;
-        shape_type = -1;
+        shape_type  = -1;
 
         node = nullptr;
     }
@@ -653,14 +653,14 @@ void CollisionShape2DEditor::_bind_methods() {
 }
 
 CollisionShape2DEditor::CollisionShape2DEditor(EditorNode* p_editor) {
-    node = nullptr;
+    node               = nullptr;
     canvas_item_editor = nullptr;
-    editor = p_editor;
+    editor             = p_editor;
 
     undo_redo = p_editor->get_undo_redo();
 
     edit_handle = -1;
-    pressed = false;
+    pressed     = false;
 }
 
 void CollisionShape2DEditorPlugin::edit(Object* p_obj) {

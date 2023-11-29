@@ -61,7 +61,7 @@ public:
     RES load(
         const String& p_path,
         const String& p_type_hint = "",
-        bool p_no_cache = false
+        bool p_no_cache           = false
     );
     PoolVector<String> get_recognized_extensions_for_type(const String& p_type);
     void set_abort_on_missing_resources(bool p_abort);
@@ -84,12 +84,12 @@ protected:
 
 public:
     enum SaverFlags {
-        FLAG_RELATIVE_PATHS = 1,
-        FLAG_BUNDLE_RESOURCES = 2,
-        FLAG_CHANGE_PATH = 4,
-        FLAG_OMIT_EDITOR_PROPERTIES = 8,
-        FLAG_SAVE_BIG_ENDIAN = 16,
-        FLAG_COMPRESS = 32,
+        FLAG_RELATIVE_PATHS            = 1,
+        FLAG_BUNDLE_RESOURCES          = 2,
+        FLAG_CHANGE_PATH               = 4,
+        FLAG_OMIT_EDITOR_PROPERTIES    = 8,
+        FLAG_SAVE_BIG_ENDIAN           = 16,
+        FLAG_COMPRESS                  = 32,
         FLAG_REPLACE_SUBRESOURCE_PATHS = 64,
     };
 
@@ -273,8 +273,8 @@ public:
     int execute(
         const String& p_path,
         const Vector<String>& p_arguments,
-        bool p_blocking = true,
-        Array p_output = Array(),
+        bool p_blocking    = true,
+        Array p_output     = Array(),
         bool p_read_stderr = false
     );
 
@@ -307,7 +307,7 @@ public:
     bool has_virtual_keyboard() const;
     void show_virtual_keyboard(
         const String& p_existing_text = "",
-        bool p_multiline = false
+        bool p_multiline              = false
     );
     void hide_virtual_keyboard();
     int get_virtual_keyboard_height();
@@ -635,7 +635,7 @@ public:
         const Vector<Vector2>& p_polygon,
         real_t p_delta,
         PolyJoinType p_join_type = JOIN_SQUARE,
-        PolyEndType p_end_type = END_SQUARE
+        PolyEndType p_end_type   = END_SQUARE
     );
 
     Dictionary make_atlas(const Vector<Size2>& p_rects);
@@ -657,17 +657,17 @@ protected:
 
 public:
     enum ModeFlags {
-        READ = 1,
-        WRITE = 2,
+        READ       = 1,
+        WRITE      = 2,
         READ_WRITE = 3,
         WRITE_READ = 7,
     };
 
     enum CompressionMode {
-        COMPRESSION_FASTLZ = Compression::MODE_FASTLZ,
+        COMPRESSION_FASTLZ  = Compression::MODE_FASTLZ,
         COMPRESSION_DEFLATE = Compression::MODE_DEFLATE,
-        COMPRESSION_ZSTD = Compression::MODE_ZSTD,
-        COMPRESSION_GZIP = Compression::MODE_GZIP
+        COMPRESSION_ZSTD    = Compression::MODE_ZSTD,
+        COMPRESSION_GZIP    = Compression::MODE_GZIP
     };
 
     Error open_encrypted(
@@ -779,7 +779,7 @@ public:
 
     Error list_dir_begin(
         bool p_skip_navigational = false,
-        bool p_skip_hidden = false
+        bool p_skip_hidden       = false
     ); // This starts dir listing.
     String get_next();
     bool current_is_dir() const;
@@ -894,7 +894,7 @@ public:
         Object* p_instance,
         const StringName& p_method,
         const Variant& p_userdata = Variant(),
-        Priority p_priority = PRIORITY_NORMAL
+        Priority p_priority       = PRIORITY_NORMAL
     );
     String get_id() const;
     bool is_active() const;
@@ -1089,7 +1089,7 @@ public:
     String print(
         const Variant& p_value,
         const String& p_indent = "",
-        bool p_sort_keys = false
+        bool p_sort_keys       = false
     );
     Ref<JSONParseResult> parse(const String& p_json);
 

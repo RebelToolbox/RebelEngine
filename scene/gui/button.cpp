@@ -48,8 +48,8 @@ Size2 Button::get_minimum_size() const {
         }
 
         if (!_icon.is_null()) {
-            minsize.height = MAX(minsize.height, _icon->get_height());
-            minsize.width += _icon->get_width();
+            minsize.height  = MAX(minsize.height, _icon->get_height());
+            minsize.width  += _icon->get_width();
             if (xl_text != "") {
                 minsize.width += get_constant("hseparation");
             }
@@ -71,7 +71,7 @@ void Button::_notification(int p_what) {
             update();
         } break;
         case NOTIFICATION_DRAW: {
-            RID ci = get_canvas_item();
+            RID ci     = get_canvas_item();
             Size2 size = get_size();
             Color color;
             Color color_icon(1, 1, 1, 1);
@@ -196,7 +196,7 @@ void Button::_notification(int p_what) {
                     float icon_height = _size.height;
 
                     if (icon_width > _size.width) {
-                        icon_width = _size.width;
+                        icon_width  = _size.width;
                         icon_height = _icon->get_height() * icon_width
                                     / _icon->get_width();
                     }
@@ -307,7 +307,7 @@ void Button::set_text(const String& p_text) {
     if (text == p_text) {
         return;
     }
-    text = p_text;
+    text    = p_text;
     xl_text = tr(p_text);
     update();
     _change_notify("text");
@@ -443,8 +443,8 @@ void Button::_bind_methods() {
 }
 
 Button::Button(const String& p_text) {
-    flat = false;
-    clip_text = false;
+    flat        = false;
+    clip_text   = false;
     expand_icon = false;
     set_mouse_filter(MOUSE_FILTER_STOP);
     set_text(p_text);

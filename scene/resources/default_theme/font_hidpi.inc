@@ -1,6 +1,6 @@
-static const int _hidpi_font_height = 25;
-static const int _hidpi_font_ascent = 19;
-static const int _hidpi_font_charcount = 191;
+static const int _hidpi_font_height            = 25;
+static const int _hidpi_font_ascent            = 19;
+static const int _hidpi_font_charcount         = 191;
 static const int _hidpi_font_charrects[191][8] = {
   /* charidx , ofs_x, ofs_y, size_x, size_y, valign, halign, advance */
     {192, 63,  23,  16, 23, -4, -1, 15},
@@ -195,13 +195,13 @@ static const int _hidpi_font_charrects[191][8] = {
     {63,  2,   203, 9,  17, 2,  0,  10},
     {95,  218, 166, 10, 2,  21, 0,  10},
 };
-static const int _hidpi_font_kerning_pair_count = 0;
+static const int _hidpi_font_kerning_pair_count  = 0;
 static const int _hidpi_font_kerning_pairs[1][3] = {
     {0, 0, 0}
 };
-static const int _hidpi_font_img_width = 256;
-static const int _hidpi_font_img_height = 512;
-static const int _hidpi_font_img_data_size = 25255;
+static const int _hidpi_font_img_width                 = 256;
+static const int _hidpi_font_img_height                = 512;
+static const int _hidpi_font_img_data_size             = 25255;
 static const unsigned char _hidpi_font_img_data[25255] = {
     137, 80,  78,  71,  13,  10,  26,  10,  0,   0,   0,   13,  73,  72,  68,
     82,  0,   0,   1,   0,   0,   0,   2,   0,   8,   6,   0,   0,   0,   109,

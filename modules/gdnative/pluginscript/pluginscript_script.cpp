@@ -273,7 +273,7 @@ Error PluginScript::reload(bool p_keep_state) {
     ERR_FAIL_COND_V(!p_keep_state && _instances.size(), ERR_ALREADY_IN_USE);
     _language->unlock();
 
-    _valid = false;
+    _valid         = false;
     String basedir = _path;
 
     if (basedir == "") {
@@ -337,22 +337,22 @@ Error PluginScript::reload(bool p_keep_state) {
 
     _valid = true;
     // Use the manifest to configure this script object
-    _data = manifest.data;
-    _name = *(StringName*)&manifest.name;
-    _tool = manifest.is_tool;
+    _data  = manifest.data;
+    _name  = *(StringName*)&manifest.name;
+    _tool  = manifest.is_tool;
 
     Dictionary* members = (Dictionary*)&manifest.member_lines;
     for (const Variant* key = members->next(); key != nullptr;
-         key = members->next(key)) {
+         key                = members->next(key)) {
         _member_lines[*key] = (*members)[*key];
     }
     Array* methods = (Array*)&manifest.methods;
     for (int i = 0; i < methods->size(); ++i) {
-        Dictionary v = (*methods)[i];
-        MethodInfo mi = MethodInfo::from_dict(v);
+        Dictionary v           = (*methods)[i];
+        MethodInfo mi          = MethodInfo::from_dict(v);
         _methods_info[mi.name] = mi;
         // rpc_mode is passed as an optional field and is not part of MethodInfo
-        Variant var = v["rpc_mode"];
+        Variant var            = v["rpc_mode"];
         if (var == Variant()) {
             _methods_rpc_mode[mi.name] = MultiplayerAPI::RPC_MODE_DISABLED;
         } else {
@@ -361,19 +361,19 @@ Error PluginScript::reload(bool p_keep_state) {
     }
     Array* signals = (Array*)&manifest.signals;
     for (int i = 0; i < signals->size(); ++i) {
-        Variant v = (*signals)[i];
-        MethodInfo mi = MethodInfo::from_dict(v);
+        Variant v              = (*signals)[i];
+        MethodInfo mi          = MethodInfo::from_dict(v);
         _signals_info[mi.name] = mi;
     }
     Array* properties = (Array*)&manifest.properties;
     for (int i = 0; i < properties->size(); ++i) {
-        Dictionary v = (*properties)[i];
-        PropertyInfo pi = PropertyInfo::from_dict(v);
-        _properties_info[pi.name] = pi;
+        Dictionary v                        = (*properties)[i];
+        PropertyInfo pi                     = PropertyInfo::from_dict(v);
+        _properties_info[pi.name]           = pi;
         _properties_default_values[pi.name] = v["default_value"];
         // rset_mode is passed as an optional field and is not part of
         // PropertyInfo
-        Variant var = v["rset_mode"];
+        Variant var                         = v["rset_mode"];
         if (var == Variant()) {
             _methods_rpc_mode[pi.name] = MultiplayerAPI::RPC_MODE_DISABLED;
         } else {
@@ -469,7 +469,7 @@ Error PluginScript::load_source_code(const String& p_path) {
     uint64_t len = f->get_len();
     sourcef.resize(len + 1);
     PoolVector<uint8_t>::Write w = sourcef.write();
-    uint64_t r = f->get_buffer(w.ptr(), len);
+    uint64_t r                   = f->get_buffer(w.ptr(), len);
     f->close();
     memdelete(f);
     ERR_FAIL_COND_V(r != len, ERR_CANT_OPEN);
@@ -481,7 +481,7 @@ Error PluginScript::load_source_code(const String& p_path) {
     }
 
     _source = s;
-    _path = p_path;
+    _path   = p_path;
     return OK;
 }
 
@@ -541,7 +541,7 @@ PluginScript::PluginScript() :
     _script_list(this) {}
 
 void PluginScript::init(PluginScriptLanguage* language) {
-    _desc = &language->_desc.script_desc;
+    _desc     = &language->_desc.script_desc;
     _language = language;
 
 #ifdef DEBUG_ENABLED

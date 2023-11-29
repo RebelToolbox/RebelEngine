@@ -64,7 +64,7 @@
 }
 
 - (void)godot_commonInit {
-    self.hidden = YES;
+    self.hidden   = YES;
     self.delegate = self;
 
     [[NSNotificationCenter defaultCenter]
@@ -89,7 +89,7 @@
                              multiline:(BOOL)flag
                            cursorStart:(NSInteger)start
                              cursorEnd:(NSInteger)end {
-    self.text = existingString;
+    self.text         = existingString;
     self.previousText = existingString;
 
     NSInteger safeStartIndex = MAX(start, 0);
@@ -103,14 +103,14 @@
         textRange = NSMakeRange(safeStartIndex, 0);
     }
 
-    self.selectedRange = textRange;
+    self.selectedRange         = textRange;
     self.previousSelectedRange = textRange;
 
     return [self becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder {
-    self.text = nil;
+    self.text         = nil;
     self.previousText = nil;
     return [super resignFirstResponder];
 }
@@ -199,7 +199,7 @@
 
     [self enterText:substringToEnter];
 
-    self.previousText = self.text;
+    self.previousText          = self.text;
     self.previousSelectedRange = self.selectedRange;
 }
 

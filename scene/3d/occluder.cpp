@@ -84,7 +84,7 @@ String Occluder::get_configuration_warning() const {
         warning += TTR("No shape is set.");
     }
 
-    Transform tr = get_global_transform();
+    Transform tr  = get_global_transform();
     Vector3 scale = tr.basis.get_scale();
 
     if ((!Math::is_equal_approx(scale.x, scale.y, 0.01f))

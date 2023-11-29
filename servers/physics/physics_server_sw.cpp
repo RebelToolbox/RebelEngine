@@ -130,9 +130,9 @@ real_t PhysicsServerSW::shape_get_custom_solver_bias(RID p_shape) const {
 
 RID PhysicsServerSW::space_create() {
     SpaceSW* space = memnew(SpaceSW);
-    RID id = space_owner.make_rid(space);
+    RID id         = space_owner.make_rid(space);
     space->set_self(id);
-    RID area_id = area_create();
+    RID area_id  = area_create();
     AreaSW* area = area_owner.get(area_id);
     ERR_FAIL_COND_V(!area, RID());
     space->set_default_area(area);
@@ -217,7 +217,7 @@ int PhysicsServerSW::space_get_contact_count(RID p_space) const {
 
 RID PhysicsServerSW::area_create() {
     AreaSW* area = memnew(AreaSW);
-    RID rid = area_owner.make_rid(area);
+    RID rid      = area_owner.make_rid(area);
     area->set_self(rid);
     return rid;
 };
@@ -365,7 +365,7 @@ void PhysicsServerSW::area_attach_object_instance_id(
 ) {
     if (space_owner.owns(p_area)) {
         SpaceSW* space = space_owner.get(p_area);
-        p_area = space->get_default_area()->get_self();
+        p_area         = space->get_default_area()->get_self();
     }
     AreaSW* area = area_owner.get(p_area);
     ERR_FAIL_COND(!area);
@@ -375,7 +375,7 @@ void PhysicsServerSW::area_attach_object_instance_id(
 ObjectID PhysicsServerSW::area_get_object_instance_id(RID p_area) const {
     if (space_owner.owns(p_area)) {
         SpaceSW* space = space_owner.get(p_area);
-        p_area = space->get_default_area()->get_self();
+        p_area         = space->get_default_area()->get_self();
     }
     AreaSW* area = area_owner.get(p_area);
     ERR_FAIL_COND_V(!area, 0);
@@ -389,7 +389,7 @@ void PhysicsServerSW::area_set_param(
 ) {
     if (space_owner.owns(p_area)) {
         SpaceSW* space = space_owner.get(p_area);
-        p_area = space->get_default_area()->get_self();
+        p_area         = space->get_default_area()->get_self();
     }
     AreaSW* area = area_owner.get(p_area);
     ERR_FAIL_COND(!area);
@@ -409,7 +409,7 @@ Variant PhysicsServerSW::area_get_param(RID p_area, AreaParameter p_param)
     const {
     if (space_owner.owns(p_area)) {
         SpaceSW* space = space_owner.get(p_area);
-        p_area = space->get_default_area()->get_self();
+        p_area         = space->get_default_area()->get_self();
     }
     AreaSW* area = area_owner.get(p_area);
     ERR_FAIL_COND_V(!area, Variant());
@@ -882,10 +882,10 @@ void PhysicsServerSW::body_set_axis_velocity(
 
     _update_shapes();
 
-    Vector3 v = body->get_linear_velocity();
-    Vector3 axis = p_axis_velocity.normalized();
-    v -= axis * axis.dot(v);
-    v += p_axis_velocity;
+    Vector3 v     = body->get_linear_velocity();
+    Vector3 axis  = p_axis_velocity.normalized();
+    v            -= axis * axis.dot(v);
+    v            += p_axis_velocity;
     body->set_linear_velocity(v);
     body->wakeup();
 };
@@ -1109,7 +1109,7 @@ RID PhysicsServerSW::joint_create_pin(
     ERR_FAIL_COND_V(body_A == body_B, RID());
 
     JointSW* joint = memnew(PinJointSW(body_A, p_local_A, body_B, p_local_B));
-    RID rid = joint_owner.make_rid(joint);
+    RID rid        = joint_owner.make_rid(joint);
     joint->set_self(rid);
     return rid;
 }
@@ -1187,7 +1187,7 @@ RID PhysicsServerSW::joint_create_hinge(
     ERR_FAIL_COND_V(body_A == body_B, RID());
 
     JointSW* joint = memnew(HingeJointSW(body_A, body_B, p_frame_A, p_frame_B));
-    RID rid = joint_owner.make_rid(joint);
+    RID rid        = joint_owner.make_rid(joint);
     joint->set_self(rid);
     return rid;
 }
@@ -1451,7 +1451,7 @@ RID PhysicsServerSW::joint_create_generic_6dof(
         p_local_frame_B,
         true
     ));
-    RID rid = joint_owner.make_rid(joint);
+    RID rid        = joint_owner.make_rid(joint);
     joint->set_self(rid);
     return rid;
 }
@@ -1597,9 +1597,9 @@ void PhysicsServerSW::set_collision_iterations(int p_iterations) {
 };
 
 void PhysicsServerSW::init() {
-    last_step = 0.001;
-    iterations = 8; // 8?
-    stepper = memnew(StepSW);
+    last_step    = 0.001;
+    iterations   = 8; // 8?
+    stepper      = memnew(StepSW);
     direct_state = memnew(PhysicsDirectBodyStateSW);
 };
 
@@ -1612,17 +1612,17 @@ void PhysicsServerSW::step(real_t p_step) {
 
     _update_shapes();
 
-    last_step = p_step;
+    last_step                                 = p_step;
     PhysicsDirectBodyStateSW::singleton->step = p_step;
 
-    island_count = 0;
-    active_objects = 0;
+    island_count    = 0;
+    active_objects  = 0;
     collision_pairs = 0;
     for (Set<const SpaceSW*>::Element* E = active_spaces.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         stepper->step((SpaceSW*)E->get(), p_step, iterations);
-        island_count += E->get()->get_island_count();
-        active_objects += E->get()->get_active_objects();
+        island_count    += E->get()->get_island_count();
+        active_objects  += E->get()->get_active_objects();
         collision_pairs += E->get()->get_collision_pairs();
     }
 #endif
@@ -1640,7 +1640,7 @@ void PhysicsServerSW::flush_queries() {
     uint64_t time_beg = OS::get_singleton()->get_ticks_usec();
 
     for (Set<const SpaceSW*>::Element* E = active_spaces.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         SpaceSW* space = (SpaceSW*)E->get();
         space->call_queries();
     }
@@ -1663,7 +1663,7 @@ void PhysicsServerSW::flush_queries() {
         }
 
         for (Set<const SpaceSW*>::Element* E = active_spaces.front(); E;
-             E = E->next()) {
+             E                               = E->next()) {
             for (int i = 0; i < SpaceSW::ELAPSED_TIME_MAX; i++) {
                 total_time[i] +=
                     E->get()->get_elapsed_time(SpaceSW::ElapsedTime(i));
@@ -1730,13 +1730,13 @@ void PhysicsServerSW::_shape_col_cbk(
 
     if (cbk->amount == cbk->max) {
         // find least deep
-        real_t min_depth = 1e20;
+        real_t min_depth  = 1e20;
         int min_depth_idx = 0;
         for (int i = 0; i < cbk->amount; i++) {
             real_t d =
                 cbk->ptr[i * 2 + 0].distance_squared_to(cbk->ptr[i * 2 + 1]);
             if (d < min_depth) {
-                min_depth = d;
+                min_depth     = d;
                 min_depth_idx = i;
             }
         }
@@ -1768,11 +1768,11 @@ PhysicsServerSW::PhysicsServerSW() {
         BroadPhaseSW::create_func = BroadPhaseOctree::_create;
     }
 
-    island_count = 0;
-    active_objects = 0;
+    island_count    = 0;
+    active_objects  = 0;
     collision_pairs = 0;
 
-    active = true;
+    active           = true;
     flushing_queries = false;
 };
 

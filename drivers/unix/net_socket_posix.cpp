@@ -112,8 +112,8 @@ size_t NetSocketPosix::_set_addr_storage(
         );
 
         struct sockaddr_in6* addr6 = (struct sockaddr_in6*)p_addr;
-        addr6->sin6_family = AF_INET6;
-        addr6->sin6_port = htons(p_port);
+        addr6->sin6_family         = AF_INET6;
+        addr6->sin6_port           = htons(p_port);
         if (p_ip.is_valid()) {
             memcpy(&addr6->sin6_addr.s6_addr, p_ip.get_ipv6(), 16);
         } else {
@@ -126,8 +126,8 @@ size_t NetSocketPosix::_set_addr_storage(
         ERR_FAIL_COND_V(!p_ip.is_wildcard() && !p_ip.is_ipv4(), 0);
 
         struct sockaddr_in* addr4 = (struct sockaddr_in*)p_addr;
-        addr4->sin_family = AF_INET;
-        addr4->sin_port = htons(p_port); // short, network byte order
+        addr4->sin_family         = AF_INET;
+        addr4->sin_port           = htons(p_port); // short, network byte order
 
         if (p_ip.is_valid()) {
             memcpy(&addr4->sin_addr.s_addr, p_ip.get_ipv4(), 4);
@@ -260,14 +260,14 @@ _FORCE_INLINE_ Error NetSocketPosix::_change_multicast_group(
     // This needs to be the proper level for the multicast group, no matter if
     // the socket is dual stacking.
     int level = type == IP::TYPE_IPV4 ? IPPROTO_IP : IPPROTO_IPV6;
-    int ret = -1;
+    int ret   = -1;
 
     IP_Address if_ip;
     uint32_t if_v6id = 0;
     Map<String, IP::Interface_Info> if_info;
     IP::get_singleton()->get_local_interfaces(&if_info);
     for (Map<String, IP::Interface_Info>::Element* E = if_info.front(); E;
-         E = E->next()) {
+         E                                           = E->next()) {
         IP::Interface_Info& c = E->get();
         if (c.name != p_if_name) {
             continue;
@@ -279,7 +279,7 @@ _FORCE_INLINE_ Error NetSocketPosix::_change_multicast_group(
         }
 
         for (List<IP_Address>::Element* F = c.ip_addresses.front(); F;
-             F = F->next()) {
+             F                            = F->next()) {
             if (!F->get().is_ipv4()) {
                 continue; // Wrong IP type
             }
@@ -307,7 +307,7 @@ _FORCE_INLINE_ Error NetSocketPosix::_change_multicast_group(
         int sock_opt = p_add ? IPV6_ADD_MEMBERSHIP : IPV6_DROP_MEMBERSHIP;
         memcpy(&greq.ipv6mr_multiaddr, p_ip.get_ipv6(), 16);
         greq.ipv6mr_interface = if_v6id;
-        ret = setsockopt(
+        ret                   = setsockopt(
             _sock,
             level,
             sock_opt,
@@ -325,8 +325,8 @@ void NetSocketPosix::_set_socket(
     IP::Type p_ip_type,
     bool p_is_stream
 ) {
-    _sock = p_sock;
-    _ip_type = p_ip_type;
+    _sock      = p_sock;
+    _ip_type   = p_ip_type;
     _is_stream = p_is_stream;
     // Disable descriptor sharing with subprocesses.
     _set_close_exec_enabled(true);
@@ -360,18 +360,18 @@ Error NetSocketPosix::open(Type p_sock_type, IP::Type& ip_type) {
     }
 #endif
 
-    int family = ip_type == IP::TYPE_IPV4 ? AF_INET : AF_INET6;
+    int family   = ip_type == IP::TYPE_IPV4 ? AF_INET : AF_INET6;
     int protocol = p_sock_type == TYPE_TCP ? IPPROTO_TCP : IPPROTO_UDP;
-    int type = p_sock_type == TYPE_TCP ? SOCK_STREAM : SOCK_DGRAM;
-    _sock = socket(family, type, protocol);
+    int type     = p_sock_type == TYPE_TCP ? SOCK_STREAM : SOCK_DGRAM;
+    _sock        = socket(family, type, protocol);
 
     if (_sock == SOCK_EMPTY && ip_type == IP::TYPE_ANY) {
         // Careful here, changing the referenced parameter so the caller knows
         // that we are using an IPv4 socket in place of a dual stack one, and
         // further calls to _set_sock_addr will work as expected.
         ip_type = IP::TYPE_IPV4;
-        family = AF_INET;
-        _sock = socket(family, type, protocol);
+        family  = AF_INET;
+        _sock   = socket(family, type, protocol);
     }
 
     ERR_FAIL_COND_V(_sock == SOCK_EMPTY, FAILED);
@@ -436,8 +436,8 @@ void NetSocketPosix::close() {
         SOCK_CLOSE(_sock);
     }
 
-    _sock = SOCK_EMPTY;
-    _ip_type = IP::TYPE_NONE;
+    _sock      = SOCK_EMPTY;
+    _ip_type   = IP::TYPE_NONE;
     _is_stream = false;
 }
 
@@ -513,7 +513,7 @@ Error NetSocketPosix::poll(PollType p_type, int p_timeout) const {
     FD_SET(_sock, &ex);
     struct timeval timeout = {p_timeout / 1000, (p_timeout % 1000) * 1000};
     // For blocking operation, pass NULL timeout pointer to select.
-    struct timeval* tp = NULL;
+    struct timeval* tp     = NULL;
     if (p_timeout >= 0) {
         // If timeout is non-negative, we want to specify the timeout instead.
         tp = &timeout;
@@ -560,8 +560,8 @@ Error NetSocketPosix::poll(PollType p_type, int p_timeout) const {
     return ready ? OK : ERR_BUSY;
 #else
     struct pollfd pfd;
-    pfd.fd = _sock;
-    pfd.events = POLLIN;
+    pfd.fd      = _sock;
+    pfd.events  = POLLIN;
     pfd.revents = 0;
 
     switch (p_type) {
@@ -690,7 +690,7 @@ Error NetSocketPosix::sendto(
 
     struct sockaddr_storage addr;
     size_t addr_size = _set_addr_storage(&addr, p_ip, p_port, _ip_type);
-    r_sent = ::sendto(
+    r_sent           = ::sendto(
         _sock,
         SOCK_CBUF(p_buffer),
         p_len,
@@ -739,7 +739,7 @@ void NetSocketPosix::set_blocking_enabled(bool p_enabled) {
     int ret = 0;
 #if defined(WINDOWS_ENABLED) || defined(NO_FCNTL)
     unsigned long par = p_enabled ? 0 : 1;
-    ret = SOCK_IOCTL(_sock, FIONBIO, &par);
+    ret               = SOCK_IOCTL(_sock, FIONBIO, &par);
 #else
     int opts = fcntl(_sock, F_GETFL);
     if (p_enabled) {

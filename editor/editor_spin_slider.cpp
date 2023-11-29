@@ -76,10 +76,10 @@ void EditorSpinSlider::_gui_input(const Ref<InputEvent>& p_event) {
                     }
                     return;
                 } else {
-                    grabbing_spinner_attempt = true;
+                    grabbing_spinner_attempt    = true;
                     grabbing_spinner_dist_cache = 0;
-                    pre_grab_value = get_value();
-                    grabbing_spinner = false;
+                    pre_grab_value              = get_value();
+                    grabbing_spinner            = false;
                     grabbing_spinner_mouse_pos =
                         Input::get_singleton()->get_mouse_position();
                 }
@@ -97,7 +97,7 @@ void EditorSpinSlider::_gui_input(const Ref<InputEvent>& p_event) {
                         _focus_entered();
                     }
 
-                    grabbing_spinner = false;
+                    grabbing_spinner         = false;
                     grabbing_spinner_attempt = false;
                 }
             }
@@ -194,7 +194,7 @@ void EditorSpinSlider::_grabber_gui_input(const Ref<InputEvent>& p_event) {
                     grabber->get_transform().xform(mb->get_position()).x;
             }
         } else {
-            grabbing_grabber = false;
+            grabbing_grabber        = false;
             mousewheel_over_grabber = false;
         }
     }
@@ -219,7 +219,7 @@ void EditorSpinSlider::_grabber_gui_input(const Ref<InputEvent>& p_event) {
 void EditorSpinSlider::_value_input_gui_input(const Ref<InputEvent>& p_event) {
     Ref<InputEventKey> k = p_event;
     if (k.is_valid() && k->is_pressed()) {
-        double step = get_step();
+        double step      = get_step();
         double real_step = step;
         if (step < 1) {
             double divisor = 1.0 / get_step();
@@ -287,7 +287,7 @@ void EditorSpinSlider::_draw_spin_slider() {
         draw_style_box(sb, Rect2(Vector2(), get_size()));
     }
     Ref<Font> font = get_font("font", "LineEdit");
-    int sep_base = 4 * EDSCALE;
+    int sep_base   = 4 * EDSCALE;
     int sep =
         sep_base
         + sb->get_offset()
@@ -352,8 +352,8 @@ void EditorSpinSlider::_draw_spin_slider() {
 
     if (get_step() == 1) {
         Ref<Texture> updown2 = get_icon("updown", "SpinBox");
-        int updown_vofs = (get_size().height - updown2->get_height()) / 2;
-        updown_offset = get_size().width - sb->get_margin(MARGIN_RIGHT)
+        int updown_vofs      = (get_size().height - updown2->get_height()) / 2;
+        updown_offset        = get_size().width - sb->get_margin(MARGIN_RIGHT)
                       - updown2->get_width();
         Color c(1, 1, 1);
         if (hover_updown) {
@@ -366,14 +366,14 @@ void EditorSpinSlider::_draw_spin_slider() {
     } else if (!hide_slider) {
         int grabber_w = 4 * EDSCALE;
         int width = get_size().width - sb->get_minimum_size().width - grabber_w;
-        int ofs = sb->get_offset().x;
+        int ofs   = sb->get_offset().x;
         int svofs = (get_size().height + vofs) / 2 - 1;
-        Color c = fc;
-        c.a = 0.2;
+        Color c   = fc;
+        c.a       = 0.2;
 
         draw_rect(Rect2(ofs, svofs + 1, width, 2 * EDSCALE), c);
         int gofs = get_as_ratio() * width;
-        c.a = 0.9;
+        c.a      = 0.9;
         Rect2 grabber_rect =
             Rect2(ofs + gofs, svofs + 1, grabber_w, 2 * EDSCALE);
         draw_rect(grabber_rect, c);
@@ -451,7 +451,7 @@ void EditorSpinSlider::_notification(int p_what) {
                 grabber->hide();
                 Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_VISIBLE
                 );
-                grabbing_spinner = false;
+                grabbing_spinner         = false;
                 grabbing_spinner_attempt = false;
             }
             break;
@@ -483,9 +483,9 @@ void EditorSpinSlider::_notification(int p_what) {
 
 Size2 EditorSpinSlider::get_minimum_size() const {
     Ref<StyleBox> sb = get_stylebox("normal", "LineEdit");
-    Ref<Font> font = get_font("font", "LineEdit");
+    Ref<Font> font   = get_font("font", "LineEdit");
 
-    Size2 ms = sb->get_minimum_size();
+    Size2 ms   = sb->get_minimum_size();
     ms.height += font->get_height();
 
     return ms;
@@ -598,7 +598,7 @@ void EditorSpinSlider::set_custom_label_color(
     Color p_custom_label_color
 ) {
     use_custom_label_color = p_use_custom_label_color;
-    custom_label_color = p_custom_label_color;
+    custom_label_color     = p_custom_label_color;
 }
 
 void EditorSpinSlider::_focus_entered() {
@@ -679,15 +679,15 @@ void EditorSpinSlider::_bind_methods() {
 }
 
 EditorSpinSlider::EditorSpinSlider() {
-    flat = false;
-    grabbing_spinner_attempt = false;
-    grabbing_spinner = false;
+    flat                        = false;
+    grabbing_spinner_attempt    = false;
+    grabbing_spinner            = false;
     grabbing_spinner_dist_cache = 0;
-    pre_grab_value = 0;
+    pre_grab_value              = 0;
     set_focus_mode(FOCUS_ALL);
     updown_offset = -1;
-    hover_updown = false;
-    grabber = memnew(TextureRect);
+    hover_updown  = false;
+    grabber       = memnew(TextureRect);
     add_child(grabber);
     grabber->hide();
     grabber->set_as_toplevel(true);
@@ -695,12 +695,12 @@ EditorSpinSlider::EditorSpinSlider() {
     grabber->connect("mouse_entered", this, "_grabber_mouse_entered");
     grabber->connect("mouse_exited", this, "_grabber_mouse_exited");
     grabber->connect("gui_input", this, "_grabber_gui_input");
-    mouse_over_spin = false;
-    mouse_over_grabber = false;
+    mouse_over_spin         = false;
+    mouse_over_grabber      = false;
     mousewheel_over_grabber = false;
-    grabbing_grabber = false;
-    grabber_range = 1;
-    value_input = memnew(LineEdit);
+    grabbing_grabber        = false;
+    grabber_range           = 1;
+    value_input             = memnew(LineEdit);
     add_child(value_input);
     value_input->set_as_toplevel(true);
     value_input->hide();
@@ -709,7 +709,7 @@ EditorSpinSlider::EditorSpinSlider() {
     value_input->connect("focus_exited", this, "_value_focus_exited");
     value_input->connect("gui_input", this, "_value_input_gui_input");
     value_input_just_closed = false;
-    hide_slider = false;
-    read_only = false;
-    use_custom_label_color = false;
+    hide_slider             = false;
+    read_only               = false;
+    use_custom_label_color  = false;
 }

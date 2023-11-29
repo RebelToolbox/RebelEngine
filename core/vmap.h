@@ -44,7 +44,7 @@ public:
         _FORCE_INLINE_ Pair() {}
 
         _FORCE_INLINE_ Pair(const T& p_key, const V& p_value) {
-            key = p_key;
+            key   = p_key;
             value = p_value;
         }
     };
@@ -58,10 +58,10 @@ private:
             return 0;
         }
 
-        int low = 0;
-        int high = _cowdata.size() - 1;
+        int low       = 0;
+        int high      = _cowdata.size() - 1;
         const Pair* a = _cowdata.ptr();
-        int middle = 0;
+        int middle    = 0;
 
 #ifdef DEBUG_ENABLED
         if (low > high) {
@@ -93,7 +93,7 @@ private:
             return -1;
         }
 
-        int low = 0;
+        int low  = 0;
         int high = _cowdata.size() - 1;
         int middle;
         const Pair* a = _cowdata.ptr();

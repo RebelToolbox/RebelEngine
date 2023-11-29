@@ -85,7 +85,7 @@ class EditorPropertyArray : public EditorProperty {
 
     Ref<EditorPropertyArrayObject> object;
     int page_length = 20;
-    int page_index = 0;
+    int page_index  = 0;
     int changing_type_index;
     Button* edit;
     VBoxContainer* vbox;
@@ -97,11 +97,11 @@ class EditorPropertyArray : public EditorProperty {
     PropertyHint subtype_hint;
     String subtype_hint_string;
 
-    int reorder_from_index = -1;
-    int reorder_to_index = -1;
-    float reorder_mouse_y_delta = 0.0f;
+    int reorder_from_index                       = -1;
+    int reorder_to_index                         = -1;
+    float reorder_mouse_y_delta                  = 0.0f;
     HBoxContainer* reorder_selected_element_hbox = nullptr;
-    Button* reorder_selected_button = nullptr;
+    Button* reorder_selected_button              = nullptr;
 
     void _page_changed(double p_page);
     void _length_changed(double p_page);
@@ -110,7 +110,7 @@ class EditorPropertyArray : public EditorProperty {
         const String& p_prop,
         Variant p_value,
         const String& p_name = String(),
-        bool changing = false
+        bool changing        = false
     );
     void _change_type(Object* p_button, int p_index);
     void _change_type_menu(int p_index);
@@ -153,7 +153,7 @@ class EditorPropertyDictionary : public EditorProperty {
 
     Ref<EditorPropertyDictionaryObject> object;
     int page_length = 20;
-    int page_index = 0;
+    int page_index  = 0;
     int changing_type_index;
     Button* edit;
     VBoxContainer* vbox;
@@ -167,7 +167,7 @@ class EditorPropertyDictionary : public EditorProperty {
         const String& p_prop,
         Variant p_value,
         const String& p_name = String(),
-        bool changing = false
+        bool changing        = false
     );
     void _change_type(Object* p_button, int p_index);
     void _change_type_menu(int p_index);

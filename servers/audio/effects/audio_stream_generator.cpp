@@ -49,7 +49,7 @@ float AudioStreamGenerator::get_buffer_length() const {
 Ref<AudioStreamPlayback> AudioStreamGenerator::instance_playback() {
     Ref<AudioStreamGeneratorPlayback> playback;
     playback.instance();
-    playback->generator = this;
+    playback->generator    = this;
     int target_buffer_size = mix_rate * buffer_len;
     playback->buffer.resize(nearest_shift(target_buffer_size));
     playback->buffer.clear();
@@ -106,7 +106,7 @@ void AudioStreamGenerator::_bind_methods() {
 }
 
 AudioStreamGenerator::AudioStreamGenerator() {
-    mix_rate = 44100;
+    mix_rate   = 44100;
     buffer_len = 0.5;
 }
 
@@ -148,7 +148,7 @@ bool AudioStreamGeneratorPlayback::push_buffer(const PoolVector2Array& p_frames
                 buf[i] = r[i + ofs];
             }
             buffer.write(buf, w);
-            ofs += w;
+            ofs      += w;
             to_write -= w;
         }
     }
@@ -200,9 +200,9 @@ void AudioStreamGeneratorPlayback::start(float p_from_pos) {
     if (mixed == 0.0) {
         _begin_resample();
     }
-    skips = 0;
+    skips  = 0;
     active = true;
-    mixed = 0.0;
+    mixed  = 0.0;
 }
 
 void AudioStreamGeneratorPlayback::stop() {
@@ -254,7 +254,7 @@ void AudioStreamGeneratorPlayback::_bind_methods() {
 
 AudioStreamGeneratorPlayback::AudioStreamGeneratorPlayback() {
     generator = nullptr;
-    skips = 0;
-    active = false;
-    mixed = 0;
+    skips     = 0;
+    active    = false;
+    mixed     = 0;
 }

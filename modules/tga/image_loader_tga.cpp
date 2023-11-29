@@ -53,14 +53,14 @@ Error ImageLoaderTGA::decode_tga_rle(
     PoolVector<uint8_t>::Write pixels_w = pixels.write();
 
     size_t compressed_pos = 0;
-    size_t output_pos = 0;
-    size_t c = 0;
-    size_t count = 0;
+    size_t output_pos     = 0;
+    size_t c              = 0;
+    size_t count          = 0;
 
     while (output_pos < p_output_size) {
-        c = p_compressed_buffer[compressed_pos];
+        c               = p_compressed_buffer[compressed_pos];
         compressed_pos += 1;
-        count = (c & 0x7f) + 1;
+        count           = (c & 0x7f) + 1;
 
         if (output_pos + count * p_pixel_size > p_output_size) {
             return ERR_PARSE_ERROR;
@@ -71,8 +71,8 @@ Error ImageLoaderTGA::decode_tga_rle(
                 return ERR_PARSE_ERROR;
             }
             for (size_t i = 0; i < p_pixel_size; i++) {
-                pixels_w.ptr()[i] = p_compressed_buffer[compressed_pos];
-                compressed_pos += 1;
+                pixels_w.ptr()[i]  = p_compressed_buffer[compressed_pos];
+                compressed_pos    += 1;
             }
             for (size_t i = 0; i < count; i++) {
                 for (size_t j = 0; j < p_pixel_size; j++) {
@@ -89,7 +89,7 @@ Error ImageLoaderTGA::decode_tga_rle(
                 p_uncompressed_buffer[output_pos] =
                     p_compressed_buffer[compressed_pos];
                 compressed_pos += 1;
-                output_pos += 1;
+                output_pos     += 1;
             }
         }
     }
@@ -105,14 +105,14 @@ Error ImageLoaderTGA::convert_to_image(
     size_t p_input_size
 ) {
 #define TGA_PUT_PIXEL(r, g, b, a)                                              \
-    int image_data_ofs = ((y * width) + x);                                    \
+    int image_data_ofs                   = ((y * width) + x);                  \
     image_data_w[image_data_ofs * 4 + 0] = r;                                  \
     image_data_w[image_data_ofs * 4 + 1] = g;                                  \
     image_data_w[image_data_ofs * 4 + 2] = b;                                  \
     image_data_w[image_data_ofs * 4 + 3] = a;
 
-    uint32_t width = p_header.image_width;
-    uint32_t height = p_header.image_height;
+    uint32_t width      = p_header.image_width;
+    uint32_t height     = p_header.image_height;
     tga_origin_e origin = static_cast<tga_origin_e>(
         (p_header.image_descriptor & TGA_ORIGIN_MASK) >> TGA_ORIGIN_SHIFT
     );
@@ -126,29 +126,29 @@ Error ImageLoaderTGA::convert_to_image(
 
     if (origin == TGA_ORIGIN_TOP_LEFT || origin == TGA_ORIGIN_TOP_RIGHT) {
         y_start = 0;
-        y_step = 1;
-        y_end = height;
+        y_step  = 1;
+        y_end   = height;
     } else {
         y_start = height - 1;
-        y_step = -1;
-        y_end = -1;
+        y_step  = -1;
+        y_end   = -1;
     }
 
     if (origin == TGA_ORIGIN_TOP_LEFT || origin == TGA_ORIGIN_BOTTOM_LEFT) {
         x_start = 0;
-        x_step = 1;
-        x_end = width;
+        x_step  = 1;
+        x_end   = width;
     } else {
         x_start = width - 1;
-        x_step = -1;
-        x_end = -1;
+        x_step  = -1;
+        x_end   = -1;
     }
 
     PoolVector<uint8_t> image_data;
     image_data.resize(width * height * sizeof(uint32_t));
     PoolVector<uint8_t>::Write image_data_w = image_data.write();
 
-    size_t i = 0;
+    size_t i   = 0;
     uint32_t x = x_start;
     uint32_t y = y_start;
 
@@ -166,7 +166,7 @@ Error ImageLoaderTGA::convert_to_image(
                     x += x_step;
                     i += 1;
                 }
-                x = x_start;
+                x  = x_start;
                 y += y_step;
             }
         } else {
@@ -176,10 +176,10 @@ Error ImageLoaderTGA::convert_to_image(
                         return ERR_PARSE_ERROR;
                     }
                     uint8_t index = p_buffer[i];
-                    uint8_t r = 0x00;
-                    uint8_t g = 0x00;
-                    uint8_t b = 0x00;
-                    uint8_t a = 0xff;
+                    uint8_t r     = 0x00;
+                    uint8_t g     = 0x00;
+                    uint8_t b     = 0x00;
+                    uint8_t a     = 0xff;
 
                     if (p_header.color_map_depth == 24) {
                         // Due to low-high byte order, the color table must be
@@ -196,7 +196,7 @@ Error ImageLoaderTGA::convert_to_image(
                     x += x_step;
                     i += 1;
                 }
-                x = x_start;
+                x  = x_start;
                 y += y_step;
             }
         }
@@ -216,7 +216,7 @@ Error ImageLoaderTGA::convert_to_image(
                 x += x_step;
                 i += 3;
             }
-            x = x_start;
+            x  = x_start;
             y += y_step;
         }
     } else if (p_header.pixel_depth == 32) {
@@ -236,7 +236,7 @@ Error ImageLoaderTGA::convert_to_image(
                 x += x_step;
                 i += 4;
             }
-            x = x_start;
+            x  = x_start;
             y += y_step;
         }
     }
@@ -266,19 +266,19 @@ Error ImageLoaderTGA::load_image(
     Error err = OK;
 
     tga_header_s tga_header;
-    tga_header.id_length = f->get_8();
+    tga_header.id_length      = f->get_8();
     tga_header.color_map_type = f->get_8();
-    tga_header.image_type = static_cast<tga_type_e>(f->get_8());
+    tga_header.image_type     = static_cast<tga_type_e>(f->get_8());
 
     tga_header.first_color_entry = f->get_16();
-    tga_header.color_map_length = f->get_16();
-    tga_header.color_map_depth = f->get_8();
+    tga_header.color_map_length  = f->get_16();
+    tga_header.color_map_depth   = f->get_8();
 
-    tga_header.x_origin = f->get_16();
-    tga_header.y_origin = f->get_16();
-    tga_header.image_width = f->get_16();
-    tga_header.image_height = f->get_16();
-    tga_header.pixel_depth = f->get_8();
+    tga_header.x_origin         = f->get_16();
+    tga_header.y_origin         = f->get_16();
+    tga_header.image_width      = f->get_16();
+    tga_header.image_height     = f->get_16();
+    tga_header.pixel_depth      = f->get_8();
     tga_header.image_descriptor = f->get_8();
 
     bool is_encoded =
@@ -362,16 +362,16 @@ Error ImageLoaderTGA::load_image(
 
             if (err == OK) {
                 uncompressed_buffer_r = uncompressed_buffer.read();
-                buffer = uncompressed_buffer_r.ptr();
+                buffer                = uncompressed_buffer_r.ptr();
             }
         } else {
-            buffer = src_image_r.ptr();
+            buffer      = src_image_r.ptr();
             buffer_size = src_image_len;
         };
 
         if (err == OK) {
             PoolVector<uint8_t>::Read palette_r = palette.read();
-            err = convert_to_image(
+            err                                 = convert_to_image(
                 p_image,
                 buffer,
                 tga_header,

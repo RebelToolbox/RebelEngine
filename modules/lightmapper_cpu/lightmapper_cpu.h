@@ -84,7 +84,7 @@ class LightmapperCPU : public Lightmapper {
         int bounces;
         float bounce_indirect_energy;
         int samples;
-        bool use_denoiser = true;
+        bool use_denoiser                   = true;
         bool use_physical_light_attenuation = false;
         Ref<Image> environment_panorama;
         Basis environment_transform;
@@ -275,8 +275,8 @@ public:
         int p_max_texture_size,
         const Ref<Image>& p_environment_panorama,
         const Basis& p_environment_transform,
-        BakeStepFunc p_step_function = nullptr,
-        void* p_bake_userdata = nullptr,
+        BakeStepFunc p_step_function    = nullptr,
+        void* p_bake_userdata           = nullptr,
         BakeStepFunc p_substep_function = nullptr
     );
 

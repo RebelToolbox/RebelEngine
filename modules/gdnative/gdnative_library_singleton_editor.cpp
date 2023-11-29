@@ -128,7 +128,7 @@ void GDNativeLibrarySingletonEditor::_update_libraries() {
     Array updated_disabled;
     for (int i = 0; i < singletons.size(); i++) {
         bool enabled = true;
-        String path = singletons[i];
+        String path  = singletons[i];
         if (singletons_disabled.has(path)) {
             enabled = false;
             updated_disabled.push_back(path);
@@ -166,7 +166,7 @@ void GDNativeLibrarySingletonEditor::_item_edited() {
     }
 
     bool enabled = item->get_range(1);
-    String path = item->get_metadata(0);
+    String path  = item->get_metadata(0);
 
     Array disabled_paths;
     Array undo_paths;
@@ -179,7 +179,7 @@ void GDNativeLibrarySingletonEditor::_item_edited() {
         // Duplicate so redo works (not a reference)
         disabled_paths = disabled_paths.duplicate();
         // For undo, so we can reset the property.
-        undo_paths = disabled_paths.duplicate();
+        undo_paths     = disabled_paths.duplicate();
     }
 
     if (enabled) {

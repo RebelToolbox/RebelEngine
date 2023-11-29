@@ -38,7 +38,7 @@ bool ConcavePolygonShape2D::_edit_is_selected_on_click(
     double p_tolerance
 ) const {
     PoolVector<Vector2> s = get_segments();
-    int len = s.size();
+    int len               = s.size();
     if (len == 0 || (len % 2) == 1) {
         return false;
     }
@@ -67,7 +67,7 @@ PoolVector<Vector2> ConcavePolygonShape2D::get_segments() const {
 
 void ConcavePolygonShape2D::draw(const RID& p_to_rid, const Color& p_color) {
     PoolVector<Vector2> s = get_segments();
-    int len = s.size();
+    int len               = s.size();
     if (len == 0 || (len % 2) == 1) {
         return;
     }
@@ -81,7 +81,7 @@ void ConcavePolygonShape2D::draw(const RID& p_to_rid, const Color& p_color) {
 
 Rect2 ConcavePolygonShape2D::get_rect() const {
     PoolVector<Vector2> s = get_segments();
-    int len = s.size();
+    int len               = s.size();
     if (len == 0) {
         return Rect2();
     }

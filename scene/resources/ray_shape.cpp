@@ -42,7 +42,7 @@ Vector<Vector3> RayShape::get_debug_mesh_lines() {
 
 void RayShape::_update_shape() {
     Dictionary d;
-    d["length"] = length;
+    d["length"]         = length;
     d["slips_on_slope"] = slips_on_slope;
     PhysicsServer::get_singleton()->shape_set_data(get_shape(), d);
     Shape::_update_shape();
@@ -106,7 +106,7 @@ void RayShape::_bind_methods() {
 RayShape::RayShape() :
     Shape(PhysicsServer::get_singleton()->shape_create(PhysicsServer::SHAPE_RAY)
     ) {
-    length = 1.0;
+    length         = 1.0;
     slips_on_slope = false;
 
     /* Code copied from setters to prevent the use of uninitialized variables */

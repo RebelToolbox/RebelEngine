@@ -69,7 +69,7 @@ static void LocalReferenceHolder_Cleanup(struct LocalReferenceHolder* refholder
 static struct LocalReferenceHolder LocalReferenceHolder_Setup(const char* func
 ) {
     struct LocalReferenceHolder refholder;
-    refholder.m_env = NULL;
+    refholder.m_env  = NULL;
     refholder.m_func = func;
     return refholder;
 }
@@ -117,7 +117,7 @@ int Android_JNI_GetPowerInfo(
     int* seconds,
     int* percent
 ) {
-    env = Android_JNI_GetEnv();
+    env  = Android_JNI_GetEnv();
     refs = LocalReferenceHolder_Setup(__FUNCTION__);
 
     if (!LocalReferenceHolder_Init(&refs, env)) {
@@ -132,8 +132,8 @@ int Android_JNI_GetPowerInfo(
     );
     context = (*env)->CallStaticObjectMethod(env, mActivityClass, mid);
     action = (*env)->NewStringUTF(env, "android.intent.action.BATTERY_CHANGED");
-    cls = (*env)->FindClass(env, "android/content/IntentFilter");
-    mid = (*env)->GetMethodID(env, cls, "<init>", "(Ljava/lang/String;)V");
+    cls    = (*env)->FindClass(env, "android/content/IntentFilter");
+    mid    = (*env)->GetMethodID(env, cls, "<init>", "(Ljava/lang/String;)V");
     filter = (*env)->NewObject(env, cls, mid, action);
     (*env)->DeleteLocalRef(env, action);
     mid = (*env)->GetMethodID(
@@ -152,7 +152,7 @@ int Android_JNI_GetPowerInfo(
 #define GET_INT_EXTRA(var, key)                                                \
     int var;                                                                   \
     iname = (*env)->NewStringUTF(env, key);                                    \
-    var = (*env)->CallIntMethod(env, intent, imid, iname, -1);                 \
+    var   = (*env)->CallIntMethod(env, intent, imid, iname, -1);               \
     (*env)->DeleteLocalRef(env, iname);
     bmid = (*env)->GetMethodID(
         env,
@@ -164,7 +164,7 @@ int Android_JNI_GetPowerInfo(
 #define GET_BOOL_EXTRA(var, key)                                               \
     int var;                                                                   \
     bname = (*env)->NewStringUTF(env, key);                                    \
-    var = (*env)->CallBooleanMethod(env, intent, bmid, bname, JNI_FALSE);      \
+    var   = (*env)->CallBooleanMethod(env, intent, bmid, bname, JNI_FALSE);    \
     (*env)->DeleteLocalRef(env, bname);
     if (plugged) {
         // Watch out for C89 scoping rules because of the macro
@@ -253,16 +253,16 @@ bool PowerAndroid::GetPowerInfo_Android() {
             } else if (battery) {
                 this->power_state = OS::POWERSTATE_CHARGING;
             } else {
-                this->power_state = OS::POWERSTATE_NO_BATTERY;
-                this->nsecs_left = -1;
+                this->power_state  = OS::POWERSTATE_NO_BATTERY;
+                this->nsecs_left   = -1;
                 this->percent_left = -1;
             }
         } else {
             this->power_state = OS::POWERSTATE_ON_BATTERY;
         }
     } else {
-        this->power_state = OS::POWERSTATE_UNKNOWN;
-        this->nsecs_left = -1;
+        this->power_state  = OS::POWERSTATE_UNKNOWN;
+        this->nsecs_left   = -1;
         this->percent_left = -1;
     }
 

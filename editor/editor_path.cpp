@@ -59,7 +59,7 @@ void EditorPath::_add_children_to_popup(Object* p_obj, int p_depth) {
 
         Ref<Texture> icon = EditorNode::get_singleton()->get_object_icon(obj);
 
-        String proper_name = "";
+        String proper_name        = "";
         Vector<String> name_parts = E->get().name.split("/");
 
         for (int i = 0; i < name_parts.size(); i++) {
@@ -81,9 +81,9 @@ void EditorPath::_add_children_to_popup(Object* p_obj, int p_depth) {
 void EditorPath::_show_popup() {
     sub_objects_menu->clear();
 
-    Size2 size = get_size();
-    Point2 gp = get_global_position();
-    gp.y += size.y;
+    Size2 size  = get_size();
+    Point2 gp   = get_global_position();
+    gp.y       += size.y;
 
     sub_objects_menu->set_position(gp);
     sub_objects_menu->set_size(Size2(size.width, 1));

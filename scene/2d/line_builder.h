@@ -69,7 +69,7 @@ public:
 
 private:
     enum Orientation {
-        UP = 0,
+        UP   = 0,
         DOWN = 1
     };
 

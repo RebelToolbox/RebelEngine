@@ -8,7 +8,7 @@ layout(location = 4) in vec2 uv_in;
 out vec2 uv_interp;
 
 void main() {
-    uv_interp = uv_in;
+    uv_interp   = uv_in;
     gl_Position = vertex_attrib;
 }
 
@@ -34,7 +34,7 @@ void main() {
     vec4 specular = texture(source_specular, uv_interp);
 
 #ifdef USE_SSR
-    vec4 ssr = textureLod(source_ssr, uv_interp, 0.0);
+    vec4 ssr     = textureLod(source_ssr, uv_interp, 0.0);
     specular.rgb = mix(specular.rgb, ssr.rgb * specular.a, ssr.a);
 #endif
 

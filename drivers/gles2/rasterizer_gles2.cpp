@@ -196,21 +196,21 @@ Error RasterizerGLES2::is_viable() {
     if (!GLAD_GL_ARB_framebuffer_object) {
         // Try older GL_EXT_framebuffer_object extension
         if (GLAD_GL_EXT_framebuffer_object) {
-            glIsRenderbuffer = glIsRenderbufferEXT;
-            glBindRenderbuffer = glBindRenderbufferEXT;
-            glDeleteRenderbuffers = glDeleteRenderbuffersEXT;
-            glGenRenderbuffers = glGenRenderbuffersEXT;
-            glRenderbufferStorage = glRenderbufferStorageEXT;
+            glIsRenderbuffer             = glIsRenderbufferEXT;
+            glBindRenderbuffer           = glBindRenderbufferEXT;
+            glDeleteRenderbuffers        = glDeleteRenderbuffersEXT;
+            glGenRenderbuffers           = glGenRenderbuffersEXT;
+            glRenderbufferStorage        = glRenderbufferStorageEXT;
             glGetRenderbufferParameteriv = glGetRenderbufferParameterivEXT;
-            glIsFramebuffer = glIsFramebufferEXT;
-            glBindFramebuffer = glBindFramebufferEXT;
-            glDeleteFramebuffers = glDeleteFramebuffersEXT;
-            glGenFramebuffers = glGenFramebuffersEXT;
-            glCheckFramebufferStatus = glCheckFramebufferStatusEXT;
-            glFramebufferTexture1D = glFramebufferTexture1DEXT;
-            glFramebufferTexture2D = glFramebufferTexture2DEXT;
-            glFramebufferTexture3D = glFramebufferTexture3DEXT;
-            glFramebufferRenderbuffer = glFramebufferRenderbufferEXT;
+            glIsFramebuffer              = glIsFramebufferEXT;
+            glBindFramebuffer            = glBindFramebufferEXT;
+            glDeleteFramebuffers         = glDeleteFramebuffersEXT;
+            glGenFramebuffers            = glGenFramebuffersEXT;
+            glCheckFramebufferStatus     = glCheckFramebufferStatusEXT;
+            glFramebufferTexture1D       = glFramebufferTexture1DEXT;
+            glFramebufferTexture2D       = glFramebufferTexture2DEXT;
+            glFramebufferTexture3D       = glFramebufferTexture3DEXT;
+            glFramebufferRenderbuffer    = glFramebufferRenderbufferEXT;
             glGetFramebufferAttachmentParameteriv =
                 glGetFramebufferAttachmentParameterivEXT;
             glGenerateMipmap = glGenerateMipmapEXT;
@@ -380,7 +380,7 @@ void RasterizerGLES2::set_current_render_target(RID p_render_target) {
 
         glViewport(0, 0, rt->width, rt->height);
     } else {
-        storage->frame.current_rt = nullptr;
+        storage->frame.current_rt    = nullptr;
         storage->frame.clear_request = false;
         glViewport(
             0,
@@ -402,7 +402,7 @@ void RasterizerGLES2::restore_render_target(bool p_3d_was_drawn) {
 void RasterizerGLES2::clear_render_target(const Color& p_color) {
     ERR_FAIL_COND(!storage->frame.current_rt);
 
-    storage->frame.clear_request = true;
+    storage->frame.clear_request       = true;
     storage->frame.clear_request_color = p_color;
 }
 
@@ -449,14 +449,14 @@ void RasterizerGLES2::set_boot_image(
     if (p_scale) {
         if (window_w > window_h) {
             // scale horizontally
-            screenrect.size.y = window_h;
-            screenrect.size.x = imgrect.size.x * window_h / imgrect.size.y;
+            screenrect.size.y     = window_h;
+            screenrect.size.x     = imgrect.size.x * window_h / imgrect.size.y;
             screenrect.position.x = (window_w - screenrect.size.x) / 2;
 
         } else {
             // scale vertically
-            screenrect.size.x = window_w;
-            screenrect.size.y = imgrect.size.y * window_w / imgrect.size.x;
+            screenrect.size.x     = window_w;
+            screenrect.size.y     = imgrect.size.y * window_w / imgrect.size.x;
             screenrect.position.y = (window_h - screenrect.size.y) / 2;
         }
     } else {
@@ -590,7 +590,7 @@ void RasterizerGLES2::register_config() {}
 
 bool RasterizerGLES2::gl_check_errors() {
     bool error_found = false;
-    GLenum error = glGetError();
+    GLenum error     = glGetError();
     while (error != GL_NO_ERROR) {
         switch (error) {
 #ifdef DEBUG_ENABLED
@@ -640,21 +640,21 @@ bool RasterizerGLES2::gl_check_errors() {
             } break;
         }
         error_found = true;
-        error = glGetError();
+        error       = glGetError();
     }
 
     return error_found;
 }
 
 RasterizerGLES2::RasterizerGLES2() {
-    storage = memnew(RasterizerStorageGLES2);
-    canvas = memnew(RasterizerCanvasGLES2);
-    scene = memnew(RasterizerSceneGLES2);
-    canvas->storage = storage;
+    storage              = memnew(RasterizerStorageGLES2);
+    canvas               = memnew(RasterizerCanvasGLES2);
+    scene                = memnew(RasterizerSceneGLES2);
+    canvas->storage      = storage;
     canvas->scene_render = scene;
-    storage->canvas = canvas;
-    scene->storage = storage;
-    storage->scene = scene;
+    storage->canvas      = canvas;
+    scene->storage       = storage;
+    storage->scene       = scene;
 
     time_total = 0;
     time_scale = 1;

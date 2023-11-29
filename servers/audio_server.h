@@ -95,16 +95,16 @@ public:
 
     virtual const char* get_name() const = 0;
 
-    virtual Error init() = 0;
-    virtual void start() = 0;
-    virtual int get_mix_rate() const = 0;
+    virtual Error init()                         = 0;
+    virtual void start()                         = 0;
+    virtual int get_mix_rate() const             = 0;
     virtual SpeakerMode get_speaker_mode() const = 0;
     virtual Array get_device_list();
     virtual String get_device();
 
     virtual void set_device(String device) {}
 
-    virtual void lock() = 0;
+    virtual void lock()   = 0;
     virtual void unlock() = 0;
     virtual void finish() = 0;
 
@@ -164,7 +164,7 @@ class AudioDriverManager {
         MAX_DRIVERS = 10
     };
 
-    static const int DEFAULT_MIX_RATE = 44100;
+    static const int DEFAULT_MIX_RATE       = 44100;
     static const int DEFAULT_OUTPUT_LATENCY = 15;
 
     static AudioDriver* drivers[MAX_DRIVERS];
@@ -237,8 +237,8 @@ private:
 
             Channel() {
                 last_mix_with_audio = 0;
-                used = false;
-                active = false;
+                used                = false;
+                active              = false;
                 peak_volume = AudioFrame(AUDIO_MIN_PEAK_DB, AUDIO_MIN_PEAK_DB);
             }
         };
@@ -453,9 +453,9 @@ class AudioBusLayout : public Resource {
         StringName send;
 
         Bus() {
-            solo = false;
-            mute = false;
-            bypass = false;
+            solo      = false;
+            mute      = false;
+            bypass    = false;
             volume_db = 0;
         }
     };

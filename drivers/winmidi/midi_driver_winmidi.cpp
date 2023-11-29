@@ -84,8 +84,8 @@ PoolStringArray MIDIDriverWinMidi::get_connected_inputs() {
 
     for (int i = 0; i < connected_sources.size(); i++) {
         HMIDIIN midi_in = connected_sources[i];
-        UINT id = 0;
-        MMRESULT res = midiInGetID(midi_in, &id);
+        UINT id         = 0;
+        MMRESULT res    = midiInGetID(midi_in, &id);
         if (res == MMSYSERR_NOERROR) {
             MIDIINCAPS caps;
             res = midiInGetDevCaps(i, &caps, sizeof(MIDIINCAPS));

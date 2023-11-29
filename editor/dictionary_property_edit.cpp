@@ -52,8 +52,8 @@ void DictionaryPropertyEdit::_set_value(
     const Variant& p_value
 ) {
     Dictionary dict = get_dictionary();
-    dict[p_key] = p_value;
-    Object* o = ObjectDB::get_instance(obj);
+    dict[p_key]     = p_value;
+    Object* o       = ObjectDB::get_instance(obj);
     if (!o) {
         return;
     }
@@ -95,7 +95,7 @@ void DictionaryPropertyEdit::_get_property_list(List<PropertyInfo>* p_list
 
 void DictionaryPropertyEdit::edit(Object* p_obj, const StringName& p_prop) {
     property = p_prop;
-    obj = p_obj->get_instance_id();
+    obj      = p_obj->get_instance_id();
 }
 
 Node* DictionaryPropertyEdit::get_node() {
@@ -139,17 +139,17 @@ bool DictionaryPropertyEdit::_set(
     const Variant& p_value
 ) {
     Dictionary dict = get_dictionary();
-    Array keys = dict.keys();
+    Array keys      = dict.keys();
     keys.sort();
 
     String pn = p_name;
     int slash = pn.find(": ");
     if (slash != -1 && pn.length() > slash) {
         String type = pn.substr(slash + 2, pn.length());
-        int index = pn.substr(0, slash).to_int();
+        int index   = pn.substr(0, slash).to_int();
         if (type == "key" && index < keys.size()) {
             const Variant& key = keys[index];
-            UndoRedo* ur = EditorNode::get_undo_redo();
+            UndoRedo* ur       = EditorNode::get_undo_redo();
 
             ur->create_action(TTR("Change Dictionary Key"));
             ur->add_do_method(this, "_set_key", key, p_value);
@@ -163,7 +163,7 @@ bool DictionaryPropertyEdit::_set(
             const Variant& key = keys[index];
             if (dict.has(key)) {
                 Variant value = dict[key];
-                UndoRedo* ur = EditorNode::get_undo_redo();
+                UndoRedo* ur  = EditorNode::get_undo_redo();
 
                 ur->create_action(TTR("Change Dictionary Value"));
                 ur->add_do_method(this, "_set_value", key, p_value);
@@ -183,7 +183,7 @@ bool DictionaryPropertyEdit::_set(
 bool DictionaryPropertyEdit::_get(const StringName& p_name, Variant& r_ret)
     const {
     Dictionary dict = get_dictionary();
-    Array keys = dict.keys();
+    Array keys      = dict.keys();
     keys.sort();
 
     String pn = p_name;
@@ -191,7 +191,7 @@ bool DictionaryPropertyEdit::_get(const StringName& p_name, Variant& r_ret)
 
     if (slash != -1 && pn.length() > slash) {
         String type = pn.substr(slash + 2, pn.length());
-        int index = pn.substr(0, slash).to_int();
+        int index   = pn.substr(0, slash).to_int();
 
         if (type == "key" && index < keys.size()) {
             r_ret = keys[index];

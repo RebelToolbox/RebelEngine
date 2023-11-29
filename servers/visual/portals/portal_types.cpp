@@ -32,7 +32,7 @@
 
 VSPortal::ClipResult VSPortal::clip_with_plane(const Plane& p) const {
     int nOutside = 0;
-    int nPoints = _pts_world.size();
+    int nPoints  = _pts_world.size();
 
     for (int n = 0; n < nPoints; n++) {
         real_t d = p.distance_to(_pts_world[n]);
@@ -122,7 +122,7 @@ bool VSPortal::_is_plane_duplicate(
     const Plane& p_plane,
     const LocalVector<Plane, int32_t>& p_planes
 ) const {
-    const real_t epsilon_d = 0.001;
+    const real_t epsilon_d   = 0.001;
     const real_t epsilon_dot = 0.98;
 
     for (int n = 0; n < p_planes.size(); n++) {
@@ -148,14 +148,14 @@ bool VSPortal::_pvs_is_outside_planes(
 ) const {
     // short version
     const Vector<Vector3>& pts = _pts_world;
-    int nPoints = pts.size();
+    int nPoints                = pts.size();
 
     const real_t epsilon = 0.1;
 
     for (int p = 0; p < p_planes.size(); p++) {
         for (int n = 0; n < nPoints; n++) {
             const Vector3& pt = pts[n];
-            real_t dist = p_planes[p].distance_to(pt);
+            real_t dist       = p_planes[p].distance_to(pt);
 
             if (dist < -epsilon) {
                 return false;

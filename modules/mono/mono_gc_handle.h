@@ -73,8 +73,8 @@ public:
         HandleType p_handle_type
     ) {
         released = false;
-        weak = p_handle_type == WEAK_HANDLE;
-        handle = p_handle;
+        weak     = p_handle_type == WEAK_HANDLE;
+        handle   = p_handle;
     }
 
     void release();

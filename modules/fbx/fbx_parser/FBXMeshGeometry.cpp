@@ -195,8 +195,8 @@ MeshGeometry::MeshGeometry(
         for (ElementMap::const_iterator eit = LayerElement.first;
              eit != LayerElement.second;
              ++eit) {
-            std::string layer_name = eit->first;
-            ElementPtr element_layer = eit->second;
+            std::string layer_name       = eit->first;
+            ElementPtr element_layer     = eit->second;
             const ScopePtr layer_element = GetRequiredScope(element_layer);
 
             // Actual usable 'type' LayerElementUV, LayerElementNormal, etc
@@ -221,7 +221,7 @@ MeshGeometry::MeshGeometry(
     // iterate over all layers for the mesh (uvs, normals, smoothing groups,
     // colors, etc)
     for (size_t x = 0; x < valid_layers.size(); x++) {
-        const int layer_id = std::get<0>(valid_layers[x]);
+        const int layer_id                 = std::get<0>(valid_layers[x]);
         const std::string& layer_type_name = std::get<1>(valid_layers[x]);
 
         // Get collection of elements from the XLayerMap (example:
@@ -236,8 +236,8 @@ MeshGeometry::MeshGeometry(
         ElementMap::const_iterator iter;
         for (iter = candidates.first; iter != candidates.second; ++iter) {
             const ScopePtr layer_scope = GetRequiredScope(iter->second);
-            TokenPtr layer_token = GetRequiredToken(iter->second, 0);
-            const int index = ParseTokenAsInt(layer_token);
+            TokenPtr layer_token       = GetRequiredToken(iter->second, 0);
+            const int index            = ParseTokenAsInt(layer_token);
 
             ERR_FAIL_COND_MSG(
                 layer_scope == nullptr,
@@ -375,13 +375,13 @@ MeshGeometry::MeshGeometry(
                 if (x == 0) {
                     // This for sure is the start.
                     polygon_vertex_1 = m_face_indices[x];
-                    found_it = true;
+                    found_it         = true;
                     break;
                 } else if (m_face_indices[x] < 0) {
                     // This is the end of the previous polygon, so the next is
                     // the start of the polygon we need.
                     polygon_vertex_1 = m_face_indices[x + 1];
-                    found_it = true;
+                    found_it         = true;
                     break;
                 }
             }
@@ -591,8 +591,8 @@ ShapeGeometry::ShapeGeometry(
             "failed to read Geometry object (class: Shape), no data scope found"
         );
     }
-    const ElementPtr Indexes = GetRequiredElement(sc, "Indexes", element);
-    const ElementPtr Normals = GetRequiredElement(sc, "Normals", element);
+    const ElementPtr Indexes  = GetRequiredElement(sc, "Indexes", element);
+    const ElementPtr Normals  = GetRequiredElement(sc, "Normals", element);
     const ElementPtr Vertices = GetRequiredElement(sc, "Vertices", element);
     ParseVectorDataArray(m_indices, Indexes);
     ParseVectorDataArray(m_vertices, Vertices);

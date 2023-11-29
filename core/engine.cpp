@@ -93,15 +93,15 @@ void Engine::set_portals_active(bool p_active) {
 
 Dictionary Engine::get_version_info() const {
     Dictionary dict;
-    dict["major"] = VERSION_MAJOR;
-    dict["minor"] = VERSION_MINOR;
-    dict["patch"] = VERSION_PATCH;
-    dict["hex"] = VERSION_HEX;
+    dict["major"]  = VERSION_MAJOR;
+    dict["minor"]  = VERSION_MINOR;
+    dict["patch"]  = VERSION_PATCH;
+    dict["hex"]    = VERSION_HEX;
     dict["status"] = VERSION_STATUS;
-    dict["build"] = VERSION_BUILD;
-    dict["year"] = VERSION_YEAR;
+    dict["build"]  = VERSION_BUILD;
+    dict["year"]   = VERSION_YEAR;
 
-    String hash = VERSION_HASH;
+    String hash  = VERSION_HASH;
     dict["hash"] = hash.length() == 0 ? String("unknown") : hash;
 
     String stringver = String(dict["major"]) + "." + String(dict["minor"]);
@@ -172,7 +172,7 @@ Array Engine::get_copyright_info() const {
 Dictionary Engine::get_donor_info() const {
     Dictionary donors;
     donors["sponsors"] = array_from_info(DONORS_SPONSOR);
-    donors["donors"] = array_from_info(DONORS_DONOR);
+    donors["donors"]   = array_from_info(DONORS_DONOR);
     return donors;
 }
 
@@ -228,23 +228,23 @@ Engine* Engine::get_singleton() {
 }
 
 Engine::Engine() {
-    singleton = this;
-    frames_drawn = 0;
-    ips = 60;
-    physics_jitter_fix = 0.5;
+    singleton                       = this;
+    frames_drawn                    = 0;
+    ips                             = 60;
+    physics_jitter_fix              = 0.5;
     _physics_interpolation_fraction = 0.0f;
-    _frame_delay = 0;
-    _fps = 1;
-    _target_fps = 0;
-    _time_scale = 1.0;
-    _gpu_pixel_snap = false;
-    _physics_frames = 0;
-    _idle_frames = 0;
-    _in_physics = false;
-    _frame_ticks = 0;
-    _frame_step = 0;
-    editor_hint = false;
-    _portals_active = false;
+    _frame_delay                    = 0;
+    _fps                            = 1;
+    _target_fps                     = 0;
+    _time_scale                     = 1.0;
+    _gpu_pixel_snap                 = false;
+    _physics_frames                 = 0;
+    _idle_frames                    = 0;
+    _in_physics                     = false;
+    _frame_ticks                    = 0;
+    _frame_step                     = 0;
+    editor_hint                     = false;
+    _portals_active                 = false;
 }
 
 Engine::Singleton::Singleton(const StringName& p_name, Object* p_ptr) :

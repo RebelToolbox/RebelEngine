@@ -111,8 +111,8 @@ void Particles2D::set_visibility_rect(const Rect2& p_visibility_rect) {
     AABB aabb;
     aabb.position.x = p_visibility_rect.position.x;
     aabb.position.y = p_visibility_rect.position.y;
-    aabb.size.x = p_visibility_rect.size.x;
-    aabb.size.y = p_visibility_rect.size.y;
+    aabb.size.x     = p_visibility_rect.size.x;
+    aabb.size.y     = p_visibility_rect.size.y;
 
     VS::get_singleton()->particles_set_custom_aabb(particles, aabb);
 
@@ -143,7 +143,7 @@ void Particles2D::_update_particle_emission_transform() {
 }
 
 void Particles2D::set_process_material(const Ref<Material>& p_material) {
-    process_material = p_material;
+    process_material          = p_material;
     Ref<ParticlesMaterial> pm = p_material;
     if (pm.is_valid() && !pm->get_flag(ParticlesMaterial::FLAG_DISABLE_Z)
         && pm->get_gravity() == Vector3(0, -9.8, 0)) {
@@ -331,8 +331,8 @@ Rect2 Particles2D::capture_rect() const {
     Rect2 r;
     r.position.x = aabb.position.x;
     r.position.y = aabb.position.y;
-    r.size.x = aabb.size.x;
-    r.size.y = aabb.size.y;
+    r.size.x     = aabb.size.x;
+    r.size.y     = aabb.size.y;
     return r;
 }
 

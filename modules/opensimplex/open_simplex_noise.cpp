@@ -33,11 +33,11 @@
 #include "core/core_string_names.h"
 
 OpenSimplexNoise::OpenSimplexNoise() {
-    seed = 0;
+    seed        = 0;
     persistence = 0.5;
-    octaves = 3;
-    period = 64;
-    lacunarity = 2.0;
+    octaves     = 3;
+    period      = 64;
+    lacunarity  = 2.0;
 
     _init_seeds();
 }
@@ -124,7 +124,7 @@ Ref<Image> OpenSimplexNoise::get_image(
                 float(j) + p_noise_offset.x,
                 float(i) + p_noise_offset.y
             );
-            v = v * 0.5 + 0.5; // Normalize [0..1]
+            v                      = v * 0.5 + 0.5; // Normalize [0..1]
             wd8[(i * p_width + j)] = uint8_t(CLAMP(v * 255.0, 0, 255));
         }
     }
@@ -156,7 +156,7 @@ Ref<Image> OpenSimplexNoise::get_seamless_image(int p_size) const {
             float w = radius * Math::cos(ii);
             float v = get_noise_4d(x, y, z, w);
 
-            v = v * 0.5 + 0.5; // Normalize [0..1]
+            v                     = v * 0.5 + 0.5; // Normalize [0..1]
             wd8[(i * p_size + j)] = uint8_t(CLAMP(v * 255.0, 0, 255));
         }
     }
@@ -299,8 +299,8 @@ float OpenSimplexNoise::get_noise_2d(float x, float y) const {
 
     int i = 0;
     while (++i < octaves) {
-        x *= lacunarity;
-        y *= lacunarity;
+        x   *= lacunarity;
+        y   *= lacunarity;
         amp *= persistence;
         max += amp;
         sum += _get_octave_noise_2d(i, x, y) * amp;
@@ -320,9 +320,9 @@ float OpenSimplexNoise::get_noise_3d(float x, float y, float z) const {
 
     int i = 0;
     while (++i < octaves) {
-        x *= lacunarity;
-        y *= lacunarity;
-        z *= lacunarity;
+        x   *= lacunarity;
+        y   *= lacunarity;
+        z   *= lacunarity;
         amp *= persistence;
         max += amp;
         sum += _get_octave_noise_3d(i, x, y, z) * amp;
@@ -343,10 +343,10 @@ float OpenSimplexNoise::get_noise_4d(float x, float y, float z, float w) const {
 
     int i = 0;
     while (++i < octaves) {
-        x *= lacunarity;
-        y *= lacunarity;
-        z *= lacunarity;
-        w *= lacunarity;
+        x   *= lacunarity;
+        y   *= lacunarity;
+        z   *= lacunarity;
+        w   *= lacunarity;
         amp *= persistence;
         max += amp;
         sum += _get_octave_noise_4d(i, x, y, z, w) * amp;

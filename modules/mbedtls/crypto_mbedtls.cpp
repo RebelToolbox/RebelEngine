@@ -228,7 +228,7 @@ Error X509CertificateMbedTLS::save(String p_path) {
     while (crt) {
         unsigned char w[4096];
         size_t wrote = 0;
-        int ret = mbedtls_pem_write_buffer(
+        int ret      = mbedtls_pem_write_buffer(
             PEM_BEGIN_CRT,
             PEM_END_CRT,
             cert.raw.p,
@@ -351,7 +351,7 @@ PoolByteArray HMACContextMbedTLS::finish() {
 
     mbedtls_md_free((mbedtls_md_context_t*)ctx);
     memfree((mbedtls_md_context_t*)ctx);
-    ctx = nullptr;
+    ctx      = nullptr;
     hash_len = 0;
 
     ERR_FAIL_COND_V_MSG(
@@ -378,7 +378,7 @@ void CryptoMbedTLS::initialize_crypto() {
     mbedtls_debug_set_threshold(1);
 #endif
 
-    Crypto::_create = create;
+    Crypto::_create                    = create;
     Crypto::_load_default_certificates = load_default_certificates;
     X509CertificateMbedTLS::make_default();
     CryptoKeyMbedTLS::make_default();
@@ -386,7 +386,7 @@ void CryptoMbedTLS::initialize_crypto() {
 }
 
 void CryptoMbedTLS::finalize_crypto() {
-    Crypto::_create = nullptr;
+    Crypto::_create                    = nullptr;
     Crypto::_load_default_certificates = nullptr;
     if (default_certs) {
         memdelete(default_certs);

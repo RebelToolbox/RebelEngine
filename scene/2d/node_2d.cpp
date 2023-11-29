@@ -40,14 +40,14 @@ Dictionary Node2D::_edit_get_state() const {
     Dictionary state;
     state["position"] = get_position();
     state["rotation"] = get_rotation();
-    state["scale"] = get_scale();
+    state["scale"]    = get_scale();
 
     return state;
 }
 
 void Node2D::_edit_set_state(const Dictionary& p_state) {
-    pos = p_state["position"];
-    angle = p_state["rotation"];
+    pos    = p_state["position"];
+    angle  = p_state["rotation"];
     _scale = p_state["scale"];
 
     _update_transform();
@@ -116,7 +116,7 @@ void Node2D::_edit_set_rect(const Rect2& p_edit_rect) {
     postxf.set_rotation_and_scale(angle, _scale);
     new_pos = postxf.xform(new_pos);
 
-    pos += new_pos;
+    pos    += new_pos;
     _scale *= new_scale;
 
     _update_transform();
@@ -126,9 +126,9 @@ void Node2D::_edit_set_rect(const Rect2& p_edit_rect) {
 #endif
 
 void Node2D::_update_xform_values() {
-    pos = _mat.elements[2];
-    angle = _mat.get_rotation();
-    _scale = _mat.get_scale();
+    pos          = _mat.elements[2];
+    angle        = _mat.get_rotation();
+    _scale       = _mat.get_scale();
     _xform_dirty = false;
 }
 
@@ -236,7 +236,7 @@ void Node2D::apply_scale(const Size2& p_amount) {
 
 void Node2D::move_x(float p_delta, bool p_scaled) {
     Transform2D t = get_transform();
-    Vector2 m = t[0];
+    Vector2 m     = t[0];
     if (!p_scaled) {
         m.normalize();
     }
@@ -245,7 +245,7 @@ void Node2D::move_x(float p_delta, bool p_scaled) {
 
 void Node2D::move_y(float p_delta, bool p_scaled) {
     Transform2D t = get_transform();
-    Vector2 m = t[1];
+    Vector2 m     = t[1];
     if (!p_scaled) {
         m.normalize();
     }
@@ -306,7 +306,7 @@ void Node2D::set_global_scale(const Size2& p_scale) {
 }
 
 void Node2D::set_transform(const Transform2D& p_transform) {
-    _mat = p_transform;
+    _mat         = p_transform;
     _xform_dirty = true;
 
     VisualServer::get_singleton()->canvas_item_set_transform(
@@ -631,9 +631,9 @@ void Node2D::_bind_methods() {
 }
 
 Node2D::Node2D() {
-    angle = 0;
-    _scale = Vector2(1, 1);
+    angle        = 0;
+    _scale       = Vector2(1, 1);
     _xform_dirty = false;
-    z_index = 0;
-    z_relative = true;
+    z_index      = 0;
+    z_relative   = true;
 }

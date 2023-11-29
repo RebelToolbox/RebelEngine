@@ -84,7 +84,7 @@ void LineEdit::_gui_input(Ref<InputEvent> p_event) {
             ); // don't pass event further when clicked on text field
             if (!text.empty() && is_editable()
                 && _is_over_clear_button(b->get_position())) {
-                clear_button_status.press_attempt = true;
+                clear_button_status.press_attempt   = true;
                 clear_button_status.pressing_inside = true;
                 update();
                 return;
@@ -105,16 +105,16 @@ void LineEdit::_gui_input(Ref<InputEvent> p_event) {
                             - selection.last_dblclk)
                                < 600) {
                         // Triple-click select all.
-                        selection.enabled = true;
-                        selection.begin = 0;
-                        selection.end = text.length();
+                        selection.enabled     = true;
+                        selection.begin       = 0;
+                        selection.end         = text.length();
                         selection.doubleclick = true;
                         selection.last_dblclk = 0;
                     } else if (b->is_doubleclick()) {
                         // Double-click select word.
                         selection.enabled = true;
-                        int beg = cursor_pos;
-                        int end = beg;
+                        int beg           = cursor_pos;
+                        int end           = beg;
                         bool symbol =
                             beg < text.length() && is_symbol(text[beg]);
                         while (beg > 0 && text[beg - 1] > 32
@@ -128,8 +128,8 @@ void LineEdit::_gui_input(Ref<InputEvent> p_event) {
                         if (end < text.length()) {
                             end += 1;
                         }
-                        selection.begin = beg;
-                        selection.end = end;
+                        selection.begin       = beg;
+                        selection.end         = end;
                         selection.doubleclick = true;
                         selection.last_dblclk =
                             OS::get_singleton()->get_ticks_msec();
@@ -142,7 +142,7 @@ void LineEdit::_gui_input(Ref<InputEvent> p_event) {
                     || (cursor_pos > selection.end) || !selection.enabled) {
                     deselect();
                     selection.cursor_start = cursor_pos;
-                    selection.creating = true;
+                    selection.creating     = true;
                 } else if (selection.enabled) {
                     selection.drag_attempt = true;
                 }
@@ -164,7 +164,7 @@ void LineEdit::_gui_input(Ref<InputEvent> p_event) {
             if ((!selection.creating) && (!selection.doubleclick)) {
                 deselect();
             }
-            selection.creating = false;
+            selection.creating    = false;
             selection.doubleclick = false;
 
             show_virtual_keyboard();
@@ -376,7 +376,7 @@ void LineEdit::_gui_input(Ref<InputEvent> p_event) {
                         break;
                     } else if (k->get_command()) {
 #endif
-                        int cc = cursor_pos;
+                        int cc         = cursor_pos;
                         bool prev_char = false;
 
                         while (cc > 0) {
@@ -430,7 +430,7 @@ void LineEdit::_gui_input(Ref<InputEvent> p_event) {
                     } else if (k->get_command()) {
 #endif
                         bool prev_char = false;
-                        int cc = cursor_pos;
+                        int cc         = cursor_pos;
 
                         while (cc > 0) {
                             bool ischar = _is_text_char(text[cc - 1]);
@@ -478,7 +478,7 @@ void LineEdit::_gui_input(Ref<InputEvent> p_event) {
                     } else if (k->get_command()) {
 #endif
                         bool prev_char = false;
-                        int cc = cursor_pos;
+                        int cc         = cursor_pos;
 
                         while (cc < text.length()) {
                             bool ischar = _is_text_char(text[cc]);
@@ -628,7 +628,7 @@ void LineEdit::_gui_input(Ref<InputEvent> p_event) {
                     if (editable) {
                         selection_delete();
                         CharType ucodestr[2] = {(CharType)k->get_unicode(), 0};
-                        int prev_len = text.length();
+                        int prev_len         = text.length();
                         append_at_cursor(ucodestr);
                         if (text.length() != prev_len) {
                             _text_changed();
@@ -704,7 +704,7 @@ void LineEdit::drop_data(const Point2& p_point, const Variant& p_data) {
 
         append_at_cursor(p_data);
         selection.begin = cursor_pos - selected;
-        selection.end = cursor_pos;
+        selection.end   = cursor_pos;
     }
 }
 
@@ -721,7 +721,7 @@ bool LineEdit::_is_over_clear_button(const Point2& p_pos) const {
         return false;
     }
     Ref<Texture> icon = Control::get_icon("clear");
-    int x_ofs = get_stylebox("normal")->get_margin(MARGIN_RIGHT);
+    int x_ofs         = get_stylebox("normal")->get_margin(MARGIN_RIGHT);
     return p_pos.x > get_size().width - icon->get_width() - x_ofs;
 }
 
@@ -771,12 +771,12 @@ void LineEdit::_notification(int p_what) {
         } break;
         case MainLoop::NOTIFICATION_WM_FOCUS_IN: {
             window_has_focus = true;
-            draw_caret = true;
+            draw_caret       = true;
             update();
         } break;
         case MainLoop::NOTIFICATION_WM_FOCUS_OUT: {
             window_has_focus = false;
-            draw_caret = false;
+            draw_caret       = false;
             update();
         } break;
         case NOTIFICATION_DRAW: {
@@ -787,14 +787,14 @@ void LineEdit::_notification(int p_what) {
             int width, height;
 
             Size2 size = get_size();
-            width = size.width;
-            height = size.height;
+            width      = size.width;
+            height     = size.height;
 
             RID ci = get_canvas_item();
 
             Ref<StyleBox> style = get_stylebox("normal");
             if (!is_editable()) {
-                style = get_stylebox("read_only");
+                style      = get_stylebox("read_only");
                 draw_caret = false;
             }
 
@@ -806,7 +806,7 @@ void LineEdit::_notification(int p_what) {
                 get_stylebox("focus")->draw(ci, Rect2(Point2(), size));
             }
 
-            int x_ofs = 0;
+            int x_ofs              = 0;
             bool using_placeholder = text.empty() && ime_text.empty();
             int cached_text_width =
                 using_placeholder ? cached_placeholder_width : cached_width;
@@ -833,7 +833,7 @@ void LineEdit::_notification(int p_what) {
                 } break;
             }
 
-            int ofs_max = width - style->get_margin(MARGIN_RIGHT);
+            int ofs_max  = width - style->get_margin(MARGIN_RIGHT);
             int char_ofs = scroll_offset;
 
             int y_area = height - style->get_minimum_size().height;
@@ -842,12 +842,12 @@ void LineEdit::_notification(int p_what) {
 
             int font_ascent = font->get_ascent();
 
-            Color selection_color = get_color("selection_color");
-            Color font_color = is_editable()
-                                 ? get_color("font_color")
-                                 : get_color("font_color_uneditable");
+            Color selection_color     = get_color("selection_color");
+            Color font_color          = is_editable()
+                                          ? get_color("font_color")
+                                          : get_color("font_color_uneditable");
             Color font_color_selected = get_color("font_color_selected");
-            Color cursor_color = get_color("cursor_color");
+            Color cursor_color        = get_color("cursor_color");
 
             const String& t = using_placeholder ? placeholder_translated : text;
             // Draw placeholder color.
@@ -920,9 +920,9 @@ void LineEdit::_notification(int p_what) {
                             CharType cchar = (pass && !text.empty())
                                                ? secret_character[0]
                                                : ime_text[ofs];
-                            CharType next = (pass && !text.empty())
-                                              ? secret_character[0]
-                                              : ime_text[ofs + 1];
+                            CharType next  = (pass && !text.empty())
+                                               ? secret_character[0]
+                                               : ime_text[ofs + 1];
                             int im_char_width =
                                 font->get_char_size(cchar, next).width;
 
@@ -971,8 +971,8 @@ void LineEdit::_notification(int p_what) {
 
                 CharType cchar =
                     (pass && !text.empty()) ? secret_character[0] : t[char_ofs];
-                CharType next = (pass && !text.empty()) ? secret_character[0]
-                                                        : t[char_ofs + 1];
+                CharType next  = (pass && !text.empty()) ? secret_character[0]
+                                                         : t[char_ofs + 1];
                 int char_width = font->get_char_size(cchar, next).width;
 
                 // End of widget, break.
@@ -1040,9 +1040,9 @@ void LineEdit::_notification(int p_what) {
                         CharType cchar = (pass && !text.empty())
                                            ? secret_character[0]
                                            : ime_text[ofs];
-                        CharType next = (pass && !text.empty())
-                                          ? secret_character[0]
-                                          : ime_text[ofs + 1];
+                        CharType next  = (pass && !text.empty())
+                                           ? secret_character[0]
+                                           : ime_text[ofs + 1];
                         int im_char_width =
                             font->get_char_size(cchar, next).width;
 
@@ -1162,7 +1162,7 @@ void LineEdit::_notification(int p_what) {
 
             OS::get_singleton()->set_ime_position(Point2());
             OS::get_singleton()->set_ime_active(false);
-            ime_text = "";
+            ime_text      = "";
             ime_selection = Point2();
 
             if (OS::get_singleton()->has_virtual_keyboard()
@@ -1173,7 +1173,7 @@ void LineEdit::_notification(int p_what) {
         } break;
         case MainLoop::NOTIFICATION_OS_IME_UPDATE: {
             if (has_focus()) {
-                ime_text = OS::get_singleton()->get_ime_text();
+                ime_text      = OS::get_singleton()->get_ime_text();
                 ime_selection = OS::get_singleton()->get_ime_selection();
                 update();
             }
@@ -1239,11 +1239,11 @@ void LineEdit::undo() {
     } else if (undo_stack_pos == undo_stack.front()) {
         return;
     }
-    undo_stack_pos = undo_stack_pos->prev();
+    undo_stack_pos   = undo_stack_pos->prev();
     TextOperation op = undo_stack_pos->get();
-    text = op.text;
-    cached_width = op.cached_width;
-    scroll_offset = op.scroll_offset;
+    text             = op.text;
+    cached_width     = op.cached_width;
+    scroll_offset    = op.scroll_offset;
     set_cursor_position(op.cursor_pos);
 
     if (expand_to_text_length) {
@@ -1260,11 +1260,11 @@ void LineEdit::redo() {
     if (undo_stack_pos == undo_stack.back()) {
         return;
     }
-    undo_stack_pos = undo_stack_pos->next();
+    undo_stack_pos   = undo_stack_pos->next();
     TextOperation op = undo_stack_pos->get();
-    text = op.text;
-    cached_width = op.cached_width;
-    scroll_offset = op.scroll_offset;
+    text             = op.text;
+    cached_width     = op.cached_width;
+    scroll_offset    = op.scroll_offset;
     set_cursor_position(op.cursor_pos);
 
     if (expand_to_text_length) {
@@ -1290,11 +1290,11 @@ void LineEdit::shift_selection_check_post(bool p_shift) {
 }
 
 void LineEdit::set_cursor_at_pixel_pos(int p_x) {
-    Ref<Font> font = get_font("font");
-    int ofs = scroll_offset;
+    Ref<Font> font      = get_font("font");
+    int ofs             = scroll_offset;
     Ref<StyleBox> style = get_stylebox("normal");
-    int pixel_ofs = 0;
-    Size2 size = get_size();
+    int pixel_ofs       = 0;
+    Size2 size          = get_size();
     bool display_clear_icon =
         !text.empty() && is_editable() && clear_button_enabled;
     int r_icon_width = Control::get_icon("clear")->get_width();
@@ -1347,11 +1347,11 @@ void LineEdit::set_cursor_at_pixel_pos(int p_x) {
 }
 
 int LineEdit::get_cursor_pixel_pos() {
-    Ref<Font> font = get_font("font");
-    int ofs = scroll_offset;
+    Ref<Font> font      = get_font("font");
+    int ofs             = scroll_offset;
     Ref<StyleBox> style = get_stylebox("normal");
-    int pixel_ofs = 0;
-    Size2 size = get_size();
+    int pixel_ofs       = 0;
+    Size2 size          = get_size();
     bool display_clear_icon =
         !text.empty() && is_editable() && clear_button_enabled;
     int r_icon_width = Control::get_icon("clear")->get_width();
@@ -1529,7 +1529,7 @@ void LineEdit::set_text(String p_text) {
     }
 
     update();
-    cursor_pos = 0;
+    cursor_pos    = 0;
     scroll_offset = 0;
 }
 
@@ -1572,7 +1572,7 @@ String LineEdit::get_text() const {
 }
 
 void LineEdit::set_placeholder(String p_text) {
-    placeholder = p_text;
+    placeholder            = p_text;
     placeholder_translated = tr(placeholder);
     update_placeholder_width();
     update();
@@ -1608,7 +1608,7 @@ void LineEdit::set_cursor_position(int p_pos) {
     }
 
     Ref<StyleBox> style = get_stylebox("normal");
-    Ref<Font> font = get_font("font");
+    Ref<Font> font      = get_font("font");
 
     if (cursor_pos <= scroll_offset) {
         // Adjust window if cursor goes too much to the left.
@@ -1694,9 +1694,9 @@ void LineEdit::append_at_cursor(String p_text) {
             p_text = p_text.substr(0, available_chars);
         }
     }
-    String pre = text.substr(0, cursor_pos);
+    String pre  = text.substr(0, cursor_pos);
     String post = text.substr(cursor_pos, text.length() - cursor_pos);
-    text = pre + p_text + post;
+    text        = pre + p_text + post;
     update_cached_width();
     set_cursor_position(cursor_pos + p_text.length());
 }
@@ -1704,17 +1704,17 @@ void LineEdit::append_at_cursor(String p_text) {
 void LineEdit::clear_internal() {
     deselect();
     _clear_undo_stack();
-    cached_width = 0;
-    cursor_pos = 0;
+    cached_width  = 0;
+    cursor_pos    = 0;
     scroll_offset = 0;
-    undo_text = "";
-    text = "";
+    undo_text     = "";
+    text          = "";
     update();
 }
 
 Size2 LineEdit::get_minimum_size() const {
     Ref<StyleBox> style = get_stylebox("normal");
-    Ref<Font> font = get_font("font");
+    Ref<Font> font      = get_font("font");
 
     Size2 min_size;
 
@@ -1739,7 +1739,7 @@ Size2 LineEdit::get_minimum_size() const {
             MAX(min_size.height, Control::get_icon("clear")->get_height());
     }
     if (right_icon.is_valid()) {
-        min_size.width = MAX(min_size.width, right_icon->get_width());
+        min_size.width  = MAX(min_size.width, right_icon->get_width());
         min_size.height = MAX(min_size.height, right_icon->get_height());
     }
 
@@ -1747,12 +1747,12 @@ Size2 LineEdit::get_minimum_size() const {
 }
 
 void LineEdit::deselect() {
-    selection.begin = 0;
-    selection.end = 0;
+    selection.begin        = 0;
+    selection.end          = 0;
     selection.cursor_start = 0;
-    selection.enabled = false;
-    selection.creating = false;
-    selection.doubleclick = false;
+    selection.enabled      = false;
+    selection.creating     = false;
+    selection.doubleclick  = false;
     update();
 }
 
@@ -1780,11 +1780,11 @@ void LineEdit::selection_fill_at_cursor() {
     }
 
     selection.begin = cursor_pos;
-    selection.end = selection.cursor_start;
+    selection.end   = selection.cursor_start;
 
     if (selection.end < selection.begin) {
-        int aux = selection.end;
-        selection.end = selection.begin;
+        int aux         = selection.end;
+        selection.end   = selection.begin;
         selection.begin = aux;
     }
 
@@ -1800,8 +1800,8 @@ void LineEdit::select_all() {
         return;
     }
 
-    selection.begin = 0;
-    selection.end = text.length();
+    selection.begin   = 0;
+    selection.end     = text.length();
     selection.enabled = true;
     update();
 }
@@ -1876,10 +1876,10 @@ void LineEdit::select(int p_from, int p_to) {
         return;
     }
 
-    selection.enabled = true;
-    selection.begin = p_from;
-    selection.end = p_to;
-    selection.creating = false;
+    selection.enabled     = true;
+    selection.begin       = p_from;
+    selection.end         = p_to;
+    selection.creating    = false;
     selection.doubleclick = false;
     update();
 }
@@ -2031,7 +2031,7 @@ void LineEdit::_emit_text_change() {
 
 void LineEdit::update_cached_width() {
     Ref<Font> font = get_font("font");
-    cached_width = 0;
+    cached_width   = 0;
     if (font != nullptr) {
         String text = get_text();
         for (int i = 0; i < text.length(); i++) {
@@ -2042,7 +2042,7 @@ void LineEdit::update_cached_width() {
 }
 
 void LineEdit::update_placeholder_width() {
-    Ref<Font> font = get_font("font");
+    Ref<Font> font           = get_font("font");
     cached_placeholder_width = 0;
     if (font != nullptr) {
         for (int i = 0; i < placeholder_translated.length(); i++) {
@@ -2061,7 +2061,7 @@ void LineEdit::_clear_redo() {
     undo_stack_pos = undo_stack_pos->next();
     while (undo_stack_pos) {
         List<TextOperation>::Element* elem = undo_stack_pos;
-        undo_stack_pos = undo_stack_pos->next();
+        undo_stack_pos                     = undo_stack_pos->next();
         undo_stack.erase(elem);
     }
     _create_undo_state();
@@ -2075,9 +2075,9 @@ void LineEdit::_clear_undo_stack() {
 
 void LineEdit::_create_undo_state() {
     TextOperation op;
-    op.text = text;
-    op.cached_width = cached_width;
-    op.cursor_pos = cursor_pos;
+    op.text          = text;
+    op.cached_width  = cached_width;
+    op.cursor_pos    = cursor_pos;
     op.scroll_offset = scroll_offset;
     undo_stack.push_back(op);
 }
@@ -2440,22 +2440,22 @@ void LineEdit::_bind_methods() {
 }
 
 LineEdit::LineEdit() {
-    align = ALIGN_LEFT;
-    cached_width = 0;
-    cached_placeholder_width = 0;
-    cursor_pos = 0;
-    scroll_offset = 0;
-    window_has_focus = true;
-    max_length = 0;
-    pass = false;
-    secret_character = "*";
-    text_changed_dirty = false;
-    placeholder_alpha = 0.6;
-    clear_button_enabled = false;
-    clear_button_status.press_attempt = false;
+    align                               = ALIGN_LEFT;
+    cached_width                        = 0;
+    cached_placeholder_width            = 0;
+    cursor_pos                          = 0;
+    scroll_offset                       = 0;
+    window_has_focus                    = true;
+    max_length                          = 0;
+    pass                                = false;
+    secret_character                    = "*";
+    text_changed_dirty                  = false;
+    placeholder_alpha                   = 0.6;
+    clear_button_enabled                = false;
+    clear_button_status.press_attempt   = false;
     clear_button_status.pressing_inside = false;
-    shortcut_keys_enabled = true;
-    selecting_enabled = true;
+    shortcut_keys_enabled               = true;
+    selecting_enabled                   = true;
 
     undo_stack_pos = nullptr;
     _create_undo_state();
@@ -2465,16 +2465,16 @@ LineEdit::LineEdit() {
     set_default_cursor_shape(CURSOR_IBEAM);
     set_mouse_filter(MOUSE_FILTER_STOP);
 
-    draw_caret = true;
+    draw_caret          = true;
     caret_blink_enabled = false;
-    caret_blink_timer = memnew(Timer);
+    caret_blink_timer   = memnew(Timer);
     add_child(caret_blink_timer);
     caret_blink_timer->set_wait_time(0.65);
     caret_blink_timer->connect("timeout", this, "_toggle_draw_caret");
     cursor_set_blink_enabled(false);
 
     context_menu_enabled = true;
-    menu = memnew(PopupMenu);
+    menu                 = memnew(PopupMenu);
     add_child(menu);
     editable = false; // Initialise to opposite first, so we get past the
                       // early-out in set_editable.

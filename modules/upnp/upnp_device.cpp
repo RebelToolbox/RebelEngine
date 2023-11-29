@@ -289,12 +289,12 @@ void UPNPDevice::_bind_methods() {
 }
 
 UPNPDevice::UPNPDevice() {
-    description_url = "";
-    service_type = "";
-    igd_control_url = "";
+    description_url  = "";
+    service_type     = "";
+    igd_control_url  = "";
     igd_service_type = "";
-    igd_our_addr = "";
-    igd_status = IGD_STATUS_UNKNOWN_ERROR;
+    igd_our_addr     = "";
+    igd_status       = IGD_STATUS_UNKNOWN_ERROR;
 }
 
 UPNPDevice::~UPNPDevice() {}

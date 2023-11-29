@@ -74,7 +74,7 @@ public:
         String p_path,
         uint16_t p_port,
         bool p_ssl,
-        const Vector<String> p_protocol = Vector<String>(),
+        const Vector<String> p_protocol       = Vector<String>(),
         const Vector<String> p_custom_headers = Vector<String>()
     );
     Ref<WebSocketPeer> get_peer(int p_peer_id) const;

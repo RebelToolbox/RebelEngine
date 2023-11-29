@@ -60,30 +60,30 @@ static void plane_space(const Vector3& n, Vector3& p, Vector3& q) {
         // choose p in y-z plane
         real_t a = n[1] * n[1] + n[2] * n[2];
         real_t k = 1.0 / Math::sqrt(a);
-        p = Vector3(0, -n[2] * k, n[1] * k);
+        p        = Vector3(0, -n[2] * k, n[1] * k);
         // set q = n x p
-        q = Vector3(a * k, -n[0] * p[2], n[0] * p[1]);
+        q        = Vector3(a * k, -n[0] * p[2], n[0] * p[1]);
     } else {
         // choose p in x-y plane
         real_t a = n.x * n.x + n.y * n.y;
         real_t k = 1.0 / Math::sqrt(a);
-        p = Vector3(-n.y * k, n.x * k, 0);
+        p        = Vector3(-n.y * k, n.x * k, 0);
         // set q = n x p
-        q = Vector3(-n.z * p.y, n.z * p.x, a * k);
+        q        = Vector3(-n.z * p.y, n.z * p.x, a * k);
     }
 }
 
 static _FORCE_INLINE_ real_t atan2fast(real_t y, real_t x) {
     real_t coeff_1 = Math_PI / 4.0f;
     real_t coeff_2 = 3.0f * coeff_1;
-    real_t abs_y = Math::abs(y);
+    real_t abs_y   = Math::abs(y);
     real_t angle;
     if (x >= 0.0f) {
         real_t r = (x - abs_y) / (x + abs_y);
-        angle = coeff_1 - coeff_1 * r;
+        angle    = coeff_1 - coeff_1 * r;
     } else {
         real_t r = (x + abs_y) / (abs_y - x);
-        angle = coeff_2 - coeff_1 * r;
+        angle    = coeff_2 - coeff_1 * r;
     }
     return (y < 0.0f) ? -angle : angle;
 }
@@ -101,13 +101,13 @@ ConeTwistJointSW::ConeTwistJointSW(
     m_rbAFrame = rbAFrame;
     m_rbBFrame = rbBFrame;
 
-    m_swingSpan1 = Math_PI / 4.0;
-    m_swingSpan2 = Math_PI / 4.0;
-    m_twistSpan = Math_PI * 2;
-    m_biasFactor = 0.3f;
+    m_swingSpan1       = Math_PI / 4.0;
+    m_swingSpan2       = Math_PI / 4.0;
+    m_twistSpan        = Math_PI * 2;
+    m_biasFactor       = 0.3f;
     m_relaxationFactor = 1.0f;
 
-    m_angularOnly = false;
+    m_angularOnly     = false;
     m_solveTwistLimit = false;
     m_solveSwingLimit = false;
 
@@ -126,17 +126,17 @@ bool ConeTwistJointSW::setup(real_t p_timestep) {
     m_appliedImpulse = real_t(0.);
 
     // set bias, sign, clear accumulator
-    m_swingCorrection = real_t(0.);
-    m_twistLimitSign = real_t(0.);
-    m_solveTwistLimit = false;
-    m_solveSwingLimit = false;
+    m_swingCorrection      = real_t(0.);
+    m_twistLimitSign       = real_t(0.);
+    m_solveTwistLimit      = false;
+    m_solveSwingLimit      = false;
     m_accTwistLimitImpulse = real_t(0.);
     m_accSwingLimitImpulse = real_t(0.);
 
     if (!m_angularOnly) {
         Vector3 pivotAInW = A->get_transform().xform(m_rbAFrame.origin);
         Vector3 pivotBInW = B->get_transform().xform(m_rbBFrame.origin);
-        Vector3 relPos = pivotBInW - pivotAInW;
+        Vector3 relPos    = pivotBInW - pivotAInW;
 
         Vector3 normal[3];
         if (Math::is_zero_approx(relPos.length_squared())) {
@@ -186,11 +186,11 @@ bool ConeTwistJointSW::setup(real_t p_timestep) {
         b1Axis2 =
             A->get_transform().basis.xform(this->m_rbAFrame.basis.get_axis(1));
         // swing1  = btAtan2Fast( b2Axis1.dot(b1Axis2),b2Axis1.dot(b1Axis1) );
-        swx = b2Axis1.dot(b1Axis1);
-        swy = b2Axis1.dot(b1Axis2);
-        swing1 = atan2fast(swy, swx);
-        fact = (swy * swy + swx * swx) * thresh * thresh;
-        fact = fact / (fact + real_t(1.0));
+        swx     = b2Axis1.dot(b1Axis1);
+        swy     = b2Axis1.dot(b1Axis2);
+        swing1  = atan2fast(swy, swx);
+        fact    = (swy * swy + swx * swx) * thresh * thresh;
+        fact    = fact / (fact + real_t(1.0));
         swing1 *= fact;
     }
 
@@ -198,11 +198,11 @@ bool ConeTwistJointSW::setup(real_t p_timestep) {
         b1Axis3 =
             A->get_transform().basis.xform(this->m_rbAFrame.basis.get_axis(2));
         // swing2 = btAtan2Fast( b2Axis1.dot(b1Axis3),b2Axis1.dot(b1Axis1) );
-        swx = b2Axis1.dot(b1Axis1);
-        swy = b2Axis1.dot(b1Axis3);
-        swing2 = atan2fast(swy, swx);
-        fact = (swy * swy + swx * swx) * thresh * thresh;
-        fact = fact / (fact + real_t(1.0));
+        swx     = b2Axis1.dot(b1Axis1);
+        swy     = b2Axis1.dot(b1Axis3);
+        swing2  = atan2fast(swy, swx);
+        fact    = (swy * swy + swx * swx) * thresh * thresh;
+        fact    = fact / (fact + real_t(1.0));
         swing2 *= fact;
     }
 
@@ -221,8 +221,8 @@ bool ConeTwistJointSW::setup(real_t p_timestep) {
         );
         m_swingAxis.normalize();
 
-        real_t swingAxisSign = (b2Axis1.dot(b1Axis1) >= 0.0f) ? 1.0f : -1.0f;
-        m_swingAxis *= swingAxisSign;
+        real_t swingAxisSign  = (b2Axis1.dot(b1Axis1) >= 0.0f) ? 1.0f : -1.0f;
+        m_swingAxis          *= swingAxisSign;
 
         m_kSwing = real_t(1.)
                  / (A->compute_angular_impulse_denominator(m_swingAxis)
@@ -280,11 +280,11 @@ void ConeTwistJointSW::solve(real_t p_timestep) {
 
         Vector3 vel1 = A->get_velocity_in_local_point(rel_pos1);
         Vector3 vel2 = B->get_velocity_in_local_point(rel_pos2);
-        Vector3 vel = vel1 - vel2;
+        Vector3 vel  = vel1 - vel2;
 
         for (int i = 0; i < 3; i++) {
             const Vector3& normal = m_jac[i].m_linearJointAxis;
-            real_t jacDiagABInv = real_t(1.) / m_jac[i].getDiagonal();
+            real_t jacDiagABInv   = real_t(1.) / m_jac[i].getDiagonal();
 
             real_t rel_vel;
             rel_vel = normal.dot(vel);
@@ -294,8 +294,8 @@ void ConeTwistJointSW::solve(real_t p_timestep) {
                      .dot(normal); // this is the error projected on the normal
             real_t impulse = depth * tau / p_timestep * jacDiagABInv
                            - rel_vel * jacDiagABInv;
-            m_appliedImpulse += impulse;
-            Vector3 impulse_vector = normal * impulse;
+            m_appliedImpulse       += impulse;
+            Vector3 impulse_vector  = normal * impulse;
             A->apply_impulse(
                 pivotAInW - A->get_transform().origin,
                 impulse_vector

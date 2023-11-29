@@ -201,9 +201,9 @@ private:
     Vector<String> _compute_uncollapsed_paths();
     void _update_tree(
         const Vector<String>& p_uncollapsed_paths = Vector<String>(),
-        bool p_uncollapse_root = false,
-        bool p_select_in_favorites = false,
-        bool p_unfold_path = false
+        bool p_uncollapse_root                    = false,
+        bool p_select_in_favorites                = false,
+        bool p_unfold_path                        = false
     );
     void _navigate_to_path(
         const String& p_path,

@@ -37,9 +37,9 @@
 PhysicsServer* PhysicsServer::singleton = nullptr;
 
 void PhysicsDirectBodyState::integrate_forces() {
-    real_t step = get_step();
-    Vector3 lv = get_linear_velocity();
-    lv += get_total_gravity() * step;
+    real_t step  = get_step();
+    Vector3 lv   = get_linear_velocity();
+    lv          += get_total_gravity() * step;
 
     Vector3 av = get_angular_velocity();
 
@@ -65,7 +65,7 @@ void PhysicsDirectBodyState::integrate_forces() {
 Object* PhysicsDirectBodyState::get_contact_collider_object(int p_contact_idx
 ) const {
     ObjectID objid = get_contact_collider_id(p_contact_idx);
-    Object* obj = ObjectDB::get_instance(objid);
+    Object* obj    = ObjectDB::get_instance(objid);
     return obj;
 }
 
@@ -485,10 +485,10 @@ void PhysicsShapeQueryParameters::_bind_methods() {
 }
 
 PhysicsShapeQueryParameters::PhysicsShapeQueryParameters() {
-    margin = 0;
-    collision_mask = 0x7FFFFFFF;
+    margin              = 0;
+    collision_mask      = 0x7FFFFFFF;
     collide_with_bodies = true;
-    collide_with_areas = false;
+    collide_with_areas  = false;
 }
 
 /////////////////////////////////////
@@ -522,12 +522,12 @@ Dictionary PhysicsDirectSpaceState::_intersect_ray(
     }
 
     Dictionary d;
-    d["position"] = inters.position;
-    d["normal"] = inters.normal;
+    d["position"]    = inters.position;
+    d["normal"]      = inters.normal;
     d["collider_id"] = inters.collider_id;
-    d["collider"] = inters.collider;
-    d["shape"] = inters.shape;
-    d["rid"] = inters.rid;
+    d["collider"]    = inters.collider;
+    d["shape"]       = inters.shape;
+    d["rid"]         = inters.rid;
 
     return d;
 }
@@ -566,11 +566,11 @@ Array PhysicsDirectSpaceState::_intersect_point(
     r.resize(rc);
     for (int i = 0; i < rc; i++) {
         Dictionary d;
-        d["rid"] = ret[i].rid;
+        d["rid"]         = ret[i].rid;
         d["collider_id"] = ret[i].collider_id;
-        d["collider"] = ret[i].collider;
-        d["shape"] = ret[i].shape;
-        r[i] = d;
+        d["collider"]    = ret[i].collider;
+        d["shape"]       = ret[i].shape;
+        r[i]             = d;
     }
     return r;
 }
@@ -598,11 +598,11 @@ Array PhysicsDirectSpaceState::_intersect_shape(
     ret.resize(rc);
     for (int i = 0; i < rc; i++) {
         Dictionary d;
-        d["rid"] = sr[i].rid;
+        d["rid"]         = sr[i].rid;
         d["collider_id"] = sr[i].collider_id;
-        d["collider"] = sr[i].collider;
-        d["shape"] = sr[i].shape;
-        ret[i] = d;
+        d["collider"]    = sr[i].collider;
+        d["shape"]       = sr[i].shape;
+        ret[i]           = d;
     }
 
     return ret;
@@ -645,7 +645,7 @@ Array PhysicsDirectSpaceState::_collide_shape(
 
     Vector<Vector3> ret;
     ret.resize(p_max_results * 2);
-    int rc = 0;
+    int rc   = 0;
     bool res = collide_shape(
         p_shape_query->shape,
         p_shape_query->transform,
@@ -691,11 +691,11 @@ Dictionary PhysicsDirectSpaceState::_get_rest_info(
         return r;
     }
 
-    r["point"] = sri.point;
-    r["normal"] = sri.normal;
-    r["rid"] = sri.rid;
-    r["collider_id"] = sri.collider_id;
-    r["shape"] = sri.shape;
+    r["point"]           = sri.point;
+    r["normal"]          = sri.normal;
+    r["rid"]             = sri.rid;
+    r["collider_id"]     = sri.collider_id;
+    r["shape"]           = sri.shape;
     r["linear_velocity"] = sri.linear_velocity;
 
     return r;
@@ -1682,7 +1682,7 @@ PhysicsServer::~PhysicsServer() {
 }
 
 Vector<PhysicsServerManager::ClassInfo> PhysicsServerManager::physics_servers;
-int PhysicsServerManager::default_server_id = -1;
+int PhysicsServerManager::default_server_id       = -1;
 int PhysicsServerManager::default_server_priority = -1;
 const String PhysicsServerManager::setting_property_name(
     "physics/3d/physics_engine"
@@ -1721,7 +1721,7 @@ void PhysicsServerManager::set_default_server(
     const int id = find_server_id(p_name);
     ERR_FAIL_COND(id == -1); // Not found
     if (default_server_priority < p_priority) {
-        default_server_id = id;
+        default_server_id       = id;
         default_server_priority = p_priority;
     }
 }

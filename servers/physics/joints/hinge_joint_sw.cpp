@@ -58,16 +58,16 @@ static void plane_space(const Vector3& n, Vector3& p, Vector3& q) {
         // choose p in y-z plane
         real_t a = n[1] * n[1] + n[2] * n[2];
         real_t k = 1.0 / Math::sqrt(a);
-        p = Vector3(0, -n[2] * k, n[1] * k);
+        p        = Vector3(0, -n[2] * k, n[1] * k);
         // set q = n x p
-        q = Vector3(a * k, -n[0] * p[2], n[0] * p[1]);
+        q        = Vector3(a * k, -n[0] * p[2], n[0] * p[1]);
     } else {
         // choose p in x-y plane
         real_t a = n.x * n.x + n.y * n.y;
         real_t k = 1.0 / Math::sqrt(a);
-        p = Vector3(-n.y * k, n.x * k, 0);
+        p        = Vector3(-n.y * k, n.x * k, 0);
         // set q = n x p
-        q = Vector3(-n.z * p.y, n.z * p.x, a * k);
+        q        = Vector3(-n.z * p.y, n.z * p.x, a * k);
     }
 }
 
@@ -81,8 +81,8 @@ HingeJointSW::HingeJointSW(
     A = rbA;
     B = rbB;
 
-    m_rbAFrame = frameA;
-    m_rbBFrame = frameB;
+    m_rbAFrame              = frameA;
+    m_rbBFrame              = frameB;
     // flip axis
     m_rbBFrame.basis[0][2] *= real_t(-1.);
     m_rbBFrame.basis[1][2] *= real_t(-1.);
@@ -92,15 +92,15 @@ HingeJointSW::HingeJointSW(
     m_lowerLimit = Math_PI;
     m_upperLimit = -Math_PI;
 
-    m_useLimit = false;
-    m_biasFactor = 0.3f;
+    m_useLimit         = false;
+    m_biasFactor       = 0.3f;
     m_relaxationFactor = 1.0f;
-    m_limitSoftness = 0.9f;
-    m_solveLimit = false;
+    m_limitSoftness    = 0.9f;
+    m_solveLimit       = false;
 
     tau = 0.3;
 
-    m_angularOnly = false;
+    m_angularOnly        = false;
     m_enableAngularMotor = false;
 
     A->add_constraint(this, 0);
@@ -155,7 +155,7 @@ HingeJointSW::HingeJointSW(
     Vector3 rbAxisB2 = axisInB.cross(rbAxisB1);
 
     m_rbBFrame.origin = pivotInB;
-    m_rbBFrame.basis = Basis(
+    m_rbBFrame.basis  = Basis(
         rbAxisB1.x,
         rbAxisB2.x,
         -axisInB.x,
@@ -171,15 +171,15 @@ HingeJointSW::HingeJointSW(
     m_lowerLimit = Math_PI;
     m_upperLimit = -Math_PI;
 
-    m_useLimit = false;
-    m_biasFactor = 0.3f;
+    m_useLimit         = false;
+    m_biasFactor       = 0.3f;
     m_relaxationFactor = 1.0f;
-    m_limitSoftness = 0.9f;
-    m_solveLimit = false;
+    m_limitSoftness    = 0.9f;
+    m_solveLimit       = false;
 
     tau = 0.3;
 
-    m_angularOnly = false;
+    m_angularOnly        = false;
     m_enableAngularMotor = false;
 
     A->add_constraint(this, 0);
@@ -197,7 +197,7 @@ bool HingeJointSW::setup(real_t p_step) {
     if (!m_angularOnly) {
         Vector3 pivotAInW = A->get_transform().xform(m_rbAFrame.origin);
         Vector3 pivotBInW = B->get_transform().xform(m_rbBFrame.origin);
-        Vector3 relPos = pivotBInW - pivotAInW;
+        Vector3 relPos    = pivotBInW - pivotAInW;
 
         Vector3 normal[3];
         if (Math::is_zero_approx(relPos.length_squared())) {
@@ -279,9 +279,9 @@ bool HingeJointSW::setup(real_t p_step) {
     real_t hingeAngle = get_hinge_angle();
 
     // set bias, sign, clear accumulator
-    m_correction = real_t(0.);
-    m_limitSign = real_t(0.);
-    m_solveLimit = false;
+    m_correction      = real_t(0.);
+    m_limitSign       = real_t(0.);
+    m_solveLimit      = false;
     m_accLimitImpulse = real_t(0.);
 
     // if (m_lowerLimit < m_upperLimit)
@@ -289,13 +289,13 @@ bool HingeJointSW::setup(real_t p_step) {
         // if (hingeAngle <= m_lowerLimit*m_limitSoftness)
         if (hingeAngle <= m_lowerLimit) {
             m_correction = (m_lowerLimit - hingeAngle);
-            m_limitSign = 1.0f;
+            m_limitSign  = 1.0f;
             m_solveLimit = true;
         }
         // else if (hingeAngle >= m_upperLimit*m_limitSoftness)
         else if (hingeAngle >= m_upperLimit) {
             m_correction = m_upperLimit - hingeAngle;
-            m_limitSign = -1.0f;
+            m_limitSign  = -1.0f;
             m_solveLimit = true;
         }
     }
@@ -323,11 +323,11 @@ void HingeJointSW::solve(real_t p_step) {
 
         Vector3 vel1 = A->get_velocity_in_local_point(rel_pos1);
         Vector3 vel2 = B->get_velocity_in_local_point(rel_pos2);
-        Vector3 vel = vel1 - vel2;
+        Vector3 vel  = vel1 - vel2;
 
         for (int i = 0; i < 3; i++) {
             const Vector3& normal = m_jac[i].m_linearJointAxis;
-            real_t jacDiagABInv = real_t(1.) / m_jac[i].getDiagonal();
+            real_t jacDiagABInv   = real_t(1.) / m_jac[i].getDiagonal();
 
             real_t rel_vel;
             rel_vel = normal.dot(vel);
@@ -337,8 +337,8 @@ void HingeJointSW::solve(real_t p_step) {
                      .dot(normal); // this is the error projected on the normal
             real_t impulse =
                 depth * tau / p_step * jacDiagABInv - rel_vel * jacDiagABInv;
-            m_appliedImpulse += impulse;
-            Vector3 impulse_vector = normal * impulse;
+            m_appliedImpulse       += impulse;
+            Vector3 impulse_vector  = normal * impulse;
             A->apply_impulse(
                 pivotAInW - A->get_transform().origin,
                 impulse_vector
@@ -365,16 +365,16 @@ void HingeJointSW::solve(real_t p_step) {
         Vector3 angVelAroundHingeAxisA = axisA * axisA.dot(angVelA);
         Vector3 angVelAroundHingeAxisB = axisB * axisB.dot(angVelB);
 
-        Vector3 angAorthog = angVelA - angVelAroundHingeAxisA;
-        Vector3 angBorthog = angVelB - angVelAroundHingeAxisB;
+        Vector3 angAorthog   = angVelA - angVelAroundHingeAxisA;
+        Vector3 angBorthog   = angVelB - angVelAroundHingeAxisB;
         Vector3 velrelOrthog = angAorthog - angBorthog;
         {
             // solve orthogonal angular velocity correction
             real_t relaxation = real_t(1.);
-            real_t len = velrelOrthog.length();
+            real_t len        = velrelOrthog.length();
             if (len > real_t(0.00001)) {
                 Vector3 normal = velrelOrthog.normalized();
-                real_t denom = A->compute_angular_impulse_denominator(normal)
+                real_t denom   = A->compute_angular_impulse_denominator(normal)
                              + B->compute_angular_impulse_denominator(normal);
                 // scale for mass and relaxation
                 velrelOrthog *= (real_t(1.) / denom) * m_relaxationFactor;
@@ -382,7 +382,7 @@ void HingeJointSW::solve(real_t p_step) {
 
             // solve angular positional correction
             Vector3 angularError = -axisA.cross(axisB) * (real_t(1.) / p_step);
-            real_t len2 = angularError.length();
+            real_t len2          = angularError.length();
             if (len2 > real_t(0.00001)) {
                 Vector3 normal2 = angularError.normalized();
                 real_t denom2 = A->compute_angular_impulse_denominator(normal2)
@@ -419,11 +419,11 @@ void HingeJointSW::solve(real_t p_step) {
             // todo: add limits too
             Vector3 angularLimit(0, 0, 0);
 
-            Vector3 velrel = angVelAroundHingeAxisA - angVelAroundHingeAxisB;
+            Vector3 velrel    = angVelAroundHingeAxisA - angVelAroundHingeAxisB;
             real_t projRelVel = velrel.dot(axisA);
 
             real_t desiredMotorVel = m_motorTargetVelocity;
-            real_t motor_relvel = desiredMotorVel - projRelVel;
+            real_t motor_relvel    = desiredMotorVel - projRelVel;
 
             real_t unclippedMotorImpulse = m_kHinge * motor_relvel;
             // todo: should clip against accumulated impulse
@@ -434,7 +434,7 @@ void HingeJointSW::solve(real_t p_step) {
             clippedMotorImpulse = clippedMotorImpulse < -m_maxMotorImpulse
                                     ? -m_maxMotorImpulse
                                     : clippedMotorImpulse;
-            Vector3 motorImp = clippedMotorImpulse * axisA;
+            Vector3 motorImp    = clippedMotorImpulse * axisA;
 
             A->apply_torque_impulse(motorImp + angularLimit);
             B->apply_torque_impulse(-motorImp - angularLimit);
@@ -453,14 +453,14 @@ void	HingeJointSW::updateRHS(real_t	timeStep)
 static _FORCE_INLINE_ real_t atan2fast(real_t y, real_t x) {
     real_t coeff_1 = Math_PI / 4.0f;
     real_t coeff_2 = 3.0f * coeff_1;
-    real_t abs_y = Math::abs(y);
+    real_t abs_y   = Math::abs(y);
     real_t angle;
     if (x >= 0.0f) {
         real_t r = (x - abs_y) / (x + abs_y);
-        angle = coeff_1 - coeff_1 * r;
+        angle    = coeff_1 - coeff_1 * r;
     } else {
         real_t r = (x + abs_y) / (abs_y - x);
-        angle = coeff_2 - coeff_1 * r;
+        angle    = coeff_2 - coeff_1 * r;
     }
     return (y < 0.0f) ? -angle : angle;
 }

@@ -46,7 +46,7 @@ class MessageQueue {
         TYPE_NOTIFICATION,
         TYPE_SET,
         FLAG_SHOW_ERROR = 1 << 14,
-        FLAG_MASK = FLAG_SHOW_ERROR - 1
+        FLAG_MASK       = FLAG_SHOW_ERROR - 1
     };
 
     struct Message {

@@ -31,7 +31,7 @@
 #include "triangulate.h"
 
 real_t Triangulate::get_area(const Vector<Vector2>& contour) {
-    int n = contour.size();
+    int n            = contour.size();
     const Vector2* c = &contour[0];
 
     real_t A = 0.0;
@@ -60,12 +60,12 @@ bool Triangulate::is_inside_triangle(
     real_t ax, ay, bx, by, cx, cy, apx, apy, bpx, bpy, cpx, cpy;
     real_t cCROSSap, bCROSScp, aCROSSbp;
 
-    ax = Cx - Bx;
-    ay = Cy - By;
-    bx = Ax - Cx;
-    by = Ay - Cy;
-    cx = Bx - Ax;
-    cy = By - Ay;
+    ax  = Cx - Bx;
+    ay  = Cy - By;
+    bx  = Ax - Cx;
+    by  = Ay - Cy;
+    cx  = Bx - Ax;
+    cy  = By - Ay;
     apx = Px - Ax;
     apy = Py - Ay;
     bpx = Px - Bx;
@@ -178,7 +178,7 @@ bool Triangulate::triangulate(
                 // round.
                 // Only relaxing the constraints as a last resort avoids
                 // degenerate triangles when they aren't necessary.
-                count = 2 * nv;
+                count   = 2 * nv;
                 relaxed = true;
             }
         }

@@ -52,12 +52,12 @@ public:
         TYPE_NONE = 0,
         TYPE_IPV4 = 1,
         TYPE_IPV6 = 2,
-        TYPE_ANY = 3,
+        TYPE_ANY  = 3,
     };
 
     enum {
         RESOLVER_MAX_QUERIES = 32,
-        RESOLVER_INVALID_ID = -1
+        RESOLVER_INVALID_ID  = -1
     };
 
     typedef int ResolverID;

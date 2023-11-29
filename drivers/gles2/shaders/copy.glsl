@@ -48,7 +48,7 @@ void main() {
     uv_interp = uv_in;
 #endif
 
-    uv2_interp = uv2_in;
+    uv2_interp  = uv2_in;
     gl_Position = vertex_attrib;
 
 #ifdef USE_COPY_SECTION
@@ -133,9 +133,9 @@ void main() {
 #ifdef USE_PANORAMA
 
     vec3 cube_normal = normalize(cube_interp);
-    cube_normal.z = -cube_normal.z;
-    cube_normal = mat3(sky_transform) * cube_normal;
-    cube_normal.z = -cube_normal.z;
+    cube_normal.z    = -cube_normal.z;
+    cube_normal      = mat3(sky_transform) * cube_normal;
+    cube_normal.z    = -cube_normal.z;
 
     vec4 color = texturePanorama(source, cube_normal);
 
@@ -154,7 +154,7 @@ void main() {
         (cube_normal.z * (-uv_interp.x - asym_proj.x)) / asym_proj.y;
     cube_normal.y =
         (cube_normal.z * (-uv_interp.y - asym_proj.z)) / asym_proj.a;
-    cube_normal = mat3(sky_transform) * mat3(pano_transform) * cube_normal;
+    cube_normal   = mat3(sky_transform) * mat3(pano_transform) * cube_normal;
     cube_normal.z = -cube_normal.z;
 
     vec4 color = texturePanorama(source, normalize(cube_normal.xyz));
@@ -163,9 +163,9 @@ void main() {
     vec4 color = textureCube(source_cube, normalize(cube_interp));
 #elif defined(SEP_CBCR_TEXTURE)
     vec4 color;
-    color.r = texture2D(source, uv_interp).r;
+    color.r  = texture2D(source, uv_interp).r;
     color.gb = texture2D(CbCr, uv_interp).rg - vec2(0.5, 0.5);
-    color.a = 1.0;
+    color.a  = 1.0;
 #else
     vec4 color = texture2D(source, uv_interp);
 #endif

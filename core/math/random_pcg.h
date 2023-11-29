@@ -69,7 +69,7 @@ class RandomPCG {
 
 public:
     static const uint64_t DEFAULT_SEED = 12047754176567800795U;
-    static const uint64_t DEFAULT_INC = PCG_DEFAULT_INC_64;
+    static const uint64_t DEFAULT_INC  = PCG_DEFAULT_INC_64;
 
     RandomPCG(uint64_t p_seed = DEFAULT_SEED, uint64_t p_inc = DEFAULT_INC);
 

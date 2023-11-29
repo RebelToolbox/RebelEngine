@@ -53,7 +53,7 @@ class ShapeSW;
 
 class ShapeOwnerSW : public RID_Data {
 public:
-    virtual void _shape_changed() = 0;
+    virtual void _shape_changed()               = 0;
     virtual void remove_shape(ShapeSW* p_shape) = 0;
 
     virtual ~ShapeOwnerSW() {}
@@ -117,19 +117,19 @@ public:
         Vector3* r_supports,
         int& r_amount,
         FeatureType& r_type
-    ) const = 0;
+    ) const                                                            = 0;
     virtual Vector3 get_closest_point_to(const Vector3& p_point) const = 0;
     virtual bool intersect_segment(
         const Vector3& p_begin,
         const Vector3& p_end,
         Vector3& r_point,
         Vector3& r_normal
-    ) const = 0;
+    ) const                                                    = 0;
     virtual bool intersect_point(const Vector3& p_point) const = 0;
     virtual Vector3 get_moment_of_inertia(real_t p_mass) const = 0;
 
     virtual void set_data(const Variant& p_data) = 0;
-    virtual Variant get_data() const = 0;
+    virtual Variant get_data() const             = 0;
 
     _FORCE_INLINE_ void set_custom_bias(real_t p_bias) {
         custom_bias = p_bias;
@@ -779,8 +779,8 @@ struct MotionShapeSW : public ShapeSW {
         Vector3 cast = p_transform.basis.xform(motion);
         real_t mina, maxa;
         real_t minb, maxb;
-        Transform ofsb = p_transform;
-        ofsb.origin += cast;
+        Transform ofsb  = p_transform;
+        ofsb.origin    += cast;
         shape->project_range(p_normal, p_transform, mina, maxa);
         shape->project_range(p_normal, ofsb, minb, maxb);
         r_min = MIN(mina, minb);

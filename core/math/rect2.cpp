@@ -42,14 +42,14 @@ bool Rect2::intersects_segment(
     Point2* r_normal
 ) const {
     real_t min = 0, max = 1;
-    int axis = 0;
+    int axis    = 0;
     real_t sign = 0;
 
     for (int i = 0; i < 2; i++) {
-        real_t seg_from = p_from[i];
-        real_t seg_to = p_to[i];
+        real_t seg_from  = p_from[i];
+        real_t seg_to    = p_to[i];
         real_t box_begin = position[i];
-        real_t box_end = box_begin + size[i];
+        real_t box_end   = box_begin + size[i];
         real_t cmin, cmax;
         real_t csign;
 
@@ -60,7 +60,7 @@ bool Rect2::intersects_segment(
             real_t length = seg_to - seg_from;
             cmin =
                 (seg_from < box_begin) ? ((box_begin - seg_from) / length) : 0;
-            cmax = (seg_to > box_end) ? ((box_end - seg_from) / length) : 1;
+            cmax  = (seg_to > box_end) ? ((box_end - seg_from) / length) : 1;
             csign = -1.0;
 
         } else {
@@ -68,13 +68,13 @@ bool Rect2::intersects_segment(
                 return false;
             }
             real_t length = seg_to - seg_from;
-            cmin = (seg_from > box_end) ? (box_end - seg_from) / length : 0;
-            cmax = (seg_to < box_begin) ? (box_begin - seg_from) / length : 1;
+            cmin  = (seg_from > box_end) ? (box_end - seg_from) / length : 0;
+            cmax  = (seg_to < box_begin) ? (box_begin - seg_from) / length : 1;
             csign = 1.0;
         }
 
         if (cmin > min) {
-            min = cmin;
+            min  = cmin;
             axis = i;
             sign = csign;
         }
@@ -91,7 +91,7 @@ bool Rect2::intersects_segment(
     if (r_normal) {
         Vector2 normal;
         normal[axis] = sign;
-        *r_normal = normal;
+        *r_normal    = normal;
     }
 
     if (r_pos) {
@@ -208,29 +208,29 @@ next4:
     real_t mina = maxa;
 
     real_t dp = p_xform.elements[0].dot(xf_points2[1]);
+    maxa      = MAX(dp, maxa);
+    mina      = MIN(dp, mina);
+
+    dp   = p_xform.elements[0].dot(xf_points2[2]);
     maxa = MAX(dp, maxa);
     mina = MIN(dp, mina);
 
-    dp = p_xform.elements[0].dot(xf_points2[2]);
-    maxa = MAX(dp, maxa);
-    mina = MIN(dp, mina);
-
-    dp = p_xform.elements[0].dot(xf_points2[3]);
+    dp   = p_xform.elements[0].dot(xf_points2[3]);
     maxa = MAX(dp, maxa);
     mina = MIN(dp, mina);
 
     real_t maxb = p_xform.elements[0].dot(xf_points[0]);
     real_t minb = maxb;
 
-    dp = p_xform.elements[0].dot(xf_points[1]);
+    dp   = p_xform.elements[0].dot(xf_points[1]);
     maxb = MAX(dp, maxb);
     minb = MIN(dp, minb);
 
-    dp = p_xform.elements[0].dot(xf_points[2]);
+    dp   = p_xform.elements[0].dot(xf_points[2]);
     maxb = MAX(dp, maxb);
     minb = MIN(dp, minb);
 
-    dp = p_xform.elements[0].dot(xf_points[3]);
+    dp   = p_xform.elements[0].dot(xf_points[3]);
     maxb = MAX(dp, maxb);
     minb = MIN(dp, minb);
 
@@ -244,30 +244,30 @@ next4:
     maxa = p_xform.elements[1].dot(xf_points2[0]);
     mina = maxa;
 
-    dp = p_xform.elements[1].dot(xf_points2[1]);
+    dp   = p_xform.elements[1].dot(xf_points2[1]);
     maxa = MAX(dp, maxa);
     mina = MIN(dp, mina);
 
-    dp = p_xform.elements[1].dot(xf_points2[2]);
+    dp   = p_xform.elements[1].dot(xf_points2[2]);
     maxa = MAX(dp, maxa);
     mina = MIN(dp, mina);
 
-    dp = p_xform.elements[1].dot(xf_points2[3]);
+    dp   = p_xform.elements[1].dot(xf_points2[3]);
     maxa = MAX(dp, maxa);
     mina = MIN(dp, mina);
 
     maxb = p_xform.elements[1].dot(xf_points[0]);
     minb = maxb;
 
-    dp = p_xform.elements[1].dot(xf_points[1]);
+    dp   = p_xform.elements[1].dot(xf_points[1]);
     maxb = MAX(dp, maxb);
     minb = MIN(dp, minb);
 
-    dp = p_xform.elements[1].dot(xf_points[2]);
+    dp   = p_xform.elements[1].dot(xf_points[2]);
     maxb = MAX(dp, maxb);
     minb = MIN(dp, minb);
 
-    dp = p_xform.elements[1].dot(xf_points[3]);
+    dp   = p_xform.elements[1].dot(xf_points[3]);
     maxb = MAX(dp, maxb);
     minb = MIN(dp, minb);
 

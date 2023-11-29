@@ -51,19 +51,19 @@ Error FileAccessEncrypted::open_and_parse(
     );
     ERR_FAIL_COND_V(p_key.size() != 32, ERR_INVALID_PARAMETER);
 
-    pos = 0;
+    pos   = 0;
     eofed = false;
 
     if (p_mode == MODE_WRITE_AES256) {
         data.clear();
         writing = true;
-        file = p_base;
-        mode = p_mode;
-        key = p_key;
+        file    = p_base;
+        mode    = p_mode;
+        key     = p_key;
 
     } else if (p_mode == MODE_READ) {
-        writing = false;
-        key = p_key;
+        writing        = false;
+        key            = p_key;
         uint32_t magic = p_base->get_32();
         ERR_FAIL_COND_V(magic != COMP_MAGIC, ERR_FILE_UNRECOGNIZED);
 
@@ -74,7 +74,7 @@ Error FileAccessEncrypted::open_and_parse(
         unsigned char md5d[16];
         p_base->get_buffer(md5d, 16);
         length = p_base->get_64();
-        base = p_base->get_position();
+        base   = p_base->get_position();
         ERR_FAIL_COND_V(p_base->get_len() < base + length, ERR_FILE_CORRUPT);
         uint64_t ds = length;
         if (ds % 16) {
@@ -210,7 +210,7 @@ void FileAccessEncrypted::seek(uint64_t p_position) {
         p_position = get_len();
     }
 
-    pos = p_position;
+    pos   = p_position;
     eofed = false;
 }
 
@@ -329,10 +329,10 @@ Error FileAccessEncrypted::_set_unix_permissions(
 }
 
 FileAccessEncrypted::FileAccessEncrypted() {
-    file = nullptr;
-    pos = 0;
-    eofed = false;
-    mode = MODE_MAX;
+    file    = nullptr;
+    pos     = 0;
+    eofed   = false;
+    mode    = MODE_MAX;
     writing = false;
 }
 

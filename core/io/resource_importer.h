@@ -70,7 +70,7 @@ public:
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
     virtual void get_recognized_extensions_for_type(
@@ -138,12 +138,12 @@ protected:
     static void _bind_methods();
 
 public:
-    virtual String get_importer_name() const = 0;
-    virtual String get_visible_name() const = 0;
+    virtual String get_importer_name() const  = 0;
+    virtual String get_visible_name() const   = 0;
     virtual void get_recognized_extensions(List<String>* p_extensions
-    ) const = 0;
+    ) const                                   = 0;
     virtual String get_save_extension() const = 0;
-    virtual String get_resource_type() const = 0;
+    virtual String get_resource_type() const  = 0;
 
     virtual float get_priority() const {
         return 1.0;
@@ -166,7 +166,7 @@ public:
 
     enum ImportOrder {
         IMPORT_ORDER_DEFAULT = 0,
-        IMPORT_ORDER_SCENE = 100,
+        IMPORT_ORDER_SCENE   = 100,
     };
 
     virtual int get_preset_count() const {
@@ -196,7 +196,7 @@ public:
         const Map<StringName, Variant>& p_options,
         List<String>* r_platform_variants,
         List<String>* r_gen_files = nullptr,
-        Variant* r_metadata = nullptr
+        Variant* r_metadata       = nullptr
     ) = 0;
 
     virtual Error import_group_file(

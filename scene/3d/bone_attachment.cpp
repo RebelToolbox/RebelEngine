@@ -43,10 +43,10 @@ void BoneAttachment::_validate_property(PropertyInfo& property) const {
                 names += parent->get_bone_name(i);
             }
 
-            property.hint = PROPERTY_HINT_ENUM;
+            property.hint        = PROPERTY_HINT_ENUM;
             property.hint_string = names;
         } else {
-            property.hint = PROPERTY_HINT_NONE;
+            property.hint        = PROPERTY_HINT_NONE;
             property.hint_string = "";
         }
     }

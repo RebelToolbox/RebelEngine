@@ -40,12 +40,12 @@ RES ResourceFormatDummyTexture::load(
     const String& p_original_path,
     Error* r_error
 ) {
-    unsigned int width = 8;
+    unsigned int width  = 8;
     unsigned int height = 8;
 
     // We just use some format
     Image::Format fmt = Image::FORMAT_RGB8;
-    int rowsize = 3 * width;
+    int rowsize       = 3 * width;
 
     PoolVector<uint8_t> dstbuff;
 

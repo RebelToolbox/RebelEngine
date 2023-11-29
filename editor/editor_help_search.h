@@ -42,13 +42,13 @@ class EditorHelpSearch : public ConfirmationDialog {
     GDCLASS(EditorHelpSearch, ConfirmationDialog);
 
     enum SearchFlags {
-        SEARCH_CLASSES = 1 << 0,
-        SEARCH_METHODS = 1 << 1,
-        SEARCH_SIGNALS = 1 << 2,
-        SEARCH_CONSTANTS = 1 << 3,
-        SEARCH_PROPERTIES = 1 << 4,
+        SEARCH_CLASSES     = 1 << 0,
+        SEARCH_METHODS     = 1 << 1,
+        SEARCH_SIGNALS     = 1 << 2,
+        SEARCH_CONSTANTS   = 1 << 3,
+        SEARCH_PROPERTIES  = 1 << 4,
         SEARCH_THEME_ITEMS = 1 << 5,
-        SEARCH_ALL = SEARCH_CLASSES | SEARCH_METHODS | SEARCH_SIGNALS
+        SEARCH_ALL         = SEARCH_CLASSES | SEARCH_METHODS | SEARCH_SIGNALS
                    | SEARCH_CONSTANTS | SEARCH_PROPERTIES | SEARCH_THEME_ITEMS,
         SEARCH_CASE_SENSITIVE = 1 << 29,
         SEARCH_SHOW_HIERARCHY = 1 << 30

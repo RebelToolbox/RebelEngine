@@ -95,7 +95,7 @@ void Polygon3DEditor::_wip_close() {
     undo_redo->add_undo_method(this, "_polygon_draw");
     wip.clear();
     wip_active = false;
-    mode = MODE_EDIT;
+    mode       = MODE_EDIT;
     button_edit->set_pressed(true);
     button_create->set_pressed(false);
     edited_point = -1;
@@ -112,16 +112,16 @@ bool Polygon3DEditor::forward_spatial_gui_input(
 
     Transform gt = node->get_global_transform();
     Transform gi = gt.affine_inverse();
-    float depth = _get_depth() * 0.5;
-    Vector3 n = gt.basis.get_axis(2).normalized();
+    float depth  = _get_depth() * 0.5;
+    Vector3 n    = gt.basis.get_axis(2).normalized();
     Plane p(gt.origin + n * depth, n);
 
     Ref<InputEventMouseButton> mb = p_event;
 
     if (mb.is_valid()) {
-        Vector2 gpoint = mb->get_position();
+        Vector2 gpoint   = mb->get_position();
         Vector3 ray_from = p_camera->project_ray_origin(gpoint);
-        Vector3 ray_dir = p_camera->project_ray_normal(gpoint);
+        Vector3 ray_dir  = p_camera->project_ray_normal(gpoint);
 
         Vector3 spoint;
 
@@ -149,9 +149,9 @@ bool Polygon3DEditor::forward_spatial_gui_input(
                     if (!wip_active) {
                         wip.clear();
                         wip.push_back(cpoint);
-                        wip_active = true;
+                        wip_active       = true;
                         edited_point_pos = cpoint;
-                        snap_ignore = false;
+                        snap_ignore      = false;
                         _polygon_draw();
                         edited_point = 1;
                         return true;
@@ -170,7 +170,7 @@ bool Polygon3DEditor::forward_spatial_gui_input(
                         } else {
                             wip.push_back(cpoint);
                             edited_point = wip.size();
-                            snap_ignore = false;
+                            snap_ignore  = false;
                             _polygon_draw();
                             return true;
                         }
@@ -237,15 +237,15 @@ bool Polygon3DEditor::forward_spatial_gui_input(
                                 real_t d = cp.distance_to(gpoint);
                                 if (d < closest_dist && d < grab_threshold) {
                                     closest_dist = d;
-                                    closest_pos = cp;
-                                    closest_idx = i;
+                                    closest_pos  = cp;
+                                    closest_idx  = i;
                                 }
                             }
 
                             if (closest_idx >= 0) {
                                 pre_move_edit = poly;
                                 poly.insert(closest_idx + 1, cpoint);
-                                edited_point = closest_idx + 1;
+                                edited_point     = closest_idx + 1;
                                 edited_point_pos = cpoint;
                                 node->call("set_polygon", poly);
                                 _polygon_draw();
@@ -268,14 +268,14 @@ bool Polygon3DEditor::forward_spatial_gui_input(
                                 real_t d = cp.distance_to(gpoint);
                                 if (d < closest_dist && d < grab_threshold) {
                                     closest_dist = d;
-                                    closest_pos = cp;
-                                    closest_idx = i;
+                                    closest_pos  = cp;
+                                    closest_idx  = i;
                                 }
                             }
 
                             if (closest_idx >= 0) {
-                                pre_move_edit = poly;
-                                edited_point = closest_idx;
+                                pre_move_edit    = poly;
+                                edited_point     = closest_idx;
                                 edited_point_pos = poly[closest_idx];
                                 _polygon_draw();
                                 snap_ignore = false;
@@ -319,8 +319,8 @@ bool Polygon3DEditor::forward_spatial_gui_input(
                         real_t d = cp.distance_to(gpoint);
                         if (d < closest_dist && d < grab_threshold) {
                             closest_dist = d;
-                            closest_pos = cp;
-                            closest_idx = i;
+                            closest_pos  = cp;
+                            closest_idx  = i;
                         }
                     }
 
@@ -349,7 +349,7 @@ bool Polygon3DEditor::forward_spatial_gui_input(
             Vector2 gpoint = mm->get_position();
 
             Vector3 ray_from = p_camera->project_ray_origin(gpoint);
-            Vector3 ray_dir = p_camera->project_ray_normal(gpoint);
+            Vector3 ray_dir  = p_camera->project_ray_normal(gpoint);
 
             Vector3 spoint;
 
@@ -427,7 +427,7 @@ void Polygon3DEditor::_polygon_draw() {
             rect.expand_to(p);
         }
 
-        Vector3 point = Vector3(p.x, p.y, depth);
+        Vector3 point      = Vector3(p.x, p.y, depth);
         Vector3 next_point = Vector3(p2.x, p2.y, depth);
 
         imgeom->set_color(Color(1, 0.3, 0.1, 0.8));
@@ -446,9 +446,9 @@ void Polygon3DEditor::_polygon_draw() {
     r.position.x = rect.position.x;
     r.position.y = rect.position.y;
     r.position.z = depth;
-    r.size.x = rect.size.x;
-    r.size.y = rect.size.y;
-    r.size.z = 0;
+    r.size.x     = rect.size.x;
+    r.size.y     = rect.size.y;
+    r.size.z     = 0;
 
     imgeom->set_color(Color(0.8, 0.8, 0.8, 0.2));
     imgeom->add_vertex(r.position);
@@ -515,7 +515,7 @@ void Polygon3DEditor::_polygon_draw() {
             p = i == edited_point ? edited_point_pos : poly[i];
 
             Vector3 point = Vector3(p.x, p.y, depth);
-            w[i] = point;
+            w[i]          = point;
         }
     }
     a[Mesh::ARRAY_VERTEX] = va;
@@ -531,7 +531,7 @@ void Polygon3DEditor::edit(Node* p_collision_polygon) {
             _menu_option(MODE_CREATE);
         }
         wip.clear();
-        wip_active = false;
+        wip_active   = false;
         edited_point = -1;
         p_collision_polygon->add_child(imgeom);
         _polygon_draw();
@@ -565,8 +565,8 @@ void Polygon3DEditor::_bind_methods() {
 }
 
 Polygon3DEditor::Polygon3DEditor(EditorNode* p_editor) {
-    node = nullptr;
-    editor = p_editor;
+    node      = nullptr;
+    editor    = p_editor;
     undo_redo = EditorNode::get_undo_redo();
 
     add_child(memnew(VSeparator));
@@ -581,9 +581,9 @@ Polygon3DEditor::Polygon3DEditor(EditorNode* p_editor) {
     button_edit->connect("pressed", this, "_menu_option", varray(MODE_EDIT));
     button_edit->set_toggle_mode(true);
 
-    mode = MODE_EDIT;
+    mode       = MODE_EDIT;
     wip_active = false;
-    imgeom = memnew(ImmediateGeometry);
+    imgeom     = memnew(ImmediateGeometry);
     imgeom->set_transform(Transform(Basis(), Vector3(0, 0, 0.00001)));
 
     line_material = Ref<SpatialMaterial>(memnew(SpatialMaterial));
@@ -643,7 +643,7 @@ void Polygon3DEditorPlugin::make_visible(bool p_visible) {
 }
 
 Polygon3DEditorPlugin::Polygon3DEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor                   = p_node;
     collision_polygon_editor = memnew(Polygon3DEditor(p_node));
     SpatialEditor::get_singleton()->add_control_to_menu_panel(
         collision_polygon_editor

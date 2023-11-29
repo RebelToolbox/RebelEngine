@@ -32,8 +32,8 @@
 
 #include "thread_jandroid.h"
 
-jobject NetSocketAndroid::net_utils = 0;
-jclass NetSocketAndroid::cls = 0;
+jobject NetSocketAndroid::net_utils                 = 0;
+jclass NetSocketAndroid::cls                        = 0;
 jmethodID NetSocketAndroid::_multicast_lock_acquire = 0;
 jmethodID NetSocketAndroid::_multicast_lock_release = 0;
 
@@ -43,7 +43,7 @@ void NetSocketAndroid::setup(jobject p_net_utils) {
     net_utils = env->NewGlobalRef(p_net_utils);
 
     jclass c = env->GetObjectClass(net_utils);
-    cls = (jclass)env->NewGlobalRef(c);
+    cls      = (jclass)env->NewGlobalRef(c);
 
     _multicast_lock_acquire =
         env->GetMethodID(cls, "multicastLockAcquire", "()V");
@@ -89,7 +89,7 @@ void NetSocketAndroid::close() {
     if (multicast_groups) {
         multicast_lock_release();
     }
-    wants_broadcast = false;
+    wants_broadcast  = false;
     multicast_groups = 0;
 }
 

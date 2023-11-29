@@ -42,10 +42,10 @@ protected:
     static void _bind_methods();
 
 private:
-    Color color = Color(1.0f, 1.0f, 1.0f);
+    Color color     = Color(1.0f, 1.0f, 1.0f);
     float intensity = 1.0f;
     String type;
-    float range = INFINITY;
+    float range            = INFINITY;
     float inner_cone_angle = 0.0f;
     float outer_cone_angle = Math_TAU / 8.0f;
 

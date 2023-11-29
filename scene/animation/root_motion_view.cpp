@@ -34,7 +34,7 @@
 #include "scene/resources/material.h"
 
 void RootMotionView::set_animation_path(const NodePath& p_path) {
-    path = p_path;
+    path  = p_path;
     first = true;
 }
 
@@ -53,7 +53,7 @@ Color RootMotionView::get_color() const {
 
 void RootMotionView::set_cell_size(float p_size) {
     cell_size = p_size;
-    first = true;
+    first     = true;
 }
 
 float RootMotionView::get_cell_size() const {
@@ -62,7 +62,7 @@ float RootMotionView::get_cell_size() const {
 
 void RootMotionView::set_radius(float p_radius) {
     radius = p_radius;
-    first = true;
+    first  = true;
 }
 
 float RootMotionView::get_radius() const {
@@ -129,7 +129,7 @@ void RootMotionView::_notification(int p_what) {
         transform.orthonormalize(); // don't want scale, too imprecise
         transform.affine_invert();
 
-        accumulated = transform * accumulated;
+        accumulated          = transform * accumulated;
         accumulated.origin.x = Math::fposmod(accumulated.origin.x, cell_size);
         if (zero_y) {
             accumulated.origin.y = 0;
@@ -146,12 +146,12 @@ void RootMotionView::_notification(int p_what) {
                 Vector3 from(i * cell_size, 0, j * cell_size);
                 Vector3 from_i((i + 1) * cell_size, 0, j * cell_size);
                 Vector3 from_j(i * cell_size, 0, (j + 1) * cell_size);
-                from = accumulated.xform(from);
+                from   = accumulated.xform(from);
                 from_i = accumulated.xform(from_i);
                 from_j = accumulated.xform(from_j);
 
                 Color c = color, c_i = color, c_j = color;
-                c.a *= MAX(0, 1.0 - from.length() / radius);
+                c.a   *= MAX(0, 1.0 - from.length() / radius);
                 c_i.a *= MAX(0, 1.0 - from_i.length() / radius);
                 c_j.a *= MAX(0, 1.0 - from_j.length() / radius);
 
@@ -264,8 +264,8 @@ void RootMotionView::_bind_methods() {
 }
 
 RootMotionView::RootMotionView() {
-    zero_y = true;
-    radius = 10;
+    zero_y    = true;
+    radius    = 10;
     cell_size = 1;
     set_process_internal(true);
     immediate = VisualServer::get_singleton()->immediate_create();

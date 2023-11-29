@@ -126,11 +126,11 @@ public class RebelFragment
     private Button mPauseButton;
     private Button mWiFiSettingsButton;
 
-    private XRMode xrMode = XRMode.REGULAR;
-    private boolean use_32_bits = false;
-    private boolean use_immersive = false;
+    private XRMode xrMode            = XRMode.REGULAR;
+    private boolean use_32_bits      = false;
+    private boolean use_immersive    = false;
     private boolean use_debug_opengl = false;
-    private boolean translucent = false;
+    private boolean translucent      = false;
     private boolean mStatePaused;
     private boolean activityResumed;
     private int mState;
@@ -172,7 +172,7 @@ public class RebelFragment
         protected void registerClass(String p_name, String[] p_methods) {
             RebelPlugin.nativeRegisterSingleton(p_name, this);
 
-            Class clazz = getClass();
+            Class clazz      = getClass();
             Method[] methods = clazz.getDeclaredMethods();
             for (Method method : methods) {
                 boolean found = false;
@@ -279,7 +279,7 @@ public class RebelFragment
     public static WifiMulticastLock wifiMulticastLock;
 
     static SingletonBase[] singletons = new SingletonBase[MAX_SINGLETONS];
-    static int singleton_count = 0;
+    static int singleton_count        = 0;
 
     public interface ResultCallback {
         void callback(int requestCode, int resultCode, Intent data);
@@ -392,7 +392,7 @@ public class RebelFragment
         boolean use_gl3 = getGLESVersionCode() >= 0x00030000;
 
         final Activity activity = getActivity();
-        containerLayout = new FrameLayout(activity);
+        containerLayout         = new FrameLayout(activity);
         containerLayout.setLayoutParams(new LayoutParams(
             LayoutParams.MATCH_PARENT,
             LayoutParams.MATCH_PARENT
@@ -561,9 +561,9 @@ public class RebelFragment
     private String[] parseCommandLine() {
         InputStream is;
         try {
-            is = getActivity().getAssets().open("_cl_");
+            is         = getActivity().getAssets().open("_cl_");
             byte[] len = new byte[4];
-            int r = is.read(len);
+            int r      = is.read(len);
             if (r < 4) {
                 return new String[0];
             }
@@ -584,7 +584,7 @@ public class RebelFragment
                     return new String[0];
                 }
                 byte[] arg = new byte[strlen];
-                r = is.read(arg);
+                r          = is.read(arg);
                 if (r == strlen) {
                     cmdline[i] = new String(arg, "UTF-8");
                 }
@@ -632,7 +632,7 @@ public class RebelFragment
             int cll = 0;
             if (command_line != null) {
                 new_cmdline = new String[command_line.length + 2];
-                cll = command_line.length;
+                cll         = command_line.length;
                 for (int i = 0; i < command_line.length; i++) {
                     new_cmdline[i] = command_line[i];
                 }
@@ -640,15 +640,15 @@ public class RebelFragment
                 new_cmdline = new String[2];
             }
 
-            new_cmdline[cll] = "--main-pack";
+            new_cmdline[cll]     = "--main-pack";
             new_cmdline[cll + 1] = expansion_pack_path;
-            command_line = new_cmdline;
+            command_line         = new_cmdline;
         }
 
         final Activity activity = getActivity();
-        io = new RebelIO(activity);
-        RebelEngine.io = io;
-        wifiMulticastLock = new WifiMulticastLock(activity);
+        io                      = new RebelIO(activity);
+        RebelEngine.io          = io;
+        wifiMulticastLock       = new WifiMulticastLock(activity);
         mSensorManager =
             (SensorManager)activity.getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer =
@@ -699,15 +699,15 @@ public class RebelFragment
         super.onCreate(icicle);
 
         final Activity activity = getActivity();
-        Window window = activity.getWindow();
+        Window window           = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        mClipboard = (ClipboardManager
+        mClipboard          = (ClipboardManager
         )activity.getSystemService(Context.CLIPBOARD_SERVICE);
         rebelPluginRegistry = RebelPluginRegistry.initialize(this);
 
         // check for apk expansion API
-        boolean md5mismatch = false;
-        command_line = getCommandLine();
+        boolean md5mismatch  = false;
+        command_line         = getCommandLine();
         String main_pack_md5 = null;
         String main_pack_key = null;
 
@@ -749,7 +749,7 @@ public class RebelFragment
                 main_pack_md5 = command_line[i + 1];
                 i++;
             } else if (has_extra && command_line[i].equals("--apk_expansion_key")) {
-                main_pack_key = command_line[i + 1];
+                main_pack_key           = command_line[i + 1];
                 SharedPreferences prefs = activity.getSharedPreferences(
                     "app_data_keys",
                     MODE_PRIVATE
@@ -862,17 +862,17 @@ public class RebelFragment
                 container,
                 false
             );
-            mPB = (ProgressBar
+            mPB               = (ProgressBar
             )downloadingExpansionView.findViewById(R.id.progressBar);
-            mStatusText = (TextView
+            mStatusText       = (TextView
             )downloadingExpansionView.findViewById(R.id.statusText);
             mProgressFraction = (TextView
             )downloadingExpansionView.findViewById(R.id.progressAsFraction);
-            mProgressPercent = (TextView
+            mProgressPercent  = (TextView
             )downloadingExpansionView.findViewById(R.id.progressAsPercentage);
-            mAverageSpeed = (TextView
+            mAverageSpeed     = (TextView
             )downloadingExpansionView.findViewById(R.id.progressAverageSpeed);
-            mTimeRemaining = (TextView
+            mTimeRemaining    = (TextView
             )downloadingExpansionView.findViewById(R.id.progressTimeRemaining);
             mDashboard =
                 downloadingExpansionView.findViewById(R.id.downloaderDashboard);
@@ -1031,7 +1031,7 @@ public class RebelFragment
             {1,  1,  1, 0}
         }; // ROTATION_270
 
-        final int[] as = axisSwap[displayRotation];
+        final int[] as    = axisSwap[displayRotation];
         adjustedValues[0] = (float)as[0] * event.values[as[2]];
         adjustedValues[1] = (float)as[1] * event.values[as[3]];
         adjustedValues[2] = event.values[2];
@@ -1187,7 +1187,7 @@ public class RebelFragment
     @Override
     public void onDownloadStateChanged(int newState) {
         setState(newState);
-        boolean showDashboard = true;
+        boolean showDashboard   = true;
         boolean showCellMessage = false;
         boolean paused;
         boolean indeterminate;
@@ -1195,17 +1195,17 @@ public class RebelFragment
             case IDownloaderClient.STATE_IDLE:
                 // STATE_IDLE means the service is listening, so it's
                 // safe to start making remote service calls.
-                paused = false;
+                paused        = false;
                 indeterminate = true;
                 break;
             case IDownloaderClient.STATE_CONNECTING:
             case IDownloaderClient.STATE_FETCHING_URL:
                 showDashboard = true;
-                paused = false;
+                paused        = false;
                 indeterminate = true;
                 break;
             case IDownloaderClient.STATE_DOWNLOADING:
-                paused = false;
+                paused        = false;
                 showDashboard = true;
                 indeterminate = false;
                 break;
@@ -1214,36 +1214,36 @@ public class RebelFragment
             case IDownloaderClient.STATE_FAILED:
             case IDownloaderClient.STATE_FAILED_FETCHING_URL:
             case IDownloaderClient.STATE_FAILED_UNLICENSED:
-                paused = true;
+                paused        = true;
                 showDashboard = false;
                 indeterminate = false;
                 break;
             case IDownloaderClient.STATE_PAUSED_NEED_CELLULAR_PERMISSION:
             case IDownloaderClient
                 .STATE_PAUSED_WIFI_DISABLED_NEED_CELLULAR_PERMISSION:
-                showDashboard = false;
-                paused = true;
-                indeterminate = false;
+                showDashboard   = false;
+                paused          = true;
+                indeterminate   = false;
                 showCellMessage = true;
                 break;
 
             case IDownloaderClient.STATE_PAUSED_BY_REQUEST:
-                paused = true;
+                paused        = true;
                 indeterminate = false;
                 break;
             case IDownloaderClient.STATE_PAUSED_ROAMING:
             case IDownloaderClient.STATE_PAUSED_SDCARD_UNAVAILABLE:
-                paused = true;
+                paused        = true;
                 indeterminate = false;
                 break;
             case IDownloaderClient.STATE_COMPLETED:
                 showDashboard = false;
-                paused = false;
+                paused        = false;
                 indeterminate = false;
                 initialize();
                 return;
             default:
-                paused = true;
+                paused        = true;
                 indeterminate = true;
                 showDashboard = true;
         }

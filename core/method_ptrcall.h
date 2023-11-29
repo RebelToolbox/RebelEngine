@@ -287,7 +287,7 @@ MAKE_VECARG_ALT(String, StringName);
         }                                                                      \
         _FORCE_INLINE_ static void encode(Vector<m_type> p_vec, void* p_ptr) { \
             Array* arr = reinterpret_cast<Array*>(p_ptr);                      \
-            int len = p_vec.size();                                            \
+            int len    = p_vec.size();                                         \
             arr->resize(len);                                                  \
             for (int i = 0; i < len; i++) {                                    \
                 (*arr)[i] = p_vec[i];                                          \
@@ -333,7 +333,7 @@ MAKE_VECARR(Plane);
             void* p_ptr                                                        \
         ) {                                                                    \
             Array* arr = reinterpret_cast<Array*>(p_ptr);                      \
-            int len = p_vec.size();                                            \
+            int len    = p_vec.size();                                         \
             arr->resize(len);                                                  \
             {                                                                  \
                 PoolVector<m_type>::Read r = p_vec.read();                     \
@@ -372,7 +372,7 @@ MAKE_DVECARR(Plane);
         }                                                                      \
         _FORCE_INLINE_ static void encode(m_type p_vec, void* p_ptr) {         \
             String* arr = reinterpret_cast<String*>(p_ptr);                    \
-            *arr = p_vec;                                                      \
+            *arr        = p_vec;                                               \
         }                                                                      \
     };                                                                         \
                                                                                \
@@ -393,7 +393,7 @@ MAKE_DVECARR(Plane);
         }                                                                      \
         _FORCE_INLINE_ static void encode(const m_type& p_vec, void* p_ptr) {  \
             String* arr = reinterpret_cast<String*>(p_ptr);                    \
-            *arr = p_vec;                                                      \
+            *arr        = p_vec;                                               \
         }                                                                      \
     };                                                                         \
                                                                                \
@@ -418,7 +418,7 @@ struct PtrToArg<PoolVector<Face3>> {
         ret.resize(len);
         {
             PoolVector<Vector3>::Read r = dvs->read();
-            PoolVector<Face3>::Write w = ret.write();
+            PoolVector<Face3>::Write w  = ret.write();
             for (int i = 0; i < len; i++) {
                 w[i].vertex[0] = r[i * 3 + 0];
                 w[i].vertex[1] = r[i * 3 + 1];
@@ -434,7 +434,7 @@ struct PtrToArg<PoolVector<Face3>> {
         int len = p_vec.size();
         arr->resize(len * 3);
         {
-            PoolVector<Face3>::Read r = p_vec.read();
+            PoolVector<Face3>::Read r    = p_vec.read();
             PoolVector<Vector3>::Write w = arr->write();
             for (int i = 0; i < len; i++) {
                 w[i * 3 + 0] = r[i].vertex[0];
@@ -455,7 +455,7 @@ struct PtrToArg<const PoolVector<Face3>&> {
         ret.resize(len);
         {
             PoolVector<Vector3>::Read r = dvs->read();
-            PoolVector<Face3>::Write w = ret.write();
+            PoolVector<Face3>::Write w  = ret.write();
             for (int i = 0; i < len; i++) {
                 w[i].vertex[0] = r[i * 3 + 0];
                 w[i].vertex[1] = r[i * 3 + 1];

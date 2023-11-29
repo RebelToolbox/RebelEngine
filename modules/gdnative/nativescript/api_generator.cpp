@@ -46,7 +46,7 @@ static Error save_file(const String& p_path, const List<String>& p_content) {
     ERR_FAIL_COND_V(!file, ERR_FILE_CANT_WRITE);
 
     for (const List<String>::Element* e = p_content.front(); e != nullptr;
-         e = e->next()) {
+         e                              = e->next()) {
         file->store_string(e->get());
     }
 
@@ -182,10 +182,10 @@ List<ClassAPI> generate_c_api_classes() {
     // Register global constants as a fake GlobalConstants singleton class
     {
         ClassAPI global_constants_api;
-        global_constants_api.class_name = L"GlobalConstants";
-        global_constants_api.api_type = ClassDB::API_CORE;
-        global_constants_api.is_singleton = true;
-        global_constants_api.singleton_name = L"GlobalConstants";
+        global_constants_api.class_name      = L"GlobalConstants";
+        global_constants_api.api_type        = ClassDB::API_CORE;
+        global_constants_api.is_singleton    = true;
+        global_constants_api.singleton_name  = L"GlobalConstants";
         global_constants_api.is_instanciable = false;
         const int constants_count =
             GlobalConstants::get_global_constant_count();
@@ -202,12 +202,12 @@ List<ClassAPI> generate_c_api_classes() {
     }
 
     for (List<StringName>::Element* e = classes.front(); e != nullptr;
-         e = e->next()) {
+         e                            = e->next()) {
         StringName class_name = e->get();
 
         ClassAPI class_api;
-        class_api.api_type = ClassDB::get_api_type(e->get());
-        class_api.class_name = class_name;
+        class_api.api_type         = ClassDB::get_api_type(e->get());
+        class_api.class_name       = class_name;
         class_api.super_class_name = ClassDB::get_parent_class(class_name);
         {
             String name = class_name;
@@ -238,7 +238,7 @@ List<ClassAPI> generate_c_api_classes() {
             ClassDB::get_integer_constant_list(class_name, &constant, true);
             constant.sort_custom<NoCaseComparator>();
             for (List<String>::Element* c = constant.front(); c != nullptr;
-                 c = c->next()) {
+                 c                        = c->next()) {
                 ConstantAPI constant_api;
                 constant_api.constant_name = c->get();
                 constant_api.constant_value =
@@ -258,7 +258,7 @@ List<ClassAPI> generate_c_api_classes() {
                 SignalAPI signal;
 
                 MethodInfo method_info = signals_[i];
-                signal.name = method_info.name;
+                signal.name            = method_info.name;
 
                 for (int j = 0; j < method_info.arguments.size(); j++) {
                     PropertyInfo argument = method_info.arguments[j];
@@ -332,7 +332,7 @@ List<ClassAPI> generate_c_api_classes() {
             methods.sort_custom<MethodInfoComparator>();
 
             for (List<MethodInfo>::Element* m = methods.front(); m != nullptr;
-                 m = m->next()) {
+                 m                            = m->next()) {
                 MethodAPI method_api;
                 MethodBind* method_bind =
                     ClassDB::get_method(class_name, m->get().name);
@@ -357,12 +357,12 @@ List<ClassAPI> generate_c_api_classes() {
                 // Method flags
                 method_api.is_virtual = false;
                 if (method_info.flags) {
-                    const uint32_t flags = method_info.flags;
-                    method_api.is_editor = flags & METHOD_FLAG_EDITOR;
-                    method_api.is_noscript = flags & METHOD_FLAG_NOSCRIPT;
-                    method_api.is_const = flags & METHOD_FLAG_CONST;
-                    method_api.is_reverse = flags & METHOD_FLAG_REVERSE;
-                    method_api.is_virtual = flags & METHOD_FLAG_VIRTUAL;
+                    const uint32_t flags      = method_info.flags;
+                    method_api.is_editor      = flags & METHOD_FLAG_EDITOR;
+                    method_api.is_noscript    = flags & METHOD_FLAG_NOSCRIPT;
+                    method_api.is_const       = flags & METHOD_FLAG_CONST;
+                    method_api.is_reverse     = flags & METHOD_FLAG_REVERSE;
+                    method_api.is_virtual     = flags & METHOD_FLAG_VIRTUAL;
                     method_api.is_from_script = flags & METHOD_FLAG_FROM_SCRIPT;
                 }
 
@@ -413,7 +413,7 @@ List<ClassAPI> generate_c_api_classes() {
             List<StringName> enum_names;
             ClassDB::get_enum_list(class_name, &enum_names, true);
             for (List<StringName>::Element* E = enum_names.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 List<StringName> value_names;
                 EnumAPI enum_api;
                 enum_api.name = E->get();
@@ -457,7 +457,7 @@ static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
     source.push_back("[\n");
 
     for (const List<ClassAPI>::Element* c = p_api.front(); c != nullptr;
-         c = c->next()) {
+         c                                = c->next()) {
         ClassAPI api = c->get();
 
         source.push_back("\t{\n");
@@ -492,7 +492,7 @@ static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
 
         source.push_back("\t\t\"constants\": {\n");
         for (List<ConstantAPI>::Element* e = api.constants.front(); e;
-             e = e->next()) {
+             e                             = e->next()) {
             source.push_back(
                 "\t\t\t\"" + e->get().constant_name
                 + "\": " + String::num_int64(e->get().constant_value)
@@ -503,7 +503,7 @@ static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
 
         source.push_back("\t\t\"properties\": [\n");
         for (List<PropertyAPI>::Element* e = api.properties.front(); e;
-             e = e->next()) {
+             e                             = e->next()) {
             source.push_back("\t\t\t{\n");
             source.push_back("\t\t\t\t\"name\": \"" + e->get().name + "\",\n");
             source.push_back("\t\t\t\t\"type\": \"" + e->get().type + "\",\n");
@@ -522,7 +522,7 @@ static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
 
         source.push_back("\t\t\"signals\": [\n");
         for (List<SignalAPI>::Element* e = api.signals_.front(); e;
-             e = e->next()) {
+             e                           = e->next()) {
             source.push_back("\t\t\t{\n");
             source.push_back("\t\t\t\t\"name\": \"" + e->get().name + "\",\n");
             source.push_back("\t\t\t\t\"arguments\": [\n");
@@ -561,7 +561,7 @@ static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
 
         source.push_back("\t\t\"methods\": [\n");
         for (List<MethodAPI>::Element* e = api.methods.front(); e;
-             e = e->next()) {
+             e                           = e->next()) {
             source.push_back("\t\t\t{\n");
             source.push_back(
                 "\t\t\t\t\"name\": \"" + e->get().method_name + "\",\n"

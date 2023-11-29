@@ -210,7 +210,7 @@ CSGBrush* CSGShape::_get_brush() {
                 n->copy_from(*n2, child->get_transform());
 
             } else {
-                CSGBrush* nn = memnew(CSGBrush);
+                CSGBrush* nn  = memnew(CSGBrush);
                 CSGBrush* nn2 = memnew(CSGBrush);
                 nn2->copy_from(*n2, child->get_transform());
 
@@ -297,7 +297,7 @@ void CSGShape::mikktGetPosition(
 ) {
     ShapeUpdateSurface& surface = *((ShapeUpdateSurface*)pContext->m_pUserData);
 
-    Vector3 v = surface.verticesw[iFace * 3 + iVert];
+    Vector3 v   = surface.verticesw[iFace * 3 + iVert];
     fvPosOut[0] = v.x;
     fvPosOut[1] = v.y;
     fvPosOut[2] = v.z;
@@ -311,7 +311,7 @@ void CSGShape::mikktGetNormal(
 ) {
     ShapeUpdateSurface& surface = *((ShapeUpdateSurface*)pContext->m_pUserData);
 
-    Vector3 n = surface.normalsw[iFace * 3 + iVert];
+    Vector3 n    = surface.normalsw[iFace * 3 + iVert];
     fvNormOut[0] = n.x;
     fvNormOut[1] = n.y;
     fvNormOut[2] = n.z;
@@ -325,7 +325,7 @@ void CSGShape::mikktGetTexCoord(
 ) {
     ShapeUpdateSurface& surface = *((ShapeUpdateSurface*)pContext->m_pUserData);
 
-    Vector2 t = surface.uvsw[iFace * 3 + iVert];
+    Vector2 t    = surface.uvsw[iFace * 3 + iVert];
     fvTexcOut[0] = t.x;
     fvTexcOut[1] = t.y;
 }
@@ -342,9 +342,9 @@ void CSGShape::mikktSetTSpaceDefault(
 ) {
     ShapeUpdateSurface& surface = *((ShapeUpdateSurface*)pContext->m_pUserData);
 
-    int i = iFace * 3 + iVert;
-    Vector3 normal = surface.normalsw[i];
-    Vector3 tangent = Vector3(fvTangent[0], fvTangent[1], fvTangent[2]);
+    int i             = iFace * 3 + iVert;
+    Vector3 normal    = surface.normalsw[i];
+    Vector3 tangent   = Vector3(fvTangent[0], fvTangent[1], fvTangent[2]);
     Vector3 bitangent = Vector3(
         -fvBiTangent[0],
         -fvBiTangent[1],
@@ -353,11 +353,11 @@ void CSGShape::mikktSetTSpaceDefault(
        // system in Godot
     float d = bitangent.dot(normal.cross(tangent));
 
-    i *= 4;
-    surface.tansw[i++] = tangent.x;
-    surface.tansw[i++] = tangent.y;
-    surface.tansw[i++] = tangent.z;
-    surface.tansw[i++] = d < 0 ? -1 : 1;
+    i                  *= 4;
+    surface.tansw[i++]  = tangent.x;
+    surface.tansw[i++]  = tangent.y;
+    surface.tansw[i++]  = tangent.z;
+    surface.tansw[i++]  = d < 0 ? -1 : 1;
 }
 
 void CSGShape::_update_shape() {
@@ -425,8 +425,8 @@ void CSGShape::_update_shape() {
         }
 
         surfaces.write[i].verticesw = surfaces.write[i].vertices.write();
-        surfaces.write[i].normalsw = surfaces.write[i].normals.write();
-        surfaces.write[i].uvsw = surfaces.write[i].uvs.write();
+        surfaces.write[i].normalsw  = surfaces.write[i].normals.write();
+        surfaces.write[i].uvsw      = surfaces.write[i].uvs.write();
         if (calculate_tangents) {
             surfaces.write[i].tansw = surfaces.write[i].tans.write();
         }
@@ -487,18 +487,18 @@ void CSGShape::_update_shape() {
                     normal = -normal;
                 }
 
-                int k = last + order[j];
+                int k                      = last + order[j];
                 surfaces[idx].verticesw[k] = v;
-                surfaces[idx].uvsw[k] = n->faces[i].uvs[j];
-                surfaces[idx].normalsw[k] = normal;
+                surfaces[idx].uvsw[k]      = n->faces[i].uvs[j];
+                surfaces[idx].normalsw[k]  = normal;
 
                 if (calculate_tangents) {
                     // zero out our tangents for now
-                    k *= 4;
-                    surfaces[idx].tansw[k++] = 0.0;
-                    surfaces[idx].tansw[k++] = 0.0;
-                    surfaces[idx].tansw[k++] = 0.0;
-                    surfaces[idx].tansw[k++] = 0.0;
+                    k                        *= 4;
+                    surfaces[idx].tansw[k++]  = 0.0;
+                    surfaces[idx].tansw[k++]  = 0.0;
+                    surfaces[idx].tansw[k++]  = 0.0;
+                    surfaces[idx].tansw[k++]  = 0.0;
                 }
             }
 
@@ -514,18 +514,18 @@ void CSGShape::_update_shape() {
         bool have_tangents = calculate_tangents;
         if (have_tangents) {
             SMikkTSpaceInterface mkif;
-            mkif.m_getNormal = mikktGetNormal;
-            mkif.m_getNumFaces = mikktGetNumFaces;
+            mkif.m_getNormal            = mikktGetNormal;
+            mkif.m_getNumFaces          = mikktGetNumFaces;
             mkif.m_getNumVerticesOfFace = mikktGetNumVerticesOfFace;
-            mkif.m_getPosition = mikktGetPosition;
-            mkif.m_getTexCoord = mikktGetTexCoord;
-            mkif.m_setTSpace = mikktSetTSpaceDefault;
-            mkif.m_setTSpaceBasic = nullptr;
+            mkif.m_getPosition          = mikktGetPosition;
+            mkif.m_getTexCoord          = mikktGetTexCoord;
+            mkif.m_setTSpace            = mikktSetTSpaceDefault;
+            mkif.m_setTSpaceBasic       = nullptr;
 
             SMikkTSpaceContext msc;
             msc.m_pInterface = &mkif;
-            msc.m_pUserData = &surfaces.write[i];
-            have_tangents = genTangSpaceDefault(&msc);
+            msc.m_pUserData  = &surfaces.write[i];
+            have_tangents    = genTangSpaceDefault(&msc);
         }
 
         // unset write access
@@ -846,14 +846,14 @@ void CSGShape::_bind_methods() {
 }
 
 CSGShape::CSGShape() {
-    operation = OPERATION_UNION;
-    parent = nullptr;
-    brush = nullptr;
-    dirty = false;
-    snap = 0.001;
-    use_collision = false;
-    collision_layer = 1;
-    collision_mask = 1;
+    operation          = OPERATION_UNION;
+    parent             = nullptr;
+    brush              = nullptr;
+    dirty              = false;
+    snap               = 0.001;
+    use_collision      = false;
+    collision_layer    = 1;
+    collision_mask     = 1;
     calculate_tangents = true;
     set_notify_local_transform(true);
 }
@@ -886,7 +886,7 @@ CSGBrush* CSGPrimitive::_create_brush_from_arrays(
     PoolVector<bool> invert;
     invert.resize(p_vertices.size() / 3);
     {
-        int ic = invert.size();
+        int ic                    = invert.size();
         PoolVector<bool>::Write w = invert.write();
         for (int i = 0; i < ic; i++) {
             w[i] = invert_faces;
@@ -968,7 +968,7 @@ CSGBrush* CSGMesh::_build_brush() {
         PoolVector<Vector3>::Read nr;
         bool nr_used = false;
         if (anormals.size()) {
-            nr = anormals.read();
+            nr      = anormals.read();
             nr_used = true;
         }
 
@@ -976,7 +976,7 @@ CSGBrush* CSGMesh::_build_brush() {
         PoolVector<Vector2>::Read uvr;
         bool uvr_used = false;
         if (auvs.size()) {
-            uvr = auvs.read();
+            uvr      = auvs.read();
             uvr_used = true;
         }
 
@@ -997,9 +997,9 @@ CSGBrush* CSGMesh::_build_brush() {
             materials.resize((as + is) / 3);
             uvs.resize(as + is);
 
-            PoolVector<Vector3>::Write vw = vertices.write();
-            PoolVector<bool>::Write sw = smooth.write();
-            PoolVector<Vector2>::Write uvw = uvs.write();
+            PoolVector<Vector3>::Write vw       = vertices.write();
+            PoolVector<bool>::Write sw          = smooth.write();
+            PoolVector<Vector2>::Write uvw      = uvs.write();
             PoolVector<Ref<Material>>::Write mw = materials.write();
 
             PoolVector<int>::Read ir = aindices.read();
@@ -1010,7 +1010,7 @@ CSGBrush* CSGMesh::_build_brush() {
                 Vector2 uv[3];
 
                 for (int k = 0; k < 3; k++) {
-                    int idx = ir[j + k];
+                    int idx   = ir[j + k];
                     vertex[k] = vr[idx];
                     if (nr_used) {
                         normal[k] = nr[idx];
@@ -1043,9 +1043,9 @@ CSGBrush* CSGMesh::_build_brush() {
             uvs.resize(as + is);
             materials.resize((as + is) / 3);
 
-            PoolVector<Vector3>::Write vw = vertices.write();
-            PoolVector<bool>::Write sw = smooth.write();
-            PoolVector<Vector2>::Write uvw = uvs.write();
+            PoolVector<Vector3>::Write vw       = vertices.write();
+            PoolVector<bool>::Write sw          = smooth.write();
+            PoolVector<Vector2>::Write uvw      = uvs.write();
             PoolVector<Ref<Material>>::Write mw = materials.write();
 
             for (int j = 0; j < is; j += 3) {
@@ -1167,7 +1167,7 @@ CSGBrush* CSGSphere::_build_brush() {
 
     int face_count = rings * radial_segments * 2 - radial_segments * 2;
 
-    bool invert_val = is_inverting_faces();
+    bool invert_val        = is_inverting_faces();
     Ref<Material> material = get_material();
 
     PoolVector<Vector3> faces;
@@ -1184,35 +1184,35 @@ CSGBrush* CSGSphere::_build_brush() {
     invert.resize(face_count);
 
     {
-        PoolVector<Vector3>::Write facesw = faces.write();
-        PoolVector<Vector2>::Write uvsw = uvs.write();
-        PoolVector<bool>::Write smoothw = smooth.write();
+        PoolVector<Vector3>::Write facesw           = faces.write();
+        PoolVector<Vector2>::Write uvsw             = uvs.write();
+        PoolVector<bool>::Write smoothw             = smooth.write();
         PoolVector<Ref<Material>>::Write materialsw = materials.write();
-        PoolVector<bool>::Write invertw = invert.write();
+        PoolVector<bool>::Write invertw             = invert.write();
 
         // We want to follow an order that's convenient for UVs.
         // For latitude step we start at the top and move down like in an image.
-        const double latitude_step = -Math_PI / rings;
+        const double latitude_step  = -Math_PI / rings;
         const double longitude_step = Math_TAU / radial_segments;
-        int face = 0;
+        int face                    = 0;
         for (int i = 0; i < rings; i++) {
             double latitude0 = latitude_step * i + Math_TAU / 4;
-            double cos0 = Math::cos(latitude0);
-            double sin0 = Math::sin(latitude0);
-            double v0 = double(i) / rings;
+            double cos0      = Math::cos(latitude0);
+            double sin0      = Math::sin(latitude0);
+            double v0        = double(i) / rings;
 
             double latitude1 = latitude_step * (i + 1) + Math_TAU / 4;
-            double cos1 = Math::cos(latitude1);
-            double sin1 = Math::sin(latitude1);
-            double v1 = double(i + 1) / rings;
+            double cos1      = Math::cos(latitude1);
+            double sin1      = Math::sin(latitude1);
+            double v1        = double(i + 1) / rings;
 
             for (int j = 0; j < radial_segments; j++) {
                 double longitude0 = longitude_step * j;
                 // We give sin to X and cos to Z on purpose.
                 // This allows UVs to be CCW on +X so it maps to images well.
-                double x0 = Math::sin(longitude0);
-                double z0 = Math::cos(longitude0);
-                double u0 = double(j) / radial_segments;
+                double x0         = Math::sin(longitude0);
+                double z0         = Math::cos(longitude0);
+                double u0         = double(j) / radial_segments;
 
                 double longitude1 = longitude_step * (j + 1);
                 if (j == radial_segments - 1) {
@@ -1248,8 +1248,8 @@ CSGBrush* CSGSphere::_build_brush() {
                     uvsw[face * 3 + 1] = u[1];
                     uvsw[face * 3 + 2] = u[2];
 
-                    smoothw[face] = smooth_faces;
-                    invertw[face] = invert_val;
+                    smoothw[face]    = smooth_faces;
+                    invertw[face]    = invert_val;
                     materialsw[face] = material;
 
                     face++;
@@ -1266,8 +1266,8 @@ CSGBrush* CSGSphere::_build_brush() {
                     uvsw[face * 3 + 1] = u[3];
                     uvsw[face * 3 + 2] = u[0];
 
-                    smoothw[face] = smooth_faces;
-                    invertw[face] = invert_val;
+                    smoothw[face]    = smooth_faces;
+                    invertw[face]    = invert_val;
                     materialsw[face] = material;
 
                     face++;
@@ -1412,10 +1412,10 @@ Ref<Material> CSGSphere::get_material() const {
 
 CSGSphere::CSGSphere() {
     // defaults
-    radius = 1.0;
+    radius          = 1.0;
     radial_segments = 12;
-    rings = 6;
-    smooth_faces = true;
+    rings           = 6;
+    smooth_faces    = true;
 }
 
 ///////////////
@@ -1427,7 +1427,7 @@ CSGBrush* CSGBox::_build_brush() {
 
     int face_count = 12; // it's a cube..
 
-    bool invert_val = is_inverting_faces();
+    bool invert_val        = is_inverting_faces();
     Ref<Material> material = get_material();
 
     PoolVector<Vector3> faces;
@@ -1444,11 +1444,11 @@ CSGBrush* CSGBox::_build_brush() {
     invert.resize(face_count);
 
     {
-        PoolVector<Vector3>::Write facesw = faces.write();
-        PoolVector<Vector2>::Write uvsw = uvs.write();
-        PoolVector<bool>::Write smoothw = smooth.write();
+        PoolVector<Vector3>::Write facesw           = faces.write();
+        PoolVector<Vector2>::Write uvsw             = uvs.write();
+        PoolVector<bool>::Write smoothw             = smooth.write();
         PoolVector<Ref<Material>>::Write materialsw = materials.write();
-        PoolVector<bool>::Write invertw = invert.write();
+        PoolVector<bool>::Write invertw             = invert.write();
 
         int face = 0;
 
@@ -1488,8 +1488,8 @@ CSGBrush* CSGBox::_build_brush() {
                 uvsw[face * 3 + 1] = u[1];
                 uvsw[face * 3 + 2] = u[2];
 
-                smoothw[face] = false;
-                invertw[face] = invert_val;
+                smoothw[face]    = false;
+                invertw[face]    = invert_val;
                 materialsw[face] = material;
 
                 face++;
@@ -1502,8 +1502,8 @@ CSGBrush* CSGBox::_build_brush() {
                 uvsw[face * 3 + 1] = u[3];
                 uvsw[face * 3 + 2] = u[0];
 
-                smoothw[face] = false;
-                invertw[face] = invert_val;
+                smoothw[face]    = false;
+                invertw[face]    = invert_val;
                 materialsw[face] = material;
 
                 face++;
@@ -1623,9 +1623,9 @@ Ref<Material> CSGBox::get_material() const {
 
 CSGBox::CSGBox() {
     // defaults
-    width = 2.0;
+    width  = 2.0;
     height = 2.0;
-    depth = 2.0;
+    depth  = 2.0;
 }
 
 ///////////////
@@ -1637,7 +1637,7 @@ CSGBrush* CSGCylinder::_build_brush() {
 
     int face_count = sides * (cone ? 1 : 2) + sides + (cone ? 0 : sides);
 
-    bool invert_val = is_inverting_faces();
+    bool invert_val        = is_inverting_faces();
     Ref<Material> material = get_material();
 
     PoolVector<Vector3> faces;
@@ -1654,11 +1654,11 @@ CSGBrush* CSGCylinder::_build_brush() {
     invert.resize(face_count);
 
     {
-        PoolVector<Vector3>::Write facesw = faces.write();
-        PoolVector<Vector2>::Write uvsw = uvs.write();
-        PoolVector<bool>::Write smoothw = smooth.write();
+        PoolVector<Vector3>::Write facesw           = faces.write();
+        PoolVector<Vector2>::Write uvsw             = uvs.write();
+        PoolVector<bool>::Write smoothw             = smooth.write();
         PoolVector<Ref<Material>>::Write materialsw = materials.write();
-        PoolVector<bool>::Write invertw = invert.write();
+        PoolVector<bool>::Write invertw             = invert.write();
 
         int face = 0;
 
@@ -1666,13 +1666,13 @@ CSGBrush* CSGCylinder::_build_brush() {
 
         {
             for (int i = 0; i < sides; i++) {
-                float inc = float(i) / sides;
+                float inc   = float(i) / sides;
                 float inc_n = float((i + 1)) / sides;
                 if (i == sides - 1) {
                     inc_n = 0;
                 }
 
-                float ang = inc * Math_PI * 2.0;
+                float ang   = inc * Math_PI * 2.0;
                 float ang_n = inc_n * Math_PI * 2.0;
 
                 Vector3 base(Math::cos(ang), 0, Math::sin(ang));
@@ -1701,8 +1701,8 @@ CSGBrush* CSGCylinder::_build_brush() {
                 uvsw[face * 3 + 1] = u[1];
                 uvsw[face * 3 + 2] = u[2];
 
-                smoothw[face] = smooth_faces;
-                invertw[face] = invert_val;
+                smoothw[face]    = smooth_faces;
+                invertw[face]    = invert_val;
                 materialsw[face] = material;
 
                 face++;
@@ -1717,8 +1717,8 @@ CSGBrush* CSGCylinder::_build_brush() {
                     uvsw[face * 3 + 1] = u[3];
                     uvsw[face * 3 + 2] = u[0];
 
-                    smoothw[face] = smooth_faces;
-                    invertw[face] = invert_val;
+                    smoothw[face]    = smooth_faces;
+                    invertw[face]    = invert_val;
                     materialsw[face] = material;
                     face++;
                 }
@@ -1736,8 +1736,8 @@ CSGBrush* CSGCylinder::_build_brush() {
                     + Vector2(0.5, 0.5);
                 uvsw[face * 3 + 2] = Vector2(0.5, 0.5);
 
-                smoothw[face] = false;
-                invertw[face] = invert_val;
+                smoothw[face]    = false;
+                invertw[face]    = invert_val;
                 materialsw[face] = material;
                 face++;
 
@@ -1755,8 +1755,8 @@ CSGBrush* CSGCylinder::_build_brush() {
                         + Vector2(0.5, 0.5);
                     uvsw[face * 3 + 2] = Vector2(0.5, 0.5);
 
-                    smoothw[face] = false;
-                    invertw[face] = invert_val;
+                    smoothw[face]    = false;
+                    invertw[face]    = invert_val;
                     materialsw[face] = material;
                     face++;
                 }
@@ -1916,10 +1916,10 @@ Ref<Material> CSGCylinder::get_material() const {
 
 CSGCylinder::CSGCylinder() {
     // defaults
-    radius = 1.0;
-    height = 1.0;
-    sides = 8;
-    cone = false;
+    radius       = 1.0;
+    height       = 1.0;
+    sides        = 8;
+    cone         = false;
     smooth_faces = true;
 }
 
@@ -1945,7 +1945,7 @@ CSGBrush* CSGTorus::_build_brush() {
 
     int face_count = ring_sides * sides * 2;
 
-    bool invert_val = is_inverting_faces();
+    bool invert_val        = is_inverting_faces();
     Ref<Material> material = get_material();
 
     PoolVector<Vector3> faces;
@@ -1962,23 +1962,23 @@ CSGBrush* CSGTorus::_build_brush() {
     invert.resize(face_count);
 
     {
-        PoolVector<Vector3>::Write facesw = faces.write();
-        PoolVector<Vector2>::Write uvsw = uvs.write();
-        PoolVector<bool>::Write smoothw = smooth.write();
+        PoolVector<Vector3>::Write facesw           = faces.write();
+        PoolVector<Vector2>::Write uvsw             = uvs.write();
+        PoolVector<bool>::Write smoothw             = smooth.write();
         PoolVector<Ref<Material>>::Write materialsw = materials.write();
-        PoolVector<bool>::Write invertw = invert.write();
+        PoolVector<bool>::Write invertw             = invert.write();
 
         int face = 0;
 
         {
             for (int i = 0; i < sides; i++) {
-                float inci = float(i) / sides;
+                float inci   = float(i) / sides;
                 float inci_n = float((i + 1)) / sides;
                 if (i == sides - 1) {
                     inci_n = 0;
                 }
 
-                float angi = inci * Math_PI * 2.0;
+                float angi   = inci * Math_PI * 2.0;
                 float angi_n = inci_n * Math_PI * 2.0;
 
                 Vector3 normali = Vector3(Math::cos(angi), 0, Math::sin(angi));
@@ -1986,13 +1986,13 @@ CSGBrush* CSGTorus::_build_brush() {
                     Vector3(Math::cos(angi_n), 0, Math::sin(angi_n));
 
                 for (int j = 0; j < ring_sides; j++) {
-                    float incj = float(j) / ring_sides;
+                    float incj   = float(j) / ring_sides;
                     float incj_n = float((j + 1)) / ring_sides;
                     if (j == ring_sides - 1) {
                         incj_n = 0;
                     }
 
-                    float angj = incj * Math_PI * 2.0;
+                    float angj   = incj * Math_PI * 2.0;
                     float angj_n = incj_n * Math_PI * 2.0;
 
                     Vector2 normalj =
@@ -2041,8 +2041,8 @@ CSGBrush* CSGTorus::_build_brush() {
                     uvsw[face * 3 + 1] = u[2];
                     uvsw[face * 3 + 2] = u[1];
 
-                    smoothw[face] = smooth_faces;
-                    invertw[face] = invert_val;
+                    smoothw[face]    = smooth_faces;
+                    invertw[face]    = invert_val;
                     materialsw[face] = material;
 
                     face++;
@@ -2056,8 +2056,8 @@ CSGBrush* CSGTorus::_build_brush() {
                     uvsw[face * 3 + 1] = u[2];
                     uvsw[face * 3 + 2] = u[0];
 
-                    smoothw[face] = smooth_faces;
-                    invertw[face] = invert_val;
+                    smoothw[face]    = smooth_faces;
+                    invertw[face]    = invert_val;
                     materialsw[face] = material;
                     face++;
                 }
@@ -2230,8 +2230,8 @@ CSGTorus::CSGTorus() {
     // defaults
     inner_radius = 2.0;
     outer_radius = 3.0;
-    sides = 8;
-    ring_sides = 6;
+    sides        = 8;
+    ring_sides   = 6;
     smooth_faces = true;
 }
 
@@ -2249,7 +2249,7 @@ CSGBrush* CSGPolygon::_build_brush() {
     if (Triangulate::get_area(shape_polygon) > 0) {
         shape_polygon.invert();
     }
-    int shape_sides = shape_polygon.size();
+    int shape_sides         = shape_polygon.size();
     Vector<int> shape_faces = Geometry::triangulate_polygon(shape_polygon);
     ERR_FAIL_COND_V_MSG(
         shape_faces.size() < 3,
@@ -2291,15 +2291,15 @@ CSGBrush* CSGPolygon::_build_brush() {
     }
 
     // Calculate the number of extrusions, ends and faces.
-    int extrusions = 0;
+    int extrusions           = 0;
     int extrusion_face_count = shape_sides * 2;
-    int end_count = 0;
-    int shape_face_count = shape_faces.size() / 3;
-    real_t curve_length = 1.0;
+    int end_count            = 0;
+    int shape_face_count     = shape_faces.size() / 3;
+    real_t curve_length      = 1.0;
     switch (mode) {
         case MODE_DEPTH:
             extrusions = 1;
-            end_count = 2;
+            end_count  = 2;
             break;
         case MODE_SPIN:
             extrusions = spin_sides;
@@ -2317,7 +2317,7 @@ CSGBrush* CSGPolygon::_build_brush() {
                     Math::ceil(1.0 * curve->get_point_count() / path_interval);
             }
             if (!path_joined) {
-                end_count = 2;
+                end_count   = 2;
                 extrusions -= 1;
             }
         } break;
@@ -2342,11 +2342,11 @@ CSGBrush* CSGPolygon::_build_brush() {
     int faces_removed = 0;
 
     {
-        PoolVector<Vector3>::Write facesw = faces.write();
-        PoolVector<Vector2>::Write uvsw = uvs.write();
-        PoolVector<bool>::Write smoothw = smooth.write();
+        PoolVector<Vector3>::Write facesw           = faces.write();
+        PoolVector<Vector2>::Write uvsw             = uvs.write();
+        PoolVector<bool>::Write smoothw             = smooth.write();
         PoolVector<Ref<Material>>::Write materialsw = materials.write();
-        PoolVector<bool>::Write invertw = invert.write();
+        PoolVector<bool>::Write invertw             = invert.write();
 
         int face = 0;
         Transform base_xform;
@@ -2357,8 +2357,8 @@ CSGBrush* CSGPolygon::_build_brush() {
         if (path_u_distance > 0.0) {
             u_step *= curve_length / path_u_distance;
         }
-        double v_step = 1.0 / shape_sides;
-        double spin_step = Math::deg2rad(spin_degrees / spin_sides);
+        double v_step         = 1.0 / shape_sides;
+        double spin_step      = Math::deg2rad(spin_degrees / spin_sides);
         double extrusion_step = 1.0 / extrusions;
         if (mode == MODE_PATH) {
             if (path_joined) {
@@ -2373,9 +2373,9 @@ CSGBrush* CSGPolygon::_build_brush() {
             }
 
             Vector3 current_point = curve->interpolate_baked(0);
-            Vector3 next_point = curve->interpolate_baked(extrusion_step);
-            Vector3 current_up = Vector3(0, 1, 0);
-            Vector3 direction = next_point - current_point;
+            Vector3 next_point    = curve->interpolate_baked(extrusion_step);
+            Vector3 current_up    = Vector3(0, 1, 0);
+            Vector3 direction     = next_point - current_point;
 
             if (path_joined) {
                 Vector3 last_point =
@@ -2395,7 +2395,7 @@ CSGBrush* CSGPolygon::_build_brush() {
             }
 
             Transform facing = Transform().looking_at(direction, current_up);
-            current_xform = base_xform.translated(current_point) * facing;
+            current_xform    = base_xform.translated(current_point) * facing;
         }
 
         // Create the mesh.
@@ -2407,7 +2407,7 @@ CSGBrush* CSGPolygon::_build_brush() {
                     // We need to reverse the rotation of the shape face
                     // vertices.
                     int index = shape_faces[face_idx * 3 + 2 - face_vertex_idx];
-                    Point2 p = shape_polygon[index];
+                    Point2 p  = shape_polygon[index];
                     Point2 uv = (p - shape_rect.position) / shape_rect.size;
 
                     // Use the left side of the bottom half of the y-inverted
@@ -2420,9 +2420,9 @@ CSGBrush* CSGPolygon::_build_brush() {
                     uvsw[face * 3 + face_vertex_idx] = uv;
                 }
 
-                smoothw[face] = false;
+                smoothw[face]    = false;
                 materialsw[face] = material;
-                invertw[face] = invert_faces;
+                invertw[face]    = invert_faces;
                 face++;
             }
         }
@@ -2430,12 +2430,12 @@ CSGBrush* CSGPolygon::_build_brush() {
         real_t angle_simplify_dot =
             Math::cos(Math::deg2rad(path_simplify_angle));
         Vector3 previous_simplify_dir = Vector3(0, 0, 0);
-        int faces_combined = 0;
+        int faces_combined            = 0;
 
         // Add extrusion faces.
         for (int x0 = 0; x0 < extrusions; x0++) {
             previous_previous_xform = previous_xform;
-            previous_xform = current_xform;
+            previous_xform          = current_xform;
 
             switch (mode) {
                 case MODE_DEPTH: {
@@ -2446,12 +2446,12 @@ CSGBrush* CSGPolygon::_build_brush() {
                 } break;
                 case MODE_PATH: {
                     double previous_offset = x0 * extrusion_step;
-                    double current_offset = (x0 + 1) * extrusion_step;
-                    double next_offset = (x0 + 2) * extrusion_step;
+                    double current_offset  = (x0 + 1) * extrusion_step;
+                    double next_offset     = (x0 + 2) * extrusion_step;
                     if (x0 == extrusions - 1) {
                         if (path_joined) {
                             current_offset = 0;
-                            next_offset = extrusion_step;
+                            next_offset    = extrusion_step;
                         } else {
                             next_offset = current_offset;
                         }
@@ -2463,7 +2463,7 @@ CSGBrush* CSGPolygon::_build_brush() {
                         curve->interpolate_baked(current_offset);
                     Vector3 next_point = curve->interpolate_baked(next_offset);
                     Vector3 current_up = Vector3(0, 1, 0);
-                    Vector3 direction = next_point - previous_point;
+                    Vector3 direction  = next_point - previous_point;
                     Vector3 current_dir =
                         (current_point - previous_point).normalized();
 
@@ -2473,11 +2473,11 @@ CSGBrush* CSGPolygon::_build_brush() {
                         && previous_simplify_dir.dot(current_dir)
                                > angle_simplify_dot) {
                         faces_combined += 1;
-                        previous_xform = previous_previous_xform;
-                        face -= extrusion_face_count;
-                        faces_removed += extrusion_face_count;
+                        previous_xform  = previous_previous_xform;
+                        face           -= extrusion_face_count;
+                        faces_removed  += extrusion_face_count;
                     } else {
-                        faces_combined = 0;
+                        faces_combined        = 0;
                         previous_simplify_dir = current_dir;
                     }
 
@@ -2509,7 +2509,7 @@ CSGBrush* CSGPolygon::_build_brush() {
             }
 
             for (int y0 = 0; y0 < shape_sides; y0++) {
-                int y1 = (y0 + 1) % shape_sides;
+                int y1    = (y0 + 1) % shape_sides;
                 // Use the top half of the texture.
                 double v0 = (y0 * v_step) / 2;
                 double v1 = ((y0 + 1) * v_step) / 2;
@@ -2545,8 +2545,8 @@ CSGBrush* CSGPolygon::_build_brush() {
                 uvsw[face * 3 + 1] = u[1];
                 uvsw[face * 3 + 2] = u[2];
 
-                smoothw[face] = smooth_faces;
-                invertw[face] = invert_faces;
+                smoothw[face]    = smooth_faces;
+                invertw[face]    = invert_faces;
                 materialsw[face] = material;
 
                 face++;
@@ -2560,8 +2560,8 @@ CSGBrush* CSGPolygon::_build_brush() {
                 uvsw[face * 3 + 1] = u[3];
                 uvsw[face * 3 + 2] = u[0];
 
-                smoothw[face] = smooth_faces;
-                invertw[face] = invert_faces;
+                smoothw[face]    = smooth_faces;
+                invertw[face]    = invert_faces;
                 materialsw[face] = material;
 
                 face++;
@@ -2574,7 +2574,7 @@ CSGBrush* CSGPolygon::_build_brush() {
                 for (int face_vertex_idx = 0; face_vertex_idx < 3;
                      face_vertex_idx++) {
                     int index = shape_faces[face_idx * 3 + face_vertex_idx];
-                    Point2 p = shape_polygon[index];
+                    Point2 p  = shape_polygon[index];
                     Point2 uv = (p - shape_rect.position) / shape_rect.size;
 
                     // Use the x-inverted ride side of the bottom half of the
@@ -2587,9 +2587,9 @@ CSGBrush* CSGPolygon::_build_brush() {
                     uvsw[face * 3 + face_vertex_idx] = uv;
                 }
 
-                smoothw[face] = false;
+                smoothw[face]    = false;
                 materialsw[face] = material;
-                invertw[face] = invert_faces;
+                invertw[face]    = invert_faces;
                 face++;
             }
         }
@@ -3103,17 +3103,17 @@ CSGPolygon::CSGPolygon() {
     polygon.push_back(Vector2(0, 1));
     polygon.push_back(Vector2(1, 1));
     polygon.push_back(Vector2(1, 0));
-    depth = 1.0;
-    spin_degrees = 360;
-    spin_sides = 8;
-    smooth_faces = false;
-    path_interval_type = PATH_INTERVAL_DISTANCE;
-    path_interval = 1.0;
+    depth               = 1.0;
+    spin_degrees        = 360;
+    spin_sides          = 8;
+    smooth_faces        = false;
+    path_interval_type  = PATH_INTERVAL_DISTANCE;
+    path_interval       = 1.0;
     path_simplify_angle = 0.0;
-    path_rotation = PATH_ROTATION_PATH_FOLLOW;
-    path_local = false;
-    path_continuous_u = true;
-    path_u_distance = 1.0;
-    path_joined = false;
-    path = nullptr;
+    path_rotation       = PATH_ROTATION_PATH_FOLLOW;
+    path_local          = false;
+    path_continuous_u   = true;
+    path_u_distance     = 1.0;
+    path_joined         = false;
+    path                = nullptr;
 }

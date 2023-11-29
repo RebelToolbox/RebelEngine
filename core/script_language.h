@@ -148,20 +148,20 @@ public:
 
     virtual bool instance_has(const Object* p_this) const = 0;
 
-    virtual bool has_source_code() const = 0;
-    virtual String get_source_code() const = 0;
+    virtual bool has_source_code() const               = 0;
+    virtual String get_source_code() const             = 0;
     virtual void set_source_code(const String& p_code) = 0;
-    virtual Error reload(bool p_keep_state = false) = 0;
+    virtual Error reload(bool p_keep_state = false)    = 0;
 
-    virtual bool has_method(const StringName& p_method) const = 0;
+    virtual bool has_method(const StringName& p_method) const            = 0;
     virtual MethodInfo get_method_info(const StringName& p_method) const = 0;
 
-    virtual bool is_tool() const = 0;
+    virtual bool is_tool() const  = 0;
     virtual bool is_valid() const = 0;
 
     virtual ScriptLanguage* get_language() const = 0;
 
-    virtual bool has_script_signal(const StringName& p_signal) const = 0;
+    virtual bool has_script_signal(const StringName& p_signal) const       = 0;
     virtual void get_script_signal_list(List<MethodInfo>* r_signals) const = 0;
 
     virtual bool get_property_default_value(
@@ -171,7 +171,7 @@ public:
 
     virtual void update_exports() {} // editor tool
 
-    virtual void get_script_method_list(List<MethodInfo>* p_list) const = 0;
+    virtual void get_script_method_list(List<MethodInfo>* p_list) const     = 0;
     virtual void get_script_property_list(List<PropertyInfo>* p_list) const = 0;
 
     virtual int get_member_line(const StringName& p_member) const {
@@ -191,8 +191,8 @@ public:
 
 class ScriptInstance {
 public:
-    virtual bool set(const StringName& p_name, const Variant& p_value) = 0;
-    virtual bool get(const StringName& p_name, Variant& r_ret) const = 0;
+    virtual bool set(const StringName& p_name, const Variant& p_value)     = 0;
+    virtual bool get(const StringName& p_name, Variant& r_ret) const       = 0;
     virtual void get_property_list(List<PropertyInfo>* p_properties) const = 0;
     virtual Variant::Type get_property_type(
         const StringName& p_name,
@@ -206,7 +206,7 @@ public:
     virtual void get_property_state(List<Pair<StringName, Variant>>& state);
 
     virtual void get_method_list(List<MethodInfo>* p_list) const = 0;
-    virtual bool has_method(const StringName& p_method) const = 0;
+    virtual bool has_method(const StringName& p_method) const    = 0;
     virtual Variant call(const StringName& p_method, VARIANT_ARG_LIST);
     virtual Variant call(
         const StringName& p_method,
@@ -294,9 +294,9 @@ struct ScriptCodeCompletionOption {
     }
 
     ScriptCodeCompletionOption(const String& p_text, Kind p_kind) {
-        display = p_text;
+        display     = p_text;
         insert_text = p_text;
-        kind = p_kind;
+        kind        = p_kind;
     }
 };
 
@@ -320,11 +320,11 @@ public:
     virtual String get_name() const = 0;
 
     /* LANGUAGE FUNCTIONS */
-    virtual void init() = 0;
-    virtual String get_type() const = 0;
-    virtual String get_extension() const = 0;
+    virtual void init()                              = 0;
+    virtual String get_type() const                  = 0;
+    virtual String get_extension() const             = 0;
     virtual Error execute_file(const String& p_path) = 0;
-    virtual void finish() = 0;
+    virtual void finish()                            = 0;
 
     /* EDITOR FUNCTIONS */
     struct Warning {
@@ -334,10 +334,10 @@ public:
         String message;
     };
 
-    virtual void get_reserved_words(List<String>* p_words) const = 0;
-    virtual bool is_control_flow_keyword(String p_string) const = 0;
+    virtual void get_reserved_words(List<String>* p_words) const          = 0;
+    virtual bool is_control_flow_keyword(String p_string) const           = 0;
     virtual void get_comment_delimiters(List<String>* p_delimiters) const = 0;
-    virtual void get_string_delimiters(List<String>* p_delimiters) const = 0;
+    virtual void get_string_delimiters(List<String>* p_delimiters) const  = 0;
     virtual Ref<Script> get_template(
         const String& p_class_name,
         const String& p_base_class_name
@@ -358,18 +358,18 @@ public:
         int& r_line_error,
         int& r_col_error,
         String& r_test_error,
-        const String& p_path = "",
+        const String& p_path      = "",
         List<String>* r_functions = nullptr,
         List<Warning>* r_warnings = nullptr,
-        Set<int>* r_safe_lines = nullptr
+        Set<int>* r_safe_lines    = nullptr
     ) const = 0;
 
     virtual String validate_path(const String& p_path) const {
         return "";
     }
 
-    virtual Script* create_script() const = 0;
-    virtual bool has_named_classes() const = 0;
+    virtual Script* create_script() const      = 0;
+    virtual bool has_named_classes() const     = 0;
     virtual bool supports_builtin_mode() const = 0;
 
     virtual bool can_inherit_from_file() {
@@ -462,24 +462,24 @@ public:
 
     /* DEBUGGER FUNCTIONS */
 
-    virtual String debug_get_error() const = 0;
-    virtual int debug_get_stack_level_count() const = 0;
-    virtual int debug_get_stack_level_line(int p_level) const = 0;
+    virtual String debug_get_error() const                           = 0;
+    virtual int debug_get_stack_level_count() const                  = 0;
+    virtual int debug_get_stack_level_line(int p_level) const        = 0;
     virtual String debug_get_stack_level_function(int p_level) const = 0;
-    virtual String debug_get_stack_level_source(int p_level) const = 0;
+    virtual String debug_get_stack_level_source(int p_level) const   = 0;
     virtual void debug_get_stack_level_locals(
         int p_level,
         List<String>* p_locals,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     ) = 0;
     virtual void debug_get_stack_level_members(
         int p_level,
         List<String>* p_members,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     ) = 0;
 
     virtual ScriptInstance* debug_get_stack_level_instance(int p_level) {
@@ -490,13 +490,13 @@ public:
         List<String>* p_globals,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     ) = 0;
     virtual String debug_parse_stack_level_expression(
         int p_level,
         const String& p_expression,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     ) = 0;
 
     struct StackInfo {
@@ -517,10 +517,10 @@ public:
     /* LOADER FUNCTIONS */
 
     virtual void get_recognized_extensions(List<String>* p_extensions
-    ) const = 0;
+    ) const                                                                = 0;
     virtual void get_public_functions(List<MethodInfo>* p_functions) const = 0;
     virtual void get_public_constants(List<Pair<String, Variant>>* p_constants
-    ) const = 0;
+    ) const                                                                = 0;
 
     struct ProfilingInfo {
         StringName signature;
@@ -530,7 +530,7 @@ public:
     };
 
     virtual void profiling_start() = 0;
-    virtual void profiling_stop() = 0;
+    virtual void profiling_stop()  = 0;
 
     virtual int profiling_get_accumulated_data(
         ProfilingInfo* p_info_arr,
@@ -696,7 +696,7 @@ public:
 
     virtual void debug(
         ScriptLanguage* p_script,
-        bool p_can_continue = true,
+        bool p_can_continue        = true,
         bool p_is_error_breakpoint = false
     ) = 0;
     virtual void idle_poll();
@@ -728,9 +728,9 @@ public:
     virtual void add_profiling_frame_data(
         const StringName& p_name,
         const Array& p_data
-    ) = 0;
+    )                              = 0;
     virtual void profiling_start() = 0;
-    virtual void profiling_end() = 0;
+    virtual void profiling_end()   = 0;
     virtual void profiling_set_frame_times(
         float p_frame_time,
         float p_idle_time,

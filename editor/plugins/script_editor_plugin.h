@@ -87,26 +87,26 @@ public:
     virtual void add_syntax_highlighter(SyntaxHighlighter* p_highlighter) = 0;
     virtual void set_syntax_highlighter(SyntaxHighlighter* p_highlighter) = 0;
 
-    virtual void apply_code() = 0;
-    virtual RES get_edited_resource() const = 0;
-    virtual Vector<String> get_functions() = 0;
-    virtual void set_edited_resource(const RES& p_res) = 0;
-    virtual void enable_editor() = 0;
-    virtual void reload_text() = 0;
-    virtual String get_name() = 0;
-    virtual Ref<Texture> get_icon() = 0;
-    virtual bool is_unsaved() = 0;
-    virtual Variant get_edit_state() = 0;
-    virtual void set_edit_state(const Variant& p_state) = 0;
+    virtual void apply_code()                                     = 0;
+    virtual RES get_edited_resource() const                       = 0;
+    virtual Vector<String> get_functions()                        = 0;
+    virtual void set_edited_resource(const RES& p_res)            = 0;
+    virtual void enable_editor()                                  = 0;
+    virtual void reload_text()                                    = 0;
+    virtual String get_name()                                     = 0;
+    virtual Ref<Texture> get_icon()                               = 0;
+    virtual bool is_unsaved()                                     = 0;
+    virtual Variant get_edit_state()                              = 0;
+    virtual void set_edit_state(const Variant& p_state)           = 0;
     virtual void goto_line(int p_line, bool p_with_error = false) = 0;
-    virtual void set_executing_line(int p_line) = 0;
-    virtual void clear_executing_line() = 0;
-    virtual void trim_trailing_whitespace() = 0;
-    virtual void insert_final_newline() = 0;
-    virtual void convert_indent_to_spaces() = 0;
-    virtual void convert_indent_to_tabs() = 0;
-    virtual void ensure_focus() = 0;
-    virtual void tag_saved_version() = 0;
+    virtual void set_executing_line(int p_line)                   = 0;
+    virtual void clear_executing_line()                           = 0;
+    virtual void trim_trailing_whitespace()                       = 0;
+    virtual void insert_final_newline()                           = 0;
+    virtual void convert_indent_to_spaces()                       = 0;
+    virtual void convert_indent_to_tabs()                         = 0;
+    virtual void ensure_focus()                                   = 0;
+    virtual void tag_saved_version()                              = 0;
 
     virtual void reload(bool p_soft) {}
 
@@ -114,8 +114,8 @@ public:
     virtual void add_callback(
         const String& p_function,
         PoolStringArray p_args
-    ) = 0;
-    virtual void update_settings() = 0;
+    )                                               = 0;
+    virtual void update_settings()                  = 0;
     virtual void set_debugger_active(bool p_active) = 0;
 
     virtual bool can_lose_focus_on_node_selection() {
@@ -125,8 +125,8 @@ public:
     virtual bool show_members_overview() = 0;
 
     virtual void set_tooltip_request_func(String p_method, Object* p_obj) = 0;
-    virtual Control* get_edit_menu() = 0;
-    virtual void clear_edit_menu() = 0;
+    virtual Control* get_edit_menu()                                      = 0;
+    virtual void clear_edit_menu()                                        = 0;
 
     virtual void validate() = 0;
 
@@ -255,7 +255,7 @@ class ScriptEditor : public PanelContainer {
     Button* find_in_files_button;
 
     enum {
-        SCRIPT_EDITOR_FUNC_MAX = 32,
+        SCRIPT_EDITOR_FUNC_MAX      = 32,
         SYNTAX_HIGHLIGHTER_FUNC_MAX = 32
     };
 

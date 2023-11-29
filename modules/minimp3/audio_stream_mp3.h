@@ -40,10 +40,10 @@ class AudioStreamMP3;
 class AudioStreamPlaybackMP3 : public AudioStreamPlaybackResampled {
     GDCLASS(AudioStreamPlaybackMP3, AudioStreamPlaybackResampled);
 
-    mp3dec_ex_t* mp3d = nullptr;
+    mp3dec_ex_t* mp3d     = nullptr;
     uint32_t frames_mixed = 0;
-    bool active = false;
-    int loops = 0;
+    bool active           = false;
+    int loops             = 0;
 
     friend class AudioStreamMP3;
 
@@ -76,13 +76,13 @@ class AudioStreamMP3 : public AudioStream {
 
     friend class AudioStreamPlaybackMP3;
 
-    void* data = nullptr;
+    void* data        = nullptr;
     uint32_t data_len = 0;
 
     float sample_rate = 1;
-    int channels = 1;
-    float length = 0;
-    bool loop = false;
+    int channels      = 1;
+    float length      = 0;
+    bool loop         = false;
     float loop_offset = 0;
     void clear_data();
 

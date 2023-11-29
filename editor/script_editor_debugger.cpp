@@ -81,7 +81,7 @@ protected:
 
     void _get_property_list(List<PropertyInfo>* p_list) const {
         for (const List<PropertyInfo>::Element* E = props.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             p_list->push_back(E->get());
         }
     }
@@ -94,7 +94,7 @@ public:
 
     String get_var_value(const String& p_var) const {
         for (Map<StringName, Variant>::Element* E = values.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             String v = E->key().operator String().get_slice("/", 1);
             if (v == p_var) {
                 return E->get();
@@ -111,9 +111,9 @@ public:
         const String p_hint_string
     ) {
         PropertyInfo pinfo;
-        pinfo.name = p_name;
-        pinfo.type = p_value.get_type();
-        pinfo.hint = p_hint;
+        pinfo.name        = p_name;
+        pinfo.type        = p_value.get_type();
+        pinfo.hint        = p_hint;
         pinfo.hint_string = p_hint_string;
         props.push_back(pinfo);
         values[p_name] = p_value;
@@ -153,7 +153,7 @@ protected:
     void _get_property_list(List<PropertyInfo>* p_list) const {
         p_list->clear(); // Sorry, no want category.
         for (const List<PropertyInfo>::Element* E = prop_list.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             const PropertyInfo& prop = E->get();
             if (prop.name == "script") {
                 // Skip the script property, it's always added by the
@@ -505,12 +505,12 @@ int ScriptEditorDebugger::_update_scene_tree(
         EditorNode::get_singleton()->get_scene_tree_dock()->get_filter();
     String item_text = nodes[current_index + 1];
     String item_type = nodes[current_index + 2];
-    bool keep = filter.is_subsequence_ofi(item_text);
+    bool keep        = filter.is_subsequence_ofi(item_text);
 
     TreeItem* item = inspect_scene_tree->create_item(parent);
     item->set_text(0, item_text);
     item->set_tooltip(0, TTR("Type:") + " " + item_type);
-    ObjectID id = ObjectID(nodes[current_index + 3]);
+    ObjectID id       = ObjectID(nodes[current_index + 3]);
     Ref<Texture> icon = EditorNode::get_singleton()->get_class_icon(
         nodes[current_index + 2],
         ""
@@ -545,7 +545,7 @@ int ScriptEditorDebugger::_update_scene_tree(
     // without traversing the nodes array previously. Keeping track of this
     // allows us to build our remote scene tree by traversing the node array
     // just once.
-    int items_count = 1;
+    int items_count    = 1;
     for (int i = 0; i < children_count; i++) {
         // Called for each direct child of item.
         // Direct children of current item might not be adjacent so items_count
@@ -593,7 +593,7 @@ void ScriptEditorDebugger::_video_mem_export() {
 
 Size2 ScriptEditorDebugger::get_minimum_size() const {
     Size2 ms = MarginContainer::get_minimum_size();
-    ms.y = MAX(ms.y, 250 * EDSCALE);
+    ms.y     = MAX(ms.y, 250 * EDSCALE);
     return ms;
 }
 
@@ -607,7 +607,7 @@ void ScriptEditorDebugger::_parse_message(
         ppeer->put_var(msg);
         ERR_FAIL_COND(p_data.size() != 2);
         bool can_continue = p_data[0];
-        String error = p_data[1];
+        String error      = p_data[1];
         step->set_disabled(!can_continue);
         next->set_disabled(!can_continue);
         _set_reason_text(error, MESSAGE_ERROR);
@@ -660,8 +660,8 @@ void ScriptEditorDebugger::_parse_message(
     } else if (p_msg == "message:inspect_object") {
         ScriptEditorDebuggerInspectedObject* debugObj = nullptr;
 
-        ObjectID id = p_data[0];
-        String type = p_data[1];
+        ObjectID id      = p_data[0];
+        String type      = p_data[1];
         Array properties = p_data[2];
 
         if (remote_objects.has(id)) {
@@ -669,8 +669,8 @@ void ScriptEditorDebugger::_parse_message(
         } else {
             debugObj = memnew(ScriptEditorDebuggerInspectedObject);
             debugObj->remote_object_id = id;
-            debugObj->type_name = type;
-            remote_objects[id] = debugObj;
+            debugObj->type_name        = type;
+            remote_objects[id]         = debugObj;
             debugObj->connect(
                 "value_edited",
                 this,
@@ -690,12 +690,12 @@ void ScriptEditorDebugger::_parse_message(
             }
 
             PropertyInfo pinfo;
-            pinfo.name = prop[0];
-            pinfo.type = Variant::Type(int(prop[1]));
-            pinfo.hint = PropertyHint(int(prop[2]));
+            pinfo.name        = prop[0];
+            pinfo.type        = Variant::Type(int(prop[1]));
+            pinfo.hint        = PropertyHint(int(prop[2]));
             pinfo.hint_string = prop[3];
-            pinfo.usage = PropertyUsageFlags(int(prop[4]));
-            Variant var = prop[5];
+            pinfo.usage       = PropertyUsageFlags(int(prop[4]));
+            Variant var       = prop[5];
 
             if (pinfo.type == Variant::OBJECT) {
                 if (var.is_zero()) {
@@ -705,7 +705,7 @@ void ScriptEditorDebugger::_parse_message(
                     if (path.find("::") != -1) {
                         // built-in resource
                         String base_path = path.get_slice("::", 0);
-                        RES dependency = ResourceLoader::load(base_path);
+                        RES dependency   = ResourceLoader::load(base_path);
                         if (dependency.is_valid()) {
                             remote_dependencies.insert(dependency);
                         }
@@ -731,8 +731,8 @@ void ScriptEditorDebugger::_parse_message(
                     if (((Object*)var)->is_class("EncodedObjectAsID")) {
                         var = Object::cast_to<EncodedObjectAsID>(var)
                                   ->get_object_id();
-                        pinfo.type = var.get_type();
-                        pinfo.hint = PROPERTY_HINT_OBJECT_ID;
+                        pinfo.type        = var.get_type();
+                        pinfo.hint        = PROPERTY_HINT_OBJECT_ID;
                         pinfo.hint_string = "Object";
                     }
                 }
@@ -766,7 +766,7 @@ void ScriptEditorDebugger::_parse_message(
                 // only some may have changed, if so, then update those, if
                 // exist
                 for (Set<String>::Element* E = changed.front(); E;
-                     E = E->next()) {
+                     E                       = E->next()) {
                     EditorNode::get_singleton()
                         ->get_inspector()
                         ->update_property(E->get());
@@ -784,8 +784,8 @@ void ScriptEditorDebugger::_parse_message(
 
         for (int i = 0; i < p_data.size(); i += 4) {
             TreeItem* it = vmem_tree->create_item(root);
-            String type = p_data[i + 1];
-            int bytes = p_data[i + 3].operator int();
+            String type  = p_data[i + 1];
+            int bytes    = p_data[i + 3].operator int();
             it->set_text(0, p_data[i + 0]);                // path
             it->set_text(1, type);                         // type
             it->set_text(2, p_data[i + 2]);                // type
@@ -811,7 +811,7 @@ void ScriptEditorDebugger::_parse_message(
             ERR_CONTINUE(!d.has("line"));
             ERR_CONTINUE(!d.has("id"));
             TreeItem* s = stack_dump->create_item(r);
-            d["frame"] = i;
+            d["frame"]  = i;
             s->set_metadata(0, d);
 
             String line = itos(i) + " - " + String(d["file"]) + ":"
@@ -825,37 +825,37 @@ void ScriptEditorDebugger::_parse_message(
     } else if (p_msg == "stack_frame_vars") {
         variables->clear();
 
-        int ofs = 0;
+        int ofs    = 0;
         int mcount = p_data[ofs];
         ofs++;
         for (int i = 0; i < mcount; i++) {
-            String n = p_data[ofs + i * 2 + 0];
+            String n  = p_data[ofs + i * 2 + 0];
             Variant v = p_data[ofs + i * 2 + 1];
 
             PropertyHint h = PROPERTY_HINT_NONE;
-            String hs = String();
+            String hs      = String();
 
             if (v.get_type() == Variant::OBJECT) {
-                v = Object::cast_to<EncodedObjectAsID>(v)->get_object_id();
-                h = PROPERTY_HINT_OBJECT_ID;
+                v  = Object::cast_to<EncodedObjectAsID>(v)->get_object_id();
+                h  = PROPERTY_HINT_OBJECT_ID;
                 hs = "Object";
             }
 
             variables->add_property("Locals/" + n, v, h, hs);
         }
 
-        ofs += mcount * 2;
-        mcount = p_data[ofs];
+        ofs    += mcount * 2;
+        mcount  = p_data[ofs];
         ofs++;
         for (int i = 0; i < mcount; i++) {
-            String n = p_data[ofs + i * 2 + 0];
-            Variant v = p_data[ofs + i * 2 + 1];
+            String n       = p_data[ofs + i * 2 + 0];
+            Variant v      = p_data[ofs + i * 2 + 1];
             PropertyHint h = PROPERTY_HINT_NONE;
-            String hs = String();
+            String hs      = String();
 
             if (v.get_type() == Variant::OBJECT) {
-                v = Object::cast_to<EncodedObjectAsID>(v)->get_object_id();
-                h = PROPERTY_HINT_OBJECT_ID;
+                v  = Object::cast_to<EncodedObjectAsID>(v)->get_object_id();
+                h  = PROPERTY_HINT_OBJECT_ID;
                 hs = "Object";
             }
 
@@ -866,18 +866,18 @@ void ScriptEditorDebugger::_parse_message(
             }
         }
 
-        ofs += mcount * 2;
-        mcount = p_data[ofs];
+        ofs    += mcount * 2;
+        mcount  = p_data[ofs];
         ofs++;
         for (int i = 0; i < mcount; i++) {
-            String n = p_data[ofs + i * 2 + 0];
-            Variant v = p_data[ofs + i * 2 + 1];
+            String n       = p_data[ofs + i * 2 + 0];
+            Variant v      = p_data[ofs + i * 2 + 1];
             PropertyHint h = PROPERTY_HINT_NONE;
-            String hs = String();
+            String hs      = String();
 
             if (v.get_type() == Variant::OBJECT) {
-                v = Object::cast_to<EncodedObjectAsID>(v)->get_object_id();
-                h = PROPERTY_HINT_OBJECT_ID;
+                v  = Object::cast_to<EncodedObjectAsID>(v)->get_object_id();
+                h  = PROPERTY_HINT_OBJECT_ID;
                 hs = "Object";
             }
 
@@ -940,17 +940,17 @@ void ScriptEditorDebugger::_parse_message(
             p.write[i] = arr[i];
             if (i < perf_items.size()) {
                 const float value = p[i];
-                String label = rtos(value);
-                String tooltip = label;
+                String label      = rtos(value);
+                String tooltip    = label;
                 switch (Performance::MonitorType(
                     (int)perf_items[i]->get_metadata(1)
                 )) {
                     case Performance::MONITOR_TYPE_MEMORY: {
-                        label = String::humanize_size(value);
+                        label   = String::humanize_size(value);
                         tooltip = label;
                     } break;
                     case Performance::MONITOR_TYPE_TIME: {
-                        label = rtos(value * 1000).pad_decimals(2) + " ms";
+                        label   = rtos(value * 1000).pad_decimals(2) + " ms";
                         tooltip = label;
                     } break;
                     default: {
@@ -992,14 +992,14 @@ void ScriptEditorDebugger::_parse_message(
         String time = String("%d:%02d:%02d.%03d").sprintf(time_vals, &e);
 
         // Rest of the error data.
-        String method = err[4];
-        String source_file = err[5];
-        String source_line = err[6];
-        String error_cond = err[7];
-        String error_msg = err[8];
-        bool is_warning = err[9];
-        bool has_method = !method.empty();
-        bool has_error_msg = !error_msg.empty();
+        String method               = err[4];
+        String source_file          = err[5];
+        String source_line          = err[6];
+        String error_cond           = err[7];
+        String error_msg            = err[8];
+        bool is_warning             = err[9];
+        bool has_method             = !method.empty();
+        bool has_error_msg          = !error_msg.empty();
         bool source_is_project_file = source_file.begins_with("res://");
 
         // Metadata to highlight error line in scripts.
@@ -1090,9 +1090,9 @@ void ScriptEditorDebugger::_parse_message(
         int stack_items_count = p_data[1];
 
         for (int i = 0; i < stack_items_count; i += 3) {
-            String script = p_data[2 + i];
-            String method2 = p_data[3 + i];
-            int line = p_data[4 + i];
+            String script         = p_data[2 + i];
+            String method2        = p_data[3 + i];
+            int line              = p_data[4 + i];
             TreeItem* stack_trace = error_tree->create_item(error);
 
             Array meta;
@@ -1123,42 +1123,42 @@ void ScriptEditorDebugger::_parse_message(
 
     } else if (p_msg == "profile_frame" || p_msg == "profile_total") {
         EditorProfiler::Metric metric;
-        metric.valid = true;
-        metric.frame_number = p_data[0];
-        metric.frame_time = p_data[1];
-        metric.idle_time = p_data[2];
-        metric.physics_time = p_data[3];
+        metric.valid              = true;
+        metric.frame_number       = p_data[0];
+        metric.frame_time         = p_data[1];
+        metric.idle_time          = p_data[2];
+        metric.physics_time       = p_data[3];
         metric.physics_frame_time = p_data[4];
-        int frame_data_amount = p_data[6];
+        int frame_data_amount     = p_data[6];
         int frame_function_amount = p_data[7];
 
         if (frame_data_amount) {
             EditorProfiler::Metric::Category frame_time;
-            frame_time.signature = "category_frame_time";
-            frame_time.name = "Frame Time";
+            frame_time.signature  = "category_frame_time";
+            frame_time.name       = "Frame Time";
             frame_time.total_time = metric.frame_time;
 
             EditorProfiler::Metric::Category::Item item;
             item.calls = 1;
-            item.line = 0;
+            item.line  = 0;
 
-            item.name = "Physics Time";
-            item.total = metric.physics_time;
-            item.self = item.total;
+            item.name      = "Physics Time";
+            item.total     = metric.physics_time;
+            item.self      = item.total;
             item.signature = "physics_time";
 
             frame_time.items.push_back(item);
 
-            item.name = "Idle Time";
-            item.total = metric.idle_time;
-            item.self = item.total;
+            item.name      = "Idle Time";
+            item.total     = metric.idle_time;
+            item.self      = item.total;
             item.signature = "idle_time";
 
             frame_time.items.push_back(item);
 
-            item.name = "Physics Frame Time";
-            item.total = metric.physics_frame_time;
-            item.self = item.total;
+            item.name      = "Physics Frame Time";
+            item.total     = metric.physics_frame_time;
+            item.self      = item.total;
             item.signature = "physics_frame_time";
 
             frame_time.items.push_back(item);
@@ -1169,23 +1169,23 @@ void ScriptEditorDebugger::_parse_message(
         int idx = 8;
         for (int i = 0; i < frame_data_amount; i++) {
             EditorProfiler::Metric::Category c;
-            String name = p_data[idx++];
+            String name  = p_data[idx++];
             Array values = p_data[idx++];
-            c.name = name.capitalize();
+            c.name       = name.capitalize();
             c.items.resize(values.size() / 2);
             c.total_time = 0;
-            c.signature = "categ::" + name;
+            c.signature  = "categ::" + name;
             for (int j = 0; j < values.size(); j += 2) {
                 EditorProfiler::Metric::Category::Item item;
-                item.calls = 1;
-                item.line = 0;
-                item.name = values[j];
-                item.self = values[j + 1];
-                item.total = item.self;
-                item.signature = "categ::" + name + "::" + item.name;
-                item.name = item.name.capitalize();
-                c.total_time += item.total;
-                c.items.write[j / 2] = item;
+                item.calls            = 1;
+                item.line             = 0;
+                item.name             = values[j];
+                item.self             = values[j + 1];
+                item.total            = item.self;
+                item.signature        = "categ::" + name + "::" + item.name;
+                item.name             = item.name.capitalize();
+                c.total_time         += item.total;
+                c.items.write[j / 2]  = item;
             }
             metric.categories.push_back(c);
         }
@@ -1193,38 +1193,38 @@ void ScriptEditorDebugger::_parse_message(
         EditorProfiler::Metric::Category funcs;
         funcs.total_time = p_data[5]; // script time
         funcs.items.resize(frame_function_amount);
-        funcs.name = "Script Functions";
+        funcs.name      = "Script Functions";
         funcs.signature = "script_functions";
         for (int i = 0; i < frame_function_amount; i++) {
             int signature = p_data[idx++];
-            int calls = p_data[idx++];
-            float total = p_data[idx++];
-            float self = p_data[idx++];
+            int calls     = p_data[idx++];
+            float total   = p_data[idx++];
+            float self    = p_data[idx++];
 
             EditorProfiler::Metric::Category::Item item;
             if (profiler_signature.has(signature)) {
                 item.signature = profiler_signature[signature];
 
-                String name = profiler_signature[signature];
+                String name            = profiler_signature[signature];
                 Vector<String> strings = name.split("::");
                 if (strings.size() == 3) {
-                    item.name = strings[2];
+                    item.name   = strings[2];
                     item.script = strings[0];
-                    item.line = strings[1].to_int();
+                    item.line   = strings[1].to_int();
                 } else if (strings.size() == 4) { // Built-in scripts have an ::
                                                   // in their name
-                    item.name = strings[3];
+                    item.name   = strings[3];
                     item.script = strings[0] + "::" + strings[1];
-                    item.line = strings[2].to_int();
+                    item.line   = strings[2].to_int();
                 }
 
             } else {
                 item.name = "SigErr " + itos(signature);
             }
 
-            item.calls = calls;
-            item.self = self;
-            item.total = total;
+            item.calls           = calls;
+            item.self            = self;
+            item.total           = total;
             funcs.items.write[i] = item;
         }
 
@@ -1239,11 +1239,11 @@ void ScriptEditorDebugger::_parse_message(
         int frame_size = 6;
         for (int i = 0; i < p_data.size(); i += frame_size) {
             MultiplayerAPI::ProfilingInfo pi;
-            pi.node = p_data[i + 0];
-            pi.node_path = p_data[i + 1];
-            pi.incoming_rpc = p_data[i + 2];
+            pi.node          = p_data[i + 0];
+            pi.node_path     = p_data[i + 1];
+            pi.incoming_rpc  = p_data[i + 2];
             pi.incoming_rset = p_data[i + 3];
-            pi.outgoing_rpc = p_data[i + 4];
+            pi.outgoing_rpc  = p_data[i + 4];
             pi.outgoing_rset = p_data[i + 5];
             network_profiler->add_node_frame_data(pi);
         }
@@ -1301,27 +1301,27 @@ void ScriptEditorDebugger::_performance_draw() {
     info_message->hide();
 
     const Ref<StyleBox> graph_sb = get_stylebox("normal", "TextEdit");
-    const Ref<Font> graph_font = get_font("font", "TextEdit");
+    const Ref<Font> graph_font   = get_font("font", "TextEdit");
 
     const int cols = Math::ceil(Math::sqrt((float)which.size()));
-    int rows = Math::ceil((float)which.size() / cols);
+    int rows       = Math::ceil((float)which.size() / cols);
     if (which.size() == 1) {
         rows = 1;
     }
 
-    const int margin = 3;
+    const int margin    = 3;
     const int point_sep = 5;
-    const Size2i s = Size2i(perf_draw->get_size()) / Size2i(cols, rows);
+    const Size2i s      = Size2i(perf_draw->get_size()) / Size2i(cols, rows);
 
     for (int i = 0; i < which.size(); i++) {
         Point2i p(i % cols, i / cols);
         Rect2i r(p * s, s);
         r.position += Point2(margin, margin);
-        r.size -= Point2(margin, margin) * 2.0;
+        r.size     -= Point2(margin, margin) * 2.0;
         perf_draw->draw_style_box(graph_sb, r);
-        r.position += graph_sb->get_offset();
-        r.size -= graph_sb->get_minimum_size();
-        const int pi = which[i];
+        r.position   += graph_sb->get_offset();
+        r.size       -= graph_sb->get_minimum_size();
+        const int pi  = which[i];
 
         // Draw horizontal lines with labels.
 
@@ -1337,8 +1337,8 @@ void ScriptEditorDebugger::_performance_draw() {
 
         for (int line = 0; line < nb_lines; line += 1) {
             const int from_x = r.position.x;
-            const int to_x = r.position.x + r.size.width;
-            const int y = r.position.y
+            const int to_x   = r.position.x + r.size.width;
+            const int y      = r.position.y
                         + (r.size.height * inv_nb_lines
                            + line * inv_nb_lines * r.size.height);
             perf_draw->draw_line(
@@ -1415,17 +1415,17 @@ void ScriptEditorDebugger::_performance_draw() {
         );
 
         const float spacing = point_sep / float(cols);
-        float from = r.size.width;
+        float from          = r.size.width;
 
         const List<Vector<float>>::Element* E = perf_history.front();
-        float prev = -1;
+        float prev                            = -1;
         while (from >= 0 && E) {
             float m = perf_max[pi];
             if (m == 0) {
                 m = 0.00001;
             }
             float h2 = E->get()[pi] / m;
-            h2 = (1.0 - h2) * r.size.y;
+            h2       = (1.0 - h2) * r.size.y;
 
             if (E != perf_history.front()) {
                 perf_draw->draw_line(
@@ -1435,8 +1435,8 @@ void ScriptEditorDebugger::_performance_draw() {
                     Math::round(EDSCALE)
                 );
             }
-            prev = h2;
-            E = E->next();
+            prev  = h2;
+            E     = E->next();
             from -= spacing;
         }
     }
@@ -1515,8 +1515,8 @@ void ScriptEditorDebugger::_notification(int p_what) {
                         CanvasItemEditor::get_singleton();
 
                     Dictionary state = editor->get_state();
-                    float zoom = state["zoom"];
-                    Point2 offset = state["ofs"];
+                    float zoom       = state["zoom"];
+                    Point2 offset    = state["ofs"];
                     Transform2D transform;
 
                     transform.scale_basis(Size2(zoom, zoom));
@@ -1594,7 +1594,7 @@ void ScriptEditorDebugger::_notification(int p_what) {
                         );
                     }
                 }
-                last_error_count = error_count;
+                last_error_count   = error_count;
                 last_warning_count = warning_count;
             }
 
@@ -1637,7 +1637,7 @@ void ScriptEditorDebugger::_notification(int p_what) {
                     le_clear->set_disabled(false);
                     vmem_refresh->set_disabled(false);
                     error_tree->clear();
-                    error_count = 0;
+                    error_count   = 0;
                     warning_count = 0;
                     profiler_signature.clear();
                     // live_edit_root->set_text("/root");
@@ -1822,7 +1822,7 @@ void ScriptEditorDebugger::start() {
         (int)EditorSettings::get_singleton()->get("network/debug/remote_port");
     int current_try = 0;
     // Find first available port.
-    Error err = server->listen(remote_port);
+    Error err       = server->listen(remote_port);
     while (err != OK && current_try < max_tries) {
         EditorNode::get_log()->add_message(
             String("Remote debugger failed listening on port: ")
@@ -1858,7 +1858,7 @@ void ScriptEditorDebugger::start() {
     }
 
     set_process(true);
-    breaked = false;
+    breaked         = false;
     camera_override = OVERRIDE_NONE;
 }
 
@@ -1886,7 +1886,7 @@ void ScriptEditorDebugger::stop() {
         reason->set_tooltip("");
     }
 
-    remote_port = 0;
+    remote_port      = 0;
     pending_in_queue = 0;
     message.clear();
 
@@ -2073,7 +2073,7 @@ void ScriptEditorDebugger::_method_changed(
 
     if (node) {
         NodePath path = editor->get_edited_scene()->get_path_to(node);
-        int pathid = _get_node_path_cache(path);
+        int pathid    = _get_node_path_cache(path);
 
         Array msg;
         msg.push_back("live_node_call");
@@ -2092,7 +2092,7 @@ void ScriptEditorDebugger::_method_changed(
 
     if (res && res->get_path() != String()) {
         String respath = res->get_path();
-        int pathid = _get_res_path_cache(respath);
+        int pathid     = _get_res_path_cache(respath);
 
         Array msg;
         msg.push_back("live_res_call");
@@ -2122,7 +2122,7 @@ void ScriptEditorDebugger::_property_changed(
 
     if (node) {
         NodePath path = editor->get_edited_scene()->get_path_to(node);
-        int pathid = _get_node_path_cache(path);
+        int pathid    = _get_node_path_cache(path);
 
         if (p_value.is_ref()) {
             Ref<Resource> res = p_value;
@@ -2150,7 +2150,7 @@ void ScriptEditorDebugger::_property_changed(
 
     if (res && res->get_path() != String()) {
         String respath = res->get_path();
-        int pathid = _get_res_path_cache(respath);
+        int pathid     = _get_res_path_cache(respath);
 
         if (p_value.is_ref()) {
             Ref<Resource> res2 = p_value;
@@ -2212,8 +2212,8 @@ void ScriptEditorDebugger::_live_edit_set() {
 
     while (ti) {
         String lp = ti->get_text(0);
-        path = "/" + lp + path;
-        ti = ti->get_parent();
+        path      = "/" + lp + path;
+        ti        = ti->get_parent();
     }
 
     NodePath np = path;
@@ -2522,7 +2522,7 @@ void ScriptEditorDebugger::_clear_remote_objects() {
 
 void ScriptEditorDebugger::_clear_errors_list() {
     error_tree->clear();
-    error_count = 0;
+    error_count   = 0;
     warning_count = 0;
     _notification(NOTIFICATION_PROCESS);
 }
@@ -2567,10 +2567,10 @@ void ScriptEditorDebugger::_item_menu_id_pressed(int p_option) {
                 type = "E ";
             }
 
-            String text = ti->get_text(0) + "   ";
+            String text  = ti->get_text(0) + "   ";
             int rpad_len = text.length();
 
-            text = type + text + ti->get_text(1) + "\n";
+            text         = type + text + ti->get_text(1) + "\n";
             TreeItem* ci = ti->get_children();
             while (ci) {
                 text += "  " + ci->get_text(0).rpad(rpad_len) + ci->get_text(1)
@@ -2600,7 +2600,7 @@ void ScriptEditorDebugger::_item_menu_id_pressed(int p_option) {
         } break;
         case ITEM_MENU_COPY_NODE_PATH: {
             TreeItem* ti = inspect_scene_tree->get_selected();
-            String text = ti->get_text(0);
+            String text  = ti->get_text(0);
 
             if (ti->get_parent() == nullptr) {
                 text = ".";
@@ -2609,7 +2609,7 @@ void ScriptEditorDebugger::_item_menu_id_pressed(int p_option) {
             } else {
                 while (ti->get_parent()->get_parent()
                        != inspect_scene_tree->get_root()) {
-                    ti = ti->get_parent();
+                    ti   = ti->get_parent();
                     text = ti->get_text(0) + "/" + text;
                 }
             }
@@ -2632,7 +2632,7 @@ void ScriptEditorDebugger::_item_menu_id_pressed(int p_option) {
                 "Incorrect C++ source stack trace file:line format (please "
                 "report)."
             );
-            const String file = file_line_number[0];
+            const String file     = file_line_number[0];
             const int line_number = file_line_number[1].to_int();
 
             // Construct a GitHub repository URL and open it in the user's
@@ -3204,7 +3204,7 @@ ScriptEditorDebugger::ScriptEditorDebugger(EditorNode* p_editor) {
         vmem_export->connect("pressed", this, "_video_mem_export");
 
         VBoxContainer* vmmc = memnew(VBoxContainer);
-        vmem_tree = memnew(Tree);
+        vmem_tree           = memnew(Tree);
         vmem_tree->set_v_size_flags(SIZE_EXPAND_FILL);
         vmem_tree->set_h_size_flags(SIZE_EXPAND_FILL);
         vmmc->add_child(vmem_tree);
@@ -3251,7 +3251,7 @@ ScriptEditorDebugger::ScriptEditorDebugger(EditorNode* p_editor) {
 
         {
             HBoxContainer* lehb = memnew(HBoxContainer);
-            Label* l = memnew(Label(TTR("Live Edit Root:")));
+            Label* l            = memnew(Label(TTR("Live Edit Root:")));
             info_left->add_child(l);
             lehb->add_child(live_edit_root);
             le_set = memnew(Button(TTR("Set From Tree")));
@@ -3285,16 +3285,16 @@ ScriptEditorDebugger::ScriptEditorDebugger(EditorNode* p_editor) {
         _property_changeds,
         this
     );
-    live_debug = true;
-    camera_override = OVERRIDE_NONE;
-    last_path_id = false;
-    error_count = 0;
-    warning_count = 0;
-    hide_on_stop = true;
+    live_debug             = true;
+    camera_override        = OVERRIDE_NONE;
+    last_path_id           = false;
+    error_count            = 0;
+    warning_count          = 0;
+    hide_on_stop           = true;
     enable_external_editor = false;
-    last_error_count = 0;
-    last_warning_count = 0;
-    remote_port = 0;
+    last_error_count       = 0;
+    last_warning_count     = 0;
+    remote_port            = 0;
 
     EditorNode::get_singleton()->get_pause_button()->connect(
         "pressed",

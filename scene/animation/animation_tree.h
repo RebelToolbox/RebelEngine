@@ -114,8 +114,8 @@ public:
         bool p_seek,
         float p_blend,
         FilterAction p_filter = FILTER_IGNORE,
-        bool p_optimize = true,
-        float* r_max = nullptr
+        bool p_optimize       = true,
+        float* r_max          = nullptr
     );
 
 protected:
@@ -133,7 +133,7 @@ protected:
         bool p_seek,
         float p_blend,
         FilterAction p_filter = FILTER_IGNORE,
-        bool p_optimize = true
+        bool p_optimize       = true
     );
     float blend_input(
         int p_input,
@@ -141,7 +141,7 @@ protected:
         bool p_seek,
         float p_blend,
         FilterAction p_filter = FILTER_IGNORE,
-        bool p_optimize = true
+        bool p_optimize       = true
     );
     void make_invalid(const String& p_reason);
 
@@ -219,11 +219,11 @@ private:
         ObjectID object_id;
 
         TrackCache() {
-            root_motion = false;
-            setup_pass = 0;
+            root_motion  = false;
+            setup_pass   = 0;
             process_pass = 0;
-            object = nullptr;
-            object_id = 0;
+            object       = nullptr;
+            object_id    = 0;
         }
 
         virtual ~TrackCache() {}
@@ -239,8 +239,8 @@ private:
         Vector3 scale;
 
         TrackCacheTransform() {
-            type = Animation::TYPE_TRANSFORM;
-            spatial = nullptr;
+            type     = Animation::TYPE_TRANSFORM;
+            spatial  = nullptr;
             bone_idx = -1;
             skeleton = nullptr;
         }
@@ -266,7 +266,7 @@ private:
         Vector<StringName> subpath;
 
         TrackCacheBezier() {
-            type = Animation::TYPE_BEZIER;
+            type  = Animation::TYPE_BEZIER;
             value = 0;
         }
     };
@@ -277,10 +277,10 @@ private:
         float len;
 
         TrackCacheAudio() {
-            type = Animation::TYPE_AUDIO;
+            type    = Animation::TYPE_AUDIO;
             playing = false;
-            start = 0;
-            len = 0;
+            start   = 0;
+            len     = 0;
         }
     };
 
@@ -288,7 +288,7 @@ private:
         bool playing;
 
         TrackCacheAnimation() {
-            type = Animation::TYPE_ANIMATION;
+            type    = Animation::TYPE_ANIMATION;
             playing = false;
         }
     };

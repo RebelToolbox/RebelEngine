@@ -56,13 +56,13 @@ class ARVRInterface : public Reference {
     GDCLASS(ARVRInterface, Reference);
 
 public:
-    enum Capabilities {  /* purely meta data, provides some info about what this
-                            interface supports */
-        ARVR_NONE = 0,   /* no capabilities */
-        ARVR_MONO = 1,   /* can be used with mono output */
-        ARVR_STEREO = 2, /* can be used with stereo output */
-        ARVR_AR = 4,     /* offers a camera feed for AR */
-        ARVR_EXTERNAL = 8 /* renders to external device */
+    enum Capabilities { /* purely meta data, provides some info about what this
+                           interface supports */
+        ARVR_NONE     = 0, /* no capabilities */
+        ARVR_MONO     = 1, /* can be used with mono output */
+        ARVR_STEREO   = 2, /* can be used with stereo output */
+        ARVR_AR       = 4, /* offers a camera feed for AR */
+        ARVR_EXTERNAL = 8  /* renders to external device */
     };
 
     enum Eyes {
@@ -141,7 +141,7 @@ public:
         const Rect2& p_screen_rect
     ) = 0; /* output the left or right eye */
 
-    virtual void process() = 0;
+    virtual void process()                = 0;
     virtual void notification(int p_what) = 0;
 
     ARVRInterface();

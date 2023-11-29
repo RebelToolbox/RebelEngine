@@ -75,7 +75,7 @@ void Shader::get_param_list(List<PropertyInfo>* p_params) const {
         if (default_textures.has(pi.name)) { // do not show default textures
             continue;
         }
-        pi.name = "shader_param/" + pi.name;
+        pi.name               = "shader_param/" + pi.name;
         params_cache[pi.name] = E->get().name;
         if (p_params) {
             // small little hack
@@ -222,8 +222,8 @@ void Shader::_bind_methods() {
 }
 
 Shader::Shader() {
-    mode = MODE_SPATIAL;
-    shader = VisualServer::get_singleton()->shader_create();
+    mode               = MODE_SPATIAL;
+    shader             = VisualServer::get_singleton()->shader_create();
     params_cache_dirty = true;
 }
 

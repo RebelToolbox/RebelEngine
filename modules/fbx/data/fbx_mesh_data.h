@@ -92,10 +92,10 @@ struct FBXMeshData : Reference {
     void gen_weight_info(Ref<SurfaceTool> st, int vertex_id) const;
 
     /* mesh maximum weight count */
-    bool valid_weight_count = false;
-    int max_weight_count = 0;
-    uint64_t armature_id = 0;
-    bool valid_armature_id = false;
+    bool valid_weight_count           = false;
+    int max_weight_count              = 0;
+    uint64_t armature_id              = 0;
+    bool valid_armature_id            = false;
     MeshInstance* godot_mesh_instance = nullptr;
 
 private:
@@ -130,7 +130,7 @@ private:
         const HashMap<int, Vector2>& p_uvs_0,
         const HashMap<int, Vector2>& p_uvs_1,
         const HashMap<int, Color>& p_colors,
-        const Vector3& p_morph_value = Vector3(),
+        const Vector3& p_morph_value  = Vector3(),
         const Vector3& p_morph_normal = Vector3()
     );
 

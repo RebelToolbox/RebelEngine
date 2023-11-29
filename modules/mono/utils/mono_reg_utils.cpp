@@ -228,7 +228,7 @@ String find_msbuild_tools_path() {
 
         for (int i = 0; i < lines.size(); i++) {
             const String& line = lines[i];
-            int sep_idx = line.find(":");
+            int sep_idx        = line.find(":");
 
             if (sep_idx > 0) {
                 String key = line.substr(0, sep_idx); // No need to trim

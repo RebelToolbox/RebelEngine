@@ -98,11 +98,11 @@ void create_context() {
 
     int fbcount;
     GLXFBConfig fbconfig = nullptr;
-    XVisualInfo* vi = nullptr;
+    XVisualInfo* vi      = nullptr;
 
     XSetWindowAttributes swa;
-    swa.event_mask = StructureNotifyMask;
-    swa.border_pixel = 0;
+    swa.event_mask          = StructureNotifyMask;
+    swa.border_pixel        = 0;
     unsigned long valuemask = CWBorderPixel | CWColormap | CWEventMask;
 
     GLXFBConfig* fbc = glXChooseFBConfig(
@@ -174,8 +174,8 @@ int detect_prime() {
     String vendors[2];
     String renderers[2];
 
-    vendors[0] = "Unknown";
-    vendors[1] = "Unknown";
+    vendors[0]   = "Unknown";
+    vendors[1]   = "Unknown";
     renderers[0] = "Unknown";
     renderers[1] = "Unknown";
 
@@ -207,7 +207,7 @@ int detect_prime() {
                 // PIPE_BUF will be delivered in one read() call.
                 // Leave it 'Unknown' otherwise.
                 if (read(fdset[0], string, sizeof(string) - 1) > 0) {
-                    vendors[i] = string;
+                    vendors[i]   = string;
                     renderers[i] = string + strlen(string) + 1;
                 }
             }
@@ -226,10 +226,10 @@ int detect_prime() {
             }
             create_context();
 
-            const char* vendor = (const char*)glGetString(GL_VENDOR);
+            const char* vendor   = (const char*)glGetString(GL_VENDOR);
             const char* renderer = (const char*)glGetString(GL_RENDERER);
 
-            unsigned int vendor_len = strlen(vendor) + 1;
+            unsigned int vendor_len   = strlen(vendor) + 1;
             unsigned int renderer_len = strlen(renderer) + 1;
 
             if (vendor_len + renderer_len >= sizeof(string)) {
@@ -248,7 +248,7 @@ int detect_prime() {
     }
 
     int preferred = 0;
-    int priority = 0;
+    int priority  = 0;
 
     if (vendors[0] == vendors[1]) {
         print_verbose("Only one GPU found, using default.");
@@ -262,7 +262,7 @@ int detect_prime() {
                 priorities[i] = v->priority;
 
                 if (v->priority >= priority) {
-                    priority = v->priority;
+                    priority  = v->priority;
                     preferred = i;
                 }
             }

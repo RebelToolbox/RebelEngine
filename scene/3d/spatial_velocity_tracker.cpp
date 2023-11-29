@@ -68,12 +68,12 @@ Vector3 SpatialVelocityTracker::get_tracked_linear_velocity() const {
 
     Vector3 distance_accum;
     float time_accum = 0.0;
-    float base_time = 0.0;
+    float base_time  = 0.0;
 
     if (position_history_len) {
         if (physics_step) {
             uint64_t base = Engine::get_singleton()->get_physics_frames();
-            base_time = float(base - position_history[0].frame)
+            base_time     = float(base - position_history[0].frame)
                       / Engine::get_singleton()->get_iterations_per_second();
         } else {
             uint64_t base = Engine::get_singleton()->get_idle_frame_ticks();
@@ -100,7 +100,7 @@ Vector3 SpatialVelocityTracker::get_tracked_linear_velocity() const {
         }
 
         distance_accum += distance;
-        time_accum += delta;
+        time_accum     += delta;
     }
 
     if (time_accum) {
@@ -120,7 +120,7 @@ void SpatialVelocityTracker::reset(const Vector3& p_new_pos) {
     }
 
     position_history.write[0] = ph;
-    position_history_len = 1;
+    position_history_len      = 1;
 }
 
 void SpatialVelocityTracker::_bind_methods() {
@@ -155,5 +155,5 @@ void SpatialVelocityTracker::_bind_methods() {
 SpatialVelocityTracker::SpatialVelocityTracker() {
     position_history.resize(4); // should be configurable
     position_history_len = 0;
-    physics_step = false;
+    physics_step         = false;
 }

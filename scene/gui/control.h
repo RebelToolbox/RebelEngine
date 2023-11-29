@@ -50,7 +50,7 @@ class Control : public CanvasItem {
 public:
     enum Anchor {
         ANCHOR_BEGIN = 0,
-        ANCHOR_END = 1
+        ANCHOR_END   = 1
     };
 
     enum GrowDirection {
@@ -66,11 +66,11 @@ public:
     };
 
     enum SizeFlags {
-        SIZE_FILL = 1,
-        SIZE_EXPAND = 2,
-        SIZE_EXPAND_FILL = SIZE_EXPAND | SIZE_FILL,
+        SIZE_FILL          = 1,
+        SIZE_EXPAND        = 2,
+        SIZE_EXPAND_FILL   = SIZE_EXPAND | SIZE_FILL,
         SIZE_SHRINK_CENTER = 4, // ignored by expand or fill
-        SIZE_SHRINK_END = 8,    // ignored by expand or fill
+        SIZE_SHRINK_END    = 8, // ignored by expand or fill
     };
 
     enum MouseFilter {
@@ -284,15 +284,15 @@ public:
     enum {
         /*		NOTIFICATION_DRAW=30,
         NOTIFICATION_VISIBILITY_CHANGED=38*/
-        NOTIFICATION_RESIZED = 40,
-        NOTIFICATION_MOUSE_ENTER = 41,
-        NOTIFICATION_MOUSE_EXIT = 42,
-        NOTIFICATION_FOCUS_ENTER = 43,
-        NOTIFICATION_FOCUS_EXIT = 44,
+        NOTIFICATION_RESIZED       = 40,
+        NOTIFICATION_MOUSE_ENTER   = 41,
+        NOTIFICATION_MOUSE_EXIT    = 42,
+        NOTIFICATION_FOCUS_ENTER   = 43,
+        NOTIFICATION_FOCUS_EXIT    = 44,
         NOTIFICATION_THEME_CHANGED = 45,
-        NOTIFICATION_MODAL_CLOSE = 46,
-        NOTIFICATION_SCROLL_BEGIN = 47,
-        NOTIFICATION_SCROLL_END = 48,
+        NOTIFICATION_MODAL_CLOSE   = 46,
+        NOTIFICATION_SCROLL_BEGIN  = 47,
+        NOTIFICATION_SCROLL_END    = 48,
     };
 
     /* EDITOR */
@@ -349,18 +349,18 @@ public:
     void set_margins_preset(
         LayoutPreset p_preset,
         LayoutPresetMode p_resize_mode = PRESET_MODE_MINSIZE,
-        int p_margin = 0
+        int p_margin                   = 0
     );
     void set_anchors_and_margins_preset(
         LayoutPreset p_preset,
         LayoutPresetMode p_resize_mode = PRESET_MODE_MINSIZE,
-        int p_margin = 0
+        int p_margin                   = 0
     );
 
     void set_anchor(
         Margin p_margin,
         float p_anchor,
-        bool p_keep_margin = true,
+        bool p_keep_margin          = true,
         bool p_push_opposite_anchor = true
     );
     float get_anchor(Margin p_margin) const;

@@ -37,12 +37,12 @@
 #include "servers/visual_server.h"
 
 void InputDefault::SpeedTrack::update(const Vector2& p_delta_p) {
-    uint64_t tick = OS::get_singleton()->get_ticks_usec();
+    uint64_t tick  = OS::get_singleton()->get_ticks_usec();
     uint32_t tdiff = tick - last_tick;
-    float delta_t = tdiff / 1000000.0;
-    last_tick = tick;
+    float delta_t  = tdiff / 1000000.0;
+    last_tick      = tick;
 
-    accum += p_delta_p;
+    accum   += p_delta_p;
     accum_t += delta_t;
 
     if (accum_t > max_ref_frame * 10) {
@@ -50,10 +50,10 @@ void InputDefault::SpeedTrack::update(const Vector2& p_delta_p) {
     }
 
     while (accum_t >= min_ref_frame) {
-        float slice_t = min_ref_frame / accum_t;
-        Vector2 slice = accum * slice_t;
-        accum = accum - slice;
-        accum_t -= min_ref_frame;
+        float slice_t  = min_ref_frame / accum_t;
+        Vector2 slice  = accum * slice_t;
+        accum          = accum - slice;
+        accum_t       -= min_ref_frame;
 
         speed = (slice / min_ref_frame)
                     .linear_interpolate(speed, min_ref_frame / max_ref_frame);
@@ -62,8 +62,8 @@ void InputDefault::SpeedTrack::update(const Vector2& p_delta_p) {
 
 void InputDefault::SpeedTrack::reset() {
     last_tick = OS::get_singleton()->get_ticks_usec();
-    speed = Vector2();
-    accum_t = 0;
+    speed     = Vector2();
+    accum_t   = 0;
 }
 
 InputDefault::SpeedTrack::SpeedTrack() {
@@ -315,7 +315,7 @@ void InputDefault::joy_connection_changed(
     _THREAD_SAFE_METHOD_
     Joypad js;
     js.name = p_connected ? p_name : "";
-    js.uid = p_connected ? p_guid : "";
+    js.uid  = p_connected ? p_guid : "";
 
     if (p_connected) {
         String uidname = p_guid;
@@ -325,9 +325,9 @@ void InputDefault::joy_connection_changed(
                 uidname = uidname + _hex_str(p_name[i]);
             };
         };
-        js.uid = uidname;
+        js.uid       = uidname;
         js.connected = true;
-        int mapping = fallback_mapping;
+        int mapping  = fallback_mapping;
         for (int i = 0; i < map_db.size(); i++) {
             if (js.uid == map_db[i].uid) {
                 mapping = i;
@@ -463,12 +463,12 @@ void InputDefault::_parse_input_event_impl(
             bool translate = false;
             if (st->is_pressed()) {
                 if (mouse_from_touch_index == -1) {
-                    translate = true;
+                    translate              = true;
                     mouse_from_touch_index = st->get_index();
                 }
             } else {
                 if (st->get_index() == mouse_from_touch_index) {
-                    translate = true;
+                    translate              = true;
                     mouse_from_touch_index = -1;
                 }
             }
@@ -560,10 +560,10 @@ void InputDefault::_parse_input_event_impl(
                 action.physics_frame =
                     Engine::get_singleton()->get_physics_frames();
                 action.idle_frame = Engine::get_singleton()->get_idle_frames();
-                action.pressed = p_event->is_action_pressed(E->key());
-                action.strength = 0.0f;
+                action.pressed    = p_event->is_action_pressed(E->key());
+                action.strength   = 0.0f;
                 action.raw_strength = 0.0f;
-                action.exact = InputMap::get_singleton()
+                action.exact        = InputMap::get_singleton()
                                    ->event_is_action(p_event, E->key(), true);
                 action_state[E->key()] = action;
             }
@@ -581,7 +581,7 @@ void InputDefault::_parse_input_event_impl(
 
 void InputDefault::set_joy_axis(int p_device, int p_axis, float p_value) {
     _THREAD_SAFE_METHOD_
-    int c = _combine_device(p_axis, p_device);
+    int c        = _combine_device(p_axis, p_device);
     _joy_axis[c] = p_value;
 }
 
@@ -597,21 +597,21 @@ void InputDefault::start_joy_vibration(
         return;
     }
     VibrationInfo vibration;
-    vibration.weak_magnitude = p_weak_magnitude;
+    vibration.weak_magnitude   = p_weak_magnitude;
     vibration.strong_magnitude = p_strong_magnitude;
-    vibration.duration = p_duration;
-    vibration.timestamp = OS::get_singleton()->get_ticks_usec();
-    joy_vibration[p_device] = vibration;
+    vibration.duration         = p_duration;
+    vibration.timestamp        = OS::get_singleton()->get_ticks_usec();
+    joy_vibration[p_device]    = vibration;
 }
 
 void InputDefault::stop_joy_vibration(int p_device) {
     _THREAD_SAFE_METHOD_
     VibrationInfo vibration;
-    vibration.weak_magnitude = 0;
+    vibration.weak_magnitude   = 0;
     vibration.strong_magnitude = 0;
-    vibration.duration = 0;
-    vibration.timestamp = OS::get_singleton()->get_ticks_usec();
-    joy_vibration[p_device] = vibration;
+    vibration.duration         = 0;
+    vibration.timestamp        = OS::get_singleton()->get_ticks_usec();
+    joy_vibration[p_device]    = vibration;
 }
 
 void InputDefault::vibrate_handheld(int p_duration_ms) {
@@ -719,9 +719,9 @@ void InputDefault::action_press(const StringName& p_action, float p_strength) {
     Action action;
 
     action.physics_frame = Engine::get_singleton()->get_physics_frames();
-    action.idle_frame = Engine::get_singleton()->get_idle_frames();
-    action.pressed = true;
-    action.strength = p_strength;
+    action.idle_frame    = Engine::get_singleton()->get_idle_frames();
+    action.pressed       = true;
+    action.strength      = p_strength;
 
     action_state[p_action] = action;
 }
@@ -730,9 +730,9 @@ void InputDefault::action_release(const StringName& p_action) {
     Action action;
 
     action.physics_frame = Engine::get_singleton()->get_physics_frames();
-    action.idle_frame = Engine::get_singleton()->get_idle_frames();
-    action.pressed = false;
-    action.strength = 0.f;
+    action.idle_frame    = Engine::get_singleton()->get_idle_frames();
+    action.pressed       = false;
+    action.strength      = 0.f;
 
     action_state[p_action] = action;
 }
@@ -872,14 +872,14 @@ void InputDefault::release_pressed_events() {
 }
 
 InputDefault::InputDefault() {
-    use_input_buffering = false;
-    use_accumulated_input = false;
-    mouse_button_mask = 0;
+    use_input_buffering      = false;
+    use_accumulated_input    = false;
+    mouse_button_mask        = 0;
     emulate_touch_from_mouse = false;
     emulate_mouse_from_touch = false;
-    mouse_from_touch_index = -1;
-    main_loop = nullptr;
-    default_shape = CURSOR_ARROW;
+    mouse_from_touch_index   = -1;
+    main_loop                = nullptr;
+    default_shape            = CURSOR_ARROW;
 
     fallback_mapping = -1;
 
@@ -926,7 +926,7 @@ void InputDefault::joy_button(int p_device, int p_button, bool p_pressed) {
         // fake additional axis event for triggers
         if (map.index == JOY_L2 || map.index == JOY_R2) {
             float value = p_pressed ? 1.0f : 0.0f;
-            int axis = map.index == JOY_L2 ? JOY_ANALOG_L2 : JOY_ANALOG_R2;
+            int axis    = map.index == JOY_L2 ? JOY_ANALOG_L2 : JOY_ANALOG_R2;
             _axis_event(p_device, axis, value);
         }
         _button_event(p_device, map.index, p_pressed);
@@ -956,12 +956,12 @@ void InputDefault::joy_axis(int p_device, int p_axis, const JoyAxis& p_value) {
     if (p_value.min == 0 && (last < 0.25 || last > 0.75)
         && (last - 0.5) * (p_value.value - 0.5) < 0) {
         JoyAxis jx;
-        jx.min = p_value.min;
+        jx.min   = p_value.min;
         jx.value = p_value.value < 0.5 ? 0.6 : 0.4;
         joy_axis(p_device, p_axis, jx);
     } else if (ABS(last) > 0.5 && last * p_value.value <= 0) {
         JoyAxis jx;
-        jx.min = p_value.min;
+        jx.min   = p_value.min;
         jx.value = last > 0 ? 0.1 : -0.1;
         joy_axis(p_device, p_axis, jx);
     }
@@ -1043,19 +1043,19 @@ void InputDefault::joy_hat(int p_device, int p_val) {
 
     JoyEvent map[HAT_MAX];
 
-    map[HAT_UP].type = TYPE_BUTTON;
+    map[HAT_UP].type  = TYPE_BUTTON;
     map[HAT_UP].index = JOY_DPAD_UP;
     map[HAT_UP].value = 0;
 
-    map[HAT_RIGHT].type = TYPE_BUTTON;
+    map[HAT_RIGHT].type  = TYPE_BUTTON;
     map[HAT_RIGHT].index = JOY_DPAD_RIGHT;
     map[HAT_RIGHT].value = 0;
 
-    map[HAT_DOWN].type = TYPE_BUTTON;
+    map[HAT_DOWN].type  = TYPE_BUTTON;
     map[HAT_DOWN].index = JOY_DPAD_DOWN;
     map[HAT_DOWN].value = 0;
 
-    map[HAT_LEFT].type = TYPE_BUTTON;
+    map[HAT_LEFT].type  = TYPE_BUTTON;
     map[HAT_LEFT].index = JOY_DPAD_LEFT;
     map[HAT_LEFT].value = 0;
 
@@ -1065,8 +1065,8 @@ void InputDefault::joy_hat(int p_device, int p_val) {
 
     int cur_val = joy_names[p_device].hat_current;
 
-    for (int hat_direction = 0, hat_mask = 1; hat_direction < HAT_MAX;
-         hat_direction++, hat_mask <<= 1) {
+    for (int hat_direction = 0, hat_mask   = 1; hat_direction < HAT_MAX;
+         hat_direction++, hat_mask       <<= 1) {
         if ((p_val & hat_mask) != (cur_val & hat_mask)) {
             if (map[hat_direction].type == TYPE_BUTTON) {
                 _button_event(
@@ -1169,7 +1169,7 @@ InputDefault::JoyEvent InputDefault::_get_mapped_axis_event(
                 || (binding.input.axis.range == POSITIVE_HALF_AXIS && value > 0)
                 || (binding.input.axis.range == NEGATIVE_HALF_AXIS && value < 0
                 )) {
-                event.type = binding.outputType;
+                event.type                   = binding.outputType;
                 float shifted_positive_value = 0;
                 switch (binding.input.axis.range) {
                     case POSITIVE_HALF_AXIS:
@@ -1345,7 +1345,7 @@ void InputDefault::parse_mapping(String p_mapping) {
     CharString uid;
     uid.resize(17);
 
-    mapping.uid = entry[0];
+    mapping.uid  = entry[0];
     mapping.name = entry[1];
 
     int idx = 1;
@@ -1355,7 +1355,7 @@ void InputDefault::parse_mapping(String p_mapping) {
         }
 
         String output = entry[idx].get_slice(":", 0).replace(" ", "");
-        String input = entry[idx].get_slice(":", 1).replace(" ", "");
+        String input  = entry[idx].get_slice(":", 1).replace(" ", "");
         ERR_CONTINUE_MSG(
             output.length() < 1 || input.length() < 2,
             vformat(
@@ -1390,19 +1390,19 @@ void InputDefault::parse_mapping(String p_mapping) {
         JoyAxisRange input_range = FULL_AXIS;
         if (input[0] == '+') {
             input_range = POSITIVE_HALF_AXIS;
-            input = input.right(1);
+            input       = input.right(1);
         } else if (input[0] == '-') {
             input_range = NEGATIVE_HALF_AXIS;
-            input = input.right(1);
+            input       = input.right(1);
         }
         bool invert_axis = false;
         if (input[input.length() - 1] == '~') {
             invert_axis = true;
-            input = input.left(input.length() - 1);
+            input       = input.left(input.length() - 1);
         }
 
         JoystickList output_button = _get_output_button(output);
-        JoystickList output_axis = _get_output_axis(output);
+        JoystickList output_axis   = _get_output_axis(output);
         ERR_CONTINUE_MSG(
             output_button == JOY_INVALID_OPTION
                 && output_axis == JOY_INVALID_OPTION,
@@ -1425,23 +1425,23 @@ void InputDefault::parse_mapping(String p_mapping) {
 
         JoyBinding binding;
         if (output_button != JOY_INVALID_OPTION) {
-            binding.outputType = TYPE_BUTTON;
+            binding.outputType    = TYPE_BUTTON;
             binding.output.button = output_button;
         } else if (output_axis != JOY_INVALID_OPTION) {
-            binding.outputType = TYPE_AXIS;
-            binding.output.axis.axis = output_axis;
+            binding.outputType        = TYPE_AXIS;
+            binding.output.axis.axis  = output_axis;
             binding.output.axis.range = output_range;
         }
 
         switch (input[0]) {
             case 'b':
-                binding.inputType = TYPE_BUTTON;
+                binding.inputType    = TYPE_BUTTON;
                 binding.input.button = input.right(1).to_int();
                 break;
             case 'a':
-                binding.inputType = TYPE_AXIS;
-                binding.input.axis.axis = input.right(1).to_int();
-                binding.input.axis.range = input_range;
+                binding.inputType         = TYPE_AXIS;
+                binding.input.axis.axis   = input.right(1).to_int();
+                binding.input.axis.range  = input_range;
                 binding.input.axis.invert = invert_axis;
                 break;
             case 'h':
@@ -1453,7 +1453,7 @@ void InputDefault::parse_mapping(String p_mapping) {
                         p_mapping
                     )
                 );
-                binding.inputType = TYPE_HAT;
+                binding.inputType     = TYPE_HAT;
                 binding.input.hat.hat = input.substr(1, 1).to_int();
                 binding.input.hat.hat_mask =
                     static_cast<HatMask>(input.right(3).to_int());
@@ -1479,9 +1479,9 @@ void InputDefault::add_joy_mapping(String p_mapping, bool p_update_existing) {
     parse_mapping(p_mapping);
     if (p_update_existing) {
         Vector<String> entry = p_mapping.split(",");
-        String uid = entry[0];
+        String uid           = entry[0];
         for (Map<int, Joypad>::Element* E = joy_names.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             Joypad& joy = E->get();
             if (joy.uid == uid) {
                 joy.mapping = map_db.size() - 1;

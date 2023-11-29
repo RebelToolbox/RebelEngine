@@ -6,7 +6,7 @@ layout(location = 0) in highp vec4 vertex_attrib;
 /* clang-format on */
 
 void main() {
-    gl_Position = vertex_attrib;
+    gl_Position   = vertex_attrib;
     gl_Position.z = 1.0;
 }
 
@@ -162,7 +162,7 @@ vec3 getOffsetPosition(ivec2 ssC, vec2 unitOffset, float ssR) {
     } else {
         // read from mipmaps
         uint d = texelFetch(source_depth_mipmaps, mipP, mipLevel - 1).r;
-        P.z = -(float(d) / 65535.0) * camera_z_far;
+        P.z    = -(float(d) / 65535.0) * camera_z_far;
     }
 
     // Offset to pixel center
@@ -192,8 +192,8 @@ float sampleAO(
 ) {
     // Offset on the unit disk, spun for this pixel
     float ssR;
-    vec2 unitOffset = tapLocation(tapIndex, randomPatternRotationAngle, ssR);
-    ssR *= ssDiskRadius;
+    vec2 unitOffset  = tapLocation(tapIndex, randomPatternRotationAngle, ssR);
+    ssR             *= ssDiskRadius;
 
     // The occluding point in camera space
     vec3 Q = getOffsetPosition(ssC, unitOffset, ssR);
@@ -204,7 +204,7 @@ float sampleAO(
     float vn = dot(v, n_C);
 
     const float epsilon = 0.01;
-    float radius2 = p_radius * p_radius;
+    float radius2       = p_radius * p_radius;
 
     // A: From the HPG12 paper
     // Note large epsilon to avoid overdarkening within cracks
@@ -247,7 +247,7 @@ void main() {
 	vec3 n_C = texelFetch(source_normal, ssC, 0).rgb * 2.0 - 1.0;
 #else
     vec3 n_C = reconstructCSFaceNormal(C);
-    n_C = -n_C;
+    n_C      = -n_C;
 #endif
 
     // Hash function used in the HPG12 AlchemyAO paper

@@ -44,7 +44,7 @@ class SSLContextMbedTLS;
 class CryptoKeyMbedTLS : public CryptoKey {
 private:
     mbedtls_pk_context pkey;
-    int locks = 0;
+    int locks        = 0;
     bool public_only = true;
 
 public:
@@ -133,7 +133,7 @@ class HMACContextMbedTLS : public HMACContext {
 private:
     HashingContext::HashType hash_type;
     int hash_len = 0;
-    void* ctx = nullptr;
+    void* ctx    = nullptr;
 
 public:
     static HMACContext* create();

@@ -153,7 +153,7 @@ struct StrRange {
 
     StrRange(const CharType* p_c_str = nullptr, int p_len = 0) {
         c_str = p_c_str;
-        len = p_len;
+        len   = p_len;
     }
 };
 
@@ -312,12 +312,12 @@ public:
     static String num_real(double p_num);
     static String num_int64(
         int64_t p_num,
-        int base = 10,
+        int base            = 10,
         bool capitalize_hex = false
     );
     static String num_uint64(
         uint64_t p_num,
-        int base = 10,
+        int base            = 10,
         bool capitalize_hex = false
     );
     static String chr(CharType p_char);
@@ -349,12 +349,12 @@ public:
     Vector<String> split(
         const String& p_splitter,
         bool p_allow_empty = true,
-        int p_maxsplit = 0
+        int p_maxsplit     = 0
     ) const;
     Vector<String> rsplit(
         const String& p_splitter,
         bool p_allow_empty = true,
-        int p_maxsplit = 0
+        int p_maxsplit     = 0
     ) const;
     Vector<String> split_spaces() const;
     Vector<float> split_floats(

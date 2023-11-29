@@ -153,10 +153,10 @@ Cluster::Cluster(
         sc->GetElement("TransformAssociateModel");
     if (TransformAssociateModel != nullptr) {
         // Transform t = ReadMatrix(*TransformAssociateModel);
-        link_mode = SkinLinkMode_Additive;
+        link_mode                     = SkinLinkMode_Additive;
         valid_transformAssociateModel = true;
     } else {
-        link_mode = SkinLinkMode_Normalized;
+        link_mode                     = SkinLinkMode_Normalized;
         valid_transformAssociateModel = false;
     }
 
@@ -168,7 +168,7 @@ Cluster::Cluster(
     // const Element& TransformAssociateModel = GetRequiredElement(sc,
     // "TransformAssociateModel", &element);
 
-    transform = ReadMatrix(Transform);
+    transform     = ReadMatrix(Transform);
     transformLink = ReadMatrix(TransformLink);
 
     // it is actually possible that there be Deformer's with no weights
@@ -314,7 +314,7 @@ BlendShapeChannel::BlendShapeChannel(
     const std::string& name
 ) :
     Deformer(id, element, doc, name) {
-    const ScopePtr sc = GetRequiredScope(element);
+    const ScopePtr sc              = GetRequiredScope(element);
     const ElementPtr DeformPercent = sc->GetElement("DeformPercent");
     if (DeformPercent) {
         percent = ParseTokenAsFloat(GetRequiredToken(DeformPercent, 0));

@@ -136,7 +136,7 @@ protected:
 public:
     enum {
         NODE_ID_INVALID = -1,
-        NODE_ID_OUTPUT = 0,
+        NODE_ID_OUTPUT  = 0,
     };
 
     void add_node(
@@ -264,9 +264,9 @@ public:
 
     virtual String get_caption() const = 0;
 
-    virtual int get_input_port_count() const = 0;
+    virtual int get_input_port_count() const               = 0;
     virtual PortType get_input_port_type(int p_port) const = 0;
-    virtual String get_input_port_name(int p_port) const = 0;
+    virtual String get_input_port_name(int p_port) const   = 0;
 
     virtual void set_input_port_default_value(
         int p_port,
@@ -279,9 +279,9 @@ public:
     Array get_default_input_values() const;
     virtual void set_default_input_values(const Array& p_values);
 
-    virtual int get_output_port_count() const = 0;
+    virtual int get_output_port_count() const               = 0;
     virtual PortType get_output_port_type(int p_port) const = 0;
-    virtual String get_output_port_name(int p_port) const = 0;
+    virtual String get_output_port_name(int p_port) const   = 0;
 
     virtual String get_input_port_default_hint(int p_port) const;
 

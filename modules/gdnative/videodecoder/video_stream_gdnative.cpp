@@ -106,15 +106,15 @@ void GDAPI godot_videodecoder_register_decoder(
 
 bool VideoStreamPlaybackGDNative::open_file(const String& p_file) {
     ERR_FAIL_COND_V(interface == nullptr, false);
-    file = FileAccess::open(p_file, FileAccess::READ);
+    file             = FileAccess::open(p_file, FileAccess::READ);
     bool file_opened = interface->open_file(data_struct, file);
 
     if (file_opened) {
         num_channels = interface->get_channels(data_struct);
-        mix_rate = interface->get_mix_rate(data_struct);
+        mix_rate     = interface->get_mix_rate(data_struct);
 
         godot_vector2 vec = interface->get_texture_size(data_struct);
-        texture_size = *(Vector2*)&vec;
+        texture_size      = *(Vector2*)&vec;
         // Only do memset if num_channels > 0 otherwise it will crash.
         if (num_channels > 0) {
             pcm = (float*)memalloc(
@@ -123,7 +123,7 @@ bool VideoStreamPlaybackGDNative::open_file(const String& p_file) {
             memset(pcm, 0, num_channels * AUX_BUFFER_SIZE * sizeof(float));
         }
 
-        pcm_write_idx = -1;
+        pcm_write_idx   = -1;
         samples_decoded = 0;
 
         texture->create(
@@ -161,7 +161,7 @@ void VideoStreamPlaybackGDNative::update(float p_delta) {
                 pcm_write_idx = -1;
             } else {
                 samples_decoded -= mixed;
-                pcm_write_idx += mixed;
+                pcm_write_idx   += mixed;
             }
         }
         if (pcm_write_idx < 0) {
@@ -241,11 +241,11 @@ void VideoStreamPlaybackGDNative::cleanup() {
         memdelete(file);
         file = nullptr;
     }
-    pcm = nullptr;
-    time = 0;
+    pcm          = nullptr;
+    time         = 0;
     num_channels = -1;
-    interface = nullptr;
-    data_struct = nullptr;
+    interface    = nullptr;
+    data_struct  = nullptr;
 }
 
 void VideoStreamPlaybackGDNative::set_interface(
@@ -255,7 +255,7 @@ void VideoStreamPlaybackGDNative::set_interface(
     if (interface != nullptr) {
         cleanup();
     }
-    interface = p_interface;
+    interface   = p_interface;
     data_struct = interface->constructor((godot_object*)this);
 }
 
@@ -296,7 +296,7 @@ void VideoStreamPlaybackGDNative::seek(float p_time) {
     time = p_time;
     // reset audio buffers
     memset(pcm, 0, num_channels * AUX_BUFFER_SIZE * sizeof(float));
-    pcm_write_idx = -1;
+    pcm_write_idx   = -1;
     samples_decoded = 0;
 }
 
@@ -336,7 +336,7 @@ void VideoStreamPlaybackGDNative::set_mix_callback(
     AudioMixCallback p_callback,
     void* p_userdata
 ) {
-    mix_udata = p_userdata;
+    mix_udata    = p_userdata;
     mix_callback = p_callback;
 }
 

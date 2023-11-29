@@ -43,7 +43,7 @@ struct StaticCString {
 class StringName {
     enum {
         STRING_TABLE_BITS = 12,
-        STRING_TABLE_LEN = 1 << STRING_TABLE_BITS,
+        STRING_TABLE_LEN  = 1 << STRING_TABLE_BITS,
         STRING_TABLE_MASK = STRING_TABLE_LEN - 1
     };
 
@@ -64,8 +64,8 @@ class StringName {
         _Data() {
             cname = nullptr;
             next = prev = nullptr;
-            idx = 0;
-            hash = 0;
+            idx         = 0;
+            hash        = 0;
         }
     };
 

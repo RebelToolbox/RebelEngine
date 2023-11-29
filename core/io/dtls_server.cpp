@@ -34,7 +34,7 @@
 #include "core/project_settings.h"
 
 DTLSServer* (*DTLSServer::_create)() = nullptr;
-bool DTLSServer::available = false;
+bool DTLSServer::available           = false;
 
 DTLSServer* DTLSServer::create() {
     if (_create) {

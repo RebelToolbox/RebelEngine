@@ -186,17 +186,17 @@ void Spatial::_notification(int p_what) {
             if (data.C) {
                 data.parent->data.children.erase(data.C);
             }
-            data.parent = nullptr;
-            data.C = nullptr;
+            data.parent          = nullptr;
+            data.C               = nullptr;
             data.toplevel_active = false;
         } break;
         case NOTIFICATION_ENTER_WORLD: {
             data.inside_world = true;
-            data.viewport = nullptr;
-            Node* parent = get_parent();
+            data.viewport     = nullptr;
+            Node* parent      = get_parent();
             while (parent && !data.viewport) {
                 data.viewport = Object::cast_to<Viewport>(parent);
-                parent = parent->get_parent();
+                parent        = parent->get_parent();
             }
 
             ERR_FAIL_COND(!data.viewport);
@@ -247,7 +247,7 @@ void Spatial::_notification(int p_what) {
                 );
             }
 
-            data.viewport = nullptr;
+            data.viewport     = nullptr;
             data.inside_world = false;
 
         } break;
@@ -266,8 +266,8 @@ void Spatial::_notification(int p_what) {
 }
 
 void Spatial::set_transform(const Transform& p_transform) {
-    data.local_transform = p_transform;
-    data.dirty |= DIRTY_VECTORS;
+    data.local_transform  = p_transform;
+    data.dirty           |= DIRTY_VECTORS;
     _change_notify("translation");
     _change_notify("rotation");
     _change_notify("rotation_degrees");
@@ -359,12 +359,12 @@ void Spatial::set_translation(const Vector3& p_translation) {
 
 void Spatial::set_rotation(const Vector3& p_euler_rad) {
     if (data.dirty & DIRTY_VECTORS) {
-        data.scale = data.local_transform.basis.get_scale();
+        data.scale  = data.local_transform.basis.get_scale();
         data.dirty &= ~DIRTY_VECTORS;
     }
 
-    data.rotation = p_euler_rad;
-    data.dirty |= DIRTY_LOCAL;
+    data.rotation  = p_euler_rad;
+    data.dirty    |= DIRTY_LOCAL;
     _change_notify("transform");
     _propagate_transform_changed(this);
     if (data.notify_local_transform) {
@@ -378,11 +378,11 @@ void Spatial::set_rotation_degrees(const Vector3& p_euler_deg) {
 
 void Spatial::set_scale(const Vector3& p_scale) {
     if (data.dirty & DIRTY_VECTORS) {
-        data.rotation = data.local_transform.basis.get_rotation();
-        data.dirty &= ~DIRTY_VECTORS;
+        data.rotation  = data.local_transform.basis.get_rotation();
+        data.dirty    &= ~DIRTY_VECTORS;
     }
 
-    data.scale = p_scale;
+    data.scale  = p_scale;
     data.dirty |= DIRTY_LOCAL;
     _change_notify("transform");
     _propagate_transform_changed(this);
@@ -397,7 +397,7 @@ Vector3 Spatial::get_translation() const {
 
 Vector3 Spatial::get_rotation() const {
     if (data.dirty & DIRTY_VECTORS) {
-        data.scale = data.local_transform.basis.get_scale();
+        data.scale    = data.local_transform.basis.get_scale();
         data.rotation = data.local_transform.basis.get_rotation();
 
         data.dirty &= ~DIRTY_VECTORS;
@@ -412,7 +412,7 @@ Vector3 Spatial::get_rotation_degrees() const {
 
 Vector3 Spatial::get_scale() const {
     if (data.dirty & DIRTY_VECTORS) {
-        data.scale = data.local_transform.basis.get_scale();
+        data.scale    = data.local_transform.basis.get_scale();
         data.rotation = data.local_transform.basis.get_rotation();
 
         data.dirty &= ~DIRTY_VECTORS;
@@ -524,7 +524,7 @@ void Spatial::set_as_toplevel(bool p_enabled) {
             );
         }
 
-        data.toplevel = p_enabled;
+        data.toplevel        = p_enabled;
         data.toplevel_active = p_enabled;
 
     } else {
@@ -684,8 +684,8 @@ void Spatial::global_scale(const Vector3& p_scale) {
 }
 
 void Spatial::global_translate(const Vector3& p_offset) {
-    Transform t = get_global_transform();
-    t.origin += p_offset;
+    Transform t  = get_global_transform();
+    t.origin    += p_offset;
     set_global_transform(t);
 }
 
@@ -1011,28 +1011,28 @@ void Spatial::_bind_methods() {
 }
 
 Spatial::Spatial() : xform_change(this) {
-    data.dirty = DIRTY_NONE;
+    data.dirty         = DIRTY_NONE;
     data.children_lock = 0;
 
     data.ignore_notification = false;
-    data.toplevel = false;
-    data.toplevel_active = false;
-    data.scale = Vector3(1, 1, 1);
-    data.viewport = nullptr;
-    data.inside_world = false;
-    data.visible = true;
-    data.disable_scale = false;
+    data.toplevel            = false;
+    data.toplevel_active     = false;
+    data.scale               = Vector3(1, 1, 1);
+    data.viewport            = nullptr;
+    data.inside_world        = false;
+    data.visible             = true;
+    data.disable_scale       = false;
 
     data.spatial_flags = SPATIAL_FLAG_VI_VISIBLE;
 
 #ifdef TOOLS_ENABLED
     data.gizmo_disabled = false;
-    data.gizmo_dirty = false;
+    data.gizmo_dirty    = false;
 #endif
     data.notify_local_transform = false;
-    data.notify_transform = false;
-    data.parent = nullptr;
-    data.C = nullptr;
+    data.notify_transform       = false;
+    data.parent                 = nullptr;
+    data.C                      = nullptr;
 }
 
 Spatial::~Spatial() {}

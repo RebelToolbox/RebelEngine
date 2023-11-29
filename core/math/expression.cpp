@@ -209,7 +209,7 @@ int Expression::get_func_argument_count(BuiltinFunc p_func) {
 
 #define VALIDATE_ARG_NUM(m_arg)                                                \
     if (!p_inputs[m_arg]->is_num()) {                                          \
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;       \
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;    \
         r_error.argument = m_arg;                                              \
         r_error.expected = Variant::REAL;                                      \
         return;                                                                \
@@ -302,7 +302,7 @@ void Expression::exec_func(
                 int64_t i = *p_inputs[0];
                 *r_return = ABS(i);
             } else if (p_inputs[0]->get_type() == Variant::REAL) {
-                real_t r = *p_inputs[0];
+                real_t r  = *p_inputs[0];
                 *r_return = Math::abs(r);
             } else {
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
@@ -315,7 +315,7 @@ void Expression::exec_func(
                 int64_t i = *p_inputs[0];
                 *r_return = i < 0 ? -1 : (i > 0 ? +1 : 0);
             } else if (p_inputs[0]->get_type() == Variant::REAL) {
-                real_t r = *p_inputs[0];
+                real_t r  = *p_inputs[0];
                 *r_return = r < 0.0 ? -1.0 : (r > 0.0 ? +1.0 : 0.0);
             } else {
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
@@ -462,7 +462,7 @@ void Expression::exec_func(
         case MATH_RANDSEED: {
             VALIDATE_ARG_NUM(0);
             uint64_t seed = *p_inputs[0];
-            int ret = Math::rand_from_seed(&seed);
+            int ret       = Math::rand_from_seed(&seed);
             Array reta;
             reta.push_back(ret);
             reta.push_back(seed);
@@ -488,15 +488,15 @@ void Expression::exec_func(
         case MATH_POLAR2CARTESIAN: {
             VALIDATE_ARG_NUM(0);
             VALIDATE_ARG_NUM(1);
-            double r = *p_inputs[0];
+            double r  = *p_inputs[0];
             double th = *p_inputs[1];
             *r_return = Vector2(r * Math::cos(th), r * Math::sin(th));
         } break;
         case MATH_CARTESIAN2POLAR: {
             VALIDATE_ARG_NUM(0);
             VALIDATE_ARG_NUM(1);
-            double x = *p_inputs[0];
-            double y = *p_inputs[1];
+            double x  = *p_inputs[0];
+            double y  = *p_inputs[1];
             *r_return = Vector2(Math::sqrt(x * x + y * y), Math::atan2(y, x));
         } break;
         case MATH_WRAP: {
@@ -575,7 +575,7 @@ void Expression::exec_func(
         case LOGIC_NEAREST_PO2: {
             VALIDATE_ARG_NUM(0);
             int64_t num = *p_inputs[0];
-            *r_return = next_power_of_2(num);
+            *r_return   = next_power_of_2(num);
         } break;
         case OBJ_WEAKREF: {
             if (p_inputs[0]->get_type() != Variant::OBJECT) {
@@ -779,7 +779,7 @@ void Expression::exec_func(
             Variant ret;
             {
                 PoolByteArray::Read r = varr.read();
-                Error err = decode_variant(
+                Error err             = decode_variant(
                     ret,
                     r.ptr(),
                     varr.size(),
@@ -805,7 +805,7 @@ void Expression::exec_func(
             VALIDATE_ARG_NUM(1);
 
             Color color = Color::named(*p_inputs[0]);
-            color.a = *p_inputs[1];
+            color.a     = *p_inputs[1];
 
             *r_return = String(color);
 
@@ -875,7 +875,7 @@ Error Expression::_get_token(Token& r_token) {
             };
             case '$': {
                 r_token.type = TK_INPUT;
-                int index = 0;
+                int index    = 0;
                 do {
                     if (!_is_number(expression[str_ofs])) {
                         _set_error("Expected number after '$'");
@@ -1047,10 +1047,10 @@ Error Expression::_get_token(Token& r_token) {
                                     if (_is_number(c)) {
                                         v = c - '0';
                                     } else if (c >= 'a' && c <= 'f') {
-                                        v = c - 'a';
+                                        v  = c - 'a';
                                         v += 10;
                                     } else if (c >= 'A' && c <= 'F') {
-                                        v = c - 'A';
+                                        v  = c - 'A';
                                         v += 10;
                                     } else {
                                         ERR_PRINT("BUG");
@@ -1058,7 +1058,7 @@ Error Expression::_get_token(Token& r_token) {
                                     }
 
                                     res <<= 4;
-                                    res |= v;
+                                    res  |= v;
                                 }
 
                             } break;
@@ -1079,7 +1079,7 @@ Error Expression::_get_token(Token& r_token) {
                     }
                 }
 
-                r_token.type = TK_CONSTANT;
+                r_token.type  = TK_CONSTANT;
                 r_token.value = str;
                 return OK;
 
@@ -1105,12 +1105,12 @@ Error Expression::_get_token(Token& r_token) {
 #define READING_DONE 6
                     int reading = READING_INT;
 
-                    CharType c = cchar;
-                    bool exp_sign = false;
-                    bool exp_beg = false;
-                    bool bin_beg = false;
-                    bool hex_beg = false;
-                    bool is_float = false;
+                    CharType c         = cchar;
+                    bool exp_sign      = false;
+                    bool exp_beg       = false;
+                    bool bin_beg       = false;
+                    bool hex_beg       = false;
+                    bool is_float      = false;
                     bool is_first_char = true;
 
                     while (true) {
@@ -1125,10 +1125,10 @@ Error Expression::_get_token(Token& r_token) {
                                         }
                                     }
                                 } else if (c == '.') {
-                                    reading = READING_DEC;
+                                    reading  = READING_DEC;
                                     is_float = true;
                                 } else if (c == 'e') {
-                                    reading = READING_EXP;
+                                    reading  = READING_EXP;
                                     is_float = true;
                                 } else {
                                     reading = READING_DONE;
@@ -1177,9 +1177,9 @@ Error Expression::_get_token(Token& r_token) {
                         if (reading == READING_DONE) {
                             break;
                         }
-                        num += String::chr(c);
-                        c = GET_CHAR();
-                        is_first_char = false;
+                        num           += String::chr(c);
+                        c              = GET_CHAR();
+                        is_first_char  = false;
                     }
 
                     str_ofs--;
@@ -1204,9 +1204,9 @@ Error Expression::_get_token(Token& r_token) {
                     while ((cchar >= 'A' && cchar <= 'Z')
                            || (cchar >= 'a' && cchar <= 'z') || cchar == '_'
                            || (!first && _is_number(cchar))) {
-                        id += String::chr(cchar);
-                        cchar = GET_CHAR();
-                        first = false;
+                        id    += String::chr(cchar);
+                        cchar  = GET_CHAR();
+                        first  = false;
                     }
 
                     str_ofs--; // go back one
@@ -1214,25 +1214,25 @@ Error Expression::_get_token(Token& r_token) {
                     if (id == "in") {
                         r_token.type = TK_OP_IN;
                     } else if (id == "null") {
-                        r_token.type = TK_CONSTANT;
+                        r_token.type  = TK_CONSTANT;
                         r_token.value = Variant();
                     } else if (id == "true") {
-                        r_token.type = TK_CONSTANT;
+                        r_token.type  = TK_CONSTANT;
                         r_token.value = true;
                     } else if (id == "false") {
-                        r_token.type = TK_CONSTANT;
+                        r_token.type  = TK_CONSTANT;
                         r_token.value = false;
                     } else if (id == "PI") {
-                        r_token.type = TK_CONSTANT;
+                        r_token.type  = TK_CONSTANT;
                         r_token.value = Math_PI;
                     } else if (id == "TAU") {
-                        r_token.type = TK_CONSTANT;
+                        r_token.type  = TK_CONSTANT;
                         r_token.value = Math_TAU;
                     } else if (id == "INF") {
-                        r_token.type = TK_CONSTANT;
+                        r_token.type  = TK_CONSTANT;
                         r_token.value = Math_INF;
                     } else if (id == "NAN") {
-                        r_token.type = TK_CONSTANT;
+                        r_token.type  = TK_CONSTANT;
                         r_token.value = Math_NAN;
                     } else if (id == "not") {
                         r_token.type = TK_OP_NOT;
@@ -1246,7 +1246,7 @@ Error Expression::_get_token(Token& r_token) {
                         for (int i = 0; i < Variant::VARIANT_MAX; i++) {
                             if (id
                                 == Variant::get_type_name(Variant::Type(i))) {
-                                r_token.type = TK_BASIC_TYPE;
+                                r_token.type  = TK_BASIC_TYPE;
                                 r_token.value = i;
                                 return OK;
                             }
@@ -1254,12 +1254,12 @@ Error Expression::_get_token(Token& r_token) {
 
                         BuiltinFunc bifunc = find_function(id);
                         if (bifunc != FUNC_MAX) {
-                            r_token.type = TK_BUILTIN_FUNC;
+                            r_token.type  = TK_BUILTIN_FUNC;
                             r_token.value = bifunc;
                             return OK;
                         }
 
-                        r_token.type = TK_IDENTIFIER;
+                        r_token.type  = TK_IDENTIFIER;
                         r_token.value = id;
                     }
 
@@ -1350,7 +1350,7 @@ Expression::ENode* Expression::_parse_expression() {
                     if (tk.type == TK_CURLY_BRACKET_CLOSE) {
                         break;
                     }
-                    str_ofs = cofs; // revert
+                    str_ofs        = cofs; // revert
                     // parse an expression
                     ENode* subexpr = _parse_expression();
                     if (!subexpr) {
@@ -1395,7 +1395,7 @@ Expression::ENode* Expression::_parse_expression() {
                     if (tk.type == TK_BRACKET_CLOSE) {
                         break;
                     }
-                    str_ofs = cofs; // revert
+                    str_ofs        = cofs; // revert
                     // parse an expression
                     ENode* subexpr = _parse_expression();
                     if (!subexpr) {
@@ -1439,9 +1439,9 @@ Expression::ENode* Expression::_parse_expression() {
                 if (tk.type == TK_PARENTHESIS_OPEN) {
                     // function call
                     CallNode* func_call = alloc_node<CallNode>();
-                    func_call->method = identifier;
+                    func_call->method   = identifier;
                     SelfNode* self_node = alloc_node<SelfNode>();
-                    func_call->base = self_node;
+                    func_call->base     = self_node;
 
                     while (true) {
                         int cofs2 = str_ofs;
@@ -1449,7 +1449,7 @@ Expression::ENode* Expression::_parse_expression() {
                         if (tk.type == TK_PARENTHESIS_CLOSE) {
                             break;
                         }
-                        str_ofs = cofs2; // revert
+                        str_ofs        = cofs2; // revert
                         // parse an expression
                         ENode* subexpr = _parse_expression();
                         if (!subexpr) {
@@ -1484,30 +1484,30 @@ Expression::ENode* Expression::_parse_expression() {
 
                     if (input_index != -1) {
                         InputNode* input = alloc_node<InputNode>();
-                        input->index = input_index;
-                        expr = input;
+                        input->index     = input_index;
+                        expr             = input;
                     } else {
                         NamedIndexNode* index = alloc_node<NamedIndexNode>();
-                        SelfNode* self_node = alloc_node<SelfNode>();
-                        index->base = self_node;
-                        index->name = identifier;
-                        expr = index;
+                        SelfNode* self_node   = alloc_node<SelfNode>();
+                        index->base           = self_node;
+                        index->name           = identifier;
+                        expr                  = index;
                     }
                 }
             } break;
             case TK_INPUT: {
                 InputNode* input = alloc_node<InputNode>();
-                input->index = tk.value;
-                expr = input;
+                input->index     = tk.value;
+                expr             = input;
             } break;
             case TK_SELF: {
                 SelfNode* self = alloc_node<SelfNode>();
-                expr = self;
+                expr           = self;
             } break;
             case TK_CONSTANT: {
                 ConstantNode* constant = alloc_node<ConstantNode>();
-                constant->value = tk.value;
-                expr = constant;
+                constant->value        = tk.value;
+                expr                   = constant;
             } break;
             case TK_BASIC_TYPE: {
                 // constructor..
@@ -1520,7 +1520,7 @@ Expression::ENode* Expression::_parse_expression() {
                 }
 
                 ConstructorNode* constructor = alloc_node<ConstructorNode>();
-                constructor->data_type = bt;
+                constructor->data_type       = bt;
 
                 while (true) {
                     int cofs = str_ofs;
@@ -1528,7 +1528,7 @@ Expression::ENode* Expression::_parse_expression() {
                     if (tk.type == TK_PARENTHESIS_CLOSE) {
                         break;
                     }
-                    str_ofs = cofs; // revert
+                    str_ofs        = cofs; // revert
                     // parse an expression
                     ENode* subexpr = _parse_expression();
                     if (!subexpr) {
@@ -1561,7 +1561,7 @@ Expression::ENode* Expression::_parse_expression() {
                 }
 
                 BuiltinFuncNode* bifunc = alloc_node<BuiltinFuncNode>();
-                bifunc->func = BuiltinFunc(int(tk.value));
+                bifunc->func            = BuiltinFunc(int(tk.value));
 
                 while (true) {
                     int cofs = str_ofs;
@@ -1569,7 +1569,7 @@ Expression::ENode* Expression::_parse_expression() {
                     if (tk.type == TK_PARENTHESIS_CLOSE) {
                         break;
                     }
-                    str_ofs = cofs; // revert
+                    str_ofs        = cofs; // revert
                     // parse an expression
                     ENode* subexpr = _parse_expression();
                     if (!subexpr) {
@@ -1603,14 +1603,14 @@ Expression::ENode* Expression::_parse_expression() {
             case TK_OP_SUB: {
                 ExpressionNode e;
                 e.is_op = true;
-                e.op = Variant::OP_NEGATE;
+                e.op    = Variant::OP_NEGATE;
                 expression.push_back(e);
                 continue;
             } break;
             case TK_OP_NOT: {
                 ExpressionNode e;
                 e.is_op = true;
-                e.op = Variant::OP_NOT;
+                e.op    = Variant::OP_NOT;
                 expression.push_back(e);
                 continue;
             } break;
@@ -1637,7 +1637,7 @@ Expression::ENode* Expression::_parse_expression() {
                     // value indexing
 
                     IndexNode* index = alloc_node<IndexNode>();
-                    index->base = expr;
+                    index->base      = expr;
 
                     ENode* what = _parse_expression();
                     if (!what) {
@@ -1669,8 +1669,8 @@ Expression::ENode* Expression::_parse_expression() {
                     if (tk.type == TK_PARENTHESIS_OPEN) {
                         // function call
                         CallNode* func_call = alloc_node<CallNode>();
-                        func_call->method = identifier;
-                        func_call->base = expr;
+                        func_call->method   = identifier;
+                        func_call->base     = expr;
 
                         while (true) {
                             int cofs3 = str_ofs;
@@ -1678,7 +1678,7 @@ Expression::ENode* Expression::_parse_expression() {
                             if (tk.type == TK_PARENTHESIS_CLOSE) {
                                 break;
                             }
-                            str_ofs = cofs3; // revert
+                            str_ofs        = cofs3; // revert
                             // parse an expression
                             ENode* subexpr = _parse_expression();
                             if (!subexpr) {
@@ -1704,15 +1704,15 @@ Expression::ENode* Expression::_parse_expression() {
                         str_ofs = cofs;
 
                         NamedIndexNode* index = alloc_node<NamedIndexNode>();
-                        index->base = expr;
-                        index->name = identifier;
-                        expr = index;
+                        index->base           = expr;
+                        index->name           = identifier;
+                        expr                  = index;
                     }
 
                 } break;
                 default: {
                     str_ofs = cofs2;
-                    done = true;
+                    done    = true;
                 } break;
             }
 
@@ -1725,7 +1725,7 @@ Expression::ENode* Expression::_parse_expression() {
         {
             ExpressionNode e;
             e.is_op = false;
-            e.node = expr;
+            e.node  = expr;
             expression.push_back(e);
         }
 
@@ -1816,7 +1816,7 @@ Expression::ENode* Expression::_parse_expression() {
         {
             ExpressionNode e;
             e.is_op = true;
-            e.op = op;
+            e.op    = op;
             expression.push_back(e);
         }
     }
@@ -1825,9 +1825,9 @@ Expression::ENode* Expression::_parse_expression() {
      * respecting precedence */
 
     while (expression.size() > 1) {
-        int next_op = -1;
+        int next_op      = -1;
         int min_priority = 0xFFFFF;
-        bool is_unary = false;
+        bool is_unary    = false;
 
         for (int i = 0; i < expression.size(); i++) {
             if (!expression[i].is_op) {
@@ -1841,11 +1841,11 @@ Expression::ENode* Expression::_parse_expression() {
             switch (expression[i].op) {
                 case Variant::OP_BIT_NEGATE:
                     priority = 0;
-                    unary = true;
+                    unary    = true;
                     break;
                 case Variant::OP_NEGATE:
                     priority = 1;
-                    unary = true;
+                    unary    = true;
                     break;
 
                 case Variant::OP_MULTIPLY:
@@ -1908,7 +1908,7 @@ Expression::ENode* Expression::_parse_expression() {
 
                 case Variant::OP_NOT:
                     priority = 11;
-                    unary = true;
+                    unary    = true;
                     break;
                 case Variant::OP_AND:
                     priority = 12;
@@ -1930,9 +1930,9 @@ Expression::ENode* Expression::_parse_expression() {
                 // < is used for left to right (default)
                 // <= is used for right to left
 
-                next_op = i;
+                next_op      = i;
                 min_priority = priority;
-                is_unary = unary;
+                is_unary     = unary;
             }
         }
 
@@ -1955,12 +1955,12 @@ Expression::ENode* Expression::_parse_expression() {
 
             // consecutively do unary operators
             for (int i = expr_pos - 1; i >= next_op; i--) {
-                OperatorNode* op = alloc_node<OperatorNode>();
-                op->op = expression[i].op;
-                op->nodes[0] = expression[i + 1].node;
-                op->nodes[1] = nullptr;
+                OperatorNode* op          = alloc_node<OperatorNode>();
+                op->op                    = expression[i].op;
+                op->nodes[0]              = expression[i + 1].node;
+                op->nodes[1]              = nullptr;
                 expression.write[i].is_op = false;
-                expression.write[i].node = op;
+                expression.write[i].node  = op;
                 expression.remove(i + 1);
             }
 
@@ -1971,7 +1971,7 @@ Expression::ENode* Expression::_parse_expression() {
             }
 
             OperatorNode* op = alloc_node<OperatorNode>();
-            op->op = expression[next_op].op;
+            op->op           = expression[next_op].op;
 
             if (expression[next_op - 1].is_op) {
                 _set_error("Parser bug...");
@@ -2012,12 +2012,12 @@ bool Expression::_compile_expression() {
     if (nodes) {
         memdelete(nodes);
         nodes = nullptr;
-        root = nullptr;
+        root  = nullptr;
     }
 
     error_str = String();
     error_set = false;
-    str_ofs = 0;
+    str_ofs   = 0;
 
     root = _parse_expression();
 
@@ -2245,7 +2245,7 @@ bool Expression::_execute(
                 if (ret) {
                     return true;
                 }
-                arr.write[i] = value;
+                arr.write[i]  = value;
                 argp.write[i] = &arr[i];
             }
 
@@ -2287,7 +2287,7 @@ bool Expression::_execute(
                 if (ret) {
                     return true;
                 }
-                arr.write[i] = value;
+                arr.write[i]  = value;
                 argp.write[i] = &arr[i];
             }
 
@@ -2336,7 +2336,7 @@ bool Expression::_execute(
                 if (ret) {
                     return true;
                 }
-                arr.write[i] = value;
+                arr.write[i]  = value;
                 argp.write[i] = &arr[i];
             }
 
@@ -2366,16 +2366,16 @@ Error Expression::parse(
     if (nodes) {
         memdelete(nodes);
         nodes = nullptr;
-        root = nullptr;
+        root  = nullptr;
     }
 
-    error_str = String();
-    error_set = false;
-    str_ofs = 0;
+    error_str   = String();
+    error_set   = false;
+    str_ofs     = 0;
     input_names = p_input_names;
 
     expression = p_expression;
-    root = _parse_expression();
+    root       = _parse_expression();
 
     if (error_set) {
         root = nullptr;
@@ -2402,7 +2402,7 @@ Variant Expression::execute(Array p_inputs, Object* p_base, bool p_show_error) {
     bool err = _execute(p_inputs, p_base, root, output, error_txt);
     if (err) {
         execution_error = true;
-        error_str = error_txt;
+        error_str       = error_txt;
         ERR_FAIL_COND_V_MSG(p_show_error, Variant(), error_str);
     }
 

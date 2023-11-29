@@ -77,7 +77,7 @@ RES _ResourceLoader::load(
     bool p_no_cache
 ) {
     Error err = OK;
-    RES ret = ResourceLoader::load(p_path, p_type_hint, p_no_cache, &err);
+    RES ret   = ResourceLoader::load(p_path, p_type_hint, p_no_cache, &err);
 
     ERR_FAIL_COND_V_MSG(
         err != OK,
@@ -328,10 +328,10 @@ void _OS::set_video_mode(
     int p_screen
 ) {
     OS::VideoMode vm;
-    vm.width = p_size.width;
-    vm.height = p_size.height;
+    vm.width      = p_size.width;
+    vm.height     = p_size.height;
     vm.fullscreen = p_fullscreen;
-    vm.resizable = p_resizeable;
+    vm.resizable  = p_resizeable;
     OS::get_singleton()->set_video_mode(vm, p_screen);
 }
 
@@ -561,7 +561,7 @@ int _OS::execute(
     bool p_read_stderr
 ) {
     OS::ProcessID pid = -2;
-    int exitcode = 0;
+    int exitcode      = 0;
     List<String> args;
     for (int i = 0; i < p_arguments.size(); i++) {
         args.push_back(p_arguments[i]);
@@ -826,18 +826,18 @@ Dictionary _OS::get_datetime(bool utc) const {
 Dictionary _OS::get_date(bool utc) const {
     OS::Date date = OS::get_singleton()->get_date(utc);
     Dictionary dated;
-    dated[YEAR_KEY] = date.year;
-    dated[MONTH_KEY] = date.month;
-    dated[DAY_KEY] = date.day;
+    dated[YEAR_KEY]    = date.year;
+    dated[MONTH_KEY]   = date.month;
+    dated[DAY_KEY]     = date.day;
     dated[WEEKDAY_KEY] = date.weekday;
-    dated[DST_KEY] = date.dst;
+    dated[DST_KEY]     = date.dst;
     return dated;
 }
 
 Dictionary _OS::get_time(bool utc) const {
     OS::Time time = OS::get_singleton()->get_time(utc);
     Dictionary timed;
-    timed[HOUR_KEY] = time.hour;
+    timed[HOUR_KEY]   = time.hour;
     timed[MINUTE_KEY] = time.min;
     timed[SECOND_KEY] = time.sec;
     return timed;
@@ -865,8 +865,8 @@ int64_t _OS::get_unix_time_from_datetime(Dictionary datetime) const {
 
     // Bunch of conversion constants
     static const unsigned int SECONDS_PER_MINUTE = 60;
-    static const unsigned int MINUTES_PER_HOUR = 60;
-    static const unsigned int HOURS_PER_DAY = 24;
+    static const unsigned int MINUTES_PER_HOUR   = 60;
+    static const unsigned int HOURS_PER_DAY      = 24;
     static const unsigned int SECONDS_PER_HOUR =
         MINUTES_PER_HOUR * SECONDS_PER_MINUTE;
     static const unsigned int SECONDS_PER_DAY =
@@ -984,8 +984,8 @@ Dictionary _OS::get_datetime_from_unix_time(int64_t unix_time_val) const {
     int year = EPOCH_YR;
 
     if (unix_time_val >= 0) {
-        dayno = unix_time_val / SECS_DAY;
-        dayclock = unix_time_val % SECS_DAY;
+        dayno        = unix_time_val / SECS_DAY;
+        dayclock     = unix_time_val % SECS_DAY;
         /* day 0 was a thursday */
         date.weekday = static_cast<OS::Weekday>((dayno + 4) % 7);
         while (dayno >= YEARSIZE(year)) {
@@ -993,8 +993,8 @@ Dictionary _OS::get_datetime_from_unix_time(int64_t unix_time_val) const {
             year++;
         }
     } else {
-        dayno = (unix_time_val - SECS_DAY + 1) / SECS_DAY;
-        dayclock = unix_time_val - dayno * SECS_DAY;
+        dayno        = (unix_time_val - SECS_DAY + 1) / SECS_DAY;
+        dayclock     = unix_time_val - dayno * SECS_DAY;
         date.weekday = static_cast<OS::Weekday>(((dayno % 7) + 11) % 7);
         do {
             year--;
@@ -1002,8 +1002,8 @@ Dictionary _OS::get_datetime_from_unix_time(int64_t unix_time_val) const {
         } while (dayno < 0);
     }
 
-    time.sec = dayclock % 60;
-    time.min = (dayclock % 3600) / 60;
+    time.sec  = dayclock % 60;
+    time.min  = (dayclock % 3600) / 60;
     time.hour = dayclock / 3600;
     date.year = year;
 
@@ -1020,12 +1020,12 @@ Dictionary _OS::get_datetime_from_unix_time(int64_t unix_time_val) const {
     date.day = dayno + 1;
 
     Dictionary timed;
-    timed[HOUR_KEY] = time.hour;
-    timed[MINUTE_KEY] = time.min;
-    timed[SECOND_KEY] = time.sec;
-    timed[YEAR_KEY] = date.year;
-    timed[MONTH_KEY] = date.month;
-    timed[DAY_KEY] = date.day;
+    timed[HOUR_KEY]    = time.hour;
+    timed[MINUTE_KEY]  = time.min;
+    timed[SECOND_KEY]  = time.sec;
+    timed[YEAR_KEY]    = date.year;
+    timed[MONTH_KEY]   = date.month;
+    timed[DAY_KEY]     = date.day;
     timed[WEEKDAY_KEY] = date.weekday;
 
     return timed;
@@ -1140,19 +1140,19 @@ void _OS::print_all_textures_by_size() {
             }
 
             Size2 size = E->get()->call("get_size");
-            int fmt = E->get()->call("get_format");
+            int fmt    = E->get()->call("get_format");
 
             _OSCoreBindImg img;
             img.size = size;
-            img.fmt = fmt;
+            img.fmt  = fmt;
             img.path = E->get()->get_path();
             img.vram = Image::get_image_data_size(
                 img.size.width,
                 img.size.height,
                 Image::Format(img.fmt)
             );
-            img.id = E->get()->get_instance_id();
-            total += img.vram;
+            img.id  = E->get()->get_instance_id();
+            total  += img.vram;
             imgs.push_back(img);
         }
     }
@@ -1196,7 +1196,7 @@ void _OS::print_resources_by_type(const Vector<String>& p_types) {
     ResourceCache::get_cached_resources(&resources);
 
     for (List<Ref<Resource>>::Element* E = resources.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         Ref<Resource> r = E->get();
 
         bool found = false;
@@ -2704,7 +2704,7 @@ Dictionary _Geometry::make_atlas(const Vector<Size2>& p_rects) {
     };
 
     ret["points"] = r_result;
-    ret["size"] = r_size;
+    ret["size"]   = r_size;
 
     return ret;
 };
@@ -2962,11 +2962,11 @@ Error _File::open_encrypted(
     }
 
     FileAccessEncrypted* fae = memnew(FileAccessEncrypted);
-    err = fae->open_and_parse(
+    err                      = fae->open_and_parse(
         f,
         p_key,
         (p_mode_flags == WRITE) ? FileAccessEncrypted::MODE_WRITE_AES256
-                                : FileAccessEncrypted::MODE_READ
+                                                     : FileAccessEncrypted::MODE_READ
     );
     if (err) {
         memdelete(fae);
@@ -2988,11 +2988,11 @@ Error _File::open_encrypted_pass(
     }
 
     FileAccessEncrypted* fae = memnew(FileAccessEncrypted);
-    err = fae->open_and_parse_password(
+    err                      = fae->open_and_parse_password(
         f,
         p_pass,
         (p_mode_flags == WRITE) ? FileAccessEncrypted::MODE_WRITE_AES256
-                                : FileAccessEncrypted::MODE_READ
+                                                     : FileAccessEncrypted::MODE_READ
     );
     if (err) {
         memdelete(fae);
@@ -3145,7 +3145,7 @@ PoolVector<uint8_t> _File::get_buffer(int64_t p_length) const {
     );
 
     PoolVector<uint8_t>::Write w = data.write();
-    int64_t len = f->get_buffer(&w[0], p_length);
+    int64_t len                  = f->get_buffer(&w[0], p_length);
     ERR_FAIL_COND_V(len < 0, PoolVector<uint8_t>());
 
     w.release();
@@ -3167,7 +3167,7 @@ String _File::get_as_text() const {
     String l = get_line();
     while (!eof_reached()) {
         text += l + "\n";
-        l = get_line();
+        l     = get_line();
     }
     text += l;
 
@@ -3331,7 +3331,7 @@ void _File::store_var(const Variant& p_var, bool p_full_objects) {
 
 Variant _File::get_var(bool p_allow_objects) const {
     ERR_FAIL_COND_V_MSG(!f, Variant(), "File must be opened before use.");
-    uint32_t len = get_32();
+    uint32_t len             = get_32();
     PoolVector<uint8_t> buff = get_buffer(len);
     ERR_FAIL_COND_V((uint32_t)buff.size() != len, Variant());
 
@@ -3477,7 +3477,7 @@ void _File::_bind_methods() {
 }
 
 _File::_File() {
-    f = nullptr;
+    f     = nullptr;
     eswap = false;
 }
 
@@ -3512,7 +3512,7 @@ Error _Directory::list_dir_begin(bool p_skip_navigational, bool p_skip_hidden) {
     );
 
     _list_skip_navigational = p_skip_navigational;
-    _list_skip_hidden = p_skip_hidden;
+    _list_skip_hidden       = p_skip_hidden;
 
     return d->list_dir_begin();
 }
@@ -3576,7 +3576,7 @@ Error _Directory::make_dir(String p_dir) {
     );
     if (!p_dir.is_rel_path()) {
         DirAccess* d = DirAccess::create_for_path(p_dir);
-        Error err = d->make_dir(p_dir);
+        Error err    = d->make_dir(p_dir);
         memdelete(d);
         return err;
     }
@@ -3591,7 +3591,7 @@ Error _Directory::make_dir_recursive(String p_dir) {
     );
     if (!p_dir.is_rel_path()) {
         DirAccess* d = DirAccess::create_for_path(p_dir);
-        Error err = d->make_dir_recursive(p_dir);
+        Error err    = d->make_dir_recursive(p_dir);
         memdelete(d);
         return err;
     }
@@ -3612,7 +3612,7 @@ bool _Directory::dir_exists(String p_dir) {
     ERR_FAIL_COND_V_MSG(!d, false, "Directory must be opened before use.");
     if (!p_dir.is_rel_path()) {
         DirAccess* d = DirAccess::create_for_path(p_dir);
-        bool exists = d->dir_exists(p_dir);
+        bool exists  = d->dir_exists(p_dir);
         memdelete(d);
         return exists;
 
@@ -3675,7 +3675,7 @@ Error _Directory::remove(String p_name) {
     );
     if (!p_name.is_rel_path()) {
         DirAccess* d = DirAccess::create_for_path(p_name);
-        Error err = d->remove(p_name);
+        Error err    = d->remove(p_name);
         memdelete(d);
         return err;
     }
@@ -3778,7 +3778,7 @@ Variant _Marshalls::base64_to_variant(
     const String& p_str,
     bool p_allow_objects
 ) {
-    int strlen = p_str.length();
+    int strlen      = p_str.length();
     CharString cstr = p_str.ascii();
 
     PoolVector<uint8_t> buf;
@@ -3815,7 +3815,7 @@ String _Marshalls::raw_to_base64(const PoolVector<uint8_t>& p_arr) {
 };
 
 PoolVector<uint8_t> _Marshalls::base64_to_raw(const String& p_str) {
-    int strlen = p_str.length();
+    int strlen      = p_str.length();
     CharString cstr = p_str.ascii();
 
     size_t arr_len = 0;
@@ -3842,7 +3842,7 @@ PoolVector<uint8_t> _Marshalls::base64_to_raw(const String& p_str) {
 
 String _Marshalls::utf8_to_base64(const String& p_str) {
     CharString cstr = p_str.utf8();
-    String ret = CryptoCore::b64_encode_str(
+    String ret      = CryptoCore::b64_encode_str(
         (unsigned char*)cstr.get_data(),
         cstr.length()
     );
@@ -3851,7 +3851,7 @@ String _Marshalls::utf8_to_base64(const String& p_str) {
 };
 
 String _Marshalls::base64_to_utf8(const String& p_str) {
-    int strlen = p_str.length();
+    int strlen      = p_str.length();
     CharString cstr = p_str.ascii();
 
     PoolVector<uint8_t> buf;
@@ -3870,7 +3870,7 @@ String _Marshalls::base64_to_utf8(const String& p_str) {
         String()
     );
 
-    w[len] = 0;
+    w[len]     = 0;
     String ret = String::utf8((char*)&w[0]);
 
     return ret;
@@ -3948,7 +3948,7 @@ void _Mutex::_bind_methods() {
 
 void _Thread::_start_func(void* ud) {
     Ref<_Thread>* tud = (Ref<_Thread>*)ud;
-    Ref<_Thread> t = *tud;
+    Ref<_Thread> t    = *tud;
     memdelete(tud);
 
     Object* target_instance = ObjectDB::get_instance(t->target_instance_id);
@@ -3963,7 +3963,7 @@ void _Thread::_start_func(void* ud) {
 
     Variant::CallError ce;
     const Variant* arg[1] = {&t->userdata};
-    int argc = 0;
+    int argc              = 0;
     if (arg[0]->get_type() != Variant::NIL) {
         // Just pass to the target function whatever came as user data
         argc = 1;
@@ -3978,11 +3978,11 @@ void _Thread::_start_func(void* ud) {
         //    mindset here is to do our best with the only/first one and let the
         //    call handle any other error conditions, like too much arguments.
         // We must check if we are in case b).
-        int target_param_count = 0;
+        int target_param_count       = 0;
         int target_default_arg_count = 0;
-        Ref<Script> script = target_instance->get_script();
+        Ref<Script> script           = target_instance->get_script();
         if (script.is_valid()) {
-            MethodInfo mi = script->get_method_info(t->target_method);
+            MethodInfo mi      = script->get_method_info(t->target_method);
             target_param_count = mi.arguments.size();
             target_default_arg_count = mi.default_arguments.size();
         } else {
@@ -3991,7 +3991,7 @@ void _Thread::_start_func(void* ud) {
                 t->target_method
             );
             if (method) {
-                target_param_count = method->get_argument_count();
+                target_param_count       = method->get_argument_count();
                 target_default_arg_count = method->get_default_argument_count();
             }
         }
@@ -4048,10 +4048,10 @@ Error _Thread::start(
     ERR_FAIL_COND_V(p_method == StringName(), ERR_INVALID_PARAMETER);
     ERR_FAIL_INDEX_V(p_priority, PRIORITY_MAX, ERR_INVALID_PARAMETER);
 
-    ret = Variant();
-    target_method = p_method;
+    ret                = Variant();
+    target_method      = p_method;
     target_instance_id = p_instance->get_instance_id();
-    userdata = p_userdata;
+    userdata           = p_userdata;
     running.set();
 
     Ref<_Thread>* ud = memnew(Ref<_Thread>(this));
@@ -4082,10 +4082,10 @@ Variant _Thread::wait_to_finish() {
         "Thread must have been started to wait for its completion."
     );
     thread.wait_to_finish();
-    Variant r = ret;
-    target_method = StringName();
+    Variant r          = ret;
+    target_method      = StringName();
     target_instance_id = ObjectID();
-    userdata = Variant();
+    userdata           = Variant();
 
     return r;
 }

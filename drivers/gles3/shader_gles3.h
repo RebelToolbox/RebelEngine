@@ -236,7 +236,7 @@ private:
             } break;
 
             case Variant::TRANSFORM2D: {
-                Transform2D tr = p_value;
+                Transform2D tr     = p_value;
                 GLfloat matrix[16] = {/* build a 16x16 matrix */
                                       tr.elements[0][0],
                                       tr.elements[0][1],
@@ -261,7 +261,7 @@ private:
             } break;
             case Variant::BASIS:
             case Variant::TRANSFORM: {
-                Transform tr = p_value;
+                Transform tr       = p_value;
                 GLfloat matrix[16] = {/* build a 16x16 matrix */
                                       tr.basis.elements[0][0],
                                       tr.basis.elements[1][0],
@@ -373,7 +373,7 @@ public:
 
     void set_uniform_camera(int p_idx, const CameraMatrix& p_mat) {
         uniform_cameras[p_idx] = p_mat;
-        uniforms_dirty = true;
+        uniforms_dirty         = true;
     };
 
     _FORCE_INLINE_ void set_texture_uniform(int p_idx, const Variant& p_value) {

@@ -44,7 +44,7 @@ protected:
 public:
     virtual float get_height() const = 0;
 
-    virtual float get_ascent() const = 0;
+    virtual float get_ascent() const  = 0;
     virtual float get_descent() const = 0;
 
     virtual Size2 get_char_size(CharType p_char, CharType p_next = 0) const = 0;
@@ -57,8 +57,8 @@ public:
         RID p_canvas_item,
         const Point2& p_pos,
         const String& p_text,
-        const Color& p_modulate = Color(1, 1, 1),
-        int p_clip_w = -1,
+        const Color& p_modulate         = Color(1, 1, 1),
+        int p_clip_w                    = -1,
         const Color& p_outline_modulate = Color(1, 1, 1)
     ) const;
     void draw_halign(
@@ -67,7 +67,7 @@ public:
         HAlign p_align,
         float p_width,
         const String& p_text,
-        const Color& p_modulate = Color(1, 1, 1),
+        const Color& p_modulate         = Color(1, 1, 1),
         const Color& p_outline_modulate = Color(1, 1, 1)
     ) const;
 
@@ -79,9 +79,9 @@ public:
         RID p_canvas_item,
         const Point2& p_pos,
         CharType p_char,
-        CharType p_next = 0,
+        CharType p_next         = 0,
         const Color& p_modulate = Color(1, 1, 1),
-        bool p_outline = false
+        bool p_outline          = false
     ) const = 0;
 
     void update_changes();
@@ -116,7 +116,7 @@ public:
         RID p_canvas_item,
         const Point2& p_pos,
         CharType p_char,
-        CharType p_next = 0,
+        CharType p_next         = 0,
         const Color& p_modulate = Color(1, 1, 1)
     ) {
         if (has_outline) {
@@ -165,7 +165,7 @@ public:
 
         Character() {
             texture_idx = 0;
-            v_align = 0;
+            v_align     = 0;
         }
     };
 
@@ -247,9 +247,9 @@ public:
         RID p_canvas_item,
         const Point2& p_pos,
         CharType p_char,
-        CharType p_next = 0,
+        CharType p_next         = 0,
         const Color& p_modulate = Color(1, 1, 1),
-        bool p_outline = false
+        bool p_outline          = false
     ) const;
 
     BitmapFont();
@@ -261,7 +261,7 @@ public:
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
     virtual bool handles_type(const String& p_type) const;

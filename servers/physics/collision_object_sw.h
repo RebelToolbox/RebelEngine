@@ -145,7 +145,7 @@ public:
     void add_shape(
         ShapeSW* p_shape,
         const Transform& p_transform = Transform(),
-        bool p_disabled = false
+        bool p_disabled              = false
     );
     void set_shape(int p_index, ShapeSW* p_shape);
     void set_shape_transform(int p_index, const Transform& p_transform);

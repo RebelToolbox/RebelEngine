@@ -54,7 +54,7 @@ CommandQueueMT::SyncSemaphore* CommandQueueMT::_alloc_sync_sem() {
         for (int i = 0; i < SYNC_SEMAPHORES; i++) {
             if (!sync_sems[i].in_use) {
                 sync_sems[i].in_use = true;
-                idx = i;
+                idx                 = i;
                 break;
             }
         }
@@ -95,9 +95,9 @@ tryagain:
 }
 
 CommandQueueMT::CommandQueueMT(bool p_sync) {
-    read_ptr_and_epoch = 0;
+    read_ptr_and_epoch  = 0;
     write_ptr_and_epoch = 0;
-    dealloc_ptr = 0;
+    dealloc_ptr         = 0;
 
     command_mem_size = GLOBAL_DEF_RST(
         "memory/limits/command_queue/multithreading_queue_size_kb",
@@ -113,7 +113,7 @@ CommandQueueMT::CommandQueueMT(bool p_sync) {
         )
     );
     command_mem_size *= 1024;
-    command_mem = (uint8_t*)memalloc(command_mem_size);
+    command_mem       = (uint8_t*)memalloc(command_mem_size);
 
     for (int i = 0; i < SYNC_SEMAPHORES; i++) {
         sync_sems[i].in_use = false;

@@ -74,7 +74,7 @@ int PacketPeerMbedDTLS::bio_recv(void* ctx, unsigned char* buf, size_t len) {
 
     const uint8_t* buffer;
     int buffer_size = 0;
-    Error err = sp->base->get_packet(&buffer, buffer_size);
+    Error err       = sp->base->get_packet(&buffer, buffer_size);
     if (err != OK) {
         return MBEDTLS_ERR_SSL_INTERNAL_ERROR;
     }
@@ -84,7 +84,7 @@ int PacketPeerMbedDTLS::bio_recv(void* ctx, unsigned char* buf, size_t len) {
 
 void PacketPeerMbedDTLS::_cleanup() {
     ssl_ctx->clear();
-    base = Ref<PacketPeer>();
+    base   = Ref<PacketPeer>();
     status = STATUS_DISCONNECTED;
 }
 
@@ -92,7 +92,7 @@ int PacketPeerMbedDTLS::_set_cookie() {
     // Setup DTLS session cookie for this client
     uint8_t client_id[18];
     IP_Address addr = base->get_packet_address();
-    uint16_t port = base->get_packet_port();
+    uint16_t port   = base->get_packet_port();
     memcpy(client_id, addr.get_ipv6(), 16);
     memcpy(&client_id[16], (uint8_t*)&port, 2);
     return mbedtls_ssl_set_client_transport_id(
@@ -134,8 +134,8 @@ Error PacketPeerMbedDTLS::connect_to_peer(
         ERR_INVALID_PARAMETER
     );
 
-    base = p_base;
-    int ret = 0;
+    base         = p_base;
+    int ret      = 0;
     int authmode = p_validate_certs ? MBEDTLS_SSL_VERIFY_REQUIRED
                                     : MBEDTLS_SSL_VERIFY_NONE;
 
@@ -268,7 +268,7 @@ Error PacketPeerMbedDTLS::get_packet(const uint8_t** r_buffer, int& r_bytes) {
         return ERR_CONNECTION_ERROR;
     }
     *r_buffer = packet_buffer;
-    r_bytes = ret;
+    r_bytes   = ret;
 
     return OK;
 }
@@ -342,11 +342,11 @@ PacketPeerDTLS* PacketPeerMbedDTLS::_create_func() {
 }
 
 void PacketPeerMbedDTLS::initialize_dtls() {
-    _create = _create_func;
+    _create   = _create_func;
     available = true;
 }
 
 void PacketPeerMbedDTLS::finalize_dtls() {
-    _create = nullptr;
+    _create   = nullptr;
     available = false;
 }

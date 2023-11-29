@@ -63,17 +63,17 @@ void AStar::add_point(int p_id, const Vector3& p_pos, real_t p_weight_scale) {
     bool p_exists = points.lookup(p_id, found_pt);
 
     if (!p_exists) {
-        Point* pt = memnew(Point);
-        pt->id = p_id;
-        pt->pos = p_pos;
+        Point* pt        = memnew(Point);
+        pt->id           = p_id;
+        pt->pos          = p_pos;
         pt->weight_scale = p_weight_scale;
-        pt->prev_point = nullptr;
-        pt->open_pass = 0;
-        pt->closed_pass = 0;
-        pt->enabled = true;
+        pt->prev_point   = nullptr;
+        pt->open_pass    = 0;
+        pt->closed_pass  = 0;
+        pt->enabled      = true;
         points.set(p_id, pt);
     } else {
-        found_pt->pos = p_pos;
+        found_pt->pos          = p_pos;
         found_pt->weight_scale = p_weight_scale;
     }
 }
@@ -152,7 +152,7 @@ void AStar::remove_point(int p_id) {
     );
 
     for (OAHashMap<int, Point*>::Iterator it = p->neighbours.iter(); it.valid;
-         it = p->neighbours.next_iter(it)) {
+         it                                  = p->neighbours.next_iter(it)) {
         Segment s(p_id, (*it.key));
         segments.erase(s);
 
@@ -286,7 +286,7 @@ Array AStar::get_points() {
     Array point_list;
 
     for (OAHashMap<int, Point*>::Iterator it = points.iter(); it.valid;
-         it = points.next_iter(it)) {
+         it                                  = points.next_iter(it)) {
         point_list.push_back(*(it.key));
     }
 
@@ -308,7 +308,7 @@ PoolVector<int> AStar::get_point_connections(int p_id) {
     PoolVector<int> point_list;
 
     for (OAHashMap<int, Point*>::Iterator it = p->neighbours.iter(); it.valid;
-         it = p->neighbours.next_iter(it)) {
+         it                                  = p->neighbours.next_iter(it)) {
         point_list.push_back((*it.key));
     }
 
@@ -328,7 +328,7 @@ bool AStar::are_points_connected(int p_id, int p_with_id, bool bidirectional)
 void AStar::clear() {
     last_free_id = 0;
     for (OAHashMap<int, Point*>::Iterator it = points.iter(); it.valid;
-         it = points.next_iter(it)) {
+         it                                  = points.next_iter(it)) {
         memdelete(*(it.value));
     }
     segments.clear();
@@ -365,11 +365,11 @@ void AStar::reserve_space(int p_num_nodes) {
 
 int AStar::get_closest_point(const Vector3& p_point, bool p_include_disabled)
     const {
-    int closest_id = -1;
+    int closest_id      = -1;
     real_t closest_dist = 1e20;
 
     for (OAHashMap<int, Point*>::Iterator it = points.iter(); it.valid;
-         it = points.next_iter(it)) {
+         it                                  = points.next_iter(it)) {
         if (!p_include_disabled && !(*it.value)->enabled) {
             continue; // Disabled points should not be considered.
         }
@@ -377,13 +377,13 @@ int AStar::get_closest_point(const Vector3& p_point, bool p_include_disabled)
         // Keep the closest point's ID, and in case of multiple closest IDs,
         // the smallest one (makes it deterministic).
         real_t d = p_point.distance_squared_to((*it.value)->pos);
-        int id = *(it.key);
+        int id   = *(it.key);
         if (d <= closest_dist) {
             if (d == closest_dist && id > closest_id) { // Keep lowest ID.
                 continue;
             }
             closest_dist = d;
-            closest_id = id;
+            closest_id   = id;
         }
     }
 
@@ -409,10 +409,10 @@ Vector3 AStar::get_closest_position_in_segment(const Vector3& p_point) const {
         };
 
         Vector3 p = Geometry::get_closest_point_to_segment(p_point, segment);
-        real_t d = p_point.distance_squared_to(p);
+        real_t d  = p_point.distance_squared_to(p);
         if (d < closest_dist) {
             closest_point = p;
-            closest_dist = d;
+            closest_dist  = d;
         }
     }
 
@@ -477,8 +477,8 @@ bool AStar::_solve(Point* begin_point, Point* end_point) {
             }
 
             e->prev_point = p;
-            e->g_score = tentative_g_score;
-            e->f_score = e->g_score + _estimate_cost(e->id, end_point->id);
+            e->g_score    = tentative_g_score;
+            e->f_score    = e->g_score + _estimate_cost(e->id, end_point->id);
 
             if (new_point) { // The position of the new points is already known.
                 sorter
@@ -593,7 +593,7 @@ PoolVector<Vector3> AStar::get_point_path(int p_from_id, int p_to_id) {
     }
 
     Point* begin_point = a;
-    Point* end_point = b;
+    Point* end_point   = b;
 
     bool found_route = _solve(begin_point, end_point);
     if (!found_route) {
@@ -601,7 +601,7 @@ PoolVector<Vector3> AStar::get_point_path(int p_from_id, int p_to_id) {
     }
 
     Point* p = end_point;
-    int pc = 1; // Begin point
+    int pc   = 1; // Begin point
     while (p != begin_point) {
         pc++;
         p = p->prev_point;
@@ -614,10 +614,10 @@ PoolVector<Vector3> AStar::get_point_path(int p_from_id, int p_to_id) {
         PoolVector<Vector3>::Write w = path.write();
 
         Point* p2 = end_point;
-        int idx = pc - 1;
+        int idx   = pc - 1;
         while (p2 != begin_point) {
             w[idx--] = p2->pos;
-            p2 = p2->prev_point;
+            p2       = p2->prev_point;
         }
 
         w[0] = p2->pos; // Assign first
@@ -653,7 +653,7 @@ PoolVector<int> AStar::get_id_path(int p_from_id, int p_to_id) {
     }
 
     Point* begin_point = a;
-    Point* end_point = b;
+    Point* end_point   = b;
 
     bool found_route = _solve(begin_point, end_point);
     if (!found_route) {
@@ -661,7 +661,7 @@ PoolVector<int> AStar::get_id_path(int p_from_id, int p_to_id) {
     }
 
     Point* p = end_point;
-    int pc = 1; // Begin point
+    int pc   = 1; // Begin point
     while (p != begin_point) {
         pc++;
         p = p->prev_point;
@@ -673,11 +673,11 @@ PoolVector<int> AStar::get_id_path(int p_from_id, int p_to_id) {
     {
         PoolVector<int>::Write w = path.write();
 
-        p = end_point;
+        p       = end_point;
         int idx = pc - 1;
         while (p != begin_point) {
             w[idx--] = p->id;
-            p = p->prev_point;
+            p        = p->prev_point;
         }
 
         w[0] = p->id; // Assign first
@@ -821,7 +821,7 @@ void AStar::_bind_methods() {
 
 AStar::AStar() {
     last_free_id = 0;
-    pass = 1;
+    pass         = 1;
 }
 
 AStar::~AStar() {
@@ -1022,7 +1022,7 @@ PoolVector<Vector2> AStar2D::get_point_path(int p_from_id, int p_to_id) {
     }
 
     AStar::Point* begin_point = a;
-    AStar::Point* end_point = b;
+    AStar::Point* end_point   = b;
 
     bool found_route = _solve(begin_point, end_point);
     if (!found_route) {
@@ -1030,7 +1030,7 @@ PoolVector<Vector2> AStar2D::get_point_path(int p_from_id, int p_to_id) {
     }
 
     AStar::Point* p = end_point;
-    int pc = 1; // Begin point
+    int pc          = 1; // Begin point
     while (p != begin_point) {
         pc++;
         p = p->prev_point;
@@ -1043,10 +1043,10 @@ PoolVector<Vector2> AStar2D::get_point_path(int p_from_id, int p_to_id) {
         PoolVector<Vector2>::Write w = path.write();
 
         AStar::Point* p2 = end_point;
-        int idx = pc - 1;
+        int idx          = pc - 1;
         while (p2 != begin_point) {
             w[idx--] = Vector2(p2->pos.x, p2->pos.y);
-            p2 = p2->prev_point;
+            p2       = p2->prev_point;
         }
 
         w[0] = Vector2(p2->pos.x, p2->pos.y); // Assign first
@@ -1082,7 +1082,7 @@ PoolVector<int> AStar2D::get_id_path(int p_from_id, int p_to_id) {
     }
 
     AStar::Point* begin_point = a;
-    AStar::Point* end_point = b;
+    AStar::Point* end_point   = b;
 
     bool found_route = _solve(begin_point, end_point);
     if (!found_route) {
@@ -1090,7 +1090,7 @@ PoolVector<int> AStar2D::get_id_path(int p_from_id, int p_to_id) {
     }
 
     AStar::Point* p = end_point;
-    int pc = 1; // Begin point
+    int pc          = 1; // Begin point
     while (p != begin_point) {
         pc++;
         p = p->prev_point;
@@ -1102,11 +1102,11 @@ PoolVector<int> AStar2D::get_id_path(int p_from_id, int p_to_id) {
     {
         PoolVector<int>::Write w = path.write();
 
-        p = end_point;
+        p       = end_point;
         int idx = pc - 1;
         while (p != begin_point) {
             w[idx--] = p->id;
-            p = p->prev_point;
+            p        = p->prev_point;
         }
 
         w[0] = p->id; // Assign first
@@ -1173,8 +1173,8 @@ bool AStar2D::_solve(AStar::Point* begin_point, AStar::Point* end_point) {
             }
 
             e->prev_point = p;
-            e->g_score = tentative_g_score;
-            e->f_score = e->g_score + _estimate_cost(e->id, end_point->id);
+            e->g_score    = tentative_g_score;
+            e->f_score    = e->g_score + _estimate_cost(e->id, end_point->id);
 
             if (new_point) { // The position of the new points is already known.
                 sorter

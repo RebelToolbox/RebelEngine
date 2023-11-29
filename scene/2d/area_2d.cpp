@@ -139,7 +139,7 @@ real_t Area2D::get_priority() const {
 
 void Area2D::_body_enter_tree(ObjectID p_id) {
     Object* obj = ObjectDB::get_instance(p_id);
-    Node* node = Object::cast_to<Node>(obj);
+    Node* node  = Object::cast_to<Node>(obj);
     ERR_FAIL_COND(!node);
 
     Map<ObjectID, BodyState>::Element* E = body_map.find(p_id);
@@ -161,7 +161,7 @@ void Area2D::_body_enter_tree(ObjectID p_id) {
 
 void Area2D::_body_exit_tree(ObjectID p_id) {
     Object* obj = ObjectDB::get_instance(p_id);
-    Node* node = Object::cast_to<Node>(obj);
+    Node* node  = Object::cast_to<Node>(obj);
     ERR_FAIL_COND(!node);
     Map<ObjectID, BodyState>::Element* E = body_map.find(p_id);
     ERR_FAIL_COND(!E);
@@ -186,11 +186,11 @@ void Area2D::_body_inout(
     int p_body_shape,
     int p_area_shape
 ) {
-    bool body_in = p_status == Physics2DServer::AREA_BODY_ADDED;
+    bool body_in   = p_status == Physics2DServer::AREA_BODY_ADDED;
     ObjectID objid = p_instance;
 
     Object* obj = ObjectDB::get_instance(objid);
-    Node* node = Object::cast_to<Node>(obj);
+    Node* node  = Object::cast_to<Node>(obj);
 
     Map<ObjectID, BodyState>::Element* E = body_map.find(objid);
 
@@ -202,9 +202,9 @@ void Area2D::_body_inout(
 
     if (body_in) {
         if (!E) {
-            E = body_map.insert(objid, BodyState());
-            E->get().rid = p_body;
-            E->get().rc = 0;
+            E                = body_map.insert(objid, BodyState());
+            E->get().rid     = p_body;
+            E->get().rc      = 0;
             E->get().in_tree = node && node->is_inside_tree();
             if (node) {
                 node->connect(
@@ -287,7 +287,7 @@ void Area2D::_body_inout(
 
 void Area2D::_area_enter_tree(ObjectID p_id) {
     Object* obj = ObjectDB::get_instance(p_id);
-    Node* node = Object::cast_to<Node>(obj);
+    Node* node  = Object::cast_to<Node>(obj);
     ERR_FAIL_COND(!node);
 
     Map<ObjectID, AreaState>::Element* E = area_map.find(p_id);
@@ -309,7 +309,7 @@ void Area2D::_area_enter_tree(ObjectID p_id) {
 
 void Area2D::_area_exit_tree(ObjectID p_id) {
     Object* obj = ObjectDB::get_instance(p_id);
-    Node* node = Object::cast_to<Node>(obj);
+    Node* node  = Object::cast_to<Node>(obj);
     ERR_FAIL_COND(!node);
     Map<ObjectID, AreaState>::Element* E = area_map.find(p_id);
     ERR_FAIL_COND(!E);
@@ -334,11 +334,11 @@ void Area2D::_area_inout(
     int p_area_shape,
     int p_self_shape
 ) {
-    bool area_in = p_status == Physics2DServer::AREA_BODY_ADDED;
+    bool area_in   = p_status == Physics2DServer::AREA_BODY_ADDED;
     ObjectID objid = p_instance;
 
     Object* obj = ObjectDB::get_instance(objid);
-    Node* node = Object::cast_to<Node>(obj);
+    Node* node  = Object::cast_to<Node>(obj);
 
     Map<ObjectID, AreaState>::Element* E = area_map.find(objid);
 
@@ -349,9 +349,9 @@ void Area2D::_area_inout(
 
     if (area_in) {
         if (!E) {
-            E = area_map.insert(objid, AreaState());
-            E->get().rid = p_area;
-            E->get().rc = 0;
+            E                = area_map.insert(objid, AreaState());
+            E->get().rid     = p_area;
+            E->get().rc      = 0;
             E->get().in_tree = node && node->is_inside_tree();
             if (node) {
                 node->connect(
@@ -444,9 +444,9 @@ void Area2D::_clear_monitoring() {
         // disconnect all monitored stuff
 
         for (Map<ObjectID, BodyState>::Element* E = bmcopy.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             Object* obj = ObjectDB::get_instance(E->key());
-            Node* node = Object::cast_to<Node>(obj);
+            Node* node  = Object::cast_to<Node>(obj);
 
             if (!node) { // node may have been deleted in previous frame or at
                          // other legiminate point
@@ -489,9 +489,9 @@ void Area2D::_clear_monitoring() {
         // disconnect all monitored stuff
 
         for (Map<ObjectID, AreaState>::Element* E = bmcopy.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             Object* obj = ObjectDB::get_instance(E->key());
-            Node* node = Object::cast_to<Node>(obj);
+            Node* node  = Object::cast_to<Node>(obj);
 
             if (!node) { // node may have been deleted in previous frame or at
                          // other legiminate point
@@ -609,7 +609,7 @@ Array Area2D::get_overlapping_bodies() const {
     ret.resize(body_map.size());
     int idx = 0;
     for (const Map<ObjectID, BodyState>::Element* E = body_map.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         Object* obj = ObjectDB::get_instance(E->key());
         if (!obj) {
             ret.resize(ret.size() - 1); // ops
@@ -631,7 +631,7 @@ Array Area2D::get_overlapping_areas() const {
     ret.resize(area_map.size());
     int idx = 0;
     for (const Map<ObjectID, AreaState>::Element* E = area_map.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         Object* obj = ObjectDB::get_instance(E->key());
         if (!obj) {
             ret.resize(ret.size() - 1); // ops
@@ -692,8 +692,8 @@ void Area2D::_validate_property(PropertyInfo& property) const {
             if (i > 0) {
                 options += ",";
             }
-            String name = AudioServer::get_singleton()->get_bus_name(i);
-            options += name;
+            String name  = AudioServer::get_singleton()->get_bus_name(i);
+            options     += name;
         }
 
         property.hint_string = options;
@@ -1021,15 +1021,15 @@ Area2D::Area2D() :
     space_override = SPACE_OVERRIDE_DISABLED;
     set_gravity(98);
     set_gravity_vector(Vector2(0, 1));
-    gravity_is_point = false;
+    gravity_is_point       = false;
     gravity_distance_scale = 0;
-    linear_damp = 0.1;
-    angular_damp = 1;
-    locked = false;
-    priority = 0;
-    monitoring = false;
-    monitorable = false;
-    audio_bus_override = false;
+    linear_damp            = 0.1;
+    angular_damp           = 1;
+    locked                 = false;
+    priority               = 0;
+    monitoring             = false;
+    monitorable            = false;
+    audio_bus_override     = false;
     set_monitoring(true);
     set_monitorable(true);
 }

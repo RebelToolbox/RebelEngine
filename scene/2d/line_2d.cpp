@@ -39,15 +39,15 @@ VARIANT_ENUM_CAST(Line2D::LineCapMode)
 VARIANT_ENUM_CAST(Line2D::LineTextureMode)
 
 Line2D::Line2D() {
-    _joint_mode = LINE_JOINT_SHARP;
-    _begin_cap_mode = LINE_CAP_NONE;
-    _end_cap_mode = LINE_CAP_NONE;
-    _width = 10;
-    _default_color = Color(0.4, 0.5, 1);
-    _texture_mode = LINE_TEXTURE_NONE;
-    _sharp_limit = 2.f;
+    _joint_mode      = LINE_JOINT_SHARP;
+    _begin_cap_mode  = LINE_CAP_NONE;
+    _end_cap_mode    = LINE_CAP_NONE;
+    _width           = 10;
+    _default_color   = Color(0.4, 0.5, 1);
+    _texture_mode    = LINE_TEXTURE_NONE;
+    _sharp_limit     = 2.f;
     _round_precision = 8;
-    _antialiased = false;
+    _antialiased     = false;
 }
 
 #ifdef TOOLS_ENABLED
@@ -55,7 +55,7 @@ Rect2 Line2D::_edit_get_rect() const {
     if (_points.size() == 0) {
         return Rect2(0, 0, 0, 0);
     }
-    Vector2 d = Vector2(_width, _width);
+    Vector2 d  = Vector2(_width, _width);
     Rect2 aabb = Rect2(_points[0] - d, 2 * d);
     for (int i = 1; i < _points.size(); i++) {
         aabb.expand_to(_points[i] - d);
@@ -72,7 +72,7 @@ bool Line2D::_edit_is_selected_on_click(
     const Point2& p_point,
     double p_tolerance
 ) const {
-    const real_t d = _width / 2 + p_tolerance;
+    const real_t d                   = _width / 2 + p_tolerance;
     PoolVector<Vector2>::Read points = _points.read();
     for (int i = 0; i < _points.size() - 1; i++) {
         Vector2 p =
@@ -316,17 +316,17 @@ void Line2D::_draw() {
     // TODO Maybe have it as member rather than copying parameters and
     // allocating memory?
     LineBuilder lb;
-    lb.points = points;
-    lb.default_color = _default_color;
-    lb.gradient = *_gradient;
-    lb.texture_mode = _texture_mode;
-    lb.joint_mode = _joint_mode;
-    lb.begin_cap_mode = _begin_cap_mode;
-    lb.end_cap_mode = _end_cap_mode;
+    lb.points          = points;
+    lb.default_color   = _default_color;
+    lb.gradient        = *_gradient;
+    lb.texture_mode    = _texture_mode;
+    lb.joint_mode      = _joint_mode;
+    lb.begin_cap_mode  = _begin_cap_mode;
+    lb.end_cap_mode    = _end_cap_mode;
     lb.round_precision = _round_precision;
-    lb.sharp_limit = _sharp_limit;
-    lb.width = _width;
-    lb.curve = *_curve;
+    lb.sharp_limit     = _sharp_limit;
+    lb.width           = _width;
+    lb.curve           = *_curve;
 
     RID texture_rid;
     if (_texture.is_valid()) {

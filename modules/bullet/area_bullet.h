@@ -79,7 +79,7 @@ public:
 
         void operator=(const OverlappingObjectData& other) {
             object = other.object;
-            state = other.state;
+            state  = other.state;
         }
     };
 

@@ -76,7 +76,7 @@ private:
         void* p_userdata,
         bool p_swap_result,
         Vector2* sep_axis = nullptr,
-        real_t p_margin = 0
+        real_t p_margin   = 0
     );
 
 public:

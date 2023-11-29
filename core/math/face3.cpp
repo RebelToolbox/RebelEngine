@@ -89,7 +89,7 @@ int Face3::split_by_plane(
     ERR_FAIL_COND_V(above_count >= 4 && below_count >= 4, 0); // bug in the algo
 
     if (above_count >= 3) {
-        p_res[polygons_created] = Face3(above[0], above[1], above[2]);
+        p_res[polygons_created]           = Face3(above[0], above[1], above[2]);
         p_is_point_over[polygons_created] = true;
         polygons_created++;
 
@@ -101,7 +101,7 @@ int Face3::split_by_plane(
     }
 
     if (below_count >= 3) {
-        p_res[polygons_created] = Face3(below[0], below[1], below[2]);
+        p_res[polygons_created]           = Face3(below[0], below[1], below[2]);
         p_is_point_over[polygons_created] = false;
         polygons_created++;
 
@@ -223,8 +223,8 @@ bool Face3::intersects_aabb(const AABB& p_aabb) const {
     {                                                                          \
         real_t aabb_min = p_aabb.position.m_ax;                                \
         real_t aabb_max = p_aabb.position.m_ax + p_aabb.size.m_ax;             \
-        real_t tri_min = vertex[0].m_ax;                                       \
-        real_t tri_max = vertex[0].m_ax;                                       \
+        real_t tri_min  = vertex[0].m_ax;                                      \
+        real_t tri_max  = vertex[0].m_ax;                                      \
         for (int i = 1; i < 3; i++) {                                          \
             if (vertex[i].m_ax > tri_max) tri_max = vertex[i].m_ax;            \
             if (vertex[i].m_ax < tri_min) tri_min = vertex[i].m_ax;            \
@@ -283,7 +283,7 @@ void Face3::project_range(
 ) const {
     for (int i = 0; i < 3; i++) {
         Vector3 v = p_transform.xform(vertex[i]);
-        real_t d = p_normal.dot(v);
+        real_t d  = p_normal.dot(v);
 
         if (i == 0 || d > r_max) {
             r_max = d;
@@ -325,13 +325,13 @@ void Face3::get_support(
     /** FIND SUPPORT VERTEX **/
 
     int vert_support_idx = -1;
-    real_t support_max = 0;
+    real_t support_max   = 0;
 
     for (int i = 0; i < 3; i++) {
         real_t d = n.dot(vertex[i]);
 
         if (i == 0 || d > support_max) {
-            support_max = d;
+            support_max      = d;
             vert_support_idx = i;
         }
     }
@@ -345,7 +345,7 @@ void Face3::get_support(
 
         // check if edge is valid as a support
         real_t dot = (vertex[i] - vertex[(i + 1) % 3]).normalized().dot(n);
-        dot = ABS(dot);
+        dot        = ABS(dot);
         if (dot < _EDGE_IS_VALID_SUPPORT_THRESHOLD) {
             *p_count = MIN(2, p_max);
 
@@ -357,14 +357,14 @@ void Face3::get_support(
         }
     }
 
-    *p_count = 1;
+    *p_count      = 1;
     p_vertices[0] = p_transform.xform(vertex[vert_support_idx]);
 }
 
 Vector3 Face3::get_closest_point_to(const Vector3& p_point) const {
     Vector3 edge0 = vertex[1] - vertex[0];
     Vector3 edge1 = vertex[2] - vertex[0];
-    Vector3 v0 = vertex[0] - p_point;
+    Vector3 v0    = vertex[0] - p_point;
 
     real_t a = edge0.dot(edge0);
     real_t b = edge0.dot(edge1);
@@ -373,8 +373,8 @@ Vector3 Face3::get_closest_point_to(const Vector3& p_point) const {
     real_t e = edge1.dot(v0);
 
     real_t det = a * c - b * b;
-    real_t s = b * e - c * d;
-    real_t t = b * d - a * e;
+    real_t s   = b * e - c * d;
+    real_t t   = b * d - a * e;
 
     if (s + t < det) {
         if (s < 0.f) {
@@ -394,9 +394,9 @@ Vector3 Face3::get_closest_point_to(const Vector3& p_point) const {
             s = CLAMP(-d / a, 0.f, 1.f);
             t = 0.f;
         } else {
-            real_t invDet = 1.f / det;
-            s *= invDet;
-            t *= invDet;
+            real_t invDet  = 1.f / det;
+            s             *= invDet;
+            t             *= invDet;
         }
     } else {
         if (s < 0.f) {
@@ -405,8 +405,8 @@ Vector3 Face3::get_closest_point_to(const Vector3& p_point) const {
             if (tmp1 > tmp0) {
                 real_t numer = tmp1 - tmp0;
                 real_t denom = a - 2 * b + c;
-                s = CLAMP(numer / denom, 0.f, 1.f);
-                t = 1 - s;
+                s            = CLAMP(numer / denom, 0.f, 1.f);
+                t            = 1 - s;
             } else {
                 t = CLAMP(-e / c, 0.f, 1.f);
                 s = 0.f;
@@ -415,8 +415,8 @@ Vector3 Face3::get_closest_point_to(const Vector3& p_point) const {
             if (a + d > b + e) {
                 real_t numer = c + e - b - d;
                 real_t denom = a - 2 * b + c;
-                s = CLAMP(numer / denom, 0.f, 1.f);
-                t = 1 - s;
+                s            = CLAMP(numer / denom, 0.f, 1.f);
+                t            = 1 - s;
             } else {
                 s = CLAMP(-d / a, 0.f, 1.f);
                 t = 0.f;
@@ -424,8 +424,8 @@ Vector3 Face3::get_closest_point_to(const Vector3& p_point) const {
         } else {
             real_t numer = c + e - b - d;
             real_t denom = a - 2 * b + c;
-            s = CLAMP(numer / denom, 0.f, 1.f);
-            t = 1.f - s;
+            s            = CLAMP(numer / denom, 0.f, 1.f);
+            t            = 1.f - s;
         }
     }
 

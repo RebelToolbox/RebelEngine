@@ -132,7 +132,7 @@ void ThemeEditorPreview::_draw_picker_overlay() {
             highlight_rect
         );
 
-        String highlight_name = hovered_control->get_class_name();
+        String highlight_name      = hovered_control->get_class_name();
         Rect2 highlight_label_rect = highlight_rect;
         highlight_label_rect.size =
             theme_cache.preview_picker_font->get_string_size(highlight_name);
@@ -163,9 +163,9 @@ void ThemeEditorPreview::_draw_picker_overlay() {
             highlight_label_rect
         );
 
-        Point2 label_pos = highlight_label_rect.position;
-        label_pos.y += highlight_label_rect.size.y - margin_bottom;
-        label_pos.x += margin_left;
+        Point2 label_pos  = highlight_label_rect.position;
+        label_pos.y      += highlight_label_rect.size.y - margin_bottom;
+        label_pos.x      += margin_left;
         picker_overlay->draw_string(
             theme_cache.preview_picker_font,
             label_pos,
@@ -198,7 +198,7 @@ void ThemeEditorPreview::_gui_input_picker_overlay(
     Ref<InputEventMouseMotion> mm = p_event;
 
     if (mm.is_valid()) {
-        Vector2 mp = preview_content->get_local_mouse_position();
+        Vector2 mp      = preview_content->get_local_mouse_position();
         hovered_control = _find_hovered_control(preview_content, mp);
         picker_overlay->update();
     }

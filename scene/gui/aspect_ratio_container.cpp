@@ -44,8 +44,8 @@ Size2 AspectRatioContainer::get_minimum_size() const {
             continue;
         }
         Size2 minsize = c->get_combined_minimum_size();
-        ms.width = MAX(ms.width, minsize.width);
-        ms.height = MAX(ms.height, minsize.height);
+        ms.width      = MAX(ms.width, minsize.width);
+        ms.height     = MAX(ms.height, minsize.height);
     }
     return ms;
 }
@@ -86,8 +86,8 @@ void AspectRatioContainer::_notification(int p_what) {
                     continue;
                 }
                 Size2 child_minsize = c->get_combined_minimum_size();
-                Size2 child_size = Size2(ratio, 1.0);
-                float scale_factor = 1.0;
+                Size2 child_size    = Size2(ratio, 1.0);
+                float scale_factor  = 1.0;
 
                 switch (stretch_mode) {
                     case STRETCH_WIDTH_CONTROLS_HEIGHT: {
@@ -105,9 +105,9 @@ void AspectRatioContainer::_notification(int p_what) {
                             MAX(size.x / child_size.x, size.y / child_size.y);
                     } break;
                 }
-                child_size *= scale_factor;
-                child_size.x = MAX(child_size.x, child_minsize.x);
-                child_size.y = MAX(child_size.y, child_minsize.y);
+                child_size   *= scale_factor;
+                child_size.x  = MAX(child_size.x, child_minsize.x);
+                child_size.y  = MAX(child_size.y, child_minsize.y);
 
                 float align_x = 0.5;
                 switch (alignment_horizontal) {

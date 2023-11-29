@@ -174,15 +174,15 @@ VisualScriptNodeInstance* VisualScriptReturn::instance(
 ) {
     VisualScriptNodeInstanceReturn* instance =
         memnew(VisualScriptNodeInstanceReturn);
-    instance->node = this;
-    instance->instance = p_instance;
+    instance->node       = this;
+    instance->instance   = p_instance;
     instance->with_value = with_value;
     return instance;
 }
 
 VisualScriptReturn::VisualScriptReturn() {
     with_value = false;
-    type = Variant::NIL;
+    type       = Variant::NIL;
 }
 
 template <bool with_value>
@@ -278,7 +278,7 @@ VisualScriptNodeInstance* VisualScriptCondition::instance(
 ) {
     VisualScriptNodeInstanceCondition* instance =
         memnew(VisualScriptNodeInstanceCondition);
-    instance->node = this;
+    instance->node     = this;
     instance->instance = p_instance;
     return instance;
 }
@@ -367,7 +367,7 @@ VisualScriptNodeInstance* VisualScriptWhile::instance(
 ) {
     VisualScriptNodeInstanceWhile* instance =
         memnew(VisualScriptNodeInstanceWhile);
-    instance->node = this;
+    instance->node     = this;
     instance->instance = p_instance;
     return instance;
 }
@@ -454,7 +454,7 @@ public:
 
             if (!valid) {
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-                r_error_str = RTR("Input type not iterable: ")
+                r_error_str   = RTR("Input type not iterable: ")
                             + Variant::get_type_name(p_inputs[0]->get_type());
                 return 0;
             }
@@ -467,7 +467,7 @@ public:
 
             if (!valid) {
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-                r_error_str = RTR("Iterator became invalid");
+                r_error_str   = RTR("Iterator became invalid");
                 return 0;
             }
 
@@ -478,7 +478,7 @@ public:
 
             if (!valid) {
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-                r_error_str = RTR("Iterator became invalid: ")
+                r_error_str   = RTR("Iterator became invalid: ")
                             + Variant::get_type_name(p_inputs[0]->get_type());
                 return 0;
             }
@@ -491,7 +491,7 @@ public:
 
             if (!valid) {
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-                r_error_str = RTR("Iterator became invalid");
+                r_error_str   = RTR("Iterator became invalid");
                 return 0;
             }
         }
@@ -505,7 +505,7 @@ VisualScriptNodeInstance* VisualScriptIterator::instance(
 ) {
     VisualScriptNodeInstanceIterator* instance =
         memnew(VisualScriptNodeInstanceIterator);
-    instance->node = this;
+    instance->node     = this;
     instance->instance = p_instance;
     return instance;
 }
@@ -627,9 +627,9 @@ VisualScriptNodeInstance* VisualScriptSequence::instance(
 ) {
     VisualScriptNodeInstanceSequence* instance =
         memnew(VisualScriptNodeInstanceSequence);
-    instance->node = this;
+    instance->node     = this;
     instance->instance = p_instance;
-    instance->steps = steps;
+    instance->steps    = steps;
     return instance;
 }
 
@@ -722,7 +722,7 @@ VisualScriptNodeInstance* VisualScriptSwitch::instance(
 ) {
     VisualScriptNodeInstanceSwitch* instance =
         memnew(VisualScriptNodeInstanceSwitch);
-    instance->instance = p_instance;
+    instance->instance   = p_instance;
     instance->case_count = case_values.size();
     return instance;
 }
@@ -911,7 +911,7 @@ public:
 
         if (!obj) {
             r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-            r_error_str = "Instance is null";
+            r_error_str   = "Instance is null";
             return 0;
         }
 
@@ -930,7 +930,7 @@ public:
             Ref<Script> cast_script = Ref<Resource>(ResourceCache::get(script));
             if (!cast_script.is_valid()) {
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-                r_error_str = "Script path is not a script: " + script;
+                r_error_str   = "Script path is not a script: " + script;
                 return 1;
             }
 
@@ -960,9 +960,9 @@ VisualScriptNodeInstance* VisualScriptTypeCast::instance(
 ) {
     VisualScriptNodeInstanceTypeCast* instance =
         memnew(VisualScriptNodeInstanceTypeCast);
-    instance->instance = p_instance;
+    instance->instance  = p_instance;
     instance->base_type = base_type;
-    instance->script = script;
+    instance->script    = script;
     return instance;
 }
 
@@ -994,7 +994,7 @@ void VisualScriptTypeCast::_bind_methods() {
 
     String script_ext_hint;
     for (List<String>::Element* E = script_extensions.front(); E;
-         E = E->next()) {
+         E                        = E->next()) {
         if (script_ext_hint != String()) {
             script_ext_hint += ",";
         }

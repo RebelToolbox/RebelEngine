@@ -53,11 +53,11 @@ public:
     struct CacheID {
         union {
             struct {
-                uint32_t size : 16;
+                uint32_t size         : 16;
                 uint32_t outline_size : 8;
-                uint32_t mipmaps : 1;
-                uint32_t filter : 1;
-                uint32_t unused : 6;
+                uint32_t mipmaps      : 1;
+                uint32_t filter       : 1;
+                uint32_t unused       : 6;
             };
 
             uint32_t key;
@@ -153,7 +153,7 @@ class DynamicFontAtSize : public Reference {
 
         Character() {
             texture_idx = 0;
-            v_align = 0;
+            v_align     = 0;
         }
 
         static Character not_found();
@@ -221,7 +221,7 @@ public:
         const Color& p_modulate,
         const Vector<Ref<DynamicFontAtSize>>& p_fallbacks,
         bool p_advance_only = false,
-        bool p_outline = false
+        bool p_outline      = false
     ) const;
 
     void set_texture_flags(uint32_t p_flags);
@@ -317,9 +317,9 @@ public:
         RID p_canvas_item,
         const Point2& p_pos,
         CharType p_char,
-        CharType p_next = 0,
+        CharType p_next         = 0,
         const Color& p_modulate = Color(1, 1, 1),
-        bool p_outline = false
+        bool p_outline          = false
     ) const;
 
     SelfList<DynamicFont> font_list;
@@ -344,7 +344,7 @@ public:
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
     virtual bool handles_type(const String& p_type) const;

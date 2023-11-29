@@ -91,8 +91,8 @@ public:
         _update_sorting();
 
         // binary search
-        int low = 0;
-        int high = points.size() - 1;
+        int low    = 0;
+        int high   = points.size() - 1;
         int middle = 0;
 
 #ifdef DEBUG_ENABLED
@@ -102,7 +102,7 @@ public:
 #endif
 
         while (low <= high) {
-            middle = (low + high) / 2;
+            middle             = (low + high) / 2;
             const Point& point = points[middle];
             if (point.offset > p_offset) {
                 high = middle - 1; // search low end of array
@@ -117,7 +117,7 @@ public:
         if (points[middle].offset > p_offset) {
             middle--;
         }
-        int first = middle;
+        int first  = middle;
         int second = middle + 1;
         if (second >= points.size()) {
             return points[points.size() - 1].color;
@@ -125,7 +125,7 @@ public:
         if (first < 0) {
             return points[0].color;
         }
-        const Point& pointFirst = points[first];
+        const Point& pointFirst  = points[first];
         const Point& pointSecond = points[second];
         return pointFirst.color.linear_interpolate(
             pointSecond.color,

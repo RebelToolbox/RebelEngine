@@ -76,7 +76,7 @@ void thread_process_array(
     int p_num_threads = 0
 ) {
     ThreadArrayProcessData<C, U> data;
-    data.method = p_method;
+    data.method   = p_method;
     data.instance = p_instance;
     data.userdata = p_userdata;
     data.index.set(0);
@@ -118,7 +118,7 @@ void thread_process_array(
     int p_num_threads = 0
 ) {
     ThreadArrayProcessData<C, U> data;
-    data.method = p_method;
+    data.method   = p_method;
     data.instance = p_instance;
     data.userdata = p_userdata;
     data.index.set(0);

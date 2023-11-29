@@ -43,7 +43,7 @@ public:
         Object* ptr;
         Singleton(
             const StringName& p_name = StringName(),
-            Object* p_ptr = nullptr
+            Object* p_ptr            = nullptr
         );
     };
 

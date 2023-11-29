@@ -78,7 +78,7 @@ void GDMonoMethod::_update_signature(MonoMethodSignature* p_method_sig) {
 
     // clear the cache
     method_info_fetched = false;
-    method_info = MethodInfo();
+    method_info         = MethodInfo();
 }
 
 GDMonoClass* GDMonoMethod::get_enclosing_class() const {
@@ -130,7 +130,7 @@ MonoObject* GDMonoMethod::invoke(
         }
 
         MonoException* exc = NULL;
-        MonoObject* ret = GDMonoUtils::runtime_invoke_array(
+        MonoObject* ret    = GDMonoUtils::runtime_invoke_array(
             mono_method,
             p_object,
             params,
@@ -219,7 +219,7 @@ MonoObject* GDMonoMethod::get_attribute(GDMonoClass* p_attr_class) {
 
 void GDMonoMethod::fetch_attributes() {
     ERR_FAIL_COND(attributes != NULL);
-    attributes = mono_custom_attrs_from_method(mono_method);
+    attributes    = mono_custom_attrs_from_method(mono_method);
     attrs_fetched = true;
 }
 
@@ -244,8 +244,8 @@ String GDMonoMethod::get_full_name_no_class() const {
     res += name;
     res += "(";
 
-    char* sig_desc = mono_signature_get_desc(method_sig, true);
-    res += sig_desc;
+    char* sig_desc  = mono_signature_get_desc(method_sig, true);
+    res            += sig_desc;
     mono_free(sig_desc);
 
     res += ")";
@@ -265,7 +265,7 @@ String GDMonoMethod::get_ret_type_full_name() const {
 String GDMonoMethod::get_signature_desc(bool p_namespaces) const {
     MonoMethodSignature* method_sig = mono_method_signature(mono_method);
     char* sig_desc = mono_signature_get_desc(method_sig, p_namespaces);
-    String res = sig_desc;
+    String res     = sig_desc;
     mono_free(sig_desc);
     return res;
 }
@@ -289,7 +289,7 @@ void GDMonoMethod::get_parameter_types(Vector<ManagedType>& types) const {
 
 const MethodInfo& GDMonoMethod::get_method_info() {
     if (!method_info_fetched) {
-        method_info.name = name;
+        method_info.name       = name;
         method_info.return_val = PropertyInfo(
             GDMonoMarshal::managed_to_variant_type(return_type),
             ""
@@ -321,7 +321,7 @@ GDMonoMethod::GDMonoMethod(StringName p_name, MonoMethod* p_method) {
     method_info_fetched = false;
 
     attrs_fetched = false;
-    attributes = NULL;
+    attributes    = NULL;
 
     _update_signature();
 }

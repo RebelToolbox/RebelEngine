@@ -86,8 +86,8 @@ void GDMonoLog::
 
     if (GDMonoLog::get_singleton()->log_level_id
         >= get_log_level_id(log_level)) {
-        String text = make_text(log_domain, log_level, message);
-        text += "\n";
+        String text  = make_text(log_domain, log_level, message);
+        text        += "\n";
 
         f->seek_end();
         f->store_string(text);

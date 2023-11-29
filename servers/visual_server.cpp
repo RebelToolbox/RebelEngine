@@ -33,7 +33,7 @@
 #include "core/method_bind_ext.gen.inc"
 #include "core/project_settings.h"
 
-VisualServer* VisualServer::singleton = nullptr;
+VisualServer* VisualServer::singleton        = nullptr;
 VisualServer* (*VisualServer::create_func)() = nullptr;
 
 VisualServer* VisualServer::get_singleton() {
@@ -79,12 +79,12 @@ Array VisualServer::_texture_debug_usage_bind() {
     for (const List<TextureInfo>::Element* E = list.front(); E; E = E->next()) {
         Dictionary dict;
         dict["texture"] = E->get().texture;
-        dict["width"] = E->get().width;
-        dict["height"] = E->get().height;
-        dict["depth"] = E->get().depth;
-        dict["format"] = E->get().format;
-        dict["bytes"] = E->get().bytes;
-        dict["path"] = E->get().path;
+        dict["width"]   = E->get().width;
+        dict["height"]  = E->get().height;
+        dict["depth"]   = E->get().depth;
+        dict["format"]  = E->get().format;
+        dict["bytes"]   = E->get().bytes;
+        dict["path"]    = E->get().path;
         arr.push_back(dict);
     }
     return arr;
@@ -237,7 +237,7 @@ RID VisualServer::_make_test_cube() {
                     face_points[3 - j][(i + k) % 3] = -v[k];
                 }
             }
-            normal_points[j] = Vector3();
+            normal_points[j]        = Vector3();
             normal_points[j][i % 3] = (i >= 3 ? -1 : 1);
         }
 
@@ -255,10 +255,10 @@ RID VisualServer::_make_test_cube() {
 
     Array d;
     d.resize(VS::ARRAY_MAX);
-    d[VisualServer::ARRAY_NORMAL] = normals;
+    d[VisualServer::ARRAY_NORMAL]  = normals;
     d[VisualServer::ARRAY_TANGENT] = tangents;
-    d[VisualServer::ARRAY_TEX_UV] = uvs;
-    d[VisualServer::ARRAY_VERTEX] = vertices;
+    d[VisualServer::ARRAY_TEX_UV]  = uvs;
+    d[VisualServer::ARRAY_VERTEX]  = vertices;
 
     PoolVector<int> indices;
     indices.resize(vertices.size());
@@ -292,21 +292,21 @@ RID VisualServer::make_sphere_mesh(int p_lats, int p_lons, float p_radius) {
 
     for (int i = 1; i <= p_lats; i++) {
         double lat0 = Math_PI * (-0.5 + (double)(i - 1) / p_lats);
-        double z0 = Math::sin(lat0);
-        double zr0 = Math::cos(lat0);
+        double z0   = Math::sin(lat0);
+        double zr0  = Math::cos(lat0);
 
         double lat1 = Math_PI * (-0.5 + (double)i / p_lats);
-        double z1 = Math::sin(lat1);
-        double zr1 = Math::cos(lat1);
+        double z1   = Math::sin(lat1);
+        double zr1  = Math::cos(lat1);
 
         for (int j = p_lons; j >= 1; j--) {
             double lng0 = 2 * Math_PI * (double)(j - 1) / p_lons;
-            double x0 = Math::cos(lng0);
-            double y0 = Math::sin(lng0);
+            double x0   = Math::cos(lng0);
+            double y0   = Math::sin(lng0);
 
             double lng1 = 2 * Math_PI * (double)(j) / p_lons;
-            double x1 = Math::cos(lng1);
-            double y1 = Math::sin(lng1);
+            double x1   = Math::cos(lng1);
+            double y1   = Math::sin(lng1);
 
             Vector3 v[4] = {
                 Vector3(x1 * zr0, z0, y1 * zr0),
@@ -355,7 +355,7 @@ RID VisualServer::get_white_texture() {
         }
     }
     Ref<Image> white = memnew(Image(4, 4, 0, Image::FORMAT_RGB8, wt));
-    white_texture = texture_create();
+    white_texture    = texture_create();
     texture_allocate(
         white_texture,
         4,
@@ -413,10 +413,10 @@ Vector2 VisualServer::tangent_to_oct(
     const float sign,
     const bool high_precision
 ) {
-    float bias = high_precision ? 1.0f / 32767 : 1.0f / 127;
+    float bias  = high_precision ? 1.0f / 32767 : 1.0f / 127;
     Vector2 res = norm_to_oct(v);
-    res.y = res.y * 0.5f + 0.5f;
-    res.y = MAX(res.y, bias) * SGN(sign);
+    res.y       = res.y * 0.5f + 0.5f;
+    res.y       = MAX(res.y, bias) * SGN(sign);
     return res;
 }
 
@@ -424,9 +424,9 @@ Vector2 VisualServer::tangent_to_oct(
 // Assumes normalized format (elements of v within range [-1, 1])
 Vector3 VisualServer::oct_to_norm(const Vector2 v) {
     Vector3 res(v.x, v.y, 1 - (Math::absf(v.x) + Math::absf(v.y)));
-    float t = MAX(-res.z, 0.0f);
-    res.x += t * -SGN(res.x);
-    res.y += t * -SGN(res.y);
+    float t  = MAX(-res.z, 0.0f);
+    res.x   += t * -SGN(res.x);
+    res.y   += t * -SGN(res.y);
     return res.normalized();
 }
 
@@ -435,9 +435,9 @@ Vector3 VisualServer::oct_to_norm(const Vector2 v) {
 // Assumes normalized format (elements of v within range [-1, 1])
 Vector3 VisualServer::oct_to_tangent(const Vector2 v, float* out_sign) {
     Vector2 v_decompressed = v;
-    v_decompressed.y = Math::absf(v_decompressed.y) * 2 - 1;
-    Vector3 res = oct_to_norm(v_decompressed);
-    *out_sign = SGN(v[1]);
+    v_decompressed.y       = Math::absf(v_decompressed.y) * 2 - 1;
+    Vector3 res            = oct_to_norm(v_decompressed);
+    *out_sign              = SGN(v[1]);
     return res;
 }
 
@@ -477,7 +477,7 @@ Error VisualServer::_surface_set_data(
                     );
 
                     PoolVector<Vector2>::Read read = array.read();
-                    const Vector2* src = read.ptr();
+                    const Vector2* src             = read.ptr();
 
                     // setting vertices means regenerating the AABB
                     Rect2 aabb;
@@ -539,7 +539,7 @@ Error VisualServer::_surface_set_data(
                     );
 
                     PoolVector<Vector3>::Read read = array.read();
-                    const Vector3* src = read.ptr();
+                    const Vector3* src             = read.ptr();
 
                     // setting vertices means regenerating the AABB
                     AABB aabb;
@@ -601,7 +601,7 @@ Error VisualServer::_surface_set_data(
                 );
 
                 PoolVector<Vector3>::Read read = array.read();
-                const Vector3* src = read.ptr();
+                const Vector3* src             = read.ptr();
 
                 // setting vertices means regenerating the AABB
 
@@ -610,7 +610,7 @@ Error VisualServer::_surface_set_data(
                         && (p_format & ARRAY_FORMAT_TANGENT)
                         && (p_format & ARRAY_COMPRESS_TANGENT)) {
                         for (int i = 0; i < p_vertex_array_len; i++) {
-                            Vector2 res = norm_to_oct(src[i]);
+                            Vector2 res      = norm_to_oct(src[i]);
                             int8_t vector[2] = {
                                 (int8_t)CLAMP(res.x * 127, -128, 127),
                                 (int8_t)CLAMP(res.y * 127, -128, 127),
@@ -625,7 +625,7 @@ Error VisualServer::_surface_set_data(
 
                     } else {
                         for (int i = 0; i < p_vertex_array_len; i++) {
-                            Vector2 res = norm_to_oct(src[i]);
+                            Vector2 res       = norm_to_oct(src[i]);
                             int16_t vector[2] = {
                                 (int16_t)CLAMP(res.x * 32767, -32768, 32767),
                                 (int16_t)CLAMP(res.y * 32767, -32768, 32767),
@@ -683,7 +683,7 @@ Error VisualServer::_surface_set_data(
                 );
 
                 PoolVector<real_t>::Read read = array.read();
-                const real_t* src = read.ptr();
+                const real_t* src             = read.ptr();
 
                 if (p_format & ARRAY_FLAG_USE_OCTAHEDRAL_COMPRESSION) {
                     if (p_format & ARRAY_COMPRESS_TANGENT) {
@@ -780,7 +780,7 @@ Error VisualServer::_surface_set_data(
                 );
 
                 PoolVector<Color>::Read read = array.read();
-                const Color* src = read.ptr();
+                const Color* src             = read.ptr();
 
                 if (p_format & ARRAY_COMPRESS_COLOR) {
                     for (int i = 0; i < p_vertex_array_len; i++) {
@@ -984,7 +984,7 @@ Error VisualServer::_surface_set_data(
                     for (int i = 0; i < p_vertex_array_len; i++) {
                         uint16_t data[VS::ARRAY_WEIGHTS_SIZE];
                         for (int j = 0; j < VS::ARRAY_WEIGHTS_SIZE; j++) {
-                            data[j] = src[i * VS::ARRAY_WEIGHTS_SIZE + j];
+                            data[j]  = src[i * VS::ARRAY_WEIGHTS_SIZE + j];
                             max_bone = MAX(data[j], max_bone);
                         }
 
@@ -1014,7 +1014,7 @@ Error VisualServer::_surface_set_data(
                 /* determine whether using 16 or 32 bits indices */
 
                 PoolVector<int>::Read read = indices.read();
-                const int* src = read.ptr();
+                const int* src             = read.ptr();
 
                 for (int i = 0; i < p_index_array_len; i++) {
                     if (p_vertex_array_len < (1 << 16)) {
@@ -1050,17 +1050,17 @@ Error VisualServer::_surface_set_data(
         }
 
         PoolVector<Vector3> vertices = p_arrays[VS::ARRAY_VERTEX];
-        PoolVector<int> bones = p_arrays[VS::ARRAY_BONES];
-        PoolVector<float> weights = p_arrays[VS::ARRAY_WEIGHTS];
+        PoolVector<int> bones        = p_arrays[VS::ARRAY_BONES];
+        PoolVector<float> weights    = p_arrays[VS::ARRAY_WEIGHTS];
 
         bool any_valid = false;
 
         if (vertices.size() && bones.size() == vertices.size() * 4
             && weights.size() == bones.size()) {
-            int vs = vertices.size();
+            int vs                       = vertices.size();
             PoolVector<Vector3>::Read rv = vertices.read();
-            PoolVector<int>::Read rb = bones.read();
-            PoolVector<float>::Read rw = weights.read();
+            PoolVector<int>::Read rb     = bones.read();
+            PoolVector<float>::Read rw   = weights.read();
 
             AABB* bptr = r_bone_aabb.ptrw();
 
@@ -1142,8 +1142,8 @@ void VisualServer::mesh_surface_make_offsets_from_format(
         && !(p_format & VS::ARRAY_FLAG_USE_DYNAMIC_UPDATE);
 
     int attributes_base_offset = 0;
-    int attributes_stride = 0;
-    int positions_stride = 0;
+    int attributes_stride      = 0;
+    int positions_stride       = 0;
 
     for (int i = 0; i < VS::ARRAY_MAX; i++) {
         r_offsets[i] = 0; // reset
@@ -1172,7 +1172,7 @@ void VisualServer::mesh_surface_make_offsets_from_format(
                     elem_size = 8;
                 }
 
-                r_offsets[i] = 0;
+                r_offsets[i]     = 0;
                 positions_stride = elem_size;
                 if (use_split_stream) {
                     attributes_base_offset = elem_size * p_vertex_len;
@@ -1200,7 +1200,7 @@ void VisualServer::mesh_surface_make_offsets_from_format(
                         elem_size = sizeof(float) * 3;
                     }
                 }
-                r_offsets[i] = attributes_base_offset + attributes_stride;
+                r_offsets[i]       = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1221,7 +1221,7 @@ void VisualServer::mesh_surface_make_offsets_from_format(
                         elem_size = sizeof(float) * 4;
                     }
                 }
-                r_offsets[i] = attributes_base_offset + attributes_stride;
+                r_offsets[i]       = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1231,7 +1231,7 @@ void VisualServer::mesh_surface_make_offsets_from_format(
                 } else {
                     elem_size = sizeof(float) * 4;
                 }
-                r_offsets[i] = attributes_base_offset + attributes_stride;
+                r_offsets[i]       = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1241,7 +1241,7 @@ void VisualServer::mesh_surface_make_offsets_from_format(
                 } else {
                     elem_size = sizeof(float) * 2;
                 }
-                r_offsets[i] = attributes_base_offset + attributes_stride;
+                r_offsets[i]       = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1252,7 +1252,7 @@ void VisualServer::mesh_surface_make_offsets_from_format(
                 } else {
                     elem_size = sizeof(float) * 2;
                 }
-                r_offsets[i] = attributes_base_offset + attributes_stride;
+                r_offsets[i]       = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1262,7 +1262,7 @@ void VisualServer::mesh_surface_make_offsets_from_format(
                 } else {
                     elem_size = sizeof(float) * 4;
                 }
-                r_offsets[i] = attributes_base_offset + attributes_stride;
+                r_offsets[i]       = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1272,7 +1272,7 @@ void VisualServer::mesh_surface_make_offsets_from_format(
                 } else {
                     elem_size = sizeof(uint32_t);
                 }
-                r_offsets[i] = attributes_base_offset + attributes_stride;
+                r_offsets[i]       = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1327,7 +1327,7 @@ void VisualServer::mesh_add_surface_from_arrays(
 
     // validation
     int index_array_len = 0;
-    int array_len = 0;
+    int array_len       = 0;
 
     for (int i = 0; i < p_arrays.size(); i++) {
         if (p_arrays[i].get_type() == Variant::NIL) {
@@ -1363,7 +1363,7 @@ void VisualServer::mesh_add_surface_from_arrays(
         // validate format for morphs
         for (int i = 0; i < p_blend_shapes.size(); i++) {
             uint32_t bsformat = 0;
-            Array arr = p_blend_shapes[i];
+            Array arr         = p_blend_shapes[i];
             for (int j = 0; j < arr.size(); j++) {
                 if (arr[j].get_type() != Variant::NIL) {
                     bsformat |= (1 << j);
@@ -1380,8 +1380,8 @@ void VisualServer::mesh_add_surface_from_arrays(
     uint32_t strides[VS::ARRAY_MAX];
 
     int attributes_base_offset = 0;
-    int attributes_stride = 0;
-    int positions_stride = 0;
+    int attributes_stride      = 0;
+    int positions_stride       = 0;
 
     for (int i = 0; i < VS::ARRAY_MAX; i++) {
         offsets[i] = 0; // reset
@@ -1396,11 +1396,11 @@ void VisualServer::mesh_add_surface_from_arrays(
             case VS::ARRAY_VERTEX: {
                 Variant arr = p_arrays[0];
                 if (arr.get_type() == Variant::POOL_VECTOR2_ARRAY) {
-                    elem_size = 2;
+                    elem_size          = 2;
                     p_compress_format |= ARRAY_FLAG_USE_2D_VERTICES;
                 } else if (arr.get_type() == Variant::POOL_VECTOR3_ARRAY) {
                     p_compress_format &= ~ARRAY_FLAG_USE_2D_VERTICES;
-                    elem_size = 3;
+                    elem_size          = 3;
                 } else {
                     elem_size = (p_compress_format & ARRAY_FLAG_USE_2D_VERTICES)
                                   ? 2
@@ -1418,7 +1418,7 @@ void VisualServer::mesh_add_surface_from_arrays(
                     elem_size = 8;
                 }
 
-                offsets[i] = 0;
+                offsets[i]       = 0;
                 positions_stride = elem_size;
                 if (use_split_stream) {
                     attributes_base_offset = elem_size * array_len;
@@ -1446,7 +1446,7 @@ void VisualServer::mesh_add_surface_from_arrays(
                         elem_size = sizeof(float) * 3;
                     }
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1467,7 +1467,7 @@ void VisualServer::mesh_add_surface_from_arrays(
                         elem_size = sizeof(float) * 4;
                     }
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1477,7 +1477,7 @@ void VisualServer::mesh_add_surface_from_arrays(
                 } else {
                     elem_size = sizeof(float) * 4;
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1487,7 +1487,7 @@ void VisualServer::mesh_add_surface_from_arrays(
                 } else {
                     elem_size = sizeof(float) * 2;
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1498,7 +1498,7 @@ void VisualServer::mesh_add_surface_from_arrays(
                 } else {
                     elem_size = sizeof(float) * 2;
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1508,16 +1508,16 @@ void VisualServer::mesh_add_surface_from_arrays(
                 } else {
                     elem_size = sizeof(float) * 4;
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
             case VS::ARRAY_BONES: {
                 PoolVector<int> bones = p_arrays[VS::ARRAY_BONES];
-                int max_bone = 0;
+                int max_bone          = 0;
 
                 {
-                    int bc = bones.size();
+                    int bc                  = bones.size();
                     PoolVector<int>::Read r = bones.read();
                     for (int j = 0; j < bc; j++) {
                         max_bone = MAX(r[j], max_bone);
@@ -1526,12 +1526,12 @@ void VisualServer::mesh_add_surface_from_arrays(
 
                 if (max_bone > 255) {
                     p_compress_format |= ARRAY_FLAG_USE_16_BIT_BONES;
-                    elem_size = sizeof(uint16_t) * 4;
+                    elem_size          = sizeof(uint16_t) * 4;
                 } else {
                     p_compress_format &= ~ARRAY_FLAG_USE_16_BIT_BONES;
-                    elem_size = sizeof(uint32_t);
+                    elem_size          = sizeof(uint32_t);
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1567,8 +1567,8 @@ void VisualServer::mesh_add_surface_from_arrays(
         }
     }
 
-    uint32_t mask = (1 << ARRAY_MAX) - 1;
-    format |= (~mask) & p_compress_format; // make the full format
+    uint32_t mask  = (1 << ARRAY_MAX) - 1;
+    format        |= (~mask) & p_compress_format; // make the full format
 
     int array_size = (positions_stride + attributes_stride) * array_len;
 
@@ -1655,8 +1655,8 @@ Array VisualServer::_get_array_from_surface(
     uint32_t strides[VS::ARRAY_MAX];
 
     int attributes_base_offset = 0;
-    int attributes_stride = 0;
-    int positions_stride = 0;
+    int attributes_stride      = 0;
+    int positions_stride       = 0;
 
     for (int i = 0; i < VS::ARRAY_MAX; i++) {
         offsets[i] = 0; // reset
@@ -1684,7 +1684,7 @@ Array VisualServer::_get_array_from_surface(
                     elem_size = 8;
                 }
 
-                offsets[i] = 0;
+                offsets[i]       = 0;
                 positions_stride = elem_size;
                 if (use_split_stream) {
                     attributes_base_offset = elem_size * p_vertex_len;
@@ -1712,7 +1712,7 @@ Array VisualServer::_get_array_from_surface(
                         elem_size = sizeof(float) * 3;
                     }
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1733,7 +1733,7 @@ Array VisualServer::_get_array_from_surface(
                         elem_size = sizeof(float) * 4;
                     }
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1743,7 +1743,7 @@ Array VisualServer::_get_array_from_surface(
                 } else {
                     elem_size = sizeof(float) * 4;
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1753,7 +1753,7 @@ Array VisualServer::_get_array_from_surface(
                 } else {
                     elem_size = sizeof(float) * 2;
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1764,7 +1764,7 @@ Array VisualServer::_get_array_from_surface(
                 } else {
                     elem_size = sizeof(float) * 2;
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1774,7 +1774,7 @@ Array VisualServer::_get_array_from_surface(
                 } else {
                     elem_size = sizeof(float) * 4;
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1784,7 +1784,7 @@ Array VisualServer::_get_array_from_surface(
                 } else {
                     elem_size = sizeof(uint32_t);
                 }
-                offsets[i] = attributes_base_offset + attributes_stride;
+                offsets[i]         = attributes_base_offset + attributes_stride;
                 attributes_stride += elem_size;
 
             } break;
@@ -1919,7 +1919,7 @@ Array VisualServer::_get_array_from_surface(
                 } else {
                     if (p_format & ARRAY_COMPRESS_NORMAL) {
                         PoolVector<Vector3>::Write w = arr.write();
-                        const float multiplier = 1.f / 127.f;
+                        const float multiplier       = 1.f / 127.f;
 
                         for (int j = 0; j < p_vertex_len; j++) {
                             const int8_t* v =
@@ -2157,14 +2157,14 @@ Array VisualServer::_get_array_from_surface(
 
                     for (int j = 0; j < p_index_len; j++) {
                         const uint16_t* v = (const uint16_t*)&ir[j * 2];
-                        w[j] = *v;
+                        w[j]              = *v;
                     }
                 } else {
                     PoolVector<int>::Write w = arr.write();
 
                     for (int j = 0; j < p_index_len; j++) {
                         const int* v = (const int*)&ir[j * 4];
-                        w[j] = *v;
+                        w[j]         = *v;
                     }
                 }
                 ret[i] = arr;

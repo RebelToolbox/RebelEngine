@@ -34,10 +34,10 @@
 #include "core/print_string.h"
 #include "scene/gui/label.h"
 
-FileDialog::GetIconFunc FileDialog::get_icon_func = nullptr;
+FileDialog::GetIconFunc FileDialog::get_icon_func       = nullptr;
 FileDialog::GetIconFunc FileDialog::get_large_icon_func = nullptr;
 
-FileDialog::RegisterFunc FileDialog::register_func = nullptr;
+FileDialog::RegisterFunc FileDialog::register_func   = nullptr;
 FileDialog::RegisterFunc FileDialog::unregister_func = nullptr;
 
 VBoxContainer* FileDialog::get_vbox() {
@@ -53,7 +53,7 @@ void FileDialog::_notification(int p_what) {
             show_hidden->set_icon(get_icon("toggle_hidden"));
         }
 
-        Color font_color = get_color("font_color", "ToolButton");
+        Color font_color       = get_color("font_color", "ToolButton");
         Color font_color_hover = get_color("font_color_hover", "ToolButton");
         Color font_color_focus = get_color("font_color_focus", "ToolButton");
         Color font_color_pressed =
@@ -211,7 +211,7 @@ void FileDialog::_action_pressed() {
     } else if (mode == MODE_OPEN_ANY || mode == MODE_OPEN_DIR) {
         String path = dir_access->get_current_dir();
 
-        path = path.replace("\\", "/");
+        path           = path.replace("\\", "/");
         TreeItem* item = tree->get_selected();
         if (item) {
             Dictionary d = item->get_metadata(0);
@@ -250,7 +250,7 @@ void FileDialog::_action_pressed() {
                 idx--;
             }
             if (idx >= 0 && idx < filters.size()) {
-                String flt = filters[idx].get_slice(";", 0);
+                String flt           = filters[idx].get_slice(";", 0);
                 int filterSliceCount = flt.get_slice_count(",");
                 for (int j = 0; j < filterSliceCount; j++) {
                     String str = (flt.get_slice(",", j).strip_edges());
@@ -261,8 +261,8 @@ void FileDialog::_action_pressed() {
                 }
 
                 if (!valid && filterSliceCount > 0) {
-                    String str = (flt.get_slice(",", 0).strip_edges());
-                    f += str.substr(1, str.length() - 1);
+                    String str  = (flt.get_slice(",", 0).strip_edges());
+                    f          += str.substr(1, str.length() - 1);
                     file->set_text(f.get_file());
                     valid = true;
                 }
@@ -300,7 +300,7 @@ bool FileDialog::_is_open_should_be_disabled() {
     TreeItem* ti = tree->get_next_selected(tree->get_root());
     while (ti) {
         TreeItem* prev_ti = ti;
-        ti = tree->get_next_selected(tree->get_root());
+        ti                = tree->get_next_selected(tree->get_root());
         if (ti == prev_ti) {
             break;
         }
@@ -404,8 +404,8 @@ void FileDialog::update_file_name() {
             idx += 1;
         }
         String filter_str = filters[idx];
-        String file_str = file->get_text();
-        String base_name = file_str.get_basename();
+        String file_str   = file->get_text();
+        String base_name  = file_str.get_basename();
         file_str = base_name + "." + filter_str.strip_edges().to_lower();
         file->set_text(file_str);
     }
@@ -419,11 +419,11 @@ void FileDialog::update_file_list() {
 
     dir_access->list_dir_begin();
 
-    TreeItem* root = tree->create_item();
-    Ref<Texture> folder = get_icon("folder");
-    Ref<Texture> file_icon = get_icon("file");
+    TreeItem* root           = tree->create_item();
+    Ref<Texture> folder      = get_icon("folder");
+    Ref<Texture> file_icon   = get_icon("file");
     const Color folder_color = get_color("folder_icon_modulate");
-    const Color file_color = get_color("file_icon_modulate");
+    const Color file_color   = get_color("file_icon_modulate");
     List<String> files;
     List<String> dirs;
 
@@ -451,14 +451,14 @@ void FileDialog::update_file_list() {
 
     while (!dirs.empty()) {
         String& dir_name = dirs.front()->get();
-        TreeItem* ti = tree->create_item(root);
+        TreeItem* ti     = tree->create_item(root);
         ti->set_text(0, dir_name);
         ti->set_icon(0, folder);
         ti->set_icon_modulate(0, folder_color);
 
         Dictionary d;
         d["name"] = dir_name;
-        d["dir"] = true;
+        d["dir"]  = true;
 
         ti->set_metadata(0, d);
 
@@ -500,7 +500,7 @@ void FileDialog::update_file_list() {
         for (List<String>::Element* E = patterns.front(); E; E = E->next()) {
             if (files.front()->get().matchn(E->get())) {
                 match_str = E->get();
-                match = true;
+                match     = true;
                 break;
             }
         }
@@ -524,7 +524,7 @@ void FileDialog::update_file_list() {
             }
             Dictionary d;
             d["name"] = files.front()->get();
-            d["dir"] = false;
+            d["dir"]  = false;
             ti->set_metadata(0, d);
 
             if (file->get_text() == files.front()->get()
@@ -570,7 +570,7 @@ void FileDialog::update_filters() {
         filter->add_item(RTR("All Recognized") + " (" + all_filters + ")");
     }
     for (int i = 0; i < filters.size(); i++) {
-        String flt = filters[i].get_slice(";", 0).strip_edges();
+        String flt  = filters[i].get_slice(";", 0).strip_edges();
         String desc = filters[i].get_slice(";", 1).strip_edges();
         if (desc.length()) {
             filter->add_item(String(tr(desc)) + " (" + flt + ")");
@@ -647,7 +647,7 @@ void FileDialog::set_current_path(const String& p_path) {
     if (pos == -1) {
         set_current_file(p_path);
     } else {
-        String dir = p_path.substr(0, pos);
+        String dir  = p_path.substr(0, pos);
         String file = p_path.substr(pos + 1, p_path.length());
         set_current_dir(dir);
         set_current_file(file);
@@ -1077,7 +1077,7 @@ FileDialog::FileDialog() {
     vbc->add_child(file_box);
 
     dir_access = DirAccess::create(DirAccess::ACCESS_RESOURCES);
-    access = ACCESS_RESOURCES;
+    access     = ACCESS_RESOURCES;
     _update_drives();
 
     connect("confirmed", this, "_action_pressed");

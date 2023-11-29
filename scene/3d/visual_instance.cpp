@@ -574,8 +574,8 @@ void GeometryInstance::_bind_methods() {
 }
 
 GeometryInstance::GeometryInstance() {
-    lod_min_distance = 0;
-    lod_max_distance = 0;
+    lod_min_distance   = 0;
+    lod_max_distance   = 0;
     lod_min_hysteresis = 0;
     lod_max_hysteresis = 0;
 
@@ -584,8 +584,8 @@ GeometryInstance::GeometryInstance() {
     }
 
     shadow_casting_setting = SHADOW_CASTING_SETTING_ON;
-    extra_cull_margin = 0;
-    generate_lightmap = true;
-    lightmap_scale = LightmapScale::LIGHTMAP_SCALE_1X;
+    extra_cull_margin      = 0;
+    generate_lightmap      = true;
+    lightmap_scale         = LightmapScale::LIGHTMAP_SCALE_1X;
     // VS::get_singleton()->instance_geometry_set_baked_light_texture_index(get_instance(),0);
 }

@@ -43,8 +43,8 @@ class BSP_Tree {
 public:
     enum {
         UNDER_LEAF = 0xFFFF,
-        OVER_LEAF = 0xFFFE,
-        MAX_NODES = 0xFFFE,
+        OVER_LEAF  = 0xFFFE,
+        MAX_NODES  = 0xFFFE,
         MAX_PLANES = (1 << 16)
     };
 
@@ -133,7 +133,7 @@ bool BSP_Tree::_test_convex(
     p_convex.project_range(p.normal, min, max);
 
     bool go_under = min < p.d;
-    bool go_over = max >= p.d;
+    bool go_over  = max >= p.d;
 
     if (go_under && _test_convex(p_nodes, p_planes, n.under, p_convex)) {
         collided = true;
@@ -151,7 +151,7 @@ bool BSP_Tree::convex_is_inside(const T& p_convex) const {
     if (node_count == 0) {
         return false;
     }
-    const Node* nodes = &this->nodes[0];
+    const Node* nodes   = &this->nodes[0];
     const Plane* planes = &this->planes[0];
 
     return _test_convex(nodes, planes, node_count - 1, p_convex);
@@ -168,7 +168,7 @@ struct PtrToArg<BSP_Tree> {
 
     _FORCE_INLINE_ static void encode(BSP_Tree p_val, void* p_ptr) {
         Dictionary* d = reinterpret_cast<Dictionary*>(p_ptr);
-        *d = Variant(p_val);
+        *d            = Variant(p_val);
     }
 };
 

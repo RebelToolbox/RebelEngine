@@ -100,7 +100,7 @@ class Body2DSW : public CollisionObject2DSW {
         _FORCE_INLINE_ AreaCMP() {}
 
         _FORCE_INLINE_ AreaCMP(Area2DSW* p_area) {
-            area = p_area;
+            area     = p_area;
             refCount = 1;
         }
     };
@@ -303,7 +303,7 @@ public:
         const Vector2& p_offset,
         const Vector2& p_impulse
     ) {
-        linear_velocity += p_impulse * _inv_mass;
+        linear_velocity  += p_impulse * _inv_mass;
         angular_velocity += _inv_inertia * p_offset.cross(p_impulse);
     }
 
@@ -315,7 +315,7 @@ public:
         const Vector2& p_pos,
         const Vector2& p_j
     ) {
-        biased_linear_velocity += p_j * _inv_mass;
+        biased_linear_velocity  += p_j * _inv_mass;
         biased_angular_velocity += _inv_inertia * p_pos.cross(p_j);
     }
 
@@ -369,7 +369,7 @@ public:
         const Vector2& p_offset,
         const Vector2& p_force
     ) {
-        applied_force += p_force;
+        applied_force  += p_force;
         applied_torque += p_offset.cross(p_force);
     }
 
@@ -478,10 +478,10 @@ void Body2DSW::add_contact(
         idx = contact_count++;
     } else {
         real_t least_depth = 1e20;
-        int least_deep = -1;
+        int least_deep     = -1;
         for (int i = 0; i < c_max; i++) {
             if (i == 0 || c[i].depth < least_depth) {
-                least_deep = i;
+                least_deep  = i;
                 least_depth = c[i].depth;
             }
         }
@@ -494,14 +494,14 @@ void Body2DSW::add_contact(
         }
     }
 
-    c[idx].local_pos = p_local_pos;
-    c[idx].local_normal = p_local_normal;
-    c[idx].depth = p_depth;
-    c[idx].local_shape = p_local_shape;
-    c[idx].collider_pos = p_collider_pos;
-    c[idx].collider_shape = p_collider_shape;
-    c[idx].collider_instance_id = p_collider_instance_id;
-    c[idx].collider = p_collider;
+    c[idx].local_pos                = p_local_pos;
+    c[idx].local_normal             = p_local_normal;
+    c[idx].depth                    = p_depth;
+    c[idx].local_shape              = p_local_shape;
+    c[idx].collider_pos             = p_collider_pos;
+    c[idx].collider_shape           = p_collider_shape;
+    c[idx].collider_instance_id     = p_collider_instance_id;
+    c[idx].collider                 = p_collider;
     c[idx].collider_velocity_at_pos = p_collider_velocity_at_pos;
 }
 
@@ -661,7 +661,7 @@ public:
 
     Physics2DDirectBodyStateSW() {
         singleton = this;
-        body = nullptr;
+        body      = nullptr;
     }
 };
 

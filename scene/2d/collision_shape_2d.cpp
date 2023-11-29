@@ -93,7 +93,7 @@ void CollisionShape2D::_notification(int p_what) {
                 parent->remove_shape_owner(owner_id);
             }
             owner_id = 0;
-            parent = nullptr;
+            parent   = nullptr;
 
         } break;
         case NOTIFICATION_DRAW: {
@@ -112,10 +112,10 @@ void CollisionShape2D::_notification(int p_what) {
 
             Color draw_col = get_tree()->get_debug_collisions_color();
             if (disabled) {
-                float g = draw_col.get_v();
-                draw_col.r = g;
-                draw_col.g = g;
-                draw_col.b = g;
+                float g     = draw_col.get_v();
+                draw_col.r  = g;
+                draw_col.g  = g;
+                draw_col.b  = g;
                 draw_col.a *= 0.5;
             }
             shape->draw(get_canvas_item(), draw_col);
@@ -208,7 +208,7 @@ String CollisionShape2D::get_configuration_warning() const {
             TTR("A shape must be provided for CollisionShape2D to function. "
                 "Please create a shape resource for it!");
     } else {
-        Ref<ConvexPolygonShape2D> convex = shape;
+        Ref<ConvexPolygonShape2D> convex   = shape;
         Ref<ConcavePolygonShape2D> concave = shape;
         if (convex.is_valid() || concave.is_valid()) {
             if (warning != String()) {
@@ -332,9 +332,9 @@ void CollisionShape2D::_bind_methods() {
 CollisionShape2D::CollisionShape2D() {
     rect = Rect2(-Point2(10, 10), Point2(20, 20));
     set_notify_local_transform(true);
-    owner_id = 0;
-    parent = nullptr;
-    disabled = false;
-    one_way_collision = false;
+    owner_id                 = 0;
+    parent                   = nullptr;
+    disabled                 = false;
+    one_way_collision        = false;
     one_way_collision_margin = 1.0;
 }

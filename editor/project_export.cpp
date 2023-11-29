@@ -112,7 +112,7 @@ void ProjectExportDialog::_add_preset(int p_platform) {
                       ->get_export_platform(p_platform)
                       ->get_name();
     bool make_runnable = true;
-    int attempt = 1;
+    int attempt        = 1;
     while (true) {
         bool valid = true;
 
@@ -277,7 +277,7 @@ void ProjectExportDialog::_edit_preset(int p_index) {
     if (!current->get_platform()->can_export(current, error, needs_templates)) {
         if (error != String()) {
             Vector<String> items = error.split("\n", false);
-            error = "";
+            error                = "";
             for (int i = 0; i < items.size(); i++) {
                 if (i > 0) {
                     error += "\n";
@@ -302,7 +302,7 @@ void ProjectExportDialog::_edit_preset(int p_index) {
     } else {
         if (error != String()) {
             Vector<String> items = error.split("\n", false);
-            error = "";
+            error                = "";
             for (int i = 0; i < items.size(); i++) {
                 if (i > 0) {
                     error += "\n";
@@ -359,7 +359,7 @@ void ProjectExportDialog::_update_feature_list() {
     current->get_platform()->get_platform_features(&features);
     current->get_platform()->get_preset_features(current, &features);
 
-    String custom = current->get_custom_features();
+    String custom              = current->get_custom_features();
     Vector<String> custom_list = custom.split(",");
     for (int i = 0; i < custom_list.size(); i++) {
         String f = custom_list[i].strip_edges();
@@ -523,7 +523,7 @@ void ProjectExportDialog::_duplicate_preset() {
     Ref<EditorExportPreset> preset = current->get_platform()->create_preset();
     ERR_FAIL_COND(!preset.is_valid());
 
-    String name = current->get_name() + " (copy)";
+    String name        = current->get_name() + " (copy)";
     bool make_runnable = true;
     while (true) {
         bool valid = true;
@@ -601,11 +601,11 @@ Variant ProjectExportDialog::get_drag_data_fw(
 
         if (pos >= 0) {
             Dictionary d;
-            d["type"] = "export_preset";
+            d["type"]   = "export_preset";
             d["preset"] = pos;
 
             HBoxContainer* drag = memnew(HBoxContainer);
-            TextureRect* tr = memnew(TextureRect);
+            TextureRect* tr     = memnew(TextureRect);
             tr->set_texture(presets->get_item_icon(pos));
             drag->add_child(tr);
             Label* label = memnew(Label);
@@ -751,12 +751,12 @@ bool ProjectExportDialog::_fill_tree(
     p_item->set_editable(0, true);
     p_item->set_metadata(0, p_dir->get_path());
 
-    bool used = false;
+    bool used    = false;
     bool checked = true;
     for (int i = 0; i < p_dir->get_subdir_count(); i++) {
         TreeItem* subdir = include_files->create_item(p_item);
         if (_fill_tree(p_dir->get_subdir(i), subdir, current, p_only_scenes)) {
-            used = true;
+            used    = true;
             checked = checked && subdir->is_checked(0);
         } else {
             memdelete(subdir);
@@ -804,7 +804,7 @@ void ProjectExportDialog::_tree_changed() {
     }
 
     String path = item->get_metadata(0);
-    bool added = item->is_checked(0);
+    bool added  = item->is_checked(0);
 
     if (path.ends_with("/")) {
         _check_dir_recursive(item, added);
@@ -824,7 +824,7 @@ void ProjectExportDialog::_check_dir_recursive(
     bool p_checked
 ) {
     for (TreeItem* child = p_dir->get_children(); child;
-         child = child->get_next()) {
+         child           = child->get_next()) {
         String path = child->get_metadata(0);
 
         child->set_checked(0, p_checked);
@@ -848,7 +848,7 @@ void ProjectExportDialog::_refresh_parent_checks(TreeItem* p_item) {
 
     bool checked = true;
     for (TreeItem* child = parent->get_children(); child;
-         child = child->get_next()) {
+         child           = child->get_next()) {
         checked = checked && child->is_checked(0);
         if (!checked) {
             break;

@@ -42,7 +42,7 @@ bool sat_2d_calculate_penetration(
     const Vector2& p_motion_B,
     CollisionSolver2DSW::CallbackResult p_result_callback,
     void* p_userdata,
-    bool p_swap = false,
+    bool p_swap       = false,
     Vector2* sep_axis = nullptr,
     real_t p_margin_A = 0,
     real_t p_margin_B = 0

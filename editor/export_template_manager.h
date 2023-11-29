@@ -44,12 +44,12 @@ class ExportTemplateVersion;
 class ExportTemplateManager : public AcceptDialog {
     GDCLASS(ExportTemplateManager, AcceptDialog);
 
-    bool current_version_exists = false;
-    bool downloads_available = true;
-    bool mirrors_available = false;
-    bool is_refreshing_mirrors = false;
+    bool current_version_exists   = false;
+    bool downloads_available      = true;
+    bool mirrors_available        = false;
+    bool is_refreshing_mirrors    = false;
     bool is_downloading_templates = false;
-    float update_countdown = 0;
+    float update_countdown        = 0;
 
     Label* current_value;
     Label* current_missing_label;

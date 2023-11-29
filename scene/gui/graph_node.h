@@ -55,12 +55,12 @@ private:
         Ref<Texture> custom_slot_right;
 
         Slot() {
-            enable_left = false;
-            type_left = 0;
-            color_left = Color(1, 1, 1, 1);
+            enable_left  = false;
+            type_left    = 0;
+            color_left   = Color(1, 1, 1, 1);
             enable_right = false;
-            type_right = 0;
-            color_right = Color(1, 1, 1, 1);
+            type_right   = 0;
+            color_right  = Color(1, 1, 1, 1);
         }
     };
 
@@ -119,7 +119,7 @@ public:
         bool p_enable_right,
         int p_type_right,
         const Color& p_color_right,
-        const Ref<Texture>& p_custom_left = Ref<Texture>(),
+        const Ref<Texture>& p_custom_left  = Ref<Texture>(),
         const Ref<Texture>& p_custom_right = Ref<Texture>()
     );
     void clear_slot(int p_idx);

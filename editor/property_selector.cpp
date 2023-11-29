@@ -238,7 +238,7 @@ void PropertySelector::_update_search() {
 
         TreeItem* category = nullptr;
 
-        bool found = false;
+        bool found          = false;
         bool script_methods = false;
 
         for (List<MethodInfo>::Element* E = methods.front(); E; E = E->next()) {
@@ -252,9 +252,9 @@ void PropertySelector::_update_search() {
 
                 Ref<Texture> icon;
                 script_methods = false;
-                String rep = E->get().name.replace("*", "");
+                String rep     = E->get().name.replace("*", "");
                 if (E->get().name == "*Script Methods") {
-                    icon = get_icon("Script", "EditorIcons");
+                    icon           = get_icon("Script", "EditorIcons");
                     script_methods = true;
                 } else {
                     icon = EditorNode::get_singleton()->get_class_icon(rep);
@@ -290,7 +290,7 @@ void PropertySelector::_update_search() {
 
             String desc;
             if (mi.name.find(":") != -1) {
-                desc = mi.name.get_slice(":", 1) + " ";
+                desc    = mi.name.get_slice(":", 1) + " ";
                 mi.name = mi.name.get_slice(":", 0);
             } else if (mi.return_val.type != Variant::NIL) {
                 desc = Variant::get_type_name(mi.return_val.type);
@@ -452,12 +452,12 @@ void PropertySelector::select_method_from_base_type(
     const String& p_current,
     bool p_virtuals_only
 ) {
-    base_type = p_base;
-    selected = p_current;
-    type = Variant::NIL;
-    script = 0;
-    properties = false;
-    instance = nullptr;
+    base_type     = p_base;
+    selected      = p_current;
+    type          = Variant::NIL;
+    script        = 0;
+    properties    = false;
+    instance      = nullptr;
     virtuals_only = p_virtuals_only;
 
     popup_centered_ratio(0.6);
@@ -471,12 +471,12 @@ void PropertySelector::select_method_from_script(
     const String& p_current
 ) {
     ERR_FAIL_COND(p_script.is_null());
-    base_type = p_script->get_instance_base_type();
-    selected = p_current;
-    type = Variant::NIL;
-    script = p_script->get_instance_id();
-    properties = false;
-    instance = nullptr;
+    base_type     = p_script->get_instance_base_type();
+    selected      = p_current;
+    type          = Variant::NIL;
+    script        = p_script->get_instance_id();
+    properties    = false;
+    instance      = nullptr;
     virtuals_only = false;
 
     popup_centered_ratio(0.6);
@@ -490,12 +490,12 @@ void PropertySelector::select_method_from_basic_type(
     const String& p_current
 ) {
     ERR_FAIL_COND(p_type == Variant::NIL);
-    base_type = "";
-    selected = p_current;
-    type = p_type;
-    script = 0;
-    properties = false;
-    instance = nullptr;
+    base_type     = "";
+    selected      = p_current;
+    type          = p_type;
+    script        = 0;
+    properties    = false;
+    instance      = nullptr;
     virtuals_only = false;
 
     popup_centered_ratio(0.6);
@@ -509,17 +509,17 @@ void PropertySelector::select_method_from_instance(
     const String& p_current
 ) {
     base_type = p_instance->get_class();
-    selected = p_current;
-    type = Variant::NIL;
-    script = 0;
+    selected  = p_current;
+    type      = Variant::NIL;
+    script    = 0;
     {
         Ref<Script> scr = p_instance->get_script();
         if (scr.is_valid()) {
             script = scr->get_instance_id();
         }
     }
-    properties = false;
-    instance = nullptr;
+    properties    = false;
+    instance      = nullptr;
     virtuals_only = false;
 
     popup_centered_ratio(0.6);
@@ -532,12 +532,12 @@ void PropertySelector::select_property_from_base_type(
     const String& p_base,
     const String& p_current
 ) {
-    base_type = p_base;
-    selected = p_current;
-    type = Variant::NIL;
-    script = 0;
-    properties = true;
-    instance = nullptr;
+    base_type     = p_base;
+    selected      = p_current;
+    type          = Variant::NIL;
+    script        = 0;
+    properties    = true;
+    instance      = nullptr;
     virtuals_only = false;
 
     popup_centered_ratio(0.6);
@@ -552,12 +552,12 @@ void PropertySelector::select_property_from_script(
 ) {
     ERR_FAIL_COND(p_script.is_null());
 
-    base_type = p_script->get_instance_base_type();
-    selected = p_current;
-    type = Variant::NIL;
-    script = p_script->get_instance_id();
-    properties = true;
-    instance = nullptr;
+    base_type     = p_script->get_instance_base_type();
+    selected      = p_current;
+    type          = Variant::NIL;
+    script        = p_script->get_instance_id();
+    properties    = true;
+    instance      = nullptr;
     virtuals_only = false;
 
     popup_centered_ratio(0.6);
@@ -571,12 +571,12 @@ void PropertySelector::select_property_from_basic_type(
     const String& p_current
 ) {
     ERR_FAIL_COND(p_type == Variant::NIL);
-    base_type = "";
-    selected = p_current;
-    type = p_type;
-    script = 0;
-    properties = true;
-    instance = nullptr;
+    base_type     = "";
+    selected      = p_current;
+    type          = p_type;
+    script        = 0;
+    properties    = true;
+    instance      = nullptr;
     virtuals_only = false;
 
     popup_centered_ratio(0.6);
@@ -589,12 +589,12 @@ void PropertySelector::select_property_from_instance(
     Object* p_instance,
     const String& p_current
 ) {
-    base_type = "";
-    selected = p_current;
-    type = Variant::NIL;
-    script = 0;
-    properties = true;
-    instance = p_instance;
+    base_type     = "";
+    selected      = p_current;
+    type          = Variant::NIL;
+    script        = 0;
+    properties    = true;
+    instance      = p_instance;
     virtuals_only = false;
 
     popup_centered_ratio(0.6);

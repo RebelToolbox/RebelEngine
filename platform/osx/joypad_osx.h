@@ -65,15 +65,15 @@ struct joypad {
     Vector<rec_element> button_elements;
     Vector<rec_element> hat_elements;
 
-    int id = 0;
+    int id          = 0;
     bool offset_hat = false;
 
     io_service_t ffservice = 0; /* Interface for force feedback, 0 = no ff */
     FFCONSTANTFORCE ff_constant_force;
     FFDeviceObjectReference ff_device = nullptr;
     FFEffectObjectReference ff_object = nullptr;
-    uint64_t ff_timestamp = 0;
-    LONG* ff_directions = nullptr;
+    uint64_t ff_timestamp             = 0;
+    LONG* ff_directions               = nullptr;
     FFEFFECT ff_effect;
     DWORD* ff_axes = nullptr;
 

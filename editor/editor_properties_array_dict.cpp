@@ -100,9 +100,9 @@ bool EditorPropertyDictionaryObject::_set(
     }
 
     if (name.begins_with("indices")) {
-        int index = name.get_slicec('/', 1).to_int();
+        int index   = name.get_slicec('/', 1).to_int();
         Variant key = dict.get_key_at_index(index);
-        dict[key] = p_value;
+        dict[key]   = p_value;
         return true;
     }
 
@@ -126,9 +126,9 @@ bool EditorPropertyDictionaryObject::_get(
     }
 
     if (name.begins_with("indices")) {
-        int index = name.get_slicec('/', 1).to_int();
+        int index   = name.get_slicec('/', 1).to_int();
         Variant key = dict.get_key_at_index(index);
-        r_ret = dict[key];
+        r_ret       = dict[key];
         if (r_ret.get_type() == Variant::OBJECT
             && Object::cast_to<EncodedObjectAsID>(r_ret)) {
             r_ret = Object::cast_to<EncodedObjectAsID>(r_ret)->get_object_id();
@@ -178,7 +178,7 @@ void EditorPropertyArray::_property_changed(
     bool p_changing
 ) {
     if (p_property.begins_with("indices")) {
-        int index = p_property.get_slice("/", 1).to_int();
+        int index     = p_property.get_slice("/", 1).to_int();
         Variant array = object->get_array();
         array.set(index, p_value);
         emit_changed(get_edited_property(), array, "", true);
@@ -192,9 +192,9 @@ void EditorPropertyArray::_property_changed(
 }
 
 void EditorPropertyArray::_change_type(Object* p_button, int p_index) {
-    Button* button = Object::cast_to<Button>(p_button);
+    Button* button      = Object::cast_to<Button>(p_button);
     changing_type_index = p_index;
-    Rect2 rect = button->get_global_rect();
+    Rect2 rect          = button->get_global_rect();
     change_type->set_as_minsize();
     change_type->set_global_position(
         rect.position + rect.size
@@ -211,7 +211,7 @@ void EditorPropertyArray::_change_type_menu(int p_index) {
 
     Variant value;
     Variant::CallError ce;
-    value = Variant::construct(Variant::Type(p_index), nullptr, 0, ce);
+    value         = Variant::construct(Variant::Type(p_index), nullptr, 0, ce);
     Variant array = object->get_array();
     array.set(changing_type_index, value);
 
@@ -283,8 +283,8 @@ void EditorPropertyArray::update_property() {
         return;
     }
 
-    int size = array.call("size");
-    int pages = MAX(0, size - 1) / page_length + 1;
+    int size   = array.call("size");
+    int pages  = MAX(0, size - 1) / page_length + 1;
     page_index = MIN(page_index, pages - 1);
     int offset = page_index * page_length;
 
@@ -393,8 +393,8 @@ void EditorPropertyArray::update_property() {
 
             String prop_name = "indices/" + itos(i + offset);
 
-            EditorProperty* prop = nullptr;
-            Variant value = array.get(i + offset);
+            EditorProperty* prop     = nullptr;
+            Variant value            = array.get(i + offset);
             Variant::Type value_type = value.get_type();
 
             if (value_type == Variant::NIL && subtype != Variant::NIL) {
@@ -618,7 +618,7 @@ void EditorPropertyArray::_length_changed(double p_page) {
         return;
     }
 
-    Variant array = object->get_array();
+    Variant array     = object->get_array();
     int previous_size = array.call("size");
 
     array.call("resize", int(p_page));
@@ -696,7 +696,7 @@ void EditorPropertyArray::_reorder_button_gui_input(
     Ref<InputEventMouseMotion> mm = p_event;
     if (mm.is_valid()) {
         Variant array = object->get_array();
-        int size = array.call("size");
+        int size      = array.call("size");
 
         // Cumulate the mouse delta, many small changes (dragging slowly) should
         // result in reordering at some point.
@@ -714,7 +714,7 @@ void EditorPropertyArray::_reorder_button_gui_input(
 
         float required_y_distance = 20.0f * EDSCALE;
         if (ABS(reorder_mouse_y_delta) > required_y_distance) {
-            int direction = reorder_mouse_y_delta > 0.0f ? 1 : -1;
+            int direction          = reorder_mouse_y_delta > 0.0f ? 1 : -1;
             reorder_mouse_y_delta -= required_y_distance * direction;
 
             reorder_to_index += direction;
@@ -737,8 +737,8 @@ void EditorPropertyArray::_reorder_button_gui_input(
 }
 
 void EditorPropertyArray::_reorder_button_down(int p_index) {
-    reorder_from_index = p_index;
-    reorder_to_index = p_index;
+    reorder_from_index            = p_index;
+    reorder_to_index              = p_index;
     reorder_selected_element_hbox = Object::cast_to<HBoxContainer>(
         vbox->get_child(p_index % page_length + 2)
     );
@@ -763,8 +763,8 @@ void EditorPropertyArray::_reorder_button_up() {
         update_property();
     }
 
-    reorder_from_index = -1;
-    reorder_to_index = -1;
+    reorder_from_index    = -1;
+    reorder_to_index      = -1;
     reorder_mouse_y_delta = 0.0f;
 
     Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
@@ -773,7 +773,7 @@ void EditorPropertyArray::_reorder_button_up() {
     );
 
     reorder_selected_element_hbox = nullptr;
-    reorder_selected_button = nullptr;
+    reorder_selected_button       = nullptr;
 }
 
 void EditorPropertyArray::_bind_methods() {
@@ -840,10 +840,10 @@ EditorPropertyArray::EditorPropertyArray() {
     edit->connect("draw", this, "_button_draw");
     add_child(edit);
     add_focusable(edit);
-    vbox = nullptr;
+    vbox        = nullptr;
     page_slider = nullptr;
     size_slider = nullptr;
-    updating = false;
+    updating    = false;
     change_type = memnew(PopupMenu);
     add_child(change_type);
     change_type->connect("id_pressed", this, "_change_type_menu");
@@ -856,8 +856,8 @@ EditorPropertyArray::EditorPropertyArray() {
     change_type->add_item(TTR("Remove Item"), Variant::VARIANT_MAX);
     changing_type_index = -1;
 
-    subtype = Variant::NIL;
-    subtype_hint = PROPERTY_HINT_NONE;
+    subtype             = Variant::NIL;
+    subtype_hint        = PROPERTY_HINT_NONE;
     subtype_hint_string = "";
 
     dropping = false;
@@ -876,10 +876,10 @@ void EditorPropertyDictionary::_property_changed(
     } else if (p_property == "new_item_value") {
         object->set_new_item_value(p_value);
     } else if (p_property.begins_with("indices")) {
-        int index = p_property.get_slice("/", 1).to_int();
+        int index       = p_property.get_slice("/", 1).to_int();
         Dictionary dict = object->get_dict();
-        Variant key = dict.get_key_at_index(index);
-        dict[key] = p_value;
+        Variant key     = dict.get_key_at_index(index);
+        dict[key]       = p_value;
 
         emit_changed(get_edited_property(), dict, "", true);
 
@@ -941,7 +941,7 @@ void EditorPropertyDictionary::_change_type_menu(int p_index) {
         Variant::CallError ce;
         value = Variant::construct(Variant::Type(p_index), nullptr, 0, ce);
         Variant key = dict.get_key_at_index(changing_type_index);
-        dict[key] = value;
+        dict[key]   = value;
     } else {
         Variant key = dict.get_key_at_index(changing_type_index);
         dict.erase(key);
@@ -1030,14 +1030,14 @@ void EditorPropertyDictionary::update_property() {
 
             if (i < amount) {
                 prop_name = "indices/" + itos(i + offset);
-                key = dict.get_key_at_index(i + offset);
-                value = dict.get_value_at_index(i + offset);
+                key       = dict.get_key_at_index(i + offset);
+                value     = dict.get_value_at_index(i + offset);
             } else if (i == amount) {
                 prop_name = "new_item_key";
-                value = object->get_new_item_key();
+                value     = object->get_new_item_key();
             } else if (i == amount + 1) {
                 prop_name = "new_item_value";
-                value = object->get_new_item_value();
+                value     = object->get_new_item_value();
             }
 
             EditorProperty* prop = nullptr;
@@ -1367,9 +1367,9 @@ EditorPropertyDictionary::EditorPropertyDictionary() {
     edit->set_toggle_mode(true);
     add_child(edit);
     add_focusable(edit);
-    vbox = nullptr;
+    vbox        = nullptr;
     page_slider = nullptr;
-    updating = false;
+    updating    = false;
     change_type = memnew(PopupMenu);
     add_child(change_type);
     change_type->connect("id_pressed", this, "_change_type_menu");

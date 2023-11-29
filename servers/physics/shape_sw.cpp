@@ -63,10 +63,10 @@ misrepresented as being the original software.
 #define _CYLINDER_FACE_IS_VALID_SUPPORT_THRESHOLD 0.999
 
 void ShapeSW::configure(const AABB& p_aabb) {
-    aabb = p_aabb;
+    aabb       = p_aabb;
     configured = true;
     for (Map<ShapeOwnerSW*, int>::Element* E = owners.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         ShapeOwnerSW* co = (ShapeOwnerSW*)E->key();
         co->_shape_changed();
     }
@@ -108,7 +108,7 @@ const Map<ShapeOwnerSW*, int>& ShapeSW::get_owners() const {
 
 ShapeSW::ShapeSW() {
     custom_bias = 0;
-    configured = false;
+    configured  = false;
 }
 
 ShapeSW::~ShapeSW() {
@@ -217,17 +217,17 @@ void RayShapeSW::get_supports(
     FeatureType& r_type
 ) const {
     if (Math::abs(p_normal.z) < _EDGE_IS_VALID_SUPPORT_THRESHOLD) {
-        r_amount = 2;
-        r_type = FEATURE_EDGE;
+        r_amount      = 2;
+        r_type        = FEATURE_EDGE;
         r_supports[0] = Vector3(0, 0, 0);
         r_supports[1] = Vector3(0, 0, length);
     } else if (p_normal.z > 0) {
-        r_amount = 1;
-        r_type = FEATURE_POINT;
+        r_amount    = 1;
+        r_type      = FEATURE_POINT;
         *r_supports = Vector3(0, 0, length);
     } else {
-        r_amount = 1;
-        r_type = FEATURE_POINT;
+        r_amount    = 1;
+        r_type      = FEATURE_POINT;
         *r_supports = Vector3(0, 0, 0);
     }
 }
@@ -256,7 +256,7 @@ Vector3 RayShapeSW::get_moment_of_inertia(real_t p_mass) const {
 }
 
 void RayShapeSW::_setup(real_t p_length, bool p_slips_on_slope) {
-    length = p_length;
+    length         = p_length;
     slips_on_slope = p_slips_on_slope;
     configure(AABB(Vector3(0, 0, 0), Vector3(0.1, 0.1, length)));
 }
@@ -268,13 +268,13 @@ void RayShapeSW::set_data(const Variant& p_data) {
 
 Variant RayShapeSW::get_data() const {
     Dictionary d;
-    d["length"] = length;
+    d["length"]         = length;
     d["slips_on_slope"] = slips_on_slope;
     return d;
 }
 
 RayShapeSW::RayShapeSW() {
-    length = 1;
+    length         = 1;
     slips_on_slope = false;
 }
 
@@ -294,7 +294,7 @@ void SphereShapeSW::project_range(
 
     // figure out scale at point
     Vector3 local_normal = p_transform.basis.xform_inv(p_normal);
-    real_t scale = local_normal.length();
+    real_t scale         = local_normal.length();
 
     r_min = d - (radius)*scale;
     r_max = d + (radius)*scale;
@@ -312,8 +312,8 @@ void SphereShapeSW::get_supports(
     FeatureType& r_type
 ) const {
     *r_supports = p_normal * radius;
-    r_amount = 1;
-    r_type = FEATURE_POINT;
+    r_amount    = 1;
+    r_type      = FEATURE_POINT;
 }
 
 bool SphereShapeSW::intersect_segment(
@@ -338,7 +338,7 @@ bool SphereShapeSW::intersect_point(const Vector3& p_point) const {
 
 Vector3 SphereShapeSW::get_closest_point_to(const Vector3& p_point) const {
     Vector3 p = p_point;
-    float l = p.length();
+    float l   = p.length();
     if (l < radius) {
         return p_point;
     }
@@ -381,7 +381,7 @@ void BoxShapeSW::project_range(
     // no matter the angle, the box is mirrored anyway
     Vector3 local_normal = p_transform.basis.xform_inv(p_normal);
 
-    real_t length = local_normal.abs().dot(half_extents);
+    real_t length   = local_normal.abs().dot(half_extents);
     real_t distance = p_normal.dot(p_transform.origin);
 
     r_min = distance - length;
@@ -405,24 +405,24 @@ void BoxShapeSW::get_supports(
     int& r_amount,
     FeatureType& r_type
 ) const {
-    static const int next[3] = {1, 2, 0};
+    static const int next[3]  = {1, 2, 0};
     static const int next2[3] = {2, 0, 1};
 
     for (int i = 0; i < 3; i++) {
         Vector3 axis;
-        axis[i] = 1.0;
+        axis[i]    = 1.0;
         real_t dot = p_normal.dot(axis);
         if (Math::abs(dot) > _FACE_IS_VALID_SUPPORT_THRESHOLD) {
             // Vector3 axis_b;
 
             bool neg = dot < 0;
             r_amount = 4;
-            r_type = FEATURE_FACE;
+            r_type   = FEATURE_FACE;
 
             Vector3 point;
             point[i] = half_extents[i];
 
-            int i_n = next[i];
+            int i_n  = next[i];
             int i_n2 = next2[i];
 
             static const real_t sign[4][2] = {
@@ -434,8 +434,8 @@ void BoxShapeSW::get_supports(
             };
 
             for (int j = 0; j < 4; j++) {
-                point[i_n] = sign[j][0] * half_extents[i_n];
-                point[i_n2] = sign[j][1] * half_extents[i_n2];
+                point[i_n]    = sign[j][0] * half_extents[i_n];
+                point[i_n2]   = sign[j][1] * half_extents[i_n2];
                 r_supports[j] = neg ? -point : point;
             }
 
@@ -456,9 +456,9 @@ void BoxShapeSW::get_supports(
 
         if (Math::abs(p_normal.dot(axis)) < _EDGE_IS_VALID_SUPPORT_THRESHOLD) {
             r_amount = 2;
-            r_type = FEATURE_EDGE;
+            r_type   = FEATURE_EDGE;
 
-            int i_n = next[i];
+            int i_n  = next[i];
             int i_n2 = next2[i];
 
             Vector3 point = half_extents;
@@ -471,7 +471,7 @@ void BoxShapeSW::get_supports(
             }
 
             r_supports[0] = point;
-            point[i] = -point[i];
+            point[i]      = -point[i];
             r_supports[1] = point;
             return;
         }
@@ -484,8 +484,8 @@ void BoxShapeSW::get_supports(
         (p_normal.z < 0) ? -half_extents.z : half_extents.z
     );
 
-    r_amount = 1;
-    r_type = FEATURE_POINT;
+    r_amount      = 1;
+    r_type        = FEATURE_POINT;
     r_supports[0] = point;
 }
 
@@ -535,12 +535,12 @@ Vector3 BoxShapeSW::get_closest_point_to(const Vector3& p_point) const {
     }
 
     // check segments
-    float min_distance = 1e20;
+    float min_distance     = 1e20;
     Vector3 closest_vertex = half_extents * p_point.sign();
-    Vector3 s[2] = {closest_vertex, closest_vertex};
+    Vector3 s[2]           = {closest_vertex, closest_vertex};
 
     for (int i = 0; i < 3; i++) {
-        s[1] = closest_vertex;
+        s[1]    = closest_vertex;
         s[1][i] = -s[1][i]; // edge
 
         Vector3 closest_edge =
@@ -548,7 +548,7 @@ Vector3 BoxShapeSW::get_closest_point_to(const Vector3& p_point) const {
 
         float d = p_point.distance_to(closest_edge);
         if (d < min_distance) {
-            min_point = closest_edge;
+            min_point    = closest_edge;
             min_distance = d;
         }
     }
@@ -593,9 +593,9 @@ void CapsuleShapeSW::project_range(
     real_t& r_max
 ) const {
     Vector3 n = p_transform.basis.xform_inv(p_normal).normalized();
-    real_t h = (n.z > 0) ? height : -height;
+    real_t h  = (n.z > 0) ? height : -height;
 
-    n *= radius;
+    n   *= radius;
     n.z += h * 0.5;
 
     r_max = p_normal.dot(p_transform.xform(n));
@@ -607,7 +607,7 @@ Vector3 CapsuleShapeSW::get_support(const Vector3& p_normal) const {
 
     real_t h = (n.z > 0) ? height : -height;
 
-    n *= radius;
+    n   *= radius;
     n.z += h * 0.5;
     return n;
 }
@@ -629,21 +629,21 @@ void CapsuleShapeSW::get_supports(
         n.normalize();
         n *= radius;
 
-        r_amount = 2;
-        r_type = FEATURE_EDGE;
-        r_supports[0] = n;
+        r_amount         = 2;
+        r_type           = FEATURE_EDGE;
+        r_supports[0]    = n;
         r_supports[0].z += height * 0.5;
-        r_supports[1] = n;
+        r_supports[1]    = n;
         r_supports[1].z -= height * 0.5;
 
     } else {
         real_t h = (d > 0) ? height : -height;
 
-        n *= radius;
-        n.z += h * 0.5;
-        r_amount = 1;
-        r_type = FEATURE_POINT;
-        *r_supports = n;
+        n           *= radius;
+        n.z         += h * 0.5;
+        r_amount     = 1;
+        r_type       = FEATURE_POINT;
+        *r_supports  = n;
     }
 }
 
@@ -676,9 +676,9 @@ bool CapsuleShapeSW::intersect_segment(
     if (collided) {
         real_t d = norm.dot(auxres);
         if (d < min_d) {
-            min_d = d;
-            res = auxres;
-            n = auxn;
+            min_d     = d;
+            res       = auxres;
+            n         = auxn;
             collision = true;
         }
     }
@@ -695,9 +695,9 @@ bool CapsuleShapeSW::intersect_segment(
     if (collided) {
         real_t d = norm.dot(auxres);
         if (d < min_d) {
-            min_d = d;
-            res = auxres;
-            n = auxn;
+            min_d     = d;
+            res       = auxres;
+            n         = auxn;
             collision = true;
         }
     }
@@ -715,9 +715,9 @@ bool CapsuleShapeSW::intersect_segment(
         real_t d = norm.dot(auxres);
 
         if (d < min_d) {
-            min_d = d;
-            res = auxres;
-            n = auxn;
+            min_d     = d;
+            res       = auxres;
+            n         = auxn;
             collision = true;
         }
     }
@@ -734,7 +734,7 @@ bool CapsuleShapeSW::intersect_point(const Vector3& p_point) const {
         return Vector3(p_point.x, p_point.y, 0).length() < radius;
     } else {
         Vector3 p = p_point;
-        p.z = Math::abs(p.z) - height * 0.5;
+        p.z       = Math::abs(p.z) - height * 0.5;
         return p.length() < radius;
     }
 }
@@ -801,10 +801,10 @@ void CylinderShapeSW::project_range(
     real_t& r_max
 ) const {
     Vector3 cylinder_axis = p_transform.basis.get_axis(1).normalized();
-    real_t axis_dot = cylinder_axis.dot(p_normal);
+    real_t axis_dot       = cylinder_axis.dot(p_normal);
 
     Vector3 local_normal = p_transform.basis.xform_inv(p_normal);
-    real_t scale = local_normal.length();
+    real_t scale         = local_normal.length();
     real_t scaled_radius = radius * scale;
     real_t scaled_height = height * scale;
 
@@ -824,17 +824,17 @@ void CylinderShapeSW::project_range(
 
 Vector3 CylinderShapeSW::get_support(const Vector3& p_normal) const {
     Vector3 n = p_normal;
-    real_t h = (n.y > 0) ? height : -height;
-    real_t s = Math::sqrt(n.x * n.x + n.z * n.z);
+    real_t h  = (n.y > 0) ? height : -height;
+    real_t s  = Math::sqrt(n.x * n.x + n.z * n.z);
     if (Math::is_zero_approx(s)) {
         n.x = radius;
         n.y = h * 0.5;
         n.z = 0.0;
     } else {
         real_t d = radius / s;
-        n.x = n.x * d;
-        n.y = h * 0.5;
-        n.z = n.z * d;
+        n.x      = n.x * d;
+        n.y      = h * 0.5;
+        n.z      = n.z * d;
     }
 
     return n;
@@ -852,38 +852,38 @@ void CylinderShapeSW::get_supports(
         real_t h = (d > 0) ? height : -height;
 
         Vector3 n = p_normal;
-        n.x = 0.0;
-        n.z = 0.0;
-        n.y = h * 0.5;
+        n.x       = 0.0;
+        n.z       = 0.0;
+        n.y       = h * 0.5;
 
-        r_amount = 3;
-        r_type = FEATURE_CIRCLE;
-        r_supports[0] = n;
-        r_supports[1] = n;
+        r_amount         = 3;
+        r_type           = FEATURE_CIRCLE;
+        r_supports[0]    = n;
+        r_supports[1]    = n;
         r_supports[1].x += radius;
-        r_supports[2] = n;
+        r_supports[2]    = n;
         r_supports[2].z += radius;
     } else if (Math::abs(d) < _CYLINDER_EDGE_IS_VALID_SUPPORT_THRESHOLD) {
         // make it flat
         Vector3 n = p_normal;
-        n.y = 0.0;
+        n.y       = 0.0;
         n.normalize();
         n *= radius;
 
-        r_amount = 2;
-        r_type = FEATURE_EDGE;
-        r_supports[0] = n;
+        r_amount         = 2;
+        r_type           = FEATURE_EDGE;
+        r_supports[0]    = n;
         r_supports[0].y += height * 0.5;
-        r_supports[1] = n;
+        r_supports[1]    = n;
         r_supports[1].y -= height * 0.5;
     } else {
-        r_amount = 1;
-        r_type = FEATURE_POINT;
+        r_amount      = 1;
+        r_type        = FEATURE_POINT;
         r_supports[0] = get_support(p_normal);
         return;
 
         Vector3 n = p_normal;
-        real_t h = n.y * Math::sqrt(0.25 * height * height + radius * radius);
+        real_t h  = n.y * Math::sqrt(0.25 * height * height + radius * radius);
         if (Math::abs(h) > 1.0) {
             // Top or bottom surface.
             n.y = (n.y > 0.0) ? height * 0.5 : -height * 0.5;
@@ -898,8 +898,8 @@ void CylinderShapeSW::get_supports(
             n.z = 0.0;
         } else {
             real_t scaled_radius = radius / s;
-            n.x = n.x * scaled_radius;
-            n.z = n.z * scaled_radius;
+            n.x                  = n.x * scaled_radius;
+            n.z                  = n.z * scaled_radius;
         }
 
         r_supports[0] = n;
@@ -940,7 +940,7 @@ Vector3 CylinderShapeSW::get_closest_point_to(const Vector3& p_point) const {
 
         // Clip position.
         Vector3 delta_point_1 = proj_point - circle_pos;
-        real_t dist_point_1 = delta_point_1.length_squared();
+        real_t dist_point_1   = delta_point_1.length_squared();
         if (!Math::is_zero_approx(dist_point_1)) {
             dist_point_1 = Math::sqrt(dist_point_1);
             proj_point =
@@ -1034,7 +1034,7 @@ Vector3 ConvexPolygonShapeSW::get_support(const Vector3& p_normal) const {
     Vector3 n = p_normal;
 
     int vert_support_idx = -1;
-    real_t support_max = 0;
+    real_t support_max   = 0;
 
     int vertex_count = mesh.vertices.size();
     if (vertex_count == 0) {
@@ -1047,7 +1047,7 @@ Vector3 ConvexPolygonShapeSW::get_support(const Vector3& p_normal) const {
         real_t d = n.dot(vrts[i]);
 
         if (i == 0 || d > support_max) {
-            support_max = d;
+            support_max      = d;
             vert_support_idx = i;
         }
     }
@@ -1063,20 +1063,20 @@ void ConvexPolygonShapeSW::get_supports(
     FeatureType& r_type
 ) const {
     const Geometry::MeshData::Face* faces = mesh.faces.ptr();
-    int fc = mesh.faces.size();
+    int fc                                = mesh.faces.size();
 
     const Geometry::MeshData::Edge* edges = mesh.edges.ptr();
-    int ec = mesh.edges.size();
+    int ec                                = mesh.edges.size();
 
     const Vector3* vertices = mesh.vertices.ptr();
-    int vc = mesh.vertices.size();
+    int vc                  = mesh.vertices.size();
 
     r_amount = 0;
     ERR_FAIL_COND_MSG(vc == 0, "Convex polygon shape has no vertices.");
 
     // find vertex first
     real_t max = 0;
-    int vtx = 0;
+    int vtx    = 0;
 
     for (int i = 0; i < vc; i++) {
         real_t d = p_normal.dot(vertices[i]);
@@ -1090,7 +1090,7 @@ void ConvexPolygonShapeSW::get_supports(
     for (int i = 0; i < fc; i++) {
         if (faces[i].plane.normal.dot(p_normal)
             > _FACE_IS_VALID_SUPPORT_THRESHOLD) {
-            int ic = faces[i].indices.size();
+            int ic         = faces[i].indices.size();
             const int* ind = faces[i].indices.ptr();
 
             bool valid = false;
@@ -1110,7 +1110,7 @@ void ConvexPolygonShapeSW::get_supports(
                 r_supports[j] = vertices[ind[j]];
             }
             r_amount = m;
-            r_type = FEATURE_FACE;
+            r_type   = FEATURE_FACE;
             return;
         }
     }
@@ -1122,8 +1122,8 @@ void ConvexPolygonShapeSW::get_supports(
         dot = ABS(dot);
         if (dot < _EDGE_IS_VALID_SUPPORT_THRESHOLD
             && (edges[i].a == vtx || edges[i].b == vtx)) {
-            r_amount = 2;
-            r_type = FEATURE_EDGE;
+            r_amount      = 2;
+            r_type        = FEATURE_EDGE;
             r_supports[0] = vertices[edges[i].a];
             r_supports[1] = vertices[edges[i].b];
             return;
@@ -1131,8 +1131,8 @@ void ConvexPolygonShapeSW::get_supports(
     }
 
     r_supports[0] = vertices[vtx];
-    r_amount = 1;
-    r_type = FEATURE_POINT;
+    r_amount      = 1;
+    r_type        = FEATURE_POINT;
 }
 
 bool ConvexPolygonShapeSW::intersect_segment(
@@ -1142,20 +1142,20 @@ bool ConvexPolygonShapeSW::intersect_segment(
     Vector3& r_normal
 ) const {
     const Geometry::MeshData::Face* faces = mesh.faces.ptr();
-    int fc = mesh.faces.size();
+    int fc                                = mesh.faces.size();
 
     const Vector3* vertices = mesh.vertices.ptr();
 
-    Vector3 n = p_end - p_begin;
+    Vector3 n  = p_end - p_begin;
     real_t min = 1e20;
-    bool col = false;
+    bool col   = false;
 
     for (int i = 0; i < fc; i++) {
         if (faces[i].plane.normal.dot(n) > 0) {
             continue; // opposing face
         }
 
-        int ic = faces[i].indices.size();
+        int ic         = faces[i].indices.size();
         const int* ind = faces[i].indices.ptr();
 
         for (int j = 1; j < ic - 1; j++) {
@@ -1164,10 +1164,10 @@ bool ConvexPolygonShapeSW::intersect_segment(
             if (f.intersects_segment(p_begin, p_end, &result)) {
                 real_t d = n.dot(result);
                 if (d < min) {
-                    min = d;
+                    min      = d;
                     r_result = result;
                     r_normal = faces[i].plane.normal;
-                    col = true;
+                    col      = true;
                 }
 
                 break;
@@ -1180,7 +1180,7 @@ bool ConvexPolygonShapeSW::intersect_segment(
 
 bool ConvexPolygonShapeSW::intersect_point(const Vector3& p_point) const {
     const Geometry::MeshData::Face* faces = mesh.faces.ptr();
-    int fc = mesh.faces.size();
+    int fc                                = mesh.faces.size();
 
     for (int i = 0; i < fc; i++) {
         if (faces[i].plane.distance_to(p_point) >= 0) {
@@ -1194,8 +1194,8 @@ bool ConvexPolygonShapeSW::intersect_point(const Vector3& p_point) const {
 Vector3 ConvexPolygonShapeSW::get_closest_point_to(const Vector3& p_point
 ) const {
     const Geometry::MeshData::Face* faces = mesh.faces.ptr();
-    int fc = mesh.faces.size();
-    const Vector3* vertices = mesh.vertices.ptr();
+    int fc                                = mesh.faces.size();
+    const Vector3* vertices               = mesh.vertices.ptr();
 
     bool all_inside = true;
     for (int i = 0; i < fc; i++) {
@@ -1203,9 +1203,9 @@ Vector3 ConvexPolygonShapeSW::get_closest_point_to(const Vector3& p_point
             continue;
         }
 
-        all_inside = false;
-        bool is_inside = true;
-        int ic = faces[i].indices.size();
+        all_inside         = false;
+        bool is_inside     = true;
+        int ic             = faces[i].indices.size();
         const int* indices = faces[i].indices.ptr();
 
         for (int j = 0; j < ic; j++) {
@@ -1232,15 +1232,15 @@ Vector3 ConvexPolygonShapeSW::get_closest_point_to(const Vector3& p_point
 
     // check edges
     const Geometry::MeshData::Edge* edges = mesh.edges.ptr();
-    int ec = mesh.edges.size();
+    int ec                                = mesh.edges.size();
     for (int i = 0; i < ec; i++) {
         Vector3 s[2] = {vertices[edges[i].a], vertices[edges[i].b]};
 
         Vector3 closest = Geometry::get_closest_point_to_segment(p_point, s);
-        float d = closest.distance_to(p_point);
+        float d         = closest.distance_to(p_point);
         if (d < min_distance) {
             min_distance = d;
-            min_point = closest;
+            min_point    = closest;
         }
     }
 
@@ -1297,7 +1297,7 @@ void FaceShapeSW::project_range(
 ) const {
     for (int i = 0; i < 3; i++) {
         Vector3 v = p_transform.xform(vertex[i]);
-        real_t d = p_normal.dot(v);
+        real_t d  = p_normal.dot(v);
 
         if (i == 0 || d > r_max) {
             r_max = d;
@@ -1311,13 +1311,13 @@ void FaceShapeSW::project_range(
 
 Vector3 FaceShapeSW::get_support(const Vector3& p_normal) const {
     int vert_support_idx = -1;
-    real_t support_max = 0;
+    real_t support_max   = 0;
 
     for (int i = 0; i < 3; i++) {
         real_t d = p_normal.dot(vertex[i]);
 
         if (i == 0 || d > support_max) {
-            support_max = d;
+            support_max      = d;
             vert_support_idx = i;
         }
     }
@@ -1337,7 +1337,7 @@ void FaceShapeSW::get_supports(
     /** TEST FACE AS SUPPORT **/
     if (Math::abs(normal.dot(n)) > _FACE_IS_VALID_SUPPORT_THRESHOLD) {
         r_amount = 3;
-        r_type = FEATURE_FACE;
+        r_type   = FEATURE_FACE;
         for (int i = 0; i < 3; i++) {
             r_supports[i] = vertex[i];
         }
@@ -1347,13 +1347,13 @@ void FaceShapeSW::get_supports(
     /** FIND SUPPORT VERTEX **/
 
     int vert_support_idx = -1;
-    real_t support_max = 0;
+    real_t support_max   = 0;
 
     for (int i = 0; i < 3; i++) {
         real_t d = n.dot(vertex[i]);
 
         if (i == 0 || d > support_max) {
-            support_max = d;
+            support_max      = d;
             vert_support_idx = i;
         }
     }
@@ -1368,18 +1368,18 @@ void FaceShapeSW::get_supports(
 
         // check if edge is valid as a support
         real_t dot = (vertex[i] - vertex[nx]).normalized().dot(n);
-        dot = ABS(dot);
+        dot        = ABS(dot);
         if (dot < _EDGE_IS_VALID_SUPPORT_THRESHOLD) {
-            r_amount = 2;
-            r_type = FEATURE_EDGE;
+            r_amount      = 2;
+            r_type        = FEATURE_EDGE;
             r_supports[0] = vertex[i];
             r_supports[1] = vertex[nx];
             return;
         }
     }
 
-    r_amount = 1;
-    r_type = FEATURE_POINT;
+    r_amount      = 1;
+    r_type        = FEATURE_POINT;
     r_supports[0] = vertex[vert_support_idx];
 }
 
@@ -1451,7 +1451,7 @@ void ConcavePolygonShapeSW::project_range(
         return;
     }
     PoolVector<Vector3>::Read r = vertices.read();
-    const Vector3* vptr = r.ptr();
+    const Vector3* vptr         = r.ptr();
 
     for (int i = 0; i < count; i++) {
         real_t d = p_normal.dot(p_transform.xform(vptr[i]));
@@ -1472,18 +1472,18 @@ Vector3 ConcavePolygonShapeSW::get_support(const Vector3& p_normal) const {
     }
 
     PoolVector<Vector3>::Read r = vertices.read();
-    const Vector3* vptr = r.ptr();
+    const Vector3* vptr         = r.ptr();
 
     Vector3 n = p_normal;
 
     int vert_support_idx = -1;
-    real_t support_max = 0;
+    real_t support_max   = 0;
 
     for (int i = 0; i < count; i++) {
         real_t d = n.dot(vptr[i]);
 
         if (i == 0 || d > support_max) {
-            support_max = d;
+            support_max      = d;
             vert_support_idx = i;
         }
     }
@@ -1528,7 +1528,7 @@ void ConcavePolygonShapeSW::_cull_segment(
                 p_params->dir.dot(res) - p_params->dir.dot(p_params->from);
             // TODO, seems segmen/triangle intersection is broken :(
             if (d > 0 && d < p_params->min_d) {
-                p_params->min_d = d;
+                p_params->min_d  = d;
                 p_params->result = res;
                 p_params->normal =
                     Plane(vertices[0], vertices[1], vertices[2]).normal;
@@ -1557,19 +1557,19 @@ bool ConcavePolygonShapeSW::intersect_segment(
     }
 
     // unlock data
-    PoolVector<Face>::Read fr = faces.read();
+    PoolVector<Face>::Read fr    = faces.read();
     PoolVector<Vector3>::Read vr = vertices.read();
-    PoolVector<BVH>::Read br = bvh.read();
+    PoolVector<BVH>::Read br     = bvh.read();
 
     _SegmentCullParams params;
-    params.from = p_begin;
-    params.to = p_end;
+    params.from       = p_begin;
+    params.to         = p_end;
     params.collisions = 0;
-    params.dir = (p_end - p_begin).normalized();
+    params.dir        = (p_end - p_begin).normalized();
 
-    params.faces = fr.ptr();
+    params.faces    = fr.ptr();
     params.vertices = vr.ptr();
-    params.bvh = br.ptr();
+    params.bvh      = br.ptr();
 
     params.min_d = 1e20;
     // cull
@@ -1601,12 +1601,12 @@ bool ConcavePolygonShapeSW::_cull(int p_idx, _CullParams* p_params) const {
     }
 
     if (bvh->face_index >= 0) {
-        const Face* f = &p_params->faces[bvh->face_index];
+        const Face* f     = &p_params->faces[bvh->face_index];
         FaceShapeSW* face = p_params->face;
-        face->normal = f->normal;
-        face->vertex[0] = p_params->vertices[f->indices[0]];
-        face->vertex[1] = p_params->vertices[f->indices[1]];
-        face->vertex[2] = p_params->vertices[f->indices[2]];
+        face->normal      = f->normal;
+        face->vertex[0]   = p_params->vertices[f->indices[0]];
+        face->vertex[1]   = p_params->vertices[f->indices[1]];
+        face->vertex[2]   = p_params->vertices[f->indices[2]];
         if (p_params->callback(p_params->userdata, face)) {
             return true;
         }
@@ -1641,18 +1641,18 @@ void ConcavePolygonShapeSW::cull(
     AABB local_aabb = p_local_aabb;
 
     // unlock data
-    PoolVector<Face>::Read fr = faces.read();
+    PoolVector<Face>::Read fr    = faces.read();
     PoolVector<Vector3>::Read vr = vertices.read();
-    PoolVector<BVH>::Read br = bvh.read();
+    PoolVector<BVH>::Read br     = bvh.read();
 
     FaceShapeSW face; // use this to send in the callback
 
     _CullParams params;
-    params.aabb = local_aabb;
-    params.face = &face;
-    params.faces = fr.ptr();
+    params.aabb     = local_aabb;
+    params.face     = &face;
+    params.faces    = fr.ptr();
     params.vertices = vr.ptr();
-    params.bvh = br.ptr();
+    params.bvh      = br.ptr();
     params.callback = p_callback;
     params.userdata = p_userdata;
 
@@ -1721,9 +1721,9 @@ _VolumeSW_BVH* _volume_sw_build_bvh(
 
     if (p_size == 1) {
         // leaf
-        bvh->aabb = p_elements[0].aabb;
-        bvh->left = nullptr;
-        bvh->right = nullptr;
+        bvh->aabb       = p_elements[0].aabb;
+        bvh->left       = nullptr;
+        bvh->right      = nullptr;
         bvh->face_index = p_elements->face_index;
         count++;
         return bvh;
@@ -1773,7 +1773,7 @@ void ConcavePolygonShapeSW::_fill_bvh(
 ) {
     int idx = p_idx;
 
-    p_bvh_array[idx].aabb = p_bvh_tree->aabb;
+    p_bvh_array[idx].aabb       = p_bvh_tree->aabb;
     p_bvh_array[idx].face_index = p_bvh_tree->face_index;
     // printf("%p - %i: %i(%p)  --
     // %p:%p\n",%p_bvh_array[idx],p_idx,p_bvh_array[i]->face_index,&p_bvh_tree->face_index,p_bvh_tree->left,p_bvh_tree->right);
@@ -1807,22 +1807,22 @@ void ConcavePolygonShapeSW::_setup(PoolVector<Vector3> p_faces) {
     src_face_count /= 3;
 
     PoolVector<Vector3>::Read r = p_faces.read();
-    const Vector3* facesr = r.ptr();
+    const Vector3* facesr       = r.ptr();
 
     PoolVector<_VolumeSW_BVH_Element> bvh_array;
     bvh_array.resize(src_face_count);
 
     PoolVector<_VolumeSW_BVH_Element>::Write bvhw = bvh_array.write();
-    _VolumeSW_BVH_Element* bvh_arrayw = bvhw.ptr();
+    _VolumeSW_BVH_Element* bvh_arrayw             = bvhw.ptr();
 
     faces.resize(src_face_count);
     PoolVector<Face>::Write w = faces.write();
-    Face* facesw = w.ptr();
+    Face* facesw              = w.ptr();
 
     vertices.resize(src_face_count * 3);
 
     PoolVector<Vector3>::Write vw = vertices.write();
-    Vector3* verticesw = vw.ptr();
+    Vector3* verticesw            = vw.ptr();
 
     AABB _aabb;
 
@@ -1833,13 +1833,13 @@ void ConcavePolygonShapeSW::_setup(PoolVector<Vector3> p_faces) {
         bvh_arrayw[i].center =
             bvh_arrayw[i].aabb.position + bvh_arrayw[i].aabb.size * 0.5;
         bvh_arrayw[i].face_index = i;
-        facesw[i].indices[0] = i * 3 + 0;
-        facesw[i].indices[1] = i * 3 + 1;
-        facesw[i].indices[2] = i * 3 + 2;
-        facesw[i].normal = face.get_plane().normal;
-        verticesw[i * 3 + 0] = face.vertex[0];
-        verticesw[i * 3 + 1] = face.vertex[1];
-        verticesw[i * 3 + 2] = face.vertex[2];
+        facesw[i].indices[0]     = i * 3 + 0;
+        facesw[i].indices[1]     = i * 3 + 1;
+        facesw[i].indices[2]     = i * 3 + 2;
+        facesw[i].normal         = face.get_plane().normal;
+        verticesw[i * 3 + 0]     = face.vertex[0];
+        verticesw[i * 3 + 1]     = face.vertex[1];
+        verticesw[i * 3 + 2]     = face.vertex[2];
         if (i == 0) {
             _aabb = bvh_arrayw[i].aabb;
         } else {
@@ -1857,7 +1857,7 @@ void ConcavePolygonShapeSW::_setup(PoolVector<Vector3> p_faces) {
     bvh.resize(count + 1);
 
     PoolVector<BVH>::Write bvhw2 = bvh.write();
-    BVH* bvh_arrayw2 = bvhw2.ptr();
+    BVH* bvh_arrayw2             = bvhw2.ptr();
 
     int idx = 0;
     _fill_bvh(bvh_tree, bvh_arrayw2, idx);
@@ -1914,14 +1914,14 @@ struct _HeightmapSegmentCullParams {
     Vector3 normal;
 
     const HeightMapShapeSW* heightmap = nullptr;
-    FaceShapeSW* face = nullptr;
+    FaceShapeSW* face                 = nullptr;
 };
 
 struct _HeightmapGridCullState {
-    real_t length = 0.0;
+    real_t length      = 0.0;
     real_t length_flat = 0.0;
 
-    real_t dist = 0.0;
+    real_t dist      = 0.0;
     real_t prev_dist = 0.0;
 
     int x = 0;
@@ -1992,22 +1992,22 @@ _FORCE_INLINE_ bool _heightmap_chunk_cull_segment(
     Vector3 exit_pos;
 
     if (p_state.length_flat > CMP_EPSILON) {
-        real_t flat_to_3d = p_state.length / p_state.length_flat;
+        real_t flat_to_3d  = p_state.length / p_state.length_flat;
         real_t enter_param = p_state.prev_dist * flat_to_3d;
-        real_t exit_param = p_state.dist * flat_to_3d;
-        enter_pos = p_params.from + p_params.dir * enter_param;
-        exit_pos = p_params.from + p_params.dir * exit_param;
+        real_t exit_param  = p_state.dist * flat_to_3d;
+        enter_pos          = p_params.from + p_params.dir * enter_param;
+        exit_pos           = p_params.from + p_params.dir * exit_param;
     } else {
         // Consider the ray vertical.
         // (though we shouldn't reach this often because there is an early check
         // up-front)
         enter_pos = p_params.from;
-        exit_pos = p_params.to;
+        exit_pos  = p_params.to;
     }
 
     // Transform positions to heightmap space.
     enter_pos *= HeightMapShapeSW::BOUNDS_CHUNK_SIZE;
-    exit_pos *= HeightMapShapeSW::BOUNDS_CHUNK_SIZE;
+    exit_pos  *= HeightMapShapeSW::BOUNDS_CHUNK_SIZE;
 
     // We did enter the flat projection of the AABB,
     // but we have to check if we intersect it on the vertical axis.
@@ -2053,17 +2053,17 @@ bool HeightMapShapeSW::_intersect_grid_segment(
     FaceShapeSW face;
 
     _HeightmapSegmentCullParams params;
-    params.from = p_begin;
-    params.to = p_end;
-    params.dir = delta / length;
+    params.from      = p_begin;
+    params.to        = p_end;
+    params.dir       = delta / length;
     params.heightmap = this;
-    params.face = &face;
+    params.face      = &face;
 
     _HeightmapGridCullState state;
 
     // Perform grid query from projected ray.
     Vector2 ray_dir_flat(delta.x, delta.z);
-    state.length = length;
+    state.length      = length;
     state.length_flat = ray_dir_flat.length();
 
     if (state.length_flat < CMP_EPSILON) {
@@ -2143,27 +2143,27 @@ bool HeightMapShapeSW::_intersect_grid_segment(
 
     while (true) {
         state.prev_dist = state.dist;
-        state.x = x;
-        state.z = z;
+        state.x         = x;
+        state.z         = z;
 
         if (cross_x < cross_z) {
             // X lane.
-            x += x_step;
+            x          += x_step;
             // Assign before advancing the param,
             // to be in sync with the initialization step.
-            state.dist = cross_x;
-            cross_x += delta_x;
+            state.dist  = cross_x;
+            cross_x    += delta_x;
         } else {
             // Z lane.
-            z += z_step;
-            state.dist = cross_z;
-            cross_z += delta_z;
+            z          += z_step;
+            state.dist  = cross_z;
+            cross_z    += delta_z;
         }
 
         if (state.dist > state.length_flat) {
             state.dist = state.length_flat;
             if (p_process(params, state)) {
-                r_point = params.result;
+                r_point  = params.result;
                 r_normal = params.normal;
                 return true;
             }
@@ -2171,7 +2171,7 @@ bool HeightMapShapeSW::_intersect_grid_segment(
         }
 
         if (p_process(params, state)) {
-            r_point = params.result;
+            r_point  = params.result;
             r_normal = params.normal;
             return true;
         }
@@ -2196,13 +2196,13 @@ bool HeightMapShapeSW::intersect_segment(
     }
 
     Vector3 local_begin = p_begin + local_origin;
-    Vector3 local_end = p_end + local_origin;
+    Vector3 local_end   = p_end + local_origin;
 
     // Quantize the ray begin/end.
     int begin_x = Math::floor(local_begin.x);
     int begin_z = Math::floor(local_begin.z);
-    int end_x = Math::floor(local_end.x);
-    int end_z = Math::floor(local_end.z);
+    int end_x   = Math::floor(local_end.x);
+    int end_z   = Math::floor(local_end.z);
 
     if ((begin_x == end_x) && (begin_z == end_z)) {
         // Simple case for rays that don't traverse the grid horizontally.
@@ -2211,17 +2211,17 @@ bool HeightMapShapeSW::intersect_segment(
 
         _HeightmapSegmentCullParams params;
         params.from = p_begin;
-        params.to = p_end;
-        params.dir = (p_end - p_begin).normalized();
+        params.to   = p_end;
+        params.dir  = (p_end - p_begin).normalized();
 
         params.heightmap = this;
-        params.face = &face;
+        params.face      = &face;
 
         _HeightmapGridCullState state;
         state.x = MAX(MIN(begin_x, width - 2), 0);
         state.z = MAX(MIN(begin_z, depth - 2), 0);
         if (_heightmap_cell_cull_segment(params, state)) {
-            r_point = params.result;
+            r_point  = params.result;
             r_normal = params.normal;
             return true;
         }
@@ -2255,8 +2255,8 @@ bool HeightMapShapeSW::intersect_segment(
             );
         } else {
             // The ray is long, run raycast on a higher-level grid.
-            Vector3 bounds_from = p_begin / BOUNDS_CHUNK_SIZE;
-            Vector3 bounds_to = p_end / BOUNDS_CHUNK_SIZE;
+            Vector3 bounds_from   = p_begin / BOUNDS_CHUNK_SIZE;
+            Vector3 bounds_to     = p_end / BOUNDS_CHUNK_SIZE;
             Vector3 bounds_offset = local_origin / BOUNDS_CHUNK_SIZE;
             return _intersect_grid_segment(
                 _heightmap_chunk_cull_segment,
@@ -2314,7 +2314,7 @@ void HeightMapShapeSW::cull(
         return;
     }
 
-    AABB local_aabb = p_local_aabb;
+    AABB local_aabb      = p_local_aabb;
     local_aabb.position += local_origin;
 
     // Quantize the aabb, and adjust the start/end ranges.
@@ -2336,9 +2336,9 @@ void HeightMapShapeSW::cull(
     }
 
     int start_x = MAX(0, aabb_min[0]);
-    int end_x = MIN(width - 1, aabb_max[0]);
+    int end_x   = MIN(width - 1, aabb_max[0]);
     int start_z = MAX(0, aabb_min[2]);
-    int end_z = MIN(depth - 1, aabb_max[2]);
+    int end_z   = MIN(depth - 1, aabb_max[2]);
 
     FaceShapeSW face;
 
@@ -2457,8 +2457,8 @@ void HeightMapShapeSW::_setup(
     real_t p_max_height
 ) {
     heights = p_heights;
-    width = p_width;
-    depth = p_depth;
+    width   = p_width;
+    depth   = p_depth;
 
     // Initialize aabb.
     AABB aabb;
@@ -2466,7 +2466,7 @@ void HeightMapShapeSW::_setup(
     aabb.size = Vector3(p_width - 1, p_max_height - p_min_height, p_depth - 1);
 
     // Initialize origin as the aabb center.
-    local_origin = aabb.position + 0.5 * aabb.size;
+    local_origin   = aabb.position + 0.5 * aabb.size;
     local_origin.y = 0.0;
 
     aabb.position -= local_origin;
@@ -2507,8 +2507,8 @@ void HeightMapShapeSW::set_data(const Variant& p_data) {
         heights_buffer.resize(image->get_width() * image->get_height());
 
         PoolRealArray::Write w = heights_buffer.write();
-        PoolByteArray::Read r = im_data.read();
-        float* rp = (float*)r.ptr();
+        PoolByteArray::Read r  = im_data.read();
+        float* rp              = (float*)r.ptr();
         for (int i = 0; i < heights_buffer.size(); ++i) {
             w[i] = rp[i];
         }
@@ -2524,7 +2524,7 @@ void HeightMapShapeSW::set_data(const Variant& p_data) {
         max_height = d["max_height"];
     } else {
         PoolVector<real_t>::Read r = heights.read();
-        int heights_size = heights.size();
+        int heights_size           = heights.size();
         for (int i = 0; i < heights_size; ++i) {
             real_t h = r[i];
             if (h < min_height) {
@@ -2549,8 +2549,8 @@ Variant HeightMapShapeSW::get_data() const {
     d["depth"] = depth;
 
     const AABB& aabb = get_aabb();
-    d["min_height"] = aabb.position.y;
-    d["max_height"] = aabb.position.y + aabb.size.y;
+    d["min_height"]  = aabb.position.y;
+    d["max_height"]  = aabb.position.y + aabb.size.y;
 
     d["heights"] = heights;
 

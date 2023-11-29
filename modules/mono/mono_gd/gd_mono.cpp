@@ -157,7 +157,7 @@ void gd_mono_debug_init() {
         List<String> cmdline_args = OS::get_singleton()->get_cmdline_args();
 
         for (List<String>::Element* E = cmdline_args.front(); E;
-             E = E->next()) {
+             E                        = E->next()) {
             const String& arg = E->get();
 
             if (arg.begins_with("--mono-debugger-agent=")) {
@@ -222,7 +222,7 @@ void gd_mono_debug_init() {
 #if defined(JAVASCRIPT_ENABLED)
 MonoDomain* gd_initialize_mono_runtime() {
     const char* vfs_prefix = "managed";
-    int enable_debugging = 0;
+    int enable_debugging   = 0;
 
     // TODO: Provide a way to enable debugging on WASM release builds.
 #ifdef DEBUG_ENABLED
@@ -305,7 +305,7 @@ void GDMono::determine_mono_dirs(
     String& r_config_dir
 ) {
     String bundled_assembly_rootdir = GodotSharpDirs::get_data_mono_lib_dir();
-    String bundled_config_dir = GodotSharpDirs::get_data_mono_etc_dir();
+    String bundled_config_dir       = GodotSharpDirs::get_data_mono_etc_dir();
 
 #ifdef TOOLS_ENABLED
 
@@ -323,7 +323,7 @@ void GDMono::determine_mono_dirs(
     }
 #elif defined(OSX_ENABLED)
     const char* c_assembly_rootdir = mono_assembly_getrootdir();
-    const char* c_config_dir = mono_get_config_dir();
+    const char* c_config_dir       = mono_get_config_dir();
 
     if (!c_assembly_rootdir || !c_config_dir
         || !DirAccess::exists(c_assembly_rootdir)
@@ -336,7 +336,7 @@ void GDMono::determine_mono_dirs(
 
         for (int i = 0; i < locations.size(); i++) {
             String hint_assembly_rootdir = path::join(locations[i], "lib");
-            String hint_mscorlib_path = path::join(
+            String hint_mscorlib_path    = path::join(
                 hint_assembly_rootdir,
                 "mono",
                 "4.5",
@@ -347,7 +347,7 @@ void GDMono::determine_mono_dirs(
             if (FileAccess::exists(hint_mscorlib_path)
                 && DirAccess::exists(hint_config_dir)) {
                 r_assembly_rootdir = hint_assembly_rootdir;
-                r_config_dir = hint_config_dir;
+                r_config_dir       = hint_config_dir;
                 break;
             }
         }
@@ -377,7 +377,7 @@ void GDMono::determine_mono_dirs(
 #else
     // Export templates always use the bundled directories
     r_assembly_rootdir = bundled_assembly_rootdir;
-    r_config_dir = bundled_config_dir;
+    r_config_dir       = bundled_config_dir;
 #endif
 }
 
@@ -635,8 +635,8 @@ GDMonoAssembly* GDMono::get_loaded_assembly(const String& p_name) {
         return corlib_assembly;
     }
 
-    MonoDomain* domain = mono_domain_get();
-    uint32_t domain_id = domain ? mono_domain_get_id(domain) : 0;
+    MonoDomain* domain      = mono_domain_get();
+    uint32_t domain_id      = domain ? mono_domain_get_id(domain) : 0;
     GDMonoAssembly** result = assemblies[domain_id].getptr(p_name);
     return result ? *result : NULL;
 }
@@ -816,7 +816,7 @@ bool GDMono::copy_prebuilt_api_assembly(
     // Create destination directory if needed
     if (!DirAccess::exists(dst_dir)) {
         DirAccess* da = DirAccess::create_for_path(dst_dir);
-        Error err = da->make_dir_recursive(dst_dir);
+        Error err     = da->make_dir_recursive(dst_dir);
         memdelete(da);
 
         if (err != OK) {
@@ -1424,12 +1424,12 @@ Error GDMono::_unload_scripts_domain() {
 
     project_assembly = NULL;
 #ifdef TOOLS_ENABLED
-    tools_assembly = NULL;
+    tools_assembly                = NULL;
     tools_project_editor_assembly = NULL;
 #endif
 
     MonoDomain* domain = scripts_domain;
-    scripts_domain = NULL;
+    scripts_domain     = NULL;
 
     print_verbose("Mono: Unloading scripts domain...");
 
@@ -1572,7 +1572,7 @@ GDMonoClass* GDMono::get_class(
     const String* k = NULL;
     while ((k = domain_assemblies.next(k))) {
         GDMonoAssembly* assembly = domain_assemblies.get(*k);
-        klass = assembly->get_class(p_namespace, p_name);
+        klass                    = assembly->get_class(p_namespace, p_name);
         if (klass) {
             return klass;
         }
@@ -1616,16 +1616,16 @@ GDMono::GDMono() {
 
     gdmono_log = memnew(GDMonoLog);
 
-    runtime_initialized = false;
+    runtime_initialized       = false;
     finalizing_scripts_domain = false;
 
-    root_domain = NULL;
+    root_domain    = NULL;
     scripts_domain = NULL;
 
-    corlib_assembly = NULL;
+    corlib_assembly  = NULL;
     project_assembly = NULL;
 #ifdef TOOLS_ENABLED
-    tools_assembly = NULL;
+    tools_assembly                = NULL;
     tools_project_editor_assembly = NULL;
 #endif
 

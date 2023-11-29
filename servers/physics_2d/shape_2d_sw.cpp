@@ -34,10 +34,10 @@
 #include "core/sort_array.h"
 
 void Shape2DSW::configure(const Rect2& p_aabb) {
-    aabb = p_aabb;
+    aabb       = p_aabb;
     configured = true;
     for (Map<ShapeOwner2DSW*, int>::Element* E = owners.front(); E;
-         E = E->next()) {
+         E                                     = E->next()) {
         ShapeOwner2DSW* co = (ShapeOwner2DSW*)E->key();
         co->_shape_changed();
     }
@@ -78,7 +78,7 @@ const Map<ShapeOwner2DSW*, int>& Shape2DSW::get_owners() const {
 
 Shape2DSW::Shape2DSW() {
     custom_bias = 0;
-    configured = false;
+    configured  = false;
 }
 
 Shape2DSW::~Shape2DSW() {
@@ -108,7 +108,7 @@ bool LineShape2DSW::intersect_segment(
     Vector2& r_normal
 ) const {
     Vector2 segment = p_begin - p_end;
-    real_t den = normal.dot(segment);
+    real_t den      = normal.dot(segment);
 
     // printf("den is %i\n",den);
     if (Math::abs(den) <= CMP_EPSILON) {
@@ -122,7 +122,7 @@ bool LineShape2DSW::intersect_segment(
         return false;
     }
 
-    r_point = p_begin + segment * -dist;
+    r_point  = p_begin + segment * -dist;
     r_normal = normal;
 
     return true;
@@ -138,7 +138,7 @@ void LineShape2DSW::set_data(const Variant& p_data) {
     Array arr = p_data;
     ERR_FAIL_COND(arr.size() != 2);
     normal = arr[0];
-    d = arr[1];
+    d      = arr[1];
     configure(Rect2(Vector2(-1e4, -1e4), Vector2(1e4 * 2, 1e4 * 2)));
 }
 
@@ -187,15 +187,15 @@ real_t RayShape2DSW::get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
 }
 
 void RayShape2DSW::set_data(const Variant& p_data) {
-    Dictionary d = p_data;
-    length = d["length"];
+    Dictionary d   = p_data;
+    length         = d["length"];
     slips_on_slope = d["slips_on_slope"];
     configure(Rect2(0, 0, 0.001, length));
 }
 
 Variant RayShape2DSW::get_data() const {
     Dictionary d;
-    d["length"] = length;
+    d["length"]         = length;
     d["slips_on_slope"] = slips_on_slope;
     return d;
 }
@@ -212,7 +212,7 @@ void SegmentShape2DSW::get_supports(
     if (Math::abs(p_normal.dot(n)) > _SEGMENT_IS_VALID_SUPPORT_THRESHOLD) {
         r_supports[0] = a;
         r_supports[1] = b;
-        r_amount = 2;
+        r_amount      = 2;
         return;
     }
 
@@ -265,9 +265,9 @@ void SegmentShape2DSW::set_data(const Variant& p_data) {
     ERR_FAIL_COND(p_data.get_type() != Variant::RECT2);
 
     Rect2 r = p_data;
-    a = r.position;
-    b = r.size;
-    n = (b - a).tangent();
+    a       = r.position;
+    b       = r.size;
+    n       = (b - a).tangent();
 
     Rect2 aabb;
     aabb.position = a;
@@ -284,7 +284,7 @@ void SegmentShape2DSW::set_data(const Variant& p_data) {
 Variant SegmentShape2DSW::get_data() const {
     Rect2 r;
     r.position = a;
-    r.size = b;
+    r.size     = b;
     return r;
 }
 
@@ -297,7 +297,7 @@ void CircleShape2DSW::get_supports(
     Vector2* r_supports,
     int& r_amount
 ) const {
-    r_amount = 1;
+    r_amount    = 1;
     *r_supports = p_normal * radius;
 }
 
@@ -324,14 +324,14 @@ bool CircleShape2DSW::intersect_segment(
     if (sqrtterm < 0) {
         return false;
     }
-    sqrtterm = Math::sqrt(sqrtterm);
+    sqrtterm   = Math::sqrt(sqrtterm);
     real_t res = (-b - sqrtterm) / (2 * a);
 
     if (res < 0 || res > 1 + CMP_EPSILON) {
         return false;
     }
 
-    r_point = p_begin + line_vec * res;
+    r_point  = p_begin + line_vec * res;
     r_normal = r_point.normalized();
     return true;
 }
@@ -366,7 +366,7 @@ void RectangleShape2DSW::get_supports(
 ) const {
     for (int i = 0; i < 2; i++) {
         Vector2 ag;
-        ag[i] = 1.0;
+        ag[i]     = 1.0;
         real_t dp = ag.dot(p_normal);
         if (Math::abs(dp) < _SEGMENT_IS_VALID_SUPPORT_THRESHOLD) {
             continue;
@@ -376,10 +376,10 @@ void RectangleShape2DSW::get_supports(
 
         r_amount = 2;
 
-        r_supports[0][i] = half_extents[i] * sgn;
+        r_supports[0][i]     = half_extents[i] * sgn;
         r_supports[0][i ^ 1] = half_extents[i ^ 1];
 
-        r_supports[1][i] = half_extents[i] * sgn;
+        r_supports[1][i]     = half_extents[i] * sgn;
         r_supports[1][i ^ 1] = -half_extents[i ^ 1];
 
         return;
@@ -387,7 +387,7 @@ void RectangleShape2DSW::get_supports(
 
     /* USE POINT */
 
-    r_amount = 1;
+    r_amount      = 1;
     r_supports[0] = Vector2(
         (p_normal.x < 0) ? -half_extents.x : half_extents.x,
         (p_normal.y < 0) ? -half_extents.y : half_extents.y
@@ -395,8 +395,8 @@ void RectangleShape2DSW::get_supports(
 }
 
 bool RectangleShape2DSW::contains_point(const Vector2& p_point) const {
-    float x = p_point.x;
-    float y = p_point.y;
+    float x      = p_point.x;
+    float y      = p_point.y;
     float edge_x = half_extents.x;
     float edge_y = half_extents.y;
     return (x >= -edge_x) && (x < edge_x) && (y >= -edge_y) && (y < edge_y);
@@ -449,26 +449,26 @@ void CapsuleShape2DSW::get_supports(
         n.normalize();
         n *= radius;
 
-        r_amount = 2;
-        r_supports[0] = n;
+        r_amount         = 2;
+        r_supports[0]    = n;
         r_supports[0].y += height * 0.5;
-        r_supports[1] = n;
+        r_supports[1]    = n;
         r_supports[1].y -= height * 0.5;
 
     } else {
         real_t h = (d > 0) ? height : -height;
 
-        n *= radius;
-        n.y += h * 0.5;
-        r_amount = 1;
-        *r_supports = n;
+        n           *= radius;
+        n.y         += h * 0.5;
+        r_amount     = 1;
+        *r_supports  = n;
     }
 }
 
 bool CapsuleShape2DSW::contains_point(const Vector2& p_point) const {
-    Vector2 p = p_point;
-    p.y = Math::abs(p.y);
-    p.y -= height * 0.5;
+    Vector2 p  = p_point;
+    p.y        = Math::abs(p.y);
+    p.y       -= height * 0.5;
     if (p.y < 0) {
         p.y = 0;
     }
@@ -482,17 +482,17 @@ bool CapsuleShape2DSW::intersect_segment(
     Vector2& r_point,
     Vector2& r_normal
 ) const {
-    real_t d = 1e10;
-    Vector2 n = (p_end - p_begin).normalized();
+    real_t d      = 1e10;
+    Vector2 n     = (p_end - p_begin).normalized();
     bool collided = false;
 
     // try spheres
     for (int i = 0; i < 2; i++) {
-        Vector2 begin = p_begin;
-        Vector2 end = p_end;
-        real_t ofs = (i == 0) ? -height * 0.5 : height * 0.5;
-        begin.y += ofs;
-        end.y += ofs;
+        Vector2 begin  = p_begin;
+        Vector2 end    = p_end;
+        real_t ofs     = (i == 0) ? -height * 0.5 : height * 0.5;
+        begin.y       += ofs;
+        end.y         += ofs;
 
         Vector2 line_vec = end - begin;
 
@@ -508,7 +508,7 @@ bool CapsuleShape2DSW::intersect_segment(
             continue;
         }
 
-        sqrtterm = Math::sqrt(sqrtterm);
+        sqrtterm   = Math::sqrt(sqrtterm);
         real_t res = (-b - sqrtterm) / (2 * a);
 
         if (res < 0 || res > 1 + CMP_EPSILON) {
@@ -519,9 +519,9 @@ bool CapsuleShape2DSW::intersect_segment(
         Vector2 pointf(point.x, point.y - ofs);
         real_t pd = n.dot(pointf);
         if (pd < d) {
-            r_point = pointf;
+            r_point  = pointf;
             r_normal = point.normalized();
-            d = pd;
+            d        = pd;
             collided = true;
         }
     }
@@ -531,9 +531,9 @@ bool CapsuleShape2DSW::intersect_segment(
             .intersects_segment(p_begin, p_end, &rpos, &rnorm)) {
         real_t pd = n.dot(rpos);
         if (pd < d) {
-            r_point = rpos;
+            r_point  = rpos;
             r_normal = rnorm;
-            d = pd;
+            d        = pd;
             collided = true;
         }
     }
@@ -563,8 +563,8 @@ void CapsuleShape2DSW::set_data(const Variant& p_data) {
         radius = arr[1];
     } else {
         Point2 p = p_data;
-        radius = p.x;
-        height = p.y;
+        radius   = p.x;
+        height   = p.y;
     }
 
     Point2 he(radius, height * 0.5 + radius);
@@ -585,21 +585,21 @@ void ConvexPolygonShape2DSW::get_supports(
     int& r_amount
 ) const {
     int support_idx = -1;
-    real_t d = -1e10;
-    r_amount = 0;
+    real_t d        = -1e10;
+    r_amount        = 0;
 
     for (int i = 0; i < point_count; i++) {
         // test point
         real_t ld = p_normal.dot(points[i].pos);
         if (ld > d) {
             support_idx = i;
-            d = ld;
+            d           = ld;
         }
 
         // test segment
         if (points[i].normal.dot(p_normal)
             > _SEGMENT_IS_VALID_SUPPORT_THRESHOLD) {
-            r_amount = 2;
+            r_amount      = 2;
             r_supports[0] = points[i].pos;
             r_supports[1] = points[(i + 1) % point_count].pos;
             return;
@@ -611,13 +611,13 @@ void ConvexPolygonShape2DSW::get_supports(
         "Convex polygon shape support not found."
     );
 
-    r_amount = 1;
+    r_amount      = 1;
     r_supports[0] = points[support_idx].pos;
 }
 
 bool ConvexPolygonShape2DSW::contains_point(const Vector2& p_point) const {
     bool out = false;
-    bool in = false;
+    bool in  = false;
 
     for (int i = 0; i < point_count; i++) {
         real_t d =
@@ -638,8 +638,8 @@ bool ConvexPolygonShape2DSW::intersect_segment(
     Vector2& r_point,
     Vector2& r_normal
 ) const {
-    Vector2 n = (p_end - p_begin).normalized();
-    real_t d = 1e10;
+    Vector2 n   = (p_end - p_begin).normalized();
+    real_t d    = 1e10;
     bool inters = false;
 
     for (int i = 0; i < point_count; i++) {
@@ -663,10 +663,10 @@ bool ConvexPolygonShape2DSW::intersect_segment(
 
         real_t nd = n.dot(res);
         if (nd < d) {
-            d = nd;
-            r_point = res;
+            d        = nd;
+            r_point  = res;
             r_normal = points[i].normal;
-            inters = true;
+            inters   = true;
         }
     }
 
@@ -707,14 +707,14 @@ void ConvexPolygonShape2DSW::set_data(const Variant& p_data) {
     if (points) {
         memdelete_arr(points);
     }
-    points = nullptr;
+    points      = nullptr;
     point_count = 0;
 
     if (p_data.get_type() == Variant::POOL_VECTOR2_ARRAY) {
         PoolVector<Vector2> arr = p_data;
         ERR_FAIL_COND(arr.size() == 0);
-        point_count = arr.size();
-        points = memnew_arr(Point, point_count);
+        point_count                 = arr.size();
+        points                      = memnew_arr(Point, point_count);
         PoolVector<Vector2>::Read r = arr.read();
 
         for (int i = 0; i < point_count; i++) {
@@ -722,22 +722,22 @@ void ConvexPolygonShape2DSW::set_data(const Variant& p_data) {
         }
 
         for (int i = 0; i < point_count; i++) {
-            Vector2 p = points[i].pos;
-            Vector2 pn = points[(i + 1) % point_count].pos;
+            Vector2 p        = points[i].pos;
+            Vector2 pn       = points[(i + 1) % point_count].pos;
             points[i].normal = (pn - p).tangent().normalized();
         }
     } else {
         PoolVector<real_t> dvr = p_data;
-        point_count = dvr.size() / 4;
+        point_count            = dvr.size() / 4;
         ERR_FAIL_COND(point_count == 0);
 
-        points = memnew_arr(Point, point_count);
+        points                     = memnew_arr(Point, point_count);
         PoolVector<real_t>::Read r = dvr.read();
 
         for (int i = 0; i < point_count; i++) {
-            int idx = i << 2;
-            points[i].pos.x = r[idx + 0];
-            points[i].pos.y = r[idx + 1];
+            int idx            = i << 2;
+            points[i].pos.x    = r[idx + 0];
+            points[i].pos.y    = r[idx + 1];
             points[i].normal.x = r[idx + 2];
             points[i].normal.y = r[idx + 3];
         }
@@ -766,7 +766,7 @@ Variant ConvexPolygonShape2DSW::get_data() const {
 }
 
 ConvexPolygonShape2DSW::ConvexPolygonShape2DSW() {
-    points = nullptr;
+    points      = nullptr;
     point_count = 0;
 }
 
@@ -784,11 +784,11 @@ void ConcavePolygonShape2DSW::get_supports(
     int& r_amount
 ) const {
     real_t d = -1e10;
-    int idx = -1;
+    int idx  = -1;
     for (int i = 0; i < points.size(); i++) {
         real_t ld = p_normal.dot(points[i]);
         if (ld > d) {
-            d = ld;
+            d   = ld;
             idx = i;
         }
     }
@@ -815,17 +815,17 @@ bool ConcavePolygonShape2DSW::intersect_segment(
     uint32_t* stack = (uint32_t*)alloca(sizeof(int) * bvh_depth);
 
     enum {
-        TEST_AABB_BIT = 0,
-        VISIT_LEFT_BIT = 1,
-        VISIT_RIGHT_BIT = 2,
-        VISIT_DONE_BIT = 3,
+        TEST_AABB_BIT     = 0,
+        VISIT_LEFT_BIT    = 1,
+        VISIT_RIGHT_BIT   = 2,
+        VISIT_DONE_BIT    = 3,
         VISITED_BIT_SHIFT = 29,
-        NODE_IDX_MASK = (1 << VISITED_BIT_SHIFT) - 1,
-        VISITED_BIT_MASK = ~NODE_IDX_MASK,
+        NODE_IDX_MASK     = (1 << VISITED_BIT_SHIFT) - 1,
+        VISITED_BIT_MASK  = ~NODE_IDX_MASK,
     };
 
-    Vector2 n = (p_end - p_begin).normalized();
-    real_t d = 1e10;
+    Vector2 n   = (p_end - p_begin).normalized();
+    real_t d    = 1e10;
     bool inters = false;
 
     /*
@@ -836,14 +836,14 @@ bool ConcavePolygonShape2DSW::intersect_segment(
     int level = 0;
 
     const Segment* segmentptr = &segments[0];
-    const Vector2* pointptr = &points[0];
-    const BVH* bvhptr = &bvh[0];
+    const Vector2* pointptr   = &points[0];
+    const BVH* bvhptr         = &bvh[0];
 
     stack[0] = 0;
     while (true) {
-        uint32_t node = stack[level] & NODE_IDX_MASK;
+        uint32_t node  = stack[level] & NODE_IDX_MASK;
         const BVH& bvh = bvhptr[node];
-        bool done = false;
+        bool done      = false;
 
         switch (stack[level] >> VISITED_BIT_SHIFT) {
             case TEST_AABB_BIT: {
@@ -854,8 +854,8 @@ bool ConcavePolygonShape2DSW::intersect_segment(
                 } else {
                     if (bvh.left < 0) {
                         const Segment& s = segmentptr[bvh.right];
-                        Vector2 a = pointptr[s.points[0]];
-                        Vector2 b = pointptr[s.points[1]];
+                        Vector2 a        = pointptr[s.points[0]];
+                        Vector2 b        = pointptr[s.points[1]];
 
                         Vector2 res;
 
@@ -868,10 +868,10 @@ bool ConcavePolygonShape2DSW::intersect_segment(
                             )) {
                             real_t nd = n.dot(res);
                             if (nd < d) {
-                                d = nd;
-                                r_point = res;
+                                d        = nd;
+                                r_point  = res;
                                 r_normal = (b - a).tangent().normalized();
-                                inters = true;
+                                inters   = true;
                             }
                         }
 
@@ -892,7 +892,7 @@ bool ConcavePolygonShape2DSW::intersect_segment(
             }
                 continue;
             case VISIT_RIGHT_BIT: {
-                stack[level] = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
+                stack[level]     = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
                 stack[level + 1] = bvh.right | TEST_AABB_BIT;
                 level++;
             }
@@ -948,13 +948,13 @@ int ConcavePolygonShape2DSW::_generate_bvh(BVH* p_bvh, int p_len, int p_depth) {
     int median = p_len / 2;
 
     BVH node;
-    node.aabb = global_aabb;
+    node.aabb    = global_aabb;
     int node_idx = bvh.size();
     bvh.push_back(node);
 
     int l = _generate_bvh(p_bvh, median, p_depth + 1);
     int r = _generate_bvh(&p_bvh[median], p_len - median, p_depth + 1);
-    bvh.write[node_idx].left = l;
+    bvh.write[node_idx].left  = l;
     bvh.write[node_idx].right = r;
 
     return node_idx;
@@ -970,7 +970,7 @@ void ConcavePolygonShape2DSW::set_data(const Variant& p_data) {
 
     if (p_data.get_type() == Variant::POOL_VECTOR2_ARRAY) {
         PoolVector<Vector2> p2arr = p_data;
-        int len = p2arr.size();
+        int len                   = p2arr.size();
         ERR_FAIL_COND(len % 2);
 
         segments.clear();
@@ -994,14 +994,14 @@ void ConcavePolygonShape2DSW::set_data(const Variant& p_data) {
             if (pointmap.has(p1)) {
                 idx_p1 = pointmap[p1];
             } else {
-                idx_p1 = pointmap.size();
+                idx_p1       = pointmap.size();
                 pointmap[p1] = idx_p1;
             }
 
             if (pointmap.has(p2)) {
                 idx_p2 = pointmap[p2];
             } else {
-                idx_p2 = pointmap.size();
+                idx_p2       = pointmap.size();
                 pointmap[p2] = idx_p2;
             }
 
@@ -1014,7 +1014,7 @@ void ConcavePolygonShape2DSW::set_data(const Variant& p_data) {
         points.resize(pointmap.size());
         aabb.position = pointmap.front()->key();
         for (Map<Point2, int>::Element* E = pointmap.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             aabb.expand_to(E->key());
             points.write[E->get()] = E->key();
         }
@@ -1024,7 +1024,7 @@ void ConcavePolygonShape2DSW::set_data(const Variant& p_data) {
         for (int i = 0; i < main_vbh.size(); i++) {
             main_vbh.write[i].aabb.position = points[segments[i].points[0]];
             main_vbh.write[i].aabb.expand_to(points[segments[i].points[1]]);
-            main_vbh.write[i].left = -1;
+            main_vbh.write[i].left  = -1;
             main_vbh.write[i].right = i;
         }
 
@@ -1060,13 +1060,13 @@ void ConcavePolygonShape2DSW::cull(
     uint32_t* stack = (uint32_t*)alloca(sizeof(int) * bvh_depth);
 
     enum {
-        TEST_AABB_BIT = 0,
-        VISIT_LEFT_BIT = 1,
-        VISIT_RIGHT_BIT = 2,
-        VISIT_DONE_BIT = 3,
+        TEST_AABB_BIT     = 0,
+        VISIT_LEFT_BIT    = 1,
+        VISIT_RIGHT_BIT   = 2,
+        VISIT_DONE_BIT    = 3,
         VISITED_BIT_SHIFT = 29,
-        NODE_IDX_MASK = (1 << VISITED_BIT_SHIFT) - 1,
-        VISITED_BIT_MASK = ~NODE_IDX_MASK,
+        NODE_IDX_MASK     = (1 << VISITED_BIT_SHIFT) - 1,
+        VISITED_BIT_MASK  = ~NODE_IDX_MASK,
     };
 
     /*
@@ -1081,12 +1081,12 @@ void ConcavePolygonShape2DSW::cull(
     int level = 0;
 
     const Segment* segmentptr = &segments[0];
-    const Vector2* pointptr = &points[0];
-    const BVH* bvhptr = &bvh[0];
+    const Vector2* pointptr   = &points[0];
+    const BVH* bvhptr         = &bvh[0];
 
     stack[0] = 0;
     while (true) {
-        uint32_t node = stack[level] & NODE_IDX_MASK;
+        uint32_t node  = stack[level] & NODE_IDX_MASK;
         const BVH& bvh = bvhptr[node];
 
         switch (stack[level] >> VISITED_BIT_SHIFT) {
@@ -1098,8 +1098,8 @@ void ConcavePolygonShape2DSW::cull(
                 } else {
                     if (bvh.left < 0) {
                         const Segment& s = segmentptr[bvh.right];
-                        Vector2 a = pointptr[s.points[0]];
-                        Vector2 b = pointptr[s.points[1]];
+                        Vector2 a        = pointptr[s.points[0]];
+                        Vector2 b        = pointptr[s.points[1]];
 
                         SegmentShape2DSW ss(
                             a,
@@ -1127,7 +1127,7 @@ void ConcavePolygonShape2DSW::cull(
             }
                 continue;
             case VISIT_RIGHT_BIT: {
-                stack[level] = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
+                stack[level]     = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
                 stack[level + 1] = bvh.right | TEST_AABB_BIT;
                 level++;
             }

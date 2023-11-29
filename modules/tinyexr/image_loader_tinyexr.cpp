@@ -46,7 +46,7 @@ Error ImageLoaderTinyEXR::load_image(
     src_image.resize(src_image_len);
 
     PoolVector<uint8_t>::Write img_write = src_image.write();
-    uint8_t* w = img_write.ptr();
+    uint8_t* w                           = img_write.ptr();
 
     f->get_buffer(&w[0], src_image_len);
 
@@ -87,7 +87,7 @@ Error ImageLoaderTinyEXR::load_image(
     bool use_float16 = false;
     for (int i = 0; i < exr_header.num_channels; i++) {
         if (exr_header.pixel_types[i] == TINYEXR_PIXELTYPE_HALF) {
-            use_float16 = true;
+            use_float16                         = true;
             exr_header.requested_pixel_types[i] = TINYEXR_PIXELTYPE_FLOAT;
         }
     }
@@ -142,57 +142,57 @@ Error ImageLoaderTinyEXR::load_image(
         imgdata.resize(
             exr_image.width * exr_image.height * 3 * channel_size
         ); // RGB
-        format = use_float16 ? Image::FORMAT_RGBH : Image::FORMAT_RGBF;
+        format          = use_float16 ? Image::FORMAT_RGBH : Image::FORMAT_RGBF;
         output_channels = 3;
     } else if (idxG != -1) {
         ERR_FAIL_COND_V(idxR == -1, ERR_FILE_CORRUPT);
         imgdata.resize(
             exr_image.width * exr_image.height * 2 * channel_size
         ); // RG
-        format = use_float16 ? Image::FORMAT_RGH : Image::FORMAT_RGF;
+        format          = use_float16 ? Image::FORMAT_RGH : Image::FORMAT_RGF;
         output_channels = 2;
     } else {
         ERR_FAIL_COND_V(idxR == -1, ERR_FILE_CORRUPT);
         imgdata.resize(
             exr_image.width * exr_image.height * 1 * channel_size
         ); // R
-        format = use_float16 ? Image::FORMAT_RH : Image::FORMAT_RF;
+        format          = use_float16 ? Image::FORMAT_RH : Image::FORMAT_RF;
         output_channels = 1;
     }
 
     EXRTile single_image_tile;
     int num_tiles;
-    int tile_width = 0;
+    int tile_width  = 0;
     int tile_height = 0;
 
     const EXRTile* exr_tiles;
 
     if (!exr_header.tiled) {
-        single_image_tile.images = exr_image.images;
-        single_image_tile.width = exr_image.width;
-        single_image_tile.height = exr_image.height;
-        single_image_tile.level_x = exr_image.width;
-        single_image_tile.level_y = exr_image.height;
+        single_image_tile.images   = exr_image.images;
+        single_image_tile.width    = exr_image.width;
+        single_image_tile.height   = exr_image.height;
+        single_image_tile.level_x  = exr_image.width;
+        single_image_tile.level_y  = exr_image.height;
         single_image_tile.offset_x = 0;
         single_image_tile.offset_y = 0;
 
-        exr_tiles = &single_image_tile;
-        num_tiles = 1;
-        tile_width = exr_image.width;
+        exr_tiles   = &single_image_tile;
+        num_tiles   = 1;
+        tile_width  = exr_image.width;
         tile_height = exr_image.height;
     } else {
-        tile_width = exr_header.tile_size_x;
+        tile_width  = exr_header.tile_size_x;
         tile_height = exr_header.tile_size_y;
-        num_tiles = exr_image.num_tiles;
-        exr_tiles = exr_image.tiles;
+        num_tiles   = exr_image.num_tiles;
+        exr_tiles   = exr_image.tiles;
     }
 
     // print_line("reading format: " + Image::get_format_name(format));
     {
         PoolVector<uint8_t>::Write imgdata_write = imgdata.write();
-        uint8_t* wd = imgdata_write.ptr();
-        uint16_t* iw16 = (uint16_t*)wd;
-        float* iw32 = (float*)wd;
+        uint8_t* wd                              = imgdata_write.ptr();
+        uint16_t* iw16                           = (uint16_t*)wd;
+        float* iw32                              = (float*)wd;
 
         // Assume `out_rgba` have enough memory allocated.
         for (int tile_index = 0; tile_index < num_tiles; tile_index++) {

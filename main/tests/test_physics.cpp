@@ -68,8 +68,8 @@ class TestPhysicsMainLoop : public MainLoop {
 
     void body_changed_transform(Object* p_state, RID p_visual_instance) {
         PhysicsDirectBodyState* state = (PhysicsDirectBodyState*)p_state;
-        VisualServer* vs = VisualServer::get_singleton();
-        Transform t = state->get_transform();
+        VisualServer* vs              = VisualServer::get_singleton();
+        Transform t                   = state->get_transform();
         vs->instance_set_transform(p_visual_instance, t);
     }
 
@@ -87,10 +87,10 @@ protected:
         PhysicsServer::ShapeType p_shape,
         PhysicsServer::BodyMode p_body,
         const Transform p_location,
-        bool p_active_default = true,
+        bool p_active_default          = true,
         const Transform& p_shape_xform = Transform()
     ) {
-        VisualServer* vs = VisualServer::get_singleton();
+        VisualServer* vs  = VisualServer::get_singleton();
         PhysicsServer* ps = PhysicsServer::get_singleton();
 
         RID mesh_instance =
@@ -150,7 +150,7 @@ protected:
     }
 
     void init_shapes() {
-        VisualServer* vs = VisualServer::get_singleton();
+        VisualServer* vs  = VisualServer::get_singleton();
         PhysicsServer* ps = PhysicsServer::get_singleton();
 
         /* SPHERE SHAPE */
@@ -165,7 +165,7 @@ protected:
 
         PoolVector<Plane> box_planes =
             Geometry::build_box_planes(Vector3(0.5, 0.5, 0.5));
-        RID box_mesh = vs->mesh_create();
+        RID box_mesh                = vs->mesh_create();
         Geometry::MeshData box_data = Geometry::build_convex_mesh(box_planes);
         vs->mesh_add_surface_from_mesh_data(box_mesh, box_data);
         type_mesh_map[PhysicsServer::SHAPE_BOX] = box_mesh;
@@ -216,7 +216,7 @@ protected:
         Vector<Vector3> p_faces,
         const Transform& p_xform = Transform()
     ) {
-        VisualServer* vs = VisualServer::get_singleton();
+        VisualServer* vs  = VisualServer::get_singleton();
         PhysicsServer* ps = PhysicsServer::get_singleton();
         RID trimesh_shape =
             ps->shape_create(PhysicsServer::SHAPE_CONCAVE_POLYGON);
@@ -314,7 +314,7 @@ public:
 
             if (mover.is_valid()) {
                 PhysicsServer* ps = PhysicsServer::get_singleton();
-                Transform t = ps->body_get_state(
+                Transform t       = ps->body_get_state(
                     mover,
                     PhysicsServer::BODY_STATE_TRANSFORM
                 );
@@ -338,14 +338,14 @@ public:
         init_shapes();
 
         PhysicsServer* ps = PhysicsServer::get_singleton();
-        space = ps->space_create();
+        space             = ps->space_create();
         ps->space_set_active(space, true);
 
         VisualServer* vs = VisualServer::get_singleton();
 
         /* LIGHT */
         RID lightaux = vs->directional_light_create();
-        scenario = vs->scenario_create();
+        scenario     = vs->scenario_create();
         vs->light_set_shadow(lightaux, true);
         light = vs->instance_create2(lightaux, scenario);
         Transform t;
@@ -356,7 +356,7 @@ public:
 
         camera = vs->camera_create();
 
-        RID viewport = vs->viewport_create();
+        RID viewport       = vs->viewport_create();
         Size2i screen_size = OS::get_singleton()->get_window_size();
         vs->viewport_set_size(viewport, screen_size.x, screen_size.y);
         vs->viewport_attach_to_screen(viewport, Rect2(Vector2(), screen_size));
@@ -378,7 +378,7 @@ public:
     virtual bool iteration(float p_time) {
         if (mover.is_valid()) {
             static float joy_speed = 10;
-            PhysicsServer* ps = PhysicsServer::get_singleton();
+            PhysicsServer* ps      = PhysicsServer::get_singleton();
             Transform t =
                 ps->body_get_state(mover, PhysicsServer::BODY_STATE_TRANSFORM);
             t.origin += Vector3(
@@ -406,7 +406,7 @@ public:
     void test_hinge() {}
 
     void test_character() {
-        VisualServer* vs = VisualServer::get_singleton();
+        VisualServer* vs  = VisualServer::get_singleton();
         PhysicsServer* ps = PhysicsServer::get_singleton();
 
         PoolVector<Plane> capsule_planes =
@@ -428,7 +428,7 @@ public:
         ps->shape_set_data(capsule_shape, capsule_params);
 
         RID mesh_instance = vs->instance_create2(capsule_mesh, scenario);
-        character = ps->body_create(PhysicsServer::BODY_MODE_CHARACTER);
+        character         = ps->body_create(PhysicsServer::BODY_MODE_CHARACTER);
         ps->body_set_space(character, space);
         // todo add space
         ps->body_add_shape(character, capsule_shape);

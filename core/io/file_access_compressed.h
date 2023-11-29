@@ -67,7 +67,7 @@ public:
     void configure(
         const String& p_magic,
         Compression::Mode p_mode = Compression::MODE_ZSTD,
-        uint32_t p_block_size = 4096
+        uint32_t p_block_size    = 4096
     );
 
     Error open_after_magic(FileAccess* p_base);

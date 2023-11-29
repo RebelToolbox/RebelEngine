@@ -46,7 +46,7 @@ class PortalRoomsBSP {
         }
 
         void clear() {
-            leaf = false;
+            leaf     = false;
             child[0] = -1;
             child[1] = -1;
         }
@@ -105,7 +105,7 @@ private:
     int evaluate_portal(
         int p_portal_id,
         const LocalVector<int32_t, int32_t>& p_room_ids,
-        LocalVector<int32_t, int32_t>* r_room_ids_back = nullptr,
+        LocalVector<int32_t, int32_t>* r_room_ids_back  = nullptr,
         LocalVector<int32_t, int32_t>* r_room_ids_front = nullptr
     );
 
@@ -114,7 +114,7 @@ private:
         int p_room_b_id,
         const LocalVector<int32_t, int32_t>& p_room_ids,
         Plane& r_plane,
-        LocalVector<int32_t, int32_t>* r_room_ids_back = nullptr,
+        LocalVector<int32_t, int32_t>* r_room_ids_back  = nullptr,
         LocalVector<int32_t, int32_t>* r_room_ids_front = nullptr
     );
 
@@ -122,7 +122,7 @@ private:
         const VSPortal* p_portal,
         const Plane& p_plane,
         const LocalVector<int32_t, int32_t>& p_room_ids,
-        LocalVector<int32_t, int32_t>* r_room_ids_back = nullptr,
+        LocalVector<int32_t, int32_t>* r_room_ids_back  = nullptr,
         LocalVector<int32_t, int32_t>* r_room_ids_front = nullptr
     );
 

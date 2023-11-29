@@ -54,9 +54,9 @@ class BindingsGenerator {
             const String& p_proxy_name,
             int p_value
         ) {
-            name = p_name;
+            name       = p_name;
             proxy_name = p_proxy_name;
-            value = p_value;
+            value      = p_value;
         }
     };
 
@@ -168,12 +168,12 @@ class BindingsGenerator {
         }
 
         MethodInterface() {
-            is_vararg = false;
-            is_virtual = false;
+            is_vararg            = false;
+            is_virtual           = false;
             requires_object_call = false;
-            is_internal = false;
-            method_doc = NULL;
-            is_deprecated = false;
+            is_internal          = false;
+            method_doc           = NULL;
+            is_deprecated        = false;
         }
     };
 
@@ -348,7 +348,7 @@ class BindingsGenerator {
         const MethodInterface* find_method_by_name(const StringName& p_cname
         ) const {
             for (const List<MethodInterface>::Element* E = methods.front(); E;
-                 E = E->next()) {
+                 E                                       = E->next()) {
                 if (E->get().cname == p_cname) {
                     return &E->get();
                 }
@@ -388,9 +388,9 @@ class BindingsGenerator {
         static void _init_value_type(TypeInterface& itype) {
             itype.proxy_name = itype.name;
 
-            itype.c_type = itype.name;
-            itype.cs_type = itype.proxy_name;
-            itype.im_type_in = "ref " + itype.proxy_name;
+            itype.c_type      = itype.name;
+            itype.cs_type     = itype.proxy_name;
+            itype.im_type_in  = "ref " + itype.proxy_name;
             itype.im_type_out = itype.proxy_name;
             itype.class_doc =
                 &EditorHelp::get_doc_data()->class_list[itype.proxy_name];
@@ -399,7 +399,7 @@ class BindingsGenerator {
     public:
         static TypeInterface create_value_type(const String& p_name) {
             TypeInterface itype;
-            itype.name = p_name;
+            itype.name  = p_name;
             itype.cname = StringName(p_name);
             _init_value_type(itype);
             return itype;
@@ -407,7 +407,7 @@ class BindingsGenerator {
 
         static TypeInterface create_value_type(const StringName& p_name) {
             TypeInterface itype;
-            itype.name = p_name.operator String();
+            itype.name  = p_name.operator String();
             itype.cname = p_name;
             _init_value_type(itype);
             return itype;
@@ -419,12 +419,12 @@ class BindingsGenerator {
         ) {
             TypeInterface itype;
 
-            itype.name = p_cname;
-            itype.cname = p_cname;
-            itype.proxy_name = itype.name.begins_with("_")
-                                 ? itype.name.substr(1, itype.name.length())
-                                 : itype.name;
-            itype.api_type = p_api_type;
+            itype.name           = p_cname;
+            itype.cname          = p_cname;
+            itype.proxy_name     = itype.name.begins_with("_")
+                                     ? itype.name.substr(1, itype.name.length())
+                                     : itype.name;
+            itype.api_type       = p_api_type;
             itype.is_object_type = true;
             itype.class_doc =
                 &EditorHelp::get_doc_data()->class_list[itype.proxy_name];
@@ -436,15 +436,15 @@ class BindingsGenerator {
             TypeInterface& r_itype,
             const StringName& p_cname
         ) {
-            r_itype.name = p_cname;
-            r_itype.cname = p_cname;
+            r_itype.name       = p_cname;
+            r_itype.cname      = p_cname;
             r_itype.proxy_name = r_itype.name;
 
-            r_itype.c_type = r_itype.name;
-            r_itype.c_type_in = "MonoObject*";
-            r_itype.c_type_out = "MonoObject*";
-            r_itype.cs_type = r_itype.proxy_name;
-            r_itype.im_type_in = r_itype.proxy_name;
+            r_itype.c_type      = r_itype.name;
+            r_itype.c_type_in   = "MonoObject*";
+            r_itype.c_type_out  = "MonoObject*";
+            r_itype.cs_type     = r_itype.proxy_name;
+            r_itype.im_type_in  = r_itype.proxy_name;
             r_itype.im_type_out = r_itype.proxy_name;
         }
 
@@ -457,29 +457,29 @@ class BindingsGenerator {
             {
                 // The expected types for parameters and return value in ptrcall
                 // are 'int64_t' or 'uint64_t'.
-                r_enum_itype.c_in = "\t%0 %1_in = (%0)%1;\n";
-                r_enum_itype.c_out = "\treturn (%0)%1;\n";
+                r_enum_itype.c_in   = "\t%0 %1_in = (%0)%1;\n";
+                r_enum_itype.c_out  = "\treturn (%0)%1;\n";
                 r_enum_itype.c_type = "int64_t";
             }
-            r_enum_itype.c_type_in = "int32_t";
+            r_enum_itype.c_type_in  = "int32_t";
             r_enum_itype.c_type_out = r_enum_itype.c_type_in;
 
-            r_enum_itype.cs_type = r_enum_itype.proxy_name;
-            r_enum_itype.cs_in = "(int)%s";
-            r_enum_itype.cs_out = "return (%2)%0(%1);";
-            r_enum_itype.im_type_in = "int";
+            r_enum_itype.cs_type     = r_enum_itype.proxy_name;
+            r_enum_itype.cs_in       = "(int)%s";
+            r_enum_itype.cs_out      = "return (%2)%0(%1);";
+            r_enum_itype.im_type_in  = "int";
             r_enum_itype.im_type_out = "int";
-            r_enum_itype.class_doc = &EditorHelp::get_doc_data()
+            r_enum_itype.class_doc   = &EditorHelp::get_doc_data()
                                           ->class_list[r_enum_itype.proxy_name];
         }
 
         TypeInterface() {
             api_type = ClassDB::API_NONE;
 
-            is_enum = false;
-            is_object_type = false;
-            is_singleton = false;
-            is_reference = false;
+            is_enum         = false;
+            is_object_type  = false;
+            is_singleton    = false;
+            is_reference    = false;
             is_instantiable = false;
 
             memory_own = false;
@@ -505,13 +505,13 @@ class BindingsGenerator {
         InternalCall(
             const String& p_name,
             const String& p_im_type_out,
-            const String& p_im_sig = String(),
+            const String& p_im_sig     = String(),
             const String& p_unique_sig = String()
         ) {
-            name = p_name;
+            name        = p_name;
             im_type_out = p_im_type_out;
-            im_sig = p_im_sig;
-            unique_sig = p_unique_sig;
+            im_sig      = p_im_sig;
+            unique_sig  = p_unique_sig;
             editor_only = false;
         }
 
@@ -519,13 +519,13 @@ class BindingsGenerator {
             ClassDB::APIType api_type,
             const String& p_name,
             const String& p_im_type_out,
-            const String& p_im_sig = String(),
+            const String& p_im_sig     = String(),
             const String& p_unique_sig = String()
         ) {
-            name = p_name;
+            name        = p_name;
             im_type_out = p_im_type_out;
-            im_sig = p_im_sig;
-            unique_sig = p_unique_sig;
+            im_sig      = p_im_sig;
+            unique_sig  = p_unique_sig;
             editor_only = api_type == ClassDB::API_EDITOR;
         }
 
@@ -584,28 +584,28 @@ class BindingsGenerator {
         StringName type_double;
 
         NameCache() {
-            type_void = StaticCString::create("void");
-            type_Array = StaticCString::create("Array");
-            type_Dictionary = StaticCString::create("Dictionary");
-            type_Variant = StaticCString::create("Variant");
-            type_VarArg = StaticCString::create("VarArg");
-            type_Object = StaticCString::create("Object");
-            type_Reference = StaticCString::create("Reference");
-            type_RID = StaticCString::create("RID");
-            type_String = StaticCString::create("String");
-            type_NodePath = StaticCString::create("NodePath");
+            type_void           = StaticCString::create("void");
+            type_Array          = StaticCString::create("Array");
+            type_Dictionary     = StaticCString::create("Dictionary");
+            type_Variant        = StaticCString::create("Variant");
+            type_VarArg         = StaticCString::create("VarArg");
+            type_Object         = StaticCString::create("Object");
+            type_Reference      = StaticCString::create("Reference");
+            type_RID            = StaticCString::create("RID");
+            type_String         = StaticCString::create("String");
+            type_NodePath       = StaticCString::create("NodePath");
             type_at_GlobalScope = StaticCString::create("@GlobalScope");
-            enum_Error = StaticCString::create("Error");
+            enum_Error          = StaticCString::create("Error");
 
-            type_sbyte = StaticCString::create("sbyte");
-            type_short = StaticCString::create("short");
-            type_int = StaticCString::create("int");
-            type_long = StaticCString::create("long");
-            type_byte = StaticCString::create("byte");
+            type_sbyte  = StaticCString::create("sbyte");
+            type_short  = StaticCString::create("short");
+            type_int    = StaticCString::create("int");
+            type_long   = StaticCString::create("long");
+            type_byte   = StaticCString::create("byte");
             type_ushort = StaticCString::create("ushort");
-            type_uint = StaticCString::create("uint");
-            type_ulong = StaticCString::create("ulong");
-            type_float = StaticCString::create("float");
+            type_uint   = StaticCString::create("uint");
+            type_ulong  = StaticCString::create("ulong");
+            type_float  = StaticCString::create("float");
             type_double = StaticCString::create("double");
         }
 
@@ -635,7 +635,7 @@ class BindingsGenerator {
         const List<ConstantInterface>& p_constants
     ) const {
         for (const List<ConstantInterface>::Element* E = p_constants.front(); E;
-             E = E->next()) {
+             E                                         = E->next()) {
             if (E->get().name == p_name) {
                 return &E->get();
             }

@@ -148,9 +148,9 @@ void ColorPicker::_update_controls() {
 void ColorPicker::_set_pick_color(const Color& p_color, bool p_update_sliders) {
     color = p_color;
     if (color != last_hsv) {
-        h = color.get_h();
-        s = color.get_s();
-        v = color.get_v();
+        h        = color.get_h();
+        s        = color.get_s();
+        v        = color.get_v();
         last_hsv = color;
     }
 
@@ -211,7 +211,7 @@ void ColorPicker::_html_entered(const String& p_html) {
     }
 
     float last_alpha = color.a;
-    color = Color::html(p_html);
+    color            = Color::html(p_html);
     if (!is_editing_alpha()) {
         color.a = last_alpha;
     }
@@ -271,8 +271,8 @@ void ColorPicker::_update_color(bool p_update_sliders) {
 }
 
 void ColorPicker::_update_presets() {
-    presets_per_row = 10;
-    Size2 size = bt_add_preset->get_size();
+    presets_per_row   = 10;
+    Size2 size        = bt_add_preset->get_size();
     Size2 preset_size = Size2(
         MIN(size.width * presets.size(), presets_per_row * size.width),
         size.height * (Math::ceil((float)presets.size() / presets_per_row))
@@ -549,7 +549,7 @@ void ColorPicker::_hsv_draw(int p_which, Control* c) {
         int x = CLAMP(c->get_size().x * s, 0, c->get_size().x);
         int y =
             CLAMP(c->get_size().y - c->get_size().y * v, 0, c->get_size().y);
-        col = color;
+        col   = color;
         col.a = 1;
         c->draw_line(Point2(x, 0), Point2(x, c->get_size().y), col.inverted());
         c->draw_line(Point2(0, y), Point2(c->get_size().x, y), col.inverted());
@@ -557,7 +557,7 @@ void ColorPicker::_hsv_draw(int p_which, Control* c) {
     } else if (p_which == 1) {
         Ref<Texture> hue = get_icon("color_hue", "ColorPicker");
         c->draw_texture_rect(hue, Rect2(Point2(), c->get_size()));
-        int y = c->get_size().y - c->get_size().y * (1.0 - h);
+        int y     = c->get_size().y - c->get_size().y * (1.0 - h);
         Color col = Color();
         col.set_hsv(h, 1, 1);
         c->draw_line(Point2(0, y), Point2(c->get_size().x, y), col.inverted());
@@ -570,7 +570,7 @@ void ColorPicker::_uv_input(const Ref<InputEvent>& p_event) {
     if (bev.is_valid()) {
         if (bev->is_pressed() && bev->get_button_index() == BUTTON_LEFT) {
             changing_color = true;
-            float x = CLAMP(
+            float x        = CLAMP(
                 (float)bev->get_position().x,
                 0,
                 uv_edit->get_size().width
@@ -625,7 +625,7 @@ void ColorPicker::_w_input(const Ref<InputEvent>& p_event) {
     if (bev.is_valid()) {
         if (bev->is_pressed() && bev->get_button_index() == BUTTON_LEFT) {
             changing_color = true;
-            float y = CLAMP(
+            float y        = CLAMP(
                 (float)bev->get_position().y,
                 0,
                 w_edit->get_size().height
@@ -993,16 +993,16 @@ void ColorPicker::_bind_methods() {
 }
 
 ColorPicker::ColorPicker() : BoxContainer(true) {
-    updating = true;
-    edit_alpha = true;
-    text_is_constructor = false;
-    hsv_mode_enabled = false;
-    raw_mode_enabled = false;
+    updating              = true;
+    edit_alpha            = true;
+    text_is_constructor   = false;
+    hsv_mode_enabled      = false;
+    raw_mode_enabled      = false;
     deferred_mode_enabled = false;
-    changing_color = false;
-    presets_enabled = true;
-    presets_visible = true;
-    screen = nullptr;
+    changing_color        = false;
+    presets_enabled       = true;
+    presets_visible       = true;
+    screen                = nullptr;
 
     HBoxContainer* hb_edit = memnew(HBoxContainer);
     add_child(hb_edit);
@@ -1185,7 +1185,7 @@ void ColorPickerButton::_notification(int p_what) {
     switch (p_what) {
         case NOTIFICATION_DRAW: {
             const Ref<StyleBox> normal = get_stylebox("normal");
-            const Rect2 r = Rect2(
+            const Rect2 r              = Rect2(
                 normal->get_offset(),
                 get_size() - normal->get_minimum_size()
             );
@@ -1267,7 +1267,7 @@ PopupPanel* ColorPickerButton::get_popup() {
 
 void ColorPickerButton::_update_picker() {
     if (!picker) {
-        popup = memnew(PopupPanel);
+        popup  = memnew(PopupPanel);
         picker = memnew(ColorPicker);
         popup->add_child(picker);
         add_child(popup);
@@ -1338,8 +1338,8 @@ ColorPickerButton::ColorPickerButton() {
     // Initialization is now done deferred,
     // this improves performance in the inspector as the color picker
     // can be expensive to initialize.
-    picker = nullptr;
-    popup = nullptr;
+    picker     = nullptr;
+    popup      = nullptr;
     edit_alpha = true;
 
     set_toggle_mode(true);

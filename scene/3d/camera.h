@@ -101,7 +101,7 @@ protected:
 public:
     enum {
         NOTIFICATION_BECAME_CURRENT = 50,
-        NOTIFICATION_LOST_CURRENT = 51
+        NOTIFICATION_LOST_CURRENT   = 51
     };
 
     void set_perspective(float p_fovy_degrees, float p_z_near, float p_z_far);

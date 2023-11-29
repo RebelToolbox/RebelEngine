@@ -72,12 +72,12 @@ void tie_managed_to_unmanaged(MonoObject* managed, Object* unmanaged) {
 
         CSharpScriptBinding script_binding;
 
-        script_binding.inited = true;
-        script_binding.type_name = NATIVE_GDMONOCLASS_NAME(klass);
+        script_binding.inited        = true;
+        script_binding.type_name     = NATIVE_GDMONOCLASS_NAME(klass);
         script_binding.wrapper_class = klass;
-        script_binding.gchandle = ref ? MonoGCHandle::create_weak(managed)
-                                      : MonoGCHandle::create_strong(managed);
-        script_binding.owner = unmanaged;
+        script_binding.gchandle      = ref ? MonoGCHandle::create_weak(managed)
+                                           : MonoGCHandle::create_strong(managed);
+        script_binding.owner         = unmanaged;
 
         if (ref) {
             // Unsafe refcount increment. The managed instance also counts as a

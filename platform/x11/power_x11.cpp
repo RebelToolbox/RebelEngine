@@ -66,9 +66,9 @@ Adapted from corresponding SDL 2.0 code.
 
 // CODE CHUNK IMPORTED FROM SDL 2.0
 
-static const char* proc_apm_path = "/proc/apm";
-static const char* proc_acpi_battery_path = "/proc/acpi/battery";
-static const char* proc_acpi_ac_adapter_path = "/proc/acpi/ac_adapter";
+static const char* proc_apm_path               = "/proc/apm";
+static const char* proc_acpi_battery_path      = "/proc/acpi/battery";
+static const char* proc_acpi_ac_adapter_path   = "/proc/acpi/ac_adapter";
 static const char* sys_class_power_supply_path = "/sys/class/power_supply";
 
 FileAccessRef PowerX11::open_power_file(
@@ -152,15 +152,15 @@ void PowerX11::check_proc_acpi_battery(
     const char* base = proc_acpi_battery_path;
     char info[1024];
     char state[1024];
-    char* ptr = nullptr;
-    char* key = nullptr;
-    char* val = nullptr;
-    bool charge = false;
-    bool choose = false;
-    int maximum = -1;
+    char* ptr     = nullptr;
+    char* key     = nullptr;
+    char* val     = nullptr;
+    bool charge   = false;
+    bool choose   = false;
+    int maximum   = -1;
     int remaining = -1;
-    int secs = -1;
-    int pct = -1;
+    int secs      = -1;
+    int pct       = -1;
 
     if (!read_power_file(base, node, "state", state, sizeof(state))) {
         return;
@@ -184,18 +184,18 @@ void PowerX11::check_proc_acpi_battery(
                 charge = true;
             }
         } else if (String(key) == "remaining capacity") {
-            String sval = val;
+            String sval   = val;
             const int cvt = sval.to_int();
-            remaining = cvt;
+            remaining     = cvt;
         }
     }
 
     ptr = &info[0];
     while (make_proc_acpi_key_val(&ptr, &key, &val)) {
         if (String(key) == "design capacity") {
-            String sval = val;
+            String sval   = val;
             const int cvt = sval.to_int();
-            maximum = cvt;
+            maximum       = cvt;
         }
     }
 
@@ -229,9 +229,9 @@ void PowerX11::check_proc_acpi_battery(
     }
 
     if (choose) {
-        this->nsecs_left = secs;
+        this->nsecs_left   = secs;
         this->percent_left = pct;
-        *charging = charge;
+        *charging          = charge;
     }
 }
 
@@ -260,14 +260,14 @@ void PowerX11::check_proc_acpi_ac_adapter(const char* node, bool* have_ac) {
 
 bool PowerX11::GetPowerInfo_Linux_proc_acpi() {
     String node;
-    DirAccess* dirp = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+    DirAccess* dirp   = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     bool have_battery = false;
-    bool have_ac = false;
-    bool charging = false;
+    bool have_ac      = false;
+    bool charging     = false;
 
-    this->nsecs_left = -1;
+    this->nsecs_left   = -1;
     this->percent_left = -1;
-    this->power_state = OS::POWERSTATE_UNKNOWN;
+    this->power_state  = OS::POWERSTATE_UNKNOWN;
 
     dirp->change_dir(proc_acpi_battery_path);
     Error err = dirp->list_dir_begin();
@@ -339,19 +339,19 @@ bool PowerX11::next_string(char** _ptr, char** _str) {
 
 bool PowerX11::int_string(char* str, int* val) {
     String sval = str;
-    *val = sval.to_int();
+    *val        = sval.to_int();
     return (*str != '\0');
 }
 
 /* http://lxr.linux.no/linux+v2.6.29/drivers/char/apm-emulation.c */
 bool PowerX11::GetPowerInfo_Linux_proc_apm() {
-    bool need_details = false;
-    int ac_status = 0;
-    int battery_status = 0;
-    int battery_flag = 0;
+    bool need_details   = false;
+    int ac_status       = 0;
+    int battery_status  = 0;
+    int battery_flag    = 0;
     int battery_percent = 0;
-    int battery_time = 0;
-    FileAccessRef fd = FileAccess::open(proc_apm_path, FileAccess::READ);
+    int battery_time    = 0;
+    FileAccessRef fd    = FileAccess::open(proc_apm_path, FileAccess::READ);
     char buf[128];
     char* ptr = &buf[0];
     char* str = nullptr;
@@ -420,19 +420,19 @@ bool PowerX11::GetPowerInfo_Linux_proc_apm() {
         this->power_state = OS::POWERSTATE_NO_BATTERY;
     } else if (battery_flag & (1 << 3)) { /* charging */
         this->power_state = OS::POWERSTATE_CHARGING;
-        need_details = true;
+        need_details      = true;
     } else if (ac_status == 1) {
         this->power_state = OS::POWERSTATE_CHARGED; /* on AC, not charging. */
-        need_details = true;
+        need_details      = true;
     } else {
         this->power_state = OS::POWERSTATE_ON_BATTERY;
-        need_details = true;
+        need_details      = true;
     }
 
     this->percent_left = -1;
-    this->nsecs_left = -1;
+    this->nsecs_left   = -1;
     if (need_details) {
-        const int pct = battery_percent;
+        const int pct  = battery_percent;
         const int secs = battery_time;
 
         if (pct >= 0) { /* -1 == unknown */
@@ -465,7 +465,7 @@ bool PowerX11::GetPowerInfo_Linux_sys_class_power_supply(
 
     this->power_state =
         OS::POWERSTATE_NO_BATTERY; /* assume we're just plugged in. */
-    this->nsecs_left = -1;
+    this->nsecs_left   = -1;
     this->percent_left = -1;
 
     name = dirp->get_next();
@@ -568,9 +568,9 @@ bool PowerX11::GetPowerInfo_Linux_sys_class_power_supply(
         }
 
         if (choose) {
-            this->nsecs_left = secs;
+            this->nsecs_left   = secs;
             this->percent_left = pct;
-            this->power_state = st;
+            this->power_state  = st;
         }
 
         name = dirp->get_next();

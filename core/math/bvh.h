@@ -57,10 +57,10 @@
 
 template <
     class T,
-    bool USE_PAIRS = false,
-    int MAX_ITEMS = 32,
-    class BOUNDS = AABB,
-    class POINT = Vector3,
+    bool USE_PAIRS       = false,
+    int MAX_ITEMS        = 32,
+    class BOUNDS         = AABB,
+    class POINT          = Vector3,
     bool BVH_THREAD_SAFE = true>
 class BVH_Manager {
 public:
@@ -81,7 +81,7 @@ public:
     void params_set_node_expansion(real_t p_value) {
         BVH_LOCKED_FUNCTION
         if (p_value >= 0.0) {
-            tree._node_expansion = p_value;
+            tree._node_expansion      = p_value;
             tree._auto_node_expansion = false;
         } else {
             tree._auto_node_expansion = true;
@@ -95,13 +95,13 @@ public:
 
     void set_pair_callback(PairCallback p_callback, void* p_userdata) {
         BVH_LOCKED_FUNCTION
-        pair_callback = p_callback;
+        pair_callback          = p_callback;
         pair_callback_userdata = p_userdata;
     }
 
     void set_unpair_callback(UnpairCallback p_callback, void* p_userdata) {
         BVH_LOCKED_FUNCTION
-        unpair_callback = p_callback;
+        unpair_callback          = p_callback;
         unpair_callback_userdata = p_userdata;
     }
 
@@ -110,16 +110,16 @@ public:
         void* p_userdata
     ) {
         BVH_LOCKED_FUNCTION
-        check_pair_callback = p_callback;
+        check_pair_callback          = p_callback;
         check_pair_callback_userdata = p_userdata;
     }
 
     BVHHandle create(
         T* p_userdata,
         bool p_active,
-        const BOUNDS& p_aabb = BOUNDS(),
-        int p_subindex = 0,
-        bool p_pairable = false,
+        const BOUNDS& p_aabb     = BOUNDS(),
+        int p_subindex           = 0,
+        bool p_pairable          = false,
         uint32_t p_pairable_type = 0,
         uint32_t p_pairable_mask = 1
     ) {
@@ -155,7 +155,7 @@ public:
         if (USE_PAIRS) {
             // for safety initialize the expanded AABB
             BOUNDS& expanded_aabb = tree._pairs[h.id()].expanded_aabb;
-            expanded_aabb = p_aabb;
+            expanded_aabb         = p_aabb;
             expanded_aabb.grow_by(tree._pairing_expansion);
 
             // force a collision check no matter the AABB
@@ -423,18 +423,18 @@ public:
         T** p_result_array,
         int p_result_max,
         int* p_subindex_array = nullptr,
-        uint32_t p_mask = 0xFFFFFFFF
+        uint32_t p_mask       = 0xFFFFFFFF
     ) {
         BVH_LOCKED_FUNCTION
         typename BVHTREE_CLASS::CullParams params;
 
         params.result_count_overall = 0;
-        params.result_max = p_result_max;
-        params.result_array = p_result_array;
-        params.subindex_array = p_subindex_array;
-        params.mask = p_mask;
-        params.pairable_type = 0;
-        params.test_pairable_only = false;
+        params.result_max           = p_result_max;
+        params.result_array         = p_result_array;
+        params.subindex_array       = p_subindex_array;
+        params.mask                 = p_mask;
+        params.pairable_type        = 0;
+        params.test_pairable_only   = false;
         params.abb.from(p_aabb);
 
         tree.cull_aabb(params);
@@ -448,20 +448,20 @@ public:
         T** p_result_array,
         int p_result_max,
         int* p_subindex_array = nullptr,
-        uint32_t p_mask = 0xFFFFFFFF
+        uint32_t p_mask       = 0xFFFFFFFF
     ) {
         BVH_LOCKED_FUNCTION
         typename BVHTREE_CLASS::CullParams params;
 
         params.result_count_overall = 0;
-        params.result_max = p_result_max;
-        params.result_array = p_result_array;
-        params.subindex_array = p_subindex_array;
-        params.mask = p_mask;
-        params.pairable_type = 0;
+        params.result_max           = p_result_max;
+        params.result_array         = p_result_array;
+        params.subindex_array       = p_subindex_array;
+        params.mask                 = p_mask;
+        params.pairable_type        = 0;
 
         params.segment.from = p_from;
-        params.segment.to = p_to;
+        params.segment.to   = p_to;
 
         tree.cull_segment(params);
 
@@ -473,17 +473,17 @@ public:
         T** p_result_array,
         int p_result_max,
         int* p_subindex_array = nullptr,
-        uint32_t p_mask = 0xFFFFFFFF
+        uint32_t p_mask       = 0xFFFFFFFF
     ) {
         BVH_LOCKED_FUNCTION
         typename BVHTREE_CLASS::CullParams params;
 
         params.result_count_overall = 0;
-        params.result_max = p_result_max;
-        params.result_array = p_result_array;
-        params.subindex_array = p_subindex_array;
-        params.mask = p_mask;
-        params.pairable_type = 0;
+        params.result_max           = p_result_max;
+        params.result_array         = p_result_array;
+        params.subindex_array       = p_subindex_array;
+        params.mask                 = p_mask;
+        params.pairable_type        = 0;
 
         params.point = p_point;
 
@@ -510,15 +510,15 @@ public:
 
         typename BVHTREE_CLASS::CullParams params;
         params.result_count_overall = 0;
-        params.result_max = p_result_max;
-        params.result_array = p_result_array;
-        params.subindex_array = nullptr;
-        params.mask = p_mask;
-        params.pairable_type = 0;
+        params.result_max           = p_result_max;
+        params.result_array         = p_result_array;
+        params.subindex_array       = nullptr;
+        params.mask                 = p_mask;
+        params.pairable_type        = 0;
 
-        params.hull.planes = &p_convex[0];
+        params.hull.planes     = &p_convex[0];
         params.hull.num_planes = p_convex.size();
-        params.hull.points = &convex_points[0];
+        params.hull.points     = &convex_points[0];
         params.hull.num_points = convex_points.size();
 
         tree.cull_convex(params);
@@ -539,11 +539,11 @@ private:
         typename BVHTREE_CLASS::CullParams params;
 
         params.result_count_overall = 0;
-        params.result_max = INT_MAX;
-        params.result_array = nullptr;
-        params.subindex_array = nullptr;
-        params.mask = 0xFFFFFFFF;
-        params.pairable_type = 0;
+        params.result_max           = INT_MAX;
+        params.result_array         = nullptr;
+        params.subindex_array       = nullptr;
+        params.mask                 = 0xFFFFFFFF;
+        params.pairable_type        = 0;
 
         for (unsigned int n = 0; n < changed_items.size(); n++) {
             const BVHHandle& h = changed_items[n];
@@ -762,7 +762,7 @@ private:
         }
 
         typename BVHTREE_CLASS::ItemPairs& p_from = tree._pairs[p_ha.id()];
-        typename BVHTREE_CLASS::ItemPairs& p_to = tree._pairs[p_hb.id()];
+        typename BVHTREE_CLASS::ItemPairs& p_to   = tree._pairs[p_hb.id()];
 
         // does this pair exist already?
         // or only check the one with lower number of pairs for greater speed
@@ -823,7 +823,7 @@ private:
         for (unsigned int n = 0; n < from.extended_pairs.size(); n++) {
             typename BVHTREE_CLASS::ItemPairs::Link& pair =
                 from.extended_pairs[n];
-            BVHHandle h_to = pair.handle;
+            BVHHandle h_to      = pair.handle;
             void* new_pair_data = _recheck_pair(p_handle, h_to, pair.userdata);
 
             if (new_pair_data != pair.userdata) {
@@ -986,11 +986,11 @@ private:
 public:
     BVH_Manager() {
         _tick = 1; // start from 1 so items with 0 indicate never updated
-        pair_callback = nullptr;
-        unpair_callback = nullptr;
-        pair_callback_userdata = nullptr;
+        pair_callback            = nullptr;
+        unpair_callback          = nullptr;
+        pair_callback_userdata   = nullptr;
         unpair_callback_userdata = nullptr;
-        _thread_safe = BVH_THREAD_SAFE;
+        _thread_safe             = BVH_THREAD_SAFE;
     }
 };
 

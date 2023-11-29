@@ -47,8 +47,8 @@ Size2 CenterContainer::get_minimum_size() const {
             continue;
         }
         Size2 minsize = c->get_combined_minimum_size();
-        ms.width = MAX(ms.width, minsize.width);
-        ms.height = MAX(ms.height, minsize.height);
+        ms.width      = MAX(ms.width, minsize.width);
+        ms.height     = MAX(ms.height, minsize.height);
     }
 
     return ms;
@@ -82,8 +82,8 @@ void CenterContainer::_notification(int p_what) {
             }
 
             Size2 minsize = c->get_combined_minimum_size();
-            Point2 ofs = use_top_left ? (-minsize * 0.5).floor()
-                                      : ((size - minsize) / 2.0).floor();
+            Point2 ofs    = use_top_left ? (-minsize * 0.5).floor()
+                                         : ((size - minsize) / 2.0).floor();
             fit_child_in_rect(c, Rect2(ofs, minsize));
         }
     }

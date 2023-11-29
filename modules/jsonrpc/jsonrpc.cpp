@@ -85,11 +85,11 @@ Dictionary JSONRPC::make_response_error(
     dict["jsonrpc"] = "2.0";
 
     Dictionary err;
-    err["code"] = p_code;
+    err["code"]    = p_code;
     err["message"] = p_message;
 
     dict["error"] = err;
-    dict["id"] = p_id;
+    dict["id"]    = p_id;
 
     return dict;
 }
@@ -97,8 +97,8 @@ Dictionary JSONRPC::make_response_error(
 Dictionary JSONRPC::make_response(const Variant& p_value, const Variant& p_id) {
     Dictionary dict;
     dict["jsonrpc"] = "2.0";
-    dict["id"] = p_id;
-    dict["result"] = p_value;
+    dict["id"]      = p_id;
+    dict["result"]  = p_value;
     return dict;
 }
 
@@ -108,8 +108,8 @@ Dictionary JSONRPC::make_notification(
 ) {
     Dictionary dict;
     dict["jsonrpc"] = "2.0";
-    dict["method"] = p_method;
-    dict["params"] = p_params;
+    dict["method"]  = p_method;
+    dict["params"]  = p_params;
     return dict;
 }
 
@@ -120,9 +120,9 @@ Dictionary JSONRPC::make_request(
 ) {
     Dictionary dict;
     dict["jsonrpc"] = "2.0";
-    dict["method"] = p_method;
-    dict["params"] = p_params;
-    dict["id"] = p_id;
+    dict["method"]  = p_method;
+    dict["params"]  = p_params;
+    dict["id"]      = p_id;
     return dict;
 }
 
@@ -133,7 +133,7 @@ Variant JSONRPC::process_action(
     Variant ret;
     if (p_action.get_type() == Variant::DICTIONARY) {
         Dictionary dict = p_action;
-        String method = dict.get("method", "");
+        String method   = dict.get("method", "");
         if (method.begins_with("$/")) {
             return ret;
         }
@@ -173,7 +173,7 @@ Variant JSONRPC::process_action(
         }
     } else if (p_action.get_type() == Variant::ARRAY && p_process_arr_elements) {
         Array arr = p_action;
-        int size = arr.size();
+        int size  = arr.size();
         if (size) {
             Array arr_ret;
             for (int i = 0; i < size; i++) {

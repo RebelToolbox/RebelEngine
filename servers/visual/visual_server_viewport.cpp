@@ -48,12 +48,12 @@ static Transform2D _canvas_get_transform(
     if (p_viewport->canvas_map.has(p_canvas->parent)) {
         Transform2D c_xform =
             p_viewport->canvas_map[p_canvas->parent].transform;
-        xf = xf * c_xform;
+        xf    = xf * c_xform;
         scale = p_canvas->parent_scale;
     }
 
     Transform2D c_xform = p_canvas_data->transform;
-    xf = xf * c_xform;
+    xf                  = xf * c_xform;
 
     if (scale != 1.0 && !VSG::canvas->disable_scale) {
         Vector2 pivot = p_vp_size * 0.5;
@@ -104,8 +104,8 @@ void VisualServerViewport::_draw_viewport(
 ) {
     /* Camera should always be BEFORE any other 3D */
 
-    bool scenario_draw_canvas_bg = false; // draw canvas, or some layer of it,
-                                          // as BG for 3D instead of in front
+    bool scenario_draw_canvas_bg  = false; // draw canvas, or some layer of it,
+                                           // as BG for 3D instead of in front
     int scenario_canvas_max_layer = 0;
 
     if (!p_viewport->hide_canvas && !p_viewport->disable_environment
@@ -148,9 +148,9 @@ void VisualServerViewport::_draw_viewport(
         Map<Viewport::CanvasKey, Viewport::CanvasData*> canvas_map;
 
         Rect2 clip_rect(0, 0, p_viewport->size.x, p_viewport->size.y);
-        RasterizerCanvas::Light* lights = nullptr;
+        RasterizerCanvas::Light* lights             = nullptr;
         RasterizerCanvas::Light* lights_with_shadow = nullptr;
-        RasterizerCanvas::Light* lights_with_mask = nullptr;
+        RasterizerCanvas::Light* lights_with_mask   = nullptr;
         Rect2 shadow_rect;
 
         for (Map<RID, Viewport::CanvasData>::Element* E =
@@ -193,8 +193,8 @@ void VisualServerViewport::_draw_viewport(
                             cl->rect_cache
                         )) {
                         cl->filter_next_ptr = lights;
-                        lights = cl;
-                        cl->texture_cache = nullptr;
+                        lights              = cl;
+                        cl->texture_cache   = nullptr;
                         Transform2D scale;
                         scale.scale(cl->rect_cache.size);
                         scale.elements[2] = cl->rect_cache.position;
@@ -212,11 +212,11 @@ void VisualServerViewport::_draw_viewport(
                                 );
                             }
                             lights_with_shadow = cl;
-                            cl->radius_cache = cl->rect_cache.size.length();
+                            cl->radius_cache   = cl->rect_cache.size.length();
                         }
                         if (cl->mode == VS::CANVAS_LIGHT_MODE_MASK) {
                             cl->mask_next_ptr = lights_with_mask;
-                            lights_with_mask = cl;
+                            lights_with_mask  = cl;
                         }
                     }
 
@@ -266,7 +266,7 @@ void VisualServerViewport::_draw_viewport(
                             F->get()->aabb_cache
                         )) {
                         F->get()->next = occluders;
-                        occluders = F->get();
+                        occluders      = F->get();
                     }
                 }
             }
@@ -323,7 +323,7 @@ void VisualServerViewport::_draw_viewport(
             RasterizerCanvas::Light* canvas_lights = nullptr;
 
             RasterizerCanvas::Light* ptr = lights;
-            int canvas_layer_id = E->get()->layer;
+            int canvas_layer_id          = E->get()->layer;
             while (ptr) {
                 if (canvas_layer_id >= ptr->layer_min
                     && canvas_layer_id <= ptr->layer_max) {
@@ -554,11 +554,11 @@ RID VisualServerViewport::viewport_create() {
 
     RID rid = viewport_owner.make_rid(viewport);
 
-    viewport->self = rid;
+    viewport->self          = rid;
     viewport->hide_scenario = false;
-    viewport->hide_canvas = false;
+    viewport->hide_canvas   = false;
     viewport->render_target = VSG::storage->render_target_create();
-    viewport->shadow_atlas = VSG::scene_render->shadow_atlas_create();
+    viewport->shadow_atlas  = VSG::scene_render->shadow_atlas_create();
     viewport->viewport_render_direct_to_screen = false;
 
     return rid;
@@ -668,7 +668,7 @@ void VisualServerViewport::viewport_attach_to_screen(
     }
 
     viewport->viewport_to_screen_rect = p_rect;
-    viewport->viewport_to_screen = p_screen;
+    viewport->viewport_to_screen      = p_screen;
 }
 
 void VisualServerViewport::viewport_set_render_direct_to_screen(
@@ -732,7 +732,7 @@ void VisualServerViewport::viewport_detach(RID p_viewport) {
     }
 
     viewport->viewport_to_screen_rect = Rect2();
-    viewport->viewport_to_screen = 0;
+    viewport->viewport_to_screen      = 0;
 }
 
 void VisualServerViewport::viewport_set_update_mode(
@@ -854,10 +854,10 @@ void VisualServerViewport::viewport_attach_canvas(
     ERR_FAIL_COND(!canvas);
 
     canvas->viewports.insert(p_viewport);
-    viewport->canvas_map[p_canvas] = Viewport::CanvasData();
-    viewport->canvas_map[p_canvas].layer = 0;
+    viewport->canvas_map[p_canvas]          = Viewport::CanvasData();
+    viewport->canvas_map[p_canvas].layer    = 0;
     viewport->canvas_map[p_canvas].sublayer = 0;
-    viewport->canvas_map[p_canvas].canvas = canvas;
+    viewport->canvas_map[p_canvas].canvas   = canvas;
 }
 
 void VisualServerViewport::viewport_remove_canvas(
@@ -922,7 +922,7 @@ void VisualServerViewport::viewport_set_canvas_stacking(
     ERR_FAIL_COND(!viewport);
 
     ERR_FAIL_COND(!viewport->canvas_map.has(p_canvas));
-    viewport->canvas_map[p_canvas].layer = p_layer;
+    viewport->canvas_map[p_canvas].layer    = p_layer;
     viewport->canvas_map[p_canvas].sublayer = p_sublayer;
 }
 

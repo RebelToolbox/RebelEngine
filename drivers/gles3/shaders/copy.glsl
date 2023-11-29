@@ -45,7 +45,7 @@ void main() {
 #endif
 
 #endif
-    uv2_interp = uv2_in;
+    uv2_interp  = uv2_in;
     gl_Position = vertex_attrib;
 
 #ifdef USE_COPY_SECTION
@@ -158,9 +158,9 @@ void main() {
 #ifdef USE_PANORAMA
 
     vec3 cube_normal = normalize(cube_interp);
-    cube_normal.z = -cube_normal.z;
-    cube_normal = mat3(sky_transform) * cube_normal;
-    cube_normal.z = -cube_normal.z;
+    cube_normal.z    = -cube_normal.z;
+    cube_normal      = mat3(sky_transform) * cube_normal;
+    cube_normal.z    = -cube_normal.z;
 
     vec4 color = texturePanorama(cube_normal, source);
 
@@ -179,7 +179,7 @@ void main() {
         (cube_normal.z * (-uv_interp.x - asym_proj.x)) / asym_proj.y;
     cube_normal.y =
         (cube_normal.z * (-uv_interp.y - asym_proj.z)) / asym_proj.a;
-    cube_normal = mat3(sky_transform) * mat3(pano_transform) * cube_normal;
+    cube_normal   = mat3(sky_transform) * mat3(pano_transform) * cube_normal;
     cube_normal.z = -cube_normal.z;
 
     vec4 color = texturePanorama(normalize(cube_normal.xyz), source);
@@ -193,9 +193,9 @@ void main() {
     vec4 color = textureLod(source_2d_array, vec3(uv_interp, layer), 0.0);
 #elif defined(SEP_CBCR_TEXTURE)
     vec4 color;
-    color.r = textureLod(source, uv_interp, 0.0).r;
+    color.r  = textureLod(source, uv_interp, 0.0).r;
     color.gb = textureLod(CbCr, uv_interp, 0.0).rg - vec2(0.5, 0.5);
-    color.a = 1.0;
+    color.a  = 1.0;
 #else
 #ifdef USE_LOD
     vec4 color = textureLod(source, uv_interp, mip_level);
@@ -235,7 +235,7 @@ void main() {
 
 #ifdef DEBUG_GRADIENT
     color.rg = uv_interp;
-    color.b = 0.0;
+    color.b  = 0.0;
 #endif
 
 #ifdef DISABLE_ALPHA

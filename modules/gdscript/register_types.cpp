@@ -69,7 +69,7 @@ public:
 
         if (preset.is_valid()) {
             script_mode = preset->get_script_export_mode();
-            script_key = preset->get_script_encryption_key().to_lower();
+            script_key  = preset->get_script_encryption_key().to_lower();
         }
 
         if (!p_path.ends_with(".gd")
@@ -120,7 +120,7 @@ public:
                     key.write[i] = v;
                 }
                 FileAccessEncrypted* fae = memnew(FileAccessEncrypted);
-                Error err = fae->open_and_parse(
+                Error err                = fae->open_and_parse(
                     fa,
                     key,
                     FileAccessEncrypted::MODE_WRITE_AES256

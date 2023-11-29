@@ -55,9 +55,9 @@ void RasterizerCanvasBaseGLES2::canvas_begin() {
     state.using_transparent_rt = false;
 
     // always start with light_angle unset
-    state.using_light_angle = false;
+    state.using_light_angle  = false;
     state.using_large_vertex = false;
-    state.using_modulate = false;
+    state.using_modulate     = false;
 
     state.canvas_shader.set_conditional(
         CanvasShaderGLES2::USE_ATTRIB_LIGHT_ANGLE,
@@ -84,10 +84,10 @@ void RasterizerCanvasBaseGLES2::canvas_begin() {
         if (storage->frame.current_rt
                 ->flags[RasterizerStorage::RENDER_TARGET_DIRECT_TO_SCREEN]) {
             // set Viewport and Scissor when rendering directly to screen
-            viewport_width = storage->frame.current_rt->width;
+            viewport_width  = storage->frame.current_rt->width;
             viewport_height = storage->frame.current_rt->height;
-            viewport_x = storage->frame.current_rt->x;
-            viewport_y = OS::get_singleton()->get_window_size().height
+            viewport_x      = storage->frame.current_rt->x;
+            viewport_y      = OS::get_singleton()->get_window_size().height
                        - viewport_height - storage->frame.current_rt->y;
             glScissor(viewport_x, viewport_y, viewport_width, viewport_height);
             glViewport(viewport_x, viewport_y, viewport_width, viewport_height);
@@ -157,7 +157,7 @@ void RasterizerCanvasBaseGLES2::canvas_begin() {
     state.uniforms.final_modulate = Color(1, 1, 1, 1);
 
     state.uniforms.modelview_matrix = Transform2D();
-    state.uniforms.extra_matrix = Transform2D();
+    state.uniforms.extra_matrix     = Transform2D();
 
     _set_uniforms();
     _bind_quad_buffer();
@@ -174,15 +174,15 @@ void RasterizerCanvasBaseGLES2::canvas_end() {
         && storage->frame.current_rt
                ->flags[RasterizerStorage::RENDER_TARGET_DIRECT_TO_SCREEN]) {
         // reset viewport to full window size
-        int viewport_width = OS::get_singleton()->get_window_size().width;
+        int viewport_width  = OS::get_singleton()->get_window_size().width;
         int viewport_height = OS::get_singleton()->get_window_size().height;
         glViewport(0, 0, viewport_width, viewport_height);
         glScissor(0, 0, viewport_width, viewport_height);
     }
 
-    state.using_texture_rect = false;
-    state.using_skeleton = false;
-    state.using_ninepatch = false;
+    state.using_texture_rect   = false;
+    state.using_skeleton       = false;
+    state.using_ninepatch      = false;
     state.using_transparent_rt = false;
 }
 
@@ -253,7 +253,7 @@ RasterizerStorageGLES2::Texture* RasterizerCanvasBaseGLES2::
             storage->texture_owner.getornull(p_texture);
 
         if (!texture) {
-            state.current_tex = RID();
+            state.current_tex     = RID();
             state.current_tex_ptr = nullptr;
 
             glActiveTexture(
@@ -277,13 +277,13 @@ RasterizerStorageGLES2::Texture* RasterizerCanvasBaseGLES2::
             );
             glBindTexture(GL_TEXTURE_2D, texture->tex_id);
 
-            state.current_tex = p_texture;
+            state.current_tex     = p_texture;
             state.current_tex_ptr = texture;
 
             tex_return = texture;
         }
     } else {
-        state.current_tex = RID();
+        state.current_tex     = RID();
         state.current_tex_ptr = nullptr;
 
         glActiveTexture(
@@ -354,8 +354,8 @@ void RasterizerCanvasBaseGLES2::draw_window_margins(
     RID* black_image
 ) {
     Vector2 window_size = OS::get_singleton()->get_window_size();
-    int window_h = window_size.height;
-    int window_w = window_size.width;
+    int window_h        = window_size.height;
+    int window_w        = window_size.width;
 
     glBindFramebuffer(GL_FRAMEBUFFER, storage->system_fbo);
     glViewport(0, 0, window_size.width, window_size.height);
@@ -685,7 +685,7 @@ void RasterizerCanvasBaseGLES2::_draw_polygon(
 ) {
     glBindBuffer(GL_ARRAY_BUFFER, data.polygon_buffer);
 
-    uint32_t buffer_ofs = 0;
+    uint32_t buffer_ofs       = 0;
     uint32_t buffer_ofs_after = buffer_ofs + (sizeof(Vector2) * p_vertex_count);
 #ifdef DEBUG_ENABLED
     ERR_FAIL_COND(buffer_ofs_after > data.polygon_buffer_size);
@@ -863,7 +863,7 @@ void RasterizerCanvasBaseGLES2::_draw_generic(
 ) {
     glBindBuffer(GL_ARRAY_BUFFER, data.polygon_buffer);
 
-    uint32_t buffer_ofs = 0;
+    uint32_t buffer_ofs       = 0;
     uint32_t buffer_ofs_after = buffer_ofs + (sizeof(Vector2) * p_vertex_count);
 #ifdef DEBUG_ENABLED
     ERR_FAIL_COND(buffer_ofs_after > data.polygon_buffer_size);
@@ -958,7 +958,7 @@ void RasterizerCanvasBaseGLES2::_draw_generic_indices(
 ) {
     glBindBuffer(GL_ARRAY_BUFFER, data.polygon_buffer);
 
-    uint32_t buffer_ofs = 0;
+    uint32_t buffer_ofs       = 0;
     uint32_t buffer_ofs_after = buffer_ofs + (sizeof(Vector2) * p_vertex_count);
 #ifdef DEBUG_ENABLED
     ERR_FAIL_COND(buffer_ofs_after > data.polygon_buffer_size);
@@ -1098,24 +1098,24 @@ void RasterizerCanvasBaseGLES2::_draw_gui_primitive(
     static const GLenum prim[5] =
         {GL_POINTS, GL_POINTS, GL_LINES, GL_TRIANGLES, GL_TRIANGLE_FAN};
 
-    int color_offset = 0;
-    int uv_offset = 0;
+    int color_offset       = 0;
+    int uv_offset          = 0;
     int light_angle_offset = 0;
-    int stride = 2;
+    int stride             = 2;
 
     if (p_colors) {
-        color_offset = stride;
-        stride += 4;
+        color_offset  = stride;
+        stride       += 4;
     }
 
     if (p_uvs) {
-        uv_offset = stride;
-        stride += 2;
+        uv_offset  = stride;
+        stride    += 2;
     }
 
     if (p_light_angles) { // light_angles
-        light_angle_offset = stride;
-        stride += 1;
+        light_angle_offset  = stride;
+        stride             += 1;
     }
 
     DEV_ASSERT(p_points <= 4);
@@ -1341,8 +1341,8 @@ void RasterizerCanvasBaseGLES2::canvas_light_shadow_buffer_update(
         // make sure it remains orthogonal, makes easy to read angle later
 
         Transform light;
-        light.origin[0] = p_light_xform[2][0];
-        light.origin[1] = p_light_xform[2][1];
+        light.origin[0]   = p_light_xform[2][0];
+        light.origin[1]   = p_light_xform[2][1];
         light.basis[0][0] = p_light_xform[0][0];
         light.basis[0][1] = p_light_xform[1][0];
         light.basis[1][0] = p_light_xform[0][1];
@@ -1353,9 +1353,9 @@ void RasterizerCanvasBaseGLES2::canvas_light_shadow_buffer_update(
         // p_near=1;
         CameraMatrix projection;
         {
-            real_t fov = 90;
-            real_t nearp = p_near;
-            real_t farp = p_far;
+            real_t fov    = 90;
+            real_t nearp  = p_near;
+            real_t farp   = p_far;
             real_t aspect = 1.0;
 
             real_t ymax = nearp * Math::tan(Math::deg2rad(fov * 0.5));
@@ -1593,7 +1593,7 @@ void RasterizerCanvasBaseGLES2::initialize() {
                 "0,256,1,or_greater"
             )
         );
-        index_size = MAX(index_size, 2);
+        index_size  = MAX(index_size, 2);
         index_size *= 1024; // kb
         glGenBuffers(1, &data.polygon_index_buffer);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.polygon_index_buffer);
@@ -1721,9 +1721,9 @@ void RasterizerCanvasBaseGLES2::initialize() {
 
     state.canvas_shader.init();
 
-    state.using_light_angle = false;
+    state.using_light_angle  = false;
     state.using_large_vertex = false;
-    state.using_modulate = false;
+    state.using_modulate     = false;
 
     _set_texture_rect_mode(true);
     state.canvas_shader.set_conditional(
@@ -1740,9 +1740,9 @@ void RasterizerCanvasBaseGLES2::initialize() {
         GLOBAL_DEF("rendering/2d/snapping/use_gpu_pixel_snap", false)
     );
 
-    state.using_light = nullptr;
+    state.using_light          = nullptr;
     state.using_transparent_rt = false;
-    state.using_skeleton = false;
+    state.using_skeleton       = false;
 }
 
 void RasterizerCanvasBaseGLES2::finalize() {}

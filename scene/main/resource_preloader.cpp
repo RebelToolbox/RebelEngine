@@ -35,12 +35,12 @@ void ResourcePreloader::_set_resources(const Array& p_data) {
 
     ERR_FAIL_COND(p_data.size() != 2);
     PoolVector<String> names = p_data[0];
-    Array resdata = p_data[1];
+    Array resdata            = p_data[1];
 
     ERR_FAIL_COND(names.size() != resdata.size());
 
     for (int i = 0; i < resdata.size(); i++) {
-        String name = names[i];
+        String name  = names[i];
         RES resource = resdata[i];
         ERR_CONTINUE(!resource.is_valid());
         resources[name] = resource;
@@ -58,7 +58,7 @@ Array ResourcePreloader::_get_resources() const {
     Set<String> sorted_names;
 
     for (Map<StringName, RES>::Element* E = resources.front(); E;
-         E = E->next()) {
+         E                                = E->next()) {
         sorted_names.insert(E->key());
     }
 
@@ -131,7 +131,7 @@ PoolVector<String> ResourcePreloader::_get_resource_list() const {
     res.resize(resources.size());
     int i = 0;
     for (Map<StringName, RES>::Element* E = resources.front(); E;
-         E = E->next(), i++) {
+         E                                = E->next(), i++) {
         res.set(i, E->key());
     }
 
@@ -140,7 +140,7 @@ PoolVector<String> ResourcePreloader::_get_resource_list() const {
 
 void ResourcePreloader::get_resource_list(List<StringName>* p_list) {
     for (Map<StringName, RES>::Element* E = resources.front(); E;
-         E = E->next()) {
+         E                                = E->next()) {
         p_list->push_back(E->key());
     }
 }

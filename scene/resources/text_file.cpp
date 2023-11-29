@@ -58,7 +58,7 @@ Error TextFile::load_text(const String& p_path) {
     uint64_t len = f->get_len();
     sourcef.resize(len + 1);
     PoolVector<uint8_t>::Write w = sourcef.write();
-    uint64_t r = f->get_buffer(w.ptr(), len);
+    uint64_t r                   = f->get_buffer(w.ptr(), len);
     f->close();
     memdelete(f);
     ERR_FAIL_COND_V(r != len, ERR_CANT_OPEN);

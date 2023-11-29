@@ -37,19 +37,19 @@ void AudioEffectCompressorInstance::process(
     AudioFrame* p_dst_frames,
     int p_frame_count
 ) {
-    float threshold = Math::db2linear(base->threshold);
+    float threshold   = Math::db2linear(base->threshold);
     float sample_rate = AudioServer::get_singleton()->get_mix_rate();
 
-    float ratatcoef = exp(-1 / (0.00001f * sample_rate));
+    float ratatcoef  = exp(-1 / (0.00001f * sample_rate));
     float ratrelcoef = exp(-1 / (0.5f * sample_rate));
-    float attime = base->attack_us / 1000000.0;
-    float reltime = base->release_ms / 1000.0;
-    float atcoef = exp(-1 / (attime * sample_rate));
-    float relcoef = exp(-1 / (reltime * sample_rate));
+    float attime     = base->attack_us / 1000000.0;
+    float reltime    = base->release_ms / 1000.0;
+    float atcoef     = exp(-1 / (attime * sample_rate));
+    float relcoef    = exp(-1 / (reltime * sample_rate));
 
     float makeup = Math::db2linear(base->gain);
 
-    float mix = base->mix;
+    float mix            = base->mix;
     float gr_meter_decay = exp(1 / (1 * sample_rate));
 
     const AudioFrame* src = p_src_frames;
@@ -69,8 +69,8 @@ void AudioEffectCompressorInstance::process(
     for (int i = 0; i < p_frame_count; i++) {
         AudioFrame s = src[i];
         // convert to positive
-        s.l = Math::abs(s.l);
-        s.r = Math::abs(s.r);
+        s.l          = Math::abs(s.l);
+        s.r          = Math::abs(s.r);
 
         float peak = MAX(s.l, s.r);
 
@@ -85,14 +85,14 @@ void AudioEffectCompressorInstance::process(
         }
 
         if (overdb > rundb) {
-            rundb = overdb + atcoef * (rundb - overdb);
+            rundb    = overdb + atcoef * (rundb - overdb);
             runratio = averatio + ratatcoef * (runratio - averatio);
         } else {
-            rundb = overdb + relcoef * (rundb - overdb);
+            rundb    = overdb + relcoef * (rundb - overdb);
             runratio = averatio + ratrelcoef * (runratio - averatio);
         }
 
-        overdb = rundb;
+        overdb   = rundb;
         averatio = runratio;
 
         float cratio;
@@ -103,7 +103,7 @@ void AudioEffectCompressorInstance::process(
             cratio = base->ratio;
         }
 
-        float gr = -overdb * (cratio - 1) / cratio;
+        float gr  = -overdb * (cratio - 1) / cratio;
         float grv = Math::db2linear(gr);
 
         runmax = maxover
@@ -129,13 +129,13 @@ void AudioEffectCompressorInstance::process(
 Ref<AudioEffectInstance> AudioEffectCompressor::instance() {
     Ref<AudioEffectCompressorInstance> ins;
     ins.instance();
-    ins->base = Ref<AudioEffectCompressor>(this);
-    ins->rundb = 0;
-    ins->runratio = 0;
-    ins->averatio = 0;
-    ins->runmax = 0;
-    ins->maxover = 0;
-    ins->gr_meter = 1.0;
+    ins->base            = Ref<AudioEffectCompressor>(this);
+    ins->rundb           = 0;
+    ins->runratio        = 0;
+    ins->averatio        = 0;
+    ins->runmax          = 0;
+    ins->maxover         = 0;
+    ins->gr_meter        = 1.0;
     ins->current_channel = -1;
     return ins;
 }
@@ -325,10 +325,10 @@ void AudioEffectCompressor::_bind_methods() {
 }
 
 AudioEffectCompressor::AudioEffectCompressor() {
-    threshold = 0;
-    ratio = 4;
-    gain = 0;
-    attack_us = 20;
+    threshold  = 0;
+    ratio      = 4;
+    gain       = 0;
+    attack_us  = 20;
     release_ms = 250;
-    mix = 1;
+    mix        = 1;
 }

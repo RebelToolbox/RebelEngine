@@ -52,8 +52,8 @@ void post_process_preview(Ref<Image> p_image) {
     const int w = p_image->get_width();
     const int h = p_image->get_height();
 
-    const int r = MIN(w, h) / 32;
-    const int r2 = r * r;
+    const int r       = MIN(w, h) / 32;
+    const int r2      = r * r;
     Color transparent = Color(0, 0, 0, 0);
 
     for (int i = 0; i < r; i++) {
@@ -409,7 +409,7 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
     );
     VS::get_singleton()->camera_set_perspective(camera, 45, 0.1, 10);
 
-    light = VS::get_singleton()->directional_light_create();
+    light          = VS::get_singleton()->directional_light_create();
     light_instance = VS::get_singleton()->instance_create2(light, scenario);
     VS::get_singleton()->instance_set_transform(
         light_instance,
@@ -427,11 +427,11 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
         Transform().looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1))
     );
 
-    sphere = VS::get_singleton()->mesh_create();
+    sphere          = VS::get_singleton()->mesh_create();
     sphere_instance = VS::get_singleton()->instance_create2(sphere, scenario);
 
-    int lats = 32;
-    int lons = 32;
+    int lats     = 32;
+    int lons     = 32;
     float radius = 1.0;
 
     PoolVector<Vector3> vertices;
@@ -442,21 +442,21 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
 
     for (int i = 1; i <= lats; i++) {
         double lat0 = Math_PI * (-0.5 + (double)(i - 1) / lats);
-        double z0 = Math::sin(lat0);
-        double zr0 = Math::cos(lat0);
+        double z0   = Math::sin(lat0);
+        double zr0  = Math::cos(lat0);
 
         double lat1 = Math_PI * (-0.5 + (double)i / lats);
-        double z1 = Math::sin(lat1);
-        double zr1 = Math::cos(lat1);
+        double z1   = Math::sin(lat1);
+        double zr1  = Math::cos(lat1);
 
         for (int j = lons; j >= 1; j--) {
             double lng0 = 2 * Math_PI * (double)(j - 1) / lons;
-            double x0 = Math::cos(lng0);
-            double y0 = Math::sin(lng0);
+            double x0   = Math::cos(lng0);
+            double y0   = Math::sin(lng0);
 
             double lng1 = 2 * Math_PI * (double)(j) / lons;
-            double x1 = Math::cos(lng1);
-            double y1 = Math::sin(lng1);
+            double x1   = Math::cos(lng1);
+            double y1   = Math::sin(lng1);
 
             Vector3 v[4] = {
                 Vector3(x1 * zr0, z0, y1 * zr0),
@@ -475,7 +475,7 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
         );                                                                     \
         uv /= Math_PI;                                                         \
         uv *= 4.0;                                                             \
-        uv = uv * 0.5 + Vector2(0.5, 0.5);                                     \
+        uv  = uv * 0.5 + Vector2(0.5, 0.5);                                    \
         uvs.push_back(uv);                                                     \
     }                                                                          \
     {                                                                          \
@@ -498,10 +498,10 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
 
     Array arr;
     arr.resize(VS::ARRAY_MAX);
-    arr[VS::ARRAY_VERTEX] = vertices;
-    arr[VS::ARRAY_NORMAL] = normals;
+    arr[VS::ARRAY_VERTEX]  = vertices;
+    arr[VS::ARRAY_NORMAL]  = normals;
     arr[VS::ARRAY_TANGENT] = tangents;
-    arr[VS::ARRAY_TEX_UV] = uvs;
+    arr[VS::ARRAY_TEX_UV]  = uvs;
     VS::get_singleton()
         ->mesh_add_surface_from_arrays(sphere, VS::PRIMITIVE_TRIANGLES, arr);
 }
@@ -558,7 +558,7 @@ Ref<Texture> EditorScriptPreviewPlugin::generate(
     }
 
     int line = 0;
-    int col = 0;
+    int col  = 0;
     Ref<Image> img;
     img.instance();
     int thumbnail_size = MAX(p_size.x, p_size.y);
@@ -596,15 +596,15 @@ Ref<Texture> EditorScriptPreviewPlugin::generate(
         }
     }
 
-    const int x0 = thumbnail_size / 8;
-    const int y0 = thumbnail_size / 8;
+    const int x0               = thumbnail_size / 8;
+    const int y0               = thumbnail_size / 8;
     const int available_height = thumbnail_size - 2 * y0;
-    col = x0;
+    col                        = x0;
 
-    bool prev_is_text = false;
+    bool prev_is_text            = false;
     bool in_control_flow_keyword = false;
-    bool in_keyword = false;
-    bool in_comment = false;
+    bool in_keyword              = false;
+    bool in_comment              = false;
     for (int i = 0; i < code.length(); i++) {
         CharType c = code[i];
         if (c > 32) {
@@ -623,9 +623,9 @@ Ref<Texture> EditorScriptPreviewPlugin::generate(
                             || (c >= '[' && c <= '`') || (c >= '{' && c <= '~')
                             || c == '\t')) {
                         // make symbol a little visible
-                        color = symbol_color;
+                        color                   = symbol_color;
                         in_control_flow_keyword = false;
-                        in_keyword = false;
+                        in_keyword              = false;
                     } else if (!prev_is_text && _is_text_char(c)) {
                         int pos = i;
 
@@ -643,7 +643,7 @@ Ref<Texture> EditorScriptPreviewPlugin::generate(
 
                     } else if (!_is_text_char(c)) {
                         in_control_flow_keyword = false;
-                        in_keyword = false;
+                        in_keyword              = false;
                     }
 
                     if (in_control_flow_keyword) {
@@ -653,8 +653,8 @@ Ref<Texture> EditorScriptPreviewPlugin::generate(
                     }
                 }
 
-                Color ul = color;
-                ul.a *= 0.5;
+                Color ul  = color;
+                ul.a     *= 0.5;
                 img->set_pixel(col, y0 + line * 2, bg_color.blend(ul));
                 img->set_pixel(col, y0 + line * 2 + 1, color);
 
@@ -662,9 +662,9 @@ Ref<Texture> EditorScriptPreviewPlugin::generate(
             }
             col++;
         } else {
-            prev_is_text = false;
+            prev_is_text            = false;
             in_control_flow_keyword = false;
-            in_keyword = false;
+            in_keyword              = false;
 
             if (c == '\n') {
                 in_comment = false;
@@ -714,7 +714,7 @@ Ref<Texture> EditorAudioStreamPreviewPlugin::generate(
     img.resize(w * h * 3);
 
     PoolVector<uint8_t>::Write imgdata = img.write();
-    uint8_t* imgw = imgdata.ptr();
+    uint8_t* imgw                      = imgdata.ptr();
 
     Ref<AudioStreamPlayback> playback = stream->instance_playback();
     ERR_FAIL_COND_V(playback.is_null(), Ref<Texture>());
@@ -735,10 +735,10 @@ Ref<Texture> EditorAudioStreamPreviewPlugin::generate(
     for (int i = 0; i < w; i++) {
         float max = -1000;
         float min = 1000;
-        int from = uint64_t(i) * frame_length / w;
-        int to = (uint64_t(i) + 1) * frame_length / w;
-        to = MIN(to, frame_length);
-        from = MIN(from, frame_length - 1);
+        int from  = uint64_t(i) * frame_length / w;
+        int to    = (uint64_t(i) + 1) * frame_length / w;
+        to        = MIN(to, frame_length);
+        from      = MIN(from, frame_length - 1);
         if (to == from) {
             to = from + 1;
         }
@@ -752,7 +752,7 @@ Ref<Texture> EditorAudioStreamPreviewPlugin::generate(
         }
 
         int pfrom = CLAMP((min * 0.5 + 0.5) * h / 2, 0, h / 2) + h / 4;
-        int pto = CLAMP((max * 0.5 + 0.5) * h / 2, 0, h / 2) + h / 4;
+        int pto   = CLAMP((max * 0.5 + 0.5) * h / 2, 0, h / 2) + h / 4;
 
         for (int j = 0; j < h; j++) {
             uint8_t* p = &imgw[(j * w + i) * 3];
@@ -807,22 +807,22 @@ Ref<Texture> EditorMeshPreviewPlugin::generate(
 
     VS::get_singleton()->instance_set_base(mesh_instance, mesh->get_rid());
 
-    AABB aabb = mesh->get_aabb();
-    Vector3 ofs = aabb.position + aabb.size * 0.5;
+    AABB aabb      = mesh->get_aabb();
+    Vector3 ofs    = aabb.position + aabb.size * 0.5;
     aabb.position -= ofs;
     Transform xform;
     xform.basis = Basis().rotated(Vector3(0, 1, 0), -Math_PI * 0.125);
     xform.basis =
         Basis().rotated(Vector3(1, 0, 0), Math_PI * 0.125) * xform.basis;
     AABB rot_aabb = xform.xform(aabb);
-    float m = MAX(rot_aabb.size.x, rot_aabb.size.y) * 0.5;
+    float m       = MAX(rot_aabb.size.x, rot_aabb.size.y) * 0.5;
     if (m == 0) {
         return Ref<Texture>();
     }
-    m = 1.0 / m;
+    m  = 1.0 / m;
     m *= 0.5;
     xform.basis.scale(Vector3(m, m, m));
-    xform.origin = -xform.basis.xform(ofs); //-ofs*m;
+    xform.origin    = -xform.basis.xform(ofs); //-ofs*m;
     xform.origin.z -= rot_aabb.size.z * 2;
     VS::get_singleton()->instance_set_transform(mesh_instance, xform);
 
@@ -889,7 +889,7 @@ EditorMeshPreviewPlugin::EditorMeshPreviewPlugin() {
     // VS::get_singleton()->camera_set_perspective(camera,45,0.1,10);
     VS::get_singleton()->camera_set_orthogonal(camera, 1.0, 0.01, 1000.0);
 
-    light = VS::get_singleton()->directional_light_create();
+    light          = VS::get_singleton()->directional_light_create();
     light_instance = VS::get_singleton()->instance_create2(light, scenario);
     VS::get_singleton()->instance_set_transform(
         light_instance,
@@ -966,7 +966,7 @@ Ref<Texture> EditorFontPreviewPlugin::generate_from_path(
     sampled_font->set_size(50);
 
     String sampled_text = "Abg";
-    Vector2 size = sampled_font->get_string_size(sampled_text);
+    Vector2 size        = sampled_font->get_string_size(sampled_text);
 
     Vector2 pos;
 
@@ -1038,7 +1038,7 @@ EditorFontPreviewPlugin::EditorFontPreviewPlugin() {
     VS::get_singleton()->viewport_set_active(viewport, true);
     viewport_texture = VS::get_singleton()->viewport_get_texture(viewport);
 
-    canvas = VS::get_singleton()->canvas_create();
+    canvas      = VS::get_singleton()->canvas_create();
     canvas_item = VS::get_singleton()->canvas_item_create();
 
     VS::get_singleton()->viewport_attach_canvas(viewport, canvas);

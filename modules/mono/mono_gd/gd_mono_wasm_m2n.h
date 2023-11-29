@@ -147,11 +147,11 @@ constexpr size_t calc_m2n_index(size_t& r_int_idx, size_t& r_float_idx) {
     );
 
     if (cookie == 'I' || cookie == 'L') {
-        size_t ret = r_int_idx;
-        r_int_idx += cookie == 'I' ? 1 : 2;
+        size_t ret  = r_int_idx;
+        r_int_idx  += cookie == 'I' ? 1 : 2;
         return ret;
     } else {
-        size_t ret = r_float_idx;
+        size_t ret   = r_float_idx;
         r_float_idx += cookie == 'F' ? 1 : 2;
         return ret;
     }
@@ -159,7 +159,7 @@ constexpr size_t calc_m2n_index(size_t& r_int_idx, size_t& r_float_idx) {
 
 template <typename... P>
 constexpr array<size_t, sizeof...(P)> get_indices_for_type() {
-    size_t int_idx = 0;
+    size_t int_idx   = 0;
     size_t float_idx = 0;
     (void)int_idx;   // Suppress 'unused' warning when parameter count is 0
     (void)float_idx; // Suppress 'unused' warning when parameter count is 0
@@ -253,7 +253,7 @@ void m2n_trampoline_with_idx_seq_r(void* p_target_func, Mono_InterpMethodArgumen
     (void)indices; // Suppress 'unused' warning when parameter count is 0
     typedef R (*Func)(P...);
     Func func = (Func)p_target_func;
-    R res = func(m2n_arg_cast<P>(p_margs, indices.elems[Is])...);
+    R res     = func(m2n_arg_cast<P>(p_margs, indices.elems[Is])...);
     *reinterpret_cast<R*>(p_margs->retval) = res;
 }
 

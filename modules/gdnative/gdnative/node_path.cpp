@@ -44,7 +44,7 @@ static_assert(
 
 void GDAPI
 godot_node_path_new(godot_node_path* r_dest, const godot_string* p_from) {
-    NodePath* dest = (NodePath*)r_dest;
+    NodePath* dest     = (NodePath*)r_dest;
     const String* from = (const String*)p_from;
     memnew_placement(dest, NodePath(*from));
 }
@@ -53,7 +53,7 @@ void GDAPI godot_node_path_new_copy(
     godot_node_path* r_dest,
     const godot_node_path* p_src
 ) {
-    NodePath* dest = (NodePath*)r_dest;
+    NodePath* dest      = (NodePath*)r_dest;
     const NodePath* src = (const NodePath*)p_src;
     memnew_placement(dest, NodePath(*src));
 }
@@ -124,7 +124,7 @@ godot_bool GDAPI godot_node_path_operator_equal(
     const godot_node_path* p_b
 ) {
     const NodePath* self = (const NodePath*)p_self;
-    const NodePath* b = (const NodePath*)p_b;
+    const NodePath* b    = (const NodePath*)p_b;
     return *self == *b;
 }
 

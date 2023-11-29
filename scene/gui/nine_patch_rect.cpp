@@ -38,7 +38,7 @@ void NinePatchRect::_notification(int p_what) {
             return;
         }
 
-        Rect2 rect = Rect2(Point2(), get_size());
+        Rect2 rect     = Rect2(Point2(), get_size());
         Rect2 src_rect = region_rect;
 
         texture->get_rect_region(rect, src_rect, rect, src_rect);
@@ -318,10 +318,10 @@ String NinePatchRect::get_configuration_warning() const {
 }
 
 NinePatchRect::NinePatchRect() {
-    margin[MARGIN_LEFT] = 0;
-    margin[MARGIN_RIGHT] = 0;
+    margin[MARGIN_LEFT]   = 0;
+    margin[MARGIN_RIGHT]  = 0;
     margin[MARGIN_BOTTOM] = 0;
-    margin[MARGIN_TOP] = 0;
+    margin[MARGIN_TOP]    = 0;
 
     set_mouse_filter(MOUSE_FILTER_IGNORE);
     draw_center = true;

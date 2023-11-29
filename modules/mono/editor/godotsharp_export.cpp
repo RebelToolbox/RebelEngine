@@ -163,12 +163,12 @@ Error get_exported_assembly_dependencies(
     }
 
     for (const Variant* key = p_initial_assemblies.next(); key;
-         key = p_initial_assemblies.next(key)) {
+         key                = p_initial_assemblies.next(key)) {
         String assembly_name = *key;
         String assembly_path = p_initial_assemblies[*key];
 
         GDMonoAssembly* assembly = NULL;
-        bool load_success = GDMono::get_singleton()->load_assembly_from(
+        bool load_success        = GDMono::get_singleton()->load_assembly_from(
             assembly_name,
             assembly_path,
             &assembly,

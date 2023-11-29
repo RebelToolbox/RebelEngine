@@ -50,7 +50,7 @@ bool AABB::create_from_points(const Vector<Vector3>& p_points) {
     }
 
     Vector3 begin = p_points[0];
-    Vector3 end = begin;
+    Vector3 end   = begin;
 
     for (int n = 1; n < p_points.size(); n++) {
         const Vector3& pt = p_points[n];
@@ -77,7 +77,7 @@ bool AABB::create_from_points(const Vector<Vector3>& p_points) {
     }
 
     position = begin;
-    size = end - begin;
+    size     = end - begin;
 
     return true;
 }
@@ -101,7 +101,7 @@ void AABB::merge_with(const AABB& p_aabb) {
     max.z = (end_1.z > end_2.z) ? end_1.z : end_2.z;
 
     position = min;
-    size = max - min;
+    size     = max - min;
 }
 
 bool AABB::is_equal_approx(const AABB& p_aabb) const {
@@ -150,8 +150,8 @@ bool AABB::intersects_ray(
     Vector3 c1, c2;
     Vector3 end = position + size;
     real_t near = -1e20;
-    real_t far = 1e20;
-    int axis = 0;
+    real_t far  = 1e20;
+    int axis    = 0;
 
     for (int i = 0; i < 3; i++) {
         if (p_dir[i] == 0) {
@@ -182,7 +182,7 @@ bool AABB::intersects_ray(
         *r_clip = c1;
     }
     if (r_normal) {
-        *r_normal = Vector3();
+        *r_normal         = Vector3();
         (*r_normal)[axis] = p_dir[axis] ? -1 : 1;
     }
 
@@ -196,14 +196,14 @@ bool AABB::intersects_segment(
     Vector3* r_normal
 ) const {
     real_t min = 0, max = 1;
-    int axis = 0;
+    int axis    = 0;
     real_t sign = 0;
 
     for (int i = 0; i < 3; i++) {
-        real_t seg_from = p_from[i];
-        real_t seg_to = p_to[i];
+        real_t seg_from  = p_from[i];
+        real_t seg_to    = p_to[i];
         real_t box_begin = position[i];
-        real_t box_end = box_begin + size[i];
+        real_t box_end   = box_begin + size[i];
         real_t cmin, cmax;
         real_t csign;
 
@@ -214,7 +214,7 @@ bool AABB::intersects_segment(
             real_t length = seg_to - seg_from;
             cmin =
                 (seg_from < box_begin) ? ((box_begin - seg_from) / length) : 0;
-            cmax = (seg_to > box_end) ? ((box_end - seg_from) / length) : 1;
+            cmax  = (seg_to > box_end) ? ((box_end - seg_from) / length) : 1;
             csign = -1.0;
 
         } else {
@@ -222,13 +222,13 @@ bool AABB::intersects_segment(
                 return false;
             }
             real_t length = seg_to - seg_from;
-            cmin = (seg_from > box_end) ? (box_end - seg_from) / length : 0;
-            cmax = (seg_to < box_begin) ? (box_begin - seg_from) / length : 1;
+            cmin  = (seg_from > box_end) ? (box_end - seg_from) / length : 0;
+            cmax  = (seg_to < box_begin) ? (box_begin - seg_from) / length : 1;
             csign = 1.0;
         }
 
         if (cmin > min) {
-            min = cmin;
+            min  = cmin;
             axis = i;
             sign = csign;
         }
@@ -245,7 +245,7 @@ bool AABB::intersects_segment(
     if (r_normal) {
         Vector3 normal;
         normal[axis] = sign;
-        *r_normal = normal;
+        *r_normal    = normal;
     }
 
     if (r_clip) {
@@ -267,7 +267,7 @@ bool AABB::intersects_plane(const Plane& p_plane) const {
         Vector3(position.x + size.x, position.y + size.y, position.z + size.z),
     };
 
-    bool over = false;
+    bool over  = false;
     bool under = false;
 
     for (int i = 0; i < 8; i++) {
@@ -286,7 +286,7 @@ Vector3 AABB::get_longest_axis() const {
     real_t max_size = size.x;
 
     if (size.y > max_size) {
-        axis = Vector3(0, 1, 0);
+        axis     = Vector3(0, 1, 0);
         max_size = size.y;
     }
 
@@ -298,11 +298,11 @@ Vector3 AABB::get_longest_axis() const {
 }
 
 int AABB::get_longest_axis_index() const {
-    int axis = 0;
+    int axis        = 0;
     real_t max_size = size.x;
 
     if (size.y > max_size) {
-        axis = 1;
+        axis     = 1;
         max_size = size.y;
     }
 
@@ -318,7 +318,7 @@ Vector3 AABB::get_shortest_axis() const {
     real_t max_size = size.x;
 
     if (size.y < max_size) {
-        axis = Vector3(0, 1, 0);
+        axis     = Vector3(0, 1, 0);
         max_size = size.y;
     }
 
@@ -330,11 +330,11 @@ Vector3 AABB::get_shortest_axis() const {
 }
 
 int AABB::get_shortest_axis_index() const {
-    int axis = 0;
+    int axis        = 0;
     real_t max_size = size.x;
 
     if (size.y < max_size) {
-        axis = 1;
+        axis     = 1;
         max_size = size.y;
     }
 
@@ -368,7 +368,7 @@ void AABB::get_edge(int p_edge, Vector3& r_from, Vector3& r_to) const {
     switch (p_edge) {
         case 0: {
             r_from = Vector3(position.x + size.x, position.y, position.z);
-            r_to = Vector3(position.x, position.y, position.z);
+            r_to   = Vector3(position.x, position.y, position.z);
         } break;
         case 1: {
             r_from =
@@ -383,7 +383,7 @@ void AABB::get_edge(int p_edge, Vector3& r_from, Vector3& r_to) const {
         } break;
         case 3: {
             r_from = Vector3(position.x, position.y, position.z);
-            r_to = Vector3(position.x, position.y, position.z + size.z);
+            r_to   = Vector3(position.x, position.y, position.z + size.z);
 
         } break;
         case 4: {
@@ -424,7 +424,7 @@ void AABB::get_edge(int p_edge, Vector3& r_from, Vector3& r_to) const {
         } break;
         case 9: {
             r_from = Vector3(position.x, position.y, position.z);
-            r_to = Vector3(position.x, position.y + size.y, position.z);
+            r_to   = Vector3(position.x, position.y + size.y, position.z);
 
         } break;
         case 10: {

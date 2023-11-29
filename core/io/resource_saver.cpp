@@ -37,8 +37,8 @@
 
 Ref<ResourceFormatSaver> ResourceSaver::saver[MAX_SAVERS];
 
-int ResourceSaver::saver_count = 0;
-bool ResourceSaver::timestamp_on_save = false;
+int ResourceSaver::saver_count                     = 0;
+bool ResourceSaver::timestamp_on_save              = false;
 ResourceSavedCallback ResourceSaver::save_callback = nullptr;
 
 Error ResourceFormatSaver::save(
@@ -135,7 +135,7 @@ Error ResourceSaver::save(
     uint32_t p_flags
 ) {
     String extension = p_path.get_extension();
-    Error err = ERR_FILE_UNRECOGNIZED;
+    Error err        = ERR_FILE_UNRECOGNIZED;
 
     for (int i = 0; i < saver_count; i++) {
         if (!saver[i]->recognize(p_resource)) {
@@ -276,8 +276,8 @@ bool ResourceSaver::add_custom_resource_format_saver(String script_path) {
     ERR_FAIL_COND_V(res.is_null(), false);
     ERR_FAIL_COND_V(!res->is_class("Script"), false);
 
-    Ref<Script> s = res;
-    StringName ibt = s->get_instance_base_type();
+    Ref<Script> s   = res;
+    StringName ibt  = s->get_instance_base_type();
     bool valid_type = ClassDB::is_parent_class(ibt, "ResourceFormatSaver");
     ERR_FAIL_COND_V_MSG(
         !valid_type,
@@ -319,7 +319,7 @@ void ResourceSaver::add_custom_savers() {
     ScriptServer::get_global_class_list(&global_classes);
 
     for (List<StringName>::Element* E = global_classes.front(); E;
-         E = E->next()) {
+         E                            = E->next()) {
         StringName class_name = E->get();
         StringName base_class =
             ScriptServer::get_global_class_native_base(class_name);

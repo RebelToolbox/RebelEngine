@@ -283,7 +283,7 @@ RemoteTransform::RemoteTransform() {
     use_global_coordinates = true;
     update_remote_position = true;
     update_remote_rotation = true;
-    update_remote_scale = true;
+    update_remote_scale    = true;
 
     cache = 0;
     set_notify_transform(true);

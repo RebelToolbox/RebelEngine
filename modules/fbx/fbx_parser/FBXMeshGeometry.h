@@ -156,14 +156,14 @@ public:
     };
 
     enum class ReferenceType {
-        direct = 0,
-        index = 1,
+        direct          = 0,
+        index           = 1,
         index_to_direct = 2
     };
 
     template <class T>
     struct MappingData {
-        MapType map_type = MapType::none;
+        MapType map_type       = MapType::none;
         ReferenceType ref_type = ReferenceType::direct;
         std::vector<T> data;
         /// The meaning of the indices depends from the `MapType`.

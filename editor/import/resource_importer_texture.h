@@ -41,8 +41,8 @@ class ResourceImporterTexture : public ResourceImporter {
 
 protected:
     enum {
-        MAKE_3D_FLAG = 1,
-        MAKE_SRGB_FLAG = 2,
+        MAKE_3D_FLAG     = 1,
+        MAKE_SRGB_FLAG   = 2,
         MAKE_NORMAL_FLAG = 4
     };
 
@@ -116,7 +116,7 @@ public:
         const Map<StringName, Variant>& p_options,
         List<String>* r_platform_variants,
         List<String>* r_gen_files = nullptr,
-        Variant* r_metadata = nullptr
+        Variant* r_metadata       = nullptr
     );
 
     void update_imports();

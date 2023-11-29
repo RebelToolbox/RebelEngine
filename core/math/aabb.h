@@ -93,13 +93,13 @@ public:
     bool intersects_segment(
         const Vector3& p_from,
         const Vector3& p_to,
-        Vector3* r_clip = nullptr,
+        Vector3* r_clip   = nullptr,
         Vector3* r_normal = nullptr
     ) const;
     bool intersects_ray(
         const Vector3& p_from,
         const Vector3& p_dir,
-        Vector3* r_clip = nullptr,
+        Vector3* r_clip   = nullptr,
         Vector3* r_normal = nullptr
     ) const;
     _FORCE_INLINE_ bool smits_intersect_ray(
@@ -229,7 +229,7 @@ inline bool AABB::encloses(const AABB& p_aabb) const {
 
 Vector3 AABB::get_support(const Vector3& p_normal) const {
     Vector3 half_extents = size * 0.5;
-    Vector3 ofs = position + half_extents;
+    Vector3 ofs          = position + half_extents;
 
     return Vector3(
                (p_normal.x > 0) ? -half_extents.x : half_extents.x,
@@ -285,7 +285,7 @@ bool AABB::intersects_convex_shape(
     int p_point_count
 ) const {
     Vector3 half_extents = size * 0.5;
-    Vector3 ofs = position + half_extents;
+    Vector3 ofs          = position + half_extents;
 
     for (int i = 0; i < p_plane_count; i++) {
         const Plane& p = p_planes[i];
@@ -328,7 +328,7 @@ bool AABB::intersects_convex_shape(
 
 bool AABB::inside_convex_shape(const Plane* p_planes, int p_plane_count) const {
     Vector3 half_extents = size * 0.5;
-    Vector3 ofs = position + half_extents;
+    Vector3 ofs          = position + half_extents;
 
     for (int i = 0; i < p_plane_count; i++) {
         const Plane& p = p_planes[i];
@@ -371,7 +371,7 @@ bool AABB::has_point(const Vector3& p_point) const {
 
 inline void AABB::expand_to(const Vector3& p_vector) {
     Vector3 begin = position;
-    Vector3 end = position + size;
+    Vector3 end   = position + size;
 
     if (p_vector.x < begin.x) {
         begin.x = p_vector.x;
@@ -394,7 +394,7 @@ inline void AABB::expand_to(const Vector3& p_vector) {
     }
 
     position = begin;
-    size = end - begin;
+    size     = end - begin;
 }
 
 void AABB::project_range_in_plane(
@@ -409,10 +409,10 @@ void AABB::project_range_in_plane(
         position.z + half_extents.z
     );
 
-    real_t length = p_plane.normal.abs().dot(half_extents);
+    real_t length   = p_plane.normal.abs().dot(half_extents);
     real_t distance = p_plane.distance_to(center);
-    r_min = distance - length;
-    r_max = distance + length;
+    r_min           = distance - length;
+    r_max           = distance + length;
 }
 
 inline real_t AABB::get_longest_axis_size() const {
@@ -501,9 +501,9 @@ void AABB::grow_by(real_t p_amount) {
     position.x -= p_amount;
     position.y -= p_amount;
     position.z -= p_amount;
-    size.x += 2.0 * p_amount;
-    size.y += 2.0 * p_amount;
-    size.z += 2.0 * p_amount;
+    size.x     += 2.0 * p_amount;
+    size.y     += 2.0 * p_amount;
+    size.z     += 2.0 * p_amount;
 }
 
 #endif // AABB_H

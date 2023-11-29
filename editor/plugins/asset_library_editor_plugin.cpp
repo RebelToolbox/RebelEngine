@@ -175,8 +175,8 @@ void EditorAssetLibraryItemDescription::set_image(
                         Ref<Image> overlay =
                             get_icon("PlayOverlay", "EditorIcons")->get_data();
                         Ref<Image> thumbnail = p_image->get_data();
-                        thumbnail = thumbnail->duplicate();
-                        Point2 overlay_pos = Point2(
+                        thumbnail            = thumbnail->duplicate();
+                        Point2 overlay_pos   = Point2(
                             (thumbnail->get_width() - overlay->get_width()) / 2,
                             (thumbnail->get_height() - overlay->get_height())
                                 / 2
@@ -288,10 +288,10 @@ void EditorAssetLibraryItemDescription::configure(
     const String& p_browse_url,
     const String& p_sha256_hash
 ) {
-    asset_id = p_asset_id;
-    title = p_title;
+    asset_id     = p_asset_id;
+    title        = p_title;
     download_url = p_download_url;
-    sha256 = p_sha256_hash;
+    sha256       = p_sha256_hash;
     item->configure(
         p_title,
         p_asset_id,
@@ -318,10 +318,10 @@ void EditorAssetLibraryItemDescription::add_preview(
     const String& p_url
 ) {
     Preview preview;
-    preview.id = p_id;
+    preview.id         = p_id;
     preview.video_link = p_url;
-    preview.is_video = p_video;
-    preview.button = memnew(Button);
+    preview.is_video   = p_video;
+    preview.button     = memnew(Button);
     preview.button->set_flat(true);
     preview.button->set_icon(get_icon("ThumbnailWait", "EditorIcons"));
     preview.button->set_toggle_mode(true);
@@ -488,7 +488,7 @@ void EditorAssetLibraryItemDownload::configure(
     if (!p_preview.is_valid()) {
         icon->set_texture(get_icon("FileBrokenBigThumb", "EditorIcons"));
     }
-    host = p_download_url;
+    host   = p_download_url;
     sha256 = p_sha256_hash;
     _make_request();
 }
@@ -705,7 +705,7 @@ void EditorAssetLibrary::_notification(int p_what) {
         } break;
         case NOTIFICATION_PROCESS: {
             HTTPClient::Status s = request->get_http_client_status();
-            const bool loading = s != HTTPClient::STATUS_DISCONNECTED;
+            const bool loading   = s != HTTPClient::STATUS_DISCONNECTED;
 
             if (loading) {
                 library_scroll->set_modulate(Color(1, 1, 1, 0.5));
@@ -846,7 +846,7 @@ void EditorAssetLibrary::_image_update(
     Object* obj = ObjectDB::get_instance(image_queue[p_queue_id].target);
 
     if (obj) {
-        bool image_set = false;
+        bool image_set           = false;
         PoolByteArray image_data = p_data;
 
         if (use_cache) {
@@ -874,9 +874,9 @@ void EditorAssetLibrary::_image_update(
             }
         }
 
-        int len = image_data.size();
+        int len               = image_data.size();
         PoolByteArray::Read r = image_data.read();
-        Ref<Image> image = Ref<Image>(memnew(Image));
+        Ref<Image> image      = Ref<Image>(memnew(Image));
 
         uint8_t png_signature[8] = {137, 80, 78, 71, 13, 10, 26, 10};
         uint8_t jpg_signature[3] = {255, 216, 255};
@@ -996,9 +996,9 @@ void EditorAssetLibrary::_image_request_completed(
                         memdelete(file);
                     }
 
-                    int len = p_data.size();
+                    int len               = p_data.size();
                     PoolByteArray::Read r = p_data.read();
-                    file = FileAccess::open(
+                    file                  = FileAccess::open(
                         cache_filename_base + ".data",
                         FileAccess::WRITE
                     );
@@ -1044,11 +1044,11 @@ void EditorAssetLibrary::_image_request_completed(
 
 void EditorAssetLibrary::_update_image_queue() {
     const int max_images = 6;
-    int current_images = 0;
+    int current_images   = 0;
 
     List<int> to_delete;
     for (Map<int, ImageQueue>::Element* E = image_queue.front(); E;
-         E = E->next()) {
+         E                                = E->next()) {
         if (!E->get().active && current_images < max_images) {
             String cache_filename_base =
                 EditorSettings::get_singleton()->get_cache_dir().plus_file(
@@ -1095,15 +1095,15 @@ void EditorAssetLibrary::_request_image(
     int p_image_index
 ) {
     ImageQueue iq;
-    iq.image_url = p_image_url;
+    iq.image_url   = p_image_url;
     iq.image_index = p_image_index;
-    iq.image_type = p_type;
-    iq.request = memnew(HTTPRequest);
+    iq.image_type  = p_type;
+    iq.request     = memnew(HTTPRequest);
     iq.request->set_use_threads(EDITOR_DEF("asset_library/use_threads", true));
 
-    iq.target = p_for;
+    iq.target   = p_for;
     iq.queue_id = ++last_queue_id;
-    iq.active = false;
+    iq.active   = false;
 
     iq.request->connect(
         "request_completed",
@@ -1312,7 +1312,7 @@ void EditorAssetLibrary::_http_request_completed(
     String str;
 
     {
-        int datalen = p_data.size();
+        int datalen           = p_data.size();
         PoolByteArray::Read r = p_data.read();
         str.parse_utf8((const char*)r.ptr(), datalen);
     }
@@ -1370,7 +1370,7 @@ void EditorAssetLibrary::_http_request_completed(
     }
 
     RequestType requested = requesting;
-    requesting = REQUESTING_NONE;
+    requesting            = REQUESTING_NONE;
 
     switch (requested) {
         case REQUESTING_CONFIG: {
@@ -1385,7 +1385,7 @@ void EditorAssetLibrary::_http_request_completed(
                         continue;
                     }
                     String name = cat["name"];
-                    int id = cat["id"];
+                    int id      = cat["id"];
                     categories->add_item(name);
                     categories->set_item_metadata(
                         categories->get_item_count() - 1,
@@ -1418,9 +1418,9 @@ void EditorAssetLibrary::_http_request_completed(
                 memdelete(asset_bottom_page);
             }
 
-            int page = 0;
-            int pages = 1;
-            int page_len = 10;
+            int page        = 0;
+            int pages       = 1;
+            int page_len    = 10;
             int total_items = 1;
             Array result;
 
@@ -1684,8 +1684,8 @@ void EditorAssetLibrary::_bind_methods() {
 }
 
 EditorAssetLibrary::EditorAssetLibrary(bool p_templates_only) {
-    requesting = REQUESTING_NONE;
-    templates_only = p_templates_only;
+    requesting      = REQUESTING_NONE;
+    templates_only  = p_templates_only;
     initial_loading = true;
 
     VBoxContainer* library_main = memnew(VBoxContainer);
@@ -1892,7 +1892,7 @@ void AssetLibraryEditorPlugin::make_visible(bool p_visible) {
 }
 
 AssetLibraryEditorPlugin::AssetLibraryEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor        = p_node;
     addon_library = memnew(EditorAssetLibrary);
     addon_library->set_v_size_flags(Control::SIZE_EXPAND_FILL);
     editor->get_viewport()->add_child(addon_library);

@@ -66,10 +66,10 @@ public:
 private:
     union MaterialKey {
         struct {
-            uint32_t blend_mode : 4;
-            uint32_t light_mode : 4;
+            uint32_t blend_mode          : 4;
+            uint32_t light_mode          : 4;
             uint32_t particles_animation : 1;
-            uint32_t invalid_key : 1;
+            uint32_t invalid_key         : 1;
         };
 
         uint32_t key;
@@ -98,9 +98,9 @@ private:
 
     _FORCE_INLINE_ MaterialKey _compute_key() const {
         MaterialKey mk;
-        mk.key = 0;
-        mk.blend_mode = blend_mode;
-        mk.light_mode = light_mode;
+        mk.key                 = 0;
+        mk.blend_mode          = blend_mode;
+        mk.light_mode          = light_mode;
         mk.particles_animation = particles_animation;
         return mk;
     }
@@ -245,12 +245,12 @@ public:
     enum {
         NOTIFICATION_TRANSFORM_CHANGED =
             SceneTree::NOTIFICATION_TRANSFORM_CHANGED, // unique
-        NOTIFICATION_DRAW = 30,
-        NOTIFICATION_VISIBILITY_CHANGED = 31,
-        NOTIFICATION_ENTER_CANVAS = 32,
-        NOTIFICATION_EXIT_CANVAS = 33,
+        NOTIFICATION_DRAW                    = 30,
+        NOTIFICATION_VISIBILITY_CHANGED      = 31,
+        NOTIFICATION_ENTER_CANVAS            = 32,
+        NOTIFICATION_EXIT_CANVAS             = 33,
         NOTIFICATION_LOCAL_TRANSFORM_CHANGED = 35,
-        NOTIFICATION_WORLD_2D_CHANGED = 36,
+        NOTIFICATION_WORLD_2D_CHANGED        = 36,
     };
 
     /* EDITOR */
@@ -270,11 +270,11 @@ public:
 
     // Used to move the node
     virtual void _edit_set_position(const Point2& p_position) = 0;
-    virtual Point2 _edit_get_position() const = 0;
+    virtual Point2 _edit_get_position() const                 = 0;
 
     // Used to scale the node
     virtual void _edit_set_scale(const Size2& p_scale) = 0;
-    virtual Size2 _edit_get_scale() const = 0;
+    virtual Size2 _edit_get_scale() const              = 0;
 
     // Used to rotate the node
     virtual bool _edit_use_rotation() const {
@@ -341,19 +341,19 @@ public:
         const Point2& p_from,
         const Point2& p_to,
         const Color& p_color,
-        float p_width = 1.0,
+        float p_width      = 1.0,
         bool p_antialiased = false
     );
     void draw_polyline(
         const Vector<Point2>& p_points,
         const Color& p_color,
-        float p_width = 1.0,
+        float p_width      = 1.0,
         bool p_antialiased = false
     );
     void draw_polyline_colors(
         const Vector<Point2>& p_points,
         const Vector<Color>& p_colors,
-        float p_width = 1.0,
+        float p_width      = 1.0,
         bool p_antialiased = false
     );
     void draw_arc(
@@ -363,76 +363,76 @@ public:
         float p_end_angle,
         int p_point_count,
         const Color& p_color,
-        float p_width = 1.0,
+        float p_width      = 1.0,
         bool p_antialiased = false
     );
     void draw_multiline(
         const Vector<Point2>& p_points,
         const Color& p_color,
-        float p_width = 1.0,
+        float p_width      = 1.0,
         bool p_antialiased = false
     );
     void draw_multiline_colors(
         const Vector<Point2>& p_points,
         const Vector<Color>& p_colors,
-        float p_width = 1.0,
+        float p_width      = 1.0,
         bool p_antialiased = false
     );
     void draw_rect(
         const Rect2& p_rect,
         const Color& p_color,
-        bool p_filled = true,
-        float p_width = 1.0,
+        bool p_filled      = true,
+        float p_width      = 1.0,
         bool p_antialiased = false
     );
     void draw_circle(const Point2& p_pos, float p_radius, const Color& p_color);
     void draw_texture(
         const Ref<Texture>& p_texture,
         const Point2& p_pos,
-        const Color& p_modulate = Color(1, 1, 1, 1),
+        const Color& p_modulate          = Color(1, 1, 1, 1),
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     );
     void draw_texture_rect(
         const Ref<Texture>& p_texture,
         const Rect2& p_rect,
-        bool p_tile = false,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        bool p_tile                      = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     );
     void draw_texture_rect_region(
         const Ref<Texture>& p_texture,
         const Rect2& p_rect,
         const Rect2& p_src_rect,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>(),
-        bool p_clip_uv = false
+        bool p_clip_uv                   = false
     );
     void draw_style_box(const Ref<StyleBox>& p_style_box, const Rect2& p_rect);
     void draw_primitive(
         const Vector<Point2>& p_points,
         const Vector<Color>& p_colors,
         const Vector<Point2>& p_uvs,
-        Ref<Texture> p_texture = Ref<Texture>(),
-        float p_width = 1,
+        Ref<Texture> p_texture           = Ref<Texture>(),
+        float p_width                    = 1,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     );
     void draw_polygon(
         const Vector<Point2>& p_points,
         const Vector<Color>& p_colors,
-        const Vector<Point2>& p_uvs = Vector<Point2>(),
-        Ref<Texture> p_texture = Ref<Texture>(),
+        const Vector<Point2>& p_uvs      = Vector<Point2>(),
+        Ref<Texture> p_texture           = Ref<Texture>(),
         const Ref<Texture>& p_normal_map = Ref<Texture>(),
-        bool p_antialiased = false
+        bool p_antialiased               = false
     );
     void draw_colored_polygon(
         const Vector<Point2>& p_points,
         const Color& p_color,
-        const Vector<Point2>& p_uvs = Vector<Point2>(),
-        Ref<Texture> p_texture = Ref<Texture>(),
+        const Vector<Point2>& p_uvs      = Vector<Point2>(),
+        Ref<Texture> p_texture           = Ref<Texture>(),
         const Ref<Texture>& p_normal_map = Ref<Texture>(),
-        bool p_antialiased = false
+        bool p_antialiased               = false
     );
 
     void draw_mesh(
@@ -440,7 +440,7 @@ public:
         const Ref<Texture>& p_texture,
         const Ref<Texture>& p_normal_map,
         const Transform2D& p_transform = Transform2D(),
-        const Color& p_modulate = Color(1, 1, 1)
+        const Color& p_modulate        = Color(1, 1, 1)
     );
     void draw_multimesh(
         const Ref<MultiMesh>& p_multimesh,
@@ -453,13 +453,13 @@ public:
         const Point2& p_pos,
         const String& p_text,
         const Color& p_modulate = Color(1, 1, 1),
-        int p_clip_w = -1
+        int p_clip_w            = -1
     );
     float draw_char(
         const Ref<Font>& p_font,
         const Point2& p_pos,
         const String& p_char,
-        const String& p_next = "",
+        const String& p_next    = "",
         const Color& p_modulate = Color(1, 1, 1)
     );
 

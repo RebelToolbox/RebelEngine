@@ -113,12 +113,12 @@ private:
         bool ok;
 
         Version() {
-            id = 0;
-            vert_id = 0;
-            frag_id = 0;
+            id               = 0;
+            vert_id          = 0;
+            frag_id          = 0;
             uniform_location = nullptr;
-            code_version = 0;
-            ok = false;
+            code_version     = 0;
+            ok               = false;
         }
     };
 

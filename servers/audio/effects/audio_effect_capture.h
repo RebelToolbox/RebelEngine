@@ -70,10 +70,10 @@ protected:
 
 public:
     AudioEffectCapture() {
-        discarded_frames = 0;
-        pushed_frames = 0;
+        discarded_frames      = 0;
+        pushed_frames         = 0;
         buffer_length_seconds = 0.1f;
-        buffer_initialized = false;
+        buffer_initialized    = false;
     }
 
     virtual Ref<AudioEffectInstance> instance();

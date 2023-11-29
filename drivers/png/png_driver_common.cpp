@@ -49,7 +49,7 @@ static bool check_error(const png_image& image) {
 #ifdef TOOLS_ENABLED
         // suppress this warning, to avoid log spam when opening assetlib
         const static char* const noisy = "iCCP: known incorrect sRGB profile";
-        const Engine* const eng = Engine::get_singleton();
+        const Engine* const eng        = Engine::get_singleton();
         if (eng && eng->is_editor_hint() && !strcmp(image.message, noisy)) {
             return false;
         }
@@ -154,8 +154,8 @@ Error image_to_png(const Ref<Image>& p_image, PoolVector<uint8_t>& p_buffer) {
     png_image png_img;
     memset(&png_img, 0, sizeof(png_img));
     png_img.version = PNG_IMAGE_VERSION;
-    png_img.width = source_image->get_width();
-    png_img.height = source_image->get_height();
+    png_img.width   = source_image->get_width();
+    png_img.height  = source_image->get_height();
 
     switch (source_image->get_format()) {
         case Image::FORMAT_L8:
@@ -180,7 +180,7 @@ Error image_to_png(const Ref<Image>& p_image, PoolVector<uint8_t>& p_buffer) {
             }
     }
 
-    const PoolVector<uint8_t> image_data = source_image->get_data();
+    const PoolVector<uint8_t> image_data   = source_image->get_data();
     const PoolVector<uint8_t>::Read reader = image_data.read();
 
     // we may be passed a buffer with existing content we're expected to append
@@ -191,13 +191,13 @@ Error image_to_png(const Ref<Image>& p_image, PoolVector<uint8_t>& p_buffer) {
 
     // try with estimated size
     size_t compressed_size = png_size_estimate;
-    int success = 0;
+    int success            = 0;
     { // scope writer lifetime
         Error err = p_buffer.resize(buffer_offset + png_size_estimate);
         ERR_FAIL_COND_V(err, err);
 
         PoolVector<uint8_t>::Write writer = p_buffer.write();
-        success = png_image_write_to_memory(
+        success                           = png_image_write_to_memory(
             &png_img,
             &writer[buffer_offset],
             &compressed_size,
@@ -217,7 +217,7 @@ Error image_to_png(const Ref<Image>& p_image, PoolVector<uint8_t>& p_buffer) {
         ERR_FAIL_COND_V(err, err);
 
         PoolVector<uint8_t>::Write writer = p_buffer.write();
-        success = png_image_write_to_memory(
+        success                           = png_image_write_to_memory(
             &png_img,
             &writer[buffer_offset],
             &compressed_size,

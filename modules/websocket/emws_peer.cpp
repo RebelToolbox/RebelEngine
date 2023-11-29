@@ -88,13 +88,13 @@ Error EMWSPeer::get_packet(const uint8_t** r_buffer, int& r_buffer_size) {
     }
 
     PoolVector<uint8_t>::Write rw = _packet_buffer.write();
-    int read = 0;
+    int read                      = 0;
     Error err =
         _in_buffer
             .read_packet(rw.ptr(), _packet_buffer.size(), &_is_string, read);
     ERR_FAIL_COND_V(err != OK, err);
 
-    *r_buffer = rw.ptr();
+    *r_buffer     = rw.ptr();
     r_buffer_size = read;
 
     return OK;
@@ -142,8 +142,8 @@ void EMWSPeer::set_no_delay(bool p_enabled) {
 
 EMWSPeer::EMWSPeer() {
     _out_buf_size = 0;
-    peer_sock = -1;
-    write_mode = WRITE_MODE_BINARY;
+    peer_sock     = -1;
+    write_mode    = WRITE_MODE_BINARY;
     close();
 };
 

@@ -38,7 +38,7 @@ class ReferenceRect : public Control {
 
     Color border_color = Color(1, 0, 0);
     float border_width = 1.0;
-    bool editor_only = true;
+    bool editor_only   = true;
 
 protected:
     void _notification(int p_what);

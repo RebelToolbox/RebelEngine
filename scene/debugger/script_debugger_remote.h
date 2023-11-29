@@ -196,7 +196,7 @@ public:
     Error connect_to_host(const String& p_host, uint16_t p_port);
     virtual void debug(
         ScriptLanguage* p_script,
-        bool p_can_continue = true,
+        bool p_can_continue        = true,
         bool p_is_error_breakpoint = false
     );
     virtual void idle_poll();

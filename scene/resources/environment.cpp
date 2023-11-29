@@ -3023,95 +3023,95 @@ Environment::Environment() :
     dof_blur_near_quality(DOF_BLUR_QUALITY_LOW) {
     environment = VS::get_singleton()->environment_create();
 
-    bg_mode = BG_CLEAR_COLOR;
-    bg_sky_custom_fov = 0;
-    bg_sky_orientation = Basis();
-    bg_energy = 1.0;
+    bg_mode             = BG_CLEAR_COLOR;
+    bg_sky_custom_fov   = 0;
+    bg_sky_orientation  = Basis();
+    bg_energy           = 1.0;
     bg_canvas_max_layer = 0;
-    ambient_energy = 1.0;
+    ambient_energy      = 1.0;
     // ambient_sky_contribution = 1.0;
     set_ambient_light_sky_contribution(1.0);
     set_camera_feed_id(1);
 
-    tone_mapper = TONE_MAPPER_LINEAR;
-    tonemap_exposure = 1.0;
-    tonemap_white = 1.0;
-    tonemap_auto_exposure = false;
-    tonemap_auto_exposure_max = 8;
-    tonemap_auto_exposure_min = 0.05;
+    tone_mapper                 = TONE_MAPPER_LINEAR;
+    tonemap_exposure            = 1.0;
+    tonemap_white               = 1.0;
+    tonemap_auto_exposure       = false;
+    tonemap_auto_exposure_max   = 8;
+    tonemap_auto_exposure_min   = 0.05;
     tonemap_auto_exposure_speed = 0.5;
-    tonemap_auto_exposure_grey = 0.4;
+    tonemap_auto_exposure_grey  = 0.4;
 
     set_tonemapper(tone_mapper); // update
 
-    adjustment_enabled = false;
-    adjustment_contrast = 1.0;
+    adjustment_enabled    = false;
+    adjustment_contrast   = 1.0;
     adjustment_saturation = 1.0;
     adjustment_brightness = 1.0;
 
     set_adjustment_enable(adjustment_enabled); // update
 
-    ssr_enabled = false;
-    ssr_max_steps = 64;
-    ssr_fade_in = 0.15;
-    ssr_fade_out = 2.0;
+    ssr_enabled         = false;
+    ssr_max_steps       = 64;
+    ssr_fade_in         = 0.15;
+    ssr_fade_out        = 2.0;
     ssr_depth_tolerance = 0.2;
-    ssr_roughness = true;
+    ssr_roughness       = true;
 
-    ssao_enabled = false;
-    ssao_radius = 1;
-    ssao_intensity = 1;
-    ssao_radius2 = 0;
-    ssao_intensity2 = 1;
-    ssao_bias = 0.01;
+    ssao_enabled             = false;
+    ssao_radius              = 1;
+    ssao_intensity           = 1;
+    ssao_radius2             = 0;
+    ssao_intensity2          = 1;
+    ssao_bias                = 0.01;
     ssao_direct_light_affect = 0.0;
-    ssao_ao_channel_affect = 0.0;
-    ssao_blur = SSAO_BLUR_3x3;
+    ssao_ao_channel_affect   = 0.0;
+    ssao_blur                = SSAO_BLUR_3x3;
     set_ssao_edge_sharpness(4);
     set_ssao_quality(SSAO_QUALITY_MEDIUM);
 
-    glow_enabled = false;
-    glow_levels = (1 << 2) | (1 << 4);
-    glow_intensity = 0.8;
-    glow_strength = 1.0;
-    glow_bloom = 0.0;
-    glow_blend_mode = GLOW_BLEND_MODE_SOFTLIGHT;
+    glow_enabled             = false;
+    glow_levels              = (1 << 2) | (1 << 4);
+    glow_intensity           = 0.8;
+    glow_strength            = 1.0;
+    glow_bloom               = 0.0;
+    glow_blend_mode          = GLOW_BLEND_MODE_SOFTLIGHT;
     glow_hdr_bleed_threshold = 1.0;
-    glow_hdr_luminance_cap = 12.0;
-    glow_hdr_bleed_scale = 2.0;
-    glow_bicubic_upscale = false;
-    glow_high_quality = false;
+    glow_hdr_luminance_cap   = 12.0;
+    glow_hdr_bleed_scale     = 2.0;
+    glow_bicubic_upscale     = false;
+    glow_high_quality        = false;
 
-    dof_blur_far_enabled = false;
-    dof_blur_far_distance = 10;
+    dof_blur_far_enabled    = false;
+    dof_blur_far_distance   = 10;
     dof_blur_far_transition = 5;
-    dof_blur_far_amount = 0.1;
-    dof_blur_far_quality = DOF_BLUR_QUALITY_MEDIUM;
+    dof_blur_far_amount     = 0.1;
+    dof_blur_far_quality    = DOF_BLUR_QUALITY_MEDIUM;
 
-    dof_blur_near_enabled = false;
-    dof_blur_near_distance = 2;
+    dof_blur_near_enabled    = false;
+    dof_blur_near_distance   = 2;
     dof_blur_near_transition = 1;
-    dof_blur_near_amount = 0.1;
-    dof_blur_near_quality = DOF_BLUR_QUALITY_MEDIUM;
+    dof_blur_near_amount     = 0.1;
+    dof_blur_near_quality    = DOF_BLUR_QUALITY_MEDIUM;
 
-    fog_enabled = false;
-    fog_color = Color(0.5, 0.5, 0.5);
-    fog_sun_color = Color(0.8, 0.8, 0.0);
+    fog_enabled    = false;
+    fog_color      = Color(0.5, 0.5, 0.5);
+    fog_sun_color  = Color(0.8, 0.8, 0.0);
     fog_sun_amount = 0;
 
     fog_depth_enabled = true;
 
     fog_depth_begin = 10;
-    fog_depth_end = 100;
+    fog_depth_end   = 100;
     fog_depth_curve = 1;
 
     fog_transmit_enabled = false;
-    fog_transmit_curve = 1;
+    fog_transmit_curve   = 1;
 
     fog_height_enabled = false;
-    fog_height_min = 10;
-    fog_height_max = 0;
-    fog_height_curve = 1;
+    fog_height_min     = 10;
+    fog_height_max     = 0;
+    fog_height_curve   = 1;
 
     set_fog_color(Color(0.5, 0.6, 0.7));
     set_fog_sun_color(Color(1.0, 0.9, 0.7));

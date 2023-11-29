@@ -49,25 +49,25 @@ private:
     jclass java_method_class;
     jclass activity_class;
 
-    jmethodID _on_video_init = 0;
-    jmethodID _restart = 0;
-    jmethodID _finish = 0;
-    jmethodID _set_keep_screen_on = 0;
-    jmethodID _alert = 0;
-    jmethodID _get_GLES_version_code = 0;
-    jmethodID _get_clipboard = 0;
-    jmethodID _set_clipboard = 0;
-    jmethodID _request_permission = 0;
-    jmethodID _request_permissions = 0;
-    jmethodID _get_granted_permissions = 0;
-    jmethodID _init_input_devices = 0;
-    jmethodID _get_surface = 0;
-    jmethodID _is_activity_resumed = 0;
-    jmethodID _vibrate = 0;
+    jmethodID _on_video_init              = 0;
+    jmethodID _restart                    = 0;
+    jmethodID _finish                     = 0;
+    jmethodID _set_keep_screen_on         = 0;
+    jmethodID _alert                      = 0;
+    jmethodID _get_GLES_version_code      = 0;
+    jmethodID _get_clipboard              = 0;
+    jmethodID _set_clipboard              = 0;
+    jmethodID _request_permission         = 0;
+    jmethodID _request_permissions        = 0;
+    jmethodID _get_granted_permissions    = 0;
+    jmethodID _init_input_devices         = 0;
+    jmethodID _get_surface                = 0;
+    jmethodID _is_activity_resumed        = 0;
+    jmethodID _vibrate                    = 0;
     jmethodID _get_input_fallback_mapping = 0;
-    jmethodID _on_setup_completed = 0;
-    jmethodID _on_main_loop_started = 0;
-    jmethodID _get_class_loader = 0;
+    jmethodID _on_setup_completed         = 0;
+    jmethodID _on_main_loop_started       = 0;
+    jmethodID _get_class_loader           = 0;
 
 public:
     GodotJavaWrapper(

@@ -51,7 +51,7 @@ void AnimationNodeBlendTreeEditor::add_custom_type(
     }
 
     AddOption ao;
-    ao.name = p_name;
+    ao.name   = p_name;
     ao.script = p_script;
     add_options.push_back(ao);
 
@@ -104,7 +104,7 @@ void AnimationNodeBlendTreeEditor::_property_changed(
     bool p_changing
 ) {
     AnimationTree* tree = AnimationTreeEditor::get_singleton()->get_tree();
-    updating = true;
+    updating            = true;
     undo_redo->create_action(
         TTR("Parameter Changed:") + " " + String(p_property),
         UndoRedo::MERGE_ENDS
@@ -293,7 +293,7 @@ void AnimationNodeBlendTreeEditor::_update_graph() {
                     ap->get_animation_list(&anims);
 
                     for (List<StringName>::Element* F = anims.front(); F;
-                         F = F->next()) {
+                         F                            = F->next()) {
                         mb->get_popup()->add_item(F->get());
                         options.push_back(F->get());
                     }
@@ -323,12 +323,12 @@ void AnimationNodeBlendTreeEditor::_update_graph() {
                 "interface/theme/use_graph_node_headers"
             )) {
             Ref<StyleBoxFlat> sb = node->get_stylebox("frame", "GraphNode");
-            Color c = sb->get_border_color();
-            Color mono_color = ((c.r + c.g + c.b) / 3) < 0.7
-                                 ? Color(1.0, 1.0, 1.0)
-                                 : Color(0.0, 0.0, 0.0);
-            mono_color.a = 0.85;
-            c = mono_color;
+            Color c              = sb->get_border_color();
+            Color mono_color     = ((c.r + c.g + c.b) / 3) < 0.7
+                                     ? Color(1.0, 1.0, 1.0)
+                                     : Color(0.0, 0.0, 0.0);
+            mono_color.a         = 0.85;
+            c                    = mono_color;
 
             node->add_color_override("title_color", c);
             c.a = 0.7;
@@ -345,8 +345,8 @@ void AnimationNodeBlendTreeEditor::_update_graph() {
          E;
          E = E->next()) {
         StringName from = E->get().output_node;
-        StringName to = E->get().input_node;
-        int to_idx = E->get().input_index;
+        StringName to   = E->get().input_node;
+        int to_idx      = E->get().input_index;
 
         graph->connect_node(from, 0, to, to_idx);
     }
@@ -394,7 +394,7 @@ void AnimationNodeBlendTreeEditor::_add_node(int p_idx) {
             ClassDB::instance(add_options[p_idx].type)
         );
         ERR_FAIL_COND(!an);
-        anode = Ref<AnimationNode>(an);
+        anode     = Ref<AnimationNode>(an);
         base_name = add_options[p_idx].name;
     } else {
         ERR_FAIL_COND(add_options[p_idx].script.is_null());
@@ -429,7 +429,7 @@ void AnimationNodeBlendTreeEditor::_add_node(int p_idx) {
 
     instance_pos /= graph->get_zoom();
 
-    int base = 1;
+    int base    = 1;
     String name = base_name;
     while (blend_tree->has_node(name)) {
         base++;
@@ -480,7 +480,7 @@ void AnimationNodeBlendTreeEditor::_popup(
 ) {
     _update_options_menu(p_has_input_ports);
     use_popup_menu_position = true;
-    popup_menu_position = p_popup_position;
+    popup_menu_position     = p_popup_position;
     add_node->get_popup()->set_position(p_node_position);
     add_node->get_popup()->popup();
 }
@@ -720,7 +720,7 @@ void AnimationNodeBlendTreeEditor::_filter_edited() {
     ERR_FAIL_COND(!edited);
 
     NodePath edited_path = edited->get_metadata(0);
-    bool filtered = edited->is_checked(0);
+    bool filtered        = edited->is_checked(0);
 
     updating = true;
     undo_redo->create_action(TTR("Change Filter"));
@@ -790,7 +790,7 @@ bool AnimationNodeBlendTreeEditor::_update_filters(
         player->get_animation_list(&animations);
 
         for (List<StringName>::Element* E = animations.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             Ref<Animation> anim = player->get_animation(E->get());
             for (int i = 0; i < anim->get_track_count(); i++) {
                 String track_path = anim->track_get_path(i);
@@ -826,7 +826,7 @@ bool AnimationNodeBlendTreeEditor::_update_filters(
 
     for (Set<String>::Element* E = paths.front(); E; E = E->next()) {
         NodePath path = E->get();
-        TreeItem* ti = nullptr;
+        TreeItem* ti  = nullptr;
         String accum;
         for (int i = 0; i < path.get_name_count(); i++) {
             String name = path.get_name(i);
@@ -874,7 +874,7 @@ bool AnimationNodeBlendTreeEditor::_update_filters(
             if (skeleton && skeleton->find_bone(concat) != -1) {
                 // path in skeleton
                 const String& bone = concat;
-                int idx = skeleton->find_bone(bone);
+                int idx            = skeleton->find_bone(bone);
                 List<String> bone_path;
                 while (idx != -1) {
                     bone_path.push_front(skeleton->get_bone_name(idx));
@@ -883,14 +883,14 @@ bool AnimationNodeBlendTreeEditor::_update_filters(
 
                 accum += ":";
                 for (List<String>::Element* F = bone_path.front(); F;
-                     F = F->next()) {
+                     F                        = F->next()) {
                     if (F != bone_path.front()) {
                         accum += "/";
                     }
 
                     accum += F->get();
                     if (!parenthood.has(accum)) {
-                        ti = filters->create_item(ti);
+                        ti                = filters->create_item(ti);
                         parenthood[accum] = ti;
                         ti->set_text(0, F->get());
                         ti->set_selectable(0, false);
@@ -927,15 +927,15 @@ bool AnimationNodeBlendTreeEditor::_update_filters(
                 // just a node, not a property track
                 String types_text = "[";
                 if (types.has(path)) {
-                    Set<String>::Element* F = types[path].front();
-                    types_text += F->get();
+                    Set<String>::Element* F  = types[path].front();
+                    types_text              += F->get();
                     while (F->next()) {
-                        F = F->next();
+                        F           = F->next();
                         types_text += " / " + F->get();
                     }
                 }
                 types_text += "]";
-                ti = filters->create_item(ti);
+                ti          = filters->create_item(ti);
                 ti->set_cell_mode(0, TreeItem::CELL_MODE_CHECK);
                 ti->set_text(0, types_text);
                 ti->set_editable(0, true);
@@ -1211,8 +1211,8 @@ void AnimationNodeBlendTreeEditor::_node_renamed(
     }
 
     const String& base_name = new_name;
-    int base = 1;
-    String name = base_name;
+    int base                = 1;
+    String name             = base_name;
     while (blend_tree->has_node(name)) {
         base++;
         name = base_name + " " + itos(base);
@@ -1269,15 +1269,15 @@ void AnimationNodeBlendTreeEditor::_node_renamed(
          E;
          E = E->next()) {
         StringName from = E->get().output_node;
-        StringName to = E->get().input_node;
-        int to_idx = E->get().input_index;
+        StringName to   = E->get().input_node;
+        int to_idx      = E->get().input_index;
 
         graph->connect_node(from, 0, to, to_idx);
     }
 
     // update animations
     for (Map<StringName, ProgressBar*>::Element* E = animations.front(); E;
-         E = E->next()) {
+         E                                         = E->next()) {
         if (E->key() == prev_name) {
             animations[new_name] = animations[prev_name];
             animations.erase(prev_name);
@@ -1323,8 +1323,8 @@ void AnimationNodeBlendTreeEditor::edit(const Ref<AnimationNode>& p_node) {
 }
 
 AnimationNodeBlendTreeEditor::AnimationNodeBlendTreeEditor() {
-    singleton = this;
-    updating = false;
+    singleton               = this;
+    updating                = false;
     use_popup_menu_position = false;
 
     graph = memnew(GraphEdit);

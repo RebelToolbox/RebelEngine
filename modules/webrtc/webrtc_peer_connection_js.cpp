@@ -69,7 +69,7 @@ void WebRTCPeerConnectionJS::_on_connection_state_changed(
     int p_state
 ) {
     WebRTCPeerConnectionJS* peer = static_cast<WebRTCPeerConnectionJS*>(p_obj);
-    peer->_conn_state = (ConnectionState)p_state;
+    peer->_conn_state            = (ConnectionState)p_state;
 }
 
 void WebRTCPeerConnectionJS::_on_error(void* p_obj) {
@@ -151,7 +151,7 @@ Error WebRTCPeerConnectionJS::initialize(Dictionary p_config) {
     _conn_state = STATE_NEW;
 
     String config = JSON::print(p_config);
-    _js_id = godot_js_rtc_pc_create(
+    _js_id        = godot_js_rtc_pc_create(
         config.utf8().get_data(),
         this,
         &_on_connection_state_changed,
@@ -168,7 +168,7 @@ Ref<WebRTCDataChannel> WebRTCPeerConnectionJS::create_data_channel(
     ERR_FAIL_COND_V(_conn_state != STATE_NEW, NULL);
 
     String config = JSON::print(p_channel_config);
-    int id = godot_js_rtc_pc_datachannel_create(
+    int id        = godot_js_rtc_pc_datachannel_create(
         _js_id,
         p_channel.utf8().get_data(),
         config.utf8().get_data()
@@ -188,7 +188,7 @@ WebRTCPeerConnection::ConnectionState WebRTCPeerConnectionJS::
 
 WebRTCPeerConnectionJS::WebRTCPeerConnectionJS() {
     _conn_state = STATE_NEW;
-    _js_id = 0;
+    _js_id      = 0;
 
     Dictionary config;
     initialize(config);

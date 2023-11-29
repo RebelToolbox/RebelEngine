@@ -49,8 +49,8 @@ RenameDialog::RenameDialog(
     UndoRedo* p_undo_redo
 ) {
     scene_tree_editor = p_scene_tree_editor;
-    undo_redo = p_undo_redo;
-    preview_node = nullptr;
+    undo_redo         = p_undo_redo;
+    preview_node      = nullptr;
 
     set_title(TTR("Batch Rename"));
 
@@ -322,7 +322,7 @@ RenameDialog::RenameDialog(
     get_ok()->set_text(TTR("Rename"));
     Button* but_reset = add_button(TTR("Reset"));
 
-    eh.errfunc = _error_handler;
+    eh.errfunc  = _error_handler;
     eh.userdata = this;
 
     // ---- Connections
@@ -462,17 +462,17 @@ void RenameDialog::_update_preview(String new_text) {
 }
 
 String RenameDialog::_apply_rename(const Node* node, int count) {
-    String search = lne_search->get_text();
-    String replace = lne_replace->get_text();
-    String prefix = lne_prefix->get_text();
-    String suffix = lne_suffix->get_text();
+    String search   = lne_search->get_text();
+    String replace  = lne_replace->get_text();
+    String prefix   = lne_prefix->get_text();
+    String suffix   = lne_suffix->get_text();
     String new_name = node->get_name();
 
     if (cbut_substitute->is_pressed()) {
-        search = _substitute(search, node, count);
+        search  = _substitute(search, node, count);
         replace = _substitute(replace, node, count);
-        prefix = _substitute(prefix, node, count);
-        suffix = _substitute(suffix, node, count);
+        prefix  = _substitute(prefix, node, count);
+        suffix  = _substitute(suffix, node, count);
     }
 
     if (cbut_regex->is_pressed()) {
@@ -603,15 +603,15 @@ String RenameDialog::_postprocess(const String& subject) {
         if (matches.size() && result != "_") {
             String buffer;
             int start = 0;
-            int end = 0;
+            int end   = 0;
             for (int i = 0; i < matches.size(); ++i) {
-                start = ((Ref<RegExMatch>)matches[i])->get_start(1);
+                start   = ((Ref<RegExMatch>)matches[i])->get_start(1);
                 buffer += result.substr(end, start - end - 1);
                 buffer += result.substr(start, 1).to_upper();
-                end = start + 1;
+                end     = start + 1;
             }
             buffer += result.substr(end, result.size() - (end + 1));
-            result = buffer.replace("_", "").capitalize();
+            result  = buffer.replace("_", "").capitalize();
         }
     }
 
@@ -642,7 +642,7 @@ void RenameDialog::_iterate_scene(
 
         if (node->get_name() != new_name) {
             Pair<NodePath, String> rename_item;
-            rename_item.first = node->get_path();
+            rename_item.first  = node->get_path();
             rename_item.second = new_name;
             to_rename.push_back(rename_item);
         }
@@ -650,7 +650,7 @@ void RenameDialog::_iterate_scene(
         *counter += spn_count_step->get_value();
     }
 
-    int* cur_counter = counter;
+    int* cur_counter  = counter;
     int level_counter = spn_count_start->get_value();
 
     if (chk_per_level_counter->is_pressed()) {
@@ -682,7 +682,7 @@ void RenameDialog::rename() {
 
         // Make sure to iterate reversed so that child nodes will find parents.
         for (int i = to_rename.size() - 1; i >= 0; --i) {
-            Node* n = root_node->get_node(to_rename[i].first);
+            Node* n                = root_node->get_node(to_rename[i].first);
             const String& new_name = to_rename[i].second;
 
             if (!n) {
@@ -762,7 +762,7 @@ void RenameDialog::_features_toggled(bool pressed) {
 
     // Adjust to minimum size in y
     Size2i size = get_size();
-    size.y = 0;
+    size.y      = 0;
     set_size(size);
 }
 

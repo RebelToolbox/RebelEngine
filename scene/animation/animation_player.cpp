@@ -90,13 +90,13 @@ bool AnimationPlayer::_set(const StringName& p_name, const Variant& p_value) {
 
     } else if (p_name == SceneStringNames::get_singleton()->blend_times) {
         Array array = p_value;
-        int len = array.size();
+        int len     = array.size();
         ERR_FAIL_COND_V(len % 3, false);
 
         for (int i = 0; i < len / 3; i++) {
             StringName from = array[i * 3 + 0];
-            StringName to = array[i * 3 + 1];
-            float time = array[i * 3 + 2];
+            StringName to   = array[i * 3 + 1];
+            float time      = array[i * 3 + 2];
 
             set_blend_time(from, to, time);
         }
@@ -117,7 +117,7 @@ bool AnimationPlayer::_get(const StringName& p_name, Variant& r_ret) const {
 
     } else if (name.begins_with("anims/")) {
         String which = name.get_slicec('/', 1);
-        r_ret = get_animation(which).get_ref_ptr();
+        r_ret        = get_animation(which).get_ref_ptr();
 
     } else if (name.begins_with("next/")) {
         String which = name.get_slicec('/', 1);
@@ -127,7 +127,7 @@ bool AnimationPlayer::_get(const StringName& p_name, Variant& r_ret) const {
     } else if (name == "blend_times") {
         Vector<BlendKey> keys;
         for (Map<BlendKey, float>::Element* E = blend_times.front(); E;
-             E = E->next()) {
+             E                                = E->next()) {
             keys.ordered_insert(E->key());
         }
 
@@ -173,7 +173,7 @@ void AnimationPlayer::_get_property_list(List<PropertyInfo>* p_list) const {
     List<PropertyInfo> anim_names;
 
     for (Map<StringName, AnimationData>::Element* E = animation_set.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         anim_names.push_back(PropertyInfo(
             Variant::OBJECT,
             "anims/" + String(E->key()),
@@ -196,7 +196,7 @@ void AnimationPlayer::_get_property_list(List<PropertyInfo>* p_list) const {
     anim_names.sort();
 
     for (List<PropertyInfo>::Element* E = anim_names.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         p_list->push_back(E->get());
     }
 
@@ -287,14 +287,14 @@ void AnimationPlayer::_ensure_node_caches(
             "On Animation: '" + p_anim->name + "', couldn't resolve track:  '"
                 + String(a->track_get_path(i)) + "'."
         ); // couldn't find the child node
-        uint32_t id = resource.is_valid() ? resource->get_instance_id()
-                                          : child->get_instance_id();
+        uint32_t id  = resource.is_valid() ? resource->get_instance_id()
+                                           : child->get_instance_id();
         int bone_idx = -1;
 
         if (a->track_get_path(i).get_subname_count() == 1
             && Object::cast_to<Skeleton>(child)) {
             Skeleton* sk = Object::cast_to<Skeleton>(child);
-            bone_idx = sk->find_bone(a->track_get_path(i).get_subname(0));
+            bone_idx     = sk->find_bone(a->track_get_path(i).get_subname(0));
             if (bone_idx == -1) {
                 continue;
             }
@@ -313,23 +313,23 @@ void AnimationPlayer::_ensure_node_caches(
         }
 
         TrackNodeCacheKey key;
-        key.id = id;
+        key.id       = id;
         key.bone_idx = bone_idx;
 
         if (!node_cache_map.has(key)) {
             node_cache_map[key] = TrackNodeCache();
         }
 
-        p_anim->node_cache.write[i] = &node_cache_map[key];
-        p_anim->node_cache[i]->path = a->track_get_path(i);
-        p_anim->node_cache[i]->node = child;
+        p_anim->node_cache.write[i]     = &node_cache_map[key];
+        p_anim->node_cache[i]->path     = a->track_get_path(i);
+        p_anim->node_cache[i]->node     = child;
         p_anim->node_cache[i]->resource = resource;
-        p_anim->node_cache[i]->node_2d = Object::cast_to<Node2D>(child);
+        p_anim->node_cache[i]->node_2d  = Object::cast_to<Node2D>(child);
         if (a->track_get_type(i) == Animation::TYPE_TRANSFORM) {
             // special cases and caches for transform tracks
 
             // cache spatial
-            p_anim->node_cache[i]->spatial = Object::cast_to<Spatial>(child);
+            p_anim->node_cache[i]->spatial  = Object::cast_to<Spatial>(child);
             // cache skeleton
             p_anim->node_cache[i]->skeleton = Object::cast_to<Skeleton>(child);
             if (p_anim->node_cache[i]->skeleton) {
@@ -341,7 +341,7 @@ void AnimationPlayer::_ensure_node_caches(
                     if (p_anim->node_cache[i]->bone_idx < 0) {
                         // broken track (nonexistent bone)
                         p_anim->node_cache[i]->skeleton = nullptr;
-                        p_anim->node_cache[i]->spatial = nullptr;
+                        p_anim->node_cache[i]->spatial  = nullptr;
                         ERR_CONTINUE(p_anim->node_cache[i]->bone_idx < 0);
                     }
                 } else {
@@ -357,10 +357,10 @@ void AnimationPlayer::_ensure_node_caches(
                 )) {
                 TrackNodeCache::PropertyAnim pa;
                 pa.subpath = leftover_path;
-                pa.object = resource.is_valid() ? (Object*)resource.ptr()
-                                                : (Object*)child;
+                pa.object  = resource.is_valid() ? (Object*)resource.ptr()
+                                                 : (Object*)child;
                 pa.special = SP_NONE;
-                pa.owner = p_anim->node_cache[i];
+                pa.owner   = p_anim->node_cache[i];
                 if (false && p_anim->node_cache[i]->node_2d) {
                     if (leftover_path.size() == 1
                         && leftover_path[0]
@@ -387,7 +387,7 @@ void AnimationPlayer::_ensure_node_caches(
                 ba.bezier_property = leftover_path;
                 ba.object = resource.is_valid() ? (Object*)resource.ptr()
                                                 : (Object*)child;
-                ba.owner = p_anim->node_cache[i];
+                ba.owner  = p_anim->node_cache[i];
 
                 p_anim->node_cache[i]->bezier_anim
                     [a->track_get_path(i).get_concatenated_subnames()] = ba;
@@ -461,10 +461,10 @@ void AnimationPlayer::_animation_process_animation(
                 if (nc->accum_pass != accum_pass) {
                     ERR_CONTINUE(cache_update_size >= NODE_CACHE_UPDATE_MAX);
                     cache_update[cache_update_size++] = nc;
-                    nc->accum_pass = accum_pass;
-                    nc->loc_accum = loc;
-                    nc->rot_accum = rot;
-                    nc->scale_accum = scale;
+                    nc->accum_pass                    = accum_pass;
+                    nc->loc_accum                     = loc;
+                    nc->rot_accum                     = rot;
+                    nc->scale_accum                   = scale;
 
                 } else {
                     nc->loc_accum =
@@ -504,17 +504,17 @@ void AnimationPlayer::_animation_process_animation(
                     }
 
                     float first_key_time = a->track_get_key_time(i, 0);
-                    float transition = 1.0;
-                    int first_key = 0;
+                    float transition     = 1.0;
+                    int first_key        = 0;
 
                     if (first_key_time == 0.0) {
                         // ignore, use for transition
                         if (key_count == 1) {
                             continue; // with one key we can't do anything
                         }
-                        transition = a->track_get_key_transition(i, 0);
+                        transition     = a->track_get_key_transition(i, 0);
                         first_key_time = a->track_get_key_time(i, 1);
-                        first_key = 1;
+                        first_key      = 1;
                     }
 
                     if (p_time < first_key_time) {
@@ -536,7 +536,7 @@ void AnimationPlayer::_animation_process_animation(
                             );
                             cache_update_prop[cache_update_prop_size++] = pa;
                             pa->value_accum = interp_value;
-                            pa->accum_pass = accum_pass;
+                            pa->accum_pass  = accum_pass;
                         } else {
                             Variant::interpolate(
                                 pa->value_accum,
@@ -573,7 +573,7 @@ void AnimationPlayer::_animation_process_animation(
                             cache_update_prop_size >= NODE_CACHE_UPDATE_MAX
                         );
                         cache_update_prop[cache_update_prop_size++] = pa;
-                        pa->value_accum = value;
+                        pa->value_accum                             = value;
                         pa->accum_pass = accum_pass;
                     } else {
                         Variant::interpolate(
@@ -594,7 +594,7 @@ void AnimationPlayer::_animation_process_animation(
                     );
 
                     for (List<int>::Element* F = indices.front(); F;
-                         F = F->next()) {
+                         F                     = F->next()) {
                         Variant value = a->track_get_key_value(i, F->get());
                         switch (pa->special) {
                             case SP_NONE: {
@@ -683,7 +683,7 @@ void AnimationPlayer::_animation_process_animation(
                 a->method_track_get_key_indices(i, p_time, p_delta, &indices);
 
                 for (List<int>::Element* E = indices.front(); E;
-                     E = E->next()) {
+                     E                     = E->next()) {
                     StringName method = a->method_track_get_name(i, E->get());
                     Vector<Variant> params =
                         a->method_track_get_params(i, E->get());
@@ -745,7 +745,7 @@ void AnimationPlayer::_animation_process_animation(
                         cache_update_bezier_size >= NODE_CACHE_UPDATE_MAX
                     );
                     cache_update_bezier[cache_update_bezier_size++] = ba;
-                    ba->bezier_accum = bezier;
+                    ba->bezier_accum                                = bezier;
                     ba->accum_pass = accum_pass;
                 } else {
                     ba->bezier_accum =
@@ -958,7 +958,7 @@ void AnimationPlayer::_animation_process_data(
     bool p_seeked,
     bool p_started
 ) {
-    float delta = p_delta * speed_scale * cd.speed_scale;
+    float delta    = p_delta * speed_scale * cd.speed_scale;
     float next_pos = cd.pos + delta;
 
     float len = cd.from->animation->get_length();
@@ -1037,7 +1037,7 @@ void AnimationPlayer::_animation_process2(float p_delta, bool p_started) {
 
     List<Blend>::Element* prev = nullptr;
     for (List<Blend>::Element* E = c.blend.back(); E; E = prev) {
-        Blend& b = E->get();
+        Blend& b    = E->get();
         float blend = b.blend_left / b.blend_time;
         _animation_process_data(b.data, p_delta, blend, false, false);
 
@@ -1151,7 +1151,7 @@ void AnimationPlayer::_animation_update_transforms() {
 void AnimationPlayer::_animation_process(float p_delta) {
     if (playback.current.from) {
         end_reached = false;
-        end_notify = false;
+        end_notify  = false;
         _animation_process2(p_delta, playback.started);
 
         if (playback.started) {
@@ -1212,8 +1212,8 @@ Error AnimationPlayer::add_animation(
         clear_caches();
     } else {
         AnimationData ad;
-        ad.animation = p_animation;
-        ad.name = p_name;
+        ad.animation          = p_animation;
+        ad.name               = p_name;
         animation_set[p_name] = ad;
     }
 
@@ -1263,24 +1263,24 @@ void AnimationPlayer::rename_animation(
 
     stop();
     AnimationData ad = animation_set[p_name];
-    ad.name = p_new_name;
+    ad.name          = p_new_name;
     animation_set.erase(p_name);
     animation_set[p_new_name] = ad;
 
     List<BlendKey> to_erase;
     Map<BlendKey, float> to_insert;
     for (Map<BlendKey, float>::Element* E = blend_times.front(); E;
-         E = E->next()) {
-        BlendKey bk = E->key();
+         E                                = E->next()) {
+        BlendKey bk     = E->key();
         BlendKey new_bk = bk;
-        bool erase = false;
+        bool erase      = false;
         if (bk.from == p_name) {
             new_bk.from = p_new_name;
-            erase = true;
+            erase       = true;
         }
         if (bk.to == p_name) {
             new_bk.to = p_new_name;
-            erase = true;
+            erase     = true;
         }
 
         if (erase) {
@@ -1323,7 +1323,7 @@ void AnimationPlayer::get_animation_list(List<StringName>* p_animations) const {
     List<String> anims;
 
     for (Map<StringName, AnimationData>::Element* E = animation_set.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         anims.push_back(E->key());
     }
 
@@ -1345,7 +1345,7 @@ void AnimationPlayer::set_blend_time(
 
     BlendKey bk;
     bk.from = p_animation1;
-    bk.to = p_animation2;
+    bk.to   = p_animation2;
     if (p_time == 0) {
         blend_times.erase(bk);
     } else {
@@ -1359,7 +1359,7 @@ float AnimationPlayer::get_blend_time(
 ) const {
     BlendKey bk;
     bk.from = p_animation1;
-    bk.to = p_animation2;
+    bk.to   = p_animation2;
 
     if (blend_times.has(bk)) {
         return blend_times[bk];
@@ -1420,7 +1420,7 @@ void AnimationPlayer::play(
         // find if it can blend
         BlendKey bk;
         bk.from = c.current.from->name;
-        bk.to = name;
+        bk.to   = name;
 
         if (p_custom_blend >= 0) {
             blend_time = p_custom_blend;
@@ -1432,7 +1432,7 @@ void AnimationPlayer::play(
                 blend_time = blend_times[bk];
             } else {
                 bk.from = c.current.from->name;
-                bk.to = "*";
+                bk.to   = "*";
 
                 if (blend_times.has(bk)) {
                     blend_time = blend_times[bk];
@@ -1445,7 +1445,7 @@ void AnimationPlayer::play(
         }
         if (blend_time > 0) {
             Blend b;
-            b.data = c.current;
+            b.data       = c.current;
             b.blend_time = b.blend_left = blend_time;
             c.blend.push_back(b);
         }
@@ -1472,9 +1472,9 @@ void AnimationPlayer::play(
     }
 
     c.current.speed_scale = p_custom_scale;
-    c.assigned = name;
-    c.seeked = false;
-    c.started = true;
+    c.assigned            = name;
+    c.seeked              = false;
+    c.started             = true;
 
     if (!end_reached) {
         queued.clear();
@@ -1533,9 +1533,9 @@ void AnimationPlayer::set_assigned_animation(const String& p_anim) {
         play(p_anim);
     } else {
         ERR_FAIL_COND(!animation_set.has(p_anim));
-        playback.current.pos = 0;
+        playback.current.pos  = 0;
         playback.current.from = &animation_set[p_anim];
-        playback.assigned = p_anim;
+        playback.assigned     = p_anim;
     }
 }
 
@@ -1548,9 +1548,9 @@ void AnimationPlayer::stop(bool p_reset) {
     Playback& c = playback;
     c.blend.clear();
     if (p_reset) {
-        c.current.from = nullptr;
+        c.current.from        = nullptr;
         c.current.speed_scale = 1;
-        c.current.pos = 0;
+        c.current.pos         = 0;
     }
     _set_process(false);
     queued.clear();
@@ -1582,7 +1582,7 @@ void AnimationPlayer::seek(float p_time, bool p_update) {
     }
 
     playback.current.pos = p_time;
-    playback.seeked = true;
+    playback.seeked      = true;
     if (p_update) {
         _animation_process(0);
     }
@@ -1637,7 +1637,7 @@ void AnimationPlayer::_animation_changed() {
 
 void AnimationPlayer::_stop_playing_caches() {
     for (Set<TrackNodeCache*>::Element* E = playing_caches.front(); E;
-         E = E->next()) {
+         E                                = E->next()) {
         if (E->get()->node && E->get()->audio_playing) {
             E->get()->node->call("stop");
         }
@@ -1664,12 +1664,12 @@ void AnimationPlayer::clear_caches() {
     node_cache_map.clear();
 
     for (Map<StringName, AnimationData>::Element* E = animation_set.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         E->get().node_cache.clear();
     }
 
-    cache_update_size = 0;
-    cache_update_prop_size = 0;
+    cache_update_size        = 0;
+    cache_update_prop_size   = 0;
     cache_update_bezier_size = 0;
 }
 
@@ -1689,7 +1689,7 @@ bool AnimationPlayer::is_active() const {
 StringName AnimationPlayer::find_animation(const Ref<Animation>& p_animation
 ) const {
     for (Map<StringName, AnimationData>::Element* E = animation_set.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         if (E->get().animation == p_animation) {
             return E->key();
         }
@@ -1852,16 +1852,16 @@ Ref<AnimatedValuesBackup> AnimationPlayer::backup_animated_values(
             }
 
             AnimatedValuesBackup::Entry entry;
-            entry.object = nc->skeleton;
+            entry.object   = nc->skeleton;
             entry.bone_idx = nc->bone_idx;
-            entry.value = nc->skeleton->get_bone_pose(nc->bone_idx);
+            entry.value    = nc->skeleton->get_bone_pose(nc->bone_idx);
             backup->entries.push_back(entry);
         } else {
             if (nc->spatial) {
                 AnimatedValuesBackup::Entry entry;
                 entry.object = nc->spatial;
                 entry.subpath.push_back("transform");
-                entry.value = nc->spatial->get_transform();
+                entry.value    = nc->spatial->get_transform();
                 entry.bone_idx = -1;
                 backup->entries.push_back(entry);
             } else {
@@ -1870,7 +1870,7 @@ Ref<AnimatedValuesBackup> AnimationPlayer::backup_animated_values(
                      E;
                      E = E->next()) {
                     AnimatedValuesBackup::Entry entry;
-                    entry.object = E->value().object;
+                    entry.object  = E->value().object;
                     entry.subpath = E->value().subpath;
                     bool valid;
                     entry.value = E->value().object->get_indexed(
@@ -2268,23 +2268,23 @@ void AnimationPlayer::_bind_methods() {
 }
 
 AnimationPlayer::AnimationPlayer() {
-    accum_pass = 1;
-    cache_update_size = 0;
-    cache_update_prop_size = 0;
+    accum_pass               = 1;
+    cache_update_size        = 0;
+    cache_update_prop_size   = 0;
     cache_update_bezier_size = 0;
-    speed_scale = 1;
-    end_reached = false;
-    end_notify = false;
-    reset_on_save = true;
-    animation_process_mode = ANIMATION_PROCESS_IDLE;
-    method_call_mode = ANIMATION_METHOD_CALL_DEFERRED;
-    processing = false;
-    default_blend_time = 0;
-    root = SceneStringNames::get_singleton()->path_pp;
-    playing = false;
-    active = true;
-    playback.seeked = false;
-    playback.started = false;
+    speed_scale              = 1;
+    end_reached              = false;
+    end_notify               = false;
+    reset_on_save            = true;
+    animation_process_mode   = ANIMATION_PROCESS_IDLE;
+    method_call_mode         = ANIMATION_METHOD_CALL_DEFERRED;
+    processing               = false;
+    default_blend_time       = 0;
+    root                     = SceneStringNames::get_singleton()->path_pp;
+    playing                  = false;
+    active                   = true;
+    playback.seeked          = false;
+    playback.started         = false;
 }
 
 AnimationPlayer::~AnimationPlayer() {}

@@ -180,7 +180,7 @@ void EditorResourcePicker::_update_menu() {
 
     Rect2 gt = edit_button->get_global_rect();
     edit_menu->set_as_minsize();
-    int ms = edit_menu->get_combined_minimum_size().width;
+    int ms            = edit_menu->get_combined_minimum_size().width;
     Vector2 popup_pos = gt.position + gt.size - Vector2(ms, 0);
     edit_menu->set_global_position(popup_pos);
     edit_menu->popup();
@@ -312,7 +312,7 @@ void EditorResourcePicker::_edit_menu_cbk(int p_which) {
 
             Set<String> valid_extensions;
             for (List<String>::Element* E = extensions.front(); E;
-                 E = E->next()) {
+                 E                        = E->next()) {
                 valid_extensions.insert(E->get());
             }
 
@@ -325,7 +325,7 @@ void EditorResourcePicker::_edit_menu_cbk(int p_which) {
 
             file_dialog->clear_filters();
             for (Set<String>::Element* E = valid_extensions.front(); E;
-                 E = E->next()) {
+                 E                       = E->next()) {
                 file_dialog->add_filter(
                     "*." + E->get() + " ; " + E->get().to_upper()
                 );
@@ -366,11 +366,11 @@ void EditorResourcePicker::_edit_menu_cbk(int p_which) {
             edited_resource->get_property_list(&property_list);
             List<Pair<String, Variant>> propvalues;
             for (List<PropertyInfo>::Element* E = property_list.front(); E;
-                 E = E->next()) {
+                 E                              = E->next()) {
                 Pair<String, Variant> p;
                 PropertyInfo& pi = E->get();
                 if (pi.usage & PROPERTY_USAGE_STORAGE) {
-                    p.first = pi.name;
+                    p.first  = pi.name;
                     p.second = edited_resource->get(pi.name);
                 }
 
@@ -378,7 +378,7 @@ void EditorResourcePicker::_edit_menu_cbk(int p_which) {
             }
 
             String orig_type = edited_resource->get_class();
-            Object* inst = ClassDB::instance(orig_type);
+            Object* inst     = ClassDB::instance(orig_type);
             Ref<Resource> unique_resource =
                 Ref<Resource>(Object::cast_to<Resource>(inst));
             ERR_FAIL_COND(unique_resource.is_null());
@@ -507,7 +507,7 @@ void EditorResourcePicker::set_create_options(Object* p_menu_node) {
         }
 
         for (Set<String>::Element* E = allowed_types.front(); E;
-             E = E->next()) {
+             E                       = E->next()) {
             const String& t = E->get();
 
             bool is_custom_resource = false;
@@ -596,7 +596,7 @@ void EditorResourcePicker::_get_allowed_types(
     Set<String>* p_vector
 ) const {
     Vector<String> allowed_types = base_type.split(",");
-    int size = allowed_types.size();
+    int size                     = allowed_types.size();
 
     List<StringName> global_classes;
     ScriptServer::get_global_class_list(&global_classes);
@@ -609,7 +609,7 @@ void EditorResourcePicker::_get_allowed_types(
         if (allowed_types_cache.has(base)) {
             List<StringName> allowed_subtypes = allowed_types_cache[base];
             for (List<StringName>::Element* E = allowed_subtypes.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 p_vector->insert(E->get());
             }
         } else {
@@ -618,13 +618,13 @@ void EditorResourcePicker::_get_allowed_types(
             List<StringName> inheriters;
             ClassDB::get_inheriters_from_class(base, &inheriters);
             for (List<StringName>::Element* E = inheriters.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 p_vector->insert(E->get());
                 allowed_subtypes.push_back(E->get());
             }
 
             for (List<StringName>::Element* E = global_classes.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 if (EditorNode::get_editor_data()
                         .script_class_is_parent(E->get(), base)) {
                     p_vector->insert(E->get());
@@ -775,7 +775,7 @@ void EditorResourcePicker::drop_data_fw(
         Vector<String> files = drag_data["files"];
 
         if (files.size() == 1) {
-            String file = files[0];
+            String file      = files[0];
             dropped_resource = ResourceLoader::load(file);
         }
     }
@@ -788,7 +788,7 @@ void EditorResourcePicker::drop_data_fw(
         // requires conversion.
         if (!_is_type_valid(dropped_resource->get_class(), allowed_types)) {
             for (Set<String>::Element* E = allowed_types.front(); E;
-                 E = E->next()) {
+                 E                       = E->next()) {
                 String at = E->get().strip_edges();
 
                 if (at == "SpatialMaterial"
@@ -1068,10 +1068,10 @@ Vector<String> EditorResourcePicker::get_allowed_types() const {
     Vector<String> types;
     types.resize(allowed_types.size());
 
-    int i = 0;
+    int i     = 0;
     String* w = types.ptrw();
     for (Set<String>::Element* E = allowed_types.front(); E;
-         E = E->next(), i++) {
+         E                       = E->next(), i++) {
         w[i] = E->get();
     }
 

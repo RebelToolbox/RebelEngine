@@ -85,9 +85,9 @@ class Navigation : public Spatial {
             List<ConnectionPending>::Element* P;
 
             Edge() {
-                C = nullptr;
+                C      = nullptr;
                 C_edge = -1;
-                P = nullptr;
+                P      = nullptr;
             }
         };
 
@@ -112,8 +112,8 @@ class Navigation : public Spatial {
         List<ConnectionPending> pending;
 
         Connection() {
-            A = nullptr;
-            B = nullptr;
+            A      = nullptr;
+            B      = nullptr;
             A_edge = -1;
             B_edge = -1;
         }
@@ -136,9 +136,9 @@ class Navigation : public Spatial {
 
         Point p;
         p.key = 0;
-        p.x = x;
-        p.y = y;
-        p.z = z;
+        p.x   = x;
+        p.y   = y;
+        p.z   = z;
         return p;
     }
 

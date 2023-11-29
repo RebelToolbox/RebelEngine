@@ -154,46 +154,46 @@ Point2 TextureProgress::unit_val_to_uv(float val) {
     Point2 p = get_relative_center();
 
     // Minimal version of Liang-Barsky clipping algorithm
-    float angle = (val * Math_TAU) - Math_PI * 0.5;
-    Point2 dir = Vector2(Math::cos(angle), Math::sin(angle));
-    float t1 = 1.0;
-    float cp = 0;
-    float cq = 0;
-    float cr = 0;
-    float edgeLeft = 0.0;
-    float edgeRight = 1.0;
+    float angle      = (val * Math_TAU) - Math_PI * 0.5;
+    Point2 dir       = Vector2(Math::cos(angle), Math::sin(angle));
+    float t1         = 1.0;
+    float cp         = 0;
+    float cq         = 0;
+    float cr         = 0;
+    float edgeLeft   = 0.0;
+    float edgeRight  = 1.0;
     float edgeBottom = 0.0;
-    float edgeTop = 1.0;
+    float edgeTop    = 1.0;
 
     for (int edge = 0; edge < 4; edge++) {
         if (edge == 0) {
             if (dir.x > 0) {
                 continue;
             }
-            cq = -(edgeLeft - p.x);
+            cq     = -(edgeLeft - p.x);
             dir.x *= 2.0 * cq;
-            cp = -dir.x;
+            cp     = -dir.x;
         } else if (edge == 1) {
             if (dir.x < 0) {
                 continue;
             }
-            cq = (edgeRight - p.x);
+            cq     = (edgeRight - p.x);
             dir.x *= 2.0 * cq;
-            cp = dir.x;
+            cp     = dir.x;
         } else if (edge == 2) {
             if (dir.y > 0) {
                 continue;
             }
-            cq = -(edgeBottom - p.y);
+            cq     = -(edgeBottom - p.y);
             dir.y *= 2.0 * cq;
-            cp = -dir.y;
+            cp     = -dir.y;
         } else if (edge == 3) {
             if (dir.y < 0) {
                 continue;
             }
-            cq = (edgeTop - p.y);
+            cq     = (edgeTop - p.y);
             dir.y *= 2.0 * cq;
-            cp = dir.y;
+            cp     = dir.y;
         }
         cr = cq / cp;
         if (cr >= 0 && cr < t1) {
@@ -207,12 +207,12 @@ Point2 TextureProgress::get_relative_center() {
     if (progress.is_null()) {
         return Point2();
     }
-    Point2 p = progress->get_size() / 2;
-    p += rad_center_off;
-    p.x /= progress->get_width();
-    p.y /= progress->get_height();
-    p.x = CLAMP(p.x, 0, 1);
-    p.y = CLAMP(p.y, 0, 1);
+    Point2 p  = progress->get_size() / 2;
+    p        += rad_center_off;
+    p.x      /= progress->get_width();
+    p.y      /= progress->get_height();
+    p.x       = CLAMP(p.x, 0, 1);
+    p.y       = CLAMP(p.y, 0, 1);
     return p;
 }
 
@@ -236,49 +236,49 @@ void TextureProgress::draw_nine_patch_stretched(
         // texture is divided by 3 sections toward fill direction,
         // then middle section is stretching while the other two aren't.
 
-        double width_total = 0.0;
-        double width_texture = 0.0;
+        double width_total        = 0.0;
+        double width_texture      = 0.0;
         double first_section_size = 0.0;
-        double last_section_size = 0.0;
+        double last_section_size  = 0.0;
         switch (p_mode) {
             case FILL_LEFT_TO_RIGHT: {
-                width_total = dst_rect.size.x;
-                width_texture = texture_size.x;
+                width_total        = dst_rect.size.x;
+                width_texture      = texture_size.x;
                 first_section_size = topleft.x;
-                last_section_size = bottomright.x;
+                last_section_size  = bottomright.x;
             } break;
             case FILL_RIGHT_TO_LEFT: {
-                width_total = dst_rect.size.x;
-                width_texture = texture_size.x;
+                width_total        = dst_rect.size.x;
+                width_texture      = texture_size.x;
                 // In contrast to `FILL_LEFT_TO_RIGHT`, `first_section_size` and
                 // `last_section_size` should switch value.
                 first_section_size = bottomright.x;
-                last_section_size = topleft.x;
+                last_section_size  = topleft.x;
             } break;
             case FILL_TOP_TO_BOTTOM: {
-                width_total = dst_rect.size.y;
-                width_texture = texture_size.y;
+                width_total        = dst_rect.size.y;
+                width_texture      = texture_size.y;
                 first_section_size = topleft.y;
-                last_section_size = bottomright.y;
+                last_section_size  = bottomright.y;
             } break;
             case FILL_BOTTOM_TO_TOP: {
-                width_total = dst_rect.size.y;
-                width_texture = texture_size.y;
+                width_total        = dst_rect.size.y;
+                width_texture      = texture_size.y;
                 // Similar to `FILL_RIGHT_TO_LEFT`.
                 first_section_size = bottomright.y;
-                last_section_size = topleft.y;
+                last_section_size  = topleft.y;
             } break;
             case FILL_BILINEAR_LEFT_AND_RIGHT: {
-                width_total = dst_rect.size.x;
-                width_texture = texture_size.x;
+                width_total        = dst_rect.size.x;
+                width_texture      = texture_size.x;
                 first_section_size = topleft.x;
-                last_section_size = bottomright.x;
+                last_section_size  = bottomright.x;
             } break;
             case FILL_BILINEAR_TOP_AND_BOTTOM: {
-                width_total = dst_rect.size.y;
-                width_texture = texture_size.y;
+                width_total        = dst_rect.size.y;
+                width_texture      = texture_size.y;
                 first_section_size = topleft.y;
-                last_section_size = bottomright.y;
+                last_section_size  = bottomright.y;
             } break;
             case FILL_CLOCKWISE:
             case FILL_CLOCKWISE_AND_COUNTER_CLOCKWISE:
@@ -341,7 +341,7 @@ void TextureProgress::draw_nine_patch_stretched(
                 last_section_size =
                     MAX(0.0, last_section_size - (width_total - width_filled));
                 first_section_size = MIN(first_section_size, width_filled);
-                width_texture = MIN(
+                width_texture      = MIN(
                     width_texture,
                     first_section_size + middle_section_size + last_section_size
                 );
@@ -352,30 +352,30 @@ void TextureProgress::draw_nine_patch_stretched(
             case FILL_LEFT_TO_RIGHT: {
                 src_rect.size.x = width_texture;
                 dst_rect.size.x = width_filled;
-                topleft.x = first_section_size;
-                bottomright.x = last_section_size;
+                topleft.x       = first_section_size;
+                bottomright.x   = last_section_size;
             } break;
             case FILL_RIGHT_TO_LEFT: {
                 src_rect.position.x += src_rect.size.x - width_texture;
-                src_rect.size.x = width_texture;
+                src_rect.size.x      = width_texture;
                 dst_rect.position.x += width_total - width_filled;
-                dst_rect.size.x = width_filled;
-                topleft.x = last_section_size;
-                bottomright.x = first_section_size;
+                dst_rect.size.x      = width_filled;
+                topleft.x            = last_section_size;
+                bottomright.x        = first_section_size;
             } break;
             case FILL_TOP_TO_BOTTOM: {
                 src_rect.size.y = width_texture;
                 dst_rect.size.y = width_filled;
-                bottomright.y = last_section_size;
-                topleft.y = first_section_size;
+                bottomright.y   = last_section_size;
+                topleft.y       = first_section_size;
             } break;
             case FILL_BOTTOM_TO_TOP: {
                 src_rect.position.y += src_rect.size.y - width_texture;
-                src_rect.size.y = width_texture;
+                src_rect.size.y      = width_texture;
                 dst_rect.position.y += width_total - width_filled;
-                dst_rect.size.y = width_filled;
-                topleft.y = last_section_size;
-                bottomright.y = first_section_size;
+                dst_rect.size.y      = width_filled;
+                topleft.y            = last_section_size;
+                bottomright.y        = first_section_size;
             } break;
             case FILL_BILINEAR_LEFT_AND_RIGHT: {
                 double center_mapped_from_real_width =
@@ -393,11 +393,11 @@ void TextureProgress::draw_nine_patch_stretched(
                 src_rect.position.x += center_mapped_from_real_width
                                      + drift_from_unscaled_center
                                      - width_texture * 0.5;
-                src_rect.size.x = width_texture;
+                src_rect.size.x      = width_texture;
                 dst_rect.position.x += (width_total - width_filled) * 0.5;
-                dst_rect.size.x = width_filled;
-                topleft.x = first_section_size;
-                bottomright.x = last_section_size;
+                dst_rect.size.x      = width_filled;
+                topleft.x            = first_section_size;
+                bottomright.x        = last_section_size;
             } break;
             case FILL_BILINEAR_TOP_AND_BOTTOM: {
                 double center_mapped_from_real_width =
@@ -415,11 +415,11 @@ void TextureProgress::draw_nine_patch_stretched(
                 src_rect.position.y += center_mapped_from_real_width
                                      + drift_from_unscaled_center
                                      - width_texture * 0.5;
-                src_rect.size.y = width_texture;
+                src_rect.size.y      = width_texture;
                 dst_rect.position.y += (width_total - width_filled) * 0.5;
-                dst_rect.size.y = width_filled;
-                topleft.y = first_section_size;
-                bottomright.y = last_section_size;
+                dst_rect.size.y      = width_filled;
+                topleft.y            = first_section_size;
+                bottomright.y        = last_section_size;
             } break;
             case FILL_CLOCKWISE:
             case FILL_CLOCKWISE_AND_COUNTER_CLOCKWISE:
@@ -597,9 +597,9 @@ void TextureProgress::_notification(int p_what) {
                                     start = rad_init_angle / 360;
                                 }
 
-                                float end = start + direction * val;
+                                float end  = start + direction * val;
                                 float from = MIN(start, end);
-                                float to = MAX(start, end);
+                                float to   = MAX(start, end);
                                 pts.append(from);
                                 for (float corner =
                                          Math::floor(from * 4 + 0.5) * 0.25
@@ -648,7 +648,7 @@ void TextureProgress::_notification(int p_what) {
 
                                 p *= get_relative_center();
                                 p += progress_offset;
-                                p = p.floor();
+                                p  = p.floor();
                                 draw_line(
                                     p - Point2(8, 0),
                                     p + Point2(8, 0),
@@ -1063,17 +1063,17 @@ void TextureProgress::_bind_methods() {
 }
 
 TextureProgress::TextureProgress() {
-    mode = FILL_LEFT_TO_RIGHT;
-    rad_init_angle = 0;
-    rad_center_off = Point2();
+    mode            = FILL_LEFT_TO_RIGHT;
+    rad_init_angle  = 0;
+    rad_center_off  = Point2();
     rad_max_degrees = 360;
     set_mouse_filter(MOUSE_FILTER_PASS);
 
-    nine_patch_stretch = false;
-    stretch_margin[MARGIN_LEFT] = 0;
-    stretch_margin[MARGIN_RIGHT] = 0;
+    nine_patch_stretch            = false;
+    stretch_margin[MARGIN_LEFT]   = 0;
+    stretch_margin[MARGIN_RIGHT]  = 0;
     stretch_margin[MARGIN_BOTTOM] = 0;
-    stretch_margin[MARGIN_TOP] = 0;
+    stretch_margin[MARGIN_TOP]    = 0;
 
     tint_under = tint_progress = tint_over = Color(1, 1, 1);
 }

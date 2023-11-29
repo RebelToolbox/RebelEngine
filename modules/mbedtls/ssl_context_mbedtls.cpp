@@ -174,7 +174,7 @@ Error SSLContextMbedTLS::init_server(
     ERR_FAIL_COND_V(err != OK, err);
 
     // Locking key and certificate(s)
-    pkey = p_pkey;
+    pkey  = p_pkey;
     certs = p_cert;
     if (pkey.is_valid()) {
         pkey->lock();
@@ -264,9 +264,9 @@ void SSLContextMbedTLS::clear() {
     if (pkey.is_valid()) {
         pkey->unlock();
     }
-    pkey = Ref<CryptoKeyMbedTLS>();
+    pkey    = Ref<CryptoKeyMbedTLS>();
     cookies = Ref<CookieContextMbedTLS>();
-    inited = false;
+    inited  = false;
 }
 
 mbedtls_ssl_context* SSLContextMbedTLS::get_context() {

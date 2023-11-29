@@ -85,11 +85,11 @@ public class RebelView extends GLSurfaceView {
         boolean p_translucent
     ) {
         super(context);
-        GLUtils.use_gl3 = p_use_gl3;
-        GLUtils.use_32 = p_use_32_bits;
+        GLUtils.use_gl3          = p_use_gl3;
+        GLUtils.use_32           = p_use_32_bits;
         GLUtils.use_debug_opengl = p_use_debug_opengl;
 
-        this.rebelFragment = rebelFragment;
+        this.rebelFragment     = rebelFragment;
         this.rebelInputHandler = new RebelInputHandler(this);
         this.gestureDetector =
             new GestureDetector(context, new RebelGestureListener(this));

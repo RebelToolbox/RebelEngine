@@ -91,7 +91,7 @@ void Font::draw(
 ) const {
     Vector2 ofs;
 
-    int chars_drawn = 0;
+    int chars_drawn   = 0;
     bool with_outline = has_outline();
     for (int i = 0; i < p_text.length(); i++) {
         int width = get_char_size(p_text[i]).width;
@@ -252,7 +252,7 @@ PoolVector<int> BitmapFont::_get_kernings() const {
     PoolVector<int> kernings;
 
     for (Map<KerningPairKey, int>::Element* E = kerning_map.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         kernings.push_back(E->key().A);
         kernings.push_back(E->key().B);
         kernings.push_back(E->get());
@@ -296,8 +296,8 @@ Error BitmapFont::create_from_fnt(const String& p_file) {
         String line = f->get_line();
 
         int delimiter = line.find(" ");
-        String type = line.substr(0, delimiter);
-        int pos = delimiter + 1;
+        String type   = line.substr(0, delimiter);
+        int pos       = delimiter + 1;
         Map<String, String> keys;
 
         while (pos < line.size() && line[pos] == ' ') {
@@ -310,7 +310,7 @@ Error BitmapFont::create_from_fnt(const String& p_file) {
                 break;
             }
             String key = line.substr(pos, eq - pos);
-            int end = -1;
+            int end    = -1;
             String value;
             if (line[eq + 1] == '"') {
                 end = line.find("\"", eq + 2);
@@ -318,7 +318,7 @@ Error BitmapFont::create_from_fnt(const String& p_file) {
                     break;
                 }
                 value = line.substr(eq + 2, end - 1 - eq - 1);
-                pos = end + 1;
+                pos   = end + 1;
             } else {
                 end = line.find(" ", eq + 1);
                 if (end == -1) {
@@ -356,8 +356,8 @@ Error BitmapFont::create_from_fnt(const String& p_file) {
 
         } else if (type == "page") {
             if (keys.has("file")) {
-                String base_dir = p_file.get_base_dir();
-                String file = base_dir.plus_file(keys["file"]);
+                String base_dir  = p_file.get_base_dir();
+                String file      = base_dir.plus_file(keys["file"]);
                 Ref<Texture> tex = ResourceLoader::load(file);
                 if (tex.is_null()) {
                     ERR_PRINT("Can't load font texture!");
@@ -478,7 +478,7 @@ Vector<CharType> BitmapFont::get_char_keys() const {
     Vector<CharType> chars;
     chars.resize(char_map.size());
     const CharType* ct = nullptr;
-    int count = 0;
+    int count          = 0;
     while ((ct = char_map.next(ct))) {
         chars.write[count++] = *ct;
     };
@@ -506,11 +506,11 @@ void BitmapFont::add_char(
     }
 
     Character c;
-    c.rect = p_rect;
+    c.rect        = p_rect;
     c.texture_idx = p_texture_idx;
-    c.v_align = p_align.y;
-    c.advance = p_advance;
-    c.h_align = p_align.x;
+    c.v_align     = p_align.y;
+    c.advance     = p_advance;
+    c.h_align     = p_align.x;
 
     char_map[p_char] = c;
 }
@@ -533,7 +533,7 @@ Vector<BitmapFont::KerningPairKey> BitmapFont::get_kerning_pair_keys() const {
     int i = 0;
 
     for (Map<KerningPairKey, int>::Element* E = kerning_map.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         ret.write[i++] = E->key();
     }
 
@@ -596,20 +596,20 @@ Size2 Font::get_wordwrap_string_size(const String& p_string, float p_width)
         return Size2(p_width, get_height());
     }
 
-    float line_w = 0;
-    float h = 0;
-    float space_w = get_char_size(' ').width;
+    float line_w         = 0;
+    float h              = 0;
+    float space_w        = get_char_size(' ').width;
     Vector<String> lines = p_string.split("\n");
     for (int i = 0; i < lines.size(); i++) {
-        h += get_height();
-        String t = lines[i];
-        line_w = 0;
-        Vector<String> words = t.split(" ");
+        h                    += get_height();
+        String t              = lines[i];
+        line_w                = 0;
+        Vector<String> words  = t.split(" ");
         for (int j = 0; j < words.size(); j++) {
             line_w += get_string_size(words[j]).x;
             if (line_w > p_width) {
-                h += get_height();
-                line_w = get_string_size(words[j]).x;
+                h      += get_height();
+                line_w  = get_string_size(words[j]).x;
             } else {
                 line_w += space_w;
             }
@@ -621,7 +621,7 @@ Size2 Font::get_wordwrap_string_size(const String& p_string, float p_width)
 
 void BitmapFont::set_fallback(const Ref<BitmapFont>& p_fallback) {
     for (Ref<BitmapFont> fallback_child = p_fallback; fallback_child != nullptr;
-         fallback_child = fallback_child->get_fallback()) {
+         fallback_child                 = fallback_child->get_fallback()) {
         ERR_FAIL_COND_MSG(
             fallback_child == this,
             "Can't set as fallback one of its parents to prevent crashes due "
@@ -665,10 +665,10 @@ float BitmapFont::draw_char(
         0
     );
     if (!p_outline && c->texture_idx != -1) {
-        Point2 cpos = p_pos;
-        cpos.x += c->h_align;
-        cpos.y -= ascent;
-        cpos.y += c->v_align;
+        Point2 cpos  = p_pos;
+        cpos.x      += c->h_align;
+        cpos.y      -= ascent;
+        cpos.y      += c->v_align;
         VisualServer::get_singleton()->canvas_item_add_texture_rect_region(
             p_canvas_item,
             Rect2(cpos, c->rect.size),

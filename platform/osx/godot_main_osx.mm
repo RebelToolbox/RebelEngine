@@ -35,7 +35,7 @@
 #include <unistd.h>
 
 int main(int argc, char** argv) {
-    int first_arg = 1;
+    int first_arg       = 1;
     const char* dbg_arg = "-NSDocumentRevisionsDebugMode";
     printf("arguments\n");
     for (int i = 0; i < argc; i++) {

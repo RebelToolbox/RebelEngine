@@ -70,8 +70,8 @@ void ParallaxLayer::_update_mirroring() {
 
     ParallaxBackground* pb = Object::cast_to<ParallaxBackground>(get_parent());
     if (pb) {
-        RID c = pb->get_canvas();
-        RID ci = get_canvas_item();
+        RID c              = pb->get_canvas();
+        RID ci             = get_canvas_item();
         Point2 mirrorScale = mirroring * get_scale();
         VisualServer::get_singleton()
             ->canvas_set_item_mirroring(c, ci, mirrorScale);
@@ -98,7 +98,7 @@ void ParallaxLayer::_notification(int p_what) {
     switch (p_what) {
         case NOTIFICATION_ENTER_TREE: {
             orig_offset = get_position();
-            orig_scale = get_scale();
+            orig_scale  = get_scale();
             _update_mirroring();
         } break;
         case NOTIFICATION_EXIT_TREE: {
@@ -126,13 +126,13 @@ void ParallaxLayer::set_base_offset_and_scale(
                    + motion_offset * p_scale + orig_offset * p_scale;
 
     if (mirroring.x) {
-        double den = mirroring.x * p_scale;
-        new_ofs.x -= den * ceil(new_ofs.x / den);
+        double den  = mirroring.x * p_scale;
+        new_ofs.x  -= den * ceil(new_ofs.x / den);
     }
 
     if (mirroring.y) {
-        double den = mirroring.y * p_scale;
-        new_ofs.y -= den * ceil(new_ofs.y / den);
+        double den  = mirroring.y * p_scale;
+        new_ofs.y  -= den * ceil(new_ofs.y / den);
     }
 
     set_position(new_ofs);

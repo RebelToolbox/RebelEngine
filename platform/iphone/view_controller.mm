@@ -60,7 +60,7 @@
     GodotViewRenderer* renderer = [[GodotViewRenderer alloc] init];
 
     self.renderer = renderer;
-    self.view = view;
+    self.view     = view;
 
     view.renderer = self.renderer;
     view.delegate = self;
@@ -126,7 +126,7 @@
 }
 
 - (void)displayLoadingOverlay {
-    NSBundle* bundle = [NSBundle mainBundle];
+    NSBundle* bundle         = [NSBundle mainBundle];
     NSString* storyboardName = @"Launch Screen";
 
     if ([bundle pathForResource:storyboardName ofType:@"storyboardc"] == nil) {
@@ -138,7 +138,7 @@
 
     UIViewController* controller =
         [launchStoryboard instantiateInitialViewController];
-    self.godotLoadingOverlay = controller.view;
+    self.godotLoadingOverlay       = controller.view;
     self.godotLoadingOverlay.frame = self.view.bounds;
     self.godotLoadingOverlay.autoresizingMask =
         UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -230,9 +230,9 @@
 
 - (void)keyboardOnScreen:(NSNotification*)notification {
     NSDictionary* info = notification.userInfo;
-    NSValue* value = info[UIKeyboardFrameEndUserInfoKey];
+    NSValue* value     = info[UIKeyboardFrameEndUserInfoKey];
 
-    CGRect rawFrame = [value CGRectValue];
+    CGRect rawFrame      = [value CGRectValue];
     CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
 
     if (OSIPhone::get_singleton()) {

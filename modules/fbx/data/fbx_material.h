@@ -36,8 +36,8 @@
 #include "tools/import_utils.h"
 
 struct FBXMaterial : public Reference {
-    String material_name = String();
-    bool warning_non_pbr_material = false;
+    String material_name             = String();
+    bool warning_non_pbr_material    = false;
     FBXDocParser::Material* material = nullptr;
 
     /* Godot materials
@@ -295,7 +295,7 @@ struct FBXMaterial : public Reference {
     struct TextureFileMapping {
         SpatialMaterial::TextureParam map_mode =
             SpatialMaterial::TEXTURE_ALBEDO;
-        String name = String();
+        String name                          = String();
         const FBXDocParser::Texture* texture = nullptr;
     };
 

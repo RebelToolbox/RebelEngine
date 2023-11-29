@@ -74,8 +74,8 @@ public:
     virtual void init() {
         print_line("INITIALIZING TEST RENDER");
         VisualServer* vs = VisualServer::get_singleton();
-        test_cube = vs->get_test_cube();
-        scenario = vs->scenario_create();
+        test_cube        = vs->get_test_cube();
+        scenario         = vs->scenario_create();
 
         Vector<Vector3> vts;
 
@@ -137,7 +137,7 @@ public:
         */
 
         List<String> cmdline = OS::get_singleton()->get_cmdline_args();
-        int object_count = OBJECT_COUNT;
+        int object_count     = OBJECT_COUNT;
         if (cmdline.size() > 0 && cmdline[cmdline.size() - 1].to_int()) {
             object_count = cmdline[cmdline.size() - 1].to_int();
         };
@@ -170,7 +170,7 @@ public:
 
         // 		vs->camera_set_perspective( camera, 60.0,0.1, 100.0 );
 
-        viewport = vs->viewport_create();
+        viewport           = vs->viewport_create();
         Size2i screen_size = OS::get_singleton()->get_window_size();
         vs->viewport_set_size(viewport, screen_size.x, screen_size.y);
         vs->viewport_attach_to_screen(viewport, Rect2(Vector2(), screen_size));
@@ -214,7 +214,7 @@ public:
         // vs->light_set_shadow( lightaux, true );
         // light = vs->instance_create( lightaux );
 
-        ofs = 0;
+        ofs  = 0;
         quit = false;
     }
 
@@ -230,7 +230,7 @@ public:
         // return quit;
 
         for (List<InstanceInfo>::Element* E = instances.front(); E;
-             E = E->next()) {
+             E                              = E->next()) {
             Transform pre(Basis(E->get().rot_axis, ofs), Vector3());
             vs->instance_set_transform(E->get().instance, pre * E->get().base);
             /*

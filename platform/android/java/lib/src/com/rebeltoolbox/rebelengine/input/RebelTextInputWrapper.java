@@ -65,7 +65,7 @@ public class RebelTextInputWrapper
         final RebelView rebelView,
         final RebelEditText rebelEditText
     ) {
-        this.rebelView = rebelView;
+        this.rebelView     = rebelView;
         this.rebelEditText = rebelEditText;
     }
 

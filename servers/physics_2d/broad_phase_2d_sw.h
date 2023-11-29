@@ -64,18 +64,18 @@ public:
     // 0 is an invalid ID
     virtual ID create(
         CollisionObject2DSW* p_object_,
-        int p_subindex = 0,
+        int p_subindex      = 0,
         const Rect2& p_aabb = Rect2(),
-        bool p_static = false
-    ) = 0;
+        bool p_static       = false
+    )                                               = 0;
     virtual void move(ID p_id, const Rect2& p_aabb) = 0;
-    virtual void recheck_pairs(ID p_id) = 0;
+    virtual void recheck_pairs(ID p_id)             = 0;
     virtual void set_static(ID p_id, bool p_static) = 0;
-    virtual void remove(ID p_id) = 0;
+    virtual void remove(ID p_id)                    = 0;
 
     virtual CollisionObject2DSW* get_object(ID p_id) const = 0;
-    virtual bool is_static(ID p_id) const = 0;
-    virtual int get_subindex(ID p_id) const = 0;
+    virtual bool is_static(ID p_id) const                  = 0;
+    virtual int get_subindex(ID p_id) const                = 0;
 
     virtual int cull_segment(
         const Vector2& p_from,

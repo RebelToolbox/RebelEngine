@@ -100,10 +100,10 @@ void Reverb::process(float* p_src, float* p_dst, int p_frames) {
         float hp_b1 = hpaux;
 
         for (int i = 0; i < p_frames; i++) {
-            float in = input_buffer[i];
+            float in        = input_buffer[i];
             input_buffer[i] = in * hp_a1 + hpf_h1 * hp_a2 + hpf_h2 * hp_b1;
-            hpf_h2 = input_buffer[i];
-            hpf_h1 = in;
+            hpf_h2          = input_buffer[i];
+            hpf_h1          = in;
         }
     }
 
@@ -121,10 +121,10 @@ void Reverb::process(float* p_src, float* p_dst, int p_frames) {
             }
 
             float out = undenormalise(c.buffer[c.pos] * c.feedback);
-            out = out * (1.0 - c.damp) + c.damp_h * c.damp; // lowpass
-            c.damp_h = out;
-            c.buffer[c.pos] = input_buffer[j] + out;
-            p_dst[j] += out;
+            out       = out * (1.0 - c.damp) + c.damp_h * c.damp; // lowpass
+            c.damp_h  = out;
+            c.buffer[c.pos]  = input_buffer[j] + out;
+            p_dst[j]        += out;
             c.pos++;
         }
     }
@@ -177,9 +177,9 @@ void Reverb::process(float* p_src, float* p_dst, int p_frames) {
                 a.pos = 0;
             }
 
-            float aux = a.buffer[a.pos];
+            float aux       = a.buffer[a.pos];
             a.buffer[a.pos] = undenormalise(allpass_feedback * aux + p_dst[j]);
-            p_dst[j] = aux - allpass_feedback * a.buffer[a.pos];
+            p_dst[j]        = aux - allpass_feedback * a.buffer[a.pos];
             a.pos++;
         }
     }
@@ -257,7 +257,7 @@ void Reverb::configure_buffers() {
         }
 
         c.buffer = memnew_arr(float, len);
-        c.pos = 0;
+        c.pos    = 0;
         for (int j = 0; j < len; j++) {
             c.buffer[j] = 0;
         }
@@ -277,7 +277,7 @@ void Reverb::configure_buffers() {
         }
 
         a.buffer = memnew_arr(float, len);
-        a.pos = 0;
+        a.pos    = 0;
         for (int j = 0; j < len; j++) {
             a.buffer[j] = 0;
         }
@@ -296,11 +296,11 @@ void Reverb::configure_buffers() {
 
 void Reverb::update_parameters() {
     // more freeverb derived constants
-    static const float room_scale = 0.28f;
+    static const float room_scale  = 0.28f;
     static const float room_offset = 0.7f;
 
     for (int i = 0; i < MAX_COMBS; i++) {
-        Comb& c = comb[i];
+        Comb& c    = comb[i];
         c.feedback = room_offset + params.room_size * room_scale;
         if (c.feedback < room_offset) {
             c.feedback = room_offset;
@@ -341,21 +341,21 @@ void Reverb::clear_buffers() {
 }
 
 Reverb::Reverb() {
-    params.room_size = 0.8;
-    params.damp = 0.5;
-    params.dry = 1.0;
-    params.wet = 0.0;
-    params.mix_rate = 44100;
+    params.room_size         = 0.8;
+    params.damp              = 0.5;
+    params.dry               = 1.0;
+    params.wet               = 0.0;
+    params.mix_rate          = 44100;
     params.extra_spread_base = 0;
-    params.extra_spread = 1.0;
-    params.predelay = 150;
-    params.predelay_fb = 0.4;
-    params.hpf = 0;
-    hpf_h1 = 0;
-    hpf_h2 = 0;
+    params.extra_spread      = 1.0;
+    params.predelay          = 150;
+    params.predelay_fb       = 0.4;
+    params.hpf               = 0;
+    hpf_h1                   = 0;
+    hpf_h2                   = 0;
 
     input_buffer = memnew_arr(float, INPUT_BUFFER_MAX_SIZE);
-    echo_buffer = nullptr;
+    echo_buffer  = nullptr;
 
     configure_buffers();
     update_parameters();

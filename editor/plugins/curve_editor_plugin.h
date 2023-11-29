@@ -66,8 +66,8 @@ public:
     };
 
     enum TangentIndex {
-        TANGENT_NONE = -1,
-        TANGENT_LEFT = 0,
+        TANGENT_NONE  = -1,
+        TANGENT_LEFT  = 0,
         TANGENT_RIGHT = 1
     };
 

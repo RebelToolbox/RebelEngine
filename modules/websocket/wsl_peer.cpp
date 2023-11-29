@@ -75,7 +75,7 @@ void WSLPeer::_wsl_destroy(struct PeerData** p_data) {
 
 bool WSLPeer::_wsl_poll(struct PeerData* p_data) {
     p_data->polling = true;
-    int err = 0;
+    int err         = 0;
     if ((err = wslay_event_recv(p_data->ctx)) != 0
         || (err = wslay_event_send(p_data->ctx)) != 0) {
         print_verbose("Websocket (wslay) poll error: " + itos(err));
@@ -106,8 +106,8 @@ ssize_t wsl_recv_callback(
         return -1;
     }
     Ref<StreamPeer> conn = peer_data->conn;
-    int read = 0;
-    Error err = conn->get_partial_data(data, len, read);
+    int read             = 0;
+    Error err            = conn->get_partial_data(data, len, read);
     if (err != OK) {
         print_verbose(
             "Websocket get data error: " + itos(err)
@@ -136,8 +136,8 @@ ssize_t wsl_send_callback(
         return -1;
     }
     Ref<StreamPeer> conn = peer_data->conn;
-    int sent = 0;
-    Error err = conn->put_partial_data(data, len, sent);
+    int sent             = 0;
+    Error err            = conn->put_partial_data(data, len, sent);
     if (err != OK) {
         wslay_event_set_error(ctx, WSLAY_ERR_CALLBACK_FAILURE);
         return -1;
@@ -203,8 +203,8 @@ Error WSLPeer::parse_message(const wslay_event_on_msg_recv_arg* arg) {
     if (arg->opcode == WSLAY_TEXT_FRAME) {
         is_string = 1;
     } else if (arg->opcode == WSLAY_CONNECTION_CLOSE) {
-        close_code = arg->status_code;
-        size_t len = arg->msg_length;
+        close_code   = arg->status_code;
+        size_t len   = arg->msg_length;
         close_reason = "";
         if (len > 2 /* first 2 bytes = close code */) {
             close_reason.parse_utf8((char*)arg->msg + 2, len - 2);
@@ -242,8 +242,8 @@ void WSLPeer::make_context(
     _out_buf_size = p_out_buf_size;
     _out_pkt_size = p_out_pkt_size;
 
-    _data = p_data;
-    _data->peer = this;
+    _data        = p_data;
+    _data->peer  = this;
     _data->valid = true;
 
     if (_data->is_server) {
@@ -293,7 +293,7 @@ Error WSLPeer::put_packet(const uint8_t* p_buffer, int p_buffer_size) {
     struct wslay_event_msg msg;
     msg.opcode =
         write_mode == WRITE_MODE_TEXT ? WSLAY_TEXT_FRAME : WSLAY_BINARY_FRAME;
-    msg.msg = p_buffer;
+    msg.msg        = p_buffer;
     msg.msg_length = p_buffer_size;
 
     if (wslay_event_queue_msg(_data->ctx, &msg) != 0
@@ -313,11 +313,11 @@ Error WSLPeer::get_packet(const uint8_t** r_buffer, int& r_buffer_size) {
         return ERR_UNAVAILABLE;
     }
 
-    int read = 0;
+    int read                      = 0;
     PoolVector<uint8_t>::Write rw = _packet_buffer.write();
     _in_buffer.read_packet(rw.ptr(), _packet_buffer.size(), &_is_string, read);
 
-    *r_buffer = rw.ptr();
+    *r_buffer     = rw.ptr();
     r_buffer_size = read;
 
     return OK;
@@ -394,10 +394,10 @@ void WSLPeer::invalidate() {
 }
 
 WSLPeer::WSLPeer() {
-    _data = nullptr;
-    _is_string = 0;
-    close_code = -1;
-    write_mode = WRITE_MODE_BINARY;
+    _data         = nullptr;
+    _is_string    = 0;
+    close_code    = -1;
+    write_mode    = WRITE_MODE_BINARY;
     _out_buf_size = 0;
     _out_pkt_size = 0;
 }

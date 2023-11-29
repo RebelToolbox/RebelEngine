@@ -40,19 +40,19 @@ struct GLTFAccessor : public Resource {
 
 private:
     GLTFBufferViewIndex buffer_view = 0;
-    int byte_offset = 0;
-    int component_type = 0;
-    bool normalized = false;
-    int count = 0;
-    GLTFDocument::GLTFType type = GLTFDocument::TYPE_SCALAR;
+    int byte_offset                 = 0;
+    int component_type              = 0;
+    bool normalized                 = false;
+    int count                       = 0;
+    GLTFDocument::GLTFType type     = GLTFDocument::TYPE_SCALAR;
     PoolVector<float> min;
     PoolVector<float> max;
-    int sparse_count = 0;
-    int sparse_indices_buffer_view = 0;
-    int sparse_indices_byte_offset = 0;
+    int sparse_count                  = 0;
+    int sparse_indices_buffer_view    = 0;
+    int sparse_indices_byte_offset    = 0;
     int sparse_indices_component_type = 0;
-    int sparse_values_buffer_view = 0;
-    int sparse_values_byte_offset = 0;
+    int sparse_values_buffer_view     = 0;
+    int sparse_values_byte_offset     = 0;
 
 protected:
     static void _bind_methods();

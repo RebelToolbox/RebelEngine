@@ -95,7 +95,7 @@ void ResourceImporterTexture::update_imports() {
 
     Vector<String> to_reimport;
     for (Map<StringName, int>::Element* E = make_flags.front(); E;
-         E = E->next()) {
+         E                                = E->next()) {
         Ref<ConfigFile> cf;
         cf.instance();
         String src_path = String(E->key()) + ".import";
@@ -493,8 +493,8 @@ void ResourceImporterTexture::_save_stex(
 
             f->store_32(format);
 
-            PoolVector<uint8_t> data = image->get_data();
-            int dl = data.size();
+            PoolVector<uint8_t> data    = image->get_data();
+            int dl                      = data.size();
             PoolVector<uint8_t>::Read r = data.read();
             f->store_buffer(r.ptr(), dl);
         } break;
@@ -509,8 +509,8 @@ void ResourceImporterTexture::_save_stex(
             format |= image->get_format();
             f->store_32(format);
 
-            PoolVector<uint8_t> data = image->get_data();
-            int dl = data.size();
+            PoolVector<uint8_t> data    = image->get_data();
+            int dl                      = data.size();
             PoolVector<uint8_t>::Read r = data.read();
 
             f->store_buffer(r.ptr(), dl);
@@ -529,24 +529,24 @@ Error ResourceImporterTexture::import(
     List<String>* r_gen_files,
     Variant* r_metadata
 ) {
-    int compress_mode = p_options["compress/mode"];
-    float lossy = p_options["compress/lossy_quality"];
-    int repeat = p_options["flags/repeat"];
-    bool filter = p_options["flags/filter"];
-    bool mipmaps = p_options["flags/mipmaps"];
-    bool anisotropic = p_options["flags/anisotropic"];
-    int srgb = p_options["flags/srgb"];
-    bool fix_alpha_border = p_options["process/fix_alpha_border"];
-    bool premult_alpha = p_options["process/premult_alpha"];
-    bool invert_color = p_options["process/invert_color"];
+    int compress_mode        = p_options["compress/mode"];
+    float lossy              = p_options["compress/lossy_quality"];
+    int repeat               = p_options["flags/repeat"];
+    bool filter              = p_options["flags/filter"];
+    bool mipmaps             = p_options["flags/mipmaps"];
+    bool anisotropic         = p_options["flags/anisotropic"];
+    int srgb                 = p_options["flags/srgb"];
+    bool fix_alpha_border    = p_options["process/fix_alpha_border"];
+    bool premult_alpha       = p_options["process/premult_alpha"];
+    bool invert_color        = p_options["process/invert_color"];
     bool normal_map_invert_y = p_options["process/normal_map_invert_y"];
-    bool stream = p_options["stream"];
-    int size_limit = p_options["size_limit"];
-    bool hdr_as_srgb = p_options["process/HDR_as_SRGB"];
-    int normal = p_options["compress/normal_map"];
-    float scale = p_options["svg/scale"];
-    bool force_rgbe = p_options["compress/hdr_mode"];
-    int bptc_ldr = p_options["compress/bptc_ldr"];
+    bool stream              = p_options["stream"];
+    int size_limit           = p_options["size_limit"];
+    bool hdr_as_srgb         = p_options["process/HDR_as_SRGB"];
+    int normal               = p_options["compress/normal_map"];
+    float scale              = p_options["svg/scale"];
+    bool force_rgbe          = p_options["compress/hdr_mode"];
+    int bptc_ldr             = p_options["compress/bptc_ldr"];
 
     Ref<Image> image;
     image.instance();
@@ -650,7 +650,7 @@ Error ResourceImporterTexture::import(
 
     if (invert_color) {
         int height = image->get_height();
-        int width = image->get_width();
+        int width  = image->get_width();
 
         image->lock();
         for (int i = 0; i < width; i++) {
@@ -668,7 +668,7 @@ Error ResourceImporterTexture::import(
         // exported from another program. See
         // <http://wiki.polycount.com/wiki/Normal_Map_Technical_Details#Common_Swizzle_Coordinates>.
         const int height = image->get_height();
-        const int width = image->get_width();
+        const int width  = image->get_width();
 
         image->lock();
         for (int i = 0; i < width; i++) {
@@ -680,10 +680,10 @@ Error ResourceImporterTexture::import(
         image->unlock();
     }
 
-    bool detect_3d = p_options["detect_3d"];
-    bool detect_srgb = srgb == 2;
+    bool detect_3d     = p_options["detect_3d"];
+    bool detect_srgb   = srgb == 2;
     bool detect_normal = normal == 0;
-    bool force_normal = normal == 1;
+    bool force_normal  = normal == 1;
 
     if (compress_mode == COMPRESS_VIDEO_RAM) {
         // must import in all formats, in order of priority (so platform choses
@@ -894,7 +894,7 @@ bool ResourceImporterTexture::are_import_settings_valid(const String& p_path
         formats_imported = metadata["imported_formats"];
     }
 
-    int index = 0;
+    int index  = 0;
     bool valid = true;
     while (compression_formats[index]) {
         String setting_path = "rendering/vram_compression/import_"
@@ -915,8 +915,8 @@ bool ResourceImporterTexture::are_import_settings_valid(const String& p_path
 ResourceImporterTexture* ResourceImporterTexture::singleton = nullptr;
 
 ResourceImporterTexture::ResourceImporterTexture() {
-    singleton = this;
-    StreamTexture::request_3d_callback = _texture_reimport_3d;
-    StreamTexture::request_srgb_callback = _texture_reimport_srgb;
+    singleton                              = this;
+    StreamTexture::request_3d_callback     = _texture_reimport_3d;
+    StreamTexture::request_srgb_callback   = _texture_reimport_srgb;
     StreamTexture::request_normal_callback = _texture_reimport_normal;
 }

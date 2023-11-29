@@ -128,16 +128,16 @@ public:
 
 private:
     _GodotSharpDirs() {
-        res_data_dir = "res://.mono";
-        res_metadata_dir = res_data_dir.plus_file("metadata");
+        res_data_dir            = "res://.mono";
+        res_metadata_dir        = res_data_dir.plus_file("metadata");
         res_assemblies_base_dir = res_data_dir.plus_file("assemblies");
-        res_assemblies_dir = res_assemblies_base_dir.plus_file(
+        res_assemblies_dir      = res_assemblies_base_dir.plus_file(
             GDMono::get_expected_api_build_config()
         );
         res_config_dir = res_data_dir.plus_file("etc").plus_file("mono");
 
         // TODO use paths from csproj
-        res_temp_dir = res_data_dir.plus_file("temp");
+        res_temp_dir                 = res_data_dir.plus_file("temp");
         res_temp_assemblies_base_dir = res_temp_dir.plus_file("bin");
         res_temp_assemblies_dir =
             res_temp_assemblies_base_dir.plus_file(_get_expected_build_config()
@@ -152,7 +152,7 @@ private:
 
 #ifdef TOOLS_ENABLED
         mono_solutions_dir = mono_user_dir.plus_file("solutions");
-        build_logs_dir = mono_user_dir.plus_file("build_logs");
+        build_logs_dir     = mono_user_dir.plus_file("build_logs");
 
         String appname =
             ProjectSettings::get_singleton()->get("application/config/name");
@@ -164,7 +164,7 @@ private:
         String base_path =
             ProjectSettings::get_singleton()->globalize_path("res://");
 
-        sln_filepath = base_path.plus_file(appname_safe + ".sln");
+        sln_filepath    = base_path.plus_file(appname_safe + ".sln");
         csproj_filepath = base_path.plus_file(appname_safe + ".csproj");
 #endif
 
@@ -173,12 +173,12 @@ private:
 
 #ifdef TOOLS_ENABLED
 
-        String data_dir_root = exe_dir.plus_file("GodotSharp");
-        data_editor_tools_dir = data_dir_root.plus_file("Tools");
+        String data_dir_root         = exe_dir.plus_file("GodotSharp");
+        data_editor_tools_dir        = data_dir_root.plus_file("Tools");
         data_editor_prebuilt_api_dir = data_dir_root.plus_file("Api");
 
         String data_mono_root_dir = data_dir_root.plus_file("Mono");
-        data_mono_etc_dir = data_mono_root_dir.plus_file("etc");
+        data_mono_etc_dir         = data_mono_root_dir.plus_file("etc");
 
 #ifdef ANDROID_ENABLED
         data_mono_lib_dir = gdmono::android::support::get_app_native_lib_dir();
@@ -213,19 +213,19 @@ private:
 
         String appname =
             ProjectSettings::get_singleton()->get("application/config/name");
-        String appname_safe = OS::get_singleton()->get_safe_dir_name(appname);
+        String appname_safe  = OS::get_singleton()->get_safe_dir_name(appname);
         String data_dir_root = exe_dir.plus_file("data_" + appname_safe);
         if (!DirAccess::exists(data_dir_root)) {
             data_dir_root = exe_dir.plus_file("data_Godot");
         }
 
         String data_mono_root_dir = data_dir_root.plus_file("Mono");
-        data_mono_etc_dir = data_mono_root_dir.plus_file("etc");
+        data_mono_etc_dir         = data_mono_root_dir.plus_file("etc");
 
 #ifdef ANDROID_ENABLED
         data_mono_lib_dir = gdmono::android::support::get_app_native_lib_dir();
 #else
-        data_mono_lib_dir = data_mono_root_dir.plus_file("lib");
+        data_mono_lib_dir        = data_mono_root_dir.plus_file("lib");
         data_game_assemblies_dir = data_dir_root.plus_file("Assemblies");
 #endif
 

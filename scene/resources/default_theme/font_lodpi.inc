@@ -1,6 +1,6 @@
-static const int _lodpi_font_height = 14;
-static const int _lodpi_font_ascent = 11;
-static const int _lodpi_font_charcount = 191;
+static const int _lodpi_font_height            = 14;
+static const int _lodpi_font_ascent            = 11;
+static const int _lodpi_font_charcount         = 191;
 static const int _lodpi_font_charrects[191][8] = {
   /* charidx , ofs_x, ofs_y, size_x, size_y, valign, halign, advance */
     {64,  72,         34,  10, 11, 1,  1,  12},
@@ -195,13 +195,13 @@ static const int _lodpi_font_charrects[191][8] = {
     {63,  74,         202, 5,  10, 1,  0,  6 },
     {95,  92,         148, 6,  1,  12, 0,  6 },
 };
-static const int _lodpi_font_kerning_pair_count = 0;
+static const int _lodpi_font_kerning_pair_count  = 0;
 static const int _lodpi_font_kerning_pairs[1][3] = {
     {0, 0, 0},
 };
-static const int _lodpi_font_img_width = 128;
-static const int _lodpi_font_img_height = 256;
-static const int _lodpi_font_img_data_size = 12909;
+static const int _lodpi_font_img_width                 = 128;
+static const int _lodpi_font_img_height                = 256;
+static const int _lodpi_font_img_data_size             = 12909;
 static const unsigned char _lodpi_font_img_data[12909] = {
     137, 80,  78,  71,  13,  10,  26,  10,  0,   0,   0,   13,  73,  72,  68,
     82,  0,   0,   0,   128, 0,   0,   1,   0,   8,   6,   0,   0,   0,   123,

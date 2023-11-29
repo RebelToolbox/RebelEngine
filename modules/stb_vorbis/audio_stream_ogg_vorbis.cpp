@@ -59,7 +59,7 @@ void AudioStreamPlaybackOGGVorbis::_mix_internal(
                 p_buffer[i].r = p_buffer[i].l;
             }
         }
-        todo -= mixed;
+        todo         -= mixed;
         frames_mixed += mixed;
 
         if (todo) {
@@ -79,7 +79,7 @@ void AudioStreamPlaybackOGGVorbis::_mix_internal(
                     p_buffer[i] = AudioFrame(0, 0);
                 }
                 active = false;
-                todo = 0;
+                todo   = 0;
             }
         }
     }
@@ -148,9 +148,9 @@ Ref<AudioStreamPlayback> AudioStreamOGGVorbis::instance_playback() {
     ovs->ogg_alloc.alloc_buffer =
         (char*)AudioServer::get_singleton()->audio_data_alloc(decode_mem_size);
     ovs->ogg_alloc.alloc_buffer_length_in_bytes = decode_mem_size;
-    ovs->frames_mixed = 0;
-    ovs->active = false;
-    ovs->loops = 0;
+    ovs->frames_mixed                           = 0;
+    ovs->active                                 = false;
+    ovs->loops                                  = 0;
     int error;
     ovs->ogg_stream = stb_vorbis_open_memory(
         (const unsigned char*)data,
@@ -176,13 +176,13 @@ String AudioStreamOGGVorbis::get_stream_name() const {
 void AudioStreamOGGVorbis::clear_data() {
     if (data) {
         AudioServer::get_singleton()->audio_data_free(data);
-        data = nullptr;
+        data     = nullptr;
         data_len = 0;
     }
 }
 
 void AudioStreamOGGVorbis::set_data(const PoolVector<uint8_t>& p_data) {
-    int src_data_len = p_data.size();
+    int src_data_len   = p_data.size();
     uint32_t alloc_try = 1024;
     PoolVector<char> alloc_mem;
     PoolVector<char>::Write w;
@@ -197,7 +197,7 @@ void AudioStreamOGGVorbis::set_data(const PoolVector<uint8_t>& p_data) {
         alloc_mem.resize(alloc_try);
         w = alloc_mem.write();
 
-        ogg_alloc.alloc_buffer = w.ptr();
+        ogg_alloc.alloc_buffer                 = w.ptr();
         ogg_alloc.alloc_buffer_length_in_bytes = alloc_try;
 
         PoolVector<uint8_t>::Read src_datar = p_data.read();
@@ -226,8 +226,8 @@ void AudioStreamOGGVorbis::set_data(const PoolVector<uint8_t>& p_data) {
 
             stb_vorbis_info info = stb_vorbis_get_info(ogg_stream);
 
-            channels = info.channels;
-            sample_rate = info.sample_rate;
+            channels        = info.channels;
+            sample_rate     = info.sample_rate;
             decode_mem_size = alloc_try;
             // does this work? (it's less mem..)
             // decode_mem_size = ogg_alloc.alloc_buffer_length_in_bytes +
@@ -336,14 +336,14 @@ void AudioStreamOGGVorbis::_bind_methods() {
 }
 
 AudioStreamOGGVorbis::AudioStreamOGGVorbis() {
-    data = nullptr;
-    data_len = 0;
-    length = 0;
-    sample_rate = 1;
-    channels = 1;
-    loop_offset = 0;
+    data            = nullptr;
+    data_len        = 0;
+    length          = 0;
+    sample_rate     = 1;
+    channels        = 1;
+    loop_offset     = 0;
     decode_mem_size = 0;
-    loop = false;
+    loop            = false;
 }
 
 AudioStreamOGGVorbis::~AudioStreamOGGVorbis() {

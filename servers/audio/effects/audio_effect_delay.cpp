@@ -93,9 +93,9 @@ void AudioEffectDelayInstance::_process_chunk(
     float lpf_ic = 1.0 - lpf_c;
 
     const AudioFrame* src = p_src_frames;
-    AudioFrame* dst = p_dst_frames;
-    AudioFrame* rb_buf = ring_buffer.ptrw();
-    AudioFrame* fb_buf = feedback_buffer.ptrw();
+    AudioFrame* dst       = p_dst_frames;
+    AudioFrame* rb_buf    = ring_buffer.ptrw();
+    AudioFrame* fb_buf    = feedback_buffer.ptrw();
 
     for (int i = 0; i < p_frame_count; i++) {
         rb_buf[ring_buffer_pos & ring_buffer_mask] = src[i];
@@ -116,7 +116,7 @@ void AudioEffectDelayInstance::_process_chunk(
         AudioFrame fb_in = out * feedback_level_f * lpf_ic + h * lpf_c;
         fb_in.undenormalise(); // avoid denormals
 
-        h = fb_in;
+        h                           = fb_in;
         fb_buf[feedback_buffer_pos] = fb_in;
 
         dst[i] = out;
@@ -148,9 +148,9 @@ Ref<AudioEffectInstance> AudioEffectDelay::instance() {
         ringbuff_size /= 2;
     }
 
-    ringbuff_size = 1 << bits;
+    ringbuff_size         = 1 << bits;
     ins->ring_buffer_mask = ringbuff_size - 1;
-    ins->ring_buffer_pos = 0;
+    ins->ring_buffer_pos  = 0;
 
     ins->ring_buffer.resize(ringbuff_size);
     ins->feedback_buffer.resize(ringbuff_size);
@@ -497,20 +497,20 @@ void AudioEffectDelay::_bind_methods() {
 }
 
 AudioEffectDelay::AudioEffectDelay() {
-    tap_1_active = true;
+    tap_1_active   = true;
     tap_1_delay_ms = 250;
-    tap_1_level = -6;
-    tap_1_pan = 0.2;
+    tap_1_level    = -6;
+    tap_1_pan      = 0.2;
 
-    tap_2_active = true;
+    tap_2_active   = true;
     tap_2_delay_ms = 500;
-    tap_2_level = -12;
-    tap_2_pan = -0.4;
+    tap_2_level    = -12;
+    tap_2_pan      = -0.4;
 
-    feedback_active = false;
+    feedback_active   = false;
     feedback_delay_ms = 340;
-    feedback_level = -6;
-    feedback_lowpass = 16000;
+    feedback_level    = -6;
+    feedback_lowpass  = 16000;
 
     dry = 1.0;
 }

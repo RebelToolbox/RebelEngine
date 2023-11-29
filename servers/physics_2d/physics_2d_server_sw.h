@@ -159,7 +159,7 @@ public:
         RID p_area,
         RID p_shape,
         const Transform2D& p_transform = Transform2D(),
-        bool p_disabled = false
+        bool p_disabled                = false
     );
     virtual void area_set_shape(RID p_area, int p_shape_idx, RID p_shape);
     virtual void area_set_shape_transform(
@@ -229,7 +229,7 @@ public:
         RID p_body,
         RID p_shape,
         const Transform2D& p_transform = Transform2D(),
-        bool p_disabled = false
+        bool p_disabled                = false
     );
     virtual void body_set_shape(RID p_body, int p_shape_idx, RID p_shape);
     virtual void body_set_shape_transform(
@@ -369,10 +369,10 @@ public:
         const Transform2D& p_from,
         const Vector2& p_motion,
         bool p_infinite_inertia,
-        real_t p_margin = 0.08,
-        MotionResult* r_result = nullptr,
+        real_t p_margin               = 0.08,
+        MotionResult* r_result        = nullptr,
         bool p_exclude_raycast_shapes = true,
-        const Set<RID>& p_exclude = Set<RID>()
+        const Set<RID>& p_exclude     = Set<RID>()
     );
     virtual int body_test_ray_separation(
         RID p_body,

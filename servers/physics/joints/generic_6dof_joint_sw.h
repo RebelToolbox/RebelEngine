@@ -93,19 +93,19 @@ public:
 
     G6DOFRotationalLimitMotorSW() {
         m_accumulatedImpulse = 0.f;
-        m_targetVelocity = 0;
-        m_maxMotorForce = 0.1f;
-        m_maxLimitForce = 300.0f;
-        m_loLimit = -1e30;
-        m_hiLimit = 1e30;
-        m_ERP = 0.5f;
-        m_bounce = 0.0f;
-        m_damping = 1.0f;
-        m_limitSoftness = 0.5f;
-        m_currentLimit = 0;
-        m_currentLimitError = 0;
-        m_enableMotor = false;
-        m_enableLimit = false;
+        m_targetVelocity     = 0;
+        m_maxMotorForce      = 0.1f;
+        m_maxLimitForce      = 300.0f;
+        m_loLimit            = -1e30;
+        m_hiLimit            = 1e30;
+        m_ERP                = 0.5f;
+        m_bounce             = 0.0f;
+        m_damping            = 1.0f;
+        m_limitSoftness      = 0.5f;
+        m_currentLimit       = 0;
+        m_currentLimitError  = 0;
+        m_enableMotor        = false;
+        m_enableLimit        = false;
     }
 
     //! Is limited
@@ -148,13 +148,13 @@ public:
     bool enable_limit[3];
 
     G6DOFTranslationalLimitMotorSW() {
-        m_lowerLimit = Vector3(0.f, 0.f, 0.f);
-        m_upperLimit = Vector3(0.f, 0.f, 0.f);
+        m_lowerLimit         = Vector3(0.f, 0.f, 0.f);
+        m_upperLimit         = Vector3(0.f, 0.f, 0.f);
         m_accumulatedImpulse = Vector3(0.f, 0.f, 0.f);
 
         m_limitSoftness = Vector3(1, 1, 1) * 0.7f;
-        m_damping = Vector3(1, 1, 1) * real_t(1.0f);
-        m_restitution = Vector3(1, 1, 1) * real_t(0.5f);
+        m_damping       = Vector3(1, 1, 1) * real_t(1.0f);
+        m_restitution   = Vector3(1, 1, 1) * real_t(0.5f);
 
         enable_limit[0] = true;
         enable_limit[1] = true;
@@ -235,7 +235,7 @@ protected:
     //!@}
 
     Generic6DOFJointSW(Generic6DOFJointSW const&) = delete;
-    void operator=(Generic6DOFJointSW const&) = delete;
+    void operator=(Generic6DOFJointSW const&)     = delete;
 
     void buildLinearJacobian(
         JacobianEntrySW& jacLinear,

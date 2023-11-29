@@ -45,11 +45,11 @@ protected:
 
 public:
     virtual void set_local_path(const String& p_local_path) = 0;
-    virtual Ref<Resource> get_resource() = 0;
-    virtual Error poll() = 0;
-    virtual int get_stage() const = 0;
-    virtual int get_stage_count() const = 0;
-    virtual void set_translation_remapped(bool p_remapped) = 0;
+    virtual Ref<Resource> get_resource()                    = 0;
+    virtual Error poll()                                    = 0;
+    virtual int get_stage() const                           = 0;
+    virtual int get_stage_count() const                     = 0;
+    virtual void set_translation_remapped(bool p_remapped)  = 0;
     virtual Error wait();
 
     ResourceInteractiveLoader() {}
@@ -67,12 +67,12 @@ public:
     virtual Ref<ResourceInteractiveLoader> load_interactive(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual bool exists(const String& p_path) const;
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
@@ -198,14 +198,14 @@ public:
     static Ref<ResourceInteractiveLoader> load_interactive(
         const String& p_path,
         const String& p_type_hint = "",
-        bool p_no_cache = false,
-        Error* r_error = nullptr
+        bool p_no_cache           = false,
+        Error* r_error            = nullptr
     );
     static RES load(
         const String& p_path,
         const String& p_type_hint = "",
-        bool p_no_cache = false,
-        Error* r_error = nullptr
+        bool p_no_cache           = false,
+        Error* r_error            = nullptr
     );
     static bool exists(const String& p_path, const String& p_type_hint = "");
 
@@ -253,7 +253,7 @@ public:
         void* p_ud,
         ResourceLoadErrorNotify p_err_notify
     ) {
-        err_notify = p_err_notify;
+        err_notify    = p_err_notify;
         err_notify_ud = p_ud;
     }
 
@@ -271,7 +271,7 @@ public:
         void* p_ud,
         DependencyErrorNotify p_err_notify
     ) {
-        dep_err_notify = p_err_notify;
+        dep_err_notify    = p_err_notify;
         dep_err_notify_ud = p_ud;
     }
 

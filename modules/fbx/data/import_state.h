@@ -59,17 +59,17 @@ struct FBXNode;
 struct FBXSkeleton;
 
 struct ImportState {
-    bool enable_material_import = true;
+    bool enable_material_import  = true;
     bool enable_animation_import = true;
-    bool is_blender_fbx = false;
+    bool is_blender_fbx          = false;
 
     Map<StringName, Ref<Texture>> cached_image_searches;
     Map<uint64_t, Ref<SpatialMaterial>> cached_materials;
 
-    String path = String();
-    Spatial* root_owner = nullptr;
-    Spatial* root = nullptr;
-    real_t scale = 0.01;
+    String path                = String();
+    Spatial* root_owner        = nullptr;
+    Spatial* root              = nullptr;
+    real_t scale               = 0.01;
     Ref<FBXNode> fbx_root_node = Ref<FBXNode>();
     // skeleton map - merged automatically when they are on the same x node in
     // the tree so we can merge them automatically.
@@ -99,7 +99,7 @@ struct ImportState {
     // skin poses in MeshSkins
     Map<uint64_t, Ref<FBXNode>> MeshNodes = Map<uint64_t, Ref<FBXNode>>();
     // mesh skin map
-    Map<uint64_t, Ref<Skin>> MeshSkins = Map<uint64_t, Ref<Skin>>();
+    Map<uint64_t, Ref<Skin>> MeshSkins    = Map<uint64_t, Ref<Skin>>();
 
     // this is the container for the mesh weight information and eventually
     // any mesh data

@@ -425,11 +425,11 @@ class AnimationTrackEditor : public VBoxContainer {
         int reset;
 
         TrackIndices(
-            const Animation* p_anim = nullptr,
+            const Animation* p_anim       = nullptr,
             const Animation* p_reset_anim = nullptr
         ) {
             normal = p_anim ? p_anim->get_track_count() : 0;
-            reset = p_reset_anim ? p_reset_anim->get_track_count() : 0;
+            reset  = p_reset_anim ? p_reset_anim->get_track_count() : 0;
         }
     };
 

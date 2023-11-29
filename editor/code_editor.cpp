@@ -165,13 +165,13 @@ bool FindReplaceBar::_search(
         text_edit->set_current_search_result(line, col);
 
         result_line = line;
-        result_col = col;
+        result_col  = col;
 
         _update_results_count();
     } else {
         results_count = 0;
-        result_line = -1;
-        result_col = -1;
+        result_line   = -1;
+        result_col    = -1;
         text_edit->set_search_text("");
         text_edit->set_search_flags(p_flags);
         text_edit->set_current_search_result(line, col);
@@ -362,7 +362,7 @@ void FindReplaceBar::_replace_all() {
 
 void FindReplaceBar::_get_search_from(int& r_line, int& r_col) {
     r_line = text_edit->cursor_get_line();
-    r_col = text_edit->cursor_get_column();
+    r_col  = text_edit->cursor_get_column();
 
     if (text_edit->is_selection_active() && is_selection_only()) {
         return;
@@ -461,7 +461,7 @@ bool FindReplaceBar::search_prev() {
     }
 
     uint32_t flags = 0;
-    String text = get_search_text();
+    String text    = get_search_text();
 
     if (is_whole_words()) {
         flags |= TextEdit::SEARCH_WHOLE_WORDS;
@@ -534,7 +534,7 @@ void FindReplaceBar::_hide_bar() {
 
     text_edit->set_search_text("");
     result_line = -1;
-    result_col = -1;
+    result_col  = -1;
     hide();
 }
 
@@ -656,7 +656,7 @@ void FindReplaceBar::set_error(const String& p_label) {
 
 void FindReplaceBar::set_text_edit(TextEdit* p_text_edit) {
     results_count = -1;
-    text_edit = p_text_edit;
+    text_edit     = p_text_edit;
     text_edit->connect("text_changed", this, "_editor_text_changed");
 }
 
@@ -695,9 +695,9 @@ void FindReplaceBar::_bind_methods() {
 }
 
 FindReplaceBar::FindReplaceBar() {
-    results_count = -1;
+    results_count    = -1;
     replace_all_mode = false;
-    preserve_cursor = false;
+    preserve_cursor  = false;
 
     vbc_lineedit = memnew(VBoxContainer);
     add_child(vbc_lineedit);
@@ -937,7 +937,7 @@ void CodeTextEditor::_complete_request() {
     }
 
     for (List<ScriptCodeCompletionOption>::Element* E = entries.front(); E;
-         E = E->next()) {
+         E                                            = E->next()) {
         E->get().icon = _get_completion_icon(E->get());
     }
     text_editor->code_complete(entries, forced);
@@ -1178,7 +1178,7 @@ void CodeTextEditor::convert_indent_to_spaces() {
         indent += " ";
     }
 
-    int cursor_line = text_editor->cursor_get_line();
+    int cursor_line   = text_editor->cursor_get_line();
     int cursor_column = text_editor->cursor_get_column();
 
     bool changed_indentation = false;
@@ -1219,7 +1219,7 @@ void CodeTextEditor::convert_indent_to_tabs() {
         EditorSettings::get_singleton()->get("text_editor/indent/size");
     indent_size -= 1;
 
-    int cursor_line = text_editor->cursor_get_line();
+    int cursor_line   = text_editor->cursor_get_line();
     int cursor_column = text_editor->cursor_get_column();
 
     bool changed_indentation = false;
@@ -1230,7 +1230,7 @@ void CodeTextEditor::convert_indent_to_tabs() {
             continue;
         }
 
-        int j = 0;
+        int j           = 0;
         int space_count = -1;
         while (j < line.length() && (line[j] == ' ' || line[j] == '\t')) {
             if (line[j] != '\t') {
@@ -1246,7 +1246,7 @@ void CodeTextEditor::convert_indent_to_tabs() {
                     }
                     line =
                         line.left(j - indent_size) + "\t" + line.right(j + 1);
-                    j = 0;
+                    j           = 0;
                     space_count = -1;
                 }
             } else {
@@ -1272,10 +1272,10 @@ void CodeTextEditor::convert_case(CaseStyle p_case) {
 
     text_editor->begin_complex_operation();
 
-    int begin = text_editor->get_selection_from_line();
-    int end = text_editor->get_selection_to_line();
+    int begin     = text_editor->get_selection_from_line();
+    int end       = text_editor->get_selection_to_line();
     int begin_col = text_editor->get_selection_from_column();
-    int end_col = text_editor->get_selection_to_column();
+    int end_col   = text_editor->get_selection_to_column();
 
     for (int i = begin; i <= end; i++) {
         int len = text_editor->get_line(i).length();
@@ -1314,10 +1314,10 @@ void CodeTextEditor::convert_case(CaseStyle p_case) {
 void CodeTextEditor::move_lines_up() {
     text_editor->begin_complex_operation();
     if (text_editor->is_selection_active()) {
-        int from_line = text_editor->get_selection_from_line();
-        int from_col = text_editor->get_selection_from_column();
-        int to_line = text_editor->get_selection_to_line();
-        int to_column = text_editor->get_selection_to_column();
+        int from_line   = text_editor->get_selection_from_line();
+        int from_col    = text_editor->get_selection_from_column();
+        int to_line     = text_editor->get_selection_to_line();
+        int to_column   = text_editor->get_selection_to_column();
         int cursor_line = text_editor->cursor_get_line();
 
         for (int i = from_line; i <= to_line; i++) {
@@ -1334,8 +1334,8 @@ void CodeTextEditor::move_lines_up() {
             text_editor->swap_lines(line_id, next_id);
             text_editor->cursor_set_line(next_id);
         }
-        int from_line_up = from_line > 0 ? from_line - 1 : from_line;
-        int to_line_up = to_line > 0 ? to_line - 1 : to_line;
+        int from_line_up   = from_line > 0 ? from_line - 1 : from_line;
+        int to_line_up     = to_line > 0 ? to_line - 1 : to_line;
         int cursor_line_up = cursor_line > 0 ? cursor_line - 1 : cursor_line;
         text_editor->select(from_line_up, from_col, to_line_up, to_column);
         text_editor->cursor_set_line(cursor_line_up);
@@ -1360,10 +1360,10 @@ void CodeTextEditor::move_lines_up() {
 void CodeTextEditor::move_lines_down() {
     text_editor->begin_complex_operation();
     if (text_editor->is_selection_active()) {
-        int from_line = text_editor->get_selection_from_line();
-        int from_col = text_editor->get_selection_from_column();
-        int to_line = text_editor->get_selection_to_line();
-        int to_column = text_editor->get_selection_to_column();
+        int from_line   = text_editor->get_selection_from_line();
+        int from_col    = text_editor->get_selection_from_column();
+        int to_line     = text_editor->get_selection_to_line();
+        int to_column   = text_editor->get_selection_to_column();
         int cursor_line = text_editor->cursor_get_line();
 
         for (int i = to_line; i >= from_line; i--) {
@@ -1428,9 +1428,9 @@ void CodeTextEditor::_delete_line(int p_line) {
 void CodeTextEditor::delete_lines() {
     text_editor->begin_complex_operation();
     if (text_editor->is_selection_active()) {
-        int to_line = text_editor->get_selection_to_line();
+        int to_line   = text_editor->get_selection_to_line();
         int from_line = text_editor->get_selection_from_line();
-        int count = Math::abs(to_line - from_line) + 1;
+        int count     = Math::abs(to_line - from_line) + 1;
 
         text_editor->cursor_set_line(from_line, false);
         for (int i = 0; i < count; i++) {
@@ -1445,28 +1445,28 @@ void CodeTextEditor::delete_lines() {
 
 void CodeTextEditor::duplicate_selection() {
     const int cursor_column = text_editor->cursor_get_column();
-    int from_line = text_editor->cursor_get_line();
-    int to_line = text_editor->cursor_get_line();
-    int from_column = 0;
-    int to_column = 0;
-    int cursor_new_line = to_line + 1;
-    int cursor_new_column = text_editor->cursor_get_column();
-    String new_text = "\n" + text_editor->get_line(from_line);
-    bool selection_active = false;
+    int from_line           = text_editor->cursor_get_line();
+    int to_line             = text_editor->cursor_get_line();
+    int from_column         = 0;
+    int to_column           = 0;
+    int cursor_new_line     = to_line + 1;
+    int cursor_new_column   = text_editor->cursor_get_column();
+    String new_text         = "\n" + text_editor->get_line(from_line);
+    bool selection_active   = false;
 
     text_editor->cursor_set_column(text_editor->get_line(from_line).length());
     if (text_editor->is_selection_active()) {
         from_column = text_editor->get_selection_from_column();
-        to_column = text_editor->get_selection_to_column();
+        to_column   = text_editor->get_selection_to_column();
 
-        from_line = text_editor->get_selection_from_line();
-        to_line = text_editor->get_selection_to_line();
+        from_line       = text_editor->get_selection_from_line();
+        to_line         = text_editor->get_selection_to_line();
         cursor_new_line = to_line + text_editor->cursor_get_line() - from_line;
         cursor_new_column = to_column == cursor_column
                               ? 2 * to_column - from_column
                               : to_column;
-        new_text = text_editor->get_selection_text();
-        selection_active = true;
+        new_text          = text_editor->get_selection_text();
+        selection_active  = true;
 
         text_editor->cursor_set_line(to_line);
         text_editor->cursor_set_column(to_column);
@@ -1498,7 +1498,7 @@ void CodeTextEditor::toggle_inline_comment(const String& delimiter) {
     text_editor->begin_complex_operation();
     if (text_editor->is_selection_active()) {
         int begin = text_editor->get_selection_from_line();
-        int end = text_editor->get_selection_to_line();
+        int end   = text_editor->get_selection_to_line();
 
         // End of selection ends on the first column of the last line, ignore
         // it.
@@ -1506,7 +1506,7 @@ void CodeTextEditor::toggle_inline_comment(const String& delimiter) {
             end -= 1;
         }
 
-        int col_to = text_editor->get_selection_to_column();
+        int col_to     = text_editor->get_selection_to_column();
         int cursor_pos = text_editor->cursor_get_column();
 
         // Check if all lines in the selected block are commented.
@@ -1536,7 +1536,7 @@ void CodeTextEditor::toggle_inline_comment(const String& delimiter) {
         }
 
         // Adjust selection & cursor position.
-        int offset = (is_commented ? -1 : 1) * delimiter.length();
+        int offset   = (is_commented ? -1 : 1) * delimiter.length();
         int col_from = text_editor->get_selection_from_column() > 0
                          ? text_editor->get_selection_from_column() + offset
                          : 0;
@@ -1571,17 +1571,17 @@ void CodeTextEditor::toggle_inline_comment(const String& delimiter) {
         text_editor->cursor_set_column(cursor_pos);
 
     } else {
-        int begin = text_editor->cursor_get_line();
-        String line_text = text_editor->get_line(begin);
+        int begin            = text_editor->cursor_get_line();
+        String line_text     = text_editor->get_line(begin);
         int delimiter_length = delimiter.length();
 
         int col = text_editor->cursor_get_column();
         if (line_text.begins_with(delimiter)) {
-            line_text = line_text.substr(delimiter_length, line_text.length());
-            col -= delimiter_length;
+            line_text  = line_text.substr(delimiter_length, line_text.length());
+            col       -= delimiter_length;
         } else {
-            line_text = delimiter + line_text;
-            col += delimiter_length;
+            line_text  = delimiter + line_text;
+            col       += delimiter_length;
         }
 
         text_editor->set_line(begin, line_text);
@@ -1620,23 +1620,23 @@ void CodeTextEditor::clear_executing_line() {
 Variant CodeTextEditor::get_edit_state() {
     Dictionary state;
 
-    state["scroll_position"] = text_editor->get_v_scroll();
+    state["scroll_position"]   = text_editor->get_v_scroll();
     state["h_scroll_position"] = text_editor->get_h_scroll();
-    state["column"] = text_editor->cursor_get_column();
-    state["row"] = text_editor->cursor_get_line();
+    state["column"]            = text_editor->cursor_get_column();
+    state["row"]               = text_editor->cursor_get_line();
 
     state["selection"] = get_text_edit()->is_selection_active();
     if (get_text_edit()->is_selection_active()) {
         state["selection_from_line"] = text_editor->get_selection_from_line();
         state["selection_from_column"] =
             text_editor->get_selection_from_column();
-        state["selection_to_line"] = text_editor->get_selection_to_line();
+        state["selection_to_line"]   = text_editor->get_selection_to_line();
         state["selection_to_column"] = text_editor->get_selection_to_column();
     }
 
     state["folded_lines"] = text_editor->get_folded_lines();
-    state["breakpoints"] = text_editor->get_breakpoints_array();
-    state["bookmarks"] = text_editor->get_bookmarks_array();
+    state["breakpoints"]  = text_editor->get_breakpoints_array();
+    state["bookmarks"]    = text_editor->get_bookmarks_array();
 
     state["syntax_highlighter"] = TTR("Standard");
     SyntaxHighlighter* syntax_highlighter =
@@ -1698,7 +1698,7 @@ void CodeTextEditor::set_error(const String& p_error) {
 }
 
 void CodeTextEditor::set_error_pos(int p_line, int p_column) {
-    error_line = p_line;
+    error_line   = p_line;
     error_column = p_column;
 }
 
@@ -1953,7 +1953,7 @@ void CodeTextEditor::set_code_complete_func(
     void* p_ud
 ) {
     code_complete_func = p_code_complete_func;
-    code_complete_ud = p_ud;
+    code_complete_ud   = p_ud;
 }
 
 void CodeTextEditor::show_toggle_scripts_button() {
@@ -2026,7 +2026,7 @@ CodeTextEditor::CodeTextEditor() {
         EDITOR_GET("text_editor/completion/code_complete_delay")
     );
 
-    error_line = 0;
+    error_line   = 0;
     error_column = 0;
 
     toggle_scripts_button = memnew(ToolButton);

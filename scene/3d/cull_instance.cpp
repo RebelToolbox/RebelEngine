@@ -106,7 +106,7 @@ void CullInstance::_bind_methods() {
 }
 
 CullInstance::CullInstance() {
-    _portal_mode = PORTAL_MODE_STATIC;
-    _include_in_bound = true;
+    _portal_mode               = PORTAL_MODE_STATIC;
+    _include_in_bound          = true;
     _portal_autoplace_priority = 0;
 }

@@ -172,7 +172,7 @@ public:
 
     _FORCE_INLINE_ void remove(int p_index) {
         ERR_FAIL_INDEX(p_index, size());
-        T* p = ptrw();
+        T* p    = ptrw();
         int len = size();
         for (int i = p_index; i < len - 1; i++) {
             p[i] = p[i + 1];
@@ -217,7 +217,7 @@ void CowData<T>::_unref(void* p_data) {
 
     if (!std::is_trivially_destructible<T>::value) {
         uint32_t* count = _get_size();
-        T* data = (T*)(count + 1);
+        T* data         = (T*)(count + 1);
 
         for (uint32_t i = 0; i < *count; ++i) {
             // call destructors

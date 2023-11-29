@@ -46,7 +46,7 @@ void BitFieldDynamic::create(uint32_t p_num_bits, bool p_blank) {
     _num_bits = p_num_bits;
     if (p_num_bits) {
         _num_bytes = (p_num_bits / 8) + 1;
-        _data = (uint8_t*)memalloc(_num_bytes);
+        _data      = (uint8_t*)memalloc(_num_bytes);
 
         if (p_blank) {
             blank(false);
@@ -61,7 +61,7 @@ void BitFieldDynamic::destroy() {
     }
 
     _num_bytes = 0;
-    _num_bits = 0;
+    _num_bits  = 0;
 }
 
 void BitFieldDynamic::blank(bool p_set_or_zero) {

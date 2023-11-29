@@ -86,13 +86,13 @@
     NSDictionary* dict = [[NSBundle mainBundle] infoDictionary];
     for (NSString* key in dict) {
         NSObject* value = [dict objectForKey:key];
-        String ukey = String::utf8([key UTF8String]);
+        String ukey     = String::utf8([key UTF8String]);
 
         // we need a NSObject to Variant conversor
 
         if ([value isKindOfClass:[NSString class]]) {
             NSString* str = (NSString*)value;
-            String uval = String::utf8([str UTF8String]);
+            String uval   = String::utf8([str UTF8String]);
 
             ProjectSettings::get_singleton()->set("Info.plist/" + ukey, uval);
 

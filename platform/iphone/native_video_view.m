@@ -67,7 +67,7 @@
 
 - (void)godot_commonInit {
     self.isVideoCurrentlyPlaying = NO;
-    self.videoCurrentTime = kCMTimeZero;
+    self.videoCurrentTime        = kCMTimeZero;
 
     [self observeVideoAudio];
 }
@@ -184,7 +184,7 @@
                            options:0
                            context:nil];
 
-    self.avPlayer = [AVPlayer playerWithPlayerItem:self.avPlayerItem];
+    self.avPlayer      = [AVPlayer playerWithPlayerItem:self.avPlayerItem];
     self.avPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:self.avPlayer];
 
     [self.avPlayer addObserver:self forKeyPath:@"status" options:0 context:nil];
@@ -231,7 +231,7 @@
 
     AVMediaSelectionGroup* subtitlesGroup = [self.avAsset
         mediaSelectionGroupForMediaCharacteristic:AVMediaCharacteristicLegible];
-    NSArray* useableTracks = [AVMediaSelectionGroup
+    NSArray* useableTracks                = [AVMediaSelectionGroup
         mediaSelectionOptionsFromArray:subtitlesGroup.options
            withoutMediaCharacteristics:
                [NSArray arrayWithObject:

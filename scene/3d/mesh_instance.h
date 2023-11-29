@@ -77,7 +77,7 @@ protected:
         float value;
 
         BlendShapeTrack() {
-            idx = 0;
+            idx   = 0;
             value = 0;
         }
     };
@@ -92,7 +92,7 @@ protected:
     static bool _is_global_software_skinning_enabled();
 
     void _initialize_skinning(
-        bool p_force_reset = false,
+        bool p_force_reset          = false,
         bool p_call_attach_skeleton = true
     );
     void _update_skinning();
@@ -162,7 +162,7 @@ public:
     void create_multiple_convex_collisions();
 
     Node* create_convex_collision_node(
-        bool p_clean = true,
+        bool p_clean    = true,
         bool p_simplify = false
     );
     void create_convex_collision(bool p_clean = true, bool p_simplify = false);

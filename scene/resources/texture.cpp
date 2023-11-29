@@ -113,7 +113,7 @@ bool Texture::get_rect_region(
     Rect2& r_rect,
     Rect2& r_src_rect
 ) const {
-    r_rect = p_rect;
+    r_rect     = p_rect;
     r_src_rect = p_src_rect;
 
     return true;
@@ -232,8 +232,8 @@ bool ImageTexture::_set(const StringName& p_name, const Variant& p_value) {
         }
     } else if (p_name == "size") {
         Size2 s = p_value;
-        w = s.width;
-        h = s.height;
+        w       = s.width;
+        h       = s.height;
         VisualServer::get_singleton()
             ->texture_set_size_override(texture, w, h, 0);
     } else if (p_name == "_data") {
@@ -314,8 +314,8 @@ void ImageTexture::create(
         p_flags
     );
     format = p_format;
-    w = p_width;
-    h = p_height;
+    w      = p_width;
+    h      = p_height;
     _change_notify();
     emit_changed();
 }
@@ -325,9 +325,9 @@ void ImageTexture::create_from_image(
     uint32_t p_flags
 ) {
     ERR_FAIL_COND_MSG(p_image.is_null() || p_image->empty(), "Invalid image");
-    flags = p_flags;
-    w = p_image->get_width();
-    h = p_image->get_height();
+    flags  = p_flags;
+    w      = p_image->get_width();
+    h      = p_image->get_height();
     format = p_image->get_format();
 
     VisualServer::get_singleton()->texture_allocate(
@@ -639,13 +639,13 @@ void ImageTexture::_bind_methods() {
 }
 
 ImageTexture::ImageTexture() {
-    w = h = 0;
-    flags = FLAGS_DEFAULT;
-    texture = VisualServer::get_singleton()->texture_create();
-    storage = STORAGE_RAW;
+    w = h                 = 0;
+    flags                 = FLAGS_DEFAULT;
+    texture               = VisualServer::get_singleton()->texture_create();
+    storage               = STORAGE_RAW;
     lossy_storage_quality = 0.7;
-    image_stored = false;
-    format = Image::FORMAT_L8;
+    image_stored          = false;
+    format                = Image::FORMAT_L8;
 }
 
 ImageTexture::~ImageTexture() {
@@ -731,12 +731,12 @@ Error StreamTexture::_load_data(
         );
     }
 
-    tw = f->get_16();
+    tw        = f->get_16();
     tw_custom = f->get_16();
-    th = f->get_16();
+    th        = f->get_16();
     th_custom = f->get_16();
 
-    flags = f->get_32();       // texture flags!
+    flags       = f->get_32(); // texture flags!
     uint32_t df = f->get_32(); // data format
 
     /*
@@ -791,7 +791,7 @@ Error StreamTexture::_load_data(
         int sh = th;
 
         uint32_t mipmaps = f->get_32();
-        uint32_t size = f->get_32();
+        uint32_t size    = f->get_32();
 
         // print_line("mipmaps: " + itos(mipmaps));
 
@@ -799,7 +799,7 @@ Error StreamTexture::_load_data(
                && (sw > p_size_limit || sh > p_size_limit)) {
             f->seek(f->get_position() + size);
             mipmaps = f->get_32();
-            size = f->get_32();
+            size    = f->get_32();
 
             sw = MAX(sw >> 1, 1);
             sh = MAX(sh >> 1, 1);
@@ -865,8 +865,8 @@ Error StreamTexture::_load_data(
 
                 int ofs = 0;
                 for (int i = 0; i < mipmap_images.size(); i++) {
-                    PoolVector<uint8_t> id = mipmap_images[i]->get_data();
-                    int len = id.size();
+                    PoolVector<uint8_t> id      = mipmap_images[i]->get_data();
+                    int len                     = id.size();
                     PoolVector<uint8_t>::Read r = id.read();
                     memcpy(&w[ofs], r.ptr(), len);
                     ofs += len;
@@ -886,7 +886,7 @@ Error StreamTexture::_load_data(
     } else {
         // look for regular format
         Image::Format format = (Image::Format)(df & FORMAT_MASK_IMAGE_FORMAT);
-        bool mipmaps = df & FORMAT_BIT_HAS_MIPMAPS;
+        bool mipmaps         = df & FORMAT_BIT_HAS_MIPMAPS;
 
         if (!mipmaps) {
             int size = Image::get_image_data_size(tw, th, format, false);
@@ -988,11 +988,11 @@ Error StreamTexture::load(const String& p_path) {
     } else {
     }
 
-    w = lwc ? lwc : lw;
-    h = lhc ? lhc : lh;
-    flags = lflags;
+    w            = lwc ? lwc : lw;
+    h            = lhc ? lhc : lh;
+    flags        = lflags;
     path_to_file = p_path;
-    format = image->get_format();
+    format       = image->get_format();
 
     _change_notify();
     emit_changed();
@@ -1176,9 +1176,9 @@ void StreamTexture::_bind_methods() {
 
 StreamTexture::StreamTexture() {
     format = Image::FORMAT_MAX;
-    flags = 0;
-    w = 0;
-    h = 0;
+    flags  = 0;
+    w      = 0;
+    h      = 0;
 
     texture = VS::get_singleton()->texture_create();
 }
@@ -1514,25 +1514,25 @@ bool AtlasTexture::get_rect_region(
     Vector2 scale = p_rect.size / src.size;
 
     src.position += (rc.position - margin.position);
-    Rect2 src_c = rc.clip(src);
+    Rect2 src_c   = rc.clip(src);
     if (src_c.size == Size2()) {
         return false;
     }
     Vector2 ofs = (src_c.position - src.position);
 
     if (scale.x < 0) {
-        float mx = (margin.size.width - margin.position.x);
-        mx -= margin.position.x;
-        ofs.x = -(ofs.x + mx);
+        float mx  = (margin.size.width - margin.position.x);
+        mx       -= margin.position.x;
+        ofs.x     = -(ofs.x + mx);
     }
     if (scale.y < 0) {
-        float my = margin.size.height - margin.position.y;
-        my -= margin.position.y;
-        ofs.y = -(ofs.y + my);
+        float my  = margin.size.height - margin.position.y;
+        my       -= margin.position.y;
+        ofs.y     = -(ofs.y + my);
     }
     Rect2 dr(p_rect.position + ofs * scale, src_c.size * scale);
 
-    r_rect = dr;
+    r_rect     = dr;
     r_src_rect = src_c;
     return true;
 }
@@ -1716,7 +1716,7 @@ bool MeshTexture::get_rect_region(
     Rect2& r_rect,
     Rect2& r_src_rect
 ) const {
-    r_rect = p_rect;
+    r_rect     = p_rect;
     r_src_rect = p_src_rect;
     return true;
 }
@@ -1823,7 +1823,7 @@ int LargeTexture::add_piece(
 ) {
     ERR_FAIL_COND_V(p_texture.is_null(), -1);
     Piece p;
-    p.offset = p_offset;
+    p.offset  = p_offset;
     p.texture = p_texture;
     pieces.push_back(p);
 
@@ -2021,9 +2021,9 @@ void LargeTexture::draw_rect_region(
         if (!p_src_rect.intersects(rect)) {
             continue;
         }
-        Rect2 local = p_src_rect.clip(rect);
-        Rect2 target = local;
-        target.size *= scale;
+        Rect2 local   = p_src_rect.clip(rect);
+        Rect2 target  = local;
+        target.size  *= scale;
         target.position =
             p_rect.position + (p_src_rect.position + rect.position) * scale;
         local.position -= rect.position;
@@ -2080,8 +2080,8 @@ void CubeMap::set_side(Side p_side, const Ref<Image>& p_image) {
 
     if (!_is_valid()) {
         format = p_image->get_format();
-        w = p_image->get_width();
-        h = p_image->get_height();
+        w      = p_image->get_width();
+        h      = p_image->get_height();
         VS::get_singleton()->texture_allocate(
             cubemap,
             w,
@@ -2309,10 +2309,10 @@ CubeMap::CubeMap() {
     for (int i = 0; i < 6; i++) {
         valid[i] = false;
     }
-    cubemap = VisualServer::get_singleton()->texture_create();
-    storage = STORAGE_RAW;
+    cubemap               = VisualServer::get_singleton()->texture_create();
+    storage               = STORAGE_RAW;
     lossy_storage_quality = 0.7;
-    format = Image::FORMAT_BPTC_RGBA;
+    format                = Image::FORMAT_BPTC_RGBA;
 }
 
 CubeMap::~CubeMap() {
@@ -2411,13 +2411,13 @@ void CurveTexture::_update() {
     // The array is locked in that scope
     {
         PoolVector<uint8_t>::Write wd8 = data.write();
-        float* wd = (float*)wd8.ptr();
+        float* wd                      = (float*)wd8.ptr();
 
         if (_curve.is_valid()) {
             Curve& curve = **_curve;
             for (int i = 0; i < _width; ++i) {
                 float t = i / static_cast<float>(_width);
-                wd[i] = curve.interpolate_baked(t);
+                wd[i]   = curve.interpolate_baked(t);
             }
 
         } else {
@@ -2452,7 +2452,7 @@ RID CurveTexture::get_rid() const {
 }
 
 CurveTexture::CurveTexture() {
-    _width = 2048;
+    _width   = 2048;
     _texture = VS::get_singleton()->texture_create();
 }
 
@@ -2470,7 +2470,7 @@ CurveTexture::~CurveTexture() {
 
 GradientTexture::GradientTexture() {
     update_pending = false;
-    width = 2048;
+    width          = 2048;
 
     texture = VS::get_singleton()->texture_create();
     _queue_update();
@@ -2561,10 +2561,10 @@ void GradientTexture::_update() {
     data.resize(width * 4);
     {
         PoolVector<uint8_t>::Write wd8 = data.write();
-        Gradient& g = **gradient;
+        Gradient& g                    = **gradient;
 
         for (int i = 0; i < width; i++) {
-            float ofs = float(i) / (width - 1);
+            float ofs   = float(i) / (width - 1);
             Color color = g.get_color_at_offset(ofs);
 
             wd8[i * 4 + 0] = uint8_t(CLAMP(color.r * 255.0, 0, 255));
@@ -2685,12 +2685,12 @@ void AnimatedTexture::_update_proxy() {
 
     float delta;
     if (prev_ticks == 0) {
-        delta = 0;
+        delta      = 0;
         prev_ticks = OS::get_singleton()->get_ticks_usec();
     } else {
         uint64_t ticks = OS::get_singleton()->get_ticks_usec();
-        delta = float(double(ticks - prev_ticks) / 1000000.0);
-        prev_ticks = ticks;
+        delta          = float(double(ticks - prev_ticks) / 1000000.0);
+        prev_ticks     = ticks;
     }
 
     time += delta;
@@ -3020,13 +3020,13 @@ AnimatedTexture::AnimatedTexture() {
         proxy,
         true
     );
-    time = 0;
-    frame_count = 1;
-    fps = 4;
-    prev_ticks = 0;
+    time          = 0;
+    frame_count   = 1;
+    fps           = 4;
+    prev_ticks    = 0;
     current_frame = 0;
-    pause = false;
-    oneshot = false;
+    pause         = false;
+    oneshot       = false;
     VisualServer::get_singleton()
         ->connect("frame_pre_draw", this, "_update_proxy");
 }
@@ -3084,10 +3084,10 @@ Error TextureLayered::load(const String& p_path) {
         );
     }
 
-    int tw = f->get_32();
-    int th = f->get_32();
-    int td = f->get_32();
-    int flags = f->get_32(); // texture flags!
+    int tw               = f->get_32();
+    int th               = f->get_32();
+    int td               = f->get_32();
+    int flags            = f->get_32(); // texture flags!
     Image::Format format = Image::Format(f->get_32());
     uint32_t compression =
         f->get_32(); // 0 - lossless (PNG), 1 - vram, 2 - uncompressed
@@ -3141,7 +3141,7 @@ Error TextureLayered::load(const String& p_path) {
                     int ofs = 0;
                     for (int i = 0; i < mipmap_images.size(); i++) {
                         PoolVector<uint8_t> id = mipmap_images[i]->get_data();
-                        int len = id.size();
+                        int len                = id.size();
                         PoolVector<uint8_t>::Read r = id.read();
                         memcpy(&w[ofs], r.ptr(), len);
                         ofs += len;
@@ -3226,12 +3226,12 @@ void TextureLayered::_set_data(const Dictionary& p_data) {
     ERR_FAIL_COND(!p_data.has("format"));
     ERR_FAIL_COND(!p_data.has("flags"));
     ERR_FAIL_COND(!p_data.has("layers"));
-    int w = p_data["width"];
-    int h = p_data["height"];
-    int d = p_data["depth"];
+    int w                = p_data["width"];
+    int h                = p_data["height"];
+    int d                = p_data["depth"];
     Image::Format format = Image::Format(int(p_data["format"]));
-    int flags = p_data["flags"];
-    Array layers = p_data["layers"];
+    int flags            = p_data["flags"];
+    Array layers         = p_data["layers"];
     ERR_FAIL_COND(layers.size() != d);
 
     create(w, h, d, format, flags);
@@ -3248,10 +3248,10 @@ void TextureLayered::_set_data(const Dictionary& p_data) {
 
 Dictionary TextureLayered::_get_data() const {
     Dictionary d;
-    d["width"] = width;
+    d["width"]  = width;
     d["height"] = height;
-    d["depth"] = depth;
-    d["flags"] = flags;
+    d["depth"]  = depth;
+    d["flags"]  = flags;
     d["format"] = format;
 
     Array layers;
@@ -3279,11 +3279,11 @@ void TextureLayered::create(
         p_flags
     );
 
-    width = p_width;
+    width  = p_width;
     height = p_height;
-    depth = p_depth;
+    depth  = p_depth;
     format = p_format;
-    flags = p_flags;
+    flags  = p_flags;
 }
 
 void TextureLayered::set_layer_data(const Ref<Image>& p_image, int p_layer) {
@@ -3413,13 +3413,13 @@ void TextureLayered::_bind_methods() {
 }
 
 TextureLayered::TextureLayered(bool p_3d) {
-    is_3d = p_3d;
-    flags = p_3d ? FLAGS_DEFAULT_TEXTURE_3D : FLAGS_DEFAULT_TEXTURE_ARRAY;
+    is_3d  = p_3d;
+    flags  = p_3d ? FLAGS_DEFAULT_TEXTURE_3D : FLAGS_DEFAULT_TEXTURE_ARRAY;
     format = Image::FORMAT_MAX;
 
-    width = 0;
+    width  = 0;
     height = 0;
-    depth = 0;
+    depth  = 0;
 
     texture = VS::get_singleton()->texture_create();
 }
@@ -3636,7 +3636,7 @@ bool CameraTexture::get_camera_active() const {
 
 CameraTexture::CameraTexture() {
     camera_feed_id = 0;
-    which_feed = CameraServer::FEED_RGBA_IMAGE;
+    which_feed     = CameraServer::FEED_RGBA_IMAGE;
 }
 
 CameraTexture::~CameraTexture() {
@@ -3701,7 +3701,7 @@ uint32_t ExternalTexture::get_flags() const {
 }
 
 ExternalTexture::ExternalTexture() {
-    size = Size2(1.0, 1.0);
+    size    = Size2(1.0, 1.0);
     texture = VisualServer::get_singleton()->texture_create();
 
     VisualServer::get_singleton()->texture_allocate(

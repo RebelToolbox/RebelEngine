@@ -63,7 +63,7 @@ void main() {
               - fdepth * (camera_z_far - camera_z_near));
 #endif
     fdepth /= camera_z_far;
-    depth = uint(clamp(fdepth * 65535.0, 0.0, 65535.0));
+    depth   = uint(clamp(fdepth * 65535.0, 0.0, 65535.0));
 
 #else
     depth = texelFetch(

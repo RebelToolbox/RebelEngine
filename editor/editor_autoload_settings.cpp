@@ -53,7 +53,7 @@ void EditorAutoloadSettings::_notification(int p_what) {
         }
 
         for (List<AutoLoadInfo>::Element* E = autoload_cache.front(); E;
-             E = E->next()) {
+             E                              = E->next()) {
             AutoLoadInfo& info = E->get();
             if (info.node && info.in_editor) {
                 get_tree()->get_root()->call_deferred("add_child", info.node);
@@ -161,12 +161,12 @@ void EditorAutoloadSettings::_autoload_edited() {
     }
 
     TreeItem* ti = tree->get_edited();
-    int column = tree->get_edited_column();
+    int column   = tree->get_edited_column();
 
     UndoRedo* undo_redo = EditorNode::get_undo_redo();
 
     if (column == 0) {
-        String name = ti->get_text(0);
+        String name     = ti->get_text(0);
         String old_name = selected_autoload.get_slice("/", 1);
 
         if (name == old_name) {
@@ -239,9 +239,9 @@ void EditorAutoloadSettings::_autoload_edited() {
         updating_autoload = true;
 
         bool checked = ti->is_checked(2);
-        String base = "autoload/" + ti->get_text(0);
+        String base  = "autoload/" + ti->get_text(0);
 
-        int order = ProjectSettings::get_singleton()->get_order(base);
+        int order   = ProjectSettings::get_singleton()->get_order(base);
         String path = ProjectSettings::get_singleton()->get(base);
 
         if (path.begins_with("*")) {
@@ -462,10 +462,10 @@ Node* EditorAutoloadSettings::_create_autoload(const String& p_path) {
     Node* n = nullptr;
     if (res->is_class("PackedScene")) {
         Ref<PackedScene> ps = res;
-        n = ps->instance();
+        n                   = ps->instance();
     } else if (res->is_class("Script")) {
-        Ref<Script> s = res;
-        StringName ibt = s->get_instance_base_type();
+        Ref<Script> s   = res;
+        StringName ibt  = s->get_instance_base_type();
         bool valid_type = ClassDB::is_parent_class(ibt, "Node");
         ERR_FAIL_COND_V_MSG(
             !valid_type,
@@ -507,7 +507,7 @@ void EditorAutoloadSettings::update_autoload() {
     List<AutoLoadInfo*> to_add;
 
     for (List<AutoLoadInfo>::Element* E = autoload_cache.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         AutoLoadInfo& info = E->get();
         to_remove.insert(info.name, info);
     }
@@ -541,8 +541,8 @@ void EditorAutoloadSettings::update_autoload() {
             path = path.substr(1, path.length());
         }
 
-        info.name = name;
-        info.path = path;
+        info.name  = name;
+        info.path  = path;
         info.order = ProjectSettings::get_singleton()->get_order(pi.name);
 
         bool need_to_add = true;
@@ -553,7 +553,7 @@ void EditorAutoloadSettings::update_autoload() {
                 info.node = old_info.node;
                 if (info.node) {
                     Ref<Script> scr = info.node->get_script();
-                    info.in_editor = scr.is_valid() && scr->is_tool();
+                    info.in_editor  = scr.is_valid() && scr->is_tool();
                     if (info.is_singleton == old_info.is_singleton
                         && info.in_editor == old_info.in_editor) {
                         to_remove.erase(name);
@@ -595,7 +595,7 @@ void EditorAutoloadSettings::update_autoload() {
 
     // Remove deleted/changed autoloads
     for (Map<String, AutoLoadInfo>::Element* E = to_remove.front(); E;
-         E = E->next()) {
+         E                                     = E->next()) {
         AutoLoadInfo& info = E->get();
         if (info.is_singleton) {
             for (int i = 0; i < ScriptServer::get_language_count(); i++) {
@@ -694,7 +694,7 @@ Variant EditorAutoloadSettings::get_drag_data_fw(
     tree->set_drag_preview(preview);
 
     Dictionary drop_data;
-    drop_data["type"] = "autoload";
+    drop_data["type"]      = "autoload";
     drop_data["autoloads"] = autoloads;
 
     return drop_data;
@@ -755,7 +755,7 @@ void EditorAutoloadSettings::drop_data_fw(
     } else if (ti->get_next()) {
         name = ti->get_next()->get_text(0);
     } else {
-        name = ti->get_text(0);
+        name         = ti->get_text(0);
         move_to_back = true;
     }
 
@@ -766,10 +766,10 @@ void EditorAutoloadSettings::drop_data_fw(
 
     if (!move_to_back) {
         aux.order = order;
-        E = autoload_cache.find(aux);
+        E         = autoload_cache.find(aux);
     }
 
-    Dictionary drop_data = p_data;
+    Dictionary drop_data      = p_data;
     PoolStringArray autoloads = drop_data["autoloads"];
 
     Vector<int> orders;
@@ -796,7 +796,7 @@ void EditorAutoloadSettings::drop_data_fw(
     int i = 0;
 
     for (List<AutoLoadInfo>::Element* F = autoload_cache.front(); F;
-         F = F->next()) {
+         F                              = F->next()) {
         orders.write[i++] = F->get().order;
     }
 
@@ -809,7 +809,7 @@ void EditorAutoloadSettings::drop_data_fw(
     i = 0;
 
     for (List<AutoLoadInfo>::Element* F = autoload_cache.front(); F;
-         F = F->next()) {
+         F                              = F->next()) {
         undo_redo->add_do_method(
             ProjectSettings::get_singleton(),
             "set_order",
@@ -1028,8 +1028,8 @@ EditorAutoloadSettings::EditorAutoloadSettings() {
             path = path.substr(1, path.length());
         }
 
-        info.name = name;
-        info.path = path;
+        info.name  = name;
+        info.path  = path;
         info.order = ProjectSettings::get_singleton()->get_order(pi.name);
 
         if (info.is_singleton) {
@@ -1046,14 +1046,14 @@ EditorAutoloadSettings::EditorAutoloadSettings() {
     }
 
     for (List<AutoLoadInfo>::Element* E = autoload_cache.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         AutoLoadInfo& info = E->get();
 
         info.node = _create_autoload(info.path);
 
         if (info.node) {
             Ref<Script> scr = info.node->get_script();
-            info.in_editor = scr.is_valid() && scr->is_tool();
+            info.in_editor  = scr.is_valid() && scr->is_tool();
             info.node->set_name(info.name);
         }
 
@@ -1152,7 +1152,7 @@ EditorAutoloadSettings::EditorAutoloadSettings() {
 
 EditorAutoloadSettings::~EditorAutoloadSettings() {
     for (List<AutoLoadInfo>::Element* E = autoload_cache.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         AutoLoadInfo& info = E->get();
         if (info.node && !info.in_editor) {
             memdelete(info.node);

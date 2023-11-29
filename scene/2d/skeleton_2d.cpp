@@ -33,8 +33,8 @@
 void Bone2D::_notification(int p_what) {
     if (p_what == NOTIFICATION_ENTER_TREE) {
         Node* parent = get_parent();
-        parent_bone = Object::cast_to<Bone2D>(parent);
-        skeleton = nullptr;
+        parent_bone  = Object::cast_to<Bone2D>(parent);
+        skeleton     = nullptr;
         while (parent) {
             skeleton = Object::cast_to<Skeleton2D>(parent);
             if (skeleton) {
@@ -187,8 +187,8 @@ String Bone2D::get_configuration_warning() const {
 }
 
 Bone2D::Bone2D() {
-    skeleton = nullptr;
-    parent_bone = nullptr;
+    skeleton       = nullptr;
+    parent_bone    = nullptr;
     skeleton_index = -1;
     default_length = 16;
     set_notify_local_transform(true);
@@ -343,7 +343,7 @@ void Skeleton2D::_bind_methods() {
 
 Skeleton2D::Skeleton2D() {
     bone_setup_dirty = true;
-    transform_dirty = true;
+    transform_dirty  = true;
 
     skeleton = VS::get_singleton()->skeleton_create();
     set_notify_transform(true);

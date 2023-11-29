@@ -79,7 +79,7 @@ int StreamPeerMbedTLS::bio_recv(void* ctx, unsigned char* buf, size_t len) {
 
 void StreamPeerMbedTLS::_cleanup() {
     ssl_ctx->clear();
-    base = Ref<StreamPeer>();
+    base   = Ref<StreamPeer>();
     status = STATUS_DISCONNECTED;
 }
 
@@ -115,7 +115,7 @@ Error StreamPeerMbedTLS::connect_to_stream(
 ) {
     ERR_FAIL_COND_V(p_base.is_null(), ERR_INVALID_PARAMETER);
 
-    base = p_base;
+    base         = p_base;
     int authmode = p_validate_certs ? MBEDTLS_SSL_VERIFY_REQUIRED
                                     : MBEDTLS_SSL_VERIFY_NONE;
 
@@ -197,7 +197,7 @@ Error StreamPeerMbedTLS::put_data(const uint8_t* p_data, int p_bytes) {
             return err;
         }
 
-        p_data += sent;
+        p_data  += sent;
         p_bytes -= sent;
     }
 
@@ -249,7 +249,7 @@ Error StreamPeerMbedTLS::get_data(uint8_t* p_buffer, int p_bytes) {
         }
 
         p_buffer += got;
-        p_bytes -= got;
+        p_bytes  -= got;
     }
 
     return OK;
@@ -354,11 +354,11 @@ StreamPeerSSL* StreamPeerMbedTLS::_create_func() {
 }
 
 void StreamPeerMbedTLS::initialize_ssl() {
-    _create = _create_func;
+    _create   = _create_func;
     available = true;
 }
 
 void StreamPeerMbedTLS::finalize_ssl() {
     available = false;
-    _create = nullptr;
+    _create   = nullptr;
 }

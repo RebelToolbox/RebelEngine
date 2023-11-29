@@ -69,8 +69,8 @@ public class RebelGestureListener
 
     @Override
     public boolean onDoubleTap(MotionEvent event) {
-        final int x = Math.round(event.getX());
-        final int y = Math.round(event.getY());
+        final int x          = Math.round(event.getX());
+        final int y          = Math.round(event.getY());
         final int buttonMask = event.getButtonState();
         RebelEngine.doubleTap(buttonMask, x, y);
         return true;

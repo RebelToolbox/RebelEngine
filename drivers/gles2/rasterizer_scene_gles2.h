@@ -62,7 +62,7 @@ public:
 
     enum {
         INSTANCE_ATTRIB_BASE = 8,
-        INSTANCE_BONE_BASE = 13,
+        INSTANCE_BONE_BASE   = 13,
     };
 
     ShadowFilterMode shadow_filter_mode;
@@ -232,9 +232,9 @@ public:
 
     struct ShadowAtlas : public RID_Data {
         enum {
-            QUADRANT_SHIFT = 27,
+            QUADRANT_SHIFT    = 27,
             SHADOW_INDEX_MASK = (1 << QUADRANT_SHIFT) - 1,
-            SHADOW_INVALID = 0xFFFFFFFF,
+            SHADOW_INVALID    = 0xFFFFFFFF,
         };
 
         struct Quadrant {
@@ -246,7 +246,7 @@ public:
                 uint64_t alloc_tick;
 
                 Shadow() {
-                    version = 0;
+                    version    = 0;
                     alloc_tick = 0;
                 }
             };
@@ -507,7 +507,7 @@ public:
     virtual void environment_set_ambient_light(
         RID p_env,
         const Color& p_color,
-        float p_energy = 1.0,
+        float p_energy           = 1.0,
         float p_sky_contribution = 0.0
     );
     virtual void environment_set_camera_feed_id(
@@ -722,9 +722,9 @@ public:
 
     struct RenderList {
         enum {
-            MAX_LIGHTS = 255,
+            MAX_LIGHTS            = 255,
             MAX_REFLECTION_PROBES = 255,
-            DEFAULT_MAX_ELEMENTS = 65536
+            DEFAULT_MAX_ELEMENTS  = 65536
         };
 
         int max_elements;
@@ -744,7 +744,7 @@ public:
                 // TODO: should be endian swapped on big endian
                 struct {
                     int32_t depth_layer : 16;
-                    int32_t priority : 16;
+                    int32_t priority    : 16;
                 };
 
                 uint32_t depth_key;
@@ -756,18 +756,18 @@ public:
                     // should be endian swapped on big endian
 
                     uint64_t geometry_index : 14;
-                    uint64_t instancing : 1;
-                    uint64_t skeleton : 1;
-                    uint64_t shader_index : 10;
+                    uint64_t instancing     : 1;
+                    uint64_t skeleton       : 1;
+                    uint64_t shader_index   : 10;
                     uint64_t material_index : 10;
-                    uint64_t light_index : 8;
+                    uint64_t light_index    : 8;
                     uint64_t light_type2 : 1; // if 1==0 : nolight/directional,
                                               // else omni/spot
                     uint64_t refprobe_1_index : 8;
                     uint64_t refprobe_0_index : 8;
                     uint64_t light_type1 : 1; // no light, directional is 0,
                                               // omni spot is 1
-                    uint64_t light_mode : 2;  // LightMode enum
+                    uint64_t light_mode  : 2; // LightMode enum
                 };
 
                 uint64_t sort_key;
@@ -781,7 +781,7 @@ public:
         int alpha_element_count;
 
         void clear() {
-            element_count = 0;
+            element_count       = 0;
             alpha_element_count = 0;
         }
 
@@ -872,17 +872,17 @@ public:
                 return nullptr;
             }
 
-            int idx = max_elements - alpha_element_count - 1;
+            int idx       = max_elements - alpha_element_count - 1;
             elements[idx] = &base_elements[idx];
             alpha_element_count++;
             return elements[idx];
         }
 
         void init() {
-            element_count = 0;
+            element_count       = 0;
             alpha_element_count = 0;
 
-            elements = memnew_arr(Element*, max_elements);
+            elements      = memnew_arr(Element*, max_elements);
             base_elements = memnew_arr(Element, max_elements);
 
             for (int i = 0; i < max_elements; i++) {

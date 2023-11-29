@@ -96,7 +96,7 @@ Error create_directory(const String& p_dir) {
 // Note: this will overwrite the file at p_path if it already exists.
 Error store_file_at_path(const String& p_path, const Vector<uint8_t>& p_data) {
     String dir = p_path.get_base_dir();
-    Error err = create_directory(dir);
+    Error err  = create_directory(dir);
     if (err != OK) {
         return err;
     }
@@ -115,7 +115,7 @@ Error store_file_at_path(const String& p_path, const Vector<uint8_t>& p_data) {
 // necessary. Note: this will overwrite the file at p_path if it already exists.
 Error store_string_at_path(const String& p_path, const String& p_data) {
     String dir = p_path.get_base_dir();
-    Error err = create_directory(dir);
+    Error err  = create_directory(dir);
     if (err != OK) {
         if (OS::get_singleton()->is_stdout_verbose()) {
             print_error("Unable to write data into " + p_path);
@@ -204,7 +204,7 @@ Error _create_project_name_strings_files(
             // for localization.
             continue;
         }
-        String locale = file.replace("values-", "").replace("-r", "_");
+        String locale        = file.replace("values-", "").replace("-r", "_");
         String property_name = "application/config/name_" + locale;
         String locale_directory =
             "res://android/build/res/" + file + "/project_name_string.xml";
@@ -252,12 +252,12 @@ String _get_gles_tag() {
 String _get_screen_sizes_tag(const Ref<EditorExportPreset>& p_preset) {
     String manifest_screen_sizes =
         "    <supports-screens \n        tools:node=\"replace\"";
-    String sizes[] = {"small", "normal", "large", "xlarge"};
+    String sizes[]   = {"small", "normal", "large", "xlarge"};
     size_t num_sizes = sizeof(sizes) / sizeof(sizes[0]);
     for (size_t i = 0; i < num_sizes; i++) {
-        String feature_name = vformat("screen/support_%s", sizes[i]);
+        String feature_name    = vformat("screen/support_%s", sizes[i]);
         String feature_support = bool_to_string(p_preset->get(feature_name));
-        String xml_entry = vformat(
+        String xml_entry       = vformat(
             "\n        android:%sScreens=\"%s\"",
             sizes[i],
             feature_support
@@ -310,7 +310,7 @@ String _get_xr_features_tag(const Ref<EditorExportPreset>& p_preset) {
 }
 
 String _get_instrumentation_tag(const Ref<EditorExportPreset>& p_preset) {
-    String package_name = p_preset->get("package/unique_name");
+    String package_name                  = p_preset->get("package/unique_name");
     String manifest_instrumentation_text = vformat(
         "    <instrumentation\n"
         "        tools:node=\"replace\"\n"

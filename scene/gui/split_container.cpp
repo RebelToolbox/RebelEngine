@@ -58,7 +58,7 @@ Control* SplitContainer::_getch(int p_idx) const {
 void SplitContainer::_resort() {
     int axis = vertical ? 1 : 0;
 
-    Control* first = _getch(0);
+    Control* first  = _getch(0);
     Control* second = _getch(1);
 
     // If we have only one element
@@ -81,13 +81,13 @@ void SplitContainer::_resort() {
 
     // Determine the separation between items
     Ref<Texture> g = get_icon("grabber");
-    int sep = get_constant("separation");
-    sep = (dragger_visibility != DRAGGER_HIDDEN_COLLAPSED)
-            ? MAX(sep, vertical ? g->get_height() : g->get_width())
+    int sep        = get_constant("separation");
+    sep            = (dragger_visibility != DRAGGER_HIDDEN_COLLAPSED)
+                       ? MAX(sep, vertical ? g->get_height() : g->get_width())
             : 0;
 
     // Compute the minimum size
-    Size2 ms_first = first->get_combined_minimum_size();
+    Size2 ms_first  = first->get_combined_minimum_size();
     Size2 ms_second = second->get_combined_minimum_size();
 
     // Compute the separator position without the split offset
@@ -154,9 +154,9 @@ Size2 SplitContainer::get_minimum_size() const {
 
     Size2i minimum;
     Ref<Texture> g = get_icon("grabber");
-    int sep = get_constant("separation");
-    sep = (dragger_visibility != DRAGGER_HIDDEN_COLLAPSED)
-            ? MAX(sep, vertical ? g->get_height() : g->get_width())
+    int sep        = get_constant("separation");
+    sep            = (dragger_visibility != DRAGGER_HIDDEN_COLLAPSED)
+                       ? MAX(sep, vertical ? g->get_height() : g->get_width())
             : 0;
 
     for (int i = 0; i < 2; i++) {
@@ -176,10 +176,10 @@ Size2 SplitContainer::get_minimum_size() const {
 
         if (vertical) {
             minimum.height += ms.height;
-            minimum.width = MAX(minimum.width, ms.width);
+            minimum.width   = MAX(minimum.width, ms.width);
         } else {
-            minimum.width += ms.width;
-            minimum.height = MAX(minimum.height, ms.height);
+            minimum.width  += ms.width;
+            minimum.height  = MAX(minimum.height, ms.height);
         }
     }
 
@@ -211,11 +211,11 @@ void SplitContainer::_notification(int p_what) {
                 return;
             }
 
-            int sep = dragger_visibility != DRAGGER_HIDDEN_COLLAPSED
-                        ? get_constant("separation")
-                        : 0;
+            int sep          = dragger_visibility != DRAGGER_HIDDEN_COLLAPSED
+                                 ? get_constant("separation")
+                                 : 0;
             Ref<Texture> tex = get_icon("grabber");
-            Size2 size = get_size();
+            Size2 size       = get_size();
 
             if (vertical) {
                 draw_texture(
@@ -257,16 +257,16 @@ void SplitContainer::_gui_input(const Ref<InputEvent>& p_event) {
                 if (vertical) {
                     if (mb->get_position().y > middle_sep
                         && mb->get_position().y < middle_sep + sep) {
-                        dragging = true;
+                        dragging  = true;
                         drag_from = mb->get_position().y;
-                        drag_ofs = split_offset;
+                        drag_ofs  = split_offset;
                     }
                 } else {
                     if (mb->get_position().x > middle_sep
                         && mb->get_position().x < middle_sep + sep) {
-                        dragging = true;
+                        dragging  = true;
                         drag_from = mb->get_position().x;
-                        drag_ofs = split_offset;
+                        drag_ofs  = split_offset;
                     }
                 }
             } else {
@@ -440,12 +440,12 @@ void SplitContainer::_bind_methods() {
 }
 
 SplitContainer::SplitContainer(bool p_vertical) {
-    mouse_inside = false;
-    split_offset = 0;
+    mouse_inside              = false;
+    split_offset              = 0;
     should_clamp_split_offset = false;
-    middle_sep = 0;
-    vertical = p_vertical;
-    dragging = false;
-    collapsed = false;
-    dragger_visibility = DRAGGER_VISIBLE;
+    middle_sep                = 0;
+    vertical                  = p_vertical;
+    dragging                  = false;
+    collapsed                 = false;
+    dragger_visibility        = DRAGGER_VISIBLE;
 }

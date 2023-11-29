@@ -23,7 +23,7 @@ uniform vec4 blur_section;
 #endif
 
 void main() {
-    uv_interp = uv_in;
+    uv_interp   = uv_in;
     gl_Position = vec4(vertex_attrib, 0.0, 1.0);
 #ifdef USE_BLUR_SECTION
 
@@ -94,8 +94,8 @@ const float dof_kernel[5] =
 #endif
 
 #ifdef DOF_QUALITY_MEDIUM
-const int dof_kernel_size = 11;
-const int dof_kernel_from = 5;
+const int dof_kernel_size  = 11;
+const int dof_kernel_from  = 5;
 const float dof_kernel[11] = float[](
     0.055037,
     0.072806,
@@ -113,8 +113,8 @@ const float dof_kernel[11] = float[](
 #endif
 
 #ifdef DOF_QUALITY_HIGH
-const int dof_kernel_size = 21;
-const int dof_kernel_from = 10;
+const int dof_kernel_size  = 21;
+const int dof_kernel_from  = 10;
 const float dof_kernel[21] = float[](
     0.028174,
     0.032676,
@@ -164,8 +164,8 @@ uniform float camera_z_near;
 
 void main() {
 #ifdef GLOW_GAUSSIAN_HORIZONTAL
-    vec2 pix_size = pixel_size;
-    pix_size *= 0.5; // reading from larger buffer, so use more samples
+    vec2 pix_size  = pixel_size;
+    pix_size      *= 0.5; // reading from larger buffer, so use more samples
 
 #ifdef USE_GLOW_HIGH_QUALITY
     // Sample from two lines to capture single-pixel features.
@@ -251,8 +251,8 @@ void main() {
         * 0.106595;
 #endif // USE_GLOW_HIGH_QUALITY
 
-    color *= glow_strength;
-    gl_FragColor = color;
+    color        *= glow_strength;
+    gl_FragColor  = color;
 #endif // GLOW_GAUSSIAN_HORIZONTAL
 
 #ifdef GLOW_GAUSSIAN_VERTICAL
@@ -277,8 +277,8 @@ void main() {
                  lod
              )
            * 0.122581;
-    color *= glow_strength;
-    gl_FragColor = color;
+    color        *= glow_strength;
+    gl_FragColor  = color;
 #endif
 
 #ifndef USE_GLES_OVER_GL
@@ -299,16 +299,16 @@ void main() {
     const int dof_kernel_size = 11;
     const int dof_kernel_from = 5;
     float dof_kernel[11];
-    dof_kernel[0] = 0.055037;
-    dof_kernel[1] = 0.072806;
-    dof_kernel[2] = 0.090506;
-    dof_kernel[3] = 0.105726;
-    dof_kernel[4] = 0.116061;
-    dof_kernel[5] = 0.119726;
-    dof_kernel[6] = 0.116061;
-    dof_kernel[7] = 0.105726;
-    dof_kernel[8] = 0.090506;
-    dof_kernel[9] = 0.072806;
+    dof_kernel[0]  = 0.055037;
+    dof_kernel[1]  = 0.072806;
+    dof_kernel[2]  = 0.090506;
+    dof_kernel[3]  = 0.105726;
+    dof_kernel[4]  = 0.116061;
+    dof_kernel[5]  = 0.119726;
+    dof_kernel[6]  = 0.116061;
+    dof_kernel[7]  = 0.105726;
+    dof_kernel[8]  = 0.090506;
+    dof_kernel[9]  = 0.072806;
     dof_kernel[10] = 0.055037;
 #endif
 
@@ -316,16 +316,16 @@ void main() {
     const int dof_kernel_size = 21;
     const int dof_kernel_from = 10;
     float dof_kernel[21];
-    dof_kernel[0] = 0.028174;
-    dof_kernel[1] = 0.032676;
-    dof_kernel[2] = 0.037311;
-    dof_kernel[3] = 0.041944;
-    dof_kernel[4] = 0.046421;
-    dof_kernel[5] = 0.050582;
-    dof_kernel[6] = 0.054261;
-    dof_kernel[7] = 0.057307;
-    dof_kernel[8] = 0.059587;
-    dof_kernel[9] = 0.060998;
+    dof_kernel[0]  = 0.028174;
+    dof_kernel[1]  = 0.032676;
+    dof_kernel[2]  = 0.037311;
+    dof_kernel[3]  = 0.041944;
+    dof_kernel[4]  = 0.046421;
+    dof_kernel[5]  = 0.050582;
+    dof_kernel[6]  = 0.054261;
+    dof_kernel[7]  = 0.057307;
+    dof_kernel[8]  = 0.059587;
+    dof_kernel[9]  = 0.060998;
     dof_kernel[10] = 0.061476;
     dof_kernel[11] = 0.060998;
     dof_kernel[12] = 0.059587;
@@ -346,7 +346,7 @@ void main() {
     vec4 color_accum = vec4(0.0);
 
     float depth = texture2DLod(dof_source_depth, uv_interp, 0.0).r;
-    depth = depth * 2.0 - 1.0;
+    depth       = depth * 2.0 - 1.0;
 #ifdef USE_ORTHOGONAL_PROJECTION
     depth = ((depth
               + (camera_z_far + camera_z_near) / (camera_z_far - camera_z_near))
@@ -358,7 +358,7 @@ void main() {
              - depth * (camera_z_far - camera_z_near));
 #endif
 
-    float amount = smoothstep(dof_begin, dof_end, depth);
+    float amount  = smoothstep(dof_begin, dof_end, depth);
     float k_accum = 0.0;
 
     for (int i = 0; i < dof_kernel_size; i++) {
@@ -369,7 +369,7 @@ void main() {
         float tap_k = dof_kernel[i];
 
         float tap_depth = texture2D(dof_source_depth, tap_uv, 0.0).r;
-        tap_depth = tap_depth * 2.0 - 1.0;
+        tap_depth       = tap_depth * 2.0 - 1.0;
 #ifdef USE_ORTHOGONAL_PROJECTION
         tap_depth =
             ((tap_depth
@@ -387,7 +387,7 @@ void main() {
 
         vec4 tap_color = texture2DLod(source_color, tap_uv, 0.0) * tap_k;
 
-        k_accum += tap_k * tap_amount;
+        k_accum     += tap_k * tap_amount;
         color_accum += tap_color * tap_amount;
     }
 
@@ -416,7 +416,7 @@ void main() {
         vec4 tap_color = texture2DLod(source_color, tap_uv, 0.0);
 
         float tap_depth = texture2D(dof_source_depth, tap_uv, 0.0).r;
-        tap_depth = tap_depth * 2.0 - 1.0;
+        tap_depth       = tap_depth * 2.0 - 1.0;
 #ifdef USE_ORTHOGONAL_PROJECTION
         tap_depth =
             ((tap_depth

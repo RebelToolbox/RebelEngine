@@ -48,11 +48,11 @@ public:
     static CryptoKey* create();
     virtual Error load(String p_path, bool p_public_only = false) = 0;
     virtual Error save(String p_path, bool p_public_only = false) = 0;
-    virtual String save_to_string(bool p_public_only = false) = 0;
+    virtual String save_to_string(bool p_public_only = false)     = 0;
     virtual Error load_from_string(
         String p_string_key,
         bool p_public_only = false
-    ) = 0;
+    )                                   = 0;
     virtual bool is_public_only() const = 0;
 };
 
@@ -65,9 +65,9 @@ protected:
 
 public:
     static X509Certificate* create();
-    virtual Error load(String p_path) = 0;
+    virtual Error load(String p_path)                                  = 0;
     virtual Error load_from_memory(const uint8_t* p_buffer, int p_len) = 0;
-    virtual Error save(String p_path) = 0;
+    virtual Error save(String p_path)                                  = 0;
 };
 
 class HMACContext : public Reference {
@@ -83,9 +83,9 @@ public:
     virtual Error start(
         HashingContext::HashType p_hash_type,
         PoolByteArray p_key
-    ) = 0;
+    )                                          = 0;
     virtual Error update(PoolByteArray p_data) = 0;
-    virtual PoolByteArray finish() = 0;
+    virtual PoolByteArray finish()             = 0;
 
     HMACContext() {}
 
@@ -105,7 +105,7 @@ public:
     static void load_default_certificates(String p_path);
 
     virtual PoolByteArray generate_random_bytes(int p_bytes) = 0;
-    virtual Ref<CryptoKey> generate_rsa(int p_bytes) = 0;
+    virtual Ref<CryptoKey> generate_rsa(int p_bytes)         = 0;
     virtual Ref<X509Certificate> generate_self_signed_certificate(
         Ref<CryptoKey> p_key,
         String p_issuer_name,
@@ -156,7 +156,7 @@ public:
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
     virtual bool handles_type(const String& p_type) const;

@@ -165,12 +165,12 @@ size_t DecodeBase64(
         if (table_value == 255) {
             return 0;
         }
-        val = (val << 6) + table_value;
+        val   = (val << 6) + table_value;
         valb += 6;
         if (valb >= 0) {
-            out[dst_offset++] = static_cast<uint8_t>((val >> valb) & 0xFF);
-            valb -= 8;
-            val &= 0xFFF;
+            out[dst_offset++]  = static_cast<uint8_t>((val >> valb) & 0xFF);
+            valb              -= 8;
+            val               &= 0xFFF;
         }
     }
     return dst_offset;
@@ -215,9 +215,9 @@ std::string EncodeBase64(const char* data, size_t length) {
 
     // read blocks of 3 bytes
     for (size_t ib3 = 0; ib3 < length / 3; ib3++) {
-        const size_t iByte = ib3 * 3;
+        const size_t iByte        = ib3 * 3;
         const size_t iEncodedByte = ib3 * 4;
-        const char* currData = &data[iByte];
+        const char* currData      = &data[iByte];
 
         EncodeByteBlock(currData, encoded_string, iEncodedByte);
     }

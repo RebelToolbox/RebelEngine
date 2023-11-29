@@ -96,7 +96,7 @@ void MeshInstanceEditor::_menu_option(int p_option) {
             ur->create_action(TTR("Create Static Trimesh Body"));
 
             for (List<Node*>::Element* E = selection.front(); E;
-                 E = E->next()) {
+                 E                       = E->next()) {
                 MeshInstance* instance =
                     Object::cast_to<MeshInstance>(E->get());
                 if (!instance) {
@@ -391,11 +391,11 @@ void MeshInstanceEditor::_create_uv_lines(int p_layer) {
         bool use_indices;
 
         if (indices.size()) {
-            ic = indices.size();
-            ri = indices.read();
+            ic          = indices.size();
+            ri          = indices.read();
             use_indices = true;
         } else {
-            ic = uv.size();
+            ic          = uv.size();
             use_indices = false;
         }
 
@@ -635,7 +635,7 @@ void MeshInstanceEditorPlugin::make_visible(bool p_visible) {
 }
 
 MeshInstanceEditorPlugin::MeshInstanceEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor      = p_node;
     mesh_editor = memnew(MeshInstanceEditor);
     editor->get_viewport()->add_child(mesh_editor);
 

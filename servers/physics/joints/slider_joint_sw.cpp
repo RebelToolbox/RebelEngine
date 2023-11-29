@@ -64,50 +64,50 @@ April 04, 2008
 static _FORCE_INLINE_ real_t atan2fast(real_t y, real_t x) {
     real_t coeff_1 = Math_PI / 4.0f;
     real_t coeff_2 = 3.0f * coeff_1;
-    real_t abs_y = Math::abs(y);
+    real_t abs_y   = Math::abs(y);
     real_t angle;
     if (x >= 0.0f) {
         real_t r = (x - abs_y) / (x + abs_y);
-        angle = coeff_1 - coeff_1 * r;
+        angle    = coeff_1 - coeff_1 * r;
     } else {
         real_t r = (x + abs_y) / (abs_y - x);
-        angle = coeff_2 - coeff_1 * r;
+        angle    = coeff_2 - coeff_1 * r;
     }
     return (y < 0.0f) ? -angle : angle;
 }
 
 void SliderJointSW::initParams() {
-    m_lowerLinLimit = real_t(1.0);
-    m_upperLinLimit = real_t(-1.0);
-    m_lowerAngLimit = real_t(0.);
-    m_upperAngLimit = real_t(0.);
-    m_softnessDirLin = SLIDER_CONSTRAINT_DEF_SOFTNESS;
-    m_restitutionDirLin = SLIDER_CONSTRAINT_DEF_RESTITUTION;
-    m_dampingDirLin = real_t(0.);
-    m_softnessDirAng = SLIDER_CONSTRAINT_DEF_SOFTNESS;
-    m_restitutionDirAng = SLIDER_CONSTRAINT_DEF_RESTITUTION;
-    m_dampingDirAng = real_t(0.);
-    m_softnessOrthoLin = SLIDER_CONSTRAINT_DEF_SOFTNESS;
+    m_lowerLinLimit       = real_t(1.0);
+    m_upperLinLimit       = real_t(-1.0);
+    m_lowerAngLimit       = real_t(0.);
+    m_upperAngLimit       = real_t(0.);
+    m_softnessDirLin      = SLIDER_CONSTRAINT_DEF_SOFTNESS;
+    m_restitutionDirLin   = SLIDER_CONSTRAINT_DEF_RESTITUTION;
+    m_dampingDirLin       = real_t(0.);
+    m_softnessDirAng      = SLIDER_CONSTRAINT_DEF_SOFTNESS;
+    m_restitutionDirAng   = SLIDER_CONSTRAINT_DEF_RESTITUTION;
+    m_dampingDirAng       = real_t(0.);
+    m_softnessOrthoLin    = SLIDER_CONSTRAINT_DEF_SOFTNESS;
     m_restitutionOrthoLin = SLIDER_CONSTRAINT_DEF_RESTITUTION;
-    m_dampingOrthoLin = SLIDER_CONSTRAINT_DEF_DAMPING;
-    m_softnessOrthoAng = SLIDER_CONSTRAINT_DEF_SOFTNESS;
+    m_dampingOrthoLin     = SLIDER_CONSTRAINT_DEF_DAMPING;
+    m_softnessOrthoAng    = SLIDER_CONSTRAINT_DEF_SOFTNESS;
     m_restitutionOrthoAng = SLIDER_CONSTRAINT_DEF_RESTITUTION;
-    m_dampingOrthoAng = SLIDER_CONSTRAINT_DEF_DAMPING;
-    m_softnessLimLin = SLIDER_CONSTRAINT_DEF_SOFTNESS;
-    m_restitutionLimLin = SLIDER_CONSTRAINT_DEF_RESTITUTION;
-    m_dampingLimLin = SLIDER_CONSTRAINT_DEF_DAMPING;
-    m_softnessLimAng = SLIDER_CONSTRAINT_DEF_SOFTNESS;
-    m_restitutionLimAng = SLIDER_CONSTRAINT_DEF_RESTITUTION;
-    m_dampingLimAng = SLIDER_CONSTRAINT_DEF_DAMPING;
+    m_dampingOrthoAng     = SLIDER_CONSTRAINT_DEF_DAMPING;
+    m_softnessLimLin      = SLIDER_CONSTRAINT_DEF_SOFTNESS;
+    m_restitutionLimLin   = SLIDER_CONSTRAINT_DEF_RESTITUTION;
+    m_dampingLimLin       = SLIDER_CONSTRAINT_DEF_DAMPING;
+    m_softnessLimAng      = SLIDER_CONSTRAINT_DEF_SOFTNESS;
+    m_restitutionLimAng   = SLIDER_CONSTRAINT_DEF_RESTITUTION;
+    m_dampingLimAng       = SLIDER_CONSTRAINT_DEF_DAMPING;
 
-    m_poweredLinMotor = false;
-    m_targetLinMotorVelocity = real_t(0.);
-    m_maxLinMotorForce = real_t(0.);
+    m_poweredLinMotor            = false;
+    m_targetLinMotorVelocity     = real_t(0.);
+    m_maxLinMotorForce           = real_t(0.);
     m_accumulatedLinMotorImpulse = real_t(0.0);
 
-    m_poweredAngMotor = false;
-    m_targetAngMotorVelocity = real_t(0.);
-    m_maxAngMotorForce = real_t(0.);
+    m_poweredAngMotor            = false;
+    m_targetAngMotorVelocity     = real_t(0.);
+    m_maxAngMotorForce           = real_t(0.);
     m_accumulatedAngMotorImpulse = real_t(0.0);
 
 } // SliderJointSW::initParams()
@@ -145,13 +145,13 @@ bool SliderJointSW::setup(real_t p_step) {
     // calculate transforms
     m_calculatedTransformA = A->get_transform() * m_frameInA;
     m_calculatedTransformB = B->get_transform() * m_frameInB;
-    m_realPivotAInW = m_calculatedTransformA.origin;
-    m_realPivotBInW = m_calculatedTransformB.origin;
-    m_sliderAxis = m_calculatedTransformA.basis.get_axis(0); // along X
-    m_delta = m_realPivotBInW - m_realPivotAInW;
+    m_realPivotAInW        = m_calculatedTransformA.origin;
+    m_realPivotBInW        = m_calculatedTransformB.origin;
+    m_sliderAxis   = m_calculatedTransformA.basis.get_axis(0); // along X
+    m_delta        = m_realPivotBInW - m_realPivotAInW;
     m_projPivotInW = m_realPivotAInW + m_sliderAxis.dot(m_delta) * m_sliderAxis;
-    m_relPosA = m_projPivotInW - A->get_transform().origin;
-    m_relPosB = m_realPivotBInW - B->get_transform().origin;
+    m_relPosA      = m_projPivotInW - A->get_transform().origin;
+    m_relPosB      = m_realPivotBInW - B->get_transform().origin;
     Vector3 normalWorld;
     int i;
     // linear part
@@ -172,7 +172,7 @@ bool SliderJointSW::setup(real_t p_step) {
             )
         );
         m_jacLinDiagABInv[i] = real_t(1.) / m_jacLin[i].getDiagonal();
-        m_depth[i] = m_delta.dot(normalWorld);
+        m_depth[i]           = m_delta.dot(normalWorld);
     }
     testLinLimits();
     // angular part
@@ -191,7 +191,7 @@ bool SliderJointSW::setup(real_t p_step) {
     }
     testAngLimits();
     Vector3 axisA = m_calculatedTransformA.basis.get_axis(0);
-    m_kAngle = real_t(1.0)
+    m_kAngle      = real_t(1.0)
              / (A->compute_angular_impulse_denominator(axisA)
                 + B->compute_angular_impulse_denominator(axisA));
     // clear accumulator for motors
@@ -208,12 +208,12 @@ void SliderJointSW::solve(real_t p_step) {
     // linear
     Vector3 velA = A->get_velocity_in_local_point(m_relPosA);
     Vector3 velB = B->get_velocity_in_local_point(m_relPosB);
-    Vector3 vel = velA - velB;
+    Vector3 vel  = velA - velB;
     for (i = 0; i < 3; i++) {
         const Vector3& normal = m_jacLin[i].m_linearJointAxis;
-        real_t rel_vel = normal.dot(vel);
+        real_t rel_vel        = normal.dot(vel);
         // calculate positional error
-        real_t depth = m_depth[i];
+        real_t depth          = m_depth[i];
         // get parameters
         real_t softness =
             (i) ? m_softnessOrthoLin
@@ -234,8 +234,8 @@ void SliderJointSW::solve(real_t p_step) {
         if (m_poweredLinMotor && (!i)) { // apply linear motor
             if (m_accumulatedLinMotorImpulse < m_maxLinMotorForce) {
                 real_t desiredMotorVel = m_targetLinMotorVelocity;
-                real_t motor_relvel = desiredMotorVel + rel_vel;
-                normalImpulse = -motor_relvel * m_jacLinDiagABInv[i];
+                real_t motor_relvel    = desiredMotorVel + rel_vel;
+                normalImpulse          = -motor_relvel * m_jacLinDiagABInv[i];
                 // clamp accumulated impulse
                 real_t new_acc =
                     m_accumulatedLinMotorImpulse + Math::abs(normalImpulse);
@@ -250,7 +250,7 @@ void SliderJointSW::solve(real_t p_step) {
                 }
                 m_accumulatedLinMotorImpulse = new_acc;
                 // apply clamped impulse
-                impulse_vector = normal * normalImpulse;
+                impulse_vector               = normal * normalImpulse;
                 A->apply_impulse(m_relPosA, impulse_vector);
                 B->apply_impulse(m_relPosB, -impulse_vector);
             }
@@ -267,24 +267,24 @@ void SliderJointSW::solve(real_t p_step) {
     Vector3 angVelAroundAxisA = axisA * axisA.dot(angVelA);
     Vector3 angVelAroundAxisB = axisB * axisB.dot(angVelB);
 
-    Vector3 angAorthog = angVelA - angVelAroundAxisA;
-    Vector3 angBorthog = angVelB - angVelAroundAxisB;
+    Vector3 angAorthog   = angVelA - angVelAroundAxisA;
+    Vector3 angBorthog   = angVelB - angVelAroundAxisB;
     Vector3 velrelOrthog = angAorthog - angBorthog;
     // solve orthogonal angular velocity correction
-    real_t len = velrelOrthog.length();
+    real_t len           = velrelOrthog.length();
     if (len > real_t(0.00001)) {
         Vector3 normal = velrelOrthog.normalized();
-        real_t denom = A->compute_angular_impulse_denominator(normal)
+        real_t denom   = A->compute_angular_impulse_denominator(normal)
                      + B->compute_angular_impulse_denominator(normal);
         velrelOrthog *=
             (real_t(1.) / denom) * m_dampingOrthoAng * m_softnessOrthoAng;
     }
     // solve angular positional correction
     Vector3 angularError = axisA.cross(axisB) * (real_t(1.) / p_step);
-    real_t len2 = angularError.length();
+    real_t len2          = angularError.length();
     if (len2 > real_t(0.00001)) {
         Vector3 normal2 = angularError.normalized();
-        real_t denom2 = A->compute_angular_impulse_denominator(normal2)
+        real_t denom2   = A->compute_angular_impulse_denominator(normal2)
                       + B->compute_angular_impulse_denominator(normal2);
         angularError *=
             (real_t(1.) / denom2) * m_restitutionOrthoAng * m_softnessOrthoAng;
@@ -309,11 +309,11 @@ void SliderJointSW::solve(real_t p_step) {
     // apply angular motor
     if (m_poweredAngMotor) {
         if (m_accumulatedAngMotorImpulse < m_maxAngMotorForce) {
-            Vector3 velrel = angVelAroundAxisA - angVelAroundAxisB;
+            Vector3 velrel    = angVelAroundAxisA - angVelAroundAxisB;
             real_t projRelVel = velrel.dot(axisA);
 
             real_t desiredMotorVel = m_targetAngMotorVelocity;
-            real_t motor_relvel = desiredMotorVel - projRelVel;
+            real_t motor_relvel    = desiredMotorVel - projRelVel;
 
             real_t angImpulse = m_kAngle * motor_relvel;
             // clamp accumulated impulse
@@ -330,7 +330,7 @@ void SliderJointSW::solve(real_t p_step) {
             }
             m_accumulatedAngMotorImpulse = new_acc;
             // apply clamped impulse
-            Vector3 motorImp = angImpulse * axisA;
+            Vector3 motorImp             = angImpulse * axisA;
             A->apply_torque_impulse(motorImp);
             B->apply_torque_impulse(-motorImp);
         }
@@ -344,17 +344,17 @@ void SliderJointSW::solve(real_t p_step) {
 void SliderJointSW::calculateTransforms() {
     m_calculatedTransformA = A->get_transform() * m_frameInA;
     m_calculatedTransformB = B->get_transform() * m_frameInB;
-    m_realPivotAInW = m_calculatedTransformA.origin;
-    m_realPivotBInW = m_calculatedTransformB.origin;
-    m_sliderAxis = m_calculatedTransformA.basis.get_axis(0); // along X
-    m_delta = m_realPivotBInW - m_realPivotAInW;
+    m_realPivotAInW        = m_calculatedTransformA.origin;
+    m_realPivotBInW        = m_calculatedTransformB.origin;
+    m_sliderAxis   = m_calculatedTransformA.basis.get_axis(0); // along X
+    m_delta        = m_realPivotBInW - m_realPivotAInW;
     m_projPivotInW = m_realPivotAInW + m_sliderAxis.dot(m_delta) * m_sliderAxis;
     Vector3 normalWorld;
     int i;
     // linear part
     for (i = 0; i < 3; i++) {
         normalWorld = m_calculatedTransformA.basis.get_axis(i);
-        m_depth[i] = m_delta.dot(normalWorld);
+        m_depth[i]  = m_delta.dot(normalWorld);
     }
 } // SliderJointSW::calculateTransforms()
 
@@ -362,14 +362,14 @@ void SliderJointSW::calculateTransforms() {
 
 void SliderJointSW::testLinLimits() {
     m_solveLinLim = false;
-    m_linPos = m_depth[0];
+    m_linPos      = m_depth[0];
     if (m_lowerLinLimit <= m_upperLinLimit) {
         if (m_depth[0] > m_upperLinLimit) {
-            m_depth[0] -= m_upperLinLimit;
-            m_solveLinLim = true;
+            m_depth[0]    -= m_upperLinLimit;
+            m_solveLinLim  = true;
         } else if (m_depth[0] < m_lowerLinLimit) {
-            m_depth[0] -= m_lowerLinLimit;
-            m_solveLinLim = true;
+            m_depth[0]    -= m_lowerLinLimit;
+            m_solveLinLim  = true;
         } else {
             m_depth[0] = real_t(0.);
         }
@@ -381,7 +381,7 @@ void SliderJointSW::testLinLimits() {
 //-----------------------------------------------------------------------------
 
 void SliderJointSW::testAngLimits() {
-    m_angDepth = real_t(0.);
+    m_angDepth    = real_t(0.);
     m_solveAngLim = false;
     if (m_lowerAngLimit <= m_upperAngLimit) {
         const Vector3 axisA0 = m_calculatedTransformA.basis.get_axis(1);
@@ -389,10 +389,10 @@ void SliderJointSW::testAngLimits() {
         const Vector3 axisB0 = m_calculatedTransformB.basis.get_axis(1);
         real_t rot = atan2fast(axisB0.dot(axisA1), axisB0.dot(axisA0));
         if (rot < m_lowerAngLimit) {
-            m_angDepth = rot - m_lowerAngLimit;
+            m_angDepth    = rot - m_lowerAngLimit;
             m_solveAngLim = true;
         } else if (rot > m_upperAngLimit) {
-            m_angDepth = rot - m_upperAngLimit;
+            m_angDepth    = rot - m_upperAngLimit;
             m_solveAngLim = true;
         }
     }

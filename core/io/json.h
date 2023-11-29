@@ -108,7 +108,7 @@ public:
     static String print(
         const Variant& p_var,
         const String& p_indent = "",
-        bool p_sort_keys = true
+        bool p_sort_keys       = true
     );
     static Error parse(
         const String& p_json,

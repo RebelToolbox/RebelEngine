@@ -168,10 +168,10 @@ private:
         HashMap<NodePath, bool> filter;
 
         AnimationNode() {
-            type = NODE_ANIMATION;
-            next = nullptr;
+            type         = NODE_ANIMATION;
+            next         = nullptr;
             last_version = 0;
-            skip = false;
+            skip         = false;
         }
     };
 
@@ -193,16 +193,16 @@ private:
         HashMap<NodePath, bool> filter;
 
         OneShotNode() {
-            type = NODE_ONESHOT;
-            fade_in = 0;
+            type     = NODE_ONESHOT;
+            fade_in  = 0;
             fade_out = 0;
             inputs.resize(2);
-            autorestart = false;
-            autorestart_delay = 1;
+            autorestart           = false;
+            autorestart_delay     = 1;
             autorestart_remaining = 0;
-            mix = false;
-            active = false;
-            start = false;
+            mix                   = false;
+            active                = false;
+            start                 = false;
         }
     };
 
@@ -220,7 +220,7 @@ private:
         HashMap<NodePath, bool> filter;
 
         Blend2Node() {
-            type = NODE_BLEND2;
+            type  = NODE_BLEND2;
             value = 0;
             inputs.resize(2);
         }
@@ -230,7 +230,7 @@ private:
         float value;
 
         Blend3Node() {
-            type = NODE_BLEND3;
+            type  = NODE_BLEND3;
             value = 0;
             inputs.resize(3);
         }
@@ -249,7 +249,7 @@ private:
         float scale;
 
         TimeScaleNode() {
-            type = NODE_TIMESCALE;
+            type  = NODE_TIMESCALE;
             scale = 1;
             inputs.resize(1);
         }
@@ -287,15 +287,15 @@ private:
         float xfade;
 
         TransitionNode() {
-            type = NODE_TRANSITION;
+            type  = NODE_TRANSITION;
             xfade = 0;
             inputs.resize(1);
             input_data.resize(1);
-            current = 0;
-            prev = -1;
-            prev_time = 0;
+            current      = 0;
+            prev         = -1;
+            prev_time    = 0;
             prev_xfading = 0;
-            switched = false;
+            switched     = false;
         }
 
         void set_current(int p_current);
@@ -322,8 +322,8 @@ private:
         const StringName& p_node,
         AnimationNode** r_prev_anim,
         float p_time,
-        bool p_seek = false,
-        float p_fallback_weight = 1.0,
+        bool p_seek                         = false,
+        float p_fallback_weight             = 1.0,
         HashMap<NodePath, float>* p_weights = nullptr
     );
     void _process_animation(float p_delta);
@@ -342,7 +342,7 @@ private:
         HashMap<NodePath, float>* p_weights,
         float p_coeff,
         const HashMap<NodePath, bool>* p_filter = nullptr,
-        float p_filtered_coeff = 0
+        float p_filtered_coeff                  = 0
     );
 
 protected:

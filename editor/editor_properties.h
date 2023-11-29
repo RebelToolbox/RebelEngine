@@ -565,13 +565,13 @@ class EditorPropertyResource : public EditorProperty {
     GDCLASS(EditorPropertyResource, EditorProperty);
 
     EditorResourcePicker* resource_picker = nullptr;
-    SceneTreeDialog* scene_tree = nullptr;
+    SceneTreeDialog* scene_tree           = nullptr;
 
-    bool use_sub_inspector = false;
-    EditorInspector* sub_inspector = nullptr;
+    bool use_sub_inspector            = false;
+    EditorInspector* sub_inspector    = nullptr;
     VBoxContainer* sub_inspector_vbox = nullptr;
-    bool updating_theme = false;
-    bool opened_editor = false;
+    bool updating_theme               = false;
+    bool opened_editor                = false;
 
     void _resource_selected(const RES& p_resource, bool p_edit);
     void _resource_changed(const RES& p_resource);

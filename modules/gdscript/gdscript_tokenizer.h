@@ -160,22 +160,22 @@ public:
     StringName get_token_literal(int p_offset = 0) const;
 
     virtual const Variant& get_token_constant(int p_offset = 0) const = 0;
-    virtual Token get_token(int p_offset = 0) const = 0;
-    virtual StringName get_token_identifier(int p_offset = 0) const = 0;
+    virtual Token get_token(int p_offset = 0) const                   = 0;
+    virtual StringName get_token_identifier(int p_offset = 0) const   = 0;
     virtual GDScriptFunctions::Function get_token_built_in_func(
         int p_offset = 0
-    ) const = 0;
-    virtual Variant::Type get_token_type(int p_offset = 0) const = 0;
-    virtual int get_token_line(int p_offset = 0) const = 0;
-    virtual int get_token_column(int p_offset = 0) const = 0;
-    virtual int get_token_line_indent(int p_offset = 0) const = 0;
+    ) const                                                       = 0;
+    virtual Variant::Type get_token_type(int p_offset = 0) const  = 0;
+    virtual int get_token_line(int p_offset = 0) const            = 0;
+    virtual int get_token_column(int p_offset = 0) const          = 0;
+    virtual int get_token_line_indent(int p_offset = 0) const     = 0;
     virtual int get_token_line_tab_indent(int p_offset = 0) const = 0;
-    virtual String get_token_error(int p_offset = 0) const = 0;
-    virtual void advance(int p_amount = 1) = 0;
+    virtual String get_token_error(int p_offset = 0) const        = 0;
+    virtual void advance(int p_amount = 1)                        = 0;
 #ifdef DEBUG_ENABLED
     virtual const Vector<Pair<int, String>>& get_warning_skips() const = 0;
-    virtual const Set<String>& get_warning_global_skips() const = 0;
-    virtual bool is_ignoring_warnings() const = 0;
+    virtual const Set<String>& get_warning_global_skips() const        = 0;
+    virtual bool is_ignoring_warnings() const                          = 0;
 #endif // DEBUG_ENABLED
 
     virtual ~GDScriptTokenizer(){};
@@ -184,7 +184,7 @@ public:
 class GDScriptTokenizerText : public GDScriptTokenizer {
     enum {
         MAX_LOOKAHEAD = 4,
-        TK_RB_SIZE = MAX_LOOKAHEAD * 2 + 1
+        TK_RB_SIZE    = MAX_LOOKAHEAD * 2 + 1
     };
 
     struct TokenData {
@@ -203,7 +203,7 @@ class GDScriptTokenizerText : public GDScriptTokenizer {
         TokenData() {
             type = TK_EMPTY;
             line = col = 0;
-            vtype = Variant::NIL;
+            vtype      = Variant::NIL;
         }
     };
 
@@ -267,8 +267,8 @@ public:
 class GDScriptTokenizerBuffer : public GDScriptTokenizer {
     enum {
         TOKEN_BYTE_MASK = 0x80,
-        TOKEN_BITS = 8,
-        TOKEN_MASK = (1 << TOKEN_BITS) - 1,
+        TOKEN_BITS      = 8,
+        TOKEN_MASK      = (1 << TOKEN_BITS) - 1,
         TOKEN_LINE_BITS = 24,
         TOKEN_LINE_MASK = (1 << TOKEN_LINE_BITS) - 1,
     };

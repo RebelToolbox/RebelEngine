@@ -473,7 +473,7 @@ void GIProbe::_find_meshes(Node* p_at_node, List<PlotMesh>& plot_meshes) {
             if (AABB(-extents, extents * 2).intersects(xf.xform(aabb))) {
                 PlotMesh pm;
                 pm.local_xform = xf;
-                pm.mesh = mesh;
+                pm.mesh        = mesh;
                 for (int i = 0; i < mesh->get_surface_count(); i++) {
                     pm.instance_materials.push_back(mi->get_surface_material(i)
                     );
@@ -489,7 +489,7 @@ void GIProbe::_find_meshes(Node* p_at_node, List<PlotMesh>& plot_meshes) {
         if (s->is_visible_in_tree()) {
             Array meshes = p_at_node->call("get_meshes");
             for (int i = 0; i < meshes.size(); i += 2) {
-                Transform mxf = meshes[i];
+                Transform mxf  = meshes[i];
                 Ref<Mesh> mesh = meshes[i + 1];
                 if (!mesh.is_valid()) {
                     continue;
@@ -503,7 +503,7 @@ void GIProbe::_find_meshes(Node* p_at_node, List<PlotMesh>& plot_meshes) {
                 if (AABB(-extents, extents * 2).intersects(xf.xform(aabb))) {
                     PlotMesh pm;
                     pm.local_xform = xf;
-                    pm.mesh = mesh;
+                    pm.mesh        = mesh;
                     plot_meshes.push_back(pm);
                 }
             }
@@ -517,8 +517,8 @@ void GIProbe::_find_meshes(Node* p_at_node, List<PlotMesh>& plot_meshes) {
 }
 
 GIProbe::BakeBeginFunc GIProbe::bake_begin_function = nullptr;
-GIProbe::BakeStepFunc GIProbe::bake_step_function = nullptr;
-GIProbe::BakeEndFunc GIProbe::bake_end_function = nullptr;
+GIProbe::BakeStepFunc GIProbe::bake_step_function   = nullptr;
+GIProbe::BakeEndFunc GIProbe::bake_end_function     = nullptr;
 
 void GIProbe::bake(Node* p_from_node, bool p_create_visual_debug) {
     static const int subdiv_value[SUBDIV_MAX] = {7, 8, 9, 10};
@@ -813,15 +813,15 @@ void GIProbe::_bind_methods() {
 }
 
 GIProbe::GIProbe() {
-    subdiv = SUBDIV_128;
+    subdiv        = SUBDIV_128;
     dynamic_range = 4;
-    energy = 1.0;
-    bias = 1.5;
-    normal_bias = 0.0;
-    propagation = 0.7;
-    extents = Vector3(10, 10, 10);
-    interior = false;
-    compress = false;
+    energy        = 1.0;
+    bias          = 1.5;
+    normal_bias   = 0.0;
+    propagation   = 0.7;
+    extents       = Vector3(10, 10, 10);
+    interior      = false;
+    compress      = false;
 
     gi_probe = VS::get_singleton()->gi_probe_create();
     set_disable_scale(true);

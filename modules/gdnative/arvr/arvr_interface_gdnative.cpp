@@ -62,7 +62,7 @@ ARVRInterfaceGDNative::~ARVRInterfaceGDNative() {
 void ARVRInterfaceGDNative::cleanup() {
     if (interface != nullptr) {
         interface->destructor(data);
-        data = nullptr;
+        data      = nullptr;
         interface = nullptr;
     }
 }
@@ -179,7 +179,7 @@ Size2 ARVRInterfaceGDNative::get_render_targetsize() {
     ERR_FAIL_COND_V(interface == nullptr, Size2());
 
     godot_vector2 result = interface->get_render_targetsize(data);
-    Vector2* vec = (Vector2*)&result;
+    Vector2* vec         = (Vector2*)&result;
 
     return *vec;
 }
@@ -339,13 +339,13 @@ void GDAPI godot_arvr_blit(
     // blits out our texture as is, handy for preview display of one of the eyes
     // that is already rendered with lens distortion on an external HMD
     ARVRInterface::Eyes eye = (ARVRInterface::Eyes)p_eye;
-    RID* render_target = (RID*)p_render_target;
-    Rect2 screen_rect = *(Rect2*)p_rect;
+    RID* render_target      = (RID*)p_render_target;
+    Rect2 screen_rect       = *(Rect2*)p_rect;
 
     if (eye == ARVRInterface::EYE_LEFT) {
         screen_rect.size.x /= 2.0;
     } else if (p_eye == ARVRInterface::EYE_RIGHT) {
-        screen_rect.size.x /= 2.0;
+        screen_rect.size.x     /= 2.0;
         screen_rect.position.x += screen_rect.size.x;
     }
 
@@ -361,7 +361,7 @@ godot_int GDAPI godot_arvr_get_texid(godot_rid* p_render_target) {
     RID* render_target = (RID*)p_render_target;
 
     RID eye_texture = VSG::storage->render_target_get_texture(*render_target);
-    uint32_t texid = VS::get_singleton()->texture_get_texid(eye_texture);
+    uint32_t texid  = VS::get_singleton()->texture_get_texid(eye_texture);
 
     return texid;
 }
@@ -504,7 +504,7 @@ void GDAPI godot_arvr_set_controller_axis(
         int joyid = tracker->get_joy_id();
         if (joyid != -1) {
             InputDefault::JoyAxis jx;
-            jx.min = p_can_be_negative ? -1 : 0;
+            jx.min   = p_can_be_negative ? -1 : 0;
             jx.value = p_value;
             input->joy_axis(joyid, p_axis, jx);
         }

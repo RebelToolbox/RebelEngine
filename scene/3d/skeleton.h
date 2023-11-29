@@ -50,7 +50,7 @@ class SkinReference : public Reference {
     Skeleton* skeleton_node = nullptr;
     RID skeleton;
     Ref<Skin> skin;
-    uint32_t bind_count = 0;
+    uint32_t bind_count       = 0;
     uint64_t skeleton_version = 0;
     Vector<uint32_t> skin_bone_indices;
     uint32_t* skin_bone_indices_ptrs = nullptr;
@@ -105,14 +105,14 @@ private:
         List<uint32_t> nodes_bound;
 
         Bone() {
-            parent = -1;
-            enabled = true;
-            disable_rest = false;
-            custom_pose_enable = false;
+            parent                      = -1;
+            enabled                     = true;
+            disable_rest                = false;
+            custom_pose_enable          = false;
             global_pose_override_amount = 0;
-            global_pose_override_reset = false;
+            global_pose_override_reset  = false;
 #ifndef _3D_DISABLED
-            physical_bone = nullptr;
+            physical_bone              = nullptr;
             cache_parent_physical_bone = nullptr;
 #endif // _3D_DISABLED
         }

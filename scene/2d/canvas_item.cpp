@@ -57,7 +57,7 @@ void CanvasItemMaterial::init_shaders() {
 
     shader_names->particles_anim_h_frames = "particles_anim_h_frames";
     shader_names->particles_anim_v_frames = "particles_anim_v_frames";
-    shader_names->particles_anim_loop = "particles_anim_loop";
+    shader_names->particles_anim_loop     = "particles_anim_loop";
 }
 
 void CanvasItemMaterial::finish_shaders() {
@@ -172,7 +172,7 @@ void CanvasItemMaterial::_update_shader() {
 
     ShaderData shader_data;
     shader_data.shader = VS::get_singleton()->shader_create();
-    shader_data.users = 1;
+    shader_data.users  = 1;
 
     VS::get_singleton()->shader_set_code(shader_data.shader, code);
 
@@ -417,17 +417,17 @@ void CanvasItemMaterial::_bind_methods() {
 }
 
 CanvasItemMaterial::CanvasItemMaterial() : element(this) {
-    blend_mode = BLEND_MODE_MIX;
-    light_mode = LIGHT_MODE_NORMAL;
+    blend_mode          = BLEND_MODE_MIX;
+    light_mode          = LIGHT_MODE_NORMAL;
     particles_animation = false;
 
     set_particles_anim_h_frames(1);
     set_particles_anim_v_frames(1);
     set_particles_anim_loop(false);
 
-    current_key.key = 0;
+    current_key.key         = 0;
     current_key.invalid_key = 1;
-    is_initialized = true;
+    is_initialized          = true;
     _queue_shader_change();
 }
 
@@ -562,7 +562,7 @@ void CanvasItem::_update_callback() {
             notification(NOTIFICATION_VISIBILITY_CHANGED);
             first_draw = false;
         }
-        drawing = true;
+        drawing            = true;
         current_item_drawn = this;
         notification(NOTIFICATION_DRAW);
         emit_signal(SceneStringNames::get_singleton()->draw);
@@ -574,7 +574,7 @@ void CanvasItem::_update_callback() {
             );
         }
         current_item_drawn = nullptr;
-        drawing = false;
+        drawing            = false;
     }
     // todo updating = false
     pending_update = false; // don't change to false until finished drawing
@@ -673,7 +673,7 @@ void CanvasItem::_enter_canvas() {
 
     } else {
         CanvasItem* parent = get_parent_item();
-        canvas_layer = parent->canvas_layer;
+        canvas_layer       = parent->canvas_layer;
         VisualServer::get_singleton()->canvas_item_set_parent(
             canvas_item,
             parent->get_canvas_item()
@@ -694,7 +694,7 @@ void CanvasItem::_exit_canvas() {
     notification(NOTIFICATION_EXIT_CANVAS, true); // reverse the notification
     VisualServer::get_singleton()->canvas_item_set_parent(canvas_item, RID());
     canvas_layer = nullptr;
-    group = "";
+    group        = "";
 }
 
 void CanvasItem::_notification(int p_what) {
@@ -1186,7 +1186,7 @@ void CanvasItem::draw_primitive(
         "'draw' signal."
     );
 
-    RID rid = p_texture.is_valid() ? p_texture->get_rid() : RID();
+    RID rid        = p_texture.is_valid() ? p_texture->get_rid() : RID();
     RID rid_normal = p_normal_map.is_valid() ? p_normal_map->get_rid() : RID();
 
     VisualServer::get_singleton()->canvas_item_add_primitive(
@@ -1246,7 +1246,7 @@ void CanvasItem::draw_polygon(
         "'draw' signal."
     );
 
-    RID rid = p_texture.is_valid() ? p_texture->get_rid() : RID();
+    RID rid        = p_texture.is_valid() ? p_texture->get_rid() : RID();
     RID rid_normal = p_normal_map.is_valid() ? p_normal_map->get_rid() : RID();
 
     VisualServer::get_singleton()->canvas_item_add_polygon(
@@ -1276,7 +1276,7 @@ void CanvasItem::draw_colored_polygon(
 
     Vector<Color> colors;
     colors.push_back(p_color);
-    RID rid = p_texture.is_valid() ? p_texture->get_rid() : RID();
+    RID rid        = p_texture.is_valid() ? p_texture->get_rid() : RID();
     RID rid_normal = p_normal_map.is_valid() ? p_normal_map->get_rid() : RID();
 
     VisualServer::get_singleton()->canvas_item_add_polygon(
@@ -1404,7 +1404,7 @@ void CanvasItem::_notify_transform(CanvasItem* p_node) {
     }
 
     for (List<CanvasItem*>::Element* E = p_node->children_items.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         CanvasItem* ci = E->get();
         if (ci->toplevel) {
             continue;
@@ -2141,23 +2141,23 @@ int CanvasItem::get_canvas_layer() const {
 }
 
 CanvasItem::CanvasItem() : xform_change(this) {
-    canvas_item = VisualServer::get_singleton()->canvas_item_create();
-    visible = true;
+    canvas_item    = VisualServer::get_singleton()->canvas_item_create();
+    visible        = true;
     pending_update = false;
-    modulate = Color(1, 1, 1, 1);
-    self_modulate = Color(1, 1, 1, 1);
-    toplevel = false;
-    first_draw = false;
-    drawing = false;
-    behind = false;
+    modulate       = Color(1, 1, 1, 1);
+    self_modulate  = Color(1, 1, 1, 1);
+    toplevel       = false;
+    first_draw     = false;
+    drawing        = false;
+    behind         = false;
     block_transform_notify = false;
     // viewport=NULL;
-    canvas_layer = nullptr;
-    use_parent_material = false;
-    global_invalid = true;
+    canvas_layer           = nullptr;
+    use_parent_material    = false;
+    global_invalid         = true;
     notify_local_transform = false;
-    notify_transform = false;
-    light_mask = 1;
+    notify_transform       = false;
+    light_mask             = 1;
 
     C = nullptr;
 }

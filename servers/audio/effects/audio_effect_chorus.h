@@ -68,13 +68,13 @@ class AudioEffectChorus : public AudioEffect {
 
 public:
     enum {
-        MAX_DELAY_MS = 50,
-        MAX_DEPTH_MS = 20,
-        MAX_WIDTH_MS = 50,
-        MAX_VOICES = 4,
-        CYCLES_FRAC = 16,
-        CYCLES_MASK = (1 << CYCLES_FRAC) - 1,
-        MAX_CHANNELS = 4,
+        MAX_DELAY_MS  = 50,
+        MAX_DEPTH_MS  = 20,
+        MAX_WIDTH_MS  = 50,
+        MAX_VOICES    = 4,
+        CYCLES_FRAC   = 16,
+        CYCLES_MASK   = (1 << CYCLES_FRAC) - 1,
+        MAX_CHANNELS  = 4,
         MS_CUTOFF_MAX = 16000
     };
 
@@ -88,12 +88,12 @@ private:
         float pan;
 
         Voice() {
-            delay = 12.0;
-            rate = 1;
-            depth = 0;
-            level = 0;
+            delay  = 12.0;
+            rate   = 1;
+            depth  = 0;
+            level  = 0;
             cutoff = MS_CUTOFF_MAX;
-            pan = 0;
+            pan    = 0;
         }
 
     } voice[MAX_VOICES];

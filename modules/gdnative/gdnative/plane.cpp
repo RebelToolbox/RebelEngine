@@ -47,7 +47,7 @@ void GDAPI godot_plane_new_with_reals(
     const godot_real p_d
 ) {
     Plane* dest = (Plane*)r_dest;
-    *dest = Plane(p_a, p_b, p_c, p_d);
+    *dest       = Plane(p_a, p_b, p_c, p_d);
 }
 
 void GDAPI godot_plane_new_with_vectors(
@@ -59,8 +59,8 @@ void GDAPI godot_plane_new_with_vectors(
     const Vector3* v1 = (const Vector3*)p_v1;
     const Vector3* v2 = (const Vector3*)p_v2;
     const Vector3* v3 = (const Vector3*)p_v3;
-    Plane* dest = (Plane*)r_dest;
-    *dest = Plane(*v1, *v2, *v3);
+    Plane* dest       = (Plane*)r_dest;
+    *dest             = Plane(*v1, *v2, *v3);
 }
 
 void GDAPI godot_plane_new_with_normal(
@@ -69,8 +69,8 @@ void GDAPI godot_plane_new_with_normal(
     const godot_real p_d
 ) {
     const Vector3* normal = (const Vector3*)p_normal;
-    Plane* dest = (Plane*)r_dest;
-    *dest = Plane(*normal, p_d);
+    Plane* dest           = (Plane*)r_dest;
+    *dest                 = Plane(*normal, p_d);
 }
 
 godot_string GDAPI godot_plane_as_string(const godot_plane* p_self) {
@@ -83,20 +83,20 @@ godot_string GDAPI godot_plane_as_string(const godot_plane* p_self) {
 godot_plane GDAPI godot_plane_normalized(const godot_plane* p_self) {
     godot_plane dest;
     const Plane* self = (const Plane*)p_self;
-    *((Plane*)&dest) = self->normalized();
+    *((Plane*)&dest)  = self->normalized();
     return dest;
 }
 
 godot_vector3 GDAPI godot_plane_center(const godot_plane* p_self) {
     godot_vector3 dest;
-    const Plane* self = (const Plane*)p_self;
+    const Plane* self  = (const Plane*)p_self;
     *((Vector3*)&dest) = self->center();
     return dest;
 }
 
 godot_vector3 GDAPI godot_plane_get_any_point(const godot_plane* p_self) {
     godot_vector3 dest;
-    const Plane* self = (const Plane*)p_self;
+    const Plane* self  = (const Plane*)p_self;
     *((Vector3*)&dest) = self->get_any_point();
     return dest;
 }
@@ -105,7 +105,7 @@ godot_bool GDAPI godot_plane_is_point_over(
     const godot_plane* p_self,
     const godot_vector3* p_point
 ) {
-    const Plane* self = (const Plane*)p_self;
+    const Plane* self    = (const Plane*)p_self;
     const Vector3* point = (const Vector3*)p_point;
     return self->is_point_over(*point);
 }
@@ -114,7 +114,7 @@ godot_real GDAPI godot_plane_distance_to(
     const godot_plane* p_self,
     const godot_vector3* p_point
 ) {
-    const Plane* self = (const Plane*)p_self;
+    const Plane* self    = (const Plane*)p_self;
     const Vector3* point = (const Vector3*)p_point;
     return self->distance_to(*point);
 }
@@ -124,7 +124,7 @@ godot_bool GDAPI godot_plane_has_point(
     const godot_vector3* p_point,
     const godot_real p_epsilon
 ) {
-    const Plane* self = (const Plane*)p_self;
+    const Plane* self    = (const Plane*)p_self;
     const Vector3* point = (const Vector3*)p_point;
     return self->has_point(*point, p_epsilon);
 }
@@ -132,9 +132,9 @@ godot_bool GDAPI godot_plane_has_point(
 godot_vector3 GDAPI
 godot_plane_project(const godot_plane* p_self, const godot_vector3* p_point) {
     godot_vector3 dest;
-    const Plane* self = (const Plane*)p_self;
+    const Plane* self    = (const Plane*)p_self;
     const Vector3* point = (const Vector3*)p_point;
-    *((Vector3*)&dest) = self->project(*point);
+    *((Vector3*)&dest)   = self->project(*point);
     return dest;
 }
 
@@ -145,9 +145,9 @@ godot_bool GDAPI godot_plane_intersect_3(
     const godot_plane* p_c
 ) {
     const Plane* self = (const Plane*)p_self;
-    const Plane* b = (const Plane*)p_b;
-    const Plane* c = (const Plane*)p_c;
-    Vector3* dest = (Vector3*)r_dest;
+    const Plane* b    = (const Plane*)p_b;
+    const Plane* c    = (const Plane*)p_c;
+    Vector3* dest     = (Vector3*)r_dest;
     return self->intersect_3(*b, *c, dest);
 }
 
@@ -157,10 +157,10 @@ godot_bool GDAPI godot_plane_intersects_ray(
     const godot_vector3* p_from,
     const godot_vector3* p_dir
 ) {
-    const Plane* self = (const Plane*)p_self;
+    const Plane* self   = (const Plane*)p_self;
     const Vector3* from = (const Vector3*)p_from;
-    const Vector3* dir = (const Vector3*)p_dir;
-    Vector3* dest = (Vector3*)r_dest;
+    const Vector3* dir  = (const Vector3*)p_dir;
+    Vector3* dest       = (Vector3*)r_dest;
     return self->intersects_ray(*from, *dir, dest);
 }
 
@@ -170,39 +170,39 @@ godot_bool GDAPI godot_plane_intersects_segment(
     const godot_vector3* p_begin,
     const godot_vector3* p_end
 ) {
-    const Plane* self = (const Plane*)p_self;
+    const Plane* self    = (const Plane*)p_self;
     const Vector3* begin = (const Vector3*)p_begin;
-    const Vector3* end = (const Vector3*)p_end;
-    Vector3* dest = (Vector3*)r_dest;
+    const Vector3* end   = (const Vector3*)p_end;
+    Vector3* dest        = (Vector3*)r_dest;
     return self->intersects_segment(*begin, *end, dest);
 }
 
 godot_plane GDAPI godot_plane_operator_neg(const godot_plane* p_self) {
     godot_plane raw_dest;
-    Plane* dest = (Plane*)&raw_dest;
+    Plane* dest       = (Plane*)&raw_dest;
     const Plane* self = (const Plane*)p_self;
-    *dest = -(*self);
+    *dest             = -(*self);
     return raw_dest;
 }
 
 godot_bool GDAPI
 godot_plane_operator_equal(const godot_plane* p_self, const godot_plane* p_b) {
     const Plane* self = (const Plane*)p_self;
-    const Plane* b = (const Plane*)p_b;
+    const Plane* b    = (const Plane*)p_b;
     return *self == *b;
 }
 
 void GDAPI
 godot_plane_set_normal(godot_plane* p_self, const godot_vector3* p_normal) {
-    Plane* self = (Plane*)p_self;
+    Plane* self           = (Plane*)p_self;
     const Vector3* normal = (const Vector3*)p_normal;
     self->set_normal(*normal);
 }
 
 godot_vector3 GDAPI godot_plane_get_normal(const godot_plane* p_self) {
-    const Plane* self = (const Plane*)p_self;
+    const Plane* self    = (const Plane*)p_self;
     const Vector3 normal = self->get_normal();
-    godot_vector3* v3 = (godot_vector3*)&normal;
+    godot_vector3* v3    = (godot_vector3*)&normal;
     return *v3;
 }
 
@@ -213,7 +213,7 @@ godot_real GDAPI godot_plane_get_d(const godot_plane* p_self) {
 
 void GDAPI godot_plane_set_d(godot_plane* p_self, const godot_real p_d) {
     Plane* self = (Plane*)p_self;
-    self->d = p_d;
+    self->d     = p_d;
 }
 
 #ifdef __cplusplus

@@ -83,8 +83,8 @@ void VisualScriptPropertySelector::_update_search() {
     search_options->clear();
     help_bit->set_text("");
 
-    TreeItem* root = search_options->create_item();
-    bool found = false;
+    TreeItem* root  = search_options->create_item();
+    bool found      = false;
     StringName base = base_type;
     List<StringName> base_list;
     while (base) {
@@ -95,7 +95,7 @@ void VisualScriptPropertySelector::_update_search() {
     for (List<StringName>::Element* E = base_list.front(); E; E = E->next()) {
         List<MethodInfo> methods;
         List<PropertyInfo> props;
-        TreeItem* category = nullptr;
+        TreeItem* category                            = nullptr;
         Ref<Texture> type_icons[Variant::VARIANT_MAX] = {
             Control::get_icon("Variant", "EditorIcons"),
             Control::get_icon("bool", "EditorIcons"),
@@ -133,7 +133,7 @@ void VisualScriptPropertySelector::_update_search() {
                 category->set_selectable(0, false);
                 Ref<Texture> icon;
                 String rep = b.replace("*", "");
-                icon = EditorNode::get_singleton()->get_class_icon(rep);
+                icon       = EditorNode::get_singleton()->get_class_icon(rep);
                 category->set_icon(0, icon);
             }
         }
@@ -151,7 +151,7 @@ void VisualScriptPropertySelector::_update_search() {
                 }
             }
             for (List<PropertyInfo>::Element* F = props.front(); F;
-                 F = F->next()) {
+                 F                              = F->next()) {
                 if (!(F->get().usage & PROPERTY_USAGE_EDITOR)
                     && !(F->get().usage & PROPERTY_USAGE_SCRIPT_VARIABLE)) {
                     continue;
@@ -170,7 +170,7 @@ void VisualScriptPropertySelector::_update_search() {
                 String set_text_raw =
                     String(vformat(TTR("Set %s"), F->get().name));
                 String set_text = set_text_raw.capitalize();
-                String input = search_box->get_text().capitalize();
+                String input    = search_box->get_text().capitalize();
 
                 if (input == String() || get_text_raw.findn(input) != -1
                     || get_text.findn(input) != -1) {
@@ -257,7 +257,7 @@ void VisualScriptPropertySelector::_update_search() {
                 desc_arguments += ")";
             }
             String desc_raw = mi.name + desc_arguments;
-            String desc = desc_raw.capitalize().replace("( ", "(");
+            String desc     = desc_raw.capitalize().replace("( ", "(");
 
             if (search_box->get_text() != String()
                 && name.findn(search_box->get_text()) == -1
@@ -461,7 +461,7 @@ void VisualScriptPropertySelector::get_visual_node_names(
         Vector<String> path = E->get().split("/");
 
         // check if the name has the filter
-        bool in_filter = false;
+        bool in_filter            = false;
         Vector<String> tx_filters = search_box->get_text().split(" ");
         for (int i = 0; i < tx_filters.size(); i++) {
             if (tx_filters[i] == "") {
@@ -480,7 +480,7 @@ void VisualScriptPropertySelector::get_visual_node_names(
 
         bool in_modifier = p_modifiers.empty();
         for (Set<String>::Element* F = p_modifiers.front(); F && in_modifier;
-             F = F->next()) {
+             F                       = F->next()) {
             if (E->get().findn(F->get()) != -1) {
                 in_modifier = true;
             }
@@ -676,12 +676,12 @@ void VisualScriptPropertySelector::select_method_from_base_type(
     const bool p_connecting,
     bool clear_text
 ) {
-    base_type = p_base;
-    selected = p_current;
-    type = Variant::NIL;
-    script = 0;
-    properties = false;
-    instance = nullptr;
+    base_type     = p_base;
+    selected      = p_current;
+    type          = Variant::NIL;
+    script        = 0;
+    properties    = false;
+    instance      = nullptr;
     virtuals_only = p_virtuals_only;
 
     show_window(.5f);
@@ -710,14 +710,14 @@ void VisualScriptPropertySelector::select_from_base_type(
     const bool p_connecting,
     bool clear_text
 ) {
-    base_type = p_base;
-    selected = p_current;
-    type = Variant::NIL;
-    script = 0;
-    properties = true;
+    base_type             = p_base;
+    selected              = p_current;
+    type                  = Variant::NIL;
+    script                = 0;
+    properties            = true;
     visual_script_generic = false;
-    instance = nullptr;
-    virtuals_only = p_virtuals_only;
+    instance              = nullptr;
+    virtuals_only         = p_virtuals_only;
 
     show_window(.5f);
     if (clear_text) {
@@ -727,7 +727,7 @@ void VisualScriptPropertySelector::select_from_base_type(
     }
     search_box->grab_focus();
     seq_connect = p_seq_connect;
-    connecting = p_connecting;
+    connecting  = p_connecting;
 
     _update_search();
 }
@@ -740,14 +740,14 @@ void VisualScriptPropertySelector::select_from_script(
 ) {
     ERR_FAIL_COND(p_script.is_null());
 
-    base_type = p_script->get_instance_base_type();
-    selected = p_current;
-    type = Variant::NIL;
-    script = p_script->get_instance_id();
-    properties = true;
+    base_type             = p_script->get_instance_base_type();
+    selected              = p_current;
+    type                  = Variant::NIL;
+    script                = p_script->get_instance_id();
+    properties            = true;
     visual_script_generic = false;
-    instance = nullptr;
-    virtuals_only = false;
+    instance              = nullptr;
+    virtuals_only         = false;
 
     show_window(.5f);
     if (clear_text) {
@@ -757,7 +757,7 @@ void VisualScriptPropertySelector::select_from_script(
     }
     search_box->grab_focus();
     seq_connect = false;
-    connecting = p_connecting;
+    connecting  = p_connecting;
 
     _update_search();
 }
@@ -769,14 +769,14 @@ void VisualScriptPropertySelector::select_from_basic_type(
     bool clear_text
 ) {
     ERR_FAIL_COND(p_type == Variant::NIL);
-    base_type = "";
-    selected = p_current;
-    type = p_type;
-    script = 0;
-    properties = true;
+    base_type             = "";
+    selected              = p_current;
+    type                  = p_type;
+    script                = 0;
+    properties            = true;
     visual_script_generic = false;
-    instance = nullptr;
-    virtuals_only = false;
+    instance              = nullptr;
+    virtuals_only         = false;
 
     show_window(.5f);
     if (clear_text) {
@@ -786,7 +786,7 @@ void VisualScriptPropertySelector::select_from_basic_type(
     }
     search_box->grab_focus();
     seq_connect = false;
-    connecting = p_connecting;
+    connecting  = p_connecting;
 
     _update_search();
 }
@@ -797,14 +797,14 @@ void VisualScriptPropertySelector::select_from_action(
     const bool p_connecting,
     bool clear_text
 ) {
-    base_type = p_type;
-    selected = p_current;
-    type = Variant::NIL;
-    script = 0;
-    properties = false;
+    base_type             = p_type;
+    selected              = p_current;
+    type                  = Variant::NIL;
+    script                = 0;
+    properties            = false;
     visual_script_generic = false;
-    instance = nullptr;
-    virtuals_only = false;
+    instance              = nullptr;
+    virtuals_only         = false;
 
     show_window(.5f);
     if (clear_text) {
@@ -814,7 +814,7 @@ void VisualScriptPropertySelector::select_from_action(
     }
     search_box->grab_focus();
     seq_connect = true;
-    connecting = p_connecting;
+    connecting  = p_connecting;
 
     _update_search();
 }
@@ -826,14 +826,14 @@ void VisualScriptPropertySelector::select_from_instance(
     const String& p_basetype,
     bool clear_text
 ) {
-    base_type = p_basetype;
-    selected = p_current;
-    type = Variant::NIL;
-    script = 0;
-    properties = true;
+    base_type             = p_basetype;
+    selected              = p_current;
+    type                  = Variant::NIL;
+    script                = 0;
+    properties            = true;
     visual_script_generic = false;
-    instance = p_instance;
-    virtuals_only = false;
+    instance              = p_instance;
+    virtuals_only         = false;
 
     show_window(.5f);
     if (clear_text) {
@@ -843,7 +843,7 @@ void VisualScriptPropertySelector::select_from_instance(
     }
     search_box->grab_focus();
     seq_connect = false;
-    connecting = p_connecting;
+    connecting  = p_connecting;
 
     _update_search();
 }
@@ -853,14 +853,14 @@ void VisualScriptPropertySelector::select_from_visual_script(
     const bool p_connecting,
     bool clear_text
 ) {
-    base_type = p_base;
-    selected = "";
-    type = Variant::NIL;
-    script = 0;
-    properties = true;
+    base_type             = p_base;
+    selected              = "";
+    type                  = Variant::NIL;
+    script                = 0;
+    properties            = true;
     visual_script_generic = true;
-    instance = nullptr;
-    virtuals_only = false;
+    instance              = nullptr;
+    virtuals_only         = false;
     show_window(.5f);
     if (clear_text) {
         search_box->set_text("");
@@ -876,9 +876,9 @@ void VisualScriptPropertySelector::select_from_visual_script(
 void VisualScriptPropertySelector::show_window(float p_screen_ratio) {
     Rect2 rect;
     Point2 window_size = get_viewport_rect().size;
-    rect.size = (window_size * p_screen_ratio).floor();
-    rect.size.x = rect.size.x / 2.2f;
-    rect.position = ((window_size - rect.size) / 2.0f).floor();
+    rect.size          = (window_size * p_screen_ratio).floor();
+    rect.size.x        = rect.size.x / 2.2f;
+    rect.position      = ((window_size - rect.size) / 2.0f).floor();
     popup(rect);
 }
 
@@ -927,8 +927,8 @@ VisualScriptPropertySelector::VisualScriptPropertySelector() {
     search_options->set_hide_root(true);
     search_options->set_hide_folding(true);
     virtuals_only = false;
-    seq_connect = false;
-    help_bit = memnew(EditorHelpBit);
+    seq_connect   = false;
+    help_bit      = memnew(EditorHelpBit);
     vbc->add_margin_child(TTR("Description:"), help_bit);
     help_bit->connect("request_hide", this, "_closed");
     search_options->set_columns(3);

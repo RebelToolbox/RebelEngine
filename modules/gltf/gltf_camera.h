@@ -38,9 +38,9 @@ class GLTFCamera : public Resource {
 
 private:
     bool perspective = true;
-    float fov_size = 75.0;
-    float zfar = 4000.0;
-    float znear = 0.05;
+    float fov_size   = 75.0;
+    float zfar       = 4000.0;
+    float znear      = 0.05;
 
 protected:
     static void _bind_methods();

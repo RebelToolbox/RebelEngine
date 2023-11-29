@@ -84,7 +84,7 @@ public:
 
     /// Setup the shape
     virtual void set_data(const Variant& p_data) = 0;
-    virtual Variant get_data() const = 0;
+    virtual Variant get_data() const             = 0;
 
     virtual PhysicsServer::ShapeType get_type() const = 0;
 

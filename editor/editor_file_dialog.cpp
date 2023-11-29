@@ -43,10 +43,10 @@
 #include "scene/gui/label.h"
 #include "scene/gui/margin_container.h"
 
-EditorFileDialog::GetIconFunc EditorFileDialog::get_icon_func = nullptr;
+EditorFileDialog::GetIconFunc EditorFileDialog::get_icon_func       = nullptr;
 EditorFileDialog::GetIconFunc EditorFileDialog::get_large_icon_func = nullptr;
 
-EditorFileDialog::RegisterFunc EditorFileDialog::register_func = nullptr;
+EditorFileDialog::RegisterFunc EditorFileDialog::register_func   = nullptr;
 EditorFileDialog::RegisterFunc EditorFileDialog::unregister_func = nullptr;
 
 VBoxContainer* EditorFileDialog::get_vbox() {
@@ -371,7 +371,7 @@ void EditorFileDialog::_request_single_thumbnail(const String& p_path) {
     }
 
     set_process(true);
-    preview_waiting = true;
+    preview_waiting       = true;
     preview_wheel_timeout = 0;
     EditorResourcePreview::get_singleton()
         ->queue_resource_preview(p_path, this, "_thumbnail_done", p_path);
@@ -451,7 +451,7 @@ void EditorFileDialog::_action_pressed() {
                 idx--;
             }
             if (idx >= 0 && idx < filters.size()) {
-                String flt = filters[idx].get_slice(";", 0);
+                String flt           = filters[idx].get_slice(";", 0);
                 int filterSliceCount = flt.get_slice_count(",");
                 for (int j = 0; j < filterSliceCount; j++) {
                     String str = (flt.get_slice(",", j).strip_edges());
@@ -462,8 +462,8 @@ void EditorFileDialog::_action_pressed() {
                 }
 
                 if (!valid && filterSliceCount > 0) {
-                    String str = (flt.get_slice(",", 0).strip_edges());
-                    f += str.substr(1, str.length() - 1);
+                    String str  = (flt.get_slice(",", 0).strip_edges());
+                    f          += str.substr(1, str.length() - 1);
                     _request_single_thumbnail(
                         get_current_dir().plus_file(f.get_file())
                     );
@@ -477,10 +477,10 @@ void EditorFileDialog::_action_pressed() {
 
         // Add first extension of filter if no valid extension is found.
         if (!valid) {
-            int idx = filter->get_selected();
-            String flt = filters[idx].get_slice(";", 0);
-            String ext = flt.get_slice(",", 0).strip_edges().get_extension();
-            f += "." + ext;
+            int idx     = filter->get_selected();
+            String flt  = filters[idx].get_slice(";", 0);
+            String ext  = flt.get_slice(",", 0).strip_edges().get_extension();
+            f          += "." + ext;
         }
 
         if (dir_access->file_exists(f) && !disable_overwrite_warning) {
@@ -637,8 +637,8 @@ void EditorFileDialog::_item_list_item_rmb_selected(
     if (single_item_selected) {
         item_menu->add_separator();
         Dictionary item_meta = item_list->get_item_metadata(p_item);
-        String item_text = item_meta["dir"] ? TTR("Open in File Manager")
-                                            : TTR("Show in File Manager");
+        String item_text     = item_meta["dir"] ? TTR("Open in File Manager")
+                                                : TTR("Show in File Manager");
         item_menu->add_icon_item(
             get_icon("Filesystem", "EditorIcons"),
             item_text,
@@ -762,9 +762,9 @@ void EditorFileDialog::update_file_name() {
         if (idx == -1) {
             idx += 1;
         }
-        String filter_str = filters[idx];
-        String file_str = file->get_text();
-        String base_name = file_str.get_basename();
+        String filter_str            = filters[idx];
+        String file_str              = file->get_text();
+        String base_name             = file_str.get_basename();
         Vector<String> filter_substr = filter_str.split(";");
         if (filter_substr.size() >= 2) {
             file_str = base_name + "."
@@ -800,10 +800,10 @@ void EditorFileDialog::update_file_list() {
 
         if (thumbnail_size < 64) {
             folder_thumbnail = get_icon("FolderMediumThumb", "EditorIcons");
-            file_thumbnail = get_icon("FileMediumThumb", "EditorIcons");
+            file_thumbnail   = get_icon("FileMediumThumb", "EditorIcons");
         } else {
             folder_thumbnail = get_icon("FolderBigThumb", "EditorIcons");
-            file_thumbnail = get_icon("FileBigThumb", "EditorIcons");
+            file_thumbnail   = get_icon("FileBigThumb", "EditorIcons");
         }
 
         preview_vb->hide();
@@ -823,7 +823,7 @@ void EditorFileDialog::update_file_list() {
 
     dir_access->list_dir_begin();
 
-    Ref<Texture> folder = get_icon("folder", "FileDialog");
+    Ref<Texture> folder      = get_icon("folder", "FileDialog");
     const Color folder_color = get_color("folder_icon_modulate", "FileDialog");
     List<String> files;
     List<String> dirs;
@@ -864,7 +864,7 @@ void EditorFileDialog::update_file_list() {
         Dictionary d;
         d["name"] = dir_name;
         d["path"] = cdir.plus_file(dir_name);
-        d["dir"] = true;
+        d["dir"]  = true;
 
         item_list->set_item_metadata(item_list->get_item_count() - 1, d);
         item_list->set_item_icon_modulate(
@@ -935,10 +935,10 @@ void EditorFileDialog::update_file_list() {
             }
 
             Dictionary d;
-            d["name"] = files.front()->get();
-            d["dir"] = false;
+            d["name"]       = files.front()->get();
+            d["dir"]        = false;
             String fullpath = cdir.plus_file(files.front()->get());
-            d["path"] = fullpath;
+            d["path"]       = fullpath;
             item_list->set_item_metadata(item_list->get_item_count() - 1, d);
 
             if (display_mode == DISPLAY_THUMBNAILS) {
@@ -1010,7 +1010,7 @@ void EditorFileDialog::update_filters() {
         filter->add_item(TTR("All Recognized") + " (" + all_filters + ")");
     }
     for (int i = 0; i < filters.size(); i++) {
-        String flt = filters[i].get_slice(";", 0).strip_edges();
+        String flt  = filters[i].get_slice(";", 0).strip_edges();
         String desc = filters[i].get_slice(";", 1).strip_edges();
         if (desc.length()) {
             filter->add_item(desc + " (" + flt + ")");
@@ -1079,7 +1079,7 @@ void EditorFileDialog::set_current_path(const String& p_path) {
     if (pos == -1) {
         set_current_file(p_path);
     } else {
-        String dir = p_path.substr(0, pos);
+        String dir  = p_path.substr(0, pos);
         String file = p_path.substr(pos + 1, p_path.length());
         set_current_dir(dir);
         set_current_file(file);
@@ -1305,7 +1305,7 @@ void EditorFileDialog::_favorite_move_down() {
 void EditorFileDialog::_update_favorites() {
     bool res = access == ACCESS_RESOURCES;
 
-    String current = get_current_dir();
+    String current           = get_current_dir();
     Ref<Texture> folder_icon = get_icon("Folder", "EditorIcons");
     const Color folder_color = get_color("folder_icon_modulate", "FileDialog");
     favorites->clear();
@@ -1318,7 +1318,7 @@ void EditorFileDialog::_update_favorites() {
         if (cres != res) {
             continue;
         }
-        String name = favorited[i];
+        String name  = favorited[i];
         bool setthis = false;
 
         if (res && name == "res://") {
@@ -1753,12 +1753,12 @@ void EditorFileDialog::set_default_display_mode(DisplayMode p_mode) {
 }
 
 void EditorFileDialog::_save_to_recent() {
-    String dir = get_current_dir();
+    String dir            = get_current_dir();
     Vector<String> recent = EditorSettings::get_singleton()->get_recent_dirs();
 
     const int max = 20;
-    int count = 0;
-    bool res = dir.begins_with("res://");
+    int count     = 0;
+    bool res      = dir.begins_with("res://");
 
     for (int i = 0; i < recent.size(); i++) {
         bool cres = recent[i].begins_with("res://");
@@ -1786,11 +1786,11 @@ bool EditorFileDialog::is_overwrite_warning_disabled() const {
 EditorFileDialog::EditorFileDialog() {
     set_resizable(true);
 
-    show_hidden_files = default_show_hidden_files;
-    display_mode = default_display_mode;
-    local_history_pos = 0;
+    show_hidden_files         = default_show_hidden_files;
+    display_mode              = default_display_mode;
+    local_history_pos         = 0;
     disable_overwrite_warning = false;
-    VBoxContainer* vbc = memnew(VBoxContainer);
+    VBoxContainer* vbc        = memnew(VBoxContainer);
     add_child(vbc);
 
     mode = MODE_SAVE_FILE;
@@ -2014,7 +2014,7 @@ EditorFileDialog::EditorFileDialog() {
     item_vb->add_child(file_box);
 
     dir_access = DirAccess::create(DirAccess::ACCESS_RESOURCES);
-    access = ACCESS_RESOURCES;
+    access     = ACCESS_RESOURCES;
     _update_drives();
 
     connect("confirmed", this, "_action_pressed");
@@ -2072,8 +2072,8 @@ EditorFileDialog::EditorFileDialog() {
     }
 
     preview_wheel_timeout = 0;
-    preview_wheel_index = 0;
-    preview_waiting = false;
+    preview_wheel_index   = 0;
+    preview_waiting       = false;
 }
 
 EditorFileDialog::~EditorFileDialog() {

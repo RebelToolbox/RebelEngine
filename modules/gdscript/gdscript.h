@@ -145,8 +145,8 @@ class GDScript : public Script {
 #endif
 
     bool _update_exports(
-        bool* r_err = nullptr,
-        bool p_recursive_call = false,
+        bool* r_err                                     = nullptr,
+        bool p_recursive_call                           = false,
         PlaceHolderScriptInstance* p_instance_to_update = nullptr
     );
 
@@ -506,11 +506,11 @@ public:
             return;
         }
 
-        _call_stack[_debug_call_stack_pos].stack = p_stack;
+        _call_stack[_debug_call_stack_pos].stack    = p_stack;
         _call_stack[_debug_call_stack_pos].instance = p_instance;
         _call_stack[_debug_call_stack_pos].function = p_function;
-        _call_stack[_debug_call_stack_pos].ip = p_ip;
-        _call_stack[_debug_call_stack_pos].line = p_line;
+        _call_stack[_debug_call_stack_pos].ip       = p_ip;
+        _call_stack[_debug_call_stack_pos].line     = p_line;
         _debug_call_stack_pos++;
     }
 
@@ -619,10 +619,10 @@ public:
         int& r_line_error,
         int& r_col_error,
         String& r_test_error,
-        const String& p_path = "",
-        List<String>* r_functions = nullptr,
+        const String& p_path                      = "",
+        List<String>* r_functions                 = nullptr,
         List<ScriptLanguage::Warning>* r_warnings = nullptr,
-        Set<int>* r_safe_lines = nullptr
+        Set<int>* r_safe_lines                    = nullptr
     ) const;
     virtual Script* create_script() const;
     virtual bool has_named_classes() const;
@@ -684,27 +684,27 @@ public:
         List<String>* p_locals,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
     virtual void debug_get_stack_level_members(
         int p_level,
         List<String>* p_members,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
     virtual ScriptInstance* debug_get_stack_level_instance(int p_level);
     virtual void debug_get_globals(
         List<String>* p_globals,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
     virtual String debug_parse_stack_level_expression(
         int p_level,
         const String& p_expression,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
 
     virtual void reload_all_scripts();
@@ -759,7 +759,7 @@ public:
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
     virtual bool handles_type(const String& p_type) const;

@@ -81,7 +81,7 @@ typedef bool (*TestFunc)();
 TestFunc test_funcs[] = {test_1, nullptr};
 
 MainLoop* test() {
-    int count = 0;
+    int count  = 0;
     int passed = 0;
 
     while (true) {

@@ -61,17 +61,17 @@ void GDAPI godot_nativescript_register_class(
 
     NativeScriptDesc desc;
 
-    desc.create_func = p_create_func;
+    desc.create_func  = p_create_func;
     desc.destroy_func = p_destroy_func;
-    desc.is_tool = false;
+    desc.is_tool      = false;
 
     desc.base = p_base;
 
     if (classes->has(p_base)) {
-        desc.base_data = &(*classes)[p_base];
+        desc.base_data        = &(*classes)[p_base];
         desc.base_native_type = desc.base_data->base_native_type;
     } else {
-        desc.base_data = nullptr;
+        desc.base_data        = nullptr;
         desc.base_native_type = p_base;
     }
 
@@ -91,16 +91,16 @@ void GDAPI godot_nativescript_register_tool_class(
 
     NativeScriptDesc desc;
 
-    desc.create_func = p_create_func;
+    desc.create_func  = p_create_func;
     desc.destroy_func = p_destroy_func;
-    desc.is_tool = true;
-    desc.base = p_base;
+    desc.is_tool      = true;
+    desc.base         = p_base;
 
     if (classes->has(p_base)) {
-        desc.base_data = &(*classes)[p_base];
+        desc.base_data        = &(*classes)[p_base];
         desc.base_native_type = desc.base_data->base_native_type;
     } else {
-        desc.base_data = nullptr;
+        desc.base_data        = nullptr;
         desc.base_native_type = p_base;
     }
 
@@ -124,9 +124,9 @@ void GDAPI godot_nativescript_register_method(
     );
 
     NativeScriptDesc::Method method;
-    method.method = p_method;
+    method.method   = p_method;
     method.rpc_mode = p_attr.rpc_type;
-    method.info = MethodInfo(p_function_name);
+    method.info     = MethodInfo(p_function_name);
 
     E->get().methods.insert(p_function_name, method);
 }
@@ -150,10 +150,10 @@ void GDAPI godot_nativescript_register_property(
 
     NativeScriptDesc::Property property;
     property.default_value = *(Variant*)&p_attr->default_value;
-    property.getter = p_get_func;
-    property.rset_mode = p_attr->rset_type;
-    property.setter = p_set_func;
-    property.info = PropertyInfo(
+    property.getter        = p_get_func;
+    property.rset_mode     = p_attr->rset_type;
+    property.setter        = p_set_func;
+    property.info          = PropertyInfo(
         (Variant::Type)p_attr->type,
         p_path,
         (PropertyHint)p_attr->hint,
@@ -186,11 +186,11 @@ void GDAPI godot_nativescript_register_signal(
 
         godot_signal_argument arg = p_signal->args[i];
 
-        info.hint = (PropertyHint)arg.hint;
+        info.hint        = (PropertyHint)arg.hint;
         info.hint_string = *(String*)&arg.hint_string;
-        info.name = *(String*)&arg.name;
-        info.type = (Variant::Type)arg.type;
-        info.usage = (PropertyUsageFlags)arg.usage;
+        info.name        = *(String*)&arg.name;
+        info.type        = (Variant::Type)arg.type;
+        info.usage       = (PropertyUsageFlags)arg.usage;
 
         args.push_back(info);
     }
@@ -205,8 +205,8 @@ void GDAPI godot_nativescript_register_signal(
     }
 
     MethodInfo method_info;
-    method_info.name = *(String*)&p_signal->name;
-    method_info.arguments = args;
+    method_info.name              = *(String*)&p_signal->name;
+    method_info.arguments         = args;
     method_info.default_arguments = default_args;
 
     NativeScriptDesc::Signal signal;
@@ -267,11 +267,11 @@ void GDAPI godot_nativescript_set_method_argument_information(
 
     for (int i = 0; i < p_num_args; i++) {
         godot_method_arg arg = p_args[i];
-        String name = *(String*)&arg.name;
-        String hint_string = *(String*)&arg.hint_string;
+        String name          = *(String*)&arg.name;
+        String hint_string   = *(String*)&arg.hint_string;
 
         Variant::Type type = (Variant::Type)arg.type;
-        PropertyHint hint = (PropertyHint)arg.hint;
+        PropertyHint hint  = (PropertyHint)arg.hint;
 
         args.push_back(PropertyInfo(type, p_name, hint, hint_string));
     }

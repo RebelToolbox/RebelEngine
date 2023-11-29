@@ -58,7 +58,7 @@ IP_Address::operator String() const {
             ret = ret + ":";
         }
         uint16_t num = (field8[i * 2] << 8) + field8[i * 2 + 1];
-        ret = ret + String::num_int64(num, 16);
+        ret          = ret + String::num_int64(num, 16);
     };
 
     return ret;
@@ -71,7 +71,7 @@ static void _parse_hex(const String& p_string, int p_start, uint8_t* p_dst) {
             break;
         };
 
-        int n = 0;
+        int n      = 0;
         CharType c = p_string[i];
         if (c >= '0' && c <= '9') {
             n = c - '0';
@@ -86,7 +86,7 @@ static void _parse_hex(const String& p_string, int p_start, uint8_t* p_dst) {
                 "Invalid character in IPv6 address: " + p_string + "."
             );
         };
-        ret = ret << 4;
+        ret  = ret << 4;
         ret += n;
     };
 
@@ -96,12 +96,12 @@ static void _parse_hex(const String& p_string, int p_start, uint8_t* p_dst) {
 
 void IP_Address::_parse_ipv6(const String& p_string) {
     static const int parts_total = 8;
-    int parts[parts_total] = {0};
-    int parts_count = 0;
-    bool part_found = false;
-    bool part_skip = false;
-    bool part_ipv4 = false;
-    int parts_idx = 0;
+    int parts[parts_total]       = {0};
+    int parts_count              = 0;
+    bool part_found              = false;
+    bool part_skip               = false;
+    bool part_ipv4               = false;
+    int parts_idx                = 0;
 
     for (int i = 0; i < p_string.length(); i++) {
         CharType c = p_string[i];
@@ -110,7 +110,7 @@ void IP_Address::_parse_ipv6(const String& p_string) {
                 continue; // next must be a ":"
             };
             if (!part_found) {
-                part_skip = true;
+                part_skip          = true;
                 parts[parts_idx++] = -1;
             };
             part_found = false;
@@ -120,7 +120,7 @@ void IP_Address::_parse_ipv6(const String& p_string) {
         } else if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')) {
             if (!part_found) {
                 parts[parts_idx++] = i;
-                part_found = true;
+                part_found         = true;
                 ++parts_count;
             };
         } else {
@@ -177,7 +177,7 @@ void IP_Address::_parse_ipv4(
 
 void IP_Address::clear() {
     memset(&field8[0], 0, sizeof(field8));
-    valid = false;
+    valid    = false;
     wildcard = false;
 };
 
@@ -200,7 +200,7 @@ const uint8_t* IP_Address::get_ipv4() const {
 
 void IP_Address::set_ipv4(const uint8_t* p_ip) {
     clear();
-    valid = true;
+    valid      = true;
     field16[5] = 0xffff;
     field32[3] = *((const uint32_t*)p_ip);
 }

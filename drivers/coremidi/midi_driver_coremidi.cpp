@@ -106,7 +106,7 @@ PoolStringArray MIDIDriverCoreMidi::get_connected_inputs() {
 
     for (int i = 0; i < connected_sources.size(); i++) {
         MIDIEndpointRef source = connected_sources[i];
-        CFStringRef ref = NULL;
+        CFStringRef ref        = NULL;
         char name[256];
 
         MIDIObjectGetStringProperty(source, kMIDIPropertyDisplayName, &ref);

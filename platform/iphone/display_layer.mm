@@ -60,14 +60,14 @@ bool gles3_available = true;
 - (void)initializeDisplayLayer {
     // Configure it so that it is opaque, does not retain the contents of the
     // backbuffer when displayed, and uses RGBA8888 color.
-    self.opaque = YES;
+    self.opaque             = YES;
     self.drawableProperties = [NSDictionary
         dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:FALSE],
                                      kEAGLDrawablePropertyRetainedBacking,
                                      kEAGLColorFormatRGBA8,
                                      kEAGLDrawablePropertyColorFormat,
                                      nil];
-    bool fallback_gl2 = false;
+    bool fallback_gl2       = false;
     // Create a GL ES 3 context based on the gl driver from project settings
     if (GLOBAL_GET("rendering/quality/driver/driver_name") == "GLES3") {
         context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
@@ -78,7 +78,7 @@ bool gles3_available = true;
         if (!context
             && GLOBAL_GET("rendering/quality/driver/fallback_to_gles2")) {
             gles3_available = false;
-            fallback_gl2 = true;
+            fallback_gl2    = true;
             NSLog(
                 @"Failed to create OpenGL ES 3.0 context. Falling back to "
                 @"OpenGL ES 2.0"
@@ -201,9 +201,9 @@ bool gles3_available = true;
     if (OS::get_singleton()) {
         OS::VideoMode vm;
         vm.fullscreen = true;
-        vm.width = backingWidth;
-        vm.height = backingHeight;
-        vm.resizable = false;
+        vm.width      = backingWidth;
+        vm.height     = backingHeight;
+        vm.resizable  = false;
         OS::get_singleton()->set_video_mode(vm);
         OSIPhone::get_singleton()->set_base_framebuffer(viewFramebuffer);
     }

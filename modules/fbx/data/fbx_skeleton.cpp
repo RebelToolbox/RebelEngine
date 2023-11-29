@@ -73,12 +73,12 @@ void FBXSkeleton::init_skeleton(const ImportState& state) {
         if (bone.is_valid()) {
             // Make sure the bone name is unique.
             const String bone_name = bone->bone_name;
-            int same_name_count = 0;
+            int same_name_count    = 0;
             for (int y = x + 1; y < skeleton_bone_count; y++) {
                 Ref<FBXBone> other_bone = skeleton_bones[y];
                 if (other_bone.is_valid()) {
                     if (other_bone->bone_name == bone_name) {
-                        same_name_count += 1;
+                        same_name_count       += 1;
                         other_bone->bone_name += "_" + itos(same_name_count);
                     }
                 }
@@ -94,7 +94,7 @@ void FBXSkeleton::init_skeleton(const ImportState& state) {
         if (bone.is_valid()) {
             skeleton->add_bone(bone->bone_name);
             bone->godot_bone_id = bone_count;
-            bone->fbx_skeleton = Ref<FBXSkeleton>(this);
+            bone->fbx_skeleton  = Ref<FBXSkeleton>(this);
             bone_map.insert(bone_count, bone);
             print_verbose(
                 "added bone " + itos(bone->bone_id) + " " + bone->bone_name
@@ -112,7 +112,7 @@ void FBXSkeleton::init_skeleton(const ImportState& state) {
          bone_element;
          bone_element = bone_element->next()) {
         const Ref<FBXBone> bone = bone_element->value();
-        int bone_index = bone_element->key();
+        int bone_index          = bone_element->key();
         print_verbose(
             "working on bone: " + itos(bone_index)
             + " bone name:" + bone->bone_name

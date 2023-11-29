@@ -41,13 +41,13 @@
 
 class VisualServerRaster : public VisualServer {
     enum {
-        MAX_INSTANCE_CULL = 8192,
-        MAX_INSTANCE_LIGHTS = 4,
-        LIGHT_CACHE_DIRTY = -1,
-        MAX_LIGHTS_CULLED = 256,
-        MAX_ROOM_CULL = 32,
-        MAX_EXTERIOR_PORTALS = 128,
-        MAX_LIGHT_SAMPLERS = 256,
+        MAX_INSTANCE_CULL      = 8192,
+        MAX_INSTANCE_LIGHTS    = 4,
+        LIGHT_CACHE_DIRTY      = -1,
+        MAX_LIGHTS_CULLED      = 256,
+        MAX_ROOM_CULL          = 32,
+        MAX_EXTERIOR_PORTALS   = 128,
+        MAX_LIGHT_SAMPLERS     = 256,
         INSTANCE_ROOMLESS_MASK = (1 << 20)
     };
 

@@ -67,7 +67,7 @@ public:
         int p_bake_fps,
         uint32_t p_compress_flags,
         List<String>* r_missing_deps = NULL,
-        Error* r_err = NULL
+        Error* r_err                 = NULL
     );
     virtual Ref<Animation> import_animation(
         const String& p_path,
@@ -97,7 +97,7 @@ public:
     virtual Error export_gltf(
         Node* p_root,
         String p_path,
-        int32_t p_flags = 0,
+        int32_t p_flags   = 0,
         real_t p_bake_fps = 1000.0f
     );
     virtual Node* import_scene(
@@ -118,10 +118,10 @@ public:
     );
     virtual void pack_gltf(
         String p_path,
-        int32_t p_flags = 0,
-        real_t p_bake_fps = 1000.0f,
+        int32_t p_flags           = 0,
+        real_t p_bake_fps         = 1000.0f,
         uint32_t p_compress_flags = Mesh::ARRAY_COMPRESS_DEFAULT,
-        Ref<GLTFState> r_state = Ref<GLTFState>()
+        Ref<GLTFState> r_state    = Ref<GLTFState>()
     );
 };
 #endif // EDITOR_SCENE_IMPORTER_GLTF_H

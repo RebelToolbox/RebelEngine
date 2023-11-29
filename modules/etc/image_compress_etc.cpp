@@ -98,7 +98,7 @@ static void _compress_etc(
     bool force_etc1_format,
     Image::CompressSource p_source
 ) {
-    Image::Format img_format = p_img->get_format();
+    Image::Format img_format                = p_img->get_format();
     Image::DetectChannels detected_channels = p_img->get_detected_channels();
 
     if (p_source == Image::COMPRESS_SOURCE_LAYERED) {
@@ -218,7 +218,7 @@ static void _compress_etc(
     PoolVector<uint8_t>::Write w = dst_data.write();
 
     // prepare parameters to be passed to etc2comp
-    int num_cpus = OS::get_singleton()->get_processor_count();
+    int num_cpus      = OS::get_singleton()->get_processor_count();
     int encoding_time = 0;
 
     float effort = 0.0; // default, reasonable time
@@ -260,7 +260,7 @@ static void _compress_etc(
         Etc::ColorFloatRGBA* src_rgba_f =
             new Etc::ColorFloatRGBA[mipmap_w * mipmap_h];
         for (int j = 0; j < mipmap_w * mipmap_h; j++) {
-            int si = j * 4; // RGBA8
+            int si        = j * 4; // RGBA8
             src_rgba_f[j] = Etc::ColorFloatRGBA::ConvertFromRGBA8(
                 src[si],
                 src[si + 1],
@@ -269,8 +269,8 @@ static void _compress_etc(
             );
         }
 
-        unsigned char* etc_data = nullptr;
-        unsigned int etc_data_len = 0;
+        unsigned char* etc_data     = nullptr;
+        unsigned int etc_data_len   = 0;
         unsigned int extended_width = 0, extended_height = 0;
         Etc::Encode(
             (float*)src_rgba_f,

@@ -84,7 +84,7 @@ public:
         const Map<StringName, Variant>& p_options,
         List<String>* r_platform_variants,
         List<String>* r_gen_files = nullptr,
-        Variant* r_metadata = nullptr
+        Variant* r_metadata       = nullptr
     );
 
     ResourceImporterOBJ();

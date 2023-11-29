@@ -38,7 +38,7 @@ class CollisionObject : public Spatial {
     GDCLASS(CollisionObject, Spatial);
 
     uint32_t collision_layer = 1;
-    uint32_t collision_mask = 1;
+    uint32_t collision_mask  = 1;
 
     bool area;
 

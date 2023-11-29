@@ -191,7 +191,7 @@ ReflectionProbe::UpdateMode ReflectionProbe::get_update_mode() const {
 AABB ReflectionProbe::get_aabb() const {
     AABB aabb;
     aabb.position = -origin_offset;
-    aabb.size = origin_offset + extents;
+    aabb.size     = origin_offset + extents;
     return aabb;
 }
 
@@ -418,18 +418,18 @@ void ReflectionProbe::_bind_methods() {
 }
 
 ReflectionProbe::ReflectionProbe() {
-    intensity = 1.0;
-    interior_ambient = Color(0, 0, 0);
+    intensity                           = 1.0;
+    interior_ambient                    = Color(0, 0, 0);
     interior_ambient_probe_contribution = 0;
-    interior_ambient_energy = 1.0;
-    max_distance = 0;
-    extents = Vector3(1, 1, 1);
-    origin_offset = Vector3(0, 0, 0);
-    box_projection = false;
-    interior = false;
-    enable_shadows = false;
-    cull_mask = (1 << 20) - 1;
-    update_mode = UPDATE_ONCE;
+    interior_ambient_energy             = 1.0;
+    max_distance                        = 0;
+    extents                             = Vector3(1, 1, 1);
+    origin_offset                       = Vector3(0, 0, 0);
+    box_projection                      = false;
+    interior                            = false;
+    enable_shadows                      = false;
+    cull_mask                           = (1 << 20) - 1;
+    update_mode                         = UPDATE_ONCE;
 
     probe = VisualServer::get_singleton()->reflection_probe_create();
     VS::get_singleton()->instance_set_base(get_instance(), probe);

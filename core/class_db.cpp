@@ -258,16 +258,16 @@ MethodDefinition D_METHOD(
     MethodDefinition md;
     md.name = StaticCString::create(p_name);
     md.args.resize(11);
-    md.args.write[0] = StaticCString::create(p_arg1);
-    md.args.write[1] = StaticCString::create(p_arg2);
-    md.args.write[2] = StaticCString::create(p_arg3);
-    md.args.write[3] = StaticCString::create(p_arg4);
-    md.args.write[4] = StaticCString::create(p_arg5);
-    md.args.write[5] = StaticCString::create(p_arg6);
-    md.args.write[6] = StaticCString::create(p_arg7);
-    md.args.write[7] = StaticCString::create(p_arg8);
-    md.args.write[8] = StaticCString::create(p_arg9);
-    md.args.write[9] = StaticCString::create(p_arg10);
+    md.args.write[0]  = StaticCString::create(p_arg1);
+    md.args.write[1]  = StaticCString::create(p_arg2);
+    md.args.write[2]  = StaticCString::create(p_arg3);
+    md.args.write[3]  = StaticCString::create(p_arg4);
+    md.args.write[4]  = StaticCString::create(p_arg5);
+    md.args.write[5]  = StaticCString::create(p_arg6);
+    md.args.write[6]  = StaticCString::create(p_arg7);
+    md.args.write[7]  = StaticCString::create(p_arg8);
+    md.args.write[8]  = StaticCString::create(p_arg9);
+    md.args.write[9]  = StaticCString::create(p_arg10);
     md.args.write[10] = StaticCString::create(p_arg11);
     return md;
 }
@@ -290,16 +290,16 @@ MethodDefinition D_METHOD(
     MethodDefinition md;
     md.name = StaticCString::create(p_name);
     md.args.resize(12);
-    md.args.write[0] = StaticCString::create(p_arg1);
-    md.args.write[1] = StaticCString::create(p_arg2);
-    md.args.write[2] = StaticCString::create(p_arg3);
-    md.args.write[3] = StaticCString::create(p_arg4);
-    md.args.write[4] = StaticCString::create(p_arg5);
-    md.args.write[5] = StaticCString::create(p_arg6);
-    md.args.write[6] = StaticCString::create(p_arg7);
-    md.args.write[7] = StaticCString::create(p_arg8);
-    md.args.write[8] = StaticCString::create(p_arg9);
-    md.args.write[9] = StaticCString::create(p_arg10);
+    md.args.write[0]  = StaticCString::create(p_arg1);
+    md.args.write[1]  = StaticCString::create(p_arg2);
+    md.args.write[2]  = StaticCString::create(p_arg3);
+    md.args.write[3]  = StaticCString::create(p_arg4);
+    md.args.write[4]  = StaticCString::create(p_arg5);
+    md.args.write[5]  = StaticCString::create(p_arg6);
+    md.args.write[6]  = StaticCString::create(p_arg7);
+    md.args.write[7]  = StaticCString::create(p_arg8);
+    md.args.write[8]  = StaticCString::create(p_arg9);
+    md.args.write[9]  = StaticCString::create(p_arg10);
     md.args.write[10] = StaticCString::create(p_arg11);
     md.args.write[11] = StaticCString::create(p_arg12);
     return md;
@@ -324,16 +324,16 @@ MethodDefinition D_METHOD(
     MethodDefinition md;
     md.name = StaticCString::create(p_name);
     md.args.resize(13);
-    md.args.write[0] = StaticCString::create(p_arg1);
-    md.args.write[1] = StaticCString::create(p_arg2);
-    md.args.write[2] = StaticCString::create(p_arg3);
-    md.args.write[3] = StaticCString::create(p_arg4);
-    md.args.write[4] = StaticCString::create(p_arg5);
-    md.args.write[5] = StaticCString::create(p_arg6);
-    md.args.write[6] = StaticCString::create(p_arg7);
-    md.args.write[7] = StaticCString::create(p_arg8);
-    md.args.write[8] = StaticCString::create(p_arg9);
-    md.args.write[9] = StaticCString::create(p_arg10);
+    md.args.write[0]  = StaticCString::create(p_arg1);
+    md.args.write[1]  = StaticCString::create(p_arg2);
+    md.args.write[2]  = StaticCString::create(p_arg3);
+    md.args.write[3]  = StaticCString::create(p_arg4);
+    md.args.write[4]  = StaticCString::create(p_arg5);
+    md.args.write[5]  = StaticCString::create(p_arg6);
+    md.args.write[6]  = StaticCString::create(p_arg7);
+    md.args.write[7]  = StaticCString::create(p_arg8);
+    md.args.write[8]  = StaticCString::create(p_arg9);
+    md.args.write[9]  = StaticCString::create(p_arg10);
     md.args.write[10] = StaticCString::create(p_arg11);
     md.args.write[11] = StaticCString::create(p_arg12);
     md.args.write[12] = StaticCString::create(p_arg13);
@@ -357,11 +357,11 @@ HashMap<StringName, StringName> ClassDB::resource_base_extensions;
 HashMap<StringName, StringName> ClassDB::compat_classes;
 
 ClassDB::ClassInfo::ClassInfo() {
-    api = API_NONE;
+    api           = API_NONE;
     creation_func = nullptr;
-    inherits_ptr = nullptr;
-    disabled = false;
-    exposed = false;
+    inherits_ptr  = nullptr;
+    disabled      = false;
+    exposed       = false;
 }
 
 ClassDB::ClassInfo::~ClassInfo() {}
@@ -524,16 +524,16 @@ uint64_t ClassDB::get_api_hash(APIType p_api) {
             snames.sort_custom<StringName::AlphCompare>();
 
             for (List<StringName>::Element* F = snames.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 MethodBind* mb = t->method_map[F->get()];
-                hash = hash_djb2_one_64(mb->get_name().hash(), hash);
+                hash           = hash_djb2_one_64(mb->get_name().hash(), hash);
                 hash = hash_djb2_one_64(mb->get_argument_count(), hash);
                 hash =
                     hash_djb2_one_64(mb->get_argument_type(-1), hash); // return
 
                 for (int i = 0; i < mb->get_argument_count(); i++) {
                     const PropertyInfo info = mb->get_argument_info(i);
-                    hash = hash_djb2_one_64(info.type, hash);
+                    hash                    = hash_djb2_one_64(info.type, hash);
                     hash = hash_djb2_one_64(info.name.hash(), hash);
                     hash = hash_djb2_one_64(info.hint, hash);
                     hash = hash_djb2_one_64(info.hint_string.hash(), hash);
@@ -544,7 +544,7 @@ uint64_t ClassDB::get_api_hash(APIType p_api) {
                 for (int i = 0; i < mb->get_default_argument_count(); i++) {
                     // hash should not change, i hope for tis
                     Variant da = mb->get_default_argument(i);
-                    hash = hash_djb2_one_64(da.hash(), hash);
+                    hash       = hash_djb2_one_64(da.hash(), hash);
                 }
 
                 hash = hash_djb2_one_64(mb->get_hint_flags(), hash);
@@ -564,7 +564,7 @@ uint64_t ClassDB::get_api_hash(APIType p_api) {
             snames.sort_custom<StringName::AlphCompare>();
 
             for (List<StringName>::Element* F = snames.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 hash = hash_djb2_one_64(F->get().hash(), hash);
                 hash = hash_djb2_one_64(t->constant_map[F->get()], hash);
             }
@@ -583,9 +583,9 @@ uint64_t ClassDB::get_api_hash(APIType p_api) {
             snames.sort_custom<StringName::AlphCompare>();
 
             for (List<StringName>::Element* F = snames.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 MethodInfo& mi = t->signal_map[F->get()];
-                hash = hash_djb2_one_64(F->get().hash(), hash);
+                hash           = hash_djb2_one_64(F->get().hash(), hash);
                 for (int i = 0; i < mi.arguments.size(); i++) {
                     hash = hash_djb2_one_64(mi.arguments[i].type, hash);
                 }
@@ -605,7 +605,7 @@ uint64_t ClassDB::get_api_hash(APIType p_api) {
             snames.sort_custom<StringName::AlphCompare>();
 
             for (List<StringName>::Element* F = snames.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 PropertySetGet* psg = t->property_setget.getptr(F->get());
                 ERR_FAIL_COND_V(!psg, 0);
 
@@ -617,7 +617,7 @@ uint64_t ClassDB::get_api_hash(APIType p_api) {
 
         // property list
         for (List<PropertyInfo>::Element* F = t->property_list.front(); F;
-             F = F->next()) {
+             F                              = F->next()) {
             hash = hash_djb2_one_64(F->get().name.hash(), hash);
             hash = hash_djb2_one_64(F->get().type, hash);
             hash = hash_djb2_one_64(F->get().hint, hash);
@@ -716,9 +716,9 @@ void ClassDB::_add_class2(
 
     classes[name] = ClassInfo();
     ClassInfo& ti = classes[name];
-    ti.name = name;
-    ti.inherits = p_inherits;
-    ti.api = current_api;
+    ti.name       = name;
+    ti.inherits   = p_inherits;
+    ti.api        = current_api;
 
     if (ti.inherits) {
         ERR_FAIL_COND(!classes.has(ti.inherits)); // it MUST be registered.
@@ -752,16 +752,16 @@ void ClassDB::get_method_list(
 #ifdef DEBUG_METHODS_ENABLED
 
         for (List<MethodInfo>::Element* E = type->virtual_methods.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             p_methods->push_back(E->get());
         }
 
         for (List<StringName>::Element* E = type->method_order.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             MethodBind* method = type->method_map.get(E->get());
             MethodInfo minfo;
             minfo.name = E->get();
-            minfo.id = method->get_method_id();
+            minfo.id   = method->get_method_id();
 
             if (p_exclude_from_properties
                 && type->methods_in_properties.has(minfo.name)) {
@@ -775,7 +775,7 @@ void ClassDB::get_method_list(
             }
 
             minfo.return_val = method->get_return_info();
-            minfo.flags = method->get_hint_flags();
+            minfo.flags      = method->get_hint_flags();
 
             for (int i = 0; i < method->get_argument_count(); i++) {
                 if (method->has_default_argument(i)) {
@@ -876,7 +876,7 @@ void ClassDB::get_integer_constant_list(
     while (type) {
 #ifdef DEBUG_METHODS_ENABLED
         for (List<StringName>::Element* E = type->constant_order.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             p_constants->push_back(E->get());
         }
 #else
@@ -991,7 +991,7 @@ void ClassDB::get_enum_constants(
 
         if (constants) {
             for (const List<StringName>::Element* E = constants->front(); E;
-                 E = E->next()) {
+                 E                                  = E->next()) {
                 p_constants->push_back(E->get());
             }
         }
@@ -1077,7 +1077,7 @@ void ClassDB::get_signal_list(
 
 bool ClassDB::has_signal(StringName p_class, StringName p_signal) {
     OBJTYPE_RLOCK;
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     while (check) {
         if (check->signal_map.has(p_signal)) {
@@ -1095,7 +1095,7 @@ bool ClassDB::get_signal(
     MethodInfo* r_signal
 ) {
     OBJTYPE_RLOCK;
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     while (check) {
         if (check->signal_map.has(p_signal)) {
@@ -1200,12 +1200,12 @@ void ClassDB::add_property(
     }
 #endif
     PropertySetGet psg;
-    psg.setter = p_setter;
-    psg.getter = p_getter;
+    psg.setter  = p_setter;
+    psg.getter  = p_getter;
     psg._setptr = mb_set;
     psg._getptr = mb_get;
-    psg.index = p_index;
-    psg.type = p_pinfo.type;
+    psg.index   = p_index;
+    psg.type    = p_pinfo.type;
 
     type->property_setget[p_pinfo.name] = psg;
 }
@@ -1229,11 +1229,11 @@ void ClassDB::get_property_list(
 ) {
     OBJTYPE_RLOCK;
 
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     while (check) {
         for (List<PropertyInfo>::Element* E = check->property_list.front(); E;
-             E = E->next()) {
+             E                              = E->next()) {
             if (p_validator) {
                 PropertyInfo pi = E->get();
                 p_validator->_validate_property(pi);
@@ -1258,7 +1258,7 @@ bool ClassDB::set_property(
 ) {
     ERR_FAIL_NULL_V(p_object, false);
 
-    ClassInfo* type = classes.getptr(p_object->get_class_name());
+    ClassInfo* type  = classes.getptr(p_object->get_class_name());
     ClassInfo* check = type;
     while (check) {
         const PropertySetGet* psg = check->property_setget.getptr(p_property);
@@ -1273,7 +1273,7 @@ bool ClassDB::set_property(
             Variant::CallError ce;
 
             if (psg->index >= 0) {
-                Variant index = psg->index;
+                Variant index         = psg->index;
                 const Variant* arg[2] = {&index, &p_value};
                 // p_object->call(psg->setter,arg,2,ce);
                 if (psg->_setptr) {
@@ -1311,7 +1311,7 @@ bool ClassDB::get_property(
 ) {
     ERR_FAIL_NULL_V(p_object, false);
 
-    ClassInfo* type = classes.getptr(p_object->get_class_name());
+    ClassInfo* type  = classes.getptr(p_object->get_class_name());
     ClassInfo* check = type;
     while (check) {
         const PropertySetGet* psg = check->property_setget.getptr(p_property);
@@ -1321,7 +1321,7 @@ bool ClassDB::get_property(
             }
 
             if (psg->index >= 0) {
-                Variant index = psg->index;
+                Variant index         = psg->index;
                 const Variant* arg[1] = {&index};
                 Variant::CallError ce;
                 r_value = p_object->call(psg->getter, arg, 1, ce);
@@ -1354,7 +1354,7 @@ int ClassDB::get_property_index(
     const StringName& p_property,
     bool* r_is_valid
 ) {
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     while (check) {
         const PropertySetGet* psg = check->property_setget.getptr(p_property);
@@ -1380,7 +1380,7 @@ Variant::Type ClassDB::get_property_type(
     const StringName& p_property,
     bool* r_is_valid
 ) {
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     while (check) {
         const PropertySetGet* psg = check->property_setget.getptr(p_property);
@@ -1405,7 +1405,7 @@ StringName ClassDB::get_property_setter(
     StringName p_class,
     const StringName& p_property
 ) {
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     while (check) {
         const PropertySetGet* psg = check->property_setget.getptr(p_property);
@@ -1423,7 +1423,7 @@ StringName ClassDB::get_property_getter(
     StringName p_class,
     const StringName& p_property
 ) {
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     while (check) {
         const PropertySetGet* psg = check->property_setget.getptr(p_property);
@@ -1442,7 +1442,7 @@ bool ClassDB::has_property(
     const StringName& p_property,
     bool p_no_inheritance
 ) {
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     while (check) {
         if (check->property_setget.has(p_property)) {
@@ -1464,7 +1464,7 @@ void ClassDB::set_method_flags(
     int p_flags
 ) {
     OBJTYPE_WLOCK;
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     ERR_FAIL_COND(!check);
     ERR_FAIL_COND(!check->method_map.has(p_method));
@@ -1476,7 +1476,7 @@ bool ClassDB::has_method(
     StringName p_method,
     bool p_no_inheritance
 ) {
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     while (check) {
         if (check->method_map.has(p_method)) {
@@ -1611,11 +1611,11 @@ void ClassDB::get_virtual_methods(
 
 #ifdef DEBUG_METHODS_ENABLED
 
-    ClassInfo* type = classes.getptr(p_class);
+    ClassInfo* type  = classes.getptr(p_class);
     ClassInfo* check = type;
     while (check) {
         for (List<MethodInfo>::Element* E = check->virtual_methods.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             p_methods->push_back(E->get());
         }
 
@@ -1723,14 +1723,14 @@ Variant ClassDB::class_get_default_property_value(
             default_values[p_class] = HashMap<StringName, Variant>();
         }
 
-        Object* c = nullptr;
+        Object* c      = nullptr;
         bool cleanup_c = false;
 
         if (Engine::get_singleton()->has_singleton(p_class)) {
-            c = Engine::get_singleton()->get_singleton_object(p_class);
+            c         = Engine::get_singleton()->get_singleton_object(p_class);
             cleanup_c = false;
         } else if (ClassDB::can_instance(p_class)) {
-            c = ClassDB::instance(p_class);
+            c         = ClassDB::instance(p_class);
             cleanup_c = true;
         }
 
@@ -1738,7 +1738,7 @@ Variant ClassDB::class_get_default_property_value(
             List<PropertyInfo> plist;
             c->get_property_list(&plist);
             for (List<PropertyInfo>::Element* E = plist.front(); E;
-                 E = E->next()) {
+                 E                              = E->next()) {
                 if (E->get().usage
                     & (PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_EDITOR)) {
                     if (!default_values[p_class].has(E->get().name)) {

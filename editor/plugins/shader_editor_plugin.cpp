@@ -67,10 +67,10 @@ void ShaderTextEditor::reload_text() {
     ERR_FAIL_COND(shader.is_null());
 
     TextEdit* te = get_text_edit();
-    int column = te->cursor_get_column();
-    int row = te->cursor_get_line();
-    int h = te->get_h_scroll();
-    int v = te->get_v_scroll();
+    int column   = te->cursor_get_column();
+    int row      = te->cursor_get_line();
+    int h        = te->get_h_scroll();
+    int v        = te->get_v_scroll();
 
     te->set_text(shader->get_code());
     te->cursor_set_line(row);
@@ -134,7 +134,7 @@ void ShaderTextEditor::_load_theme_settings() {
         EDITOR_GET("text_editor/highlighting/search_result_color");
     Color search_result_border_color =
         EDITOR_GET("text_editor/highlighting/search_result_border_color");
-    Color symbol_color = EDITOR_GET("text_editor/highlighting/symbol_color");
+    Color symbol_color  = EDITOR_GET("text_editor/highlighting/symbol_color");
     Color keyword_color = EDITOR_GET("text_editor/highlighting/keyword_color");
     Color control_flow_keyword_color =
         EDITOR_GET("text_editor/highlighting/control_flow_keyword_color");
@@ -720,10 +720,10 @@ void ShaderEditor::_text_edit_gui_input(const Ref<InputEvent>& ev) {
 
             if (tx->is_right_click_moving_caret()) {
                 if (tx->is_selection_active()) {
-                    int from_line = tx->get_selection_from_line();
-                    int to_line = tx->get_selection_to_line();
+                    int from_line   = tx->get_selection_from_line();
+                    int to_line     = tx->get_selection_to_line();
                     int from_column = tx->get_selection_from_column();
-                    int to_column = tx->get_selection_to_column();
+                    int to_column   = tx->get_selection_to_column();
 
                     if (row < from_line || row > to_line
                         || (row == from_line && col < from_column)
@@ -896,7 +896,7 @@ ShaderEditor::ShaderEditor(EditorNode* p_node) {
     context_menu->set_hide_on_window_lose_focus(true);
 
     VBoxContainer* main_container = memnew(VBoxContainer);
-    HBoxContainer* hbc = memnew(HBoxContainer);
+    HBoxContainer* hbc            = memnew(HBoxContainer);
 
     edit_menu = memnew(MenuButton);
     edit_menu->set_text(TTR("Edit"));
@@ -1095,7 +1095,7 @@ void ShaderEditorPlugin::apply_changes() {
 }
 
 ShaderEditorPlugin::ShaderEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor        = p_node;
     shader_editor = memnew(ShaderEditor(p_node));
 
     shader_editor->set_custom_minimum_size(Size2(0, 300) * EDSCALE);

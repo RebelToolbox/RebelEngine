@@ -100,23 +100,23 @@ struct Rect2 {
 
         if (p_point.x < position.x) {
             real_t d = position.x - p_point.x;
-            dist = d;
-            inside = false;
+            dist     = d;
+            inside   = false;
         }
         if (p_point.y < position.y) {
             real_t d = position.y - p_point.y;
-            dist = inside ? d : MIN(dist, d);
-            inside = false;
+            dist     = inside ? d : MIN(dist, d);
+            inside   = false;
         }
         if (p_point.x >= (position.x + size.x)) {
             real_t d = p_point.x - (position.x + size.x);
-            dist = inside ? d : MIN(dist, d);
-            inside = false;
+            dist     = inside ? d : MIN(dist, d);
+            inside   = false;
         }
         if (p_point.y >= (position.y + size.y)) {
             real_t d = p_point.y - (position.y + size.y);
-            dist = inside ? d : MIN(dist, d);
-            inside = false;
+            dist     = inside ? d : MIN(dist, d);
+            inside   = false;
         }
 
         if (inside) {
@@ -132,7 +132,7 @@ struct Rect2 {
     bool intersects_segment(
         const Point2& p_from,
         const Point2& p_to,
-        Point2* r_pos = nullptr,
+        Point2* r_pos    = nullptr,
         Point2* r_normal = nullptr
     ) const;
 
@@ -159,7 +159,7 @@ struct Rect2 {
         new_rect.position.y = MAX(p_rect.position.y, position.y);
 
         Point2 p_rect_end = p_rect.position + p_rect.size;
-        Point2 end = position + size;
+        Point2 end        = position + size;
 
         new_rect.size.x = MIN(p_rect_end.x, end.x) - new_rect.position.x;
         new_rect.size.y = MIN(p_rect_end.y, end.y) - new_rect.position.y;
@@ -220,15 +220,15 @@ struct Rect2 {
     }
 
     inline void grow_by(real_t p_by) {
-        position.x -= p_by;
-        position.y -= p_by;
-        size.width += p_by * 2;
+        position.x  -= p_by;
+        position.y  -= p_by;
+        size.width  += p_by * 2;
         size.height += p_by * 2;
     }
 
     inline Rect2 grow_margin(Margin p_margin, real_t p_amount) const {
         Rect2 g = *this;
-        g = g.grow_individual(
+        g       = g.grow_individual(
             (MARGIN_LEFT == p_margin) ? p_amount : 0,
             (MARGIN_TOP == p_margin) ? p_amount : 0,
             (MARGIN_RIGHT == p_margin) ? p_amount : 0,
@@ -243,10 +243,10 @@ struct Rect2 {
         real_t p_right,
         real_t p_bottom
     ) const {
-        Rect2 g = *this;
-        g.position.x -= p_left;
-        g.position.y -= p_top;
-        g.size.width += p_left + p_right;
+        Rect2 g        = *this;
+        g.position.x  -= p_left;
+        g.position.y  -= p_top;
+        g.size.width  += p_left + p_right;
         g.size.height += p_top + p_bottom;
 
         return g;
@@ -262,7 +262,7 @@ struct Rect2 {
     ) { // in place function for speed
 
         Vector2 begin = position;
-        Vector2 end = position + size;
+        Vector2 end   = position + size;
 
         if (p_vector.x < begin.x) {
             begin.x = p_vector.x;
@@ -279,7 +279,7 @@ struct Rect2 {
         }
 
         position = begin;
-        size = end - begin;
+        size     = end - begin;
     }
 
     _FORCE_INLINE_ Rect2 abs() const {
@@ -368,7 +368,7 @@ struct Rect2i {
         new_rect.position.y = MAX(p_rect.position.y, position.y);
 
         Point2 p_rect_end = p_rect.position + p_rect.size;
-        Point2 end = position + size;
+        Point2 end        = position + size;
 
         new_rect.size.x = (int)(MIN(p_rect_end.x, end.x) - new_rect.position.x);
         new_rect.size.y = (int)(MIN(p_rect_end.y, end.y) - new_rect.position.y);
@@ -421,17 +421,17 @@ struct Rect2i {
     }
 
     Rect2i grow(int p_by) const {
-        Rect2i g = *this;
-        g.position.x -= p_by;
-        g.position.y -= p_by;
-        g.size.width += p_by * 2;
+        Rect2i g       = *this;
+        g.position.x  -= p_by;
+        g.position.y  -= p_by;
+        g.size.width  += p_by * 2;
         g.size.height += p_by * 2;
         return g;
     }
 
     inline Rect2i grow_margin(Margin p_margin, int p_amount) const {
         Rect2i g = *this;
-        g = g.grow_individual(
+        g        = g.grow_individual(
             (MARGIN_LEFT == p_margin) ? p_amount : 0,
             (MARGIN_TOP == p_margin) ? p_amount : 0,
             (MARGIN_RIGHT == p_margin) ? p_amount : 0,
@@ -446,10 +446,10 @@ struct Rect2i {
         int p_right,
         int p_bottom
     ) const {
-        Rect2i g = *this;
-        g.position.x -= p_left;
-        g.position.y -= p_top;
-        g.size.width += p_left + p_right;
+        Rect2i g       = *this;
+        g.position.x  -= p_left;
+        g.position.y  -= p_top;
+        g.size.width  += p_left + p_right;
         g.size.height += p_top + p_bottom;
 
         return g;
@@ -463,7 +463,7 @@ struct Rect2i {
 
     inline void expand_to(const Point2i& p_vector) {
         Point2i begin = position;
-        Point2i end = position + size;
+        Point2i end   = position + size;
 
         if (p_vector.x < begin.x) {
             begin.x = p_vector.x;
@@ -480,7 +480,7 @@ struct Rect2i {
         }
 
         position = begin;
-        size = end - begin;
+        size     = end - begin;
     }
 
     operator String() const {

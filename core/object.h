@@ -288,9 +288,9 @@ class ObjectRC;
 class Object {
 public:
     enum ConnectFlags {
-        CONNECT_DEFERRED = 1,
-        CONNECT_PERSIST = 2, // hint for scene to save this connection
-        CONNECT_ONESHOT = 4,
+        CONNECT_DEFERRED          = 1,
+        CONNECT_PERSIST           = 2, // hint for scene to save this connection
+        CONNECT_ONESHOT           = 4,
         CONNECT_REFERENCE_COUNTED = 8,
     };
 
@@ -308,7 +308,7 @@ public:
         Connection() {
             source = nullptr;
             target = nullptr;
-            flags = 0;
+            flags  = 0;
         }
 
         Connection(const Variant& p_variant);
@@ -521,7 +521,7 @@ public:
     _FORCE_INLINE_ void _change_notify(const char* p_property = "") {
         _edited = true;
         for (Set<Object*>::Element* E = change_receptors.front(); E;
-             E = E->next()) {
+             E                        = E->next()) {
             ((Object*)(E->get()))->_changed_callback(this, p_property);
         }
     }
@@ -582,7 +582,7 @@ public:
 
     enum {
         NOTIFICATION_POSTINITIALIZE = 0,
-        NOTIFICATION_PREDELETE = 1
+        NOTIFICATION_PREDELETE      = 1
     };
 
     /* TYPE API */
@@ -743,7 +743,7 @@ public:
         Object* p_to_object,
         const StringName& p_to_method,
         const Vector<Variant>& p_binds = Vector<Variant>(),
-        uint32_t p_flags = 0
+        uint32_t p_flags               = 0
     );
     void disconnect(
         const StringName& p_signal,

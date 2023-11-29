@@ -48,18 +48,18 @@ static Ref<StyleBoxTexture> make_stylebox(
     float p_top,
     float p_right,
     float p_bottom,
-    float p_margin_left = -1,
-    float p_margin_top = -1,
-    float p_margin_right = -1,
+    float p_margin_left   = -1,
+    float p_margin_top    = -1,
+    float p_margin_right  = -1,
     float p_margin_bottom = -1,
-    bool p_draw_center = true
+    bool p_draw_center    = true
 ) {
     Ref<ImageTexture> texture;
 
     if (tex_cache->has(p_src)) {
         texture = (*tex_cache)[p_src];
     } else {
-        texture = Ref<ImageTexture>(memnew(ImageTexture));
+        texture        = Ref<ImageTexture>(memnew(ImageTexture));
         Ref<Image> img = memnew(Image(p_src));
 
         if (scale > 1) {
@@ -97,9 +97,9 @@ static Ref<StyleBoxTexture> make_stylebox(
 
 static Ref<StyleBoxFlat> make_flat_stylebox(
     Color p_color,
-    float p_margin_left = -1,
-    float p_margin_top = -1,
-    float p_margin_right = -1,
+    float p_margin_left   = -1,
+    float p_margin_top    = -1,
+    float p_margin_right  = -1,
     float p_margin_bottom = -1
 ) {
     Ref<StyleBoxFlat> style(memnew(StyleBoxFlat));
@@ -159,7 +159,7 @@ static Ref<Texture> flip_icon(
 
     Ref<ImageTexture> texture(memnew(ImageTexture));
     Ref<Image> img = p_texture->get_data();
-    img = img->duplicate();
+    img            = img->duplicate();
 
     if (p_flip_y) {
         img->flip_y();
@@ -185,7 +185,7 @@ static Ref<BitmapFont> make_font(
 ) {
     Ref<BitmapFont> font(memnew(BitmapFont));
 
-    Ref<Image> image = memnew(Image(p_img));
+    Ref<Image> image      = memnew(Image(p_img));
     Ref<ImageTexture> tex = memnew(ImageTexture);
     tex->create_from_image(image);
 
@@ -198,8 +198,8 @@ static Ref<BitmapFont> make_font(
         Rect2 frect;
         frect.position.x = c[1];
         frect.position.y = c[2];
-        frect.size.x = c[3];
-        frect.size.y = c[4];
+        frect.size.x     = c[3];
+        frect.size.y     = c[4];
         Point2 align(c[6], c[5]);
         int advance = c[7];
 
@@ -221,9 +221,9 @@ static Ref<BitmapFont> make_font(
 }
 
 static Ref<StyleBox> make_empty_stylebox(
-    float p_margin_left = -1,
-    float p_margin_top = -1,
-    float p_margin_right = -1,
+    float p_margin_left   = -1,
+    float p_margin_top    = -1,
+    float p_margin_right  = -1,
     float p_margin_bottom = -1
 ) {
     Ref<StyleBox> style(memnew(StyleBoxEmpty));
@@ -250,14 +250,14 @@ void fill_default_theme(
 
     // Font Colors
 
-    Color control_font_color = Color(0.88, 0.88, 0.88);
-    Color control_font_color_lower = Color(0.63, 0.63, 0.63);
-    Color control_font_color_low = Color(0.69, 0.69, 0.69);
-    Color control_font_color_hover = Color(0.94, 0.94, 0.94);
-    Color control_font_color_focus = Color(0.94, 0.94, 0.94);
+    Color control_font_color          = Color(0.88, 0.88, 0.88);
+    Color control_font_color_lower    = Color(0.63, 0.63, 0.63);
+    Color control_font_color_low      = Color(0.69, 0.69, 0.69);
+    Color control_font_color_hover    = Color(0.94, 0.94, 0.94);
+    Color control_font_color_focus    = Color(0.94, 0.94, 0.94);
     Color control_font_color_disabled = Color(0.9, 0.9, 0.9, 0.2);
-    Color control_font_color_pressed = Color(1, 1, 1);
-    Color font_color_selection = Color(0.49, 0.49, 0.49);
+    Color control_font_color_pressed  = Color(1, 1, 1);
+    Color font_color_selection        = Color(0.49, 0.49, 0.49);
 
     // Panel
 
@@ -1596,7 +1596,7 @@ void fill_default_theme(
 
     // Theme
 
-    default_icon = make_icon(error_icon_png);
+    default_icon  = make_icon(error_icon_png);
     default_style = make_stylebox(error_icon_png, 2, 2, 2, 2);
 
     memdelete(tex_cache);

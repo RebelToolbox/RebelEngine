@@ -79,8 +79,8 @@ void touch_preprocessing(
     jint pointer,
     jint pointer_count,
     jfloatArray positions,
-    jint buttons_mask = 0,
-    jfloat vertical_factor = 0,
+    jint buttons_mask        = 0,
+    jfloat vertical_factor   = 0,
     jfloat horizontal_factor = 0
 );
 JNIEXPORT void JNICALL

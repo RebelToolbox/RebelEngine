@@ -902,10 +902,10 @@ void BulletPhysicsServer::body_set_axis_velocity(
     RigidBodyBullet* body = rigid_body_owner.get(p_body);
     ERR_FAIL_COND(!body);
 
-    Vector3 v = body->get_linear_velocity();
-    Vector3 axis = p_axis_velocity.normalized();
-    v -= axis * axis.dot(v);
-    v += p_axis_velocity;
+    Vector3 v     = body->get_linear_velocity();
+    Vector3 axis  = p_axis_velocity.normalized();
+    v            -= axis * axis.dot(v);
+    v            += p_axis_velocity;
     body->set_linear_velocity(v);
 }
 

@@ -44,8 +44,8 @@ class VSet {
             return 0;
         }
 
-        int low = 0;
-        int high = _data.size() - 1;
+        int low    = 0;
+        int high   = _data.size() - 1;
         const T* a = &_data[0];
         int middle = 0;
 
@@ -80,7 +80,7 @@ class VSet {
             return -1;
         }
 
-        int low = 0;
+        int low  = 0;
         int high = _data.size() - 1;
         int middle;
         const T* a = &_data[0];

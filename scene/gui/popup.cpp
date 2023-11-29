@@ -113,15 +113,15 @@ void Popup::set_as_minsize() {
             Margin m_end = Margin(2 + j);
 
             float margin_begin = c->get_margin(m_beg);
-            float margin_end = c->get_margin(m_end);
+            float margin_end   = c->get_margin(m_end);
             float anchor_begin = c->get_anchor(m_beg);
-            float anchor_end = c->get_anchor(m_end);
+            float anchor_end   = c->get_anchor(m_end);
 
             minsize[j] += margin_begin * (ANCHOR_END - anchor_begin)
                         + margin_end * anchor_end;
         }
 
-        total_minsize.width = MAX(total_minsize.width, minsize.width);
+        total_minsize.width  = MAX(total_minsize.width, minsize.width);
         total_minsize.height = MAX(total_minsize.height, minsize.height);
     }
 
@@ -132,7 +132,7 @@ void Popup::popup_centered_clamped(
     const Size2& p_size,
     float p_fallback_ratio
 ) {
-    Size2 popup_size = p_size;
+    Size2 popup_size  = p_size;
     Size2 window_size = get_viewport_rect().size;
 
     // clamp popup size in each dimension if window size is too small (using
@@ -152,8 +152,8 @@ void Popup::popup_centered_minsize(const Size2& p_minsize) {
 void Popup::popup_centered(const Size2& p_size) {
     Rect2 rect;
     Size2 window_size = get_viewport_rect().size;
-    rect.size = p_size == Size2() ? get_size() : p_size;
-    rect.position = ((window_size - rect.size * get_scale()) / 2.0).floor();
+    rect.size         = p_size == Size2() ? get_size() : p_size;
+    rect.position     = ((window_size - rect.size * get_scale()) / 2.0).floor();
 
     _popup(rect, true);
 }
@@ -161,8 +161,8 @@ void Popup::popup_centered(const Size2& p_size) {
 void Popup::popup_centered_ratio(float p_screen_ratio) {
     Rect2 rect;
     Size2 window_size = get_viewport_rect().size;
-    rect.size = (window_size * p_screen_ratio).floor();
-    rect.position = ((window_size - rect.size * get_scale()) / 2.0).floor();
+    rect.size         = (window_size * p_screen_ratio).floor();
+    rect.position     = ((window_size - rect.size * get_scale()) / 2.0).floor();
 
     _popup(rect, true);
 }
@@ -295,8 +295,8 @@ Size2 PopupPanel::get_minimum_size() const {
         }
 
         Size2 cms = c->get_combined_minimum_size();
-        ms.x = MAX(cms.x, ms.x);
-        ms.y = MAX(cms.y, ms.y);
+        ms.x      = MAX(cms.x, ms.x);
+        ms.y      = MAX(cms.y, ms.y);
     }
 
     return ms + p->get_minimum_size();

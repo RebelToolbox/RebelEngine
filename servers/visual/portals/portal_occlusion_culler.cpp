@@ -40,14 +40,14 @@ void PortalOcclusionCuller::prepare_generic(
     const LocalVector<Plane>& p_planes
 ) {
     _num_spheres = 0;
-    _pt_camera = pt_camera;
+    _pt_camera   = pt_camera;
 
     real_t goodness_of_fit[MAX_SPHERES];
     for (int n = 0; n < _max_spheres; n++) {
         goodness_of_fit[n] = 0.0;
     }
-    real_t weakest_fit = FLT_MAX;
-    int weakest_sphere = 0;
+    real_t weakest_fit   = FLT_MAX;
+    int weakest_sphere   = 0;
     _sphere_closest_dist = FLT_MAX;
 
     // TODO : occlusion cull spheres AGAINST themselves.
@@ -56,7 +56,7 @@ void PortalOcclusionCuller::prepare_generic(
 
     // find sphere occluders
     for (unsigned int o = 0; o < p_occluder_pool_ids.size(); o++) {
-        int id = p_occluder_pool_ids[o];
+        int id          = p_occluder_pool_ids[o];
         VSOccluder& occ = p_portal_renderer.get_pool_occluder(id);
 
         // is it active?
@@ -95,18 +95,18 @@ void PortalOcclusionCuller::prepare_generic(
 
                 // calculate the goodness of fit .. smaller distance better, and
                 // larger radius calculate adjusted radius at 100.0
-                real_t fit = 100 / MAX(dist, 0.01);
-                fit *= occluder_sphere.radius;
+                real_t fit  = 100 / MAX(dist, 0.01);
+                fit        *= occluder_sphere.radius;
 
                 // until we reach the max, just keep recording, and keep track
                 // of the worst fit
                 if (_num_spheres < _max_spheres) {
-                    _spheres[_num_spheres] = occluder_sphere;
+                    _spheres[_num_spheres]          = occluder_sphere;
                     _sphere_distances[_num_spheres] = dist;
-                    goodness_of_fit[_num_spheres] = fit;
+                    goodness_of_fit[_num_spheres]   = fit;
 
                     if (fit < weakest_fit) {
-                        weakest_fit = fit;
+                        weakest_fit    = fit;
                         weakest_sphere = _num_spheres;
                     }
 
@@ -119,9 +119,9 @@ void PortalOcclusionCuller::prepare_generic(
                 } else {
                     // must beat the weakest
                     if (fit > weakest_fit) {
-                        _spheres[weakest_sphere] = occluder_sphere;
+                        _spheres[weakest_sphere]          = occluder_sphere;
                         _sphere_distances[weakest_sphere] = dist;
-                        goodness_of_fit[weakest_sphere] = fit;
+                        goodness_of_fit[weakest_sphere]   = fit;
 
                         // keep a record of the closest sphere for quick rejects
                         if (dist < _sphere_closest_dist) {
@@ -133,7 +133,7 @@ void PortalOcclusionCuller::prepare_generic(
                         weakest_fit = FLT_MAX;
                         for (int s = 0; s < _max_spheres; s++) {
                             if (goodness_of_fit[s] < weakest_fit) {
-                                weakest_fit = goodness_of_fit[s];
+                                weakest_fit    = goodness_of_fit[s];
                                 weakest_sphere = s;
                             }
                         }
@@ -157,7 +157,7 @@ void PortalOcclusionCuller::prepare_generic(
         if (cull_sphere(sphere.pos, sphere.radius, n)) {
             // yes, unordered remove
             _num_spheres--;
-            _spheres[n] = _spheres[_num_spheres];
+            _spheres[n]          = _spheres[_num_spheres];
             _sphere_distances[n] = _sphere_distances[_num_spheres];
 
             // repeat this n
@@ -176,7 +176,7 @@ bool PortalOcclusionCuller::cull_sphere(
     }
 
     // ray from origin to the occludee
-    Vector3 ray_dir = p_occludee_center - _pt_camera;
+    Vector3 ray_dir             = p_occludee_center - _pt_camera;
     real_t dist_to_occludee_raw = ray_dir.length();
 
     // account for occludee radius

@@ -678,7 +678,7 @@ VisualScriptBuiltinFunc::BuiltinFunc VisualScriptBuiltinFunc::get_func() {
 
 #define VALIDATE_ARG_NUM(m_arg)                                                \
     if (!p_inputs[m_arg]->is_num()) {                                          \
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;       \
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;    \
         r_error.argument = m_arg;                                              \
         r_error.expected = Variant::REAL;                                      \
         return;                                                                \
@@ -771,7 +771,7 @@ void VisualScriptBuiltinFunc::exec_func(
                 int64_t i = *p_inputs[0];
                 *r_return = ABS(i);
             } else if (p_inputs[0]->get_type() == Variant::REAL) {
-                real_t r = *p_inputs[0];
+                real_t r  = *p_inputs[0];
                 *r_return = Math::abs(r);
             } else {
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
@@ -784,7 +784,7 @@ void VisualScriptBuiltinFunc::exec_func(
                 int64_t i = *p_inputs[0];
                 *r_return = i < 0 ? -1 : (i > 0 ? +1 : 0);
             } else if (p_inputs[0]->get_type() == Variant::REAL) {
-                real_t r = *p_inputs[0];
+                real_t r  = *p_inputs[0];
                 *r_return = r < 0.0 ? -1.0 : (r > 0.0 ? +1.0 : 0.0);
             } else {
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
@@ -927,7 +927,7 @@ void VisualScriptBuiltinFunc::exec_func(
         case VisualScriptBuiltinFunc::MATH_RANDSEED: {
             VALIDATE_ARG_NUM(0);
             uint64_t seed = *p_inputs[0];
-            int ret = Math::rand_from_seed(&seed);
+            int ret       = Math::rand_from_seed(&seed);
             Array reta;
             reta.push_back(ret);
             reta.push_back(seed);
@@ -953,15 +953,15 @@ void VisualScriptBuiltinFunc::exec_func(
         case VisualScriptBuiltinFunc::MATH_POLAR2CARTESIAN: {
             VALIDATE_ARG_NUM(0);
             VALIDATE_ARG_NUM(1);
-            double r = *p_inputs[0];
+            double r  = *p_inputs[0];
             double th = *p_inputs[1];
             *r_return = Vector2(r * Math::cos(th), r * Math::sin(th));
         } break;
         case VisualScriptBuiltinFunc::MATH_CARTESIAN2POLAR: {
             VALIDATE_ARG_NUM(0);
             VALIDATE_ARG_NUM(1);
-            double x = *p_inputs[0];
-            double y = *p_inputs[1];
+            double x  = *p_inputs[0];
+            double y  = *p_inputs[1];
             *r_return = Vector2(Math::sqrt(x * x + y * y), Math::atan2(y, x));
         } break;
         case VisualScriptBuiltinFunc::MATH_WRAP: {
@@ -1040,7 +1040,7 @@ void VisualScriptBuiltinFunc::exec_func(
         case VisualScriptBuiltinFunc::LOGIC_NEAREST_PO2: {
             VALIDATE_ARG_NUM(0);
             int64_t num = *p_inputs[0];
-            *r_return = next_power_of_2(num);
+            *r_return   = next_power_of_2(num);
         } break;
         case VisualScriptBuiltinFunc::OBJ_WEAKREF: {
             if (p_inputs[0]->get_type() != Variant::OBJECT) {
@@ -1254,7 +1254,7 @@ void VisualScriptBuiltinFunc::exec_func(
             Variant ret;
             {
                 PoolByteArray::Read r = varr.read();
-                Error err = decode_variant(
+                Error err             = decode_variant(
                     ret,
                     r.ptr(),
                     varr.size(),
@@ -1280,7 +1280,7 @@ void VisualScriptBuiltinFunc::exec_func(
             VALIDATE_ARG_NUM(1);
 
             Color color = Color::named(*p_inputs[0]);
-            color.a = *p_inputs[1];
+            color.a     = *p_inputs[1];
 
             *r_return = String(color);
 
@@ -1326,9 +1326,9 @@ VisualScriptNodeInstance* VisualScriptBuiltinFunc::instance(
 ) {
     VisualScriptNodeInstanceBuiltinFunc* instance =
         memnew(VisualScriptNodeInstanceBuiltinFunc);
-    instance->node = this;
+    instance->node     = this;
     instance->instance = p_instance;
-    instance->func = func;
+    instance->func     = func;
     return instance;
 }
 

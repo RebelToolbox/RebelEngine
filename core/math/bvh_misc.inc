@@ -14,8 +14,8 @@ public:
 void _handle_sort(BVHHandle& p_ha, BVHHandle& p_hb) const {
     if (p_ha.id() > p_hb.id()) {
         BVHHandle temp = p_hb;
-        p_hb = p_ha;
-        p_ha = temp;
+        p_hb           = p_ha;
+        p_ha           = temp;
     }
 }
 

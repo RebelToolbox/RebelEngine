@@ -131,7 +131,7 @@ void EditorImportPlugin::get_import_options(
     for (int i = 0; i < options.size(); i++) {
         Dictionary d = options[i];
         ERR_FAIL_COND(!d.has_all(needed));
-        String name = d["name"];
+        String name           = d["name"];
         Variant default_value = d["default_value"];
 
         PropertyHint hint = PROPERTY_HINT_NONE;
@@ -176,7 +176,7 @@ bool EditorImportPlugin::get_option_visibility(
     Map<StringName, Variant>::Element* E = p_options.front();
     while (E) {
         d[E->key()] = E->get();
-        E = E->next();
+        E           = E->next();
     }
     return get_script_instance()->call("get_option_visibility", p_option, d);
 }
@@ -199,7 +199,7 @@ Error EditorImportPlugin::import(
     Map<StringName, Variant>::Element* E = p_options.front();
     while (E) {
         options[E->key()] = E->get();
-        E = E->next();
+        E                 = E->next();
     }
     Error err = (Error)get_script_instance()
                     ->call(

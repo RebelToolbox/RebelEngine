@@ -158,9 +158,9 @@ Vector3 get_poly_normal(const std::vector<Vector3>& p_vertices) {
     ldouble y = 0.0;
     ldouble z = 0.0;
     for (size_t i = 0; i < p_vertices.size(); i += 1) {
-        const Vector3 current = p_vertices[i];
-        const Vector3 next = p_vertices[(i + 1) % p_vertices.size()];
-        x += (ldouble(current.y) - ldouble(next.y))
+        const Vector3 current  = p_vertices[i];
+        const Vector3 next     = p_vertices[(i + 1) % p_vertices.size()];
+        x                     += (ldouble(current.y) - ldouble(next.y))
            * (ldouble(current.z) + ldouble(next.z));
         y += (ldouble(current.z) - ldouble(next.z))
            * (ldouble(current.x) + ldouble(next.x));

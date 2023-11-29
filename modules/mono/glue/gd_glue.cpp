@@ -46,7 +46,7 @@ MonoObject* godot_icall_GD_bytes2var(
     MonoBoolean p_allow_objects
 ) {
     Variant ret;
-    PoolByteArray varr = GDMonoMarshal::mono_array_to_PoolByteArray(p_bytes);
+    PoolByteArray varr    = GDMonoMarshal::mono_array_to_PoolByteArray(p_bytes);
     PoolByteArray::Read r = varr.read();
     Error err =
         decode_variant(ret, r.ptr(), varr.size(), NULL, p_allow_objects);
@@ -57,7 +57,7 @@ MonoObject* godot_icall_GD_bytes2var(
 }
 
 MonoObject* godot_icall_GD_convert(MonoObject* p_what, int32_t p_type) {
-    Variant what = GDMonoMarshal::mono_object_to_variant(p_what);
+    Variant what           = GDMonoMarshal::mono_object_to_variant(p_what);
     const Variant* args[1] = {&what};
     Variant::CallError ce;
     Variant ret = Variant::construct(Variant::Type(p_type), args, 1, ce);
@@ -210,7 +210,7 @@ double godot_icall_GD_rand_range(double from, double to) {
 }
 
 uint32_t godot_icall_GD_rand_seed(uint64_t seed, uint64_t* newSeed) {
-    int ret = Math::rand_from_seed(&seed);
+    int ret  = Math::rand_from_seed(&seed);
     *newSeed = seed;
     return ret;
 }

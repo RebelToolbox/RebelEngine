@@ -103,14 +103,14 @@ GDScriptInstance* GDScript::_create_instance(
     /* STEP 1, CREATE */
 
     GDScriptInstance* instance = memnew(GDScriptInstance);
-    instance->base_ref = p_isref;
+    instance->base_ref         = p_isref;
     instance->members.resize(member_indices.size());
     instance->script = Ref<GDScript>(this);
-    instance->owner = p_owner;
+    instance->owner  = p_owner;
 #ifdef DEBUG_ENABLED
     // needed for hot reloading
     for (Map<StringName, MemberInfo>::Element* E = member_indices.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         instance->member_indices_cache[E->key()] = E->get().index;
     }
 #endif
@@ -276,7 +276,7 @@ void GDScript::get_script_property_list(List<PropertyInfo>* p_list) const {
             _GDScriptMemberSort ms;
             ERR_CONTINUE(!sptr->member_indices.has(E->key()));
             ms.index = sptr->member_indices[E->key()].index;
-            ms.name = E->key();
+            ms.name  = E->key();
             msort.push_back(ms);
         }
 
@@ -436,7 +436,7 @@ void GDScript::_update_exports_values(
     }
 
     for (List<PropertyInfo>::Element* E = members_cache.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         propnames.push_back(E->get());
     }
 }
@@ -459,7 +459,7 @@ bool GDScript::_update_exports(
 
     if (source_changed_cache) {
         source_changed_cache = false;
-        changed = true;
+        changed              = true;
 
         String basedir = path;
 
@@ -564,7 +564,7 @@ bool GDScript::_update_exports(
                 if (r_err) {
                     *r_err = true;
                 }
-                valid = false; // to show error in the editor
+                valid             = false; // to show error in the editor
                 base_cache->valid = false;
                 base_cache->inheriters_cache.clear(
                 ); // to prevent future stackoverflows
@@ -620,7 +620,7 @@ void GDScript::update_exports() {
     Set<ObjectID> copy = inheriters_cache; // might get modified
 
     for (Set<ObjectID>::Element* E = copy.front(); E; E = E->next()) {
-        Object* id = ObjectDB::get_instance(E->get());
+        Object* id  = ObjectDB::get_instance(E->get());
         GDScript* s = Object::cast_to<GDScript>(id);
         if (!s) {
             continue;
@@ -734,7 +734,7 @@ Error GDScript::reload(bool p_keep_state) {
     valid = true;
 
     for (Map<StringName, Ref<GDScript>>::Element* E = subclasses.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         _set_subclass_path(E->get(), path);
     }
     _clear_pending_func_states();
@@ -749,7 +749,7 @@ ScriptLanguage* GDScript::get_language() const {
 void GDScript::get_constants(Map<StringName, Variant>* p_constants) {
     if (p_constants) {
         for (Map<StringName, Variant>::Element* E = constants.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             (*p_constants)[E->key()] = E->value();
         }
     }
@@ -945,7 +945,7 @@ Error GDScript::load_byte_code(const String& p_path) {
     valid = true;
 
     for (Map<StringName, Ref<GDScript>>::Element* E = subclasses.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         _set_subclass_path(E->get(), path);
     }
 
@@ -963,7 +963,7 @@ Error GDScript::load_source_code(const String& p_path) {
     uint64_t len = f->get_len();
     sourcef.resize(len + 1);
     PoolVector<uint8_t>::Write w = sourcef.write();
-    uint64_t r = f->get_buffer(w.ptr(), len);
+    uint64_t r                   = f->get_buffer(w.ptr(), len);
     f->close();
     memdelete(f);
     ERR_FAIL_COND_V(r != len, ERR_CANT_OPEN);
@@ -1063,14 +1063,14 @@ void GDScript::get_script_signal_list(List<MethodInfo>* r_signals) const {
 }
 
 GDScript::GDScript() : script_list(this) {
-    valid = false;
+    valid          = false;
     subclass_count = 0;
-    initializer = nullptr;
-    _base = nullptr;
-    _owner = nullptr;
-    tool = false;
+    initializer    = nullptr;
+    _base          = nullptr;
+    _owner         = nullptr;
+    tool           = false;
 #ifdef TOOLS_ENABLED
-    source_changed_cache = false;
+    source_changed_cache         = false;
     placeholder_fallback_enabled = false;
 #endif
 
@@ -1090,10 +1090,10 @@ void GDScript::_save_orphaned_subclasses() {
     Vector<ClassRefWithName> weak_subclasses;
     // collect subclasses ObjectID and name
     for (Map<StringName, Ref<GDScript>>::Element* E = subclasses.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         E->get()->_owner = nullptr; // bye, you are no longer owned cause I died
         ClassRefWithName subclass;
-        subclass.id = E->get()->get_instance_id();
+        subclass.id                   = E->get()->get_instance_id();
         subclass.fully_qualified_name = E->get()->fully_qualified_name;
         weak_subclasses.push_back(subclass);
     }
@@ -1106,7 +1106,7 @@ void GDScript::_save_orphaned_subclasses() {
     // keep orphan subclass only for subclasses that are still in use
     for (int i = 0; i < weak_subclasses.size(); i++) {
         ClassRefWithName subclass = weak_subclasses[i];
-        Object* obj = ObjectDB::get_instance(subclass.id);
+        Object* obj               = ObjectDB::get_instance(subclass.id);
         if (!obj) {
             continue;
         }
@@ -1162,7 +1162,7 @@ bool GDScriptInstance::set(const StringName& p_name, const Variant& p_value) {
                     // Try conversion
                     Variant::CallError ce;
                     const Variant* value = &p_value;
-                    Variant converted = Variant::construct(
+                    Variant converted    = Variant::construct(
                         member->data_type.builtin_type,
                         &value,
                         1,
@@ -1189,7 +1189,7 @@ bool GDScriptInstance::set(const StringName& p_name, const Variant& p_value) {
                 GDScriptLanguage::get_singleton()->strings._set
             );
         if (E) {
-            Variant name = p_name;
+            Variant name           = p_name;
             const Variant* args[2] = {&name, &p_value};
 
             Variant::CallError err;
@@ -1244,7 +1244,7 @@ bool GDScriptInstance::get(const StringName& p_name, Variant& r_ret) const {
                     GDScriptLanguage::get_singleton()->strings._get
                 );
             if (E) {
-                Variant name = p_name;
+                Variant name           = p_name;
                 const Variant* args[1] = {&name};
 
                 Variant::CallError err;
@@ -1352,7 +1352,7 @@ void GDScriptInstance::get_property_list(List<PropertyInfo>* p_properties
             _GDScriptMemberSort ms;
             ERR_CONTINUE(!sptr->member_indices.has(F->key()));
             ms.index = sptr->member_indices[F->key()].index;
-            ms.name = F->key();
+            ms.name  = F->key();
             msort.push_back(ms);
         }
 
@@ -1378,7 +1378,7 @@ void GDScriptInstance::get_method_list(List<MethodInfo>* p_list) const {
              E;
              E = E->next()) {
             MethodInfo mi;
-            mi.name = E->key();
+            mi.name   = E->key();
             mi.flags |= METHOD_FLAG_FROM_SCRIPT;
             for (int i = 0; i < E->get()->get_argument_count(); i++) {
                 mi.arguments.push_back(
@@ -1473,7 +1473,7 @@ void GDScriptInstance::call_multilevel_reversed(
 
 void GDScriptInstance::notification(int p_notification) {
     // notification is not virtual, it gets called at ALL levels just like in C.
-    Variant value = p_notification;
+    Variant value          = p_notification;
     const Variant* args[1] = {&value};
 
     GDScript* sptr = script.ptr();
@@ -1603,7 +1603,7 @@ void GDScriptInstance::reload_members() {
 }
 
 GDScriptInstance::GDScriptInstance() {
-    owner = nullptr;
+    owner    = nullptr;
     base_ref = false;
 }
 
@@ -1689,7 +1689,7 @@ void GDScriptLanguage::init() {
     ClassDB::get_class_list(&class_list);
     for (List<StringName>::Element* E = class_list.front(); E; E = E->next()) {
         StringName n = E->get();
-        String s = String(n);
+        String s     = String(n);
         if (s.begins_with("_")) {
             n = s.substr(1, s.length());
         }
@@ -1706,7 +1706,7 @@ void GDScriptLanguage::init() {
     List<Engine::Singleton> singletons;
     Engine::get_singleton()->get_singletons(&singletons);
     for (List<Engine::Singleton>::Element* E = singletons.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         _add_global(E->get().name, E->get().ptr);
     }
 }
@@ -1732,16 +1732,16 @@ void GDScriptLanguage::profiling_start() {
 
     SelfList<GDScriptFunction>* elem = function_list.first();
     while (elem) {
-        elem->self()->profile.call_count = 0;
-        elem->self()->profile.self_time = 0;
-        elem->self()->profile.total_time = 0;
-        elem->self()->profile.frame_call_count = 0;
-        elem->self()->profile.frame_self_time = 0;
-        elem->self()->profile.frame_total_time = 0;
+        elem->self()->profile.call_count            = 0;
+        elem->self()->profile.self_time             = 0;
+        elem->self()->profile.total_time            = 0;
+        elem->self()->profile.frame_call_count      = 0;
+        elem->self()->profile.frame_self_time       = 0;
+        elem->self()->profile.frame_total_time      = 0;
         elem->self()->profile.last_frame_call_count = 0;
-        elem->self()->profile.last_frame_self_time = 0;
+        elem->self()->profile.last_frame_self_time  = 0;
         elem->self()->profile.last_frame_total_time = 0;
-        elem = elem->next();
+        elem                                        = elem->next();
     }
 
     profiling = true;
@@ -1771,10 +1771,10 @@ int GDScriptLanguage::profiling_get_accumulated_data(
             break;
         }
         p_info_arr[current].call_count = elem->self()->profile.call_count;
-        p_info_arr[current].self_time = elem->self()->profile.self_time;
+        p_info_arr[current].self_time  = elem->self()->profile.self_time;
         p_info_arr[current].total_time = elem->self()->profile.total_time;
-        p_info_arr[current].signature = elem->self()->profile.signature;
-        elem = elem->next();
+        p_info_arr[current].signature  = elem->self()->profile.signature;
+        elem                           = elem->next();
         current++;
     }
 
@@ -2054,9 +2054,9 @@ void GDScriptLanguage::frame() {
             elem->self()->profile.last_frame_total_time =
                 elem->self()->profile.frame_total_time;
             elem->self()->profile.frame_call_count = 0;
-            elem->self()->profile.frame_self_time = 0;
+            elem->self()->profile.frame_self_time  = 0;
             elem->self()->profile.frame_total_time = 0;
-            elem = elem->next();
+            elem                                   = elem->next();
         }
 
         lock.unlock();
@@ -2194,7 +2194,7 @@ String GDScriptLanguage::get_global_class_name(
         }
         if (r_base_type) {
             const GDScriptParser::ClassNode* subclass = c;
-            String path = p_path;
+            String path                               = p_path;
             GDScriptParser subparser;
             while (subclass) {
                 if (subclass->extends_used) {
@@ -2261,7 +2261,7 @@ String GDScriptLanguage::get_global_class_name(
                                     if (inner_class->name
                                         == extend_classes[0]) {
                                         extend_classes.remove(0);
-                                        found = true;
+                                        found    = true;
                                         subclass = inner_class;
                                         break;
                                     }
@@ -2274,13 +2274,13 @@ String GDScriptLanguage::get_global_class_name(
                         }
                     } else if (subclass->extends_class.size() == 1) {
                         *r_base_type = subclass->extends_class[0];
-                        subclass = nullptr;
+                        subclass     = nullptr;
                     } else {
                         break;
                     }
                 } else {
                     *r_base_type = "Reference";
-                    subclass = nullptr;
+                    subclass     = nullptr;
                 }
             }
         }
@@ -2508,17 +2508,17 @@ GDScriptWarning::Code GDScriptWarning::get_code_from_name(const String& p_name
 GDScriptLanguage::GDScriptLanguage() {
     calls = 0;
     ERR_FAIL_COND(singleton);
-    singleton = this;
-    strings._init = StaticCString::create("_init");
-    strings._notification = StaticCString::create("_notification");
-    strings._set = StaticCString::create("_set");
-    strings._get = StaticCString::create("_get");
+    singleton                  = this;
+    strings._init              = StaticCString::create("_init");
+    strings._notification      = StaticCString::create("_notification");
+    strings._set               = StaticCString::create("_set");
+    strings._get               = StaticCString::create("_get");
     strings._get_property_list = StaticCString::create("_get_property_list");
-    strings._script_source = StaticCString::create("script/source");
-    _debug_parse_err_line = -1;
-    _debug_parse_err_file = "";
+    strings._script_source     = StaticCString::create("script/source");
+    _debug_parse_err_line      = -1;
+    _debug_parse_err_file      = "";
 
-    profiling = false;
+    profiling         = false;
     script_frame_time = 0;
 
     _debug_call_stack_pos = 0;
@@ -2541,7 +2541,7 @@ GDScriptLanguage::GDScriptLanguage() {
 
     } else {
         _debug_max_call_stack = 0;
-        _call_stack = nullptr;
+        _call_stack           = nullptr;
     }
 
 #ifdef DEBUG_ENABLED
@@ -2620,7 +2620,7 @@ Ref<GDScript> GDScriptLanguage::get_orphan_subclass(
         return Ref<GDScript>();
     }
     ObjectID orphan_subclass = orphan_subclass_element->get();
-    Object* obj = ObjectDB::get_instance(orphan_subclass);
+    Object* obj              = ObjectDB::get_instance(orphan_subclass);
     orphan_subclasses.erase(orphan_subclass_element);
     if (!obj) {
         return Ref<GDScript>();
@@ -2722,7 +2722,7 @@ void ResourceFormatLoaderGDScript::get_dependencies(
     }
 
     for (const List<String>::Element* E = parser.get_dependencies().front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         p_dependencies->push_back(E->get());
     }
 }

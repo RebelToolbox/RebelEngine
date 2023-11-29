@@ -64,8 +64,8 @@ class AnimationNodeBlendTreeEditor : public AnimationTreeNodeEditorPlugin {
     Map<StringName, ProgressBar*> animations;
     Vector<EditorProperty*> visible_properties;
 
-    String to_node = "";
-    int to_slot = -1;
+    String to_node   = "";
+    int to_slot      = -1;
     String from_node = "";
 
     void _update_graph();
@@ -77,8 +77,8 @@ class AnimationNodeBlendTreeEditor : public AnimationTreeNodeEditorPlugin {
         int input_port_count;
 
         AddOption(
-            const String& p_name = String(),
-            const String& p_type = String(),
+            const String& p_name   = String(),
+            const String& p_type   = String(),
             int p_input_port_count = 0
         ) :
             name(p_name),
@@ -159,8 +159,8 @@ class AnimationNodeBlendTreeEditor : public AnimationTreeNodeEditorPlugin {
     void _file_opened(const String& p_file);
 
     enum {
-        MENU_LOAD_FILE = 1000,
-        MENU_PASTE = 1001,
+        MENU_LOAD_FILE         = 1000,
+        MENU_PASTE             = 1001,
         MENU_LOAD_FILE_CONFIRM = 1002
     };
 

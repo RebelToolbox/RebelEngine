@@ -121,17 +121,17 @@ _FORCE_INLINE_ static void _generate_contacts_edge_edge(
 
     _generate_contacts_Pair dvec[4];
 
-    dvec[0].d = t.dot(p_points_A[0]);
-    dvec[0].a = true;
+    dvec[0].d   = t.dot(p_points_A[0]);
+    dvec[0].a   = true;
     dvec[0].idx = 0;
-    dvec[1].d = t.dot(p_points_A[1]);
-    dvec[1].a = true;
+    dvec[1].d   = t.dot(p_points_A[1]);
+    dvec[1].a   = true;
     dvec[1].idx = 1;
-    dvec[2].d = t.dot(p_points_B[0]);
-    dvec[2].a = false;
+    dvec[2].d   = t.dot(p_points_B[0]);
+    dvec[2].a   = false;
     dvec[2].idx = 0;
-    dvec[3].d = t.dot(p_points_B[1]);
-    dvec[3].a = false;
+    dvec[3].d   = t.dot(p_points_B[1]);
+    dvec[3].a   = false;
     dvec[3].idx = 1;
 
     SortArray<_generate_contacts_Pair> sa;
@@ -184,18 +184,18 @@ static void _generate_contacts_from_supports(
 
     if (p_point_count_A > p_point_count_B) {
         // swap
-        p_collector->swap = !p_collector->swap;
+        p_collector->swap   = !p_collector->swap;
         p_collector->normal = -p_collector->normal;
 
         pointcount_B = p_point_count_A;
         pointcount_A = p_point_count_B;
-        points_A = p_points_B;
-        points_B = p_points_A;
+        points_A     = p_points_B;
+        points_B     = p_points_A;
     } else {
         pointcount_B = p_point_count_B;
         pointcount_A = p_point_count_A;
-        points_A = p_points_A;
-        points_B = p_points_B;
+        points_A     = p_points_A;
+        points_B     = p_points_B;
     }
 
     int version_A = (pointcount_A > 2 ? 2 : pointcount_A) - 1;
@@ -210,8 +210,8 @@ static void _generate_contacts_from_supports(
 template <
     class ShapeA,
     class ShapeB,
-    bool castA = false,
-    bool castB = false,
+    bool castA      = false,
+    bool castB      = false,
     bool withMargin = false>
 class SeparatorAxisTest2D {
     const ShapeA* shape_A;
@@ -330,7 +330,7 @@ public:
         if (dmax < dmin) {
             if (dmax < best_depth) {
                 best_depth = dmax;
-                best_axis = axis;
+                best_axis  = axis;
 #ifdef DEBUG_ENABLED
                 best_axis_index = best_axis_count;
 #endif
@@ -338,7 +338,7 @@ public:
         } else {
             if (dmin < best_depth) {
                 best_depth = dmin;
-                best_axis = -axis; // keep it as A axis
+                best_axis  = -axis; // keep it as A axis
 #ifdef DEBUG_ENABLED
                 best_axis_index = best_axis_count;
 #endif
@@ -445,18 +445,18 @@ public:
         _CollectorCallback2D* p_collector,
         const Vector2& p_motion_A = Vector2(),
         const Vector2& p_motion_B = Vector2(),
-        real_t p_margin_A = 0,
-        real_t p_margin_B = 0
+        real_t p_margin_A         = 0,
+        real_t p_margin_B         = 0
     ) {
-        margin_A = p_margin_A;
-        margin_B = p_margin_B;
-        best_depth = 1e15;
-        shape_A = p_shape_A;
-        shape_B = p_shape_B;
+        margin_A    = p_margin_A;
+        margin_B    = p_margin_B;
+        best_depth  = 1e15;
+        shape_A     = p_shape_A;
+        shape_B     = p_shape_B;
         transform_A = &p_transform_a;
         transform_B = &p_transform_b;
-        motion_A = p_motion_A;
-        motion_B = p_motion_B;
+        motion_A    = p_motion_A;
+        motion_B    = p_motion_B;
 
         callback = p_collector;
 #ifdef DEBUG_ENABLED
@@ -1018,7 +1018,7 @@ static void _collision_circle_rectangle(
     }
 
     const Vector2& sphere = p_transform_a.elements[2];
-    const Vector2* axis = &p_transform_b.elements[0];
+    const Vector2* axis   = &p_transform_b.elements[0];
     // const Vector2& half_extents = rectangle_B->get_half_extents();
 
     if (!separator.test_axis(axis[0].normalized())) {
@@ -1273,10 +1273,10 @@ static void _collision_rectangle_rectangle(
         }
 
         if (castA || castB) {
-            Transform2D aofs = p_transform_a;
+            Transform2D aofs  = p_transform_a;
             aofs.elements[2] += p_motion_a;
 
-            Transform2D bofs = p_transform_b;
+            Transform2D bofs  = p_transform_b;
             bofs.elements[2] += p_motion_b;
 
             Transform2D aofsinv = aofs.affine_inverse();
@@ -2011,17 +2011,17 @@ bool sat_2d_calculate_penetration(
 
     _CollectorCallback2D callback;
     callback.callback = p_result_callback;
-    callback.swap = p_swap;
+    callback.swap     = p_swap;
     callback.userdata = p_userdata;
     callback.collided = false;
     callback.sep_axis = sep_axis;
 
-    const Shape2DSW* A = p_shape_A;
-    const Shape2DSW* B = p_shape_B;
+    const Shape2DSW* A             = p_shape_A;
+    const Shape2DSW* B             = p_shape_B;
     const Transform2D* transform_A = &p_transform_A;
     const Transform2D* transform_B = &p_transform_B;
-    const Vector2* motion_A = &p_motion_A;
-    const Vector2* motion_B = &p_motion_B;
+    const Vector2* motion_A        = &p_motion_A;
+    const Vector2* motion_B        = &p_motion_B;
     real_t margin_A = p_margin_A, margin_B = p_margin_B;
 
     if (type_A > type_B) {

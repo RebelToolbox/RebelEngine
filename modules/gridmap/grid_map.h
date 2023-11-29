@@ -45,7 +45,7 @@ class GridMap : public Spatial {
 
     enum {
         MAP_DIRTY_TRANSFORMS = 1,
-        MAP_DIRTY_INSTANCES = 2,
+        MAP_DIRTY_INSTANCES  = 2,
     };
 
     union IndexKey {
@@ -72,16 +72,16 @@ class GridMap : public Spatial {
      */
     union Cell {
         struct {
-            unsigned int item : 16;
-            unsigned int rot : 5;
+            unsigned int item  : 16;
+            unsigned int rot   : 5;
             unsigned int layer : 8;
         };
 
         uint32_t cell;
 
         Cell() {
-            item = 0;
-            rot = 0;
+            item  = 0;
+            rot   = 0;
             layer = 0;
         }
     };
@@ -257,8 +257,8 @@ public:
 
     void set_clip(
         bool p_enabled,
-        bool p_clip_above = true,
-        int p_floor = 0,
+        bool p_clip_above    = true,
+        int p_floor          = 0,
         Vector3::Axis p_axis = Vector3::AXIS_X
     );
 
@@ -271,7 +271,7 @@ public:
 
     void clear_baked_meshes();
     void make_baked_meshes(
-        bool p_gen_lightmap_uv = false,
+        bool p_gen_lightmap_uv         = false,
         float p_lightmap_uv_texel_size = 0.1
     );
 

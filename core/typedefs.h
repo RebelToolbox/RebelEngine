@@ -139,8 +139,8 @@ T* _nullptr() {
 template <class T>
 inline void __swap_tmpl(T& x, T& y) {
     T aux = x;
-    x = y;
-    y = aux;
+    x     = y;
+    y     = aux;
 }
 
 #endif // swap

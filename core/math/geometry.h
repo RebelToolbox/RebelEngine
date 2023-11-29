@@ -55,7 +55,7 @@ public:
     ) {
         Vector2 d1 = q1 - p1; // Direction vector of segment S1.
         Vector2 d2 = q2 - p2; // Direction vector of segment S2.
-        Vector2 r = p1 - p2;
+        Vector2 r  = p1 - p2;
         real_t a =
             d1.dot(d1); // Squared length of segment S1, always nonnegative.
         real_t e =
@@ -86,7 +86,7 @@ public:
                 ); // t = 0 => s = (b*t - c) / a = -c / a
             } else {
                 // The general nondegenerate case starts here.
-                real_t b = d1.dot(d2);
+                real_t b     = d1.dot(d2);
                 real_t denom = a * e - b * b; // Always nonnegative.
                 // If segments not parallel, compute closest point on L1 to L2
                 // and clamp to segment S1. Else pick arbitrary s (here 0).
@@ -165,14 +165,14 @@ public:
         Vector3 u = p_to_a - p_from_a;
         Vector3 v = p_to_b - p_from_b;
         Vector3 w = p_from_a - p_to_a;
-        real_t a = u.dot(u); // Always >= 0
-        real_t b = u.dot(v);
-        real_t c = v.dot(v); // Always >= 0
-        real_t d = u.dot(w);
-        real_t e = v.dot(w);
-        real_t D = a * c - b * b; // Always >= 0
-        real_t sc, sN, sD = D;    // sc = sN / sD, default sD = D >= 0
-        real_t tc, tN, tD = D;    // tc = tN / tD, default tD = D >= 0
+        real_t a  = u.dot(u); // Always >= 0
+        real_t b  = u.dot(v);
+        real_t c  = v.dot(v); // Always >= 0
+        real_t d  = u.dot(w);
+        real_t e  = v.dot(w);
+        real_t D  = a * c - b * b; // Always >= 0
+        real_t sc, sN, sD = D;     // sc = sN / sD, default sD = D >= 0
+        real_t tc, tN, tD = D;     // tc = tN / tD, default tD = D >= 0
 
         // Compute the line parameters of the two closest points.
         if (D < CMP_EPSILON) { // The lines are almost parallel.
@@ -237,8 +237,8 @@ public:
     ) {
         Vector3 e1 = p_v1 - p_v0;
         Vector3 e2 = p_v2 - p_v0;
-        Vector3 h = p_dir.cross(e2);
-        real_t a = e1.dot(h);
+        Vector3 h  = p_dir.cross(e2);
+        real_t a   = e1.dot(h);
         if (Math::is_zero_approx(a)) { // Parallel test.
             return false;
         }
@@ -246,7 +246,7 @@ public:
         real_t f = 1.0 / a;
 
         Vector3 s = p_from - p_v0;
-        real_t u = f * s.dot(h);
+        real_t u  = f * s.dot(h);
 
         if (u < 0.0 || u > 1.0) {
             return false;
@@ -284,10 +284,10 @@ public:
         Vector3* r_res = nullptr
     ) {
         Vector3 rel = p_to - p_from;
-        Vector3 e1 = p_v1 - p_v0;
-        Vector3 e2 = p_v2 - p_v0;
-        Vector3 h = rel.cross(e2);
-        real_t a = e1.dot(h);
+        Vector3 e1  = p_v1 - p_v0;
+        Vector3 e2  = p_v2 - p_v0;
+        Vector3 h   = rel.cross(e2);
+        real_t a    = e1.dot(h);
         if (Math::is_zero_approx(a)) { // Parallel test.
             return false;
         }
@@ -295,7 +295,7 @@ public:
         real_t f = 1.0 / a;
 
         Vector3 s = p_from - p_v0;
-        real_t u = f * s.dot(h);
+        real_t u  = f * s.dot(h);
 
         if (u < 0.0 || u > 1.0) {
             return false;
@@ -329,12 +329,12 @@ public:
         const Vector3& p_to,
         const Vector3& p_sphere_pos,
         real_t p_sphere_radius,
-        Vector3* r_res = nullptr,
+        Vector3* r_res  = nullptr,
         Vector3* r_norm = nullptr
     ) {
         Vector3 sphere_pos = p_sphere_pos - p_from;
-        Vector3 rel = (p_to - p_from);
-        real_t rel_l = rel.length();
+        Vector3 rel        = (p_to - p_from);
+        real_t rel_l       = rel.length();
         if (rel_l < CMP_EPSILON) {
             return false; // Both points are the same.
         }
@@ -378,11 +378,11 @@ public:
         const Vector3& p_to,
         real_t p_height,
         real_t p_radius,
-        Vector3* r_res = nullptr,
-        Vector3* r_norm = nullptr,
+        Vector3* r_res      = nullptr,
+        Vector3* r_norm     = nullptr,
         int p_cylinder_axis = 2
     ) {
-        Vector3 rel = (p_to - p_from);
+        Vector3 rel  = (p_to - p_from);
         real_t rel_l = rel.length();
         if (rel_l < CMP_EPSILON) {
             return false; // Both points are the same.
@@ -395,15 +395,15 @@ public:
 
         // First check if they are parallel.
         Vector3 normal = (rel / rel_l);
-        Vector3 crs = normal.cross(cylinder_axis);
-        real_t crs_l = crs.length();
+        Vector3 crs    = normal.cross(cylinder_axis);
+        real_t crs_l   = crs.length();
 
         Vector3 axis_dir;
 
         if (crs_l < CMP_EPSILON) {
             Vector3 side_axis;
             side_axis[(p_cylinder_axis + 1) % 3] = 1.0; // Any side axis OK.
-            axis_dir = side_axis;
+            axis_dir                             = side_axis;
         } else {
             axis_dir = crs / crs_l;
         }
@@ -431,10 +431,10 @@ public:
         int axis = -1;
 
         for (int i = 0; i < 2; i++) {
-            real_t seg_from = from2D[i];
-            real_t seg_to = to2D[i];
+            real_t seg_from  = from2D[i];
+            real_t seg_to    = to2D[i];
             real_t box_begin = -size[i];
-            real_t box_end = size[i];
+            real_t box_end   = size[i];
             real_t cmin, cmax;
 
             if (seg_from < seg_to) {
@@ -442,9 +442,9 @@ public:
                     return false;
                 }
                 real_t length = seg_to - seg_from;
-                cmin = (seg_from < box_begin)
-                         ? ((box_begin - seg_from) / length)
-                         : 0;
+                cmin          = (seg_from < box_begin)
+                                  ? ((box_begin - seg_from) / length)
+                                  : 0;
                 cmax = (seg_to > box_end) ? ((box_end - seg_from) / length) : 1;
 
             } else {
@@ -458,7 +458,7 @@ public:
             }
 
             if (cmin > min) {
-                min = cmin;
+                min  = cmin;
                 axis = i;
             }
             if (cmax < max) {
@@ -470,15 +470,15 @@ public:
         }
 
         // Convert to 3D again.
-        Vector3 result = p_from + (rel * min);
+        Vector3 result     = p_from + (rel * min);
         Vector3 res_normal = result;
 
         if (axis == 0) {
             res_normal[p_cylinder_axis] = 0;
         } else {
-            int axis_side = (p_cylinder_axis + 1) % 3;
+            int axis_side         = (p_cylinder_axis + 1) % 3;
             res_normal[axis_side] = 0;
-            axis_side = (axis_side + 1) % 3;
+            axis_side             = (axis_side + 1) % 3;
             res_normal[axis_side] = 0;
         }
 
@@ -504,7 +504,7 @@ public:
     ) {
         real_t min = -1e20, max = 1e20;
 
-        Vector3 rel = p_to - p_from;
+        Vector3 rel  = p_to - p_from;
         real_t rel_l = rel.length();
 
         if (rel_l < CMP_EPSILON) {
@@ -534,7 +534,7 @@ public:
             } else {
                 // Front facing plane.
                 if (dist > min) {
-                    min = dist;
+                    min       = dist;
                     min_index = i;
                 }
             }
@@ -654,9 +654,9 @@ public:
 
         // Compute barycentric coordinates
         double invDenom = 1.0f / (dot00 * dot11 - dot01 * dot01);
-        double b2 = (dot11 * dot02 - dot01 * dot12) * invDenom;
-        double b1 = (dot00 * dot12 - dot01 * dot02) * invDenom;
-        double b0 = 1.0f - b2 - b1;
+        double b2       = (dot11 * dot02 - dot01 * dot12) * invDenom;
+        double b1       = (dot00 * dot12 - dot01 * dot02) * invDenom;
+        double b0       = 1.0f - b2 - b1;
         return Vector3(b0, b1, b2);
     }
 
@@ -691,8 +691,8 @@ public:
         }
 
         const Vector2 v = p_from_a - p_from_b;
-        const real_t t = (p_dir_b.x * v.y - p_dir_b.y * v.x) / denom;
-        r_result = p_from_a + t * p_dir_a;
+        const real_t t  = (p_dir_b.x * v.y - p_dir_b.y * v.x) / denom;
+        r_result        = p_from_a + t * p_dir_a;
         return true;
     }
 
@@ -712,8 +712,8 @@ public:
             return false;
         }
         Vector2 Bn = B / ABlen;
-        C = Vector2(C.x * Bn.x + C.y * Bn.y, C.y * Bn.x - C.x * Bn.y);
-        D = Vector2(D.x * Bn.x + D.y * Bn.y, D.y * Bn.x - D.x * Bn.y);
+        C          = Vector2(C.x * Bn.x + C.y * Bn.y, C.y * Bn.x - C.x * Bn.y);
+        D          = Vector2(D.x * Bn.x + D.y * Bn.y, D.y * Bn.x - D.x * Bn.y);
 
         if ((C.y < 0 && D.y < 0) || (C.y >= 0 && D.y >= 0)) {
             return false;
@@ -791,7 +791,7 @@ public:
                 p_triangle[2]
             )) {
             r_triangle_contact = contact;
-            r_sphere_contact = p_sphere_pos - p_normal * p_sphere_radius;
+            r_sphere_contact   = p_sphere_pos - p_normal * p_sphere_radius;
             // printf("solved inside triangle\n");
             return true;
         }
@@ -831,7 +831,7 @@ public:
 
             if (sphere_at >= 0 && sphere_at < n1.dot(n1)) {
                 r_triangle_contact = p_sphere_pos - axis * (axis.dot(n2));
-                r_sphere_contact = p_sphere_pos - axis * p_sphere_radius;
+                r_sphere_contact   = p_sphere_pos - axis * p_sphere_radius;
                 // Point inside here.
                 return true;
             }
@@ -842,7 +842,7 @@ public:
                 Vector3 n = (p_sphere_pos - verts[i + 1]).normalized();
 
                 r_triangle_contact = verts[i + 1];
-                r_sphere_contact = p_sphere_pos - n * p_sphere_radius;
+                r_sphere_contact   = p_sphere_pos - n * p_sphere_radius;
                 return true;
             }
 
@@ -850,7 +850,7 @@ public:
                 Vector3 n = (p_sphere_pos - verts[i]).normalized();
 
                 r_triangle_contact = verts[i];
-                r_sphere_contact = p_sphere_pos - n * p_sphere_radius;
+                r_sphere_contact   = p_sphere_pos - n * p_sphere_radius;
                 return true;
             }
 
@@ -876,7 +876,7 @@ public:
         const Vector2& p_circle_pos,
         real_t p_circle_radius
     ) {
-        Vector2 line_vec = p_to - p_from;
+        Vector2 line_vec    = p_to - p_from;
         Vector2 vec_to_line = p_from - p_circle_pos;
 
         // Create a quadratic formula of the form ax^2 + bx + c = 0
@@ -898,7 +898,7 @@ public:
         // If we can assume that the line segment starts outside the circle
         // (e.g. for continuous time collision detection) then the following can
         // be skipped and we can just return the equivalent of res1.
-        sqrtterm = Math::sqrt(sqrtterm);
+        sqrtterm    = Math::sqrt(sqrtterm);
         real_t res1 = (-b - sqrtterm) / (2 * a);
         real_t res2 = (-b + sqrtterm) / (2 * a);
 
@@ -916,9 +916,9 @@ public:
         const Plane& p_plane
     ) {
         enum LocationCache {
-            LOC_INSIDE = 1,
+            LOC_INSIDE   = 1,
             LOC_BOUNDARY = 0,
-            LOC_OUTSIDE = -1
+            LOC_OUTSIDE  = -1
         };
 
         if (polygon.size() == 0) {
@@ -926,8 +926,8 @@ public:
         }
 
         int* location_cache = (int*)alloca(sizeof(int) * polygon.size());
-        int inside_count = 0;
-        int outside_count = 0;
+        int inside_count    = 0;
+        int outside_count   = 0;
 
         for (int a = 0; a < polygon.size(); a++) {
             real_t dist = p_plane.distance_to(polygon[a]);
@@ -962,9 +962,9 @@ public:
                     const Vector3& v2 = polygon[index];
 
                     Vector3 segment = v1 - v2;
-                    real_t den = p_plane.normal.dot(segment);
-                    real_t dist = p_plane.distance_to(v1) / den;
-                    dist = -dist;
+                    real_t den      = p_plane.normal.dot(segment);
+                    real_t dist     = p_plane.distance_to(v1) / den;
+                    dist            = -dist;
                     clipped.push_back(v1 + segment * dist);
                 }
             } else {
@@ -972,10 +972,10 @@ public:
                 if ((loc == LOC_INSIDE)
                     && (location_cache[previous] == LOC_OUTSIDE)) {
                     const Vector3& v2 = polygon[previous];
-                    Vector3 segment = v1 - v2;
-                    real_t den = p_plane.normal.dot(segment);
-                    real_t dist = p_plane.distance_to(v1) / den;
-                    dist = -dist;
+                    Vector3 segment   = v1 - v2;
+                    real_t den        = p_plane.normal.dot(segment);
+                    real_t dist       = p_plane.distance_to(v1) / den;
+                    dist              = -dist;
                     clipped.push_back(v1 + segment * dist);
                 }
 
@@ -1124,11 +1124,11 @@ public:
             return false;
         }
         const Vector2* p = p_polygon.ptr();
-        real_t sum = 0;
+        real_t sum       = 0;
         for (int i = 0; i < c; i++) {
-            const Vector2& v1 = p[i];
-            const Vector2& v2 = p[(i + 1) % c];
-            sum += (v2.x - v1.x) * (v2.y + v1.y);
+            const Vector2& v1  = p[i];
+            const Vector2& v2  = p[(i + 1) % c];
+            sum               += (v2.x - v1.x) * (v2.y + v1.y);
         }
 
         return sum > 0.0f;
@@ -1148,8 +1148,8 @@ public:
         Vector2 further_away_opposite(1e20, 1e20);
 
         for (int i = 0; i < c; i++) {
-            further_away.x = MAX(p[i].x, further_away.x);
-            further_away.y = MAX(p[i].y, further_away.y);
+            further_away.x          = MAX(p[i].x, further_away.x);
+            further_away.y          = MAX(p[i].y, further_away.y);
             further_away_opposite.x = MIN(p[i].x, further_away_opposite.x);
             further_away_opposite.y = MIN(p[i].y, further_away_opposite.y);
         }

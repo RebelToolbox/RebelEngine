@@ -150,16 +150,16 @@ public:
 
     Error create_server(
         int p_port,
-        int p_max_clients = 32,
-        int p_in_bandwidth = 0,
+        int p_max_clients   = 32,
+        int p_in_bandwidth  = 0,
         int p_out_bandwidth = 0
     );
     Error create_client(
         const String& p_address,
         int p_port,
-        int p_in_bandwidth = 0,
+        int p_in_bandwidth  = 0,
         int p_out_bandwidth = 0,
-        int p_client_port = 0
+        int p_client_port   = 0
     );
 
     void close_connection(uint32_t wait_usec = 100);

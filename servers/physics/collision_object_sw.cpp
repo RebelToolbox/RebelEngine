@@ -39,11 +39,11 @@ void CollisionObjectSW::add_shape(
     bool p_disabled
 ) {
     Shape s;
-    s.shape = p_shape;
-    s.xform = p_transform;
+    s.shape     = p_shape;
+    s.xform     = p_transform;
     s.xform_inv = s.xform.affine_inverse();
-    s.bpid = 0; // needs update
-    s.disabled = p_disabled;
+    s.bpid      = 0; // needs update
+    s.disabled  = p_disabled;
     shapes.push_back(s);
     p_shape->add_owner(this);
 
@@ -73,7 +73,7 @@ void CollisionObjectSW::set_shape_transform(
 ) {
     ERR_FAIL_INDEX(p_index, shapes.size());
 
-    shapes.write[p_index].xform = p_transform;
+    shapes.write[p_index].xform     = p_transform;
     shapes.write[p_index].xform_inv = p_transform.affine_inverse();
     if (!pending_shape_update_list.in_list()) {
         PhysicsServerSW::singleton->pending_shape_update_list.add(
@@ -186,14 +186,14 @@ void CollisionObjectSW::_update_shapes() {
         // not quite correct, should compute the next matrix..
         AABB shape_aabb = s.shape->get_aabb();
         Transform xform = transform * s.xform;
-        shape_aabb = xform.xform(shape_aabb);
+        shape_aabb      = xform.xform(shape_aabb);
         shape_aabb.grow_by(
             (s.aabb_cache.size.x + s.aabb_cache.size.y) * 0.5 * 0.05
         );
         s.aabb_cache = shape_aabb;
 
         Vector3 scale = xform.get_basis().get_scale();
-        s.area_cache = s.shape->get_area() * scale.x * scale.y * scale.z;
+        s.area_cache  = s.shape->get_area() * scale.x * scale.y * scale.z;
 
         if (s.bpid == 0) {
             s.bpid =
@@ -236,7 +236,7 @@ void CollisionObjectSW::_update_shapes_with_motion(const Vector3& p_motion) {
         // not quite correct, should compute the next matrix..
         AABB shape_aabb = s.shape->get_aabb();
         Transform xform = transform * s.xform;
-        shape_aabb = xform.xform(shape_aabb);
+        shape_aabb      = xform.xform(shape_aabb);
         shape_aabb.merge_with(
             AABB(shape_aabb.position + p_motion, shape_aabb.size)
         ); // use motion
@@ -280,11 +280,11 @@ void CollisionObjectSW::_shape_changed() {
 
 CollisionObjectSW::CollisionObjectSW(Type p_type) :
     pending_shape_update_list(this) {
-    _static = true;
-    type = p_type;
-    space = nullptr;
-    instance_id = 0;
+    _static         = true;
+    type            = p_type;
+    space           = nullptr;
+    instance_id     = 0;
     collision_layer = 1;
-    collision_mask = 1;
-    ray_pickable = true;
+    collision_mask  = 1;
+    ray_pickable    = true;
 }

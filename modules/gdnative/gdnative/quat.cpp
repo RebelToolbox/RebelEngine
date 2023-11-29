@@ -47,7 +47,7 @@ void GDAPI godot_quat_new(
     const godot_real p_w
 ) {
     Quat* dest = (Quat*)r_dest;
-    *dest = Quat(p_x, p_y, p_z, p_w);
+    *dest      = Quat(p_x, p_y, p_z, p_w);
 }
 
 void GDAPI godot_quat_new_with_axis_angle(
@@ -56,22 +56,22 @@ void GDAPI godot_quat_new_with_axis_angle(
     const godot_real p_angle
 ) {
     const Vector3* axis = (const Vector3*)p_axis;
-    Quat* dest = (Quat*)r_dest;
-    *dest = Quat(*axis, p_angle);
+    Quat* dest          = (Quat*)r_dest;
+    *dest               = Quat(*axis, p_angle);
 }
 
 void GDAPI
 godot_quat_new_with_basis(godot_quat* r_dest, const godot_basis* p_basis) {
     const Basis* basis = (const Basis*)p_basis;
-    Quat* dest = (Quat*)r_dest;
-    *dest = Quat(*basis);
+    Quat* dest         = (Quat*)r_dest;
+    *dest              = Quat(*basis);
 }
 
 void GDAPI
 godot_quat_new_with_euler(godot_quat* r_dest, const godot_vector3* p_euler) {
     const Vector3* euler = (const Vector3*)p_euler;
-    Quat* dest = (Quat*)r_dest;
-    *dest = Quat(*euler);
+    Quat* dest           = (Quat*)r_dest;
+    *dest                = Quat(*euler);
 }
 
 godot_real GDAPI godot_quat_get_x(const godot_quat* p_self) {
@@ -81,7 +81,7 @@ godot_real GDAPI godot_quat_get_x(const godot_quat* p_self) {
 
 void GDAPI godot_quat_set_x(godot_quat* p_self, const godot_real val) {
     Quat* self = (Quat*)p_self;
-    self->x = val;
+    self->x    = val;
 }
 
 godot_real GDAPI godot_quat_get_y(const godot_quat* p_self) {
@@ -91,7 +91,7 @@ godot_real GDAPI godot_quat_get_y(const godot_quat* p_self) {
 
 void GDAPI godot_quat_set_y(godot_quat* p_self, const godot_real val) {
     Quat* self = (Quat*)p_self;
-    self->y = val;
+    self->y    = val;
 }
 
 godot_real GDAPI godot_quat_get_z(const godot_quat* p_self) {
@@ -101,7 +101,7 @@ godot_real GDAPI godot_quat_get_z(const godot_quat* p_self) {
 
 void GDAPI godot_quat_set_z(godot_quat* p_self, const godot_real val) {
     Quat* self = (Quat*)p_self;
-    self->z = val;
+    self->z    = val;
 }
 
 godot_real GDAPI godot_quat_get_w(const godot_quat* p_self) {
@@ -111,7 +111,7 @@ godot_real GDAPI godot_quat_get_w(const godot_quat* p_self) {
 
 void GDAPI godot_quat_set_w(godot_quat* p_self, const godot_real val) {
     Quat* self = (Quat*)p_self;
-    self->w = val;
+    self->w    = val;
 }
 
 godot_string GDAPI godot_quat_as_string(const godot_quat* p_self) {
@@ -134,7 +134,7 @@ godot_real GDAPI godot_quat_length_squared(const godot_quat* p_self) {
 godot_quat GDAPI godot_quat_normalized(const godot_quat* p_self) {
     godot_quat dest;
     const Quat* self = (const Quat*)p_self;
-    *((Quat*)&dest) = self->normalized();
+    *((Quat*)&dest)  = self->normalized();
     return dest;
 }
 
@@ -146,22 +146,22 @@ godot_bool GDAPI godot_quat_is_normalized(const godot_quat* p_self) {
 godot_quat GDAPI godot_quat_inverse(const godot_quat* p_self) {
     godot_quat dest;
     const Quat* self = (const Quat*)p_self;
-    *((Quat*)&dest) = self->inverse();
+    *((Quat*)&dest)  = self->inverse();
     return dest;
 }
 
 godot_real GDAPI
 godot_quat_dot(const godot_quat* p_self, const godot_quat* p_b) {
     const Quat* self = (const Quat*)p_self;
-    const Quat* b = (const Quat*)p_b;
+    const Quat* b    = (const Quat*)p_b;
     return self->dot(*b);
 }
 
 godot_vector3 GDAPI
 godot_quat_xform(const godot_quat* p_self, const godot_vector3* p_v) {
     godot_vector3 dest;
-    const Quat* self = (const Quat*)p_self;
-    const Vector3* v = (const Vector3*)p_v;
+    const Quat* self   = (const Quat*)p_self;
+    const Vector3* v   = (const Vector3*)p_v;
     *((Vector3*)&dest) = self->xform(*v);
     return dest;
 }
@@ -173,8 +173,8 @@ godot_quat GDAPI godot_quat_slerp(
 ) {
     godot_quat dest;
     const Quat* self = (const Quat*)p_self;
-    const Quat* b = (const Quat*)p_b;
-    *((Quat*)&dest) = self->slerp(*b, p_t);
+    const Quat* b    = (const Quat*)p_b;
+    *((Quat*)&dest)  = self->slerp(*b, p_t);
     return dest;
 }
 
@@ -185,8 +185,8 @@ godot_quat GDAPI godot_quat_slerpni(
 ) {
     godot_quat dest;
     const Quat* self = (const Quat*)p_self;
-    const Quat* b = (const Quat*)p_b;
-    *((Quat*)&dest) = self->slerpni(*b, p_t);
+    const Quat* b    = (const Quat*)p_b;
+    *((Quat*)&dest)  = self->slerpni(*b, p_t);
     return dest;
 }
 
@@ -198,64 +198,64 @@ godot_quat GDAPI godot_quat_cubic_slerp(
     const godot_real p_t
 ) {
     godot_quat dest;
-    const Quat* self = (const Quat*)p_self;
-    const Quat* b = (const Quat*)p_b;
-    const Quat* pre_a = (const Quat*)p_pre_a;
+    const Quat* self   = (const Quat*)p_self;
+    const Quat* b      = (const Quat*)p_b;
+    const Quat* pre_a  = (const Quat*)p_pre_a;
     const Quat* post_b = (const Quat*)p_post_b;
-    *((Quat*)&dest) = self->cubic_slerp(*b, *pre_a, *post_b, p_t);
+    *((Quat*)&dest)    = self->cubic_slerp(*b, *pre_a, *post_b, p_t);
     return dest;
 }
 
 godot_quat GDAPI
 godot_quat_operator_multiply(const godot_quat* p_self, const godot_real p_b) {
     godot_quat raw_dest;
-    Quat* dest = (Quat*)&raw_dest;
+    Quat* dest       = (Quat*)&raw_dest;
     const Quat* self = (const Quat*)p_self;
-    *dest = *self * p_b;
+    *dest            = *self * p_b;
     return raw_dest;
 }
 
 godot_quat GDAPI
 godot_quat_operator_add(const godot_quat* p_self, const godot_quat* p_b) {
     godot_quat raw_dest;
-    Quat* dest = (Quat*)&raw_dest;
+    Quat* dest       = (Quat*)&raw_dest;
     const Quat* self = (const Quat*)p_self;
-    const Quat* b = (const Quat*)p_b;
-    *dest = *self + *b;
+    const Quat* b    = (const Quat*)p_b;
+    *dest            = *self + *b;
     return raw_dest;
 }
 
 godot_quat GDAPI
 godot_quat_operator_subtract(const godot_quat* p_self, const godot_quat* p_b) {
     godot_quat raw_dest;
-    Quat* dest = (Quat*)&raw_dest;
+    Quat* dest       = (Quat*)&raw_dest;
     const Quat* self = (const Quat*)p_self;
-    const Quat* b = (const Quat*)p_b;
-    *dest = *self - *b;
+    const Quat* b    = (const Quat*)p_b;
+    *dest            = *self - *b;
     return raw_dest;
 }
 
 godot_quat GDAPI
 godot_quat_operator_divide(const godot_quat* p_self, const godot_real p_b) {
     godot_quat raw_dest;
-    Quat* dest = (Quat*)&raw_dest;
+    Quat* dest       = (Quat*)&raw_dest;
     const Quat* self = (const Quat*)p_self;
-    *dest = *self / p_b;
+    *dest            = *self / p_b;
     return raw_dest;
 }
 
 godot_bool GDAPI
 godot_quat_operator_equal(const godot_quat* p_self, const godot_quat* p_b) {
     const Quat* self = (const Quat*)p_self;
-    const Quat* b = (const Quat*)p_b;
+    const Quat* b    = (const Quat*)p_b;
     return *self == *b;
 }
 
 godot_quat GDAPI godot_quat_operator_neg(const godot_quat* p_self) {
     godot_quat raw_dest;
-    Quat* dest = (Quat*)&raw_dest;
+    Quat* dest       = (Quat*)&raw_dest;
     const Quat* self = (const Quat*)p_self;
-    *dest = -(*self);
+    *dest            = -(*self);
     return raw_dest;
 }
 
@@ -264,7 +264,7 @@ void GDAPI godot_quat_set_axis_angle(
     const godot_vector3* p_axis,
     const godot_real p_angle
 ) {
-    Quat* self = (Quat*)p_self;
+    Quat* self          = (Quat*)p_self;
     const Vector3* axis = (const Vector3*)p_axis;
     self->set_axis_angle(*axis, p_angle);
 }

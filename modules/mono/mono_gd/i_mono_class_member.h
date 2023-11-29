@@ -63,7 +63,7 @@ public:
 
     virtual Visibility get_visibility() = 0;
 
-    virtual bool has_attribute(GDMonoClass* p_attr_class) = 0;
+    virtual bool has_attribute(GDMonoClass* p_attr_class)        = 0;
     virtual MonoObject* get_attribute(GDMonoClass* p_attr_class) = 0;
 };
 

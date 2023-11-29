@@ -285,7 +285,7 @@ String Particles::get_configuration_warning() const {
         );
 #endif
 
-    bool meshes_found = false;
+    bool meshes_found        = false;
     bool anim_material_found = false;
 
     for (int i = 0; i < draw_passes.size(); i++) {

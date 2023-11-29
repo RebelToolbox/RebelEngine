@@ -45,7 +45,7 @@
 #include "scene/gui/tree.h"
 
 const char* FindInFiles::SIGNAL_RESULT_FOUND = "result_found";
-const char* FindInFiles::SIGNAL_FINISHED = "finished";
+const char* FindInFiles::SIGNAL_FINISHED     = "finished";
 
 // TODO Would be nice in Vector and PoolVectors
 template <typename T>
@@ -79,9 +79,9 @@ static bool find_next(
             return false;
         }
 
-        end = begin + pattern.length();
+        end       = begin + pattern.length();
         out_begin = begin;
-        out_end = end;
+        out_end   = end;
 
         if (whole_words) {
             if (begin > 0 && is_text_char(line[begin - 1])) {
@@ -98,9 +98,9 @@ static bool find_next(
 
 //--------------------------------------------------------------------------------
 FindInFiles::FindInFiles() {
-    _searching = false;
+    _searching   = false;
     _whole_words = true;
-    _match_case = true;
+    _match_case  = true;
 }
 
 void FindInFiles::set_search_text(String p_pattern) {
@@ -155,7 +155,7 @@ void FindInFiles::start() {
 }
 
 void FindInFiles::stop() {
-    _searching = false;
+    _searching   = false;
     _current_dir = "";
     set_process(false);
 }
@@ -163,7 +163,7 @@ void FindInFiles::stop() {
 void FindInFiles::_process() {
     // This part can be moved to a thread if needed
 
-    OS& os = *OS::get_singleton();
+    OS& os               = *OS::get_singleton();
     uint64_t time_before = os.get_ticks_msec();
     while (is_processing()) {
         _iterate();
@@ -218,7 +218,7 @@ void FindInFiles::_iterate() {
         print_verbose("Search complete");
         set_process(false);
         _current_dir = "";
-        _searching = false;
+        _searching   = false;
         emit_signal(SIGNAL_FINISHED);
     }
 }
@@ -289,7 +289,7 @@ void FindInFiles::_scan_file(String fpath) {
         ++line_number;
 
         int begin = 0;
-        int end = 0;
+        int end   = 0;
 
         String line = f->get_line();
 
@@ -330,7 +330,7 @@ void FindInFiles::_bind_methods() {
 }
 
 //-----------------------------------------------------------------------------
-const char* FindInFilesDialog::SIGNAL_FIND_REQUESTED = "find_requested";
+const char* FindInFilesDialog::SIGNAL_FIND_REQUESTED    = "find_requested";
 const char* FindInFilesDialog::SIGNAL_REPLACE_REQUESTED = "replace_requested";
 
 FindInFilesDialog::FindInFilesDialog() {
@@ -553,7 +553,7 @@ void FindInFilesDialog::_bind_methods() {
 
 //-----------------------------------------------------------------------------
 const char* FindInFilesPanel::SIGNAL_RESULT_SELECTED = "result_selected";
-const char* FindInFilesPanel::SIGNAL_FILES_MODIFIED = "files_modified";
+const char* FindInFilesPanel::SIGNAL_FILES_MODIFIED  = "files_modified";
 
 FindInFilesPanel::FindInFilesPanel() {
     _finder = memnew(FindInFiles);
@@ -754,18 +754,18 @@ void FindInFilesPanel::_on_result_found(
 
     // Trim result item line
     int old_text_size = text.size();
-    text = text.strip_edges(true, false);
+    text              = text.strip_edges(true, false);
     int chars_removed = old_text_size - text.size();
-    String start = vformat("%3s: ", line_number);
+    String start      = vformat("%3s: ", line_number);
 
     item->set_text(text_index, start + text);
     item->set_custom_draw(text_index, this, "_draw_result_text");
 
     Result r;
-    r.line_number = line_number;
-    r.begin = begin;
-    r.end = end;
-    r.begin_trimmed = begin - chars_removed + start.size() - 1;
+    r.line_number       = line_number;
+    r.begin             = begin;
+    r.end               = end;
+    r.begin_trimmed     = begin - chars_removed + start.size() - 1;
     _result_items[item] = r;
 
     if (_with_replace) {
@@ -785,16 +785,16 @@ void FindInFilesPanel::draw_result_text(Object* item_obj, Rect2 rect) {
     if (!E) {
         return;
     }
-    Result r = E->value();
+    Result r         = E->value();
     String item_text = item->get_text(_with_replace ? 1 : 0);
-    Ref<Font> font = _results_display->get_font("font");
+    Ref<Font> font   = _results_display->get_font("font");
 
     Rect2 match_rect = rect;
     match_rect.position.x +=
         font->get_string_size(item_text.left(r.begin_trimmed)).x;
     match_rect.size.x = font->get_string_size(_search_text_label->get_text()).x;
     match_rect.position.y += 1 * EDSCALE;
-    match_rect.size.y -= 2 * EDSCALE;
+    match_rect.size.y     -= 2 * EDSCALE;
 
     // Use the inverted accent color to help match rectangles stand out even on
     // the currently selected line.
@@ -814,8 +814,8 @@ void FindInFilesPanel::_on_item_edited() {
 
     } else {
         // Grey out
-        Color color = _results_display->get_color("font_color");
-        color.a /= 2.0;
+        Color color  = _results_display->get_color("font_color");
+        color.a     /= 2.0;
         item->set_custom_color(1, color);
     }
 }
@@ -823,7 +823,7 @@ void FindInFilesPanel::_on_item_edited() {
 void FindInFilesPanel::_on_finished() {
     String results_text;
     int result_count = _result_items.size();
-    int file_count = _file_items.size();
+    int file_count   = _file_items.size();
 
     if (result_count == 1 && file_count == 1) {
         results_text =
@@ -852,7 +852,7 @@ void FindInFilesPanel::_on_cancel_button_clicked() {
 }
 
 void FindInFilesPanel::_on_result_selected() {
-    TreeItem* item = _results_display->get_selected();
+    TreeItem* item                     = _results_display->get_selected();
     Map<TreeItem*, Result>::Element* E = _result_items.find(item);
 
     if (E == nullptr) {
@@ -861,7 +861,7 @@ void FindInFilesPanel::_on_result_selected() {
     Result r = E->value();
 
     TreeItem* file_item = item->get_parent();
-    String fpath = file_item->get_metadata(0);
+    String fpath        = file_item->get_metadata(0);
 
     emit_signal(SIGNAL_RESULT_SELECTED, fpath, r.line_number, r.begin, r.end);
 }
@@ -876,13 +876,13 @@ void FindInFilesPanel::_on_replace_all_clicked() {
     PoolStringArray modified_files;
 
     for (Map<String, TreeItem*>::Element* E = _file_items.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         TreeItem* file_item = E->value();
-        String fpath = file_item->get_metadata(0);
+        String fpath        = file_item->get_metadata(0);
 
         Vector<Result> locations;
         for (TreeItem* item = file_item->get_children(); item;
-             item = item->get_next()) {
+             item           = item->get_next()) {
             if (!item->is_checked(0)) {
                 continue;
             }
@@ -956,7 +956,7 @@ void FindInFilesPanel::apply_replaces_in_file(
 
     ConservativeGetLine conservative;
 
-    String line = conservative.get_line(f);
+    String line        = conservative.get_line(f);
     String search_text = _finder->get_search_text();
 
     int offset = 0;
@@ -966,13 +966,13 @@ void FindInFilesPanel::apply_replaces_in_file(
 
         while (current_line < repl_line_number) {
             buffer += line;
-            line = conservative.get_line(f);
+            line    = conservative.get_line(f);
             ++current_line;
             offset = 0;
         }
 
         int repl_begin = locations[i].begin + offset;
-        int repl_end = locations[i].end + offset;
+        int repl_end   = locations[i].end + offset;
 
         int _;
         if (!find_next(
@@ -994,7 +994,7 @@ void FindInFilesPanel::apply_replaces_in_file(
             continue;
         }
 
-        line = line.left(repl_begin) + new_text + line.right(repl_end);
+        line    = line.left(repl_begin) + new_text + line.right(repl_end);
         // keep an offset in case there are successive replaces in the same line
         offset += new_text.length() - (repl_end - repl_begin);
     }

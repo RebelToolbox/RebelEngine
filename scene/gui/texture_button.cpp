@@ -63,8 +63,8 @@ Size2 TextureButton::get_minimum_size() const {
 
 bool TextureButton::has_point(const Point2& p_point) const {
     if (click_mask.is_valid()) {
-        Point2 point = p_point;
-        Rect2 rect = Rect2();
+        Point2 point    = p_point;
+        Rect2 rect      = Rect2();
         Size2 mask_size = click_mask->get_size();
 
         if (_position_rect.has_no_area()) {
@@ -76,25 +76,25 @@ bool TextureButton::has_point(const Point2& p_point) const {
             if (_position_rect.has_point(point)) {
                 int cols = (int)Math::ceil(_position_rect.size.x / mask_size.x);
                 int rows = (int)Math::ceil(_position_rect.size.y / mask_size.y);
-                int col = (int)(point.x / mask_size.x) % cols;
-                int row = (int)(point.y / mask_size.y) % rows;
+                int col  = (int)(point.x / mask_size.x) % cols;
+                int row  = (int)(point.y / mask_size.y) % rows;
                 point.x -= mask_size.x * col;
                 point.y -= mask_size.y * row;
             }
         } else {
             // we need to transform the point from our scaled / translated image
             // back to our mask image
-            Point2 ofs = _position_rect.position;
+            Point2 ofs  = _position_rect.position;
             Size2 scale = mask_size / _position_rect.size;
 
             switch (stretch_mode) {
                 case STRETCH_KEEP_ASPECT_COVERED: {
                     // if the stretch mode is aspect covered the image uses a
                     // texture region so we need to take that into account
-                    float min = MIN(scale.x, scale.y);
-                    scale.x = min;
-                    scale.y = min;
-                    ofs -= _texture_region.position / min;
+                    float min  = MIN(scale.x, scale.y);
+                    scale.x    = min;
+                    scale.y    = min;
+                    ofs       -= _texture_region.position / min;
                 } break;
                 default: {
                     // FIXME: Why a switch if we only handle one enum value?
@@ -190,9 +190,9 @@ void TextureButton::_notification(int p_what) {
             }
 
             if (texdraw.is_valid()) {
-                size = texdraw->get_size();
+                size            = texdraw->get_size();
                 _texture_region = Rect2(Point2(), texdraw->get_size());
-                _tile = false;
+                _tile           = false;
                 if (expand) {
                     switch (stretch_mode) {
                         case STRETCH_KEEP:
@@ -202,23 +202,23 @@ void TextureButton::_notification(int p_what) {
                             size = get_size();
                             break;
                         case STRETCH_TILE:
-                            size = get_size();
+                            size  = get_size();
                             _tile = true;
                             break;
                         case STRETCH_KEEP_CENTERED:
-                            ofs = (get_size() - texdraw->get_size()) / 2;
+                            ofs  = (get_size() - texdraw->get_size()) / 2;
                             size = texdraw->get_size();
                             break;
                         case STRETCH_KEEP_ASPECT_CENTERED:
                         case STRETCH_KEEP_ASPECT: {
-                            Size2 _size = get_size();
+                            Size2 _size     = get_size();
                             float tex_width = texdraw->get_width()
                                             * _size.height
                                             / texdraw->get_height();
                             float tex_height = _size.height;
 
                             if (tex_width > _size.width) {
-                                tex_width = _size.width;
+                                tex_width  = _size.width;
                                 tex_height = texdraw->get_height() * tex_width
                                            / texdraw->get_width();
                             }
@@ -227,11 +227,11 @@ void TextureButton::_notification(int p_what) {
                                 ofs.x = (_size.width - tex_width) / 2;
                                 ofs.y = (_size.height - tex_height) / 2;
                             }
-                            size.width = tex_width;
+                            size.width  = tex_width;
                             size.height = tex_height;
                         } break;
                         case STRETCH_KEEP_ASPECT_COVERED: {
-                            size = get_size();
+                            size           = get_size();
                             Size2 tex_size = texdraw->get_size();
                             Size2 scale_size(
                                 size.width / tex_size.width,
@@ -250,7 +250,7 @@ void TextureButton::_notification(int p_what) {
 
                 _position_rect = Rect2(ofs, size);
 
-                size.width *= hflip ? -1.0f : 1.0f;
+                size.width  *= hflip ? -1.0f : 1.0f;
                 size.height *= vflip ? -1.0f : 1.0f;
 
                 if (draw_focus_only) {
@@ -562,12 +562,12 @@ bool TextureButton::is_flipped_v() const {
 }
 
 TextureButton::TextureButton() {
-    expand = false;
+    expand       = false;
     stretch_mode = STRETCH_SCALE;
-    hflip = false;
-    vflip = false;
+    hflip        = false;
+    vflip        = false;
 
     _texture_region = Rect2();
-    _position_rect = Rect2();
-    _tile = false;
+    _position_rect  = Rect2();
+    _tile           = false;
 }

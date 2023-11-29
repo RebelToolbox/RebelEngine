@@ -260,14 +260,14 @@ void EditorExportPlatformWindows::_rcedit_add_data(
     String icon_path = ProjectSettings::get_singleton()->globalize_path(
         p_preset->get("application/icon")
     );
-    String file_verion = p_preset->get("application/file_version");
-    String product_version = p_preset->get("application/product_version");
-    String company_name = p_preset->get("application/company_name");
-    String product_name = p_preset->get("application/product_name");
+    String file_verion      = p_preset->get("application/file_version");
+    String product_version  = p_preset->get("application/product_version");
+    String company_name     = p_preset->get("application/company_name");
+    String product_name     = p_preset->get("application/product_name");
     String file_description = p_preset->get("application/file_description");
-    String copyright = p_preset->get("application/copyright");
-    String trademarks = p_preset->get("application/trademarks");
-    String comments = p_preset->get("application/comments");
+    String copyright        = p_preset->get("application/copyright");
+    String trademarks       = p_preset->get("application/trademarks");
+    String comments         = p_preset->get("application/comments");
 
     List<String> args;
     args.push_back(p_path);

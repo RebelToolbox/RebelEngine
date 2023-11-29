@@ -94,8 +94,8 @@ Error AudioDriverCoreAudio::init() {
 #ifdef OSX_ENABLED
     AudioObjectPropertyAddress prop;
     prop.mSelector = kAudioHardwarePropertyDefaultOutputDevice;
-    prop.mScope = kAudioObjectPropertyScopeGlobal;
-    prop.mElement = kAudioObjectPropertyElementMaster;
+    prop.mScope    = kAudioObjectPropertyScopeGlobal;
+    prop.mElement  = kAudioObjectPropertyElementMaster;
 
     result = AudioObjectAddPropertyListener(
         kAudioObjectSystemObject,
@@ -110,7 +110,7 @@ Error AudioDriverCoreAudio::init() {
 
     memset(&strdesc, 0, sizeof(strdesc));
     UInt32 size = sizeof(strdesc);
-    result = AudioUnitGetProperty(
+    result      = AudioUnitGetProperty(
         audio_unit,
         kAudioUnitProperty_StreamFormat,
         kAudioUnitScope_Output,
@@ -141,9 +141,9 @@ Error AudioDriverCoreAudio::init() {
     strdesc.mFormatFlags =
         kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
     strdesc.mChannelsPerFrame = channels;
-    strdesc.mSampleRate = mix_rate;
-    strdesc.mFramesPerPacket = 1;
-    strdesc.mBitsPerChannel = 16;
+    strdesc.mSampleRate       = mix_rate;
+    strdesc.mFramesPerPacket  = 1;
+    strdesc.mBitsPerChannel   = 16;
     strdesc.mBytesPerFrame =
         strdesc.mBitsPerChannel * strdesc.mChannelsPerFrame / 8;
     strdesc.mBytesPerPacket = strdesc.mBytesPerFrame * strdesc.mFramesPerPacket;
@@ -158,7 +158,7 @@ Error AudioDriverCoreAudio::init() {
     );
     ERR_FAIL_COND_V(result != noErr, FAILED);
 
-    int latency = GLOBAL_GET("audio/output_latency");
+    int latency   = GLOBAL_GET("audio/output_latency");
     // Sample rate is independent of channels (ref:
     // https://stackoverflow.com/questions/11048825/audio-sample-frequency-rely-on-channels)
     buffer_frames = closest_power_of_2(latency * mix_rate / 1000);
@@ -187,9 +187,9 @@ Error AudioDriverCoreAudio::init() {
 
     AURenderCallbackStruct callback;
     memset(&callback, 0, sizeof(AURenderCallbackStruct));
-    callback.inputProc = &AudioDriverCoreAudio::output_callback;
+    callback.inputProc       = &AudioDriverCoreAudio::output_callback;
     callback.inputProcRefCon = this;
-    result = AudioUnitSetProperty(
+    result                   = AudioUnitSetProperty(
         audio_unit,
         kAudioUnitProperty_SetRenderCallback,
         kAudioUnitScope_Input,
@@ -229,9 +229,9 @@ OSStatus AudioDriverCoreAudio::output_callback(
     ad->start_counting_ticks();
 
     for (unsigned int i = 0; i < ioData->mNumberBuffers; i++) {
-        AudioBuffer* abuf = &ioData->mBuffers[i];
+        AudioBuffer* abuf        = &ioData->mBuffers[i];
         unsigned int frames_left = inNumberFrames;
-        int16_t* out = (int16_t*)abuf->mData;
+        int16_t* out             = (int16_t*)abuf->mData;
 
         while (frames_left) {
             unsigned int frames = MIN(frames_left, ad->buffer_frames);
@@ -242,7 +242,7 @@ OSStatus AudioDriverCoreAudio::output_callback(
             }
 
             frames_left -= frames;
-            out += frames * ad->channels;
+            out         += frames * ad->channels;
         };
     };
 
@@ -268,8 +268,8 @@ OSStatus AudioDriverCoreAudio::input_callback(
     ad->lock();
 
     AudioBufferList bufferList;
-    bufferList.mNumberBuffers = 1;
-    bufferList.mBuffers[0].mData = ad->input_buf.ptrw();
+    bufferList.mNumberBuffers              = 1;
+    bufferList.mBuffers[0].mData           = ad->input_buf.ptrw();
     bufferList.mBuffers[0].mNumberChannels = ad->capture_channels;
     bufferList.mBuffers[0].mDataByteSize =
         ad->input_buf.size() * sizeof(int16_t);
@@ -383,8 +383,8 @@ void AudioDriverCoreAudio::finish() {
 #ifdef OSX_ENABLED
         AudioObjectPropertyAddress prop;
         prop.mSelector = kAudioHardwarePropertyDefaultOutputDevice;
-        prop.mScope = kAudioObjectPropertyScopeGlobal;
-        prop.mElement = kAudioObjectPropertyElementMaster;
+        prop.mScope    = kAudioObjectPropertyScopeGlobal;
+        prop.mElement  = kAudioObjectPropertyElementMaster;
 
         result = AudioObjectRemovePropertyListener(
             kAudioObjectSystemObject,
@@ -427,8 +427,8 @@ Error AudioDriverCoreAudio::capture_init() {
 #ifdef OSX_ENABLED
     AudioObjectPropertyAddress prop;
     prop.mSelector = kAudioHardwarePropertyDefaultInputDevice;
-    prop.mScope = kAudioObjectPropertyScopeGlobal;
-    prop.mElement = kAudioObjectPropertyElementMaster;
+    prop.mScope    = kAudioObjectPropertyScopeGlobal;
+    prop.mElement  = kAudioObjectPropertyElementMaster;
 
     result = AudioObjectAddPropertyListener(
         kAudioObjectSystemObject,
@@ -440,7 +440,7 @@ Error AudioDriverCoreAudio::capture_init() {
 #endif
 
     UInt32 flag = 1;
-    result = AudioUnitSetProperty(
+    result      = AudioUnitSetProperty(
         input_unit,
         kAudioOutputUnitProperty_EnableIO,
         kAudioUnitScope_Input,
@@ -449,7 +449,7 @@ Error AudioDriverCoreAudio::capture_init() {
         sizeof(flag)
     );
     ERR_FAIL_COND_V(result != noErr, FAILED);
-    flag = 0;
+    flag   = 0;
     result = AudioUnitSetProperty(
         input_unit,
         kAudioOutputUnitProperty_EnableIO,
@@ -463,7 +463,7 @@ Error AudioDriverCoreAudio::capture_init() {
     UInt32 size;
 #ifdef OSX_ENABLED
     AudioDeviceID deviceId;
-    size = sizeof(AudioDeviceID);
+    size                                = sizeof(AudioDeviceID);
     AudioObjectPropertyAddress property = {
         kAudioHardwarePropertyDefaultInputDevice,
         kAudioObjectPropertyScopeGlobal,
@@ -493,7 +493,7 @@ Error AudioDriverCoreAudio::capture_init() {
 
     AudioStreamBasicDescription strdesc;
     memset(&strdesc, 0, sizeof(strdesc));
-    size = sizeof(strdesc);
+    size   = sizeof(strdesc);
     result = AudioUnitGetProperty(
         input_unit,
         kAudioUnitProperty_StreamFormat,
@@ -526,9 +526,9 @@ Error AudioDriverCoreAudio::capture_init() {
     strdesc.mFormatFlags =
         kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
     strdesc.mChannelsPerFrame = capture_channels;
-    strdesc.mSampleRate = mix_rate;
-    strdesc.mFramesPerPacket = 1;
-    strdesc.mBitsPerChannel = 16;
+    strdesc.mSampleRate       = mix_rate;
+    strdesc.mFramesPerPacket  = 1;
+    strdesc.mBitsPerChannel   = 16;
     strdesc.mBytesPerFrame =
         strdesc.mBitsPerChannel * strdesc.mChannelsPerFrame / 8;
     strdesc.mBytesPerPacket = strdesc.mBytesPerFrame * strdesc.mFramesPerPacket;
@@ -545,9 +545,9 @@ Error AudioDriverCoreAudio::capture_init() {
 
     AURenderCallbackStruct callback;
     memset(&callback, 0, sizeof(AURenderCallbackStruct));
-    callback.inputProc = &AudioDriverCoreAudio::input_callback;
+    callback.inputProc       = &AudioDriverCoreAudio::input_callback;
     callback.inputProcRefCon = this;
-    result = AudioUnitSetProperty(
+    result                   = AudioUnitSetProperty(
         input_unit,
         kAudioOutputUnitProperty_SetInputCallback,
         kAudioUnitScope_Global,
@@ -589,8 +589,8 @@ void AudioDriverCoreAudio::capture_finish() {
 #ifdef OSX_ENABLED
         AudioObjectPropertyAddress prop;
         prop.mSelector = kAudioHardwarePropertyDefaultInputDevice;
-        prop.mScope = kAudioObjectPropertyScopeGlobal;
-        prop.mElement = kAudioObjectPropertyElementMaster;
+        prop.mScope    = kAudioObjectPropertyScopeGlobal;
+        prop.mElement  = kAudioObjectPropertyElementMaster;
 
         result = AudioObjectRemovePropertyListener(
             kAudioObjectSystemObject,
@@ -645,8 +645,8 @@ Array AudioDriverCoreAudio::_get_device_list(bool capture) {
     AudioObjectPropertyAddress prop;
 
     prop.mSelector = kAudioHardwarePropertyDevices;
-    prop.mScope = kAudioObjectPropertyScopeGlobal;
-    prop.mElement = kAudioObjectPropertyElementMaster;
+    prop.mScope    = kAudioObjectPropertyScopeGlobal;
+    prop.mElement  = kAudioObjectPropertyElementMaster;
 
     UInt32 size = 0;
     AudioObjectGetPropertyDataSize(
@@ -669,8 +669,8 @@ Array AudioDriverCoreAudio::_get_device_list(bool capture) {
 
     UInt32 deviceCount = size / sizeof(AudioDeviceID);
     for (UInt32 i = 0; i < deviceCount; i++) {
-        prop.mScope = capture ? kAudioDevicePropertyScopeInput
-                              : kAudioDevicePropertyScopeOutput;
+        prop.mScope    = capture ? kAudioDevicePropertyScopeInput
+                                 : kAudioDevicePropertyScopeOutput;
         prop.mSelector = kAudioDevicePropertyStreamConfiguration;
 
         AudioObjectGetPropertyDataSize(audioDevices[i], &prop, 0, NULL, &size);
@@ -695,7 +695,7 @@ Array AudioDriverCoreAudio::_get_device_list(bool capture) {
         if (channelCount >= 1) {
             CFStringRef cfname;
 
-            size = sizeof(CFStringRef);
+            size           = sizeof(CFStringRef);
             prop.mSelector = kAudioObjectPropertyName;
 
             AudioObjectGetPropertyData(
@@ -742,8 +742,8 @@ void AudioDriverCoreAudio::_set_device(const String& device, bool capture) {
         AudioObjectPropertyAddress prop;
 
         prop.mSelector = kAudioHardwarePropertyDevices;
-        prop.mScope = kAudioObjectPropertyScopeGlobal;
-        prop.mElement = kAudioObjectPropertyElementMaster;
+        prop.mScope    = kAudioObjectPropertyScopeGlobal;
+        prop.mElement  = kAudioObjectPropertyElementMaster;
 
         UInt32 size = 0;
         AudioObjectGetPropertyDataSize(
@@ -766,8 +766,8 @@ void AudioDriverCoreAudio::_set_device(const String& device, bool capture) {
 
         UInt32 deviceCount = size / sizeof(AudioDeviceID);
         for (UInt32 i = 0; i < deviceCount && !found; i++) {
-            prop.mScope = capture ? kAudioDevicePropertyScopeInput
-                                  : kAudioDevicePropertyScopeOutput;
+            prop.mScope    = capture ? kAudioDevicePropertyScopeInput
+                                     : kAudioDevicePropertyScopeOutput;
             prop.mSelector = kAudioDevicePropertyStreamConfiguration;
 
             AudioObjectGetPropertyDataSize(
@@ -798,7 +798,7 @@ void AudioDriverCoreAudio::_set_device(const String& device, bool capture) {
             if (channelCount >= 1) {
                 CFStringRef cfname;
 
-                size = sizeof(CFStringRef);
+                size           = sizeof(CFStringRef);
                 prop.mSelector = kAudioObjectPropertyName;
 
                 AudioObjectGetPropertyData(
@@ -810,7 +810,7 @@ void AudioDriverCoreAudio::_set_device(const String& device, bool capture) {
                     &cfname
                 );
 
-                CFIndex length = CFStringGetLength(cfname);
+                CFIndex length  = CFStringGetLength(cfname);
                 CFIndex maxSize = CFStringGetMaximumSizeForEncoding(
                                       length,
                                       kCFStringEncodingUTF8
@@ -828,7 +828,7 @@ void AudioDriverCoreAudio::_set_device(const String& device, bool capture) {
                                 + itos(audioDevices[i]) + ")";
                     if (name == device) {
                         deviceId = audioDevices[i];
-                        found = true;
+                        found    = true;
                     }
                 }
 
@@ -877,7 +877,7 @@ void AudioDriverCoreAudio::_set_device(const String& device, bool capture) {
         if (capture) {
             // Reset audio input to keep synchronisation.
             input_position = 0;
-            input_size = 0;
+            input_size     = 0;
         }
     }
 }

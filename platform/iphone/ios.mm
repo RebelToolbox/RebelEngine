@@ -44,7 +44,7 @@ void iOS::_bind_methods() {
 };
 
 void iOS::alert(const char* p_alert, const char* p_title) {
-    NSString* title = [NSString stringWithUTF8String:p_title];
+    NSString* title   = [NSString stringWithUTF8String:p_title];
     NSString* message = [NSString stringWithUTF8String:p_alert];
 
     UIAlertController* alert = [UIAlertController

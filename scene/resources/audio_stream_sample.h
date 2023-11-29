@@ -40,7 +40,7 @@ class AudioStreamPlaybackSample : public AudioStreamPlayback {
 
     enum {
         MIX_FRAC_BITS = 13,
-        MIX_FRAC_LEN = (1 << MIX_FRAC_BITS),
+        MIX_FRAC_LEN  = (1 << MIX_FRAC_BITS),
         MIX_FRAC_MASK = MIX_FRAC_LEN - 1,
     };
 

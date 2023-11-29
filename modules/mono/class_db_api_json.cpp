@@ -86,14 +86,14 @@ void class_db_api_to_json(const String& p_output_file, ClassDB::APIType p_api) {
             Array methods;
 
             for (List<StringName>::Element* F = snames.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 Dictionary method_dict;
                 methods.push_back(method_dict);
 
-                MethodBind* mb = t->method_map[F->get()];
-                method_dict["name"] = mb->get_name();
+                MethodBind* mb                = t->method_map[F->get()];
+                method_dict["name"]           = mb->get_name();
                 method_dict["argument_count"] = mb->get_argument_count();
-                method_dict["return_type"] = mb->get_argument_type(-1);
+                method_dict["return_type"]    = mb->get_argument_type(-1);
 
                 Array arguments;
                 method_dict["arguments"] = arguments;
@@ -101,10 +101,10 @@ void class_db_api_to_json(const String& p_output_file, ClassDB::APIType p_api) {
                 for (int i = 0; i < mb->get_argument_count(); i++) {
                     Dictionary argument_dict;
                     arguments.push_back(argument_dict);
-                    const PropertyInfo info = mb->get_argument_info(i);
-                    argument_dict["type"] = info.type;
-                    argument_dict["name"] = info.name;
-                    argument_dict["hint"] = info.hint;
+                    const PropertyInfo info      = mb->get_argument_info(i);
+                    argument_dict["type"]        = info.type;
+                    argument_dict["name"]        = info.name;
+                    argument_dict["hint"]        = info.hint;
                     argument_dict["hint_string"] = info.hint_string;
                 }
 
@@ -145,11 +145,11 @@ void class_db_api_to_json(const String& p_output_file, ClassDB::APIType p_api) {
             Array constants;
 
             for (List<StringName>::Element* F = snames.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 Dictionary constant_dict;
                 constants.push_back(constant_dict);
 
-                constant_dict["name"] = F->get();
+                constant_dict["name"]  = F->get();
                 constant_dict["value"] = t->constant_map[F->get()];
             }
 
@@ -173,11 +173,11 @@ void class_db_api_to_json(const String& p_output_file, ClassDB::APIType p_api) {
             Array signals;
 
             for (List<StringName>::Element* F = snames.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 Dictionary signal_dict;
                 signals.push_back(signal_dict);
 
-                MethodInfo& mi = t->signal_map[F->get()];
+                MethodInfo& mi      = t->signal_map[F->get()];
                 signal_dict["name"] = F->get();
 
                 Array arguments;
@@ -209,14 +209,14 @@ void class_db_api_to_json(const String& p_output_file, ClassDB::APIType p_api) {
             Array properties;
 
             for (List<StringName>::Element* F = snames.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 Dictionary property_dict;
                 properties.push_back(property_dict);
 
                 ClassDB::PropertySetGet* psg =
                     t->property_setget.getptr(F->get());
 
-                property_dict["name"] = F->get();
+                property_dict["name"]   = F->get();
                 property_dict["setter"] = psg->setter;
                 property_dict["getter"] = psg->getter;
             }
@@ -230,15 +230,15 @@ void class_db_api_to_json(const String& p_output_file, ClassDB::APIType p_api) {
 
         // property list
         for (List<PropertyInfo>::Element* F = t->property_list.front(); F;
-             F = F->next()) {
+             F                              = F->next()) {
             Dictionary property_dict;
             property_list.push_back(property_dict);
 
-            property_dict["name"] = F->get().name;
-            property_dict["type"] = F->get().type;
-            property_dict["hint"] = F->get().hint;
+            property_dict["name"]        = F->get().name;
+            property_dict["type"]        = F->get().type;
+            property_dict["hint"]        = F->get().hint;
             property_dict["hint_string"] = F->get().hint_string;
-            property_dict["usage"] = F->get().usage;
+            property_dict["usage"]       = F->get().usage;
         }
 
         if (!property_list.empty()) {

@@ -120,7 +120,7 @@ public:
 
     void popup_create(
         bool p_dont_clear,
-        bool p_replace_mode = false,
+        bool p_replace_mode         = false,
         const String& p_select_type = "Node"
     );
 

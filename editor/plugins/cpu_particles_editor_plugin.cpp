@@ -68,7 +68,7 @@ void CPUParticlesEditor::_menu_option(int p_option) {
 
 void CPUParticlesEditor::edit(CPUParticles* p_particles) {
     base_node = p_particles;
-    node = p_particles;
+    node      = p_particles;
 }
 
 void CPUParticlesEditor::_generate_emission_points() {
@@ -138,7 +138,7 @@ void CPUParticlesEditorPlugin::make_visible(bool p_visible) {
 }
 
 CPUParticlesEditorPlugin::CPUParticlesEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor           = p_node;
     particles_editor = memnew(CPUParticlesEditor);
     editor->get_viewport()->add_child(particles_editor);
 

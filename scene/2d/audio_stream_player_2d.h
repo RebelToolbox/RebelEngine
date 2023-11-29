@@ -41,7 +41,7 @@ class AudioStreamPlayer2D : public Node2D {
 
 private:
     enum {
-        MAX_OUTPUTS = 8,
+        MAX_OUTPUTS         = 8,
         MAX_INTERSECT_AREAS = 32
     };
 

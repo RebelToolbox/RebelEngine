@@ -93,7 +93,7 @@ private:
         int maximum_width;
 
         Line() {
-            from = nullptr;
+            from       = nullptr;
             char_count = 0;
         }
     };
@@ -115,8 +115,8 @@ private:
 
         Item() {
             parent = nullptr;
-            E = nullptr;
-            line = 0;
+            E      = nullptr;
+            line   = 0;
         }
 
         virtual ~Item() {
@@ -132,10 +132,10 @@ private:
         ItemFrame* parent_frame;
 
         ItemFrame() {
-            type = ITEM_FRAME;
+            type         = ITEM_FRAME;
             parent_frame = nullptr;
-            cell = false;
-            parent_line = 0;
+            cell         = false;
+            parent_line  = 0;
         }
     };
 
@@ -263,15 +263,15 @@ private:
         uint64_t _previous_rng;
 
         ItemShake() {
-            strength = 0;
-            rate = 0.0f;
+            strength     = 0;
+            rate         = 0.0f;
             _current_rng = 0;
-            type = ITEM_SHAKE;
+            type         = ITEM_SHAKE;
         }
 
         void reroll_random() {
             _previous_rng = _current_rng;
-            _current_rng = Math::rand();
+            _current_rng  = Math::rand();
         }
 
         uint64_t offset_random(int index) {
@@ -292,7 +292,7 @@ private:
         ItemWave() {
             frequency = 1.0f;
             amplitude = 1.0f;
-            type = ITEM_WAVE;
+            type      = ITEM_WAVE;
         }
     };
 
@@ -301,9 +301,9 @@ private:
         float frequency;
 
         ItemTornado() {
-            radius = 1.0f;
+            radius    = 1.0f;
             frequency = 1.0f;
-            type = ITEM_TORNADO;
+            type      = ITEM_TORNADO;
         }
     };
 
@@ -314,9 +314,9 @@ private:
 
         ItemRainbow() {
             saturation = 0.8f;
-            value = 0.8f;
-            frequency = 1.0f;
-            type = ITEM_RAINBOW;
+            value      = 0.8f;
+            frequency  = 1.0f;
+            type       = ITEM_RAINBOW;
         }
     };
 
@@ -370,7 +370,7 @@ private:
 
     void _add_item(
         Item* p_item,
-        bool p_enter = false,
+        bool p_enter          = false,
         bool p_ensure_newline = false
     );
     void _remove_item(Item* p_item, const int p_line, const int p_subitem_line);
@@ -416,17 +416,17 @@ private:
         bool p_shadow_as_outline,
         const Point2& shadow_ofs,
         const Point2i& p_click_pos = Point2i(),
-        Item** r_click_item = nullptr,
-        int* r_click_char = nullptr,
-        bool* r_outside = nullptr,
-        int p_char_count = 0
+        Item** r_click_item        = nullptr,
+        int* r_click_char          = nullptr,
+        bool* r_outside            = nullptr,
+        int p_char_count           = 0
     );
     void _find_click(
         ItemFrame* p_frame,
         const Point2i& p_click,
         Item** r_click_item = nullptr,
-        int* r_click_char = nullptr,
-        bool* r_outside = nullptr
+        int* r_click_char   = nullptr,
+        bool* r_outside     = nullptr
     );
 
     Ref<Font> _find_font(Item* p_item);
@@ -470,7 +470,7 @@ public:
     void add_text(const String& p_text);
     void add_image(
         const Ref<Texture>& p_image,
-        const int p_width = 0,
+        const int p_width  = 0,
         const int p_height = 0
     );
     void add_newline();
@@ -527,7 +527,7 @@ public:
 
     bool search(
         const String& p_string,
-        bool p_from_selection = false,
+        bool p_from_selection  = false,
         bool p_search_previous = false
     );
 

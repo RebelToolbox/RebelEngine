@@ -126,7 +126,7 @@ void AnimationTreeEditor::edit_path(const Vector<String>& p_path) {
         }
     } else {
         current_root = 0;
-        edited_path = button_path;
+        edited_path  = button_path;
     }
 
     _update_path();
@@ -244,8 +244,8 @@ AnimationTreeEditor::AnimationTreeEditor() {
     add_child(memnew(HSeparator));
 
     current_root = 0;
-    singleton = this;
-    editor_base = memnew(MarginContainer);
+    singleton    = this;
+    editor_base  = memnew(MarginContainer);
     editor_base->set_v_size_flags(SIZE_EXPAND_FILL);
     add_child(editor_base);
 
@@ -280,7 +280,7 @@ void AnimationTreeEditorPlugin::make_visible(bool p_visible) {
 }
 
 AnimationTreeEditorPlugin::AnimationTreeEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor           = p_node;
     anim_tree_editor = memnew(AnimationTreeEditor);
     anim_tree_editor->set_custom_minimum_size(Size2(0, 300) * EDSCALE);
 

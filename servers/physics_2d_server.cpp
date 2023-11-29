@@ -37,9 +37,9 @@
 Physics2DServer* Physics2DServer::singleton = nullptr;
 
 void Physics2DDirectBodyState::integrate_forces() {
-    real_t step = get_step();
-    Vector2 lv = get_linear_velocity();
-    lv += get_total_gravity() * step;
+    real_t step  = get_step();
+    Vector2 lv   = get_linear_velocity();
+    lv          += get_total_gravity() * step;
 
     real_t av = get_angular_velocity();
 
@@ -66,7 +66,7 @@ void Physics2DDirectBodyState::integrate_forces() {
 Object* Physics2DDirectBodyState::get_contact_collider_object(int p_contact_idx
 ) const {
     ObjectID objid = get_contact_collider_id(p_contact_idx);
-    Object* obj = ObjectDB::get_instance(objid);
+    Object* obj    = ObjectDB::get_instance(objid);
     return obj;
 }
 
@@ -490,10 +490,10 @@ void Physics2DShapeQueryParameters::_bind_methods() {
 }
 
 Physics2DShapeQueryParameters::Physics2DShapeQueryParameters() {
-    margin = 0;
-    collision_mask = 0x7FFFFFFF;
+    margin              = 0;
+    collision_mask      = 0x7FFFFFFF;
     collide_with_bodies = true;
-    collide_with_areas = false;
+    collide_with_areas  = false;
 }
 
 Dictionary Physics2DDirectSpaceState::_intersect_ray(
@@ -525,13 +525,13 @@ Dictionary Physics2DDirectSpaceState::_intersect_ray(
     }
 
     Dictionary d;
-    d["position"] = inters.position;
-    d["normal"] = inters.normal;
+    d["position"]    = inters.position;
+    d["normal"]      = inters.normal;
     d["collider_id"] = inters.collider_id;
-    d["collider"] = inters.collider;
-    d["shape"] = inters.shape;
-    d["rid"] = inters.rid;
-    d["metadata"] = inters.metadata;
+    d["collider"]    = inters.collider;
+    d["shape"]       = inters.shape;
+    d["rid"]         = inters.rid;
+    d["metadata"]    = inters.metadata;
 
     return d;
 }
@@ -560,12 +560,12 @@ Array Physics2DDirectSpaceState::_intersect_shape(
     ret.resize(rc);
     for (int i = 0; i < rc; i++) {
         Dictionary d;
-        d["rid"] = sr[i].rid;
+        d["rid"]         = sr[i].rid;
         d["collider_id"] = sr[i].collider_id;
-        d["collider"] = sr[i].collider;
-        d["shape"] = sr[i].shape;
-        d["metadata"] = sr[i].metadata;
-        ret[i] = d;
+        d["collider"]    = sr[i].collider;
+        d["shape"]       = sr[i].shape;
+        d["metadata"]    = sr[i].metadata;
+        ret[i]           = d;
     }
 
     return ret;
@@ -649,12 +649,12 @@ Array Physics2DDirectSpaceState::_intersect_point_impl(
     r.resize(rc);
     for (int i = 0; i < rc; i++) {
         Dictionary d;
-        d["rid"] = ret[i].rid;
+        d["rid"]         = ret[i].rid;
         d["collider_id"] = ret[i].collider_id;
-        d["collider"] = ret[i].collider;
-        d["shape"] = ret[i].shape;
-        d["metadata"] = ret[i].metadata;
-        r[i] = d;
+        d["collider"]    = ret[i].collider;
+        d["shape"]       = ret[i].shape;
+        d["metadata"]    = ret[i].metadata;
+        r[i]             = d;
     }
     return r;
 }
@@ -706,7 +706,7 @@ Array Physics2DDirectSpaceState::_collide_shape(
 
     Vector<Vector2> ret;
     ret.resize(p_max_results * 2);
-    int rc = 0;
+    int rc   = 0;
     bool res = collide_shape(
         p_shape_query->shape,
         p_shape_query->transform,
@@ -754,13 +754,13 @@ Dictionary Physics2DDirectSpaceState::_get_rest_info(
         return r;
     }
 
-    r["point"] = sri.point;
-    r["normal"] = sri.normal;
-    r["rid"] = sri.rid;
-    r["collider_id"] = sri.collider_id;
-    r["shape"] = sri.shape;
+    r["point"]           = sri.point;
+    r["normal"]          = sri.normal;
+    r["rid"]             = sri.rid;
+    r["collider_id"]     = sri.collider_id;
+    r["shape"]           = sri.shape;
     r["linear_velocity"] = sri.linear_velocity;
-    r["metadata"] = sri.metadata;
+    r["metadata"]        = sri.metadata;
 
     return r;
 }
@@ -1625,7 +1625,7 @@ Physics2DServer::~Physics2DServer() {
 
 Vector<Physics2DServerManager::ClassInfo>
     Physics2DServerManager::physics_2d_servers;
-int Physics2DServerManager::default_server_id = -1;
+int Physics2DServerManager::default_server_id       = -1;
 int Physics2DServerManager::default_server_priority = -1;
 const String Physics2DServerManager::setting_property_name(
     "physics/2d/physics_engine"
@@ -1664,7 +1664,7 @@ void Physics2DServerManager::set_default_server(
     const int id = find_server_id(p_name);
     ERR_FAIL_COND(id == -1); // Not found
     if (default_server_priority < p_priority) {
-        default_server_id = id;
+        default_server_id       = id;
         default_server_priority = p_priority;
     }
 }

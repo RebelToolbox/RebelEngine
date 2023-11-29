@@ -1373,7 +1373,7 @@ static const int reverse_caps_table[CAPS_LEN - 1][2] = {
 };
 
 static int _find_upper(int ch) {
-    int low = 0;
+    int low  = 0;
     int high = CAPS_LEN - 1;
     int middle;
 
@@ -1393,7 +1393,7 @@ static int _find_upper(int ch) {
 }
 
 static int _find_lower(int ch) {
-    int low = 0;
+    int low  = 0;
     int high = CAPS_LEN - 2;
     int middle;
 

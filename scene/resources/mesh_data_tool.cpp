@@ -35,7 +35,7 @@ void MeshDataTool::clear() {
     edges.clear();
     faces.clear();
     material = Ref<Material>();
-    format = 0;
+    format   = 0;
 }
 
 Error MeshDataTool::create_from_surface(
@@ -70,7 +70,7 @@ Error MeshDataTool::create_from_surface(
         }
     }
 
-    int icount = indices.size();
+    int icount              = indices.size();
     PoolVector<int>::Read r = indices.read();
 
     ERR_FAIL_COND_V(icount == 0, ERR_INVALID_PARAMETER);
@@ -80,7 +80,7 @@ Error MeshDataTool::create_from_surface(
     }
 
     clear();
-    format = p_mesh->surface_get_format(p_surface);
+    format   = p_mesh->surface_get_format(p_surface);
     material = p_mesh->surface_get_material(p_surface);
 
     PoolVector<Vector3>::Read vr = varray.read();
@@ -186,7 +186,7 @@ Error MeshDataTool::create_from_surface(
                 face.edges[j] = edge_indices[edge];
 
             } else {
-                face.edges[j] = edge_indices.size();
+                face.edges[j]      = edge_indices.size();
                 edge_indices[edge] = face.edges[j];
                 Edge e;
                 e.vertex[0] = edge.x;
@@ -318,7 +318,7 @@ Error MeshDataTool::commit_to_surface(const Ref<ArrayMesh>& p_mesh) {
     }
 
     arr[Mesh::ARRAY_VERTEX] = v;
-    arr[Mesh::ARRAY_INDEX] = in;
+    arr[Mesh::ARRAY_INDEX]  = in;
     if (n.size()) {
         arr[Mesh::ARRAY_NORMAL] = n;
     }
@@ -342,7 +342,7 @@ Error MeshDataTool::commit_to_surface(const Ref<ArrayMesh>& p_mesh) {
     }
 
     Ref<ArrayMesh> ncmesh = p_mesh;
-    int sc = ncmesh->get_surface_count();
+    int sc                = ncmesh->get_surface_count();
     ncmesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arr);
     ncmesh->surface_set_material(sc, material);
 
@@ -382,8 +382,8 @@ Vector3 MeshDataTool::get_vertex_normal(int p_idx) const {
 
 void MeshDataTool::set_vertex_normal(int p_idx, const Vector3& p_normal) {
     ERR_FAIL_INDEX(p_idx, vertices.size());
-    vertices.write[p_idx].normal = p_normal;
-    format |= Mesh::ARRAY_FORMAT_NORMAL;
+    vertices.write[p_idx].normal  = p_normal;
+    format                       |= Mesh::ARRAY_FORMAT_NORMAL;
 }
 
 Plane MeshDataTool::get_vertex_tangent(int p_idx) const {
@@ -393,8 +393,8 @@ Plane MeshDataTool::get_vertex_tangent(int p_idx) const {
 
 void MeshDataTool::set_vertex_tangent(int p_idx, const Plane& p_tangent) {
     ERR_FAIL_INDEX(p_idx, vertices.size());
-    vertices.write[p_idx].tangent = p_tangent;
-    format |= Mesh::ARRAY_FORMAT_TANGENT;
+    vertices.write[p_idx].tangent  = p_tangent;
+    format                        |= Mesh::ARRAY_FORMAT_TANGENT;
 }
 
 Vector2 MeshDataTool::get_vertex_uv(int p_idx) const {
@@ -404,8 +404,8 @@ Vector2 MeshDataTool::get_vertex_uv(int p_idx) const {
 
 void MeshDataTool::set_vertex_uv(int p_idx, const Vector2& p_uv) {
     ERR_FAIL_INDEX(p_idx, vertices.size());
-    vertices.write[p_idx].uv = p_uv;
-    format |= Mesh::ARRAY_FORMAT_TEX_UV;
+    vertices.write[p_idx].uv  = p_uv;
+    format                   |= Mesh::ARRAY_FORMAT_TEX_UV;
 }
 
 Vector2 MeshDataTool::get_vertex_uv2(int p_idx) const {
@@ -415,8 +415,8 @@ Vector2 MeshDataTool::get_vertex_uv2(int p_idx) const {
 
 void MeshDataTool::set_vertex_uv2(int p_idx, const Vector2& p_uv2) {
     ERR_FAIL_INDEX(p_idx, vertices.size());
-    vertices.write[p_idx].uv2 = p_uv2;
-    format |= Mesh::ARRAY_FORMAT_TEX_UV2;
+    vertices.write[p_idx].uv2  = p_uv2;
+    format                    |= Mesh::ARRAY_FORMAT_TEX_UV2;
 }
 
 Color MeshDataTool::get_vertex_color(int p_idx) const {
@@ -426,8 +426,8 @@ Color MeshDataTool::get_vertex_color(int p_idx) const {
 
 void MeshDataTool::set_vertex_color(int p_idx, const Color& p_color) {
     ERR_FAIL_INDEX(p_idx, vertices.size());
-    vertices.write[p_idx].color = p_color;
-    format |= Mesh::ARRAY_FORMAT_COLOR;
+    vertices.write[p_idx].color  = p_color;
+    format                      |= Mesh::ARRAY_FORMAT_COLOR;
 }
 
 Vector<int> MeshDataTool::get_vertex_bones(int p_idx) const {
@@ -438,8 +438,8 @@ Vector<int> MeshDataTool::get_vertex_bones(int p_idx) const {
 void MeshDataTool::set_vertex_bones(int p_idx, const Vector<int>& p_bones) {
     ERR_FAIL_INDEX(p_idx, vertices.size());
     ERR_FAIL_COND(p_bones.size() != 4);
-    vertices.write[p_idx].bones = p_bones;
-    format |= Mesh::ARRAY_FORMAT_BONES;
+    vertices.write[p_idx].bones  = p_bones;
+    format                      |= Mesh::ARRAY_FORMAT_BONES;
 }
 
 Vector<float> MeshDataTool::get_vertex_weights(int p_idx) const {
@@ -453,8 +453,8 @@ void MeshDataTool::set_vertex_weights(
 ) {
     ERR_FAIL_INDEX(p_idx, vertices.size());
     ERR_FAIL_COND(p_weights.size() != 4);
-    vertices.write[p_idx].weights = p_weights;
-    format |= Mesh::ARRAY_FORMAT_WEIGHTS;
+    vertices.write[p_idx].weights  = p_weights;
+    format                        |= Mesh::ARRAY_FORMAT_WEIGHTS;
 }
 
 Variant MeshDataTool::get_vertex_meta(int p_idx) const {

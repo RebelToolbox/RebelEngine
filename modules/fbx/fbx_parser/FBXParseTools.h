@@ -69,11 +69,11 @@ inline bool IsLineEnd(char_t c) {
 inline uint64_t strtoul10_64(
     const char* in,
     bool& errored,
-    const char** out = nullptr,
+    const char** out        = nullptr,
     unsigned int* max_inout = nullptr
 ) {
     unsigned int cur = 0;
-    uint64_t value = 0;
+    uint64_t value   = 0;
 
     errored = *in < '0' || *in > '9';
     ERR_FAIL_COND_V_MSG(

@@ -153,10 +153,10 @@ void JoypadUWP::OnGamepadAdded(
 
     ERR_FAIL_COND(idx == -1);
 
-    controllers[idx].connected = true;
+    controllers[idx].connected            = true;
     controllers[idx].controller_reference = value;
-    controllers[idx].id = idx;
-    controllers[idx].type = ControllerType::GAMEPAD_CONTROLLER;
+    controllers[idx].id                   = idx;
+    controllers[idx].type                 = ControllerType::GAMEPAD_CONTROLLER;
 
     input->joy_connection_changed(
         controllers[idx].id,
@@ -193,7 +193,7 @@ InputDefault::JoyAxis JoypadUWP::axis_correct(
 ) const {
     InputDefault::JoyAxis jx;
 
-    jx.min = p_trigger ? 0 : -1;
+    jx.min   = p_trigger ? 0 : -1;
     jx.value = (float)(p_negate ? -p_val : p_val);
 
     return jx;
@@ -209,8 +209,8 @@ void JoypadUWP::joypad_vibration_start(
     ControllerDevice& joy = controllers[p_device];
     if (joy.connected) {
         GamepadVibration vibration;
-        vibration.LeftMotor = p_strong_magnitude;
-        vibration.RightMotor = p_weak_magnitude;
+        vibration.LeftMotor                               = p_strong_magnitude;
+        vibration.RightMotor                              = p_weak_magnitude;
         ((Gamepad ^) joy.controller_reference)->Vibration = vibration;
 
         joy.ff_timestamp = p_timestamp;
@@ -225,11 +225,11 @@ void JoypadUWP::joypad_vibration_stop(int p_device, uint64_t p_timestamp) {
     ControllerDevice& joy = controllers[p_device];
     if (joy.connected) {
         GamepadVibration vibration;
-        vibration.LeftMotor = 0.0;
-        vibration.RightMotor = 0.0;
+        vibration.LeftMotor                               = 0.0;
+        vibration.RightMotor                              = 0.0;
         ((Gamepad ^) joy.controller_reference)->Vibration = vibration;
 
         joy.ff_timestamp = p_timestamp;
-        joy.vibrating = false;
+        joy.vibrating    = false;
     }
 }

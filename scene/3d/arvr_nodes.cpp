@@ -62,7 +62,7 @@ String ARVRCamera::get_configuration_warning() const {
         return String();
     }
 
-    String warning = Camera::get_configuration_warning();
+    String warning     = Camera::get_configuration_warning();
     // must be child node of ARVROrigin!
     ARVROrigin* origin = Object::cast_to<ARVROrigin>(get_parent());
     if (origin == nullptr) {
@@ -94,7 +94,7 @@ Vector3 ARVRCamera::project_local_ray_normal(const Point2& p_pos) const {
     );
 
     Size2 viewport_size = get_viewport()->get_camera_rect_size();
-    Vector2 cpos = get_viewport()->get_camera_coords(p_pos);
+    Vector2 cpos        = get_viewport()->get_camera_coords(p_pos);
     Vector3 ray;
 
     CameraMatrix cm = arvr_interface->get_projection_for_eye(
@@ -143,7 +143,7 @@ Point2 ARVRCamera::unproject_position(const Vector3& p_pos) const {
 
     Plane p(get_camera_transform().xform_inv(p_pos), 1.0);
 
-    p = cm.xform4(p);
+    p         = cm.xform4(p);
     p.normal /= p.d;
 
     Point2 res;
@@ -183,9 +183,9 @@ Vector3 ARVRCamera::project_position(const Point2& p_point, float p_z_depth)
     Vector2 vp_he = cm.get_viewport_half_extents();
 
     Vector2 point;
-    point.x = (p_point.x / viewport_size.x) * 2.0 - 1.0;
-    point.y = (1.0 - (p_point.y / viewport_size.y)) * 2.0 - 1.0;
-    point *= vp_he;
+    point.x  = (p_point.x / viewport_size.x) * 2.0 - 1.0;
+    point.y  = (1.0 - (p_point.y / viewport_size.y)) * 2.0 - 1.0;
+    point   *= vp_he;
 
     Vector3 p(point.x, point.y, -p_z_depth);
 
@@ -206,7 +206,7 @@ Vector<Plane> ARVRCamera::get_frustum() const {
     ERR_FAIL_COND_V(!is_inside_world(), Vector<Plane>());
 
     Size2 viewport_size = get_viewport()->get_visible_rect().size;
-    CameraMatrix cm = arvr_interface->get_projection_for_eye(
+    CameraMatrix cm     = arvr_interface->get_projection_for_eye(
         ARVRInterface::EYE_MONO,
         viewport_size.aspect(),
         get_znear(),
@@ -246,7 +246,7 @@ void ARVRController::_notification(int p_what) {
                 );
             if (!tracker.is_valid()) {
                 // this controller is currently turned off
-                is_active = false;
+                is_active     = false;
                 button_states = 0;
             } else {
                 is_active = true;
@@ -494,7 +494,7 @@ String ARVRController::get_configuration_warning() const {
         return String();
     }
 
-    String warning = Spatial::get_configuration_warning();
+    String warning     = Spatial::get_configuration_warning();
     // must be child node of ARVROrigin!
     ARVROrigin* origin = Object::cast_to<ARVROrigin>(get_parent());
     if (origin == nullptr) {
@@ -519,7 +519,7 @@ String ARVRController::get_configuration_warning() const {
 
 ARVRController::ARVRController() {
     controller_id = 1;
-    is_active = true;
+    is_active     = true;
     button_states = 0;
 };
 
@@ -559,7 +559,7 @@ void ARVRAnchor::_notification(int p_what) {
                 real_t world_scale = arvr_server->get_world_scale();
 
                 // get our info from our tracker
-                transform.basis = tracker->get_orientation();
+                transform.basis  = tracker->get_orientation();
                 transform.origin = tracker->get_position(
                 ); // <-- already adjusted to world scale
 
@@ -656,7 +656,7 @@ String ARVRAnchor::get_configuration_warning() const {
         return String();
     }
 
-    String warning = Spatial::get_configuration_warning();
+    String warning     = Spatial::get_configuration_warning();
     // must be child node of ARVROrigin!
     ARVROrigin* origin = Object::cast_to<ARVROrigin>(get_parent());
     if (origin == nullptr) {
@@ -680,7 +680,7 @@ String ARVRAnchor::get_configuration_warning() const {
 };
 
 Plane ARVRAnchor::get_plane() const {
-    Vector3 location = get_translation();
+    Vector3 location  = get_translation();
     Basis orientation = get_transform().basis;
 
     Plane plane(location, orientation.get_axis(1).normalized());

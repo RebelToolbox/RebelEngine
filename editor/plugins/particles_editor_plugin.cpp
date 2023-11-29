@@ -50,8 +50,8 @@ bool ParticlesEditorBase::_generate(
             if (area < CMP_EPSILON) {
                 continue;
             }
-            triangle_area_map[area_accum] = i;
-            area_accum += area;
+            triangle_area_map[area_accum]  = i;
+            area_accum                    += area;
         }
 
         if (!triangle_area_map.size() || area_accum == 0) {
@@ -126,7 +126,7 @@ bool ParticlesEditorBase::_generate(
                 Vector3 ofsv = ofs + aabb.size * dir;
 
                 // space it a little
-                ofs -= dir;
+                ofs  -= dir;
                 ofsv += dir;
 
                 float max = -1e7, min = 1e7;
@@ -136,8 +136,8 @@ bool ParticlesEditorBase::_generate(
 
                     Vector3 res;
                     if (f3.intersects_segment(ofs, ofsv, &res)) {
-                        res -= ofs;
-                        float d = dir.dot(res);
+                        res     -= ofs;
+                        float d  = dir.dot(res);
 
                         if (d < min) {
                             min = d;
@@ -200,7 +200,7 @@ void ParticlesEditorBase::_node_selected(const NodePath& p_path) {
     Transform geom_xform = base_node->get_global_transform().affine_inverse()
                          * vi->get_global_transform();
 
-    int gc = geometry.size();
+    int gc                     = geometry.size();
     PoolVector<Face3>::Write w = geometry.write();
 
     for (int i = 0; i < gc; i++) {
@@ -406,7 +406,7 @@ void ParticlesEditor::_generate_aabb() {
 
 void ParticlesEditor::edit(Particles* p_particles) {
     base_node = p_particles;
-    node = p_particles;
+    node      = p_particles;
 }
 
 void ParticlesEditor::_generate_emission_points() {
@@ -430,7 +430,7 @@ void ParticlesEditor::_generate_emission_points() {
         PoolVector<uint8_t>::Write iw = point_img.write();
         memset(iw.ptr(), 0, w * h * 3 * sizeof(float));
         PoolVector<Vector3>::Read r = points.read();
-        float* wf = (float*)iw.ptr();
+        float* wf                   = (float*)iw.ptr();
         for (int i = 0; i < point_count; i++) {
             wf[i * 3 + 0] = r[i].x;
             wf[i * 3 + 1] = r[i].y;
@@ -462,7 +462,7 @@ void ParticlesEditor::_generate_emission_points() {
             PoolVector<uint8_t>::Write iw = point_img2.write();
             memset(iw.ptr(), 0, w * h * 3 * sizeof(float));
             PoolVector<Vector3>::Read r = normals.read();
-            float* wf = (float*)iw.ptr();
+            float* wf                   = (float*)iw.ptr();
             for (int i = 0; i < point_count; i++) {
                 wf[i * 3 + 0] = r[i].x;
                 wf[i * 3 + 1] = r[i].y;
@@ -492,7 +492,7 @@ void ParticlesEditor::_bind_methods() {
 }
 
 ParticlesEditor::ParticlesEditor() {
-    node = nullptr;
+    node                = nullptr;
     particles_editor_hb = memnew(HBoxContainer);
     SpatialEditor::get_singleton()->add_control_to_menu_panel(
         particles_editor_hb
@@ -561,7 +561,7 @@ void ParticlesEditorPlugin::make_visible(bool p_visible) {
 }
 
 ParticlesEditorPlugin::ParticlesEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor           = p_node;
     particles_editor = memnew(ParticlesEditor);
     editor->get_viewport()->add_child(particles_editor);
 

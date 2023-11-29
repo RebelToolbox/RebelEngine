@@ -66,7 +66,7 @@ void CreateDialog::popup_create(
             has_icon(base_type, "EditorIcons") ? base_type : "Object";
 
         while (!f->eof_reached()) {
-            String l = f->get_line().strip_edges();
+            String l    = f->get_line().strip_edges();
             String name = l.split(" ")[0];
             if ((ClassDB::class_exists(name)
                  || ScriptServer::is_global_class(name))
@@ -168,7 +168,7 @@ void CreateDialog::add_type(
         return;
     }
 
-    bool cpp_type = ClassDB::class_exists(p_type);
+    bool cpp_type  = ClassDB::class_exists(p_type);
     EditorData& ed = EditorNode::get_editor_data();
 
     if (p_type == base_type) {
@@ -252,9 +252,9 @@ void CreateDialog::add_type(
                 search_box->get_text().is_subsequence_ofi(p_type);
             bool is_substring_of_type =
                 p_type.to_lower().find(search_term) >= 0;
-            bool is_substring_of_selected = false;
+            bool is_substring_of_selected   = false;
             bool is_subsequence_of_selected = false;
-            bool is_selected_equal = false;
+            bool is_selected_equal          = false;
 
             if (*to_select) {
                 String name =
@@ -292,11 +292,11 @@ void CreateDialog::add_type(
         item->set_collapsed(false);
     } else {
         // don't collapse search results
-        bool collapse = (search_box->get_text() == "");
+        bool collapse  = (search_box->get_text() == "");
         // don't collapse the root node
-        collapse &= (item != p_root);
+        collapse      &= (item != p_root);
         // don't collapse abstract nodes on the first tree level
-        collapse &= ((parent != p_root) || (can_instance));
+        collapse      &= ((parent != p_root) || (can_instance));
         item->set_collapsed(collapse);
     }
 
@@ -315,7 +315,7 @@ void CreateDialog::add_type(
 }
 
 bool CreateDialog::_is_type_prefered(const String& type) {
-    bool cpp_type = ClassDB::class_exists(type);
+    bool cpp_type  = ClassDB::class_exists(type);
     EditorData& ed = EditorNode::get_editor_data();
 
     if (cpp_type) {
@@ -412,8 +412,8 @@ void CreateDialog::_update_search() {
         if (search_box->get_text() == "") {
             add_type(type, search_options_types, root, &to_select);
         } else {
-            bool found = false;
-            String type2 = type;
+            bool found     = false;
+            String type2   = type;
             bool cpp_type2 = cpp_type;
 
             if (!cpp_type && !search_loaded_scripts.has(type)) {
@@ -429,8 +429,8 @@ void CreateDialog::_update_search() {
                     break;
                 }
 
-                type2 = cpp_type2 ? ClassDB::get_parent_class(type2)
-                                  : ed.script_class_get_base(type2);
+                type2     = cpp_type2 ? ClassDB::get_parent_class(type2)
+                                      : ed.script_class_get_base(type2);
                 cpp_type2 = cpp_type2
                          || ClassDB::class_exists(type2
                          ); // Built-in class can't inherit from custom type, so
@@ -702,7 +702,7 @@ void CreateDialog::_save_favorite_list() {
 
     if (f) {
         for (int i = 0; i < favorite_list.size(); i++) {
-            String l = favorite_list[i];
+            String l    = favorite_list[i];
             String name = l.split(" ")[0];
             if (!(ClassDB::class_exists(name)
                   || ScriptServer::is_global_class(name))) {
@@ -723,7 +723,7 @@ void CreateDialog::_update_favorite_list() {
         has_icon(base_type, "EditorIcons") ? base_type : "Object";
 
     for (int i = 0; i < favorite_list.size(); i++) {
-        String l = favorite_list[i];
+        String l    = favorite_list[i];
         String name = l.split(" ")[0];
         if (!((ClassDB::class_exists(name)
                || ScriptServer::is_global_class(name))
@@ -777,7 +777,7 @@ Variant CreateDialog::get_drag_data_fw(const Point2& p_point, Control* p_from) {
     TreeItem* ti = favorites->get_item_at_position(p_point);
     if (ti) {
         Dictionary d;
-        d["type"] = "create_favorite_drag";
+        d["type"]  = "create_favorite_drag";
         d["class"] = ti->get_text(0);
 
         ToolButton* tb = memnew(ToolButton);
@@ -818,7 +818,7 @@ void CreateDialog::drop_data_fw(
     }
 
     String drop_at = ti->get_text(0);
-    int ds = favorites->get_drop_section_at_position(p_point);
+    int ds         = favorites->get_drop_section_at_position(p_point);
 
     int drop_idx = favorite_list.find(drop_at);
     if (drop_idx < 0) {
@@ -947,7 +947,7 @@ CreateDialog::CreateDialog() {
     vbc->set_custom_minimum_size(Size2(300, 0) * EDSCALE);
     vbc->set_h_size_flags(SIZE_EXPAND_FILL);
     HBoxContainer* search_hb = memnew(HBoxContainer);
-    search_box = memnew(LineEdit);
+    search_box               = memnew(LineEdit);
     search_box->set_h_size_flags(SIZE_EXPAND_FILL);
     search_hb->add_child(search_box);
     favorite = memnew(Button);
@@ -965,7 +965,7 @@ CreateDialog::CreateDialog() {
     set_hide_on_ok(false);
     search_options->connect("item_activated", this, "_confirmed");
     search_options->connect("cell_selected", this, "_item_selected");
-    base_type = "Object";
+    base_type                    = "Object";
     preferred_search_result_type = "";
 
     help_bit = memnew(EditorHelpBit);

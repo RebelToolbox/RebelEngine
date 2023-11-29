@@ -39,10 +39,10 @@ struct PivotTransform;
 
 struct FBXBone : public Reference {
     uint64_t parent_bone_id = 0;
-    uint64_t bone_id = 0;
+    uint64_t bone_id        = 0;
 
-    bool valid_parent = false;   // if the parent bone id is set up.
-    String bone_name = String(); // bone name
+    bool valid_parent = false;    // if the parent bone id is set up.
+    String bone_name  = String(); // bone name
 
     bool is_root_bone() const {
         return !valid_parent;
@@ -54,10 +54,10 @@ struct FBXBone : public Reference {
     // if a bone / armature is the root then FBX skeleton will contain the bone
     // not any other skeleton. this is to support joints by themselves in scenes
     bool valid_armature_id = false;
-    uint64_t armature_id = 0;
+    uint64_t armature_id   = 0;
 
     /* link node is the parent bone */
-    mutable const FBXDocParser::Geometry* geometry = nullptr;
+    mutable const FBXDocParser::Geometry* geometry       = nullptr;
     mutable const FBXDocParser::ModelLimbNode* limb_node = nullptr;
 
     void set_node(Ref<FBXNode> p_node) {
@@ -66,8 +66,8 @@ struct FBXBone : public Reference {
 
     // Stores the pivot xform for this bone
 
-    Ref<FBXNode> node = nullptr;
-    Ref<FBXBone> parent_bone = nullptr;
+    Ref<FBXNode> node             = nullptr;
+    Ref<FBXBone> parent_bone      = nullptr;
     Ref<FBXSkeleton> fbx_skeleton = nullptr;
 };
 

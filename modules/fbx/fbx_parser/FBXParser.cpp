@@ -130,7 +130,7 @@ Element::Element(const TokenPtr key_token, Parser& parser) :
         if (n && n->Type() == TokenType_DATA) {
             tokens.push_back(n);
             TokenPtr prev = n;
-            n = parser.AdvanceToNextToken();
+            n             = parser.AdvanceToNextToken();
 
             if (n == nullptr) {
                 break;
@@ -311,7 +311,7 @@ uint64_t ParseTokenAsID(const TokenPtr t, const char*& err_out) {
     // ai_assert(length > 0);
 
     const char* out = nullptr;
-    bool errored = false;
+    bool errored    = false;
 
     const uint64_t id = strtoul10_64(t->begin(), errored, &out, &length);
     if (errored || out > t->end()) {
@@ -325,7 +325,7 @@ uint64_t ParseTokenAsID(const TokenPtr t, const char*& err_out) {
 // ------------------------------------------------------------------------------------------------
 // wrapper around ParseTokenAsID() with print_error handling
 uint64_t ParseTokenAsID(const TokenPtr t) {
-    const char* err = nullptr;
+    const char* err  = nullptr;
     const uint64_t i = ParseTokenAsID(t, err);
     if (err) {
         print_error(String(err) + " " + String(t->StringContents().c_str()));
@@ -370,7 +370,7 @@ size_t ParseTokenAsDim(const TokenPtr t, const char*& err_out) {
     }
 
     const char* out = nullptr;
-    bool errored = false;
+    bool errored    = false;
     const size_t id =
         static_cast<size_t>(strtoul10_64(t->begin() + 1, errored, &out, &length)
         );
@@ -450,7 +450,7 @@ int ParseTokenAsInt(const TokenPtr t, const char*& err_out) {
     }
 
     // must not be null for strtol to work
-    char* out = (char*)t->end();
+    char* out       = (char*)t->end();
     // string begin, end ptr ref, base 10
     const int value = strtol(t->begin(), &out, 10);
     if (out == nullptr || out != t->end()) {
@@ -486,7 +486,7 @@ int64_t ParseTokenAsInt64(const TokenPtr t, const char*& err_out) {
     unsigned int length = static_cast<unsigned int>(t->end() - t->begin());
     // ai_assert(length > 0);
 
-    char* out = nullptr;
+    char* out        = nullptr;
     const int64_t id = strtol(t->begin(), &out, length);
     if (out > t->end()) {
         err_out = "failed to parse Int64 (text)";
@@ -563,8 +563,8 @@ void ReadBinaryDataArrayHead(
     uint32_t len = SafeParse<uint32_t>(data + 1, end);
     AI_SWAP4(len);
 
-    count = len;
-    data += 5;
+    count  = len;
+    data  += 5;
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -617,9 +617,9 @@ void ReadBinaryDataArray(
         // see http://www.ietf.org/rfc/rfc1950.txt
 
         z_stream zstream;
-        zstream.opaque = Z_NULL;
-        zstream.zalloc = Z_NULL;
-        zstream.zfree = Z_NULL;
+        zstream.opaque    = Z_NULL;
+        zstream.zalloc    = Z_NULL;
+        zstream.zfree     = Z_NULL;
         zstream.data_type = Z_BINARY;
 
         // http://hewgill.com/journal/entries/349-how-to-decompress-gzip-stream-with-zlib
@@ -627,12 +627,12 @@ void ReadBinaryDataArray(
             print_error("failure initializing zlib");
         }
 
-        zstream.next_in = reinterpret_cast<Bytef*>(const_cast<char*>(data));
+        zstream.next_in  = reinterpret_cast<Bytef*>(const_cast<char*>(data));
         zstream.avail_in = comp_len;
 
         zstream.avail_out = static_cast<uInt>(buff.size());
-        zstream.next_out = reinterpret_cast<Bytef*>(&*buff.begin());
-        const int ret = inflate(&zstream, Z_FINISH);
+        zstream.next_out  = reinterpret_cast<Bytef*>(&*buff.begin());
+        const int ret     = inflate(&zstream, Z_FINISH);
 
         if (ret != Z_STREAM_END && ret != Z_OK) {
             print_error("failure decompressing compressed data section");
@@ -660,7 +660,7 @@ void ParseVectorDataArray(std::vector<Vector3>& out, const ElementPtr el) {
     out.resize(0);
 
     const TokenList& tok = el->Tokens();
-    TokenPtr token = el->KeyToken();
+    TokenPtr token       = el->KeyToken();
     if (tok.empty()) {
         print_error(
             "unexpected empty element" + String(token->StringContents().c_str())
@@ -728,7 +728,7 @@ void ParseVectorDataArray(std::vector<Vector3>& out, const ElementPtr el) {
     out.reserve(dim);
 
     const ScopePtr scope = GetRequiredScope(el);
-    const ElementPtr a = GetRequiredElement(scope, "a", el);
+    const ElementPtr a   = GetRequiredElement(scope, "a", el);
 
     if (a->Tokens().size() % 3 != 0) {
         print_error(
@@ -736,7 +736,7 @@ void ParseVectorDataArray(std::vector<Vector3>& out, const ElementPtr el) {
             + String(token->StringContents().c_str())
         );
     }
-    for (TokenList::const_iterator it = a->Tokens().begin(),
+    for (TokenList::const_iterator it  = a->Tokens().begin(),
                                    end = a->Tokens().end();
          it != end;) {
         Vector3 v;
@@ -821,7 +821,7 @@ void ParseVectorDataArray(std::vector<Color>& out, const ElementPtr el) {
     out.reserve(dim);
 
     const ScopePtr scope = GetRequiredScope(el);
-    const ElementPtr a = GetRequiredElement(scope, "a", el);
+    const ElementPtr a   = GetRequiredElement(scope, "a", el);
 
     if (a->Tokens().size() % 4 != 0) {
         print_error(
@@ -829,7 +829,7 @@ void ParseVectorDataArray(std::vector<Color>& out, const ElementPtr el) {
             + String(token->StringContents().c_str())
         );
     }
-    for (TokenList::const_iterator it = a->Tokens().begin(),
+    for (TokenList::const_iterator it  = a->Tokens().begin(),
                                    end = a->Tokens().end();
          it != end;) {
         Color v;
@@ -847,7 +847,7 @@ void ParseVectorDataArray(std::vector<Color>& out, const ElementPtr el) {
 void ParseVectorDataArray(std::vector<Vector2>& out, const ElementPtr el) {
     out.resize(0);
     const TokenList& tok = el->Tokens();
-    TokenPtr token = el->KeyToken();
+    TokenPtr token       = el->KeyToken();
     if (tok.empty()) {
         print_error(
             "unexpected empty element" + String(token->StringContents().c_str())
@@ -911,7 +911,7 @@ void ParseVectorDataArray(std::vector<Vector2>& out, const ElementPtr el) {
     out.reserve(dim);
 
     const ScopePtr scope = GetRequiredScope(el);
-    const ElementPtr a = GetRequiredElement(scope, "a", el);
+    const ElementPtr a   = GetRequiredElement(scope, "a", el);
 
     if (a->Tokens().size() % 2 != 0) {
         print_error(
@@ -919,7 +919,7 @@ void ParseVectorDataArray(std::vector<Vector2>& out, const ElementPtr el) {
             + String(token->StringContents().c_str())
         );
     }
-    for (TokenList::const_iterator it = a->Tokens().begin(),
+    for (TokenList::const_iterator it  = a->Tokens().begin(),
                                    end = a->Tokens().end();
          it != end;) {
         Vector2 v;
@@ -934,7 +934,7 @@ void ParseVectorDataArray(std::vector<Vector2>& out, const ElementPtr el) {
 void ParseVectorDataArray(std::vector<int>& out, const ElementPtr el) {
     out.resize(0);
     const TokenList& tok = el->Tokens();
-    TokenPtr token = el->KeyToken();
+    TokenPtr token       = el->KeyToken();
     if (tok.empty()) {
         print_error(
             "unexpected empty element" + String(token->StringContents().c_str())
@@ -983,9 +983,9 @@ void ParseVectorDataArray(std::vector<int>& out, const ElementPtr el) {
     out.reserve(dim);
 
     const ScopePtr scope = GetRequiredScope(el);
-    const ElementPtr a = GetRequiredElement(scope, "a", el);
+    const ElementPtr a   = GetRequiredElement(scope, "a", el);
 
-    for (TokenList::const_iterator it = a->Tokens().begin(),
+    for (TokenList::const_iterator it  = a->Tokens().begin(),
                                    end = a->Tokens().end();
          it != end;) {
         const int ival = ParseTokenAsInt(*it++);
@@ -998,7 +998,7 @@ void ParseVectorDataArray(std::vector<int>& out, const ElementPtr el) {
 void ParseVectorDataArray(std::vector<float>& out, const ElementPtr el) {
     out.resize(0);
     const TokenList& tok = el->Tokens();
-    TokenPtr token = el->KeyToken();
+    TokenPtr token       = el->KeyToken();
     if (tok.empty()) {
         print_error(
             "unexpected empty element: "
@@ -1051,9 +1051,9 @@ void ParseVectorDataArray(std::vector<float>& out, const ElementPtr el) {
     out.reserve(dim);
 
     const ScopePtr scope = GetRequiredScope(el);
-    const ElementPtr a = GetRequiredElement(scope, "a", el);
+    const ElementPtr a   = GetRequiredElement(scope, "a", el);
 
-    for (TokenList::const_iterator it = a->Tokens().begin(),
+    for (TokenList::const_iterator it  = a->Tokens().begin(),
                                    end = a->Tokens().end();
          it != end;) {
         const float ival = ParseTokenAsFloat(*it++);
@@ -1122,9 +1122,9 @@ void ParseVectorDataArray(std::vector<unsigned int>& out, const ElementPtr el) {
     out.reserve(dim);
 
     const ScopePtr scope = GetRequiredScope(el);
-    const ElementPtr a = GetRequiredElement(scope, "a", el);
+    const ElementPtr a   = GetRequiredElement(scope, "a", el);
 
-    for (TokenList::const_iterator it = a->Tokens().begin(),
+    for (TokenList::const_iterator it  = a->Tokens().begin(),
                                    end = a->Tokens().end();
          it != end;) {
         const int ival = ParseTokenAsInt(*it++);
@@ -1141,7 +1141,7 @@ void ParseVectorDataArray(std::vector<uint64_t>& out, const ElementPtr el) {
     out.resize(0);
 
     const TokenList& tok = el->Tokens();
-    TokenPtr token = el->KeyToken();
+    TokenPtr token       = el->KeyToken();
     ERR_FAIL_COND(!token);
 
     if (tok.empty()) {
@@ -1193,9 +1193,9 @@ void ParseVectorDataArray(std::vector<uint64_t>& out, const ElementPtr el) {
     out.reserve(dim);
 
     const ScopePtr scope = GetRequiredScope(el);
-    const ElementPtr a = GetRequiredElement(scope, "a", el);
+    const ElementPtr a   = GetRequiredElement(scope, "a", el);
 
-    for (TokenList::const_iterator it = a->Tokens().begin(),
+    for (TokenList::const_iterator it  = a->Tokens().begin(),
                                    end = a->Tokens().end();
          it != end;) {
         const uint64_t ival = ParseTokenAsID(*it++);
@@ -1209,7 +1209,7 @@ void ParseVectorDataArray(std::vector<uint64_t>& out, const ElementPtr el) {
 void ParseVectorDataArray(std::vector<int64_t>& out, const ElementPtr el) {
     out.resize(0);
     const TokenList& tok = el->Tokens();
-    TokenPtr token = el->KeyToken();
+    TokenPtr token       = el->KeyToken();
     ERR_FAIL_COND(!token);
     if (tok.empty()) {
         print_error(
@@ -1260,9 +1260,9 @@ void ParseVectorDataArray(std::vector<int64_t>& out, const ElementPtr el) {
     out.reserve(dim);
 
     const ScopePtr scope = GetRequiredScope(el);
-    const ElementPtr a = GetRequiredElement(scope, "a", el);
+    const ElementPtr a   = GetRequiredElement(scope, "a", el);
 
-    for (TokenList::const_iterator it = a->Tokens().begin(),
+    for (TokenList::const_iterator it  = a->Tokens().begin(),
                                    end = a->Tokens().end();
          it != end;) {
         const int64_t val = ParseTokenAsInt64(*it++);
@@ -1295,7 +1295,7 @@ Transform ReadMatrix(const ElementPtr element) {
         Vector3(values[8], values[9], values[10])
     );
 
-    xform.basis = basis;
+    xform.basis  = basis;
     xform.origin = Vector3(values[12], values[13], values[14]);
     // determine if we need to think about this with dynamic rotation order?
     // for example:
@@ -1329,7 +1329,7 @@ ElementPtr GetRequiredElement(
     const std::string& index,
     const ElementPtr element /*= NULL*/
 ) {
-    ElementPtr el = sc->GetElement(index);
+    ElementPtr el  = sc->GetElement(index);
     TokenPtr token = el->KeyToken();
     ERR_FAIL_COND_V(!token, nullptr);
     if (!el) {
@@ -1365,7 +1365,7 @@ ElementPtr GetOptionalElement(
 // extract required compound scope
 ScopePtr GetRequiredScope(const ElementPtr el) {
     if (el) {
-        ScopePtr s = el->Compound();
+        ScopePtr s     = el->Compound();
         TokenPtr token = el->KeyToken();
         ERR_FAIL_COND_V(!token, nullptr);
         if (s) {
@@ -1386,7 +1386,7 @@ ScopePtr GetRequiredScope(const ElementPtr el) {
 TokenPtr GetRequiredToken(const ElementPtr el, unsigned int index) {
     if (el) {
         const TokenList& x = el->Tokens();
-        TokenPtr token = el->KeyToken();
+        TokenPtr token     = el->KeyToken();
 
         ERR_FAIL_COND_V(!token, nullptr);
 

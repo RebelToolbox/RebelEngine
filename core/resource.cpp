@@ -178,7 +178,7 @@ Ref<Resource> Resource::duplicate_for_local_scene(
                             p_for_scene,
                             remap_cache
                         );
-                        p = dupe;
+                        p               = dupe;
                         remap_cache[sr] = dupe;
                     }
                 }
@@ -442,13 +442,13 @@ void Resource::_bind_methods() {
 
 Resource::Resource() : remapped_list(this) {
 #ifdef TOOLS_ENABLED
-    last_modified_time = 0;
+    last_modified_time        = 0;
     import_last_modified_time = 0;
 #endif
 
-    subindex = 0;
+    subindex       = 0;
     local_to_scene = false;
-    local_scene = nullptr;
+    local_scene    = nullptr;
 }
 
 Resource::~Resource() {

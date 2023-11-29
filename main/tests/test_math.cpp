@@ -130,7 +130,7 @@ class GetClassAndNamespace {
                             while (true) {
                                 if (code[idx] == 0) {
                                     error_str = "Unterminated comment";
-                                    error = true;
+                                    error     = true;
                                     return TK_ERROR;
                                 } else if (code[idx] == '*' && code[idx + 1] == '/') {
                                     idx += 2;
@@ -167,7 +167,7 @@ class GetClassAndNamespace {
                     while (true) {
                         if (code[idx] == 0) {
                             error_str = "Unterminated String";
-                            error = true;
+                            error     = true;
                             return TK_ERROR;
                         } else if (code[idx] == begin_str) {
                             idx++;
@@ -178,7 +178,7 @@ class GetClassAndNamespace {
                             CharType next = code[idx];
                             if (next == 0) {
                                 error_str = "Unterminated String";
-                                error = true;
+                                error     = true;
                                 return TK_ERROR;
                             }
                             CharType res = 0;
@@ -245,9 +245,9 @@ class GetClassAndNamespace {
                         || (code[idx] >= '0' && code[idx] <= '9')) {
                         // a number
                         const CharType* rptr;
-                        double number = String::to_double(&code[idx], &rptr);
-                        idx += (rptr - &code[idx]);
-                        value = number;
+                        double number  = String::to_double(&code[idx], &rptr);
+                        idx           += (rptr - &code[idx]);
+                        value          = number;
                         return TK_NUMBER;
 
                     } else if ((code[idx] >= 'A' && code[idx] <= 'Z') || (code[idx] >= 'a' && code[idx] <= 'z') || code[idx] > 127) {
@@ -264,7 +264,7 @@ class GetClassAndNamespace {
                         return TK_IDENTIFIER;
                     } else {
                         error_str = "Unexpected character.";
-                        error = true;
+                        error     = true;
                         return TK_ERROR;
                     }
                 }
@@ -277,16 +277,16 @@ public:
         const String& p_code,
         const String& p_known_class_name = String()
     ) {
-        code = p_code;
-        idx = 0;
-        line = 0;
-        error_str = String();
-        error = false;
-        value = Variant();
+        code       = p_code;
+        idx        = 0;
+        line       = 0;
+        error_str  = String();
+        error      = false;
+        value      = Variant();
         class_name = String();
 
         bool use_next_class = false;
-        Token tk = get_token();
+        Token tk            = get_token();
 
         Map<int, String> namespace_stack;
         int curly_stack = 0;
@@ -412,14 +412,14 @@ MainLoop* test() {
         float b = 0.1;
 
         const float pow2to9 = 512.0f;
-        const float B = 15.0f;
-        const float N = 9.0f;
+        const float B       = 15.0f;
+        const float N       = 9.0f;
 
         float sharedexp = 65408.000f;
 
-        float cRed = MAX(0.0f, MIN(sharedexp, r));
+        float cRed   = MAX(0.0f, MIN(sharedexp, r));
         float cGreen = MAX(0.0f, MIN(sharedexp, g));
-        float cBlue = MAX(0.0f, MIN(sharedexp, b));
+        float cBlue  = MAX(0.0f, MIN(sharedexp, b));
 
         float cMax = MAX(cRed, MAX(cGreen, cBlue));
 
@@ -435,9 +435,9 @@ MainLoop* test() {
             exps = expp;
         }
 
-        float sRed = Math::floor((cRed / pow(2.0f, exps - B - N)) + 0.5f);
+        float sRed   = Math::floor((cRed / pow(2.0f, exps - B - N)) + 0.5f);
         float sGreen = Math::floor((cGreen / pow(2.0f, exps - B - N)) + 0.5f);
-        float sBlue = Math::floor((cBlue / pow(2.0f, exps - B - N)) + 0.5f);
+        float sBlue  = Math::floor((cBlue / pow(2.0f, exps - B - N)) + 0.5f);
 
         print_line(
             "R: " + rtos(sRed) + " G: " + rtos(sGreen) + " B: " + rtos(sBlue)
@@ -580,11 +580,11 @@ MainLoop* test() {
 
         Basis m2(v2, a2);
 
-        Quat q = m;
+        Quat q  = m;
         Quat q2 = m2;
 
         Basis m3 = m.inverse() * m2;
-        Quat q3 = (q.inverse() * q2); //.normalized();
+        Quat q3  = (q.inverse() * q2); //.normalized();
 
         print_line(Quat(m3));
         print_line(q3);
@@ -615,9 +615,9 @@ MainLoop* test() {
 
     {
         Dictionary d;
-        d["momo"] = 1;
+        d["momo"]    = 1;
         Dictionary b = d;
-        b["44"] = 4;
+        b["44"]      = 4;
     }
 
     print_line(

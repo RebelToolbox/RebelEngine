@@ -63,7 +63,7 @@ void AudioDriverOpenSL::_buffer_callback(SLAndroidSimpleBufferQueueItf queueItf
     const int32_t* src_buff = mixdown_buffer;
 
     int16_t* ptr = (int16_t*)buffers[last_free];
-    last_free = (last_free + 1) % BUFFER_COUNT;
+    last_free    = (last_free + 1) % BUFFER_COUNT;
 
     for (unsigned int i = 0; i < buffer_size * 2; i++) {
         ptr[i] = src_buff[i] >> 16;
@@ -132,7 +132,7 @@ void AudioDriverOpenSL::start() {
 
     {
         const SLInterfaceID ids[1] = {SL_IID_ENVIRONMENTALREVERB};
-        const SLboolean req[1] = {SL_BOOLEAN_FALSE};
+        const SLboolean req[1]     = {SL_BOOLEAN_FALSE};
         res = (*EngineItf)->CreateOutputMix(EngineItf, &OutputMix, 0, ids, req);
     }
 
@@ -149,25 +149,25 @@ void AudioDriverOpenSL::start() {
     // bufferQueue.numBuffers = BUFFER_COUNT; /* Four buffers in our buffer
     // queue */
     /* Setup the format of the content in the buffer queue */
-    pcm.formatType = SL_DATAFORMAT_PCM;
-    pcm.numChannels = 2;
+    pcm.formatType    = SL_DATAFORMAT_PCM;
+    pcm.numChannels   = 2;
     pcm.samplesPerSec = SL_SAMPLINGRATE_44_1;
     pcm.bitsPerSample = SL_PCMSAMPLEFORMAT_FIXED_16;
     pcm.containerSize = SL_PCMSAMPLEFORMAT_FIXED_16;
-    pcm.channelMask = SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT;
+    pcm.channelMask   = SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT;
 #ifdef BIG_ENDIAN_ENABLED
     pcm.endianness = SL_BYTEORDER_BIGENDIAN;
 #else
     pcm.endianness = SL_BYTEORDER_LITTLEENDIAN;
 #endif
-    audioSource.pFormat = (void*)&pcm;
+    audioSource.pFormat  = (void*)&pcm;
     audioSource.pLocator = (void*)&loc_bufq;
 
     /* Setup the data sink structure */
     locator_outputmix.locatorType = SL_DATALOCATOR_OUTPUTMIX;
-    locator_outputmix.outputMix = OutputMix;
-    audioSink.pLocator = (void*)&locator_outputmix;
-    audioSink.pFormat = NULL;
+    locator_outputmix.outputMix   = OutputMix;
+    audioSink.pLocator            = (void*)&locator_outputmix;
+    audioSink.pFormat             = NULL;
     /* Initialize the context for Buffer queue callbacks */
     // cntxt.pDataBase = (void*)&pcmData;
     // cntxt.pData = cntxt.pDataBase;
@@ -177,7 +177,7 @@ void AudioDriverOpenSL::start() {
 
     {
         const SLInterfaceID ids[2] = {SL_IID_BUFFERQUEUE, SL_IID_EFFECTSEND};
-        const SLboolean req[2] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
+        const SLboolean req[2]     = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
 
         res = (*EngineItf)
                   ->CreateAudioPlayer(
@@ -408,7 +408,7 @@ void AudioDriverOpenSL::set_pause(bool p_pause) {
 }
 
 AudioDriverOpenSL::AudioDriverOpenSL() {
-    s_ad = this;
-    pause = false;
+    s_ad   = this;
+    pause  = false;
     active = false;
 }

@@ -52,9 +52,9 @@ Size2 CheckButton::get_icon_size() const {
 }
 
 Size2 CheckButton::get_minimum_size() const {
-    Size2 minsize = Button::get_minimum_size();
-    Size2 tex_size = get_icon_size();
-    minsize.width += tex_size.width;
+    Size2 minsize   = Button::get_minimum_size();
+    Size2 tex_size  = get_icon_size();
+    minsize.width  += tex_size.width;
     if (get_text().length() > 0) {
         minsize.width += get_constant("hseparation");
     }

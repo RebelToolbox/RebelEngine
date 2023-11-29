@@ -39,12 +39,12 @@ void CollisionObject2DSW::add_shape(
     bool p_disabled
 ) {
     Shape s;
-    s.shape = p_shape;
-    s.xform = p_transform;
-    s.xform_inv = s.xform.affine_inverse();
-    s.bpid = 0; // needs update
-    s.disabled = p_disabled;
-    s.one_way_collision = false;
+    s.shape                    = p_shape;
+    s.xform                    = p_transform;
+    s.xform_inv                = s.xform.affine_inverse();
+    s.bpid                     = 0; // needs update
+    s.disabled                 = p_disabled;
+    s.one_way_collision        = false;
     s.one_way_collision_margin = 0;
     shapes.push_back(s);
     p_shape->add_owner(this);
@@ -84,7 +84,7 @@ void CollisionObject2DSW::set_shape_transform(
 ) {
     ERR_FAIL_INDEX(p_index, shapes.size());
 
-    shapes.write[p_index].xform = p_transform;
+    shapes.write[p_index].xform     = p_transform;
     shapes.write[p_index].xform_inv = p_transform.affine_inverse();
 
     if (!pending_shape_update_list.in_list()) {
@@ -196,9 +196,9 @@ void CollisionObject2DSW::_update_shapes() {
         }
 
         // not quite correct, should compute the next matrix..
-        Rect2 shape_aabb = s.shape->get_aabb();
+        Rect2 shape_aabb  = s.shape->get_aabb();
         Transform2D xform = transform * s.xform;
-        shape_aabb = xform.xform(shape_aabb);
+        shape_aabb        = xform.xform(shape_aabb);
         shape_aabb.grow_by(
             (s.aabb_cache.size.x + s.aabb_cache.size.y) * 0.5 * 0.05
         );
@@ -243,10 +243,10 @@ void CollisionObject2DSW::_update_shapes_with_motion(const Vector2& p_motion) {
         }
 
         // not quite correct, should compute the next matrix..
-        Rect2 shape_aabb = s.shape->get_aabb();
+        Rect2 shape_aabb  = s.shape->get_aabb();
         Transform2D xform = transform * s.xform;
-        shape_aabb = xform.xform(shape_aabb);
-        shape_aabb = shape_aabb.merge(
+        shape_aabb        = xform.xform(shape_aabb);
+        shape_aabb        = shape_aabb.merge(
             Rect2(shape_aabb.position + p_motion, shape_aabb.size)
         ); // use motion
         s.aabb_cache = shape_aabb;
@@ -289,12 +289,12 @@ void CollisionObject2DSW::_shape_changed() {
 
 CollisionObject2DSW::CollisionObject2DSW(Type p_type) :
     pending_shape_update_list(this) {
-    _static = true;
-    type = p_type;
-    space = nullptr;
-    instance_id = 0;
+    _static            = true;
+    type               = p_type;
+    space              = nullptr;
+    instance_id        = 0;
     canvas_instance_id = 0;
-    collision_mask = 1;
-    collision_layer = 1;
-    pickable = true;
+    collision_mask     = 1;
+    collision_layer    = 1;
+    pickable           = true;
 }

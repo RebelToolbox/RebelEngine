@@ -119,9 +119,9 @@ uniform float blend_amount;
 
 #ifdef ENABLE_OCTAHEDRAL_COMPRESSION
 vec3 oct_to_vec3(vec2 e) {
-    vec3 v = vec3(e.xy, 1.0 - abs(e.x) - abs(e.y));
-    float t = max(-v.z, 0.0);
-    v.xy += t * -sign(v.xy);
+    vec3 v   = vec3(e.xy, 1.0 - abs(e.x) - abs(e.y));
+    float t  = max(-v.z, 0.0);
+    v.xy    += t * -sign(v.xy);
     return normalize(v);
 }
 #endif
@@ -173,7 +173,7 @@ void main() {
 
 #ifdef ENABLE_SKELETON
 
-    bone_out = bone_attrib_blend;
+    bone_out   = bone_attrib_blend;
     weight_out = weight_attrib_blend + weight_attrib * blend_amount;
 #endif
 
@@ -199,7 +199,7 @@ void main() {
     tangent_out.w = sign(normal_tangent_attrib.w);
 #else
     tangent_out.xyz = tangent_attrib.xyz * blend_amount;
-    tangent_out.w = tangent_attrib.w; // just copy, no point in blending his
+    tangent_out.w   = tangent_attrib.w; // just copy, no point in blending his
 #endif
 #endif
 
@@ -220,7 +220,7 @@ void main() {
 
 #ifdef ENABLE_SKELETON
 
-    bone_out = bone_attrib;
+    bone_out   = bone_attrib;
     weight_out = weight_attrib * blend_amount;
 #endif
 

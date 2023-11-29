@@ -95,7 +95,7 @@ void WebRTCDataChannelJS::_on_message(
     int p_size,
     int p_is_string
 ) {
-    WebRTCDataChannelJS* peer = static_cast<WebRTCDataChannelJS*>(p_obj);
+    WebRTCDataChannelJS* peer      = static_cast<WebRTCDataChannelJS*>(p_obj);
     RingBuffer<uint8_t>& in_buffer = peer->in_buffer;
 
     ERR_FAIL_COND_MSG(
@@ -139,10 +139,10 @@ Error WebRTCDataChannelJS::get_packet(
         return ERR_UNAVAILABLE;
     }
 
-    uint32_t to_read = 0;
-    uint32_t left = 0;
+    uint32_t to_read  = 0;
+    uint32_t left     = 0;
     uint8_t is_string = 0;
-    r_buffer_size = 0;
+    r_buffer_size     = 0;
 
     in_buffer.read((uint8_t*)&to_read, 4);
     --queue_count;
@@ -156,7 +156,7 @@ Error WebRTCDataChannelJS::get_packet(
     in_buffer.read(&is_string, 1);
     _was_string = is_string == 1;
     in_buffer.read(packet_buffer, to_read);
-    *r_buffer = packet_buffer;
+    *r_buffer     = packet_buffer;
     r_buffer_size = to_read;
 
     return OK;
@@ -225,14 +225,14 @@ WebRTCDataChannelJS::WebRTCDataChannelJS() {
     queue_count = 0;
     _was_string = false;
     _write_mode = WRITE_MODE_BINARY;
-    _js_id = 0;
+    _js_id      = 0;
 }
 
 WebRTCDataChannelJS::WebRTCDataChannelJS(int js_id) {
     queue_count = 0;
     _was_string = false;
     _write_mode = WRITE_MODE_BINARY;
-    _js_id = js_id;
+    _js_id      = js_id;
 
     godot_js_rtc_datachannel_connect(
         js_id,

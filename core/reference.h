@@ -235,7 +235,7 @@ public:
         RefPtr refptr = p_variant;
         Ref<Reference>* irr =
             reinterpret_cast<Ref<Reference>*>(refptr.get_data());
-        reference = nullptr;
+        reference       = nullptr;
         Reference* refb = irr->ptr();
         if (!refb) {
             unref();
@@ -250,7 +250,7 @@ public:
     Ref(const RefPtr& p_refptr) {
         Ref<Reference>* irr =
             reinterpret_cast<Ref<Reference>*>(p_refptr.get_data());
-        reference = nullptr;
+        reference       = nullptr;
         Reference* refb = irr->ptr();
         if (!refb) {
             unref();
@@ -345,7 +345,7 @@ struct PtrToArg<RefPtr> {
     }
 
     _FORCE_INLINE_ static void encode(RefPtr p_val, const void* p_ptr) {
-        Ref<Reference> r = p_val;
+        Ref<Reference> r        = p_val;
         *(Ref<Reference>*)p_ptr = r;
     }
 };

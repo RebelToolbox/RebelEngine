@@ -75,7 +75,7 @@ CameraServer* CameraServer::get_singleton() {
 
 int CameraServer::get_free_id() {
     bool id_exists = true;
-    int newid = 0;
+    int newid      = 0;
 
     // find a free id
     while (id_exists) {

@@ -177,7 +177,7 @@ private:
 #endif
 
     const char* sbegin = nullptr;
-    const char* send = nullptr;
+    const char* send   = nullptr;
     const TokenType type;
 
     union {

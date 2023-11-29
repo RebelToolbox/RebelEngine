@@ -109,8 +109,8 @@ int PortalRoomsBSP::find_room_within(
     const Vector3& p_pos,
     int p_previous_room_id
 ) const {
-    real_t closest = FLT_MAX;
-    int closest_room_id = -1;
+    real_t closest       = FLT_MAX;
+    int closest_room_id  = -1;
     int closest_priority = -10000;
 
     // first try previous room
@@ -122,7 +122,7 @@ int PortalRoomsBSP::find_room_within(
         // rooms. otherwise the point may be inside more than one room, and we
         // need to find the room of highest priority.
         if (!prev_room._contains_internal_rooms) {
-            closest = prev_room.is_point_within(p_pos);
+            closest         = prev_room.is_point_within(p_pos);
             closest_room_id = p_previous_room_id;
 
             if (closest < 0.0) {
@@ -135,7 +135,7 @@ int PortalRoomsBSP::find_room_within(
         }
     }
 
-    int num_bsp_rooms = 0;
+    int num_bsp_rooms        = 0;
     const int32_t* bsp_rooms = find_shortlist(p_pos, num_bsp_rooms);
     if (!num_bsp_rooms) {
         return -1;
@@ -156,14 +156,14 @@ int PortalRoomsBSP::find_room_within(
         }
 
         const VSRoom& room = p_portal_renderer.get_room(room_id);
-        real_t dist = room.is_point_within(p_pos);
+        real_t dist        = room.is_point_within(p_pos);
 
         // if we are actually inside a room, unless we are dealing with internal
         // rooms, we can terminate early, no need to search more
         if (dist < 0.0) {
             if (!room._contains_internal_rooms) {
                 // this will happen in most cases
-                closest = dist;
+                closest         = dist;
                 closest_room_id = room_id;
                 break;
             } else {
@@ -174,8 +174,8 @@ int PortalRoomsBSP::find_room_within(
                 if ((room._priority > closest_priority)
                     || ((room._priority == closest_priority) && (dist < closest)
                     )) {
-                    closest = dist;
-                    closest_room_id = room_id;
+                    closest          = dist;
+                    closest_room_id  = room_id;
                     closest_priority = room._priority;
                     continue;
                 }
@@ -184,7 +184,7 @@ int PortalRoomsBSP::find_room_within(
             // if we are outside we just pick the closest room, irrespective of
             // priority
             if (dist < closest) {
-                closest = dist;
+                closest         = dist;
                 closest_room_id = room_id;
                 // do NOT store the priority, we don't want an room that isn't a
                 // true hit overriding a hit inside the room
@@ -261,7 +261,7 @@ void PortalRoomsBSP::build(
     };
 
     Element first;
-    first.node_id = p_start_node_id;
+    first.node_id  = p_start_node_id;
     first.room_ids = p_orig_room_ids;
 
     LocalVector<Element, int32_t> stack;
@@ -275,19 +275,19 @@ void PortalRoomsBSP::build(
 
         Node* node = &_nodes[curr.node_id];
 
-        int best_fit = 0;
+        int best_fit       = 0;
         int best_portal_id = -1;
-        int best_room_a = -1;
-        int best_room_b = -1;
+        int best_room_a    = -1;
+        int best_room_b    = -1;
 
         // find a splitting plane
         for (int n = 0; n < curr.room_ids.size(); n++) {
             // go through the portals in this room
-            int rid = curr.room_ids[n];
+            int rid            = curr.room_ids[n];
             const VSRoom& room = _portal_renderer->get_room(rid);
 
             for (int p = 0; p < room._portal_ids.size(); p++) {
-                int pid = room._portal_ids[p];
+                int pid                = room._portal_ids[p];
                 // only outward portals
                 const VSPortal& portal = _portal_renderer->get_portal(pid);
                 if (portal._linkedroom_ID[1] == rid) {
@@ -296,7 +296,7 @@ void PortalRoomsBSP::build(
 
                 int fit = evaluate_portal(pid, curr.room_ids);
                 if (fit > best_fit) {
-                    best_fit = fit;
+                    best_fit       = fit;
                     best_portal_id = pid;
                 }
             }
@@ -407,9 +407,9 @@ void PortalRoomsBSP::build(
 
         } else {
             // couldn't split any further, is leaf
-            node->leaf = true;
+            node->leaf     = true;
             node->first_id = _room_ids.size();
-            node->num_ids = curr.room_ids.size();
+            node->num_ids  = curr.room_ids.size();
 
             _log("leaf contains : " + itos(curr.room_ids.size()) + " rooms");
 
@@ -434,8 +434,8 @@ void PortalRoomsBSP::debug_print_tree(int p_node_id, int p_depth) {
     if (node.leaf) {
         string += "L ";
         for (int n = 0; n < node.num_ids; n++) {
-            int room_id = _room_ids[node.first_id + n];
-            string += itos(room_id) + ", ";
+            int room_id  = _room_ids[node.first_id + n];
+            string      += itos(room_id) + ", ";
         }
     } else {
         string += "N ";
@@ -559,8 +559,8 @@ bool PortalRoomsBSP::calculate_aabb_splitting_plane(
 
     const Vector3& min_a = p_a.position;
     const Vector3& min_b = p_b.position;
-    Vector3 max_a = min_a + p_a.size;
-    Vector3 max_b = min_b + p_b.size;
+    Vector3 max_a        = min_a + p_a.size;
+    Vector3 max_b        = min_b + p_b.size;
 
     if (find_1d_split_point(min_a.x, max_a.x, min_b.x, max_b.x, split_point)) {
         r_plane = Plane(Vector3(1, 0, 0), split_point);
@@ -623,7 +623,7 @@ int PortalRoomsBSP::evaluate_plane(
     LocalVector<int32_t, int32_t>* r_room_ids_front
 ) {
     int rooms_front = 0;
-    int rooms_back = 0;
+    int rooms_back  = 0;
 
     if (r_room_ids_back) {
         DEV_ASSERT(!r_room_ids_back->size());
@@ -646,7 +646,7 @@ int PortalRoomsBSP::evaluate_plane(
     }
 
     for (int n = 0; n < p_room_ids.size(); n++) {
-        int rid = p_room_ids[n];
+        int rid            = p_room_ids[n];
         const VSRoom& room = _portal_renderer->get_room(rid);
 
         // easy cases first
@@ -682,11 +682,11 @@ int PortalRoomsBSP::evaluate_plane(
         // This will catch some off axis rooms that aren't caught by the AABB
         // alone
         int points_front = 0;
-        int points_back = 0;
+        int points_back  = 0;
 
         for (int p = 0; p < room._verts.size(); p++) {
             const Vector3& pt = room._verts[p];
-            real_t dist = p_plane.distance_to(pt);
+            real_t dist       = p_plane.distance_to(pt);
 
             // don't take account of points in the epsilon zone,
             // these are within the margin of error and could be in front OR
@@ -738,7 +738,7 @@ int PortalRoomsBSP::evaluate_portal(
     LocalVector<int32_t, int32_t>* r_room_ids_front
 ) {
     const VSPortal& portal = _portal_renderer->get_portal(p_portal_id);
-    const Plane& plane = portal._plane;
+    const Plane& plane     = portal._plane;
 
     return evaluate_plane(
         &portal,

@@ -72,11 +72,11 @@ int G6DOFRotationalLimitMotorSW::testLimitValue(real_t test_value) {
     }
 
     if (test_value < m_loLimit) {
-        m_currentLimit = 1; // low limit violation
+        m_currentLimit      = 1; // low limit violation
         m_currentLimitError = test_value - m_loLimit;
         return 1;
     } else if (test_value > m_hiLimit) {
-        m_currentLimit = 2; // High limit violation
+        m_currentLimit      = 2; // High limit violation
         m_currentLimitError = test_value - m_hiLimit;
         return 2;
     };
@@ -97,12 +97,12 @@ real_t G6DOFRotationalLimitMotorSW::solveAngularLimits(
     }
 
     real_t target_velocity = m_targetVelocity;
-    real_t maxMotorForce = m_maxMotorForce;
+    real_t maxMotorForce   = m_maxMotorForce;
 
     // current error correction
     if (m_currentLimit != 0) {
         target_velocity = -m_ERP * m_currentLimitError / (timeStep);
-        maxMotorForce = m_maxLimitForce;
+        maxMotorForce   = m_maxLimitForce;
     }
 
     maxMotorForce *= timeStep;
@@ -145,7 +145,7 @@ real_t G6DOFRotationalLimitMotorSW::solveAngularLimits(
     real_t hi = real_t(1e30);
 
     real_t oldaccumImpulse = m_accumulatedImpulse;
-    real_t sum = oldaccumImpulse + clippedMotorImpulse;
+    real_t sum             = oldaccumImpulse + clippedMotorImpulse;
     m_accumulatedImpulse =
         sum > hi ? real_t(0.) : (sum < lo ? real_t(0.) : sum);
 
@@ -185,7 +185,7 @@ real_t G6DOFTranslationalLimitMotorSW::solveLinearAxis(
 
     Vector3 vel1 = body1->get_velocity_in_local_point(rel_pos1);
     Vector3 vel2 = body2->get_velocity_in_local_point(rel_pos2);
-    Vector3 vel = vel1 - vel2;
+    Vector3 vel  = vel1 - vel2;
 
     real_t rel_vel = axis_normal_on_a.dot(vel);
 
@@ -193,8 +193,8 @@ real_t G6DOFTranslationalLimitMotorSW::solveLinearAxis(
 
     // positional error (zeroth order error)
     real_t depth = -(pointInA - pointInB).dot(axis_normal_on_a);
-    real_t lo = real_t(-1e30);
-    real_t hi = real_t(1e30);
+    real_t lo    = real_t(-1e30);
+    real_t hi    = real_t(1e30);
 
     real_t minLimit = m_lowerLimit[limit_index];
     real_t maxLimit = m_upperLimit[limit_index];
@@ -203,12 +203,12 @@ real_t G6DOFTranslationalLimitMotorSW::solveLinearAxis(
     if (minLimit < maxLimit) {
         if (depth > maxLimit) {
             depth -= maxLimit;
-            lo = real_t(0.);
+            lo     = real_t(0.);
 
         } else {
             if (depth < minLimit) {
                 depth -= minLimit;
-                hi = real_t(0.);
+                hi     = real_t(0.);
             } else {
                 return 0.0f;
             }
@@ -221,7 +221,7 @@ real_t G6DOFTranslationalLimitMotorSW::solveLinearAxis(
                          * jacDiagABInv;
 
     real_t oldNormalImpulse = m_accumulatedImpulse[limit_index];
-    real_t sum = oldNormalImpulse + normalImpulse;
+    real_t sum              = oldNormalImpulse + normalImpulse;
     m_accumulatedImpulse[limit_index] =
         sum > hi ? real_t(0.) : (sum < lo ? real_t(0.) : sum);
     normalImpulse = m_accumulatedImpulse[limit_index] - oldNormalImpulse;
@@ -488,7 +488,7 @@ void Generic6DOFJointSW::calcAnchorPos() {
     }
     const Vector3& pA = m_calculatedTransformA.origin;
     const Vector3& pB = m_calculatedTransformB.origin;
-    m_AnchorPos = pA * weight + pB * (real_t(1.0) - weight);
+    m_AnchorPos       = pA * weight + pB * (real_t(1.0) - weight);
 } // Generic6DOFJointSW::calcAnchorPos()
 
 void Generic6DOFJointSW::set_param(

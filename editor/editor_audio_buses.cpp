@@ -139,8 +139,8 @@ void EditorAudioBus::_notification(int p_what) {
             }
 
             if (get_index() != 0 && hovering_drop) {
-                Color accent = get_color("accent_color", "Editor");
-                accent.a *= 0.7;
+                Color accent  = get_color("accent_color", "Editor");
+                accent.a     *= 0.7;
                 draw_rect(Rect2(Point2(), get_size()), accent, false);
             }
         } break;
@@ -154,7 +154,7 @@ void EditorAudioBus::_notification(int p_what) {
             }
 
             for (int i = 0; i < cc; i++) {
-                float real_peak[2] = {-100, -100};
+                float real_peak[2]  = {-100, -100};
                 bool activity_found = false;
 
                 if (AudioServer::get_singleton()
@@ -200,8 +200,8 @@ void EditorAudioBus::_notification(int p_what) {
         } break;
         case NOTIFICATION_VISIBILITY_CHANGED: {
             for (int i = 0; i < CHANNELS_MAX; i++) {
-                channel[i].peak_l = -100;
-                channel[i].peak_r = -100;
+                channel[i].peak_l      = -100;
+                channel[i].peak_r      = -100;
                 channel[i].prev_active = true;
             }
 
@@ -301,7 +301,7 @@ void EditorAudioBus::_name_changed(const String& p_new_name) {
     }
 
     String attempt = p_new_name;
-    int attempts = 1;
+    int attempts   = 1;
 
     while (true) {
         bool name_free = true;
@@ -475,10 +475,10 @@ void EditorAudioBus::_show_value(float slider_value) {
     // dragged).
     slider->set_tooltip(text);
     audio_value_preview_label->set_text(text);
-    const Vector2 slider_size = slider->get_size();
+    const Vector2 slider_size     = slider->get_size();
     const Vector2 slider_position = slider->get_global_position();
-    const float vert_padding = 10.0f;
-    const Vector2 box_position = Vector2(
+    const float vert_padding      = 10.0f;
+    const Vector2 box_position    = Vector2(
         slider_size.x,
         (slider_size.y - vert_padding) * (1.0f - slider->get_value())
             - vert_padding
@@ -630,7 +630,7 @@ void EditorAudioBus::_effect_edited() {
         effect_options->popup();
         // add effect
     } else {
-        int index = effect->get_metadata(0);
+        int index    = effect->get_metadata(0);
         updating_bus = true;
 
         UndoRedo* ur = EditorNode::get_undo_redo();
@@ -740,7 +740,7 @@ Variant EditorAudioBus::get_drag_data(const Point2& p_point) {
     }
 
     Control* c = memnew(Control);
-    Panel* p = memnew(Panel);
+    Panel* p   = memnew(Panel);
     c->add_child(p);
     p->set_modulate(Color(1, 1, 1, 0.7));
     p->add_style_override("panel", get_stylebox("focus", "Button"));
@@ -748,7 +748,7 @@ Variant EditorAudioBus::get_drag_data(const Point2& p_point) {
     p->set_position(-p_point);
     set_drag_preview(c);
     Dictionary d;
-    d["type"] = "move_audio_bus";
+    d["type"]  = "move_audio_bus";
     d["index"] = get_index();
 
     if (get_index() < AudioServer::get_singleton()->get_bus_count() - 1) {
@@ -791,8 +791,8 @@ Variant EditorAudioBus::get_drag_data_fw(
     Variant md = item->get_metadata(0);
     if (md.get_type() == Variant::INT) {
         Dictionary fxd;
-        fxd["type"] = "audio_bus_effect";
-        fxd["bus"] = get_index();
+        fxd["type"]   = "audio_bus_effect";
+        fxd["bus"]    = get_index();
         fxd["effect"] = md;
 
         Label* l = memnew(Label);
@@ -836,11 +836,11 @@ void EditorAudioBus::drop_data_fw(
     if (!item) {
         return;
     }
-    int pos = effects->get_drop_section_at_position(p_point);
+    int pos    = effects->get_drop_section_at_position(p_point);
     Variant md = item->get_metadata(0);
 
     int paste_at;
-    int bus = d["bus"];
+    int bus    = d["bus"];
     int effect = d["effect"];
 
     if (md.get_type() == Variant::INT) {
@@ -1021,9 +1021,9 @@ void EditorAudioBus::_bind_methods() {
 }
 
 EditorAudioBus::EditorAudioBus(EditorAudioBuses* p_buses, bool p_is_master) {
-    buses = p_buses;
-    updating_bus = false;
-    is_master = p_is_master;
+    buses         = p_buses;
+    updating_bus  = false;
+    is_master     = p_is_master;
     hovering_drop = false;
 
     set_tooltip(TTR("Drag & drop to rearrange."));
@@ -1215,8 +1215,8 @@ void EditorAudioBusDrop::_notification(int p_what) {
             );
 
             if (hovering_drop) {
-                Color accent = get_color("accent_color", "Editor");
-                accent.a *= 0.7;
+                Color accent  = get_color("accent_color", "Editor");
+                accent.a     *= 0.7;
                 draw_rect(Rect2(Point2(), get_size()), accent, false);
             }
         } break;
@@ -1272,7 +1272,7 @@ void EditorAudioBuses::_update_buses() {
     drop_end = nullptr;
 
     for (int i = 0; i < AudioServer::get_singleton()->get_bus_count(); i++) {
-        bool is_master = (i == 0);
+        bool is_master            = (i == 0);
         EditorAudioBus* audio_bus = memnew(EditorAudioBus(this, is_master));
         bus_hb->add_child(audio_bus);
         audio_bus->connect(
@@ -1392,7 +1392,7 @@ void EditorAudioBuses::_update_sends() {
 
 void EditorAudioBuses::_delete_bus(Object* p_which) {
     EditorAudioBus* bus = Object::cast_to<EditorAudioBus>(p_which);
-    int index = bus->get_index();
+    int index           = bus->get_index();
     if (index == 0) {
         EditorNode::get_singleton()->show_warning(
             TTR("Master bus can't be deleted!")
@@ -1465,7 +1465,7 @@ void EditorAudioBuses::_delete_bus(Object* p_which) {
 
 void EditorAudioBuses::_duplicate_bus(int p_which) {
     int add_at_pos = p_which + 1;
-    UndoRedo* ur = EditorNode::get_undo_redo();
+    UndoRedo* ur   = EditorNode::get_undo_redo();
     ur->create_action(TTR("Duplicate Audio Bus"));
     ur->add_do_method(AudioServer::get_singleton(), "add_bus", add_at_pos);
     ur->add_do_method(
@@ -1529,7 +1529,7 @@ void EditorAudioBuses::_duplicate_bus(int p_which) {
 
 void EditorAudioBuses::_reset_bus_volume(Object* p_which) {
     EditorAudioBus* bus = Object::cast_to<EditorAudioBus>(p_which);
-    int index = bus->get_index();
+    int index           = bus->get_index();
 
     UndoRedo* ur = EditorNode::get_undo_redo();
     ur->create_action(TTR("Reset Bus Volume"));
@@ -1573,7 +1573,7 @@ void EditorAudioBuses::_drop_at_index(int p_bus, int p_index) {
     ur->create_action(TTR("Move Audio Bus"));
 
     ur->add_do_method(AudioServer::get_singleton(), "move_bus", p_bus, p_index);
-    int real_bus = p_index > p_bus ? p_bus : p_bus + 1;
+    int real_bus   = p_index > p_bus ? p_bus : p_bus + 1;
     int real_index = p_index > p_bus ? p_index - 1 : p_index;
     ur->add_undo_method(
         AudioServer::get_singleton(),
@@ -1720,7 +1720,7 @@ void EditorAudioBuses::_bind_methods() {
 
 EditorAudioBuses::EditorAudioBuses() {
     drop_end = nullptr;
-    top_hb = memnew(HBoxContainer);
+    top_hb   = memnew(HBoxContainer);
     add_child(top_hb);
 
     file = memnew(Label);
@@ -1847,10 +1847,10 @@ void EditorAudioMeterNotches::add_notch(
 }
 
 Size2 EditorAudioMeterNotches::get_minimum_size() const {
-    Ref<Font> font = get_font("font", "Label");
+    Ref<Font> font    = get_font("font", "Label");
     float font_height = font->get_height();
 
-    float width = 0;
+    float width  = 0;
     float height = top_padding + btm_padding;
 
     for (int i = 0; i < notches.size(); i++) {
@@ -1889,7 +1889,7 @@ void EditorAudioMeterNotches::_notification(int p_what) {
 }
 
 void EditorAudioMeterNotches::_draw_audio_notches() {
-    Ref<Font> font = get_font("font", "Label");
+    Ref<Font> font    = get_font("font", "Label");
     float font_height = font->get_height();
 
     for (int i = 0; i < notches.size(); i++) {

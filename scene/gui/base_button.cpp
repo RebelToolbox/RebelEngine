@@ -44,7 +44,7 @@ void BaseButton::_unpress_group() {
     }
 
     for (Set<BaseButton*>::Element* E = button_group->buttons.front(); E;
-         E = E->next()) {
+         E                            = E->next()) {
         if (E->get() == this) {
             continue;
         }
@@ -120,8 +120,8 @@ void BaseButton::_notification(int p_what) {
         if (!toggle_mode) {
             status.pressed = false;
         }
-        status.hovering = false;
-        status.press_attempt = false;
+        status.hovering        = false;
+        status.press_attempt   = false;
         status.pressing_inside = false;
     }
 }
@@ -148,7 +148,7 @@ void BaseButton::_toggled(bool p_pressed) {
 
 void BaseButton::on_action_event(Ref<InputEvent> p_event) {
     if (p_event->is_pressed()) {
-        status.press_attempt = true;
+        status.press_attempt   = true;
         status.pressing_inside = true;
         emit_signal("button_down");
     }
@@ -160,7 +160,7 @@ void BaseButton::on_action_event(Ref<InputEvent> p_event) {
                 || (!p_event->is_pressed()
                     && action_mode == ACTION_MODE_BUTTON_RELEASE)) {
                 if (action_mode == ACTION_MODE_BUTTON_PRESS) {
-                    status.press_attempt = false;
+                    status.press_attempt   = false;
                     status.pressing_inside = false;
                 }
                 status.pressed = !status.pressed;
@@ -188,7 +188,7 @@ void BaseButton::on_action_event(Ref<InputEvent> p_event) {
                 status.hovering = false;
             }
         }
-        status.press_attempt = false;
+        status.press_attempt   = false;
         status.pressing_inside = false;
         emit_signal("button_up");
     }
@@ -210,7 +210,7 @@ void BaseButton::set_disabled(bool p_disabled) {
         if (!toggle_mode) {
             status.pressed = false;
         }
-        status.press_attempt = false;
+        status.press_attempt   = false;
         status.pressing_inside = false;
     }
     update();
@@ -589,18 +589,18 @@ void BaseButton::_bind_methods() {
 }
 
 BaseButton::BaseButton() {
-    toggle_mode = false;
-    shortcut_in_tooltip = true;
-    keep_pressed_outside = false;
-    status.pressed = false;
-    status.press_attempt = false;
-    status.hovering = false;
+    toggle_mode            = false;
+    shortcut_in_tooltip    = true;
+    keep_pressed_outside   = false;
+    status.pressed         = false;
+    status.press_attempt   = false;
+    status.hovering        = false;
     status.pressing_inside = false;
-    status.disabled = false;
+    status.disabled        = false;
     set_focus_mode(FOCUS_ALL);
     enabled_focus_mode = FOCUS_ALL;
-    action_mode = ACTION_MODE_BUTTON_RELEASE;
-    button_mask = BUTTON_MASK_LEFT;
+    action_mode        = ACTION_MODE_BUTTON_RELEASE;
+    button_mask        = BUTTON_MASK_LEFT;
 }
 
 BaseButton::~BaseButton() {

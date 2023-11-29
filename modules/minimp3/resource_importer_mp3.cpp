@@ -89,7 +89,7 @@ Error ResourceImporterMP3::import(
     List<String>* r_gen_files,
     Variant* r_metadata
 ) {
-    bool loop = p_options["loop"];
+    bool loop         = p_options["loop"];
     float loop_offset = p_options["loop_offset"];
 
     FileAccess* f = FileAccess::open(p_source_file, FileAccess::READ);

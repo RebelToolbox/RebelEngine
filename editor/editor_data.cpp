@@ -93,8 +93,8 @@ void EditorHistory::_add_object(
     if (r) {
         o.ref = REF(r);
     }
-    o.object = p_object;
-    o.property = p_property;
+    o.object         = p_object;
+    o.property       = p_property;
     o.inspector_only = p_inspector_only;
 
     History h;
@@ -108,14 +108,14 @@ void EditorHistory::_add_object(
     if (p_property != "" && has_prev) {
         // add a sub property
         History& pr = history.write[current];
-        h = pr;
+        h           = pr;
         h.path.resize(h.level + 1);
         h.path.push_back(o);
         h.level++;
     } else if (p_level_change != -1 && has_prev) {
         // add a sub property
         History& pr = history.write[current];
-        h = pr;
+        h           = pr;
         ERR_FAIL_INDEX(p_level_change, h.path.size());
         h.level = p_level_change;
     } else {
@@ -210,7 +210,7 @@ ObjectID EditorHistory::get_current() {
         return 0;
     }
 
-    History& h = history.write[current];
+    History& h  = history.write[current];
     Object* obj = ObjectDB::get_instance(h.path[h.level].object);
     if (!obj) {
         return 0;
@@ -322,7 +322,7 @@ void EditorData::copy_object_params(Object* p_object) {
         }
 
         PropertyData pd;
-        pd.name = E->get().name;
+        pd.name  = E->get().name;
         pd.value = p_object->get(pd.name);
         clipboard.push_back(pd);
     }
@@ -360,7 +360,7 @@ void EditorData::set_editor_states(const Dictionary& p_states) {
     List<Variant>::Element* E = keys.front();
     for (; E; E = E->next()) {
         String name = E->get();
-        int idx = -1;
+        int idx     = -1;
         for (int i = 0; i < editor_plugins.size(); i++) {
             if (editor_plugins[i]->get_name() == name) {
                 idx = i;
@@ -473,8 +473,8 @@ void EditorData::add_custom_type(
         "It's not a reference to a valid Script object."
     );
     CustomType ct;
-    ct.name = p_type;
-    ct.icon = p_icon;
+    ct.name   = p_type;
+    ct.icon   = p_icon;
     ct.script = p_script;
     if (!custom_types.has(p_inherits)) {
         custom_types[p_inherits] = Vector<CustomType>();
@@ -509,7 +509,7 @@ Variant EditorData::instance_custom_type(
 
 void EditorData::remove_custom_type(const String& p_type) {
     for (Map<String, Vector<CustomType>>::Element* E = custom_types.front(); E;
-         E = E->next()) {
+         E                                           = E->next()) {
         for (int i = 0; i < E->get().size(); i++) {
             if (E->get()[i].name == p_type) {
                 E->get().remove(i);
@@ -527,12 +527,12 @@ int EditorData::add_edited_scene(int p_at_pos) {
         p_at_pos = edited_scene.size();
     }
     EditedScene es;
-    es.root = nullptr;
-    es.path = String();
+    es.root               = nullptr;
+    es.path               = String();
     es.file_modified_time = 0;
-    es.history_current = -1;
-    es.version = 0;
-    es.live_edit_root = NodePath(String("/root"));
+    es.history_current    = -1;
+    es.version            = 0;
+    es.live_edit_root     = NodePath(String("/root"));
 
     if (p_at_pos == edited_scene.size()) {
         edited_scene.push_back(es);
@@ -657,7 +657,7 @@ bool EditorData::check_and_update_scene(int p_idx) {
                  edited_scene.write[p_idx].selection.front();
              E;
              E = E->next()) {
-            NodePath p = edited_scene[p_idx].root->get_path_to(E->get());
+            NodePath p     = edited_scene[p_idx].root->get_path_to(E->get());
             Node* new_node = new_scene->get_node(p);
             if (new_node) {
                 new_selection.push_back(new_node);
@@ -884,12 +884,12 @@ void EditorData::save_edited_scene_state(
 ) {
     ERR_FAIL_INDEX(current_edited_scene, edited_scene.size());
 
-    EditedScene& es = edited_scene.write[current_edited_scene];
-    es.selection = p_selection->get_full_selected_node_list();
+    EditedScene& es    = edited_scene.write[current_edited_scene];
+    es.selection       = p_selection->get_full_selected_node_list();
     es.history_current = p_history->current;
-    es.history_stored = p_history->history;
-    es.editor_states = get_editor_states();
-    es.custom_state = p_custom;
+    es.history_stored  = p_history->history;
+    es.editor_states   = get_editor_states();
+    es.custom_state    = p_custom;
 }
 
 Dictionary EditorData::restore_edited_scene_state(
@@ -1007,7 +1007,7 @@ String EditorData::script_class_get_icon_path(const String& p_class) const {
     }
 
     String current = p_class;
-    String ret = _script_class_icon_paths[current];
+    String ret     = _script_class_icon_paths[current];
     while (ret.empty()) {
         current = script_class_get_base(current);
         if (!ScriptServer::is_global_class(current)) {
@@ -1081,7 +1081,7 @@ void EditorData::script_class_load_icon_paths() {
         d.get_key_list(&keys);
 
         for (List<Variant>::Element* E = keys.front(); E; E = E->next()) {
-            String name = E->get().operator String();
+            String name                    = E->get().operator String();
             _script_class_icon_paths[name] = d[name];
 
             String path = ScriptServer::get_global_class_path(name);
@@ -1108,7 +1108,7 @@ void EditorSelection::_node_removed(Node* p_node) {
         memdelete(meta);
     }
     selection.erase(p_node);
-    changed = true;
+    changed    = true;
     nl_changed = true;
 }
 
@@ -1119,8 +1119,8 @@ void EditorSelection::add_node(Node* p_node) {
         return;
     }
 
-    changed = true;
-    nl_changed = true;
+    changed      = true;
+    nl_changed   = true;
     Object* meta = nullptr;
     for (List<Object*>::Element* E = editor_plugins.front(); E; E = E->next()) {
         meta = E->get()->call("_get_editor_data", p_node);
@@ -1148,8 +1148,8 @@ void EditorSelection::remove_node(Node* p_node) {
         return;
     }
 
-    changed = true;
-    nl_changed = true;
+    changed      = true;
+    nl_changed   = true;
     Object* meta = selection[p_node];
     if (meta) {
         memdelete(meta);
@@ -1167,7 +1167,7 @@ Array EditorSelection::_get_transformable_selected_nodes() {
     Array ret;
 
     for (List<Node*>::Element* E = selected_node_list.front(); E;
-         E = E->next()) {
+         E                       = E->next()) {
         ret.push_back(E->get());
     }
 
@@ -1178,7 +1178,7 @@ Array EditorSelection::get_selected_nodes() {
     Array ret;
 
     for (Map<Node*, Object*>::Element* E = selection.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         ret.push_back(E->key());
     }
 
@@ -1226,10 +1226,10 @@ void EditorSelection::_update_nl() {
     selected_node_list.clear();
 
     for (Map<Node*, Object*>::Element* E = selection.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         Node* parent = E->key();
-        parent = parent->get_parent();
-        bool skip = false;
+        parent       = parent->get_parent();
+        bool skip    = false;
         while (parent) {
             if (selection.has(parent)) {
                 skip = true;
@@ -1277,7 +1277,7 @@ List<Node*>& EditorSelection::get_selected_node_list() {
 List<Node*> EditorSelection::get_full_selected_node_list() {
     List<Node*> node_list;
     for (Map<Node*, Object*>::Element* E = selection.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         node_list.push_back(E->key());
     }
 
@@ -1289,13 +1289,13 @@ void EditorSelection::clear() {
         remove_node(selection.front()->key());
     }
 
-    changed = true;
+    changed    = true;
     nl_changed = true;
 }
 
 EditorSelection::EditorSelection() {
-    emitted = false;
-    changed = false;
+    emitted    = false;
+    changed    = false;
     nl_changed = false;
 }
 

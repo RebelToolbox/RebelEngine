@@ -143,13 +143,13 @@ Error StreamPeerTCP::write(
     }
 
     Error err;
-    int data_to_send = p_bytes;
+    int data_to_send      = p_bytes;
     const uint8_t* offset = p_data;
-    int total_sent = 0;
+    int total_sent        = 0;
 
     while (data_to_send) {
         int sent_amount = 0;
-        err = _sock->send(offset, data_to_send, sent_amount);
+        err             = _sock->send(offset, data_to_send, sent_amount);
 
         if (err != OK) {
             if (err != ERR_BUSY) {
@@ -170,8 +170,8 @@ Error StreamPeerTCP::write(
             }
         } else {
             data_to_send -= sent_amount;
-            offset += sent_amount;
-            total_sent += sent_amount;
+            offset       += sent_amount;
+            total_sent   += sent_amount;
         }
     }
 
@@ -202,13 +202,13 @@ Error StreamPeerTCP::read(
     }
 
     Error err;
-    int to_read = p_bytes;
+    int to_read    = p_bytes;
     int total_read = 0;
-    r_received = 0;
+    r_received     = 0;
 
     while (to_read) {
         int read = 0;
-        err = _sock->recv(p_buffer + total_read, to_read, read);
+        err      = _sock->recv(p_buffer + total_read, to_read, read);
 
         if (err != OK) {
             if (err != ERR_BUSY) {
@@ -234,7 +234,7 @@ Error StreamPeerTCP::read(
             return ERR_FILE_EOF;
 
         } else {
-            to_read -= read;
+            to_read    -= read;
             total_read += read;
 
             if (!p_block) {
@@ -289,8 +289,8 @@ void StreamPeerTCP::disconnect_from_host() {
         _sock->close();
     }
 
-    timeout = 0;
-    status = STATUS_NONE;
+    timeout   = 0;
+    status    = STATUS_NONE;
     peer_host = IP_Address();
     peer_port = 0;
 }

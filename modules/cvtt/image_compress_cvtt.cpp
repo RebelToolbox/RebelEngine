@@ -65,16 +65,16 @@ static void _digest_row_task(
     const CVTTCompressionRowTask& p_row_task
 ) {
     const uint8_t* in_bytes = p_row_task.in_mm_bytes;
-    uint8_t* out_bytes = p_row_task.out_mm_bytes;
-    int w = p_row_task.width;
-    int h = p_row_task.height;
+    uint8_t* out_bytes      = p_row_task.out_mm_bytes;
+    int w                   = p_row_task.width;
+    int h                   = p_row_task.height;
 
     int y_start = p_row_task.y_start;
-    int y_end = y_start + 4;
+    int y_end   = y_start + 4;
 
     int bytes_per_pixel = p_job_params.bytes_per_pixel;
-    bool is_hdr = p_job_params.is_hdr;
-    bool is_signed = p_job_params.is_signed;
+    bool is_hdr         = p_job_params.is_hdr;
+    bool is_signed      = p_job_params.is_signed;
 
     cvtt::PixelBlockU8 input_blocks_ldr[cvtt::NumParallelBlocks];
     cvtt::PixelBlockF16 input_blocks_hdr[cvtt::NumParallelBlocks];
@@ -99,7 +99,7 @@ static void _digest_row_task(
                     pixel_start = row_start + x * bytes_per_pixel;
                 }
 
-                int block_index = (x - x_start) / 4;
+                int block_index   = (x - x_start) / 4;
                 int block_element = (x - x_start) % 4 + first_input_element;
                 if (is_hdr) {
                     memcpy(
@@ -220,7 +220,7 @@ void image_compress_cvtt(
         PoolVector<uint8_t>::Read rb = p_image->get_data().read();
 
         const uint16_t* source_data = reinterpret_cast<const uint16_t*>(&rb[0]);
-        int pixel_element_count = w * h * 3;
+        int pixel_element_count     = w * h * 3;
         for (int i = 0; i < pixel_element_count; i++) {
             if ((source_data[i] & 0x8000) != 0
                 && (source_data[i] & 0x7fff) != 0) {
@@ -251,9 +251,9 @@ void image_compress_cvtt(
     int dst_ofs = 0;
 
     CVTTCompressionJobQueue job_queue;
-    job_queue.job_params.is_hdr = is_hdr;
-    job_queue.job_params.is_signed = is_signed;
-    job_queue.job_params.options = options;
+    job_queue.job_params.is_hdr          = is_hdr;
+    job_queue.job_params.is_signed       = is_signed;
+    job_queue.job_params.options         = options;
     job_queue.job_params.bytes_per_pixel = is_hdr ? 6 : 4;
 
 #ifdef NO_THREADS
@@ -273,14 +273,14 @@ void image_compress_cvtt(
         int src_ofs = p_image->get_mipmap_offset(i);
 
         const uint8_t* in_bytes = &rb[src_ofs];
-        uint8_t* out_bytes = &wb[dst_ofs];
+        uint8_t* out_bytes      = &wb[dst_ofs];
 
         for (int y_start = 0; y_start < h; y_start += 4) {
             CVTTCompressionRowTask row_task;
-            row_task.width = w;
-            row_task.height = h;
-            row_task.y_start = y_start;
-            row_task.in_mm_bytes = in_bytes;
+            row_task.width        = w;
+            row_task.height       = h;
+            row_task.y_start      = y_start;
+            row_task.in_mm_bytes  = in_bytes;
             row_task.out_mm_bytes = out_bytes;
 
             if (num_job_threads > 0) {
@@ -293,8 +293,8 @@ void image_compress_cvtt(
         }
 
         dst_ofs += (MAX(4, bw) * MAX(4, bh)) >> shift;
-        w = MAX(w / 2, 1);
-        h = MAX(h / 2, 1);
+        w        = MAX(w / 2, 1);
+        h        = MAX(h / 2, 1);
     }
 
     if (num_job_threads > 0) {
@@ -333,7 +333,7 @@ void image_compress_cvtt(
 void image_decompress_cvtt(Image* p_image) {
     Image::Format target_format;
     bool is_signed = false;
-    bool is_hdr = false;
+    bool is_hdr    = false;
 
     Image::Format input_format = p_image->get_format();
 
@@ -344,8 +344,8 @@ void image_decompress_cvtt(Image* p_image) {
         case Image::FORMAT_BPTC_RGBF:
         case Image::FORMAT_BPTC_RGBFU:
             target_format = Image::FORMAT_RGBH;
-            is_signed = (input_format == Image::FORMAT_BPTC_RGBF);
-            is_hdr = true;
+            is_signed     = (input_format == Image::FORMAT_BPTC_RGBF);
+            is_hdr        = true;
             break;
         default:
             return; // Invalid input format
@@ -372,7 +372,7 @@ void image_decompress_cvtt(Image* p_image) {
         int src_ofs = p_image->get_mipmap_offset(i);
 
         const uint8_t* in_bytes = &rb[src_ofs];
-        uint8_t* out_bytes = &wb[dst_ofs];
+        uint8_t* out_bytes      = &wb[dst_ofs];
 
         cvtt::PixelBlockU8 output_blocks_ldr[cvtt::NumParallelBlocks];
         cvtt::PixelBlockF16 output_blocks_hdr[cvtt::NumParallelBlocks];
@@ -380,8 +380,8 @@ void image_decompress_cvtt(Image* p_image) {
         for (int y_start = 0; y_start < h; y_start += 4) {
             int y_end = y_start + 4;
 
-            for (int x_start = 0; x_start < w;
-                 x_start += 4 * cvtt::NumParallelBlocks) {
+            for (int x_start  = 0; x_start < w;
+                 x_start     += 4 * cvtt::NumParallelBlocks) {
                 int x_end = x_start + 4 * cvtt::NumParallelBlocks;
 
                 uint8_t input_blocks[16 * cvtt::NumParallelBlocks];
@@ -451,9 +451,9 @@ void image_decompress_cvtt(Image* p_image) {
             }
         }
 
-        dst_ofs += w * h * bytes_per_pixel;
-        w >>= 1;
-        h >>= 1;
+        dst_ofs  += w * h * bytes_per_pixel;
+        w       >>= 1;
+        h       >>= 1;
     }
 
     rb.release();

@@ -274,20 +274,20 @@ void EditorFileServer::_thread_start(void* s) {
         if (self->cmd == CMD_ACTIVATE) {
             self->server->listen(self->port);
             self->active = true;
-            self->cmd = CMD_NONE;
+            self->cmd    = CMD_NONE;
         } else if (self->cmd == CMD_STOP) {
             self->server->stop();
             self->active = false;
-            self->cmd = CMD_NONE;
+            self->cmd    = CMD_NONE;
         }
 
         if (self->active) {
             if (self->server->is_connection_available()) {
                 ClientData* cd = memnew(ClientData);
                 cd->connection = self->server->take_connection();
-                cd->efs = self;
-                cd->quit = false;
-                cd->thread = memnew(Thread);
+                cd->efs        = self;
+                cd->quit       = false;
+                cd->thread     = memnew(Thread);
                 cd->thread->start(_subthread_start, cd);
             }
         }
@@ -308,9 +308,9 @@ void EditorFileServer::_thread_start(void* s) {
 
 void EditorFileServer::start() {
     stop();
-    port = EDITOR_DEF("filesystem/file_server/port", 6010);
+    port     = EDITOR_DEF("filesystem/file_server/port", 6010);
     password = EDITOR_DEF("filesystem/file_server/password", "");
-    cmd = CMD_ACTIVATE;
+    cmd      = CMD_ACTIVATE;
 }
 
 bool EditorFileServer::is_active() const {
@@ -323,9 +323,9 @@ void EditorFileServer::stop() {
 
 EditorFileServer::EditorFileServer() {
     server.instance();
-    quit = false;
+    quit   = false;
     active = false;
-    cmd = CMD_NONE;
+    cmd    = CMD_NONE;
     thread.start(_thread_start, this);
 
     EDITOR_DEF("filesystem/file_server/port", 6010);

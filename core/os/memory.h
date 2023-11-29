@@ -184,9 +184,9 @@ T* memnew_arr_template(size_t p_elements, const char* p_descr = "") {
     array). Because of that, it must be done by hand. This is the same strategy
     used by std::vector, and the PoolVector class, so it should be safe.*/
 
-    size_t len = sizeof(T) * p_elements;
+    size_t len    = sizeof(T) * p_elements;
     uint64_t* mem = (uint64_t*)Memory::alloc_static(len, true);
-    T* failptr = nullptr; // get rid of a warning
+    T* failptr    = nullptr; // get rid of a warning
     ERR_FAIL_COND_V(!mem, failptr);
     *(mem - 1) = p_elements;
 

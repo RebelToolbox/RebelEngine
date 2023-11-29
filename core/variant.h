@@ -534,7 +534,7 @@ public:
         const String& p_string,
         Variant& r_value,
         ObjectConstruct p_obj_construct = nullptr,
-        void* p_construct_ud = nullptr
+        void* p_construct_ud            = nullptr
     );
 
     void operator=(const Variant& p_variant

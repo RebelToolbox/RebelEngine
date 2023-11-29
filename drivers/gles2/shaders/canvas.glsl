@@ -163,7 +163,7 @@ void main() {
 
 #else
     mat4 extra_matrix_instance = extra_matrix;
-    vec4 instance_custom = vec4(0.0);
+    vec4 instance_custom       = vec4(0.0);
 #endif
 
 #ifdef USE_TEXTURE_RECT
@@ -220,12 +220,12 @@ VERTEX_SHADER_CODE
     // transform is in attributes
     vec2 temp;
 
-    temp = outvec.xy;
+    temp   = outvec.xy;
     temp.x = (outvec.x * basis_attrib.x) + (outvec.y * basis_attrib.z);
     temp.y = (outvec.x * basis_attrib.y) + (outvec.y * basis_attrib.w);
 
-    temp += translate_attrib;
-    outvec.xy = temp;
+    temp      += translate_attrib;
+    outvec.xy  = temp;
 
 #else
 
@@ -240,10 +240,10 @@ VERTEX_SHADER_CODE
     color_interp = color;
 
 #ifdef USE_PIXEL_SNAP
-    outvec.xy = floor(outvec + 0.5).xy;
+    outvec.xy  = floor(outvec + 0.5).xy;
     // precision issue on some hardware creates artifacts within texture
     // offset uv by a small amount to avoid
-    uv += 1e-5;
+    uv        += 1e-5;
 #endif
 
 #ifdef USE_SKELETON
@@ -281,7 +281,7 @@ VERTEX_SHADER_CODE
 
 #endif
 
-    uv_interp = uv;
+    uv_interp   = uv;
     gl_Position = projection_matrix * outvec;
 
 #ifdef USE_LIGHTING
@@ -474,7 +474,7 @@ LIGHT_SHADER_CODE
 
 void main() {
     vec4 color = color_interp;
-    vec2 uv = uv_interp;
+    vec2 uv    = uv_interp;
 #ifdef USE_FORCE_REPEAT
     // needs to use this to workaround GLES2/WebGL1 forcing tiling that textures
     // that don't support it
@@ -500,8 +500,8 @@ void main() {
 #endif
 
     if (use_default_normal) {
-        normal.xy = texture2D(normal_texture, uv).xy * 2.0 - 1.0;
-        normal.z = sqrt(max(0.0, 1.0 - dot(normal.xy, normal.xy)));
+        normal.xy   = texture2D(normal_texture, uv).xy * 2.0 - 1.0;
+        normal.z    = sqrt(max(0.0, 1.0 - dot(normal.xy, normal.xy)));
         normal_used = true;
     } else {
         normal = vec3(0.0, 0.0, 1.0);
@@ -512,7 +512,7 @@ void main() {
 
 #if defined(NORMALMAP_USED)
         vec3 normal_map = vec3(0.0, 0.0, 1.0);
-        normal_used = true;
+        normal_used     = true;
 #endif
 
         // If larger fvfs are used, final_modulate is passed as an attribute.
@@ -547,7 +547,7 @@ FRAGMENT_SHADER_CODE
 
 #ifdef USE_LIGHTING
 
-    vec2 light_vec = transformed_light_uv;
+    vec2 light_vec  = transformed_light_uv;
     vec2 shadow_vec = transformed_light_uv;
 
     if (normal_used) {
@@ -557,15 +557,15 @@ FRAGMENT_SHADER_CODE
     float att = 1.0;
 
     vec2 light_uv = light_uv_interp.xy;
-    vec4 light = texture2D(light_texture, light_uv);
+    vec4 light    = texture2D(light_texture, light_uv);
 
     if (any(lessThan(light_uv_interp.xy, vec2(0.0, 0.0)))
         || any(greaterThanEqual(light_uv_interp.xy, vec2(1.0, 1.0)))) {
         color.a *= light_outside_alpha; // invisible
 
     } else {
-        float real_light_height = light_height;
-        vec4 real_light_color = light_color;
+        float real_light_height      = light_height;
+        vec4 real_light_color        = light_color;
         vec4 real_light_shadow_color = light_shadow_color;
 
 #if defined(USE_LIGHT_SHADER_CODE)
@@ -590,8 +590,8 @@ FRAGMENT_SHADER_CODE
         light *= real_light_color;
 
         if (normal_used) {
-            vec3 light_normal = normalize(vec3(light_vec, -real_light_height));
-            light *= max(dot(-light_normal, normal), 0.0);
+            vec3 light_normal  = normalize(vec3(light_vec, -real_light_height));
+            light             *= max(dot(-light_normal, normal), 0.0);
         }
 
         color *= light;
@@ -600,16 +600,16 @@ FRAGMENT_SHADER_CODE
 
 #ifdef SHADOW_VEC_USED
         mat3 inverse_light_matrix = mat3(light_matrix);
-        inverse_light_matrix[0] = normalize(inverse_light_matrix[0]);
-        inverse_light_matrix[1] = normalize(inverse_light_matrix[1]);
-        inverse_light_matrix[2] = normalize(inverse_light_matrix[2]);
+        inverse_light_matrix[0]   = normalize(inverse_light_matrix[0]);
+        inverse_light_matrix[1]   = normalize(inverse_light_matrix[1]);
+        inverse_light_matrix[2]   = normalize(inverse_light_matrix[2]);
         shadow_vec = (inverse_light_matrix * vec3(shadow_vec, 0.0)).xy;
 #else
         shadow_vec = light_uv_interp.zw;
 #endif
 
         float angle_to_light = -atan(shadow_vec.x, shadow_vec.y);
-        float PI = 3.14159265358979323846264;
+        float PI             = 3.14159265358979323846264;
         /*int i =
         int(mod(floor((angle_to_light+7.0*PI/6.0)/(4.0*PI/6.0))+1.0, 3.0)); //
         +1 pq os indices estao em ordem 2,0,1 nos arrays float ang*/
@@ -621,22 +621,22 @@ FRAGMENT_SHADER_CODE
         float sh;
         if (abs_angle < 45.0 * PI / 180.0) {
             point = shadow_vec;
-            sh = 0.0 + (1.0 / 8.0);
+            sh    = 0.0 + (1.0 / 8.0);
         } else if (abs_angle > 135.0 * PI / 180.0) {
             point = -shadow_vec;
-            sh = 0.5 + (1.0 / 8.0);
+            sh    = 0.5 + (1.0 / 8.0);
         } else if (angle_to_light > 0.0) {
             point = vec2(shadow_vec.y, -shadow_vec.x);
-            sh = 0.25 + (1.0 / 8.0);
+            sh    = 0.25 + (1.0 / 8.0);
         } else {
             point = vec2(-shadow_vec.y, shadow_vec.x);
-            sh = 0.75 + (1.0 / 8.0);
+            sh    = 0.75 + (1.0 / 8.0);
         }
 
-        highp vec4 s = shadow_matrix * vec4(point, 0.0, 1.0);
-        s.xyz /= s.w;
-        su = s.x * 0.5 + 0.5;
-        sz = s.z * 0.5 + 0.5;
+        highp vec4 s  = shadow_matrix * vec4(point, 0.0, 1.0);
+        s.xyz        /= s.w;
+        su            = s.x * 0.5 + 0.5;
+        sz            = s.z * 0.5 + 0.5;
         // sz=lightlength(light_vec);
 
         highp float shadow_attenuation = 0.0;

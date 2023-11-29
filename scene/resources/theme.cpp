@@ -46,9 +46,9 @@ bool Theme::_set(const StringName& p_name, const Variant& p_value) {
     String sname = p_name;
 
     if (sname.find("/") != -1) {
-        String type = sname.get_slicec('/', 1);
+        String type      = sname.get_slicec('/', 1);
         String node_type = sname.get_slicec('/', 0);
-        String name = sname.get_slicec('/', 2);
+        String name      = sname.get_slicec('/', 2);
 
         if (type == "icons") {
             set_icon(name, node_type, p_value);
@@ -74,9 +74,9 @@ bool Theme::_get(const StringName& p_name, Variant& r_ret) const {
     String sname = p_name;
 
     if (sname.find("/") != -1) {
-        String type = sname.get_slicec('/', 1);
+        String type      = sname.get_slicec('/', 1);
         String node_type = sname.get_slicec('/', 0);
-        String name = sname.get_slicec('/', 2);
+        String name      = sname.get_slicec('/', 2);
 
         if (type == "icons") {
             if (!has_icon(name, node_type)) {
@@ -748,7 +748,7 @@ void Theme::set_color(
     const StringName& p_node_type,
     const Color& p_color
 ) {
-    bool existing = has_color_nocheck(p_name, p_node_type);
+    bool existing                  = has_color_nocheck(p_name, p_node_type);
     color_map[p_node_type][p_name] = p_color;
 
     _emit_theme_changed(!existing);
@@ -1286,7 +1286,7 @@ PoolVector<String> Theme::_get_icon_list(const String& p_node_type) const {
     get_icon_list(p_node_type, &il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1301,7 +1301,7 @@ PoolVector<String> Theme::_get_icon_types() const {
     get_icon_types(&il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1316,7 +1316,7 @@ PoolVector<String> Theme::_get_stylebox_list(const String& p_node_type) const {
     get_stylebox_list(p_node_type, &il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1331,7 +1331,7 @@ PoolVector<String> Theme::_get_stylebox_types() const {
     get_stylebox_types(&il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1346,7 +1346,7 @@ PoolVector<String> Theme::_get_font_list(const String& p_node_type) const {
     get_font_list(p_node_type, &il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1361,7 +1361,7 @@ PoolVector<String> Theme::_get_font_types() const {
     get_font_types(&il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1376,7 +1376,7 @@ PoolVector<String> Theme::_get_color_list(const String& p_node_type) const {
     get_color_list(p_node_type, &il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1391,7 +1391,7 @@ PoolVector<String> Theme::_get_color_types() const {
     get_color_types(&il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1406,7 +1406,7 @@ PoolVector<String> Theme::_get_constant_list(const String& p_node_type) const {
     get_constant_list(p_node_type, &il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1421,7 +1421,7 @@ PoolVector<String> Theme::_get_constant_types() const {
     get_constant_types(&il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1477,7 +1477,7 @@ PoolVector<String> Theme::_get_type_list(const String& p_node_type) const {
     get_type_list(&il);
     ilret.resize(il.size());
 
-    int i = 0;
+    int i                       = 0;
     PoolVector<String>::Write w = ilret.write();
     for (List<StringName>::Element* E = il.front(); E; E = E->next(), i++) {
         w[i] = E->get();
@@ -1551,9 +1551,9 @@ void Theme::copy_theme(const Ref<Theme>& p_other) {
     }
 
     // These items can be simply copied.
-    color_map = p_other->color_map;
+    color_map    = p_other->color_map;
     constant_map = p_other->constant_map;
-    shader_map = p_other->shader_map;
+    shader_map   = p_other->shader_map;
 
     _unfreeze_and_propagate_changes();
 }

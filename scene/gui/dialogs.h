@@ -42,12 +42,12 @@ class WindowDialog : public Popup {
     GDCLASS(WindowDialog, Popup);
 
     enum DRAG_TYPE {
-        DRAG_NONE = 0,
-        DRAG_MOVE = 1,
-        DRAG_RESIZE_TOP = 1 << 1,
-        DRAG_RESIZE_RIGHT = 1 << 2,
+        DRAG_NONE          = 0,
+        DRAG_MOVE          = 1,
+        DRAG_RESIZE_TOP    = 1 << 1,
+        DRAG_RESIZE_RIGHT  = 1 << 2,
         DRAG_RESIZE_BOTTOM = 1 << 3,
-        DRAG_RESIZE_LEFT = 1 << 4
+        DRAG_RESIZE_LEFT   = 1 << 4
     };
 
     TextureButton* close_button;
@@ -147,7 +147,7 @@ public:
 
     Button* add_button(
         const String& p_text,
-        bool p_right = false,
+        bool p_right           = false,
         const String& p_action = ""
     );
     Button* add_cancel(const String& p_cancel = "");

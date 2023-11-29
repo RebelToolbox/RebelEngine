@@ -49,14 +49,14 @@ protected:
 
 public:
     enum Flags {
-        FLAG_ICON = 1,
+        FLAG_ICON      = 1,
         FLAG_CHECKABLE = 2,
-        FLAG_ID = 4,
-        FLAG_ENABLE = 8,
+        FLAG_ID        = 4,
+        FLAG_ENABLE    = 8,
         FLAG_SEPARATOR = 16
     };
 
-    virtual void set_object(Object* p_object) = 0;
+    virtual void set_object(Object* p_object)    = 0;
     virtual bool handles(Object* p_object) const = 0;
 
     virtual int get_flags() const = 0;
@@ -109,9 +109,9 @@ public:
         return false;
     };
 
-    virtual void add_item() = 0;
+    virtual void add_item()            = 0;
     virtual int get_item_count() const = 0;
-    virtual void erase(int p_idx) = 0;
+    virtual void erase(int p_idx)      = 0;
 
     ItemListPlugin() {}
 };

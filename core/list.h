@@ -146,7 +146,7 @@ public:
         _FORCE_INLINE_ Element() {
             next_ptr = nullptr;
             prev_ptr = nullptr;
-            data = nullptr;
+            data     = nullptr;
         };
     };
 
@@ -219,18 +219,18 @@ public:
      */
     Element* push_back(const T& value) {
         if (!_data) {
-            _data = memnew_allocator(_Data, A);
-            _data->first = nullptr;
-            _data->last = nullptr;
+            _data             = memnew_allocator(_Data, A);
+            _data->first      = nullptr;
+            _data->last       = nullptr;
             _data->size_cache = 0;
         }
 
         Element* n = memnew_allocator(Element, A);
-        n->value = (T&)value;
+        n->value   = (T&)value;
 
         n->prev_ptr = _data->last;
         n->next_ptr = nullptr;
-        n->data = _data;
+        n->data     = _data;
 
         if (_data->last) {
             _data->last->next_ptr = n;
@@ -258,17 +258,17 @@ public:
      */
     Element* push_front(const T& value) {
         if (!_data) {
-            _data = memnew_allocator(_Data, A);
-            _data->first = nullptr;
-            _data->last = nullptr;
+            _data             = memnew_allocator(_Data, A);
+            _data->first      = nullptr;
+            _data->last       = nullptr;
             _data->size_cache = 0;
         }
 
-        Element* n = memnew_allocator(Element, A);
-        n->value = (T&)value;
+        Element* n  = memnew_allocator(Element, A);
+        n->value    = (T&)value;
         n->prev_ptr = nullptr;
         n->next_ptr = _data->first;
-        n->data = _data;
+        n->data     = _data;
 
         if (_data->first) {
             _data->first->prev_ptr = n;
@@ -298,11 +298,11 @@ public:
             return push_back(p_value);
         }
 
-        Element* n = memnew_allocator(Element, A);
-        n->value = (T&)p_value;
+        Element* n  = memnew_allocator(Element, A);
+        n->value    = (T&)p_value;
         n->prev_ptr = p_element;
         n->next_ptr = p_element->next_ptr;
-        n->data = _data;
+        n->data     = _data;
 
         if (!p_element->next_ptr) {
             _data->last = n;
@@ -324,11 +324,11 @@ public:
             return push_back(p_value);
         }
 
-        Element* n = memnew_allocator(Element, A);
-        n->value = (T&)p_value;
+        Element* n  = memnew_allocator(Element, A);
+        n->value    = (T&)p_value;
         n->prev_ptr = p_element->prev_ptr;
         n->next_ptr = p_element;
-        n->data = _data;
+        n->data     = _data;
 
         if (!p_element->prev_ptr) {
             _data->first = n;
@@ -461,7 +461,7 @@ public:
         CRASH_BAD_INDEX(p_index, size());
 
         Element* I = front();
-        int c = 0;
+        int c      = 0;
         while (I) {
             if (c == p_index) {
                 return I->get();
@@ -477,7 +477,7 @@ public:
         CRASH_BAD_INDEX(p_index, size());
 
         const Element* I = front();
-        int c = 0;
+        int c            = 0;
         while (I) {
             if (c == p_index) {
                 return I->get();
@@ -510,13 +510,13 @@ public:
         p_I->next_ptr->prev_ptr = p_I->prev_ptr;
 
         _data->last->next_ptr = p_I;
-        p_I->prev_ptr = _data->last;
-        p_I->next_ptr = nullptr;
-        _data->last = p_I;
+        p_I->prev_ptr         = _data->last;
+        p_I->next_ptr         = nullptr;
+        _data->last           = p_I;
     }
 
     void invert() {
-        int s = size() / 2;
+        int s      = size() / 2;
         Element* F = front();
         Element* B = back();
         for (int i = 0; i < s; i++) {
@@ -547,9 +547,9 @@ public:
         }
 
         _data->first->prev_ptr = p_I;
-        p_I->next_ptr = _data->first;
-        p_I->prev_ptr = nullptr;
-        _data->first = p_I;
+        p_I->next_ptr          = _data->first;
+        p_I->prev_ptr          = nullptr;
+        _data->first           = p_I;
     }
 
     void move_before(Element* value, Element* where) {
@@ -567,7 +567,7 @@ public:
         value->next_ptr = where;
         if (!where) {
             value->prev_ptr = _data->last;
-            _data->last = value;
+            _data->last     = value;
             return;
         };
 
@@ -596,9 +596,9 @@ public:
             return;
         }
 
-        Element* from = front();
+        Element* from    = front();
         Element* current = from;
-        Element* to = from;
+        Element* to      = from;
 
         while (current) {
             Element* next = current->next_ptr;
@@ -612,7 +612,7 @@ public:
                 while (find && less(find->value, current->value)) {
                     current->prev_ptr = find;
                     current->next_ptr = find->next_ptr;
-                    find = find->next_ptr;
+                    find              = find->next_ptr;
                 }
 
                 if (current->prev_ptr) {
@@ -634,7 +634,7 @@ public:
             current = next;
         }
         _data->first = from;
-        _data->last = to;
+        _data->last  = to;
     }
 
     template <class C>
@@ -668,11 +668,11 @@ public:
         SortArray<Element*, AuxiliaryComparator<C>> sort;
         sort.sort(aux_buffer, s);
 
-        _data->first = aux_buffer[0];
+        _data->first            = aux_buffer[0];
         aux_buffer[0]->prev_ptr = nullptr;
         aux_buffer[0]->next_ptr = aux_buffer[1];
 
-        _data->last = aux_buffer[s - 1];
+        _data->last                 = aux_buffer[s - 1];
         aux_buffer[s - 1]->prev_ptr = aux_buffer[s - 2];
         aux_buffer[s - 1]->next_ptr = nullptr;
 
@@ -692,7 +692,7 @@ public:
      * copy constructor for the list
      */
     List(const List& p_list) {
-        _data = nullptr;
+        _data             = nullptr;
         const Element* it = p_list.front();
         while (it) {
             push_back(it->get());

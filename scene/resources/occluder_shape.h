@@ -58,7 +58,7 @@ public:
     ~OccluderShape();
 
     virtual void notification_enter_world(RID p_scenario) = 0;
-    virtual void update_shape_to_visual_server() = 0;
+    virtual void update_shape_to_visual_server()          = 0;
     void update_transform_to_visual_server(const Transform& p_global_xform);
     void update_active_to_visual_server(bool p_active);
     void notification_exit_world();

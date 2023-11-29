@@ -38,10 +38,10 @@ AreaSW::BodyKey::BodyKey(
     uint32_t p_body_shape,
     uint32_t p_area_shape
 ) {
-    rid = p_body->get_self();
+    rid         = p_body->get_self();
     instance_id = p_body->get_instance_id();
-    body_shape = p_body_shape;
-    area_shape = p_area_shape;
+    body_shape  = p_body_shape;
+    area_shape  = p_area_shape;
 }
 
 AreaSW::BodyKey::BodyKey(
@@ -49,10 +49,10 @@ AreaSW::BodyKey::BodyKey(
     uint32_t p_body_shape,
     uint32_t p_area_shape
 ) {
-    rid = p_body->get_self();
+    rid         = p_body->get_self();
     instance_id = p_body->get_instance_id();
-    body_shape = p_body_shape;
-    area_shape = p_area_shape;
+    body_shape  = p_body_shape;
+    area_shape  = p_area_shape;
 }
 
 void AreaSW::_shapes_changed() {
@@ -95,7 +95,7 @@ void AreaSW::set_monitor_callback(ObjectID p_id, const StringName& p_method) {
 
     _unregister_shapes();
 
-    monitor_callback_id = p_id;
+    monitor_callback_id     = p_id;
     monitor_callback_method = p_method;
 
     monitored_bodies.clear();
@@ -119,7 +119,7 @@ void AreaSW::set_area_monitor_callback(
 
     _unregister_shapes();
 
-    area_monitor_callback_id = p_id;
+    area_monitor_callback_id     = p_id;
     area_monitor_callback_method = p_method;
 
     monitored_bodies.clear();
@@ -310,19 +310,19 @@ AreaSW::AreaSW() :
     monitor_query_list(this),
     moved_list(this) {
     _set_static(true); // areas are never active
-    space_override_mode = PhysicsServer::AREA_SPACE_OVERRIDE_DISABLED;
-    gravity = 9.80665;
-    gravity_vector = Vector3(0, -1, 0);
-    gravity_is_point = false;
+    space_override_mode    = PhysicsServer::AREA_SPACE_OVERRIDE_DISABLED;
+    gravity                = 9.80665;
+    gravity_vector         = Vector3(0, -1, 0);
+    gravity_is_point       = false;
     gravity_distance_scale = 0;
-    point_attenuation = 1;
-    angular_damp = 0.1;
-    linear_damp = 0.1;
-    priority = 0;
+    point_attenuation      = 1;
+    angular_damp           = 0.1;
+    linear_damp            = 0.1;
+    priority               = 0;
     set_ray_pickable(false);
-    monitor_callback_id = 0;
+    monitor_callback_id      = 0;
     area_monitor_callback_id = 0;
-    monitorable = false;
+    monitorable              = false;
 }
 
 AreaSW::~AreaSW() {}

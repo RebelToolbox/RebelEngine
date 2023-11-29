@@ -60,9 +60,9 @@ class ARVRServer : public Object {
 
 public:
     enum TrackerType {
-        TRACKER_CONTROLLER = 0x01,  /* tracks a controller */
+        TRACKER_CONTROLLER  = 0x01, /* tracks a controller */
         TRACKER_BASESTATION = 0x02, /* tracks location of a base station */
-        TRACKER_ANCHOR = 0x04,  /* tracks an anchor point, used in AR to track a
+        TRACKER_ANCHOR  = 0x04, /* tracks an anchor point, used in AR to track a
                                    real live location */
         TRACKER_UNKNOWN = 0x80, /* unknown tracker */
 

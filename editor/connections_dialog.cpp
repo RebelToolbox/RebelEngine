@@ -353,7 +353,7 @@ void ConnectDialog::init(Connection c, bool bEdit) {
     _update_ok_enabled();
 
     bool bDeferred = (c.flags & CONNECT_DEFERRED) == CONNECT_DEFERRED;
-    bool bOneshot = (c.flags & CONNECT_ONESHOT) == CONNECT_ONESHOT;
+    bool bOneshot  = (c.flags & CONNECT_ONESHOT) == CONNECT_ONESHOT;
 
     deferred->set_pressed(bDeferred);
     oneshot->set_pressed(bOneshot);
@@ -571,7 +571,7 @@ void ConnectionsDock::_make_or_edit_connection() {
     ERR_FAIL_COND(!it);
 
     NodePath dst_path = connect_dialog->get_dst_path();
-    Node* target = selectedNode->get_node(dst_path);
+    Node* target      = selectedNode->get_node(dst_path);
     ERR_FAIL_COND(!target);
 
     Connection cToMake;
@@ -579,21 +579,21 @@ void ConnectionsDock::_make_or_edit_connection() {
     cToMake.target = target;
     cToMake.signal = connect_dialog->get_signal_name();
     cToMake.method = connect_dialog->get_dst_method_name();
-    cToMake.binds = connect_dialog->get_binds();
-    bool defer = connect_dialog->get_deferred();
-    bool oshot = connect_dialog->get_oneshot();
-    cToMake.flags = CONNECT_PERSIST | (defer ? CONNECT_DEFERRED : 0)
+    cToMake.binds  = connect_dialog->get_binds();
+    bool defer     = connect_dialog->get_deferred();
+    bool oshot     = connect_dialog->get_oneshot();
+    cToMake.flags  = CONNECT_PERSIST | (defer ? CONNECT_DEFERRED : 0)
                   | (oshot ? CONNECT_ONESHOT : 0);
 
     // Conditions to add function: must have a script and must not have the
     // method already (in the class, the script itself, or inherited).
     bool add_script_function = false;
-    Ref<Script> script = target->get_script();
+    Ref<Script> script       = target->get_script();
     if (!target->get_script().is_null()
         && !ClassDB::has_method(target->get_class(), cToMake.method)) {
         // There is a chance that the method is inherited from another script.
         bool found_inherited_function = false;
-        Ref<Script> inherited_script = script->get_base_script();
+        Ref<Script> inherited_script  = script->get_base_script();
         while (!inherited_script.is_null()) {
             int line = inherited_script->get_language()->find_function(
                 cToMake.method,
@@ -747,7 +747,7 @@ void ConnectionsDock::_disconnect_all() {
         return;
     }
 
-    TreeItem* child = item->get_children();
+    TreeItem* child   = item->get_children();
     String signalName = item->get_metadata(0).operator Dictionary()["name"];
     undo_redo->create_action(
         vformat(TTR("Disconnect all from signal: '%s'"), signalName)
@@ -830,7 +830,7 @@ bool ConnectionsDock::_is_item_signal(TreeItem& item) {
 void ConnectionsDock::_open_connection_dialog(TreeItem& item) {
     String signal = item.get_metadata(0).operator Dictionary()["name"];
     const String& signalname = signal;
-    String midname = selectedNode->get_name();
+    String midname           = selectedNode->get_name();
     for (int i = 0; i < midname.length();
          i++) { // TODO: Regex filter may be cleaner.
         CharType c = midname[i];
@@ -1104,11 +1104,11 @@ void ConnectionsDock::update_tree() {
         }
 
         for (List<MethodInfo>::Element* E = node_signals2.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             MethodInfo& mi = E->get();
 
             StringName signal_name = mi.name;
-            String signaldesc = "(";
+            String signaldesc      = "(";
             PoolStringArray argnames;
 
             String filter_text = search_box->get_text();
@@ -1197,7 +1197,7 @@ void ConnectionsDock::update_tree() {
             selectedNode->get_signal_connection_list(signal_name, &connections);
 
             for (List<Object::Connection>::Element* F = connections.front(); F;
-                 F = F->next()) {
+                 F                                    = F->next()) {
                 Object::Connection& c = F->get();
                 if (!(c.flags & CONNECT_PERSIST)) {
                     continue;
@@ -1268,7 +1268,7 @@ ConnectionsDock::ConnectionsDock(EditorNode* p_editor) {
     tree->set_v_size_flags(SIZE_EXPAND_FILL);
     tree->set_allow_rmb_select(true);
 
-    connect_button = memnew(Button);
+    connect_button    = memnew(Button);
     HBoxContainer* hb = memnew(HBoxContainer);
     vbc->add_child(hb);
     hb->add_spacer();

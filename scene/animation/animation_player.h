@@ -79,7 +79,7 @@ public:
 private:
     enum {
         NODE_CACHE_UPDATE_MAX = 1024,
-        BLEND_FROM_MAX = 3
+        BLEND_FROM_MAX        = 3
     };
 
     enum SpecialProperty {
@@ -215,9 +215,9 @@ private:
         float speed_scale;
 
         PlaybackData() {
-            pos = 0;
+            pos         = 0;
             speed_scale = 1.0;
-            from = nullptr;
+            from        = nullptr;
         }
     };
 
@@ -261,8 +261,8 @@ private:
         float p_delta,
         float p_interp,
         bool p_is_current = true,
-        bool p_seeked = false,
-        bool p_started = false
+        bool p_seeked     = false,
+        bool p_started    = false
     );
 
     void _ensure_node_caches(
@@ -349,13 +349,13 @@ public:
 
     void play(
         const StringName& p_name = StringName(),
-        float p_custom_blend = -1,
-        float p_custom_scale = 1.0,
-        bool p_from_end = false
+        float p_custom_blend     = -1,
+        float p_custom_scale     = 1.0,
+        bool p_from_end          = false
     );
     void play_backwards(
         const StringName& p_name = StringName(),
-        float p_custom_blend = -1
+        float p_custom_blend     = -1
     );
     void queue(const StringName& p_name);
     PoolVector<String> get_queue();

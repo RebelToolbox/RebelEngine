@@ -219,7 +219,7 @@ Array Array::duplicate(bool p_deep) const {
 }
 
 int Array::_clamp_slice_index(int p_index) const {
-    int arr_size = size();
+    int arr_size    = size();
     int fixed_index = CLAMP(p_index, -arr_size, arr_size - 1);
     if (fixed_index < 0) {
         fixed_index = arr_size + fixed_index;
@@ -252,7 +252,7 @@ Array Array::slice(int p_begin, int p_end, int p_step, bool p_deep)
     }
 
     int begin = _clamp_slice_index(p_begin);
-    int end = _clamp_slice_index(p_end);
+    int end   = _clamp_slice_index(p_end);
 
     int new_arr_size = MAX(((end - begin + p_step) / p_step), 0);
     new_arr.resize(new_arr_size);
@@ -322,7 +322,7 @@ Array& Array::sort_custom(Object* p_obj, const StringName& p_function) {
     ERR_FAIL_NULL_V(p_obj, *this);
 
     SortArray<Variant, _ArrayVariantSortCustom, true> avs;
-    avs.compare.obj = p_obj;
+    avs.compare.obj  = p_obj;
     avs.compare.func = p_function;
     avs.sort(_p->array.ptrw(), _p->array.size());
     return *this;
@@ -335,10 +335,10 @@ void Array::shuffle() {
     }
     Variant* data = _p->array.ptrw();
     for (int i = n - 1; i >= 1; i--) {
-        const int j = Math::rand() % (i + 1);
+        const int j       = Math::rand() % (i + 1);
         const Variant tmp = data[j];
-        data[j] = data[i];
-        data[i] = tmp;
+        data[j]           = data[i];
+        data[i]           = tmp;
     }
 }
 
@@ -386,7 +386,7 @@ int Array::bsearch_custom(
     ERR_FAIL_NULL_V(p_obj, 0);
 
     _ArrayVariantSortCustom less;
-    less.obj = p_obj;
+    less.obj  = p_obj;
     less.func = p_function;
 
     return bisect(_p->array, p_value, p_before, less);
@@ -403,7 +403,7 @@ void Array::push_front(const Variant& p_value) {
 
 Variant Array::pop_back() {
     if (!_p->array.empty()) {
-        const int n = _p->array.size() - 1;
+        const int n       = _p->array.size() - 1;
         const Variant ret = _p->array.get(n);
         _p->array.resize(n);
         return ret;

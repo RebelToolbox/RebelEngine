@@ -256,9 +256,9 @@ class VisualScriptExpression : public VisualScriptNode {
 
     template <class T>
     T* alloc_node() {
-        T* node = memnew(T);
+        T* node    = memnew(T);
         node->next = nodes;
-        nodes = node;
+        nodes      = node;
         return node;
     }
 

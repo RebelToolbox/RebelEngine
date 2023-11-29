@@ -50,8 +50,8 @@ Size2 PanelContainer::get_minimum_size() const {
         }
 
         Size2 minsize = c->get_combined_minimum_size();
-        ms.width = MAX(ms.width, minsize.width);
-        ms.height = MAX(ms.height, minsize.height);
+        ms.width      = MAX(ms.width, minsize.width);
+        ms.height     = MAX(ms.height, minsize.height);
     }
 
     if (style.is_valid()) {
@@ -87,7 +87,7 @@ void PanelContainer::_notification(int p_what) {
         Point2 ofs;
         if (style.is_valid()) {
             size -= style->get_minimum_size();
-            ofs += style->get_offset();
+            ofs  += style->get_offset();
         }
 
         for (int i = 0; i < get_child_count(); i++) {

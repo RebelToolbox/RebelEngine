@@ -186,7 +186,7 @@ unsigned int ReadString(
     const char*& cursor,
     const char* end,
     bool long_length = false,
-    bool allow_null = false
+    bool allow_null  = false
 ) {
     const uint32_t len_len = long_length ? 4 : 1;
     if (Offset(cursor, end) < len_len) {
@@ -208,8 +208,8 @@ unsigned int ReadString(
         );
     }
 
-    sbegin_out = cursor;
-    cursor += length;
+    sbegin_out  = cursor;
+    cursor     += length;
 
     send_out = cursor;
 
@@ -245,7 +245,7 @@ void ReadData(
     }
 
     const char type = *cursor;
-    sbegin_out = cursor++;
+    sbegin_out      = cursor++;
 
     switch (type) {
         // 16 bit int
@@ -282,8 +282,8 @@ void ReadData(
 
             // raw binary data
         case 'R': {
-            const uint32_t length = ReadWord(input, cursor, end);
-            cursor += length;
+            const uint32_t length  = ReadWord(input, cursor, end);
+            cursor                += length;
             break;
         }
 
@@ -299,7 +299,7 @@ void ReadData(
         case 'l':
         case 'i':
         case 'c': {
-            const uint32_t length = ReadWord(input, cursor, end);
+            const uint32_t length   = ReadWord(input, cursor, end);
             const uint32_t encoding = ReadWord(input, cursor, end);
 
             const uint32_t comp_len = ReadWord(input, cursor, end);
@@ -539,7 +539,7 @@ void TokenizeBinary(
     print_verbose("FBX Version: " + itos(version));
     // ASSIMP_LOG_DEBUG_F("FBX version: ", version);
     const bool is64bits = version >= 7500;
-    const char* end = input + length;
+    const char* end     = input + length;
     while (cursor < end) {
         if (!ReadScope(
                 output_tokens,

@@ -76,13 +76,13 @@ void BodyPairSW::contact_added_callback(
 
     Contact contact;
 
-    contact.acc_normal_impulse = 0;
-    contact.acc_bias_impulse = 0;
+    contact.acc_normal_impulse              = 0;
+    contact.acc_bias_impulse                = 0;
     contact.acc_bias_impulse_center_of_mass = 0;
-    contact.acc_tangent_impulse = Vector3();
-    contact.local_A = local_A;
-    contact.local_B = local_B;
-    contact.normal = (p_point_A - p_point_B).normalized();
+    contact.acc_tangent_impulse             = Vector3();
+    contact.local_A                         = local_A;
+    contact.local_B                         = local_B;
+    contact.normal      = (p_point_A - p_point_B).normalized();
     contact.mass_normal = 0; // will be computed in setup()
 
     // attempt to determine if the contact will be reused
@@ -95,11 +95,11 @@ void BodyPairSW::contact_added_callback(
             && c.local_B.distance_squared_to(local_B)
                    < (contact_recycle_radius * contact_recycle_radius)) {
             contact.acc_normal_impulse = c.acc_normal_impulse;
-            contact.acc_bias_impulse = c.acc_bias_impulse;
+            contact.acc_bias_impulse   = c.acc_bias_impulse;
             contact.acc_bias_impulse_center_of_mass =
                 c.acc_bias_impulse_center_of_mass;
             contact.acc_tangent_impulse = c.acc_tangent_impulse;
-            new_index = i;
+            new_index                   = i;
             break;
         }
     }
@@ -109,11 +109,11 @@ void BodyPairSW::contact_added_callback(
     if (new_index == MAX_CONTACTS) {
         // remove the contact with the minimum depth
 
-        int least_deep = -1;
+        int least_deep   = -1;
         real_t min_depth = 1e10;
 
         for (int i = 0; i <= contact_count; i++) {
-            Contact& c = (i == contact_count) ? contact : contacts[i];
+            Contact& c       = (i == contact_count) ? contact : contacts[i];
             Vector3 global_A = A->get_transform().basis.xform(c.local_A);
             Vector3 global_B =
                 B->get_transform().basis.xform(c.local_B) + offset_B;
@@ -122,7 +122,7 @@ void BodyPairSW::contact_added_callback(
             real_t depth = axis.dot(c.normal);
 
             if (depth < min_depth) {
-                min_depth = depth;
+                min_depth  = depth;
                 least_deep = i;
             }
         }
@@ -154,8 +154,8 @@ void BodyPairSW::validate_contacts() {
 
         Vector3 global_A = A->get_transform().basis.xform(c.local_A);
         Vector3 global_B = B->get_transform().basis.xform(c.local_B) + offset_B;
-        Vector3 axis = global_A - global_B;
-        real_t depth = axis.dot(c.normal);
+        Vector3 axis     = global_A - global_B;
+        real_t depth     = axis.dot(c.normal);
 
         if (depth < -contact_max_separation
             || (global_B + c.normal * depth - global_A).length()
@@ -183,7 +183,7 @@ bool BodyPairSW::_test_ccd(
     const Transform& p_xform_B
 ) {
     Vector3 motion = p_A->get_linear_velocity() * p_step;
-    real_t mlen = motion.length();
+    real_t mlen    = motion.length();
     if (mlen < CMP_EPSILON) {
         return false;
     }
@@ -208,7 +208,7 @@ bool BodyPairSW::_test_ccd(
         p_xform_A.basis.xform(mnormal).normalized()
     );
     Vector3 from = p_xform_A.xform(s);
-    Vector3 to = from + motion;
+    Vector3 to   = from + motion;
 
     Transform from_inv = p_xform_B.affine_inverse();
 
@@ -266,13 +266,13 @@ bool BodyPairSW::setup(real_t p_step) {
 
     validate_contacts();
 
-    Vector3 offset_A = A->get_transform().get_origin();
+    Vector3 offset_A   = A->get_transform().get_origin();
     Transform xform_Au = Transform(A->get_transform().basis, Vector3());
-    Transform xform_A = xform_Au * A->get_shape_transform(shape_A);
+    Transform xform_A  = xform_Au * A->get_shape_transform(shape_A);
 
-    Transform xform_Bu = B->get_transform();
-    xform_Bu.origin -= offset_A;
-    Transform xform_B = xform_Bu * B->get_shape_transform(shape_B);
+    Transform xform_Bu  = B->get_transform();
+    xform_Bu.origin    -= offset_A;
+    Transform xform_B   = xform_Bu * B->get_shape_transform(shape_B);
 
     ShapeSW* shape_A_ptr = A->get_shape(shape_A);
     ShapeSW* shape_B_ptr = B->get_shape(shape_B);
@@ -326,7 +326,7 @@ bool BodyPairSW::setup(real_t p_step) {
 
     for (int i = 0; i < contact_count; i++) {
         Contact& c = contacts[i];
-        c.active = false;
+        c.active   = false;
 
         Vector3 global_A = xform_Au.xform(c.local_A);
         Vector3 global_B = xform_Bu.xform(c.local_B);
@@ -394,18 +394,18 @@ bool BodyPairSW::setup(real_t p_step) {
             A->get_inv_inertia_tensor().xform(c.rA.cross(c.normal));
         Vector3 inertia_B =
             B->get_inv_inertia_tensor().xform(c.rB.cross(c.normal));
-        real_t kNormal = A->get_inv_mass() + B->get_inv_mass();
-        kNormal += c.normal.dot(inertia_A.cross(c.rA))
+        real_t kNormal  = A->get_inv_mass() + B->get_inv_mass();
+        kNormal        += c.normal.dot(inertia_A.cross(c.rA))
                  + c.normal.dot(inertia_B.cross(c.rB));
         c.mass_normal = 1.0f / kNormal;
 
-        c.bias = -bias * inv_dt * MIN(0.0f, -depth + max_penetration);
+        c.bias  = -bias * inv_dt * MIN(0.0f, -depth + max_penetration);
         c.depth = depth;
 
         Vector3 j_vec = c.normal * c.acc_normal_impulse + c.acc_tangent_impulse;
         A->apply_impulse(c.rA + A->get_center_of_mass(), -j_vec);
         B->apply_impulse(c.rB + B->get_center_of_mass(), j_vec);
-        c.acc_bias_impulse = 0;
+        c.acc_bias_impulse                = 0;
         c.acc_bias_impulse_center_of_mass = 0;
 
         c.bounce = combine_bounce(A, B);
@@ -440,14 +440,14 @@ void BodyPairSW::solve(real_t p_step) {
 
         Vector3 crbA = A->get_biased_angular_velocity().cross(c.rA);
         Vector3 crbB = B->get_biased_angular_velocity().cross(c.rB);
-        Vector3 dbv = B->get_biased_linear_velocity() + crbB
+        Vector3 dbv  = B->get_biased_linear_velocity() + crbB
                     - A->get_biased_linear_velocity() - crbA;
 
         real_t vbn = dbv.dot(c.normal);
 
         if (Math::abs(-vbn + c.bias) > MIN_VELOCITY) {
-            real_t jbn = (-vbn + c.bias) * c.mass_normal;
-            real_t jbnOld = c.acc_bias_impulse;
+            real_t jbn         = (-vbn + c.bias) * c.mass_normal;
+            real_t jbnOld      = c.acc_bias_impulse;
             c.acc_bias_impulse = MAX(jbnOld + jbn, 0.0f);
 
             Vector3 jb = c.normal * (c.acc_bias_impulse - jbnOld);
@@ -465,7 +465,7 @@ void BodyPairSW::solve(real_t p_step) {
 
             crbA = A->get_biased_angular_velocity().cross(c.rA);
             crbB = B->get_biased_angular_velocity().cross(c.rB);
-            dbv = B->get_biased_linear_velocity() + crbB
+            dbv  = B->get_biased_linear_velocity() + crbB
                 - A->get_biased_linear_velocity() - crbA;
 
             vbn = dbv.dot(c.normal);
@@ -496,8 +496,8 @@ void BodyPairSW::solve(real_t p_step) {
         real_t vn = dv.dot(c.normal);
 
         if (Math::abs(vn) > MIN_VELOCITY) {
-            real_t jn = -(c.bounce + vn) * c.mass_normal;
-            real_t jnOld = c.acc_normal_impulse;
+            real_t jn            = -(c.bounce + vn) * c.mass_normal;
+            real_t jnOld         = c.acc_normal_impulse;
             c.acc_normal_impulse = MAX(jnOld + jn, 0.0f);
 
             Vector3 j = c.normal * (c.acc_normal_impulse - jnOld);
@@ -518,7 +518,7 @@ void BodyPairSW::solve(real_t p_step) {
             B->get_linear_velocity() + B->get_angular_velocity().cross(c.rB);
 
         Vector3 dtv = lvB - lvA;
-        real_t tn = c.normal.dot(dtv);
+        real_t tn   = c.normal.dot(dtv);
 
         // tangential velocity
         Vector3 tv = dtv - c.normal * tn;
@@ -536,11 +536,11 @@ void BodyPairSW::solve(real_t p_step) {
 
             Vector3 jt = t * tv;
 
-            Vector3 jtOld = c.acc_tangent_impulse;
+            Vector3 jtOld          = c.acc_tangent_impulse;
             c.acc_tangent_impulse += jt;
 
             real_t fi_len = c.acc_tangent_impulse.length();
-            real_t jtMax = c.acc_normal_impulse * friction;
+            real_t jtMax  = c.acc_normal_impulse * friction;
 
             if (fi_len > CMP_EPSILON && fi_len > jtMax) {
                 c.acc_tangent_impulse *= jtMax / fi_len;
@@ -558,15 +558,15 @@ void BodyPairSW::solve(real_t p_step) {
 
 BodyPairSW::BodyPairSW(BodySW* p_A, int p_shape_A, BodySW* p_B, int p_shape_B) :
     ConstraintSW(_arr, 2) {
-    A = p_A;
-    B = p_B;
+    A       = p_A;
+    B       = p_B;
     shape_A = p_shape_A;
     shape_B = p_shape_B;
-    space = A->get_space();
+    space   = A->get_space();
     A->add_constraint(this, 0);
     B->add_constraint(this, 1);
     contact_count = 0;
-    collided = false;
+    collided      = false;
 }
 
 BodyPairSW::~BodyPairSW() {

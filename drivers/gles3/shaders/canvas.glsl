@@ -167,7 +167,7 @@ void main() {
 
 #else
     mat4 extra_matrix_instance = extra_matrix;
-    vec4 instance_custom = vec4(0.0);
+    vec4 instance_custom       = vec4(0.0);
 #endif
 
 #ifdef USE_TEXTURE_RECT
@@ -190,7 +190,7 @@ void main() {
     );
 
 #else
-    uv_interp = uv_attrib;
+    uv_interp         = uv_attrib;
     highp vec4 outvec = vec4(vertex, 0.0, 1.0);
 #endif
 
@@ -203,7 +203,7 @@ void main() {
 
     float point_size = 1.0;
     // for compatibility with the fragment shader we need to use uv here
-    vec2 uv = uv_interp;
+    vec2 uv          = uv_interp;
     {
         /* clang-format off */
 
@@ -213,7 +213,7 @@ VERTEX_SHADER_CODE
     }
 
     gl_PointSize = point_size;
-    uv_interp = uv;
+    uv_interp    = uv;
 
 #ifdef USE_NINEPATCH
 
@@ -230,12 +230,12 @@ VERTEX_SHADER_CODE
     // transform is in attributes
     vec2 temp;
 
-    temp = outvec.xy;
+    temp   = outvec.xy;
     temp.x = (outvec.x * basis_attrib.x) + (outvec.y * basis_attrib.z);
     temp.y = (outvec.x * basis_attrib.y) + (outvec.y * basis_attrib.w);
 
-    temp += translate_attrib;
-    outvec.xy = temp;
+    temp      += translate_attrib;
+    outvec.xy  = temp;
 
 #else
 
@@ -252,7 +252,7 @@ VERTEX_SHADER_CODE
     color_interp = color;
 
 #ifdef USE_PIXEL_SNAP
-    outvec.xy = floor(outvec + 0.5).xy;
+    outvec.xy  = floor(outvec + 0.5).xy;
     // precision issue on some hardware creates artifacts within texture
     // offset uv by a small amount to avoid
     uv_interp += 1e-5;
@@ -321,9 +321,9 @@ VERTEX_SHADER_CODE
     light_uv_interp.zw = (light_local_matrix * outvec).xy;
 
     mat3 inverse_light_matrix = mat3(inverse(light_matrix));
-    inverse_light_matrix[0] = normalize(inverse_light_matrix[0]);
-    inverse_light_matrix[1] = normalize(inverse_light_matrix[1]);
-    inverse_light_matrix[2] = normalize(inverse_light_matrix[2]);
+    inverse_light_matrix[0]   = normalize(inverse_light_matrix[0]);
+    inverse_light_matrix[1]   = normalize(inverse_light_matrix[1]);
+    inverse_light_matrix[2]   = normalize(inverse_light_matrix[2]);
     transformed_light_uv =
         (inverse_light_matrix * vec3(light_uv_interp.zw, 0.0))
             .xy; // for normal mapping
@@ -339,8 +339,8 @@ VERTEX_SHADER_CODE
 
     // vector light angle
     vec4 vla;
-    vla.xy = vec2(cos(la), sin(la));
-    vla.zw = vec2(-vla.y, vla.x);
+    vla.xy  = vec2(cos(la), sin(la));
+    vla.zw  = vec2(-vla.y, vla.x);
     vla.zw *= sign(light_angle);
 
     // apply the transform matrix.
@@ -517,7 +517,7 @@ float map_ninepatch_axis(
     float tex_size = 1.0 / tex_pixel_size;
 
     float screen_margin_begin = margin_begin / s_ratio;
-    float screen_margin_end = margin_end / s_ratio;
+    float screen_margin_end   = margin_end / s_ratio;
     if (pixel < screen_margin_begin) {
         return pixel * s_ratio * tex_pixel_size;
     } else if (pixel >= draw_size - screen_margin_end) {
@@ -552,7 +552,7 @@ float map_ninepatch_axis(
 
             // convert to ratio
             float ratio = (pixel - screen_margin_begin) / src_area;
-            ratio = mod(ratio * scale, 1.0);
+            ratio       = mod(ratio * scale, 1.0);
             return (margin_begin + ratio * dst_area) * tex_pixel_size;
         }
     }
@@ -603,7 +603,7 @@ float map_ninepatch_axis(
                 max(1.0, floor(src_area / max(dst_area, 0.0000001) + 0.5));
             // Convert to ratio.
             float ratio = (pixel - margin_begin) / src_area;
-            ratio = mod(ratio * scale, 1.0);
+            ratio       = mod(ratio * scale, 1.0);
             // Scale to source texture.
             return (margin_begin + ratio * dst_area) * tex_pixel_size;
         } else { // Shouldn't happen, but silences compiler warning.
@@ -620,7 +620,7 @@ uniform bool use_default_normal;
 
 void main() {
     vec4 color = color_interp;
-    vec2 uv = uv_interp;
+    vec2 uv    = uv_interp;
 
 #ifdef USE_TEXTURE_RECT
 
@@ -632,7 +632,7 @@ void main() {
         max((1.0 / color_texpixel_size.x) / abs(dst_rect.z),
             (1.0 / color_texpixel_size.y) / abs(dst_rect.w));
     s_ratio = max(1.0, s_ratio);
-    uv = vec2(
+    uv      = vec2(
         map_ninepatch_axis(
             pixel_size_interp.x,
             abs(dst_rect.z),
@@ -698,7 +698,7 @@ void main() {
 
 #ifdef USE_DISTANCE_FIELD
     const float smoothing = 1.0 / 32.0;
-    float distance = textureLod(color_texture, uv, 0.0).a;
+    float distance        = textureLod(color_texture, uv, 0.0).a;
     color.a = smoothstep(0.5 - smoothing, 0.5 + smoothing, distance) * color.a;
 #else
     color *= texture(color_texture, uv);
@@ -717,8 +717,8 @@ void main() {
 #endif
 
     if (use_default_normal) {
-        normal.xy = textureLod(normal_texture, uv, 0.0).xy * 2.0 - 1.0;
-        normal.z = sqrt(max(0.0, 1.0 - dot(normal.xy, normal.xy)));
+        normal.xy   = textureLod(normal_texture, uv, 0.0).xy * 2.0 - 1.0;
+        normal.z    = sqrt(max(0.0, 1.0 - dot(normal.xy, normal.xy)));
         normal_used = true;
     } else {
         normal = vec3(0.0, 0.0, 1.0);
@@ -733,7 +733,7 @@ void main() {
 
 #if defined(NORMALMAP_USED)
         vec3 normal_map = vec3(0.0, 0.0, 1.0);
-        normal_used = true;
+        normal_used     = true;
 #endif
 
         // If larger fvfs are used, final_modulate is passed as an attribute.
@@ -779,7 +779,7 @@ FRAGMENT_SHADER_CODE
 
 #ifdef USE_LIGHTING
 
-    vec2 light_vec = transformed_light_uv;
+    vec2 light_vec  = transformed_light_uv;
     vec2 shadow_vec = transformed_light_uv;
 
     if (normal_used) {
@@ -789,15 +789,15 @@ FRAGMENT_SHADER_CODE
     float att = 1.0;
 
     vec2 light_uv = light_uv_interp.xy;
-    vec4 light = texture(light_texture, light_uv);
+    vec4 light    = texture(light_texture, light_uv);
 
     if (any(lessThan(light_uv_interp.xy, vec2(0.0, 0.0)))
         || any(greaterThanEqual(light_uv_interp.xy, vec2(1.0, 1.0)))) {
         color.a *= light_outside_alpha; // invisible
 
     } else {
-        float real_light_height = light_height;
-        vec4 real_light_color = light_color;
+        float real_light_height      = light_height;
+        vec4 real_light_color        = light_color;
         vec4 real_light_shadow_color = light_shadow_color;
 
 #if defined(USE_LIGHT_SHADER_CODE)
@@ -822,8 +822,8 @@ FRAGMENT_SHADER_CODE
         light *= real_light_color;
 
         if (normal_used) {
-            vec3 light_normal = normalize(vec3(light_vec, -real_light_height));
-            light *= max(dot(-light_normal, normal), 0.0);
+            vec3 light_normal  = normalize(vec3(light_vec, -real_light_height));
+            light             *= max(dot(-light_normal, normal), 0.0);
         }
 
         color *= light;
@@ -831,15 +831,15 @@ FRAGMENT_SHADER_CODE
 #ifdef USE_SHADOWS
 #ifdef SHADOW_VEC_USED
         mat3 inverse_light_matrix = mat3(light_matrix);
-        inverse_light_matrix[0] = normalize(inverse_light_matrix[0]);
-        inverse_light_matrix[1] = normalize(inverse_light_matrix[1]);
-        inverse_light_matrix[2] = normalize(inverse_light_matrix[2]);
+        inverse_light_matrix[0]   = normalize(inverse_light_matrix[0]);
+        inverse_light_matrix[1]   = normalize(inverse_light_matrix[1]);
+        inverse_light_matrix[2]   = normalize(inverse_light_matrix[2]);
         shadow_vec = (mat3(inverse_light_matrix) * vec3(shadow_vec, 0.0)).xy;
 #else
         shadow_vec = light_uv_interp.zw;
 #endif
         float angle_to_light = -atan(shadow_vec.x, shadow_vec.y);
-        float PI = 3.14159265358979323846264;
+        float PI             = 3.14159265358979323846264;
         /*int i =
         int(mod(floor((angle_to_light+7.0*PI/6.0)/(4.0*PI/6.0))+1.0, 3.0)); //
         +1 pq os indices estao em ordem 2,0,1 nos arrays float ang*/
@@ -851,22 +851,22 @@ FRAGMENT_SHADER_CODE
         float sh;
         if (abs_angle < 45.0 * PI / 180.0) {
             point = shadow_vec;
-            sh = 0.0 + (1.0 / 8.0);
+            sh    = 0.0 + (1.0 / 8.0);
         } else if (abs_angle > 135.0 * PI / 180.0) {
             point = -shadow_vec;
-            sh = 0.5 + (1.0 / 8.0);
+            sh    = 0.5 + (1.0 / 8.0);
         } else if (angle_to_light > 0.0) {
             point = vec2(shadow_vec.y, -shadow_vec.x);
-            sh = 0.25 + (1.0 / 8.0);
+            sh    = 0.25 + (1.0 / 8.0);
         } else {
             point = vec2(-shadow_vec.y, shadow_vec.x);
-            sh = 0.75 + (1.0 / 8.0);
+            sh    = 0.75 + (1.0 / 8.0);
         }
 
-        highp vec4 s = shadow_matrix * vec4(point, 0.0, 1.0);
-        s.xyz /= s.w;
-        su = s.x * 0.5 + 0.5;
-        sz = s.z * 0.5 + 0.5;
+        highp vec4 s  = shadow_matrix * vec4(point, 0.0, 1.0);
+        s.xyz        /= s.w;
+        su            = s.x * 0.5 + 0.5;
+        sz            = s.z * 0.5 + 0.5;
         // sz=lightlength(light_vec);
 
         highp float shadow_attenuation = 0.0;
@@ -892,7 +892,7 @@ FRAGMENT_SHADER_CODE
 
 #define SHADOW_TEST(m_ofs)                                                     \
     {                                                                          \
-        highp float sd = SHADOW_DEPTH(shadow_texture, vec2(m_ofs, sh));        \
+        highp float sd      = SHADOW_DEPTH(shadow_texture, vec2(m_ofs, sh));   \
         shadow_attenuation += 1.0 - smoothstep(sd, sd + shadow_gradient, sz);  \
     }
 
@@ -900,7 +900,7 @@ FRAGMENT_SHADER_CODE
 
 #define SHADOW_TEST(m_ofs)                                                     \
     {                                                                          \
-        highp float sd = SHADOW_DEPTH(shadow_texture, vec2(m_ofs, sh));        \
+        highp float sd      = SHADOW_DEPTH(shadow_texture, vec2(m_ofs, sh));   \
         shadow_attenuation += step(sz, sd);                                    \
     }
 

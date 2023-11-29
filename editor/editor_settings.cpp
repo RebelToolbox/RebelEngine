@@ -73,7 +73,7 @@ bool EditorSettings::_set_only(
         Array arr = p_value;
         ERR_FAIL_COND_V(arr.size() && arr.size() & 1, true);
         for (int i = 0; i < arr.size(); i += 2) {
-            String name = arr[i];
+            String name              = arr[i];
             Ref<InputEvent> shortcut = arr[i + 1];
 
             Ref<ShortCut> sc;
@@ -96,17 +96,17 @@ bool EditorSettings::_set_only(
         if (props.has(p_name)) {
             if (p_value != props[p_name].variant) {
                 props[p_name].variant = p_value;
-                changed = true;
+                changed               = true;
             }
         } else {
             props[p_name] = VariantContainer(p_value, last_order++);
-            changed = true;
+            changed       = true;
         }
 
         if (save_changed_setting) {
             if (!props[p_name].save) {
                 props[p_name].save = true;
-                changed = true;
+                changed            = true;
             }
         }
     }
@@ -160,7 +160,7 @@ void EditorSettings::_initial_set(
     const Variant& p_value
 ) {
     set(p_name, p_value);
-    props[p_name].initial = p_value;
+    props[p_name].initial           = p_value;
     props[p_name].has_default_value = true;
 }
 
@@ -190,10 +190,10 @@ void EditorSettings::_get_property_list(List<PropertyInfo>* p_list) const {
         }
 
         _EVCSort vc;
-        vc.name = *k;
-        vc.order = v->order;
-        vc.type = v->variant.get_type();
-        vc.save = v->save;
+        vc.name               = *k;
+        vc.order              = v->order;
+        vc.type               = v->variant.get_type();
+        vc.save               = v->save;
         /*if (vc.save) { this should be implemented, but lets do after 3.1 is
         out. if (v->initial.get_type() != Variant::NIL && v->initial ==
         v->variant) { vc.save = false;
@@ -277,7 +277,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
     {
         String lang_hint = "en";
         String host_lang = OS::get_singleton()->get_locale();
-        host_lang = TranslationServer::standardize_locale(host_lang);
+        host_lang        = TranslationServer::standardize_locale(host_lang);
 
         // Some locales are not properly supported currently in Godot due to
         // lack of font shaping (e.g. Arabic or Hindi), so even though we have
@@ -331,7 +331,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
     // Editor
     _initial_set("interface/editor/display_scale", 0);
     // Display what the Auto display scale setting effectively corresponds to.
-    float scale = get_auto_display_scale();
+    float scale                             = get_auto_display_scale();
     hints["interface/editor/display_scale"] = PropertyInfo(
         Variant::INT,
         "interface/editor/display_scale",
@@ -1117,7 +1117,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
             p_extra_config->get_section_keys("presets", &keys);
 
             for (List<String>::Element* E = keys.front(); E; E = E->next()) {
-                String key = E->get();
+                String key  = E->get();
                 Variant val = p_extra_config->get_value("presets", key);
                 set(key, val);
             };
@@ -1272,7 +1272,7 @@ void EditorSettings::_load_default_text_editor_theme() {
 
 bool EditorSettings::_save_text_editor_theme(String p_file) {
     String theme_section = "color_theme";
-    Ref<ConfigFile> cf = memnew(ConfigFile); // hex is better?
+    Ref<ConfigFile> cf   = memnew(ConfigFile); // hex is better?
 
     List<String> keys;
     props.get_key_list(&keys);
@@ -1367,18 +1367,18 @@ void EditorSettings::create() {
     Ref<ConfigFile> extra_config = memnew(ConfigFile);
 
     String exe_path = OS::get_singleton()->get_executable_path().get_base_dir();
-    DirAccess* d = DirAccess::create_for_path(exe_path);
+    DirAccess* d    = DirAccess::create_for_path(exe_path);
     bool self_contained = false;
 
     if (d->file_exists(exe_path + "/._sc_")) {
         self_contained = true;
-        Error err = extra_config->load(exe_path + "/._sc_");
+        Error err      = extra_config->load(exe_path + "/._sc_");
         if (err != OK) {
             ERR_PRINT("Can't load config from path '" + exe_path + "/._sc_'.");
         }
     } else if (d->file_exists(exe_path + "/_sc_")) {
         self_contained = true;
-        Error err = extra_config->load(exe_path + "/_sc_");
+        Error err      = extra_config->load(exe_path + "/_sc_");
         if (err != OK) {
             ERR_PRINT("Can't load config from path '" + exe_path + "/_sc_'.");
         }
@@ -1387,12 +1387,12 @@ void EditorSettings::create() {
 
     if (self_contained) {
         // editor is self contained, all in same folder
-        data_path = exe_path;
-        data_dir = data_path.plus_file("editor_data");
+        data_path   = exe_path;
+        data_dir    = data_path.plus_file("editor_data");
         config_path = exe_path;
-        config_dir = data_dir;
-        cache_path = exe_path;
-        cache_dir = data_dir.plus_file("cache");
+        config_dir  = data_dir;
+        cache_path  = exe_path;
+        cache_dir   = data_dir.plus_file("cache");
     } else {
         // Typically XDG_DATA_HOME or %APPDATA%
         data_path = OS::get_singleton()->get_data_path();
@@ -1525,11 +1525,11 @@ void EditorSettings::create() {
         }
 
         singleton->save_changed_setting = true;
-        singleton->config_file_path = config_file_path;
-        singleton->project_config_dir = project_config_dir;
-        singleton->settings_dir = config_dir;
-        singleton->data_dir = data_dir;
-        singleton->cache_dir = cache_dir;
+        singleton->config_file_path     = config_file_path;
+        singleton->project_config_dir   = project_config_dir;
+        singleton->settings_dir         = config_dir;
+        singleton->data_dir             = data_dir;
+        singleton->cache_dir            = cache_dir;
 
         print_verbose("EditorSettings: Load OK!");
 
@@ -1554,10 +1554,10 @@ fail:
 
     singleton = Ref<EditorSettings>(memnew(EditorSettings));
     singleton->save_changed_setting = true;
-    singleton->config_file_path = config_file_path;
-    singleton->settings_dir = config_dir;
-    singleton->data_dir = data_dir;
-    singleton->cache_dir = cache_dir;
+    singleton->config_file_path     = config_file_path;
+    singleton->settings_dir         = config_dir;
+    singleton->data_dir             = data_dir;
+    singleton->cache_dir            = cache_dir;
     singleton->_load_defaults(extra_config);
     singleton->setup_language();
     singleton->setup_network();
@@ -1581,9 +1581,9 @@ void EditorSettings::setup_network() {
     List<IP_Address> local_ip;
     IP::get_singleton()->get_local_addresses(&local_ip);
     String hint;
-    String current = has_setting("network/debug/remote_host")
-                       ? get("network/debug/remote_host")
-                       : "";
+    String current  = has_setting("network/debug/remote_host")
+                        ? get("network/debug/remote_host")
+                        : "";
     String selected = "127.0.0.1";
 
     // Check that current remote_host is a valid interface address and populate
@@ -1711,7 +1711,7 @@ void EditorSettings::set_initial_value(
     if (!props.has(p_setting)) {
         return;
     }
-    props[p_setting].initial = p_value;
+    props[p_setting].initial           = p_value;
     props[p_setting].has_default_value = true;
     if (p_update_current) {
         set(p_setting, p_value);
@@ -1854,7 +1854,7 @@ Variant EditorSettings::get_project_metadata(
 ) const {
     Ref<ConfigFile> cf = memnew(ConfigFile);
     String path = get_project_settings_dir().plus_file("project_metadata.cfg");
-    Error err = cf->load(path);
+    Error err   = cf->load(path);
     if (err != OK) {
         return p_default;
     }
@@ -1862,7 +1862,7 @@ Variant EditorSettings::get_project_metadata(
 }
 
 void EditorSettings::set_favorites(const Vector<String>& p_favorites) {
-    favorites = p_favorites;
+    favorites     = p_favorites;
     FileAccess* f = FileAccess::open(
         get_project_settings_dir().plus_file("favorites"),
         FileAccess::WRITE
@@ -1880,7 +1880,7 @@ Vector<String> EditorSettings::get_favorites() const {
 }
 
 void EditorSettings::set_recent_dirs(const Vector<String>& p_recent_dirs) {
-    recent_dirs = p_recent_dirs;
+    recent_dirs   = p_recent_dirs;
     FileAccess* f = FileAccess::open(
         get_project_settings_dir().plus_file("recent_dirs"),
         FileAccess::WRITE
@@ -1926,9 +1926,9 @@ void EditorSettings::load_favorites() {
 }
 
 bool EditorSettings::is_dark_theme() {
-    int AUTO_COLOR = 0;
-    int LIGHT_COLOR = 2;
-    Color base_color = get("interface/theme/base_color");
+    int AUTO_COLOR              = 0;
+    int LIGHT_COLOR             = 2;
+    Color base_color            = get("interface/theme/base_color");
     int icon_font_color_setting = get("interface/theme/icon_and_font_color");
     return (icon_font_color_setting == AUTO_COLOR
             && ((base_color.r + base_color.g + base_color.b) / 3.0) < 0.5)
@@ -1956,7 +1956,7 @@ void EditorSettings::list_text_editor_themes() {
 
         custom_themes.sort();
         for (List<String>::Element* E = custom_themes.front(); E;
-             E = E->next()) {
+             E                        = E->next()) {
             themes += "," + E->get();
         }
     }
@@ -1981,7 +1981,7 @@ void EditorSettings::load_text_editor_theme() {
     String theme_path = get_text_editor_themes_dir().plus_file(p_file + ".tet");
 
     Ref<ConfigFile> cf = memnew(ConfigFile);
-    Error err = cf->load(theme_path);
+    Error err          = cf->load(theme_path);
 
     if (err != OK) {
         return;
@@ -2155,7 +2155,7 @@ Ref<ShortCut> EditorSettings::get_shortcut(const String& p_name) const {
 
 void EditorSettings::get_shortcut_list(List<String>* r_shortcuts) {
     for (const Map<String, Ref<ShortCut>>::Element* E = shortcuts.front(); E;
-         E = E->next()) {
+         E                                            = E->next()) {
         r_shortcuts->push_back(E->key());
     }
 }
@@ -2322,8 +2322,8 @@ void EditorSettings::_bind_methods() {
 }
 
 EditorSettings::EditorSettings() {
-    last_order = 0;
-    optimize_save = true;
+    last_order           = 0;
+    optimize_save        = true;
     save_changed_setting = true;
 
     _load_defaults();

@@ -239,9 +239,9 @@ Error ContextGL_Windows::initialize() {
 }
 
 ContextGL_Windows::ContextGL_Windows(HWND hwnd, bool p_opengl_3_context) {
-    opengl_3_context = p_opengl_3_context;
-    hWnd = hwnd;
-    use_vsync = false;
+    opengl_3_context     = p_opengl_3_context;
+    hWnd                 = hwnd;
+    use_vsync            = false;
     vsync_via_compositor = false;
 }
 

@@ -70,20 +70,20 @@ bool PowerWindows::GetPowerInfo_Windows() {
     } else if (status.BatteryFlag & (1 << 7)) { /* no battery */
         power_state = OS::POWERSTATE_NO_BATTERY;
     } else if (status.BatteryFlag & (1 << 3)) { /* charging */
-        power_state = OS::POWERSTATE_CHARGING;
+        power_state  = OS::POWERSTATE_CHARGING;
         need_details = TRUE;
     } else if (status.ACLineStatus == 1) {
-        power_state = OS::POWERSTATE_CHARGED; /* on AC, not charging. */
+        power_state  = OS::POWERSTATE_CHARGED; /* on AC, not charging. */
         need_details = TRUE;
     } else {
-        power_state = OS::POWERSTATE_ON_BATTERY; /* not on AC. */
+        power_state  = OS::POWERSTATE_ON_BATTERY; /* not on AC. */
         need_details = TRUE;
     }
 
     percent_left = -1;
-    nsecs_left = -1;
+    nsecs_left   = -1;
     if (need_details) {
-        const int pct = (int)status.BatteryLifePercent;
+        const int pct  = (int)status.BatteryLifePercent;
         const int secs = (int)status.BatteryLifeTime;
 
         if (pct != 255) {                           /* 255 == unknown */

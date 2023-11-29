@@ -54,7 +54,7 @@ void ConnectionInfoDialog::popup_connections(
         p_nodes[i]->get_signals_connected_to_this(&all_connections);
 
         for (List<Connection>::Element* E = all_connections.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             Connection connection = E->get();
 
             if (connection.method != p_method) {
@@ -130,9 +130,9 @@ ConnectionInfoDialog::ConnectionInfoDialog() {
 
 Vector<String> ScriptTextEditor::get_functions() {
     String errortxt;
-    int line = -1, col;
+    int line     = -1, col;
     TextEdit* te = code_editor->get_text_edit();
-    String text = te->get_text();
+    String text  = te->get_text();
     List<String> fnc;
 
     if (script->get_language()
@@ -283,7 +283,7 @@ void ScriptTextEditor::_load_theme_settings() {
         EDITOR_GET("text_editor/highlighting/search_result_color");
     Color search_result_border_color =
         EDITOR_GET("text_editor/highlighting/search_result_border_color");
-    Color symbol_color = EDITOR_GET("text_editor/highlighting/symbol_color");
+    Color symbol_color  = EDITOR_GET("text_editor/highlighting/symbol_color");
     Color keyword_color = EDITOR_GET("text_editor/highlighting/keyword_color");
     Color control_flow_keyword_color =
         EDITOR_GET("text_editor/highlighting/control_flow_keyword_color");
@@ -293,7 +293,7 @@ void ScriptTextEditor::_load_theme_settings() {
     Color usertype_color =
         EDITOR_GET("text_editor/highlighting/user_type_color");
     Color comment_color = EDITOR_GET("text_editor/highlighting/comment_color");
-    Color string_color = EDITOR_GET("text_editor/highlighting/string_color");
+    Color string_color  = EDITOR_GET("text_editor/highlighting/string_color");
 
     text_edit->add_color_override("background_color", background_color);
     text_edit->add_color_override(
@@ -362,14 +362,14 @@ void ScriptTextEditor::_load_theme_settings() {
         EDITOR_DEF("text_editor/theme/line_spacing", 6)
     );
 
-    colors_cache.symbol_color = symbol_color;
-    colors_cache.keyword_color = keyword_color;
+    colors_cache.symbol_color               = symbol_color;
+    colors_cache.keyword_color              = keyword_color;
     colors_cache.control_flow_keyword_color = control_flow_keyword_color;
-    colors_cache.basetype_color = basetype_color;
-    colors_cache.type_color = type_color;
-    colors_cache.usertype_color = usertype_color;
-    colors_cache.comment_color = comment_color;
-    colors_cache.string_color = string_color;
+    colors_cache.basetype_color             = basetype_color;
+    colors_cache.type_color                 = type_color;
+    colors_cache.usertype_color             = usertype_color;
+    colors_cache.comment_color              = comment_color;
+    colors_cache.string_color               = string_color;
 
     theme_loaded = true;
     if (!script.is_null()) {
@@ -445,7 +445,7 @@ void ScriptTextEditor::_set_theme_for_script() {
     ScriptServer::get_global_class_list(&global_classes);
 
     for (List<StringName>::Element* E = global_classes.front(); E;
-         E = E->next()) {
+         E                            = E->next()) {
         text_edit->add_keyword_color(E->get(), colors_cache.usertype_color);
     }
 
@@ -472,10 +472,10 @@ void ScriptTextEditor::_set_theme_for_script() {
 
     for (List<String>::Element* E = comments.front(); E; E = E->next()) {
         String comment = E->get();
-        String beg = comment.get_slice(" ", 0);
-        String end = comment.get_slice_count(" ") > 1
-                       ? comment.get_slice(" ", 1)
-                       : String();
+        String beg     = comment.get_slice(" ", 0);
+        String end     = comment.get_slice_count(" ") > 1
+                           ? comment.get_slice(" ", 1)
+                           : String();
 
         text_edit
             ->add_color_region(beg, end, colors_cache.comment_color, end == "");
@@ -486,7 +486,7 @@ void ScriptTextEditor::_set_theme_for_script() {
     script->get_language()->get_string_delimiters(&strings);
     for (List<String>::Element* E = strings.front(); E; E = E->next()) {
         String string = E->get();
-        String beg = string.get_slice(" ", 0);
+        String beg    = string.get_slice(" ", 0);
         String end = string.get_slice_count(" ") > 1 ? string.get_slice(" ", 1)
                                                      : String();
         text_edit
@@ -515,10 +515,10 @@ void ScriptTextEditor::reload_text() {
     ERR_FAIL_COND(script.is_null());
 
     TextEdit* te = code_editor->get_text_edit();
-    int column = te->cursor_get_column();
-    int row = te->cursor_get_line();
-    int h = te->get_h_scroll();
-    int v = te->get_v_scroll();
+    int column   = te->cursor_get_column();
+    int row      = te->cursor_get_line();
+    int h        = te->get_h_scroll();
+    int v        = te->get_v_scroll();
 
     te->set_text(script->get_source_code());
     te->cursor_set_line(row);
@@ -536,7 +536,7 @@ void ScriptTextEditor::add_callback(
     PoolStringArray p_args
 ) {
     String code = code_editor->get_text_edit()->get_text();
-    int pos = script->get_language()->find_function(p_function, code);
+    int pos     = script->get_language()->find_function(p_function, code);
     if (pos == -1) {
         // does not exist
         code_editor->get_text_edit()->deselect();
@@ -669,7 +669,7 @@ Ref<Texture> ScriptTextEditor::get_icon() {
 
 void ScriptTextEditor::_validate_script() {
     String errortxt;
-    int line = -1, col;
+    int line     = -1, col;
     TextEdit* te = code_editor->get_text_edit();
 
     String text = te->get_text();
@@ -718,7 +718,7 @@ void ScriptTextEditor::_validate_script() {
         if (base && missing_connections.size() > 0) {
             warnings_panel->push_table(1);
             for (List<Connection>::Element* E = missing_connections.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 Connection connection = E->get();
 
                 String base_path = base->get_name();
@@ -763,7 +763,7 @@ void ScriptTextEditor::_validate_script() {
     // Add script warnings.
     warnings_panel->push_table(3);
     for (List<ScriptLanguage::Warning>::Element* E = warnings.front(); E;
-         E = E->next()) {
+         E                                         = E->next()) {
         ScriptLanguage::Warning w = E->get();
 
         Dictionary ignore_meta;
@@ -992,7 +992,7 @@ void ScriptEditor::_update_modified_scripts_for_external_editor(
         }
 
         uint64_t last_date = script->get_last_modified_time();
-        uint64_t date = FileAccess::get_modified_time(script->get_path());
+        uint64_t date      = FileAccess::get_modified_time(script->get_path());
 
         if (last_date != date) {
             Ref<Script> rel_script = ResourceLoader::load(
@@ -1178,7 +1178,7 @@ void ScriptTextEditor::_lookup_symbol(
                     );
                     if (success) {
                         result.class_name = cname;
-                        cname = ClassDB::get_parent_class(cname);
+                        cname             = ClassDB::get_parent_class(cname);
                     } else {
                         break;
                     }
@@ -1205,7 +1205,7 @@ void ScriptTextEditor::_lookup_symbol(
                 while (true) {
                     if (ClassDB::has_method(cname, result.class_member)) {
                         result.class_name = cname;
-                        cname = ClassDB::get_parent_class(cname);
+                        cname             = ClassDB::get_parent_class(cname);
                     } else {
                         break;
                     }
@@ -1229,7 +1229,7 @@ void ScriptTextEditor::_lookup_symbol(
                     );
                     if (success != StringName()) {
                         result.class_name = cname;
-                        cname = ClassDB::get_parent_class(cname);
+                        cname             = ClassDB::get_parent_class(cname);
                     } else {
                         break;
                     }
@@ -1282,7 +1282,7 @@ void ScriptTextEditor::_lookup_symbol(
 
 String ScriptTextEditor::_get_absolute_path(const String& rel_path) {
     String base_path = script->get_path().get_base_dir();
-    String path = base_path.plus_file(rel_path);
+    String path      = base_path.plus_file(rel_path);
     return path.replace("///", "//").simplify_path();
 }
 
@@ -1313,7 +1313,7 @@ void ScriptTextEditor::_update_connected_methods() {
         nodes[i]->get_signals_connected_to_this(&connections);
 
         for (List<Connection>::Element* E = connections.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             Connection connection = E->get();
             if (!(connection.flags & CONNECT_PERSIST)) {
                 continue;
@@ -1358,7 +1358,7 @@ void ScriptTextEditor::_update_connected_methods() {
                 // There is a chance that the method is inherited from another
                 // script.
                 bool found_inherited_function = false;
-                Ref<Script> inherited_script = script->get_base_script();
+                Ref<Script> inherited_script  = script->get_base_script();
                 while (!inherited_script.is_null()) {
                     if (inherited_script->has_method(connection.method)) {
                         found_inherited_function = true;
@@ -1461,7 +1461,7 @@ void ScriptTextEditor::_edit_option(int p_op) {
             tx->query_code_comple();
         } break;
         case EDIT_AUTO_INDENT: {
-            String text = tx->get_text();
+            String text     = tx->get_text();
             Ref<Script> scr = script;
             if (scr.is_null()) {
                 return;
@@ -1471,14 +1471,14 @@ void ScriptTextEditor::_edit_option(int p_op) {
             int begin, end;
             if (tx->is_selection_active()) {
                 begin = tx->get_selection_from_line();
-                end = tx->get_selection_to_line();
+                end   = tx->get_selection_to_line();
                 // ignore if the cursor is not past the first column
                 if (tx->get_selection_to_column() == 0) {
                     end--;
                 }
             } else {
                 begin = 0;
-                end = tx->get_line_count() - 1;
+                end   = tx->get_line_count() - 1;
             }
             scr->get_language()->auto_indent_code(text, begin, end);
             Vector<String> lines = text.split("\n");
@@ -1516,7 +1516,7 @@ void ScriptTextEditor::_edit_option(int p_op) {
             PoolStringArray results;
 
             for (int i = 0; i < lines.size(); i++) {
-                String line = lines[i];
+                String line       = lines[i];
                 String whitespace = line.substr(
                     0,
                     line.size() - line.strip_edges(true, false).size()
@@ -1585,7 +1585,7 @@ void ScriptTextEditor::_edit_option(int p_op) {
             code_editor->remove_all_bookmarks();
         } break;
         case DEBUG_TOGGLE_BREAKPOINT: {
-            int line = tx->cursor_get_line();
+            int line     = tx->cursor_get_line();
             bool dobreak = !tx->is_line_set_as_breakpoint(line);
             tx->set_line_as_breakpoint(line, dobreak);
             ScriptEditor::get_singleton()->get_debugger()->set_breakpoint(
@@ -1599,7 +1599,7 @@ void ScriptTextEditor::_edit_option(int p_op) {
             tx->get_breakpoints(&bpoints);
 
             for (List<int>::Element* E = bpoints.front(); E; E = E->next()) {
-                int line = E->get();
+                int line     = E->get();
                 bool dobreak = !tx->is_line_set_as_breakpoint(line);
                 tx->set_line_as_breakpoint(line, dobreak);
                 ScriptEditor::get_singleton()->get_debugger()->set_breakpoint(
@@ -1625,7 +1625,7 @@ void ScriptTextEditor::_edit_option(int p_op) {
                 tx->center_viewport_to_cursor();
             } else {
                 for (List<int>::Element* E = bpoints.front(); E;
-                     E = E->next()) {
+                     E                     = E->next()) {
                     int bline = E->get();
                     if (bline > line) {
                         tx->unfold_line(bline);
@@ -1698,7 +1698,7 @@ void ScriptTextEditor::_edit_option_toggle_inline_comment() {
     script->get_language()->get_comment_delimiters(&comment_delimiters);
 
     for (List<String>::Element* E = comment_delimiters.front(); E;
-         E = E->next()) {
+         E                        = E->next()) {
         String script_delimiter = E->get();
         if (script_delimiter.find(" ") == -1) {
             delimiter = script_delimiter;
@@ -1828,7 +1828,7 @@ void ScriptTextEditor::clear_edit_menu() {
 }
 
 void ScriptTextEditor::reload(bool p_soft) {
-    TextEdit* te = code_editor->get_text_edit();
+    TextEdit* te    = code_editor->get_text_edit();
     Ref<Script> scr = script;
     if (scr.is_null()) {
         return;
@@ -1992,12 +1992,12 @@ void ScriptTextEditor::drop_data_fw(
             }
 
             NodePath np = nodes[i];
-            Node* node = get_node(np);
+            Node* node  = get_node(np);
             if (!node) {
                 continue;
             }
 
-            String path = sn->get_path_to(node);
+            String path   = sn->get_path_to(node);
             text_to_drop += "\"" + path.c_escape() + "\"";
         }
 
@@ -2022,17 +2022,17 @@ void ScriptTextEditor::drop_data_fw(
 
 void ScriptTextEditor::_text_edit_gui_input(const Ref<InputEvent>& ev) {
     Ref<InputEventMouseButton> mb = ev;
-    Ref<InputEventKey> k = ev;
+    Ref<InputEventKey> k          = ev;
     Point2 local_pos;
     bool create_menu = false;
 
     TextEdit* tx = code_editor->get_text_edit();
     if (mb.is_valid() && mb->get_button_index() == BUTTON_RIGHT
         && mb->is_pressed()) {
-        local_pos = mb->get_global_position() - tx->get_global_position();
+        local_pos   = mb->get_global_position() - tx->get_global_position();
         create_menu = true;
     } else if (k.is_valid() && k->get_scancode() == KEY_MENU) {
-        local_pos = tx->_get_cursor_pixel_pos();
+        local_pos   = tx->_get_cursor_pixel_pos();
         create_menu = true;
     }
 
@@ -2045,10 +2045,10 @@ void ScriptTextEditor::_text_edit_gui_input(const Ref<InputEvent>& ev) {
         ));
         if (tx->is_right_click_moving_caret()) {
             if (tx->is_selection_active()) {
-                int from_line = tx->get_selection_from_line();
-                int to_line = tx->get_selection_to_line();
+                int from_line   = tx->get_selection_from_line();
+                int to_line     = tx->get_selection_to_line();
                 int from_column = tx->get_selection_from_column();
-                int to_column = tx->get_selection_to_column();
+                int to_column   = tx->get_selection_to_column();
 
                 if (row < from_line || row > to_line
                     || (row == from_line && col < from_column)
@@ -2071,9 +2071,9 @@ void ScriptTextEditor::_text_edit_gui_input(const Ref<InputEvent>& ev) {
             word_at_pos = tx->get_selection_text();
         }
 
-        bool has_color = (word_at_pos == "Color");
-        bool foldable = tx->can_fold(row) || tx->is_folded(row);
-        bool open_docs = false;
+        bool has_color       = (word_at_pos == "Color");
+        bool foldable        = tx->can_fold(row) || tx->is_folded(row);
+        bool open_docs       = false;
         bool goto_definition = false;
 
         if (word_at_pos.is_resource_file()) {
@@ -2098,19 +2098,19 @@ void ScriptTextEditor::_text_edit_gui_input(const Ref<InputEvent>& ev) {
         }
 
         if (has_color) {
-            String line = tx->get_line(row);
+            String line      = tx->get_line(row);
             color_position.x = row;
             color_position.y = col;
 
-            int begin = 0;
-            int end = 0;
+            int begin  = 0;
+            int end    = 0;
             bool valid = false;
             for (int i = col; i < line.length(); i++) {
                 if (line[i] == '(') {
                     begin = i;
                     continue;
                 } else if (line[i] == ')') {
-                    end = i + 1;
+                    end   = i + 1;
                     valid = true;
                     break;
                 }
@@ -2161,7 +2161,7 @@ void ScriptTextEditor::_color_changed(const Color& p_color) {
     }
 
     String line = code_editor->get_text_edit()->get_line(color_position.x);
-    int color_args_pos = line.find(color_args, color_position.y);
+    int color_args_pos             = line.find(color_args, color_position.y);
     String line_with_replaced_args = line;
     line_with_replaced_args.erase(color_args_pos, color_args.length());
     line_with_replaced_args =
@@ -2179,7 +2179,7 @@ void ScriptTextEditor::_color_changed(const Color& p_color) {
 
 void ScriptTextEditor::_prepare_edit_menu() {
     const TextEdit* tx = code_editor->get_text_edit();
-    PopupMenu* popup = edit_menu->get_popup();
+    PopupMenu* popup   = edit_menu->get_popup();
     popup->set_item_disabled(popup->get_item_index(EDIT_UNDO), !tx->has_undo());
     popup->set_item_disabled(popup->get_item_index(EDIT_REDO), !tx->has_redo());
 }
@@ -2542,9 +2542,9 @@ void ScriptTextEditor::_enable_code_editor() {
 }
 
 ScriptTextEditor::ScriptTextEditor() {
-    theme_loaded = false;
+    theme_loaded    = false;
     script_is_valid = false;
-    editor_enabled = false;
+    editor_enabled  = false;
 
     code_editor = memnew(CodeTextEditor);
     code_editor->add_constant_override("separation", 2);
@@ -2576,7 +2576,7 @@ ScriptTextEditor::ScriptTextEditor() {
 
     context_menu = memnew(PopupMenu);
 
-    color_panel = memnew(PopupPanel);
+    color_panel  = memnew(PopupPanel);
     color_picker = nullptr;
 
     edit_hb = memnew(HBoxContainer);
@@ -2590,7 +2590,7 @@ ScriptTextEditor::ScriptTextEditor() {
     convert_case->set_name("convert_case");
 
     highlighters[TTR("Standard")] = NULL;
-    highlighter_menu = memnew(PopupMenu);
+    highlighter_menu              = memnew(PopupMenu);
     highlighter_menu->set_name("highlighter_menu");
     highlighter_menu->add_radio_check_item(TTR("Standard"));
 
@@ -2609,7 +2609,7 @@ ScriptTextEditor::ScriptTextEditor() {
     breakpoints_menu = memnew(PopupMenu);
     breakpoints_menu->set_name("Breakpoints");
 
-    quick_open = nullptr;
+    quick_open       = nullptr;
     goto_line_dialog = nullptr;
 
     connection_info_dialog = memnew(ConnectionInfoDialog);

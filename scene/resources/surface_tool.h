@@ -154,11 +154,11 @@ public:
 
     void add_triangle_fan(
         const Vector<Vector3>& p_vertices,
-        const Vector<Vector2>& p_uvs = Vector<Vector2>(),
-        const Vector<Color>& p_colors = Vector<Color>(),
-        const Vector<Vector2>& p_uv2s = Vector<Vector2>(),
+        const Vector<Vector2>& p_uvs     = Vector<Vector2>(),
+        const Vector<Color>& p_colors    = Vector<Color>(),
+        const Vector<Vector2>& p_uv2s    = Vector<Vector2>(),
         const Vector<Vector3>& p_normals = Vector<Vector3>(),
-        const Vector<Plane>& p_tangents = Vector<Plane>()
+        const Vector<Plane>& p_tangents  = Vector<Plane>()
     );
 
     void add_index(int p_index);
@@ -194,7 +194,7 @@ public:
     );
     Ref<ArrayMesh> commit(
         const Ref<ArrayMesh>& p_existing = Ref<ArrayMesh>(),
-        uint32_t p_flags = Mesh::ARRAY_COMPRESS_DEFAULT
+        uint32_t p_flags                 = Mesh::ARRAY_COMPRESS_DEFAULT
     );
 
     SurfaceTool();

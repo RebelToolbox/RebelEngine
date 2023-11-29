@@ -50,50 +50,50 @@ protected:
 
 public:
     enum {
-        NO_INDEX_ARRAY = VisualServer::NO_INDEX_ARRAY,
+        NO_INDEX_ARRAY     = VisualServer::NO_INDEX_ARRAY,
         ARRAY_WEIGHTS_SIZE = VisualServer::ARRAY_WEIGHTS_SIZE
     };
 
     enum ArrayType {
-        ARRAY_VERTEX = VisualServer::ARRAY_VERTEX,
-        ARRAY_NORMAL = VisualServer::ARRAY_NORMAL,
+        ARRAY_VERTEX  = VisualServer::ARRAY_VERTEX,
+        ARRAY_NORMAL  = VisualServer::ARRAY_NORMAL,
         ARRAY_TANGENT = VisualServer::ARRAY_TANGENT,
-        ARRAY_COLOR = VisualServer::ARRAY_COLOR,
-        ARRAY_TEX_UV = VisualServer::ARRAY_TEX_UV,
+        ARRAY_COLOR   = VisualServer::ARRAY_COLOR,
+        ARRAY_TEX_UV  = VisualServer::ARRAY_TEX_UV,
         ARRAY_TEX_UV2 = VisualServer::ARRAY_TEX_UV2,
-        ARRAY_BONES = VisualServer::ARRAY_BONES,
+        ARRAY_BONES   = VisualServer::ARRAY_BONES,
         ARRAY_WEIGHTS = VisualServer::ARRAY_WEIGHTS,
-        ARRAY_INDEX = VisualServer::ARRAY_INDEX,
-        ARRAY_MAX = VisualServer::ARRAY_MAX
+        ARRAY_INDEX   = VisualServer::ARRAY_INDEX,
+        ARRAY_MAX     = VisualServer::ARRAY_MAX
     };
 
     enum ArrayFormat {
         /* ARRAY FORMAT FLAGS */
-        ARRAY_FORMAT_VERTEX = 1 << ARRAY_VERTEX, // mandatory
-        ARRAY_FORMAT_NORMAL = 1 << ARRAY_NORMAL,
+        ARRAY_FORMAT_VERTEX  = 1 << ARRAY_VERTEX, // mandatory
+        ARRAY_FORMAT_NORMAL  = 1 << ARRAY_NORMAL,
         ARRAY_FORMAT_TANGENT = 1 << ARRAY_TANGENT,
-        ARRAY_FORMAT_COLOR = 1 << ARRAY_COLOR,
-        ARRAY_FORMAT_TEX_UV = 1 << ARRAY_TEX_UV,
+        ARRAY_FORMAT_COLOR   = 1 << ARRAY_COLOR,
+        ARRAY_FORMAT_TEX_UV  = 1 << ARRAY_TEX_UV,
         ARRAY_FORMAT_TEX_UV2 = 1 << ARRAY_TEX_UV2,
-        ARRAY_FORMAT_BONES = 1 << ARRAY_BONES,
+        ARRAY_FORMAT_BONES   = 1 << ARRAY_BONES,
         ARRAY_FORMAT_WEIGHTS = 1 << ARRAY_WEIGHTS,
-        ARRAY_FORMAT_INDEX = 1 << ARRAY_INDEX,
+        ARRAY_FORMAT_INDEX   = 1 << ARRAY_INDEX,
 
         ARRAY_COMPRESS_BASE = (ARRAY_INDEX + 1),
         ARRAY_COMPRESS_VERTEX =
             1 << (ARRAY_VERTEX + ARRAY_COMPRESS_BASE), // mandatory
-        ARRAY_COMPRESS_NORMAL = 1 << (ARRAY_NORMAL + ARRAY_COMPRESS_BASE),
+        ARRAY_COMPRESS_NORMAL  = 1 << (ARRAY_NORMAL + ARRAY_COMPRESS_BASE),
         ARRAY_COMPRESS_TANGENT = 1 << (ARRAY_TANGENT + ARRAY_COMPRESS_BASE),
-        ARRAY_COMPRESS_COLOR = 1 << (ARRAY_COLOR + ARRAY_COMPRESS_BASE),
-        ARRAY_COMPRESS_TEX_UV = 1 << (ARRAY_TEX_UV + ARRAY_COMPRESS_BASE),
+        ARRAY_COMPRESS_COLOR   = 1 << (ARRAY_COLOR + ARRAY_COMPRESS_BASE),
+        ARRAY_COMPRESS_TEX_UV  = 1 << (ARRAY_TEX_UV + ARRAY_COMPRESS_BASE),
         ARRAY_COMPRESS_TEX_UV2 = 1 << (ARRAY_TEX_UV2 + ARRAY_COMPRESS_BASE),
-        ARRAY_COMPRESS_BONES = 1 << (ARRAY_BONES + ARRAY_COMPRESS_BASE),
+        ARRAY_COMPRESS_BONES   = 1 << (ARRAY_BONES + ARRAY_COMPRESS_BASE),
         ARRAY_COMPRESS_WEIGHTS = 1 << (ARRAY_WEIGHTS + ARRAY_COMPRESS_BASE),
-        ARRAY_COMPRESS_INDEX = 1 << (ARRAY_INDEX + ARRAY_COMPRESS_BASE),
+        ARRAY_COMPRESS_INDEX   = 1 << (ARRAY_INDEX + ARRAY_COMPRESS_BASE),
 
-        ARRAY_FLAG_USE_2D_VERTICES = ARRAY_COMPRESS_INDEX << 1,
-        ARRAY_FLAG_USE_16_BIT_BONES = ARRAY_COMPRESS_INDEX << 2,
-        ARRAY_FLAG_USE_DYNAMIC_UPDATE = ARRAY_COMPRESS_INDEX << 3,
+        ARRAY_FLAG_USE_2D_VERTICES            = ARRAY_COMPRESS_INDEX << 1,
+        ARRAY_FLAG_USE_16_BIT_BONES           = ARRAY_COMPRESS_INDEX << 2,
+        ARRAY_FLAG_USE_DYNAMIC_UPDATE         = ARRAY_COMPRESS_INDEX << 3,
         ARRAY_FLAG_USE_OCTAHEDRAL_COMPRESSION = ARRAY_COMPRESS_INDEX << 4,
 
         ARRAY_COMPRESS_DEFAULT = ARRAY_COMPRESS_NORMAL | ARRAY_COMPRESS_TANGENT
@@ -103,35 +103,35 @@ public:
     };
 
     enum PrimitiveType {
-        PRIMITIVE_POINTS = VisualServer::PRIMITIVE_POINTS,
-        PRIMITIVE_LINES = VisualServer::PRIMITIVE_LINES,
-        PRIMITIVE_LINE_STRIP = VisualServer::PRIMITIVE_LINE_STRIP,
-        PRIMITIVE_LINE_LOOP = VisualServer::PRIMITIVE_LINE_LOOP,
-        PRIMITIVE_TRIANGLES = VisualServer::PRIMITIVE_TRIANGLES,
+        PRIMITIVE_POINTS         = VisualServer::PRIMITIVE_POINTS,
+        PRIMITIVE_LINES          = VisualServer::PRIMITIVE_LINES,
+        PRIMITIVE_LINE_STRIP     = VisualServer::PRIMITIVE_LINE_STRIP,
+        PRIMITIVE_LINE_LOOP      = VisualServer::PRIMITIVE_LINE_LOOP,
+        PRIMITIVE_TRIANGLES      = VisualServer::PRIMITIVE_TRIANGLES,
         PRIMITIVE_TRIANGLE_STRIP = VisualServer::PRIMITIVE_TRIANGLE_STRIP,
-        PRIMITIVE_TRIANGLE_FAN = VisualServer::PRIMITIVE_TRIANGLE_FAN,
+        PRIMITIVE_TRIANGLE_FAN   = VisualServer::PRIMITIVE_TRIANGLE_FAN,
     };
 
     enum BlendShapeMode {
         BLEND_SHAPE_MODE_NORMALIZED = VS::BLEND_SHAPE_MODE_NORMALIZED,
-        BLEND_SHAPE_MODE_RELATIVE = VS::BLEND_SHAPE_MODE_RELATIVE,
+        BLEND_SHAPE_MODE_RELATIVE   = VS::BLEND_SHAPE_MODE_RELATIVE,
     };
 
-    virtual int get_surface_count() const = 0;
-    virtual int surface_get_array_len(int p_idx) const = 0;
+    virtual int get_surface_count() const                    = 0;
+    virtual int surface_get_array_len(int p_idx) const       = 0;
     virtual int surface_get_array_index_len(int p_idx) const = 0;
     virtual bool surface_is_softbody_friendly(int p_idx) const;
-    virtual Array surface_get_arrays(int p_surface) const = 0;
+    virtual Array surface_get_arrays(int p_surface) const             = 0;
     virtual Array surface_get_blend_shape_arrays(int p_surface) const = 0;
-    virtual uint32_t surface_get_format(int p_idx) const = 0;
+    virtual uint32_t surface_get_format(int p_idx) const              = 0;
     virtual PrimitiveType surface_get_primitive_type(int p_idx) const = 0;
     virtual void surface_set_material(
         int p_idx,
         const Ref<Material>& p_material
-    ) = 0;
+    )                                                           = 0;
     virtual Ref<Material> surface_get_material(int p_idx) const = 0;
-    virtual int get_blend_shape_count() const = 0;
-    virtual StringName get_blend_shape_name(int p_index) const = 0;
+    virtual int get_blend_shape_count() const                   = 0;
+    virtual StringName get_blend_shape_name(int p_index) const  = 0;
     virtual void set_blend_shape_name(
         int p_index,
         const StringName& p_name
@@ -207,7 +207,7 @@ public:
         PrimitiveType p_primitive,
         const Array& p_arrays,
         const Array& p_blend_shapes = Array(),
-        uint32_t p_flags = ARRAY_COMPRESS_DEFAULT
+        uint32_t p_flags            = ARRAY_COMPRESS_DEFAULT
     );
     void add_surface(
         uint32_t p_format,
@@ -277,14 +277,14 @@ public:
 
     Error lightmap_unwrap(
         const Transform& p_base_transform = Transform(),
-        float p_texel_size = 0.05
+        float p_texel_size                = 0.05
     );
     Error lightmap_unwrap_cached(
         int*& r_cache_data,
         unsigned int& r_cache_size,
         bool& r_used_cache,
         const Transform& p_base_transform = Transform(),
-        float p_texel_size = 0.05
+        float p_texel_size                = 0.05
     );
 
     virtual void reload_from_file();

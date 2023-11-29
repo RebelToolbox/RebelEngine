@@ -283,8 +283,8 @@ public:
         return true;
     }
 
-    virtual String get_os_name() const = 0;
-    virtual String get_name() const = 0;
+    virtual String get_os_name() const    = 0;
+    virtual String get_name() const       = 0;
     virtual Ref<Texture> get_logo() const = 0;
 
     Error export_project_files(
@@ -298,9 +298,9 @@ public:
         const Ref<EditorExportPreset>& p_preset,
         const String& p_path,
         Vector<SharedObject>* p_so_files = nullptr,
-        bool p_embed = false,
-        int64_t* r_embedded_start = nullptr,
-        int64_t* r_embedded_size = nullptr
+        bool p_embed                     = false,
+        int64_t* r_embedded_start        = nullptr,
+        int64_t* r_embedded_size         = nullptr
     );
     Error save_zip(
         const Ref<EditorExportPreset>& p_preset,
@@ -330,11 +330,11 @@ public:
     }
 
     enum DebugFlags {
-        DEBUG_FLAG_DUMB_CLIENT = 1,
-        DEBUG_FLAG_REMOTE_DEBUG = 2,
+        DEBUG_FLAG_DUMB_CLIENT            = 1,
+        DEBUG_FLAG_REMOTE_DEBUG           = 2,
         DEBUG_FLAG_REMOTE_DEBUG_LOCALHOST = 4,
-        DEBUG_FLAG_VIEW_COLLISONS = 8,
-        DEBUG_FLAG_VIEW_NAVIGATION = 16,
+        DEBUG_FLAG_VIEW_COLLISONS         = 8,
+        DEBUG_FLAG_VIEW_NAVIGATION        = 16,
     };
 
     virtual Error run(
@@ -425,8 +425,8 @@ class EditorExportPlugin : public Reference {
         ios_embedded_frameworks.clear();
         ios_bundle_files.clear();
         ios_plist_content = "";
-        ios_linker_flags = "";
-        ios_cpp_code = "";
+        ios_linker_flags  = "";
+        ios_cpp_code      = "";
     }
 
     void _export_file_script(

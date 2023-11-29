@@ -43,7 +43,7 @@ bool GraphNode::_set(const StringName& p_name, const Variant& p_value) {
         return false;
     }
 
-    int idx = p_name.operator String().get_slice("/", 1).to_int();
+    int idx     = p_name.operator String().get_slice("/", 1).to_int();
     String what = p_name.operator String().get_slice("/", 2);
 
     Slot si;
@@ -85,7 +85,7 @@ bool GraphNode::_get(const StringName& p_name, Variant& r_ret) const {
         return false;
     }
 
-    int idx = p_name.operator String().get_slice("/", 1).to_int();
+    int idx     = p_name.operator String().get_slice("/", 1).to_int();
     String what = p_name.operator String().get_slice("/", 2);
 
     Slot si;
@@ -136,15 +136,15 @@ void GraphNode::_get_property_list(List<PropertyInfo>* p_list) const {
 void GraphNode::_resort() {
     /** First pass, determine minimum size AND amount of stretchable elements */
 
-    Size2 new_size = get_size();
+    Size2 new_size   = get_size();
     Ref<StyleBox> sb = get_stylebox("frame");
 
     int sep = get_constant("separation");
 
-    bool first = true;
-    int children_count = 0;
-    int stretch_min = 0;
-    int stretch_avail = 0;
+    bool first                = true;
+    int children_count        = 0;
+    int stretch_min           = 0;
+    int stretch_avail         = 0;
     float stretch_ratio_total = 0;
     Map<Control*, _MinSizeCache> min_size_cache;
 
@@ -160,15 +160,15 @@ void GraphNode::_resort() {
         Size2i size = c->get_combined_minimum_size();
         _MinSizeCache msc;
 
-        stretch_min += size.height;
-        msc.min_size = size.height;
-        msc.will_stretch = c->get_v_size_flags() & SIZE_EXPAND;
+        stretch_min      += size.height;
+        msc.min_size      = size.height;
+        msc.will_stretch  = c->get_v_size_flags() & SIZE_EXPAND;
 
         if (msc.will_stretch) {
-            stretch_avail += msc.min_size;
+            stretch_avail       += msc.min_size;
             stretch_ratio_total += c->get_stretch_ratio();
         }
-        msc.final_size = msc.min_size;
+        msc.final_size    = msc.min_size;
         min_size_cache[c] = msc;
         children_count++;
     }
@@ -177,7 +177,7 @@ void GraphNode::_resort() {
         return;
     }
 
-    int stretch_max = new_size.height - (children_count - 1) * sep;
+    int stretch_max  = new_size.height - (children_count - 1) * sep;
     int stretch_diff = stretch_max - stretch_min;
     if (stretch_diff < 0) {
         // avoid negative stretch space
@@ -213,11 +213,11 @@ void GraphNode::_resort() {
                 if (final_pixel_size < msc.min_size) {
                     // if available stretching area is too small for widget,
                     // then remove it from stretching area
-                    msc.will_stretch = false;
+                    msc.will_stretch     = false;
                     stretch_ratio_total -= c->get_stretch_ratio();
-                    refit_successful = false;
-                    stretch_avail -= msc.min_size;
-                    msc.final_size = msc.min_size;
+                    refit_successful     = false;
+                    stretch_avail       -= msc.min_size;
+                    msc.final_size       = msc.min_size;
                     break;
                 } else {
                     msc.final_size = final_pixel_size;
@@ -234,7 +234,7 @@ void GraphNode::_resort() {
 
     int ofs = sb->get_margin(MARGIN_TOP);
 
-    first = true;
+    first   = true;
     int idx = 0;
     cache_y.clear();
     int w = new_size.width - sb->get_minimum_size().x;
@@ -257,7 +257,7 @@ void GraphNode::_resort() {
         }
 
         int from = ofs;
-        int to = ofs + msc.final_size;
+        int to   = ofs + msc.final_size;
 
         if (msc.will_stretch && idx == children_count - 1) {
             // adjust so the last one always fits perfect
@@ -284,7 +284,7 @@ void GraphNode::_resort() {
 bool GraphNode::has_point(const Point2& p_point) const {
     if (comment) {
         Ref<StyleBox> comment = get_stylebox("comment");
-        Ref<Texture> resizer = get_icon("resizer");
+        Ref<Texture> resizer  = get_icon("resizer");
 
         if (Rect2(get_size() - resizer->get_size(), resizer->get_size())
                 .has_point(p_point)) {
@@ -317,20 +317,20 @@ void GraphNode::_notification(int p_what) {
 
             // sb=sb->duplicate();
             // sb->call("set_modulate",modulate);
-            Ref<Texture> port = get_icon("port");
-            Ref<Texture> close = get_icon("close");
-            Ref<Texture> resizer = get_icon("resizer");
-            int close_offset = get_constant("close_offset");
-            int close_h_offset = get_constant("close_h_offset");
-            Color close_color = get_color("close_color");
-            Color resizer_color = get_color("resizer_color");
-            Ref<Font> title_font = get_font("title_font");
-            int title_offset = get_constant("title_offset");
-            int title_h_offset = get_constant("title_h_offset");
-            Color title_color = get_color("title_color");
-            Point2i icofs = -port->get_size() * 0.5;
-            int edgeofs = get_constant("port_offset");
-            icofs.y += sb->get_margin(MARGIN_TOP);
+            Ref<Texture> port     = get_icon("port");
+            Ref<Texture> close    = get_icon("close");
+            Ref<Texture> resizer  = get_icon("resizer");
+            int close_offset      = get_constant("close_offset");
+            int close_h_offset    = get_constant("close_h_offset");
+            Color close_color     = get_color("close_color");
+            Color resizer_color   = get_color("resizer_color");
+            Ref<Font> title_font  = get_font("title_font");
+            int title_offset      = get_constant("title_offset");
+            int title_h_offset    = get_constant("title_h_offset");
+            Color title_color     = get_color("title_color");
+            Point2i icofs         = -port->get_size() * 0.5;
+            int edgeofs           = get_constant("port_offset");
+            icofs.y              += sb->get_margin(MARGIN_TOP);
 
             draw_style_box(sb, Rect2(Point2(), get_size()));
 
@@ -376,13 +376,13 @@ void GraphNode::_notification(int p_what) {
                 );
                 draw_texture(close, cpos, close_color);
                 close_rect.position = cpos;
-                close_rect.size = close->get_size();
+                close_rect.size     = close->get_size();
             } else {
                 close_rect = Rect2();
             }
 
             for (Map<int, Slot>::Element* E = slot_info.front(); E;
-                 E = E->next()) {
+                 E                          = E->next()) {
                 if (E->key() < 0 || E->key() >= cache_y.size()) {
                     continue;
                 }
@@ -459,15 +459,15 @@ void GraphNode::set_slot(
     }
 
     Slot s;
-    s.enable_left = p_enable_left;
-    s.type_left = p_type_left;
-    s.color_left = p_color_left;
-    s.enable_right = p_enable_right;
-    s.type_right = p_type_right;
-    s.color_right = p_color_right;
-    s.custom_slot_left = p_custom_left;
+    s.enable_left       = p_enable_left;
+    s.type_left         = p_type_left;
+    s.color_left        = p_color_left;
+    s.enable_right      = p_enable_right;
+    s.type_right        = p_type_right;
+    s.color_right       = p_color_right;
+    s.custom_slot_left  = p_custom_left;
     s.custom_slot_right = p_custom_right;
-    slot_info[p_idx] = s;
+    slot_info[p_idx]    = s;
     update();
     connpos_dirty = true;
 
@@ -633,15 +633,15 @@ Color GraphNode::get_slot_color_right(int p_idx) const {
 Size2 GraphNode::get_minimum_size() const {
     Ref<Font> title_font = get_font("title_font");
 
-    int sep = get_constant("separation");
+    int sep          = get_constant("separation");
     Ref<StyleBox> sb = get_stylebox("frame");
-    bool first = true;
+    bool first       = true;
 
     Size2 minsize;
     minsize.x = title_font->get_string_size(title).x;
     if (show_close) {
-        Ref<Texture> close = get_icon("close");
-        minsize.x += sep + close->get_width();
+        Ref<Texture> close  = get_icon("close");
+        minsize.x          += sep + close->get_width();
     }
 
     for (int i = 0; i < get_child_count(); i++) {
@@ -656,7 +656,7 @@ Size2 GraphNode::get_minimum_size() const {
         Size2i size = c->get_combined_minimum_size();
 
         minsize.y += size.y;
-        minsize.x = MAX(minsize.x, size.x);
+        minsize.x  = MAX(minsize.x, size.x);
 
         if (first) {
             first = false;
@@ -724,7 +724,7 @@ bool GraphNode::is_close_button_visible() const {
 
 void GraphNode::_connpos_update() {
     int edgeofs = get_constant("port_offset");
-    int sep = get_constant("separation");
+    int sep     = get_constant("separation");
 
     Ref<StyleBox> sb = get_stylebox("frame");
     conn_input_cache.clear();
@@ -750,15 +750,15 @@ void GraphNode::_connpos_update() {
         if (slot_info.has(idx)) {
             if (slot_info[idx].enable_left) {
                 ConnCache cc;
-                cc.pos = Point2i(edgeofs, y + h / 2);
-                cc.type = slot_info[idx].type_left;
+                cc.pos   = Point2i(edgeofs, y + h / 2);
+                cc.type  = slot_info[idx].type_left;
                 cc.color = slot_info[idx].color_left;
                 conn_input_cache.push_back(cc);
             }
             if (slot_info[idx].enable_right) {
                 ConnCache cc;
-                cc.pos = Point2i(get_size().width - edgeofs, y + h / 2);
-                cc.type = slot_info[idx].type_right;
+                cc.pos   = Point2i(get_size().width - edgeofs, y + h / 2);
+                cc.type  = slot_info[idx].type_right;
                 cc.color = slot_info[idx].color_right;
                 conn_output_cache.push_back(cc);
             }
@@ -794,9 +794,9 @@ Vector2 GraphNode::get_connection_input_position(int p_idx) {
     }
 
     ERR_FAIL_INDEX_V(p_idx, conn_input_cache.size(), Vector2());
-    Vector2 pos = conn_input_cache[p_idx].pos;
-    pos.x *= get_scale().x;
-    pos.y *= get_scale().y;
+    Vector2 pos  = conn_input_cache[p_idx].pos;
+    pos.x       *= get_scale().x;
+    pos.y       *= get_scale().y;
     return pos;
 }
 
@@ -824,9 +824,9 @@ Vector2 GraphNode::get_connection_output_position(int p_idx) {
     }
 
     ERR_FAIL_INDEX_V(p_idx, conn_output_cache.size(), Vector2());
-    Vector2 pos = conn_output_cache[p_idx].pos;
-    pos.x *= get_scale().x;
-    pos.y *= get_scale().y;
+    Vector2 pos  = conn_output_cache[p_idx].pos;
+    pos.x       *= get_scale().x;
+    pos.y       *= get_scale().y;
     return pos;
 }
 
@@ -870,8 +870,8 @@ void GraphNode::_gui_input(const Ref<InputEvent>& p_ev) {
 
             if (resizable && mpos.x > get_size().x - resizer->get_width()
                 && mpos.y > get_size().y - resizer->get_height()) {
-                resizing = true;
-                resizing_from = mpos;
+                resizing           = true;
+                resizing_from      = mpos;
                 resizing_from_size = get_size();
                 accept_event();
                 return;
@@ -1138,12 +1138,12 @@ void GraphNode::_bind_methods() {
 }
 
 GraphNode::GraphNode() {
-    overlay = OVERLAY_DISABLED;
-    show_close = false;
+    overlay       = OVERLAY_DISABLED;
+    show_close    = false;
     connpos_dirty = true;
     set_mouse_filter(MOUSE_FILTER_STOP);
-    comment = false;
+    comment   = false;
     resizable = false;
-    resizing = false;
-    selected = false;
+    resizing  = false;
+    selected  = false;
 }

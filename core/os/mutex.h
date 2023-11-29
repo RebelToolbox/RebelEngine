@@ -121,7 +121,7 @@ public:
     explicit MutexLock(const MutexImpl<FakeMutex>& p_mutex) {}
 };
 
-using Mutex = MutexImpl<FakeMutex>;
+using Mutex       = MutexImpl<FakeMutex>;
 using BinaryMutex = MutexImpl<FakeMutex>; // Non-recursive, handle with care
 
 #endif // !NO_THREADS

@@ -118,7 +118,7 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                         while (true) {
                             if (code[idx] == 0) {
                                 error_str = "Unterminated comment";
-                                error = true;
+                                error     = true;
                                 return TK_ERROR;
                             } else if (code[idx] == '*' && code[idx + 1] == '/') {
                                 idx += 2;
@@ -156,7 +156,7 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                 while (true) {
                     if (code[idx] == 0) {
                         error_str = "Unterminated String";
-                        error = true;
+                        error     = true;
                         return TK_ERROR;
                     } else if (code[idx] == begin_str) {
                         if (verbatim
@@ -174,7 +174,7 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                         CharType next = code[idx];
                         if (next == 0) {
                             error_str = "Unterminated String";
-                            error = true;
+                            error     = true;
                             return TK_ERROR;
                         }
                         CharType res = 0;
@@ -240,9 +240,9 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                     || (code[idx] >= '0' && code[idx] <= '9')) {
                     // a number
                     const CharType* rptr;
-                    double number = String::to_double(&code[idx], &rptr);
-                    idx += (rptr - &code[idx]);
-                    value = number;
+                    double number  = String::to_double(&code[idx], &rptr);
+                    idx           += (rptr - &code[idx]);
+                    value          = number;
                     return TK_NUMBER;
 
                 } else if ((code[idx] == '@' && code[idx + 1] != '"') || code[idx] == '_' || (code[idx] >= 'A' && code[idx] <= 'Z') || (code[idx] >= 'a' && code[idx] <= 'z') || code[idx] > 127) {
@@ -267,7 +267,7 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                     idx++;
                 } else {
                     error_str = "Unexpected character.";
-                    error = true;
+                    error     = true;
                     return TK_ERROR;
                 }
             }
@@ -334,7 +334,7 @@ Error ScriptClassParser::_skip_generic_type_params() {
                 return OK;
             } else if (tk != TK_COMMA) {
                 error_str = "Unexpected token: " + get_token_name(tk);
-                error = true;
+                error     = true;
                 return ERR_PARSE_ERROR;
             }
         } else if (tk == TK_OP_LESS) {
@@ -346,7 +346,7 @@ Error ScriptClassParser::_skip_generic_type_params() {
             return OK;
         } else {
             error_str = "Unexpected token: " + get_token_name(tk);
-            error = true;
+            error     = true;
             return ERR_PARSE_ERROR;
         }
     }
@@ -416,7 +416,7 @@ Error ScriptClassParser::_parse_class_base(Vector<String>& r_base) {
         // we are finished when we hit the open curly bracket
     } else {
         error_str = "Unexpected token: " + get_token_name(tk);
-        error = true;
+        error     = true;
         return ERR_PARSE_ERROR;
     }
 
@@ -429,14 +429,14 @@ Error ScriptClassParser::_parse_type_constraints() {
     Token tk = get_token();
     if (tk != TK_IDENTIFIER) {
         error_str = "Unexpected token: " + get_token_name(tk);
-        error = true;
+        error     = true;
         return ERR_PARSE_ERROR;
     }
 
     tk = get_token();
     if (tk != TK_COLON) {
         error_str = "Unexpected token: " + get_token_name(tk);
-        error = true;
+        error     = true;
         return ERR_PARSE_ERROR;
     }
 
@@ -476,7 +476,7 @@ Error ScriptClassParser::_parse_type_constraints() {
             tk = get_token();
             if (tk != TK_SYMBOL || String(value) != ")") {
                 error_str = "Unexpected token: " + get_token_name(tk);
-                error = true;
+                error     = true;
                 return ERR_PARSE_ERROR;
             }
         } else if (tk == TK_OP_LESS) {
@@ -488,7 +488,7 @@ Error ScriptClassParser::_parse_type_constraints() {
             return OK;
         } else {
             error_str = "Unexpected token: " + get_token_name(tk);
-            error = true;
+            error     = true;
             return ERR_PARSE_ERROR;
         }
     }
@@ -504,7 +504,7 @@ Error ScriptClassParser::_parse_namespace_name(
         r_name += String(value);
     } else {
         error_str = "Unexpected token: " + get_token_name(tk);
-        error = true;
+        error     = true;
         return ERR_PARSE_ERROR;
     }
 
@@ -518,24 +518,24 @@ Error ScriptClassParser::_parse_namespace_name(
         return OK;
     } else {
         error_str = "Unexpected token: " + get_token_name(tk);
-        error = true;
+        error     = true;
         return ERR_PARSE_ERROR;
     }
 }
 
 Error ScriptClassParser::parse(const String& p_code) {
-    code = p_code;
-    idx = 0;
-    line = 0;
+    code      = p_code;
+    idx       = 0;
+    line      = 0;
     error_str = String();
-    error = false;
-    value = Variant();
+    error     = false;
+    value     = Variant();
     classes.clear();
 
     Token tk = get_token();
 
     Map<int, NameDecl> name_stack;
-    int curly_stack = 0;
+    int curly_stack      = 0;
     int type_curly_stack = 0;
 
     while (!error && tk != TK_EOF) {
@@ -547,13 +547,13 @@ Error ScriptClassParser::parse(const String& p_code) {
             tk = get_token();
 
             if (tk == TK_IDENTIFIER) {
-                String name = value;
+                String name  = value;
                 int at_level = curly_stack;
 
                 ClassDecl class_decl;
 
                 for (Map<int, NameDecl>::Element* E = name_stack.front(); E;
-                     E = E->next()) {
+                     E                              = E->next()) {
                     const NameDecl& name_decl = E->value();
 
                     if (name_decl.type == NameDecl::NAMESPACE_DECL) {
@@ -566,8 +566,8 @@ Error ScriptClassParser::parse(const String& p_code) {
                     }
                 }
 
-                class_decl.name += name;
-                class_decl.nested = type_curly_stack > 0;
+                class_decl.name   += name;
+                class_decl.nested  = type_curly_stack > 0;
 
                 bool generic = false;
 
@@ -608,7 +608,7 @@ Error ScriptClassParser::parse(const String& p_code) {
                         break;
                     } else {
                         error_str = "Unexpected token: " + get_token_name(tk);
-                        error = true;
+                        error     = true;
                         return ERR_PARSE_ERROR;
                     }
                 }
@@ -638,7 +638,7 @@ Error ScriptClassParser::parse(const String& p_code) {
         } else if (tk == TK_IDENTIFIER && identifier == "namespace") {
             if (type_curly_stack > 0) {
                 error_str = "Found namespace nested inside type.";
-                error = true;
+                error     = true;
                 return ERR_PARSE_ERROR;
             }
 
@@ -651,8 +651,8 @@ Error ScriptClassParser::parse(const String& p_code) {
             }
 
             NameDecl name_decl;
-            name_decl.name = name;
-            name_decl.type = NameDecl::NAMESPACE_DECL;
+            name_decl.name       = name;
+            name_decl.type       = NameDecl::NAMESPACE_DECL;
             name_stack[at_level] = name_decl;
         } else if (tk == TK_CURLY_BRACKET_OPEN) {
             curly_stack++;
@@ -671,7 +671,7 @@ Error ScriptClassParser::parse(const String& p_code) {
 
     if (!error && tk == TK_EOF && curly_stack > 0) {
         error_str = "Reached EOF with missing close curly brackets.";
-        error = true;
+        error     = true;
     }
 
     if (error) {

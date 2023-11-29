@@ -74,9 +74,9 @@ void PortalTracer::trace_debug_sprawl(
     int p_start_room_id,
     TraceResult& r_result
 ) {
-    _portal_renderer = &p_portal_renderer;
+    _portal_renderer   = &p_portal_renderer;
     _trace_start_point = p_pos;
-    _result = &r_result;
+    _result            = &r_result;
 
     // all the statics should be not hit to start with
     _result->clear();
@@ -101,9 +101,9 @@ void PortalTracer::trace(
     TraceResult& r_result
 ) {
     // store local versions to prevent passing around recursive functions
-    _portal_renderer = &p_portal_renderer;
+    _portal_renderer   = &p_portal_renderer;
     _trace_start_point = p_pos;
-    _result = &r_result;
+    _result            = &r_result;
 
     // The near and far clipping planes needs special treatment. The problem is,
     // if it is say a metre from the camera, it will clip out a portal
@@ -275,7 +275,7 @@ int PortalTracer::trace_globals(
     bool p_override_camera
 ) {
     uint32_t num_globals = _portal_renderer->get_num_moving_globals();
-    int current_result = first_result;
+    int current_result   = first_result;
 
     if (!p_override_camera) {
         for (uint32_t n = 0; n < num_globals; n++) {
@@ -381,7 +381,7 @@ void PortalTracer::trace_pvs(
     int p_source_room_id,
     const LocalVector<Plane>& p_planes
 ) {
-    const PVS& pvs = _portal_renderer->get_pvs();
+    const PVS& pvs            = _portal_renderer->get_pvs();
     const VSRoom& source_room = _portal_renderer->get_room(p_source_room_id);
 
     for (int r = 0; r < source_room._pvs_size; r++) {

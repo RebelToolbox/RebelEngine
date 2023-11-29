@@ -134,9 +134,9 @@ public:
 
     void _set_texture_rect_mode(
         bool p_enable,
-        bool p_ninepatch = false,
-        bool p_light_angle = false,
-        bool p_modulate = false,
+        bool p_ninepatch    = false,
+        bool p_light_angle  = false,
+        bool p_modulate     = false,
         bool p_large_vertex = false
     );
     RasterizerStorageGLES3::Texture* _bind_canvas_texture(

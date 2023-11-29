@@ -78,10 +78,10 @@ void AudioStreamEditor::_draw_preview() {
     lines.resize(size.width * 2);
 
     for (int i = 0; i < size.width; i++) {
-        float ofs = i * preview_len / size.width;
+        float ofs   = i * preview_len / size.width;
         float ofs_n = (i + 1) * preview_len / size.width;
-        float max = preview->get_max(ofs, ofs_n) * 0.5 + 0.5;
-        float min = preview->get_min(ofs, ofs_n) * 0.5 + 0.5;
+        float max   = preview->get_max(ofs, ofs_n) * 0.5 + 0.5;
+        float min   = preview->get_min(ofs, ofs_n) * 0.5 + 0.5;
 
         int idx = i;
         lines.write[idx * 2 + 0] =
@@ -152,9 +152,9 @@ void AudioStreamEditor::_draw_indicator() {
         return;
     }
 
-    Rect2 rect = _preview->get_rect();
-    float len = stream->get_length();
-    float ofs_x = _current / len * rect.size.width;
+    Rect2 rect        = _preview->get_rect();
+    float len         = stream->get_length();
+    float ofs_x       = _current / len * rect.size.width;
     const Color color = get_color("accent_color", "Editor");
     _indicator->draw_line(
         Point2(ofs_x, 0),
@@ -207,7 +207,7 @@ void AudioStreamEditor::edit(Ref<AudioStream> p_stream) {
 
     stream = p_stream;
     _player->set_stream(stream);
-    _current = 0;
+    _current    = 0;
     String text = String::num(stream->get_length(), 2).pad_decimals(2) + "s";
     _duration_label->set_text(text);
 
@@ -327,7 +327,7 @@ void AudioStreamEditorPlugin::make_visible(bool p_visible) {
 }
 
 AudioStreamEditorPlugin::AudioStreamEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor       = p_node;
     audio_editor = memnew(AudioStreamEditor);
     add_control_to_container(CONTAINER_PROPERTY_EDITOR_BOTTOM, audio_editor);
     audio_editor->hide();

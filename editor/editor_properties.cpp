@@ -182,7 +182,7 @@ EditorPropertyMultilineText::EditorPropertyMultilineText() {
     open_big_text->connect("pressed", this, "_open_big_text");
     hb->add_child(open_big_text);
     big_text_dialog = nullptr;
-    big_text = nullptr;
+    big_text        = nullptr;
 }
 
 ///////////////////// TEXT ENUM /////////////////////////
@@ -282,8 +282,8 @@ void EditorPropertyPath::setup(
     bool p_global
 ) {
     extensions = p_extensions;
-    folder = p_folder;
-    global = p_global;
+    folder     = p_folder;
+    global     = p_global;
 }
 
 void EditorPropertyPath::set_save_mode() {
@@ -331,8 +331,8 @@ EditorPropertyPath::EditorPropertyPath() {
     add_focusable(path);
     dialog = nullptr;
     path_edit->connect("pressed", this, "_path_pressed");
-    folder = false;
-    global = false;
+    folder    = false;
+    global    = false;
     save_mode = false;
 }
 
@@ -435,7 +435,7 @@ void EditorPropertyMember::_property_select() {
 
     } else if (hint == MEMBER_PROPERTY_OF_VARIANT_TYPE) {
         Variant::Type type = Variant::NIL;
-        String tname = hint_text;
+        String tname       = hint_text;
         if (tname.find(".") != -1) {
             tname = tname.get_slice(".", 0);
         }
@@ -470,7 +470,7 @@ void EditorPropertyMember::_property_select() {
 }
 
 void EditorPropertyMember::setup(Type p_hint, const String& p_hint_text) {
-    hint = p_hint;
+    hint      = p_hint;
     hint_text = p_hint_text;
 }
 
@@ -582,9 +582,9 @@ void EditorPropertyFlags::_flag_toggled() {
     uint32_t value = 0;
     for (int i = 0; i < flags.size(); i++) {
         if (flags[i]->is_pressed()) {
-            uint32_t val = 1;
-            val <<= flag_indices[i];
-            value |= val;
+            uint32_t val   = 1;
+            val          <<= flag_indices[i];
+            value         |= val;
         }
     }
 
@@ -595,8 +595,8 @@ void EditorPropertyFlags::update_property() {
     uint32_t value = get_edited_object()->get(get_edited_property());
 
     for (int i = 0; i < flags.size(); i++) {
-        uint32_t val = 1;
-        val <<= flag_indices[i];
+        uint32_t val   = 1;
+        val          <<= flag_indices[i];
         if (value & val) {
             flags[i]->set_pressed(true);
         } else {
@@ -649,9 +649,9 @@ private:
     Vector<Rect2> flag_rects;
     Rect2 expand_rect;
     bool expand_hovered = false;
-    bool expanded = false;
-    int expansion_rows = 0;
-    int hovered_index = -1;
+    bool expanded       = false;
+    int expansion_rows  = 0;
+    int hovered_index   = -1;
 
     Size2 get_grid_size() const {
         Ref<Font> font = get_font("font", "Label");
@@ -659,9 +659,9 @@ private:
     }
 
 public:
-    uint32_t value = 0;
+    uint32_t value       = 0;
     int layer_group_size = 0;
-    int layer_count = 0;
+    int layer_count      = 0;
     Vector<String> names;
     Vector<String> tooltips;
 
@@ -692,7 +692,7 @@ public:
         const Ref<InputEventMouseMotion> mm = p_ev;
         if (mm.is_valid()) {
             bool expand_was_hovered = expand_hovered;
-            expand_hovered = expand_rect.has_point(mm->get_position());
+            expand_hovered          = expand_rect.has_point(mm->get_position());
             if (expand_hovered != expand_was_hovered) {
                 update();
             }
@@ -745,23 +745,23 @@ public:
         switch (p_what) {
             case NOTIFICATION_DRAW: {
                 Size2 grid_size = get_grid_size();
-                grid_size.x = get_size().x;
+                grid_size.x     = get_size().x;
 
                 flag_rects.clear();
 
                 int prev_expansion_rows = expansion_rows;
-                expansion_rows = 0;
+                expansion_rows          = 0;
 
                 const int bsize = (grid_size.height * 80 / 100) / 2;
-                const int h = bsize * 2 + 1;
+                const int h     = bsize * 2 + 1;
 
                 Color color = get_color("highlight_color", "Editor");
 
-                Color text_color = get_color("font_color", "Editor");
-                text_color.a *= 0.5;
+                Color text_color  = get_color("font_color", "Editor");
+                text_color.a     *= 0.5;
 
-                Color text_color_on = get_color("dark_color_3", "Editor");
-                text_color_on.a *= 0.8;
+                Color text_color_on  = get_color("dark_color_3", "Editor");
+                text_color_on.a     *= 0.8;
 
                 const int vofs = (grid_size.height - h) / 2;
 
@@ -777,7 +777,7 @@ public:
                     for (int i = 0; i < 2; i++) {
                         for (int j = 0; j < layer_group_size; j++) {
                             const bool on = value & (1 << layer_index);
-                            Rect2 rect2 = Rect2(ofs, Size2(bsize, bsize));
+                            Rect2 rect2   = Rect2(ofs, Size2(bsize, bsize));
 
                             color.a = on ? 0.6 : 0.2;
                             if (layer_index == hovered_index) {
@@ -810,7 +810,7 @@ public:
                             ++layer_index;
                         }
 
-                        ofs.x = block_ofs.x;
+                        ofs.x  = block_ofs.x;
                         ofs.y += bsize + 1;
                     }
 
@@ -823,8 +823,8 @@ public:
                         break;
                     }
 
-                    int block_size_x = layer_group_size * (bsize + 1);
-                    block_ofs.x += block_size_x + 3;
+                    int block_size_x  = layer_group_size * (bsize + 1);
+                    block_ofs.x      += block_size_x + 3;
 
                     if (block_ofs.x + block_size_x + 12 > grid_size.width) {
                         // Keep last valid cell position for the expansion icon.
@@ -837,7 +837,7 @@ public:
 
                         if (expanded) {
                             // Expand grid to next line.
-                            block_ofs.x = 4;
+                            block_ofs.x  = 4;
                             block_ofs.y += 2 * (bsize + 1) + 3;
                         } else {
                             // Skip remaining blocks.
@@ -859,7 +859,7 @@ public:
                 ERR_FAIL_COND(arrow.is_null());
 
                 Color arrow_color = get_color("highlight_color", "Editor");
-                arrow_color.a = expand_hovered ? 1.0 : 0.6;
+                arrow_color.a     = expand_hovered ? 1.0 : 0.6;
 
                 arrow_pos.x += 2.0;
                 arrow_pos.y -= arrow->get_height();
@@ -921,30 +921,30 @@ void EditorPropertyLayers::update_property() {
 void EditorPropertyLayers::setup(LayerType p_layer_type) {
     String basename;
     int layer_group_size = 0;
-    int layer_count = 0;
+    int layer_count      = 0;
     switch (p_layer_type) {
         case LAYER_RENDER_2D: {
-            basename = "layer_names/2d_render";
+            basename         = "layer_names/2d_render";
             layer_group_size = 5;
-            layer_count = 20;
+            layer_count      = 20;
         } break;
 
         case LAYER_PHYSICS_2D: {
-            basename = "layer_names/2d_physics";
+            basename         = "layer_names/2d_physics";
             layer_group_size = 4;
-            layer_count = 32;
+            layer_count      = 32;
         } break;
 
         case LAYER_RENDER_3D: {
-            basename = "layer_names/3d_render";
+            basename         = "layer_names/3d_render";
             layer_group_size = 5;
-            layer_count = 20;
+            layer_count      = 20;
         } break;
 
         case LAYER_PHYSICS_3D: {
-            basename = "layer_names/3d_physics";
+            basename         = "layer_names/3d_physics";
             layer_group_size = 4;
-            layer_count = 32;
+            layer_count      = 32;
         } break;
     }
 
@@ -971,14 +971,14 @@ void EditorPropertyLayers::setup(LayerType p_layer_type) {
         );
     }
 
-    grid->names = names;
-    grid->tooltips = tooltips;
+    grid->names            = names;
+    grid->tooltips         = tooltips;
     grid->layer_group_size = layer_group_size;
-    grid->layer_count = layer_count;
+    grid->layer_count      = layer_count;
 }
 
 void EditorPropertyLayers::_button_pressed() {
-    int layer_count = grid->layer_count;
+    int layer_count      = grid->layer_count;
     int layer_group_size = grid->layer_group_size;
 
     layers->clear();
@@ -1063,7 +1063,7 @@ void EditorPropertyInteger::_value_changed(int64_t val) {
 
 void EditorPropertyInteger::update_property() {
     int64_t val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting     = true;
     spin->set_value(val);
     setting = false;
 #ifdef DEBUG_ENABLED
@@ -1166,7 +1166,7 @@ void EditorPropertyFloat::_value_changed(double val) {
 
 void EditorPropertyFloat::update_property() {
     double val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting    = true;
     spin->set_value(val);
     setting = false;
 }
@@ -1245,10 +1245,10 @@ void EditorPropertyEasing::_drag_easing(const Ref<InputEvent>& p_ev) {
         }
 
         float val = get_edited_object()->get(get_edited_property());
-        bool sg = val < 0;
-        val = Math::absf(val);
+        bool sg   = val < 0;
+        val       = Math::absf(val);
 
-        val = Math::log(val) / Math::log((float)2.0);
+        val  = Math::log(val) / Math::log((float)2.0);
         // Logarithmic space.
         val += rel * 0.05;
 
@@ -1281,7 +1281,7 @@ void EditorPropertyEasing::_draw_easing() {
 
     const float exp = get_edited_object()->get(get_edited_property());
 
-    const Ref<Font> f = get_font("font", "Label");
+    const Ref<Font> f      = get_font("font", "Label");
     const Color font_color = get_color("font_color", "Label");
     Color line_color;
     if (dragging) {
@@ -1461,8 +1461,8 @@ EditorPropertyEasing::EditorPropertyEasing() {
     add_child(spin);
 
     dragging = false;
-    flip = false;
-    full = false;
+    flip     = false;
+    full     = false;
 }
 
 ///////////////////// VECTOR2 /////////////////////////
@@ -1480,7 +1480,7 @@ void EditorPropertyVector2::_value_changed(double val, const String& p_name) {
 
 void EditorPropertyVector2::update_property() {
     Vector2 val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting     = true;
     spin[0]->set_value(val.x);
     spin[1]->set_value(val.y);
     setting = false;
@@ -1566,14 +1566,14 @@ void EditorPropertyRect2::_value_changed(double val, const String& p_name) {
     Rect2 r2;
     r2.position.x = spin[0]->get_value();
     r2.position.y = spin[1]->get_value();
-    r2.size.x = spin[2]->get_value();
-    r2.size.y = spin[3]->get_value();
+    r2.size.x     = spin[2]->get_value();
+    r2.size.y     = spin[3]->get_value();
     emit_changed(get_edited_property(), r2, p_name);
 }
 
 void EditorPropertyRect2::update_property() {
     Rect2 val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting   = true;
     spin[0]->set_value(val.position.x);
     spin[1]->set_value(val.position.y);
     spin[2]->set_value(val.size.x);
@@ -1667,7 +1667,7 @@ void EditorPropertyVector3::_value_changed(double val, const String& p_name) {
 
 void EditorPropertyVector3::update_property() {
     Vector3 val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting     = true;
     spin[0]->set_value(val.x);
     spin[1]->set_value(val.y);
     spin[2]->set_value(val.z);
@@ -1755,13 +1755,13 @@ void EditorPropertyPlane::_value_changed(double val, const String& p_name) {
     p.normal.x = spin[0]->get_value();
     p.normal.y = spin[1]->get_value();
     p.normal.z = spin[2]->get_value();
-    p.d = spin[3]->get_value();
+    p.d        = spin[3]->get_value();
     emit_changed(get_edited_property(), p, p_name);
 }
 
 void EditorPropertyPlane::update_property() {
     Plane val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting   = true;
     spin[0]->set_value(val.normal.x);
     spin[1]->set_value(val.normal.y);
     spin[2]->set_value(val.normal.z);
@@ -1856,7 +1856,7 @@ void EditorPropertyQuat::_value_changed(double val, const String& p_name) {
 
 void EditorPropertyQuat::update_property() {
     Quat val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting  = true;
     spin[0]->set_value(val.x);
     spin[1]->set_value(val.y);
     spin[2]->set_value(val.z);
@@ -1945,16 +1945,16 @@ void EditorPropertyAABB::_value_changed(double val, const String& p_name) {
     p.position.x = spin[0]->get_value();
     p.position.y = spin[1]->get_value();
     p.position.z = spin[2]->get_value();
-    p.size.x = spin[3]->get_value();
-    p.size.y = spin[4]->get_value();
-    p.size.z = spin[5]->get_value();
+    p.size.x     = spin[3]->get_value();
+    p.size.y     = spin[4]->get_value();
+    p.size.z     = spin[5]->get_value();
 
     emit_changed(get_edited_property(), p, p_name);
 }
 
 void EditorPropertyAABB::update_property() {
     AABB val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting  = true;
     spin[0]->set_value(val.position.x);
     spin[1]->set_value(val.position.y);
     spin[2]->set_value(val.position.z);
@@ -2044,7 +2044,7 @@ void EditorPropertyTransform2D::_value_changed(
 
 void EditorPropertyTransform2D::update_property() {
     Transform2D val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting         = true;
     spin[0]->set_value(val[0][0]);
     spin[1]->set_value(val[0][1]);
     spin[2]->set_value(val[1][0]);
@@ -2133,7 +2133,7 @@ void EditorPropertyBasis::_value_changed(double val, const String& p_name) {
 
 void EditorPropertyBasis::update_property() {
     Basis val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting   = true;
     spin[0]->set_value(val[0][0]);
     spin[1]->set_value(val[1][0]);
     spin[2]->set_value(val[2][0]);
@@ -2219,16 +2219,16 @@ void EditorPropertyTransform::_value_changed(double val, const String& p_name) {
     p.basis[0][2] = spin[6]->get_value();
     p.basis[1][2] = spin[7]->get_value();
     p.basis[2][2] = spin[8]->get_value();
-    p.origin[0] = spin[9]->get_value();
-    p.origin[1] = spin[10]->get_value();
-    p.origin[2] = spin[11]->get_value();
+    p.origin[0]   = spin[9]->get_value();
+    p.origin[1]   = spin[10]->get_value();
+    p.origin[2]   = spin[11]->get_value();
 
     emit_changed(get_edited_property(), p, p_name);
 }
 
 void EditorPropertyTransform::update_property() {
     Transform val = get_edited_object()->get(get_edited_property());
-    setting = true;
+    setting       = true;
     spin[0]->set_value(val.basis[0][0]);
     spin[1]->set_value(val.basis[1][0]);
     spin[2]->set_value(val.basis[2][0]);
@@ -2398,7 +2398,7 @@ EditorPropertyColor::EditorPropertyColor() {
 ////////////// NODE PATH //////////////////////
 
 void EditorPropertyNodePath::_node_selected(const NodePath& p_path) {
-    NodePath path = p_path;
+    NodePath path   = p_path;
     Node* base_node = nullptr;
 
     if (!use_path_from_scene_root) {
@@ -2501,8 +2501,8 @@ void EditorPropertyNodePath::setup(
     Vector<StringName> p_valid_types,
     bool p_use_path_from_scene_root
 ) {
-    base_hint = p_base_hint;
-    valid_types = p_valid_types;
+    base_hint                = p_base_hint;
+    valid_types              = p_valid_types;
     use_path_from_scene_root = p_use_path_from_scene_root;
 }
 
@@ -2723,7 +2723,7 @@ void EditorPropertyResource::_update_property_bg() {
 
     if (sub_inspector != nullptr) {
         int count_subinspectors = 0;
-        Node* n = get_parent();
+        Node* n                 = get_parent();
         while (n) {
             EditorInspector* ei = Object::cast_to<EditorInspector>(n);
             if (ei && ei->is_sub_inspector()) {
@@ -2918,7 +2918,7 @@ void EditorPropertyResource::update_property() {
             if (sub_inspector) {
                 set_bottom_editor(nullptr);
                 memdelete(sub_inspector_vbox);
-                sub_inspector = nullptr;
+                sub_inspector      = nullptr;
                 sub_inspector_vbox = nullptr;
 
                 if (opened_editor) {
@@ -3039,13 +3039,13 @@ bool EditorInspectorDefaultPlugin::parse_property(
         case Variant::INT: {
             if (p_hint == PROPERTY_HINT_ENUM) {
                 EditorPropertyEnum* editor = memnew(EditorPropertyEnum);
-                Vector<String> options = p_hint_text.split(",");
+                Vector<String> options     = p_hint_text.split(",");
                 editor->setup(options);
                 add_property_editor(p_path, editor);
 
             } else if (p_hint == PROPERTY_HINT_FLAGS) {
                 EditorPropertyFlags* editor = memnew(EditorPropertyFlags);
-                Vector<String> options = p_hint_text.split(",");
+                Vector<String> options      = p_hint_text.split(",");
                 editor->setup(options);
                 add_property_editor(p_path, editor);
 
@@ -3087,8 +3087,8 @@ bool EditorInspectorDefaultPlugin::parse_property(
                     greater =
                         false; // If using ranged, assume false by default.
                     lesser = false;
-                    min = slices[0].to_int();
-                    max = slices[1].to_int();
+                    min    = slices[0].to_int();
+                    max    = slices[1].to_int();
 
                     if (slices.size() >= 3 && slices[2].is_valid_integer()) {
                         // Step is optional, could be something else if not a
@@ -3115,9 +3115,9 @@ bool EditorInspectorDefaultPlugin::parse_property(
         case Variant::REAL: {
             if (p_hint == PROPERTY_HINT_EXP_EASING) {
                 EditorPropertyEasing* editor = memnew(EditorPropertyEasing);
-                bool full = true;
-                bool flip = false;
-                Vector<String> hints = p_hint_text.split(",");
+                bool full                    = true;
+                bool flip                    = false;
+                Vector<String> hints         = p_hint_text.split(",");
                 for (int i = 0; i < hints.size(); i++) {
                     String h = hints[i].strip_edges();
                     if (h == "attenuation") {
@@ -3135,7 +3135,7 @@ bool EditorInspectorDefaultPlugin::parse_property(
                 EditorPropertyFloat* editor = memnew(EditorPropertyFloat);
                 double min = -65535, max = 65535, step = default_float_step;
                 bool hide_slider = true;
-                bool exp_range = false;
+                bool exp_range   = false;
                 bool greater = true, lesser = true;
 
                 Vector<String> slices = p_hint_text.split(",");
@@ -3145,8 +3145,8 @@ bool EditorInspectorDefaultPlugin::parse_property(
                     greater =
                         false; // If using ranged, assume false by default.
                     lesser = false;
-                    min = slices[0].to_double();
-                    max = slices[1].to_double();
+                    min    = slices[0].to_double();
+                    max    = slices[1].to_double();
 
                     if (slices.size() >= 3 && slices[2].is_valid_float()) {
                         // Step is optional, could be something else if not a
@@ -3155,7 +3155,7 @@ bool EditorInspectorDefaultPlugin::parse_property(
                     }
 
                     hide_slider = false;
-                    exp_range = p_hint == PROPERTY_HINT_EXP_RANGE;
+                    exp_range   = p_hint == PROPERTY_HINT_EXP_RANGE;
 
                     for (int i = 2; i < slices.size(); i++) {
                         String slice = slices[i].strip_edges();
@@ -3184,7 +3184,7 @@ bool EditorInspectorDefaultPlugin::parse_property(
         case Variant::STRING: {
             if (p_hint == PROPERTY_HINT_ENUM) {
                 EditorPropertyTextEnum* editor = memnew(EditorPropertyTextEnum);
-                Vector<String> options = p_hint_text.split(",");
+                Vector<String> options         = p_hint_text.split(",");
                 editor->setup(options);
                 add_property_editor(p_path, editor);
             } else if (p_hint == PROPERTY_HINT_MULTILINE_TEXT) {
@@ -3198,11 +3198,11 @@ bool EditorInspectorDefaultPlugin::parse_property(
                 add_property_editor(p_path, editor);
             } else if (p_hint == PROPERTY_HINT_DIR || p_hint == PROPERTY_HINT_FILE || p_hint == PROPERTY_HINT_SAVE_FILE || p_hint == PROPERTY_HINT_GLOBAL_DIR || p_hint == PROPERTY_HINT_GLOBAL_FILE) {
                 Vector<String> extensions = p_hint_text.split(",");
-                bool global = p_hint == PROPERTY_HINT_GLOBAL_DIR
+                bool global               = p_hint == PROPERTY_HINT_GLOBAL_DIR
                            || p_hint == PROPERTY_HINT_GLOBAL_FILE;
                 bool folder = p_hint == PROPERTY_HINT_DIR
                            || p_hint == PROPERTY_HINT_GLOBAL_DIR;
-                bool save = p_hint == PROPERTY_HINT_SAVE_FILE;
+                bool save                  = p_hint == PROPERTY_HINT_SAVE_FILE;
                 EditorPropertyPath* editor = memnew(EditorPropertyPath);
                 editor->setup(extensions, folder, global);
                 if (save) {
@@ -3442,7 +3442,7 @@ bool EditorInspectorDefaultPlugin::parse_property(
             }
             if (p_hint == PROPERTY_HINT_NODE_PATH_VALID_TYPES
                 && p_hint_text != String()) {
-                Vector<String> types = p_hint_text.split(",", false);
+                Vector<String> types  = p_hint_text.split(",", false);
                 Vector<StringName> sn = Variant(types); // convert via variant
                 editor->setup(
                     NodePath(),

@@ -109,21 +109,21 @@ void SurfaceTool::begin(Mesh::PrimitiveType p_primitive) {
     clear();
 
     primitive = p_primitive;
-    begun = true;
-    first = true;
+    begun     = true;
+    first     = true;
 }
 
 void SurfaceTool::add_vertex(const Vector3& p_vertex) {
     ERR_FAIL_COND(!begun);
 
     Vertex vtx;
-    vtx.vertex = p_vertex;
-    vtx.color = last_color;
-    vtx.normal = last_normal;
-    vtx.uv = last_uv;
-    vtx.uv2 = last_uv2;
+    vtx.vertex  = p_vertex;
+    vtx.color   = last_color;
+    vtx.normal  = last_normal;
+    vtx.uv      = last_uv;
+    vtx.uv2     = last_uv2;
     vtx.weights = last_weights;
-    vtx.bones = last_bones;
+    vtx.bones   = last_bones;
     vtx.tangent = last_tangent.normal;
     vtx.binormal =
         last_normal.cross(last_tangent.normal).normalized() * last_tangent.d;
@@ -147,7 +147,7 @@ void SurfaceTool::add_vertex(const Vector3& p_vertex) {
             Vector<WeightSort> weights;
             for (int i = 0; i < vtx.weights.size(); i++) {
                 WeightSort ws;
-                ws.index = vtx.bones[i];
+                ws.index  = vtx.bones[i];
                 ws.weight = vtx.weights[i];
                 weights.push_back(ws);
             }
@@ -187,8 +187,8 @@ void SurfaceTool::add_color(Color p_color) {
 
     ERR_FAIL_COND(!first && !(format & Mesh::ARRAY_FORMAT_COLOR));
 
-    format |= Mesh::ARRAY_FORMAT_COLOR;
-    last_color = p_color;
+    format     |= Mesh::ARRAY_FORMAT_COLOR;
+    last_color  = p_color;
 }
 
 void SurfaceTool::add_normal(const Vector3& p_normal) {
@@ -196,48 +196,48 @@ void SurfaceTool::add_normal(const Vector3& p_normal) {
 
     ERR_FAIL_COND(!first && !(format & Mesh::ARRAY_FORMAT_NORMAL));
 
-    format |= Mesh::ARRAY_FORMAT_NORMAL;
-    last_normal = p_normal;
+    format      |= Mesh::ARRAY_FORMAT_NORMAL;
+    last_normal  = p_normal;
 }
 
 void SurfaceTool::add_tangent(const Plane& p_tangent) {
     ERR_FAIL_COND(!begun);
     ERR_FAIL_COND(!first && !(format & Mesh::ARRAY_FORMAT_TANGENT));
 
-    format |= Mesh::ARRAY_FORMAT_TANGENT;
-    last_tangent = p_tangent;
+    format       |= Mesh::ARRAY_FORMAT_TANGENT;
+    last_tangent  = p_tangent;
 }
 
 void SurfaceTool::add_uv(const Vector2& p_uv) {
     ERR_FAIL_COND(!begun);
     ERR_FAIL_COND(!first && !(format & Mesh::ARRAY_FORMAT_TEX_UV));
 
-    format |= Mesh::ARRAY_FORMAT_TEX_UV;
-    last_uv = p_uv;
+    format  |= Mesh::ARRAY_FORMAT_TEX_UV;
+    last_uv  = p_uv;
 }
 
 void SurfaceTool::add_uv2(const Vector2& p_uv2) {
     ERR_FAIL_COND(!begun);
     ERR_FAIL_COND(!first && !(format & Mesh::ARRAY_FORMAT_TEX_UV2));
 
-    format |= Mesh::ARRAY_FORMAT_TEX_UV2;
-    last_uv2 = p_uv2;
+    format   |= Mesh::ARRAY_FORMAT_TEX_UV2;
+    last_uv2  = p_uv2;
 }
 
 void SurfaceTool::add_bones(const Vector<int>& p_bones) {
     ERR_FAIL_COND(!begun);
     ERR_FAIL_COND(!first && !(format & Mesh::ARRAY_FORMAT_BONES));
 
-    format |= Mesh::ARRAY_FORMAT_BONES;
-    last_bones = p_bones;
+    format     |= Mesh::ARRAY_FORMAT_BONES;
+    last_bones  = p_bones;
 }
 
 void SurfaceTool::add_weights(const Vector<float>& p_weights) {
     ERR_FAIL_COND(!begun);
     ERR_FAIL_COND(!first && !(format & Mesh::ARRAY_FORMAT_WEIGHTS));
 
-    format |= Mesh::ARRAY_FORMAT_WEIGHTS;
-    last_weights = p_weights;
+    format       |= Mesh::ARRAY_FORMAT_WEIGHTS;
+    last_weights  = p_weights;
 }
 
 void SurfaceTool::add_smooth_group(bool p_smooth) {
@@ -308,7 +308,7 @@ Array SurfaceTool::commit_to_arrays() {
 
                 int idx = 0;
                 for (List<Vertex>::Element* E = vertex_array.front(); E;
-                     E = E->next(), idx++) {
+                     E                        = E->next(), idx++) {
                     const Vertex& v = E->get();
 
                     switch (i) {
@@ -334,7 +334,7 @@ Array SurfaceTool::commit_to_arrays() {
 
                 int idx = 0;
                 for (List<Vertex>::Element* E = vertex_array.front(); E;
-                     E = E->next(), idx++) {
+                     E                        = E->next(), idx++) {
                     const Vertex& v = E->get();
 
                     switch (i) {
@@ -365,7 +365,7 @@ Array SurfaceTool::commit_to_arrays() {
                     w[idx + 2] = v.tangent.z;
 
                     // float d = v.tangent.dot(v.binormal,v.normal);
-                    float d = v.binormal.dot(v.normal.cross(v.tangent));
+                    float d    = v.binormal.dot(v.normal.cross(v.tangent));
                     w[idx + 3] = d < 0 ? -1 : 1;
                 }
 
@@ -380,9 +380,9 @@ Array SurfaceTool::commit_to_arrays() {
 
                 int idx = 0;
                 for (List<Vertex>::Element* E = vertex_array.front(); E;
-                     E = E->next(), idx++) {
+                     E                        = E->next(), idx++) {
                     const Vertex& v = E->get();
-                    w[idx] = v.color;
+                    w[idx]          = v.color;
                 }
 
                 w.release();
@@ -438,7 +438,7 @@ Array SurfaceTool::commit_to_arrays() {
 
                 int idx = 0;
                 for (List<int>::Element* E = index_array.front(); E;
-                     E = E->next(), idx++) {
+                     E                     = E->next(), idx++) {
                     w[idx] = E->get();
                 }
 
@@ -553,14 +553,14 @@ Vector<SurfaceTool::Vertex> SurfaceTool::
     create_vertex_array_from_triangle_arrays(const Array& p_arrays) {
     Vector<SurfaceTool::Vertex> ret;
 
-    PoolVector<Vector3> varr = p_arrays[VS::ARRAY_VERTEX];
-    PoolVector<Vector3> narr = p_arrays[VS::ARRAY_NORMAL];
-    PoolVector<float> tarr = p_arrays[VS::ARRAY_TANGENT];
-    PoolVector<Color> carr = p_arrays[VS::ARRAY_COLOR];
-    PoolVector<Vector2> uvarr = p_arrays[VS::ARRAY_TEX_UV];
+    PoolVector<Vector3> varr   = p_arrays[VS::ARRAY_VERTEX];
+    PoolVector<Vector3> narr   = p_arrays[VS::ARRAY_NORMAL];
+    PoolVector<float> tarr     = p_arrays[VS::ARRAY_TANGENT];
+    PoolVector<Color> carr     = p_arrays[VS::ARRAY_COLOR];
+    PoolVector<Vector2> uvarr  = p_arrays[VS::ARRAY_TEX_UV];
     PoolVector<Vector2> uv2arr = p_arrays[VS::ARRAY_TEX_UV2];
-    PoolVector<int> barr = p_arrays[VS::ARRAY_BONES];
-    PoolVector<float> warr = p_arrays[VS::ARRAY_WEIGHTS];
+    PoolVector<int> barr       = p_arrays[VS::ARRAY_BONES];
+    PoolVector<float> warr     = p_arrays[VS::ARRAY_WEIGHTS];
 
     int vc = varr.size();
 
@@ -572,46 +572,46 @@ Vector<SurfaceTool::Vertex> SurfaceTool::
     PoolVector<Vector3>::Read rv;
     if (varr.size()) {
         lformat |= VS::ARRAY_FORMAT_VERTEX;
-        rv = varr.read();
+        rv       = varr.read();
     }
     PoolVector<Vector3>::Read rn;
     if (narr.size()) {
         lformat |= VS::ARRAY_FORMAT_NORMAL;
-        rn = narr.read();
+        rn       = narr.read();
     }
     PoolVector<float>::Read rt;
     if (tarr.size()) {
         lformat |= VS::ARRAY_FORMAT_TANGENT;
-        rt = tarr.read();
+        rt       = tarr.read();
     }
     PoolVector<Color>::Read rc;
     if (carr.size()) {
         lformat |= VS::ARRAY_FORMAT_COLOR;
-        rc = carr.read();
+        rc       = carr.read();
     }
 
     PoolVector<Vector2>::Read ruv;
     if (uvarr.size()) {
         lformat |= VS::ARRAY_FORMAT_TEX_UV;
-        ruv = uvarr.read();
+        ruv      = uvarr.read();
     }
 
     PoolVector<Vector2>::Read ruv2;
     if (uv2arr.size()) {
         lformat |= VS::ARRAY_FORMAT_TEX_UV2;
-        ruv2 = uv2arr.read();
+        ruv2     = uv2arr.read();
     }
 
     PoolVector<int>::Read rb;
     if (barr.size()) {
         lformat |= VS::ARRAY_FORMAT_BONES;
-        rb = barr.read();
+        rb       = barr.read();
     }
 
     PoolVector<float>::Read rw;
     if (warr.size()) {
         lformat |= VS::ARRAY_FORMAT_WEIGHTS;
-        rw = warr.read();
+        rw       = warr.read();
     }
 
     for (int i = 0; i < vc; i++) {
@@ -629,7 +629,7 @@ Vector<SurfaceTool::Vertex> SurfaceTool::
                 tarr[i * 4 + 2],
                 tarr[i * 4 + 3]
             );
-            v.tangent = p.normal;
+            v.tangent  = p.normal;
             v.binormal = p.normal.cross(v.tangent).normalized() * p.d;
         }
         if (lformat & VS::ARRAY_FORMAT_COLOR) {
@@ -648,7 +648,7 @@ Vector<SurfaceTool::Vertex> SurfaceTool::
             b.write[1] = barr[i * 4 + 1];
             b.write[2] = barr[i * 4 + 2];
             b.write[3] = barr[i * 4 + 3];
-            v.bones = b;
+            v.bones    = b;
         }
         if (lformat & VS::ARRAY_FORMAT_WEIGHTS) {
             Vector<float> w;
@@ -657,7 +657,7 @@ Vector<SurfaceTool::Vertex> SurfaceTool::
             w.write[1] = warr[i * 4 + 1];
             w.write[2] = warr[i * 4 + 2];
             w.write[3] = warr[i * 4 + 3];
-            v.weights = w;
+            v.weights  = w;
         }
 
         ret.push_back(v);
@@ -672,14 +672,14 @@ void SurfaceTool::_create_list_from_arrays(
     List<int>* r_index,
     int& lformat
 ) {
-    PoolVector<Vector3> varr = arr[VS::ARRAY_VERTEX];
-    PoolVector<Vector3> narr = arr[VS::ARRAY_NORMAL];
-    PoolVector<float> tarr = arr[VS::ARRAY_TANGENT];
-    PoolVector<Color> carr = arr[VS::ARRAY_COLOR];
-    PoolVector<Vector2> uvarr = arr[VS::ARRAY_TEX_UV];
+    PoolVector<Vector3> varr   = arr[VS::ARRAY_VERTEX];
+    PoolVector<Vector3> narr   = arr[VS::ARRAY_NORMAL];
+    PoolVector<float> tarr     = arr[VS::ARRAY_TANGENT];
+    PoolVector<Color> carr     = arr[VS::ARRAY_COLOR];
+    PoolVector<Vector2> uvarr  = arr[VS::ARRAY_TEX_UV];
     PoolVector<Vector2> uv2arr = arr[VS::ARRAY_TEX_UV2];
-    PoolVector<int> barr = arr[VS::ARRAY_BONES];
-    PoolVector<float> warr = arr[VS::ARRAY_WEIGHTS];
+    PoolVector<int> barr       = arr[VS::ARRAY_BONES];
+    PoolVector<float> warr     = arr[VS::ARRAY_WEIGHTS];
 
     int vc = varr.size();
 
@@ -691,46 +691,46 @@ void SurfaceTool::_create_list_from_arrays(
     PoolVector<Vector3>::Read rv;
     if (varr.size()) {
         lformat |= VS::ARRAY_FORMAT_VERTEX;
-        rv = varr.read();
+        rv       = varr.read();
     }
     PoolVector<Vector3>::Read rn;
     if (narr.size()) {
         lformat |= VS::ARRAY_FORMAT_NORMAL;
-        rn = narr.read();
+        rn       = narr.read();
     }
     PoolVector<float>::Read rt;
     if (tarr.size()) {
         lformat |= VS::ARRAY_FORMAT_TANGENT;
-        rt = tarr.read();
+        rt       = tarr.read();
     }
     PoolVector<Color>::Read rc;
     if (carr.size()) {
         lformat |= VS::ARRAY_FORMAT_COLOR;
-        rc = carr.read();
+        rc       = carr.read();
     }
 
     PoolVector<Vector2>::Read ruv;
     if (uvarr.size()) {
         lformat |= VS::ARRAY_FORMAT_TEX_UV;
-        ruv = uvarr.read();
+        ruv      = uvarr.read();
     }
 
     PoolVector<Vector2>::Read ruv2;
     if (uv2arr.size()) {
         lformat |= VS::ARRAY_FORMAT_TEX_UV2;
-        ruv2 = uv2arr.read();
+        ruv2     = uv2arr.read();
     }
 
     PoolVector<int>::Read rb;
     if (barr.size()) {
         lformat |= VS::ARRAY_FORMAT_BONES;
-        rb = barr.read();
+        rb       = barr.read();
     }
 
     PoolVector<float>::Read rw;
     if (warr.size()) {
         lformat |= VS::ARRAY_FORMAT_WEIGHTS;
-        rw = warr.read();
+        rw       = warr.read();
     }
 
     for (int i = 0; i < vc; i++) {
@@ -748,7 +748,7 @@ void SurfaceTool::_create_list_from_arrays(
                 tarr[i * 4 + 2],
                 tarr[i * 4 + 3]
             );
-            v.tangent = p.normal;
+            v.tangent  = p.normal;
             v.binormal = p.normal.cross(v.tangent).normalized() * p.d;
         }
         if (lformat & VS::ARRAY_FORMAT_COLOR) {
@@ -767,7 +767,7 @@ void SurfaceTool::_create_list_from_arrays(
             b.write[1] = barr[i * 4 + 1];
             b.write[2] = barr[i * 4 + 2];
             b.write[3] = barr[i * 4 + 3];
-            v.bones = b;
+            v.bones    = b;
         }
         if (lformat & VS::ARRAY_FORMAT_WEIGHTS) {
             Vector<float> w;
@@ -776,7 +776,7 @@ void SurfaceTool::_create_list_from_arrays(
             w.write[1] = warr[i * 4 + 1];
             w.write[2] = warr[i * 4 + 2];
             w.write[3] = warr[i * 4 + 3];
-            v.weights = w;
+            v.weights  = w;
         }
 
         r_vertex->push_back(v);
@@ -785,10 +785,10 @@ void SurfaceTool::_create_list_from_arrays(
     // indices
 
     PoolVector<int> idx = arr[VS::ARRAY_INDEX];
-    int is = idx.size();
+    int is              = idx.size();
     if (is) {
-        lformat |= VS::ARRAY_FORMAT_INDEX;
-        PoolVector<int>::Read iarr = idx.read();
+        lformat                    |= VS::ARRAY_FORMAT_INDEX;
+        PoolVector<int>::Read iarr  = idx.read();
         for (int i = 0; i < is; i++) {
             r_index->push_back(iarr[i]);
         }
@@ -859,15 +859,15 @@ void SurfaceTool::append_from(
     );
     if (vertex_array.size() == 0) {
         primitive = p_existing->surface_get_primitive_type(p_surface);
-        format = 0;
+        format    = 0;
     }
 
     int nformat;
     List<Vertex> nvertices;
     List<int> nindices;
     _create_list(p_existing, p_surface, &nvertices, &nindices, nformat);
-    format |= nformat;
-    int vfrom = vertex_array.size();
+    format    |= nformat;
+    int vfrom  = vertex_array.size();
 
     for (List<Vertex>::Element* E = nvertices.front(); E; E = E->next()) {
         Vertex v = E->get();
@@ -876,7 +876,7 @@ void SurfaceTool::append_from(
             v.normal = p_xform.basis.xform(v.normal);
         }
         if (nformat & VS::ARRAY_FORMAT_TANGENT) {
-            v.tangent = p_xform.basis.xform(v.tangent);
+            v.tangent  = p_xform.basis.xform(v.tangent);
             v.binormal = p_xform.basis.xform(v.binormal);
         }
 
@@ -1020,7 +1020,7 @@ void SurfaceTool::mikktSetTSpaceDefault(
     }
 
     if (vtx != nullptr) {
-        vtx->tangent = Vector3(fvTangent[0], fvTangent[1], fvTangent[2]);
+        vtx->tangent  = Vector3(fvTangent[0], fvTangent[1], fvTangent[2]);
         vtx->binormal = Vector3(
             -fvBiTangent[0],
             -fvBiTangent[1],
@@ -1035,13 +1035,13 @@ void SurfaceTool::generate_tangents() {
     ERR_FAIL_COND(!(format & Mesh::ARRAY_FORMAT_NORMAL));
 
     SMikkTSpaceInterface mkif;
-    mkif.m_getNormal = mikktGetNormal;
-    mkif.m_getNumFaces = mikktGetNumFaces;
+    mkif.m_getNormal            = mikktGetNormal;
+    mkif.m_getNumFaces          = mikktGetNumFaces;
     mkif.m_getNumVerticesOfFace = mikktGetNumVerticesOfFace;
-    mkif.m_getPosition = mikktGetPosition;
-    mkif.m_getTexCoord = mikktGetTexCoord;
-    mkif.m_setTSpace = mikktSetTSpaceDefault;
-    mkif.m_setTSpaceBasic = nullptr;
+    mkif.m_getPosition          = mikktGetPosition;
+    mkif.m_getTexCoord          = mikktGetTexCoord;
+    mkif.m_setTSpace            = mikktSetTSpaceDefault;
+    mkif.m_setTSpaceBasic       = nullptr;
 
     SMikkTSpaceContext msc;
     msc.m_pInterface = &mkif;
@@ -1051,8 +1051,8 @@ void SurfaceTool::generate_tangents() {
     int idx = 0;
     for (List<Vertex>::Element* E = vertex_array.front(); E; E = E->next()) {
         triangle_data.vertices.write[idx++] = E;
-        E->get().binormal = Vector3();
-        E->get().tangent = Vector3();
+        E->get().binormal                   = Vector3();
+        E->get().tangent                    = Vector3();
     }
     triangle_data.indices.resize(index_array.size());
     idx = 0;
@@ -1076,7 +1076,7 @@ void SurfaceTool::generate_normals(bool p_flip) {
 
     HashMap<Vertex, Vector3, VertexHasher> vertex_hash;
 
-    int count = 0;
+    int count   = 0;
     bool smooth = false;
     if (smooth_groups.has(0)) {
         smooth = smooth_groups[0];
@@ -1160,9 +1160,9 @@ void SurfaceTool::set_material(const Ref<Material>& p_material) {
 }
 
 void SurfaceTool::clear() {
-    begun = false;
+    begun     = false;
     primitive = Mesh::PRIMITIVE_LINES;
-    format = 0;
+    format    = 0;
     last_bones.clear();
     last_weights.clear();
     index_array.clear();
@@ -1277,8 +1277,8 @@ void SurfaceTool::_bind_methods() {
 }
 
 SurfaceTool::SurfaceTool() {
-    first = false;
-    begun = false;
+    first     = false;
+    begun     = false;
     primitive = Mesh::PRIMITIVE_LINES;
-    format = 0;
+    format    = 0;
 }

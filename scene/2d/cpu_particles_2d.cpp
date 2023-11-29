@@ -178,7 +178,7 @@ void CPUParticles2D::_update_mesh_texture() {
     AtlasTexture* atlas_texure = Object::cast_to<AtlasTexture>(*texture);
     if (atlas_texure && atlas_texure->get_atlas().is_valid()) {
         Rect2 region_rect = atlas_texure->get_region();
-        Size2 atlas_size = atlas_texure->get_atlas()->get_size();
+        Size2 atlas_size  = atlas_texure->get_atlas()->get_size();
         uvs.push_back(Vector2(
             region_rect.position.x / atlas_size.x,
             region_rect.position.y / atlas_size.y
@@ -218,8 +218,8 @@ void CPUParticles2D::_update_mesh_texture() {
     arr.resize(VS::ARRAY_MAX);
     arr[VS::ARRAY_VERTEX] = vertices;
     arr[VS::ARRAY_TEX_UV] = uvs;
-    arr[VS::ARRAY_COLOR] = colors;
-    arr[VS::ARRAY_INDEX] = indices;
+    arr[VS::ARRAY_COLOR]  = colors;
+    arr[VS::ARRAY_INDEX]  = indices;
 
     VS::get_singleton()->mesh_clear(mesh);
     VS::get_singleton()
@@ -316,14 +316,14 @@ String CPUParticles2D::get_configuration_warning() const {
 }
 
 void CPUParticles2D::restart() {
-    time = 0;
-    inactive_time = 0;
+    time            = 0;
+    inactive_time   = 0;
     frame_remainder = 0;
-    cycle = 0;
-    emitting = false;
+    cycle           = 0;
+    emitting        = false;
 
     {
-        int pc = particles.size();
+        int pc                        = particles.size();
         PoolVector<Particle>::Write w = particles.write();
 
         for (int i = 0; i < pc; i++) {
@@ -599,10 +599,10 @@ void CPUParticles2D::_update_internal() {
             _set_redraw(false);
 
             // reset variables
-            time = 0;
-            inactive_time = 0;
+            time            = 0;
+            inactive_time   = 0;
             frame_remainder = 0;
-            cycle = 0;
+            cycle           = 0;
             return;
         }
     }
@@ -626,7 +626,7 @@ void CPUParticles2D::_update_internal() {
 
     if (fixed_fps > 0) {
         float frame_time = 1.0 / fixed_fps;
-        float decr = frame_time;
+        float decr       = frame_time;
 
         float ldelta = delta;
         if (ldelta > 0.1) { // avoid recursive stalls if fps goes below 10
@@ -653,13 +653,13 @@ void CPUParticles2D::_update_internal() {
 void CPUParticles2D::_particles_process(float p_delta) {
     p_delta *= speed_scale;
 
-    int pcount = particles.size();
+    int pcount                    = particles.size();
     PoolVector<Particle>::Write w = particles.write();
 
     Particle* parray = w.ptr();
 
-    float prev_time = time;
-    time += p_delta;
+    float prev_time  = time;
+    time            += p_delta;
     if (time > lifetime) {
         time = Math::fmod(time, lifetime);
         cycle++;
@@ -672,8 +672,8 @@ void CPUParticles2D::_particles_process(float p_delta) {
     Transform2D emission_xform;
     Transform2D velocity_xform;
     if (!local_coords) {
-        emission_xform = get_global_transform();
-        velocity_xform = emission_xform;
+        emission_xform    = get_global_transform();
+        velocity_xform    = emission_xform;
         velocity_xform[2] = Vector2();
     }
 
@@ -699,15 +699,15 @@ void CPUParticles2D::_particles_process(float p_delta) {
             if (restart_phase >= system_phase) {
                 seed -= uint32_t(1);
             }
-            seed *= uint32_t(pcount);
-            seed += uint32_t(i);
-            float random = float(idhash(seed) % uint32_t(65536)) / 65536.0;
+            seed          *= uint32_t(pcount);
+            seed          += uint32_t(i);
+            float random   = float(idhash(seed) % uint32_t(65536)) / 65536.0;
             restart_phase += randomness_ratio * random * 1.0 / float(pcount);
         }
 
-        restart_phase *= (1.0 - explosiveness_ratio);
-        float restart_time = restart_phase * lifetime;
-        bool restart = false;
+        restart_phase      *= (1.0 - explosiveness_ratio);
+        float restart_time  = restart_phase * lifetime;
+        bool restart        = false;
 
         if (time > prev_time) {
             // restart_time >= prev_time is used so particles emit in the first
@@ -767,16 +767,16 @@ void CPUParticles2D::_particles_process(float p_delta) {
 
             p.seed = Math::rand();
 
-            p.angle_rand = Math::randf();
-            p.scale_rand = Math::randf();
-            p.hue_rot_rand = Math::randf();
+            p.angle_rand       = Math::randf();
+            p.scale_rand       = Math::randf();
+            p.hue_rot_rand     = Math::randf();
             p.anim_offset_rand = Math::randf();
 
             float angle1_rad =
                 Math::atan2(direction.y, direction.x)
                 + (Math::randf() * 2.0 - 1.0) * Math_PI * spread / 180.0;
             Vector2 rot = Vector2(Math::cos(angle1_rad), Math::sin(angle1_rad));
-            p.velocity = rot * parameters[PARAM_INITIAL_LINEAR_VELOCITY]
+            p.velocity  = rot * parameters[PARAM_INITIAL_LINEAR_VELOCITY]
                        * Math::lerp(
                              1.0f,
                              float(Math::randf()),
@@ -798,7 +798,7 @@ void CPUParticles2D::_particles_process(float p_delta) {
                         ); // animation phase [0..1]
             p.custom[3] = 0.0;
             p.transform = Transform2D();
-            p.time = 0;
+            p.time      = 0;
             p.lifetime = lifetime * (1.0 - Math::randf() * lifetime_randomness);
             p.base_color = Color(1, 1, 1, 1);
 
@@ -850,7 +850,7 @@ void CPUParticles2D::_particles_process(float p_delta) {
             }
 
             if (!local_coords) {
-                p.velocity = velocity_xform.xform(p.velocity);
+                p.velocity  = velocity_xform.xform(p.velocity);
                 p.transform = emission_xform * p.transform;
             }
 
@@ -858,13 +858,13 @@ void CPUParticles2D::_particles_process(float p_delta) {
             continue;
         } else if (p.time > p.lifetime) {
             p.active = false;
-            tv = 1.0;
+            tv       = 1.0;
         } else {
             uint32_t alt_seed = p.seed;
 
-            p.time += local_delta;
-            p.custom[1] = p.time / lifetime;
-            tv = p.time / p.lifetime;
+            p.time      += local_delta;
+            p.custom[1]  = p.time / lifetime;
+            tv           = p.time / p.lifetime;
 
             float tex_linear_velocity = 0.0;
             if (curve_parameters[PARAM_INITIAL_LINEAR_VELOCITY].is_valid()) {
@@ -925,7 +925,7 @@ void CPUParticles2D::_particles_process(float p_delta) {
             }
 
             Vector2 force = gravity;
-            Vector2 pos = p.transform[2];
+            Vector2 pos   = p.transform[2];
 
             // apply linear acceleration
             force +=
@@ -939,7 +939,7 @@ void CPUParticles2D::_particles_process(float p_delta) {
                           )
                     : Vector2();
             // apply radial acceleration
-            Vector2 org = emission_xform[2];
+            Vector2 org  = emission_xform[2];
             Vector2 diff = pos - org;
             force +=
                 diff.length() > 0.0
@@ -952,9 +952,9 @@ void CPUParticles2D::_particles_process(float p_delta) {
                           )
                     : Vector2();
             // apply tangential acceleration;
-            Vector2 yx = Vector2(diff.y, diff.x);
-            force += yx.length() > 0.0
-                       ? (yx * Vector2(-1.0, 1.0)).normalized()
+            Vector2 yx  = Vector2(diff.y, diff.x);
+            force      += yx.length() > 0.0
+                            ? (yx * Vector2(-1.0, 1.0)).normalized()
                              * ((parameters[PARAM_TANGENTIAL_ACCEL]
                                  + tex_tangential_accel)
                                 * Math::lerp(
@@ -962,7 +962,7 @@ void CPUParticles2D::_particles_process(float p_delta) {
                                     rand_from_seed(alt_seed),
                                     randomness[PARAM_TANGENTIAL_ACCEL]
                                 ))
-                       : Vector2();
+                            : Vector2();
             // apply attractor forces
             p.velocity += force * local_delta;
             // orbit velocity
@@ -974,20 +974,20 @@ void CPUParticles2D::_particles_process(float p_delta) {
                     randomness[PARAM_ORBIT_VELOCITY]
                 );
             if (orbit_amount != 0.0) {
-                float ang = orbit_amount * local_delta * Math_PI * 2.0;
+                float ang        = orbit_amount * local_delta * Math_PI * 2.0;
                 // Not sure why the ParticlesMaterial code uses a clockwise
                 // rotation matrix, but we use -ang here to reproduce its
                 // behavior.
-                Transform2D rot = Transform2D(-ang, Vector2());
-                p.transform[2] -= diff;
-                p.transform[2] += rot.basis_xform(diff);
+                Transform2D rot  = Transform2D(-ang, Vector2());
+                p.transform[2]  -= diff;
+                p.transform[2]  += rot.basis_xform(diff);
             }
             if (curve_parameters[PARAM_INITIAL_LINEAR_VELOCITY].is_valid()) {
                 p.velocity = p.velocity.normalized() * tex_linear_velocity;
             }
 
             if (parameters[PARAM_DAMPING] + tex_damping > 0.0) {
-                float v = p.velocity.length();
+                float v    = p.velocity.length();
                 float damp = (parameters[PARAM_DAMPING] + tex_damping)
                            * Math::lerp(
                                  1.0f,
@@ -1149,12 +1149,12 @@ void CPUParticles2D::_update_particle_data_buffer() {
         PoolVector<int>::Write ow;
         int* order = nullptr;
 
-        PoolVector<float>::Write w = particle_data.write();
+        PoolVector<float>::Write w   = particle_data.write();
         PoolVector<Particle>::Read r = particles.read();
-        float* ptr = w.ptr();
+        float* ptr                   = w.ptr();
 
         if (draw_order != DRAW_ORDER_INDEX) {
-            ow = particle_order.write();
+            ow    = particle_order.write();
             order = ow.ptr();
 
             for (int i = 0; i < pc; i++) {
@@ -1186,14 +1186,14 @@ void CPUParticles2D::_update_particle_data_buffer() {
                 ptr[6] = 0;
                 ptr[7] = t.elements[2][1];
 
-                Color c = r[idx].color;
+                Color c        = r[idx].color;
                 uint8_t* data8 = (uint8_t*)&ptr[8];
-                data8[0] = CLAMP(c.r * 255.0, 0, 255);
-                data8[1] = CLAMP(c.g * 255.0, 0, 255);
-                data8[2] = CLAMP(c.b * 255.0, 0, 255);
-                data8[3] = CLAMP(c.a * 255.0, 0, 255);
+                data8[0]       = CLAMP(c.r * 255.0, 0, 255);
+                data8[1]       = CLAMP(c.g * 255.0, 0, 255);
+                data8[2]       = CLAMP(c.b * 255.0, 0, 255);
+                data8[3]       = CLAMP(c.a * 255.0, 0, 255);
 
-                ptr[9] = r[idx].custom[0];
+                ptr[9]  = r[idx].custom[0];
                 ptr[10] = r[idx].custom[1];
                 ptr[11] = r[idx].custom[2];
                 ptr[12] = r[idx].custom[3];
@@ -1298,9 +1298,9 @@ void CPUParticles2D::_notification(int p_what) {
         if (!local_coords) {
             int pc = particles.size();
 
-            PoolVector<float>::Write w = particle_data.write();
+            PoolVector<float>::Write w   = particle_data.write();
             PoolVector<Particle>::Read r = particles.read();
-            float* ptr = w.ptr();
+            float* ptr                   = w.ptr();
 
             for (int i = 0; i < pc; i++) {
                 Transform2D t = inv_emission_transform * r[i].transform;
@@ -2328,14 +2328,14 @@ void CPUParticles2D::_bind_methods() {
 }
 
 CPUParticles2D::CPUParticles2D() {
-    time = 0;
-    inactive_time = 0;
+    time            = 0;
+    inactive_time   = 0;
     frame_remainder = 0;
-    cycle = 0;
-    redraw = false;
-    emitting = false;
+    cycle           = 0;
+    redraw          = false;
+    emitting        = false;
 
-    mesh = VisualServer::get_singleton()->mesh_create();
+    mesh      = VisualServer::get_singleton()->mesh_create();
     multimesh = VisualServer::get_singleton()->multimesh_create();
     VisualServer::get_singleton()->multimesh_set_mesh(multimesh, mesh);
 

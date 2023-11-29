@@ -110,7 +110,7 @@ void CPUParticles2DEditorPlugin::_generate_emission_mask() {
     int vpc = 0;
 
     {
-        PoolVector<uint8_t> data = img->get_data();
+        PoolVector<uint8_t> data    = img->get_data();
         PoolVector<uint8_t>::Read r = data.read();
 
         for (int i = 0; i < s.width; i++) {
@@ -269,7 +269,7 @@ void CPUParticles2DEditorPlugin::_bind_methods() {
 
 CPUParticles2DEditorPlugin::CPUParticles2DEditorPlugin(EditorNode* p_node) {
     particles = nullptr;
-    editor = p_node;
+    editor    = p_node;
     undo_redo = editor->get_undo_redo();
 
     toolbar = memnew(HBoxContainer);

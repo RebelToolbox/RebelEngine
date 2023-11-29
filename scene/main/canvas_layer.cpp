@@ -49,7 +49,7 @@ int CanvasLayer::get_layer() const {
 }
 
 void CanvasLayer::set_transform(const Transform2D& p_xform) {
-    transform = p_xform;
+    transform         = p_xform;
     locrotscale_dirty = true;
     if (viewport.is_valid()) {
         VisualServer::get_singleton()
@@ -71,9 +71,9 @@ void CanvasLayer::_update_xform() {
 }
 
 void CanvasLayer::_update_locrotscale() {
-    ofs = transform.elements[2];
-    rot = transform.get_rotation();
-    scale = transform.get_scale();
+    ofs               = transform.elements[2];
+    rot               = transform.get_rotation();
+    scale             = transform.get_scale();
     locrotscale_dirty = false;
 }
 
@@ -443,16 +443,16 @@ void CanvasLayer::_bind_methods() {
 }
 
 CanvasLayer::CanvasLayer() {
-    vp = nullptr;
-    scale = Vector2(1, 1);
-    rot = 0;
-    locrotscale_dirty = false;
-    layer = 1;
-    canvas = VS::get_singleton()->canvas_create();
-    custom_viewport = nullptr;
-    custom_viewport_id = 0;
-    sort_index = 0;
-    follow_viewport = false;
+    vp                    = nullptr;
+    scale                 = Vector2(1, 1);
+    rot                   = 0;
+    locrotscale_dirty     = false;
+    layer                 = 1;
+    canvas                = VS::get_singleton()->canvas_create();
+    custom_viewport       = nullptr;
+    custom_viewport_id    = 0;
+    sort_index            = 0;
+    follow_viewport       = false;
     follow_viewport_scale = 1.0;
 }
 

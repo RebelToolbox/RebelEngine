@@ -46,8 +46,8 @@ BVHHandle item_add(
         BVH_ASSERT(pairs_id == ref_id);
     }
 
-    extra->subindex = p_subindex;
-    extra->userdata = p_userdata;
+    extra->subindex          = p_subindex;
+    extra->userdata          = p_userdata;
     extra->last_updated_tick = 0;
 
     // add an active reference to the list for slow incremental optimize
@@ -59,11 +59,11 @@ BVHHandle item_add(
     if (USE_PAIRS) {
         extra->pairable_mask = p_pairable_mask;
         extra->pairable_type = p_pairable_type;
-        extra->pairable = p_pairable;
+        extra->pairable      = p_pairable;
     } else {
         // just for safety, in case this gets queried etc
         extra->pairable = 0;
-        p_pairable = false;
+        p_pairable      = false;
     }
 
     // assign to handle to return
@@ -96,8 +96,8 @@ BVHHandle item_add(
 
 #ifdef BVH_VERBOSE
     // memory use
-    int mem = _refs.estimate_memory_use();
-    mem += _nodes.estimate_memory_use();
+    int mem  = _refs.estimate_memory_use();
+    mem     += _nodes.estimate_memory_use();
 
     String sz = _debug_aabb_to_string(abb);
     VERBOSE_PRINT(
@@ -236,7 +236,7 @@ void item_remove(BVHHandle p_handle) {
     // remove the active reference from the list for slow incremental optimize
     // this list must be kept in sync with the references as they are added or
     // removed.
-    uint32_t active_ref_id = _extra[ref_id].active_ref_id;
+    uint32_t active_ref_id     = _extra[ref_id].active_ref_id;
     uint32_t ref_id_moved_back = _active_refs[_active_refs.size() - 1];
 
     // swap back and decrement for fast unordered remove
@@ -270,7 +270,7 @@ void item_remove(BVHHandle p_handle) {
 // returns success
 bool item_activate(BVHHandle p_handle, const BOUNDS& p_aabb) {
     uint32_t ref_id = p_handle.id();
-    ItemRef& ref = _refs[ref_id];
+    ItemRef& ref    = _refs[ref_id];
     if (ref.is_active()) {
         // noop
         return false;
@@ -294,7 +294,7 @@ bool item_activate(BVHHandle p_handle, const BOUNDS& p_aabb) {
 // returns success
 bool item_deactivate(BVHHandle p_handle) {
     uint32_t ref_id = p_handle.id();
-    ItemRef& ref = _refs[ref_id];
+    ItemRef& ref    = _refs[ref_id];
     if (!ref.is_active()) {
         // noop
         return false;
@@ -312,7 +312,7 @@ bool item_deactivate(BVHHandle p_handle) {
 }
 
 bool item_get_active(BVHHandle p_handle) const {
-    uint32_t ref_id = p_handle.id();
+    uint32_t ref_id    = p_handle.id();
     const ItemRef& ref = _refs[ref_id];
     return ref.is_active();
 }
@@ -320,30 +320,30 @@ bool item_get_active(BVHHandle p_handle) const {
 // during collision testing, we want to set the mask and whether pairable for
 // the item testing from
 void item_fill_cullparams(BVHHandle p_handle, CullParams& r_params) const {
-    uint32_t ref_id = p_handle.id();
+    uint32_t ref_id        = p_handle.id();
     const ItemExtra& extra = _extra[ref_id];
 
     // testing from a non pairable item, we only want to test pairable items
     r_params.test_pairable_only = extra.pairable == 0;
 
     // we take into account the mask of the item testing from
-    r_params.mask = extra.pairable_mask;
+    r_params.mask          = extra.pairable_mask;
     r_params.pairable_type = extra.pairable_type;
 }
 
 bool item_is_pairable(const BVHHandle& p_handle) {
-    uint32_t ref_id = p_handle.id();
+    uint32_t ref_id        = p_handle.id();
     const ItemExtra& extra = _extra[ref_id];
     return extra.pairable != 0;
 }
 
 void item_get_ABB(const BVHHandle& p_handle, BVHABB_CLASS& r_abb) {
     // change tree?
-    uint32_t ref_id = p_handle.id();
+    uint32_t ref_id    = p_handle.id();
     const ItemRef& ref = _refs[ref_id];
 
     TNode& tnode = _nodes[ref.tnode_id];
-    TLeaf& leaf = _node_get_leaf(tnode);
+    TLeaf& leaf  = _node_get_leaf(tnode);
 
     r_abb = leaf.get_aabb(ref.item_id);
 }
@@ -358,11 +358,11 @@ bool item_set_pairable(
     uint32_t ref_id = p_handle.id();
 
     ItemExtra& ex = _extra[ref_id];
-    ItemRef& ref = _refs[ref_id];
+    ItemRef& ref  = _refs[ref_id];
 
-    bool active = ref.is_active();
+    bool active           = ref.is_active();
     bool pairable_changed = (ex.pairable != 0) != p_pairable;
-    bool state_changed = pairable_changed
+    bool state_changed    = pairable_changed
                       || (ex.pairable_type != p_pairable_type)
                       || (ex.pairable_mask != p_pairable_mask);
 
@@ -371,8 +371,8 @@ bool item_set_pairable(
 
     if (active && pairable_changed) {
         // record abb
-        TNode& tnode = _nodes[ref.tnode_id];
-        TLeaf& leaf = _node_get_leaf(tnode);
+        TNode& tnode     = _nodes[ref.tnode_id];
+        TLeaf& leaf      = _node_get_leaf(tnode);
         BVHABB_CLASS abb = leaf.get_aabb(ref.item_id);
 
         // make sure current tree is correct prior to changing

@@ -46,7 +46,7 @@ static_assert(
 
 void GDAPI
 godot_string_name_new(godot_string_name* r_dest, const godot_string* p_name) {
-    StringName* dest = (StringName*)r_dest;
+    StringName* dest   = (StringName*)r_dest;
     const String* name = (const String*)p_name;
     memnew_placement(dest, StringName(*name));
 }
@@ -80,7 +80,7 @@ godot_bool GDAPI godot_string_name_operator_equal(
     const godot_string_name* p_self,
     const godot_string_name* p_other
 ) {
-    const StringName* self = (const StringName*)p_self;
+    const StringName* self  = (const StringName*)p_self;
     const StringName* other = (const StringName*)p_other;
     return self == other;
 }
@@ -89,7 +89,7 @@ godot_bool GDAPI godot_string_name_operator_less(
     const godot_string_name* p_self,
     const godot_string_name* p_other
 ) {
-    const StringName* self = (const StringName*)p_self;
+    const StringName* self  = (const StringName*)p_self;
     const StringName* other = (const StringName*)p_other;
     return self < other;
 }

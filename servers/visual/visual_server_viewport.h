@@ -92,7 +92,7 @@ public:
             }
 
             CanvasKey(const RID& p_canvas, int p_layer, int p_sublayer) {
-                canvas = p_canvas;
+                canvas       = p_canvas;
                 int64_t sign = p_layer < 0 ? -1 : 1;
                 stacking = sign * (((int64_t)ABS(p_layer)) << 32) + p_sublayer;
             }
@@ -114,16 +114,16 @@ public:
         Map<RID, CanvasData> canvas_map;
 
         Viewport() {
-            update_mode = VS::VIEWPORT_UPDATE_WHEN_VISIBLE;
-            clear_mode = VS::VIEWPORT_CLEAR_ALWAYS;
-            transparent_bg = false;
+            update_mode         = VS::VIEWPORT_UPDATE_WHEN_VISIBLE;
+            clear_mode          = VS::VIEWPORT_CLEAR_ALWAYS;
+            transparent_bg      = false;
             disable_environment = false;
-            viewport_to_screen = 0;
-            shadow_atlas_size = 0;
-            disable_3d = false;
+            viewport_to_screen  = 0;
+            shadow_atlas_size   = 0;
+            disable_3d          = false;
             disable_3d_by_usage = false;
-            keep_3d_linear = false;
-            debug_draw = VS::VIEWPORT_DEBUG_DRAW_DISABLED;
+            keep_3d_linear      = false;
+            debug_draw          = VS::VIEWPORT_DEBUG_DRAW_DISABLED;
             for (int i = 0; i < VS::VIEWPORT_RENDER_INFO_MAX; i++) {
                 render_info[i] = 0;
             }
@@ -170,7 +170,7 @@ public:
     void viewport_attach_to_screen(
         RID p_viewport,
         const Rect2& p_rect = Rect2(),
-        int p_screen = 0
+        int p_screen        = 0
     );
     void viewport_set_render_direct_to_screen(RID p_viewport, bool p_enable);
     void viewport_detach(RID p_viewport);

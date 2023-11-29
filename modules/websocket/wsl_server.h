@@ -88,7 +88,7 @@ public:
     Error listen(
         int p_port,
         const Vector<String> p_protocols = Vector<String>(),
-        bool gd_mp_api = false
+        bool gd_mp_api                   = false
     );
     void stop();
     bool is_listening() const;
@@ -99,7 +99,7 @@ public:
     int get_peer_port(int p_peer_id) const;
     void disconnect_peer(
         int p_peer_id,
-        int p_code = 1000,
+        int p_code      = 1000,
         String p_reason = ""
     );
     virtual void poll();

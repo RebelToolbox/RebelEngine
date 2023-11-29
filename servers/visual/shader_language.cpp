@@ -486,10 +486,10 @@ ShaderLanguage::Token ShaderLanguage::_get_token() {
                 if (_is_number(GETCHAR(0))
                     || (GETCHAR(0) == '.' && _is_number(GETCHAR(1)))) {
                     // parse number
-                    bool period_found = false;
-                    bool exponent_found = false;
-                    bool hexa_found = false;
-                    bool sign_found = false;
+                    bool period_found       = false;
+                    bool exponent_found     = false;
+                    bool hexa_found         = false;
+                    bool sign_found         = false;
                     bool float_suffix_found = false;
 
                     String str;
@@ -599,7 +599,7 @@ ShaderLanguage::Token ShaderLanguage::_get_token() {
 
                         if (float_suffix_found) {
                             // strip the suffix
-                            str = str.left(str.length() - 1);
+                            str       = str.left(str.length() - 1);
                             // compensate reading cursor position
                             char_idx += 1;
                         }
@@ -707,7 +707,7 @@ String ShaderLanguage::token_debug(const String& p_code) {
     Token tk = _get_token();
     while (tk.type != TK_EOF && tk.type != TK_ERROR) {
         output += itos(tk_line) + ": " + get_token_text(tk) + "\n";
-        tk = _get_token();
+        tk      = _get_token();
     }
 
     return output;
@@ -880,23 +880,23 @@ bool ShaderLanguage::is_token_nonvoid_datatype(TokenType p_type) {
 void ShaderLanguage::clear() {
     current_function = StringName();
 
-    completion_type = COMPLETION_NONE;
-    completion_block = nullptr;
+    completion_type     = COMPLETION_NONE;
+    completion_block    = nullptr;
     completion_function = StringName();
-    completion_class = SubClassTag::TAG_GLOBAL;
-    completion_struct = StringName();
+    completion_class    = SubClassTag::TAG_GLOBAL;
+    completion_struct   = StringName();
 
     unknown_varying_usages.clear();
 
     error_line = 0;
-    tk_line = 1;
-    char_idx = 0;
-    error_set = false;
-    error_str = "";
+    tk_line    = 1;
+    char_idx   = 0;
+    error_set  = false;
+    error_str  = "";
     last_const = false;
     while (nodes) {
         Node* n = nodes;
-        nodes = nodes->next;
+        nodes   = nodes->next;
         memdelete(n);
     }
 }
@@ -1036,7 +1036,7 @@ bool ShaderLanguage::_validate_operator(
     OperatorNode* p_op,
     DataType* r_ret_type
 ) {
-    bool valid = false;
+    bool valid        = false;
     DataType ret_type = TYPE_VOID;
 
     switch (p_op->op) {
@@ -1044,8 +1044,8 @@ bool ShaderLanguage::_validate_operator(
         case OP_NOT_EQUAL: {
             DataType na = p_op->arguments[0]->get_datatype();
             DataType nb = p_op->arguments[1]->get_datatype();
-            valid = na == nb;
-            ret_type = TYPE_BOOL;
+            valid       = na == nb;
+            ret_type    = TYPE_BOOL;
         } break;
         case OP_LESS:
         case OP_LESS_EQUAL:
@@ -1064,14 +1064,14 @@ bool ShaderLanguage::_validate_operator(
             DataType na = p_op->arguments[0]->get_datatype();
             DataType nb = p_op->arguments[1]->get_datatype();
 
-            valid = na == nb && na == TYPE_BOOL;
+            valid    = na == nb && na == TYPE_BOOL;
             ret_type = TYPE_BOOL;
 
         } break;
         case OP_NOT: {
             DataType na = p_op->arguments[0]->get_datatype();
-            valid = na == TYPE_BOOL;
-            ret_type = TYPE_BOOL;
+            valid       = na == TYPE_BOOL;
+            ret_type    = TYPE_BOOL;
 
         } break;
         case OP_INCREMENT:
@@ -1080,8 +1080,8 @@ bool ShaderLanguage::_validate_operator(
         case OP_POST_DECREMENT:
         case OP_NEGATE: {
             DataType na = p_op->arguments[0]->get_datatype();
-            valid = na > TYPE_BOOL && na < TYPE_MAT2;
-            ret_type = na;
+            valid       = na > TYPE_BOOL && na < TYPE_MAT2;
+            ret_type    = na;
         } break;
         case OP_ADD:
         case OP_SUB:
@@ -1096,52 +1096,52 @@ bool ShaderLanguage::_validate_operator(
             }
 
             if (na == nb) {
-                valid = (na > TYPE_BOOL && na <= TYPE_MAT4);
+                valid    = (na > TYPE_BOOL && na <= TYPE_MAT4);
                 ret_type = na;
             } else if (na == TYPE_INT && nb == TYPE_IVEC2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC2;
             } else if (na == TYPE_INT && nb == TYPE_IVEC3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC3;
             } else if (na == TYPE_INT && nb == TYPE_IVEC4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC4;
             } else if (na == TYPE_UINT && nb == TYPE_UVEC2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC2;
             } else if (na == TYPE_UINT && nb == TYPE_UVEC3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC3;
             } else if (na == TYPE_UINT && nb == TYPE_UVEC4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC4;
             } else if (na == TYPE_FLOAT && nb == TYPE_VEC2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC2;
             } else if (na == TYPE_FLOAT && nb == TYPE_VEC3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC3;
             } else if (na == TYPE_FLOAT && nb == TYPE_VEC4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC4;
             } else if (na == TYPE_FLOAT && nb == TYPE_MAT2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_MAT2;
             } else if (na == TYPE_FLOAT && nb == TYPE_MAT3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_MAT3;
             } else if (na == TYPE_FLOAT && nb == TYPE_MAT4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_MAT4;
             } else if (p_op->op == OP_MUL && na == TYPE_VEC2 && nb == TYPE_MAT2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC2;
             } else if (p_op->op == OP_MUL && na == TYPE_VEC3 && nb == TYPE_MAT3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC3;
             } else if (p_op->op == OP_MUL && na == TYPE_VEC4 && nb == TYPE_MAT4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC4;
             }
         } break;
@@ -1161,47 +1161,47 @@ bool ShaderLanguage::_validate_operator(
             DataType nb = p_op->arguments[1]->get_datatype();
 
             if (na == TYPE_INT && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_INT;
             } else if (na == TYPE_IVEC2 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC2;
             } else if (na == TYPE_IVEC3 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC3;
             } else if (na == TYPE_IVEC4 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC4;
             } else if (na == TYPE_IVEC2 && nb == TYPE_IVEC2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC2;
             } else if (na == TYPE_IVEC3 && nb == TYPE_IVEC3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC3;
             } else if (na == TYPE_IVEC4 && nb == TYPE_IVEC4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC4;
                 /////
             } else if (na == TYPE_UINT && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UINT;
             } else if (na == TYPE_UVEC2 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC2;
             } else if (na == TYPE_UVEC3 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC3;
             } else if (na == TYPE_UVEC4 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC4;
             } else if (na == TYPE_UVEC2 && nb == TYPE_UVEC2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC2;
             } else if (na == TYPE_UVEC3 && nb == TYPE_UVEC3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC3;
             } else if (na == TYPE_UVEC4 && nb == TYPE_UVEC4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC4;
             }
         } break;
@@ -1213,46 +1213,46 @@ bool ShaderLanguage::_validate_operator(
             DataType nb = p_op->arguments[1]->get_datatype();
 
             if (na == TYPE_INT && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_INT;
             } else if (na == TYPE_IVEC2 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC2;
             } else if (na == TYPE_IVEC3 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC3;
             } else if (na == TYPE_IVEC4 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC4;
             } else if (na == TYPE_IVEC2 && nb == TYPE_IVEC2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC2;
             } else if (na == TYPE_IVEC3 && nb == TYPE_IVEC3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC3;
             } else if (na == TYPE_IVEC4 && nb == TYPE_IVEC4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC4;
             } else if (na == TYPE_UINT && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UINT;
             } else if (na == TYPE_UVEC2 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC2;
             } else if (na == TYPE_UVEC3 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC3;
             } else if (na == TYPE_UVEC4 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC4;
             } else if (na == TYPE_UVEC2 && nb == TYPE_UVEC2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC2;
             } else if (na == TYPE_UVEC3 && nb == TYPE_UVEC3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC3;
             } else if (na == TYPE_UVEC4 && nb == TYPE_UVEC4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC4;
             }
         } break;
@@ -1275,52 +1275,52 @@ bool ShaderLanguage::_validate_operator(
             DataType nb = p_op->arguments[1]->get_datatype();
 
             if (na == nb) {
-                valid = (na > TYPE_BOOL && na <= TYPE_MAT4);
+                valid    = (na > TYPE_BOOL && na <= TYPE_MAT4);
                 ret_type = na;
             } else if (na == TYPE_IVEC2 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC2;
             } else if (na == TYPE_IVEC3 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC3;
             } else if (na == TYPE_IVEC4 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC4;
             } else if (na == TYPE_UVEC2 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC2;
             } else if (na == TYPE_UVEC3 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC3;
             } else if (na == TYPE_UVEC4 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC4;
             } else if (na == TYPE_VEC2 && nb == TYPE_FLOAT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC2;
             } else if (na == TYPE_VEC3 && nb == TYPE_FLOAT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC3;
             } else if (na == TYPE_VEC4 && nb == TYPE_FLOAT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC4;
             } else if (na == TYPE_MAT2 && nb == TYPE_FLOAT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_MAT2;
             } else if (na == TYPE_MAT3 && nb == TYPE_FLOAT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_MAT3;
             } else if (na == TYPE_MAT4 && nb == TYPE_FLOAT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_MAT4;
             } else if (p_op->op == OP_ASSIGN_MUL && na == TYPE_VEC2 && nb == TYPE_MAT2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC2;
             } else if (p_op->op == OP_ASSIGN_MUL && na == TYPE_VEC3 && nb == TYPE_MAT3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC3;
             } else if (p_op->op == OP_ASSIGN_MUL && na == TYPE_VEC4 && nb == TYPE_MAT4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_VEC4;
             }
         } break;
@@ -1349,61 +1349,61 @@ bool ShaderLanguage::_validate_operator(
             }
 
             if (na == TYPE_INT && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_INT;
             } else if (na == TYPE_IVEC2 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC2;
             } else if (na == TYPE_IVEC3 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC3;
             } else if (na == TYPE_IVEC4 && nb == TYPE_INT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC4;
             } else if (na == TYPE_IVEC2 && nb == TYPE_IVEC2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC2;
             } else if (na == TYPE_IVEC3 && nb == TYPE_IVEC3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC3;
             } else if (na == TYPE_IVEC4 && nb == TYPE_IVEC4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_IVEC4;
                 /////
             } else if (na == TYPE_UINT && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UINT;
             } else if (na == TYPE_UVEC2 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC2;
             } else if (na == TYPE_UVEC3 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC3;
             } else if (na == TYPE_UVEC4 && nb == TYPE_UINT) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC4;
             } else if (na == TYPE_UVEC2 && nb == TYPE_UVEC2) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC2;
             } else if (na == TYPE_UVEC3 && nb == TYPE_UVEC3) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC3;
             } else if (na == TYPE_UVEC4 && nb == TYPE_UVEC4) {
-                valid = true;
+                valid    = true;
                 ret_type = TYPE_UVEC4;
             }
         } break;
         case OP_BIT_INVERT: { // unaries
             DataType na = p_op->arguments[0]->get_datatype();
-            valid = na >= TYPE_INT && na < TYPE_FLOAT;
-            ret_type = na;
+            valid       = na >= TYPE_INT && na < TYPE_FLOAT;
+            ret_type    = na;
         } break;
         case OP_SELECT_IF: {
             DataType na = p_op->arguments[0]->get_datatype();
             DataType nb = p_op->arguments[1]->get_datatype();
             DataType nc = p_op->arguments[2]->get_datatype();
 
-            valid = na == TYPE_BOOL && (nb == nc);
+            valid    = na == TYPE_BOOL && (nb == nc);
             ret_type = nb;
         } break;
         default: {
@@ -2608,9 +2608,9 @@ bool ShaderLanguage::_validate_function_call(
 
     int argcount = args.size();
 
-    bool failed_builtin = false;
+    bool failed_builtin      = false;
     bool unsupported_builtin = false;
-    int builtin_idx = 0;
+    int builtin_idx          = 0;
 
     if (argcount <= 4) {
         // test builtins
@@ -2624,7 +2624,7 @@ bool ShaderLanguage::_validate_function_call(
 
             if (name == builtin_func_defs[idx].name) {
                 failed_builtin = true;
-                bool fail = false;
+                bool fail      = false;
                 for (int i = 0; i < argcount; i++) {
                     if (get_scalar_type(args[i]) == args[i]
                         && p_func->arguments[i + 1]->type == Node::TYPE_CONSTANT
@@ -2643,9 +2643,9 @@ bool ShaderLanguage::_validate_function_call(
                 if (!fail) {
                     if (VisualServer::get_singleton()->is_low_end()) {
                         if (builtin_func_defs[idx].high_end) {
-                            fail = true;
+                            fail                = true;
                             unsupported_builtin = true;
-                            builtin_idx = idx;
+                            builtin_idx         = idx;
                         }
                     }
                 }
@@ -2690,7 +2690,7 @@ bool ShaderLanguage::_validate_function_call(
                                 }
 
                                 const BlockNode* b = p_block;
-                                bool valid = false;
+                                bool valid         = false;
                                 while (b) {
                                     if (b->variables.has(var_name)) {
                                         valid = true;
@@ -2919,7 +2919,7 @@ bool ShaderLanguage::_parse_function_arguments(
     int* r_complete_arg
 ) {
     TkPos pos = _get_tkpos();
-    Token tk = _get_token();
+    Token tk  = _get_token();
 
     if (tk.type == TK_PARENTHESIS_CLOSE) {
         return true;
@@ -2930,7 +2930,7 @@ bool ShaderLanguage::_parse_function_arguments(
     while (true) {
         if (r_complete_arg) {
             pos = _get_tkpos();
-            tk = _get_token();
+            tk  = _get_token();
 
             if (tk.type == TK_CURSOR) {
                 *r_complete_arg = p_func->arguments.size() - 1;
@@ -3152,20 +3152,20 @@ Variant ShaderLanguage::constant_value_to_variant(
                 p[2][0] = p_value[6].real;
                 p[2][1] = p_value[7].real;
                 p[2][2] = p_value[8].real;
-                value = Variant(p);
+                value   = Variant(p);
                 break;
             }
             case ShaderLanguage::TYPE_MAT4: {
                 Basis p;
-                p[0][0] = p_value[0].real;
-                p[0][1] = p_value[1].real;
-                p[0][2] = p_value[2].real;
-                p[1][0] = p_value[4].real;
-                p[1][1] = p_value[5].real;
-                p[1][2] = p_value[6].real;
-                p[2][0] = p_value[8].real;
-                p[2][1] = p_value[9].real;
-                p[2][2] = p_value[10].real;
+                p[0][0]     = p_value[0].real;
+                p[0][1]     = p_value[1].real;
+                p[0][2]     = p_value[2].real;
+                p[1][0]     = p_value[4].real;
+                p[1][1]     = p_value[5].real;
+                p[1][2]     = p_value[6].real;
+                p[2][0]     = p_value[8].real;
+                p[2][1]     = p_value[9].real;
+                p[2][2]     = p_value[10].real;
                 Transform t = Transform(
                     p,
                     Vector3(p_value[3].real, p_value[7].real, p_value[11].real)
@@ -3276,17 +3276,17 @@ bool ShaderLanguage::_get_completable_identifier(
 
     if (tk.type == TK_IDENTIFIER) {
         identifier = tk.text;
-        pos = _get_tkpos();
-        tk = _get_token();
+        pos        = _get_tkpos();
+        tk         = _get_token();
     }
 
     if (tk.type == TK_CURSOR) {
-        completion_type = p_type;
-        completion_line = tk_line;
+        completion_type  = p_type;
+        completion_line  = tk_line;
         completion_block = p_block;
 
         pos = _get_tkpos();
-        tk = _get_token();
+        tk  = _get_token();
 
         if (tk.type == TK_IDENTIFIER) {
             identifier =
@@ -3374,7 +3374,7 @@ bool ShaderLanguage::_validate_varying_using(
     switch (p_varying.stage) {
         case ShaderNode::Varying::STAGE_UNKNOWN:
             VaryingUsage usage;
-            usage.var = &p_varying;
+            usage.var  = &p_varying;
             usage.line = tk_line;
             unknown_varying_usages.push_back(usage);
             break;
@@ -3500,17 +3500,17 @@ ShaderLanguage::Node* ShaderLanguage::_parse_array_constructor(
     const StringName& p_struct_name,
     int p_array_size
 ) {
-    DataType type = TYPE_VOID;
+    DataType type      = TYPE_VOID;
     String struct_name = "";
-    int array_size = 0;
-    bool auto_size = false;
-    Token tk = _get_token();
+    int array_size     = 0;
+    bool auto_size     = false;
+    Token tk           = _get_token();
 
     if (tk.type == TK_CURLY_BRACKET_OPEN) {
         auto_size = true;
     } else {
         if (shader->structs.has(tk.text)) {
-            type = TYPE_STRUCT;
+            type        = TYPE_STRUCT;
             struct_name = tk.text;
         } else {
             if (!is_token_variable_datatype(tk.type)) {
@@ -3522,10 +3522,10 @@ ShaderLanguage::Node* ShaderLanguage::_parse_array_constructor(
         tk = _get_token();
         if (tk.type == TK_BRACKET_OPEN) {
             TkPos pos = _get_tkpos();
-            tk = _get_token();
+            tk        = _get_token();
             if (tk.type == TK_BRACKET_CLOSE) {
                 array_size = p_array_size;
-                tk = _get_token();
+                tk         = _get_token();
             } else {
                 _set_tkpos(pos);
 
@@ -3588,8 +3588,8 @@ ShaderLanguage::Node* ShaderLanguage::_parse_array_constructor(
     }
 
     ArrayConstructNode* an = alloc_node<ArrayConstructNode>();
-    an->datatype = p_type;
-    an->struct_name = p_struct_name;
+    an->datatype           = p_type;
+    an->struct_name        = p_struct_name;
 
     if (tk.type == TK_PARENTHESIS_OPEN || auto_size) { // initialization
         while (true) {
@@ -3652,10 +3652,10 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
     // Vector<TokenType> operators;
 
     while (true) {
-        Node* expr = nullptr;
+        Node* expr   = nullptr;
         TkPos prepos = _get_tkpos();
-        Token tk = _get_token();
-        TkPos pos = _get_tkpos();
+        Token tk     = _get_token();
+        TkPos pos    = _get_tkpos();
 
         if (tk.type == TK_PARENTHESIS_OPEN) {
             // handle subexpression
@@ -3678,7 +3678,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             v.real = tk.constant;
             constant->values.push_back(v);
             constant->datatype = TYPE_FLOAT;
-            expr = constant;
+            expr               = constant;
 
         } else if (tk.type == TK_INT_CONSTANT) {
             ConstantNode* constant = alloc_node<ConstantNode>();
@@ -3686,7 +3686,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             v.sint = tk.constant;
             constant->values.push_back(v);
             constant->datatype = TYPE_INT;
-            expr = constant;
+            expr               = constant;
 
         } else if (tk.type == TK_TRUE) {
             // handle true constant
@@ -3695,7 +3695,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             v.boolean = true;
             constant->values.push_back(v);
             constant->datatype = TYPE_BOOL;
-            expr = constant;
+            expr               = constant;
 
         } else if (tk.type == TK_FALSE) {
             // handle false constant
@@ -3704,7 +3704,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             v.boolean = false;
             constant->values.push_back(v);
             constant->datatype = TYPE_BOOL;
-            expr = constant;
+            expr               = constant;
 
         } else if (tk.type == TK_TYPE_VOID) {
             // make sure void is not used in expression
@@ -3714,11 +3714,11 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             // basic type constructor
 
             OperatorNode* func = alloc_node<OperatorNode>();
-            func->op = OP_CONSTRUCT;
+            func->op           = OP_CONSTRUCT;
 
             if (is_token_precision(tk.type)) {
                 func->return_precision_cache = get_token_precision(tk.type);
-                tk = _get_token();
+                tk                           = _get_token();
             }
 
             VariableNode* funcname = alloc_node<VariableNode>();
@@ -3741,9 +3741,9 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             );
 
             if (carg >= 0) {
-                completion_type = COMPLETION_CALL_ARGUMENTS;
-                completion_line = tk_line;
-                completion_block = p_block;
+                completion_type     = COMPLETION_CALL_ARGUMENTS;
+                completion_line     = tk_line;
+                completion_block    = p_block;
                 completion_function = funcname->name;
                 completion_argument = carg;
             }
@@ -3773,7 +3773,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             StringName identifier;
 
             StructNode* pstruct = nullptr;
-            bool struct_init = false;
+            bool struct_init    = false;
 
             _get_completable_identifier(
                 p_block,
@@ -3782,7 +3782,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             );
 
             if (shader->structs.has(identifier)) {
-                pstruct = shader->structs[identifier].shader_struct;
+                pstruct     = shader->structs[identifier].shader_struct;
                 struct_init = true;
             }
 
@@ -3792,12 +3792,12 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
 
                     const StringName& name = identifier;
 
-                    OperatorNode* func = alloc_node<OperatorNode>();
-                    func->op = OP_STRUCT;
-                    func->struct_name = name;
-                    func->return_cache = TYPE_STRUCT;
+                    OperatorNode* func     = alloc_node<OperatorNode>();
+                    func->op               = OP_STRUCT;
+                    func->struct_name      = name;
+                    func->return_cache     = TYPE_STRUCT;
                     VariableNode* funcname = alloc_node<VariableNode>();
-                    funcname->name = name;
+                    funcname->name         = name;
                     func->arguments.push_back(funcname);
 
                     for (int i = 0; i < pstruct->members.size(); i++) {
@@ -3822,7 +3822,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
 
                             DataType type2;
                             String struct_name2 = "";
-                            int array_size2 = 0;
+                            int array_size2     = 0;
 
                             bool auto_size = false;
 
@@ -3832,7 +3832,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                                 auto_size = true;
                             } else {
                                 if (shader->structs.has(tk.text)) {
-                                    type2 = TYPE_STRUCT;
+                                    type2        = TYPE_STRUCT;
                                     struct_name2 = tk.text;
                                 } else {
                                     if (!is_token_variable_datatype(tk.type)) {
@@ -3846,10 +3846,10 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                                 tk = _get_token();
                                 if (tk.type == TK_BRACKET_OPEN) {
                                     TkPos pos2 = _get_tkpos();
-                                    tk = _get_token();
+                                    tk         = _get_token();
                                     if (tk.type == TK_BRACKET_CLOSE) {
                                         array_size2 = array_size;
-                                        tk = _get_token();
+                                        tk          = _get_token();
                                     } else {
                                         _set_tkpos(pos2);
 
@@ -3924,7 +3924,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
 
                             ArrayConstructNode* an =
                                 alloc_node<ArrayConstructNode>();
-                            an->datatype = type;
+                            an->datatype    = type;
                             an->struct_name = struct_name;
 
                             if (tk.type == TK_PARENTHESIS_OPEN
@@ -4036,10 +4036,10 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
 
                     const StringName& name = identifier;
 
-                    OperatorNode* func = alloc_node<OperatorNode>();
-                    func->op = OP_CALL;
+                    OperatorNode* func     = alloc_node<OperatorNode>();
+                    func->op               = OP_CALL;
                     VariableNode* funcname = alloc_node<VariableNode>();
-                    funcname->name = name;
+                    funcname->name         = name;
                     func->arguments.push_back(funcname);
 
                     int carg = -1;
@@ -4081,9 +4081,9 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                     }
 
                     if (carg >= 0) {
-                        completion_type = COMPLETION_CALL_ARGUMENTS;
-                        completion_line = tk_line;
-                        completion_block = p_block;
+                        completion_type     = COMPLETION_CALL_ARGUMENTS;
+                        completion_line     = tk_line;
+                        completion_block    = p_block;
                         completion_function = funcname->name;
                         completion_argument = carg;
                     }
@@ -4121,7 +4121,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                                                == ArgumentQualifier::
                                                    ARGUMENT_QUALIFIER_INOUT) {
                                         bool error = false;
-                                        Node* n = func->arguments[argidx];
+                                        Node* n    = func->arguments[argidx];
                                         if (n->type == Node::TYPE_CONSTANT
                                             || n->type == Node::TYPE_OPERATOR) {
                                             error = true;
@@ -4206,13 +4206,13 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
 
                 DataType data_type;
                 IdentifierType ident_type;
-                bool is_const = false;
+                bool is_const  = false;
                 int array_size = 0;
                 StringName struct_name;
                 bool is_local = false;
 
                 if (p_block && p_block->block_tag != SubClassTag::TAG_GLOBAL) {
-                    int idx = 0;
+                    int idx    = 0;
                     bool found = false;
 
                     while (builtin_func_defs[idx].name) {
@@ -4249,7 +4249,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                     }
                     last_const = is_const;
                     if (ident_type == IDENTIFIER_VARYING) {
-                        TkPos prev_pos = _get_tkpos();
+                        TkPos prev_pos   = _get_tkpos();
                         Token next_token = _get_token();
 
                         // An array of varyings.
@@ -4292,8 +4292,8 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                             || ident_type == IDENTIFIER_FUNCTION_ARGUMENT;
                 }
 
-                Node* index_expression = nullptr;
-                Node* call_expression = nullptr;
+                Node* index_expression  = nullptr;
+                Node* call_expression   = nullptr;
                 Node* assign_expression = nullptr;
 
                 if (array_size > 0) {
@@ -4329,9 +4329,9 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                             return nullptr;
                         }
                     } else if (tk.type == TK_PERIOD) {
-                        completion_class = TAG_ARRAY;
+                        completion_class   = TAG_ARRAY;
                         p_block->block_tag = SubClassTag::TAG_ARRAY;
-                        call_expression = _parse_and_reduce_expression(
+                        call_expression    = _parse_and_reduce_expression(
                             p_block,
                             p_builtin_types
                         );
@@ -4385,25 +4385,25 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                         }
                     }
 
-                    ArrayNode* arrname = alloc_node<ArrayNode>();
-                    arrname->name = identifier;
-                    arrname->datatype_cache = data_type;
-                    arrname->struct_name = struct_name;
-                    arrname->index_expression = index_expression;
-                    arrname->call_expression = call_expression;
+                    ArrayNode* arrname         = alloc_node<ArrayNode>();
+                    arrname->name              = identifier;
+                    arrname->datatype_cache    = data_type;
+                    arrname->struct_name       = struct_name;
+                    arrname->index_expression  = index_expression;
+                    arrname->call_expression   = call_expression;
                     arrname->assign_expression = assign_expression;
-                    arrname->is_const = is_const;
-                    arrname->is_local = is_local;
-                    expr = arrname;
+                    arrname->is_const          = is_const;
+                    arrname->is_local          = is_local;
+                    expr                       = arrname;
 
                 } else {
-                    VariableNode* varname = alloc_node<VariableNode>();
-                    varname->name = identifier;
+                    VariableNode* varname   = alloc_node<VariableNode>();
+                    varname->name           = identifier;
                     varname->datatype_cache = data_type;
-                    varname->is_const = is_const;
-                    varname->struct_name = struct_name;
-                    varname->is_local = is_local;
-                    expr = varname;
+                    varname->is_const       = is_const;
+                    varname->struct_name    = struct_name;
+                    varname->is_local       = is_local;
+                    expr                    = varname;
                 }
             }
         } else if (tk.type == TK_OP_ADD) {
@@ -4448,14 +4448,14 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
 
         while (true) {
             TkPos pos2 = _get_tkpos();
-            tk = _get_token();
+            tk         = _get_token();
 
             if (tk.type == TK_CURSOR) {
                 // do nothing
             } else if (tk.type == TK_IDENTIFIER) {
             } else if (tk.type == TK_PERIOD) {
                 DataType dt = expr->get_datatype();
-                String st = expr->get_datatype_name();
+                String st   = expr->get_datatype_name();
                 StringName identifier;
                 if (_get_completable_identifier(
                         p_block,
@@ -4476,13 +4476,13 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                 }
                 String ident = identifier;
 
-                bool ok = true;
-                DataType member_type = TYPE_VOID;
+                bool ok                       = true;
+                DataType member_type          = TYPE_VOID;
                 StringName member_struct_name = "";
-                int array_size = 0;
+                int array_size                = 0;
                 switch (dt) {
                     case TYPE_STRUCT: {
-                        ok = false;
+                        ok                 = false;
                         String member_name = String(ident.ptr());
                         if (shader->structs.has(st)) {
                             StructNode* n = shader->structs[st].shader_struct;
@@ -4492,7 +4492,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                                  E = E->next()) {
                                 if (String(E->get()->name) == member_name) {
                                     member_type = E->get()->datatype;
-                                    array_size = E->get()->array_size;
+                                    array_size  = E->get()->array_size;
                                     if (member_type == TYPE_STRUCT) {
                                         member_struct_name =
                                             E->get()->struct_name;
@@ -4624,14 +4624,14 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                     return nullptr;
                 }
 
-                MemberNode* mn = alloc_node<MemberNode>();
-                mn->basetype = dt;
-                mn->datatype = member_type;
+                MemberNode* mn       = alloc_node<MemberNode>();
+                mn->basetype         = dt;
+                mn->datatype         = member_type;
                 mn->base_struct_name = st;
-                mn->struct_name = member_struct_name;
-                mn->array_size = array_size;
-                mn->name = ident;
-                mn->owner = expr;
+                mn->struct_name      = member_struct_name;
+                mn->array_size       = array_size;
+                mn->name             = ident;
+                mn->owner            = expr;
                 if (array_size > 0) {
                     tk = _get_token();
                     if (tk.type == TK_OP_ASSIGN) {
@@ -4874,7 +4874,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                 }
 
                 OperatorNode* op = alloc_node<OperatorNode>();
-                op->op = OP_INDEX;
+                op->op           = OP_INDEX;
                 op->return_cache = member_type;
                 op->arguments.push_back(expr);
                 op->arguments.push_back(index);
@@ -4915,11 +4915,11 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
 
         Expression e;
         e.is_op = false;
-        e.node = expr;
+        e.node  = expr;
         expression.push_back(e);
 
         pos = _get_tkpos();
-        tk = _get_token();
+        tk  = _get_token();
 
         if (is_token_operator(tk.type)) {
             Expression o;
@@ -5039,17 +5039,17 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
      * respecting precedence */
 
     while (expression.size() > 1) {
-        int next_op = -1;
+        int next_op      = -1;
         int min_priority = 0xFFFFF;
-        bool is_unary = false;
-        bool is_ternary = false;
+        bool is_unary    = false;
+        bool is_ternary  = false;
 
         for (int i = 0; i < expression.size(); i++) {
             if (!expression[i].is_op) {
                 continue;
             }
 
-            bool unary = false;
+            bool unary   = false;
             bool ternary = false;
 
             int priority;
@@ -5080,11 +5080,11 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                     break;
                 case OP_NOT:
                     priority = 3;
-                    unary = true;
+                    unary    = true;
                     break;
                 case OP_NEGATE:
                     priority = 3;
-                    unary = true;
+                    unary    = true;
                     break;
                 case OP_ADD:
                     priority = 5;
@@ -5151,23 +5151,23 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                     break;
                 case OP_BIT_INVERT:
                     priority = 3;
-                    unary = true;
+                    unary    = true;
                     break;
                 case OP_INCREMENT:
                     priority = 3;
-                    unary = true;
+                    unary    = true;
                     break;
                 case OP_DECREMENT:
                     priority = 3;
-                    unary = true;
+                    unary    = true;
                     break;
                 case OP_SELECT_IF:
                     priority = 15;
-                    ternary = true;
+                    ternary  = true;
                     break;
                 case OP_SELECT_ELSE:
                     priority = 15;
-                    ternary = true;
+                    ternary  = true;
                     break;
 
                 default:
@@ -5177,10 +5177,10 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             if (priority < min_priority) {
                 // < is used for left to right (default)
                 // <= is used for right to left
-                next_op = i;
+                next_op      = i;
                 min_priority = priority;
-                is_unary = unary;
-                is_ternary = ternary;
+                is_unary     = unary;
+                is_ternary   = ternary;
             }
         }
 
@@ -5202,7 +5202,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             // consecutively do unary operators
             for (int i = expr_pos - 1; i >= next_op; i--) {
                 OperatorNode* op = alloc_node<OperatorNode>();
-                op->op = expression[i].op;
+                op->op           = expression[i].op;
                 if ((op->op == OP_INCREMENT || op->op == OP_DECREMENT)
                     && !_validate_assign(
                         expression[i + 1].node,
@@ -5217,7 +5217,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                 op->arguments.push_back(expression[i + 1].node);
 
                 expression.write[i].is_op = false;
-                expression.write[i].node = op;
+                expression.write[i].node  = op;
 
                 if (!_validate_operator(op, &op->return_cache)) {
                     String at;
@@ -5251,13 +5251,13 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             }
 
             OperatorNode* op = alloc_node<OperatorNode>();
-            op->op = expression[next_op].op;
+            op->op           = expression[next_op].op;
             op->arguments.push_back(expression[next_op - 1].node);
             op->arguments.push_back(expression[next_op + 1].node);
             op->arguments.push_back(expression[next_op + 3].node);
 
             expression.write[next_op - 1].is_op = false;
-            expression.write[next_op - 1].node = op;
+            expression.write[next_op - 1].node  = op;
             if (!_validate_operator(op, &op->return_cache)) {
                 String at;
                 for (int i = 0; i < op->arguments.size(); i++) {
@@ -5281,7 +5281,7 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             }
 
             OperatorNode* op = alloc_node<OperatorNode>();
-            op->op = expression[next_op].op;
+            op->op           = expression[next_op].op;
 
             if (expression[next_op - 1].is_op) {
                 _set_error("Parser bug...");
@@ -5360,8 +5360,8 @@ ShaderLanguage::Node* ShaderLanguage::_reduce_expression(
     if (op->op == OP_CONSTRUCT) {
         ERR_FAIL_COND_V(op->arguments[0]->type != Node::TYPE_VARIABLE, p_node);
 
-        DataType type = op->get_datatype();
-        DataType base = get_scalar_type(type);
+        DataType type   = op->get_datatype();
+        DataType base   = get_scalar_type(type);
         int cardinality = get_cardinality(type);
 
         Vector<ConstantNode::Value> values;
@@ -5396,7 +5396,7 @@ ShaderLanguage::Node* ShaderLanguage::_reduce_expression(
                 ConstantNode::Value value = values[0];
                 ConstantNode::Value zero;
                 zero.real = 0.0f;
-                int size = 2 + (type - TYPE_MAT2);
+                int size  = 2 + (type - TYPE_MAT2);
 
                 values.clear();
                 for (int i = 0; i < size; i++) {
@@ -5418,8 +5418,8 @@ ShaderLanguage::Node* ShaderLanguage::_reduce_expression(
         }
 
         ConstantNode* cn = alloc_node<ConstantNode>();
-        cn->datatype = op->get_datatype();
-        cn->values = values;
+        cn->datatype     = op->get_datatype();
+        cn->values       = values;
         return cn;
     } else if (op->op == OP_NEGATE) {
         op->arguments.write[0] = _reduce_expression(p_block, op->arguments[0]);
@@ -5515,10 +5515,10 @@ Error ShaderLanguage::_parse_block(
 
             if (tk.type == TK_CONST) {
                 is_const = true;
-                tk = _get_token();
+                tk       = _get_token();
 
                 if (!is_struct) {
-                    is_struct = shader->structs.has(tk.text); // check again.
+                    is_struct   = shader->structs.has(tk.text); // check again.
                     struct_name = tk.text;
                 }
             }
@@ -5526,7 +5526,7 @@ Error ShaderLanguage::_parse_block(
             DataPrecision precision = PRECISION_DEFAULT;
             if (is_token_precision(tk.type)) {
                 precision = get_token_precision(tk.type);
-                tk = _get_token();
+                tk        = _get_token();
 
                 if (!is_struct) {
                     is_struct = shader->structs.has(tk.text); // check again.
@@ -5583,11 +5583,11 @@ Error ShaderLanguage::_parse_block(
                 }
 
                 BlockNode::Variable var;
-                var.type = type;
-                var.precision = precision;
-                var.line = tk_line;
-                var.array_size = 0;
-                var.is_const = is_const;
+                var.type        = type;
+                var.precision   = precision;
+                var.line        = tk_line;
+                var.array_size  = 0;
+                var.is_const    = is_const;
                 var.struct_name = struct_name;
 
                 tk = _get_token();
@@ -5608,13 +5608,13 @@ Error ShaderLanguage::_parse_block(
                         alloc_node<ArrayDeclarationNode>();
                     if (is_struct) {
                         node->struct_name = struct_name;
-                        node->datatype = TYPE_STRUCT;
+                        node->datatype    = TYPE_STRUCT;
                     } else {
                         node->datatype = type;
                     }
                     node->precision = precision;
-                    node->is_const = is_const;
-                    vardecl = (Node*)node;
+                    node->is_const  = is_const;
+                    vardecl         = (Node*)node;
 
                     ArrayDeclarationNode::Declaration decl;
                     decl.name = name;
@@ -5632,7 +5632,7 @@ Error ShaderLanguage::_parse_block(
                         }
 
                         decl.size = ((uint32_t)tk.constant);
-                        tk = _get_token();
+                        tk        = _get_token();
 
                         if (tk.type != TK_BRACKET_CLOSE) {
                             _set_error("Expected ']'");
@@ -5667,7 +5667,7 @@ Error ShaderLanguage::_parse_block(
                             DataPrecision precision2 = PRECISION_DEFAULT;
                             if (is_token_precision(tk.type)) {
                                 precision2 = get_token_precision(tk.type);
-                                tk = _get_token();
+                                tk         = _get_token();
                                 if (shader->structs.has(tk.text)) {
                                     _set_error(
                                         "Precision modifier cannot be used on "
@@ -5687,7 +5687,7 @@ Error ShaderLanguage::_parse_block(
                             StringName struct_name2 = "";
 
                             if (shader->structs.has(tk.text)) {
-                                type2 = TYPE_STRUCT;
+                                type2        = TYPE_STRUCT;
                                 struct_name2 = tk.text;
                             } else {
                                 if (!is_token_variable_datatype(tk.type)) {
@@ -5702,10 +5702,10 @@ Error ShaderLanguage::_parse_block(
                             tk = _get_token();
                             if (tk.type == TK_BRACKET_OPEN) {
                                 TkPos pos2 = _get_tkpos();
-                                tk = _get_token();
+                                tk         = _get_token();
                                 if (tk.type == TK_BRACKET_CLOSE) {
                                     array_size2 = var.array_size;
-                                    tk = _get_token();
+                                    tk          = _get_token();
                                 } else {
                                     _set_tkpos(pos2);
 
@@ -5859,7 +5859,7 @@ Error ShaderLanguage::_parse_block(
                                 }
                             }
                             if (unknown_size) {
-                                decl.size = decl.initializer.size();
+                                decl.size      = decl.initializer.size();
                                 var.array_size = decl.initializer.size();
                             } else if (decl.initializer.size() != var.array_size) {
                                 _set_error("Array size mismatch");
@@ -5884,16 +5884,16 @@ Error ShaderLanguage::_parse_block(
                         alloc_node<VariableDeclarationNode>();
                     if (is_struct) {
                         node->struct_name = struct_name;
-                        node->datatype = TYPE_STRUCT;
+                        node->datatype    = TYPE_STRUCT;
                     } else {
                         node->datatype = type;
                     }
                     node->precision = precision;
-                    node->is_const = is_const;
-                    vardecl = (Node*)node;
+                    node->is_const  = is_const;
+                    vardecl         = (Node*)node;
 
                     VariableDeclarationNode::Declaration decl;
-                    decl.name = name;
+                    decl.name        = name;
                     decl.initializer = nullptr;
 
                     // variable created with assignment! must parse an
@@ -5938,15 +5938,15 @@ Error ShaderLanguage::_parse_block(
                         alloc_node<VariableDeclarationNode>();
                     if (is_struct) {
                         node->struct_name = struct_name;
-                        node->datatype = TYPE_STRUCT;
+                        node->datatype    = TYPE_STRUCT;
                     } else {
                         node->datatype = type;
                     }
                     node->precision = precision;
-                    vardecl = (Node*)node;
+                    vardecl         = (Node*)node;
 
                     VariableDeclarationNode::Declaration decl;
-                    decl.name = name;
+                    decl.name        = name;
                     decl.initializer = nullptr;
                     node->declarations.push_back(decl);
                 }
@@ -5967,7 +5967,7 @@ Error ShaderLanguage::_parse_block(
             }
         } else if (tk.type == TK_CURLY_BRACKET_OPEN) {
             // a sub block, just because..
-            BlockNode* block = alloc_node<BlockNode>();
+            BlockNode* block    = alloc_node<BlockNode>();
             block->parent_block = p_block;
             _parse_block(
                 block,
@@ -5986,7 +5986,7 @@ Error ShaderLanguage::_parse_block(
             }
 
             ControlFlowNode* cf = alloc_node<ControlFlowNode>();
-            cf->flow_op = FLOW_OP_IF;
+            cf->flow_op         = FLOW_OP_IF;
             Node* n = _parse_and_reduce_expression(p_block, p_builtin_types);
             if (!n) {
                 return ERR_PARSE_ERROR;
@@ -6003,7 +6003,7 @@ Error ShaderLanguage::_parse_block(
                 return ERR_PARSE_ERROR;
             }
 
-            BlockNode* block = alloc_node<BlockNode>();
+            BlockNode* block    = alloc_node<BlockNode>();
             block->parent_block = p_block;
             cf->expressions.push_back(n);
             cf->blocks.push_back(block);
@@ -6021,9 +6021,9 @@ Error ShaderLanguage::_parse_block(
             }
 
             pos = _get_tkpos();
-            tk = _get_token();
+            tk  = _get_token();
             if (tk.type == TK_CF_ELSE) {
-                block = alloc_node<BlockNode>();
+                block               = alloc_node<BlockNode>();
                 block->parent_block = p_block;
                 cf->blocks.push_back(block);
                 err = _parse_block(
@@ -6053,7 +6053,7 @@ Error ShaderLanguage::_parse_block(
                 return ERR_PARSE_ERROR;
             }
             ControlFlowNode* cf = alloc_node<ControlFlowNode>();
-            cf->flow_op = FLOW_OP_SWITCH;
+            cf->flow_op         = FLOW_OP_SWITCH;
             Node* n = _parse_and_reduce_expression(p_block, p_builtin_types);
             if (!n) {
                 return ERR_PARSE_ERROR;
@@ -6072,8 +6072,8 @@ Error ShaderLanguage::_parse_block(
                 _set_error("Expected '{' after switch statement");
                 return ERR_PARSE_ERROR;
             }
-            BlockNode* switch_block = alloc_node<BlockNode>();
-            switch_block->block_type = BlockNode::BLOCK_TYPE_SWITCH;
+            BlockNode* switch_block    = alloc_node<BlockNode>();
+            switch_block->block_type   = BlockNode::BLOCK_TYPE_SWITCH;
             switch_block->parent_block = p_block;
             cf->expressions.push_back(n);
             cf->blocks.push_back(switch_block);
@@ -6093,7 +6093,7 @@ Error ShaderLanguage::_parse_block(
                     return ERR_PARSE_ERROR;
                 }
                 pos = _get_tkpos();
-                tk = _get_token();
+                tk  = _get_token();
                 if (tk.type == TK_CF_CASE || tk.type == TK_CF_DEFAULT) {
                     if (prev_type == TK_CF_DEFAULT) {
                         if (tk.type == TK_CF_CASE) {
@@ -6168,7 +6168,7 @@ Error ShaderLanguage::_parse_block(
 
             if (tk.type == TK_OP_SUB) {
                 sign = -1;
-                tk = _get_token();
+                tk   = _get_token();
             }
 
             if (tk.type != TK_INT_CONSTANT) {
@@ -6186,7 +6186,7 @@ Error ShaderLanguage::_parse_block(
             }
 
             ControlFlowNode* cf = alloc_node<ControlFlowNode>();
-            cf->flow_op = FLOW_OP_CASE;
+            cf->flow_op         = FLOW_OP_CASE;
 
             ConstantNode* n = alloc_node<ConstantNode>();
             ConstantNode::Value v;
@@ -6194,8 +6194,8 @@ Error ShaderLanguage::_parse_block(
             n->values.push_back(v);
             n->datatype = TYPE_INT;
 
-            BlockNode* case_block = alloc_node<BlockNode>();
-            case_block->block_type = BlockNode::BLOCK_TYPE_CASE;
+            BlockNode* case_block    = alloc_node<BlockNode>();
+            case_block->block_type   = BlockNode::BLOCK_TYPE_CASE;
             case_block->parent_block = p_block;
             cf->expressions.push_back(n);
             cf->blocks.push_back(case_block);
@@ -6229,10 +6229,10 @@ Error ShaderLanguage::_parse_block(
             }
 
             ControlFlowNode* cf = alloc_node<ControlFlowNode>();
-            cf->flow_op = FLOW_OP_DEFAULT;
+            cf->flow_op         = FLOW_OP_DEFAULT;
 
-            BlockNode* default_block = alloc_node<BlockNode>();
-            default_block->block_type = BlockNode::BLOCK_TYPE_DEFAULT;
+            BlockNode* default_block    = alloc_node<BlockNode>();
+            default_block->block_type   = BlockNode::BLOCK_TYPE_DEFAULT;
             default_block->parent_block = p_block;
             cf->blocks.push_back(default_block);
             p_block->statements.push_back(cf);
@@ -6257,7 +6257,7 @@ Error ShaderLanguage::_parse_block(
 
             BlockNode* do_block = nullptr;
             if (is_do) {
-                do_block = alloc_node<BlockNode>();
+                do_block               = alloc_node<BlockNode>();
                 do_block->parent_block = p_block;
 
                 Error err =
@@ -6296,7 +6296,7 @@ Error ShaderLanguage::_parse_block(
                 return ERR_PARSE_ERROR;
             }
             if (!is_do) {
-                BlockNode* block = alloc_node<BlockNode>();
+                BlockNode* block    = alloc_node<BlockNode>();
                 block->parent_block = p_block;
                 cf->expressions.push_back(n);
                 cf->blocks.push_back(block);
@@ -6327,10 +6327,10 @@ Error ShaderLanguage::_parse_block(
             }
 
             ControlFlowNode* cf = alloc_node<ControlFlowNode>();
-            cf->flow_op = FLOW_OP_FOR;
+            cf->flow_op         = FLOW_OP_FOR;
 
-            BlockNode* init_block = alloc_node<BlockNode>();
-            init_block->parent_block = p_block;
+            BlockNode* init_block        = alloc_node<BlockNode>();
+            init_block->parent_block     = p_block;
             init_block->single_statement = true;
             cf->blocks.push_back(init_block);
             if (_parse_block(init_block, p_builtin_types, true, false, false)
@@ -6369,7 +6369,7 @@ Error ShaderLanguage::_parse_block(
                 return ERR_PARSE_ERROR;
             }
 
-            BlockNode* block = alloc_node<BlockNode>();
+            BlockNode* block    = alloc_node<BlockNode>();
             block->parent_block = init_block;
             cf->blocks.push_back(block);
             p_block->statements.push_back(cf);
@@ -6408,10 +6408,10 @@ Error ShaderLanguage::_parse_block(
                 String(b->parent_function->return_struct_name);
 
             ControlFlowNode* flow = alloc_node<ControlFlowNode>();
-            flow->flow_op = FLOW_OP_RETURN;
+            flow->flow_op         = FLOW_OP_RETURN;
 
             pos = _get_tkpos();
-            tk = _get_token();
+            tk  = _get_token();
             if (tk.type == TK_SEMICOLON) {
                 // all is good
                 if (b->parent_function->return_type != TYPE_VOID) {
@@ -6484,10 +6484,10 @@ Error ShaderLanguage::_parse_block(
             }
 
             ControlFlowNode* flow = alloc_node<ControlFlowNode>();
-            flow->flow_op = FLOW_OP_DISCARD;
+            flow->flow_op         = FLOW_OP_DISCARD;
 
             pos = _get_tkpos();
-            tk = _get_token();
+            tk  = _get_token();
             if (tk.type != TK_SEMICOLON) {
                 _set_error("Expected ';' after discard");
                 return ERR_PARSE_ERROR;
@@ -6504,10 +6504,10 @@ Error ShaderLanguage::_parse_block(
             }
 
             ControlFlowNode* flow = alloc_node<ControlFlowNode>();
-            flow->flow_op = FLOW_OP_BREAK;
+            flow->flow_op         = FLOW_OP_BREAK;
 
             pos = _get_tkpos();
-            tk = _get_token();
+            tk  = _get_token();
             if (tk.type != TK_SEMICOLON) {
                 _set_error("Expected ';' after break");
                 return ERR_PARSE_ERROR;
@@ -6531,10 +6531,10 @@ Error ShaderLanguage::_parse_block(
             }
 
             ControlFlowNode* flow = alloc_node<ControlFlowNode>();
-            flow->flow_op = FLOW_OP_CONTINUE;
+            flow->flow_op         = FLOW_OP_CONTINUE;
 
             pos = _get_tkpos();
-            tk = _get_token();
+            tk  = _get_token();
             if (tk.type != TK_SEMICOLON) {
                 // all is good
                 _set_error("Expected ';' after continue");
@@ -6572,7 +6572,7 @@ String ShaderLanguage::_get_shader_type_list(const Set<String>& p_shader_types
     // Return a list of shader types as an human-readable string
     String valid_types;
     for (const Set<String>::Element* E = p_shader_types.front(); E;
-         E = E->next()) {
+         E                             = E->next()) {
         if (valid_types != String()) {
             valid_types += ", ";
         }
@@ -6678,7 +6678,7 @@ Error ShaderLanguage::_parse_shader(
     tk = _get_token();
 
     int texture_uniforms = 0;
-    int uniforms = 0;
+    int uniforms         = 0;
 
     while (tk.type != TK_EOF) {
         switch (tk.type) {
@@ -6745,7 +6745,7 @@ Error ShaderLanguage::_parse_shader(
                 }
 
                 StructNode* st_node = alloc_node<StructNode>();
-                st.shader_struct = st_node;
+                st.shader_struct    = st_node;
 
                 int member_count = 0;
                 Set<String> member_names;
@@ -6754,9 +6754,9 @@ Error ShaderLanguage::_parse_shader(
                     if (tk.type == TK_CURLY_BRACKET_CLOSE) {
                         break;
                     }
-                    StringName struct_name = "";
-                    bool struct_dt = false;
-                    bool use_precision = false;
+                    StringName struct_name  = "";
+                    bool struct_dt          = false;
+                    bool use_precision      = false;
                     DataPrecision precision = DataPrecision::PRECISION_DEFAULT;
 
                     if (tk.type == TK_STRUCT) {
@@ -6765,14 +6765,14 @@ Error ShaderLanguage::_parse_shader(
                     }
 
                     if (is_token_precision(tk.type)) {
-                        precision = get_token_precision(tk.type);
+                        precision     = get_token_precision(tk.type);
                         use_precision = true;
-                        tk = _get_token();
+                        tk            = _get_token();
                     }
 
                     if (shader->structs.has(tk.text)) {
                         struct_name = tk.text;
-                        struct_dt = true;
+                        struct_dt   = true;
                         if (use_precision) {
                             _set_error(
                                 "Precision modifier cannot be used on structs."
@@ -6802,11 +6802,11 @@ Error ShaderLanguage::_parse_shader(
                             return ERR_PARSE_ERROR;
                         }
 
-                        MemberNode* member = alloc_node<MemberNode>();
-                        member->precision = precision;
-                        member->datatype = type;
+                        MemberNode* member  = alloc_node<MemberNode>();
+                        member->precision   = precision;
+                        member->datatype    = type;
                         member->struct_name = struct_name;
-                        member->name = tk.text;
+                        member->name        = tk.text;
 
                         if (member_names.has(member->name)) {
                             _set_error(
@@ -6865,8 +6865,8 @@ Error ShaderLanguage::_parse_shader(
             } break;
             case TK_UNIFORM:
             case TK_VARYING: {
-                bool uniform = tk.type == TK_UNIFORM;
-                DataPrecision precision = PRECISION_DEFAULT;
+                bool uniform                    = tk.type == TK_UNIFORM;
+                DataPrecision precision         = PRECISION_DEFAULT;
                 DataInterpolation interpolation = INTERPOLATION_SMOOTH;
                 DataType type;
                 StringName name;
@@ -6875,12 +6875,12 @@ Error ShaderLanguage::_parse_shader(
                 tk = _get_token();
                 if (is_token_interpolation(tk.type)) {
                     interpolation = get_token_interpolation(tk.type);
-                    tk = _get_token();
+                    tk            = _get_token();
                 }
 
                 if (is_token_precision(tk.type)) {
                     precision = get_token_precision(tk.type);
-                    tk = _get_token();
+                    tk        = _get_token();
                 }
 
                 if (!is_token_datatype(tk.type)) {
@@ -6937,7 +6937,7 @@ Error ShaderLanguage::_parse_shader(
                 }
 
                 TkPos name_pos = _get_tkpos();
-                name = tk.text;
+                name           = tk.text;
 
                 if (_find_identifier(
                         nullptr,
@@ -6958,15 +6958,15 @@ Error ShaderLanguage::_parse_shader(
 
                     if (is_sampler_type(type)) {
                         uniform2.texture_order = texture_uniforms++;
-                        uniform2.order = -1;
+                        uniform2.order         = -1;
                         if (_validate_datatype(type) != OK) {
                             return ERR_PARSE_ERROR;
                         }
                     } else {
                         uniform2.texture_order = -1;
-                        uniform2.order = uniforms++;
+                        uniform2.order         = uniforms++;
                     }
-                    uniform2.type = type;
+                    uniform2.type      = type;
                     uniform2.precision = precision;
 
                     // todo parse default value
@@ -7017,7 +7017,7 @@ Error ShaderLanguage::_parse_shader(
 
                             if (tk.type == TK_OP_SUB) {
                                 sign = -1.0;
-                                tk = _get_token();
+                                tk   = _get_token();
                             }
 
                             if (tk.type != TK_REAL_CONSTANT
@@ -7026,7 +7026,7 @@ Error ShaderLanguage::_parse_shader(
                                 return ERR_PARSE_ERROR;
                             }
 
-                            uniform2.hint_range[0] = tk.constant;
+                            uniform2.hint_range[0]  = tk.constant;
                             uniform2.hint_range[0] *= sign;
 
                             tk = _get_token();
@@ -7043,7 +7043,7 @@ Error ShaderLanguage::_parse_shader(
 
                             if (tk.type == TK_OP_SUB) {
                                 sign = -1.0;
-                                tk = _get_token();
+                                tk   = _get_token();
                             }
 
                             if (tk.type != TK_REAL_CONSTANT
@@ -7053,7 +7053,7 @@ Error ShaderLanguage::_parse_shader(
                                 return ERR_PARSE_ERROR;
                             }
 
-                            uniform2.hint_range[1] = tk.constant;
+                            uniform2.hint_range[1]  = tk.constant;
                             uniform2.hint_range[1] *= sign;
 
                             tk = _get_token();
@@ -7070,7 +7070,7 @@ Error ShaderLanguage::_parse_shader(
                                 }
 
                                 uniform2.hint_range[2] = tk.constant;
-                                tk = _get_token();
+                                tk                     = _get_token();
                             } else {
                                 if (type == TYPE_INT) {
                                     uniform2.hint_range[2] = 1;
@@ -7140,11 +7140,11 @@ Error ShaderLanguage::_parse_shader(
                     }
                 } else { // varying
                     ShaderNode::Varying varying;
-                    varying.type = type;
-                    varying.precision = precision;
+                    varying.type          = type;
+                    varying.precision     = precision;
                     varying.interpolation = interpolation;
-                    varying.tkpos = name_pos;
-                    varying.array_size = array_size;
+                    varying.tkpos         = name_pos;
+                    varying.array_size    = array_size;
 
                     tk = _get_token();
                     if (tk.type != TK_SEMICOLON && tk.type != TK_BRACKET_OPEN) {
@@ -7186,7 +7186,7 @@ Error ShaderLanguage::_parse_shader(
                 // function or constant variable
 
                 bool is_constant = false;
-                bool is_struct = false;
+                bool is_struct   = false;
                 StringName struct_name;
                 DataPrecision precision = PRECISION_DEFAULT;
                 DataType type;
@@ -7194,12 +7194,12 @@ Error ShaderLanguage::_parse_shader(
 
                 if (tk.type == TK_CONST) {
                     is_constant = true;
-                    tk = _get_token();
+                    tk          = _get_token();
                 }
 
                 if (is_token_precision(tk.type)) {
                     precision = get_token_precision(tk.type);
-                    tk = _get_token();
+                    tk        = _get_token();
                 }
 
                 if (shader->structs.has(tk.text)) {
@@ -7209,7 +7209,7 @@ Error ShaderLanguage::_parse_shader(
                         );
                         return ERR_PARSE_ERROR;
                     }
-                    is_struct = true;
+                    is_struct   = true;
                     struct_name = tk.text;
                 } else {
                     if (!is_token_datatype(tk.type)) {
@@ -7234,7 +7234,7 @@ Error ShaderLanguage::_parse_shader(
                     type = get_token_datatype(tk.type);
                 }
                 TkPos prev_pos = _get_tkpos();
-                tk = _get_token();
+                tk             = _get_token();
                 if (tk.type == TK_BRACKET_OPEN) {
                     _set_error("Cannot use arrays as return types");
                     return ERR_PARSE_ERROR;
@@ -7277,12 +7277,12 @@ Error ShaderLanguage::_parse_shader(
 
                     while (true) {
                         ShaderNode::Constant constant;
-                        constant.name = name;
-                        constant.type = is_struct ? TYPE_STRUCT : type;
-                        constant.type_str = struct_name;
-                        constant.precision = precision;
+                        constant.name        = name;
+                        constant.type        = is_struct ? TYPE_STRUCT : type;
+                        constant.type_str    = struct_name;
+                        constant.precision   = precision;
                         constant.initializer = nullptr;
-                        constant.array_size = 0;
+                        constant.array_size  = 0;
 
                         bool unknown_size = false;
 
@@ -7297,10 +7297,10 @@ Error ShaderLanguage::_parse_shader(
                             tk = _get_token();
                             if (tk.type == TK_BRACKET_CLOSE) {
                                 unknown_size = true;
-                                tk = _get_token();
+                                tk           = _get_token();
                             } else if (tk.type == TK_INT_CONSTANT && ((int)tk.constant) > 0) {
                                 constant.array_size = (int)tk.constant;
-                                tk = _get_token();
+                                tk                  = _get_token();
                                 if (tk.type != TK_BRACKET_CLOSE) {
                                     _set_error("Expected ']'");
                                     return ERR_PARSE_ERROR;
@@ -7360,7 +7360,7 @@ Error ShaderLanguage::_parse_shader(
                                     DataType type2;
 
                                     if (shader->structs.has(tk.text)) {
-                                        type2 = TYPE_STRUCT;
+                                        type2        = TYPE_STRUCT;
                                         struct_name2 = tk.text;
                                     } else {
                                         if (!is_token_variable_datatype(tk.type
@@ -7374,13 +7374,13 @@ Error ShaderLanguage::_parse_shader(
                                     }
 
                                     int array_size2 = 0;
-                                    tk = _get_token();
+                                    tk              = _get_token();
                                     if (tk.type == TK_BRACKET_OPEN) {
                                         TkPos pos2 = _get_tkpos();
-                                        tk = _get_token();
+                                        tk         = _get_token();
                                         if (tk.type == TK_BRACKET_CLOSE) {
                                             array_size2 = constant.array_size;
-                                            tk = _get_token();
+                                            tk          = _get_token();
                                         } else {
                                             _set_tkpos(pos2);
 
@@ -7689,7 +7689,7 @@ Error ShaderLanguage::_parse_shader(
                 ShaderNode::Function function;
 
                 function.callable = !p_functions.has(name);
-                function.name = name;
+                function.name     = name;
 
                 FunctionNode* func_node = alloc_node<FunctionNode>();
 
@@ -7697,16 +7697,16 @@ Error ShaderLanguage::_parse_shader(
 
                 shader->functions.push_back(function);
 
-                func_node->name = name;
-                func_node->return_type = type;
+                func_node->name               = name;
+                func_node->return_type        = type;
                 func_node->return_struct_name = struct_name;
-                func_node->return_precision = precision;
+                func_node->return_precision   = precision;
 
                 if (p_functions.has(name)) {
                     func_node->can_discard = p_functions[name].can_discard;
                 }
 
-                func_node->body = alloc_node<BlockNode>();
+                func_node->body                  = alloc_node<BlockNode>();
                 func_node->body->parent_function = func_node;
 
                 tk = _get_token();
@@ -7720,31 +7720,31 @@ Error ShaderLanguage::_parse_shader(
 
                     if (tk.type == TK_ARG_IN) {
                         qualifier = ARGUMENT_QUALIFIER_IN;
-                        tk = _get_token();
+                        tk        = _get_token();
                     } else if (tk.type == TK_ARG_OUT) {
                         qualifier = ARGUMENT_QUALIFIER_OUT;
-                        tk = _get_token();
+                        tk        = _get_token();
                     } else if (tk.type == TK_ARG_INOUT) {
                         qualifier = ARGUMENT_QUALIFIER_INOUT;
-                        tk = _get_token();
+                        tk        = _get_token();
                     }
 
                     DataType ptype;
                     StringName pname;
                     StringName param_struct_name;
                     DataPrecision pprecision = PRECISION_DEFAULT;
-                    bool use_precision = false;
+                    bool use_precision       = false;
 
                     if (is_token_precision(tk.type)) {
-                        pprecision = get_token_precision(tk.type);
-                        tk = _get_token();
+                        pprecision    = get_token_precision(tk.type);
+                        tk            = _get_token();
                         use_precision = true;
                     }
 
                     is_struct = false;
 
                     if (shader->structs.has(tk.text)) {
-                        is_struct = true;
+                        is_struct         = true;
                         param_struct_name = tk.text;
                         if (use_precision) {
                             _set_error(
@@ -7809,9 +7809,9 @@ Error ShaderLanguage::_parse_shader(
                     }
 
                     FunctionNode::Argument arg;
-                    arg.type = ptype;
-                    arg.name = pname;
-                    arg.type_str = param_struct_name;
+                    arg.type      = ptype;
+                    arg.name      = pname;
+                    arg.type_str  = param_struct_name;
                     arg.precision = pprecision;
                     arg.qualifier = qualifier;
 
@@ -8040,7 +8040,7 @@ String ShaderLanguage::get_shader_type(const String& p_code) {
                         return String();
                     }
 
-                    reading_type = true;
+                    reading_type   = true;
                     cur_identifier = String();
                 } else {
                     return cur_identifier;
@@ -8070,7 +8070,7 @@ Error ShaderLanguage::compile(
 
     nodes = nullptr;
 
-    shader = alloc_node<ShaderNode>();
+    shader    = alloc_node<ShaderNode>();
     Error err = _parse_shader(p_functions, p_render_modes, p_shader_types);
 
     if (err != OK) {
@@ -8243,7 +8243,7 @@ Error ShaderLanguage::complete(
                     );
                 }
 
-                int idx = 0;
+                int idx      = 0;
                 bool low_end = VisualServer::get_singleton()->is_low_end();
 
                 while (builtin_func_defs[idx].name) {
@@ -8259,7 +8259,7 @@ Error ShaderLanguage::complete(
                 }
 
             } else { // sub-class
-                int idx = 0;
+                int idx      = 0;
                 bool low_end = VisualServer::get_singleton()->is_low_end();
 
                 while (builtin_func_defs[idx].name) {
@@ -8407,7 +8407,7 @@ Error ShaderLanguage::complete(
 
         } break;
         case COMPLETION_INDEX: {
-            const char colv[4] = {'r', 'g', 'b', 'a'};
+            const char colv[4]   = {'r', 'g', 'b', 'a'};
             const char coordv[4] = {'x', 'y', 'z', 'w'};
 
             int limit = 0;
@@ -8477,7 +8477,7 @@ ShaderLanguage::ShaderNode* ShaderLanguage::get_shader() {
 }
 
 ShaderLanguage::ShaderLanguage() {
-    nodes = nullptr;
+    nodes            = nullptr;
     completion_class = TAG_GLOBAL;
 }
 

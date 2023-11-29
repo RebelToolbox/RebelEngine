@@ -102,7 +102,7 @@ class PoolVector {
         MemoryPool::Alloc* old_alloc = alloc;
 
         // take one from the free list
-        alloc = MemoryPool::free_list;
+        alloc                 = MemoryPool::free_list;
         MemoryPool::free_list = alloc->free_list;
         // increment the used counter
         MemoryPool::allocs_used++;
@@ -134,8 +134,8 @@ class PoolVector {
             r._ref(old_alloc);
 
             int cur_elements = alloc->size / sizeof(T);
-            T* dst = (T*)w.ptr();
-            const T* src = (const T*)r.ptr();
+            T* dst           = (T*)w.ptr();
+            const T* src     = (const T*)r.ptr();
             for (int i = 0; i < cur_elements; i++) {
                 memnew_placement(&dst[i], T(src[i]));
             }
@@ -155,7 +155,7 @@ class PoolVector {
                 w._ref(old_alloc);
 
                 int cur_elements = old_alloc->size / sizeof(T);
-                T* elems = (T*)w.ptr();
+                T* elems         = (T*)w.ptr();
                 for (int i = 0; i < cur_elements; i++) {
                     elems[i].~T();
                 }
@@ -167,11 +167,11 @@ class PoolVector {
                 // if some resize
             } else {
                 memfree(old_alloc->mem);
-                old_alloc->mem = nullptr;
+                old_alloc->mem  = nullptr;
                 old_alloc->size = 0;
 
                 MemoryPool::alloc_mutex.lock();
-                old_alloc->free_list = MemoryPool::free_list;
+                old_alloc->free_list  = MemoryPool::free_list;
                 MemoryPool::free_list = old_alloc;
                 MemoryPool::allocs_used--;
                 MemoryPool::alloc_mutex.unlock();
@@ -234,11 +234,11 @@ class PoolVector {
             // if some resize
         } else {
             memfree(alloc->mem);
-            alloc->mem = nullptr;
+            alloc->mem  = nullptr;
             alloc->size = 0;
 
             MemoryPool::alloc_mutex.lock();
-            alloc->free_list = MemoryPool::free_list;
+            alloc->free_list      = MemoryPool::free_list;
             MemoryPool::free_list = alloc;
             MemoryPool::allocs_used--;
             MemoryPool::alloc_mutex.unlock();
@@ -276,14 +276,14 @@ public:
                     }
                 }
 
-                mem = nullptr;
+                mem   = nullptr;
                 alloc = nullptr;
             }
         }
 
         Access() {
             alloc = nullptr;
-            mem = nullptr;
+            mem   = nullptr;
         }
 
     public:
@@ -403,7 +403,7 @@ public:
         int bs = size();
         resize(bs + ds);
         Write w = write();
-        Read r = p_arr.read();
+        Read r  = p_arr.read();
         for (int i = 0; i < ds; i++) {
             w[bs + i] = r[i];
         }
@@ -423,7 +423,7 @@ public:
         PoolVector<T> slice;
         int span = 1 + p_to - p_from;
         slice.resize(span);
-        Read r = read();
+        Read r  = read();
         Write w = slice.write();
         for (int i = 0; i < span; ++i) {
             w[i] = r[p_from + i];
@@ -449,8 +449,8 @@ public:
 
     String join(String delimiter) {
         String rs = "";
-        int s = size();
-        Read r = read();
+        int s     = size();
+        Read r    = read();
         for (int i = 0; i < s; i++) {
             rs += r[i] + delimiter;
         }
@@ -505,7 +505,7 @@ template <class T>
 void PoolVector<T>::set(int p_index, const T& p_val) {
     ERR_FAIL_INDEX(p_index, size());
 
-    Write w = write();
+    Write w    = write();
     w[p_index] = p_val;
 }
 
@@ -547,7 +547,7 @@ Error PoolVector<T>::resize(int p_size) {
         }
 
         // take one from the free list
-        alloc = MemoryPool::free_list;
+        alloc                 = MemoryPool::free_list;
         MemoryPool::free_list = alloc->free_list;
         // increment the used counter
         MemoryPool::allocs_used++;
@@ -627,17 +627,17 @@ Error PoolVector<T>::resize(int p_size) {
         } else {
             if (new_size == 0) {
                 memfree(alloc->mem);
-                alloc->mem = nullptr;
+                alloc->mem  = nullptr;
                 alloc->size = 0;
 
                 MemoryPool::alloc_mutex.lock();
-                alloc->free_list = MemoryPool::free_list;
+                alloc->free_list      = MemoryPool::free_list;
                 MemoryPool::free_list = alloc;
                 MemoryPool::allocs_used--;
                 MemoryPool::alloc_mutex.unlock();
 
             } else {
-                alloc->mem = memrealloc(alloc->mem, new_size);
+                alloc->mem  = memrealloc(alloc->mem, new_size);
                 alloc->size = new_size;
             }
         }
@@ -649,13 +649,13 @@ Error PoolVector<T>::resize(int p_size) {
 template <class T>
 void PoolVector<T>::invert() {
     T temp;
-    Write w = write();
-    int s = size();
+    Write w    = write();
+    int s      = size();
     int half_s = s / 2;
 
     for (int i = 0; i < half_s; i++) {
-        temp = w[i];
-        w[i] = w[s - i - 1];
+        temp         = w[i];
+        w[i]         = w[s - i - 1];
         w[s - i - 1] = temp;
     }
 }

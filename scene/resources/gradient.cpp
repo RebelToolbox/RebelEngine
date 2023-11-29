@@ -41,11 +41,11 @@
 Gradient::Gradient() {
     // Set initial color ramp transition from black to white
     points.resize(2);
-    points.write[0].color = Color(0, 0, 0, 1);
+    points.write[0].color  = Color(0, 0, 0, 1);
     points.write[0].offset = 0;
-    points.write[1].color = Color(1, 1, 1, 1);
+    points.write[1].color  = Color(1, 1, 1, 1);
     points.write[1].offset = 1;
-    is_sorted = true;
+    is_sorted              = true;
 }
 
 Gradient::~Gradient() {}
@@ -159,8 +159,8 @@ Vector<Gradient::Point>& Gradient::get_points() {
 
 void Gradient::add_point(float p_offset, const Color& p_color) {
     Point p;
-    p.offset = p_offset;
-    p.color = p_color;
+    p.offset  = p_offset;
+    p.color   = p_color;
     is_sorted = false;
     points.push_back(p);
 
@@ -175,7 +175,7 @@ void Gradient::remove_point(int p_index) {
 }
 
 void Gradient::set_points(Vector<Gradient::Point>& p_points) {
-    points = p_points;
+    points    = p_points;
     is_sorted = false;
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
@@ -184,7 +184,7 @@ void Gradient::set_offset(int pos, const float offset) {
     ERR_FAIL_INDEX(pos, points.size());
     _update_sorting();
     points.write[pos].offset = offset;
-    is_sorted = false;
+    is_sorted                = false;
     emit_signal(CoreStringNames::get_singleton()->changed);
 }
 

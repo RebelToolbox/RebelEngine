@@ -51,7 +51,7 @@ bool GDScriptCompiler::_is_class_member_property(
     GDScript* owner,
     const StringName& p_name
 ) {
-    GDScript* scr = owner;
+    GDScript* scr           = owner;
     GDScriptNativeClass* nc = nullptr;
     while (scr) {
         if (scr->native.is_valid()) {
@@ -75,10 +75,10 @@ void GDScriptCompiler::_set_error(
 
     error = p_error;
     if (p_node) {
-        err_line = p_node->line;
+        err_line   = p_node->line;
         err_column = p_node->column;
     } else {
-        err_line = 0;
+        err_line   = 0;
         err_column = 0;
     }
 }
@@ -166,23 +166,23 @@ GDScriptDataType GDScriptCompiler::_gdtype_from_datatype(
 
     switch (p_datatype.kind) {
         case GDScriptParser::DataType::BUILTIN: {
-            result.kind = GDScriptDataType::BUILTIN;
+            result.kind         = GDScriptDataType::BUILTIN;
             result.builtin_type = p_datatype.builtin_type;
         } break;
         case GDScriptParser::DataType::NATIVE: {
-            result.kind = GDScriptDataType::NATIVE;
+            result.kind        = GDScriptDataType::NATIVE;
             result.native_type = p_datatype.native_type;
         } break;
         case GDScriptParser::DataType::SCRIPT: {
-            result.kind = GDScriptDataType::SCRIPT;
+            result.kind            = GDScriptDataType::SCRIPT;
             result.script_type_ref = Ref<Script>(p_datatype.script_type);
-            result.script_type = result.script_type_ref.ptr();
+            result.script_type     = result.script_type_ref.ptr();
             result.native_type = result.script_type->get_instance_base_type();
         } break;
         case GDScriptParser::DataType::GDSCRIPT: {
-            result.kind = GDScriptDataType::GDSCRIPT;
+            result.kind            = GDScriptDataType::GDSCRIPT;
             result.script_type_ref = Ref<Script>(p_datatype.script_type);
-            result.script_type = result.script_type_ref.ptr();
+            result.script_type     = result.script_type_ref.ptr();
             result.native_type = result.script_type->get_instance_base_type();
         } break;
         case GDScriptParser::DataType::CLASS: {
@@ -206,10 +206,10 @@ GDScriptDataType GDScriptCompiler::_gdtype_from_datatype(
                 names.pop_back();
             }
 
-            result.kind = GDScriptDataType::GDSCRIPT;
+            result.kind            = GDScriptDataType::GDSCRIPT;
             result.script_type_ref = Ref<Script>(script);
-            result.script_type = result.script_type_ref.ptr();
-            result.native_type = script->get_instance_base_type();
+            result.script_type     = result.script_type_ref.ptr();
+            result.native_type     = script->get_instance_base_type();
         } break;
         default: {
             ERR_PRINT("Parser bug: converting unresolved type.");
@@ -375,7 +375,7 @@ int GDScriptCompiler::_parse_expression(
 
             GDScript* owner = codegen.script;
             while (owner) {
-                GDScript* scr = owner;
+                GDScript* scr           = owner;
                 GDScriptNativeClass* nc = nullptr;
                 while (scr) {
                     if (scr->constants.has(identifier)) {
@@ -468,7 +468,7 @@ int GDScriptCompiler::_parse_expression(
                 int idx;
 
                 if (!codegen.constant_map.has(key)) {
-                    idx = codegen.constant_map.size();
+                    idx                       = codegen.constant_map.size();
                     codegen.constant_map[key] = idx;
 
                 } else {
@@ -514,7 +514,7 @@ int GDScriptCompiler::_parse_expression(
             int idx;
 
             if (!codegen.constant_map.has(cn->value)) {
-                idx = codegen.constant_map.size();
+                idx                             = codegen.constant_map.size();
                 codegen.constant_map[cn->value] = idx;
 
             } else {
@@ -634,7 +634,7 @@ int GDScriptCompiler::_parse_expression(
             const GDScriptParser::CastNode* cn =
                 static_cast<const GDScriptParser::CastNode*>(p_expression);
 
-            int slevel = p_stack_level;
+            int slevel   = p_stack_level;
             int src_addr = _parse_expression(codegen, cn->source_node, slevel);
             if (src_addr < 0) {
                 return src_addr;
@@ -682,9 +682,9 @@ int GDScriptCompiler::_parse_expression(
                 } break;
                 case GDScriptDataType::SCRIPT:
                 case GDScriptDataType::GDSCRIPT: {
-                    Variant script = cast_type.script_type;
-                    int idx = codegen.get_constant_pos(script);
-                    idx |= GDScriptFunction::ADDR_TYPE_LOCAL_CONSTANT
+                    Variant script  = cast_type.script_type;
+                    int idx         = codegen.get_constant_pos(script);
+                    idx            |= GDScriptFunction::ADDR_TYPE_LOCAL_CONSTANT
                         << GDScriptFunction::ADDR_BITS; // make it a local
                                                         // constant (faster
                                                         // access)
@@ -1884,8 +1884,8 @@ int GDScriptCompiler::_parse_expression(
                                 case GDScriptDataType::SCRIPT:
                                 case GDScriptDataType::GDSCRIPT: {
                                     Variant script = assign_type.script_type;
-                                    int idx = codegen.get_constant_pos(script);
-                                    idx |= GDScriptFunction::
+                                    int idx  = codegen.get_constant_pos(script);
+                                    idx     |= GDScriptFunction::
                                                ADDR_TYPE_LOCAL_CONSTANT
                                         << GDScriptFunction::
                                                ADDR_BITS; // make it a local
@@ -2223,9 +2223,9 @@ Error GDScriptCompiler::_parse_block(
 
                     } break;
                     case GDScriptParser::ControlFlowNode::CF_FOR: {
-                        int slevel = p_stack_level;
+                        int slevel         = p_stack_level;
                         int iter_stack_pos = slevel;
-                        int iterator_pos = (slevel++)
+                        int iterator_pos   = (slevel++)
                                          | (GDScriptFunction::ADDR_TYPE_STACK
                                             << GDScriptFunction::ADDR_BITS);
                         int counter_pos = (slevel++)
@@ -2467,13 +2467,13 @@ Error GDScriptCompiler::_parse_function(
     Vector<int> bytecode;
     CodeGen codegen;
 
-    codegen.class_node = p_class;
-    codegen.script = p_script;
+    codegen.class_node    = p_class;
+    codegen.script        = p_script;
     codegen.function_node = p_func;
-    codegen.stack_max = 0;
-    codegen.current_line = 0;
-    codegen.call_max = 0;
-    codegen.debug_stack = ScriptDebugger::get_singleton() != nullptr;
+    codegen.stack_max     = 0;
+    codegen.current_line  = 0;
+    codegen.call_max      = 0;
+    codegen.debug_stack   = ScriptDebugger::get_singleton() != nullptr;
     Vector<StringName> argnames;
 
     int stack_level = 0;
@@ -2583,7 +2583,7 @@ Error GDScriptCompiler::_parse_function(
     //}
 
     if (p_func) {
-        gdfunc->_static = p_func->_static;
+        gdfunc->_static  = p_func->_static;
         gdfunc->rpc_mode = p_func->rpc_mode;
         gdfunc->argument_types.resize(p_func->argument_types.size());
         for (int i = 0; i < p_func->argument_types.size(); i++) {
@@ -2593,11 +2593,11 @@ Error GDScriptCompiler::_parse_function(
         gdfunc->return_type =
             _gdtype_from_datatype(p_func->return_type, p_script);
     } else {
-        gdfunc->_static = false;
-        gdfunc->rpc_mode = MultiplayerAPI::RPC_MODE_DISABLED;
-        gdfunc->return_type = GDScriptDataType();
-        gdfunc->return_type.has_type = true;
-        gdfunc->return_type.kind = GDScriptDataType::BUILTIN;
+        gdfunc->_static                  = false;
+        gdfunc->rpc_mode                 = MultiplayerAPI::RPC_MODE_DISABLED;
+        gdfunc->return_type              = GDScriptDataType();
+        gdfunc->return_type.has_type     = true;
+        gdfunc->return_type.kind         = GDScriptDataType::BUILTIN;
         gdfunc->return_type.builtin_type = Variant::NIL;
     }
 
@@ -2609,13 +2609,13 @@ Error GDScriptCompiler::_parse_function(
         gdfunc->_constant_count = codegen.constant_map.size();
         gdfunc->constants.resize(codegen.constant_map.size());
         gdfunc->_constants_ptr = gdfunc->constants.ptrw();
-        const Variant* K = nullptr;
+        const Variant* K       = nullptr;
         while ((K = codegen.constant_map.next(K))) {
-            int idx = codegen.constant_map[*K];
+            int idx                      = codegen.constant_map[*K];
             gdfunc->constants.write[idx] = *K;
         }
     } else {
-        gdfunc->_constants_ptr = nullptr;
+        gdfunc->_constants_ptr  = nullptr;
         gdfunc->_constant_count = 0;
     }
     // global names
@@ -2623,13 +2623,13 @@ Error GDScriptCompiler::_parse_function(
         gdfunc->global_names.resize(codegen.name_map.size());
         gdfunc->_global_names_ptr = &gdfunc->global_names[0];
         for (Map<StringName, int>::Element* E = codegen.name_map.front(); E;
-             E = E->next()) {
+             E                                = E->next()) {
             gdfunc->global_names.write[E->get()] = E->key();
         }
         gdfunc->_global_names_count = gdfunc->global_names.size();
 
     } else {
-        gdfunc->_global_names_ptr = nullptr;
+        gdfunc->_global_names_ptr   = nullptr;
         gdfunc->_global_names_count = 0;
     }
 
@@ -2646,28 +2646,28 @@ Error GDScriptCompiler::_parse_function(
 #endif
 
     if (codegen.opcodes.size()) {
-        gdfunc->code = codegen.opcodes;
-        gdfunc->_code_ptr = &gdfunc->code[0];
+        gdfunc->code       = codegen.opcodes;
+        gdfunc->_code_ptr  = &gdfunc->code[0];
         gdfunc->_code_size = codegen.opcodes.size();
 
     } else {
-        gdfunc->_code_ptr = nullptr;
+        gdfunc->_code_ptr  = nullptr;
         gdfunc->_code_size = 0;
     }
 
     if (defarg_addr.size()) {
-        gdfunc->default_arguments = defarg_addr;
+        gdfunc->default_arguments  = defarg_addr;
         gdfunc->_default_arg_count = defarg_addr.size() - 1;
-        gdfunc->_default_arg_ptr = &gdfunc->default_arguments[0];
+        gdfunc->_default_arg_ptr   = &gdfunc->default_arguments[0];
     } else {
         gdfunc->_default_arg_count = 0;
-        gdfunc->_default_arg_ptr = nullptr;
+        gdfunc->_default_arg_ptr   = nullptr;
     }
 
     gdfunc->_argument_count = p_func ? p_func->arguments.size() : 0;
-    gdfunc->_stack_size = codegen.stack_max;
-    gdfunc->_call_size = codegen.call_max;
-    gdfunc->name = func_name;
+    gdfunc->_stack_size     = codegen.stack_max;
+    gdfunc->_call_size      = codegen.call_max;
+    gdfunc->name            = func_name;
 #ifdef DEBUG_ENABLED
     if (ScriptDebugger::get_singleton()) {
         String signature;
@@ -2694,7 +2694,7 @@ Error GDScriptCompiler::_parse_function(
     }
 #endif
     gdfunc->_script = p_script;
-    gdfunc->source = source;
+    gdfunc->source  = source;
 
 #ifdef DEBUG_ENABLED
 
@@ -2756,8 +2756,8 @@ Error GDScriptCompiler::_parse_class_level(
     }
 
     p_script->native = Ref<GDScriptNativeClass>();
-    p_script->base = Ref<GDScript>();
-    p_script->_base = nullptr;
+    p_script->base   = Ref<GDScript>();
+    p_script->_base  = nullptr;
     p_script->members.clear();
     p_script->constants.clear();
     for (Map<StringName, GDScriptFunction*>::Element* E =
@@ -2789,9 +2789,9 @@ Error GDScriptCompiler::_parse_class_level(
             p_script->native = native;
         } break;
         case GDScriptDataType::GDSCRIPT: {
-            Ref<GDScript> base = Ref<Script>(base_type.script_type);
-            p_script->base = base;
-            p_script->_base = base.ptr();
+            Ref<GDScript> base       = Ref<Script>(base_type.script_type);
+            p_script->base           = base;
+            p_script->_base          = base.ptr();
             p_script->member_indices = base->member_indices;
 
             if (p_class->base_type.kind == GDScriptParser::DataType::CLASS) {
@@ -2825,25 +2825,25 @@ Error GDScriptCompiler::_parse_class_level(
         StringName name = p_class->variables[i].identifier;
 
         GDScript::MemberInfo minfo;
-        minfo.index = p_script->member_indices.size();
-        minfo.setter = p_class->variables[i].setter;
-        minfo.getter = p_class->variables[i].getter;
+        minfo.index    = p_script->member_indices.size();
+        minfo.setter   = p_class->variables[i].setter;
+        minfo.getter   = p_class->variables[i].getter;
         minfo.rpc_mode = p_class->variables[i].rpc_mode;
         minfo.data_type =
             _gdtype_from_datatype(p_class->variables[i].data_type, p_script);
 
-        PropertyInfo prop_info = minfo.data_type;
-        prop_info.name = name;
+        PropertyInfo prop_info   = minfo.data_type;
+        prop_info.name           = name;
         PropertyInfo export_info = p_class->variables[i]._export;
 
         if (export_info.type != Variant::NIL) {
             if (!minfo.data_type.has_type) {
-                prop_info.type = export_info.type;
+                prop_info.type       = export_info.type;
                 prop_info.class_name = export_info.class_name;
             }
-            prop_info.hint = export_info.hint;
+            prop_info.hint        = export_info.hint;
             prop_info.hint_string = export_info.hint_string;
-            prop_info.usage = export_info.usage;
+            prop_info.usage       = export_info.usage;
 #ifdef TOOLS_ENABLED
             if (p_class->variables[i].default_value.get_type()
                 != Variant::NIL) {
@@ -2855,7 +2855,7 @@ Error GDScriptCompiler::_parse_class_level(
             prop_info.usage = PROPERTY_USAGE_SCRIPT_VARIABLE;
         }
 
-        p_script->member_info[name] = prop_info;
+        p_script->member_info[name]    = prop_info;
         p_script->member_indices[name] = minfo;
         p_script->members.insert(name);
 
@@ -2927,9 +2927,9 @@ Error GDScriptCompiler::_parse_class_level(
     // parse sub-classes
 
     for (int i = 0; i < p_class->subclasses.size(); i++) {
-        StringName name = p_class->subclasses[i]->name;
+        StringName name         = p_class->subclasses[i]->name;
         Ref<GDScript>& subclass = p_script->subclasses[name];
-        GDScript* subclass_ptr = subclass.ptr();
+        GDScript* subclass_ptr  = subclass.ptr();
 
         // Subclass might still be parsing, just skip it
         if (!parsed_classes.has(subclass_ptr)
@@ -2966,7 +2966,7 @@ Error GDScriptCompiler::_parse_class_blocks(
     // parse methods
 
     bool has_initializer = false;
-    bool has_ready = false;
+    bool has_ready       = false;
 
     for (int i = 0; i < p_class->functions.size(); i++) {
         if (!has_initializer && p_class->functions[i]->name == "_init") {
@@ -3029,7 +3029,7 @@ Error GDScriptCompiler::_parse_class_blocks(
                     instance->base_ref = Object::cast_to<Reference>(E->get());
                     instance->members.resize(p_script->member_indices.size());
                     instance->script = Ref<GDScript>(p_script);
-                    instance->owner = E->get();
+                    instance->owner  = E->get();
 
                     // needed for hot reloading
                     for (Map<StringName, GDScript::MemberInfo>::Element* F =
@@ -3062,7 +3062,7 @@ Error GDScriptCompiler::_parse_class_blocks(
 #endif
 
     for (int i = 0; i < p_class->subclasses.size(); i++) {
-        StringName name = p_class->subclasses[i]->name;
+        StringName name    = p_class->subclasses[i]->name;
         GDScript* subclass = p_script->subclasses[name].ptr();
 
         Error err =
@@ -3110,7 +3110,7 @@ void GDScriptCompiler::_make_scripts(
             }
         }
 
-        subclass->_owner = p_script;
+        subclass->_owner               = p_script;
         subclass->fully_qualified_name = fully_qualified_name;
         p_script->subclasses.insert(name, subclass);
 
@@ -3123,11 +3123,11 @@ Error GDScriptCompiler::compile(
     GDScript* p_script,
     bool p_keep_state
 ) {
-    err_line = -1;
-    err_column = -1;
-    error = "";
-    parser = p_parser;
-    main_script = p_script;
+    err_line                         = -1;
+    err_column                       = -1;
+    error                            = "";
+    parser                           = p_parser;
+    main_script                      = p_script;
     const GDScriptParser::Node* root = parser->get_parse_tree();
     ERR_FAIL_COND_V(
         root->type != GDScriptParser::Node::TYPE_CLASS,
@@ -3147,7 +3147,7 @@ Error GDScriptCompiler::compile(
     );
 
     p_script->_owner = nullptr;
-    Error err = _parse_class_level(
+    Error err        = _parse_class_level(
         p_script,
         static_cast<const GDScriptParser::ClassNode*>(root),
         p_keep_state

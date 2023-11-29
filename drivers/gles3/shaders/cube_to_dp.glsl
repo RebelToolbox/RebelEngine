@@ -8,7 +8,7 @@ layout(location = 4) in vec2 uv_in;
 out vec2 uv_interp;
 
 void main() {
-    uv_interp = uv_in;
+    uv_interp   = uv_in;
     gl_Position = vertex_attrib;
 }
 
@@ -38,7 +38,7 @@ void main() {
     // normal.xy *= 1.0 + normal.z;
 
     normal.z = 0.5 - 0.5 * ((normal.x * normal.x) + (normal.y * normal.y));
-    normal = normalize(normal);
+    normal   = normalize(normal);
     /*
     normal.z = 0.5;
     normal = normalize(normal);

@@ -365,7 +365,7 @@ public:
         const String& p_path,
         List<String>* r_functions,
         List<ScriptLanguage::Warning>* r_warnings = nullptr,
-        Set<int>* r_safe_lines = nullptr
+        Set<int>* r_safe_lines                    = nullptr
     ) const;
     virtual Script* create_script() const;
     virtual bool has_named_classes() const;
@@ -490,7 +490,7 @@ public:
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
     virtual bool handles_type(const String& p_type) const;

@@ -216,7 +216,7 @@ public:
     );
     String update_api_assemblies_from_prebuilt(
         const String& p_config,
-        const bool* p_core_api_out_of_sync = NULL,
+        const bool* p_core_api_out_of_sync   = NULL,
         const bool* p_editor_api_out_of_sync = NULL
     );
 #endif

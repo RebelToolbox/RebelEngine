@@ -54,9 +54,9 @@ const CGFloat kGLGestureMovementDistance = 0.5;
 - (instancetype)init {
     self = [super init];
 
-    self.cancelsTouchesInView = YES;
-    self.delaysTouchesBegan = YES;
-    self.delaysTouchesEnded = YES;
+    self.cancelsTouchesInView       = YES;
+    self.delaysTouchesBegan         = YES;
+    self.delaysTouchesEnded         = YES;
     self.requiresExclusiveTouchType = NO;
 
     self.delayTimeInterval =
@@ -69,7 +69,7 @@ const CGFloat kGLGestureMovementDistance = 0.5;
     [delayTimer fire];
 
     delayedTouches = touches;
-    delayedEvent = event;
+    delayedEvent   = event;
 
     delayTimer =
         [NSTimer scheduledTimerWithTimeInterval:self.delayTimeInterval
@@ -89,7 +89,7 @@ const CGFloat kGLGestureMovementDistance = 0.5;
     }
 
     delayedTouches = nil;
-    delayedEvent = nil;
+    delayedEvent   = nil;
 }
 
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
@@ -106,8 +106,8 @@ const CGFloat kGLGestureMovementDistance = 0.5;
         // We should check if movement was significant enough to fire an event
         // for dragging to work correctly.
         for (UITouch* touch in cleared) {
-            CGPoint from = [touch locationInView:self.godotView];
-            CGPoint to = [touch previousLocationInView:self.godotView];
+            CGPoint from      = [touch locationInView:self.godotView];
+            CGPoint to        = [touch previousLocationInView:self.godotView];
             CGFloat xDistance = from.x - to.x;
             CGFloat yDistance = from.y - to.y;
 

@@ -67,7 +67,7 @@ btCollisionShape* ShapeBullet::prepare(btCollisionShape* p_btShape) const {
 
 void ShapeBullet::notifyShapeChanged() {
     for (Map<ShapeOwnerBullet*, int>::Element* E = owners.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         ShapeOwnerBullet* owner = static_cast<ShapeOwnerBullet*>(E->key());
         owner->shape_changed(owner->find_shape(this));
     }
@@ -178,9 +178,9 @@ btHeightfieldTerrainShape* ShapeBullet::create_shape_height_field(
     real_t p_max_height
 ) {
     const btScalar ignoredHeightScale(1);
-    const int YAxis = 1; // 0=X, 1=Y, 2=Z
+    const int YAxis          = 1; // 0=X, 1=Y, 2=Z
     const bool flipQuadEdges = false;
-    const void* heightsPtr = p_heights.read().ptr();
+    const void* heightsPtr   = p_heights.read().ptr();
 
     btHeightfieldTerrainShape* heightfield =
         bulletnew(btHeightfieldTerrainShape(
@@ -475,10 +475,10 @@ void ConcavePolygonShapeBullet::setup(PoolVector<Vector3> p_faces) {
         // of vertices.
         ERR_FAIL_COND(src_face_count % 3);
 
-        btTriangleMesh* shapeInterface = bulletnew(btTriangleMesh);
-        src_face_count /= 3;
-        PoolVector<Vector3>::Read r = p_faces.read();
-        const Vector3* facesr = r.ptr();
+        btTriangleMesh* shapeInterface  = bulletnew(btTriangleMesh);
+        src_face_count                 /= 3;
+        PoolVector<Vector3>::Read r     = p_faces.read();
+        const Vector3* facesr           = r.ptr();
 
         btVector3 supVec_0;
         btVector3 supVec_1;
@@ -587,8 +587,8 @@ void HeightMapShapeBullet::set_data(const Variant& p_data) {
         l_heights.resize(l_image->get_width() * l_image->get_height());
 
         PoolRealArray::Write w = l_heights.write();
-        PoolByteArray::Read r = im_data.read();
-        float* rp = (float*)r.ptr();
+        PoolByteArray::Read r  = im_data.read();
+        float* rp              = (float*)r.ptr();
         // At this point, `rp` could be used directly for Bullet, but I don't
         // know how safe it would be.
 
@@ -607,7 +607,7 @@ void HeightMapShapeBullet::set_data(const Variant& p_data) {
     // Compute min and max heights if not specified.
     if (!d.has("min_height") && !d.has("max_height")) {
         PoolVector<real_t>::Read r = l_heights.read();
-        int heights_size = l_heights.size();
+        int heights_size           = l_heights.size();
 
         for (int i = 0; i < heights_size; ++i) {
             real_t h = r[i];
@@ -645,8 +645,8 @@ void HeightMapShapeBullet::setup(
     // CoW
     heights = p_heights;
 
-    width = p_width;
-    depth = p_depth;
+    width      = p_width;
+    depth      = p_depth;
     min_height = p_min_height;
     max_height = p_max_height;
     notifyShapeChanged();
@@ -681,7 +681,7 @@ void RayShapeBullet::set_data(const Variant& p_data) {
 
 Variant RayShapeBullet::get_data() const {
     Dictionary d;
-    d["length"] = length;
+    d["length"]         = length;
     d["slips_on_slope"] = slips_on_slope;
     return d;
 }
@@ -691,7 +691,7 @@ PhysicsServer::ShapeType RayShapeBullet::get_type() const {
 }
 
 void RayShapeBullet::setup(real_t p_length, bool p_slips_on_slope) {
-    length = p_length;
+    length         = p_length;
     slips_on_slope = p_slips_on_slope;
     notifyShapeChanged();
 }

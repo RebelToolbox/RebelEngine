@@ -65,8 +65,8 @@ struct SpatialIndexer {
     void _notifier_add(VisibilityNotifier* p_notifier, const AABB& p_rect) {
         ERR_FAIL_COND(notifiers.has(p_notifier));
         notifiers[p_notifier].aabb = p_rect;
-        notifiers[p_notifier].id = octree.create(p_notifier, p_rect);
-        changed = true;
+        notifiers[p_notifier].id   = octree.create(p_notifier, p_rect);
+        changed                    = true;
     }
 
     void _notifier_update(VisibilityNotifier* p_notifier, const AABB& p_rect) {
@@ -92,7 +92,7 @@ struct SpatialIndexer {
 
         List<Camera*> removed;
         for (Map<Camera*, CameraData>::Element* F = cameras.front(); F;
-             F = F->next()) {
+             F                                    = F->next()) {
             Map<VisibilityNotifier*, uint64_t>::Element* G =
                 F->get().notifiers.find(p_notifier);
 
@@ -114,7 +114,7 @@ struct SpatialIndexer {
         ERR_FAIL_COND(cameras.has(p_camera));
         CameraData vd;
         cameras[p_camera] = vd;
-        changed = true;
+        changed           = true;
     }
 
     void _update_camera(Camera* p_camera) {
@@ -152,7 +152,7 @@ struct SpatialIndexer {
         }
 
         for (Map<Camera*, CameraData>::Element* E = cameras.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             pass++;
 
             Camera* c = E->key();
@@ -203,9 +203,9 @@ struct SpatialIndexer {
     }
 
     SpatialIndexer() {
-        pass = 0;
+        pass       = 0;
         last_frame = 0;
-        changed = false;
+        changed    = false;
         cull.resize(VISIBILITY_CULL_MAX);
     }
 };
@@ -387,7 +387,7 @@ void World::_bind_methods() {
 }
 
 World::World() {
-    space = PhysicsServer::get_singleton()->space_create();
+    space    = PhysicsServer::get_singleton()->space_create();
     scenario = VisualServer::get_singleton()->scenario_create();
 
     PhysicsServer::get_singleton()->space_set_active(space, true);

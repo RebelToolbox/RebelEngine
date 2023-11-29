@@ -82,7 +82,7 @@ class ThemeItemImportTree : public VBoxContainer {
     bool updating_tree = false;
 
     enum ItemActionFlag {
-        IMPORT_ITEM = 1,
+        IMPORT_ITEM      = 1,
         IMPORT_ITEM_DATA = 2,
     };
 

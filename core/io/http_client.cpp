@@ -59,14 +59,14 @@ Error HTTPClient::connect_to_host(
 
     ip_candidates.clear();
 
-    ssl = p_ssl;
+    ssl             = p_ssl;
     ssl_verify_host = p_verify_host;
 
     String host_lower = conn_host.to_lower();
     if (host_lower.begins_with("http://")) {
         conn_host = conn_host.substr(7, conn_host.length() - 7);
     } else if (host_lower.begins_with("https://")) {
-        ssl = true;
+        ssl       = true;
         conn_host = conn_host.substr(8, conn_host.length() - 8);
     }
 
@@ -95,7 +95,7 @@ Error HTTPClient::connect_to_host(
     } else {
         // Host contains hostname and needs to be resolved to IP
         resolving = IP::get_singleton()->resolve_hostname_queue_item(conn_host);
-        status = STATUS_RESOLVING;
+        status    = STATUS_RESOLVING;
     }
 
     return OK;
@@ -120,7 +120,7 @@ void HTTPClient::set_connection(const Ref<StreamPeer>& p_connection) {
 
     close();
     connection = p_connection;
-    status = STATUS_CONNECTED;
+    status     = STATUS_CONNECTED;
 }
 
 Ref<StreamPeer> HTTPClient::get_connection() const {
@@ -165,8 +165,8 @@ Error HTTPClient::request_raw(
     ERR_FAIL_COND_V(connection.is_null(), ERR_INVALID_DATA);
 
     String request = String(_methods[p_method]) + " " + p_url + " HTTP/1.1\r\n";
-    bool add_host = true;
-    bool add_clen = p_body.size() > 0;
+    bool add_host  = true;
+    bool add_clen  = p_body.size() > 0;
     bool add_uagent = true;
     bool add_accept = true;
     for (int i = 0; i < p_headers.size(); i++) {
@@ -204,8 +204,8 @@ Error HTTPClient::request_raw(
     if (add_accept) {
         request += "Accept: */*\r\n";
     }
-    request += "\r\n";
-    CharString cs = request.utf8();
+    request       += "\r\n";
+    CharString cs  = request.utf8();
 
     PoolVector<uint8_t> data;
     data.resize(cs.length());
@@ -219,7 +219,7 @@ Error HTTPClient::request_raw(
     data.append_array(p_body);
 
     PoolVector<uint8_t>::Read r = data.read();
-    Error err = connection->put_data(&r[0], data.size());
+    Error err                   = connection->put_data(&r[0], data.size());
 
     if (err) {
         close();
@@ -227,7 +227,7 @@ Error HTTPClient::request_raw(
         return err;
     }
 
-    status = STATUS_REQUESTING;
+    status       = STATUS_REQUESTING;
     head_request = p_method == METHOD_HEAD;
 
     return OK;
@@ -248,10 +248,10 @@ Error HTTPClient::request(
     ERR_FAIL_COND_V(connection.is_null(), ERR_INVALID_DATA);
 
     String request = String(_methods[p_method]) + " " + p_url + " HTTP/1.1\r\n";
-    bool add_host = true;
+    bool add_host  = true;
     bool add_uagent = true;
     bool add_accept = true;
-    bool add_clen = p_body.length() > 0;
+    bool add_clen   = p_body.length() > 0;
     for (int i = 0; i < p_headers.size(); i++) {
         request += p_headers[i] + "\r\n";
         if (add_host && p_headers[i].findn("Host:") == 0) {
@@ -291,14 +291,14 @@ Error HTTPClient::request(
     request += p_body;
 
     CharString cs = request.utf8();
-    Error err = connection->put_data((const uint8_t*)cs.ptr(), cs.length());
+    Error err     = connection->put_data((const uint8_t*)cs.ptr(), cs.length());
     if (err) {
         close();
         status = STATUS_CONNECTION_ERROR;
         return err;
     }
 
-    status = STATUS_REQUESTING;
+    status       = STATUS_REQUESTING;
     head_request = p_method == METHOD_HEAD;
 
     return OK;
@@ -336,7 +336,7 @@ void HTTPClient::close() {
     }
 
     connection.unref();
-    status = STATUS_DISCONNECTED;
+    status       = STATUS_DISCONNECTED;
     head_request = false;
     if (resolving != IP::RESOLVER_INVALID_ID) {
         IP::get_singleton()->erase_resolve_item(resolving);
@@ -346,13 +346,13 @@ void HTTPClient::close() {
     ip_candidates.clear();
     response_headers.clear();
     response_str.clear();
-    body_size = -1;
-    body_left = 0;
-    chunk_left = 0;
+    body_size          = -1;
+    body_left          = 0;
+    chunk_left         = 0;
     chunk_trailer_part = false;
-    read_until_eof = false;
-    response_num = 0;
-    handshaking = false;
+    read_until_eof     = false;
+    response_num       = 0;
+    handshaking        = false;
 }
 
 Error HTTPClient::poll() {
@@ -424,7 +424,7 @@ Error HTTPClient::poll() {
                                 status = STATUS_SSL_HANDSHAKE_ERROR;
                                 return ERR_CANT_CONNECT;
                             }
-                            connection = ssl;
+                            connection  = ssl;
                             handshaking = true;
                         } else {
                             // We are already handshaking, which means we can
@@ -498,7 +498,7 @@ Error HTTPClient::poll() {
         case STATUS_REQUESTING: {
             while (true) {
                 uint8_t byte;
-                int rec = 0;
+                int rec   = 0;
                 Error err = _get_http_data(&byte, 1, rec);
                 if (err != OK) {
                     close();
@@ -523,12 +523,12 @@ Error HTTPClient::poll() {
                     String response;
                     response.parse_utf8((const char*)response_str.ptr());
                     Vector<String> responses = response.split("\n");
-                    body_size = -1;
-                    chunked = false;
-                    body_left = 0;
-                    chunk_left = 0;
-                    chunk_trailer_part = false;
-                    read_until_eof = false;
+                    body_size                = -1;
+                    chunked                  = false;
+                    body_left                = 0;
+                    chunk_left               = 0;
+                    chunk_trailer_part       = false;
+                    read_until_eof           = false;
                     response_str.clear();
                     response_headers.clear();
                     response_num = RESPONSE_OK;
@@ -540,7 +540,7 @@ Error HTTPClient::poll() {
 
                     for (int i = 0; i < responses.size(); i++) {
                         String header = responses[i].strip_edges();
-                        String s = header.to_lower();
+                        String s      = header.to_lower();
                         if (s.length() == 0) {
                             continue;
                         }
@@ -565,7 +565,7 @@ Error HTTPClient::poll() {
                         }
 
                         if (i == 0 && responses[i].begins_with("HTTP")) {
-                            String num = responses[i].get_slicec(' ', 1);
+                            String num   = responses[i].get_slicec(' ', 1);
                             response_num = num.to_int();
                         } else {
                             response_headers.push_back(header);
@@ -582,7 +582,7 @@ Error HTTPClient::poll() {
                         status = STATUS_BODY;
                     } else if (!keep_alive) {
                         read_until_eof = true;
-                        status = STATUS_BODY;
+                        status         = STATUS_BODY;
                     } else {
                         status = STATUS_CONNECTED;
                     }
@@ -625,7 +625,7 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
                 // break
                 uint8_t b;
                 int rec = 0;
-                err = _get_http_data(&b, 1, rec);
+                err     = _get_http_data(&b, 1, rec);
 
                 if (rec == 0) {
                     break;
@@ -638,7 +638,7 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
                     if (cs == 2) {
                         // Finally over
                         chunk_trailer_part = false;
-                        status = STATUS_CONNECTED;
+                        status             = STATUS_CONNECTED;
                         chunk.clear();
                         break;
                     } else {
@@ -650,7 +650,7 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
                 // Reading length
                 uint8_t b;
                 int rec = 0;
-                err = _get_http_data(&b, 1, rec);
+                err     = _get_http_data(&b, 1, rec);
 
                 if (rec == 0) {
                     break;
@@ -669,7 +669,7 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
                     int len = 0;
                     for (int i = 0; i < chunk.size() - 2; i++) {
                         char c = chunk[i];
-                        int v = 0;
+                        int v  = 0;
                         if (c >= '0' && c <= '9') {
                             v = c - '0';
                         } else if (c >= 'a' && c <= 'f') {
@@ -682,7 +682,7 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
                             break;
                         }
                         len <<= 4;
-                        len |= v;
+                        len  |= v;
                         if (len > (1 << 24)) {
                             ERR_PRINT("HTTP Chunk too big!! >16mb");
                             status = STATUS_CONNECTION_ERROR;
@@ -702,7 +702,7 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
                 }
             } else {
                 int rec = 0;
-                err = _get_http_data(
+                err     = _get_http_data(
                     &chunk.write[chunk.size() - chunk_left],
                     chunk_left,
                     rec
@@ -793,9 +793,9 @@ Error HTTPClient::_get_http_data(
     if (blocking) {
         // We can't use StreamPeer.get_data, since when reaching EOF we will get
         // an error without knowing how many bytes we received.
-        Error err = ERR_FILE_EOF;
-        int read = 0;
-        int left = p_bytes;
+        Error err  = ERR_FILE_EOF;
+        int read   = 0;
+        int left   = p_bytes;
         r_received = 0;
         while (left > 0) {
             err =
@@ -827,23 +827,23 @@ int HTTPClient::get_read_chunk_size() const {
 
 HTTPClient::HTTPClient() {
     tcp_connection.instance();
-    resolving = IP::RESOLVER_INVALID_ID;
-    status = STATUS_DISCONNECTED;
-    head_request = false;
-    conn_port = -1;
-    body_size = -1;
-    chunked = false;
-    body_left = 0;
-    read_until_eof = false;
-    chunk_left = 0;
+    resolving          = IP::RESOLVER_INVALID_ID;
+    status             = STATUS_DISCONNECTED;
+    head_request       = false;
+    conn_port          = -1;
+    body_size          = -1;
+    chunked            = false;
+    body_left          = 0;
+    read_until_eof     = false;
+    chunk_left         = 0;
     chunk_trailer_part = false;
-    response_num = 0;
-    ssl = false;
-    blocking = false;
-    handshaking = false;
+    response_num       = 0;
+    ssl                = false;
+    blocking           = false;
+    handshaking        = false;
     // 64 KiB by default (favors fast download speeds at the cost of memory
     // usage).
-    read_chunk_size = 65536;
+    read_chunk_size    = 65536;
 }
 
 HTTPClient::~HTTPClient() {}
@@ -852,10 +852,10 @@ HTTPClient::~HTTPClient() {}
 
 String HTTPClient::query_string_from_dict(const Dictionary& p_dict) {
     String query = "";
-    Array keys = p_dict.keys();
+    Array keys   = p_dict.keys();
     for (int i = 0; i < keys.size(); ++i) {
         String encoded_key = String(keys[i]).http_escape();
-        Variant value = p_dict[keys[i]];
+        Variant value      = p_dict[keys[i]];
         switch (value.get_type()) {
             case Variant::ARRAY: {
                 // Repeat the key with every values
@@ -887,13 +887,13 @@ Dictionary HTTPClient::_get_response_headers_as_dictionary() {
     Dictionary ret;
     for (const List<String>::Element* E = rh.front(); E; E = E->next()) {
         const String& s = E->get();
-        int sp = s.find(":");
+        int sp          = s.find(":");
         if (sp == -1) {
             continue;
         }
-        String key = s.substr(0, sp).strip_edges();
+        String key   = s.substr(0, sp).strip_edges();
         String value = s.substr(sp + 1, s.length()).strip_edges();
-        ret[key] = value;
+        ret[key]     = value;
     }
 
     return ret;

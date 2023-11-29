@@ -34,14 +34,14 @@
 
 NoiseTexture::NoiseTexture() {
     update_queued = false;
-    regen_queued = false;
-    first_time = true;
+    regen_queued  = false;
+    first_time    = true;
 
-    size = Vector2i(512, 512);
-    seamless = false;
-    as_normalmap = false;
+    size          = Vector2i(512, 512);
+    seamless      = false;
+    as_normalmap  = false;
     bump_strength = 8.0;
-    flags = FLAGS_DEFAULT;
+    flags         = FLAGS_DEFAULT;
 
     noise = Ref<OpenSimplexNoise>();
 

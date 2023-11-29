@@ -32,18 +32,18 @@
 
 const char* PluginConfigAndroid::PLUGIN_CONFIG_EXT = ".gdap";
 
-const char* PluginConfigAndroid::CONFIG_SECTION = "config";
-const char* PluginConfigAndroid::CONFIG_NAME_KEY = "name";
+const char* PluginConfigAndroid::CONFIG_SECTION         = "config";
+const char* PluginConfigAndroid::CONFIG_NAME_KEY        = "name";
 const char* PluginConfigAndroid::CONFIG_BINARY_TYPE_KEY = "binary_type";
-const char* PluginConfigAndroid::CONFIG_BINARY_KEY = "binary";
+const char* PluginConfigAndroid::CONFIG_BINARY_KEY      = "binary";
 
-const char* PluginConfigAndroid::DEPENDENCIES_SECTION = "dependencies";
-const char* PluginConfigAndroid::DEPENDENCIES_LOCAL_KEY = "local";
+const char* PluginConfigAndroid::DEPENDENCIES_SECTION    = "dependencies";
+const char* PluginConfigAndroid::DEPENDENCIES_LOCAL_KEY  = "local";
 const char* PluginConfigAndroid::DEPENDENCIES_REMOTE_KEY = "remote";
 const char* PluginConfigAndroid::DEPENDENCIES_CUSTOM_MAVEN_REPOS_KEY =
     "custom_maven_repos";
 
-const char* PluginConfigAndroid::BINARY_TYPE_LOCAL = "local";
+const char* PluginConfigAndroid::BINARY_TYPE_LOCAL  = "local";
 const char* PluginConfigAndroid::BINARY_TYPE_REMOTE = "remote";
 
 const char* PluginConfigAndroid::PLUGIN_VALUE_SEPARATOR = "|";

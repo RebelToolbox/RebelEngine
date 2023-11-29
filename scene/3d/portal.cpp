@@ -38,23 +38,23 @@
 #include "scene/main/viewport.h"
 #include "servers/visual_server.h"
 
-bool Portal::_portal_plane_convention = false;
+bool Portal::_portal_plane_convention     = false;
 bool Portal::_settings_gizmo_show_margins = true;
 
 Portal::Portal() {
     clear();
 
-    _settings_active = true;
+    _settings_active  = true;
     _settings_two_way = true;
-    _internal = false;
+    _internal         = false;
     _linkedroom_ID[0] = -1;
     _linkedroom_ID[1] = -1;
     _pts_world.clear();
     _pts_local.clear();
     _pts_local_raw.resize(0);
-    _pt_center_world = Vector3();
-    _plane = Plane();
-    _margin = 1.0;
+    _pt_center_world    = Vector3();
+    _plane              = Plane();
+    _margin             = 1.0;
     _use_default_margin = true;
 
     // the visual server portal lifetime is linked to the lifetime of this
@@ -162,7 +162,7 @@ void Portal::_changed() {
 }
 
 void Portal::clear() {
-    _internal = false;
+    _internal         = false;
     _linkedroom_ID[0] = -1;
     _linkedroom_ID[1] = -1;
     _importing_portal = false;
@@ -349,9 +349,9 @@ NodePath Portal::get_linked_room() const {
 
 void Portal::flip() {
     // flip portal
-    Transform tr = get_transform();
-    Basis flip_basis = Basis(Vector3(0, Math_PI, 0));
-    tr.basis *= flip_basis;
+    Transform tr      = get_transform();
+    Basis flip_basis  = Basis(Vector3(0, Math_PI, 0));
+    tr.basis         *= flip_basis;
     set_transform(tr);
 
     _pts_local.clear();
@@ -393,9 +393,9 @@ bool Portal::create_from_mesh_instance(const MeshInstance* p_mi) {
         return false;
     }
 
-    Array arrays = rmesh->surface_get_arrays(0);
+    Array arrays                 = rmesh->surface_get_arrays(0);
     PoolVector<Vector3> vertices = arrays[VS::ARRAY_VERTEX];
-    PoolVector<int> indices = arrays[VS::ARRAY_INDEX];
+    PoolVector<int> indices      = arrays[VS::ARRAY_INDEX];
 
     // get the model space verts and find center
     int num_source_points = vertices.size();
@@ -514,7 +514,7 @@ void Portal::_update_aabb() {
 
     if (_pts_local.size()) {
         Vector3 begin = _vec2to3(_pts_local[0]);
-        Vector3 end = begin;
+        Vector3 end   = begin;
 
         for (int n = 1; n < _pts_local.size(); n++) {
             Vector3 pt = _vec2to3(_pts_local[n]);
@@ -541,7 +541,7 @@ void Portal::_update_aabb() {
         }
 
         _aabb_local.position = begin;
-        _aabb_local.size = end - begin;
+        _aabb_local.size     = end - begin;
     }
 }
 
@@ -550,8 +550,8 @@ void Portal::portal_update() {
     // (portals are standardized outward from source room once sanitized,
     // irrespective of the user portal plane convention)
     const Transform& tr = get_global_transform();
-    _plane = Plane(0.0, 0.0, -1.0, 0.0);
-    _plane = tr.xform(_plane);
+    _plane              = Plane(0.0, 0.0, -1.0, 0.0);
+    _plane              = tr.xform(_plane);
 
     // after becoming a portal, the centre world IS the transform origin
     _pt_center_world = tr.origin;
@@ -616,12 +616,12 @@ void Portal::_sanitize_points() {
 
     for (int n = 0; n < _pts_local.size(); n++) {
         Vector2 offset = _pts_local[n] - center;
-        real_t l = offset.length();
+        real_t l       = offset.length();
 
         // don't apply the pull in for tiny holes
         if (l > (pull_in * 2.0)) {
-            real_t fract = (l - pull_in) / l;
-            offset *= fract;
+            real_t fract  = (l - pull_in) / l;
+            offset       *= fract;
             _pts_local.set(n, center + offset);
         }
     }
@@ -639,7 +639,7 @@ void Portal::_sort_verts_clockwise(
     }
 
     // find centroid
-    int num_points = r_verts.size();
+    int num_points   = r_verts.size();
     _pt_center_world = Vector3(0, 0, 0);
 
     for (int n = 0; n < num_points; n++) {
@@ -660,7 +660,7 @@ void Portal::_sort_verts_clockwise(
         );
 
         double smallest_angle = -1;
-        int smallest = -1;
+        int smallest          = -1;
 
         for (int m = n + 1; m < num_points; m++) {
             if (p.distance_to(r_verts[m]) > 0.0) {
@@ -671,7 +671,7 @@ void Portal::_sort_verts_clockwise(
 
                 if (angle > smallest_angle) {
                     smallest_angle = angle;
-                    smallest = m;
+                    smallest       = m;
                 }
             } // which side
 

@@ -96,13 +96,13 @@ public class RebelInputHandler implements InputDeviceListener {
             // Check if the device exists
             final int deviceId = event.getDeviceId();
             if (mJoystickIds.indexOfKey(deviceId) >= 0) {
-                final int buttonId = getButtonId(keyCode);
+                final int buttonId   = getButtonId(keyCode);
                 final int joystickId = mJoystickIds.get(deviceId);
                 RebelEngine.joybutton(joystickId, buttonId, false);
             }
         } else {
             final int scanCode = event.getScanCode();
-            final int chr = event.getUnicodeChar(0);
+            final int chr      = event.getUnicodeChar(0);
             RebelEngine.key(keyCode, scanCode, chr, false);
         };
 
@@ -136,13 +136,13 @@ public class RebelInputHandler implements InputDeviceListener {
                 return true;
 
             if (mJoystickIds.indexOfKey(deviceId) >= 0) {
-                final int buttonId = getButtonId(keyCode);
+                final int buttonId   = getButtonId(keyCode);
                 final int joystickId = mJoystickIds.get(deviceId);
                 RebelEngine.joybutton(joystickId, buttonId, true);
             }
         } else {
             final int scanCode = event.getScanCode();
-            final int chr = event.getUnicodeChar(0);
+            final int chr      = event.getUnicodeChar(0);
             RebelEngine.key(keyCode, scanCode, chr, true);
         }
 
@@ -175,7 +175,7 @@ public class RebelInputHandler implements InputDeviceListener {
                 arr[i * 3 + 1] = event.getX(i);
                 arr[i * 3 + 2] = event.getY(i);
             }
-            final int action = event.getActionMasked();
+            final int action      = event.getActionMasked();
             final int pointer_idx = event.getPointerId(event.getActionIndex());
 
             switch (action) {
@@ -205,10 +205,10 @@ public class RebelInputHandler implements InputDeviceListener {
             final int deviceId = event.getDeviceId();
             if (mJoystickIds.indexOfKey(deviceId) >= 0) {
                 final int joystickId = mJoystickIds.get(deviceId);
-                Joystick joystick = mJoysticksDevices.get(deviceId);
+                Joystick joystick    = mJoysticksDevices.get(deviceId);
 
                 for (int i = 0; i < joystick.axes.size(); i++) {
-                    final int axis = joystick.axes.get(i);
+                    final int axis    = joystick.axes.get(i);
                     final float value = event.getAxisValue(axis);
                     /**
                      * As all axes are polled for each event, only fire an axis
@@ -238,8 +238,8 @@ public class RebelInputHandler implements InputDeviceListener {
                 return true;
             }
         } else if (event.isFromSource(InputDevice.SOURCE_STYLUS)) {
-            final float x = event.getX();
-            final float y = event.getY();
+            final float x  = event.getX();
+            final float y  = event.getY();
             final int type = event.getAction();
             RebelEngine.hover(type, x, y);
             return true;
@@ -307,8 +307,8 @@ public class RebelInputHandler implements InputDeviceListener {
         final int id = assignJoystickIdNumber(deviceId);
 
         final Joystick joystick = new Joystick();
-        joystick.device_id = deviceId;
-        joystick.name = device.getName();
+        joystick.device_id      = deviceId;
+        joystick.name           = device.getName();
 
         // Helps with creating new joypad mappings.
         Log.i(tag, "=== New Input Device: " + joystick.name);
@@ -445,8 +445,8 @@ public class RebelInputHandler implements InputDeviceListener {
             case MotionEvent.ACTION_HOVER_ENTER:
             case MotionEvent.ACTION_HOVER_MOVE:
             case MotionEvent.ACTION_HOVER_EXIT: {
-                final float x = event.getX();
-                final float y = event.getY();
+                final float x  = event.getX();
+                final float y  = event.getY();
                 final int type = event.getAction();
                 RebelEngine.hover(type, x, y);
                 return true;
@@ -454,10 +454,10 @@ public class RebelInputHandler implements InputDeviceListener {
             case MotionEvent.ACTION_BUTTON_PRESS:
             case MotionEvent.ACTION_BUTTON_RELEASE:
             case MotionEvent.ACTION_MOVE: {
-                final float x = event.getX();
-                final float y = event.getY();
+                final float x         = event.getX();
+                final float y         = event.getY();
                 final int buttonsMask = event.getButtonState();
-                final int action = event.getAction();
+                final int action      = event.getAction();
                 RebelEngine.touch(
                     event.getSource(),
                     action,
@@ -469,10 +469,10 @@ public class RebelInputHandler implements InputDeviceListener {
                 return true;
             }
             case MotionEvent.ACTION_SCROLL: {
-                final float x = event.getX();
-                final float y = event.getY();
+                final float x         = event.getX();
+                final float y         = event.getY();
                 final int buttonsMask = event.getButtonState();
-                final int action = event.getAction();
+                final int action      = event.getAction();
                 final float verticalFactor =
                     event.getAxisValue(MotionEvent.AXIS_VSCROLL);
                 final float horizontalFactor =

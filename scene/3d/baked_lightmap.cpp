@@ -122,9 +122,9 @@ void BakedLightmapData::add_user(
     } else {
         user.lightmap.layered = p_lightmap;
     }
-    user.lightmap_slice = p_lightmap_slice;
+    user.lightmap_slice   = p_lightmap_slice;
     user.lightmap_uv_rect = p_lightmap_uv_rect;
-    user.instance_index = p_instance;
+    user.instance_index   = p_instance;
     users.push_back(user);
 }
 
@@ -413,9 +413,9 @@ void BakedLightmapData::_bind_methods() {
 
 BakedLightmapData::BakedLightmapData() {
     baked_light = VS::get_singleton()->lightmap_capture_create();
-    energy = 1;
+    energy      = 1;
     cell_subdiv = 1;
-    interior = false;
+    interior    = false;
 }
 
 BakedLightmapData::~BakedLightmapData() {
@@ -429,19 +429,19 @@ Lightmapper::BakeStepFunc BakedLightmap::bake_substep_function;
 Lightmapper::BakeEndFunc BakedLightmap::bake_end_function;
 
 Size2i BakedLightmap::_compute_lightmap_size(const MeshesFound& p_mesh) {
-    double area = 0;
+    double area    = 0;
     double uv_area = 0;
     for (int i = 0; i < p_mesh.mesh->get_surface_count(); i++) {
-        Array arrays = p_mesh.mesh->surface_get_arrays(i);
+        Array arrays                 = p_mesh.mesh->surface_get_arrays(i);
         PoolVector<Vector3> vertices = arrays[Mesh::ARRAY_VERTEX];
-        PoolVector<Vector2> uv2 = arrays[Mesh::ARRAY_TEX_UV2];
-        PoolVector<int> indices = arrays[Mesh::ARRAY_INDEX];
+        PoolVector<Vector2> uv2      = arrays[Mesh::ARRAY_TEX_UV2];
+        PoolVector<int> indices      = arrays[Mesh::ARRAY_INDEX];
 
         ERR_FAIL_COND_V(vertices.size() == 0, Vector2());
         ERR_FAIL_COND_V(uv2.size() == 0, Vector2());
 
-        int vc = vertices.size();
-        PoolVector<Vector3>::Read vr = vertices.read();
+        int vc                        = vertices.size();
+        PoolVector<Vector3>::Read vr  = vertices.read();
         PoolVector<Vector2>::Read u2r = uv2.read();
         PoolVector<int>::Read ir;
         int ic = 0;
@@ -457,31 +457,31 @@ Size2i BakedLightmap::_compute_lightmap_size(const MeshesFound& p_mesh) {
             Vector2 uv[3];
 
             for (int k = 0; k < 3; k++) {
-                int idx = ic ? ir[j * 3 + k] : j * 3 + k;
+                int idx   = ic ? ir[j * 3 + k] : j * 3 + k;
                 vertex[k] = p_mesh.xform.xform(vr[idx]);
-                uv[k] = u2r[idx];
+                uv[k]     = u2r[idx];
             }
 
-            Vector3 p1 = vertex[0];
-            Vector3 p2 = vertex[1];
-            Vector3 p3 = vertex[2];
-            double a = p1.distance_to(p2);
-            double b = p2.distance_to(p3);
-            double c = p3.distance_to(p1);
-            double halfPerimeter = (a + b + c) / 2.0;
-            area += sqrt(
+            Vector3 p1            = vertex[0];
+            Vector3 p2            = vertex[1];
+            Vector3 p3            = vertex[2];
+            double a              = p1.distance_to(p2);
+            double b              = p2.distance_to(p3);
+            double c              = p3.distance_to(p1);
+            double halfPerimeter  = (a + b + c) / 2.0;
+            area                 += sqrt(
                 halfPerimeter * (halfPerimeter - a) * (halfPerimeter - b)
                 * (halfPerimeter - c)
             );
 
-            Vector2 uv_p1 = uv[0];
-            Vector2 uv_p2 = uv[1];
-            Vector2 uv_p3 = uv[2];
-            double uv_a = uv_p1.distance_to(uv_p2);
-            double uv_b = uv_p2.distance_to(uv_p3);
-            double uv_c = uv_p3.distance_to(uv_p1);
-            double uv_halfPerimeter = (uv_a + uv_b + uv_c) / 2.0;
-            uv_area += sqrt(
+            Vector2 uv_p1            = uv[0];
+            Vector2 uv_p2            = uv[1];
+            Vector2 uv_p3            = uv[2];
+            double uv_a              = uv_p1.distance_to(uv_p2);
+            double uv_b              = uv_p2.distance_to(uv_p3);
+            double uv_c              = uv_p3.distance_to(uv_p1);
+            double uv_halfPerimeter  = (uv_a + uv_b + uv_c) / 2.0;
+            uv_area                 += sqrt(
                 uv_halfPerimeter * (uv_halfPerimeter - uv_a)
                 * (uv_halfPerimeter - uv_b) * (uv_halfPerimeter - uv_c)
             );
@@ -512,7 +512,7 @@ void BakedLightmap::_find_meshes_and_lights(
         Ref<Mesh> mesh = mi->get_mesh();
         if (mesh.is_valid()) {
             bool all_have_uv2_and_normal = true;
-            bool surfaces_found = false;
+            bool surfaces_found          = false;
             for (int i = 0; i < mesh->get_surface_count(); i++) {
                 if (mesh->surface_get_primitive_type(i)
                     != Mesh::PRIMITIVE_TRIANGLES) {
@@ -543,10 +543,10 @@ void BakedLightmap::_find_meshes_and_lights(
                         mi->get_cast_shadows_setting()
                         != GeometryInstance::SHADOW_CASTING_SETTING_OFF;
                     mf.generate_lightmap = mi->get_generate_lightmap();
-                    mf.xform = mesh_xform;
-                    mf.node_path = get_path_to(mi);
-                    mf.subindex = -1;
-                    mf.mesh = mesh;
+                    mf.xform             = mesh_xform;
+                    mf.node_path         = get_path_to(mi);
+                    mf.subindex          = -1;
+                    mf.mesh              = mesh;
 
                     static const int lightmap_scale[4] =
                         {1, 2, 4, 8}; // GeometryInstance3D::LIGHTMAP_SCALE_MAX
@@ -598,11 +598,11 @@ void BakedLightmap::_find_meshes_and_lights(
                 }
 
                 MeshesFound mf;
-                mf.xform = mesh_xform;
-                mf.node_path = get_path_to(s);
-                mf.subindex = i / 2;
+                mf.xform          = mesh_xform;
+                mf.node_path      = get_path_to(s);
+                mf.subindex       = i / 2;
                 mf.lightmap_scale = 1;
-                mf.mesh = mesh;
+                mf.mesh           = mesh;
 
                 if (gi) {
                     mf.cast_shadows =
@@ -610,7 +610,7 @@ void BakedLightmap::_find_meshes_and_lights(
                         != GeometryInstance::SHADOW_CASTING_SETTING_OFF;
                     mf.generate_lightmap = gi->get_generate_lightmap();
                 } else {
-                    mf.cast_shadows = true;
+                    mf.cast_shadows      = true;
                     mf.generate_lightmap = true;
                 }
 
@@ -676,7 +676,7 @@ void BakedLightmap::_get_material_images(
 
             emission_texture =
                 mat->get_texture(SpatialMaterial::TEXTURE_EMISSION);
-            Color emission_color = mat->get_emission();
+            Color emission_color  = mat->get_emission();
             float emission_energy = mat->get_emission_energy();
 
             if (mat->get_emission_operator()
@@ -774,7 +774,7 @@ bool BakedLightmap::_lightmap_bake_step_function(
     bool p_refresh
 ) {
     BakeStepUD* bsud = (BakeStepUD*)ud;
-    bool ret = false;
+    bool ret         = false;
     if (bsud->func) {
         ret = bsud->func(
             bsud->from_percent
@@ -876,7 +876,7 @@ BakedLightmap::BakeError BakedLightmap::bake(
 
     for (int m_i = 0; m_i < meshes_found.size(); m_i++) {
         if (bake_step_function) {
-            float p = (float)(m_i) / meshes_found.size();
+            float p        = (float)(m_i) / meshes_found.size();
             bool cancelled = bake_step_function(
                 p * 0.05,
                 vformat(
@@ -910,7 +910,7 @@ BakedLightmap::BakeError BakedLightmap::bake(
             if (mf.subindex >= 0) {
                 d["subindex"] = mf.subindex;
             }
-            d["cast_shadows"] = mf.cast_shadows;
+            d["cast_shadows"]      = mf.cast_shadows;
             d["generate_lightmap"] = mf.generate_lightmap;
             d["node_name"] =
                 mf.node_path.get_name(mf.node_path.get_name_count() - 1);
@@ -927,14 +927,14 @@ BakedLightmap::BakeError BakedLightmap::bake(
             Array a = mf.mesh->surface_get_arrays(i);
 
             Vector<Vector3> vertices = a[Mesh::ARRAY_VERTEX];
-            const Vector3* vr = vertices.ptr();
-            Vector<Vector2> uv2 = a[Mesh::ARRAY_TEX_UV2];
-            const Vector2* uv2r = nullptr;
-            Vector<Vector2> uv = a[Mesh::ARRAY_TEX_UV];
-            const Vector2* uvr = nullptr;
-            Vector<Vector3> normals = a[Mesh::ARRAY_NORMAL];
-            const Vector3* nr = nullptr;
-            Vector<int> index = a[Mesh::ARRAY_INDEX];
+            const Vector3* vr        = vertices.ptr();
+            Vector<Vector2> uv2      = a[Mesh::ARRAY_TEX_UV2];
+            const Vector2* uv2r      = nullptr;
+            Vector<Vector2> uv       = a[Mesh::ARRAY_TEX_UV];
+            const Vector2* uvr       = nullptr;
+            Vector<Vector3> normals  = a[Mesh::ARRAY_NORMAL];
+            const Vector3* nr        = nullptr;
+            Vector<int> index        = a[Mesh::ARRAY_INDEX];
 
             ERR_CONTINUE(uv2.size() == 0);
             ERR_CONTINUE(normals.size() == 0);
@@ -944,14 +944,14 @@ BakedLightmap::BakeError BakedLightmap::bake(
             }
 
             uv2r = uv2.ptr();
-            nr = normals.ptr();
+            nr   = normals.ptr();
 
             int facecount;
             const int* ir = nullptr;
 
             if (index.size()) {
                 facecount = index.size() / 3;
-                ir = index.ptr();
+                ir        = index.ptr();
             } else {
                 facecount = vertices.size() / 3;
             }
@@ -1098,10 +1098,10 @@ BakedLightmap::BakeError BakedLightmap::bake(
             case ENVIRONMENT_MODE_CUSTOM_COLOR: {
                 environment_image.instance();
                 environment_image->create(128, 64, false, Image::FORMAT_RGBF);
-                Color c = environment_custom_color;
-                c.r *= environment_custom_energy;
-                c.g *= environment_custom_energy;
-                c.b *= environment_custom_energy;
+                Color c  = environment_custom_color;
+                c.r     *= environment_custom_energy;
+                c.g     *= environment_custom_energy;
+                c.b     *= environment_custom_energy;
                 environment_image->lock();
                 for (int i = 0; i < 128; i++) {
                     for (int j = 0; j < 64; j++) {
@@ -1114,10 +1114,10 @@ BakedLightmap::BakeError BakedLightmap::bake(
     }
 
     BakeStepUD bsud;
-    bsud.func = bake_step_function;
-    bsud.ud = nullptr;
+    bsud.func         = bake_step_function;
+    bsud.ud           = nullptr;
     bsud.from_percent = 0.1;
-    bsud.to_percent = 0.9;
+    bsud.to_percent   = 0.9;
 
     bool gen_atlas = OS::get_singleton()->get_current_video_driver()
                           == OS::VIDEO_DRIVER_GLES2
@@ -1187,7 +1187,7 @@ BakedLightmap::BakeError BakedLightmap::bake(
         AABB bake_bounds;
         {
             bake_bounds = AABB(-extents, extents * 2.0);
-            int subdiv = nearest_power_of_2_templated(
+            int subdiv  = nearest_power_of_2_templated(
                 int(bake_bounds.get_longest_axis_size() / capture_cell_size)
             );
             bake_bounds.size[bake_bounds.get_longest_axis_index()] =
@@ -1195,7 +1195,7 @@ BakedLightmap::BakeError BakedLightmap::bake(
             bake_subdiv = nearest_shift(subdiv) + 1;
 
             capture_subdiv = bake_subdiv;
-            float css = capture_cell_size;
+            float css      = capture_cell_size;
             while (css < capture_cell_size && capture_subdiv > 2) {
                 capture_subdiv--;
                 css *= 2.0;
@@ -1386,14 +1386,14 @@ BakedLightmap::BakeError BakedLightmap::bake(
 
         for (int i = 0; i < lightmapper->get_bake_mesh_count(); i++) {
             if (meshes_found[i].generate_lightmap) {
-                Dictionary d = lightmapper->get_bake_mesh_userdata(i);
-                NodePath np = d["path"];
+                Dictionary d     = lightmapper->get_bake_mesh_userdata(i);
+                NodePath np      = d["path"];
                 int32_t subindex = -1;
                 if (d.has("subindex")) {
                     subindex = d["subindex"];
                 }
 
-                Rect2 uv_rect = lightmapper->get_bake_mesh_uv_scale(i);
+                Rect2 uv_rect   = lightmapper->get_bake_mesh_uv_scale(i);
                 int slice_index = lightmapper->get_bake_mesh_texture_slice(i);
                 data->add_user(np, texture, slice_index, uv_rect, subindex);
             }
@@ -1460,14 +1460,14 @@ BakedLightmap::BakeError BakedLightmap::bake(
                 texture = tex;
             }
 
-            Dictionary d = lightmapper->get_bake_mesh_userdata(i);
-            NodePath np = d["path"];
+            Dictionary d     = lightmapper->get_bake_mesh_userdata(i);
+            NodePath np      = d["path"];
             int32_t subindex = -1;
             if (d.has("subindex")) {
                 subindex = d["subindex"];
             }
 
-            Rect2 uv_rect = Rect2(0, 0, 1, 1);
+            Rect2 uv_rect   = Rect2(0, 0, 1, 1);
             int slice_index = -1;
             data->add_user(np, texture, slice_index, uv_rect, subindex);
         }
@@ -1560,7 +1560,7 @@ void BakedLightmap::_assign_lightmaps() {
             && !Object::cast_to<TextureLayered>(lightmap.ptr())
         );
 
-        Node* node = get_node(light_data->get_user_path(i));
+        Node* node       = get_node(light_data->get_user_path(i));
         int instance_idx = light_data->get_user_instance(i);
         if (instance_idx >= 0) {
             RID instance = node->call("get_bake_mesh_instance", instance_idx);
@@ -1609,7 +1609,7 @@ void BakedLightmap::_assign_lightmaps() {
 void BakedLightmap::_clear_lightmaps() {
     ERR_FAIL_COND(!light_data.is_valid());
     for (int i = 0; i < light_data->get_user_count(); i++) {
-        Node* node = get_node(light_data->get_user_path(i));
+        Node* node       = get_node(light_data->get_user_path(i));
         int instance_idx = light_data->get_user_instance(i);
         if (instance_idx >= 0) {
             RID instance = node->call("get_bake_mesh_instance", instance_idx);
@@ -2351,25 +2351,25 @@ BakedLightmap::BakedLightmap() {
     extents = Vector3(10, 10, 10);
 
     default_texels_per_unit = 16.0f;
-    bake_quality = BAKE_QUALITY_MEDIUM;
-    capture_quality = BAKE_QUALITY_MEDIUM;
-    capture_propagation = 1;
-    capture_enabled = true;
-    bounces = 3;
-    bounce_indirect_energy = 1.0;
-    image_path = "";
+    bake_quality            = BAKE_QUALITY_MEDIUM;
+    capture_quality         = BAKE_QUALITY_MEDIUM;
+    capture_propagation     = 1;
+    capture_enabled         = true;
+    bounces                 = 3;
+    bounce_indirect_energy  = 1.0;
+    image_path              = "";
     set_disable_scale(true);
     capture_cell_size = 0.5;
 
-    environment_mode = ENVIRONMENT_MODE_DISABLED;
-    environment_custom_color = Color(0.2, 0.7, 1.0);
+    environment_mode          = ENVIRONMENT_MODE_DISABLED;
+    environment_custom_color  = Color(0.2, 0.7, 1.0);
     environment_custom_energy = 1.0;
-    environment_min_light = Color(0.0, 0.0, 0.0);
+    environment_min_light     = Color(0.0, 0.0, 0.0);
 
     use_denoiser = true;
-    use_hdr = true;
-    use_color = true;
-    bias = 0.005;
+    use_hdr      = true;
+    use_color    = true;
+    bias         = 0.005;
 
     generate_atlas = true;
     max_atlas_size = 4096;

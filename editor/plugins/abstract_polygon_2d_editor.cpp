@@ -237,8 +237,8 @@ void AbstractPolygon2DEditor::_wip_cancel() {
     wip.clear();
     wip_active = false;
 
-    edited_point = PosVertex();
-    hover_point = Vertex();
+    edited_point   = PosVertex();
+    hover_point    = Vertex();
     selected_point = Vertex();
 
     canvas_item_editor->update_viewport();
@@ -276,8 +276,8 @@ void AbstractPolygon2DEditor::_wip_close() {
     wip.clear();
     wip_active = false;
 
-    edited_point = PosVertex();
-    hover_point = Vertex();
+    edited_point   = PosVertex();
+    hover_point    = Vertex();
     selected_point = Vertex();
 }
 
@@ -369,7 +369,7 @@ bool AbstractPolygon2DEditor::forward_gui_input(const Ref<InputEvent>& p_event
                             Vector<Vector2> vertices2 =
                                 _get_polygon(insert.polygon);
                             pre_move_edit = vertices2;
-                            edited_point = PosVertex(
+                            edited_point  = PosVertex(
                                 insert.polygon,
                                 insert.vertex + 1,
                                 xform.affine_inverse().xform(insert.pos)
@@ -379,7 +379,7 @@ bool AbstractPolygon2DEditor::forward_gui_input(const Ref<InputEvent>& p_event
                                 edited_point.pos
                             );
                             selected_point = edited_point;
-                            edge_point = PosVertex();
+                            edge_point     = PosVertex();
 
                             undo_redo->create_action(TTR("Insert Point"));
                             _action_set_polygon(insert.polygon, vertices2);
@@ -392,12 +392,12 @@ bool AbstractPolygon2DEditor::forward_gui_input(const Ref<InputEvent>& p_event
 
                         if (closest.valid()) {
                             pre_move_edit = _get_polygon(closest.polygon);
-                            edited_point = PosVertex(
+                            edited_point  = PosVertex(
                                 closest,
                                 xform.affine_inverse().xform(closest.pos)
                             );
                             selected_point = closest;
-                            edge_point = PosVertex();
+                            edge_point     = PosVertex();
                             canvas_item_editor->update_viewport();
                             return true;
                         } else {
@@ -468,9 +468,9 @@ bool AbstractPolygon2DEditor::forward_gui_input(const Ref<InputEvent>& p_event
                     _wip_changed();
                     edited_point = PosVertex(-1, 1, cpoint);
                     canvas_item_editor->update_viewport();
-                    hover_point = Vertex();
+                    hover_point    = Vertex();
                     selected_point = Vertex(0);
-                    edge_point = PosVertex();
+                    edge_point     = PosVertex();
                     return true;
                 } else {
                     const real_t grab_threshold =
@@ -487,7 +487,7 @@ bool AbstractPolygon2DEditor::forward_gui_input(const Ref<InputEvent>& p_event
                         // add wip point
                         wip.push_back(cpoint);
                         _wip_changed();
-                        edited_point = PosVertex(-1, wip.size(), cpoint);
+                        edited_point   = PosVertex(-1, wip.size(), cpoint);
                         selected_point = Vertex(wip.size() - 1);
                         canvas_item_editor->update_viewport();
                         return true;
@@ -541,7 +541,7 @@ bool AbstractPolygon2DEditor::forward_gui_input(const Ref<InputEvent>& p_event
 
             if (onEdgeVertex.valid()) {
                 hover_point = Vertex();
-                edge_point = onEdgeVertex;
+                edge_point  = onEdgeVertex;
                 canvas_item_editor->update_viewport();
             } else {
                 if (edge_point.valid()) {
@@ -607,8 +607,8 @@ void AbstractPolygon2DEditor::forward_canvas_draw_over_viewport(
         get_icon("EditorPathSharpHandle", "EditorIcons");
 
     const Vertex active_point = get_active_point();
-    const int n_polygons = _get_polygon_count();
-    const bool is_closed = !_is_line();
+    const int n_polygons      = _get_polygon_count();
+    const bool is_closed      = !_is_line();
 
     for (int j = -1; j < n_polygons; j++) {
         if (wip_active && wip_destructive && j != -1) {
@@ -636,10 +636,10 @@ void AbstractPolygon2DEditor::forward_canvas_draw_over_viewport(
             const int n = pre_move_edit.size();
             for (int i = 0; i < n - (is_closed ? 0 : 1); i++) {
                 Vector2 p, p2;
-                p = pre_move_edit[i] + offset;
+                p  = pre_move_edit[i] + offset;
                 p2 = pre_move_edit[(i + 1) % n] + offset;
 
-                Vector2 point = xform.xform(p);
+                Vector2 point      = xform.xform(p);
                 Vector2 next_point = xform.xform(p2);
 
                 p_overlay->draw_line(
@@ -653,13 +653,13 @@ void AbstractPolygon2DEditor::forward_canvas_draw_over_viewport(
         }
 
         const int n_points = points.size();
-        const Color col = Color(1, 0.3, 0.1, 0.8);
+        const Color col    = Color(1, 0.3, 0.1, 0.8);
 
         for (int i = 0; i < n_points; i++) {
             const Vertex vertex(j, i);
 
-            const Vector2 p = (vertex == edited_point) ? edited_point.pos
-                                                       : (points[i] + offset);
+            const Vector2 p     = (vertex == edited_point) ? edited_point.pos
+                                                           : (points[i] + offset);
             const Vector2 point = xform.xform(p);
 
             if (is_closed || i < n_points - 1) {
@@ -686,8 +686,8 @@ void AbstractPolygon2DEditor::forward_canvas_draw_over_viewport(
         for (int i = 0; i < n_points; i++) {
             const Vertex vertex(j, i);
 
-            const Vector2 p = (vertex == edited_point) ? edited_point.pos
-                                                       : (points[i] + offset);
+            const Vector2 p     = (vertex == edited_point) ? edited_point.pos
+                                                           : (points[i] + offset);
             const Vector2 point = xform.xform(p);
 
             const Color modulate =
@@ -700,7 +700,7 @@ void AbstractPolygon2DEditor::forward_canvas_draw_over_viewport(
 
             if (vertex == hover_point) {
                 Ref<Font> font = get_font("font", "Label");
-                String num = String::num(vertex.vertex);
+                String num     = String::num(vertex.vertex);
                 Size2 num_size = font->get_string_size(num);
                 p_overlay->draw_string(
                     font,
@@ -737,9 +737,9 @@ void AbstractPolygon2DEditor::edit(Node* p_polygon) {
         }
 
         wip.clear();
-        wip_active = false;
-        edited_point = PosVertex();
-        hover_point = Vertex();
+        wip_active     = false;
+        edited_point   = PosVertex();
+        hover_point    = Vertex();
         selected_point = Vertex();
     } else {
         _set_node(nullptr);
@@ -799,7 +799,7 @@ AbstractPolygon2DEditor::PosVertex AbstractPolygon2DEditor::closest_point(
     const real_t grab_threshold =
         EDITOR_GET("editors/poly_editor/point_grab_radius");
 
-    const int n_polygons = _get_polygon_count();
+    const int n_polygons    = _get_polygon_count();
     const Transform2D xform = canvas_item_editor->get_canvas_transform()
                             * _get_node()->get_global_transform();
 
@@ -808,8 +808,8 @@ AbstractPolygon2DEditor::PosVertex AbstractPolygon2DEditor::closest_point(
 
     for (int j = 0; j < n_polygons; j++) {
         PoolVector<Vector2> points = _get_polygon(j);
-        const Vector2 offset = _get_offset(j);
-        const int n_points = points.size();
+        const Vector2 offset       = _get_offset(j);
+        const int n_points         = points.size();
 
         for (int i = 0; i < n_points; i++) {
             Vector2 cp = xform.xform(points[i] + offset);
@@ -817,7 +817,7 @@ AbstractPolygon2DEditor::PosVertex AbstractPolygon2DEditor::closest_point(
             real_t d = cp.distance_to(p_pos);
             if (d < closest_dist && d < grab_threshold) {
                 closest_dist = d;
-                closest = PosVertex(j, i, cp);
+                closest      = PosVertex(j, i, cp);
             }
         }
     }
@@ -830,10 +830,10 @@ AbstractPolygon2DEditor::PosVertex AbstractPolygon2DEditor::closest_edge_point(
 ) const {
     const real_t grab_threshold =
         EDITOR_GET("editors/poly_editor/point_grab_radius");
-    const real_t eps = grab_threshold * 2;
+    const real_t eps  = grab_threshold * 2;
     const real_t eps2 = eps * eps;
 
-    const int n_polygons = _get_polygon_count();
+    const int n_polygons    = _get_polygon_count();
     const Transform2D xform = canvas_item_editor->get_canvas_transform()
                             * _get_node()->get_global_transform();
 
@@ -842,9 +842,9 @@ AbstractPolygon2DEditor::PosVertex AbstractPolygon2DEditor::closest_edge_point(
 
     for (int j = 0; j < n_polygons; j++) {
         PoolVector<Vector2> points = _get_polygon(j);
-        const Vector2 offset = _get_offset(j);
-        const int n_points = points.size();
-        const int n_segments = n_points - (_is_line() ? 1 : 0);
+        const Vector2 offset       = _get_offset(j);
+        const int n_points         = points.size();
+        const int n_segments       = n_points - (_is_line() ? 1 : 0);
 
         for (int i = 0; i < n_segments; i++) {
             Vector2 segment[2] = {
@@ -863,7 +863,7 @@ AbstractPolygon2DEditor::PosVertex AbstractPolygon2DEditor::closest_edge_point(
             real_t d = cp.distance_to(p_pos);
             if (d < closest_dist && d < grab_threshold) {
                 closest_dist = d;
-                closest = PosVertex(j, i, cp);
+                closest      = PosVertex(j, i, cp);
             }
         }
     }
@@ -876,16 +876,16 @@ AbstractPolygon2DEditor::AbstractPolygon2DEditor(
     bool p_wip_destructive
 ) {
     canvas_item_editor = nullptr;
-    editor = p_editor;
-    undo_redo = EditorNode::get_undo_redo();
+    editor             = p_editor;
+    undo_redo          = EditorNode::get_undo_redo();
 
-    wip_active = false;
-    edited_point = PosVertex();
+    wip_active      = false;
+    edited_point    = PosVertex();
     wip_destructive = p_wip_destructive;
 
-    hover_point = Vertex();
+    hover_point    = Vertex();
     selected_point = Vertex();
-    edge_point = PosVertex();
+    edge_point     = PosVertex();
 
     add_child(memnew(VSeparator));
     button_create = memnew(ToolButton);

@@ -127,7 +127,7 @@ PoolStringArray get_code_completion(
             ProjectSettings::get_singleton()->get_property_list(&project_props);
 
             for (List<PropertyInfo>::Element* E = project_props.front(); E;
-                 E = E->next()) {
+                 E                              = E->next()) {
                 const PropertyInfo& prop = E->get();
 
                 if (!prop.name.begins_with("input/")) {
@@ -148,7 +148,7 @@ PoolStringArray get_code_completion(
                 ProjectSettings::get_singleton()->get_property_list(&props);
 
                 for (List<PropertyInfo>::Element* E = props.front(); E;
-                     E = E->next()) {
+                     E                              = E->next()) {
                     String s = E->get().name;
                     if (!s.begins_with("autoload/")) {
                         continue;
@@ -231,7 +231,7 @@ PoolStringArray get_code_completion(
             }
 
             for (List<MethodInfo>::Element* E = signals.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 const String& signal = E->get().name;
                 suggestions.push_back(quoted(signal));
             }
@@ -245,7 +245,7 @@ PoolStringArray get_code_completion(
                 Theme::get_default()->get_color_list(base->get_class(), &sn);
 
                 for (List<StringName>::Element* E = sn.front(); E;
-                     E = E->next()) {
+                     E                            = E->next()) {
                     suggestions.push_back(quoted(E->get()));
                 }
             }
@@ -259,7 +259,7 @@ PoolStringArray get_code_completion(
                 Theme::get_default()->get_constant_list(base->get_class(), &sn);
 
                 for (List<StringName>::Element* E = sn.front(); E;
-                     E = E->next()) {
+                     E                            = E->next()) {
                     suggestions.push_back(quoted(E->get()));
                 }
             }
@@ -273,7 +273,7 @@ PoolStringArray get_code_completion(
                 Theme::get_default()->get_font_list(base->get_class(), &sn);
 
                 for (List<StringName>::Element* E = sn.front(); E;
-                     E = E->next()) {
+                     E                            = E->next()) {
                     suggestions.push_back(quoted(E->get()));
                 }
             }
@@ -287,7 +287,7 @@ PoolStringArray get_code_completion(
                 Theme::get_default()->get_stylebox_list(base->get_class(), &sn);
 
                 for (List<StringName>::Element* E = sn.front(); E;
-                     E = E->next()) {
+                     E                            = E->next()) {
                     suggestions.push_back(quoted(E->get()));
                 }
             }

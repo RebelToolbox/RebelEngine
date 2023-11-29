@@ -48,7 +48,7 @@ void PVSBuilder::find_neighbors(LocalVector<Neighbours>& r_neighbors) {
         int num_portals = room._portal_ids.size();
 
         for (int p = 0; p < num_portals; p++) {
-            int portal_id = room._portal_ids[p];
+            int portal_id          = room._portal_ids[p];
             const VSPortal& portal = _portal_renderer->get_portal(portal_id);
 
             // everything depends on whether the portal is incoming or outgoing.
@@ -82,13 +82,13 @@ void PVSBuilder::create_secondary_pvs(
     const LocalVector<Neighbours>& p_neighbors,
     BitFieldDynamic& r_bitfield_rooms
 ) {
-    VSRoom& room = _portal_renderer->get_room(p_room_id);
+    VSRoom& room              = _portal_renderer->get_room(p_room_id);
     room._secondary_pvs_first = _pvs->get_secondary_pvs_size();
 
     // go through each primary PVS room, and add the neighbors in the secondary
     // pvs
     for (int r = 0; r < room._pvs_size; r++) {
-        int pvs_entry = room._pvs_first + r;
+        int pvs_entry   = room._pvs_first + r;
         int pvs_room_id = _pvs->get_pvs_room_id(pvs_entry);
 
         // add the visible rooms first
@@ -147,11 +147,11 @@ bool PVSBuilder::load_pvs(String p_filename) {
             goto failed;
         }
 
-        VSRoom& room = _portal_renderer->get_room(n);
-        room._pvs_first = file->get_32();
-        room._pvs_size = file->get_32();
+        VSRoom& room              = _portal_renderer->get_room(n);
+        room._pvs_first           = file->get_32();
+        room._pvs_size            = file->get_32();
         room._secondary_pvs_first = file->get_32();
-        room._secondary_pvs_size = file->get_32();
+        room._secondary_pvs_size  = file->get_32();
     }
 
     pvs_size = file->get_32();
@@ -246,8 +246,8 @@ void PVSBuilder::calculate_pvs(
     bool p_log_pvs_generation
 ) {
     _portal_renderer = &p_portal_renderer;
-    _pvs = &p_portal_renderer.get_pvs();
-    _depth_limit = p_depth_limit;
+    _pvs             = &p_portal_renderer.get_pvs();
+    _depth_limit     = p_depth_limit;
 
     _log_active = p_log_pvs_generation;
 
@@ -280,7 +280,7 @@ void PVSBuilder::calculate_pvs(
 
         LocalVector<Plane, int32_t> dummy_planes;
 
-        VSRoom& room = _portal_renderer->get_room(n);
+        VSRoom& room    = _portal_renderer->get_room(n);
         room._pvs_first = _pvs->get_pvs_size();
 
         log("pvs from room : " + itos(n));
@@ -305,9 +305,9 @@ void PVSBuilder::calculate_pvs(
         if (_log_active) {
             String string = "";
             for (int i = 0; i < room._pvs_size; i++) {
-                int visible_room = _pvs->get_pvs_room_id(room._pvs_first + i);
-                string += itos(visible_room);
-                string += ", ";
+                int visible_room  = _pvs->get_pvs_room_id(room._pvs_first + i);
+                string           += itos(visible_room);
+                string           += ", ";
             }
 
             log("\t" + string);
@@ -397,7 +397,7 @@ void PVSBuilder::trace_rooms_recursive(
     int num_portals = room._portal_ids.size();
 
     for (int p = 0; p < num_portals; p++) {
-        int portal_id = room._portal_ids[p];
+        int portal_id          = room._portal_ids[p];
         const VSPortal& portal = _portal_renderer->get_portal(portal_id);
 
         // everything depends on whether the portal is incoming or outgoing.
@@ -576,7 +576,7 @@ void PVSBuilder::trace_rooms_recursive(
             // it here, because we are looking through the first portal
             int first_portal_id = p_first_portal_id;
             if (first_portal_id == -1) {
-                first_portal_id = portal_id;
+                first_portal_id         = portal_id;
                 p_first_portal_outgoing = outgoing != 0;
             }
 
@@ -635,7 +635,7 @@ void PVSBuilder::trace_rooms_recursive_simple(
     int num_portals = room._portal_ids.size();
 
     for (int p = 0; p < num_portals; p++) {
-        int portal_id = room._portal_ids[p];
+        int portal_id          = room._portal_ids[p];
         const VSPortal& portal = _portal_renderer->get_portal(portal_id);
 
         // everything depends on whether the portal is incoming or outgoing.
@@ -749,7 +749,7 @@ void PVSBuilder::trace_rooms_recursive_simple(
             // it here, because we are looking through the first portal
             int first_portal_id = p_first_portal_id;
             if (first_portal_id == -1) {
-                first_portal_id = portal_id;
+                first_portal_id         = portal_id;
                 p_first_portal_outgoing = outgoing != 0;
             }
 

@@ -37,9 +37,9 @@ void _debug_recursive_print_tree_node(uint32_t p_node_id, int depth = 0) const {
     sz += itos(p_node_id);
 
     if (tnode.is_leaf()) {
-        sz += " L";
-        sz += itos(tnode.height) + " ";
-        const TLeaf& leaf = _node_get_leaf(tnode);
+        sz                += " L";
+        sz                += itos(tnode.height) + " ";
+        const TLeaf& leaf  = _node_get_leaf(tnode);
 
         sz += "[";
         for (int n = 0; n < leaf.num_items; n++) {

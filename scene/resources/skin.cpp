@@ -33,7 +33,7 @@
 void Skin::set_bind_count(int p_size) {
     ERR_FAIL_COND(p_size < 0);
     binds.resize(p_size);
-    binds_ptr = binds.ptrw();
+    binds_ptr  = binds.ptrw();
     bind_count = p_size;
     emit_changed();
 }
@@ -77,7 +77,7 @@ void Skin::set_bind_pose(int p_index, const Transform& p_pose) {
 
 void Skin::clear_binds() {
     binds.clear();
-    binds_ptr = nullptr;
+    binds_ptr  = nullptr;
     bind_count = 0;
     emit_changed();
 }
@@ -88,7 +88,7 @@ bool Skin::_set(const StringName& p_name, const Variant& p_value) {
         set_bind_count(p_value);
         return true;
     } else if (name.begins_with("bind/")) {
-        int index = name.get_slicec('/', 1).to_int();
+        int index   = name.get_slicec('/', 1).to_int();
         String what = name.get_slicec('/', 2);
         if (what == "bone") {
             set_bind_bone(index, p_value);
@@ -110,7 +110,7 @@ bool Skin::_get(const StringName& p_name, Variant& r_ret) const {
         r_ret = get_bind_count();
         return true;
     } else if (name.begins_with("bind/")) {
-        int index = name.get_slicec('/', 1).to_int();
+        int index   = name.get_slicec('/', 1).to_int();
         String what = name.get_slicec('/', 2);
         if (what == "bone") {
             r_ret = get_bind_bone(index);
@@ -192,5 +192,5 @@ void Skin::_bind_methods() {
 
 Skin::Skin() {
     bind_count = 0;
-    binds_ptr = nullptr;
+    binds_ptr  = nullptr;
 }

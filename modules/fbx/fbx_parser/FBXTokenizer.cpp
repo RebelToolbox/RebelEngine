@@ -128,7 +128,7 @@ void ProcessDataToken(
     const char*& end,
     unsigned int line,
     unsigned int column,
-    TokenType type = TokenType_DATA,
+    TokenType type       = TokenType_DATA,
     bool must_have_token = false
 ) {
     if (start && end) {
@@ -167,11 +167,11 @@ void ProcessDataToken(
 // ------------------------------------------------------------------------------------------------
 void Tokenize(TokenList& output_tokens, const char* input, size_t length) {
     // line and column numbers numbers are one-based
-    unsigned int line = 1;
+    unsigned int line   = 1;
     unsigned int column = 1;
 
-    bool comment = false;
-    bool in_double_quotes = false;
+    bool comment            = false;
+    bool in_double_quotes   = false;
     bool pending_data_token = false;
 
     const char *token_begin = nullptr, *token_end = nullptr;
@@ -179,9 +179,9 @@ void Tokenize(TokenList& output_tokens, const char* input, size_t length) {
     // input (starting string), *cur the current string, column +=
     // modified to fix strlen() and stop buffer overflow
     for (size_t x = 0; x < length; x++) {
-        const char c = input[x];
-        const char* cur = &input[x];
-        column += (c == '\t' ? ASSIMP_FBX_TAB_WIDTH : 1);
+        const char c     = input[x];
+        const char* cur  = &input[x];
+        column          += (c == '\t' ? ASSIMP_FBX_TAB_WIDTH : 1);
 
         if (IsLineEnd(c)) {
             comment = false;
@@ -197,7 +197,7 @@ void Tokenize(TokenList& output_tokens, const char* input, size_t length) {
         if (in_double_quotes) {
             if (c == '\"') {
                 in_double_quotes = false;
-                token_end = cur;
+                token_end        = cur;
 
                 ProcessDataToken(
                     output_tokens,
@@ -216,7 +216,7 @@ void Tokenize(TokenList& output_tokens, const char* input, size_t length) {
                 if (token_begin) {
                     TokenizeError("unexpected double-quote", line, column);
                 }
-                token_begin = cur;
+                token_begin      = cur;
                 in_double_quotes = true;
                 continue;
 
@@ -308,7 +308,7 @@ void Tokenize(TokenList& output_tokens, const char* input, size_t length) {
                      ++peek) {
                     if (*peek == ':') {
                         type = TokenType_KEY;
-                        cur = peek;
+                        cur  = peek;
                         break;
                     }
                 }

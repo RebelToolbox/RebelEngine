@@ -436,7 +436,7 @@ void RigidCollisionObjectBullet::reload_shapes() {
 
     // Try to optimize by not using compound
     if (1 == shape_count) {
-        shpWrapper = &shapes.write[0];
+        shpWrapper            = &shapes.write[0];
         btTransform transform = shpWrapper->get_adjusted_transform();
         if (transform.getOrigin().isZero()
             && transform.getBasis() == transform.getBasis().getIdentity()) {

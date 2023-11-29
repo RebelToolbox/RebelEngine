@@ -45,8 +45,8 @@ public:
     };
 
     enum ColorFormat {
-        COLOR_NONE = VS::MULTIMESH_COLOR_NONE,
-        COLOR_8BIT = VS::MULTIMESH_COLOR_8BIT,
+        COLOR_NONE  = VS::MULTIMESH_COLOR_NONE,
+        COLOR_8BIT  = VS::MULTIMESH_COLOR_8BIT,
         COLOR_FLOAT = VS::MULTIMESH_COLOR_FLOAT,
     };
 

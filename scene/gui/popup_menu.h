@@ -64,16 +64,16 @@ class PopupMenu : public Popup {
         bool shortcut_is_disabled;
 
         Item() {
-            checked = false;
-            checkable_type = CHECKABLE_TYPE_NONE;
-            separator = false;
-            max_states = 0;
-            state = 0;
-            accel = 0;
-            disabled = false;
-            _ofs_cache = 0;
-            h_ofs = 0;
-            shortcut_is_global = false;
+            checked              = false;
+            checkable_type       = CHECKABLE_TYPE_NONE;
+            separator            = false;
+            max_states           = 0;
+            state                = 0;
+            accel                = 0;
+            disabled             = false;
+            _ofs_cache           = 0;
+            h_ofs                = 0;
+            shortcut_is_global   = false;
             shortcut_is_disabled = false;
         }
     };
@@ -125,29 +125,29 @@ public:
     void add_icon_item(
         const Ref<Texture>& p_icon,
         const String& p_label,
-        int p_id = -1,
+        int p_id         = -1,
         uint32_t p_accel = 0
     );
     void add_check_item(
         const String& p_label,
-        int p_id = -1,
+        int p_id         = -1,
         uint32_t p_accel = 0
     );
     void add_icon_check_item(
         const Ref<Texture>& p_icon,
         const String& p_label,
-        int p_id = -1,
+        int p_id         = -1,
         uint32_t p_accel = 0
     );
     void add_radio_check_item(
         const String& p_label,
-        int p_id = -1,
+        int p_id         = -1,
         uint32_t p_accel = 0
     );
     void add_icon_radio_check_item(
         const Ref<Texture>& p_icon,
         const String& p_label,
-        int p_id = -1,
+        int p_id         = -1,
         uint32_t p_accel = 0
     );
 
@@ -155,41 +155,41 @@ public:
         const String& p_label,
         int p_max_states,
         int p_default_state = 0,
-        int p_id = -1,
-        uint32_t p_accel = 0
+        int p_id            = -1,
+        uint32_t p_accel    = 0
     );
 
     void add_shortcut(
         const Ref<ShortCut>& p_shortcut,
-        int p_id = -1,
+        int p_id      = -1,
         bool p_global = false
     );
     void add_icon_shortcut(
         const Ref<Texture>& p_icon,
         const Ref<ShortCut>& p_shortcut,
-        int p_id = -1,
+        int p_id      = -1,
         bool p_global = false
     );
     void add_check_shortcut(
         const Ref<ShortCut>& p_shortcut,
-        int p_id = -1,
+        int p_id      = -1,
         bool p_global = false
     );
     void add_icon_check_shortcut(
         const Ref<Texture>& p_icon,
         const Ref<ShortCut>& p_shortcut,
-        int p_id = -1,
+        int p_id      = -1,
         bool p_global = false
     );
     void add_radio_check_shortcut(
         const Ref<ShortCut>& p_shortcut,
-        int p_id = -1,
+        int p_id      = -1,
         bool p_global = false
     );
     void add_icon_radio_check_shortcut(
         const Ref<Texture>& p_icon,
         const Ref<ShortCut>& p_shortcut,
-        int p_id = -1,
+        int p_id      = -1,
         bool p_global = false
     );
 

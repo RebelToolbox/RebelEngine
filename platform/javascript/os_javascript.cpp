@@ -100,7 +100,7 @@ bool OS_JavaScript::check_size_force_redraw() {
 }
 
 void OS_JavaScript::fullscreen_change_callback(int p_fullscreen) {
-    OS_JavaScript* os = get_singleton();
+    OS_JavaScript* os         = get_singleton();
     os->video_mode.fullscreen = p_fullscreen;
 }
 
@@ -205,7 +205,7 @@ static void dom2godot_mod(Ref<InputEventWithModifiers> ev, int p_mod) {
 }
 
 void OS_JavaScript::key_callback(int p_pressed, int p_repeat, int p_modifiers) {
-    OS_JavaScript* os = get_singleton();
+    OS_JavaScript* os     = get_singleton();
     JSKeyEvent& key_event = os->key_event;
     // Resume audio context after input in case autoplay was denied.
     os->resume_audio();
@@ -288,8 +288,8 @@ int OS_JavaScript::mouse_button_callback(
             if (diff < 400
                 && Point2(os->last_click_pos).distance_to(ev->get_position())
                        < 5) {
-                os->last_click_ms = 0;
-                os->last_click_pos = Point2(-100, -100);
+                os->last_click_ms           = 0;
+                os->last_click_pos          = Point2(-100, -100);
                 os->last_click_button_index = -1;
                 ev->set_doubleclick(true);
             }
@@ -299,12 +299,12 @@ int OS_JavaScript::mouse_button_callback(
         }
 
         if (!ev->is_doubleclick()) {
-            os->last_click_ms += diff;
-            os->last_click_pos = ev->get_position();
+            os->last_click_ms  += diff;
+            os->last_click_pos  = ev->get_position();
         }
     }
 
-    int mask = os->input->get_mouse_button_mask();
+    int mask        = os->input->get_mouse_button_mask();
     int button_flag = 1 << (ev->get_button_index() - 1);
     if (ev->is_pressed()) {
         mask |= button_flag;
@@ -415,7 +415,7 @@ void OS_JavaScript::set_custom_mouse_cursor(
     const Vector2& p_hotspot
 ) {
     if (p_cursor.is_valid()) {
-        Ref<Texture> texture = p_cursor;
+        Ref<Texture> texture            = p_cursor;
         Ref<AtlasTexture> atlas_texture = p_cursor;
         Ref<Image> image;
         Size2 texture_size;
@@ -431,15 +431,15 @@ void OS_JavaScript::set_custom_mouse_cursor(
         if (!image.is_valid() && atlas_texture.is_valid()) {
             texture = atlas_texture->get_atlas();
 
-            atlas_rect.size.width = texture->get_width();
+            atlas_rect.size.width  = texture->get_width();
             atlas_rect.size.height = texture->get_height();
-            atlas_rect.position.x = atlas_texture->get_region().position.x;
-            atlas_rect.position.y = atlas_texture->get_region().position.y;
+            atlas_rect.position.x  = atlas_texture->get_region().position.x;
+            atlas_rect.position.y  = atlas_texture->get_region().position.y;
 
-            texture_size.width = atlas_texture->get_region().size.x;
+            texture_size.width  = atlas_texture->get_region().size.x;
             texture_size.height = atlas_texture->get_region().size.y;
         } else if (image.is_valid()) {
-            texture_size.width = texture->get_width();
+            texture_size.width  = texture->get_width();
             texture_size.height = texture->get_height();
         }
 
@@ -473,9 +473,9 @@ void OS_JavaScript::set_custom_mouse_cursor(
         png_image png_meta;
         memset(&png_meta, 0, sizeof png_meta);
         png_meta.version = PNG_IMAGE_VERSION;
-        png_meta.width = texture_size.width;
-        png_meta.height = texture_size.height;
-        png_meta.format = PNG_FORMAT_RGBA;
+        png_meta.width   = texture_size.width;
+        png_meta.height  = texture_size.height;
+        png_meta.format  = PNG_FORMAT_RGBA;
 
         PoolByteArray png;
         size_t len;
@@ -669,7 +669,7 @@ void OS_JavaScript::gamepad_callback(
 }
 
 void OS_JavaScript::process_joypads() {
-    int32_t pads = godot_js_input_gamepad_sample_count();
+    int32_t pads       = godot_js_input_gamepad_sample_count();
     int32_t s_btns_num = 0;
     int32_t s_axes_num = 0;
     int32_t s_standard = 0;
@@ -693,9 +693,9 @@ void OS_JavaScript::process_joypads() {
             // axis to be handled as JOY_ANALOG by Godot.
             if (s_standard && (b == 6 || b == 7)) {
                 InputDefault::JoyAxis joy_axis;
-                joy_axis.min = 0;
+                joy_axis.min   = 0;
                 joy_axis.value = value;
-                int a = b == 6 ? JOY_ANALOG_L2 : JOY_ANALOG_R2;
+                int a          = b == 6 ? JOY_ANALOG_L2 : JOY_ANALOG_R2;
                 input->joy_axis(idx, a, joy_axis);
             } else {
                 input->joy_button(idx, b, value);
@@ -703,7 +703,7 @@ void OS_JavaScript::process_joypads() {
         }
         for (int a = 0; a < s_axes_num; a++) {
             InputDefault::JoyAxis joy_axis;
-            joy_axis.min = -1;
+            joy_axis.min   = -1;
             joy_axis.value = s_axes[a];
             input->joy_axis(idx, a, joy_axis);
         }
@@ -778,7 +778,7 @@ Error OS_JavaScript::initialize(
     int p_video_driver,
     int p_audio_driver
 ) {
-    video_mode = p_desired;
+    video_mode            = p_desired;
     // fullscreen_change_callback will correct this if the request is
     // successful.
     video_mode.fullscreen = false;
@@ -796,7 +796,7 @@ Error OS_JavaScript::initialize(
     emscripten_webgl_init_context_attributes(&attributes);
     attributes.alpha =
         GLOBAL_GET("display/window/per_pixel_transparency/allowed");
-    attributes.antialias = false;
+    attributes.antialias           = false;
     attributes.explicitSwapControl = true;
     ERR_FAIL_INDEX_V(p_video_driver, VIDEO_DRIVER_MAX, ERR_INVALID_PARAMETER);
 
@@ -822,7 +822,7 @@ Error OS_JavaScript::initialize(
             } else {
                 if (GLOBAL_GET("rendering/quality/driver/fallback_to_gles2")) {
                     p_video_driver = VIDEO_DRIVER_GLES2;
-                    gles3 = false;
+                    gles3          = false;
                     continue;
                 } else {
                     gl_initialization_error = true;
@@ -1032,11 +1032,11 @@ Error OS_JavaScript::execute(
 ) {
     Array args;
     for (const List<String>::Element* E = p_arguments.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         args.push_back(E->get());
     }
     String json_args = JSON::print(args);
-    int failed = godot_js_os_execute(json_args.utf8().get_data());
+    int failed       = godot_js_os_execute(json_args.utf8().get_data());
     ERR_FAIL_COND_V_MSG(
         failed,
         ERR_UNAVAILABLE,
@@ -1113,9 +1113,9 @@ void OS_JavaScript::set_icon(const Ref<Image>& p_icon) {
     png_image png_meta;
     memset(&png_meta, 0, sizeof png_meta);
     png_meta.version = PNG_IMAGE_VERSION;
-    png_meta.width = icon->get_width();
-    png_meta.height = icon->get_height();
-    png_meta.format = PNG_FORMAT_RGBA;
+    png_meta.width   = icon->get_width();
+    png_meta.height  = icon->get_height();
+    png_meta.format  = PNG_FORMAT_RGBA;
 
     PoolByteArray png;
     size_t len;
@@ -1228,7 +1228,7 @@ Error OS_JavaScript::open_dynamic_library(
     void*& p_library_handle,
     bool p_also_set_library_path
 ) {
-    String path = p_path.get_file();
+    String path      = p_path.get_file();
     p_library_handle = dlopen(path.utf8().get_data(), RTLD_NOW);
     ERR_FAIL_COND_V_MSG(
         !p_library_handle,
@@ -1249,19 +1249,19 @@ OS_JavaScript::OS_JavaScript() {
     godot_js_config_canvas_id_get(canvas_id, sizeof(canvas_id));
 
     cursor_inside_canvas = true;
-    cursor_shape = OS::CURSOR_ARROW;
+    cursor_shape         = OS::CURSOR_ARROW;
 
     last_click_button_index = -1;
-    last_click_ms = 0;
-    last_click_pos = Point2(-100, -100);
+    last_click_ms           = 0;
+    last_click_pos          = Point2(-100, -100);
 
     transparency_enabled = false;
 
-    main_loop = NULL;
+    main_loop     = NULL;
     visual_server = NULL;
 
     swap_ok_cancel = false;
-    idb_available = godot_js_os_fs_is_persistent() != 0;
+    idb_available  = godot_js_os_fs_is_persistent() != 0;
     idb_needs_sync = false;
     idb_is_syncing = false;
 

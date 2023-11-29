@@ -190,7 +190,7 @@ void RayCast2D::_notification(int p_what) {
             // Draw an arrow indicating where the RayCast is pointing to
             Color draw_col = get_tree()->get_debug_collisions_color();
             if (!enabled) {
-                float g = draw_col.get_v();
+                float g    = draw_col.get_v();
                 draw_col.r = g;
                 draw_col.g = g;
                 draw_col.b = g;
@@ -248,14 +248,14 @@ void RayCast2D::_update_raycast_state() {
             collide_with_bodies,
             collide_with_areas
         )) {
-        collided = true;
-        against = rr.collider_id;
-        collision_point = rr.position;
+        collided         = true;
+        against          = rr.collider_id;
+        collision_point  = rr.position;
         collision_normal = rr.normal;
-        against_shape = rr.shape;
+        against_shape    = rr.shape;
     } else {
-        collided = false;
-        against = 0;
+        collided      = false;
+        against       = 0;
         against_shape = 0;
     }
 }
@@ -466,13 +466,13 @@ void RayCast2D::_bind_methods() {
 }
 
 RayCast2D::RayCast2D() {
-    enabled = false;
-    against = 0;
-    collided = false;
-    against_shape = 0;
-    collision_mask = 1;
-    cast_to = Vector2(0, 50);
+    enabled             = false;
+    against             = 0;
+    collided            = false;
+    against_shape       = 0;
+    collision_mask      = 1;
+    cast_to             = Vector2(0, 50);
     exclude_parent_body = true;
     collide_with_bodies = true;
-    collide_with_areas = false;
+    collide_with_areas  = false;
 }

@@ -51,10 +51,10 @@ void ThemeItemImportTree::_update_items_tree() {
     base_theme->get_type_list(&types);
     types.sort_custom<StringName::AlphCompare>();
 
-    int color_amount = 0;
+    int color_amount    = 0;
     int constant_amount = 0;
-    int font_amount = 0;
-    int icon_amount = 0;
+    int font_amount     = 0;
+    int icon_amount     = 0;
     int stylebox_amount = 0;
 
     tree_color_items.clear();
@@ -79,8 +79,8 @@ void ThemeItemImportTree::_update_items_tree() {
 
         bool is_matching_filter =
             (filter_text.empty() || type_name.findn(filter_text) > -1);
-        bool has_filtered_items = false;
-        bool any_checked = false;
+        bool has_filtered_items    = false;
+        bool any_checked           = false;
         bool any_checked_with_data = false;
 
         for (int i = 0; i < Theme::DATA_TYPE_MAX; i++) {
@@ -93,7 +93,7 @@ void ThemeItemImportTree::_update_items_tree() {
             bool data_type_has_filtered_items = false;
 
             for (List<StringName>::Element* F = names.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 String item_name = (String)F->get();
                 bool is_item_matching_filter =
                     (item_name.findn(filter_text) > -1);
@@ -105,7 +105,7 @@ void ThemeItemImportTree::_update_items_tree() {
                 // Only mark this if actual items match the filter and not just
                 // the type group.
                 if (!filter_text.empty() && is_item_matching_filter) {
-                    has_filtered_items = true;
+                    has_filtered_items           = true;
                     data_type_has_filtered_items = true;
                 }
                 filtered_names.push_back(F->get());
@@ -143,7 +143,7 @@ void ThemeItemImportTree::_update_items_tree() {
                     );
                     data_type_node->set_text(0, TTR("Colors"));
 
-                    item_list = &tree_color_items;
+                    item_list     = &tree_color_items;
                     color_amount += filtered_names.size();
                     break;
 
@@ -154,7 +154,7 @@ void ThemeItemImportTree::_update_items_tree() {
                     );
                     data_type_node->set_text(0, TTR("Constants"));
 
-                    item_list = &tree_constant_items;
+                    item_list        = &tree_constant_items;
                     constant_amount += filtered_names.size();
                     break;
 
@@ -165,7 +165,7 @@ void ThemeItemImportTree::_update_items_tree() {
                     );
                     data_type_node->set_text(0, TTR("Fonts"));
 
-                    item_list = &tree_font_items;
+                    item_list    = &tree_font_items;
                     font_amount += filtered_names.size();
                     break;
 
@@ -176,7 +176,7 @@ void ThemeItemImportTree::_update_items_tree() {
                     );
                     data_type_node->set_text(0, TTR("Icons"));
 
-                    item_list = &tree_icon_items;
+                    item_list    = &tree_icon_items;
                     icon_amount += filtered_names.size();
                     break;
 
@@ -187,7 +187,7 @@ void ThemeItemImportTree::_update_items_tree() {
                     );
                     data_type_node->set_text(0, TTR("Styleboxes"));
 
-                    item_list = &tree_stylebox_items;
+                    item_list        = &tree_stylebox_items;
                     stylebox_amount += filtered_names.size();
                     break;
 
@@ -195,12 +195,12 @@ void ThemeItemImportTree::_update_items_tree() {
                     break; // Can't happen, but silences warning.
             }
 
-            bool data_type_any_checked = false;
+            bool data_type_any_checked           = false;
             bool data_type_any_checked_with_data = false;
 
             filtered_names.sort_custom<StringName::AlphCompare>();
             for (List<StringName>::Element* F = filtered_names.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 TreeItem* item_node =
                     import_items_tree->create_item(data_type_node);
                 item_node->set_meta("_can_be_imported", true);
@@ -221,11 +221,11 @@ void ThemeItemImportTree::_update_items_tree() {
                 _restore_selected_item(item_node);
                 if (item_node->is_checked(IMPORT_ITEM)) {
                     data_type_any_checked = true;
-                    any_checked = true;
+                    any_checked           = true;
                 }
                 if (item_node->is_checked(IMPORT_ITEM_DATA)) {
                     data_type_any_checked_with_data = true;
-                    any_checked_with_data = true;
+                    any_checked_with_data           = true;
                 }
 
                 item_list->push_back(item_node);
@@ -372,7 +372,7 @@ void ThemeItemImportTree::_store_selected_item(TreeItem* p_tree_item) {
     ti.data_type = (Theme::DataType)(int)data_type_node->get_metadata(0);
     ti.type_name = type_node->get_text(0);
 
-    bool import = p_tree_item->is_checked(IMPORT_ITEM);
+    bool import    = p_tree_item->is_checked(IMPORT_ITEM);
     bool with_data = p_tree_item->is_checked(IMPORT_ITEM_DATA);
 
     if (import && with_data) {
@@ -493,7 +493,7 @@ void ThemeItemImportTree::_tree_item_edited() {
     updating_tree = true;
 
     int edited_column = import_items_tree->get_edited_column();
-    bool is_checked = edited_item->is_checked(edited_column);
+    bool is_checked   = edited_item->is_checked(edited_column);
     if (is_checked) {
         if (edited_column == IMPORT_ITEM_DATA) {
             edited_item->set_checked(IMPORT_ITEM, true);
@@ -554,7 +554,7 @@ void ThemeItemImportTree::_update_parent_items(TreeItem* p_root_item) {
         return;
     }
 
-    bool any_checked = false;
+    bool any_checked           = false;
     bool any_checked_with_data = false;
 
     TreeItem* child_item = parent_item->get_children();
@@ -820,7 +820,7 @@ void ThemeItemImportTree::_import_selected() {
         }
 
         ItemCheckedState cs = E->get();
-        ThemeItem ti = E->key();
+        ThemeItem ti        = E->key();
 
         if (cs == SELECT_IMPORT_DEFINITION || cs == SELECT_IMPORT_FULL) {
             Variant item_value = Variant();
@@ -1094,39 +1094,39 @@ ThemeItemImportTree::ThemeItemImportTree() {
     import_bulk_label->set_text(TTR("Select by data type:"));
     import_bulk_vb->add_child(import_bulk_label);
 
-    select_colors_icon = memnew(TextureRect);
-    select_colors_label = memnew(Label);
-    deselect_all_colors_button = memnew(Button);
-    select_all_colors_button = memnew(Button);
-    select_full_colors_button = memnew(Button);
+    select_colors_icon          = memnew(TextureRect);
+    select_colors_label         = memnew(Label);
+    deselect_all_colors_button  = memnew(Button);
+    select_all_colors_button    = memnew(Button);
+    select_full_colors_button   = memnew(Button);
     total_selected_colors_label = memnew(Label);
 
-    select_constants_icon = memnew(TextureRect);
-    select_constants_label = memnew(Label);
-    deselect_all_constants_button = memnew(Button);
-    select_all_constants_button = memnew(Button);
-    select_full_constants_button = memnew(Button);
+    select_constants_icon          = memnew(TextureRect);
+    select_constants_label         = memnew(Label);
+    deselect_all_constants_button  = memnew(Button);
+    select_all_constants_button    = memnew(Button);
+    select_full_constants_button   = memnew(Button);
     total_selected_constants_label = memnew(Label);
 
-    select_fonts_icon = memnew(TextureRect);
-    select_fonts_label = memnew(Label);
-    deselect_all_fonts_button = memnew(Button);
-    select_all_fonts_button = memnew(Button);
-    select_full_fonts_button = memnew(Button);
+    select_fonts_icon          = memnew(TextureRect);
+    select_fonts_label         = memnew(Label);
+    deselect_all_fonts_button  = memnew(Button);
+    select_all_fonts_button    = memnew(Button);
+    select_full_fonts_button   = memnew(Button);
     total_selected_fonts_label = memnew(Label);
 
-    select_icons_icon = memnew(TextureRect);
-    select_icons_label = memnew(Label);
-    deselect_all_icons_button = memnew(Button);
-    select_all_icons_button = memnew(Button);
-    select_full_icons_button = memnew(Button);
+    select_icons_icon          = memnew(TextureRect);
+    select_icons_label         = memnew(Label);
+    deselect_all_icons_button  = memnew(Button);
+    select_all_icons_button    = memnew(Button);
+    select_full_icons_button   = memnew(Button);
     total_selected_icons_label = memnew(Label);
 
-    select_styleboxes_icon = memnew(TextureRect);
-    select_styleboxes_label = memnew(Label);
-    deselect_all_styleboxes_button = memnew(Button);
-    select_all_styleboxes_button = memnew(Button);
-    select_full_styleboxes_button = memnew(Button);
+    select_styleboxes_icon          = memnew(TextureRect);
+    select_styleboxes_label         = memnew(Label);
+    deselect_all_styleboxes_button  = memnew(Button);
+    select_all_styleboxes_button    = memnew(Button);
+    select_full_styleboxes_button   = memnew(Button);
     total_selected_styleboxes_label = memnew(Label);
 
     for (int i = 0; i < Theme::DATA_TYPE_MAX; i++) {
@@ -1139,18 +1139,18 @@ ThemeItemImportTree::ThemeItemImportTree() {
         Button* select_full_items_button;
         Label* total_selected_items_label;
 
-        String items_title = "";
-        String select_all_items_tooltip = "";
-        String select_full_items_tooltip = "";
+        String items_title                = "";
+        String select_all_items_tooltip   = "";
+        String select_full_items_tooltip  = "";
         String deselect_all_items_tooltip = "";
 
         switch (dt) {
             case Theme::DATA_TYPE_COLOR:
-                select_items_icon = select_colors_icon;
-                select_items_label = select_colors_label;
-                deselect_all_items_button = deselect_all_colors_button;
-                select_all_items_button = select_all_colors_button;
-                select_full_items_button = select_full_colors_button;
+                select_items_icon          = select_colors_icon;
+                select_items_label         = select_colors_label;
+                deselect_all_items_button  = deselect_all_colors_button;
+                select_all_items_button    = select_all_colors_button;
+                select_full_items_button   = select_full_colors_button;
                 total_selected_items_label = total_selected_colors_label;
 
                 items_title = TTR("Colors");
@@ -1163,11 +1163,11 @@ ThemeItemImportTree::ThemeItemImportTree() {
                 break;
 
             case Theme::DATA_TYPE_CONSTANT:
-                select_items_icon = select_constants_icon;
-                select_items_label = select_constants_label;
-                deselect_all_items_button = deselect_all_constants_button;
-                select_all_items_button = select_all_constants_button;
-                select_full_items_button = select_full_constants_button;
+                select_items_icon          = select_constants_icon;
+                select_items_label         = select_constants_label;
+                deselect_all_items_button  = deselect_all_constants_button;
+                select_all_items_button    = select_all_constants_button;
+                select_full_items_button   = select_full_constants_button;
                 total_selected_items_label = total_selected_constants_label;
 
                 items_title = TTR("Constants");
@@ -1180,11 +1180,11 @@ ThemeItemImportTree::ThemeItemImportTree() {
                 break;
 
             case Theme::DATA_TYPE_FONT:
-                select_items_icon = select_fonts_icon;
-                select_items_label = select_fonts_label;
-                deselect_all_items_button = deselect_all_fonts_button;
-                select_all_items_button = select_all_fonts_button;
-                select_full_items_button = select_full_fonts_button;
+                select_items_icon          = select_fonts_icon;
+                select_items_label         = select_fonts_label;
+                deselect_all_items_button  = deselect_all_fonts_button;
+                select_all_items_button    = select_all_fonts_button;
+                select_full_items_button   = select_full_fonts_button;
                 total_selected_items_label = total_selected_fonts_label;
 
                 items_title = TTR("Fonts");
@@ -1197,11 +1197,11 @@ ThemeItemImportTree::ThemeItemImportTree() {
                 break;
 
             case Theme::DATA_TYPE_ICON:
-                select_items_icon = select_icons_icon;
-                select_items_label = select_icons_label;
-                deselect_all_items_button = deselect_all_icons_button;
-                select_all_items_button = select_all_icons_button;
-                select_full_items_button = select_full_icons_button;
+                select_items_icon          = select_icons_icon;
+                select_items_label         = select_icons_label;
+                deselect_all_items_button  = deselect_all_icons_button;
+                select_all_items_button    = select_all_icons_button;
+                select_full_items_button   = select_full_icons_button;
                 total_selected_items_label = total_selected_icons_label;
 
                 items_title = TTR("Icons");
@@ -1214,11 +1214,11 @@ ThemeItemImportTree::ThemeItemImportTree() {
                 break;
 
             case Theme::DATA_TYPE_STYLEBOX:
-                select_items_icon = select_styleboxes_icon;
-                select_items_label = select_styleboxes_label;
-                deselect_all_items_button = deselect_all_styleboxes_button;
-                select_all_items_button = select_all_styleboxes_button;
-                select_full_items_button = select_full_styleboxes_button;
+                select_items_icon          = select_styleboxes_icon;
+                select_items_label         = select_styleboxes_label;
+                deselect_all_items_button  = deselect_all_styleboxes_button;
+                select_all_items_button    = select_all_styleboxes_button;
+                select_full_items_button   = select_full_styleboxes_button;
                 total_selected_items_label = total_selected_styleboxes_label;
 
                 items_title = TTR("Styleboxes");
@@ -1440,7 +1440,7 @@ void ThemeItemEditorDialog::_update_edit_types() {
     base_theme->get_type_list(&default_types);
     default_types.sort_custom<StringName::AlphCompare>();
 
-    String selected_type = "";
+    String selected_type     = "";
     Vector<int> selected_ids = edit_type_list->get_selected_items();
     if (selected_ids.size() > 0) {
         selected_type = edit_type_list->get_item_text(selected_ids[0]);
@@ -1510,7 +1510,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 
             names.sort_custom<StringName::AlphCompare>();
             for (List<StringName>::Element* E = names.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 TreeItem* item = edit_items_tree->create_item(color_root);
                 item->set_text(0, E->get());
                 item->add_button(
@@ -1555,7 +1555,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 
             names.sort_custom<StringName::AlphCompare>();
             for (List<StringName>::Element* E = names.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 TreeItem* item = edit_items_tree->create_item(constant_root);
                 item->set_text(0, E->get());
                 item->add_button(
@@ -1597,7 +1597,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 
             names.sort_custom<StringName::AlphCompare>();
             for (List<StringName>::Element* E = names.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 TreeItem* item = edit_items_tree->create_item(font_root);
                 item->set_text(0, E->get());
                 item->add_button(
@@ -1639,7 +1639,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 
             names.sort_custom<StringName::AlphCompare>();
             for (List<StringName>::Element* E = names.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 TreeItem* item = edit_items_tree->create_item(icon_root);
                 item->set_text(0, E->get());
                 item->add_button(
@@ -1681,7 +1681,7 @@ void ThemeItemEditorDialog::_update_edit_item_tree(String p_item_type) {
 
             names.sort_custom<StringName::AlphCompare>();
             for (List<StringName>::Element* E = names.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 TreeItem* item = edit_items_tree->create_item(stylebox_root);
                 item->set_text(0, E->get());
                 item->add_button(
@@ -1734,7 +1734,7 @@ void ThemeItemEditorDialog::_item_tree_button_pressed(
     switch (p_id) {
         case ITEMS_TREE_RENAME_ITEM: {
             String item_name = item->get_text(0);
-            int data_type = item->get_parent()->get_metadata(0);
+            int data_type    = item->get_parent()->get_metadata(0);
             _open_rename_theme_item_dialog(
                 (Theme::DataType)data_type,
                 item_name
@@ -1742,7 +1742,7 @@ void ThemeItemEditorDialog::_item_tree_button_pressed(
         } break;
         case ITEMS_TREE_REMOVE_ITEM: {
             String item_name = item->get_text(0);
-            int data_type = item->get_parent()->get_metadata(0);
+            int data_type    = item->get_parent()->get_metadata(0);
             edited_theme->clear_theme_item(
                 (Theme::DataType)data_type,
                 item_name,
@@ -1914,7 +1914,7 @@ void ThemeItemEditorDialog::_open_add_theme_item_dialog(int p_data_type) {
         "Theme item data type is out of bounds."
     );
 
-    item_popup_mode = CREATE_THEME_ITEM;
+    item_popup_mode     = CREATE_THEME_ITEM;
     edit_item_data_type = (Theme::DataType)p_data_type;
 
     switch (edit_item_data_type) {
@@ -1953,9 +1953,9 @@ void ThemeItemEditorDialog::_open_rename_theme_item_dialog(
         "Theme item data type is out of bounds."
     );
 
-    item_popup_mode = RENAME_THEME_ITEM;
+    item_popup_mode     = RENAME_THEME_ITEM;
     edit_item_data_type = p_data_type;
-    edit_item_old_name = p_item_name;
+    edit_item_old_name  = p_item_name;
 
     switch (edit_item_data_type) {
         case Theme::DATA_TYPE_COLOR:
@@ -2000,9 +2000,9 @@ void ThemeItemEditorDialog::_confirm_edit_theme_item() {
         );
     }
 
-    item_popup_mode = ITEM_POPUP_MODE_MAX;
+    item_popup_mode     = ITEM_POPUP_MODE_MAX;
     edit_item_data_type = Theme::DATA_TYPE_MAX;
-    edit_item_old_name = "";
+    edit_item_old_name  = "";
 
     _update_edit_item_tree(edited_item_type);
 }
@@ -2483,9 +2483,9 @@ void ThemeTypeEditor::_update_type_list() {
         theme_type_list->set_disabled(false);
 
         bool item_reselected = false;
-        int e_idx = 0;
+        int e_idx            = 0;
         for (List<StringName>::Element* E = theme_types.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             Ref<Texture> item_icon;
             if (E->get() == "") {
                 item_icon = get_icon("NodeDisabled", "EditorIcons");
@@ -2582,7 +2582,7 @@ OrderedHashMap<StringName, bool> ThemeTypeEditor::_get_type_items(
 
     List<StringName> keys;
     for (OrderedHashMap<StringName, bool>::Element E = items.front(); E;
-         E = E.next()) {
+         E                                           = E.next()) {
         keys.push_back(E.key());
     }
     keys.sort_custom<StringName::AlphCompare>();
@@ -3392,9 +3392,9 @@ void ThemeTypeEditor::_pin_leading_stylebox(
     }
 
     LeadingStylebox leader;
-    leader.pinned = true;
-    leader.item_name = p_item_name;
-    leader.stylebox = stylebox;
+    leader.pinned       = true;
+    leader.item_name    = p_item_name;
+    leader.stylebox     = stylebox;
     leader.ref_stylebox = (stylebox.is_valid() ? stylebox->duplicate() : RES());
 
     leading_stylebox = leader;
@@ -3413,7 +3413,7 @@ void ThemeTypeEditor::_unpin_leading_stylebox() {
     }
 
     LeadingStylebox leader;
-    leader.pinned = false;
+    leader.pinned    = false;
     leading_stylebox = leader;
 
     _update_type_items();
@@ -3451,14 +3451,14 @@ void ThemeTypeEditor::_update_stylebox_from_leading() {
             continue;
         }
 
-        Variant value = leading_stylebox.stylebox->get(E->get().name);
+        Variant value     = leading_stylebox.stylebox->get(E->get().name);
         Variant ref_value = leading_stylebox.ref_stylebox->get(E->get().name);
         if (value == ref_value) {
             continue;
         }
 
         for (List<Ref<StyleBox>>::Element* F = styleboxes.front(); F;
-             F = F->next()) {
+             F                               = F->next()) {
             Ref<StyleBox> sb = F->get();
             sb->set(E->get().name, value);
         }
@@ -3633,7 +3633,7 @@ void ThemeTypeEditor::set_edited_theme(const Ref<Theme>& p_theme) {
 }
 
 void ThemeTypeEditor::select_type(String p_type_name) {
-    edited_type = p_type_name;
+    edited_type      = p_type_name;
     bool type_exists = false;
 
     for (int i = 0; i < theme_type_list->get_item_count(); i++) {
@@ -3731,10 +3731,10 @@ ThemeTypeEditor::ThemeTypeEditor() {
     data_type_tabs->set_v_size_flags(SIZE_EXPAND_FILL);
     data_type_tabs->set_use_hidden_tabs_for_min_size(true);
 
-    color_items_list = _create_item_list(Theme::DATA_TYPE_COLOR);
+    color_items_list    = _create_item_list(Theme::DATA_TYPE_COLOR);
     constant_items_list = _create_item_list(Theme::DATA_TYPE_CONSTANT);
-    font_items_list = _create_item_list(Theme::DATA_TYPE_FONT);
-    icon_items_list = _create_item_list(Theme::DATA_TYPE_ICON);
+    font_items_list     = _create_item_list(Theme::DATA_TYPE_FONT);
+    icon_items_list     = _create_item_list(Theme::DATA_TYPE_ICON);
     stylebox_items_list = _create_item_list(Theme::DATA_TYPE_STYLEBOX);
 
     update_debounce_timer = memnew(Timer);
@@ -4109,7 +4109,7 @@ bool ThemeEditorPlugin::handles(Object* p_node) const {
             edited_theme->get_font_list(E->get(), &names);
 
             for (List<StringName>::Element* F = names.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 if (font_item == edited_theme->get_font(F->get(), E->get())) {
                     belongs_to_theme = true;
                     break;
@@ -4127,7 +4127,7 @@ bool ThemeEditorPlugin::handles(Object* p_node) const {
             edited_theme->get_stylebox_list(E->get(), &names);
 
             for (List<StringName>::Element* F = names.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 if (stylebox_item
                     == edited_theme->get_stylebox(F->get(), E->get())) {
                     belongs_to_theme = true;
@@ -4146,7 +4146,7 @@ bool ThemeEditorPlugin::handles(Object* p_node) const {
             edited_theme->get_icon_list(E->get(), &names);
 
             for (List<StringName>::Element* F = names.front(); F;
-                 F = F->next()) {
+                 F                            = F->next()) {
                 if (icon_item == edited_theme->get_icon(F->get(), E->get())) {
                     belongs_to_theme = true;
                     break;
@@ -4172,7 +4172,7 @@ void ThemeEditorPlugin::make_visible(bool p_visible) {
 }
 
 ThemeEditorPlugin::ThemeEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor       = p_node;
     theme_editor = memnew(ThemeEditor);
     theme_editor->set_custom_minimum_size(Size2(0, 200) * EDSCALE);
 

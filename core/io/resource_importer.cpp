@@ -109,7 +109,7 @@ Error ResourceFormatImporter::_get_path_and_type(
 
             } else if (!path_found && assign == "path") {
                 r_path_and_type.path = value;
-                path_found = true; // first match must have priority
+                path_found           = true; // first match must have priority
             } else if (assign == "type") {
                 r_path_and_type.type = value;
             } else if (assign == "importer") {

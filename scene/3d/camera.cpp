@@ -155,9 +155,9 @@ void Camera::_notification(int p_what) {
 }
 
 Transform Camera::get_camera_transform() const {
-    Transform tr = get_global_transform().orthonormalized();
-    tr.origin += tr.basis.get_axis(1) * v_offset;
-    tr.origin += tr.basis.get_axis(0) * h_offset;
+    Transform tr  = get_global_transform().orthonormalized();
+    tr.origin    += tr.basis.get_axis(1) * v_offset;
+    tr.origin    += tr.basis.get_axis(0) * h_offset;
     return tr;
 }
 
@@ -171,9 +171,9 @@ void Camera::set_perspective(
         return;
     }
 
-    fov = p_fovy_degrees;
+    fov  = p_fovy_degrees;
     near = p_z_near;
-    far = p_z_far;
+    far  = p_z_far;
     mode = PROJECTION_PERSPECTIVE;
 
     VisualServer::get_singleton()
@@ -190,9 +190,9 @@ void Camera::set_orthogonal(float p_size, float p_z_near, float p_z_far) {
 
     size = p_size;
 
-    near = p_z_near;
-    far = p_z_far;
-    mode = PROJECTION_ORTHOGONAL;
+    near         = p_z_near;
+    far          = p_z_far;
+    mode         = PROJECTION_ORTHOGONAL;
     force_change = false;
 
     VisualServer::get_singleton()
@@ -211,12 +211,12 @@ void Camera::set_frustum(
         return;
     }
 
-    size = p_size;
+    size           = p_size;
     frustum_offset = p_offset;
 
-    near = p_z_near;
-    far = p_z_far;
-    mode = PROJECTION_FRUSTUM;
+    near         = p_z_near;
+    far          = p_z_far;
+    mode         = PROJECTION_FRUSTUM;
     force_change = false;
 
     VisualServer::get_singleton()
@@ -293,7 +293,7 @@ Vector3 Camera::project_local_ray_normal(const Point2& p_pos) const {
     );
 
     Size2 viewport_size = get_viewport()->get_camera_rect_size();
-    Vector2 cpos = get_viewport()->get_camera_coords(p_pos);
+    Vector2 cpos        = get_viewport()->get_camera_coords(p_pos);
     Vector3 ray;
 
     if (mode == PROJECTION_ORTHOGONAL) {
@@ -308,7 +308,7 @@ Vector3 Camera::project_local_ray_normal(const Point2& p_pos) const {
             keep_aspect == KEEP_WIDTH
         );
         Vector2 screen_he = cm.get_viewport_half_extents();
-        ray = Vector3(
+        ray               = Vector3(
                   ((cpos.x / viewport_size.width) * 2.0 - 1.0) * screen_he.x,
                   ((1.0 - (cpos.y / viewport_size.height)) * 2.0 - 1.0)
                       * screen_he.y,
@@ -328,7 +328,7 @@ Vector3 Camera::project_ray_origin(const Point2& p_pos) const {
     );
 
     Size2 viewport_size = get_viewport()->get_camera_rect_size();
-    Vector2 cpos = get_viewport()->get_camera_coords(p_pos);
+    Vector2 cpos        = get_viewport()->get_camera_coords(p_pos);
     ERR_FAIL_COND_V(viewport_size.y == 0, Vector3());
 
     if (mode == PROJECTION_PERSPECTIVE) {
@@ -348,13 +348,13 @@ Vector3 Camera::project_ray_origin(const Point2& p_pos) const {
         ray.x = pos.x * (hsize)-hsize / 2;
         ray.y = (1.0 - pos.y) * (vsize)-vsize / 2;
         ray.z = -near;
-        ray = get_camera_transform().xform(ray);
+        ray   = get_camera_transform().xform(ray);
         return ray;
     };
 };
 
 bool Camera::is_position_behind(const Vector3& p_pos) const {
-    Transform t = get_global_transform();
+    Transform t    = get_global_transform();
     Vector3 eyedir = -t.basis.get_axis(2).normalized();
     return eyedir.dot(p_pos - t.origin) < near;
 }
@@ -430,7 +430,7 @@ Point2 Camera::unproject_position(const Vector3& p_pos) const {
 
     Plane p(get_camera_transform().xform_inv(p_pos), 1.0);
 
-    p = cm.xform4(p);
+    p         = cm.xform4(p);
     p.normal /= p.d;
 
     Point2 res;
@@ -475,9 +475,9 @@ Vector3 Camera::project_position(const Point2& p_point, float p_z_depth) const {
     Vector2 vp_he = cm.get_viewport_half_extents();
 
     Vector2 point;
-    point.x = (p_point.x / viewport_size.x) * 2.0 - 1.0;
-    point.y = (1.0 - (p_point.y / viewport_size.y)) * 2.0 - 1.0;
-    point *= vp_he;
+    point.x  = (p_point.x / viewport_size.x) * 2.0 - 1.0;
+    point.y  = (1.0 - (p_point.y / viewport_size.y)) * 2.0 - 1.0;
+    point   *= vp_he;
 
     Vector3 p(point.x, point.y, -p_z_depth);
 
@@ -914,21 +914,21 @@ Vector3 Camera::get_doppler_tracked_velocity() const {
 }
 
 Camera::Camera() {
-    camera = VisualServer::get_singleton()->camera_create();
-    size = 1;
-    fov = 0;
+    camera         = VisualServer::get_singleton()->camera_create();
+    size           = 1;
+    fov            = 0;
     frustum_offset = Vector2();
-    near = 0;
-    far = 0;
-    current = false;
-    viewport = nullptr;
-    force_change = false;
-    mode = PROJECTION_PERSPECTIVE;
+    near           = 0;
+    far            = 0;
+    current        = false;
+    viewport       = nullptr;
+    force_change   = false;
+    mode           = PROJECTION_PERSPECTIVE;
     set_perspective(70.0, 0.05, 100.0);
     keep_aspect = KEEP_HEIGHT;
-    layers = 0xfffff;
-    v_offset = 0;
-    h_offset = 0;
+    layers      = 0xfffff;
+    v_offset    = 0;
+    h_offset    = 0;
     VisualServer::get_singleton()->camera_set_cull_mask(camera, layers);
     // active=false;
     velocity_tracker.instance();
@@ -984,7 +984,7 @@ void ClippedCamera::_notification(int p_what) {
         Vector3 cam_fw = -get_global_transform()
                               .basis.get_axis(Vector3::AXIS_Z)
                               .normalized();
-        Vector3 cam_pos = get_global_transform().origin;
+        Vector3 cam_pos    = get_global_transform().origin;
         Vector3 parent_pos = parent->get_global_transform().origin;
 
         Plane parent_plane(parent_pos, cam_fw);
@@ -1020,7 +1020,7 @@ void ClippedCamera::_notification(int p_what) {
         }
 
         Transform xf = get_global_transform();
-        xf.origin = ray_from;
+        xf.origin    = ray_from;
         xf.orthonormalize();
 
         float closest_safe = 1.0f, closest_unsafe = 1.0f;
@@ -1262,8 +1262,8 @@ void ClippedCamera::_bind_methods() {
 }
 
 ClippedCamera::ClippedCamera() {
-    margin = 0;
-    clip_offset = 0;
+    margin       = 0;
+    clip_offset  = 0;
     process_mode = CLIP_PROCESS_PHYSICS;
     set_physics_process_internal(true);
     collision_mask = 1;
@@ -1272,7 +1272,7 @@ ClippedCamera::ClippedCamera() {
     pyramid_shape = PhysicsServer::get_singleton()->shape_create(
         PhysicsServer::SHAPE_CONVEX_POLYGON
     );
-    clip_to_areas = false;
+    clip_to_areas  = false;
     clip_to_bodies = true;
 }
 

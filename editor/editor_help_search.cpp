@@ -343,7 +343,7 @@ bool EditorHelpSearch::Runner::_slice() {
 bool EditorHelpSearch::Runner::_phase_match_classes_init() {
     iterator_doc = EditorHelp::get_doc_data()->class_list.front();
     matches.clear();
-    matched_item = nullptr;
+    matched_item        = nullptr;
     match_highest_score = 0;
 
     return true;
@@ -353,7 +353,7 @@ bool EditorHelpSearch::Runner::_phase_match_classes() {
     DocData::ClassDoc& class_doc = iterator_doc->value();
     if (!_is_class_disabled_by_feature_profile(class_doc.name)) {
         matches[class_doc.name] = ClassMatch();
-        ClassMatch& match = matches[class_doc.name];
+        ClassMatch& match       = matches[class_doc.name];
 
         match.doc = &class_doc;
 
@@ -533,17 +533,17 @@ void EditorHelpSearch::Runner::_match_item(
 
     // Favor types where search term is a substring close to the start of the
     // type.
-    float w = 0.5f;
-    int pos = p_text.findn(term);
+    float w     = 0.5f;
+    int pos     = p_text.findn(term);
     float score = (pos > -1) ? 1.0f - w * MIN(1, 3 * pos * inverse_length)
                              : MAX(0.f, .9f - w);
 
     // Favor shorter items: they resemble the search term more.
-    w = 0.1f;
+    w      = 0.1f;
     score *= (1 - w) + w * (term.length() * inverse_length);
 
     if (match_highest_score == 0 || score > match_highest_score) {
-        matched_item = p_item;
+        matched_item        = p_item;
         match_highest_score = score;
     }
 }
@@ -562,7 +562,7 @@ TreeItem* EditorHelpSearch::Runner::_create_class_hierarchy(
             parent = class_items[p_match.doc->inherits];
         } else {
             ClassMatch& base_match = matches[p_match.doc->inherits];
-            parent = _create_class_hierarchy(base_match);
+            parent                 = _create_class_hierarchy(base_match);
         }
     }
 
@@ -610,8 +610,8 @@ TreeItem* EditorHelpSearch::Runner::_create_method_item(
     String tooltip =
         p_doc->return_type + " " + p_class_doc->name + "." + p_doc->name + "(";
     for (int i = 0; i < p_doc->arguments.size(); i++) {
-        const DocData::ArgumentDoc& arg = p_doc->arguments[i];
-        tooltip += arg.type + " " + arg.name;
+        const DocData::ArgumentDoc& arg  = p_doc->arguments[i];
+        tooltip                         += arg.type + " " + arg.name;
         if (arg.default_value != "") {
             tooltip += " = " + arg.default_value;
         }
@@ -639,8 +639,8 @@ TreeItem* EditorHelpSearch::Runner::_create_signal_item(
     String tooltip =
         p_doc->return_type + " " + p_class_doc->name + "." + p_doc->name + "(";
     for (int i = 0; i < p_doc->arguments.size(); i++) {
-        const DocData::ArgumentDoc& arg = p_doc->arguments[i];
-        tooltip += arg.type + " " + arg.name;
+        const DocData::ArgumentDoc& arg  = p_doc->arguments[i];
+        tooltip                         += arg.type + " " + arg.name;
         if (arg.default_value != "") {
             tooltip += " = " + arg.default_value;
         }

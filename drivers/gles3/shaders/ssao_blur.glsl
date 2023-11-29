@@ -6,7 +6,7 @@ layout(location = 0) in highp vec4 vertex_attrib;
 /* clang-format on */
 
 void main() {
-    gl_Position = vertex_attrib;
+    gl_Position   = vertex_attrib;
     gl_Position.z = 1.0;
 }
 
@@ -84,9 +84,9 @@ void main() {
 
     // Base weight for depth falloff.  Increase this for more blurriness,
     // decrease it for better edge discrimination
-    float BASE = gaussian[0];
-    float totalWeight = BASE;
-    sum *= totalWeight;
+    float BASE         = gaussian[0];
+    float totalWeight  = BASE;
+    sum               *= totalWeight;
 
     ivec2 clamp_limit = screen_size - ivec2(1);
 
@@ -99,7 +99,7 @@ void main() {
             float value =
                 texelFetch(source_ssao, clamp(ppos, ivec2(0), clamp_limit), 0)
                     .r;
-            ivec2 rpos = clamp(ppos, ivec2(0), clamp_limit);
+            ivec2 rpos       = clamp(ppos, ivec2(0), clamp_limit);
             float temp_depth = texelFetch(source_depth, rpos, 0).r;
             // vec3 temp_normal = texelFetch(source_normal, rpos, 0).rgb * 2.0
             // - 1.0;
@@ -118,11 +118,11 @@ void main() {
             // increases, decrease weight.
             weight *= max(0.0, 1.0 - edge_sharpness * abs(temp_depth - depth));
 
-            sum += value * weight;
+            sum         += value * weight;
             totalWeight += weight;
         }
     }
 
     const float epsilon = 0.0001;
-    visibility = sum / (totalWeight + epsilon);
+    visibility          = sum / (totalWeight + epsilon);
 }

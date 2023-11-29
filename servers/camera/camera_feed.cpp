@@ -173,11 +173,11 @@ RID CameraFeed::get_texture(CameraServer::FeedImage p_which) {
 
 CameraFeed::CameraFeed() {
     // initialize our feed
-    id = CameraServer::get_singleton()->get_free_id();
-    name = "???";
-    active = false;
-    datatype = CameraFeed::FEED_RGB;
-    position = CameraFeed::FEED_UNSPECIFIED;
+    id        = CameraServer::get_singleton()->get_free_id();
+    name      = "???";
+    active    = false;
+    datatype  = CameraFeed::FEED_RGB;
+    position  = CameraFeed::FEED_UNSPECIFIED;
     transform = Transform2D(1.0, 0.0, 0.0, -1.0, 0.0, 1.0);
 
     // create a texture object
@@ -189,14 +189,14 @@ CameraFeed::CameraFeed() {
 
 CameraFeed::CameraFeed(String p_name, FeedPosition p_position) {
     // initialize our feed
-    id = CameraServer::get_singleton()->get_free_id();
-    base_width = 0;
+    id          = CameraServer::get_singleton()->get_free_id();
+    base_width  = 0;
     base_height = 0;
-    name = p_name;
-    active = false;
-    datatype = CameraFeed::FEED_NOIMAGE;
-    position = p_position;
-    transform = Transform2D(1.0, 0.0, 0.0, -1.0, 0.0, 1.0);
+    name        = p_name;
+    active      = false;
+    datatype    = CameraFeed::FEED_NOIMAGE;
+    position    = p_position;
+    transform   = Transform2D(1.0, 0.0, 0.0, -1.0, 0.0, 1.0);
 
     // create a texture object
     VisualServer* vs = VisualServer::get_singleton();
@@ -217,13 +217,13 @@ void CameraFeed::set_RGB_img(const Ref<Image>& p_rgb_img) {
     if (active) {
         VisualServer* vs = VisualServer::get_singleton();
 
-        int new_width = p_rgb_img->get_width();
+        int new_width  = p_rgb_img->get_width();
         int new_height = p_rgb_img->get_height();
 
         if ((base_width != new_width) || (base_height != new_height)) {
             // We're assuming here that our camera image doesn't change around
             // formats etc, allocate the whole lot...
-            base_width = new_width;
+            base_width  = new_width;
             base_height = new_height;
 
             vs->texture_allocate(
@@ -247,13 +247,13 @@ void CameraFeed::set_YCbCr_img(const Ref<Image>& p_ycbcr_img) {
     if (active) {
         VisualServer* vs = VisualServer::get_singleton();
 
-        int new_width = p_ycbcr_img->get_width();
+        int new_width  = p_ycbcr_img->get_width();
         int new_height = p_ycbcr_img->get_height();
 
         if ((base_width != new_width) || (base_height != new_height)) {
             // We're assuming here that our camera image doesn't change around
             // formats etc, allocate the whole lot...
-            base_width = new_width;
+            base_width  = new_width;
             base_height = new_height;
 
             vs->texture_allocate(
@@ -291,15 +291,15 @@ void CameraFeed::set_YCbCr_imgs(
         // issues. That said, if we convert to RGB, we could enable using
         // texture resources again...
 
-        int new_y_width = p_y_img->get_width();
-        int new_y_height = p_y_img->get_height();
-        int new_cbcr_width = p_cbcr_img->get_width();
+        int new_y_width     = p_y_img->get_width();
+        int new_y_height    = p_y_img->get_height();
+        int new_cbcr_width  = p_cbcr_img->get_width();
         int new_cbcr_height = p_cbcr_img->get_height();
 
         if ((base_width != new_y_width) || (base_height != new_y_height)) {
             // We're assuming here that our camera image doesn't change around
             // formats etc, allocate the whole lot...
-            base_width = new_y_width;
+            base_width  = new_y_width;
             base_height = new_y_height;
 
             vs->texture_allocate(
@@ -346,7 +346,7 @@ void CameraFeed::allocate_texture(
     if ((base_width != p_width) || (base_height != p_height)) {
         // We're assuming here that our camera image doesn't change around
         // formats etc, allocate the whole lot...
-        base_width = p_width;
+        base_width  = p_width;
         base_height = p_height;
 
         vs->texture_allocate(

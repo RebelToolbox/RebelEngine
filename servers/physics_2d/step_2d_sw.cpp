@@ -73,9 +73,9 @@ void Step2DSW::_populate_island(
 }
 
 bool Step2DSW::_setup_island(Constraint2DSW* p_island, real_t p_delta) {
-    Constraint2DSW* ci = p_island;
+    Constraint2DSW* ci      = p_island;
     Constraint2DSW* prev_ci = nullptr;
-    bool removed_root = false;
+    bool removed_root       = false;
     while (ci) {
         bool process = ci->setup(p_delta);
 
@@ -85,7 +85,7 @@ bool Step2DSW::_setup_island(Constraint2DSW* p_island, real_t p_delta) {
                 prev_ci->set_island_next(ci->get_island_next());
             } else {
                 removed_root = true;
-                prev_ci = ci;
+                prev_ci      = ci;
             }
         } else {
             prev_ci = ci;
@@ -186,9 +186,9 @@ void Step2DSW::step(Space2DSW* p_space, real_t p_delta, int p_iterations) {
 
     /* GENERATE CONSTRAINT ISLANDS */
 
-    Body2DSW* island_list = nullptr;
+    Body2DSW* island_list                  = nullptr;
     Constraint2DSW* constraint_island_list = nullptr;
-    b = body_list->first();
+    b                                      = body_list->first();
 
     int island_count = 0;
 
@@ -196,7 +196,7 @@ void Step2DSW::step(Space2DSW* p_space, real_t p_delta, int p_iterations) {
         Body2DSW* body = b->self();
 
         if (body->get_island_step() != _step) {
-            Body2DSW* island = nullptr;
+            Body2DSW* island                  = nullptr;
             Constraint2DSW* constraint_island = nullptr;
             _populate_island(body, &island, &constraint_island);
 
@@ -246,7 +246,7 @@ void Step2DSW::step(Space2DSW* p_space, real_t p_delta, int p_iterations) {
     /* SETUP CONSTRAINT ISLANDS */
 
     {
-        Constraint2DSW* ci = constraint_island_list;
+        Constraint2DSW* ci      = constraint_island_list;
         Constraint2DSW* prev_ci = nullptr;
         while (ci) {
             if (_setup_island(ci, p_delta)) {

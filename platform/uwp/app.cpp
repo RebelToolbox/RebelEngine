@@ -135,7 +135,7 @@ void App::SetWindow(CoreWindow ^ p_window) {
     // This is not supported on Windows Phone applications.
     auto pointerVisualizationSettings =
         PointerVisualizationSettings::GetForCurrentView();
-    pointerVisualizationSettings->IsContactFeedbackEnabled = false;
+    pointerVisualizationSettings->IsContactFeedbackEnabled      = false;
     pointerVisualizationSettings->IsBarrelButtonFeedbackEnabled = false;
 #endif
 
@@ -279,7 +279,7 @@ static Windows::Foundation::Point _get_pixel_position(
     }
 #endif
 
-    OS::VideoMode vm = os->get_video_mode();
+    OS::VideoMode vm  = os->get_video_mode();
     outputPosition.X *= vm.width;
     outputPosition.Y *= vm.height;
 
@@ -375,7 +375,7 @@ void App::OnMouseModeChanged(
     Windows::System::Threading::Core::SignalNotifier ^ signalNotifier,
     bool timedOut
 ) {
-    OS::MouseMode mode = os->get_mouse_mode();
+    OS::MouseMode mode        = os->get_mouse_mode();
     SignalNotifier ^ notifier = mouseChangedNotifier;
 
     window->Dispatcher->RunAsync(
@@ -483,7 +483,7 @@ void App::key_event(
     ke.pressed = p_pressed;
 
     if (key_args != nullptr) {
-        ke.type = OS_UWP::KeyEvent::MessageType::KEY_EVENT_MESSAGE;
+        ke.type    = OS_UWP::KeyEvent::MessageType::KEY_EVENT_MESSAGE;
         ke.unicode = 0;
         ke.scancode =
             KeyMappingWindows::get_keysym((unsigned int)key_args->VirtualKey);
@@ -495,8 +495,8 @@ void App::key_event(
                || (p_pressed && key_args->KeyStatus.WasKeyDown);
 
     } else {
-        ke.type = OS_UWP::KeyEvent::MessageType::CHAR_EVENT_MESSAGE;
-        ke.unicode = char_args->KeyCode;
+        ke.type     = OS_UWP::KeyEvent::MessageType::CHAR_EVENT_MESSAGE;
+        ke.unicode  = char_args->KeyCode;
         ke.scancode = 0;
         ke.physical_scancode = 0;
         ke.echo = (!p_pressed && !char_args->KeyStatus.IsKeyReleased)
@@ -593,20 +593,20 @@ void App::UpdateWindowSize(Size size) {
         ConvertDipsToPixels(size.Height, dpi)
     );
 
-    mWindowWidth = static_cast<GLsizei>(pixelSize.Width);
+    mWindowWidth  = static_cast<GLsizei>(pixelSize.Width);
     mWindowHeight = static_cast<GLsizei>(pixelSize.Height);
 
     OS::VideoMode vm;
-    vm.width = mWindowWidth;
-    vm.height = mWindowHeight;
+    vm.width      = mWindowWidth;
+    vm.height     = mWindowHeight;
     vm.fullscreen = true;
-    vm.resizable = false;
+    vm.resizable  = false;
     os->set_video_mode(vm);
 }
 
 char** App::get_command_line(unsigned int* out_argc) {
     static char* fail_cl[] = {"--path", "game", NULL};
-    *out_argc = 2;
+    *out_argc              = 2;
 
     FILE* f = _wfopen(L"__cl__.cl", L"rb");
 
@@ -650,8 +650,8 @@ char** App::get_command_line(unsigned int* out_argc) {
             return (fail_cl);
         }
 
-        char* arg = new char[strlen + 1];
-        r = fread(arg, sizeof(char), strlen, f);
+        char* arg   = new char[strlen + 1];
+        r           = fread(arg, sizeof(char), strlen, f);
         arg[strlen] = '\0';
 
         if (r == strlen) {
@@ -704,7 +704,7 @@ char** App::get_command_line(unsigned int* out_argc) {
         ret[i] = arg;
     }
     ret[cl.Size] = NULL;
-    *out_argc = cl.Size;
+    *out_argc    = cl.Size;
 
     return ret;
 }

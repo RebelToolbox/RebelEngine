@@ -106,7 +106,7 @@ FileAccess* FileAccess::open(
         }
     }
 
-    ret = create_for_path(p_path);
+    ret       = create_for_path(p_path);
     Error err = ret->_open(p_path, p_mode_flags);
 
     if (r_error) {
@@ -176,9 +176,9 @@ uint16_t FileAccess::get_16() const {
         SWAP(a, b);
     }
 
-    res = b;
+    res   = b;
     res <<= 8;
-    res |= a;
+    res  |= a;
 
     return res;
 }
@@ -194,9 +194,9 @@ uint32_t FileAccess::get_32() const {
         SWAP(a, b);
     }
 
-    res = b;
+    res   = b;
     res <<= 16;
-    res |= a;
+    res  |= a;
 
     return res;
 }
@@ -212,9 +212,9 @@ uint64_t FileAccess::get_64() const {
         SWAP(a, b);
     }
 
-    res = b;
+    res   = b;
     res <<= 32;
-    res |= a;
+    res  |= a;
 
     return res;
 }
@@ -278,7 +278,7 @@ class CharBuffer {
             }
         }
 
-        buffer = vector.ptrw();
+        buffer   = vector.ptrw();
         capacity = vector.size();
         ERR_FAIL_COND_V(written >= capacity, false);
 
@@ -347,7 +347,7 @@ Vector<String> FileAccess::get_csv_line(const String& p_delim) const {
             break;
         }
         line += get_line() + "\n";
-        qc = 0;
+        qc    = 0;
         for (int i = 0; i < line.length(); i++) {
             if (line[i] == '"') {
                 qc++;
@@ -402,7 +402,7 @@ String FileAccess::get_as_utf8_string() const {
     sourcef.resize(len + 1);
 
     PoolVector<uint8_t>::Write w = sourcef.write();
-    uint64_t r = get_buffer(w.ptr(), len);
+    uint64_t r                   = get_buffer(w.ptr(), len);
     ERR_FAIL_COND_V(r != len, String());
     w[len] = 0;
 
@@ -578,7 +578,7 @@ void FileAccess::store_csv_line(
     ERR_FAIL_COND(p_delim.length() != 1);
 
     String line = "";
-    int size = p_values.size();
+    int size    = p_values.size();
     for (int i = 0; i < size; ++i) {
         String value = p_values[i];
 
@@ -731,7 +731,7 @@ String FileAccess::get_sha256(const String& p_file) {
 }
 
 FileAccess::FileAccess() {
-    endian_swap = false;
+    endian_swap    = false;
     real_is_double = false;
-    _access_type = ACCESS_FILESYSTEM;
+    _access_type   = ACCESS_FILESYSTEM;
 };

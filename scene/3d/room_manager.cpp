@@ -87,7 +87,7 @@ bool RoomManager::static_rooms_get_active_and_loaded() {
     if (active_room_manager) {
         if (active_room_manager->rooms_get_active()) {
             Ref<World> world = active_room_manager->get_world();
-            RID scenario = world->get_scenario();
+            RID scenario     = world->get_scenario();
             return active_room_manager->rooms_get_active()
                 && VisualServer::get_singleton()->rooms_is_loaded(scenario);
         }
@@ -155,7 +155,7 @@ String RoomManager::get_configuration_warning() const {
 
 void RoomManager::_preview_camera_update() {
     Ref<World> world = get_world();
-    RID scenario = world->get_scenario();
+    RID scenario     = world->get_scenario();
 
     if (_godot_preview_camera_ID != (ObjectID)-1) {
         Camera* cam = Object::cast_to<Camera>(
@@ -165,7 +165,7 @@ void RoomManager::_preview_camera_update() {
             _godot_preview_camera_ID = (ObjectID)-1;
         } else {
             // get camera position and direction
-            Vector3 camera_pos = cam->get_global_transform().origin;
+            Vector3 camera_pos   = cam->get_global_transform().origin;
             Vector<Plane> planes = cam->get_frustum();
 
             // only update the visual server when there is a change.. as it will
@@ -195,7 +195,7 @@ void RoomManager::_preview_camera_update() {
             }
 
             if (changed) {
-                _godot_camera_pos = camera_pos;
+                _godot_camera_pos    = camera_pos;
                 _godot_camera_planes = planes;
                 VisualServer::get_singleton()->rooms_override_camera(
                     scenario,
@@ -218,7 +218,7 @@ void RoomManager::_notification(int p_what) {
                 // creates two room managers, but should not create major
                 // problems as it is just used to auto update when portals etc
                 // are changed in the editor, and there is a check for nullptr.
-                active_room_manager = this;
+                active_room_manager           = this;
                 SpatialEditor* spatial_editor = SpatialEditor::get_singleton();
                 if (spatial_editor) {
                     spatial_editor->update_portal_tools();
@@ -254,7 +254,7 @@ void RoomManager::_notification(int p_what) {
 
             if (_settings_gameplay_monitor_enabled) {
                 Ref<World> world = get_world();
-                RID scenario = world->get_scenario();
+                RID scenario     = world->get_scenario();
 
                 List<Camera*> cameras;
                 world->get_camera_list(&cameras);
@@ -477,7 +477,7 @@ void RoomManager::_refresh_from_project_settings() {
 
     // force not to show logs when not in editor
     if (!Engine::get_singleton()->is_editor_hint()) {
-        _show_debug = false;
+        _show_debug                  = false;
         _settings_log_pvs_generation = false;
     }
 }
@@ -739,10 +739,10 @@ void RoomManager::rooms_flip_portals() {
 
 void RoomManager::rooms_convert() {
     // set all error conditions to false
-    _warning_misnamed_nodes_detected = false;
+    _warning_misnamed_nodes_detected    = false;
     _warning_portal_link_room_not_found = false;
-    _warning_portal_autolink_failed = false;
-    _warning_room_overlap_detected = false;
+    _warning_portal_autolink_failed     = false;
+    _warning_room_overlap_detected      = false;
 
     _refresh_from_project_settings();
 
@@ -809,7 +809,7 @@ void RoomManager::rooms_convert() {
     _autoplace_recursive(_roomlist);
 
     bool generate_pvs = false;
-    bool pvs_cull = false;
+    bool pvs_cull     = false;
     switch (_pvs_mode) {
         default: {
         } break;
@@ -818,7 +818,7 @@ void RoomManager::rooms_convert() {
         } break;
         case PVS_MODE_FULL: {
             generate_pvs = true;
-            pvs_cull = true;
+            pvs_cull     = true;
         } break;
     }
 
@@ -930,7 +930,7 @@ void RoomManager::_second_pass_room(
         aabb.create_from_points(room_pts);
 
         for (int n = 0; n < p_room->_portals.size(); n++) {
-            int portal_id = p_room->_portals[n];
+            int portal_id  = p_room->_portals[n];
             Portal* portal = p_portals[portal_id];
 
             // only checking portals out from source room
@@ -1231,7 +1231,7 @@ void RoomManager::_autolink_portals(
                 portal->_pt_center_world + (dist * portal->_plane.normal);
 
             int best_priority = -1000;
-            int best_room = -1;
+            int best_room     = -1;
 
             for (int r = 0; r < _rooms.size(); r++) {
                 Room* room = _rooms[r];
@@ -1259,7 +1259,7 @@ void RoomManager::_autolink_portals(
                     // priority in case there are internal rooms...
                     if (room->_room_priority > best_priority) {
                         best_priority = room->_room_priority;
-                        best_room = r;
+                        best_room     = r;
                     }
                 }
 
@@ -1468,14 +1468,14 @@ void RoomManager::_check_portal_for_warnings(
 ) {
 #ifdef TOOLS_ENABLED
     AABB bb = p_room_aabb_without_portals;
-    bb = bb.grow(bb.get_longest_axis_size() * 0.5);
+    bb      = bb.grow(bb.get_longest_axis_size() * 0.5);
 
     bool changed = false;
 
     // far outside the room?
     const Vector3& pos = p_portal->get_global_transform().origin;
 
-    bool old_outside = p_portal->_warning_outside_room_aabb;
+    bool old_outside                     = p_portal->_warning_outside_room_aabb;
     p_portal->_warning_outside_room_aabb = !bb.has_point(pos);
 
     if (p_portal->_warning_outside_room_aabb != old_outside) {
@@ -1490,9 +1490,9 @@ void RoomManager::_check_portal_for_warnings(
 
     // facing wrong way?
     Vector3 offset = pos - bb.get_center();
-    real_t dot = offset.dot(p_portal->_plane.normal);
+    real_t dot     = offset.dot(p_portal->_plane.normal);
 
-    bool old_facing = p_portal->_warning_facing_wrong_way;
+    bool old_facing                     = p_portal->_warning_facing_wrong_way;
     p_portal->_warning_facing_wrong_way = dot < 0.0;
 
     if (p_portal->_warning_facing_wrong_way != old_facing) {
@@ -1518,14 +1518,14 @@ bool RoomManager::_autoplace_object(VisualInstance* p_vi) {
     // note we could alternatively use the portal_renderer to do this more
     // efficiently (as it has a BSP) but at a cost of returning result from the
     // visual server
-    AABB bb = p_vi->get_transformed_aabb();
+    AABB bb        = p_vi->get_transformed_aabb();
     Vector3 centre = bb.get_center();
 
     // in order to deal with internal rooms, we can't just stop at the first
     // room the point is within, as there could be later rooms with a higher
     // priority
     int best_priority = -INT32_MAX;
-    Room* best_room = nullptr;
+    Room* best_room   = nullptr;
 
     // if not set to zero (no preference) this can override a preference
     // for a certain RoomGroup priority to ensure the instance gets placed in
@@ -1539,7 +1539,7 @@ bool RoomManager::_autoplace_object(VisualInstance* p_vi) {
             // the standard routine autoplaces in the highest priority room
             if (room->_room_priority > best_priority) {
                 best_priority = room->_room_priority;
-                best_room = room;
+                best_room     = room;
             }
 
             // if we override the preferred priority we always choose this
@@ -1603,7 +1603,7 @@ void RoomManager::_process_static(
     Vector<Vector3>& r_room_pts,
     bool p_add_to_portal_renderer
 ) {
-    bool ignore = false;
+    bool ignore        = false;
     VisualInstance* vi = Object::cast_to<VisualInstance>(p_node);
 
     bool is_dynamic = false;
@@ -1841,7 +1841,7 @@ bool RoomManager::_convert_room_hull_preliminary(
     // add any existing portals planes first, as these will trump any other
     // existing planes further out
     for (int n = 0; n < p_room->_portals.size(); n++) {
-        int portal_id = p_room->_portals[n];
+        int portal_id  = p_room->_portals[n];
         Portal* portal = p_portals[portal_id];
 
         // don't add portals to the hull that are internal to this room!
@@ -1889,7 +1889,7 @@ bool RoomManager::_convert_room_hull_final(
     int num_portals_added = 0;
 
     for (int n = 0; n < p_room->_portals.size(); n++) {
-        int portal_id = p_room->_portals[n];
+        int portal_id  = p_room->_portals[n];
         Portal* portal = p_portals[portal_id];
 
         // don't add portals to the world bound that are internal to this room!
@@ -2087,7 +2087,7 @@ void RoomManager::_convert_portal(
     // if not a gportal already, convert the node type
     if (!portal) {
         importing = true;
-        portal = _change_node_type<Portal>(p_node, "G", false);
+        portal    = _change_node_type<Portal>(p_node, "G", false);
         portal->create_from_mesh_instance(Object::cast_to<MeshInstance>(p_node)
         );
 
@@ -2129,7 +2129,7 @@ bool RoomManager::_bound_findpoints_geom_instance(
     // max opposite extents .. note AABB storing size is rubbish in this aspect
     // it can fail once mesh min is larger than FLT_MAX / 2.
     r_aabb.position = Vector3(FLT_MAX / 2, FLT_MAX / 2, FLT_MAX / 2);
-    r_aabb.size = Vector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+    r_aabb.size     = Vector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
 #ifdef MODULE_CSG_ENABLED
     CSGShape* shape = Object::cast_to<CSGShape>(p_gi);
@@ -2228,7 +2228,7 @@ bool RoomManager::_bound_findpoints_geom_instance(
         // find the AABB
         for (int i = 0; i < rmm->get_instance_count(); i++) {
             Transform trans = rmm->get_instance_transform(i);
-            trans = mmi->get_global_transform() * trans;
+            trans           = mmi->get_global_transform() * trans;
 
             for (int n = 0; n < local_verts.size(); n++) {
                 Vector3 pt_world = trans.xform(local_verts[n]);
@@ -2244,7 +2244,7 @@ bool RoomManager::_bound_findpoints_geom_instance(
     // Sprite3D
     SpriteBase3D* sprite = Object::cast_to<SpriteBase3D>(p_gi);
     if (sprite) {
-        Ref<TriangleMesh> tmesh = sprite->generate_triangle_mesh();
+        Ref<TriangleMesh> tmesh      = sprite->generate_triangle_mesh();
         PoolVector<Vector3> vertices = tmesh->get_vertices();
 
         // for converting meshes to world space
@@ -2273,7 +2273,7 @@ bool RoomManager::_bound_findpoints_mesh_instance(
     // max opposite extents .. note AABB storing size is rubbish in this aspect
     // it can fail once mesh min is larger than FLT_MAX / 2.
     r_aabb.position = Vector3(FLT_MAX / 2, FLT_MAX / 2, FLT_MAX / 2);
-    r_aabb.size = Vector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+    r_aabb.size     = Vector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
     // some godot jiggery pokery to get the mesh verts in local space
     Ref<Mesh> rmesh = p_mi->get_mesh();
@@ -2462,7 +2462,7 @@ Error RoomManager::_build_convex_hull(
 
 #else
     QuickHull::_flag_warnings = false;
-    Error err = QuickHull::build(p_points, r_mesh, p_epsilon);
+    Error err                 = QuickHull::build(p_points, r_mesh, p_epsilon);
     QuickHull::_flag_warnings = true;
     return err;
 #endif
@@ -2498,7 +2498,7 @@ bool RoomManager::_name_ends_with(const Node* p_node, String p_postfix) const {
     String name = p_node->get_name();
 
     int pf_l = p_postfix.length();
-    int l = name.length();
+    int l    = name.length();
 
     if (pf_l > l) {
         return false;
@@ -2521,7 +2521,7 @@ String RoomManager::_find_name_before(
     String name = p_node->get_name();
 
     int pf_l = p_postfix.length();
-    int l = name.length();
+    int l    = name.length();
 
     if (pf_l > l) {
         if (!p_allow_no_postfix) {

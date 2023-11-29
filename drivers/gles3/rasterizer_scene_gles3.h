@@ -225,9 +225,9 @@ public:
 
     struct ShadowAtlas : public RID_Data {
         enum {
-            QUADRANT_SHIFT = 27,
+            QUADRANT_SHIFT    = 27,
             SHADOW_INDEX_MASK = (1 << QUADRANT_SHIFT) - 1,
-            SHADOW_INVALID = 0xFFFFFFFF
+            SHADOW_INVALID    = 0xFFFFFFFF
         };
 
         struct Quadrant {
@@ -239,7 +239,7 @@ public:
                 uint64_t alloc_tick;
 
                 Shadow() {
-                    version = 0;
+                    version    = 0;
                     alloc_tick = 0;
                 }
             };
@@ -578,7 +578,7 @@ public:
     virtual void environment_set_ambient_light(
         RID p_env,
         const Color& p_color,
-        float p_energy = 1.0,
+        float p_energy           = 1.0,
         float p_sky_contribution = 0.0
     );
     virtual void environment_set_camera_feed_id(
@@ -817,19 +817,19 @@ public:
 
     struct RenderList {
         enum {
-            DEFAULT_MAX_ELEMENTS = 65536,
-            SORT_FLAG_SKELETON = 1,
-            SORT_FLAG_INSTANCING = 2,
-            MAX_DIRECTIONAL_LIGHTS = 16,
-            DEFAULT_MAX_LIGHTS = 4096,
-            DEFAULT_MAX_REFLECTIONS = 1024,
+            DEFAULT_MAX_ELEMENTS          = 65536,
+            SORT_FLAG_SKELETON            = 1,
+            SORT_FLAG_INSTANCING          = 2,
+            MAX_DIRECTIONAL_LIGHTS        = 16,
+            DEFAULT_MAX_LIGHTS            = 4096,
+            DEFAULT_MAX_REFLECTIONS       = 1024,
             DEFAULT_MAX_LIGHTS_PER_OBJECT = 32,
 
-            SORT_KEY_PRIORITY_SHIFT = 56,
-            SORT_KEY_PRIORITY_MASK = 0xFF,
+            SORT_KEY_PRIORITY_SHIFT           = 56,
+            SORT_KEY_PRIORITY_MASK            = 0xFF,
             // depth layer for opaque (56-52)
             SORT_KEY_OPAQUE_DEPTH_LAYER_SHIFT = 52,
-            SORT_KEY_OPAQUE_DEPTH_LAYER_MASK = 0xF,
+            SORT_KEY_OPAQUE_DEPTH_LAYER_MASK  = 0xF,
 // 64 bits unsupported in MSVC
 #define SORT_KEY_UNSHADED_FLAG         (uint64_t(1) << 50)
 #define SORT_KEY_NO_DIRECTIONAL_FLAG   (uint64_t(1) << 49)
@@ -838,19 +838,19 @@ public:
 #define SORT_KEY_LIGHTMAP_FLAG         (uint64_t(1) << 46)
 #define SORT_KEY_GI_PROBES_FLAG        (uint64_t(1) << 45)
 #define SORT_KEY_VERTEX_LIT_FLAG       (uint64_t(1) << 44)
-            SORT_KEY_SHADING_SHIFT = 44,
-            SORT_KEY_SHADING_MASK = 127,
+            SORT_KEY_SHADING_SHIFT        = 44,
+            SORT_KEY_SHADING_MASK         = 127,
             // 44-28 material index
             SORT_KEY_MATERIAL_INDEX_SHIFT = 28,
             // 28-8 geometry index
             SORT_KEY_GEOMETRY_INDEX_SHIFT = 8,
             // bits 5-7 geometry type
-            SORT_KEY_GEOMETRY_TYPE_SHIFT = 5,
+            SORT_KEY_GEOMETRY_TYPE_SHIFT  = 5,
             // bits 0-5 for flags
-            SORT_KEY_OPAQUE_PRE_PASS = 8,
-            SORT_KEY_CULL_DISABLED_FLAG = 4,
-            SORT_KEY_SKELETON_FLAG = 2,
-            SORT_KEY_MIRROR_FLAG = 1
+            SORT_KEY_OPAQUE_PRE_PASS      = 8,
+            SORT_KEY_CULL_DISABLED_FLAG   = 4,
+            SORT_KEY_SKELETON_FLAG        = 2,
+            SORT_KEY_MIRROR_FLAG          = 1
         };
 
         int max_elements;
@@ -873,7 +873,7 @@ public:
         int alpha_element_count;
 
         void clear() {
-            element_count = 0;
+            element_count       = 0;
             alpha_element_count = 0;
         }
 
@@ -959,25 +959,25 @@ public:
             if (element_count + alpha_element_count >= max_elements) {
                 return nullptr;
             }
-            int idx = max_elements - alpha_element_count - 1;
+            int idx       = max_elements - alpha_element_count - 1;
             elements[idx] = &base_elements[idx];
             alpha_element_count++;
             return elements[idx];
         }
 
         void init() {
-            element_count = 0;
+            element_count       = 0;
             alpha_element_count = 0;
-            elements = memnew_arr(Element*, max_elements);
-            base_elements = memnew_arr(Element, max_elements);
+            elements            = memnew_arr(Element*, max_elements);
+            base_elements       = memnew_arr(Element, max_elements);
             for (int i = 0; i < max_elements; i++) {
                 elements[i] = &base_elements[i]; // assign elements
             }
         }
 
         RenderList() {
-            max_elements = DEFAULT_MAX_ELEMENTS;
-            max_lights = DEFAULT_MAX_LIGHTS;
+            max_elements    = DEFAULT_MAX_ELEMENTS;
+            max_lights      = DEFAULT_MAX_LIGHTS;
             max_reflections = DEFAULT_MAX_REFLECTIONS;
         }
 
@@ -1060,7 +1060,7 @@ public:
         const CameraMatrix& p_cam_projection,
         const Transform& p_cam_transform,
         const int p_eye = 0,
-        bool p_no_fog = false
+        bool p_no_fog   = false
     );
     void _setup_directional_light(
         int p_index,

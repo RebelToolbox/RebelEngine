@@ -263,9 +263,9 @@ real_t Vector3::angle_to(const Vector3& p_to) const {
 
 real_t Vector3::signed_angle_to(const Vector3& p_to, const Vector3& p_axis)
     const {
-    Vector3 cross_to = cross(p_to);
+    Vector3 cross_to      = cross(p_to);
     real_t unsigned_angle = Math::atan2(cross_to.length(), dot(p_to));
-    real_t sign = cross_to.dot(p_axis);
+    real_t sign           = cross_to.dot(p_axis);
     return (sign < 0) ? -unsigned_angle : unsigned_angle;
 }
 
@@ -436,10 +436,10 @@ void Vector3::normalize() {
     if (lengthsq == 0) {
         x = y = z = 0;
     } else {
-        real_t length = Math::sqrt(lengthsq);
-        x /= length;
-        y /= length;
-        z /= length;
+        real_t length  = Math::sqrt(lengthsq);
+        x             /= length;
+        y             /= length;
+        z             /= length;
     }
 }
 

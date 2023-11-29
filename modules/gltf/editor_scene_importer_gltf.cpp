@@ -164,7 +164,7 @@ Node* PackedSceneGLTF::import_scene(
     Ref<GLTFDocument> gltf_document;
     gltf_document.instance();
     Error err = gltf_document->parse(r_state, p_path);
-    *r_err = err;
+    *r_err    = err;
     ERR_FAIL_COND_V(err != Error::OK, nullptr);
 
     Spatial* root = memnew(Spatial);
@@ -264,8 +264,8 @@ Error PackedSceneGLTF::export_gltf(
     ERR_FAIL_COND_V(!p_root, FAILED);
     List<String> deps;
     Error err;
-    String path = p_path;
-    int32_t flags = p_flags;
+    String path      = p_path;
+    int32_t flags    = p_flags;
     real_t baked_fps = p_bake_fps;
     Ref<PackedSceneGLTF> exporter;
     exporter.instance();

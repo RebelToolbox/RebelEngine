@@ -63,13 +63,13 @@ public class RebelIO {
     private final String uniqueId;
     RebelEditText rebelEditText;
 
-    final int SCREEN_LANDSCAPE = 0;
-    final int SCREEN_PORTRAIT = 1;
+    final int SCREEN_LANDSCAPE         = 0;
+    final int SCREEN_PORTRAIT          = 1;
     final int SCREEN_REVERSE_LANDSCAPE = 2;
-    final int SCREEN_REVERSE_PORTRAIT = 3;
-    final int SCREEN_SENSOR_LANDSCAPE = 4;
-    final int SCREEN_SENSOR_PORTRAIT = 5;
-    final int SCREEN_SENSOR = 6;
+    final int SCREEN_REVERSE_PORTRAIT  = 3;
+    final int SCREEN_SENSOR_LANDSCAPE  = 4;
+    final int SCREEN_SENSOR_PORTRAIT   = 5;
+    final int SCREEN_SENSOR            = 6;
 
     /////////////////////////
     /// DIRECTORIES
@@ -87,8 +87,8 @@ public class RebelIO {
 
     public int dir_open(String path) {
         AssetDir ad = new AssetDir();
-        ad.current = 0;
-        ad.path = path;
+        ad.current  = 0;
+        ad.path     = path;
 
         try {
             ad.files = am.list(path);
@@ -115,7 +115,7 @@ public class RebelIO {
         }
         AssetDir ad = dirs.get(id);
         // System.out.printf("go next: %d,%d\n",ad.current,ad.files.length);
-        int idx = ad.current;
+        int idx     = ad.current;
         if (idx > 0) idx--;
 
         if (idx >= ad.files.length) return false;
@@ -160,9 +160,9 @@ public class RebelIO {
     }
 
     RebelIO(Activity p_activity) {
-        am = p_activity.getAssets();
-        activity = p_activity;
-        dirs = new SparseArray<>();
+        am               = p_activity.getAssets();
+        activity         = p_activity;
+        dirs             = new SparseArray<>();
         String androidId = Settings.Secure.getString(
             activity.getContentResolver(),
             Settings.Secure.ANDROID_ID
@@ -231,7 +231,7 @@ public class RebelIO {
     public int[] getWindowSafeArea() {
         DisplayMetrics metrics = activity.getResources().getDisplayMetrics();
         Display display = activity.getWindowManager().getDefaultDisplay();
-        Point size = new Point();
+        Point size      = new Point();
         display.getRealSize(size);
 
         int[] result = {0, 0, size.x, size.y};
@@ -240,12 +240,12 @@ public class RebelIO {
                 activity.getWindow().getDecorView().getRootWindowInsets();
             DisplayCutout cutout = insets.getDisplayCutout();
             if (cutout != null) {
-                int insetLeft = cutout.getSafeInsetLeft();
-                int insetTop = cutout.getSafeInsetTop();
-                result[0] = insetLeft;
-                result[1] = insetTop;
-                result[2] -= insetLeft + cutout.getSafeInsetRight();
-                result[3] -= insetTop + cutout.getSafeInsetBottom();
+                int insetLeft  = cutout.getSafeInsetLeft();
+                int insetTop   = cutout.getSafeInsetTop();
+                result[0]      = insetLeft;
+                result[1]      = insetTop;
+                result[2]     -= insetLeft + cutout.getSafeInsetRight();
+                result[3]     -= insetTop + cutout.getSafeInsetBottom();
             }
         }
         return result;
@@ -351,13 +351,13 @@ public class RebelIO {
         this.rebelEditText = rebelEditText;
     }
 
-    public static final int SYSTEM_DIR_DESKTOP = 0;
-    public static final int SYSTEM_DIR_DCIM = 1;
+    public static final int SYSTEM_DIR_DESKTOP   = 0;
+    public static final int SYSTEM_DIR_DCIM      = 1;
     public static final int SYSTEM_DIR_DOCUMENTS = 2;
     public static final int SYSTEM_DIR_DOWNLOADS = 3;
-    public static final int SYSTEM_DIR_MOVIES = 4;
-    public static final int SYSTEM_DIR_MUSIC = 5;
-    public static final int SYSTEM_DIR_PICTURES = 6;
+    public static final int SYSTEM_DIR_MOVIES    = 4;
+    public static final int SYSTEM_DIR_MUSIC     = 5;
+    public static final int SYSTEM_DIR_PICTURES  = 6;
     public static final int SYSTEM_DIR_RINGTONES = 7;
 
     public String getSystemDir(int idx, boolean shared_storage) {

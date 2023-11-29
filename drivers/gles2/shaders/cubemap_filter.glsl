@@ -17,7 +17,7 @@ attribute highp vec2 uv; // attrib:4
 varying highp vec2 uv_interp;
 
 void main() {
-    uv_interp = uv;
+    uv_interp   = uv;
     gl_Position = vec4(vertex, 0, 1);
 }
 
@@ -149,7 +149,7 @@ vec3 ImportanceSampleGGX(vec2 Xi, float Roughness, vec3 N) {
         Roughness * Roughness; // DISNEY'S ROUGHNESS [see Burley'12 siggraph]
 
     // Compute distribution direction
-    float Phi = 2.0 * M_PI * Xi.x;
+    float Phi      = 2.0 * M_PI * Xi.x;
     float CosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
     float SinTheta = sqrt(1.0 - CosTheta * CosTheta);
 
@@ -182,7 +182,7 @@ void main() {
     vec3 color = vec3(0.0);
 
     vec2 uv = (uv_interp * 2.0) - 1.0;
-    vec3 N = texelCoordToVec(uv, face_id);
+    vec3 N  = texelCoordToVec(uv, face_id);
 
 #ifdef USE_DIRECT_WRITE
 

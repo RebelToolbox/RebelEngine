@@ -35,7 +35,7 @@
 bool MeshLibrary::_set(const StringName& p_name, const Variant& p_value) {
     String name = p_name;
     if (name.begins_with("item/")) {
-        int idx = name.get_slicec('/', 1).to_int();
+        int idx     = name.get_slicec('/', 1).to_int();
         String what = name.get_slicec('/', 2);
         if (!item_map.has(idx)) {
             create_item(idx);
@@ -73,7 +73,7 @@ bool MeshLibrary::_set(const StringName& p_name, const Variant& p_value) {
 
 bool MeshLibrary::_get(const StringName& p_name, Variant& r_ret) const {
     String name = p_name;
-    int idx = name.get_slicec('/', 1).to_int();
+    int idx     = name.get_slicec('/', 1).to_int();
     ERR_FAIL_COND_V(!item_map.has(idx), false);
     String what = name.get_slicec('/', 2);
 
@@ -342,7 +342,7 @@ int MeshLibrary::get_last_unused_item_id() const {
 
 void MeshLibrary::_set_item_shapes(int p_item, const Array& p_shapes) {
     Array arr_shapes = p_shapes;
-    int size = p_shapes.size();
+    int size         = p_shapes.size();
     if (size & 1) {
         ERR_FAIL_COND_MSG(
             !item_map.has(p_item),
@@ -371,7 +371,7 @@ void MeshLibrary::_set_item_shapes(int p_item, const Array& p_shapes) {
     Vector<ShapeData> shapes;
     for (int i = 0; i < size; i += 2) {
         ShapeData sd;
-        sd.shape = arr_shapes[i + 0];
+        sd.shape           = arr_shapes[i + 0];
         sd.local_transform = arr_shapes[i + 1];
 
         if (sd.shape.is_valid()) {

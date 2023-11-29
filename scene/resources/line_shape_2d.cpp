@@ -37,7 +37,7 @@ bool LineShape2D::_edit_is_selected_on_click(
     const Point2& p_point,
     double p_tolerance
 ) const {
-    Vector2 point = get_d() * get_normal();
+    Vector2 point   = get_d() * get_normal();
     Vector2 l[2][2] = {
         {point - get_normal().tangent() * 100,
          point + get_normal().tangent() * 100                           },
@@ -132,6 +132,6 @@ void LineShape2D::_bind_methods() {
 LineShape2D::LineShape2D() :
     Shape2D(Physics2DServer::get_singleton()->line_shape_create()) {
     normal = Vector2(0, -1);
-    d = 0;
+    d      = 0;
     _update_shape();
 }

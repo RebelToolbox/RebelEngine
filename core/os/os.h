@@ -110,26 +110,26 @@ public:
         }
 
         VideoMode(
-            int p_width = 1024,
-            int p_height = 600,
-            bool p_fullscreen = false,
-            bool p_resizable = true,
-            bool p_borderless_window = false,
-            bool p_maximized = false,
-            bool p_always_on_top = false,
-            bool p_use_vsync = false,
+            int p_width                 = 1024,
+            int p_height                = 600,
+            bool p_fullscreen           = false,
+            bool p_resizable            = true,
+            bool p_borderless_window    = false,
+            bool p_maximized            = false,
+            bool p_always_on_top        = false,
+            bool p_use_vsync            = false,
             bool p_vsync_via_compositor = false
         ) {
-            width = p_width;
-            height = p_height;
-            fullscreen = p_fullscreen;
-            resizable = p_resizable;
-            borderless_window = p_borderless_window;
-            maximized = p_maximized;
-            always_on_top = p_always_on_top;
-            use_vsync = p_use_vsync;
+            width                = p_width;
+            height               = p_height;
+            fullscreen           = p_fullscreen;
+            resizable            = p_resizable;
+            borderless_window    = p_borderless_window;
+            maximized            = p_maximized;
+            always_on_top        = p_always_on_top;
+            use_vsync            = p_use_vsync;
             vsync_via_compositor = p_vsync_via_compositor;
-            layered = false;
+            layered              = false;
         }
     };
 
@@ -150,9 +150,9 @@ protected:
     ) = 0;
 
     virtual void set_main_loop(MainLoop* p_main_loop) = 0;
-    virtual void delete_main_loop() = 0;
+    virtual void delete_main_loop()                   = 0;
 
-    virtual void finalize() = 0;
+    virtual void finalize()      = 0;
     virtual void finalize_core() = 0;
 
     virtual void set_cmdline(
@@ -191,7 +191,7 @@ public:
     virtual void alert(
         const String& p_alert,
         const String& p_title = "ALERT!"
-    ) = 0;
+    )                                                    = 0;
     virtual String get_stdin_string(bool p_block = true) = 0;
 
     enum MouseMode {
@@ -206,8 +206,8 @@ public:
 
     virtual void warp_mouse_position(const Point2& p_to) {}
 
-    virtual Point2 get_mouse_position() const = 0;
-    virtual int get_mouse_button_state() const = 0;
+    virtual Point2 get_mouse_position() const            = 0;
+    virtual int get_mouse_button_state() const           = 0;
     virtual void set_window_title(const String& p_title) = 0;
     virtual void set_window_mouse_passthrough(const PoolVector2Array& p_region){
     };
@@ -218,7 +218,7 @@ public:
     virtual void set_video_mode(
         const VideoMode& p_video_mode,
         int p_screen = 0
-    ) = 0;
+    )                                                        = 0;
     virtual VideoMode get_video_mode(int p_screen = 0) const = 0;
     virtual void get_fullscreen_mode_list(
         List<VideoMode>* p_list,
@@ -446,13 +446,13 @@ public:
     virtual Error execute(
         const String& p_path,
         const List<String>& p_arguments,
-        bool p_blocking = true,
+        bool p_blocking       = true,
         ProcessID* r_child_id = nullptr,
-        String* r_pipe = nullptr,
-        int* r_exitcode = nullptr,
-        bool read_stderr = false,
-        Mutex* p_pipe_mutex = nullptr
-    ) = 0;
+        String* r_pipe        = nullptr,
+        int* r_exitcode       = nullptr,
+        bool read_stderr      = false,
+        Mutex* p_pipe_mutex   = nullptr
+    )                                          = 0;
     virtual Error kill(const ProcessID& p_pid) = 0;
     virtual int get_process_id() const;
     virtual void vibrate_handheld(int p_duration_ms = 500);
@@ -460,7 +460,7 @@ public:
     virtual Error shell_open(String p_uri);
     virtual Error set_cwd(const String& p_cwd);
 
-    virtual bool has_environment(const String& p_var) const = 0;
+    virtual bool has_environment(const String& p_var) const   = 0;
     virtual String get_environment(const String& p_var) const = 0;
     virtual bool set_environment(const String& p_var, const String& p_value)
         const = 0;
@@ -582,10 +582,10 @@ public:
     virtual void show_virtual_keyboard(
         const String& p_existing_text,
         const Rect2& p_screen_rect = Rect2(),
-        bool p_multiline = false,
-        int p_max_input_length = -1,
-        int p_cursor_start = -1,
-        int p_cursor_end = -1
+        bool p_multiline           = false,
+        int p_max_input_length     = -1,
+        int p_cursor_start         = -1,
+        int p_cursor_end           = -1
     );
     virtual void hide_virtual_keyboard();
 

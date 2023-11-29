@@ -78,25 +78,25 @@ static const char* uwp_device_capabilities[] =
 
 class AppxPackager {
     enum {
-        FILE_HEADER_MAGIC = 0x04034b50,
-        DATA_DESCRIPTOR_MAGIC = 0x08074b50,
-        CENTRAL_DIR_MAGIC = 0x02014b50,
-        END_OF_CENTRAL_DIR_MAGIC = 0x06054b50,
+        FILE_HEADER_MAGIC              = 0x04034b50,
+        DATA_DESCRIPTOR_MAGIC          = 0x08074b50,
+        CENTRAL_DIR_MAGIC              = 0x02014b50,
+        END_OF_CENTRAL_DIR_MAGIC       = 0x06054b50,
         ZIP64_END_OF_CENTRAL_DIR_MAGIC = 0x06064b50,
-        ZIP64_END_DIR_LOCATOR_MAGIC = 0x07064b50,
-        P7X_SIGNATURE = 0x58434b50,
-        ZIP64_HEADER_ID = 0x0001,
-        ZIP_VERSION = 20,
-        ZIP_ARCHIVE_VERSION = 45,
-        GENERAL_PURPOSE = 0x00,
-        BASE_FILE_HEADER_SIZE = 30,
-        DATA_DESCRIPTOR_SIZE = 24,
-        BASE_CENTRAL_DIR_SIZE = 46,
-        EXTRA_FIELD_LENGTH = 28,
-        ZIP64_HEADER_SIZE = 24,
-        ZIP64_END_OF_CENTRAL_DIR_SIZE = (56 - 12),
-        END_OF_CENTRAL_DIR_SIZE = 42,
-        BLOCK_SIZE = 65536,
+        ZIP64_END_DIR_LOCATOR_MAGIC    = 0x07064b50,
+        P7X_SIGNATURE                  = 0x58434b50,
+        ZIP64_HEADER_ID                = 0x0001,
+        ZIP_VERSION                    = 20,
+        ZIP_ARCHIVE_VERSION            = 45,
+        GENERAL_PURPOSE                = 0x00,
+        BASE_FILE_HEADER_SIZE          = 30,
+        DATA_DESCRIPTOR_SIZE           = 24,
+        BASE_CENTRAL_DIR_SIZE          = 46,
+        EXTRA_FIELD_LENGTH             = 28,
+        ZIP64_HEADER_SIZE              = 24,
+        ZIP64_END_OF_CENTRAL_DIR_SIZE  = (56 - 12),
+        END_OF_CENTRAL_DIR_SIZE        = 42,
+        BLOCK_SIZE                     = 65536,
     };
 
     struct BlockHash {
@@ -334,9 +334,9 @@ Vector<uint8_t> AppxPackager::make_file_header(FileMeta p_file_meta) {
     Vector<uint8_t> buf;
     buf.resize(BASE_FILE_HEADER_SIZE + p_file_meta.name.length());
 
-    int offs = 0;
+    int offs  = 0;
     // Write magic
-    offs += buf_put_int32(FILE_HEADER_MAGIC, &buf.write[offs]);
+    offs     += buf_put_int32(FILE_HEADER_MAGIC, &buf.write[offs]);
 
     // Version
     offs += buf_put_int16(ZIP_VERSION, &buf.write[offs]);
@@ -380,7 +380,7 @@ void AppxPackager::store_central_dir_header(
     bool p_do_hash
 ) {
     Vector<uint8_t>& buf = central_dir_data;
-    int offs = buf.size();
+    int offs             = buf.size();
     buf.resize(buf.size() + BASE_CENTRAL_DIR_SIZE + p_file.name.length());
 
     // Write magic
@@ -501,8 +501,8 @@ Vector<uint8_t> AppxPackager::make_end_of_central_record() {
 }
 
 void AppxPackager::init(FileAccess* p_fa) {
-    package = p_fa;
-    central_dir_offset = 0;
+    package                   = p_fa;
+    central_dir_offset        = 0;
     end_of_central_dir_offset = 0;
 }
 
@@ -525,11 +525,11 @@ Error AppxPackager::add_file(
     }
 
     FileMeta meta;
-    meta.name = p_file_name;
+    meta.name              = p_file_name;
     meta.uncompressed_size = p_len;
-    meta.compressed_size = p_len;
-    meta.compressed = p_compress;
-    meta.zip_offset = package->get_position();
+    meta.compressed_size   = p_len;
+    meta.compressed        = p_compress;
+    meta.zip_offset        = package->get_position();
 
     Vector<uint8_t> file_buffer;
 
@@ -542,7 +542,7 @@ Error AppxPackager::add_file(
 
     if (p_compress) {
         strm.zalloc = zipio_alloc;
-        strm.zfree = zipio_free;
+        strm.zfree  = zipio_free;
         strm.opaque = &strm_f;
 
         strm_out.resize(BLOCK_SIZE + 8);
@@ -571,10 +571,10 @@ Error AppxPackager::add_file(
         bh.base64_hash = hash_block(strm_in.ptr(), block_size);
 
         if (p_compress) {
-            strm.avail_in = block_size;
+            strm.avail_in  = block_size;
             strm.avail_out = strm_out.size();
-            strm.next_in = (uint8_t*)strm_in.ptr();
-            strm.next_out = strm_out.ptrw();
+            strm.next_in   = (uint8_t*)strm_in.ptr();
+            strm.next_out  = strm_out.ptrw();
 
             int total_out_before = strm.total_out;
 
@@ -593,7 +593,7 @@ Error AppxPackager::add_file(
         } else {
             bh.compressed_size = block_size;
             // package->store_buffer(strm_in.ptr(), block_size);
-            int start = file_buffer.size();
+            int start          = file_buffer.size();
             file_buffer.resize(file_buffer.size() + block_size);
             for (uint64_t i = 0; i < bh.compressed_size; i++) {
                 file_buffer.write[start + i] = strm_in[i];
@@ -606,10 +606,10 @@ Error AppxPackager::add_file(
     }
 
     if (p_compress) {
-        strm.avail_in = 0;
+        strm.avail_in  = 0;
         strm.avail_out = strm_out.size();
-        strm.next_in = (uint8_t*)strm_in.ptr();
-        strm.next_out = strm_out.ptrw();
+        strm.next_in   = (uint8_t*)strm_in.ptr();
+        strm.next_out  = strm_out.ptrw();
 
         int total_out_before = strm.total_out;
 
@@ -633,13 +633,13 @@ Error AppxPackager::add_file(
     }
 
     // Calculate file CRC-32
-    uLong crc = crc32(0L, Z_NULL, 0);
-    crc = crc32(crc, p_buffer, p_len);
+    uLong crc       = crc32(0L, Z_NULL, 0);
+    crc             = crc32(crc, p_buffer, p_len);
     meta.file_crc32 = crc;
 
     // Create file header
     Vector<uint8_t> file_header = make_file_header(meta);
-    meta.lfh_size = file_header.size();
+    meta.lfh_size               = file_header.size();
 
     // Store the header and file;
     package->store_buffer(file_header.ptr(), file_header.size());
@@ -723,7 +723,7 @@ void AppxPackager::finish() {
     package->store_buffer(central_dir_data.ptr(), central_dir_data.size());
 
     // End record
-    end_of_central_dir_offset = package->get_position();
+    end_of_central_dir_offset  = package->get_position();
     Vector<uint8_t> end_record = make_end_of_central_record();
     package->store_buffer(end_record.ptr(), end_record.size());
 
@@ -1084,7 +1084,7 @@ class EditorExportPlatformUWP : public EditorExportPlatform {
         result = result.replace("$rotation_preference$", rotation_preference);
 
         String capabilities_elements = "";
-        const char** basic = uwp_capabilities;
+        const char** basic           = uwp_capabilities;
         while (*basic) {
             if ((bool)p_preset->get("capabilities/" + String(*basic))) {
                 capabilities_elements +=
@@ -1311,7 +1311,7 @@ class EditorExportPlatformUWP : public EditorExportPlatform {
         int p_total
     ) {
         AppxPackager* packager = (AppxPackager*)p_userdata;
-        String dst_path = p_path.replace_first("res://", "game/");
+        String dst_path        = p_path.replace_first("res://", "game/");
 
         return packager->add_file(
             dst_path,
@@ -1677,40 +1677,40 @@ public:
             }
         }
 
-        valid = dvalid || rvalid;
+        valid               = dvalid || rvalid;
         r_missing_templates = !valid;
 
         // Validate the rest of the configuration.
 
         if (!_valid_resource_name(p_preset->get("package/short_name"))) {
-            valid = false;
-            err += TTR("Invalid package short name.") + "\n";
+            valid  = false;
+            err   += TTR("Invalid package short name.") + "\n";
         }
 
         if (!_valid_resource_name(p_preset->get("package/unique_name"))) {
-            valid = false;
-            err += TTR("Invalid package unique name.") + "\n";
+            valid  = false;
+            err   += TTR("Invalid package unique name.") + "\n";
         }
 
         if (!_valid_resource_name(p_preset->get("package/publisher_display_name"
             ))) {
-            valid = false;
-            err += TTR("Invalid package publisher display name.") + "\n";
+            valid  = false;
+            err   += TTR("Invalid package publisher display name.") + "\n";
         }
 
         if (!_valid_guid(p_preset->get("identity/product_guid"))) {
-            valid = false;
-            err += TTR("Invalid product GUID.") + "\n";
+            valid  = false;
+            err   += TTR("Invalid product GUID.") + "\n";
         }
 
         if (!_valid_guid(p_preset->get("identity/publisher_guid"))) {
-            valid = false;
-            err += TTR("Invalid publisher GUID.") + "\n";
+            valid  = false;
+            err   += TTR("Invalid publisher GUID.") + "\n";
         }
 
         if (!_valid_bgcolor(p_preset->get("images/background_color"))) {
-            valid = false;
-            err += TTR("Invalid background color.") + "\n";
+            valid  = false;
+            err   += TTR("Invalid background color.") + "\n";
         }
 
         if (!p_preset->get("images/store_logo").is_zero()
@@ -1762,9 +1762,9 @@ public:
                 150,
                 150
             )) {
-            valid = false;
-            err += TTR("Invalid square 150x150 logo image dimensions (should "
-                       "be 150x150).")
+            valid  = false;
+            err   += TTR("Invalid square 150x150 logo image dimensions (should "
+                         "be 150x150).")
                  + "\n";
         }
 
@@ -1776,9 +1776,9 @@ public:
                 310,
                 310
             )) {
-            valid = false;
-            err += TTR("Invalid square 310x310 logo image dimensions (should "
-                       "be 310x310).")
+            valid  = false;
+            err   += TTR("Invalid square 310x310 logo image dimensions (should "
+                         "be 310x310).")
                  + "\n";
         }
 
@@ -1804,9 +1804,9 @@ public:
                 620,
                 300
             )) {
-            valid = false;
-            err += TTR("Invalid splash screen image dimensions (should be "
-                       "620x300).")
+            valid  = false;
+            err   += TTR("Invalid splash screen image dimensions (should be "
+                         "620x300).")
                  + "\n";
         }
 
@@ -1878,7 +1878,7 @@ public:
         AppxPackager packager;
         packager.init(fa_pack);
 
-        FileAccess* src_f = nullptr;
+        FileAccess* src_f    = nullptr;
         zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
 
         if (ep.step("Creating package...", 0)) {
@@ -1904,7 +1904,7 @@ public:
         packager.set_progress_task("template_files");
 
         int template_files_amount = 9;
-        int template_file_no = 1;
+        int template_file_no      = 1;
 
         while (ret == UNZ_OK) {
             // get file name
@@ -2006,7 +2006,7 @@ public:
 
         for (int i = 0; i < cl.size(); i++) {
             CharString txt = cl[i].utf8();
-            int base = clf.size();
+            int base       = clf.size();
             clf.resize(base + 4 + txt.length());
             encode_uint32(txt.length(), &clf.write[base]);
             memcpy(&clf.write[base + 4], txt.ptr(), txt.length());
@@ -2072,7 +2072,7 @@ public:
         if (!p_debug) {
             cert_path = p_preset->get("signing/certificate");
             cert_pass = p_preset->get("signing/password");
-            cert_alg = p_preset->get("signing/algorithm");
+            cert_alg  = p_preset->get("signing/algorithm");
         }
 
         if (cert_path == String()) {

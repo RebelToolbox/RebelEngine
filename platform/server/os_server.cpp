@@ -71,9 +71,9 @@ Error OS_Server::initialize(
     int p_video_driver,
     int p_audio_driver
 ) {
-    args = OS::get_singleton()->get_cmdline_args();
+    args              = OS::get_singleton()->get_cmdline_args();
     current_videomode = p_desired;
-    main_loop = NULL;
+    main_loop         = NULL;
 
     RasterizerDummy::make_current();
 

@@ -232,8 +232,8 @@
     template <class T, class M COMMA(N) COMMA_SEP_LIST(TYPE_PARAM, N)>         \
     void push(T* p_instance, M p_method COMMA(N) COMMA_SEP_LIST(PARAM, N)) {   \
         CMD_TYPE(N)* cmd = allocate_and_lock<CMD_TYPE(N)>();                   \
-        cmd->instance = p_instance;                                            \
-        cmd->method = p_method;                                                \
+        cmd->instance    = p_instance;                                         \
+        cmd->method      = p_method;                                           \
         SEMIC_SEP_LIST(CMD_ASSIGN_PARAM, N);                                   \
         unlock();                                                              \
         if (sync) sync->post();                                                \
@@ -252,12 +252,12 @@
         M p_method,                                                            \
         COMMA_SEP_LIST(PARAM, N) COMMA(N) R* r_ret                             \
     ) {                                                                        \
-        SyncSemaphore* ss = _alloc_sync_sem();                                 \
+        SyncSemaphore* ss    = _alloc_sync_sem();                              \
         CMD_RET_TYPE(N)* cmd = allocate_and_lock<CMD_RET_TYPE(N)>();           \
-        cmd->instance = p_instance;                                            \
-        cmd->method = p_method;                                                \
+        cmd->instance        = p_instance;                                     \
+        cmd->method          = p_method;                                       \
         SEMIC_SEP_LIST(CMD_ASSIGN_PARAM, N);                                   \
-        cmd->ret = r_ret;                                                      \
+        cmd->ret      = r_ret;                                                 \
         cmd->sync_sem = ss;                                                    \
         unlock();                                                              \
         if (sync) sync->post();                                                \
@@ -274,10 +274,10 @@
         T* p_instance,                                                         \
         M p_method COMMA(N) COMMA_SEP_LIST(PARAM, N)                           \
     ) {                                                                        \
-        SyncSemaphore* ss = _alloc_sync_sem();                                 \
+        SyncSemaphore* ss     = _alloc_sync_sem();                             \
         CMD_SYNC_TYPE(N)* cmd = allocate_and_lock<CMD_SYNC_TYPE(N)>();         \
-        cmd->instance = p_instance;                                            \
-        cmd->method = p_method;                                                \
+        cmd->instance         = p_instance;                                    \
+        cmd->method           = p_method;                                      \
         SEMIC_SEP_LIST(CMD_ASSIGN_PARAM, N);                                   \
         cmd->sync_sem = ss;                                                    \
         unlock();                                                              \
@@ -323,7 +323,7 @@ class CommandQueueMT {
 
     enum {
         DEFAULT_COMMAND_MEM_SIZE_KB = 256,
-        SYNC_SEMAPHORES = 8
+        SYNC_SEMAPHORES             = 8
     };
 
     uint8_t* command_mem;
@@ -380,7 +380,7 @@ class CommandQueueMT {
                 // zero means, wrap to beginning
 
                 uint32_t* p = (uint32_t*)&command_mem[write_ptr];
-                *p = 1;
+                *p          = 1;
                 write_ptr_and_epoch =
                     0 | (1 & ~write_ptr_and_epoch); // Invert epoch.
                 // See if we can get the thread to run and clear up some more
@@ -395,14 +395,14 @@ class CommandQueueMT {
         // Allocate the size and the 'in use' bit.
         // First bit used to mark if command is still in use (1)
         // or if it has been destroyed and can be deallocated (0).
-        uint32_t size = (sizeof(T) + 8 - 1) & ~(8 - 1);
-        uint32_t* p = (uint32_t*)&command_mem[write_ptr];
-        *p = (size << 1) | 1;
-        write_ptr += 8;
+        uint32_t size        = (sizeof(T) + 8 - 1) & ~(8 - 1);
+        uint32_t* p          = (uint32_t*)&command_mem[write_ptr];
+        *p                   = (size << 1) | 1;
+        write_ptr           += 8;
         // allocate the command
-        T* cmd = memnew_placement(&command_mem[write_ptr], T);
-        write_ptr += size;
-        write_ptr_and_epoch = (write_ptr << 1) | (write_ptr_and_epoch & 1);
+        T* cmd               = memnew_placement(&command_mem[write_ptr], T);
+        write_ptr           += size;
+        write_ptr_and_epoch  = (write_ptr << 1) | (write_ptr_and_epoch & 1);
         return cmd;
     }
 
@@ -437,7 +437,7 @@ class CommandQueueMT {
 
         uint32_t read_ptr = read_ptr_and_epoch >> 1;
         uint32_t size_ptr = read_ptr;
-        uint32_t size = *(uint32_t*)&command_mem[read_ptr] >> 1;
+        uint32_t size     = *(uint32_t*)&command_mem[read_ptr] >> 1;
 
         if (size == 0) {
             *(uint32_t*)&command_mem[read_ptr] = 0; // clear in-use bit.

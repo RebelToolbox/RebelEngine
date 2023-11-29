@@ -72,7 +72,7 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
 
     // reset the averager for next time
     _estimator_delta_readings = 0;
-    _estimator_total_delta = 0;
+    _estimator_total_delta    = 0;
 
     ///////////////////////////////
 
@@ -117,7 +117,7 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
             // when the estimate is complete we turn on smoothing
             if (_estimated_fps) {
                 _estimate_complete = true;
-                _vsync_delta = 1000000 / _estimated_fps;
+                _vsync_delta       = 1000000 / _estimated_fps;
 
 #ifdef GODOT_DEBUG_DELTA_SMOOTHER
                 print_line(
@@ -143,7 +143,7 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
         return;
     }
 
-    const int SIGNIFICANCE_UP = 1;
+    const int SIGNIFICANCE_UP   = 1;
     const int SIGNIFICANCE_DOWN = 2;
 
     // we are not usually interested in slowing the estimate
@@ -202,9 +202,9 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
         if ((_hits_above_estimated > _hits_at_estimated)
             && (_hits_above_estimated > SIGNIFICANCE_UP)) {
             // increase the estimate
-            int change = fps - _estimated_fps;
-            change /= 2;
-            change = MAX(1, change);
+            int change  = fps - _estimated_fps;
+            change     /= 2;
+            change      = MAX(1, change);
 
             _estimated_fps += change;
             made_new_estimate();
@@ -227,7 +227,7 @@ bool MainTimerSync::DeltaSmoother::fps_allows_smoothing(int64_t p_delta) {
 
             // estimate fps
             if (time_passed) {
-                double fps = 1000000.0 / time_passed;
+                double fps   = 1000000.0 / time_passed;
                 double ratio = fps / (double)_estimated_fps;
 
                 // print_line("ratio : " + String(Variant(ratio)));
@@ -241,8 +241,8 @@ bool MainTimerSync::DeltaSmoother::fps_allows_smoothing(int64_t p_delta) {
         } // estimate complete
 
         // new start time for next iteration
-        _measurement_start_time = _measurement_time;
-        _measurement_end_frame += MEASURE_FPS_OVER_NUM_FRAMES;
+        _measurement_start_time  = _measurement_time;
+        _measurement_end_frame  += MEASURE_FPS_OVER_NUM_FRAMES;
     }
 
     return _measurement_allows_smoothing;
@@ -326,7 +326,7 @@ int MainTimerSync::get_average_physics_steps(float& p_min, float& p_max) {
 
     for (int i = 1; i < CONTROL_STEPS; ++i) {
         const float typical_lower = typical_physics_steps[i];
-        const float current_min = typical_lower / (i + 1);
+        const float current_min   = typical_lower / (i + 1);
         if (current_min > p_max) {
             return i; // bail out if further restrictions would void the
                       // interval
@@ -356,8 +356,8 @@ MainFrameTime MainTimerSync::advance_core(
     ret.idle_step = p_idle_step;
 
     // simple determination of number of physics iteration
-    time_accum += ret.idle_step;
-    ret.physics_steps = floor(time_accum * p_iterations_per_second);
+    time_accum        += ret.idle_step;
+    ret.physics_steps  = floor(time_accum * p_iterations_per_second);
 
     int min_typical_steps = typical_physics_steps[0];
     int max_typical_steps = min_typical_steps + 1;
@@ -399,7 +399,7 @@ MainFrameTime MainTimerSync::advance_core(
         );
         if (max_possible_steps < min_typical_steps) {
             ret.physics_steps = max_possible_steps;
-            update_typical = true;
+            update_typical    = true;
         } else {
             ret.physics_steps = min_typical_steps;
         }
@@ -409,7 +409,7 @@ MainFrameTime MainTimerSync::advance_core(
         );
         if (min_possible_steps > max_typical_steps) {
             ret.physics_steps = min_possible_steps;
-            update_typical = true;
+            update_typical    = true;
         } else {
             ret.physics_steps = max_typical_steps;
         }
@@ -453,7 +453,7 @@ MainFrameTime MainTimerSync::advance_checked(
     }
 
     float min_output_step = p_idle_step / 8;
-    min_output_step = MAX(min_output_step, 1E-6);
+    min_output_step       = MAX(min_output_step, 1E-6);
 
     // compensate for last deficit
     p_idle_step += time_deficit;
@@ -517,7 +517,7 @@ MainFrameTime MainTimerSync::advance_checked(
     if (time_accum > p_frame_slice) {
         const int extra_physics_steps =
             floor(time_accum * p_iterations_per_second);
-        time_accum -= extra_physics_steps * p_frame_slice;
+        time_accum        -= extra_physics_steps * p_frame_slice;
         ret.physics_steps += extra_physics_steps;
     }
 
@@ -550,7 +550,7 @@ MainFrameTime MainTimerSync::advance_checked(
 // determine wall clock step since last iteration
 float MainTimerSync::get_cpu_idle_step() {
     uint64_t cpu_ticks_elapsed = current_cpu_ticks_usec - last_cpu_ticks_usec;
-    last_cpu_ticks_usec = current_cpu_ticks_usec;
+    last_cpu_ticks_usec        = current_cpu_ticks_usec;
 
     cpu_ticks_elapsed = _delta_smoother.smooth_delta(cpu_ticks_elapsed);
 
@@ -564,7 +564,7 @@ MainTimerSync::MainTimerSync() :
     time_deficit(0),
     fixed_fps(0) {
     for (int i = CONTROL_STEPS - 1; i >= 0; --i) {
-        typical_physics_steps[i] = i;
+        typical_physics_steps[i]     = i;
         accumulated_physics_steps[i] = i;
     }
 }

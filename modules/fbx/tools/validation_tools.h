@@ -56,8 +56,8 @@ protected:
             print_verbose("Exporting assset validation log please wait");
             String massive_log_file;
 
-            String csv_header = "file_path, error message, extra data\n";
-            massive_log_file += csv_header;
+            String csv_header  = "file_path, error message, extra data\n";
+            massive_log_file  += csv_header;
 
             for (Map<String, LocalVector<String>>::Element* element =
                      validation_entries.front();

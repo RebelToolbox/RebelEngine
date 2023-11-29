@@ -341,9 +341,9 @@ private:
 
     template <class T>
     T* alloc_node() {
-        T* node = memnew(T);
+        T* node    = memnew(T);
         node->next = nodes;
-        nodes = node;
+        nodes      = node;
         return node;
     }
 
@@ -371,7 +371,7 @@ public:
     );
     Variant execute(
         Array p_inputs,
-        Object* p_base = nullptr,
+        Object* p_base    = nullptr,
         bool p_show_error = true
     );
     bool has_execute_failed() const;

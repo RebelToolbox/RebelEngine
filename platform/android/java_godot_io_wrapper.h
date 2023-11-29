@@ -46,19 +46,19 @@ private:
     jobject io_object;
     jclass cls;
 
-    jmethodID _open_URI = 0;
-    jmethodID _get_cache_dir = 0;
-    jmethodID _get_data_dir = 0;
-    jmethodID _get_locale = 0;
-    jmethodID _get_model = 0;
-    jmethodID _get_screen_DPI = 0;
-    jmethodID _get_window_safe_area = 0;
-    jmethodID _get_unique_id = 0;
-    jmethodID _show_keyboard = 0;
-    jmethodID _hide_keyboard = 0;
+    jmethodID _open_URI               = 0;
+    jmethodID _get_cache_dir          = 0;
+    jmethodID _get_data_dir           = 0;
+    jmethodID _get_locale             = 0;
+    jmethodID _get_model              = 0;
+    jmethodID _get_screen_DPI         = 0;
+    jmethodID _get_window_safe_area   = 0;
+    jmethodID _get_unique_id          = 0;
+    jmethodID _show_keyboard          = 0;
+    jmethodID _hide_keyboard          = 0;
     jmethodID _set_screen_orientation = 0;
     jmethodID _get_screen_orientation = 0;
-    jmethodID _get_system_dir = 0;
+    jmethodID _get_system_dir         = 0;
 
 public:
     GodotIOJavaWrapper(JNIEnv* p_env, jobject io_object);

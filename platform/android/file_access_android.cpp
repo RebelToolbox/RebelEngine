@@ -180,7 +180,7 @@ bool FileAccessAndroid::file_exists(const String& p_path) {
 }
 
 FileAccessAndroid::FileAccessAndroid() {
-    a = NULL;
+    a   = NULL;
     eof = false;
 }
 

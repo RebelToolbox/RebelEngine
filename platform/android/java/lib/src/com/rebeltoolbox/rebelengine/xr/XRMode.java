@@ -51,9 +51,9 @@ public enum XRMode {
         String cmdLineArg,
         String inputFallbackMapping
     ) {
-        this.index = index;
-        this.label = label;
-        this.cmdLineArg = cmdLineArg;
+        this.index                = index;
+        this.label                = label;
+        this.cmdLineArg           = cmdLineArg;
         this.inputFallbackMapping = inputFallbackMapping;
     }
 }

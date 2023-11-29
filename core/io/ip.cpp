@@ -48,7 +48,7 @@ struct _IP_ResolverPrivate {
         void clear() {
             status.set(IP::RESOLVER_STATUS_NONE);
             response.clear();
-            type = IP::TYPE_NONE;
+            type     = IP::TYPE_NONE;
             hostname = "";
         };
 
@@ -84,7 +84,7 @@ struct _IP_ResolverPrivate {
             mutex.lock();
             List<IP_Address> response;
             String hostname = queue[i].hostname;
-            IP::Type type = queue[i].type;
+            IP::Type type   = queue[i].type;
             mutex.unlock();
 
             // We should not lock while resolving the hostname,
@@ -190,7 +190,7 @@ IP::ResolverID IP::resolve_hostname_queue_item(
 
     String key = _IP_ResolverPrivate::get_cache_key(p_hostname, p_type);
     resolver->queue[id].hostname = p_hostname;
-    resolver->queue[id].type = p_type;
+    resolver->queue[id].type     = p_type;
     if (resolver->cache.has(key)) {
         resolver->queue[id].response = resolver->cache[key];
         resolver->queue[id].status.set(IP::RESOLVER_STATUS_DONE);
@@ -297,7 +297,7 @@ Array IP::_get_local_addresses() const {
     List<IP_Address> ip_addresses;
     get_local_addresses(&ip_addresses);
     for (List<IP_Address>::Element* E = ip_addresses.front(); E;
-         E = E->next()) {
+         E                            = E->next()) {
         addresses.push_back(E->get());
     }
 
@@ -309,16 +309,16 @@ Array IP::_get_local_interfaces() const {
     Map<String, Interface_Info> interfaces;
     get_local_interfaces(&interfaces);
     for (Map<String, Interface_Info>::Element* E = interfaces.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         Interface_Info& c = E->get();
         Dictionary rc;
-        rc["name"] = c.name;
+        rc["name"]     = c.name;
         rc["friendly"] = c.name_friendly;
-        rc["index"] = c.index;
+        rc["index"]    = c.index;
 
         Array ips;
         for (const List<IP_Address>::Element* F = c.ip_addresses.front(); F;
-             F = F->next()) {
+             F                                  = F->next()) {
             ips.push_front(F->get());
         }
         rc["addresses"] = ips;
@@ -333,7 +333,7 @@ void IP::get_local_addresses(List<IP_Address>* r_addresses) const {
     Map<String, Interface_Info> interfaces;
     get_local_interfaces(&interfaces);
     for (Map<String, Interface_Info>::Element* E = interfaces.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         for (const List<IP_Address>::Element* F = E->get().ip_addresses.front();
              F;
              F = F->next()) {
@@ -418,7 +418,7 @@ IP* IP::create() {
 
 IP::IP() {
     singleton = this;
-    resolver = memnew(_IP_ResolverPrivate);
+    resolver  = memnew(_IP_ResolverPrivate);
 
     resolver->thread_abort = false;
     resolver->thread.start(_IP_ResolverPrivate::_thread_function, resolver);

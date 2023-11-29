@@ -87,11 +87,11 @@ public class RegularConfigChooser implements GLSurfaceView.EGLConfigChooser {
         int depth,
         int stencil
     ) {
-        mRedSize = r;
-        mGreenSize = g;
-        mBlueSize = b;
-        mAlphaSize = a;
-        mDepthSize = depth;
+        mRedSize     = r;
+        mGreenSize   = g;
+        mBlueSize    = b;
+        mAlphaSize   = a;
+        mDepthSize   = depth;
         mStencilSize = stencil;
     }
 

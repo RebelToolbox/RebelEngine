@@ -34,7 +34,7 @@
 #include "core/project_settings.h"
 
 PacketPeerDTLS* (*PacketPeerDTLS::_create)() = nullptr;
-bool PacketPeerDTLS::available = false;
+bool PacketPeerDTLS::available               = false;
 
 PacketPeerDTLS* PacketPeerDTLS::create() {
     if (_create) {

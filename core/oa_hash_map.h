@@ -51,7 +51,7 @@
 template <
     class TKey,
     class TValue,
-    class Hasher = HashMapHasherDefault,
+    class Hasher     = HashMapHasherDefault,
     class Comparator = HashMapComparatorDefault<TKey>>
 class OAHashMap {
 private:
@@ -95,8 +95,8 @@ private:
     }
 
     bool _lookup_pos(const TKey& p_key, uint32_t& r_pos) const {
-        uint32_t hash = _hash(p_key);
-        uint32_t pos = hash % capacity;
+        uint32_t hash     = _hash(p_key);
+        uint32_t pos      = hash % capacity;
         uint32_t distance = 0;
 
         while (true) {
@@ -123,11 +123,11 @@ private:
         const TKey& p_key,
         const TValue& p_value
     ) {
-        uint32_t hash = p_hash;
+        uint32_t hash     = p_hash;
         uint32_t distance = 0;
-        uint32_t pos = hash % capacity;
+        uint32_t pos      = hash % capacity;
 
-        TKey key = p_key;
+        TKey key     = p_key;
         TValue value = p_value;
 
         while (true) {
@@ -154,10 +154,10 @@ private:
 
     void _resize_and_rehash(uint32_t p_new_capacity) {
         uint32_t old_capacity = capacity;
-        capacity = p_new_capacity;
+        capacity              = p_new_capacity;
 
-        TKey* old_keys = keys;
-        TValue* old_values = values;
+        TKey* old_keys       = keys;
+        TValue* old_values   = values;
         uint32_t* old_hashes = hashes;
 
         num_elements = 0;
@@ -233,7 +233,7 @@ public:
 
     void set(const TKey& p_key, const TValue& p_data) {
         uint32_t pos = 0;
-        bool exists = _lookup_pos(p_key, pos);
+        bool exists  = _lookup_pos(p_key, pos);
 
         if (exists) {
             values[pos] = p_data;
@@ -250,7 +250,7 @@ public:
      */
     bool lookup(const TKey& p_key, TValue& r_data) const {
         uint32_t pos = 0;
-        bool exists = _lookup_pos(p_key, pos);
+        bool exists  = _lookup_pos(p_key, pos);
 
         if (exists) {
             r_data = values[pos];
@@ -267,7 +267,7 @@ public:
 
     void remove(const TKey& p_key) {
         uint32_t pos = 0;
-        bool exists = _lookup_pos(p_key, pos);
+        bool exists  = _lookup_pos(p_key, pos);
 
         if (!exists) {
             return;
@@ -279,7 +279,7 @@ public:
             SWAP(hashes[next_pos], hashes[pos]);
             SWAP(keys[next_pos], keys[pos]);
             SWAP(values[next_pos], values[pos]);
-            pos = next_pos;
+            pos      = next_pos;
             next_pos = (pos + 1) % capacity;
         }
 
@@ -315,7 +315,7 @@ public:
         Iterator it;
 
         it.valid = true;
-        it.pos = 0;
+        it.pos   = 0;
 
         return next_iter(it);
     }
@@ -327,8 +327,8 @@ public:
 
         Iterator it;
         it.valid = false;
-        it.pos = p_iter.pos;
-        it.key = nullptr;
+        it.pos   = p_iter.pos;
+        it.key   = nullptr;
         it.value = nullptr;
 
         for (uint32_t i = it.pos; i < capacity; i++) {
@@ -339,7 +339,7 @@ public:
             }
 
             it.valid = true;
-            it.key = &keys[i];
+            it.key   = &keys[i];
             it.value = &values[i];
             return it;
         }
@@ -354,7 +354,7 @@ public:
         delete; // Same for assignment operator.
 
     OAHashMap(uint32_t p_initial_capacity = 64) {
-        capacity = p_initial_capacity;
+        capacity     = p_initial_capacity;
         num_elements = 0;
 
         keys =

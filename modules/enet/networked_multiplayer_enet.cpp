@@ -158,11 +158,11 @@ Error NetworkedMultiplayerENet::create_server(
 #endif
 
     _setup_compressor();
-    active = true;
-    server = true;
+    active             = true;
+    server             = true;
     refuse_connections = false;
-    unique_id = 1;
-    connection_status = CONNECTION_CONNECTED;
+    unique_id          = 1;
+    connection_status  = CONNECTION_CONNECTED;
     return OK;
 }
 
@@ -313,9 +313,9 @@ Error NetworkedMultiplayerENet::create_client(
 
     // Technically safe to ignore the peer or anything else.
 
-    connection_status = CONNECTION_CONNECTING;
-    active = true;
-    server = false;
+    connection_status  = CONNECTION_CONNECTING;
+    active             = true;
+    server             = false;
     refuse_connections = false;
 
     return OK;
@@ -364,7 +364,7 @@ void NetworkedMultiplayerENet::poll() {
                 }
 
                 int* new_id = memnew(int);
-                *new_id = event.data;
+                *new_id     = event.data;
 
                 if (*new_id
                     == 0) { // Data zero is sent by server (enet won't let you
@@ -390,7 +390,7 @@ void NetworkedMultiplayerENet::poll() {
 
                     // Someone connected, notify all the peers available
                     for (Map<int, ENetPeer*>::Element* E = peer_map.front(); E;
-                         E = E->next()) {
+                         E                               = E->next()) {
                         if (E->key() == *new_id) {
                             continue;
                         }
@@ -440,7 +440,7 @@ void NetworkedMultiplayerENet::poll() {
                     // Server just received a client disconnect and is in relay
                     // mode, notify everyone else.
                     for (Map<int, ENetPeer*>::Element* E = peer_map.front(); E;
-                         E = E->next()) {
+                         E                               = E->next()) {
                         if (E->key() == *id) {
                             continue;
                         }
@@ -469,7 +469,7 @@ void NetworkedMultiplayerENet::poll() {
                     ERR_CONTINUE(server);
 
                     int msg = decode_uint32(&event.packet->data[0]);
-                    int id = decode_uint32(&event.packet->data[4]);
+                    int id  = decode_uint32(&event.packet->data[4]);
 
                     switch (msg) {
                         case SYSMSG_ADD_PEER: {
@@ -493,9 +493,9 @@ void NetworkedMultiplayerENet::poll() {
                     ERR_CONTINUE(event.packet->dataLength < 8);
 
                     uint32_t source = decode_uint32(&event.packet->data[0]);
-                    int target = decode_uint32(&event.packet->data[4]);
+                    int target      = decode_uint32(&event.packet->data[4]);
 
-                    packet.from = source;
+                    packet.from    = source;
                     packet.channel = event.channelID;
 
                     if (server) {
@@ -644,7 +644,7 @@ void NetworkedMultiplayerENet::close_connection(uint32_t wait_usec) {
     active = false;
     incoming_packets.clear();
     peer_map.clear();
-    unique_id = 1; // Server is 1
+    unique_id         = 1; // Server is 1
     connection_status = CONNECTION_DISCONNECTED;
 }
 
@@ -671,7 +671,7 @@ void NetworkedMultiplayerENet::disconnect_peer(int p_peer, bool now) {
         // like in poll()
         if (server_relay) {
             for (Map<int, ENetPeer*>::Element* E = peer_map.front(); E;
-                 E = E->next()) {
+                 E                               = E->next()) {
                 if (E->key() == p_peer) {
                     continue;
                 }
@@ -714,7 +714,7 @@ Error NetworkedMultiplayerENet::get_packet(
     current_packet = incoming_packets.front()->get();
     incoming_packets.pop_front();
 
-    *r_buffer = (const uint8_t*)(&current_packet.packet->data[8]);
+    *r_buffer     = (const uint8_t*)(&current_packet.packet->data[8]);
     r_buffer_size = current_packet.packet->dataLength - 8;
 
     return OK;
@@ -737,7 +737,7 @@ Error NetworkedMultiplayerENet::put_packet(
     );
 
     int packet_flags = 0;
-    int channel = SYSCH_RELIABLE;
+    int channel      = SYSCH_RELIABLE;
 
     switch (transfer_mode) {
         case TRANSFER_MODE_UNRELIABLE: {
@@ -750,11 +750,11 @@ Error NetworkedMultiplayerENet::put_packet(
         } break;
         case TRANSFER_MODE_UNRELIABLE_ORDERED: {
             packet_flags = 0;
-            channel = SYSCH_UNRELIABLE;
+            channel      = SYSCH_UNRELIABLE;
         } break;
         case TRANSFER_MODE_RELIABLE: {
             packet_flags = ENET_PACKET_FLAG_RELIABLE;
-            channel = SYSCH_RELIABLE;
+            channel      = SYSCH_RELIABLE;
         } break;
     }
 
@@ -789,7 +789,7 @@ Error NetworkedMultiplayerENet::put_packet(
             int exclude = -target_peer;
 
             for (Map<int, ENetPeer*>::Element* F = peer_map.front(); F;
-                 F = F->next()) {
+                 F                               = F->next()) {
                 if (F->key() == exclude) { // Exclude packet
                     continue;
                 }
@@ -828,8 +828,8 @@ int NetworkedMultiplayerENet::get_max_packet_size() const {
 void NetworkedMultiplayerENet::_pop_current_packet() {
     if (current_packet.packet) {
         enet_packet_destroy(current_packet.packet);
-        current_packet.packet = nullptr;
-        current_packet.from = 0;
+        current_packet.packet  = nullptr;
+        current_packet.from    = 0;
         current_packet.channel = -1;
     }
 }
@@ -915,7 +915,7 @@ size_t NetworkedMultiplayerENet::enet_compress(
     }
 
     int total = inLimit;
-    int ofs = 0;
+    int ofs   = 0;
     while (total) {
         for (size_t i = 0; i < inBufferCount; i++) {
             int to_copy = MIN(total, int(inBuffers[i].dataLength));
@@ -924,7 +924,7 @@ size_t NetworkedMultiplayerENet::enet_compress(
                 inBuffers[i].data,
                 to_copy
             );
-            ofs += to_copy;
+            ofs   += to_copy;
             total -= to_copy;
         }
     }
@@ -984,7 +984,7 @@ size_t NetworkedMultiplayerENet::enet_decompress(
     size_t outLimit
 ) {
     NetworkedMultiplayerENet* enet = (NetworkedMultiplayerENet*)(context);
-    int ret = -1;
+    int ret                        = -1;
     switch (enet->compression_mode) {
         case COMPRESS_FASTLZ: {
             ret = Compression::decompress(
@@ -1397,28 +1397,28 @@ void NetworkedMultiplayerENet::_bind_methods() {
 }
 
 NetworkedMultiplayerENet::NetworkedMultiplayerENet() {
-    active = false;
-    server = false;
-    refuse_connections = false;
-    server_relay = true;
-    unique_id = 0;
-    target_peer = 0;
-    current_packet.packet = nullptr;
-    transfer_mode = TRANSFER_MODE_RELIABLE;
-    channel_count = SYSCH_MAX;
-    transfer_channel = -1;
-    always_ordered = false;
-    connection_status = CONNECTION_DISCONNECTED;
-    compression_mode = COMPRESS_RANGE_CODER;
-    enet_compressor.context = this;
-    enet_compressor.compress = enet_compress;
+    active                     = false;
+    server                     = false;
+    refuse_connections         = false;
+    server_relay               = true;
+    unique_id                  = 0;
+    target_peer                = 0;
+    current_packet.packet      = nullptr;
+    transfer_mode              = TRANSFER_MODE_RELIABLE;
+    channel_count              = SYSCH_MAX;
+    transfer_channel           = -1;
+    always_ordered             = false;
+    connection_status          = CONNECTION_DISCONNECTED;
+    compression_mode           = COMPRESS_RANGE_CODER;
+    enet_compressor.context    = this;
+    enet_compressor.compress   = enet_compress;
     enet_compressor.decompress = enet_decompress;
-    enet_compressor.destroy = enet_compressor_destroy;
+    enet_compressor.destroy    = enet_compressor_destroy;
 
     bind_ip = IP_Address("*");
 
     dtls_enabled = false;
-    dtls_verify = true;
+    dtls_verify  = true;
 }
 
 NetworkedMultiplayerENet::~NetworkedMultiplayerENet() {

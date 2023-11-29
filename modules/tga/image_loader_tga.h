@@ -38,22 +38,22 @@
 */
 class ImageLoaderTGA : public ImageFormatLoader {
     enum tga_type_e {
-        TGA_TYPE_NO_DATA = 0,
-        TGA_TYPE_INDEXED = 1,
-        TGA_TYPE_RGB = 2,
-        TGA_TYPE_MONOCHROME = 3,
-        TGA_TYPE_RLE_INDEXED = 9,
-        TGA_TYPE_RLE_RGB = 10,
+        TGA_TYPE_NO_DATA        = 0,
+        TGA_TYPE_INDEXED        = 1,
+        TGA_TYPE_RGB            = 2,
+        TGA_TYPE_MONOCHROME     = 3,
+        TGA_TYPE_RLE_INDEXED    = 9,
+        TGA_TYPE_RLE_RGB        = 10,
         TGA_TYPE_RLE_MONOCHROME = 11
     };
 
     enum tga_origin_e {
-        TGA_ORIGIN_BOTTOM_LEFT = 0x00,
+        TGA_ORIGIN_BOTTOM_LEFT  = 0x00,
         TGA_ORIGIN_BOTTOM_RIGHT = 0x01,
-        TGA_ORIGIN_TOP_LEFT = 0x02,
-        TGA_ORIGIN_TOP_RIGHT = 0x03,
-        TGA_ORIGIN_SHIFT = 0x04,
-        TGA_ORIGIN_MASK = 0x30
+        TGA_ORIGIN_TOP_LEFT     = 0x02,
+        TGA_ORIGIN_TOP_RIGHT    = 0x03,
+        TGA_ORIGIN_SHIFT        = 0x04,
+        TGA_ORIGIN_MASK         = 0x30
     };
 
     struct tga_header_s {

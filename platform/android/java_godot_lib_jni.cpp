@@ -52,10 +52,10 @@
 #include <unistd.h>
 
 static JavaClassWrapper* java_class_wrapper = NULL;
-static OS_Android* os_android = NULL;
-static AndroidInputHandler* input_handler = NULL;
-static GodotJavaWrapper* godot_java = NULL;
-static GodotIOJavaWrapper* godot_io_java = NULL;
+static OS_Android* os_android               = NULL;
+static AndroidInputHandler* input_handler   = NULL;
+static GodotJavaWrapper* godot_java         = NULL;
+static GodotIOJavaWrapper* godot_io_java    = NULL;
 
 static bool initialized = false;
 static SafeNumeric<int> step; // Shared between UI and render threads
@@ -72,7 +72,7 @@ static void _initialize_java_modules() {
     }
 
     String modules = ProjectSettings::get_singleton()->get("android/modules");
-    modules = modules.strip_edges();
+    modules        = modules.strip_edges();
     if (modules == String()) {
         return;
     }
@@ -83,8 +83,8 @@ static void _initialize_java_modules() {
 
         // TODO create wrapper for class loader
 
-        JNIEnv* env = get_jni_env();
-        jclass classLoader = env->FindClass("java/lang/ClassLoader");
+        JNIEnv* env         = get_jni_env();
+        jclass classLoader  = env->FindClass("java/lang/ClassLoader");
         jmethodID findClass = env->GetMethodID(
             classLoader,
             "loadClass",
@@ -166,7 +166,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
     env->GetJavaVM(&jvm);
 
     // create our wrapper classes
-    godot_java = new GodotJavaWrapper(env, activity, godot_instance);
+    godot_java    = new GodotJavaWrapper(env, activity, godot_instance);
     godot_io_java = new GodotIOJavaWrapper(
         env,
         godot_java->get_member_object(
@@ -224,8 +224,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_setup(
     setup_android_thread();
 
     const char** cmdline = NULL;
-    jstring* j_cmdline = NULL;
-    int cmdlen = 0;
+    jstring* j_cmdline   = NULL;
+    int cmdlen           = 0;
     if (p_cmdline) {
         cmdlen = env->GetArrayLength(p_cmdline);
         if (cmdlen) {
@@ -233,7 +233,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_setup(
                 (const char**)memalloc((cmdlen + 1) * sizeof(const char*));
             ERR_FAIL_NULL_MSG(cmdline, "Out of memory.");
             cmdline[cmdlen] = NULL;
-            j_cmdline = (jstring*)memalloc(cmdlen * sizeof(jstring));
+            j_cmdline       = (jstring*)memalloc(cmdlen * sizeof(jstring));
             ERR_FAIL_NULL_MSG(j_cmdline, "Out of memory.");
 
             for (int i = 0; i < cmdlen; i++) {
@@ -241,7 +241,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_setup(
                     (jstring)env->GetObjectArrayElement(p_cmdline, i);
                 const char* rawString = env->GetStringUTFChars(string, 0);
 
-                cmdline[i] = rawString;
+                cmdline[i]   = rawString;
                 j_cmdline[i] = string;
             }
         }
@@ -370,7 +370,7 @@ void touch_preprocessing(
         env->GetFloatArrayRegion(positions, i * 3, 3, p);
         AndroidInputHandler::TouchPos tp;
         tp.pos = Point2(p[1], p[2]);
-        tp.id = (int)p[0];
+        tp.id  = (int)p[0];
         points.push_back(tp);
     }
 
@@ -518,9 +518,9 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_joybutton(
     }
 
     AndroidInputHandler::JoypadEvent jevent;
-    jevent.device = p_device;
-    jevent.type = AndroidInputHandler::JOY_EVENT_BUTTON;
-    jevent.index = p_button;
+    jevent.device  = p_device;
+    jevent.type    = AndroidInputHandler::JOY_EVENT_BUTTON;
+    jevent.index   = p_button;
     jevent.pressed = p_pressed;
 
     input_handler->process_joy_event(jevent);
@@ -540,9 +540,9 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_joyaxis(
 
     AndroidInputHandler::JoypadEvent jevent;
     jevent.device = p_device;
-    jevent.type = AndroidInputHandler::JOY_EVENT_AXIS;
-    jevent.index = p_axis;
-    jevent.value = p_value;
+    jevent.type   = AndroidInputHandler::JOY_EVENT_AXIS;
+    jevent.index  = p_axis;
+    jevent.value  = p_value;
 
     input_handler->process_joy_event(jevent);
 }
@@ -561,8 +561,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_joyhat(
 
     AndroidInputHandler::JoypadEvent jevent;
     jevent.device = p_device;
-    jevent.type = AndroidInputHandler::JOY_EVENT_HAT;
-    int hat = 0;
+    jevent.type   = AndroidInputHandler::JOY_EVENT_HAT;
+    int hat       = 0;
     if (p_hat_x != 0) {
         if (p_hat_x < 0) {
             hat |= InputDefault::HAT_MASK_LEFT;
@@ -711,7 +711,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_callobject(
 
     String str_method = jstring_to_string(method, env);
 
-    int count = env->GetArrayLength(params);
+    int count      = env->GetArrayLength(params);
     Variant* vlist = (Variant*)alloca(sizeof(Variant) * count);
     Variant** vptr = (Variant**)alloca(sizeof(Variant*) * count);
     for (int i = 0; i < count; i++) {
@@ -722,7 +722,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_callobject(
         }
         memnew_placement(&vlist[i], Variant);
         vlist[i] = v;
-        vptr[i] = &vlist[i];
+        vptr[i]  = &vlist[i];
         env->DeleteLocalRef(obj);
     };
 

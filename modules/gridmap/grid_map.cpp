@@ -45,8 +45,8 @@ bool GridMap::_set(const StringName& p_name, const Variant& p_value) {
         Dictionary d = p_value;
 
         if (d.has("cells")) {
-            PoolVector<int> cells = d["cells"];
-            int amount = cells.size();
+            PoolVector<int> cells   = d["cells"];
+            int amount              = cells.size();
             PoolVector<int>::Read r = cells.read();
             ERR_FAIL_COND_V(amount % 3, false); // not even
             cell_map.clear();
@@ -54,7 +54,7 @@ bool GridMap::_set(const StringName& p_name, const Variant& p_value) {
                 IndexKey ik;
                 ik.key = decode_uint64((const uint8_t*)&r[i * 3]);
                 Cell cell;
-                cell.cell = decode_uint32((const uint8_t*)&r[i * 3 + 2]);
+                cell.cell    = decode_uint32((const uint8_t*)&r[i * 3 + 2]);
                 cell_map[ik] = cell;
             }
         }
@@ -111,9 +111,9 @@ bool GridMap::_get(const StringName& p_name, Variant& r_ret) const {
         cells.resize(cell_map.size() * 3);
         {
             PoolVector<int>::Write w = cells.write();
-            int i = 0;
+            int i                    = 0;
             for (Map<IndexKey, Cell>::Element* E = cell_map.front(); E;
-                 E = E->next(), i++) {
+                 E                               = E->next(), i++) {
                 encode_uint64(E->key().key, (uint8_t*)&w[i * 3]);
                 encode_uint32(E->get().cell, (uint8_t*)&w[i * 3 + 2]);
             }
@@ -338,8 +338,8 @@ void GridMap::set_cell_item(int p_x, int p_y, int p_z, int p_item, int p_rot) {
 
     if (!octant_map.has(octantkey)) {
         // create octant because it does not exist
-        Octant* g = memnew(Octant);
-        g->dirty = true;
+        Octant* g      = memnew(Octant);
+        g->dirty       = true;
         g->static_body = PhysicsServer::get_singleton()->body_create(
             PhysicsServer::BODY_MODE_STATIC
         );
@@ -382,7 +382,7 @@ void GridMap::set_cell_item(int p_x, int p_y, int p_z, int p_item, int p_rot) {
 
     Cell c;
     c.item = p_item;
-    c.rot = p_rot;
+    c.rot  = p_rot;
 
     cell_map[key] = c;
 }
@@ -421,9 +421,9 @@ int GridMap::get_cell_item_orientation(int p_x, int p_y, int p_z) const {
 
 Vector3 GridMap::world_to_map(const Vector3& p_world_pos) const {
     Vector3 map_pos = p_world_pos / cell_size;
-    map_pos.x = floor(map_pos.x);
-    map_pos.y = floor(map_pos.y);
-    map_pos.z = floor(map_pos.z);
+    map_pos.x       = floor(map_pos.x);
+    map_pos.y       = floor(map_pos.y);
+    map_pos.z       = floor(map_pos.z);
     return map_pos;
 }
 
@@ -524,7 +524,7 @@ bool GridMap::_octant_update(const OctantKey& p_key) {
         }
 
         Vector3 cellpos = Vector3(E->get().x, E->get().y, E->get().z);
-        Vector3 ofs = _get_offset();
+        Vector3 ofs     = _get_offset();
 
         Transform xform;
 
@@ -610,9 +610,9 @@ bool GridMap::_octant_update(const OctantKey& p_key) {
 #ifdef TOOLS_ENABLED
 
                 Octant::MultimeshInstance::Item it;
-                it.index = idx;
+                it.index     = idx;
                 it.transform = F->get().first;
-                it.key = F->get().second;
+                it.key       = F->get().second;
                 mmi.items.push_back(it);
 #endif
 
@@ -634,7 +634,7 @@ bool GridMap::_octant_update(const OctantKey& p_key) {
             }
 
             mmi.multimesh = mm;
-            mmi.instance = instance;
+            mmi.instance  = instance;
 
             g.multimesh_instances.push_back(mmi);
         }
@@ -667,7 +667,7 @@ bool GridMap::_octant_update(const OctantKey& p_key) {
 
 void GridMap::_reset_physic_bodies_collision_filters() {
     for (Map<OctantKey, Octant*>::Element* E = octant_map.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         PhysicsServer::get_singleton()->body_set_collision_layer(
             E->get()->static_body,
             collision_layer
@@ -824,7 +824,7 @@ void GridMap::_notification(int p_what) {
             last_transform = get_global_transform();
 
             for (Map<OctantKey, Octant*>::Element* E = octant_map.front(); E;
-                 E = E->next()) {
+                 E                                   = E->next()) {
                 _octant_enter_world(E->key());
             }
 
@@ -847,7 +847,7 @@ void GridMap::_notification(int p_what) {
             }
             // update run
             for (Map<OctantKey, Octant*>::Element* E = octant_map.front(); E;
-                 E = E->next()) {
+                 E                                   = E->next()) {
                 _octant_transform(E->key());
             }
 
@@ -863,7 +863,7 @@ void GridMap::_notification(int p_what) {
         } break;
         case NOTIFICATION_EXIT_WORLD: {
             for (Map<OctantKey, Octant*>::Element* E = octant_map.front(); E;
-                 E = E->next()) {
+                 E                                   = E->next()) {
                 _octant_exit_world(E->key());
             }
 
@@ -894,7 +894,7 @@ void GridMap::_update_visibility() {
     _change_notify("visible");
 
     for (Map<OctantKey, Octant*>::Element* e = octant_map.front(); e;
-         e = e->next()) {
+         e                                   = e->next()) {
         Octant* octant = e->value();
         for (int i = 0; i < octant->multimesh_instances.size(); i++) {
             const Octant::MultimeshInstance& mi =
@@ -924,11 +924,11 @@ void GridMap::_queue_octants_dirty() {
 }
 
 void GridMap::_recreate_octant_data() {
-    recreating_octants = true;
+    recreating_octants            = true;
     Map<IndexKey, Cell> cell_copy = cell_map;
     _clear_internal();
     for (Map<IndexKey, Cell>::Element* E = cell_copy.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         set_cell_item(
             E->key().x,
             E->key().y,
@@ -942,7 +942,7 @@ void GridMap::_recreate_octant_data() {
 
 void GridMap::_clear_internal() {
     for (Map<OctantKey, Octant*>::Element* E = octant_map.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         if (is_inside_world()) {
             _octant_exit_world(E->key());
         }
@@ -971,7 +971,7 @@ void GridMap::_update_octants_callback() {
 
     List<OctantKey> to_delete;
     for (Map<OctantKey, Octant*>::Element* E = octant_map.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         if (_octant_update(E->key())) {
             to_delete.push_back(E->key());
         }
@@ -1241,16 +1241,16 @@ void GridMap::set_clip(
         return;
     }
 
-    clip = p_enabled;
+    clip       = p_enabled;
     clip_floor = p_floor;
-    clip_axis = p_axis;
+    clip_axis  = p_axis;
     clip_above = p_clip_above;
 
     // make it all update
     for (Map<OctantKey, Octant*>::Element* E = octant_map.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         Octant* g = E->get();
-        g->dirty = true;
+        g->dirty  = true;
     }
     awaiting_update = true;
     _update_octants_callback();
@@ -1357,7 +1357,7 @@ void GridMap::make_baked_meshes(
         }
 
         Vector3 cellpos = Vector3(key.x, key.y, key.z);
-        Vector3 ofs = _get_offset();
+        Vector3 ofs     = _get_offset();
 
         Transform xform;
 
@@ -1409,7 +1409,7 @@ void GridMap::make_baked_meshes(
         }
 
         BakedMesh bm;
-        bm.mesh = mesh;
+        bm.mesh     = mesh;
         bm.instance = VS::get_singleton()->instance_create();
         VS::get_singleton()->get_singleton()->instance_set_base(
             bm.instance,
@@ -1467,19 +1467,19 @@ RID GridMap::get_bake_mesh_instance(int p_idx) {
 
 GridMap::GridMap() {
     collision_layer = 1;
-    collision_mask = 1;
+    collision_mask  = 1;
 
-    cell_size = Vector3(2, 2, 2);
-    octant_size = 8;
+    cell_size       = Vector3(2, 2, 2);
+    octant_size     = 8;
     awaiting_update = false;
-    _in_tree = false;
-    center_x = true;
-    center_y = true;
-    center_z = true;
+    _in_tree        = false;
+    center_x        = true;
+    center_y        = true;
+    center_z        = true;
 
-    clip = false;
+    clip       = false;
     clip_floor = 0;
-    clip_axis = Vector3::AXIS_Z;
+    clip_axis  = Vector3::AXIS_Z;
     clip_above = true;
     cell_scale = 1.0;
 

@@ -165,8 +165,8 @@ void EditorResourcePreview::_preview_ready(
 ) {
     preview_mutex.lock();
 
-    String path = p_str;
-    uint32_t hash = 0;
+    String path            = p_str;
+    uint32_t hash          = 0;
     uint64_t modified_time = 0;
 
     if (p_str.begins_with("ID:")) {
@@ -177,10 +177,10 @@ void EditorResourcePreview::_preview_ready(
     }
 
     Item item;
-    item.order = order++;
-    item.preview = p_texture;
+    item.order         = order++;
+    item.preview       = p_texture;
     item.small_preview = p_small_texture;
-    item.last_hash = hash;
+    item.last_hash     = hash;
     item.modified_time = modified_time;
 
     cache[path] = item;
@@ -206,7 +206,7 @@ void EditorResourcePreview::_generate_preview(
     }
 
     if (type == "") {
-        r_texture = Ref<ImageTexture>();
+        r_texture       = Ref<ImageTexture>();
         r_small_texture = Ref<ImageTexture>();
         return; // could not guess type
     }
@@ -216,7 +216,7 @@ void EditorResourcePreview::_generate_preview(
     );
     thumbnail_size *= EDSCALE;
 
-    r_texture = Ref<ImageTexture>();
+    r_texture       = Ref<ImageTexture>();
     r_small_texture = Ref<ImageTexture>();
 
     for (int i = 0; i < preview_generators.size(); i++) {
@@ -268,7 +268,7 @@ void EditorResourcePreview::_generate_preview(
         if (!r_small_texture.is_valid() && r_texture.is_valid()
             && preview_generators[i]->generate_small_preview_automatically()) {
             Ref<Image> small_image = r_texture->get_data();
-            small_image = small_image->duplicate();
+            small_image            = small_image->duplicate();
             small_image->resize(
                 small_thumbnail_size,
                 small_thumbnail_size,
@@ -375,7 +375,7 @@ void EditorResourcePreview::_thread() {
 
                     // does not have it, try to load a cached thumbnail
 
-                    String file = cache_base + ".txt";
+                    String file   = cache_base + ".txt";
                     FileAccess* f = FileAccess::open(file, FileAccess::READ);
                     if (!f) {
                         // No cache found, generate
@@ -388,9 +388,9 @@ void EditorResourcePreview::_thread() {
                     } else {
                         uint64_t modtime =
                             FileAccess::get_modified_time(item.path);
-                        int tsize = f->get_line().to_int64();
+                        int tsize              = f->get_line().to_int64();
                         bool has_small_texture = f->get_line().to_int();
-                        uint64_t last_modtime = f->get_line().to_int64();
+                        uint64_t last_modtime  = f->get_line().to_int64();
 
                         bool cache_valid = true;
 
@@ -399,7 +399,7 @@ void EditorResourcePreview::_thread() {
                             memdelete(f);
                         } else if (last_modtime != modtime) {
                             String last_md5 = f->get_line();
-                            String md5 = FileAccess::get_md5(item.path);
+                            String md5      = FileAccess::get_md5(item.path);
                             memdelete(f);
 
                             if (last_md5 != md5) {
@@ -520,9 +520,9 @@ void EditorResourcePreview::queue_edited_resource_preview(
 
     QueueItem item;
     item.function = p_receiver_func;
-    item.id = p_receiver->get_instance_id();
+    item.id       = p_receiver->get_instance_id();
     item.resource = p_res;
-    item.path = path_id;
+    item.path     = path_id;
     item.userdata = p_userdata;
 
     queue.push_back(item);
@@ -553,8 +553,8 @@ void EditorResourcePreview::queue_resource_preview(
 
     QueueItem item;
     item.function = p_receiver_func;
-    item.id = p_receiver->get_instance_id();
-    item.path = p_path;
+    item.id       = p_receiver->get_instance_id();
+    item.path     = p_path;
     item.userdata = p_userdata;
 
     queue.push_back(item);
@@ -661,7 +661,7 @@ void EditorResourcePreview::stop() {
 
 EditorResourcePreview::EditorResourcePreview() {
     singleton = this;
-    order = 0;
+    order     = 0;
 }
 
 EditorResourcePreview::~EditorResourcePreview() {

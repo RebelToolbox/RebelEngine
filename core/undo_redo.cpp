@@ -54,7 +54,7 @@ void UndoRedo::_discard_redo() {
 
     for (int i = current_action + 1; i < actions.size(); i++) {
         for (List<Operation>::Element* E = actions.write[i].do_ops.front(); E;
-             E = E->next()) {
+             E                           = E->next()) {
             E->get().delete_reference();
         }
         // ERASE do data
@@ -91,10 +91,10 @@ void UndoRedo::create_action(const String& p_name, MergeMode p_mode) {
             actions.write[actions.size() - 1].last_tick = ticks;
 
             merge_mode = p_mode;
-            merging = true;
+            merging    = true;
         } else {
             Action new_action;
-            new_action.name = p_name;
+            new_action.name      = p_name;
             new_action.last_tick = ticks;
             actions.push_back(new_action);
 
@@ -173,8 +173,8 @@ void UndoRedo::add_do_property(
         do_op.ref = Ref<Reference>(Object::cast_to<Reference>(p_object));
     }
 
-    do_op.type = Operation::TYPE_PROPERTY;
-    do_op.name = p_property;
+    do_op.type    = Operation::TYPE_PROPERTY;
+    do_op.name    = p_property;
     do_op.args[0] = p_value;
     actions.write[current_action + 1].do_ops.push_back(do_op);
 }
@@ -199,8 +199,8 @@ void UndoRedo::add_undo_property(
         undo_op.ref = Ref<Reference>(Object::cast_to<Reference>(p_object));
     }
 
-    undo_op.type = Operation::TYPE_PROPERTY;
-    undo_op.name = p_property;
+    undo_op.type    = Operation::TYPE_PROPERTY;
+    undo_op.name    = p_property;
     undo_op.args[0] = p_value;
     actions.write[current_action + 1].undo_ops.push_back(undo_op);
 }
@@ -247,7 +247,7 @@ void UndoRedo::_pop_history_tail() {
     }
 
     for (List<Operation>::Element* E = actions.write[0].undo_ops.front(); E;
-         E = E->next()) {
+         E                           = E->next()) {
         E->get().delete_reference();
     }
 
@@ -428,7 +428,7 @@ void UndoRedo::set_commit_notify_callback(
     CommitNotifyCallback p_callback,
     void* p_ud
 ) {
-    callback = p_callback;
+    callback    = p_callback;
     callback_ud = p_ud;
 }
 
@@ -436,7 +436,7 @@ void UndoRedo::set_method_notify_callback(
     MethodNotifyCallback p_method_callback,
     void* p_ud
 ) {
-    method_callback = p_method_callback;
+    method_callback   = p_method_callback;
     method_callbck_ud = p_ud;
 }
 
@@ -445,22 +445,22 @@ void UndoRedo::set_property_notify_callback(
     void* p_ud
 ) {
     property_callback = p_property_callback;
-    prop_callback_ud = p_ud;
+    prop_callback_ud  = p_ud;
 }
 
 UndoRedo::UndoRedo() {
-    committing = 0;
-    version = 1;
-    action_level = 0;
+    committing     = 0;
+    version        = 1;
+    action_level   = 0;
     current_action = -1;
-    merge_mode = MERGE_DISABLE;
-    merging = false;
-    callback = nullptr;
-    callback_ud = nullptr;
+    merge_mode     = MERGE_DISABLE;
+    merging        = false;
+    callback       = nullptr;
+    callback_ud    = nullptr;
 
     method_callbck_ud = nullptr;
-    prop_callback_ud = nullptr;
-    method_callback = nullptr;
+    prop_callback_ud  = nullptr;
+    method_callback   = nullptr;
     property_callback = nullptr;
 }
 
@@ -474,20 +474,20 @@ Variant UndoRedo::_add_do_method(
     Variant::CallError& r_error
 ) {
     if (p_argcount < 2) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 0;
         return Variant();
     }
 
     if (p_args[0]->get_type() != Variant::OBJECT) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::OBJECT;
         return Variant();
     }
 
     if (p_args[1]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 1;
         r_error.expected = Variant::STRING;
         return Variant();
@@ -496,7 +496,7 @@ Variant UndoRedo::_add_do_method(
     r_error.error = Variant::CallError::CALL_OK;
 
     Object* object = *p_args[0];
-    String method = *p_args[1];
+    String method  = *p_args[1];
 
     Variant v[VARIANT_ARG_MAX];
 
@@ -514,20 +514,20 @@ Variant UndoRedo::_add_undo_method(
     Variant::CallError& r_error
 ) {
     if (p_argcount < 2) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 0;
         return Variant();
     }
 
     if (p_args[0]->get_type() != Variant::OBJECT) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::OBJECT;
         return Variant();
     }
 
     if (p_args[1]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 1;
         r_error.expected = Variant::STRING;
         return Variant();
@@ -536,7 +536,7 @@ Variant UndoRedo::_add_undo_method(
     r_error.error = Variant::CallError::CALL_OK;
 
     Object* object = *p_args[0];
-    String method = *p_args[1];
+    String method  = *p_args[1];
 
     Variant v[VARIANT_ARG_MAX];
 

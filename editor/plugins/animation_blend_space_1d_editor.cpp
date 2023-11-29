@@ -83,7 +83,7 @@ void AnimationNodeBlendSpace1DEditor::_blend_space_gui_input(
                 ap->get_animation_list(&names);
 
                 for (List<StringName>::Element* E = names.front(); E;
-                     E = E->next()) {
+                     E                            = E->next()) {
                     animations_menu->add_icon_item(
                         get_icon("Animation", "EditorIcons"),
                         E->get()
@@ -145,7 +145,7 @@ void AnimationNodeBlendSpace1DEditor::_blend_space_gui_input(
                 Ref<AnimationNode> node = blend_space->get_blend_point_node(i);
                 EditorNode::get_singleton()->push_item(node.ptr(), "", true);
                 dragging_selected_attempt = true;
-                drag_from = mb->get_position();
+                drag_from                 = mb->get_position();
                 _update_tool_erase();
                 _update_edited_point_pos();
                 return;
@@ -188,7 +188,7 @@ void AnimationNodeBlendSpace1DEditor::_blend_space_gui_input(
         }
 
         dragging_selected_attempt = false;
-        dragging_selected = false;
+        dragging_selected         = false;
         blend_space_draw->update();
     }
 
@@ -241,12 +241,12 @@ void AnimationNodeBlendSpace1DEditor::_blend_space_gui_input(
 }
 
 void AnimationNodeBlendSpace1DEditor::_blend_space_draw() {
-    Color linecolor = get_color("font_color", "Label");
-    Color linecolor_soft = linecolor;
-    linecolor_soft.a *= 0.5;
+    Color linecolor       = get_color("font_color", "Label");
+    Color linecolor_soft  = linecolor;
+    linecolor_soft.a     *= 0.5;
 
-    Ref<Font> font = get_font("font", "Label");
-    Ref<Texture> icon = get_icon("KeyValue", "EditorIcons");
+    Ref<Font> font             = get_font("font", "Label");
+    Ref<Texture> icon          = get_icon("KeyValue", "EditorIcons");
     Ref<Texture> icon_selected = get_icon("KeySelected", "EditorIcons");
 
     Size2 s = blend_space_draw->get_size();
@@ -264,7 +264,7 @@ void AnimationNodeBlendSpace1DEditor::_blend_space_draw() {
 
     if (blend_space->get_min_space() < 0) {
         float point = 0.0;
-        point = (point - blend_space->get_min_space())
+        point       = (point - blend_space->get_min_space())
               / (blend_space->get_max_space() - blend_space->get_min_space());
         point *= s.width;
 
@@ -355,7 +355,7 @@ void AnimationNodeBlendSpace1DEditor::_blend_space_draw() {
         if (tool_blend->is_pressed()) {
             color = get_color("accent_color", "Editor");
         } else {
-            color = linecolor;
+            color    = linecolor;
             color.a *= 0.5;
         }
 
@@ -838,7 +838,7 @@ AnimationNodeBlendSpace1DEditor* AnimationNodeBlendSpace1DEditor::singleton =
 
 AnimationNodeBlendSpace1DEditor::AnimationNodeBlendSpace1DEditor() {
     singleton = this;
-    updating = false;
+    updating  = false;
 
     HBoxContainer* top_hb = memnew(HBoxContainer);
     add_child(top_hb);
@@ -987,8 +987,8 @@ AnimationNodeBlendSpace1DEditor::AnimationNodeBlendSpace1DEditor() {
     open_file->connect("file_selected", this, "_file_opened");
     undo_redo = EditorNode::get_undo_redo();
 
-    selected_point = -1;
-    dragging_selected = false;
+    selected_point            = -1;
+    dragging_selected         = false;
     dragging_selected_attempt = false;
 
     set_custom_minimum_size(Size2(0, 150 * EDSCALE));

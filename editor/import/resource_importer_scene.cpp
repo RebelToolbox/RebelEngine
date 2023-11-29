@@ -221,7 +221,7 @@ void EditorScenePostImport::init(
     const String& p_source_file
 ) {
     source_folder = p_source_folder;
-    source_file = p_source_file;
+    source_file   = p_source_file;
 }
 
 EditorScenePostImport::EditorScenePostImport() {}
@@ -237,7 +237,7 @@ String ResourceImporterScene::get_visible_name() const {
 void ResourceImporterScene::get_recognized_extensions(List<String>* p_extensions
 ) const {
     for (Set<Ref<EditorSceneImporter>>::Element* E = importers.front(); E;
-         E = E->next()) {
+         E                                         = E->next()) {
         E->get()->get_extensions(p_extensions);
     }
 }
@@ -544,7 +544,7 @@ Node* ResourceImporterScene::_fix_node(
             );
             p_node->replace_by(sb);
             memdelete(p_node);
-            p_node = nullptr;
+            p_node                   = nullptr;
             CollisionShape* colshape = memnew(CollisionShape);
             if (empty_draw_type == "CUBE") {
                 BoxShape* boxShape = memnew(BoxShape);
@@ -577,7 +577,7 @@ Node* ResourceImporterScene::_fix_node(
         }
 
         MeshInstance* mi = Object::cast_to<MeshInstance>(p_node);
-        Ref<Mesh> mesh = mi->get_mesh();
+        Ref<Mesh> mesh   = mi->get_mesh();
 
         if (mesh.is_valid()) {
             List<Ref<Shape>> shapes;
@@ -665,10 +665,10 @@ Node* ResourceImporterScene::_fix_node(
             return p_node;
         }
 
-        Node* owner = p_node->get_owner();
-        Spatial* s = Object::cast_to<Spatial>(p_node);
+        Node* owner     = p_node->get_owner();
+        Spatial* s      = Object::cast_to<Spatial>(p_node);
         VehicleBody* bv = memnew(VehicleBody);
-        String n = _fixstr(p_node->get_name(), "vehicle");
+        String n        = _fixstr(p_node->get_name(), "vehicle");
         bv->set_name(n);
         p_node->replace_by(bv);
         p_node->set_name(n);
@@ -685,10 +685,10 @@ Node* ResourceImporterScene::_fix_node(
             return p_node;
         }
 
-        Node* owner = p_node->get_owner();
-        Spatial* s = Object::cast_to<Spatial>(p_node);
+        Node* owner      = p_node->get_owner();
+        Spatial* s       = Object::cast_to<Spatial>(p_node);
         VehicleWheel* bv = memnew(VehicleWheel);
-        String n = _fixstr(p_node->get_name(), "wheel");
+        String n         = _fixstr(p_node->get_name(), "wheel");
         bv->set_name(n);
         p_node->replace_by(bv);
         p_node->set_name(n);
@@ -756,9 +756,9 @@ void ResourceImporterScene::_create_clips(
 
     for (int i = 0; i < p_clips.size(); i += 4) {
         String name = p_clips[i];
-        float from = p_clips[i + 1];
-        float to = p_clips[i + 2];
-        bool loop = p_clips[i + 3];
+        float from  = p_clips[i + 1];
+        float to    = p_clips[i + 2];
+        bool loop   = p_clips[i + 3];
         if (from >= to) {
             continue;
         }
@@ -767,7 +767,7 @@ void ResourceImporterScene::_create_clips(
 
         for (int j = 0; j < default_anim->get_track_count(); j++) {
             List<float> keys;
-            int kc = default_anim->track_get_key_count(j);
+            int kc     = default_anim->track_get_key_count(j);
             int dtrack = -1;
             for (int k = 0; k < kc; k++) {
                 float kt = default_anim->track_get_key_time(j, k);
@@ -938,9 +938,9 @@ void ResourceImporterScene::_filter_tracks(Node* scene, const String& p_text) {
     List<StringName> anim_names;
     anim->get_animation_list(&anim_names);
     for (List<StringName>::Element* E = anim_names.front(); E; E = E->next()) {
-        String name = E->get();
+        String name         = E->get();
         bool valid_for_this = false;
-        bool valid = false;
+        bool valid          = false;
 
         Set<String> keep;
         Set<String> keep_local;
@@ -949,7 +949,7 @@ void ResourceImporterScene::_filter_tracks(Node* scene, const String& p_text) {
             if (strings[i].begins_with("@")) {
                 valid_for_this = false;
                 for (Set<String>::Element* F = keep_local.front(); F;
-                     F = F->next()) {
+                     F                       = F->next()) {
                     keep.insert(F->get());
                 }
                 keep_local.clear();
@@ -1025,7 +1025,7 @@ void ResourceImporterScene::_filter_tracks(Node* scene, const String& p_text) {
 
         if (valid) {
             for (Set<String>::Element* F = keep_local.front(); F;
-                 F = F->next()) {
+                 F                       = F->next()) {
                 keep.insert(F->get());
             }
             _filter_anim_tracks(anim->get_animation(name), keep);
@@ -1061,15 +1061,15 @@ void ResourceImporterScene::_optimize_animations(
 
 static String _make_extname(const String& p_str) {
     String ext_name = p_str.replace(".", "_");
-    ext_name = ext_name.replace(":", "_");
-    ext_name = ext_name.replace("\"", "_");
-    ext_name = ext_name.replace("<", "_");
-    ext_name = ext_name.replace(">", "_");
-    ext_name = ext_name.replace("/", "_");
-    ext_name = ext_name.replace("|", "_");
-    ext_name = ext_name.replace("\\", "_");
-    ext_name = ext_name.replace("?", "_");
-    ext_name = ext_name.replace("*", "_");
+    ext_name        = ext_name.replace(":", "_");
+    ext_name        = ext_name.replace("\"", "_");
+    ext_name        = ext_name.replace("<", "_");
+    ext_name        = ext_name.replace(">", "_");
+    ext_name        = ext_name.replace("/", "_");
+    ext_name        = ext_name.replace("|", "_");
+    ext_name        = ext_name.replace("\\", "_");
+    ext_name        = ext_name.replace("?", "_");
+    ext_name        = ext_name.replace("*", "_");
 
     return ext_name;
 }
@@ -1088,7 +1088,7 @@ void ResourceImporterScene::_find_meshes(
             Transform transform;
             while (s) {
                 transform = transform * s->get_transform();
-                s = Object::cast_to<Spatial>(s->get_parent());
+                s         = Object::cast_to<Spatial>(s->get_parent());
             }
 
             meshes[mesh] = transform;
@@ -1123,7 +1123,7 @@ void ResourceImporterScene::_make_external_resources(
             List<StringName> anims;
             ap->get_animation_list(&anims);
             for (List<StringName>::Element* E = anims.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 Ref<Animation> anim = ap->get_animation(E->get());
                 ERR_CONTINUE(anim.is_null());
 
@@ -1389,7 +1389,7 @@ void ResourceImporterScene::get_import_options(
     String script_ext_hint;
 
     for (List<String>::Element* E = script_extentions.front(); E;
-         E = E->next()) {
+         E                        = E->next()) {
         if (script_ext_hint != "") {
             script_ext_hint += ",";
         }
@@ -1651,7 +1651,7 @@ void ResourceImporterScene::_add_shapes(
 ) {
     int idx = 0;
     for (const List<Ref<Shape>>::Element* E = p_shapes.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         CollisionShape* cshape = memnew(CollisionShape);
         cshape->set_shape(E->get());
         p_node->add_child(cshape);
@@ -1673,7 +1673,7 @@ Node* ResourceImporterScene::import_scene_from_other_importer(
     String ext = p_path.get_extension().to_lower();
 
     for (Set<Ref<EditorSceneImporter>>::Element* E = importers.front(); E;
-         E = E->next()) {
+         E                                         = E->next()) {
         if (E->get().ptr() == p_exception) {
             continue;
         }
@@ -1716,7 +1716,7 @@ Ref<Animation> ResourceImporterScene::import_animation_from_other_importer(
     String ext = p_path.get_extension().to_lower();
 
     for (Set<Ref<EditorSceneImporter>>::Element* E = importers.front(); E;
-         E = E->next()) {
+         E                                         = E->next()) {
         if (E->get().ptr() == p_exception) {
             continue;
         }
@@ -1757,7 +1757,7 @@ Error ResourceImporterScene::import(
     progress.step(TTR("Importing Scene..."), 0);
 
     for (Set<Ref<EditorSceneImporter>>::Element* E = importers.front(); E;
-         E = E->next()) {
+         E                                         = E->next()) {
         List<String> extensions;
         E->get()->get_extensions(&extensions);
 
@@ -1873,7 +1873,7 @@ Error ResourceImporterScene::import(
     float anim_optimizer_angerr =
         p_options["animation/optimizer/max_angular_error"];
     float anim_optimizer_maxang = p_options["animation/optimizer/max_angle"];
-    int light_bake_mode = p_options["meshes/light_baking"];
+    int light_bake_mode         = p_options["meshes/light_baking"];
 
     Map<Ref<Mesh>, List<Ref<Shape>>> collision_map;
 
@@ -1926,10 +1926,10 @@ Error ResourceImporterScene::import(
     bool external_materials = int(p_options["materials/storage"]) == 1
                            || int(p_options["materials/storage"]) == 2;
     bool external_materials_as_text = int(p_options["materials/storage"]) == 2;
-    bool external_meshes = int(p_options["meshes/storage"]) == 1
+    bool external_meshes            = int(p_options["meshes/storage"]) == 1
                         || int(p_options["meshes/storage"]) == 2;
     bool external_meshes_as_text = int(p_options["meshes/storage"]) == 2;
-    bool external_scenes = int(p_options["nodes/storage"]) == 1;
+    bool external_scenes         = int(p_options["nodes/storage"]) == 1;
 
     String base_path = p_source_file.get_base_dir();
 
@@ -1937,8 +1937,8 @@ Error ResourceImporterScene::import(
         || external_scenes) {
         if (bool(p_options["external_files/store_in_subdir"])) {
             String subdir_name = p_source_file.get_file().get_basename();
-            DirAccess* da = DirAccess::open(base_path);
-            Error err2 = da->make_dir(subdir_name);
+            DirAccess* da      = DirAccess::open(base_path);
+            Error err2         = da->make_dir(subdir_name);
             memdelete(da);
             ERR_FAIL_COND_V_MSG(
                 err2 != OK && err2 != ERR_ALREADY_EXISTS,
@@ -1953,10 +1953,10 @@ Error ResourceImporterScene::import(
         Map<Ref<ArrayMesh>, Transform> meshes;
         _find_meshes(scene, meshes);
 
-        String file_id = src_path.get_file();
+        String file_id         = src_path.get_file();
         String cache_file_path = base_path.plus_file(file_id + ".unwrap_cache");
 
-        int* cache_data = nullptr;
+        int* cache_data     = nullptr;
         uint64_t cache_size = 0;
 
         if (FileAccess::exists(cache_file_path)) {
@@ -1976,7 +1976,7 @@ Error ResourceImporterScene::import(
         }
 
         float texel_size = p_options["meshes/lightmap_texel_size"];
-        texel_size = MAX(0.001, texel_size);
+        texel_size       = MAX(0.001, texel_size);
 
         Map<String, unsigned int> used_meshes;
 
@@ -1987,9 +1987,9 @@ Error ResourceImporterScene::import(
         );
         int step = 0;
         for (Map<Ref<ArrayMesh>, Transform>::Element* E = meshes.front(); E;
-             E = E->next()) {
+             E                                          = E->next()) {
             Ref<ArrayMesh> mesh = E->key();
-            String name = mesh->get_name();
+            String name         = mesh->get_name();
             if (name == "") { // should not happen but..
                 name = "Mesh " + itos(step);
             }
@@ -2000,10 +2000,10 @@ Error ResourceImporterScene::import(
                 step
             );
 
-            int* ret_cache_data = cache_data;
+            int* ret_cache_data         = cache_data;
             unsigned int ret_cache_size = cache_size;
             bool ret_used_cache = true; // Tell the unwrapper to use the cache
-            Error err2 = mesh->lightmap_unwrap_cached(
+            Error err2          = mesh->lightmap_unwrap_cached(
                 ret_cache_data,
                 ret_cache_size,
                 ret_used_cache,
@@ -2031,7 +2031,7 @@ Error ResourceImporterScene::import(
                     if (cache_size == 0) {
                         // Cache was empty
                         new_cache_data[0] = 0;
-                        cache_size = 4;
+                        cache_size        = 4;
                     } else {
                         memcpy(new_cache_data, cache_data, cache_size);
                         memfree(cache_data);
@@ -2068,7 +2068,7 @@ Error ResourceImporterScene::import(
             unsigned int r_idx = 1;
             for (int i = 0; i < cache_data[0]; ++i) {
                 unsigned char* entry_start = (unsigned char*)&cache_data[r_idx];
-                String entry_hash = String::md5(entry_start);
+                String entry_hash          = String::md5(entry_start);
                 if (used_meshes.has(entry_hash)) {
                     unsigned int entry_size = used_meshes[entry_hash];
                     file->store_buffer(entry_start, entry_size);
@@ -2077,14 +2077,14 @@ Error ResourceImporterScene::import(
                 r_idx += 4; // hash
                 r_idx += 2; // size hint
 
-                int vertex_count = cache_data[r_idx];
-                r_idx += 1;                // vertex count
-                r_idx += vertex_count;     // vertex
-                r_idx += vertex_count * 2; // uvs
+                int vertex_count  = cache_data[r_idx];
+                r_idx            += 1;                // vertex count
+                r_idx            += vertex_count;     // vertex
+                r_idx            += vertex_count * 2; // uvs
 
-                int index_count = cache_data[r_idx];
-                r_idx += 1;           // index count
-                r_idx += index_count; // indices
+                int index_count  = cache_data[r_idx];
+                r_idx           += 1;           // index count
+                r_idx           += index_count; // indices
             }
 
             file->close();

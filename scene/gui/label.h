@@ -66,7 +66,7 @@ private:
 
     struct WordCache {
         enum {
-            CHAR_NEWLINE = -1,
+            CHAR_NEWLINE  = -1,
             CHAR_WRAPLINE = -2
         };
 
@@ -77,10 +77,10 @@ private:
         WordCache* next;
 
         WordCache() {
-            char_pos = 0;
-            word_len = 0;
+            char_pos    = 0;
+            word_len    = 0;
             pixel_width = 0;
-            next = nullptr;
+            next        = nullptr;
             space_count = 0;
         }
     };

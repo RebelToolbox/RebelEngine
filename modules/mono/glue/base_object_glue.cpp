@@ -203,7 +203,7 @@ MonoArray* godot_icall_DynamicGodotObject_SetMemberList(Object* p_ptr) {
 
     int i = 0;
     for (List<PropertyInfo>::Element* E = property_list.front(); E;
-         E = E->next()) {
+         E                              = E->next()) {
         MonoString* boxed =
             GDMonoMarshal::mono_string_from_godot(E->get().name);
         mono_array_setref(result, i, boxed);
@@ -262,7 +262,7 @@ MonoBoolean godot_icall_DynamicGodotObject_SetMember(
     MonoString* p_name,
     MonoObject* p_value
 ) {
-    String name = GDMonoMarshal::mono_string_to_godot(p_name);
+    String name   = GDMonoMarshal::mono_string_to_godot(p_name);
     Variant value = GDMonoMarshal::mono_object_to_variant(p_value);
 
     bool valid;

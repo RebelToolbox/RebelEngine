@@ -310,8 +310,8 @@ public:
         ClassInfo* t = classes.getptr(T::get_class_static());
         ERR_FAIL_COND(!t);
         t->creation_func = &creator<T>;
-        t->exposed = true;
-        t->class_ptr = T::get_class_ptr_static();
+        t->exposed       = true;
+        t->class_ptr     = T::get_class_ptr_static();
         T::register_custom_data_to_otdb();
     }
 
@@ -321,7 +321,7 @@ public:
         T::initialize_class();
         ClassInfo* t = classes.getptr(T::get_class_static());
         ERR_FAIL_COND(!t);
-        t->exposed = true;
+        t->exposed   = true;
         t->class_ptr = T::get_class_ptr_static();
         // nothing
     }
@@ -338,8 +338,8 @@ public:
         ClassInfo* t = classes.getptr(T::get_class_static());
         ERR_FAIL_COND(!t);
         t->creation_func = &_create_ptr_func<T>;
-        t->exposed = true;
-        t->class_ptr = T::get_class_ptr_static();
+        t->exposed       = true;
+        t->class_ptr     = T::get_class_ptr_static();
         T::register_custom_data_to_otdb();
     }
 
@@ -384,7 +384,7 @@ public:
         M p_method,
         const Variant& p_def1
     ) {
-        MethodBind* bind = create_method_bind(p_method);
+        MethodBind* bind      = create_method_bind(p_method);
         const Variant* ptr[1] = {&p_def1};
 
         return bind_methodfi(METHOD_FLAGS_DEFAULT, bind, p_method_name, ptr, 1);
@@ -397,7 +397,7 @@ public:
         const Variant& p_def1,
         const Variant& p_def2
     ) {
-        MethodBind* bind = create_method_bind(p_method);
+        MethodBind* bind      = create_method_bind(p_method);
         const Variant* ptr[2] = {&p_def1, &p_def2};
 
         return bind_methodfi(METHOD_FLAGS_DEFAULT, bind, p_method_name, ptr, 2);
@@ -411,7 +411,7 @@ public:
         const Variant& p_def2,
         const Variant& p_def3
     ) {
-        MethodBind* bind = create_method_bind(p_method);
+        MethodBind* bind      = create_method_bind(p_method);
         const Variant* ptr[3] = {&p_def1, &p_def2, &p_def3};
 
         return bind_methodfi(METHOD_FLAGS_DEFAULT, bind, p_method_name, ptr, 3);
@@ -426,7 +426,7 @@ public:
         const Variant& p_def3,
         const Variant& p_def4
     ) {
-        MethodBind* bind = create_method_bind(p_method);
+        MethodBind* bind      = create_method_bind(p_method);
         const Variant* ptr[4] = {&p_def1, &p_def2, &p_def3, &p_def4};
 
         return bind_methodfi(METHOD_FLAGS_DEFAULT, bind, p_method_name, ptr, 4);
@@ -442,7 +442,7 @@ public:
         const Variant& p_def4,
         const Variant& p_def5
     ) {
-        MethodBind* bind = create_method_bind(p_method);
+        MethodBind* bind      = create_method_bind(p_method);
         const Variant* ptr[5] = {&p_def1, &p_def2, &p_def3, &p_def4, &p_def5};
 
         return bind_methodfi(METHOD_FLAGS_DEFAULT, bind, p_method_name, ptr, 5);
@@ -498,7 +498,7 @@ public:
         const Variant& p_def7,
         const Variant& p_def8
     ) {
-        MethodBind* bind = create_method_bind(p_method);
+        MethodBind* bind      = create_method_bind(p_method);
         const Variant* ptr[8] = {
             &p_def1,
             &p_def2,
@@ -518,9 +518,9 @@ public:
         uint32_t p_flags,
         StringName p_name,
         M p_method,
-        const MethodInfo& p_info = MethodInfo(),
+        const MethodInfo& p_info              = MethodInfo(),
         const Vector<Variant>& p_default_args = Vector<Variant>(),
-        bool p_return_nil_is_variant = true
+        bool p_return_nil_is_variant          = true
     ) {
         GLOBAL_LOCK_FUNCTION;
 
@@ -594,7 +594,7 @@ public:
     static void get_property_list(
         StringName p_class,
         List<PropertyInfo>* p_list,
-        bool p_no_inheritance = false,
+        bool p_no_inheritance     = false,
         const Object* p_validator = nullptr
     );
     static bool set_property(
@@ -646,7 +646,7 @@ public:
     static void get_method_list(
         StringName p_class,
         List<MethodInfo>* p_methods,
-        bool p_no_inheritance = false,
+        bool p_no_inheritance          = false,
         bool p_exclude_from_properties = false
     );
     static MethodBind* get_method(StringName p_class, StringName p_name);

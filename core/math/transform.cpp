@@ -119,12 +119,12 @@ Transform Transform::interpolate_with(const Transform& p_transform, real_t p_c)
     /* not sure if very "efficient" but good enough? */
 
     Vector3 src_scale = basis.get_scale();
-    Quat src_rot = basis.get_rotation_quat();
-    Vector3 src_loc = origin;
+    Quat src_rot      = basis.get_rotation_quat();
+    Vector3 src_loc   = origin;
 
     Vector3 dst_scale = p_transform.basis.get_scale();
-    Quat dst_rot = p_transform.basis.get_rotation_quat();
-    Vector3 dst_loc = p_transform.origin;
+    Quat dst_rot      = p_transform.basis.get_rotation_quat();
+    Vector3 dst_loc   = p_transform.origin;
 
     Transform interp;
     interp.basis.set_quat_scale(
@@ -191,13 +191,13 @@ bool Transform::operator!=(const Transform& p_transform) const {
 }
 
 void Transform::operator*=(const Transform& p_transform) {
-    origin = xform(p_transform.origin);
-    basis *= p_transform.basis;
+    origin  = xform(p_transform.origin);
+    basis  *= p_transform.basis;
 }
 
 Transform Transform::operator*(const Transform& p_transform) const {
-    Transform t = *this;
-    t *= p_transform;
+    Transform t  = *this;
+    t           *= p_transform;
     return t;
 }
 
@@ -223,6 +223,6 @@ Transform::Transform(
     real_t oy,
     real_t oz
 ) {
-    basis = Basis(xx, xy, xz, yx, yy, yz, zx, zy, zz);
+    basis  = Basis(xx, xy, xz, yx, yy, yz, zx, zy, zz);
     origin = Vector3(ox, oy, oz);
 }

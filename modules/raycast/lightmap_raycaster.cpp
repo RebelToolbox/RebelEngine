@@ -48,8 +48,8 @@ void LightmapRaycasterEmbree::filter_function(
     RTCHit* hit = (RTCHit*)p_args->hit;
 
     unsigned int geomID = hit->geomID;
-    float u = hit->u;
-    float v = hit->v;
+    float u             = hit->u;
+    float v             = hit->v;
 
     LightmapRaycasterEmbree* scene =
         (LightmapRaycasterEmbree*)p_args->geometryUserPtr;
@@ -115,7 +115,7 @@ void LightmapRaycasterEmbree::set_mesh_alpha_texture(
 
         {
             PoolVector<uint8_t>::Read r = p_alpha_texture->get_data().read();
-            uint8_t* ptrw = tex.data.ptrw();
+            uint8_t* ptrw               = tex.data.ptrw();
             for (int i = 0; i < tex.size.x * tex.size.y; ++i) {
                 ptrw[i] = r[i];
             }
@@ -133,15 +133,15 @@ uint8_t LightmapRaycasterEmbree::AlphaTextureData::sample(float u, float v)
     const {
     float x = u * size.x;
     float y = v * size.y;
-    int xi = (int)x;
-    int yi = (int)y;
+    int xi  = (int)x;
+    int yi  = (int)y;
 
     uint8_t texels[4];
 
     for (int i = 0; i < 4; ++i) {
         int sample_x = CLAMP(xi + i % 2, 0, size.x - 1);
         int sample_y = CLAMP(yi + i / 2, 0, size.y - 1);
-        texels[i] = data[sample_y * size.x + sample_x];
+        texels[i]    = data[sample_y * size.x + sample_x];
     }
 
     return Math::round(

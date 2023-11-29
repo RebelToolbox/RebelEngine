@@ -47,7 +47,7 @@ void GDAPI godot_color_new_rgba(
     const godot_real p_a
 ) {
     Color* dest = (Color*)r_dest;
-    *dest = Color(p_r, p_g, p_b, p_a);
+    *dest       = Color(p_r, p_g, p_b, p_a);
 }
 
 void GDAPI godot_color_new_rgb(
@@ -57,7 +57,7 @@ void GDAPI godot_color_new_rgb(
     const godot_real p_b
 ) {
     Color* dest = (Color*)r_dest;
-    *dest = Color(p_r, p_g, p_b);
+    *dest       = Color(p_r, p_g, p_b);
 }
 
 godot_real godot_color_get_r(const godot_color* p_self) {
@@ -67,7 +67,7 @@ godot_real godot_color_get_r(const godot_color* p_self) {
 
 void godot_color_set_r(godot_color* p_self, const godot_real val) {
     Color* self = (Color*)p_self;
-    self->r = val;
+    self->r     = val;
 }
 
 godot_real godot_color_get_g(const godot_color* p_self) {
@@ -77,7 +77,7 @@ godot_real godot_color_get_g(const godot_color* p_self) {
 
 void godot_color_set_g(godot_color* p_self, const godot_real val) {
     Color* self = (Color*)p_self;
-    self->g = val;
+    self->g     = val;
 }
 
 godot_real godot_color_get_b(const godot_color* p_self) {
@@ -87,7 +87,7 @@ godot_real godot_color_get_b(const godot_color* p_self) {
 
 void godot_color_set_b(godot_color* p_self, const godot_real val) {
     Color* self = (Color*)p_self;
-    self->b = val;
+    self->b     = val;
 }
 
 godot_real godot_color_get_a(const godot_color* p_self) {
@@ -97,7 +97,7 @@ godot_real godot_color_get_a(const godot_color* p_self) {
 
 void godot_color_set_a(godot_color* p_self, const godot_real val) {
     Color* self = (Color*)p_self;
-    self->a = val;
+    self->a     = val;
 }
 
 godot_real godot_color_get_h(const godot_color* p_self) {
@@ -160,14 +160,14 @@ godot_real GDAPI godot_color_gray(const godot_color* p_self) {
 godot_color GDAPI godot_color_inverted(const godot_color* p_self) {
     godot_color dest;
     const Color* self = (const Color*)p_self;
-    *((Color*)&dest) = self->inverted();
+    *((Color*)&dest)  = self->inverted();
     return dest;
 }
 
 godot_color GDAPI godot_color_contrasted(const godot_color* p_self) {
     godot_color dest;
     const Color* self = (const Color*)p_self;
-    *((Color*)&dest) = self->contrasted();
+    *((Color*)&dest)  = self->contrasted();
     return dest;
 }
 
@@ -178,8 +178,8 @@ godot_color GDAPI godot_color_linear_interpolate(
 ) {
     godot_color dest;
     const Color* self = (const Color*)p_self;
-    const Color* b = (const Color*)p_b;
-    *((Color*)&dest) = self->linear_interpolate(*b, p_t);
+    const Color* b    = (const Color*)p_b;
+    *((Color*)&dest)  = self->linear_interpolate(*b, p_t);
     return dest;
 }
 
@@ -188,7 +188,7 @@ godot_color_blend(const godot_color* p_self, const godot_color* p_over) {
     godot_color dest;
     const Color* self = (const Color*)p_self;
     const Color* over = (const Color*)p_over;
-    *((Color*)&dest) = self->blend(*over);
+    *((Color*)&dest)  = self->blend(*over);
     return dest;
 }
 
@@ -196,7 +196,7 @@ godot_color GDAPI
 godot_color_darkened(const godot_color* p_self, const godot_real p_amount) {
     godot_color dest;
     const Color* self = (const Color*)p_self;
-    *((Color*)&dest) = self->darkened(p_amount);
+    *((Color*)&dest)  = self->darkened(p_amount);
     return dest;
 }
 
@@ -209,7 +209,7 @@ godot_color GDAPI godot_color_from_hsv(
 ) {
     godot_color dest;
     const Color* self = (const Color*)p_self;
-    *((Color*)&dest) = self->from_hsv(p_h, p_s, p_v, p_a);
+    *((Color*)&dest)  = self->from_hsv(p_h, p_s, p_v, p_a);
     return dest;
 }
 
@@ -217,7 +217,7 @@ godot_color GDAPI
 godot_color_lightened(const godot_color* p_self, const godot_real p_amount) {
     godot_color dest;
     const Color* self = (const Color*)p_self;
-    *((Color*)&dest) = self->lightened(p_amount);
+    *((Color*)&dest)  = self->lightened(p_amount);
     return dest;
 }
 
@@ -233,14 +233,14 @@ godot_color_to_html(const godot_color* p_self, const godot_bool p_with_alpha) {
 godot_bool GDAPI
 godot_color_operator_equal(const godot_color* p_self, const godot_color* p_b) {
     const Color* self = (const Color*)p_self;
-    const Color* b = (const Color*)p_b;
+    const Color* b    = (const Color*)p_b;
     return *self == *b;
 }
 
 godot_bool GDAPI
 godot_color_operator_less(const godot_color* p_self, const godot_color* p_b) {
     const Color* self = (const Color*)p_self;
-    const Color* b = (const Color*)p_b;
+    const Color* b    = (const Color*)p_b;
     return *self < *b;
 }
 

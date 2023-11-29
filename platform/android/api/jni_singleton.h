@@ -211,9 +211,9 @@ public:
         Variant::Type p_ret_type
     ) {
         MethodData md;
-        md.method = p_method;
-        md.argtypes = p_args;
-        md.ret_type = p_ret_type;
+        md.method          = p_method;
+        md.argtypes        = p_args;
+        md.ret_type        = p_ret_type;
         method_map[p_name] = md;
     }
 

@@ -69,9 +69,9 @@ void RemoteTransform2D::_update_remote() {
             && update_remote_scale) {
             n->set_global_transform(get_global_transform());
         } else {
-            Transform2D n_trans = n->get_global_transform();
+            Transform2D n_trans   = n->get_global_transform();
             Transform2D our_trans = get_global_transform();
-            Vector2 n_scale = n->get_scale();
+            Vector2 n_scale       = n->get_scale();
 
             if (!update_remote_position) {
                 our_trans.set_origin(n_trans.get_origin());
@@ -94,9 +94,9 @@ void RemoteTransform2D::_update_remote() {
             && update_remote_scale) {
             n->set_transform(get_transform());
         } else {
-            Transform2D n_trans = n->get_transform();
+            Transform2D n_trans   = n->get_transform();
             Transform2D our_trans = get_transform();
-            Vector2 n_scale = n->get_scale();
+            Vector2 n_scale       = n->get_scale();
 
             if (!update_remote_position) {
                 our_trans.set_origin(n_trans.get_origin());
@@ -289,7 +289,7 @@ RemoteTransform2D::RemoteTransform2D() {
     use_global_coordinates = true;
     update_remote_position = true;
     update_remote_rotation = true;
-    update_remote_scale = true;
+    update_remote_scale    = true;
 
     cache = 0;
     set_notify_transform(true);

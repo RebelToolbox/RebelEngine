@@ -38,7 +38,7 @@ void MultiMesh::_set_transform_array(const PoolVector<Vector3>& p_array) {
     }
 
     const PoolVector<Vector3>& xforms = p_array;
-    int len = xforms.size();
+    int len                           = xforms.size();
     ERR_FAIL_COND((len / 4) != instance_count);
     if (len == 0) {
         return;
@@ -51,7 +51,7 @@ void MultiMesh::_set_transform_array(const PoolVector<Vector3>& p_array) {
         t.basis[0] = r[i * 4 + 0];
         t.basis[1] = r[i * 4 + 1];
         t.basis[2] = r[i * 4 + 2];
-        t.origin = r[i * 4 + 3];
+        t.origin   = r[i * 4 + 3];
 
         set_instance_transform(i, t);
     }
@@ -72,7 +72,7 @@ PoolVector<Vector3> MultiMesh::_get_transform_array() const {
     PoolVector<Vector3>::Write w = xforms.write();
 
     for (int i = 0; i < instance_count; i++) {
-        Transform t = get_instance_transform(i);
+        Transform t  = get_instance_transform(i);
         w[i * 4 + 0] = t.basis[0];
         w[i * 4 + 1] = t.basis[1];
         w[i * 4 + 2] = t.basis[2];
@@ -88,7 +88,7 @@ void MultiMesh::_set_transform_2d_array(const PoolVector<Vector2>& p_array) {
     }
 
     const PoolVector<Vector2>& xforms = p_array;
-    int len = xforms.size();
+    int len                           = xforms.size();
     ERR_FAIL_COND((len / 3) != instance_count);
     if (len == 0) {
         return;
@@ -122,9 +122,9 @@ PoolVector<Vector2> MultiMesh::_get_transform_2d_array() const {
 
     for (int i = 0; i < instance_count; i++) {
         Transform2D t = get_instance_transform_2d(i);
-        w[i * 3 + 0] = t.elements[0];
-        w[i * 3 + 1] = t.elements[1];
-        w[i * 3 + 2] = t.elements[2];
+        w[i * 3 + 0]  = t.elements[0];
+        w[i * 3 + 1]  = t.elements[1];
+        w[i * 3 + 2]  = t.elements[2];
     }
 
     return xforms;
@@ -132,7 +132,7 @@ PoolVector<Vector2> MultiMesh::_get_transform_2d_array() const {
 
 void MultiMesh::_set_color_array(const PoolVector<Color>& p_array) {
     const PoolVector<Color>& colors = p_array;
-    int len = colors.size();
+    int len                         = colors.size();
     if (len == 0) {
         return;
     }
@@ -162,7 +162,7 @@ PoolVector<Color> MultiMesh::_get_color_array() const {
 
 void MultiMesh::_set_custom_data_array(const PoolVector<Color>& p_array) {
     const PoolVector<Color>& custom_datas = p_array;
-    int len = custom_datas.size();
+    int len                               = custom_datas.size();
     if (len == 0) {
         return;
     }
@@ -574,12 +574,12 @@ void MultiMesh::_bind_methods() {
 }
 
 MultiMesh::MultiMesh() {
-    multimesh = VisualServer::get_singleton()->multimesh_create();
-    color_format = COLOR_NONE;
-    custom_data_format = CUSTOM_DATA_NONE;
-    transform_format = TRANSFORM_2D;
+    multimesh              = VisualServer::get_singleton()->multimesh_create();
+    color_format           = COLOR_NONE;
+    custom_data_format     = CUSTOM_DATA_NONE;
+    transform_format       = TRANSFORM_2D;
     visible_instance_count = -1;
-    instance_count = 0;
+    instance_count         = 0;
 }
 
 MultiMesh::~MultiMesh() {

@@ -113,7 +113,7 @@ protected:
 
 public:
     void add_tab(
-        const String& p_str = "",
+        const String& p_str        = "",
         const Ref<Texture>& p_icon = Ref<Texture>()
     );
 

@@ -110,7 +110,7 @@ Error VariantParser::get_token(
     while (true) {
         CharType cchar;
         if (p_stream->saved) {
-            cchar = p_stream->saved;
+            cchar           = p_stream->saved;
             p_stream->saved = 0;
         } else {
             cchar = p_stream->get_char();
@@ -201,7 +201,7 @@ Error VariantParser::get_token(
                 }
 
                 r_token.value = Color::html(color_str.as_string());
-                r_token.type = TK_COLOR;
+                r_token.type  = TK_COLOR;
                 return OK;
             };
             case '"': {
@@ -210,7 +210,7 @@ Error VariantParser::get_token(
                     CharType ch = p_stream->get_char();
 
                     if (ch == 0) {
-                        r_err_str = "Unterminated String";
+                        r_err_str    = "Unterminated String";
                         r_token.type = TK_ERROR;
                         return ERR_PARSE_ERROR;
                     } else if (ch == '"') {
@@ -219,7 +219,7 @@ Error VariantParser::get_token(
                         // escaped characters...
                         CharType next = p_stream->get_char();
                         if (next == 0) {
-                            r_err_str = "Unterminated String";
+                            r_err_str    = "Unterminated String";
                             r_token.type = TK_ERROR;
                             return ERR_PARSE_ERROR;
                         }
@@ -247,7 +247,7 @@ Error VariantParser::get_token(
                                 for (int j = 0; j < 4; j++) {
                                     CharType c = p_stream->get_char();
                                     if (c == 0) {
-                                        r_err_str = "Unterminated String";
+                                        r_err_str    = "Unterminated String";
                                         r_token.type = TK_ERROR;
                                         return ERR_PARSE_ERROR;
                                     }
@@ -263,10 +263,10 @@ Error VariantParser::get_token(
                                     if (c >= '0' && c <= '9') {
                                         v = c - '0';
                                     } else if (c >= 'a' && c <= 'f') {
-                                        v = c - 'a';
+                                        v  = c - 'a';
                                         v += 10;
                                     } else if (c >= 'A' && c <= 'F') {
-                                        v = c - 'A';
+                                        v  = c - 'A';
                                         v += 10;
                                     } else {
                                         ERR_PRINT("BUG");
@@ -274,7 +274,7 @@ Error VariantParser::get_token(
                                     }
 
                                     res <<= 4;
-                                    res |= v;
+                                    res  |= v;
                                 }
 
                             } break;
@@ -301,7 +301,7 @@ Error VariantParser::get_token(
                 if (p_stream->is_utf8()) {
                     str.parse_utf8(str.ascii(true).get_data());
                 }
-                r_token.type = TK_STRING;
+                r_token.type  = TK_STRING;
                 r_token.value = str;
                 return OK;
 
@@ -323,13 +323,13 @@ Error VariantParser::get_token(
                     int reading = READING_INT;
 
                     if (cchar == '-') {
-                        num += '-';
-                        cchar = p_stream->get_char();
+                        num   += '-';
+                        cchar  = p_stream->get_char();
                     }
 
-                    CharType c = cchar;
+                    CharType c    = cchar;
                     bool exp_sign = false;
-                    bool exp_beg = false;
+                    bool exp_beg  = false;
                     bool is_float = false;
 
                     while (true) {
@@ -338,10 +338,10 @@ Error VariantParser::get_token(
                                 if (c >= '0' && c <= '9') {
                                     // pass
                                 } else if (c == '.') {
-                                    reading = READING_DEC;
+                                    reading  = READING_DEC;
                                     is_float = true;
                                 } else if (c == 'e') {
-                                    reading = READING_EXP;
+                                    reading  = READING_EXP;
                                     is_float = true;
                                 } else {
                                     reading = READING_DONE;
@@ -374,7 +374,7 @@ Error VariantParser::get_token(
                             break;
                         }
                         num += c;
-                        c = p_stream->get_char();
+                        c    = p_stream->get_char();
                     }
 
                     p_stream->saved = c;
@@ -395,18 +395,18 @@ Error VariantParser::get_token(
                     while ((cchar >= 'A' && cchar <= 'Z')
                            || (cchar >= 'a' && cchar <= 'z') || cchar == '_'
                            || (!first && cchar >= '0' && cchar <= '9')) {
-                        id += cchar;
-                        cchar = p_stream->get_char();
-                        first = false;
+                        id    += cchar;
+                        cchar  = p_stream->get_char();
+                        first  = false;
                     }
 
                     p_stream->saved = cchar;
 
-                    r_token.type = TK_IDENTIFIER;
+                    r_token.type  = TK_IDENTIFIER;
                     r_token.value = id.as_string();
                     return OK;
                 } else {
-                    r_err_str = "Unexpected character.";
+                    r_err_str    = "Unexpected character.";
                     r_token.type = TK_ERROR;
                     return ERR_PARSE_ERROR;
                 }
@@ -491,9 +491,9 @@ Error VariantParser::_parse_construct(
             if (token.type == TK_IDENTIFIER) {
                 double real = stor_fix(token.value);
                 if (real != -1) {
-                    token.type = TK_NUMBER;
+                    token.type  = TK_NUMBER;
                     token.value = real;
-                    valid = true;
+                    valid       = true;
                 }
             }
             if (!valid) {
@@ -604,9 +604,9 @@ Error VariantParser::parse_value(
             }
 
             Transform2D m;
-            m[0] = Vector2(args[0], args[1]);
-            m[1] = Vector2(args[2], args[3]);
-            m[2] = Vector2(args[4], args[5]);
+            m[0]  = Vector2(args[0], args[1]);
+            m[1]  = Vector2(args[2], args[3]);
+            m[2]  = Vector2(args[4], args[5]);
             value = m;
         } else if (id == "Plane") {
             Vector<float> args;
@@ -858,7 +858,7 @@ Error VariantParser::parse_value(
                     }
                     obj->set(key, v);
                     need_comma = true;
-                    at_key = true;
+                    at_key     = true;
                 }
             }
         } else if (id == "Resource" || id == "SubResource" || id == "ExtResource") {
@@ -914,7 +914,7 @@ Error VariantParser::parse_value(
                 get_token(p_stream, token, line, r_err_str);
                 if (token.type == TK_STRING) {
                     String path = token.value;
-                    RES res = ResourceLoader::load(path);
+                    RES res     = ResourceLoader::load(path);
                     if (res.is_null()) {
                         r_err_str =
                             "Can't load resource at path: '" + path + "'.";
@@ -1432,8 +1432,8 @@ Error VariantParser::_parse_dictionary(
                 return err;
             }
             object[key] = v;
-            need_comma = true;
-            at_key = true;
+            need_comma  = true;
+            at_key      = true;
         }
     }
 }
@@ -1498,7 +1498,7 @@ Error VariantParser::_parse_tag(
         return ERR_PARSE_ERROR;
     }
 
-    r_tag.name = token.value;
+    r_tag.name       = token.value;
     bool parsing_tag = true;
 
     while (true) {
@@ -1604,7 +1604,7 @@ Error VariantParser::parse_tag_assign_eof(
     while (true) {
         CharType c;
         if (p_stream->saved) {
-            c = p_stream->saved;
+            c               = p_stream->saved;
             p_stream->saved = 0;
 
         } else {
@@ -1823,7 +1823,7 @@ Error VariantWriter::write(
 
         } break;
         case Variant::TRANSFORM2D: {
-            String s = "Transform2D( ";
+            String s       = "Transform2D( ";
             Transform2D m3 = p_variant;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 2; j++) {
@@ -1853,9 +1853,9 @@ Error VariantWriter::write(
 
         } break;
         case Variant::TRANSFORM: {
-            String s = "Transform( ";
+            String s    = "Transform( ";
             Transform t = p_variant;
-            Basis& m3 = t.basis;
+            Basis& m3   = t.basis;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     if (i != 0 || j != 0) {
@@ -1912,7 +1912,7 @@ Error VariantWriter::write(
                     && res->get_path().is_resource_file()) {
                     // external resource
                     String path = res->get_path();
-                    res_text = "Resource( \"" + path + "\")";
+                    res_text    = "Resource( \"" + path + "\")";
                 }
 
                 // could come up with some sort of text
@@ -1933,7 +1933,7 @@ Error VariantWriter::write(
             obj->get_property_list(&props);
             bool first = true;
             for (List<PropertyInfo>::Element* E = props.front(); E;
-                 E = E->next()) {
+                 E                              = E->next()) {
                 if (E->get().usage & PROPERTY_USAGE_STORAGE
                     || E->get().usage & PROPERTY_USAGE_SCRIPT_VARIABLE) {
                     // must be serialized
@@ -2003,7 +2003,7 @@ Error VariantWriter::write(
         case Variant::ARRAY: {
             p_store_string_func(p_store_string_ud, "[ ");
             Array array = p_variant;
-            int len = array.size();
+            int len     = array.size();
             for (int i = 0; i < len; i++) {
                 if (i > 0) {
                     p_store_string_func(p_store_string_ud, ", ");
@@ -2023,10 +2023,10 @@ Error VariantWriter::write(
         case Variant::POOL_BYTE_ARRAY: {
             p_store_string_func(p_store_string_ud, "PoolByteArray( ");
             String s;
-            PoolVector<uint8_t> data = p_variant;
-            int len = data.size();
+            PoolVector<uint8_t> data    = p_variant;
+            int len                     = data.size();
             PoolVector<uint8_t>::Read r = data.read();
-            const uint8_t* ptr = r.ptr();
+            const uint8_t* ptr          = r.ptr();
             for (int i = 0; i < len; i++) {
                 if (i > 0) {
                     p_store_string_func(p_store_string_ud, ", ");
@@ -2040,10 +2040,10 @@ Error VariantWriter::write(
         } break;
         case Variant::POOL_INT_ARRAY: {
             p_store_string_func(p_store_string_ud, "PoolIntArray( ");
-            PoolVector<int> data = p_variant;
-            int len = data.size();
+            PoolVector<int> data    = p_variant;
+            int len                 = data.size();
             PoolVector<int>::Read r = data.read();
-            const int* ptr = r.ptr();
+            const int* ptr          = r.ptr();
 
             for (int i = 0; i < len; i++) {
                 if (i > 0) {
@@ -2058,10 +2058,10 @@ Error VariantWriter::write(
         } break;
         case Variant::POOL_REAL_ARRAY: {
             p_store_string_func(p_store_string_ud, "PoolRealArray( ");
-            PoolVector<real_t> data = p_variant;
-            int len = data.size();
+            PoolVector<real_t> data    = p_variant;
+            int len                    = data.size();
             PoolVector<real_t>::Read r = data.read();
-            const real_t* ptr = r.ptr();
+            const real_t* ptr          = r.ptr();
 
             for (int i = 0; i < len; i++) {
                 if (i > 0) {
@@ -2075,10 +2075,10 @@ Error VariantWriter::write(
         } break;
         case Variant::POOL_STRING_ARRAY: {
             p_store_string_func(p_store_string_ud, "PoolStringArray( ");
-            PoolVector<String> data = p_variant;
-            int len = data.size();
+            PoolVector<String> data    = p_variant;
+            int len                    = data.size();
             PoolVector<String>::Read r = data.read();
-            const String* ptr = r.ptr();
+            const String* ptr          = r.ptr();
             String s;
             // write_string("\n");
 
@@ -2098,10 +2098,10 @@ Error VariantWriter::write(
         } break;
         case Variant::POOL_VECTOR2_ARRAY: {
             p_store_string_func(p_store_string_ud, "PoolVector2Array( ");
-            PoolVector<Vector2> data = p_variant;
-            int len = data.size();
+            PoolVector<Vector2> data    = p_variant;
+            int len                     = data.size();
             PoolVector<Vector2>::Read r = data.read();
-            const Vector2* ptr = r.ptr();
+            const Vector2* ptr          = r.ptr();
 
             for (int i = 0; i < len; i++) {
                 if (i > 0) {
@@ -2118,10 +2118,10 @@ Error VariantWriter::write(
         } break;
         case Variant::POOL_VECTOR3_ARRAY: {
             p_store_string_func(p_store_string_ud, "PoolVector3Array( ");
-            PoolVector<Vector3> data = p_variant;
-            int len = data.size();
+            PoolVector<Vector3> data    = p_variant;
+            int len                     = data.size();
             PoolVector<Vector3>::Read r = data.read();
-            const Vector3* ptr = r.ptr();
+            const Vector3* ptr          = r.ptr();
 
             for (int i = 0; i < len; i++) {
                 if (i > 0) {
@@ -2140,10 +2140,10 @@ Error VariantWriter::write(
         case Variant::POOL_COLOR_ARRAY: {
             p_store_string_func(p_store_string_ud, "PoolColorArray( ");
 
-            PoolVector<Color> data = p_variant;
-            int len = data.size();
+            PoolVector<Color> data    = p_variant;
+            int len                   = data.size();
             PoolVector<Color>::Read r = data.read();
-            const Color* ptr = r.ptr();
+            const Color* ptr          = r.ptr();
 
             for (int i = 0; i < len; i++) {
                 if (i > 0) {
@@ -2167,8 +2167,8 @@ Error VariantWriter::write(
 }
 
 static Error _write_to_str(void* ud, const String& p_string) {
-    String* str = (String*)ud;
-    (*str) += p_string;
+    String* str  = (String*)ud;
+    (*str)      += p_string;
     return OK;
 }
 

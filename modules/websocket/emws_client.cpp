@@ -37,7 +37,7 @@
 #include "emscripten.h"
 
 void EMWSClient::_esws_on_connect(void* obj, char* proto) {
-    EMWSClient* client = static_cast<EMWSClient*>(obj);
+    EMWSClient* client     = static_cast<EMWSClient*>(obj);
     client->_is_connecting = false;
     client->_on_connect(String(proto));
 }
@@ -58,7 +58,7 @@ void EMWSClient::_esws_on_message(
 }
 
 void EMWSClient::_esws_on_error(void* obj) {
-    EMWSClient* client = static_cast<EMWSClient*>(obj);
+    EMWSClient* client     = static_cast<EMWSClient*>(obj);
     client->_is_connecting = false;
     client->_on_error();
 }
@@ -111,8 +111,8 @@ Error EMWSClient::connect_to_host(
             );
         }
     }
-    str += p_host + ":" + itos(p_port) + p_path;
-    _is_connecting = true;
+    str            += p_host + ":" + itos(p_port) + p_path;
+    _is_connecting  = true;
 
     _js_id = godot_js_websocket_create(
         this,
@@ -173,19 +173,19 @@ Error EMWSClient::set_buffers(
     int p_out_buffer,
     int p_out_packets
 ) {
-    _in_buf_size = nearest_shift(p_in_buffer - 1) + 10;
-    _in_pkt_size = nearest_shift(p_in_packets - 1);
+    _in_buf_size  = nearest_shift(p_in_buffer - 1) + 10;
+    _in_pkt_size  = nearest_shift(p_in_packets - 1);
     _out_buf_size = nearest_shift(p_out_buffer - 1) + 10;
     return OK;
 }
 
 EMWSClient::EMWSClient() {
-    _in_buf_size = nearest_shift((int)GLOBAL_GET(WSC_IN_BUF) - 1) + 10;
-    _in_pkt_size = nearest_shift((int)GLOBAL_GET(WSC_IN_PKT) - 1);
-    _out_buf_size = nearest_shift((int)GLOBAL_GET(WSC_OUT_BUF) - 1) + 10;
+    _in_buf_size   = nearest_shift((int)GLOBAL_GET(WSC_IN_BUF) - 1) + 10;
+    _in_pkt_size   = nearest_shift((int)GLOBAL_GET(WSC_IN_PKT) - 1);
+    _out_buf_size  = nearest_shift((int)GLOBAL_GET(WSC_OUT_BUF) - 1) + 10;
     _is_connecting = false;
-    _peer = Ref<EMWSPeer>(memnew(EMWSPeer));
-    _js_id = 0;
+    _peer          = Ref<EMWSPeer>(memnew(EMWSPeer));
+    _js_id         = 0;
 }
 
 EMWSClient::~EMWSClient() {

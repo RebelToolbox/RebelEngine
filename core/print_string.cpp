@@ -35,12 +35,12 @@
 #include <stdio.h>
 
 static PrintHandlerList* print_handler_list = nullptr;
-bool _print_line_enabled = true;
-bool _print_error_enabled = true;
+bool _print_line_enabled                    = true;
+bool _print_error_enabled                   = true;
 
 void add_print_handler(PrintHandlerList* p_handler) {
     _global_lock();
-    p_handler->next = print_handler_list;
+    p_handler->next    = print_handler_list;
     print_handler_list = p_handler;
     _global_unlock();
 }
@@ -49,7 +49,7 @@ void remove_print_handler(PrintHandlerList* p_handler) {
     _global_lock();
 
     PrintHandlerList* prev = nullptr;
-    PrintHandlerList* l = print_handler_list;
+    PrintHandlerList* l    = print_handler_list;
 
     while (l) {
         if (l == p_handler) {
@@ -61,7 +61,7 @@ void remove_print_handler(PrintHandlerList* p_handler) {
             break;
         }
         prev = l;
-        l = l->next;
+        l    = l->next;
     }
     // OS::get_singleton()->print("print handler list is
     // %p\n",print_handler_list);

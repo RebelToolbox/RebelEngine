@@ -93,8 +93,8 @@ AnimationCurve::AnimationCurve(
     const Document& /*doc*/
 ) :
     Object(id, element, name) {
-    const ScopePtr sc = GetRequiredScope(element);
-    const ElementPtr KeyTime = GetRequiredElement(sc, "KeyTime");
+    const ScopePtr sc              = GetRequiredScope(element);
+    const ElementPtr KeyTime       = GetRequiredElement(sc, "KeyTime");
     const ElementPtr KeyValueFloat = GetRequiredElement(sc, "KeyValueFloat");
 
     // note preserved keys and values for legacy FBXConverter.cpp
@@ -173,7 +173,7 @@ AnimationCurveNode::AnimationCurveNode(
         }
 
         target = object;
-        prop = con->PropertyName();
+        prop   = con->PropertyName();
         break;
     }
 
@@ -204,7 +204,7 @@ const AnimationMap& AnimationCurveNode::Curves() const {
             // simple once you get it. The other advantage is casting is
             // guaranteed to be safe and nullptr will be returned in the last
             // step if it fails.
-            Object* ob = con->SourceObject();
+            Object* ob                 = con->SourceObject();
             AnimationCurve* anim_curve = dynamic_cast<AnimationCurve*>(ob);
             ERR_CONTINUE_MSG(
                 !anim_curve,
@@ -280,7 +280,7 @@ const AnimationCurveNodeList AnimationLayer::Nodes(
 
         if (target_prop_whitelist) {
             const char* s = anim->TargetProperty().c_str();
-            bool ok = false;
+            bool ok       = false;
             for (size_t i = 0; i < whitelist_size; ++i) {
                 if (!strcmp(s, target_prop_whitelist[i])) {
                     ok = true;

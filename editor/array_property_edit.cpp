@@ -84,7 +84,7 @@ bool ArrayPropertyEdit::_set(const StringName& p_name, const Variant& p_value) {
     if (pn.begins_with("array/")) {
         if (pn == "array/size") {
             Variant arr = get_array();
-            int size = arr.call("size");
+            int size    = arr.call("size");
 
             int newsize = p_value;
             if (newsize == size) {
@@ -151,11 +151,11 @@ bool ArrayPropertyEdit::_set(const StringName& p_name, const Variant& p_value) {
             return true;
 
         } else {
-            int idx = pn.get_slicec('/', 1).to_int();
+            int idx     = pn.get_slicec('/', 1).to_int();
             Variant arr = get_array();
 
             Variant value = arr.get(idx);
-            UndoRedo* ur = EditorNode::get_undo_redo();
+            UndoRedo* ur  = EditorNode::get_undo_redo();
 
             ur->create_action(TTR("Change Array Value"));
             ur->add_do_method(this, "_set_value", idx, p_value);
@@ -215,7 +215,7 @@ bool ArrayPropertyEdit::_get(const StringName& p_name, Variant& r_ret) const {
 
 void ArrayPropertyEdit::_get_property_list(List<PropertyInfo>* p_list) const {
     Variant arr = get_array();
-    int size = arr.call("size");
+    int size    = arr.call("size");
 
     p_list->push_back(PropertyInfo(
         Variant::INT,
@@ -265,11 +265,11 @@ void ArrayPropertyEdit::_get_property_list(List<PropertyInfo>* p_list) const {
         if (is_typed || v.get_type() != Variant::NIL) {
             PropertyInfo pi(v.get_type(), "indices/" + itos(i + offset));
             if (subtype != Variant::NIL) {
-                pi.type = Variant::Type(subtype);
-                pi.hint = PropertyHint(subtype_hint);
+                pi.type        = Variant::Type(subtype);
+                pi.hint        = PropertyHint(subtype_hint);
                 pi.hint_string = subtype_hint_string;
             } else if (v.get_type() == Variant::OBJECT) {
-                pi.hint = PROPERTY_HINT_RESOURCE_TYPE;
+                pi.hint        = PROPERTY_HINT_RESOURCE_TYPE;
                 pi.hint_string = "Resource";
             }
 
@@ -284,9 +284,9 @@ void ArrayPropertyEdit::edit(
     const String& p_hint_string,
     Variant::Type p_deftype
 ) {
-    page = 0;
-    property = p_prop;
-    obj = p_obj->get_instance_id();
+    page         = 0;
+    property     = p_prop;
+    obj          = p_obj->get_instance_id();
     default_type = p_deftype;
 
     if (!p_hint_string.empty()) {
@@ -352,8 +352,8 @@ ArrayPropertyEdit::ArrayPropertyEdit() {
         }
         vtypes += Variant::get_type_name(Variant::Type(i));
     }
-    default_type = Variant::NIL;
-    subtype = Variant::NIL;
-    subtype_hint = PROPERTY_HINT_NONE;
+    default_type        = Variant::NIL;
+    subtype             = Variant::NIL;
+    subtype_hint        = PROPERTY_HINT_NONE;
     subtype_hint_string = "";
 }

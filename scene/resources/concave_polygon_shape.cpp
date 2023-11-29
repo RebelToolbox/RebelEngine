@@ -36,7 +36,7 @@ Vector<Vector3> ConcavePolygonShape::get_debug_mesh_lines() {
     Set<DrawEdge> edges;
 
     PoolVector<Vector3> data = get_faces();
-    int datalen = data.size();
+    int datalen              = data.size();
     ERR_FAIL_COND_V((datalen % 3) != 0, Vector<Vector3>());
 
     PoolVector<Vector3>::Read r = data.read();
@@ -52,9 +52,9 @@ Vector<Vector3> ConcavePolygonShape::get_debug_mesh_lines() {
     points.resize(edges.size() * 2);
     int idx = 0;
     for (Set<DrawEdge>::Element* E = edges.front(); E; E = E->next()) {
-        points.write[idx + 0] = E->get().a;
-        points.write[idx + 1] = E->get().b;
-        idx += 2;
+        points.write[idx + 0]  = E->get().a;
+        points.write[idx + 1]  = E->get().b;
+        idx                   += 2;
     }
 
     return points;

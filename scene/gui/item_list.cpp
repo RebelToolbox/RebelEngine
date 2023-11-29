@@ -39,16 +39,16 @@ void ItemList::add_item(
     bool p_selectable
 ) {
     Item item;
-    item.icon = p_texture;
+    item.icon            = p_texture;
     item.icon_transposed = false;
-    item.icon_region = Rect2i();
-    item.icon_modulate = Color(1, 1, 1, 1);
-    item.text = p_item;
-    item.selectable = p_selectable;
-    item.selected = false;
-    item.disabled = false;
+    item.icon_region     = Rect2i();
+    item.icon_modulate   = Color(1, 1, 1, 1);
+    item.text            = p_item;
+    item.selectable      = p_selectable;
+    item.selected        = false;
+    item.disabled        = false;
     item.tooltip_enabled = true;
-    item.custom_bg = Color(0, 0, 0, 0);
+    item.custom_bg       = Color(0, 0, 0, 0);
     items.push_back(item);
 
     update();
@@ -57,16 +57,16 @@ void ItemList::add_item(
 
 void ItemList::add_icon_item(const Ref<Texture>& p_item, bool p_selectable) {
     Item item;
-    item.icon = p_item;
+    item.icon            = p_item;
     item.icon_transposed = false;
-    item.icon_region = Rect2i();
-    item.icon_modulate = Color(1, 1, 1, 1);
+    item.icon_region     = Rect2i();
+    item.icon_modulate   = Color(1, 1, 1, 1);
     // item.text=p_item;
-    item.selectable = p_selectable;
-    item.selected = false;
-    item.disabled = false;
+    item.selectable      = p_selectable;
+    item.selected        = false;
+    item.disabled        = false;
     item.tooltip_enabled = true;
-    item.custom_bg = Color(0, 0, 0, 0);
+    item.custom_bg       = Color(0, 0, 0, 0);
     items.push_back(item);
 
     update();
@@ -258,7 +258,7 @@ void ItemList::select(int p_idx, bool p_single) {
             items.write[i].selected = p_idx == i;
         }
 
-        current = p_idx;
+        current                 = p_idx;
         ensure_selected_visible = false;
     } else {
         if (items[p_idx].selectable && !items[p_idx].disabled) {
@@ -273,7 +273,7 @@ void ItemList::unselect(int p_idx) {
 
     if (select_mode != SELECT_MULTI) {
         items.write[p_idx].selected = false;
-        current = -1;
+        current                     = -1;
     } else {
         items.write[p_idx].selected = false;
     }
@@ -338,16 +338,16 @@ void ItemList::remove_item(int p_idx) {
 
     items.remove(p_idx);
     update();
-    shape_changed = true;
+    shape_changed       = true;
     defer_select_single = -1;
 }
 
 void ItemList::clear() {
     items.clear();
-    current = -1;
+    current                 = -1;
     ensure_selected_visible = false;
     update();
-    shape_changed = true;
+    shape_changed       = true;
     defer_select_single = -1;
 }
 
@@ -435,8 +435,8 @@ Size2 ItemList::Item::get_icon_size() const {
 
     if (icon_transposed) {
         Size2 size_tmp = size_result;
-        size_result.x = size_tmp.y;
-        size_result.y = size_tmp.x;
+        size_result.x  = size_tmp.y;
+        size_result.y  = size_tmp.x;
     }
 
     return size_result;
@@ -468,11 +468,11 @@ void ItemList::_gui_input(const Ref<InputEvent>& p_event) {
         && (mb->get_button_index() == BUTTON_LEFT
             || (allow_rmb_select && mb->get_button_index() == BUTTON_RIGHT))
         && mb->is_pressed()) {
-        search_string = ""; // any mousepress cancels
-        Vector2 pos = mb->get_position();
-        Ref<StyleBox> bg = get_stylebox("bg");
-        pos -= bg->get_offset();
-        pos.y += scroll_bar->get_value();
+        search_string     = ""; // any mousepress cancels
+        Vector2 pos       = mb->get_position();
+        Ref<StyleBox> bg  = get_stylebox("bg");
+        pos              -= bg->get_offset();
+        pos.y            += scroll_bar->get_value();
 
         int closest = -1;
 
@@ -498,7 +498,7 @@ void ItemList::_gui_input(const Ref<InputEvent>& p_event) {
 
             } else if (select_mode == SELECT_MULTI && mb->get_shift() && current >= 0 && current < items.size() && current != i) {
                 int from = current;
-                int to = i;
+                int to   = i;
                 if (i < current) {
                     SWAP(from, to);
                 }
@@ -593,7 +593,7 @@ void ItemList::_gui_input(const Ref<InputEvent>& p_event) {
     if (p_event->is_pressed() && items.size() > 0) {
         if (p_event->is_action("ui_up")) {
             if (search_string != "") {
-                uint64_t now = OS::get_singleton()->get_ticks_msec();
+                uint64_t now  = OS::get_singleton()->get_ticks_msec();
                 uint64_t diff = now - search_time_msec;
 
                 if (diff < uint64_t(ProjectSettings::get_singleton()->get(
@@ -625,7 +625,7 @@ void ItemList::_gui_input(const Ref<InputEvent>& p_event) {
             }
         } else if (p_event->is_action("ui_down")) {
             if (search_string != "") {
-                uint64_t now = OS::get_singleton()->get_ticks_msec();
+                uint64_t now  = OS::get_singleton()->get_ticks_msec();
                 uint64_t diff = now - search_time_msec;
 
                 if (diff < uint64_t(ProjectSettings::get_singleton()->get(
@@ -729,13 +729,13 @@ void ItemList::_gui_input(const Ref<InputEvent>& p_event) {
             Ref<InputEventKey> k = p_event;
 
             if (k.is_valid() && k->get_unicode()) {
-                uint64_t now = OS::get_singleton()->get_ticks_msec();
-                uint64_t diff = now - search_time_msec;
+                uint64_t now          = OS::get_singleton()->get_ticks_msec();
+                uint64_t diff         = now - search_time_msec;
                 uint64_t max_interval = uint64_t(GLOBAL_DEF(
                     "gui/timers/incremental_search_max_interval_msec",
                     2000
                 ));
-                search_time_msec = now;
+                search_time_msec      = now;
 
                 if (diff > max_interval) {
                     search_string = "";
@@ -790,12 +790,12 @@ void ItemList::ensure_current_is_visible() {
 }
 
 static Rect2 _adjust_to_max_size(Size2 p_size, Size2 p_max_size) {
-    Size2 size = p_max_size;
-    int tex_width = p_size.width * size.height / p_size.height;
+    Size2 size     = p_max_size;
+    int tex_width  = p_size.width * size.height / p_size.height;
     int tex_height = size.height;
 
     if (tex_width > size.width) {
-        tex_width = size.width;
+        tex_width  = size.width;
         tex_height = p_size.height * tex_width / p_size.width;
     }
 
@@ -837,21 +837,21 @@ void ItemList::_notification(int p_what) {
 
         draw_style_box(bg, Rect2(Point2(), size));
 
-        int hseparation = get_constant("hseparation");
-        int vseparation = get_constant("vseparation");
-        int icon_margin = get_constant("icon_margin");
+        int hseparation     = get_constant("hseparation");
+        int vseparation     = get_constant("vseparation");
+        int icon_margin     = get_constant("icon_margin");
         int line_separation = get_constant("line_separation");
 
-        Ref<StyleBox> sbsel = has_focus() ? get_stylebox("selected_focus")
-                                          : get_stylebox("selected");
+        Ref<StyleBox> sbsel  = has_focus() ? get_stylebox("selected_focus")
+                                           : get_stylebox("selected");
         Ref<StyleBox> cursor = has_focus() ? get_stylebox("cursor")
                                            : get_stylebox("cursor_unfocused");
 
-        Ref<Font> font = get_font("font");
-        Color guide_color = get_color("guide_color");
-        Color font_color = get_color("font_color");
+        Ref<Font> font            = get_font("font");
+        Color guide_color         = get_color("guide_color");
+        Color font_color          = get_color("font_color");
         Color font_color_selected = get_color("font_color_selected");
-        int font_height = font->get_height();
+        int font_height           = font->get_height();
         Vector<int> line_size_cache;
         Vector<int> line_limit_cache;
 
@@ -908,7 +908,7 @@ void ItemList::_notification(int p_what) {
                         }
 
                     } else {
-                        minsize.y = MAX(minsize.y, s.height);
+                        minsize.y  = MAX(minsize.y, s.height);
                         minsize.x += s.width;
                     }
                 }
@@ -919,10 +919,10 @@ void ItemList::_notification(int p_what) {
                 max_column_width = MAX(max_column_width, minsize.x);
 
                 // elements need to adapt to the selected size
-                minsize.y += vseparation;
-                minsize.x += hseparation;
-                items.write[i].rect_cache.size = minsize;
-                items.write[i].min_rect_cache.size = minsize;
+                minsize.y                          += vseparation;
+                minsize.x                          += hseparation;
+                items.write[i].rect_cache.size      = minsize;
+                items.write[i].min_rect_cache.size  = minsize;
             }
 
             int fit_size = size.x - bg->get_minimum_size().width - mw;
@@ -937,7 +937,7 @@ void ItemList::_notification(int p_what) {
                 // repeat until all fits
                 bool all_fit = true;
                 Vector2 ofs;
-                int col = 0;
+                int col   = 0;
                 int max_h = 0;
                 separators.clear();
                 for (int i = 0; i < items.size(); i++) {
@@ -945,7 +945,7 @@ void ItemList::_notification(int p_what) {
                         && items[i].rect_cache.size.width + ofs.x > fit_size) {
                         // went past
                         current_columns = MAX(col, 1);
-                        all_fit = false;
+                        all_fit         = false;
                         break;
                     }
 
@@ -953,7 +953,7 @@ void ItemList::_notification(int p_what) {
                         items.write[i].rect_cache.size.x = max_column_width;
                     }
                     items.write[i].rect_cache.position = ofs;
-                    max_h = MAX(max_h, items[i].rect_cache.size.y);
+                    max_h  = MAX(max_h, items[i].rect_cache.size.y);
                     ofs.x += items[i].rect_cache.size.x + hseparation;
                     col++;
                     if (col == current_columns) {
@@ -967,10 +967,10 @@ void ItemList::_notification(int p_what) {
                             items.write[j].rect_cache.size.y = max_h;
                         }
 
-                        ofs.x = 0;
+                        ofs.x  = 0;
                         ofs.y += max_h + vseparation;
-                        col = 0;
-                        max_h = 0;
+                        col    = 0;
+                        max_h  = 0;
                     }
                 }
 
@@ -1008,9 +1008,9 @@ void ItemList::_notification(int p_what) {
 
         // ensure_selected_visible needs to be checked before we draw the list.
         if (ensure_selected_visible && current >= 0 && current < items.size()) {
-            Rect2 r = items[current].rect_cache;
+            Rect2 r  = items[current].rect_cache;
             int from = scroll_bar->get_value();
-            int to = from + scroll_bar->get_page();
+            int to   = from + scroll_bar->get_page();
 
             if (r.position.y < from) {
                 scroll_bar->set_value(r.position.y);
@@ -1021,8 +1021,8 @@ void ItemList::_notification(int p_what) {
 
         ensure_selected_visible = false;
 
-        Vector2 base_ofs = bg->get_offset();
-        base_ofs.y -= int(scroll_bar->get_value());
+        Vector2 base_ofs  = bg->get_offset();
+        base_ofs.y       -= int(scroll_bar->get_value());
 
         const Rect2 clip(
             -base_ofs,
@@ -1036,7 +1036,7 @@ void ItemList::_notification(int p_what) {
             int lo = 0;
             int hi = items.size();
             while (lo < hi) {
-                const int mid = (lo + hi) / 2;
+                const int mid       = (lo + hi) / 2;
                 const Rect2& rcache = items[mid].rect_cache;
                 if (rcache.position.y + rcache.size.y < clip.position.y) {
                     lo = mid + 1;
@@ -1070,24 +1070,24 @@ void ItemList::_notification(int p_what) {
             }
 
             if (items[i].selected) {
-                Rect2 r = rcache;
-                r.position += base_ofs;
+                Rect2 r       = rcache;
+                r.position   += base_ofs;
                 r.position.y -= vseparation / 2;
-                r.size.y += vseparation;
+                r.size.y     += vseparation;
                 r.position.x -= hseparation / 2;
-                r.size.x += hseparation;
+                r.size.x     += hseparation;
 
                 draw_style_box(sbsel, r);
             }
             if (items[i].custom_bg.a > 0.001) {
-                Rect2 r = rcache;
+                Rect2 r     = rcache;
                 r.position += base_ofs;
 
                 // Size rect to make the align the temperature colors
                 r.position.y -= vseparation / 2;
-                r.size.y += vseparation;
+                r.size.y     += vseparation;
                 r.position.x -= hseparation / 2;
-                r.size.x += hseparation;
+                r.size.x     += hseparation;
 
                 draw_rect(r, items[i].custom_bg);
             }
@@ -1121,7 +1121,7 @@ void ItemList::_notification(int p_what) {
                         items[i].rect_cache.size.height
                             - items[i].min_rect_cache.size.height
                     );
-                    text_ofs.y = icon_size.height + icon_margin;
+                    text_ofs.y  = icon_size.height + icon_margin;
                     text_ofs.y += items[i].rect_cache.size.height
                                 - items[i].min_rect_cache.size.height;
                 } else {
@@ -1139,7 +1139,7 @@ void ItemList::_notification(int p_what) {
                         icon_size
                     );
                     draw_rect.position += adj.position;
-                    draw_rect.size = adj.size;
+                    draw_rect.size      = adj.size;
                 }
 
                 Color modulate = items[i].icon_modulate;
@@ -1150,7 +1150,7 @@ void ItemList::_notification(int p_what) {
                 // If the icon is transposed, we have to switch the size so that
                 // it is drawn correctly
                 if (items[i].icon_transposed) {
-                    Size2 size_tmp = draw_rect.size;
+                    Size2 size_tmp   = draw_rect.size;
                     draw_rect.size.x = size_tmp.y;
                     draw_rect.size.y = size_tmp.x;
                 }
@@ -1197,9 +1197,9 @@ void ItemList::_notification(int p_what) {
                 }
 
                 if (icon_mode == ICON_MODE_TOP && max_text_lines > 0) {
-                    int ss = items[i].text.length();
+                    int ss    = items[i].text.length();
                     float ofs = 0;
-                    int line = 0;
+                    int line  = 0;
                     for (int j = 0; j <= ss; j++) {
                         int cs = j < ss ? font->get_char_size(
                                                   items[i].text[j],
@@ -1209,7 +1209,7 @@ void ItemList::_notification(int p_what) {
                                         : 0;
                         if (ofs + cs > max_len || j == ss) {
                             line_limit_cache.write[line] = j;
-                            line_size_cache.write[line] = ofs;
+                            line_size_cache.write[line]  = ofs;
                             line++;
                             ofs = 0;
                             if (line >= max_text_lines) {
@@ -1221,12 +1221,12 @@ void ItemList::_notification(int p_what) {
                     }
 
                     line = 0;
-                    ofs = 0;
+                    ofs  = 0;
 
                     text_ofs.y += font->get_ascent();
-                    text_ofs = text_ofs.floor();
-                    text_ofs += base_ofs;
-                    text_ofs += items[i].rect_cache.position;
+                    text_ofs    = text_ofs.floor();
+                    text_ofs   += base_ofs;
+                    text_ofs   += items[i].rect_cache.position;
 
                     FontDrawer drawer(font, Color(1, 1, 1));
                     for (int j = 0; j < ss; j++) {
@@ -1268,9 +1268,9 @@ void ItemList::_notification(int p_what) {
                     }
 
                     text_ofs.y += font->get_ascent();
-                    text_ofs = text_ofs.floor();
-                    text_ofs += base_ofs;
-                    text_ofs += items[i].rect_cache.position;
+                    text_ofs    = text_ofs.floor();
+                    text_ofs   += base_ofs;
+                    text_ofs   += items[i].rect_cache.position;
 
                     draw_string(
                         font,
@@ -1283,12 +1283,12 @@ void ItemList::_notification(int p_what) {
             }
 
             if (select_mode == SELECT_MULTI && i == current) {
-                Rect2 r = rcache;
-                r.position += base_ofs;
+                Rect2 r       = rcache;
+                r.position   += base_ofs;
                 r.position.y -= vseparation / 2;
-                r.size.y += vseparation;
+                r.size.y     += vseparation;
                 r.position.x -= hseparation / 2;
-                r.size.x += hseparation;
+                r.size.x     += hseparation;
                 draw_style_box(cursor, r);
             }
         }
@@ -1330,12 +1330,12 @@ void ItemList::_scroll_changed(double) {
 }
 
 int ItemList::get_item_at_position(const Point2& p_pos, bool p_exact) const {
-    Vector2 pos = p_pos;
-    Ref<StyleBox> bg = get_stylebox("bg");
-    pos -= bg->get_offset();
-    pos.y += scroll_bar->get_value();
+    Vector2 pos       = p_pos;
+    Ref<StyleBox> bg  = get_stylebox("bg");
+    pos              -= bg->get_offset();
+    pos.y            += scroll_bar->get_value();
 
-    int closest = -1;
+    int closest      = -1;
     int closest_dist = 0x7FFFFFFF;
 
     for (int i = 0; i < items.size(); i++) {
@@ -1354,7 +1354,7 @@ int ItemList::get_item_at_position(const Point2& p_pos, bool p_exact) const {
 
         float dist = rc.distance_to(pos);
         if (!p_exact && dist < closest_dist) {
-            closest = i;
+            closest      = i;
             closest_dist = dist;
         }
     }
@@ -1367,10 +1367,10 @@ bool ItemList::is_pos_at_end_of_items(const Point2& p_pos) const {
         return true;
     }
 
-    Vector2 pos = p_pos;
-    Ref<StyleBox> bg = get_stylebox("bg");
-    pos -= bg->get_offset();
-    pos.y += scroll_bar->get_value();
+    Vector2 pos       = p_pos;
+    Ref<StyleBox> bg  = get_stylebox("bg");
+    pos              -= bg->get_offset();
+    pos.y            += scroll_bar->get_value();
 
     Rect2 endrect = items[items.size() - 1].rect_cache;
     return (pos.y > endrect.position.y + endrect.size.y);
@@ -1471,9 +1471,9 @@ void ItemList::_set_items(const Array& p_items) {
     clear();
 
     for (int i = 0; i < p_items.size(); i += 3) {
-        String text = p_items[i + 0];
+        String text       = p_items[i + 0];
         Ref<Texture> icon = p_items[i + 1];
-        bool disabled = p_items[i + 2];
+        bool disabled     = p_items[i + 2];
 
         int idx = get_item_count();
         add_item(text, icon);
@@ -1504,7 +1504,7 @@ void ItemList::set_autoscroll_to_bottom(const bool p_enable) {
 }
 
 void ItemList::set_auto_height(bool p_enable) {
-    auto_height = p_enable;
+    auto_height   = p_enable;
     shape_changed = true;
     update();
 }
@@ -1919,14 +1919,14 @@ ItemList::ItemList() {
     current = -1;
 
     select_mode = SELECT_SINGLE;
-    icon_mode = ICON_MODE_LEFT;
+    icon_mode   = ICON_MODE_LEFT;
 
     fixed_column_width = 0;
-    same_column_width = false;
-    max_text_lines = 1;
-    max_columns = 1;
-    auto_height = false;
-    auto_height_value = 0.0f;
+    same_column_width  = false;
+    max_text_lines     = 1;
+    max_columns        = 1;
+    auto_height        = false;
+    auto_height_value  = 0.0f;
 
     scroll_bar = memnew(VScrollBar);
     add_child(scroll_bar);
@@ -1935,12 +1935,12 @@ ItemList::ItemList() {
     scroll_bar->connect("value_changed", this, "_scroll_changed");
 
     set_focus_mode(FOCUS_ALL);
-    current_columns = 1;
-    search_time_msec = 0;
+    current_columns         = 1;
+    search_time_msec        = 0;
     ensure_selected_visible = false;
-    defer_select_single = -1;
-    allow_rmb_select = false;
-    allow_reselect = false;
+    defer_select_single     = -1;
+    allow_rmb_select        = false;
+    allow_reselect          = false;
     do_autoscroll_to_bottom = false;
 
     icon_scale = 1.0f;

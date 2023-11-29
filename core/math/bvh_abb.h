@@ -66,25 +66,25 @@ struct BVH_ABB {
     }
 
     void set(const POINT& _min, const POINT& _max) {
-        min = _min;
+        min     = _min;
         neg_max = -_max;
     }
 
     // to and from standard AABB
     void from(const BOUNDS& p_aabb) {
-        min = p_aabb.position;
+        min     = p_aabb.position;
         neg_max = -(p_aabb.position + p_aabb.size);
     }
 
     void to(BOUNDS& r_aabb) const {
         r_aabb.position = min;
-        r_aabb.size = calculate_size();
+        r_aabb.size     = calculate_size();
     }
 
     void merge(const BVH_ABB& p_o) {
         for (int axis = 0; axis < POINT::AXIS_COUNT; ++axis) {
             neg_max[axis] = MIN(neg_max[axis], p_o.neg_max[axis]);
-            min[axis] = MIN(min[axis], p_o.min[axis]);
+            min[axis]     = MIN(min[axis], p_o.min[axis]);
         }
     }
 
@@ -97,7 +97,7 @@ struct BVH_ABB {
     }
 
     real_t get_proximity_to(const BVH_ABB& p_b) const {
-        const POINT d = (min - neg_max) - (p_b.min - p_b.neg_max);
+        const POINT d    = (min - neg_max) - (p_b.min - p_b.neg_max);
         real_t proximity = 0.0;
         for (int axis = 0; axis < POINT::AXIS_COUNT; ++axis) {
             proximity += Math::abs(d[axis]);
@@ -126,9 +126,9 @@ struct BVH_ABB {
     }
 
     bool intersects_plane(const Plane& p_p) const {
-        Vector3 size = calculate_size();
+        Vector3 size         = calculate_size();
         Vector3 half_extents = size * 0.5;
-        Vector3 ofs = min + half_extents;
+        Vector3 ofs          = min + half_extents;
 
         // forward side of plane?
         Vector3 point_offset(
@@ -155,9 +155,9 @@ struct BVH_ABB {
         const uint32_t* p_plane_ids,
         uint32_t p_num_planes
     ) const {
-        Vector3 size = calculate_size();
+        Vector3 size         = calculate_size();
         Vector3 half_extents = size * 0.5;
-        Vector3 ofs = min + half_extents;
+        Vector3 ofs          = min + half_extents;
 
         for (unsigned int i = 0; i < p_num_planes; i++) {
             const Plane& p = p_hull.planes[p_plane_ids[i]];
@@ -254,7 +254,7 @@ struct BVH_ABB {
 
     void grow(const POINT& p_change) {
         neg_max -= p_change;
-        min -= p_change;
+        min     -= p_change;
     }
 
     void expand(real_t p_change) {

@@ -41,11 +41,11 @@ float AudioStreamPreview::get_max(float p_time, float p_time_next) const {
         return 0;
     }
 
-    int max = preview.size() / 2;
+    int max       = preview.size() / 2;
     int time_from = p_time / length * max;
-    int time_to = p_time_next / length * max;
-    time_from = CLAMP(time_from, 0, max - 1);
-    time_to = CLAMP(time_to, 0, max - 1);
+    int time_to   = p_time_next / length * max;
+    time_from     = CLAMP(time_from, 0, max - 1);
+    time_to       = CLAMP(time_to, 0, max - 1);
 
     if (time_to <= time_from) {
         time_to = time_from + 1;
@@ -68,11 +68,11 @@ float AudioStreamPreview::get_min(float p_time, float p_time_next) const {
         return 0;
     }
 
-    int max = preview.size() / 2;
+    int max       = preview.size() / 2;
     int time_from = p_time / length * max;
-    int time_to = p_time_next / length * max;
-    time_from = CLAMP(time_from, 0, max - 1);
-    time_to = CLAMP(time_to, 0, max - 1);
+    int time_to   = p_time_next / length * max;
+    time_from     = CLAMP(time_from, 0, max - 1);
+    time_to       = CLAMP(time_to, 0, max - 1);
 
     if (time_to <= time_from) {
         time_to = time_from + 1;
@@ -121,7 +121,7 @@ void AudioStreamPreviewGenerator::_preview_thread(void* p_preview) {
         int ofs_write = uint64_t(frames_total - frames_todo)
                       * uint64_t(preview->preview->preview.size() / 2)
                       / uint64_t(frames_total);
-        int to_read = MIN(frames_todo, mixbuff_chunk_frames);
+        int to_read  = MIN(frames_todo, mixbuff_chunk_frames);
         int to_write = uint64_t(to_read)
                      * uint64_t(preview->preview->preview.size() / 2)
                      / uint64_t(frames_total);
@@ -133,10 +133,10 @@ void AudioStreamPreviewGenerator::_preview_thread(void* p_preview) {
         for (int i = 0; i < to_write; i++) {
             float max = -1000;
             float min = 1000;
-            int from = uint64_t(i) * to_read / to_write;
-            int to = (uint64_t(i) + 1) * to_read / to_write;
-            to = MIN(to, to_read);
-            from = MIN(from, to_read - 1);
+            int from  = uint64_t(i) * to_read / to_write;
+            int to    = (uint64_t(i) + 1) * to_read / to_write;
+            to        = MIN(to, to_read);
+            from      = MIN(from, to_read - 1);
             if (to == from) {
                 to = from + 1;
             }
@@ -150,7 +150,7 @@ void AudioStreamPreviewGenerator::_preview_thread(void* p_preview) {
             }
 
             uint8_t pfrom = CLAMP((min * 0.5 + 0.5) * 255, 0, 255);
-            uint8_t pto = CLAMP((max * 0.5 + 0.5) * 255, 0, 255);
+            uint8_t pto   = CLAMP((max * 0.5 + 0.5) * 255, 0, 255);
 
             preview->preview->preview.write[(ofs_write + i) * 2 + 0] = pfrom;
             preview->preview->preview.write[(ofs_write + i) * 2 + 1] = pto;
@@ -178,9 +178,9 @@ Ref<AudioStreamPreview> AudioStreamPreviewGenerator::generate_preview(
 
     previews[p_stream->get_instance_id()] = Preview();
 
-    Preview* preview = &previews[p_stream->get_instance_id()];
+    Preview* preview     = &previews[p_stream->get_instance_id()];
     preview->base_stream = p_stream;
-    preview->playback = preview->base_stream->instance_playback();
+    preview->playback    = preview->base_stream->instance_playback();
     preview->generating.set();
     preview->id = p_stream->get_instance_id();
 
@@ -203,7 +203,7 @@ Ref<AudioStreamPreview> AudioStreamPreviewGenerator::generate_preview(
 
     preview->preview.instance();
     preview->preview->preview = maxmin;
-    preview->preview->length = len_s;
+    preview->preview->length  = len_s;
 
     if (preview->playback.is_valid()) {
         preview->thread = memnew(Thread);
@@ -234,7 +234,7 @@ void AudioStreamPreviewGenerator::_notification(int p_what) {
     if (p_what == NOTIFICATION_PROCESS) {
         List<ObjectID> to_erase;
         for (Map<ObjectID, Preview>::Element* E = previews.front(); E;
-             E = E->next()) {
+             E                                  = E->next()) {
             if (!E->get().generating.is_set()) {
                 if (E->get().thread) {
                     E->get().thread->wait_to_finish();

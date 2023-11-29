@@ -44,15 +44,15 @@
 #include "core/type_info.h"
 
 enum MethodFlags {
-    METHOD_FLAG_NORMAL = 1,
-    METHOD_FLAG_EDITOR = 2,
-    METHOD_FLAG_NOSCRIPT = 4,
-    METHOD_FLAG_CONST = 8,
-    METHOD_FLAG_REVERSE = 16, // used for events
-    METHOD_FLAG_VIRTUAL = 32,
+    METHOD_FLAG_NORMAL      = 1,
+    METHOD_FLAG_EDITOR      = 2,
+    METHOD_FLAG_NOSCRIPT    = 4,
+    METHOD_FLAG_CONST       = 8,
+    METHOD_FLAG_REVERSE     = 16, // used for events
+    METHOD_FLAG_VIRTUAL     = 32,
     METHOD_FLAG_FROM_SCRIPT = 64,
-    METHOD_FLAG_VARARG = 128,
-    METHOD_FLAGS_DEFAULT = METHOD_FLAG_NORMAL,
+    METHOD_FLAG_VARARG      = 128,
+    METHOD_FLAGS_DEFAULT    = METHOD_FLAG_NORMAL,
 };
 
 template <class T>
@@ -126,7 +126,7 @@ template <>
 struct VariantObjectClassChecker<Node*> {
     static _FORCE_INLINE_ bool check(const Variant& p_variant) {
         Object* obj = p_variant;
-        Node* node = p_variant;
+        Node* node  = p_variant;
         return node || !obj;
     }
 };
@@ -134,26 +134,26 @@ struct VariantObjectClassChecker<Node*> {
 template <>
 struct VariantObjectClassChecker<Control*> {
     static _FORCE_INLINE_ bool check(const Variant& p_variant) {
-        Object* obj = p_variant;
+        Object* obj      = p_variant;
         Control* control = p_variant;
         return control || !obj;
     }
 };
 
-#define CHECK_ARG(m_arg)                                                       \
-    if ((m_arg - 1) < p_arg_count) {                                           \
-        Variant::Type argtype = get_argument_type(m_arg - 1);                  \
-        if (!Variant::can_convert_strict(                                      \
-                p_args[m_arg - 1]->get_type(),                                 \
-                argtype                                                        \
-            )                                                                  \
-            || !VariantObjectClassChecker<P##m_arg>::check(*p_args[m_arg - 1]  \
-            )) {                                                               \
-            r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;   \
-            r_error.argument = m_arg - 1;                                      \
-            r_error.expected = argtype;                                        \
-            return Variant();                                                  \
-        }                                                                      \
+#define CHECK_ARG(m_arg)                                                        \
+    if ((m_arg - 1) < p_arg_count) {                                            \
+        Variant::Type argtype = get_argument_type(m_arg - 1);                   \
+        if (!Variant::can_convert_strict(                                       \
+                p_args[m_arg - 1]->get_type(),                                  \
+                argtype                                                         \
+            )                                                                   \
+            || !VariantObjectClassChecker<P##m_arg>::check(*p_args[m_arg - 1]   \
+            )) {                                                                \
+            r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT; \
+            r_error.argument = m_arg - 1;                                       \
+            r_error.expected = argtype;                                         \
+            return Variant();                                                   \
+        }                                                                       \
     }
 
 #define CHECK_NOARG(m_arg)                                                     \
@@ -218,7 +218,7 @@ protected:
     void _set_const(bool p_const);
     void _set_returns(bool p_returns);
 #ifdef DEBUG_METHODS_ENABLED
-    virtual Variant::Type _gen_argument_type(int p_arg) const = 0;
+    virtual Variant::Type _gen_argument_type(int p_arg) const     = 0;
     virtual PropertyInfo _gen_argument_type_info(int p_arg) const = 0;
     void _generate_argument_types(int p_count);
 
@@ -401,14 +401,14 @@ public:
             Vector<StringName> names;
             names.resize(p_info.arguments.size());
             for (int i = 0; i < p_info.arguments.size(); i++) {
-                at[i + 1] = p_info.arguments[i].type;
+                at[i + 1]      = p_info.arguments[i].type;
                 names.write[i] = p_info.arguments[i].name;
             }
 
             set_argument_names(names);
         }
         argument_types = at;
-        arguments = p_info;
+        arguments      = p_info;
         if (p_return_nil_is_variant) {
             arguments.return_val.usage |= PROPERTY_USAGE_NIL_IS_VARIANT;
         }

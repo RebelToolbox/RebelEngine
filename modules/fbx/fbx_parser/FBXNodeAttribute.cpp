@@ -125,9 +125,9 @@ CameraSwitcher::CameraSwitcher(
     const std::string& name
 ) :
     NodeAttribute(id, element, doc, name) {
-    const ScopePtr sc = GetRequiredScope(element);
-    const ElementPtr CameraId = sc->GetElement("CameraId");
-    const ElementPtr CameraName = sc->GetElement("CameraName");
+    const ScopePtr sc                = GetRequiredScope(element);
+    const ElementPtr CameraId        = sc->GetElement("CameraId");
+    const ElementPtr CameraName      = sc->GetElement("CameraName");
     const ElementPtr CameraIndexName = sc->GetElement("CameraIndexName");
 
     if (CameraId) {

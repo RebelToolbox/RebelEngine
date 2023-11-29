@@ -110,14 +110,14 @@ bool test_PoolByteArray_constant_time_compare() {
                            150, 64,  165, 127, 221, 118, 144, 232,
                            45,  100, 15,  248, 193, 244, 245, 34,
                            116, 147, 132, 200, 110, 27,  38,  75};
-    PoolByteArray p1 = raw_to_pba(hm1, sizeof(hm1) / sizeof(hm1[0]));
-    PoolByteArray p2 = raw_to_pba(hm2, sizeof(hm2) / sizeof(hm2[0]));
+    PoolByteArray p1    = raw_to_pba(hm1, sizeof(hm1) / sizeof(hm1[0]));
+    PoolByteArray p2    = raw_to_pba(hm2, sizeof(hm2) / sizeof(hm2[0]));
     _MockCrypto crypto;
     bool equal = crypto.constant_time_compare(p1, p1);
-    bool ok = true;
-    ok = ok && equal;
-    equal = crypto.constant_time_compare(p1, p2);
-    ok = ok && !equal;
+    bool ok    = true;
+    ok         = ok && equal;
+    equal      = crypto.constant_time_compare(p1, p2);
+    ok         = ok && !equal;
     return ok;
 }
 
@@ -126,7 +126,7 @@ typedef bool (*TestFunc)();
 TestFunc test_funcs[] = {test_PoolByteArray_constant_time_compare, nullptr};
 
 MainLoop* test() {
-    int count = 0;
+    int count  = 0;
     int passed = 0;
 
     while (true) {

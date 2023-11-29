@@ -87,7 +87,7 @@ Vector<Ref<Texture>> EditorInterface::make_mesh_previews(
     RID camera = VS::get_singleton()->camera_create();
     VS::get_singleton()->viewport_attach_camera(viewport, camera);
 
-    RID light = VS::get_singleton()->directional_light_create();
+    RID light          = VS::get_singleton()->directional_light_create();
     RID light_instance = VS::get_singleton()->instance_create2(light, scenario);
 
     RID light2 = VS::get_singleton()->directional_light_create();
@@ -115,20 +115,20 @@ Vector<Ref<Texture>> EditorInterface::make_mesh_previews(
             VS::get_singleton()->instance_create2(mesh->get_rid(), scenario);
         VS::get_singleton()->instance_set_transform(inst, mesh_xform);
 
-        AABB aabb = mesh->get_aabb();
-        Vector3 ofs = aabb.position + aabb.size * 0.5;
+        AABB aabb      = mesh->get_aabb();
+        Vector3 ofs    = aabb.position + aabb.size * 0.5;
         aabb.position -= ofs;
         Transform xform;
         xform.basis = Basis().rotated(Vector3(0, 1, 0), -Math_PI / 6);
         xform.basis =
             Basis().rotated(Vector3(1, 0, 0), Math_PI / 6) * xform.basis;
         AABB rot_aabb = xform.xform(aabb);
-        float m = MAX(rot_aabb.size.x, rot_aabb.size.y) * 0.5;
+        float m       = MAX(rot_aabb.size.x, rot_aabb.size.y) * 0.5;
         if (m == 0) {
             textures.push_back(Ref<Texture>());
             continue;
         }
-        xform.origin = -xform.basis.xform(ofs); //-ofs*m;
+        xform.origin    = -xform.basis.xform(ofs); //-ofs*m;
         xform.origin.z -= rot_aabb.size.z * 2;
         xform.invert();
         xform = mesh_xform * xform;

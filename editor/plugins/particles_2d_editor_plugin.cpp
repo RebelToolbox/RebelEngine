@@ -206,7 +206,7 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
     int vpc = 0;
 
     {
-        PoolVector<uint8_t> data = img->get_data();
+        PoolVector<uint8_t> data    = img->get_data();
         PoolVector<uint8_t>::Read r = data.read();
 
         for (int i = 0; i < s.width; i++) {
@@ -307,7 +307,7 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
 
     {
         PoolVector<uint8_t>::Write tw = texdata.write();
-        float* twf = (float*)tw.ptr();
+        float* twf                    = (float*)tw.ptr();
         for (int i = 0; i < vpc; i++) {
             twf[i * 2 + 0] = valid_positions[i].x;
             twf[i * 2 + 1] = valid_positions[i].y;
@@ -352,7 +352,7 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
 
         {
             PoolVector<uint8_t>::Write tw = normdata.write();
-            float* twf = (float*)tw.ptr();
+            float* twf                    = (float*)tw.ptr();
             for (int i = 0; i < vpc; i++) {
                 twf[i * 2 + 0] = valid_normals[i].x;
                 twf[i * 2 + 1] = valid_normals[i].y;
@@ -401,7 +401,7 @@ void Particles2DEditorPlugin::_bind_methods() {
 
 Particles2DEditorPlugin::Particles2DEditorPlugin(EditorNode* p_node) {
     particles = nullptr;
-    editor = p_node;
+    editor    = p_node;
     undo_redo = editor->get_undo_redo();
 
     toolbar = memnew(HBoxContainer);

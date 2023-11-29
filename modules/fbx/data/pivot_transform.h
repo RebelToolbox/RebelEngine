@@ -58,22 +58,22 @@ struct PivotTransform : Reference, ModelAbstraction {
     // at the end we want to keep geometric_ everything, post and pre rotation
     // these are used during animation data processing / keyframe ingestion the
     // rest can be simplified down / out.
-    Quat pre_rotation = Quat();
-    Quat post_rotation = Quat();
-    Quat rotation = Quat();
-    Quat geometric_rotation = Quat();
-    Vector3 rotation_pivot = Vector3();
-    Vector3 rotation_offset = Vector3();
-    Vector3 scaling_offset = Vector3(1.0, 1.0, 1.0);
-    Vector3 scaling_pivot = Vector3(1.0, 1.0, 1.0);
-    Vector3 translation = Vector3();
-    Vector3 scaling = Vector3(1.0, 1.0, 1.0);
-    Vector3 geometric_scaling = Vector3(1.0, 1.0, 1.0);
+    Quat pre_rotation             = Quat();
+    Quat post_rotation            = Quat();
+    Quat rotation                 = Quat();
+    Quat geometric_rotation       = Quat();
+    Vector3 rotation_pivot        = Vector3();
+    Vector3 rotation_offset       = Vector3();
+    Vector3 scaling_offset        = Vector3(1.0, 1.0, 1.0);
+    Vector3 scaling_pivot         = Vector3(1.0, 1.0, 1.0);
+    Vector3 translation           = Vector3();
+    Vector3 scaling               = Vector3(1.0, 1.0, 1.0);
+    Vector3 geometric_scaling     = Vector3(1.0, 1.0, 1.0);
     Vector3 geometric_translation = Vector3();
 
-    Vector3 raw_rotation = Vector3();
+    Vector3 raw_rotation      = Vector3();
     Vector3 raw_post_rotation = Vector3();
-    Vector3 raw_pre_rotation = Vector3();
+    Vector3 raw_pre_rotation  = Vector3();
 
     /* Read pivots from the document */
     void ReadTransformChain();
@@ -110,15 +110,15 @@ struct PivotTransform : Reference, ModelAbstraction {
         parent_transform = p_parent;
     }
 
-    bool computed_global_xform = false;
+    bool computed_global_xform           = false;
     Ref<PivotTransform> parent_transform = Ref<PivotTransform>();
     // Transform chain[TransformationComp_MAXIMUM];
 
     // cached for later use
-    Transform GlobalTransform = Transform();
-    Transform LocalTransform = Transform();
+    Transform GlobalTransform      = Transform();
+    Transform LocalTransform       = Transform();
     Transform Local_Scaling_Matrix = Transform(); // used for inherit type.
-    Transform GeometricTransform = Transform();   // 3DS max only
+    Transform GeometricTransform   = Transform(); // 3DS max only
     FBXDocParser::TransformInheritance inherit_type =
         FBXDocParser::TransformInheritance_MAX; // maya fbx requires this -
                                                 // sorry <3

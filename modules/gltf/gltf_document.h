@@ -52,19 +52,19 @@ class CSGShape;
 class GridMap;
 class MultiMeshInstance;
 
-using GLTFAccessorIndex = int;
-using GLTFAnimationIndex = int;
-using GLTFBufferIndex = int;
+using GLTFAccessorIndex   = int;
+using GLTFAnimationIndex  = int;
+using GLTFBufferIndex     = int;
 using GLTFBufferViewIndex = int;
-using GLTFCameraIndex = int;
-using GLTFImageIndex = int;
-using GLTFMaterialIndex = int;
-using GLTFMeshIndex = int;
-using GLTFLightIndex = int;
-using GLTFNodeIndex = int;
-using GLTFSkeletonIndex = int;
-using GLTFSkinIndex = int;
-using GLTFTextureIndex = int;
+using GLTFCameraIndex     = int;
+using GLTFImageIndex      = int;
+using GLTFMaterialIndex   = int;
+using GLTFMeshIndex       = int;
+using GLTFLightIndex      = int;
+using GLTFNodeIndex       = int;
+using GLTFSkeletonIndex   = int;
+using GLTFSkinIndex       = int;
+using GLTFTextureIndex    = int;
 
 class GLTFDocument : public Resource {
     GDCLASS(GLTFDocument, Resource);
@@ -89,22 +89,22 @@ public:
     };
 
     enum {
-        ARRAY_BUFFER = 34962,
+        ARRAY_BUFFER         = 34962,
         ELEMENT_ARRAY_BUFFER = 34963,
 
-        TYPE_BYTE = 5120,
-        TYPE_UNSIGNED_BYTE = 5121,
-        TYPE_SHORT = 5122,
+        TYPE_BYTE           = 5120,
+        TYPE_UNSIGNED_BYTE  = 5121,
+        TYPE_SHORT          = 5122,
         TYPE_UNSIGNED_SHORT = 5123,
-        TYPE_UNSIGNED_INT = 5125,
-        TYPE_FLOAT = 5126,
+        TYPE_UNSIGNED_INT   = 5125,
+        TYPE_FLOAT          = 5126,
 
-        COMPONENT_TYPE_BYTE = 5120,
-        COMPONENT_TYPE_UNSIGNED_BYTE = 5121,
-        COMPONENT_TYPE_SHORT = 5122,
+        COMPONENT_TYPE_BYTE           = 5120,
+        COMPONENT_TYPE_UNSIGNED_BYTE  = 5121,
+        COMPONENT_TYPE_SHORT          = 5122,
         COMPONENT_TYPE_UNSIGNED_SHORT = 5123,
-        COMPONENT_TYPE_INT = 5125,
-        COMPONENT_TYPE_FLOAT = 5126,
+        COMPONENT_TYPE_INT            = 5125,
+        COMPONENT_TYPE_FLOAT          = 5126,
     };
 
 private:

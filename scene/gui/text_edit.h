@@ -55,15 +55,15 @@ public:
 
         ColorRegion(
             const String& p_begin_key = "",
-            const String& p_end_key = "",
-            const Color& p_color = Color(),
-            bool p_line_only = false
+            const String& p_end_key   = "",
+            const Color& p_color      = Color(),
+            bool p_line_only          = false
         ) {
             begin_key = p_begin_key;
-            end_key = p_end_key;
-            color = p_color;
+            end_key   = p_end_key;
+            color     = p_color;
             line_only = p_line_only || p_end_key == "";
-            eq = begin_key == end_key;
+            eq        = begin_key == end_key;
         }
     };
 
@@ -75,18 +75,18 @@ public:
 
             ColorRegionInfo() {
                 region = 0;
-                end = false;
+                end    = false;
             }
         };
 
         struct Line {
-            int width_cache : 24;
-            bool marked : 1;
-            bool breakpoint : 1;
-            bool bookmark : 1;
-            bool hidden : 1;
-            bool safe : 1;
-            bool has_info : 1;
+            int width_cache       : 24;
+            bool marked           : 1;
+            bool breakpoint       : 1;
+            bool bookmark         : 1;
+            bool hidden           : 1;
+            bool safe             : 1;
+            bool has_info         : 1;
             int wrap_amount_cache : 24;
             Map<int, ColorRegionInfo> region_info;
             Ref<Texture> info_icon;
@@ -94,13 +94,13 @@ public:
             String data;
 
             Line() {
-                width_cache = 0;
-                marked = false;
-                breakpoint = false;
-                bookmark = false;
-                hidden = false;
-                safe = false;
-                has_info = false;
+                width_cache       = 0;
+                marked            = false;
+                breakpoint        = false;
+                bookmark          = false;
+                hidden            = false;
+                safe              = false;
+                has_info          = false;
                 wrap_amount_cache = 0;
             }
         };
@@ -177,8 +177,8 @@ public:
                 return;
             }
             text.write[p_line].info_icon = p_icon;
-            text.write[p_line].info = p_info;
-            text.write[p_line].has_info = true;
+            text.write[p_line].info      = p_info;
+            text.write[p_line].has_info  = true;
         }
 
         bool has_info_icon(int p_line) const {
@@ -222,11 +222,11 @@ private:
 
         Cursor() {
             last_fit_x = 0;
-            line = 0;
-            column = 0; ///< cursor
-            x_ofs = 0;
-            line_ofs = 0;
-            wrap_ofs = 0;
+            line       = 0;
+            column     = 0; ///< cursor
+            x_ofs      = 0;
+            line_ofs   = 0;
+            wrap_ofs   = 0;
         }
     } cursor;
 
@@ -252,19 +252,19 @@ private:
         bool shiftclick_left;
 
         Selection() {
-            selecting_mode = MODE_NONE;
-            selecting_line = 0;
-            selecting_column = 0;
-            selected_word_beg = 0;
-            selected_word_end = 0;
+            selecting_mode       = MODE_NONE;
+            selecting_line       = 0;
+            selecting_column     = 0;
+            selected_word_beg    = 0;
+            selected_word_end    = 0;
             selected_word_origin = 0;
-            selecting_text = false;
-            active = false;
-            from_line = 0;
-            from_column = 0;
-            to_line = 0;
-            to_column = 0;
-            shiftclick_left = false;
+            selecting_text       = false;
+            active               = false;
+            from_line            = 0;
+            from_column          = 0;
+            to_line              = 0;
+            to_column            = 0;
+            shiftclick_left      = false;
         }
     } selection;
 
@@ -319,13 +319,13 @@ private:
         int minimap_width;
 
         Cache() {
-            row_height = 0;
-            line_spacing = 0;
-            line_number_w = 0;
+            row_height              = 0;
+            line_spacing            = 0;
+            line_number_w           = 0;
             breakpoint_gutter_width = 0;
-            fold_gutter_width = 0;
-            info_gutter_width = 0;
-            minimap_width = 0;
+            fold_gutter_width       = 0;
+            info_gutter_width       = 0;
+            minimap_width           = 0;
         }
     } cache;
 
@@ -349,14 +349,14 @@ private:
         bool chain_backward;
 
         TextOperation() {
-            type = TYPE_NONE;
-            from_line = 0;
-            from_column = 0;
-            to_line = 0;
-            to_column = 0;
-            prev_version = 0;
-            version = 0;
-            chain_forward = false;
+            type           = TYPE_NONE;
+            from_line      = 0;
+            from_column    = 0;
+            to_line        = 0;
+            to_column      = 0;
+            prev_version   = 0;
+            version        = 0;
+            chain_forward  = false;
             chain_backward = false;
         }
     };
@@ -676,9 +676,9 @@ public:
     };
 
     enum SearchFlags {
-        SEARCH_MATCH_CASE = 1,
+        SEARCH_MATCH_CASE  = 1,
         SEARCH_WHOLE_WORDS = 2,
-        SEARCH_BACKWARDS = 4
+        SEARCH_BACKWARDS   = 4
     };
 
     enum SearchResult {
@@ -778,7 +778,7 @@ public:
     }
 
     inline void set_callhint_settings(bool below, Vector2 offset) {
-        callhint_below = below;
+        callhint_below  = below;
         callhint_offset = offset;
     }
 
@@ -790,8 +790,8 @@ public:
     void cursor_set_line(
         int p_row,
         bool p_adjust_viewport = true,
-        bool p_can_be_hidden = true,
-        int p_wrap_index = 0
+        bool p_can_be_hidden   = true,
+        int p_wrap_index       = 0
     );
 
     int cursor_get_column() const;
@@ -890,9 +890,9 @@ public:
 
     void add_color_region(
         const String& p_begin_key = String(),
-        const String& p_end_key = String(),
-        const Color& p_color = Color(),
-        bool p_line_only = false
+        const String& p_end_key   = String(),
+        const Color& p_color      = Color(),
+        bool p_line_only          = false
     );
     void clear_colors();
 
@@ -1018,7 +1018,7 @@ public:
         int p_line
     ) = 0;
 
-    virtual String get_name() const = 0;
+    virtual String get_name() const                = 0;
     virtual List<String> get_supported_languages() = 0;
 
     void set_text_editor(TextEdit* p_text_editor);

@@ -71,7 +71,7 @@ void CPUParticles::set_amount(int p_amount) {
         PoolVector<Particle>::Write w = particles.write();
 
         for (int i = 0; i < p_amount; i++) {
-            w[i].active = false;
+            w[i].active    = false;
             w[i].custom[3] = 0.0; // Make sure w component isn't garbage data
         }
     }
@@ -205,7 +205,7 @@ bool CPUParticles::get_fractional_delta() const {
 String CPUParticles::get_configuration_warning() const {
     String warnings = GeometryInstance::get_configuration_warning();
 
-    bool mesh_found = false;
+    bool mesh_found          = false;
     bool anim_material_found = false;
 
     if (get_mesh().is_valid()) {
@@ -266,14 +266,14 @@ String CPUParticles::get_configuration_warning() const {
 }
 
 void CPUParticles::restart() {
-    time = 0;
-    inactive_time = 0;
+    time            = 0;
+    inactive_time   = 0;
     frame_remainder = 0;
-    cycle = 0;
-    emitting = false;
+    cycle           = 0;
+    emitting        = false;
 
     {
-        int pc = particles.size();
+        int pc                        = particles.size();
         PoolVector<Particle>::Write w = particles.write();
 
         for (int i = 0; i < pc; i++) {
@@ -588,10 +588,10 @@ void CPUParticles::_update_internal() {
             _set_redraw(false);
 
             // reset variables
-            time = 0;
-            inactive_time = 0;
+            time            = 0;
+            inactive_time   = 0;
             frame_remainder = 0;
-            cycle = 0;
+            cycle           = 0;
             return;
         }
     }
@@ -611,14 +611,14 @@ void CPUParticles::_update_internal() {
 
         while (todo >= 0) {
             _particles_process(frame_time);
-            processed = true;
-            todo -= frame_time;
+            processed  = true;
+            todo      -= frame_time;
         }
     }
 
     if (fixed_fps > 0) {
         float frame_time = 1.0 / fixed_fps;
-        float decr = frame_time;
+        float decr       = frame_time;
 
         float ldelta = delta;
         if (ldelta > 0.1) { // avoid recursive stalls if fps goes below 10
@@ -630,8 +630,8 @@ void CPUParticles::_update_internal() {
 
         while (todo >= frame_time) {
             _particles_process(frame_time);
-            processed = true;
-            todo -= decr;
+            processed  = true;
+            todo      -= decr;
         }
 
         frame_remainder = todo;
@@ -649,13 +649,13 @@ void CPUParticles::_update_internal() {
 void CPUParticles::_particles_process(float p_delta) {
     p_delta *= speed_scale;
 
-    int pcount = particles.size();
+    int pcount                    = particles.size();
     PoolVector<Particle>::Write w = particles.write();
 
     Particle* parray = w.ptr();
 
-    float prev_time = time;
-    time += p_delta;
+    float prev_time  = time;
+    time            += p_delta;
     if (time > lifetime) {
         time = Math::fmod(time, lifetime);
         cycle++;
@@ -694,15 +694,15 @@ void CPUParticles::_particles_process(float p_delta) {
             if (restart_phase >= system_phase) {
                 seed -= uint32_t(1);
             }
-            seed *= uint32_t(pcount);
-            seed += uint32_t(i);
-            float random = float(idhash(seed) % uint32_t(65536)) / 65536.0;
+            seed          *= uint32_t(pcount);
+            seed          += uint32_t(i);
+            float random   = float(idhash(seed) % uint32_t(65536)) / 65536.0;
             restart_phase += randomness_ratio * random * 1.0 / float(pcount);
         }
 
-        restart_phase *= (1.0 - explosiveness_ratio);
-        float restart_time = restart_phase * lifetime;
-        bool restart = false;
+        restart_phase      *= (1.0 - explosiveness_ratio);
+        float restart_time  = restart_phase * lifetime;
+        bool restart        = false;
 
         if (time > prev_time) {
             // restart_time >= prev_time is used so particles emit in the first
@@ -762,9 +762,9 @@ void CPUParticles::_particles_process(float p_delta) {
 
             p.seed = Math::rand();
 
-            p.angle_rand = Math::randf();
-            p.scale_rand = Math::randf();
-            p.hue_rot_rand = Math::randf();
+            p.angle_rand       = Math::randf();
+            p.scale_rand       = Math::randf();
+            p.hue_rot_rand     = Math::randf();
             p.anim_offset_rand = Math::randf();
 
             if (flags[FLAG_DISABLE_Z]) {
@@ -808,7 +808,7 @@ void CPUParticles::_particles_process(float p_delta) {
                     binormal = Vector3(0.0, 0.0, 1.0);
                 }
                 binormal.normalize();
-                Vector3 normal = binormal.cross(direction_nrm);
+                Vector3 normal   = binormal.cross(direction_nrm);
                 spread_direction = binormal * spread_direction.x
                                  + normal * spread_direction.y
                                  + direction_nrm * spread_direction.z;
@@ -833,7 +833,7 @@ void CPUParticles::_particles_process(float p_delta) {
                               randomness[PARAM_ANIM_OFFSET]
                         ); // animation offset (0-1)
             p.transform = Transform();
-            p.time = 0;
+            p.time      = 0;
             p.lifetime = lifetime * (1.0 - Math::randf() * lifetime_randomness);
             p.base_color = Color(1, 1, 1, 1);
 
@@ -880,14 +880,14 @@ void CPUParticles::_particles_process(float p_delta) {
                             m2.set_axis(0, normal_2d);
                             m2.set_axis(1, normal_2d.tangent());
                             Vector2 velocity_2d(p.velocity.x, p.velocity.y);
-                            velocity_2d = m2.basis_xform(velocity_2d);
+                            velocity_2d  = m2.basis_xform(velocity_2d);
                             p.velocity.x = velocity_2d.x;
                             p.velocity.y = velocity_2d.y;
                         } else {
-                            Vector3 normal = emission_normals.get(random_idx);
-                            Vector3 v0 = Math::abs(normal.z) < 0.999
-                                           ? Vector3(0.0, 0.0, 1.0)
-                                           : Vector3(0, 1.0, 0.0);
+                            Vector3 normal  = emission_normals.get(random_idx);
+                            Vector3 v0      = Math::abs(normal.z) < 0.999
+                                                ? Vector3(0.0, 0.0, 1.0)
+                                                : Vector3(0, 1.0, 0.0);
                             Vector3 tangent = v0.cross(normal).normalized();
                             Vector3 bitangent =
                                 tangent.cross(normal).normalized();
@@ -909,7 +909,7 @@ void CPUParticles::_particles_process(float p_delta) {
                         Math::randf(
                         ) * (emission_ring_radius - emission_ring_inner_radius)
                         + emission_ring_inner_radius;
-                    Vector3 axis = emission_ring_axis.normalized();
+                    Vector3 axis       = emission_ring_axis.normalized();
                     Vector3 ortho_axis = Vector3();
                     if (axis == Vector3(1.0, 0.0, 0.0)) {
                         ortho_axis = Vector3(0.0, 1.0, 0.0).cross(axis);
@@ -918,7 +918,7 @@ void CPUParticles::_particles_process(float p_delta) {
                     }
                     ortho_axis = ortho_axis.normalized();
                     ortho_axis.rotate(axis, ring_random_angle);
-                    ortho_axis = ortho_axis.normalized();
+                    ortho_axis         = ortho_axis.normalized();
                     p.transform.origin = ortho_axis * ring_random_radius
                                        + (Math::randf() * emission_ring_height
                                           - emission_ring_height / 2.0)
@@ -930,12 +930,12 @@ void CPUParticles::_particles_process(float p_delta) {
             }
 
             if (!local_coords) {
-                p.velocity = velocity_xform.xform(p.velocity);
+                p.velocity  = velocity_xform.xform(p.velocity);
                 p.transform = emission_xform * p.transform;
             }
 
             if (flags[FLAG_DISABLE_Z]) {
-                p.velocity.z = 0.0;
+                p.velocity.z         = 0.0;
                 p.transform.origin.z = 0.0;
             }
 
@@ -943,13 +943,13 @@ void CPUParticles::_particles_process(float p_delta) {
             continue;
         } else if (p.time > p.lifetime) {
             p.active = false;
-            tv = 1.0;
+            tv       = 1.0;
         } else {
             uint32_t alt_seed = p.seed;
 
-            p.time += local_delta;
-            p.custom[1] = p.time / lifetime;
-            tv = p.time / p.lifetime;
+            p.time      += local_delta;
+            p.custom[1]  = p.time / lifetime;
+            tv           = p.time / p.lifetime;
 
             float tex_linear_velocity = 0.0;
             if (curve_parameters[PARAM_INITIAL_LINEAR_VELOCITY].is_valid()) {
@@ -1011,7 +1011,7 @@ void CPUParticles::_particles_process(float p_delta) {
                     curve_parameters[PARAM_ANIM_OFFSET]->interpolate(tv);
             }
 
-            Vector3 force = gravity;
+            Vector3 force    = gravity;
             Vector3 position = p.transform.origin;
             if (flags[FLAG_DISABLE_Z]) {
                 position.z = 0.0;
@@ -1028,7 +1028,7 @@ void CPUParticles::_particles_process(float p_delta) {
                           )
                     : Vector3();
             // apply radial acceleration
-            Vector3 org = emission_xform.origin;
+            Vector3 org  = emission_xform.origin;
             Vector3 diff = position - org;
             force +=
                 diff.length() > 0.0
@@ -1042,10 +1042,10 @@ void CPUParticles::_particles_process(float p_delta) {
                     : Vector3();
             // apply tangential acceleration;
             if (flags[FLAG_DISABLE_Z]) {
-                Vector2 yx = Vector2(diff.y, diff.x);
-                Vector2 yx2 = (yx * Vector2(-1.0, 1.0)).normalized();
-                force += yx.length() > 0.0
-                           ? Vector3(yx2.x, yx2.y, 0.0)
+                Vector2 yx   = Vector2(diff.y, diff.x);
+                Vector2 yx2  = (yx * Vector2(-1.0, 1.0)).normalized();
+                force       += yx.length() > 0.0
+                                 ? Vector3(yx2.x, yx2.y, 0.0)
                                  * ((parameters[PARAM_TANGENTIAL_ACCEL]
                                      + tex_tangential_accel)
                                     * Math::lerp(
@@ -1053,7 +1053,7 @@ void CPUParticles::_particles_process(float p_delta) {
                                         rand_from_seed(alt_seed),
                                         randomness[PARAM_TANGENTIAL_ACCEL]
                                     ))
-                           : Vector3();
+                                 : Vector3();
 
             } else {
                 Vector3 crossDiff =
@@ -1086,7 +1086,7 @@ void CPUParticles::_particles_process(float p_delta) {
                     // rotation matrix, but we use -ang here to reproduce its
                     // behavior.
                     Transform2D rot = Transform2D(-ang, Vector2());
-                    Vector2 rotv = rot.basis_xform(Vector2(diff.x, diff.y));
+                    Vector2 rotv    = rot.basis_xform(Vector2(diff.x, diff.y));
                     p.transform.origin -= Vector3(diff.x, diff.y, 0);
                     p.transform.origin += Vector3(rotv.x, rotv.y, 0);
                 }
@@ -1095,7 +1095,7 @@ void CPUParticles::_particles_process(float p_delta) {
                 p.velocity = p.velocity.normalized() * tex_linear_velocity;
             }
             if (parameters[PARAM_DAMPING] + tex_damping > 0.0) {
-                float v = p.velocity.length();
+                float v    = p.velocity.length();
                 float damp = (parameters[PARAM_DAMPING] + tex_damping)
                            * Math::lerp(
                                  1.0f,
@@ -1314,7 +1314,7 @@ void CPUParticles::_particles_process(float p_delta) {
         p.transform.basis.scale(Vector3(1, 1, 1) * base_scale);
 
         if (flags[FLAG_DISABLE_Z]) {
-            p.velocity.z = 0.0;
+            p.velocity.z         = 0.0;
             p.transform.origin.z = 0.0;
         }
 
@@ -1331,12 +1331,12 @@ void CPUParticles::_update_particle_data_buffer() {
         PoolVector<int>::Write ow;
         int* order = nullptr;
 
-        PoolVector<float>::Write w = particle_data.write();
+        PoolVector<float>::Write w   = particle_data.write();
         PoolVector<Particle>::Read r = particles.read();
-        float* ptr = w.ptr();
+        float* ptr                   = w.ptr();
 
         if (draw_order != DRAW_ORDER_INDEX) {
-            ow = particle_order.write();
+            ow    = particle_order.write();
             order = ow.ptr();
 
             for (int i = 0; i < pc; i++) {
@@ -1364,7 +1364,7 @@ void CPUParticles::_update_particle_data_buffer() {
 
                     SortArray<int, SortAxis> sorter;
                     sorter.compare.particles = r.ptr();
-                    sorter.compare.axis = dir;
+                    sorter.compare.axis      = dir;
                     sorter.sort(order, pc);
                 }
             }
@@ -1380,28 +1380,28 @@ void CPUParticles::_update_particle_data_buffer() {
             }
 
             if (r[idx].active) {
-                ptr[0] = t.basis.elements[0][0];
-                ptr[1] = t.basis.elements[0][1];
-                ptr[2] = t.basis.elements[0][2];
-                ptr[3] = t.origin.x;
-                ptr[4] = t.basis.elements[1][0];
-                ptr[5] = t.basis.elements[1][1];
-                ptr[6] = t.basis.elements[1][2];
-                ptr[7] = t.origin.y;
-                ptr[8] = t.basis.elements[2][0];
-                ptr[9] = t.basis.elements[2][1];
+                ptr[0]  = t.basis.elements[0][0];
+                ptr[1]  = t.basis.elements[0][1];
+                ptr[2]  = t.basis.elements[0][2];
+                ptr[3]  = t.origin.x;
+                ptr[4]  = t.basis.elements[1][0];
+                ptr[5]  = t.basis.elements[1][1];
+                ptr[6]  = t.basis.elements[1][2];
+                ptr[7]  = t.origin.y;
+                ptr[8]  = t.basis.elements[2][0];
+                ptr[9]  = t.basis.elements[2][1];
                 ptr[10] = t.basis.elements[2][2];
                 ptr[11] = t.origin.z;
             } else {
                 memset(ptr, 0, sizeof(float) * 12);
             }
 
-            Color c = r[idx].color;
+            Color c        = r[idx].color;
             uint8_t* data8 = (uint8_t*)&ptr[12];
-            data8[0] = CLAMP(c.r * 255.0, 0, 255);
-            data8[1] = CLAMP(c.g * 255.0, 0, 255);
-            data8[2] = CLAMP(c.b * 255.0, 0, 255);
-            data8[3] = CLAMP(c.a * 255.0, 0, 255);
+            data8[0]       = CLAMP(c.r * 255.0, 0, 255);
+            data8[1]       = CLAMP(c.g * 255.0, 0, 255);
+            data8[2]       = CLAMP(c.b * 255.0, 0, 255);
+            data8[3]       = CLAMP(c.a * 255.0, 0, 255);
 
             ptr[13] = r[idx].custom[0];
             ptr[14] = r[idx].custom[1];
@@ -1498,24 +1498,24 @@ void CPUParticles::_notification(int p_what) {
         if (!local_coords) {
             int pc = particles.size();
 
-            PoolVector<float>::Write w = particle_data.write();
+            PoolVector<float>::Write w   = particle_data.write();
             PoolVector<Particle>::Read r = particles.read();
-            float* ptr = w.ptr();
+            float* ptr                   = w.ptr();
 
             for (int i = 0; i < pc; i++) {
                 Transform t = inv_emission_transform * r[i].transform;
 
                 if (r[i].active) {
-                    ptr[0] = t.basis.elements[0][0];
-                    ptr[1] = t.basis.elements[0][1];
-                    ptr[2] = t.basis.elements[0][2];
-                    ptr[3] = t.origin.x;
-                    ptr[4] = t.basis.elements[1][0];
-                    ptr[5] = t.basis.elements[1][1];
-                    ptr[6] = t.basis.elements[1][2];
-                    ptr[7] = t.origin.y;
-                    ptr[8] = t.basis.elements[2][0];
-                    ptr[9] = t.basis.elements[2][1];
+                    ptr[0]  = t.basis.elements[0][0];
+                    ptr[1]  = t.basis.elements[0][1];
+                    ptr[2]  = t.basis.elements[0][2];
+                    ptr[3]  = t.origin.x;
+                    ptr[4]  = t.basis.elements[1][0];
+                    ptr[5]  = t.basis.elements[1][1];
+                    ptr[6]  = t.basis.elements[1][2];
+                    ptr[7]  = t.origin.y;
+                    ptr[8]  = t.basis.elements[2][0];
+                    ptr[9]  = t.basis.elements[2][1];
                     ptr[10] = t.basis.elements[2][2];
                     ptr[11] = t.origin.z;
                 } else {
@@ -2600,12 +2600,12 @@ void CPUParticles::_bind_methods() {
 }
 
 CPUParticles::CPUParticles() {
-    time = 0;
-    inactive_time = 0;
+    time            = 0;
+    inactive_time   = 0;
     frame_remainder = 0;
-    cycle = 0;
-    redraw = false;
-    emitting = false;
+    cycle           = 0;
+    redraw          = false;
+    emitting        = false;
 
     set_notify_transform(true);
 

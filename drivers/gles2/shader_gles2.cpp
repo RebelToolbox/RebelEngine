@@ -80,7 +80,7 @@ bool ShaderGLES2::bind() {
     if (active != this || !version
         || !(new_conditional_version == conditional_version)) {
         conditional_version = new_conditional_version;
-        version = get_current_version();
+        version             = get_current_version();
     } else {
         return false;
     }
@@ -97,7 +97,7 @@ bool ShaderGLES2::bind() {
 
     DEBUG_TEST_ERROR("use program");
 
-    active = this;
+    active         = this;
     uniforms_dirty = true;
 
     return true;
@@ -107,7 +107,7 @@ void ShaderGLES2::unbind() {
     version = nullptr;
     glUseProgram(0);
     uniforms_dirty = true;
-    active = nullptr;
+    active         = nullptr;
 }
 
 static void _display_error_with_code(
@@ -290,7 +290,7 @@ ShaderGLES2::Version* ShaderGLES2::get_current_version() {
                 iloglen = 4096; // buggy driver (Adreno 220+)
             }
 
-            char* ilogmem = (char*)Memory::alloc_static(iloglen + 1);
+            char* ilogmem    = (char*)Memory::alloc_static(iloglen + 1);
             ilogmem[iloglen] = '\0';
             glGetShaderInfoLog(v.vert_id, iloglen, &iloglen, ilogmem);
 
@@ -367,7 +367,7 @@ ShaderGLES2::Version* ShaderGLES2::get_current_version() {
                 iloglen = 4096; // buggy driver (Adreno 220+)
             }
 
-            char* ilogmem = (char*)Memory::alloc_static(iloglen + 1);
+            char* ilogmem    = (char*)Memory::alloc_static(iloglen + 1);
             ilogmem[iloglen] = '\0';
             glGetShaderInfoLog(v.frag_id, iloglen, &iloglen, ilogmem);
 
@@ -423,7 +423,7 @@ ShaderGLES2::Version* ShaderGLES2::get_current_version() {
             iloglen = 4096; // buggy driver (Adreno 220+)
         }
 
-        char* ilogmem = (char*)Memory::alloc_static(iloglen + 1);
+        char* ilogmem    = (char*)Memory::alloc_static(iloglen + 1);
         ilogmem[iloglen] = '\0';
         glGetProgramInfoLog(v.id, iloglen, &iloglen, ilogmem);
 
@@ -465,7 +465,7 @@ ShaderGLES2::Version* ShaderGLES2::get_current_version() {
         // uniforms
         for (int i = 0; i < cc->custom_uniforms.size(); i++) {
             String native_uniform_name = _mkid(cc->custom_uniforms[i]);
-            GLint location = glGetUniformLocation(
+            GLint location             = glGetUniformLocation(
                 v.id,
                 (native_uniform_name).ascii().get_data()
             );
@@ -475,7 +475,7 @@ ShaderGLES2::Version* ShaderGLES2::get_current_version() {
         // textures
         for (int i = 0; i < cc->texture_uniforms.size(); i++) {
             String native_uniform_name = _mkid(cc->texture_uniforms[i]);
-            GLint location = glGetUniformLocation(
+            GLint location             = glGetUniformLocation(
                 v.id,
                 (native_uniform_name).ascii().get_data()
             );
@@ -517,24 +517,24 @@ void ShaderGLES2::setup(
 
     memset(conditional_version.key, 0, sizeof(conditional_version.key));
     memset(new_conditional_version.key, 0, sizeof(new_conditional_version.key));
-    uniform_count = p_uniform_count;
-    conditional_count = p_conditional_count;
-    conditional_defines = p_conditional_defines;
-    uniform_names = p_uniform_names;
-    vertex_code = p_vertex_code;
-    fragment_code = p_fragment_code;
-    texunit_pairs = p_texunit_pairs;
-    texunit_pair_count = p_texunit_pair_count;
-    vertex_code_start = p_vertex_code_start;
-    fragment_code_start = p_fragment_code_start;
-    attribute_pairs = p_attribute_pairs;
+    uniform_count        = p_uniform_count;
+    conditional_count    = p_conditional_count;
+    conditional_defines  = p_conditional_defines;
+    uniform_names        = p_uniform_names;
+    vertex_code          = p_vertex_code;
+    fragment_code        = p_fragment_code;
+    texunit_pairs        = p_texunit_pairs;
+    texunit_pair_count   = p_texunit_pair_count;
+    vertex_code_start    = p_vertex_code_start;
+    fragment_code_start  = p_fragment_code_start;
+    attribute_pairs      = p_attribute_pairs;
     attribute_pair_count = p_attribute_count;
 
     {
         String globals_tag = "\nVERTEX_SHADER_GLOBALS";
-        String code_tag = "\nVERTEX_SHADER_CODE";
-        String code = vertex_code;
-        int cpos = code.find(globals_tag);
+        String code_tag    = "\nVERTEX_SHADER_CODE";
+        String code        = vertex_code;
+        int cpos           = code.find(globals_tag);
         if (cpos == -1) {
             vertex_code0 = code.ascii();
         } else {
@@ -555,11 +555,11 @@ void ShaderGLES2::setup(
     }
 
     {
-        String globals_tag = "\nFRAGMENT_SHADER_GLOBALS";
-        String code_tag = "\nFRAGMENT_SHADER_CODE";
+        String globals_tag    = "\nFRAGMENT_SHADER_GLOBALS";
+        String code_tag       = "\nFRAGMENT_SHADER_CODE";
         String light_code_tag = "\nLIGHT_SHADER_CODE";
-        String code = fragment_code;
-        int cpos = code.find(globals_tag);
+        String code           = fragment_code;
+        int cpos              = code.find(globals_tag);
         if (cpos == -1) {
             fragment_code0 = code.ascii();
         } else {
@@ -619,13 +619,13 @@ void ShaderGLES2::clear_caches() {
     version_map.clear();
 
     custom_code_map.clear();
-    version = nullptr;
+    version          = nullptr;
     last_custom_code = 1;
-    uniforms_dirty = true;
+    uniforms_dirty   = true;
 }
 
 uint32_t ShaderGLES2::create_custom_shader() {
-    custom_code_map[last_custom_code] = CustomCode();
+    custom_code_map[last_custom_code]         = CustomCode();
     custom_code_map[last_custom_code].version = 1;
     return last_custom_code++;
 }
@@ -644,13 +644,13 @@ void ShaderGLES2::set_custom_shader_code(
     CustomCode* cc = custom_code_map.getptr(p_code_id);
     ERR_FAIL_COND(!cc);
 
-    cc->vertex = p_vertex;
-    cc->vertex_globals = p_vertex_globals;
-    cc->fragment = p_fragment;
+    cc->vertex           = p_vertex;
+    cc->vertex_globals   = p_vertex_globals;
+    cc->fragment         = p_fragment;
     cc->fragment_globals = p_fragment_globals;
-    cc->light = p_light;
-    cc->custom_uniforms = p_uniforms;
-    cc->custom_defines = p_custom_defines;
+    cc->light            = p_light;
+    cc->custom_uniforms  = p_uniforms;
+    cc->custom_defines   = p_custom_defines;
     cc->texture_uniforms = p_texture_uniforms;
     cc->version++;
 }
@@ -769,7 +769,7 @@ void ShaderGLES2::use_material(void* p_material) {
 
                 case ShaderLanguage::TYPE_IVEC2:
                 case ShaderLanguage::TYPE_UVEC2: {
-                    Array r = V->get();
+                    Array r         = V->get();
                     const int count = 2;
                     if (r.size() == count) {
                         int values[count];
@@ -783,7 +783,7 @@ void ShaderGLES2::use_material(void* p_material) {
 
                 case ShaderLanguage::TYPE_IVEC3:
                 case ShaderLanguage::TYPE_UVEC3: {
-                    Array r = V->get();
+                    Array r         = V->get();
                     const int count = 3;
                     if (r.size() == count) {
                         int values[count];
@@ -797,7 +797,7 @@ void ShaderGLES2::use_material(void* p_material) {
 
                 case ShaderLanguage::TYPE_IVEC4:
                 case ShaderLanguage::TYPE_UVEC4: {
-                    Array r = V->get();
+                    Array r         = V->get();
                     const int count = 4;
                     if (r.size() == count) {
                         int values[count];
@@ -864,7 +864,7 @@ void ShaderGLES2::use_material(void* p_material) {
                 } break;
 
                 case ShaderLanguage::TYPE_MAT2: {
-                    Transform2D tr = V->get();
+                    Transform2D tr    = V->get();
                     GLfloat matrix[4] = {
                         /* build a 16x16 matrix */
                         tr.elements[0][0],
@@ -897,7 +897,7 @@ void ShaderGLES2::use_material(void* p_material) {
 
                 case ShaderLanguage::TYPE_MAT4: {
                     if (V->get().get_type() == Variant::TRANSFORM) {
-                        Transform tr = V->get();
+                        Transform tr       = V->get();
                         GLfloat matrix[16] = {/* build a 16x16 matrix */
                                               tr.basis.elements[0][0],
                                               tr.basis.elements[1][0],
@@ -918,7 +918,7 @@ void ShaderGLES2::use_material(void* p_material) {
                         };
                         glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
                     } else {
-                        Transform2D tr = V->get();
+                        Transform2D tr     = V->get();
                         GLfloat matrix[16] = {/* build a 16x16 matrix */
                                               tr.elements[0][0],
                                               tr.elements[0][1],
@@ -1251,9 +1251,9 @@ void ShaderGLES2::use_material(void* p_material) {
 }
 
 ShaderGLES2::ShaderGLES2() {
-    version = nullptr;
+    version          = nullptr;
     last_custom_code = 1;
-    uniforms_dirty = true;
+    uniforms_dirty   = true;
 }
 
 ShaderGLES2::~ShaderGLES2() {

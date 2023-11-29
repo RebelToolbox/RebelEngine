@@ -43,7 +43,7 @@ void Plane::normalize() {
         return;
     }
     normal /= l;
-    d /= l;
+    d      /= l;
 }
 
 Plane Plane::normalized() const {
@@ -81,9 +81,9 @@ bool Plane::intersect_3(
     Vector3* r_result
 ) const {
     const Plane& p_plane0 = *this;
-    Vector3 normal0 = p_plane0.normal;
-    Vector3 normal1 = p_plane1.normal;
-    Vector3 normal2 = p_plane2.normal;
+    Vector3 normal0       = p_plane0.normal;
+    Vector3 normal1       = p_plane1.normal;
+    Vector3 normal2       = p_plane2.normal;
 
     real_t denom = vec3_cross(normal0, normal1).dot(normal2);
 
@@ -107,7 +107,7 @@ bool Plane::intersects_ray(
     Vector3* p_intersection
 ) const {
     Vector3 segment = p_dir;
-    real_t den = normal.dot(segment);
+    real_t den      = normal.dot(segment);
 
     // printf("den is %i\n",den);
     if (Math::is_zero_approx(den)) {
@@ -123,7 +123,7 @@ bool Plane::intersects_ray(
         return false;
     }
 
-    dist = -dist;
+    dist            = -dist;
     *p_intersection = p_from + segment * dist;
 
     return true;
@@ -135,7 +135,7 @@ bool Plane::intersects_segment(
     Vector3* p_intersection
 ) const {
     Vector3 segment = p_begin - p_end;
-    real_t den = normal.dot(segment);
+    real_t den      = normal.dot(segment);
 
     // printf("den is %i\n",den);
     if (Math::is_zero_approx(den)) {
@@ -149,7 +149,7 @@ bool Plane::intersects_segment(
         return false;
     }
 
-    dist = -dist;
+    dist            = -dist;
     *p_intersection = p_begin + segment * dist;
 
     return true;

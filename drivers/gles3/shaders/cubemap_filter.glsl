@@ -9,7 +9,7 @@ layout(location = 4) in highp vec2 uv;
 out highp vec2 uv_interp;
 
 void main() {
-    uv_interp = uv;
+    uv_interp   = uv;
     gl_Position = vec4(vertex, 0, 1);
 }
 
@@ -127,7 +127,7 @@ vec3 ImportanceSampleGGX(vec2 Xi, float Roughness, vec3 N) {
         Roughness * Roughness; // DISNEY'S ROUGHNESS [see Burley'12 siggraph]
 
     // Compute distribution direction
-    float Phi = 2.0 * M_PI * Xi.x;
+    float Phi      = 2.0 * M_PI * Xi.x;
     float CosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
     float SinTheta = sqrt(1.0 - CosTheta * CosTheta);
 
@@ -147,14 +147,14 @@ vec3 ImportanceSampleGGX(vec2 Xi, float Roughness, vec3 N) {
 }
 
 float DistributionGGX(vec3 N, vec3 H, float roughness) {
-    float a = roughness * roughness;
-    float a2 = a * a;
-    float NdotH = max(dot(N, H), 0.0);
+    float a      = roughness * roughness;
+    float a2     = a * a;
+    float NdotH  = max(dot(N, H), 0.0);
     float NdotH2 = NdotH * NdotH;
 
-    float nom = a2;
+    float nom   = a2;
     float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-    denom = M_PI * denom * denom;
+    denom       = M_PI * denom * denom;
 
     return nom / denom;
 }
@@ -216,9 +216,9 @@ vec4 texturePanorama(vec3 normal, sampler2D pano, float mipLevel) {
 #ifdef USE_SOURCE_DUAL_PARABOLOID_ARRAY
 
 vec4 textureDualParaboloidArray(vec3 normal) {
-    vec3 norm = normalize(normal);
-    norm.xy /= 1.0 + abs(norm.z);
-    norm.xy = norm.xy * vec2(0.5, 0.25) + vec2(0.5, 0.25);
+    vec3 norm  = normalize(normal);
+    norm.xy   /= 1.0 + abs(norm.z);
+    norm.xy    = norm.xy * vec2(0.5, 0.25) + vec2(0.5, 0.25);
     if (norm.z < 0.0) {
         norm.y = 0.5 - norm.y + 0.5;
     }
@@ -233,9 +233,9 @@ vec4 textureDualParaboloidArray(vec3 normal) {
 
 #ifdef USE_SOURCE_DUAL_PARABOLOID
 vec4 textureDualParaboloid(vec3 normal) {
-    vec3 norm = normalize(normal);
-    norm.xy /= 1.0 + abs(norm.z);
-    norm.xy = norm.xy * vec2(0.5, 0.25) + vec2(0.5, 0.25);
+    vec3 norm  = normalize(normal);
+    norm.xy   /= 1.0 + abs(norm.z);
+    norm.xy    = norm.xy * vec2(0.5, 0.25) + vec2(0.5, 0.25);
     if (norm.z < 0.0) {
         norm.y = 0.5 - norm.y + 0.5;
     }
@@ -248,8 +248,8 @@ void main() {
 #ifdef USE_DUAL_PARABOLOID
 
     vec3 N = vec3(uv_interp * 2.0 - 1.0, 0.0);
-    N.z = 0.5 - 0.5 * ((N.x * N.x) + (N.y * N.y));
-    N = normalize(N);
+    N.z    = 0.5 - 0.5 * ((N.x * N.x) + (N.y * N.y));
+    N      = normalize(N);
 
     if (z_flip) {
         N.y = -N.y; // y is flipped to improve blending between both sides
@@ -258,7 +258,7 @@ void main() {
 
 #else
     vec2 uv = (uv_interp * 2.0) - 1.0;
-    vec3 N = texelCoordToVec(uv, face_id);
+    vec3 N  = texelCoordToVec(uv, face_id);
 #endif
     // vec4 color = color_interp;
 
@@ -282,7 +282,7 @@ void main() {
 #if !defined(USE_SOURCE_DUAL_PARABOLOID_ARRAY)                                 \
     && !defined(USE_SOURCE_PANORAMA) && !defined(USE_SOURCE_DUAL_PARABOLOID)
 
-    N.y = -N.y;
+    N.y        = -N.y;
     frag_color = vec4(texture(N, source_cube).rgb, 1.0);
 #endif
 
@@ -339,10 +339,10 @@ void main() {
         if (ndotl > 0.0) {
 
 #ifdef USE_SOURCE_PANORAMA
-            float D = DistributionGGX(N, H, roughness);
+            float D     = DistributionGGX(N, H, roughness);
             float ndoth = max(dot(N, H), 0.0);
             float hdotv = max(dot(H, V), 0.0);
-            float pdf = D * ndoth / (4.0 * hdotv) + 0.0001;
+            float pdf   = D * ndoth / (4.0 * hdotv) + 0.0001;
 
             float saTexel =
                 4.0 * M_PI / (6.0 * source_resolution * source_resolution);
@@ -365,7 +365,7 @@ void main() {
 
 #if !defined(USE_SOURCE_DUAL_PARABOLOID_ARRAY)                                 \
     && !defined(USE_SOURCE_PANORAMA) && !defined(USE_SOURCE_DUAL_PARABOLOID)
-            L.y = -L.y;
+            L.y      = -L.y;
             sum.rgb += textureLod(source_cube, L, 0.0).rgb * ndotl;
 #endif
             sum.a += ndotl;

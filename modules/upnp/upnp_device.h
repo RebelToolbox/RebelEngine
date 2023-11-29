@@ -73,9 +73,9 @@ public:
     int add_port_mapping(
         int port,
         int port_internal = 0,
-        String desc = "",
-        String proto = "UDP",
-        int duration = 0
+        String desc       = "",
+        String proto      = "UDP",
+        int duration      = 0
     ) const;
     int delete_port_mapping(int port, String proto = "UDP") const;
 

@@ -156,7 +156,7 @@ String OS_Unix::get_stdin_string(bool p_block) {
     if (p_block) {
         char buff[1024];
         String ret = stdin_buf + fgets(buff, 1024, stdin);
-        stdin_buf = "";
+        stdin_buf  = "";
         return ret;
     }
 
@@ -192,14 +192,14 @@ OS::Date OS_Unix::get_date(bool utc) const {
         localtime_r(&t, &lt);
     }
     Date ret;
-    ret.year = 1900 + lt.tm_year;
+    ret.year    = 1900 + lt.tm_year;
     // Index starting at 1 to match OS_Unix::get_date
     //   and Windows SYSTEMTIME and tm_mon follows the typical structure
     //   of 0-11, noted here: http://www.cplusplus.com/reference/ctime/tm/
-    ret.month = (Month)(lt.tm_mon + 1);
-    ret.day = lt.tm_mday;
+    ret.month   = (Month)(lt.tm_mon + 1);
+    ret.day     = lt.tm_mday;
     ret.weekday = (Weekday)lt.tm_wday;
-    ret.dst = lt.tm_isdst;
+    ret.dst     = lt.tm_isdst;
 
     return ret;
 }
@@ -214,8 +214,8 @@ OS::Time OS_Unix::get_time(bool utc) const {
     }
     Time ret;
     ret.hour = lt.tm_hour;
-    ret.min = lt.tm_min;
-    ret.sec = lt.tm_sec;
+    ret.min  = lt.tm_min;
+    ret.sec  = lt.tm_sec;
     get_time_zone_info();
     return ret;
 }
@@ -237,7 +237,7 @@ OS::TimeZoneInfo OS_Unix::get_time_zone_info() const {
     sscanf(bias_buf, "%d", &bias);
 
     // convert from ISO 8601 (1 minute=1, 1 hour=100) to minutes
-    int hour = (int)bias / 100;
+    int hour    = (int)bias / 100;
     int minutes = bias % 100;
     if (bias < 0) {
         ret.bias = hour * 60 - minutes;
@@ -255,7 +255,7 @@ void OS_Unix::delay_usec(uint32_t p_usec) const {
     };
     struct timespec remaining;
     while (nanosleep(&requested, &remaining) == -1 && errno == EINTR) {
-        requested.tv_sec = remaining.tv_sec;
+        requested.tv_sec  = remaining.tv_sec;
         requested.tv_nsec = remaining.tv_nsec;
     }
 }
@@ -408,7 +408,7 @@ String OS_Unix::get_locale() const {
     }
 
     String locale = get_environment("LANG");
-    int tp = locale.find(".");
+    int tp        = locale.find(".");
     if (tp != -1) {
         locale = locale.substr(0, tp);
     }
@@ -625,17 +625,17 @@ void UnixTerminalLogger::log_error(
     // Disable color codes if stdout is not a TTY.
     // This prevents Godot from writing ANSI escape codes when redirecting
     // stdout and stderr to a file.
-    const bool tty = isatty(fileno(stdout));
-    const char* gray = tty ? "\E[0;90m" : "";
-    const char* red = tty ? "\E[0;91m" : "";
-    const char* red_bold = tty ? "\E[1;31m" : "";
-    const char* yellow = tty ? "\E[0;93m" : "";
-    const char* yellow_bold = tty ? "\E[1;33m" : "";
-    const char* magenta = tty ? "\E[0;95m" : "";
+    const bool tty           = isatty(fileno(stdout));
+    const char* gray         = tty ? "\E[0;90m" : "";
+    const char* red          = tty ? "\E[0;91m" : "";
+    const char* red_bold     = tty ? "\E[1;31m" : "";
+    const char* yellow       = tty ? "\E[0;93m" : "";
+    const char* yellow_bold  = tty ? "\E[1;33m" : "";
+    const char* magenta      = tty ? "\E[0;95m" : "";
     const char* magenta_bold = tty ? "\E[1;35m" : "";
-    const char* cyan = tty ? "\E[0;96m" : "";
-    const char* cyan_bold = tty ? "\E[1;36m" : "";
-    const char* reset = tty ? "\E[0m" : "";
+    const char* cyan         = tty ? "\E[0;96m" : "";
+    const char* cyan_bold    = tty ? "\E[1;36m" : "";
+    const char* reset        = tty ? "\E[0m" : "";
 
     switch (p_type) {
         case ERR_WARNING:

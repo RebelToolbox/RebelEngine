@@ -259,6 +259,6 @@ ParallaxBackground::ParallaxBackground() {
     scale = 1.0;
     set_layer(-100); // behind all by default
 
-    base_scale = Vector2(1, 1);
+    base_scale         = Vector2(1, 1);
     ignore_camera_zoom = false;
 }

@@ -72,9 +72,9 @@ bool FileAccessMemory::file_exists(const String& p_name) {
 }
 
 Error FileAccessMemory::open_custom(const uint8_t* p_data, uint64_t p_len) {
-    data = (uint8_t*)p_data;
+    data   = (uint8_t*)p_data;
     length = p_len;
-    pos = 0;
+    pos    = 0;
     return OK;
 }
 
@@ -91,9 +91,9 @@ Error FileAccessMemory::_open(const String& p_path, int p_mode_flags) {
         "Can't find file '" + p_path + "'."
     );
 
-    data = E->get().ptrw();
+    data   = E->get().ptrw();
     length = E->get().size();
-    pos = 0;
+    pos    = 0;
 
     return OK;
 }
@@ -173,7 +173,7 @@ void FileAccessMemory::store_8(uint8_t p_byte) {
 
 void FileAccessMemory::store_buffer(const uint8_t* p_src, uint64_t p_length) {
     ERR_FAIL_COND(!p_src && p_length > 0);
-    uint64_t left = length - pos;
+    uint64_t left  = length - pos;
     uint64_t write = MIN(p_length, left);
     if (write < p_length) {
         WARN_PRINT("Writing less data than requested");

@@ -64,8 +64,8 @@ private:
         float one_way_collision_margin;
 
         Shape() {
-            disabled = false;
-            one_way_collision = false;
+            disabled                 = false;
+            one_way_collision        = false;
             one_way_collision_margin = 0;
         }
     };
@@ -144,7 +144,7 @@ public:
     void add_shape(
         Shape2DSW* p_shape,
         const Transform2D& p_transform = Transform2D(),
-        bool p_disabled = false
+        bool p_disabled                = false
     );
     void set_shape(int p_index, Shape2DSW* p_shape);
     void set_shape_transform(int p_index, const Transform2D& p_transform);
@@ -205,7 +205,7 @@ public:
         float p_margin
     ) {
         CRASH_BAD_INDEX(p_idx, shapes.size());
-        shapes.write[p_idx].one_way_collision = p_one_way_collision;
+        shapes.write[p_idx].one_way_collision        = p_one_way_collision;
         shapes.write[p_idx].one_way_collision_margin = p_margin;
     }
 

@@ -56,10 +56,10 @@ public:
     };
 
 private:
-    float ratio = 1.0;
-    StretchMode stretch_mode = STRETCH_FIT;
+    float ratio                    = 1.0;
+    StretchMode stretch_mode       = STRETCH_FIT;
     AlignMode alignment_horizontal = ALIGN_CENTER;
-    AlignMode alignment_vertical = ALIGN_CENTER;
+    AlignMode alignment_vertical   = ALIGN_CENTER;
 
 public:
     void set_ratio(float p_ratio);

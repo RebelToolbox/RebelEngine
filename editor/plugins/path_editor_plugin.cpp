@@ -46,8 +46,8 @@ String PathSpatialGizmo::get_handle_name(int p_idx) const {
 
     p_idx = p_idx - c->get_point_count() + 1;
 
-    int idx = p_idx / 2;
-    int t = p_idx % 2;
+    int idx  = p_idx / 2;
+    int t    = p_idx % 2;
     String n = TTR("Curve Point #") + itos(idx);
     if (t == 0) {
         n += " In";
@@ -72,7 +72,7 @@ Variant PathSpatialGizmo::get_handle_value(int p_idx) {
     p_idx = p_idx - c->get_point_count() + 1;
 
     int idx = p_idx / 2;
-    int t = p_idx % 2;
+    int t   = p_idx % 2;
 
     Vector3 ofs;
     if (t == 0) {
@@ -96,10 +96,10 @@ void PathSpatialGizmo::set_handle(
         return;
     }
 
-    Transform gt = path->get_global_transform();
-    Transform gi = gt.affine_inverse();
+    Transform gt     = path->get_global_transform();
+    Transform gi     = gt.affine_inverse();
     Vector3 ray_from = p_camera->project_ray_origin(p_point);
-    Vector3 ray_dir = p_camera->project_ray_normal(p_point);
+    Vector3 ray_dir  = p_camera->project_ray_normal(p_point);
 
     // Setting curve point positions
     if (p_idx < c->get_point_count()) {
@@ -127,7 +127,7 @@ void PathSpatialGizmo::set_handle(
     p_idx = p_idx - c->get_point_count() + 1;
 
     int idx = p_idx / 2;
-    int t = p_idx % 2;
+    int t   = p_idx % 2;
 
     Vector3 base = c->get_point_position(idx);
 
@@ -138,7 +138,7 @@ void PathSpatialGizmo::set_handle(
     // Setting curve in/out positions
     if (p.intersects_ray(ray_from, ray_dir, &inters)) {
         if (!PathEditorPlugin::singleton->is_handle_clicked()) {
-            orig_in_length = c->get_point_in(idx).length();
+            orig_in_length  = c->get_point_in(idx).length();
             orig_out_length = c->get_point_out(idx).length();
             PathEditorPlugin::singleton->set_handle_clicked(true);
         }
@@ -206,7 +206,7 @@ void PathSpatialGizmo::commit_handle(
     p_idx = p_idx - c->get_point_count() + 1;
 
     int idx = p_idx / 2;
-    int t = p_idx % 2;
+    int t   = p_idx % 2;
 
     if (t == 0) {
         if (p_cancel) {
@@ -380,9 +380,9 @@ bool PathEditorPlugin::forward_spatial_gui_input(
                 || (curve_edit->is_pressed() && mb->get_control()))) {
             // click into curve, break it down
             PoolVector<Vector3> v3a = c->tessellate();
-            int idx = 0;
-            int rc = v3a.size();
-            int closest_seg = -1;
+            int idx                 = 0;
+            int rc                  = v3a.size();
+            int closest_seg         = -1;
             Vector3 closest_seg_point;
             float closest_d = 1e20;
 
@@ -410,10 +410,10 @@ bool PathEditorPlugin::forward_spatial_gui_input(
 
                     while (j < rc && c->get_point_position(i + 1) != r[j]) {
                         Vector3 from = r[j];
-                        Vector3 to = r[j + 1];
+                        Vector3 to   = r[j + 1];
                         real_t cdist = from.distance_to(to);
-                        from = gt.xform(from);
-                        to = gt.xform(to);
+                        from         = gt.xform(from);
+                        to           = gt.xform(to);
                         if (cdist > 0) {
                             Vector2 s[2];
                             s[0] = p_camera->unproject_position(from);
@@ -426,7 +426,7 @@ bool PathEditorPlugin::forward_spatial_gui_input(
                             float d = inters.distance_to(mbpos);
 
                             if (d < 10 && d < closest_d) {
-                                closest_d = d;
+                                closest_d   = d;
                                 closest_seg = i;
                                 Vector3 ray_from =
                                     p_camera->project_ray_origin(mbpos);
@@ -488,7 +488,7 @@ bool PathEditorPlugin::forward_spatial_gui_input(
                 }
                 Plane p(org, p_camera->get_transform().basis.get_axis(2));
                 Vector3 ray_from = p_camera->project_ray_origin(mbpos);
-                Vector3 ray_dir = p_camera->project_ray_normal(mbpos);
+                Vector3 ray_dir  = p_camera->project_ray_normal(mbpos);
 
                 Vector3 inters;
                 if (p.intersects_ray(ray_from, ray_dir, &inters)) {
@@ -590,7 +590,7 @@ void PathEditorPlugin::edit(Object* p_object) {
         }
     } else {
         Path* pre = path;
-        path = nullptr;
+        path      = nullptr;
         if (pre) {
             pre->get_curve()->emit_signal("changed");
         }
@@ -620,7 +620,7 @@ void PathEditorPlugin::make_visible(bool p_visible) {
 
         {
             Path* pre = path;
-            path = nullptr;
+            path      = nullptr;
             if (pre && pre->get_curve().is_valid()) {
                 pre->get_curve()->emit_signal("changed");
             }
@@ -666,13 +666,13 @@ void PathEditorPlugin::_handle_option_pressed(int p_option) {
 
     switch (p_option) {
         case HANDLE_OPTION_ANGLE: {
-            bool is_checked = pm->is_item_checked(HANDLE_OPTION_ANGLE);
+            bool is_checked     = pm->is_item_checked(HANDLE_OPTION_ANGLE);
             mirror_handle_angle = !is_checked;
             pm->set_item_checked(HANDLE_OPTION_ANGLE, mirror_handle_angle);
             pm->set_item_disabled(HANDLE_OPTION_LENGTH, !mirror_handle_angle);
         } break;
         case HANDLE_OPTION_LENGTH: {
-            bool is_checked = pm->is_item_checked(HANDLE_OPTION_LENGTH);
+            bool is_checked      = pm->is_item_checked(HANDLE_OPTION_LENGTH);
             mirror_handle_length = !is_checked;
             pm->set_item_checked(HANDLE_OPTION_LENGTH, mirror_handle_length);
         } break;
@@ -706,10 +706,10 @@ void PathEditorPlugin::_bind_methods() {
 PathEditorPlugin* PathEditorPlugin::singleton = nullptr;
 
 PathEditorPlugin::PathEditorPlugin(EditorNode* p_node) {
-    path = nullptr;
-    editor = p_node;
-    singleton = this;
-    mirror_handle_angle = true;
+    path                 = nullptr;
+    editor               = p_node;
+    singleton            = this;
+    mirror_handle_angle  = true;
     mirror_handle_length = true;
 
     Ref<PathSpatialGizmoPlugin> gizmo_plugin;

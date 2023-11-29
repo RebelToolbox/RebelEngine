@@ -84,7 +84,7 @@ struct BVHCommon {
     // these could possibly also be the same constant,
     // although this may be useful for debugging.
     // or use zero for invalid and +1 based indices.
-    static const uint32_t INVALID = (0xffffffff);
+    static const uint32_t INVALID  = (0xffffffff);
     static const uint32_t INACTIVE = (0xfffffffe);
 };
 
@@ -136,7 +136,7 @@ public:
         ALLOCA_STACK_SIZE = 128
     };
 
-    int32_t depth = 1;
+    int32_t depth     = 1;
     int32_t threshold = ALLOCA_STACK_SIZE - 2;
     T* stack;
     // only used in rare occasions when you run out of alloca memory
@@ -171,7 +171,7 @@ public:
             } else {
                 aux_stack.resize(aux_stack.size() * 2);
             }
-            stack = aux_stack.ptr();
+            stack     = aux_stack.ptr();
             threshold = aux_stack.size() - 2;
         }
         return &stack[depth++];
@@ -183,8 +183,8 @@ template <
     int MAX_CHILDREN,
     int MAX_ITEMS,
     bool USE_PAIRS = false,
-    class BOUNDS = AABB,
-    class POINT = Vector3>
+    class BOUNDS   = AABB,
+    class POINT    = Vector3>
 class BVH_Tree {
     friend class BVH;
 
@@ -216,11 +216,11 @@ private:
             return false;
         }
 
-        tnode.children[tnode.num_children] = p_child_node_id;
-        tnode.num_children += 1;
+        tnode.children[tnode.num_children]  = p_child_node_id;
+        tnode.num_children                 += 1;
 
         // back link in the child to the parent
-        TNode& tnode_child = _nodes[p_child_node_id];
+        TNode& tnode_child    = _nodes[p_child_node_id];
         tnode_child.parent_id = p_node_id;
 
         return true;
@@ -238,7 +238,7 @@ private:
         BVH_ASSERT(child_num != BVHCommon::INVALID);
         parent.children[child_num] = p_new_child_id;
 
-        TNode& new_child = _nodes[p_new_child_id];
+        TNode& new_child    = _nodes[p_new_child_id];
         new_child.parent_id = p_parent_id;
     }
 
@@ -271,7 +271,7 @@ private:
         if (parent.num_children == 1) {
             // else there is now a redundant node with one child, which can be
             // removed
-            sibling_id = parent.children[0];
+            sibling_id      = parent.children[0];
             sibling_present = true;
         }
 
@@ -316,7 +316,7 @@ private:
 
     void change_root_node(uint32_t p_new_root_id, uint32_t p_tree_id) {
         _root_node_id[p_tree_id] = p_new_root_id;
-        TNode& root = _nodes[p_new_root_id];
+        TNode& root              = _nodes[p_new_root_id];
 
         // mark no parent
         root.parent_id = BVHCommon::INVALID;
@@ -332,7 +332,7 @@ private:
         // already taken)
         BVH_ASSERT(child_leaf_id != 0);
 
-        TNode& node = _nodes[p_node_id];
+        TNode& node      = _nodes[p_node_id];
         node.neg_leaf_id = -(int)child_leaf_id;
     }
 
@@ -342,7 +342,7 @@ private:
         BVHABB_CLASS* r_old_aabb = nullptr
     ) {
         // get the reference
-        ItemRef& ref = _refs[p_ref_id];
+        ItemRef& ref           = _refs[p_ref_id];
         uint32_t owner_node_id = ref.tnode_id;
 
         // debug draw special
@@ -417,7 +417,7 @@ private:
         }
 
         ref.tnode_id = BVHCommon::INVALID;
-        ref.item_id = BVHCommon::INVALID; // unset
+        ref.item_id  = BVHCommon::INVALID; // unset
     }
 
     // returns true if needs refit of PARENT tree only, the node itself AABB is

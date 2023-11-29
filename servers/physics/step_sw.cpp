@@ -101,7 +101,7 @@ void StepSW::_solve_island(
         at_priority++;
 
         {
-            ConstraintSW* ci = p_island;
+            ConstraintSW* ci   = p_island;
             ConstraintSW* prev = nullptr;
             while (ci) {
                 if (ci->get_priority() < at_priority) {
@@ -195,9 +195,9 @@ void StepSW::step(SpaceSW* p_space, real_t p_delta, int p_iterations) {
 
     /* GENERATE CONSTRAINT ISLANDS */
 
-    BodySW* island_list = nullptr;
+    BodySW* island_list                  = nullptr;
     ConstraintSW* constraint_island_list = nullptr;
-    b = body_list->first();
+    b                                    = body_list->first();
 
     int island_count = 0;
 
@@ -205,7 +205,7 @@ void StepSW::step(SpaceSW* p_space, real_t p_delta, int p_iterations) {
         BodySW* body = b->self();
 
         if (body->get_island_step() != _step) {
-            BodySW* island = nullptr;
+            BodySW* island                  = nullptr;
             ConstraintSW* constraint_island = nullptr;
             _populate_island(body, &island, &constraint_island);
 

@@ -60,15 +60,15 @@ void PHashTranslation::generate(const Ref<Translation>& p_from) {
     buckets.resize(size);
     compressed.resize(keys.size());
 
-    int idx = 0;
+    int idx                    = 0;
     int total_compression_size = 0;
 
     for (List<StringName>::Element* E = keys.front(); E; E = E->next()) {
         // hash string
         CharString cs = E->get().operator String().utf8();
-        uint32_t h = hash(0, cs.get_data());
+        uint32_t h    = hash(0, cs.get_data());
         Pair<int, CharString> p;
-        p.first = idx;
+        p.first  = idx;
         p.second = cs;
         buckets.write[h % size].push_back(p);
 
@@ -77,7 +77,7 @@ void PHashTranslation::generate(const Ref<Translation>& p_from) {
             p_from->get_message(E->get()).operator String().utf8();
         _PHashTranslationCmp ps;
         ps.orig_len = src_s.size();
-        ps.offset = total_compression_size;
+        ps.offset   = total_compression_size;
 
         if (ps.orig_len != 0) {
             CharString dst_s;
@@ -90,7 +90,7 @@ void PHashTranslation::generate(const Ref<Translation>& p_from) {
             );
             if (ret >= src_s.size()) {
                 // if compressed is larger than original, just use original
-                ps.orig_len = src_s.size();
+                ps.orig_len   = src_s.size();
                 ps.compressed = src_s;
             } else {
                 dst_s.resize(ret);
@@ -103,7 +103,7 @@ void PHashTranslation::generate(const Ref<Translation>& p_from) {
             ps.compressed[0] = 0;
         }
 
-        compressed.write[idx] = ps;
+        compressed.write[idx]   = ps;
         total_compression_size += ps.compressed.size();
         idx++;
     }
@@ -112,13 +112,13 @@ void PHashTranslation::generate(const Ref<Translation>& p_from) {
 
     for (int i = 0; i < size; i++) {
         const Vector<Pair<int, CharString>>& b = buckets[i];
-        Map<uint32_t, int>& t = table.write[i];
+        Map<uint32_t, int>& t                  = table.write[i];
 
         if (b.size() == 0) {
             continue;
         }
 
-        int d = 1;
+        int d    = 1;
         int item = 0;
 
         while (item < b.size()) {
@@ -133,8 +133,8 @@ void PHashTranslation::generate(const Ref<Translation>& p_from) {
             }
         }
 
-        hfunc_table.write[i] = d;
-        bucket_table_size += 2 + b.size() * 4;
+        hfunc_table.write[i]  = d;
+        bucket_table_size    += 2 + b.size() * 4;
     }
 
     ERR_FAIL_COND(bucket_table_size == 0);
@@ -157,7 +157,7 @@ void PHashTranslation::generate(const Ref<Translation>& p_from) {
             continue;
         }
 
-        htw[i] = btindex;
+        htw[i]         = btindex;
         btw[btindex++] = t.size();
         btw[btindex++] = hfunc_table[i];
 
@@ -226,14 +226,14 @@ StringName PHashTranslation::get_message(const StringName& p_src_text) const {
     }
 
     CharString str = p_src_text.operator String().utf8();
-    uint32_t h = hash(0, str.get_data());
+    uint32_t h     = hash(0, str.get_data());
 
-    PoolVector<int>::Read htr = hash_table.read();
-    const uint32_t* htptr = (const uint32_t*)&htr[0];
-    PoolVector<int>::Read btr = bucket_table.read();
-    const uint32_t* btptr = (const uint32_t*)&btr[0];
+    PoolVector<int>::Read htr    = hash_table.read();
+    const uint32_t* htptr        = (const uint32_t*)&htr[0];
+    PoolVector<int>::Read btr    = bucket_table.read();
+    const uint32_t* btptr        = (const uint32_t*)&btr[0];
     PoolVector<uint8_t>::Read sr = strings.read();
-    const char* sptr = (const char*)&sr[0];
+    const char* sptr             = (const char*)&sr[0];
 
     uint32_t p = htptr[h % htsize];
 

@@ -36,7 +36,7 @@
 #ifdef TOOLS_ENABLED
 Dictionary Polygon2D::_edit_get_state() const {
     Dictionary state = Node2D::_edit_get_state();
-    state["offset"] = offset;
+    state["offset"]  = offset;
     return state;
 }
 
@@ -60,9 +60,9 @@ bool Polygon2D::_edit_use_pivot() const {
 
 Rect2 Polygon2D::_edit_get_rect() const {
     if (rect_cache_dirty) {
-        int l = polygon.size();
+        int l                       = polygon.size();
         PoolVector<Vector2>::Read r = polygon.read();
-        item_rect = Rect2();
+        item_rect                   = Rect2();
         for (int i = 0; i < l; i++) {
             Vector2 pos = r[i] + offset;
             if (i == 0) {
@@ -174,7 +174,7 @@ void Polygon2D::_notification(int p_what) {
                 Rect2 bounds;
                 int highest_idx = -1;
                 float highest_y = -1e20;
-                float sum = 0;
+                float sum       = 0;
 
                 for (int i = 0; i < len; i++) {
                     if (i == 0) {
@@ -184,10 +184,10 @@ void Polygon2D::_notification(int p_what) {
                     }
                     if (points[i].y > highest_y) {
                         highest_idx = i;
-                        highest_y = points[i].y;
+                        highest_y   = points[i].y;
                     }
-                    int ni = (i + 1) % len;
-                    sum += (points[ni].x - points[i].x)
+                    int ni  = (i + 1) % len;
+                    sum    += (points[ni].x - points[i].x)
                          * (points[ni].y + points[i].y);
                 }
 
@@ -258,11 +258,11 @@ void Polygon2D::_notification(int p_what) {
                 bones.resize(vc * 4);
                 weights.resize(vc * 4);
 
-                int* bonesw = bones.ptrw();
+                int* bonesw     = bones.ptrw();
                 float* weightsw = weights.ptrw();
 
                 for (int i = 0; i < vc * 4; i++) {
-                    bonesw[i] = 0;
+                    bonesw[i]   = 0;
                     weightsw[i] = 0;
                 }
 
@@ -281,7 +281,7 @@ void Polygon2D::_notification(int p_what) {
                         continue;
                     }
 
-                    int bone_index = bone->get_index_in_skeleton();
+                    int bone_index            = bone->get_index_in_skeleton();
                     PoolVector<float>::Read r = bone_weights[i].weights.read();
                     for (int j = 0; j < vc; j++) {
                         if (r[j] == 0.0) {
@@ -297,7 +297,7 @@ void Polygon2D::_notification(int p_what) {
                                     bonesw[j * 4 + l] = bonesw[j * 4 + l - 1];
                                 }
                                 weightsw[j * 4 + k] = r[j];
-                                bonesw[j * 4 + k] = bone_index;
+                                bonesw[j * 4 + k]   = bone_index;
                                 break;
                             }
                         }
@@ -360,7 +360,7 @@ void Polygon2D::_notification(int p_what) {
                 Vector<int> total_indices;
                 for (int i = 0; i < polygons.size(); i++) {
                     PoolVector<int> src_indices = polygons[i];
-                    int ic = src_indices.size();
+                    int ic                      = src_indices.size();
                     if (ic < 3) {
                         continue;
                     }
@@ -376,7 +376,7 @@ void Polygon2D::_notification(int p_what) {
                     }
                     Vector<int> indices =
                         Geometry::triangulate_polygon(tmp_points);
-                    int ic2 = indices.size();
+                    int ic2       = indices.size();
                     const int* r2 = indices.ptr();
 
                     int bic = total_indices.size();
@@ -410,7 +410,7 @@ void Polygon2D::_notification(int p_what) {
 }
 
 void Polygon2D::set_polygon(const PoolVector<Vector2>& p_polygon) {
-    polygon = p_polygon;
+    polygon          = p_polygon;
     rect_cache_dirty = true;
     update();
 }
@@ -544,7 +544,7 @@ float Polygon2D::get_invert_border() const {
 }
 
 void Polygon2D::set_offset(const Vector2& p_offset) {
-    offset = p_offset;
+    offset           = p_offset;
     rect_cache_dirty = true;
     update();
     _change_notify("offset");
@@ -559,7 +559,7 @@ void Polygon2D::add_bone(
     const PoolVector<float>& p_weights
 ) {
     Bone bone;
-    bone.path = p_path;
+    bone.path    = p_path;
     bone.weights = p_weights;
     bone_weights.push_back(bone);
 }
@@ -923,14 +923,14 @@ void Polygon2D::_bind_methods() {
 }
 
 Polygon2D::Polygon2D() {
-    invert = false;
-    invert_border = 100;
-    antialiased = false;
-    tex_rot = 0;
-    tex_tile = true;
-    tex_scale = Vector2(1, 1);
-    color = Color(1, 1, 1);
-    rect_cache_dirty = true;
-    internal_vertices = 0;
+    invert              = false;
+    invert_border       = 100;
+    antialiased         = false;
+    tex_rot             = 0;
+    tex_tile            = true;
+    tex_scale           = Vector2(1, 1);
+    color               = Color(1, 1, 1);
+    rect_cache_dirty    = true;
+    internal_vertices   = 0;
     current_skeleton_id = 0;
 }

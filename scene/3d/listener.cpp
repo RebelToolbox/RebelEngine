@@ -152,7 +152,7 @@ void Listener::_bind_methods() {
 }
 
 Listener::Listener() {
-    current = false;
+    current      = false;
     force_change = false;
     set_notify_transform(true);
 }

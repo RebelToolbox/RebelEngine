@@ -70,7 +70,7 @@ public:
         void process(
             float* p_samples,
             int p_amount,
-            int p_stride = 1,
+            int p_stride       = 1,
             bool p_interpolate = false
         );
         void update_coeffs(int p_interp_buffer_len = 0);

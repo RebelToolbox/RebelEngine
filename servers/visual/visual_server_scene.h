@@ -45,11 +45,11 @@
 class VisualServerScene {
 public:
     enum {
-        MAX_INSTANCE_CULL = 65536,
-        MAX_LIGHTS_CULLED = 4096,
+        MAX_INSTANCE_CULL            = 65536,
+        MAX_LIGHTS_CULLED            = 4096,
         MAX_REFLECTION_PROBES_CULLED = 4096,
-        MAX_ROOM_CULL = 32,
-        MAX_EXTERIOR_PORTALS = 128,
+        MAX_ROOM_CULL                = 32,
+        MAX_EXTERIOR_PORTALS         = 128,
     };
 
     uint64_t render_pass;
@@ -77,14 +77,14 @@ public:
         int32_t previous_room_id_hint;
 
         Camera() {
-            visible_layers = 0xFFFFFFFF;
-            fov = 70;
-            type = PERSPECTIVE;
-            znear = 0.05;
-            zfar = 100;
-            size = 1.0;
-            offset = Vector2();
-            vaspect = false;
+            visible_layers        = 0xFFFFFFFF;
+            fov                   = 70;
+            type                  = PERSPECTIVE;
+            znear                 = 0.05;
+            zfar                  = 100;
+            size                  = 1.0;
+            offset                = Vector2();
+            vaspect               = false;
             previous_room_id_hint = -1;
         }
     };
@@ -136,13 +136,13 @@ public:
     public:
         virtual SpatialPartitionID create(
             Instance* p_userdata,
-            const AABB& p_aabb = AABB(),
-            int p_subindex = 0,
-            bool p_pairable = false,
+            const AABB& p_aabb       = AABB(),
+            int p_subindex           = 0,
+            bool p_pairable          = false,
             uint32_t p_pairable_type = 0,
-            uint32_t pairable_mask = 1
-        ) = 0;
-        virtual void erase(SpatialPartitionID p_handle) = 0;
+            uint32_t pairable_mask   = 1
+        )                                                                  = 0;
+        virtual void erase(SpatialPartitionID p_handle)                    = 0;
         virtual void move(SpatialPartitionID p_handle, const AABB& p_aabb) = 0;
 
         virtual void activate(SpatialPartitionID p_handle, const AABB& p_aabb) {
@@ -173,7 +173,7 @@ public:
             Instance** p_result_array,
             int p_result_max,
             int* p_subindex_array = nullptr,
-            uint32_t p_mask = 0xFFFFFFFF
+            uint32_t p_mask       = 0xFFFFFFFF
         ) = 0;
         virtual int cull_segment(
             const Vector3& p_from,
@@ -181,7 +181,7 @@ public:
             Instance** p_result_array,
             int p_result_max,
             int* p_subindex_array = nullptr,
-            uint32_t p_mask = 0xFFFFFFFF
+            uint32_t p_mask       = 0xFFFFFFFF
         ) = 0;
 
         typedef void* (*PairCallback)(
@@ -221,11 +221,11 @@ public:
     public:
         SpatialPartitionID create(
             Instance* p_userdata,
-            const AABB& p_aabb = AABB(),
-            int p_subindex = 0,
-            bool p_pairable = false,
+            const AABB& p_aabb       = AABB(),
+            int p_subindex           = 0,
+            bool p_pairable          = false,
             uint32_t p_pairable_type = 0,
-            uint32_t pairable_mask = 1
+            uint32_t pairable_mask   = 1
         );
         void erase(SpatialPartitionID p_handle);
         void move(SpatialPartitionID p_handle, const AABB& p_aabb);
@@ -246,7 +246,7 @@ public:
             Instance** p_result_array,
             int p_result_max,
             int* p_subindex_array = nullptr,
-            uint32_t p_mask = 0xFFFFFFFF
+            uint32_t p_mask       = 0xFFFFFFFF
         );
         int cull_segment(
             const Vector3& p_from,
@@ -254,7 +254,7 @@ public:
             Instance** p_result_array,
             int p_result_max,
             int* p_subindex_array = nullptr,
-            uint32_t p_mask = 0xFFFFFFFF
+            uint32_t p_mask       = 0xFFFFFFFF
         );
         void set_pair_callback(PairCallback p_callback, void* p_userdata);
         void set_unpair_callback(UnpairCallback p_callback, void* p_userdata);
@@ -270,9 +270,9 @@ public:
         SpatialPartitioningScene_BVH();
         SpatialPartitionID create(
             Instance* p_userdata,
-            const AABB& p_aabb = AABB(),
-            int p_subindex = 0,
-            bool p_pairable = false,
+            const AABB& p_aabb       = AABB(),
+            int p_subindex           = 0,
+            bool p_pairable          = false,
             uint32_t p_pairable_type = 0,
             uint32_t p_pairable_mask = 1
         );
@@ -300,7 +300,7 @@ public:
             Instance** p_result_array,
             int p_result_max,
             int* p_subindex_array = nullptr,
-            uint32_t p_mask = 0xFFFFFFFF
+            uint32_t p_mask       = 0xFFFFFFFF
         );
         int cull_segment(
             const Vector3& p_from,
@@ -308,7 +308,7 @@ public:
             Instance** p_result_array,
             int p_result_max,
             int* p_subindex_array = nullptr,
-            uint32_t p_mask = 0xFFFFFFFF
+            uint32_t p_mask       = 0xFFFFFFFF
         );
         void set_pair_callback(PairCallback p_callback, void* p_userdata);
         void set_unpair_callback(UnpairCallback p_callback, void* p_userdata);
@@ -431,29 +431,29 @@ public:
 
         Instance() : scenario_item(this), update_item(this) {
             spatial_partition_id = 0;
-            scenario = nullptr;
+            scenario             = nullptr;
 
-            update_aabb = false;
+            update_aabb      = false;
             update_materials = false;
 
             extra_margin = 0;
 
             object_id = 0;
-            visible = true;
+            visible   = true;
 
             occlusion_handle = 0;
             portal_mode =
                 VisualServer::InstancePortalMode::INSTANCE_PORTAL_MODE_STATIC;
 
-            lod_begin = 0;
-            lod_end = 0;
+            lod_begin            = 0;
+            lod_end              = 0;
             lod_begin_hysteresis = 0;
-            lod_end_hysteresis = 0;
+            lod_end_hysteresis   = 0;
 
             last_render_pass = 0;
-            last_frame_pass = 0;
-            version = 1;
-            base_data = nullptr;
+            last_frame_pass  = 0;
+            version          = 1;
+            base_data        = nullptr;
 
             custom_aabb = nullptr;
         }
@@ -490,11 +490,11 @@ public:
         List<Instance*> lightmap_captures;
 
         InstanceGeometryData() {
-            lighting_dirty = true;
-            reflection_dirty = true;
-            can_cast_shadows = true;
+            lighting_dirty       = true;
+            reflection_dirty     = true;
+            can_cast_shadows     = true;
             material_is_animated = true;
-            gi_probes_dirty = true;
+            gi_probes_dirty      = true;
         }
     };
 
@@ -516,8 +516,8 @@ public:
         int32_t previous_room_id_hint;
 
         InstanceReflectionProbeData() : update_list(this) {
-            reflection_dirty = true;
-            render_step = -1;
+            reflection_dirty      = true;
+            render_step           = -1;
             previous_room_id_hint = -1;
         }
     };
@@ -542,10 +542,10 @@ public:
         int32_t previous_room_id_hint;
 
         InstanceLightData() {
-            shadow_dirty = true;
-            D = nullptr;
-            last_version = 0;
-            baked_light = nullptr;
+            shadow_dirty          = true;
+            D                     = nullptr;
+            last_version          = 0;
+            baked_light           = nullptr;
             previous_room_id_hint = -1;
         }
     };
@@ -590,13 +590,13 @@ public:
             }
 
             LightCache() {
-                type = VS::LIGHT_DIRECTIONAL;
-                energy = 1.0;
-                radius = 1.0;
-                attenuation = 1.0;
-                spot_angle = 1.0;
+                type             = VS::LIGHT_DIRECTIONAL;
+                energy           = 1.0;
+                radius           = 1.0;
+                attenuation      = 1.0;
+                spot_angle       = 1.0;
                 spot_attenuation = 1.0;
-                visible = true;
+                visible          = true;
             }
         };
 
@@ -645,8 +645,8 @@ public:
         SelfList<InstanceGIProbeData> update_element;
 
         InstanceGIProbeData() : update_element(this) {
-            invalid = true;
-            base_version = 0;
+            invalid                = true;
+            base_version           = 0;
             dynamic.updating_stage = GI_UPDATE_STAGE_CHECK;
         }
     };
@@ -761,8 +761,8 @@ public:
     struct Ghost : RID_Data {
         // all interations with actual ghosts are indirect, as the ghost is part
         // of the scenario
-        Scenario* scenario = nullptr;
-        uint32_t object_id = 0;
+        Scenario* scenario         = nullptr;
+        uint32_t object_id         = 0;
         RGhostHandle rghost_handle = 0; // handle in occlusion system (or 0)
         AABB aabb;
 
@@ -797,12 +797,12 @@ public:
         // all interations with actual portals are indirect, as the portal is
         // part of the scenario
         uint32_t scenario_portal_id = 0;
-        Scenario* scenario = nullptr;
+        Scenario* scenario          = nullptr;
 
         virtual ~Portal() {
             if (scenario) {
                 scenario->_portal_renderer.portal_destroy(scenario_portal_id);
-                scenario = nullptr;
+                scenario           = nullptr;
                 scenario_portal_id = 0;
             }
         }
@@ -830,14 +830,14 @@ public:
         // all interations with actual roomgroups are indirect, as the roomgroup
         // is part of the scenario
         uint32_t scenario_roomgroup_id = 0;
-        Scenario* scenario = nullptr;
+        Scenario* scenario             = nullptr;
 
         virtual ~RoomGroup() {
             if (scenario) {
                 scenario->_portal_renderer.roomgroup_destroy(
                     scenario_roomgroup_id
                 );
-                scenario = nullptr;
+                scenario              = nullptr;
                 scenario_roomgroup_id = 0;
             }
         }
@@ -856,13 +856,13 @@ public:
     // Occluders
     struct Occluder : RID_Data {
         uint32_t scenario_occluder_id = 0;
-        Scenario* scenario = nullptr;
+        Scenario* scenario            = nullptr;
 
         virtual ~Occluder() {
             if (scenario) {
                 scenario->_portal_renderer.occluder_destroy(scenario_occluder_id
                 );
-                scenario = nullptr;
+                scenario             = nullptr;
                 scenario_occluder_id = 0;
             }
         }
@@ -892,12 +892,12 @@ public:
         // all interations with actual rooms are indirect, as the room is part
         // of the scenario
         uint32_t scenario_room_id = 0;
-        Scenario* scenario = nullptr;
+        Scenario* scenario        = nullptr;
 
         virtual ~Room() {
             if (scenario) {
                 scenario->_portal_renderer.room_destroy(scenario_room_id);
-                scenario = nullptr;
+                scenario         = nullptr;
                 scenario_room_id = 0;
             }
         }

@@ -249,23 +249,23 @@ public:
 private:
     union MaterialKey {
         struct {
-            uint64_t feature_mask : 12;
-            uint64_t detail_uv : 1;
-            uint64_t blend_mode : 2;
-            uint64_t depth_draw_mode : 2;
-            uint64_t cull_mode : 2;
-            uint64_t flags : 19;
+            uint64_t feature_mask      : 12;
+            uint64_t detail_uv         : 1;
+            uint64_t blend_mode        : 2;
+            uint64_t depth_draw_mode   : 2;
+            uint64_t cull_mode         : 2;
+            uint64_t flags             : 19;
             uint64_t detail_blend_mode : 2;
-            uint64_t diffuse_mode : 3;
-            uint64_t specular_mode : 3;
-            uint64_t invalid_key : 1;
-            uint64_t deep_parallax : 1;
-            uint64_t billboard_mode : 2;
-            uint64_t grow : 1;
-            uint64_t proximity_fade : 1;
-            uint64_t distance_fade : 2;
-            uint64_t emission_op : 1;
-            uint64_t texture_metallic : 1;
+            uint64_t diffuse_mode      : 3;
+            uint64_t specular_mode     : 3;
+            uint64_t invalid_key       : 1;
+            uint64_t deep_parallax     : 1;
+            uint64_t billboard_mode    : 2;
+            uint64_t grow              : 1;
+            uint64_t proximity_fade    : 1;
+            uint64_t distance_fade     : 2;
+            uint64_t emission_op       : 1;
+            uint64_t texture_metallic  : 1;
             uint64_t texture_roughness : 1;
         };
 
@@ -293,25 +293,25 @@ private:
                 mk.feature_mask |= ((uint64_t)1 << i);
             }
         }
-        mk.detail_uv = detail_uv;
-        mk.blend_mode = blend_mode;
+        mk.detail_uv       = detail_uv;
+        mk.blend_mode      = blend_mode;
         mk.depth_draw_mode = depth_draw_mode;
-        mk.cull_mode = cull_mode;
+        mk.cull_mode       = cull_mode;
         for (int i = 0; i < FLAG_MAX; i++) {
             if (flags[i]) {
                 mk.flags |= ((uint64_t)1 << i);
             }
         }
         mk.detail_blend_mode = detail_blend_mode;
-        mk.diffuse_mode = diffuse_mode;
-        mk.specular_mode = specular_mode;
-        mk.billboard_mode = billboard_mode;
-        mk.deep_parallax = deep_parallax ? 1 : 0;
-        mk.grow = grow_enabled;
-        mk.proximity_fade = proximity_fade_enabled;
-        mk.distance_fade = distance_fade;
-        mk.emission_op = emission_op;
-        mk.texture_metallic = textures[TEXTURE_METALLIC].is_valid() ? 1 : 0;
+        mk.diffuse_mode      = diffuse_mode;
+        mk.specular_mode     = specular_mode;
+        mk.billboard_mode    = billboard_mode;
+        mk.deep_parallax     = deep_parallax ? 1 : 0;
+        mk.grow              = grow_enabled;
+        mk.proximity_fade    = proximity_fade_enabled;
+        mk.distance_fade     = distance_fade;
+        mk.emission_op       = emission_op;
+        mk.texture_metallic  = textures[TEXTURE_METALLIC].is_valid() ? 1 : 0;
         mk.texture_roughness = textures[TEXTURE_ROUGHNESS].is_valid() ? 1 : 0;
 
         return mk;
@@ -652,7 +652,7 @@ public:
         bool p_double_sided,
         bool p_cut_alpha,
         bool p_opaque_prepass,
-        bool p_billboard = false,
+        bool p_billboard   = false,
         bool p_billboard_y = false
     );
 

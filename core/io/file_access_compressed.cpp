@@ -46,7 +46,7 @@ void FileAccessCompressed::configure(
         }
     }
 
-    cmode = p_mode;
+    cmode      = p_mode;
     block_size = p_block_size;
 }
 
@@ -63,8 +63,8 @@ void FileAccessCompressed::configure(
     }
 
 Error FileAccessCompressed::open_after_magic(FileAccess* p_base) {
-    f = p_base;
-    cmode = (Compression::Mode)f->get_32();
+    f          = p_base;
+    cmode      = (Compression::Mode)f->get_32();
     block_size = f->get_32();
     if (block_size == 0) {
         f = nullptr; // Let the caller to handle the FileAccess object if failed
@@ -75,16 +75,16 @@ Error FileAccessCompressed::open_after_magic(FileAccess* p_base) {
                 + "' with block size 0, it is corrupted."
         );
     }
-    read_total = f->get_32();
-    uint32_t bc = (read_total / block_size) + 1;
+    read_total       = f->get_32();
+    uint32_t bc      = (read_total / block_size) + 1;
     uint64_t acc_ofs = f->get_position() + bc * 4;
-    uint32_t max_bs = 0;
+    uint32_t max_bs  = 0;
     for (uint32_t i = 0; i < bc; i++) {
         ReadBlock rb;
-        rb.offset = acc_ofs;
-        rb.csize = f->get_32();
-        acc_ofs += rb.csize;
-        max_bs = MAX(max_bs, rb.csize);
+        rb.offset  = acc_ofs;
+        rb.csize   = f->get_32();
+        acc_ofs   += rb.csize;
+        max_bs     = MAX(max_bs, rb.csize);
         read_blocks.push_back(rb);
     }
 
@@ -92,10 +92,10 @@ Error FileAccessCompressed::open_after_magic(FileAccess* p_base) {
     buffer.resize(block_size);
     read_ptr = buffer.ptrw();
     f->get_buffer(comp_buffer.ptrw(), read_blocks[0].csize);
-    at_end = false;
-    read_eof = false;
+    at_end           = false;
+    read_eof         = false;
     read_block_count = bc;
-    read_block_size = read_blocks.size() == 1 ? read_total : block_size;
+    read_block_size  = read_blocks.size() == 1 ? read_total : block_size;
 
     int ret = Compression::decompress(
         buffer.ptrw(),
@@ -105,7 +105,7 @@ Error FileAccessCompressed::open_after_magic(FileAccess* p_base) {
         cmode
     );
     read_block = 0;
-    read_pos = 0;
+    read_pos   = 0;
 
     return ret == -1 ? ERR_FILE_CORRUPT : OK;
 }
@@ -128,8 +128,8 @@ Error FileAccessCompressed::_open(const String& p_path, int p_mode_flags) {
 
     if (p_mode_flags & WRITE) {
         buffer.clear();
-        writing = true;
-        write_pos = 0;
+        writing           = true;
+        write_pos         = 0;
         write_buffer_size = 256;
         buffer.resize(256);
         write_max = 0;
@@ -140,7 +140,7 @@ Error FileAccessCompressed::_open(const String& p_path, int p_mode_flags) {
         char rmagic[5];
         f->get_buffer((uint8_t*)rmagic, 4);
         rmagic[4] = 0;
-        err = ERR_FILE_UNRECOGNIZED;
+        err       = ERR_FILE_UNRECOGNIZED;
         if (magic != rmagic || (err = open_after_magic(f)) != OK) {
             memdelete(f);
             f = nullptr;
@@ -226,8 +226,8 @@ void FileAccessCompressed::seek(uint64_t p_position) {
         if (p_position == read_total) {
             at_end = true;
         } else {
-            at_end = false;
-            read_eof = false;
+            at_end             = false;
+            read_eof           = false;
             uint32_t block_idx = p_position / block_size;
             if (block_idx != read_block) {
                 read_block = block_idx;
@@ -319,7 +319,7 @@ uint8_t FileAccessCompressed::get_8() const {
             read_block_size = read_block == read_block_count - 1
                                 ? read_total % block_size
                                 : block_size;
-            read_pos = 0;
+            read_pos        = 0;
 
         } else {
             read_block--;
@@ -368,7 +368,7 @@ uint64_t FileAccessCompressed::get_buffer(uint8_t* p_dst, uint64_t p_length)
                 read_block_size = read_block == read_block_count - 1
                                     ? read_total % block_size
                                     : block_size;
-                read_pos = 0;
+                read_pos        = 0;
 
             } else {
                 read_block--;

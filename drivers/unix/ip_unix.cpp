@@ -90,10 +90,10 @@ void IP_Unix::_resolve_hostname(
         hints.ai_family = AF_INET;
     } else if (p_type == TYPE_IPV6) {
         hints.ai_family = AF_INET6;
-        hints.ai_flags = 0;
+        hints.ai_flags  = 0;
     } else {
         hints.ai_family = AF_UNSPEC;
-        hints.ai_flags = AI_ADDRCONFIG;
+        hints.ai_flags  = AI_ADDRCONFIG;
     };
     hints.ai_flags &= ~AI_NUMERICHOST;
 
@@ -148,14 +148,14 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
             continue;
         }
 
-        String name = hostname->RawName->Data();
+        String name                             = hostname->RawName->Data();
         Map<String, Interface_Info>::Element* E = r_interfaces->find(name);
         if (!E) {
             Interface_Info info;
-            info.name = name;
+            info.name          = name;
             info.name_friendly = hostname->DisplayName->Data();
-            info.index = String::num_uint64(0);
-            E = r_interfaces->insert(name, info);
+            info.index         = String::num_uint64(0);
+            E                  = r_interfaces->insert(name, info);
             ERR_CONTINUE(!E);
         }
 
@@ -174,7 +174,7 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
     IP_ADAPTER_ADDRESSES* addrs;
 
     while (true) {
-        addrs = (IP_ADAPTER_ADDRESSES*)memalloc(buf_size);
+        addrs   = (IP_ADAPTER_ADDRESSES*)memalloc(buf_size);
         int err = GetAdaptersAddresses(
             AF_UNSPEC,
             GAA_FLAG_SKIP_ANYCAST | GAA_FLAG_SKIP_MULTICAST
@@ -200,9 +200,9 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 
     while (adapter != NULL) {
         Interface_Info info;
-        info.name = adapter->AdapterName;
+        info.name          = adapter->AdapterName;
         info.name_friendly = adapter->FriendlyName;
-        info.index = String::num_uint64(adapter->IfIndex);
+        info.index         = String::num_uint64(adapter->IfIndex);
 
         IP_ADAPTER_UNICAST_ADDRESS* address = adapter->FirstUnicastAddress;
         while (address != NULL) {
@@ -232,7 +232,7 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 ) const {
     struct ifaddrs* ifAddrStruct = nullptr;
-    struct ifaddrs* ifa = nullptr;
+    struct ifaddrs* ifa          = nullptr;
     int family;
 
     getifaddrs(&ifAddrStruct);
@@ -252,10 +252,10 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
             r_interfaces->find(ifa->ifa_name);
         if (!E) {
             Interface_Info info;
-            info.name = ifa->ifa_name;
+            info.name          = ifa->ifa_name;
             info.name_friendly = ifa->ifa_name;
             info.index = String::num_uint64(if_nametoindex(ifa->ifa_name));
-            E = r_interfaces->insert(ifa->ifa_name, info);
+            E          = r_interfaces->insert(ifa->ifa_name, info);
             ERR_CONTINUE(!E);
         }
 

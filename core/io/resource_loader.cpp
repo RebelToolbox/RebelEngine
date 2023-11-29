@@ -297,7 +297,7 @@ Error ResourceFormatLoader::rename_dependencies(
         && get_script_instance()->has_method("rename_dependencies")) {
         Dictionary deps_dict;
         for (Map<String, String>::Element* E = p_map.front(); E;
-             E = E->next()) {
+             E                               = E->next()) {
             deps_dict[E->key()] = E->value();
         }
 
@@ -376,7 +376,7 @@ RES ResourceLoader::_load(
         if (!loader[i]->recognize_path(p_path, p_type_hint)) {
             continue;
         }
-        found = true;
+        found   = true;
         RES res = loader[i]->load(
             p_path,
             p_original_path != String() ? p_original_path : p_path,
@@ -416,14 +416,14 @@ bool ResourceLoader::_add_to_loading_map(const String& p_path) {
     loading_map_mutex.lock();
 
     LoadingMapKey key;
-    key.path = p_path;
+    key.path   = p_path;
     key.thread = Thread::get_caller_id();
 
     if (loading_map.has(key)) {
         success = false;
     } else {
         loading_map[key] = true;
-        success = true;
+        success          = true;
     }
 
     loading_map_mutex.unlock();
@@ -435,7 +435,7 @@ void ResourceLoader::_remove_from_loading_map(const String& p_path) {
     loading_map_mutex.lock();
 
     LoadingMapKey key;
-    key.path = p_path;
+    key.path   = p_path;
     key.thread = Thread::get_caller_id();
 
     loading_map.erase(key);
@@ -450,7 +450,7 @@ void ResourceLoader::_remove_from_loading_map_and_thread(
     loading_map_mutex.lock();
 
     LoadingMapKey key;
-    key.path = p_path;
+    key.path   = p_path;
     key.thread = p_thread;
 
     loading_map.erase(key);
@@ -511,7 +511,7 @@ RES ResourceLoader::load(
     }
 
     bool xl_remapped = false;
-    String path = _path_remap(local_path, &xl_remapped);
+    String path      = _path_remap(local_path, &xl_remapped);
 
     if (path == "") {
         if (!p_no_cache) {
@@ -571,7 +571,7 @@ bool ResourceLoader::exists(const String& p_path, const String& p_type_hint) {
     }
 
     bool xl_remapped = false;
-    String path = _path_remap(local_path, &xl_remapped);
+    String path      = _path_remap(local_path, &xl_remapped);
 
     // Try all loaders and pick the first match for the type hint
     for (int i = 0; i < loader_count; i++) {
@@ -621,15 +621,15 @@ Ref<ResourceInteractiveLoader> ResourceLoader::load_interactive(
                     memnew(ResourceInteractiveLoaderDefault)
                 );
 
-            ril->resource = res_cached;
-            ril->path_loading = local_path;
+            ril->resource            = res_cached;
+            ril->path_loading        = local_path;
             ril->path_loading_thread = Thread::get_caller_id();
             return ril;
         }
     }
 
     bool xl_remapped = false;
-    String path = _path_remap(local_path, &xl_remapped);
+    String path      = _path_remap(local_path, &xl_remapped);
     if (path == "") {
         if (!p_no_cache) {
             _remove_from_loading_map(local_path);
@@ -652,7 +652,7 @@ Ref<ResourceInteractiveLoader> ResourceLoader::load_interactive(
         }
         if (!p_no_cache) {
             ril->set_local_path(local_path);
-            ril->path_loading = local_path;
+            ril->path_loading        = local_path;
             ril->path_loading_thread = Thread::get_caller_id();
         }
 
@@ -920,7 +920,7 @@ String ResourceLoader::_path_remap(
         String lang = TranslationServer::get_language_code(locale);
 
         Vector<String>& res_remaps = *translation_remaps.getptr(new_path);
-        bool near_match = false;
+        bool near_match            = false;
 
         for (int i = 0; i < res_remaps.size(); i++) {
             int split = res_remaps[i].find_last(":");
@@ -944,7 +944,7 @@ String ResourceLoader::_path_remap(
                 // Language code matches, that's a near match. Keep looking for
                 // exact match.
                 near_match = true;
-                new_path = res_remaps[i].left(split);
+                new_path   = res_remaps[i].left(split);
                 continue;
             }
         }
@@ -1128,8 +1128,8 @@ bool ResourceLoader::add_custom_resource_format_loader(String script_path) {
     ERR_FAIL_COND_V(res.is_null(), false);
     ERR_FAIL_COND_V(!res->is_class("Script"), false);
 
-    Ref<Script> s = res;
-    StringName ibt = s->get_instance_base_type();
+    Ref<Script> s   = res;
+    StringName ibt  = s->get_instance_base_type();
     bool valid_type = ClassDB::is_parent_class(ibt, "ResourceFormatLoader");
     ERR_FAIL_COND_V_MSG(
         !valid_type,
@@ -1171,7 +1171,7 @@ void ResourceLoader::add_custom_loaders() {
     ScriptServer::get_global_class_list(&global_classes);
 
     for (List<StringName>::Element* E = global_classes.front(); E;
-         E = E->next()) {
+         E                            = E->next()) {
         StringName class_name = E->get();
         StringName base_class =
             ScriptServer::get_global_class_native_base(class_name);
@@ -1211,13 +1211,13 @@ void ResourceLoader::finalize() {
 }
 
 ResourceLoadErrorNotify ResourceLoader::err_notify = nullptr;
-void* ResourceLoader::err_notify_ud = nullptr;
+void* ResourceLoader::err_notify_ud                = nullptr;
 
 DependencyErrorNotify ResourceLoader::dep_err_notify = nullptr;
-void* ResourceLoader::dep_err_notify_ud = nullptr;
+void* ResourceLoader::dep_err_notify_ud              = nullptr;
 
 bool ResourceLoader::abort_on_missing_resource = true;
-bool ResourceLoader::timestamp_on_load = false;
+bool ResourceLoader::timestamp_on_load         = false;
 
 SelfList<Resource>::List ResourceLoader::remapped_list;
 HashMap<String, Vector<String>> ResourceLoader::translation_remaps;

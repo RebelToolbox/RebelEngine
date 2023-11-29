@@ -36,12 +36,12 @@ Size2 OptionButton::get_minimum_size() const {
     Size2 minsize = Button::get_minimum_size();
 
     if (has_icon("arrow")) {
-        const Size2 padding = get_stylebox("normal")->get_minimum_size();
+        const Size2 padding    = get_stylebox("normal")->get_minimum_size();
         const Size2 arrow_size = Control::get_icon("arrow")->get_size();
 
-        Size2 content_size = minsize - padding;
-        content_size.width += arrow_size.width + get_constant("hseparation");
-        content_size.height = MAX(content_size.height, arrow_size.height);
+        Size2 content_size   = minsize - padding;
+        content_size.width  += arrow_size.width + get_constant("hseparation");
+        content_size.height  = MAX(content_size.height, arrow_size.height);
 
         minsize = content_size + padding;
     }
@@ -56,9 +56,9 @@ void OptionButton::_notification(int p_what) {
                 return;
             }
 
-            RID ci = get_canvas_item();
+            RID ci             = get_canvas_item();
             Ref<Texture> arrow = Control::get_icon("arrow");
-            Color clr = Color(1, 1, 1);
+            Color clr          = Color(1, 1, 1);
             if (get_constant("modulate_arrow")) {
                 switch (get_draw_mode()) {
                     case DRAW_PRESSED:
@@ -286,11 +286,11 @@ void OptionButton::_set_items(const Array& p_items) {
     clear();
 
     for (int i = 0; i < p_items.size(); i += 5) {
-        String text = p_items[i + 0];
+        String text       = p_items[i + 0];
         Ref<Texture> icon = p_items[i + 1];
-        bool disabled = p_items[i + 2];
-        int id = p_items[i + 3];
-        Variant meta = p_items[i + 4];
+        bool disabled     = p_items[i + 2];
+        int id            = p_items[i + 3];
+        Variant meta      = p_items[i + 4];
 
         int idx = get_item_count();
         add_item(text, id);

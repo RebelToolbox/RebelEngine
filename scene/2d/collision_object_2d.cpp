@@ -246,7 +246,7 @@ void CollisionObject2D::shape_owner_set_disabled(
     ERR_FAIL_COND(!shapes.has(p_owner));
 
     ShapeData& sd = shapes[p_owner];
-    sd.disabled = p_disabled;
+    sd.disabled   = p_disabled;
     for (int i = 0; i < sd.shapes.size(); i++) {
         if (area) {
             Physics2DServer::get_singleton()
@@ -274,7 +274,7 @@ void CollisionObject2D::shape_owner_set_one_way_collision(
 
     ERR_FAIL_COND(!shapes.has(p_owner));
 
-    ShapeData& sd = shapes[p_owner];
+    ShapeData& sd        = shapes[p_owner];
     sd.one_way_collision = p_enable;
     for (int i = 0; i < sd.shapes.size(); i++) {
         Physics2DServer::get_singleton()->body_set_shape_as_one_way_collision(
@@ -304,7 +304,7 @@ void CollisionObject2D::shape_owner_set_one_way_collision_margin(
 
     ERR_FAIL_COND(!shapes.has(p_owner));
 
-    ShapeData& sd = shapes[p_owner];
+    ShapeData& sd               = shapes[p_owner];
     sd.one_way_collision_margin = p_margin;
     for (int i = 0; i < sd.shapes.size(); i++) {
         Physics2DServer::get_singleton()->body_set_shape_as_one_way_collision(
@@ -326,7 +326,7 @@ float CollisionObject2D::get_shape_owner_one_way_collision_margin(
 
 void CollisionObject2D::get_shape_owners(List<uint32_t>* r_owners) {
     for (Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         r_owners->push_back(E->key());
     }
 }
@@ -334,7 +334,7 @@ void CollisionObject2D::get_shape_owners(List<uint32_t>* r_owners) {
 Array CollisionObject2D::_get_shape_owners() {
     Array ret;
     for (Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         ret.push_back(E->key());
     }
 
@@ -446,7 +446,7 @@ void CollisionObject2D::shape_owner_remove_shape(
     shapes[p_owner].shapes.remove(p_shape);
 
     for (Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         for (int i = 0; i < E->get().shapes.size(); i++) {
             if (E->get().shapes[i].index > index_to_remove) {
                 E->get().shapes.write[i].index -= 1;
@@ -469,7 +469,7 @@ uint32_t CollisionObject2D::shape_find_owner(int p_shape_index) const {
     ERR_FAIL_INDEX_V(p_shape_index, total_subshapes, UINT32_MAX);
 
     for (const Map<uint32_t, ShapeData>::Element* E = shapes.front(); E;
-         E = E->next()) {
+         E                                          = E->next()) {
         for (int i = 0; i < E->get().shapes.size(); i++) {
             if (E->get().shapes[i].index == p_shape_index) {
                 return E->key();
@@ -752,11 +752,11 @@ void CollisionObject2D::_bind_methods() {
 }
 
 CollisionObject2D::CollisionObject2D(RID p_rid, bool p_area) {
-    rid = p_rid;
-    area = p_area;
+    rid      = p_rid;
+    area     = p_area;
     pickable = true;
     set_notify_transform(true);
-    total_subshapes = 0;
+    total_subshapes               = 0;
     only_update_transform_changes = false;
 
     if (p_area) {

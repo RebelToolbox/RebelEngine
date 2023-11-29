@@ -127,12 +127,12 @@ Transform OccluderShapeSphere::center_node(
     }
 
     Vector3 scale3 = p_global_xform.basis.get_scale_abs();
-    real_t scale = (scale3.x + scale3.y + scale3.z) / 3.0;
+    real_t scale   = (scale3.x + scale3.y + scale3.z) / 3.0;
 
     for (int n = 0; n < _spheres.size(); n++) {
         Plane p;
         p.normal = p_global_xform.xform(_spheres[n].normal);
-        p.d = _spheres[n].d * scale;
+        p.d      = _spheres[n].d * scale;
         spheres_world_space.set(n, p);
     }
 
@@ -170,8 +170,8 @@ Transform OccluderShapeSphere::center_node(
         p.normal = inv_xform.xform(p.normal);
 
         // assuming uniform scale, otherwise this will go wrong
-        Vector3 inv_scale = inv_xform.basis.get_scale_abs();
-        p.d *= inv_scale.x;
+        Vector3 inv_scale  = inv_xform.basis.get_scale_abs();
+        p.d               *= inv_scale.x;
 
         spheres_world_space.set(n, p);
     }
@@ -220,7 +220,7 @@ void OccluderShapeSphere::set_spheres(const Vector<Plane>& p_spheres) {
     for (int n = 0; n < _spheres.size(); n++) {
         if (_spheres[n].d < _min_radius) {
             Plane p = _spheres[n];
-            p.d = _min_radius;
+            p.d     = _min_radius;
             _spheres.set(n, p);
         }
     }
@@ -239,7 +239,7 @@ void OccluderShapeSphere::set_sphere_position(
     const Vector3& p_position
 ) {
     if ((p_idx >= 0) && (p_idx < _spheres.size())) {
-        Plane p = _spheres[p_idx];
+        Plane p  = _spheres[p_idx];
         p.normal = p_position;
         _spheres.set(p_idx, p);
         notify_change_to_owners();
@@ -249,7 +249,7 @@ void OccluderShapeSphere::set_sphere_position(
 void OccluderShapeSphere::set_sphere_radius(int p_idx, real_t p_radius) {
     if ((p_idx >= 0) && (p_idx < _spheres.size())) {
         Plane p = _spheres[p_idx];
-        p.d = MAX(p_radius, _min_radius);
+        p.d     = MAX(p_radius, _min_radius);
         _spheres.set(p_idx, p);
         notify_change_to_owners();
     }

@@ -61,11 +61,11 @@ void CollisionPolygon::_build_polygon() {
         cp.resize(cs * 2);
         {
             PoolVector<Vector3>::Write w = cp.write();
-            int idx = 0;
+            int idx                      = 0;
             for (int j = 0; j < cs; j++) {
                 Vector2 d = decomp[i][j];
-                w[idx++] = Vector3(d.x, d.y, depth * 0.5);
-                w[idx++] = Vector3(d.x, d.y, -depth * 0.5);
+                w[idx++]  = Vector3(d.x, d.y, depth * 0.5);
+                w[idx++]  = Vector3(d.x, d.y, -depth * 0.5);
             }
         }
 
@@ -111,7 +111,7 @@ void CollisionPolygon::_notification(int p_what) {
                 parent->remove_shape_owner(owner_id);
             }
             owner_id = 0;
-            parent = nullptr;
+            parent   = nullptr;
         } break;
     }
 }
@@ -258,10 +258,10 @@ void CollisionPolygon::_bind_methods() {
 }
 
 CollisionPolygon::CollisionPolygon() {
-    aabb = AABB(Vector3(-1, -1, -1), Vector3(2, 2, 2));
+    aabb  = AABB(Vector3(-1, -1, -1), Vector3(2, 2, 2));
     depth = 1.0;
     set_notify_local_transform(true);
-    parent = nullptr;
+    parent   = nullptr;
     owner_id = 0;
     disabled = false;
 }

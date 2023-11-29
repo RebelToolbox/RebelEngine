@@ -64,7 +64,7 @@ class GDMonoAssembly {
             const StringName& p_class_name
         ) {
             namespace_name = p_namespace_name;
-            class_name = p_class_name;
+            class_name     = p_class_name;
         }
 
         StringName namespace_name;
@@ -169,7 +169,7 @@ public:
 
     static void fill_search_dirs(
         Vector<String>& r_search_dirs,
-        const String& p_custom_config = String(),
+        const String& p_custom_config  = String(),
         const String& p_custom_bcl_dir = String()
     );
 

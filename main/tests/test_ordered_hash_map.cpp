@@ -113,7 +113,7 @@ bool test_const_iteration(const OrderedHashMap<int, int>& map) {
 
     int idx = 0;
     for (OrderedHashMap<int, int>::ConstElement E = map.front(); E;
-         E = E.next()) {
+         E                                        = E.next()) {
         if (expected[idx] != Pair<int, int>(E.key(), E.value())) {
             return false;
         }
@@ -149,7 +149,7 @@ TestFunc test_funcs[] = {
 };
 
 MainLoop* test() {
-    int count = 0;
+    int count  = 0;
     int passed = 0;
 
     while (true) {

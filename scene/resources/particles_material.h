@@ -80,14 +80,14 @@ private:
         // The bit size of the struct must be kept below or equal to 32 bits.
         // Consider this when extending Flags, or EmissionShape.
         struct {
-            uint32_t texture_mask : 16;
-            uint32_t texture_color : 1;
-            uint32_t flags : 4;
-            uint32_t emission_shape : 3;
-            uint32_t trail_size_texture : 1;
+            uint32_t texture_mask        : 16;
+            uint32_t texture_color       : 1;
+            uint32_t flags               : 4;
+            uint32_t emission_shape      : 3;
+            uint32_t trail_size_texture  : 1;
             uint32_t trail_color_texture : 1;
-            uint32_t invalid_key : 1;
-            uint32_t has_emission_color : 1;
+            uint32_t invalid_key         : 1;
+            uint32_t has_emission_color  : 1;
         };
 
         uint32_t key;
@@ -120,11 +120,11 @@ private:
             }
         }
 
-        mk.texture_color = color_ramp.is_valid() ? 1 : 0;
-        mk.emission_shape = emission_shape;
+        mk.texture_color       = color_ramp.is_valid() ? 1 : 0;
+        mk.emission_shape      = emission_shape;
         mk.trail_color_texture = trail_color_modifier.is_valid() ? 1 : 0;
-        mk.trail_size_texture = trail_size_modifier.is_valid() ? 1 : 0;
-        mk.has_emission_color = emission_shape >= EMISSION_SHAPE_POINTS
+        mk.trail_size_texture  = trail_size_modifier.is_valid() ? 1 : 0;
+        mk.has_emission_color  = emission_shape >= EMISSION_SHAPE_POINTS
                              && emission_color_texture.is_valid();
 
         return mk;

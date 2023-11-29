@@ -69,12 +69,12 @@ void AudioEffectChorusInstance::_process_chunk(
     for (int vc = 0; vc < base->voice_count; vc++) {
         AudioEffectChorus::Voice& v = base->voice[vc];
 
-        double time_to_mix = (float)p_frame_count / mix_rate;
+        double time_to_mix   = (float)p_frame_count / mix_rate;
         double cycles_to_mix = time_to_mix * v.rate;
 
         unsigned int local_rb_pos = buffer_pos;
-        AudioFrame* dst_buff = p_dst_frames;
-        AudioFrame* rb_buff = audio_buffer.ptrw();
+        AudioFrame* dst_buff      = p_dst_frames;
+        AudioFrame* rb_buff       = audio_buffer.ptrw();
 
         double delay_msec = v.delay;
         unsigned int delay_frames =
@@ -82,7 +82,7 @@ void AudioEffectChorusInstance::_process_chunk(
         float max_depth_frames = (v.depth / 1000.0) * mix_rate;
 
         uint64_t local_cycles = cycles[vc];
-        uint64_t increment = llrint(
+        uint64_t increment    = llrint(
             cycles_to_mix / (double)p_frame_count
             * (double)(1 << AudioEffectChorus::CYCLES_FRAC)
         );
@@ -98,9 +98,9 @@ void AudioEffectChorusInstance::_process_chunk(
         if (v.cutoff == 0) {
             continue;
         }
-        float auxlp = expf(-2.0 * Math_PI * v.cutoff / mix_rate);
-        float c1 = 1.0 - auxlp;
-        float c2 = auxlp;
+        float auxlp  = expf(-2.0 * Math_PI * v.cutoff / mix_rate);
+        float c1     = 1.0 - auxlp;
+        float c2     = auxlp;
         AudioFrame h = filter_h[vc];
         if (v.cutoff >= AudioEffectChorus::MS_CUTOFF_MAX) {
             c1 = 1.0;
@@ -127,20 +127,20 @@ void AudioEffectChorusInstance::_process_chunk(
 
             /** COMPUTE RINGBUFFER POS**/
 
-            unsigned int rb_source = local_rb_pos;
-            rb_source -= delay_frames;
+            unsigned int rb_source  = local_rb_pos;
+            rb_source              -= delay_frames;
 
             rb_source -= wave_delay_frames;
 
             /** READ FROM RINGBUFFER, LINEARLY INTERPOLATE */
 
-            AudioFrame val = rb_buff[rb_source & buffer_mask];
+            AudioFrame val      = rb_buff[rb_source & buffer_mask];
             AudioFrame val_next = rb_buff[(rb_source - 1) & buffer_mask];
 
             val += (val_next - val) * wave_delay_frac;
 
             val = val * c1 + h * c2;
-            h = val;
+            h   = val;
 
             /** MIX VALUE TO OUTPUT **/
 
@@ -150,8 +150,8 @@ void AudioEffectChorusInstance::_process_chunk(
             local_rb_pos++;
         }
 
-        filter_h[vc] = h;
-        cycles[vc] += Math::fast_ftoi(
+        filter_h[vc]  = h;
+        cycles[vc]   += Math::fast_ftoi(
             cycles_to_mix * (double)(1 << AudioEffectChorus::CYCLES_FRAC)
         );
     }
@@ -165,7 +165,7 @@ Ref<AudioEffectInstance> AudioEffectChorus::instance() {
     ins->base = Ref<AudioEffectChorus>(this);
     for (int i = 0; i < 4; i++) {
         ins->filter_h[i] = AudioFrame(0, 0);
-        ins->cycles[i] = 0;
+        ins->cycles[i]   = 0;
     }
 
     float ring_buffer_max_size = AudioEffectChorus::MAX_DELAY_MS
@@ -185,9 +185,9 @@ Ref<AudioEffectInstance> AudioEffectChorus::instance() {
         ringbuff_size /= 2;
     }
 
-    ringbuff_size = 1 << bits;
+    ringbuff_size    = 1 << bits;
     ins->buffer_mask = ringbuff_size - 1;
-    ins->buffer_pos = 0;
+    ins->buffer_pos  = 0;
     ins->audio_buffer.resize(ringbuff_size);
     for (int i = 0; i < ringbuff_size; i++) {
         ins->audio_buffer.write[i] = AudioFrame(0, 0);
@@ -669,17 +669,17 @@ void AudioEffectChorus::_bind_methods() {
 }
 
 AudioEffectChorus::AudioEffectChorus() {
-    voice_count = 2;
-    voice[0].delay = 15;
-    voice[1].delay = 20;
-    voice[0].rate = 0.8;
-    voice[1].rate = 1.2;
-    voice[0].depth = 2;
-    voice[1].depth = 3;
+    voice_count     = 2;
+    voice[0].delay  = 15;
+    voice[1].delay  = 20;
+    voice[0].rate   = 0.8;
+    voice[1].rate   = 1.2;
+    voice[0].depth  = 2;
+    voice[1].depth  = 3;
     voice[0].cutoff = 8000;
     voice[1].cutoff = 8000;
-    voice[0].pan = -0.5;
-    voice[1].pan = 0.5;
+    voice[0].pan    = -0.5;
+    voice[1].pan    = 0.5;
 
     wet = 0.5;
     dry = 1.0;

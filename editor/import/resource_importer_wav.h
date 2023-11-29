@@ -88,7 +88,7 @@ public:
         PoolVector<uint8_t>::Write w = dst_data.write();
 
         int i, step_idx = 0, prev = 0;
-        uint8_t* out = w.ptr();
+        uint8_t* out    = w.ptr();
         // int16_t xm_prev=0;
         const float* in = p_data.ptr();
 
@@ -121,17 +121,17 @@ public:
             diff = (int)xm_sample - prev;
 
             nibble = 0;
-            step = _ima_adpcm_step_table[step_idx];
+            step   = _ima_adpcm_step_table[step_idx];
             vpdiff = step >> 3;
             if (diff < 0) {
                 nibble = 8;
-                diff = -diff;
+                diff   = -diff;
             }
             mask = 4;
             while (mask) {
                 if (diff >= step) {
                     nibble |= mask;
-                    diff -= step;
+                    diff   -= step;
                     vpdiff += step;
                 }
 
@@ -178,7 +178,7 @@ public:
         const Map<StringName, Variant>& p_options,
         List<String>* r_platform_variants,
         List<String>* r_gen_files = nullptr,
-        Variant* r_metadata = nullptr
+        Variant* r_metadata       = nullptr
     );
 
     ResourceImporterWAV();

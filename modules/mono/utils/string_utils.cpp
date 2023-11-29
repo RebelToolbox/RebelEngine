@@ -44,7 +44,7 @@ int sfind(const String& p_text, int p_from) {
     }
 
     int src_len = 2;
-    int len = p_text.length();
+    int len     = p_text.length();
 
     if (len == 0) {
         return -1;
@@ -66,7 +66,7 @@ int sfind(const String& p_text, int p_from) {
                     break;
                 case 1: {
                     CharType c = src[read_pos];
-                    found = src[read_pos] == 's' || (c >= '0' && c <= '4');
+                    found      = src[read_pos] == 's' || (c >= '0' && c <= '4');
                     break;
                 }
                 default:
@@ -123,18 +123,18 @@ String sformat(
 
     String new_string;
 
-    int findex = 0;
+    int findex      = 0;
     int search_from = 0;
-    int result = 0;
+    int result      = 0;
 
     while ((result = sfind(p_text, search_from)) >= 0) {
         CharType c = p_text[result + 1];
 
         int req_index = (c == 's' ? findex++ : c - '0');
 
-        new_string += p_text.substr(search_from, result - search_from);
-        new_string += args[req_index].operator String();
-        search_from = result + 2;
+        new_string  += p_text.substr(search_from, result - search_from);
+        new_string  += args[req_index].operator String();
+        search_from  = result + 2;
     }
 
     new_string += p_text.substr(search_from, p_text.length() - search_from);
@@ -188,7 +188,7 @@ Error read_all_file_utf8(const String& p_path, String& r_content) {
     uint64_t len = f->get_len();
     sourcef.resize(len + 1);
     PoolVector<uint8_t>::Write w = sourcef.write();
-    uint64_t r = f->get_buffer(w.ptr(), len);
+    uint64_t r                   = f->get_buffer(w.ptr(), len);
     f->close();
     memdelete(f);
     ERR_FAIL_COND_V(r != len, ERR_CANT_OPEN);

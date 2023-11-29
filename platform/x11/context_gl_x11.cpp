@@ -76,7 +76,7 @@ static void set_class_hint(Display* p_display, Window p_window) {
     /* set the name and class hints for the window manager to use */
     classHint = XAllocClassHint();
     if (classHint) {
-        classHint->res_name = (char*)"Godot_Engine";
+        classHint->res_name  = (char*)"Godot_Engine";
         classHint->res_class = (char*)"Godot";
     }
     XSetClassHint(p_display, p_window, classHint);
@@ -133,11 +133,11 @@ Error ContextGL_X11::initialize() {
 
     int fbcount;
     GLXFBConfig fbconfig = nullptr;
-    XVisualInfo* vi = nullptr;
+    XVisualInfo* vi      = nullptr;
 
     XSetWindowAttributes swa;
-    swa.event_mask = StructureNotifyMask;
-    swa.border_pixel = 0;
+    swa.event_mask          = StructureNotifyMask;
+    swa.border_pixel        = 0;
     unsigned long valuemask = CWBorderPixel | CWColormap | CWEventMask;
 
     if (OS::get_singleton()->is_layered_allowed()) {
@@ -171,10 +171,10 @@ Error ContextGL_X11::initialize() {
         XFree(fbc);
         ERR_FAIL_COND_V(!fbconfig, ERR_UNCONFIGURED);
 
-        swa.background_pixmap = None;
-        swa.background_pixel = 0;
-        swa.border_pixmap = None;
-        valuemask |= CWBackPixel;
+        swa.background_pixmap  = None;
+        swa.background_pixel   = 0;
+        swa.border_pixmap      = None;
+        valuemask             |= CWBackPixel;
 
     } else {
         GLXFBConfig* fbc = glXChooseFBConfig(
@@ -300,10 +300,10 @@ void* ContextGL_X11::get_glx_context() {
 }
 
 void ContextGL_X11::set_use_vsync(bool p_use) {
-    static bool setup = false;
-    static PFNGLXSWAPINTERVALEXTPROC glXSwapIntervalEXT = nullptr;
+    static bool setup                                    = false;
+    static PFNGLXSWAPINTERVALEXTPROC glXSwapIntervalEXT  = nullptr;
     static PFNGLXSWAPINTERVALSGIPROC glXSwapIntervalMESA = nullptr;
-    static PFNGLXSWAPINTERVALSGIPROC glXSwapIntervalSGI = nullptr;
+    static PFNGLXSWAPINTERVALSGIPROC glXSwapIntervalSGI  = nullptr;
 
     if (!setup) {
         setup = true;
@@ -348,16 +348,16 @@ ContextGL_X11::ContextGL_X11(
 ) :
     x11_window(p_x11_window) {
     default_video_mode = p_default_video_mode;
-    x11_display = p_x11_display;
+    x11_display        = p_x11_display;
 
     context_type = p_context_type;
 
     double_buffer = false;
     direct_render = false;
     glx_minor = glx_major = 0;
-    p = memnew(ContextGL_X11_Private);
-    p->glx_context = nullptr;
-    use_vsync = false;
+    p                     = memnew(ContextGL_X11_Private);
+    p->glx_context        = nullptr;
+    use_vsync             = false;
 }
 
 ContextGL_X11::~ContextGL_X11() {

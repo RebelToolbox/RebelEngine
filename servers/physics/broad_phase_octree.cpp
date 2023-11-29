@@ -192,7 +192,7 @@ BroadPhaseSW* BroadPhaseOctree::_create() {
 BroadPhaseOctree::BroadPhaseOctree() {
     octree.set_pair_callback(_pair_callback, this);
     octree.set_unpair_callback(_unpair_callback, this);
-    pair_callback = nullptr;
-    pair_userdata = nullptr;
+    pair_callback   = nullptr;
+    pair_userdata   = nullptr;
     unpair_userdata = nullptr;
 }

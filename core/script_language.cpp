@@ -36,9 +36,9 @@
 ScriptLanguage* ScriptServer::_languages[MAX_LANGUAGES];
 int ScriptServer::_language_count = 0;
 
-bool ScriptServer::scripting_enabled = true;
-bool ScriptServer::reload_scripts_on_save = false;
-bool ScriptServer::languages_finished = false;
+bool ScriptServer::scripting_enabled                      = true;
+bool ScriptServer::reload_scripts_on_save                 = false;
+bool ScriptServer::languages_finished                     = false;
 ScriptEditRequestFunction ScriptServer::edit_request_func = nullptr;
 
 void Script::_notification(int p_what) {
@@ -263,9 +263,9 @@ void ScriptServer::add_global_class(
         "Cyclic inheritance in script class."
     );
     GlobalScriptClass g;
-    g.language = p_language;
-    g.path = p_path;
-    g.base = p_base;
+    g.language              = p_language;
+    g.path                  = p_path;
+    g.base                  = p_base;
     global_classes[p_class] = g;
 }
 
@@ -319,10 +319,10 @@ void ScriptServer::save_global_classes() {
     Array gcarr;
     for (List<StringName>::Element* E = gc.front(); E; E = E->next()) {
         Dictionary d;
-        d["class"] = E->get();
+        d["class"]    = E->get();
         d["language"] = global_classes[E->get()].language;
-        d["path"] = global_classes[E->get()].path;
-        d["base"] = global_classes[E->get()].base;
+        d["path"]     = global_classes[E->get()].path;
+        d["base"]     = global_classes[E->get()].base;
         gcarr.push_back(d);
     }
 
@@ -520,9 +520,9 @@ ScriptLanguage* ScriptDebugger::get_break_language() const {
 }
 
 ScriptDebugger::ScriptDebugger() {
-    singleton = this;
+    singleton  = this;
     lines_left = -1;
-    depth = -1;
+    depth      = -1;
     break_lang = nullptr;
 }
 
@@ -584,12 +584,12 @@ void PlaceHolderScriptInstance::get_property_list(
 ) const {
     if (script->is_placeholder_fallback_enabled()) {
         for (const List<PropertyInfo>::Element* E = properties.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             p_properties->push_back(E->get());
         }
     } else {
         for (const List<PropertyInfo>::Element* E = properties.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             PropertyInfo pinfo = E->get();
             if (!values.has(pinfo.name)) {
                 pinfo.usage |= PROPERTY_USAGE_SCRIPT_DEFAULT_VALUE;
@@ -652,7 +652,7 @@ void PlaceHolderScriptInstance::update(
 ) {
     Set<StringName> new_values;
     for (const List<PropertyInfo>::Element* E = p_properties.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         StringName n = E->get().name;
         new_values.insert(n);
 
@@ -667,7 +667,7 @@ void PlaceHolderScriptInstance::update(
     List<StringName> to_remove;
 
     for (Map<StringName, Variant>::Element* E = values.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         if (!new_values.has(E->key())) {
             to_remove.push_back(E->key());
         }
@@ -711,7 +711,7 @@ void PlaceHolderScriptInstance::property_set_fallback(
 
         bool found = false;
         for (const List<PropertyInfo>::Element* F = properties.front(); F;
-             F = F->next()) {
+             F                                    = F->next()) {
             if (F->get().name == p_name) {
                 found = true;
                 break;

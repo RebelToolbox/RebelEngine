@@ -60,7 +60,7 @@ void TextureRect::_notification(int p_what) {
             } break;
             case STRETCH_KEEP_CENTERED: {
                 offset = (get_size() - texture->get_size()) / 2;
-                size = texture->get_size();
+                size   = texture->get_size();
             } break;
             case STRETCH_KEEP_ASPECT_CENTERED:
             case STRETCH_KEEP_ASPECT: {
@@ -70,7 +70,7 @@ void TextureRect::_notification(int p_what) {
                 int tex_height = size.height;
 
                 if (tex_width > size.width) {
-                    tex_width = size.width;
+                    tex_width  = size.width;
                     tex_height = texture->get_height() * tex_width
                                / texture->get_width();
                 }
@@ -80,7 +80,7 @@ void TextureRect::_notification(int p_what) {
                     offset.y += (size.height - tex_height) / 2;
                 }
 
-                size.width = tex_width;
+                size.width  = tex_width;
                 size.height = tex_height;
             } break;
             case STRETCH_KEEP_ASPECT_COVERED: {
@@ -91,9 +91,9 @@ void TextureRect::_notification(int p_what) {
                     size.width / tex_size.width,
                     size.height / tex_size.height
                 );
-                float scale = scale_size.width > scale_size.height
-                                ? scale_size.width
-                                : scale_size.height;
+                float scale           = scale_size.width > scale_size.height
+                                          ? scale_size.width
+                                          : scale_size.height;
                 Size2 scaled_tex_size = tex_size * scale;
 
                 region.position =
@@ -110,15 +110,15 @@ void TextureRect::_notification(int p_what) {
                 size.height / texture->get_height()
             );
 
-            offset.width += hflip ? p_atlas->get_margin().get_position().width
+            offset.width  += hflip ? p_atlas->get_margin().get_position().width
                                         * scale_size.width * 2
-                                  : 0;
+                                   : 0;
             offset.height += vflip ? p_atlas->get_margin().get_position().height
                                          * scale_size.height * 2
                                    : 0;
         }
 
-        size.width *= hflip ? -1.0f : 1.0f;
+        size.width  *= hflip ? -1.0f : 1.0f;
         size.height *= vflip ? -1.0f : 1.0f;
 
         if (region.has_no_area()) {
@@ -295,8 +295,8 @@ bool TextureRect::is_flipped_v() const {
 
 TextureRect::TextureRect() {
     expand = false;
-    hflip = false;
-    vflip = false;
+    hflip  = false;
+    vflip  = false;
     set_mouse_filter(MOUSE_FILTER_PASS);
     stretch_mode = STRETCH_SCALE_ON_EXPAND;
 }

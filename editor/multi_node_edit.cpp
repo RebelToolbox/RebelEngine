@@ -169,8 +169,8 @@ void MultiNodeEdit::_get_property_list(List<PropertyInfo>* p_list) const {
             }
             if (!usage.has(F->get().name)) {
                 PLData pld;
-                pld.uses = 0;
-                pld.info = F->get();
+                pld.uses             = 0;
+                pld.info             = F->get();
                 usage[F->get().name] = pld;
                 data_list.push_back(usage.getptr(F->get().name));
             }

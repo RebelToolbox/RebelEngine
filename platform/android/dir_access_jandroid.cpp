@@ -35,11 +35,11 @@
 #include "string_android.h"
 #include "thread_jandroid.h"
 
-jobject DirAccessJAndroid::io = NULL;
-jclass DirAccessJAndroid::cls = NULL;
-jmethodID DirAccessJAndroid::_dir_open = NULL;
-jmethodID DirAccessJAndroid::_dir_next = NULL;
-jmethodID DirAccessJAndroid::_dir_close = NULL;
+jobject DirAccessJAndroid::io            = NULL;
+jclass DirAccessJAndroid::cls            = NULL;
+jmethodID DirAccessJAndroid::_dir_open   = NULL;
+jmethodID DirAccessJAndroid::_dir_next   = NULL;
+jmethodID DirAccessJAndroid::_dir_close  = NULL;
 jmethodID DirAccessJAndroid::_dir_is_dir = NULL;
 
 DirAccess* DirAccessJAndroid::create_fs() {
@@ -51,7 +51,7 @@ Error DirAccessJAndroid::list_dir_begin() {
     JNIEnv* env = get_jni_env();
 
     jstring js = env->NewStringUTF(current_dir.utf8().get_data());
-    int res = env->CallIntMethod(io, _dir_open, js);
+    int res    = env->CallIntMethod(io, _dir_open, js);
     if (res <= 0) {
         return ERR_CANT_OPEN;
     }
@@ -130,7 +130,7 @@ Error DirAccessJAndroid::change_dir(String p_dir) {
     new_dir = new_dir.simplify_path();
 
     jstring js = env->NewStringUTF(new_dir.utf8().get_data());
-    int res = env->CallIntMethod(io, _dir_open, js);
+    int res    = env->CallIntMethod(io, _dir_open, js);
     env->DeleteLocalRef(js);
     if (res <= 0) {
         return ERR_INVALID_PARAMETER;
@@ -156,7 +156,7 @@ bool DirAccessJAndroid::file_exists(String p_file) {
     }
 
     FileAccessAndroid* f = memnew(FileAccessAndroid);
-    bool exists = f->file_exists(sd);
+    bool exists          = f->file_exists(sd);
     memdelete(f);
 
     return exists;
@@ -186,7 +186,7 @@ bool DirAccessJAndroid::dir_exists(String p_dir) {
     }
 
     jstring js = env->NewStringUTF(path.utf8().get_data());
-    int res = env->CallIntMethod(io, _dir_open, js);
+    int res    = env->CallIntMethod(io, _dir_open, js);
     env->DeleteLocalRef(js);
     if (res <= 0) {
         return false;
@@ -219,14 +219,14 @@ uint64_t DirAccessJAndroid::get_space_left() {
 
 void DirAccessJAndroid::setup(jobject p_io) {
     JNIEnv* env = get_jni_env();
-    io = p_io;
+    io          = p_io;
 
     jclass c = env->GetObjectClass(io);
-    cls = (jclass)env->NewGlobalRef(c);
+    cls      = (jclass)env->NewGlobalRef(c);
 
-    _dir_open = env->GetMethodID(cls, "dir_open", "(Ljava/lang/String;)I");
-    _dir_next = env->GetMethodID(cls, "dir_next", "(I)Ljava/lang/String;");
-    _dir_close = env->GetMethodID(cls, "dir_close", "(I)V");
+    _dir_open   = env->GetMethodID(cls, "dir_open", "(Ljava/lang/String;)I");
+    _dir_next   = env->GetMethodID(cls, "dir_next", "(I)Ljava/lang/String;");
+    _dir_close  = env->GetMethodID(cls, "dir_close", "(I)V");
     _dir_is_dir = env->GetMethodID(cls, "dir_is_dir", "(I)Z");
 
     //(*env)->CallVoidMethod(env,obj,aMethodID, myvar);

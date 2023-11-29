@@ -93,7 +93,7 @@ void AnimationPlayerEditor::_notification(int p_what) {
             }
 
             last_active = player->is_playing();
-            updating = false;
+            updating    = false;
         } break;
         case NOTIFICATION_ENTER_TREE: {
             tool_anim->get_popup()
@@ -127,10 +127,10 @@ void AnimationPlayerEditor::_notification(int p_what) {
             play_bw_from->set_icon(get_icon("PlayBackwards", "EditorIcons"));
 
             autoplay_icon = get_icon("AutoPlay", "EditorIcons");
-            reset_icon = get_icon("Reload", "EditorIcons");
+            reset_icon    = get_icon("Reload", "EditorIcons");
             {
                 Ref<Image> autoplay_img = autoplay_icon->get_data();
-                Ref<Image> reset_img = reset_icon->get_data();
+                Ref<Image> reset_img    = reset_icon->get_data();
                 Ref<Image> autoplay_reset_img;
                 Size2 icon_size = Size2(
                     autoplay_img->get_width(),
@@ -356,7 +356,7 @@ void AnimationPlayerEditor::_animation_new() {
     renaming = false;
     name_title->set_text(TTR("New Animation Name:"));
 
-    int count = 1;
+    int count   = 1;
     String base = TTR("New Anim");
     while (true) {
         String attempt = base;
@@ -381,7 +381,7 @@ void AnimationPlayerEditor::_animation_rename() {
     if (animation->get_item_count() == 0) {
         return;
     }
-    int selected = animation->get_selected();
+    int selected         = animation->get_selected();
     String selected_name = animation->get_item_text(selected);
 
     name_title->set_text(TTR("Change Animation Name:"));
@@ -422,7 +422,7 @@ void AnimationPlayerEditor::_animation_save_in_path(
     }
 
     String path = ProjectSettings::get_singleton()->localize_path(p_path);
-    Error err = ResourceSaver::save(
+    Error err   = ResourceSaver::save(
         path,
         p_resource,
         flg | ResourceSaver::FLAG_REPLACE_SUBRESOURCE_PATHS
@@ -498,7 +498,7 @@ void AnimationPlayerEditor::_animation_remove() {
 }
 
 void AnimationPlayerEditor::_animation_remove_confirmed() {
-    String current = animation->get_item_text(animation->get_selected());
+    String current      = animation->get_item_text(animation->get_selected());
     Ref<Animation> anim = player->get_animation(current);
 
     undo_redo->create_action(TTR("Remove Animation"));
@@ -540,7 +540,7 @@ double AnimationPlayerEditor::_get_editor_step() const {
     // Returns the effective snapping value depending on snapping modifiers, or
     // 0 if snapping is disabled.
     if (track_editor->is_snap_enabled()) {
-        const String current = player->get_assigned_animation();
+        const String current      = player->get_assigned_animation();
         const Ref<Animation> anim = player->get_animation(current);
         ERR_FAIL_COND_V(!anim.is_valid(), 0.0);
 
@@ -659,16 +659,16 @@ void AnimationPlayerEditor::_animation_blend() {
 
     List<StringName> anims;
     player->get_animation_list(&anims);
-    TreeItem* root = blend_editor.tree->create_item();
+    TreeItem* root  = blend_editor.tree->create_item();
     updating_blends = true;
 
-    int i = 0;
+    int i           = 0;
     bool anim_found = false;
     blend_editor.next->clear();
     blend_editor.next->add_item("", i);
 
     for (List<StringName>::Element* E = anims.front(); E; E = E->next()) {
-        String to = E->get();
+        String to       = E->get();
         TreeItem* blend = blend_editor.tree->create_item(root);
         blend->set_editable(0, false);
         blend->set_editable(1, true);
@@ -714,9 +714,9 @@ void AnimationPlayerEditor::_blend_edited() {
         return;
     }
 
-    updating_blends = true;
-    String to = selected->get_text(0);
-    float blend_time = selected->get_range(1);
+    updating_blends       = true;
+    String to             = selected->get_text(0);
+    float blend_time      = selected->get_range(1);
     float prev_blend_time = player->get_blend_time(current, to);
 
     undo_redo->create_action(TTR("Change Blend Time"));
@@ -751,7 +751,7 @@ Dictionary AnimationPlayerEditor::get_state() const {
         d["player"] =
             EditorNode::get_singleton()->get_edited_scene()->get_path_to(player
             );
-        d["animation"] = player->get_assigned_animation();
+        d["animation"]          = player->get_assigned_animation();
         d["track_editor_state"] = track_editor->get_state();
     }
 
@@ -1041,7 +1041,7 @@ void AnimationPlayerEditor::forward_force_draw_over_viewport(Control* p_overlay
         return;
     }
 
-    RID ci = p_overlay->get_canvas_item();
+    RID ci         = p_overlay->get_canvas_item();
     Rect2 src_rect = p_overlay->get_global_rect();
     // Re-flip since captures are already flipped.
     src_rect.position.y =
@@ -1074,7 +1074,7 @@ void AnimationPlayerEditor::forward_force_draw_over_viewport(Control* p_overlay
         } while (cidx < onion.steps);
     }
     if (onion.future) {
-        float alpha = 1;
+        float alpha   = 1;
         int base_cidx = cidx;
         do {
             alpha -= alpha_step;
@@ -1102,7 +1102,7 @@ void AnimationPlayerEditor::_animation_duplicate() {
         return;
     }
 
-    String current = animation->get_item_text(animation->get_selected());
+    String current      = animation->get_item_text(animation->get_selected());
     Ref<Animation> anim = player->get_animation(current);
     if (!anim.is_valid()) {
         return;
@@ -1151,11 +1151,11 @@ void AnimationPlayerEditor::_seek_value_changed(float p_value, bool p_set) {
         return;
     };
 
-    updating = true;
+    updating       = true;
     String current = player->get_assigned_animation();
     if (current == "" || !player->has_animation(current)) {
         updating = false;
-        current = "";
+        current  = "";
         return;
     };
 
@@ -1303,7 +1303,7 @@ void AnimationPlayerEditor::_animation_tool_menu(int p_option) {
                 name = TTR("Pasted Animation");
             }
 
-            int idx = 1;
+            int idx     = 1;
             String base = name;
             while (player->has_animation(name)) {
                 idx++;
@@ -1337,7 +1337,7 @@ void AnimationPlayerEditor::_animation_tool_menu(int p_option) {
 
 void AnimationPlayerEditor::_onion_skinning_menu(int p_option) {
     PopupMenu* menu = onion_skinning->get_popup();
-    int idx = menu->get_item_index(p_option);
+    int idx         = menu->get_item_index(p_option);
 
     switch (p_option) {
         case ONION_SKINNING_ENABLE: {
@@ -1363,7 +1363,7 @@ void AnimationPlayerEditor::_onion_skinning_menu(int p_option) {
         case ONION_SKINNING_1_STEP: // Fall-through.
         case ONION_SKINNING_2_STEPS:
         case ONION_SKINNING_3_STEPS: {
-            onion.steps = (p_option - ONION_SKINNING_1_STEP) + 1;
+            onion.steps       = (p_option - ONION_SKINNING_1_STEP) + 1;
             int one_frame_idx = menu->get_item_index(ONION_SKINNING_1_STEP);
             for (int i = 0;
                  i <= ONION_SKINNING_LAST_STEPS_OPTION - ONION_SKINNING_1_STEP;
@@ -1431,7 +1431,7 @@ bool AnimationPlayerEditor::_are_onion_layers_valid() {
 void AnimationPlayerEditor::_allocate_onion_layers() {
     _free_onion_layers();
 
-    int captures = onion.get_needed_capture_count();
+    int captures        = onion.get_needed_capture_count();
     Point2 capture_size = get_tree()->get_root()->get_size();
 
     onion.captures.resize(captures);
@@ -1532,32 +1532,32 @@ void AnimationPlayerEditor::_prepare_onion_layers_2() {
     Dictionary spatial_edit_state;
     if (SpatialEditor::get_singleton()->is_visible()) {
         // 3D
-        spatial_edit_state = SpatialEditor::get_singleton()->get_state();
-        Dictionary new_state = spatial_edit_state.duplicate();
-        new_state["show_grid"] = false;
+        spatial_edit_state       = SpatialEditor::get_singleton()->get_state();
+        Dictionary new_state     = spatial_edit_state.duplicate();
+        new_state["show_grid"]   = false;
         new_state["show_origin"] = false;
-        Array orig_vp = spatial_edit_state["viewports"];
+        Array orig_vp            = spatial_edit_state["viewports"];
         Array vp;
         vp.resize(4);
         for (int i = 0; i < vp.size(); i++) {
-            Dictionary d = ((Dictionary)orig_vp[i]).duplicate();
+            Dictionary d         = ((Dictionary)orig_vp[i]).duplicate();
             d["use_environment"] = false;
-            d["doppler"] = false;
+            d["doppler"]         = false;
             d["gizmos"] = onion.include_gizmos ? d["gizmos"] : Variant(false);
             d["information"] = false;
-            vp[i] = d;
+            vp[i]            = d;
         }
         new_state["viewports"] = vp;
         // TODO: Save/restore only affected entries.
         SpatialEditor::get_singleton()->set_state(new_state);
     } else { // CanvasItemEditor
         // 2D
-        canvas_edit_state = CanvasItemEditor::get_singleton()->get_state();
-        Dictionary new_state = canvas_edit_state.duplicate();
+        canvas_edit_state      = CanvasItemEditor::get_singleton()->get_state();
+        Dictionary new_state   = canvas_edit_state.duplicate();
         new_state["show_grid"] = false;
-        new_state["show_rulers"] = false;
-        new_state["show_guides"] = false;
-        new_state["show_helpers"] = false;
+        new_state["show_rulers"]       = false;
+        new_state["show_guides"]       = false;
+        new_state["show_helpers"]      = false;
         new_state["show_zoom_control"] = false;
         // TODO: Save/restore only affected entries.
         CanvasItemEditor::get_singleton()->set_state(new_state);
@@ -1614,7 +1614,7 @@ void AnimationPlayerEditor::_prepare_onion_layers_2() {
 
     int step_off_a = onion.past ? -onion.steps : 0;
     int step_off_b = onion.future ? onion.steps : 0;
-    int cidx = 0;
+    int cidx       = 0;
     onion.capture.material->set_shader_param(
         "dir_color",
         onion.force_white_modulate
@@ -1888,8 +1888,8 @@ AnimationPlayerEditor::AnimationPlayerEditor(
     EditorNode* p_editor,
     AnimationPlayerEditorPlugin* p_plugin
 ) {
-    editor = p_editor;
-    plugin = p_plugin;
+    editor    = p_editor;
+    plugin    = p_plugin;
     singleton = this;
 
     updating = false;
@@ -2177,8 +2177,8 @@ AnimationPlayerEditor::AnimationPlayerEditor(
         true
     );
 
-    renaming = false;
-    last_active = false;
+    renaming          = false;
+    last_active       = false;
     timeline_position = 0;
 
     set_process_unhandled_key_input(true);
@@ -2200,18 +2200,18 @@ AnimationPlayerEditor::AnimationPlayerEditor(
     track_editor
         ->connect("visibility_changed", this, "_editor_visibility_changed");
 
-    onion.enabled = false;
-    onion.past = true;
-    onion.future = false;
-    onion.steps = 1;
-    onion.differences_only = false;
+    onion.enabled              = false;
+    onion.past                 = true;
+    onion.future               = false;
+    onion.steps                = 1;
+    onion.differences_only     = false;
     onion.force_white_modulate = false;
-    onion.include_gizmos = false;
+    onion.include_gizmos       = false;
 
-    onion.last_frame = 0;
-    onion.can_overlay = false;
-    onion.capture_size = Size2();
-    onion.capture.canvas = VS::get_singleton()->canvas_create();
+    onion.last_frame          = 0;
+    onion.can_overlay         = false;
+    onion.capture_size        = Size2();
+    onion.capture.canvas      = VS::get_singleton()->canvas_create();
     onion.capture.canvas_item = VS::get_singleton()->canvas_item_create();
     VS::get_singleton()->canvas_item_set_parent(
         onion.capture.canvas_item,
@@ -2285,7 +2285,7 @@ void AnimationPlayerEditorPlugin::make_visible(bool p_visible) {
 }
 
 AnimationPlayerEditorPlugin::AnimationPlayerEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor      = p_node;
     anim_editor = memnew(AnimationPlayerEditor(editor, this));
     anim_editor->set_undo_redo(EditorNode::get_undo_redo());
     editor->add_bottom_panel_item(TTR("Animation"), anim_editor);

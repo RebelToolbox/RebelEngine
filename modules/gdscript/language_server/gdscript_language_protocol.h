@@ -50,9 +50,9 @@ private:
         Ref<StreamPeerTCP> connection;
 
         uint8_t req_buf[LSP_MAX_BUFFER_SIZE];
-        int req_pos = 0;
-        bool has_header = false;
-        bool has_content = false;
+        int req_pos        = 0;
+        bool has_header    = false;
+        bool has_content   = false;
         int content_length = 0;
         Vector<CharString> res_queue;
         int res_sent = 0;
@@ -63,7 +63,7 @@ private:
 
     enum LSPErrorCode {
         RequestCancelled = -32800,
-        ContentModified = -32801,
+        ContentModified  = -32801,
     };
 
     static GDScriptLanguageProtocol* singleton;
@@ -71,8 +71,8 @@ private:
     HashMap<int, Ref<LSPeer>> clients;
     Ref<TCP_Server> server;
     int latest_client_id = 0;
-    int next_client_id = 0;
-    int next_server_id = 0;
+    int next_client_id   = 0;
+    int next_server_id   = 0;
 
     Ref<GDScriptTextDocument> text_document;
     Ref<GDScriptWorkspace> workspace;
@@ -115,12 +115,12 @@ public:
     void notify_client(
         const String& p_method,
         const Variant& p_params = Variant(),
-        int p_client_id = -1
+        int p_client_id         = -1
     );
     void request_client(
         const String& p_method,
         const Variant& p_params = Variant(),
-        int p_client_id = -1
+        int p_client_id         = -1
     );
 
     bool is_smart_resolve_enabled() const;

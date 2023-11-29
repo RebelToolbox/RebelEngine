@@ -52,17 +52,17 @@ protected:
 
 public:
     enum Flags {
-        FLAG_MIPMAPS = VisualServer::TEXTURE_FLAG_MIPMAPS,
-        FLAG_REPEAT = VisualServer::TEXTURE_FLAG_REPEAT,
-        FLAG_FILTER = VisualServer::TEXTURE_FLAG_FILTER,
+        FLAG_MIPMAPS            = VisualServer::TEXTURE_FLAG_MIPMAPS,
+        FLAG_REPEAT             = VisualServer::TEXTURE_FLAG_REPEAT,
+        FLAG_FILTER             = VisualServer::TEXTURE_FLAG_FILTER,
         FLAG_ANISOTROPIC_FILTER = VisualServer::TEXTURE_FLAG_ANISOTROPIC_FILTER,
-        FLAG_CONVERT_TO_LINEAR = VisualServer::TEXTURE_FLAG_CONVERT_TO_LINEAR,
-        FLAG_VIDEO_SURFACE = VisualServer::TEXTURE_FLAG_USED_FOR_STREAMING,
-        FLAGS_DEFAULT = FLAG_MIPMAPS | FLAG_REPEAT | FLAG_FILTER,
-        FLAG_MIRRORED_REPEAT = VisualServer::TEXTURE_FLAG_MIRRORED_REPEAT
+        FLAG_CONVERT_TO_LINEAR  = VisualServer::TEXTURE_FLAG_CONVERT_TO_LINEAR,
+        FLAG_VIDEO_SURFACE      = VisualServer::TEXTURE_FLAG_USED_FOR_STREAMING,
+        FLAGS_DEFAULT           = FLAG_MIPMAPS | FLAG_REPEAT | FLAG_FILTER,
+        FLAG_MIRRORED_REPEAT    = VisualServer::TEXTURE_FLAG_MIRRORED_REPEAT
     };
 
-    virtual int get_width() const = 0;
+    virtual int get_width() const  = 0;
     virtual int get_height() const = 0;
     virtual Size2 get_size() const;
     virtual RID get_rid() const = 0;
@@ -72,31 +72,31 @@ public:
     virtual bool has_alpha() const = 0;
 
     virtual void set_flags(uint32_t p_flags) = 0;
-    virtual uint32_t get_flags() const = 0;
+    virtual uint32_t get_flags() const       = 0;
 
     virtual void draw(
         RID p_canvas_item,
         const Point2& p_pos,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect(
         RID p_canvas_item,
         const Rect2& p_rect,
-        bool p_tile = false,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        bool p_tile                      = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect_region(
         RID p_canvas_item,
         const Rect2& p_rect,
         const Rect2& p_src_rect,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>(),
-        bool p_clip_uv = true
+        bool p_clip_uv                   = true
     ) const;
     virtual bool get_rect_region(
         const Rect2& p_rect,
@@ -181,26 +181,26 @@ public:
     virtual void draw(
         RID p_canvas_item,
         const Point2& p_pos,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect(
         RID p_canvas_item,
         const Rect2& p_rect,
-        bool p_tile = false,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        bool p_tile                      = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect_region(
         RID p_canvas_item,
         const Rect2& p_rect,
         const Rect2& p_src_rect,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>(),
-        bool p_clip_uv = true
+        bool p_clip_uv                   = true
     ) const;
     void set_storage(Storage p_storage);
     Storage get_storage() const;
@@ -224,12 +224,12 @@ class StreamTexture : public Texture {
 public:
     enum FormatBits {
         FORMAT_MASK_IMAGE_FORMAT = (1 << 20) - 1,
-        FORMAT_BIT_PNG = 1 << 20,
-        FORMAT_BIT_WEBP = 1 << 21,
-        FORMAT_BIT_STREAM = 1 << 22,
-        FORMAT_BIT_HAS_MIPMAPS = 1 << 23,
-        FORMAT_BIT_DETECT_3D = 1 << 24,
-        FORMAT_BIT_DETECT_SRGB = 1 << 25,
+        FORMAT_BIT_PNG           = 1 << 20,
+        FORMAT_BIT_WEBP          = 1 << 21,
+        FORMAT_BIT_STREAM        = 1 << 22,
+        FORMAT_BIT_HAS_MIPMAPS   = 1 << 23,
+        FORMAT_BIT_DETECT_3D     = 1 << 24,
+        FORMAT_BIT_DETECT_SRGB   = 1 << 25,
         FORMAT_BIT_DETECT_NORMAL = 1 << 26,
     };
 
@@ -282,26 +282,26 @@ public:
     virtual void draw(
         RID p_canvas_item,
         const Point2& p_pos,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect(
         RID p_canvas_item,
         const Rect2& p_rect,
-        bool p_tile = false,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        bool p_tile                      = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect_region(
         RID p_canvas_item,
         const Rect2& p_rect,
         const Rect2& p_src_rect,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>(),
-        bool p_clip_uv = true
+        bool p_clip_uv                   = true
     ) const;
 
     virtual bool has_alpha() const;
@@ -319,7 +319,7 @@ public:
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
     virtual bool handles_type(const String& p_type) const;
@@ -367,26 +367,26 @@ public:
     virtual void draw(
         RID p_canvas_item,
         const Point2& p_pos,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect(
         RID p_canvas_item,
         const Rect2& p_rect,
-        bool p_tile = false,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        bool p_tile                      = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect_region(
         RID p_canvas_item,
         const Rect2& p_rect,
         const Rect2& p_src_rect,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>(),
-        bool p_clip_uv = true
+        bool p_clip_uv                   = true
     ) const;
     virtual bool get_rect_region(
         const Rect2& p_rect,
@@ -435,26 +435,26 @@ public:
     virtual void draw(
         RID p_canvas_item,
         const Point2& p_pos,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect(
         RID p_canvas_item,
         const Rect2& p_rect,
-        bool p_tile = false,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        bool p_tile                      = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect_region(
         RID p_canvas_item,
         const Rect2& p_rect,
         const Rect2& p_src_rect,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>(),
-        bool p_clip_uv = true
+        bool p_clip_uv                   = true
     ) const;
     virtual bool get_rect_region(
         const Rect2& p_rect,
@@ -510,26 +510,26 @@ public:
     virtual void draw(
         RID p_canvas_item,
         const Point2& p_pos,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect(
         RID p_canvas_item,
         const Rect2& p_rect,
-        bool p_tile = false,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        bool p_tile                      = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>()
     ) const;
     virtual void draw_rect_region(
         RID p_canvas_item,
         const Rect2& p_rect,
         const Rect2& p_src_rect,
-        const Color& p_modulate = Color(1, 1, 1),
-        bool p_transpose = false,
+        const Color& p_modulate          = Color(1, 1, 1),
+        bool p_transpose                 = false,
         const Ref<Texture>& p_normal_map = Ref<Texture>(),
-        bool p_clip_uv = true
+        bool p_clip_uv                   = true
     ) const;
 
     bool is_pixel_opaque(int p_x, int p_y) const;
@@ -558,9 +558,9 @@ public:
     };
 
     enum Flags {
-        FLAG_MIPMAPS = VisualServer::TEXTURE_FLAG_MIPMAPS,
-        FLAG_REPEAT = VisualServer::TEXTURE_FLAG_REPEAT,
-        FLAG_FILTER = VisualServer::TEXTURE_FLAG_FILTER,
+        FLAG_MIPMAPS  = VisualServer::TEXTURE_FLAG_MIPMAPS,
+        FLAG_REPEAT   = VisualServer::TEXTURE_FLAG_REPEAT,
+        FLAG_FILTER   = VisualServer::TEXTURE_FLAG_FILTER,
         FLAGS_DEFAULT = FLAG_MIPMAPS | FLAG_REPEAT | FLAG_FILTER,
     };
 
@@ -623,13 +623,13 @@ class TextureLayered : public Resource {
 
 public:
     enum Flags {
-        FLAG_MIPMAPS = VisualServer::TEXTURE_FLAG_MIPMAPS,
-        FLAG_REPEAT = VisualServer::TEXTURE_FLAG_REPEAT,
-        FLAG_FILTER = VisualServer::TEXTURE_FLAG_FILTER,
+        FLAG_MIPMAPS            = VisualServer::TEXTURE_FLAG_MIPMAPS,
+        FLAG_REPEAT             = VisualServer::TEXTURE_FLAG_REPEAT,
+        FLAG_FILTER             = VisualServer::TEXTURE_FLAG_FILTER,
         FLAG_ANISOTROPIC_FILTER = VisualServer::TEXTURE_FLAG_ANISOTROPIC_FILTER,
-        FLAG_CONVERT_TO_LINEAR = VisualServer::TEXTURE_FLAG_CONVERT_TO_LINEAR,
+        FLAG_CONVERT_TO_LINEAR  = VisualServer::TEXTURE_FLAG_CONVERT_TO_LINEAR,
         FLAGS_DEFAULT_TEXTURE_ARRAY = FLAG_MIPMAPS | FLAG_REPEAT | FLAG_FILTER,
-        FLAGS_DEFAULT_TEXTURE_3D = FLAG_FILTER,
+        FLAGS_DEFAULT_TEXTURE_3D    = FLAG_FILTER,
     };
 
     enum CompressMode {
@@ -740,7 +740,7 @@ public:
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
     virtual bool handles_type(const String& p_type) const;

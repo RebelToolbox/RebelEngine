@@ -7,7 +7,7 @@ void _split_inform_references(uint32_t p_node_id) {
 
         ItemRef& ref = _refs[ref_id];
         ref.tnode_id = p_node_id;
-        ref.item_id = n;
+        ref.item_id  = n;
     }
 }
 
@@ -33,11 +33,11 @@ void _split_leaf_sort_groups_simple(
     }
 
     POINT centre = full_bound.calculate_centre();
-    POINT size = full_bound.calculate_size();
+    POINT size   = full_bound.calculate_size();
 
     int order[POINT::AXIS_COUNT];
 
-    order[0] = size.min_axis();
+    order[0]                     = size.min_axis();
     order[POINT::AXIS_COUNT - 1] = size.max_axis();
 
     static_assert(
@@ -80,7 +80,7 @@ void _split_leaf_sort_groups_simple(
         // now calculate the best split
         for (int axis = 1; axis < POINT::AXIS_COUNT; axis++) {
             split_axis = order[axis];
-            int count = 0;
+            int count  = 0;
 
             for (int a = 0; a < num_a; a++) {
                 uint32_t ind = group_a[a];
@@ -96,10 +96,10 @@ void _split_leaf_sort_groups_simple(
 
         // best axis
         int best_axis = 0;
-        int best_min = min_group_size[0];
+        int best_min  = min_group_size[0];
         for (int axis = 1; axis < POINT::AXIS_COUNT; axis++) {
             if (min_group_size[axis] > best_min) {
-                best_min = min_group_size[axis];
+                best_min  = min_group_size[axis];
                 best_axis = axis;
             }
         }
@@ -168,7 +168,7 @@ void _split_leaf_sort_groups(
 
     BVHABB_CLASS rest_aabb;
 
-    float best_size = FLT_MAX;
+    float best_size    = FLT_MAX;
     int best_candidate = -1;
 
     // find most likely from a to move into b
@@ -191,7 +191,7 @@ void _split_leaf_sort_groups(
         // now compare the sizes
         float size = groupb_aabb_new.get_area() + rest_aabb.get_area();
         if (size < best_size) {
-            best_size = size;
+            best_size      = size;
             best_candidate = check;
         }
     }
@@ -237,8 +237,8 @@ uint32_t split_leaf_complex(
     }
 
     // don't get any leaves or nodes till AFTER the split
-    TNode& tnode = _nodes[p_node_id];
-    uint32_t orig_leaf_id = tnode.get_leaf_id();
+    TNode& tnode           = _nodes[p_node_id];
+    uint32_t orig_leaf_id  = tnode.get_leaf_id();
     const TLeaf& orig_leaf = _node_get_leaf(tnode);
 
     // store the final child ids
@@ -267,13 +267,13 @@ uint32_t split_leaf_complex(
 
     // setup - start with all in group a
     for (int n = 0; n < orig_leaf.num_items; n++) {
-        group_a[n] = n;
+        group_a[n]     = n;
         temp_bounds[n] = orig_leaf.get_aabb(n);
     }
     // wildcard
     int wildcard = orig_leaf.num_items;
 
-    group_a[wildcard] = wildcard;
+    group_a[wildcard]     = wildcard;
     temp_bounds[wildcard] = p_added_item_aabb;
 
     // we can choose here either an equal split, or just 1 in the new leaf

@@ -90,7 +90,7 @@ Vector3 Vector3::cubic_interpolaten(
         }
     }
 
-    real_t t = p_weight;
+    real_t t  = p_weight;
     real_t t2 = t * t;
     real_t t3 = t2 * t;
 
@@ -113,7 +113,7 @@ Vector3 Vector3::cubic_interpolate(
     Vector3 p2 = p_b;
     Vector3 p3 = p_post_b;
 
-    real_t t = p_weight;
+    real_t t  = p_weight;
     real_t t2 = t * t;
     real_t t3 = t2 * t;
 
@@ -126,7 +126,7 @@ Vector3 Vector3::cubic_interpolate(
 }
 
 Vector3 Vector3::move_toward(const Vector3& p_to, const real_t p_delta) const {
-    Vector3 v = *this;
+    Vector3 v  = *this;
     Vector3 vd = p_to - v;
     real_t len = vd.length();
     return len <= p_delta || len < CMP_EPSILON ? p_to : v + vd / len * p_delta;

@@ -49,9 +49,9 @@ Error jpeg_load_image_from_buffer(
         return ERR_CANT_OPEN;
     }
 
-    const int image_width = decoder.get_width();
+    const int image_width  = decoder.get_width();
     const int image_height = decoder.get_height();
-    const int comps = decoder.get_num_components();
+    const int comps        = decoder.get_num_components();
     if (comps != 1 && comps != 3) {
         return ERR_FILE_CORRUPT;
     }
@@ -87,10 +87,10 @@ Error jpeg_load_image_from_buffer(
             // to a buffer containing 32-bit RGBA pixels. Alpha is always 255
             // and we ignore it.
             for (int x = 0; x < image_width; x++) {
-                pDst[0] = pScan_line[x * 4 + 0];
-                pDst[1] = pScan_line[x * 4 + 1];
-                pDst[2] = pScan_line[x * 4 + 2];
-                pDst += 3;
+                pDst[0]  = pScan_line[x * 4 + 0];
+                pDst[1]  = pScan_line[x * 4 + 1];
+                pDst[2]  = pScan_line[x * 4 + 2];
+                pDst    += 3;
             }
         }
     }

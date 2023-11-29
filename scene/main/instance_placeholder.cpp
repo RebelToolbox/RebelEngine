@@ -38,7 +38,7 @@ bool InstancePlaceholder::_set(
     const Variant& p_value
 ) {
     PropSet ps;
-    ps.name = p_name;
+    ps.name  = p_name;
     ps.value = p_value;
     stored_values.push_back(ps);
     return true;
@@ -46,7 +46,7 @@ bool InstancePlaceholder::_set(
 
 bool InstancePlaceholder::_get(const StringName& p_name, Variant& r_ret) const {
     for (const List<PropSet>::Element* E = stored_values.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         if (E->get().name == p_name) {
             r_ret = E->get().value;
             return true;
@@ -57,10 +57,10 @@ bool InstancePlaceholder::_get(const StringName& p_name, Variant& r_ret) const {
 
 void InstancePlaceholder::_get_property_list(List<PropertyInfo>* p_list) const {
     for (const List<PropSet>::Element* E = stored_values.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         PropertyInfo pi;
-        pi.name = E->get().name;
-        pi.type = E->get().value.get_type();
+        pi.name  = E->get().name;
+        pi.type  = E->get().value.get_type();
         pi.usage = PROPERTY_USAGE_STORAGE;
 
         p_list->push_back(pi);

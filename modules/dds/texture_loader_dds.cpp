@@ -39,14 +39,14 @@
 // https://docs.microsoft.com/en-us/windows/win32/direct3ddds/dds-header
 
 enum {
-    DDS_MAGIC = 0x20534444,
-    DDSD_PITCH = 0x00000008,
-    DDSD_LINEARSIZE = 0x00080000,
+    DDS_MAGIC        = 0x20534444,
+    DDSD_PITCH       = 0x00000008,
+    DDSD_LINEARSIZE  = 0x00080000,
     DDSD_MIPMAPCOUNT = 0x00020000,
-    DDPF_FOURCC = 0x00000004,
+    DDPF_FOURCC      = 0x00000004,
     DDPF_ALPHAPIXELS = 0x00000001,
-    DDPF_INDEXED = 0x00000020,
-    DDPF_RGB = 0x00000040,
+    DDPF_INDEXED     = 0x00000020,
+    DDPF_RGB         = 0x00000040,
 };
 
 enum DDSFormat {
@@ -122,12 +122,12 @@ RES ResourceFormatDDS::load(
         "Unable to open DDS texture file '" + p_path + "'."
     );
 
-    uint32_t magic = f->get_32();
-    uint32_t hsize = f->get_32();
-    uint32_t flags = f->get_32();
+    uint32_t magic  = f->get_32();
+    uint32_t hsize  = f->get_32();
+    uint32_t flags  = f->get_32();
     uint32_t height = f->get_32();
-    uint32_t width = f->get_32();
-    uint32_t pitch = f->get_32();
+    uint32_t width  = f->get_32();
+    uint32_t pitch  = f->get_32();
     /* uint32_t depth = */ f->get_32();
     uint32_t mipmaps = f->get_32();
 
@@ -149,12 +149,12 @@ RES ResourceFormatDDS::load(
     }
 
     /* uint32_t format_size = */ f->get_32();
-    uint32_t format_flags = f->get_32();
-    uint32_t format_fourcc = f->get_32();
-    uint32_t format_rgb_bits = f->get_32();
-    uint32_t format_red_mask = f->get_32();
+    uint32_t format_flags      = f->get_32();
+    uint32_t format_fourcc     = f->get_32();
+    uint32_t format_rgb_bits   = f->get_32();
+    uint32_t format_red_mask   = f->get_32();
     uint32_t format_green_mask = f->get_32();
-    uint32_t format_blue_mask = f->get_32();
+    uint32_t format_blue_mask  = f->get_32();
     uint32_t format_alpha_mask = f->get_32();
 
     /* uint32_t caps_1 = */ f->get_32();
@@ -243,8 +243,8 @@ RES ResourceFormatDDS::load(
     PoolVector<uint8_t> src_data;
 
     const DDSFormatInfo& info = dds_format_info[dds_format];
-    uint32_t w = width;
-    uint32_t h = height;
+    uint32_t w                = width;
+    uint32_t h                = height;
 
     if (info.compressed) {
         // compressed bc
@@ -255,8 +255,8 @@ RES ResourceFormatDDS::load(
         ERR_FAIL_COND_V(!(flags & DDSD_LINEARSIZE), RES());
 
         for (uint32_t i = 1; i < mipmaps; i++) {
-            w = MAX(1, w >> 1);
-            h = MAX(1, h >> 1);
+            w              = MAX(1, w >> 1);
+            h              = MAX(1, h >> 1);
             uint32_t bsize = MAX(info.divisor, w) / info.divisor
                            * MAX(info.divisor, h) / info.divisor
                            * info.block_size;
@@ -290,8 +290,8 @@ RES ResourceFormatDDS::load(
         int h2 = height;
 
         for (uint32_t i = 1; i < mipmaps; i++) {
-            w2 = (w2 + 1) >> 1;
-            h2 = (h2 + 1) >> 1;
+            w2    = (w2 + 1) >> 1;
+            h2    = (h2 + 1) >> 1;
             size += w2 * h2 * info.block_size;
         }
 
@@ -300,8 +300,8 @@ RES ResourceFormatDDS::load(
         f->get_buffer(wb.ptr(), size);
 
         for (int i = 0; i < 256; i++) {
-            int dst_ofs = size + i * colsize;
-            int src_ofs = i * 4;
+            int dst_ofs     = size + i * colsize;
+            int src_ofs     = i * 4;
             wb[dst_ofs + 0] = palette[src_ofs + 2];
             wb[dst_ofs + 1] = palette[src_ofs + 1];
             wb[dst_ofs + 2] = palette[src_ofs + 0];
@@ -315,8 +315,8 @@ RES ResourceFormatDDS::load(
         uint32_t size = width * height * info.block_size;
 
         for (uint32_t i = 1; i < mipmaps; i++) {
-            w = (w + 1) >> 1;
-            h = (h + 1) >> 1;
+            w     = (w + 1) >> 1;
+            h     = (h + 1) >> 1;
             size += w * h * info.block_size;
         }
 
@@ -343,7 +343,7 @@ RES ResourceFormatDDS::load(
                     uint8_t b = wb[src_ofs] & 0x1F;
                     uint8_t g =
                         (wb[src_ofs] >> 5) | ((wb[src_ofs + 1] & 0x3) << 3);
-                    uint8_t r = (wb[src_ofs + 1] >> 2) & 0x1F;
+                    uint8_t r       = (wb[src_ofs + 1] >> 2) & 0x1F;
                     wb[dst_ofs + 0] = r << 3;
                     wb[dst_ofs + 1] = g << 3;
                     wb[dst_ofs + 2] = b << 3;
@@ -360,7 +360,7 @@ RES ResourceFormatDDS::load(
                     uint8_t b = wb[src_ofs] & 0x1F;
                     uint8_t g =
                         (wb[src_ofs] >> 5) | ((wb[src_ofs + 1] & 0x7) << 3);
-                    uint8_t r = wb[src_ofs + 1] >> 3;
+                    uint8_t r       = wb[src_ofs + 1] >> 3;
                     wb[dst_ofs + 0] = r << 3;
                     wb[dst_ofs + 1] = g << 2;
                     wb[dst_ofs + 2] = b << 3; // b<<3;

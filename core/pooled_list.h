@@ -81,7 +81,7 @@ public:
         if (freelist.size()) {
             // pop from freelist
             int new_size = freelist.size() - 1;
-            r_id = freelist[new_size];
+            r_id         = freelist[new_size];
             freelist.resize(new_size);
             return &list[r_id];
         }

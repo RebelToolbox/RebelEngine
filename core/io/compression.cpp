@@ -61,10 +61,10 @@ int Compression::compress(
 
             z_stream strm;
             strm.zalloc = zipio_alloc;
-            strm.zfree = zipio_free;
+            strm.zfree  = zipio_free;
             strm.opaque = Z_NULL;
-            int level = p_mode == MODE_DEFLATE ? zlib_level : gzip_level;
-            int err = deflateInit2(
+            int level   = p_mode == MODE_DEFLATE ? zlib_level : gzip_level;
+            int err     = deflateInit2(
                 &strm,
                 level,
                 Z_DEFLATED,
@@ -76,11 +76,11 @@ int Compression::compress(
                 return -1;
             }
 
-            strm.avail_in = p_src_size;
-            int aout = deflateBound(&strm, p_src_size);
+            strm.avail_in  = p_src_size;
+            int aout       = deflateBound(&strm, p_src_size);
             strm.avail_out = aout;
-            strm.next_in = (Bytef*)p_src;
-            strm.next_out = p_dst;
+            strm.next_in   = (Bytef*)p_src;
+            strm.next_out  = p_dst;
             deflate(&strm, Z_FINISH);
             aout = aout - strm.avail_out;
             deflateEnd(&strm);
@@ -136,9 +136,9 @@ int Compression::get_max_compressed_buffer_size(int p_src_size, Mode p_mode) {
 
             z_stream strm;
             strm.zalloc = zipio_alloc;
-            strm.zfree = zipio_free;
+            strm.zfree  = zipio_free;
             strm.opaque = Z_NULL;
-            int err = deflateInit2(
+            int err     = deflateInit2(
                 &strm,
                 Z_DEFAULT_COMPRESSION,
                 Z_DEFLATED,
@@ -188,20 +188,20 @@ int Compression::decompress(
             int window_bits = p_mode == MODE_DEFLATE ? 15 : 15 + 16;
 
             z_stream strm;
-            strm.zalloc = zipio_alloc;
-            strm.zfree = zipio_free;
-            strm.opaque = Z_NULL;
+            strm.zalloc   = zipio_alloc;
+            strm.zfree    = zipio_free;
+            strm.opaque   = Z_NULL;
             strm.avail_in = 0;
-            strm.next_in = Z_NULL;
-            int err = inflateInit2(&strm, window_bits);
+            strm.next_in  = Z_NULL;
+            int err       = inflateInit2(&strm, window_bits);
             ERR_FAIL_COND_V(err != Z_OK, -1);
 
-            strm.avail_in = p_src_size;
+            strm.avail_in  = p_src_size;
             strm.avail_out = p_dst_max_size;
-            strm.next_in = (Bytef*)p_src;
-            strm.next_out = p_dst;
+            strm.next_in   = (Bytef*)p_src;
+            strm.next_out  = p_dst;
 
-            err = inflate(&strm, Z_FINISH);
+            err       = inflate(&strm, Z_FINISH);
             int total = strm.total_out;
             inflateEnd(&strm);
             ERR_FAIL_COND_V(err != Z_STREAM_END, -1);
@@ -258,17 +258,17 @@ int Compression::decompress_dynamic(
     ERR_FAIL_COND_V(p_mode != MODE_DEFLATE && p_mode != MODE_GZIP, Z_ERRNO);
 
     // Initialize the stream
-    strm.zalloc = Z_NULL;
-    strm.zfree = Z_NULL;
-    strm.opaque = Z_NULL;
+    strm.zalloc   = Z_NULL;
+    strm.zfree    = Z_NULL;
+    strm.opaque   = Z_NULL;
     strm.avail_in = 0;
-    strm.next_in = Z_NULL;
+    strm.next_in  = Z_NULL;
 
     int err = inflateInit2(&strm, window_bits);
     ERR_FAIL_COND_V(err != Z_OK, -1);
 
     // Setup the stream inputs
-    strm.next_in = (Bytef*)p_src;
+    strm.next_in  = (Bytef*)p_src;
     strm.avail_in = p_src_size;
 
     // Ensure the destination buffer is empty
@@ -284,7 +284,7 @@ int Compression::decompress_dynamic(
 
         // Set the stream to the new output stream
         // Since it was copied, we need to reset the stream to the new buffer
-        strm.next_out = &(dst[out_mark]);
+        strm.next_out  = &(dst[out_mark]);
         strm.avail_out = gzip_chunk;
 
         // run inflate() on input until output buffer is full and needs to be
@@ -330,9 +330,9 @@ int Compression::decompress_dynamic(
     return ret == Z_STREAM_END ? Z_OK : Z_DATA_ERROR;
 }
 
-int Compression::zlib_level = Z_DEFAULT_COMPRESSION;
-int Compression::gzip_level = Z_DEFAULT_COMPRESSION;
-int Compression::zstd_level = 3;
+int Compression::zlib_level                   = Z_DEFAULT_COMPRESSION;
+int Compression::gzip_level                   = Z_DEFAULT_COMPRESSION;
+int Compression::zstd_level                   = 3;
 bool Compression::zstd_long_distance_matching = false;
 int Compression::zstd_window_log_size = 27; // ZSTD_WINDOWLOG_LIMIT_DEFAULT
-int Compression::gzip_chunk = 16384;
+int Compression::gzip_chunk           = 16384;

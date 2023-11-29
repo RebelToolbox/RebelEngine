@@ -81,7 +81,7 @@ void AudioFilterSW::prepare_coefficients(Coeffs* p_coeffs) {
     }
 
     if (stages > 1) {
-        Q = (Q > 1.0 ? Math::pow(Q, 1.0 / stages) : Q);
+        Q       = (Q > 1.0 ? Math::pow(Q, 1.0 / stages) : Q);
         tmpgain = Math::pow(tmpgain, 1.0 / (stages + 1));
     }
     double alpha = sin_v / (2 * Q);
@@ -129,7 +129,7 @@ void AudioFilterSW::prepare_coefficients(Coeffs* p_coeffs) {
         } break;
         case BANDLIMIT: {
             // this one is extra tricky
-            double hicutoff = resonance;
+            double hicutoff     = resonance;
             double centercutoff = (cutoff + resonance) / 2.0;
             double bandwidth = (Math::log(centercutoff) - Math::log(hicutoff))
                              / Math::log((double)2);
@@ -216,8 +216,8 @@ float AudioFilterSW::get_response(float p_freq, Coeffs* p_coeffs) {
     cy -= sin(2 * freq) * p_coeffs->b2;
 
     float H = cx * cx + cy * cy;
-    cx = 1.0;
-    cy = 0.0;
+    cx      = 1.0;
+    cy      = 0.0;
 
     cx -= cos(freq) * p_coeffs->a1;
     cy += sin(freq) * p_coeffs->a1;
@@ -230,11 +230,11 @@ float AudioFilterSW::get_response(float p_freq, Coeffs* p_coeffs) {
 
 AudioFilterSW::AudioFilterSW() {
     sampling_rate = 44100;
-    resonance = 0.5;
-    cutoff = 5000;
-    gain = 1.0;
-    mode = LOWPASS;
-    stages = 1;
+    resonance     = 0.5;
+    cutoff        = 5000;
+    gain          = 1.0;
+    mode          = LOWPASS;
+    stages        = 1;
 }
 
 AudioFilterSW::Processor::Processor() {
@@ -264,7 +264,7 @@ void AudioFilterSW::Processor::update_coeffs(int p_interp_buffer_len) {
         incr_coeffs.b0 = (coeffs.b0 - old_coeffs.b0) / p_interp_buffer_len;
         incr_coeffs.b1 = (coeffs.b1 - old_coeffs.b1) / p_interp_buffer_len;
         incr_coeffs.b2 = (coeffs.b2 - old_coeffs.b2) / p_interp_buffer_len;
-        coeffs = old_coeffs;
+        coeffs         = old_coeffs;
     } else {
         filter->prepare_coefficients(&coeffs);
     }

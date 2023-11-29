@@ -83,7 +83,7 @@ public:
         String p_path,
         uint16_t p_port,
         bool p_ssl,
-        const Vector<String> p_protocol = Vector<String>(),
+        const Vector<String> p_protocol       = Vector<String>(),
         const Vector<String> p_custom_headers = Vector<String>()
     );
     int get_max_packet_size() const;

@@ -75,11 +75,11 @@ Size2 ScrollContainer::get_minimum_size() const {
 void ScrollContainer::_cancel_drag() {
     set_physics_process_internal(false);
     drag_touching_deaccel = false;
-    drag_touching = false;
-    drag_speed = Vector2();
-    drag_accum = Vector2();
-    last_drag_accum = Vector2();
-    drag_from = Vector2();
+    drag_touching         = false;
+    drag_speed            = Vector2();
+    drag_accum            = Vector2();
+    last_drag_accum       = Vector2();
+    drag_from             = Vector2();
 
     if (beyond_deadzone) {
         emit_signal("scroll_ended");
@@ -163,14 +163,14 @@ void ScrollContainer::_gui_input(const Ref<InputEvent>& p_gui_input) {
                 _cancel_drag();
             }
 
-            drag_speed = Vector2();
-            drag_accum = Vector2();
+            drag_speed      = Vector2();
+            drag_accum      = Vector2();
             last_drag_accum = Vector2();
             drag_from = Vector2(h_scroll->get_value(), v_scroll->get_value());
             drag_touching = OS::get_singleton()->has_touchscreen_ui_hint();
             drag_touching_deaccel = false;
-            beyond_deadzone = false;
-            time_since_motion = 0;
+            beyond_deadzone       = false;
+            time_since_motion     = 0;
             if (drag_touching) {
                 set_physics_process_internal(true);
                 time_since_motion = 0;
@@ -205,7 +205,7 @@ void ScrollContainer::_gui_input(const Ref<InputEvent>& p_gui_input) {
                     beyond_deadzone = true;
                     // resetting drag_accum here ensures smooth scrolling after
                     // reaching deadzone
-                    drag_accum = -motion;
+                    drag_accum      = -motion;
                 }
                 Vector2 diff = drag_from + drag_accum;
                 if (scroll_h) {
@@ -275,8 +275,8 @@ void ScrollContainer::ensure_control_visible(Control* p_control) {
         "Must be a parent of the control."
     );
 
-    Rect2 global_rect = get_global_rect();
-    Rect2 other_rect = p_control->get_global_rect();
+    Rect2 global_rect  = get_global_rect();
+    Rect2 other_rect   = p_control->get_global_rect();
     float right_margin = v_scroll->is_visible() ? v_scroll->get_size().x : 0.0f;
     float bottom_margin =
         h_scroll->is_visible() ? h_scroll->get_size().y : 0.0f;
@@ -307,12 +307,12 @@ void ScrollContainer::_notification(int p_what) {
 
     if (p_what == NOTIFICATION_SORT_CHILDREN) {
         child_max_size = Size2(0, 0);
-        Size2 size = get_size();
+        Size2 size     = get_size();
         Point2 ofs;
 
-        Ref<StyleBox> sb = get_stylebox("bg");
-        size -= sb->get_minimum_size();
-        ofs += sb->get_offset();
+        Ref<StyleBox> sb  = get_stylebox("bg");
+        size             -= sb->get_minimum_size();
+        ofs              += sb->get_offset();
 
         if (h_scroll->is_visible_in_tree()
             && h_scroll->get_parent()
@@ -337,7 +337,7 @@ void ScrollContainer::_notification(int p_what) {
             if (c == h_scroll || c == v_scroll) {
                 continue;
             }
-            Size2 minsize = c->get_combined_minimum_size();
+            Size2 minsize    = c->get_combined_minimum_size();
             child_max_size.x = MAX(child_max_size.x, minsize.x);
             child_max_size.y = MAX(child_max_size.y, minsize.y);
 
@@ -387,20 +387,20 @@ void ScrollContainer::_notification(int p_what) {
                 bool turnoff_v = false;
 
                 if (pos.x < 0) {
-                    pos.x = 0;
+                    pos.x     = 0;
                     turnoff_h = true;
                 }
                 if (pos.x > (h_scroll->get_max() - h_scroll->get_page())) {
-                    pos.x = h_scroll->get_max() - h_scroll->get_page();
+                    pos.x     = h_scroll->get_max() - h_scroll->get_page();
                     turnoff_h = true;
                 }
 
                 if (pos.y < 0) {
-                    pos.y = 0;
+                    pos.y     = 0;
                     turnoff_v = true;
                 }
                 if (pos.y > (v_scroll->get_max() - v_scroll->get_page())) {
-                    pos.y = v_scroll->get_max() - v_scroll->get_page();
+                    pos.y     = v_scroll->get_max() - v_scroll->get_page();
                     turnoff_v = true;
                 }
 
@@ -411,17 +411,17 @@ void ScrollContainer::_notification(int p_what) {
                     v_scroll->set_value(pos.y);
                 }
 
-                float sgn_x = drag_speed.x < 0 ? -1 : 1;
-                float val_x = Math::abs(drag_speed.x);
-                val_x -= 1000 * get_physics_process_delta_time();
+                float sgn_x  = drag_speed.x < 0 ? -1 : 1;
+                float val_x  = Math::abs(drag_speed.x);
+                val_x       -= 1000 * get_physics_process_delta_time();
 
                 if (val_x < 0) {
                     turnoff_h = true;
                 }
 
-                float sgn_y = drag_speed.y < 0 ? -1 : 1;
-                float val_y = Math::abs(drag_speed.y);
-                val_y -= 1000 * get_physics_process_delta_time();
+                float sgn_y  = drag_speed.y < 0 ? -1 : 1;
+                float val_y  = Math::abs(drag_speed.y);
+                val_y       -= 1000 * get_physics_process_delta_time();
 
                 if (val_y < 0) {
                     turnoff_v = true;
@@ -435,9 +435,9 @@ void ScrollContainer::_notification(int p_what) {
 
             } else {
                 if (time_since_motion == 0 || time_since_motion > 0.1) {
-                    Vector2 diff = drag_accum - last_drag_accum;
+                    Vector2 diff    = drag_accum - last_drag_accum;
                     last_drag_accum = drag_accum;
-                    drag_speed = diff / get_physics_process_delta_time();
+                    drag_speed      = diff / get_physics_process_delta_time();
                 }
 
                 time_since_motion += get_physics_process_delta_time();
@@ -447,9 +447,9 @@ void ScrollContainer::_notification(int p_what) {
 };
 
 void ScrollContainer::update_scrollbars() {
-    Size2 size = get_size();
-    Ref<StyleBox> sb = get_stylebox("bg");
-    size -= sb->get_minimum_size();
+    Size2 size        = get_size();
+    Ref<StyleBox> sb  = get_stylebox("bg");
+    size             -= sb->get_minimum_size();
 
     Size2 hmin;
     Size2 vmin;
@@ -747,14 +747,14 @@ ScrollContainer::ScrollContainer() {
     add_child(v_scroll);
     v_scroll->connect("value_changed", this, "_scroll_moved");
 
-    drag_speed = Vector2();
-    drag_touching = false;
+    drag_speed            = Vector2();
+    drag_touching         = false;
     drag_touching_deaccel = false;
-    beyond_deadzone = false;
-    scroll_h = true;
-    scroll_v = true;
+    beyond_deadzone       = false;
+    scroll_h              = true;
+    scroll_v              = true;
 
-    deadzone = GLOBAL_GET("gui/common/default_scroll_deadzone");
+    deadzone     = GLOBAL_GET("gui/common/default_scroll_deadzone");
     follow_focus = false;
 
     set_clip_contents(true);

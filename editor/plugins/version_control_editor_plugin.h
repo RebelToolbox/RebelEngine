@@ -43,10 +43,10 @@ class VersionControlEditorPlugin : public EditorPlugin {
 
 public:
     enum ChangeType {
-        CHANGE_TYPE_NEW = 0,
-        CHANGE_TYPE_MODIFIED = 1,
-        CHANGE_TYPE_RENAMED = 2,
-        CHANGE_TYPE_DELETED = 3,
+        CHANGE_TYPE_NEW        = 0,
+        CHANGE_TYPE_MODIFIED   = 1,
+        CHANGE_TYPE_RENAMED    = 2,
+        CHANGE_TYPE_DELETED    = 3,
         CHANGE_TYPE_TYPECHANGE = 4
     };
 

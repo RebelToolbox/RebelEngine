@@ -68,16 +68,16 @@ bool CollisionSolverSW::solve_static_plane(
     if (support_type == ShapeSW::FEATURE_CIRCLE) {
         ERR_FAIL_COND_V(support_count != 3, false);
 
-        Vector3 circle_pos = supports[0];
+        Vector3 circle_pos    = supports[0];
         Vector3 circle_axis_1 = supports[1] - circle_pos;
         Vector3 circle_axis_2 = supports[2] - circle_pos;
 
         // Use 3 equidistant points on the circle.
         for (int i = 0; i < 3; ++i) {
             Vector3 vertex_pos = circle_pos;
-            vertex_pos += circle_axis_1 * Math::cos(2.0 * Math_PI * i / 3.0);
-            vertex_pos += circle_axis_2 * Math::sin(2.0 * Math_PI * i / 3.0);
-            supports[i] = vertex_pos;
+            vertex_pos  += circle_axis_1 * Math::cos(2.0 * Math_PI * i / 3.0);
+            vertex_pos  += circle_axis_2 * Math::sin(2.0 * Math_PI * i / 3.0);
+            supports[i]  = vertex_pos;
         }
     }
 
@@ -124,7 +124,7 @@ bool CollisionSolverSW::solve_ray(
     Transform ai = p_transform_B.affine_inverse();
 
     from = ai.xform(from);
-    to = ai.xform(to);
+    to   = ai.xform(to);
 
     Vector3 p, n;
     if (!p_shape_B->intersect_segment(from, to, p, n)) {
@@ -205,29 +205,29 @@ bool CollisionSolverSW::solve_concave(
         static_cast<const ConcaveShapeSW*>(p_shape_B);
 
     _ConcaveCollisionInfo cinfo;
-    cinfo.transform_A = &p_transform_A;
-    cinfo.shape_A = p_shape_A;
-    cinfo.transform_B = &p_transform_B;
+    cinfo.transform_A     = &p_transform_A;
+    cinfo.shape_A         = p_shape_A;
+    cinfo.transform_B     = &p_transform_B;
     cinfo.result_callback = p_result_callback;
-    cinfo.userdata = p_userdata;
-    cinfo.swap_result = p_swap_result;
-    cinfo.collided = false;
-    cinfo.collisions = 0;
-    cinfo.margin_A = p_margin_A;
-    cinfo.margin_B = p_margin_B;
+    cinfo.userdata        = p_userdata;
+    cinfo.swap_result     = p_swap_result;
+    cinfo.collided        = false;
+    cinfo.collisions      = 0;
+    cinfo.margin_A        = p_margin_A;
+    cinfo.margin_B        = p_margin_B;
 
     cinfo.aabb_tests = 0;
 
-    Transform rel_transform = p_transform_A;
-    rel_transform.origin -= p_transform_B.origin;
+    Transform rel_transform  = p_transform_A;
+    rel_transform.origin    -= p_transform_B.origin;
 
     // quickly compute a local AABB
 
     AABB local_aabb;
     for (int i = 0; i < 3; i++) {
         Vector3 axis(p_transform_B.basis.get_axis(i));
-        real_t axis_scale = 1.0 / axis.length();
-        axis *= axis_scale;
+        real_t axis_scale  = 1.0 / axis.length();
+        axis              *= axis_scale;
 
         real_t smin, smax;
         p_shape_A->project_range(axis, rel_transform, smin, smax);
@@ -237,7 +237,7 @@ bool CollisionSolverSW::solve_concave(
         smax *= axis_scale;
 
         local_aabb.position[i] = smin;
-        local_aabb.size[i] = smax - smin;
+        local_aabb.size[i]     = smax - smin;
     }
 
     concave_B->cull(local_aabb, concave_callback, &cinfo);
@@ -258,8 +258,8 @@ bool CollisionSolverSW::solve_static(
 ) {
     PhysicsServer::ShapeType type_A = p_shape_A->get_type();
     PhysicsServer::ShapeType type_B = p_shape_B->get_type();
-    bool concave_A = p_shape_A->is_concave();
-    bool concave_B = p_shape_B->is_concave();
+    bool concave_A                  = p_shape_A->is_concave();
+    bool concave_B                  = p_shape_B->is_concave();
 
     bool swap = false;
 
@@ -402,7 +402,7 @@ bool CollisionSolverSW::concave_distance_callback(
                < cinfo.close_A.distance_squared_to(cinfo.close_B)) {
         cinfo.close_A = close_A;
         cinfo.close_B = close_B;
-        cinfo.tested = true;
+        cinfo.tested  = true;
     }
 
     cinfo.collisions++;
@@ -440,16 +440,16 @@ bool CollisionSolverSW::solve_distance_plane(
     if (support_type == ShapeSW::FEATURE_CIRCLE) {
         ERR_FAIL_COND_V(support_count != 3, false);
 
-        Vector3 circle_pos = supports[0];
+        Vector3 circle_pos    = supports[0];
         Vector3 circle_axis_1 = supports[1] - circle_pos;
         Vector3 circle_axis_2 = supports[2] - circle_pos;
 
         // Use 3 equidistant points on the circle.
         for (int i = 0; i < 3; ++i) {
             Vector3 vertex_pos = circle_pos;
-            vertex_pos += circle_axis_1 * Math::cos(2.0 * Math_PI * i / 3.0);
-            vertex_pos += circle_axis_2 * Math::sin(2.0 * Math_PI * i / 3.0);
-            supports[i] = vertex_pos;
+            vertex_pos  += circle_axis_1 * Math::cos(2.0 * Math_PI * i / 3.0);
+            vertex_pos  += circle_axis_2 * Math::sin(2.0 * Math_PI * i / 3.0);
+            supports[i]  = vertex_pos;
         }
     }
 
@@ -459,9 +459,9 @@ bool CollisionSolverSW::solve_distance_plane(
 
     for (int i = 0; i < support_count; i++) {
         supports[i] = p_transform_B.xform(supports[i]);
-        real_t d = p.distance_to(supports[i]);
+        real_t d    = p.distance_to(supports[i]);
         if (i == 0 || d < closest_d) {
-            closest = supports[i];
+            closest   = supports[i];
             closest_d = d;
             if (d <= 0) {
                 collided = true;
@@ -512,34 +512,34 @@ bool CollisionSolverSW::solve_distance(
             static_cast<const ConcaveShapeSW*>(p_shape_B);
 
         _ConcaveCollisionInfo cinfo;
-        cinfo.transform_A = &p_transform_A;
-        cinfo.shape_A = p_shape_A;
-        cinfo.transform_B = &p_transform_B;
+        cinfo.transform_A     = &p_transform_A;
+        cinfo.shape_A         = p_shape_A;
+        cinfo.transform_B     = &p_transform_B;
         cinfo.result_callback = nullptr;
-        cinfo.userdata = nullptr;
-        cinfo.swap_result = false;
-        cinfo.collided = false;
-        cinfo.collisions = 0;
-        cinfo.aabb_tests = 0;
-        cinfo.tested = false;
+        cinfo.userdata        = nullptr;
+        cinfo.swap_result     = false;
+        cinfo.collided        = false;
+        cinfo.collisions      = 0;
+        cinfo.aabb_tests      = 0;
+        cinfo.tested          = false;
 
-        Transform rel_transform = p_transform_A;
-        rel_transform.origin -= p_transform_B.origin;
+        Transform rel_transform  = p_transform_A;
+        rel_transform.origin    -= p_transform_B.origin;
 
         // quickly compute a local AABB
 
         bool use_cc_hint = p_concave_hint != AABB();
         AABB cc_hint_aabb;
         if (use_cc_hint) {
-            cc_hint_aabb = p_concave_hint;
+            cc_hint_aabb           = p_concave_hint;
             cc_hint_aabb.position -= p_transform_B.origin;
         }
 
         AABB local_aabb;
         for (int i = 0; i < 3; i++) {
             Vector3 axis(p_transform_B.basis.get_axis(i));
-            real_t axis_scale = ((real_t)1.0) / axis.length();
-            axis *= axis_scale;
+            real_t axis_scale  = ((real_t)1.0) / axis.length();
+            axis              *= axis_scale;
 
             real_t smin, smax;
 
@@ -553,7 +553,7 @@ bool CollisionSolverSW::solve_distance(
             smax *= axis_scale;
 
             local_aabb.position[i] = smin;
-            local_aabb.size[i] = smax - smin;
+            local_aabb.size[i]     = smax - smin;
         }
 
         concave_B->cull(local_aabb, concave_distance_callback, &cinfo);

@@ -50,7 +50,7 @@ Variant RichTextEffect::get_bbcode() const {
     if (get_script_instance()) {
         if (!get_script_instance()->get("bbcode", r)) {
             String path = get_script_instance()->get_script()->get_path();
-            r = path.get_file().get_basename();
+            r           = path.get_file().get_basename();
         }
     }
     return r;
@@ -180,11 +180,11 @@ void CharFXTransform::_bind_methods() {
 CharFXTransform::CharFXTransform() {
     relative_index = 0;
     absolute_index = 0;
-    visibility = true;
-    offset = Point2();
-    color = Color();
-    character = 0;
-    elapsed_time = 0.0f;
+    visibility     = true;
+    offset         = Point2();
+    color          = Color();
+    character      = 0;
+    elapsed_time   = 0.0f;
 }
 
 CharFXTransform::~CharFXTransform() {

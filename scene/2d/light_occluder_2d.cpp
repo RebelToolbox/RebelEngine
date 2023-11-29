@@ -39,7 +39,7 @@ Rect2 OccluderPolygon2D::_edit_get_rect() const {
     if (rect_cache_dirty) {
         if (closed) {
             PoolVector<Vector2>::Read r = polygon.read();
-            item_rect = Rect2();
+            item_rect                   = Rect2();
             for (int i = 0; i < polygon.size(); i++) {
                 Vector2 pos = r[i];
                 if (i == 0) {
@@ -73,7 +73,7 @@ bool OccluderPolygon2D::_edit_is_selected_on_click(
     if (closed) {
         return Geometry::is_point_in_polygon(p_point, Variant(polygon));
     } else {
-        const real_t d = LINE_GRAB_WIDTH / 2 + p_tolerance;
+        const real_t d                   = LINE_GRAB_WIDTH / 2 + p_tolerance;
         PoolVector<Vector2>::Read points = polygon.read();
         for (int i = 0; i < polygon.size() - 1; i++) {
             Vector2 p =
@@ -89,7 +89,7 @@ bool OccluderPolygon2D::_edit_is_selected_on_click(
 #endif
 
 void OccluderPolygon2D::set_polygon(const PoolVector<Vector2>& p_polygon) {
-    polygon = p_polygon;
+    polygon          = p_polygon;
     rect_cache_dirty = true;
     VS::get_singleton()
         ->canvas_occluder_polygon_set_shape(occ_polygon, p_polygon, closed);
@@ -184,9 +184,9 @@ void OccluderPolygon2D::_bind_methods() {
 }
 
 OccluderPolygon2D::OccluderPolygon2D() {
-    occ_polygon = VS::get_singleton()->canvas_occluder_polygon_create();
-    closed = true;
-    cull = CULL_DISABLED;
+    occ_polygon      = VS::get_singleton()->canvas_occluder_polygon_create();
+    closed           = true;
+    cull             = CULL_DISABLED;
     rect_cache_dirty = true;
 }
 
@@ -239,7 +239,7 @@ void LightOccluder2D::_notification(int p_what) {
                         color.push_back(Color(0, 0, 0, 0.6));
                         draw_polygon(Variant(poly), color);
                     } else {
-                        int ps = poly.size();
+                        int ps                      = poly.size();
                         PoolVector<Vector2>::Read r = poly.read();
                         for (int i = 0; i < ps - 1; i++) {
                             draw_line(r[i], r[i + 1], Color(0, 0, 0, 0.6), 3);
@@ -385,7 +385,7 @@ void LightOccluder2D::_bind_methods() {
 
 LightOccluder2D::LightOccluder2D() {
     occluder = VS::get_singleton()->canvas_light_occluder_create();
-    mask = 1;
+    mask     = 1;
     set_notify_transform(true);
 }
 

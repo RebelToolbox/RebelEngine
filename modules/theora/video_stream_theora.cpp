@@ -88,7 +88,7 @@ void VideoStreamPlaybackTheora::video_write() {
     frame_data.resize(size.x * size.y * pitch);
     {
         PoolVector<uint8_t>::Write w = frame_data.write();
-        char* dst = (char*)w.ptr();
+        char* dst                    = (char*)w.ptr();
 
         // uv_offset=(ti.pic_x/2)+(yuv[1].stride)*(ti.pic_y/2);
 
@@ -175,18 +175,18 @@ void VideoStreamPlaybackTheora::clear() {
     ring_buffer.clear();
 #endif
 
-    theora_p = 0;
-    vorbis_p = 0;
+    theora_p       = 0;
+    vorbis_p       = 0;
     videobuf_ready = 0;
     frames_pending = 0;
-    videobuf_time = 0;
-    theora_eos = false;
-    vorbis_eos = false;
+    videobuf_time  = 0;
+    theora_eos     = false;
+    vorbis_eos     = false;
 
     if (file) {
         memdelete(file);
     }
-    file = nullptr;
+    file    = nullptr;
     playing = false;
 };
 
@@ -203,10 +203,10 @@ void VideoStreamPlaybackTheora::set_file(const String& p_file) {
     ERR_FAIL_COND_MSG(!file, "Cannot open file '" + p_file + "'.");
 
 #ifdef THEORA_USE_THREAD_STREAMING
-    thread_exit = false;
-    thread_eof = false;
+    thread_exit   = false;
+    thread_eof    = false;
     // pre-fill buffer
-    int to_read = ring_buffer.space_left();
+    int to_read   = ring_buffer.space_left();
     uint64_t read = file->get_buffer(read_buffer.ptr(), to_read);
     ring_buffer.write(read_buffer.ptr(), read);
 
@@ -352,7 +352,7 @@ void VideoStreamPlaybackTheora::set_file(const String& p_file) {
 
     /* And now we have it all. Initialize decoders. */
     if (theora_p) {
-        td = th_decode_alloc(&ti, ts);
+        td     = th_decode_alloc(&ti, ts);
         px_fmt = ti.pixel_fmt;
         switch (ti.pixel_fmt) {
             case TH_PF_420:
@@ -381,8 +381,8 @@ void VideoStreamPlaybackTheora::set_file(const String& p_file) {
 
         int w;
         int h;
-        w = ((ti.pic_x + ti.frame_width + 1) & ~1) - (ti.pic_x & ~1);
-        h = ((ti.pic_y + ti.frame_height + 1) & ~1) - (ti.pic_y & ~1);
+        w      = ((ti.pic_x + ti.frame_width + 1) & ~1) - (ti.pic_x & ~1);
+        h      = ((ti.pic_y + ti.frame_height + 1) & ~1) - (ti.pic_y & ~1);
         size.x = w;
         size.y = h;
 
@@ -411,9 +411,9 @@ void VideoStreamPlaybackTheora::set_file(const String& p_file) {
         vorbis_comment_clear(&vc);
     }
 
-    playing = false;
-    buffering = true;
-    time = 0;
+    playing            = false;
+    buffering          = true;
+    time               = 0;
     audio_frames_wrote = 0;
 };
 
@@ -456,7 +456,7 @@ void VideoStreamPlaybackTheora::update(float p_delta) {
         // a frame needs to be produced
 
         ogg_packet op;
-        bool no_theora = false;
+        bool no_theora   = false;
         bool buffer_full = false;
 
         while (vorbis_p && !audio_done && !buffer_full) {
@@ -467,7 +467,7 @@ void VideoStreamPlaybackTheora::update(float p_delta) {
             ret = vorbis_synthesis_pcmout(&vd, &pcm);
             if (ret > 0) {
                 const int AUXBUF_LEN = 4096;
-                int to_read = ret;
+                int to_read          = ret;
                 float aux_buffer[AUXBUF_LEN];
 
                 while (to_read) {
@@ -482,8 +482,8 @@ void VideoStreamPlaybackTheora::update(float p_delta) {
                     }
 
                     if (mix_callback) {
-                        int mixed = mix_callback(mix_udata, aux_buffer, m);
-                        to_read -= mixed;
+                        int mixed  = mix_callback(mix_udata, aux_buffer, m);
+                        to_read   -= mixed;
                         if (mixed != m) { // could mix no more
                             buffer_full = true;
                             break;
@@ -622,7 +622,7 @@ void VideoStreamPlaybackTheora::play() {
         stop();
     }
 
-    playing = true;
+    playing            = true;
     delay_compensation = ProjectSettings::get_singleton()->get(
         "audio/video_delay_compensation_ms"
     );
@@ -635,7 +635,7 @@ void VideoStreamPlaybackTheora::stop() {
         set_file(file_name); // reset
     }
     playing = false;
-    time = 0;
+    time    = 0;
 };
 
 bool VideoStreamPlaybackTheora::is_playing() const {
@@ -686,7 +686,7 @@ void VideoStreamPlaybackTheora::set_mix_callback(
     void* p_userdata
 ) {
     mix_callback = p_callback;
-    mix_udata = p_userdata;
+    mix_udata    = p_userdata;
 }
 
 int VideoStreamPlaybackTheora::get_channels() const {
@@ -725,20 +725,20 @@ void VideoStreamPlaybackTheora::_streaming_thread(void* ud) {
 #endif
 
 VideoStreamPlaybackTheora::VideoStreamPlaybackTheora() {
-    file = nullptr;
-    theora_p = 0;
-    vorbis_p = 0;
+    file           = nullptr;
+    theora_p       = 0;
+    vorbis_p       = 0;
     videobuf_ready = 0;
-    playing = false;
+    playing        = false;
     frames_pending = 0;
-    videobuf_time = 0;
-    paused = false;
+    videobuf_time  = 0;
+    paused         = false;
 
-    buffering = false;
-    texture = Ref<ImageTexture>(memnew(ImageTexture));
-    mix_callback = nullptr;
-    mix_udata = nullptr;
-    audio_track = 0;
+    buffering          = false;
+    texture            = Ref<ImageTexture>(memnew(ImageTexture));
+    mix_callback       = nullptr;
+    mix_udata          = nullptr;
+    audio_track        = 0;
     delay_compensation = 0;
     audio_frames_wrote = 0;
 
@@ -747,7 +747,7 @@ VideoStreamPlaybackTheora::VideoStreamPlaybackTheora() {
     ring_buffer.resize(rb_power);
     read_buffer.resize(RB_SIZE_KB * 1024);
     thread_exit = false;
-    thread_eof = false;
+    thread_eof  = false;
 
 #endif
 };

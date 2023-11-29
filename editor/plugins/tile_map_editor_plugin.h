@@ -163,7 +163,7 @@ class TileMapEditor : public VBoxContainer {
 
     PoolVector<Vector2> _bucket_fill(
         const Point2i& p_start,
-        bool erase = false,
+        bool erase   = false,
         bool preview = false
     );
 
@@ -233,9 +233,9 @@ class TileMapEditor : public VBoxContainer {
     void _set_cell(
         const Point2i& p_pos,
         Vector<int> p_values,
-        bool p_flip_h = false,
-        bool p_flip_v = false,
-        bool p_transpose = false,
+        bool p_flip_h                   = false,
+        bool p_flip_v                   = false,
+        bool p_transpose                = false,
         const Point2i& p_autotile_coord = Point2()
     );
 

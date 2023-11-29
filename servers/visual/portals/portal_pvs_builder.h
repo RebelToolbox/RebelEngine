@@ -93,8 +93,8 @@ private:
     );
 
     PortalRenderer* _portal_renderer = nullptr;
-    PVS* _pvs = nullptr;
-    int _depth_limit = 16;
+    PVS* _pvs                        = nullptr;
+    int _depth_limit                 = 16;
     Vector3 _trace_start_point;
 
     static bool _log_active;

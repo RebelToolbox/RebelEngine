@@ -77,16 +77,16 @@ public:
 
 protected:
     // member vars
-    uint8_t* _data = nullptr;
+    uint8_t* _data      = nullptr;
     uint32_t _num_bytes = 0;
-    uint32_t _num_bits = 0;
+    uint32_t _num_bits  = 0;
 };
 
 inline uint32_t BitFieldDynamic::get_bit(uint32_t p_bit) const {
     DEV_ASSERT(_data);
     uint32_t byte_number = p_bit >> 3; // divide by 8
     DEV_ASSERT(byte_number < _num_bytes);
-    uint8_t uc = _data[byte_number];
+    uint8_t uc       = _data[byte_number];
     uint32_t bit_set = uc & (1 << (p_bit & 7));
     return bit_set;
 }
@@ -95,8 +95,8 @@ inline bool BitFieldDynamic::check_and_set(uint32_t p_bit) {
     DEV_ASSERT(_data);
     uint32_t byte_number = p_bit >> 3; // divide by 8
     DEV_ASSERT(byte_number < _num_bytes);
-    uint8_t& uc = _data[byte_number];
-    uint32_t mask = (1 << (p_bit & 7));
+    uint8_t& uc      = _data[byte_number];
+    uint32_t mask    = (1 << (p_bit & 7));
     uint32_t bit_set = uc & mask;
     if (bit_set) {
         return false;
@@ -111,7 +111,7 @@ inline void BitFieldDynamic::set_bit(uint32_t p_bit, uint32_t p_set) {
     DEV_ASSERT(_data);
     uint32_t byte_number = p_bit >> 3; // divide by 8
     DEV_ASSERT(byte_number < _num_bytes);
-    uint8_t uc = _data[byte_number];
+    uint8_t uc    = _data[byte_number];
     uint32_t mask = 1 << (p_bit & 7);
     if (p_set) {
         uc = uc | mask;

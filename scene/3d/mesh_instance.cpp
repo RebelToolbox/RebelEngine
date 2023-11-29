@@ -159,7 +159,7 @@ void MeshInstance::set_mesh(const Ref<Mesh>& p_mesh) {
     if (mesh.is_valid()) {
         for (int i = 0; i < mesh->get_blend_shape_count(); i++) {
             BlendShapeTrack mt;
-            mt.idx = i;
+            mt.idx   = i;
             mt.value = 0;
             blend_shape_tracks
                 ["blend_shapes/" + String(mesh->get_blend_shape_name(i))] = mt;
@@ -295,7 +295,7 @@ void MeshInstance::_initialize_skinning(
 
                     SoftwareSkinning::SurfaceData& surface_data =
                         software_skinning->surface_data[surface_index];
-                    surface_data.transform_tangents = false;
+                    surface_data.transform_tangents     = false;
                     surface_data.ensure_correct_normals = false;
 
                     uint32_t format = mesh->surface_get_format(surface_index);
@@ -320,7 +320,7 @@ void MeshInstance::_initialize_skinning(
                     read_arrays[Mesh::ARRAY_WEIGHTS] =
                         write_arrays[Mesh::ARRAY_WEIGHTS];
 
-                    write_arrays[Mesh::ARRAY_BONES] = Variant();
+                    write_arrays[Mesh::ARRAY_BONES]   = Variant();
                     write_arrays[Mesh::ARRAY_WEIGHTS] = Variant();
 
                     if (software_skinning_flags
@@ -415,7 +415,7 @@ void MeshInstance::_initialize_skinning(
                 }
 
                 software_skinning->mesh_instance = software_mesh;
-                update_mesh = true;
+                update_mesh                      = true;
             }
 
             if (p_call_attach_skeleton) {
@@ -449,7 +449,7 @@ void MeshInstance::_initialize_skinning(
             if (software_skinning) {
                 memdelete(software_skinning);
                 software_skinning = nullptr;
-                update_mesh = true;
+                update_mesh       = true;
             }
         }
     } else {
@@ -459,7 +459,7 @@ void MeshInstance::_initialize_skinning(
         if (software_skinning) {
             memdelete(software_skinning);
             software_skinning = nullptr;
-            update_mesh = true;
+            update_mesh       = true;
         }
     }
 
@@ -530,7 +530,7 @@ void MeshInstance::_update_skinning() {
         );
         const SoftwareSkinning::SurfaceData& surface_data =
             software_skinning->surface_data[surface_index];
-        const bool transform_tangents = surface_data.transform_tangents;
+        const bool transform_tangents     = surface_data.transform_tangents;
         const bool ensure_correct_normals = surface_data.ensure_correct_normals;
 
         const uint32_t format_write =
@@ -562,7 +562,7 @@ void MeshInstance::_update_skinning() {
         const uint32_t offset_tangents_write =
             array_offsets_write[Mesh::ARRAY_TANGENT];
 
-        PoolByteArray buffer_source = surface_data.source_buffer;
+        PoolByteArray buffer_source     = surface_data.source_buffer;
         PoolByteArray::Read buffer_read = buffer_source.read();
 
         const uint32_t format_read = surface_data.source_format;
@@ -589,19 +589,19 @@ void MeshInstance::_update_skinning() {
             array_strides[Mesh::ARRAY_VERTEX]
             != array_strides[Mesh::ARRAY_NORMAL]
         );
-        const uint32_t stride = array_strides[Mesh::ARRAY_VERTEX];
+        const uint32_t stride          = array_strides[Mesh::ARRAY_VERTEX];
         const uint32_t offset_vertices = array_offsets[Mesh::ARRAY_VERTEX];
-        const uint32_t offset_normals = array_offsets[Mesh::ARRAY_NORMAL];
+        const uint32_t offset_normals  = array_offsets[Mesh::ARRAY_NORMAL];
         const uint32_t offset_tangents = array_offsets[Mesh::ARRAY_TANGENT];
-        const uint32_t offset_bones = array_offsets[Mesh::ARRAY_BONES];
-        const uint32_t offset_weights = array_offsets[Mesh::ARRAY_WEIGHTS];
+        const uint32_t offset_bones    = array_offsets[Mesh::ARRAY_BONES];
+        const uint32_t offset_weights  = array_offsets[Mesh::ARRAY_WEIGHTS];
 
-        PoolByteArray buffer = surface_data.buffer;
+        PoolByteArray buffer              = surface_data.buffer;
         PoolByteArray::Write buffer_write = surface_data.buffer_write;
 
         for (int vertex_index = 0; vertex_index < vertex_count;
              ++vertex_index) {
-            const uint32_t vertex_offset = vertex_index * stride;
+            const uint32_t vertex_offset       = vertex_index * stride;
             const uint32_t vertex_offset_write = vertex_index * stride_write;
 
             float bone_weights[4];
@@ -681,7 +681,7 @@ void MeshInstance::_update_skinning() {
 
 void MeshInstance::set_skin(const Ref<Skin>& p_skin) {
     skin_internal = p_skin;
-    skin = p_skin;
+    skin          = p_skin;
     if (!is_inside_tree()) {
         return;
     }
@@ -735,7 +735,7 @@ Node* MeshInstance::create_trimesh_collision_node() {
     }
 
     StaticBody* static_body = memnew(StaticBody);
-    CollisionShape* cshape = memnew(CollisionShape);
+    CollisionShape* cshape  = memnew(CollisionShape);
     cshape->set_shape(shape);
     static_body->add_child(cshape);
     return static_body;
@@ -807,7 +807,7 @@ Node* MeshInstance::create_convex_collision_node(
     }
 
     StaticBody* static_body = memnew(StaticBody);
-    CollisionShape* cshape = memnew(CollisionShape);
+    CollisionShape* cshape  = memnew(CollisionShape);
     cshape->set_shape(shape);
     static_body->add_child(cshape);
     return static_body;
@@ -954,7 +954,7 @@ void MeshInstance::create_debug_tangents() {
     }
 
     for (int i = 0; i < mesh->get_surface_count(); i++) {
-        Array arrays = mesh->surface_get_arrays(i);
+        Array arrays          = mesh->surface_get_arrays(i);
         Vector<Vector3> verts = arrays[Mesh::ARRAY_VERTEX];
         Vector<Vector3> norms = arrays[Mesh::ARRAY_NORMAL];
         if (norms.size() == 0) {
@@ -1005,7 +1005,7 @@ void MeshInstance::create_debug_tangents() {
         Array a;
         a.resize(Mesh::ARRAY_MAX);
         a[Mesh::ARRAY_VERTEX] = lines;
-        a[Mesh::ARRAY_COLOR] = colors;
+        a[Mesh::ARRAY_COLOR]  = colors;
 
         am->add_surface_from_arrays(Mesh::PRIMITIVE_LINES, a);
         am->surface_set_material(0, sm);
@@ -1098,13 +1098,13 @@ void MeshInstance::_merge_into_mesh_data(
 
     Array arrays = rmesh->surface_get_arrays(p_surface_id);
 
-    PoolVector<Vector3> verts = arrays[VS::ARRAY_VERTEX];
+    PoolVector<Vector3> verts   = arrays[VS::ARRAY_VERTEX];
     PoolVector<Vector3> normals = arrays[VS::ARRAY_NORMAL];
     PoolVector<real_t> tangents = arrays[VS::ARRAY_TANGENT];
-    PoolVector<Color> colors = arrays[VS::ARRAY_COLOR];
-    PoolVector<Vector2> uvs = arrays[VS::ARRAY_TEX_UV];
-    PoolVector<Vector2> uv2s = arrays[VS::ARRAY_TEX_UV2];
-    PoolVector<int> indices = arrays[VS::ARRAY_INDEX];
+    PoolVector<Color> colors    = arrays[VS::ARRAY_COLOR];
+    PoolVector<Vector2> uvs     = arrays[VS::ARRAY_TEX_UV];
+    PoolVector<Vector2> uv2s    = arrays[VS::ARRAY_TEX_UV2];
+    PoolVector<int> indices     = arrays[VS::ARRAY_INDEX];
 
     // NEW .. the checking for valid triangles should be on WORLD SPACE
     // vertices, NOT model space
@@ -1142,7 +1142,7 @@ void MeshInstance::_merge_into_mesh_data(
         }
 
         if (tangents.size()) {
-            int tstart = n * 4;
+            int tstart         = n * 4;
             Vector3 pt_tangent = Vector3(
                 tangents[tstart],
                 tangents[tstart + 1],
@@ -1190,7 +1190,7 @@ bool MeshInstance::_ensure_indices_valid(
         // triangles
         r_indices.resize(p_verts.size());
         PoolVector<int>::Write write = r_indices.write();
-        int* pi = write.ptr();
+        int* pi                      = write.ptr();
 
         // this is assuming each triangle vertex is unique
         for (int n = 0; n < p_verts.size(); n++) {
@@ -1206,7 +1206,7 @@ bool MeshInstance::_ensure_indices_valid(
         // copy the new indices
         r_indices.resize(new_inds.size());
         PoolVector<int>::Write write = r_indices.write();
-        int* pi = write.ptr();
+        int* pi                      = write.ptr();
 
         for (int n = 0; n < new_inds.size(); n++) {
             pi[n] = new_inds[n];
@@ -1225,9 +1225,9 @@ bool MeshInstance::_check_for_valid_indices(
     const PoolVector<Vector3>& p_verts,
     LocalVector<int, int32_t>* r_inds
 ) {
-    int nTris = p_inds.size();
-    nTris /= 3;
-    int indCount = 0;
+    int nTris     = p_inds.size();
+    nTris        /= 3;
+    int indCount  = 0;
 
     for (int t = 0; t < nTris; t++) {
         int i0 = p_inds[indCount++];
@@ -1295,7 +1295,7 @@ bool MeshInstance::_triangle_is_degenerate(
     edge2 *= 1024.0;
 
     Vector3 vec = edge1.cross(edge2);
-    real_t sl = vec.length_squared();
+    real_t sl   = vec.length_squared();
 
     if (sl <= p_epsilon) {
         return true;
@@ -1527,8 +1527,8 @@ void MeshInstance::_bind_methods() {
 }
 
 MeshInstance::MeshInstance() {
-    skeleton_path = NodePath("..");
-    software_skinning = nullptr;
+    skeleton_path           = NodePath("..");
+    software_skinning       = nullptr;
     software_skinning_flags = SoftwareSkinning::FLAG_TRANSFORM_NORMALS;
 }
 

@@ -80,7 +80,7 @@ public:
     static Error update_library_file(
         Node* p_base_scene,
         Ref<MeshLibrary> ml,
-        bool p_merge = true,
+        bool p_merge        = true,
         bool p_apply_xforms = false
     );
 

@@ -61,8 +61,8 @@ extern bool gles3_available; // from gl_view.mm
 // everything else, but after all units are initialized.
 typedef void (*init_callback)();
 static init_callback* ios_init_callbacks = NULL;
-static int ios_init_callbacks_count = 0;
-static int ios_init_callbacks_capacity = 0;
+static int ios_init_callbacks_count      = 0;
+static int ios_init_callbacks_capacity   = 0;
 HashMap<String, void*> OSIPhone::dynamic_symbol_lookup_table;
 
 int OSIPhone::get_video_driver_count() const {
@@ -136,7 +136,7 @@ Error OSIPhone::initialize(
             } else {
                 if (GLOBAL_GET("rendering/quality/driver/fallback_to_gles2")) {
                     p_video_driver = VIDEO_DRIVER_GLES2;
-                    use_gl3 = false;
+                    use_gl3        = false;
                     continue;
                 } else {
                     gl_initialization_error = true;
@@ -165,7 +165,7 @@ Error OSIPhone::initialize(
     }
 
     video_driver_index = p_video_driver;
-    visual_server = memnew(VisualServerRaster);
+    visual_server      = memnew(VisualServerRaster);
     // FIXME: Reimplement threaded rendering
     if (get_render_thread_mode() != RENDER_THREAD_UNSAFE) {
         visual_server = memnew(VisualServerWrapMT(visual_server, false));
@@ -629,13 +629,13 @@ int OSIPhone::get_screen_dpi(int p_screen) const {
 Rect2 OSIPhone::get_window_safe_area() const {
     if (@available(iOS 11, *)) {
         UIEdgeInsets insets = UIEdgeInsetsZero;
-        UIView* view = AppDelegate.viewController.godotView;
+        UIView* view        = AppDelegate.viewController.godotView;
 
         if ([view respondsToSelector:@selector(safeAreaInsets)]) {
             insets = [view safeAreaInsets];
         }
 
-        float scale = [UIScreen mainScreen].nativeScale;
+        float scale            = [UIScreen mainScreen].nativeScale;
         Size2i insets_position = Size2i(insets.left, insets.top) * scale;
         Size2i insets_size =
             Size2i(insets.left + insets.right, insets.top + insets.bottom)
@@ -669,7 +669,7 @@ Error OSIPhone::native_video_play(
     String p_subtitle_track
 ) {
     FileAccess* f = FileAccess::open(p_path, FileAccess::READ);
-    bool exists = f && f->is_open();
+    bool exists   = f && f->is_open();
 
     String user_data_dir = OSIPhone::get_singleton()->get_user_data_dir();
 
@@ -756,7 +756,7 @@ void add_ios_init_callback(init_callback cb) {
     if (ios_init_callbacks_count == ios_init_callbacks_capacity) {
         void* new_ptr = realloc(ios_init_callbacks, sizeof(cb) * 32);
         if (new_ptr) {
-            ios_init_callbacks = (init_callback*)(new_ptr);
+            ios_init_callbacks           = (init_callback*)(new_ptr);
             ios_init_callbacks_capacity += 32;
         }
     }
@@ -771,11 +771,11 @@ OSIPhone::OSIPhone(String p_data_dir) {
         ios_init_callbacks[i]();
     }
     free(ios_init_callbacks);
-    ios_init_callbacks = NULL;
-    ios_init_callbacks_count = 0;
+    ios_init_callbacks          = NULL;
+    ios_init_callbacks_count    = 0;
     ios_init_callbacks_capacity = 0;
 
-    main_loop = NULL;
+    main_loop     = NULL;
     visual_server = NULL;
 
     // can't call set_data_dir from here, since it requires DirAccess

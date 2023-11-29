@@ -45,7 +45,7 @@ public:
 
 private:
     enum {
-        MAX_COMBS = 8,
+        MAX_COMBS   = 8,
         MAX_ALLPASS = 4,
         MAX_ECHO_MS = 500
     };
@@ -63,11 +63,11 @@ private:
         int extra_spread_frames;
 
         Comb() {
-            size = 0;
-            buffer = nullptr;
+            size     = 0;
+            buffer   = nullptr;
             feedback = 0;
-            damp_h = 0;
-            pos = 0;
+            damp_h   = 0;
+            pos      = 0;
         }
     };
 
@@ -78,9 +78,9 @@ private:
         int extra_spread_frames;
 
         AllPass() {
-            size = 0;
+            size   = 0;
             buffer = nullptr;
-            pos = 0;
+            pos    = 0;
         }
     };
 

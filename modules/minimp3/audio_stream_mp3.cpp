@@ -71,7 +71,7 @@ void AudioStreamPlaybackMP3::_mix_internal(AudioFrame* p_buffer, int p_frames) {
                     p_buffer[i] = AudioFrame(0, 0);
                 }
                 active = false;
-                todo = 0;
+                todo   = 0;
             }
         }
     }
@@ -149,8 +149,8 @@ Ref<AudioStreamPlayback> AudioStreamMP3::instance_playback() {
     );
 
     mp3s->frames_mixed = 0;
-    mp3s->active = false;
-    mp3s->loops = 0;
+    mp3s->active       = false;
+    mp3s->loops        = 0;
 
     if (errorcode) {
         ERR_FAIL_COND_V(errorcode, Ref<AudioStreamPlaybackMP3>());
@@ -166,13 +166,13 @@ String AudioStreamMP3::get_stream_name() const {
 void AudioStreamMP3::clear_data() {
     if (data) {
         AudioServer::get_singleton()->audio_data_free(data);
-        data = nullptr;
+        data     = nullptr;
         data_len = 0;
     }
 }
 
 void AudioStreamMP3::set_data(const PoolVector<uint8_t>& p_data) {
-    int src_data_len = p_data.size();
+    int src_data_len                    = p_data.size();
     PoolVector<uint8_t>::Read src_datar = p_data.read();
 
     mp3dec_ex_t mp3d;
@@ -187,9 +187,9 @@ void AudioStreamMP3::set_data(const PoolVector<uint8_t>& p_data) {
         "Failed to decode mp3 file. Make sure it is a valid mp3 audio file."
     );
 
-    channels = mp3d.info.channels;
+    channels    = mp3d.info.channels;
     sample_rate = mp3d.info.hz;
-    length = float(mp3d.samples) / (sample_rate * float(channels));
+    length      = float(mp3d.samples) / (sample_rate * float(channels));
 
     mp3dec_ex_close(&mp3d);
 

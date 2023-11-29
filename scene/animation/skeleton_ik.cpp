@@ -51,7 +51,7 @@ FabrikInverseKinematic::ChainItem* FabrikInverseKinematic::ChainItem::add_child(
 ) {
     const int infant_child_id = children.size();
     children.resize(infant_child_id + 1);
-    children.write[infant_child_id].bone = p_bone_id;
+    children.write[infant_child_id].bone        = p_bone_id;
     children.write[infant_child_id].parent_item = this;
     return &children.write[infant_child_id];
 }
@@ -70,7 +70,7 @@ bool FabrikInverseKinematic::build_chain(
     chain.chain_root.initial_transform =
         p_task->skeleton->get_bone_global_pose(chain.chain_root.bone);
     chain.chain_root.current_pos = chain.chain_root.initial_transform.origin;
-    chain.middle_chain_item = nullptr;
+    chain.middle_chain_item      = nullptr;
 
     // Holds all IDs that are composing a single chain in reverse order
     Vector<BoneId> chain_ids;
@@ -130,7 +130,7 @@ bool FabrikInverseKinematic::build_chain(
         }
 
         // Initialize current tip
-        chain.tips.write[x].chain_item = sub_chain;
+        chain.tips.write[x].chain_item   = sub_chain;
         chain.tips.write[x].end_effector = ee;
 
         if (p_force_simple_chain) {
@@ -179,10 +179,10 @@ void FabrikInverseKinematic::solve_simple_backwards(
     Vector3 goal;
     ChainItem* sub_chain_tip;
     if (p_solve_magnet) {
-        goal = r_chain.magnet_position;
+        goal          = r_chain.magnet_position;
         sub_chain_tip = r_chain.middle_chain_item;
     } else {
-        goal = r_chain.tips[0].end_effector->goal_transform.origin;
+        goal          = r_chain.tips[0].end_effector->goal_transform.origin;
         sub_chain_tip = r_chain.tips[0].chain_item;
     }
 
@@ -258,7 +258,7 @@ FabrikInverseKinematic::Task* FabrikInverseKinematic::create_simple_task(
     ee.tip_bone = tip_bone;
 
     Task* task(memnew(Task));
-    task->skeleton = p_sk;
+    task->skeleton  = p_sk;
     task->root_bone = root_bone;
     task->end_effectors.push_back(ee);
     task->goal_global_transform = goal_transform;
@@ -444,10 +444,10 @@ void SkeletonIK::_validate_property(PropertyInfo& property) const {
                 names += skeleton->get_bone_name(i);
             }
 
-            property.hint = PROPERTY_HINT_ENUM;
+            property.hint        = PROPERTY_HINT_ENUM;
             property.hint_string = names;
         } else {
-            property.hint = PROPERTY_HINT_NONE;
+            property.hint        = PROPERTY_HINT_NONE;
             property.hint_string = "";
         }
     }
@@ -681,7 +681,7 @@ const Transform& SkeletonIK::get_target_transform() const {
 
 void SkeletonIK::set_target_node(const NodePath& p_node) {
     target_node_path_override = p_node;
-    target_node_override = nullptr;
+    target_node_override      = nullptr;
     reload_goal();
 }
 
@@ -775,7 +775,7 @@ void SkeletonIK::reload_chain() {
     );
     if (task) {
         task->max_iterations = max_iterations;
-        task->min_distance = min_distance;
+        task->min_distance   = min_distance;
     }
 }
 

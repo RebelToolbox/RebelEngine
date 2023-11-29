@@ -78,7 +78,7 @@ struct PluginConfigAndroid {
     static const char* PLUGIN_VALUE_SEPARATOR;
 
     // Set to true when the config file is properly loaded.
-    bool valid_config = false;
+    bool valid_config     = false;
     // Unix timestamp of last change to this plugin.
     uint64_t last_updated = 0;
 

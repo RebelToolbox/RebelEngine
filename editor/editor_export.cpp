@@ -49,7 +49,7 @@
 
 static int _get_pad(int p_alignment, int p_n) {
     int rest = p_n % p_alignment;
-    int pad = 0;
+    int pad  = 0;
     if (rest > 0) {
         pad = p_alignment - rest;
     };
@@ -83,7 +83,7 @@ bool EditorExportPreset::_get(const StringName& p_name, Variant& r_ret) const {
 
 void EditorExportPreset::_get_property_list(List<PropertyInfo>* p_list) const {
     for (const List<PropertyInfo>::Element* E = properties.front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         if (platform->get_option_visibility(E->get().name, values)) {
             p_list->push_back(E->get());
         }
@@ -156,7 +156,7 @@ void EditorExportPreset::set_export_path(const String& p_path) {
      * specifically indicates a relative path, this should be removed. */
     if (export_path.is_abs_path()) {
         String res_path = OS::get_singleton()->get_resource_dir();
-        export_path = res_path.path_to_file(export_path);
+        export_path     = res_path.path_to_file(export_path);
     }
     EditorExport::singleton->save_presets();
 }
@@ -262,7 +262,7 @@ void EditorExportPlatform::gen_debug_flags(
             r_flags.push_back("--breakpoints");
             String bpoints;
             for (const List<String>::Element* E = breakpoints.front(); E;
-                 E = E->next()) {
+                 E                              = E->next()) {
                 bpoints += E->get().replace(" ", "%20");
                 if (E->next()) {
                     bpoints += ",";
@@ -299,8 +299,8 @@ Error EditorExportPlatform::_save_pack_file(
 
     SavedData sd;
     sd.path_utf8 = p_path.utf8();
-    sd.ofs = pd->f->get_position();
-    sd.size = p_data.size();
+    sd.ofs       = pd->f->get_position();
+    sd.size      = p_data.size();
 
     pd->f->store_buffer(p_data.ptr(), p_data.size());
     int pad = _get_pad(PCK_PADDING, sd.size);
@@ -387,7 +387,7 @@ String EditorExportPlatform::find_export_template(
     String* err
 ) const {
     String current_version = VERSION_FULL_CONFIG;
-    String template_path = EditorSettings::get_singleton()
+    String template_path   = EditorSettings::get_singleton()
                                ->get_templates_dir()
                                .plus_file(current_version)
                                .plus_file(template_file_name);
@@ -483,7 +483,7 @@ void EditorExportPlatform::_edit_files_with_filter(
         if (da->current_is_dir()) {
             dirs.push_back(f);
         } else {
-            String fullpath = cur_dir + f;
+            String fullpath           = cur_dir + f;
             // Test also against path without res:// so that filters like
             // `file.txt` can work.
             String fullpath_no_prefix = cur_dir_no_prefix + f;
@@ -560,8 +560,8 @@ void EditorExportPlugin::add_file(
     bool p_remap
 ) {
     ExtraFile ef;
-    ef.data = p_file;
-    ef.path = p_path;
+    ef.data  = p_file;
+    ef.path  = p_path;
     ef.remap = p_remap;
     extra_files.push_back(ef);
 }
@@ -899,11 +899,11 @@ Error EditorExportPlatform::export_project_files(
     }
 
     FeatureContainers feature_containers = get_feature_containers(p_preset);
-    Set<String>& features = feature_containers.features;
-    PoolVector<String>& features_pv = feature_containers.features_pv;
+    Set<String>& features                = feature_containers.features;
+    PoolVector<String>& features_pv      = feature_containers.features_pv;
 
     // store everything in the export medium
-    int idx = 0;
+    int idx   = 0;
     int total = paths.size();
 
     for (Set<String>::Element* E = paths.front(); E; E = E->next()) {
@@ -940,7 +940,7 @@ Error EditorExportPlatform::export_project_files(
             Set<String> remap_features;
 
             for (List<String>::Element* F = remaps.front(); F; F = F->next()) {
-                String remap = F->get();
+                String remap   = F->get();
                 String feature = remap.get_slice(".", 1);
                 if (features.has(feature)) {
                     remap_features.insert(feature);
@@ -1077,7 +1077,7 @@ Error EditorExportPlatform::export_project_files(
                     // multiple .pck exports
             for (int i = 0; i < path_remaps.size(); i += 2) {
                 String from = path_remaps[i];
-                String to = path_remaps[i + 1];
+                String to   = path_remaps[i + 1];
                 String remap_file =
                     "[remap]\n\npath=\"" + to.c_escape() + "\"\n";
                 CharString utf8 = remap_file.utf8();
@@ -1107,14 +1107,14 @@ Error EditorExportPlatform::export_project_files(
         ProjectSettings::get_singleton()->get("application/boot_splash/image");
     if (icon != String() && FileAccess::exists(icon)) {
         Vector<uint8_t> array = FileAccess::get_file_as_array(icon);
-        err = p_func(p_udata, icon, array, idx, total);
+        err                   = p_func(p_udata, icon, array, idx, total);
         if (err != OK) {
             return err;
         }
     }
     if (splash != String() && FileAccess::exists(splash) && icon != splash) {
         Vector<uint8_t> array = FileAccess::get_file_as_array(splash);
-        err = p_func(p_udata, splash, array, idx, total);
+        err                   = p_func(p_udata, splash, array, idx, total);
         if (err != OK) {
             return err;
         }
@@ -1169,8 +1169,8 @@ Error EditorExportPlatform::save_pack(
     );
 
     PackData pd;
-    pd.ep = &ep;
-    pd.f = ftmp;
+    pd.ep       = &ep;
+    pd.f        = ftmp;
     pd.so_files = p_so_files;
 
     Error err = export_project_files(
@@ -1241,8 +1241,8 @@ Error EditorExportPlatform::save_pack(
     // precalculate header size
 
     for (int i = 0; i < pd.file_ofs.size(); i++) {
-        header_size += 4; // size of path string (32 bits is enough)
-        int string_len = pd.file_ofs[i].path_utf8.length();
+        header_size    += 4; // size of path string (32 bits is enough)
+        int string_len  = pd.file_ofs[i].path_utf8.length();
         header_size +=
             string_len + _get_pad(4, string_len); /// size of path string
         header_size += 8;  // offset to file _with_ header size included
@@ -1254,7 +1254,7 @@ Error EditorExportPlatform::save_pack(
 
     for (int i = 0; i < pd.file_ofs.size(); i++) {
         uint32_t string_len = pd.file_ofs[i].path_utf8.length();
-        uint32_t pad = _get_pad(4, string_len);
+        uint32_t pad        = _get_pad(4, string_len);
 
         f->store_32(string_len + pad);
         f->store_buffer(
@@ -1303,7 +1303,7 @@ Error EditorExportPlatform::save_pack(
     if (p_embed) {
         // Ensure embedded data ends at a 64-bit multiple
         uint64_t embed_end = f->get_position() - embed_pos + 12;
-        uint64_t pad = embed_end % 8;
+        uint64_t pad       = embed_end % 8;
         for (uint64_t i = 0; i < pad; i++) {
             f->store_8(0);
         }
@@ -1335,7 +1335,7 @@ Error EditorExportPlatform::save_zip(
         zipOpen2(p_path.utf8().get_data(), APPEND_STATUS_CREATE, nullptr, &io);
 
     ZipData zd;
-    zd.ep = &ep;
+    zd.ep  = &ep;
     zd.zip = zip;
 
     Error err = export_project_files(p_preset, _save_zip_file, &zd);
@@ -1407,7 +1407,7 @@ void EditorExportPlatform::gen_export_flags(
             r_flags.push_back("--breakpoints");
             String bpoints;
             for (const List<String>::Element* E = breakpoints.front(); E;
-                 E = E->next()) {
+                 E                              = E->next()) {
                 bpoints += E->get().replace(" ", "%20");
                 if (E->next()) {
                     bpoints += ",";
@@ -1438,7 +1438,7 @@ void EditorExport::_save() {
     config.instance();
     for (int i = 0; i < export_presets.size(); i++) {
         Ref<EditorExportPreset> preset = export_presets[i];
-        String section = "preset." + itos(i);
+        String section                 = "preset." + itos(i);
 
         config->set_value(section, "name", preset->get_name());
         config->set_value(
@@ -1819,7 +1819,7 @@ void EditorExport::update_export_presets() {
                  E = E->next()) {
                 preset->properties.push_back(E->get().option);
 
-                StringName option_name = E->get().option.name;
+                StringName option_name      = E->get().option.name;
                 preset->values[option_name] = previous_values.has(option_name)
                                                 ? previous_values[option_name]
                                                 : E->get().default_value;
@@ -1968,7 +1968,7 @@ bool EditorExportPlatformPC::can_export(
         }
     }
 
-    valid = dvalid || rvalid;
+    valid               = dvalid || rvalid;
     r_missing_templates = !valid;
 
     if (!err.empty()) {
@@ -1982,7 +1982,7 @@ List<String> EditorExportPlatformPC::get_binary_extensions(
 ) const {
     List<String> list;
     for (Map<String, String>::Element* E = extensions.front(); E;
-         E = E->next()) {
+         E                               = E->next()) {
         if (p_preset->get(E->key())) {
             list.push_back(extensions[E->key()]);
             return list;
@@ -2009,7 +2009,7 @@ Error EditorExportPlatformPC::export_project(
         return ERR_FILE_BAD_PATH;
     }
 
-    String custom_debug = p_preset->get("custom_template/debug");
+    String custom_debug   = p_preset->get("custom_template/debug");
     String custom_release = p_preset->get("custom_template/release");
 
     String template_path = p_debug ? custom_debug : custom_release;
@@ -2040,7 +2040,7 @@ Error EditorExportPlatformPC::export_project(
     }
 
     DirAccess* da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
-    Error err = da->copy(template_path, p_path, get_chmod_flags());
+    Error err     = da->copy(template_path, p_path, get_chmod_flags());
     memdelete(da);
 
     if (err == OK) {
@@ -2191,7 +2191,7 @@ void EditorExportPlatformPC::set_fixup_embedded_pck_func(
 }
 
 EditorExportPlatformPC::EditorExportPlatformPC() {
-    chmod_flags = -1;
+    chmod_flags             = -1;
     fixup_embedded_pck_func = nullptr;
 }
 

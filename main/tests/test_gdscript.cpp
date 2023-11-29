@@ -134,7 +134,7 @@ static String _parser_expr(const GDScriptParser::Node* p_expr) {
                     ERR_FAIL_COND_V(c_node->arguments.size() < 1, "");
                     String func_name;
                     const GDScriptParser::Node* nfunc = c_node->arguments[0];
-                    int arg_ofs = 0;
+                    int arg_ofs                       = 0;
                     if (nfunc->type
                         == GDScriptParser::Node::TYPE_BUILT_IN_FUNCTION) {
                         const GDScriptParser::BuiltInFunctionNode* bif_node =
@@ -150,7 +150,7 @@ static String _parser_expr(const GDScriptParser::Node* p_expr) {
                         const GDScriptParser::TypeNode* t_node =
                             static_cast<const GDScriptParser::TypeNode*>(nfunc);
                         func_name = Variant::get_type_name(t_node->vtype);
-                        arg_ofs = 1;
+                        arg_ofs   = 1;
                     } else {
                         ERR_FAIL_COND_V(c_node->arguments.size() < 2, "");
                         nfunc = c_node->arguments[1];
@@ -167,7 +167,7 @@ static String _parser_expr(const GDScriptParser::Node* p_expr) {
                         }
 
                         func_name += _parser_expr(nfunc);
-                        arg_ofs = 2;
+                        arg_ofs    = 2;
                     }
 
                     txt += func_name + "(";
@@ -502,7 +502,7 @@ static void _parser_show_class(
 
     for (int i = 0; i < p_class->subclasses.size(); i++) {
         const GDScriptParser::ClassNode* subclass = p_class->subclasses[i];
-        String line = "class " + subclass->name;
+        String line                               = "class " + subclass->name;
         if (String(subclass->extends_file) != ""
             || subclass->extends_class.size()) {
             line += " " + _parser_extends(subclass);
@@ -610,10 +610,10 @@ static void _disassemble_class(
         p_class->debug_get_member_functions();
 
     for (const Map<StringName, GDScriptFunction*>::Element* E = mf.front(); E;
-         E = E->next()) {
+         E                                                    = E->next()) {
         const GDScriptFunction& func = *E->get();
-        const int* code = func.get_code();
-        int codelen = func.get_code_size();
+        const int* code              = func.get_code();
+        int codelen                  = func.get_code_size();
         String defargs;
         if (func.get_default_argument_count()) {
             defargs = "defarg at: ";
@@ -633,115 +633,115 @@ static void _disassemble_class(
 #define DADDR(m_ip) (_disassemble_addr(p_class, func, code[ip + m_ip]))
 
         for (int ip = 0; ip < codelen;) {
-            int incr = 0;
+            int incr   = 0;
             String txt = itos(ip) + " ";
 
             switch (code[ip]) {
                 case GDScriptFunction::OPCODE_OPERATOR: {
-                    int op = code[ip + 1];
-                    txt += " op ";
+                    int op  = code[ip + 1];
+                    txt    += " op ";
 
                     String opname =
                         Variant::get_operator_name(Variant::Operator(op));
 
-                    txt += DADDR(4);
-                    txt += " = ";
-                    txt += DADDR(2);
-                    txt += " " + opname + " ";
-                    txt += DADDR(3);
+                    txt  += DADDR(4);
+                    txt  += " = ";
+                    txt  += DADDR(2);
+                    txt  += " " + opname + " ";
+                    txt  += DADDR(3);
                     incr += 5;
 
                 } break;
                 case GDScriptFunction::OPCODE_SET: {
-                    txt += "set ";
-                    txt += DADDR(1);
-                    txt += "[";
-                    txt += DADDR(2);
-                    txt += "]=";
-                    txt += DADDR(3);
+                    txt  += "set ";
+                    txt  += DADDR(1);
+                    txt  += "[";
+                    txt  += DADDR(2);
+                    txt  += "]=";
+                    txt  += DADDR(3);
                     incr += 4;
 
                 } break;
                 case GDScriptFunction::OPCODE_GET: {
-                    txt += " get ";
-                    txt += DADDR(3);
-                    txt += "=";
-                    txt += DADDR(1);
-                    txt += "[";
-                    txt += DADDR(2);
-                    txt += "]";
+                    txt  += " get ";
+                    txt  += DADDR(3);
+                    txt  += "=";
+                    txt  += DADDR(1);
+                    txt  += "[";
+                    txt  += DADDR(2);
+                    txt  += "]";
                     incr += 4;
 
                 } break;
                 case GDScriptFunction::OPCODE_SET_NAMED: {
-                    txt += " set_named ";
-                    txt += DADDR(1);
-                    txt += "[\"";
-                    txt += func.get_global_name(code[ip + 2]);
-                    txt += "\"]=";
-                    txt += DADDR(3);
+                    txt  += " set_named ";
+                    txt  += DADDR(1);
+                    txt  += "[\"";
+                    txt  += func.get_global_name(code[ip + 2]);
+                    txt  += "\"]=";
+                    txt  += DADDR(3);
                     incr += 4;
 
                 } break;
                 case GDScriptFunction::OPCODE_GET_NAMED: {
-                    txt += " get_named ";
-                    txt += DADDR(3);
-                    txt += "=";
-                    txt += DADDR(1);
-                    txt += "[\"";
-                    txt += func.get_global_name(code[ip + 2]);
-                    txt += "\"]";
+                    txt  += " get_named ";
+                    txt  += DADDR(3);
+                    txt  += "=";
+                    txt  += DADDR(1);
+                    txt  += "[\"";
+                    txt  += func.get_global_name(code[ip + 2]);
+                    txt  += "\"]";
                     incr += 4;
 
                 } break;
                 case GDScriptFunction::OPCODE_SET_MEMBER: {
-                    txt += " set_member ";
-                    txt += "[\"";
-                    txt += func.get_global_name(code[ip + 1]);
-                    txt += "\"]=";
-                    txt += DADDR(2);
+                    txt  += " set_member ";
+                    txt  += "[\"";
+                    txt  += func.get_global_name(code[ip + 1]);
+                    txt  += "\"]=";
+                    txt  += DADDR(2);
                     incr += 3;
 
                 } break;
                 case GDScriptFunction::OPCODE_GET_MEMBER: {
-                    txt += " get_member ";
-                    txt += DADDR(2);
-                    txt += "=";
-                    txt += "[\"";
-                    txt += func.get_global_name(code[ip + 1]);
-                    txt += "\"]";
+                    txt  += " get_member ";
+                    txt  += DADDR(2);
+                    txt  += "=";
+                    txt  += "[\"";
+                    txt  += func.get_global_name(code[ip + 1]);
+                    txt  += "\"]";
                     incr += 3;
 
                 } break;
                 case GDScriptFunction::OPCODE_ASSIGN: {
-                    txt += " assign ";
-                    txt += DADDR(1);
-                    txt += "=";
-                    txt += DADDR(2);
+                    txt  += " assign ";
+                    txt  += DADDR(1);
+                    txt  += "=";
+                    txt  += DADDR(2);
                     incr += 3;
 
                 } break;
                 case GDScriptFunction::OPCODE_ASSIGN_TRUE: {
-                    txt += " assign ";
-                    txt += DADDR(1);
-                    txt += "= true";
+                    txt  += " assign ";
+                    txt  += DADDR(1);
+                    txt  += "= true";
                     incr += 2;
 
                 } break;
                 case GDScriptFunction::OPCODE_ASSIGN_FALSE: {
-                    txt += " assign ";
-                    txt += DADDR(1);
-                    txt += "= false";
+                    txt  += " assign ";
+                    txt  += DADDR(1);
+                    txt  += "= false";
                     incr += 2;
 
                 } break;
                 case GDScriptFunction::OPCODE_ASSIGN_TYPED_BUILTIN: {
-                    txt += " assign typed builtin (";
-                    txt += Variant::get_type_name((Variant::Type)code[ip + 1]);
-                    txt += ") ";
-                    txt += DADDR(2);
-                    txt += " = ";
-                    txt += DADDR(3);
+                    txt  += " assign typed builtin (";
+                    txt  += Variant::get_type_name((Variant::Type)code[ip + 1]);
+                    txt  += ") ";
+                    txt  += DADDR(2);
+                    txt  += " = ";
+                    txt  += DADDR(3);
                     incr += 4;
 
                 } break;
@@ -752,28 +752,28 @@ static void _disassemble_class(
                             className.operator Object*()
                         );
 
-                    txt += " assign typed native (";
-                    txt += nc->get_name().operator String();
-                    txt += ") ";
-                    txt += DADDR(2);
-                    txt += " = ";
-                    txt += DADDR(3);
+                    txt  += " assign typed native (";
+                    txt  += nc->get_name().operator String();
+                    txt  += ") ";
+                    txt  += DADDR(2);
+                    txt  += " = ";
+                    txt  += DADDR(3);
                     incr += 4;
 
                 } break;
                 case GDScriptFunction::OPCODE_CAST_TO_SCRIPT: {
-                    txt += " cast ";
-                    txt += DADDR(3);
-                    txt += "=";
-                    txt += DADDR(1);
-                    txt += " as ";
-                    txt += DADDR(2);
+                    txt  += " cast ";
+                    txt  += DADDR(3);
+                    txt  += "=";
+                    txt  += DADDR(1);
+                    txt  += " as ";
+                    txt  += DADDR(2);
                     incr += 4;
 
                 } break;
                 case GDScriptFunction::OPCODE_CONSTRUCT: {
                     Variant::Type t = Variant::Type(code[ip + 1]);
-                    int argc = code[ip + 2];
+                    int argc        = code[ip + 2];
 
                     txt += " construct ";
                     txt += DADDR(3 + argc);
@@ -792,10 +792,10 @@ static void _disassemble_class(
 
                 } break;
                 case GDScriptFunction::OPCODE_CONSTRUCT_ARRAY: {
-                    int argc = code[ip + 1];
-                    txt += " make_array ";
-                    txt += DADDR(2 + argc);
-                    txt += " = [ ";
+                    int argc  = code[ip + 1];
+                    txt      += " make_array ";
+                    txt      += DADDR(2 + argc);
+                    txt      += " = [ ";
 
                     for (int i = 0; i < argc; i++) {
                         if (i > 0) {
@@ -810,10 +810,10 @@ static void _disassemble_class(
 
                 } break;
                 case GDScriptFunction::OPCODE_CONSTRUCT_DICTIONARY: {
-                    int argc = code[ip + 1];
-                    txt += " make_dict ";
-                    txt += DADDR(2 + argc * 2);
-                    txt += " = { ";
+                    int argc  = code[ip + 1];
+                    txt      += " make_dict ";
+                    txt      += DADDR(2 + argc * 2);
+                    txt      += " = { ";
 
                     for (int i = 0; i < argc; i++) {
                         if (i > 0) {
@@ -863,8 +863,8 @@ static void _disassemble_class(
                 case GDScriptFunction::OPCODE_CALL_BUILT_IN: {
                     txt += " call-built-in ";
 
-                    int argc = code[ip + 2];
-                    txt += DADDR(3 + argc) + "=";
+                    int argc  = code[ip + 2];
+                    txt      += DADDR(3 + argc) + "=";
 
                     txt += GDScriptFunctions::get_func_name(
                         GDScriptFunctions::Function(code[ip + 1])
@@ -885,8 +885,8 @@ static void _disassemble_class(
                 case GDScriptFunction::OPCODE_CALL_SELF_BASE: {
                     txt += " call-self-base ";
 
-                    int argc = code[ip + 2];
-                    txt += DADDR(3 + argc) + "=";
+                    int argc  = code[ip + 2];
+                    txt      += DADDR(3 + argc) + "=";
 
                     txt += func.get_global_name(code[ip + 1]);
                     txt += "(";
@@ -903,21 +903,21 @@ static void _disassemble_class(
 
                 } break;
                 case GDScriptFunction::OPCODE_YIELD: {
-                    txt += " yield ";
-                    incr = 1;
+                    txt  += " yield ";
+                    incr  = 1;
 
                 } break;
                 case GDScriptFunction::OPCODE_YIELD_SIGNAL: {
-                    txt += " yield_signal ";
-                    txt += DADDR(1);
-                    txt += ",";
-                    txt += DADDR(2);
-                    incr = 3;
+                    txt  += " yield_signal ";
+                    txt  += DADDR(1);
+                    txt  += ",";
+                    txt  += DADDR(2);
+                    incr  = 3;
                 } break;
                 case GDScriptFunction::OPCODE_YIELD_RESUME: {
-                    txt += " yield resume: ";
-                    txt += DADDR(1);
-                    incr = 2;
+                    txt  += " yield resume: ";
+                    txt  += DADDR(1);
+                    incr  = 2;
                 } break;
                 case GDScriptFunction::OPCODE_JUMP: {
                     txt += " jump ";
@@ -943,8 +943,8 @@ static void _disassemble_class(
                     incr = 3;
                 } break;
                 case GDScriptFunction::OPCODE_JUMP_TO_DEF_ARGUMENT: {
-                    txt += " jump-to-default-argument ";
-                    incr = 1;
+                    txt  += " jump-to-default-argument ";
+                    incr  = 1;
                 } break;
                 case GDScriptFunction::OPCODE_RETURN: {
                     txt += " return ";
@@ -978,12 +978,12 @@ static void _disassemble_class(
                     incr += 2;
                 } break;
                 case GDScriptFunction::OPCODE_END: {
-                    txt += " end";
+                    txt  += " end";
                     incr += 1;
                 } break;
                 case GDScriptFunction::OPCODE_ASSERT: {
-                    txt += " assert ";
-                    txt += DADDR(1);
+                    txt  += " assert ";
+                    txt  += DADDR(1);
                     incr += 2;
 
                 } break;
@@ -1075,7 +1075,7 @@ MainLoop* test(TestType p_type) {
 
             if (tk.get_token_line() != line) {
                 int from = line + 1;
-                line = tk.get_token_line();
+                line     = tk.get_token_line();
 
                 for (int i = from; i <= line; i++) {
                     int l = i - 1;
@@ -1149,8 +1149,8 @@ MainLoop* test(TestType p_type) {
 
     } else if (p_type == TEST_BYTECODE) {
         Vector<uint8_t> buf2 = GDScriptTokenizerBuffer::parse_code_string(code);
-        String dst = test.get_basename() + ".gdc";
-        FileAccess* fw = FileAccess::open(dst, FileAccess::WRITE);
+        String dst           = test.get_basename() + ".gdc";
+        FileAccess* fw       = FileAccess::open(dst, FileAccess::WRITE);
         fw->store_buffer(buf2.ptr(), buf2.size());
         memdelete(fw);
     }

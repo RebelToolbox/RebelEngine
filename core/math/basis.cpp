@@ -40,15 +40,15 @@
 void Basis::from_z(const Vector3& p_z) {
     if (Math::abs(p_z.z) > Math_SQRT12) {
         // choose p in y-z plane
-        real_t a = p_z[1] * p_z[1] + p_z[2] * p_z[2];
-        real_t k = 1.0 / Math::sqrt(a);
+        real_t a    = p_z[1] * p_z[1] + p_z[2] * p_z[2];
+        real_t k    = 1.0 / Math::sqrt(a);
         elements[0] = Vector3(0, -p_z[2] * k, p_z[1] * k);
         elements[1] =
             Vector3(a * k, -p_z[0] * elements[0][2], p_z[0] * elements[0][1]);
     } else {
         // choose p in x-y plane
-        real_t a = p_z.x * p_z.x + p_z.y * p_z.y;
-        real_t k = 1.0 / Math::sqrt(a);
+        real_t a    = p_z.x * p_z.x + p_z.y * p_z.y;
+        real_t k    = 1.0 / Math::sqrt(a);
         elements[0] = Vector3(-p_z.y * k, p_z.x * k, 0);
         elements[1] =
             Vector3(-p_z.z * elements[0].y, p_z.z * elements[0].x, a * k);
@@ -58,7 +58,7 @@ void Basis::from_z(const Vector3& p_z) {
 
 void Basis::invert() {
     real_t co[3] = {cofac(1, 1, 2, 2), cofac(1, 2, 2, 0), cofac(1, 0, 2, 1)};
-    real_t det = elements[0][0] * co[0] + elements[0][1] * co[1]
+    real_t det   = elements[0][0] * co[0] + elements[0][1] * co[1]
                + elements[0][2] * co[2];
 #ifdef MATH_CHECKS
     ERR_FAIL_COND(det == 0);
@@ -207,7 +207,7 @@ Basis Basis::diagonalize() {
         off_matrix_norm_2 -= elements[i][j] * elements[i][j];
 
         // Apply the rotation
-        *this = rot * *this * rot.transposed();
+        *this   = rot * *this * rot.transposed();
         acc_rot = rot * acc_rot;
     }
 
@@ -329,10 +329,10 @@ Vector3 Basis::rotref_posscale_decomposition(Basis& rotref) const {
     Basis m = transposed() * (*this);
     ERR_FAIL_COND_V(!m.is_diagonal(), Vector3());
 #endif
-    Vector3 scale = get_scale();
+    Vector3 scale   = get_scale();
     Basis inv_scale = Basis().scaled(scale.inverse()
     ); // this will also absorb the sign of scale
-    rotref = (*this) * inv_scale;
+    rotref          = (*this) * inv_scale;
 
 #ifdef MATH_CHECKS
     ERR_FAIL_COND_V(!rotref.is_orthogonal(), Vector3());
@@ -386,7 +386,7 @@ Vector3 Basis::get_rotation_euler() const {
     // scaling matrix as M = R.S, and returns the Euler angles corresponding to
     // the rotation part, complementing get_scale(). See the comment in
     // get_scale() for further information.
-    Basis m = orthonormalized();
+    Basis m    = orthonormalized();
     real_t det = m.determinant();
     if (det < 0) {
         // Ensure that the determinant is 1, such that result is a proper
@@ -402,7 +402,7 @@ Quat Basis::get_rotation_quat() const {
     // scaling matrix as M = R.S, and returns the Euler angles corresponding to
     // the rotation part, complementing get_scale(). See the comment in
     // get_scale() for further information.
-    Basis m = orthonormalized();
+    Basis m    = orthonormalized();
     real_t det = m.determinant();
     if (det < 0) {
         // Ensure that the determinant is 1, such that result is a proper
@@ -418,7 +418,7 @@ void Basis::get_rotation_axis_angle(Vector3& p_axis, real_t& p_angle) const {
     // scaling matrix as M = R.S, and returns the Euler angles corresponding to
     // the rotation part, complementing get_scale(). See the comment in
     // get_scale() for further information.
-    Basis m = orthonormalized();
+    Basis m    = orthonormalized();
     real_t det = m.determinant();
     if (det < 0) {
         // Ensure that the determinant is 1, such that result is a proper
@@ -847,14 +847,14 @@ Quat Basis::get_quat() const {
     );
 #endif
     /* Allow getting a quaternion from an unnormalized transform */
-    Basis m = *this;
+    Basis m      = *this;
     real_t trace = m.elements[0][0] + m.elements[1][1] + m.elements[2][2];
     real_t temp[4];
 
     if (trace > 0.0) {
         real_t s = Math::sqrt(trace + 1.0);
-        temp[3] = (s * 0.5);
-        s = 0.5 / s;
+        temp[3]  = (s * 0.5);
+        s        = 0.5 / s;
 
         temp[0] = ((m.elements[2][1] - m.elements[1][2]) * s);
         temp[1] = ((m.elements[0][2] - m.elements[2][0]) * s);
@@ -870,7 +870,7 @@ Quat Basis::get_quat() const {
             m.elements[i][i] - m.elements[j][j] - m.elements[k][k] + 1.0
         );
         temp[i] = s * 0.5;
-        s = 0.5 / s;
+        s       = 0.5 / s;
 
         temp[3] = (m.elements[k][j] - m.elements[j][k]) * s;
         temp[j] = (m.elements[j][i] + m.elements[i][j]) * s;
@@ -933,9 +933,9 @@ void Basis::get_axis_angle(Vector3& r_axis, real_t& r_angle) const {
     /* checking this is a bad idea, because obtaining from scaled transform is a
 valid use case #ifdef MATH_CHECKS ERR_FAIL_COND(!is_rotation()); #endif
 */
-    real_t angle, x, y, z; // variables for result
-    real_t epsilon = 0.01; // margin to allow for rounding errors
-    real_t epsilon2 = 0.1; // margin to distinguish between 0 and 180 degrees
+    real_t angle, x, y, z;  // variables for result
+    real_t epsilon  = 0.01; // margin to allow for rounding errors
+    real_t epsilon2 = 0.1;  // margin to distinguish between 0 and 180 degrees
 
     if ((Math::abs(elements[1][0] - elements[0][1]) < epsilon)
         && (Math::abs(elements[2][0] - elements[0][2]) < epsilon)
@@ -949,12 +949,12 @@ valid use case #ifdef MATH_CHECKS ERR_FAIL_COND(!is_rotation()); #endif
             && (Math::abs(elements[0][0] + elements[1][1] + elements[2][2] - 3)
                 < epsilon2)) {
             // this singularity is identity matrix so angle = 0
-            r_axis = Vector3(0, 1, 0);
+            r_axis  = Vector3(0, 1, 0);
             r_angle = 0;
             return;
         }
         // otherwise this singularity is angle = 180
-        angle = Math_PI;
+        angle     = Math_PI;
         real_t xx = (elements[0][0] + 1) / 2;
         real_t yy = (elements[1][1] + 1) / 2;
         real_t zz = (elements[2][2] + 1) / 2;
@@ -994,7 +994,7 @@ valid use case #ifdef MATH_CHECKS ERR_FAIL_COND(!is_rotation()); #endif
                 y = yz / z;
             }
         }
-        r_axis = Vector3(x, y, z);
+        r_axis  = Vector3(x, y, z);
         r_angle = angle;
         return;
     }
@@ -1015,13 +1015,13 @@ valid use case #ifdef MATH_CHECKS ERR_FAIL_COND(!is_rotation()); #endif
     y = (elements[0][2] - elements[2][0]) / s;
     z = (elements[1][0] - elements[0][1]) / s;
 
-    r_axis = Vector3(x, y, z);
+    r_axis  = Vector3(x, y, z);
     r_angle = angle;
 }
 
 void Basis::set_quat(const Quat& p_quat) {
-    real_t d = p_quat.length_squared();
-    real_t s = 2.0 / d;
+    real_t d  = p_quat.length_squared();
+    real_t s  = 2.0 / d;
     real_t xs = p_quat.x * s, ys = p_quat.y * s, zs = p_quat.z * s;
     real_t wx = p_quat.w * xs, wy = p_quat.w * ys, wz = p_quat.w * zs;
     real_t xx = p_quat.x * xs, xy = p_quat.x * ys, xz = p_quat.x * zs;
@@ -1051,26 +1051,26 @@ void Basis::set_axis_angle(const Vector3& p_axis, real_t p_phi) {
         p_axis.y * p_axis.y,
         p_axis.z * p_axis.z
     );
-    real_t cosine = Math::cos(p_phi);
+    real_t cosine  = Math::cos(p_phi);
     elements[0][0] = axis_sq.x + cosine * (1.0 - axis_sq.x);
     elements[1][1] = axis_sq.y + cosine * (1.0 - axis_sq.y);
     elements[2][2] = axis_sq.z + cosine * (1.0 - axis_sq.z);
 
     real_t sine = Math::sin(p_phi);
-    real_t t = 1 - cosine;
+    real_t t    = 1 - cosine;
 
-    real_t xyzt = p_axis.x * p_axis.y * t;
-    real_t zyxs = p_axis.z * sine;
+    real_t xyzt    = p_axis.x * p_axis.y * t;
+    real_t zyxs    = p_axis.z * sine;
     elements[0][1] = xyzt - zyxs;
     elements[1][0] = xyzt + zyxs;
 
-    xyzt = p_axis.x * p_axis.z * t;
-    zyxs = p_axis.y * sine;
+    xyzt           = p_axis.x * p_axis.z * t;
+    zyxs           = p_axis.y * sine;
     elements[0][2] = xyzt + zyxs;
     elements[2][0] = xyzt - zyxs;
 
-    xyzt = p_axis.y * p_axis.z * t;
-    zyxs = p_axis.x * sine;
+    xyzt           = p_axis.y * p_axis.z * t;
+    zyxs           = p_axis.x * sine;
     elements[1][2] = xyzt - zyxs;
     elements[2][1] = xyzt + zyxs;
 }

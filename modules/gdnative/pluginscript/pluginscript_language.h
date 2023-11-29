@@ -89,10 +89,10 @@ public:
         int& r_line_error,
         int& r_col_error,
         String& r_test_error,
-        const String& p_path = "",
-        List<String>* r_functions = nullptr,
+        const String& p_path                      = "",
+        List<String>* r_functions                 = nullptr,
         List<ScriptLanguage::Warning>* r_warnings = nullptr,
-        Set<int>* r_safe_lines = nullptr
+        Set<int>* r_safe_lines                    = nullptr
     ) const;
     virtual Script* create_script() const;
     virtual bool has_named_classes() const;
@@ -146,26 +146,26 @@ public:
         List<String>* p_locals,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
     virtual void debug_get_stack_level_members(
         int p_level,
         List<String>* p_members,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
     virtual void debug_get_globals(
         List<String>* p_locals,
         List<Variant>* p_values,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
     virtual String debug_parse_stack_level_expression(
         int p_level,
         const String& p_expression,
         int p_max_subitems = -1,
-        int p_max_depth = -1
+        int p_max_depth    = -1
     );
 
     // virtual Vector<StackInfo> debug_get_current_stack_info() { return

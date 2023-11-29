@@ -53,7 +53,7 @@ void EditorPluginSettings::_notification(int p_what) {
 
 void EditorPluginSettings::update_plugins() {
     plugin_list->clear();
-    updating = true;
+    updating       = true;
     TreeItem* root = plugin_list->create_item();
 
     Vector<String> plugins = _get_plugins("res://addons");
@@ -101,11 +101,11 @@ void EditorPluginSettings::update_plugins() {
             }
 
             if (!key_missing) {
-                String name = cf->get_value("plugin", "name");
-                String author = cf->get_value("plugin", "author");
-                String version = cf->get_value("plugin", "version");
+                String name        = cf->get_value("plugin", "name");
+                String author      = cf->get_value("plugin", "author");
+                String version     = cf->get_value("plugin", "version");
                 String description = cf->get_value("plugin", "description");
-                String script = cf->get_value("plugin", "script");
+                String script      = cf->get_value("plugin", "script");
 
                 TreeItem* item = plugin_list->create_item(root);
                 item->set_text(0, name);
@@ -186,7 +186,7 @@ void EditorPluginSettings::_cell_button_pressed(
 
 Vector<String> EditorPluginSettings::_get_plugins(const String& p_dir) {
     DirAccessRef da = DirAccess::create(DirAccess::ACCESS_RESOURCES);
-    Error err = da->change_dir(p_dir);
+    Error err       = da->change_dir(p_dir);
     if (err != OK) {
         return Vector<String>();
     }
@@ -194,12 +194,12 @@ Vector<String> EditorPluginSettings::_get_plugins(const String& p_dir) {
     Vector<String> plugins;
     da->list_dir_begin();
     for (String path = da->get_next(); path != String();
-         path = da->get_next()) {
+         path        = da->get_next()) {
         if (path[0] == '.' || !da->current_is_dir()) {
             continue;
         }
 
-        const String full_path = p_dir.plus_file(path);
+        const String full_path     = p_dir.plus_file(path);
         const String plugin_config = full_path.plus_file("plugin.cfg");
         if (FileAccess::exists(plugin_config)) {
             plugins.push_back(plugin_config);

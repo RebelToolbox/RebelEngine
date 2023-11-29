@@ -545,7 +545,7 @@ public:
         const String& p_path,
         List<String>* r_functions,
         List<ScriptLanguage::Warning>* r_warnings = NULL,
-        Set<int>* r_safe_lines = NULL
+        Set<int>* r_safe_lines                    = NULL
     ) const {
         return true;
     }
@@ -702,7 +702,7 @@ public:
     virtual RES load(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = NULL
+        Error* r_error                = NULL
     );
     virtual void get_recognized_extensions(List<String>* p_extensions) const;
     virtual bool handles_type(const String& p_type) const;

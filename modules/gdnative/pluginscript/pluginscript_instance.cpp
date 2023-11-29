@@ -146,11 +146,11 @@ bool PluginScriptInstance::refcount_decremented() {
 PluginScriptInstance::PluginScriptInstance() {}
 
 bool PluginScriptInstance::init(PluginScript* p_script, Object* p_owner) {
-    _owner = p_owner;
+    _owner         = p_owner;
     _owner_variant = Variant(p_owner);
-    _script = Ref<PluginScript>(p_script);
-    _desc = &p_script->_desc->instance_desc;
-    _data = _desc->init(p_script->_data, (godot_object*)p_owner);
+    _script        = Ref<PluginScript>(p_script);
+    _desc          = &p_script->_desc->instance_desc;
+    _data          = _desc->init(p_script->_data, (godot_object*)p_owner);
     ERR_FAIL_COND_V(_data == nullptr, false);
     p_owner->set_script_instance(this);
     return true;

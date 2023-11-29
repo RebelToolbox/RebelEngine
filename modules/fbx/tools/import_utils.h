@@ -182,21 +182,21 @@ public:
 
     struct AssetImportFbx {
         enum ETimeMode {
-            TIME_MODE_DEFAULT = 0,
-            TIME_MODE_120 = 1,
-            TIME_MODE_100 = 2,
-            TIME_MODE_60 = 3,
-            TIME_MODE_50 = 4,
-            TIME_MODE_48 = 5,
-            TIME_MODE_30 = 6,
-            TIME_MODE_30_DROP = 7,
+            TIME_MODE_DEFAULT         = 0,
+            TIME_MODE_120             = 1,
+            TIME_MODE_100             = 2,
+            TIME_MODE_60              = 3,
+            TIME_MODE_50              = 4,
+            TIME_MODE_48              = 5,
+            TIME_MODE_30              = 6,
+            TIME_MODE_30_DROP         = 7,
             TIME_MODE_NTSC_DROP_FRAME = 8,
             TIME_MODE_NTSC_FULL_FRAME = 9,
-            TIME_MODE_PAL = 10,
-            TIME_MODE_CINEMA = 11,
-            TIME_MODE_1000 = 12,
-            TIME_MODE_CINEMA_ND = 13,
-            TIME_MODE_CUSTOM = 14,
+            TIME_MODE_PAL             = 10,
+            TIME_MODE_CINEMA          = 11,
+            TIME_MODE_1000            = 12,
+            TIME_MODE_CINEMA_ND       = 13,
+            TIME_MODE_CUSTOM          = 14,
             TIME_MODE_TIME_MODE_COUNT = 15
         };
 
@@ -208,12 +208,12 @@ public:
 
         enum FrontAxis {
             FRONT_PARITY_EVEN = 1,
-            FRONT_PARITY_ODD = 2,
+            FRONT_PARITY_ODD  = 2,
         };
 
         enum CoordAxis {
             COORD_RIGHT = 0,
-            COORD_LEFT = 1
+            COORD_LEFT  = 1
         };
     };
 

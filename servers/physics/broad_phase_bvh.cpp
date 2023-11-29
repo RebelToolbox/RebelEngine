@@ -223,7 +223,7 @@ BroadPhaseBVH::BroadPhaseBVH() {
     bvh.set_pair_callback(_pair_callback, this);
     bvh.set_unpair_callback(_unpair_callback, this);
     bvh.set_check_pair_callback(_check_pair_callback, this);
-    pair_callback = nullptr;
-    pair_userdata = nullptr;
+    pair_callback   = nullptr;
+    pair_userdata   = nullptr;
     unpair_userdata = nullptr;
 }

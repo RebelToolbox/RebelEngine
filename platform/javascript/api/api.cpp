@@ -120,12 +120,12 @@ Variant JavaScript::_create_object_bind(
     Variant::CallError& r_error
 ) {
     if (p_argcount < 1) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 0;
         return Ref<JavaScriptObject>();
     }
     if (p_args[0]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::STRING;
         return Ref<JavaScriptObject>();

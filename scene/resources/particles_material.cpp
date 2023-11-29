@@ -43,64 +43,64 @@ void ParticlesMaterial::init_shaders() {
 
     shader_names = memnew(ShaderNames);
 
-    shader_names->direction = "direction";
-    shader_names->spread = "spread";
-    shader_names->flatness = "flatness";
+    shader_names->direction               = "direction";
+    shader_names->spread                  = "spread";
+    shader_names->flatness                = "flatness";
     shader_names->initial_linear_velocity = "initial_linear_velocity";
-    shader_names->initial_angle = "initial_angle";
-    shader_names->angular_velocity = "angular_velocity";
-    shader_names->orbit_velocity = "orbit_velocity";
-    shader_names->linear_accel = "linear_accel";
-    shader_names->radial_accel = "radial_accel";
-    shader_names->tangent_accel = "tangent_accel";
-    shader_names->damping = "damping";
-    shader_names->scale = "scale";
-    shader_names->hue_variation = "hue_variation";
-    shader_names->anim_speed = "anim_speed";
-    shader_names->anim_offset = "anim_offset";
+    shader_names->initial_angle           = "initial_angle";
+    shader_names->angular_velocity        = "angular_velocity";
+    shader_names->orbit_velocity          = "orbit_velocity";
+    shader_names->linear_accel            = "linear_accel";
+    shader_names->radial_accel            = "radial_accel";
+    shader_names->tangent_accel           = "tangent_accel";
+    shader_names->damping                 = "damping";
+    shader_names->scale                   = "scale";
+    shader_names->hue_variation           = "hue_variation";
+    shader_names->anim_speed              = "anim_speed";
+    shader_names->anim_offset             = "anim_offset";
 
     shader_names->initial_linear_velocity_random =
         "initial_linear_velocity_random";
-    shader_names->initial_angle_random = "initial_angle_random";
+    shader_names->initial_angle_random    = "initial_angle_random";
     shader_names->angular_velocity_random = "angular_velocity_random";
-    shader_names->orbit_velocity_random = "orbit_velocity_random";
-    shader_names->linear_accel_random = "linear_accel_random";
-    shader_names->radial_accel_random = "radial_accel_random";
-    shader_names->tangent_accel_random = "tangent_accel_random";
-    shader_names->damping_random = "damping_random";
-    shader_names->scale_random = "scale_random";
-    shader_names->hue_variation_random = "hue_variation_random";
-    shader_names->anim_speed_random = "anim_speed_random";
-    shader_names->anim_offset_random = "anim_offset_random";
+    shader_names->orbit_velocity_random   = "orbit_velocity_random";
+    shader_names->linear_accel_random     = "linear_accel_random";
+    shader_names->radial_accel_random     = "radial_accel_random";
+    shader_names->tangent_accel_random    = "tangent_accel_random";
+    shader_names->damping_random          = "damping_random";
+    shader_names->scale_random            = "scale_random";
+    shader_names->hue_variation_random    = "hue_variation_random";
+    shader_names->anim_speed_random       = "anim_speed_random";
+    shader_names->anim_offset_random      = "anim_offset_random";
 
-    shader_names->angle_texture = "angle_texture";
+    shader_names->angle_texture            = "angle_texture";
     shader_names->angular_velocity_texture = "angular_velocity_texture";
-    shader_names->orbit_velocity_texture = "orbit_velocity_texture";
-    shader_names->linear_accel_texture = "linear_accel_texture";
-    shader_names->radial_accel_texture = "radial_accel_texture";
-    shader_names->tangent_accel_texture = "tangent_accel_texture";
-    shader_names->damping_texture = "damping_texture";
-    shader_names->scale_texture = "scale_texture";
-    shader_names->hue_variation_texture = "hue_variation_texture";
-    shader_names->anim_speed_texture = "anim_speed_texture";
-    shader_names->anim_offset_texture = "anim_offset_texture";
+    shader_names->orbit_velocity_texture   = "orbit_velocity_texture";
+    shader_names->linear_accel_texture     = "linear_accel_texture";
+    shader_names->radial_accel_texture     = "radial_accel_texture";
+    shader_names->tangent_accel_texture    = "tangent_accel_texture";
+    shader_names->damping_texture          = "damping_texture";
+    shader_names->scale_texture            = "scale_texture";
+    shader_names->hue_variation_texture    = "hue_variation_texture";
+    shader_names->anim_speed_texture       = "anim_speed_texture";
+    shader_names->anim_offset_texture      = "anim_offset_texture";
 
-    shader_names->color = "color_value";
+    shader_names->color      = "color_value";
     shader_names->color_ramp = "color_ramp";
 
-    shader_names->emission_sphere_radius = "emission_sphere_radius";
-    shader_names->emission_box_extents = "emission_box_extents";
+    shader_names->emission_sphere_radius       = "emission_sphere_radius";
+    shader_names->emission_box_extents         = "emission_box_extents";
     shader_names->emission_texture_point_count = "emission_texture_point_count";
-    shader_names->emission_texture_points = "emission_texture_points";
-    shader_names->emission_texture_normal = "emission_texture_normal";
-    shader_names->emission_texture_color = "emission_texture_color";
-    shader_names->emission_ring_height = "ring_height";
-    shader_names->emission_ring_inner_radius = "ring_inner_radius";
-    shader_names->emission_ring_radius = "ring_radius";
-    shader_names->emission_ring_axis = "ring_axis";
+    shader_names->emission_texture_points      = "emission_texture_points";
+    shader_names->emission_texture_normal      = "emission_texture_normal";
+    shader_names->emission_texture_color       = "emission_texture_color";
+    shader_names->emission_ring_height         = "ring_height";
+    shader_names->emission_ring_inner_radius   = "ring_inner_radius";
+    shader_names->emission_ring_radius         = "ring_radius";
+    shader_names->emission_ring_axis           = "ring_axis";
 
-    shader_names->trail_divisor = "trail_divisor";
-    shader_names->trail_size_modifier = "trail_size_modifier";
+    shader_names->trail_divisor        = "trail_divisor";
+    shader_names->trail_size_modifier  = "trail_size_modifier";
     shader_names->trail_color_modifier = "trail_color_modifier";
 
     shader_names->gravity = "gravity";
@@ -875,7 +875,7 @@ void ParticlesMaterial::_update_shader() {
 
     ShaderData shader_data;
     shader_data.shader = VS::get_singleton()->shader_create();
-    shader_data.users = 1;
+    shader_data.users  = 1;
 
     VS::get_singleton()->shader_set_code(shader_data.shader, code);
 
@@ -1519,7 +1519,7 @@ Ref<GradientTexture> ParticlesMaterial::get_trail_color_modifier() const {
 }
 
 void ParticlesMaterial::set_gravity(const Vector3& p_gravity) {
-    gravity = p_gravity;
+    gravity      = p_gravity;
     Vector3 gset = gravity;
     if (gset == Vector3()) {
         gset = Vector3(
@@ -2495,7 +2495,7 @@ ParticlesMaterial::ParticlesMaterial() : element(this) {
 
     set_color(Color(1, 1, 1, 1));
 
-    current_key.key = 0;
+    current_key.key         = 0;
     current_key.invalid_key = 1;
 
     is_initialized = true;

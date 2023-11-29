@@ -336,7 +336,7 @@ public:
     static void show_warning(
         const String& p_string,
         const String& p_extra_string = "",
-        bool p_alert = true
+        bool p_alert                 = true
     );
 
     static real_t _get_default_portal_margin() {
@@ -349,11 +349,11 @@ private:
     NodePath _settings_path_preview_camera;
 
     // resolved node
-    Spatial* _roomlist = nullptr;
-    bool _warning_misnamed_nodes_detected = false;
+    Spatial* _roomlist                       = nullptr;
+    bool _warning_misnamed_nodes_detected    = false;
     bool _warning_portal_link_room_not_found = false;
-    bool _warning_portal_autolink_failed = false;
-    bool _warning_room_overlap_detected = false;
+    bool _warning_portal_autolink_failed     = false;
+    bool _warning_room_overlap_detected      = false;
 
     // merge suitable meshes in rooms?
     bool _settings_merge_meshes = false;
@@ -364,17 +364,17 @@ private:
     bool _active = true;
 
     // portals, room hulls etc
-    bool _show_debug = true;
+    bool _show_debug   = true;
     bool _debug_sprawl = false;
 
     // pvs
     PVSMode _pvs_mode = PVS_MODE_PARTIAL;
     String _pvs_filename;
-    bool _settings_use_secondary_pvs = false;
-    bool _settings_use_simple_pvs = false;
+    bool _settings_use_secondary_pvs  = false;
+    bool _settings_use_simple_pvs     = false;
     bool _settings_log_pvs_generation = false;
 
-    bool _settings_use_signals = true;
+    bool _settings_use_signals              = true;
     bool _settings_gameplay_monitor_enabled = false;
 
     int _conversion_tick = 0;
@@ -387,7 +387,7 @@ private:
     static real_t _default_portal_margin;
     real_t _overlap_warning_threshold = 1.0;
     Room::SimplifyInfo _room_simplify_info;
-    int _settings_portal_depth_limit = 16;
+    int _settings_portal_depth_limit          = 16;
     real_t _settings_roaming_expansion_margin = 1.0;
 
     // debug override camera

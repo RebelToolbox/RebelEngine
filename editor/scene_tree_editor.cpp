@@ -72,7 +72,7 @@ void SceneTreeEditor::_cell_button_pressed(
             emit_signal("open", n->get_filename());
         }
     } else if (p_id == BUTTON_SCRIPT) {
-        RefPtr script = n->get_script();
+        RefPtr script            = n->get_script();
         Ref<Script> script_typed = script;
         if (!script_typed.is_null()) {
             emit_signal("open_script", script);
@@ -84,7 +84,7 @@ void SceneTreeEditor::_cell_button_pressed(
         List<Node*> selection = editor_selection->get_selected_node_list();
         if (selection.size() > 1 && selection.find(n) != nullptr) {
             for (List<Node*>::Element* E = selection.front(); E;
-                 E = E->next()) {
+                 E                       = E->next()) {
                 Node* nv = E->get();
                 ERR_FAIL_COND(!nv);
                 if (nv == n) {
@@ -317,7 +317,7 @@ bool SceneTreeEditor::_add_nodes(
         }
 
         int num_connections = p_node->get_persistent_signal_connection_count();
-        int num_groups = p_node->get_persistent_group_count();
+        int num_groups      = p_node->get_persistent_group_count();
 
         if (num_connections >= 1 && num_groups >= 1) {
             item->add_button(
@@ -1000,7 +1000,7 @@ void SceneTreeEditor::_renamed() {
 
     ERR_FAIL_COND(!which);
     NodePath np = which->get_metadata(0);
-    Node* n = get_node(np);
+    Node* n     = get_node(np);
     ERR_FAIL_COND(!n);
 
     // Empty node names are not allowed, so resets it to previous text and show
@@ -1012,7 +1012,7 @@ void SceneTreeEditor::_renamed() {
     }
 
     String raw_new_name = which->get_text(0);
-    String new_name = raw_new_name.validate_node_name();
+    String new_name     = raw_new_name.validate_node_name();
     if (new_name != raw_new_name) {
         error->set_text(
             TTR("Invalid node name, the following characters are not allowed:")
@@ -1072,8 +1072,8 @@ void SceneTreeEditor::set_marked(
     if (tree_dirty) {
         _update_tree();
     }
-    marked = p_marked;
-    marked_selectable = p_selectable;
+    marked                     = p_marked;
+    marked_selectable          = p_selectable;
     marked_children_selectable = p_children_selectable;
     _update_tree();
 }
@@ -1220,13 +1220,13 @@ Variant SceneTreeEditor::get_drag_data_fw(
 
     VBoxContainer* vb = memnew(VBoxContainer);
     Array objs;
-    int list_max = 10;
+    int list_max       = 10;
     float opacity_step = 1.0f / list_max;
     float opacity_item = 1.0f;
     for (int i = 0; i < selected.size(); i++) {
         if (i < list_max) {
             HBoxContainer* hb = memnew(HBoxContainer);
-            TextureRect* tf = memnew(TextureRect);
+            TextureRect* tf   = memnew(TextureRect);
             tf->set_texture(icons[i]);
             tf->set_stretch_mode(TextureRect::STRETCH_KEEP_CENTERED);
             hb->add_child(tf);
@@ -1242,7 +1242,7 @@ Variant SceneTreeEditor::get_drag_data_fw(
 
     set_drag_preview(vb);
     Dictionary drag_data;
-    drag_data["type"] = "nodes";
+    drag_data["type"]  = "nodes";
     drag_data["nodes"] = objs;
 
     tree->set_drop_mode_flags(
@@ -1356,7 +1356,7 @@ void SceneTreeEditor::drop_data_fw(
     }
 
     NodePath np = item->get_metadata(0);
-    Node* n = get_node(np);
+    Node* n     = get_node(np);
     if (!n) {
         return;
     }
@@ -1515,17 +1515,17 @@ SceneTreeEditor::SceneTreeEditor(
     bool p_can_open_instance
 ) {
     connect_to_script_mode = false;
-    connecting_signal = false;
-    undo_redo = nullptr;
-    tree_dirty = true;
-    selected = nullptr;
+    connecting_signal      = false;
+    undo_redo              = nullptr;
+    tree_dirty             = true;
+    selected               = nullptr;
 
-    marked_selectable = false;
+    marked_selectable          = false;
     marked_children_selectable = false;
-    can_rename = p_can_rename;
-    can_open_instance = p_can_open_instance;
-    display_foreign = false;
-    editor_selection = nullptr;
+    can_rename                 = p_can_rename;
+    can_open_instance          = p_can_open_instance;
+    display_foreign            = false;
+    editor_selection           = nullptr;
 
     if (p_label) {
         Label* label = memnew(Label);
@@ -1568,10 +1568,10 @@ SceneTreeEditor::SceneTreeEditor(
 
     show_enabled_subscene = false;
 
-    last_hash = 0;
+    last_hash           = 0;
     pending_test_update = false;
-    updating_tree = false;
-    blocked = 0;
+    updating_tree       = false;
+    blocked             = 0;
 
     update_timer = memnew(Timer);
     update_timer->connect("timeout", this, "_update_tree", varray(false));

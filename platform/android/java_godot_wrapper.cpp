@@ -43,7 +43,7 @@ GodotJavaWrapper::GodotJavaWrapper(
     jobject p_godot_instance
 ) {
     godot_instance = p_env->NewGlobalRef(p_godot_instance);
-    activity = p_env->NewGlobalRef(p_activity);
+    activity       = p_env->NewGlobalRef(p_activity);
 
     // Get the RebelFragment class that contains all the java methods that are
     // called
@@ -67,7 +67,7 @@ GodotJavaWrapper::GodotJavaWrapper(
     _on_video_init =
         p_env->GetMethodID(java_method_class, "onVideoInit", "()V");
     _restart = p_env->GetMethodID(java_method_class, "restart", "()V");
-    _finish = p_env->GetMethodID(java_method_class, "forceQuit", "()V");
+    _finish  = p_env->GetMethodID(java_method_class, "forceQuit", "()V");
     _set_keep_screen_on =
         p_env->GetMethodID(java_method_class, "setKeepScreenOn", "(Z)V");
     _alert = p_env->GetMethodID(
@@ -241,7 +241,7 @@ void GodotJavaWrapper::alert(const String& p_message, const String& p_title) {
         ERR_FAIL_COND(env == nullptr);
 
         jstring jStrMessage = env->NewStringUTF(p_message.utf8().get_data());
-        jstring jStrTitle = env->NewStringUTF(p_title.utf8().get_data());
+        jstring jStrTitle   = env->NewStringUTF(p_title.utf8().get_data());
         env->CallVoidMethod(godot_instance, _alert, jStrMessage, jStrTitle);
     }
 }
@@ -336,11 +336,11 @@ Vector<String> GodotJavaWrapper::get_granted_permissions() const {
         jobjectArray* arr =
             reinterpret_cast<jobjectArray*>(&permissions_object);
 
-        int i = 0;
+        int i     = 0;
         jsize len = env->GetArrayLength(*arr);
         for (i = 0; i < len; i++) {
             jstring jstr = (jstring)env->GetObjectArrayElement(*arr, i);
-            String str = jstring_to_string(jstr, env);
+            String str   = jstring_to_string(jstr, env);
             permissions_list.push_back(str);
             env->DeleteLocalRef(jstr);
         }

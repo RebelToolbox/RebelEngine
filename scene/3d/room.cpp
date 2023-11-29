@@ -50,7 +50,7 @@ void Room::SimplifyInfo::set_simplify(real_t p_value, real_t p_room_size) {
     // _plane_simplify_dist = MAX(_plane_simplify_dist, 0.08);
 
     // test fix
-    _plane_simplify_dot = 0.99;
+    _plane_simplify_dot  = 0.99;
     _plane_simplify_dist = 0.08;
 
     // print_verbose("plane simplify dot : " +
@@ -175,7 +175,7 @@ PoolVector<Vector3> Room::generate_points() {
 
     // scale an epsilon using 10.0 for a normal sized room
     real_t scaled_epsilon = _aabb.get_longest_axis_size() / 10.0;
-    scaled_epsilon = MAX(scaled_epsilon * 0.01, 0.001);
+    scaled_epsilon        = MAX(scaled_epsilon * 0.01, 0.001);
 
     LocalVector<Vector3, int32_t> pts;
     pts = Geometry::compute_convex_mesh_points(

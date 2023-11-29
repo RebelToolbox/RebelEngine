@@ -90,9 +90,9 @@ class AStar : public Reference {
         };
 
         enum {
-            NONE = 0,
-            FORWARD = 1,
-            BACKWARD = 2,
+            NONE          = 0,
+            FORWARD       = 1,
+            BACKWARD      = 2,
             BIDIRECTIONAL = FORWARD | BACKWARD
         };
 
@@ -103,18 +103,18 @@ class AStar : public Reference {
         }
 
         Segment() {
-            key = 0;
+            key       = 0;
             direction = NONE;
         }
 
         Segment(int p_from, int p_to) {
             if (p_from < p_to) {
-                u = p_from;
-                v = p_to;
+                u         = p_from;
+                v         = p_to;
                 direction = FORWARD;
             } else {
-                u = p_to;
-                v = p_from;
+                u         = p_to;
+                v         = p_from;
                 direction = BACKWARD;
             }
         }

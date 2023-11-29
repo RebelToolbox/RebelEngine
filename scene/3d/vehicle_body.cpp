@@ -61,8 +61,8 @@ public:
         const real_t massInvB
     ) :
         m_linearJointAxis(jointAxis) {
-        m_aJ = world2A.xform(rel_pos1.cross(m_linearJointAxis));
-        m_bJ = world2B.xform(rel_pos2.cross(-m_linearJointAxis));
+        m_aJ      = world2A.xform(rel_pos1.cross(m_linearJointAxis));
+        m_bJ      = world2B.xform(rel_pos2.cross(-m_linearJointAxis));
         m_0MinvJt = inertiaInvA * m_aJ;
         m_1MinvJt = inertiaInvB * m_bJ;
         m_Adiag =
@@ -77,13 +77,13 @@ public:
         const Vector3& linvelB,
         const Vector3& angvelB
     ) {
-        Vector3 linrel = linvelA - linvelB;
-        Vector3 angvela = angvelA * m_aJ;
-        Vector3 angvelb = angvelB * m_bJ;
-        linrel *= m_linearJointAxis;
-        angvela += angvelb;
-        angvela += linrel;
-        real_t rel_vel2 = angvela[0] + angvela[1] + angvela[2];
+        Vector3 linrel   = linvelA - linvelB;
+        Vector3 angvela  = angvelA * m_aJ;
+        Vector3 angvelb  = angvelB * m_bJ;
+        linrel          *= m_linearJointAxis;
+        angvela         += angvelb;
+        angvela         += linrel;
+        real_t rel_vel2  = angvela[0] + angvela[1] + angvela[2];
         return rel_vel2 + CMP_EPSILON;
     }
 };
@@ -94,7 +94,7 @@ void VehicleWheel::_notification(int p_what) {
         if (!cb) {
             return;
         }
-        body = cb;
+        body        = cb;
         local_xform = get_transform();
         cb->wheels.push_back(this);
 
@@ -147,11 +147,11 @@ void VehicleWheel::_update(PhysicsDirectBodyState* s) {
             m_raycastInfo.m_contactNormalWS.dot(chassis_velocity_at_contactPoint
             );
         if (project >= real_t(-0.1)) {
-            m_suspensionRelativeVelocity = real_t(0.0);
+            m_suspensionRelativeVelocity     = real_t(0.0);
             m_clippedInvContactDotSuspension = real_t(1.0) / real_t(0.1);
         } else {
-            real_t inv = real_t(-1.) / project;
-            m_suspensionRelativeVelocity = projVel * inv;
+            real_t inv                       = real_t(-1.) / project;
+            m_suspensionRelativeVelocity     = projVel * inv;
             m_clippedInvContactDotSuspension = inv;
         }
 
@@ -160,8 +160,8 @@ void VehicleWheel::_update(PhysicsDirectBodyState* s) {
     else // Not in contact : position wheel in a nice (rest length) position
     {
         m_raycastInfo.m_suspensionLength = m_suspensionRestLength;
-        m_suspensionRelativeVelocity = real_t(0.0);
-        m_raycastInfo.m_contactNormalWS = -m_raycastInfo.m_wheelDirectionWS;
+        m_suspensionRelativeVelocity     = real_t(0.0);
+        m_raycastInfo.m_contactNormalWS  = -m_raycastInfo.m_wheelDirectionWS;
         m_clippedInvContactDotSuspension = real_t(1.0);
     }
 }
@@ -512,29 +512,29 @@ float VehicleWheel::get_rpm() const {
 }
 
 VehicleWheel::VehicleWheel() {
-    steers = false;
+    steers          = false;
     engine_traction = false;
 
-    m_steering = real_t(0.);
-    m_engineForce = real_t(0.);
-    m_rotation = real_t(0.);
+    m_steering      = real_t(0.);
+    m_engineForce   = real_t(0.);
+    m_rotation      = real_t(0.);
     m_deltaRotation = real_t(0.);
-    m_brake = real_t(0.);
+    m_brake         = real_t(0.);
     m_rollInfluence = real_t(0.1);
 
-    m_suspensionRestLength = 0.15;
-    m_wheelRadius = 0.5; // 0.28;
-    m_suspensionStiffness = 5.88;
+    m_suspensionRestLength     = 0.15;
+    m_wheelRadius              = 0.5; // 0.28;
+    m_suspensionStiffness      = 5.88;
     m_wheelsDampingCompression = 0.83;
-    m_wheelsDampingRelaxation = 0.88;
-    m_frictionSlip = 10.5;
-    m_bIsFrontWheel = false;
-    m_maxSuspensionTravelCm = 500;
-    m_maxSuspensionForce = 6000;
+    m_wheelsDampingRelaxation  = 0.88;
+    m_frictionSlip             = 10.5;
+    m_bIsFrontWheel            = false;
+    m_maxSuspensionTravelCm    = 500;
+    m_maxSuspensionForce       = 6000;
 
-    m_suspensionRelativeVelocity = 0;
+    m_suspensionRelativeVelocity     = 0;
     m_clippedInvContactDotSuspension = 1.0;
-    m_raycastInfo.m_isInContact = false;
+    m_raycastInfo.m_isInContact      = false;
     m_raycastInfo.m_suspensionLength = 0.0;
 
     body = nullptr;
@@ -566,10 +566,10 @@ void VehicleBody::_update_wheel(int p_idx, PhysicsDirectBodyState* s) {
     VehicleWheel& wheel = *wheels[p_idx];
     _update_wheel_transform(wheel, s);
 
-    Vector3 up = -wheel.m_raycastInfo.m_wheelDirectionWS;
+    Vector3 up           = -wheel.m_raycastInfo.m_wheelDirectionWS;
     const Vector3& right = wheel.m_raycastInfo.m_wheelAxleWS;
-    Vector3 fwd = up.cross(right);
-    fwd = fwd.normalized();
+    Vector3 fwd          = up.cross(right);
+    fwd                  = fwd.normalized();
 
     Basis steeringMat(up, wheel.m_steering);
 
@@ -606,9 +606,9 @@ real_t VehicleBody::_ray_cast(int p_idx, PhysicsDirectBodyState* s) {
     real_t raylen = wheel.m_suspensionRestLength + wheel.m_wheelRadius;
 
     Vector3 rayvector = wheel.m_raycastInfo.m_wheelDirectionWS * (raylen);
-    Vector3 source = wheel.m_raycastInfo.m_hardPointWS;
+    Vector3 source    = wheel.m_raycastInfo.m_hardPointWS;
     wheel.m_raycastInfo.m_contactPointWS = source + rayvector;
-    const Vector3& target = wheel.m_raycastInfo.m_contactPointWS;
+    const Vector3& target                = wheel.m_raycastInfo.m_contactPointWS;
     source -= wheel.m_wheelRadius * wheel.m_raycastInfo.m_wheelDirectionWS;
 
     real_t param = real_t(0.);
@@ -677,19 +677,19 @@ real_t VehicleBody::_ray_cast(int p_idx, PhysicsDirectBodyState* s) {
         );
 
         if (denominator >= real_t(-0.1)) {
-            wheel.m_suspensionRelativeVelocity = real_t(0.0);
+            wheel.m_suspensionRelativeVelocity     = real_t(0.0);
             wheel.m_clippedInvContactDotSuspension = real_t(1.0) / real_t(0.1);
         } else {
-            real_t inv = real_t(-1.) / denominator;
-            wheel.m_suspensionRelativeVelocity = projVel * inv;
+            real_t inv                             = real_t(-1.) / denominator;
+            wheel.m_suspensionRelativeVelocity     = projVel * inv;
             wheel.m_clippedInvContactDotSuspension = inv;
         }
 
     } else {
-        wheel.m_raycastInfo.m_isInContact = false;
+        wheel.m_raycastInfo.m_isInContact      = false;
         // put wheel info as in rest position
         wheel.m_raycastInfo.m_suspensionLength = wheel.m_suspensionRestLength;
-        wheel.m_suspensionRelativeVelocity = real_t(0.0);
+        wheel.m_suspensionRelativeVelocity     = real_t(0.0);
         wheel.m_raycastInfo.m_contactNormalWS =
             -wheel.m_raycastInfo.m_wheelDirectionWS;
         wheel.m_clippedInvContactDotSuspension = real_t(1.0);
@@ -787,10 +787,10 @@ void VehicleBody::_resolve_single_bilateral(
     Vector3 b2invinertia; // todo
 
     if (body2) {
-        b2trans = body2->get_global_transform().basis.transposed();
+        b2trans   = body2->get_global_transform().basis.transposed();
         b2invmass = body2->get_inverse_mass();
-        b2lv = body2->get_linear_velocity();
-        b2av = body2->get_angular_velocity();
+        b2lv      = body2->get_linear_velocity();
+        b2av      = body2->get_angular_velocity();
     }
 
     btVehicleJacobianEntry jac(
@@ -830,10 +830,10 @@ void VehicleBody::_resolve_single_bilateral(
 #define ONLY_USE_LINEAR_MASS
 #ifdef ONLY_USE_LINEAR_MASS
     real_t massTerm = real_t(1.) / ((1.0 / mass) + b2invmass);
-    impulse = -contactDamping * rel_vel * massTerm;
+    impulse         = -contactDamping * rel_vel * massTerm;
 #else
     real_t velocityImpulse = -contactDamping * rel_vel * jacDiagABInv;
-    impulse = velocityImpulse;
+    impulse                = velocityImpulse;
 #endif
 }
 
@@ -853,10 +853,10 @@ VehicleBody::btVehicleWheelContactPoint::btVehicleWheelContactPoint(
     float denom1 = 0;
 
     {
-        Vector3 r0 = frictionPosWorld - s->get_transform().origin;
-        Vector3 c0 = (r0).cross(frictionDirectionWorld);
+        Vector3 r0  = frictionPosWorld - s->get_transform().origin;
+        Vector3 c0  = (r0).cross(frictionDirectionWorld);
         Vector3 vec = s->get_inverse_inertia_tensor().xform_inv(c0).cross(r0);
-        denom0 = s->get_inverse_mass() + frictionDirectionWorld.dot(vec);
+        denom0      = s->get_inverse_mass() + frictionDirectionWorld.dot(vec);
     }
 
     /* TODO: Why is this code unused?
@@ -871,7 +871,7 @@ VehicleBody::btVehicleWheelContactPoint::btVehicleWheelContactPoint(
     */
 
     real_t relaxation = 1.f;
-    m_jacDiagABInv = relaxation / (denom0 + denom1);
+    m_jacDiagABInv    = relaxation / (denom0 + denom1);
 }
 
 real_t VehicleBody::_calc_rolling_friction(
@@ -927,7 +927,7 @@ void VehicleBody::_update_friction(PhysicsDirectBodyState* s) {
 
     // collapse all those loops into one!
     for (int i = 0; i < wheels.size(); i++) {
-        m_sideImpulse.write[i] = real_t(0.);
+        m_sideImpulse.write[i]    = real_t(0.);
         m_forwardImpulse.write[i] = real_t(0.);
     }
 
@@ -946,9 +946,9 @@ void VehicleBody::_update_friction(PhysicsDirectBodyState* s) {
 
                 const Vector3& surfNormalWS =
                     wheelInfo.m_raycastInfo.m_contactNormalWS;
-                real_t proj = m_axle[i].dot(surfNormalWS);
+                real_t proj      = m_axle[i].dot(surfNormalWS);
                 m_axle.write[i] -= surfNormalWS * proj;
-                m_axle.write[i] = m_axle[i].normalized();
+                m_axle.write[i]  = m_axle[i].normalized();
 
                 m_forwardWS.write[i] = surfNormalWS.cross(m_axle[i]);
                 m_forwardWS.write[i].normalize();
@@ -969,7 +969,7 @@ void VehicleBody::_update_friction(PhysicsDirectBodyState* s) {
     }
 
     real_t sideFactor = real_t(1.);
-    real_t fwdFactor = 0.5;
+    real_t fwdFactor  = 0.5;
 
     bool sliding = false;
     {
@@ -986,9 +986,9 @@ void VehicleBody::_update_friction(PhysicsDirectBodyState* s) {
                     rollingFriction = -wheelInfo.m_engineForce * s->get_step();
                 } else {
                     real_t defaultRollingFrictionImpulse = 0.f;
-                    real_t maxImpulse = wheelInfo.m_brake
-                                          ? wheelInfo.m_brake
-                                          : defaultRollingFrictionImpulse;
+                    real_t maxImpulse                    = wheelInfo.m_brake
+                                                             ? wheelInfo.m_brake
+                                                             : defaultRollingFrictionImpulse;
                     btVehicleWheelContactPoint contactPt(
                         s,
                         wheelInfo.m_raycastInfo.m_groundObject,
@@ -1004,7 +1004,7 @@ void VehicleBody::_update_friction(PhysicsDirectBodyState* s) {
             // rolling friction (no throttle/break)
 
             m_forwardImpulse.write[wheel] = real_t(0.);
-            wheelInfo.m_skidInfo = real_t(1.);
+            wheelInfo.m_skidInfo          = real_t(1.);
 
             if (wheelInfo.m_raycastInfo.m_isInContact) {
                 wheelInfo.m_skidInfo = real_t(1.);
@@ -1039,7 +1039,7 @@ void VehicleBody::_update_friction(PhysicsDirectBodyState* s) {
             if (m_sideImpulse[wheel] != real_t(0.)) {
                 if (wheels[wheel]->m_skidInfo < real_t(1.)) {
                     m_forwardImpulse.write[wheel] *= wheels[wheel]->m_skidInfo;
-                    m_sideImpulse.write[wheel] *= wheels[wheel]->m_skidInfo;
+                    m_sideImpulse.write[wheel]    *= wheels[wheel]->m_skidInfo;
                 }
             }
         }
@@ -1152,8 +1152,8 @@ void VehicleBody::_direct_state_changed(Object* p_state) {
                 chassisWorldTransform.basis[2][Vector3::AXIS_Z]
             );
 
-            real_t proj = fwd.dot(wheel.m_raycastInfo.m_contactNormalWS);
-            fwd -= wheel.m_raycastInfo.m_contactNormalWS * proj;
+            real_t proj  = fwd.dot(wheel.m_raycastInfo.m_contactNormalWS);
+            fwd         -= wheel.m_raycastInfo.m_contactNormalWS * proj;
 
             real_t proj2 = fwd.dot(vel);
 
@@ -1161,7 +1161,7 @@ void VehicleBody::_direct_state_changed(Object* p_state) {
         }
 
         wheel.m_rotation += wheel.m_deltaRotation;
-        wheel.m_rpm = ((wheel.m_deltaRotation / step) * 60) / Math_TAU;
+        wheel.m_rpm       = ((wheel.m_deltaRotation / step) * 60) / Math_TAU;
 
         wheel.m_deltaRotation *=
             real_t(0.99); // damping of rotation when not in contact
@@ -1188,7 +1188,7 @@ void VehicleBody::set_brake(float p_brake) {
     brake = p_brake;
     for (int i = 0; i < wheels.size(); i++) {
         VehicleWheel& wheelInfo = *wheels[i];
-        wheelInfo.m_brake = p_brake;
+        wheelInfo.m_brake       = p_brake;
     }
 }
 
@@ -1266,15 +1266,15 @@ void VehicleBody::_bind_methods() {
 }
 
 VehicleBody::VehicleBody() {
-    m_pitchControl = 0;
+    m_pitchControl              = 0;
     m_currentVehicleSpeedKmHour = real_t(0.);
-    m_steeringValue = real_t(0.);
+    m_steeringValue             = real_t(0.);
 
     engine_force = 0;
-    brake = 0;
+    brake        = 0;
 
     state = nullptr;
-    ccd = false;
+    ccd   = false;
 
     exclude.insert(get_rid());
     // PhysicsServer::get_singleton()->body_set_force_integration_callback(get_rid(),

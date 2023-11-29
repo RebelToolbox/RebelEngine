@@ -131,9 +131,9 @@ class EditorFileSystem : public Node {
         EditorFileSystemDirectory::FileInfo* new_file;
 
         ItemAction() {
-            action = ACTION_NONE;
-            dir = nullptr;
-            new_dir = nullptr;
+            action   = ACTION_NONE;
+            dir      = nullptr;
+            new_dir  = nullptr;
             new_file = nullptr;
         }
     };

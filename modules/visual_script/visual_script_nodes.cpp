@@ -48,7 +48,7 @@ bool VisualScriptFunction::_set(
 ) {
     if (p_name == "argument_count") {
         int new_argc = p_value;
-        int argc = arguments.size();
+        int argc     = arguments.size();
         if (argc == new_argc) {
             return true;
         }
@@ -69,7 +69,7 @@ bool VisualScriptFunction::_set(
         ERR_FAIL_INDEX_V(idx, arguments.size(), false);
         String what = String(p_name).get_slice("/", 1);
         if (what == "type") {
-            Variant::Type new_type = Variant::Type(int(p_value));
+            Variant::Type new_type    = Variant::Type(int(p_value));
             arguments.write[idx].type = new_type;
             ports_changed_notify();
 
@@ -226,9 +226,9 @@ PropertyInfo VisualScriptFunction::get_output_value_port_info(int p_idx) const {
         return PropertyInfo();
     }
     PropertyInfo out;
-    out.type = arguments[p_idx].type;
-    out.name = arguments[p_idx].name;
-    out.hint = arguments[p_idx].hint;
+    out.type        = arguments[p_idx].type;
+    out.name        = arguments[p_idx].name;
+    out.hint        = arguments[p_idx].hint;
     out.hint_string = arguments[p_idx].hint_string;
     return out;
 }
@@ -249,9 +249,9 @@ void VisualScriptFunction::add_argument(
     const String& p_hint_string
 ) {
     Argument arg;
-    arg.name = p_name;
-    arg.type = p_type;
-    arg.hint = p_hint;
+    arg.name        = p_name;
+    arg.type        = p_type;
+    arg.hint        = p_hint;
     arg.hint_string = p_hint_string;
     if (p_index >= 0) {
         arguments.insert(p_index, arg);
@@ -357,7 +357,7 @@ VisualScriptNodeInstance* VisualScriptFunction::instance(
 ) {
     VisualScriptNodeInstanceFunction* instance =
         memnew(VisualScriptNodeInstanceFunction);
-    instance->node = this;
+    instance->node     = this;
     instance->instance = p_instance;
     return instance;
 }
@@ -365,8 +365,8 @@ VisualScriptNodeInstance* VisualScriptFunction::instance(
 VisualScriptFunction::VisualScriptFunction() {
     stack_size = 256;
     stack_less = false;
-    sequenced = true;
-    rpc_mode = MultiplayerAPI::RPC_MODE_DISABLED;
+    sequenced  = true;
+    rpc_mode   = MultiplayerAPI::RPC_MODE_DISABLED;
 }
 
 void VisualScriptFunction::set_stack_less(bool p_enable) {
@@ -468,7 +468,7 @@ bool VisualScriptLists::is_output_port_type_editable() const {
 bool VisualScriptLists::_set(const StringName& p_name, const Variant& p_value) {
     if (p_name == "input_count" && is_input_port_editable()) {
         int new_argc = p_value;
-        int argc = inputports.size();
+        int argc     = inputports.size();
         if (argc == new_argc) {
             return true;
         }
@@ -489,7 +489,7 @@ bool VisualScriptLists::_set(const StringName& p_name, const Variant& p_value) {
         ERR_FAIL_INDEX_V(idx, inputports.size(), false);
         String what = String(p_name).get_slice("/", 1);
         if (what == "type") {
-            Variant::Type new_type = Variant::Type(int(p_value));
+            Variant::Type new_type     = Variant::Type(int(p_value));
             inputports.write[idx].type = new_type;
             ports_changed_notify();
 
@@ -505,7 +505,7 @@ bool VisualScriptLists::_set(const StringName& p_name, const Variant& p_value) {
 
     if (p_name == "output_count" && is_output_port_editable()) {
         int new_argc = p_value;
-        int argc = outputports.size();
+        int argc     = outputports.size();
         if (argc == new_argc) {
             return true;
         }
@@ -526,7 +526,7 @@ bool VisualScriptLists::_set(const StringName& p_name, const Variant& p_value) {
         ERR_FAIL_INDEX_V(idx, outputports.size(), false);
         String what = String(p_name).get_slice("/", 1);
         if (what == "type") {
-            Variant::Type new_type = Variant::Type(int(p_value));
+            Variant::Type new_type      = Variant::Type(int(p_value));
             outputports.write[idx].type = new_type;
             ports_changed_notify();
 
@@ -797,7 +797,7 @@ bool VisualScriptLists::is_sequenced() const {
 VisualScriptLists::VisualScriptLists() {
     // initialize
     sequenced = false;
-    flags = 0;
+    flags     = 0;
 }
 
 void VisualScriptLists::_bind_methods() {
@@ -932,7 +932,7 @@ VisualScriptNodeInstance* VisualScriptComposeArray::instance(
 VisualScriptComposeArray::VisualScriptComposeArray() {
     // initialize stuff here
     sequenced = false;
-    flags = INPUT_EDITABLE;
+    flags     = INPUT_EDITABLE;
 }
 
 //////////////////////////////////////////
@@ -1252,12 +1252,12 @@ VisualScriptNodeInstance* VisualScriptOperator::instance(
     VisualScriptNodeInstanceOperator* instance =
         memnew(VisualScriptNodeInstanceOperator);
     instance->unary = get_input_value_port_count() == 1;
-    instance->op = op;
+    instance->op    = op;
     return instance;
 }
 
 VisualScriptOperator::VisualScriptOperator() {
-    op = Variant::OP_ADD;
+    op    = Variant::OP_ADD;
     typed = Variant::NIL;
 }
 
@@ -1419,9 +1419,9 @@ PropertyInfo VisualScriptVariableGet::get_output_value_port_info(int p_idx
     if (get_visual_script().is_valid()
         && get_visual_script()->has_variable(variable)) {
         PropertyInfo vinfo = get_visual_script()->get_variable_info(variable);
-        pinfo.type = vinfo.type;
-        pinfo.hint = vinfo.hint;
-        pinfo.hint_string = vinfo.hint_string;
+        pinfo.type         = vinfo.type;
+        pinfo.hint         = vinfo.hint;
+        pinfo.hint_string  = vinfo.hint_string;
     }
     return pinfo;
 }
@@ -1457,7 +1457,7 @@ void VisualScriptVariableGet::_validate_property(PropertyInfo& property) const {
             vhint += E->get().operator String();
         }
 
-        property.hint = PROPERTY_HINT_ENUM;
+        property.hint        = PROPERTY_HINT_ENUM;
         property.hint_string = vhint;
     }
 }
@@ -1495,7 +1495,7 @@ public:
     ) {
         if (!instance->get_variable(variable, p_outputs[0])) {
             r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-            r_error_str = RTR("VariableGet not found in script: ") + "'"
+            r_error_str   = RTR("VariableGet not found in script: ") + "'"
                         + String(variable) + "'";
             return 0;
         }
@@ -1508,7 +1508,7 @@ VisualScriptNodeInstance* VisualScriptVariableGet::instance(
 ) {
     VisualScriptNodeInstanceVariableGet* instance =
         memnew(VisualScriptNodeInstanceVariableGet);
-    instance->node = this;
+    instance->node     = this;
     instance->instance = p_instance;
     instance->variable = variable;
     return instance;
@@ -1548,9 +1548,9 @@ PropertyInfo VisualScriptVariableSet::get_input_value_port_info(int p_idx
     if (get_visual_script().is_valid()
         && get_visual_script()->has_variable(variable)) {
         PropertyInfo vinfo = get_visual_script()->get_variable_info(variable);
-        pinfo.type = vinfo.type;
-        pinfo.hint = vinfo.hint;
-        pinfo.hint_string = vinfo.hint_string;
+        pinfo.type         = vinfo.type;
+        pinfo.hint         = vinfo.hint;
+        pinfo.hint_string  = vinfo.hint_string;
     }
     return pinfo;
 }
@@ -1591,7 +1591,7 @@ void VisualScriptVariableSet::_validate_property(PropertyInfo& property) const {
             vhint += E->get().operator String();
         }
 
-        property.hint = PROPERTY_HINT_ENUM;
+        property.hint        = PROPERTY_HINT_ENUM;
         property.hint_string = vhint;
     }
 }
@@ -1631,7 +1631,7 @@ public:
     ) {
         if (!instance->set_variable(variable, *p_inputs[0])) {
             r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-            r_error_str = RTR("VariableSet not found in script: ") + "'"
+            r_error_str   = RTR("VariableSet not found in script: ") + "'"
                         + String(variable) + "'";
         }
 
@@ -1644,7 +1644,7 @@ VisualScriptNodeInstance* VisualScriptVariableSet::instance(
 ) {
     VisualScriptNodeInstanceVariableSet* instance =
         memnew(VisualScriptNodeInstanceVariableSet);
-    instance->node = this;
+    instance->node     = this;
     instance->instance = p_instance;
     instance->variable = variable;
     return instance;
@@ -1835,7 +1835,7 @@ PropertyInfo VisualScriptPreload::get_output_value_port_info(int p_idx) const {
     PropertyInfo pinfo;
     pinfo.type = Variant::OBJECT;
     if (preload.is_valid()) {
-        pinfo.hint = PROPERTY_HINT_RESOURCE_TYPE;
+        pinfo.hint        = PROPERTY_HINT_RESOURCE_TYPE;
         pinfo.hint_string = preload->get_class();
         if (preload->get_path().is_resource_file()) {
             pinfo.name = preload->get_path();
@@ -2416,7 +2416,7 @@ void VisualScriptBasicTypeConstant::set_basic_type(Variant::Type p_which) {
     if (constants.size() > 0) {
         bool found_name = false;
         for (List<StringName>::Element* E = constants.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             if (E->get() == name) {
                 found_name = true;
                 break;
@@ -2484,7 +2484,7 @@ void VisualScriptBasicTypeConstant::_validate_property(PropertyInfo& property
         }
         property.hint_string = "";
         for (List<StringName>::Element* E = constants.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             if (property.hint_string != String()) {
                 property.hint_string += ",";
             }
@@ -2751,7 +2751,7 @@ VisualScriptEngineSingleton::TypeGuess VisualScriptEngineSingleton::
     tg.type = Variant::OBJECT;
     if (obj) {
         tg.gdclass = obj->get_class();
-        tg.script = obj->get_script();
+        tg.script  = obj->get_script();
     }
 
     return tg;
@@ -2766,7 +2766,7 @@ void VisualScriptEngineSingleton::_validate_property(PropertyInfo& property
     Engine::get_singleton()->get_singletons(&singletons);
 
     for (List<Engine::Singleton>::Element* E = singletons.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         if (E->get().name == "VS" || E->get().name == "PS"
             || E->get().name == "PS2D" || E->get().name == "AS"
             || E->get().name == "TS" || E->get().name == "SS"
@@ -2780,7 +2780,7 @@ void VisualScriptEngineSingleton::_validate_property(PropertyInfo& property
         cc += E->get().name;
     }
 
-    property.hint = PROPERTY_HINT_ENUM;
+    property.hint        = PROPERTY_HINT_ENUM;
     property.hint_string = cc;
 }
 
@@ -2871,14 +2871,14 @@ public:
         Node* node = Object::cast_to<Node>(instance->get_owner_ptr());
         if (!node) {
             r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-            r_error_str = "Base object is not a Node!";
+            r_error_str   = "Base object is not a Node!";
             return 0;
         }
 
         Node* another = node->get_node(path);
         if (!another) {
             r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-            r_error_str = "Path does not lead Node!";
+            r_error_str   = "Path does not lead Node!";
             return 0;
         }
 
@@ -2893,9 +2893,9 @@ VisualScriptNodeInstance* VisualScriptSceneNode::instance(
 ) {
     VisualScriptNodeInstanceSceneNode* instance =
         memnew(VisualScriptNodeInstanceSceneNode);
-    instance->node = this;
+    instance->node     = this;
     instance->instance = p_instance;
-    instance->path = path;
+    instance->path     = path;
     return instance;
 }
 
@@ -2938,7 +2938,7 @@ VisualScriptSceneNode::TypeGuess VisualScriptSceneNode::guess_output_type(
     int p_output
 ) const {
     VisualScriptSceneNode::TypeGuess tg;
-    tg.type = Variant::OBJECT;
+    tg.type    = Variant::OBJECT;
     tg.gdclass = "Node";
 
 #ifdef TOOLS_ENABLED
@@ -2947,7 +2947,7 @@ VisualScriptSceneNode::TypeGuess VisualScriptSceneNode::guess_output_type(
         return tg;
     }
 
-    MainLoop* main_loop = OS::get_singleton()->get_main_loop();
+    MainLoop* main_loop   = OS::get_singleton()->get_main_loop();
     SceneTree* scene_tree = Object::cast_to<SceneTree>(main_loop);
 
     if (!scene_tree) {
@@ -2970,7 +2970,7 @@ VisualScriptSceneNode::TypeGuess VisualScriptSceneNode::guess_output_type(
 
     if (another) {
         tg.gdclass = another->get_class();
-        tg.script = another->get_script();
+        tg.script  = another->get_script();
     }
 #endif
     return tg;
@@ -2984,7 +2984,7 @@ void VisualScriptSceneNode::_validate_property(PropertyInfo& property) const {
             return;
         }
 
-        MainLoop* main_loop = OS::get_singleton()->get_main_loop();
+        MainLoop* main_loop   = OS::get_singleton()->get_main_loop();
         SceneTree* scene_tree = Object::cast_to<SceneTree>(main_loop);
 
         if (!scene_tree) {
@@ -3094,7 +3094,7 @@ public:
         Node* node = Object::cast_to<Node>(instance->get_owner_ptr());
         if (!node) {
             r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-            r_error_str = "Base object is not a Node!";
+            r_error_str   = "Base object is not a Node!";
             return 0;
         }
 
@@ -3118,7 +3118,7 @@ VisualScriptNodeInstance* VisualScriptSceneTree::instance(
 ) {
     VisualScriptNodeInstanceSceneTree* instance =
         memnew(VisualScriptNodeInstanceSceneTree);
-    instance->node = this;
+    instance->node     = this;
     instance->instance = p_instance;
     return instance;
 }
@@ -3128,7 +3128,7 @@ VisualScriptSceneTree::TypeGuess VisualScriptSceneTree::guess_output_type(
     int p_output
 ) const {
     TypeGuess tg;
-    tg.type = Variant::OBJECT;
+    tg.type    = Variant::OBJECT;
     tg.gdclass = "SceneTree";
     return tg;
 }
@@ -3313,7 +3313,7 @@ VisualScriptSelf::TypeGuess VisualScriptSelf::guess_output_type(
     int p_output
 ) const {
     VisualScriptSceneNode::TypeGuess tg;
-    tg.type = Variant::OBJECT;
+    tg.type    = Variant::OBJECT;
     tg.gdclass = "Object";
 
     Ref<Script> script = get_visual_script();
@@ -3322,7 +3322,7 @@ VisualScriptSelf::TypeGuess VisualScriptSelf::guess_output_type(
     }
 
     tg.gdclass = script->get_instance_base_type();
-    tg.script = script;
+    tg.script  = script;
 
     return tg;
 }
@@ -3548,7 +3548,7 @@ public:
                 work_mem
             );
             if (ret.get_type() == Variant::STRING) {
-                r_error_str = ret;
+                r_error_str   = ret;
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
                 return 0;
             } else if (ret.is_num()) {
@@ -3585,9 +3585,9 @@ VisualScriptNodeInstance* VisualScriptCustomNode::instance(
 ) {
     VisualScriptNodeInstanceCustomNode* instance =
         memnew(VisualScriptNodeInstanceCustomNode);
-    instance->instance = p_instance;
-    instance->node = this;
-    instance->in_count = get_input_value_port_count();
+    instance->instance  = p_instance;
+    instance->node      = this;
+    instance->in_count  = get_input_value_port_count();
     instance->out_count = get_output_value_port_count();
 
     if (get_script_instance()
@@ -3817,7 +3817,7 @@ VisualScriptNodeInstance* VisualScriptSubCall::instance(
     Ref<Script> script = get_script();
     if (script.is_valid()
         && script->has_method(VisualScriptLanguage::singleton->_subcall)) {
-        instance->valid = true;
+        instance->valid      = true;
         instance->input_args = get_input_value_port_count();
     } else {
         instance->valid = false;
@@ -3992,7 +3992,7 @@ void VisualScriptComment::_bind_methods() {
 
 VisualScriptComment::VisualScriptComment() {
     title = "Comment";
-    size = Size2(150, 150);
+    size  = Size2(150, 150);
 }
 
 //////////////////////////////////////////
@@ -4092,7 +4092,7 @@ VisualScriptNodeInstance* VisualScriptConstructor::instance(
     VisualScriptNodeInstanceConstructor* instance =
         memnew(VisualScriptNodeInstanceConstructor);
     instance->instance = p_instance;
-    instance->type = type;
+    instance->type     = type;
     instance->argcount = constructor.arguments.size();
     return instance;
 }
@@ -4247,7 +4247,7 @@ VisualScriptNodeInstance* VisualScriptLocalVar::instance(
     VisualScriptNodeInstanceLocalVar* instance =
         memnew(VisualScriptNodeInstanceLocalVar);
     instance->instance = p_instance;
-    instance->name = name;
+    instance->name     = name;
 
     return instance;
 }
@@ -4380,7 +4380,7 @@ public:
         String& r_error_str
     ) {
         *p_working_mem = *p_inputs[0];
-        *p_outputs[0] = *p_working_mem;
+        *p_outputs[0]  = *p_working_mem;
         return 0;
     }
 };
@@ -4391,7 +4391,7 @@ VisualScriptNodeInstance* VisualScriptLocalVarSet::instance(
     VisualScriptNodeInstanceLocalVarSet* instance =
         memnew(VisualScriptNodeInstanceLocalVarSet);
     instance->instance = p_instance;
-    instance->name = name;
+    instance->name     = name;
 
     return instance;
 }
@@ -4565,8 +4565,8 @@ VisualScriptNodeInstance* VisualScriptInputAction::instance(
     VisualScriptNodeInstanceInputAction* instance =
         memnew(VisualScriptNodeInstanceInputAction);
     instance->instance = p_instance;
-    instance->action = name;
-    instance->mode = mode;
+    instance->action   = name;
+    instance->mode     = mode;
 
     return instance;
 }
@@ -4979,7 +4979,7 @@ void register_visual_script_nodes() {
         Variant::get_constructor_list(Variant::Type(i), &constructors);
 
         for (List<MethodInfo>::Element* E = constructors.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             if (E->get().arguments.size() > 0) {
                 String name = "functions/constructors/"
                             + Variant::get_type_name(Variant::Type(i)) + "(";
@@ -5000,8 +5000,8 @@ void register_visual_script_nodes() {
                     create_constructor_node
                 );
                 Pair<Variant::Type, MethodInfo> pair;
-                pair.first = Variant::Type(i);
-                pair.second = E->get();
+                pair.first            = Variant::Type(i);
+                pair.second           = E->get();
                 constructor_map[name] = pair;
             }
         }

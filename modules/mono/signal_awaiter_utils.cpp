@@ -89,7 +89,7 @@ Variant SignalAwaiterHandle::_signal_callback(
 #endif
 
     if (p_argcount < 1) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 1;
         return Variant();
     }
@@ -97,7 +97,7 @@ Variant SignalAwaiterHandle::_signal_callback(
     Ref<SignalAwaiterHandle> self = *p_args[p_argcount - 1];
 
     if (self.is_null()) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = p_argcount - 1;
         r_error.expected = Variant::OBJECT;
         return Variant();
@@ -105,7 +105,7 @@ Variant SignalAwaiterHandle::_signal_callback(
 
     set_completed(true);
 
-    int signal_argc = p_argcount - 1;
+    int signal_argc        = p_argcount - 1;
     MonoArray* signal_args = mono_array_new(
         mono_domain_get(),
         CACHED_CLASS_RAW(MonoObject),

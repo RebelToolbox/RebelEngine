@@ -65,8 +65,8 @@ public:
     static SavePNGBufferFunc save_png_buffer_func;
 
     enum {
-        MAX_WIDTH = 16384, // force a limit somehow
-        MAX_HEIGHT = 16384 // force a limit somehow
+        MAX_WIDTH  = 16384, // force a limit somehow
+        MAX_HEIGHT = 16384  // force a limit somehow
     };
 
     enum Format {
@@ -207,11 +207,11 @@ private:
     bool mipmaps;
 
     void _copy_internals_from(const Image& p_image) {
-        format = p_image.format;
-        width = p_image.width;
-        height = p_image.height;
+        format  = p_image.format;
+        width   = p_image.width;
+        height  = p_image.height;
         mipmaps = p_image.mipmaps;
-        data = p_image.data;
+        data    = p_image.data;
     }
 
     _FORCE_INLINE_ void _get_mipmap_offset_and_size(
@@ -319,7 +319,7 @@ public:
      * Resize the image, using the preferred interpolation method.
      */
     void resize_to_po2(
-        bool p_square = false,
+        bool p_square                 = false,
         Interpolation p_interpolation = INTERPOLATE_BILINEAR
     );
     void resize(
@@ -436,9 +436,9 @@ public:
     };
 
     Error compress(
-        CompressMode p_mode = COMPRESS_S3TC,
+        CompressMode p_mode     = COMPRESS_S3TC,
         CompressSource p_source = COMPRESS_SOURCE_GENERIC,
-        float p_lossy_quality = 0.7
+        float p_lossy_quality   = 0.7
     );
     Error decompress();
     bool is_compressed() const;
@@ -522,11 +522,11 @@ public:
             p_image.is_null(),
             "It's not a reference to a valid Image object."
         );
-        format = p_image->format;
-        width = p_image->width;
-        height = p_image->height;
+        format  = p_image->format;
+        width   = p_image->width;
+        height  = p_image->height;
         mipmaps = p_image->mipmaps;
-        data = p_image->data;
+        data    = p_image->data;
     }
 
     ~Image();

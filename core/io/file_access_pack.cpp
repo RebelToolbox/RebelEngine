@@ -62,9 +62,9 @@ void PackedData::add_path(
     bool exists = files.has(pmd5);
 
     PackedFile pf;
-    pf.pack = p_pkg_path;
+    pf.pack   = p_pkg_path;
     pf.offset = p_ofs;
-    pf.size = p_size;
+    pf.size   = p_size;
     for (int i = 0; i < 16; i++) {
         pf.md5[i] = p_md5[i];
     }
@@ -76,7 +76,7 @@ void PackedData::add_path(
 
     if (!exists) {
         // search for dir
-        String p = p_path.replace_first("res://", "");
+        String p      = p_path.replace_first("res://", "");
         PackedDir* cd = root;
 
         if (p.find("/") != -1) { // in a subdir
@@ -85,11 +85,11 @@ void PackedData::add_path(
 
             for (int j = 0; j < ds.size(); j++) {
                 if (!cd->subdirs.has(ds[j])) {
-                    PackedDir* pd = memnew(PackedDir);
-                    pd->name = ds[j];
-                    pd->parent = cd;
+                    PackedDir* pd         = memnew(PackedDir);
+                    pd->name              = ds[j];
+                    pd->parent            = cd;
                     cd->subdirs[pd->name] = pd;
-                    cd = pd;
+                    cd                    = pd;
                 } else {
                     cd = cd->subdirs[ds[j]];
                 }
@@ -112,17 +112,17 @@ void PackedData::add_pack_source(PackSource* p_source) {
 PackedData* PackedData::singleton = nullptr;
 
 PackedData::PackedData() {
-    singleton = this;
-    root = memnew(PackedDir);
+    singleton    = this;
+    root         = memnew(PackedDir);
     root->parent = nullptr;
-    disabled = false;
+    disabled     = false;
 
     add_pack_source(memnew(PackedSourcePCK));
 }
 
 void PackedData::_free_packed_dirs(PackedDir* p_dir) {
     for (Map<String, PackedDir*>::Element* E = p_dir->subdirs.front(); E;
-         E = E->next()) {
+         E                                   = E->next()) {
         _free_packed_dirs(E->get());
     }
     memdelete(p_dir);
@@ -185,7 +185,7 @@ bool PackedSourcePCK::try_open_pack(
         }
     }
 
-    uint32_t version = f->get_32();
+    uint32_t version   = f->get_32();
     uint32_t ver_major = f->get_32();
     uint32_t ver_minor = f->get_32();
     f->get_32(); // patch number, not used for validation.
@@ -226,7 +226,7 @@ bool PackedSourcePCK::try_open_pack(
         String path;
         path.parse_utf8(cs.ptr());
 
-        uint64_t ofs = f->get_64();
+        uint64_t ofs  = f->get_64();
         uint64_t size = f->get_64();
         uint8_t md5[16];
         f->get_buffer(md5, 16);
@@ -314,7 +314,7 @@ uint64_t FileAccessPack::get_buffer(uint8_t* p_dst, uint64_t p_length) const {
 
     int64_t to_read = p_length;
     if (to_read + pos > pf.size) {
-        eof = true;
+        eof     = true;
         to_read = (int64_t)pf.size - (int64_t)pos;
     }
 
@@ -402,12 +402,12 @@ Error DirAccessPack::list_dir_begin() {
 
 String DirAccessPack::get_next() {
     if (list_dirs.size()) {
-        cdir = true;
+        cdir     = true;
         String d = list_dirs.front()->get();
         list_dirs.pop_front();
         return d;
     } else if (list_files.size()) {
-        cdir = false;
+        cdir     = false;
         String f = list_files.front()->get();
         list_files.pop_front();
         return f;
@@ -447,7 +447,7 @@ PackedData::PackedDir* DirAccessPack::_find_dir(String p_dir) {
 
     bool absolute = false;
     if (nd.begins_with("res://")) {
-        nd = nd.replace_first("res://", "");
+        nd       = nd.replace_first("res://", "");
         absolute = true;
     }
 
@@ -458,7 +458,7 @@ PackedData::PackedDir* DirAccessPack::_find_dir(String p_dir) {
     }
 
     if (nd.begins_with("/")) {
-        nd = nd.replace_first("/", "");
+        nd       = nd.replace_first("/", "");
         absolute = true;
     }
 
@@ -503,11 +503,11 @@ Error DirAccessPack::change_dir(String p_dir) {
 
 String DirAccessPack::get_current_dir() {
     PackedData::PackedDir* pd = current;
-    String p = current->name;
+    String p                  = current->name;
 
     while (pd->parent) {
         pd = pd->parent;
-        p = pd->name.plus_file(p);
+        p  = pd->name.plus_file(p);
     }
 
     return "res://" + p;
@@ -551,7 +551,7 @@ String DirAccessPack::get_filesystem_type() const {
 
 DirAccessPack::DirAccessPack() {
     current = PackedData::get_singleton()->root;
-    cdir = false;
+    cdir    = false;
 }
 
 DirAccessPack::~DirAccessPack() {}

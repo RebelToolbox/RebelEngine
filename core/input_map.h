@@ -58,9 +58,9 @@ private:
     List<Ref<InputEvent>>::Element* _find_event(
         Action& p_action,
         const Ref<InputEvent>& p_event,
-        bool p_exact_match = false,
-        bool* p_pressed = nullptr,
-        float* p_strength = nullptr,
+        bool p_exact_match    = false,
+        bool* p_pressed       = nullptr,
+        float* p_strength     = nullptr,
         float* p_raw_strength = nullptr
     ) const;
 
@@ -105,9 +105,9 @@ public:
     bool event_get_action_status(
         const Ref<InputEvent>& p_event,
         const StringName& p_action,
-        bool p_exact_match = false,
-        bool* p_pressed = nullptr,
-        float* p_strength = nullptr,
+        bool p_exact_match    = false,
+        bool* p_pressed       = nullptr,
+        float* p_strength     = nullptr,
         float* p_raw_strength = nullptr
     ) const;
 

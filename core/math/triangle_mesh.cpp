@@ -97,13 +97,13 @@ int TriangleMesh::_create_bvh(
         max_alloc
     );
 
-    int index = max_alloc++;
-    BVH* _new = &p_bvh[index];
-    _new->aabb = aabb;
-    _new->center = aabb.position + aabb.size * 0.5;
+    int index        = max_alloc++;
+    BVH* _new        = &p_bvh[index];
+    _new->aabb       = aabb;
+    _new->center     = aabb.position + aabb.size * 0.5;
     _new->face_index = -1;
-    _new->left = left;
-    _new->right = right;
+    _new->left       = left;
+    _new->right      = right;
 
     return index;
 }
@@ -144,22 +144,22 @@ void TriangleMesh::create(const PoolVector<Vector3>& p_faces) {
         // except for the Set for repeated triangles, everything
         // goes in-place.
 
-        PoolVector<Vector3>::Read r = p_faces.read();
+        PoolVector<Vector3>::Read r   = p_faces.read();
         PoolVector<Triangle>::Write w = triangles.write();
         Map<Vector3, int> db;
 
         for (int i = 0; i < fc; i++) {
-            Triangle& f = w[i];
+            Triangle& f      = w[i];
             const Vector3* v = &r[i * 3];
 
             for (int j = 0; j < 3; j++) {
-                int vidx = -1;
+                int vidx   = -1;
                 Vector3 vs = v[j].snapped(Vector3(0.0001, 0.0001, 0.0001));
                 Map<Vector3, int>::Element* E = db.find(vs);
                 if (E) {
                     vidx = E->get();
                 } else {
-                    vidx = db.size();
+                    vidx   = db.size();
                     db[vs] = vidx;
                 }
 
@@ -175,10 +175,10 @@ void TriangleMesh::create(const PoolVector<Vector3>& p_faces) {
                            .get_plane()
                            .get_normal();
 
-            bw[i].left = -1;
-            bw[i].right = -1;
+            bw[i].left       = -1;
+            bw[i].right      = -1;
             bw[i].face_index = i;
-            bw[i].center = bw[i].aabb.position + bw[i].aabb.size * 0.5;
+            bw[i].center     = bw[i].aabb.position + bw[i].aabb.size * 0.5;
         }
 
         vertices.resize(db.size());
@@ -195,7 +195,7 @@ void TriangleMesh::create(const PoolVector<Vector3>& p_faces) {
         bwp[i] = &bw[i];
     }
 
-    max_depth = 0;
+    max_depth     = 0;
     int max_alloc = fc;
     _create_bvh(bw.ptr(), bwp.ptr(), 0, fc, 1, max_depth, max_alloc);
 
@@ -209,13 +209,13 @@ Vector3 TriangleMesh::get_area_normal(const AABB& p_aabb) const {
     uint32_t* stack = (uint32_t*)alloca(sizeof(int) * max_depth);
 
     enum {
-        TEST_AABB_BIT = 0,
-        VISIT_LEFT_BIT = 1,
-        VISIT_RIGHT_BIT = 2,
-        VISIT_DONE_BIT = 3,
+        TEST_AABB_BIT     = 0,
+        VISIT_LEFT_BIT    = 1,
+        VISIT_RIGHT_BIT   = 2,
+        VISIT_DONE_BIT    = 3,
         VISITED_BIT_SHIFT = 29,
-        NODE_IDX_MASK = (1 << VISITED_BIT_SHIFT) - 1,
-        VISITED_BIT_MASK = ~NODE_IDX_MASK,
+        NODE_IDX_MASK     = (1 << VISITED_BIT_SHIFT) - 1,
+        VISITED_BIT_MASK  = ~NODE_IDX_MASK,
     };
 
     int n_count = 0;
@@ -224,18 +224,18 @@ Vector3 TriangleMesh::get_area_normal(const AABB& p_aabb) const {
     int level = 0;
 
     PoolVector<Triangle>::Read trianglesr = triangles.read();
-    PoolVector<Vector3>::Read verticesr = vertices.read();
-    PoolVector<BVH>::Read bvhr = bvh.read();
+    PoolVector<Vector3>::Read verticesr   = vertices.read();
+    PoolVector<BVH>::Read bvhr            = bvh.read();
 
     const Triangle* triangleptr = trianglesr.ptr();
-    int pos = bvh.size() - 1;
-    const BVH* bvhptr = bvhr.ptr();
+    int pos                     = bvh.size() - 1;
+    const BVH* bvhptr           = bvhr.ptr();
 
     stack[0] = pos;
     while (true) {
         uint32_t node = stack[level] & NODE_IDX_MASK;
-        const BVH& b = bvhptr[node];
-        bool done = false;
+        const BVH& b  = bvhptr[node];
+        bool done     = false;
 
         switch (stack[level] >> VISITED_BIT_SHIFT) {
             case TEST_AABB_BIT: {
@@ -245,8 +245,8 @@ Vector3 TriangleMesh::get_area_normal(const AABB& p_aabb) const {
 
                 } else {
                     if (b.face_index >= 0) {
-                        const Triangle& s = triangleptr[b.face_index];
-                        n += s.normal;
+                        const Triangle& s  = triangleptr[b.face_index];
+                        n                 += s.normal;
                         n_count++;
 
                         stack[level] =
@@ -266,7 +266,7 @@ Vector3 TriangleMesh::get_area_normal(const AABB& p_aabb) const {
                 continue;
             }
             case VISIT_RIGHT_BIT: {
-                stack[level] = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
+                stack[level]     = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
                 stack[level + 1] = b.right | TEST_AABB_BIT;
                 level++;
                 continue;
@@ -303,35 +303,35 @@ bool TriangleMesh::intersect_segment(
     uint32_t* stack = (uint32_t*)alloca(sizeof(int) * max_depth);
 
     enum {
-        TEST_AABB_BIT = 0,
-        VISIT_LEFT_BIT = 1,
-        VISIT_RIGHT_BIT = 2,
-        VISIT_DONE_BIT = 3,
+        TEST_AABB_BIT     = 0,
+        VISIT_LEFT_BIT    = 1,
+        VISIT_RIGHT_BIT   = 2,
+        VISIT_DONE_BIT    = 3,
         VISITED_BIT_SHIFT = 29,
-        NODE_IDX_MASK = (1 << VISITED_BIT_SHIFT) - 1,
-        VISITED_BIT_MASK = ~NODE_IDX_MASK,
+        NODE_IDX_MASK     = (1 << VISITED_BIT_SHIFT) - 1,
+        VISITED_BIT_MASK  = ~NODE_IDX_MASK,
     };
 
-    Vector3 n = (p_end - p_begin).normalized();
-    real_t d = 1e10;
+    Vector3 n   = (p_end - p_begin).normalized();
+    real_t d    = 1e10;
     bool inters = false;
 
     int level = 0;
 
     PoolVector<Triangle>::Read trianglesr = triangles.read();
-    PoolVector<Vector3>::Read verticesr = vertices.read();
-    PoolVector<BVH>::Read bvhr = bvh.read();
+    PoolVector<Vector3>::Read verticesr   = vertices.read();
+    PoolVector<BVH>::Read bvhr            = bvh.read();
 
     const Triangle* triangleptr = trianglesr.ptr();
-    const Vector3* vertexptr = verticesr.ptr();
-    int pos = bvh.size() - 1;
-    const BVH* bvhptr = bvhr.ptr();
+    const Vector3* vertexptr    = verticesr.ptr();
+    int pos                     = bvh.size() - 1;
+    const BVH* bvhptr           = bvhr.ptr();
 
     stack[0] = pos;
     while (true) {
         uint32_t node = stack[level] & NODE_IDX_MASK;
-        const BVH& b = bvhptr[node];
-        bool done = false;
+        const BVH& b  = bvhptr[node];
+        bool done     = false;
 
         switch (stack[level] >> VISITED_BIT_SHIFT) {
             case TEST_AABB_BIT: {
@@ -355,10 +355,10 @@ bool TriangleMesh::intersect_segment(
                         if (f3.intersects_segment(p_begin, p_end, &res)) {
                             real_t nd = n.dot(res);
                             if (nd < d) {
-                                d = nd;
-                                r_point = res;
+                                d        = nd;
+                                r_point  = res;
                                 r_normal = f3.get_plane().get_normal();
-                                inters = true;
+                                inters   = true;
                             }
                         }
 
@@ -379,7 +379,7 @@ bool TriangleMesh::intersect_segment(
                 continue;
             }
             case VISIT_RIGHT_BIT: {
-                stack[level] = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
+                stack[level]     = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
                 stack[level + 1] = b.right | TEST_AABB_BIT;
                 level++;
                 continue;
@@ -418,35 +418,35 @@ bool TriangleMesh::intersect_ray(
     uint32_t* stack = (uint32_t*)alloca(sizeof(int) * max_depth);
 
     enum {
-        TEST_AABB_BIT = 0,
-        VISIT_LEFT_BIT = 1,
-        VISIT_RIGHT_BIT = 2,
-        VISIT_DONE_BIT = 3,
+        TEST_AABB_BIT     = 0,
+        VISIT_LEFT_BIT    = 1,
+        VISIT_RIGHT_BIT   = 2,
+        VISIT_DONE_BIT    = 3,
         VISITED_BIT_SHIFT = 29,
-        NODE_IDX_MASK = (1 << VISITED_BIT_SHIFT) - 1,
-        VISITED_BIT_MASK = ~NODE_IDX_MASK,
+        NODE_IDX_MASK     = (1 << VISITED_BIT_SHIFT) - 1,
+        VISITED_BIT_MASK  = ~NODE_IDX_MASK,
     };
 
-    Vector3 n = p_dir;
-    real_t d = 1e20;
+    Vector3 n   = p_dir;
+    real_t d    = 1e20;
     bool inters = false;
 
     int level = 0;
 
     PoolVector<Triangle>::Read trianglesr = triangles.read();
-    PoolVector<Vector3>::Read verticesr = vertices.read();
-    PoolVector<BVH>::Read bvhr = bvh.read();
+    PoolVector<Vector3>::Read verticesr   = vertices.read();
+    PoolVector<BVH>::Read bvhr            = bvh.read();
 
     const Triangle* triangleptr = trianglesr.ptr();
-    const Vector3* vertexptr = verticesr.ptr();
-    int pos = bvh.size() - 1;
-    const BVH* bvhptr = bvhr.ptr();
+    const Vector3* vertexptr    = verticesr.ptr();
+    int pos                     = bvh.size() - 1;
+    const BVH* bvhptr           = bvhr.ptr();
 
     stack[0] = pos;
     while (true) {
         uint32_t node = stack[level] & NODE_IDX_MASK;
-        const BVH& b = bvhptr[node];
-        bool done = false;
+        const BVH& b  = bvhptr[node];
+        bool done     = false;
 
         switch (stack[level] >> VISITED_BIT_SHIFT) {
             case TEST_AABB_BIT: {
@@ -468,10 +468,10 @@ bool TriangleMesh::intersect_ray(
                         if (f3.intersects_ray(p_begin, p_dir, &res)) {
                             real_t nd = n.dot(res);
                             if (nd < d) {
-                                d = nd;
-                                r_point = res;
+                                d        = nd;
+                                r_point  = res;
                                 r_normal = f3.get_plane().get_normal();
-                                inters = true;
+                                inters   = true;
                             }
                         }
 
@@ -492,7 +492,7 @@ bool TriangleMesh::intersect_ray(
                 continue;
             }
             case VISIT_RIGHT_BIT: {
-                stack[level] = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
+                stack[level]     = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
                 stack[level + 1] = b.right | TEST_AABB_BIT;
                 level++;
                 continue;
@@ -533,31 +533,31 @@ bool TriangleMesh::intersect_convex_shape(
     // p_fully_inside = true;
 
     enum {
-        TEST_AABB_BIT = 0,
-        VISIT_LEFT_BIT = 1,
-        VISIT_RIGHT_BIT = 2,
-        VISIT_DONE_BIT = 3,
+        TEST_AABB_BIT     = 0,
+        VISIT_LEFT_BIT    = 1,
+        VISIT_RIGHT_BIT   = 2,
+        VISIT_DONE_BIT    = 3,
         VISITED_BIT_SHIFT = 29,
-        NODE_IDX_MASK = (1 << VISITED_BIT_SHIFT) - 1,
-        VISITED_BIT_MASK = ~NODE_IDX_MASK,
+        NODE_IDX_MASK     = (1 << VISITED_BIT_SHIFT) - 1,
+        VISITED_BIT_MASK  = ~NODE_IDX_MASK,
     };
 
     int level = 0;
 
     PoolVector<Triangle>::Read trianglesr = triangles.read();
-    PoolVector<Vector3>::Read verticesr = vertices.read();
-    PoolVector<BVH>::Read bvhr = bvh.read();
+    PoolVector<Vector3>::Read verticesr   = vertices.read();
+    PoolVector<BVH>::Read bvhr            = bvh.read();
 
     const Triangle* triangleptr = trianglesr.ptr();
-    const Vector3* vertexptr = verticesr.ptr();
-    int pos = bvh.size() - 1;
-    const BVH* bvhptr = bvhr.ptr();
+    const Vector3* vertexptr    = verticesr.ptr();
+    int pos                     = bvh.size() - 1;
+    const BVH* bvhptr           = bvhr.ptr();
 
     stack[0] = pos;
     while (true) {
         uint32_t node = stack[level] & NODE_IDX_MASK;
-        const BVH& b = bvhptr[node];
-        bool done = false;
+        const BVH& b  = bvhptr[node];
+        bool done     = false;
 
         switch (stack[level] >> VISITED_BIT_SHIFT) {
             case TEST_AABB_BIT: {
@@ -631,7 +631,7 @@ bool TriangleMesh::intersect_convex_shape(
                 continue;
             }
             case VISIT_RIGHT_BIT: {
-                stack[level] = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
+                stack[level]     = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
                 stack[level + 1] = b.right | TEST_AABB_BIT;
                 level++;
                 continue;
@@ -665,33 +665,33 @@ bool TriangleMesh::inside_convex_shape(
     uint32_t* stack = (uint32_t*)alloca(sizeof(int) * max_depth);
 
     enum {
-        TEST_AABB_BIT = 0,
-        VISIT_LEFT_BIT = 1,
-        VISIT_RIGHT_BIT = 2,
-        VISIT_DONE_BIT = 3,
+        TEST_AABB_BIT     = 0,
+        VISIT_LEFT_BIT    = 1,
+        VISIT_RIGHT_BIT   = 2,
+        VISIT_DONE_BIT    = 3,
         VISITED_BIT_SHIFT = 29,
-        NODE_IDX_MASK = (1 << VISITED_BIT_SHIFT) - 1,
-        VISITED_BIT_MASK = ~NODE_IDX_MASK,
+        NODE_IDX_MASK     = (1 << VISITED_BIT_SHIFT) - 1,
+        VISITED_BIT_MASK  = ~NODE_IDX_MASK,
     };
 
     int level = 0;
 
     PoolVector<Triangle>::Read trianglesr = triangles.read();
-    PoolVector<Vector3>::Read verticesr = vertices.read();
-    PoolVector<BVH>::Read bvhr = bvh.read();
+    PoolVector<Vector3>::Read verticesr   = vertices.read();
+    PoolVector<BVH>::Read bvhr            = bvh.read();
 
     Transform scale(Basis().scaled(p_scale));
 
     const Triangle* triangleptr = trianglesr.ptr();
-    const Vector3* vertexptr = verticesr.ptr();
-    int pos = bvh.size() - 1;
-    const BVH* bvhptr = bvhr.ptr();
+    const Vector3* vertexptr    = verticesr.ptr();
+    int pos                     = bvh.size() - 1;
+    const BVH* bvhptr           = bvhr.ptr();
 
     stack[0] = pos;
     while (true) {
         uint32_t node = stack[level] & NODE_IDX_MASK;
-        const BVH& b = bvhptr[node];
-        bool done = false;
+        const BVH& b  = bvhptr[node];
+        bool done     = false;
 
         switch (stack[level] >> VISITED_BIT_SHIFT) {
             case TEST_AABB_BIT: {
@@ -743,7 +743,7 @@ bool TriangleMesh::inside_convex_shape(
                 continue;
             }
             case VISIT_RIGHT_BIT: {
-                stack[level] = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
+                stack[level]     = (VISIT_DONE_BIT << VISITED_BIT_SHIFT) | node;
                 stack[level + 1] = b.right | TEST_AABB_BIT;
                 level++;
                 continue;
@@ -780,7 +780,7 @@ PoolVector<Face3> TriangleMesh::get_faces() const {
     int ts = triangles.size();
     faces.resize(triangles.size());
 
-    PoolVector<Face3>::Write w = faces.write();
+    PoolVector<Face3>::Write w   = faces.write();
     PoolVector<Triangle>::Read r = triangles.read();
     PoolVector<Vector3>::Read rv = vertices.read();
 
@@ -795,6 +795,6 @@ PoolVector<Face3> TriangleMesh::get_faces() const {
 }
 
 TriangleMesh::TriangleMesh() {
-    valid = false;
+    valid     = false;
     max_depth = 0;
 }

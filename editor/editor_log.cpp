@@ -214,7 +214,7 @@ EditorLog::EditorLog() {
     vb->add_child(log);
     add_message(VERSION_FULL_NAME);
 
-    eh.errfunc = _error_handler;
+    eh.errfunc  = _error_handler;
     eh.userdata = this;
     add_error_handler(&eh);
 

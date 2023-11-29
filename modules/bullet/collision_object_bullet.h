@@ -107,11 +107,11 @@ public:
         }
 
         void operator=(const ShapeWrapper& otherShape) {
-            shape = otherShape.shape;
-            bt_shape = otherShape.bt_shape;
+            shape     = otherShape.shape;
+            bt_shape  = otherShape.bt_shape;
             transform = otherShape.transform;
-            scale = otherShape.scale;
-            active = otherShape.active;
+            scale     = otherShape.scale;
+            active    = otherShape.active;
         }
 
         void set_transform(const Transform& p_transform);
@@ -233,7 +233,7 @@ public:
             || p_other->collisionLayer & collisionMask;
     }
 
-    virtual void reload_body() = 0;
+    virtual void reload_body()                   = 0;
     virtual void set_space(SpaceBullet* p_space) = 0;
 
     _FORCE_INLINE_ SpaceBullet* get_space() const {
@@ -241,7 +241,7 @@ public:
     }
 
     virtual void on_collision_checker_start() = 0;
-    virtual void on_collision_checker_end() = 0;
+    virtual void on_collision_checker_end()   = 0;
 
     virtual void dispatch_callbacks() = 0;
 
@@ -289,7 +289,7 @@ public:
     void add_shape(
         ShapeBullet* p_shape,
         const Transform& p_transform = Transform(),
-        bool p_disabled = false
+        bool p_disabled              = false
     );
     void set_shape(int p_index, ShapeBullet* p_shape);
 
@@ -303,7 +303,7 @@ public:
     void remove_shape_full(int p_index);
     void remove_all_shapes(
         bool p_permanentlyFromThisBody = false,
-        bool p_force_not_reload = false
+        bool p_force_not_reload        = false
     );
 
     void set_shape_transform(int p_index, const Transform& p_transform);

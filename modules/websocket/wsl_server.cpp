@@ -36,17 +36,17 @@
 #include "core/project_settings.h"
 
 WSLServer::PendingPeer::PendingPeer() {
-    use_ssl = false;
-    time = 0;
-    has_request = false;
+    use_ssl       = false;
+    time          = 0;
+    has_request   = false;
     response_sent = 0;
-    req_pos = 0;
+    req_pos       = 0;
     memset(req_buf, 0, sizeof(req_buf));
 }
 
 bool WSLServer::PendingPeer::_parse_request(const Vector<String> p_protocols) {
     Vector<String> psa = String((char*)req_buf).split("\r\n");
-    int len = psa.size();
+    int len            = psa.size();
     ERR_FAIL_COND_V_MSG(
         len < 4,
         false,
@@ -75,7 +75,7 @@ bool WSLServer::PendingPeer::_parse_request(const Vector<String> p_protocols) {
             false,
             "Invalid header -> " + psa[i]
         );
-        String name = header[0].to_lower();
+        String name  = header[0].to_lower();
         String value = header[1].strip_edges();
         if (headers.has(name)) {
             headers[name] += "," + value;
@@ -184,24 +184,24 @@ Error WSLServer::PendingPeer::do_handshake(
                 return ERR_BUSY;
             }
             char* r = (char*)req_buf;
-            int l = req_pos;
+            int l   = req_pos;
             if (l > 3 && r[l] == '\n' && r[l - 1] == '\r' && r[l - 2] == '\n'
                 && r[l - 3] == '\r') {
                 r[l - 3] = '\0';
                 if (!_parse_request(p_protocols)) {
                     return FAILED;
                 }
-                String s = "HTTP/1.1 101 Switching Protocols\r\n";
-                s += "Upgrade: websocket\r\n";
-                s += "Connection: Upgrade\r\n";
-                s += "Sec-WebSocket-Accept: "
+                String s  = "HTTP/1.1 101 Switching Protocols\r\n";
+                s        += "Upgrade: websocket\r\n";
+                s        += "Connection: Upgrade\r\n";
+                s        += "Sec-WebSocket-Accept: "
                    + WSLPeer::compute_key_response(key) + "\r\n";
                 if (protocol != "") {
                     s += "Sec-WebSocket-Protocol: " + protocol + "\r\n";
                 }
-                s += "\r\n";
-                response = s.utf8();
-                has_request = true;
+                s           += "\r\n";
+                response     = s.utf8();
+                has_request  = true;
                 break;
             }
             req_pos += 1;
@@ -209,7 +209,7 @@ Error WSLServer::PendingPeer::do_handshake(
     }
 
     if (has_request && response_sent < response.size() - 1) {
-        int sent = 0;
+        int sent  = 0;
         Error err = connection->put_partial_data(
             (const uint8_t*)response.get_data() + response_sent,
             response.size() - response_sent - 1,
@@ -253,7 +253,7 @@ Error WSLServer::listen(
 void WSLServer::poll() {
     List<int> remove_ids;
     for (Map<int, Ref<WebSocketPeer>>::Element* E = _peer_map.front(); E;
-         E = E->next()) {
+         E                                        = E->next()) {
         Ref<WSLPeer> peer = (WSLPeer*)E->get().ptr();
         peer->poll();
         if (!peer->is_connected_to_host()) {
@@ -268,7 +268,7 @@ void WSLServer::poll() {
 
     List<Ref<PendingPeer>> remove_peers;
     for (List<Ref<PendingPeer>>::Element* E = _pending.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         Ref<PendingPeer> ppeer = E->get();
         Error err = ppeer->do_handshake(_protocols, handshake_timeout);
         if (err == ERR_BUSY) {
@@ -281,11 +281,11 @@ void WSLServer::poll() {
         int32_t id = _gen_unique_id();
 
         WSLPeer::PeerData* data = memnew(struct WSLPeer::PeerData);
-        data->obj = this;
-        data->conn = ppeer->connection;
-        data->tcp = ppeer->tcp;
-        data->is_server = true;
-        data->id = id;
+        data->obj               = this;
+        data->conn              = ppeer->connection;
+        data->tcp               = ppeer->tcp;
+        data->is_server         = true;
+        data->id                = id;
 
         Ref<WSLPeer> ws_peer = memnew(WSLPeer);
         ws_peer->make_context(
@@ -302,7 +302,7 @@ void WSLServer::poll() {
         _on_connect(id, ppeer->protocol);
     }
     for (List<Ref<PendingPeer>>::Element* E = remove_peers.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         _pending.erase(E->get());
     }
     remove_peers.clear();
@@ -324,11 +324,11 @@ void WSLServer::poll() {
             ssl->set_blocking_handshake_enabled(false);
             ssl->accept_stream(conn, private_key, ssl_cert, ca_chain);
             peer->connection = ssl;
-            peer->use_ssl = true;
+            peer->use_ssl    = true;
         } else {
             peer->connection = conn;
         }
-        peer->tcp = conn;
+        peer->tcp  = conn;
         peer->time = OS::get_singleton()->get_ticks_msec();
         _pending.push_back(peer);
     }
@@ -345,7 +345,7 @@ int WSLServer::get_max_packet_size() const {
 void WSLServer::stop() {
     _server->stop();
     for (Map<int, Ref<WebSocketPeer>>::Element* E = _peer_map.front(); E;
-         E = E->next()) {
+         E                                        = E->next()) {
         Ref<WSLPeer> peer = (WSLPeer*)E->get().ptr();
         peer->close_now();
     }
@@ -393,16 +393,16 @@ Error WSLServer::set_buffers(
         "Buffers sizes can only be set before listening or connecting."
     );
 
-    _in_buf_size = nearest_shift(p_in_buffer - 1) + 10;
-    _in_pkt_size = nearest_shift(p_in_packets - 1);
+    _in_buf_size  = nearest_shift(p_in_buffer - 1) + 10;
+    _in_pkt_size  = nearest_shift(p_in_packets - 1);
     _out_buf_size = nearest_shift(p_out_buffer - 1) + 10;
     _out_pkt_size = nearest_shift(p_out_packets - 1);
     return OK;
 }
 
 WSLServer::WSLServer() {
-    _in_buf_size = nearest_shift((int)GLOBAL_GET(WSS_IN_BUF) - 1) + 10;
-    _in_pkt_size = nearest_shift((int)GLOBAL_GET(WSS_IN_PKT) - 1);
+    _in_buf_size  = nearest_shift((int)GLOBAL_GET(WSS_IN_BUF) - 1) + 10;
+    _in_pkt_size  = nearest_shift((int)GLOBAL_GET(WSS_IN_PKT) - 1);
     _out_buf_size = nearest_shift((int)GLOBAL_GET(WSS_OUT_BUF) - 1) + 10;
     _out_pkt_size = nearest_shift((int)GLOBAL_GET(WSS_OUT_PKT) - 1);
     _server.instance();

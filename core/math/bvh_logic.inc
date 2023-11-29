@@ -86,8 +86,8 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
     CRASH_COND(A->num_children != 2);
     int32_t iB = A->children[0];
     int32_t iC = A->children[1];
-    TNode* B = &_nodes[iB];
-    TNode* C = &_nodes[iC];
+    TNode* B   = &_nodes[iB];
+    TNode* C   = &_nodes[iC];
 
     int32_t balance = C->height - B->height;
 
@@ -95,8 +95,8 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
     if (balance > 1) {
         int32_t iF = C->children[0];
         int32_t iG = C->children[1];
-        TNode* F = &_nodes[iF];
-        TNode* G = &_nodes[iG];
+        TNode* F   = &_nodes[iF];
+        TNode* G   = &_nodes[iG];
 
         // grandParent point to C
         if (A->parent_id != BVHCommon::INVALID) {
@@ -113,16 +113,16 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
 
         // Swap A and C
         C->children[0] = iA;
-        C->parent_id = A->parent_id;
-        A->parent_id = iC;
+        C->parent_id   = A->parent_id;
+        A->parent_id   = iC;
 
         // Finish rotation
         if (F->height > G->height) {
             C->children[1] = iF;
             A->children[1] = iG;
-            G->parent_id = iA;
-            A->aabb = _logic_abb_merge(B->aabb, G->aabb);
-            C->aabb = _logic_abb_merge(A->aabb, F->aabb);
+            G->parent_id   = iA;
+            A->aabb        = _logic_abb_merge(B->aabb, G->aabb);
+            C->aabb        = _logic_abb_merge(A->aabb, F->aabb);
 
             A->height = 1 + MAX(B->height, G->height);
             C->height = 1 + MAX(A->height, F->height);
@@ -131,9 +131,9 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
         else {
             C->children[1] = iG;
             A->children[1] = iF;
-            F->parent_id = iA;
-            A->aabb = _logic_abb_merge(B->aabb, F->aabb);
-            C->aabb = _logic_abb_merge(A->aabb, G->aabb);
+            F->parent_id   = iA;
+            A->aabb        = _logic_abb_merge(B->aabb, F->aabb);
+            C->aabb        = _logic_abb_merge(A->aabb, G->aabb);
 
             A->height = 1 + MAX(B->height, F->height);
             C->height = 1 + MAX(A->height, G->height);
@@ -146,8 +146,8 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
     else if (balance < -1) {
         int32_t iD = B->children[0];
         int32_t iE = B->children[1];
-        TNode* D = &_nodes[iD];
-        TNode* E = &_nodes[iE];
+        TNode* D   = &_nodes[iD];
+        TNode* E   = &_nodes[iE];
 
         // grandParent point to B
         if (A->parent_id != BVHCommon::INVALID) {
@@ -165,16 +165,16 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
 
         // Swap A and B
         B->children[1] = iA;
-        B->parent_id = A->parent_id;
-        A->parent_id = iB;
+        B->parent_id   = A->parent_id;
+        A->parent_id   = iB;
 
         // Finish rotation
         if (D->height > E->height) {
             B->children[0] = iD;
             A->children[0] = iE;
-            E->parent_id = iA;
-            A->aabb = _logic_abb_merge(C->aabb, E->aabb);
-            B->aabb = _logic_abb_merge(A->aabb, D->aabb);
+            E->parent_id   = iA;
+            A->aabb        = _logic_abb_merge(C->aabb, E->aabb);
+            B->aabb        = _logic_abb_merge(A->aabb, D->aabb);
 
             A->height = 1 + MAX(C->height, E->height);
             B->height = 1 + MAX(A->height, D->height);
@@ -183,9 +183,9 @@ int32_t _logic_balance(int32_t iA, uint32_t p_tree_id) {
         else {
             B->children[0] = iE;
             A->children[0] = iD;
-            D->parent_id = iA;
-            A->aabb = _logic_abb_merge(C->aabb, D->aabb);
-            B->aabb = _logic_abb_merge(A->aabb, E->aabb);
+            D->parent_id   = iA;
+            A->aabb        = _logic_abb_merge(C->aabb, D->aabb);
+            B->aabb        = _logic_abb_merge(A->aabb, E->aabb);
 
             A->height = 1 + MAX(C->height, D->height);
             B->height = 1 + MAX(A->height, E->height);

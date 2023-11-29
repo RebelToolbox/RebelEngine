@@ -120,7 +120,7 @@ Error PacketPeerUDP::get_packet(const uint8_t** r_buffer, int& r_buffer_size) {
     rb.read((uint8_t*)&size, 4, true);
     rb.read(packet_buffer, size, true);
     --queue_count;
-    *r_buffer = packet_buffer;
+    *r_buffer     = packet_buffer;
     r_buffer_size = size;
     return OK;
 }
@@ -134,7 +134,7 @@ Error PacketPeerUDP::put_packet(const uint8_t* p_buffer, int p_buffer_size) {
 
     if (!_sock->is_open()) {
         IP::Type ip_type = peer_addr.is_ipv4() ? IP::TYPE_IPV4 : IP::TYPE_IPV6;
-        err = _sock->open(NetSocket::TYPE_UDP, ip_type);
+        err              = _sock->open(NetSocket::TYPE_UDP, ip_type);
         ERR_FAIL_COND_V(err != OK, err);
         _sock->set_blocking_enabled(false);
         _sock->set_broadcasting_enabled(broadcast);
@@ -215,19 +215,19 @@ Error PacketPeerUDP::connect_shared_socket(
     uint16_t p_port,
     UDPServer* p_server
 ) {
-    udp_server = p_server;
-    connected = true;
-    _sock = p_sock;
-    peer_addr = p_ip;
-    peer_port = p_port;
-    packet_ip = peer_addr;
+    udp_server  = p_server;
+    connected   = true;
+    _sock       = p_sock;
+    peer_addr   = p_ip;
+    peer_port   = p_port;
+    packet_ip   = peer_addr;
     packet_port = peer_port;
     return OK;
 }
 
 void PacketPeerUDP::disconnect_shared_socket() {
     udp_server = nullptr;
-    _sock = Ref<NetSocket>(NetSocket::create());
+    _sock      = Ref<NetSocket>(NetSocket::create());
     close();
 }
 
@@ -240,7 +240,7 @@ Error PacketPeerUDP::connect_to_host(const IP_Address& p_host, int p_port) {
 
     if (!_sock->is_open()) {
         IP::Type ip_type = p_host.is_ipv4() ? IP::TYPE_IPV4 : IP::TYPE_IPV6;
-        err = _sock->open(NetSocket::TYPE_UDP, ip_type);
+        err              = _sock->open(NetSocket::TYPE_UDP, ip_type);
         ERR_FAIL_COND_V(err != OK, ERR_CANT_OPEN);
         _sock->set_blocking_enabled(false);
     }
@@ -274,13 +274,13 @@ void PacketPeerUDP::close() {
     if (udp_server) {
         udp_server->remove_peer(peer_addr, peer_port);
         udp_server = nullptr;
-        _sock = Ref<NetSocket>(NetSocket::create());
+        _sock      = Ref<NetSocket>(NetSocket::create());
     } else if (_sock.is_valid()) {
         _sock->close();
     }
     rb.resize(16);
     queue_count = 0;
-    connected = false;
+    connected   = false;
 }
 
 Error PacketPeerUDP::wait() {
@@ -305,8 +305,8 @@ Error PacketPeerUDP::_poll() {
 
     while (true) {
         if (connected) {
-            err = _sock->recv(recv_buffer, sizeof(recv_buffer), read);
-            ip = peer_addr;
+            err  = _sock->recv(recv_buffer, sizeof(recv_buffer), read);
+            ip   = peer_addr;
             port = peer_port;
         } else {
             err = _sock->recvfrom(

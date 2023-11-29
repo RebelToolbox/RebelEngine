@@ -46,9 +46,9 @@ Error ImageLoaderBMP::convert_to_image(
     }
 
     if (err == OK) {
-        size_t index = 0;
-        size_t width = (size_t)p_header.bmp_info_header.bmp_width;
-        size_t height = (size_t)p_header.bmp_info_header.bmp_height;
+        size_t index          = 0;
+        size_t width          = (size_t)p_header.bmp_info_header.bmp_width;
+        size_t height         = (size_t)p_header.bmp_info_header.bmp_height;
         size_t bits_per_pixel = (size_t)p_header.bmp_info_header.bmp_bit_count;
 
         // Check whether we can load it
@@ -119,15 +119,15 @@ Error ImageLoaderBMP::convert_to_image(
         err = data.resize(data_len);
 
         PoolVector<uint8_t>::Write data_w = data.write();
-        uint8_t* write_buffer = data_w.ptr();
+        uint8_t* write_buffer             = data_w.ptr();
 
         const uint32_t width_bytes = width * bits_per_pixel / 8;
-        const uint32_t line_width = (width_bytes + 3) & ~3;
+        const uint32_t line_width  = (width_bytes + 3) & ~3;
 
         // The actual data traversal is determined by
         // the data width in case of 8/4/1 bit images
-        const uint32_t w = bits_per_pixel >= 24 ? width : width_bytes;
-        const uint8_t* line = p_buffer + (line_width * (height - 1));
+        const uint32_t w          = bits_per_pixel >= 24 ? width : width_bytes;
+        const uint8_t* line       = p_buffer + (line_width * (height - 1));
         const uint8_t* end_buffer = p_buffer
                                   + p_header.bmp_file_header.bmp_file_size
                                   - p_header.bmp_file_header.bmp_file_offset;
@@ -150,7 +150,7 @@ Error ImageLoaderBMP::convert_to_image(
                         write_buffer[index + 6] = (color_index >> 1) & 1;
                         write_buffer[index + 7] = (color_index >> 0) & 1;
 
-                        index += 8;
+                        index    += 8;
                         line_ptr += 1;
                     } break;
                     case 4: {
@@ -159,7 +159,7 @@ Error ImageLoaderBMP::convert_to_image(
                         write_buffer[index + 0] = (color_index >> 4) & 0x0f;
                         write_buffer[index + 1] = color_index & 0x0f;
 
-                        index += 2;
+                        index    += 2;
                         line_ptr += 1;
                     } break;
                     case 8: {
@@ -167,7 +167,7 @@ Error ImageLoaderBMP::convert_to_image(
 
                         write_buffer[index] = color_index;
 
-                        index += 1;
+                        index    += 1;
                         line_ptr += 1;
                     } break;
                     case 24: {
@@ -176,7 +176,7 @@ Error ImageLoaderBMP::convert_to_image(
                         write_buffer[index + 0] = line_ptr[2];
                         write_buffer[index + 3] = 0xff;
 
-                        index += 4;
+                        index    += 4;
                         line_ptr += 3;
                     } break;
                     case 32: {
@@ -185,7 +185,7 @@ Error ImageLoaderBMP::convert_to_image(
                         write_buffer[index + 0] = line_ptr[2];
                         write_buffer[index + 3] = line_ptr[3];
 
-                        index += 4;
+                        index    += 4;
                         line_ptr += 4;
                     } break;
                 }
@@ -205,7 +205,7 @@ Error ImageLoaderBMP::convert_to_image(
             palette_data.resize(color_table_size * 4);
 
             PoolVector<uint8_t>::Write palette_data_w = palette_data.write();
-            uint8_t* pal = palette_data_w.ptr();
+            uint8_t* pal                              = palette_data_w.ptr();
 
             const uint8_t* cb = p_color_buffer;
 
@@ -222,7 +222,7 @@ Error ImageLoaderBMP::convert_to_image(
             extended_data.resize(data.size() * 4);
 
             PoolVector<uint8_t>::Write ex_w = extended_data.write();
-            uint8_t* dest = ex_w.ptr();
+            uint8_t* dest                   = ex_w.ptr();
 
             const int num_pixels = width * height;
 
@@ -261,9 +261,9 @@ Error ImageLoaderBMP::load_image(
         // File Header
         bmp_header.bmp_file_header.bmp_signature = f->get_16();
         if (bmp_header.bmp_file_header.bmp_signature == BITMAP_SIGNATURE) {
-            bmp_header.bmp_file_header.bmp_file_size = f->get_32();
+            bmp_header.bmp_file_header.bmp_file_size    = f->get_32();
             bmp_header.bmp_file_header.bmp_file_padding = f->get_32();
-            bmp_header.bmp_file_header.bmp_file_offset = f->get_32();
+            bmp_header.bmp_file_header.bmp_file_offset  = f->get_32();
 
             // Info Header
             bmp_header.bmp_info_header.bmp_header_size = f->get_32();
@@ -278,7 +278,7 @@ Error ImageLoaderBMP::load_image(
                 )
             );
 
-            bmp_header.bmp_info_header.bmp_width = f->get_32();
+            bmp_header.bmp_info_header.bmp_width  = f->get_32();
             bmp_header.bmp_info_header.bmp_height = f->get_32();
 
             bmp_header.bmp_info_header.bmp_planes = f->get_16();
@@ -292,13 +292,13 @@ Error ImageLoaderBMP::load_image(
                 )
             );
 
-            bmp_header.bmp_info_header.bmp_bit_count = f->get_16();
-            bmp_header.bmp_info_header.bmp_compression = f->get_32();
-            bmp_header.bmp_info_header.bmp_size_image = f->get_32();
+            bmp_header.bmp_info_header.bmp_bit_count          = f->get_16();
+            bmp_header.bmp_info_header.bmp_compression        = f->get_32();
+            bmp_header.bmp_info_header.bmp_size_image         = f->get_32();
             bmp_header.bmp_info_header.bmp_pixels_per_meter_x = f->get_32();
             bmp_header.bmp_info_header.bmp_pixels_per_meter_y = f->get_32();
-            bmp_header.bmp_info_header.bmp_colors_used = f->get_32();
-            bmp_header.bmp_info_header.bmp_important_colors = f->get_32();
+            bmp_header.bmp_info_header.bmp_colors_used        = f->get_32();
+            bmp_header.bmp_info_header.bmp_important_colors   = f->get_32();
 
             switch (bmp_header.bmp_info_header.bmp_compression) {
                 case BI_RLE8:

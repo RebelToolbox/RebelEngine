@@ -8,7 +8,7 @@ layout(location = 4) in vec2 uv_in;
 out vec2 uv_interp;
 
 void main() {
-    uv_interp = uv_in;
+    uv_interp   = uv_in;
     gl_Position = vertex_attrib;
 }
 
@@ -51,7 +51,7 @@ QUALIFIER vec2 kernel[25] = vec2[](
 #endif // USE_25_SAMPLES
 
 #ifdef USE_17_SAMPLES
-const int kernel_size = 17;
+const int kernel_size     = 17;
 QUALIFIER vec2 kernel[17] = vec2[](
     vec2(0.536343, 0.0),
     vec2(0.00317394, -2.0),
@@ -74,7 +74,7 @@ QUALIFIER vec2 kernel[17] = vec2[](
 #endif // USE_17_SAMPLES
 
 #ifdef USE_11_SAMPLES
-const int kernel_size = 11;
+const int kernel_size     = 11;
 QUALIFIER vec2 kernel[11] = vec2[](
     vec2(0.560479, 0.0),
     vec2(0.00471691, -2.0),
@@ -104,8 +104,8 @@ uniform sampler2D source_depth;   // texunit:2
 layout(location = 0) out vec4 frag_color;
 
 void main() {
-    float strength = texture(source_sss, uv_interp).r;
-    strength *= strength; // stored as sqrt
+    float strength  = texture(source_sss, uv_interp).r;
+    strength       *= strength; // stored as sqrt
 
     // Fetch color of current pixel:
     vec4 base_color = texture(source_diffuse, uv_interp);
@@ -130,13 +130,13 @@ void main() {
 #endif
 
         // Calculate the final step to fetch the surrounding pixels:
-        vec2 step = max_radius * scale * dir;
-        step *= strength;  // Modulate it using the alpha channel.
-        step *= 1.0 / 3.0; // Divide by 3 as the kernels range from -3 to 3.
+        vec2 step  = max_radius * scale * dir;
+        step      *= strength; // Modulate it using the alpha channel.
+        step *= 1.0 / 3.0;     // Divide by 3 as the kernels range from -3 to 3.
 
         // Accumulate the center sample:
-        vec3 color_accum = base_color.rgb;
-        color_accum *= kernel[0].x;
+        vec3 color_accum  = base_color.rgb;
+        color_accum      *= kernel[0].x;
 #ifdef ENABLE_STRENGTH_WEIGHTING
         float color_weight = kernel[0].x;
 #endif
@@ -145,7 +145,7 @@ void main() {
         for (int i = 1; i < kernel_size; i++) {
             // Fetch color and depth for current sample:
             vec2 offset = uv_interp + kernel[i].y * step;
-            vec3 color = texture(source_diffuse, offset).rgb;
+            vec3 color  = texture(source_diffuse, offset).rgb;
 
 #ifdef ENABLE_FOLLOW_SURFACE
             // If the difference in depth is huge, we lerp color back to
@@ -176,9 +176,9 @@ void main() {
             color *= kernel[i].x;
 
 #ifdef ENABLE_STRENGTH_WEIGHTING
-            float color_s = texture(source_sss, offset).r;
-            color_weight += color_s * kernel[i].x;
-            color *= color_s;
+            float color_s  = texture(source_sss, offset).r;
+            color_weight  += color_s * kernel[i].x;
+            color         *= color_s;
 #endif
             color_accum += color;
         }

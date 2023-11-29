@@ -76,7 +76,7 @@ Error FileAccessUnix::_open(const String& p_path, int p_mode_flags) {
     f = nullptr;
 
     path_src = p_path;
-    path = fix_path(p_path);
+    path     = fix_path(p_path);
     // printf("opening %ls, %i\n", path.c_str(),
     // Memory::get_static_mem_usage());
 
@@ -115,7 +115,7 @@ Error FileAccessUnix::_open(const String& p_path, int p_mode_flags) {
     if (is_backup_save_enabled() && (p_mode_flags & WRITE)
         && !(p_mode_flags & READ)) {
         save_path = path;
-        path = path + ".tmp";
+        path      = path + ".tmp";
     }
 
     f = fopen(path.utf8().get_data(), mode_string);
@@ -146,7 +146,7 @@ Error FileAccessUnix::_open(const String& p_path, int p_mode_flags) {
     }
 
     last_error = OK;
-    flags = p_mode_flags;
+    flags      = p_mode_flags;
     return OK;
 }
 

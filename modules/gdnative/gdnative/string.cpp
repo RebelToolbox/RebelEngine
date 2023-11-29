@@ -75,7 +75,7 @@ void GDAPI godot_string_new(godot_string* r_dest) {
 
 void GDAPI
 godot_string_new_copy(godot_string* r_dest, const godot_string* p_src) {
-    String* dest = (String*)r_dest;
+    String* dest      = (String*)r_dest;
     const String* src = (const String*)p_src;
     memnew_placement(dest, String(*src));
 }
@@ -115,7 +115,7 @@ godot_bool GDAPI godot_string_operator_equal(
     const godot_string* p_b
 ) {
     const String* self = (const String*)p_self;
-    const String* b = (const String*)p_b;
+    const String* b    = (const String*)p_b;
     return *self == *b;
 }
 
@@ -124,7 +124,7 @@ godot_bool GDAPI godot_string_operator_less(
     const godot_string* p_b
 ) {
     const String* self = (const String*)p_self;
-    const String* b = (const String*)p_b;
+    const String* b    = (const String*)p_b;
     return *self < *b;
 }
 
@@ -134,7 +134,7 @@ godot_string GDAPI godot_string_operator_plus(
 ) {
     godot_string ret;
     const String* self = (const String*)p_self;
-    const String* b = (const String*)p_b;
+    const String* b    = (const String*)p_b;
     memnew_placement(&ret, String(*self + *b));
     return ret;
 }
@@ -157,7 +157,7 @@ godot_int GDAPI godot_string_length(const godot_string* p_self) {
 signed char GDAPI
 godot_string_casecmp_to(const godot_string* p_self, const godot_string* p_str) {
     const String* self = (const String*)p_self;
-    const String* str = (const String*)p_str;
+    const String* str  = (const String*)p_str;
 
     return self->casecmp_to(*str);
 }
@@ -167,7 +167,7 @@ signed char GDAPI godot_string_nocasecmp_to(
     const godot_string* p_str
 ) {
     const String* self = (const String*)p_self;
-    const String* str = (const String*)p_str;
+    const String* str  = (const String*)p_str;
 
     return self->nocasecmp_to(*str);
 }
@@ -177,7 +177,7 @@ signed char GDAPI godot_string_naturalnocasecmp_to(
     const godot_string* p_str
 ) {
     const String* self = (const String*)p_self;
-    const String* str = (const String*)p_str;
+    const String* str  = (const String*)p_str;
 
     return self->naturalnocasecmp_to(*str);
 }
@@ -186,7 +186,7 @@ godot_bool GDAPI godot_string_begins_with(
     const godot_string* p_self,
     const godot_string* p_string
 ) {
-    const String* self = (const String*)p_self;
+    const String* self   = (const String*)p_self;
     const String* string = (const String*)p_string;
 
     return self->begins_with(*string);
@@ -202,7 +202,7 @@ godot_bool GDAPI godot_string_begins_with_char_array(
 }
 
 godot_array GDAPI godot_string_bigrams(const godot_string* p_self) {
-    const String* self = (const String*)p_self;
+    const String* self          = (const String*)p_self;
     Vector<String> return_value = self->bigrams();
 
     godot_array result;
@@ -227,7 +227,7 @@ godot_bool GDAPI godot_string_ends_with(
     const godot_string* p_self,
     const godot_string* p_string
 ) {
-    const String* self = (const String*)p_self;
+    const String* self   = (const String*)p_self;
     const String* string = (const String*)p_string;
 
     return self->ends_with(*string);
@@ -240,7 +240,7 @@ godot_int GDAPI godot_string_count(
     godot_int p_to
 ) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->count(*what, p_from, p_to);
 }
@@ -252,7 +252,7 @@ godot_int GDAPI godot_string_countn(
     godot_int p_to
 ) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->countn(*what, p_from, p_to);
 }
@@ -260,7 +260,7 @@ godot_int GDAPI godot_string_countn(
 godot_int GDAPI
 godot_string_find(const godot_string* p_self, godot_string p_what) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->find(*what);
 }
@@ -271,7 +271,7 @@ godot_int GDAPI godot_string_find_from(
     godot_int p_from
 ) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->find(*what, p_from);
 }
@@ -328,7 +328,7 @@ godot_int GDAPI godot_string_findmk_from_in_place(
 godot_int GDAPI
 godot_string_findn(const godot_string* p_self, godot_string p_what) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->findn(*what);
 }
@@ -339,7 +339,7 @@ godot_int GDAPI godot_string_findn_from(
     godot_int p_from
 ) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->findn(*what, p_from);
 }
@@ -347,14 +347,14 @@ godot_int GDAPI godot_string_findn_from(
 godot_int GDAPI
 godot_string_find_last(const godot_string* p_self, godot_string p_what) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->find_last(*what);
 }
 
 godot_string GDAPI
 godot_string_format(const godot_string* p_self, const godot_variant* p_values) {
-    const String* self = (const String*)p_self;
+    const String* self    = (const String*)p_self;
     const Variant* values = (const Variant*)p_values;
     godot_string result;
     memnew_placement(&result, String(self->format(*values)));
@@ -367,9 +367,9 @@ godot_string GDAPI godot_string_format_with_custom_placeholder(
     const godot_variant* p_values,
     const char* p_placeholder
 ) {
-    const String* self = (const String*)p_self;
+    const String* self    = (const String*)p_self;
     const Variant* values = (const Variant*)p_values;
-    String placeholder = String(p_placeholder);
+    String placeholder    = String(p_placeholder);
     godot_string result;
     memnew_placement(&result, String(self->format(*values, placeholder)));
 
@@ -406,7 +406,7 @@ godot_string GDAPI godot_string_insert(
     godot_string p_string
 ) {
     const String* self = (const String*)p_self;
-    String* content = (String*)&p_string;
+    String* content    = (String*)&p_string;
     godot_string result;
     memnew_placement(&result, String(self->insert(p_at_pos, *content)));
 
@@ -423,7 +423,7 @@ godot_bool GDAPI godot_string_is_subsequence_of(
     const godot_string* p_self,
     const godot_string* p_string
 ) {
-    const String* self = (const String*)p_self;
+    const String* self   = (const String*)p_self;
     const String* string = (const String*)p_string;
 
     return self->is_subsequence_of(*string);
@@ -433,7 +433,7 @@ godot_bool GDAPI godot_string_is_subsequence_ofi(
     const godot_string* p_self,
     const godot_string* p_string
 ) {
-    const String* self = (const String*)p_self;
+    const String* self   = (const String*)p_self;
     const String* string = (const String*)p_string;
 
     return self->is_subsequence_ofi(*string);
@@ -453,7 +453,7 @@ godot_string GDAPI godot_string_lpad_with_custom_character(
     godot_int p_min_length,
     const godot_string* p_character
 ) {
-    const String* self = (const String*)p_self;
+    const String* self      = (const String*)p_self;
     const String* character = (const String*)p_character;
     godot_string result;
     memnew_placement(&result, String(self->lpad(p_min_length, *character)));
@@ -463,7 +463,7 @@ godot_string GDAPI godot_string_lpad_with_custom_character(
 
 godot_bool GDAPI
 godot_string_match(const godot_string* p_self, const godot_string* p_wildcard) {
-    const String* self = (const String*)p_self;
+    const String* self     = (const String*)p_self;
     const String* wildcard = (const String*)p_wildcard;
 
     return self->match(*wildcard);
@@ -473,7 +473,7 @@ godot_bool GDAPI godot_string_matchn(
     const godot_string* p_self,
     const godot_string* p_wildcard
 ) {
-    const String* self = (const String*)p_self;
+    const String* self     = (const String*)p_self;
     const String* wildcard = (const String*)p_wildcard;
 
     return self->matchn(*wildcard);
@@ -557,8 +557,8 @@ godot_string GDAPI godot_string_replace(
     godot_string p_with
 ) {
     const String* self = (const String*)p_self;
-    String* key = (String*)&p_key;
-    String* with = (String*)&p_with;
+    String* key        = (String*)&p_key;
+    String* with       = (String*)&p_with;
     godot_string result;
     memnew_placement(&result, String(self->replace(*key, *with)));
 
@@ -571,8 +571,8 @@ godot_string GDAPI godot_string_replacen(
     godot_string p_with
 ) {
     const String* self = (const String*)p_self;
-    String* key = (String*)&p_key;
-    String* with = (String*)&p_with;
+    String* key        = (String*)&p_key;
+    String* with       = (String*)&p_with;
     godot_string result;
     memnew_placement(&result, String(self->replacen(*key, *with)));
 
@@ -582,7 +582,7 @@ godot_string GDAPI godot_string_replacen(
 godot_int GDAPI
 godot_string_rfind(const godot_string* p_self, godot_string p_what) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->rfind(*what);
 }
@@ -590,7 +590,7 @@ godot_string_rfind(const godot_string* p_self, godot_string p_what) {
 godot_int GDAPI
 godot_string_rfindn(const godot_string* p_self, godot_string p_what) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->rfindn(*what);
 }
@@ -601,7 +601,7 @@ godot_int GDAPI godot_string_rfind_from(
     godot_int p_from
 ) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->rfind(*what, p_from);
 }
@@ -612,7 +612,7 @@ godot_int GDAPI godot_string_rfindn_from(
     godot_int p_from
 ) {
     const String* self = (const String*)p_self;
-    String* what = (String*)&p_what;
+    String* what       = (String*)&p_what;
 
     return self->rfindn(*what, p_from);
 }
@@ -623,8 +623,8 @@ godot_string GDAPI godot_string_replace_first(
     godot_string p_with
 ) {
     const String* self = (const String*)p_self;
-    String* key = (String*)&p_key;
-    String* with = (String*)&p_with;
+    String* key        = (String*)&p_key;
+    String* with       = (String*)&p_with;
     godot_string result;
     memnew_placement(&result, String(self->replace_first(*key, *with)));
 
@@ -645,7 +645,7 @@ godot_string GDAPI godot_string_rpad_with_custom_character(
     godot_int p_min_length,
     const godot_string* p_character
 ) {
-    const String* self = (const String*)p_self;
+    const String* self      = (const String*)p_self;
     const String* character = (const String*)p_character;
     godot_string result;
     memnew_placement(&result, String(self->rpad(p_min_length, *character)));
@@ -657,7 +657,7 @@ godot_real GDAPI godot_string_similarity(
     const godot_string* p_self,
     const godot_string* p_string
 ) {
-    const String* self = (const String*)p_self;
+    const String* self   = (const String*)p_self;
     const String* string = (const String*)p_string;
 
     return self->similarity(*string);
@@ -668,7 +668,7 @@ godot_string GDAPI godot_string_sprintf(
     const godot_array* p_values,
     godot_bool* p_error
 ) {
-    const String* self = (const String*)p_self;
+    const String* self  = (const String*)p_self;
     const Array* values = (const Array*)p_values;
 
     godot_string result;
@@ -788,7 +788,7 @@ godot_string GDAPI godot_string_get_slice(
     godot_int p_slice
 ) {
     const String* self = (const String*)p_self;
-    String* splitter = (String*)&p_splitter;
+    String* splitter   = (String*)&p_splitter;
     godot_string result;
     memnew_placement(&result, String(self->get_slice(*splitter, p_slice)));
 
@@ -809,11 +809,11 @@ godot_string GDAPI godot_string_get_slicec(
 
 godot_array GDAPI
 godot_string_split(const godot_string* p_self, const godot_string* p_splitter) {
-    const String* self = (const String*)p_self;
+    const String* self     = (const String*)p_self;
     const String* splitter = (const String*)p_splitter;
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy                = (Array*)&result;
     Vector<String> return_value = self->split(*splitter, false);
 
     proxy->resize(return_value.size());
@@ -828,11 +828,11 @@ godot_array GDAPI godot_string_split_allow_empty(
     const godot_string* p_self,
     const godot_string* p_splitter
 ) {
-    const String* self = (const String*)p_self;
+    const String* self     = (const String*)p_self;
     const String* splitter = (const String*)p_splitter;
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy                = (Array*)&result;
     Vector<String> return_value = self->split(*splitter);
 
     proxy->resize(return_value.size());
@@ -847,11 +847,11 @@ godot_array GDAPI godot_string_split_floats(
     const godot_string* p_self,
     const godot_string* p_splitter
 ) {
-    const String* self = (const String*)p_self;
+    const String* self     = (const String*)p_self;
     const String* splitter = (const String*)p_splitter;
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy               = (Array*)&result;
     Vector<float> return_value = self->split_floats(*splitter, false);
 
     proxy->resize(return_value.size());
@@ -866,11 +866,11 @@ godot_array GDAPI godot_string_split_floats_allows_empty(
     const godot_string* p_self,
     const godot_string* p_splitter
 ) {
-    const String* self = (const String*)p_self;
+    const String* self     = (const String*)p_self;
     const String* splitter = (const String*)p_splitter;
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy               = (Array*)&result;
     Vector<float> return_value = self->split_floats(*splitter);
 
     proxy->resize(return_value.size());
@@ -896,7 +896,7 @@ godot_array GDAPI godot_string_split_floats_mk(
 
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy               = (Array*)&result;
     Vector<float> return_value = self->split_floats_mk(splitters, false);
 
     proxy->resize(return_value.size());
@@ -922,7 +922,7 @@ godot_array GDAPI godot_string_split_floats_mk_allows_empty(
 
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy               = (Array*)&result;
     Vector<float> return_value = self->split_floats_mk(splitters);
 
     proxy->resize(return_value.size());
@@ -937,11 +937,11 @@ godot_array GDAPI godot_string_split_ints(
     const godot_string* p_self,
     const godot_string* p_splitter
 ) {
-    const String* self = (const String*)p_self;
+    const String* self     = (const String*)p_self;
     const String* splitter = (const String*)p_splitter;
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy             = (Array*)&result;
     Vector<int> return_value = self->split_ints(*splitter, false);
 
     proxy->resize(return_value.size());
@@ -956,11 +956,11 @@ godot_array GDAPI godot_string_split_ints_allows_empty(
     const godot_string* p_self,
     const godot_string* p_splitter
 ) {
-    const String* self = (const String*)p_self;
+    const String* self     = (const String*)p_self;
     const String* splitter = (const String*)p_splitter;
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy             = (Array*)&result;
     Vector<int> return_value = self->split_ints(*splitter);
 
     proxy->resize(return_value.size());
@@ -986,7 +986,7 @@ godot_array GDAPI godot_string_split_ints_mk(
 
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy             = (Array*)&result;
     Vector<int> return_value = self->split_ints_mk(splitters, false);
 
     proxy->resize(return_value.size());
@@ -1012,7 +1012,7 @@ godot_array GDAPI godot_string_split_ints_mk_allows_empty(
 
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy             = (Array*)&result;
     Vector<int> return_value = self->split_ints_mk(splitters);
 
     proxy->resize(return_value.size());
@@ -1027,7 +1027,7 @@ godot_array GDAPI godot_string_split_spaces(const godot_string* p_self) {
     const String* self = (const String*)p_self;
     godot_array result;
     memnew_placement(&result, Array);
-    Array* proxy = (Array*)&result;
+    Array* proxy                = (Array*)&result;
     Vector<String> return_value = self->split_spaces();
 
     proxy->resize(return_value.size());
@@ -1043,7 +1043,7 @@ godot_int GDAPI godot_string_get_slice_count(
     godot_string p_splitter
 ) {
     const String* self = (const String*)p_self;
-    String* splitter = (String*)&p_splitter;
+    String* splitter   = (String*)&p_splitter;
 
     return self->get_slice_count(*splitter);
 }
@@ -1243,12 +1243,12 @@ godot_string_hash_utf8_chars_with_len(const wchar_t* p_str, godot_int p_len) {
 
 godot_pool_byte_array GDAPI godot_string_md5_buffer(const godot_string* p_self
 ) {
-    const String* self = (const String*)p_self;
+    const String* self         = (const String*)p_self;
     Vector<uint8_t> tmp_result = self->md5_buffer();
 
     godot_pool_byte_array result;
     memnew_placement(&result, PoolByteArray);
-    PoolByteArray* proxy = (PoolByteArray*)&result;
+    PoolByteArray* proxy              = (PoolByteArray*)&result;
     PoolByteArray::Write proxy_writer = proxy->write();
     proxy->resize(tmp_result.size());
 
@@ -1269,12 +1269,12 @@ godot_string GDAPI godot_string_md5_text(const godot_string* p_self) {
 
 godot_pool_byte_array GDAPI
 godot_string_sha256_buffer(const godot_string* p_self) {
-    const String* self = (const String*)p_self;
+    const String* self         = (const String*)p_self;
     Vector<uint8_t> tmp_result = self->sha256_buffer();
 
     godot_pool_byte_array result;
     memnew_placement(&result, PoolByteArray);
-    PoolByteArray* proxy = (PoolByteArray*)&result;
+    PoolByteArray* proxy              = (PoolByteArray*)&result;
     PoolByteArray::Write proxy_writer = proxy->write();
     proxy->resize(tmp_result.size());
 
@@ -1347,7 +1347,7 @@ godot_bool GDAPI godot_string_is_resource_file(const godot_string* p_self) {
 godot_string GDAPI
 godot_string_path_to(const godot_string* p_self, const godot_string* p_path) {
     const String* self = (const String*)p_self;
-    String* path = (String*)p_path;
+    String* path       = (String*)p_path;
     godot_string result;
     String return_value = self->path_to(*path);
     memnew_placement(&result, String(return_value));
@@ -1360,7 +1360,7 @@ godot_string GDAPI godot_string_path_to_file(
     const godot_string* p_path
 ) {
     const String* self = (const String*)p_self;
-    String* path = (String*)p_path;
+    String* path       = (String*)p_path;
     godot_string result;
     String return_value = self->path_to_file(*path);
     memnew_placement(&result, String(return_value));
@@ -1540,7 +1540,7 @@ godot_string GDAPI godot_string_trim_prefix(
     const godot_string* p_prefix
 ) {
     const String* self = (const String*)p_self;
-    String* prefix = (String*)p_prefix;
+    String* prefix     = (String*)p_prefix;
     godot_string result;
     String return_value = self->trim_prefix(*prefix);
     memnew_placement(&result, String(return_value));
@@ -1553,7 +1553,7 @@ godot_string GDAPI godot_string_trim_suffix(
     const godot_string* p_suffix
 ) {
     const String* self = (const String*)p_self;
-    String* suffix = (String*)p_suffix;
+    String* suffix     = (String*)p_suffix;
     godot_string result;
     String return_value = self->trim_suffix(*suffix);
     memnew_placement(&result, String(return_value));
@@ -1564,7 +1564,7 @@ godot_string GDAPI godot_string_trim_suffix(
 godot_string GDAPI
 godot_string_rstrip(const godot_string* p_self, const godot_string* p_chars) {
     const String* self = (const String*)p_self;
-    String* chars = (String*)p_chars;
+    String* chars      = (String*)p_chars;
     godot_string result;
     String return_value = self->rstrip(*chars);
     memnew_placement(&result, String(return_value));
@@ -1579,11 +1579,11 @@ godot_pool_string_array GDAPI godot_string_rsplit(
     const godot_int p_maxsplit
 ) {
     const String* self = (const String*)p_self;
-    String* divisor = (String*)p_divisor;
+    String* divisor    = (String*)p_divisor;
 
     godot_pool_string_array result;
     memnew_placement(&result, PoolStringArray);
-    PoolStringArray* proxy = (PoolStringArray*)&result;
+    PoolStringArray* proxy              = (PoolStringArray*)&result;
     PoolStringArray::Write proxy_writer = proxy->write();
     Vector<String> tmp_result =
         self->rsplit(*divisor, p_allow_empty, p_maxsplit);

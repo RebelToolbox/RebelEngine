@@ -68,8 +68,8 @@ void ResourcePreloaderEditor::_files_load_request(const Vector<String>& p_paths
         }
 
         String basename = path.get_file().get_basename();
-        String name = basename;
-        int counter = 1;
+        String name     = basename;
+        int counter     = 1;
         while (preloader->has_resource(name)) {
             counter++;
             name = basename + " " + itos(counter);
@@ -165,7 +165,7 @@ void ResourcePreloaderEditor::_paste_pressed() {
     }
 
     String basename = name;
-    int counter = 1;
+    int counter     = 1;
     while (preloader->has_resource(name)) {
         counter++;
         name = basename + " " + itos(counter);
@@ -504,7 +504,7 @@ void ResourcePreloaderEditorPlugin::make_visible(bool p_visible) {
 
 ResourcePreloaderEditorPlugin::ResourcePreloaderEditorPlugin(EditorNode* p_node
 ) {
-    editor = p_node;
+    editor           = p_node;
     preloader_editor = memnew(ResourcePreloaderEditor);
     preloader_editor->set_custom_minimum_size(Size2(0, 250) * EDSCALE);
 

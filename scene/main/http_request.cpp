@@ -37,12 +37,12 @@ Error HTTPRequest::_request() {
 }
 
 Error HTTPRequest::_parse_url(const String& p_url) {
-    use_ssl = false;
+    use_ssl        = false;
     request_string = "";
-    port = 80;
-    request_sent = false;
-    got_response = false;
-    body_len = -1;
+    port           = 80;
+    request_sent   = false;
+    got_response   = false;
+    body_len       = -1;
     body.resize(0);
     downloaded.set(0);
     redirections = 0;
@@ -78,7 +78,7 @@ Error HTTPRequest::request(
     PoolVector<uint8_t> raw_data;
 
     CharString charstr = p_request_data.utf8();
-    size_t len = charstr.length();
+    size_t len         = charstr.length();
     raw_data.resize(len);
     memcpy(raw_data.write().ptr(), charstr.ptr(), len);
 
@@ -197,10 +197,10 @@ void HTTPRequest::cancel_request() {
     }
     client->close();
     body.resize(0);
-    got_response = false;
+    got_response  = false;
     response_code = -1;
-    request_sent = false;
-    requesting = false;
+    request_sent  = false;
+    requesting    = false;
 }
 
 bool HTTPRequest::_handle_response(bool* ret_value) {
@@ -216,7 +216,7 @@ bool HTTPRequest::_handle_response(bool* ret_value) {
         return true;
     }
 
-    got_response = true;
+    got_response  = true;
     response_code = client->get_response_code();
     List<String> rheaders;
     client->get_response_headers(&rheaders);
@@ -267,11 +267,11 @@ bool HTTPRequest::_handle_response(bool* ret_value) {
             if (err == OK) {
                 request_sent = false;
                 got_response = false;
-                body_len = -1;
+                body_len     = -1;
                 body.resize(0);
                 downloaded.set(0);
                 redirections = new_redirs;
-                *ret_value = false;
+                *ret_value   = false;
                 return true;
             }
         }
@@ -827,19 +827,19 @@ void HTTPRequest::_bind_methods() {
 }
 
 HTTPRequest::HTTPRequest() {
-    port = 80;
-    redirections = 0;
+    port          = 80;
+    redirections  = 0;
     max_redirects = 8;
-    body_len = -1;
-    got_response = false;
-    validate_ssl = false;
-    use_ssl = false;
+    body_len      = -1;
+    got_response  = false;
+    validate_ssl  = false;
+    use_ssl       = false;
     response_code = 0;
-    request_sent = false;
-    requesting = false;
+    request_sent  = false;
+    requesting    = false;
     client.instance();
     body_size_limit = -1;
-    file = nullptr;
+    file            = nullptr;
 
     timer = memnew(Timer);
     timer->set_one_shot(true);

@@ -38,7 +38,7 @@ class CollisionObject2D : public Node2D {
     GDCLASS(CollisionObject2D, Node2D);
 
     uint32_t collision_layer = 1;
-    uint32_t collision_mask = 1;
+    uint32_t collision_mask  = 1;
 
     bool area;
     RID rid;
@@ -59,10 +59,10 @@ class CollisionObject2D : public Node2D {
         float one_way_collision_margin;
 
         ShapeData() {
-            disabled = false;
-            one_way_collision = false;
+            disabled                 = false;
+            one_way_collision        = false;
             one_way_collision_margin = 0;
-            owner_id = 0;
+            owner_id                 = 0;
         }
     };
 

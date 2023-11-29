@@ -108,7 +108,7 @@ Vector<Vector2> expand(
         p2 = p2->GetNext();
     }
 
-    int lasti = p2->Contour.size() - 1;
+    int lasti    = p2->Contour.size() - 1;
     Vector2 prev = Vector2(
         p2->Contour[lasti].X / PRECISION,
         p2->Contour[lasti].Y / PRECISION
@@ -259,7 +259,7 @@ void SpriteEditor::_update_mesh_data() {
 
             for (int i = 0; i < poly.size(); i += 3) {
                 for (int k = 0; k < 3; k++) {
-                    int idx = i + k;
+                    int idx  = i + k;
                     int idxn = i + (k + 1) % 3;
                     uv_lines.push_back(lines[j][poly[idx]]);
                     uv_lines.push_back(lines[j][poly[idxn]]);
@@ -307,7 +307,7 @@ void SpriteEditor::_update_mesh_data() {
                 col.write[i] = vtx;
             }
 
-            outline_lines.write[pi] = ol;
+            outline_lines.write[pi]          = ol;
             computed_outline_lines.write[pi] = col;
         }
     }
@@ -346,7 +346,7 @@ void SpriteEditor::_convert_to_mesh_2d_node() {
     a.resize(Mesh::ARRAY_MAX);
     a[Mesh::ARRAY_VERTEX] = computed_vertices;
     a[Mesh::ARRAY_TEX_UV] = computed_uv;
-    a[Mesh::ARRAY_INDEX] = computed_indices;
+    a[Mesh::ARRAY_INDEX]  = computed_indices;
 
     mesh->add_surface_from_arrays(
         Mesh::PRIMITIVE_TRIANGLES,
@@ -409,7 +409,7 @@ void SpriteEditor::_convert_to_polygon_2d_node() {
     polys.resize(computed_outline_lines.size());
 
     for (int i = 0; i < computed_outline_lines.size(); i++) {
-        Vector<Vector2> outline = computed_outline_lines[i];
+        Vector<Vector2> outline    = computed_outline_lines[i];
         Vector<Vector2> uv_outline = outline_lines[i];
 
         PoolIntArray pia;
@@ -418,8 +418,8 @@ void SpriteEditor::_convert_to_polygon_2d_node() {
 
         for (int pi = 0; pi < outline.size(); pi++) {
             polygon_write[current_point_index] = outline[pi];
-            uvs_write[current_point_index] = uv_outline[pi];
-            pia_write[pi] = current_point_index;
+            uvs_write[current_point_index]     = uv_outline[pi];
+            pia_write[pi]                      = current_point_index;
             current_point_index++;
         }
 
@@ -692,7 +692,7 @@ void SpriteEditorPlugin::make_visible(bool p_visible) {
 }
 
 SpriteEditorPlugin::SpriteEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor        = p_node;
     sprite_editor = memnew(SpriteEditor);
     editor->get_viewport()->add_child(sprite_editor);
     make_visible(false);

@@ -123,7 +123,7 @@ void BackBufferCopy::_bind_methods() {
 }
 
 BackBufferCopy::BackBufferCopy() {
-    rect = Rect2(-100, -100, 200, 200);
+    rect      = Rect2(-100, -100, 200, 200);
     copy_mode = COPY_MODE_RECT;
     _update_copy_mode();
 }

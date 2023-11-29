@@ -54,9 +54,9 @@ public:
     };
 
     enum DuplicateFlags {
-        DUPLICATE_SIGNALS = 1,
-        DUPLICATE_GROUPS = 2,
-        DUPLICATE_SCRIPTS = 4,
+        DUPLICATE_SIGNALS        = 1,
+        DUPLICATE_GROUPS         = 2,
+        DUPLICATE_SCRIPTS        = 4,
         DUPLICATE_USE_INSTANCING = 8,
 #ifdef TOOLS_ENABLED
         DUPLICATE_FROM_EDITOR = 16,
@@ -250,29 +250,29 @@ public:
     enum {
         // you can make your own, but don't use the same numbers as other
         // notifications in other nodes
-        NOTIFICATION_ENTER_TREE = 10,
-        NOTIFICATION_EXIT_TREE = 11,
-        NOTIFICATION_MOVED_IN_PARENT = 12,
-        NOTIFICATION_READY = 13,
-        NOTIFICATION_PAUSED = 14,
-        NOTIFICATION_UNPAUSED = 15,
-        NOTIFICATION_PHYSICS_PROCESS = 16,
-        NOTIFICATION_PROCESS = 17,
-        NOTIFICATION_PARENTED = 18,
-        NOTIFICATION_UNPARENTED = 19,
-        NOTIFICATION_INSTANCED = 20,
-        NOTIFICATION_DRAG_BEGIN = 21,
-        NOTIFICATION_DRAG_END = 22,
-        NOTIFICATION_PATH_CHANGED = 23,
+        NOTIFICATION_ENTER_TREE               = 10,
+        NOTIFICATION_EXIT_TREE                = 11,
+        NOTIFICATION_MOVED_IN_PARENT          = 12,
+        NOTIFICATION_READY                    = 13,
+        NOTIFICATION_PAUSED                   = 14,
+        NOTIFICATION_UNPAUSED                 = 15,
+        NOTIFICATION_PHYSICS_PROCESS          = 16,
+        NOTIFICATION_PROCESS                  = 17,
+        NOTIFICATION_PARENTED                 = 18,
+        NOTIFICATION_UNPARENTED               = 19,
+        NOTIFICATION_INSTANCED                = 20,
+        NOTIFICATION_DRAG_BEGIN               = 21,
+        NOTIFICATION_DRAG_END                 = 22,
+        NOTIFICATION_PATH_CHANGED             = 23,
         // NOTIFICATION_TRANSLATION_CHANGED = 24, moved below
-        NOTIFICATION_INTERNAL_PROCESS = 25,
+        NOTIFICATION_INTERNAL_PROCESS         = 25,
         NOTIFICATION_INTERNAL_PHYSICS_PROCESS = 26,
-        NOTIFICATION_POST_ENTER_TREE = 27,
+        NOTIFICATION_POST_ENTER_TREE          = 27,
         // keep these linked to node
-        NOTIFICATION_WM_MOUSE_ENTER = MainLoop::NOTIFICATION_WM_MOUSE_ENTER,
-        NOTIFICATION_WM_MOUSE_EXIT = MainLoop::NOTIFICATION_WM_MOUSE_EXIT,
-        NOTIFICATION_WM_FOCUS_IN = MainLoop::NOTIFICATION_WM_FOCUS_IN,
-        NOTIFICATION_WM_FOCUS_OUT = MainLoop::NOTIFICATION_WM_FOCUS_OUT,
+        NOTIFICATION_WM_MOUSE_ENTER  = MainLoop::NOTIFICATION_WM_MOUSE_ENTER,
+        NOTIFICATION_WM_MOUSE_EXIT   = MainLoop::NOTIFICATION_WM_MOUSE_EXIT,
+        NOTIFICATION_WM_FOCUS_IN     = MainLoop::NOTIFICATION_WM_FOCUS_IN,
+        NOTIFICATION_WM_FOCUS_OUT    = MainLoop::NOTIFICATION_WM_FOCUS_OUT,
         NOTIFICATION_WM_QUIT_REQUEST = MainLoop::NOTIFICATION_WM_QUIT_REQUEST,
         NOTIFICATION_WM_GO_BACK_REQUEST =
             MainLoop::NOTIFICATION_WM_GO_BACK_REQUEST,
@@ -282,11 +282,11 @@ public:
             MainLoop::NOTIFICATION_OS_MEMORY_WARNING,
         NOTIFICATION_TRANSLATION_CHANGED =
             MainLoop::NOTIFICATION_TRANSLATION_CHANGED,
-        NOTIFICATION_WM_ABOUT = MainLoop::NOTIFICATION_WM_ABOUT,
-        NOTIFICATION_CRASH = MainLoop::NOTIFICATION_CRASH,
+        NOTIFICATION_WM_ABOUT      = MainLoop::NOTIFICATION_WM_ABOUT,
+        NOTIFICATION_CRASH         = MainLoop::NOTIFICATION_CRASH,
         NOTIFICATION_OS_IME_UPDATE = MainLoop::NOTIFICATION_OS_IME_UPDATE,
-        NOTIFICATION_APP_RESUMED = MainLoop::NOTIFICATION_APP_RESUMED,
-        NOTIFICATION_APP_PAUSED = MainLoop::NOTIFICATION_APP_PAUSED
+        NOTIFICATION_APP_RESUMED   = MainLoop::NOTIFICATION_APP_RESUMED,
+        NOTIFICATION_APP_PAUSED    = MainLoop::NOTIFICATION_APP_PAUSED
     };
 
     /* NODE/TREE */
@@ -310,7 +310,7 @@ public:
     Node* find_node(
         const String& p_mask,
         bool p_recursive = true,
-        bool p_owned = true
+        bool p_owned     = true
     ) const;
     bool has_node_and_resource(const NodePath& p_path) const;
     Node* get_node_and_resource(
@@ -385,7 +385,7 @@ public:
 
     void propagate_call(
         const StringName& p_method,
-        const Array& p_args = Array(),
+        const Array& p_args       = Array(),
         const bool p_parent_first = false
     );
 

@@ -49,14 +49,14 @@ Vector3 MobileVRInterface::scale_magneto(const Vector3& p_magnetometer) {
     // fairly simple adjustment we can do to correct for the magnetometer data
     // being elliptical
 
-    Vector3 mag_raw = p_magnetometer;
+    Vector3 mag_raw    = p_magnetometer;
     Vector3 mag_scaled = p_magnetometer;
 
     // update our variables every x frames
     if (mag_count > 20) {
         mag_current_min = mag_next_min;
         mag_current_max = mag_next_max;
-        mag_count = 0;
+        mag_count       = 0;
     } else {
         mag_count++;
     };
@@ -84,20 +84,20 @@ Vector3 MobileVRInterface::scale_magneto(const Vector3& p_magnetometer) {
 
     // scale our x, y and z
     if (!(mag_current_max.x - mag_current_min.x)) {
-        mag_raw.x -= (mag_current_min.x + mag_current_max.x) / 2.0;
-        mag_scaled.x = (mag_raw.x - mag_current_min.x)
+        mag_raw.x    -= (mag_current_min.x + mag_current_max.x) / 2.0;
+        mag_scaled.x  = (mag_raw.x - mag_current_min.x)
                      / ((mag_current_max.x - mag_current_min.x) * 2.0 - 1.0);
     };
 
     if (!(mag_current_max.y - mag_current_min.y)) {
-        mag_raw.y -= (mag_current_min.y + mag_current_max.y) / 2.0;
-        mag_scaled.y = (mag_raw.y - mag_current_min.y)
+        mag_raw.y    -= (mag_current_min.y + mag_current_max.y) / 2.0;
+        mag_scaled.y  = (mag_raw.y - mag_current_min.y)
                      / ((mag_current_max.y - mag_current_min.y) * 2.0 - 1.0);
     };
 
     if (!(mag_current_max.z - mag_current_min.z)) {
-        mag_raw.z -= (mag_current_min.z + mag_current_max.z) / 2.0;
-        mag_scaled.z = (mag_raw.z - mag_current_min.z)
+        mag_raw.z    -= (mag_current_min.z + mag_current_max.z) / 2.0;
+        mag_scaled.z  = (mag_raw.z - mag_current_min.z)
                      / ((mag_current_max.z - mag_current_min.z) * 2.0 - 1.0);
     };
 
@@ -136,9 +136,9 @@ void MobileVRInterface::set_position_from_sensors() {
     // accelerometer axis + 3 gyro axis + 3 magnetometer axis = 9 axis but in
     // reality this only offers 3 dof (yaw, pitch, roll) orientation
 
-    uint64_t ticks = OS::get_singleton()->get_ticks_usec();
+    uint64_t ticks         = OS::get_singleton()->get_ticks_usec();
     uint64_t ticks_elapsed = ticks - last_ticks;
-    float delta_time = (double)ticks_elapsed / 1000000.0;
+    float delta_time       = (double)ticks_elapsed / 1000000.0;
 
     // few things we need
     Input* input = Input::get_singleton();
@@ -146,10 +146,10 @@ void MobileVRInterface::set_position_from_sensors() {
     Vector3 north(0.0, 0.0, 1.0); // North is Z positive
 
     // make copies of our inputs
-    bool has_grav = false;
-    Vector3 acc = input->get_accelerometer();
-    Vector3 gyro = input->get_gyroscope();
-    Vector3 grav = input->get_gravity();
+    bool has_grav   = false;
+    Vector3 acc     = input->get_accelerometer();
+    Vector3 gyro    = input->get_gyroscope();
+    Vector3 grav    = input->get_gravity();
     Vector3 magneto = scale_magneto(input->get_magnetometer()
     ); // this may be overkill on iOS because we're already getting a calibrated
        // magnetometer reading
@@ -157,11 +157,11 @@ void MobileVRInterface::set_position_from_sensors() {
     if (sensor_first) {
         sensor_first = false;
     } else {
-        acc = scrub(acc, last_accerometer_data, 2, 0.2);
+        acc     = scrub(acc, last_accerometer_data, 2, 0.2);
         magneto = scrub(magneto, last_magnetometer_data, 3, 0.3);
     };
 
-    last_accerometer_data = acc;
+    last_accerometer_data  = acc;
     last_magnetometer_data = magneto;
 
     if (grav.length() < 0.1) {
@@ -204,7 +204,7 @@ void MobileVRInterface::set_position_from_sensors() {
         Quat transform_quat(orientation);
         Quat acc_mag_quat(combine_acc_mag(grav, magneto));
         transform_quat = transform_quat.slerp(acc_mag_quat, 0.1);
-        orientation = Basis(transform_quat);
+        orientation    = Basis(transform_quat);
 
         tracking_state = ARVRInterface::ARVR_NORMAL_TRACKING;
     } else if (has_grav) {
@@ -212,7 +212,7 @@ void MobileVRInterface::set_position_from_sensors() {
         // transform gravity into our world space
         grav.normalize();
         Vector3 grav_adj = orientation.xform(grav);
-        float dot = grav_adj.dot(down);
+        float dot        = grav_adj.dot(down);
         if ((dot > -1.0) && (dot < 1.0)) {
             // axis around which we have this rotation
             Vector3 axis = grav_adj.cross(down);
@@ -416,11 +416,11 @@ bool MobileVRInterface::initialize() {
 
     if (!initialized) {
         // reset our sensor data and orientation
-        mag_count = 0;
-        has_gyro = false;
-        sensor_first = true;
-        mag_next_min = Vector3(10000, 10000, 10000);
-        mag_next_max = Vector3(-10000, -10000, -10000);
+        mag_count       = 0;
+        has_gyro        = false;
+        sensor_first    = true;
+        mag_next_min    = Vector3(10000, 10000, 10000);
+        mag_next_max    = Vector3(-10000, -10000, -10000);
         mag_current_min = Vector3(0, 0, 0);
         mag_current_max = Vector3(0, 0, 0);
 
@@ -491,7 +491,7 @@ Transform MobileVRInterface::get_transform_for_eye(
 
         // just scale our origin point of our transform
         Transform hmd_transform;
-        hmd_transform.basis = orientation;
+        hmd_transform.basis  = orientation;
         hmd_transform.origin = Vector3(0.0, eye_height * world_scale, 0.0);
 
         transform_for_eye = p_cam_transform
@@ -565,7 +565,7 @@ void MobileVRInterface::commit_for_eye(
                      / (display_width / 2.0);
     } else if (p_eye == ARVRInterface::EYE_RIGHT) {
         dest.position.x = dest.size.x;
-        eye_center.x = ((intraocular_dist / 2.0) - (display_width / 4.0))
+        eye_center.x    = ((intraocular_dist / 2.0) - (display_width / 4.0))
                      / (display_width / 2.0);
     }
     // we don't offset the eye center vertically (yet)
@@ -606,14 +606,14 @@ MobileVRInterface::MobileVRInterface() {
     // Just set some defaults for these. At some point we need to look at adding
     // a lookup table for common device + headset combos and/or support reading
     // cardboard QR codes
-    eye_height = 1.85;
+    eye_height       = 1.85;
     intraocular_dist = 6.0;
-    display_width = 14.5;
-    display_to_lens = 4.0;
-    oversample = 1.5;
-    k1 = 0.215;
-    k2 = 0.215;
-    last_ticks = 0;
+    display_width    = 14.5;
+    display_to_lens  = 4.0;
+    oversample       = 1.5;
+    k1               = 0.215;
+    k2               = 0.215;
+    last_ticks       = 0;
 };
 
 MobileVRInterface::~MobileVRInterface() {

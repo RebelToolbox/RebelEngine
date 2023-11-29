@@ -61,17 +61,17 @@ void main() {
 
 #else
 
-    ivec2 coord = ivec2(gl_FragCoord.xy);
-    exposure = texelFetch(source_exposure, coord * 3 + ivec2(0, 0), 0).r;
-    exposure += texelFetch(source_exposure, coord * 3 + ivec2(1, 0), 0).r;
-    exposure += texelFetch(source_exposure, coord * 3 + ivec2(2, 0), 0).r;
-    exposure += texelFetch(source_exposure, coord * 3 + ivec2(0, 1), 0).r;
-    exposure += texelFetch(source_exposure, coord * 3 + ivec2(1, 1), 0).r;
-    exposure += texelFetch(source_exposure, coord * 3 + ivec2(2, 1), 0).r;
-    exposure += texelFetch(source_exposure, coord * 3 + ivec2(0, 2), 0).r;
-    exposure += texelFetch(source_exposure, coord * 3 + ivec2(1, 2), 0).r;
-    exposure += texelFetch(source_exposure, coord * 3 + ivec2(2, 2), 0).r;
-    exposure *= (1.0 / 9.0);
+    ivec2 coord  = ivec2(gl_FragCoord.xy);
+    exposure     = texelFetch(source_exposure, coord * 3 + ivec2(0, 0), 0).r;
+    exposure    += texelFetch(source_exposure, coord * 3 + ivec2(1, 0), 0).r;
+    exposure    += texelFetch(source_exposure, coord * 3 + ivec2(2, 0), 0).r;
+    exposure    += texelFetch(source_exposure, coord * 3 + ivec2(0, 1), 0).r;
+    exposure    += texelFetch(source_exposure, coord * 3 + ivec2(1, 1), 0).r;
+    exposure    += texelFetch(source_exposure, coord * 3 + ivec2(2, 1), 0).r;
+    exposure    += texelFetch(source_exposure, coord * 3 + ivec2(0, 2), 0).r;
+    exposure    += texelFetch(source_exposure, coord * 3 + ivec2(1, 2), 0).r;
+    exposure    += texelFetch(source_exposure, coord * 3 + ivec2(2, 2), 0).r;
+    exposure    *= (1.0 / 9.0);
 
 #ifdef EXPOSURE_END
 

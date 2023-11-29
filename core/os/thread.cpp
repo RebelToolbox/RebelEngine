@@ -38,10 +38,10 @@
 
 #include "core/safe_refcount.h"
 
-Error (*Thread::set_name_func)(const String&) = nullptr;
+Error (*Thread::set_name_func)(const String&)       = nullptr;
 void (*Thread::set_priority_func)(Thread::Priority) = nullptr;
-void (*Thread::init_func)() = nullptr;
-void (*Thread::term_func)() = nullptr;
+void (*Thread::init_func)()                         = nullptr;
+void (*Thread::term_func)()                         = nullptr;
 
 uint64_t Thread::_thread_id_hash(const std::thread::id& p_t) {
     static std::hash<std::thread::id> hasher;
@@ -49,7 +49,7 @@ uint64_t Thread::_thread_id_hash(const std::thread::id& p_t) {
 }
 
 Thread::ID Thread::main_thread_id = _thread_id_hash(std::this_thread::get_id());
-static thread_local Thread::ID caller_id = 0;
+static thread_local Thread::ID caller_id  = 0;
 static thread_local bool caller_id_cached = false;
 
 void Thread::_set_platform_funcs(
@@ -58,10 +58,10 @@ void Thread::_set_platform_funcs(
     void (*p_init_func)(),
     void (*p_term_func)()
 ) {
-    Thread::set_name_func = p_set_name_func;
+    Thread::set_name_func     = p_set_name_func;
     Thread::set_priority_func = p_set_priority_func;
-    Thread::init_func = p_init_func;
-    Thread::term_func = p_term_func;
+    Thread::init_func         = p_init_func;
+    Thread::term_func         = p_term_func;
 }
 
 void Thread::callback(
@@ -70,7 +70,7 @@ void Thread::callback(
     Callback p_callback,
     void* p_userdata
 ) {
-    caller_id = _thread_id_hash(p_self->thread.get_id());
+    caller_id        = _thread_id_hash(p_self->thread.get_id());
     caller_id_cached = true;
 
     if (set_priority_func) {
@@ -152,7 +152,7 @@ Thread::ID Thread::get_caller_id() {
     if (likely(caller_id_cached)) {
         return caller_id;
     } else {
-        caller_id = _thread_id_hash(std::this_thread::get_id());
+        caller_id        = _thread_id_hash(std::this_thread::get_id());
         caller_id_cached = true;
         return caller_id;
     }

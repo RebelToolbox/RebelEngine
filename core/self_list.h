@@ -109,7 +109,7 @@ public:
 
         _FORCE_INLINE_ List() {
             _first = nullptr;
-            _last = nullptr;
+            _last  = nullptr;
         }
 
         _FORCE_INLINE_ ~List() {

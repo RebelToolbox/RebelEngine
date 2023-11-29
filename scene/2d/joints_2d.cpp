@@ -36,7 +36,7 @@
 #include "servers/physics_2d_server.h"
 
 void Joint2D::_disconnect_signals() {
-    Node* node_a = get_node_or_null(a);
+    Node* node_a          = get_node_or_null(a);
     PhysicsBody2D* body_a = Object::cast_to<PhysicsBody2D>(node_a);
     if (body_a) {
         body_a->disconnect(
@@ -46,7 +46,7 @@ void Joint2D::_disconnect_signals() {
         );
     }
 
-    Node* node_b = get_node_or_null(b);
+    Node* node_b          = get_node_or_null(b);
     PhysicsBody2D* body_b = Object::cast_to<PhysicsBody2D>(node_b);
     if (body_b) {
         body_b->disconnect(
@@ -71,8 +71,8 @@ void Joint2D::_update_joint(bool p_only_free) {
 
         Physics2DServer::get_singleton()->free(joint);
         joint = RID();
-        ba = RID();
-        bb = RID();
+        ba    = RID();
+        bb    = RID();
     }
 
     if (p_only_free || !is_inside_tree()) {
@@ -309,7 +309,7 @@ void Joint2D::_bind_methods() {
 }
 
 Joint2D::Joint2D() {
-    bias = 0;
+    bias                   = 0;
     exclude_from_collision = true;
 }
 
@@ -446,10 +446,10 @@ RID GrooveJoint2D::_configure_joint(
     PhysicsBody2D* body_a,
     PhysicsBody2D* body_b
 ) {
-    Transform2D gt = get_global_transform();
+    Transform2D gt    = get_global_transform();
     Vector2 groove_A1 = gt.get_origin();
     Vector2 groove_A2 = gt.xform(Vector2(0, length));
-    Vector2 anchor_B = gt.xform(Vector2(0, initial_offset));
+    Vector2 anchor_B  = gt.xform(Vector2(0, initial_offset));
 
     return Physics2DServer::get_singleton()->groove_joint_create(
         groove_A1,
@@ -516,7 +516,7 @@ void GrooveJoint2D::_bind_methods() {
 }
 
 GrooveJoint2D::GrooveJoint2D() {
-    length = 50;
+    length         = 50;
     initial_offset = 25;
 }
 
@@ -562,7 +562,7 @@ RID DampedSpringJoint2D::_configure_joint(
     PhysicsBody2D* body_a,
     PhysicsBody2D* body_b
 ) {
-    Transform2D gt = get_global_transform();
+    Transform2D gt   = get_global_transform();
     Vector2 anchor_A = gt.get_origin();
     Vector2 anchor_B = gt.xform(Vector2(0, length));
 
@@ -727,8 +727,8 @@ void DampedSpringJoint2D::_bind_methods() {
 }
 
 DampedSpringJoint2D::DampedSpringJoint2D() {
-    length = 50;
+    length      = 50;
     rest_length = 0;
-    stiffness = 20;
-    damping = 1;
+    stiffness   = 20;
+    damping     = 1;
 }

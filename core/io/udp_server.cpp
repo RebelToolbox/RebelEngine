@@ -85,8 +85,8 @@ Error UDPServer::poll() {
             return FAILED;
         }
         Peer p;
-        p.ip = ip;
-        p.port = port;
+        p.ip                   = ip;
+        p.port                 = port;
         List<Peer>::Element* E = peers.find(p);
         if (!E) {
             E = pending.find(p);
@@ -100,7 +100,7 @@ Error UDPServer::poll() {
             }
             // It's a new peer, add it to the pending list.
             Peer peer;
-            peer.ip = ip;
+            peer.ip   = ip;
             peer.port = port;
             peer.peer = memnew(PacketPeerUDP);
             peer.peer->connect_shared_socket(_sock, ip, port, this);
@@ -141,7 +141,7 @@ Error UDPServer::listen(uint16_t p_port, const IP_Address& p_bind_address) {
         return err;
     }
     bind_address = p_bind_address;
-    bind_port = p_port;
+    bind_port    = p_port;
     return OK;
 }
 
@@ -196,8 +196,8 @@ Ref<PacketPeerUDP> UDPServer::take_connection() {
 
 void UDPServer::remove_peer(IP_Address p_ip, int p_port) {
     Peer peer;
-    peer.ip = p_ip;
-    peer.port = p_port;
+    peer.ip                = p_ip;
+    peer.port              = p_port;
     List<Peer>::Element* E = peers.find(peer);
     if (E) {
         peers.erase(E);
@@ -208,8 +208,8 @@ void UDPServer::stop() {
     if (_sock.is_valid()) {
         _sock->close();
     }
-    bind_port = 0;
-    bind_address = IP_Address();
+    bind_port              = 0;
+    bind_address           = IP_Address();
     List<Peer>::Element* E = peers.front();
     while (E) {
         E->get().peer->disconnect_shared_socket();

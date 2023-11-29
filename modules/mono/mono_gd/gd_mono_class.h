@@ -62,7 +62,7 @@ class GDMonoClass {
         MethodKey() {}
 
         MethodKey(const StringName& p_name, int p_params_count) {
-            name = p_name;
+            name         = p_name;
             params_count = p_params_count;
         }
 

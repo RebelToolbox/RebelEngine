@@ -99,7 +99,7 @@ Material::Material(
     const ScopePtr sc = GetRequiredScope(element);
 
     const ElementPtr ShadingModel = sc->GetElement("ShadingModel");
-    const ElementPtr MultiLayer = sc->GetElement("MultiLayer");
+    const ElementPtr MultiLayer   = sc->GetElement("MultiLayer");
 
     if (MultiLayer) {
         multilayer = !!ParseTokenAsInt(GetRequiredToken(MultiLayer, 0));
@@ -195,11 +195,11 @@ Texture::Texture(
     media(nullptr) {
     const ScopePtr sc = GetRequiredScope(element);
 
-    const ElementPtr Type = sc->GetElement("Type");
-    const ElementPtr FileName = sc->GetElement("FileName");
-    const ElementPtr RelativeFilename = sc->GetElement("RelativeFilename");
+    const ElementPtr Type               = sc->GetElement("Type");
+    const ElementPtr FileName           = sc->GetElement("FileName");
+    const ElementPtr RelativeFilename   = sc->GetElement("RelativeFilename");
     const ElementPtr ModelUVTranslation = sc->GetElement("ModelUVTranslation");
-    const ElementPtr ModelUVScaling = sc->GetElement("ModelUVScaling");
+    const ElementPtr ModelUVScaling     = sc->GetElement("ModelUVScaling");
     const ElementPtr Texture_Alpha_Source =
         sc->GetElement("Texture_Alpha_Source");
     const ElementPtr Cropping = sc->GetElement("Cropping");
@@ -306,7 +306,7 @@ LayeredTexture::LayeredTexture(
     const ScopePtr sc = GetRequiredScope(element);
 
     ElementPtr BlendModes = sc->GetElement("BlendModes");
-    ElementPtr Alphas = sc->GetElement("Alphas");
+    ElementPtr Alphas     = sc->GetElement("Alphas");
 
     if (BlendModes != nullptr) {
         blendMode = (BlendMode)ParseTokenAsInt(GetRequiredToken(BlendModes, 0));
@@ -354,7 +354,7 @@ Video::Video(
     const ElementPtr Type = sc->GetElement("Type");
     // File Version 7500 Crashes if this is not checked fully.
     // As of writing this comment 7700 exists, in August 2020
-    ElementPtr FileName = nullptr;
+    ElementPtr FileName   = nullptr;
     if (HasElement(sc, "Filename")) {
         FileName = (ElementPtr)sc->GetElement("Filename");
     } else if (HasElement(sc, "FileName")) {
@@ -364,7 +364,7 @@ Video::Video(
         return;
     }
     const ElementPtr RelativeFilename = sc->GetElement("RelativeFilename");
-    const ElementPtr Content = sc->GetElement("Content");
+    const ElementPtr Content          = sc->GetElement("Content");
 
     if (Type) {
         type = ParseTokenAsString(GetRequiredToken(Type, 0));
@@ -384,7 +384,7 @@ Video::Video(
         // let's ignore if it's not found
         try {
             const Token* token = GetRequiredToken(Content, 0);
-            const char* data = token->begin();
+            const char* data   = token->begin();
             if (!token->IsBinary()) {
                 if (*data != '"') {
                     DOMError(
@@ -393,7 +393,7 @@ Video::Video(
                     );
                 } else {
                     size_t targetLength = 0;
-                    auto numTokens = Content->Tokens().size();
+                    auto numTokens      = Content->Tokens().size();
                     // First time compute size (it could be large like 64Gb and
                     // it is good to allocate it once)
                     for (uint32_t tokenIdx = 0; tokenIdx < numTokens;
@@ -419,8 +419,8 @@ Video::Video(
                     if (targetLength == 0) {
                         DOMError("Corrupted embedded content found", element);
                     }
-                    content = new uint8_t[targetLength];
-                    contentLength = static_cast<uint64_t>(targetLength);
+                    content           = new uint8_t[targetLength];
+                    contentLength     = static_cast<uint64_t>(targetLength);
                     size_t dst_offset = 0;
                     for (uint32_t tokenIdx = 0; tokenIdx < numTokens;
                          ++tokenIdx) {
@@ -430,8 +430,8 @@ Video::Video(
                         size_t tokenLength = dataToken->end()
                                            - dataToken->begin()
                                            - 2; // ignore double quotes
-                        const char* base64data = dataToken->begin() + 1;
-                        dst_offset += Util::DecodeBase64(
+                        const char* base64data  = dataToken->begin() + 1;
+                        dst_offset             += Util::DecodeBase64(
                             base64data,
                             tokenLength,
                             content + dst_offset,

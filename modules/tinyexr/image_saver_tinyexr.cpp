@@ -198,7 +198,7 @@ Error save_exr(
     const int* channel_mapping = channel_mappings[channel_count - 1];
 
     {
-        PoolByteArray src_data = p_img->get_data();
+        PoolByteArray src_data    = p_img->get_data();
         PoolByteArray::Read src_r = src_data.read();
 
         for (int channel_index = 0; channel_index < channel_count;
@@ -219,7 +219,7 @@ Error save_exr(
                 );
 
                 const float* src_rp = (float*)src_r.ptr();
-                float* dst_wp = (float*)dst_w.ptr();
+                float* dst_wp       = (float*)dst_w.ptr();
 
                 for (int i = 0; i < pixel_count; ++i) {
                     dst_wp[i] = src_rp[channel_index + i * channel_count];
@@ -232,7 +232,7 @@ Error save_exr(
                 );
 
                 const uint16_t* src_rp = (uint16_t*)src_r.ptr();
-                uint16_t* dst_wp = (uint16_t*)dst_w.ptr();
+                uint16_t* dst_wp       = (uint16_t*)dst_w.ptr();
 
                 for (int i = 0; i < pixel_count; ++i) {
                     dst_wp[i] = src_rp[channel_index + i * channel_count];
@@ -242,7 +242,7 @@ Error save_exr(
                 CRASH_COND(src_data.size() < pixel_count * channel_count);
 
                 const uint8_t* src_rp = (uint8_t*)src_r.ptr();
-                uint16_t* dst_wp = (uint16_t*)dst_w.ptr();
+                uint16_t* dst_wp      = (uint16_t*)dst_w.ptr();
 
                 for (int i = 0; i < pixel_count; ++i) {
                     dst_wp[i] = Math::make_half_float(
@@ -259,7 +259,7 @@ Error save_exr(
             channels_ptrs[remapped_index] = dst_w.ptr();
 
             // No conversion
-            pixel_types[remapped_index] = target_pixel_type;
+            pixel_types[remapped_index]           = target_pixel_type;
             requested_pixel_types[remapped_index] = target_pixel_type;
 
             // Write channel name
@@ -267,26 +267,26 @@ Error save_exr(
                 channel_infos[remapped_index].name[0] = 'Y';
                 channel_infos[remapped_index].name[1] = '\0';
             } else {
-                const char* rgba = "RGBA";
+                const char* rgba                      = "RGBA";
                 channel_infos[remapped_index].name[0] = rgba[channel_index];
                 channel_infos[remapped_index].name[1] = '\0';
             }
         }
     }
 
-    image.images = channels_ptrs;
+    image.images       = channels_ptrs;
     image.num_channels = channel_count;
-    image.width = p_img->get_width();
-    image.height = p_img->get_height();
+    image.width        = p_img->get_width();
+    image.height       = p_img->get_height();
 
-    header.num_channels = image.num_channels;
-    header.channels = channel_infos;
-    header.pixel_types = pixel_types;
+    header.num_channels          = image.num_channels;
+    header.channels              = channel_infos;
+    header.pixel_types           = pixel_types;
     header.requested_pixel_types = requested_pixel_types;
-    header.compression_type = TINYEXR_COMPRESSIONTYPE_PIZ;
+    header.compression_type      = TINYEXR_COMPRESSIONTYPE_PIZ;
 
     unsigned char* mem = nullptr;
-    const char* err = nullptr;
+    const char* err    = nullptr;
 
     size_t bytes = SaveEXRImageToMemory(&image, &header, &mem, &err);
 

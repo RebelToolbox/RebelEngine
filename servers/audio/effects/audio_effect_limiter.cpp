@@ -36,23 +36,23 @@ void AudioEffectLimiterInstance::process(
     int p_frame_count
 ) {
     float threshdb = base->threshold;
-    float ceiling = Math::db2linear(base->ceiling);
-    float ceildb = base->ceiling;
-    float makeup = Math::db2linear(ceildb - threshdb);
-    float sc = -base->soft_clip;
-    float scv = Math::db2linear(sc);
-    float peakdb = ceildb + 25;
-    float scmult = Math::abs((ceildb - sc) / (peakdb - sc));
+    float ceiling  = Math::db2linear(base->ceiling);
+    float ceildb   = base->ceiling;
+    float makeup   = Math::db2linear(ceildb - threshdb);
+    float sc       = -base->soft_clip;
+    float scv      = Math::db2linear(sc);
+    float peakdb   = ceildb + 25;
+    float scmult   = Math::abs((ceildb - sc) / (peakdb - sc));
 
     for (int i = 0; i < p_frame_count; i++) {
-        float spl0 = p_src_frames[i].l;
-        float spl1 = p_src_frames[i].r;
-        spl0 = spl0 * makeup;
-        spl1 = spl1 * makeup;
-        float sign0 = (spl0 < 0.0 ? -1.0 : 1.0);
-        float sign1 = (spl1 < 0.0 ? -1.0 : 1.0);
-        float abs0 = Math::abs(spl0);
-        float abs1 = Math::abs(spl1);
+        float spl0    = p_src_frames[i].l;
+        float spl1    = p_src_frames[i].r;
+        spl0          = spl0 * makeup;
+        spl1          = spl1 * makeup;
+        float sign0   = (spl0 < 0.0 ? -1.0 : 1.0);
+        float sign1   = (spl1 < 0.0 ? -1.0 : 1.0);
+        float abs0    = Math::abs(spl0);
+        float abs1    = Math::abs(spl1);
         float overdb0 = Math::linear2db(abs0) - ceildb;
         float overdb1 = Math::linear2db(abs1) - ceildb;
 
@@ -191,8 +191,8 @@ void AudioEffectLimiter::_bind_methods() {
 }
 
 AudioEffectLimiter::AudioEffectLimiter() {
-    threshold = 0;
-    ceiling = -0.1;
-    soft_clip = 2;
+    threshold       = 0;
+    ceiling         = -0.1;
+    soft_clip       = 2;
     soft_clip_ratio = 10;
 }

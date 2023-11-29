@@ -38,11 +38,11 @@ class SpatialGizmo : public Reference {
     GDCLASS(SpatialGizmo, Reference);
 
 public:
-    virtual void create() = 0;
+    virtual void create()    = 0;
     virtual void transform() = 0;
-    virtual void clear() = 0;
-    virtual void redraw() = 0;
-    virtual void free() = 0;
+    virtual void clear()     = 0;
+    virtual void redraw()    = 0;
+    virtual void free()      = 0;
 
     SpatialGizmo();
 
@@ -63,10 +63,10 @@ public:
 
 private:
     enum TransformDirty {
-        DIRTY_NONE = 0,
+        DIRTY_NONE    = 0,
         DIRTY_VECTORS = 1,
-        DIRTY_LOCAL = 2,
-        DIRTY_GLOBAL = 4
+        DIRTY_LOCAL   = 2,
+        DIRTY_GLOBAL  = 4
     };
 
     mutable SelfList<Node> xform_change;
@@ -144,12 +144,12 @@ public:
     enum {
         NOTIFICATION_TRANSFORM_CHANGED =
             SceneTree::NOTIFICATION_TRANSFORM_CHANGED,
-        NOTIFICATION_ENTER_WORLD = 41,
-        NOTIFICATION_EXIT_WORLD = 42,
-        NOTIFICATION_VISIBILITY_CHANGED = 43,
+        NOTIFICATION_ENTER_WORLD             = 41,
+        NOTIFICATION_EXIT_WORLD              = 42,
+        NOTIFICATION_VISIBILITY_CHANGED      = 43,
         NOTIFICATION_LOCAL_TRANSFORM_CHANGED = 44,
-        NOTIFICATION_ENTER_GAMEPLAY = 45,
-        NOTIFICATION_EXIT_GAMEPLAY = 46,
+        NOTIFICATION_ENTER_GAMEPLAY          = 45,
+        NOTIFICATION_EXIT_GAMEPLAY           = 46,
     };
 
     virtual void notification_callback(int p_message_type);

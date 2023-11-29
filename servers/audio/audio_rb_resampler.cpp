@@ -56,52 +56,52 @@ uint32_t AudioRBResampler::_resample(
     for (int i = 0; i < p_todo; i++) {
         offset =
             (offset + p_increment) & (((1 << (rb_bits + MIX_FRAC_BITS)) - 1));
-        read += p_increment;
-        uint32_t pos = offset >> MIX_FRAC_BITS;
-        float frac = float(offset & MIX_FRAC_MASK) / float(MIX_FRAC_LEN);
+        read         += p_increment;
+        uint32_t pos  = offset >> MIX_FRAC_BITS;
+        float frac    = float(offset & MIX_FRAC_MASK) / float(MIX_FRAC_LEN);
         ERR_FAIL_COND_V(pos >= rb_len, 0);
         uint32_t pos_next = (pos + 1) & rb_mask;
 
         // since this is a template with a known compile time value (C),
         // conditionals go away when compiling.
         if (C == 1) {
-            float v0 = rb[pos];
-            float v0n = rb[pos_next];
-            v0 += (v0n - v0) * frac;
-            p_dest[i] = AudioFrame(v0, v0);
+            float v0   = rb[pos];
+            float v0n  = rb[pos_next];
+            v0        += (v0n - v0) * frac;
+            p_dest[i]  = AudioFrame(v0, v0);
         }
 
         if (C == 2) {
-            float v0 = rb[(pos << 1) + 0];
-            float v1 = rb[(pos << 1) + 1];
+            float v0  = rb[(pos << 1) + 0];
+            float v1  = rb[(pos << 1) + 1];
             float v0n = rb[(pos_next << 1) + 0];
             float v1n = rb[(pos_next << 1) + 1];
 
-            v0 += (v0n - v0) * frac;
-            v1 += (v1n - v1) * frac;
-            p_dest[i] = AudioFrame(v0, v1);
+            v0        += (v0n - v0) * frac;
+            v1        += (v1n - v1) * frac;
+            p_dest[i]  = AudioFrame(v0, v1);
         }
 
         // This will probably never be used, but added anyway
         if (C == 4) {
-            float v0 = rb[(pos << 2) + 0];
-            float v1 = rb[(pos << 2) + 1];
-            float v0n = rb[(pos_next << 2) + 0];
-            float v1n = rb[(pos_next << 2) + 1];
-            v0 += (v0n - v0) * frac;
-            v1 += (v1n - v1) * frac;
-            p_dest[i] = AudioFrame(v0, v1);
+            float v0   = rb[(pos << 2) + 0];
+            float v1   = rb[(pos << 2) + 1];
+            float v0n  = rb[(pos_next << 2) + 0];
+            float v1n  = rb[(pos_next << 2) + 1];
+            v0        += (v0n - v0) * frac;
+            v1        += (v1n - v1) * frac;
+            p_dest[i]  = AudioFrame(v0, v1);
         }
 
         if (C == 6) {
-            float v0 = rb[(pos * 6) + 0];
-            float v1 = rb[(pos * 6) + 1];
+            float v0  = rb[(pos * 6) + 0];
+            float v1  = rb[(pos * 6) + 1];
             float v0n = rb[(pos_next * 6) + 0];
             float v1n = rb[(pos_next * 6) + 1];
 
-            v0 += (v0n - v0) * frac;
-            v1 += (v1n - v1) * frac;
-            p_dest[i] = AudioFrame(v0, v1);
+            v0        += (v0n - v0) * frac;
+            v1        += (v1n - v1) * frac;
+            p_dest[i]  = AudioFrame(v0, v1);
         }
     }
 
@@ -114,8 +114,8 @@ bool AudioRBResampler::mix(AudioFrame* p_dest, int p_frames) {
     }
 
     int32_t increment = (src_mix_rate * MIX_FRAC_LEN) / target_mix_rate;
-    int read_space = get_reader_space();
-    int target_todo = MIN(get_num_of_ready_frames(), p_frames);
+    int read_space    = get_reader_space();
+    int target_todo   = MIN(get_num_of_ready_frames(), p_frames);
 
     {
         int src_read = 0;
@@ -163,7 +163,7 @@ int AudioRBResampler::get_num_of_ready_frames() {
         return 0;
     }
     int32_t increment = (src_mix_rate * MIX_FRAC_LEN) / target_mix_rate;
-    int read_space = get_reader_space();
+    int read_space    = get_reader_space();
     return (int64_t(read_space) << MIX_FRAC_BITS) / increment;
 }
 
@@ -196,22 +196,22 @@ Error AudioRBResampler::setup(
 
     if (recreate) {
         channels = p_channels;
-        rb_bits = desired_rb_bits;
-        rb_len = (1 << rb_bits);
-        rb_mask = rb_len - 1;
-        rb = memnew_arr(float, rb_len* p_channels);
+        rb_bits  = desired_rb_bits;
+        rb_len   = (1 << rb_bits);
+        rb_mask  = rb_len - 1;
+        rb       = memnew_arr(float, rb_len* p_channels);
         read_buf = memnew_arr(float, rb_len* p_channels);
     }
 
-    src_mix_rate = p_src_mix_rate;
+    src_mix_rate    = p_src_mix_rate;
     target_mix_rate = p_target_mix_rate;
-    offset = 0;
+    offset          = 0;
     rb_read_pos.set(0);
     rb_write_pos.set(0);
 
     // avoid maybe strange noises upon load
     for (unsigned int i = 0; i < (rb_len * channels); i++) {
-        rb[i] = 0;
+        rb[i]       = 0;
         read_buf[i] = 0;
     }
 
@@ -226,7 +226,7 @@ void AudioRBResampler::clear() {
     // should be stopped at this point but just in case
     memdelete_arr(rb);
     memdelete_arr(read_buf);
-    rb = nullptr;
+    rb     = nullptr;
     offset = 0;
     rb_read_pos.set(0);
     rb_write_pos.set(0);
@@ -234,18 +234,18 @@ void AudioRBResampler::clear() {
 }
 
 AudioRBResampler::AudioRBResampler() {
-    rb = nullptr;
-    offset = 0;
+    rb       = nullptr;
+    offset   = 0;
     read_buf = nullptr;
     rb_read_pos.set(0);
     rb_write_pos.set(0);
 
-    rb_bits = 0;
-    rb_len = 0;
-    rb_mask = 0;
-    read_buff_len = 0;
-    channels = 0;
-    src_mix_rate = 0;
+    rb_bits         = 0;
+    rb_len          = 0;
+    rb_mask         = 0;
+    read_buff_len   = 0;
+    channels        = 0;
+    src_mix_rate    = 0;
     target_mix_rate = 0;
 }
 

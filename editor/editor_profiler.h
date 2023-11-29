@@ -77,7 +77,7 @@ public:
         Map<StringName, Category::Item*> item_ptrs;
 
         Metric() {
-            valid = false;
+            valid        = false;
             frame_number = 0;
         }
     };

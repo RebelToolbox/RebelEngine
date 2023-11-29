@@ -107,7 +107,7 @@ public:
     bool task_step(
         const String& p_task,
         const String& p_state,
-        int p_step = -1,
+        int p_step          = -1,
         bool p_force_redraw = true
     );
     void end_task(const String& p_task);

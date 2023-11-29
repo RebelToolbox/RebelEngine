@@ -78,7 +78,7 @@ static const int max_touches = 8;
 
     CALayer<DisplayLayer>* layer = [GodotOpenGLLayer layer];
 
-    layer.frame = self.bounds;
+    layer.frame         = self.bounds;
     layer.contentsScale = self.contentScaleFactor;
 
     [self.layer addSublayer:layer];
@@ -352,7 +352,7 @@ static const int max_touches = 8;
     for (unsigned int i = 0; i < [tlist count]; i++) {
         if ([touchesSet containsObject:[tlist objectAtIndex:i]]) {
             UITouch* touch = [tlist objectAtIndex:i];
-            int tid = [self getTouchIDForTouch:touch];
+            int tid        = [self getTouchIDForTouch:touch];
             ERR_FAIL_COND(tid == -1);
             CGPoint touchPoint = [touch locationInView:self];
 
@@ -382,11 +382,11 @@ static const int max_touches = 8;
     for (unsigned int i = 0; i < [tlist count]; i++) {
         if ([touches containsObject:[tlist objectAtIndex:i]]) {
             UITouch* touch = [tlist objectAtIndex:i];
-            int tid = [self getTouchIDForTouch:touch];
+            int tid        = [self getTouchIDForTouch:touch];
             ERR_FAIL_COND(tid == -1);
             CGPoint touchPoint = [touch locationInView:self];
             CGPoint prev_point = [touch previousLocationInView:self];
-            CGFloat force = touch.force;
+            CGFloat force      = touch.force;
             // Vector2 tilt = touch.azimuthUnitVector;
 
             if (touch.type == UITouchTypeStylus) {
@@ -416,7 +416,7 @@ static const int max_touches = 8;
     for (unsigned int i = 0; i < [tlist count]; i++) {
         if ([touches containsObject:[tlist objectAtIndex:i]]) {
             UITouch* touch = [tlist objectAtIndex:i];
-            int tid = [self getTouchIDForTouch:touch];
+            int tid        = [self getTouchIDForTouch:touch];
             ERR_FAIL_COND(tid == -1);
             [self removeTouch:touch];
             CGPoint touchPoint = [touch locationInView:self];
@@ -446,7 +446,7 @@ static const int max_touches = 8;
     for (unsigned int i = 0; i < [tlist count]; i++) {
         if ([touches containsObject:[tlist objectAtIndex:i]]) {
             UITouch* touch = [tlist objectAtIndex:i];
-            int tid = [self getTouchIDForTouch:touch];
+            int tid        = [self getTouchIDForTouch:touch];
             ERR_FAIL_COND(tid == -1);
             if (touch.type == UITouchTypeStylus) {
                 OSIPhone::get_singleton()->pencil_cancelled(tid);

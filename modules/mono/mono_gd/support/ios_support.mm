@@ -104,7 +104,7 @@ void cleanup() {}
 #define GD_PINVOKE_EXPORT extern "C" __attribute__((visibility("default")))
 
 GD_PINVOKE_EXPORT const char* xamarin_get_locale_country_code() {
-    NSLocale* locale = [NSLocale currentLocale];
+    NSLocale* locale      = [NSLocale currentLocale];
     NSString* countryCode = [locale objectForKey:NSLocaleCountryCode];
     if (countryCode == NULL) {
         return strdup("US");
@@ -113,7 +113,7 @@ GD_PINVOKE_EXPORT const char* xamarin_get_locale_country_code() {
 }
 
 GD_PINVOKE_EXPORT void xamarin_log(const uint16_t* p_unicode_message) {
-    int length = 0;
+    int length          = 0;
     const uint16_t* ptr = p_unicode_message;
     while (*ptr++) {
         length += sizeof(uint16_t);
@@ -128,27 +128,27 @@ GD_PINVOKE_EXPORT void xamarin_log(const uint16_t* p_unicode_message) {
 
 GD_PINVOKE_EXPORT const char* xamarin_GetFolderPath(int p_folder) {
     NSSearchPathDirectory dd = (NSSearchPathDirectory)p_folder;
-    NSURL* url = [[[NSFileManager defaultManager]
+    NSURL* url               = [[[NSFileManager defaultManager]
         URLsForDirectory:dd
                inDomains:NSUserDomainMask] lastObject];
-    NSString* path = [url path];
+    NSString* path           = [url path];
     return strdup([path UTF8String]);
 }
 
 GD_PINVOKE_EXPORT char* xamarin_timezone_get_local_name() {
     NSTimeZone* tz = nil;
-    tz = [NSTimeZone localTimeZone];
+    tz             = [NSTimeZone localTimeZone];
     NSString* name = [tz name];
     return (name != nil) ? strdup([name UTF8String]) : strdup("Local");
 }
 
 GD_PINVOKE_EXPORT char** xamarin_timezone_get_names(uint32_t* p_count) {
     NSArray* array = [NSTimeZone knownTimeZoneNames];
-    *p_count = array.count;
-    char** result = (char**)malloc(sizeof(char*) * (*p_count));
+    *p_count       = array.count;
+    char** result  = (char**)malloc(sizeof(char*) * (*p_count));
     for (uint32_t i = 0; i < *p_count; i++) {
         NSString* s = [array objectAtIndex:i];
-        result[i] = strdup(s.UTF8String);
+        result[i]   = strdup(s.UTF8String);
     }
     return result;
 }
@@ -160,12 +160,12 @@ GD_PINVOKE_EXPORT void* xamarin_timezone_get_data(
     NSTimeZone* tz = nil;
     if (p_name) {
         NSString* n = [[NSString alloc] initWithUTF8String:p_name];
-        tz = [[NSTimeZone alloc] initWithName:n];
+        tz          = [[NSTimeZone alloc] initWithName:n];
     } else {
         tz = [NSTimeZone localTimeZone];
     }
     NSData* data = [tz data];
-    *p_size = [data length];
+    *p_size      = [data length];
     void* result = malloc(*p_size);
     memcpy(result, data.bytes, *p_size);
     return result;

@@ -38,12 +38,12 @@
 #include "core/project_settings.h"
 #include "scene/main/scene_tree.h"
 
-static const String init_symbol = "gdnative_init";
-static const String terminate_symbol = "gdnative_terminate";
+static const String init_symbol           = "gdnative_init";
+static const String terminate_symbol      = "gdnative_terminate";
 static const String default_symbol_prefix = "godot_";
-static const bool default_singleton = false;
-static const bool default_load_once = true;
-static const bool default_reloadable = true;
+static const bool default_singleton       = false;
+static const bool default_load_once       = true;
+static const bool default_reloadable      = true;
 
 // Defined in gdnative_api_struct.gen.cpp
 extern const godot_gdnative_core_api_struct api_struct;
@@ -54,9 +54,9 @@ GDNativeLibrary::GDNativeLibrary() {
     config_file.instance();
 
     symbol_prefix = default_symbol_prefix;
-    load_once = default_load_once;
-    singleton = default_singleton;
-    reloadable = default_reloadable;
+    load_once     = default_load_once;
+    singleton     = default_singleton;
+    reloadable    = default_reloadable;
 }
 
 GDNativeLibrary::~GDNativeLibrary() {}
@@ -140,7 +140,7 @@ void GDNativeLibrary::_get_property_list(List<PropertyInfo>* p_list) const {
     }
 
     for (List<String>::Element* E = dependency_key_list.front(); E;
-         E = E->next()) {
+         E                        = E->next()) {
         String key = E->get();
 
         PropertyInfo prop;
@@ -211,7 +211,7 @@ void GDNativeLibrary::set_config_file(Ref<ConfigFile> p_config_file) {
         }
 
         for (List<String>::Element* E = dependency_keys.front(); E;
-             E = E->next()) {
+             E                        = E->next()) {
             String key = E->get();
 
             Vector<String> tags = key.split(".");
@@ -328,7 +328,7 @@ void GDNativeLibrary::_bind_methods() {
 
 GDNative::GDNative() {
     native_handle = nullptr;
-    initialized = false;
+    initialized   = false;
 }
 
 GDNative::~GDNative() {}
@@ -405,7 +405,7 @@ bool GDNative::initialize() {
         path = ProjectSettings::get_singleton()->globalize_path(lib_path);
 
         if (!FileAccess::exists(path)) {
-            String lib_name = lib_path.get_basename().get_file();
+            String lib_name              = lib_path.get_basename().get_file();
             String framework_path_format = "Frameworks/$name.framework/$name";
 
             Dictionary format_dict;
@@ -430,7 +430,7 @@ bool GDNative::initialize() {
 #elif defined(OSX_ENABLED)
     // On OSX the exported libraries are located under the Frameworks directory.
     // So we need to replace the library path.
-    String path = ProjectSettings::get_singleton()->globalize_path(lib_path);
+    String path   = ProjectSettings::get_singleton()->globalize_path(lib_path);
     DirAccess* da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 
     if (!da->file_exists(path) && !da->dir_exists(path)) {
@@ -495,27 +495,27 @@ bool GDNative::initialize() {
     godot_gdnative_init_fn library_init_fpointer;
     library_init_fpointer = (godot_gdnative_init_fn)library_init;
 
-    static uint64_t core_api_hash = 0;
+    static uint64_t core_api_hash   = 0;
     static uint64_t editor_api_hash = 0;
-    static uint64_t no_api_hash = 0;
+    static uint64_t no_api_hash     = 0;
 
     if (!(core_api_hash || editor_api_hash || no_api_hash)) {
-        core_api_hash = ClassDB::get_api_hash(ClassDB::API_CORE);
+        core_api_hash   = ClassDB::get_api_hash(ClassDB::API_CORE);
         editor_api_hash = ClassDB::get_api_hash(ClassDB::API_EDITOR);
-        no_api_hash = ClassDB::get_api_hash(ClassDB::API_NONE);
+        no_api_hash     = ClassDB::get_api_hash(ClassDB::API_NONE);
     }
 
     godot_gdnative_init_options options;
 
-    options.api_struct = &api_struct;
-    options.in_editor = Engine::get_singleton()->is_editor_hint();
-    options.core_api_hash = core_api_hash;
-    options.editor_api_hash = editor_api_hash;
-    options.no_api_hash = no_api_hash;
+    options.api_struct              = &api_struct;
+    options.in_editor               = Engine::get_singleton()->is_editor_hint();
+    options.core_api_hash           = core_api_hash;
+    options.editor_api_hash         = editor_api_hash;
+    options.no_api_hash             = no_api_hash;
     options.report_version_mismatch = &_gdnative_report_version_mismatch;
-    options.report_loading_error = &_gdnative_report_loading_error;
-    options.gd_native_library = (godot_object*)(get_library().ptr());
-    options.active_library_path = (godot_string*)&path;
+    options.report_loading_error    = &_gdnative_report_loading_error;
+    options.gd_native_library       = (godot_object*)(get_library().ptr());
+    options.active_library_path     = (godot_string*)&path;
 
     library_init_fpointer(&options);
 
@@ -569,7 +569,7 @@ bool GDNative::terminate() {
     if (error || !library_terminate) {
         OS::get_singleton()->close_dynamic_library(native_handle);
         native_handle = nullptr;
-        initialized = false;
+        initialized   = false;
         return true;
     }
 
@@ -608,7 +608,7 @@ Vector<StringName> GDNativeCallRegistry::get_native_call_types() {
 
     size_t idx = 0;
     for (Map<StringName, native_call_cb>::Element* E = native_calls.front(); E;
-         E = E->next(), idx++) {
+         E                                           = E->next(), idx++) {
         call_types.write[idx] = E->key();
     }
 

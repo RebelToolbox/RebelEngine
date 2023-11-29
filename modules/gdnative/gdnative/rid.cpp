@@ -56,21 +56,21 @@ godot_rid_new_with_resource(godot_rid* r_dest, const godot_object* p_from) {
     godot_rid_new(r_dest);
     if (res_from) {
         RID* dest = (RID*)r_dest;
-        *dest = RID(res_from->get_rid());
+        *dest     = RID(res_from->get_rid());
     }
 }
 
 godot_bool GDAPI
 godot_rid_operator_equal(const godot_rid* p_self, const godot_rid* p_b) {
     const RID* self = (const RID*)p_self;
-    const RID* b = (const RID*)p_b;
+    const RID* b    = (const RID*)p_b;
     return *self == *b;
 }
 
 godot_bool GDAPI
 godot_rid_operator_less(const godot_rid* p_self, const godot_rid* p_b) {
     const RID* self = (const RID*)p_self;
-    const RID* b = (const RID*)p_b;
+    const RID* b    = (const RID*)p_b;
     return *self < *b;
 }
 

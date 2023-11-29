@@ -47,8 +47,8 @@ public:
 
     enum {
         JOY_EVENT_BUTTON = 0,
-        JOY_EVENT_AXIS = 1,
-        JOY_EVENT_HAT = 2
+        JOY_EVENT_AXIS   = 1,
+        JOY_EVENT_HAT    = 2
     };
 
     struct JoypadEvent {
@@ -67,10 +67,10 @@ private:
     Point2 scroll_prev_pos; // needed to calculate the relative position on
                             // scroll events
 
-    bool alt_mem = false;
-    bool shift_mem = false;
+    bool alt_mem     = false;
+    bool shift_mem   = false;
     bool control_mem = false;
-    bool meta_mem = false;
+    bool meta_mem    = false;
 
     int buttons_state = 0;
 

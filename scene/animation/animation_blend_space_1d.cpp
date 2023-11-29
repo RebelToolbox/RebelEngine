@@ -51,7 +51,7 @@ void AnimationNodeBlendSpace1D::_validate_property(PropertyInfo& property
 ) const {
     if (property.name.begins_with("blend_point_")) {
         String left = property.name.get_slicec('/', 0);
-        int idx = left.get_slicec('_', 2).to_int();
+        int idx     = left.get_slicec('_', 2).to_int();
         if (idx >= blend_points_used) {
             property.usage = 0;
         }
@@ -241,7 +241,7 @@ void AnimationNodeBlendSpace1D::add_blend_point(
         }
     }
 
-    blend_points[p_at_index].node = p_node;
+    blend_points[p_at_index].node     = p_node;
     blend_points[p_at_index].position = p_position;
 
     blend_points[p_at_index].node->connect(
@@ -393,8 +393,8 @@ float AnimationNodeBlendSpace1D::process(float p_time, bool p_seek) {
 
     float weights[MAX_BLEND_POINTS] = {};
 
-    int point_lower = -1;
-    float pos_lower = 0.0;
+    int point_lower  = -1;
+    float pos_lower  = 0.0;
     int point_higher = -1;
     float pos_higher = 0.0;
 
@@ -405,18 +405,18 @@ float AnimationNodeBlendSpace1D::process(float p_time, bool p_seek) {
         if (pos <= blend_pos) {
             if (point_lower == -1) {
                 point_lower = i;
-                pos_lower = pos;
+                pos_lower   = pos;
             } else if ((blend_pos - pos) < (blend_pos - pos_lower)) {
                 point_lower = i;
-                pos_lower = pos;
+                pos_lower   = pos;
             }
         } else {
             if (point_higher == -1) {
                 point_higher = i;
-                pos_higher = pos;
+                pos_higher   = pos;
             } else if ((pos - blend_pos) < (pos_higher - blend_pos)) {
                 point_higher = i;
-                pos_higher = pos;
+                pos_higher   = pos;
             }
         }
     }
@@ -444,10 +444,10 @@ float AnimationNodeBlendSpace1D::process(float p_time, bool p_seek) {
         float blend_percentage =
             current_pos_inbetween / distance_between_points;
 
-        float blend_lower = 1.0 - blend_percentage;
+        float blend_lower  = 1.0 - blend_percentage;
         float blend_higher = blend_percentage;
 
-        weights[point_lower] = blend_lower;
+        weights[point_lower]  = blend_lower;
         weights[point_higher] = blend_higher;
     }
 
@@ -481,10 +481,10 @@ AnimationNodeBlendSpace1D::AnimationNodeBlendSpace1D() {
         blend_points[i].name = itos(i);
     }
     blend_points_used = 0;
-    max_space = 1;
-    min_space = -1;
+    max_space         = 1;
+    min_space         = -1;
 
-    snap = 0.1;
+    snap        = 0.1;
     value_label = "value";
 
     blend_position = "blend_position";

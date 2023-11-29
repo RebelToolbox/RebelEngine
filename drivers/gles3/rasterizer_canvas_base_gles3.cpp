@@ -44,16 +44,16 @@ static _FORCE_INLINE_ void store_transform2d(
     const Transform2D& p_mtx,
     float* p_array
 ) {
-    p_array[0] = p_mtx.elements[0][0];
-    p_array[1] = p_mtx.elements[0][1];
-    p_array[2] = 0;
-    p_array[3] = 0;
-    p_array[4] = p_mtx.elements[1][0];
-    p_array[5] = p_mtx.elements[1][1];
-    p_array[6] = 0;
-    p_array[7] = 0;
-    p_array[8] = 0;
-    p_array[9] = 0;
+    p_array[0]  = p_mtx.elements[0][0];
+    p_array[1]  = p_mtx.elements[0][1];
+    p_array[2]  = 0;
+    p_array[3]  = 0;
+    p_array[4]  = p_mtx.elements[1][0];
+    p_array[5]  = p_mtx.elements[1][1];
+    p_array[6]  = 0;
+    p_array[7]  = 0;
+    p_array[8]  = 0;
+    p_array[9]  = 0;
     p_array[10] = 1;
     p_array[11] = 0;
     p_array[12] = p_mtx.elements[2][0];
@@ -66,16 +66,16 @@ static _FORCE_INLINE_ void store_transform(
     const Transform& p_mtx,
     float* p_array
 ) {
-    p_array[0] = p_mtx.basis.elements[0][0];
-    p_array[1] = p_mtx.basis.elements[1][0];
-    p_array[2] = p_mtx.basis.elements[2][0];
-    p_array[3] = 0;
-    p_array[4] = p_mtx.basis.elements[0][1];
-    p_array[5] = p_mtx.basis.elements[1][1];
-    p_array[6] = p_mtx.basis.elements[2][1];
-    p_array[7] = 0;
-    p_array[8] = p_mtx.basis.elements[0][2];
-    p_array[9] = p_mtx.basis.elements[1][2];
+    p_array[0]  = p_mtx.basis.elements[0][0];
+    p_array[1]  = p_mtx.basis.elements[1][0];
+    p_array[2]  = p_mtx.basis.elements[2][0];
+    p_array[3]  = 0;
+    p_array[4]  = p_mtx.basis.elements[0][1];
+    p_array[5]  = p_mtx.basis.elements[1][1];
+    p_array[6]  = p_mtx.basis.elements[2][1];
+    p_array[7]  = 0;
+    p_array[8]  = p_mtx.basis.elements[0][2];
+    p_array[9]  = p_mtx.basis.elements[1][2];
     p_array[10] = p_mtx.basis.elements[2][2];
     p_array[11] = 0;
     p_array[12] = p_mtx.origin.x;
@@ -126,7 +126,7 @@ void RasterizerCanvasBaseGLES3::light_internal_update(
     store_camera(p_light->shadow_matrix_cache, li->ubo_data.shadow_matrix);
 
     for (int i = 0; i < 4; i++) {
-        li->ubo_data.color[i] = p_light->color[i] * p_light->energy;
+        li->ubo_data.color[i]        = p_light->color[i] * p_light->energy;
         li->ubo_data.shadow_color[i] = p_light->shadow_color[i];
     }
 
@@ -275,10 +275,10 @@ void RasterizerCanvasBaseGLES3::canvas_begin() {
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, state.canvas_item_ubo);
     glBindVertexArray(data.canvas_quad_array);
     state.using_texture_rect = true;
-    state.using_ninepatch = false;
+    state.using_ninepatch    = false;
 
-    state.using_light_angle = false;
-    state.using_modulate = false;
+    state.using_light_angle  = false;
+    state.using_modulate     = false;
     state.using_large_vertex = false;
 
     state.using_skeleton = false;
@@ -292,8 +292,8 @@ void RasterizerCanvasBaseGLES3::canvas_end() {
     glVertexAttrib4f(VS::ARRAY_COLOR, 1, 1, 1, 1);
 
     state.using_texture_rect = false;
-    state.using_ninepatch = false;
-    state.using_light_angle = false;
+    state.using_ninepatch    = false;
+    state.using_light_angle  = false;
 }
 
 RasterizerStorageGLES3::Texture* RasterizerCanvasBaseGLES3::
@@ -311,7 +311,7 @@ RasterizerStorageGLES3::Texture* RasterizerCanvasBaseGLES3::
             storage->texture_owner.getornull(p_texture);
 
         if (!texture) {
-            state.current_tex = RID();
+            state.current_tex     = RID();
             state.current_tex_ptr = nullptr;
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, storage->resources.white_tex);
@@ -331,7 +331,7 @@ RasterizerStorageGLES3::Texture* RasterizerCanvasBaseGLES3::
 
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture->tex_id);
-            state.current_tex = p_texture;
+            state.current_tex     = p_texture;
             state.current_tex_ptr = texture;
 
             tex_return = texture;
@@ -340,7 +340,7 @@ RasterizerStorageGLES3::Texture* RasterizerCanvasBaseGLES3::
     } else {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, storage->resources.white_tex);
-        state.current_tex = RID();
+        state.current_tex     = RID();
         state.current_tex_ptr = nullptr;
     }
 
@@ -481,10 +481,10 @@ void RasterizerCanvasBaseGLES3::_set_texture_rect_mode(
     }
 
     state.using_texture_rect = p_enable;
-    state.using_ninepatch = p_ninepatch;
+    state.using_ninepatch    = p_ninepatch;
 
-    state.using_light_angle = p_light_angle;
-    state.using_modulate = p_modulate;
+    state.using_light_angle  = p_light_angle;
+    state.using_modulate     = p_modulate;
     state.using_large_vertex = p_large_vertex;
 }
 
@@ -502,7 +502,7 @@ void RasterizerCanvasBaseGLES3::_draw_polygon(
     glBindVertexArray(data.polygon_buffer_pointer_array);
     glBindBuffer(GL_ARRAY_BUFFER, data.polygon_buffer);
 
-    uint32_t buffer_ofs = 0;
+    uint32_t buffer_ofs       = 0;
     uint32_t buffer_ofs_after = buffer_ofs + (sizeof(Vector2) * p_vertex_count);
 #ifdef DEBUG_ENABLED
     ERR_FAIL_COND(buffer_ofs_after > data.polygon_buffer_size);
@@ -670,7 +670,7 @@ void RasterizerCanvasBaseGLES3::_draw_generic(
     glBindBuffer(GL_ARRAY_BUFFER, data.polygon_buffer);
 
     // vertex
-    uint32_t buffer_ofs = 0;
+    uint32_t buffer_ofs       = 0;
     uint32_t buffer_ofs_after = buffer_ofs + (sizeof(Vector2) * p_vertex_count);
 #ifdef DEBUG_ENABLED
     ERR_FAIL_COND(buffer_ofs_after > data.polygon_buffer_size);
@@ -770,7 +770,7 @@ void RasterizerCanvasBaseGLES3::_draw_generic_indices(
     glBindBuffer(GL_ARRAY_BUFFER, data.polygon_buffer);
 
     // vertex
-    uint32_t buffer_ofs = 0;
+    uint32_t buffer_ofs       = 0;
     uint32_t buffer_ofs_after = buffer_ofs + (sizeof(Vector2) * p_vertex_count);
 #ifdef DEBUG_ENABLED
     ERR_FAIL_COND(buffer_ofs_after > data.polygon_buffer_size);
@@ -893,28 +893,28 @@ void RasterizerCanvasBaseGLES3::_draw_gui_primitive(
 
     // #define GLES_USE_PRIMITIVE_BUFFER
 
-    int version = 0;
-    int color_ofs = 0;
-    int uv_ofs = 0;
+    int version         = 0;
+    int color_ofs       = 0;
+    int uv_ofs          = 0;
     int light_angle_ofs = 0;
-    int stride = 2;
+    int stride          = 2;
 
     if (p_colors) { // color
-        version |= 1;
-        color_ofs = stride;
-        stride += 4;
+        version   |= 1;
+        color_ofs  = stride;
+        stride    += 4;
     }
 
     if (p_uvs) { // uv
         version |= 2;
-        uv_ofs = stride;
-        stride += 2;
+        uv_ofs   = stride;
+        stride  += 2;
     }
 
     if (p_light_angles) { // light_angles
-        version |= 4;
-        light_angle_ofs = stride;
-        stride += 1;
+        version         |= 4;
+        light_angle_ofs  = stride;
+        stride          += 1;
     }
 
     DEV_ASSERT(p_points <= 4);
@@ -1267,8 +1267,8 @@ void RasterizerCanvasBaseGLES3::canvas_debug_viewport_shadows(
 
     canvas_begin(); // reset
     glVertexAttrib4f(VS::ARRAY_COLOR, 1, 1, 1, 1);
-    int h = 10;
-    int w = storage->frame.current_rt->width;
+    int h   = 10;
+    int w   = storage->frame.current_rt->width;
     int ofs = h;
     glDisable(GL_BLEND);
 
@@ -1329,8 +1329,8 @@ void RasterizerCanvasBaseGLES3::canvas_light_shadow_buffer_update(
         // make sure it remains orthogonal, makes easy to read angle later
 
         Transform light;
-        light.origin[0] = p_light_xform[2][0];
-        light.origin[1] = p_light_xform[2][1];
+        light.origin[0]   = p_light_xform[2][0];
+        light.origin[1]   = p_light_xform[2][1];
         light.basis[0][0] = p_light_xform[0][0];
         light.basis[0][1] = p_light_xform[1][0];
         light.basis[1][0] = p_light_xform[0][1];
@@ -1341,9 +1341,9 @@ void RasterizerCanvasBaseGLES3::canvas_light_shadow_buffer_update(
         // p_near=1;
         CameraMatrix projection;
         {
-            real_t fov = 90;
-            real_t nearp = p_near;
-            real_t farp = p_far;
+            real_t fov    = 90;
+            real_t nearp  = p_near;
+            real_t farp   = p_far;
             real_t aspect = 1.0;
 
             real_t ymax = nearp * Math::tan(Math::deg2rad(fov * 0.5));
@@ -1623,8 +1623,8 @@ void RasterizerCanvasBaseGLES3::draw_window_margins(
     RID* black_image
 ) {
     Vector2 window_size = OS::get_singleton()->get_window_size();
-    int window_h = window_size.height;
-    int window_w = window_size.width;
+    int window_h        = window_size.height;
+    int window_w        = window_size.width;
 
     glBindFramebuffer(GL_FRAMEBUFFER, RasterizerStorageGLES3::system_fbo);
     glViewport(0, 0, window_size.width, window_size.height);
@@ -1898,24 +1898,24 @@ void RasterizerCanvasBaseGLES3::initialize() {
             glBindVertexArray(data.polygon_buffer_quad_arrays[i]);
             glBindBuffer(GL_ARRAY_BUFFER, data.polygon_buffer);
 
-            int uv_ofs = 0;
-            int color_ofs = 0;
+            int uv_ofs          = 0;
+            int color_ofs       = 0;
             int light_angle_ofs = 0;
-            int stride = 2 * 4;
+            int stride          = 2 * 4;
 
             if (i & 1) { // color
-                color_ofs = stride;
-                stride += 4 * 4;
+                color_ofs  = stride;
+                stride    += 4 * 4;
             }
 
             if (i & 2) { // uv
-                uv_ofs = stride;
+                uv_ofs  = stride;
                 stride += 2 * 4;
             }
 
             if (i & 4) { // light_angle
-                light_angle_ofs = stride;
-                stride += 1 * 4;
+                light_angle_ofs  = stride;
+                stride          += 1 * 4;
             }
 
             glEnableVertexAttribArray(VS::ARRAY_VERTEX);
@@ -1983,7 +1983,7 @@ void RasterizerCanvasBaseGLES3::initialize() {
                 "0,256,1,or_greater"
             )
         );
-        index_size = MAX(index_size, 2);
+        index_size  = MAX(index_size, 2);
         index_size *= 1024; // kb
         glGenBuffers(1, &data.polygon_index_buffer);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.polygon_index_buffer);

@@ -76,7 +76,7 @@ void AudioStreamPlayer::_mix_to_bus(const AudioFrame* p_frames, int p_amount) {
 void AudioStreamPlayer::_mix_internal(bool p_fadeout) {
     // get data
     AudioFrame* buffer = mix_buffer.ptrw();
-    int buffer_size = mix_buffer.size();
+    int buffer_size    = mix_buffer.size();
 
     if (p_fadeout) {
         // Short fadeout ramp
@@ -87,12 +87,12 @@ void AudioStreamPlayer::_mix_internal(bool p_fadeout) {
 
     // multiply volume interpolating to avoid clicks if this changes
     float target_volume = p_fadeout ? -80.0 : volume_db;
-    float vol = Math::db2linear(mix_volume_db);
+    float vol           = Math::db2linear(mix_volume_db);
     float vol_inc = (Math::db2linear(target_volume) - vol) / float(buffer_size);
 
     for (int i = 0; i < buffer_size; i++) {
         buffer[i] *= vol;
-        vol += vol_inc;
+        vol       += vol_inc;
     }
 
     // set volume for next mix
@@ -190,19 +190,19 @@ void AudioStreamPlayer::set_stream(Ref<AudioStream> p_stream) {
         // lets try to somehow avoid a click
 
         AudioFrame* buffer = fadeout_buffer.ptrw();
-        int buffer_size = fadeout_buffer.size();
+        int buffer_size    = fadeout_buffer.size();
 
         stream_playback->mix(buffer, pitch_scale, buffer_size);
 
         // multiply volume interpolating to avoid clicks if this changes
         float target_volume = -80.0;
-        float vol = Math::db2linear(mix_volume_db);
+        float vol           = Math::db2linear(mix_volume_db);
         float vol_inc =
             (Math::db2linear(target_volume) - vol) / float(buffer_size);
 
         for (int i = 0; i < buffer_size; i++) {
             buffer[i] *= vol;
-            vol += vol_inc;
+            vol       += vol_inc;
         }
 
         use_fadeout = true;
@@ -220,7 +220,7 @@ void AudioStreamPlayer::set_stream(Ref<AudioStream> p_stream) {
     }
 
     if (p_stream.is_valid()) {
-        stream = p_stream;
+        stream          = p_stream;
         stream_playback = pre_instanced_playback;
     }
 
@@ -343,7 +343,7 @@ bool AudioStreamPlayer::_is_active() const {
 
 void AudioStreamPlayer::set_stream_paused(bool p_pause) {
     if (p_pause != stream_paused) {
-        stream_paused = p_pause;
+        stream_paused      = p_pause;
         stream_paused_fade = p_pause;
     }
 }
@@ -360,8 +360,8 @@ void AudioStreamPlayer::_validate_property(PropertyInfo& property) const {
             if (i > 0) {
                 options += ",";
             }
-            String name = AudioServer::get_singleton()->get_bus_name(i);
-            options += name;
+            String name  = AudioServer::get_singleton()->get_bus_name(i);
+            options     += name;
         }
 
         property.hint_string = options;
@@ -547,13 +547,13 @@ void AudioStreamPlayer::_bind_methods() {
 
 AudioStreamPlayer::AudioStreamPlayer() {
     mix_volume_db = 0;
-    pitch_scale = 1.0;
-    volume_db = 0;
-    autoplay = false;
+    pitch_scale   = 1.0;
+    volume_db     = 0;
+    autoplay      = false;
     setseek.set(-1);
-    stream_paused = false;
+    stream_paused      = false;
     stream_paused_fade = false;
-    mix_target = MIX_TARGET_STEREO;
+    mix_target         = MIX_TARGET_STEREO;
     fadeout_buffer.resize(512);
     use_fadeout = false;
 

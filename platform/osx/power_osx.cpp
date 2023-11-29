@@ -78,10 +78,10 @@ void PowerOSX::checkps(
     CFNumberRef numval;
     bool charge = false;
     bool choose = false;
-    bool is_ac = false;
-    int secs = -1;
-    int maxpct = -1;
-    int pct = -1;
+    bool is_ac  = false;
+    int secs    = -1;
+    int maxpct  = -1;
+    int pct     = -1;
 
     if ((GETVAL(kIOPSIsPresentKey, &bval)) && (bval == kCFBooleanFalse)) {
         return; /* nothing to see here. */
@@ -106,7 +106,7 @@ void PowerOSX::checkps(
         CFNumberGetValue(numval, kCFNumberSInt32Type, &val);
         if (val > 0) {
             *have_battery = true;
-            maxpct = (int)val;
+            maxpct        = (int)val;
         }
     }
 
@@ -115,7 +115,7 @@ void PowerOSX::checkps(
         CFNumberGetValue(numval, kCFNumberSInt32Type, &val);
         if (val > 0) {
             *have_battery = true;
-            maxpct = (int)val;
+            maxpct        = (int)val;
         }
     }
 
@@ -164,9 +164,9 @@ void PowerOSX::checkps(
     }
 
     if (choose) {
-        nsecs_left = secs;
+        nsecs_left   = secs;
         percent_left = pct;
-        *charging = charge;
+        *charging    = charge;
     }
 }
 
@@ -177,17 +177,17 @@ void PowerOSX::checkps(
 bool PowerOSX::GetPowerInfo_MacOSX() {
     CFTypeRef blob = IOPSCopyPowerSourcesInfo();
 
-    nsecs_left = -1;
+    nsecs_left   = -1;
     percent_left = -1;
-    power_state = OS::POWERSTATE_UNKNOWN;
+    power_state  = OS::POWERSTATE_UNKNOWN;
 
     if (blob != NULL) {
         CFArrayRef list = IOPSCopyPowerSourcesList(blob);
         if (list != NULL) {
             /* don't CFRelease() the list items, or dictionaries! */
-            bool have_ac = false;
-            bool have_battery = false;
-            bool charging = false;
+            bool have_ac        = false;
+            bool have_battery   = false;
+            bool charging       = false;
             const CFIndex total = CFArrayGetCount(list);
             CFIndex i;
             for (i = 0; i < total; i++) {

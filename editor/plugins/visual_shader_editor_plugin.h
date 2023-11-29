@@ -118,30 +118,30 @@ class VisualShaderEditor : public VBoxContainer {
         bool is_custom;
 
         AddOption(
-            const String& p_name = String(),
-            const String& p_category = String(),
+            const String& p_name         = String(),
+            const String& p_category     = String(),
             const String& p_sub_category = String(),
-            const String& p_type = String(),
-            const String& p_description = String(),
-            int p_sub_func = -1,
-            int p_return_type = -1,
-            int p_mode = -1,
-            int p_func = -1,
-            float p_value = -1,
-            bool p_highend = false
+            const String& p_type         = String(),
+            const String& p_description  = String(),
+            int p_sub_func               = -1,
+            int p_return_type            = -1,
+            int p_mode                   = -1,
+            int p_func                   = -1,
+            float p_value                = -1,
+            bool p_highend               = false
         ) {
-            name = p_name;
-            type = p_type;
-            category = p_category;
+            name         = p_name;
+            type         = p_type;
+            category     = p_category;
             sub_category = p_sub_category;
-            description = p_description;
-            sub_func = p_sub_func;
-            return_type = p_return_type;
-            mode = p_mode;
-            func = p_func;
-            value = p_value;
-            highend = p_highend;
-            is_custom = false;
+            description  = p_description;
+            sub_func     = p_sub_func;
+            return_type  = p_return_type;
+            mode         = p_mode;
+            func         = p_func;
+            value        = p_value;
+            highend      = p_highend;
+            is_custom    = false;
         }
 
         AddOption(
@@ -152,24 +152,24 @@ class VisualShaderEditor : public VBoxContainer {
             const String& p_description,
             const String& p_sub_func,
             int p_return_type = -1,
-            int p_mode = -1,
-            int p_func = -1,
-            float p_value = -1,
-            bool p_highend = false
+            int p_mode        = -1,
+            int p_func        = -1,
+            float p_value     = -1,
+            bool p_highend    = false
         ) {
-            name = p_name;
-            type = p_type;
-            category = p_category;
+            name         = p_name;
+            type         = p_type;
+            category     = p_category;
             sub_category = p_sub_category;
-            description = p_description;
-            sub_func = 0;
+            description  = p_description;
+            sub_func     = 0;
             sub_func_str = p_sub_func;
-            return_type = p_return_type;
-            mode = p_mode;
-            func = p_func;
-            value = p_value;
-            highend = p_highend;
-            is_custom = false;
+            return_type  = p_return_type;
+            mode         = p_mode;
+            func         = p_func;
+            value        = p_value;
+            highend      = p_highend;
+            is_custom    = false;
         }
     };
 

@@ -111,7 +111,7 @@ class JavaScriptObjectImpl : public JavaScriptObject {
 private:
     friend class JavaScript;
 
-    int _js_id = 0;
+    int _js_id   = 0;
     Object* _ref = nullptr;
     StringName _method;
 
@@ -166,9 +166,9 @@ bool JavaScriptObjectImpl::_set(
     ERR_FAIL_COND_V_MSG(!_js_id, false, "Invalid JS instance");
     const String name = p_name;
     godot_js_wrapper_ex exchange;
-    void* lock = nullptr;
+    void* lock       = nullptr;
     const Variant* v = &p_value;
-    int type = _variant2js((const void**)&v, 0, &exchange, &lock);
+    int type         = _variant2js((const void**)&v, 0, &exchange, &lock);
     godot_js_wrapper_object_set(
         _js_id,
         name.utf8().get_data(),
@@ -198,9 +198,9 @@ Variant JavaScriptObjectImpl::getvar(const Variant& p_key, bool* r_valid)
         *r_valid = false;
     }
     godot_js_wrapper_ex exchange;
-    void* lock = nullptr;
+    void* lock       = nullptr;
     const Variant* v = &p_key;
-    int prop_type = _variant2js((const void**)&v, 0, &exchange, &lock);
+    int prop_type    = _variant2js((const void**)&v, 0, &exchange, &lock);
     int type = godot_js_wrapper_object_getvar(_js_id, prop_type, &exchange);
     if (lock) {
         _free_lock(&lock, prop_type);
@@ -223,12 +223,12 @@ void JavaScriptObjectImpl::setvar(
         *r_valid = false;
     }
     godot_js_wrapper_ex kex, vex;
-    void* klock = nullptr;
-    void* vlock = nullptr;
+    void* klock       = nullptr;
+    void* vlock       = nullptr;
     const Variant* kv = &p_key;
     const Variant* vv = &p_value;
-    int ktype = _variant2js((const void**)&kv, 0, &kex, &klock);
-    int vtype = _variant2js((const void**)&vv, 0, &vex, &vlock);
+    int ktype         = _variant2js((const void**)&kv, 0, &kex, &klock);
+    int vtype         = _variant2js((const void**)&vv, 0, &vex, &vlock);
     int ret = godot_js_wrapper_object_setvar(_js_id, ktype, &kex, vtype, &vex);
     if (klock) {
         _free_lock(&klock, ktype);
@@ -290,8 +290,8 @@ int JavaScriptObjectImpl::_variant2js(
     void** p_lock
 ) {
     const Variant** args = (const Variant**)p_args;
-    const Variant* v = args[p_pos];
-    Variant::Type type = v->get_type();
+    const Variant* v     = args[p_pos];
+    Variant::Type type   = v->get_type();
     switch (type) {
         case Variant::BOOL:
             r_val->i = v->operator bool() ? 1 : 0;
@@ -309,8 +309,8 @@ int JavaScriptObjectImpl::_variant2js(
             break;
         case Variant::STRING: {
             CharString* cs = memnew(CharString(v->operator String().utf8()));
-            r_val->p = (void*)cs->get_data();
-            *p_lock = (void*)cs;
+            r_val->p       = (void*)cs->get_data();
+            *p_lock        = (void*)cs;
         } break;
         case Variant::OBJECT: {
             JavaScriptObject* js_obj =
@@ -332,8 +332,8 @@ Variant JavaScriptObjectImpl::call(
 ) {
     godot_js_wrapper_ex exchange;
     const String method = p_method;
-    void* lock = nullptr;
-    const int type = godot_js_wrapper_object_call(
+    void* lock          = nullptr;
+    const int type      = godot_js_wrapper_object_call(
         _js_id,
         method.utf8().get_data(),
         (void**)p_args,
@@ -363,7 +363,7 @@ void JavaScriptObjectImpl::_callback(void* p_ref, int p_args_id, int p_argc) {
             godot_js_wrapper_object_getvar(p_args_id, Variant::INT, &exchange);
         arg_arr.push_back(_js2variant(type, &exchange));
     }
-    Variant arg = arg_arr;
+    Variant arg            = arg_arr;
     const Variant* argv[1] = {&arg};
     Variant::CallError err;
     obj->_ref->call(obj->_method, argv, 1, err);
@@ -374,8 +374,8 @@ Ref<JavaScriptObject> JavaScript::create_callback(
     const StringName& p_method
 ) {
     Ref<JavaScriptObjectImpl> out = memnew(JavaScriptObjectImpl);
-    out->_ref = p_ref;
-    out->_method = p_method;
+    out->_ref                     = p_ref;
+    out->_method                  = p_method;
     out->_js_id =
         godot_js_wrapper_create_cb(out.ptr(), JavaScriptObjectImpl::_callback);
     return out;
@@ -397,21 +397,21 @@ Variant JavaScript::_create_object_bind(
     Variant::CallError& r_error
 ) {
     if (p_argcount < 1) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 0;
         return Ref<JavaScriptObject>();
     }
     if (p_args[0]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::STRING;
         return Ref<JavaScriptObject>();
     }
     godot_js_wrapper_ex exchange;
-    const String object = *p_args[0];
-    void* lock = nullptr;
+    const String object  = *p_args[0];
+    void* lock           = nullptr;
     const Variant** args = p_argcount > 1 ? &p_args[1] : nullptr;
-    const int type = godot_js_wrapper_create_object(
+    const int type       = godot_js_wrapper_create_object(
         object.utf8().get_data(),
         (void**)args,
         p_argcount - 1,
@@ -450,7 +450,7 @@ void* resize_poolbytearray_and_open_write(
     void* r_write,
     int p_len
 ) {
-    PoolByteArray* arr = (PoolByteArray*)p_arr;
+    PoolByteArray* arr          = (PoolByteArray*)p_arr;
     PoolByteArray::Write* write = (PoolByteArray::Write*)r_write;
     arr->resize(p_len);
     *write = arr->write();

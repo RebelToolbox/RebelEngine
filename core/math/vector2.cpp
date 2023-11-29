@@ -45,7 +45,7 @@ real_t Vector2::length_squared() const {
 void Vector2::normalize() {
     real_t l = x * x + y * y;
     if (l != 0) {
-        l = Math::sqrt(l);
+        l  = Math::sqrt(l);
         x /= l;
         y /= l;
     }
@@ -131,7 +131,7 @@ Vector2 Vector2::snapped(const Vector2& p_by) const {
 }
 
 Vector2 Vector2::clamped(real_t p_len) const {
-    real_t l = length();
+    real_t l  = length();
     Vector2 v = *this;
     if (l > 0 && p_len < l) {
         v /= l;
@@ -152,7 +152,7 @@ Vector2 Vector2::cubic_interpolate(
     Vector2 p2 = p_b;
     Vector2 p3 = p_post_b;
 
-    real_t t = p_weight;
+    real_t t  = p_weight;
     real_t t2 = t * t;
     real_t t3 = t2 * t;
 
@@ -165,7 +165,7 @@ Vector2 Vector2::cubic_interpolate(
 }
 
 Vector2 Vector2::move_toward(const Vector2& p_to, const real_t p_delta) const {
-    Vector2 v = *this;
+    Vector2 v  = *this;
     Vector2 vd = p_to - v;
     real_t len = vd.length();
     return len <= p_delta || len < CMP_EPSILON ? p_to : v + vd / len * p_delta;

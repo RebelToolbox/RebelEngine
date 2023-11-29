@@ -121,7 +121,7 @@ private:
     void key_event(
         Windows::UI::Core::CoreWindow ^ sender,
         bool p_pressed,
-        Windows::UI::Core::KeyEventArgs ^ key_args = nullptr,
+        Windows::UI::Core::KeyEventArgs ^ key_args                = nullptr,
         Windows::UI::Core::CharacterReceivedEventArgs ^ char_args = nullptr
     );
     void OnKeyDown(

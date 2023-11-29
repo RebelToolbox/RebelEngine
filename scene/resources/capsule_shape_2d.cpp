@@ -125,7 +125,7 @@ Rect2 CapsuleShape2D::get_rect() const {
     Vector2 he = Point2(get_radius(), get_radius() + get_height() * 0.5);
     Rect2 rect;
     rect.position = -he;
-    rect.size = he * 2.0;
+    rect.size     = he * 2.0;
     return rect;
 }
 

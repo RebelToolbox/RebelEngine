@@ -62,17 +62,17 @@ void AudioStreamPlaybackResampled::mix(
     );
 
     for (int i = 0; i < p_frames; i++) {
-        uint32_t idx = CUBIC_INTERP_HISTORY + uint32_t(mix_offset >> FP_BITS);
+        uint32_t idx  = CUBIC_INTERP_HISTORY + uint32_t(mix_offset >> FP_BITS);
         // standard cubic interpolation (great quality/performance ratio)
         // this used to be moved to a LUT for greater performance, but nowadays
         // CPU speed is generally faster than memory.
-        float mu = (mix_offset & FP_MASK) / float(FP_LEN);
+        float mu      = (mix_offset & FP_MASK) / float(FP_LEN);
         AudioFrame y0 = internal_buffer[idx - 3];
         AudioFrame y1 = internal_buffer[idx - 2];
         AudioFrame y2 = internal_buffer[idx - 1];
         AudioFrame y3 = internal_buffer[idx - 0];
 
-        float mu2 = mu * mu;
+        float mu2     = mu * mu;
         AudioFrame a0 = 3 * y1 - 3 * y2 + y3 - y0;
         AudioFrame a1 = 2 * y0 - 5 * y1 + 4 * y2 - y3;
         AudioFrame a2 = y2 - y0;
@@ -142,9 +142,9 @@ void AudioStreamPlaybackMicrophone::_mix_internal(
 ) {
     AudioDriver::get_singleton()->lock();
 
-    Vector<int32_t> buf = AudioDriver::get_singleton()->get_input_buffer();
+    Vector<int32_t> buf     = AudioDriver::get_singleton()->get_input_buffer();
     unsigned int input_size = AudioDriver::get_singleton()->get_input_size();
-    int mix_rate = AudioDriver::get_singleton()->get_mix_rate();
+    int mix_rate            = AudioDriver::get_singleton()->get_mix_rate();
     unsigned int playback_delay =
         MIN(((50 * mix_rate) / 1000) * 2, buf.size() >> 1);
 #ifdef DEBUG_ENABLED
@@ -358,9 +358,9 @@ AudioStreamRandomPitch::AudioStreamRandomPitch() {
 }
 
 void AudioStreamPlaybackRandomPitch::start(float p_from_pos) {
-    playing = playback;
+    playing          = playback;
     float range_from = 1.0 / random_pitch->random_pitch;
-    float range_to = random_pitch->random_pitch;
+    float range_to   = random_pitch->random_pitch;
 
     pitch_scale = range_from + Math::randf() * (range_to - range_from);
 

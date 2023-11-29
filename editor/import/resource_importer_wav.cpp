@@ -35,7 +35,7 @@
 #include "core/os/file_access.h"
 #include "scene/resources/audio_stream_sample.h"
 
-const float TRIM_DB_LIMIT = -50;
+const float TRIM_DB_LIMIT      = -50;
 const int TRIM_FADE_OUT_FRAMES = 500;
 
 String ResourceImporterWAV::get_importer_name() const {
@@ -175,17 +175,17 @@ Error ResourceImporterWAV::import(
         );
     }
 
-    int format_bits = 0;
+    int format_bits     = 0;
     int format_channels = 0;
 
     AudioStreamSample::LoopMode loop = AudioStreamSample::LOOP_DISABLED;
-    uint16_t compression_code = 1;
-    bool format_found = false;
-    bool data_found = false;
-    int format_freq = 0;
-    int loop_begin = 0;
-    int loop_end = 0;
-    int frames = 0;
+    uint16_t compression_code        = 1;
+    bool format_found                = false;
+    bool data_found                  = false;
+    int format_freq                  = 0;
+    int loop_begin                   = 0;
+    int loop_end                     = 0;
+    int frames                       = 0;
 
     Vector<float> data;
 
@@ -196,7 +196,7 @@ Error ResourceImporterWAV::import(
 
         /* chunk size */
         uint32_t chunksize = file->get_32();
-        uint32_t file_pos = file->get_position(
+        uint32_t file_pos  = file->get_position(
         ); // save file pos, so we can skip to next chunk safely
 
         if (file->eof_reached()) {
@@ -352,7 +352,7 @@ Error ResourceImporterWAV::import(
                     loop = AudioStreamSample::LOOP_BACKWARD;
                 }
                 loop_begin = file->get_32();
-                loop_end = file->get_32();
+                loop_end   = file->get_32();
             }
         }
         file->seek(file_pos + chunksize);
@@ -364,7 +364,7 @@ Error ResourceImporterWAV::import(
     // STEP 2, APPLY CONVERSIONS
 
     bool is16 = format_bits != 8;
-    int rate = format_freq;
+    int rate  = format_freq;
 
     /*
     print_line("Input Sample: ");
@@ -379,7 +379,7 @@ Error ResourceImporterWAV::import(
 
     // apply frequency limit
 
-    bool limit_rate = p_options["force/max_rate"];
+    bool limit_rate   = p_options["force/max_rate"];
     int limit_rate_hz = p_options["force/max_rate_hz"];
     if (limit_rate && rate > limit_rate_hz && rate > 0 && frames > 0) {
         // resample!
@@ -390,7 +390,7 @@ Error ResourceImporterWAV::import(
         new_data.resize(new_data_frames * format_channels);
         for (int c = 0; c < format_channels; c++) {
             float frac = .0f;
-            int ipos = 0;
+            int ipos   = 0;
 
             for (int i = 0; i < new_data_frames; i++) {
                 // simple cubic interpolation should be enough.
@@ -405,10 +405,10 @@ Error ResourceImporterWAV::import(
                     data[MIN(frames - 1, ipos + 2) * format_channels + c];
 
                 float mu2 = mu * mu;
-                float a0 = y3 - y2 - y0 + y1;
-                float a1 = y0 - y1 - a0;
-                float a2 = y2 - y0;
-                float a3 = y1;
+                float a0  = y3 - y2 - y0 + y1;
+                float a1  = y0 - y1 - a0;
+                float a2  = y2 - y0;
+                float a3  = y1;
 
                 float res = (a0 * mu * mu2 + a1 * mu2 + a2 * mu + a3);
 
@@ -418,10 +418,10 @@ Error ResourceImporterWAV::import(
                 // ]0...1] in order to avoid 32bit floating point precision
                 // errors
 
-                frac += (float)rate / (float)limit_rate_hz;
-                int tpos = (int)Math::floor(frac);
-                ipos += tpos;
-                frac -= tpos;
+                frac     += (float)rate / (float)limit_rate_hz;
+                int tpos  = (int)Math::floor(frac);
+                ipos     += tpos;
+                frac     -= tpos;
             }
         }
 
@@ -431,8 +431,8 @@ Error ResourceImporterWAV::import(
             loop_end = (int)(loop_end * (float)new_data_frames / (float)frames);
         }
 
-        data = new_data;
-        rate = limit_rate_hz;
+        data   = new_data;
+        rate   = limit_rate_hz;
         frames = new_data_frames;
     }
 
@@ -458,9 +458,9 @@ Error ResourceImporterWAV::import(
     bool trim = p_options["edit/trim"];
 
     if (trim && !loop && format_channels > 0) {
-        int first = 0;
-        int last = (frames / format_channels) - 1;
-        bool found = false;
+        int first   = 0;
+        int last    = (frames / format_channels) - 1;
+        bool found  = false;
         float limit = Math::db2linear(TRIM_DB_LIMIT);
 
         for (int i = 0; i < data.size() / format_channels; i++) {
@@ -498,7 +498,7 @@ Error ResourceImporterWAV::import(
                 }
             }
 
-            data = new_data;
+            data   = new_data;
             frames = data.size() / format_channels;
         }
     }
@@ -506,9 +506,9 @@ Error ResourceImporterWAV::import(
     bool make_loop = p_options["edit/loop"];
 
     if (make_loop && !loop) {
-        loop = AudioStreamSample::LOOP_FORWARD;
+        loop       = AudioStreamSample::LOOP_FORWARD;
         loop_begin = 0;
-        loop_end = frames;
+        loop_end   = frames;
     }
 
     int compression = p_options["compress/mode"];
@@ -521,7 +521,7 @@ Error ResourceImporterWAV::import(
             new_data.write[i] = (data[i * 2 + 0] + data[i * 2 + 1]) / 2.0;
         }
 
-        data = new_data;
+        data            = new_data;
         format_channels = 1;
     }
 
@@ -547,7 +547,7 @@ Error ResourceImporterWAV::import(
             right.resize(tframes);
 
             for (int i = 0; i < tframes; i++) {
-                left.write[i] = data[i * 2 + 0];
+                left.write[i]  = data[i * 2 + 0];
                 right.write[i] = data[i * 2 + 1];
             }
 
@@ -584,7 +584,7 @@ Error ResourceImporterWAV::import(
                     encode_uint16(v, &w[i * 2]);
                 } else {
                     int8_t v = CLAMP(data[i] * 128, -128, 127);
-                    w[i] = v;
+                    w[i]     = v;
                 }
             }
         }

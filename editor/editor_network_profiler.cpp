@@ -141,9 +141,9 @@ void EditorNetworkProfiler::add_node_frame_data(
     if (!nodes_data.has(p_frame.node)) {
         nodes_data.insert(p_frame.node, p_frame);
     } else {
-        nodes_data[p_frame.node].incoming_rpc += p_frame.incoming_rpc;
+        nodes_data[p_frame.node].incoming_rpc  += p_frame.incoming_rpc;
         nodes_data[p_frame.node].incoming_rset += p_frame.incoming_rset;
-        nodes_data[p_frame.node].outgoing_rpc += p_frame.outgoing_rpc;
+        nodes_data[p_frame.node].outgoing_rpc  += p_frame.outgoing_rpc;
         nodes_data[p_frame.node].outgoing_rset += p_frame.outgoing_rset;
     }
 

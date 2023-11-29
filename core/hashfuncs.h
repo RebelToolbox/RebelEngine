@@ -49,7 +49,7 @@
  */
 static inline uint32_t hash_djb2(const char* p_cstr) {
     const unsigned char* chr = (const unsigned char*)p_cstr;
-    uint32_t hash = 5381;
+    uint32_t hash            = 5381;
     uint32_t c;
 
     while ((c = *chr++)) {
@@ -79,12 +79,12 @@ static inline uint32_t hash_djb2_one_32(uint32_t p_in, uint32_t p_prev = 5381) {
 
 static inline uint32_t hash_one_uint64(const uint64_t p_int) {
     uint64_t v = p_int;
-    v = (~v) + (v << 18); // v = (v << 18) - v - 1;
-    v = v ^ (v >> 31);
-    v = v * 21; // v = (v + (v << 2)) + (v << 4);
-    v = v ^ (v >> 11);
-    v = v + (v << 6);
-    v = v ^ (v >> 22);
+    v          = (~v) + (v << 18); // v = (v << 18) - v - 1;
+    v          = v ^ (v >> 31);
+    v          = v * 21; // v = (v + (v << 2)) + (v << 4);
+    v          = v ^ (v >> 11);
+    v          = v + (v << 6);
+    v          = v ^ (v >> 22);
     return (int)v;
 }
 
@@ -117,7 +117,7 @@ static inline uint32_t make_uint32_t(T p_in) {
     } _u;
 
     _u._u32 = 0;
-    _u.t = p_in;
+    _u.t    = p_in;
     return _u._u32;
 }
 

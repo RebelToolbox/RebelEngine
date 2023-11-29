@@ -295,7 +295,7 @@ public:
     ) {
         String plugin_names =
             PluginConfigAndroid::get_plugins_names(enabled_plugins);
-        bool first_build = last_custom_build_time == 0;
+        bool first_build          = last_custom_build_time == 0;
         bool have_plugins_changed = false;
 
         if (!first_build) {
@@ -312,7 +312,7 @@ public:
         }
 
         last_custom_build_time = OS::get_singleton()->get_unix_time();
-        last_plugin_names = plugin_names;
+        last_plugin_names      = plugin_names;
 
         return have_plugins_changed || first_build;
     }

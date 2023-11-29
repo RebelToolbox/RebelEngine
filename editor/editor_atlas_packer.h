@@ -74,7 +74,7 @@ public:
         Vector<Chart>& charts,
         int& r_width,
         int& r_height,
-        int p_atlas_max_size = 2048,
+        int p_atlas_max_size  = 2048,
         int p_cell_resolution = 4
     );
 };

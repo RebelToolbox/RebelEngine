@@ -120,7 +120,7 @@ public:
     String get_text_for_lookup_symbol(
         const lsp::Position& p_cursor,
         const String& p_symbol = "",
-        bool p_func_required = false
+        bool p_func_required   = false
     ) const;
     String get_identifier_under_position(
         const lsp::Position& p_position,

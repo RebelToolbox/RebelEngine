@@ -198,7 +198,7 @@ void godot_icall_EditorProgress_Create(
     int32_t p_amount,
     MonoBoolean p_can_cancel
 ) {
-    String task = GDMonoMarshal::mono_string_to_godot(p_task);
+    String task  = GDMonoMarshal::mono_string_to_godot(p_task);
     String label = GDMonoMarshal::mono_string_to_godot(p_label);
     EditorNode::progress_add_task(task, label, p_amount, (bool)p_can_cancel);
 }
@@ -214,7 +214,7 @@ MonoBoolean godot_icall_EditorProgress_Step(
     int32_t p_step,
     MonoBoolean p_force_refresh
 ) {
-    String task = GDMonoMarshal::mono_string_to_godot(p_task);
+    String task  = GDMonoMarshal::mono_string_to_godot(p_task);
     String state = GDMonoMarshal::mono_string_to_godot(p_state);
     return EditorNode::progress_task_step(
         task,
@@ -244,9 +244,9 @@ int32_t godot_icall_ScriptClassParser_ParseFile(
             const ScriptClassParser::ClassDecl& classDecl = class_decls[i];
 
             Dictionary classDeclDict;
-            classDeclDict["name"] = classDecl.name;
-            classDeclDict["namespace"] = classDecl.namespace_;
-            classDeclDict["nested"] = classDecl.nested;
+            classDeclDict["name"]       = classDecl.name;
+            classDeclDict["namespace"]  = classDecl.namespace_;
+            classDeclDict["nested"]     = classDecl.nested;
             classDeclDict["base_count"] = classDecl.base.size();
             classes.push_back(classDeclDict);
         }
@@ -386,7 +386,7 @@ MonoObject* godot_icall_Internal_GetScriptsMetadataOrNothing(
 
     MonoType* dict_type = mono_reflection_type_get_type(p_dict_reftype);
 
-    uint32_t type_encoding = mono_type_get_type(dict_type);
+    uint32_t type_encoding    = mono_type_get_type(dict_type);
     MonoClass* type_class_raw = mono_class_from_mono_type(dict_type);
     GDMonoClass* type_class =
         GDMono::get_singleton()->get_class(type_class_raw);
@@ -465,7 +465,7 @@ MonoObject* godot_icall_Globals_EditorDef(
 }
 
 MonoObject* godot_icall_Globals_EditorShortcut(MonoString* p_setting) {
-    String setting = GDMonoMarshal::mono_string_to_godot(p_setting);
+    String setting       = GDMonoMarshal::mono_string_to_godot(p_setting);
     Ref<ShortCut> result = ED_GET_SHORTCUT(setting);
     return GDMonoMarshal::variant_to_mono_object(result);
 }

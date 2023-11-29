@@ -141,7 +141,7 @@ void EditorSubScene::_item_multi_selected(
 void EditorSubScene::_remove_selection_child(Node* p_node) {
     if (p_node->get_child_count() > 0) {
         for (int i = 0; i < p_node->get_child_count(); i++) {
-            Node* c = p_node->get_child(i);
+            Node* c                 = p_node->get_child(i);
             List<Node*>::Element* E = selection.find(c);
             if (E) {
                 selection.move_to_back(E);
@@ -243,7 +243,7 @@ void EditorSubScene::_bind_methods() {
 }
 
 EditorSubScene::EditorSubScene() {
-    scene = nullptr;
+    scene   = nullptr;
     is_root = false;
 
     set_title(TTR("Select Node(s) to Import"));
@@ -254,7 +254,7 @@ EditorSubScene::EditorSubScene() {
     // set_child_rect(vb);
 
     HBoxContainer* hb = memnew(HBoxContainer);
-    path = memnew(LineEdit);
+    path              = memnew(LineEdit);
     path->connect("text_entered", this, "_path_changed");
     hb->add_child(path);
     path->set_h_size_flags(SIZE_EXPAND_FILL);

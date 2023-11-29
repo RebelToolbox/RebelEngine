@@ -62,7 +62,7 @@ void MeshLibraryEditor::_menu_remove_confirm() {
 
 void MeshLibraryEditor::_menu_update_confirm(bool p_apply_xforms) {
     cd_update->hide();
-    apply_xforms = p_apply_xforms;
+    apply_xforms    = p_apply_xforms;
     String existing = mesh_library->get_meta("_editor_source_scene");
     ERR_FAIL_COND(existing == "");
     _import_scene_cbk(existing);
@@ -96,7 +96,7 @@ void MeshLibraryEditor::_import_scene(
         }
 
         MeshInstance* mi = Object::cast_to<MeshInstance>(child);
-        Ref<Mesh> mesh = mi->get_mesh();
+        Ref<Mesh> mesh   = mi->get_mesh();
         if (mesh.is_null()) {
             continue;
         }
@@ -140,7 +140,7 @@ void MeshLibraryEditor::_import_scene(
             sb->get_shape_owners(&shapes);
 
             for (List<uint32_t>::Element* E = shapes.front(); E;
-                 E = E->next()) {
+                 E                          = E->next()) {
                 if (sb->is_shape_owner_disabled(E->get())) {
                     continue;
                 }
@@ -160,7 +160,7 @@ void MeshLibraryEditor::_import_scene(
                         continue;
                     }
                     MeshLibrary::ShapeData shape_data;
-                    shape_data.shape = collision;
+                    shape_data.shape           = collision;
                     shape_data.local_transform = shape_transform;
                     collisions.push_back(shape_data);
                 }
@@ -178,7 +178,7 @@ void MeshLibraryEditor::_import_scene(
             }
             NavigationMeshInstance* sb =
                 Object::cast_to<NavigationMeshInstance>(child2);
-            navmesh = sb->get_navigation_mesh();
+            navmesh           = sb->get_navigation_mesh();
             navmesh_transform = sb->get_transform();
             if (!navmesh.is_null()) {
                 break;
@@ -358,7 +358,7 @@ MeshLibraryEditor::MeshLibraryEditor(EditorNode* p_editor) {
     menu->get_popup()->connect("id_pressed", this, "_menu_cbk");
     menu->hide();
 
-    editor = p_editor;
+    editor    = p_editor;
     cd_remove = memnew(ConfirmationDialog);
     add_child(cd_remove);
     cd_remove->get_ok()->connect("pressed", this, "_menu_remove_confirm");

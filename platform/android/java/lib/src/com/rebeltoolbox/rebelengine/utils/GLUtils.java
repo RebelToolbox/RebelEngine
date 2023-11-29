@@ -44,8 +44,8 @@ public class GLUtils {
 
     public static final boolean DEBUG = false;
 
-    public static boolean use_gl3 = false;
-    public static boolean use_32 = false;
+    public static boolean use_gl3          = false;
+    public static boolean use_32           = false;
     public static boolean use_debug_opengl = false;
 
     private static final String[] ATTRIBUTES_NAMES = new String[] {
@@ -150,7 +150,7 @@ public class GLUtils {
         int[] value = new int[1];
         for (int i = 0; i < ATTRIBUTES.length; i++) {
             int attribute = ATTRIBUTES[i];
-            String name = ATTRIBUTES_NAMES[i];
+            String name   = ATTRIBUTES_NAMES[i];
             if (egl.eglGetConfigAttrib(display, config, attribute, value)) {
                 Log.i(TAG, String.format("  %s: %d\n", name, value[0]));
             } else {

@@ -132,12 +132,12 @@ public:
         }
 
         String to_string() const {
-            String sz = "{";
+            String sz         = "{";
             const float* data = get_data();
             for (int c = 0; c < 4; c++) {
-                float f = data[c];
-                int val = ((f * 255.0f) + 0.5f);
-                sz += String(Variant(val)) + " ";
+                float f  = data[c];
+                int val  = ((f * 255.0f) + 0.5f);
+                sz      += String(Variant(val)) + " ";
             }
             sz += "}";
             return sz;
@@ -254,7 +254,7 @@ public:
     struct BSortItem {
         // have a function to keep as pod, rather than operator
         void assign(const BSortItem& o) {
-            item = o.item;
+            item    = o.item;
             z_index = o.z_index;
         }
 
@@ -295,7 +295,7 @@ public:
 
     struct BLightRegion {
         void reset() {
-            light_bitfield = 0;
+            light_bitfield  = 0;
             shadow_bitfield = 0;
             too_many_lights = false;
         }
@@ -311,45 +311,45 @@ public:
             reset_flush();
             reset_joined_item();
 
-            gl_vertex_buffer = 0;
-            gl_index_buffer = 0;
-            max_quads = 0;
+            gl_vertex_buffer         = 0;
+            gl_index_buffer          = 0;
+            max_quads                = 0;
             vertex_buffer_size_units = 0;
             vertex_buffer_size_bytes = 0;
-            index_buffer_size_units = 0;
-            index_buffer_size_bytes = 0;
+            index_buffer_size_units  = 0;
+            index_buffer_size_bytes  = 0;
 
             use_colored_vertices = false;
 
-            settings_use_batching = false;
-            settings_max_join_item_commands = 0;
+            settings_use_batching                    = false;
+            settings_max_join_item_commands          = 0;
             settings_colored_vertex_format_threshold = 0.0f;
-            settings_batch_buffer_num_verts = 0;
-            scissor_threshold_area = 0.0f;
-            joined_item_batch_flags = 0;
-            diagnose_frame = false;
-            next_diagnose_tick = 10000;
-            diagnose_frame_number = 9999999999; // some high number
-            join_across_z_indices = true;
+            settings_batch_buffer_num_verts          = 0;
+            scissor_threshold_area                   = 0.0f;
+            joined_item_batch_flags                  = 0;
+            diagnose_frame                           = false;
+            next_diagnose_tick                       = 10000;
+            diagnose_frame_number              = 9999999999; // some high number
+            join_across_z_indices              = true;
             settings_item_reordering_lookahead = 0;
 
             settings_use_batching_original_choice = false;
-            settings_flash_batching = false;
-            settings_diagnose_frame = false;
-            settings_scissor_lights = false;
-            settings_scissor_threshold = -1.0f;
-            settings_use_single_rect_fallback = false;
-            settings_use_software_skinning = true;
-            settings_ninepatch_mode = 0; // default
-            settings_light_max_join_items = 16;
+            settings_flash_batching               = false;
+            settings_diagnose_frame               = false;
+            settings_scissor_lights               = false;
+            settings_scissor_threshold            = -1.0f;
+            settings_use_single_rect_fallback     = false;
+            settings_use_software_skinning        = true;
+            settings_ninepatch_mode               = 0; // default
+            settings_light_max_join_items         = 16;
 
-            settings_uv_contract = false;
+            settings_uv_contract        = false;
             settings_uv_contract_amount = 0.0f;
 
-            buffer_mode_batch_upload_send_null = true;
+            buffer_mode_batch_upload_send_null   = true;
             buffer_mode_batch_upload_flag_stream = false;
 
-            stats_items_sorted = 0;
+            stats_items_sorted       = 0;
             stats_light_items_joined = 0;
         }
 
@@ -369,14 +369,14 @@ public:
             vertex_modulates.reset();
             vertex_transforms.reset();
 
-            total_quads = 0;
-            total_verts = 0;
+            total_quads         = 0;
+            total_verts         = 0;
             total_color_changes = 0;
 
             use_light_angles = false;
-            use_modulate = false;
-            use_large_verts = false;
-            fvf = RasterizerStorageCommon::FVF_REGULAR;
+            use_modulate     = false;
+            use_large_verts  = false;
+            fvf              = RasterizerStorageCommon::FVF_REGULAR;
         }
 
         unsigned int gl_vertex_buffer;
@@ -489,7 +489,7 @@ public:
 
         // only done on diagnose frame
         void reset_stats() {
-            stats_items_sorted = 0;
+            stats_items_sorted       = 0;
             stats_light_items_joined = 0;
         }
 
@@ -502,10 +502,10 @@ public:
         void reset_flush() {
             // don't reset members that need to be preserved after flushing
             // half way through a list of commands
-            curr_batch = nullptr;
-            batch_tex_id = -1;
+            curr_batch    = nullptr;
+            batch_tex_id  = -1;
             texpixel_size = Vector2(1, 1);
-            contract_uvs = false;
+            contract_uvs  = false;
 
             sequence_batch_type_flags = 0;
         }
@@ -515,8 +515,8 @@ public:
             bool p_use_attrib_transform
         ) {
             reset_flush();
-            is_single_item = p_is_single_item;
-            use_attrib_transform = p_use_attrib_transform;
+            is_single_item         = p_is_single_item;
+            use_attrib_transform   = p_use_attrib_transform;
             use_software_transform = !is_single_item && !use_attrib_transform;
 
             extra_matrix_sent = false;
@@ -557,14 +557,14 @@ public:
         }
 
         void reset() {
-            current_clip = nullptr;
-            shader_cache = nullptr;
-            rebind_shader = true;
-            prev_use_skeleton = false;
-            last_blend_mode = -1;
+            current_clip         = nullptr;
+            shader_cache         = nullptr;
+            rebind_shader        = true;
+            prev_use_skeleton    = false;
+            last_blend_mode      = -1;
             canvas_last_material = RID();
-            item_group_z = 0;
-            item_group_light = nullptr;
+            item_group_z         = 0;
+            item_group_light     = nullptr;
             final_modulate =
                 Color(-1.0, -1.0, -1.0, -1.0); // just something unlikely
 
@@ -889,7 +889,7 @@ PREAMBLE(void)::batch_canvas_begin() {
     if (bdata.settings_diagnose_frame) {
         bdata.diagnose_frame = false;
 
-        uint32_t tick = OS::get_singleton()->get_ticks_msec();
+        uint32_t tick  = OS::get_singleton()->get_ticks_msec();
         uint64_t frame = Engine::get_singleton()->get_frames_drawn();
 
         if (tick >= bdata.next_diagnose_tick) {
@@ -955,8 +955,8 @@ PREAMBLE(void)::batch_canvas_render_items_begin(
     // set up render item state for all the z_indexes (this is common to all
     // z_indexes)
     _render_item_state.reset();
-    _render_item_state.item_group_modulate = p_modulate;
-    _render_item_state.item_group_light = p_light;
+    _render_item_state.item_group_modulate       = p_modulate;
+    _render_item_state.item_group_light          = p_light;
     _render_item_state.item_group_base_transform = p_base_transform;
     _render_item_state.light_region.reset();
 
@@ -1089,7 +1089,7 @@ PREAMBLE(void)::_prefill_default_batch(
             r_fill_state.curr_batch->num_commands += 2;
 
             r_fill_state.transform_extra_command_number_p1 = 0; // mark as sent
-            r_fill_state.extra_matrix_sent = true;
+            r_fill_state.extra_matrix_sent                 = true;
 
             // the original mode should always be hardware transform ..
             // test this assumption
@@ -1108,14 +1108,14 @@ PREAMBLE(void)::_prefill_default_batch(
             int extra_command = r_fill_state.transform_extra_command_number_p1
                               - 1; // plus 1 based
             r_fill_state.transform_extra_command_number_p1 = 0;
-            r_fill_state.extra_matrix_sent = true;
+            r_fill_state.extra_matrix_sent                 = true;
 
             // send the extra to the GPU in a batch
-            r_fill_state.curr_batch = _batch_request_new();
+            r_fill_state.curr_batch       = _batch_request_new();
             r_fill_state.curr_batch->type = RasterizerStorageCommon::BT_DEFAULT;
             r_fill_state.curr_batch->first_command = extra_command;
-            r_fill_state.curr_batch->num_commands = 1;
-            r_fill_state.curr_batch->item = &p_item;
+            r_fill_state.curr_batch->num_commands  = 1;
+            r_fill_state.curr_batch->item          = &p_item;
 
             // revert to the original transform mode
             // e.g. go back to NONE if we were in hardware transform mode
@@ -1138,11 +1138,11 @@ PREAMBLE(void)::_prefill_default_batch(
         }
 
         // start default batch
-        r_fill_state.curr_batch = _batch_request_new();
+        r_fill_state.curr_batch       = _batch_request_new();
         r_fill_state.curr_batch->type = RasterizerStorageCommon::BT_DEFAULT;
         r_fill_state.curr_batch->first_command = p_command_num;
-        r_fill_state.curr_batch->num_commands = 1;
-        r_fill_state.curr_batch->item = &p_item;
+        r_fill_state.curr_batch->num_commands  = 1;
+        r_fill_state.curr_batch->item          = &p_item;
     }
 }
 
@@ -1195,7 +1195,7 @@ PREAMBLE(int)::_batch_find_or_create_tex(
     // because non pod due to RIDs
     BatchTex new_batch_tex;
     new_batch_tex.RID_texture = p_texture;
-    new_batch_tex.RID_normal = p_normal;
+    new_batch_tex.RID_normal  = p_normal;
 
     // get the texture
     typename T_STORAGE::Texture* texture = _get_canvas_texture(p_texture);
@@ -1212,12 +1212,12 @@ PREAMBLE(int)::_batch_find_or_create_tex(
 
         new_batch_tex.tex_pixel_size.x = 1.0 / w;
         new_batch_tex.tex_pixel_size.y = 1.0 / h;
-        new_batch_tex.flags = texture->flags;
+        new_batch_tex.flags            = texture->flags;
     } else {
         // maybe doesn't need doing...
         new_batch_tex.tex_pixel_size.x = 1.0f;
         new_batch_tex.tex_pixel_size.y = 1.0f;
-        new_batch_tex.flags = 0;
+        new_batch_tex.flags            = 0;
     }
 
     if (p_tile) {
@@ -1528,7 +1528,7 @@ PREAMBLE(bool)::_light_scissor_begin(
         // some conditions not to scissor
         // determine the area (fill rate) that will be saved
         float area_cliprect = cliprect.size.x * cliprect.size.y;
-        float area_saved = area_item - area_cliprect;
+        float area_saved    = area_item - area_cliprect;
 
         // if area saved is too small, don't scissor
         if (area_saved < bdata.scissor_threshold_area) {
@@ -1542,8 +1542,8 @@ PREAMBLE(bool)::_light_scissor_begin(
     // possibly due to pixel snap. For this reason we will boost
     // the scissor area by 1 pixel, this will take care of any rounding
     // issues, and shouldn't significantly negatively impact performance.
-    int y = rh - (cliprect.position.y + cliprect.size.y);
-    y += 1; // off by 1 boost before flipping
+    int y  = rh - (cliprect.position.y + cliprect.size.y);
+    y     += 1; // off by 1 boost before flipping
 
     if (get_storage()
             ->frame.current_rt->flags[RasterizerStorage::RENDER_TARGET_VFLIP]) {
@@ -1603,7 +1603,7 @@ PREAMBLE(bool)::_light_find_intersection(
     r_cliprect.position.y = MAX(p_item_rect.position.y, lrect.position.y);
 
     Point2 item_rect_end = p_item_rect.position + p_item_rect.size;
-    Point2 lrect_end = lrect.position + lrect.size;
+    Point2 lrect_end     = lrect.position + lrect.size;
 
     r_cliprect.size.x =
         MIN(item_rect_end.x, lrect_end.x) - r_cliprect.position.x;
@@ -1653,7 +1653,7 @@ PREAMBLE(bool)::_prefill_line(
     uint32_t line_batch_flags = RasterizerStorageCommon::BTF_LINE;
 #ifdef GLES_OVER_GL
     if (p_line->antialiased) {
-        line_batch_type = RasterizerStorageCommon::BT_LINE_AA;
+        line_batch_type  = RasterizerStorageCommon::BT_LINE_AA;
         line_batch_flags = RasterizerStorageCommon::BTF_LINE_AA;
     }
 #endif
@@ -1706,15 +1706,15 @@ PREAMBLE(bool)::_prefill_line(
         // open new batch (this should never fail, it dynamically grows)
         r_fill_state.curr_batch = _batch_request_new(false);
 
-        r_fill_state.curr_batch->type = line_batch_type;
-        r_fill_state.curr_batch->color = bcol;
+        r_fill_state.curr_batch->type             = line_batch_type;
+        r_fill_state.curr_batch->color            = bcol;
         // cast is to stop sanitizer benign warning .. watch though in case
         // destination type changes
         r_fill_state.curr_batch->batch_texture_id = (uint16_t)-1;
-        r_fill_state.curr_batch->first_command = command_num;
-        r_fill_state.curr_batch->num_commands = 1;
+        r_fill_state.curr_batch->first_command    = command_num;
+        r_fill_state.curr_batch->num_commands     = 1;
         // r_fill_state.curr_batch->first_quad = bdata.total_quads;
-        r_fill_state.curr_batch->first_vert = bdata.total_verts;
+        r_fill_state.curr_batch->first_vert       = bdata.total_verts;
     } else {
         // we could alternatively do the count when closing a batch .. perhaps
         // more efficient
@@ -1723,7 +1723,7 @@ PREAMBLE(bool)::_prefill_line(
 
     // fill the geometry
     Vector2 from = p_line->from;
-    Vector2 to = p_line->to;
+    Vector2 to   = p_line->to;
 
     const bool use_large_verts = bdata.use_large_verts;
 
@@ -1839,10 +1839,10 @@ bool C_PREAMBLE::_prefill_ninepatch(
     // create a temporary rect so we can reuse the rect routine
     RasterizerCanvas::Item::CommandRect trect;
 
-    trect.texture = p_np->texture;
+    trect.texture    = p_np->texture;
     trect.normal_map = p_np->normal_map;
-    trect.modulate = p_np->color;
-    trect.flags = RasterizerCanvas::CANVAS_RECT_REGION;
+    trect.modulate   = p_np->color;
+    trect.flags      = RasterizerCanvas::CANVAS_RECT_REGION;
 
     // Size2 texpixel_size(1.0f / tex->width, 1.0f / tex->height);
 
@@ -1868,12 +1868,12 @@ bool C_PREAMBLE::_prefill_ninepatch(
     // trect.flags |= _ninepatch_apply_tiling_modes(p_np, source);
 
     // translate to rects
-    Rect2& rt = trect.rect;
+    Rect2& rt  = trect.rect;
     Rect2& src = trect.source;
 
-    float tex_margin_left = p_np->margin[MARGIN_LEFT];
-    float tex_margin_right = p_np->margin[MARGIN_RIGHT];
-    float tex_margin_top = p_np->margin[MARGIN_TOP];
+    float tex_margin_left   = p_np->margin[MARGIN_LEFT];
+    float tex_margin_right  = p_np->margin[MARGIN_RIGHT];
+    float tex_margin_top    = p_np->margin[MARGIN_TOP];
     float tex_margin_bottom = p_np->margin[MARGIN_BOTTOM];
 
     float x[4];
@@ -1917,10 +1917,10 @@ bool C_PREAMBLE::_prefill_ninepatch(
 
     // each line of the ninepatch
     for (int line = 0; line < 3; line++) {
-        rt.position = Vector2(x[0], y[line]);
-        rt.size = Vector2(x[1] - x[0], y[line + 1] - y[line]);
+        rt.position  = Vector2(x[0], y[line]);
+        rt.size      = Vector2(x[1] - x[0], y[line + 1] - y[line]);
         src.position = Vector2(u[0], v[line]);
-        src.size = Vector2(u[1] - u[0], v[line + 1] - v[line]);
+        src.size     = Vector2(u[1] - u[0], v[line + 1] - v[line]);
         _prefill_rect<SEND_LIGHT_ANGLES>(
             &trect,
             r_fill_state,
@@ -1935,10 +1935,10 @@ bool C_PREAMBLE::_prefill_ninepatch(
         if ((line == 1) && (!p_np->draw_center)) {
             ;
         } else {
-            rt.position.x = x[1];
-            rt.size.x = x[2] - x[1];
+            rt.position.x  = x[1];
+            rt.size.x      = x[2] - x[1];
             src.position.x = u[1];
-            src.size.x = u[2] - u[1];
+            src.size.x     = u[2] - u[1];
             _prefill_rect<SEND_LIGHT_ANGLES>(
                 &trect,
                 r_fill_state,
@@ -1951,10 +1951,10 @@ bool C_PREAMBLE::_prefill_ninepatch(
             );
         }
 
-        rt.position.x = x[2];
-        rt.size.x = x[3] - x[2];
+        rt.position.x  = x[2];
+        rt.size.x      = x[3] - x[2];
         src.position.x = u[2];
-        src.size.x = u[3] - u[2];
+        src.size.x     = u[3] - u[2];
         _prefill_rect<SEND_LIGHT_ANGLES>(
             &trect,
             r_fill_state,
@@ -2035,7 +2035,7 @@ bool C_PREAMBLE::_prefill_polygon(
     // are we using large FVF?
     ////////////////////////////////////
     const bool use_large_verts = bdata.use_large_verts;
-    const bool use_modulate = bdata.use_modulate;
+    const bool use_modulate    = bdata.use_modulate;
 
     BatchColor* vertex_modulates = nullptr;
     if (use_modulate) {
@@ -2070,7 +2070,7 @@ bool C_PREAMBLE::_prefill_polygon(
         modulate = Color(1, 1, 1, 1);
     }
 
-    int old_batch_tex_id = r_fill_state.batch_tex_id;
+    int old_batch_tex_id      = r_fill_state.batch_tex_id;
     r_fill_state.batch_tex_id = _batch_find_or_create_tex(
         p_poly->texture,
         p_poly->normal_map,
@@ -2110,10 +2110,10 @@ bool C_PREAMBLE::_prefill_polygon(
         // modulate unused except for debugging?
         r_fill_state.curr_batch->color.set(modulate);
         r_fill_state.curr_batch->batch_texture_id = r_fill_state.batch_tex_id;
-        r_fill_state.curr_batch->first_command = command_num;
-        r_fill_state.curr_batch->num_commands = num_inds;
+        r_fill_state.curr_batch->first_command    = command_num;
+        r_fill_state.curr_batch->num_commands     = num_inds;
         //		r_fill_state.curr_batch->num_elements = num_inds;
-        r_fill_state.curr_batch->first_vert = bdata.total_verts;
+        r_fill_state.curr_batch->first_vert       = bdata.total_verts;
     } else {
         // we could alternatively do the count when closing a batch .. perhaps
         // more efficient
@@ -2241,7 +2241,7 @@ PREAMBLE(bool)::_software_skin_poly(
         return false;
     }
 
-    int num_inds = p_poly->indices.size();
+    int num_inds  = p_poly->indices.size();
     int num_verts = p_poly->points.size();
 
     RID skeleton = p_item->skeleton;
@@ -2282,7 +2282,7 @@ PREAMBLE(bool)::_software_skin_poly(
 
         for (int n = 0; n < num_verts; n++) {
             const Vector2& src_pos = p_poly->points[n];
-            Vector2& dst_pos = pTemps[n];
+            Vector2& dst_pos       = pTemps[n];
 
             // there can be an offset on the polygon at rigging time, this has
             // to be accounted for note it may be possible that this could be
@@ -2293,7 +2293,7 @@ PREAMBLE(bool)::_software_skin_poly(
             float total_weight = 0.0f;
 
             for (int k = 0; k < 4; k++) {
-                int bone_id = p_poly->bones[n * 4 + k];
+                int bone_id  = p_poly->bones[n * 4 + k];
                 float weight = p_poly->weights[n * 4 + k];
                 if (weight == 0.0f) {
                     continue;
@@ -2327,7 +2327,7 @@ PREAMBLE(bool)::_software_skin_poly(
         // not rigged properly, just copy the verts directly
         for (int n = 0; n < num_verts; n++) {
             const Vector2& src_pos = p_poly->points[n];
-            Vector2& dst_pos = pTemps[n];
+            Vector2& dst_pos       = pTemps[n];
 
             dst_pos = src_pos;
         }
@@ -2414,7 +2414,7 @@ bool C_PREAMBLE::_prefill_rect(
         // will go horribly wrong.
         if (bdata.settings_use_single_rect_fallback
             && r_fill_state.is_single_item) {
-            bool is_single_rect = false;
+            bool is_single_rect  = false;
             int command_num_next = command_num + 1;
             if (command_num_next < command_count) {
                 RasterizerCanvas::Item::Command* command_next =
@@ -2452,7 +2452,7 @@ bool C_PREAMBLE::_prefill_rect(
 
     // are we using large FVF?
     const bool use_large_verts = bdata.use_large_verts;
-    const bool use_modulate = bdata.use_modulate;
+    const bool use_modulate    = bdata.use_modulate;
 
     Color col = rect->modulate;
 
@@ -2467,7 +2467,7 @@ bool C_PREAMBLE::_prefill_rect(
     // we build a list of texture combinations and do this once off.
     // This means we have a potentially rather slow step to identify which
     // texture combo using the RIDs.
-    int old_batch_tex_id = r_fill_state.batch_tex_id;
+    int old_batch_tex_id      = r_fill_state.batch_tex_id;
     r_fill_state.batch_tex_id = _batch_find_or_create_tex(
         rect->texture,
         rect->normal_map,
@@ -2513,10 +2513,10 @@ bool C_PREAMBLE::_prefill_rect(
         r_fill_state.curr_batch->type = RasterizerStorageCommon::BT_RECT;
         r_fill_state.curr_batch->color.set(col);
         r_fill_state.curr_batch->batch_texture_id = r_fill_state.batch_tex_id;
-        r_fill_state.curr_batch->first_command = command_num;
-        r_fill_state.curr_batch->num_commands = 1;
+        r_fill_state.curr_batch->first_command    = command_num;
+        r_fill_state.curr_batch->num_commands     = 1;
         // r_fill_state.curr_batch->first_quad = bdata.total_quads;
-        r_fill_state.curr_batch->first_vert = bdata.total_verts;
+        r_fill_state.curr_batch->first_vert       = bdata.total_verts;
     } else {
         // we could alternatively do the count when closing a batch .. perhaps
         // more efficient
@@ -2680,7 +2680,7 @@ bool C_PREAMBLE::_prefill_rect(
         float* angles = bdata.light_angles.request(4);
         RAST_DEBUG_ASSERT(angles);
 
-        float angle = 0.0f;
+        float angle        = 0.0f;
         const float TWO_PI = Math_PI * 2;
 
         if (r_fill_state.transform_mode != TM_NONE) {
@@ -2757,7 +2757,7 @@ PREAMBLE(bool)::prefill_joined_item(
 ) {
     // we will prefill batches and vertices ready for sending in one go to the
     // vertex buffer
-    int command_count = p_item->commands.size();
+    int command_count                                = p_item->commands.size();
     RasterizerCanvas::Item::Command* const* commands = p_item->commands.ptr();
 
     // whether to multiply final modulate on the CPU, or pass it in the FVF and
@@ -2774,7 +2774,7 @@ PREAMBLE(bool)::prefill_joined_item(
         // allocate dummy batch on the stack, it should always get replaced
         // note that the rest of the structure is uninitialized, this should not
         // matter if the type is checked before anything else.
-        r_fill_state.curr_batch = (Batch*)alloca(sizeof(Batch));
+        r_fill_state.curr_batch       = (Batch*)alloca(sizeof(Batch));
         r_fill_state.curr_batch->type = RasterizerStorageCommon::BT_DUMMY;
 
         // this is assumed to be the case
@@ -3091,7 +3091,7 @@ PREAMBLE(void)::flush_render_batches(
             // if we used vertex colors
             if (bdata.vertex_colors.size()) {
                 bdata.use_colored_vertices = true;
-                bdata.fvf = RasterizerStorageCommon::FVF_COLOR;
+                bdata.fvf                  = RasterizerStorageCommon::FVF_COLOR;
             }
 
             // needs light angles?
@@ -3192,12 +3192,12 @@ PREAMBLE(void)::render_joined_item_commands(
     // should this joined item be using large FVF?
     if (p_bij.flags & RasterizerStorageCommon::USE_MODULATE_FVF) {
         bdata.use_modulate = true;
-        bdata.fvf = RasterizerStorageCommon::FVF_MODULATED;
+        bdata.fvf          = RasterizerStorageCommon::FVF_MODULATED;
     }
     if (p_bij.flags & RasterizerStorageCommon::USE_LARGE_FVF) {
-        bdata.use_modulate = true;
+        bdata.use_modulate    = true;
         bdata.use_large_verts = true;
-        bdata.fvf = RasterizerStorageCommon::FVF_LARGE;
+        bdata.fvf             = RasterizerStorageCommon::FVF_LARGE;
     }
 
     // make sure the jointed item flags state is up to date, as it is read
@@ -3216,7 +3216,7 @@ PREAMBLE(void)::render_joined_item_commands(
 
     for (unsigned int i = 0; i < p_bij.num_item_refs; i++) {
         const BItemRef& ref = bdata.item_refs[p_bij.first_item_ref + i];
-        item = ref.item;
+        item                = ref.item;
 
         if (!p_lit) {
             // if not lit we use the complex calculated final modulate
@@ -3321,10 +3321,10 @@ PREAMBLE(void)::_legacy_canvas_item_render_commands(
 
     // legacy .. just create one massive batch and render everything as before
     bdata.batches.reset();
-    Batch* batch = _batch_request_new();
-    batch->type = RasterizerStorageCommon::BT_DEFAULT;
+    Batch* batch        = _batch_request_new();
+    batch->type         = RasterizerStorageCommon::BT_DEFAULT;
     batch->num_commands = command_count;
-    batch->item = p_item;
+    batch->item         = p_item;
 
     get_this()->render_batches(p_current_clip, r_reclip, p_material);
     bdata.reset_flush();
@@ -3334,7 +3334,7 @@ PREAMBLE(void)::record_items(RasterizerCanvas::Item* p_item_list, int p_z) {
     while (p_item_list) {
         BSortItem* s = bdata.sort_items.request_with_grow();
 
-        s->item = p_item_list;
+        s->item    = p_item_list;
         s->z_index = p_z;
 
         p_item_list = p_item_list->next;
@@ -3344,11 +3344,11 @@ PREAMBLE(void)::record_items(RasterizerCanvas::Item* p_item_list, int p_z) {
 PREAMBLE(void)::join_sorted_items() {
     sort_items();
 
-    int z = VS::CANVAS_ITEM_Z_MIN;
+    int z                           = VS::CANVAS_ITEM_Z_MIN;
     _render_item_state.item_group_z = z;
 
     for (int s = 0; s < bdata.sort_items.size(); s++) {
-        const BSortItem& si = bdata.sort_items[s];
+        const BSortItem& si        = bdata.sort_items[s];
         RasterizerCanvas::Item* ci = si.item;
 
         // change z?
@@ -3409,8 +3409,8 @@ PREAMBLE(void)::join_sorted_items() {
                 _render_item_state.joined_item_batch_type_flags_curr;
 
             // add the reference
-            BItemRef* r = bdata.item_refs.request_with_grow();
-            r->item = ci;
+            BItemRef* r       = bdata.item_refs.request_with_grow();
+            r->item           = ci;
             // we are storing final_modulate in advance per item reference
             // for baking into vertex colors.
             // this may not be ideal... as we are increasing the size of item
@@ -3425,8 +3425,8 @@ PREAMBLE(void)::join_sorted_items() {
                     ci->global_rect_cache
                 );
 
-            BItemRef* r = bdata.item_refs.request_with_grow();
-            r->item = ci;
+            BItemRef* r       = bdata.item_refs.request_with_grow();
+            r->item           = ci;
             r->final_modulate = _render_item_state.final_modulate;
 
             // joined item references may introduce new flags
@@ -3526,7 +3526,7 @@ PREAMBLE(bool)::sort_items_from(int p_start) {
 #endif
 
     const BSortItem& start = bdata.sort_items[p_start];
-    int start_z = start.z_index;
+    int start_z            = start.z_index;
 
     // check start is the right type for sorting
     if (start.item->commands.size() != 1) {
@@ -3657,7 +3657,7 @@ PREAMBLE(void)::_translate_batches_to_vertex_colored_FVF() {
             (BatchVertexColored*)bdata.unit_vertices.request();
 
         cv->pos = bv.pos;
-        cv->uv = bv.uv;
+        cv->uv  = bv.uv;
         cv->col = *source_vertex_colors++;
     }
 }
@@ -3701,8 +3701,8 @@ void C_PREAMBLE::_translate_batches_to_larger_FVF(
 
     Batch* dest_batch = nullptr;
 
-    const BatchColor* source_vertex_colors = &bdata.vertex_colors[0];
-    const float* source_light_angles = &bdata.light_angles[0];
+    const BatchColor* source_vertex_colors    = &bdata.vertex_colors[0];
+    const float* source_light_angles          = &bdata.light_angles[0];
     const BatchColor* source_vertex_modulates = &bdata.vertex_modulates[0];
     const BatchTransform* source_vertex_transforms =
         &bdata.vertex_transforms[0];
@@ -3725,12 +3725,12 @@ void C_PREAMBLE::_translate_batches_to_larger_FVF(
                         == source_batch.batch_texture_id) {
                         // add to previous batch
                         dest_batch->num_commands += source_batch.num_commands;
-                        needs_new_batch = false;
+                        needs_new_batch           = false;
 
                         // create the colored verts (only if not default)
                         int first_vert = source_batch.first_vert;
-                        int num_verts = source_batch.get_num_verts();
-                        int end_vert = first_vert + num_verts;
+                        int num_verts  = source_batch.get_num_verts();
+                        int end_vert   = first_vert + num_verts;
 
                         for (int v = first_vert; v < end_vert; v++) {
                             RAST_DEV_DEBUG_ASSERT(bdata.vertices.size());
@@ -3740,7 +3740,7 @@ void C_PREAMBLE::_translate_batches_to_larger_FVF(
                                 );
                             RAST_DEBUG_ASSERT(cv);
                             cv->pos = bv.pos;
-                            cv->uv = bv.uv;
+                            cv->uv  = bv.uv;
                             cv->col = source_batch.color;
 
                             if (INCLUDE_LIGHT_ANGLES) {
@@ -3789,7 +3789,7 @@ void C_PREAMBLE::_translate_batches_to_larger_FVF(
                         source_batch.first_command + source_batch.num_commands;
                     if (source_last_command == dest_batch->first_command) {
                         dest_batch->num_commands += source_batch.num_commands;
-                        needs_new_batch = false;
+                        needs_new_batch           = false;
                     } // if the commands line up exactly
                 }
             } // if both batches are the same type
@@ -3805,8 +3805,8 @@ void C_PREAMBLE::_translate_batches_to_larger_FVF(
             // create the colored verts (only if not default)
             if (source_batch.type != RasterizerStorageCommon::BT_DEFAULT) {
                 int first_vert = source_batch.first_vert;
-                int num_verts = source_batch.get_num_verts();
-                int end_vert = first_vert + num_verts;
+                int num_verts  = source_batch.get_num_verts();
+                int end_vert   = first_vert + num_verts;
 
                 for (int v = first_vert; v < end_vert; v++) {
                     RAST_DEV_DEBUG_ASSERT(bdata.vertices.size());
@@ -3815,7 +3815,7 @@ void C_PREAMBLE::_translate_batches_to_larger_FVF(
                         (BATCH_VERTEX_TYPE*)bdata.unit_vertices.request();
                     RAST_DEBUG_ASSERT(cv);
                     cv->pos = bv.pos;
-                    cv->uv = bv.uv;
+                    cv->uv  = bv.uv;
 
                     // polys are special, they can have per vertex colors
                     if (!include_poly_color) {
@@ -3844,13 +3844,13 @@ void C_PREAMBLE::_translate_batches_to_larger_FVF(
                     if (INCLUDE_MODULATE) {
                         RAST_DEV_DEBUG_ASSERT(bdata.vertex_modulates.size());
                         BatchVertexModulated* mv = (BatchVertexModulated*)cv;
-                        mv->modulate = *source_vertex_modulates++;
+                        mv->modulate             = *source_vertex_modulates++;
                     } // including modulate
 
                     if (INCLUDE_LARGE) {
                         RAST_DEV_DEBUG_ASSERT(bdata.vertex_transforms.size());
                         BatchVertexLarge* lv = (BatchVertexLarge*)cv;
-                        lv->transform = *source_vertex_transforms++;
+                        lv->transform        = *source_vertex_transforms++;
                     } // if including large
                 }
             }

@@ -97,8 +97,8 @@ void Camera2D::_setup_viewport() {
         viewport = get_viewport();
     }
 
-    RID vp = viewport->get_viewport_rid();
-    group_name = "__cameras_" + itos(vp.get_id());
+    RID vp            = viewport->get_viewport_rid();
+    group_name        = "__cameras_" + itos(vp.get_id());
     canvas_group_name = "__cameras_c" + itos(canvas.get_id());
     add_to_group(group_name);
     add_to_group(canvas_group_name);
@@ -113,7 +113,7 @@ void Camera2D::set_zoom(const Vector2& p_zoom) {
         "Zoom level must be different from 0 (can be negative)."
     );
 
-    zoom = p_zoom;
+    zoom                           = p_zoom;
     Point2 old_smoothed_camera_pos = smoothed_camera_pos;
     _update_scroll();
     smoothed_camera_pos = old_smoothed_camera_pos;
@@ -238,7 +238,7 @@ Transform2D Camera2D::get_camera_transform() {
 
     } else {
         ret_camera_pos = smoothed_camera_pos = camera_pos = new_camera_pos;
-        first = false;
+        first                                             = false;
     }
 
     Point2 screen_offset =
@@ -468,7 +468,7 @@ void Camera2D::_notification(int p_what) {
 }
 
 void Camera2D::set_offset(const Vector2& p_offset) {
-    offset = p_offset;
+    offset                         = p_offset;
     Point2 old_smoothed_camera_pos = smoothed_camera_pos;
     _update_scroll();
     smoothed_camera_pos = old_smoothed_camera_pos;
@@ -488,7 +488,7 @@ Camera2D::AnchorMode Camera2D::get_anchor_mode() const {
 }
 
 void Camera2D::set_rotating(bool p_rotating) {
-    rotating = p_rotating;
+    rotating                       = p_rotating;
     Point2 old_smoothed_camera_pos = smoothed_camera_pos;
     _update_scroll();
     smoothed_camera_pos = old_smoothed_camera_pos;
@@ -666,8 +666,8 @@ bool Camera2D::is_v_drag_enabled() const {
 }
 
 void Camera2D::set_v_offset(float p_offset) {
-    v_ofs = p_offset;
-    v_offset_changed = true;
+    v_ofs                          = p_offset;
+    v_offset_changed               = true;
     Point2 old_smoothed_camera_pos = smoothed_camera_pos;
     _update_scroll();
     smoothed_camera_pos = old_smoothed_camera_pos;
@@ -678,8 +678,8 @@ float Camera2D::get_v_offset() const {
 }
 
 void Camera2D::set_h_offset(float p_offset) {
-    h_ofs = p_offset;
-    h_offset_changed = true;
+    h_ofs                          = p_offset;
+    h_offset_changed               = true;
     Point2 old_smoothed_camera_pos = smoothed_camera_pos;
     _update_scroll();
     smoothed_camera_pos = old_smoothed_camera_pos;
@@ -1145,40 +1145,40 @@ void Camera2D::_bind_methods() {
 }
 
 Camera2D::Camera2D() {
-    anchor_mode = ANCHOR_MODE_DRAG_CENTER;
-    rotating = false;
-    current = false;
-    limit[MARGIN_LEFT] = -10000000;
-    limit[MARGIN_TOP] = -10000000;
-    limit[MARGIN_RIGHT] = 10000000;
+    anchor_mode          = ANCHOR_MODE_DRAG_CENTER;
+    rotating             = false;
+    current              = false;
+    limit[MARGIN_LEFT]   = -10000000;
+    limit[MARGIN_TOP]    = -10000000;
+    limit[MARGIN_RIGHT]  = 10000000;
     limit[MARGIN_BOTTOM] = 10000000;
 
-    drag_margin[MARGIN_LEFT] = 0.2;
-    drag_margin[MARGIN_TOP] = 0.2;
-    drag_margin[MARGIN_RIGHT] = 0.2;
+    drag_margin[MARGIN_LEFT]   = 0.2;
+    drag_margin[MARGIN_TOP]    = 0.2;
+    drag_margin[MARGIN_RIGHT]  = 0.2;
     drag_margin[MARGIN_BOTTOM] = 0.2;
-    camera_pos = Vector2();
-    first = true;
-    smoothing_enabled = false;
-    smoothing_active = false;
-    limit_smoothing_enabled = false;
+    camera_pos                 = Vector2();
+    first                      = true;
+    smoothing_enabled          = false;
+    smoothing_active           = false;
+    limit_smoothing_enabled    = false;
 
-    viewport = nullptr;
-    custom_viewport = nullptr;
+    viewport           = nullptr;
+    custom_viewport    = nullptr;
     custom_viewport_id = 0;
-    process_mode = CAMERA2D_PROCESS_IDLE;
+    process_mode       = CAMERA2D_PROCESS_IDLE;
 
     smoothing = 5.0;
-    zoom = Vector2(1, 1);
+    zoom      = Vector2(1, 1);
 
     screen_drawing_enabled = true;
-    limit_drawing_enabled = false;
+    limit_drawing_enabled  = false;
     margin_drawing_enabled = false;
 
-    h_drag_enabled = false;
-    v_drag_enabled = false;
-    h_ofs = 0;
-    v_ofs = 0;
+    h_drag_enabled   = false;
+    v_drag_enabled   = false;
+    h_ofs            = 0;
+    v_ofs            = 0;
     h_offset_changed = false;
     v_offset_changed = false;
 

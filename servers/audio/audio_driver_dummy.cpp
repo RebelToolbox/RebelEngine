@@ -34,16 +34,16 @@
 #include "core/project_settings.h"
 
 Error AudioDriverDummy::init() {
-    active = false;
+    active        = false;
     thread_exited = false;
-    exit_thread = false;
-    samples_in = nullptr;
+    exit_thread   = false;
+    samples_in    = nullptr;
 
-    mix_rate = GLOBAL_GET("audio/mix_rate");
+    mix_rate     = GLOBAL_GET("audio/mix_rate");
     speaker_mode = SPEAKER_MODE_STEREO;
-    channels = 2;
+    channels     = 2;
 
-    int latency = GLOBAL_GET("audio/output_latency");
+    int latency   = GLOBAL_GET("audio/output_latency");
     buffer_frames = closest_power_of_2(latency * mix_rate / 1000);
 
     samples_in = memnew_arr(int32_t, buffer_frames * channels);

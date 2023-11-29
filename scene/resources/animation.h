@@ -73,9 +73,9 @@ private:
 
         Track() {
             interpolation = INTERPOLATION_LINEAR;
-            imported = false;
-            loop_wrap = true;
-            enabled = true;
+            imported      = false;
+            loop_wrap     = true;
+            enabled       = true;
         }
 
         virtual ~Track() {}
@@ -120,7 +120,7 @@ private:
         Vector<TKey<Variant>> values;
 
         ValueTrack() {
-            type = TYPE_VALUE;
+            type        = TYPE_VALUE;
             update_mode = UPDATE_CONTINUOUS;
         }
     };
@@ -165,7 +165,7 @@ private:
 
         AudioKey() {
             start_offset = 0;
-            end_offset = 0;
+            end_offset   = 0;
         }
     };
 
@@ -346,8 +346,8 @@ private:
     );
     void _transform_track_optimize(
         int p_idx,
-        float p_allowed_linear_err = 0.05,
-        float p_allowed_angular_err = 0.01,
+        float p_allowed_linear_err    = 0.05,
+        float p_allowed_angular_err   = 0.01,
         float p_max_optimizable_angle = Math_PI * 0.125
     );
 
@@ -410,7 +410,7 @@ public:
         int p_track,
         float p_time,
         const Vector3& p_loc,
-        const Quat& p_rot = Quat(),
+        const Quat& p_rot      = Quat(),
         const Vector3& p_scale = Vector3()
     );
     Error transform_track_get_key(
@@ -452,7 +452,7 @@ public:
         float p_time,
         const RES& p_stream,
         float p_start_offset = 0,
-        float p_end_offset = 0
+        float p_end_offset   = 0
     );
     void audio_track_set_key_stream(
         int p_track,
@@ -532,8 +532,8 @@ public:
     void clear();
 
     void optimize(
-        float p_allowed_linear_err = 0.05,
-        float p_allowed_angular_err = 0.01,
+        float p_allowed_linear_err    = 0.05,
+        float p_allowed_angular_err   = 0.01,
         float p_max_optimizable_angle = Math_PI * 0.125
     );
 

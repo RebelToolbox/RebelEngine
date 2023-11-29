@@ -34,7 +34,7 @@
 #include "core/io/marshalls.h"
 
 Variant PackedDataContainer::getvar(const Variant& p_key, bool* r_valid) const {
-    bool err = false;
+    bool err    = false;
     Variant ret = _key_at_ofs(0, p_key, err);
     if (r_valid) {
         *r_valid = !err;
@@ -50,7 +50,7 @@ Variant PackedDataContainer::_iter_init_ofs(
     const Array& p_iter,
     uint32_t p_offset
 ) {
-    Array ref = p_iter;
+    Array ref     = p_iter;
     uint32_t size = _size(p_offset);
     if (size == 0 || ref.size() != 1) {
         return false;
@@ -65,7 +65,7 @@ Variant PackedDataContainer::_iter_next_ofs(
     uint32_t p_offset
 ) {
     Array ref = p_iter;
-    int size = _size(p_offset);
+    int size  = _size(p_offset);
     if (ref.size() != 1) {
         return false;
     }
@@ -73,8 +73,8 @@ Variant PackedDataContainer::_iter_next_ofs(
     if (pos < 0 || pos >= size) {
         return false;
     }
-    pos += 1;
-    ref[0] = pos;
+    pos    += 1;
+    ref[0]  = pos;
     return pos != size;
 }
 
@@ -83,14 +83,14 @@ Variant PackedDataContainer::_iter_get_ofs(
     uint32_t p_offset
 ) {
     int size = _size(p_offset);
-    int pos = p_iter;
+    int pos  = p_iter;
     if (pos < 0 || pos >= size) {
         return Variant();
     }
 
     PoolVector<uint8_t>::Read rd = data.read();
-    const uint8_t* r = &rd[p_offset];
-    uint32_t type = decode_uint32(r);
+    const uint8_t* r             = &rd[p_offset];
+    uint32_t type                = decode_uint32(r);
 
     bool err = false;
     if (type == TYPE_ARRAY) {
@@ -118,7 +118,7 @@ Variant PackedDataContainer::_get_at_ofs(
         Ref<PackedDataContainer> pdc =
             Ref<PackedDataContainer>((PackedDataContainer*)this);
 
-        pdcr->from = pdc;
+        pdcr->from   = pdc;
         pdcr->offset = p_ofs;
         return pdcr;
     } else {
@@ -143,7 +143,7 @@ uint32_t PackedDataContainer::_type_at_ofs(uint32_t p_ofs) const {
     PoolVector<uint8_t>::Read rd = data.read();
     ERR_FAIL_COND_V(!rd.ptr(), 0);
     const uint8_t* r = &rd[p_ofs];
-    uint32_t type = decode_uint32(r);
+    uint32_t type    = decode_uint32(r);
 
     return type;
 };
@@ -153,7 +153,7 @@ int PackedDataContainer::_size(uint32_t p_ofs) const {
     PoolVector<uint8_t>::Read rd = data.read();
     ERR_FAIL_COND_V(!rd.ptr(), 0);
     const uint8_t* r = &rd[p_ofs];
-    uint32_t type = decode_uint32(r);
+    uint32_t type    = decode_uint32(r);
 
     if (type == TYPE_ARRAY) {
         uint32_t len = decode_uint32(r + 4);
@@ -179,7 +179,7 @@ Variant PackedDataContainer::_key_at_ofs(
         ERR_FAIL_COND_V(!rd.ptr(), Variant());
     }
     const uint8_t* r = &rd[p_ofs];
-    uint32_t type = decode_uint32(r);
+    uint32_t type    = decode_uint32(r);
 
     if (type == TYPE_ARRAY) {
         if (p_key.is_num()) {
@@ -199,7 +199,7 @@ Variant PackedDataContainer::_key_at_ofs(
 
     } else if (type == TYPE_DICT) {
         uint32_t hash = p_key.hash();
-        uint32_t len = decode_uint32(r + 4);
+        uint32_t len  = decode_uint32(r + 4);
 
         bool found = false;
         for (uint32_t i = 0; i < len; i++) {
@@ -292,7 +292,7 @@ uint32_t PackedDataContainer::_pack(
             Dictionary d = p_data;
             // size is known, use sort
             uint32_t pos = tmpdata.size();
-            int len = d.size();
+            int len      = d.size();
             tmpdata.resize(tmpdata.size() + len * 12 + 8);
             encode_uint32(TYPE_DICT, &tmpdata.write[pos + 0]);
             encode_uint32(len, &tmpdata.write[pos + 4]);
@@ -304,7 +304,7 @@ uint32_t PackedDataContainer::_pack(
             for (List<Variant>::Element* E = keys.front(); E; E = E->next()) {
                 DictKey dk;
                 dk.hash = E->get().hash();
-                dk.key = E->get();
+                dk.key  = E->get();
                 sortk.push_back(dk);
             }
 
@@ -327,10 +327,10 @@ uint32_t PackedDataContainer::_pack(
 
         } break;
         case Variant::ARRAY: {
-            Array a = p_data;
+            Array a      = p_data;
             // size is known, use sort
             uint32_t pos = tmpdata.size();
-            int len = a.size();
+            int len      = a.size();
             tmpdata.resize(tmpdata.size() + len * 4 + 8);
             encode_uint32(TYPE_ARRAY, &tmpdata.write[pos + 0]);
             encode_uint32(len, &tmpdata.write[pos + 4]);
@@ -364,7 +364,7 @@ Error PackedDataContainer::pack(const Variant& p_data) {
 }
 
 void PackedDataContainer::_set_data(const PoolVector<uint8_t>& p_data) {
-    data = p_data;
+    data    = p_data;
     datalen = data.size();
 }
 
@@ -459,7 +459,7 @@ void PackedDataContainerRef::_bind_methods() {
 
 Variant PackedDataContainerRef::getvar(const Variant& p_key, bool* r_valid)
     const {
-    bool err = false;
+    bool err    = false;
     Variant ret = from->_key_at_ofs(offset, p_key, err);
     if (r_valid) {
         *r_valid = !err;

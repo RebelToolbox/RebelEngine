@@ -58,10 +58,10 @@ GraphEditMinimap::GraphEditMinimap(GraphEdit* p_edit) {
     ge = p_edit;
 
     graph_proportions = Vector2(1, 1);
-    graph_padding = Vector2(0, 0);
-    camera_position = Vector2(100, 50);
-    camera_size = Vector2(200, 200);
-    minimap_padding = Vector2(MINIMAP_PADDING, MINIMAP_PADDING);
+    graph_padding     = Vector2(0, 0);
+    camera_position   = Vector2(100, 50);
+    camera_size       = Vector2(200, 200);
+    minimap_padding   = Vector2(MINIMAP_PADDING, MINIMAP_PADDING);
     minimap_offset =
         minimap_padding + _convert_from_graph_position(graph_padding);
 
@@ -71,25 +71,25 @@ GraphEditMinimap::GraphEditMinimap(GraphEdit* p_edit) {
 
 void GraphEditMinimap::update_minimap() {
     Vector2 graph_offset = _get_graph_offset();
-    Vector2 graph_size = _get_graph_size();
+    Vector2 graph_size   = _get_graph_size();
 
     camera_position = ge->get_scroll_ofs() - graph_offset;
-    camera_size = ge->get_size();
+    camera_size     = ge->get_size();
 
     Vector2 render_size = _get_render_size();
-    float target_ratio = render_size.x / render_size.y;
-    float graph_ratio = graph_size.x / graph_size.y;
+    float target_ratio  = render_size.x / render_size.y;
+    float graph_ratio   = graph_size.x / graph_size.y;
 
     graph_proportions = graph_size;
-    graph_padding = Vector2(0, 0);
+    graph_padding     = Vector2(0, 0);
     if (graph_ratio > target_ratio) {
         graph_proportions.x = graph_size.x;
         graph_proportions.y = graph_size.x / target_ratio;
-        graph_padding.y = Math::abs(graph_size.y - graph_proportions.y) / 2;
+        graph_padding.y     = Math::abs(graph_size.y - graph_proportions.y) / 2;
     } else {
         graph_proportions.x = graph_size.y * target_ratio;
         graph_proportions.y = graph_size.y;
-        graph_padding.x = Math::abs(graph_size.x - graph_proportions.x) / 2;
+        graph_padding.x     = Math::abs(graph_size.x - graph_proportions.x) / 2;
     }
 
     // This centers minimap inside the minimap rectangle.
@@ -136,7 +136,7 @@ Vector2 GraphEditMinimap::_get_graph_size() {
 Vector2 GraphEditMinimap::_convert_from_graph_position(const Vector2& p_position
 ) {
     Vector2 map_position = Vector2(0, 0);
-    Vector2 render_size = _get_render_size();
+    Vector2 render_size  = _get_render_size();
 
     map_position.x = p_position.x * render_size.x / graph_proportions.x;
     map_position.y = p_position.y * render_size.y / graph_proportions.y;
@@ -147,7 +147,7 @@ Vector2 GraphEditMinimap::_convert_from_graph_position(const Vector2& p_position
 Vector2 GraphEditMinimap::_convert_to_graph_position(const Vector2& p_position
 ) {
     Vector2 graph_position = Vector2(0, 0);
-    Vector2 render_size = _get_render_size();
+    Vector2 render_size    = _get_render_size();
 
     graph_position.x = p_position.x * graph_proportions.x / render_size.x;
     graph_position.y = p_position.y * graph_proportions.y / render_size.y;
@@ -222,11 +222,11 @@ Error GraphEdit::connect_node(
         return OK;
     }
     Connection c;
-    c.from = p_from;
+    c.from      = p_from;
     c.from_port = p_from_port;
-    c.to = p_to;
-    c.to_port = p_to_port;
-    c.activity = 0;
+    c.to        = p_to;
+    c.to_port   = p_to_port;
+    c.activity  = 0;
     connections.push_back(c);
     top_layer->update();
     minimap->update();
@@ -315,8 +315,8 @@ void GraphEdit::_update_scroll_offset() {
             continue;
         }
 
-        Point2 pos = gn->get_offset() * zoom;
-        pos -= Point2(h_scroll->get_value(), v_scroll->get_value());
+        Point2 pos  = gn->get_offset() * zoom;
+        pos        -= Point2(h_scroll->get_value(), v_scroll->get_value());
         gn->set_position(pos);
         if (gn->get_scale() != Vector2(zoom, zoom)) {
             gn->set_scale(Vector2(zoom, zoom));
@@ -348,12 +348,12 @@ void GraphEdit::_update_scroll() {
 
         Rect2 r;
         r.position = gn->get_offset() * zoom;
-        r.size = gn->get_size() * zoom;
-        screen = screen.merge(r);
+        r.size     = gn->get_size() * zoom;
+        screen     = screen.merge(r);
     }
 
     screen.position -= get_size();
-    screen.size += get_size() * 2.0;
+    screen.size     += get_size() * 2.0;
 
     h_scroll->set_min(screen.position.x);
     h_scroll->set_max(screen.position.x + screen.size.x);
@@ -467,7 +467,7 @@ void GraphEdit::remove_child_notify(Node* p_child) {
 
     if (p_child == top_layer) {
         top_layer = nullptr;
-        minimap = nullptr;
+        minimap   = nullptr;
     } else if (p_child == connections_layer) {
         connections_layer = nullptr;
     }
@@ -531,10 +531,10 @@ void GraphEdit::_notification(int p_what) {
             int snap = get_snap();
 
             Vector2 offset = get_scroll_ofs() / zoom;
-            Size2 size = get_size() / zoom;
+            Size2 size     = get_size() / zoom;
 
             Point2i from = (offset / float(snap)).floor();
-            Point2i len = (size / float(snap)).floor() + Vector2(1, 1);
+            Point2i len  = (size / float(snap)).floor() + Vector2(1, 1);
 
             Color grid_minor = get_color("grid_minor");
             Color grid_major = get_color("grid_major");
@@ -583,7 +583,7 @@ void GraphEdit::_notification(int p_what) {
 }
 
 bool GraphEdit::_filter_input(const Point2& p_point) {
-    Ref<Texture> port = get_icon("port", "GraphNode");
+    Ref<Texture> port  = get_icon("port", "GraphNode");
     Vector2i port_size = Vector2i(port->get_width(), port->get_height());
 
     for (int i = get_child_count() - 1; i >= 0; i--) {
@@ -616,11 +616,11 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
     Ref<InputEventMouseButton> mb = p_ev;
     if (mb.is_valid() && mb->get_button_index() == BUTTON_LEFT
         && mb->is_pressed()) {
-        Ref<Texture> port = get_icon("port", "GraphNode");
+        Ref<Texture> port  = get_icon("port", "GraphNode");
         Vector2i port_size = Vector2i(port->get_width(), port->get_height());
 
         connecting_valid = false;
-        click_pos = mb->get_position() / zoom;
+        click_pos        = mb->get_position() / zoom;
         for (int i = get_child_count() - 1; i >= 0; i--) {
             GraphNode* gn = Object::cast_to<GraphNode>(get_child(i));
             if (!gn) {
@@ -642,9 +642,9 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                                 && E->get().from_port == j) {
                                 Node* to = get_node(String(E->get().to));
                                 if (Object::cast_to<GraphNode>(to)) {
-                                    connecting_from = E->get().to;
+                                    connecting_from  = E->get().to;
                                     connecting_index = E->get().to_port;
-                                    connecting_out = false;
+                                    connecting_out   = false;
                                     connecting_type =
                                         Object::cast_to<GraphNode>(to)
                                             ->get_connection_input_type(
@@ -656,7 +656,7 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                                                 E->get().to_port
                                             );
                                     connecting_target = false;
-                                    connecting_to = pos;
+                                    connecting_to     = pos;
                                     just_disconnected = true;
 
                                     emit_signal(
@@ -677,14 +677,14 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                         }
                     }
 
-                    connecting = true;
-                    connecting_from = gn->get_name();
-                    connecting_index = j;
-                    connecting_out = true;
-                    connecting_type = gn->get_connection_output_type(j);
-                    connecting_color = gn->get_connection_output_color(j);
+                    connecting        = true;
+                    connecting_from   = gn->get_name();
+                    connecting_index  = j;
+                    connecting_out    = true;
+                    connecting_type   = gn->get_connection_output_type(j);
+                    connecting_color  = gn->get_connection_output_color(j);
                     connecting_target = false;
-                    connecting_to = pos;
+                    connecting_to     = pos;
                     just_disconnected = false;
                     return;
                 }
@@ -706,9 +706,9 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                                 && E->get().to_port == j) {
                                 Node* fr = get_node(String(E->get().from));
                                 if (Object::cast_to<GraphNode>(fr)) {
-                                    connecting_from = E->get().from;
+                                    connecting_from  = E->get().from;
                                     connecting_index = E->get().from_port;
-                                    connecting_out = true;
+                                    connecting_out   = true;
                                     connecting_type =
                                         Object::cast_to<GraphNode>(fr)
                                             ->get_connection_output_type(
@@ -720,7 +720,7 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                                                 E->get().from_port
                                             );
                                     connecting_target = false;
-                                    connecting_to = pos;
+                                    connecting_to     = pos;
                                     just_disconnected = true;
 
                                     emit_signal(
@@ -741,14 +741,14 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                         }
                     }
 
-                    connecting = true;
-                    connecting_from = gn->get_name();
-                    connecting_index = j;
-                    connecting_out = false;
-                    connecting_type = gn->get_connection_input_type(j);
-                    connecting_color = gn->get_connection_input_color(j);
+                    connecting        = true;
+                    connecting_from   = gn->get_name();
+                    connecting_index  = j;
+                    connecting_out    = false;
+                    connecting_type   = gn->get_connection_input_type(j);
+                    connecting_color  = gn->get_connection_input_color(j);
                     connecting_target = false;
-                    connecting_to = pos;
+                    connecting_to     = pos;
                     just_disconnected = false;
 
                     return;
@@ -759,7 +759,7 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
 
     Ref<InputEventMouseMotion> mm = p_ev;
     if (mm.is_valid() && connecting) {
-        connecting_to = mm->get_position();
+        connecting_to     = mm->get_position();
         connecting_target = false;
         top_layer->update();
         minimap->update();
@@ -794,9 +794,9 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                                 port_size,
                                 false
                             )) {
-                            connecting_target = true;
-                            connecting_to = pos;
-                            connecting_target_to = gn->get_name();
+                            connecting_target       = true;
+                            connecting_to           = pos;
+                            connecting_target_to    = gn->get_name();
                             connecting_target_index = j;
                             return;
                         }
@@ -816,9 +816,9 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                                 port_size,
                                 true
                             )) {
-                            connecting_target = true;
-                            connecting_to = pos;
-                            connecting_target_to = gn->get_name();
+                            connecting_target       = true;
+                            connecting_to           = pos;
+                            connecting_target_to    = gn->get_name();
                             connecting_target_index = j;
                             return;
                         }
@@ -832,10 +832,10 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
         && !mb->is_pressed()) {
         if (connecting_valid) {
             if (connecting && connecting_target) {
-                String from = connecting_from;
+                String from   = connecting_from;
                 int from_slot = connecting_index;
-                String to = connecting_target_to;
-                int to_slot = connecting_target_index;
+                String to     = connecting_target_to;
+                int to_slot   = connecting_target_index;
 
                 if (!connecting_out) {
                     SWAP(from, to);
@@ -844,7 +844,7 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                 emit_signal("connection_request", from, from_slot, to, to_slot);
 
             } else if (!just_disconnected) {
-                String from = connecting_from;
+                String from   = connecting_from;
                 int from_slot = connecting_index;
                 Vector2 ofs =
                     Vector2(mb->get_position().x, mb->get_position().y);
@@ -933,7 +933,7 @@ bool GraphEdit::is_in_hot_zone(
 
         // To prevent intersections with other nodes.
         rect.position *= zoom;
-        rect.size *= zoom;
+        rect.size     *= zoom;
 
         if (rect.has_point(p_mouse_pos)) {
             // check sub-controls
@@ -968,11 +968,11 @@ static _FORCE_INLINE_ Vector2 _bezier_interp(
     Vector2 end
 ) {
     /* Formula from Wikipedia article on Bezier curves. */
-    real_t omt = (1.0 - t);
+    real_t omt  = (1.0 - t);
     real_t omt2 = omt * omt;
     real_t omt3 = omt2 * omt;
-    real_t t2 = t * t;
-    real_t t3 = t2 * t;
+    real_t t2   = t * t;
+    real_t t3   = t2 * t;
 
     return start * omt3 + control_1 * omt2 * t * 3.0
          + control_2 * omt * t2 * 3.0 + end * t3;
@@ -995,14 +995,14 @@ void GraphEdit::_bake_segment2d(
     const Color& p_to_color,
     int& lines
 ) const {
-    float mp = p_begin + (p_end - p_begin) * 0.5;
+    float mp    = p_begin + (p_end - p_begin) * 0.5;
     Vector2 beg = _bezier_interp(p_begin, p_a, p_a + p_out, p_b + p_in, p_b);
     Vector2 mid = _bezier_interp(mp, p_a, p_a + p_out, p_b + p_in, p_b);
     Vector2 end = _bezier_interp(p_end, p_a, p_a + p_out, p_b + p_in, p_b);
 
     Vector2 na = (mid - beg).normalized();
     Vector2 nb = (end - mid).normalized();
-    float dp = Math::rad2deg(Math::acos(na.dot(nb)));
+    float dp   = Math::rad2deg(Math::acos(na.dot(nb)));
 
     if (p_depth >= p_min_depth && (dp < p_tol || p_depth >= p_max_depth)) {
         points.push_back((beg + end) * 0.5);
@@ -1058,7 +1058,7 @@ void GraphEdit::_draw_cos_line(
     // cubic bezier code
     float diff = p_to.x - p_from.x;
     float cp_offset;
-    int cp_len = get_constant("bezier_len_pos") * p_bezier_ratio;
+    int cp_len     = get_constant("bezier_len_pos") * p_bezier_ratio;
     int cp_neg_len = get_constant("bezier_len_neg") * p_bezier_ratio;
 
     if (diff > 0) {
@@ -1145,7 +1145,7 @@ void GraphEdit::_connections_layer_draw() {
         Vector2 frompos =
             gfrom->get_connection_output_position(E->get().from_port)
             + gfrom->get_offset() * zoom;
-        Color color = gfrom->get_connection_output_color(E->get().from_port);
+        Color color   = gfrom->get_connection_output_color(E->get().from_port);
         Vector2 topos = gto->get_connection_input_position(E->get().to_port)
                       + gto->get_offset() * zoom;
         Color tocolor = gto->get_connection_input_color(E->get().to_port);
@@ -1218,7 +1218,7 @@ void GraphEdit::_minimap_draw() {
     Rect2 minimap_rect = Rect2(Point2(), minimap->get_size());
     minimap->draw_style_box(minimap->get_stylebox("bg"), minimap_rect);
 
-    Vector2 graph_offset = minimap->_get_graph_offset();
+    Vector2 graph_offset   = minimap->_get_graph_offset();
     Vector2 minimap_offset = minimap->minimap_offset;
 
     // Draw comment graph nodes.
@@ -1348,7 +1348,7 @@ void GraphEdit::_minimap_draw() {
 
     // Draw the resizer control.
     Ref<Texture> resizer = minimap->get_icon("resizer");
-    Color resizer_color = minimap->get_color("resizer_color");
+    Color resizer_color  = minimap->get_color("resizer_color");
     minimap->draw_texture(resizer, Point2(), resizer_color);
 }
 
@@ -1379,8 +1379,8 @@ void GraphEdit::_gui_input(const Ref<InputEvent>& p_ev) {
             moving_selection = true;
         }
 
-        just_selected = true;
-        drag_accum += mm->get_relative();
+        just_selected  = true;
+        drag_accum    += mm->get_relative();
         for (int i = get_child_count() - 1; i >= 0; i--) {
             GraphNode* gn = Object::cast_to<GraphNode>(get_child(i));
             if (gn && gn->is_selected()) {
@@ -1392,7 +1392,7 @@ void GraphEdit::_gui_input(const Ref<InputEvent>& p_ev) {
                 if (is_using_snap()
                     ^ Input::get_singleton()->is_key_pressed(KEY_CONTROL)) {
                     const int snap = get_snap();
-                    pos = pos.snapped(Vector2(snap, snap));
+                    pos            = pos.snapped(Vector2(snap, snap));
                 }
 
                 gn->set_offset(pos);
@@ -1416,9 +1416,9 @@ void GraphEdit::_gui_input(const Ref<InputEvent>& p_ev) {
                 continue;
             }
 
-            Rect2 r = gn->get_rect();
-            r.size *= zoom;
-            bool in_box = r.intersects(box_selecting_rect);
+            Rect2 r      = gn->get_rect();
+            r.size      *= zoom;
+            bool in_box  = r.intersects(box_selecting_rect);
 
             if (in_box) {
                 if (!gn->is_selected() && box_selection_mode_additive) {
@@ -1483,8 +1483,8 @@ void GraphEdit::_gui_input(const Ref<InputEvent>& p_ev) {
                     GraphNode* gn = Object::cast_to<GraphNode>(get_child(i));
 
                     if (gn) {
-                        Rect2 r = gn->get_rect();
-                        r.size *= zoom;
+                        Rect2 r  = gn->get_rect();
+                        r.size  *= zoom;
                         if (r.has_point(b->get_position())) {
                             emit_signal("node_unselected", gn);
                             gn->set_selected(false);
@@ -1542,8 +1542,8 @@ void GraphEdit::_gui_input(const Ref<InputEvent>& p_ev) {
                     return;
                 }
 
-                dragging = true;
-                drag_accum = Vector2();
+                dragging      = true;
+                drag_accum    = Vector2();
                 just_selected = !gn->is_selected();
                 if (!gn->is_selected()
                     && !Input::get_singleton()->is_key_pressed(KEY_CONTROL)) {
@@ -1582,7 +1582,7 @@ void GraphEdit::_gui_input(const Ref<InputEvent>& p_ev) {
                     return;
                 }
 
-                box_selecting = true;
+                box_selecting      = true;
                 box_selecting_from = b->get_position();
                 if (b->get_control()) {
                     box_selection_mode_additive = true;
@@ -1628,7 +1628,7 @@ void GraphEdit::_gui_input(const Ref<InputEvent>& p_ev) {
 
         if (b->get_button_index() == BUTTON_LEFT && !b->is_pressed()
             && box_selecting) {
-            box_selecting = false;
+            box_selecting      = false;
             box_selecting_rect = Rect2();
             previous_selected.clear();
             top_layer->update();
@@ -1866,10 +1866,10 @@ Array GraphEdit::_get_connection_list() const {
     Array arr;
     for (List<Connection>::Element* E = conns.front(); E; E = E->next()) {
         Dictionary d;
-        d["from"] = E->get().from;
+        d["from"]      = E->get().from;
         d["from_port"] = E->get().from_port;
-        d["to"] = E->get().to;
-        d["to_port"] = E->get().to_port;
+        d["to"]        = E->get().to;
+        d["to_port"]   = E->get().to_port;
         arr.push_back(d);
     }
     return arr;
@@ -2404,7 +2404,7 @@ GraphEdit::GraphEdit() {
     minimap_button->set_focus_mode(FOCUS_NONE);
     zoom_hb->add_child(minimap_button);
 
-    Vector2 minimap_size = Vector2(240, 160);
+    Vector2 minimap_size  = Vector2(240, 160);
     float minimap_opacity = 0.65;
 
     minimap = memnew(GraphEditMinimap(this));

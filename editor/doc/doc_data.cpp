@@ -43,7 +43,7 @@
 
 static String _get_indent(const String& p_text) {
     String indent;
-    bool has_text = false;
+    bool has_text  = false;
     int line_start = 0;
 
     for (int i = 0; i < p_text.length(); i++) {
@@ -52,7 +52,7 @@ static String _get_indent(const String& p_text) {
             line_start = i + 1;
         } else if (c > 32) {
             has_text = true;
-            indent = p_text.substr(line_start, i - line_start);
+            indent   = p_text.substr(line_start, i - line_start);
             break; // Indentation of the first line that has text.
         }
     }
@@ -63,7 +63,7 @@ static String _get_indent(const String& p_text) {
 }
 
 static String _translate_doc_string(const String& p_text) {
-    const String indent = _get_indent(p_text);
+    const String indent  = _get_indent(p_text);
     const String message = p_text.dedent().strip_edges();
     const String translated =
         TranslationServer::get_singleton()->doc_translate(message);
@@ -74,7 +74,7 @@ static String _translate_doc_string(const String& p_text) {
 
 void DocData::merge_from(const DocData& p_data) {
     for (Map<String, ClassDoc>::Element* E = class_list.front(); E;
-         E = E->next()) {
+         E                                 = E->next()) {
         ClassDoc& c = E->get();
 
         if (!p_data.class_list.has(c.name)) {
@@ -83,9 +83,9 @@ void DocData::merge_from(const DocData& p_data) {
 
         const ClassDoc& cf = p_data.class_list[c.name];
 
-        c.description = cf.description;
+        c.description       = cf.description;
         c.brief_description = cf.brief_description;
-        c.tutorials = cf.tutorials;
+        c.tutorials         = cf.tutorials;
 
         for (int i = 0; i < c.methods.size(); i++) {
             MethodDoc& m = c.methods.write[i];
@@ -197,7 +197,7 @@ void DocData::merge_from(const DocData& p_data) {
 
 void DocData::remove_from(const DocData& p_data) {
     for (Map<String, ClassDoc>::Element* E = p_data.class_list.front(); E;
-         E = E->next()) {
+         E                                 = E->next()) {
         if (class_list.has(E->key())) {
             class_list.erase(E->key());
         }
@@ -280,7 +280,7 @@ static Variant get_documentation_default_value(
             &inheriting_classes
         );
         for (List<StringName>::Element* E2 = inheriting_classes.front(); E2;
-             E2 = E2->next()) {
+             E2                            = E2->next()) {
             if (ClassDB::can_instance(E2->get())) {
                 default_value = ClassDB::class_get_default_property_value(
                     E2->get(),
@@ -324,9 +324,9 @@ void DocData::generate(bool p_basic_types) {
         }
 
         class_list[cname] = ClassDoc();
-        ClassDoc& c = class_list[cname];
-        c.name = cname;
-        c.inherits = ClassDB::get_parent_class(name);
+        ClassDoc& c       = class_list[cname];
+        c.name            = cname;
+        c.inherits        = ClassDB::get_parent_class(name);
 
         List<PropertyInfo> properties;
         List<PropertyInfo> own_properties;
@@ -341,11 +341,11 @@ void DocData::generate(bool p_basic_types) {
 
         List<PropertyInfo>::Element* EO = own_properties.front();
         for (List<PropertyInfo>::Element* E = properties.front(); E;
-             E = E->next()) {
+             E                              = E->next()) {
             bool inherited = EO == nullptr;
             if (EO && EO->get() == E->get()) {
                 inherited = false;
-                EO = EO->next();
+                EO        = EO->next();
             }
 
             if (E->get().usage & PROPERTY_USAGE_GROUP
@@ -426,7 +426,7 @@ void DocData::generate(bool p_basic_types) {
                     if (retinfo.type == Variant::INT
                         && retinfo.usage & PROPERTY_USAGE_CLASS_IS_ENUM) {
                         prop.enumeration = retinfo.class_name;
-                        prop.type = "int";
+                        prop.type        = "int";
                     } else if (retinfo.class_name != StringName()) {
                         prop.type = retinfo.class_name;
                     } else if (retinfo.hint == PROPERTY_HINT_RESOURCE_TYPE) {
@@ -464,7 +464,7 @@ void DocData::generate(bool p_basic_types) {
         method_list.sort();
 
         for (List<MethodInfo>::Element* E = method_list.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             if (E->get().name == ""
                 || (E->get().name[0] == '_'
                     && !(E->get().flags & METHOD_FLAG_VIRTUAL))) {
@@ -537,7 +537,7 @@ void DocData::generate(bool p_basic_types) {
 
         if (signal_list.size()) {
             for (List<MethodInfo>::Element* EV = signal_list.front(); EV;
-                 EV = EV->next()) {
+                 EV                            = EV->next()) {
                 MethodDoc signal;
                 signal.name = EV->get().name;
                 for (int i = 0; i < EV->get().arguments.size(); i++) {
@@ -556,7 +556,7 @@ void DocData::generate(bool p_basic_types) {
         ClassDB::get_integer_constant_list(name, &constant_list, true);
 
         for (List<String>::Element* E = constant_list.front(); E;
-             E = E->next()) {
+             E                        = E->next()) {
             ConstantDoc constant;
             constant.name = E->get();
             constant.value =
@@ -574,8 +574,8 @@ void DocData::generate(bool p_basic_types) {
             Theme::get_default()->get_color_list(cname, &l);
             for (List<StringName>::Element* E = l.front(); E; E = E->next()) {
                 ThemeItemDoc tid;
-                tid.name = E->get();
-                tid.type = "Color";
+                tid.name      = E->get();
+                tid.type      = "Color";
                 tid.data_type = "color";
                 tid.default_value =
                     Variant(Theme::get_default()->get_color(E->get(), cname))
@@ -587,8 +587,8 @@ void DocData::generate(bool p_basic_types) {
             Theme::get_default()->get_constant_list(cname, &l);
             for (List<StringName>::Element* E = l.front(); E; E = E->next()) {
                 ThemeItemDoc tid;
-                tid.name = E->get();
-                tid.type = "int";
+                tid.name      = E->get();
+                tid.type      = "int";
                 tid.data_type = "constant";
                 tid.default_value =
                     itos(Theme::get_default()->get_constant(E->get(), cname));
@@ -599,8 +599,8 @@ void DocData::generate(bool p_basic_types) {
             Theme::get_default()->get_font_list(cname, &l);
             for (List<StringName>::Element* E = l.front(); E; E = E->next()) {
                 ThemeItemDoc tid;
-                tid.name = E->get();
-                tid.type = "Font";
+                tid.name      = E->get();
+                tid.type      = "Font";
                 tid.data_type = "font";
                 c.theme_properties.push_back(tid);
             }
@@ -609,8 +609,8 @@ void DocData::generate(bool p_basic_types) {
             Theme::get_default()->get_icon_list(cname, &l);
             for (List<StringName>::Element* E = l.front(); E; E = E->next()) {
                 ThemeItemDoc tid;
-                tid.name = E->get();
-                tid.type = "Texture";
+                tid.name      = E->get();
+                tid.type      = "Texture";
                 tid.data_type = "icon";
                 c.theme_properties.push_back(tid);
             }
@@ -619,8 +619,8 @@ void DocData::generate(bool p_basic_types) {
             Theme::get_default()->get_stylebox_list(cname, &l);
             for (List<StringName>::Element* E = l.front(); E; E = E->next()) {
                 ThemeItemDoc tid;
-                tid.name = E->get();
-                tid.type = "StyleBox";
+                tid.name      = E->get();
+                tid.type      = "StyleBox";
                 tid.data_type = "style";
                 c.theme_properties.push_back(tid);
             }
@@ -634,7 +634,7 @@ void DocData::generate(bool p_basic_types) {
     {
         // So we can document the concept of Variant even if it's not a usable
         // class per se.
-        class_list["Variant"] = ClassDoc();
+        class_list["Variant"]      = ClassDoc();
         class_list["Variant"].name = "Variant";
     }
 
@@ -655,8 +655,8 @@ void DocData::generate(bool p_basic_types) {
         String cname = Variant::get_type_name(Variant::Type(i));
 
         class_list[cname] = ClassDoc();
-        ClassDoc& c = class_list[cname];
-        c.name = cname;
+        ClassDoc& c       = class_list[cname];
+        c.name            = cname;
 
         Variant::CallError cerror;
         Variant v = Variant::construct(Variant::Type(i), nullptr, 0, cerror);
@@ -667,7 +667,7 @@ void DocData::generate(bool p_basic_types) {
         Variant::get_constructor_list(Variant::Type(i), &method_list);
 
         for (List<MethodInfo>::Element* E = method_list.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             MethodInfo& mi = E->get();
             MethodDoc method;
 
@@ -683,7 +683,7 @@ void DocData::generate(bool p_basic_types) {
                     mi.default_arguments.size() - mi.arguments.size() + j;
                 if (darg_idx >= 0) {
                     Variant default_arg = mi.default_arguments[darg_idx];
-                    ad.default_value = default_arg.get_construct_string();
+                    ad.default_value    = default_arg.get_construct_string();
                 }
 
                 method.arguments.push_back(ad);
@@ -703,11 +703,11 @@ void DocData::generate(bool p_basic_types) {
         List<PropertyInfo> properties;
         v.get_property_list(&properties);
         for (List<PropertyInfo>::Element* E = properties.front(); E;
-             E = E->next()) {
+             E                              = E->next()) {
             PropertyInfo pi = E->get();
             PropertyDoc property;
-            property.name = pi.name;
-            property.type = Variant::get_type_name(pi.type);
+            property.name          = pi.name;
+            property.type          = Variant::get_type_name(pi.type);
             property.default_value = v.get(pi.name).get_construct_string();
 
             c.properties.push_back(property);
@@ -717,14 +717,14 @@ void DocData::generate(bool p_basic_types) {
         Variant::get_constants_for_type(Variant::Type(i), &constants);
 
         for (List<StringName>::Element* E = constants.front(); E;
-             E = E->next()) {
+             E                            = E->next()) {
             ConstantDoc constant;
             constant.name = E->get();
             Variant value =
                 Variant::get_constant_value(Variant::Type(i), E->get());
-            constant.value = value.get_type() == Variant::INT
-                               ? itos(value)
-                               : value.get_construct_string();
+            constant.value          = value.get_type() == Variant::INT
+                                        ? itos(value)
+                                        : value.get_construct_string();
             constant.is_value_valid = true;
             c.constants.push_back(constant);
         }
@@ -733,10 +733,10 @@ void DocData::generate(bool p_basic_types) {
     // built in constants and functions
 
     {
-        String cname = "@GlobalScope";
+        String cname      = "@GlobalScope";
         class_list[cname] = ClassDoc();
-        ClassDoc& c = class_list[cname];
-        c.name = cname;
+        ClassDoc& c       = class_list[cname];
+        c.name            = cname;
 
         for (int i = 0; i < GlobalConstants::get_global_constant_count(); i++) {
             ConstantDoc cd;
@@ -756,7 +756,7 @@ void DocData::generate(bool p_basic_types) {
 
         // servers (this is kind of hackish)
         for (List<Engine::Singleton>::Element* E = singletons.front(); E;
-             E = E->next()) {
+             E                                   = E->next()) {
             PropertyDoc pd;
             Engine::Singleton& s = E->get();
             if (!s.ptr) {
@@ -781,7 +781,7 @@ void DocData::generate(bool p_basic_types) {
     {
         for (int i = 0; i < ScriptServer::get_language_count(); i++) {
             ScriptLanguage* lang = ScriptServer::get_language(i);
-            String cname = "@" + lang->get_name();
+            String cname         = "@" + lang->get_name();
             ClassDoc c;
             c.name = cname;
 
@@ -790,7 +790,7 @@ void DocData::generate(bool p_basic_types) {
             lang->get_public_functions(&minfo);
 
             for (List<MethodInfo>::Element* E = minfo.front(); E;
-                 E = E->next()) {
+                 E                            = E->next()) {
                 MethodInfo& mi = E->get();
                 MethodDoc md;
                 md.name = mi.name;
@@ -827,10 +827,10 @@ void DocData::generate(bool p_basic_types) {
             lang->get_public_constants(&cinfo);
 
             for (List<Pair<String, Variant>>::Element* E = cinfo.front(); E;
-                 E = E->next()) {
+                 E                                       = E->next()) {
                 ConstantDoc cd;
-                cd.name = E->get().first;
-                cd.value = E->get().second;
+                cd.name           = E->get().first;
+                cd.value          = E->get().second;
                 cd.is_value_valid = true;
                 c.constants.push_back(cd);
             }
@@ -942,7 +942,7 @@ Error DocData::load_classes(const String& p_dir) {
     while (path != String()) {
         if (!da->current_is_dir() && path.ends_with("xml")) {
             Ref<XMLParser> parser = memnew(XMLParser);
-            Error err2 = parser->open(p_dir.plus_file(path));
+            Error err2            = parser->open(p_dir.plus_file(path));
             if (err2) {
                 return err2;
             }
@@ -1001,9 +1001,9 @@ Error DocData::_load(Ref<XMLParser> parser) {
         ERR_FAIL_COND_V(parser->get_node_name() != "class", ERR_FILE_CORRUPT);
 
         ERR_FAIL_COND_V(!parser->has_attribute("name"), ERR_FILE_CORRUPT);
-        String name = parser->get_attribute_value("name");
+        String name      = parser->get_attribute_value("name");
         class_list[name] = ClassDoc();
-        ClassDoc& c = class_list[name];
+        ClassDoc& c      = class_list[name];
 
         c.name = name;
         if (parser->has_attribute("inherits")) {
@@ -1245,7 +1245,7 @@ Error DocData::save_classes(
     const Map<String, String>& p_class_path
 ) {
     for (Map<String, ClassDoc>::Element* E = class_list.front(); E;
-         E = E->next()) {
+         E                                 = E->next()) {
         ClassDoc& c = E->get();
 
         String save_path;
@@ -1257,7 +1257,7 @@ Error DocData::save_classes(
 
         Error err;
         String save_file = save_path.plus_file(c.name + ".xml");
-        FileAccessRef f = FileAccess::open(save_file, FileAccess::WRITE, &err);
+        FileAccessRef f  = FileAccess::open(save_file, FileAccess::WRITE, &err);
 
         ERR_CONTINUE_MSG(err != OK, "Can't write doc file: " + save_file + ".");
 
@@ -1575,7 +1575,7 @@ Error DocData::load_compressed(
     class_list.clear();
 
     Ref<XMLParser> parser = memnew(XMLParser);
-    Error err = parser->open_buffer(data);
+    Error err             = parser->open_buffer(data);
     if (err) {
         return err;
     }

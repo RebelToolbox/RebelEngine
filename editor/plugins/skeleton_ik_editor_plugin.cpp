@@ -82,7 +82,7 @@ void SkeletonIKEditorPlugin::_bind_methods() {
 }
 
 SkeletonIKEditorPlugin::SkeletonIKEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor   = p_node;
     play_btn = memnew(Button);
     play_btn->set_icon(editor->get_gui_base()->get_icon("Play", "EditorIcons"));
     play_btn->set_text(TTR("Play IK"));

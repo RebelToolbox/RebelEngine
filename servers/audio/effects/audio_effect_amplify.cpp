@@ -37,12 +37,12 @@ void AudioEffectAmplifyInstance::process(
 ) {
     // multiply volume interpolating to avoid clicks if this changes
     float volume_db = base->volume_db;
-    float vol = Math::db2linear(mix_volume_db);
-    float vol_inc = (Math::db2linear(volume_db) - vol) / float(p_frame_count);
+    float vol       = Math::db2linear(mix_volume_db);
+    float vol_inc   = (Math::db2linear(volume_db) - vol) / float(p_frame_count);
 
     for (int i = 0; i < p_frame_count; i++) {
-        p_dst_frames[i] = p_src_frames[i] * vol;
-        vol += vol_inc;
+        p_dst_frames[i]  = p_src_frames[i] * vol;
+        vol             += vol_inc;
     }
     // set volume for next mix
     mix_volume_db = volume_db;
@@ -51,7 +51,7 @@ void AudioEffectAmplifyInstance::process(
 Ref<AudioEffectInstance> AudioEffectAmplify::instance() {
     Ref<AudioEffectAmplifyInstance> ins;
     ins.instance();
-    ins->base = Ref<AudioEffectAmplify>(this);
+    ins->base          = Ref<AudioEffectAmplify>(this);
     ins->mix_volume_db = volume_db;
     return ins;
 }

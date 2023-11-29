@@ -47,10 +47,10 @@ void BoxContainer::_resort() {
     int sep = get_constant("separation"
     ); //,vertical?"VBoxContainer":"HBoxContainer");
 
-    bool first = true;
-    int children_count = 0;
-    int stretch_min = 0;
-    int stretch_avail = 0;
+    bool first                = true;
+    int children_count        = 0;
+    int stretch_min           = 0;
+    int stretch_avail         = 0;
     float stretch_ratio_total = 0;
     Map<Control*, _MinSizeCache> min_size_cache;
 
@@ -67,21 +67,21 @@ void BoxContainer::_resort() {
         _MinSizeCache msc;
 
         if (vertical) { /* VERTICAL */
-            stretch_min += size.height;
-            msc.min_size = size.height;
-            msc.will_stretch = c->get_v_size_flags() & SIZE_EXPAND;
+            stretch_min      += size.height;
+            msc.min_size      = size.height;
+            msc.will_stretch  = c->get_v_size_flags() & SIZE_EXPAND;
 
         } else { /* HORIZONTAL */
-            stretch_min += size.width;
-            msc.min_size = size.width;
-            msc.will_stretch = c->get_h_size_flags() & SIZE_EXPAND;
+            stretch_min      += size.width;
+            msc.min_size      = size.width;
+            msc.will_stretch  = c->get_h_size_flags() & SIZE_EXPAND;
         }
 
         if (msc.will_stretch) {
-            stretch_avail += msc.min_size;
+            stretch_avail       += msc.min_size;
             stretch_ratio_total += c->get_stretch_ratio();
         }
-        msc.final_size = msc.min_size;
+        msc.final_size    = msc.min_size;
         min_size_cache[c] = msc;
         children_count++;
     }
@@ -106,9 +106,9 @@ void BoxContainer::_resort() {
     while (stretch_ratio_total > 0
     ) { // first of all, don't even be here if no stretchable objects exist
 
-        has_stretched = true;
+        has_stretched         = true;
         bool refit_successful = true; // assume refit-test will go well
-        float error = 0; // Keep track of accumulated error in pixels
+        float error           = 0; // Keep track of accumulated error in pixels
 
         for (int i = 0; i < get_child_count(); i++) {
             Control* c = Object::cast_to<Control>(get_child(i));
@@ -131,18 +131,18 @@ void BoxContainer::_resort() {
                 if (final_pixel_size < msc.min_size) {
                     // if available stretching area is too small for widget,
                     // then remove it from stretching area
-                    msc.will_stretch = false;
+                    msc.will_stretch     = false;
                     stretch_ratio_total -= c->get_stretch_ratio();
-                    refit_successful = false;
-                    stretch_avail -= msc.min_size;
-                    msc.final_size = msc.min_size;
+                    refit_successful     = false;
+                    stretch_avail       -= msc.min_size;
+                    msc.final_size       = msc.min_size;
                     break;
                 } else {
                     msc.final_size = final_pixel_size;
                     // Dump accumulated error if one pixel or more
                     if (error >= 1) {
                         msc.final_size += 1;
-                        error -= 1;
+                        error          -= 1;
                     }
                 }
             }
@@ -169,7 +169,7 @@ void BoxContainer::_resort() {
         }
     }
 
-    first = true;
+    first   = true;
     int idx = 0;
 
     for (int i = 0; i < get_child_count(); i++) {
@@ -190,7 +190,7 @@ void BoxContainer::_resort() {
         }
 
         int from = ofs;
-        int to = ofs + msc.final_size;
+        int to   = ofs + msc.final_size;
 
         if (msc.will_stretch && idx == children_count - 1) {
             // adjust so the last one always fits perfect
@@ -301,7 +301,7 @@ void BoxContainer::add_spacer(bool p_begin) {
 
 BoxContainer::BoxContainer(bool p_vertical) {
     vertical = p_vertical;
-    align = ALIGN_BEGIN;
+    align    = ALIGN_BEGIN;
     // set_ignore_mouse(true);
     set_mouse_filter(MOUSE_FILTER_PASS);
 }

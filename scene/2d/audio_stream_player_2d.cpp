@@ -48,7 +48,7 @@ void AudioStreamPlayer2D::_mix_audio() {
 
     // get data
     AudioFrame* buffer = mix_buffer.ptrw();
-    int buffer_size = mix_buffer.size();
+    int buffer_size    = mix_buffer.size();
 
     if (stream_paused_fade_out) {
         // Short fadeout ramp
@@ -90,7 +90,7 @@ void AudioStreamPlayer2D::_mix_audio() {
         AudioFrame vol_prev =
             stream_paused_fade_in ? AudioFrame(0.f, 0.f) : prev_outputs[i].vol;
         AudioFrame vol_inc = (target_volume - vol_prev) / float(buffer_size);
-        AudioFrame vol = vol_prev;
+        AudioFrame vol     = vol_prev;
 
         int cc = AudioServer::get_singleton()->get_channel_count();
 
@@ -108,7 +108,7 @@ void AudioStreamPlayer2D::_mix_audio() {
 
             for (int j = 0; j < buffer_size; j++) {
                 target[j] += buffer[j] * vol;
-                vol += vol_inc;
+                vol       += vol_inc;
             }
 
         } else {
@@ -156,7 +156,7 @@ void AudioStreamPlayer2D::_mix_audio() {
     }
 
     output_ready.clear();
-    stream_paused_fade_in = false;
+    stream_paused_fade_in  = false;
     stream_paused_fade_out = false;
 }
 
@@ -236,7 +236,7 @@ void AudioStreamPlayer2D::_notification(int p_what) {
 
             world_2d->get_viewport_list(&viewports);
             for (List<Viewport*>::Element* E = viewports.front(); E;
-                 E = E->next()) {
+                 E                           = E->next()) {
                 Viewport* vp = E->get();
                 if (vp->is_audio_listener_2d()) {
                     // compute matrix to convert to screen
@@ -246,7 +246,7 @@ void AudioStreamPlayer2D::_notification(int p_what) {
 
                     Listener2D* listener = vp->get_listener_2d();
                     if (listener) {
-                        listener_in_global = listener->get_global_position();
+                        listener_in_global   = listener->get_global_position();
                         relative_to_listener = global_pos - listener_in_global;
                     } else {
                         Transform2D to_listener =
@@ -337,7 +337,7 @@ void AudioStreamPlayer2D::set_stream(Ref<AudioStream> p_stream) {
     }
 
     if (p_stream.is_valid()) {
-        stream = p_stream;
+        stream          = p_stream;
         stream_playback = pre_instanced_playback;
     }
 
@@ -460,8 +460,8 @@ void AudioStreamPlayer2D::_validate_property(PropertyInfo& property) const {
             if (i > 0) {
                 options += ",";
             }
-            String name = AudioServer::get_singleton()->get_bus_name(i);
-            options += name;
+            String name  = AudioServer::get_singleton()->get_bus_name(i);
+            options     += name;
         }
 
         property.hint_string = options;
@@ -499,8 +499,8 @@ uint32_t AudioStreamPlayer2D::get_area_mask() const {
 
 void AudioStreamPlayer2D::set_stream_paused(bool p_pause) {
     if (p_pause != stream_paused) {
-        stream_paused = p_pause;
-        stream_paused_fade_in = !p_pause;
+        stream_paused          = p_pause;
+        stream_paused_fade_in  = !p_pause;
         stream_paused_fade_out = p_pause;
     }
 }
@@ -716,17 +716,17 @@ void AudioStreamPlayer2D::_bind_methods() {
 }
 
 AudioStreamPlayer2D::AudioStreamPlayer2D() {
-    volume_db = 0;
+    volume_db   = 0;
     pitch_scale = 1.0;
-    autoplay = false;
+    autoplay    = false;
     setseek.set(-1);
     prev_output_count = 0;
-    max_distance = 2000;
-    attenuation = 1;
+    max_distance      = 2000;
+    attenuation       = 1;
     setplay.set(-1);
-    area_mask = 1;
-    stream_paused = false;
-    stream_paused_fade_in = false;
+    area_mask              = 1;
+    stream_paused          = false;
+    stream_paused_fade_in  = false;
     stream_paused_fade_out = false;
     AudioServer::get_singleton()
         ->connect("bus_layout_changed", this, "_bus_layout_changed");

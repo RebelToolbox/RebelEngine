@@ -39,20 +39,20 @@
 class AudioDriverJavaScript : public AudioDriver {
 private:
     struct AudioContext {
-        bool inited = false;
+        bool inited          = false;
         float output_latency = 0.0;
-        int state = -1;
-        int channel_count = 0;
-        int mix_rate = 0;
+        int state            = -1;
+        int channel_count    = 0;
+        int mix_rate         = 0;
     };
 
     static AudioContext audio_context;
 
     float* output_rb = nullptr;
-    float* input_rb = nullptr;
+    float* input_rb  = nullptr;
 
     int buffer_length = 0;
-    int mix_rate = 0;
+    int mix_rate      = 0;
     int channel_count = 0;
 
     static void _state_change_callback(int p_state);
@@ -173,7 +173,7 @@ private:
 
     Mutex mutex;
     Thread thread;
-    bool quit = false;
+    bool quit                = false;
     int32_t state[STATE_MAX] = {0};
 
     static void _audio_thread_func(void* p_data);

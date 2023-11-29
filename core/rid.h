@@ -195,7 +195,7 @@ public:
 #ifdef DEBUG_ENABLED
 
         for (typename Set<RID_Data*>::Element* E = id_map.front(); E;
-             E = E->next()) {
+             E                                   = E->next()) {
             RID r;
             _set_data(r, static_cast<T*>(E->get()));
             p_owned->push_back(r);

@@ -65,12 +65,12 @@ struct _ObjectDebugLock {
 
 PropertyInfo::operator Dictionary() const {
     Dictionary d;
-    d["name"] = name;
-    d["class_name"] = class_name;
-    d["type"] = type;
-    d["hint"] = hint;
+    d["name"]        = name;
+    d["class_name"]  = class_name;
+    d["type"]        = type;
+    d["hint"]        = hint;
     d["hint_string"] = hint_string;
-    d["usage"] = usage;
+    d["usage"]       = usage;
     return d;
 }
 
@@ -107,7 +107,7 @@ PropertyInfo PropertyInfo::from_dict(const Dictionary& p_dict) {
 Array convert_property_list(const List<PropertyInfo>* p_list) {
     Array va;
     for (const List<PropertyInfo>::Element* E = p_list->front(); E;
-         E = E->next()) {
+         E                                    = E->next()) {
         va.push_back(Dictionary(E->get()));
     }
 
@@ -123,10 +123,10 @@ MethodInfo::operator Dictionary() const {
         da.push_back(default_arguments[i]);
     }
     d["default_args"] = da;
-    d["flags"] = flags;
-    d["id"] = id;
-    Dictionary r = return_val;
-    d["return"] = r;
+    d["flags"]        = flags;
+    d["id"]           = id;
+    Dictionary r      = return_val;
+    d["return"]       = r;
     return d;
 }
 
@@ -421,8 +421,8 @@ Object::Connection::operator Variant() const {
     d["signal"] = signal;
     d["target"] = target;
     d["method"] = method;
-    d["flags"] = flags;
-    d["binds"] = binds;
+    d["flags"]  = flags;
+    d["binds"]  = binds;
     return d;
 }
 
@@ -796,13 +796,13 @@ Variant Object::_call_bind(
     Variant::CallError& r_error
 ) {
     if (p_argcount < 1) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 0;
         return Variant();
     }
 
     if (p_args[0]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::STRING;
         return Variant();
@@ -819,13 +819,13 @@ Variant Object::_call_deferred_bind(
     Variant::CallError& r_error
 ) {
     if (p_argcount < 1) {
-        r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+        r_error.error    = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
         r_error.argument = 0;
         return Variant();
     }
 
     if (p_args[0]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::STRING;
         return Variant();
@@ -1062,13 +1062,13 @@ Variant Object::call(
         }
         if (Object::cast_to<Reference>(this)) {
             r_error.argument = 0;
-            r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
+            r_error.error    = Variant::CallError::CALL_ERROR_INVALID_METHOD;
             ERR_FAIL_V_MSG(Variant(), "Can't 'free' a reference.");
         }
 
         if (_lock_index.get() > 1) {
             r_error.argument = 0;
-            r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
+            r_error.error    = Variant::CallError::CALL_ERROR_INVALID_METHOD;
             ERR_FAIL_V_MSG(Variant(), "Object is locked and can't be freed.");
         }
 
@@ -1155,7 +1155,7 @@ ObjectRC* Object::_use_rc() {
     // mechanism should be used, this at least makes safe the case of first
     // assignment.
 
-    ObjectRC* rc = nullptr;
+    ObjectRC* rc             = nullptr;
     ObjectRC* const creating = reinterpret_cast<ObjectRC*>(1);
     if (unlikely(
             _rc.compare_exchange_strong(rc, creating, std::memory_order_acq_rel)
@@ -1186,7 +1186,7 @@ void Object::set_script_and_instance(
     ERR_FAIL_COND(!p_instance);
     ERR_FAIL_COND(script_instance != nullptr || !script.is_null());
 
-    script = p_script;
+    script          = p_script;
     script_instance = p_instance;
 }
 
@@ -1313,7 +1313,7 @@ void Object::add_user_signal(const MethodInfo& p_signal) {
         "Trying to add already existing signal '" + p_signal.name + "'."
     );
     Signal s;
-    s.user = p_signal;
+    s.user                    = p_signal;
     signal_map[p_signal.name] = s;
 }
 
@@ -1339,7 +1339,7 @@ Variant Object::_emit_signal(
 
     ERR_FAIL_COND_V(p_argcount < 1, Variant());
     if (p_args[0]->get_type() != Variant::STRING) {
-        r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+        r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
         r_error.argument = 0;
         r_error.expected = Variant::STRING;
         ERR_FAIL_COND_V(p_args[0]->get_type() != Variant::STRING, Variant());
@@ -1412,7 +1412,7 @@ Error Object::emit_signal(
         }
 
         const Variant** args = p_args;
-        int argc = p_argcount;
+        int argc             = p_argcount;
 
         if (c.binds.size()) {
             // handle binds
@@ -1566,8 +1566,8 @@ Array Object::_get_signal_connection_list(const String& p_signal) const {
             rc["method"] = c.method;
             rc["source"] = c.source;
             rc["target"] = c.target;
-            rc["binds"] = c.binds;
-            rc["flags"] = c.flags;
+            rc["binds"]  = c.binds;
+            rc["flags"]  = c.flags;
             ret.push_back(rc);
         }
     }
@@ -1580,7 +1580,7 @@ Array Object::_get_incoming_connections() const {
     int connections_amount = connections.size();
     for (int idx_conn = 0; idx_conn < connections_amount; idx_conn++) {
         Dictionary conn_data;
-        conn_data["source"] = connections[idx_conn].source;
+        conn_data["source"]      = connections[idx_conn].source;
         conn_data["signal_name"] = connections[idx_conn].signal;
         conn_data["method_name"] = connections[idx_conn].method;
         ret.push_back(conn_data);
@@ -1655,7 +1655,7 @@ void Object::get_signal_connection_list(
 }
 
 int Object::get_persistent_signal_connection_count() const {
-    int count = 0;
+    int count           = 0;
     const StringName* S = nullptr;
 
     while ((S = signal_map.next(S))) {
@@ -1674,7 +1674,7 @@ int Object::get_persistent_signal_connection_count() const {
 void Object::get_signals_connected_to_this(List<Connection>* p_connections
 ) const {
     for (const List<Connection>::Element* E = connections.front(); E;
-         E = E->next()) {
+         E                                  = E->next()) {
         p_connections->push_back(E->get());
     }
 }
@@ -1717,7 +1717,7 @@ Error Object::connect(
         );
 
         signal_map[p_signal] = Signal();
-        s = &signal_map[p_signal];
+        s                    = &signal_map[p_signal];
     }
 
     Signal::Target target(p_to_object->get_instance_id(), p_to_method);
@@ -1742,10 +1742,10 @@ Error Object::connect(
     conn.target = p_to_object;
     conn.method = p_to_method;
     conn.signal = p_signal;
-    conn.flags = p_flags;
-    conn.binds = p_binds;
-    slot.conn = conn;
-    slot.cE = p_to_object->connections.push_back(conn);
+    conn.flags  = p_flags;
+    conn.binds  = p_binds;
+    slot.conn   = conn;
+    slot.cE     = p_to_object->connections.push_back(conn);
     if (p_flags & CONNECT_REFERENCE_COUNTED) {
         slot.reference_count = 1;
     }
@@ -2142,7 +2142,7 @@ void Object::_bind_methods() {
     ));
 #ifdef TOOLS_ENABLED
     MethodInfo miget("_get", PropertyInfo(Variant::STRING, "property"));
-    miget.return_val.name = "Variant";
+    miget.return_val.name   = "Variant";
     miget.return_val.usage |= PROPERTY_USAGE_NIL_IS_VARIANT;
     BIND_VMETHOD(miget);
 
@@ -2238,7 +2238,7 @@ Variant::Type Object::get_static_property_type_indexed(
         return Variant::NIL;
     }
 
-    bool valid = false;
+    bool valid      = false;
     Variant::Type t = get_static_property_type(p_path[0], &valid);
     if (!valid) {
         if (r_valid) {
@@ -2342,14 +2342,14 @@ void Object::set_script_instance_binding(
 }
 
 Object::Object() {
-    _class_ptr = nullptr;
-    _block_signals = false;
-    _predelete_ok = 0;
-    _instance_id = 0;
-    _instance_id = ObjectDB::add_instance(this);
-    _can_translate = true;
+    _class_ptr              = nullptr;
+    _block_signals          = false;
+    _predelete_ok           = 0;
+    _instance_id            = 0;
+    _instance_id            = ObjectDB::add_instance(this);
+    _can_translate          = true;
     _is_queued_for_deletion = false;
-    _emitting = false;
+    _emitting               = false;
     memset(
         _script_instance_bindings,
         0,
@@ -2359,7 +2359,7 @@ Object::Object() {
     _rc.store(nullptr, std::memory_order_release);
 #ifdef TOOLS_ENABLED
 
-    _edited = false;
+    _edited         = false;
     _edited_version = 0;
 #endif
 
@@ -2413,7 +2413,7 @@ Object::~Object() {
     }
 
     ObjectDB::remove_instance(this);
-    _instance_id = 0;
+    _instance_id  = 0;
     _predelete_ok = 2;
 
     if (!ScriptServer::are_languages_finished()) {
@@ -2443,8 +2443,8 @@ ObjectID ObjectDB::add_instance(Object* p_object) {
     ERR_FAIL_COND_V(p_object->get_instance_id() != 0, 0);
 
     rw_lock.write_lock();
-    ObjectID instance_id = ++instance_counter;
-    instances[instance_id] = p_object;
+    ObjectID instance_id      = ++instance_counter;
+    instances[instance_id]    = p_object;
     instance_checks[p_object] = instance_id;
 
     rw_lock.write_unlock();

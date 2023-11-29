@@ -47,7 +47,7 @@ public:
             points[0] = p_a;
             points[1] = p_b;
             points[2] = p_c;
-            bad = false;
+            bad       = false;
         }
     };
 
@@ -60,7 +60,7 @@ public:
         }
 
         Edge(int p_a, int p_b) {
-            bad = false;
+            bad     = false;
             edge[0] = p_a;
             edge[1] = p_b;
         }
@@ -88,9 +88,9 @@ public:
                    + p3.y * (p2.x - p1.x))
         );
 
-        circum *= 0.5;
-        float r = p1.distance_squared_to(circum);
-        float d = p_vertices[p_vertex].distance_squared_to(circum);
+        circum  *= 0.5;
+        float r  = p1.distance_squared_to(circum);
+        float d  = p_vertices[p_vertex].distance_squared_to(circum);
         return d <= r;
     }
 
@@ -128,7 +128,7 @@ public:
         }
 
         float delta_max = MAX(rect.size.width, rect.size.height);
-        Vector2 center = rect.position + rect.size * 0.5;
+        Vector2 center  = rect.position + rect.size * 0.5;
 
         points.push_back(
             Vector2(center.x - 20 * delta_max, center.y - delta_max)

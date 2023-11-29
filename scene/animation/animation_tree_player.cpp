@@ -102,7 +102,7 @@ bool AnimationTreePlayer::_set(
         Dictionary node = nodes[i];
 
         StringName id = node.get_valid("id");
-        Point2 pos = node.get_valid("position");
+        Point2 pos    = node.get_valid("position");
 
         NodeType nt = NODE_MAX;
         String type = node.get_valid("type");
@@ -204,7 +204,7 @@ bool AnimationTreePlayer::_set(
 
                 for (int x = 0; x < transitions.size(); x++) {
                     Dictionary d = transitions[x];
-                    bool aa = d.get_valid("auto_advance");
+                    bool aa      = d.get_valid("auto_advance");
                     transition_node_set_input_auto_advance(id, x, aa);
                 }
 
@@ -222,7 +222,7 @@ bool AnimationTreePlayer::_set(
     for (int i = 0; i < cc; i++) {
         StringName src = connections[i * 3 + 0];
         StringName dst = connections[i * 3 + 1];
-        int dst_in = connections[i * 3 + 2];
+        int dst_in     = connections[i * 3 + 2];
         connect_nodes(src, dst, dst_in);
     }
 
@@ -257,11 +257,11 @@ bool AnimationTreePlayer::_get(const StringName& p_name, Variant& r_ret) const {
     Array nodes;
 
     for (Map<StringName, NodeBase*>::Element* E = node_map.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         NodeBase* n = node_map[E->key()];
 
         Dictionary node;
-        node["id"] = E->key();
+        node["id"]       = E->key();
         node["position"] = n->pos;
 
         switch (n->type) {
@@ -316,17 +316,17 @@ bool AnimationTreePlayer::_get(const StringName& p_name, Variant& r_ret) const {
                 k.resize(keys.size());
                 int i = 0;
                 for (List<NodePath>::Element* F = keys.front(); F;
-                     F = F->next()) {
+                     F                          = F->next()) {
                     k[i++] = F->get();
                 }
                 node["filter"] = k;
             } break;
             case NODE_ONESHOT: {
-                OneShotNode* osn = static_cast<OneShotNode*>(n);
-                node["fade_in"] = osn->fade_in;
-                node["fade_out"] = osn->fade_out;
-                node["mix"] = osn->mix;
-                node["autorestart"] = osn->autorestart;
+                OneShotNode* osn          = static_cast<OneShotNode*>(n);
+                node["fade_in"]           = osn->fade_in;
+                node["fade_out"]          = osn->fade_out;
+                node["mix"]               = osn->mix;
+                node["autorestart"]       = osn->autorestart;
                 node["autorestart_delay"] = osn->autorestart_delay;
                 node["autorestart_random_delay"] =
                     osn->autorestart_random_delay;
@@ -337,7 +337,7 @@ bool AnimationTreePlayer::_get(const StringName& p_name, Variant& r_ret) const {
                 k.resize(keys.size());
                 int i = 0;
                 for (List<NodePath>::Element* F = keys.front(); F;
-                     F = F->next()) {
+                     F                          = F->next()) {
                     k[i++] = F->get();
                 }
                 node["filter"] = k;
@@ -349,14 +349,14 @@ bool AnimationTreePlayer::_get(const StringName& p_name, Variant& r_ret) const {
             } break;
             case NODE_BLEND2: {
                 Blend2Node* bn = static_cast<Blend2Node*>(n);
-                node["blend"] = bn->value;
+                node["blend"]  = bn->value;
                 Array k;
                 List<NodePath> keys;
                 bn->filter.get_key_list(&keys);
                 k.resize(keys.size());
                 int i = 0;
                 for (List<NodePath>::Element* F = keys.front(); F;
-                     F = F->next()) {
+                     F                          = F->next()) {
                     k[i++] = F->get();
                 }
                 node["filter"] = k;
@@ -364,22 +364,22 @@ bool AnimationTreePlayer::_get(const StringName& p_name, Variant& r_ret) const {
             } break;
             case NODE_BLEND3: {
                 Blend3Node* bn = static_cast<Blend3Node*>(n);
-                node["blend"] = bn->value;
+                node["blend"]  = bn->value;
             } break;
             case NODE_BLEND4: {
                 Blend4Node* bn = static_cast<Blend4Node*>(n);
-                node["blend"] = bn->value;
+                node["blend"]  = bn->value;
 
             } break;
             case NODE_TIMESCALE: {
                 TimeScaleNode* tsn = static_cast<TimeScaleNode*>(n);
-                node["scale"] = tsn->scale;
+                node["scale"]      = tsn->scale;
             } break;
             case NODE_TIMESEEK: {
             } break;
             case NODE_TRANSITION: {
                 TransitionNode* tn = static_cast<TransitionNode*>(n);
-                node["xfade"] = tn->xfade;
+                node["xfade"]      = tn->xfade;
                 Array transitions;
 
                 for (int i = 0; i < tn->input_data.size(); i++) {
@@ -416,8 +416,8 @@ bool AnimationTreePlayer::_get(const StringName& p_name, Variant& r_ret) const {
     }
 
     data["connections"] = connections_arr;
-    data["active"] = active;
-    data["master"] = master;
+    data["active"]      = active;
+    data["master"]      = master;
 
     r_ret = data;
 
@@ -589,7 +589,7 @@ float AnimationTreePlayer::_process_node(
                         E->get().weight = 0;
                     } else {
                         if (p_weights->has(track_path)) {
-                            float weight = (*p_weights)[track_path];
+                            float weight    = (*p_weights)[track_path];
                             E->get().weight = weight;
                         } else {
                             E->get().weight = p_fallback_weight;
@@ -609,7 +609,7 @@ float AnimationTreePlayer::_process_node(
                 (*r_prev_anim)->next = an;
             }
 
-            an->next = nullptr;
+            an->next     = nullptr;
             *r_prev_anim = an;
 
             return rem;
@@ -637,7 +637,7 @@ float AnimationTreePlayer::_process_node(
             }
             if (osn->start) {
                 osn->time = 0;
-                os_seek = true;
+                os_seek   = true;
             }
 
             float blend;
@@ -698,12 +698,12 @@ float AnimationTreePlayer::_process_node(
 
             if (osn->start) {
                 osn->remaining = os_rem;
-                osn->start = false;
+                osn->start     = false;
             }
 
             if (!p_seek) {
-                osn->time += p_time;
-                osn->remaining = os_rem;
+                osn->time      += p_time;
+                osn->remaining  = os_rem;
                 if (osn->remaining <= 0) {
                     osn->active = false;
                 }
@@ -781,11 +781,11 @@ float AnimationTreePlayer::_process_node(
             float blend, lower_blend, upper_blend;
             if (bn->value < 0) {
                 lower_blend = -bn->value;
-                blend = 1.0 - lower_blend;
+                blend       = 1.0 - lower_blend;
                 upper_blend = 0;
             } else {
                 lower_blend = 0;
-                blend = 1.0 - bn->value;
+                blend       = 1.0 - bn->value;
                 upper_blend = bn->value;
             }
 
@@ -1010,7 +1010,7 @@ float AnimationTreePlayer::_process_node(
                         prev_fallback_weight,
                         &prev_weights
                     );
-                    tn->time += p_time;
+                    tn->time         += p_time;
                     tn->prev_xfading -= p_time;
                     if (tn->prev_xfading < 0) {
                         tn->prev = -1;
@@ -1037,7 +1037,7 @@ void AnimationTreePlayer::_process_animation(float p_delta) {
         _recompute_caches();
     }
 
-    active_list = nullptr;
+    active_list         = nullptr;
     AnimationNode* prev = nullptr;
 
     if (reset_request) {
@@ -1060,7 +1060,7 @@ void AnimationTreePlayer::_process_animation(float p_delta) {
         Track& t = E->get();
 
         t.loc.zero();
-        t.rot = Quat();
+        t.rot     = Quat();
         t.scale.x = 0;
         t.scale.y = 0;
         t.scale.z = 0;
@@ -1109,9 +1109,9 @@ void AnimationTreePlayer::_process_animation(float p_delta) {
 
                         tr.track->loc += loc * tr.weight;
 
-                        scale.x -= 1.0;
-                        scale.y -= 1.0;
-                        scale.z -= 1.0;
+                        scale.x         -= 1.0;
+                        scale.y         -= 1.0;
+                        scale.z         -= 1.0;
                         tr.track->scale += scale * tr.weight;
 
                         tr.track->rot =
@@ -1154,7 +1154,7 @@ void AnimationTreePlayer::_process_animation(float p_delta) {
                             &indices
                         );
                         for (List<int>::Element* F = indices.front(); F;
-                             F = F->next()) {
+                             F                     = F->next()) {
                             StringName method = a->method_track_get_name(
                                 tr.local_track,
                                 F->get()
@@ -1302,7 +1302,7 @@ void AnimationTreePlayer::animation_node_set_master_animation(
     const String& p_master_animation
 ) {
     GET_NODE(NODE_ANIMATION, AnimationNode);
-    n->from = p_master_animation;
+    n->from      = p_master_animation;
     dirty_caches = true;
     if (master != NodePath()) {
         _update_sources();
@@ -1383,7 +1383,7 @@ void AnimationTreePlayer::oneshot_node_set_autorestart_random_delay(
 void AnimationTreePlayer::oneshot_node_start(const StringName& p_node) {
     GET_NODE(NODE_ONESHOT, OneShotNode);
     n->active = true;
-    n->start = true;
+    n->start  = true;
 }
 
 void AnimationTreePlayer::oneshot_node_stop(const StringName& p_node) {
@@ -1526,12 +1526,12 @@ void AnimationTreePlayer::TransitionNode::set_current(int p_current) {
         return;
     }
 
-    prev = current;
+    prev         = current;
     prev_xfading = xfade;
-    prev_time = time;
-    time = 0;
-    current = p_current;
-    switched = true;
+    prev_time    = time;
+    time         = 0;
+    current      = p_current;
+    switched     = true;
 }
 
 void AnimationTreePlayer::transition_node_set_current(
@@ -1737,7 +1737,7 @@ int AnimationTreePlayer::transition_node_get_current(const StringName& p_node
 /*misc  */
 void AnimationTreePlayer::get_node_list(List<StringName>* p_node_list) const {
     for (Map<StringName, NodeBase*>::Element* E = node_map.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         p_node_list->push_back(E->key());
     }
 }
@@ -1747,7 +1747,7 @@ void AnimationTreePlayer::remove_node(const StringName& p_node) {
     ERR_FAIL_COND_MSG(p_node == out_name, "Node 0 (output) can't be removed.");
 
     for (Map<StringName, NodeBase*>::Element* E = node_map.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         NodeBase* nb = E->get();
         for (int i = 0; i < nb->inputs.size(); i++) {
             if (nb->inputs[i].node == p_node) {
@@ -1762,7 +1762,7 @@ void AnimationTreePlayer::remove_node(const StringName& p_node) {
     _clear_cycle_test();
 
     // compute last error again, just in case
-    last_error = _cycle_test(out_name);
+    last_error   = _cycle_test(out_name);
     dirty_caches = true;
 }
 
@@ -1795,8 +1795,8 @@ AnimationTreePlayer::ConnectError AnimationTreePlayer::_cycle_test(
 // Use this function to not alter next complete _cycle_test().
 void AnimationTreePlayer::_clear_cycle_test() {
     for (Map<StringName, NodeBase*>::Element* E = node_map.front(); E;
-         E = E->next()) {
-        NodeBase* nb = E->get();
+         E                                      = E->next()) {
+        NodeBase* nb  = E->get();
         nb->cycletest = false;
     }
 }
@@ -1817,7 +1817,7 @@ Error AnimationTreePlayer::connect_nodes(
     // int oldval = dst->inputs[p_dst_input].node;
 
     for (Map<StringName, NodeBase*>::Element* E = node_map.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         NodeBase* nb = E->get();
         for (int i = 0; i < nb->inputs.size(); i++) {
             if (nb->inputs[i].node == p_src_node) {
@@ -1866,20 +1866,20 @@ void AnimationTreePlayer::disconnect_nodes(
     NodeBase* dst = node_map[p_node];
     ERR_FAIL_INDEX(p_input, dst->inputs.size());
     dst->inputs.write[p_input].node = StringName();
-    last_error = CONNECT_INCOMPLETE;
-    dirty_caches = true;
+    last_error                      = CONNECT_INCOMPLETE;
+    dirty_caches                    = true;
 }
 
 void AnimationTreePlayer::get_connection_list(List<Connection>* p_connections
 ) const {
     for (Map<StringName, NodeBase*>::Element* E = node_map.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         NodeBase* nb = E->get();
         for (int i = 0; i < nb->inputs.size(); i++) {
             if (nb->inputs[i].node != StringName()) {
                 Connection c;
-                c.src_node = nb->inputs[i].node;
-                c.dst_node = E->key();
+                c.src_node  = nb->inputs[i].node;
+                c.dst_node  = E->key();
                 c.dst_input = i;
                 p_connections->push_back(c);
             }
@@ -1904,7 +1904,7 @@ AnimationTreePlayer::Track* AnimationTreePlayer::_find_track(
         return nullptr;
     }
 
-    ObjectID id = child->get_instance_id();
+    ObjectID id  = child->get_instance_id();
     int bone_idx = -1;
 
     if (p_path.get_subname_count()) {
@@ -1916,8 +1916,8 @@ AnimationTreePlayer::Track* AnimationTreePlayer::_find_track(
     }
 
     TrackKey key;
-    key.id = id;
-    key.bone_idx = bone_idx;
+    key.id                   = id;
+    key.bone_idx             = bone_idx;
     key.subpath_concatenated = p_path.get_concatenated_subnames();
 
     if (!track_map.has(key)) {
@@ -1926,7 +1926,7 @@ AnimationTreePlayer::Track* AnimationTreePlayer::_find_track(
         tr.object =
             resource.is_valid() ? (Object*)resource.ptr() : (Object*)child;
         tr.skeleton = Object::cast_to<Skeleton>(child);
-        tr.spatial = Object::cast_to<Spatial>(child);
+        tr.spatial  = Object::cast_to<Spatial>(child);
         tr.bone_idx = bone_idx;
         if (bone_idx == -1) {
             tr.subpath = leftover_path;
@@ -1964,8 +1964,8 @@ void AnimationTreePlayer::_recompute_caches(const StringName& p_node) {
 
                 AnimationNode::TrackRef tref;
                 tref.local_track = i;
-                tref.track = tr;
-                tref.weight = 0;
+                tref.track       = tr;
+                tref.weight      = 0;
 
                 an->tref.push_back(tref);
             }
@@ -1988,8 +1988,8 @@ void AnimationTreePlayer::set_active(bool p_active) {
         return;
     }
 
-    active = p_active;
-    processing = active;
+    active        = p_active;
+    processing    = active;
     reset_request = p_active;
     _set_process(processing, true);
 }
@@ -2064,7 +2064,7 @@ void AnimationTreePlayer::_update_sources() {
     }
 
     for (Map<StringName, NodeBase*>::Element* E = node_map.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         if (E->get()->type == NODE_ANIMATION) {
             AnimationNode* an = static_cast<AnimationNode*>(E->get());
 
@@ -2093,7 +2093,7 @@ Error AnimationTreePlayer::node_rename(
     ERR_FAIL_COND_V(p_new_name == out_name, ERR_INVALID_DATA);
 
     for (Map<StringName, NodeBase*>::Element* E = node_map.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         NodeBase* nb = E->get();
         for (int i = 0; i < nb->inputs.size(); i++) {
             if (nb->inputs[i].node == p_node) {
@@ -2455,17 +2455,17 @@ void AnimationTreePlayer::_bind_methods() {
 
 AnimationTreePlayer::AnimationTreePlayer() {
     active_list = nullptr;
-    out = memnew(NodeOut);
-    out_name = "out";
-    out->pos = Point2(40, 40);
+    out         = memnew(NodeOut);
+    out_name    = "out";
+    out->pos    = Point2(40, 40);
     node_map.insert(out_name, out);
     animation_process_mode = ANIMATION_PROCESS_IDLE;
-    processing = false;
-    active = false;
-    dirty_caches = true;
-    reset_request = true;
-    last_error = CONNECT_INCOMPLETE;
-    base_path = String("..");
+    processing             = false;
+    active                 = false;
+    dirty_caches           = true;
+    reset_request          = true;
+    last_error             = CONNECT_INCOMPLETE;
+    base_path              = String("..");
 }
 
 AnimationTreePlayer::~AnimationTreePlayer() {

@@ -67,11 +67,11 @@ class AudioStreamPreviewGenerator : public Node {
 
         // Needed for the bookkeeping of the Map
         Preview& operator=(const Preview& p_rhs) {
-            preview = p_rhs.preview;
+            preview     = p_rhs.preview;
             base_stream = p_rhs.base_stream;
-            playback = p_rhs.playback;
+            playback    = p_rhs.playback;
             generating.set_to(generating.is_set());
-            id = p_rhs.id;
+            id     = p_rhs.id;
             thread = p_rhs.thread;
             return *this;
         }

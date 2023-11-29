@@ -72,10 +72,10 @@ public:
         bool extra_margin;
 
         Instance() {
-            billboard = false;
-            unscaled = false;
+            billboard     = false;
+            unscaled      = false;
             can_intersect = false;
-            extra_margin = false;
+            extra_margin  = false;
         }
 
         void create_instance(Spatial* p_base, bool p_hidden = false);
@@ -112,27 +112,27 @@ public:
     void add_lines(
         const Vector<Vector3>& p_lines,
         const Ref<Material>& p_material,
-        bool p_billboard = false,
+        bool p_billboard        = false,
         const Color& p_modulate = Color(1, 1, 1)
     );
     void add_vertices(
         const Vector<Vector3>& p_vertices,
         const Ref<Material>& p_material,
         Mesh::PrimitiveType p_primitive_type,
-        bool p_billboard = false,
+        bool p_billboard        = false,
         const Color& p_modulate = Color(1, 1, 1)
     );
     void add_mesh(
         const Ref<Mesh>& p_mesh,
-        bool p_billboard = false,
+        bool p_billboard                           = false,
         const Ref<SkinReference>& p_skin_reference = Ref<SkinReference>(),
-        const Ref<Material>& p_material = Ref<Material>()
+        const Ref<Material>& p_material            = Ref<Material>()
     );
     void add_collision_segments(const Vector<Vector3>& p_lines);
     void add_collision_triangles(const Ref<TriangleMesh>& p_tmesh);
     void add_unscaled_billboard(
         const Ref<Material>& p_material,
-        float p_scale = 1,
+        float p_scale           = 1,
         const Color& p_modulate = Color(1, 1, 1)
     );
     void add_handles(
@@ -178,7 +178,7 @@ public:
         Vector3& r_pos,
         Vector3& r_normal,
         int* r_gizmo_handle = nullptr,
-        bool p_sec_first = false
+        bool p_sec_first    = false
     );
 
     virtual void clear();
@@ -202,7 +202,7 @@ class ViewportRotationControl : public Control {
     struct Axis2D {
         Vector2 screen_point;
         float z_axis = -99.0;
-        int axis = -1;
+        int axis     = -1;
     };
 
     struct Axis2DCompare {
@@ -215,7 +215,7 @@ class ViewportRotationControl : public Control {
     Vector<Color> axis_colors;
     Vector<int> axis_menu_options;
     Vector2i orbiting_mouse_start;
-    bool orbiting = false;
+    bool orbiting    = false;
     int focused_axis = -2;
 
     const float AXIS_CIRCLE_RADIUS = 8.0f * EDSCALE;
@@ -284,7 +284,7 @@ public:
         GIZMO_BASE_LAYER = 27,
         GIZMO_EDIT_LAYER = 26,
         GIZMO_GRID_LAYER = 25,
-        MISC_TOOL_LAYER = 24
+        MISC_TOOL_LAYER  = 24
     };
 
     enum NavigationScheme {
@@ -368,7 +368,7 @@ private:
         bool p_append,
         bool& r_includes_current,
         int* r_gizmo_handle = nullptr,
-        bool p_alt_select = false
+        bool p_alt_select   = false
     );
     void _find_items_at_pos(
         const Point2& p_pos,
@@ -478,9 +478,9 @@ private:
         Cursor() {
             // These rotations place the camera in +X +Y +Z, aka south east,
             // facing north west.
-            x_rot = 0.5;
-            y_rot = -0.5;
-            distance = 4;
+            x_rot         = 0.5;
+            y_rot         = -0.5;
+            distance      = 4;
             region_select = false;
         }
     };
@@ -628,7 +628,7 @@ public:
     RID sbox_instance_xray_offset;
 
     SpatialEditorSelectedItem() {
-        sp = nullptr;
+        sp               = nullptr;
         last_xform_dirty = true;
     }
 
@@ -1058,8 +1058,8 @@ class EditorSpatialGizmoPlugin : public Resource {
 
 public:
     static const int VISIBLE = 0;
-    static const int HIDDEN = 1;
-    static const int ON_TOP = 2;
+    static const int HIDDEN  = 1;
+    static const int ON_TOP  = 2;
 
 protected:
     int current_state;
@@ -1074,19 +1074,19 @@ public:
     void create_material(
         const String& p_name,
         const Color& p_color,
-        bool p_billboard = false,
-        bool p_on_top = false,
+        bool p_billboard        = false,
+        bool p_on_top           = false,
         bool p_use_vertex_color = false
     );
     void create_icon_material(
         const String& p_name,
         const Ref<Texture>& p_texture,
-        bool p_on_top = false,
+        bool p_on_top         = false,
         const Color& p_albedo = Color(1, 1, 1, 1)
     );
     void create_handle_material(
         const String& p_name,
-        bool p_billboard = false,
+        bool p_billboard           = false,
         const Ref<Texture>& p_icon = nullptr
     );
     void add_material(const String& p_name, Ref<SpatialMaterial> p_material);

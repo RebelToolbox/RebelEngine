@@ -40,7 +40,7 @@
 
 #include <stdarg.h>
 
-OS* OS::singleton = nullptr;
+OS* OS::singleton         = nullptr;
 uint64_t OS::target_ticks = 0;
 
 OS* OS::get_singleton() {
@@ -292,7 +292,7 @@ int OS::get_exit_code() const {
 }
 
 void OS::set_exit_code(int p_code) {
-    _exit_code = p_code;
+    _exit_code           = p_code;
     _is_custom_exit_code = true;
 }
 
@@ -432,7 +432,7 @@ Error OS::dialog_input_text(
         p_partial.c_str()
     );
 
-    String res = get_stdin_string().strip_edges();
+    String res   = get_stdin_string().strip_edges();
     bool success = true;
     if (res == "") {
         res = p_partial;
@@ -503,14 +503,14 @@ OS::ScreenOrientation OS::get_screen_orientation_from_string(
 }
 
 void OS::ensure_user_data_dir() {
-    String dd = get_user_data_dir();
+    String dd     = get_user_data_dir();
     DirAccess* da = DirAccess::open(dd);
     if (da) {
         memdelete(da);
         return;
     }
 
-    da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+    da        = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     Error err = da->make_dir_recursive(dd);
     ERR_FAIL_COND_MSG(
         err != OK,
@@ -530,7 +530,7 @@ String OS::get_model_name() const {
 
 void OS::set_cmdline(const char* p_execpath, const List<String>& p_args) {
     _execpath = String::utf8(p_execpath);
-    _cmdline = p_args;
+    _cmdline  = p_args;
 };
 
 void OS::release_rendering_thread() {}
@@ -787,7 +787,7 @@ void OS::set_restart_on_exit(
     bool p_restart,
     const List<String>& p_restart_arguments
 ) {
-    restart_on_exit = p_restart;
+    restart_on_exit     = p_restart;
     restart_commandline = p_restart_arguments;
 }
 
@@ -860,8 +860,8 @@ void OS::add_frame_delay(bool p_can_draw) {
     }
 
     if (dynamic_delay > 0) {
-        target_ticks += dynamic_delay;
-        uint64_t current_ticks = get_ticks_usec();
+        target_ticks           += dynamic_delay;
+        uint64_t current_ticks  = get_ticks_usec();
 
         if (current_ticks < target_ticks) {
             delay_usec(target_ticks - current_ticks);
@@ -878,23 +878,23 @@ OS::OS() {
     void* volatile stack_bottom;
 
     restart_on_exit = false;
-    singleton = this;
+    singleton       = this;
     _keep_screen_on = true; // set default value to true, because this had been
                             // true before godot 2.0.
-    low_processor_usage_mode = false;
+    low_processor_usage_mode            = false;
     low_processor_usage_mode_sleep_usec = 10000;
-    _verbose_stdout = false;
-    _debug_stdout = false;
-    _no_window = false;
-    _exit_code = 0;
-    _orientation = SCREEN_LANDSCAPE;
-    _delta_smoothing_enabled = false;
+    _verbose_stdout                     = false;
+    _debug_stdout                       = false;
+    _no_window                          = false;
+    _exit_code                          = 0;
+    _orientation                        = SCREEN_LANDSCAPE;
+    _delta_smoothing_enabled            = false;
 
     _render_thread_mode = RENDER_THREAD_SAFE;
 
-    _allow_hidpi = false;
+    _allow_hidpi   = false;
     _allow_layered = false;
-    _stack_bottom = (void*)(&stack_bottom);
+    _stack_bottom  = (void*)(&stack_bottom);
 
     _logger = nullptr;
 

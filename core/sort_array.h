@@ -56,7 +56,7 @@ struct _DefaultComparator {
 template <
     class T,
     class Comparator = _DefaultComparator<T>,
-    bool Validate = SORT_ARRAY_VALIDATE_ENABLED>
+    bool Validate    = SORT_ARRAY_VALIDATE_ENABLED>
 class SortArray {
     enum {
         INTROSORT_THRESHOLD = 16
@@ -104,8 +104,8 @@ public:
         while (p_hole_idx > p_top_index
                && compare(p_array[p_first + parent], p_value)) {
             p_array[p_first + p_hole_idx] = p_array[p_first + parent];
-            p_hole_idx = parent;
-            parent = (p_hole_idx - 1) / 2;
+            p_hole_idx                    = parent;
+            parent                        = (p_hole_idx - 1) / 2;
         }
         p_array[p_first + p_hole_idx] = p_value;
     }
@@ -132,7 +132,7 @@ public:
         T p_value,
         T* p_array
     ) const {
-        int top_index = p_hole_idx;
+        int top_index    = p_hole_idx;
         int second_child = 2 * p_hole_idx + 2;
 
         while (second_child < p_len) {
@@ -144,8 +144,8 @@ public:
             }
 
             p_array[p_first + p_hole_idx] = p_array[p_first + second_child];
-            p_hole_idx = second_child;
-            second_child = 2 * (second_child + 1);
+            p_hole_idx                    = second_child;
+            second_child                  = 2 * (second_child + 1);
         }
 
         if (second_child == p_len) {
@@ -166,7 +166,7 @@ public:
         if (p_last - p_first < 2) {
             return;
         }
-        int len = p_last - p_first;
+        int len    = p_last - p_first;
         int parent = (len - 2) / 2;
 
         while (true) {
@@ -212,7 +212,7 @@ public:
     inline int partitioner(int p_first, int p_last, T p_pivot, T* p_array)
         const {
         const int unmodified_first = p_first;
-        const int unmodified_last = p_last;
+        const int unmodified_last  = p_last;
 
         while (true) {
             while (compare(p_array[p_first], p_pivot)) {
@@ -309,7 +309,7 @@ public:
                 ERR_BAD_COMPARE(next == 0);
             }
             p_array[p_last] = p_array[next];
-            p_last = next;
+            p_last          = next;
             next--;
         }
         p_array[p_last] = p_value;

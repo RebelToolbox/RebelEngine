@@ -50,7 +50,7 @@ void AudioEffectReverbInstance::process(
         r.set_dry(base->dry);
     }
 
-    int todo = p_frame_count;
+    int todo   = p_frame_count;
     int offset = 0;
 
     while (todo) {
@@ -64,7 +64,7 @@ void AudioEffectReverbInstance::process(
 
         for (int j = 0; j < to_mix; j++) {
             p_dst_frames[offset + j].l = tmp_dst[j];
-            tmp_src[j] = p_src_frames[offset + j].r;
+            tmp_src[j]                 = p_src_frames[offset + j].r;
         }
 
         reverb[1].process(tmp_src, tmp_dst, to_mix);
@@ -74,7 +74,7 @@ void AudioEffectReverbInstance::process(
         }
 
         offset += to_mix;
-        todo -= to_mix;
+        todo   -= to_mix;
     }
 }
 
@@ -280,12 +280,12 @@ void AudioEffectReverb::_bind_methods() {
 }
 
 AudioEffectReverb::AudioEffectReverb() {
-    predelay = 150;
+    predelay    = 150;
     predelay_fb = 0.4;
-    hpf = 0;
-    room_size = 0.8;
-    damping = 0.5;
-    spread = 1.0;
-    dry = 1.0;
-    wet = 0.5;
+    hpf         = 0;
+    room_size   = 0.8;
+    damping     = 0.5;
+    spread      = 1.0;
+    dry         = 1.0;
+    wet         = 0.5;
 }

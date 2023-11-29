@@ -10,7 +10,7 @@ struct ItemRef {
 
     void set_inactive() {
         tnode_id = BVHCommon::INACTIVE;
-        item_id = BVHCommon::INACTIVE;
+        item_id  = BVHCommon::INACTIVE;
     }
 };
 
@@ -80,7 +80,7 @@ public:
     void remove_item_unordered(uint32_t p_id) {
         BVH_ASSERT(p_id < num_items);
         num_items--;
-        aabbs[p_id] = aabbs[num_items];
+        aabbs[p_id]        = aabbs[num_items];
         item_ref_ids[p_id] = item_ref_ids[num_items];
     }
 
@@ -126,8 +126,8 @@ struct TNode {
 
     void clear() {
         num_children = 0;
-        parent_id = BVHCommon::INVALID;
-        height = 0; // or -1 for testing
+        parent_id    = BVHCommon::INVALID;
+        height       = 0; // or -1 for testing
 
         // for safety set to improbable value
         aabb.set_to_max_opposite_extents();
@@ -201,7 +201,7 @@ uint32_t _root_node_id[NUM_TREES];
 // but on the other hand over estimates the bounding box of nodes.
 // we can either use auto mode, where the expansion is based on the root node
 // size, or specify manually
-real_t _node_expansion = 0.5;
+real_t _node_expansion    = 0.5;
 bool _auto_node_expansion = true;
 
 // pairing expansion important for physics pairing

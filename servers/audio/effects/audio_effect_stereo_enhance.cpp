@@ -37,9 +37,9 @@ void AudioEffectStereoEnhanceInstance::process(
     AudioFrame* p_dst_frames,
     int p_frame_count
 ) {
-    float intensity = base->pan_pullout;
-    bool surround_mode = base->surround > 0;
-    float surround_amount = base->surround;
+    float intensity           = base->pan_pullout;
+    bool surround_mode        = base->surround > 0;
+    float surround_amount     = base->surround;
     unsigned int delay_frames = (base->time_pullout / 1000.0)
                               * AudioServer::get_singleton()->get_mix_rate();
 
@@ -103,9 +103,9 @@ Ref<AudioEffectInstance> AudioEffectStereoEnhance::instance() {
         ringbuff_size /= 2;
     }
 
-    ringbuff_size = 1 << bits;
+    ringbuff_size      = 1 << bits;
     ins->ringbuff_mask = ringbuff_size - 1;
-    ins->ringbuff_pos = 0;
+    ins->ringbuff_pos  = 0;
 
     ins->delay_ringbuff = memnew_arr(float, ringbuff_size);
 
@@ -197,7 +197,7 @@ void AudioEffectStereoEnhance::_bind_methods() {
 }
 
 AudioEffectStereoEnhance::AudioEffectStereoEnhance() {
-    pan_pullout = 1;
+    pan_pullout  = 1;
     time_pullout = 0;
-    surround = 0;
+    surround     = 0;
 }

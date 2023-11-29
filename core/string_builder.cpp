@@ -66,7 +66,7 @@ String StringBuilder::as_string() const {
     int current_position = 0;
 
     int godot_string_elem = 0;
-    int c_string_elem = 0;
+    int c_string_elem     = 0;
 
     for (int i = 0; i < appended_strings.size(); i++) {
         if (appended_strings[i] == -1) {

@@ -38,8 +38,8 @@ RandomPCG Math::default_rand(RandomPCG::DEFAULT_SEED, RandomPCG::DEFAULT_INC);
 
 uint32_t Math::rand_from_seed(uint64_t* seed) {
     RandomPCG rng = RandomPCG(*seed, RandomPCG::DEFAULT_INC);
-    uint32_t r = rng.rand();
-    *seed = rng.get_seed();
+    uint32_t r    = rng.rand();
+    *seed         = rng.get_seed();
     return r;
 }
 
@@ -56,7 +56,7 @@ uint32_t Math::rand() {
 }
 
 int Math::step_decimals(double p_step) {
-    static const int maxn = 10;
+    static const int maxn        = 10;
     static const double sd[maxn] = {
         0.9999, // somehow compensate for floating point error
         0.09999,
@@ -70,7 +70,7 @@ int Math::step_decimals(double p_step) {
         0.0000000009999
     };
 
-    double abs = Math::abs(p_step);
+    double abs  = Math::abs(p_step);
     double decs = abs - (int)abs; // Strip away integer part
     for (int i = 0; i < maxn; i++) {
         if (decs >= sd[i]) {
@@ -95,9 +95,9 @@ double Math::dectime(double p_value, double p_amount, double p_step) {
         "The `dectime()` function has been deprecated and will be removed in "
         "Godot 4.0. Use `move_toward()` instead."
     );
-    double sgn = p_value < 0 ? -1.0 : 1.0;
-    double val = Math::abs(p_value);
-    val -= p_amount * p_step;
+    double sgn  = p_value < 0 ? -1.0 : 1.0;
+    double val  = Math::abs(p_value);
+    val        -= p_amount * p_step;
     if (val < 0.0) {
         val = 0.0;
     }

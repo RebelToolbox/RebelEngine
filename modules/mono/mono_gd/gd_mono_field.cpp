@@ -525,7 +525,7 @@ void GDMonoField::set_value_from_variant(
             // System.Collections.Generic.Dictionary<TKey, TValue>
             if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(reftype
                 )) {
-                MonoReflectionType* key_reftype = nullptr;
+                MonoReflectionType* key_reftype   = nullptr;
                 MonoReflectionType* value_reftype = nullptr;
                 GDMonoUtils::Marshal::dictionary_get_key_value_types(
                     reftype,
@@ -700,16 +700,16 @@ IMonoClassMember::Visibility GDMonoField::get_visibility() {
 }
 
 GDMonoField::GDMonoField(MonoClassField* p_mono_field, GDMonoClass* p_owner) {
-    owner = p_owner;
-    mono_field = p_mono_field;
-    name = String::utf8(mono_field_get_name(mono_field));
-    MonoType* field_type = mono_field_get_type(mono_field);
-    type.type_encoding = mono_type_get_type(field_type);
+    owner                       = p_owner;
+    mono_field                  = p_mono_field;
+    name                        = String::utf8(mono_field_get_name(mono_field));
+    MonoType* field_type        = mono_field_get_type(mono_field);
+    type.type_encoding          = mono_type_get_type(field_type);
     MonoClass* field_type_class = mono_class_from_mono_type(field_type);
     type.type_class = GDMono::get_singleton()->get_class(field_type_class);
 
     attrs_fetched = false;
-    attributes = NULL;
+    attributes    = NULL;
 }
 
 GDMonoField::~GDMonoField() {

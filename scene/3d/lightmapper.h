@@ -75,7 +75,7 @@ public:
             const Vector3& org,
             const Vector3& dir,
             float tnear = 0.0f,
-            float tfar = INFINITY
+            float tfar  = INFINITY
         ) :
             org(org),
             tnear(tnear),
@@ -125,11 +125,11 @@ public:
     virtual void set_mesh_alpha_texture(
         Ref<Image> p_alpha_texture,
         unsigned int p_id
-    ) = 0;
+    )                     = 0;
     virtual void commit() = 0;
 
     virtual void set_mesh_filter(const Set<int>& p_mesh_ids) = 0;
-    virtual void clear_mesh_filter() = 0;
+    virtual void clear_mesh_filter()                         = 0;
 
     static Ref<LightmapRaycaster> create();
 };
@@ -195,8 +195,8 @@ public:
         Variant userdata;
     };
 
-    virtual void add_albedo_texture(Ref<Texture> p_texture) = 0;
-    virtual void add_emission_texture(Ref<Texture> p_texture) = 0;
+    virtual void add_albedo_texture(Ref<Texture> p_texture)        = 0;
+    virtual void add_emission_texture(Ref<Texture> p_texture)      = 0;
     virtual void add_mesh(const MeshData& p_mesh, Vector2i p_size) = 0;
     virtual void add_directional_light(
         bool p_bake_direct,
@@ -239,16 +239,16 @@ public:
         int p_max_texture_size,
         const Ref<Image>& p_environment_panorama,
         const Basis& p_environment_transform,
-        BakeStepFunc p_step_function = nullptr,
-        void* p_step_userdata = nullptr,
+        BakeStepFunc p_step_function    = nullptr,
+        void* p_step_userdata           = nullptr,
         BakeStepFunc p_substep_function = nullptr
     ) = 0;
 
-    virtual int get_bake_texture_count() const = 0;
-    virtual Ref<Image> get_bake_texture(int p_index) const = 0;
-    virtual int get_bake_mesh_count() const = 0;
-    virtual Variant get_bake_mesh_userdata(int p_index) const = 0;
-    virtual Rect2 get_bake_mesh_uv_scale(int p_index) const = 0;
+    virtual int get_bake_texture_count() const                 = 0;
+    virtual Ref<Image> get_bake_texture(int p_index) const     = 0;
+    virtual int get_bake_mesh_count() const                    = 0;
+    virtual Variant get_bake_mesh_userdata(int p_index) const  = 0;
+    virtual Rect2 get_bake_mesh_uv_scale(int p_index) const    = 0;
     virtual int get_bake_mesh_texture_slice(int p_index) const = 0;
 
     static Ref<Lightmapper> create();

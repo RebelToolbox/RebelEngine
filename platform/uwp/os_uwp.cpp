@@ -67,7 +67,7 @@ int OS_UWP::get_video_driver_count() const {
 
 Size2 OS_UWP::get_window_size() const {
     Size2 size;
-    size.width = video_mode.width;
+    size.width  = video_mode.width;
     size.height = video_mode.height;
     return size;
 }
@@ -78,13 +78,13 @@ int OS_UWP::get_current_video_driver() const {
 
 void OS_UWP::set_window_size(const Size2 p_size) {
     Windows::Foundation::Size new_size;
-    new_size.Width = p_size.width;
+    new_size.Width  = p_size.width;
     new_size.Height = p_size.height;
 
     ApplicationView ^ view = ApplicationView::GetForCurrentView();
 
     if (view->TryResizeView(new_size)) {
-        video_mode.width = p_size.width;
+        video_mode.width  = p_size.width;
         video_mode.height = p_size.height;
     }
 }
@@ -171,7 +171,7 @@ Error OS_UWP::initialize(
     int p_audio_driver
 ) {
     main_loop = NULL;
-    outside = true;
+    outside   = true;
 
     ContextEGL_UWP::Driver opengl_api_type = ContextEGL_UWP::GLES_2_0;
 
@@ -195,7 +195,7 @@ Error OS_UWP::initialize(
                     break;
                 }
 
-                p_video_driver = VIDEO_DRIVER_GLES2;
+                p_video_driver  = VIDEO_DRIVER_GLES2;
                 opengl_api_type = ContextEGL_UWP::GLES_2_0;
             } else {
                 gl_initialization_error = true;
@@ -212,7 +212,7 @@ Error OS_UWP::initialize(
                 break;
             } else {
                 if (GLOBAL_GET("rendering/quality/driver/fallback_to_gles2")) {
-                    p_video_driver = VIDEO_DRIVER_GLES2;
+                    p_video_driver  = VIDEO_DRIVER_GLES2;
                     opengl_api_type = ContextEGL_UWP::GLES_2_0;
                     continue;
                 } else {
@@ -250,12 +250,12 @@ Error OS_UWP::initialize(
     gl_context->set_use_vsync(video_mode.use_vsync);
 
     VideoMode vm;
-    vm.width = gl_context->get_window_width();
-    vm.height = gl_context->get_window_height();
+    vm.width     = gl_context->get_window_width();
+    vm.height    = gl_context->get_window_height();
     vm.resizable = false;
 
     ApplicationView ^ view = ApplicationView::GetForCurrentView();
-    vm.fullscreen = view->IsFullScreenMode;
+    vm.fullscreen          = view->IsFullScreenMode;
 
     view->SetDesiredBoundsMode(ApplicationViewBoundsMode::UseVisible);
     view->PreferredLaunchWindowingMode =
@@ -272,13 +272,13 @@ Error OS_UWP::initialize(
     }
 
     Windows::Foundation::Size desired;
-    desired.Width = p_desired.width;
+    desired.Width  = p_desired.width;
     desired.Height = p_desired.height;
 
     view->PreferredLaunchViewSize = desired;
 
     if (view->TryResizeView(desired)) {
-        vm.width = view->VisibleBounds.Width;
+        vm.width  = view->VisibleBounds.Width;
         vm.height = view->VisibleBounds.Height;
     }
 
@@ -311,7 +311,7 @@ Error OS_UWP::initialize(
     accelerometer = Accelerometer::GetDefault();
     if (accelerometer != nullptr) {
         // 60 FPS
-        accelerometer->ReportInterval = (1.0f / 60.0f) * 1000;
+        accelerometer->ReportInterval  = (1.0f / 60.0f) * 1000;
         accelerometer->ReadingChanged += ref new TypedEventHandler<
             Accelerometer ^,
             AccelerometerReadingChangedEventArgs ^>(
@@ -323,7 +323,7 @@ Error OS_UWP::initialize(
     magnetometer = Magnetometer::GetDefault();
     if (magnetometer != nullptr) {
         // 60 FPS
-        magnetometer->ReportInterval = (1.0f / 60.0f) * 1000;
+        magnetometer->ReportInterval  = (1.0f / 60.0f) * 1000;
         magnetometer->ReadingChanged += ref new TypedEventHandler<
             Magnetometer ^,
             MagnetometerReadingChangedEventArgs ^>(
@@ -335,7 +335,7 @@ Error OS_UWP::initialize(
     gyrometer = Gyrometer::GetDefault();
     if (gyrometer != nullptr) {
         // 60 FPS
-        gyrometer->ReportInterval = (1.0f / 60.0f) * 1000;
+        gyrometer->ReportInterval  = (1.0f / 60.0f) * 1000;
         gyrometer->ReadingChanged += ref new TypedEventHandler<
             Gyrometer ^,
             GyrometerReadingChangedEventArgs ^>(
@@ -356,7 +356,7 @@ Error OS_UWP::initialize(
 }
 
 void OS_UWP::set_clipboard(const String& p_text) {
-    DataPackage ^ clip = ref new DataPackage();
+    DataPackage ^ clip       = ref new DataPackage();
     clip->RequestedOperation = DataPackageOperation::Copy;
     clip->SetText(ref new Platform::String((const wchar_t*)p_text.c_str()));
 
@@ -553,11 +553,11 @@ OS::Date OS_UWP::get_date(bool utc) const {
     }
 
     Date date;
-    date.day = systemtime.wDay;
-    date.month = Month(systemtime.wMonth);
+    date.day     = systemtime.wDay;
+    date.month   = Month(systemtime.wMonth);
     date.weekday = Weekday(systemtime.wDayOfWeek);
-    date.year = systemtime.wYear;
-    date.dst = false;
+    date.year    = systemtime.wYear;
+    date.dst     = false;
     return date;
 }
 
@@ -571,8 +571,8 @@ OS::Time OS_UWP::get_time(bool utc) const {
 
     Time time;
     time.hour = systemtime.wHour;
-    time.min = systemtime.wMinute;
-    time.sec = systemtime.wSecond;
+    time.min  = systemtime.wMinute;
+    time.sec  = systemtime.wSecond;
     return time;
 }
 
@@ -604,13 +604,13 @@ uint64_t OS_UWP::get_unix_time() const {
     SystemTimeToFileTime(&st, &ft);
 
     SYSTEMTIME ep;
-    ep.wYear = 1970;
-    ep.wMonth = 1;
-    ep.wDayOfWeek = 4;
-    ep.wDay = 1;
-    ep.wHour = 0;
-    ep.wMinute = 0;
-    ep.wSecond = 0;
+    ep.wYear         = 1970;
+    ep.wMonth        = 1;
+    ep.wDayOfWeek    = 4;
+    ep.wDay          = 1;
+    ep.wHour         = 0;
+    ep.wMinute       = 0;
+    ep.wSecond       = 0;
     ep.wMilliseconds = 0;
     FILETIME fep;
     SystemTimeToFileTime(&ep, &fep);
@@ -846,7 +846,7 @@ void OS_UWP::hide_virtual_keyboard() {
 
 static String format_error_message(DWORD id) {
     LPWSTR messageBuffer = NULL;
-    size_t size = FormatMessageW(
+    size_t size          = FormatMessageW(
         FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM
             | FORMAT_MESSAGE_IGNORE_INSERTS,
         NULL,
@@ -918,7 +918,7 @@ void OS_UWP::run() {
 
     uint64_t last_ticks = get_ticks_usec();
 
-    int frames = 0;
+    int frames     = 0;
     uint64_t frame = 0;
 
     while (!force_quit) {
@@ -966,17 +966,17 @@ int OS_UWP::get_power_percent_left() {
 
 OS_UWP::OS_UWP() {
     key_event_pos = 0;
-    force_quit = false;
-    alt_mem = false;
-    gr_mem = false;
-    shift_mem = false;
-    control_mem = false;
-    meta_mem = false;
-    minimized = false;
+    force_quit    = false;
+    alt_mem       = false;
+    gr_mem        = false;
+    shift_mem     = false;
+    control_mem   = false;
+    meta_mem      = false;
+    minimized     = false;
 
-    pressrc = 0;
+    pressrc     = 0;
     old_invalid = true;
-    mouse_mode = MOUSE_MODE_VISIBLE;
+    mouse_mode  = MOUSE_MODE_VISIBLE;
 #ifdef STDOUT_FILE
     stdo = fopen("stdout.txt", "wb");
 #endif
@@ -985,7 +985,7 @@ OS_UWP::OS_UWP() {
 
     display_request = ref new Windows::System::Display::DisplayRequest();
 
-    managed_object = ref new ManagedType;
+    managed_object     = ref new ManagedType;
     managed_object->os = this;
 
     mouse_mode_changed =

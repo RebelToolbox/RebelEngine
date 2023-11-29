@@ -53,7 +53,7 @@ void GDAPI godot_dictionary_new_copy(
     godot_dictionary* r_dest,
     const godot_dictionary* p_src
 ) {
-    Dictionary* dest = (Dictionary*)r_dest;
+    Dictionary* dest      = (Dictionary*)r_dest;
     const Dictionary* src = (const Dictionary*)p_src;
     memnew_placement(dest, Dictionary(*src));
 }
@@ -95,7 +95,7 @@ godot_bool GDAPI godot_dictionary_has(
     const godot_variant* p_key
 ) {
     const Dictionary* self = (const Dictionary*)p_self;
-    const Variant* key = (const Variant*)p_key;
+    const Variant* key     = (const Variant*)p_key;
     return self->has(*key);
 }
 
@@ -104,13 +104,13 @@ godot_bool GDAPI godot_dictionary_has_all(
     const godot_array* p_keys
 ) {
     const Dictionary* self = (const Dictionary*)p_self;
-    const Array* keys = (const Array*)p_keys;
+    const Array* keys      = (const Array*)p_keys;
     return self->has_all(*keys);
 }
 
 void GDAPI
 godot_dictionary_erase(godot_dictionary* p_self, const godot_variant* p_key) {
-    Dictionary* self = (Dictionary*)p_self;
+    Dictionary* self   = (Dictionary*)p_self;
     const Variant* key = (const Variant*)p_key;
     self->erase(*key);
 }
@@ -139,9 +139,9 @@ godot_variant GDAPI godot_dictionary_get(
     const godot_variant* p_key
 ) {
     godot_variant raw_dest;
-    Variant* dest = (Variant*)&raw_dest;
+    Variant* dest          = (Variant*)&raw_dest;
     const Dictionary* self = (const Dictionary*)p_self;
-    const Variant* key = (const Variant*)p_key;
+    const Variant* key     = (const Variant*)p_key;
     memnew_placement(dest, Variant(self->operator[](*key)));
     return raw_dest;
 }
@@ -151,9 +151,9 @@ void GDAPI godot_dictionary_set(
     const godot_variant* p_key,
     const godot_variant* p_value
 ) {
-    Dictionary* self = (Dictionary*)p_self;
-    const Variant* key = (const Variant*)p_key;
-    const Variant* value = (const Variant*)p_value;
+    Dictionary* self       = (Dictionary*)p_self;
+    const Variant* key     = (const Variant*)p_key;
+    const Variant* value   = (const Variant*)p_value;
     self->operator[](*key) = *value;
 }
 
@@ -161,7 +161,7 @@ godot_variant GDAPI* godot_dictionary_operator_index(
     godot_dictionary* p_self,
     const godot_variant* p_key
 ) {
-    Dictionary* self = (Dictionary*)p_self;
+    Dictionary* self   = (Dictionary*)p_self;
     const Variant* key = (const Variant*)p_key;
     return (godot_variant*)&self->operator[](*key);
 }
@@ -171,7 +171,7 @@ const godot_variant GDAPI* godot_dictionary_operator_index_const(
     const godot_variant* p_key
 ) {
     const Dictionary* self = (const Dictionary*)p_self;
-    const Variant* key = (const Variant*)p_key;
+    const Variant* key     = (const Variant*)p_key;
     return (const godot_variant*)&self->operator[](*key);
 }
 
@@ -179,7 +179,7 @@ godot_variant GDAPI* godot_dictionary_next(
     const godot_dictionary* p_self,
     const godot_variant* p_key
 ) {
-    Dictionary* self = (Dictionary*)p_self;
+    Dictionary* self   = (Dictionary*)p_self;
     const Variant* key = (const Variant*)p_key;
     return (godot_variant*)self->next(key);
 }
@@ -189,13 +189,13 @@ godot_bool GDAPI godot_dictionary_operator_equal(
     const godot_dictionary* p_b
 ) {
     const Dictionary* self = (const Dictionary*)p_self;
-    const Dictionary* b = (const Dictionary*)p_b;
+    const Dictionary* b    = (const Dictionary*)p_b;
     return *self == *b;
 }
 
 godot_string GDAPI godot_dictionary_to_json(const godot_dictionary* p_self) {
     godot_string raw_dest;
-    String* dest = (String*)&raw_dest;
+    String* dest           = (String*)&raw_dest;
     const Dictionary* self = (const Dictionary*)p_self;
     memnew_placement(dest, String(JSON::print(Variant(*self))));
     return raw_dest;
@@ -207,7 +207,7 @@ godot_bool GDAPI godot_dictionary_erase_with_return(
     godot_dictionary* p_self,
     const godot_variant* p_key
 ) {
-    Dictionary* self = (Dictionary*)p_self;
+    Dictionary* self   = (Dictionary*)p_self;
     const Variant* key = (const Variant*)p_key;
     return self->erase(*key);
 }
@@ -218,8 +218,8 @@ godot_variant GDAPI godot_dictionary_get_with_default(
     const godot_variant* p_default
 ) {
     const Dictionary* self = (const Dictionary*)p_self;
-    const Variant* key = (const Variant*)p_key;
-    const Variant* def = (const Variant*)p_default;
+    const Variant* key     = (const Variant*)p_key;
+    const Variant* def     = (const Variant*)p_default;
 
     godot_variant raw_dest;
     Variant* dest = (Variant*)&raw_dest;

@@ -52,8 +52,8 @@ public final class PermissionsUtil {
     private static final String TAG = PermissionsUtil.class.getSimpleName();
 
     static final int REQUEST_RECORD_AUDIO_PERMISSION = 1;
-    static final int REQUEST_CAMERA_PERMISSION = 2;
-    static final int REQUEST_VIBRATE_PERMISSION = 3;
+    static final int REQUEST_CAMERA_PERMISSION       = 2;
+    static final int REQUEST_VIBRATE_PERMISSION      = 3;
     static final int REQUEST_ALL_PERMISSION_REQ_CODE = 1001;
 
     private PermissionsUtil() {}
@@ -247,7 +247,7 @@ public final class PermissionsUtil {
     private static String[] getManifestPermissions(Activity activity)
         throws PackageManager.NameNotFoundException {
         PackageManager packageManager = activity.getPackageManager();
-        PackageInfo packageInfo = packageManager.getPackageInfo(
+        PackageInfo packageInfo       = packageManager.getPackageInfo(
             activity.getPackageName(),
             PackageManager.GET_PERMISSIONS
         );

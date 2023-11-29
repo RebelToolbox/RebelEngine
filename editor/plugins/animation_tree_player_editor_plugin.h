@@ -54,7 +54,7 @@ class AnimationTreePlayerEditor : public Control {
     };
 
     enum {
-        MENU_GRAPH_CLEAR = 100,
+        MENU_GRAPH_CLEAR       = 100,
         MENU_IMPORT_ANIMATIONS = 101,
         NODE_DISCONNECT,
         NODE_RENAME,

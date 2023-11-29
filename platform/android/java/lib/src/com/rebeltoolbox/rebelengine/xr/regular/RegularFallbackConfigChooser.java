@@ -67,7 +67,7 @@ public class RegularFallbackConfigChooser extends RegularConfigChooser {
         EGLConfig ec = super.chooseConfig(egl, display, configs);
         if (ec == null) {
             Log.w(TAG, "Trying ConfigChooser fallback");
-            ec = fallback.chooseConfig(egl, display, configs);
+            ec             = fallback.chooseConfig(egl, display, configs);
             GLUtils.use_32 = false;
         }
         return ec;

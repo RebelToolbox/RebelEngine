@@ -43,7 +43,7 @@ class SpriteFrames : public Resource {
         Vector<Ref<Texture>> frames;
 
         Anim() {
-            loop = true;
+            loop  = true;
             speed = 5;
         }
 
@@ -198,7 +198,7 @@ public:
 
     void play(
         const StringName& p_animation = StringName(),
-        const bool p_backwards = false
+        const bool p_backwards        = false
     );
     void stop();
     bool is_playing() const;

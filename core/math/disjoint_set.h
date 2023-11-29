@@ -44,7 +44,7 @@ class DisjointSet {
     struct Element {
         T object;
         Element* parent = nullptr;
-        int rank = 0;
+        int rank        = 0;
     };
 
     typedef Map<T, Element*, C, AL> MapT;
@@ -74,7 +74,7 @@ public:
 template <typename T, class C, class AL>
 DisjointSet<T, C, AL>::~DisjointSet() {
     for (typename MapT::Element* itr = elements.front(); itr != nullptr;
-         itr = itr->next()) {
+         itr                         = itr->next()) {
         memdelete_allocator<Element, AL>(itr->value());
     }
 }
@@ -100,8 +100,8 @@ typename DisjointSet<T, C, AL>::Element* DisjointSet<T, C, AL>::insert_or_get(
     }
 
     Element* new_element = memnew_allocator(Element, AL);
-    new_element->object = object;
-    new_element->parent = new_element;
+    new_element->object  = object;
+    new_element->parent  = new_element;
     elements.insert(object, new_element);
 
     return new_element;
@@ -136,7 +136,7 @@ template <typename T, class C, class AL>
 void DisjointSet<T, C, AL>::get_representatives(Vector<T>& out_representatives
 ) {
     for (typename MapT::Element* itr = elements.front(); itr != nullptr;
-         itr = itr->next()) {
+         itr                         = itr->next()) {
         Element* element = itr->value();
         if (element->parent == element) {
             out_representatives.push_back(element->object);
@@ -156,7 +156,7 @@ void DisjointSet<T, C, AL>::get_members(
     ERR_FAIL_COND(rep_element->parent != rep_element);
 
     for (typename MapT::Element* itr = elements.front(); itr != nullptr;
-         itr = itr->next()) {
+         itr                         = itr->next()) {
         Element* parent = get_parent(itr->value());
         if (parent == rep_element) {
             out_members.push_back(itr->key());

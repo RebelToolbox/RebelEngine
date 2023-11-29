@@ -359,7 +359,7 @@ public:
         double p_weight
     ) {
         double difference = fmod(p_to - p_from, Math_TAU);
-        double distance = fmod(2.0 * difference, Math_TAU) - difference;
+        double distance   = fmod(2.0 * difference, Math_TAU) - difference;
         return p_from + distance * p_weight;
     }
 
@@ -539,7 +539,7 @@ public:
     static _ALWAYS_INLINE_ bool is_equal_approx_ratio(
         real_t a,
         real_t b,
-        real_t epsilon = CMP_EPSILON,
+        real_t epsilon     = CMP_EPSILON,
         real_t min_epsilon = CMP_EPSILON
     ) {
         // this is an approximate way to check that numbers are close, as a
@@ -549,8 +549,8 @@ public:
         if (diff == 0.0 || diff < min_epsilon) {
             return true;
         }
-        real_t avg_size = (abs(a) + abs(b)) / 2.0;
-        diff /= avg_size;
+        real_t avg_size  = (abs(a) + abs(b)) / 2.0;
+        diff            /= avg_size;
         return diff < epsilon;
     }
 
@@ -620,7 +620,7 @@ public:
             uint32_t i;
         } u;
 
-        u.f = g;
+        u.f  = g;
         u.i &= 2147483647u;
         return u.f;
     }
@@ -631,7 +631,7 @@ public:
             uint64_t i;
         } u;
 
-        u.d = g;
+        u.d  = g;
         u.i &= (uint64_t)9223372036854775807ll;
         return u.d;
     }
@@ -696,7 +696,7 @@ public:
 
         ci.fv = f;
 
-        uint32_t x = ci.ui;
+        uint32_t x    = ci.ui;
         uint32_t sign = (unsigned short)(x >> 31);
         uint32_t mantissa;
         uint32_t exp;
@@ -705,7 +705,7 @@ public:
         // get mantissa
         mantissa = x & ((1 << 23) - 1);
         // get exponent bits
-        exp = x & (0xFF << 23);
+        exp      = x & (0xFF << 23);
         if (exp >= 0x47800000) {
             // check if the original single precision float number is a NaN
             if (mantissa && (exp == (0xFF << 23))) {

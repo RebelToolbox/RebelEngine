@@ -91,36 +91,36 @@ enum PropertyHint {
 };
 
 enum PropertyUsageFlags {
-    PROPERTY_USAGE_STORAGE = 1,
-    PROPERTY_USAGE_EDITOR = 2,
-    PROPERTY_USAGE_NETWORK = 4,
-    PROPERTY_USAGE_EDITOR_HELPER = 8,
-    PROPERTY_USAGE_CHECKABLE = 16,         // used for editing global variables
-    PROPERTY_USAGE_CHECKED = 32,           // used for editing global variables
+    PROPERTY_USAGE_STORAGE           = 1,
+    PROPERTY_USAGE_EDITOR            = 2,
+    PROPERTY_USAGE_NETWORK           = 4,
+    PROPERTY_USAGE_EDITOR_HELPER     = 8,
+    PROPERTY_USAGE_CHECKABLE         = 16, // used for editing global variables
+    PROPERTY_USAGE_CHECKED           = 32, // used for editing global variables
     PROPERTY_USAGE_INTERNATIONALIZED = 64, // hint for internationalized
                                            // strings
-    PROPERTY_USAGE_GROUP = 128, // used for grouping props in the editor
+    PROPERTY_USAGE_GROUP    = 128, // used for grouping props in the editor
     PROPERTY_USAGE_CATEGORY = 256,
     // FIXME: Drop in 4.0, possibly reorder other flags?
     // Those below are deprecated thanks to ClassDB's now class value cache
     // PROPERTY_USAGE_STORE_IF_NONZERO = 512, //only store if nonzero
     // PROPERTY_USAGE_STORE_IF_NONONE = 1024, //only store if false
-    PROPERTY_USAGE_NO_INSTANCE_STATE = 2048,
-    PROPERTY_USAGE_RESTART_IF_CHANGED = 4096,
-    PROPERTY_USAGE_SCRIPT_VARIABLE = 8192,
-    PROPERTY_USAGE_STORE_IF_NULL = 16384,
-    PROPERTY_USAGE_ANIMATE_AS_TRIGGER = 32768,
+    PROPERTY_USAGE_NO_INSTANCE_STATE      = 2048,
+    PROPERTY_USAGE_RESTART_IF_CHANGED     = 4096,
+    PROPERTY_USAGE_SCRIPT_VARIABLE        = 8192,
+    PROPERTY_USAGE_STORE_IF_NULL          = 16384,
+    PROPERTY_USAGE_ANIMATE_AS_TRIGGER     = 32768,
     PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED = 65536,
-    PROPERTY_USAGE_SCRIPT_DEFAULT_VALUE = 1 << 17,
-    PROPERTY_USAGE_CLASS_IS_ENUM = 1 << 18,
-    PROPERTY_USAGE_NIL_IS_VARIANT = 1 << 19,
-    PROPERTY_USAGE_INTERNAL = 1 << 20,
+    PROPERTY_USAGE_SCRIPT_DEFAULT_VALUE   = 1 << 17,
+    PROPERTY_USAGE_CLASS_IS_ENUM          = 1 << 18,
+    PROPERTY_USAGE_NIL_IS_VARIANT         = 1 << 19,
+    PROPERTY_USAGE_INTERNAL               = 1 << 20,
     PROPERTY_USAGE_DO_NOT_SHARE_ON_DUPLICATE =
         1 << 21, // If the object is duplicated also this property will be
                  // duplicated
-    PROPERTY_USAGE_HIGH_END_GFX = 1 << 22,
+    PROPERTY_USAGE_HIGH_END_GFX              = 1 << 22,
     PROPERTY_USAGE_NODE_PATH_FROM_SCENE_ROOT = 1 << 23,
-    PROPERTY_USAGE_RESOURCE_NOT_PERSISTENT = 1 << 24,
+    PROPERTY_USAGE_RESOURCE_NOT_PERSISTENT   = 1 << 24,
     PROPERTY_USAGE_KEYING_INCREMENTS =
         1 << 25, // Used in inspector to increment property when keyed in
                  // animation player
@@ -142,8 +142,8 @@ struct PropertyInfo {
     uint32_t usage;
 
     _FORCE_INLINE_ PropertyInfo added_usage(int p_fl) const {
-        PropertyInfo pi = *this;
-        pi.usage |= p_fl;
+        PropertyInfo pi  = *this;
+        pi.usage        |= p_fl;
         return pi;
     }
 
@@ -159,9 +159,9 @@ struct PropertyInfo {
     PropertyInfo(
         Variant::Type p_type,
         const String p_name,
-        PropertyHint p_hint = PROPERTY_HINT_NONE,
-        const String& p_hint_string = "",
-        uint32_t p_usage = PROPERTY_USAGE_DEFAULT,
+        PropertyHint p_hint            = PROPERTY_HINT_NONE,
+        const String& p_hint_string    = "",
+        uint32_t p_usage               = PROPERTY_USAGE_DEFAULT,
         const StringName& p_class_name = StringName()
     ) :
         type(p_type),
@@ -400,7 +400,7 @@ struct GetTypeInfo;
 #define MAKE_TYPE_INFO_WITH_META(m_type, m_var_type, m_metadata)               \
     template <>                                                                \
     struct GetTypeInfo<m_type> {                                               \
-        static const Variant::Type VARIANT_TYPE = m_var_type;                  \
+        static const Variant::Type VARIANT_TYPE       = m_var_type;            \
         static const GodotTypeInfo::Metadata METADATA = m_metadata;            \
         static inline PropertyInfo get_class_info() {                          \
             return PropertyInfo(VARIANT_TYPE, String());                       \
@@ -408,7 +408,7 @@ struct GetTypeInfo;
     };                                                                         \
     template <>                                                                \
     struct GetTypeInfo<const m_type&> {                                        \
-        static const Variant::Type VARIANT_TYPE = m_var_type;                  \
+        static const Variant::Type VARIANT_TYPE       = m_var_type;            \
         static const GodotTypeInfo::Metadata METADATA = m_metadata;            \
         static inline PropertyInfo get_class_info() {                          \
             return PropertyInfo(VARIANT_TYPE, String());                       \

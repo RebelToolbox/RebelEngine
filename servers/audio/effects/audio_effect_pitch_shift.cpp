@@ -324,9 +324,9 @@ void AudioEffectPitchShiftInstance::process(
 Ref<AudioEffectInstance> AudioEffectPitchShift::instance() {
     Ref<AudioEffectPitchShiftInstance> ins;
     ins.instance();
-    ins->base = Ref<AudioEffectPitchShift>(this);
+    ins->base                                = Ref<AudioEffectPitchShift>(this);
     static const int fft_sizes[FFT_SIZE_MAX] = {256, 512, 1024, 2048, 4096};
-    ins->fft_size = fft_sizes[fft_size];
+    ins->fft_size                            = fft_sizes[fft_size];
 
     return ins;
 }
@@ -426,10 +426,10 @@ void AudioEffectPitchShift::_bind_methods() {
 }
 
 AudioEffectPitchShift::AudioEffectPitchShift() {
-    pitch_scale = 1.0;
+    pitch_scale  = 1.0;
     oversampling = 4;
-    fft_size = FFT_SIZE_2048;
-    wet = 0.0;
-    dry = 0.0;
-    filter = false;
+    fft_size     = FFT_SIZE_2048;
+    wet          = 0.0;
+    dry          = 0.0;
+    filter       = false;
 }

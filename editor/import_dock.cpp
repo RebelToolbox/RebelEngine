@@ -68,7 +68,7 @@ public:
 
     void _get_property_list(List<PropertyInfo>* p_list) const {
         for (const List<PropertyInfo>::Element* E = properties.front(); E;
-             E = E->next()) {
+             E                                    = E->next()) {
             if (!importer->get_option_visibility(E->get().name, values)) {
                 continue;
             }
@@ -121,7 +121,7 @@ void ImportDock::set_edit_path(const String& p_path) {
     List<Pair<String, String>> importer_names;
 
     for (List<Ref<ResourceImporter>>::Element* E = importers.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         importer_names.push_back(Pair<String, String>(
             E->get()->get_visible_name(),
             E->get()->get_importer_name()
@@ -133,7 +133,7 @@ void ImportDock::set_edit_path(const String& p_path) {
     import_as->clear();
 
     for (List<Pair<String, String>>::Element* E = importer_names.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         import_as->add_item(E->get().first);
         import_as->set_item_metadata(
             import_as->get_item_count() - 1,
@@ -176,7 +176,7 @@ void ImportDock::_update_options(const Ref<ConfigFile>& p_config) {
     params->checked.clear();
 
     for (List<ResourceImporter::ImportOption>::Element* E = options.front(); E;
-         E = E->next()) {
+         E                                                = E->next()) {
         params->properties.push_back(E->get().option);
         if (p_config.is_valid()
             && p_config->has_section_key("params", E->get().option.name)) {
@@ -248,12 +248,12 @@ void ImportDock::set_edit_multiple_paths(const Vector<String>& p_paths) {
     params->checked.clear();
 
     for (List<ResourceImporter::ImportOption>::Element* E = options.front(); E;
-         E = E->next()) {
+         E                                                = E->next()) {
         params->properties.push_back(E->get().option);
 
         if (value_frequency.has(E->get().option.name)) {
             Dictionary d = value_frequency[E->get().option.name];
-            int freq = 0;
+            int freq     = 0;
             List<Variant> v;
             d.get_key_list(&v);
             Variant value;
@@ -280,7 +280,7 @@ void ImportDock::set_edit_multiple_paths(const Vector<String>& p_paths) {
     List<Pair<String, String>> importer_names;
 
     for (List<Ref<ResourceImporter>>::Element* E = importers.front(); E;
-         E = E->next()) {
+         E                                       = E->next()) {
         importer_names.push_back(Pair<String, String>(
             E->get()->get_visible_name(),
             E->get()->get_importer_name()
@@ -292,7 +292,7 @@ void ImportDock::set_edit_multiple_paths(const Vector<String>& p_paths) {
     import_as->clear();
 
     for (List<Pair<String, String>>::Element* E = importer_names.front(); E;
-         E = E->next()) {
+         E                                      = E->next()) {
         import_as->add_item(E->get().first);
         import_as->set_item_metadata(
             import_as->get_item_count() - 1,
@@ -491,7 +491,7 @@ static bool _find_owners(
 }
 
 void ImportDock::_reimport_attempt() {
-    bool need_restart = false;
+    bool need_restart      = false;
     bool used_in_resources = false;
 
     String importer_name;

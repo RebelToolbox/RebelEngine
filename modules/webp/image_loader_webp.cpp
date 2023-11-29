@@ -56,11 +56,11 @@ static PoolVector<uint8_t> _webp_lossy_pack(
     }
 
     Size2 s(img->get_width(), img->get_height());
-    PoolVector<uint8_t> data = img->get_data();
+    PoolVector<uint8_t> data    = img->get_data();
     PoolVector<uint8_t>::Read r = data.read();
 
     uint8_t* dst_buff = nullptr;
-    size_t dst_size = 0;
+    size_t dst_size   = 0;
     if (img->get_format() == Image::FORMAT_RGB8) {
         dst_size = WebPEncodeRGB(
             r.ptr(),
@@ -85,10 +85,10 @@ static PoolVector<uint8_t> _webp_lossy_pack(
     PoolVector<uint8_t> dst;
     dst.resize(4 + dst_size);
     PoolVector<uint8_t>::Write w = dst.write();
-    w[0] = 'W';
-    w[1] = 'E';
-    w[2] = 'B';
-    w[3] = 'P';
+    w[0]                         = 'W';
+    w[1]                         = 'E';
+    w[2]                         = 'B';
+    w[3]                         = 'P';
     memcpy(&w[4], dst_buff, dst_size);
     WebPFree(dst_buff);
     w.release();
@@ -114,7 +114,7 @@ static PoolVector<uint8_t> _webp_lossless_pack(const Ref<Image>& p_image) {
     }
 
     Size2 s(img->get_width(), img->get_height());
-    PoolVector<uint8_t> data = img->get_data();
+    PoolVector<uint8_t> data    = img->get_data();
     PoolVector<uint8_t>::Read r = data.read();
 
     // we need to use the more complex API in order to access the 'exact'
@@ -129,11 +129,11 @@ static PoolVector<uint8_t> _webp_lossless_pack(const Ref<Image>& p_image) {
     }
 
     WebPMemoryWriter wrt;
-    config.exact = 1;
-    pic.use_argb = 1;
-    pic.width = s.width;
-    pic.height = s.height;
-    pic.writer = WebPMemoryWrite;
+    config.exact   = 1;
+    pic.use_argb   = 1;
+    pic.width      = s.width;
+    pic.height     = s.height;
+    pic.writer     = WebPMemoryWrite;
     pic.custom_ptr = &wrt;
     WebPMemoryWriterInit(&wrt);
 
@@ -158,10 +158,10 @@ static PoolVector<uint8_t> _webp_lossless_pack(const Ref<Image>& p_image) {
     PoolVector<uint8_t> dst;
     dst.resize(4 + wrt.size);
     PoolVector<uint8_t>::Write w = dst.write();
-    w[0] = 'W';
-    w[1] = 'E';
-    w[2] = 'B';
-    w[3] = 'P';
+    w[0]                         = 'W';
+    w[1]                         = 'E';
+    w[2]                         = 'B';
+    w[3]                         = 'P';
     memcpy(&w[4], wrt.mem, wrt.size);
     w.release();
     WebPMemoryWriterClear(&wrt);
@@ -326,7 +326,7 @@ void ImageLoaderWEBP::get_recognized_extensions(List<String>* p_extensions
 
 ImageLoaderWEBP::ImageLoaderWEBP() {
     Image::_webp_mem_loader_func = _webp_mem_loader_func;
-    Image::webp_lossy_packer = _webp_lossy_pack;
-    Image::webp_lossless_packer = _webp_lossless_pack;
-    Image::webp_unpacker = _webp_lossy_unpack;
+    Image::webp_lossy_packer     = _webp_lossy_pack;
+    Image::webp_lossless_packer  = _webp_lossless_pack;
+    Image::webp_unpacker         = _webp_lossy_unpack;
 }

@@ -330,9 +330,9 @@ public:
 
     template <class T>
     T* alloc_node() {
-        T* node = memnew(T);
+        T* node    = memnew(T);
         node->next = nodes;
-        nodes = node;
+        nodes      = node;
         return node;
     }
 
@@ -474,7 +474,7 @@ public:
     struct ConstantNode : public Node {
         DataType datatype;
         String struct_name = "";
-        int array_size = 0;
+        int array_size     = 0;
 
         union Value {
             bool boolean;
@@ -823,13 +823,13 @@ private:
     TkPos _get_tkpos() {
         TkPos tkp;
         tkp.char_idx = char_idx;
-        tkp.tk_line = tk_line;
+        tkp.tk_line  = tk_line;
         return tkp;
     }
 
     void _set_tkpos(TkPos p_pos) {
         char_idx = p_pos.char_idx;
-        tk_line = p_pos.tk_line;
+        tk_line  = p_pos.tk_line;
     }
 
     void _set_error(const String& p_str) {
@@ -838,8 +838,8 @@ private:
         }
 
         error_line = tk_line;
-        error_set = true;
-        error_str = p_str;
+        error_set  = true;
+        error_str  = p_str;
     }
 
     static const char* token_names[TK_MAX];
@@ -866,10 +866,10 @@ private:
         const BlockNode* p_block,
         const Map<StringName, BuiltInInfo>& p_builtin_types,
         const StringName& p_identifier,
-        DataType* r_data_type = nullptr,
-        IdentifierType* r_type = nullptr,
-        bool* r_is_const = nullptr,
-        int* r_array_size = nullptr,
+        DataType* r_data_type     = nullptr,
+        IdentifierType* r_type    = nullptr,
+        bool* r_is_const          = nullptr,
+        int* r_array_size         = nullptr,
         StringName* r_struct_name = nullptr
     );
     bool _is_operator_assign(Operator p_op) const;
@@ -961,8 +961,8 @@ private:
     Error _parse_block(
         BlockNode* p_block,
         const Map<StringName, BuiltInInfo>& p_builtin_types,
-        bool p_just_one = false,
-        bool p_can_break = false,
+        bool p_just_one     = false,
+        bool p_can_break    = false,
         bool p_can_continue = false
     );
     String _get_shader_type_list(const Set<String>& p_shader_types) const;

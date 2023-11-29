@@ -156,7 +156,7 @@ bool test_rotation(Vector3 deg_original_euler, RotOrder rot_order) {
 
     // Euler to rotation
     const Vector3 original_euler = deg2rad(deg_original_euler);
-    const Basis to_rotation = EulerToBasis(rot_order, original_euler);
+    const Basis to_rotation      = EulerToBasis(rot_order, original_euler);
 
     // Euler from rotation
     const Vector3 euler_from_rotation = BasisToEuler(rot_order, to_rotation);
@@ -328,8 +328,8 @@ void test_euler_conversion() {
                 );
                 OS::get_singleton()->print("------------>\n");
                 OS::get_singleton()->print("------------>\n");
-                failed += 1;
-                success = false;
+                failed  += 1;
+                success  = false;
             }
         }
 

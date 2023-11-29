@@ -36,7 +36,7 @@
 #include <emscripten/emscripten.h>
 #include <stdlib.h>
 
-static OS_JavaScript* os = NULL;
+static OS_JavaScript* os     = NULL;
 static uint64_t target_ticks = 0;
 
 void exit_callback() {

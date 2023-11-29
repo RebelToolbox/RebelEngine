@@ -37,10 +37,10 @@ void AudioEffectEQInstance::process(
     AudioFrame* p_dst_frames,
     int p_frame_count
 ) {
-    int band_count = bands[0].size();
+    int band_count          = bands[0].size();
     EQ::BandProcess* proc_l = bands[0].ptrw();
     EQ::BandProcess* proc_r = bands[1].ptrw();
-    float* bgain = gains.ptrw();
+    float* bgain            = gains.ptrw();
     for (int i = 0; i < band_count; i++) {
         bgain[i] = Math::db2linear(base->gain[i]);
     }
@@ -146,7 +146,7 @@ AudioEffectEQ::AudioEffectEQ(EQ::Preset p_preset) {
     gain.resize(eq.get_band_count());
     for (int i = 0; i < gain.size(); i++) {
         gain.write[i] = 0.0;
-        String name = "band_db/" + itos(eq.get_band_frequency(i)) + "_hz";
+        String name   = "band_db/" + itos(eq.get_band_frequency(i)) + "_hz";
         prop_band_map[name] = i;
         band_names.push_back(name);
     }

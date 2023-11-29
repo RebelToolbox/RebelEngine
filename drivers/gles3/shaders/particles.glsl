@@ -72,18 +72,18 @@ uint hash(uint x) {
 void main() {
 #ifdef PARTICLES_COPY
 
-    out_color = color;
+    out_color           = color;
     out_velocity_active = velocity_active;
-    out_custom = custom;
-    out_xform_1 = xform_1;
-    out_xform_2 = xform_2;
-    out_xform_3 = xform_3;
+    out_custom          = custom;
+    out_xform_1         = xform_1;
+    out_xform_2         = xform_2;
+    out_xform_3         = xform_3;
 
 #else
 
-    bool apply_forces = true;
+    bool apply_forces   = true;
     bool apply_velocity = true;
-    float local_delta = delta;
+    float local_delta   = delta;
 
     float mass = 1.0;
 
@@ -94,15 +94,15 @@ void main() {
         if (restart_phase >= system_phase) {
             seed -= uint(1);
         }
-        seed *= uint(total_particles);
-        seed += uint(gl_VertexID);
-        float random = float(hash(seed) % uint(65536)) / 65536.0;
+        seed          *= uint(total_particles);
+        seed          += uint(gl_VertexID);
+        float random   = float(hash(seed) % uint(65536)) / 65536.0;
         restart_phase += randomness * random * 1.0 / float(total_particles);
     }
 
-    restart_phase *= (1.0 - explosiveness);
-    bool restart = false;
-    bool shader_active = velocity_active.a > 0.5;
+    restart_phase      *= (1.0 - explosiveness);
+    bool restart        = false;
+    bool shader_active  = velocity_active.a > 0.5;
 
     if (system_phase > prev_system_phase) {
         // restart_phase >= prev_system_phase is used so particles emit in the
@@ -151,9 +151,9 @@ void main() {
 #else
     if (clear || restart) {
 #endif
-        out_color = vec4(1.0);
+        out_color           = vec4(1.0);
         out_velocity_active = vec4(0.0);
-        out_custom = vec4(0.0);
+        out_custom          = vec4(0.0);
         if (!restart) {
             shader_active = false;
         }
@@ -165,9 +165,9 @@ void main() {
             vec4(0.0, 0.0, 0.0, 1.0)
         );
     } else {
-        out_color = color;
+        out_color           = color;
         out_velocity_active = velocity_active;
-        out_custom = custom;
+        out_custom          = custom;
         xform =
             transpose(mat4(xform_1, xform_2, xform_3, vec4(vec3(0.0), 1.0)));
     }
@@ -189,7 +189,7 @@ VERTEX_SHADER_CODE
             vec3 force = vec3(0.0);
             for (int i = 0; i < attractor_count; i++) {
                 vec3 rel_vec = xform[3].xyz - attractors[i].pos;
-                float dist = length(rel_vec);
+                float dist   = length(rel_vec);
                 if (attractors[i].radius < dist) {
                     continue;
                 }

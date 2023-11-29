@@ -126,7 +126,7 @@ void CSGShapeSpatialGizmoPlugin::set_handle(
     Transform gi = gt.affine_inverse();
 
     Vector3 ray_from = p_camera->project_ray_origin(p_point);
-    Vector3 ray_dir = p_camera->project_ray_normal(p_point);
+    Vector3 ray_dir  = p_camera->project_ray_normal(p_point);
 
     Vector3 sg[2] = {gi.xform(ray_from), gi.xform(ray_from + ray_dir * 16384)};
 
@@ -311,7 +311,7 @@ void CSGShapeSpatialGizmoPlugin::commit_handle(
         UndoRedo* ur = SpatialEditor::get_singleton()->get_undo_redo();
         ur->create_action(TTR("Change Box Shape Extents"));
         static const char* method[3] = {"set_width", "set_height", "set_depth"};
-        float current = 0;
+        float current                = 0;
         switch (p_idx) {
             case 0:
                 current = s->get_width();
@@ -420,7 +420,7 @@ void CSGShapeSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
         for (int i = 0; i < lines.size(); i += 6) {
             int f = i / 6;
             for (int j = 0; j < 3; j++) {
-                int j_n = (j + 1) % 3;
+                int j_n                    = (j + 1) % 3;
                 lines.write[i + j * 2 + 0] = r[f * 3 + j];
                 lines.write[i + j * 2 + 1] = r[f * 3 + j_n];
             }

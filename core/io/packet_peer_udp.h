@@ -73,7 +73,7 @@ public:
     Error listen(
         int p_port,
         const IP_Address& p_bind_address = IP_Address("*"),
-        int p_recv_buffer_size = 65536
+        int p_recv_buffer_size           = 65536
     );
     void close();
     Error wait();

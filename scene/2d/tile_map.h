@@ -122,10 +122,10 @@ private:
 
     union Cell {
         struct {
-            int32_t id : 24;
-            bool flip_h : 1;
-            bool flip_v : 1;
-            bool transpose : 1;
+            int32_t id               : 24;
+            bool flip_h              : 1;
+            bool flip_v              : 1;
+            bool transpose           : 1;
             int16_t autotile_coord_x : 16;
             int16_t autotile_coord_y : 16;
         };
@@ -164,23 +164,23 @@ private:
         VSet<PosKey> cells;
 
         void operator=(const Quadrant& q) {
-            pos = q.pos;
-            canvas_items = q.canvas_items;
-            body = q.body;
-            shape_owner_id = q.shape_owner_id;
-            cells = q.cells;
-            navpoly_ids = q.navpoly_ids;
+            pos                = q.pos;
+            canvas_items       = q.canvas_items;
+            body               = q.body;
+            shape_owner_id     = q.shape_owner_id;
+            cells              = q.cells;
+            navpoly_ids        = q.navpoly_ids;
             occluder_instances = q.occluder_instances;
         }
 
         Quadrant(const Quadrant& q) : dirty_list(this) {
-            pos = q.pos;
-            canvas_items = q.canvas_items;
-            body = q.body;
-            shape_owner_id = q.shape_owner_id;
-            cells = q.cells;
+            pos                = q.pos;
+            canvas_items       = q.canvas_items;
+            body               = q.body;
+            shape_owner_id     = q.shape_owner_id;
+            cells              = q.cells;
             occluder_instances = q.occluder_instances;
-            navpoly_ids = q.navpoly_ids;
+            navpoly_ids        = q.navpoly_ids;
         }
 
         Quadrant() : dirty_list(this) {}
@@ -292,9 +292,9 @@ public:
         int p_x,
         int p_y,
         int p_tile,
-        bool p_flip_x = false,
-        bool p_flip_y = false,
-        bool p_transpose = false,
+        bool p_flip_x            = false,
+        bool p_flip_y            = false,
+        bool p_transpose         = false,
         Vector2 p_autotile_coord = Vector2()
     );
     int get_cell(int p_x, int p_y) const;
@@ -308,9 +308,9 @@ public:
     void set_cellv(
         const Vector2& p_pos,
         int p_tile,
-        bool p_flip_x = false,
-        bool p_flip_y = false,
-        bool p_transpose = false,
+        bool p_flip_x            = false,
+        bool p_flip_y            = false,
+        bool p_transpose         = false,
         Vector2 p_autotile_coord = Vector2()
     );
     int get_cellv(const Vector2& p_pos) const;
@@ -319,7 +319,7 @@ public:
     void update_bitmask_area(const Vector2& p_pos);
     void update_bitmask_region(
         const Vector2& p_start = Vector2(),
-        const Vector2& p_end = Vector2()
+        const Vector2& p_end   = Vector2()
     );
     void update_cell_bitmask(int p_x, int p_y);
     void update_dirty_bitmask();

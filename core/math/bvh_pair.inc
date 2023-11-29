@@ -4,7 +4,7 @@ public:
 struct ItemPairs {
     struct Link {
         void set(BVHHandle h, void* ud) {
-            handle = h;
+            handle   = h;
             userdata = ud;
         }
 
@@ -67,8 +67,8 @@ struct ItemPairs {
     // margin is more optimal.
     real_t scale_expansion_margin(real_t p_margin) const {
         real_t x = real_t(num_pairs) * (1.0 / 9.0);
-        x = MIN(x, 1.0);
-        x = 1.0 - x;
+        x        = MIN(x, 1.0);
+        x        = 1.0 - x;
         return p_margin * x;
     }
 };

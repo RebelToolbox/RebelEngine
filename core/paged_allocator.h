@@ -39,14 +39,14 @@
 
 template <class T, bool thread_safe = false>
 class PagedAllocator {
-    T** page_pool = nullptr;
-    T*** available_pool = nullptr;
-    uint32_t pages_allocated = 0;
+    T** page_pool             = nullptr;
+    T*** available_pool       = nullptr;
+    uint32_t pages_allocated  = 0;
     uint32_t allocs_available = 0;
 
     uint32_t page_shift = 0;
-    uint32_t page_mask = 0;
-    uint32_t page_size = 0;
+    uint32_t page_mask  = 0;
+    uint32_t page_size  = 0;
     SpinLock spin_lock;
 
 public:
@@ -63,7 +63,7 @@ public:
             available_pool =
                 (T***)memrealloc(available_pool, sizeof(T**) * pages_allocated);
 
-            page_pool[pages_used] = (T*)memalloc(sizeof(T) * page_size);
+            page_pool[pages_used]      = (T*)memalloc(sizeof(T) * page_size);
             available_pool[pages_used] = (T**)memalloc(sizeof(T*) * page_size);
 
             for (uint32_t i = 0; i < page_size; i++) {
@@ -106,9 +106,9 @@ public:
             }
             memfree(page_pool);
             memfree(available_pool);
-            page_pool = nullptr;
-            available_pool = nullptr;
-            pages_allocated = 0;
+            page_pool        = nullptr;
+            available_pool   = nullptr;
+            pages_allocated  = 0;
             allocs_available = 0;
         }
     }
@@ -120,8 +120,8 @@ public:
     void configure(uint32_t p_page_size) {
         ERR_FAIL_COND(page_pool != nullptr); // sanity check
         ERR_FAIL_COND(p_page_size == 0);
-        page_size = nearest_power_of_2_templated(p_page_size);
-        page_mask = page_size - 1;
+        page_size  = nearest_power_of_2_templated(p_page_size);
+        page_mask  = page_size - 1;
         page_shift = get_shift_from_power_of_2(page_size);
     }
 

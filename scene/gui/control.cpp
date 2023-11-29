@@ -51,8 +51,8 @@
 Dictionary Control::_edit_get_state() const {
     Dictionary s;
     s["rotation"] = get_rotation();
-    s["scale"] = get_scale();
-    s["pivot"] = get_pivot_offset();
+    s["scale"]    = get_scale();
+    s["pivot"]    = get_pivot_offset();
     Array anchors;
     anchors.push_back(get_anchor(MARGIN_LEFT));
     anchors.push_back(get_anchor(MARGIN_TOP));
@@ -79,15 +79,15 @@ void Control::_edit_set_state(const Dictionary& p_state) {
     set_rotation(state["rotation"]);
     set_scale(state["scale"]);
     set_pivot_offset(state["pivot"]);
-    Array anchors = state["anchors"];
-    data.anchor[MARGIN_LEFT] = anchors[0];
-    data.anchor[MARGIN_TOP] = anchors[1];
-    data.anchor[MARGIN_RIGHT] = anchors[2];
+    Array anchors              = state["anchors"];
+    data.anchor[MARGIN_LEFT]   = anchors[0];
+    data.anchor[MARGIN_TOP]    = anchors[1];
+    data.anchor[MARGIN_RIGHT]  = anchors[2];
     data.anchor[MARGIN_BOTTOM] = anchors[3];
-    Array margins = state["margins"];
-    data.margin[MARGIN_LEFT] = margins[0];
-    data.margin[MARGIN_TOP] = margins[1];
-    data.margin[MARGIN_RIGHT] = margins[2];
+    Array margins              = state["margins"];
+    data.margin[MARGIN_LEFT]   = margins[0];
+    data.margin[MARGIN_TOP]    = margins[1];
+    data.margin[MARGIN_RIGHT]  = margins[2];
     data.margin[MARGIN_BOTTOM] = margins[3];
     _size_changed();
     _change_notify("anchor_left");
@@ -171,7 +171,7 @@ bool Control::_edit_use_rotation() const {
 
 void Control::_edit_set_pivot(const Point2& p_pivot) {
     Vector2 delta_pivot = p_pivot - get_pivot_offset();
-    Vector2 move = Vector2(
+    Vector2 move        = Vector2(
         (cos(data.rotation) - 1.0) * delta_pivot.x
             - sin(data.rotation) * delta_pivot.y,
         sin(data.rotation) * delta_pivot.x
@@ -208,8 +208,8 @@ Size2 Control::get_custom_minimum_size() const {
 
 void Control::_update_minimum_size_cache() {
     Size2 minsize = get_minimum_size();
-    minsize.x = MAX(minsize.x, data.custom_minimum_size.x);
-    minsize.y = MAX(minsize.y, data.custom_minimum_size.y);
+    minsize.x     = MAX(minsize.x, data.custom_minimum_size.x);
+    minsize.y     = MAX(minsize.y, data.custom_minimum_size.y);
 
     bool size_changed = false;
     if (data.minimum_size_cache != minsize) {
@@ -322,7 +322,7 @@ void Control::_update_minimum_size() {
         return;
     }
 
-    Size2 minsize = get_combined_minimum_size();
+    Size2 minsize                   = get_combined_minimum_size();
     data.updating_last_minimum_size = false;
 
     if (minsize != data.last_minimum_size) {
@@ -363,9 +363,9 @@ bool Control::_get(const StringName& p_name, Variant& r_ret) const {
                                              : Variant();
     } else if (sname.begins_with("custom_colors/")) {
         String name = sname.get_slicec('/', 1);
-        r_ret = data.color_override.has(name)
-                  ? Variant(data.color_override[name])
-                  : Variant();
+        r_ret       = data.color_override.has(name)
+                        ? Variant(data.color_override[name])
+                        : Variant();
     } else if (sname.begins_with("custom_constants/")) {
         String name = sname.get_slicec('/', 1);
 
@@ -538,8 +538,8 @@ void Control::remove_child_notify(Node* p_child) {
 }
 
 void Control::_update_canvas_item_transform() {
-    Transform2D xform = _get_internal_transform();
-    xform[2] += get_position();
+    Transform2D xform  = _get_internal_transform();
+    xform[2]          += get_position();
 
     // We use a little workaround to avoid flickering when moving the pivot with
     // _edit_set_pivot()
@@ -583,9 +583,9 @@ void Control::_notification(int p_notification) {
                 }
 
             } else {
-                Node* parent = this; // meh
+                Node* parent            = this; // meh
                 Control* parent_control = nullptr;
-                bool subwindow = false;
+                bool subwindow          = false;
 
                 while (parent) {
                     parent = parent->get_parent();
@@ -668,7 +668,7 @@ void Control::_notification(int p_notification) {
                 data.RI = nullptr;
             }
 
-            data.parent = nullptr;
+            data.parent             = nullptr;
             data.parent_canvas_item = nullptr;
             /*
             if (data.theme_owner && data.theme.is_null()) {
@@ -769,7 +769,7 @@ bool Control::clips_input() const {
 
 bool Control::has_point(const Point2& p_point) const {
     if (get_script_instance()) {
-        Variant v = p_point;
+        Variant v        = p_point;
         const Variant* p = &v;
         Variant::CallError ce;
         Variant ret =
@@ -800,7 +800,7 @@ Variant Control::get_drag_data(const Point2& p_point) {
     }
 
     if (get_script_instance()) {
-        Variant v = p_point;
+        Variant v        = p_point;
         const Variant* p = &v;
         Variant::CallError ce;
         Variant ret = get_script_instance()->call(
@@ -828,7 +828,7 @@ bool Control::can_drop_data(const Point2& p_point, const Variant& p_data)
     }
 
     if (get_script_instance()) {
-        Variant v = p_point;
+        Variant v           = p_point;
         const Variant* p[2] = {&v, &p_data};
         Variant::CallError ce;
         Variant ret = get_script_instance()->call(
@@ -856,7 +856,7 @@ void Control::drop_data(const Point2& p_point, const Variant& p_data) {
     }
 
     if (get_script_instance()) {
-        Variant v = p_point;
+        Variant v           = p_point;
         const Variant* p[2] = {&v, &p_data};
         Variant::CallError ce;
         Variant ret =
@@ -1479,7 +1479,7 @@ Ref<Font> Control::get_theme_default_font() const {
             return theme_owner->data.theme->get_default_theme_font();
         }
 
-        Node* parent = theme_owner->get_parent();
+        Node* parent      = theme_owner->get_parent();
         Control* parent_c = Object::cast_to<Control>(parent);
         if (parent_c) {
             theme_owner = parent_c->data.theme_owner;
@@ -1524,7 +1524,7 @@ void Control::_size_changed() {
     float margin_pos[4];
 
     for (int i = 0; i < 4; i++) {
-        float area = parent_rect.size[i & 1];
+        float area    = parent_rect.size[i & 1];
         margin_pos[i] = data.margin[i] + (data.anchor[i] * area);
     }
 
@@ -1555,10 +1555,10 @@ void Control::_size_changed() {
         new_size_cache.height = minimum_size.height;
     }
 
-    bool pos_changed = new_pos_cache != data.pos_cache;
+    bool pos_changed  = new_pos_cache != data.pos_cache;
     bool size_changed = new_size_cache != data.size_cache;
 
-    data.pos_cache = new_pos_cache;
+    data.pos_cache  = new_pos_cache;
     data.size_cache = new_size_cache;
 
     if (is_inside_tree()) {
@@ -1585,7 +1585,7 @@ void Control::set_anchor(
 ) {
     ERR_FAIL_INDEX((int)p_margin, 4);
 
-    Rect2 parent_rect = get_parent_anchorable_rect();
+    Rect2 parent_rect  = get_parent_anchorable_rect();
     float parent_range = (p_margin == MARGIN_LEFT || p_margin == MARGIN_RIGHT)
                            ? parent_rect.size.x
                            : parent_rect.size.y;
@@ -2045,7 +2045,7 @@ void Control::_set_size(const Size2& p_size) {
 
 void Control::set_size(const Size2& p_size, bool p_keep_margins) {
     Size2 new_size = p_size;
-    Size2 min = get_combined_minimum_size();
+    Size2 min      = get_combined_minimum_size();
     if (new_size.x < min.x) {
         new_size.x = min.x;
     }
@@ -2087,7 +2087,7 @@ Rect2 Control::get_global_rect() const {
 
 Rect2 Control::get_window_rect() const {
     ERR_FAIL_COND_V(!is_inside_tree(), Rect2());
-    Rect2 gr = get_global_rect();
+    Rect2 gr     = get_global_rect();
     gr.position += get_viewport()->get_visible_rect().position;
     return gr;
 }
@@ -2472,8 +2472,8 @@ void Control::show_modal(bool p_exclusive) {
     show();
     raise();
     data.modal_exclusive = p_exclusive;
-    data.MI = get_viewport()->_gui_show_modal(this);
-    data.modal_frame = Engine::get_singleton()->get_frames_drawn();
+    data.MI              = get_viewport()->_gui_show_modal(this);
+    data.modal_frame     = Engine::get_singleton()->get_frames_drawn();
 }
 
 void Control::_modal_set_prev_focus_owner(ObjectID p_prev) {
@@ -2488,7 +2488,7 @@ void Control::_modal_stack_remove() {
     }
 
     List<Control*>::Element* element = data.MI;
-    data.MI = nullptr;
+    data.MI                          = nullptr;
 
     get_viewport()->_gui_remove_from_modal_stack(
         element,
@@ -2603,8 +2603,8 @@ Control::CursorShape Control::get_cursor_shape(const Point2& p_pos) const {
 }
 
 Transform2D Control::get_transform() const {
-    Transform2D xform = _get_internal_transform();
-    xform[2] += get_position();
+    Transform2D xform  = _get_internal_transform();
+    xform[2]          += get_position();
     return xform;
 }
 
@@ -2651,7 +2651,7 @@ Control* Control::_get_focus_neighbour(Margin p_margin, int p_count) {
     }
     if (!data.focus_neighbour[p_margin].is_empty()) {
         Control* c = nullptr;
-        Node* n = get_node(data.focus_neighbour[p_margin]);
+        Node* n    = get_node(data.focus_neighbour[p_margin]);
         if (n) {
             c = Object::cast_to<Control>(n);
             ERR_FAIL_COND_V_MSG(
@@ -2677,7 +2677,7 @@ Control* Control::_get_focus_neighbour(Margin p_margin, int p_count) {
         return c;
     }
 
-    float dist = 1e7;
+    float dist      = 1e7;
     Control* result = nullptr;
 
     Point2 points[4];
@@ -2783,7 +2783,7 @@ void Control::_window_find_focus_neighbour(
                     // Geometry::get_closest_distance_between_segments(Vector3(la.x,la.y,0),Vector3(lb.x,lb.y,0),Vector3(fa.x,fa.y,0),Vector3(fb.x,fb.y,0));
                     if (d < r_closest_dist) {
                         r_closest_dist = d;
-                        *r_closest = c;
+                        *r_closest     = c;
                     }
                 }
             }
@@ -2791,7 +2791,7 @@ void Control::_window_find_focus_neighbour(
     }
 
     for (int i = 0; i < p_at->get_child_count(); i++) {
-        Node* child = p_at->get_child(i);
+        Node* child     = p_at->get_child(i);
         Control* childc = Object::cast_to<Control>(child);
         if (childc && childc->data.SI) {
             continue; // subwindow, ignore
@@ -2966,7 +2966,7 @@ Vector2 Control::get_scale() const {
 
 Control* Control::get_root_parent_control() const {
     const CanvasItem* ci = this;
-    const Control* root = this;
+    const Control* root  = this;
 
     while (ci) {
         const Control* c = Object::cast_to<Control>(ci);
@@ -4015,28 +4015,28 @@ void Control::_bind_methods() {
 Control::Control() {
     data.parent = nullptr;
 
-    data.mouse_filter = MOUSE_FILTER_STOP;
+    data.mouse_filter              = MOUSE_FILTER_STOP;
     data.pass_on_modal_close_click = true;
 
-    data.SI = nullptr;
-    data.MI = nullptr;
-    data.RI = nullptr;
-    data.theme_owner = nullptr;
-    data.modal_exclusive = false;
-    data.default_cursor = CURSOR_ARROW;
-    data.h_size_flags = SIZE_FILL;
-    data.v_size_flags = SIZE_FILL;
-    data.expand = 1;
-    data.rotation = 0;
-    data.parent_canvas_item = nullptr;
-    data.scale = Vector2(1, 1);
-    data.drag_owner = 0;
-    data.modal_frame = 0;
-    data.block_minimum_size_adjust = false;
-    data.disable_visibility_clip = false;
-    data.h_grow = GROW_DIRECTION_END;
-    data.v_grow = GROW_DIRECTION_END;
-    data.minimum_size_valid = false;
+    data.SI                         = nullptr;
+    data.MI                         = nullptr;
+    data.RI                         = nullptr;
+    data.theme_owner                = nullptr;
+    data.modal_exclusive            = false;
+    data.default_cursor             = CURSOR_ARROW;
+    data.h_size_flags               = SIZE_FILL;
+    data.v_size_flags               = SIZE_FILL;
+    data.expand                     = 1;
+    data.rotation                   = 0;
+    data.parent_canvas_item         = nullptr;
+    data.scale                      = Vector2(1, 1);
+    data.drag_owner                 = 0;
+    data.modal_frame                = 0;
+    data.block_minimum_size_adjust  = false;
+    data.disable_visibility_clip    = false;
+    data.h_grow                     = GROW_DIRECTION_END;
+    data.v_grow                     = GROW_DIRECTION_END;
+    data.minimum_size_valid         = false;
     data.updating_last_minimum_size = false;
 
     data.clip_contents = false;
@@ -4044,7 +4044,7 @@ Control::Control() {
         data.anchor[i] = ANCHOR_BEGIN;
         data.margin[i] = 0;
     }
-    data.focus_mode = FOCUS_NONE;
+    data.focus_mode             = FOCUS_NONE;
     data.modal_prev_focus_owner = 0;
 }
 

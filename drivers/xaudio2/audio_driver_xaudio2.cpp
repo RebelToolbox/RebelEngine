@@ -38,16 +38,16 @@ const char* AudioDriverXAudio2::get_name() const {
 }
 
 Error AudioDriverXAudio2::init() {
-    active = false;
+    active        = false;
     thread_exited = false;
-    exit_thread = false;
-    pcm_open = false;
-    samples_in = NULL;
+    exit_thread   = false;
+    pcm_open      = false;
+    samples_in    = NULL;
 
-    mix_rate = GLOBAL_GET("audio/mix_rate");
+    mix_rate     = GLOBAL_GET("audio/mix_rate");
     // FIXME: speaker_mode seems unused in the Xaudio2 driver so far
     speaker_mode = SPEAKER_MODE_STEREO;
-    channels = 2;
+    channels     = 2;
 
     int latency = GLOBAL_GET("audio/output_latency");
     buffer_size = closest_power_of_2(latency * mix_rate / 1000);
@@ -57,7 +57,7 @@ Error AudioDriverXAudio2::init() {
         samples_out[i] = memnew_arr(int16_t, buffer_size * channels);
         xaudio_buffer[i].AudioBytes = buffer_size * channels * sizeof(int16_t);
         xaudio_buffer[i].pAudioData = (const BYTE*)(samples_out[i]);
-        xaudio_buffer[i].Flags = 0;
+        xaudio_buffer[i].Flags      = 0;
     }
 
     HRESULT hr;
@@ -75,12 +75,12 @@ Error AudioDriverXAudio2::init() {
         "Error creating XAudio2 mastering voice."
     );
 
-    wave_format.nChannels = channels;
-    wave_format.cbSize = 0;
-    wave_format.nSamplesPerSec = mix_rate;
-    wave_format.wFormatTag = WAVE_FORMAT_PCM;
-    wave_format.wBitsPerSample = 16;
-    wave_format.nBlockAlign = channels * wave_format.wBitsPerSample >> 3;
+    wave_format.nChannels       = channels;
+    wave_format.cbSize          = 0;
+    wave_format.nSamplesPerSec  = mix_rate;
+    wave_format.wFormatTag      = WAVE_FORMAT_PCM;
+    wave_format.wBitsPerSample  = 16;
+    wave_format.nBlockAlign     = channels * wave_format.wBitsPerSample >> 3;
     wave_format.nAvgBytesPerSec = mix_rate * wave_format.nBlockAlign;
 
     hr = xaudio->CreateSourceVoice(
@@ -149,7 +149,7 @@ void AudioDriverXAudio2::thread_func(void* p_udata) {
 }
 
 void AudioDriverXAudio2::start() {
-    active = true;
+    active     = true;
     HRESULT hr = source_voice->Start(0);
     ERR_FAIL_COND_MSG(
         hr != S_OK,
@@ -212,7 +212,7 @@ AudioDriverXAudio2::AudioDriverXAudio2() : current_buffer(0) {
     wave_format = {0};
     for (int i = 0; i < AUDIO_BUFFERS; i++) {
         xaudio_buffer[i] = {0};
-        samples_out[i] = 0;
+        samples_out[i]   = 0;
     }
 }
 

@@ -127,8 +127,8 @@ void Quat::operator*=(const Quat& p_q) {
 }
 
 Quat Quat::operator*(const Quat& p_q) const {
-    Quat r = *this;
-    r *= p_q;
+    Quat r  = *this;
+    r      *= p_q;
     return r;
 }
 
@@ -207,8 +207,8 @@ Quat Quat::slerp(const Quat& p_to, const real_t& p_weight) const {
 
     if ((1.0 - cosom) > CMP_EPSILON) {
         // standard case (slerp)
-        omega = Math::acos(cosom);
-        sinom = Math::sin(omega);
+        omega  = Math::acos(cosom);
+        sinom  = Math::sin(omega);
         scale0 = Math::sin((1.0 - p_weight) * omega) / sinom;
         scale1 = Math::sin(p_weight * omega) / sinom;
     } else {
@@ -279,8 +279,8 @@ Quat Quat::cubic_slerp(
 #endif
     // the only way to do slerp :|
     real_t t2 = (1.0 - p_weight) * p_weight * 2;
-    Quat sp = this->slerp(p_b, p_weight);
-    Quat sq = p_pre_a.slerpni(p_post_b, p_weight);
+    Quat sp   = this->slerp(p_b, p_weight);
+    Quat sq   = p_pre_a.slerpni(p_post_b, p_weight);
     return sp.slerpni(sq, t2);
 }
 
@@ -302,7 +302,7 @@ void Quat::set_axis_angle(const Vector3& axis, const real_t& angle) {
     } else {
         real_t sin_angle = Math::sin(angle * 0.5);
         real_t cos_angle = Math::cos(angle * 0.5);
-        real_t s = sin_angle / d;
+        real_t s         = sin_angle / d;
         set(axis.x * s, axis.y * s, axis.z * s, cos_angle);
     }
 }

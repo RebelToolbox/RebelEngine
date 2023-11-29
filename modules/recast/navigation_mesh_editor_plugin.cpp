@@ -151,7 +151,7 @@ void NavigationMeshEditorPlugin::make_visible(bool p_visible) {
 }
 
 NavigationMeshEditorPlugin::NavigationMeshEditorPlugin(EditorNode* p_node) {
-    editor = p_node;
+    editor                 = p_node;
     navigation_mesh_editor = memnew(NavigationMeshEditor);
     editor->get_viewport()->add_child(navigation_mesh_editor);
     add_control_to_container(

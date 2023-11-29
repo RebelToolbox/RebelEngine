@@ -42,13 +42,13 @@ class GLTFNode : public Resource {
 private:
     // matrices need to be transformed to this
     GLTFNodeIndex parent = -1;
-    int height = -1;
+    int height           = -1;
     Transform xform;
-    GLTFMeshIndex mesh = -1;
-    GLTFCameraIndex camera = -1;
-    GLTFSkinIndex skin = -1;
+    GLTFMeshIndex mesh         = -1;
+    GLTFCameraIndex camera     = -1;
+    GLTFSkinIndex skin         = -1;
     GLTFSkeletonIndex skeleton = -1;
-    bool joint = false;
+    bool joint                 = false;
     Vector3 translation;
     Quat rotation;
     Vector3 scale = Vector3(1, 1, 1);

@@ -73,7 +73,7 @@ private:
         List<Face>::Element *left, *right;
 
         FaceConnect() {
-            left = nullptr;
+            left  = nullptr;
             right = nullptr;
         }
     };
@@ -82,7 +82,7 @@ private:
         List<Geometry::MeshData::Face>::Element *left, *right;
 
         RetFaceConnect() {
-            left = nullptr;
+            left  = nullptr;
             right = nullptr;
         }
     };

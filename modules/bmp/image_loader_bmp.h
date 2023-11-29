@@ -37,20 +37,20 @@ class ImageLoaderBMP : public ImageFormatLoader {
 protected:
     static const unsigned BITMAP_SIGNATURE = 0x4d42;
 
-    static const unsigned BITMAP_FILE_HEADER_SIZE = 14;     // bmp_file_header_s
+    static const unsigned BITMAP_FILE_HEADER_SIZE     = 14; // bmp_file_header_s
     static const unsigned BITMAP_INFO_HEADER_MIN_SIZE = 40; // bmp_info_header_s
 
     enum bmp_compression_s {
-        BI_RGB = 0x00,
-        BI_RLE8 = 0x01, // compressed
-        BI_RLE4 = 0x02, // compressed
-        BI_BITFIELDS = 0x03,
-        BI_JPEG = 0x04,
-        BI_PNG = 0x05,
+        BI_RGB            = 0x00,
+        BI_RLE8           = 0x01, // compressed
+        BI_RLE4           = 0x02, // compressed
+        BI_BITFIELDS      = 0x03,
+        BI_JPEG           = 0x04,
+        BI_PNG            = 0x05,
         BI_ALPHABITFIELDS = 0x06,
-        BI_CMYK = 0x0b,
-        BI_CMYKRLE8 = 0x0c, // compressed
-        BI_CMYKRLE4 = 0x0d  // compressed
+        BI_CMYK           = 0x0b,
+        BI_CMYKRLE8       = 0x0c, // compressed
+        BI_CMYKRLE4       = 0x0d  // compressed
     };
 
     struct bmp_header_s {

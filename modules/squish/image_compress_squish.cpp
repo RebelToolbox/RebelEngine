@@ -43,7 +43,7 @@ void image_decompress_squish(Image* p_image) {
     int mm_count = p_image->get_mipmap_count();
     data.resize(target_size);
 
-    PoolVector<uint8_t>::Read rb = p_image->get_data().read();
+    PoolVector<uint8_t>::Read rb  = p_image->get_data().read();
     PoolVector<uint8_t>::Write wb = data.write();
 
     int squish_flags = Image::FORMAT_MAX;
@@ -162,30 +162,30 @@ void image_compress_squish(
 
         switch (dc) {
             case Image::DETECTED_L: {
-                target_format = Image::FORMAT_DXT1;
-                squish_comp |= squish::kDxt1;
+                target_format  = Image::FORMAT_DXT1;
+                squish_comp   |= squish::kDxt1;
             } break;
             case Image::DETECTED_LA: {
-                target_format = Image::FORMAT_DXT5;
-                squish_comp |= squish::kDxt5;
+                target_format  = Image::FORMAT_DXT5;
+                squish_comp   |= squish::kDxt5;
             } break;
             case Image::DETECTED_R: {
-                target_format = Image::FORMAT_RGTC_R;
-                squish_comp |= squish::kBc4;
+                target_format  = Image::FORMAT_RGTC_R;
+                squish_comp   |= squish::kBc4;
             } break;
             case Image::DETECTED_RG: {
-                target_format = Image::FORMAT_RGTC_RG;
-                squish_comp |= squish::kBc5;
+                target_format  = Image::FORMAT_RGTC_RG;
+                squish_comp   |= squish::kBc5;
             } break;
             case Image::DETECTED_RGB: {
-                target_format = Image::FORMAT_DXT1;
-                squish_comp |= squish::kDxt1;
+                target_format  = Image::FORMAT_DXT1;
+                squish_comp   |= squish::kDxt1;
             } break;
             case Image::DETECTED_RGBA: {
                 // TODO, should convert both, then measure which one does a
                 // better job
-                target_format = Image::FORMAT_DXT5;
-                squish_comp |= squish::kDxt5;
+                target_format  = Image::FORMAT_DXT5;
+                squish_comp   |= squish::kDxt5;
 
             } break;
             default: {
@@ -208,7 +208,7 @@ void image_compress_squish(
         data.resize(target_size);
         int shift = Image::get_format_pixel_rshift(target_format);
 
-        PoolVector<uint8_t>::Read rb = p_image->get_data().read();
+        PoolVector<uint8_t>::Read rb  = p_image->get_data().read();
         PoolVector<uint8_t>::Write wb = data.write();
 
         int dst_ofs = 0;
@@ -226,8 +226,8 @@ void image_compress_squish(
                 squish_comp
             );
             dst_ofs += (MAX(4, bw) * MAX(4, bh)) >> shift;
-            w = MAX(w / 2, 1);
-            h = MAX(h / 2, 1);
+            w        = MAX(w / 2, 1);
+            h        = MAX(h / 2, 1);
         }
 
         rb.release();

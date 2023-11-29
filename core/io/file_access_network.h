@@ -111,7 +111,7 @@ class FileAccessNetwork : public FileAccess {
 
         Page() {
             activity = 0;
-            queued = false;
+            queued   = false;
         }
     };
 

@@ -41,9 +41,9 @@
 template <class T, class U = uint32_t, bool force_trivial = false>
 class LocalVector {
 private:
-    U count = 0;
+    U count    = 0;
     U capacity = 0;
-    T* data = nullptr;
+    T* data    = nullptr;
 
 public:
     T* ptr() {
@@ -117,7 +117,7 @@ public:
         clear();
         if (data) {
             memfree(data);
-            data = nullptr;
+            data     = nullptr;
             capacity = 0;
         }
     }
@@ -130,7 +130,7 @@ public:
         p_size = nearest_power_of_2_templated(p_size);
         if (p_size > capacity) {
             capacity = p_size;
-            data = (T*)memrealloc(data, capacity * sizeof(T));
+            data     = (T*)memrealloc(data, capacity * sizeof(T));
             CRASH_COND_MSG(!data, "Out of memory");
         }
     }

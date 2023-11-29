@@ -47,7 +47,7 @@ int add_path(int p_argc, char** p_args) {
 
     p_args[p_argc++] = (char*)"--path";
     p_args[p_argc++] = (char*)[str cStringUsingEncoding:NSUTF8StringEncoding];
-    p_args[p_argc] = NULL;
+    p_args[p_argc]   = NULL;
 
     return p_argc;
 }
@@ -101,8 +101,8 @@ int iphone_main(int argc, char** argv, String data_dir) {
         fargv[i] = argv[i];
     }
     fargv[argc] = NULL;
-    argc = add_path(argc, fargv);
-    argc = add_cmdline(argc, fargv);
+    argc        = add_path(argc, fargv);
+    argc        = add_cmdline(argc, fargv);
 
     printf("os created\n");
     Error err = Main::setup(fargv[0], argc - 1, &fargv[1], false);

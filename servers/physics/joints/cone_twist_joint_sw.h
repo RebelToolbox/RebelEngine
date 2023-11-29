@@ -129,16 +129,16 @@ public:
         real_t _swingSpan1,
         real_t _swingSpan2,
         real_t _twistSpan,
-        real_t _softness = 0.8f,
-        real_t _biasFactor = 0.3f,
+        real_t _softness         = 0.8f,
+        real_t _biasFactor       = 0.3f,
         real_t _relaxationFactor = 1.0f
     ) {
         m_swingSpan1 = _swingSpan1;
         m_swingSpan2 = _swingSpan2;
-        m_twistSpan = _twistSpan;
+        m_twistSpan  = _twistSpan;
 
-        m_limitSoftness = _softness;
-        m_biasFactor = _biasFactor;
+        m_limitSoftness    = _softness;
+        m_biasFactor       = _biasFactor;
         m_relaxationFactor = _relaxationFactor;
     }
 

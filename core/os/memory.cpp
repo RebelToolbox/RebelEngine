@@ -85,7 +85,7 @@ void* Memory::alloc_static(size_t p_bytes, bool p_pad_align) {
 
     if (prepad) {
         uint64_t* s = (uint64_t*)mem;
-        *s = p_bytes;
+        *s          = p_bytes;
 
         uint8_t* s8 = (uint8_t*)mem;
 
@@ -113,8 +113,8 @@ void* Memory::realloc_static(void* p_memory, size_t p_bytes, bool p_pad_align) {
 #endif
 
     if (prepad) {
-        mem -= PAD_ALIGN;
-        uint64_t* s = (uint64_t*)mem;
+        mem         -= PAD_ALIGN;
+        uint64_t* s  = (uint64_t*)mem;
 
 #ifdef DEBUG_ENABLED
         if (p_bytes > *s) {
@@ -197,9 +197,9 @@ uint64_t Memory::get_mem_max_usage() {
 }
 
 _GlobalNil::_GlobalNil() {
-    color = 1;
-    left = this;
-    right = this;
+    color  = 1;
+    left   = this;
+    right  = this;
     parent = this;
 }
 

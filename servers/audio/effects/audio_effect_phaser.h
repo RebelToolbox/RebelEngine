@@ -53,7 +53,7 @@ class AudioEffectPhaserInstance : public AudioEffectInstance {
 
         _ALWAYS_INLINE_ float update(float s) {
             float y = s * -a + h;
-            h = y * a + s;
+            h       = y * a + s;
             return y;
         }
 

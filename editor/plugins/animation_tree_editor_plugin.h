@@ -45,7 +45,7 @@ class AnimationTreeNodeEditorPlugin : public VBoxContainer {
 
 public:
     virtual bool can_edit(const Ref<AnimationNode>& p_node) = 0;
-    virtual void edit(const Ref<AnimationNode>& p_node) = 0;
+    virtual void edit(const Ref<AnimationNode>& p_node)     = 0;
 };
 
 class AnimationTreeEditor : public VBoxContainer {

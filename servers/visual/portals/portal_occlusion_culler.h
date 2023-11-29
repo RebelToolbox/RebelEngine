@@ -118,9 +118,9 @@ private:
 
     bool is_aabb_culled(const AABB& p_aabb, const LocalVector<Plane>& p_planes)
         const {
-        const Vector3& size = p_aabb.size;
+        const Vector3& size  = p_aabb.size;
         Vector3 half_extents = size * 0.5;
-        Vector3 ofs = p_aabb.position + half_extents;
+        Vector3 ofs          = p_aabb.position + half_extents;
 
         for (unsigned int i = 0; i < p_planes.size(); i++) {
             const Plane& p = p_planes[i];
@@ -143,8 +143,8 @@ private:
     Occlusion::Sphere _spheres[MAX_SPHERES];
     real_t _sphere_distances[MAX_SPHERES];
     real_t _sphere_closest_dist = 0.0;
-    int _num_spheres = 0;
-    int _max_spheres = 8;
+    int _num_spheres            = 0;
+    int _max_spheres            = 8;
 
     Vector3 _pt_camera;
 };

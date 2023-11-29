@@ -118,7 +118,7 @@ Error EditorRun::run(
 
     Rect2 screen_rect;
     screen_rect.position = OS::get_singleton()->get_screen_position(screen);
-    screen_rect.size = OS::get_singleton()->get_screen_size(screen);
+    screen_rect.size     = OS::get_singleton()->get_screen_size(screen);
 
     Size2 desired_size;
     desired_size.x =
@@ -160,7 +160,7 @@ Error EditorRun::run(
         }
     }
     screen_rect.position /= display_scale;
-    screen_rect.size /= display_scale;
+    screen_rect.size     /= display_scale;
 
     switch (window_placement) {
         case 0: { // top left
@@ -202,7 +202,7 @@ Error EditorRun::run(
         args.push_back("--breakpoints");
         String bpoints;
         for (const List<String>::Element* E = p_breakpoints.front(); E;
-             E = E->next()) {
+             E                              = E->next()) {
             bpoints += E->get().replace(" ", "%20");
             if (E->next()) {
                 bpoints += ",";
@@ -277,7 +277,7 @@ Error EditorRun::run(
     };
     printf("\n");
 
-    pid = 0;
+    pid       = 0;
     Error err = OS::get_singleton()->execute(exec, args, false, &pid);
     ERR_FAIL_COND_V(err, err);
 
@@ -294,7 +294,7 @@ void EditorRun::stop() {
         OS::get_singleton()->kill(pid);
     }
 
-    status = STATUS_STOP;
+    status        = STATUS_STOP;
     running_scene = "";
 }
 
@@ -315,8 +315,8 @@ bool EditorRun::get_debug_navigation() const {
 }
 
 EditorRun::EditorRun() {
-    status = STATUS_STOP;
-    running_scene = "";
+    status           = STATUS_STOP;
+    running_scene    = "";
     debug_collisions = false;
     debug_navigation = false;
 }

@@ -58,18 +58,18 @@ protected:
 
 public:
     enum ImportFlags {
-        IMPORT_SCENE = 1,
-        IMPORT_ANIMATION = 2,
-        IMPORT_ANIMATION_DETECT_LOOP = 4,
-        IMPORT_ANIMATION_OPTIMIZE = 8,
+        IMPORT_SCENE                                   = 1,
+        IMPORT_ANIMATION                               = 2,
+        IMPORT_ANIMATION_DETECT_LOOP                   = 4,
+        IMPORT_ANIMATION_OPTIMIZE                      = 8,
         IMPORT_ANIMATION_FORCE_ALL_TRACKS_IN_ALL_CLIPS = 16,
-        IMPORT_ANIMATION_KEEP_VALUE_TRACKS = 32,
-        IMPORT_GENERATE_TANGENT_ARRAYS = 256,
-        IMPORT_FAIL_ON_MISSING_DEPENDENCIES = 512,
-        IMPORT_MATERIALS_IN_INSTANCES = 1024,
-        IMPORT_USE_COMPRESSION = 2048,
-        IMPORT_USE_NAMED_SKIN_BINDS = 4096,
-        IMPORT_USE_LEGACY_NAMES = 8192,
+        IMPORT_ANIMATION_KEEP_VALUE_TRACKS             = 32,
+        IMPORT_GENERATE_TANGENT_ARRAYS                 = 256,
+        IMPORT_FAIL_ON_MISSING_DEPENDENCIES            = 512,
+        IMPORT_MATERIALS_IN_INSTANCES                  = 1024,
+        IMPORT_USE_COMPRESSION                         = 2048,
+        IMPORT_USE_NAMED_SKIN_BINDS                    = 4096,
+        IMPORT_USE_LEGACY_NAMES                        = 8192,
     };
 
     virtual uint32_t get_import_flags() const;
@@ -225,7 +225,7 @@ public:
         const Map<StringName, Variant>& p_options,
         List<String>* r_platform_variants,
         List<String>* r_gen_files = nullptr,
-        Variant* r_metadata = nullptr
+        Variant* r_metadata       = nullptr
     );
 
     Node* import_scene_from_other_importer(

@@ -39,7 +39,7 @@ void AudioEffectDistortionInstance::process(
     int p_frame_count
 ) {
     const float* src = (const float*)p_src_frames;
-    float* dst = (float*)p_dst_frames;
+    float* dst       = (float*)p_dst_frames;
 
     // float
     // lpf_c=expf(-2.0*Math_PI*keep_hf_hz.get()/(mix_rate*(float)OVERSAMPLE));
@@ -49,27 +49,27 @@ void AudioEffectDistortionInstance::process(
     );
     float lpf_ic = 1.0 - lpf_c;
 
-    float drive_f = base->drive;
-    float pregain_f = Math::db2linear(base->pre_gain);
+    float drive_f    = base->drive;
+    float pregain_f  = Math::db2linear(base->pre_gain);
     float postgain_f = Math::db2linear(base->post_gain);
 
     float atan_mult = pow(10, drive_f * drive_f * 3.0) - 1.0 + 0.001;
-    float atan_div = 1.0 / (atanf(atan_mult) * (1.0 + drive_f * 8));
+    float atan_div  = 1.0 / (atanf(atan_mult) * (1.0 + drive_f * 8));
 
     float lofi_mult =
         powf(2.0, 2.0 + (1.0 - drive_f) * 14); // goes from 16 to 2 bits
 
     for (int i = 0; i < p_frame_count * 2; i++) {
-        float out = undenormalise(src[i] * lpf_ic + lpf_c * h[i & 1]);
-        h[i & 1] = out;
-        float a = out;
-        float ha = src[i] - out; // high freqs
-        a *= pregain_f;
+        float out  = undenormalise(src[i] * lpf_ic + lpf_c * h[i & 1]);
+        h[i & 1]   = out;
+        float a    = out;
+        float ha   = src[i] - out; // high freqs
+        a         *= pregain_f;
 
         switch (base->mode) {
             case AudioEffectDistortion::MODE_CLIP: {
                 float a_sign = a < 0 ? -1.0f : 1.0f;
-                a = powf(abs(a), 1.0001 - drive_f) * a_sign;
+                a            = powf(abs(a), 1.0001 - drive_f) * a_sign;
                 if (a > 1.0) {
                     a = 1.0;
                 } else if (a < (-1.0)) {
@@ -253,9 +253,9 @@ void AudioEffectDistortion::_bind_methods() {
 }
 
 AudioEffectDistortion::AudioEffectDistortion() {
-    mode = MODE_CLIP;
-    pre_gain = 0;
-    post_gain = 0;
+    mode       = MODE_CLIP;
+    pre_gain   = 0;
+    post_gain  = 0;
     keep_hf_hz = 16000;
-    drive = 0;
+    drive      = 0;
 }

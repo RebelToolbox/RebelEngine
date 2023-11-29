@@ -142,7 +142,7 @@ bool Face3::intersects_aabb2(const AABB& p_aabb) const {
     Vector3 perp = (vertex[0] - vertex[2]).cross(vertex[0] - vertex[1]);
 
     Vector3 half_extents = p_aabb.size * 0.5;
-    Vector3 ofs = p_aabb.position + half_extents;
+    Vector3 ofs          = p_aabb.position + half_extents;
 
     Vector3 sup = Vector3(
         (perp.x > 0) ? -half_extents.x : half_extents.x,
@@ -150,7 +150,7 @@ bool Face3::intersects_aabb2(const AABB& p_aabb) const {
         (perp.z > 0) ? -half_extents.z : half_extents.z
     );
 
-    real_t d = perp.dot(vertex[0]);
+    real_t d      = perp.dot(vertex[0]);
     real_t dist_a = perp.dot(ofs + sup) - d;
     real_t dist_b = perp.dot(ofs - sup) - d;
 

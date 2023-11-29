@@ -50,7 +50,7 @@ int UPNP::discover(int timeout, int ttl, const String& device_filter) {
     int error = 0;
     struct UPNPDev* devlist;
 
-    CharString cs = discover_multicast_if.utf8();
+    CharString cs    = discover_multicast_if.utf8();
     const char* m_if = cs.length() ? cs.get_data() : nullptr;
     if (is_common_device(device_filter)) {
         devlist = upnpDiscover(
@@ -123,7 +123,7 @@ char* UPNP::load_description(const String& url, int* size, int* status_code)
 }
 
 void UPNP::parse_igd(Ref<UPNPDevice> dev, UPNPDev* devlist) {
-    int size = 0;
+    int size        = 0;
     int status_code = -1;
     char* xml =
         load_description(dev->get_description_url(), &size, &status_code);
@@ -484,8 +484,8 @@ void UPNP::_bind_methods() {
 
 UPNP::UPNP() {
     discover_multicast_if = "";
-    discover_local_port = 0;
-    discover_ipv6 = false;
+    discover_local_port   = 0;
+    discover_ipv6         = false;
 }
 
 UPNP::~UPNP() {}

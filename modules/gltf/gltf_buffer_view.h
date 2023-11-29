@@ -40,10 +40,10 @@ class GLTFBufferView : public Resource {
 
 private:
     GLTFBufferIndex buffer = -1;
-    int byte_offset = 0;
-    int byte_length = 0;
-    int byte_stride = -1;
-    bool indices = false;
+    int byte_offset        = 0;
+    int byte_length        = 0;
+    int byte_stride        = -1;
+    bool indices           = false;
 
 protected:
     static void _bind_methods();

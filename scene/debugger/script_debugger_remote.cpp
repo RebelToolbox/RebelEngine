@@ -74,7 +74,7 @@ Error ScriptDebuggerRemote::connect_to_host(
 
     int port = p_port;
 
-    const int tries = 6;
+    const int tries  = 6;
     int waits[tries] = {1, 10, 100, 1000, 1000, 1000};
 
     tcp_client->connect_to_host(ip, port);
@@ -119,7 +119,7 @@ void ScriptDebuggerRemote::_put_variable(
         var = Variant();
     }
 
-    int len = 0;
+    int len   = 0;
     Error err = encode_variant(var, nullptr, len, true);
     if (err != OK) {
         ERR_PRINT("Failed to encode variant.");
@@ -176,7 +176,7 @@ void ScriptDebuggerRemote::debug(
     }
 
     uint64_t loop_begin_usec = 0;
-    uint64_t loop_time_sec = 0;
+    uint64_t loop_time_sec   = 0;
     while (true) {
         loop_begin_usec = OS::get_singleton()->get_ticks_usec();
 
@@ -203,11 +203,11 @@ void ScriptDebuggerRemote::debug(
 
                 for (int i = 0; i < slc; i++) {
                     Dictionary d;
-                    d["file"] = p_script->debug_get_stack_level_source(i);
-                    d["line"] = p_script->debug_get_stack_level_line(i);
+                    d["file"]     = p_script->debug_get_stack_level_source(i);
+                    d["line"]     = p_script->debug_get_stack_level_line(i);
                     d["function"] = p_script->debug_get_stack_level_function(i);
                     // d["id"]=p_script->debug_get_stack_level_
-                    d["id"] = 0;
+                    d["id"]       = 0;
 
                     packet_peer_stream->put_var(d);
                 }
@@ -247,7 +247,7 @@ void ScriptDebuggerRemote::debug(
                 { // locals
                     packet_peer_stream->put_var(locals.size());
 
-                    List<String>::Element* E = locals.front();
+                    List<String>::Element* E  = locals.front();
                     List<Variant>::Element* F = local_vals.front();
 
                     while (E) {
@@ -261,7 +261,7 @@ void ScriptDebuggerRemote::debug(
                 { // members
                     packet_peer_stream->put_var(members.size());
 
-                    List<String>::Element* E = members.front();
+                    List<String>::Element* E  = members.front();
                     List<Variant>::Element* F = member_vals.front();
 
                     while (E) {
@@ -275,7 +275,7 @@ void ScriptDebuggerRemote::debug(
                 { // globals
                     packet_peer_stream->put_var(globals.size());
 
-                    List<String>::Element* E = globals.front();
+                    List<String>::Element* E  = globals.front();
                     List<Variant>::Element* F = globals_vals.front();
 
                     while (E) {
@@ -342,9 +342,9 @@ void ScriptDebuggerRemote::debug(
             } else if (command == "override_camera_3D:transform") {
                 Transform transform = cmd[1];
                 bool is_perspective = cmd[2];
-                float size_or_fov = cmd[3];
-                float near = cmd[4];
-                float far = cmd[5];
+                float size_or_fov   = cmd[3];
+                float near          = cmd[4];
+                float far           = cmd[5];
 
                 if (scene_tree) {
                     if (is_perspective) {
@@ -456,14 +456,14 @@ void ScriptDebuggerRemote::_get_output() {
     if (n_errors_dropped == 1) {
         // Only print one message about dropping per second
         OutputError oe;
-        oe.error = "TOO_MANY_ERRORS";
+        oe.error       = "TOO_MANY_ERRORS";
         oe.error_descr = "Too many errors! Ignoring errors for up to 1 second.";
-        oe.warning = false;
-        uint64_t time = OS::get_singleton()->get_ticks_msec();
-        oe.hr = time / 3600000;
-        oe.min = (time / 60000) % 60;
-        oe.sec = (time / 1000) % 60;
-        oe.msec = time % 1000;
+        oe.warning     = false;
+        uint64_t time  = OS::get_singleton()->get_ticks_msec();
+        oe.hr          = time / 3600000;
+        oe.min         = (time / 60000) % 60;
+        oe.sec         = (time / 1000) % 60;
+        oe.msec        = time % 1000;
         errors.push_back(oe);
     }
 
@@ -473,12 +473,12 @@ void ScriptDebuggerRemote::_get_output() {
         oe.error = "TOO_MANY_WARNINGS";
         oe.error_descr =
             "Too many warnings! Ignoring warnings for up to 1 second.";
-        oe.warning = true;
+        oe.warning    = true;
         uint64_t time = OS::get_singleton()->get_ticks_msec();
-        oe.hr = time / 3600000;
-        oe.min = (time / 60000) % 60;
-        oe.sec = (time / 1000) % 60;
-        oe.msec = time % 1000;
+        oe.hr         = time / 3600000;
+        oe.min        = (time / 60000) % 60;
+        oe.sec        = (time / 1000) % 60;
+        oe.msec       = time % 1000;
         errors.push_back(oe);
     }
 
@@ -709,9 +709,9 @@ void ScriptDebuggerRemote::_send_object_id(ObjectID p_id) {
             }
 
             for (ScriptMemberMap::Element* sm = members.front(); sm;
-                 sm = sm->next()) {
+                 sm                           = sm->next()) {
                 for (Set<StringName>::Element* E = sm->get().front(); E;
-                     E = E->next()) {
+                     E                           = E->next()) {
                     Variant m;
                     if (si->get(E->get(), m)) {
                         String script_path =
@@ -728,7 +728,7 @@ void ScriptDebuggerRemote::_send_object_id(ObjectID p_id) {
             }
 
             for (ScriptConstantsMap::Element* sc = constants.front(); sc;
-                 sc = sc->next()) {
+                 sc                              = sc->next()) {
                 for (Map<StringName, Variant>::Element* E = sc->get().front();
                      E;
                      E = E->next()) {
@@ -774,7 +774,7 @@ void ScriptDebuggerRemote::_send_object_id(ObjectID p_id) {
             Map<StringName, Variant> constants;
             s->get_constants(&constants);
             for (Map<StringName, Variant>::Element* E = constants.front(); E;
-                 E = E->next()) {
+                 E                                    = E->next()) {
                 if (E->value().get_type() == Variant::OBJECT) {
                     Variant id = ((Object*)E->value())->get_instance_id();
                     PropertyInfo pi(
@@ -808,7 +808,7 @@ void ScriptDebuggerRemote::_send_object_id(ObjectID p_id) {
     Array send_props;
     for (int i = 0; i < properties.size(); i++) {
         const PropertyInfo& pi = properties[i].first;
-        Variant& var = properties[i].second;
+        Variant& var           = properties[i].second;
 
         RES res = var;
 
@@ -859,7 +859,7 @@ void ScriptDebuggerRemote::_set_object_property(
     String prop_name = p_property;
     if (p_property.begins_with("Members/")) {
         Vector<String> ss = p_property.split("/");
-        prop_name = ss[ss.size() - 1];
+        prop_name         = ss[ss.size() - 1];
     }
 
     obj->set(prop_name, p_value);
@@ -913,10 +913,10 @@ void ScriptDebuggerRemote::_poll_events() {
 
             max_frame_functions = cmd[1];
             profiler_function_signature_map.clear();
-            profiling = true;
-            frame_time = 0;
-            idle_time = 0;
-            physics_time = 0;
+            profiling          = true;
+            frame_time         = 0;
+            idle_time          = 0;
+            physics_time       = 0;
             physics_frame_time = 0;
 
             print_line("PROFILING ALRIGHT!");
@@ -957,9 +957,9 @@ void ScriptDebuggerRemote::_poll_events() {
         } else if (command == "override_camera_3D:transform") {
             Transform transform = cmd[1];
             bool is_perspective = cmd[2];
-            float size_or_fov = cmd[3];
-            float near = cmd[4];
-            float far = cmd[5];
+            float size_or_fov   = cmd[3];
+            float near          = cmd[4];
+            float far           = cmd[5];
 
             if (scene_tree) {
                 if (is_perspective) {
@@ -1120,7 +1120,7 @@ void ScriptDebuggerRemote::idle_poll() {
         uint64_t pt = OS::get_singleton()->get_ticks_msec();
         if (pt - last_perf_time > 1000) {
             last_perf_time = pt;
-            int max = performance->get("MONITOR_MAX");
+            int max        = performance->get("MONITOR_MAX");
             Array arr;
             arr.resize(max);
             for (int i = 0; i < max; i++) {
@@ -1204,7 +1204,7 @@ void ScriptDebuggerRemote::send_message(
         } else {
             Message msg;
             msg.message = p_message;
-            msg.data = p_args;
+            msg.data    = p_args;
             messages.push_back(msg);
         }
     }
@@ -1221,29 +1221,29 @@ void ScriptDebuggerRemote::send_error(
     const Vector<ScriptLanguage::StackInfo>& p_stack_info
 ) {
     OutputError oe;
-    oe.error = p_err;
+    oe.error       = p_err;
     oe.error_descr = p_descr;
     oe.source_file = p_file;
     oe.source_line = p_line;
     oe.source_func = p_func;
-    oe.warning = p_type == ERR_HANDLER_WARNING;
-    uint64_t time = OS::get_singleton()->get_ticks_msec();
-    oe.hr = time / 3600000;
-    oe.min = (time / 60000) % 60;
-    oe.sec = (time / 1000) % 60;
-    oe.msec = time % 1000;
+    oe.warning     = p_type == ERR_HANDLER_WARNING;
+    uint64_t time  = OS::get_singleton()->get_ticks_msec();
+    oe.hr          = time / 3600000;
+    oe.min         = (time / 60000) % 60;
+    oe.sec         = (time / 1000) % 60;
+    oe.msec        = time % 1000;
     Array cstack;
 
-    uint64_t ticks = OS::get_singleton()->get_ticks_usec() / 1000;
-    msec_count += ticks - last_msec;
-    last_msec = ticks;
+    uint64_t ticks  = OS::get_singleton()->get_ticks_usec() / 1000;
+    msec_count     += ticks - last_msec;
+    last_msec       = ticks;
 
     if (msec_count > 1000) {
         msec_count = 0;
 
-        err_count = 0;
-        n_errors_dropped = 0;
-        warn_count = 0;
+        err_count          = 0;
+        n_errors_dropped   = 0;
+        warn_count         = 0;
         n_warnings_dropped = 0;
     }
 
@@ -1289,16 +1289,16 @@ void ScriptDebuggerRemote::_print_handler(
 ) {
     ScriptDebuggerRemote* sdr = (ScriptDebuggerRemote*)p_this;
 
-    uint64_t ticks = OS::get_singleton()->get_ticks_usec() / 1000;
+    uint64_t ticks   = OS::get_singleton()->get_ticks_usec() / 1000;
     sdr->msec_count += ticks - sdr->last_msec;
-    sdr->last_msec = ticks;
+    sdr->last_msec   = ticks;
 
     if (sdr->msec_count > 1000) {
         sdr->char_count = 0;
         sdr->msec_count = 0;
     }
 
-    String s = p_string;
+    String s          = p_string;
     int allowed_chars = MIN(MAX(sdr->max_cps - sdr->char_count, 0), s.length());
 
     if (allowed_chars == 0 && s.length() > 0) {
@@ -1310,7 +1310,7 @@ void ScriptDebuggerRemote::_print_handler(
     }
 
     sdr->char_count += allowed_chars;
-    bool overflowed = sdr->char_count >= sdr->max_cps;
+    bool overflowed  = sdr->char_count >= sdr->max_cps;
 
     sdr->mutex.lock();
     if (!sdr->locking && sdr->tcp_client->is_connected_to_host()) {
@@ -1320,12 +1320,12 @@ void ScriptDebuggerRemote::_print_handler(
 
         OutputString output_string;
         output_string.message = s;
-        output_string.type = p_error ? MESSAGE_TYPE_ERROR : MESSAGE_TYPE_LOG;
+        output_string.type    = p_error ? MESSAGE_TYPE_ERROR : MESSAGE_TYPE_LOG;
         sdr->output_strings.push_back(output_string);
 
         if (overflowed) {
             output_string.message = "[output overflow, print less text!]";
-            output_string.type = MESSAGE_TYPE_ERROR;
+            output_string.type    = MESSAGE_TYPE_ERROR;
             sdr->output_strings.push_back(output_string);
         }
     }
@@ -1381,9 +1381,9 @@ void ScriptDebuggerRemote::profiling_set_frame_times(
     float p_physics_time,
     float p_physics_frame_time
 ) {
-    frame_time = p_frame_time;
-    idle_time = p_idle_time;
-    physics_time = p_physics_time;
+    frame_time         = p_frame_time;
+    idle_time          = p_idle_time;
+    physics_time       = p_physics_time;
     physics_frame_time = p_physics_frame_time;
 }
 
@@ -1439,10 +1439,10 @@ ScriptDebuggerRemote::ScriptDebuggerRemote() :
     ); // 8 MiB should be way more than enough, minus 4 bytes for separator.
 
     phl.printfunc = _print_handler;
-    phl.userdata = this;
+    phl.userdata  = this;
     add_print_handler(&phl);
 
-    eh.errfunc = _err_handler;
+    eh.errfunc  = _err_handler;
     eh.userdata = this;
     add_error_handler(&eh);
 

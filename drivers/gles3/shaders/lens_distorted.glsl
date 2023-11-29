@@ -12,7 +12,7 @@ out vec2 uv_interp;
 void main() {
     uv_interp = vertex_attrib.xy * 2.0 - 1.0;
 
-    vec2 v = vertex_attrib.xy * scale + offset;
+    vec2 v      = vertex_attrib.xy * scale + offset;
     gl_Position = vec4(v, 0.0, 1.0);
 }
 
@@ -40,17 +40,17 @@ void main() {
     offset.y /= aspect_ratio;
 
     // distort
-    vec2 offset_sq = offset * offset;
-    float radius_sq = offset_sq.x + offset_sq.y;
-    float radius_s4 = radius_sq * radius_sq;
-    float distortion_scale = 1.0 + (k1 * radius_sq) + (k2 * radius_s4);
-    offset *= distortion_scale;
+    vec2 offset_sq          = offset * offset;
+    float radius_sq         = offset_sq.x + offset_sq.y;
+    float radius_s4         = radius_sq * radius_sq;
+    float distortion_scale  = 1.0 + (k1 * radius_sq) + (k2 * radius_s4);
+    offset                 *= distortion_scale;
 
     // reapply aspect ratio
     offset.y *= aspect_ratio;
 
     // add our eye center back in
-    coords = offset + eye_center;
+    coords  = offset + eye_center;
     coords /= upscale;
 
     // and check our color
@@ -58,7 +58,7 @@ void main() {
         || coords.y > 1.0) {
         frag_color = vec4(0.0, 0.0, 0.0, 1.0);
     } else {
-        coords = (coords + vec2(1.0)) / vec2(2.0);
+        coords     = (coords + vec2(1.0)) / vec2(2.0);
         frag_color = textureLod(source, coords, 0.0);
     }
 }

@@ -34,7 +34,7 @@
 #include "core/engine.h"
 
 bool TileSet::_set(const StringName& p_name, const Variant& p_value) {
-    String n = p_name;
+    String n  = p_name;
     int slash = n.find("/");
     if (slash == -1) {
         return false;
@@ -126,9 +126,9 @@ bool TileSet::_set(const StringName& p_name, const Variant& p_value) {
             while (p.size() > 0) {
                 val = p[0];
                 if (val.z > 1) {
-                    v.x = val.x;
-                    v.y = val.y;
-                    priority = (int)val.z;
+                    v.x                                        = val.x;
+                    v.y                                        = val.y;
+                    priority                                   = (int)val.z;
                     tile_map[id].autotile_data.priority_map[v] = priority;
                 }
                 p.pop_front();
@@ -142,9 +142,9 @@ bool TileSet::_set(const StringName& p_name, const Variant& p_value) {
             while (p.size() > 0) {
                 val = p[0];
                 if (val.z != 0) {
-                    v.x = val.x;
-                    v.y = val.y;
-                    z_index = (int)val.z;
+                    v.x                                       = val.x;
+                    v.y                                       = val.y;
+                    z_index                                   = (int)val.z;
                     tile_map[id].autotile_data.z_index_map[v] = z_index;
                 }
                 p.pop_front();
@@ -210,7 +210,7 @@ bool TileSet::_set(const StringName& p_name, const Variant& p_value) {
 }
 
 bool TileSet::_get(const StringName& p_name, Variant& r_ret) const {
-    String n = p_name;
+    String n  = p_name;
     int slash = n.find("/");
     if (slash == -1) {
         return false;
@@ -341,7 +341,7 @@ bool TileSet::_get(const StringName& p_name, Variant& r_ret) const {
 
 void TileSet::_get_property_list(List<PropertyInfo>* p_list) const {
     for (Map<int, TileData>::Element* E = tile_map.front(); E; E = E->next()) {
-        int id = E->key();
+        int id     = E->key();
         String pre = itos(id) + "/";
         p_list->push_back(PropertyInfo(
             Variant::STRING,
@@ -600,7 +600,7 @@ void TileSet::create_tile(int p_id) {
         tile_map.has(p_id),
         vformat("The TileSet already has a tile with ID '%d'.", p_id)
     );
-    tile_map[p_id] = TileData();
+    tile_map[p_id]               = TileData();
     tile_map[p_id].autotile_data = AutotileData();
     _change_notify("");
     emit_changed();
@@ -928,9 +928,9 @@ const Map<Vector2, uint32_t>& TileSet::autotile_get_bitmask_map(int p_id) {
         vformat("The TileSet doesn't have a tile with ID '%d'.", p_id)
     );
     if (tile_get_tile_mode(p_id) == ATLAS_TILE) {
-        dummy_atlas = Map<Vector2, uint32_t>();
-        Rect2 region = tile_get_region(p_id);
-        Size2 size = autotile_get_size(p_id);
+        dummy_atlas   = Map<Vector2, uint32_t>();
+        Rect2 region  = tile_get_region(p_id);
+        Size2 size    = autotile_get_size(p_id);
         float spacing = autotile_get_spacing(p_id);
         for (int x = 0; x < (region.size.x / (size.x + spacing)); x++) {
             for (int y = 0; y < (region.size.y / (size.y + spacing)); y++) {
@@ -990,13 +990,13 @@ Vector2 TileSet::autotile_get_subtile_for_bitmask(
                  | BIND_IGNORE_RIGHT | BIND_IGNORE_BOTTOM);
         }
 
-        mask_ = mask & 0xFFFF;
+        mask_       = mask & 0xFFFF;
         mask_ignore = mask >> 16;
 
         if (((mask_ & (~mask_ignore)) == (p_bitmask & (~mask_ignore)))
             && (((~mask_) | mask_ignore) == ((~p_bitmask) | mask_ignore))) {
-            uint32_t priority = autotile_get_subtile_priority(p_id, E->key());
-            priority_sum += priority;
+            uint32_t priority  = autotile_get_subtile_priority(p_id, E->key());
+            priority_sum      += priority;
             priorities.push_back(priority);
             coords.push_back(E->key());
         }
@@ -1007,9 +1007,9 @@ Vector2 TileSet::autotile_get_subtile_for_bitmask(
     } else {
         uint32_t picked_value = Math::rand() % priority_sum;
         uint32_t upper_bound;
-        uint32_t lower_bound = 0;
-        Vector2 result = coords.front()->get();
-        List<Vector2>::Element* coords_E = coords.front();
+        uint32_t lower_bound                  = 0;
+        Vector2 result                        = coords.front()->get();
+        List<Vector2>::Element* coords_E      = coords.front();
         List<uint32_t>::Element* priorities_E = priorities.front();
         while (priorities_E) {
             upper_bound = lower_bound + priorities_E->get();
@@ -1017,9 +1017,9 @@ Vector2 TileSet::autotile_get_subtile_for_bitmask(
                 result = coords_E->get();
                 break;
             }
-            lower_bound = upper_bound;
+            lower_bound  = upper_bound;
             priorities_E = priorities_E->next();
-            coords_E = coords_E->next();
+            coords_E     = coords_E->next();
         }
 
         return result;
@@ -1115,11 +1115,11 @@ void TileSet::tile_add_shape(
         vformat("The TileSet doesn't have a tile with ID '%d'.", p_id)
     );
 
-    ShapeData new_data = ShapeData();
-    new_data.shape = p_shape;
-    new_data.shape_transform = p_transform;
+    ShapeData new_data         = ShapeData();
+    new_data.shape             = p_shape;
+    new_data.shape_transform   = p_transform;
     new_data.one_way_collision = p_one_way;
-    new_data.autotile_coord = p_autotile_coord;
+    new_data.autotile_coord    = p_autotile_coord;
 
     tile_map[p_id].shapes_data.push_back(new_data);
 }
@@ -1493,8 +1493,8 @@ void TileSet::tile_set_z_index(int p_id, int p_z_index) {
 void TileSet::_tile_set_shapes(int p_id, const Array& p_shapes) {
     ERR_FAIL_COND(!tile_map.has(p_id));
     Vector<ShapeData> shapes_data;
-    Transform2D default_transform = tile_get_shape_transform(p_id, 0);
-    bool default_one_way = tile_get_shape_one_way(p_id, 0);
+    Transform2D default_transform  = tile_get_shape_transform(p_id, 0);
+    bool default_one_way           = tile_get_shape_one_way(p_id, 0);
     Vector2 default_autotile_coord = Vector2();
     for (int i = 0; i < p_shapes.size(); i++) {
         ShapeData s = ShapeData();
@@ -1505,10 +1505,10 @@ void TileSet::_tile_set_shapes(int p_id, const Array& p_shapes) {
                 continue;
             }
 
-            s.shape = shape;
-            s.shape_transform = default_transform;
+            s.shape             = shape;
+            s.shape_transform   = default_transform;
             s.one_way_collision = default_one_way;
-            s.autotile_coord = default_autotile_coord;
+            s.autotile_coord    = default_autotile_coord;
         } else if (p_shapes[i].get_type() == Variant::DICTIONARY) {
             Dictionary d = p_shapes[i];
 
@@ -1569,11 +1569,11 @@ Array TileSet::_tile_get_shapes(int p_id) const {
     Vector<ShapeData> data = tile_map[p_id].shapes_data;
     for (int i = 0; i < data.size(); i++) {
         Dictionary shape_data;
-        shape_data["shape"] = data[i].shape;
+        shape_data["shape"]           = data[i].shape;
         shape_data["shape_transform"] = data[i].shape_transform;
-        shape_data["one_way"] = data[i].one_way_collision;
-        shape_data["one_way_margin"] = data[i].one_way_collision_margin;
-        shape_data["autotile_coord"] = data[i].autotile_coord;
+        shape_data["one_way"]         = data[i].one_way_collision;
+        shape_data["one_way_margin"]  = data[i].one_way_collision_margin;
+        shape_data["autotile_coord"]  = data[i].autotile_coord;
         arr.push_back(shape_data);
     }
 

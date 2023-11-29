@@ -49,7 +49,7 @@ class SceneState : public Reference {
     enum {
         NO_PARENT_SAVED = 0x7FFFFFFF,
         NAME_INDEX_BITS = 18,
-        NAME_MASK = (1 << NAME_INDEX_BITS) - 1,
+        NAME_MASK       = (1 << NAME_INDEX_BITS) - 1,
     };
 
     struct NodeData {
@@ -126,10 +126,10 @@ protected:
 
 public:
     enum {
-        FLAG_ID_IS_PATH = (1 << 30),
-        TYPE_INSTANCED = 0x7FFFFFFF,
+        FLAG_ID_IS_PATH              = (1 << 30),
+        TYPE_INSTANCED               = 0x7FFFFFFF,
         FLAG_INSTANCE_IS_PLACEHOLDER = (1 << 30),
-        FLAG_MASK = (1 << 24) - 1,
+        FLAG_MASK                    = (1 << 24) - 1,
     };
 
     enum GenEditState {

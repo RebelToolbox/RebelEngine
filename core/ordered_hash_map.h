@@ -46,10 +46,10 @@
 template <
     class K,
     class V,
-    class Hasher = HashMapHasherDefault,
-    class Comparator = HashMapComparatorDefault<K>,
+    class Hasher                 = HashMapHasherDefault,
+    class Comparator             = HashMapComparatorDefault<K>,
     uint8_t MIN_HASH_TABLE_POWER = 3,
-    uint8_t RELATIONSHIP = 8>
+    uint8_t RELATIONSHIP         = 8>
 class OrderedHashMap {
     typedef List<Pair<const K*, V>> InternalList;
     typedef HashMap<
@@ -237,7 +237,7 @@ public:
         typename InternalList::Element* new_element =
             list.push_back(Pair<const K*, V>(NULL, p_value));
         typename InternalMap::Element* e = map.set(p_key, new_element);
-        new_element->get().first = &e->key();
+        new_element->get().first         = &e->key();
 
         return Element(new_element);
     }

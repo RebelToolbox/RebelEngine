@@ -84,7 +84,7 @@ PoolByteArray AESContext::update(PoolByteArray p_src) {
     PoolByteArray out;
     out.resize(len);
     const uint8_t* src_ptr = p_src.read().ptr();
-    uint8_t* out_ptr = out.write().ptr();
+    uint8_t* out_ptr       = out.write().ptr();
     switch (mode) {
         case MODE_ECB_ENCRYPT: {
             for (int i = 0; i < len; i += 16) {

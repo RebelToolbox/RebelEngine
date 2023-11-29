@@ -57,7 +57,7 @@
 void EditorSceneImporterFBX::get_extensions(List<String>* r_extensions) const {
     // register FBX as the one and only format for FBX importing
     const String import_setting_string = "filesystem/import/fbx/";
-    const String fbx_str = "fbx";
+    const String fbx_str               = "fbx";
     Vector<String> exts;
     exts.push_back(fbx_str);
     _register_project_setting_import(
@@ -299,11 +299,11 @@ struct EditorSceneImporterAssetImportInterpolate {
 
     T bezier(T start, T control_1, T control_2, T end, float t) {
         /* Formula from Wikipedia article on Bezier curves. */
-        real_t omt = (1.0 - t);
+        real_t omt  = (1.0 - t);
         real_t omt2 = omt * omt;
         real_t omt3 = omt2 * omt;
-        real_t t2 = t * t;
-        real_t t3 = t2 * t;
+        real_t t2   = t * t;
+        real_t t3   = t2 * t;
 
         return start * omt3 + control_1 * omt2 * t * 3.0
              + control_2 * omt * t2 * 3.0 + end * t3;
@@ -413,9 +413,9 @@ T EditorSceneImporterFBX::_interpolate_track(
                 (p_time - p_times[idx]) / (p_times[idx + 1] - p_times[idx]);
 
             T from = p_values[idx * 3 + 1];
-            T c1 = from + p_values[idx * 3 + 2];
-            T to = p_values[idx * 3 + 4];
-            T c2 = to + p_values[idx * 3 + 3];
+            T c1   = from + p_values[idx * 3 + 2];
+            T to   = p_values[idx * 3 + 4];
+            T c2   = to + p_values[idx * 3 + 3];
 
             return interp.bezier(from, c1, c2, to, c);
 
@@ -443,7 +443,7 @@ Transform get_global_transform(Spatial* root, Spatial* child_node) {
     }
 
     Transform t = Transform();
-    Node* iter = child_node;
+    Node* iter  = child_node;
 
     while (iter != nullptr && iter != root) {
         Spatial* spatial = Object::cast_to<Spatial>(iter);
@@ -467,13 +467,13 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
     bool p_is_blender_fbx
 ) {
     ImportState state;
-    state.is_blender_fbx = p_is_blender_fbx;
-    state.path = p_path;
+    state.is_blender_fbx   = p_is_blender_fbx;
+    state.path             = p_path;
     state.animation_player = nullptr;
 
     // create new root node for scene
     Spatial* scene_root = memnew(Spatial);
-    state.root = memnew(Spatial);
+    state.root          = memnew(Spatial);
     state.root_owner = scene_root; // the real scene root... sorry compatibility
                                    // code is painful...
 
@@ -494,7 +494,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
     print_verbose("FBX unit scale is: " + rtos(state.scale));
 
     // Enabled by default.
-    state.enable_material_import = true;
+    state.enable_material_import  = true;
     // Enabled by default.
     state.enable_animation_import = true;
     Ref<FBXNode> root_node;
@@ -505,9 +505,9 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
     Ref<PivotTransform> pivot_transform;
     pivot_transform.instance();
     root_node->pivot_transform = pivot_transform;
-    root_node->node_name = "root node";
+    root_node->node_name       = "root node";
     root_node->current_node_id = 0;
-    root_node->godot_node = state.root;
+    root_node->godot_node      = state.root;
 
     // cache this node onto the fbx_target map.
     state.fbx_target_map.insert(0, root_node);
@@ -544,7 +544,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
             source_to_destination =
                 p_document->GetConnectionsBySourceSequenced(skin_id);
         FBXDocParser::MeshGeometry* mesh = nullptr;
-        uint64_t mesh_id = 0;
+        uint64_t mesh_id                 = 0;
 
         // Most likely only contains the mesh link for the skin
         // The mesh geometry.
@@ -607,7 +607,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
             // Cache Weight Information into bone for later usage if you want
             // the raw data.
             const std::vector<unsigned int>& indexes = cluster->GetIndices();
-            const std::vector<float>& weights = cluster->GetWeights();
+            const std::vector<float>& weights        = cluster->GetWeights();
             Ref<FBXMeshData> mesh_vertex_data;
 
             // this data will pre-exist if vertex weight information is found
@@ -618,7 +618,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                 state.renderer_mesh_data.insert(mesh_id, mesh_vertex_data);
             }
 
-            mesh_vertex_data->armature_id = bone_element->armature_id;
+            mesh_vertex_data->armature_id       = bone_element->armature_id;
             mesh_vertex_data->valid_armature_id = true;
 
             // print_verbose("storing mesh vertex data for mesh to use later");
@@ -628,7 +628,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
             );
 
             for (size_t idx = 0; idx < indexes.size(); idx++) {
-                const size_t vertex_index = indexes[idx];
+                const size_t vertex_index     = indexes[idx];
                 const real_t influence_weight = weights[idx];
 
                 VertexWeightMapping& vm =
@@ -648,7 +648,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                     mesh_vertex_data->vertex_weights.getptr(*vertex_index);
                 const int influence_count = vm->weights.size();
                 if (influence_count > mesh_vertex_data->max_weight_count) {
-                    mesh_vertex_data->max_weight_count = influence_count;
+                    mesh_vertex_data->max_weight_count   = influence_count;
                     mesh_vertex_data->valid_weight_count = true;
                 }
             }
@@ -818,7 +818,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                  state.fbx_node_list.front();
              node_element;
              node_element = node_element->next()) {
-            Ref<FBXNode> fbx_node = node_element->get();
+            Ref<FBXNode> fbx_node   = node_element->get();
             MeshInstance* mesh_node = nullptr;
             Ref<FBXMeshData> mesh_data_precached;
 
@@ -884,7 +884,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
             Ref<FBXSkeleton> node_skeleton = fbx_node->skeleton_node;
 
             if (node_skeleton.is_valid()) {
-                Skeleton* skel = node_skeleton->skeleton;
+                Skeleton* skel       = node_skeleton->skeleton;
                 fbx_node->godot_node = skel;
             } else if (mesh_node == nullptr) {
                 fbx_node->godot_node = memnew(Spatial);
@@ -919,7 +919,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
          mesh_data;
          mesh_data = mesh_data->next()) {
         const uint64_t mesh_id = mesh_data->key();
-        Ref<FBXMeshData> mesh = mesh_data->value();
+        Ref<FBXMeshData> mesh  = mesh_data->value();
 
         const FBXDocParser::MeshGeometry* mesh_geometry =
             p_document->GetObject(mesh_id)->Get<FBXDocParser::MeshGeometry>();
@@ -979,7 +979,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
             );
 
             const Ref<FBXBone> bone = state.fbx_bone_map[skin_target_id];
-            const Ref<FBXSkeleton> skeleton = bone->fbx_skeleton;
+            const Ref<FBXSkeleton> skeleton  = bone->fbx_skeleton;
             const Ref<FBXNode> skeleton_node = skeleton->fbx_node;
 
             skin->add_named_bind(
@@ -1010,13 +1010,13 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
              state.renderer_mesh_data.front();
          mesh_data;
          mesh_data = mesh_data->next()) {
-        Ref<FBXMeshData> mesh = mesh_data->value();
-        const uint64_t mesh_id = mesh_data->key();
+        Ref<FBXMeshData> mesh       = mesh_data->value();
+        const uint64_t mesh_id      = mesh_data->key();
         MeshInstance* mesh_instance = mesh->godot_mesh_instance;
-        const int mesh_weights = mesh->max_weight_count;
+        const int mesh_weights      = mesh->max_weight_count;
         Ref<FBXSkeleton> skeleton;
         const bool valid_armature = mesh->valid_armature_id;
-        const uint64_t armature = mesh->armature_id;
+        const uint64_t armature   = mesh->armature_id;
 
         if (mesh_weights > 0) {
             // this is a bug, it means the weights were found but the skeleton
@@ -1102,11 +1102,11 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                 );
                 // ReferenceTime is the same for some animations?
                 // LocalStop time is the start and end time
-                float r_start = CONVERT_FBX_TIME(stack->ReferenceStart());
-                float r_stop = CONVERT_FBX_TIME(stack->ReferenceStop());
+                float r_start    = CONVERT_FBX_TIME(stack->ReferenceStart());
+                float r_stop     = CONVERT_FBX_TIME(stack->ReferenceStop());
                 float start_time = CONVERT_FBX_TIME(stack->LocalStart());
-                float end_time = CONVERT_FBX_TIME(stack->LocalStop());
-                float duration = end_time - start_time;
+                float end_time   = CONVERT_FBX_TIME(stack->LocalStop());
+                float duration   = end_time - start_time;
 
                 print_verbose(
                     "r_start " + rtos(r_start) + ", r_stop " + rtos(r_stop)
@@ -1287,7 +1287,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                             Vector3 default_value =
                                 Vector3(offset_x, offset_y, offset_z);
                             keyframe_map.default_value = default_value;
-                            keyframe_map.has_default = true;
+                            keyframe_map.has_default   = true;
                             // print_verbose("track name: " + curve_node_name);
                             // print_verbose("xyz default: " + default_value);
                         }
@@ -1479,10 +1479,10 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                         FBXTrack& translation_keys =
                             track_data[StringName("T")];
                         FBXTrack& rotation_keys = track_data[StringName("R")];
-                        FBXTrack& scale_keys = track_data[StringName("S")];
+                        FBXTrack& scale_keys    = track_data[StringName("S")];
 
                         double increment = 1.0f / fps_setting;
-                        double time = 0.0f;
+                        double time      = 0.0f;
 
                         bool last = false;
 
@@ -1494,7 +1494,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                         Vector<float> rot_times;
 
                         double max_duration = 0;
-                        double anim_length = animation->get_length();
+                        double anim_length  = animation->get_length();
 
                         for (std::pair<int64_t, Vector3> position_key :
                              translation_keys.keyframes) {
@@ -1534,7 +1534,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                         // when it comes to implementing animation code! enjoy
                         // <3
 
-                        bool got_pre = false;
+                        bool got_pre  = false;
                         bool got_post = false;
 
                         Quat post_rotation;
@@ -1647,8 +1647,8 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                         );
 
                         while (true) {
-                            Vector3 pos = def_pos;
-                            Quat rot = def_rot;
+                            Vector3 pos   = def_pos;
+                            Quat rot      = def_rot;
                             Vector3 scale = def_scale;
 
                             if (pos_values.size()) {
@@ -1690,7 +1690,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                                 rot = t.basis.get_rotation_quat();
                                 rot.normalize();
                                 scale = t.basis.get_scale();
-                                pos = t.origin;
+                                pos   = t.origin;
                             }
 
                             animation->transform_track_insert_key(
@@ -1830,14 +1830,14 @@ void EditorSceneImporterFBX::BuildDocumentBones(
 
                 // used to build the bone hierarchy in the skeleton
                 bone_element->parent_bone_id = parent_is_bone ? p_id : 0;
-                bone_element->valid_parent = parent_is_bone;
-                bone_element->limb_node = limb_node;
+                bone_element->valid_parent   = parent_is_bone;
+                bone_element->limb_node      = limb_node;
 
                 // parent is a node and this is the first bone
                 if (!parent_is_bone) {
-                    uint64_t armature_id = p_id;
+                    uint64_t armature_id            = p_id;
                     bone_element->valid_armature_id = true;
-                    bone_element->armature_id = armature_id;
+                    bone_element->armature_id       = armature_id;
                     print_verbose(
                         "[doc] valid armature has been configured for first "
                         "child: "
@@ -1870,7 +1870,7 @@ void EditorSceneImporterFBX::BuildDocumentBones(
                     );
                 }
 
-                uint64_t limb_id = limb_node->ID();
+                uint64_t limb_id      = limb_node->ID();
                 bone_element->bone_id = limb_id;
                 bone_element->bone_name =
                     ImportUtils::FBXNodeToName(model->Name());

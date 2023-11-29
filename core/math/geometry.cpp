@@ -61,7 +61,7 @@ void Geometry::MeshData::optimize_vertices() {
         for (int j = 0; j < faces[i].indices.size(); j++) {
             int idx = faces[i].indices[j];
             if (!vtx_remap.has(idx)) {
-                int ni = vtx_remap.size();
+                int ni         = vtx_remap.size();
                 vtx_remap[idx] = ni;
             }
 
@@ -74,11 +74,11 @@ void Geometry::MeshData::optimize_vertices() {
         int b = edges[i].b;
 
         if (!vtx_remap.has(a)) {
-            int ni = vtx_remap.size();
+            int ni       = vtx_remap.size();
             vtx_remap[a] = ni;
         }
         if (!vtx_remap.has(b)) {
-            int ni = vtx_remap.size();
+            int ni       = vtx_remap.size();
             vtx_remap[b] = ni;
         }
 
@@ -268,7 +268,7 @@ PoolVector<PoolVector<Face3>> Geometry::separate_objects(
     if (group >= 0) {
         objects.resize(group);
         PoolVector<PoolVector<Face3>>::Write obw = objects.write();
-        PoolVector<Face3>* group_faces = obw.ptr();
+        PoolVector<Face3>* group_faces           = obw.ptr();
 
         for (int i = 0; i < len; i++) {
             if (!_fcptr[i].valid) {
@@ -286,19 +286,19 @@ PoolVector<PoolVector<Face3>> Geometry::separate_objects(
 /*** GEOMETRY WRAPPER ***/
 
 enum _CellFlags {
-    _CELL_SOLID = 1,
-    _CELL_EXTERIOR = 2,
-    _CELL_STEP_MASK = 0x1C,
-    _CELL_STEP_NONE = 0 << 2,
+    _CELL_SOLID      = 1,
+    _CELL_EXTERIOR   = 2,
+    _CELL_STEP_MASK  = 0x1C,
+    _CELL_STEP_NONE  = 0 << 2,
     _CELL_STEP_Y_POS = 1 << 2,
     _CELL_STEP_Y_NEG = 2 << 2,
     _CELL_STEP_X_POS = 3 << 2,
     _CELL_STEP_X_NEG = 4 << 2,
     _CELL_STEP_Z_POS = 5 << 2,
     _CELL_STEP_Z_NEG = 6 << 2,
-    _CELL_STEP_DONE = 7 << 2,
-    _CELL_PREV_MASK = 0xE0,
-    _CELL_PREV_NONE = 0 << 5,
+    _CELL_STEP_DONE  = 7 << 2,
+    _CELL_PREV_MASK  = 0xE0,
+    _CELL_PREV_NONE  = 0 << 5,
     _CELL_PREV_Y_POS = 1 << 5,
     _CELL_PREV_Y_NEG = 2 << 5,
     _CELL_PREV_X_POS = 3 << 5,
@@ -321,7 +321,7 @@ static inline void _plot_face(
 ) {
     AABB aabb(Vector3(x, y, z), Vector3(len_x, len_y, len_z));
     aabb.position = aabb.position * voxelsize;
-    aabb.size = aabb.size * voxelsize;
+    aabb.size     = aabb.size * voxelsize;
 
     if (!p_face.intersects_aabb(aabb)) {
         return;
@@ -338,13 +338,13 @@ static inline void _plot_face(
 
 #define _SPLIT(m_i, m_div, m_v, m_len_v, m_new_v, m_new_len_v)                 \
     if (m_div == 1) {                                                          \
-        m_new_v = m_v;                                                         \
+        m_new_v     = m_v;                                                     \
         m_new_len_v = 1;                                                       \
     } else if (m_i == 0) {                                                     \
-        m_new_v = m_v;                                                         \
+        m_new_v     = m_v;                                                     \
         m_new_len_v = m_len_v / 2;                                             \
     } else {                                                                   \
-        m_new_v = m_v + m_len_v / 2;                                           \
+        m_new_v     = m_v + m_len_v / 2;                                       \
         m_new_len_v = m_len_v - m_len_v / 2;                                   \
     }
 
@@ -491,9 +491,9 @@ static inline void _mark_outside(
             continue;
         }
 
-        x = next_x;
-        y = next_y;
-        z = next_z;
+        x                       = next_x;
+        y                       = next_y;
+        z                       = next_z;
         p_cell_status[x][y][z] |= prev;
     }
 }
@@ -572,9 +572,9 @@ PoolVector<Face3> Geometry::wrap_geometry(
 #define _MIN_SIZE   1.0
 #define _MAX_LENGTH 20
 
-    int face_count = p_array.size();
+    int face_count                 = p_array.size();
     PoolVector<Face3>::Read facesr = p_array.read();
-    const Face3* faces = facesr.ptr();
+    const Face3* faces             = facesr.ptr();
 
     AABB global_aabb;
 
@@ -609,10 +609,10 @@ PoolVector<Face3> Geometry::wrap_geometry(
         div_z = _MAX_LENGTH;
     }
 
-    Vector3 voxelsize = global_aabb.size;
-    voxelsize.x /= div_x;
-    voxelsize.y /= div_y;
-    voxelsize.z /= div_z;
+    Vector3 voxelsize  = global_aabb.size;
+    voxelsize.x       /= div_x;
+    voxelsize.y       /= div_y;
+    voxelsize.z       /= div_z;
 
     // Create and initialize cells to zero.
 
@@ -686,15 +686,15 @@ PoolVector<Face3> Geometry::wrap_geometry(
 
     // Transform face vertices to global coords.
 
-    int wrapped_faces_count = wrapped_faces.size();
+    int wrapped_faces_count                 = wrapped_faces.size();
     PoolVector<Face3>::Write wrapped_facesw = wrapped_faces.write();
-    Face3* wrapped_faces_ptr = wrapped_facesw.ptr();
+    Face3* wrapped_faces_ptr                = wrapped_facesw.ptr();
 
     for (int i = 0; i < wrapped_faces_count; i++) {
         for (int j = 0; j < 3; j++) {
-            Vector3& v = wrapped_faces_ptr[i].vertex[j];
-            v = v * voxelsize;
-            v += global_aabb.position;
+            Vector3& v  = wrapped_faces_ptr[i].vertex[j];
+            v           = v * voxelsize;
+            v          += global_aabb.position;
         }
     }
 
@@ -738,7 +738,7 @@ Vector<Vector<Vector2>> Geometry::decompose_polygon_in_convex(
     decomp.resize(out_poly.size());
     int idx = 0;
     for (List<TriangulatorPoly>::Element* I = out_poly.front(); I;
-         I = I->next()) {
+         I                                  = I->next()) {
         TriangulatorPoly& tp = I->get();
 
         decomp.write[idx].resize(tp.GetNumPoints());
@@ -770,7 +770,7 @@ Geometry::MeshData Geometry::build_convex_mesh(const PoolVector<Plane>& p_planes
         }
 
         Vector3 right = p.normal.cross(ref).normalized();
-        Vector3 up = p.normal.cross(right).normalized();
+        Vector3 up    = p.normal.cross(right).normalized();
 
         Vector<Vector3> vertices;
 
@@ -821,7 +821,7 @@ Geometry::MeshData Geometry::build_convex_mesh(const PoolVector<Plane>& p_planes
                         continue; // Point too short.
                     }
 
-                    real_t dist = -(clip.normal.dot(edge0_A) - clip.d) / den;
+                    real_t dist    = -(clip.normal.dot(edge0_A) - clip.d) / den;
                     Vector3 inters = edge0_A + rel * dist;
                     new_vertices.push_back(inters);
                 }
@@ -945,7 +945,7 @@ PoolVector<Plane> Geometry::build_sphere_planes(
     Vector3 axis_neg;
     axis_neg[(p_axis + 1) % 3] = 1.0;
     axis_neg[(p_axis + 2) % 3] = 1.0;
-    axis_neg[p_axis] = -1.0;
+    axis_neg[p_axis]           = -1.0;
 
     for (int i = 0; i < p_lons; i++) {
         Vector3 normal;
@@ -984,7 +984,7 @@ PoolVector<Plane> Geometry::build_capsule_planes(
     Vector3 axis_neg;
     axis_neg[(p_axis + 1) % 3] = 1.0;
     axis_neg[(p_axis + 2) % 3] = 1.0;
-    axis_neg[p_axis] = -1.0;
+    axis_neg[p_axis]           = -1.0;
 
     for (int i = 0; i < p_sides; i++) {
         Vector3 normal;
@@ -1043,7 +1043,7 @@ void Geometry::make_atlas(
     Vector<_AtlasWorkRect> wrects;
     wrects.resize(p_rects.size());
     for (int i = 0; i < p_rects.size(); i++) {
-        wrects.write[i].s = p_rects[i];
+        wrects.write[i].s   = p_rects[i];
         wrects.write[i].idx = i;
     }
     wrects.sort();
@@ -1052,7 +1052,7 @@ void Geometry::make_atlas(
     Vector<_AtlasWorkRectResult> results;
 
     for (int i = 0; i <= 12; i++) {
-        int w = 1 << i;
+        int w     = 1 << i;
         int max_h = 0;
         int max_w = 0;
         if (w < widest) {
@@ -1066,7 +1066,7 @@ void Geometry::make_atlas(
         }
 
         // Place them.
-        int ofs = 0;
+        int ofs     = 0;
         int limit_h = 0;
         for (int j = 0; j < wrects.size(); j++) {
             if (ofs + wrects[j].s.width > w) {
@@ -1082,8 +1082,8 @@ void Geometry::make_atlas(
 
             wrects.write[j].p.x = ofs;
             wrects.write[j].p.y = from_y;
-            int end_h = from_y + wrects[j].s.height;
-            int end_w = ofs + wrects[j].s.width;
+            int end_h           = from_y + wrects[j].s.height;
+            int end_w           = ofs + wrects[j].s.width;
             if (ofs == 0) {
                 limit_h = end_h;
             }
@@ -1109,22 +1109,22 @@ void Geometry::make_atlas(
 
         _AtlasWorkRectResult result;
         result.result = wrects;
-        result.max_h = max_h;
-        result.max_w = max_w;
+        result.max_h  = max_h;
+        result.max_w  = max_w;
         results.push_back(result);
     }
 
     // Find the result with the best aspect ratio.
 
-    int best = -1;
+    int best           = -1;
     real_t best_aspect = 1e20;
 
     for (int i = 0; i < results.size(); i++) {
-        real_t h = next_power_of_2(results[i].max_h);
-        real_t w = next_power_of_2(results[i].max_w);
+        real_t h      = next_power_of_2(results[i].max_h);
+        real_t w      = next_power_of_2(results[i].max_w);
         real_t aspect = h > w ? h / w : w / h;
         if (aspect < best_aspect) {
-            best = i;
+            best        = i;
             best_aspect = aspect;
         }
     }
@@ -1308,7 +1308,7 @@ real_t Geometry::calculate_convex_hull_volume(const Geometry::MeshData& p_md) {
     for (int f = 0; f < p_md.faces.size(); f++) {
         const Geometry::MeshData::Face& face = p_md.faces[f];
 
-        real_t height = 0.0;
+        real_t height    = 0.0;
         real_t face_area = 0.0;
 
         for (int c = 0; c < face.indices.size() - 2; c++) {
@@ -1494,11 +1494,11 @@ Vector<Geometry::PackRectsResult> Geometry::partial_pack_rects(
     rects.resize(p_sizes.size());
 
     for (int i = 0; i < p_sizes.size(); i++) {
-        rects.write[i].id = i;
-        rects.write[i].w = p_sizes[i].width;
-        rects.write[i].h = p_sizes[i].height;
-        rects.write[i].x = 0;
-        rects.write[i].y = 0;
+        rects.write[i].id         = i;
+        rects.write[i].w          = p_sizes[i].width;
+        rects.write[i].h          = p_sizes[i].height;
+        rects.write[i].x          = 0;
+        rects.write[i].y          = 0;
         rects.write[i].was_packed = 0;
     }
 

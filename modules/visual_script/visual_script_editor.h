@@ -47,7 +47,7 @@ class VisualScriptEditor : public ScriptEditorBase {
     GDCLASS(VisualScriptEditor, ScriptEditorBase);
 
     enum {
-        TYPE_SEQUENCE = 1000,
+        TYPE_SEQUENCE       = 1000,
         INDEX_BASE_SEQUENCE = 1024
     };
 
@@ -275,7 +275,7 @@ class VisualScriptEditor : public ScriptEditorBase {
     Vector2 _get_pos_in_graph(Vector2 p_point) const;
     Vector2 _get_available_pos(
         bool p_centered = true,
-        Vector2 p_pos = Vector2()
+        Vector2 p_pos   = Vector2()
     ) const;
     StringName _get_function_of_node(int p_id) const;
 
@@ -288,7 +288,7 @@ class VisualScriptEditor : public ScriptEditorBase {
 
     void _generic_search(
         String p_base_type = "",
-        Vector2 pos = Vector2(),
+        Vector2 pos        = Vector2(),
         bool node_centered = false
     );
 

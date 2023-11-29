@@ -101,10 +101,10 @@ private:
         int uid;
 
         InterpolateData() {
-            active = false;
-            finish = false;
+            active        = false;
+            finish        = false;
             call_deferred = false;
-            uid = 0;
+            uid           = 0;
         }
     };
 
@@ -127,15 +127,15 @@ private:
 
     void _add_pending_command(
         StringName p_key,
-        const Variant& p_arg1 = Variant(),
-        const Variant& p_arg2 = Variant(),
-        const Variant& p_arg3 = Variant(),
-        const Variant& p_arg4 = Variant(),
-        const Variant& p_arg5 = Variant(),
-        const Variant& p_arg6 = Variant(),
-        const Variant& p_arg7 = Variant(),
-        const Variant& p_arg8 = Variant(),
-        const Variant& p_arg9 = Variant(),
+        const Variant& p_arg1  = Variant(),
+        const Variant& p_arg2  = Variant(),
+        const Variant& p_arg3  = Variant(),
+        const Variant& p_arg4  = Variant(),
+        const Variant& p_arg5  = Variant(),
+        const Variant& p_arg6  = Variant(),
+        const Variant& p_arg7  = Variant(),
+        const Variant& p_arg8  = Variant(),
+        const Variant& p_arg9  = Variant(),
         const Variant& p_arg10 = Variant()
     );
     void _process_pending_commands();
@@ -220,8 +220,8 @@ public:
         Variant p_final_val,
         real_t p_duration,
         TransitionType p_trans_type = TRANS_LINEAR,
-        EaseType p_ease_type = EASE_IN_OUT,
-        real_t p_delay = 0
+        EaseType p_ease_type        = EASE_IN_OUT,
+        real_t p_delay              = 0
     );
     bool interpolate_method(
         Object* p_object,
@@ -230,8 +230,8 @@ public:
         Variant p_final_val,
         real_t p_duration,
         TransitionType p_trans_type = TRANS_LINEAR,
-        EaseType p_ease_type = EASE_IN_OUT,
-        real_t p_delay = 0
+        EaseType p_ease_type        = EASE_IN_OUT,
+        real_t p_delay              = 0
     );
     bool interpolate_callback(
         Object* p_object,
@@ -253,8 +253,8 @@ public:
         NodePath p_target_property,
         real_t p_duration,
         TransitionType p_trans_type = TRANS_LINEAR,
-        EaseType p_ease_type = EASE_IN_OUT,
-        real_t p_delay = 0
+        EaseType p_ease_type        = EASE_IN_OUT,
+        real_t p_delay              = 0
     );
     bool follow_method(
         Object* p_object,
@@ -264,8 +264,8 @@ public:
         StringName p_target_method,
         real_t p_duration,
         TransitionType p_trans_type = TRANS_LINEAR,
-        EaseType p_ease_type = EASE_IN_OUT,
-        real_t p_delay = 0
+        EaseType p_ease_type        = EASE_IN_OUT,
+        real_t p_delay              = 0
     );
     bool targeting_property(
         Object* p_object,
@@ -275,8 +275,8 @@ public:
         Variant p_final_val,
         real_t p_duration,
         TransitionType p_trans_type = TRANS_LINEAR,
-        EaseType p_ease_type = EASE_IN_OUT,
-        real_t p_delay = 0
+        EaseType p_ease_type        = EASE_IN_OUT,
+        real_t p_delay              = 0
     );
     bool targeting_method(
         Object* p_object,
@@ -286,8 +286,8 @@ public:
         Variant p_final_val,
         real_t p_duration,
         TransitionType p_trans_type = TRANS_LINEAR,
-        EaseType p_ease_type = EASE_IN_OUT,
-        real_t p_delay = 0
+        EaseType p_ease_type        = EASE_IN_OUT,
+        real_t p_delay              = 0
     );
 
     Tween();

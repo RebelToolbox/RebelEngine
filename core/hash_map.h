@@ -65,10 +65,10 @@
 template <
     class TKey,
     class TData,
-    class Hasher = HashMapHasherDefault,
-    class Comparator = HashMapComparatorDefault<TKey>,
+    class Hasher                 = HashMapHasherDefault,
+    class Comparator             = HashMapComparatorDefault<TKey>,
     uint8_t MIN_HASH_TABLE_POWER = 3,
-    uint8_t RELATIONSHIP = 8>
+    uint8_t RELATIONSHIP         = 8>
 class HashMap {
 public:
     struct Pair {
@@ -120,7 +120,7 @@ private:
         hash_table = memnew_arr(Element*, (1 << MIN_HASH_TABLE_POWER));
 
         hash_table_power = MIN_HASH_TABLE_POWER;
-        elements = 0;
+        elements         = 0;
         for (int i = 0; i < (1 << MIN_HASH_TABLE_POWER); i++) {
             hash_table[i] = nullptr;
         }
@@ -133,9 +133,9 @@ private:
         );
 
         memdelete_arr(hash_table);
-        hash_table = nullptr;
+        hash_table       = nullptr;
         hash_table_power = 0;
-        elements = 0;
+        elements         = 0;
     }
 
     void check_hash_table() {
@@ -179,23 +179,23 @@ private:
         if (hash_table) {
             for (int i = 0; i < (1 << hash_table_power); i++) {
                 while (hash_table[i]) {
-                    Element* se = hash_table[i];
+                    Element* se   = hash_table[i];
                     hash_table[i] = se->next;
                     int new_pos = se->hash & ((1 << new_hash_table_power) - 1);
-                    se->next = new_hash_table[new_pos];
+                    se->next    = new_hash_table[new_pos];
                     new_hash_table[new_pos] = se;
                 }
             }
 
             memdelete_arr(hash_table);
         }
-        hash_table = new_hash_table;
+        hash_table       = new_hash_table;
         hash_table_power = new_hash_table_power;
     }
 
     /* I want to have only one function.. */
     _FORCE_INLINE_ const Element* get_element(const TKey& p_key) const {
-        uint32_t hash = Hasher::hash(p_key);
+        uint32_t hash  = Hasher::hash(p_key);
         uint32_t index = hash & ((1 << hash_table_power) - 1);
 
         Element* e = hash_table[index];
@@ -218,12 +218,12 @@ private:
         /* if element doesn't exist, create it */
         Element* e = memnew(Element);
         ERR_FAIL_COND_V_MSG(!e, nullptr, "Out of memory.");
-        uint32_t hash = Hasher::hash(p_key);
+        uint32_t hash  = Hasher::hash(p_key);
         uint32_t index = hash & ((1 << hash_table_power) - 1);
-        e->next = hash_table[index];
-        e->hash = hash;
-        e->pair.key = p_key;
-        e->pair.data = TData();
+        e->next        = hash_table[index];
+        e->hash        = hash;
+        e->pair.key    = p_key;
+        e->pair.data   = TData();
 
         hash_table[index] = e;
         elements++;
@@ -244,7 +244,7 @@ private:
 
         hash_table = memnew_arr(Element*, (uint64_t)1 << p_t.hash_table_power);
         hash_table_power = p_t.hash_table_power;
-        elements = p_t.elements;
+        elements         = p_t.elements;
 
         for (int i = 0; i < (1 << p_t.hash_table_power); i++) {
             hash_table[i] = nullptr;
@@ -257,7 +257,7 @@ private:
                 *le = *e; /* copy data */
 
                 /* add to list and reassign pointers */
-                le->next = hash_table[i];
+                le->next      = hash_table[i];
                 hash_table[i] = le;
 
                 e = e->next;
@@ -363,7 +363,7 @@ public:
             return nullptr;
         }
 
-        uint32_t hash = p_custom_hash;
+        uint32_t hash  = p_custom_hash;
         uint32_t index = hash & ((1 << hash_table_power) - 1);
 
         Element* e = hash_table[index];
@@ -392,7 +392,7 @@ public:
             return NULL;
         }
 
-        uint32_t hash = p_custom_hash;
+        uint32_t hash  = p_custom_hash;
         uint32_t index = hash & ((1 << hash_table_power) - 1);
 
         const Element* e = hash_table[index];
@@ -421,7 +421,7 @@ public:
             return false;
         }
 
-        uint32_t hash = Hasher::hash(p_key);
+        uint32_t hash  = Hasher::hash(p_key);
         uint32_t index = hash & ((1 << hash_table_power) - 1);
 
         Element* e = hash_table[index];
@@ -545,7 +545,7 @@ public:
         if (hash_table) {
             for (int i = 0; i < (1 << hash_table_power); i++) {
                 while (hash_table[i]) {
-                    Element* e = hash_table[i];
+                    Element* e    = hash_table[i];
                     hash_table[i] = e->next;
                     memdelete(e);
                 }
@@ -554,9 +554,9 @@ public:
             memdelete_arr(hash_table);
         }
 
-        hash_table = nullptr;
+        hash_table       = nullptr;
         hash_table_power = 0;
-        elements = 0;
+        elements         = 0;
     }
 
     void operator=(const HashMap& p_table) {
@@ -564,8 +564,8 @@ public:
     }
 
     HashMap() {
-        hash_table = nullptr;
-        elements = 0;
+        hash_table       = nullptr;
+        elements         = 0;
         hash_table_power = 0;
     }
 
@@ -597,8 +597,8 @@ public:
     }
 
     HashMap(const HashMap& p_table) {
-        hash_table = nullptr;
-        elements = 0;
+        hash_table       = nullptr;
+        elements         = 0;
         hash_table_power = 0;
 
         copy_from(p_table);

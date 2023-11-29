@@ -113,7 +113,7 @@ static Error fixup_embedded_pck(
         section_table_pos = f->get_64();
         f->seek(0x3c);
     }
-    int num_sections = f->get_16();
+    int num_sections       = f->get_16();
     int string_section_idx = f->get_16();
 
     // Load the strings table
@@ -127,11 +127,11 @@ static Error fixup_embedded_pck(
         int64_t string_data_size;
         if (bits == 32) {
             f->seek(f->get_position() + 0x10);
-            string_data_pos = f->get_32();
+            string_data_pos  = f->get_32();
             string_data_size = f->get_32();
         } else { // 64
             f->seek(f->get_position() + 0x18);
-            string_data_pos = f->get_64();
+            string_data_pos  = f->get_64();
             string_data_size = f->get_64();
         }
 

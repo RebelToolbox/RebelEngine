@@ -35,13 +35,13 @@
 #include "gdnative.h"
 
 void GDNativeLibraryEditor::edit(Ref<GDNativeLibrary> p_library) {
-    library = p_library;
+    library                = p_library;
     Ref<ConfigFile> config = p_library->get_config_file();
 
     for (Map<String, NativePlatformConfig>::Element* E = platforms.front(); E;
-         E = E->next()) {
+         E                                             = E->next()) {
         for (List<String>::Element* it = E->value().entries.front(); it;
-             it = it->next()) {
+             it                        = it->next()) {
             String target = E->key() + "." + it->get();
             TargetConfig ecfg;
             ecfg.library = config->get_value("entry", target, "");
@@ -90,7 +90,7 @@ void GDNativeLibraryEditor::_update_tree() {
     TreeItem* root = tree->create_item();
 
     PopupMenu* filter_list = filter->get_popup();
-    String text = "";
+    String text            = "";
     for (int i = 0; i < filter_list->get_item_count(); i++) {
         if (!filter_list->is_item_checked(i)) {
             continue;
@@ -113,7 +113,7 @@ void GDNativeLibraryEditor::_update_tree() {
         platform->set_expand_right(0, true);
 
         for (List<String>::Element* it = E->value().entries.front(); it;
-             it = it->next()) {
+             it                        = it->next()) {
             String target = E->key() + "." + it->get();
             TreeItem* bit = tree->create_item(platform);
 
@@ -196,9 +196,9 @@ void GDNativeLibraryEditor::_update_tree() {
 }
 
 void GDNativeLibraryEditor::_on_item_button(Object* item, int column, int id) {
-    String target = Object::cast_to<TreeItem>(item)->get_metadata(0);
+    String target   = Object::cast_to<TreeItem>(item)->get_metadata(0);
     String platform = target.substr(0, target.find("."));
-    String entry = target.substr(platform.length() + 1, target.length());
+    String entry    = target.substr(platform.length() + 1, target.length());
     String section =
         (id == BUTTON_SELECT_DEPENDENCES || id == BUTTON_CLEAR_DEPENDENCES)
             ? "dependencies"
@@ -218,7 +218,7 @@ void GDNativeLibraryEditor::_on_item_button(Object* item, int column, int id) {
         file_dialog->set_meta("section", section);
         file_dialog->clear_filters();
 
-        String filter_string = treeItem->get_metadata(0);
+        String filter_string   = treeItem->get_metadata(0);
         Vector<String> filters = filter_string.split(",", false, 0);
         for (int i = 0; i < filters.size(); i++) {
             file_dialog->add_filter(filters[i]);
@@ -264,7 +264,7 @@ void GDNativeLibraryEditor::_on_filter_selected(int index) {
 
 void GDNativeLibraryEditor::_on_item_collapsed(Object* p_item) {
     TreeItem* item = Object::cast_to<TreeItem>(p_item);
-    String name = item->get_text(0);
+    String name    = item->get_text(0);
 
     if (item->is_collapsed()) {
         collapsed_items.insert(name);
@@ -284,7 +284,7 @@ void GDNativeLibraryEditor::_on_item_activated() {
 
 void GDNativeLibraryEditor::_on_create_new_entry() {
     String platform = new_architecture_dialog->get_meta("platform");
-    String entry = new_architecture_input->get_text().strip_edges();
+    String entry    = new_architecture_input->get_text().strip_edges();
     if (!entry.empty()) {
         platforms[platform].entries.push_back(entry);
         _update_tree();
@@ -351,7 +351,7 @@ void GDNativeLibraryEditor::_translate_to_config_file() {
              E;
              E = E->next()) {
             for (List<String>::Element* it = E->value().entries.front(); it;
-                 it = it->next()) {
+                 it                        = it->next()) {
                 String target = E->key() + "." + it->get();
                 if (entry_configs[target].library.empty()
                     && entry_configs[target].dependencies.empty()) {
@@ -379,14 +379,14 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
         platform_windows.entries.push_back("64");
         platform_windows.entries.push_back("32");
         platform_windows.library_extension = "*.dll";
-        platforms["Windows"] = platform_windows;
+        platforms["Windows"]               = platform_windows;
 
         NativePlatformConfig platform_linux;
         platform_linux.name = "Linux/X11";
         platform_linux.entries.push_back("64");
         platform_linux.entries.push_back("32");
         platform_linux.library_extension = "*.so";
-        platforms["X11"] = platform_linux;
+        platforms["X11"]                 = platform_linux;
 
         NativePlatformConfig platform_osx;
         platform_osx.name = "macOS";
@@ -400,7 +400,7 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
         platform_haiku.entries.push_back("64");
         platform_haiku.entries.push_back("32");
         platform_haiku.library_extension = "*.so";
-        platforms["Haiku"] = platform_haiku;
+        platforms["Haiku"]               = platform_haiku;
 
         NativePlatformConfig platform_uwp;
         platform_uwp.name = "UWP";
@@ -408,7 +408,7 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
         platform_uwp.entries.push_back("32");
         platform_uwp.entries.push_back("64");
         platform_uwp.library_extension = "*.dll";
-        platforms["UWP"] = platform_uwp;
+        platforms["UWP"]               = platform_uwp;
 
         NativePlatformConfig platform_android;
         platform_android.name = "Android";
@@ -417,13 +417,13 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
         platform_android.entries.push_back("x86");
         platform_android.entries.push_back("x86_64");
         platform_android.library_extension = "*.so";
-        platforms["Android"] = platform_android;
+        platforms["Android"]               = platform_android;
 
         NativePlatformConfig platform_html5;
         platform_html5.name = "HTML5";
         platform_html5.entries.push_back("wasm32");
         platform_html5.library_extension = "*.wasm";
-        platforms["HTML5"] = platform_html5;
+        platforms["HTML5"]               = platform_html5;
 
         NativePlatformConfig platform_ios;
         platform_ios.name = "iOS";
@@ -456,7 +456,7 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
 
     int idx = 0;
     for (Map<String, NativePlatformConfig>::Element* E = platforms.front(); E;
-         E = E->next()) {
+         E                                             = E->next()) {
         filter_list->add_check_item(E->get().name, idx);
         filter_list->set_item_metadata(idx, E->key());
         filter_list->set_item_checked(idx, true);

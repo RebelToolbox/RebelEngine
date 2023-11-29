@@ -59,10 +59,10 @@ class GDScriptCompiler {
             if (debug_stack) {
                 block_identifiers[p_id] = p_stackpos;
                 GDScriptFunction::StackDebug sd;
-                sd.added = true;
-                sd.line = current_line;
+                sd.added      = true;
+                sd.line       = current_line;
                 sd.identifier = p_id;
-                sd.pos = p_stackpos;
+                sd.pos        = p_stackpos;
                 stack_debug.push_back(sd);
             }
         }
@@ -85,10 +85,10 @@ class GDScriptCompiler {
                      E;
                      E = E->next()) {
                     GDScriptFunction::StackDebug sd;
-                    sd.added = false;
+                    sd.added      = false;
                     sd.identifier = E->key();
-                    sd.line = current_line;
-                    sd.pos = E->get();
+                    sd.line       = current_line;
+                    sd.pos        = E->get();
                     stack_debug.push_back(sd);
                 }
                 block_identifiers = block_identifier_stack.back()->get();
@@ -105,7 +105,7 @@ class GDScriptCompiler {
         int get_name_map_pos(const StringName& p_identifier) {
             int ret;
             if (!name_map.has(p_identifier)) {
-                ret = name_map.size();
+                ret                    = name_map.size();
                 name_map[p_identifier] = ret;
             } else {
                 ret = name_map[p_identifier];
@@ -117,7 +117,7 @@ class GDScriptCompiler {
             if (constant_map.has(p_constant)) {
                 return constant_map[p_constant];
             }
-            int pos = constant_map.size();
+            int pos                  = constant_map.size();
             constant_map[p_constant] = pos;
             return pos;
         }
@@ -158,7 +158,7 @@ class GDScriptCompiler {
         Variant::Operator op,
         int p_stack_level,
         bool p_initializer = false,
-        int p_index_addr = 0
+        int p_index_addr   = 0
     );
 
     GDScriptDataType _gdtype_from_datatype(
@@ -176,15 +176,15 @@ class GDScriptCompiler {
         CodeGen& codegen,
         const GDScriptParser::Node* p_expression,
         int p_stack_level,
-        bool p_root = false,
+        bool p_root        = false,
         bool p_initializer = false,
-        int p_index_addr = 0
+        int p_index_addr   = 0
     );
     Error _parse_block(
         CodeGen& codegen,
         const GDScriptParser::BlockNode* p_block,
-        int p_stack_level = 0,
-        int p_break_addr = -1,
+        int p_stack_level   = 0,
+        int p_break_addr    = -1,
         int p_continue_addr = -1
     );
     Error _parse_function(

@@ -130,7 +130,7 @@ ObjectPtr LazyObject::LoadObject() {
         return nullptr;
     }
 
-    const char* err = nullptr;
+    const char* err  = nullptr;
     std::string name = ParseTokenAsString(tokens[1], err);
     if (err) {
         DOMError(err, element);
@@ -159,7 +159,7 @@ ObjectPtr LazyObject::LoadObject() {
 
     // this needs to be relatively fast since it happens a lot,
     // so avoid constructing strings all the time.
-    const char* obtype = key->begin();
+    const char* obtype  = key->begin();
     const size_t length = static_cast<size_t>(key->end() - key->begin());
 
     if (!strncmp(obtype, "Pose", length)) {
@@ -321,14 +321,14 @@ static const unsigned int UpperSupportedVersion = 7700;
 
 bool Document::ReadHeader() {
     // Read ID objects from "Objects" section
-    const ScopePtr sc = parser.GetRootScope();
+    const ScopePtr sc      = parser.GetRootScope();
     const ElementPtr ehead = sc->GetElement("FBXHeaderExtension");
     if (!ehead || !ehead->Compound()) {
         DOMError("no FBXHeaderExtension dictionary found");
     }
 
     const ScopePtr shead = ehead->Compound();
-    fbxVersion = ParseTokenAsInt(
+    fbxVersion           = ParseTokenAsInt(
         GetRequiredToken(GetRequiredElement(shead, "FBXVersion", ehead), 0)
     );
 
@@ -379,7 +379,7 @@ bool Document::ReadHeader() {
     const ElementPtr etimestamp = shead->GetElement("CreationTimeStamp");
     if (etimestamp && etimestamp->Compound()) {
         const ScopePtr stimestamp = etimestamp->Compound();
-        creationTimeStamp[0] = ParseTokenAsInt(
+        creationTimeStamp[0]      = ParseTokenAsInt(
             GetRequiredToken(GetRequiredElement(stimestamp, "Year"), 0)
         );
         creationTimeStamp[1] = ParseTokenAsInt(
@@ -413,7 +413,7 @@ void Document::ReadGlobalSettings() {
         "be reported"
     );
 
-    const ScopePtr sc = parser.GetRootScope();
+    const ScopePtr sc      = parser.GetRootScope();
     const ElementPtr ehead = sc->GetElement("GlobalSettings");
     if (nullptr == ehead || !ehead->Compound()) {
         DOMWarning("no GlobalSettings dictionary found");
@@ -438,7 +438,7 @@ void Document::ReadGlobalSettings() {
 // ------------------------------------------------------------------------------------------------
 void Document::ReadObjects() {
     // read ID objects from "Objects" section
-    const ScopePtr sc = parser.GetRootScope();
+    const ScopePtr sc         = parser.GetRootScope();
     const ElementPtr eobjects = sc->GetElement("Objects");
     if (!eobjects || !eobjects->Compound()) {
         DOMError("no Objects dictionary found");
@@ -495,7 +495,7 @@ void Document::ReadObjects() {
                 !key,
                 "[parser bug] invalid token key for deformer"
             );
-            const TokenList& tokens = iter.second->Tokens();
+            const TokenList& tokens     = iter.second->Tokens();
             const std::string class_tag = ParseTokenAsString(tokens[2], err);
 
             if (err) {
@@ -512,7 +512,7 @@ void Document::ReadObjects() {
 
 // ------------------------------------------------------------------------------------------------
 void Document::ReadPropertyTemplates() {
-    const ScopePtr sc = parser.GetRootScope();
+    const ScopePtr sc      = parser.GetRootScope();
     // read property templates from "Definitions" section
     const ElementPtr edefs = sc->GetElement("Definitions");
     if (!edefs || !edefs->Compound()) {
@@ -520,7 +520,7 @@ void Document::ReadPropertyTemplates() {
         return;
     }
 
-    const ScopePtr sdefs = edefs->Compound();
+    const ScopePtr sdefs           = edefs->Compound();
     const ElementCollection otypes = sdefs->GetCollection("ObjectType");
     for (ElementMap::const_iterator it = otypes.first; it != otypes.second;
          ++it) {
@@ -545,7 +545,7 @@ void Document::ReadPropertyTemplates() {
              iter != templs.second;
              ++iter) {
             const ElementPtr el_2 = (*iter).second;
-            const ScopePtr sc_3 = el_2->Compound();
+            const ScopePtr sc_3   = el_2->Compound();
             if (!sc_3) {
                 DOMWarning(
                     "expected nested scope in PropertyTemplate, ignoring",
@@ -588,12 +588,12 @@ void Document::ReadConnections() {
         DOMError("no Connections dictionary found");
     }
 
-    uint64_t insertionOrder = 0l;
-    const ScopePtr sconns = econns->Compound();
+    uint64_t insertionOrder       = 0l;
+    const ScopePtr sconns         = econns->Compound();
     const ElementCollection conns = sconns->GetCollection("C");
     for (ElementMap::const_iterator it = conns.first; it != conns.second;
          ++it) {
-        const ElementPtr el = (*it).second;
+        const ElementPtr el     = (*it).second;
         const std::string& type = ParseTokenAsString(GetRequiredToken(el, 0));
 
         // PP = property-property connection, ignored for now
@@ -602,7 +602,7 @@ void Document::ReadConnections() {
             continue;
         }
 
-        const uint64_t src = ParseTokenAsID(GetRequiredToken(el, 1));
+        const uint64_t src  = ParseTokenAsID(GetRequiredToken(el, 1));
         const uint64_t dest = ParseTokenAsID(GetRequiredToken(el, 2));
 
         // OO = object-object connection

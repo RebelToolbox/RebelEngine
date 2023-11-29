@@ -43,7 +43,7 @@ void PivotTransform::ReadTransformChain() {
         "Model: " + String(fbx_model->Name().c_str())
         + " Has inherit type: " + itos(fbx_model->InheritType())
     );
-    bool ok = false;
+    bool ok          = false;
     raw_pre_rotation = ImportUtils::safe_import_vector3(
         FBXDocParser::PropertyGet<Vector3>(props, "PreRotation", ok)
     );
@@ -182,8 +182,8 @@ Transform PivotTransform::ComputeLocalTransform(
     // Scaling node
     S.scale(p_scaling);
     // Rotation pivots
-    Transform Rpre = Transform(pre_rotation);
-    Transform R = Transform(p_rotation);
+    Transform Rpre  = Transform(pre_rotation);
+    Transform R     = Transform(p_rotation);
     Transform Rpost = Transform(post_rotation);
 
     return T * Roff * Rp * Rpre * R * Rpost.affine_inverse()
@@ -191,16 +191,16 @@ Transform PivotTransform::ComputeLocalTransform(
 }
 
 Transform PivotTransform::ComputeGlobalTransform(Transform t) const {
-    Vector3 pos = t.origin;
+    Vector3 pos   = t.origin;
     Vector3 scale = t.basis.get_scale();
-    Quat rot = t.basis.get_rotation_quat();
+    Quat rot      = t.basis.get_rotation_quat();
     return ComputeGlobalTransform(pos, rot, scale);
 }
 
 Transform PivotTransform::ComputeLocalTransform(Transform t) const {
-    Vector3 pos = t.origin;
+    Vector3 pos   = t.origin;
     Vector3 scale = t.basis.get_scale();
-    Quat rot = t.basis.get_rotation_quat();
+    Quat rot      = t.basis.get_rotation_quat();
     return ComputeLocalTransform(pos, rot, scale);
 }
 
@@ -225,15 +225,15 @@ Transform PivotTransform::ComputeGlobalTransform(
     S.scale(p_scaling);
 
     // Rotation pivots
-    Transform Rpre = Transform(pre_rotation);
-    Transform R = Transform(p_rotation);
+    Transform Rpre  = Transform(pre_rotation);
+    Transform R     = Transform(p_rotation);
     Transform Rpost = Transform(post_rotation);
 
     Transform parent_global_xform;
     Transform parent_local_scaling_m;
 
     if (parent_transform.is_valid()) {
-        parent_global_xform = parent_transform->GlobalTransform;
+        parent_global_xform    = parent_transform->GlobalTransform;
         parent_local_scaling_m = parent_transform->Local_Scaling_Matrix;
     }
 
@@ -247,7 +247,7 @@ Transform PivotTransform::ComputeGlobalTransform(
 
     Transform local_shear_scaling, parent_shear_scaling, parent_shear_rotation,
         parent_shear_translation;
-    Vector3 parent_translation = parent_global_xform.get_origin();
+    Vector3 parent_translation      = parent_global_xform.get_origin();
     parent_shear_translation.origin = parent_translation;
     parent_shear_rotation =
         parent_shear_translation.affine_inverse() * parent_global_xform;
@@ -305,15 +305,15 @@ void PivotTransform::ComputePivotTransform() {
         S; // copy for when node / child is looking for the value of this.
 
     // Rotation pivots
-    Transform Rpre = Transform(pre_rotation);
-    Transform R = Transform(rotation);
+    Transform Rpre  = Transform(pre_rotation);
+    Transform R     = Transform(rotation);
     Transform Rpost = Transform(post_rotation);
 
     Transform parent_global_xform;
     Transform parent_local_scaling_m;
 
     if (parent_transform.is_valid()) {
-        parent_global_xform = parent_transform->GlobalTransform;
+        parent_global_xform    = parent_transform->GlobalTransform;
         parent_local_scaling_m = parent_transform->Local_Scaling_Matrix;
     }
 
@@ -327,7 +327,7 @@ void PivotTransform::ComputePivotTransform() {
 
     Transform local_shear_scaling, parent_shear_scaling, parent_shear_rotation,
         parent_shear_translation;
-    Vector3 parent_translation = parent_global_xform.get_origin();
+    Vector3 parent_translation      = parent_global_xform.get_origin();
     parent_shear_translation.origin = parent_translation;
     parent_shear_rotation =
         parent_shear_translation.affine_inverse() * parent_global_xform;
@@ -362,7 +362,7 @@ void PivotTransform::ComputePivotTransform() {
 
     Transform local_translation_pivoted =
         Transform(Basis(), LocalTransform.origin);
-    GlobalTransform = Transform();
+    GlobalTransform         = Transform();
     // GlobalTransform = parent_global_xform * LocalTransform;
     Transform global_origin = Transform(Basis(), parent_translation);
     GlobalTransform =

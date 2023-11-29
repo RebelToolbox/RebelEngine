@@ -79,7 +79,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace FBXDocParser
 {
-const std::string NULL_RECORD = { // 13 null bytes
+const std::string NULL_RECORD    = { // 13 null bytes
     '\0',
     '\0',
     '\0',
@@ -93,10 +93,10 @@ const std::string NULL_RECORD = { // 13 null bytes
     '\0',
     '\0',
     '\0'
-};                                                 // who knows why
-const std::string SEPARATOR = {'\x00', '\x01'};    // for use inside strings
-const std::string MAGIC_NODE_TAG = "_$AssimpFbx$"; // from import
-const int64_t SECOND = 46186158000;                // FBX's kTime unit
+};                                                // who knows why
+const std::string SEPARATOR      = {'\x00', '\x01'}; // for use inside strings
+const std::string MAGIC_NODE_TAG = "_$AssimpFbx$";   // from import
+const int64_t SECOND             = 46186158000;      // FBX's kTime unit
 
 // rotation order. We'll probably use EulerXYZ for everything
 enum RotOrder {
@@ -115,7 +115,7 @@ enum RotOrder {
 enum TransformInheritance {
     Transform_RrSs = 0,
     Transform_RSrs = 1,
-    Transform_Rrs = 2,
+    Transform_Rrs  = 2,
     TransformInheritance_MAX // end-of-enum sentinel
 };
 } // namespace FBXDocParser

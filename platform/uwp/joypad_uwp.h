@@ -66,12 +66,12 @@ private:
         bool vibrating;
 
         ControllerDevice() {
-            id = -1;
-            connected = false;
-            type = ControllerType::GAMEPAD_CONTROLLER;
-            ff_timestamp = 0.0f;
+            id               = -1;
+            connected        = false;
+            type             = ControllerType::GAMEPAD_CONTROLLER;
+            ff_timestamp     = 0.0f;
             ff_end_timestamp = 0.0f;
-            vibrating = false;
+            vibrating        = false;
         }
     };
 
@@ -90,7 +90,7 @@ private:
 
     InputDefault::JoyAxis axis_correct(
         double p_val,
-        bool p_negate = false,
+        bool p_negate  = false,
         bool p_trigger = false
     ) const;
     void joypad_vibration_start(

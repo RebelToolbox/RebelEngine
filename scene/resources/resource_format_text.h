@@ -211,7 +211,7 @@ public:
     virtual Ref<ResourceInteractiveLoader> load_interactive(
         const String& p_path,
         const String& p_original_path = "",
-        Error* r_error = nullptr
+        Error* r_error                = nullptr
     );
     virtual void get_recognized_extensions_for_type(
         const String& p_type,

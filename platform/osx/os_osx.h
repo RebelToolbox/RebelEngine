@@ -73,7 +73,7 @@ public:
 
     List<WarpEvent> warp_events;
     NSTimeInterval last_warp = 0;
-    bool ignore_warp = false;
+    bool ignore_warp         = false;
 
     Vector<KeyEvent> key_event_buffer;
     int key_event_pos;
@@ -170,9 +170,9 @@ public:
             const Variant& p_signal,
             const Variant& p_meta
         ) {
-            label = p_label;
+            label  = p_label;
             signal = p_signal;
-            meta = p_meta;
+            meta   = p_meta;
         }
     };
 
@@ -282,12 +282,12 @@ public:
     virtual Error execute(
         const String& p_path,
         const List<String>& p_arguments,
-        bool p_blocking = true,
+        bool p_blocking       = true,
         ProcessID* r_child_id = nullptr,
-        String* r_pipe = nullptr,
-        int* r_exitcode = nullptr,
-        bool read_stderr = false,
-        Mutex* p_pipe_mutex = nullptr
+        String* r_pipe        = nullptr,
+        int* r_exitcode       = nullptr,
+        bool read_stderr      = false,
+        Mutex* p_pipe_mutex   = nullptr
     );
 
     virtual LatinKeyboardVariant get_latin_keyboard_variant() const;

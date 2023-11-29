@@ -33,20 +33,20 @@
 #include "core/print_string.h"
 
 void NodePath::_update_hash_cache() const {
-    uint32_t h = data->absolute ? 1 : 0;
-    int pc = data->path.size();
+    uint32_t h           = data->absolute ? 1 : 0;
+    int pc               = data->path.size();
     const StringName* sn = data->path.ptr();
     for (int i = 0; i < pc; i++) {
         h = h ^ sn[i].hash();
     }
-    int spc = data->subpath.size();
+    int spc               = data->subpath.size();
     const StringName* ssn = data->subpath.ptr();
     for (int i = 0; i < spc; i++) {
         h = h ^ ssn[i].hash();
     }
 
     data->hash_cache_valid = true;
-    data->hash_cache = h;
+    data->hash_cache       = h;
 }
 
 void NodePath::prepend_period() {
@@ -297,9 +297,9 @@ NodePath::NodePath(const Vector<StringName>& p_path, bool p_absolute) {
 
     data = memnew(Data);
     data->refcount.init();
-    data->absolute = p_absolute;
-    data->path = p_path;
-    data->has_slashes = true;
+    data->absolute         = p_absolute;
+    data->path             = p_path;
+    data->has_slashes      = true;
     data->hash_cache_valid = false;
 }
 
@@ -316,10 +316,10 @@ NodePath::NodePath(
 
     data = memnew(Data);
     data->refcount.init();
-    data->absolute = p_absolute;
-    data->path = p_path;
-    data->subpath = p_subpath;
-    data->has_slashes = true;
+    data->absolute         = p_absolute;
+    data->path             = p_path;
+    data->subpath          = p_subpath;
+    data->has_slashes      = true;
     data->hash_cache_valid = false;
 }
 
@@ -364,11 +364,11 @@ NodePath::NodePath(const String& p_path) {
     String path = p_path;
     Vector<StringName> subpath;
 
-    bool absolute = (path[0] == '/');
+    bool absolute      = (path[0] == '/');
     bool last_is_slash = true;
-    bool has_slashes = false;
-    int slices = 0;
-    int subpath_pos = path.find(":");
+    bool has_slashes   = false;
+    int slices         = 0;
+    int subpath_pos    = path.find(":");
 
     if (subpath_pos != -1) {
         int from = subpath_pos + 1;
@@ -395,7 +395,7 @@ NodePath::NodePath(const String& p_path) {
     for (int i = (int)absolute; i < path.length(); i++) {
         if (path[i] == '/') {
             last_is_slash = true;
-            has_slashes = true;
+            has_slashes   = true;
         } else {
             if (last_is_slash) {
                 slices++;
@@ -411,9 +411,9 @@ NodePath::NodePath(const String& p_path) {
 
     data = memnew(Data);
     data->refcount.init();
-    data->absolute = absolute;
-    data->has_slashes = has_slashes;
-    data->subpath = subpath;
+    data->absolute         = absolute;
+    data->has_slashes      = has_slashes;
+    data->subpath          = subpath;
     data->hash_cache_valid = false;
 
     if (slices == 0) {
@@ -421,8 +421,8 @@ NodePath::NodePath(const String& p_path) {
     }
     data->path.resize(slices);
     last_is_slash = true;
-    int from = (int)absolute;
-    int slice = 0;
+    int from      = (int)absolute;
+    int slice     = 0;
 
     for (int i = (int)absolute; i < path.length() + 1; i++) {
         if (path[i] == '/' || path[i] == 0) {
@@ -431,7 +431,7 @@ NodePath::NodePath(const String& p_path) {
                 ERR_FAIL_INDEX(slice, data->path.size());
                 data->path.write[slice++] = name;
             }
-            from = i + 1;
+            from          = i + 1;
             last_is_slash = true;
         } else {
             last_is_slash = false;
