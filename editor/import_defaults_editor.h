@@ -42,31 +42,31 @@
 class ImportDefaultsEditorSettings;
 
 class ImportDefaultsEditor : public VBoxContainer {
-	GDCLASS(ImportDefaultsEditor, VBoxContainer)
+    GDCLASS(ImportDefaultsEditor, VBoxContainer)
 
-	OptionButton *importers;
-	Button *save_defaults;
-	Button *reset_defaults;
+    OptionButton* importers;
+    Button* save_defaults;
+    Button* reset_defaults;
 
-	EditorInspector *inspector;
+    EditorInspector* inspector;
 
-	ImportDefaultsEditorSettings *settings;
+    ImportDefaultsEditorSettings* settings;
 
-	void _update_importer();
-	void _importer_selected(int p_index);
+    void _update_importer();
+    void _importer_selected(int p_index);
 
-	void _reset();
-	void _save();
+    void _reset();
+    void _save();
 
 protected:
-	void _notification(int p_what);
-	static void _bind_methods();
+    void _notification(int p_what);
+    static void _bind_methods();
 
 public:
-	void clear();
+    void clear();
 
-	ImportDefaultsEditor();
-	~ImportDefaultsEditor();
+    ImportDefaultsEditor();
+    ~ImportDefaultsEditor();
 };
 
 #endif // IMPORT_DEFAULTS_EDITOR_H

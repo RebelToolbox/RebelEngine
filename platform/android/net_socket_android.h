@@ -46,32 +46,38 @@
  */
 class NetSocketAndroid : public NetSocketPosix {
 private:
-	static jobject net_utils;
-	static jclass cls;
-	static jmethodID _multicast_lock_acquire;
-	static jmethodID _multicast_lock_release;
+    static jobject net_utils;
+    static jclass cls;
+    static jmethodID _multicast_lock_acquire;
+    static jmethodID _multicast_lock_release;
 
-	bool wants_broadcast;
-	int multicast_groups;
+    bool wants_broadcast;
+    int multicast_groups;
 
-	static void multicast_lock_acquire();
-	static void multicast_lock_release();
+    static void multicast_lock_acquire();
+    static void multicast_lock_release();
 
 protected:
-	static NetSocket *_create_func();
+    static NetSocket* _create_func();
 
 public:
-	static void make_default();
-	static void setup(jobject p_net_utils);
+    static void make_default();
+    static void setup(jobject p_net_utils);
 
-	virtual void close();
+    virtual void close();
 
-	virtual Error set_broadcasting_enabled(bool p_enabled);
-	virtual Error join_multicast_group(const IP_Address &p_multi_address, String p_if_name);
-	virtual Error leave_multicast_group(const IP_Address &p_multi_address, String p_if_name);
+    virtual Error set_broadcasting_enabled(bool p_enabled);
+    virtual Error join_multicast_group(
+        const IP_Address& p_multi_address,
+        String p_if_name
+    );
+    virtual Error leave_multicast_group(
+        const IP_Address& p_multi_address,
+        String p_if_name
+    );
 
-	NetSocketAndroid();
-	~NetSocketAndroid();
+    NetSocketAndroid();
+    ~NetSocketAndroid();
 };
 
 #endif

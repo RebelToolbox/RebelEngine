@@ -38,20 +38,23 @@
 #if defined(DEBUG_ENABLED) && defined(MSVC)
 #define CRASH_HANDLER_EXCEPTION 1
 
-extern DWORD CrashHandlerException(EXCEPTION_POINTERS *ep);
+extern DWORD CrashHandlerException(EXCEPTION_POINTERS* ep);
 #endif
 
 class CrashHandler {
-	bool disabled;
+    bool disabled;
 
 public:
-	void initialize();
+    void initialize();
 
-	void disable();
-	bool is_disabled() const { return disabled; };
+    void disable();
 
-	CrashHandler();
-	~CrashHandler();
+    bool is_disabled() const {
+        return disabled;
+    };
+
+    CrashHandler();
+    ~CrashHandler();
 };
 
 #endif // CRASH_HANDLER_WINDOWS_H

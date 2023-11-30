@@ -34,8 +34,7 @@
 #include "lightmap_denoiser.h"
 
 void register_denoise_types() {
-	LightmapDenoiserOIDN::make_default_denoiser();
+    LightmapDenoiserOIDN::make_default_denoiser();
 }
 
-void unregister_denoise_types() {
-}
+void unregister_denoise_types() {}

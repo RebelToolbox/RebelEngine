@@ -35,23 +35,23 @@
 
 extern void (*_print_func)(String);
 
-typedef void (*PrintHandlerFunc)(void *, const String &p_string, bool p_error);
+typedef void (*PrintHandlerFunc)(void*, const String& p_string, bool p_error);
 
 struct PrintHandlerList {
-	PrintHandlerFunc printfunc;
-	void *userdata;
+    PrintHandlerFunc printfunc;
+    void* userdata;
 
-	PrintHandlerList *next;
+    PrintHandlerList* next;
 
-	PrintHandlerList() {
-		printfunc = nullptr;
-		next = nullptr;
-		userdata = nullptr;
-	}
+    PrintHandlerList() {
+        printfunc = nullptr;
+        next      = nullptr;
+        userdata  = nullptr;
+    }
 };
 
-void add_print_handler(PrintHandlerList *p_handler);
-void remove_print_handler(PrintHandlerList *p_handler);
+void add_print_handler(PrintHandlerList* p_handler);
+void remove_print_handler(PrintHandlerList* p_handler);
 
 extern bool _print_line_enabled;
 extern bool _print_error_enabled;

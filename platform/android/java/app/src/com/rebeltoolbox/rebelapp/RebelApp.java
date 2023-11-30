@@ -39,9 +39,9 @@ import android.os.Bundle;
  * Feel free to extend and modify this class for your custom logic.
  */
 public class RebelApp extends RebelActivity {
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.MainTheme);
-		super.onCreate(savedInstanceState);
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.MainTheme);
+        super.onCreate(savedInstanceState);
+    }
 }

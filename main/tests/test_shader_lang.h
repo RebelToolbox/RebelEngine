@@ -33,9 +33,10 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestShaderLang {
+namespace TestShaderLang
+{
 
-MainLoop *test();
-}
+MainLoop* test();
+} // namespace TestShaderLang
 
 #endif // TEST_SHADER_LANG_H

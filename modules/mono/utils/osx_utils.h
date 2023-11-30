@@ -35,7 +35,7 @@
 
 #ifdef OSX_ENABLED
 
-bool osx_is_app_bundle_installed(const String &p_bundle_id);
+bool osx_is_app_bundle_installed(const String& p_bundle_id);
 
 #endif
 

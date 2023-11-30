@@ -48,218 +48,259 @@
 // This allows multiple FVFs to use the same array.
 class RasterizerUnitArrayGLES2 {
 public:
-	RasterizerUnitArrayGLES2() {
-		_list = nullptr;
-		free();
-	}
-	~RasterizerUnitArrayGLES2() { free(); }
+    RasterizerUnitArrayGLES2() {
+        _list = nullptr;
+        free();
+    }
 
-	uint8_t *get_unit(unsigned int ui) { return &_list[ui * _unit_size_bytes]; }
-	const uint8_t *get_unit(unsigned int ui) const { return &_list[ui * _unit_size_bytes]; }
+    ~RasterizerUnitArrayGLES2() {
+        free();
+    }
 
-	int size() const { return _size; }
-	int max_size() const { return _max_size; }
+    uint8_t* get_unit(unsigned int ui) {
+        return &_list[ui * _unit_size_bytes];
+    }
 
-	void free() {
-		if (_list) {
-			memdelete_arr(_list);
-			_list = nullptr;
-		}
-		_size = 0;
-		_max_size = 0;
-		_max_size_bytes = 0;
-		_unit_size_bytes = 0;
-	}
+    const uint8_t* get_unit(unsigned int ui) const {
+        return &_list[ui * _unit_size_bytes];
+    }
 
-	void create(int p_max_size_units, int p_max_unit_size_bytes) {
-		free();
+    int size() const {
+        return _size;
+    }
 
-		_max_unit_size_bytes = p_max_unit_size_bytes;
-		_max_size = p_max_size_units;
-		_max_size_bytes = p_max_size_units * p_max_unit_size_bytes;
+    int max_size() const {
+        return _max_size;
+    }
 
-		if (_max_size_bytes) {
-			_list = memnew_arr(uint8_t, _max_size_bytes);
-		}
-	}
+    void free() {
+        if (_list) {
+            memdelete_arr(_list);
+            _list = nullptr;
+        }
+        _size            = 0;
+        _max_size        = 0;
+        _max_size_bytes  = 0;
+        _unit_size_bytes = 0;
+    }
 
-	void prepare(int p_unit_size_bytes) {
-		_unit_size_bytes = p_unit_size_bytes;
-		_size = 0;
-	}
+    void create(int p_max_size_units, int p_max_unit_size_bytes) {
+        free();
 
-	// several items at a time
-	uint8_t *request(int p_num_items = 1) {
-		int old_size = _size;
-		_size += p_num_items;
+        _max_unit_size_bytes = p_max_unit_size_bytes;
+        _max_size            = p_max_size_units;
+        _max_size_bytes      = p_max_size_units * p_max_unit_size_bytes;
 
-		if (_size <= _max_size) {
-			return get_unit(old_size);
-		}
+        if (_max_size_bytes) {
+            _list = memnew_arr(uint8_t, _max_size_bytes);
+        }
+    }
 
-		// revert
-		_size = old_size;
-		return nullptr;
-	}
+    void prepare(int p_unit_size_bytes) {
+        _unit_size_bytes = p_unit_size_bytes;
+        _size            = 0;
+    }
+
+    // several items at a time
+    uint8_t* request(int p_num_items = 1) {
+        int old_size  = _size;
+        _size        += p_num_items;
+
+        if (_size <= _max_size) {
+            return get_unit(old_size);
+        }
+
+        // revert
+        _size = old_size;
+        return nullptr;
+    }
 
 private:
-	uint8_t *_list;
-	int _size; // in units
-	int _max_size; // in units
-	int _max_size_bytes;
-	int _unit_size_bytes;
-	int _max_unit_size_bytes;
+    uint8_t* _list;
+    int _size;     // in units
+    int _max_size; // in units
+    int _max_size_bytes;
+    int _unit_size_bytes;
+    int _max_unit_size_bytes;
 };
 
 template <class T>
 class RasterizerArray {
 public:
-	RasterizerArray() {
-		_list = nullptr;
-		_size = 0;
-		_max_size = 0;
-	}
-	~RasterizerArray() { free(); }
+    RasterizerArray() {
+        _list     = nullptr;
+        _size     = 0;
+        _max_size = 0;
+    }
 
-	T &operator[](unsigned int ui) { return _list[ui]; }
-	const T &operator[](unsigned int ui) const { return _list[ui]; }
+    ~RasterizerArray() {
+        free();
+    }
 
-	void free() {
-		if (_list) {
-			memdelete_arr(_list);
-			_list = nullptr;
-		}
-		_size = 0;
-		_max_size = 0;
-	}
+    T& operator[](unsigned int ui) {
+        return _list[ui];
+    }
 
-	void create(int p_size) {
-		free();
-		if (p_size) {
-			_list = memnew_arr(T, p_size);
-		}
-		_size = 0;
-		_max_size = p_size;
-	}
+    const T& operator[](unsigned int ui) const {
+        return _list[ui];
+    }
 
-	void reset() { _size = 0; }
+    void free() {
+        if (_list) {
+            memdelete_arr(_list);
+            _list = nullptr;
+        }
+        _size     = 0;
+        _max_size = 0;
+    }
 
-	T *request_with_grow() {
-		T *p = request();
-		if (!p) {
-			grow();
-			return request_with_grow();
-		}
-		return p;
-	}
+    void create(int p_size) {
+        free();
+        if (p_size) {
+            _list = memnew_arr(T, p_size);
+        }
+        _size     = 0;
+        _max_size = p_size;
+    }
 
-	// none of that inefficient pass by value stuff here, thanks
-	T *request() {
-		if (_size < _max_size) {
-			return &_list[_size++];
-		}
-		return nullptr;
-	}
+    void reset() {
+        _size = 0;
+    }
 
-	// several items at a time
-	T *request(int p_num_items) {
-		int old_size = _size;
-		_size += p_num_items;
+    T* request_with_grow() {
+        T* p = request();
+        if (!p) {
+            grow();
+            return request_with_grow();
+        }
+        return p;
+    }
 
-		if (_size <= _max_size) {
-			return &_list[old_size];
-		}
+    // none of that inefficient pass by value stuff here, thanks
+    T* request() {
+        if (_size < _max_size) {
+            return &_list[_size++];
+        }
+        return nullptr;
+    }
 
-		// revert
-		_size = old_size;
-		return nullptr;
-	}
+    // several items at a time
+    T* request(int p_num_items) {
+        int old_size  = _size;
+        _size        += p_num_items;
 
-	int size() const { return _size; }
-	int max_size() const { return _max_size; }
-	const T *get_data() const { return _list; }
+        if (_size <= _max_size) {
+            return &_list[old_size];
+        }
 
-	bool copy_from(const RasterizerArray<T> &o) {
-		// no resizing done here, it should be done manually
-		if (o.size() > _max_size) {
-			return false;
-		}
+        // revert
+        _size = old_size;
+        return nullptr;
+    }
 
-		// pod types only please!
-		memcpy(_list, o.get_data(), o.size() * sizeof(T));
-		_size = o.size();
-		return true;
-	}
+    int size() const {
+        return _size;
+    }
 
-	// if you want this to be cheap, call reset before grow,
-	// to ensure there is no data to copy
-	void grow() {
-		unsigned int new_max_size = _max_size * 2;
-		if (!new_max_size) {
-			new_max_size = 1;
-		}
+    int max_size() const {
+        return _max_size;
+    }
 
-		T *new_list = memnew_arr(T, new_max_size);
+    const T* get_data() const {
+        return _list;
+    }
 
-		// copy .. pod types only
-		if (_list) {
-			memcpy(new_list, _list, _size * sizeof(T));
-		}
+    bool copy_from(const RasterizerArray<T>& o) {
+        // no resizing done here, it should be done manually
+        if (o.size() > _max_size) {
+            return false;
+        }
 
-		unsigned int new_size = size();
-		free();
-		_list = new_list;
-		_size = new_size;
-		_max_size = new_max_size;
-	}
+        // pod types only please!
+        memcpy(_list, o.get_data(), o.size() * sizeof(T));
+        _size = o.size();
+        return true;
+    }
+
+    // if you want this to be cheap, call reset before grow,
+    // to ensure there is no data to copy
+    void grow() {
+        unsigned int new_max_size = _max_size * 2;
+        if (!new_max_size) {
+            new_max_size = 1;
+        }
+
+        T* new_list = memnew_arr(T, new_max_size);
+
+        // copy .. pod types only
+        if (_list) {
+            memcpy(new_list, _list, _size * sizeof(T));
+        }
+
+        unsigned int new_size = size();
+        free();
+        _list     = new_list;
+        _size     = new_size;
+        _max_size = new_max_size;
+    }
 
 private:
-	T *_list;
-	int _size;
-	int _max_size;
+    T* _list;
+    int _size;
+    int _max_size;
 };
 
 template <class T>
 class RasterizerArray_non_pod {
 public:
-	RasterizerArray_non_pod() {
-		_size = 0;
-	}
+    RasterizerArray_non_pod() {
+        _size = 0;
+    }
 
-	const T &operator[](unsigned int ui) const { return _list[ui]; }
+    const T& operator[](unsigned int ui) const {
+        return _list[ui];
+    }
 
-	void create(int p_size) {
-		_list.resize(p_size);
-		_size = 0;
-	}
-	void reset() { _size = 0; }
+    void create(int p_size) {
+        _list.resize(p_size);
+        _size = 0;
+    }
 
-	void push_back(const T &val) {
-		while (true) {
-			if (_size < max_size()) {
-				_list.set(_size, val);
-				_size++;
-				return;
-			}
+    void reset() {
+        _size = 0;
+    }
 
-			grow();
-		}
-	}
+    void push_back(const T& val) {
+        while (true) {
+            if (_size < max_size()) {
+                _list.set(_size, val);
+                _size++;
+                return;
+            }
 
-	int size() const { return _size; }
-	int max_size() const { return _list.size(); }
+            grow();
+        }
+    }
+
+    int size() const {
+        return _size;
+    }
+
+    int max_size() const {
+        return _list.size();
+    }
 
 private:
-	void grow() {
-		unsigned int new_max_size = _list.size() * 2;
-		if (!new_max_size) {
-			new_max_size = 1;
-		}
-		_list.resize(new_max_size);
-	}
+    void grow() {
+        unsigned int new_max_size = _list.size() * 2;
+        if (!new_max_size) {
+            new_max_size = 1;
+        }
+        _list.resize(new_max_size);
+    }
 
-	Vector<T> _list;
-	int _size;
+    Vector<T> _list;
+    int _size;
 };
 
 // very simple non-growable array, that keeps track of the size of a 'unit'
@@ -268,68 +309,84 @@ private:
 // This allows multiple FVFs to use the same array.
 class RasterizerUnitArray {
 public:
-	RasterizerUnitArray() {
-		_list = nullptr;
-		free();
-	}
-	~RasterizerUnitArray() { free(); }
+    RasterizerUnitArray() {
+        _list = nullptr;
+        free();
+    }
 
-	uint8_t *get_unit(unsigned int ui) { return &_list[ui * _unit_size_bytes]; }
-	const uint8_t *get_unit(unsigned int ui) const { return &_list[ui * _unit_size_bytes]; }
+    ~RasterizerUnitArray() {
+        free();
+    }
 
-	int size() const { return _size; }
-	int max_size() const { return _max_size; }
-	int get_unit_size_bytes() const { return _unit_size_bytes; }
+    uint8_t* get_unit(unsigned int ui) {
+        return &_list[ui * _unit_size_bytes];
+    }
 
-	void free() {
-		if (_list) {
-			memdelete_arr(_list);
-			_list = nullptr;
-		}
-		_size = 0;
-		_max_size = 0;
-		_max_size_bytes = 0;
-		_unit_size_bytes = 0;
-	}
+    const uint8_t* get_unit(unsigned int ui) const {
+        return &_list[ui * _unit_size_bytes];
+    }
 
-	void create(int p_max_size_units, int p_max_unit_size_bytes) {
-		free();
+    int size() const {
+        return _size;
+    }
 
-		_max_unit_size_bytes = p_max_unit_size_bytes;
-		_max_size = p_max_size_units;
-		_max_size_bytes = p_max_size_units * p_max_unit_size_bytes;
+    int max_size() const {
+        return _max_size;
+    }
 
-		if (_max_size_bytes) {
-			_list = memnew_arr(uint8_t, _max_size_bytes);
-		}
-	}
+    int get_unit_size_bytes() const {
+        return _unit_size_bytes;
+    }
 
-	void prepare(int p_unit_size_bytes) {
-		_unit_size_bytes = p_unit_size_bytes;
-		_size = 0;
-	}
+    void free() {
+        if (_list) {
+            memdelete_arr(_list);
+            _list = nullptr;
+        }
+        _size            = 0;
+        _max_size        = 0;
+        _max_size_bytes  = 0;
+        _unit_size_bytes = 0;
+    }
 
-	// several items at a time
-	uint8_t *request(int p_num_items = 1) {
-		int old_size = _size;
-		_size += p_num_items;
+    void create(int p_max_size_units, int p_max_unit_size_bytes) {
+        free();
 
-		if (_size <= _max_size) {
-			return get_unit(old_size);
-		}
+        _max_unit_size_bytes = p_max_unit_size_bytes;
+        _max_size            = p_max_size_units;
+        _max_size_bytes      = p_max_size_units * p_max_unit_size_bytes;
 
-		// revert
-		_size = old_size;
-		return nullptr;
-	}
+        if (_max_size_bytes) {
+            _list = memnew_arr(uint8_t, _max_size_bytes);
+        }
+    }
+
+    void prepare(int p_unit_size_bytes) {
+        _unit_size_bytes = p_unit_size_bytes;
+        _size            = 0;
+    }
+
+    // several items at a time
+    uint8_t* request(int p_num_items = 1) {
+        int old_size  = _size;
+        _size        += p_num_items;
+
+        if (_size <= _max_size) {
+            return get_unit(old_size);
+        }
+
+        // revert
+        _size = old_size;
+        return nullptr;
+    }
 
 private:
-	uint8_t *_list;
-	int _size; // in units
-	int _max_size; // in units
-	int _max_size_bytes;
-	int _unit_size_bytes;
-	int _max_unit_size_bytes;
+    uint8_t* _list;
+    int _size;     // in units
+    int _max_size; // in units
+    int _max_size_bytes;
+    int _unit_size_bytes;
+    int _max_unit_size_bytes;
 };
 
 #endif // RASTERIZER_ARRAY_H

@@ -30,16 +30,22 @@
 
 // HTTPClient's additional private members in the javascript platform
 
-Error make_request(Method p_method, const String &p_url, const Vector<String> &p_headers, const uint8_t *p_body, int p_body_len);
-static void _parse_headers(int p_len, const char **p_headers, void *p_ref);
+Error make_request(
+    Method p_method,
+    const String& p_url,
+    const Vector<String>& p_headers,
+    const uint8_t* p_body,
+    int p_body_len
+);
+static void _parse_headers(int p_len, const char** p_headers, void* p_ref);
 
-int js_id = 0;
+int js_id      = 0;
 // 64 KiB by default (favors fast download speeds at the cost of memory usage).
 int read_limit = 65536;
-Status status = STATUS_DISCONNECTED;
+Status status  = STATUS_DISCONNECTED;
 
 String host;
-int port = -1;
+int port     = -1;
 bool use_tls = false;
 
 int polled_response_code = 0;

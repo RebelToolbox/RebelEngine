@@ -33,9 +33,14 @@
 
 #include "core/ustring.h"
 
-namespace CSharpProject {
+namespace CSharpProject
+{
 
-void add_item(const String &p_project_path, const String &p_item_type, const String &p_include);
+void add_item(
+    const String& p_project_path,
+    const String& p_item_type,
+    const String& p_include
+);
 
 } // namespace CSharpProject
 

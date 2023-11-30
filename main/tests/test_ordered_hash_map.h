@@ -33,9 +33,10 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestOrderedHashMap {
+namespace TestOrderedHashMap
+{
 
-MainLoop *test();
-}
+MainLoop* test();
+} // namespace TestOrderedHashMap
 
 #endif // TEST_ORDERED_HASH_MAP_H

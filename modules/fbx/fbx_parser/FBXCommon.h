@@ -77,33 +77,46 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <string>
 
-namespace FBXDocParser {
-const std::string NULL_RECORD = { // 13 null bytes
-	'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'
-}; // who knows why
-const std::string SEPARATOR = { '\x00', '\x01' }; // for use inside strings
-const std::string MAGIC_NODE_TAG = "_$AssimpFbx$"; // from import
-const int64_t SECOND = 46186158000; // FBX's kTime unit
+namespace FBXDocParser
+{
+const std::string NULL_RECORD    = { // 13 null bytes
+    '\0',
+    '\0',
+    '\0',
+    '\0',
+    '\0',
+    '\0',
+    '\0',
+    '\0',
+    '\0',
+    '\0',
+    '\0',
+    '\0',
+    '\0'
+};                                                // who knows why
+const std::string SEPARATOR      = {'\x00', '\x01'}; // for use inside strings
+const std::string MAGIC_NODE_TAG = "_$AssimpFbx$";   // from import
+const int64_t SECOND             = 46186158000;      // FBX's kTime unit
 
 // rotation order. We'll probably use EulerXYZ for everything
 enum RotOrder {
-	RotOrder_EulerXYZ = 0,
-	RotOrder_EulerXZY,
-	RotOrder_EulerYZX,
-	RotOrder_EulerYXZ,
-	RotOrder_EulerZXY,
-	RotOrder_EulerZYX,
+    RotOrder_EulerXYZ = 0,
+    RotOrder_EulerXZY,
+    RotOrder_EulerYZX,
+    RotOrder_EulerYXZ,
+    RotOrder_EulerZXY,
+    RotOrder_EulerZYX,
 
-	RotOrder_SphericXYZ,
+    RotOrder_SphericXYZ,
 
-	RotOrder_MAX // end-of-enum sentinel
+    RotOrder_MAX // end-of-enum sentinel
 };
 
 enum TransformInheritance {
-	Transform_RrSs = 0,
-	Transform_RSrs = 1,
-	Transform_Rrs = 2,
-	TransformInheritance_MAX // end-of-enum sentinel
+    Transform_RrSs = 0,
+    Transform_RSrs = 1,
+    Transform_Rrs  = 2,
+    TransformInheritance_MAX // end-of-enum sentinel
 };
 } // namespace FBXDocParser
 

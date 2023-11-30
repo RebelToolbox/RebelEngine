@@ -33,9 +33,10 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestMath {
+namespace TestMath
+{
 
-MainLoop *test();
-}
+MainLoop* test();
+} // namespace TestMath
 
 #endif

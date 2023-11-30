@@ -32,6 +32,7 @@
 
 @interface GodotDeviceMetrics : NSObject
 
-@property(nonatomic, class, readonly, strong) NSDictionary<NSArray *, NSNumber *> *dpiList;
+@property(nonatomic, class, readonly, strong)
+    NSDictionary<NSArray*, NSNumber*>* dpiList;
 
 @end

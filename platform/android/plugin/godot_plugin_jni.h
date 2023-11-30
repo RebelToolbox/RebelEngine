@@ -35,11 +35,44 @@
 #include <jni.h>
 
 extern "C" {
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSingleton(JNIEnv *env, jclass clazz, jstring name, jobject obj);
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterMethod(JNIEnv *env, jclass clazz, jstring sname, jstring name, jstring ret, jobjectArray args);
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSignal(JNIEnv *env, jclass clazz, jstring j_plugin_name, jstring j_signal_name, jobjectArray j_signal_param_types);
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeEmitSignal(JNIEnv *env, jclass clazz, jstring j_plugin_name, jstring j_signal_name, jobjectArray j_signal_params);
-JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterGDNativeLibraries(JNIEnv *env, jclass clazz, jobjectArray gdnlib_paths);
+JNIEXPORT void JNICALL
+Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSingleton(
+    JNIEnv* env,
+    jclass clazz,
+    jstring name,
+    jobject obj
+);
+JNIEXPORT void JNICALL
+Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterMethod(
+    JNIEnv* env,
+    jclass clazz,
+    jstring sname,
+    jstring name,
+    jstring ret,
+    jobjectArray args
+);
+JNIEXPORT void JNICALL
+Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSignal(
+    JNIEnv* env,
+    jclass clazz,
+    jstring j_plugin_name,
+    jstring j_signal_name,
+    jobjectArray j_signal_param_types
+);
+JNIEXPORT void JNICALL
+Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeEmitSignal(
+    JNIEnv* env,
+    jclass clazz,
+    jstring j_plugin_name,
+    jstring j_signal_name,
+    jobjectArray j_signal_params
+);
+JNIEXPORT void JNICALL
+Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterGDNativeLibraries(
+    JNIEnv* env,
+    jclass clazz,
+    jobjectArray gdnlib_paths
+);
 }
 
 #endif // GODOT_PLUGIN_JNI_H

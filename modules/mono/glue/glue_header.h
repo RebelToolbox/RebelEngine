@@ -42,16 +42,19 @@
  * from the generated GodotSharpBindings::register_generated_icalls() function.
  */
 void godot_register_glue_header_icalls() {
-	godot_register_collections_icalls();
-	godot_register_gd_icalls();
-	godot_register_nodepath_icalls();
-	godot_register_object_icalls();
-	godot_register_rid_icalls();
-	godot_register_string_icalls();
+    godot_register_collections_icalls();
+    godot_register_gd_icalls();
+    godot_register_nodepath_icalls();
+    godot_register_object_icalls();
+    godot_register_rid_icalls();
+    godot_register_string_icalls();
 }
 
 // Used by the generated glue
 
+#include "../mono_gd/gd_mono_class.h"
+#include "../mono_gd/gd_mono_internals.h"
+#include "../mono_gd/gd_mono_utils.h"
 #include "core/array.h"
 #include "core/class_db.h"
 #include "core/dictionary.h"
@@ -63,16 +66,12 @@ void godot_register_glue_header_icalls() {
 #include "core/typedefs.h"
 #include "core/ustring.h"
 
-#include "../mono_gd/gd_mono_class.h"
-#include "../mono_gd/gd_mono_internals.h"
-#include "../mono_gd/gd_mono_utils.h"
-
-#define GODOTSHARP_INSTANCE_OBJECT(m_instance, m_type) \
-	static ClassDB::ClassInfo *ci = NULL;              \
-	if (!ci) {                                         \
-		ci = ClassDB::classes.getptr(m_type);          \
-	}                                                  \
-	Object *m_instance = ci->creation_func();
+#define GODOTSHARP_INSTANCE_OBJECT(m_instance, m_type)                         \
+    static ClassDB::ClassInfo* ci = NULL;                                      \
+    if (!ci) {                                                                 \
+        ci = ClassDB::classes.getptr(m_type);                                  \
+    }                                                                          \
+    Object* m_instance = ci->creation_func();
 
 #include "arguments_vector.h"
 

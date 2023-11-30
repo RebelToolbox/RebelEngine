@@ -33,9 +33,10 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestPhysics2D {
+namespace TestPhysics2D
+{
 
-MainLoop *test();
-}
+MainLoop* test();
+} // namespace TestPhysics2D
 
 #endif // TEST_PHYSICS_2D_H

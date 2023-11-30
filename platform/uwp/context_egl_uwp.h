@@ -31,55 +31,59 @@
 #ifndef CONTEXT_EGL_UWP_H
 #define CONTEXT_EGL_UWP_H
 
-#include <wrl.h>
-
-#include <EGL/egl.h>
-
 #include "core/error_list.h"
 #include "core/os/os.h"
+
+#include <EGL/egl.h>
+#include <wrl.h>
 
 using namespace Windows::UI::Core;
 
 class ContextEGL_UWP {
 public:
-	enum Driver {
-		GLES_2_0,
-		GLES_3_0,
-	};
+    enum Driver {
+        GLES_2_0,
+        GLES_3_0,
+    };
 
 private:
-	CoreWindow ^ window;
+    CoreWindow ^ window;
 
-	EGLDisplay mEglDisplay;
-	EGLContext mEglContext;
-	EGLSurface mEglSurface;
+    EGLDisplay mEglDisplay;
+    EGLContext mEglContext;
+    EGLSurface mEglSurface;
 
-	EGLint width;
-	EGLint height;
+    EGLint width;
+    EGLint height;
 
-	bool vsync;
+    bool vsync;
 
-	Driver driver;
+    Driver driver;
 
 public:
-	void release_current();
+    void release_current();
 
-	void make_current();
+    void make_current();
 
-	int get_window_width();
-	int get_window_height();
-	void swap_buffers();
+    int get_window_width();
+    int get_window_height();
+    void swap_buffers();
 
-	void set_use_vsync(bool use) { vsync = use; }
-	bool is_using_vsync() const { return vsync; }
+    void set_use_vsync(bool use) {
+        vsync = use;
+    }
 
-	Error initialize();
-	void reset();
+    bool is_using_vsync() const {
+        return vsync;
+    }
 
-	void cleanup();
+    Error initialize();
+    void reset();
 
-	ContextEGL_UWP(CoreWindow ^ p_window, Driver p_driver);
-	~ContextEGL_UWP();
+    void cleanup();
+
+    ContextEGL_UWP(CoreWindow ^ p_window, Driver p_driver);
+    ~ContextEGL_UWP();
 };
 
 #endif // CONTEXT_EGL_UWP_H

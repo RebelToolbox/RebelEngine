@@ -34,8 +34,9 @@ typedef NSObject<UIApplicationDelegate> ApplicationDelegateService;
 
 @interface GodotApplicalitionDelegate : NSObject <UIApplicationDelegate>
 
-@property(class, readonly, strong) NSArray<ApplicationDelegateService *> *services;
+@property(class, readonly, strong)
+    NSArray<ApplicationDelegateService*>* services;
 
-+ (void)addService:(ApplicationDelegateService *)service;
++ (void)addService:(ApplicationDelegateService*)service;
 
 @end

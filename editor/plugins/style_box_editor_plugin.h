@@ -38,40 +38,49 @@
 #include "scene/resources/style_box.h"
 
 class StyleBoxPreview : public VBoxContainer {
-	GDCLASS(StyleBoxPreview, VBoxContainer);
+    GDCLASS(StyleBoxPreview, VBoxContainer);
 
-	Control *preview;
-	Ref<StyleBox> stylebox;
+    Control* preview;
+    Ref<StyleBox> stylebox;
 
-	void _sb_changed();
-	void _redraw();
+    void _sb_changed();
+    void _redraw();
 
 protected:
-	static void _bind_methods();
+    static void _bind_methods();
 
 public:
-	void edit(const Ref<StyleBox> &p_stylebox);
+    void edit(const Ref<StyleBox>& p_stylebox);
 
-	StyleBoxPreview();
+    StyleBoxPreview();
 };
 
 class EditorInspectorPluginStyleBox : public EditorInspectorPlugin {
-	GDCLASS(EditorInspectorPluginStyleBox, EditorInspectorPlugin);
+    GDCLASS(EditorInspectorPluginStyleBox, EditorInspectorPlugin);
 
 public:
-	virtual bool can_handle(Object *p_object);
-	virtual void parse_begin(Object *p_object);
-	virtual bool parse_property(Object *p_object, Variant::Type p_type, const String &p_path, PropertyHint p_hint, const String &p_hint_text, int p_usage);
-	virtual void parse_end();
+    virtual bool can_handle(Object* p_object);
+    virtual void parse_begin(Object* p_object);
+    virtual bool parse_property(
+        Object* p_object,
+        Variant::Type p_type,
+        const String& p_path,
+        PropertyHint p_hint,
+        const String& p_hint_text,
+        int p_usage
+    );
+    virtual void parse_end();
 };
 
 class StyleBoxEditorPlugin : public EditorPlugin {
-	GDCLASS(StyleBoxEditorPlugin, EditorPlugin);
+    GDCLASS(StyleBoxEditorPlugin, EditorPlugin);
 
 public:
-	virtual String get_name() const { return "StyleBox"; }
+    virtual String get_name() const {
+        return "StyleBox";
+    }
 
-	StyleBoxEditorPlugin(EditorNode *p_node);
+    StyleBoxEditorPlugin(EditorNode* p_node);
 };
 
 #endif // STYLE_BOX_EDITOR_PLUGIN_H

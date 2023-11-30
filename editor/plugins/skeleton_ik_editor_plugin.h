@@ -37,27 +37,33 @@
 class SkeletonIK;
 
 class SkeletonIKEditorPlugin : public EditorPlugin {
-	GDCLASS(SkeletonIKEditorPlugin, EditorPlugin);
+    GDCLASS(SkeletonIKEditorPlugin, EditorPlugin);
 
-	SkeletonIK *skeleton_ik;
+    SkeletonIK* skeleton_ik;
 
-	Button *play_btn;
-	EditorNode *editor;
+    Button* play_btn;
+    EditorNode* editor;
 
-	void _play();
+    void _play();
 
 protected:
-	static void _bind_methods();
+    static void _bind_methods();
 
 public:
-	virtual String get_name() const { return "SkeletonIK"; }
-	bool has_main_screen() const { return false; }
-	virtual void edit(Object *p_object);
-	virtual bool handles(Object *p_object) const;
-	virtual void make_visible(bool p_visible);
+    virtual String get_name() const {
+        return "SkeletonIK";
+    }
 
-	SkeletonIKEditorPlugin(EditorNode *p_node);
-	~SkeletonIKEditorPlugin();
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
+    virtual void make_visible(bool p_visible);
+
+    SkeletonIKEditorPlugin(EditorNode* p_node);
+    ~SkeletonIKEditorPlugin();
 };
 
 #endif // SKELETON_IK_EDITOR_PLUGIN_H

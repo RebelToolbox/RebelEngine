@@ -39,57 +39,67 @@ class PhysicalBone;
 class Joint;
 
 class SkeletonEditor : public Node {
-	GDCLASS(SkeletonEditor, Node);
+    GDCLASS(SkeletonEditor, Node);
 
-	enum Menu {
-		MENU_OPTION_CREATE_PHYSICAL_SKELETON
-	};
+    enum Menu {
+        MENU_OPTION_CREATE_PHYSICAL_SKELETON
+    };
 
-	struct BoneInfo {
-		PhysicalBone *physical_bone;
-		Transform relative_rest; // Relative to skeleton node
-		BoneInfo() :
-				physical_bone(nullptr) {}
-	};
+    struct BoneInfo {
+        PhysicalBone* physical_bone;
+        Transform relative_rest; // Relative to skeleton node
 
-	Skeleton *skeleton;
+        BoneInfo() : physical_bone(nullptr) {}
+    };
 
-	MenuButton *options;
+    Skeleton* skeleton;
 
-	void _on_click_option(int p_option);
+    MenuButton* options;
 
-	friend class SkeletonEditorPlugin;
+    void _on_click_option(int p_option);
+
+    friend class SkeletonEditorPlugin;
 
 protected:
-	void _notification(int p_what);
-	void _node_removed(Node *p_node);
-	static void _bind_methods();
+    void _notification(int p_what);
+    void _node_removed(Node* p_node);
+    static void _bind_methods();
 
-	void create_physical_skeleton();
-	PhysicalBone *create_physical_bone(int bone_id, int bone_child_id, const Vector<BoneInfo> &bones_infos);
+    void create_physical_skeleton();
+    PhysicalBone* create_physical_bone(
+        int bone_id,
+        int bone_child_id,
+        const Vector<BoneInfo>& bones_infos
+    );
 
 public:
-	void edit(Skeleton *p_node);
+    void edit(Skeleton* p_node);
 
-	SkeletonEditor();
-	~SkeletonEditor();
+    SkeletonEditor();
+    ~SkeletonEditor();
 };
 
 class SkeletonEditorPlugin : public EditorPlugin {
-	GDCLASS(SkeletonEditorPlugin, EditorPlugin);
+    GDCLASS(SkeletonEditorPlugin, EditorPlugin);
 
-	EditorNode *editor;
-	SkeletonEditor *skeleton_editor;
+    EditorNode* editor;
+    SkeletonEditor* skeleton_editor;
 
 public:
-	virtual String get_name() const { return "Skeleton"; }
-	virtual bool has_main_screen() const { return false; }
-	virtual void edit(Object *p_object);
-	virtual bool handles(Object *p_object) const;
-	virtual void make_visible(bool p_visible);
+    virtual String get_name() const {
+        return "Skeleton";
+    }
 
-	SkeletonEditorPlugin(EditorNode *p_node);
-	~SkeletonEditorPlugin();
+    virtual bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
+    virtual void make_visible(bool p_visible);
+
+    SkeletonEditorPlugin(EditorNode* p_node);
+    ~SkeletonEditorPlugin();
 };
 
 #endif // SKELETON_EDITOR_PLUGIN_H

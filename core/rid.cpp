@@ -30,11 +30,10 @@
 
 #include "rid.h"
 
-RID_Data::~RID_Data() {
-}
+RID_Data::~RID_Data() {}
 
 SafeRefCount RID_OwnerBase::refcount;
 
 void RID_OwnerBase::init_rid() {
-	refcount.init();
+    refcount.init();
 }

@@ -32,32 +32,33 @@
 #define SEPARATOR_H
 
 #include "scene/gui/control.h"
+
 class Separator : public Control {
-	GDCLASS(Separator, Control);
+    GDCLASS(Separator, Control);
 
 protected:
-	Orientation orientation;
-	void _notification(int p_what);
+    Orientation orientation;
+    void _notification(int p_what);
 
 public:
-	virtual Size2 get_minimum_size() const;
+    virtual Size2 get_minimum_size() const;
 
-	Separator();
-	~Separator();
+    Separator();
+    ~Separator();
 };
 
 class VSeparator : public Separator {
-	GDCLASS(VSeparator, Separator);
+    GDCLASS(VSeparator, Separator);
 
 public:
-	VSeparator();
+    VSeparator();
 };
 
 class HSeparator : public Separator {
-	GDCLASS(HSeparator, Separator);
+    GDCLASS(HSeparator, Separator);
 
 public:
-	HSeparator();
+    HSeparator();
 };
 
 #endif

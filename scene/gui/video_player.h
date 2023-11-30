@@ -37,89 +37,94 @@
 #include "servers/audio_server.h"
 
 class VideoPlayer : public Control {
-	GDCLASS(VideoPlayer, Control);
+    GDCLASS(VideoPlayer, Control);
 
-	struct Output {
-		AudioFrame vol;
-		int bus_index;
-		Viewport *viewport; //pointer only used for reference to previous mix
-	};
-	Ref<VideoStreamPlayback> playback;
-	Ref<VideoStream> stream;
+    struct Output {
+        AudioFrame vol;
+        int bus_index;
+        Viewport* viewport; // pointer only used for reference to previous mix
+    };
 
-	int sp_get_channel_count() const;
-	bool mix(AudioFrame *p_buffer, int p_frames);
+    Ref<VideoStreamPlayback> playback;
+    Ref<VideoStream> stream;
 
-	RID stream_rid;
+    int sp_get_channel_count() const;
+    bool mix(AudioFrame* p_buffer, int p_frames);
 
-	Ref<ImageTexture> texture;
+    RID stream_rid;
 
-	AudioRBResampler resampler;
-	Vector<AudioFrame> mix_buffer;
-	int wait_resampler, wait_resampler_limit;
+    Ref<ImageTexture> texture;
 
-	bool paused;
-	bool autoplay;
-	float volume;
-	double last_audio_time;
-	bool expand;
-	bool loops;
-	int buffering_ms;
-	int audio_track;
-	int bus_index;
+    AudioRBResampler resampler;
+    Vector<AudioFrame> mix_buffer;
+    int wait_resampler, wait_resampler_limit;
 
-	StringName bus;
+    bool paused;
+    bool autoplay;
+    float volume;
+    double last_audio_time;
+    bool expand;
+    bool loops;
+    int buffering_ms;
+    int audio_track;
+    int bus_index;
 
-	void _mix_audio();
-	static int _audio_mix_callback(void *p_udata, const float *p_data, int p_frames);
-	static void _mix_audios(void *p_self);
+    StringName bus;
+
+    void _mix_audio();
+    static int _audio_mix_callback(
+        void* p_udata,
+        const float* p_data,
+        int p_frames
+    );
+    static void _mix_audios(void* p_self);
 
 protected:
-	static void _bind_methods();
-	void _notification(int p_notification);
-	void _validate_property(PropertyInfo &p_property) const;
+    static void _bind_methods();
+    void _notification(int p_notification);
+    void _validate_property(PropertyInfo& p_property) const;
 
 public:
-	Size2 get_minimum_size() const;
-	void set_expand(bool p_expand);
-	bool has_expand() const;
+    Size2 get_minimum_size() const;
+    void set_expand(bool p_expand);
+    bool has_expand() const;
 
-	Ref<Texture> get_video_texture() const;
+    Ref<Texture> get_video_texture() const;
 
-	void set_stream(const Ref<VideoStream> &p_stream);
-	Ref<VideoStream> get_stream() const;
+    void set_stream(const Ref<VideoStream>& p_stream);
+    Ref<VideoStream> get_stream() const;
 
-	void play();
-	void stop();
-	bool is_playing() const;
+    void play();
+    void stop();
+    bool is_playing() const;
 
-	void set_paused(bool p_paused);
-	bool is_paused() const;
+    void set_paused(bool p_paused);
+    bool is_paused() const;
 
-	void set_volume(float p_vol);
-	float get_volume() const;
+    void set_volume(float p_vol);
+    float get_volume() const;
 
-	void set_volume_db(float p_db);
-	float get_volume_db() const;
+    void set_volume_db(float p_db);
+    float get_volume_db() const;
 
-	String get_stream_name() const;
-	float get_stream_position() const;
-	void set_stream_position(float p_position);
+    String get_stream_name() const;
+    float get_stream_position() const;
+    void set_stream_position(float p_position);
 
-	void set_autoplay(bool p_enable);
-	bool has_autoplay() const;
+    void set_autoplay(bool p_enable);
+    bool has_autoplay() const;
 
-	void set_audio_track(int p_track);
-	int get_audio_track() const;
+    void set_audio_track(int p_track);
+    int get_audio_track() const;
 
-	void set_buffering_msec(int p_msec);
-	int get_buffering_msec() const;
+    void set_buffering_msec(int p_msec);
+    int get_buffering_msec() const;
 
-	void set_bus(const StringName &p_bus);
-	StringName get_bus() const;
+    void set_bus(const StringName& p_bus);
+    StringName get_bus() const;
 
-	VideoPlayer();
-	~VideoPlayer();
+    VideoPlayer();
+    ~VideoPlayer();
 };
 
 #endif // VIDEO_PLAYER_H

@@ -79,101 +79,118 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXMeshGeometry.h"
 #include "FBXParser.h"
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
 using namespace Util;
 
 // ------------------------------------------------------------------------------------------------
-Model::Model(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-		Object(id, element, name), shading("Y") {
-	const ScopePtr sc = GetRequiredScope(element);
-	const ElementPtr Shading = sc->GetElement("Shading");
-	const ElementPtr Culling = sc->GetElement("Culling");
+Model::Model(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Object(id, element, name),
+    shading("Y") {
+    const ScopePtr sc        = GetRequiredScope(element);
+    const ElementPtr Shading = sc->GetElement("Shading");
+    const ElementPtr Culling = sc->GetElement("Culling");
 
-	if (Shading) {
-		shading = GetRequiredToken(Shading, 0)->StringContents();
-	}
+    if (Shading) {
+        shading = GetRequiredToken(Shading, 0)->StringContents();
+    }
 
-	if (Culling) {
-		culling = ParseTokenAsString(GetRequiredToken(Culling, 0));
-	}
+    if (Culling) {
+        culling = ParseTokenAsString(GetRequiredToken(Culling, 0));
+    }
 
-	props = GetPropertyTable(doc, "Model.FbxNode", element, sc);
-	ResolveLinks(element, doc);
+    props = GetPropertyTable(doc, "Model.FbxNode", element, sc);
+    ResolveLinks(element, doc);
 }
 
 // ------------------------------------------------------------------------------------------------
 Model::~Model() {
-	if (props != nullptr) {
-		delete props;
-		props = nullptr;
-	}
+    if (props != nullptr) {
+        delete props;
+        props = nullptr;
+    }
 }
 
-ModelLimbNode::ModelLimbNode(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-		Model(id, element, doc, name){
+ModelLimbNode::ModelLimbNode(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Model(id, element, doc, name){
 
-		};
+    };
 
-ModelLimbNode::~ModelLimbNode() {
-}
+ModelLimbNode::~ModelLimbNode() {}
 
 // ------------------------------------------------------------------------------------------------
-void Model::ResolveLinks(const ElementPtr element, const Document &doc) {
-	const char *const arr[] = { "Geometry", "Material", "NodeAttribute" };
+void Model::ResolveLinks(const ElementPtr element, const Document& doc) {
+    const char* const arr[] = {"Geometry", "Material", "NodeAttribute"};
 
-	// resolve material
-	const std::vector<const Connection *> &conns = doc.GetConnectionsByDestinationSequenced(ID(), arr, 3);
+    // resolve material
+    const std::vector<const Connection*>& conns =
+        doc.GetConnectionsByDestinationSequenced(ID(), arr, 3);
 
-	materials.reserve(conns.size());
-	geometry.reserve(conns.size());
-	attributes.reserve(conns.size());
-	for (const Connection *con : conns) {
-		// material and geometry links should be Object-Object connections
-		if (con->PropertyName().length()) {
-			continue;
-		}
+    materials.reserve(conns.size());
+    geometry.reserve(conns.size());
+    attributes.reserve(conns.size());
+    for (const Connection* con : conns) {
+        // material and geometry links should be Object-Object connections
+        if (con->PropertyName().length()) {
+            continue;
+        }
 
-		const Object *const ob = con->SourceObject();
-		if (!ob) {
-			//DOMWarning("failed to read source object for incoming Model link, ignoring",&element);
-			continue;
-		}
+        const Object* const ob = con->SourceObject();
+        if (!ob) {
+            // DOMWarning("failed to read source object for incoming Model link,
+            // ignoring",&element);
+            continue;
+        }
 
-		const Material *const mat = dynamic_cast<const Material *>(ob);
-		if (mat) {
-			materials.push_back(mat);
-			continue;
-		}
+        const Material* const mat = dynamic_cast<const Material*>(ob);
+        if (mat) {
+            materials.push_back(mat);
+            continue;
+        }
 
-		const Geometry *const geo = dynamic_cast<const Geometry *>(ob);
-		if (geo) {
-			geometry.push_back(geo);
-			continue;
-		}
+        const Geometry* const geo = dynamic_cast<const Geometry*>(ob);
+        if (geo) {
+            geometry.push_back(geo);
+            continue;
+        }
 
-		const NodeAttribute *const att = dynamic_cast<const NodeAttribute *>(ob);
-		if (att) {
-			attributes.push_back(att);
-			continue;
-		}
+        const NodeAttribute* const att = dynamic_cast<const NodeAttribute*>(ob);
+        if (att) {
+            attributes.push_back(att);
+            continue;
+        }
 
-		DOMWarning("source object for model link is neither Material, NodeAttribute nor Geometry, ignoring", element);
-		continue;
-	}
+        DOMWarning(
+            "source object for model link is neither Material, NodeAttribute "
+            "nor Geometry, ignoring",
+            element
+        );
+        continue;
+    }
 }
 
 // ------------------------------------------------------------------------------------------------
 bool Model::IsNull() const {
-	const std::vector<const NodeAttribute *> &attrs = GetAttributes();
-	for (const NodeAttribute *att : attrs) {
-		const Null *null_tag = dynamic_cast<const Null *>(att);
-		if (null_tag) {
-			return true;
-		}
-	}
+    const std::vector<const NodeAttribute*>& attrs = GetAttributes();
+    for (const NodeAttribute* att : attrs) {
+        const Null* null_tag = dynamic_cast<const Null*>(att);
+        if (null_tag) {
+            return true;
+        }
+    }
 
-	return false;
+    return false;
 }
 
 } // namespace FBXDocParser

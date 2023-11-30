@@ -32,16 +32,19 @@
 #define CRASH_HANDLER_OSX_H
 
 class CrashHandler {
-	bool disabled;
+    bool disabled;
 
 public:
-	void initialize();
+    void initialize();
 
-	void disable();
-	bool is_disabled() const { return disabled; };
+    void disable();
 
-	CrashHandler();
-	~CrashHandler();
+    bool is_disabled() const {
+        return disabled;
+    };
+
+    CrashHandler();
+    ~CrashHandler();
 };
 
 #endif // CRASH_HANDLER_OSX_H

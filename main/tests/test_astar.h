@@ -33,9 +33,10 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestAStar {
+namespace TestAStar
+{
 
-MainLoop *test();
-}
+MainLoop* test();
+} // namespace TestAStar
 
 #endif

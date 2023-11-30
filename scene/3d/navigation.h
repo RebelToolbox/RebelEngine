@@ -35,141 +35,163 @@
 #include "scene/3d/spatial.h"
 
 class Navigation : public Spatial {
-	GDCLASS(Navigation, Spatial);
+    GDCLASS(Navigation, Spatial);
 
-	union Point {
-		struct {
-			int64_t x : 21;
-			int64_t y : 22;
-			int64_t z : 21;
-		};
+    union Point {
+        struct {
+            int64_t x : 21;
+            int64_t y : 22;
+            int64_t z : 21;
+        };
 
-		uint64_t key;
-		bool operator<(const Point &p_key) const { return key < p_key.key; }
-	};
+        uint64_t key;
 
-	struct EdgeKey {
-		Point a;
-		Point b;
+        bool operator<(const Point& p_key) const {
+            return key < p_key.key;
+        }
+    };
 
-		bool operator<(const EdgeKey &p_key) const {
-			return (a.key == p_key.a.key) ? (b.key < p_key.b.key) : (a.key < p_key.a.key);
-		};
+    struct EdgeKey {
+        Point a;
+        Point b;
 
-		EdgeKey(const Point &p_a = Point(), const Point &p_b = Point()) :
-				a(p_a),
-				b(p_b) {
-			if (a.key > b.key) {
-				SWAP(a, b);
-			}
-		}
-	};
+        bool operator<(const EdgeKey& p_key) const {
+            return (a.key == p_key.a.key) ? (b.key < p_key.b.key)
+                                          : (a.key < p_key.a.key);
+        };
 
-	struct NavMesh;
-	struct Polygon;
+        EdgeKey(const Point& p_a = Point(), const Point& p_b = Point()) :
+            a(p_a),
+            b(p_b) {
+            if (a.key > b.key) {
+                SWAP(a, b);
+            }
+        }
+    };
 
-	struct ConnectionPending {
-		Polygon *polygon;
-		int edge;
-	};
+    struct NavMesh;
+    struct Polygon;
 
-	struct Polygon {
-		struct Edge {
-			Point point;
-			Polygon *C; //connection
-			int C_edge;
-			List<ConnectionPending>::Element *P;
-			Edge() {
-				C = nullptr;
-				C_edge = -1;
-				P = nullptr;
-			}
-		};
+    struct ConnectionPending {
+        Polygon* polygon;
+        int edge;
+    };
 
-		Vector<Edge> edges;
+    struct Polygon {
+        struct Edge {
+            Point point;
+            Polygon* C; // connection
+            int C_edge;
+            List<ConnectionPending>::Element* P;
 
-		Vector3 center;
-		Vector3 entry;
+            Edge() {
+                C      = nullptr;
+                C_edge = -1;
+                P      = nullptr;
+            }
+        };
 
-		float distance;
-		int prev_edge;
-		bool clockwise;
+        Vector<Edge> edges;
 
-		NavMesh *owner;
-	};
+        Vector3 center;
+        Vector3 entry;
 
-	struct Connection {
-		Polygon *A;
-		int A_edge;
-		Polygon *B;
-		int B_edge;
+        float distance;
+        int prev_edge;
+        bool clockwise;
 
-		List<ConnectionPending> pending;
+        NavMesh* owner;
+    };
 
-		Connection() {
-			A = nullptr;
-			B = nullptr;
-			A_edge = -1;
-			B_edge = -1;
-		}
-	};
+    struct Connection {
+        Polygon* A;
+        int A_edge;
+        Polygon* B;
+        int B_edge;
 
-	Map<EdgeKey, Connection> connections;
+        List<ConnectionPending> pending;
 
-	struct NavMesh {
-		Object *owner;
-		Transform xform;
-		bool linked;
-		Ref<NavigationMesh> navmesh;
-		List<Polygon> polygons;
-	};
+        Connection() {
+            A      = nullptr;
+            B      = nullptr;
+            A_edge = -1;
+            B_edge = -1;
+        }
+    };
 
-	_FORCE_INLINE_ Point _get_point(const Vector3 &p_pos) const {
-		int x = int(Math::floor(p_pos.x / cell_size));
-		int y = int(Math::floor(p_pos.y / cell_size));
-		int z = int(Math::floor(p_pos.z / cell_size));
+    Map<EdgeKey, Connection> connections;
 
-		Point p;
-		p.key = 0;
-		p.x = x;
-		p.y = y;
-		p.z = z;
-		return p;
-	}
+    struct NavMesh {
+        Object* owner;
+        Transform xform;
+        bool linked;
+        Ref<NavigationMesh> navmesh;
+        List<Polygon> polygons;
+    };
 
-	_FORCE_INLINE_ Vector3 _get_vertex(const Point &p_point) const {
-		return Vector3(p_point.x, p_point.y, p_point.z) * cell_size;
-	}
+    _FORCE_INLINE_ Point _get_point(const Vector3& p_pos) const {
+        int x = int(Math::floor(p_pos.x / cell_size));
+        int y = int(Math::floor(p_pos.y / cell_size));
+        int z = int(Math::floor(p_pos.z / cell_size));
 
-	void _navmesh_link(int p_id);
-	void _navmesh_unlink(int p_id);
+        Point p;
+        p.key = 0;
+        p.x   = x;
+        p.y   = y;
+        p.z   = z;
+        return p;
+    }
 
-	float cell_size;
-	Map<int, NavMesh> navmesh_map;
-	int last_id;
+    _FORCE_INLINE_ Vector3 _get_vertex(const Point& p_point) const {
+        return Vector3(p_point.x, p_point.y, p_point.z) * cell_size;
+    }
 
-	Vector3 up;
-	void _clip_path(Vector<Vector3> &path, Polygon *from_poly, const Vector3 &p_to_point, Polygon *p_to_poly);
+    void _navmesh_link(int p_id);
+    void _navmesh_unlink(int p_id);
+
+    float cell_size;
+    Map<int, NavMesh> navmesh_map;
+    int last_id;
+
+    Vector3 up;
+    void _clip_path(
+        Vector<Vector3>& path,
+        Polygon* from_poly,
+        const Vector3& p_to_point,
+        Polygon* p_to_poly
+    );
 
 protected:
-	static void _bind_methods();
+    static void _bind_methods();
 
 public:
-	void set_up_vector(const Vector3 &p_up);
-	Vector3 get_up_vector() const;
+    void set_up_vector(const Vector3& p_up);
+    Vector3 get_up_vector() const;
 
-	//API should be as dynamic as possible
-	int navmesh_add(const Ref<NavigationMesh> &p_mesh, const Transform &p_xform, Object *p_owner = nullptr);
-	void navmesh_set_transform(int p_id, const Transform &p_xform);
-	void navmesh_remove(int p_id);
+    // API should be as dynamic as possible
+    int navmesh_add(
+        const Ref<NavigationMesh>& p_mesh,
+        const Transform& p_xform,
+        Object* p_owner = nullptr
+    );
+    void navmesh_set_transform(int p_id, const Transform& p_xform);
+    void navmesh_remove(int p_id);
 
-	Vector<Vector3> get_simple_path(const Vector3 &p_start, const Vector3 &p_end, bool p_optimize = true);
-	Vector3 get_closest_point_to_segment(const Vector3 &p_from, const Vector3 &p_to, const bool &p_use_collision = false);
-	Vector3 get_closest_point(const Vector3 &p_point);
-	Vector3 get_closest_point_normal(const Vector3 &p_point);
-	Object *get_closest_point_owner(const Vector3 &p_point);
+    Vector<Vector3> get_simple_path(
+        const Vector3& p_start,
+        const Vector3& p_end,
+        bool p_optimize = true
+    );
+    Vector3 get_closest_point_to_segment(
+        const Vector3& p_from,
+        const Vector3& p_to,
+        const bool& p_use_collision = false
+    );
+    Vector3 get_closest_point(const Vector3& p_point);
+    Vector3 get_closest_point_normal(const Vector3& p_point);
+    Object* get_closest_point_owner(const Vector3& p_point);
 
-	Navigation();
+    Navigation();
 };
 
 #endif // NAVIGATION_H

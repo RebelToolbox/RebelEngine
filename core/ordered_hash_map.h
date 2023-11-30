@@ -43,264 +43,290 @@
  * codebase.
  * Deletion during iteration is safe and will preserve the order.
  */
-template <class K, class V, class Hasher = HashMapHasherDefault, class Comparator = HashMapComparatorDefault<K>, uint8_t MIN_HASH_TABLE_POWER = 3, uint8_t RELATIONSHIP = 8>
+template <
+    class K,
+    class V,
+    class Hasher                 = HashMapHasherDefault,
+    class Comparator             = HashMapComparatorDefault<K>,
+    uint8_t MIN_HASH_TABLE_POWER = 3,
+    uint8_t RELATIONSHIP         = 8>
 class OrderedHashMap {
-	typedef List<Pair<const K *, V>> InternalList;
-	typedef HashMap<K, typename InternalList::Element *, Hasher, Comparator, MIN_HASH_TABLE_POWER, RELATIONSHIP> InternalMap;
+    typedef List<Pair<const K*, V>> InternalList;
+    typedef HashMap<
+        K,
+        typename InternalList::Element*,
+        Hasher,
+        Comparator,
+        MIN_HASH_TABLE_POWER,
+        RELATIONSHIP>
+        InternalMap;
 
-	InternalList list;
-	InternalMap map;
+    InternalList list;
+    InternalMap map;
 
 public:
-	class Element {
-		friend class OrderedHashMap<K, V, Hasher, Comparator, MIN_HASH_TABLE_POWER, RELATIONSHIP>;
+    class Element {
+        friend class OrderedHashMap<
+            K,
+            V,
+            Hasher,
+            Comparator,
+            MIN_HASH_TABLE_POWER,
+            RELATIONSHIP>;
 
-		typename InternalList::Element *list_element;
-		typename InternalList::Element *prev_element;
-		typename InternalList::Element *next_element;
+        typename InternalList::Element* list_element;
+        typename InternalList::Element* prev_element;
+        typename InternalList::Element* next_element;
 
-		Element(typename InternalList::Element *p_element) {
-			list_element = p_element;
+        Element(typename InternalList::Element* p_element) {
+            list_element = p_element;
 
-			if (list_element) {
-				next_element = list_element->next();
-				prev_element = list_element->prev();
-			}
-		}
+            if (list_element) {
+                next_element = list_element->next();
+                prev_element = list_element->prev();
+            }
+        }
 
-	public:
-		_FORCE_INLINE_ Element() :
-				list_element(nullptr),
-				prev_element(nullptr),
-				next_element(nullptr) {
-		}
+    public:
+        _FORCE_INLINE_ Element() :
+            list_element(nullptr),
+            prev_element(nullptr),
+            next_element(nullptr) {}
 
-		Element next() const {
-			return Element(next_element);
-		}
+        Element next() const {
+            return Element(next_element);
+        }
 
-		Element prev() const {
-			return Element(prev_element);
-		}
+        Element prev() const {
+            return Element(prev_element);
+        }
 
-		Element(const Element &other) :
-				list_element(other.list_element),
-				prev_element(other.prev_element),
-				next_element(other.next_element) {
-		}
+        Element(const Element& other) :
+            list_element(other.list_element),
+            prev_element(other.prev_element),
+            next_element(other.next_element) {}
 
-		Element &operator=(const Element &other) {
-			list_element = other.list_element;
-			next_element = other.next_element;
-			prev_element = other.prev_element;
-			return *this;
-		}
+        Element& operator=(const Element& other) {
+            list_element = other.list_element;
+            next_element = other.next_element;
+            prev_element = other.prev_element;
+            return *this;
+        }
 
-		_FORCE_INLINE_ bool operator==(const Element &p_other) const {
-			return this->list_element == p_other.list_element;
-		}
-		_FORCE_INLINE_ bool operator!=(const Element &p_other) const {
-			return this->list_element != p_other.list_element;
-		}
+        _FORCE_INLINE_ bool operator==(const Element& p_other) const {
+            return this->list_element == p_other.list_element;
+        }
 
-		operator bool() const {
-			return (list_element != nullptr);
-		}
+        _FORCE_INLINE_ bool operator!=(const Element& p_other) const {
+            return this->list_element != p_other.list_element;
+        }
 
-		const K &key() const {
-			CRASH_COND(!list_element);
-			return *(list_element->get().first);
-		};
+        operator bool() const {
+            return (list_element != nullptr);
+        }
 
-		V &value() {
-			CRASH_COND(!list_element);
-			return list_element->get().second;
-		};
+        const K& key() const {
+            CRASH_COND(!list_element);
+            return *(list_element->get().first);
+        };
 
-		const V &value() const {
-			CRASH_COND(!list_element);
-			return list_element->get().second;
-		};
+        V& value() {
+            CRASH_COND(!list_element);
+            return list_element->get().second;
+        };
 
-		V &get() {
-			CRASH_COND(!list_element);
-			return list_element->get().second;
-		};
+        const V& value() const {
+            CRASH_COND(!list_element);
+            return list_element->get().second;
+        };
 
-		const V &get() const {
-			CRASH_COND(!list_element);
-			return list_element->get().second;
-		};
-	};
+        V& get() {
+            CRASH_COND(!list_element);
+            return list_element->get().second;
+        };
 
-	class ConstElement {
-		friend class OrderedHashMap<K, V, Hasher, Comparator, MIN_HASH_TABLE_POWER, RELATIONSHIP>;
+        const V& get() const {
+            CRASH_COND(!list_element);
+            return list_element->get().second;
+        };
+    };
 
-		const typename InternalList::Element *list_element;
+    class ConstElement {
+        friend class OrderedHashMap<
+            K,
+            V,
+            Hasher,
+            Comparator,
+            MIN_HASH_TABLE_POWER,
+            RELATIONSHIP>;
 
-		ConstElement(const typename InternalList::Element *p_element) :
-				list_element(p_element) {
-		}
+        const typename InternalList::Element* list_element;
 
-	public:
-		_FORCE_INLINE_ ConstElement() :
-				list_element(NULL) {
-		}
+        ConstElement(const typename InternalList::Element* p_element) :
+            list_element(p_element) {}
 
-		ConstElement(const ConstElement &other) :
-				list_element(other.list_element) {
-		}
+    public:
+        _FORCE_INLINE_ ConstElement() : list_element(NULL) {}
 
-		ConstElement &operator=(const ConstElement &other) {
-			list_element = other.list_element;
-			return *this;
-		}
+        ConstElement(const ConstElement& other) :
+            list_element(other.list_element) {}
 
-		ConstElement next() const {
-			return ConstElement(list_element ? list_element->next() : nullptr);
-		}
+        ConstElement& operator=(const ConstElement& other) {
+            list_element = other.list_element;
+            return *this;
+        }
 
-		ConstElement prev() const {
-			return ConstElement(list_element ? list_element->prev() : NULL);
-		}
+        ConstElement next() const {
+            return ConstElement(list_element ? list_element->next() : nullptr);
+        }
 
-		_FORCE_INLINE_ bool operator==(const ConstElement &p_other) const {
-			return this->list_element == p_other.list_element;
-		}
-		_FORCE_INLINE_ bool operator!=(const ConstElement &p_other) const {
-			return this->list_element != p_other.list_element;
-		}
+        ConstElement prev() const {
+            return ConstElement(list_element ? list_element->prev() : NULL);
+        }
 
-		operator bool() const {
-			return (list_element != nullptr);
-		}
+        _FORCE_INLINE_ bool operator==(const ConstElement& p_other) const {
+            return this->list_element == p_other.list_element;
+        }
 
-		const K &key() const {
-			CRASH_COND(!list_element);
-			return *(list_element->get().first);
-		};
+        _FORCE_INLINE_ bool operator!=(const ConstElement& p_other) const {
+            return this->list_element != p_other.list_element;
+        }
 
-		const V &value() const {
-			CRASH_COND(!list_element);
-			return list_element->get().second;
-		};
+        operator bool() const {
+            return (list_element != nullptr);
+        }
 
-		const V &get() const {
-			CRASH_COND(!list_element);
-			return list_element->get().second;
-		};
-	};
+        const K& key() const {
+            CRASH_COND(!list_element);
+            return *(list_element->get().first);
+        };
 
-	ConstElement find(const K &p_key) const {
-		typename InternalList::Element *const *list_element = map.getptr(p_key);
-		if (list_element) {
-			return ConstElement(*list_element);
-		}
-		return ConstElement(nullptr);
-	}
+        const V& value() const {
+            CRASH_COND(!list_element);
+            return list_element->get().second;
+        };
 
-	Element find(const K &p_key) {
-		typename InternalList::Element **list_element = map.getptr(p_key);
-		if (list_element) {
-			return Element(*list_element);
-		}
-		return Element(nullptr);
-	}
+        const V& get() const {
+            CRASH_COND(!list_element);
+            return list_element->get().second;
+        };
+    };
 
-	Element insert(const K &p_key, const V &p_value) {
-		typename InternalList::Element **list_element = map.getptr(p_key);
-		if (list_element) {
-			(*list_element)->get().second = p_value;
-			return Element(*list_element);
-		}
-		typename InternalList::Element *new_element = list.push_back(Pair<const K *, V>(NULL, p_value));
-		typename InternalMap::Element *e = map.set(p_key, new_element);
-		new_element->get().first = &e->key();
+    ConstElement find(const K& p_key) const {
+        typename InternalList::Element* const* list_element = map.getptr(p_key);
+        if (list_element) {
+            return ConstElement(*list_element);
+        }
+        return ConstElement(nullptr);
+    }
 
-		return Element(new_element);
-	}
+    Element find(const K& p_key) {
+        typename InternalList::Element** list_element = map.getptr(p_key);
+        if (list_element) {
+            return Element(*list_element);
+        }
+        return Element(nullptr);
+    }
 
-	void erase(Element &p_element) {
-		map.erase(p_element.key());
-		list.erase(p_element.list_element);
-		p_element.list_element = nullptr;
-	}
+    Element insert(const K& p_key, const V& p_value) {
+        typename InternalList::Element** list_element = map.getptr(p_key);
+        if (list_element) {
+            (*list_element)->get().second = p_value;
+            return Element(*list_element);
+        }
+        typename InternalList::Element* new_element =
+            list.push_back(Pair<const K*, V>(NULL, p_value));
+        typename InternalMap::Element* e = map.set(p_key, new_element);
+        new_element->get().first         = &e->key();
 
-	bool erase(const K &p_key) {
-		typename InternalList::Element **list_element = map.getptr(p_key);
-		if (list_element) {
-			list.erase(*list_element);
-			map.erase(p_key);
-			return true;
-		}
-		return false;
-	}
+        return Element(new_element);
+    }
 
-	inline bool has(const K &p_key) const {
-		return map.has(p_key);
-	}
+    void erase(Element& p_element) {
+        map.erase(p_element.key());
+        list.erase(p_element.list_element);
+        p_element.list_element = nullptr;
+    }
 
-	const V &operator[](const K &p_key) const {
-		ConstElement e = find(p_key);
-		CRASH_COND(!e);
-		return e.value();
-	}
+    bool erase(const K& p_key) {
+        typename InternalList::Element** list_element = map.getptr(p_key);
+        if (list_element) {
+            list.erase(*list_element);
+            map.erase(p_key);
+            return true;
+        }
+        return false;
+    }
 
-	V &operator[](const K &p_key) {
-		Element e = find(p_key);
-		if (!e) {
-			// consistent with Map behaviour
-			e = insert(p_key, V());
-		}
-		return e.value();
-	}
+    inline bool has(const K& p_key) const {
+        return map.has(p_key);
+    }
 
-	inline Element front() {
-		return Element(list.front());
-	}
+    const V& operator[](const K& p_key) const {
+        ConstElement e = find(p_key);
+        CRASH_COND(!e);
+        return e.value();
+    }
 
-	inline Element back() {
-		return Element(list.back());
-	}
+    V& operator[](const K& p_key) {
+        Element e = find(p_key);
+        if (!e) {
+            // consistent with Map behaviour
+            e = insert(p_key, V());
+        }
+        return e.value();
+    }
 
-	inline ConstElement front() const {
-		return ConstElement(list.front());
-	}
+    inline Element front() {
+        return Element(list.front());
+    }
 
-	inline ConstElement back() const {
-		return ConstElement(list.back());
-	}
+    inline Element back() {
+        return Element(list.back());
+    }
 
-	inline bool empty() const { return list.empty(); }
-	inline int size() const { return list.size(); }
+    inline ConstElement front() const {
+        return ConstElement(list.front());
+    }
 
-	const void *id() const {
-		return list.id();
-	}
+    inline ConstElement back() const {
+        return ConstElement(list.back());
+    }
 
-	void clear() {
-		map.clear();
-		list.clear();
-	}
+    inline bool empty() const {
+        return list.empty();
+    }
+
+    inline int size() const {
+        return list.size();
+    }
+
+    const void* id() const {
+        return list.id();
+    }
+
+    void clear() {
+        map.clear();
+        list.clear();
+    }
 
 private:
-	void _copy_from(const OrderedHashMap &p_map) {
-		for (ConstElement E = p_map.front(); E; E = E.next()) {
-			insert(E.key(), E.value());
-		}
-	}
+    void _copy_from(const OrderedHashMap& p_map) {
+        for (ConstElement E = p_map.front(); E; E = E.next()) {
+            insert(E.key(), E.value());
+        }
+    }
 
 public:
-	void operator=(const OrderedHashMap &p_map) {
-		_copy_from(p_map);
-	}
+    void operator=(const OrderedHashMap& p_map) {
+        _copy_from(p_map);
+    }
 
-	OrderedHashMap(const OrderedHashMap &p_map) {
-		_copy_from(p_map);
-	}
+    OrderedHashMap(const OrderedHashMap& p_map) {
+        _copy_from(p_map);
+    }
 
-	_FORCE_INLINE_ OrderedHashMap() {
-	}
+    _FORCE_INLINE_ OrderedHashMap() {}
 };
 
 #endif // ORDERED_HASH_MAP_H

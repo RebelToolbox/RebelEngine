@@ -76,30 +76,41 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "FBXDocument.h"
 #include "FBXParser.h"
+
 #include <iostream>
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
 class FbxPoseNode;
-// ------------------------------------------------------------------------------------------------
-FbxPose::FbxPose(uint64_t id, const ElementPtr element, const Document &doc, const std::string &name) :
-		Object(id, element, name) {
-	const ScopePtr sc = GetRequiredScope(element);
-	//const std::string &classname = ParseTokenAsString(GetRequiredToken(element, 2));
 
-	const ElementCollection &PoseNodes = sc->GetCollection("PoseNode");
-	for (ElementMap::const_iterator it = PoseNodes.first; it != PoseNodes.second; ++it) {
-		std::string entry_name = (*it).first;
-		ElementPtr some_element = (*it).second;
-		FbxPoseNode *pose_node = new FbxPoseNode(some_element, doc, entry_name);
-		pose_nodes.push_back(pose_node);
-	}
+// ------------------------------------------------------------------------------------------------
+FbxPose::FbxPose(
+    uint64_t id,
+    const ElementPtr element,
+    const Document& doc,
+    const std::string& name
+) :
+    Object(id, element, name) {
+    const ScopePtr sc = GetRequiredScope(element);
+    // const std::string &classname =
+    // ParseTokenAsString(GetRequiredToken(element, 2));
+
+    const ElementCollection& PoseNodes = sc->GetCollection("PoseNode");
+    for (ElementMap::const_iterator it = PoseNodes.first;
+         it != PoseNodes.second;
+         ++it) {
+        std::string entry_name  = (*it).first;
+        ElementPtr some_element = (*it).second;
+        FbxPoseNode* pose_node = new FbxPoseNode(some_element, doc, entry_name);
+        pose_nodes.push_back(pose_node);
+    }
 }
 
 // ------------------------------------------------------------------------------------------------
 FbxPose::~FbxPose() {
-	pose_nodes.clear();
-	// empty
+    pose_nodes.clear();
+    // empty
 }
 
 } // namespace FBXDocParser

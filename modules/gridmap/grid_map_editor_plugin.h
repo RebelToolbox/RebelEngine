@@ -39,232 +39,250 @@
 class SpatialEditorPlugin;
 
 class GridMapEditor : public VBoxContainer {
-	GDCLASS(GridMapEditor, VBoxContainer);
+    GDCLASS(GridMapEditor, VBoxContainer);
 
-	enum {
+    enum {
+        GRID_CURSOR_SIZE = 50
+    };
 
-		GRID_CURSOR_SIZE = 50
-	};
+    enum InputAction {
+        INPUT_NONE,
+        INPUT_PAINT,
+        INPUT_ERASE,
+        INPUT_PICK,
+        INPUT_SELECT,
+        INPUT_PASTE,
+    };
 
-	enum InputAction {
+    enum ClipMode {
+        CLIP_DISABLED,
+        CLIP_ABOVE,
+        CLIP_BELOW
+    };
 
-		INPUT_NONE,
-		INPUT_PAINT,
-		INPUT_ERASE,
-		INPUT_PICK,
-		INPUT_SELECT,
-		INPUT_PASTE,
-	};
+    enum DisplayMode {
+        DISPLAY_THUMBNAIL,
+        DISPLAY_LIST
+    };
 
-	enum ClipMode {
+    UndoRedo* undo_redo;
+    InputAction input_action;
+    Panel* panel;
+    MenuButton* options;
+    SpinBox* floor;
+    double accumulated_floor_delta;
+    ToolButton* mode_thumbnail;
+    ToolButton* mode_list;
+    LineEdit* search_box;
+    HSlider* size_slider;
+    HBoxContainer* spatial_editor_hb;
+    ConfirmationDialog* settings_dialog;
+    VBoxContainer* settings_vbc;
+    SpinBox* settings_pick_distance;
+    Label* spin_box_label;
 
-		CLIP_DISABLED,
-		CLIP_ABOVE,
-		CLIP_BELOW
-	};
+    struct SetItem {
+        Vector3 pos;
+        int new_value;
+        int new_orientation;
+        int old_value;
+        int old_orientation;
+    };
 
-	enum DisplayMode {
-		DISPLAY_THUMBNAIL,
-		DISPLAY_LIST
-	};
+    List<SetItem> set_items;
 
-	UndoRedo *undo_redo;
-	InputAction input_action;
-	Panel *panel;
-	MenuButton *options;
-	SpinBox *floor;
-	double accumulated_floor_delta;
-	ToolButton *mode_thumbnail;
-	ToolButton *mode_list;
-	LineEdit *search_box;
-	HSlider *size_slider;
-	HBoxContainer *spatial_editor_hb;
-	ConfirmationDialog *settings_dialog;
-	VBoxContainer *settings_vbc;
-	SpinBox *settings_pick_distance;
-	Label *spin_box_label;
+    GridMap* node;
+    MeshLibrary* last_mesh_library;
+    ClipMode clip_mode;
 
-	struct SetItem {
-		Vector3 pos;
-		int new_value;
-		int new_orientation;
-		int old_value;
-		int old_orientation;
-	};
+    bool lock_view;
+    Transform grid_xform;
+    Transform edit_grid_xform;
+    Vector3::Axis edit_axis;
+    int edit_floor[3];
+    Vector3 grid_ofs;
 
-	List<SetItem> set_items;
+    RID grid[3];
+    RID grid_instance[3];
+    RID cursor_instance;
+    RID selection_mesh;
+    RID selection_instance;
+    RID selection_level_mesh[3];
+    RID selection_level_instance[3];
+    RID paste_mesh;
+    RID paste_instance;
 
-	GridMap *node;
-	MeshLibrary *last_mesh_library;
-	ClipMode clip_mode;
+    struct ClipboardItem {
+        int cell_item;
+        Vector3 grid_offset;
+        int orientation;
+        RID instance;
+    };
 
-	bool lock_view;
-	Transform grid_xform;
-	Transform edit_grid_xform;
-	Vector3::Axis edit_axis;
-	int edit_floor[3];
-	Vector3 grid_ofs;
+    List<ClipboardItem> clipboard_items;
 
-	RID grid[3];
-	RID grid_instance[3];
-	RID cursor_instance;
-	RID selection_mesh;
-	RID selection_instance;
-	RID selection_level_mesh[3];
-	RID selection_level_instance[3];
-	RID paste_mesh;
-	RID paste_instance;
+    Ref<SpatialMaterial> indicator_mat;
+    Ref<SpatialMaterial> inner_mat;
+    Ref<SpatialMaterial> outer_mat;
+    Ref<SpatialMaterial> selection_floor_mat;
 
-	struct ClipboardItem {
-		int cell_item;
-		Vector3 grid_offset;
-		int orientation;
-		RID instance;
-	};
+    bool updating;
 
-	List<ClipboardItem> clipboard_items;
+    struct Selection {
+        Vector3 click;
+        Vector3 current;
+        Vector3 begin;
+        Vector3 end;
+        bool active;
+    } selection;
 
-	Ref<SpatialMaterial> indicator_mat;
-	Ref<SpatialMaterial> inner_mat;
-	Ref<SpatialMaterial> outer_mat;
-	Ref<SpatialMaterial> selection_floor_mat;
+    Selection last_selection;
 
-	bool updating;
+    struct PasteIndicator {
+        Vector3 click;
+        Vector3 current;
+        Vector3 begin;
+        Vector3 end;
+        int orientation;
+    };
 
-	struct Selection {
-		Vector3 click;
-		Vector3 current;
-		Vector3 begin;
-		Vector3 end;
-		bool active;
-	} selection;
-	Selection last_selection;
+    PasteIndicator paste_indicator;
 
-	struct PasteIndicator {
-		Vector3 click;
-		Vector3 current;
-		Vector3 begin;
-		Vector3 end;
-		int orientation;
-	};
-	PasteIndicator paste_indicator;
+    bool cursor_visible;
+    Transform cursor_transform;
 
-	bool cursor_visible;
-	Transform cursor_transform;
+    Vector3 cursor_origin;
 
-	Vector3 cursor_origin;
+    int display_mode;
+    int selected_palette;
+    int cursor_rot;
 
-	int display_mode;
-	int selected_palette;
-	int cursor_rot;
+    enum Menu {
+        MENU_OPTION_NEXT_LEVEL,
+        MENU_OPTION_PREV_LEVEL,
+        MENU_OPTION_LOCK_VIEW,
+        MENU_OPTION_CLIP_DISABLED,
+        MENU_OPTION_CLIP_ABOVE,
+        MENU_OPTION_CLIP_BELOW,
+        MENU_OPTION_X_AXIS,
+        MENU_OPTION_Y_AXIS,
+        MENU_OPTION_Z_AXIS,
+        MENU_OPTION_CURSOR_ROTATE_Y,
+        MENU_OPTION_CURSOR_ROTATE_X,
+        MENU_OPTION_CURSOR_ROTATE_Z,
+        MENU_OPTION_CURSOR_BACK_ROTATE_Y,
+        MENU_OPTION_CURSOR_BACK_ROTATE_X,
+        MENU_OPTION_CURSOR_BACK_ROTATE_Z,
+        MENU_OPTION_CURSOR_CLEAR_ROTATION,
+        MENU_OPTION_PASTE_SELECTS,
+        MENU_OPTION_SELECTION_DUPLICATE,
+        MENU_OPTION_SELECTION_CUT,
+        MENU_OPTION_SELECTION_CLEAR,
+        MENU_OPTION_SELECTION_FILL,
+        MENU_OPTION_GRIDMAP_SETTINGS
+    };
 
-	enum Menu {
+    SpatialEditorPlugin* spatial_editor;
 
-		MENU_OPTION_NEXT_LEVEL,
-		MENU_OPTION_PREV_LEVEL,
-		MENU_OPTION_LOCK_VIEW,
-		MENU_OPTION_CLIP_DISABLED,
-		MENU_OPTION_CLIP_ABOVE,
-		MENU_OPTION_CLIP_BELOW,
-		MENU_OPTION_X_AXIS,
-		MENU_OPTION_Y_AXIS,
-		MENU_OPTION_Z_AXIS,
-		MENU_OPTION_CURSOR_ROTATE_Y,
-		MENU_OPTION_CURSOR_ROTATE_X,
-		MENU_OPTION_CURSOR_ROTATE_Z,
-		MENU_OPTION_CURSOR_BACK_ROTATE_Y,
-		MENU_OPTION_CURSOR_BACK_ROTATE_X,
-		MENU_OPTION_CURSOR_BACK_ROTATE_Z,
-		MENU_OPTION_CURSOR_CLEAR_ROTATION,
-		MENU_OPTION_PASTE_SELECTS,
-		MENU_OPTION_SELECTION_DUPLICATE,
-		MENU_OPTION_SELECTION_CUT,
-		MENU_OPTION_SELECTION_CLEAR,
-		MENU_OPTION_SELECTION_FILL,
-		MENU_OPTION_GRIDMAP_SETTINGS
+    struct AreaDisplay {
+        RID mesh;
+        RID instance;
+    };
 
-	};
+    ItemList* mesh_library_palette;
+    Label* info_message;
 
-	SpatialEditorPlugin *spatial_editor;
+    EditorNode* editor;
 
-	struct AreaDisplay {
-		RID mesh;
-		RID instance;
-	};
+    void update_grid(); // Change which and where the grid is displayed
+    void _draw_grids(const Vector3& cell_size);
+    void _configure();
+    void _menu_option(int);
+    void update_palette();
+    void _set_display_mode(int p_mode);
+    void _item_selected_cbk(int idx);
+    void _update_cursor_transform();
+    void _update_cursor_instance();
+    void _update_clip();
 
-	ItemList *mesh_library_palette;
-	Label *info_message;
+    void _text_changed(const String& p_text);
+    void _sbox_input(const Ref<InputEvent>& p_ie);
+    void _mesh_library_palette_input(const Ref<InputEvent>& p_ie);
 
-	EditorNode *editor;
+    void _icon_size_changed(float p_value);
 
-	void update_grid(); // Change which and where the grid is displayed
-	void _draw_grids(const Vector3 &cell_size);
-	void _configure();
-	void _menu_option(int);
-	void update_palette();
-	void _set_display_mode(int p_mode);
-	void _item_selected_cbk(int idx);
-	void _update_cursor_transform();
-	void _update_cursor_instance();
-	void _update_clip();
+    void _clear_clipboard_data();
+    void _set_clipboard_data();
+    void _update_paste_indicator();
+    void _do_paste();
+    void _update_selection_transform();
+    void _validate_selection();
+    void _set_selection(
+        bool p_active,
+        const Vector3& p_begin = Vector3(),
+        const Vector3& p_end   = Vector3()
+    );
 
-	void _text_changed(const String &p_text);
-	void _sbox_input(const Ref<InputEvent> &p_ie);
-	void _mesh_library_palette_input(const Ref<InputEvent> &p_ie);
+    void _floor_changed(float p_value);
+    void _floor_mouse_exited();
 
-	void _icon_size_changed(float p_value);
+    void _delete_selection();
+    void _fill_selection();
 
-	void _clear_clipboard_data();
-	void _set_clipboard_data();
-	void _update_paste_indicator();
-	void _do_paste();
-	void _update_selection_transform();
-	void _validate_selection();
-	void _set_selection(bool p_active, const Vector3 &p_begin = Vector3(), const Vector3 &p_end = Vector3());
+    bool do_input_action(Camera* p_camera, const Point2& p_point, bool p_click);
 
-	void _floor_changed(float p_value);
-	void _floor_mouse_exited();
-
-	void _delete_selection();
-	void _fill_selection();
-
-	bool do_input_action(Camera *p_camera, const Point2 &p_point, bool p_click);
-
-	friend class GridMapEditorPlugin;
+    friend class GridMapEditorPlugin;
 
 protected:
-	void _notification(int p_what);
-	void _node_removed(Node *p_node);
-	static void _bind_methods();
+    void _notification(int p_what);
+    void _node_removed(Node* p_node);
+    static void _bind_methods();
 
 public:
-	bool forward_spatial_input_event(Camera *p_camera, const Ref<InputEvent> &p_event);
+    bool forward_spatial_input_event(
+        Camera* p_camera,
+        const Ref<InputEvent>& p_event
+    );
 
-	void edit(GridMap *p_gridmap);
-	GridMapEditor() {}
-	GridMapEditor(EditorNode *p_editor);
-	~GridMapEditor();
+    void edit(GridMap* p_gridmap);
+
+    GridMapEditor() {}
+
+    GridMapEditor(EditorNode* p_editor);
+    ~GridMapEditor();
 };
 
 class GridMapEditorPlugin : public EditorPlugin {
-	GDCLASS(GridMapEditorPlugin, EditorPlugin);
+    GDCLASS(GridMapEditorPlugin, EditorPlugin);
 
-	GridMapEditor *grid_map_editor;
-	EditorNode *editor;
+    GridMapEditor* grid_map_editor;
+    EditorNode* editor;
 
 protected:
-	void _notification(int p_what);
+    void _notification(int p_what);
 
 public:
-	virtual bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event) { return grid_map_editor->forward_spatial_input_event(p_camera, p_event); }
-	virtual String get_name() const { return "GridMap"; }
-	bool has_main_screen() const { return false; }
-	virtual void edit(Object *p_object);
-	virtual bool handles(Object *p_object) const;
-	virtual void make_visible(bool p_visible);
+    virtual bool forward_spatial_gui_input(
+        Camera* p_camera,
+        const Ref<InputEvent>& p_event
+    ) {
+        return grid_map_editor->forward_spatial_input_event(p_camera, p_event);
+    }
 
-	GridMapEditorPlugin(EditorNode *p_node);
-	~GridMapEditorPlugin();
+    virtual String get_name() const {
+        return "GridMap";
+    }
+
+    bool has_main_screen() const {
+        return false;
+    }
+
+    virtual void edit(Object* p_object);
+    virtual bool handles(Object* p_object) const;
+    virtual void make_visible(bool p_visible);
+
+    GridMapEditorPlugin(EditorNode* p_node);
+    ~GridMapEditorPlugin();
 };
 
 #endif // CUBE_GRID_MAP_EDITOR_PLUGIN_H

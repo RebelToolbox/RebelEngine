@@ -76,31 +76,32 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef FBX_PARSER_H
 #define FBX_PARSER_H
 
-#include <stdint.h>
-#include <map>
-#include <memory>
-
+#include "FBXTokenizer.h"
 #include "core/color.h"
 #include "core/math/transform.h"
 #include "core/math/vector2.h"
 #include "core/math/vector3.h"
 
-#include "FBXTokenizer.h"
+#include <map>
+#include <memory>
+#include <stdint.h>
 
-namespace FBXDocParser {
+namespace FBXDocParser
+{
 
 class Scope;
 class Parser;
 class Element;
 
-typedef Element *ElementPtr;
-typedef Scope *ScopePtr;
+typedef Element* ElementPtr;
+typedef Scope* ScopePtr;
 
 typedef std::vector<ScopePtr> ScopeList;
 typedef std::multimap<std::string, ElementPtr> ElementMap;
-typedef std::pair<ElementMap::const_iterator, ElementMap::const_iterator> ElementCollection;
+typedef std::pair<ElementMap::const_iterator, ElementMap::const_iterator>
+    ElementCollection;
 
-#define new_Scope new Scope
+#define new_Scope   new Scope
 #define new_Element new Element
 
 /** FBX data entity that consists of a key:value tuple.
@@ -116,26 +117,26 @@ typedef std::pair<ElementMap::const_iterator, ElementMap::const_iterator> Elemen
  *  as their trailing member.  **/
 class Element {
 public:
-	Element(TokenPtr key_token, Parser &parser);
-	~Element();
+    Element(TokenPtr key_token, Parser& parser);
+    ~Element();
 
-	ScopePtr Compound() const {
-		return compound;
-	}
+    ScopePtr Compound() const {
+        return compound;
+    }
 
-	TokenPtr KeyToken() const {
-		return key_token;
-	}
+    TokenPtr KeyToken() const {
+        return key_token;
+    }
 
-	const TokenList &Tokens() const {
-		return tokens;
-	}
+    const TokenList& Tokens() const {
+        return tokens;
+    }
 
 private:
-	TokenList tokens;
-	ScopePtr compound = nullptr;
-	std::vector<ScopePtr> compound_scope;
-	TokenPtr key_token = nullptr;
+    TokenList tokens;
+    ScopePtr compound = nullptr;
+    std::vector<ScopePtr> compound_scope;
+    TokenPtr key_token = nullptr;
 };
 
 /** FBX data entity that consists of a 'scope', a collection
@@ -151,80 +152,82 @@ private:
  *  @endverbatim  */
 class Scope {
 public:
-	Scope(Parser &parser, bool topLevel = false);
-	~Scope();
+    Scope(Parser& parser, bool topLevel = false);
+    ~Scope();
 
-	ElementPtr GetElement(const std::string &index) const {
-		ElementMap::const_iterator it = elements.find(index);
-		return it == elements.end() ? nullptr : (*it).second;
-	}
+    ElementPtr GetElement(const std::string& index) const {
+        ElementMap::const_iterator it = elements.find(index);
+        return it == elements.end() ? nullptr : (*it).second;
+    }
 
-	ElementPtr FindElementCaseInsensitive(const std::string &elementName) const {
-		for (auto element = elements.begin(); element != elements.end(); ++element) {
-			if (element->first.compare(elementName)) {
-				return element->second;
-			}
-		}
+    ElementPtr FindElementCaseInsensitive(const std::string& elementName
+    ) const {
+        for (auto element = elements.begin(); element != elements.end();
+             ++element) {
+            if (element->first.compare(elementName)) {
+                return element->second;
+            }
+        }
 
-		// nothing to reference / expired.
-		return nullptr;
-	}
+        // nothing to reference / expired.
+        return nullptr;
+    }
 
-	ElementCollection GetCollection(const std::string &index) const {
-		return elements.equal_range(index);
-	}
+    ElementCollection GetCollection(const std::string& index) const {
+        return elements.equal_range(index);
+    }
 
-	const ElementMap &Elements() const {
-		return elements;
-	}
+    const ElementMap& Elements() const {
+        return elements;
+    }
 
 private:
-	ElementMap elements;
+    ElementMap elements;
 };
 
 /** FBX parsing class, takes a list of input tokens and generates a hierarchy
  *  of nested #Scope instances, representing the fbx DOM.*/
 class Parser {
 public:
-	/** Parse given a token list. Does not take ownership of the tokens -
-	 *  the objects must persist during the entire parser lifetime */
-	Parser(const TokenList &tokens, bool is_binary);
-	~Parser();
+    /** Parse given a token list. Does not take ownership of the tokens -
+     *  the objects must persist during the entire parser lifetime */
+    Parser(const TokenList& tokens, bool is_binary);
+    ~Parser();
 
-	ScopePtr GetRootScope() const {
-		return root;
-	}
+    ScopePtr GetRootScope() const {
+        return root;
+    }
 
-	bool IsBinary() const {
-		return is_binary;
-	}
-
-private:
-	friend class Scope;
-	friend class Element;
-
-	TokenPtr AdvanceToNextToken();
-	TokenPtr LastToken() const;
-	TokenPtr CurrentToken() const;
+    bool IsBinary() const {
+        return is_binary;
+    }
 
 private:
-	ScopeList scopes;
-	const TokenList &tokens;
+    friend class Scope;
+    friend class Element;
 
-	TokenPtr last = nullptr, current = nullptr;
-	TokenList::const_iterator cursor;
-	ScopePtr root = nullptr;
+    TokenPtr AdvanceToNextToken();
+    TokenPtr LastToken() const;
+    TokenPtr CurrentToken() const;
 
-	const bool is_binary;
+private:
+    ScopeList scopes;
+    const TokenList& tokens;
+
+    TokenPtr last = nullptr, current = nullptr;
+    TokenList::const_iterator cursor;
+    ScopePtr root = nullptr;
+
+    const bool is_binary;
 };
 
 /* token parsing - this happens when building the DOM out of the parse-tree*/
-uint64_t ParseTokenAsID(const TokenPtr t, const char *&err_out);
-size_t ParseTokenAsDim(const TokenPtr t, const char *&err_out);
-float ParseTokenAsFloat(const TokenPtr t, const char *&err_out);
-int ParseTokenAsInt(const TokenPtr t, const char *&err_out);
-int64_t ParseTokenAsInt64(const TokenPtr t, const char *&err_out);
-std::string ParseTokenAsString(const TokenPtr t, const char *&err_out);
+uint64_t ParseTokenAsID(const TokenPtr t, const char*& err_out);
+size_t ParseTokenAsDim(const TokenPtr t, const char*& err_out);
+float ParseTokenAsFloat(const TokenPtr t, const char*& err_out);
+int ParseTokenAsInt(const TokenPtr t, const char*& err_out);
+int64_t ParseTokenAsInt64(const TokenPtr t, const char*& err_out);
+std::string ParseTokenAsString(const TokenPtr t, const char*& err_out);
 
 /* wrapper around ParseTokenAsXXX() with DOMError handling */
 uint64_t ParseTokenAsID(const TokenPtr t);
@@ -235,21 +238,30 @@ int64_t ParseTokenAsInt64(const TokenPtr t);
 std::string ParseTokenAsString(const TokenPtr t);
 
 /* read data arrays */
-void ParseVectorDataArray(std::vector<Vector3> &out, const ElementPtr el);
-void ParseVectorDataArray(std::vector<Color> &out, const ElementPtr el);
-void ParseVectorDataArray(std::vector<Vector2> &out, const ElementPtr el);
-void ParseVectorDataArray(std::vector<int> &out, const ElementPtr el);
-void ParseVectorDataArray(std::vector<float> &out, const ElementPtr el);
-void ParseVectorDataArray(std::vector<float> &out, const ElementPtr el);
-void ParseVectorDataArray(std::vector<unsigned int> &out, const ElementPtr el);
-void ParseVectorDataArray(std::vector<uint64_t> &out, const ElementPtr ep);
-void ParseVectorDataArray(std::vector<int64_t> &out, const ElementPtr el);
-bool HasElement(const ScopePtr sc, const std::string &index);
+void ParseVectorDataArray(std::vector<Vector3>& out, const ElementPtr el);
+void ParseVectorDataArray(std::vector<Color>& out, const ElementPtr el);
+void ParseVectorDataArray(std::vector<Vector2>& out, const ElementPtr el);
+void ParseVectorDataArray(std::vector<int>& out, const ElementPtr el);
+void ParseVectorDataArray(std::vector<float>& out, const ElementPtr el);
+void ParseVectorDataArray(std::vector<float>& out, const ElementPtr el);
+void ParseVectorDataArray(std::vector<unsigned int>& out, const ElementPtr el);
+void ParseVectorDataArray(std::vector<uint64_t>& out, const ElementPtr ep);
+void ParseVectorDataArray(std::vector<int64_t>& out, const ElementPtr el);
+bool HasElement(const ScopePtr sc, const std::string& index);
 
 // extract a required element from a scope, abort if the element cannot be found
-ElementPtr GetRequiredElement(const ScopePtr sc, const std::string &index, const ElementPtr element = nullptr);
-ScopePtr GetRequiredScope(const ElementPtr el); // New in 2020. (less likely to destroy application)
-ElementPtr GetOptionalElement(const ScopePtr sc, const std::string &index, const ElementPtr element = nullptr);
+ElementPtr GetRequiredElement(
+    const ScopePtr sc,
+    const std::string& index,
+    const ElementPtr element = nullptr
+);
+ScopePtr GetRequiredScope(const ElementPtr el
+); // New in 2020. (less likely to destroy application)
+ElementPtr GetOptionalElement(
+    const ScopePtr sc,
+    const std::string& index,
+    const ElementPtr element = nullptr
+);
 // extract required compound scope
 ScopePtr GetRequiredScope(const ElementPtr el);
 // get token at a particular index

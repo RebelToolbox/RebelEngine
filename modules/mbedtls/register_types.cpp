@@ -36,15 +36,15 @@
 #include "stream_peer_mbedtls.h"
 
 void register_mbedtls_types() {
-	CryptoMbedTLS::initialize_crypto();
-	StreamPeerMbedTLS::initialize_ssl();
-	PacketPeerMbedDTLS::initialize_dtls();
-	DTLSServerMbedTLS::initialize();
+    CryptoMbedTLS::initialize_crypto();
+    StreamPeerMbedTLS::initialize_ssl();
+    PacketPeerMbedDTLS::initialize_dtls();
+    DTLSServerMbedTLS::initialize();
 }
 
 void unregister_mbedtls_types() {
-	DTLSServerMbedTLS::finalize();
-	PacketPeerMbedDTLS::finalize_dtls();
-	StreamPeerMbedTLS::finalize_ssl();
-	CryptoMbedTLS::finalize_crypto();
+    DTLSServerMbedTLS::finalize();
+    PacketPeerMbedDTLS::finalize_dtls();
+    StreamPeerMbedTLS::finalize_ssl();
+    CryptoMbedTLS::finalize_crypto();
 }

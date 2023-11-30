@@ -34,8 +34,8 @@
 
 @property(assign, readonly, nonatomic) BOOL hasFinishedSetup;
 
-- (BOOL)setupView:(UIView *)view;
-- (void)renderOnView:(UIView *)view;
+- (BOOL)setupView:(UIView*)view;
+- (void)renderOnView:(UIView*)view;
 
 @end
 

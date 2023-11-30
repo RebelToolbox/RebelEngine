@@ -35,33 +35,33 @@
 #include "scene/resources/multimesh.h"
 
 class MultiMeshInstance2D : public Node2D {
-	GDCLASS(MultiMeshInstance2D, Node2D);
+    GDCLASS(MultiMeshInstance2D, Node2D);
 
-	Ref<MultiMesh> multimesh;
+    Ref<MultiMesh> multimesh;
 
-	Ref<Texture> texture;
-	Ref<Texture> normal_map;
+    Ref<Texture> texture;
+    Ref<Texture> normal_map;
 
 protected:
-	void _notification(int p_what);
-	static void _bind_methods();
+    void _notification(int p_what);
+    static void _bind_methods();
 
 public:
 #ifdef TOOLS_ENABLED
-	virtual Rect2 _edit_get_rect() const;
+    virtual Rect2 _edit_get_rect() const;
 #endif
 
-	void set_multimesh(const Ref<MultiMesh> &p_multimesh);
-	Ref<MultiMesh> get_multimesh() const;
+    void set_multimesh(const Ref<MultiMesh>& p_multimesh);
+    Ref<MultiMesh> get_multimesh() const;
 
-	void set_texture(const Ref<Texture> &p_texture);
-	Ref<Texture> get_texture() const;
+    void set_texture(const Ref<Texture>& p_texture);
+    Ref<Texture> get_texture() const;
 
-	void set_normal_map(const Ref<Texture> &p_texture);
-	Ref<Texture> get_normal_map() const;
+    void set_normal_map(const Ref<Texture>& p_texture);
+    Ref<Texture> get_normal_map() const;
 
-	MultiMeshInstance2D();
-	~MultiMeshInstance2D();
+    MultiMeshInstance2D();
+    ~MultiMeshInstance2D();
 };
 
 #endif // MULTIMESH_INSTANCE_2D_H

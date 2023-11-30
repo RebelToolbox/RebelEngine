@@ -40,21 +40,27 @@ import javax.microedition.khronos.egl.EGLSurface;
 /**
  * EGL window surface factory for the Oculus mobile VR SDK.
  */
-public class OvrWindowSurfaceFactory implements GLSurfaceView.EGLWindowSurfaceFactory {
-	private final static int[] SURFACE_ATTRIBS = {
-		EGL10.EGL_WIDTH, 16,
-		EGL10.EGL_HEIGHT, 16,
-		EGL10.EGL_NONE
-	};
+public class OvrWindowSurfaceFactory
+    implements GLSurfaceView.EGLWindowSurfaceFactory {
+    private final static int[] SURFACE_ATTRIBS =
+        {EGL10.EGL_WIDTH, 16, EGL10.EGL_HEIGHT, 16, EGL10.EGL_NONE};
 
-	@Override
-	public EGLSurface createWindowSurface(EGL10 egl, EGLDisplay display, EGLConfig config,
-			Object nativeWindow) {
-		return egl.eglCreatePbufferSurface(display, config, SURFACE_ATTRIBS);
-	}
+    @Override
+    public EGLSurface createWindowSurface(
+        EGL10 egl,
+        EGLDisplay display,
+        EGLConfig config,
+        Object nativeWindow
+    ) {
+        return egl.eglCreatePbufferSurface(display, config, SURFACE_ATTRIBS);
+    }
 
-	@Override
-	public void destroySurface(EGL10 egl, EGLDisplay display, EGLSurface surface) {
-		egl.eglDestroySurface(display, surface);
-	}
+    @Override
+    public void destroySurface(
+        EGL10 egl,
+        EGLDisplay display,
+        EGLSurface surface
+    ) {
+        egl.eglDestroySurface(display, surface);
+    }
 }

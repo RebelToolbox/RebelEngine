@@ -31,8 +31,8 @@
 #ifndef OCTREE_H
 #define OCTREE_H
 
-#define OCTREE_ELEMENT_INVALID_ID 0
-#define OCTREE_SIZE_LIMIT 1e15
+#define OCTREE_ELEMENT_INVALID_ID   0
+#define OCTREE_SIZE_LIMIT           1e15
 #define OCTREE_DEFAULT_OCTANT_LIMIT 0
 
 // We want 2 versions of the octree, Octree

@@ -35,7 +35,11 @@
 
 #include "core/variant.h"
 
-Variant fieldwise_assign(const Variant &p_target, const Variant &p_source, const String &p_field);
+Variant fieldwise_assign(
+    const Variant& p_target,
+    const Variant& p_source,
+    const String& p_field
+);
 
 #endif // TOOLS_ENABLED
 

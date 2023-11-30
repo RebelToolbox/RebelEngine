@@ -33,9 +33,10 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestRender {
+namespace TestRender
+{
 
-MainLoop *test();
-}
+MainLoop* test();
+} // namespace TestRender
 
 #endif

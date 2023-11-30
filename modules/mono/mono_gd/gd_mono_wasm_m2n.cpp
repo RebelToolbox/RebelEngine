@@ -34,45 +34,67 @@
 
 #include "core/oa_hash_map.h"
 
-typedef mono_bool (*GodotMonoM2nIcallTrampolineDispatch)(const char *cookie, void *target_func, Mono_InterpMethodArguments *margs);
+typedef mono_bool (*GodotMonoM2nIcallTrampolineDispatch)(
+    const char* cookie,
+    void* target_func,
+    Mono_InterpMethodArguments* margs
+);
 
 // This extern function is implemented in our patched version of Mono
-MONO_API void godot_mono_register_m2n_icall_trampoline_dispatch_hook(GodotMonoM2nIcallTrampolineDispatch hook);
+MONO_API void godot_mono_register_m2n_icall_trampoline_dispatch_hook(
+    GodotMonoM2nIcallTrampolineDispatch hook
+);
 
-namespace GDMonoWasmM2n {
+namespace GDMonoWasmM2n
+{
 
 struct HashMapCookieComparator {
-	static bool compare(const char *p_lhs, const char *p_rhs) {
-		return strcmp(p_lhs, p_rhs) == 0;
-	}
+    static bool compare(const char* p_lhs, const char* p_rhs) {
+        return strcmp(p_lhs, p_rhs) == 0;
+    }
 };
 
-// The default hasher supports 'const char *' C Strings, but we need a custom comparator
-OAHashMap<const char *, TrampolineFunc, HashMapHasherDefault, HashMapCookieComparator> trampolines;
+// The default hasher supports 'const char *' C Strings, but we need a custom
+// comparator
+OAHashMap<
+    const char*,
+    TrampolineFunc,
+    HashMapHasherDefault,
+    HashMapCookieComparator>
+    trampolines;
 
-void set_trampoline(const char *cookies, GDMonoWasmM2n::TrampolineFunc trampoline_func) {
-	trampolines.set(cookies, trampoline_func);
+void set_trampoline(
+    const char* cookies,
+    GDMonoWasmM2n::TrampolineFunc trampoline_func
+) {
+    trampolines.set(cookies, trampoline_func);
 }
 
-mono_bool trampoline_dispatch_hook(const char *cookie, void *target_func, Mono_InterpMethodArguments *margs) {
-	TrampolineFunc trampoline_func;
+mono_bool trampoline_dispatch_hook(
+    const char* cookie,
+    void* target_func,
+    Mono_InterpMethodArguments* margs
+) {
+    TrampolineFunc trampoline_func;
 
-	if (!trampolines.lookup(cookie, trampoline_func)) {
-		return false;
-	}
+    if (!trampolines.lookup(cookie, trampoline_func)) {
+        return false;
+    }
 
-	(*trampoline_func)(target_func, margs);
-	return true;
+    (*trampoline_func)(target_func, margs);
+    return true;
 }
 
 bool initialized = false;
 
 void lazy_initialize() {
-	// Doesn't need to be thread safe
-	if (!initialized) {
-		initialized = true;
-		godot_mono_register_m2n_icall_trampoline_dispatch_hook(&trampoline_dispatch_hook);
-	}
+    // Doesn't need to be thread safe
+    if (!initialized) {
+        initialized = true;
+        godot_mono_register_m2n_icall_trampoline_dispatch_hook(
+            &trampoline_dispatch_hook
+        );
+    }
 }
 } // namespace GDMonoWasmM2n
 

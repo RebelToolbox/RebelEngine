@@ -38,8 +38,9 @@ import java.lang.annotation.Target;
 /**
  * Annotation to indicate a method is being invoked by the Rebel Engine.
  *
- * At runtime, annotated plugin methods are detected and automatically registered.
+ * At runtime, annotated plugin methods are detected and automatically
+ * registered.
  */
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UsedByRebel {}

@@ -34,87 +34,104 @@
 #include "modules/modules_enabled.gen.h" // For regex.
 #ifdef MODULE_REGEX_ENABLED
 
+#include "core/undo_redo.h"
+#include "editor/scene_tree_editor.h"
 #include "scene/gui/check_box.h"
 #include "scene/gui/dialogs.h"
 #include "scene/gui/option_button.h"
 #include "scene/gui/spin_box.h"
-
-#include "core/undo_redo.h"
-#include "editor/scene_tree_editor.h"
 
 /**
 @author Blazej Floch
 */
 
 class RenameDialog : public ConfirmationDialog {
-	GDCLASS(RenameDialog, ConfirmationDialog);
+    GDCLASS(RenameDialog, ConfirmationDialog);
 
-	virtual void ok_pressed() { rename(); };
-	void _cancel_pressed(){};
-	void _features_toggled(bool pressed);
-	void _insert_text(String text);
-	void _update_substitute();
-	bool _is_main_field(LineEdit *line_edit);
+    virtual void ok_pressed() {
+        rename();
+    };
 
-	void _iterate_scene(const Node *node, const Array &selection, int *count);
-	String _apply_rename(const Node *node, int count);
-	String _substitute(const String &subject, const Node *node, int count);
-	String _regex(const String &pattern, const String &subject, const String &replacement);
-	String _postprocess(const String &subject);
-	void _update_preview(String new_text = "");
-	void _update_preview_int(int new_value = 0);
-	static void _error_handler(void *p_self, const char *p_func, const char *p_file, int p_line, const char *p_error, const char *p_errorexp, ErrorHandlerType p_type);
+    void _cancel_pressed(){};
+    void _features_toggled(bool pressed);
+    void _insert_text(String text);
+    void _update_substitute();
+    bool _is_main_field(LineEdit* line_edit);
 
-	SceneTreeEditor *scene_tree_editor;
-	UndoRedo *undo_redo;
-	int global_count;
+    void _iterate_scene(const Node* node, const Array& selection, int* count);
+    String _apply_rename(const Node* node, int count);
+    String _substitute(const String& subject, const Node* node, int count);
+    String _regex(
+        const String& pattern,
+        const String& subject,
+        const String& replacement
+    );
+    String _postprocess(const String& subject);
+    void _update_preview(String new_text = "");
+    void _update_preview_int(int new_value = 0);
+    static void _error_handler(
+        void* p_self,
+        const char* p_func,
+        const char* p_file,
+        int p_line,
+        const char* p_error,
+        const char* p_errorexp,
+        ErrorHandlerType p_type
+    );
 
-	LineEdit *lne_search;
-	LineEdit *lne_replace;
-	LineEdit *lne_prefix;
-	LineEdit *lne_suffix;
+    SceneTreeEditor* scene_tree_editor;
+    UndoRedo* undo_redo;
+    int global_count;
 
-	TabContainer *tabc_features;
+    LineEdit* lne_search;
+    LineEdit* lne_replace;
+    LineEdit* lne_prefix;
+    LineEdit* lne_suffix;
 
-	CheckBox *cbut_substitute;
-	CheckButton *cbut_regex;
-	CheckBox *cbut_process;
-	CheckBox *chk_per_level_counter;
+    TabContainer* tabc_features;
 
-	Button *but_insert_name;
-	Button *but_insert_parent;
-	Button *but_insert_type;
-	Button *but_insert_scene;
-	Button *but_insert_root;
-	Button *but_insert_count;
+    CheckBox* cbut_substitute;
+    CheckButton* cbut_regex;
+    CheckBox* cbut_process;
+    CheckBox* chk_per_level_counter;
 
-	SpinBox *spn_count_start;
-	SpinBox *spn_count_step;
-	SpinBox *spn_count_padding;
+    Button* but_insert_name;
+    Button* but_insert_parent;
+    Button* but_insert_type;
+    Button* but_insert_scene;
+    Button* but_insert_root;
+    Button* but_insert_count;
 
-	OptionButton *opt_style;
-	OptionButton *opt_case;
+    SpinBox* spn_count_start;
+    SpinBox* spn_count_step;
+    SpinBox* spn_count_padding;
 
-	Label *lbl_preview_title;
-	Label *lbl_preview;
+    OptionButton* opt_style;
+    OptionButton* opt_case;
 
-	List<Pair<NodePath, String>> to_rename;
-	Node *preview_node;
-	bool lock_preview_update;
-	ErrorHandlerList eh;
-	bool has_errors;
+    Label* lbl_preview_title;
+    Label* lbl_preview;
+
+    List<Pair<NodePath, String>> to_rename;
+    Node* preview_node;
+    bool lock_preview_update;
+    ErrorHandlerList eh;
+    bool has_errors;
 
 protected:
-	void _notification(int p_what){};
-	static void _bind_methods();
-	virtual void _post_popup();
+    void _notification(int p_what){};
+    static void _bind_methods();
+    virtual void _post_popup();
 
 public:
-	void reset();
-	void rename();
+    void reset();
+    void rename();
 
-	RenameDialog(SceneTreeEditor *p_scene_tree_editor, UndoRedo *p_undo_redo = nullptr);
-	~RenameDialog(){};
+    RenameDialog(
+        SceneTreeEditor* p_scene_tree_editor,
+        UndoRedo* p_undo_redo = nullptr
+    );
+    ~RenameDialog(){};
 };
 
 #endif // MODULE_REGEX_ENABLED

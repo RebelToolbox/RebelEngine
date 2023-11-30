@@ -34,9 +34,10 @@
 #include "core/os/main_loop.h"
 #include "core/ustring.h"
 
-namespace TestString {
+namespace TestString
+{
 
-MainLoop *test();
-}
+MainLoop* test();
+} // namespace TestString
 
 #endif

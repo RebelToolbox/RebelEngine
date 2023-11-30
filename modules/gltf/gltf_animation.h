@@ -34,41 +34,41 @@
 #include "core/resource.h"
 
 class GLTFAnimation : public Resource {
-	GDCLASS(GLTFAnimation, Resource);
+    GDCLASS(GLTFAnimation, Resource);
 
 protected:
-	static void _bind_methods();
+    static void _bind_methods();
 
 public:
-	enum Interpolation {
-		INTERP_LINEAR,
-		INTERP_STEP,
-		INTERP_CATMULLROMSPLINE,
-		INTERP_CUBIC_SPLINE,
-	};
+    enum Interpolation {
+        INTERP_LINEAR,
+        INTERP_STEP,
+        INTERP_CATMULLROMSPLINE,
+        INTERP_CUBIC_SPLINE,
+    };
 
-	template <class T>
-	struct Channel {
-		Interpolation interpolation;
-		Vector<float> times;
-		Vector<T> values;
-	};
+    template <class T>
+    struct Channel {
+        Interpolation interpolation;
+        Vector<float> times;
+        Vector<T> values;
+    };
 
-	struct Track {
-		Channel<Vector3> translation_track;
-		Channel<Quat> rotation_track;
-		Channel<Vector3> scale_track;
-		Vector<Channel<float>> weight_tracks;
-	};
+    struct Track {
+        Channel<Vector3> translation_track;
+        Channel<Quat> rotation_track;
+        Channel<Vector3> scale_track;
+        Vector<Channel<float>> weight_tracks;
+    };
 
 public:
-	bool get_loop() const;
-	void set_loop(bool p_val);
-	Map<int, GLTFAnimation::Track> &get_tracks();
-	GLTFAnimation();
+    bool get_loop() const;
+    void set_loop(bool p_val);
+    Map<int, GLTFAnimation::Track>& get_tracks();
+    GLTFAnimation();
 
 private:
-	bool loop = false;
-	Map<int, Track> tracks;
+    bool loop = false;
+    Map<int, Track> tracks;
 };
 #endif // GLTF_ANIMATION_H

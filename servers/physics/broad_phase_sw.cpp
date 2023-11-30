@@ -32,5 +32,4 @@
 
 BroadPhaseSW::CreateFunction BroadPhaseSW::create_func = nullptr;
 
-BroadPhaseSW::~BroadPhaseSW() {
-}
+BroadPhaseSW::~BroadPhaseSW() {}

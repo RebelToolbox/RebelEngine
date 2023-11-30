@@ -35,24 +35,23 @@
 
 #ifdef TOOLS_ENABLED
 static void _editor_init() {
-	Ref<EditorSceneImporterFBX> import_fbx;
-	import_fbx.instance();
-	ResourceImporterScene::get_singleton()->add_importer(import_fbx);
+    Ref<EditorSceneImporterFBX> import_fbx;
+    import_fbx.instance();
+    ResourceImporterScene::get_singleton()->add_importer(import_fbx);
 }
 #endif
 
 void register_fbx_types() {
 #ifdef TOOLS_ENABLED
-	ClassDB::APIType prev_api = ClassDB::get_current_api();
-	ClassDB::set_current_api(ClassDB::API_EDITOR);
+    ClassDB::APIType prev_api = ClassDB::get_current_api();
+    ClassDB::set_current_api(ClassDB::API_EDITOR);
 
-	ClassDB::register_class<EditorSceneImporterFBX>();
+    ClassDB::register_class<EditorSceneImporterFBX>();
 
-	ClassDB::set_current_api(prev_api);
+    ClassDB::set_current_api(prev_api);
 
-	EditorNode::add_init_callback(_editor_init);
+    EditorNode::add_init_callback(_editor_init);
 #endif
 }
 
-void unregister_fbx_types() {
-}
+void unregister_fbx_types() {}

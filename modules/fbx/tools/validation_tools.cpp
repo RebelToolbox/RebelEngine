@@ -35,14 +35,19 @@
 #include "core/print_string.h"
 #include "core/ustring.h"
 
-ValidationTracker::Entries *ValidationTracker::entries_singleton = memnew(ValidationTracker::Entries);
+ValidationTracker::Entries* ValidationTracker::entries_singleton =
+    memnew(ValidationTracker::Entries);
 
 // for printing our CSV to dump validation problems of files
-// later we can make some agnostic tooling for this but this is fine for the time being.
-void ValidationTracker::Entries::add_validation_error(String asset_path, String message) {
-	print_error(message);
-	// note: implementation is static
-	validation_entries[asset_path].push_back(message);
+// later we can make some agnostic tooling for this but this is fine for the
+// time being.
+void ValidationTracker::Entries::add_validation_error(
+    String asset_path,
+    String message
+) {
+    print_error(message);
+    // note: implementation is static
+    validation_entries[asset_path].push_back(message);
 }
 
 #endif // TOOLS_ENABLED
