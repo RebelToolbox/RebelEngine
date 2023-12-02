@@ -130,9 +130,7 @@ def setup_msvc_manual(env):
             argument (example: scons p=windows) and SCons will attempt to detect what MSVC compiler will be executed and inform you.
             """
         )
-        raise SCons.Errors.UserError(
-            "Bits argument should not be used when using VCINSTALLDIR"
-        )
+        raise SystemExit("Bits argument should not be used when using VCINSTALLDIR")
 
     # Force bits arg
     # (Actually msys2 mingw can support 64-bit, we could detect that)
@@ -158,6 +156,9 @@ def setup_msvc_manual(env):
         print(
             "Failed to manually detect MSVC compiler architecture version... Defaulting to 32bit executable settings (forcing bits=32). Compilation attempt will continue, but SCons can not detect for what architecture this build is compiled for. You should check your settings/compilation setup, or avoid setting VCINSTALLDIR."
         )
+
+    if env["use_llvm"]:
+        setup_msvc_llvm(env)
 
 
 def setup_msvc_auto(env):
@@ -194,11 +195,36 @@ def setup_msvc_auto(env):
     if env["TARGET_ARCH"] in ("amd64", "x86_64"):
         env["x86_libtheora_opt_vc"] = False
 
+    if env["use_llvm"]:
+        setup_msvc_llvm(env)
+
+
+def setup_msvc_llvm(env):
+    env["CC"] = "clang-cl"
+    env.extra_suffix = ".llvm" + env.extra_suffix
+
 
 def setup_mingw(env):
     """Set up env for use with mingw"""
-    # Nothing to do here
     print("Using MinGW")
+
+    if env["bits"] == "32":
+        mingw_prefix = env["mingw_prefix_32"]
+    else:
+        mingw_prefix = env["mingw_prefix_64"]
+
+    if env["use_llvm"]:
+        env["CC"] = mingw_prefix + "clang"
+        env["CXX"] = mingw_prefix + "clang++"
+        env["AR"] = mingw_prefix + "ar"
+        env["RANLIB"] = mingw_prefix + "ranlib"
+        env.extra_suffix = ".llvm" + env.extra_suffix
+    else:
+        env["CC"] = mingw_prefix + "gcc"
+        env["CXX"] = mingw_prefix + "g++"
+        env["AS"] = mingw_prefix + "as"
+        env["AR"] = mingw_prefix + "gcc-ar"
+        env["RANLIB"] = mingw_prefix + "gcc-ranlib"
 
 
 def configure_msvc(env, manual_msvc_config):
@@ -317,7 +343,7 @@ def configure_msvc(env, manual_msvc_config):
 
     # Sanitizers
     if env["use_asan"]:
-        env.extra_suffix += ".s"
+        env.extra_suffix += "s"
         env.Append(LINKFLAGS=["/INFERASANLIBS"])
         env.Append(CCFLAGS=["/fsanitize=address"])
 
@@ -378,31 +404,14 @@ def configure_mingw(env):
         else:  # default to 64-bit on Linux
             env["bits"] = "64"
 
-    mingw_prefix = ""
-
     if env["bits"] == "32":
         if env["use_static_cpp"]:
             env.Append(LINKFLAGS=["-static"])
             env.Append(LINKFLAGS=["-static-libgcc"])
             env.Append(LINKFLAGS=["-static-libstdc++"])
-        mingw_prefix = env["mingw_prefix_32"]
     else:
         if env["use_static_cpp"]:
             env.Append(LINKFLAGS=["-static"])
-        mingw_prefix = env["mingw_prefix_64"]
-
-    if env["use_llvm"]:
-        env["CC"] = mingw_prefix + "clang"
-        env["CXX"] = mingw_prefix + "clang++"
-        env["AS"] = mingw_prefix + "as"
-        env["AR"] = mingw_prefix + "ar"
-        env["RANLIB"] = mingw_prefix + "ranlib"
-    else:
-        env["CC"] = mingw_prefix + "gcc"
-        env["CXX"] = mingw_prefix + "g++"
-        env["AS"] = mingw_prefix + "as"
-        env["AR"] = mingw_prefix + "gcc-ar"
-        env["RANLIB"] = mingw_prefix + "gcc-ranlib"
 
     env["x86_libtheora_opt_gcc"] = True
 
@@ -488,23 +497,17 @@ def configure(env):
         ] = os.environ  # this makes build less repeatable, but simplifies some things
         env["ENV"]["TMP"] = os.environ["TMP"]
 
-    # First figure out which compiler, version, and target arch we're using
-    if os.getenv("VCINSTALLDIR") and not env["use_mingw"]:
-        # Manual setup of MSVC
-        setup_msvc_manual(env)
-        env.msvc = True
-        manual_msvc_config = True
-    elif env.get("MSVC_VERSION", "") and not env["use_mingw"]:
-        setup_msvc_auto(env)
-        env.msvc = True
-        manual_msvc_config = False
-    else:
+    if env["use_mingw"]:
         setup_mingw(env)
-        env.msvc = False
-
-    # Now set compiler/linker flags
-    if env.msvc:
-        configure_msvc(env, manual_msvc_config)
-
-    else:  # MinGW
         configure_mingw(env)
+        env.msvc = False
+        env.extra_suffix = ".mingw" + env.extra_suffix
+    else:
+        if os.getenv("VCINSTALLDIR"):
+            setup_msvc_manual(env)
+            configure_msvc(env, True)
+        else:
+            setup_msvc_auto(env)
+            configure_msvc(env, False)
+        env.msvc = True
+        env.extra_suffix = ".msvc" + env.extra_suffix
