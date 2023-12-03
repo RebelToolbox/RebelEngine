@@ -11,9 +11,9 @@
 #include "core/print_string.h"
 #include "core/project_settings.h"
 
+#include <src/webp/decode.h>
+#include <src/webp/encode.h>
 #include <stdlib.h>
-#include <webp/decode.h>
-#include <webp/encode.h>
 
 static PoolVector<uint8_t> _webp_lossy_pack(
     const Ref<Image>& p_image,
