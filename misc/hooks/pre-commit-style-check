@@ -112,11 +112,11 @@ while read -r file; do
     # and the format of these diffs are slightly different.
     case $application_name in
     "clang-format")
-        "$application" "$options" "$file" | \
+        "$application" ${options:+"$options"} "$file" | \
             diff -u "$file" - | \
             sed -e "1s|--- |--- a/|" -e "2s|+++ -|+++ b/$file|" >> "$patch_file";;
     "black")
-        "$application" "$options" --diff "$file" | \
+        "$application" ${options:+"$options"} --diff "$file" | \
             sed -e "1s|--- |--- a/|" -e "2s|+++ |+++ b/|" >> "$patch_file";;
     *)
         echo "Unrecognised application: $application_name."
