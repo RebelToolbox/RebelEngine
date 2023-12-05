@@ -12,19 +12,27 @@ def _spaced(e):
 
 
 def _build_gdnative_api_struct_header(api):
-    gdnative_api_init_macro = ["\textern const godot_gdnative_core_api_struct *_gdnative_wrapper_api_struct;"]
+    gdnative_api_init_macro = [
+        "\textern const godot_gdnative_core_api_struct *_gdnative_wrapper_api_struct;"
+    ]
 
     for ext in api["extensions"]:
         name = ext["name"]
         gdnative_api_init_macro.append(
-            "\textern const godot_gdnative_ext_{0}_api_struct *_gdnative_wrapper_{0}_api_struct;".format(name)
+            "\textern const godot_gdnative_ext_{0}_api_struct *_gdnative_wrapper_{0}_api_struct;".format(
+                name
+            )
         )
 
-    gdnative_api_init_macro.append("\t_gdnative_wrapper_api_struct = options->api_struct;")
+    gdnative_api_init_macro.append(
+        "\t_gdnative_wrapper_api_struct = options->api_struct;"
+    )
     gdnative_api_init_macro.append(
         "\tfor (unsigned int i = 0; i < _gdnative_wrapper_api_struct->num_extensions; i++) { "
     )
-    gdnative_api_init_macro.append("\t\tswitch (_gdnative_wrapper_api_struct->extensions[i]->type) {")
+    gdnative_api_init_macro.append(
+        "\t\tswitch (_gdnative_wrapper_api_struct->extensions[i]->type) {"
+    )
 
     for ext in api["extensions"]:
         name = ext["name"]
@@ -50,7 +58,9 @@ def _build_gdnative_api_struct_header(api):
         "#include <pluginscript/godot_pluginscript.h>",
         "#include <videodecoder/godot_videodecoder.h>",
         "",
-        "#define GDNATIVE_API_INIT(options) do {  \\\n" + "  \\\n".join(gdnative_api_init_macro) + "  \\\n } while (0)",
+        "#define GDNATIVE_API_INIT(options) do {  \\\n"
+        + "  \\\n".join(gdnative_api_init_macro)
+        + "  \\\n } while (0)",
         "",
         "#ifdef __cplusplus",
         'extern "C" {',
@@ -73,7 +83,13 @@ def _build_gdnative_api_struct_header(api):
         ret_val += [
             "typedef struct godot_gdnative_ext_"
             + name
-            + ("" if not include_version else ("_{0}_{1}".format(ext["version"]["major"], ext["version"]["minor"])))
+            + (
+                ""
+                if not include_version
+                else (
+                    "_{0}_{1}".format(ext["version"]["major"], ext["version"]["minor"])
+                )
+            )
             + "_api_struct {",
             "\tunsigned int type;",
             "\tgodot_gdnative_api_version version;",
@@ -81,13 +97,24 @@ def _build_gdnative_api_struct_header(api):
         ]
 
         for funcdef in ext["api"]:
-            args = ", ".join(["%s%s" % (_spaced(t), n) for t, n in funcdef["arguments"]])
-            ret_val.append("\t%s(*%s)(%s);" % (_spaced(funcdef["return_type"]), funcdef["name"], args))
+            args = ", ".join(
+                ["%s%s" % (_spaced(t), n) for t, n in funcdef["arguments"]]
+            )
+            ret_val.append(
+                "\t%s(*%s)(%s);"
+                % (_spaced(funcdef["return_type"]), funcdef["name"], args)
+            )
 
         ret_val += [
             "} godot_gdnative_ext_"
             + name
-            + ("" if not include_version else ("_{0}_{1}".format(ext["version"]["major"], ext["version"]["minor"])))
+            + (
+                ""
+                if not include_version
+                else (
+                    "_{0}_{1}".format(ext["version"]["major"], ext["version"]["minor"])
+                )
+            )
             + "_api_struct;",
             "",
         ]
@@ -109,8 +136,13 @@ def _build_gdnative_api_struct_header(api):
         ]
 
         for funcdef in core["api"]:
-            args = ", ".join(["%s%s" % (_spaced(t), n) for t, n in funcdef["arguments"]])
-            ret_val.append("\t%s(*%s)(%s);" % (_spaced(funcdef["return_type"]), funcdef["name"], args))
+            args = ", ".join(
+                ["%s%s" % (_spaced(t), n) for t, n in funcdef["arguments"]]
+            )
+            ret_val.append(
+                "\t%s(*%s)(%s);"
+                % (_spaced(funcdef["return_type"]), funcdef["name"], args)
+            )
 
         ret_val += [
             "} godot_gdnative_core_"
@@ -139,7 +171,9 @@ def _build_gdnative_api_struct_header(api):
 
     for funcdef in api["core"]["api"]:
         args = ", ".join(["%s%s" % (_spaced(t), n) for t, n in funcdef["arguments"]])
-        out.append("\t%s(*%s)(%s);" % (_spaced(funcdef["return_type"]), funcdef["name"], args))
+        out.append(
+            "\t%s(*%s)(%s);" % (_spaced(funcdef["return_type"]), funcdef["name"], args)
+        )
 
     out += [
         "} godot_gdnative_core_api_struct;",
@@ -155,13 +189,24 @@ def _build_gdnative_api_struct_header(api):
 
 
 def _build_gdnative_api_struct_source(api):
-    out = ["/* THIS FILE IS GENERATED DO NOT EDIT */", "", "#include <gdnative_api_struct.gen.h>", ""]
+    out = [
+        "/* THIS FILE IS GENERATED DO NOT EDIT */",
+        "",
+        "#include <gdnative_api_struct.gen.h>",
+        "",
+    ]
 
     def get_extension_struct_name(name, ext, include_version=True):
         return (
             "godot_gdnative_ext_"
             + name
-            + ("" if not include_version else ("_{0}_{1}".format(ext["version"]["major"], ext["version"]["minor"])))
+            + (
+                ""
+                if not include_version
+                else (
+                    "_{0}_{1}".format(ext["version"]["major"], ext["version"]["minor"])
+                )
+            )
             + "_api_struct"
         )
 
@@ -169,7 +214,13 @@ def _build_gdnative_api_struct_source(api):
         return (
             "api_extension_"
             + name
-            + ("" if not include_version else ("_{0}_{1}".format(ext["version"]["major"], ext["version"]["minor"])))
+            + (
+                ""
+                if not include_version
+                else (
+                    "_{0}_{1}".format(ext["version"]["major"], ext["version"]["minor"])
+                )
+            )
             + "_struct"
         )
 
@@ -186,12 +237,19 @@ def _build_gdnative_api_struct_source(api):
             + get_extension_struct_instance_name(name, ext, include_version)
             + " = {",
             "\tGDNATIVE_EXT_" + ext["type"] + ",",
-            "\t{" + str(ext["version"]["major"]) + ", " + str(ext["version"]["minor"]) + "},",
+            "\t{"
+            + str(ext["version"]["major"])
+            + ", "
+            + str(ext["version"]["minor"])
+            + "},",
             "\t"
             + (
                 "NULL"
                 if not ext["next"]
-                else ("(const godot_gdnative_api_struct *)&" + get_extension_struct_instance_name(name, ext["next"]))
+                else (
+                    "(const godot_gdnative_api_struct *)&"
+                    + get_extension_struct_instance_name(name, ext["next"])
+                )
             )
             + ",",
         ]
@@ -211,17 +269,26 @@ def _build_gdnative_api_struct_source(api):
 
         ret_val += [
             "extern const godot_gdnative_core_"
-            + ("{0}_{1}_api_struct api_{0}_{1}".format(core["version"]["major"], core["version"]["minor"]))
+            + (
+                "{0}_{1}_api_struct api_{0}_{1}".format(
+                    core["version"]["major"], core["version"]["minor"]
+                )
+            )
             + " = {",
             "\tGDNATIVE_" + core["type"] + ",",
-            "\t{" + str(core["version"]["major"]) + ", " + str(core["version"]["minor"]) + "},",
+            "\t{"
+            + str(core["version"]["major"])
+            + ", "
+            + str(core["version"]["minor"])
+            + "},",
             "\t"
             + (
                 "NULL"
                 if not core["next"]
                 else (
                     "(const godot_gdnative_api_struct *)& api_{0}_{1}".format(
-                        core["next"]["version"]["major"], core["next"]["version"]["minor"]
+                        core["next"]["version"]["major"],
+                        core["next"]["version"]["minor"],
                     )
                 )
             )
@@ -253,7 +320,11 @@ def _build_gdnative_api_struct_source(api):
     out += [
         "extern const godot_gdnative_core_api_struct api_struct = {",
         "\tGDNATIVE_" + api["core"]["type"] + ",",
-        "\t{" + str(api["core"]["version"]["major"]) + ", " + str(api["core"]["version"]["minor"]) + "},",
+        "\t{"
+        + str(api["core"]["version"]["major"])
+        + ", "
+        + str(api["core"]["version"]["minor"])
+        + "},",
         "\t(const godot_gdnative_api_struct *)&api_1_1,",
         "\t" + str(len(api["extensions"])) + ",",
         "\tgdnative_extensions_pointers,",
@@ -298,18 +369,28 @@ def _build_gdnative_wrapper_code(api):
 
     for ext in api["extensions"]:
         name = ext["name"]
-        out.append("godot_gdnative_ext_" + name + "_api_struct *_gdnative_wrapper_" + name + "_api_struct = 0;")
+        out.append(
+            "godot_gdnative_ext_"
+            + name
+            + "_api_struct *_gdnative_wrapper_"
+            + name
+            + "_api_struct = 0;"
+        )
 
     out += [""]
 
     for funcdef in api["core"]["api"]:
         args = ", ".join(["%s%s" % (_spaced(t), n) for t, n in funcdef["arguments"]])
-        out.append("%s%s(%s) {" % (_spaced(funcdef["return_type"]), funcdef["name"], args))
+        out.append(
+            "%s%s(%s) {" % (_spaced(funcdef["return_type"]), funcdef["name"], args)
+        )
 
         args = ", ".join(["%s" % n for t, n in funcdef["arguments"]])
 
         return_line = "\treturn " if funcdef["return_type"] != "void" else "\t"
-        return_line += "_gdnative_wrapper_api_struct->" + funcdef["name"] + "(" + args + ");"
+        return_line += (
+            "_gdnative_wrapper_api_struct->" + funcdef["name"] + "(" + args + ");"
+        )
 
         out.append(return_line)
         out.append("}")
@@ -318,13 +399,25 @@ def _build_gdnative_wrapper_code(api):
     for ext in api["extensions"]:
         name = ext["name"]
         for funcdef in ext["api"]:
-            args = ", ".join(["%s%s" % (_spaced(t), n) for t, n in funcdef["arguments"]])
-            out.append("%s%s(%s) {" % (_spaced(funcdef["return_type"]), funcdef["name"], args))
+            args = ", ".join(
+                ["%s%s" % (_spaced(t), n) for t, n in funcdef["arguments"]]
+            )
+            out.append(
+                "%s%s(%s) {" % (_spaced(funcdef["return_type"]), funcdef["name"], args)
+            )
 
             args = ", ".join(["%s" % n for t, n in funcdef["arguments"]])
 
             return_line = "\treturn " if funcdef["return_type"] != "void" else "\t"
-            return_line += "_gdnative_wrapper_" + name + "_api_struct->" + funcdef["name"] + "(" + args + ");"
+            return_line += (
+                "_gdnative_wrapper_"
+                + name
+                + "_api_struct->"
+                + funcdef["name"]
+                + "("
+                + args
+                + ");"
+            )
 
             out.append(return_line)
             out.append("}")

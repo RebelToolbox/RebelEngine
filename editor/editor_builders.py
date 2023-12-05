@@ -32,7 +32,9 @@ def make_doc_header(target, source, env):
     g.write("#ifndef _DOC_DATA_RAW_H\n")
     g.write("#define _DOC_DATA_RAW_H\n")
     g.write("static const int _doc_data_compressed_size = " + str(len(buf)) + ";\n")
-    g.write("static const int _doc_data_uncompressed_size = " + str(decomp_size) + ";\n")
+    g.write(
+        "static const int _doc_data_uncompressed_size = " + str(decomp_size) + ";\n"
+    )
     g.write("static const unsigned char _doc_data_compressed[] = {\n")
     for i in range(len(buf)):
         g.write("\t" + byte_to_str(buf[i]) + ",\n")
@@ -84,7 +86,9 @@ def make_translations_header(target, source, env, category):
     import zlib
     import os.path
 
-    sorted_paths = sorted(source, key=lambda path: os.path.splitext(os.path.basename(path))[0])
+    sorted_paths = sorted(
+        source, key=lambda path: os.path.splitext(os.path.basename(path))[0]
+    )
 
     xl_names = []
     for i in range(len(sorted_paths)):
@@ -94,7 +98,11 @@ def make_translations_header(target, source, env, category):
         buf = zlib.compress(buf)
         name = os.path.splitext(os.path.basename(sorted_paths[i]))[0]
 
-        g.write("static const unsigned char _{}_translation_{}_compressed[] = {{\n".format(category, name))
+        g.write(
+            "static const unsigned char _{}_translation_{}_compressed[] = {{\n".format(
+                category, name
+            )
+        )
         for j in range(len(buf)):
             g.write("\t" + byte_to_str(buf[j]) + ",\n")
 
@@ -108,10 +116,16 @@ def make_translations_header(target, source, env, category):
     g.write("\tint uncomp_size;\n")
     g.write("\tconst unsigned char* data;\n")
     g.write("};\n\n")
-    g.write("static {}TranslationList _{}_translations[] = {{\n".format(category.capitalize(), category))
+    g.write(
+        "static {}TranslationList _{}_translations[] = {{\n".format(
+            category.capitalize(), category
+        )
+    )
     for x in xl_names:
         g.write(
-            '\t{{ "{}", {}, {}, _{}_translation_{}_compressed }},\n'.format(x[0], str(x[1]), str(x[2]), category, x[0])
+            '\t{{ "{}", {}, {}, _{}_translation_{}_compressed }},\n'.format(
+                x[0], str(x[1]), str(x[2]), category, x[0]
+            )
         )
     g.write("\t{NULL, 0, 0, NULL}\n")
     g.write("};\n")

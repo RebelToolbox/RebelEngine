@@ -18,12 +18,18 @@ def build_api_solution(source, target, env):
 
     from .solution_builder import build_solution
 
-    build_solution(env, solution_path, build_config, extra_msbuild_args=extra_msbuild_args)
+    build_solution(
+        env, solution_path, build_config, extra_msbuild_args=extra_msbuild_args
+    )
 
     # Copy targets
 
-    core_src_dir = os.path.abspath(os.path.join(solution_path, os.pardir, "GodotSharp", "bin", build_config))
-    editor_src_dir = os.path.abspath(os.path.join(solution_path, os.pardir, "GodotSharpEditor", "bin", build_config))
+    core_src_dir = os.path.abspath(
+        os.path.join(solution_path, os.pardir, "GodotSharp", "bin", build_config)
+    )
+    editor_src_dir = os.path.abspath(
+        os.path.join(solution_path, os.pardir, "GodotSharpEditor", "bin", build_config)
+    )
 
     dst_dir = os.path.abspath(os.path.join(str(target[0]), os.pardir))
 
@@ -64,10 +70,16 @@ def build(env_mono):
         output_dir = Dir("#bin").abspath
         editor_api_dir = os.path.join(output_dir, "GodotSharp", "Api", build_config)
 
-        targets = [os.path.join(editor_api_dir, filename) for filename in target_filenames]
+        targets = [
+            os.path.join(editor_api_dir, filename) for filename in target_filenames
+        ]
 
         cmd = env_mono.CommandNoCache(
-            targets, depend_cmd, build_api_solution, module_dir=os.getcwd(), solution_build_config=build_config
+            targets,
+            depend_cmd,
+            build_api_solution,
+            module_dir=os.getcwd(),
+            solution_build_config=build_config,
         )
         env_mono.AlwaysBuild(cmd)
 

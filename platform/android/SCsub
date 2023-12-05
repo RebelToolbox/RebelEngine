@@ -30,7 +30,9 @@ env_thirdparty.disable_warnings()
 thirdparty_obj = env_thirdparty.SharedObject("#thirdparty/misc/ifaddrs-android.cc")
 android_objects.append(thirdparty_obj)
 
-lib = env_android.add_shared_library("#bin/librebel", [android_objects], SHLIBSUFFIX=env["SHLIBSUFFIX"])
+lib = env_android.add_shared_library(
+    "#bin/librebel", [android_objects], SHLIBSUFFIX=env["SHLIBSUFFIX"]
+)
 
 # Needed to force rebuilding the platform files when the thirdparty code is updated.
 env.Depends(lib, thirdparty_obj)
@@ -45,7 +47,9 @@ elif env["android_arch"] == "x86":
 elif env["android_arch"] == "x86_64":
     lib_arch_dir = "x86_64"
 else:
-    print("WARN: Architecture not suitable for embedding into APK; keeping .so at \\bin")
+    print(
+        "WARN: Architecture not suitable for embedding into APK; keeping .so at \\bin"
+    )
 
 if lib_arch_dir != "":
     if env["target"] == "release":
@@ -55,10 +59,17 @@ if lib_arch_dir != "":
 
     out_dir = "#platform/android/java/lib/libs/" + lib_type_dir + "/" + lib_arch_dir
     env_android.Command(
-        out_dir + "/librebel_android.so", "#bin/librebel" + env["SHLIBSUFFIX"], Move("$TARGET", "$SOURCE")
+        out_dir + "/librebel_android.so",
+        "#bin/librebel" + env["SHLIBSUFFIX"],
+        Move("$TARGET", "$SOURCE"),
     )
 
     stl_lib_path = (
-        str(env["ANDROID_NDK_ROOT"]) + "/sources/cxx-stl/llvm-libc++/libs/" + lib_arch_dir + "/libc++_shared.so"
+        str(env["ANDROID_NDK_ROOT"])
+        + "/sources/cxx-stl/llvm-libc++/libs/"
+        + lib_arch_dir
+        + "/libc++_shared.so"
     )
-    env_android.Command(out_dir + "/libc++_shared.so", stl_lib_path, Copy("$TARGET", "$SOURCE"))
+    env_android.Command(
+        out_dir + "/libc++_shared.so", stl_lib_path, Copy("$TARGET", "$SOURCE")
+    )

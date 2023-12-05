@@ -36,7 +36,11 @@ def run_in_subprocess(builder_function):
         subprocess_env["PYTHONPATH"] = os.pathsep.join([os.getcwd()] + sys.path)
 
         # Keep only JSON serializable environment items
-        filtered_env = dict((key, value) for key, value in env.items() if isinstance(value, JSON_SERIALIZABLE_TYPES))
+        filtered_env = dict(
+            (key, value)
+            for key, value in env.items()
+            if isinstance(value, JSON_SERIALIZABLE_TYPES)
+        )
 
         # Save parameters
         args = (target, source, filtered_env)
@@ -52,20 +56,24 @@ def run_in_subprocess(builder_function):
             % (module_path, json_path, json_file_size, target, source)
         )
         try:
-            exit_code = subprocess.call([sys.executable, module_path, json_path], env=subprocess_env)
+            exit_code = subprocess.call(
+                [sys.executable, module_path, json_path], env=subprocess_env
+            )
         finally:
             try:
                 os.remove(json_path)
             except (OSError, IOError) as e:
                 # Do not fail the entire build if it cannot delete a temporary file
                 print(
-                    "WARNING: Could not delete temporary file: path=%r; [%s] %s" % (json_path, e.__class__.__name__, e)
+                    "WARNING: Could not delete temporary file: path=%r; [%s] %s"
+                    % (json_path, e.__class__.__name__, e)
                 )
 
         # Must succeed
         if exit_code:
             raise RuntimeError(
-                "Failed to run builder function in subprocess: module_path=%r; data=%r" % (module_path, data)
+                "Failed to run builder function in subprocess: module_path=%r; data=%r"
+                % (module_path, data)
             )
 
     return wrapper

@@ -54,14 +54,18 @@ class PropertyDef:
 
 
 class ParameterDef:
-    def __init__(self, name, type_name, default_value):  # type: (str, TypeName, Optional[str]) -> None
+    def __init__(
+        self, name, type_name, default_value
+    ):  # type: (str, TypeName, Optional[str]) -> None
         self.name = name
         self.type_name = type_name
         self.default_value = default_value
 
 
 class SignalDef:
-    def __init__(self, name, parameters, description):  # type: (str, List[ParameterDef], Optional[str]) -> None
+    def __init__(
+        self, name, parameters, description
+    ):  # type: (str, List[ParameterDef], Optional[str]) -> None
         self.name = name
         self.parameters = parameters
         self.description = description
@@ -153,11 +157,18 @@ class State:
 
                 property_name = property.attrib["name"]
                 if property_name in class_def.properties:
-                    print_error("Duplicate property '{}', file: {}".format(property_name, class_name), self)
+                    print_error(
+                        "Duplicate property '{}', file: {}".format(
+                            property_name, class_name
+                        ),
+                        self,
+                    )
                     continue
 
                 type_name = TypeName.from_element(property)
-                setter = property.get("setter") or None  # Use or None so '' gets turned into None.
+                setter = (
+                    property.get("setter") or None
+                )  # Use or None so '' gets turned into None.
                 getter = property.get("getter") or None
                 default_value = property.get("default") or None
                 if default_value is not None:
@@ -165,7 +176,13 @@ class State:
                 overridden = property.get("override") or False
 
                 property_def = PropertyDef(
-                    property_name, type_name, setter, getter, property.text, default_value, overridden
+                    property_name,
+                    type_name,
+                    setter,
+                    getter,
+                    property.text,
+                    default_value,
+                    overridden,
                 )
                 class_def.properties[property_name] = property_def
 
@@ -191,7 +208,9 @@ class State:
                 if desc_element is not None:
                     method_desc = desc_element.text
 
-                method_def = MethodDef(method_name, return_type, params, method_desc, qualifiers)
+                method_def = MethodDef(
+                    method_name, return_type, params, method_desc, qualifiers
+                )
                 if method_name not in class_def.methods:
                     class_def.methods[method_name] = []
 
@@ -208,7 +227,12 @@ class State:
                 constant_def = ConstantDef(constant_name, value, constant.text)
                 if enum is None:
                     if constant_name in class_def.constants:
-                        print_error("Duplicate constant '{}', file: {}".format(constant_name, class_name), self)
+                        print_error(
+                            "Duplicate constant '{}', file: {}".format(
+                                constant_name, class_name
+                            ),
+                            self,
+                        )
                         continue
 
                     class_def.constants[constant_name] = constant_def
@@ -231,7 +255,12 @@ class State:
                 signal_name = signal.attrib["name"]
 
                 if signal_name in class_def.signals:
-                    print_error("Duplicate signal '{}', file: {}".format(signal_name, class_name), self)
+                    print_error(
+                        "Duplicate signal '{}', file: {}".format(
+                            signal_name, class_name
+                        ),
+                        self,
+                    )
                     continue
 
                 params = parse_arguments(signal)
@@ -280,7 +309,9 @@ class State:
                 assert link.tag == "link"
 
                 if link.text is not None:
-                    class_def.tutorials.append((link.text.strip(), link.get("title", "")))
+                    class_def.tutorials.append(
+                        (link.text.strip(), link.get("title", ""))
+                    )
 
     def sort_classes(self):  # type: () -> None
         self.classes = OrderedDict(sorted(self.classes.items(), key=lambda t: t[0]))
@@ -304,10 +335,21 @@ def parse_arguments(root):  # type: (ET.Element) -> List[ParameterDef]
 
 def main():  # type: () -> None
     parser = argparse.ArgumentParser()
-    parser.add_argument("path", nargs="+", help="A path to an XML file or a directory containing XML files to parse.")
-    parser.add_argument("--filter", default="", help="The filepath pattern for XML files to filter.")
+    parser.add_argument(
+        "path",
+        nargs="+",
+        help="A path to an XML file or a directory containing XML files to parse.",
+    )
+    parser.add_argument(
+        "--filter", default="", help="The filepath pattern for XML files to filter."
+    )
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("--output", "-o", default=".", help="The directory to save output .rst files in.")
+    group.add_argument(
+        "--output",
+        "-o",
+        default=".",
+        help="The directory to save output .rst files in.",
+    )
     group.add_argument(
         "--dry-run",
         action="store_true",
@@ -328,11 +370,15 @@ def main():  # type: () -> None
             for subdir, dirs, _ in os.walk(path):
                 if "doc_classes" in dirs:
                     doc_dir = os.path.join(subdir, "doc_classes")
-                    class_file_names = (f for f in os.listdir(doc_dir) if f.endswith(".xml"))
+                    class_file_names = (
+                        f for f in os.listdir(doc_dir) if f.endswith(".xml")
+                    )
                     file_list += (os.path.join(doc_dir, f) for f in class_file_names)
 
         elif os.path.isdir(path):
-            file_list += (os.path.join(path, f) for f in os.listdir(path) if f.endswith(".xml"))
+            file_list += (
+                os.path.join(path, f) for f in os.listdir(path) if f.endswith(".xml")
+            )
 
         elif os.path.isfile(path):
             if not path.endswith(".xml"):
@@ -387,22 +433,34 @@ def main():  # type: () -> None
         if not args.dry_run:
             print("Wrote reStructuredText files for each class to: %s" % args.output)
     else:
-        print("Errors were found in the class reference XML. Please check the messages above.")
+        print(
+            "Errors were found in the class reference XML. Please check the messages above."
+        )
         exit(1)
 
 
-def make_rst_class(class_def, state, dry_run, output_dir):  # type: (ClassDef, State, bool, str) -> None
+def make_rst_class(
+    class_def, state, dry_run, output_dir
+):  # type: (ClassDef, State, bool, str) -> None
     class_name = class_def.name
 
     if dry_run:
         f = open(os.devnull, "w", encoding="utf-8")
     else:
-        f = open(os.path.join(output_dir, "class_" + class_name.lower() + ".rst"), "w", encoding="utf-8")
+        f = open(
+            os.path.join(output_dir, "class_" + class_name.lower() + ".rst"),
+            "w",
+            encoding="utf-8",
+        )
 
     # Warn contributors not to edit this file directly
     f.write(":github_url: hide\n\n")
-    f.write(".. Generated automatically by doc/tools/make_rst.py in Rebel Engine's source tree.\n")
-    f.write(".. DO NOT EDIT THIS FILE, but the " + class_name + ".xml source instead.\n")
+    f.write(
+        ".. Generated automatically by doc/tools/make_rst.py in Rebel Engine's source tree.\n"
+    )
+    f.write(
+        ".. DO NOT EDIT THIS FILE, but the " + class_name + ".xml source instead.\n"
+    )
     f.write(".. The source is found in doc/classes or modules/<name>/doc_classes.\n\n")
 
     f.write(".. _class_" + class_name + ":\n\n")
@@ -465,9 +523,13 @@ def make_rst_class(class_def, state, dry_run, output_dir):  # type: (ClassDef, S
             type_rst = property_def.type_name.to_rst(state)
             default = property_def.default_value
             if default is not None and property_def.overridden:
-                ml.append((type_rst, property_def.name, default + " *(parent override)*"))
+                ml.append(
+                    (type_rst, property_def.name, default + " *(parent override)*")
+                )
             else:
-                ref = ":ref:`{0}<class_{1}_property_{0}>`".format(property_def.name, class_name)
+                ref = ":ref:`{0}<class_{1}_property_{0}>`".format(
+                    property_def.name, class_name
+                )
                 ml.append((type_rst, ref, default))
         format_table(f, ml, True)
 
@@ -488,7 +550,13 @@ def make_rst_class(class_def, state, dry_run, output_dir):  # type: (ClassDef, S
             ref = ":ref:`{0}<class_{2}_theme_{1}_{0}>`".format(
                 theme_item_def.name, theme_item_def.data_name, class_name
             )
-            pl.append((theme_item_def.type_name.to_rst(state), ref, theme_item_def.default_value))
+            pl.append(
+                (
+                    theme_item_def.type_name.to_rst(state),
+                    ref,
+                    theme_item_def.default_value,
+                )
+            )
         format_table(f, pl, True)
 
     # Signals
@@ -563,15 +631,25 @@ def make_rst_class(class_def, state, dry_run, output_dir):  # type: (ClassDef, S
             if index != 0:
                 f.write("----\n\n")
 
-            f.write(".. _class_{}_property_{}:\n\n".format(class_name, property_def.name))
-            f.write("- {} **{}**\n\n".format(property_def.type_name.to_rst(state), property_def.name))
+            f.write(
+                ".. _class_{}_property_{}:\n\n".format(class_name, property_def.name)
+            )
+            f.write(
+                "- {} **{}**\n\n".format(
+                    property_def.type_name.to_rst(state), property_def.name
+                )
+            )
 
             info = []
             if property_def.default_value is not None:
                 info.append(("*Default*", property_def.default_value))
-            if property_def.setter is not None and not property_def.setter.startswith("_"):
+            if property_def.setter is not None and not property_def.setter.startswith(
+                "_"
+            ):
                 info.append(("*Setter*", property_def.setter + "(value)"))
-            if property_def.getter is not None and not property_def.getter.startswith("_"):
+            if property_def.getter is not None and not property_def.getter.startswith(
+                "_"
+            ):
                 info.append(("*Getter*", property_def.getter + "()"))
 
             if len(info) > 0:
@@ -612,8 +690,16 @@ def make_rst_class(class_def, state, dry_run, output_dir):  # type: (ClassDef, S
             if index != 0:
                 f.write("----\n\n")
 
-            f.write(".. _class_{}_theme_{}_{}:\n\n".format(class_name, theme_item_def.data_name, theme_item_def.name))
-            f.write("- {} **{}**\n\n".format(theme_item_def.type_name.to_rst(state), theme_item_def.name))
+            f.write(
+                ".. _class_{}_theme_{}_{}:\n\n".format(
+                    class_name, theme_item_def.data_name, theme_item_def.name
+                )
+            )
+            f.write(
+                "- {} **{}**\n\n".format(
+                    theme_item_def.type_name.to_rst(state), theme_item_def.name
+                )
+            )
 
             info = []
             if theme_item_def.default_value is not None:
@@ -683,7 +769,12 @@ def rstize_text(text, state):  # type: (str, State) -> str
         if post_text.startswith("[codeblock]"):
             end_pos = post_text.find("[/codeblock]")
             if end_pos == -1:
-                print_error("[codeblock] without a closing tag, file: {}".format(state.current_class), state)
+                print_error(
+                    "[codeblock] without a closing tag, file: {}".format(
+                        state.current_class
+                    ),
+                    state,
+                )
                 return ""
 
             code_text = post_text[len("[codeblock]") : end_pos]
@@ -697,7 +788,10 @@ def rstize_text(text, state):  # type: (str, State) -> str
                     break
 
                 to_skip = 0
-                while code_pos + to_skip + 1 < len(code_text) and code_text[code_pos + to_skip + 1] == "\t":
+                while (
+                    code_pos + to_skip + 1 < len(code_text)
+                    and code_text[code_pos + to_skip + 1] == "\t"
+                ):
                     to_skip += 1
 
                 if to_skip > indent_level:
@@ -712,7 +806,11 @@ def rstize_text(text, state):  # type: (str, State) -> str
                     code_text = code_text[:code_pos] + "\n"
                     code_pos += 1
                 else:
-                    code_text = code_text[:code_pos] + "\n    " + code_text[code_pos + to_skip + 1 :]
+                    code_text = (
+                        code_text[:code_pos]
+                        + "\n    "
+                        + code_text[code_pos + to_skip + 1 :]
+                    )
                     code_pos += 5 - to_skip
 
             text = pre_text + "\n[codeblock]" + code_text + post_text
@@ -789,7 +887,12 @@ def rstize_text(text, state):  # type: (str, State) -> str
                 if param.find(".") != -1:
                     ss = param.split(".")
                     if len(ss) > 2:
-                        print_error("Bad reference: '{}', file: {}".format(param, state.current_class), state)
+                        print_error(
+                            "Bad reference: '{}', file: {}".format(
+                                param, state.current_class
+                            ),
+                            state,
+                        )
                     class_param, method_param = ss
 
                 else:
@@ -801,17 +904,32 @@ def rstize_text(text, state):  # type: (str, State) -> str
                     class_def = state.classes[class_param]
                     if cmd.startswith("method"):
                         if method_param not in class_def.methods:
-                            print_error("Unresolved method '{}', file: {}".format(param, state.current_class), state)
+                            print_error(
+                                "Unresolved method '{}', file: {}".format(
+                                    param, state.current_class
+                                ),
+                                state,
+                            )
                         ref_type = "_method"
 
                     elif cmd.startswith("member"):
                         if method_param not in class_def.properties:
-                            print_error("Unresolved member '{}', file: {}".format(param, state.current_class), state)
+                            print_error(
+                                "Unresolved member '{}', file: {}".format(
+                                    param, state.current_class
+                                ),
+                                state,
+                            )
                         ref_type = "_property"
 
                     elif cmd.startswith("signal"):
                         if method_param not in class_def.signals:
-                            print_error("Unresolved signal '{}', file: {}".format(param, state.current_class), state)
+                            print_error(
+                                "Unresolved signal '{}', file: {}".format(
+                                    param, state.current_class
+                                ),
+                                state,
+                            )
                         ref_type = "_signal"
 
                     elif cmd.startswith("constant"):
@@ -837,7 +955,12 @@ def rstize_text(text, state):  # type: (str, State) -> str
                                         break
 
                         if not found:
-                            print_error("Unresolved constant '{}', file: {}".format(param, state.current_class), state)
+                            print_error(
+                                "Unresolved constant '{}', file: {}".format(
+                                    param, state.current_class
+                                ),
+                                state,
+                            )
                         ref_type = "_constant"
 
                 else:
@@ -851,7 +974,9 @@ def rstize_text(text, state):  # type: (str, State) -> str
                 repl_text = method_param
                 if class_param != state.current_class:
                     repl_text = "{}.{}".format(class_param, method_param)
-                tag_text = ":ref:`{}<class_{}{}_{}>`".format(repl_text, class_param, ref_type, method_param)
+                tag_text = ":ref:`{}<class_{}{}_{}>`".format(
+                    repl_text, class_param, ref_type, method_param
+                )
                 escape_post = True
             elif cmd.find("image=") == 0:
                 tag_text = ""  # '![](' + cmd[6:] + ')'
@@ -913,7 +1038,11 @@ def rstize_text(text, state):  # type: (str, State) -> str
                 escape_post = True
 
         # Properly escape things like `[Node]s`
-        if escape_post and post_text and (post_text[0].isalnum() or post_text[0] == "("):  # not punctuation, escape
+        if (
+            escape_post
+            and post_text
+            and (post_text[0].isalnum() or post_text[0] == "(")
+        ):  # not punctuation, escape
             post_text = "\ " + post_text
 
         next_brac_pos = post_text.find("[", 0)
@@ -930,7 +1059,9 @@ def rstize_text(text, state):  # type: (str, State) -> str
             iter_pos = post_text.find("_", iter_pos, next_brac_pos)
             if iter_pos == -1:
                 break
-            if not post_text[iter_pos + 1].isalnum():  # don't escape within a snake_case word
+            if not post_text[
+                iter_pos + 1
+            ].isalnum():  # don't escape within a snake_case word
                 post_text = post_text[:iter_pos] + "\_" + post_text[iter_pos + 1 :]
                 iter_pos += 2
             else:
@@ -941,12 +1072,19 @@ def rstize_text(text, state):  # type: (str, State) -> str
         previous_pos = pos
 
     if tag_depth > 0:
-        print_error("Tag depth mismatch: too many/little open/close tags, file: {}".format(state.current_class), state)
+        print_error(
+            "Tag depth mismatch: too many/little open/close tags, file: {}".format(
+                state.current_class
+            ),
+            state,
+        )
 
     return text
 
 
-def format_table(f, data, remove_empty_columns=False):  # type: (TextIO, Iterable[Tuple[str, ...]]) -> None
+def format_table(
+    f, data, remove_empty_columns=False
+):  # type: (TextIO, Iterable[Tuple[str, ...]]) -> None
     if len(data) == 0:
         return
 
@@ -1007,7 +1145,9 @@ def make_enum(t, state):  # type: (str, State) -> str
 
     # Don't fail for `Vector3.Axis`, as this enum is a special case which is expected not to be resolved.
     if "{}.{}".format(c, e) != "Vector3.Axis":
-        print_error("Unresolved enum '{}', file: {}".format(t, state.current_class), state)
+        print_error(
+            "Unresolved enum '{}', file: {}".format(t, state.current_class), state
+        )
 
     return t
 
@@ -1025,7 +1165,9 @@ def make_method_signature(
     out = ""
 
     if make_ref:
-        out += ":ref:`{0}<class_{1}_{2}_{0}>` ".format(method_def.name, class_def.name, ref_type)
+        out += ":ref:`{0}<class_{1}_{2}_{0}>` ".format(
+            method_def.name, class_def.name, ref_type
+        )
     else:
         out += "**{}** ".format(method_def.name)
 
@@ -1041,7 +1183,11 @@ def make_method_signature(
         if arg.default_value is not None:
             out += "=" + arg.default_value
 
-    if isinstance(method_def, MethodDef) and method_def.qualifiers is not None and "vararg" in method_def.qualifiers:
+    if (
+        isinstance(method_def, MethodDef)
+        and method_def.qualifiers is not None
+        and "vararg" in method_def.qualifiers
+    ):
         if len(method_def.parameters) > 0:
             out += ", ..."
         else:
@@ -1081,7 +1227,17 @@ def make_link(url, title):  # type: (str, str) -> str
         if match.lastindex == 2:
             # Doc reference with fragment identifier: emit direct link to section with reference to page, for example:
             # `#calling-javascript-from-script in Exporting For Web`
-            return "`" + groups[1] + " <../" + groups[0] + ".html" + groups[1] + ">`_ in :doc:`../" + groups[0] + "`"
+            return (
+                "`"
+                + groups[1]
+                + " <../"
+                + groups[0]
+                + ".html"
+                + groups[1]
+                + ">`_ in :doc:`../"
+                + groups[0]
+                + "`"
+            )
             # Commented out alternative: Instead just emit:
             # `Subsection in Exporting For Web`
             # return "`Subsection <../" + groups[0] + ".html" + groups[1] + ">`__ in :doc:`../" + groups[0] + "`"

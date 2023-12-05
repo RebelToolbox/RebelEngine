@@ -32,7 +32,11 @@ def build(env_mono, api_sln_cmd):
     if env_mono["target"] == "debug":
         target_filenames += ["GodotTools.pdb"]
 
-    targets = [os.path.join(editor_tools_dir, filename) for filename in target_filenames]
+    targets = [
+        os.path.join(editor_tools_dir, filename) for filename in target_filenames
+    ]
 
-    cmd = env_mono.CommandNoCache(targets, api_sln_cmd, build_godot_tools, module_dir=os.getcwd())
+    cmd = env_mono.CommandNoCache(
+        targets, api_sln_cmd, build_godot_tools, module_dir=os.getcwd()
+    )
     env_mono.AlwaysBuild(cmd)

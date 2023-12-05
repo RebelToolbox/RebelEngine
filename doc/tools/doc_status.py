@@ -13,7 +13,8 @@ import xml.etree.ElementTree as ET
 ################################################################################
 
 flags = {
-    "c": platform.platform() != "Windows",  # Disable by default on windows, since we use ANSI escape codes
+    "c": platform.platform()
+    != "Windows",  # Disable by default on windows, since we use ANSI escape codes
     "b": False,
     "g": False,
     "s": False,
@@ -69,7 +70,16 @@ table_columns = [
     "signals",
     "theme_items",
 ]
-table_column_names = ["Name", "Brief Desc.", "Desc.", "Methods", "Constants", "Members", "Signals", "Theme Items"]
+table_column_names = [
+    "Name",
+    "Brief Desc.",
+    "Desc.",
+    "Methods",
+    "Constants",
+    "Members",
+    "Signals",
+    "Theme Items",
+]
 colors = {
     "name": [36],  # cyan
     "part_big_problem": [4, 31],  # underline, red
@@ -134,7 +144,9 @@ class ClassStatusProgress:
         self.total = total
 
     def __add__(self, other):
-        return ClassStatusProgress(self.described + other.described, self.total + other.total)
+        return ClassStatusProgress(
+            self.described + other.described, self.total + other.total
+        )
 
     def increment(self, described):
         if described:
@@ -146,14 +158,21 @@ class ClassStatusProgress:
 
     def to_configured_colored_string(self):
         if flags["p"]:
-            return self.to_colored_string("{percent}% ({has}/{total})", "{pad_percent}{pad_described}{s}{pad_total}")
+            return self.to_colored_string(
+                "{percent}% ({has}/{total})",
+                "{pad_percent}{pad_described}{s}{pad_total}",
+            )
         else:
             return self.to_colored_string()
 
-    def to_colored_string(self, format="{has}/{total}", pad_format="{pad_described}{s}{pad_total}"):
+    def to_colored_string(
+        self, format="{has}/{total}", pad_format="{pad_described}{s}{pad_total}"
+    ):
         ratio = float(self.described) / float(self.total) if self.total != 0 else 1
         percent = int(round(100 * ratio))
-        s = format.format(has=str(self.described), total=str(self.total), percent=str(percent))
+        s = format.format(
+            has=str(self.described), total=str(self.total), percent=str(percent)
+        )
         if self.described >= self.total:
             s = color("part_good", s)
         elif self.described >= self.total / 4 * 3:
@@ -166,7 +185,12 @@ class ClassStatusProgress:
         pad_described = "".ljust(pad_size - len(str(self.described)))
         pad_percent = "".ljust(3 - len(str(percent)))
         pad_total = "".ljust(pad_size - len(str(self.total)))
-        return pad_format.format(pad_described=pad_described, pad_total=pad_total, pad_percent=pad_percent, s=s)
+        return pad_format.format(
+            pad_described=pad_described,
+            pad_total=pad_total,
+            pad_percent=pad_percent,
+            s=s,
+        )
 
 
 class ClassStatus:
@@ -185,7 +209,9 @@ class ClassStatus:
     def __add__(self, other):
         new_status = ClassStatus()
         new_status.name = self.name
-        new_status.has_brief_description = self.has_brief_description and other.has_brief_description
+        new_status.has_brief_description = (
+            self.has_brief_description and other.has_brief_description
+        )
         new_status.has_description = self.has_description and other.has_description
         for k in self.progresses:
             new_status.progresses[k] = self.progresses[k] + other.progresses[k]
@@ -214,11 +240,14 @@ class ClassStatus:
         ok_string = color("part_good", "OK")
         missing_string = color("part_big_problem", "MISSING")
 
-        output["brief_description"] = ok_string if self.has_brief_description else missing_string
+        output["brief_description"] = (
+            ok_string if self.has_brief_description else missing_string
+        )
         output["description"] = ok_string if self.has_description else missing_string
 
         description_progress = ClassStatusProgress(
-            (self.has_brief_description + self.has_description) * overall_progress_description_weigth,
+            (self.has_brief_description + self.has_description)
+            * overall_progress_description_weigth,
             2 * overall_progress_description_weigth,
         )
         items_progress = ClassStatusProgress()
@@ -234,13 +263,17 @@ class ClassStatus:
         )
 
         if self.name.startswith("Total"):
-            output["url"] = color("url", "https://docs.rebeltoolbox.com/en/latest/classes/")
+            output["url"] = color(
+                "url", "https://docs.rebeltoolbox.com/en/latest/classes/"
+            )
             if flags["s"]:
                 output["comment"] = color("part_good", "ALL OK")
         else:
             output["url"] = color(
                 "url",
-                "https://docs.rebeltoolbox.com/en/latest/classes/class_{name}.html".format(name=self.name.lower()),
+                "https://docs.rebeltoolbox.com/en/latest/classes/class_{name}.html".format(
+                    name=self.name.lower()
+                ),
             )
 
             if flags["s"] and not flags["g"] and self.is_ok():
@@ -267,7 +300,9 @@ class ClassStatus:
             elif tag.tag in ["constants", "members", "theme_items"]:
                 for sub_tag in list(tag):
                     if not sub_tag.text is None:
-                        status.progresses[tag.tag].increment(len(sub_tag.text.strip()) > 0)
+                        status.progresses[tag.tag].increment(
+                            len(sub_tag.text.strip()) > 0
+                        )
 
             elif tag.tag in ["tutorials"]:
                 pass  # Ignore those tags for now
@@ -329,9 +364,16 @@ if flags["u"]:
 
 if len(input_file_list) < 1 or flags["h"]:
     if not flags["h"]:
-        print(color("section", "Invalid usage") + ": Please specify a classes directory")
-    print(color("section", "Usage") + ": doc_status.py [flags] <classes_dir> [class names]")
-    print("\t< and > signify required parameters, while [ and ] signify optional parameters.")
+        print(
+            color("section", "Invalid usage") + ": Please specify a classes directory"
+        )
+    print(
+        color("section", "Usage")
+        + ": doc_status.py [flags] <classes_dir> [class names]"
+    )
+    print(
+        "\t< and > signify required parameters, while [ and ] signify optional parameters."
+    )
     print(color("section", "Available flags") + ":")
     possible_synonym_list = list(long_flags)
     possible_synonym_list.sort()
@@ -407,7 +449,11 @@ for cn in filtered_classes:
 
     total_status = total_status + status
 
-    if (flags["b"] and status.is_ok()) or (flags["g"] and not status.is_ok()) or (not flags["a"]):
+    if (
+        (flags["b"] and status.is_ok())
+        or (flags["g"] and not status.is_ok())
+        or (not flags["a"])
+    ):
         continue
 
     if flags["e"] and status.is_empty():
@@ -457,12 +503,17 @@ for row in table:
         if cell_i >= len(table_column_sizes):
             table_column_sizes.append(0)
 
-        table_column_sizes[cell_i] = max(nonescape_len(cell), table_column_sizes[cell_i])
+        table_column_sizes[cell_i] = max(
+            nonescape_len(cell), table_column_sizes[cell_i]
+        )
 
 divider_string = table_row_chars[0]
 for cell_i in range(len(table[0])):
     divider_string += (
-        table_row_chars[1] + table_row_chars[2] * (table_column_sizes[cell_i]) + table_row_chars[1] + table_row_chars[0]
+        table_row_chars[1]
+        + table_row_chars[2] * (table_column_sizes[cell_i])
+        + table_row_chars[1]
+        + table_row_chars[0]
     )
 print(divider_string)
 
@@ -471,7 +522,9 @@ for row_i, row in enumerate(table):
     for cell_i, cell in enumerate(row):
         padding_needed = table_column_sizes[cell_i] - nonescape_len(cell) + 2
         if cell_i == 0:
-            row_string += table_row_chars[3] + cell + table_row_chars[3] * (padding_needed - 1)
+            row_string += (
+                table_row_chars[3] + cell + table_row_chars[3] * (padding_needed - 1)
+            )
         else:
             row_string += (
                 table_row_chars[3] * int(math.floor(float(padding_needed) / 2))

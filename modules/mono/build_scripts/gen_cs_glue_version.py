@@ -16,5 +16,7 @@ def generate_header(solution_dir, version_header_dst):
         version_header.write("/* THIS FILE IS GENERATED DO NOT EDIT */\n")
         version_header.write("#ifndef CS_GLUE_VERSION_H\n")
         version_header.write("#define CS_GLUE_VERSION_H\n\n")
-        version_header.write("#define CS_GLUE_VERSION UINT32_C(" + str(glue_version) + ")\n")
+        version_header.write(
+            "#define CS_GLUE_VERSION UINT32_C(" + str(glue_version) + ")\n"
+        )
         version_header.write("\n#endif // CS_GLUE_VERSION_H\n")

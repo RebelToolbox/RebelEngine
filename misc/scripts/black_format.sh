@@ -13,7 +13,7 @@ PY_FILES=$(find \( -path "./.git" \
                 -o -name "SCsub" \
                 -o -name "*.py" \
                 \) -print)
-black -l 120 $PY_FILES
+black $PY_FILES
 
 # If a diff has been created, notify the user and exit with error.
 if [[ $(git diff) ]]; then

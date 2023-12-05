@@ -63,14 +63,34 @@ def get_opts():
         # Targeted Windows version: 7 (and later), minimum supported version
         # XP support dropped after EOL due to missing API for IPv6 and other issues
         # Vista support dropped after EOL due to GH-10243
-        ("target_win_version", "Targeted Windows version, >= 0x0601 (Windows 7)", "0x0601"),
-        BoolVariable("debug_symbols", "Add debugging symbols to release/release_debug builds", True),
-        BoolVariable("separate_debug_symbols", "Create a separate file containing debugging symbols", False),
-        ("msvc_version", "MSVC version to use. Ignored if VCINSTALLDIR is set in shell env.", None),
-        BoolVariable("use_mingw", "Use the Mingw compiler, even if MSVC is installed.", False),
+        (
+            "target_win_version",
+            "Targeted Windows version, >= 0x0601 (Windows 7)",
+            "0x0601",
+        ),
+        BoolVariable(
+            "debug_symbols",
+            "Add debugging symbols to release/release_debug builds",
+            True,
+        ),
+        BoolVariable(
+            "separate_debug_symbols",
+            "Create a separate file containing debugging symbols",
+            False,
+        ),
+        (
+            "msvc_version",
+            "MSVC version to use. Ignored if VCINSTALLDIR is set in shell env.",
+            None,
+        ),
+        BoolVariable(
+            "use_mingw", "Use the Mingw compiler, even if MSVC is installed.", False
+        ),
         BoolVariable("use_llvm", "Use the LLVM compiler", False),
         BoolVariable("use_thinlto", "Use ThinLTO", False),
-        BoolVariable("use_static_cpp", "Link MinGW/MSVC C++ runtime libraries statically", True),
+        BoolVariable(
+            "use_static_cpp", "Link MinGW/MSVC C++ runtime libraries statically", True
+        ),
         BoolVariable("use_asan", "Use address sanitizer (ASAN)", False),
     ]
 
@@ -90,7 +110,9 @@ def build_res_file(target, source, env):
     for x in range(len(source)):
         cmd = cmdbase + "-i " + str(source[x]) + " -o " + str(target[x])
         try:
-            out = subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE).communicate()
+            out = subprocess.Popen(
+                cmd, shell=True, stderr=subprocess.PIPE
+            ).communicate()
             if len(out[1]):
                 return 1
         except Exception:
@@ -108,7 +130,9 @@ def setup_msvc_manual(env):
             argument (example: scons p=windows) and SCons will attempt to detect what MSVC compiler will be executed and inform you.
             """
         )
-        raise SCons.Errors.UserError("Bits argument should not be used when using VCINSTALLDIR")
+        raise SCons.Errors.UserError(
+            "Bits argument should not be used when using VCINSTALLDIR"
+        )
 
     # Force bits arg
     # (Actually msys2 mingw can support 64-bit, we could detect that)
@@ -123,9 +147,13 @@ def setup_msvc_manual(env):
     if compiler_version_str == "amd64" or compiler_version_str == "x86_amd64":
         env["bits"] = "64"
         env["x86_libtheora_opt_vc"] = False
-        print("Compiled program architecture will be a 64 bit executable (forcing bits=64).")
+        print(
+            "Compiled program architecture will be a 64 bit executable (forcing bits=64)."
+        )
     elif compiler_version_str == "x86" or compiler_version_str == "amd64_x86":
-        print("Compiled program architecture will be a 32 bit executable. (forcing bits=32).")
+        print(
+            "Compiled program architecture will be a 32 bit executable. (forcing bits=32)."
+        )
     else:
         print(
             "Failed to manually detect MSVC compiler architecture version... Defaulting to 32bit executable settings (forcing bits=32). Compilation attempt will continue, but SCons can not detect for what architecture this build is compiled for. You should check your settings/compilation setup, or avoid setting VCINSTALLDIR."
@@ -159,7 +187,10 @@ def setup_msvc_auto(env):
         env["bits"] = "64"
     else:
         env["bits"] = "32"
-    print("Found MSVC version %s, arch %s, bits=%s" % (env["MSVC_VERSION"], env["TARGET_ARCH"], env["bits"]))
+    print(
+        "Found MSVC version %s, arch %s, bits=%s"
+        % (env["MSVC_VERSION"], env["TARGET_ARCH"], env["bits"])
+    )
     if env["TARGET_ARCH"] in ("amd64", "x86_64"):
         env["x86_libtheora_opt_vc"] = False
 
@@ -392,9 +423,23 @@ def configure_mingw(env):
     ## Compile flags
 
     env.Append(CCFLAGS=["-mwindows"])
-    env.Append(LINKFLAGS=["-Wl,--nxcompat"])  # DEP protection. Not enabling ASLR for now, Mono crashes.
-    env.Append(CPPDEFINES=["WINDOWS_ENABLED", "OPENGL_ENABLED", "WASAPI_ENABLED", "WINMIDI_ENABLED"])
-    env.Append(CPPDEFINES=[("WINVER", env["target_win_version"]), ("_WIN32_WINNT", env["target_win_version"])])
+    env.Append(
+        LINKFLAGS=["-Wl,--nxcompat"]
+    )  # DEP protection. Not enabling ASLR for now, Mono crashes.
+    env.Append(
+        CPPDEFINES=[
+            "WINDOWS_ENABLED",
+            "OPENGL_ENABLED",
+            "WASAPI_ENABLED",
+            "WINMIDI_ENABLED",
+        ]
+    )
+    env.Append(
+        CPPDEFINES=[
+            ("WINVER", env["target_win_version"]),
+            ("_WIN32_WINNT", env["target_win_version"]),
+        ]
+    )
     env.Append(
         LIBS=[
             "mingw32",
@@ -424,7 +469,11 @@ def configure_mingw(env):
     env.Append(CPPDEFINES=["MINGW_ENABLED", ("MINGW_HAS_SECURE_API", 1)])
 
     # resrc
-    env.Append(BUILDERS={"RES": env.Builder(action=build_res_file, suffix=".o", src_suffix=".rc")})
+    env.Append(
+        BUILDERS={
+            "RES": env.Builder(action=build_res_file, suffix=".o", src_suffix=".rc")
+        }
+    )
 
 
 def configure(env):
@@ -434,7 +483,9 @@ def configure(env):
     print("Configuring for Windows: target=%s, bits=%s" % (env["target"], env["bits"]))
 
     if os.name == "nt":
-        env["ENV"] = os.environ  # this makes build less repeatable, but simplifies some things
+        env[
+            "ENV"
+        ] = os.environ  # this makes build less repeatable, but simplifies some things
         env["ENV"]["TMP"] = os.environ["TMP"]
 
     # First figure out which compiler, version, and target arch we're using

@@ -108,7 +108,10 @@ libvpx_sources_intrin_x86_sse2 = [
     "vpx_dsp/x86/loopfilter_sse2.c",
 ]
 libvpx_sources_intrin_x86_ssse3 = ["vpx_dsp/x86/vpx_subpixel_8t_intrin_ssse3.c"]
-libvpx_sources_intrin_x86_avx2 = ["vpx_dsp/x86/loopfilter_avx2.c", "vpx_dsp/x86/vpx_subpixel_8t_intrin_avx2.c"]
+libvpx_sources_intrin_x86_avx2 = [
+    "vpx_dsp/x86/loopfilter_avx2.c",
+    "vpx_dsp/x86/vpx_subpixel_8t_intrin_avx2.c",
+]
 libvpx_sources_x86asm = [
     "vp8/common/x86/copy_sse2.asm",
     "vp8/common/x86/copy_sse3.asm",
@@ -134,7 +137,10 @@ libvpx_sources_x86asm = [
     "vpx_dsp/x86/vpx_subpixel_bilinear_ssse3.asm",
     "vpx_ports/emms.asm",
 ]
-libvpx_sources_x86_64asm = ["vp8/common/x86/loopfilter_block_sse2_x86_64.asm", "vpx_dsp/x86/inv_txfm_ssse3_x86_64.asm"]
+libvpx_sources_x86_64asm = [
+    "vp8/common/x86/loopfilter_block_sse2_x86_64.asm",
+    "vpx_dsp/x86/inv_txfm_ssse3_x86_64.asm",
+]
 
 libvpx_sources_arm = [
     "vpx_ports/arm_cpudetect.c",
@@ -197,17 +203,31 @@ libvpx_sources_arm_neon_gas_apple = [
 libvpx_sources = [libvpx_dir + file for file in libvpx_sources]
 libvpx_sources_mt = [libvpx_dir + file for file in libvpx_sources_mt]
 libvpx_sources_intrin_x86 = [libvpx_dir + file for file in libvpx_sources_intrin_x86]
-libvpx_sources_intrin_x86_mmx = [libvpx_dir + file for file in libvpx_sources_intrin_x86_mmx]
-libvpx_sources_intrin_x86_sse2 = [libvpx_dir + file for file in libvpx_sources_intrin_x86_sse2]
-libvpx_sources_intrin_x86_ssse3 = [libvpx_dir + file for file in libvpx_sources_intrin_x86_ssse3]
-libvpx_sources_intrin_x86_avx2 = [libvpx_dir + file for file in libvpx_sources_intrin_x86_avx2]
+libvpx_sources_intrin_x86_mmx = [
+    libvpx_dir + file for file in libvpx_sources_intrin_x86_mmx
+]
+libvpx_sources_intrin_x86_sse2 = [
+    libvpx_dir + file for file in libvpx_sources_intrin_x86_sse2
+]
+libvpx_sources_intrin_x86_ssse3 = [
+    libvpx_dir + file for file in libvpx_sources_intrin_x86_ssse3
+]
+libvpx_sources_intrin_x86_avx2 = [
+    libvpx_dir + file for file in libvpx_sources_intrin_x86_avx2
+]
 libvpx_sources_x86asm = [libvpx_dir + file for file in libvpx_sources_x86asm]
 libvpx_sources_x86_64asm = [libvpx_dir + file for file in libvpx_sources_x86_64asm]
 libvpx_sources_arm = [libvpx_dir + file for file in libvpx_sources_arm]
 libvpx_sources_arm_neon = [libvpx_dir + file for file in libvpx_sources_arm_neon]
-libvpx_sources_arm_neon_gas = [libvpx_dir + file for file in libvpx_sources_arm_neon_gas]
-libvpx_sources_arm_neon_armasm_ms = [libvpx_dir + file for file in libvpx_sources_arm_neon_armasm_ms]
-libvpx_sources_arm_neon_gas_apple = [libvpx_dir + file for file in libvpx_sources_arm_neon_gas_apple]
+libvpx_sources_arm_neon_gas = [
+    libvpx_dir + file for file in libvpx_sources_arm_neon_gas
+]
+libvpx_sources_arm_neon_armasm_ms = [
+    libvpx_dir + file for file in libvpx_sources_arm_neon_armasm_ms
+]
+libvpx_sources_arm_neon_gas_apple = [
+    libvpx_dir + file for file in libvpx_sources_arm_neon_gas_apple
+]
 
 
 env_libvpx = env_modules.Clone()
@@ -224,15 +244,25 @@ if env["platform"] == "uwp":
         webm_cpu_arm = True
     else:
         webm_cpu_x86 = True
-elif env["platform"] != "windows":  # Disable for Windows, yasm SIMD optimizations trigger crash (GH-50862).
+elif (
+    env["platform"] != "windows"
+):  # Disable for Windows, yasm SIMD optimizations trigger crash (GH-50862).
     import platform
 
-    is_x11_or_server_arm = (env["platform"] == "x11" or env["platform"] == "server") and (
+    is_x11_or_server_arm = (
+        env["platform"] == "x11" or env["platform"] == "server"
+    ) and (
         platform.machine().startswith("arm") or platform.machine().startswith("aarch")
     )
-    is_macos_x86 = env["platform"] == "osx" and ("arch" in env and (env["arch"] != "arm64"))
-    is_ios_x86 = env["platform"] == "iphone" and ("arch" in env and env["arch"].startswith("x86"))
-    is_android_x86 = env["platform"] == "android" and env["android_arch"].startswith("x86")
+    is_macos_x86 = env["platform"] == "osx" and (
+        "arch" in env and (env["arch"] != "arm64")
+    )
+    is_ios_x86 = env["platform"] == "iphone" and (
+        "arch" in env and env["arch"].startswith("x86")
+    )
+    is_android_x86 = env["platform"] == "android" and env["android_arch"].startswith(
+        "x86"
+    )
     if is_android_x86:
         cpu_bits = "32" if env["android_arch"] == "x86" else "64"
     webm_cpu_x86 = (
@@ -269,7 +299,9 @@ if webm_cpu_x86:
     for yasm_path in yasm_paths:
         try:
             yasm_found = True
-            subprocess.Popen([yasm_path, "--version"], stdout=devnull, stderr=devnull).communicate()
+            subprocess.Popen(
+                [yasm_path, "--version"], stdout=devnull, stderr=devnull
+            ).communicate()
         except Exception:
             yasm_found = False
         if yasm_found:
@@ -323,7 +355,9 @@ if webm_cpu_arm:
     webm_simd_optimizations = True
 
 if webm_simd_optimizations == False and env["platform"] != "windows":
-    print("WebM SIMD optimizations are disabled. Check if your CPU architecture, CPU bits or platform are supported!")
+    print(
+        "WebM SIMD optimizations are disabled. Check if your CPU architecture, CPU bits or platform are supported!"
+    )
 
 env_libvpx.add_source_files(env.modules_sources, libvpx_sources)
 
@@ -332,7 +366,9 @@ if webm_multithread:
 
 if webm_cpu_x86:
     is_clang_or_gcc = (
-        ("gcc" in os.path.basename(env["CC"])) or ("clang" in os.path.basename(env["CC"])) or ("osxcross" in env)
+        ("gcc" in os.path.basename(env["CC"]))
+        or ("clang" in os.path.basename(env["CC"]))
+        or ("osxcross" in env)
     )
 
     env_libvpx_mmx = env_libvpx.Clone()
@@ -343,17 +379,23 @@ if webm_cpu_x86:
     env_libvpx_sse2 = env_libvpx.Clone()
     if cpu_bits == "32" and is_clang_or_gcc:
         env_libvpx_sse2.Append(CCFLAGS=["-msse2"])
-    env_libvpx_sse2.add_source_files(env.modules_sources, libvpx_sources_intrin_x86_sse2)
+    env_libvpx_sse2.add_source_files(
+        env.modules_sources, libvpx_sources_intrin_x86_sse2
+    )
 
     env_libvpx_ssse3 = env_libvpx.Clone()
     if is_clang_or_gcc:
         env_libvpx_ssse3.Append(CCFLAGS=["-mssse3"])
-    env_libvpx_ssse3.add_source_files(env.modules_sources, libvpx_sources_intrin_x86_ssse3)
+    env_libvpx_ssse3.add_source_files(
+        env.modules_sources, libvpx_sources_intrin_x86_ssse3
+    )
 
     env_libvpx_avx2 = env_libvpx.Clone()
     if is_clang_or_gcc:
         env_libvpx_avx2.Append(CCFLAGS=["-mavx2"])
-    env_libvpx_avx2.add_source_files(env.modules_sources, libvpx_sources_intrin_x86_avx2)
+    env_libvpx_avx2.add_source_files(
+        env.modules_sources, libvpx_sources_intrin_x86_avx2
+    )
 
     env_libvpx.add_source_files(env.modules_sources, libvpx_sources_intrin_x86)
 
@@ -364,15 +406,21 @@ elif webm_cpu_arm:
     env_libvpx.add_source_files(env.modules_sources, libvpx_sources_arm)
     if env["platform"] == "android":
         env_libvpx.Prepend(CPPPATH=[libvpx_dir + "third_party/android"])
-        env_libvpx.add_source_files(env.modules_sources, [libvpx_dir + "third_party/android/cpu-features.c"])
+        env_libvpx.add_source_files(
+            env.modules_sources, [libvpx_dir + "third_party/android/cpu-features.c"]
+        )
 
     env_libvpx_neon = env_libvpx.Clone()
     env_libvpx_neon.add_source_files(env.modules_sources, libvpx_sources_arm_neon)
 
     if env["platform"] == "uwp":
-        env_libvpx.add_source_files(env.modules_sources, libvpx_sources_arm_neon_armasm_ms)
+        env_libvpx.add_source_files(
+            env.modules_sources, libvpx_sources_arm_neon_armasm_ms
+        )
     elif env["platform"] == "iphone":
-        env_libvpx.add_source_files(env.modules_sources, libvpx_sources_arm_neon_gas_apple)
+        env_libvpx.add_source_files(
+            env.modules_sources, libvpx_sources_arm_neon_gas_apple
+        )
     elif (is_x11_or_server_arm and cpu_bits == "32") or (
         env["platform"] == "android" and not env["android_arch"] == "arm64v8"
     ):

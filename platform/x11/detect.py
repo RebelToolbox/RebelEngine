@@ -67,18 +67,42 @@ def get_opts():
         BoolVariable("use_llvm", "Use the LLVM compiler", False),
         BoolVariable("use_lld", "Use the LLD linker", False),
         BoolVariable("use_thinlto", "Use ThinLTO", False),
-        BoolVariable("use_static_cpp", "Link libgcc and libstdc++ statically for better portability", True),
-        BoolVariable("use_ubsan", "Use LLVM/GCC compiler undefined behavior sanitizer (UBSAN)", False),
-        BoolVariable("use_asan", "Use LLVM/GCC compiler address sanitizer (ASAN))", False),
+        BoolVariable(
+            "use_static_cpp",
+            "Link libgcc and libstdc++ statically for better portability",
+            True,
+        ),
+        BoolVariable(
+            "use_ubsan",
+            "Use LLVM/GCC compiler undefined behavior sanitizer (UBSAN)",
+            False,
+        ),
+        BoolVariable(
+            "use_asan", "Use LLVM/GCC compiler address sanitizer (ASAN))", False
+        ),
         BoolVariable("use_lsan", "Use LLVM/GCC compiler leak sanitizer (LSAN))", False),
-        BoolVariable("use_tsan", "Use LLVM/GCC compiler thread sanitizer (TSAN))", False),
-        BoolVariable("use_msan", "Use LLVM/GCC compiler memory sanitizer (MSAN))", False),
+        BoolVariable(
+            "use_tsan", "Use LLVM/GCC compiler thread sanitizer (TSAN))", False
+        ),
+        BoolVariable(
+            "use_msan", "Use LLVM/GCC compiler memory sanitizer (MSAN))", False
+        ),
         BoolVariable("pulseaudio", "Detect and use PulseAudio", True),
         BoolVariable("udev", "Use udev for gamepad connection callbacks", True),
-        BoolVariable("debug_symbols", "Add debugging symbols to release/release_debug builds", True),
-        BoolVariable("separate_debug_symbols", "Create a separate file containing debugging symbols", False),
+        BoolVariable(
+            "debug_symbols",
+            "Add debugging symbols to release/release_debug builds",
+            True,
+        ),
+        BoolVariable(
+            "separate_debug_symbols",
+            "Create a separate file containing debugging symbols",
+            False,
+        ),
         BoolVariable("touch", "Enable touch events", True),
-        BoolVariable("execinfo", "Use libexecinfo on systems where glibc is not available", False),
+        BoolVariable(
+            "execinfo", "Use libexecinfo on systems where glibc is not available", False
+        ),
     ]
 
 
@@ -144,10 +168,18 @@ def configure(env):
                 # A convenience so you don't need to write use_lto too when using SCons
                 env["use_lto"] = True
         else:
-            print("Using LLD with GCC is not supported yet. Try compiling with 'use_llvm=yes'.")
+            print(
+                "Using LLD with GCC is not supported yet. Try compiling with 'use_llvm=yes'."
+            )
             sys.exit(255)
 
-    if env["use_ubsan"] or env["use_asan"] or env["use_lsan"] or env["use_tsan"] or env["use_msan"]:
+    if (
+        env["use_ubsan"]
+        or env["use_asan"]
+        or env["use_lsan"]
+        or env["use_tsan"]
+        or env["use_msan"]
+    ):
         env.extra_suffix += "s"
 
         if env["use_ubsan"]:
@@ -248,7 +280,9 @@ def configure(env):
 
         import subprocess
 
-        bullet_version = subprocess.check_output(["pkg-config", "bullet", "--modversion"]).strip()
+        bullet_version = subprocess.check_output(
+            ["pkg-config", "bullet", "--modversion"]
+        ).strip()
         if str(bullet_version) < min_bullet_version:
             # Abort as system bullet was requested but too old
             print(
@@ -328,25 +362,35 @@ def configure(env):
     if os.system("pkg-config --exists alsa") == 0:  # 0 means found
         env["alsa"] = True
         env.Append(CPPDEFINES=["ALSA_ENABLED", "ALSAMIDI_ENABLED"])
-        env.ParseConfig("pkg-config alsa --cflags")  # Only cflags, we dlopen the library.
+        env.ParseConfig(
+            "pkg-config alsa --cflags"
+        )  # Only cflags, we dlopen the library.
     else:
         print("Warning: ALSA libraries not found. Disabling the ALSA audio driver.")
 
     if env["pulseaudio"]:
         if os.system("pkg-config --exists libpulse") == 0:  # 0 means found
             env.Append(CPPDEFINES=["PULSEAUDIO_ENABLED"])
-            env.ParseConfig("pkg-config libpulse --cflags")  # Only cflags, we dlopen the library.
+            env.ParseConfig(
+                "pkg-config libpulse --cflags"
+            )  # Only cflags, we dlopen the library.
         else:
-            print("Warning: PulseAudio development libraries not found. Disabling the PulseAudio audio driver.")
+            print(
+                "Warning: PulseAudio development libraries not found. Disabling the PulseAudio audio driver."
+            )
 
     if platform.system() == "Linux":
         env.Append(CPPDEFINES=["JOYDEV_ENABLED"])
         if env["udev"]:
             if os.system("pkg-config --exists libudev") == 0:  # 0 means found
                 env.Append(CPPDEFINES=["UDEV_ENABLED"])
-                env.ParseConfig("pkg-config libudev --cflags")  # Only cflags, we dlopen the library.
+                env.ParseConfig(
+                    "pkg-config libudev --cflags"
+                )  # Only cflags, we dlopen the library.
             else:
-                print("Warning: libudev development libraries not found. Disabling controller hotplugging support.")
+                print(
+                    "Warning: libudev development libraries not found. Disabling controller hotplugging support."
+                )
     else:
         env["udev"] = False  # Linux specific
 
@@ -355,7 +399,15 @@ def configure(env):
         env.ParseConfig("pkg-config zlib --cflags --libs")
 
     env.Prepend(CPPPATH=["#platform/x11"])
-    env.Append(CPPDEFINES=["X11_ENABLED", "UNIX_ENABLED", "OPENGL_ENABLED", "GLES_ENABLED", ("_FILE_OFFSET_BITS", 64)])
+    env.Append(
+        CPPDEFINES=[
+            "X11_ENABLED",
+            "UNIX_ENABLED",
+            "OPENGL_ENABLED",
+            "GLES_ENABLED",
+            ("_FILE_OFFSET_BITS", 64),
+        ]
+    )
 
     env.ParseConfig("pkg-config gl --cflags --libs")
 
@@ -374,8 +426,12 @@ def configure(env):
         import subprocess
         import re
 
-        linker_version_str = subprocess.check_output([env.subst(env["LINK"]), "-Wl,--version"]).decode("utf-8")
-        gnu_ld_version = re.search("^GNU ld [^$]*(\d+\.\d+)$", linker_version_str, re.MULTILINE)
+        linker_version_str = subprocess.check_output(
+            [env.subst(env["LINK"]), "-Wl,--version"]
+        ).decode("utf-8")
+        gnu_ld_version = re.search(
+            "^GNU ld [^$]*(\d+\.\d+)$", linker_version_str, re.MULTILINE
+        )
         if not gnu_ld_version:
             print(
                 "Warning: Creating template binaries enabled for PCK embedding is currently only supported with GNU ld, not gold or LLD."

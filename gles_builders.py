@@ -54,15 +54,45 @@ def include_file_in_legacygl_header(filename, header_data, depth):
 
             import os.path
 
-            included_file = os.path.relpath(os.path.dirname(filename) + "/" + includeline)
-            if not included_file in header_data.vertex_included_files and header_data.reading == "vertex":
+            included_file = os.path.relpath(
+                os.path.dirname(filename) + "/" + includeline
+            )
+            if (
+                not included_file in header_data.vertex_included_files
+                and header_data.reading == "vertex"
+            ):
                 header_data.vertex_included_files += [included_file]
-                if include_file_in_legacygl_header(included_file, header_data, depth + 1) is None:
-                    print("Error in file '" + filename + "': #include " + includeline + "could not be found!")
-            elif not included_file in header_data.fragment_included_files and header_data.reading == "fragment":
+                if (
+                    include_file_in_legacygl_header(
+                        included_file, header_data, depth + 1
+                    )
+                    is None
+                ):
+                    print(
+                        "Error in file '"
+                        + filename
+                        + "': #include "
+                        + includeline
+                        + "could not be found!"
+                    )
+            elif (
+                not included_file in header_data.fragment_included_files
+                and header_data.reading == "fragment"
+            ):
                 header_data.fragment_included_files += [included_file]
-                if include_file_in_legacygl_header(included_file, header_data, depth + 1) is None:
-                    print("Error in file '" + filename + "': #include " + includeline + "could not be found!")
+                if (
+                    include_file_in_legacygl_header(
+                        included_file, header_data, depth + 1
+                    )
+                    is None
+                ):
+                    print(
+                        "Error in file '"
+                        + filename
+                        + "': #include "
+                        + includeline
+                        + "could not be found!"
+                    )
 
             line = fs.readline()
 
@@ -126,7 +156,9 @@ def include_file_in_legacygl_header(filename, header_data, depth):
                     header_data.ubos += [(x, ubo)]
                     header_data.ubo_names += [x]
 
-        elif line.find("uniform") != -1 and line.find("{") == -1 and line.find(";") != -1:
+        elif (
+            line.find("uniform") != -1 and line.find("{") == -1 and line.find(";") != -1
+        ):
             uline = line.replace("uniform", "")
             uline = uline.replace(";", "")
             lines = uline.split(",")
@@ -202,12 +234,21 @@ def build_legacygl_header(filename, include, class_suffix, output_attribs, gles2
     fd.write("#define " + out_file_ifdef + class_suffix + "_120\n")
 
     out_file_class = (
-        out_file_base.replace(".glsl.gen.h", "").title().replace("_", "").replace(".", "") + "Shader" + class_suffix
+        out_file_base.replace(".glsl.gen.h", "")
+        .title()
+        .replace("_", "")
+        .replace(".", "")
+        + "Shader"
+        + class_suffix
     )
     fd.write("\n\n")
     fd.write('#include "' + include + '"\n\n\n')
     fd.write("class " + out_file_class + " : public Shader" + class_suffix + " {\n\n")
-    fd.write('\t virtual String get_shader_name() const { return "' + out_file_class + '"; }\n')
+    fd.write(
+        '\t virtual String get_shader_name() const { return "'
+        + out_file_class
+        + '"; }\n'
+    )
 
     fd.write("public:\n\n")
 
@@ -223,7 +264,9 @@ def build_legacygl_header(filename, include, class_suffix, output_attribs, gles2
             fd.write("\t\t" + x.upper() + ",\n")
         fd.write("\t};\n\n")
 
-    fd.write("\t_FORCE_INLINE_ int get_uniform(Uniforms p_uniform) const { return _get_uniform(p_uniform); }\n\n")
+    fd.write(
+        "\t_FORCE_INLINE_ int get_uniform(Uniforms p_uniform) const { return _get_uniform(p_uniform); }\n\n"
+    )
     if header_data.conditionals:
         fd.write(
             "\t_FORCE_INLINE_ void set_conditional(Conditionals p_conditional,bool p_enable)  {  _set_conditional(p_conditional,p_enable); }\n\n"
@@ -370,7 +413,9 @@ def build_legacygl_header(filename, include, class_suffix, output_attribs, gles2
     enum_value_count = 0
 
     if header_data.enums:
-        fd.write("\t\t//Written using math, given nonstandarity of 64 bits integer constants..\n")
+        fd.write(
+            "\t\t//Written using math, given nonstandarity of 64 bits integer constants..\n"
+        )
         fd.write("\t\tstatic const Enum _enums[]={\n")
 
         bitofs = len(header_data.conditionals)
@@ -389,7 +434,11 @@ def build_legacygl_header(filename, include, class_suffix, output_attribs, gles2
                 c = {}
                 c["set_mask"] = "uint64_t(" + str(i) + ")<<" + str(bitofs)
                 c["clear_mask"] = (
-                    "((uint64_t(1)<<40)-1) ^ (((uint64_t(1)<<" + str(bits) + ") - 1)<<" + str(bitofs) + ")"
+                    "((uint64_t(1)<<40)-1) ^ (((uint64_t(1)<<"
+                    + str(bits)
+                    + ") - 1)<<"
+                    + str(bitofs)
+                    + ")"
                 )
                 enum_vals.append(c)
                 enum_constants.append(x[i])
@@ -397,7 +446,15 @@ def build_legacygl_header(filename, include, class_suffix, output_attribs, gles2
             strs += "NULL}"
 
             fd.write(
-                "\t\t\t{(uint64_t(1<<" + str(bits) + ")-1)<<" + str(bitofs) + "," + str(bitofs) + "," + strs + "},\n"
+                "\t\t\t{(uint64_t(1<<"
+                + str(bits)
+                + ")-1)<<"
+                + str(bitofs)
+                + ","
+                + str(bitofs)
+                + ","
+                + strs
+                + "},\n"
             )
             bitofs += bits
 
@@ -448,7 +505,13 @@ def build_legacygl_header(filename, include, class_suffix, output_attribs, gles2
             name = x[0]
             cond = x[1]
             if cond in conditionals_found:
-                fd.write('\t\t\t{"' + name + '",' + str(conditionals_found.index(cond)) + "},\n")
+                fd.write(
+                    '\t\t\t{"'
+                    + name
+                    + '",'
+                    + str(conditionals_found.index(cond))
+                    + "},\n"
+                )
             else:
                 fd.write('\t\t\t{"' + name + '",-1},\n')
 
@@ -488,7 +551,11 @@ def build_legacygl_header(filename, include, class_suffix, output_attribs, gles2
         fd.write(str(ord("\n")) + ",")
     fd.write("\t\t0};\n\n")
 
-    fd.write("\t\tstatic const int _vertex_code_start=" + str(header_data.vertex_offset) + ";\n")
+    fd.write(
+        "\t\tstatic const int _vertex_code_start="
+        + str(header_data.vertex_offset)
+        + ";\n"
+    )
 
     fd.write("\t\tstatic const char _fragment_code[]={\n")
     for x in header_data.fragment_lines:
@@ -498,7 +565,11 @@ def build_legacygl_header(filename, include, class_suffix, output_attribs, gles2
         fd.write(str(ord("\n")) + ",")
     fd.write("\t\t0};\n\n")
 
-    fd.write("\t\tstatic const int _fragment_code_start=" + str(header_data.fragment_offset) + ";\n")
+    fd.write(
+        "\t\tstatic const int _fragment_code_start="
+        + str(header_data.fragment_offset)
+        + ";\n"
+    )
 
     if output_attribs:
         if gles2:
@@ -570,7 +641,9 @@ def build_legacygl_header(filename, include, class_suffix, output_attribs, gles2
         for x in enum_constants:
             fd.write("\t\t" + x.upper() + ",\n")
         fd.write("\t};\n\n")
-        fd.write("\tvoid set_enum_conditional(EnumConditionals p_cond) { _set_enum_conditional(p_cond); }\n")
+        fd.write(
+            "\tvoid set_enum_conditional(EnumConditionals p_cond) { _set_enum_conditional(p_cond); }\n"
+        )
 
     fd.write("};\n\n")
     fd.write("#endif\n\n")
@@ -579,13 +652,22 @@ def build_legacygl_header(filename, include, class_suffix, output_attribs, gles2
 
 def build_gles3_headers(target, source, env):
     for x in source:
-        build_legacygl_header(str(x), include="drivers/gles3/shader_gles3.h", class_suffix="GLES3", output_attribs=True)
+        build_legacygl_header(
+            str(x),
+            include="drivers/gles3/shader_gles3.h",
+            class_suffix="GLES3",
+            output_attribs=True,
+        )
 
 
 def build_gles2_headers(target, source, env):
     for x in source:
         build_legacygl_header(
-            str(x), include="drivers/gles2/shader_gles2.h", class_suffix="GLES2", output_attribs=True, gles2=True
+            str(x),
+            include="drivers/gles2/shader_gles2.h",
+            class_suffix="GLES2",
+            output_attribs=True,
+            gles2=True,
         )
 
 

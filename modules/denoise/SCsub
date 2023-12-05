@@ -119,14 +119,18 @@ weights_in_path = thirdparty_dir + "weights/rtlightmap_hdr.tza"
 weights_out_path = thirdparty_dir + "weights/rtlightmap_hdr.gen.cpp"
 
 env_thirdparty.Depends(weights_out_path, weights_in_path)
-env_thirdparty.CommandNoCache(weights_out_path, weights_in_path, resource_to_cpp.tza_to_cpp)
+env_thirdparty.CommandNoCache(
+    weights_out_path, weights_in_path, resource_to_cpp.tza_to_cpp
+)
 
 # Godot source files
 
 module_obj = []
 
 env_oidn.add_source_files(module_obj, "denoise_wrapper.cpp")
-env_modules.add_source_files(module_obj, ["register_types.cpp", "lightmap_denoiser.cpp"])
+env_modules.add_source_files(
+    module_obj, ["register_types.cpp", "lightmap_denoiser.cpp"]
+)
 env.modules_sources += module_obj
 
 # Needed to force rebuilding the module files when the thirdparty library is updated.

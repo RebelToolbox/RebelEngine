@@ -68,13 +68,21 @@ def make_editor_icons_action(target, source, env):
 
     if thumb_medium_indices:
         s.write("\n\n")
-        s.write("static const int editor_md_thumbs_count = {};\n".format(len(thumb_medium_indices)))
+        s.write(
+            "static const int editor_md_thumbs_count = {};\n".format(
+                len(thumb_medium_indices)
+            )
+        )
         s.write("static const int editor_md_thumbs_indices[] = {")
         s.write(", ".join(thumb_medium_indices))
         s.write("};\n")
     if thumb_big_indices:
         s.write("\n\n")
-        s.write("static const int editor_bg_thumbs_count = {};\n".format(len(thumb_big_indices)))
+        s.write(
+            "static const int editor_bg_thumbs_count = {};\n".format(
+                len(thumb_big_indices)
+            )
+        )
         s.write("static const int editor_bg_thumbs_indices[] = {")
         s.write(", ".join(thumb_big_indices))
         s.write("};\n")

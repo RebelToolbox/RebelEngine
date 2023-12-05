@@ -129,7 +129,9 @@ def write_class(c):
         for m in list(methods):
             qualifiers = get_tag(m, "qualifiers")
 
-            write_string(f, '<method name="' + escape(m.attrib["name"]) + '" ' + qualifiers + ">")
+            write_string(
+                f, '<method name="' + escape(m.attrib["name"]) + '" ' + qualifiers + ">"
+            )
             inc_tab()
 
             for a in list(m):
@@ -206,7 +208,14 @@ def write_class(c):
         inc_tab()
 
         for m in list(constants):
-            write_string(f, '<constant name="' + escape(m.attrib["name"]) + '" value="' + m.attrib["value"] + '">')
+            write_string(
+                f,
+                '<constant name="'
+                + escape(m.attrib["name"])
+                + '" value="'
+                + m.attrib["value"]
+                + '">',
+            )
             old_constant_descr = find_constant_descr(old_class, m.attrib["name"])
             if old_constant_descr:
                 write_string(f, escape(old_constant_descr.strip()))

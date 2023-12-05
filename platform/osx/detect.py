@@ -24,13 +24,34 @@ def get_opts():
     return [
         ("osxcross_sdk", "OSXCross SDK version", "darwin14"),
         ("MACOS_SDK_PATH", "Path to the macOS SDK", ""),
-        EnumVariable("macports_clang", "Build using Clang from MacPorts", "no", ("no", "5.0", "devel")),
-        BoolVariable("debug_symbols", "Add debugging symbols to release/release_debug builds", True),
-        BoolVariable("separate_debug_symbols", "Create a separate file containing debugging symbols", False),
-        BoolVariable("use_ubsan", "Use LLVM/GCC compiler undefined behavior sanitizer (UBSAN)", False),
-        BoolVariable("use_asan", "Use LLVM/GCC compiler address sanitizer (ASAN))", False),
+        EnumVariable(
+            "macports_clang",
+            "Build using Clang from MacPorts",
+            "no",
+            ("no", "5.0", "devel"),
+        ),
+        BoolVariable(
+            "debug_symbols",
+            "Add debugging symbols to release/release_debug builds",
+            True,
+        ),
+        BoolVariable(
+            "separate_debug_symbols",
+            "Create a separate file containing debugging symbols",
+            False,
+        ),
+        BoolVariable(
+            "use_ubsan",
+            "Use LLVM/GCC compiler undefined behavior sanitizer (UBSAN)",
+            False,
+        ),
+        BoolVariable(
+            "use_asan", "Use LLVM/GCC compiler address sanitizer (ASAN))", False
+        ),
         BoolVariable("use_lsan", "Use LLVM/GCC compiler leak sanitizer (LSAN))", False),
-        BoolVariable("use_tsan", "Use LLVM/GCC compiler thread sanitizer (TSAN))", False),
+        BoolVariable(
+            "use_tsan", "Use LLVM/GCC compiler thread sanitizer (TSAN))", False
+        ),
     ]
 
 
@@ -93,9 +114,13 @@ def configure(env):
             env["CC"] = mpprefix + "/libexec/llvm-" + mpclangver + "/bin/clang"
             env["CXX"] = mpprefix + "/libexec/llvm-" + mpclangver + "/bin/clang++"
             env["AR"] = mpprefix + "/libexec/llvm-" + mpclangver + "/bin/llvm-ar"
-            env["RANLIB"] = mpprefix + "/libexec/llvm-" + mpclangver + "/bin/llvm-ranlib"
+            env["RANLIB"] = (
+                mpprefix + "/libexec/llvm-" + mpclangver + "/bin/llvm-ranlib"
+            )
             env["AS"] = mpprefix + "/libexec/llvm-" + mpclangver + "/bin/llvm-as"
-            env.Append(CPPDEFINES=["__MACPORTS__"])  # hack to fix libvpx MM256_BROADCASTSI128_SI256 define
+            env.Append(
+                CPPDEFINES=["__MACPORTS__"]
+            )  # hack to fix libvpx MM256_BROADCASTSI128_SI256 define
         else:
             env["CC"] = "clang"
             env["CXX"] = "clang++"
@@ -123,7 +148,9 @@ def configure(env):
         env["AR"] = basecmd + "ar"
         env["RANLIB"] = basecmd + "ranlib"
         env["AS"] = basecmd + "as"
-        env.Append(CPPDEFINES=["__MACPORTS__"])  # hack to fix libvpx MM256_BROADCASTSI128_SI256 define
+        env.Append(
+            CPPDEFINES=["__MACPORTS__"]
+        )  # hack to fix libvpx MM256_BROADCASTSI128_SI256 define
 
     if env["use_ubsan"] or env["use_asan"] or env["use_lsan"] or env["use_tsan"]:
         env.extra_suffix += "s"

@@ -54,7 +54,9 @@ if env["gdnative_enabled"]:
 
     # The side library, containing all Godot code.
     wasm_env = env.Clone()
-    wasm_env.Append(CPPDEFINES=["WASM_GDNATIVE"])  # So that OS knows it can run GDNative libraries.
+    wasm_env.Append(
+        CPPDEFINES=["WASM_GDNATIVE"]
+    )  # So that OS knows it can run GDNative libraries.
     wasm_env.Append(CCFLAGS=["-s", "SIDE_MODULE=2"])
     wasm_env.Append(LINKFLAGS=["-s", "SIDE_MODULE=2"])
     wasm = wasm_env.add_program("#bin/rebel.side${PROGSUFFIX}.wasm", javascript_files)
@@ -65,7 +67,9 @@ else:
         build_targets.append("#bin/rebel${PROGSUFFIX}.worker.js")
     # We use IDBFS. Since Emscripten 1.39.1 it needs to be linked explicitly.
     sys_env.Append(LIBS=["idbfs.js"])
-    build = sys_env.Program(build_targets, javascript_files + ["javascript_runtime.cpp"])
+    build = sys_env.Program(
+        build_targets, javascript_files + ["javascript_runtime.cpp"]
+    )
 
 sys_env.Depends(build[0], sys_env["JS_LIBS"])
 sys_env.Depends(build[0], sys_env["JS_PRE"])
@@ -84,7 +88,11 @@ wrap_list = [
     build[0],
     js_engine,
 ]
-js_wrapped = env.Textfile("#bin/rebel", [env.File(f) for f in wrap_list], TEXTFILESUFFIX="${PROGSUFFIX}.wrapped.js")
+js_wrapped = env.Textfile(
+    "#bin/rebel",
+    [env.File(f) for f in wrap_list],
+    TEXTFILESUFFIX="${PROGSUFFIX}.wrapped.js",
+)
 
 # Extra will be the thread worker, or the GDNative side, or None
 extra = build[2] if len(build) > 2 else None
