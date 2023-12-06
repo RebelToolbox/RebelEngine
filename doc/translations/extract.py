@@ -5,7 +5,14 @@ import os
 import shutil
 from collections import OrderedDict
 
-EXTRACT_TAGS = ["description", "brief_description", "member", "constant", "theme_item", "link"]
+EXTRACT_TAGS = [
+    "description",
+    "brief_description",
+    "member",
+    "constant",
+    "theme_item",
+    "link",
+]
 HEADER = """\
 # LANGUAGE translation of the Rebel Engine class reference
 # Copyright (c) 2022-Present Rebel Engine contributors
@@ -208,7 +215,11 @@ def _make_translation_catalog(classes):
             if elem.tag in EXTRACT_TAGS:
                 if not elem.text or len(elem.text) == 0:
                     continue
-                line_no = elem._start_line_number if elem.text[0] != "\n" else elem._start_line_number + 1
+                line_no = (
+                    elem._start_line_number
+                    if elem.text[0] != "\n"
+                    else elem._start_line_number + 1
+                )
                 desc_str = elem.text.strip()
                 code_block_regions = _make_codeblock_regions(desc_str, desc_list.path)
                 desc_msg = _strip_and_split_desc(desc_str, code_block_regions)
@@ -259,9 +270,18 @@ def _generate_translation_catalog_file(unique_msgs, output, location_line=False)
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--path", "-p", nargs="+", default=".", help="The directory or directories containing XML files to collect."
+        "--path",
+        "-p",
+        nargs="+",
+        default=".",
+        help="The directory or directories containing XML files to collect.",
     )
-    parser.add_argument("--output", "-o", default="translation_catalog.pot", help="The path to the output file.")
+    parser.add_argument(
+        "--output",
+        "-o",
+        default="translation_catalog.pot",
+        help="The path to the output file.",
+    )
     args = parser.parse_args()
 
     output = os.path.abspath(args.output)
@@ -277,7 +297,9 @@ def main():
 
         print("\nCurrent working dir: {}".format(path))
 
-        path_classes = OrderedDict()  ## dictionary of key=class_name, value=DescList objects
+        path_classes = (
+            OrderedDict()
+        )  ## dictionary of key=class_name, value=DescList objects
         _collect_classes_dir(path, path_classes)
         classes.update(path_classes)
 

@@ -17,7 +17,11 @@ def add_source_files(self, sources, files):
         # Keep SCons project-absolute path as they are (no wildcard support)
         if files.startswith("#"):
             if "*" in files:
-                print("ERROR: Wildcards can't be expanded in SCons project-absolute path: '{}'".format(files))
+                print(
+                    "ERROR: Wildcards can't be expanded in SCons project-absolute path: '{}'".format(
+                        files
+                    )
+                )
                 return
             files = [files]
         else:
@@ -33,7 +37,11 @@ def add_source_files(self, sources, files):
     for path in files:
         obj = self.Object(path)
         if obj in sources:
-            print('WARNING: Object "{}" already included in environment sources.'.format(obj))
+            print(
+                'WARNING: Object "{}" already included in environment sources.'.format(
+                    obj
+                )
+            )
             continue
         sources.append(obj)
 
@@ -80,10 +88,19 @@ def update_version(module_version_string=""):
     godot_status = str(version.status)
     if os.getenv("GODOT_VERSION_STATUS") != None:
         godot_status = str(os.getenv("GODOT_VERSION_STATUS"))
-        print("Using version status '{}', overriding the original '{}'.".format(godot_status, str(version.status)))
+        print(
+            "Using version status '{}', overriding the original '{}'.".format(
+                godot_status, str(version.status)
+            )
+        )
     f.write('#define VERSION_STATUS "' + godot_status + '"\n')
     f.write('#define VERSION_BUILD "' + str(build_name) + '"\n')
-    f.write('#define VERSION_MODULE_CONFIG "' + str(version.module_config) + module_version_string + '"\n')
+    f.write(
+        '#define VERSION_MODULE_CONFIG "'
+        + str(version.module_config)
+        + module_version_string
+        + '"\n'
+    )
     f.write("#define VERSION_YEAR " + str(version.year) + "\n")
     f.write('#define VERSION_WEBSITE "' + str(version.website) + '"\n')
     f.close()
@@ -277,7 +294,9 @@ def convert_custom_modules_path(path):
     if not os.path.isdir(path):
         raise ValueError(err_msg % "point to an existing directory.")
     if path == os.path.realpath("modules"):
-        raise ValueError(err_msg % "be a directory other than built-in `modules` directory.")
+        raise ValueError(
+            err_msg % "be a directory other than built-in `modules` directory."
+        )
     return path
 
 
@@ -390,12 +409,19 @@ def split_lib(self, libname, src_list=None, env_lib=None):
     # impacts the linker call, we need to hack our way into the linking commands
     # LINKCOM and SHLINKCOM to set those flags.
 
-    if "-Wl,--start-group" in env["LINKCOM"] and "-Wl,--start-group" in env["SHLINKCOM"]:
+    if (
+        "-Wl,--start-group" in env["LINKCOM"]
+        and "-Wl,--start-group" in env["SHLINKCOM"]
+    ):
         # Already added by a previous call, skip.
         return
 
-    env["LINKCOM"] = str(env["LINKCOM"]).replace("$_LIBFLAGS", "-Wl,--start-group $_LIBFLAGS -Wl,--end-group")
-    env["SHLINKCOM"] = str(env["LINKCOM"]).replace("$_LIBFLAGS", "-Wl,--start-group $_LIBFLAGS -Wl,--end-group")
+    env["LINKCOM"] = str(env["LINKCOM"]).replace(
+        "$_LIBFLAGS", "-Wl,--start-group $_LIBFLAGS -Wl,--end-group"
+    )
+    env["SHLINKCOM"] = str(env["LINKCOM"]).replace(
+        "$_LIBFLAGS", "-Wl,--start-group $_LIBFLAGS -Wl,--end-group"
+    )
 
 
 def save_active_platforms(apnames, ap):
@@ -540,29 +566,40 @@ def detect_visual_c_compiler_version(tools_env):
 
         # find() works with -1 so big ifs below are needed... the simplest solution, in fact
         # First test if amd64 and amd64_x86 compilers are present in the path
-        vc_amd64_compiler_detection_index = tools_env["PATH"].find(tools_env["VCINSTALLDIR"] + "BIN\\amd64;")
+        vc_amd64_compiler_detection_index = tools_env["PATH"].find(
+            tools_env["VCINSTALLDIR"] + "BIN\\amd64;"
+        )
         if vc_amd64_compiler_detection_index > -1:
             vc_chosen_compiler_index = vc_amd64_compiler_detection_index
             vc_chosen_compiler_str = "amd64"
 
-        vc_amd64_x86_compiler_detection_index = tools_env["PATH"].find(tools_env["VCINSTALLDIR"] + "BIN\\amd64_x86;")
+        vc_amd64_x86_compiler_detection_index = tools_env["PATH"].find(
+            tools_env["VCINSTALLDIR"] + "BIN\\amd64_x86;"
+        )
         if vc_amd64_x86_compiler_detection_index > -1 and (
-            vc_chosen_compiler_index == -1 or vc_chosen_compiler_index > vc_amd64_x86_compiler_detection_index
+            vc_chosen_compiler_index == -1
+            or vc_chosen_compiler_index > vc_amd64_x86_compiler_detection_index
         ):
             vc_chosen_compiler_index = vc_amd64_x86_compiler_detection_index
             vc_chosen_compiler_str = "amd64_x86"
 
         # Now check the 32 bit compilers
-        vc_x86_compiler_detection_index = tools_env["PATH"].find(tools_env["VCINSTALLDIR"] + "BIN;")
+        vc_x86_compiler_detection_index = tools_env["PATH"].find(
+            tools_env["VCINSTALLDIR"] + "BIN;"
+        )
         if vc_x86_compiler_detection_index > -1 and (
-            vc_chosen_compiler_index == -1 or vc_chosen_compiler_index > vc_x86_compiler_detection_index
+            vc_chosen_compiler_index == -1
+            or vc_chosen_compiler_index > vc_x86_compiler_detection_index
         ):
             vc_chosen_compiler_index = vc_x86_compiler_detection_index
             vc_chosen_compiler_str = "x86"
 
-        vc_x86_amd64_compiler_detection_index = tools_env["PATH"].find(tools_env["VCINSTALLDIR"] + "BIN\\x86_amd64;")
+        vc_x86_amd64_compiler_detection_index = tools_env["PATH"].find(
+            tools_env["VCINSTALLDIR"] + "BIN\\x86_amd64;"
+        )
         if vc_x86_amd64_compiler_detection_index > -1 and (
-            vc_chosen_compiler_index == -1 or vc_chosen_compiler_index > vc_x86_amd64_compiler_detection_index
+            vc_chosen_compiler_index == -1
+            or vc_chosen_compiler_index > vc_x86_amd64_compiler_detection_index
         ):
             vc_chosen_compiler_index = vc_x86_amd64_compiler_detection_index
             vc_chosen_compiler_str = "x86_amd64"
@@ -571,35 +608,46 @@ def detect_visual_c_compiler_version(tools_env):
     if "VCTOOLSINSTALLDIR" in tools_env:
         # Newer versions have a different path available
         vc_amd64_compiler_detection_index = (
-            tools_env["PATH"].upper().find(tools_env["VCTOOLSINSTALLDIR"].upper() + "BIN\\HOSTX64\\X64;")
+            tools_env["PATH"]
+            .upper()
+            .find(tools_env["VCTOOLSINSTALLDIR"].upper() + "BIN\\HOSTX64\\X64;")
         )
         if vc_amd64_compiler_detection_index > -1:
             vc_chosen_compiler_index = vc_amd64_compiler_detection_index
             vc_chosen_compiler_str = "amd64"
 
         vc_amd64_x86_compiler_detection_index = (
-            tools_env["PATH"].upper().find(tools_env["VCTOOLSINSTALLDIR"].upper() + "BIN\\HOSTX64\\X86;")
+            tools_env["PATH"]
+            .upper()
+            .find(tools_env["VCTOOLSINSTALLDIR"].upper() + "BIN\\HOSTX64\\X86;")
         )
         if vc_amd64_x86_compiler_detection_index > -1 and (
-            vc_chosen_compiler_index == -1 or vc_chosen_compiler_index > vc_amd64_x86_compiler_detection_index
+            vc_chosen_compiler_index == -1
+            or vc_chosen_compiler_index > vc_amd64_x86_compiler_detection_index
         ):
             vc_chosen_compiler_index = vc_amd64_x86_compiler_detection_index
             vc_chosen_compiler_str = "amd64_x86"
 
         vc_x86_compiler_detection_index = (
-            tools_env["PATH"].upper().find(tools_env["VCTOOLSINSTALLDIR"].upper() + "BIN\\HOSTX86\\X86;")
+            tools_env["PATH"]
+            .upper()
+            .find(tools_env["VCTOOLSINSTALLDIR"].upper() + "BIN\\HOSTX86\\X86;")
         )
         if vc_x86_compiler_detection_index > -1 and (
-            vc_chosen_compiler_index == -1 or vc_chosen_compiler_index > vc_x86_compiler_detection_index
+            vc_chosen_compiler_index == -1
+            or vc_chosen_compiler_index > vc_x86_compiler_detection_index
         ):
             vc_chosen_compiler_index = vc_x86_compiler_detection_index
             vc_chosen_compiler_str = "x86"
 
         vc_x86_amd64_compiler_detection_index = (
-            tools_env["PATH"].upper().find(tools_env["VCTOOLSINSTALLDIR"].upper() + "BIN\\HOSTX86\\X64;")
+            tools_env["PATH"]
+            .upper()
+            .find(tools_env["VCTOOLSINSTALLDIR"].upper() + "BIN\\HOSTX86\\X64;")
         )
         if vc_x86_amd64_compiler_detection_index > -1 and (
-            vc_chosen_compiler_index == -1 or vc_chosen_compiler_index > vc_x86_amd64_compiler_detection_index
+            vc_chosen_compiler_index == -1
+            or vc_chosen_compiler_index > vc_x86_amd64_compiler_detection_index
         ):
             vc_chosen_compiler_index = vc_x86_amd64_compiler_detection_index
             vc_chosen_compiler_str = "x86_amd64"
@@ -608,7 +656,11 @@ def detect_visual_c_compiler_version(tools_env):
 
 
 def find_visual_c_batch_file(env):
-    from SCons.Tool.MSCommon.vc import get_default_version, get_host_target, find_batch_file
+    from SCons.Tool.MSCommon.vc import (
+        get_default_version,
+        get_host_target,
+        find_batch_file,
+    )
 
     # Syntax changed in SCons 4.4.0.
     from SCons import __version__ as scons_raw_version
@@ -695,7 +747,9 @@ def generate_vs_project(env, num_jobs):
             if env["custom_modules"]:
                 common_build_postfix.append("custom_modules=%s" % env["custom_modules"])
 
-            result = " ^& ".join(common_build_prefix + [" ".join([commands] + common_build_postfix)])
+            result = " ^& ".join(
+                common_build_prefix + [" ".join([commands] + common_build_postfix)]
+            )
             return result
 
         add_to_vs_project(env, env.core_sources)
@@ -720,9 +774,15 @@ def generate_vs_project(env, num_jobs):
         release_variants = ["release|Win32"] + ["release|x64"]
         release_debug_variants = ["release_debug|Win32"] + ["release_debug|x64"]
         variants = debug_variants + release_variants + release_debug_variants
-        debug_targets = ["bin\\rebel.windows.tools.32.exe"] + ["bin\\rebel.windows.tools.64.exe"]
-        release_targets = ["bin\\rebel.windows.opt.32.exe"] + ["bin\\rebel.windows.opt.64.exe"]
-        release_debug_targets = ["bin\\rebel.windows.opt.tools.32.exe"] + ["bin\\rebel.windows.opt.tools.64.exe"]
+        debug_targets = ["bin\\rebel.windows.tools.32.exe"] + [
+            "bin\\rebel.windows.tools.64.exe"
+        ]
+        release_targets = ["bin\\rebel.windows.opt.32.exe"] + [
+            "bin\\rebel.windows.opt.64.exe"
+        ]
+        release_debug_targets = ["bin\\rebel.windows.opt.tools.32.exe"] + [
+            "bin\\rebel.windows.opt.tools.64.exe"
+        ]
         targets = debug_targets + release_targets + release_debug_targets
         if not env.get("MSVS"):
             env["MSVS"]["PROJECTSUFFIX"] = ".vcxproj"
@@ -784,9 +844,19 @@ def get_darwin_sdk_version(platform):
         raise Exception("Invalid platform argument passed to get_darwin_sdk_version")
 
     try:
-        return float(decode_utf8(subprocess.check_output(["xcrun", "--sdk", sdk_name, "--show-sdk-version"]).strip()))
+        return float(
+            decode_utf8(
+                subprocess.check_output(
+                    ["xcrun", "--sdk", sdk_name, "--show-sdk-version"]
+                ).strip()
+            )
+        )
     except (subprocess.CalledProcessError, OSError):
-        print("Failed to find SDK version while running xcrun --sdk {} --show-sdk-version.".format(sdk_name))
+        print(
+            "Failed to find SDK version while running xcrun --sdk {} --show-sdk-version.".format(
+                sdk_name
+            )
+        )
         return 0.0
 
 
@@ -806,11 +876,19 @@ def detect_darwin_sdk_path(platform, env):
 
     if not env[var_name]:
         try:
-            sdk_path = decode_utf8(subprocess.check_output(["xcrun", "--sdk", sdk_name, "--show-sdk-path"]).strip())
+            sdk_path = decode_utf8(
+                subprocess.check_output(
+                    ["xcrun", "--sdk", sdk_name, "--show-sdk-path"]
+                ).strip()
+            )
             if sdk_path:
                 env[var_name] = sdk_path
         except (subprocess.CalledProcessError, OSError):
-            print("Failed to find SDK path while running xcrun --sdk {} --show-sdk-path.".format(sdk_name))
+            print(
+                "Failed to find SDK path while running xcrun --sdk {} --show-sdk-path.".format(
+                    sdk_name
+                )
+            )
             raise
 
 
@@ -823,7 +901,9 @@ def get_compiler_version(env):
         # Not using -dumpversion as some GCC distros only return major, and
         # Clang used to return hardcoded 4.2.1: # https://reviews.llvm.org/D56803
         try:
-            version = decode_utf8(subprocess.check_output([env.subst(env["CXX"]), "--version"]).strip())
+            version = decode_utf8(
+                subprocess.check_output([env.subst(env["CXX"]), "--version"]).strip()
+            )
         except (subprocess.CalledProcessError, OSError):
             print("Couldn't parse CXX environment variable to infer compiler version.")
             return None
@@ -900,7 +980,10 @@ def show_progress(env):
                 return
             if env["verbose"]:
                 # Utter something
-                screen.write("\rPurging %d %s from cache...\n" % (len(files), len(files) > 1 and "files" or "file"))
+                screen.write(
+                    "\rPurging %d %s from cache...\n"
+                    % (len(files), len(files) > 1 and "files" or "file")
+                )
             [os.remove(f) for f in files]
 
         def file_list(self):
@@ -909,7 +992,10 @@ def show_progress(env):
                 return []
             # Gather a list of (filename, (size, atime)) within the
             # cache directory
-            file_stat = [(x, os.stat(x)[6:8]) for x in glob.glob(os.path.join(self.path, "*", "*"))]
+            file_stat = [
+                (x, os.stat(x)[6:8])
+                for x in glob.glob(os.path.join(self.path, "*", "*"))
+            ]
             if file_stat == []:
                 # Nothing to do
                 return []

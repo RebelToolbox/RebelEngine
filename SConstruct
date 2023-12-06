@@ -118,28 +118,67 @@ opts = Variables(customs, ARGUMENTS)
 opts.Add("p", "Platform (alias for 'platform')", "")
 opts.Add("platform", "Target platform (%s)" % ("|".join(platform_list),), "")
 opts.Add(BoolVariable("tools", "Build the tools (a.k.a. the Rebel editor)", True))
-opts.Add(EnumVariable("target", "Compilation target", "debug", ("debug", "release_debug", "release")))
+opts.Add(
+    EnumVariable(
+        "target", "Compilation target", "debug", ("debug", "release_debug", "release")
+    )
+)
 opts.Add("arch", "Platform-dependent architecture (arm/arm64/x86/x64/mips/...)", "")
-opts.Add(EnumVariable("bits", "Target platform bits", "default", ("default", "32", "64")))
-opts.Add(EnumVariable("optimize", "Optimization type", "speed", ("speed", "size", "none")))
-opts.Add(BoolVariable("production", "Set defaults to build Rebel for use in production", False))
+opts.Add(
+    EnumVariable("bits", "Target platform bits", "default", ("default", "32", "64"))
+)
+opts.Add(
+    EnumVariable("optimize", "Optimization type", "speed", ("speed", "size", "none"))
+)
+opts.Add(
+    BoolVariable(
+        "production", "Set defaults to build Rebel for use in production", False
+    )
+)
 opts.Add(BoolVariable("use_lto", "Use link-time optimization", False))
 
 # Components
 opts.Add(BoolVariable("deprecated", "Enable deprecated features", True))
 opts.Add(BoolVariable("minizip", "Enable ZIP archive support using minizip", True))
 opts.Add(BoolVariable("xaudio2", "Enable the XAudio2 audio driver", False))
-opts.Add("custom_modules", "A list of comma-separated directory paths containing custom modules to build.", "")
-opts.Add(BoolVariable("custom_modules_recursive", "Detect custom modules recursively for each specified path.", True))
+opts.Add(
+    "custom_modules",
+    "A list of comma-separated directory paths containing custom modules to build.",
+    "",
+)
+opts.Add(
+    BoolVariable(
+        "custom_modules_recursive",
+        "Detect custom modules recursively for each specified path.",
+        True,
+    )
+)
 
 # Advanced options
-opts.Add(BoolVariable("dev", "If yes, alias for verbose=yes warnings=extra werror=yes", False))
-opts.Add(BoolVariable("fast_unsafe", "Enable unsafe options for faster rebuilds", False))
+opts.Add(
+    BoolVariable(
+        "dev", "If yes, alias for verbose=yes warnings=extra werror=yes", False
+    )
+)
+opts.Add(
+    BoolVariable("fast_unsafe", "Enable unsafe options for faster rebuilds", False)
+)
 opts.Add(BoolVariable("verbose", "Enable verbose output for the compilation", False))
 opts.Add(BoolVariable("progress", "Show a progress indicator during compilation", True))
-opts.Add(EnumVariable("warnings", "Level of compilation warnings", "all", ("extra", "all", "moderate", "no")))
+opts.Add(
+    EnumVariable(
+        "warnings",
+        "Level of compilation warnings",
+        "all",
+        ("extra", "all", "moderate", "no"),
+    )
+)
 opts.Add(BoolVariable("werror", "Treat compiler warnings as errors", False))
-opts.Add("extra_suffix", "Custom extra suffix added to the base filename of all generated binary files", "")
+opts.Add(
+    "extra_suffix",
+    "Custom extra suffix added to the base filename of all generated binary files",
+    "",
+)
 opts.Add(BoolVariable("vsproj", "Generate a Visual Studio solution", False))
 opts.Add(
     BoolVariable(
@@ -149,14 +188,34 @@ opts.Add(
     )
 )
 opts.Add(BoolVariable("disable_3d", "Disable 3D nodes for a smaller executable", False))
-opts.Add(BoolVariable("disable_advanced_gui", "Disable advanced GUI nodes and behaviors", False))
-opts.Add(BoolVariable("no_editor_splash", "Don't use the custom splash screen for the editor", True))
-opts.Add("system_certs_path", "Use this path as SSL certificates default for editor (for package maintainers)", "")
-opts.Add(BoolVariable("use_precise_math_checks", "Math checks use very precise epsilon (debug option)", False))
+opts.Add(
+    BoolVariable(
+        "disable_advanced_gui", "Disable advanced GUI nodes and behaviors", False
+    )
+)
+opts.Add(
+    BoolVariable(
+        "no_editor_splash", "Don't use the custom splash screen for the editor", True
+    )
+)
+opts.Add(
+    "system_certs_path",
+    "Use this path as SSL certificates default for editor (for package maintainers)",
+    "",
+)
+opts.Add(
+    BoolVariable(
+        "use_precise_math_checks",
+        "Math checks use very precise epsilon (debug option)",
+        False,
+    )
+)
 
 # Thirdparty libraries
 opts.Add(BoolVariable("builtin_bullet", "Use the built-in Bullet library", True))
-opts.Add(BoolVariable("builtin_certs", "Use the built-in SSL certificates bundles", True))
+opts.Add(
+    BoolVariable("builtin_certs", "Use the built-in SSL certificates bundles", True)
+)
 opts.Add(BoolVariable("builtin_embree", "Use the built-in Embree library", True))
 opts.Add(BoolVariable("builtin_enet", "Use the built-in ENet library", True))
 opts.Add(BoolVariable("builtin_freetype", "Use the built-in FreeType library", True))
@@ -171,7 +230,13 @@ opts.Add(BoolVariable("builtin_mbedtls", "Use the built-in mbedTLS library", Tru
 opts.Add(BoolVariable("builtin_miniupnpc", "Use the built-in miniupnpc library", True))
 opts.Add(BoolVariable("builtin_opus", "Use the built-in Opus library", True))
 opts.Add(BoolVariable("builtin_pcre2", "Use the built-in PCRE2 library", True))
-opts.Add(BoolVariable("builtin_pcre2_with_jit", "Use JIT compiler for the built-in PCRE2 library", True))
+opts.Add(
+    BoolVariable(
+        "builtin_pcre2_with_jit",
+        "Use JIT compiler for the built-in PCRE2 library",
+        True,
+    )
+)
 opts.Add(BoolVariable("builtin_recast", "Use the built-in Recast library", True))
 opts.Add(BoolVariable("builtin_squish", "Use the built-in squish library", True))
 opts.Add(BoolVariable("builtin_xatlas", "Use the built-in xatlas library", True))
@@ -236,7 +301,9 @@ if selected_platform in platform_opts:
 
 # Update the environment to take platform-specific options into account.
 opts.Update(env_base)
-env_base["platform"] = selected_platform  # Must always be re-set after calling opts.Update().
+env_base[
+    "platform"
+] = selected_platform  # Must always be re-set after calling opts.Update().
 
 # Detect modules.
 modules_detected = OrderedDict()
@@ -279,13 +346,19 @@ for name, path in modules_detected.items():
         pass
     sys.path.remove(path)
     sys.modules.pop("config")
-    opts.Add(BoolVariable("module_" + name + "_enabled", "Enable module '%s'" % (name,), enabled))
+    opts.Add(
+        BoolVariable(
+            "module_" + name + "_enabled", "Enable module '%s'" % (name,), enabled
+        )
+    )
 
 methods.write_modules(modules_detected)
 
 # Update the environment again after all the module options are added.
 opts.Update(env_base)
-env_base["platform"] = selected_platform  # Must always be re-set after calling opts.Update().
+env_base[
+    "platform"
+] = selected_platform  # Must always be re-set after calling opts.Update().
 Help(opts.GenerateHelpText(env_base))
 
 # add default include paths
@@ -422,7 +495,13 @@ if selected_platform in platform_list:
     # Configure compiler warnings
     if env.msvc:  # MSVC
         # Truncations, narrowing conversions, signed/unsigned comparisons...
-        disable_nonessential_warnings = ["/wd4267", "/wd4244", "/wd4305", "/wd4018", "/wd4800"]
+        disable_nonessential_warnings = [
+            "/wd4267",
+            "/wd4244",
+            "/wd4305",
+            "/wd4018",
+            "/wd4800",
+        ]
         if env["warnings"] == "extra":
             env.Append(CCFLAGS=["/Wall"])  # Implies /W4
         elif env["warnings"] == "all":
@@ -453,7 +532,10 @@ if selected_platform in platform_list:
         if env["warnings"] == "extra":
             # Note: enable -Wimplicit-fallthrough for Clang (already part of -Wextra for GCC)
             # once we switch to C++11 or later (necessary for our FALLTHROUGH macro).
-            env.Append(CCFLAGS=["-Wall", "-Wextra", "-Wwrite-strings", "-Wno-unused-parameter"] + common_warnings)
+            env.Append(
+                CCFLAGS=["-Wall", "-Wextra", "-Wwrite-strings", "-Wno-unused-parameter"]
+                + common_warnings
+            )
             env.Append(CXXFLAGS=["-Wctor-dtor-privacy", "-Wnon-virtual-dtor"])
             if methods.using_gcc(env):
                 env.Append(
@@ -477,7 +559,9 @@ if selected_platform in platform_list:
 
         if env["werror"]:
             env.Append(CCFLAGS=["-Werror"])
-            if methods.using_gcc(env) and version[0] >= 12:  # False positives in our error macros, see GH-58747.
+            if (
+                methods.using_gcc(env) and version[0] >= 12
+            ):  # False positives in our error macros, see GH-58747.
                 env.Append(CCFLAGS=["-Wno-error=return-type"])
 
     if hasattr(detect, "get_program_suffix"):
@@ -609,7 +693,9 @@ if selected_platform in platform_list:
         if not env["module_" + x + "_enabled"]:
             if env["tools"]:
                 print(
-                    "Build option 'module_" + x + "_enabled=no' cannot be used with 'tools=yes' (editor), "
+                    "Build option 'module_"
+                    + x
+                    + "_enabled=no' cannot be used with 'tools=yes' (editor), "
                     "only with 'tools=no' (export template)."
                 )
                 sys.exit(255)
@@ -621,14 +707,18 @@ if selected_platform in platform_list:
         env.Append(
             BUILDERS={
                 "GLES3_GLSL": env.Builder(
-                    action=run_in_subprocess(gles_builders.build_gles3_headers), suffix="glsl.gen.h", src_suffix=".glsl"
+                    action=run_in_subprocess(gles_builders.build_gles3_headers),
+                    suffix="glsl.gen.h",
+                    src_suffix=".glsl",
                 )
             }
         )
         env.Append(
             BUILDERS={
                 "GLES2_GLSL": env.Builder(
-                    action=run_in_subprocess(gles_builders.build_gles2_headers), suffix="glsl.gen.h", src_suffix=".glsl"
+                    action=run_in_subprocess(gles_builders.build_gles2_headers),
+                    suffix="glsl.gen.h",
+                    src_suffix=".glsl",
                 )
             }
         )
@@ -661,7 +751,9 @@ if selected_platform in platform_list:
     # Microsoft Visual Studio Project Generation
     if env["vsproj"]:
         if os.name != "nt":
-            print("Error: The `vsproj` option is only usable on Windows with Visual Studio.")
+            print(
+                "Error: The `vsproj` option is only usable on Windows with Visual Studio."
+            )
             Exit(255)
         env["CPPPATH"] = [Dir(path) for path in env["CPPPATH"]]
         methods.generate_vs_project(env, GetOption("num_jobs"))
@@ -703,7 +795,11 @@ if "env" in locals():
 def print_elapsed_time():
     elapsed_time_sec = round(time.time() - time_at_start, 3)
     time_ms = round((elapsed_time_sec % 1) * 1000)
-    print("[Time elapsed: {}.{:03}]".format(time.strftime("%H:%M:%S", time.gmtime(elapsed_time_sec)), time_ms))
+    print(
+        "[Time elapsed: {}.{:03}]".format(
+            time.strftime("%H:%M:%S", time.gmtime(elapsed_time_sec)), time_ms
+        )
+    )
 
 
 atexit.register(print_elapsed_time)

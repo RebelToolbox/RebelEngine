@@ -30,7 +30,11 @@ if "SCRIPT_AES256_ENCRYPTION_KEY" in os.environ:
                 ec_valid = False
             txt += txts
     if not ec_valid:
-        print("Error: Invalid AES256 encryption key, not 64 hexadecimal characters: '" + key + "'.")
+        print(
+            "Error: Invalid AES256 encryption key, not 64 hexadecimal characters: '"
+            + key
+            + "'."
+        )
         print(
             "Unset 'SCRIPT_AES256_ENCRYPTION_KEY' in your environment "
             "or make sure that it contains exactly 64 hexadecimal characters."
@@ -39,7 +43,11 @@ if "SCRIPT_AES256_ENCRYPTION_KEY" in os.environ:
 
 # NOTE: It is safe to generate this file here, since this is still executed serially
 with open("script_encryption_key.gen.cpp", "w") as f:
-    f.write('#include "core/project_settings.h"\nuint8_t script_encryption_key[32]={' + txt + "};\n")
+    f.write(
+        '#include "core/project_settings.h"\nuint8_t script_encryption_key[32]={'
+        + txt
+        + "};\n"
+    )
 
 
 # Add required thirdparty code.
@@ -62,7 +70,9 @@ thirdparty_misc_sources = [
     "triangulator.cpp",
     "clipper.cpp",
 ]
-thirdparty_misc_sources = [thirdparty_misc_dir + file for file in thirdparty_misc_sources]
+thirdparty_misc_sources = [
+    thirdparty_misc_dir + file for file in thirdparty_misc_sources
+]
 env_thirdparty.add_source_files(thirdparty_obj, thirdparty_misc_sources)
 
 # Zlib library, can be unbundled
@@ -81,7 +91,9 @@ if env["builtin_zlib"]:
         "uncompr.c",
         "zutil.c",
     ]
-    thirdparty_zlib_sources = [thirdparty_zlib_dir + file for file in thirdparty_zlib_sources]
+    thirdparty_zlib_sources = [
+        thirdparty_zlib_dir + file for file in thirdparty_zlib_sources
+    ]
 
     env_thirdparty.Prepend(CPPPATH=[thirdparty_zlib_dir])
     # Needs to be available in main env too
@@ -99,7 +111,9 @@ thirdparty_minizip_sources = [
     "unzip.c",
     "zip.c",
 ]
-thirdparty_minizip_sources = [thirdparty_minizip_dir + file for file in thirdparty_minizip_sources]
+thirdparty_minizip_sources = [
+    thirdparty_minizip_dir + file for file in thirdparty_minizip_sources
+]
 env_thirdparty.add_source_files(thirdparty_obj, thirdparty_minizip_sources)
 
 # Zstd library, can be unbundled in theory
@@ -134,9 +148,13 @@ if env["builtin_zstd"]:
         "decompress/zstd_decompress_block.c",
         "decompress/zstd_decompress.c",
     ]
-    thirdparty_zstd_sources = [thirdparty_zstd_dir + file for file in thirdparty_zstd_sources]
+    thirdparty_zstd_sources = [
+        thirdparty_zstd_dir + file for file in thirdparty_zstd_sources
+    ]
 
-    env_thirdparty.Prepend(CPPPATH=[thirdparty_zstd_dir, thirdparty_zstd_dir + "common"])
+    env_thirdparty.Prepend(
+        CPPPATH=[thirdparty_zstd_dir, thirdparty_zstd_dir + "common"]
+    )
     env_thirdparty.Append(CPPDEFINES=["ZSTD_STATIC_LINKING_ONLY"])
     env.Prepend(CPPPATH=thirdparty_zstd_dir)
     # Also needed in main env includes will trigger warnings
@@ -156,7 +174,11 @@ env.add_source_files(env.core_sources, "script_encryption_key.gen.cpp")
 # Certificates
 env.Depends(
     "#core/io/certs_compressed.gen.h",
-    ["#thirdparty/certs/ca-certificates.crt", env.Value(env["builtin_certs"]), env.Value(env["system_certs_path"])],
+    [
+        "#thirdparty/certs/ca-certificates.crt",
+        env.Value(env["builtin_certs"]),
+        env.Value(env["system_certs_path"]),
+    ],
 )
 env.CommandNoCache(
     "#core/io/certs_compressed.gen.h",
@@ -173,16 +195,26 @@ env.CommandNoCache(
 
 # Authors
 env.Depends("#core/authors.gen.h", "../AUTHORS.md")
-env.CommandNoCache("#core/authors.gen.h", "../AUTHORS.md", run_in_subprocess(core_builders.make_authors_header))
+env.CommandNoCache(
+    "#core/authors.gen.h",
+    "../AUTHORS.md",
+    run_in_subprocess(core_builders.make_authors_header),
+)
 
 # Donors
 env.Depends("#core/donors.gen.h", "../DONORS.md")
-env.CommandNoCache("#core/donors.gen.h", "../DONORS.md", run_in_subprocess(core_builders.make_donors_header))
+env.CommandNoCache(
+    "#core/donors.gen.h",
+    "../DONORS.md",
+    run_in_subprocess(core_builders.make_donors_header),
+)
 
 # License
 env.Depends("#core/license.gen.h", ["../copyright", "../LICENSE"])
 env.CommandNoCache(
-    "#core/license.gen.h", ["../copyright", "../LICENSE"], run_in_subprocess(core_builders.make_license_header)
+    "#core/license.gen.h",
+    ["../copyright", "../LICENSE"],
+    run_in_subprocess(core_builders.make_license_header),
 )
 
 # Chain load SCsubs

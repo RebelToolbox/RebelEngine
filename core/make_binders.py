@@ -343,11 +343,13 @@ def run(target, source, env):
     versions_ext = 6
     text = ""
     text_ext = ""
-    text_free_func = "#ifndef METHOD_BIND_FREE_FUNC_H\n#define METHOD_BIND_FREE_FUNC_H\n"
-    text_free_func += "\n//including this header file allows method binding to use free functions\n"
-    text_free_func += (
-        "//note that the free function must have a pointer to an instance of the class as its first parameter\n"
+    text_free_func = (
+        "#ifndef METHOD_BIND_FREE_FUNC_H\n#define METHOD_BIND_FREE_FUNC_H\n"
     )
+    text_free_func += (
+        "\n//including this header file allows method binding to use free functions\n"
+    )
+    text_free_func += "//note that the free function must have a pointer to an instance of the class as its first parameter\n"
 
     for i in range(0, versions + 1):
         t = ""
@@ -364,10 +366,18 @@ def run(target, source, env):
         else:
             text += t
 
-        text_free_func += make_version(template_typed_free_func, i, versions, False, False)
-        text_free_func += make_version(template_typed_free_func, i, versions, False, True)
-        text_free_func += make_version(template_typed_free_func, i, versions, True, False)
-        text_free_func += make_version(template_typed_free_func, i, versions, True, True)
+        text_free_func += make_version(
+            template_typed_free_func, i, versions, False, False
+        )
+        text_free_func += make_version(
+            template_typed_free_func, i, versions, False, True
+        )
+        text_free_func += make_version(
+            template_typed_free_func, i, versions, True, False
+        )
+        text_free_func += make_version(
+            template_typed_free_func, i, versions, True, True
+        )
 
     text_free_func += "#endif"
 

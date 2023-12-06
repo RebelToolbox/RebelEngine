@@ -32,15 +32,29 @@ def get_opts():
         ("initial_memory", "Initial WASM memory (in MiB)", 32),
         BoolVariable("use_assertions", "Use Emscripten runtime assertions", False),
         BoolVariable("use_thinlto", "Use ThinLTO", False),
-        BoolVariable("use_ubsan", "Use Emscripten undefined behavior sanitizer (UBSAN)", False),
+        BoolVariable(
+            "use_ubsan", "Use Emscripten undefined behavior sanitizer (UBSAN)", False
+        ),
         BoolVariable("use_asan", "Use Emscripten address sanitizer (ASAN)", False),
         BoolVariable("use_lsan", "Use Emscripten leak sanitizer (LSAN)", False),
         BoolVariable("use_safe_heap", "Use Emscripten SAFE_HEAP sanitizer", False),
         # eval() can be a security concern, so it can be disabled.
         BoolVariable("javascript_eval", "Enable JavaScript eval interface", True),
-        BoolVariable("threads_enabled", "Enable WebAssembly Threads support (limited browser support)", False),
-        BoolVariable("gdnative_enabled", "Enable WebAssembly GDNative support (produces bigger binaries)", False),
-        BoolVariable("use_closure_compiler", "Use closure compiler to minimize JavaScript code", False),
+        BoolVariable(
+            "threads_enabled",
+            "Enable WebAssembly Threads support (limited browser support)",
+            False,
+        ),
+        BoolVariable(
+            "gdnative_enabled",
+            "Enable WebAssembly GDNative support (produces bigger binaries)",
+            False,
+        ),
+        BoolVariable(
+            "use_closure_compiler",
+            "Use closure compiler to minimize JavaScript code",
+            False,
+        ),
     ]
 
 
@@ -88,7 +102,9 @@ def configure(env):
 
     if env["tools"]:
         if not env["threads_enabled"]:
-            print("Threads must be enabled to build the editor. Please add the 'threads_enabled=yes' option")
+            print(
+                "Threads must be enabled to build the editor. Please add the 'threads_enabled=yes' option"
+            )
             sys.exit(255)
         if env["initial_memory"] < 64:
             print("Editor build requires at least 64MiB of initial memory. Forcing it.")
@@ -131,7 +147,9 @@ def configure(env):
         # For emscripten support code.
         env.Append(LINKFLAGS=["--closure", "1"])
         # Register builder for our Engine files
-        jscc = env.Builder(generator=run_closure_compiler, suffix=".cc.js", src_suffix=".js")
+        jscc = env.Builder(
+            generator=run_closure_compiler, suffix=".cc.js", src_suffix=".js"
+        )
         env.Append(BUILDERS={"BuildJS": jscc})
 
     # Add helper method for adding libraries, externs, pre-js.
@@ -159,7 +177,11 @@ def configure(env):
 
     # Use TempFileMunge since some AR invocations are too long for cmd.exe.
     # Use POSIX-style paths, required with TempFileMunge.
-    env["ARCOM_POSIX"] = env["ARCOM"].replace("$TARGET", "$TARGET.posix").replace("$SOURCES", "$SOURCES.posix")
+    env["ARCOM_POSIX"] = (
+        env["ARCOM"]
+        .replace("$TARGET", "$TARGET.posix")
+        .replace("$SOURCES", "$SOURCES.posix")
+    )
     env["ARCOM"] = "${TEMPFILE(ARCOM_POSIX)}"
 
     # All intermediate files are just LLVM bitcode.
@@ -180,7 +202,9 @@ def configure(env):
         env.Append(CPPDEFINES=["JAVASCRIPT_EVAL_ENABLED"])
 
     if env["threads_enabled"] and env["gdnative_enabled"]:
-        print("Threads and GDNative support can't be both enabled due to WebAssembly limitations")
+        print(
+            "Threads and GDNative support can't be both enabled due to WebAssembly limitations"
+        )
         sys.exit(255)
 
     # Thread support (via SharedArrayBuffer).
@@ -197,7 +221,10 @@ def configure(env):
     if env["gdnative_enabled"]:
         major, minor, patch = get_compiler_version(env)
         if major < 2 or (major == 2 and minor == 0 and patch < 10):
-            print("GDNative support requires emscripten >= 2.0.10, detected: %s.%s.%s" % (major, minor, patch))
+            print(
+                "GDNative support requires emscripten >= 2.0.10, detected: %s.%s.%s"
+                % (major, minor, patch)
+            )
             sys.exit(255)
         env.Append(CCFLAGS=["-s", "RELOCATABLE=1"])
         env.Append(LINKFLAGS=["-s", "RELOCATABLE=1"])

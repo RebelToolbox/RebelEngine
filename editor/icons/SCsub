@@ -8,7 +8,9 @@ from platform_methods import run_in_subprocess
 import editor_icons_builders
 
 make_editor_icons_builder = Builder(
-    action=run_in_subprocess(editor_icons_builders.make_editor_icons_action), suffix=".h", src_suffix=".svg"
+    action=run_in_subprocess(editor_icons_builders.make_editor_icons_action),
+    suffix=".h",
+    src_suffix=".svg",
 )
 
 env["BUILDERS"]["MakeEditorIconsBuilder"] = make_editor_icons_builder
@@ -23,4 +25,7 @@ for path in env.module_icons_paths:
     else:
         icon_sources += Glob(path + "/*.svg")  # Custom.
 
-env.Alias("editor_icons", [env.MakeEditorIconsBuilder("#editor/editor_icons.gen.h", icon_sources)])
+env.Alias(
+    "editor_icons",
+    [env.MakeEditorIconsBuilder("#editor/editor_icons.gen.h", icon_sources)],
+)

@@ -4,7 +4,7 @@
 
 # The application and options.
 application="black"
-options="-l 120"
+options=""
 
 # Files and file extensions to parse.
 include_files="SConstruct SCsub"

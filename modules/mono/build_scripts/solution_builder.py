@@ -16,7 +16,9 @@ def find_dotnet_cli():
             hint_path = os.path.join(hint_dir, "dotnet")
             if os.path.isfile(hint_path) and os.access(hint_path, os.X_OK):
                 return hint_path
-            if os.path.isfile(hint_path + ".exe") and os.access(hint_path + ".exe", os.X_OK):
+            if os.path.isfile(hint_path + ".exe") and os.access(
+                hint_path + ".exe", os.X_OK
+            ):
                 return hint_path + ".exe"
     else:
         for hint_dir in os.environ["PATH"].split(os.pathsep):
@@ -49,7 +51,9 @@ def find_msbuild_unix():
         hint_path = os.path.join(hint_dir, "msbuild")
         if os.path.isfile(hint_path) and os.access(hint_path, os.X_OK):
             return hint_path
-        if os.path.isfile(hint_path + ".exe") and os.access(hint_path + ".exe", os.X_OK):
+        if os.path.isfile(hint_path + ".exe") and os.access(
+            hint_path + ".exe", os.X_OK
+        ):
             return hint_path + ".exe"
 
     return None
@@ -142,7 +146,12 @@ def build_solution(env, solution_path, build_config, extra_msbuild_args=[]):
 
     # Build solution
 
-    msbuild_args += [solution_path, "/restore", "/t:Build", "/p:Configuration=" + build_config]
+    msbuild_args += [
+        solution_path,
+        "/restore",
+        "/t:Build",
+        "/p:Configuration=" + build_config,
+    ]
     msbuild_args += extra_msbuild_args
 
     run_command(msbuild_path, msbuild_args, env_override=msbuild_env, name="msbuild")

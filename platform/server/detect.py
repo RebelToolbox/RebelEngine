@@ -32,15 +32,39 @@ def get_opts():
 
     return [
         BoolVariable("use_llvm", "Use the LLVM compiler", False),
-        BoolVariable("use_static_cpp", "Link libgcc and libstdc++ statically for better portability", True),
-        BoolVariable("use_ubsan", "Use LLVM/GCC compiler undefined behavior sanitizer (UBSAN)", False),
-        BoolVariable("use_asan", "Use LLVM/GCC compiler address sanitizer (ASAN))", False),
+        BoolVariable(
+            "use_static_cpp",
+            "Link libgcc and libstdc++ statically for better portability",
+            True,
+        ),
+        BoolVariable(
+            "use_ubsan",
+            "Use LLVM/GCC compiler undefined behavior sanitizer (UBSAN)",
+            False,
+        ),
+        BoolVariable(
+            "use_asan", "Use LLVM/GCC compiler address sanitizer (ASAN))", False
+        ),
         BoolVariable("use_lsan", "Use LLVM/GCC compiler leak sanitizer (LSAN))", False),
-        BoolVariable("use_tsan", "Use LLVM/GCC compiler thread sanitizer (TSAN))", False),
-        BoolVariable("debug_symbols", "Add debugging symbols to release/release_debug builds", True),
-        BoolVariable("use_msan", "Use LLVM/GCC compiler memory sanitizer (MSAN))", False),
-        BoolVariable("separate_debug_symbols", "Create a separate file containing debugging symbols", False),
-        BoolVariable("execinfo", "Use libexecinfo on systems where glibc is not available", False),
+        BoolVariable(
+            "use_tsan", "Use LLVM/GCC compiler thread sanitizer (TSAN))", False
+        ),
+        BoolVariable(
+            "debug_symbols",
+            "Add debugging symbols to release/release_debug builds",
+            True,
+        ),
+        BoolVariable(
+            "use_msan", "Use LLVM/GCC compiler memory sanitizer (MSAN))", False
+        ),
+        BoolVariable(
+            "separate_debug_symbols",
+            "Create a separate file containing debugging symbols",
+            False,
+        ),
+        BoolVariable(
+            "execinfo", "Use libexecinfo on systems where glibc is not available", False
+        ),
     ]
 
 
@@ -99,7 +123,13 @@ def configure(env):
         env.extra_suffix = ".llvm" + env.extra_suffix
         env.Append(LIBS=["atomic"])
 
-    if env["use_ubsan"] or env["use_asan"] or env["use_lsan"] or env["use_tsan"] or env["use_msan"]:
+    if (
+        env["use_ubsan"]
+        or env["use_asan"]
+        or env["use_lsan"]
+        or env["use_tsan"]
+        or env["use_msan"]
+    ):
         env.extra_suffix += "s"
 
         if env["use_ubsan"]:
@@ -158,7 +188,9 @@ def configure(env):
 
         import subprocess
 
-        bullet_version = subprocess.check_output(["pkg-config", "bullet", "--modversion"]).strip()
+        bullet_version = subprocess.check_output(
+            ["pkg-config", "bullet", "--modversion"]
+        ).strip()
         if str(bullet_version) < min_bullet_version:
             # Abort as system bullet was requested but too old
             print(
@@ -231,7 +263,11 @@ def configure(env):
     # Embree is only compatible with x86_64. Yet another unreliable hack that will break
     # cross-compilation, this will really need to be handle better. Thankfully only affects
     # people who disable builtin_embree (likely distro packagers).
-    if env["tools"] and not env["builtin_embree"] and (is64 and platform.machine() == "x86_64"):
+    if (
+        env["tools"]
+        and not env["builtin_embree"]
+        and (is64 and platform.machine() == "x86_64")
+    ):
         # No pkgconfig file so far, hardcode expected lib name.
         env.Append(LIBS=["embree3"])
 
@@ -245,7 +281,17 @@ def configure(env):
     env.Append(CPPDEFINES=["SERVER_ENABLED", "UNIX_ENABLED"])
 
     if platform.system() == "Darwin":
-        env.Append(LINKFLAGS=["-framework", "Cocoa", "-framework", "Carbon", "-lz", "-framework", "IOKit"])
+        env.Append(
+            LINKFLAGS=[
+                "-framework",
+                "Cocoa",
+                "-framework",
+                "Carbon",
+                "-lz",
+                "-framework",
+                "IOKit",
+            ]
+        )
 
     env.Append(LIBS=["pthread"])
 

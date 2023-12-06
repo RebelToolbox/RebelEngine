@@ -41,7 +41,9 @@ def make_splash_editor(target, source, env):
         g.write("#define BOOT_SPLASH_EDITOR_H\n")
         # The editor splash background color is taken from the default editor theme's background color.
         # This helps achieve a visually "smoother" transition between the splash screen and the editor.
-        g.write("static const Color boot_splash_editor_bg_color = Color(0.5, 0.5, 0.5);\n")
+        g.write(
+            "static const Color boot_splash_editor_bg_color = Color(0.5, 0.5, 0.5);\n"
+        )
         g.write("static const unsigned char boot_splash_editor_png[] = {\n")
         for i in range(len(buf)):
             g.write(byte_to_str(buf[i]) + ",\n")
@@ -99,7 +101,9 @@ def make_default_controller_mappings(target, source, env):
                 if guid in platform_mappings[current_platform]:
                     g.write(
                         "// WARNING - DATABASE {} OVERWROTE PRIOR MAPPING: {} {}\n".format(
-                            src_path, current_platform, platform_mappings[current_platform][guid]
+                            src_path,
+                            current_platform,
+                            platform_mappings[current_platform][guid],
                         )
                     )
                 platform_mappings[current_platform][guid] = line

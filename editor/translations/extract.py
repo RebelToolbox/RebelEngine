@@ -73,7 +73,9 @@ def _write_translator_comment(msg, translator_comment):
 
     # Check if a previous translator comment already exists. If so, merge them together.
     if main_po.find("TRANSLATORS:", translator_comment_pos, msg_pos) != -1:
-        translator_comment_pos = main_po.find("\n#:", translator_comment_pos, msg_pos) + 1
+        translator_comment_pos = (
+            main_po.find("\n#:", translator_comment_pos, msg_pos) + 1
+        )
         if translator_comment_pos == 0:
             print('translator_comment_pos after "TRANSLATORS:" not found')
             return
@@ -169,11 +171,15 @@ def process_file(f, fname):
 
         # Gather translator comments. It will be gathered for the next translation function.
         if reading_translator_comment:
-            reading_translator_comment, extracted_comment = _extract_translator_comment(l, is_block_translator_comment)
+            reading_translator_comment, extracted_comment = _extract_translator_comment(
+                l, is_block_translator_comment
+            )
             if extracted_comment != "":
                 translator_comment += extracted_comment + "\n"
             if not reading_translator_comment:
-                translator_comment = translator_comment[:-1]  # Remove extra \n at the end.
+                translator_comment = translator_comment[
+                    :-1
+                ]  # Remove extra \n at the end.
 
         idx = 0
         pos = 0
@@ -210,7 +216,9 @@ def process_file(f, fname):
                 # Add additional location to previous occurrence too
                 msg_pos = main_po.find('\nmsgid "' + msg + '"')
                 if msg_pos == -1:
-                    print("Someone apparently thought writing Python was as easy as GDScript. Ping Akien.")
+                    print(
+                        "Someone apparently thought writing Python was as easy as GDScript. Ping Akien."
+                    )
                 main_po = main_po[:msg_pos] + " " + location + main_po[msg_pos:]
                 unique_loc[msg].append(location)
 
@@ -236,7 +244,14 @@ shutil.move("editor.pot", "editor/translations/editor.pot")
 
 # TODO: Make that in a portable way, if we care; if not, kudos to Unix users
 if os.name == "posix":
-    added = subprocess.check_output(r"git diff editor/translations/editor.pot | grep \+msgid | wc -l", shell=True)
-    removed = subprocess.check_output(r"git diff editor/translations/editor.pot | grep \\\-msgid | wc -l", shell=True)
+    added = subprocess.check_output(
+        r"git diff editor/translations/editor.pot | grep \+msgid | wc -l", shell=True
+    )
+    removed = subprocess.check_output(
+        r"git diff editor/translations/editor.pot | grep \\\-msgid | wc -l", shell=True
+    )
     print("\n# Template changes compared to the staged status:")
-    print("#   Additions: %s msgids.\n#   Deletions: %s msgids." % (int(added), int(removed)))
+    print(
+        "#   Additions: %s msgids.\n#   Deletions: %s msgids."
+        % (int(added), int(removed))
+    )

@@ -4,7 +4,12 @@ from SCons.Util import WhereIs
 
 
 def run_closure_compiler(target, source, env, for_signature):
-    closure_bin = os.path.join(os.path.dirname(WhereIs("emcc")), "node_modules", ".bin", "google-closure-compiler")
+    closure_bin = os.path.join(
+        os.path.dirname(WhereIs("emcc")),
+        "node_modules",
+        ".bin",
+        "google-closure-compiler",
+    )
     cmd = [WhereIs("node"), closure_bin]
     cmd.extend(["--compilation_level", "ADVANCED_OPTIMIZATIONS"])
     for f in env["JSEXTERNS"]:
@@ -79,7 +84,9 @@ def create_template_zip(env, js, wasm, extra):
             "@GODOT_OPT_CACHE@": json.dumps(opt_cache),
             "@GODOT_OFFLINE_PAGE@": "offline.html",
         }
-        html = env.Substfile(target="#bin/rebel${PROGSUFFIX}.html", source=html, SUBST_DICT=subst_dict)
+        html = env.Substfile(
+            target="#bin/rebel${PROGSUFFIX}.html", source=html, SUBST_DICT=subst_dict
+        )
         in_files.append(html)
         out_files.append(zip_dir.File(binary_name + ".html"))
         # And logo/favicon
@@ -89,7 +96,9 @@ def create_template_zip(env, js, wasm, extra):
         out_files.append(zip_dir.File("favicon.png"))
         # PWA
         service_worker = env.Substfile(
-            target="#bin/rebel${PROGSUFFIX}.service.worker.js", source=service_worker, SUBST_DICT=subst_dict
+            target="#bin/rebel${PROGSUFFIX}.service.worker.js",
+            source=service_worker,
+            SUBST_DICT=subst_dict,
         )
         in_files.append(service_worker)
         out_files.append(zip_dir.File("service.worker.js"))

@@ -29,7 +29,9 @@ def make_certs_header(target, source, env):
         # Defined here and not in env so changing it does not trigger a full rebuild.
         g.write("#define BUILTIN_CERTS_ENABLED\n")
         g.write("static const int _certs_compressed_size = " + str(len(buf)) + ";\n")
-        g.write("static const int _certs_uncompressed_size = " + str(decomp_size) + ";\n")
+        g.write(
+            "static const int _certs_uncompressed_size = " + str(decomp_size) + ";\n"
+        )
         g.write("static const unsigned char _certs_compressed[] = {\n")
         for i in range(len(buf)):
             g.write("\t" + byte_to_str(buf[i]) + ",\n")

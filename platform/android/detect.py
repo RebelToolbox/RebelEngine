@@ -21,8 +21,17 @@ def get_opts():
 
     return [
         ("ANDROID_SDK_ROOT", "Path to the Android SDK", get_env_android_sdk_root()),
-        ("ndk_platform", 'Target platform (android-<api>, e.g. "android-19")', "android-19"),
-        EnumVariable("android_arch", "Target architecture", "armv7", ("armv7", "arm64v8", "x86", "x86_64")),
+        (
+            "ndk_platform",
+            'Target platform (android-<api>, e.g. "android-19")',
+            "android-19",
+        ),
+        EnumVariable(
+            "android_arch",
+            "Target architecture",
+            "armv7",
+            ("armv7", "arm64v8", "x86", "x86_64"),
+        ),
         BoolVariable("android_neon", "Enable NEON support (armv7 only)", True),
     ]
 
@@ -118,7 +127,10 @@ def configure(env):
         bin_utils = target_triple
         env.extra_suffix = ".x86_64" + env.extra_suffix
 
-    target_option = ["-target", target_triple + str(get_min_sdk_version(env["ndk_platform"]))]
+    target_option = [
+        "-target",
+        target_triple + str(get_min_sdk_version(env["ndk_platform"])),
+    ]
     env.Append(CCFLAGS=target_option)
     env.Append(LINKFLAGS=target_option)
 
@@ -206,4 +218,6 @@ def configure(env):
 
     env.Prepend(CPPPATH=["#platform/android"])
     env.Append(CPPDEFINES=["ANDROID_ENABLED", "UNIX_ENABLED", "NO_FCNTL"])
-    env.Append(LIBS=["OpenSLES", "EGL", "GLESv3", "GLESv2", "android", "log", "z", "dl"])
+    env.Append(
+        LIBS=["OpenSLES", "EGL", "GLESv3", "GLESv2", "android", "log", "z", "dl"]
+    )

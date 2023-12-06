@@ -72,7 +72,9 @@ if os.path.exists(dir_name):
 subprocess.run(["git", "clone", "https://github.com/embree/embree.git", "embree-tmp"])
 os.chdir("embree-tmp")
 
-commit_hash = str(subprocess.check_output(["git", "rev-parse", "HEAD"], universal_newlines=True)).strip()
+commit_hash = str(
+    subprocess.check_output(["git", "rev-parse", "HEAD"], universal_newlines=True)
+).strip()
 
 all_files = set(cpp_files)
 
@@ -181,11 +183,19 @@ with open(os.path.join(dest_dir, "kernels/config.h"), "w") as config_file:
 
 with open("CMakeLists.txt", "r") as cmake_file:
     cmake_content = cmake_file.read()
-    major_version = int(re.compile(r"EMBREE_VERSION_MAJOR\s(\d+)").findall(cmake_content)[0])
-    minor_version = int(re.compile(r"EMBREE_VERSION_MINOR\s(\d+)").findall(cmake_content)[0])
-    patch_version = int(re.compile(r"EMBREE_VERSION_PATCH\s(\d+)").findall(cmake_content)[0])
+    major_version = int(
+        re.compile(r"EMBREE_VERSION_MAJOR\s(\d+)").findall(cmake_content)[0]
+    )
+    minor_version = int(
+        re.compile(r"EMBREE_VERSION_MINOR\s(\d+)").findall(cmake_content)[0]
+    )
+    patch_version = int(
+        re.compile(r"EMBREE_VERSION_PATCH\s(\d+)").findall(cmake_content)[0]
+    )
 
-with open(os.path.join(dest_dir, "include/embree3/rtcore_config.h"), "w") as config_file:
+with open(
+    os.path.join(dest_dir, "include/embree3/rtcore_config.h"), "w"
+) as config_file:
     config_file.write(
         f"""
 // Copyright 2009-2021 Intel Corporation
