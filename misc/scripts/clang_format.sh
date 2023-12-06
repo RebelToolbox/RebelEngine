@@ -24,17 +24,6 @@ while IFS= read -rd '' f; do
         if [[ "$f" == *"$extension" ]]; then
             # Run clang-format.
             clang-format --Wno-error=unknown -i "$f"
-            # Fix copyright headers, but not all files get them.
-            if [[ "$f" == *"inc" ]]; then
-                continue 2
-            elif [[ "$f" == *"glsl" ]]; then
-                continue 2
-            elif [[ "$f" == *"theme_data.h" ]]; then
-                continue 2
-            elif [[ "$f" == "platform/android/java/lib/src/com/rebeltoolbox/rebelengine/input/InputManager"* ]]; then
-                continue 2
-            fi
-            python3 misc/scripts/copyright_headers.py "$f"
             continue 2
         fi
     done
