@@ -175,7 +175,7 @@ while true; do
                 response="N"
             fi
         elif [ -x "$xmessage" ]; then
-            $xmessage -file "$patch_file" -buttons "Apply":100,"Apply and stage":200,"Do not apply":0 -center -default "Do not apply" -geometry 800x600 -title "Do you want to apply this patch?"
+            $xmessage -file "$patch_file" -buttons "Apply:100,Apply and stage:200,Do not apply:0" -center -default "Do not apply" -geometry 800x600 -title "Do you want to apply this patch?"
             exit_code=$?
             if [ "$exit_code" = "100" ]; then
                 response="Y"
