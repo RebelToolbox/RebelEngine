@@ -55,6 +55,7 @@ if ($file -ne "") {
     $textBox.Multiline = $true
     $textBox.ReadOnly = $true
     $textBox.Autosize = $true
+    $textBox.ScrollBars = [System.Windows.Forms.ScrollBars]::Vertical
     $textBox.Select(0, 0)
     $form.Controls.Add($textBox)
 }

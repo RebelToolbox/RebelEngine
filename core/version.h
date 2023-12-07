@@ -16,14 +16,14 @@
 // Defines the main "branch" version.
 // Patch versions in this branch should be forward-compatible.
 // Example: "1.1"
-#define VERSION_BRANCH "" _MKSTR(VERSION_MAJOR) "." _MKSTR(VERSION_MINOR)
+#define VERSION_BRANCH _MKSTR(VERSION_MAJOR) "." _MKSTR(VERSION_MINOR)
 #if VERSION_PATCH
 // Example: "1.1.1"
-#define VERSION_NUMBER "" VERSION_BRANCH "." _MKSTR(VERSION_PATCH)
+#define VERSION_NUMBER VERSION_BRANCH "." _MKSTR(VERSION_PATCH)
 #else // VERSION_PATCH == 0
 // we don't include it in the "pretty" version number.
 // Example: "1.1" instead of "1.1.0"
-#define VERSION_NUMBER "" VERSION_BRANCH
+#define VERSION_NUMBER VERSION_BRANCH
 #endif // VERSION_PATCH
 
 // Version number encoded as hexadecimal int with one byte for each number.
@@ -37,15 +37,15 @@
 // potential module-specific features (e.g. mono).
 // Example: "1.1.stable.mono"
 #define VERSION_FULL_CONFIG                                                    \
-    "" VERSION_NUMBER "." VERSION_STATUS VERSION_MODULE_CONFIG
+    VERSION_NUMBER "." VERSION_STATUS VERSION_MODULE_CONFIG
 
 // Similar to VERSION_FULL_CONFIG, but
 // also includes the (potentially custom) VERSION_BUILD description (e.g.
 // official, custom_build, etc.). Example: "1.1.stable.mono.official"
-#define VERSION_FULL_BUILD "" VERSION_FULL_CONFIG "." VERSION_BUILD
+#define VERSION_FULL_BUILD VERSION_FULL_CONFIG "." VERSION_BUILD
 
 // Same as above, but prepended with Rebel Engine's name and a cosmetic "v" for
 // "version". Example: "Rebel Engine v1.1.stable.mono.official"
-#define VERSION_FULL_NAME "" VERSION_NAME " v" VERSION_FULL_BUILD
+#define VERSION_FULL_NAME VERSION_NAME " v" VERSION_FULL_BUILD
 
 #endif // VERSION_H

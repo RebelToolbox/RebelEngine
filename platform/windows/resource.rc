@@ -9,8 +9,9 @@ APP_ICON ICON "platform/windows/rebel-icon.ico"
 1 VERSIONINFO
 FILEVERSION    	VERSION_MAJOR,VERSION_MINOR,VERSION_PATCH,0
 PRODUCTVERSION 	VERSION_MAJOR,VERSION_MINOR,VERSION_PATCH,0
-FILEOS         	4
-FILETYPE       	1
+FILEOS         	4       // VOS__WINDOWS32 = 0x00000004L
+FILETYPE       	1       // VFT_APP = 0x00000001L
+
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
@@ -21,9 +22,7 @@ BEGIN
             VALUE "FileVersion",            VERSION_NUMBER
             VALUE "ProductName",            VERSION_NAME
             VALUE "Licence",                "MIT"
-            VALUE "LegalCopyright",         "2022-Present, Rebel Engine contributors
-2014-2022, Godot Engine contributors.
-2007-2022, Juan Linietsky, Ariel Manzur."
+            VALUE "LegalCopyright",         "\xA9 Rebel Engine contributors"
             VALUE "ProductVersion",         VERSION_FULL_BUILD
         END
     END
