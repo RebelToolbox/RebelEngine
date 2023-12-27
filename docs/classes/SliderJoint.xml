@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
 <class name="SliderJoint" inherits="Joint" version="1.0">
     <brief_description>
         Slider between two PhysicsBodies in 3D.

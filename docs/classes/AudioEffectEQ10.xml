@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
 <class name="AudioEffectEQ10" inherits="AudioEffectEQ" version="1.0">
     <brief_description>
         Adds a 10-band equalizer audio effect to an Audio bus. Gives you control over frequencies from 31 Hz to 16000 Hz.

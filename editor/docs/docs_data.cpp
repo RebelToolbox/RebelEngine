@@ -1213,7 +1213,20 @@ Error DocsData::save_classes(
 
         ERR_CONTINUE_MSG(err != OK, "Can't write doc file: " + save_file + ".");
 
-        _write_string(f, 0, "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+        f->store_string("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+        f->store_string("<!--\n");
+        f->store_string(
+            "SPDX-FileCopyrightText: 2023 Rebel Engine contributors\n"
+        );
+        f->store_string(
+            "SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors\n"
+        );
+        f->store_string(
+            "SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur\n"
+        );
+        f->store_string("\n");
+        f->store_string("SPDX-License-Identifier: MIT\n");
+        f->store_string("-->\n");
 
         String header = "<class name=\"" + c.name + "\"";
         if (c.inherits != "") {

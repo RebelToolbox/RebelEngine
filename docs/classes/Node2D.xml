@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
 <class name="Node2D" inherits="CanvasItem" version="1.0">
     <brief_description>
         A 2D game object, inherited by all 2D-related nodes. Has a position, rotation, scale, and Z index.

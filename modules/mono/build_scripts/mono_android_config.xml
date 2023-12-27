@@ -1,4 +1,13 @@
 <configuration>
+
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+
 	<dllmap wordsize="32" dll="i:cygwin1.dll" target="/system/lib/libc.so" />
 	<dllmap wordsize="64" dll="i:cygwin1.dll" target="/system/lib64/libc.so" />
 	<dllmap wordsize="32" dll="libc" target="/system/lib/libc.so" />

@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
 <class name="SkeletonIK" inherits="Node" version="1.0">
     <brief_description>
         SkeletonIK is used to place the end bone of a [Skeleton] bone chain at a certain point in 3D by rotating all bones in the chain accordingly.
