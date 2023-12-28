@@ -17,35 +17,11 @@
 #include "core/version.h"
 #include "scene/resources/theme.h"
 
-static String _get_indent(const String& p_text) {
-    String indent;
-    bool has_text  = false;
-    int line_start = 0;
-
-    for (int i = 0; i < p_text.length(); i++) {
-        const char32_t c = p_text[i];
-        if (c == '\n') {
-            line_start = i + 1;
-        } else if (c > 32) {
-            has_text = true;
-            indent   = p_text.substr(line_start, i - line_start);
-            break; // Indentation of the first line that has text.
-        }
-    }
-    if (!has_text) {
-        return p_text;
-    }
-    return indent;
-}
-
 static String _translate_docs_string(const String& p_text) {
-    const String indent  = _get_indent(p_text);
     const String message = p_text.dedent().strip_edges();
     const String translated =
         TranslationServer::get_singleton()->docs_translate(message);
-    // No need to restore stripped edges because they'll be stripped again
-    // later.
-    return translated.indent(indent);
+    return translated.strip_edges().xml_escape();
 }
 
 void DocsData::merge_from(const DocsData& p_data) {
@@ -1213,7 +1189,7 @@ static void _write_string(
     for (int i = 0; i < p_tablevel; i++) {
         tab += "\t";
     }
-    f->store_string(tab + p_string + "\n");
+    f->store_string(p_string.indent(tab) + "\n");
 }
 
 Error DocsData::save_classes(
@@ -1248,21 +1224,11 @@ Error DocsData::save_classes(
         _write_string(f, 0, header);
 
         _write_string(f, 1, "<brief_description>");
-        _write_string(
-            f,
-            2,
-            _translate_docs_string(c.brief_description)
-                .strip_edges()
-                .xml_escape()
-        );
+        _write_string(f, 2, _translate_docs_string(c.brief_description));
         _write_string(f, 1, "</brief_description>");
 
         _write_string(f, 1, "<description>");
-        _write_string(
-            f,
-            2,
-            _translate_docs_string(c.description).strip_edges().xml_escape()
-        );
+        _write_string(f, 2, _translate_docs_string(c.description));
         _write_string(f, 1, "</description>");
 
         _write_string(f, 1, "<tutorials>");
@@ -1342,11 +1308,7 @@ Error DocsData::save_classes(
             }
 
             _write_string(f, 3, "<description>");
-            _write_string(
-                f,
-                4,
-                _translate_docs_string(m.description).strip_edges().xml_escape()
-            );
+            _write_string(f, 4, _translate_docs_string(m.description));
             _write_string(f, 3, "</description>");
 
             _write_string(f, 2, "</method>");
@@ -1390,13 +1352,7 @@ Error DocsData::save_classes(
                             + "\" setter=\"" + p.setter + "\" getter=\""
                             + p.getter + "\"" + additional_attributes + ">"
                     );
-                    _write_string(
-                        f,
-                        3,
-                        _translate_docs_string(p.description)
-                            .strip_edges()
-                            .xml_escape()
-                    );
+                    _write_string(f, 3, _translate_docs_string(p.description));
                     _write_string(f, 2, "</member>");
                 }
             }
@@ -1422,13 +1378,7 @@ Error DocsData::save_classes(
                 }
 
                 _write_string(f, 3, "<description>");
-                _write_string(
-                    f,
-                    4,
-                    _translate_docs_string(m.description)
-                        .strip_edges()
-                        .xml_escape()
-                );
+                _write_string(f, 4, _translate_docs_string(m.description));
                 _write_string(f, 3, "</description>");
 
                 _write_string(f, 2, "</signal>");
@@ -1475,11 +1425,7 @@ Error DocsData::save_classes(
                     );
                 }
             }
-            _write_string(
-                f,
-                3,
-                _translate_docs_string(k.description).strip_edges().xml_escape()
-            );
+            _write_string(f, 3, _translate_docs_string(k.description));
             _write_string(f, 2, "</constant>");
         }
 
@@ -1510,13 +1456,7 @@ Error DocsData::save_classes(
                     );
                 }
 
-                _write_string(
-                    f,
-                    3,
-                    _translate_docs_string(ti.description)
-                        .strip_edges()
-                        .xml_escape()
-                );
+                _write_string(f, 3, _translate_docs_string(ti.description));
 
                 _write_string(f, 2, "</theme_item>");
             }
