@@ -1179,17 +1179,17 @@ Error DocsData::_load(Ref<XMLParser> parser) {
 
 static void _write_string(
     FileAccess* f,
-    int p_tablevel,
+    int p_indent_level,
     const String& p_string
 ) {
     if (p_string == "") {
         return;
     }
-    String tab;
-    for (int i = 0; i < p_tablevel; i++) {
-        tab += "\t";
+    String indent;
+    for (int i = 0; i < p_indent_level; i++) {
+        indent += "    ";
     }
-    f->store_string(p_string.indent(tab) + "\n");
+    f->store_string(p_string.indent(indent) + "\n");
 }
 
 Error DocsData::save_classes(
