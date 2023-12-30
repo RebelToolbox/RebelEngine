@@ -17,6 +17,40 @@ REBEL_DOCS_PATTERN = re.compile(
 )
 
 
+def indent_length(line):
+    length = 0
+    for character in line:
+        if character == "\t" or character == " ":
+            length += 1
+        else:
+            return length
+    return 0
+
+
+def dedent(text):
+    lines = text.splitlines()
+    # Get indent of the first line.
+    first_indent = 0
+    for line in lines:
+        # Ignore blank lines.
+        first_indent = indent_length(line)
+        if first_indent > 0:
+            break
+    if first_indent == 0:
+        return text
+    # Dedent lines.
+    result = []
+    for line in lines:
+        # Remove all white space if it's a blank line.
+        if not line or line.isspace():
+            result.append("")
+            continue
+        line_indent = indent_length(line)
+        dedented_line = line[min(first_indent, line_indent) :]
+        result.append(dedented_line)
+    return "\n".join(result)
+
+
 def print_error(error, state):  # type: (str, State) -> None
     print("ERROR: {}".format(error))
     state.errored = True
@@ -502,12 +536,12 @@ def make_rst_class(
 
     # Brief description
     if class_def.brief_description is not None:
-        f.write(rstize_text(class_def.brief_description.strip(), state) + "\n\n")
+        f.write(rstize_text(class_def.brief_description, state) + "\n\n")
 
     # Class description
     if class_def.description is not None and class_def.description.strip() != "":
         f.write(make_heading("Description", "-"))
-        f.write(rstize_text(class_def.description.strip(), state) + "\n\n")
+        f.write(rstize_text(class_def.description, state) + "\n\n")
 
     # Online tutorials
     if len(class_def.tutorials) > 0:
@@ -573,7 +607,7 @@ def make_rst_class(
             f.write("- {}\n\n".format(signature))
 
             if signal.description is not None and signal.description.strip() != "":
-                f.write(rstize_text(signal.description.strip(), state) + "\n\n")
+                f.write(rstize_text(signal.description, state) + "\n\n")
 
             index += 1
 
@@ -598,7 +632,7 @@ def make_rst_class(
             for value in e.values.values():
                 f.write("- **{}** = **{}**".format(value.name, value.value))
                 if value.text is not None and value.text.strip() != "":
-                    f.write(" --- " + rstize_text(value.text.strip(), state))
+                    f.write(" --- " + rstize_text(value.text, state))
 
                 f.write("\n\n")
 
@@ -615,7 +649,7 @@ def make_rst_class(
         for constant in class_def.constants.values():
             f.write("- **{}** = **{}**".format(constant.name, constant.value))
             if constant.text is not None and constant.text.strip() != "":
-                f.write(" --- " + rstize_text(constant.text.strip(), state))
+                f.write(" --- " + rstize_text(constant.text, state))
 
             f.write("\n\n")
 
@@ -656,7 +690,7 @@ def make_rst_class(
                 format_table(f, info)
 
             if property_def.text is not None and property_def.text.strip() != "":
-                f.write(rstize_text(property_def.text.strip(), state) + "\n\n")
+                f.write(rstize_text(property_def.text, state) + "\n\n")
 
             index += 1
 
@@ -677,7 +711,7 @@ def make_rst_class(
                 f.write("- {} {}\n\n".format(ret_type, signature))
 
                 if m.description is not None and m.description.strip() != "":
-                    f.write(rstize_text(m.description.strip(), state) + "\n\n")
+                    f.write(rstize_text(m.description, state) + "\n\n")
 
                 index += 1
 
@@ -709,7 +743,7 @@ def make_rst_class(
                 format_table(f, info)
 
             if theme_item_def.text is not None and theme_item_def.text.strip() != "":
-                f.write(rstize_text(theme_item_def.text.strip(), state) + "\n\n")
+                f.write(rstize_text(theme_item_def.text, state) + "\n\n")
 
             index += 1
 
@@ -751,75 +785,32 @@ def escape_rst(text, until_pos=-1):  # type: (str) -> str
 
 
 def rstize_text(text, state):  # type: (str, State) -> str
-    # Linebreak + tabs in the XML should become two line breaks unless in a "codeblock"
-    pos = 0
-    while True:
-        pos = text.find("\n", pos)
-        if pos == -1:
-            break
+    text = dedent(text).strip()
 
-        pre_text = text[:pos]
-        indent_level = 0
-        while text[pos + 1] == "\t":
-            pos += 1
-            indent_level += 1
-        post_text = text[pos + 1 :]
-
-        # Handle codeblocks
-        if post_text.startswith("[codeblock]"):
-            end_pos = post_text.find("[/codeblock]")
-            if end_pos == -1:
-                print_error(
-                    "[codeblock] without a closing tag, file: {}".format(
-                        state.current_class
-                    ),
-                    state,
-                )
-                return ""
-
-            code_text = post_text[len("[codeblock]") : end_pos]
-            post_text = post_text[end_pos:]
-
-            # Remove extraneous tabs
-            code_pos = 0
-            while True:
-                code_pos = code_text.find("\n", code_pos)
-                if code_pos == -1:
-                    break
-
-                to_skip = 0
-                while (
-                    code_pos + to_skip + 1 < len(code_text)
-                    and code_text[code_pos + to_skip + 1] == "\t"
-                ):
-                    to_skip += 1
-
-                if to_skip > indent_level:
-                    print_error(
-                        "Four spaces should be used for indentation within [codeblock], file: {}".format(
-                            state.current_class
-                        ),
-                        state,
-                    )
-
-                if len(code_text[code_pos + to_skip + 1 :]) == 0:
-                    code_text = code_text[:code_pos] + "\n"
-                    code_pos += 1
-                else:
-                    code_text = (
-                        code_text[:code_pos]
-                        + "\n    "
-                        + code_text[code_pos + to_skip + 1 :]
-                    )
-                    code_pos += 5 - to_skip
-
-            text = pre_text + "\n[codeblock]" + code_text + post_text
-            pos += len("\n[codeblock]" + code_text)
-
-        # Handle normal text
+    # Linebreak in XML becomes two line breaks in RST; unless inside a [codeblock].
+    lines = text.splitlines()
+    result = []
+    inside_codeblock = False
+    for line in lines:
+        if line.startswith("[codeblock]"):
+            inside_codeblock = True
+            result.append(line)
+            continue
+        if line.startswith("[/codeblock]"):
+            inside_codeblock = False
+        if inside_codeblock:
+            result.append("    " + line)
         else:
-            text = pre_text + "\n\n" + post_text
-            pos += 2
+            result.append(line)
+            result.append("")
+    text = "\n".join(result[:-1])
+
+    if inside_codeblock:
+        print_error(
+            "[codeblock] without a closing tag, file: {}".format(state.current_class),
+            state,
+        )
+        return ""
 
     next_brac_pos = text.find("[")
     text = escape_rst(text, next_brac_pos)
@@ -1000,7 +991,7 @@ def rstize_text(text, state):  # type: (str, State) -> str
                 tag_text = ""
             elif cmd == "codeblock":
                 tag_depth += 1
-                tag_text = "\n::\n"
+                tag_text = "::\n"
                 inside_code = True
             elif cmd == "br":
                 # Make a new paragraph instead of a linebreak, rst is not so linebreak friendly
