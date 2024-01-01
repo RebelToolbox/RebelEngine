@@ -54,7 +54,7 @@ if env["tools"]:
 
     # Core API documentation.
     docs = []
-    docs += Glob("#doc/classes/*.xml")
+    docs += Glob("#docs/classes/*.xml")
 
     # Module API documentation.
     module_dirs = []
@@ -102,7 +102,9 @@ if env["tools"]:
 
     # Documentation translations
     to_include = "de,es,fr,ja,zh_CN".split(",")
-    tlist = [env.Dir("#doc/translations").abspath + "/" + f + ".po" for f in to_include]
+    tlist = [
+        env.Dir("#docs/translations").abspath + "/" + f + ".po" for f in to_include
+    ]
     env.Depends("#editor/doc_translations.gen.h", tlist)
     env.CommandNoCache(
         "#editor/doc_translations.gen.h",
