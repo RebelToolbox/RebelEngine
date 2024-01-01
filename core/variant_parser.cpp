@@ -1940,17 +1940,16 @@ Error VariantWriter::write(
 
         case Variant::DICTIONARY: {
             Dictionary dict = p_variant;
-
+            if (dict.empty()) {
+                p_store_string_func(p_store_string_ud, "{}");
+                break;
+            }
             List<Variant> keys;
             dict.get_key_list(&keys);
             keys.sort();
 
             p_store_string_func(p_store_string_ud, "{\n");
             for (List<Variant>::Element* E = keys.front(); E; E = E->next()) {
-                /*
-                if (!_check_type(dict[E->get()]))
-                    continue;
-                */
                 write(
                     E->get(),
                     p_store_string_func,
