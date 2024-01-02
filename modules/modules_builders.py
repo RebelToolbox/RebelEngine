@@ -8,7 +8,7 @@ from platform_methods import subprocess_main
 
 def generate_modules_enabled(target, source, env):
     with open(target[0].path, "w") as f:
-        for module in env.module_list:
+        for module in env.modules_path:
             f.write("#define %s\n" % ("MODULE_" + module.upper() + "_ENABLED"))
 
 

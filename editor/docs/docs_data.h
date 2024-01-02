@@ -11,7 +11,7 @@
 #include "core/map.h"
 #include "core/variant.h"
 
-class DocData {
+class DocsData {
 public:
     struct ArgumentDoc {
         String name;
@@ -100,8 +100,8 @@ public:
     Error _load(Ref<XMLParser> parser);
 
 public:
-    void merge_from(const DocData& p_data);
-    void remove_from(const DocData& p_data);
+    void merge_from(const DocsData& p_data);
+    void remove_from(const DocsData& p_data);
     void generate(bool p_basic_types = false);
     Error load_classes(const String& p_dir);
     static Error erase_classes(const String& p_dir);

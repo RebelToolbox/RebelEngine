@@ -7191,7 +7191,7 @@ EditorNode::EditorNode() {
     ScriptServer::set_scripting_enabled(false
     ); // no scripting by default if editor
 
-    EditorHelp::generate_doc(); // before any editor classes are created
+    EditorHelp::generate_docs(); // before any editor classes are created
     SceneState::set_disable_placeholders(true);
     ResourceLoader::clear_translation_remaps(); // no remaps using during editor
     ResourceLoader::clear_path_remaps();
@@ -9136,7 +9136,7 @@ EditorNode::~EditorNode() {
     EditorInspector::cleanup_plugins();
 
     remove_print_handler(&print_handler);
-    memdelete(EditorHelp::get_doc_data());
+    memdelete(EditorHelp::get_docs_data());
     memdelete(editor_selection);
     memdelete(editor_plugins_over);
     memdelete(editor_plugins_force_over);

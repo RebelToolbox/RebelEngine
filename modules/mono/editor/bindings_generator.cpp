@@ -172,7 +172,7 @@ String BindingsGenerator::bbcode_to_xml(
         return String();
     }
 
-    DocData* doc = EditorHelp::get_doc_data();
+    DocsData* doc = EditorHelp::get_docs_data();
 
     String bbcode = p_bbcode;
 
@@ -1418,7 +1418,7 @@ Error BindingsGenerator::_generate_cs_type(
 
     output.append("\nnamespace " BINDINGS_NAMESPACE "\n" OPEN_BLOCK);
 
-    const DocData::ClassDoc* class_doc = itype.class_doc;
+    const DocsData::ClassDoc* class_doc = itype.class_doc;
 
     if (class_doc && class_doc->description.size()) {
         String xml_summary =
@@ -2886,7 +2886,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
             iprop.prop_doc = NULL;
 
             for (int i = 0; i < itype.class_doc->properties.size(); i++) {
-                const DocData::PropertyDoc& prop_doc =
+                const DocsData::PropertyDoc& prop_doc =
                     itype.class_doc->properties[i];
 
                 if (prop_doc.name == iprop.cname) {
@@ -3177,7 +3177,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 
                 iconstant.const_doc = NULL;
                 for (int i = 0; i < itype.class_doc->constants.size(); i++) {
-                    const DocData::ConstantDoc& const_doc =
+                    const DocsData::ConstantDoc& const_doc =
                         itype.class_doc->constants[i];
 
                     if (const_doc.name == iconstant.name) {
@@ -3218,7 +3218,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 
             iconstant.const_doc = NULL;
             for (int i = 0; i < itype.class_doc->constants.size(); i++) {
-                const DocData::ConstantDoc& const_doc =
+                const DocsData::ConstantDoc& const_doc =
                     itype.class_doc->constants[i];
 
                 if (const_doc.name == iconstant.name) {
@@ -3705,19 +3705,19 @@ void BindingsGenerator::_populate_global_constants() {
     int global_constants_count = GlobalConstants::get_global_constant_count();
 
     if (global_constants_count > 0) {
-        Map<String, DocData::ClassDoc>::Element* match =
-            EditorHelp::get_doc_data()->class_list.find("@GlobalScope");
+        Map<String, DocsData::ClassDoc>::Element* match =
+            EditorHelp::get_docs_data()->class_list.find("@GlobalScope");
 
-        CRASH_COND_MSG(!match, "Could not find '@GlobalScope' in DocData.");
+        CRASH_COND_MSG(!match, "Could not find '@GlobalScope' in DocsData.");
 
-        const DocData::ClassDoc& global_scope_doc = match->value();
+        const DocsData::ClassDoc& global_scope_doc = match->value();
 
         for (int i = 0; i < global_constants_count; i++) {
             String constant_name = GlobalConstants::get_global_constant_name(i);
 
-            const DocData::ConstantDoc* const_doc = NULL;
+            const DocsData::ConstantDoc* const_doc = NULL;
             for (int j = 0; j < global_scope_doc.constants.size(); j++) {
-                const DocData::ConstantDoc& curr_const_doc =
+                const DocsData::ConstantDoc& curr_const_doc =
                     global_scope_doc.constants[j];
 
                 if (curr_const_doc.name == constant_name) {
@@ -3822,7 +3822,7 @@ void BindingsGenerator::_log(const char* p_format, ...) {
 void BindingsGenerator::_initialize() {
     initialized = false;
 
-    EditorHelp::generate_doc();
+    EditorHelp::generate_docs();
 
     enum_types.clear();
 

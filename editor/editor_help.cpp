@@ -8,7 +8,7 @@
 
 #include "core/os/input.h"
 #include "core/os/keyboard.h"
-#include "doc_data_compressed.gen.h"
+#include "docs_data_compressed.gen.h"
 #include "editor/plugins/script_editor_plugin.h"
 #include "editor_node.h"
 #include "editor_scale.h"
@@ -18,7 +18,7 @@
     "https://docs.rebeltoolbox.com/en/latest/community/contributing/"          \
     "updating_the_class_reference.html"
 
-DocData* EditorHelp::doc = nullptr;
+DocsData* EditorHelp::docs_data = nullptr;
 
 void EditorHelp::_init_colors() {
     title_color     = get_color("accent_color", "Editor");
@@ -126,8 +126,8 @@ void EditorHelp::_class_desc_select(const String& p_select) {
             } else {
                 if (topic == "class_enum") {
                     // Try to find the enum in @GlobalScope
-                    const DocData::ClassDoc& cd =
-                        doc->class_list["@GlobalScope"];
+                    const DocsData::ClassDoc& cd =
+                        docs_data->class_list["@GlobalScope"];
 
                     for (int i = 0; i < cd.constants.size(); i++) {
                         if (cd.constants[i].enumeration == link) {
@@ -141,8 +141,8 @@ void EditorHelp::_class_desc_select(const String& p_select) {
                     }
                 } else if (topic == "class_constant") {
                     // Try to find the constant in @GlobalScope
-                    const DocData::ClassDoc& cd =
-                        doc->class_list["@GlobalScope"];
+                    const DocsData::ClassDoc& cd =
+                        docs_data->class_list["@GlobalScope"];
 
                     for (int i = 0; i < cd.constants.size(); i++) {
                         if (cd.constants[i].name == link) {
@@ -233,7 +233,7 @@ String EditorHelp::_fix_constant(const String& p_constant) const {
 }
 
 void EditorHelp::_add_method(
-    const DocData::MethodDoc& p_method,
+    const DocsData::MethodDoc& p_method,
     bool p_overview
 ) {
     method_line[p_method.name] =
@@ -330,7 +330,7 @@ void EditorHelp::_add_bulletpoint() {
 }
 
 Error EditorHelp::_goto_desc(const String& p_class, int p_vscr) {
-    if (!doc->class_list.has(p_class)) {
+    if (!docs_data->class_list.has(p_class)) {
         return ERR_DOES_NOT_EXIST;
     }
 
@@ -345,12 +345,12 @@ Error EditorHelp::_goto_desc(const String& p_class, int p_vscr) {
     }
 
     edited_class = p_class;
-    _update_doc();
+    _update_docs();
     return OK;
 }
 
-void EditorHelp::_update_doc() {
-    if (!doc->class_list.has(edited_class)) {
+void EditorHelp::_update_docs() {
+    if (!docs_data->class_list.has(edited_class)) {
         return;
     }
 
@@ -362,10 +362,7 @@ void EditorHelp::_update_doc() {
 
     _init_colors();
 
-    DocData::ClassDoc cd =
-        doc->class_list[edited_class]; // make a copy, so we can sort without
-                                       // worrying
-
+    DocsData::ClassDoc cd    = docs_data->class_list[edited_class];
     Ref<Font> doc_font       = get_font("doc", "EditorFonts");
     Ref<Font> doc_bold_font  = get_font("doc_bold", "EditorFonts");
     Ref<Font> doc_title_font = get_font("doc_title", "EditorFonts");
@@ -397,7 +394,7 @@ void EditorHelp::_update_doc() {
         while (inherits != "") {
             _add_type(inherits);
 
-            inherits = doc->class_list[inherits].inherits;
+            inherits = docs_data->class_list[inherits].inherits;
 
             if (inherits != "") {
                 class_desc->add_text(" < ");
@@ -415,8 +412,8 @@ void EditorHelp::_update_doc() {
         bool prev  = false;
 
         class_desc->push_font(doc_font);
-        for (Map<String, DocData::ClassDoc>::Element* E =
-                 doc->class_list.front();
+        for (Map<String, DocsData::ClassDoc>::Element* E =
+                 docs_data->class_list.front();
              E;
              E = E->next()) {
             if (E->get().inherits == cd.name) {
@@ -624,7 +621,7 @@ void EditorHelp::_update_doc() {
         "text_editor/help/sort_functions_alphabetically"
     );
 
-    Vector<DocData::MethodDoc> methods;
+    Vector<DocsData::MethodDoc> methods;
 
     for (int i = 0; i < cd.methods.size(); i++) {
         if (skip_methods.has(cd.methods[i].name)) {
@@ -659,7 +656,7 @@ void EditorHelp::_update_doc() {
 
         bool any_previous = false;
         for (int pass = 0; pass < 2; pass++) {
-            Vector<DocData::MethodDoc> m;
+            Vector<DocsData::MethodDoc> m;
 
             for (int i = 0; i < methods.size(); i++) {
                 const String& q = methods[i].qualifiers;
@@ -883,14 +880,14 @@ void EditorHelp::_update_doc() {
 
     // Constants and enums
     if (cd.constants.size()) {
-        Map<String, Vector<DocData::ConstantDoc>> enums;
-        Vector<DocData::ConstantDoc> constants;
+        Map<String, Vector<DocsData::ConstantDoc>> enums;
+        Vector<DocsData::ConstantDoc> constants;
 
         for (int i = 0; i < cd.constants.size(); i++) {
             if (cd.constants[i].enumeration != String()) {
                 if (!enums.has(cd.constants[i].enumeration)) {
                     enums[cd.constants[i].enumeration] =
-                        Vector<DocData::ConstantDoc>();
+                        Vector<DocsData::ConstantDoc>();
                 }
 
                 enums[cd.constants[i].enumeration].push_back(cd.constants[i]);
@@ -914,7 +911,7 @@ void EditorHelp::_update_doc() {
 
             class_desc->add_newline();
 
-            for (Map<String, Vector<DocData::ConstantDoc>>::Element* E =
+            for (Map<String, Vector<DocsData::ConstantDoc>>::Element* E =
                      enums.front();
                  E;
                  E = E->next()) {
@@ -942,7 +939,7 @@ void EditorHelp::_update_doc() {
                 class_desc->add_newline();
 
                 class_desc->push_indent(1);
-                Vector<DocData::ConstantDoc> enum_list = E->get();
+                Vector<DocsData::ConstantDoc> enum_list = E->get();
 
                 Map<String, int> enumValuesContainer;
                 int enumStartingLine = enum_line[E->key()];
@@ -1129,7 +1126,7 @@ void EditorHelp::_update_doc() {
             class_desc->pop(); // font
             class_desc->pop(); // cell
 
-            Map<String, DocData::MethodDoc> method_map;
+            Map<String, DocsData::MethodDoc> method_map;
             for (int j = 0; j < methods.size(); j++) {
                 method_map[methods[j].name] = methods[j];
             }
@@ -1239,7 +1236,7 @@ void EditorHelp::_update_doc() {
         class_desc->add_newline();
 
         for (int pass = 0; pass < 2; pass++) {
-            Vector<DocData::MethodDoc> methods_filtered;
+            Vector<DocsData::MethodDoc> methods_filtered;
 
             for (int i = 0; i < methods.size(); i++) {
                 const String& q = methods[i].qualifiers;
@@ -1360,7 +1357,7 @@ void EditorHelp::_help_callback(const String& p_topic) {
 }
 
 static void _add_text_to_rt(const String& p_bbcode, RichTextLabel* p_rt) {
-    DocData* doc = EditorHelp::get_doc_data();
+    DocsData* docs_data = EditorHelp::get_docs_data();
     String base_path;
 
     Ref<Font> doc_font      = p_rt->get_font("doc", "EditorFonts");
@@ -1457,7 +1454,7 @@ static void _add_text_to_rt(const String& p_bbcode, RichTextLabel* p_rt) {
             p_rt->pop();
             pos = brk_end + 1;
 
-        } else if (doc->class_list.has(tag)) {
+        } else if (docs_data->class_list.has(tag)) {
             p_rt->push_color(link_color);
             p_rt->push_meta("#" + tag);
             p_rt->add_text(tag);
@@ -1603,23 +1600,23 @@ void EditorHelp::_add_text(const String& p_bbcode) {
     _add_text_to_rt(p_bbcode, class_desc);
 }
 
-void EditorHelp::generate_doc() {
-    doc = memnew(DocData);
-    doc->generate(true);
-    DocData compdoc;
+void EditorHelp::generate_docs() {
+    docs_data = memnew(DocsData);
+    docs_data->generate(true);
+    DocsData compdoc;
     compdoc.load_compressed(
-        _doc_data_compressed,
-        _doc_data_compressed_size,
-        _doc_data_uncompressed_size
+        _docs_data_compressed,
+        _docs_data_compressed_size,
+        _docs_data_uncompressed_size
     );
-    doc->merge_from(compdoc); // ensure all is up to date
+    docs_data->merge_from(compdoc); // ensure all is up to date
 }
 
 void EditorHelp::_notification(int p_what) {
     switch (p_what) {
         case NOTIFICATION_READY:
         case EditorSettings::NOTIFICATION_EDITOR_SETTINGS_CHANGED: {
-            _update_doc();
+            _update_docs();
         } break;
         case NOTIFICATION_THEME_CHANGED: {
             if (is_inside_tree()) {

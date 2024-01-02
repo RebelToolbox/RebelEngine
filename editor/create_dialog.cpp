@@ -277,7 +277,7 @@ void CreateDialog::add_type(
     }
 
     const String& description =
-        DTR(EditorHelp::get_doc_data()->class_list[p_type].brief_description);
+        DTR(EditorHelp::get_docs_data()->class_list[p_type].brief_description);
     item->set_tooltip(0, description);
 
     String icon_fallback =
@@ -624,12 +624,12 @@ void CreateDialog::_item_selected() {
     favorite->set_disabled(false);
     favorite->set_pressed(favorite_list.find(name) != -1);
 
-    if (!EditorHelp::get_doc_data()->class_list.has(name)) {
+    if (!EditorHelp::get_docs_data()->class_list.has(name)) {
         return;
     }
 
     const String brief_desc =
-        DTR(EditorHelp::get_doc_data()->class_list[name].brief_description);
+        DTR(EditorHelp::get_docs_data()->class_list[name].brief_description);
     if (!brief_desc.empty()) {
         // Display both class name and description, since the help bit may be
         // displayed far away from the location (especially if the dialog was

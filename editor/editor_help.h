@@ -93,7 +93,7 @@ class EditorHelp : public VBoxContainer {
 
     RichTextLabel* class_desc;
     HSplitContainer* h_split;
-    static DocData* doc;
+    static DocsData* docs_data;
 
     ConfirmationDialog* search_dialog;
     LineEdit* search;
@@ -120,7 +120,7 @@ class EditorHelp : public VBoxContainer {
     // void _button_pressed(int p_idx);
     void _add_type(const String& p_type, const String& p_enum = String());
     void _add_method(
-        const DocData::MethodDoc& p_method,
+        const DocsData::MethodDoc& p_method,
         bool p_overview = true
     );
 
@@ -133,7 +133,7 @@ class EditorHelp : public VBoxContainer {
 
     Error _goto_desc(const String& p_class, int p_vscr = -1);
     // void _update_history_buttons();
-    void _update_doc();
+    void _update_docs();
 
     void _request_help(const String& p_string);
     void _search(bool p_search_previous = false);
@@ -147,10 +147,10 @@ protected:
     static void _bind_methods();
 
 public:
-    static void generate_doc();
+    static void generate_docs();
 
-    static DocData* get_doc_data() {
-        return doc;
+    static DocsData* get_docs_data() {
+        return docs_data;
     }
 
     void go_to_help(const String& p_help);

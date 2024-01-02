@@ -10,19 +10,19 @@ env_modules = env.Clone()
 
 Export("env_modules")
 
-env.Depends("modules_enabled.gen.h", Value(env.module_list))
+env.Depends("modules_enabled.gen.h", Value(env.modules_path))
 env.CommandNoCache(
     "modules_enabled.gen.h",
-    Value(env.module_list),
+    Value(env.modules_path),
     modules_builders.generate_modules_enabled,
 )
 
 env.modules_sources = []
 env_modules.add_source_files(env.modules_sources, "register_module_types.gen.cpp")
 
-for name, path in env.module_list.items():
+for module_name, path in env.modules_path.items():
     if not os.path.isabs(path):
-        SConscript(name + "/SCsub")  # Built-in.
+        SConscript(module_name + "/SCsub")  # Built-in.
     else:
         SConscript(path + "/SCsub")  # Custom.
 

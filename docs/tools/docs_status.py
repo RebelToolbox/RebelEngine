@@ -369,7 +369,7 @@ if len(input_file_list) < 1 or flags["h"]:
         )
     print(
         color("section", "Usage")
-        + ": doc_status.py [flags] <classes_dir> [class names]"
+        + ": docs_status.py [flags] <classes_dir> [class names]"
     )
     print(
         "\t< and > signify required parameters, while [ and ] signify optional parameters."

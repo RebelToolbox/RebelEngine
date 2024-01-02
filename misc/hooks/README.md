@@ -43,7 +43,7 @@ Python style checks to all Python and SCons files.
 ## `pre-commit-make-rst`
 
 `pre-commit-make-rst` checks the class reference syntax.
-`pre-commit-make-rst` performs a dry run of `doc/tools/make_rst.py`.
+`pre-commit-make-rst` performs a dry run of `docs/tools/make_rst.py`.
 
 ## `pre-commit-style-check`
 

@@ -1550,7 +1550,7 @@ void EditorSettings::setup_language() {
     load_editor_translations(lang);
 
     // Load class reference translation.
-    load_doc_translations(lang);
+    load_docs_translations(lang);
 }
 
 void EditorSettings::setup_network() {

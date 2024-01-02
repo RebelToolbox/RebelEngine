@@ -75,13 +75,13 @@ class EditorHelpSearch::Runner : public Reference {
     int phase;
 
     struct ClassMatch {
-        DocData::ClassDoc* doc;
+        DocsData::ClassDoc* doc;
         bool name;
-        Vector<DocData::MethodDoc*> methods;
-        Vector<DocData::MethodDoc*> signals;
-        Vector<DocData::ConstantDoc*> constants;
-        Vector<DocData::PropertyDoc*> properties;
-        Vector<DocData::ThemeItemDoc*> theme_properties;
+        Vector<DocsData::MethodDoc*> methods;
+        Vector<DocsData::MethodDoc*> signals;
+        Vector<DocsData::ConstantDoc*> constants;
+        Vector<DocsData::PropertyDoc*> properties;
+        Vector<DocsData::ThemeItemDoc*> theme_properties;
 
         bool required() {
             return name || methods.size() || signals.size() || constants.size()
@@ -97,7 +97,7 @@ class EditorHelpSearch::Runner : public Reference {
     Ref<Texture> empty_icon;
     Color disabled_color;
 
-    Map<String, DocData::ClassDoc>::Element* iterator_doc;
+    Map<String, DocsData::ClassDoc>::Element* iterator_doc;
     Map<String, ClassMatch> matches;
     Map<String, ClassMatch>::Element* iterator_match;
     TreeItem* root_item;
@@ -121,33 +121,33 @@ class EditorHelpSearch::Runner : public Reference {
     TreeItem* _create_class_hierarchy(const ClassMatch& p_match);
     TreeItem* _create_class_item(
         TreeItem* p_parent,
-        const DocData::ClassDoc* p_doc,
+        const DocsData::ClassDoc* p_doc,
         bool p_gray
     );
     TreeItem* _create_method_item(
         TreeItem* p_parent,
-        const DocData::ClassDoc* p_class_doc,
-        const DocData::MethodDoc* p_doc
+        const DocsData::ClassDoc* p_class_doc,
+        const DocsData::MethodDoc* p_doc
     );
     TreeItem* _create_signal_item(
         TreeItem* p_parent,
-        const DocData::ClassDoc* p_class_doc,
-        const DocData::MethodDoc* p_doc
+        const DocsData::ClassDoc* p_class_doc,
+        const DocsData::MethodDoc* p_doc
     );
     TreeItem* _create_constant_item(
         TreeItem* p_parent,
-        const DocData::ClassDoc* p_class_doc,
-        const DocData::ConstantDoc* p_doc
+        const DocsData::ClassDoc* p_class_doc,
+        const DocsData::ConstantDoc* p_doc
     );
     TreeItem* _create_property_item(
         TreeItem* p_parent,
-        const DocData::ClassDoc* p_class_doc,
-        const DocData::PropertyDoc* p_doc
+        const DocsData::ClassDoc* p_class_doc,
+        const DocsData::PropertyDoc* p_doc
     );
     TreeItem* _create_theme_property_item(
         TreeItem* p_parent,
-        const DocData::ClassDoc* p_class_doc,
-        const DocData::ThemeItemDoc* p_doc
+        const DocsData::ClassDoc* p_class_doc,
+        const DocsData::ThemeItemDoc* p_doc
     );
     TreeItem* _create_member_item(
         TreeItem* p_parent,

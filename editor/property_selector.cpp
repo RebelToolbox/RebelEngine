@@ -354,12 +354,12 @@ void PropertySelector::_item_selected() {
         class_type = instance->get_class();
     }
 
-    DocData* dd = EditorHelp::get_doc_data();
+    DocsData* docs_data = EditorHelp::get_docs_data();
     String text;
     if (properties) {
         while (class_type != String()) {
-            Map<String, DocData::ClassDoc>::Element* E =
-                dd->class_list.find(class_type);
+            Map<String, DocsData::ClassDoc>::Element* E =
+                docs_data->class_list.find(class_type);
             if (E) {
                 for (int i = 0; i < E->get().properties.size(); i++) {
                     if (E->get().properties[i].name == name) {
@@ -378,8 +378,8 @@ void PropertySelector::_item_selected() {
         }
     } else {
         while (class_type != String()) {
-            Map<String, DocData::ClassDoc>::Element* E =
-                dd->class_list.find(class_type);
+            Map<String, DocsData::ClassDoc>::Element* E =
+                docs_data->class_list.find(class_type);
             if (E) {
                 for (int i = 0; i < E->get().methods.size(); i++) {
                     if (E->get().methods[i].name == name) {

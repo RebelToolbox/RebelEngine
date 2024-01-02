@@ -21,7 +21,7 @@ class BindingsGenerator {
         String name;
         String proxy_name;
         int value;
-        const DocData::ConstantDoc* const_doc;
+        const DocsData::ConstantDoc* const_doc;
 
         ConstantInterface() {}
 
@@ -59,7 +59,7 @@ class BindingsGenerator {
         StringName setter;
         StringName getter;
 
-        const DocData::PropertyDoc* prop_doc;
+        const DocsData::PropertyDoc* prop_doc;
     };
 
     struct TypeReference {
@@ -134,7 +134,7 @@ class BindingsGenerator {
 
         List<ArgumentInterface> arguments;
 
-        const DocData::MethodDoc* method_doc;
+        const DocsData::MethodDoc* method_doc;
 
         bool is_deprecated;
         String deprecation_message;
@@ -314,7 +314,7 @@ class BindingsGenerator {
          */
         String im_type_out;
 
-        const DocData::ClassDoc* class_doc;
+        const DocsData::ClassDoc* class_doc;
 
         List<ConstantInterface> constants;
         List<EnumInterface> enums;
@@ -369,7 +369,7 @@ class BindingsGenerator {
             itype.im_type_in  = "ref " + itype.proxy_name;
             itype.im_type_out = itype.proxy_name;
             itype.class_doc =
-                &EditorHelp::get_doc_data()->class_list[itype.proxy_name];
+                &EditorHelp::get_docs_data()->class_list[itype.proxy_name];
         }
 
     public:
@@ -403,7 +403,7 @@ class BindingsGenerator {
             itype.api_type       = p_api_type;
             itype.is_object_type = true;
             itype.class_doc =
-                &EditorHelp::get_doc_data()->class_list[itype.proxy_name];
+                &EditorHelp::get_docs_data()->class_list[itype.proxy_name];
 
             return itype;
         }
@@ -445,7 +445,7 @@ class BindingsGenerator {
             r_enum_itype.cs_out      = "return (%2)%0(%1);";
             r_enum_itype.im_type_in  = "int";
             r_enum_itype.im_type_out = "int";
-            r_enum_itype.class_doc   = &EditorHelp::get_doc_data()
+            r_enum_itype.class_doc   = &EditorHelp::get_docs_data()
                                           ->class_list[r_enum_itype.proxy_name];
         }
 

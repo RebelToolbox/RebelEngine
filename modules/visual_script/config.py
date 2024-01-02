@@ -6,7 +6,7 @@ def configure(env):
     pass
 
 
-def get_doc_classes():
+def get_classes():
     return [
         "VisualScriptBasicTypeConstant",
         "VisualScriptBuiltinFunc",
@@ -56,7 +56,3 @@ def get_doc_classes():
         "VisualScriptYieldSignal",
         "VisualScriptYield",
     ]
-
-
-def get_doc_path():
-    return "doc_classes"

@@ -6,7 +6,7 @@ def configure(env):
     env.use_ptrcall = True
 
 
-def get_doc_classes():
+def get_classes():
     return [
         "ARVRInterfaceGDNative",
         "GDNative",
@@ -20,7 +20,3 @@ def get_doc_classes():
         "WebRTCPeerConnectionGDNative",
         "WebRTCDataChannelGDNative",
     ]
-
-
-def get_doc_path():
-    return "doc_classes"

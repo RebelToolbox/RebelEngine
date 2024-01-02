@@ -38,17 +38,17 @@ static String _get_indent(const String& p_text) {
     return indent;
 }
 
-static String _translate_doc_string(const String& p_text) {
+static String _translate_docs_string(const String& p_text) {
     const String indent  = _get_indent(p_text);
     const String message = p_text.dedent().strip_edges();
     const String translated =
-        TranslationServer::get_singleton()->doc_translate(message);
+        TranslationServer::get_singleton()->docs_translate(message);
     // No need to restore stripped edges because they'll be stripped again
     // later.
     return translated.indent(indent);
 }
 
-void DocData::merge_from(const DocData& p_data) {
+void DocsData::merge_from(const DocsData& p_data) {
     for (Map<String, ClassDoc>::Element* E = class_list.front(); E;
          E                                 = E->next()) {
         ClassDoc& c = E->get();
@@ -171,7 +171,7 @@ void DocData::merge_from(const DocData& p_data) {
     }
 }
 
-void DocData::remove_from(const DocData& p_data) {
+void DocsData::remove_from(const DocsData& p_data) {
     for (Map<String, ClassDoc>::Element* E = p_data.class_list.front(); E;
          E                                 = E->next()) {
         if (class_list.has(E->key())) {
@@ -181,7 +181,7 @@ void DocData::remove_from(const DocData& p_data) {
 }
 
 static void return_doc_from_retinfo(
-    DocData::MethodDoc& p_method,
+    DocsData::MethodDoc& p_method,
     const PropertyInfo& p_retinfo
 ) {
     if (p_retinfo.type == Variant::INT
@@ -206,7 +206,7 @@ static void return_doc_from_retinfo(
 }
 
 static void argument_doc_from_arginfo(
-    DocData::ArgumentDoc& p_argument,
+    DocsData::ArgumentDoc& p_argument,
     const PropertyInfo& p_arginfo
 ) {
     p_argument.name = p_arginfo.name;
@@ -273,7 +273,7 @@ static Variant get_documentation_default_value(
     return default_value;
 }
 
-void DocData::generate(bool p_basic_types) {
+void DocsData::generate(bool p_basic_types) {
     List<StringName> classes;
     ClassDB::get_class_list(&classes);
     classes.sort_custom<StringName::AlphCompare>();
@@ -823,7 +823,7 @@ void DocData::generate(bool p_basic_types) {
 
 static Error _parse_methods(
     Ref<XMLParser>& parser,
-    Vector<DocData::MethodDoc>& methods
+    Vector<DocsData::MethodDoc>& methods
 ) {
     String section = parser->get_node_name();
     String element = section.substr(0, section.length() - 1);
@@ -831,7 +831,7 @@ static Error _parse_methods(
     while (parser->read() == OK) {
         if (parser->get_node_type() == XMLParser::NODE_ELEMENT) {
             if (parser->get_node_name() == element) {
-                DocData::MethodDoc method;
+                DocsData::MethodDoc method;
                 ERR_FAIL_COND_V(
                     !parser->has_attribute("name"),
                     ERR_FILE_CORRUPT
@@ -857,7 +857,7 @@ static Error _parse_methods(
                                     parser->get_attribute_value("enum");
                             }
                         } else if (name == "argument") {
-                            DocData::ArgumentDoc argument;
+                            DocsData::ArgumentDoc argument;
                             ERR_FAIL_COND_V(
                                 !parser->has_attribute("name"),
                                 ERR_FILE_CORRUPT
@@ -905,7 +905,7 @@ static Error _parse_methods(
     return OK;
 }
 
-Error DocData::load_classes(const String& p_dir) {
+Error DocsData::load_classes(const String& p_dir) {
     Error err;
     DirAccessRef da = DirAccess::open(p_dir, &err);
     if (!da) {
@@ -933,7 +933,7 @@ Error DocData::load_classes(const String& p_dir) {
     return OK;
 }
 
-Error DocData::erase_classes(const String& p_dir) {
+Error DocsData::erase_classes(const String& p_dir) {
     Error err;
     DirAccessRef da = DirAccess::open(p_dir, &err);
     if (!da) {
@@ -961,7 +961,7 @@ Error DocData::erase_classes(const String& p_dir) {
     return OK;
 }
 
-Error DocData::_load(Ref<XMLParser> parser) {
+Error DocsData::_load(Ref<XMLParser> parser) {
     Error err = OK;
 
     while ((err = parser->read()) == OK) {
@@ -1216,7 +1216,7 @@ static void _write_string(
     f->store_string(tab + p_string + "\n");
 }
 
-Error DocData::save_classes(
+Error DocsData::save_classes(
     const String& p_default_path,
     const Map<String, String>& p_class_path
 ) {
@@ -1251,7 +1251,7 @@ Error DocData::save_classes(
         _write_string(
             f,
             2,
-            _translate_doc_string(c.brief_description)
+            _translate_docs_string(c.brief_description)
                 .strip_edges()
                 .xml_escape()
         );
@@ -1261,7 +1261,7 @@ Error DocData::save_classes(
         _write_string(
             f,
             2,
-            _translate_doc_string(c.description).strip_edges().xml_escape()
+            _translate_docs_string(c.description).strip_edges().xml_escape()
         );
         _write_string(f, 1, "</description>");
 
@@ -1345,7 +1345,7 @@ Error DocData::save_classes(
             _write_string(
                 f,
                 4,
-                _translate_doc_string(m.description).strip_edges().xml_escape()
+                _translate_docs_string(m.description).strip_edges().xml_escape()
             );
             _write_string(f, 3, "</description>");
 
@@ -1393,7 +1393,7 @@ Error DocData::save_classes(
                     _write_string(
                         f,
                         3,
-                        _translate_doc_string(p.description)
+                        _translate_docs_string(p.description)
                             .strip_edges()
                             .xml_escape()
                     );
@@ -1425,7 +1425,7 @@ Error DocData::save_classes(
                 _write_string(
                     f,
                     4,
-                    _translate_doc_string(m.description)
+                    _translate_docs_string(m.description)
                         .strip_edges()
                         .xml_escape()
                 );
@@ -1478,7 +1478,7 @@ Error DocData::save_classes(
             _write_string(
                 f,
                 3,
-                _translate_doc_string(k.description).strip_edges().xml_escape()
+                _translate_docs_string(k.description).strip_edges().xml_escape()
             );
             _write_string(f, 2, "</constant>");
         }
@@ -1513,7 +1513,7 @@ Error DocData::save_classes(
                 _write_string(
                     f,
                     3,
-                    _translate_doc_string(ti.description)
+                    _translate_docs_string(ti.description)
                         .strip_edges()
                         .xml_escape()
                 );
@@ -1529,7 +1529,7 @@ Error DocData::save_classes(
     return OK;
 }
 
-Error DocData::load_compressed(
+Error DocsData::load_compressed(
     const uint8_t* p_data,
     int p_compressed_size,
     int p_uncompressed_size

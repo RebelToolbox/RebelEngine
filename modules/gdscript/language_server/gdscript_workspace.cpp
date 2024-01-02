@@ -327,11 +327,12 @@ Error GDScriptWorkspace::initialize() {
         return OK;
     }
 
-    DocData* doc = EditorHelp::get_doc_data();
-    for (Map<String, DocData::ClassDoc>::Element* E = doc->class_list.front();
+    DocsData* docs_data = EditorHelp::get_docs_data();
+    for (Map<String, DocsData::ClassDoc>::Element* E =
+             docs_data->class_list.front();
          E;
          E = E->next()) {
-        const DocData::ClassDoc& class_data = E->value();
+        const DocsData::ClassDoc& class_data = E->value();
         lsp::DocumentSymbol class_symbol;
         String class_name         = E->key();
         class_symbol.name         = class_name;
@@ -345,7 +346,7 @@ Error GDScriptWorkspace::initialize() {
             class_data.brief_description + "\n" + class_data.description;
 
         for (int i = 0; i < class_data.constants.size(); i++) {
-            const DocData::ConstantDoc& const_data = class_data.constants[i];
+            const DocsData::ConstantDoc& const_data = class_data.constants[i];
             lsp::DocumentSymbol symbol;
             symbol.name         = const_data.name;
             symbol.native_class = class_name;
@@ -360,7 +361,7 @@ Error GDScriptWorkspace::initialize() {
         }
 
         for (int i = 0; i < class_data.properties.size(); i++) {
-            const DocData::PropertyDoc& data = class_data.properties[i];
+            const DocsData::PropertyDoc& data = class_data.properties[i];
             lsp::DocumentSymbol symbol;
             symbol.name         = data.name;
             symbol.native_class = class_name;
@@ -376,7 +377,7 @@ Error GDScriptWorkspace::initialize() {
         }
 
         for (int i = 0; i < class_data.theme_properties.size(); i++) {
-            const DocData::ThemeItemDoc& data = class_data.theme_properties[i];
+            const DocsData::ThemeItemDoc& data = class_data.theme_properties[i];
             lsp::DocumentSymbol symbol;
             symbol.name         = data.name;
             symbol.native_class = class_name;
@@ -387,13 +388,13 @@ Error GDScriptWorkspace::initialize() {
             class_symbol.children.push_back(symbol);
         }
 
-        Vector<DocData::MethodDoc> methods_signals;
+        Vector<DocsData::MethodDoc> methods_signals;
         methods_signals.append_array(class_data.methods);
         const int signal_start_idx = methods_signals.size();
         methods_signals.append_array(class_data.signals);
 
         for (int i = 0; i < methods_signals.size(); i++) {
-            const DocData::MethodDoc& data = methods_signals[i];
+            const DocsData::MethodDoc& data = methods_signals[i];
 
             lsp::DocumentSymbol symbol;
             symbol.name         = data.name;
@@ -404,7 +405,7 @@ Error GDScriptWorkspace::initialize() {
             String params                  = "";
             bool arg_default_value_started = false;
             for (int j = 0; j < data.arguments.size(); j++) {
-                const DocData::ArgumentDoc& arg = data.arguments[j];
+                const DocsData::ArgumentDoc& arg = data.arguments[j];
 
                 lsp::DocumentSymbol symbol_arg;
                 symbol_arg.name   = arg.name;
