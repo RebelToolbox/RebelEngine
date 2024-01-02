@@ -1,8 +1,10 @@
+# SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+# SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+# SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+#
+# SPDX-License-Identifier: MIT
+
 # Hindi translation of the Rebel Editor
-# Copyright (c) 2022-Present Rebel Engine contributors
-# Copyright (c) 2014-2022 Godot Engine contributors
-# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
-# This file is distributed under the same license as the Rebel Engine source code
 # Abhas Kumar Sinha <abhaskumarsinha@gmail.com>, 2017.
 # Suryansh5545 <suryanshpathak5545@gmail.com>, 2018, 2020.
 # Vikram1323 <vikram1323@gmail.com>, 2018.

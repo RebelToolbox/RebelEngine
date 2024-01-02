@@ -1,8 +1,10 @@
+# SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+# SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+# SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+#
+# SPDX-License-Identifier: MIT
+
 # LANGUAGE translation of the Rebel Engine class reference
-# Copyright (c) 2022-Present Rebel Engine contributors
-# Copyright (c) 2014-2022 Godot Engine contributors
-# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
-# This file is distributed under the same license as the Rebel Engine source code
 #
 # Tetra Homer <tetrahomer@gmail.com>, 2020.
 # Mitsuha Miamizu <mitsuha.miamizu4444@gmail.com>, 2020.
