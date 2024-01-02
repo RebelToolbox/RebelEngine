@@ -624,21 +624,12 @@ if selected_platform in platform_list:
             can_build = config.can_build(selected_platform)
         if can_build:
             config.configure(env)
-            # Get doc classes paths (if present)
-            try:
-                doc_classes = config.get_doc_classes()
-                doc_path = config.get_doc_path()
-                for c in doc_classes:
-                    env.doc_class_path[c] = path + "/" + doc_path
-            except Exception:
-                pass
-            # Get icon paths (if present)
-            try:
-                icons_path = config.get_icons_path()
-                env.module_icons_paths.append(path + "/" + icons_path)
-            except Exception:
-                # Default path for module icons
-                env.module_icons_paths.append(path + "/" + "icons")
+            # Get list of documented classes (if present)
+            if "get_doc_classes" in dir(config):
+                classes = config.get_doc_classes()
+                for class_name in classes:
+                    env.doc_class_path[class_name] = path + "/docs"
+            env.module_icons_paths.append(path + "/" + "icons")
             modules_enabled[name] = path
 
         sys.path.remove(path)
