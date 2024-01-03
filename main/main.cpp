@@ -455,13 +455,13 @@ void Main::print_help(const char* p_binary) {
         "whether it will be in PCK or ZIP format.\n"
     );
     OS::get_singleton()->print(
-        "  --doctool [<path>]               Dump the engine API reference to "
-        "the given <path> (defaults to current dir) in XML format, merging if "
-        "existing files are found.\n"
+        "  --generate-docs [<path>]         Generates the engine API XML docs, "
+        "and merges the contents of existing files. The optional <path> allows "
+        "redirecting the output to a different project root directory.\n"
     );
     OS::get_singleton()->print(
-        "  --no-docbase                     Disallow dumping the base types "
-        "(used with --doctool).\n"
+        "  --no-docs-base                   Prevents generation of base types "
+        "(used with --generate-docs).\n"
     );
     OS::get_singleton()->print(
         "  --build-solutions                Build the scripting solutions "
@@ -2130,7 +2130,7 @@ bool Main::start() {
         if (args[i] == "--check-only") {
             check_only = true;
 #ifdef TOOLS_ENABLED
-        } else if (args[i] == "--no-docbase") {
+        } else if (args[i] == "--no-docs-base") {
             doc_base = false;
         } else if (args[i] == "-e" || args[i] == "--editor") {
             editor = true;
@@ -2161,7 +2161,7 @@ bool Main::start() {
             } else if (args[i] == "--test") {
                 test = args[i + 1];
 #ifdef TOOLS_ENABLED
-            } else if (args[i] == "--doctool") {
+            } else if (args[i] == "--generate-docs") {
                 doc_tool_path = args[i + 1];
                 if (doc_tool_path.begins_with("-")) {
                     // Assuming other command line arg, so default to cwd.
@@ -2188,8 +2188,8 @@ bool Main::start() {
             if (parsed_pair) {
                 i++;
             }
-        } else if (args[i] == "--doctool") {
-            // Handle case where no path is given to --doctool.
+        } else if (args[i] == "--generate-docs") {
+            // Handle case where no path is given to --generate-docs.
             doc_tool_path = ".";
         }
     }
@@ -2210,7 +2210,8 @@ bool Main::start() {
             ERR_FAIL_COND_V_MSG(
                 !da,
                 false,
-                "Argument supplied to --doctool must be a valid directory path."
+                "Argument supplied to --generate-docs must be a valid "
+                "directory path."
             );
         }
         DocData doc;
