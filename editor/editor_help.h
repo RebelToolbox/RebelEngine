@@ -8,7 +8,7 @@
 #define EDITOR_HELP_H
 
 #include "editor/code_editor.h"
-#include "editor/doc/doc_data.h"
+#include "editor/docs/docs_data.h"
 #include "editor/editor_plugin.h"
 #include "scene/gui/margin_container.h"
 #include "scene/gui/menu_button.h"

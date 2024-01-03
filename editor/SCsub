@@ -68,7 +68,7 @@ if env["tools"]:
         else:
             docs += Glob(d + "/*.xml")  # Custom.
 
-    _make_doc_data_class_path(env.Dir("#editor/doc").abspath)
+    _make_doc_data_class_path(env.Dir("#editor/docs").abspath)
 
     docs = sorted(docs)
     env.Depends("#editor/doc_data_compressed.gen.h", docs)
@@ -127,7 +127,7 @@ if env["tools"]:
     env.add_source_files(env.editor_sources, "register_exporters.gen.cpp")
 
     SConscript("collada/SCsub")
-    SConscript("doc/SCsub")
+    SConscript("docs/SCsub")
     SConscript("fileserver/SCsub")
     SConscript("icons/SCsub")
     SConscript("import/SCsub")

@@ -47,8 +47,8 @@
 #include "servers/visual_server_callbacks.h"
 
 #ifdef TOOLS_ENABLED
-#include "editor/doc/doc_data.h"
-#include "editor/doc/doc_data_class_path.gen.h"
+#include "editor/docs/doc_data_class_path.gen.h"
+#include "editor/docs/docs_data.h"
 #include "editor/editor_node.h"
 #include "editor/editor_settings.h"
 #include "editor/editor_translation.h"

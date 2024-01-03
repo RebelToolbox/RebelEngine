@@ -9,7 +9,7 @@
 
 #include "core/class_db.h"
 #include "core/list.h"
-#include "editor/doc/doc_data.h"
+#include "editor/docs/docs_data.h"
 
 namespace lsp
 {

@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef DOC_DATA_H
-#define DOC_DATA_H
+#ifndef DOCS_DATA_H
+#define DOCS_DATA_H
 
 #include "core/io/xml_parser.h"
 #include "core/map.h"
@@ -117,4 +117,4 @@ public:
     );
 };
 
-#endif // DOC_DATA_H
+#endif // DOCS_DATA_H
