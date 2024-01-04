@@ -250,8 +250,9 @@ Dictionary GDScriptLanguageProtocol::initialize(const Dictionary& p_params) {
 void GDScriptLanguageProtocol::initialized(const Variant& p_params) {
     lsp::GodotCapabilities capabilities;
 
-    DocData* doc = EditorHelp::get_doc_data();
-    for (Map<String, DocData::ClassDoc>::Element* E = doc->class_list.front();
+    DocsData* docs_data = EditorHelp::get_docs_data();
+    for (Map<String, DocsData::ClassDoc>::Element* E =
+             docs_data->class_list.front();
          E;
          E = E->next()) {
         lsp::GodotNativeClassInfo gdclass;

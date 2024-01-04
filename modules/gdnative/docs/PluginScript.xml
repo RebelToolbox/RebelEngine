@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="PluginScript" inherits="Script" version="1.0">
+    <brief_description>
+    </brief_description>
+    <description>
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+        <method name="new" qualifiers="vararg">
+            <return type="Variant" />
+            <description>
+                Returns a new instance of the script.
+            </description>
+        </method>
+    </methods>
+    <constants>
+    </constants>
+</class>

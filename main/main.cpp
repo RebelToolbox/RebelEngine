@@ -47,8 +47,8 @@
 #include "servers/visual_server_callbacks.h"
 
 #ifdef TOOLS_ENABLED
-#include "editor/doc/doc_data.h"
-#include "editor/doc/doc_data_class_path.gen.h"
+#include "editor/docs/docs_data.h"
+#include "editor/docs/modules_classes_docs_path.gen.h"
 #include "editor/editor_node.h"
 #include "editor/editor_settings.h"
 #include "editor/editor_translation.h"
@@ -455,13 +455,13 @@ void Main::print_help(const char* p_binary) {
         "whether it will be in PCK or ZIP format.\n"
     );
     OS::get_singleton()->print(
-        "  --doctool [<path>]               Dump the engine API reference to "
-        "the given <path> (defaults to current dir) in XML format, merging if "
-        "existing files are found.\n"
+        "  --generate-docs [<path>]         Generates the engine API XML docs, "
+        "and merges the contents of existing files. The optional <path> allows "
+        "redirecting the output to a different project root directory.\n"
     );
     OS::get_singleton()->print(
-        "  --no-docbase                     Disallow dumping the base types "
-        "(used with --doctool).\n"
+        "  --no-docs-base                   Prevents generation of base types "
+        "(used with --generate-docs).\n"
     );
     OS::get_singleton()->print(
         "  --build-solutions                Build the scripting solutions "
@@ -2108,7 +2108,7 @@ bool Main::start() {
     ERR_FAIL_COND_V(!_start_success, false);
 
     bool hasicon = false;
-    String doc_tool_path;
+    String docs_path;
     String positional_arg;
     String game_path;
     String script;
@@ -2116,7 +2116,7 @@ bool Main::start() {
     bool check_only = false;
 
 #ifdef TOOLS_ENABLED
-    bool doc_base = true;
+    bool docs_base = true;
     String _export_preset;
     bool export_debug     = false;
     bool export_pack_only = false;
@@ -2130,8 +2130,8 @@ bool Main::start() {
         if (args[i] == "--check-only") {
             check_only = true;
 #ifdef TOOLS_ENABLED
-        } else if (args[i] == "--no-docbase") {
-            doc_base = false;
+        } else if (args[i] == "--no-docs-base") {
+            docs_base = false;
         } else if (args[i] == "-e" || args[i] == "--editor") {
             editor = true;
         } else if (args[i] == "-p" || args[i] == "--project-manager") {
@@ -2161,12 +2161,12 @@ bool Main::start() {
             } else if (args[i] == "--test") {
                 test = args[i + 1];
 #ifdef TOOLS_ENABLED
-            } else if (args[i] == "--doctool") {
-                doc_tool_path = args[i + 1];
-                if (doc_tool_path.begins_with("-")) {
+            } else if (args[i] == "--generate-docs") {
+                docs_path = args[i + 1];
+                if (docs_path.begins_with("-")) {
                     // Assuming other command line arg, so default to cwd.
-                    doc_tool_path = ".";
-                    parsed_pair   = false;
+                    docs_path   = ".";
+                    parsed_pair = false;
                 }
             } else if (args[i] == "--export") {
                 editor         = true; // needs editor
@@ -2188,47 +2188,48 @@ bool Main::start() {
             if (parsed_pair) {
                 i++;
             }
-        } else if (args[i] == "--doctool") {
-            // Handle case where no path is given to --doctool.
-            doc_tool_path = ".";
+        } else if (args[i] == "--generate-docs") {
+            // Handle case where no path is given to --generate-docs.
+            docs_path = ".";
         }
     }
 
 #ifdef TOOLS_ENABLED
-    if (doc_tool_path != "") {
+    if (docs_path != "") {
         Engine::get_singleton()->set_editor_hint(true
         ); // Needed to instance editor-only classes for their default values
 
         // Translate the class reference only when `-l LOCALE` parameter is
         // given.
         if (!locale.empty() && locale != "en") {
-            load_doc_translations(locale);
+            load_docs_translations(locale);
         }
 
         {
-            DirAccessRef da = DirAccess::open(doc_tool_path);
+            DirAccessRef da = DirAccess::open(docs_path);
             ERR_FAIL_COND_V_MSG(
                 !da,
                 false,
-                "Argument supplied to --doctool must be a valid directory path."
+                "Argument supplied to --generate-docs must be a valid "
+                "directory path."
             );
         }
-        DocData doc;
-        doc.generate(doc_base);
+        DocsData docs;
+        docs.generate(docs_base);
 
-        DocData docsrc;
-        Map<String, String> doc_data_classes;
+        DocsData docssrc;
+        Map<String, String> classes_docs_path;
         Set<String> checked_paths;
         print_line("Loading docs...");
 
-        for (int i = 0; i < _doc_data_class_path_count; i++) {
-            // Custom modules are always located by absolute path.
-            String path = _doc_data_class_paths[i].path;
+        for (int i = 0; i < _modules_classes_docs_path_count; i++) {
+            // Modules' docs are always located by absolute path.
+            String path = _modules_classes_docs_path[i].path;
             if (path.is_rel_path()) {
-                path = doc_tool_path.plus_file(path);
+                path = docs_path.plus_file(path);
             }
-            String name            = _doc_data_class_paths[i].name;
-            doc_data_classes[name] = path;
+            String name             = _modules_classes_docs_path[i].name;
+            classes_docs_path[name] = path;
             if (!checked_paths.has(path)) {
                 checked_paths.insert(path);
 
@@ -2237,31 +2238,31 @@ bool Main::start() {
                 da->make_dir_recursive(path);
                 memdelete(da);
 
-                docsrc.load_classes(path);
+                docssrc.load_classes(path);
                 print_line("Loading docs from: " + path);
             }
         }
 
-        String index_path = doc_tool_path.plus_file("doc/classes");
+        String index_path = docs_path.plus_file("docs/classes");
         // Create the main documentation directory if it doesn't exist
         DirAccess* da     = DirAccess::create_for_path(index_path);
         da->make_dir_recursive(index_path);
         memdelete(da);
 
-        docsrc.load_classes(index_path);
+        docssrc.load_classes(index_path);
         checked_paths.insert(index_path);
         print_line("Loading docs from: " + index_path);
 
         print_line("Merging docs...");
-        doc.merge_from(docsrc);
+        docs.merge_from(docssrc);
         for (Set<String>::Element* E = checked_paths.front(); E;
              E                       = E->next()) {
             print_line("Erasing old docs at: " + E->get());
-            DocData::erase_classes(E->get());
+            DocsData::erase_classes(E->get());
         }
 
         print_line("Generating new docs...");
-        doc.save_classes(index_path, doc_data_classes);
+        docs.save_classes(index_path, classes_docs_path);
 
         return false;
     }

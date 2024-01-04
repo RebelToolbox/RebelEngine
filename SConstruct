@@ -599,15 +599,15 @@ if selected_platform in platform_list:
     sys.path.remove(tmppath)
     sys.modules.pop("detect")
 
-    modules_enabled = OrderedDict()
+    env.modules_path = OrderedDict()
+    env.modules_classes_docs_path = {}
     env.module_icons_paths = []
-    env.doc_class_path = {}
 
-    for name, path in modules_detected.items():
-        if not env["module_" + name + "_enabled"]:
+    for module_name, path in modules_detected.items():
+        if not env["module_" + module_name + "_enabled"]:
             continue
         sys.path.insert(0, path)
-        env.current_module = name
+        env.current_module = module_name
         import config
 
         # can_build changed number of arguments between 3.0 (1) and 3.1 (2),
@@ -624,27 +624,16 @@ if selected_platform in platform_list:
             can_build = config.can_build(selected_platform)
         if can_build:
             config.configure(env)
-            # Get doc classes paths (if present)
-            try:
-                doc_classes = config.get_doc_classes()
-                doc_path = config.get_doc_path()
-                for c in doc_classes:
-                    env.doc_class_path[c] = path + "/" + doc_path
-            except Exception:
-                pass
-            # Get icon paths (if present)
-            try:
-                icons_path = config.get_icons_path()
-                env.module_icons_paths.append(path + "/" + icons_path)
-            except Exception:
-                # Default path for module icons
-                env.module_icons_paths.append(path + "/" + "icons")
-            modules_enabled[name] = path
+            # Get list of documented classes (if present)
+            if "get_classes" in dir(config):
+                classes = config.get_classes()
+                for class_name in classes:
+                    env.modules_classes_docs_path[class_name] = path + "/docs"
+            env.module_icons_paths.append(path + "/" + "icons")
+            env.modules_path[module_name] = path
 
         sys.path.remove(path)
         sys.modules.pop("config")
-
-    env.module_list = modules_enabled
 
     methods.update_version(env.module_version_string)
 
@@ -688,8 +677,8 @@ if selected_platform in platform_list:
     if env["minizip"]:
         env.Append(CPPDEFINES=["MINIZIP_ENABLED"])
 
-    editor_module_list = ["freetype"]
-    for x in editor_module_list:
+    editor_modules = ["freetype"]
+    for x in editor_modules:
         if not env["module_" + x + "_enabled"]:
             if env["tools"]:
                 print(

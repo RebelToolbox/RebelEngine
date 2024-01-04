@@ -9,14 +9,14 @@
 
 #include "core/class_db.h"
 #include "core/list.h"
-#include "editor/doc/doc_data.h"
+#include "editor/docs/docs_data.h"
 
 namespace lsp
 {
 
 typedef String DocumentUri;
 
-/** Format BBCode documentation from DocData to markdown */
+/** Format BBCode documentation from DocsData to markdown */
 static String marked_documentation(const String& p_bbcode);
 
 /**
@@ -1922,7 +1922,7 @@ struct InitializeResult {
 
 struct GodotNativeClassInfo {
     String name;
-    const DocData::ClassDoc* class_doc   = nullptr;
+    const DocsData::ClassDoc* class_doc  = nullptr;
     const ClassDB::ClassInfo* class_info = nullptr;
 
     Dictionary to_json() {
@@ -1952,7 +1952,7 @@ struct GodotCapabilities {
     }
 };
 
-/** Format BBCode documentation from DocData to markdown */
+/** Format BBCode documentation from DocsData to markdown */
 static String marked_documentation(const String& p_bbcode) {
     String markdown = p_bbcode.strip_edges();
 

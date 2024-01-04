@@ -6,7 +6,7 @@ def configure(env):
     pass
 
 
-def get_doc_classes():
+def get_classes():
     return [
         "CSGBox",
         "CSGCombiner",
@@ -18,7 +18,3 @@ def get_doc_classes():
         "CSGSphere",
         "CSGTorus",
     ]
-
-
-def get_doc_path():
-    return "doc_classes"

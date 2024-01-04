@@ -1,8 +1,10 @@
+# SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+# SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+# SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+#
+# SPDX-License-Identifier: MIT
+
 # Polish translation of the Rebel Editor
-# Copyright (c) 2022-Present Rebel Engine contributors
-# Copyright (c) 2014-2022 Godot Engine contributors
-# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
-# This file is distributed under the same license as the Rebel Engine source code
 # 8-bit Pixel <dawdejw@gmail.com>, 2016.
 # Adam Wolanski <adam.wolanski94@gmail.com>, 2017.
 # Adrian Węcławski <weclawskiadrian@gmail.com>, 2016.

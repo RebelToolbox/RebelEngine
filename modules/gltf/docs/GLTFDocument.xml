@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="GLTFDocument" inherits="Resource" version="1.0">
+    <brief_description>
+    </brief_description>
+    <description>
+        [b]Note:[/b] This class is only compiled in editor builds. Run-time glTF loading and saving is [i]not[/i] available in exported projects. References to [GLTFDocument] within a script will cause an error in an exported project.
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <constants>
+    </constants>
+</class>

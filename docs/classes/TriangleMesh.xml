@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="TriangleMesh" inherits="Reference" version="1.0">
+    <brief_description>
+        Internal mesh type.
+    </brief_description>
+    <description>
+        Mesh type used internally for collision calculations.
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <constants>
+    </constants>
+</class>

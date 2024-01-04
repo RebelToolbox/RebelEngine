@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="GLTFBufferView" inherits="Resource" version="1.0">
+    <brief_description>
+    </brief_description>
+    <description>
+        [b]Note:[/b] This class is only compiled in editor builds. Run-time glTF loading and saving is [i]not[/i] available in exported projects. References to [GLTFBufferView] within a script will cause an error in an exported project.
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <members>
+        <member name="buffer" type="int" setter="set_buffer" getter="get_buffer" default="-1">
+        </member>
+        <member name="byte_length" type="int" setter="set_byte_length" getter="get_byte_length" default="0">
+        </member>
+        <member name="byte_offset" type="int" setter="set_byte_offset" getter="get_byte_offset" default="0">
+        </member>
+        <member name="byte_stride" type="int" setter="set_byte_stride" getter="get_byte_stride" default="-1">
+        </member>
+        <member name="indices" type="bool" setter="set_indices" getter="get_indices" default="false">
+        </member>
+    </members>
+    <constants>
+    </constants>
+</class>

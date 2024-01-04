@@ -11,26 +11,27 @@ from compat import open_utf8
 import editor_builders
 
 
-def _make_doc_data_class_path(to_path):
+def _make_modules_classes_docs_path(to_path):
     # NOTE: It is safe to generate this file here, since this is still executed serially
-    g = open_utf8(os.path.join(to_path, "doc_data_class_path.gen.h"), "w")
+    g = open_utf8(os.path.join(to_path, "modules_classes_docs_path.gen.h"), "w")
     g.write(
-        "static const int _doc_data_class_path_count = "
-        + str(len(env.doc_class_path))
+        "static const int _modules_classes_docs_path_count = "
+        + str(len(env.modules_classes_docs_path))
         + ";\n"
     )
-    g.write("struct _DocDataClassPath { const char* name; const char* path; };\n")
+    g.write("struct ModulesClassesDocsPath { const char* name; const char* path; };\n")
 
     g.write(
-        "static const _DocDataClassPath _doc_data_class_paths["
-        + str(len(env.doc_class_path) + 1)
+        "static const ModulesClassesDocsPath _modules_classes_docs_path["
+        + str(len(env.modules_classes_docs_path) + 1)
         + "] = {\n"
     )
-    for c in sorted(env.doc_class_path):
-        g.write('\t{"' + c + '", "' + env.doc_class_path[c] + '"},\n')
-    g.write("\t{NULL, NULL}\n")
+    for name in sorted(env.modules_classes_docs_path):
+        g.write(
+            '    {"' + name + '", "' + env.modules_classes_docs_path[name] + '"},\n'
+        )
+    g.write("    {NULL, NULL}\n")
     g.write("};\n")
-
     g.close()
 
 
@@ -54,11 +55,11 @@ if env["tools"]:
 
     # Core API documentation.
     docs = []
-    docs += Glob("#doc/classes/*.xml")
+    docs += Glob("#docs/classes/*.xml")
 
     # Module API documentation.
     module_dirs = []
-    for d in env.doc_class_path.values():
+    for d in env.modules_classes_docs_path.values():
         if d not in module_dirs:
             module_dirs.append(d)
 
@@ -68,14 +69,14 @@ if env["tools"]:
         else:
             docs += Glob(d + "/*.xml")  # Custom.
 
-    _make_doc_data_class_path(env.Dir("#editor/doc").abspath)
+    _make_modules_classes_docs_path(env.Dir("#editor/docs").abspath)
 
     docs = sorted(docs)
-    env.Depends("#editor/doc_data_compressed.gen.h", docs)
+    env.Depends("#editor/docs_data_compressed.gen.h", docs)
     env.CommandNoCache(
-        "#editor/doc_data_compressed.gen.h",
+        "#editor/docs_data_compressed.gen.h",
         docs,
-        run_in_subprocess(editor_builders.make_doc_header),
+        run_in_subprocess(editor_builders.make_docs_header),
     )
 
     # Editor interface and class reference translations incur a significant size
@@ -102,12 +103,14 @@ if env["tools"]:
 
     # Documentation translations
     to_include = "de,es,fr,ja,zh_CN".split(",")
-    tlist = [env.Dir("#doc/translations").abspath + "/" + f + ".po" for f in to_include]
-    env.Depends("#editor/doc_translations.gen.h", tlist)
+    tlist = [
+        env.Dir("#docs/translations").abspath + "/" + f + ".po" for f in to_include
+    ]
+    env.Depends("#editor/docs_translations.gen.h", tlist)
     env.CommandNoCache(
-        "#editor/doc_translations.gen.h",
+        "#editor/docs_translations.gen.h",
         tlist,
-        run_in_subprocess(editor_builders.make_doc_translations_header),
+        run_in_subprocess(editor_builders.make_docs_translations_header),
     )
 
     # Fonts
@@ -125,7 +128,7 @@ if env["tools"]:
     env.add_source_files(env.editor_sources, "register_exporters.gen.cpp")
 
     SConscript("collada/SCsub")
-    SConscript("doc/SCsub")
+    SConscript("docs/SCsub")
     SConscript("fileserver/SCsub")
     SConscript("icons/SCsub")
     SConscript("import/SCsub")

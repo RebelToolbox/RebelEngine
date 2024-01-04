@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="ARVRInterfaceGDNative" inherits="ARVRInterface" version="1.0">
+    <brief_description>
+        GDNative wrapper for an ARVR interface.
+    </brief_description>
+    <description>
+        This is a wrapper class for GDNative implementations of the ARVR interface. To use a GDNative ARVR interface, simply instantiate this object and set your GDNative library containing the ARVR interface implementation.
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <constants>
+    </constants>
+</class>

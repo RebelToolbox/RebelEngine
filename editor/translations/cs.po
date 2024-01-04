@@ -1,8 +1,10 @@
+# SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+# SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+# SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+#
+# SPDX-License-Identifier: MIT
+
 # Czech translation of the Rebel Editor
-# Copyright (c) 2022-Present Rebel Engine contributors
-# Copyright (c) 2014-2022 Godot Engine contributors
-# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur
-# This file is distributed under the same license as the Rebel Engine source code
 # Fadex <vitekpaulik@gmail.com>, 2017.
 # Jan 'spl!te' Kondelík <j.kondelik@centrum.cz>, 2016, 2018.
 # Jiri Hysek <contact@jirihysek.com>, 2017.

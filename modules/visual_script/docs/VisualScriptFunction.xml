@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="VisualScriptFunction" inherits="VisualScriptNode" version="1.0">
+    <brief_description>
+        A Visual Script node representing a function.
+    </brief_description>
+    <description>
+        [VisualScriptFunction] represents a function header. It is the starting point for the function body and can be used to tweak the function's properties (e.g. RPC mode).
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <constants>
+    </constants>
+</class>

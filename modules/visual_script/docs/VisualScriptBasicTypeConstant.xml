@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="VisualScriptBasicTypeConstant" inherits="VisualScriptNode" version="1.0">
+    <brief_description>
+        A Visual Script node representing a constant from the base types.
+    </brief_description>
+    <description>
+        A Visual Script node representing a constant from base types, such as [constant Vector3.AXIS_X].
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <members>
+        <member name="basic_type" type="int" setter="set_basic_type" getter="get_basic_type" enum="Variant.Type" default="0">
+            The type to get the constant from.
+        </member>
+        <member name="constant" type="String" setter="set_basic_type_constant" getter="get_basic_type_constant">
+            The name of the constant to return.
+        </member>
+    </members>
+    <constants>
+    </constants>
+</class>

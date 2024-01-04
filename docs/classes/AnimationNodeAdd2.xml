@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="AnimationNodeAdd2" inherits="AnimationNode" version="1.0">
+    <brief_description>
+        Blends two animations additively inside of an [AnimationNodeBlendTree].
+    </brief_description>
+    <description>
+        A resource to add to an [AnimationNodeBlendTree]. Blends two animations additively based on an amount value in the [code][0.0, 1.0][/code] range.
+    </description>
+    <tutorials>
+        <link>https://docs.rebeltoolbox.com/en/latest/tutorials/animation/animation_tree.html</link>
+    </tutorials>
+    <methods>
+    </methods>
+    <members>
+        <member name="sync" type="bool" setter="set_use_sync" getter="is_using_sync" default="false">
+            If [code]true[/code], sets the [code]optimization[/code] to [code]false[/code] when calling [method AnimationNode.blend_input], forcing the blended animations to update every frame.
+        </member>
+    </members>
+    <constants>
+    </constants>
+</class>

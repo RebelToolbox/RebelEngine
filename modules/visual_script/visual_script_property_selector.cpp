@@ -546,14 +546,14 @@ void VisualScriptPropertySelector::_item_selected() {
         class_type = base_type;
     }
 
-    DocData* dd = EditorHelp::get_doc_data();
+    DocsData* docs_data = EditorHelp::get_docs_data();
     String text;
 
     String at_class = class_type;
 
     while (at_class != String()) {
-        Map<String, DocData::ClassDoc>::Element* E =
-            dd->class_list.find(at_class);
+        Map<String, DocsData::ClassDoc>::Element* E =
+            docs_data->class_list.find(at_class);
         if (E) {
             for (int i = 0; i < E->get().properties.size(); i++) {
                 if (E->get().properties[i].name == name) {
@@ -567,8 +567,8 @@ void VisualScriptPropertySelector::_item_selected() {
     at_class = class_type;
 
     while (at_class != String()) {
-        Map<String, DocData::ClassDoc>::Element* C =
-            dd->class_list.find(at_class);
+        Map<String, DocsData::ClassDoc>::Element* C =
+            docs_data->class_list.find(at_class);
         if (C) {
             for (int i = 0; i < C->get().methods.size(); i++) {
                 if (C->get().methods[i].name == name) {
@@ -582,7 +582,8 @@ void VisualScriptPropertySelector::_item_selected() {
     Vector<String> functions = name.rsplit("/", false);
     at_class =
         functions.size() > 3 ? functions[functions.size() - 2] : class_type;
-    Map<String, DocData::ClassDoc>::Element* T = dd->class_list.find(at_class);
+    Map<String, DocsData::ClassDoc>::Element* T =
+        docs_data->class_list.find(at_class);
     if (T) {
         for (int i = 0; i < T->get().methods.size(); i++) {
             if (T->get().methods[i].name == functions[functions.size() - 1]) {
@@ -597,8 +598,8 @@ void VisualScriptPropertySelector::_item_selected() {
         Ref<VisualScriptOperator> operator_node =
             VisualScriptLanguage::singleton->create_node_from_name(name);
         if (operator_node.is_valid()) {
-            Map<String, DocData::ClassDoc>::Element* F =
-                dd->class_list.find(operator_node->get_class_name());
+            Map<String, DocsData::ClassDoc>::Element* F =
+                docs_data->class_list.find(operator_node->get_class_name());
             if (F) {
                 text =
                     Variant::get_operator_name(operator_node->get_operator());
@@ -607,8 +608,8 @@ void VisualScriptPropertySelector::_item_selected() {
         Ref<VisualScriptTypeCast> typecast_node =
             VisualScriptLanguage::singleton->create_node_from_name(name);
         if (typecast_node.is_valid()) {
-            Map<String, DocData::ClassDoc>::Element* F =
-                dd->class_list.find(typecast_node->get_class_name());
+            Map<String, DocsData::ClassDoc>::Element* F =
+                docs_data->class_list.find(typecast_node->get_class_name());
             if (F) {
                 text = DTR(F->get().description);
             }
@@ -617,8 +618,8 @@ void VisualScriptPropertySelector::_item_selected() {
         Ref<VisualScriptBuiltinFunc> builtin_node =
             VisualScriptLanguage::singleton->create_node_from_name(name);
         if (builtin_node.is_valid()) {
-            Map<String, DocData::ClassDoc>::Element* F =
-                dd->class_list.find(builtin_node->get_class_name());
+            Map<String, DocsData::ClassDoc>::Element* F =
+                docs_data->class_list.find(builtin_node->get_class_name());
             if (F) {
                 for (int i = 0; i < F->get().constants.size(); i++) {
                     if (F->get().constants[i].value.to_int()

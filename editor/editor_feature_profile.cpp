@@ -675,8 +675,8 @@ void EditorFeatureProfileManager::_class_list_item_selected() {
         String class_name = md;
         String class_description;
 
-        DocData* dd = EditorHelp::get_doc_data();
-        Map<String, DocData::ClassDoc>::Element* E =
+        DocsData* dd = EditorHelp::get_docs_data();
+        Map<String, DocsData::ClassDoc>::Element* E =
             dd->class_list.find(class_name);
         if (E) {
             class_description = E->get().brief_description;

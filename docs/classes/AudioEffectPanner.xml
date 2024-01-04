@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="AudioEffectPanner" inherits="AudioEffect" version="1.0">
+    <brief_description>
+        Adds a panner audio effect to an Audio bus. Pans sound left or right.
+    </brief_description>
+    <description>
+        Determines how much of an audio signal is sent to the left and right buses.
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <members>
+        <member name="pan" type="float" setter="set_pan" getter="get_pan" default="0.0">
+            Pan position. Value can range from -1 (fully left) to 1 (fully right).
+        </member>
+    </members>
+    <constants>
+    </constants>
+</class>

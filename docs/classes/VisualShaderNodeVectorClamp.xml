@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="VisualShaderNodeVectorClamp" inherits="VisualShaderNode" version="1.0">
+    <brief_description>
+        Clamps a vector value within the visual shader graph.
+    </brief_description>
+    <description>
+        Constrains a value to lie between [code]min[/code] and [code]max[/code] values. The operation is performed on each component of the vector individually.
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <constants>
+    </constants>
+</class>

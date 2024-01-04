@@ -65,9 +65,6 @@ st[A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9]
 __pycache__/
 *.pyc
 
-# Documentation
-doc/_build/
-
 # Android
 .gradle/
 local.properties

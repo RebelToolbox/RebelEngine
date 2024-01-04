@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="VisualScriptEmitSignal" inherits="VisualScriptNode" version="1.0">
+    <brief_description>
+        Emits a specified signal.
+    </brief_description>
+    <description>
+        Emits a specified signal when it is executed.
+        [b]Input Ports:[/b]
+        - Sequence: [code]emit[/code]
+        [b]Output Ports:[/b]
+        - Sequence
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <members>
+        <member name="signal" type="String" setter="set_signal" getter="get_signal" default="&quot;&quot;">
+            The signal to emit.
+        </member>
+    </members>
+    <constants>
+    </constants>
+</class>

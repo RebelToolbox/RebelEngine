@@ -317,7 +317,7 @@ bool EditorHelpSearch::Runner::_slice() {
 }
 
 bool EditorHelpSearch::Runner::_phase_match_classes_init() {
-    iterator_doc = EditorHelp::get_doc_data()->class_list.front();
+    iterator_doc = EditorHelp::get_docs_data()->class_list.front();
     matches.clear();
     matched_item        = nullptr;
     match_highest_score = 0;
@@ -326,7 +326,7 @@ bool EditorHelpSearch::Runner::_phase_match_classes_init() {
 }
 
 bool EditorHelpSearch::Runner::_phase_match_classes() {
-    DocData::ClassDoc& class_doc = iterator_doc->value();
+    DocsData::ClassDoc& class_doc = iterator_doc->value();
     if (!_is_class_disabled_by_feature_profile(class_doc.name)) {
         matches[class_doc.name] = ClassMatch();
         ClassMatch& match       = matches[class_doc.name];
@@ -357,18 +357,22 @@ bool EditorHelpSearch::Runner::_phase_match_classes() {
                             && method_name
                                    == term.substr(1, term.length() - 2)
                                           .strip_edges())) {
-                        match.methods.push_back(const_cast<DocData::MethodDoc*>(
-                            &class_doc.methods[i]
-                        ));
+                        match.methods.push_back(
+                            const_cast<DocsData::MethodDoc*>(
+                                &class_doc.methods[i]
+                            )
+                        );
                     }
                 }
             }
             if (search_flags & SEARCH_SIGNALS) {
                 for (int i = 0; i < class_doc.signals.size(); i++) {
                     if (_match_string(term, class_doc.signals[i].name)) {
-                        match.signals.push_back(const_cast<DocData::MethodDoc*>(
-                            &class_doc.signals[i]
-                        ));
+                        match.signals.push_back(
+                            const_cast<DocsData::MethodDoc*>(
+                                &class_doc.signals[i]
+                            )
+                        );
                     }
                 }
             }
@@ -376,7 +380,7 @@ bool EditorHelpSearch::Runner::_phase_match_classes() {
                 for (int i = 0; i < class_doc.constants.size(); i++) {
                     if (_match_string(term, class_doc.constants[i].name)) {
                         match.constants.push_back(
-                            const_cast<DocData::ConstantDoc*>(
+                            const_cast<DocsData::ConstantDoc*>(
                                 &class_doc.constants[i]
                             )
                         );
@@ -392,7 +396,7 @@ bool EditorHelpSearch::Runner::_phase_match_classes() {
                             class_doc.properties[i].setter
                         )) {
                         match.properties.push_back(
-                            const_cast<DocData::PropertyDoc*>(
+                            const_cast<DocsData::PropertyDoc*>(
                                 &class_doc.properties[i]
                             )
                         );
@@ -406,7 +410,7 @@ bool EditorHelpSearch::Runner::_phase_match_classes() {
                             class_doc.theme_properties[i].name
                         )) {
                         match.theme_properties.push_back(
-                            const_cast<DocData::ThemeItemDoc*>(
+                            const_cast<DocsData::ThemeItemDoc*>(
                                 &class_doc.theme_properties[i]
                             )
                         );
@@ -550,7 +554,7 @@ TreeItem* EditorHelpSearch::Runner::_create_class_hierarchy(
 
 TreeItem* EditorHelpSearch::Runner::_create_class_item(
     TreeItem* p_parent,
-    const DocData::ClassDoc* p_doc,
+    const DocsData::ClassDoc* p_doc,
     bool p_gray
 ) {
     Ref<Texture> icon = empty_icon;
@@ -580,14 +584,14 @@ TreeItem* EditorHelpSearch::Runner::_create_class_item(
 
 TreeItem* EditorHelpSearch::Runner::_create_method_item(
     TreeItem* p_parent,
-    const DocData::ClassDoc* p_class_doc,
-    const DocData::MethodDoc* p_doc
+    const DocsData::ClassDoc* p_class_doc,
+    const DocsData::MethodDoc* p_doc
 ) {
     String tooltip =
         p_doc->return_type + " " + p_class_doc->name + "." + p_doc->name + "(";
     for (int i = 0; i < p_doc->arguments.size(); i++) {
-        const DocData::ArgumentDoc& arg  = p_doc->arguments[i];
-        tooltip                         += arg.type + " " + arg.name;
+        const DocsData::ArgumentDoc& arg  = p_doc->arguments[i];
+        tooltip                          += arg.type + " " + arg.name;
         if (arg.default_value != "") {
             tooltip += " = " + arg.default_value;
         }
@@ -609,14 +613,14 @@ TreeItem* EditorHelpSearch::Runner::_create_method_item(
 
 TreeItem* EditorHelpSearch::Runner::_create_signal_item(
     TreeItem* p_parent,
-    const DocData::ClassDoc* p_class_doc,
-    const DocData::MethodDoc* p_doc
+    const DocsData::ClassDoc* p_class_doc,
+    const DocsData::MethodDoc* p_doc
 ) {
     String tooltip =
         p_doc->return_type + " " + p_class_doc->name + "." + p_doc->name + "(";
     for (int i = 0; i < p_doc->arguments.size(); i++) {
-        const DocData::ArgumentDoc& arg  = p_doc->arguments[i];
-        tooltip                         += arg.type + " " + arg.name;
+        const DocsData::ArgumentDoc& arg  = p_doc->arguments[i];
+        tooltip                          += arg.type + " " + arg.name;
         if (arg.default_value != "") {
             tooltip += " = " + arg.default_value;
         }
@@ -638,8 +642,8 @@ TreeItem* EditorHelpSearch::Runner::_create_signal_item(
 
 TreeItem* EditorHelpSearch::Runner::_create_constant_item(
     TreeItem* p_parent,
-    const DocData::ClassDoc* p_class_doc,
-    const DocData::ConstantDoc* p_doc
+    const DocsData::ClassDoc* p_class_doc,
+    const DocsData::ConstantDoc* p_doc
 ) {
     String tooltip = p_class_doc->name + "." + p_doc->name;
     return _create_member_item(
@@ -655,8 +659,8 @@ TreeItem* EditorHelpSearch::Runner::_create_constant_item(
 
 TreeItem* EditorHelpSearch::Runner::_create_property_item(
     TreeItem* p_parent,
-    const DocData::ClassDoc* p_class_doc,
-    const DocData::PropertyDoc* p_doc
+    const DocsData::ClassDoc* p_class_doc,
+    const DocsData::PropertyDoc* p_doc
 ) {
     String tooltip = p_doc->type + " " + p_class_doc->name + "." + p_doc->name;
     tooltip +=
@@ -675,8 +679,8 @@ TreeItem* EditorHelpSearch::Runner::_create_property_item(
 
 TreeItem* EditorHelpSearch::Runner::_create_theme_property_item(
     TreeItem* p_parent,
-    const DocData::ClassDoc* p_class_doc,
-    const DocData::ThemeItemDoc* p_doc
+    const DocsData::ClassDoc* p_class_doc,
+    const DocsData::ThemeItemDoc* p_doc
 ) {
     String tooltip = p_doc->type + " " + p_class_doc->name + "." + p_doc->name;
     return _create_member_item(

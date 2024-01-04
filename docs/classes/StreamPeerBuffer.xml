@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="StreamPeerBuffer" inherits="StreamPeer" version="1.0">
+    <brief_description>
+    </brief_description>
+    <description>
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+        <method name="clear">
+            <return type="void" />
+            <description>
+            </description>
+        </method>
+        <method name="duplicate" qualifiers="const">
+            <return type="StreamPeerBuffer" />
+            <description>
+            </description>
+        </method>
+        <method name="get_position" qualifiers="const">
+            <return type="int" />
+            <description>
+            </description>
+        </method>
+        <method name="get_size" qualifiers="const">
+            <return type="int" />
+            <description>
+            </description>
+        </method>
+        <method name="resize">
+            <return type="void" />
+            <argument index="0" name="size" type="int" />
+            <description>
+            </description>
+        </method>
+        <method name="seek">
+            <return type="void" />
+            <argument index="0" name="position" type="int" />
+            <description>
+            </description>
+        </method>
+    </methods>
+    <members>
+        <member name="data_array" type="PoolByteArray" setter="set_data_array" getter="get_data_array" default="PoolByteArray(  )">
+        </member>
+    </members>
+    <constants>
+    </constants>
+</class>

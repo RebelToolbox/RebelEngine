@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="ConcavePolygonShape" inherits="Shape" version="1.0">
+    <brief_description>
+        Concave polygon shape.
+    </brief_description>
+    <description>
+        Concave polygon shape resource, which can be set into a [PhysicsBody] or area. This shape is created by feeding a list of triangles.
+        [b]Note:[/b] When used for collision, [ConcavePolygonShape] is intended to work with static [PhysicsBody] nodes like [StaticBody] and will not work with [KinematicBody] or [RigidBody] with a mode other than Static.
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+        <method name="get_faces" qualifiers="const">
+            <return type="PoolVector3Array" />
+            <description>
+                Returns the faces (an array of triangles).
+            </description>
+        </method>
+        <method name="set_faces">
+            <return type="void" />
+            <argument index="0" name="faces" type="PoolVector3Array" />
+            <description>
+                Sets the faces (an array of triangles).
+            </description>
+        </method>
+    </methods>
+    <constants>
+    </constants>
+</class>

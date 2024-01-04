@@ -9,7 +9,7 @@ from platform_methods import subprocess_main
 from compat import encode_utf8, byte_to_str, open_utf8
 
 
-def make_doc_header(target, source, env):
+def make_docs_header(target, source, env):
     dst = target[0]
     g = open_utf8(dst, "w")
     buf = ""
@@ -29,13 +29,13 @@ def make_doc_header(target, source, env):
     buf = zlib.compress(buf)
 
     g.write("/* THIS FILE IS GENERATED DO NOT EDIT */\n")
-    g.write("#ifndef _DOC_DATA_RAW_H\n")
-    g.write("#define _DOC_DATA_RAW_H\n")
-    g.write("static const int _doc_data_compressed_size = " + str(len(buf)) + ";\n")
+    g.write("#ifndef _DOCS_DATA_RAW_H\n")
+    g.write("#define _DOCS_DATA_RAW_H\n")
+    g.write("static const int _docs_data_compressed_size = " + str(len(buf)) + ";\n")
     g.write(
-        "static const int _doc_data_uncompressed_size = " + str(decomp_size) + ";\n"
+        "static const int _docs_data_uncompressed_size = " + str(decomp_size) + ";\n"
     )
-    g.write("static const unsigned char _doc_data_compressed[] = {\n")
+    g.write("static const unsigned char _docs_data_compressed[] = {\n")
     for i in range(len(buf)):
         g.write("\t" + byte_to_str(buf[i]) + ",\n")
     g.write("};\n")
@@ -139,8 +139,8 @@ def make_editor_translations_header(target, source, env):
     make_translations_header(target, source, env, "editor")
 
 
-def make_doc_translations_header(target, source, env):
-    make_translations_header(target, source, env, "doc")
+def make_docs_translations_header(target, source, env):
+    make_translations_header(target, source, env, "docs")
 
 
 if __name__ == "__main__":

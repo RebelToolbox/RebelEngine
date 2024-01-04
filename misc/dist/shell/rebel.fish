@@ -69,8 +69,8 @@ complete -c rebel -l check-only -d "Only parse for errors and quit (use with --s
 complete -c rebel -l export -d "Export the project using the given preset and matching release template" -x
 complete -c rebel -l export-debug -d "Same as --export, but using the debug template" -x
 complete -c rebel -l export-pack -d "Same as --export, but only export the game pack for the given preset" -x
-complete -c rebel -l doctool -d "Dump the engine API reference to the given path in XML format, merging if existing files are found" -r
-complete -c rebel -l no-docbase -d "Disallow dumping the base types (used with --doctool)"
+complete -c rebel -l generate-docs -d "Generates the engine API XML docs, and merges the contents of existing files. The optional <path> allows redirecting the output to a different project root directory" -r
+complete -c rebel -l no-docs-base -d "Prevents generation of base types (used with --generate-docs)"
 complete -c rebel -l build-solutions -d "Build the scripting solutions (e.g. for C# projects)"
 complete -c rebel -l gdnative-generate-json-api -d "Generate JSON dump of the Rebel Engine API for GDNative bindings"
 complete -c rebel -l test -d "Run a unit test" -x

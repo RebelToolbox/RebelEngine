@@ -4727,7 +4727,7 @@ String DTR(const String& p_text) {
     const String text = p_text.dedent().strip_edges();
 
     if (TranslationServer::get_singleton()) {
-        return TranslationServer::get_singleton()->doc_translate(text);
+        return TranslationServer::get_singleton()->docs_translate(text);
     }
 
     return text;

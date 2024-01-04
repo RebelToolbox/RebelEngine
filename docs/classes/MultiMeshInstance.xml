@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="MultiMeshInstance" inherits="GeometryInstance" version="1.0">
+    <brief_description>
+        Node that instances a [MultiMesh].
+    </brief_description>
+    <description>
+        [MultiMeshInstance] is a specialized node to instance [GeometryInstance]s based on a [MultiMesh] resource.
+        This is useful to optimize the rendering of a high amount of instances of a given mesh (for example trees in a forest or grass strands).
+    </description>
+    <tutorials>
+        <link>https://docs.rebeltoolbox.com/en/latest/tutorials/performance/vertex_animation/animating_thousands_of_fish.html</link>
+        <link>https://docs.rebeltoolbox.com/en/latest/tutorials/3d/using_multi_mesh_instance.html</link>
+        <link>https://docs.rebeltoolbox.com/en/latest/tutorials/performance/using_multimesh.html</link>
+    </tutorials>
+    <methods>
+    </methods>
+    <members>
+        <member name="multimesh" type="MultiMesh" setter="set_multimesh" getter="get_multimesh">
+            The [MultiMesh] resource that will be used and shared among all instances of the [MultiMeshInstance].
+        </member>
+    </members>
+    <constants>
+    </constants>
+</class>

@@ -1141,9 +1141,9 @@ void ConnectionsDock::update_tree() {
                 }
 
                 if (!found) {
-                    DocData* dd = EditorHelp::get_doc_data();
-                    Map<String, DocData::ClassDoc>::Element* F =
-                        dd->class_list.find(base);
+                    DocsData* docs_data = EditorHelp::get_docs_data();
+                    Map<String, DocsData::ClassDoc>::Element* F =
+                        docs_data->class_list.find(base);
                     while (F && descr == String()) {
                         for (int i = 0; i < F->get().signals.size(); i++) {
                             if (F->get().signals[i].name
@@ -1153,7 +1153,7 @@ void ConnectionsDock::update_tree() {
                             }
                         }
                         if (!F->get().inherits.empty()) {
-                            F = dd->class_list.find(F->get().inherits);
+                            F = docs_data->class_list.find(F->get().inherits);
                         } else {
                             break;
                         }

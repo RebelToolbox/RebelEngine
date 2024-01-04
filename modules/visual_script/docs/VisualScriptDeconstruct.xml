@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="VisualScriptDeconstruct" inherits="VisualScriptNode" version="1.0">
+    <brief_description>
+        A Visual Script node which deconstructs a base type instance into its parts.
+    </brief_description>
+    <description>
+        A Visual Script node which deconstructs a base type instance into its parts.
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <members>
+        <member name="type" type="int" setter="set_deconstruct_type" getter="get_deconstruct_type" enum="Variant.Type" default="0">
+            The type to deconstruct.
+        </member>
+    </members>
+    <constants>
+    </constants>
+</class>

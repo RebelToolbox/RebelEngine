@@ -1288,15 +1288,16 @@ StringName TranslationServer::tool_translate(const StringName& p_message
     return p_message;
 }
 
-void TranslationServer::set_doc_translation(
+void TranslationServer::set_docs_translation(
     const Ref<Translation>& p_translation
 ) {
-    doc_translation = p_translation;
+    docs_translation = p_translation;
 }
 
-StringName TranslationServer::doc_translate(const StringName& p_message) const {
-    if (doc_translation.is_valid()) {
-        StringName r = doc_translation->get_message(p_message);
+StringName TranslationServer::docs_translate(const StringName& p_message
+) const {
+    if (docs_translation.is_valid()) {
+        StringName r = docs_translation->get_message(p_message);
         if (r) {
             return r;
         }

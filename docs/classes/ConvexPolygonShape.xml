@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="ConvexPolygonShape" inherits="Shape" version="1.0">
+    <brief_description>
+        Convex polygon shape for 3D physics.
+    </brief_description>
+    <description>
+        Convex polygon shape resource, which can be added to a [PhysicsBody] or area.
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+    </methods>
+    <members>
+        <member name="points" type="PoolVector3Array" setter="set_points" getter="get_points" default="PoolVector3Array(  )">
+            The list of 3D points forming the convex polygon shape.
+        </member>
+    </members>
+    <constants>
+    </constants>
+</class>

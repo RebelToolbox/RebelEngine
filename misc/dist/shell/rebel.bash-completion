@@ -58,8 +58,8 @@ _complete_options() {
 --export
 --export-debug
 --export-pack
---doctool
---no-docbase
+--generate-docs
+--no-docs-base
 --build-solutions
 --gdnative-generate-json-api
 --test
@@ -91,7 +91,7 @@ _complete_bash() {
     local IFS=$' \n\t'
     # shellcheck disable=SC2207
     COMPREPLY=($(compgen -W "GLES3 GLES2" -- "$cur"))
-  elif [[ $prev == "--path" || $prev == "--doctool" ]]; then
+  elif [[ $prev == "--path" || $prev == "--generate-docs" ]]; then
     local IFS=$'\n\t'
     # shellcheck disable=SC2207
     COMPREPLY=($(compgen -d -- "$cur"))
