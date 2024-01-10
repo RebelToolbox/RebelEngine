@@ -27,8 +27,8 @@ HEADER = """\
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Rebel Engine class reference\n"
-"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
+"Project-Id-Version: Rebel Engine class reference\\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\\n"
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=UTF-8\\n"
 "Content-Transfer-Encoding: 8-bit\\n"

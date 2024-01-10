@@ -47,11 +47,11 @@ main_po = """
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Rebel Editor\n"
-"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
+"Project-Id-Version: Rebel Editor\\n"
+"Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\\n"
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=UTF-8\\n"
-"Content-Transfer-Encoding: 8-bit\\n"\n
+"Content-Transfer-Encoding: 8-bit\\n"
 """
 
 

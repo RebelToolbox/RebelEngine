@@ -7,7 +7,7 @@ LANGS = $(POFILES:%.po=%)
 all: update merge
 
 update:
-	@cd ../..; \
+	@cd ..; \
 	python3 tools/scripts/extract_api_strings.py \
 	  --path docs modules/*/docs \
 	  --output translations/$(TEMPLATE)
