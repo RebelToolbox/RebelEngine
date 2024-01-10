@@ -10,7 +10,7 @@ update:
 	@cd ../..; \
 	python3 tools/scripts/extract_api_strings.py \
 	  --path docs/classes modules/*/docs \
-	  --output docs/translations/$(TEMPLATE)
+	  --output translations/$(TEMPLATE)
 
 merge:
 	@for po in $(POFILES); do \
