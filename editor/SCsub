@@ -55,7 +55,7 @@ if env["tools"]:
 
     # Core API documentation.
     docs = []
-    docs += Glob("#docs/classes/*.xml")
+    docs += Glob("#docs/*.xml")
 
     # Module API documentation.
     module_dirs = []
