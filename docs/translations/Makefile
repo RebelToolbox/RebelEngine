@@ -8,7 +8,7 @@ all: update merge
 
 update:
 	@cd ../..; \
-	python3 docs/translations/extract.py \
+	python3 tools/scripts/extract_api_strings.py \
 	  --path docs/classes modules/*/docs \
 	  --output docs/translations/$(TEMPLATE)
 
