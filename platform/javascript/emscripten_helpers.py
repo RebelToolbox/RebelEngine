@@ -63,10 +63,10 @@ def create_template_zip(env, js, wasm, extra):
         in_files.append(extra)  # Worker
         out_files.append(zip_dir.File(binary_name + ".worker.js"))
 
-    service_worker = "#misc/dist/html/service-worker.js"
+    service_worker = "#tools/dist/html/service-worker.js"
     if env["tools"]:
         # HTML
-        html = "#misc/dist/html/editor.html"
+        html = "#tools/dist/html/editor.html"
         cache = [
             "godot.tools.html",
             "offline.html",
@@ -90,7 +90,7 @@ def create_template_zip(env, js, wasm, extra):
         in_files.append(html)
         out_files.append(zip_dir.File(binary_name + ".html"))
         # And logo/favicon
-        in_files.append("#misc/dist/html/logo.svg")
+        in_files.append("#tools/dist/html/logo.svg")
         out_files.append(zip_dir.File("logo.svg"))
         in_files.append("#icon.png")
         out_files.append(zip_dir.File("favicon.png"))
@@ -102,17 +102,17 @@ def create_template_zip(env, js, wasm, extra):
         )
         in_files.append(service_worker)
         out_files.append(zip_dir.File("service.worker.js"))
-        in_files.append("#misc/dist/html/manifest.json")
+        in_files.append("#tools/dist/html/manifest.json")
         out_files.append(zip_dir.File("manifest.json"))
-        in_files.append("#misc/dist/html/offline.html")
+        in_files.append("#tools/dist/html/offline.html")
         out_files.append(zip_dir.File("offline.html"))
     else:
         # HTML
-        in_files.append("#misc/dist/html/full-size.html")
+        in_files.append("#tools/dist/html/full-size.html")
         out_files.append(zip_dir.File(binary_name + ".html"))
         in_files.append(service_worker)
         out_files.append(zip_dir.File(binary_name + ".service.worker.js"))
-        in_files.append("#misc/dist/html/offline-export.html")
+        in_files.append("#tools/dist/html/offline-export.html")
         out_files.append(zip_dir.File("godot.offline.html"))
 
     zip_files = env.InstallAs(out_files, in_files)

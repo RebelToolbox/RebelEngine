@@ -29,15 +29,15 @@ jobs:
 
       - name: File formatting checks (file_format.sh)
         run: |
-          bash misc/scripts/file_format.sh
+          bash tools/scripts/file_format.sh
 
       - name: Style checks via clang-format (clang_format.sh)
         run: |
-          bash misc/scripts/clang_format.sh
+          bash tools/scripts/clang_format.sh
 
       - name: Python style checks via black (black_format.sh)
         run: |
-          bash misc/scripts/black_format.sh
+          bash tools/scripts/black_format.sh
 
       - name: Create patch file
         if: failure()
@@ -62,4 +62,4 @@ jobs:
 
       - name: Documentation checks
         run: |
-          docs/tools/make_rst.py --dry-run docs/classes modules
+          tools/scripts/make_rst.py --dry-run docs modules

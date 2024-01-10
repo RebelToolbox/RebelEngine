@@ -2243,7 +2243,7 @@ bool Main::start() {
             }
         }
 
-        String index_path = docs_path.plus_file("docs/classes");
+        String index_path = docs_path.plus_file("docs");
         // Create the main documentation directory if it doesn't exist
         DirAccess* da     = DirAccess::create_for_path(index_path);
         da->make_dir_recursive(index_path);

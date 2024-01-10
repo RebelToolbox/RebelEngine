@@ -8,9 +8,9 @@ all: update merge
 
 update:
 	@cd ../..; \
-	python3 docs/translations/extract.py \
-	  --path docs/classes modules/*/docs \
-	  --output docs/translations/$(TEMPLATE)
+	python3 tools/scripts/extract_api_strings.py \
+	  --path docs modules/*/docs \
+	  --output translations/$(TEMPLATE)
 
 merge:
 	@for po in $(POFILES); do \

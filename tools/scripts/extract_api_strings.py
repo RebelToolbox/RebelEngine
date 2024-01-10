@@ -240,7 +240,7 @@ def _generate_translation_catalog_file(unique_msgs, output, location_line=False)
     with open(output, "w", encoding="utf8") as f:
         f.write(HEADER)
         for msg in BASE_STRINGS:
-            f.write("#: doc/tools/make_rst.py\n")
+            f.write("#: tools/scripts/make_rst.py\n")
             f.write('msgid "{}"\n'.format(msg))
             f.write('msgstr ""\n\n')
         for msg in unique_msgs:

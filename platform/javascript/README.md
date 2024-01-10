@@ -5,7 +5,7 @@ compiled using [Emscripten](https://emscripten.org/).
 
 It also contains a ESLint linting setup (see [`package.json`](package.json)).
 
-See also [`misc/dist/html`](/misc/dist/html) folder for files used by this platform
+See also [`tools/dist/html`](/tools/dist/html) folder for files used by this platform
 such as the HTML5 shell.
 
 ## Artwork license
