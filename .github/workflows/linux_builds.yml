@@ -54,7 +54,7 @@ jobs:
         run: |
           # Azure repositories are not reliable, we need to prevent azure giving us packages.
           sudo rm -f /etc/apt/sources.list.d/*
-          sudo cp -f misc/ci/sources.list /etc/apt/sources.list
+          sudo cp -f tools/ci/sources.list /etc/apt/sources.list
           sudo apt-get update
           # The actual dependencies
           sudo apt-get install build-essential pkg-config libx11-dev libxcursor-dev \
@@ -112,14 +112,14 @@ jobs:
         if: ${{ matrix.test }}
         run: |
           DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --audio-driver Dummy -e -q --path RebelTestProject 2>&1 | tee sanitizers_log.txt || true
-          misc/scripts/check_ci_log.py sanitizers_log.txt
+          tools/scripts/check_ci_log.py sanitizers_log.txt
 
       # Run test project
       - name: Run project
         if: ${{ matrix.test }}
         run: |
           DRI_PRIME=0 xvfb-run ${{ matrix.bin }} 30 --video-driver GLES3 --audio-driver Dummy --path RebelTestProject 2>&1 | tee sanitizers_log.txt || true
-          misc/scripts/check_ci_log.py sanitizers_log.txt
+          tools/scripts/check_ci_log.py sanitizers_log.txt
 
       - name: Check API XML documentation
         if: ${{ matrix.test }}

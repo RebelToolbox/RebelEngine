@@ -10,7 +10,7 @@ The main reason to write this, is to provide a simple way in all platforms to in
 	- Windows: `cd /c/Users/YOUR_USERNAME`
 	- Mac: `cd /Users/YOUR_USERNAME`
 4. Get Rebel Engine source code: `git clone https://github.com/RebelToolbox/RebelEngine.git`
-5. Run command: `cd RebelEngine/misc/dist/docker`
+5. Run command: `cd RebelEngine/tools/dist/docker`
 6. Run command: `docker build -t rebel .`(In Linux run Docker commands with `sudo` or add your user to docker group before run the Docker commands). The Rebel docker image will be build after a while.
 7. Run command:
 	- Linux: `docker run -it --name=rebel-dev -v /home/YOUR_USERNAME/RebelEngine:/rebel-dev/rebel rebel`
