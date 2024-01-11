@@ -2,24 +2,18 @@
 
 import argparse
 import os
+import textwrap
 import shutil
+import xml.etree.ElementTree as ET
 from collections import OrderedDict
 
-EXTRACT_TAGS = [
-    "description",
-    "brief_description",
-    "member",
-    "constant",
-    "theme_item",
-    "link",
-]
 HEADER = """\
 # SPDX-FileCopyrightText: 2023 Rebel Engine contributors
 # SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
 # SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 #
 # SPDX-License-Identifier: MIT
-
+#
 # LANGUAGE translation of the Rebel Engine class reference
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -32,11 +26,19 @@ msgstr ""
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=UTF-8\\n"
 "Content-Transfer-Encoding: 8-bit\\n"
-
 """
-# Some strings used by make_rst.py are normally part of the editor translations,
-# so we need to include them manually here for the online docs.
-BASE_STRINGS = [
+
+EXTRACT_TAGS = [
+    "description",
+    "brief_description",
+    "member",
+    "constant",
+    "theme_item",
+    "link",
+]
+
+# Additional heading strings added by make_rst.py.
+HEADING_STRINGS = [
     "Description",
     "Tutorials",
     "Properties",
@@ -49,265 +51,150 @@ BASE_STRINGS = [
     "Method Descriptions",
 ]
 
-## <xml-line-number-hack from="https://stackoverflow.com/a/36430270/10846399">
-import sys
 
-sys.modules["_elementtree"] = None
-import xml.etree.ElementTree as ET
-
-
-## override the parser to get the line number
-class LineNumberingParser(ET.XMLParser):
-    def _start(self, *args, **kwargs):
-        ## Here we assume the default XML parser which is expat
-        ## and copy its element position attributes into output Elements
-        element = super(self.__class__, self)._start(*args, **kwargs)
-        element._start_line_number = self.parser.CurrentLineNumber
-        element._start_column_number = self.parser.CurrentColumnNumber
-        element._start_byte_index = self.parser.CurrentByteIndex
-        return element
-
-    def _end(self, *args, **kwargs):
-        element = super(self.__class__, self)._end(*args, **kwargs)
-        element._end_line_number = self.parser.CurrentLineNumber
-        element._end_column_number = self.parser.CurrentColumnNumber
-        element._end_byte_index = self.parser.CurrentByteIndex
-        return element
+class XMLData:
+    def __init__(self, xml_root, class_name, xml_filepath):
+        self.xml_root = xml_root
+        self.class_name = class_name
+        self.xml_filepath = xml_filepath
 
 
-## </xml-line-number-hack>
-
-
-class Desc:
-    def __init__(self, line_no, msg, desc_list=None):
-        ## line_no   : the line number where the desc is
-        ## msg       : the description string
-        ## desc_list : the DescList it belongs to
-        self.line_no = line_no
-        self.msg = msg
-        self.desc_list = desc_list
-
-
-class DescList:
-    def __init__(self, doc, path):
-        ## doc  : root xml element of the document
-        ## path : file path of the xml document
-        ## list : list of Desc objects for this document
-        self.doc = doc
-        self.path = path
-        self.list = []
-
-
-def print_error(error):
-    print("ERROR: {}".format(error))
-
-
-## build classes with xml elements recursively
-def _collect_classes_dir(path, classes):
-    if not os.path.isdir(path):
-        print_error("Invalid directory path: {}".format(path))
-        exit(1)
-    for _dir in map(lambda dir: os.path.join(path, dir), os.listdir(path)):
-        if os.path.isdir(_dir):
-            _collect_classes_dir(_dir, classes)
-        elif os.path.isfile(_dir):
-            if not _dir.endswith(".xml"):
-                # print("Got non-.xml file '{}', skipping.".format(path))
-                continue
-            _collect_classes_file(_dir, classes)
-
-
-## opens a file and parse xml add to classes
-def _collect_classes_file(path, classes):
-    if not os.path.isfile(path) or not path.endswith(".xml"):
-        print_error("Invalid xml file path: {}".format(path))
-        exit(1)
-    print("Collecting file: {}".format(os.path.basename(path)))
-
-    try:
-        tree = ET.parse(path, parser=LineNumberingParser())
-    except ET.ParseError as e:
-        print_error("Parse error reading file '{}': {}".format(path, e))
-        exit(1)
-
-    doc = tree.getroot()
-
-    if "name" in doc.attrib:
-        if "version" not in doc.attrib:
-            print_error("Version missing from 'doc', file: {}".format(path))
-
-        name = doc.attrib["name"]
-        if name in classes:
-            print_error("Duplicate class {} at path {}".format(name, path))
-            exit(1)
-        classes[name] = DescList(doc, path)
-    else:
-        print_error("Unknown XML file {}, skipping".format(path))
-
-
-## regions are list of tuples with size 3 (start_index, end_index, indent)
-## indication in string where the codeblock starts, ends, and it's indent
-## if i inside the region returns the indent, else returns -1
-def _get_xml_indent(i, regions):
-    for region in regions:
-        if region[0] < i < region[1]:
-            return region[2]
-    return -1
-
-
-## find and build all regions of codeblock which we need later
-def _make_codeblock_regions(desc, path=""):
-    code_block_end = False
-    code_block_index = 0
-    code_block_regions = []
-    while not code_block_end:
-        code_block_index = desc.find("[codeblock]", code_block_index)
-        if code_block_index < 0:
-            break
-        xml_indent = 0
-        while True:
-            ## [codeblock] always have a trailing new line and some tabs
-            ## those tabs are belongs to xml indentations not code indent
-            if desc[code_block_index + len("[codeblock]\n") + xml_indent] == "\t":
-                xml_indent += 1
-            else:
-                break
-        end_index = desc.find("[/codeblock]", code_block_index)
-        if end_index < 0:
-            print_error("Non terminating codeblock: {}".format(path))
-            exit(1)
-        code_block_regions.append((code_block_index, end_index, xml_indent))
-        code_block_index += 1
-    return code_block_regions
-
-
-def _strip_and_split_desc(desc, code_block_regions):
-    desc_strip = ""  ## a stripped desc msg
-    total_indent = 0  ## code indent = total indent - xml indent
-    for i in range(len(desc)):
-        c = desc[i]
-        if c == "\n":
-            c = "\\n"
-        if c == '"':
-            c = '\\"'
-        if c == "\\":
-            c = "\\\\"  ## <element \> is invalid for msgmerge
-        if c == "\t":
-            xml_indent = _get_xml_indent(i, code_block_regions)
-            if xml_indent >= 0:
-                total_indent += 1
-                if xml_indent < total_indent:
-                    c = "\\t"
-                else:
-                    continue
-            else:
-                continue
-        desc_strip += c
-        if c == "\\n":
-            total_indent = 0
-    return desc_strip
-
-
-## make catalog strings from xml elements
-def _make_translation_catalog(classes):
-    unique_msgs = OrderedDict()
-    for class_name in classes:
-        desc_list = classes[class_name]
-        for elem in desc_list.doc.iter():
-            if elem.tag in EXTRACT_TAGS:
-                if not elem.text or len(elem.text) == 0:
-                    continue
-                line_no = (
-                    elem._start_line_number
-                    if elem.text[0] != "\n"
-                    else elem._start_line_number + 1
-                )
-                desc_str = elem.text.strip()
-                code_block_regions = _make_codeblock_regions(desc_str, desc_list.path)
-                desc_msg = _strip_and_split_desc(desc_str, code_block_regions)
-                desc_obj = Desc(line_no, desc_msg, desc_list)
-                desc_list.list.append(desc_obj)
-
-                if desc_msg not in unique_msgs:
-                    unique_msgs[desc_msg] = [desc_obj]
-                else:
-                    unique_msgs[desc_msg].append(desc_obj)
-    return unique_msgs
-
-
-## generate the catalog file
-def _generate_translation_catalog_file(unique_msgs, output, location_line=False):
-    with open(output, "w", encoding="utf8") as f:
-        f.write(HEADER)
-        for msg in BASE_STRINGS:
-            f.write("#: tools/scripts/make_rst.py\n")
-            f.write('msgid "{}"\n'.format(msg))
-            f.write('msgstr ""\n\n')
-        for msg in unique_msgs:
-            if len(msg) == 0 or msg in BASE_STRINGS:
-                continue
-
-            f.write("#:")
-            desc_list = unique_msgs[msg]
-            for desc in desc_list:
-                path = desc.desc_list.path.replace("\\", "/")
-                if path.startswith("./"):
-                    path = path[2:]
-                if location_line:  # Can be skipped as diffs on line numbers are spammy.
-                    f.write(" {}:{}".format(path, desc.line_no))
-                else:
-                    f.write(" {}".format(path))
-            f.write("\n")
-
-            f.write('msgid "{}"\n'.format(msg))
-            f.write('msgstr ""\n\n')
-
-    ## TODO: what if 'nt'?
-    if os.name == "posix":
-        print("Wrapping template at 79 characters for compatibility with Weblate.")
-        os.system("msgmerge -w79 {0} {0} > {0}.wrap".format(output))
-        shutil.move("{}.wrap".format(output), output)
-
-
-def main():
+def get_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--path",
         "-p",
         nargs="+",
         default=".",
-        help="The directory or directories containing XML files to collect.",
+        help="The directory or directories containing API XML files.",
     )
     parser.add_argument(
         "--output",
         "-o",
-        default="translation_catalog.pot",
-        help="The path to the output file.",
+        default="api.pot",
+        help="The translation template .pot file.",
     )
-    args = parser.parse_args()
+    return parser.parse_args()
 
-    output = os.path.abspath(args.output)
-    if not os.path.isdir(os.path.dirname(output)) or not output.endswith(".pot"):
-        print_error("Invalid output path: {}".format(output))
-        exit(1)
 
-    classes = OrderedDict()
-    for path in args.path:
-        if not os.path.isdir(path):
-            print_error("Invalid working directory path: {}".format(path))
+def print_error(error):
+    print("ERROR: {}".format(error))
+
+
+def escape_special_characters(text):
+    escaped_text = ""
+    for character in text:
+        if character == "\n":
+            escaped_text += "\\n"
+        elif character == '"':
+            escaped_text += '\\"'
+        elif character == "\\":
+            escaped_text += "\\\\"
+        else:
+            escaped_text += character
+    return escaped_text
+
+
+def parse_xml_files_in_directory(directory):
+    print("Parsing files in: {}".format(directory))
+    classes_xml_data = OrderedDict()
+    for filepath in map(
+        lambda filename: os.path.join(directory, filename), os.listdir(directory)
+    ):
+        if not os.path.isfile(filepath) or not filepath.endswith(".xml"):
+            continue
+        xml_data = parse_xml_file(filepath)
+        class_name = xml_data.class_name
+        if class_name in classes_xml_data:
+            print_error(
+                "Duplicate class {} in XML file {}".format(class_name, filepath)
+            )
             exit(1)
+        classes_xml_data[class_name] = xml_data
+    return list(classes_xml_data.values())
 
-        print("\nCurrent working dir: {}".format(path))
 
-        path_classes = (
-            OrderedDict()
-        )  ## dictionary of key=class_name, value=DescList objects
-        _collect_classes_dir(path, path_classes)
-        classes.update(path_classes)
+def parse_xml_file(xml_filepath):
+    print("Parsing file: {}".format(os.path.basename(xml_filepath)))
+    try:
+        tree = ET.parse(xml_filepath)
+    except ET.ParseError as e:
+        print_error("Failed to parse '{}': {}".format(xml_filepath, e))
+        exit(1)
+    xml_root = tree.getroot()
+    if "name" not in xml_root.attrib:
+        print_error("Skipping unknown XML file: {}".format(xml_filepath))
+        return
+    if "version" not in xml_root.attrib:
+        print_error("Version missing from file: {}".format(xml_filepath))
+        return
+    class_name = xml_root.attrib["name"]
+    xml_filepath = xml_filepath.replace("\\", "/")
+    if xml_filepath.startswith("./"):
+        xml_filepath = xml_filepath[2:]
+    return XMLData(xml_root, class_name, xml_filepath)
 
-    classes = OrderedDict(sorted(classes.items(), key=lambda kv: kv[0].lower()))
-    unique_msgs = _make_translation_catalog(classes)
-    _generate_translation_catalog_file(unique_msgs, output)
+
+def extract_unique_strings(xml_data_list):
+    unique_strings_filepaths = OrderedDict()
+    for xml_data in xml_data_list:
+        for elem in xml_data.xml_root.iter():
+            if elem.tag not in EXTRACT_TAGS or not elem.text:
+                continue
+            text = textwrap.dedent(elem.text).strip()
+            string = escape_special_characters(text)
+            xml_filepath = xml_data.xml_filepath
+            if string not in unique_strings_filepaths:
+                unique_strings_filepaths[string] = [xml_filepath]
+            else:
+                unique_strings_filepaths[string].append(xml_filepath)
+    return unique_strings_filepaths
+
+
+def create_translation_template(unique_strings_filepaths, output):
+    with open(output, "w", encoding="utf8") as f:
+        f.write(HEADER)
+        for string in HEADING_STRINGS:
+            f.write("#: tools/scripts/make_rst.py\n")
+            f.write('msgid "{}"\n'.format(string))
+            f.write('msgstr ""\n\n')
+        for string in unique_strings_filepaths:
+            if not string or string in HEADING_STRINGS:
+                continue
+            f.write("#:")
+            xml_filepaths = unique_strings_filepaths[string]
+            for xml_filepath in xml_filepaths:
+                f.write(" {}".format(xml_filepath))
+            f.write("\n")
+            f.write('msgid "{}"\n'.format(string))
+            f.write('msgstr ""\n\n')
+
+
+def wrap_strings(output):
+    print("Wrapping strings at 79 characters for compatibility with Weblate.")
+    os.system("msgmerge -w79 {0} {0} > {0}.wrap".format(output))
+    shutil.move("{}.wrap".format(output), output)
+
+
+def main():
+    if not shutil.which("msgmerge"):
+        print_error("'msgmerge' is required, but it's not installed.")
+        exit(1)
+    arguments = get_arguments()
+    output = os.path.abspath(arguments.output)
+    if not os.path.isdir(os.path.dirname(output)) or not output.endswith(".pot"):
+        print_error("Invalid translation template .pot file: {}".format(output))
+        exit(1)
+    xml_data_list = []
+    for directory in arguments.path:
+        if not os.path.isdir(directory):
+            print_error("Invalid directory: {}".format(directory))
+            exit(1)
+        xml_data_list += parse_xml_files_in_directory(directory)
+    xml_data_list = sorted(xml_data_list, key=lambda data: data.class_name.lower())
+    unique_strings_filepaths = extract_unique_strings(xml_data_list)
+    create_translation_template(unique_strings_filepaths, output)
+    wrap_strings(output)
 
 
 if __name__ == "__main__":
