@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 #
 # SPDX-License-Identifier: MIT
-
+#
 # Serbian (cyrillic) translation of the Rebel Editor
 #
 # Александар Урошевић <nicecubedude@gmail.com>, 2017.
@@ -21,8 +21,8 @@ msgstr ""
 "Language: sr_Cyrl\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.9-dev\n"
 
 #: core/math/expression.cpp modules/gdscript/gdscript_functions.cpp
@@ -558,8 +558,8 @@ msgid ""
 "\n"
 "To enable the ability to add custom tracks, navigate to the scene's import "
 "settings and set\n"
-"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom Tracks"
-"\", then re-import.\n"
+"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom "
+"Tracks\", then re-import.\n"
 "Alternatively, use an import preset that imports animations to separate "
 "files."
 msgstr ""
@@ -905,7 +905,9 @@ msgid "Scene does not contain any script."
 msgstr "Чвор не садржи геометрију."
 
 #: editor/connections_dialog.cpp editor/editor_autoload_settings.cpp
-#: editor/groups_editor.cpp editor/plugins/item_list_editor_plugin.cpp
+#: editor/groups_editor.cpp
+#: editor/plugins/animation_tree_player_editor_plugin.cpp
+#: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
 msgid "Add"
 msgstr "Додај"
@@ -1263,74 +1265,38 @@ msgid "Change Dictionary Value"
 msgstr "Промени вредност речника"
 
 #: editor/editor_about.cpp
-msgid "Thanks from the Godot community!"
-msgstr "Хвала од Godot заједнице!"
+msgid "Rebel Engine"
+msgstr ""
 
 #: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
 msgid "Click to copy."
 msgstr ""
 
 #: editor/editor_about.cpp
-msgid "Godot Engine contributors"
+msgid ""
+"Rebel Engine is Free and Open Source Software; released under the MIT "
+"license.\n"
+msgstr ""
+
+#: editor/editor_about.cpp
+msgid ""
+"Games developed with Rebel Engine remain the property of the game developer."
+msgstr ""
+
+#: editor/editor_about.cpp
+#, fuzzy
+msgid "Rebel Contributors"
 msgstr "Godot Engine сарадници"
 
 #: editor/editor_about.cpp
-msgid "Project Founders"
-msgstr "Оснивачи пројекта"
+#, fuzzy
+msgid "Contributors"
+msgstr "Трајан"
 
-#: editor/editor_about.cpp
-msgid "Lead Developer"
-msgstr "Главни девелопер"
-
-#. TRANSLATORS: This refers to a job title.
-#. The trailing space is used to distinguish with the project list application,
-#. you do not have to keep it in your translation.
 #: editor/editor_about.cpp
 #, fuzzy
-msgid "Project Manager "
-msgstr "Менаџер пројекта"
-
-#: editor/editor_about.cpp
-msgid "Developers"
-msgstr "Девелопери"
-
-#: editor/editor_about.cpp
-msgid "Authors"
-msgstr "Аутори"
-
-#: editor/editor_about.cpp
-msgid "Platinum Sponsors"
-msgstr "Платинумски спонзори"
-
-#: editor/editor_about.cpp
-msgid "Gold Sponsors"
+msgid "Sponsors"
 msgstr "Златни спонзори"
-
-#: editor/editor_about.cpp
-#, fuzzy
-msgid "Silver Sponsors"
-msgstr "Сребрни донатори"
-
-#: editor/editor_about.cpp
-#, fuzzy
-msgid "Bronze Sponsors"
-msgstr "Бронзани донатори"
-
-#: editor/editor_about.cpp
-msgid "Mini Sponsors"
-msgstr "Мали спонзори"
-
-#: editor/editor_about.cpp
-msgid "Gold Donors"
-msgstr "Златни донатори"
-
-#: editor/editor_about.cpp
-msgid "Silver Donors"
-msgstr "Сребрни донатори"
-
-#: editor/editor_about.cpp
-msgid "Bronze Donors"
-msgstr "Бронзани донатори"
 
 #: editor/editor_about.cpp
 msgid "Donors"
@@ -1348,7 +1314,7 @@ msgstr "Лиценса трећег лица"
 #: editor/editor_about.cpp
 #, fuzzy
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Rebel Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following "
 "is an exhaustive list of all such third-party components with their "
 "respective copyright statements and license terms."
@@ -2348,8 +2314,8 @@ msgid ""
 "There is currently no description for this property. Please help us by "
 "[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr ""
-"Тренутно нема описа ове особине. Молимо помозите нама тако што ћете [color="
-"$color][url=$url]написати једну[/url][/color]!"
+"Тренутно нема описа ове особине. Молимо помозите нама тако што ћете "
+"[color=$color][url=$url]написати једну[/url][/color]!"
 
 #: editor/editor_help.cpp
 #, fuzzy
@@ -2358,11 +2324,11 @@ msgstr "Описи Метода"
 
 #: editor/editor_help.cpp
 msgid ""
-"There is currently no description for this method. Please help us by [color="
-"$color][url=$url]contributing one[/url][/color]!"
+"There is currently no description for this method. Please help us by "
+"[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr ""
-"Тренутно нема описа ове методе. Молимо помозите нама тако што ћете [color="
-"$color][url=$url]написати једну[/url][/color]!"
+"Тренутно нема описа ове методе. Молимо помозите нама тако што ћете "
+"[color=$color][url=$url]написати једну[/url][/color]!"
 
 #: editor/editor_help_search.cpp editor/editor_node.cpp
 #: editor/plugins/script_editor_plugin.cpp
@@ -3405,34 +3371,17 @@ msgid "Online Documentation"
 msgstr "Отвори Документацију"
 
 #: editor/editor_node.cpp
-msgid "Questions & Answers"
-msgstr ""
-
-#: editor/editor_node.cpp
 #, fuzzy
 msgid "Report a Bug"
 msgstr "Поново увези"
 
 #: editor/editor_node.cpp
-msgid "Suggest a Feature"
-msgstr ""
-
-#: editor/editor_node.cpp
 #, fuzzy
-msgid "Send Docs Feedback"
-msgstr "Пошаљи Подржку о Документацији"
-
-#: editor/editor_node.cpp editor/plugins/asset_library_editor_plugin.cpp
-msgid "Community"
-msgstr "Заједница"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "About Godot"
+msgid "About Rebel"
 msgstr "О"
 
 #: editor/editor_node.cpp
-msgid "Support Godot Development"
+msgid "Support Rebel Development"
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -4327,6 +4276,14 @@ msgstr "Датотека или директоријум са овим имен�
 #: editor/filesystem_dock.cpp
 msgid "Name contains invalid characters."
 msgstr "Дато име садржи неважећа слова."
+
+#: editor/filesystem_dock.cpp
+msgid ""
+"This file extension is not recognized by the editor.\n"
+"If you want to rename it anyway, use your operating system's file manager.\n"
+"After renaming to an unknown extension, the file won't be shown in the "
+"editor anymore."
+msgstr ""
 
 #: editor/filesystem_dock.cpp
 msgid ""
@@ -5586,11 +5543,6 @@ msgstr "Путуј"
 
 #: editor/plugins/animation_state_machine_editor.cpp
 #, fuzzy
-msgid "Start and end nodes are needed for a sub-transition."
-msgstr "Почетни и крајњи чвор су потребни за под-прелаз."
-
-#: editor/plugins/animation_state_machine_editor.cpp
-#, fuzzy
 msgid "No playback resource set at path: %s."
 msgstr "Нема репородуктивних ресурса постављених као путања: %s."
 
@@ -5685,10 +5637,6 @@ msgid "Blend"
 msgstr "Мешање"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Mix"
-msgstr "Микс"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Auto Restart:"
 msgstr "Аутоматско рестартовање:"
 
@@ -5720,10 +5668,6 @@ msgstr "Мешавина 1:"
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "X-Fade Time (s):"
 msgstr "X-Fade време (сек.):"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Current:"
-msgstr "Тренутно:"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
@@ -6027,6 +5971,10 @@ msgstr "Подршка..."
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Official"
 msgstr "Званично"
+
+#: editor/plugins/asset_library_editor_plugin.cpp
+msgid "Community"
+msgstr "Заједница"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
@@ -8601,12 +8549,12 @@ msgstr "Перспективна пројекција"
 
 #. TRANSLATORS: This will be appended to the view name when Auto Orthogonal is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [auto]"
+msgid "[auto]"
 msgstr ""
 
 #. TRANSLATORS: This will be appended to the view name when Portal Occulusion is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [portals active]"
+msgid "[portals active]"
 msgstr ""
 
 #: editor/plugins/spatial_editor_plugin.cpp
@@ -11906,7 +11854,7 @@ msgstr "Грешка при отварању датотеку пакета. Да
 #: editor/project_manager.cpp
 #, fuzzy
 msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."
+"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
 msgstr "Неважећи \".zip\" пројекат фајл; не садржи \"project.godot\" фајл."
 
 #: editor/project_manager.cpp
@@ -11916,7 +11864,7 @@ msgstr "Одабери празан фолдер."
 
 #: editor/project_manager.cpp
 #, fuzzy
-msgid "Please choose a \"project.godot\" or \".zip\" file."
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "Одабери \"project.godot\" или \".zip\" фајл."
 
 #: editor/project_manager.cpp
@@ -11962,7 +11910,7 @@ msgstr "Неважећа путања пројекта(нешто је изме�
 #: editor/project_manager.cpp
 #, fuzzy
 msgid ""
-"Couldn't load project.godot in project path (error %d). It may be missing or "
+"Couldn't load project.rebel in project path (error %d). It may be missing or "
 "corrupted."
 msgstr ""
 "Неуспешно учитавање project.godot-а у његовој путањи (грешка %d). Могуће да "
@@ -11970,12 +11918,12 @@ msgstr ""
 
 #: editor/project_manager.cpp
 #, fuzzy
-msgid "Couldn't edit project.godot in project path."
+msgid "Couldn't edit project.rebel in project path."
 msgstr "Неуспешна измена project.godot-а у путањи пројекта."
 
 #: editor/project_manager.cpp
 #, fuzzy
-msgid "Couldn't create project.godot in project path."
+msgid "Couldn't create project.rebel in project path."
 msgstr "Неуспешно креирање project.godot у путањи пројекта."
 
 #: editor/project_manager.cpp
@@ -12415,7 +12363,7 @@ msgid "Device"
 msgstr "Уређаји"
 
 #: editor/project_settings_editor.cpp
-msgid " (Physical)"
+msgid "(Physical)"
 msgstr ""
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -12639,7 +12587,7 @@ msgstr "Измењен Локални Режим Пробирања"
 
 #: editor/project_settings_editor.cpp
 #, fuzzy
-msgid "Project Settings (project.godot)"
+msgid "Project Settings (project.rebel)"
 msgstr "Подешавања Пројекта (project.godot)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -13174,6 +13122,20 @@ msgid ""
 "Can't save the branch of an already instanced scene.\n"
 "To create a variation of a scene, you can make an inherited scene based on "
 "the instanced scene using Scene > New Inherited Scene... instead."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is a child of an already instantiated scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is part of an inherited scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
@@ -14576,6 +14538,14 @@ msgid "Change Expression"
 msgstr "Измени Израз"
 
 #: modules/visual_script/visual_script_editor.cpp
+msgid "Can't copy the function node."
+msgstr ""
+
+#: modules/visual_script/visual_script_editor.cpp
+msgid "Paste VisualScript Nodes"
+msgstr ""
+
+#: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
 msgid "Remove VisualScript Nodes"
 msgstr "Уклони ВизуелнаСкрипта Чланове"
@@ -14683,14 +14653,6 @@ msgstr ""
 #, fuzzy
 msgid "Resize Comment"
 msgstr "Уреди CanvasItem"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Can't copy the function node."
-msgstr ""
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Paste VisualScript Nodes"
-msgstr ""
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Can't create function with a function node."
@@ -15020,6 +14982,9 @@ msgstr "Неважеће име паковања:"
 msgid ""
 "Invalid \"GodotPaymentV3\" module included in the \"android/modules\" "
 "project setting (changed in Godot 3.2.2).\n"
+"Replace it with the first-party \"GodotGooglePlayBilling\" plugin.\n"
+"Note that the singleton was also renamed from \"GodotPayments\" to "
+"\"GodotGooglePlayBilling\"."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
@@ -15042,13 +15007,32 @@ msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Changing the \"Min Sdk\" is only valid when \"Use Custom Build\" is enabled."
+"\"Min Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this min SDK."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Changing the \"Target Sdk\" is only valid when \"Use Custom Build\" is "
-"enabled."
+"\"Target Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this target SDK."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" is set to 30, while the current default is \"%d\". This might "
+"be due to upgrading from a previous Godot release.\n"
+">> Consider changing it to \"%d\" to stay up-to-date with platform "
+"requirements."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" %d is higher than the default version %d. This may work, but "
+"wasn't tested and may be unstable."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
@@ -15159,7 +15143,8 @@ msgstr "Изградња Android Пројекта (gradle)"
 #, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
+"Alternatively visit https://docs.rebeltoolbox.com for Android build "
+"documentation."
 msgstr ""
 "Изградња Android пројекта неуспешна, провери излаз за грешке.\n"
 "Алтернативно посети docs.rebeltoolbox.com за Android документацију изградње."
@@ -15538,11 +15523,20 @@ msgstr "ПаралаксСлој чвор само ради кад је дете
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles2D node instead. You can use the \"Convert to "
-"CPUParticles\" option for this purpose."
+"CPUParticles2D\" toolbar option for this purpose."
 msgstr ""
 "Честице базиране на графичкој нису подржане од стране GLES2 видео "
 "управљача.\n"
 "Уместо тога користи ПроцесорЧестице2Д чвор."
+
+#: scene/2d/particles_2d.cpp
+msgid ""
+"On macOS, Particles2D rendering is much slower than CPUParticles2D due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles2D instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles2D\" toolbar option for this "
+"purpose."
+msgstr ""
 
 #: scene/2d/particles_2d.cpp scene/3d/particles.cpp
 #, fuzzy
@@ -15826,9 +15820,17 @@ msgstr ""
 #, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
-"Use the CPUParticles node instead. You can use the \"Convert to CPUParticles"
-"\" option for this purpose."
+"Use the CPUParticles node instead. You can use the \"Convert to "
+"CPUParticles\" toolbar option for this purpose."
 msgstr "GPU-базиране честице нису подржане од стране GLES2 видео управљача."
+
+#: scene/3d/particles.cpp
+msgid ""
+"On macOS, Particles rendering is much slower than CPUParticles due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles\" toolbar option for this purpose."
+msgstr ""
 
 #: scene/3d/particles.cpp
 #, fuzzy
@@ -16036,13 +16038,6 @@ msgstr ""
 "Само једно СветскоОкружење је дозвољено за сцену (или групу инстанцираних "
 "сцена)."
 
-#: scene/3d/world_environment.cpp
-#, fuzzy
-msgid ""
-"This WorldEnvironment is ignored. Either add a Camera (for 3D scenes) or set "
-"this environment's Background Mode to Canvas (for 2D scenes)."
-msgstr "СветскоОкружење је занемарено."
-
 #: scene/animation/animation_blend_tree.cpp
 #, fuzzy
 msgid "On BlendTree node '%s', animation not found: '%s'"
@@ -16230,19 +16225,6 @@ msgid ""
 "Consider using a script's process loop instead of relying on a Timer for "
 "very low wait times."
 msgstr ""
-
-#: scene/main/viewport.cpp
-#, fuzzy
-msgid ""
-"This viewport is not set as render target. If you intend for it to display "
-"its contents directly to the screen, make it a child of a Control so it can "
-"obtain a size. Otherwise, make it a RenderTarget and assign its internal "
-"texture to some node for display."
-msgstr ""
-"Овај  viewport није постављен као мета за исцртавање. Ако намераваш да "
-"прикаже садржај директно на екран, учини га дететом Контроле да може да "
-"добави величину. У супротном, учини га МетомИсцртавања и додели његову "
-"унутрашњу текстуру неком чвору за приказ."
 
 #: scene/main/viewport.cpp
 #, fuzzy

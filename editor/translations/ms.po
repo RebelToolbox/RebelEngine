@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 #
 # SPDX-License-Identifier: MIT
-
+#
 # Malay translation of the Rebel Editor
 # Sam Vanguard <syafz119@gmail.com>, 2018.
 # Shaqir Rafiq <moshamoradev@gmail.com>, 2018.
@@ -504,8 +504,8 @@ msgid ""
 "\n"
 "To enable the ability to add custom tracks, navigate to the scene's import "
 "settings and set\n"
-"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom Tracks"
-"\", then re-import.\n"
+"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom "
+"Tracks\", then re-import.\n"
 "Alternatively, use an import preset that imports animations to separate "
 "files."
 msgstr ""
@@ -514,8 +514,8 @@ msgstr ""
 "\n"
 "Untuk memberikan keupayaan untuk menambah trek tersuai, navigasi ke tetapan "
 "import adegan dan tetapkan\n"
-"\"Animasi > Simpanan\" ke \"Fail\", aktifkan \"Animasi > Simpan Trek Tersuai"
-"\", kemudian import semula.\n"
+"\"Animasi > Simpanan\" ke \"Fail\", aktifkan \"Animasi > Simpan Trek "
+"Tersuai\", kemudian import semula.\n"
 "Sebagai alternatif, gunakan pratetap import yang mengimportkan animasi untuk "
 "memisahkan fail."
 
@@ -817,7 +817,9 @@ msgid "Scene does not contain any script."
 msgstr "Adegan tidak mengandungi sebarang skrip."
 
 #: editor/connections_dialog.cpp editor/editor_autoload_settings.cpp
-#: editor/groups_editor.cpp editor/plugins/item_list_editor_plugin.cpp
+#: editor/groups_editor.cpp
+#: editor/plugins/animation_tree_player_editor_plugin.cpp
+#: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
 msgid "Add"
 msgstr "Tambah"
@@ -925,8 +927,8 @@ msgstr "Edit Sambungan:"
 #: editor/connections_dialog.cpp
 msgid "Are you sure you want to remove all connections from the \"%s\" signal?"
 msgstr ""
-"Adakah anda pasti anda mahu mengeluarkan semua sambungan dari isyarat \"% s"
-"\"?"
+"Adakah anda pasti anda mahu mengeluarkan semua sambungan dari isyarat \"% "
+"s\"?"
 
 #: editor/connections_dialog.cpp editor/editor_help.cpp editor/node_dock.cpp
 msgid "Signals"
@@ -1159,71 +1161,38 @@ msgid "Change Dictionary Value"
 msgstr "Tukar Nilai Kamus"
 
 #: editor/editor_about.cpp
-msgid "Thanks from the Godot community!"
-msgstr "Terima kasih dari komuniti Godot!"
+msgid "Rebel Engine"
+msgstr ""
 
 #: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
 msgid "Click to copy."
 msgstr "Klik untuk salin."
 
 #: editor/editor_about.cpp
-msgid "Godot Engine contributors"
+msgid ""
+"Rebel Engine is Free and Open Source Software; released under the MIT "
+"license.\n"
+msgstr ""
+
+#: editor/editor_about.cpp
+msgid ""
+"Games developed with Rebel Engine remain the property of the game developer."
+msgstr ""
+
+#: editor/editor_about.cpp
+#, fuzzy
+msgid "Rebel Contributors"
 msgstr "Penyumbang Enjin Godot"
 
 #: editor/editor_about.cpp
-msgid "Project Founders"
-msgstr "Pengasas Projek"
+#, fuzzy
+msgid "Contributors"
+msgstr "Berterusan"
 
 #: editor/editor_about.cpp
-msgid "Lead Developer"
-msgstr "Pemaju Utama"
-
-#. TRANSLATORS: This refers to a job title.
-#. The trailing space is used to distinguish with the project list application,
-#. you do not have to keep it in your translation.
-#: editor/editor_about.cpp
-msgid "Project Manager "
-msgstr "Pengurus Projek "
-
-#: editor/editor_about.cpp
-msgid "Developers"
-msgstr "Pemaju"
-
-#: editor/editor_about.cpp
-msgid "Authors"
-msgstr "Pengarang"
-
-#: editor/editor_about.cpp
-msgid "Platinum Sponsors"
-msgstr "Penaja Platinum"
-
-#: editor/editor_about.cpp
-msgid "Gold Sponsors"
+#, fuzzy
+msgid "Sponsors"
 msgstr "Penaja Emas"
-
-#: editor/editor_about.cpp
-msgid "Silver Sponsors"
-msgstr "Penderma Perak"
-
-#: editor/editor_about.cpp
-msgid "Bronze Sponsors"
-msgstr "Penderma Gangsa"
-
-#: editor/editor_about.cpp
-msgid "Mini Sponsors"
-msgstr "Penaja Mini"
-
-#: editor/editor_about.cpp
-msgid "Gold Donors"
-msgstr "Penderma Emas"
-
-#: editor/editor_about.cpp
-msgid "Silver Donors"
-msgstr "Penderma Perak"
-
-#: editor/editor_about.cpp
-msgid "Bronze Donors"
-msgstr "Penderma Gangsa"
 
 #: editor/editor_about.cpp
 msgid "Donors"
@@ -1238,8 +1207,9 @@ msgid "Third-party Licenses"
 msgstr "Lesen Pihak Ketiga"
 
 #: editor/editor_about.cpp
+#, fuzzy
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Rebel Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following "
 "is an exhaustive list of all such third-party components with their "
 "respective copyright statements and license terms."
@@ -2169,8 +2139,8 @@ msgstr "Penerangan Kaedah"
 
 #: editor/editor_help.cpp
 msgid ""
-"There is currently no description for this method. Please help us by [color="
-"$color][url=$url]contributing one[/url][/color]!"
+"There is currently no description for this method. Please help us by "
+"[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr ""
 "Tiada keterangan untuk kaedah ini. Tolong bantu kami dengan [color=$color]"
 "[url=$url]menyumbang satu[/url][/color]!"
@@ -3163,32 +3133,17 @@ msgid "Online Documentation"
 msgstr "Dokumen Dalam Talian"
 
 #: editor/editor_node.cpp
-msgid "Questions & Answers"
-msgstr ""
-
-#: editor/editor_node.cpp
 msgid "Report a Bug"
 msgstr "Laporkan Pepijat"
 
 #: editor/editor_node.cpp
-msgid "Suggest a Feature"
-msgstr ""
-
-#: editor/editor_node.cpp
-msgid "Send Docs Feedback"
-msgstr "Hantar Maklum Balas Dokumen"
-
-#: editor/editor_node.cpp editor/plugins/asset_library_editor_plugin.cpp
-msgid "Community"
-msgstr "Komuniti"
-
-#: editor/editor_node.cpp
 #, fuzzy
-msgid "About Godot"
+msgid "About Rebel"
 msgstr "Tentang"
 
 #: editor/editor_node.cpp
-msgid "Support Godot Development"
+#, fuzzy
+msgid "Support Rebel Development"
 msgstr "Sokong Pembangunan Godot"
 
 #: editor/editor_node.cpp
@@ -4021,6 +3976,14 @@ msgstr "Fail atau folder dengan nama ini sudah wujud."
 #: editor/filesystem_dock.cpp
 msgid "Name contains invalid characters."
 msgstr "Nama mengandungi aksara yang tidak sah."
+
+#: editor/filesystem_dock.cpp
+msgid ""
+"This file extension is not recognized by the editor.\n"
+"If you want to rename it anyway, use your operating system's file manager.\n"
+"After renaming to an unknown extension, the file won't be shown in the "
+"editor anymore."
+msgstr ""
 
 #: editor/filesystem_dock.cpp
 msgid ""
@@ -5147,10 +5110,6 @@ msgid "Travel"
 msgstr ""
 
 #: editor/plugins/animation_state_machine_editor.cpp
-msgid "Start and end nodes are needed for a sub-transition."
-msgstr ""
-
-#: editor/plugins/animation_state_machine_editor.cpp
 msgid "No playback resource set at path: %s."
 msgstr ""
 
@@ -5228,10 +5187,6 @@ msgid "Blend"
 msgstr ""
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Mix"
-msgstr ""
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Auto Restart:"
 msgstr ""
 
@@ -5262,10 +5217,6 @@ msgstr ""
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "X-Fade Time (s):"
-msgstr ""
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Current:"
 msgstr ""
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
@@ -5551,6 +5502,10 @@ msgstr ""
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Official"
 msgstr ""
+
+#: editor/plugins/asset_library_editor_plugin.cpp
+msgid "Community"
+msgstr "Komuniti"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
@@ -7818,12 +7773,12 @@ msgstr ""
 
 #. TRANSLATORS: This will be appended to the view name when Auto Orthogonal is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [auto]"
+msgid "[auto]"
 msgstr ""
 
 #. TRANSLATORS: This will be appended to the view name when Portal Occulusion is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [portals active]"
+msgid "[portals active]"
 msgstr ""
 
 #: editor/plugins/spatial_editor_plugin.cpp
@@ -10632,7 +10587,7 @@ msgstr ""
 
 #: editor/project_manager.cpp
 msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."
+"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
 msgstr ""
 
 #: editor/project_manager.cpp
@@ -10640,7 +10595,7 @@ msgid "Please choose an empty folder."
 msgstr ""
 
 #: editor/project_manager.cpp
-msgid "Please choose a \"project.godot\" or \".zip\" file."
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr ""
 
 #: editor/project_manager.cpp
@@ -10678,16 +10633,16 @@ msgstr ""
 
 #: editor/project_manager.cpp
 msgid ""
-"Couldn't load project.godot in project path (error %d). It may be missing or "
+"Couldn't load project.rebel in project path (error %d). It may be missing or "
 "corrupted."
 msgstr ""
 
 #: editor/project_manager.cpp
-msgid "Couldn't edit project.godot in project path."
+msgid "Couldn't edit project.rebel in project path."
 msgstr ""
 
 #: editor/project_manager.cpp
-msgid "Couldn't create project.godot in project path."
+msgid "Couldn't create project.rebel in project path."
 msgstr ""
 
 #: editor/project_manager.cpp
@@ -11026,7 +10981,7 @@ msgid "Device"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid " (Physical)"
+msgid "(Physical)"
 msgstr ""
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11205,8 +11160,9 @@ msgid "Changed Locale Filter Mode"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Project Settings (project.godot)"
-msgstr ""
+#, fuzzy
+msgid "Project Settings (project.rebel)"
+msgstr "Tetapan Projek..."
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
 msgid "General"
@@ -11640,6 +11596,20 @@ msgid ""
 "Can't save the branch of an already instanced scene.\n"
 "To create a variation of a scene, you can make an inherited scene based on "
 "the instanced scene using Scene > New Inherited Scene... instead."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is a child of an already instantiated scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is part of an inherited scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
@@ -12786,6 +12756,14 @@ msgid "Change Expression"
 msgstr ""
 
 #: modules/visual_script/visual_script_editor.cpp
+msgid "Can't copy the function node."
+msgstr ""
+
+#: modules/visual_script/visual_script_editor.cpp
+msgid "Paste VisualScript Nodes"
+msgstr ""
+
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Nodes"
 msgstr ""
 
@@ -12883,14 +12861,6 @@ msgstr ""
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Resize Comment"
-msgstr ""
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Can't copy the function node."
-msgstr ""
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Paste VisualScript Nodes"
 msgstr ""
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -13183,6 +13153,9 @@ msgstr ""
 msgid ""
 "Invalid \"GodotPaymentV3\" module included in the \"android/modules\" "
 "project setting (changed in Godot 3.2.2).\n"
+"Replace it with the first-party \"GodotGooglePlayBilling\" plugin.\n"
+"Note that the singleton was also renamed from \"GodotPayments\" to "
+"\"GodotGooglePlayBilling\"."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
@@ -13205,13 +13178,32 @@ msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Changing the \"Min Sdk\" is only valid when \"Use Custom Build\" is enabled."
+"\"Min Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this min SDK."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Changing the \"Target Sdk\" is only valid when \"Use Custom Build\" is "
-"enabled."
+"\"Target Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this target SDK."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" is set to 30, while the current default is \"%d\". This might "
+"be due to upgrading from a previous Godot release.\n"
+">> Consider changing it to \"%d\" to stay up-to-date with platform "
+"requirements."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" %d is higher than the default version %d. This may work, but "
+"wasn't tested and may be unstable."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
@@ -13307,7 +13299,8 @@ msgstr ""
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
+"Alternatively visit https://docs.rebeltoolbox.com for Android build "
+"documentation."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
@@ -13617,7 +13610,16 @@ msgstr ""
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles2D node instead. You can use the \"Convert to "
-"CPUParticles\" option for this purpose."
+"CPUParticles2D\" toolbar option for this purpose."
+msgstr ""
+
+#: scene/2d/particles_2d.cpp
+msgid ""
+"On macOS, Particles2D rendering is much slower than CPUParticles2D due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles2D instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles2D\" toolbar option for this "
+"purpose."
 msgstr ""
 
 #: scene/2d/particles_2d.cpp scene/3d/particles.cpp
@@ -13823,8 +13825,16 @@ msgstr ""
 #: scene/3d/particles.cpp
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
-"Use the CPUParticles node instead. You can use the \"Convert to CPUParticles"
-"\" option for this purpose."
+"Use the CPUParticles node instead. You can use the \"Convert to "
+"CPUParticles\" toolbar option for this purpose."
+msgstr ""
+
+#: scene/3d/particles.cpp
+msgid ""
+"On macOS, Particles rendering is much slower than CPUParticles due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles\" toolbar option for this purpose."
 msgstr ""
 
 #: scene/3d/particles.cpp
@@ -14003,12 +14013,6 @@ msgid ""
 "Only one WorldEnvironment is allowed per scene (or set of instanced scenes)."
 msgstr ""
 
-#: scene/3d/world_environment.cpp
-msgid ""
-"This WorldEnvironment is ignored. Either add a Camera (for 3D scenes) or set "
-"this environment's Background Mode to Canvas (for 2D scenes)."
-msgstr ""
-
 #: scene/animation/animation_blend_tree.cpp
 msgid "On BlendTree node '%s', animation not found: '%s'"
 msgstr ""
@@ -14151,14 +14155,6 @@ msgid ""
 "different ways depending on the rendered or physics frame rate.\n"
 "Consider using a script's process loop instead of relying on a Timer for "
 "very low wait times."
-msgstr ""
-
-#: scene/main/viewport.cpp
-msgid ""
-"This viewport is not set as render target. If you intend for it to display "
-"its contents directly to the screen, make it a child of a Control so it can "
-"obtain a size. Otherwise, make it a RenderTarget and assign its internal "
-"texture to some node for display."
 msgstr ""
 
 #: scene/main/viewport.cpp

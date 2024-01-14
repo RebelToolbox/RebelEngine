@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 #
 # SPDX-License-Identifier: MIT
-
+#
 # Polish translation of the Rebel Editor
 # 8-bit Pixel <dawdejw@gmail.com>, 2016.
 # Adam Wolanski <adam.wolanski94@gmail.com>, 2017.
@@ -547,8 +547,8 @@ msgid ""
 "\n"
 "To enable the ability to add custom tracks, navigate to the scene's import "
 "settings and set\n"
-"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom Tracks"
-"\", then re-import.\n"
+"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom "
+"Tracks\", then re-import.\n"
 "Alternatively, use an import preset that imports animations to separate "
 "files."
 msgstr ""
@@ -557,8 +557,8 @@ msgstr ""
 "\n"
 "By umożliwić dodawanie własnych ścieżek, przejdź do ustawień importu i "
 "zmień\n"
-"\"Animation > Storage\" na \"Files\", włącz \"Animation > Keep Custom Tracks"
-"\", a potem importuj ponownie.\n"
+"\"Animation > Storage\" na \"Files\", włącz \"Animation > Keep Custom "
+"Tracks\", a potem importuj ponownie.\n"
 "Alternatywnie, użyj profilu importu, który importuje animacje do oddzielnych "
 "plików."
 
@@ -860,7 +860,9 @@ msgid "Scene does not contain any script."
 msgstr "Scena nie posiada żadnego skryptu."
 
 #: editor/connections_dialog.cpp editor/editor_autoload_settings.cpp
-#: editor/groups_editor.cpp editor/plugins/item_list_editor_plugin.cpp
+#: editor/groups_editor.cpp
+#: editor/plugins/animation_tree_player_editor_plugin.cpp
+#: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
 msgid "Add"
 msgstr "Dodaj"
@@ -1197,71 +1199,38 @@ msgid "Change Dictionary Value"
 msgstr "Zmień wartość słownika"
 
 #: editor/editor_about.cpp
-msgid "Thanks from the Godot community!"
-msgstr "Podziękowania od społeczności Godota!"
+msgid "Rebel Engine"
+msgstr ""
 
 #: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
 msgid "Click to copy."
 msgstr "Kliknij, by skopiować."
 
 #: editor/editor_about.cpp
-msgid "Godot Engine contributors"
+msgid ""
+"Rebel Engine is Free and Open Source Software; released under the MIT "
+"license.\n"
+msgstr ""
+
+#: editor/editor_about.cpp
+msgid ""
+"Games developed with Rebel Engine remain the property of the game developer."
+msgstr ""
+
+#: editor/editor_about.cpp
+#, fuzzy
+msgid "Rebel Contributors"
 msgstr "Współtwórcy Godot Engine"
 
 #: editor/editor_about.cpp
-msgid "Project Founders"
-msgstr "Założyciele projektu"
+#, fuzzy
+msgid "Contributors"
+msgstr "Ciągłe"
 
 #: editor/editor_about.cpp
-msgid "Lead Developer"
-msgstr "Deweloper naczelny"
-
-#. TRANSLATORS: This refers to a job title.
-#. The trailing space is used to distinguish with the project list application,
-#. you do not have to keep it in your translation.
-#: editor/editor_about.cpp
-msgid "Project Manager "
-msgstr "Menedżer projektu "
-
-#: editor/editor_about.cpp
-msgid "Developers"
-msgstr "Deweloperzy"
-
-#: editor/editor_about.cpp
-msgid "Authors"
-msgstr "Autorzy"
-
-#: editor/editor_about.cpp
-msgid "Platinum Sponsors"
-msgstr "Platynowi sponsorzy"
-
-#: editor/editor_about.cpp
-msgid "Gold Sponsors"
+#, fuzzy
+msgid "Sponsors"
 msgstr "Złoci sponsorzy"
-
-#: editor/editor_about.cpp
-msgid "Silver Sponsors"
-msgstr "Srebrni sponsorzy"
-
-#: editor/editor_about.cpp
-msgid "Bronze Sponsors"
-msgstr "Brązowi sponsorzy"
-
-#: editor/editor_about.cpp
-msgid "Mini Sponsors"
-msgstr "Mini-sponsorzy"
-
-#: editor/editor_about.cpp
-msgid "Gold Donors"
-msgstr "Złoci darczyńcy"
-
-#: editor/editor_about.cpp
-msgid "Silver Donors"
-msgstr "Srebrni darczyńcy"
-
-#: editor/editor_about.cpp
-msgid "Bronze Donors"
-msgstr "Brązowi darczyńcy"
 
 #: editor/editor_about.cpp
 msgid "Donors"
@@ -1276,8 +1245,9 @@ msgid "Third-party Licenses"
 msgstr "Licencje zewnętrzne"
 
 #: editor/editor_about.cpp
+#, fuzzy
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Rebel Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following "
 "is an exhaustive list of all such third-party components with their "
 "respective copyright statements and license terms."
@@ -1712,8 +1682,9 @@ msgid ""
 "Target platform requires 'ETC2' or 'PVRTC' texture compression for GLES3. "
 "Enable 'Import Etc 2' or 'Import Pvrtc' in Project Settings."
 msgstr ""
-"Platforma docelowa wymaga dla GLES3 kompresji tekstur \"ETC2\" lub \"PVRTC"
-"\". Włącz \"Import Etc 2\" lub \"Import Pvrtc\" w Ustawieniach Projektu."
+"Platforma docelowa wymaga dla GLES3 kompresji tekstur \"ETC2\" lub "
+"\"PVRTC\". Włącz \"Import Etc 2\" lub \"Import Pvrtc\" w Ustawieniach "
+"Projektu."
 
 #: editor/editor_export.cpp
 msgid ""
@@ -2190,8 +2161,8 @@ msgid ""
 "There is currently no description for this property. Please help us by "
 "[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr ""
-"Obecnie nie ma opisu dla tej właściwości. Pomóż nam, [color=$color][url="
-"$url]wysyłając ją[/url][/color]!"
+"Obecnie nie ma opisu dla tej właściwości. Pomóż nam, [color=$color]"
+"[url=$url]wysyłając ją[/url][/color]!"
 
 #: editor/editor_help.cpp
 msgid "Method Descriptions"
@@ -2199,11 +2170,11 @@ msgstr "Opisy metod"
 
 #: editor/editor_help.cpp
 msgid ""
-"There is currently no description for this method. Please help us by [color="
-"$color][url=$url]contributing one[/url][/color]!"
+"There is currently no description for this method. Please help us by "
+"[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr ""
-"Obecnie nie ma opisu dla tej metody. Pomóż nam, [color=$color][url="
-"$url]wysyłając ją[/url][/color]!"
+"Obecnie nie ma opisu dla tej metody. Pomóż nam, [color=$color]"
+"[url=$url]wysyłając ją[/url][/color]!"
 
 #: editor/editor_help_search.cpp editor/editor_node.cpp
 #: editor/plugins/script_editor_plugin.cpp
@@ -3187,31 +3158,17 @@ msgid "Online Documentation"
 msgstr "Dokumentacja online"
 
 #: editor/editor_node.cpp
-msgid "Questions & Answers"
-msgstr "Pytania i odpowiedzi"
-
-#: editor/editor_node.cpp
 msgid "Report a Bug"
 msgstr "Zgłoś błąd"
 
 #: editor/editor_node.cpp
-msgid "Suggest a Feature"
-msgstr "Zasugeruj funkcjonalność"
+#, fuzzy
+msgid "About Rebel"
+msgstr "O silniku"
 
 #: editor/editor_node.cpp
-msgid "Send Docs Feedback"
-msgstr "Oceń dokumentację"
-
-#: editor/editor_node.cpp editor/plugins/asset_library_editor_plugin.cpp
-msgid "Community"
-msgstr "Społeczność"
-
-#: editor/editor_node.cpp
-msgid "About Godot"
-msgstr "O Godocie"
-
-#: editor/editor_node.cpp
-msgid "Support Godot Development"
+#, fuzzy
+msgid "Support Rebel Development"
 msgstr "Wesprzyj rozwój Godota"
 
 #: editor/editor_node.cpp
@@ -4025,6 +3982,14 @@ msgstr "Plik lub katalog o tej nazwie już istnieje."
 #: editor/filesystem_dock.cpp
 msgid "Name contains invalid characters."
 msgstr "Nazwa zawiera niedozwolone znaki."
+
+#: editor/filesystem_dock.cpp
+msgid ""
+"This file extension is not recognized by the editor.\n"
+"If you want to rename it anyway, use your operating system's file manager.\n"
+"After renaming to an unknown extension, the file won't be shown in the "
+"editor anymore."
+msgstr ""
 
 #: editor/filesystem_dock.cpp
 msgid ""
@@ -5151,10 +5116,6 @@ msgid "Travel"
 msgstr "Przejdź"
 
 #: editor/plugins/animation_state_machine_editor.cpp
-msgid "Start and end nodes are needed for a sub-transition."
-msgstr "Początkowy i końcowy węzeł są potrzebne do podprzejścia."
-
-#: editor/plugins/animation_state_machine_editor.cpp
 msgid "No playback resource set at path: %s."
 msgstr "Nie znaleziono zasobu do odtworzenia w ścieżce: %s."
 
@@ -5237,10 +5198,6 @@ msgid "Blend"
 msgstr "Mieszanie"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Mix"
-msgstr "Miks"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Auto Restart:"
 msgstr "Automatyczny Restart:"
 
@@ -5272,10 +5229,6 @@ msgstr "Mieszanie 1:"
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "X-Fade Time (s):"
 msgstr "Czas X-Fade (s):"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Current:"
-msgstr "Bieżący:"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
@@ -5559,6 +5512,10 @@ msgstr "Wsparcie"
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Official"
 msgstr "Oficjalny"
+
+#: editor/plugins/asset_library_editor_plugin.cpp
+msgid "Community"
+msgstr "Społeczność"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
@@ -7872,12 +7829,14 @@ msgstr "Tył perspektywicznie"
 
 #. TRANSLATORS: This will be appended to the view name when Auto Orthogonal is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [auto]"
+#, fuzzy
+msgid "[auto]"
 msgstr " [auto]"
 
 #. TRANSLATORS: This will be appended to the view name when Portal Occulusion is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [portals active]"
+#, fuzzy
+msgid "[portals active]"
 msgstr " [portale aktywne]"
 
 #: editor/plugins/spatial_editor_plugin.cpp
@@ -10533,16 +10492,16 @@ msgid ""
 "(Fragment/Light mode only) (Vector) Sum of absolute derivative in 'x' and "
 "'y'."
 msgstr ""
-"(Tylko tryb fragmentów/światła) (Wektor) Suma bezwzględnej pochodnej po \"x"
-"\" i \"y\"."
+"(Tylko tryb fragmentów/światła) (Wektor) Suma bezwzględnej pochodnej po "
+"\"x\" i \"y\"."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid ""
 "(Fragment/Light mode only) (Scalar) Sum of absolute derivative in 'x' and "
 "'y'."
 msgstr ""
-"(Tylko tryb fragmentów/światła) (Skalar) Suma bezwzględnej pochodnej po \"x"
-"\" i \"y\"."
+"(Tylko tryb fragmentów/światła) (Skalar) Suma bezwzględnej pochodnej po "
+"\"x\" i \"y\"."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "VisualShader"
@@ -10744,8 +10703,9 @@ msgid "Error opening package file (it's not in ZIP format)."
 msgstr "Błąd otwierania pliku pakietu (nie jest w formacie ZIP)."
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."
+"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
 msgstr ""
 "Niewłaściwy plik \".zip\" projektu; nie zawiera pliku \"project.godot\"."
 
@@ -10754,7 +10714,8 @@ msgid "Please choose an empty folder."
 msgstr "Proszę wybrać pusty folder."
 
 #: editor/project_manager.cpp
-msgid "Please choose a \"project.godot\" or \".zip\" file."
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "Proszę wybrać plik \"project.godot\" lub \".zip\"."
 
 #: editor/project_manager.cpp
@@ -10790,19 +10751,22 @@ msgid "Invalid project path (changed anything?)."
 msgstr "Niepoprawna ścieżka projektu (zmienić cokolwiek?)."
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Couldn't load project.godot in project path (error %d). It may be missing or "
+"Couldn't load project.rebel in project path (error %d). It may be missing or "
 "corrupted."
 msgstr ""
 "Nie udało się wczytać project.godot w ścieżce projektu (błąd %d). Może go "
 "brakować lub być uszkodzony."
 
 #: editor/project_manager.cpp
-msgid "Couldn't edit project.godot in project path."
+#, fuzzy
+msgid "Couldn't edit project.rebel in project path."
 msgstr "Nie można było edytować engine.cfg w ścieżce projektu."
 
 #: editor/project_manager.cpp
-msgid "Couldn't create project.godot in project path."
+#, fuzzy
+msgid "Couldn't create project.rebel in project path."
 msgstr "Nie można utworzyć project.godot w ścieżka projektu."
 
 #: editor/project_manager.cpp
@@ -11152,8 +11116,8 @@ msgid ""
 "Invalid action name. It cannot be empty nor contain '/', ':', '=', '\\' or "
 "'\"'"
 msgstr ""
-"Niepoprawna nazwa akcji. Nie może być pusta ani zawierać \"/\", \":\", \"="
-"\", \"\\\" lub \""
+"Niepoprawna nazwa akcji. Nie może być pusta ani zawierać \"/\", \":\", "
+"\"=\", \"\\\" lub \""
 
 #: editor/project_settings_editor.cpp
 msgid "An action with the name '%s' already exists."
@@ -11180,7 +11144,8 @@ msgid "Device"
 msgstr "Urządzenie"
 
 #: editor/project_settings_editor.cpp
-msgid " (Physical)"
+#, fuzzy
+msgid "(Physical)"
 msgstr " (fizyczny)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11300,8 +11265,8 @@ msgid ""
 "Invalid action name. It cannot be empty nor contain '/', ':', '=', '\\' or "
 "'\"'."
 msgstr ""
-"Niepoprawna nazwa akcji. Nie może być pusta ani zawierać \"/\", \":\", \"="
-"\", \"\\\" lub \"."
+"Niepoprawna nazwa akcji. Nie może być pusta ani zawierać \"/\", \":\", "
+"\"=\", \"\\\" lub \"."
 
 #: editor/project_settings_editor.cpp
 msgid "Add Input Action"
@@ -11360,7 +11325,8 @@ msgid "Changed Locale Filter Mode"
 msgstr "Zmień tryb filtrowania ustawień lokalizacji"
 
 #: editor/project_settings_editor.cpp
-msgid "Project Settings (project.godot)"
+#, fuzzy
+msgid "Project Settings (project.rebel)"
 msgstr "Ustawienia projektu (project.godot)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11811,6 +11777,20 @@ msgstr ""
 "Nie można zapisać gałęzi instancji sceny.\n"
 "By utworzyć wariację sceny, zamiast tego możesz stworzyć scenę dziedziczącą "
 "bazowaną na instancji sceny, używając Scena -> Nowa scena dziedzicząca..."
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is a child of an already instantiated scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is part of an inherited scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
 
 #: editor/scene_tree_dock.cpp
 msgid "Save New Scene As..."
@@ -12979,6 +12959,14 @@ msgid "Change Expression"
 msgstr "Zmień wyrażenie"
 
 #: modules/visual_script/visual_script_editor.cpp
+msgid "Can't copy the function node."
+msgstr "Nie można skopiować węzła funkcji."
+
+#: modules/visual_script/visual_script_editor.cpp
+msgid "Paste VisualScript Nodes"
+msgstr "Wklej węzeł VisualScript"
+
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Nodes"
 msgstr "Usuwanie węzłów VisualScript"
 
@@ -13082,14 +13070,6 @@ msgstr "Zmień wartość wejściową"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Resize Comment"
 msgstr "Zmień rozmiar komentarza"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Can't copy the function node."
-msgstr "Nie można skopiować węzła funkcji."
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Paste VisualScript Nodes"
-msgstr "Wklej węzeł VisualScript"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Can't create function with a function node."
@@ -13388,9 +13368,10 @@ msgstr "Niepoprawna nazwa paczki:"
 msgid ""
 "Invalid \"GodotPaymentV3\" module included in the \"android/modules\" "
 "project setting (changed in Godot 3.2.2).\n"
+"Replace it with the first-party \"GodotGooglePlayBilling\" plugin.\n"
+"Note that the singleton was also renamed from \"GodotPayments\" to "
+"\"GodotGooglePlayBilling\"."
 msgstr ""
-"Niepoprawny moduł \"GodotPaymentV3\" załączony w ustawieniu projektu "
-"\"android/modules\" (zmieniony w Godocie 3.2.2).\n"
 
 #: platform/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
@@ -13415,18 +13396,33 @@ msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Changing the \"Min Sdk\" is only valid when \"Use Custom Build\" is enabled."
+"\"Min Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this min SDK."
 msgstr ""
-"Zmiana \"Min Sdk\" jest poprawna tylko, gdy \"Use Custom Build\" jest "
-"włączone."
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Changing the \"Target Sdk\" is only valid when \"Use Custom Build\" is "
-"enabled."
+"\"Target Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this target SDK."
 msgstr ""
-"Zmiana \"Target Sdk\" jest poprawna tylko, gdy \"Use Custom Build\" jest "
-"włączone."
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" is set to 30, while the current default is \"%d\". This might "
+"be due to upgrading from a previous Godot release.\n"
+">> Consider changing it to \"%d\" to stay up-to-date with platform "
+"requirements."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" %d is higher than the default version %d. This may work, but "
+"wasn't tested and may be unstable."
+msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version."
@@ -13528,9 +13524,11 @@ msgid "Building Android Project (gradle)"
 msgstr "Budowanie projektu Androida (gradle)"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
+"Alternatively visit https://docs.rebeltoolbox.com for Android build "
+"documentation."
 msgstr ""
 "Budowanie projektu Androida się nie powiodło, sprawdź wyjście błędu.\n"
 "Alternatywnie, odwiedź docs.rebeltoolbox.com po dokumentację budowania dla "
@@ -13886,14 +13884,24 @@ msgstr ""
 "ParallaxBackground."
 
 #: scene/2d/particles_2d.cpp
+#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles2D node instead. You can use the \"Convert to "
-"CPUParticles\" option for this purpose."
+"CPUParticles2D\" toolbar option for this purpose."
 msgstr ""
 "Cząsteczki oparte o GPU są nieobsługiwane przez sterownik wideo GLES2.\n"
 "Użyj zamiast tego węzła CPUParticles2D. Możesz użyć do tego celu opcji "
 "\"Konwertuj na CPUParticles\"."
+
+#: scene/2d/particles_2d.cpp
+msgid ""
+"On macOS, Particles2D rendering is much slower than CPUParticles2D due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles2D instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles2D\" toolbar option for this "
+"purpose."
+msgstr ""
 
 #: scene/2d/particles_2d.cpp scene/3d/particles.cpp
 msgid ""
@@ -14144,14 +14152,23 @@ msgid "Only uniform scales are supported."
 msgstr "Obsługiwane są tylko jednolite skale."
 
 #: scene/3d/particles.cpp
+#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
-"Use the CPUParticles node instead. You can use the \"Convert to CPUParticles"
-"\" option for this purpose."
+"Use the CPUParticles node instead. You can use the \"Convert to "
+"CPUParticles\" toolbar option for this purpose."
 msgstr ""
 "Cząsteczki oparte o GPU są nieobsługiwane przez sterownik wideo GLES2.\n"
 "Użyj zamiast tego węzła CPUParticles. Możesz użyć do tego celu opcji "
 "\"Konwertuj na CPUParticles\"."
+
+#: scene/3d/particles.cpp
+msgid ""
+"On macOS, Particles rendering is much slower than CPUParticles due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles\" toolbar option for this purpose."
+msgstr ""
 
 #: scene/3d/particles.cpp
 msgid ""
@@ -14176,8 +14193,8 @@ msgid ""
 "PathFollow's ROTATION_ORIENTED requires \"Up Vector\" to be enabled in its "
 "parent Path's Curve resource."
 msgstr ""
-"Właściwość ROTATION_ORIENTED węzła PathFollow wymaga włączonego \"Up Vector"
-"\" w zasobie Curve jego nadrzędnego węzła Path."
+"Właściwość ROTATION_ORIENTED węzła PathFollow wymaga włączonego \"Up "
+"Vector\" w zasobie Curve jego nadrzędnego węzła Path."
 
 #: scene/3d/physics_body.cpp
 msgid ""
@@ -14367,14 +14384,6 @@ msgstr ""
 "Tylko jeden WorldEnvironment jest dozwolony na scenę (lub zestaw "
 "zinstancjonowanych scen)."
 
-#: scene/3d/world_environment.cpp
-msgid ""
-"This WorldEnvironment is ignored. Either add a Camera (for 3D scenes) or set "
-"this environment's Background Mode to Canvas (for 2D scenes)."
-msgstr ""
-"Ten WorldEnvironment jest ignorowany. Dodaj Camera (dla scen 3D) lub ustaw "
-"Background Mode tego środowiska na Canvas (dla scen 2D)."
-
 #: scene/animation/animation_blend_tree.cpp
 msgid "On BlendTree node '%s', animation not found: '%s'"
 msgstr "W węźle BlendTree '%s', animacja nie znaleziona: '%s'"
@@ -14544,18 +14553,6 @@ msgstr ""
 "różnie w zależności od częstotliwości klatek renderowania lub fizyki\n"
 "Rozważ użycie pętli procesowej w skrypcie zamiast polegać na Timerze dla "
 "bardzo niskich czasów czekania."
-
-#: scene/main/viewport.cpp
-msgid ""
-"This viewport is not set as render target. If you intend for it to display "
-"its contents directly to the screen, make it a child of a Control so it can "
-"obtain a size. Otherwise, make it a RenderTarget and assign its internal "
-"texture to some node for display."
-msgstr ""
-"Ten Viewport nie jest ustawiony jako Render Target. Jeśli chcesz wyświetlić "
-"jego zawartość na ekranie dodaj go jako dziecko węzła typu Control, aby "
-"otrzymał jakiś rozmiar. W przeciwnym wypadku ustawi opcję RenderTarget i "
-"przyporządkuj jego teksturę dla któregoś węzła."
 
 #: scene/main/viewport.cpp
 msgid ""
