@@ -1,47 +1,27 @@
-# Makefile providing various facilities to manage translations
-
-TEMPLATE = classes.pot
+TEMPLATE = api.pot
 POFILES = $(wildcard *.po)
-LANGS = $(POFILES:%.po=%)
 
 all: update merge
 
+# Update the translations template with updated API strings.
 update:
-	@cd ../..; \
+	@cd ..;                                      \
 	python3 tools/scripts/extract_api_strings.py \
-	  --path docs modules/*/docs \
-	  --output translations/$(TEMPLATE)
+	    --path docs modules/*/docs               \
+	    --output translations/$(TEMPLATE)
 
+# Merge changes in the translations template with each translation file.
 merge:
-	@for po in $(POFILES); do \
-	  echo -e "\nMerging $$po..."; \
-	  msgmerge -w 79 -C $$po $$po $(TEMPLATE) > "$$po".new; \
-	  mv -f "$$po".new $$po; \
-	  msgattrib --output-file=$$po --no-obsolete $$po; \
+	@echo "Merging changes."
+	@for po in $(POFILES); do                                 \
+	    echo "Merging changes into: $$po";                    \
+	    msgmerge -w 79 -C $$po $$po $(TEMPLATE) > "$$po".new; \
+	    mv -f "$$po".new $$po;                                \
+	    msgattrib --output-file=$$po --no-obsolete $$po;      \
 	done
 
 check:
-	@for po in $(POFILES); do msgfmt -c $$po -o /dev/null; done
-
-# Generate completion ratio from statistics string such as:
-# 2775 translated messages, 272 fuzzy translations, 151 untranslated messages.
-# First number can be 0, second and third numbers are only present if non-zero.
-include-list:
-	@list=""; \
-	threshold=0.10; \
-	exclude_ctl="ar bn fa he hi ml si ta te ur"; \
-	for po in $(POFILES); do \
-	  lang=`basename $$po .po`; \
-	  if `grep -q $$lang <<< $$exclude_ctl`; then continue; fi; \
-	  res=`msgfmt --statistics $$po -o /dev/null 2>&1 | sed 's/[^0-9,]*//g'`; \
-	  complete=`cut -d',' -f1 <<< $$res`; \
-	  fuzzy_or_untranslated=`cut -d',' -f2 <<< $$res`; \
-	  untranslated_maybe=`cut -d',' -f3 <<< $$res`; \
-	  if [ -z "$$fuzzy_or_untranslated" ]; then fuzzy_or_untranslated=0; fi; \
-	  if [ -z "$$untranslated_maybe" ]; then untranslated_maybe=0; fi; \
-	  incomplete=`expr $$fuzzy_or_untranslated + $$untranslated_maybe`; \
-	  if `awk "BEGIN {exit !($$complete / ($$complete + $$incomplete) > $$threshold)}"`; then \
-	    list+="$$lang,"; \
-	  fi; \
-	done; \
-	echo $$list;
+	@for po in $(POFILES); do        \
+	    echo "Checking: $$po";       \
+	    msgfmt -c $$po -o /dev/null; \
+	done

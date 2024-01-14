@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 #
 # SPDX-License-Identifier: MIT
-
+#
 # Korean translation of the Rebel Editor
 # Ch <ccwpc@hanmail.net>, 2017.
 # paijai 송 (fivejobi) <xotjq237@gmail.com>, 2018.
@@ -524,8 +524,8 @@ msgid ""
 "\n"
 "To enable the ability to add custom tracks, navigate to the scene's import "
 "settings and set\n"
-"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom Tracks"
-"\", then re-import.\n"
+"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom "
+"Tracks\", then re-import.\n"
 "Alternatively, use an import preset that imports animations to separate "
 "files."
 msgstr ""
@@ -534,8 +534,8 @@ msgstr ""
 "\n"
 "저장 기능을 활성화하려면 커스텀 트랙을 추가하고, 씬의 가져오기 설정으로 가"
 "서\n"
-"\"Animation > Storage\" 설정을 \"Files\"로, \"Animation > Keep Custom Tracks"
-"\" 설정을 활성화한 뒤, 다시 가져오십시오.\n"
+"\"Animation > Storage\" 설정을 \"Files\"로, \"Animation > Keep Custom "
+"Tracks\" 설정을 활성화한 뒤, 다시 가져오십시오.\n"
 "아니면 가져오기 프리셋으로 애니메이션을 별도의 파일로 가져올 수도 있습니다."
 
 #: editor/animation_track_editor.cpp
@@ -836,7 +836,9 @@ msgid "Scene does not contain any script."
 msgstr "씬에 스크립트가 없습니다."
 
 #: editor/connections_dialog.cpp editor/editor_autoload_settings.cpp
-#: editor/groups_editor.cpp editor/plugins/item_list_editor_plugin.cpp
+#: editor/groups_editor.cpp
+#: editor/plugins/animation_tree_player_editor_plugin.cpp
+#: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
 msgid "Add"
 msgstr "추가"
@@ -1173,71 +1175,38 @@ msgid "Change Dictionary Value"
 msgstr "딕셔너리 값 바꾸기"
 
 #: editor/editor_about.cpp
-msgid "Thanks from the Godot community!"
-msgstr "Godot 커뮤니티에서 감사드립니다!"
+msgid "Rebel Engine"
+msgstr ""
 
 #: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
 msgid "Click to copy."
 msgstr "클릭하여 복사합니다."
 
 #: editor/editor_about.cpp
-msgid "Godot Engine contributors"
+msgid ""
+"Rebel Engine is Free and Open Source Software; released under the MIT "
+"license.\n"
+msgstr ""
+
+#: editor/editor_about.cpp
+msgid ""
+"Games developed with Rebel Engine remain the property of the game developer."
+msgstr ""
+
+#: editor/editor_about.cpp
+#, fuzzy
+msgid "Rebel Contributors"
 msgstr "Godot Engine 기여자"
 
 #: editor/editor_about.cpp
-msgid "Project Founders"
-msgstr "프로젝트 창립자"
+#, fuzzy
+msgid "Contributors"
+msgstr "연속적"
 
 #: editor/editor_about.cpp
-msgid "Lead Developer"
-msgstr "리드 개발자"
-
-#. TRANSLATORS: This refers to a job title.
-#. The trailing space is used to distinguish with the project list application,
-#. you do not have to keep it in your translation.
-#: editor/editor_about.cpp
-msgid "Project Manager "
-msgstr "프로젝트 매니저 "
-
-#: editor/editor_about.cpp
-msgid "Developers"
-msgstr "개발자"
-
-#: editor/editor_about.cpp
-msgid "Authors"
-msgstr "저자"
-
-#: editor/editor_about.cpp
-msgid "Platinum Sponsors"
-msgstr "플래티넘 스폰서"
-
-#: editor/editor_about.cpp
-msgid "Gold Sponsors"
+#, fuzzy
+msgid "Sponsors"
 msgstr "골드 스폰서"
-
-#: editor/editor_about.cpp
-msgid "Silver Sponsors"
-msgstr "실버 스폰서"
-
-#: editor/editor_about.cpp
-msgid "Bronze Sponsors"
-msgstr "브론즈 스폰서"
-
-#: editor/editor_about.cpp
-msgid "Mini Sponsors"
-msgstr "미니 스폰서"
-
-#: editor/editor_about.cpp
-msgid "Gold Donors"
-msgstr "골드 기부자"
-
-#: editor/editor_about.cpp
-msgid "Silver Donors"
-msgstr "실버 기부자"
-
-#: editor/editor_about.cpp
-msgid "Bronze Donors"
-msgstr "브론즈 기부자"
 
 #: editor/editor_about.cpp
 msgid "Donors"
@@ -1252,8 +1221,9 @@ msgid "Third-party Licenses"
 msgstr "제 3자 라이선스"
 
 #: editor/editor_about.cpp
+#, fuzzy
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Rebel Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following "
 "is an exhaustive list of all such third-party components with their "
 "respective copyright statements and license terms."
@@ -2175,8 +2145,8 @@ msgstr "메서드 설명"
 
 #: editor/editor_help.cpp
 msgid ""
-"There is currently no description for this method. Please help us by [color="
-"$color][url=$url]contributing one[/url][/color]!"
+"There is currently no description for this method. Please help us by "
+"[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr ""
 "현재 이 메서드의 설명이 없습니다. [color=$color][url=$url]관련 정보를 기여하"
 "여[/url][/color] 개선할 수 있도록 도와주세요!"
@@ -3158,31 +3128,17 @@ msgid "Online Documentation"
 msgstr "온라인 문서"
 
 #: editor/editor_node.cpp
-msgid "Questions & Answers"
-msgstr "질문과 답변"
-
-#: editor/editor_node.cpp
 msgid "Report a Bug"
 msgstr "버그 보고"
 
 #: editor/editor_node.cpp
-msgid "Suggest a Feature"
-msgstr "기능 제안"
+#, fuzzy
+msgid "About Rebel"
+msgstr "정보"
 
 #: editor/editor_node.cpp
-msgid "Send Docs Feedback"
-msgstr "문서 피드백 보내기"
-
-#: editor/editor_node.cpp editor/plugins/asset_library_editor_plugin.cpp
-msgid "Community"
-msgstr "커뮤니티"
-
-#: editor/editor_node.cpp
-msgid "About Godot"
-msgstr "Godot 정보"
-
-#: editor/editor_node.cpp
-msgid "Support Godot Development"
+#, fuzzy
+msgid "Support Rebel Development"
 msgstr "Godot 개발 지원"
 
 #: editor/editor_node.cpp
@@ -3988,6 +3944,14 @@ msgstr "이 이름은 이미 어떤 파일이나 폴더가 쓰고 있습니다."
 #: editor/filesystem_dock.cpp
 msgid "Name contains invalid characters."
 msgstr "이름에 잘못된 문자가 있습니다."
+
+#: editor/filesystem_dock.cpp
+msgid ""
+"This file extension is not recognized by the editor.\n"
+"If you want to rename it anyway, use your operating system's file manager.\n"
+"After renaming to an unknown extension, the file won't be shown in the "
+"editor anymore."
+msgstr ""
 
 #: editor/filesystem_dock.cpp
 msgid ""
@@ -5109,10 +5073,6 @@ msgid "Travel"
 msgstr "진행"
 
 #: editor/plugins/animation_state_machine_editor.cpp
-msgid "Start and end nodes are needed for a sub-transition."
-msgstr "하위 전환에는 시작과 끝 노드가 필요합니다."
-
-#: editor/plugins/animation_state_machine_editor.cpp
 msgid "No playback resource set at path: %s."
 msgstr "이 경로에 설정한 재생 리소스가 없음: %s."
 
@@ -5194,10 +5154,6 @@ msgid "Blend"
 msgstr "혼합"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Mix"
-msgstr "믹스"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Auto Restart:"
 msgstr "자동 재시작:"
 
@@ -5229,10 +5185,6 @@ msgstr "혼합 1:"
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "X-Fade Time (s):"
 msgstr "X-페이드 시간 (초):"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Current:"
-msgstr "현재:"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
@@ -5515,6 +5467,10 @@ msgstr "지원"
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Official"
 msgstr "공식"
+
+#: editor/plugins/asset_library_editor_plugin.cpp
+msgid "Community"
+msgstr "커뮤니티"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
@@ -7813,12 +7769,14 @@ msgstr "후면 원근"
 
 #. TRANSLATORS: This will be appended to the view name when Auto Orthogonal is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [auto]"
+#, fuzzy
+msgid "[auto]"
 msgstr " [자동]"
 
 #. TRANSLATORS: This will be appended to the view name when Portal Occulusion is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [portals active]"
+#, fuzzy
+msgid "[portals active]"
 msgstr " [포털 활성]"
 
 #: editor/plugins/spatial_editor_plugin.cpp
@@ -10650,8 +10608,9 @@ msgid "Error opening package file (it's not in ZIP format)."
 msgstr "패키지 파일을 여는 중 오류 (ZIP 형식이 아닙니다)."
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."
+"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
 msgstr ""
 "잘못된 \".zip\" 프로젝트 파일입니다. \"project.godot\" 파일이 들어있지 않습니"
 "다."
@@ -10661,7 +10620,8 @@ msgid "Please choose an empty folder."
 msgstr "비어있는 폴더를 선택해주세요."
 
 #: editor/project_manager.cpp
-msgid "Please choose a \"project.godot\" or \".zip\" file."
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "\"project.godot\" 파일 또는 \".zip\" 파일을 선택해주세요."
 
 #: editor/project_manager.cpp
@@ -10697,19 +10657,22 @@ msgid "Invalid project path (changed anything?)."
 msgstr "잘못된 프로젝트 경로 (무언가를 변경하셨습니까?)."
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Couldn't load project.godot in project path (error %d). It may be missing or "
+"Couldn't load project.rebel in project path (error %d). It may be missing or "
 "corrupted."
 msgstr ""
 "프로젝트 경로에서 project.godot을 불러올 수 없습니다 (오류 %d). 누락되거나 손"
 "상된 모양입니다."
 
 #: editor/project_manager.cpp
-msgid "Couldn't edit project.godot in project path."
+#, fuzzy
+msgid "Couldn't edit project.rebel in project path."
 msgstr "프로젝트 경로에서 project.godot 파일을 편집할 수 없습니다."
 
 #: editor/project_manager.cpp
-msgid "Couldn't create project.godot in project path."
+#, fuzzy
+msgid "Couldn't create project.rebel in project path."
 msgstr "프로젝트 경로에서 project.godot 파일을 만들 수 없습니다."
 
 #: editor/project_manager.cpp
@@ -11080,7 +11043,8 @@ msgid "Device"
 msgstr "기기"
 
 #: editor/project_settings_editor.cpp
-msgid " (Physical)"
+#, fuzzy
+msgid "(Physical)"
 msgstr " (물리)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11260,7 +11224,8 @@ msgid "Changed Locale Filter Mode"
 msgstr "로케일 필터 모드 변경됨"
 
 #: editor/project_settings_editor.cpp
-msgid "Project Settings (project.godot)"
+#, fuzzy
+msgid "Project Settings (project.rebel)"
 msgstr "프로젝트 설정 (project.godot)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11709,6 +11674,20 @@ msgstr ""
 "이미 인스턴스된 씬의 가지를 저장할 수 없습니다.\n"
 "씬의 바리에이션을 만드려면, 인스턴스된 씬을 바탕으로 상속 씬을 씬 > 새 상속 "
 "씬...을 대신 사용하여 만들 수 있습니다."
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is a child of an already instantiated scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is part of an inherited scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
 
 #: editor/scene_tree_dock.cpp
 msgid "Save New Scene As..."
@@ -12871,6 +12850,14 @@ msgid "Change Expression"
 msgstr "표현식 바꾸기"
 
 #: modules/visual_script/visual_script_editor.cpp
+msgid "Can't copy the function node."
+msgstr "함수 노드를 복사할 수 없습니다."
+
+#: modules/visual_script/visual_script_editor.cpp
+msgid "Paste VisualScript Nodes"
+msgstr "비주얼스크립트 노드 붙여넣기"
+
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Nodes"
 msgstr "비주얼스크립트 노드 제거"
 
@@ -12974,14 +12961,6 @@ msgstr "입력 값 바꾸기"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Resize Comment"
 msgstr "주석 크기 조절"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Can't copy the function node."
-msgstr "함수 노드를 복사할 수 없습니다."
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Paste VisualScript Nodes"
-msgstr "비주얼스크립트 노드 붙여넣기"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Can't create function with a function node."
@@ -13275,9 +13254,10 @@ msgstr "잘못된 패키지 이름:"
 msgid ""
 "Invalid \"GodotPaymentV3\" module included in the \"android/modules\" "
 "project setting (changed in Godot 3.2.2).\n"
+"Replace it with the first-party \"GodotGooglePlayBilling\" plugin.\n"
+"Note that the singleton was also renamed from \"GodotPayments\" to "
+"\"GodotGooglePlayBilling\"."
 msgstr ""
-"\"android/modules\" 프로젝트 세팅에 잘못된 \"GodotPaymentV3\" 모듈이 포함되"
-"어 있습니다. (Godot 3.2.2 에서 변경됨).\n"
 
 #: platform/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
@@ -13302,17 +13282,34 @@ msgid "\"Export AAB\" is only valid when \"Use Custom Build\" is enabled."
 msgstr "\"Export AAB\"는 \"Use Custom Build\"가 활성화된 경우에만 유효합니다."
 
 #: platform/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
-"Changing the \"Min Sdk\" is only valid when \"Use Custom Build\" is enabled."
-msgstr "\"Export AAB\"는 \"Use Custom Build\"가 활성화된 경우에만 유효합니다."
+"\"Min Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this min SDK."
+msgstr ""
 
 #: platform/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
-"Changing the \"Target Sdk\" is only valid when \"Use Custom Build\" is "
-"enabled."
-msgstr "\"Export AAB\"는 \"Use Custom Build\"가 활성화된 경우에만 유효합니다."
+"\"Target Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this target SDK."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" is set to 30, while the current default is \"%d\". This might "
+"be due to upgrading from a previous Godot release.\n"
+">> Consider changing it to \"%d\" to stay up-to-date with platform "
+"requirements."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" %d is higher than the default version %d. This may work, but "
+"wasn't tested and may be unstable."
+msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version."
@@ -13412,9 +13409,11 @@ msgid "Building Android Project (gradle)"
 msgstr "Android 프로젝트 빌드 중 (gradle)"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
+"Alternatively visit https://docs.rebeltoolbox.com for Android build "
+"documentation."
 msgstr ""
 "Android 프로젝트의 빌드에 실패했습니다, 출력된 오류를 확인하세요.\n"
 "또는 docs.rebeltoolbox.com에서 Android 빌드 문서를 찾아보세요."
@@ -13748,14 +13747,24 @@ msgstr ""
 "ParallaxLayer는 ParallaxBackground 노드의 자식 노드로 있을 때만 작동합니다."
 
 #: scene/2d/particles_2d.cpp
+#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles2D node instead. You can use the \"Convert to "
-"CPUParticles\" option for this purpose."
+"CPUParticles2D\" toolbar option for this purpose."
 msgstr ""
 "GPU 기반 파티클은 GLES2 비디오 드라이버에서 지원하지 않습니다.\n"
 "대신 CPUParticles2D 노드를 사용하세요. 이 경우 \"CPUParticles로 변환\" 옵션"
 "을 사용할 수 있습니다."
+
+#: scene/2d/particles_2d.cpp
+msgid ""
+"On macOS, Particles2D rendering is much slower than CPUParticles2D due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles2D instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles2D\" toolbar option for this "
+"purpose."
+msgstr ""
 
 #: scene/2d/particles_2d.cpp scene/3d/particles.cpp
 msgid ""
@@ -13943,8 +13952,8 @@ msgid ""
 "CPUParticles animation requires the usage of a SpatialMaterial whose "
 "Billboard Mode is set to \"Particle Billboard\"."
 msgstr ""
-"CPUParticles 애니메이션을 사용하려면 Billboard Mode가 \"Particle Billboard"
-"\"로 설정된 SpatialMaterial이 필요합니다."
+"CPUParticles 애니메이션을 사용하려면 Billboard Mode가 \"Particle "
+"Billboard\"로 설정된 SpatialMaterial이 필요합니다."
 
 #: scene/3d/gi_probe.cpp
 msgid "Plotting Meshes"
@@ -13998,14 +14007,23 @@ msgid "Only uniform scales are supported."
 msgstr "Uniform 스케일만 지원됩니다."
 
 #: scene/3d/particles.cpp
+#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
-"Use the CPUParticles node instead. You can use the \"Convert to CPUParticles"
-"\" option for this purpose."
+"Use the CPUParticles node instead. You can use the \"Convert to "
+"CPUParticles\" toolbar option for this purpose."
 msgstr ""
 "GPU 기반 파티클은 GLES2 비디오 드라이버에서 지원하지 않습니다.\n"
 "대신 CPUParticles 노드를 사용하세요. 이 경우 \"CPUParticles로 변환\" 설정을 "
 "사용할 수 있습니다."
+
+#: scene/3d/particles.cpp
+msgid ""
+"On macOS, Particles rendering is much slower than CPUParticles due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles\" toolbar option for this purpose."
+msgstr ""
 
 #: scene/3d/particles.cpp
 msgid ""
@@ -14029,8 +14047,8 @@ msgid ""
 "PathFollow's ROTATION_ORIENTED requires \"Up Vector\" to be enabled in its "
 "parent Path's Curve resource."
 msgstr ""
-"PathFollow의 ROTATION_ORIENTED는 부모 Path의 Curve 리소스에서 \"Up Vector"
-"\"가 켜져 있어야 합니다."
+"PathFollow의 ROTATION_ORIENTED는 부모 Path의 Curve 리소스에서 \"Up "
+"Vector\"가 켜져 있어야 합니다."
 
 #: scene/3d/physics_body.cpp
 msgid ""
@@ -14206,22 +14224,14 @@ msgid ""
 "WorldEnvironment requires its \"Environment\" property to contain an "
 "Environment to have a visible effect."
 msgstr ""
-"WorldEnvironment가 시각 이펙트를 갖도록 Environment를 갖고 있는 \"Environment"
-"\" 속성이 필요합니다."
+"WorldEnvironment가 시각 이펙트를 갖도록 Environment를 갖고 있는 "
+"\"Environment\" 속성이 필요합니다."
 
 #: scene/3d/world_environment.cpp
 msgid ""
 "Only one WorldEnvironment is allowed per scene (or set of instanced scenes)."
 msgstr ""
 "씬(또는 인스턴스된 씬 세트마다) 당 WorldEnvironment는 하나만 허용됩니다."
-
-#: scene/3d/world_environment.cpp
-msgid ""
-"This WorldEnvironment is ignored. Either add a Camera (for 3D scenes) or set "
-"this environment's Background Mode to Canvas (for 2D scenes)."
-msgstr ""
-"이 WorldEnvironment는 무시됩니다. (3D 씬을 위해) Camera를 추가하거나 아니면 "
-"(2D 씬을 위해) 이 환경의 Background Mode를 Canvas로 설정하세요."
 
 #: scene/animation/animation_blend_tree.cpp
 msgid "On BlendTree node '%s', animation not found: '%s'"
@@ -14391,18 +14401,6 @@ msgstr ""
 "레이트에 따라 상당히 다른 방식으로 작동할 수 있습니다.\n"
 "대기 시간이 매우 짧다면 타이머에 의존하는 대신 스크립트의 프로세스 루프를 사"
 "용하는 것이 좋습니다."
-
-#: scene/main/viewport.cpp
-msgid ""
-"This viewport is not set as render target. If you intend for it to display "
-"its contents directly to the screen, make it a child of a Control so it can "
-"obtain a size. Otherwise, make it a RenderTarget and assign its internal "
-"texture to some node for display."
-msgstr ""
-"뷰포트를 렌더 대상으로 설정하지 않았습니다. 뷰포트의 내용을 화면에 직접 표시"
-"하려면, Control의 자식 노드로 만들어서 크기를 얻어야 합니다. 그렇지 않을 경"
-"우, 화면에 표시하기 위해서는 뷰포트를 RenderTarget으로 만들고 내부적인 텍스처"
-"를 다른 노드에 지정해야 합니다."
 
 #: scene/main/viewport.cpp
 msgid ""

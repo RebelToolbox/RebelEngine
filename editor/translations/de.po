@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 #
 # SPDX-License-Identifier: MIT
-
+#
 # German translation of the Rebel Editor
 # Alexander Mahr <alex.mahr@gmail.com>, 2016, 2019.
 # Andreas Esau <andreasesau@gmail.com>, 2016.
@@ -571,8 +571,8 @@ msgid ""
 "\n"
 "To enable the ability to add custom tracks, navigate to the scene's import "
 "settings and set\n"
-"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom Tracks"
-"\", then re-import.\n"
+"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom "
+"Tracks\", then re-import.\n"
 "Alternatively, use an import preset that imports animations to separate "
 "files."
 msgstr ""
@@ -886,7 +886,9 @@ msgid "Scene does not contain any script."
 msgstr "Szene enthält kein einziges Skript."
 
 #: editor/connections_dialog.cpp editor/editor_autoload_settings.cpp
-#: editor/groups_editor.cpp editor/plugins/item_list_editor_plugin.cpp
+#: editor/groups_editor.cpp
+#: editor/plugins/animation_tree_player_editor_plugin.cpp
+#: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
 msgid "Add"
 msgstr "Hinzufügen"
@@ -1227,71 +1229,38 @@ msgid "Change Dictionary Value"
 msgstr "Wörterbuchwert ändern"
 
 #: editor/editor_about.cpp
-msgid "Thanks from the Godot community!"
-msgstr "Die Godot-Gemeinschaft bedankt sich!"
+msgid "Rebel Engine"
+msgstr ""
 
 #: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
 msgid "Click to copy."
 msgstr "Zum kopieren klicken."
 
 #: editor/editor_about.cpp
-msgid "Godot Engine contributors"
+msgid ""
+"Rebel Engine is Free and Open Source Software; released under the MIT "
+"license.\n"
+msgstr ""
+
+#: editor/editor_about.cpp
+msgid ""
+"Games developed with Rebel Engine remain the property of the game developer."
+msgstr ""
+
+#: editor/editor_about.cpp
+#, fuzzy
+msgid "Rebel Contributors"
 msgstr "Mitwirkende der Godot Engine"
 
 #: editor/editor_about.cpp
-msgid "Project Founders"
-msgstr "Projektgründer"
+#, fuzzy
+msgid "Contributors"
+msgstr "Fortlaufend"
 
 #: editor/editor_about.cpp
-msgid "Lead Developer"
-msgstr "Hauptentwickler"
-
-#. TRANSLATORS: This refers to a job title.
-#. The trailing space is used to distinguish with the project list application,
-#. you do not have to keep it in your translation.
-#: editor/editor_about.cpp
-msgid "Project Manager "
-msgstr "Projektleiter "
-
-#: editor/editor_about.cpp
-msgid "Developers"
-msgstr "Entwickler"
-
-#: editor/editor_about.cpp
-msgid "Authors"
-msgstr "Autoren"
-
-#: editor/editor_about.cpp
-msgid "Platinum Sponsors"
-msgstr "Platin-Sponsoren"
-
-#: editor/editor_about.cpp
-msgid "Gold Sponsors"
+#, fuzzy
+msgid "Sponsors"
 msgstr "Gold-Sponsoren"
-
-#: editor/editor_about.cpp
-msgid "Silver Sponsors"
-msgstr "Silber-Sponsoren"
-
-#: editor/editor_about.cpp
-msgid "Bronze Sponsors"
-msgstr "Bronze-Sponsoren"
-
-#: editor/editor_about.cpp
-msgid "Mini Sponsors"
-msgstr "Mini-Sponsoren"
-
-#: editor/editor_about.cpp
-msgid "Gold Donors"
-msgstr "Gold-Unterstützer"
-
-#: editor/editor_about.cpp
-msgid "Silver Donors"
-msgstr "Silber-Unterstützer"
-
-#: editor/editor_about.cpp
-msgid "Bronze Donors"
-msgstr "Bronze-Unterstützer"
 
 #: editor/editor_about.cpp
 msgid "Donors"
@@ -1306,8 +1275,9 @@ msgid "Third-party Licenses"
 msgstr "Drittpartei-Lizenzen"
 
 #: editor/editor_about.cpp
+#, fuzzy
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Rebel Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following "
 "is an exhaustive list of all such third-party components with their "
 "respective copyright statements and license terms."
@@ -2236,8 +2206,9 @@ msgid ""
 "There is currently no description for this property. Please help us by "
 "[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr ""
-"Es gibt zurzeit keine Beschreibung dieses Objekts. [color=$color][url="
-"$url]Ergänzungen durch eigene Beiträge[/url][/color] sind sehr erwünscht!"
+"Es gibt zurzeit keine Beschreibung dieses Objekts. [color=$color]"
+"[url=$url]Ergänzungen durch eigene Beiträge[/url][/color] sind sehr "
+"erwünscht!"
 
 #: editor/editor_help.cpp
 msgid "Method Descriptions"
@@ -2245,11 +2216,12 @@ msgstr "Methoden-Beschreibung"
 
 #: editor/editor_help.cpp
 msgid ""
-"There is currently no description for this method. Please help us by [color="
-"$color][url=$url]contributing one[/url][/color]!"
+"There is currently no description for this method. Please help us by "
+"[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr ""
-"Es gibt zurzeit keine Beschreibung dieser Methode. [color=$color][url="
-"$url]Ergänzungen durch eigene Beiträge[/url][/color] sind sehr erwünscht!"
+"Es gibt zurzeit keine Beschreibung dieser Methode. [color=$color]"
+"[url=$url]Ergänzungen durch eigene Beiträge[/url][/color] sind sehr "
+"erwünscht!"
 
 #: editor/editor_help_search.cpp editor/editor_node.cpp
 #: editor/plugins/script_editor_plugin.cpp
@@ -3249,31 +3221,17 @@ msgid "Online Documentation"
 msgstr "Internet-Dokumentation"
 
 #: editor/editor_node.cpp
-msgid "Questions & Answers"
-msgstr "Fragen & Antworten"
-
-#: editor/editor_node.cpp
 msgid "Report a Bug"
 msgstr "Fehler berichten"
 
 #: editor/editor_node.cpp
-msgid "Suggest a Feature"
-msgstr "Neue Funktionalität vorschlagen"
+#, fuzzy
+msgid "About Rebel"
+msgstr "Über"
 
 #: editor/editor_node.cpp
-msgid "Send Docs Feedback"
-msgstr "Dokumentationsvorschläge senden"
-
-#: editor/editor_node.cpp editor/plugins/asset_library_editor_plugin.cpp
-msgid "Community"
-msgstr "Gemeinschaft"
-
-#: editor/editor_node.cpp
-msgid "About Godot"
-msgstr "Über Godot"
-
-#: editor/editor_node.cpp
-msgid "Support Godot Development"
+#, fuzzy
+msgid "Support Rebel Development"
 msgstr "Unterstützung der Godot-Entwicklung"
 
 #: editor/editor_node.cpp
@@ -4092,6 +4050,14 @@ msgstr "Es existiert bereits eine Datei oder ein Ordner mit diesem Namen."
 #: editor/filesystem_dock.cpp
 msgid "Name contains invalid characters."
 msgstr "Name enthält ungültige Zeichen."
+
+#: editor/filesystem_dock.cpp
+msgid ""
+"This file extension is not recognized by the editor.\n"
+"If you want to rename it anyway, use your operating system's file manager.\n"
+"After renaming to an unknown extension, the file won't be shown in the "
+"editor anymore."
+msgstr ""
 
 #: editor/filesystem_dock.cpp
 msgid ""
@@ -5223,10 +5189,6 @@ msgid "Travel"
 msgstr "Reisen"
 
 #: editor/plugins/animation_state_machine_editor.cpp
-msgid "Start and end nodes are needed for a sub-transition."
-msgstr "Star- und End-Nodes werden für Sub-Transition benötigt."
-
-#: editor/plugins/animation_state_machine_editor.cpp
 msgid "No playback resource set at path: %s."
 msgstr "Keine Abspiel-Ressource festgelegt im Pfad: %s."
 
@@ -5309,10 +5271,6 @@ msgid "Blend"
 msgstr "Blenden"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Mix"
-msgstr "Mischen"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Auto Restart:"
 msgstr "Automatisch neu starten:"
 
@@ -5344,10 +5302,6 @@ msgstr "Blende 1:"
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "X-Fade Time (s):"
 msgstr "Überblendungszeit (s):"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Current:"
-msgstr "Laufend:"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
@@ -5630,6 +5584,10 @@ msgstr "Stabilität"
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Official"
 msgstr "Offiziell"
+
+#: editor/plugins/asset_library_editor_plugin.cpp
+msgid "Community"
+msgstr "Gemeinschaft"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
@@ -7955,12 +7913,14 @@ msgstr "Hinten perspektivisch"
 
 #. TRANSLATORS: This will be appended to the view name when Auto Orthogonal is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [auto]"
+#, fuzzy
+msgid "[auto]"
 msgstr " [auto]"
 
 #. TRANSLATORS: This will be appended to the view name when Portal Occulusion is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [portals active]"
+#, fuzzy
+msgid "[portals active]"
 msgstr " [Portale aktiv]"
 
 #: editor/plugins/spatial_editor_plugin.cpp
@@ -10839,8 +10799,9 @@ msgid "Error opening package file (it's not in ZIP format)."
 msgstr "Fehler beim Öffnen der Paketdatei (kein ZIP-Format)."
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."
+"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
 msgstr "Ungültige „.zip“-Projektdatei, enthält keine „project.godot“-Datei."
 
 #: editor/project_manager.cpp
@@ -10848,7 +10809,8 @@ msgid "Please choose an empty folder."
 msgstr "Bitte einen leeren Ordner auswählen."
 
 #: editor/project_manager.cpp
-msgid "Please choose a \"project.godot\" or \".zip\" file."
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "Eine „project.godot” oder „.zip“-Datei auswählen."
 
 #: editor/project_manager.cpp
@@ -10885,19 +10847,22 @@ msgid "Invalid project path (changed anything?)."
 msgstr "Ungültiger Projektpfad (etwas geändert?)."
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Couldn't load project.godot in project path (error %d). It may be missing or "
+"Couldn't load project.rebel in project path (error %d). It may be missing or "
 "corrupted."
 msgstr ""
 "Die Datei project.godot im Projektpfad konnte nicht geladen werden (Fehler "
 "%d). Sie könnte fehlen oder beschädigt sein."
 
 #: editor/project_manager.cpp
-msgid "Couldn't edit project.godot in project path."
+#, fuzzy
+msgid "Couldn't edit project.rebel in project path."
 msgstr "project.godot des Projektpfads konnte nicht bearbeitet werden."
 
 #: editor/project_manager.cpp
-msgid "Couldn't create project.godot in project path."
+#, fuzzy
+msgid "Couldn't create project.rebel in project path."
 msgstr "Konnte project.godot im Projektpfad nicht erzeugen."
 
 #: editor/project_manager.cpp
@@ -11279,7 +11244,8 @@ msgid "Device"
 msgstr "Gerät"
 
 #: editor/project_settings_editor.cpp
-msgid " (Physical)"
+#, fuzzy
+msgid "(Physical)"
 msgstr " (physisch)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11459,7 +11425,8 @@ msgid "Changed Locale Filter Mode"
 msgstr "Sprachfiltermodus geändert"
 
 #: editor/project_settings_editor.cpp
-msgid "Project Settings (project.godot)"
+#, fuzzy
+msgid "Project Settings (project.rebel)"
 msgstr "Projekteinstellungen (project.godot)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11917,6 +11884,20 @@ msgstr ""
 "Ein Abwandlung der Szene zu erstellen, kann eine geerbten Szene, basiert auf "
 "der instantiierten Szene, im Menü unter „Szene > Neue geerbte Szene…“ "
 "erzeugt werden."
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is a child of an already instantiated scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is part of an inherited scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
 
 #: editor/scene_tree_dock.cpp
 msgid "Save New Scene As..."
@@ -13089,6 +13070,14 @@ msgid "Change Expression"
 msgstr "Ausdruck ändern"
 
 #: modules/visual_script/visual_script_editor.cpp
+msgid "Can't copy the function node."
+msgstr "Das Function-Node kann nicht kopiert werden."
+
+#: modules/visual_script/visual_script_editor.cpp
+msgid "Paste VisualScript Nodes"
+msgstr "VisualScript-Nodes einfügen"
+
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Nodes"
 msgstr "VisualScript-Nodes entfernen"
 
@@ -13192,14 +13181,6 @@ msgstr "Eingabewert ändern"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Resize Comment"
 msgstr "Kommentargröße ändern"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Can't copy the function node."
-msgstr "Das Function-Node kann nicht kopiert werden."
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Paste VisualScript Nodes"
-msgstr "VisualScript-Nodes einfügen"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Can't create function with a function node."
@@ -13508,9 +13489,10 @@ msgstr "Ungültiger Paketname:"
 msgid ""
 "Invalid \"GodotPaymentV3\" module included in the \"android/modules\" "
 "project setting (changed in Godot 3.2.2).\n"
+"Replace it with the first-party \"GodotGooglePlayBilling\" plugin.\n"
+"Note that the singleton was also renamed from \"GodotPayments\" to "
+"\"GodotGooglePlayBilling\"."
 msgstr ""
-"Ungültiges „GodotPaymentV3“-Modul eingebunden in den „android/modules“-"
-"Projekteinstellungen (wurde in Godot 3.2.2 geändert).\n"
 
 #: platform/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
@@ -13536,18 +13518,33 @@ msgstr "„Export AAB“ ist nur gültig wenn „Use Custom Build“ aktiviert i
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Changing the \"Min Sdk\" is only valid when \"Use Custom Build\" is enabled."
+"\"Min Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this min SDK."
 msgstr ""
-"Das „Min Sdk“ zu ändern ist nur möglich wenn „Use Custom Build“ aktiviert "
-"ist."
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Changing the \"Target Sdk\" is only valid when \"Use Custom Build\" is "
-"enabled."
+"\"Target Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this target SDK."
 msgstr ""
-"Das „Target Sdk“ zu ändern ist nur möglich wenn „Use Custom Build“ aktiviert "
-"ist."
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" is set to 30, while the current default is \"%d\". This might "
+"be due to upgrading from a previous Godot release.\n"
+">> Consider changing it to \"%d\" to stay up-to-date with platform "
+"requirements."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" %d is higher than the default version %d. This may work, but "
+"wasn't tested and may be unstable."
+msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version."
@@ -13653,9 +13650,11 @@ msgid "Building Android Project (gradle)"
 msgstr "Baue Android-Projekt (gradle)"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
+"Alternatively visit https://docs.rebeltoolbox.com for Android build "
+"documentation."
 msgstr ""
 "Bauen des Android-Projekts fehlgeschlagen, Fehlerdetails befinden ich in der "
 "Textausgabe.\n"
@@ -14009,14 +14008,24 @@ msgstr ""
 "ParallaxBackground-Node verwenden."
 
 #: scene/2d/particles_2d.cpp
+#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles2D node instead. You can use the \"Convert to "
-"CPUParticles\" option for this purpose."
+"CPUParticles2D\" toolbar option for this purpose."
 msgstr ""
 "GPU-basierte Partikel werden vom GLES2-Grafiktreiber nicht unterstützt.\n"
 "Stattdessen bitte CPUParticles2D-Nodes verwenden. Die „In CPU-Partikel "
 "konvertieren“-Funktion kann dazu verwendet werden."
+
+#: scene/2d/particles_2d.cpp
+msgid ""
+"On macOS, Particles2D rendering is much slower than CPUParticles2D due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles2D instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles2D\" toolbar option for this "
+"purpose."
+msgstr ""
 
 #: scene/2d/particles_2d.cpp scene/3d/particles.cpp
 msgid ""
@@ -14274,14 +14283,23 @@ msgid "Only uniform scales are supported."
 msgstr "Es werden nur gleichförmige Skalierungen unterstützt."
 
 #: scene/3d/particles.cpp
+#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
-"Use the CPUParticles node instead. You can use the \"Convert to CPUParticles"
-"\" option for this purpose."
+"Use the CPUParticles node instead. You can use the \"Convert to "
+"CPUParticles\" toolbar option for this purpose."
 msgstr ""
 "GPU-basierte Partikel werden vom GLES2-Grafiktreiber nicht unterstützt.\n"
 "Stattdessen bitte CPUParticles-Nodes verwenden. Die „In CPU-Partikel "
 "konvertieren“-Funktion kann dazu verwendet werden."
+
+#: scene/3d/particles.cpp
+msgid ""
+"On macOS, Particles rendering is much slower than CPUParticles due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles\" toolbar option for this purpose."
+msgstr ""
 
 #: scene/3d/particles.cpp
 msgid ""
@@ -14506,15 +14524,6 @@ msgstr ""
 "Pro Szene (oder einem Satz von instanzierten Szenen) ist nur ein einziges "
 "WorldEnvironment erlaubt."
 
-#: scene/3d/world_environment.cpp
-msgid ""
-"This WorldEnvironment is ignored. Either add a Camera (for 3D scenes) or set "
-"this environment's Background Mode to Canvas (for 2D scenes)."
-msgstr ""
-"WorldEnvironment wird momentan ignoriert. Wahlweise Kamera (für 3D-Szenen) "
-"einfügen oder Hintergrundmodus der Environment-Instanz umstellen auf Canvas "
-"(für 2D-Szenen)."
-
 #: scene/animation/animation_blend_tree.cpp
 msgid "On BlendTree node '%s', animation not found: '%s'"
 msgstr "In BlendTree-Node ‚%s‘, Animation nicht gefunden: ‚%s‘"
@@ -14693,19 +14702,6 @@ msgstr ""
 "abhängig von der Bildfrequenz liefern.\n"
 "Für sehr kurze Schaltzeiten wird empfohlen, statt eines Timers, die "
 "›process‹-Schleife eines Skripts zu benutzen."
-
-#: scene/main/viewport.cpp
-msgid ""
-"This viewport is not set as render target. If you intend for it to display "
-"its contents directly to the screen, make it a child of a Control so it can "
-"obtain a size. Otherwise, make it a RenderTarget and assign its internal "
-"texture to some node for display."
-msgstr ""
-"Dieser Viewport ist nicht als Render-Ziel eingestellt. Soll sein Inhalt "
-"direkt auf dem Bildschirm angezeigt werden, muss er als Unterobjekt eines "
-"Controls eingehängt werden um dessen Größe zu erben. Andernfalls sollte die "
-"Eigenschaft ‚Render Target‘ des Viewports aktiviert und seine Textur "
-"irgendeinem Node zum Anzeigen zugewiesen werden."
 
 #: scene/main/viewport.cpp
 msgid ""

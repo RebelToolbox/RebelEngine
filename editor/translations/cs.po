@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 #
 # SPDX-License-Identifier: MIT
-
+#
 # Czech translation of the Rebel Editor
 # Fadex <vitekpaulik@gmail.com>, 2017.
 # Jan 'spl!te' Kondelík <j.kondelik@centrum.cz>, 2016, 2018.
@@ -524,8 +524,8 @@ msgid ""
 "\n"
 "To enable the ability to add custom tracks, navigate to the scene's import "
 "settings and set\n"
-"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom Tracks"
-"\", then re-import.\n"
+"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom "
+"Tracks\", then re-import.\n"
 "Alternatively, use an import preset that imports animations to separate "
 "files."
 msgstr ""
@@ -839,7 +839,9 @@ msgid "Scene does not contain any script."
 msgstr "Scéna neobsahuje žádný skript."
 
 #: editor/connections_dialog.cpp editor/editor_autoload_settings.cpp
-#: editor/groups_editor.cpp editor/plugins/item_list_editor_plugin.cpp
+#: editor/groups_editor.cpp
+#: editor/plugins/animation_tree_player_editor_plugin.cpp
+#: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
 msgid "Add"
 msgstr "Přidat"
@@ -1176,71 +1178,38 @@ msgid "Change Dictionary Value"
 msgstr "Změnit hodnotu slovníku"
 
 #: editor/editor_about.cpp
-msgid "Thanks from the Godot community!"
-msgstr "Děkujeme za komunitu Godotu!"
+msgid "Rebel Engine"
+msgstr ""
 
 #: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
 msgid "Click to copy."
 msgstr "Klikněte pro zkopírování."
 
 #: editor/editor_about.cpp
-msgid "Godot Engine contributors"
+msgid ""
+"Rebel Engine is Free and Open Source Software; released under the MIT "
+"license.\n"
+msgstr ""
+
+#: editor/editor_about.cpp
+msgid ""
+"Games developed with Rebel Engine remain the property of the game developer."
+msgstr ""
+
+#: editor/editor_about.cpp
+#, fuzzy
+msgid "Rebel Contributors"
 msgstr "Přispěvatelé do Godot Enginu"
 
 #: editor/editor_about.cpp
-msgid "Project Founders"
-msgstr "Zakladatelé projektu"
+#, fuzzy
+msgid "Contributors"
+msgstr "Spojité"
 
 #: editor/editor_about.cpp
-msgid "Lead Developer"
-msgstr "Vedoucí vývojář"
-
-#. TRANSLATORS: This refers to a job title.
-#. The trailing space is used to distinguish with the project list application,
-#. you do not have to keep it in your translation.
-#: editor/editor_about.cpp
-msgid "Project Manager "
-msgstr "Správce projektu "
-
-#: editor/editor_about.cpp
-msgid "Developers"
-msgstr "Vývojáři"
-
-#: editor/editor_about.cpp
-msgid "Authors"
-msgstr "Autoři"
-
-#: editor/editor_about.cpp
-msgid "Platinum Sponsors"
-msgstr "Platinoví sponzoři"
-
-#: editor/editor_about.cpp
-msgid "Gold Sponsors"
+#, fuzzy
+msgid "Sponsors"
 msgstr "Zlatí sponzoři"
-
-#: editor/editor_about.cpp
-msgid "Silver Sponsors"
-msgstr "Stříbrní sponzoři"
-
-#: editor/editor_about.cpp
-msgid "Bronze Sponsors"
-msgstr "Bronzoví sponzoři"
-
-#: editor/editor_about.cpp
-msgid "Mini Sponsors"
-msgstr "Mini sponzoři"
-
-#: editor/editor_about.cpp
-msgid "Gold Donors"
-msgstr "Zlatí dárci"
-
-#: editor/editor_about.cpp
-msgid "Silver Donors"
-msgstr "Stříbrní dárci"
-
-#: editor/editor_about.cpp
-msgid "Bronze Donors"
-msgstr "Bronzoví dárci"
 
 #: editor/editor_about.cpp
 msgid "Donors"
@@ -1255,8 +1224,9 @@ msgid "Third-party Licenses"
 msgstr "Licence třetích stran"
 
 #: editor/editor_about.cpp
+#, fuzzy
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Rebel Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following "
 "is an exhaustive list of all such third-party components with their "
 "respective copyright statements and license terms."
@@ -2178,8 +2148,8 @@ msgstr "Popisy metod"
 
 #: editor/editor_help.cpp
 msgid ""
-"There is currently no description for this method. Please help us by [color="
-"$color][url=$url]contributing one[/url][/color]!"
+"There is currently no description for this method. Please help us by "
+"[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr ""
 "V současné době neexistuje žádný popis pro tuto metodu. Prosím pomozte nám "
 "tím, že ho [color=$color][url=$url]vytvoříte[/url][/color]!"
@@ -3160,31 +3130,17 @@ msgid "Online Documentation"
 msgstr "Online dokumentace"
 
 #: editor/editor_node.cpp
-msgid "Questions & Answers"
-msgstr "Otázky & odpovědi"
-
-#: editor/editor_node.cpp
 msgid "Report a Bug"
 msgstr "Nahlásit chybu"
 
 #: editor/editor_node.cpp
-msgid "Suggest a Feature"
-msgstr "Navrhnout funkci"
+#, fuzzy
+msgid "About Rebel"
+msgstr "O aplikaci"
 
 #: editor/editor_node.cpp
-msgid "Send Docs Feedback"
-msgstr "Odeslat zpětnou vazbu dokumentace"
-
-#: editor/editor_node.cpp editor/plugins/asset_library_editor_plugin.cpp
-msgid "Community"
-msgstr "Komunita"
-
-#: editor/editor_node.cpp
-msgid "About Godot"
-msgstr "O aplikaci Godot"
-
-#: editor/editor_node.cpp
-msgid "Support Godot Development"
+#, fuzzy
+msgid "Support Rebel Development"
 msgstr "Podpořte projekt Godot"
 
 #: editor/editor_node.cpp
@@ -3997,6 +3953,14 @@ msgstr "Soubor nebo složka s tímto názvem již existuje."
 #: editor/filesystem_dock.cpp
 msgid "Name contains invalid characters."
 msgstr "Jméno obsahuje neplatné znaky."
+
+#: editor/filesystem_dock.cpp
+msgid ""
+"This file extension is not recognized by the editor.\n"
+"If you want to rename it anyway, use your operating system's file manager.\n"
+"After renaming to an unknown extension, the file won't be shown in the "
+"editor anymore."
+msgstr ""
 
 #: editor/filesystem_dock.cpp
 msgid ""
@@ -5116,10 +5080,6 @@ msgid "Travel"
 msgstr "Cestovat"
 
 #: editor/plugins/animation_state_machine_editor.cpp
-msgid "Start and end nodes are needed for a sub-transition."
-msgstr "Pro pod-přechod jsou potřeba začáteční a koncové uzly."
-
-#: editor/plugins/animation_state_machine_editor.cpp
 msgid "No playback resource set at path: %s."
 msgstr "Na cestě nebyl nalezen žádný zdrojový playback: %s."
 
@@ -5202,10 +5162,6 @@ msgid "Blend"
 msgstr "Prolnutí"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Mix"
-msgstr "Mix"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Auto Restart:"
 msgstr "Auto-restart:"
 
@@ -5237,10 +5193,6 @@ msgstr "Prolínání 1:"
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "X-Fade Time (s):"
 msgstr "X-Fade čas (s):"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Current:"
-msgstr "Aktuální:"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
@@ -5523,6 +5475,10 @@ msgstr "Podpora"
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Official"
 msgstr "Oficiální"
+
+#: editor/plugins/asset_library_editor_plugin.cpp
+msgid "Community"
+msgstr "Komunita"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
@@ -7840,12 +7796,14 @@ msgstr "Perspektivní"
 
 #. TRANSLATORS: This will be appended to the view name when Auto Orthogonal is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [auto]"
+#, fuzzy
+msgid "[auto]"
 msgstr " [auto]"
 
 #. TRANSLATORS: This will be appended to the view name when Portal Occulusion is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [portals active]"
+#, fuzzy
+msgid "[portals active]"
 msgstr " [aktivní portály]"
 
 #: editor/plugins/spatial_editor_plugin.cpp
@@ -10513,16 +10471,16 @@ msgid ""
 "(Fragment/Light mode only) (Vector) Sum of absolute derivative in 'x' and "
 "'y'."
 msgstr ""
-"(Pouze pro režim Fragment/Light) (Vektor) Součet absolutní derivace podle \"x"
-"\" a \"y\"."
+"(Pouze pro režim Fragment/Light) (Vektor) Součet absolutní derivace podle "
+"\"x\" a \"y\"."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid ""
 "(Fragment/Light mode only) (Scalar) Sum of absolute derivative in 'x' and "
 "'y'."
 msgstr ""
-"(Pouze pro režim Fragment/Light) (Skalár) Součet absolutní derivace podle \"x"
-"\" a \"y\"."
+"(Pouze pro režim Fragment/Light) (Skalár) Součet absolutní derivace podle "
+"\"x\" a \"y\"."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "VisualShader"
@@ -10726,8 +10684,9 @@ msgid "Error opening package file (it's not in ZIP format)."
 msgstr "Chyba při otevírání balíčku (není ve formátu ZIP)."
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."
+"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
 msgstr ""
 "Neplatný soubor projektu \".zip\"; neobsahuje soubor \"project.godot\"."
 
@@ -10736,7 +10695,8 @@ msgid "Please choose an empty folder."
 msgstr "Zvolte prosím prázdnou složku."
 
 #: editor/project_manager.cpp
-msgid "Please choose a \"project.godot\" or \".zip\" file."
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "Vyberte prosím soubor \"project.godot\" nebo \".zip\"."
 
 #: editor/project_manager.cpp
@@ -10772,19 +10732,22 @@ msgid "Invalid project path (changed anything?)."
 msgstr "Neplatná cesta k projektu (něco se změnilo?)."
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Couldn't load project.godot in project path (error %d). It may be missing or "
+"Couldn't load project.rebel in project path (error %d). It may be missing or "
 "corrupted."
 msgstr ""
 "Nelze načíst project.godot v umístění projektu (chyba %d). Může chybět nebo "
 "být poškozený."
 
 #: editor/project_manager.cpp
-msgid "Couldn't edit project.godot in project path."
+#, fuzzy
+msgid "Couldn't edit project.rebel in project path."
 msgstr "Nelze upravit project.godot v umístění projektu."
 
 #: editor/project_manager.cpp
-msgid "Couldn't create project.godot in project path."
+#, fuzzy
+msgid "Couldn't create project.rebel in project path."
 msgstr "Nelze vytvořit project.godot v umístění projektu."
 
 #: editor/project_manager.cpp
@@ -11161,7 +11124,7 @@ msgid "Device"
 msgstr "Zařízení"
 
 #: editor/project_settings_editor.cpp
-msgid " (Physical)"
+msgid "(Physical)"
 msgstr ""
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11343,7 +11306,8 @@ msgid "Changed Locale Filter Mode"
 msgstr "Změněn režim filtru pro nastavení jazyka"
 
 #: editor/project_settings_editor.cpp
-msgid "Project Settings (project.godot)"
+#, fuzzy
+msgid "Project Settings (project.rebel)"
 msgstr "Nastavení projektu (project.godot)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11782,6 +11746,20 @@ msgid ""
 "Can't save the branch of an already instanced scene.\n"
 "To create a variation of a scene, you can make an inherited scene based on "
 "the instanced scene using Scene > New Inherited Scene... instead."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is a child of an already instantiated scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is part of an inherited scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
@@ -12951,6 +12929,14 @@ msgid "Change Expression"
 msgstr "Změnit výraz"
 
 #: modules/visual_script/visual_script_editor.cpp
+msgid "Can't copy the function node."
+msgstr "Nelze zkopírovat uzel funkce."
+
+#: modules/visual_script/visual_script_editor.cpp
+msgid "Paste VisualScript Nodes"
+msgstr "Vložit VisualScript uzly"
+
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Nodes"
 msgstr "Odstranit uzly VisualScriptu"
 
@@ -13052,14 +13038,6 @@ msgstr "Změnit vstupní hodnotu"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Resize Comment"
 msgstr "Změnit velikost komentáře"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Can't copy the function node."
-msgstr "Nelze zkopírovat uzel funkce."
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Paste VisualScript Nodes"
-msgstr "Vložit VisualScript uzly"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Can't create function with a function node."
@@ -13355,9 +13333,10 @@ msgstr "Neplatné jméno balíčku:"
 msgid ""
 "Invalid \"GodotPaymentV3\" module included in the \"android/modules\" "
 "project setting (changed in Godot 3.2.2).\n"
+"Replace it with the first-party \"GodotGooglePlayBilling\" plugin.\n"
+"Note that the singleton was also renamed from \"GodotPayments\" to "
+"\"GodotGooglePlayBilling\"."
 msgstr ""
-"Neplatný modul \"GodotPaymentV3\" v nastavení projektu \"Android / moduly"
-"\" (změněno v Godot 3.2.2).\n"
 
 #: platform/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
@@ -13387,21 +13366,34 @@ msgstr ""
 "vlastní sestavu\"."
 
 #: platform/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
-"Changing the \"Min Sdk\" is only valid when \"Use Custom Build\" is enabled."
+"\"Min Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this min SDK."
 msgstr ""
-"\"Export AAB\" je validní pouze v případě, že je povolena možnost \"Použít "
-"vlastní sestavu\"."
 
 #: platform/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
-"Changing the \"Target Sdk\" is only valid when \"Use Custom Build\" is "
-"enabled."
+"\"Target Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this target SDK."
 msgstr ""
-"\"Export AAB\" je validní pouze v případě, že je povolena možnost \"Použít "
-"vlastní sestavu\"."
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" is set to 30, while the current default is \"%d\". This might "
+"be due to upgrading from a previous Godot release.\n"
+">> Consider changing it to \"%d\" to stay up-to-date with platform "
+"requirements."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" %d is higher than the default version %d. This may work, but "
+"wasn't tested and may be unstable."
+msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version."
@@ -13497,9 +13489,11 @@ msgid "Building Android Project (gradle)"
 msgstr "Buildování projektu pro Android (gradle)"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
+"Alternatively visit https://docs.rebeltoolbox.com for Android build "
+"documentation."
 msgstr ""
 "Buildování projektu pro Android se nezdařilo, zkontrolujte chybový výstup.\n"
 "Případně navštivte dokumentaci o build pro Android na docs.rebeltoolbox.com."
@@ -13835,14 +13829,24 @@ msgstr ""
 "Uzel ParallaxLayer funguje pouze když je dítětem uzlu ParallaxBackground."
 
 #: scene/2d/particles_2d.cpp
+#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles2D node instead. You can use the \"Convert to "
-"CPUParticles\" option for this purpose."
+"CPUParticles2D\" toolbar option for this purpose."
 msgstr ""
 "Grafický ovladač GLES2 nepodporuje částice založené na GPU.\n"
-"Použijte uzel CPUParticles2D. Na převod lze použít \"Převést na CPUParticles"
-"\"."
+"Použijte uzel CPUParticles2D. Na převod lze použít \"Převést na "
+"CPUParticles\"."
+
+#: scene/2d/particles_2d.cpp
+msgid ""
+"On macOS, Particles2D rendering is much slower than CPUParticles2D due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles2D instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles2D\" toolbar option for this "
+"purpose."
+msgstr ""
 
 #: scene/2d/particles_2d.cpp scene/3d/particles.cpp
 msgid ""
@@ -14085,14 +14089,23 @@ msgid "Only uniform scales are supported."
 msgstr ""
 
 #: scene/3d/particles.cpp
+#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
-"Use the CPUParticles node instead. You can use the \"Convert to CPUParticles"
-"\" option for this purpose."
+"Use the CPUParticles node instead. You can use the \"Convert to "
+"CPUParticles\" toolbar option for this purpose."
 msgstr ""
 "Video driver GLES2 nepodporuje částice na GPU.\n"
 "Místo toho použijte uzel CPUParticles. K převodu můžete použít \"Převést na "
 "CPUParticles\"."
+
+#: scene/3d/particles.cpp
+msgid ""
+"On macOS, Particles rendering is much slower than CPUParticles due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles\" toolbar option for this purpose."
+msgstr ""
 
 #: scene/3d/particles.cpp
 msgid ""
@@ -14290,14 +14303,6 @@ msgstr ""
 "Na každou scénu (nebo skupinu instancovaných scén) je povolen pouze jeden "
 "WorldEnvironment."
 
-#: scene/3d/world_environment.cpp
-msgid ""
-"This WorldEnvironment is ignored. Either add a Camera (for 3D scenes) or set "
-"this environment's Background Mode to Canvas (for 2D scenes)."
-msgstr ""
-"Tento WorldEnvironment je ignorován. Buď přidejte kameru (pro 3D scény) nebo "
-"nastavte plátnu tohoto prostředí Režim pozadí (pro 2D scény)."
-
 #: scene/animation/animation_blend_tree.cpp
 msgid "On BlendTree node '%s', animation not found: '%s'"
 msgstr "Na uzlu BlendTree \"%s\" nebyla nalezena animace: \"%s\""
@@ -14388,8 +14393,8 @@ msgid ""
 "\"Ignore\". To solve this, set the Mouse Filter to \"Stop\" or \"Pass\"."
 msgstr ""
 "Tip nápovědy se nezobrazí, protože filtr myši je nastaven na \"Ignorovat\". "
-"Chcete-li tento problém vyřešit, nastavte filtr myši na \"Stop\" nebo \"Pass"
-"\"."
+"Chcete-li tento problém vyřešit, nastavte filtr myši na \"Stop\" nebo "
+"\"Pass\"."
 
 #: scene/gui/dialogs.cpp
 msgid "Alert!"
@@ -14459,18 +14464,6 @@ msgid ""
 "Consider using a script's process loop instead of relying on a Timer for "
 "very low wait times."
 msgstr ""
-
-#: scene/main/viewport.cpp
-msgid ""
-"This viewport is not set as render target. If you intend for it to display "
-"its contents directly to the screen, make it a child of a Control so it can "
-"obtain a size. Otherwise, make it a RenderTarget and assign its internal "
-"texture to some node for display."
-msgstr ""
-"Tento viewport není nastaven jako render target. Pokud chcete jeho obsah "
-"zobrazit přímo na obrazovku, musíte ho nastavit jako dítě uzlu Control, aby "
-"mohl získat velikost. Jinak ho nastavte jako render target a přiřaďte jeho "
-"vnitřní texturu nějakému uzlu k zobrazení."
 
 #: scene/main/viewport.cpp
 #, fuzzy

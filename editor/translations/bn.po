@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 #
 # SPDX-License-Identifier: MIT
-
+#
 # Bengali translation of the Rebel Editor
 # Abu Md. Maruf Sarker <maruf.webdev@gmail.com>, 2016-2017.
 # Abdullah Zubair <abdullahzubair109@gmail.com>, 2017.
@@ -508,8 +508,8 @@ msgid ""
 "\n"
 "To enable the ability to add custom tracks, navigate to the scene's import "
 "settings and set\n"
-"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom Tracks"
-"\", then re-import.\n"
+"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom "
+"Tracks\", then re-import.\n"
 "Alternatively, use an import preset that imports animations to separate "
 "files."
 msgstr ""
@@ -830,7 +830,9 @@ msgid "Scene does not contain any script."
 msgstr "নোডে কোনো জ্যামিতিক আকার নেই।"
 
 #: editor/connections_dialog.cpp editor/editor_autoload_settings.cpp
-#: editor/groups_editor.cpp editor/plugins/item_list_editor_plugin.cpp
+#: editor/groups_editor.cpp
+#: editor/plugins/animation_tree_player_editor_plugin.cpp
+#: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
 msgid "Add"
 msgstr "সংযোজন করুন"
@@ -1184,74 +1186,38 @@ msgid "Change Dictionary Value"
 msgstr "ডিকশনারি ভ্যালু  পরিবর্তন করুন"
 
 #: editor/editor_about.cpp
-msgid "Thanks from the Godot community!"
-msgstr "Godot কমিউনিটি হতে আপনাকে ধন্যবাদ!"
+msgid "Rebel Engine"
+msgstr ""
 
 #: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
 msgid "Click to copy."
 msgstr ""
 
 #: editor/editor_about.cpp
-msgid "Godot Engine contributors"
+msgid ""
+"Rebel Engine is Free and Open Source Software; released under the MIT "
+"license.\n"
+msgstr ""
+
+#: editor/editor_about.cpp
+msgid ""
+"Games developed with Rebel Engine remain the property of the game developer."
+msgstr ""
+
+#: editor/editor_about.cpp
+#, fuzzy
+msgid "Rebel Contributors"
 msgstr "Godot Engine কন্ট্রিবিউটরস"
 
 #: editor/editor_about.cpp
-msgid "Project Founders"
-msgstr "প্রজেক্ট ফাউন্ডার"
+#, fuzzy
+msgid "Contributors"
+msgstr "অবিচ্ছিন্ন/নিরবচ্ছিন্ন"
 
-#: editor/editor_about.cpp
-msgid "Lead Developer"
-msgstr "মূল ডেভেলপার"
-
-#. TRANSLATORS: This refers to a job title.
-#. The trailing space is used to distinguish with the project list application,
-#. you do not have to keep it in your translation.
 #: editor/editor_about.cpp
 #, fuzzy
-msgid "Project Manager "
-msgstr "প্রজেক্ট ম্যানেজার"
-
-#: editor/editor_about.cpp
-msgid "Developers"
-msgstr "ডেভেলপার"
-
-#: editor/editor_about.cpp
-msgid "Authors"
-msgstr "লেখক"
-
-#: editor/editor_about.cpp
-msgid "Platinum Sponsors"
-msgstr "প্ল্যাটিনাম বিজ্ঞাপক"
-
-#: editor/editor_about.cpp
-msgid "Gold Sponsors"
+msgid "Sponsors"
 msgstr "সোনালি বিজ্ঞাপক"
-
-#: editor/editor_about.cpp
-#, fuzzy
-msgid "Silver Sponsors"
-msgstr "সিলভার ডোনার"
-
-#: editor/editor_about.cpp
-#, fuzzy
-msgid "Bronze Sponsors"
-msgstr "ব্রোঞ্জ ডোনার"
-
-#: editor/editor_about.cpp
-msgid "Mini Sponsors"
-msgstr "ক্ষুদ্র বিজ্ঞাপক"
-
-#: editor/editor_about.cpp
-msgid "Gold Donors"
-msgstr "গোল্ড ডোনার"
-
-#: editor/editor_about.cpp
-msgid "Silver Donors"
-msgstr "সিলভার ডোনার"
-
-#: editor/editor_about.cpp
-msgid "Bronze Donors"
-msgstr "ব্রোঞ্জ ডোনার"
 
 #: editor/editor_about.cpp
 msgid "Donors"
@@ -1269,7 +1235,7 @@ msgstr "থার্ড পার্টি লাইসেন্স"
 #: editor/editor_about.cpp
 #, fuzzy
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Rebel Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following "
 "is an exhaustive list of all such third-party components with their "
 "respective copyright statements and license terms."
@@ -2259,8 +2225,8 @@ msgstr "মেথডের বর্ণ্না:"
 
 #: editor/editor_help.cpp
 msgid ""
-"There is currently no description for this method. Please help us by [color="
-"$color][url=$url]contributing one[/url][/color]!"
+"There is currently no description for this method. Please help us by "
+"[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr ""
 "এই মেথড সম্পর্কে বিস্তারিত তথ্য লিপিবদ্ধ করা হয়নি। অনুগ্রহ করে তথ্য প্রদানের মাধ্যমে "
 "সহায়তা করুন। তথ্য প্রদানের জন্য [color=$color][url=$url], [/url][/color] ফরম্যাট "
@@ -3297,35 +3263,17 @@ msgid "Online Documentation"
 msgstr "রেফারেন্সের ডকুমেন্টেশনে খুঁজুন।"
 
 #: editor/editor_node.cpp
-msgid "Questions & Answers"
-msgstr ""
-
-#: editor/editor_node.cpp
 #, fuzzy
 msgid "Report a Bug"
 msgstr "পুন-ইম্পোর্ট"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Suggest a Feature"
-msgstr "একটি মান নির্ধারণ করুন"
-
-#: editor/editor_node.cpp
-msgid "Send Docs Feedback"
-msgstr ""
-
-#: editor/editor_node.cpp editor/plugins/asset_library_editor_plugin.cpp
-#, fuzzy
-msgid "Community"
-msgstr "সম্প্রদায়"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "About Godot"
+msgid "About Rebel"
 msgstr "সম্বন্ধে"
 
 #: editor/editor_node.cpp
-msgid "Support Godot Development"
+msgid "Support Rebel Development"
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -4203,6 +4151,14 @@ msgstr "গ্রুপের নাম ইতিমধ্যেই আছে!"
 #, fuzzy
 msgid "Name contains invalid characters."
 msgstr "গ্রহনযোগ্য অক্ষরসমূহ:"
+
+#: editor/filesystem_dock.cpp
+msgid ""
+"This file extension is not recognized by the editor.\n"
+"If you want to rename it anyway, use your operating system's file manager.\n"
+"After renaming to an unknown extension, the file won't be shown in the "
+"editor anymore."
+msgstr ""
 
 #: editor/filesystem_dock.cpp
 msgid ""
@@ -5433,10 +5389,6 @@ msgid "Travel"
 msgstr "ভ্রমণ"
 
 #: editor/plugins/animation_state_machine_editor.cpp
-msgid "Start and end nodes are needed for a sub-transition."
-msgstr ""
-
-#: editor/plugins/animation_state_machine_editor.cpp
 #, fuzzy
 msgid "No playback resource set at path: %s."
 msgstr "রিসোর্সের পথে নয়।"
@@ -5523,10 +5475,6 @@ msgid "Blend"
 msgstr "ব্লেন্ড/মিশ্রণ"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Mix"
-msgstr "মিশ্রিত করুন"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Auto Restart:"
 msgstr "স্বয়ংক্রিয়ভাবে পুনরারম্ভ করুন:"
 
@@ -5558,10 +5506,6 @@ msgstr "ব্লেন্ড/মিশ্রণ ১:"
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "X-Fade Time (s):"
 msgstr "X-ফেড/বিলীন সময় (সেঃ):"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Current:"
-msgstr "বর্তমান:"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
@@ -5868,6 +5812,11 @@ msgstr "সমর্থন..."
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Official"
 msgstr "অফিসিয়াল/প্রাথমিক উৎস"
+
+#: editor/plugins/asset_library_editor_plugin.cpp
+#, fuzzy
+msgid "Community"
+msgstr "সম্প্রদায়"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
@@ -8363,12 +8312,12 @@ msgstr "পরিপ্রেক্ষিত (Perspective)"
 
 #. TRANSLATORS: This will be appended to the view name when Auto Orthogonal is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [auto]"
+msgid "[auto]"
 msgstr ""
 
 #. TRANSLATORS: This will be appended to the view name when Portal Occulusion is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [portals active]"
+msgid "[portals active]"
 msgstr ""
 
 #: editor/plugins/spatial_editor_plugin.cpp
@@ -11421,7 +11370,7 @@ msgstr "জিপ ফরম্যাট খুঁজে পেতে ব্য�
 #: editor/project_manager.cpp
 #, fuzzy
 msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."
+"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
 msgstr "এমন একটি ফোল্ডার বাছাই করুন যেখানে 'project.godot' নামে কোন ফাইল নেই।"
 
 #: editor/project_manager.cpp
@@ -11431,7 +11380,7 @@ msgstr "অনুগ্রহ করে প্রকল্পের ফোল্
 
 #: editor/project_manager.cpp
 #, fuzzy
-msgid "Please choose a \"project.godot\" or \".zip\" file."
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "অনুগ্রহ করে প্রকল্পের ফোল্ডারের বাইরে এক্সপোর্ট করুন!"
 
 #: editor/project_manager.cpp
@@ -11471,18 +11420,18 @@ msgstr "অকার্যকর প্রকল্পের পথ (কোন�
 #: editor/project_manager.cpp
 #, fuzzy
 msgid ""
-"Couldn't load project.godot in project path (error %d). It may be missing or "
+"Couldn't load project.rebel in project path (error %d). It may be missing or "
 "corrupted."
 msgstr "প্রকল্পের পথে engine.cfg তৈরি করা সম্ভব হয়নি।"
 
 #: editor/project_manager.cpp
 #, fuzzy
-msgid "Couldn't edit project.godot in project path."
+msgid "Couldn't edit project.rebel in project path."
 msgstr "প্রকল্পের পথে engine.cfg তৈরি করা সম্ভব হয়নি।"
 
 #: editor/project_manager.cpp
 #, fuzzy
-msgid "Couldn't create project.godot in project path."
+msgid "Couldn't create project.rebel in project path."
 msgstr "প্রকল্পের পথে engine.cfg তৈরি করা সম্ভব হয়নি।"
 
 #: editor/project_manager.cpp
@@ -11854,7 +11803,7 @@ msgid "Device"
 msgstr "ডিভাইস/যন্ত্র"
 
 #: editor/project_settings_editor.cpp
-msgid " (Physical)"
+msgid "(Physical)"
 msgstr ""
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -12049,7 +11998,7 @@ msgstr "লোকাল ফিল্টার মোড পরিবর্তি
 
 #: editor/project_settings_editor.cpp
 #, fuzzy
-msgid "Project Settings (project.godot)"
+msgid "Project Settings (project.rebel)"
 msgstr "প্রকল্পের সেটিংস (engine.cfg)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -12517,6 +12466,20 @@ msgid ""
 "Can't save the branch of an already instanced scene.\n"
 "To create a variation of a scene, you can make an inherited scene based on "
 "the instanced scene using Scene > New Inherited Scene... instead."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is a child of an already instantiated scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is part of an inherited scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
@@ -13812,6 +13775,16 @@ msgstr "অভিব্যক্তি (Expression) পরিবর্তন ক
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
+msgid "Can't copy the function node."
+msgstr "'..' তে পরিচালনা করা সম্ভব নয়"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Paste VisualScript Nodes"
+msgstr "নোড-সমূহ প্রতিলেপন/পেস্ট করুন"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
 msgid "Remove VisualScript Nodes"
 msgstr "অগ্রহনযোগ্য চাবিসমূহ অপসারণ করুন"
 
@@ -13929,16 +13902,6 @@ msgstr "ইনপুট নাম পরিবর্তন করুন"
 #, fuzzy
 msgid "Resize Comment"
 msgstr "CanvasItem সম্পাদন করুন"
-
-#: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
-msgid "Can't copy the function node."
-msgstr "'..' তে পরিচালনা করা সম্ভব নয়"
-
-#: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
-msgid "Paste VisualScript Nodes"
-msgstr "নোড-সমূহ প্রতিলেপন/পেস্ট করুন"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
@@ -14245,6 +14208,9 @@ msgstr "অগ্রহণযোগ্য ক্লাস নাম"
 msgid ""
 "Invalid \"GodotPaymentV3\" module included in the \"android/modules\" "
 "project setting (changed in Godot 3.2.2).\n"
+"Replace it with the first-party \"GodotGooglePlayBilling\" plugin.\n"
+"Note that the singleton was also renamed from \"GodotPayments\" to "
+"\"GodotGooglePlayBilling\"."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
@@ -14267,13 +14233,32 @@ msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Changing the \"Min Sdk\" is only valid when \"Use Custom Build\" is enabled."
+"\"Min Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this min SDK."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Changing the \"Target Sdk\" is only valid when \"Use Custom Build\" is "
-"enabled."
+"\"Target Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this target SDK."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" is set to 30, while the current default is \"%d\". This might "
+"be due to upgrading from a previous Godot release.\n"
+">> Consider changing it to \"%d\" to stay up-to-date with platform "
+"requirements."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" %d is higher than the default version %d. This may work, but "
+"wasn't tested and may be unstable."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
@@ -14374,7 +14359,8 @@ msgstr ""
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
+"Alternatively visit https://docs.rebeltoolbox.com for Android build "
+"documentation."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
@@ -14717,7 +14703,16 @@ msgstr ""
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles2D node instead. You can use the \"Convert to "
-"CPUParticles\" option for this purpose."
+"CPUParticles2D\" toolbar option for this purpose."
+msgstr ""
+
+#: scene/2d/particles_2d.cpp
+msgid ""
+"On macOS, Particles2D rendering is much slower than CPUParticles2D due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles2D instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles2D\" toolbar option for this "
+"purpose."
 msgstr ""
 
 #: scene/2d/particles_2d.cpp scene/3d/particles.cpp
@@ -14949,8 +14944,16 @@ msgstr ""
 #: scene/3d/particles.cpp
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
-"Use the CPUParticles node instead. You can use the \"Convert to CPUParticles"
-"\" option for this purpose."
+"Use the CPUParticles node instead. You can use the \"Convert to "
+"CPUParticles\" toolbar option for this purpose."
+msgstr ""
+
+#: scene/3d/particles.cpp
+msgid ""
+"On macOS, Particles rendering is much slower than CPUParticles due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles\" toolbar option for this purpose."
 msgstr ""
 
 #: scene/3d/particles.cpp
@@ -15136,12 +15139,6 @@ msgstr ""
 "প্রতি দৃশ্যে (অথবা ইন্সট্যান্সড দৃশ্যের সম্মেলনে) সর্বোচ্চ একটি দৃশ্যমান WorldEnvironment "
 "সম্ভব।"
 
-#: scene/3d/world_environment.cpp
-msgid ""
-"This WorldEnvironment is ignored. Either add a Camera (for 3D scenes) or set "
-"this environment's Background Mode to Canvas (for 2D scenes)."
-msgstr ""
-
 #: scene/animation/animation_blend_tree.cpp
 msgid "On BlendTree node '%s', animation not found: '%s'"
 msgstr ""
@@ -15296,18 +15293,6 @@ msgid ""
 "Consider using a script's process loop instead of relying on a Timer for "
 "very low wait times."
 msgstr ""
-
-#: scene/main/viewport.cpp
-msgid ""
-"This viewport is not set as render target. If you intend for it to display "
-"its contents directly to the screen, make it a child of a Control so it can "
-"obtain a size. Otherwise, make it a RenderTarget and assign its internal "
-"texture to some node for display."
-msgstr ""
-"এই viewport টি render target হিসেবে নির্ধারন করা নেই। আপনি যদি এর বস্তু-সামগ্রী "
-"সরাসরি পর্দায় দেখাতে চান, এটিকে যেকোনো Control এর অংশভূত করুন যেনো এটি একটি "
-"আকার ধারণ করতে পারে। অন্যথায়, এটিকে একটি RenderTarget করুন এবং এর অভ্যন্তরীণ "
-"দৃশ্যাবলিকে (texture) দৃশ্যমান করতে কোনো নোডে হস্তান্তর করুন।"
 
 #: scene/main/viewport.cpp
 msgid ""

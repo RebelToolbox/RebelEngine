@@ -1142,12 +1142,6 @@ void AnimationNodeStateMachineEditor::_notification(int p_what) {
             error = AnimationTreeEditor::get_singleton()
                         ->get_tree()
                         ->get_invalid_state_reason();
-            /*} else if (state_machine->get_parent().is_valid() &&
-            state_machine->get_parent()->is_class("AnimationNodeStateMachine"))
-            { if (state_machine->get_start_node() == StringName() ||
-            state_machine->get_end_node() == StringName()) { error = TTR("Start
-            and end nodes are needed for a sub-transition.");
-            }*/
         } else if (playback.is_null()) {
             error = vformat(
                 TTR("No playback resource set at path: %s."),

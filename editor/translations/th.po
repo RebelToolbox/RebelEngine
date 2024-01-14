@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 #
 # SPDX-License-Identifier: MIT
-
+#
 # Thai translation of the Rebel Editor
 # Kaveeta Vivatchai <goodytong@gmail.com>, 2017.
 # Poommetee Ketson (Noshyaar) <poommetee@protonmail.com>, 2017-2018.
@@ -511,8 +511,8 @@ msgid ""
 "\n"
 "To enable the ability to add custom tracks, navigate to the scene's import "
 "settings and set\n"
-"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom Tracks"
-"\", then re-import.\n"
+"\"Animation > Storage\" to \"Files\", enable \"Animation > Keep Custom "
+"Tracks\", then re-import.\n"
 "Alternatively, use an import preset that imports animations to separate "
 "files."
 msgstr ""
@@ -822,7 +822,9 @@ msgid "Scene does not contain any script."
 msgstr "ไม่มีสคริปต์ในฉาก"
 
 #: editor/connections_dialog.cpp editor/editor_autoload_settings.cpp
-#: editor/groups_editor.cpp editor/plugins/item_list_editor_plugin.cpp
+#: editor/groups_editor.cpp
+#: editor/plugins/animation_tree_player_editor_plugin.cpp
+#: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
 msgid "Add"
 msgstr "เพิ่ม"
@@ -1159,71 +1161,38 @@ msgid "Change Dictionary Value"
 msgstr "แก้ไขค่าดิกชันนารี"
 
 #: editor/editor_about.cpp
-msgid "Thanks from the Godot community!"
-msgstr "ขอขอบคุณจากชุมชนผู้ใช้ Godot!"
+msgid "Rebel Engine"
+msgstr ""
 
 #: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
 msgid "Click to copy."
 msgstr "คลิกเพื่อคัดลอก"
 
 #: editor/editor_about.cpp
-msgid "Godot Engine contributors"
+msgid ""
+"Rebel Engine is Free and Open Source Software; released under the MIT "
+"license.\n"
+msgstr ""
+
+#: editor/editor_about.cpp
+msgid ""
+"Games developed with Rebel Engine remain the property of the game developer."
+msgstr ""
+
+#: editor/editor_about.cpp
+#, fuzzy
+msgid "Rebel Contributors"
 msgstr "ผู้ช่วยพัฒนา Godot Engine"
 
 #: editor/editor_about.cpp
-msgid "Project Founders"
-msgstr "ผู้ริเริ่มโครงการ"
+#, fuzzy
+msgid "Contributors"
+msgstr "ต่อเนื่อง"
 
 #: editor/editor_about.cpp
-msgid "Lead Developer"
-msgstr "ผู้พัฒนาหลัก"
-
-#. TRANSLATORS: This refers to a job title.
-#. The trailing space is used to distinguish with the project list application,
-#. you do not have to keep it in your translation.
-#: editor/editor_about.cpp
-msgid "Project Manager "
-msgstr "ผู้จัดการโครงการ "
-
-#: editor/editor_about.cpp
-msgid "Developers"
-msgstr "ผู้พัฒนา"
-
-#: editor/editor_about.cpp
-msgid "Authors"
-msgstr "ทีมงาน"
-
-#: editor/editor_about.cpp
-msgid "Platinum Sponsors"
-msgstr "ผู้สนับสนุนระดับทองคำขาว"
-
-#: editor/editor_about.cpp
-msgid "Gold Sponsors"
+#, fuzzy
+msgid "Sponsors"
 msgstr "ผู้สนับสนุนระดับทอง"
-
-#: editor/editor_about.cpp
-msgid "Silver Sponsors"
-msgstr "ผู้บริจาคระดับเงิน"
-
-#: editor/editor_about.cpp
-msgid "Bronze Sponsors"
-msgstr "ผู้บริจาคระดับทองแดง"
-
-#: editor/editor_about.cpp
-msgid "Mini Sponsors"
-msgstr "ผู้สนับสนุน"
-
-#: editor/editor_about.cpp
-msgid "Gold Donors"
-msgstr "ผู้บริจาคระดับทอง"
-
-#: editor/editor_about.cpp
-msgid "Silver Donors"
-msgstr "ผู้บริจาคระดับเงิน"
-
-#: editor/editor_about.cpp
-msgid "Bronze Donors"
-msgstr "ผู้บริจาคระดับทองแดง"
 
 #: editor/editor_about.cpp
 msgid "Donors"
@@ -1238,8 +1207,9 @@ msgid "Third-party Licenses"
 msgstr "สัญญาอนุญาตจากบุคคลที่สาม"
 
 #: editor/editor_about.cpp
+#, fuzzy
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Rebel Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following "
 "is an exhaustive list of all such third-party components with their "
 "respective copyright statements and license terms."
@@ -2173,8 +2143,8 @@ msgstr "รายละเอียดเมท็อด"
 
 #: editor/editor_help.cpp
 msgid ""
-"There is currently no description for this method. Please help us by [color="
-"$color][url=$url]contributing one[/url][/color]!"
+"There is currently no description for this method. Please help us by "
+"[color=$color][url=$url]contributing one[/url][/color]!"
 msgstr "เมท็อดนี้ยังไม่มีคำอธิบาย โปรดช่วย[color=$color][url=$url]แก้ไข[/url][/color]!"
 
 #: editor/editor_help_search.cpp editor/editor_node.cpp
@@ -3131,33 +3101,16 @@ msgid "Online Documentation"
 msgstr "เปิดคู่มือ"
 
 #: editor/editor_node.cpp
-msgid "Questions & Answers"
-msgstr ""
-
-#: editor/editor_node.cpp
 msgid "Report a Bug"
 msgstr "รายงานบั๊ก"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Suggest a Feature"
-msgstr "เซ็ตค่า"
-
-#: editor/editor_node.cpp
-msgid "Send Docs Feedback"
-msgstr "ส่งความคิดเห็นเกี่ยวกับคู่มือ"
-
-#: editor/editor_node.cpp editor/plugins/asset_library_editor_plugin.cpp
-msgid "Community"
-msgstr "ชุมชน"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "About Godot"
+msgid "About Rebel"
 msgstr "เกี่ยวกับ"
 
 #: editor/editor_node.cpp
-msgid "Support Godot Development"
+msgid "Support Rebel Development"
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -3980,6 +3933,14 @@ msgstr "มีชื่อกลุ่มนี้อยู่แล้ว"
 #: editor/filesystem_dock.cpp
 msgid "Name contains invalid characters."
 msgstr "อักษรบางตัวใช้ไม่ได้"
+
+#: editor/filesystem_dock.cpp
+msgid ""
+"This file extension is not recognized by the editor.\n"
+"If you want to rename it anyway, use your operating system's file manager.\n"
+"After renaming to an unknown extension, the file won't be shown in the "
+"editor anymore."
+msgstr ""
 
 #: editor/filesystem_dock.cpp
 msgid ""
@@ -5099,10 +5060,6 @@ msgid "Travel"
 msgstr "การเคลื่อนที่"
 
 #: editor/plugins/animation_state_machine_editor.cpp
-msgid "Start and end nodes are needed for a sub-transition."
-msgstr "โหนดเริ่มต้นและสิ้นสุดจำเป็นสำหรับทรานสิชันย่อย"
-
-#: editor/plugins/animation_state_machine_editor.cpp
 msgid "No playback resource set at path: %s."
 msgstr "ไม่ได้ตั้งทรัพยากรการเล่นไว้ที่ที่อยู่: % s"
 
@@ -5183,10 +5140,6 @@ msgid "Blend"
 msgstr "ผสม"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Mix"
-msgstr "ร่วม"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Auto Restart:"
 msgstr "เริ่มใหม่อัตโนมัติ:"
 
@@ -5218,10 +5171,6 @@ msgstr "ผสม 1:"
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "X-Fade Time (s):"
 msgstr "ระยะเวลาเฟด (วิ):"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Current:"
-msgstr "ปัจจุบัน:"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
@@ -5504,6 +5453,10 @@ msgstr "สนับสนุน..."
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Official"
 msgstr "ผู้พัฒนา"
+
+#: editor/plugins/asset_library_editor_plugin.cpp
+msgid "Community"
+msgstr "ชุมชน"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
@@ -7823,12 +7776,12 @@ msgstr "เพอร์สเปกทีฟ"
 
 #. TRANSLATORS: This will be appended to the view name when Auto Orthogonal is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [auto]"
+msgid "[auto]"
 msgstr ""
 
 #. TRANSLATORS: This will be appended to the view name when Portal Occulusion is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid " [portals active]"
+msgid "[portals active]"
 msgstr ""
 
 #: editor/plugins/spatial_editor_plugin.cpp
@@ -10728,8 +10681,9 @@ msgid "Error opening package file (it's not in ZIP format)."
 msgstr "ผิดพลาดขณะเปิดไฟล์แพคเกจ (ไม่ใช่ไฟล์นามสกุล zip)"
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."
+"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
 msgstr "ไฟล์โปรเจกต์ \".zip\" ผิดพลาด เนื่องจากไม่มีไฟล์ \"project.godot\""
 
 #: editor/project_manager.cpp
@@ -10737,7 +10691,8 @@ msgid "Please choose an empty folder."
 msgstr "กรุณาเลือกโฟลเดอร์ว่างเปล่า"
 
 #: editor/project_manager.cpp
-msgid "Please choose a \"project.godot\" or \".zip\" file."
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "กรุณาเลือกไฟล์ \"project.godot\" หรือไฟล์ \".zip\""
 
 #: editor/project_manager.cpp
@@ -10774,18 +10729,21 @@ msgid "Invalid project path (changed anything?)."
 msgstr "ตำแหน่งโปรเจกต์ผิดพลาด (ได้แก้ไขอะไรไปหรือไม่?)"
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Couldn't load project.godot in project path (error %d). It may be missing or "
+"Couldn't load project.rebel in project path (error %d). It may be missing or "
 "corrupted."
 msgstr ""
 "โหลดไฟล์ project.godot ในโฟลเดอร์โปรเจกต์ไม่ได้ (ข้อผิดพลาด %d) ไฟล์อาจสูญหายหรือเสียหาย"
 
 #: editor/project_manager.cpp
-msgid "Couldn't edit project.godot in project path."
+#, fuzzy
+msgid "Couldn't edit project.rebel in project path."
 msgstr "แก้ไขไฟล์ project.godot ไม่ได้"
 
 #: editor/project_manager.cpp
-msgid "Couldn't create project.godot in project path."
+#, fuzzy
+msgid "Couldn't create project.rebel in project path."
 msgstr "สร้างไฟล์ project.godot ไม่ได้"
 
 #: editor/project_manager.cpp
@@ -11161,7 +11119,7 @@ msgid "Device"
 msgstr "อุปกรณ์"
 
 #: editor/project_settings_editor.cpp
-msgid " (Physical)"
+msgid "(Physical)"
 msgstr ""
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11342,7 +11300,8 @@ msgid "Changed Locale Filter Mode"
 msgstr "แก้ไขโหมดการกรองภูมิภาค"
 
 #: editor/project_settings_editor.cpp
-msgid "Project Settings (project.godot)"
+#, fuzzy
+msgid "Project Settings (project.rebel)"
 msgstr "ตัวเลือกโปรเจกต์ (project.godot)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
@@ -11781,6 +11740,20 @@ msgid ""
 "Can't save the branch of an already instanced scene.\n"
 "To create a variation of a scene, you can make an inherited scene based on "
 "the instanced scene using Scene > New Inherited Scene... instead."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is a child of an already instantiated scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
+msgstr ""
+
+#: editor/scene_tree_dock.cpp
+msgid ""
+"Can't save a branch which is part of an inherited scene.\n"
+"To save this branch into its own scene, open the original scene, right click "
+"on this branch, and select \"Save Branch as Scene\"."
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
@@ -12942,6 +12915,14 @@ msgid "Change Expression"
 msgstr "แก้ไขสมการ"
 
 #: modules/visual_script/visual_script_editor.cpp
+msgid "Can't copy the function node."
+msgstr "คัดลอกโหนดฟังก์ชันไม่ได้"
+
+#: modules/visual_script/visual_script_editor.cpp
+msgid "Paste VisualScript Nodes"
+msgstr "วางโหนด VisualScript"
+
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Nodes"
 msgstr "ลบโหนด VisualScript"
 
@@ -13041,14 +13022,6 @@ msgstr "แก้ไขค่าอินพุต"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Resize Comment"
 msgstr "แก้ขนาดคอมเม้นต์"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Can't copy the function node."
-msgstr "คัดลอกโหนดฟังก์ชันไม่ได้"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Paste VisualScript Nodes"
-msgstr "วางโหนด VisualScript"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Can't create function with a function node."
@@ -13340,9 +13313,10 @@ msgstr "ชื่อแพ็คเกจผิดพลาด:"
 msgid ""
 "Invalid \"GodotPaymentV3\" module included in the \"android/modules\" "
 "project setting (changed in Godot 3.2.2).\n"
+"Replace it with the first-party \"GodotGooglePlayBilling\" plugin.\n"
+"Note that the singleton was also renamed from \"GodotPayments\" to "
+"\"GodotGooglePlayBilling\"."
 msgstr ""
-"โมดูล \"GodotPaymentV3\" ที่ไม่ถูกต้องได้รวมอยู่ในการตั้งค่าโปรเจกต์ \"android/modules"
-"\" (เปลี่ยนแปลงใน Godot 3.2.2)\n"
 
 #: platform/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
@@ -13365,17 +13339,34 @@ msgid "\"Export AAB\" is only valid when \"Use Custom Build\" is enabled."
 msgstr "\"Export AAB\" จะใช้ได้เฉพาะเมื่อเปิดใช้งาน \"Use Custom Build\""
 
 #: platform/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
-"Changing the \"Min Sdk\" is only valid when \"Use Custom Build\" is enabled."
-msgstr "\"Export AAB\" จะใช้ได้เฉพาะเมื่อเปิดใช้งาน \"Use Custom Build\""
+"\"Min Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this min SDK."
+msgstr ""
 
 #: platform/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
-"Changing the \"Target Sdk\" is only valid when \"Use Custom Build\" is "
-"enabled."
-msgstr "\"Export AAB\" จะใช้ได้เฉพาะเมื่อเปิดใช้งาน \"Use Custom Build\""
+"\"Target Sdk\" was changed from the default \"%d\" to \"%d\". This option "
+"requires \"Use Custom Build\" to be enabled.\n"
+">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
+"Build\" to use this target SDK."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" is set to 30, while the current default is \"%d\". This might "
+"be due to upgrading from a previous Godot release.\n"
+">> Consider changing it to \"%d\" to stay up-to-date with platform "
+"requirements."
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" %d is higher than the default version %d. This may work, but "
+"wasn't tested and may be unstable."
+msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version."
@@ -13475,9 +13466,11 @@ msgid "Building Android Project (gradle)"
 msgstr "กำลังสร้างโปรเจคแอนดรอยด์ (gradle)"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
-"Alternatively visit docs.rebeltoolbox.com for Android build documentation."
+"Alternatively visit https://docs.rebeltoolbox.com for Android build "
+"documentation."
 msgstr ""
 "การสร้างโปรเจกต์แอนดรอยด์ล้มเหลว ตรวจสอบผลลัพธ์เพื่อหาข้อผิดพลาด\n"
 "หรือไปที่ docs.rebeltoolbox.com สำหรับเอกสารประกอบการสร้างสำหรับแอนดรอยด์"
@@ -13810,13 +13803,23 @@ msgid ""
 msgstr "ParallaxLayer จะทำงานได้ต้องเป็นโหนดลูกของโหนด ParallaxBackground"
 
 #: scene/2d/particles_2d.cpp
+#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles2D node instead. You can use the \"Convert to "
-"CPUParticles\" option for this purpose."
+"CPUParticles2D\" toolbar option for this purpose."
 msgstr ""
 "ไดรเวอร์ GLES2 ไม่สนับสนุนระบบพาร์ติเคิลโดยใช้การ์ดจอ\n"
 "ใช้โหนด CPUParticles2D แทน คุณสามารถใช้ตัวเลือก \"แปลงเป็น CPUParticles\" ได้"
+
+#: scene/2d/particles_2d.cpp
+msgid ""
+"On macOS, Particles2D rendering is much slower than CPUParticles2D due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles2D instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles2D\" toolbar option for this "
+"purpose."
+msgstr ""
 
 #: scene/2d/particles_2d.cpp scene/3d/particles.cpp
 msgid ""
@@ -14039,13 +14042,22 @@ msgid "Only uniform scales are supported."
 msgstr ""
 
 #: scene/3d/particles.cpp
+#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
-"Use the CPUParticles node instead. You can use the \"Convert to CPUParticles"
-"\" option for this purpose."
+"Use the CPUParticles node instead. You can use the \"Convert to "
+"CPUParticles\" toolbar option for this purpose."
 msgstr ""
 "ไดรเวอร์ GLES2 ไม่สนับสนุนระบบพาร์ติเคิลโดยใช้การ์ดจอ\n"
 "ใช้โหนด CPUParticles แทน คุณสามารถใช้ตัวเลือก \"แปลงเป็น CPUParticles\" ได้"
+
+#: scene/3d/particles.cpp
+msgid ""
+"On macOS, Particles rendering is much slower than CPUParticles due to "
+"transform feedback being implemented on the CPU instead of the GPU.\n"
+"Consider using CPUParticles instead when targeting macOS.\n"
+"You can use the \"Convert to CPUParticles\" toolbar option for this purpose."
+msgstr ""
 
 #: scene/3d/particles.cpp
 msgid ""
@@ -14236,14 +14248,6 @@ msgid ""
 "Only one WorldEnvironment is allowed per scene (or set of instanced scenes)."
 msgstr "จะมี WorldEnvironment ได้เพียงอันเดียวในฉาก (หรือกลุ่มของฉากที่เป็นอินสแตนซ์)"
 
-#: scene/3d/world_environment.cpp
-msgid ""
-"This WorldEnvironment is ignored. Either add a Camera (for 3D scenes) or set "
-"this environment's Background Mode to Canvas (for 2D scenes)."
-msgstr ""
-"WorldEnvironment นี้จะถูกละเว้น เพิ่มกล้อง (สำหรับฉาก 3 มิติ) หรือตั้งโหมด environment's "
-"Background ไปยังแคนวาส (สำหรับฉาก 2 มิติ)"
-
 #: scene/animation/animation_blend_tree.cpp
 msgid "On BlendTree node '%s', animation not found: '%s'"
 msgstr "ที่โหนด BlendTree '%s' ไม่พบแอนิเมชัน '%s'"
@@ -14400,17 +14404,6 @@ msgid ""
 "Consider using a script's process loop instead of relying on a Timer for "
 "very low wait times."
 msgstr ""
-
-#: scene/main/viewport.cpp
-msgid ""
-"This viewport is not set as render target. If you intend for it to display "
-"its contents directly to the screen, make it a child of a Control so it can "
-"obtain a size. Otherwise, make it a RenderTarget and assign its internal "
-"texture to some node for display."
-msgstr ""
-"Viewport นี้ไม่ได้เป็น render target ถ้าท่านต้องการแสดงผลบนหน้าจอโดยตรง "
-"ให้แก้ไขโหนดนี้ให้เป็นโหนดลูกของ Control แต่ถ้าไม่ ให้ปรับเป็น render target และนำไปใช้เป็น "
-"texture ของโหนดอื่น"
 
 #: scene/main/viewport.cpp
 #, fuzzy
