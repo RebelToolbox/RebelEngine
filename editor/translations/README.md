@@ -1,23 +1,36 @@
-# How to contribute translations
+# Rebel Editor Translations
 
-Godot's translation work is coordinated on
-[Hosted Weblate](https://hosted.weblate.org/projects/godot-engine/godot),
-an open source web-based translation platform, where contributors can work
-together on translations using various internationalization features.
-Creating an account there is free, and you can also login directly with
-your GitHub, BitBucket, Google or Facebook account.
+This folder contains the Rebel Editor translation files that are synched with Weblate.
 
-To avoid merge conflicts when syncing translations from Weblate (currently
-this is done manually), we ask all contributors to work there instead of
-making pull requests on this repository.
+If you want to contribute to the Rebel Toolbox translations, please use our [Weblate](https://hosted.weblate.org/engage/rebel-toolbox/) project:
+https://hosted.weblate.org/projects/rebel-toolbox/
 
-Link if you missed it: https://hosted.weblate.org/projects/godot-engine/godot
+## Rebel Editor Source Text Strings
 
-## Adding new languages
+The Rebel Editor source files use three tags to identify souce text strings:
+- `TTR`: Text string only available when using the editor.
+- `RTR`: Text string available in game and when using the editor.
+- `TTRC`: C-strings
 
-If you want to translate for a language which is not featured yet on Weblate,
-you can add it (when logged in) by clicking the "Start new translation"
-button at the bottom of the page.
+The `editor.pot` file contains all the extracted text strings enclosed in these tags.
+The text strings in source files are extracted into the `editor.pot` file using `make update`.
+`make update` runs the `tools/scripts/extract_editor_strings.py` script.
 
-Alternatively, you can use this
-[direct link](https://hosted.weblate.org/new-lang/godot-engine/godot/).
+Each language has its own translation file; its `.po` file.
+Updates to the `editor.pot` file are merged into each `.po` file using `make merge`.
+The updating and merging tasks can be combined by running `make`.
+
+## Rebel Editor Translations
+
+The `editor.pot` file and all the `.po` files in this folder are synched with the Weblate project.
+The Rebel Editor Weblate component is:
+https://hosted.weblate.org/projects/rebel-toolbox/rebel-editor/
+
+All updates to the translations are done on Weblate by the Weblate community.
+Commits on Weblate are then synched with the `.po` files here.
+
+If your language is not yet available, you can add a new language to the Weblate component.
+New languages are added on Weblate:
+https://hosted.weblate.org/new-lang/rebel-toolbox/rebel-editor/
+
+For more information on Weblate and contributing to translations visit [Weblate](https://hosted.weblate.org/engage/rebel-toolbox/).
