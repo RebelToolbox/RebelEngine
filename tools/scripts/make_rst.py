@@ -1,792 +1,840 @@
 #!/usr/bin/env python3
 
-# This script makes RST files from the XML class reference for use with the online docs.
+# Used by RebelDocumentation
+# Creates RST API documenation files from XML API documentation files.
 
 import argparse
 import os
 import re
+import textwrap
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
 
-# Uncomment to do type checks. I have it commented out so it works below Python 3.5
-# from typing import List, Dict, TextIO, Tuple, Iterable, Optional, DefaultDict, Any, Union
 
-# http(s)://docs.rebeltoolbox.com/<langcode>/<tag>/path/to/page.html(#fragment-tag)
-REBEL_DOCS_PATTERN = re.compile(
-    r"^http(?:s)?://docs\.rebeltoolbox\.com/(?:[a-zA-Z0-9.\-_]*)/(?:[a-zA-Z0-9.\-_]*)/(.*)\.html(#.*)?$"
-)
-
-
-def indent_length(line):
-    length = 0
-    for character in line:
-        if character == "\t" or character == " ":
-            length += 1
-        else:
-            return length
-    return 0
-
-
-def dedent(text):
-    lines = text.splitlines()
-    # Get indent of the first line.
-    first_indent = 0
-    for line in lines:
-        # Ignore blank lines.
-        first_indent = indent_length(line)
-        if first_indent > 0:
-            break
-    if first_indent == 0:
-        return text
-    # Dedent lines.
-    result = []
-    for line in lines:
-        # Remove all white space if it's a blank line.
-        if not line or line.isspace():
-            result.append("")
-            continue
-        line_indent = indent_length(line)
-        dedented_line = line[min(first_indent, line_indent) :]
-        result.append(dedented_line)
-    return "\n".join(result)
-
-
-def print_error(error, state):  # type: (str, State) -> None
-    print("ERROR: {}".format(error))
-    state.errored = True
-
-
-class TypeName:
-    def __init__(self, type_name, enum=None):  # type: (str, Optional[str]) -> None
-        self.type_name = type_name
-        self.enum = enum
-
-    def to_rst(self, state):  # type: ("State") -> str
-        if self.enum is not None:
-            return make_enum(self.enum, state)
-        elif self.type_name == "void":
-            return "void"
-        else:
-            return make_type(self.type_name, state)
-
-    @classmethod
-    def from_element(cls, element):  # type: (ET.Element) -> "TypeName"
-        return cls(element.attrib["type"], element.get("enum"))
-
-
-class PropertyDef:
-    def __init__(
-        self, name, type_name, setter, getter, text, default_value, overridden
-    ):  # type: (str, TypeName, Optional[str], Optional[str], Optional[str], Optional[str], Optional[bool]) -> None
-        self.name = name
-        self.type_name = type_name
-        self.setter = setter
-        self.getter = getter
-        self.text = text
-        self.default_value = default_value
-        self.overridden = overridden
-
-
-class ParameterDef:
-    def __init__(
-        self, name, type_name, default_value
-    ):  # type: (str, TypeName, Optional[str]) -> None
-        self.name = name
-        self.type_name = type_name
-        self.default_value = default_value
-
-
-class SignalDef:
-    def __init__(
-        self, name, parameters, description
-    ):  # type: (str, List[ParameterDef], Optional[str]) -> None
-        self.name = name
-        self.parameters = parameters
-        self.description = description
-
-
-class MethodDef:
-    def __init__(
-        self, name, return_type, parameters, description, qualifiers
-    ):  # type: (str, TypeName, List[ParameterDef], Optional[str], Optional[str]) -> None
-        self.name = name
-        self.return_type = return_type
-        self.parameters = parameters
-        self.description = description
-        self.qualifiers = qualifiers
-
-
-class ConstantDef:
-    def __init__(self, name, value, text):  # type: (str, str, Optional[str]) -> None
-        self.name = name
-        self.value = value
-        self.text = text
-
-
-class EnumDef:
-    def __init__(self, name):  # type: (str) -> None
-        self.name = name
-        self.values = OrderedDict()  # type: OrderedDict[str, ConstantDef]
-
-
-class ThemeItemDef:
-    def __init__(
-        self, name, type_name, data_name, text, default_value
-    ):  # type: (str, TypeName, str, Optional[str], Optional[str]) -> None
-        self.name = name
-        self.type_name = type_name
-        self.data_name = data_name
-        self.text = text
-        self.default_value = default_value
-
-
-class ClassDef:
-    def __init__(self, name):  # type: (str) -> None
-        self.name = name
-        self.constants = OrderedDict()  # type: OrderedDict[str, ConstantDef]
-        self.enums = OrderedDict()  # type: OrderedDict[str, EnumDef]
-        self.properties = OrderedDict()  # type: OrderedDict[str, PropertyDef]
-        self.methods = OrderedDict()  # type: OrderedDict[str, List[MethodDef]]
-        self.signals = OrderedDict()  # type: OrderedDict[str, SignalDef]
-        self.theme_items = OrderedDict()  # type: OrderedDict[str, ThemeItemDef]
-        self.inherits = None  # type: Optional[str]
-        self.brief_description = None  # type: Optional[str]
-        self.description = None  # type: Optional[str]
-        self.tutorials = []  # type: List[Tuple[str, str]]
-
-        # Used to match the class with XML source for output filtering purposes.
-        self.filepath = ""  # type: str
-
-
-class State:
-    def __init__(self):  # type: () -> None
-        # Has any error been reported?
-        self.errored = False
-        self.classes = OrderedDict()  # type: OrderedDict[str, ClassDef]
-        self.current_class = ""  # type: str
-
-    def parse_class(self, class_root, filepath):  # type: (ET.Element, str) -> None
-        class_name = class_root.attrib["name"]
-
-        class_def = ClassDef(class_name)
-        self.classes[class_name] = class_def
-        class_def.filepath = filepath
-
-        inherits = class_root.get("inherits")
-        if inherits is not None:
-            class_def.inherits = inherits
-
-        brief_desc = class_root.find("brief_description")
-        if brief_desc is not None and brief_desc.text:
-            class_def.brief_description = brief_desc.text
-
-        desc = class_root.find("description")
-        if desc is not None and desc.text:
-            class_def.description = desc.text
-
-        properties = class_root.find("members")
-        if properties is not None:
-            for property in properties:
-                assert property.tag == "member"
-
-                property_name = property.attrib["name"]
-                if property_name in class_def.properties:
-                    print_error(
-                        "Duplicate property '{}', file: {}".format(
-                            property_name, class_name
-                        ),
-                        self,
-                    )
-                    continue
-
-                type_name = TypeName.from_element(property)
-                setter = (
-                    property.get("setter") or None
-                )  # Use or None so '' gets turned into None.
-                getter = property.get("getter") or None
-                default_value = property.get("default") or None
-                if default_value is not None:
-                    default_value = "``{}``".format(default_value)
-                overridden = property.get("override") or False
-
-                property_def = PropertyDef(
-                    property_name,
-                    type_name,
-                    setter,
-                    getter,
-                    property.text,
-                    default_value,
-                    overridden,
-                )
-                class_def.properties[property_name] = property_def
-
-        methods = class_root.find("methods")
-        if methods is not None:
-            for method in methods:
-                assert method.tag == "method"
-
-                method_name = method.attrib["name"]
-                qualifiers = method.get("qualifiers")
-
-                return_element = method.find("return")
-                if return_element is not None:
-                    return_type = TypeName.from_element(return_element)
-
-                else:
-                    return_type = TypeName("void")
-
-                params = parse_arguments(method)
-
-                desc_element = method.find("description")
-                method_desc = None
-                if desc_element is not None:
-                    method_desc = desc_element.text
-
-                method_def = MethodDef(
-                    method_name, return_type, params, method_desc, qualifiers
-                )
-                if method_name not in class_def.methods:
-                    class_def.methods[method_name] = []
-
-                class_def.methods[method_name].append(method_def)
-
-        constants = class_root.find("constants")
-        if constants is not None:
-            for constant in constants:
-                assert constant.tag == "constant"
-
-                constant_name = constant.attrib["name"]
-                value = constant.attrib["value"]
-                enum = constant.get("enum")
-                constant_def = ConstantDef(constant_name, value, constant.text)
-                if enum is None:
-                    if constant_name in class_def.constants:
-                        print_error(
-                            "Duplicate constant '{}', file: {}".format(
-                                constant_name, class_name
-                            ),
-                            self,
-                        )
-                        continue
-
-                    class_def.constants[constant_name] = constant_def
-
-                else:
-                    if enum in class_def.enums:
-                        enum_def = class_def.enums[enum]
-
-                    else:
-                        enum_def = EnumDef(enum)
-                        class_def.enums[enum] = enum_def
-
-                    enum_def.values[constant_name] = constant_def
-
-        signals = class_root.find("signals")
-        if signals is not None:
-            for signal in signals:
-                assert signal.tag == "signal"
-
-                signal_name = signal.attrib["name"]
-
-                if signal_name in class_def.signals:
-                    print_error(
-                        "Duplicate signal '{}', file: {}".format(
-                            signal_name, class_name
-                        ),
-                        self,
-                    )
-                    continue
-
-                params = parse_arguments(signal)
-
-                desc_element = signal.find("description")
-                signal_desc = None
-                if desc_element is not None:
-                    signal_desc = desc_element.text
-
-                signal_def = SignalDef(signal_name, params, signal_desc)
-                class_def.signals[signal_name] = signal_def
-
-        theme_items = class_root.find("theme_items")
-        if theme_items is not None:
-            for theme_item in theme_items:
-                assert theme_item.tag == "theme_item"
-
-                theme_item_name = theme_item.attrib["name"]
-                theme_item_data_name = theme_item.attrib["data_type"]
-                theme_item_id = "{}_{}".format(theme_item_data_name, theme_item_name)
-                if theme_item_id in class_def.theme_items:
-                    print_error(
-                        "Duplicate theme property '{}' of type '{}', file: {}".format(
-                            theme_item_name, theme_item_data_name, class_name
-                        ),
-                        self,
-                    )
-                    continue
-
-                default_value = theme_item.get("default") or None
-                if default_value is not None:
-                    default_value = "``{}``".format(default_value)
-
-                theme_item_def = ThemeItemDef(
-                    theme_item_name,
-                    TypeName.from_element(theme_item),
-                    theme_item_data_name,
-                    theme_item.text,
-                    default_value,
-                )
-                class_def.theme_items[theme_item_id] = theme_item_def
-
-        tutorials = class_root.find("tutorials")
-        if tutorials is not None:
-            for link in tutorials:
-                assert link.tag == "link"
-
-                if link.text is not None:
-                    class_def.tutorials.append(
-                        (link.text.strip(), link.get("title", ""))
-                    )
-
-    def sort_classes(self):  # type: () -> None
-        self.classes = OrderedDict(sorted(self.classes.items(), key=lambda t: t[0]))
-
-
-def parse_arguments(root):  # type: (ET.Element) -> List[ParameterDef]
-    param_elements = root.findall("argument")
-    params = [None] * len(param_elements)  # type: Any
-    for param_element in param_elements:
-        param_name = param_element.attrib["name"]
-        index = int(param_element.attrib["index"])
-        type_name = TypeName.from_element(param_element)
-        default = param_element.get("default")
-
-        params[index] = ParameterDef(param_name, type_name, default)
-
-    cast = params  # type: List[ParameterDef]
-
-    return cast
-
-
-def main():  # type: () -> None
+class_defs = OrderedDict()
+current_file = ""
+current_class = ""
+error = False
+
+
+def main():
+    global class_defs
+    global current_class
+    arguments = get_arguments()
+    files = get_files(arguments.path)
+    class_defs = parse_xml_files(files)
+    if not os.path.isdir(arguments.output):
+        os.makedirs(arguments.output)
+    for class_def in class_defs.values():
+        current_class = class_def.name
+        filename = os.path.join(
+            arguments.output, "class_" + class_def.name.lower() + ".rst"
+        )
+        if arguments.dry_run:
+            filename = os.devnull
+        rst_file = open(filename, "w", encoding="utf-8")
+        write_rst_file(rst_file, class_def)
+    if error:
+        print("Errors were found in the XML API Documentation.")
+        print("Please fix the errors and try again.")
+        exit(1)
+    print("No errors found.")
+    if not arguments.dry_run:
+        print("Wrote reStructuredText files for each class to: %s" % arguments.output)
+
+
+def parse_error(message):
+    global error
+    error = True
+    print("XML ERROR: {1}): {0}".format(message, current_file))
+
+
+def rst_error(message):
+    global error
+    error = True
+    print("RST ERROR: {1}: {0}".format(message, current_class))
+
+
+def get_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "path",
         nargs="+",
         help="A path to an XML file or a directory containing XML files to parse.",
     )
-    parser.add_argument(
-        "--filter", default="", help="The filepath pattern for XML files to filter."
-    )
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
         "--output",
         "-o",
         default=".",
-        help="The directory to save output .rst files in.",
+        help="The output directory to save the .rst files in.",
     )
     group.add_argument(
         "--dry-run",
         action="store_true",
-        help="If passed, no output will be generated and XML files are only checked for errors.",
+        help="Only check XML files for errors, do not create .rst files.",
     )
-    args = parser.parse_args()
-
-    print("Checking for errors in the XML class reference...")
-
-    file_list = []  # type: List[str]
-
-    for path in args.path:
-        # Cut off trailing slashes so os.path.basename doesn't choke.
-        if path.endswith("/") or path.endswith("\\"):
-            path = path[:-1]
-
-        if os.path.basename(path) == "modules":
-            for subdir, dirs, _ in os.walk(path):
-                if "docs" in dirs:
-                    docs_dir = os.path.join(subdir, "docs")
-                    class_file_names = (
-                        f for f in os.listdir(docs_dir) if f.endswith(".xml")
-                    )
-                    file_list += (os.path.join(docs_dir, f) for f in class_file_names)
-
-        elif os.path.isdir(path):
-            file_list += (
-                os.path.join(path, f) for f in os.listdir(path) if f.endswith(".xml")
-            )
-
-        elif os.path.isfile(path):
-            if not path.endswith(".xml"):
-                print("Got non-.xml file '{}' in input, skipping.".format(path))
-                continue
-
-            file_list.append(path)
-
-    classes = {}  # type: Dict[str, ET.Element]
-    state = State()
-
-    for cur_file in file_list:
-        try:
-            tree = ET.parse(cur_file)
-        except ET.ParseError as e:
-            print_error("Parse error reading file '{}': {}".format(cur_file, e), state)
-            continue
-        doc = tree.getroot()
-
-        if "version" not in doc.attrib:
-            print_error("Version missing from 'doc', file: {}".format(cur_file), state)
-            continue
-
-        name = doc.attrib["name"]
-        if name in classes:
-            print_error("Duplicate class '{}'".format(name), state)
-            continue
-
-        classes[name] = (doc, cur_file)
-
-    for name, data in classes.items():
-        try:
-            state.parse_class(data[0], data[1])
-        except Exception as e:
-            print_error("Exception while parsing class '{}': {}".format(name, e), state)
-
-    state.sort_classes()
-
-    pattern = re.compile(args.filter)
-
-    # Create the output folder recursively if it doesn't already exist.
-    os.makedirs(args.output, exist_ok=True)
-
-    for class_name, class_def in state.classes.items():
-        if args.filter and not pattern.search(class_def.filepath):
-            continue
-        state.current_class = class_name
-        make_rst_class(class_def, state, args.dry_run, args.output)
-
-    if not state.errored:
-        print("No errors found.")
-        if not args.dry_run:
-            print("Wrote reStructuredText files for each class to: %s" % args.output)
-    else:
-        print(
-            "Errors were found in the class reference XML. Please check the messages above."
-        )
-        exit(1)
-
-
-def make_rst_class(
-    class_def, state, dry_run, output_dir
-):  # type: (ClassDef, State, bool, str) -> None
-    class_name = class_def.name
-
-    if dry_run:
-        f = open(os.devnull, "w", encoding="utf-8")
-    else:
-        f = open(
-            os.path.join(output_dir, "class_" + class_name.lower() + ".rst"),
-            "w",
-            encoding="utf-8",
-        )
-
-    # Warn contributors not to edit this file directly
-    f.write(":github_url: hide\n\n")
-    f.write(
-        ".. Generated automatically by tools/scripts/make_rst.py in Rebel Engine's source tree.\n"
-    )
-    f.write(
-        ".. DO NOT EDIT THIS FILE, but the " + class_name + ".xml source instead.\n"
-    )
-    f.write(".. The source is found in docs or modules/<name>/docs.\n\n")
-
-    f.write(".. _class_" + class_name + ":\n\n")
-    f.write(make_heading(class_name, "="))
-
-    # Inheritance tree
-    # Ascendants
-    if class_def.inherits:
-        inh = class_def.inherits.strip()
-        f.write("**Inherits:** ")
-        first = True
-        while inh in state.classes:
-            if not first:
-                f.write(" **<** ")
-            else:
-                first = False
-
-            f.write(make_type(inh, state))
-            inode = state.classes[inh].inherits
-            if inode:
-                inh = inode.strip()
-            else:
-                break
-        f.write("\n\n")
-
-    # Descendents
-    inherited = []
-    for c in state.classes.values():
-        if c.inherits and c.inherits.strip() == class_name:
-            inherited.append(c.name)
-
-    if len(inherited):
-        f.write("**Inherited By:** ")
-        for i, child in enumerate(inherited):
-            if i > 0:
-                f.write(", ")
-            f.write(make_type(child, state))
-        f.write("\n\n")
-
-    # Brief description
-    if class_def.brief_description is not None:
-        f.write(rstize_text(class_def.brief_description, state) + "\n\n")
-
-    # Class description
-    if class_def.description is not None and class_def.description.strip() != "":
-        f.write(make_heading("Description", "-"))
-        f.write(rstize_text(class_def.description, state) + "\n\n")
-
-    # Online tutorials
-    if len(class_def.tutorials) > 0:
-        f.write(make_heading("Tutorials", "-"))
-        for url, title in class_def.tutorials:
-            f.write("- " + make_link(url, title) + "\n\n")
-
-    # Properties overview
-    if len(class_def.properties) > 0:
-        f.write(make_heading("Properties", "-"))
-        ml = []  # type: List[Tuple[str, str, str]]
-        for property_def in class_def.properties.values():
-            type_rst = property_def.type_name.to_rst(state)
-            default = property_def.default_value
-            if default is not None and property_def.overridden:
-                ml.append(
-                    (type_rst, property_def.name, default + " *(parent override)*")
-                )
-            else:
-                ref = ":ref:`{0}<class_{1}_property_{0}>`".format(
-                    property_def.name, class_name
-                )
-                ml.append((type_rst, ref, default))
-        format_table(f, ml, True)
-
-    # Methods overview
-    if len(class_def.methods) > 0:
-        f.write(make_heading("Methods", "-"))
-        ml = []
-        for method_list in class_def.methods.values():
-            for m in method_list:
-                ml.append(make_method_signature(class_def, m, True, state))
-        format_table(f, ml)
-
-    # Theme properties
-    if len(class_def.theme_items) > 0:
-        f.write(make_heading("Theme Properties", "-"))
-        pl = []
-        for theme_item_def in class_def.theme_items.values():
-            ref = ":ref:`{0}<class_{2}_theme_{1}_{0}>`".format(
-                theme_item_def.name, theme_item_def.data_name, class_name
-            )
-            pl.append(
-                (
-                    theme_item_def.type_name.to_rst(state),
-                    ref,
-                    theme_item_def.default_value,
-                )
-            )
-        format_table(f, pl, True)
-
-    # Signals
-    if len(class_def.signals) > 0:
-        f.write(make_heading("Signals", "-"))
-        index = 0
-
-        for signal in class_def.signals.values():
-            if index != 0:
-                f.write("----\n\n")
-
-            f.write(".. _class_{}_signal_{}:\n\n".format(class_name, signal.name))
-            _, signature = make_method_signature(class_def, signal, False, state)
-            f.write("- {}\n\n".format(signature))
-
-            if signal.description is not None and signal.description.strip() != "":
-                f.write(rstize_text(signal.description, state) + "\n\n")
-
-            index += 1
-
-    # Enums
-    if len(class_def.enums) > 0:
-        f.write(make_heading("Enumerations", "-"))
-        index = 0
-
-        for e in class_def.enums.values():
-            if index != 0:
-                f.write("----\n\n")
-
-            f.write(".. _enum_{}_{}:\n\n".format(class_name, e.name))
-            # Sphinx seems to divide the bullet list into individual <ul> tags if we weave the labels into it.
-            # As such I'll put them all above the list. Won't be perfect but better than making the list visually broken.
-            # As to why I'm not modifying the reference parser to directly link to the _enum label:
-            # If somebody gets annoyed enough to fix it, all existing references will magically improve.
-            for value in e.values.values():
-                f.write(".. _class_{}_constant_{}:\n\n".format(class_name, value.name))
-
-            f.write("enum **{}**:\n\n".format(e.name))
-            for value in e.values.values():
-                f.write("- **{}** = **{}**".format(value.name, value.value))
-                if value.text is not None and value.text.strip() != "":
-                    f.write(" --- " + rstize_text(value.text, state))
-
-                f.write("\n\n")
-
-            index += 1
-
-    # Constants
-    if len(class_def.constants) > 0:
-        f.write(make_heading("Constants", "-"))
-        # Sphinx seems to divide the bullet list into individual <ul> tags if we weave the labels into it.
-        # As such I'll put them all above the list. Won't be perfect but better than making the list visually broken.
-        for constant in class_def.constants.values():
-            f.write(".. _class_{}_constant_{}:\n\n".format(class_name, constant.name))
-
-        for constant in class_def.constants.values():
-            f.write("- **{}** = **{}**".format(constant.name, constant.value))
-            if constant.text is not None and constant.text.strip() != "":
-                f.write(" --- " + rstize_text(constant.text, state))
-
-            f.write("\n\n")
-
-    # Property descriptions
-    if any(not p.overridden for p in class_def.properties.values()) > 0:
-        f.write(make_heading("Property Descriptions", "-"))
-        index = 0
-
-        for property_def in class_def.properties.values():
-            if property_def.overridden:
-                continue
-
-            if index != 0:
-                f.write("----\n\n")
-
-            f.write(
-                ".. _class_{}_property_{}:\n\n".format(class_name, property_def.name)
-            )
-            f.write(
-                "- {} **{}**\n\n".format(
-                    property_def.type_name.to_rst(state), property_def.name
-                )
-            )
-
-            info = []
-            if property_def.default_value is not None:
-                info.append(("*Default*", property_def.default_value))
-            if property_def.setter is not None and not property_def.setter.startswith(
-                "_"
-            ):
-                info.append(("*Setter*", property_def.setter + "(value)"))
-            if property_def.getter is not None and not property_def.getter.startswith(
-                "_"
-            ):
-                info.append(("*Getter*", property_def.getter + "()"))
-
-            if len(info) > 0:
-                format_table(f, info)
-
-            if property_def.text is not None and property_def.text.strip() != "":
-                f.write(rstize_text(property_def.text, state) + "\n\n")
-
-            index += 1
-
-    # Method descriptions
-    if len(class_def.methods) > 0:
-        f.write(make_heading("Method Descriptions", "-"))
-        index = 0
-
-        for method_list in class_def.methods.values():
-            for i, m in enumerate(method_list):
-                if index != 0:
-                    f.write("----\n\n")
-
-                if i == 0:
-                    f.write(".. _class_{}_method_{}:\n\n".format(class_name, m.name))
-
-                ret_type, signature = make_method_signature(class_def, m, False, state)
-                f.write("- {} {}\n\n".format(ret_type, signature))
-
-                if m.description is not None and m.description.strip() != "":
-                    f.write(rstize_text(m.description, state) + "\n\n")
-
-                index += 1
-
-    # Theme property descriptions
-    if len(class_def.theme_items) > 0:
-        f.write(make_heading("Theme Property Descriptions", "-"))
-        index = 0
-
-        for theme_item_def in class_def.theme_items.values():
-            if index != 0:
-                f.write("----\n\n")
-
-            f.write(
-                ".. _class_{}_theme_{}_{}:\n\n".format(
-                    class_name, theme_item_def.data_name, theme_item_def.name
-                )
-            )
-            f.write(
-                "- {} **{}**\n\n".format(
-                    theme_item_def.type_name.to_rst(state), theme_item_def.name
-                )
-            )
-
-            info = []
-            if theme_item_def.default_value is not None:
-                info.append(("*Default*", theme_item_def.default_value))
-
-            if len(info) > 0:
-                format_table(f, info)
-
-            if theme_item_def.text is not None and theme_item_def.text.strip() != "":
-                f.write(rstize_text(theme_item_def.text, state) + "\n\n")
-
-            index += 1
-
-    f.write(make_footer())
-
-
-def escape_rst(text, until_pos=-1):  # type: (str) -> str
-    # Escape \ character, otherwise it ends up as an escape character in rst
-    pos = 0
-    while True:
-        pos = text.find("\\", pos, until_pos)
-        if pos == -1:
-            break
-        text = text[:pos] + "\\\\" + text[pos + 1 :]
-        pos += 2
-
-    # Escape * character to avoid interpreting it as emphasis
-    pos = 0
-    while True:
-        pos = text.find("*", pos, until_pos)
-        if pos == -1:
-            break
-        text = text[:pos] + "\*" + text[pos + 1 :]
-        pos += 2
-
-    # Escape _ character at the end of a word to avoid interpreting it as an inline hyperlink
-    pos = 0
-    while True:
-        pos = text.find("_", pos, until_pos)
-        if pos == -1:
-            break
-        if not text[pos + 1].isalnum():  # don't escape within a snake_case word
-            text = text[:pos] + "\_" + text[pos + 1 :]
-            pos += 2
+    return parser.parse_args()
+
+
+def get_files(paths):
+    files = []
+    for path in paths:
+        path = os.path.normpath(path)
+        if os.path.isdir(path):
+            files += get_files_in_directory(path)
+        elif os.path.isfile(path) and path.endswith(".xml"):
+            files.append(path)
         else:
-            pos += 1
+            print("File or directory not found: {}".format(path))
+    return files
 
-    return text
+
+def get_files_in_directory(directory):
+    files = []
+    if os.path.basename(directory) == "modules":
+        # Special case: Look for docs folders in each module
+        return get_files_in_modules(directory)
+    for entry in os.scandir(directory):
+        if os.path.isfile(entry.path) and entry.name.endswith(".xml"):
+            files.append(entry.path)
+    return files
 
 
-def rstize_text(text, state):  # type: (str, State) -> str
-    text = dedent(text).strip()
+def get_files_in_modules(modules_path):
+    files = []
+    for modules_entry in os.scandir(modules_path):
+        if not modules_entry.is_dir():
+            continue
+        for module_entry in os.scandir(modules_entry.path):
+            if module_entry.is_dir() and module_entry.name == "docs":
+                files += get_files_in_directory(module_entry.path)
+    return files
 
+
+def parse_xml_files(files):
+    global current_file
+    class_defs = OrderedDict()
+    for file in files:
+        current_file = file
+        try:
+            tree = ET.parse(file)
+        except ET.ParseError as e:
+            parse_error(e)
+            exit(1)
+        xml_root = tree.getroot()
+        if "name" not in xml_root.attrib:
+            parse_error("Name is not a root attribute")
+            continue
+        if "version" not in xml_root.attrib:
+            parse_error("Version missing")
+            continue
+        class_name = xml_root.get("name")
+        if class_name in class_defs:
+            parse_error("Duplicate class '{}'".format(class_name))
+            continue
+        class_def = parse_class(xml_root)
+        class_defs[class_def.name] = class_def
+    class_defs = OrderedDict(sorted(class_defs.items(), key=lambda t: t[0]))
+    return class_defs
+
+
+def parse_class(xml_root):
+    class_name = xml_root.get("name")
+    class_def = ClassDef(class_name)
+    inherits = xml_root.get("inherits")
+    if inherits is not None:
+        class_def.inherits = inherits
+    brief_description = xml_root.find("brief_description")
+    if brief_description is not None and brief_description.text:
+        class_def.brief_description = brief_description.text
+    description = xml_root.find("description")
+    if description is not None and description.text:
+        class_def.description = description.text
+    parse_tutorials(xml_root.find("tutorials"), class_def)
+    parse_methods(xml_root.find("methods"), class_def)
+    parse_properties(xml_root.find("members"), class_def)
+    parse_signals(xml_root.find("signals"), class_def)
+    parse_constants(xml_root.find("constants"), class_def)
+    parse_theme_items(xml_root.find("theme_items"), class_def)
+    return class_def
+
+
+def parse_tutorials(tutorials, class_def):
+    if tutorials is None:
+        return
+    for link in tutorials:
+        assert link.tag == "link"
+        if link.text is not None:
+            class_def.tutorials.append((link.text.strip(), link.get("title", "")))
+
+
+def parse_methods(methods, class_def):
+    if methods is None:
+        return
+    for method in methods:
+        assert method.tag == "method"
+        name = method.get("name")
+        qualifiers = method.get("qualifiers")
+        return_type = TypeDef(method.find("return"))
+        parameters = get_parameters(method)
+        description_element = method.find("description")
+        description = None
+        if description_element is not None:
+            description = description_element.text
+        method_def = MethodDef(name, qualifiers, return_type, parameters, description)
+        if name not in class_def.methods:
+            class_def.methods[name] = []
+        class_def.methods[name].append(method_def)
+
+
+def parse_properties(properties, class_def):
+    if properties is None:
+        return
+    for property in properties:
+        assert property.tag == "member"
+        name = property.get("name")
+        if name in class_def.properties:
+            parse_error("Duplicate member '{}'".format(name))
+            continue
+        type_def = TypeDef(property)
+        setter = property.get("setter")
+        getter = property.get("getter")
+        default = property.get("default")
+        overridden = property.get("override") or False
+        property_def = PropertyDef(
+            name, type_def, setter, getter, default, overridden, property.text
+        )
+        class_def.properties[name] = property_def
+
+
+def parse_signals(signals, class_def):
+    if signals is None:
+        return
+    for signal in signals:
+        assert signal.tag == "signal"
+        name = signal.get("name")
+        if name in class_def.signals:
+            parse_error("Duplicate signal '{}'".format(name))
+            continue
+        parameters = get_parameters(signal)
+        description_element = signal.find("description")
+        description = None
+        if description_element is not None:
+            description = description_element.text
+        signal_def = SignalDef(name, parameters, description)
+        class_def.signals[name] = signal_def
+
+
+def parse_constants(constants, class_def):
+    if constants is None:
+        return
+    for constant in constants:
+        assert constant.tag == "constant"
+        name = constant.get("name")
+        value = constant.get("value")
+        enum = constant.get("enum")
+        constant_def = ConstantDef(name, value, constant.text)
+        if enum:
+            if enum in class_def.enums:
+                enum_def = class_def.enums[enum]
+            else:
+                enum_def = EnumDef(enum)
+                class_def.enums[enum] = enum_def
+            enum_def.values[name] = constant_def
+        elif name in class_def.constants:
+            parse_error("Duplicate constant '{}'".format(name))
+            continue
+        else:
+            class_def.constants[name] = constant_def
+
+
+def parse_theme_items(theme_items, class_def):
+    if theme_items is None:
+        return
+    for theme_item in theme_items:
+        assert theme_item.tag == "theme_item"
+        name = theme_item.get("name")
+        if name in class_def.theme_items:
+            parse_error("Duplicate theme item '{}'".format(name))
+            continue
+        data_type = theme_item.get("data_type")
+        type_def = TypeDef(theme_item)
+        default = theme_item.get("default")
+        theme_item_def = ThemeItemDef(
+            name, data_type, type_def, default, theme_item.text
+        )
+        class_def.theme_items[name] = theme_item_def
+
+
+def get_parameters(element):
+    parameter_elements = element.findall("argument")
+    parameters = [None] * len(parameter_elements)
+    for parameter_element in parameter_elements:
+        index = int(parameter_element.get("index"))
+        name = parameter_element.get("name")
+        type_def = TypeDef(parameter_element)
+        default = parameter_element.get("default")
+        parameters[index] = ParameterDef(name, type_def, default)
+    return parameters
+
+
+def write_rst_file(rst_file, class_def):
+    write_header(rst_file, class_def)
+    write_inherits_classes(rst_file, class_def)
+    write_inherited_by_classes(rst_file, class_def)
+    write_brief_description(rst_file, class_def)
+    write_description(rst_file, class_def)
+    write_tutorials(rst_file, class_def)
+    write_properties_list(rst_file, class_def)
+    write_methods_list(rst_file, class_def)
+    write_theme_properties_list(rst_file, class_def)
+    write_signals(rst_file, class_def)
+    write_enums(rst_file, class_def)
+    write_contants(rst_file, class_def)
+    write_property_descriptions(rst_file, class_def)
+    write_method_descriptions(rst_file, class_def)
+    write_theme_property_descriptions(rst_file, class_def)
+    write_footer(rst_file, class_def)
+
+
+def write_header(rst_file, class_def):
+    class_name = class_def.name
+    # Warn contributors not to edit this file directly.
+    rst_file.write(":github_url: hide\n\n")
+    rst_file.write(
+        ".. Generated automatically by tools/scripts/make_rst.py "
+        "in Rebel Engine's source tree.\n"
+    )
+    rst_file.write(
+        ".. DO NOT EDIT THIS FILE, but the {}.xml source instead.\n".format(class_name)
+    )
+    rst_file.write(".. The source is found in docs or modules/<name>/docs.")
+    rst_file.write("\n\n")
+    rst_file.write(".. _class_" + class_name + ":")
+    rst_file.write("\n\n")
+    rst_file.write(rst_heading(class_name, "="))
+
+
+def write_inherits_classes(rst_file, class_def):
+    if not class_def.inherits:
+        return
+    rst_file.write("**Inherits:** ")
+    inherits = class_def.inherits
+    first = True
+    while inherits in class_defs:
+        if first:
+            first = False
+        else:
+            rst_file.write(" **<** ")
+        rst_file.write(rst_class_reference_link(inherits))
+        inherits = class_defs[inherits].inherits
+    rst_file.write("\n\n")
+
+
+def write_inherited_by_classes(rst_file, class_def):
+    class_name = class_def.name
+    inherited_by = []
+    for class_def in class_defs.values():
+        if class_def.inherits and class_def.inherits == class_name:
+            inherited_by.append(class_def.name)
+    if not inherited_by:
+        return
+    rst_file.write("**Inherited By:** ")
+    first = True
+    for child in inherited_by:
+        if first:
+            first = False
+        else:
+            rst_file.write(", ")
+        rst_file.write(rst_class_reference_link(child))
+    rst_file.write("\n\n")
+
+
+def write_brief_description(rst_file, class_def):
+    if class_def.brief_description is None:
+        return
+    rst_file.write(rst_text(class_def.brief_description))
+    rst_file.write("\n\n")
+
+
+def write_description(rst_file, class_def):
+    if class_def.description.strip() == "":
+        return
+    rst_file.write(rst_heading("Description", "-"))
+    rst_file.write(rst_text(class_def.description))
+    rst_file.write("\n\n")
+
+
+def write_tutorials(rst_file, class_def):
+    if not class_def.tutorials:
+        return
+    rst_file.write(rst_heading("Tutorials", "-"))
+    for url, title in class_def.tutorials:
+        rst_file.write("- " + rst_link_label(url, title))
+        rst_file.write("\n\n")
+
+
+def write_properties_list(rst_file, class_def):
+    if not class_def.properties:
+        return
+    rst_file.write(rst_heading("Properties", "-"))
+    property_data = []
+    for property_def in class_def.properties.values():
+        type_rst = rst_type(property_def.type_def)
+        default = property_def.default
+        if default is not None:
+            default = rst_inline_code(default)
+        if default is not None and property_def.overridden:
+            property_data.append(
+                (type_rst, property_def.name, "{} *(parent override)*".format(default))
+            )
+        else:
+            reference = ":ref:`{0}<class_{1}_property_{0}>`".format(
+                property_def.name, class_def.name
+            )
+            property_data.append([type_rst, reference, default])
+    write_table(rst_file, property_data, True)
+
+
+def write_methods_list(rst_file, class_def):
+    if not class_def.methods:
+        return
+    rst_file.write(rst_heading("Methods", "-"))
+    method_data = []
+    for methods in class_def.methods.values():
+        for method_def in methods:
+            method_name = rst_reference_link("method", method_def.name)
+            method_parameters = rst_method_parameters(method_def)
+            method_signature = [
+                rst_type(method_def.return_type),
+                method_name + method_parameters,
+            ]
+            method_data.append(method_signature)
+    write_table(rst_file, method_data)
+
+
+def write_theme_properties_list(rst_file, class_def):
+    if not class_def.theme_items:
+        return
+    rst_file.write(rst_heading("Theme Properties", "-"))
+    theme_properties_data = []
+    for theme_item_def in class_def.theme_items.values():
+        default = theme_item_def.default
+        if default is not None:
+            default = rst_inline_code(default)
+        reference = ":ref:`{1}<class_{0}_theme_{2}_{1}>`".format(
+            class_def.name, theme_item_def.name, theme_item_def.data_type
+        )
+        theme_properties_data.append(
+            [rst_type(theme_item_def.type_def), reference, default]
+        )
+    write_table(rst_file, theme_properties_data, True)
+
+
+def write_signals(rst_file, class_def):
+    if not class_def.signals:
+        return
+    rst_file.write(rst_heading("Signals", "-"))
+    first = True
+    for signal in class_def.signals.values():
+        if first:
+            first = False
+        else:
+            rst_file.write(rst_line_separator())
+        rst_file.write(
+            ".. _class_{}_signal_{}:\n\n".format(class_def.name, signal.name)
+        )
+        rst_file.write("- {}\n\n".format(rst_signal(signal)))
+        if signal.description.strip():
+            rst_file.write(rst_text(signal.description))
+            rst_file.write("\n\n")
+
+
+def write_enums(rst_file, class_def):
+    if not class_def.enums:
+        return
+    rst_file.write(rst_heading("Enumerations", "-"))
+    first = True
+    for enum in class_def.enums.values():
+        if first:
+            first = False
+        else:
+            rst_file.write(rst_line_separator())
+        rst_file.write(".. _enum_{}_{}:\n\n".format(class_def.name, enum.name))
+        # Sphinx seems to divide the bullet list into individual <ul> tags
+        # if we weave the labels into it. As such I'll put them all above the list.
+        # Won't be perfect but better than making the list visually broken.
+        # As to why I'm not modifying the reference parser to directly link to the _enum label:
+        # If somebody gets annoyed enough to fix it, all existing references will magically improve.
+        for value in enum.values.values():
+            rst_file.write(
+                ".. _class_{}_constant_{}:\n\n".format(class_def.name, value.name)
+            )
+        rst_file.write("enum **{}**:\n\n".format(enum.name))
+        for value in enum.values.values():
+            rst_file.write("- **{}** = **{}**".format(value.name, value.value))
+            if value.text.strip():
+                rst_file.write(" --- " + rst_text(value.text))
+            rst_file.write("\n\n")
+
+
+def write_contants(rst_file, class_def):
+    if not class_def.constants:
+        return
+    rst_file.write(rst_heading("Constants", "-"))
+    # Place all constant labels above the list to prevent the list being visually broken,
+    # because Sphinx appears to divide the bullet list into individual <ul> tags
+    # if we weave the labels into it.
+    # TODO: Move label to each constant.
+    for constant in class_def.constants.values():
+        rst_file.write(
+            ".. _class_{}_constant_{}:\n\n".format(class_def.name, constant.name)
+        )
+    for constant in class_def.constants.values():
+        rst_file.write("- **{}** = **{}**".format(constant.name, constant.value))
+        if constant.text.strip():
+            rst_file.write(" --- " + rst_text(constant.text))
+        rst_file.write("\n\n")
+
+
+def write_property_descriptions(rst_file, class_def):
+    if all(p.overridden for p in class_def.properties.values()):
+        return
+    rst_file.write(rst_heading("Property Descriptions", "-"))
+    first = True
+    for property_def in class_def.properties.values():
+        if property_def.overridden:
+            continue
+        if first:
+            first = False
+        else:
+            rst_file.write(rst_line_separator())
+        rst_file.write(
+            ".. _class_{}_property_{}:\n\n".format(class_def.name, property_def.name)
+        )
+        rst_file.write(
+            "- {} **{}**\n\n".format(rst_type(property_def.type_def), property_def.name)
+        )
+        write_property_data(rst_file, property_def)
+        if property_def.text.strip():
+            rst_file.write(rst_text(property_def.text))
+            rst_file.write("\n\n")
+
+
+def write_method_descriptions(rst_file, class_def):
+    if not class_def.methods:
+        return
+    rst_file.write(rst_heading("Method Descriptions", "-"))
+    first_name = True
+    for methods in class_def.methods.values():
+        first_method = True
+        for method_def in methods:
+            if first_name:
+                first_name = False
+            else:
+                rst_file.write(rst_line_separator())
+            if first_method:
+                first_method = False
+                rst_file.write(
+                    ".. _class_{}_method_{}:\n\n".format(
+                        class_def.name, method_def.name
+                    )
+                )
+            rst_file.write(
+                "- {} {}\n\n".format(
+                    rst_type(method_def.return_type),
+                    rst_bold(method_def.name) + rst_method_parameters(method_def),
+                )
+            )
+            if method_def.description.strip():
+                rst_file.write(rst_text(method_def.description))
+                rst_file.write("\n\n")
+
+
+def write_theme_property_descriptions(rst_file, class_def):
+    if not class_def.theme_items:
+        return
+    rst_file.write(rst_heading("Theme Property Descriptions", "-"))
+    first = True
+    for theme_item_def in class_def.theme_items.values():
+        if first:
+            first = False
+        else:
+            rst_file.write(rst_line_separator())
+        rst_file.write(
+            ".. _class_{}_theme_{}_{}:\n\n".format(
+                class_def.name, theme_item_def.data_type, theme_item_def.name
+            )
+        )
+        rst_file.write(
+            "- {} **{}**\n\n".format(
+                rst_type(theme_item_def.type_def), theme_item_def.name
+            )
+        )
+        theme_item_data = []
+        if theme_item_def.default is not None:
+            theme_item_data.append(
+                ("*Default*", rst_inline_code(theme_item_def.default))
+            )
+        if theme_item_data:
+            write_table(rst_file, theme_item_data)
+        if theme_item_def.text.strip():
+            rst_file.write(rst_text(theme_item_def.text) + "\n\n")
+
+
+def write_footer(rst_file, class_def):
+    # Abbreviations are used to display tooltips on hover.
+    # Substitutions are used to add abbreviations.
+    # Method qualifiers.
+    rst_file.write(
+        ".. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`\n"
+    )
+    rst_file.write(
+        ".. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`\n"
+    )
+    rst_file.write(
+        ".. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`\n"
+    )
+
+
+def write_property_data(rst_file, property_def):
+    property_data = []
+    if property_def.default:
+        property_data.append(("*Default*", rst_inline_code(property_def.default)))
+    if property_def.setter and not property_def.setter.startswith("_"):
+        property_data.append(("*Setter*", property_def.setter + "(value)"))
+    if property_def.getter and not property_def.getter.startswith("_"):
+        property_data.append(("*Getter*", property_def.getter + "()"))
+    if property_data:
+        write_table(rst_file, property_data)
+
+
+def write_table(rst_file, data, remove_empty_columns=False):
+    if not data:
+        return
+    column_widths = calculate_column_widths(data)
+    row_separator = get_row_separator(column_widths, remove_empty_columns)
+    rst_file.write(row_separator)
+    for row in data:
+        row_text = "|"
+        for column, text in enumerate(row):
+            if column_widths[column] == 0 and remove_empty_columns:
+                continue
+            row_text += " " + (text or "").ljust(column_widths[column]) + " |"
+        row_text += "\n"
+        rst_file.write(row_text)
+        rst_file.write(row_separator)
+    rst_file.write("\n")
+
+
+def calculate_column_widths(data):
+    column_widths = [0] * len(data[0])
+    for row in data:
+        for column, text in enumerate(row):
+            text_length = len(text or "")
+            if text_length > column_widths[column]:
+                column_widths[column] = text_length
+    return column_widths
+
+
+def get_row_separator(column_widths, remove_empty_columns):
+    row_separator = ""
+    for column_width in column_widths:
+        if remove_empty_columns and column_width == 0:
+            continue
+        row_separator += "+" + "-" * (column_width + 2)
+    row_separator += "+\n"
+    return row_separator
+
+
+def rst_heading(heading, underline):
+    return heading + "\n" + (underline * len(heading)) + "\n\n"
+
+
+def rst_line_separator():
+    return "----\n\n"
+
+
+def rst_bold(text):
+    return "**{}**".format(text)
+
+
+def rst_italics(text):
+    return "*{}*".format(text)
+
+
+def rst_inline_code(code):
+    return "``{}``".format(code)
+
+
+def rst_class_reference_link(class_name):
+    if class_name not in class_defs:
+        rst_error("Unknown class '{}'".format(class_name))
+    return ":ref:`{0}<class_{0}>`".format(class_name)
+
+
+def rst_reference_link(component, name):
+    name_components = name.split(".")
+    if len(name_components) == 1:
+        class_name = current_class
+        component_name = name
+    elif len(name_components) == 2:
+        class_name, component_name = name_components
+    else:
+        rst_error("Bad reference: '{}'".format(name))
+        return name
+    class_name = find_reference_link(component, class_name, component_name)
+    if component == "member":
+        component = "property"
+    if class_name == current_class:
+        return ":ref:`{2}<class_{1}_{0}_{2}>`".format(
+            component, class_name, component_name
+        )
+    else:
+        return ":ref:`{1}.{2}<class_{1}_{0}_{2}>`".format(
+            component, class_name, component_name
+        )
+
+
+def find_reference_link(component, class_name, component_name):
+    if class_name not in class_defs:
+        rst_error("Unknown class '{}'".format(class_name))
+        return class_name
+    class_def = class_defs[class_name]
+    found = False
+    match component:
+        case "constant":
+            found = search_constants(class_def, component_name)
+            if not found:
+                class_def = class_defs["@GlobalScope"]
+                found = search_constants(class_def, component_name)
+        case "method":
+            found = component_name in class_def.methods
+        case "member":
+            found = component_name in class_def.properties
+        case "signal":
+            found = component_name in class_def.signals
+        case _:
+            rst_error("Unrecognised component: {}".format(component))
+    if not found:
+        rst_error("Unresolved {} '{}.{}'".format(component, class_name, component_name))
+        return class_name
+    return class_def.name
+
+
+def search_constants(class_def, constant_name):
+    if constant_name in class_def.constants:
+        return True
+    else:
+        for enum in class_def.enums.values():
+            if constant_name in enum.values:
+                return True
+    return False
+
+
+def rst_method_parameters(method_def):
+    vararg = method_def.qualifiers is not None and "vararg" in method_def.qualifiers
+    parameters = rst_parameters(method_def.parameters, vararg)
+    qualifiers = rst_qualifiers(method_def.qualifiers)
+    return " {}{}".format(parameters, qualifiers)
+
+
+def rst_qualifiers(qualifiers):
+    if qualifiers is None:
+        return ""
+    qualifier_text = ""
+    # Abbreviations are used to display tooltips on hover.
+    # Substitutions are used to add abbreviations.
+    # See `write_footer()` for method qualifier descriptions.
+    for qualifier in qualifiers.split():
+        qualifier_text += " |" + qualifier + "|"
+    return qualifier_text
+
+
+def rst_signal(signal_def):
+    return "**{}** {}".format(signal_def.name, rst_parameters(signal_def.parameters))
+
+
+def rst_parameters(parameters, vararg=False):
+    parameter_string = ""
+    first = True
+    for parameter in parameters:
+        if first:
+            first = False
+            parameter_string += " "
+        else:
+            parameter_string += ", "
+        parameter_string += rst_type(parameter.type_def)
+        parameter_string += " "
+        parameter_string += parameter.name
+        if parameter.default is not None:
+            parameter_string += "={}".format(parameter.default)
+    if vararg:
+        if parameters:
+            parameter_string += ", ..."
+        else:
+            parameter_string += " ..."
+    parameter_string += " "
+    return "**(**" + parameter_string + "**)**"
+
+
+def rst_link_label(url, title):
+    # http(s)://docs.rebeltoolbox.com/<langcode>/<tag>/path/to/page.html(#fragment-tag)
+    docs_rebeltoolbox_com = re.compile(
+        r"^http(?:s)?://docs\.rebeltoolbox\.com/(?:[a-zA-Z0-9.\-_]*)/(?:[a-zA-Z0-9.\-_]*)/(.*)\.html(#.*)?$"
+    )
+    docs_match = docs_rebeltoolbox_com.search(url)
+    if docs_match:
+        return rst_internal_link(docs_match)
+    else:
+        return rst_external_link(url, title)
+
+
+def rst_internal_link(docs_match):
+    doc = docs_match.group(1)
+    tag = docs_match.group(2)
+    if tag is not None:
+        return "`{1} <../{0}.html{1}>`_ in :doc:`../{0}`".format(doc, tag)
+    else:
+        return ":doc:`../{}`".format(doc)
+
+
+def rst_external_link(url, title):
+    if title:
+        return "`" + title + " <" + url + ">`__"
+    else:
+        return "`" + url + " <" + url + ">`__"
+
+
+def rst_type(type_def):
+    if type_def.enum is not None:
+        return rst_enum(type_def.enum)
+    elif type_def.type == "void":
+        return "void"
+    else:
+        return rst_class_reference_link(type_def.type)
+
+
+def rst_text(text):
+    text = textwrap.dedent(text).strip()
+    text = add_line_breaks(text)
+    result = ""
+    remaining_text = text
+    while remaining_text:
+        (plain_text, tag, remaining_text) = extract_next_tag(remaining_text)
+        result += escape_special_characters(plain_text)
+        result += rst_tag(tag)
+        if (
+            result.endswith("`")
+            and remaining_text
+            and (remaining_text[0].isalnum() or remaining_text[0] == "(")
+        ):
+            result += "\ "
+    return result
+
+
+def add_line_breaks(text):
     # Linebreak in XML becomes two line breaks in RST; unless inside a [codeblock].
     lines = text.splitlines()
     result = []
@@ -794,455 +842,248 @@ def rstize_text(text, state):  # type: (str, State) -> str
     for line in lines:
         if line.startswith("[codeblock]"):
             inside_codeblock = True
-            result.append(line)
-            continue
-        if line.startswith("[/codeblock]"):
+        elif line.startswith("[/codeblock]"):
             inside_codeblock = False
-        if inside_codeblock:
-            result.append("    " + line)
-        else:
-            result.append(line)
+        result.append(line)
+        if not inside_codeblock:
             result.append("")
-    text = "\n".join(result[:-1])
-
     if inside_codeblock:
-        print_error(
-            "[codeblock] without a closing tag, file: {}".format(state.current_class),
-            state,
-        )
+        rst_error("[codeblock] without a closing tag")
         return ""
+    return "\n".join(result[:-1])
 
-    next_brac_pos = text.find("[")
-    text = escape_rst(text, next_brac_pos)
 
-    # Handle [tags]
-    inside_code = False
-    inside_url = False
-    url_has_name = False
-    url_link = ""
-    pos = 0
-    tag_depth = 0
-    previous_pos = 0
-    while True:
-        pos = text.find("[", pos)
-        if inside_url and (pos > previous_pos):
-            url_has_name = True
-        if pos == -1:
-            break
+def escape_special_characters(text):
+    escaped_text = ""
+    for character in text:
+        if character == "*":
+            escaped_text += "\*"
+        elif character == "\\":
+            escaped_text += "\\\\"
+        else:
+            escaped_text += character
+    position = escaped_text.find("_")
+    while position != -1:
+        if not text[position + 1].isalnum():
+            escaped_text = escaped_text[:position] + "\_" + escaped_text[position + 1 :]
+        position = escaped_text.find("_", position + 2)
+    return escaped_text
 
-        endq_pos = text.find("]", pos + 1)
-        if endq_pos == -1:
-            break
 
-        pre_text = text[:pos]
-        post_text = text[endq_pos + 1 :]
-        tag_text = text[pos + 1 : endq_pos]
+def extract_next_tag(text):
+    (before_text, tag_name, after_text) = extract_next_tag_name(text)
+    tag = TagDef(tag_name)
+    if tag_name == "":
+        return (before_text, None, after_text)
+    if tag_name.startswith("url"):
+        tag.name = "url"
+        tag.value = tag_name[4:]
+    block_tags = [
+        "b",
+        "code",
+        "codeblock",
+        "i",
+        "url",
+    ]
+    if tag.name in block_tags:
+        (tag.contents, after_text) = extract_tag_contents(tag.name, after_text)
+    else:
+        (tag.name, tag.value) = extract_tag_value(tag_name)
+    return (before_text, tag, after_text)
 
-        escape_post = False
 
-        if tag_text in state.classes:
-            if tag_text == state.current_class:
-                # We don't want references to the same class
-                tag_text = "``{}``".format(tag_text)
-            else:
-                tag_text = make_type(tag_text, state)
-            escape_post = True
-        else:  # command
-            cmd = tag_text
-            space_pos = tag_text.find(" ")
-            if cmd == "/codeblock":
-                tag_text = ""
-                tag_depth -= 1
-                inside_code = False
-                # Strip newline if the tag was alone on one
-                if pre_text[-1] == "\n":
-                    pre_text = pre_text[:-1]
-            elif cmd == "/code":
-                tag_text = "``"
-                tag_depth -= 1
-                inside_code = False
-                escape_post = True
-            elif inside_code:
-                tag_text = "[" + tag_text + "]"
-            elif cmd.find("html") == 0:
-                param = tag_text[space_pos + 1 :]
-                tag_text = param
-            elif (
-                cmd.startswith("method")
-                or cmd.startswith("member")
-                or cmd.startswith("signal")
-                or cmd.startswith("constant")
-            ):
-                param = tag_text[space_pos + 1 :]
+def extract_next_tag_name(text):
+    tag_open = text.find("[")
+    tag_close = text.find("]", tag_open)
+    if tag_open == -1 or tag_close == -1:
+        return (text, "", "")
+    before_text = text[:tag_open]
+    tag_name = text[tag_open + 1 : tag_close]
+    after_text = text[tag_close + 1 :]
+    return (before_text, tag_name, after_text)
 
-                if param.find(".") != -1:
-                    ss = param.split(".")
-                    if len(ss) > 2:
-                        print_error(
-                            "Bad reference: '{}', file: {}".format(
-                                param, state.current_class
-                            ),
-                            state,
-                        )
-                    class_param, method_param = ss
 
-                else:
-                    class_param = state.current_class
-                    method_param = param
+def extract_tag_value(tag_name):
+    components = tag_name.split()
+    if len(components) == 1:
+        return (tag_name, "")
+    if len(components) != 2:
+        rst_error("Failed to extract tag value from {}".format(tag_name))
+        exit(1)
+    return (components[0], components[1])
 
-                ref_type = ""
-                if class_param in state.classes:
-                    class_def = state.classes[class_param]
-                    if cmd.startswith("method"):
-                        if method_param not in class_def.methods:
-                            print_error(
-                                "Unresolved method '{}', file: {}".format(
-                                    param, state.current_class
-                                ),
-                                state,
-                            )
-                        ref_type = "_method"
 
-                    elif cmd.startswith("member"):
-                        if method_param not in class_def.properties:
-                            print_error(
-                                "Unresolved member '{}', file: {}".format(
-                                    param, state.current_class
-                                ),
-                                state,
-                            )
-                        ref_type = "_property"
-
-                    elif cmd.startswith("signal"):
-                        if method_param not in class_def.signals:
-                            print_error(
-                                "Unresolved signal '{}', file: {}".format(
-                                    param, state.current_class
-                                ),
-                                state,
-                            )
-                        ref_type = "_signal"
-
-                    elif cmd.startswith("constant"):
-                        found = False
-
-                        # Search in the current class
-                        search_class_defs = [class_def]
-
-                        if param.find(".") == -1:
-                            # Also search in @GlobalScope as a last resort if no class was specified
-                            search_class_defs.append(state.classes["@GlobalScope"])
-
-                        for search_class_def in search_class_defs:
-                            if method_param in search_class_def.constants:
-                                class_param = search_class_def.name
-                                found = True
-
-                            else:
-                                for enum in search_class_def.enums.values():
-                                    if method_param in enum.values:
-                                        class_param = search_class_def.name
-                                        found = True
-                                        break
-
-                        if not found:
-                            print_error(
-                                "Unresolved constant '{}', file: {}".format(
-                                    param, state.current_class
-                                ),
-                                state,
-                            )
-                        ref_type = "_constant"
-
-                else:
-                    print_error(
-                        "Unresolved type reference '{}' in method reference '{}', file: {}".format(
-                            class_param, param, state.current_class
-                        ),
-                        state,
-                    )
-
-                repl_text = method_param
-                if class_param != state.current_class:
-                    repl_text = "{}.{}".format(class_param, method_param)
-                tag_text = ":ref:`{}<class_{}{}_{}>`".format(
-                    repl_text, class_param, ref_type, method_param
-                )
-                escape_post = True
-            elif cmd.find("image=") == 0:
-                tag_text = ""  # '![](' + cmd[6:] + ')'
-            elif cmd.find("url=") == 0:
-                url_link = cmd[4:]
-                tag_text = "`"
-                tag_depth += 1
-                inside_url = True
-                url_has_name = False
-            elif cmd == "/url":
-                tag_text = ("" if url_has_name else url_link) + " <" + url_link + ">`__"
-                tag_depth -= 1
-                escape_post = True
-                inside_url = False
-                url_has_name = False
-            elif cmd == "center":
-                tag_depth += 1
-                tag_text = ""
-            elif cmd == "/center":
-                tag_depth -= 1
-                tag_text = ""
-            elif cmd == "codeblock":
-                tag_depth += 1
-                tag_text = "::\n"
-                inside_code = True
-            elif cmd == "br":
-                # Make a new paragraph instead of a linebreak, rst is not so linebreak friendly
-                tag_text = "\n\n"
-                # Strip potential leading spaces
-                while post_text[0] == " ":
-                    post_text = post_text[1:]
-            elif cmd == "i" or cmd == "/i":
-                if cmd == "/i":
-                    tag_depth -= 1
-                else:
-                    tag_depth += 1
-                tag_text = "*"
-            elif cmd == "b" or cmd == "/b":
-                if cmd == "/b":
-                    tag_depth -= 1
-                else:
-                    tag_depth += 1
-                tag_text = "**"
-            elif cmd == "u" or cmd == "/u":
-                if cmd == "/u":
-                    tag_depth -= 1
-                else:
-                    tag_depth += 1
-                tag_text = ""
-            elif cmd == "code":
-                tag_text = "``"
-                tag_depth += 1
-                inside_code = True
-            elif cmd.startswith("enum "):
-                tag_text = make_enum(cmd[5:], state)
-                escape_post = True
-            else:
-                tag_text = make_type(tag_text, state)
-                escape_post = True
-
-        # Properly escape things like `[Node]s`
-        if (
-            escape_post
-            and post_text
-            and (post_text[0].isalnum() or post_text[0] == "(")
-        ):  # not punctuation, escape
-            post_text = "\ " + post_text
-
-        next_brac_pos = post_text.find("[", 0)
-        iter_pos = 0
-        while not inside_code:
-            iter_pos = post_text.find("*", iter_pos, next_brac_pos)
-            if iter_pos == -1:
-                break
-            post_text = post_text[:iter_pos] + "\*" + post_text[iter_pos + 1 :]
-            iter_pos += 2
-
-        iter_pos = 0
-        while not inside_code:
-            iter_pos = post_text.find("_", iter_pos, next_brac_pos)
-            if iter_pos == -1:
-                break
-            if not post_text[
-                iter_pos + 1
-            ].isalnum():  # don't escape within a snake_case word
-                post_text = post_text[:iter_pos] + "\_" + post_text[iter_pos + 1 :]
-                iter_pos += 2
-            else:
-                iter_pos += 1
-
-        text = pre_text + tag_text + post_text
-        pos = len(pre_text) + len(tag_text)
-        previous_pos = pos
-
-    if tag_depth > 0:
-        print_error(
-            "Tag depth mismatch: too many/little open/close tags, file: {}".format(
-                state.current_class
-            ),
-            state,
+def extract_tag_contents(tag_name, text):
+    tag_contents = ""
+    next_tag_name = ""
+    remaining_text = text
+    while next_tag_name != ("/" + tag_name) and remaining_text:
+        (before_text, next_tag_name, remaining_text) = extract_next_tag_name(
+            remaining_text
         )
-
-    return text
-
-
-def format_table(
-    f, data, remove_empty_columns=False
-):  # type: (TextIO, Iterable[Tuple[str, ...]]) -> None
-    if len(data) == 0:
-        return
-
-    column_sizes = [0] * len(data[0])
-    for row in data:
-        for i, text in enumerate(row):
-            text_length = len(text or "")
-            if text_length > column_sizes[i]:
-                column_sizes[i] = text_length
-
-    sep = ""
-    for size in column_sizes:
-        if size == 0 and remove_empty_columns:
-            continue
-        sep += "+" + "-" * (size + 2)
-    sep += "+\n"
-    f.write(sep)
-
-    for row in data:
-        row_text = "|"
-        for i, text in enumerate(row):
-            if column_sizes[i] == 0 and remove_empty_columns:
-                continue
-            row_text += " " + (text or "").ljust(column_sizes[i]) + " |"
-        row_text += "\n"
-        f.write(row_text)
-        f.write(sep)
-    f.write("\n")
+        tag_contents += before_text
+        if next_tag_name != ("/" + tag_name):
+            tag_contents += "[" + next_tag_name + "]"
+    if next_tag_name != ("/" + tag_name):
+        rst_error("Failed to find closing tag [\{}] in {}".format(tag_name, text))
+        exit(1)
+    return (tag_contents, remaining_text)
 
 
-def make_type(t, state):  # type: (str, State) -> str
-    if t in state.classes:
-        return ":ref:`{0}<class_{0}>`".format(t)
-    print_error("Unresolved type '{}', file: {}".format(t, state.current_class), state)
-    return t
+def rst_tag(tag):
+    if tag is None:
+        return ""
+    if tag.name == current_class:
+        return rst_inline_code(tag.name)
+    match tag.name:
+        case "b":
+            return rst_bold(rst_text(tag.contents))
+        case "code":
+            return rst_inline_code(tag.contents)
+        case "codeblock":
+            return rst_codeblock(tag.contents)
+        case "constant" | "member" | "method" | "signal":
+            return rst_reference_link(tag.name, tag.value)
+        case "enum":
+            return rst_enum(tag.value)
+        case "i":
+            return rst_italics(rst_text(tag.contents))
+        case "url":
+            return rst_url(tag.value, rst_text(tag.contents))
+        case _:
+            return rst_class_reference_link(tag.name)
 
 
-def make_enum(t, state):  # type: (str, State) -> str
-    p = t.find(".")
-    if p >= 0:
-        c = t[0:p]
-        e = t[p + 1 :]
+def rst_codeblock(contents):
+    if contents.startswith("\n"):
+        contents = contents[1:]
+    if contents.endswith("\n"):
+        contents = contents[:-1]
+    indent = "    "
+    codeblock = "::\n\n" + textwrap.indent(contents, indent, lambda line: True)
+    if contents.endswith("\n"):
+        codeblock += indent
+    return codeblock
+
+
+def rst_enum(enum):
+    enum_components = enum.split(".")
+    if len(enum_components) == 1:
+        class_name = current_class
+        enum_name = enum
+    elif len(enum_components) == 2:
+        class_name, enum_name = enum_components
+    else:
+        rst_error("Bad enum reference: '{}'".format(enum))
+        return enum
+    if class_name.startswith("_"):
+        class_name = class_name[1:]
+    elif class_name == "Variant":
         # Variant enums live in GlobalScope but still use periods.
-        if c == "Variant":
-            c = "@GlobalScope"
-            e = "Variant." + e
-    else:
-        c = state.current_class
-        e = t
-        if c in state.classes and e not in state.classes[c].enums:
-            c = "@GlobalScope"
-
-    if not c in state.classes and c.startswith("_"):
-        c = c[1:]  # Remove the underscore prefix
-
-    if c in state.classes and e in state.classes[c].enums:
-        return ":ref:`{0}<enum_{1}_{0}>`".format(e, c)
-
-    # Don't fail for `Vector3.Axis`, as this enum is a special case which is expected not to be resolved.
-    if "{}.{}".format(c, e) != "Vector3.Axis":
-        print_error(
-            "Unresolved enum '{}', file: {}".format(t, state.current_class), state
-        )
-
-    return t
+        class_name = "@GlobalScope"
+        enum_name = "Variant." + enum_name
+    if enum_name not in class_defs[class_name].enums:
+        class_name = "@GlobalScope"
+        if enum_name not in class_defs[class_name].enums:
+            # Don't fail for `Vector3.Axis`
+            # TODO: Fix resolution failure.
+            if enum != "Vector3.Axis":
+                rst_error("Unresolved enum '{}'".format(enum))
+            return enum
+    return ":ref:`{1}<enum_{0}_{1}>`".format(class_name, enum_name)
 
 
-def make_method_signature(
-    class_def, method_def, make_ref, state
-):  # type: (ClassDef, Union[MethodDef, SignalDef], bool, State) -> Tuple[str, str]
-    ret_type = " "
-
-    ref_type = "signal"
-    if isinstance(method_def, MethodDef):
-        ret_type = method_def.return_type.to_rst(state)
-        ref_type = "method"
-
-    out = ""
-
-    if make_ref:
-        out += ":ref:`{0}<class_{1}_{2}_{0}>` ".format(
-            method_def.name, class_def.name, ref_type
-        )
-    else:
-        out += "**{}** ".format(method_def.name)
-
-    out += "**(**"
-    for i, arg in enumerate(method_def.parameters):
-        if i > 0:
-            out += ", "
-        else:
-            out += " "
-
-        out += "{} {}".format(arg.type_name.to_rst(state), arg.name)
-
-        if arg.default_value is not None:
-            out += "=" + arg.default_value
-
-    if (
-        isinstance(method_def, MethodDef)
-        and method_def.qualifiers is not None
-        and "vararg" in method_def.qualifiers
-    ):
-        if len(method_def.parameters) > 0:
-            out += ", ..."
-        else:
-            out += " ..."
-
-    out += " **)**"
-
-    if isinstance(method_def, MethodDef) and method_def.qualifiers is not None:
-        # Use substitutions for abbreviations. This is used to display tooltips on hover.
-        # See `make_footer()` for descriptions.
-        for qualifier in method_def.qualifiers.split():
-            out += " |" + qualifier + "|"
-
-    return ret_type, out
+def rst_url(link, label):
+    if not label:
+        label = link
+    return "`" + label + " <" + link + ">`__"
 
 
-def make_heading(title, underline):  # type: (str, str) -> str
-    return title + "\n" + (underline * len(title)) + "\n\n"
+class ClassDef:
+    def __init__(self, name):
+        self.name = name
+        self.inherits = None
+        self.brief_description = None
+        self.description = None
+        self.tutorials = []
+        self.methods = OrderedDict()
+        self.properties = OrderedDict()
+        self.signals = OrderedDict()
+        self.constants = OrderedDict()
+        self.enums = OrderedDict()
+        self.theme_items = OrderedDict()
 
 
-def make_footer():  # type: () -> str
-    # Generate reusable abbreviation substitutions.
-    # This way, we avoid bloating the generated rST with duplicate abbreviations.
-    # fmt: off
-    return (
-        ".. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`\n"
-        ".. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`\n"
-        ".. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`\n"
-    )
-    # fmt: on
+class MethodDef:
+    def __init__(self, name, qualifiers, return_type, parameters, description):
+        self.name = name
+        self.qualifiers = qualifiers
+        self.return_type = return_type
+        self.parameters = parameters
+        self.description = description
 
 
-def make_link(url, title):  # type: (str, str) -> str
-    match = REBEL_DOCS_PATTERN.search(url)
-    if match:
-        groups = match.groups()
-        if match.lastindex == 2:
-            # Doc reference with fragment identifier: emit direct link to section with reference to page, for example:
-            # `#calling-javascript-from-script in Exporting For Web`
-            return (
-                "`"
-                + groups[1]
-                + " <../"
-                + groups[0]
-                + ".html"
-                + groups[1]
-                + ">`_ in :doc:`../"
-                + groups[0]
-                + "`"
-            )
-            # Commented out alternative: Instead just emit:
-            # `Subsection in Exporting For Web`
-            # return "`Subsection <../" + groups[0] + ".html" + groups[1] + ">`__ in :doc:`../" + groups[0] + "`"
-        elif match.lastindex == 1:
-            # Doc reference, for example:
-            # `Math`
-            return ":doc:`../" + groups[0] + "`"
-    else:
-        # External link, for example:
-        # `http://enet.bespin.org/usergroup0.html`
-        if title != "":
-            return "`" + title + " <" + url + ">`__"
-        else:
-            return "`" + url + " <" + url + ">`__"
+class ParameterDef:
+    def __init__(self, name, type_def, default):
+        self.name = name
+        self.type_def = type_def
+        self.default = default
+
+
+class PropertyDef:
+    def __init__(self, name, type_def, setter, getter, default, overridden, text):
+        self.name = name
+        self.type_def = type_def
+        self.setter = setter
+        self.getter = getter
+        self.default = default
+        self.overridden = overridden
+        self.text = text
+
+
+class SignalDef:
+    def __init__(self, name, parameters, description):
+        self.name = name
+        self.parameters = parameters
+        self.description = description
+
+
+class ConstantDef:
+    def __init__(self, name, value, text):
+        self.name = name
+        self.value = value
+        self.text = text
+
+
+class EnumDef:
+    def __init__(self, name):
+        self.name = name
+        self.values = OrderedDict()
+
+
+class ThemeItemDef:
+    def __init__(self, name, data_type, type_def, default, text):
+        self.name = name
+        self.data_type = data_type
+        self.type_def = type_def
+        self.default = default
+        self.text = text
+
+
+class TypeDef:
+    def __init__(self, element):
+        self.type = "void"
+        self.enum = enum = None
+        if element is not None:
+            self.type = element.get("type")
+            self.enum = element.get("enum")
+
+
+class TagDef:
+    def __init__(self, name):
+        self.name = name
+        self.value = ""
+        self.contents = ""
 
 
 if __name__ == "__main__":
