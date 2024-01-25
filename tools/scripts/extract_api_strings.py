@@ -37,7 +37,7 @@ EXTRACT_TAGS = [
     "link",
 ]
 
-# Additional heading strings added by make_rst.py.
+# Additional heading strings added by rst_from_xml.py.
 HEADING_STRINGS = [
     "Description",
     "Tutorials",
@@ -155,7 +155,7 @@ def create_translation_template(unique_strings_filepaths, output):
     with open(output, "w", encoding="utf8") as f:
         f.write(HEADER)
         for string in HEADING_STRINGS:
-            f.write("#: tools/scripts/make_rst.py\n")
+            f.write("#: tools/scripts/rst_from_xml.py\n")
             f.write('msgid "{}"\n'.format(string))
             f.write('msgstr ""\n\n')
         for string in unique_strings_filepaths:

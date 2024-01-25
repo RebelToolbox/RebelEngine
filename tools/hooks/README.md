@@ -23,7 +23,7 @@ Additional hooks can be added by updating the `hooks` variable.
 There are currently three hooks:
 - pre-commit-clang-format
 - pre-commit-black
-- pre-commit-make-rst
+- pre-commit-documentation-checks
 
 ## `pre-commit-clang-format`
 
@@ -40,10 +40,10 @@ If there is a difference, use the version used by CI: currently version 17.
 [`black`](https://pypi.org/project/black/)
 Python style checks to all Python and SCons files.
 
-## `pre-commit-make-rst`
+## `pre-commit-documentation-checks`
 
-`pre-commit-make-rst` checks the class reference syntax.
-`pre-commit-make-rst` performs a dry run of `tools/scripts/make_rst.py`.
+`pre-commit-make-documentation-checks` checks the API XML documentation syntax.
+`pre-commit-make-documentation-checks` performs a dry run of `tools/scripts/rst_from_xml.py`.
 
 ## `pre-commit-style-check`
 
