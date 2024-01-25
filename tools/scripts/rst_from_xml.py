@@ -871,23 +871,20 @@ def escape_special_characters(text):
 
 def extract_next_tag(text):
     (before_text, tag_name, after_text) = extract_next_tag_name(text)
-    tag = TagDef(tag_name)
     if tag_name == "":
         return (before_text, None, after_text)
-    if tag_name.startswith("url"):
-        tag.name = "url"
-        tag.value = tag_name[4:]
+    tag = TagDef(tag_name)
+    (tag.name, tag.value) = extract_tag_value(tag_name)
     block_tags = [
         "b",
         "code",
         "codeblock",
         "i",
+        "img",
         "url",
     ]
     if tag.name in block_tags:
         (tag.contents, after_text) = extract_tag_contents(tag.name, after_text)
-    else:
-        (tag.name, tag.value) = extract_tag_value(tag_name)
     return (before_text, tag, after_text)
 
 
@@ -902,14 +899,18 @@ def extract_next_tag_name(text):
     return (before_text, tag_name, after_text)
 
 
-def extract_tag_value(tag_name):
-    components = tag_name.split()
+def extract_tag_value(tag):
+    components = tag.split(" ", 1)
     if len(components) == 1:
-        return (tag_name, "")
-    if len(components) != 2:
-        rst_error("Failed to extract tag value from {}".format(tag_name))
+        # Look for tag name with shorthand "=" option.
+        components = tag.split("=")
+        if len(components) == 1:
+            return (tag, "")
+        if len(components) == 2:
+            return components
+        rst_error("Failed to extract tag value from {}".format(tag))
         exit(1)
-    return (components[0], components[1])
+    return components
 
 
 def extract_tag_contents(tag_name, text):
@@ -947,6 +948,8 @@ def rst_tag(tag):
             return rst_enum(tag.value)
         case "i":
             return rst_italics(rst_text(tag.contents))
+        case "img":
+            return rst_image(tag.contents, tag.value)
         case "url":
             return rst_url(tag.value, rst_text(tag.contents))
         case _:
@@ -990,6 +993,56 @@ def rst_enum(enum):
                 rst_error("Unresolved enum '{}'".format(enum))
             return enum
     return ":ref:`{1}<enum_{0}_{1}>`".format(class_name, enum_name)
+
+
+def rst_image(image_file, image_options):
+    image = ".. figure:: {}".format(image_file)
+    if not image_options:
+        return image
+    options = parse_options(image_options)
+    for option, value in options.items():
+        match option:
+            case "alt" | "height" | "width" | "scale" | "align" | "target":
+                image += rst_image_option(option, value)
+            case "caption":
+                # Added at the end
+                pass
+            case _:
+                rst_error("Unrecognised image option {}={}".format(option, value))
+    if "caption" in options:
+        image += "\n\n    {}".format(options["caption"])
+    return image
+
+
+def rst_image_option(option, value):
+    return "\n    :{}: {}".format(option, value)
+
+
+def parse_options(options_string):
+    if "=" not in options_string:
+        # Shorthand option
+        return get_dimensions(options_string)
+    options = OrderedDict()
+    while options_string:
+        option, value = options_string.split("=", 1)
+        if value.startswith('"'):
+            end_value = value.find('"', 1)
+            options_string = value[end_value + 1 :].strip()
+            value = value[1:end_value]
+        else:
+            value, options_string = value.split(" ", 1)
+        options[option] = value
+    return options
+
+
+def get_dimensions(value):
+    dimensions = value.split("x")
+    if len(dimensions) > 2:
+        rst_error("Unrecognised dimensions string: {}").format(value)
+        return {}
+    if len(dimensions) == 1:
+        return {"width": value}
+    return {"width": dimensions[0], "height": dimensions[1]}
 
 
 def rst_url(link, label):
