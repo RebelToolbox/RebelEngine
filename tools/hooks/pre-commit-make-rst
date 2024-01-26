@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Git pre-commit hook that checks the class reference syntax using make_rst.py.
-
-python3 tools/scripts/make_rst.py docs modules --dry-run
