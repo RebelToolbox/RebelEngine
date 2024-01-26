@@ -43,7 +43,7 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="x" type="int" />
             <argument index="1" name="y" type="int" />
             <description>
-                Returns the coordinate (subtile column and row) of the autotile variation in the tileset. Returns a zero vector if the cell doesn't have autotiling.
+                Returns the coordinate (sub-tile column and row) of the autotile variation in the tileset. Returns a zero vector if the cell doesn't have autotiling.
             </description>
         </method>
         <method name="get_cellv" qualifiers="const">
@@ -136,7 +136,7 @@ SPDX-License-Identifier: MIT
             <description>
                 Sets the tile index for the given cell.
                 An index of [code]-1[/code] clears the cell.
-                Optionally, the tile can also be flipped, transposed, or given autotile coordinates. The autotile coordinate refers to the column and row of the subtile.
+                Optionally, the tile can also be flipped, transposed, or given autotile coordinates. The autotile coordinate refers to the column and row of the sub-tile.
                 [b]Note:[/b] Data such as navigation polygons and collision shapes are not immediately updated for performance reasons.
                 If you need these to be immediately updated, you can call [method update_dirty_quadrants].
                 Overriding this method also overrides it internally, allowing custom logic to be implemented when tiles are placed/removed:
@@ -159,7 +159,7 @@ SPDX-License-Identifier: MIT
             <description>
                 Sets the tile index for the cell given by a Vector2.
                 An index of [code]-1[/code] clears the cell.
-                Optionally, the tile can also be flipped, transposed, or given autotile coordinates. The autotile coordinate refers to the column and row of the subtile.
+                Optionally, the tile can also be flipped, transposed, or given autotile coordinates. The autotile coordinate refers to the column and row of the sub-tile.
                 [b]Note:[/b] Data such as navigation polygons and collision shapes are not immediately updated for performance reasons.
                 If you need these to be immediately updated, you can call [method update_dirty_quadrants].
             </description>

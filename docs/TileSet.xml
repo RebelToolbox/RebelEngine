@@ -56,8 +56,8 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="id" type="int" />
             <argument index="1" name="coord" type="Vector2" />
             <description>
-                Returns the bitmask of the subtile from an autotile given its coordinates.
-                The value is the sum of the values in [enum AutotileBindings] present in the subtile (e.g. a value of 5 means the bitmask has bindings in both the top left and top right).
+                Returns the bitmask of the sub-tile from an autotile given its coordinates.
+                The value is the sum of the values in [enum AutotileBindings] present in the sub-tile (e.g. a value of 5 means the bitmask has bindings in both the top left and top right).
             </description>
         </method>
         <method name="autotile_get_bitmask_mode" qualifiers="const">
@@ -71,8 +71,8 @@ SPDX-License-Identifier: MIT
             <return type="Vector2" />
             <argument index="0" name="id" type="int" />
             <description>
-                Returns the subtile that's being used as an icon in an atlas/autotile given its coordinates.
-                The subtile defined as the icon will be used as a fallback when the atlas/autotile's bitmask information is incomplete. It will also be used to represent it in the TileSet editor.
+                Returns the sub-tile that's being used as an icon in an atlas/autotile given its coordinates.
+                The sub-tile defined as the icon will be used as a fallback when the atlas/autotile's bitmask information is incomplete. It will also be used to represent it in the TileSet editor.
             </description>
         </method>
         <method name="autotile_get_light_occluder" qualifiers="const">
@@ -80,7 +80,7 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="id" type="int" />
             <argument index="1" name="coord" type="Vector2" />
             <description>
-                Returns the light occluder of the subtile from an atlas/autotile given its coordinates.
+                Returns the light occluder of the sub-tile from an atlas/autotile given its coordinates.
             </description>
         </method>
         <method name="autotile_get_navigation_polygon" qualifiers="const">
@@ -88,21 +88,21 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="id" type="int" />
             <argument index="1" name="coord" type="Vector2" />
             <description>
-                Returns the navigation polygon of the subtile from an atlas/autotile given its coordinates.
+                Returns the navigation polygon of the sub-tile from an atlas/autotile given its coordinates.
             </description>
         </method>
         <method name="autotile_get_size" qualifiers="const">
             <return type="Vector2" />
             <argument index="0" name="id" type="int" />
             <description>
-                Returns the size of the subtiles in an atlas/autotile.
+                Returns the size of the sub-tiles in an atlas/autotile.
             </description>
         </method>
         <method name="autotile_get_spacing" qualifiers="const">
             <return type="int" />
             <argument index="0" name="id" type="int" />
             <description>
-                Returns the spacing between subtiles of the atlas/autotile.
+                Returns the spacing between sub-tiles of the atlas/autotile.
             </description>
         </method>
         <method name="autotile_get_subtile_priority">
@@ -110,8 +110,8 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="id" type="int" />
             <argument index="1" name="coord" type="Vector2" />
             <description>
-                Returns the priority of the subtile from an autotile given its coordinates.
-                When more than one subtile has the same bitmask value, one of them will be picked randomly for drawing. Its priority will define how often it will be picked.
+                Returns the priority of the sub-tile from an autotile given its coordinates.
+                When more than one sub-tile has the same bitmask value, one of them will be picked randomly for drawing. Its priority will define how often it will be picked.
             </description>
         </method>
         <method name="autotile_get_z_index">
@@ -119,7 +119,7 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="id" type="int" />
             <argument index="1" name="coord" type="Vector2" />
             <description>
-                Returns the drawing index of the subtile from an atlas/autotile given its coordinates.
+                Returns the drawing index of the sub-tile from an atlas/autotile given its coordinates.
             </description>
         </method>
         <method name="autotile_set_bitmask">
@@ -128,8 +128,8 @@ SPDX-License-Identifier: MIT
             <argument index="1" name="bitmask" type="Vector2" />
             <argument index="2" name="flag" type="int" />
             <description>
-                Sets the bitmask of the subtile from an autotile given its coordinates.
-                The value is the sum of the values in [enum AutotileBindings] present in the subtile (e.g. a value of 5 means the bitmask has bindings in both the top left and top right).
+                Sets the bitmask of the sub-tile from an autotile given its coordinates.
+                The value is the sum of the values in [enum AutotileBindings] present in the sub-tile (e.g. a value of 5 means the bitmask has bindings in both the top left and top right).
             </description>
         </method>
         <method name="autotile_set_bitmask_mode">
@@ -145,8 +145,8 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="id" type="int" />
             <argument index="1" name="coord" type="Vector2" />
             <description>
-                Sets the subtile that will be used as an icon in an atlas/autotile given its coordinates.
-                The subtile defined as the icon will be used as a fallback when the atlas/autotile's bitmask information is incomplete. It will also be used to represent it in the TileSet editor.
+                Sets the sub-tile that will be used as an icon in an atlas/autotile given its coordinates.
+                The sub-tile defined as the icon will be used as a fallback when the atlas/autotile's bitmask information is incomplete. It will also be used to represent it in the TileSet editor.
             </description>
         </method>
         <method name="autotile_set_light_occluder">
@@ -155,7 +155,7 @@ SPDX-License-Identifier: MIT
             <argument index="1" name="light_occluder" type="OccluderPolygon2D" />
             <argument index="2" name="coord" type="Vector2" />
             <description>
-                Sets the light occluder of the subtile from an atlas/autotile given its coordinates.
+                Sets the light occluder of the sub-tile from an atlas/autotile given its coordinates.
             </description>
         </method>
         <method name="autotile_set_navigation_polygon">
@@ -164,7 +164,7 @@ SPDX-License-Identifier: MIT
             <argument index="1" name="navigation_polygon" type="NavigationPolygon" />
             <argument index="2" name="coord" type="Vector2" />
             <description>
-                Sets the navigation polygon of the subtile from an atlas/autotile given its coordinates.
+                Sets the navigation polygon of the sub-tile from an atlas/autotile given its coordinates.
             </description>
         </method>
         <method name="autotile_set_size">
@@ -172,7 +172,7 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="id" type="int" />
             <argument index="1" name="size" type="Vector2" />
             <description>
-                Sets the size of the subtiles in an atlas/autotile.
+                Sets the size of the sub-tiles in an atlas/autotile.
             </description>
         </method>
         <method name="autotile_set_spacing">
@@ -180,7 +180,7 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="id" type="int" />
             <argument index="1" name="spacing" type="int" />
             <description>
-                Sets the spacing between subtiles of the atlas/autotile.
+                Sets the spacing between sub-tiles of the atlas/autotile.
             </description>
         </method>
         <method name="autotile_set_subtile_priority">
@@ -189,8 +189,8 @@ SPDX-License-Identifier: MIT
             <argument index="1" name="coord" type="Vector2" />
             <argument index="2" name="priority" type="int" />
             <description>
-                Sets the priority of the subtile from an autotile given its coordinates.
-                When more than one subtile has the same bitmask value, one of them will be picked randomly for drawing. Its priority will define how often it will be picked.
+                Sets the priority of the sub-tile from an autotile given its coordinates.
+                When more than one sub-tile has the same bitmask value, one of them will be picked randomly for drawing. Its priority will define how often it will be picked.
             </description>
         </method>
         <method name="autotile_set_z_index">
@@ -199,7 +199,7 @@ SPDX-License-Identifier: MIT
             <argument index="1" name="coord" type="Vector2" />
             <argument index="2" name="z_index" type="int" />
             <description>
-                Sets the drawing index of the subtile from an atlas/autotile given its coordinates.
+                Sets the drawing index of the sub-tile from an atlas/autotile given its coordinates.
             </description>
         </method>
         <method name="clear">
