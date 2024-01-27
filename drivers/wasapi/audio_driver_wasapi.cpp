@@ -58,45 +58,38 @@ const IID IID_IAudioCaptureClient    = __uuidof(IAudioCaptureClient);
 static bool default_render_device_changed  = false;
 static bool default_capture_device_changed = false;
 
+// Microsoft COM Interfaces don't declare virtual destructors.
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+#elif defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnon-virtual-dtor"
+#endif
+
 class CMMNotificationClient : public IMMNotificationClient {
-    LONG _cRef;
-    IMMDeviceEnumerator* _pEnumerator;
-
 public:
-    CMMNotificationClient() : _cRef(1), _pEnumerator(NULL) {}
-
-    virtual ~CMMNotificationClient() {
-        if ((_pEnumerator) != NULL) {
-            (_pEnumerator)->Release();
-            (_pEnumerator) = NULL;
-        }
-    }
+    // IUnknown interface methods.
+    // CMMNotificationClient is not implemented as a COM Object, therefore
+    // these should never be called, but their definition is required.
 
     ULONG STDMETHODCALLTYPE AddRef() {
-        return InterlockedIncrement(&_cRef);
+        // Dummy return value.
+        return 2UL;
     }
 
     ULONG STDMETHODCALLTYPE Release() {
-        ULONG ulRef = InterlockedDecrement(&_cRef);
-        if (0 == ulRef) {
-            delete this;
-        }
-        return ulRef;
+        // Dummy return value.
+        return 1UL;
     }
 
     HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, VOID** ppvInterface) {
-        if (IID_IUnknown == riid) {
-            AddRef();
-            *ppvInterface = (IUnknown*)this;
-        } else if (__uuidof(IMMNotificationClient) == riid) {
-            AddRef();
-            *ppvInterface = (IMMNotificationClient*)this;
-        } else {
-            *ppvInterface = NULL;
-            return E_NOINTERFACE;
-        }
-        return S_OK;
+        // Never return the interface.
+        *ppvInterface = NULL;
+        return E_NOINTERFACE;
     }
+
+    // IMMNotificationClient interface methods.
 
     HRESULT STDMETHODCALLTYPE OnDeviceAdded(LPCWSTR pwstrDeviceId) {
         return S_OK;
@@ -120,7 +113,6 @@ public:
                 default_capture_device_changed = true;
             }
         }
-
         return S_OK;
     }
 
@@ -129,6 +121,13 @@ public:
         return S_OK;
     }
 };
+
+// Enable -Wnon-virtual-dtor again.
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(__clang__)
+#pragma clang diagnostic pop
+#endif
 
 static CMMNotificationClient notif_client;
 
@@ -996,4 +995,4 @@ AudioDriverWASAPI::AudioDriverWASAPI() {
     exit_thread   = false;
 }
 
-#endif
+#endif // WASAPI_ENABLED
