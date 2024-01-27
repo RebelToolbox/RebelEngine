@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Git pre-commit hook that checks the API XML documentation spelling and syntax.
+
+# Set exit on error.
+set -e
+
+echo "Checking spelling..."
+if ! codespell                           \
+    -I tools/codespell-ignore-words.txt  \
+    -x tools/codespell-ignore-lines.txt  \
+    docs modules/*/docs
+then
+    echo "Spelling errors found."
+    echo "Please fix the spelling errors and try again."
+    exit 1
+else
+    echo "No spelling mistakes found."
+fi
+
+python3 tools/scripts/make_rst.py docs modules --dry-run
+

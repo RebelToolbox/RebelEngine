@@ -22,6 +22,7 @@ jobs:
           sudo apt-get install -y \
           recode \
           dos2unix \
+          codespell \
           clang-format-${{ env.CLANG_FORMAT_VERSION }}
           sudo update-alternatives --remove-all clang-format
           sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-${{ env.CLANG_FORMAT_VERSION }} 100
@@ -60,6 +61,13 @@ jobs:
           npm run lint
           npm run docs -- -d dry-run
 
-      - name: Documentation checks
+      - name: Spelling checks (codespell)
+        run: |
+          codespell                           \
+          -I tools/codespell-ignore-words.txt \
+          -x tools/codespell-ignore-lines.txt \
+          docs modules/*/docs
+
+      - name: Documentation syntax checks
         run: |
           tools/scripts/make_rst.py --dry-run docs modules
