@@ -70,4 +70,4 @@ jobs:
 
       - name: Documentation syntax checks
         run: |
-          tools/scripts/make_rst.py --dry-run docs modules
+          tools/scripts/rst_from_xml.py --dry-run docs modules

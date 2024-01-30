@@ -18,5 +18,4 @@ else
     echo "No spelling mistakes found."
 fi
 
-python3 tools/scripts/make_rst.py docs modules --dry-run
-
+python3 tools/scripts/rst_from_xml.py docs modules --dry-run

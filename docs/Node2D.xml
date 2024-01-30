@@ -29,7 +29,7 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="point" type="Vector2" />
             <description>
                 Returns the angle between the node and the [code]point[/code] in radians.
-                [url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/img/node2d_get_angle_to.png]Illustration of the returned angle.[/url]
+                [img caption="Illustration of the returned angle"]/img/node2d_get_angle_to.png[/img]
             </description>
         </method>
         <method name="get_relative_transform_to_parent" qualifiers="const">

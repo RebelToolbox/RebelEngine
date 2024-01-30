@@ -270,7 +270,7 @@ SPDX-License-Identifier: MIT
                 - 1.0: Linear
                 - Greater than 1.0 (exclusive): Ease in
                 [/codeblock]
-                [url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/img/ease_cheatsheet.png]ease() curve values cheatsheet[/url]
+                [img caption="ease() curve values cheatsheet"]/img/ease_cheatsheet.png[/img]
                 See also [method smoothstep]. If you need to perform more advanced transitions, use [Tween] or [AnimationPlayer].
             </description>
         </method>
@@ -961,7 +961,7 @@ SPDX-License-Identifier: MIT
                 smoothstep(0, 2, 2.0) # Returns 1.0
                 [/codeblock]
                 Compared to [method ease] with a curve value of [code]-1.6521[/code], [method smoothstep] returns the smoothest possible curve with no sudden changes in the derivative. If you need to perform more advanced transitions, use [Tween] or [AnimationPlayer].
-                [url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/img/smoothstep_ease_comparison.png]Comparison between smoothstep() and ease(x, -1.6521) return values[/url]
+                [img caption="Comparison between smoothstep() and ease(x, -1.6521) return values"]/img/smoothstep_ease_comparison.png[/img]
             </description>
         </method>
         <method name="sqrt">
