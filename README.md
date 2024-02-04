@@ -1,7 +1,5 @@
-# Rebel Engine
-
 <p align="center">
-  <img src="rebel-logo.svg" width="256" alt="Rebel Engine logo"/>
+  <img src="rebel-engine.png" alt="Rebel Engine"/>
 </p>
 
 [![Translation status](https://hosted.weblate.org/widget/rebel-toolbox/svg-badge.svg)](https://hosted.weblate.org/engage/rebel-toolbox/)

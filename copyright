@@ -48,9 +48,11 @@ Copyright: 2022-Present, Rebel Engine contributors
  2007-2014, Juan Linietsky, Ariel Manzur
 License: Expat
 
-Files: ./rebel-logo.svg
-Comment: Rebel Logo
-Copyright: 2023, Daniela Ortner
+Files: ./tools/images/rebel*
+ ./rebel-engine.png
+ ./main/splash.png
+Comment: Rebel Engine images
+Copyright: 2023-2024, Daniela Ortner
 License: CC-BY-4.0
 
 Files: ./core/math/convex_hull.cpp
