@@ -1,0 +1,127 @@
+name: Update Translations
+on:
+  workflow_dispatch:
+  schedule:
+    # Check for documentation updates every day at midnight.
+    - cron: '0 0 * * *'
+
+jobs:
+  update-translations:
+    name: Update Translations
+    # Don't run on forks.
+    if: github.repository == 'RebelToolbox/RebelEngine'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Rebel Engine
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          #Install dependencies
+          sudo apt-get update
+          sudo apt-get install -y gettext
+
+      - name: Create branch
+        run: |
+          #Create branch
+          git fetch origin
+          echo "::group::git switch main"
+          if ! git switch main 2>/dev/null ; then
+            git switch -c main origin/main
+          fi
+          echo "::endgroup::"
+          echo "::group::git switch -c update-translations"
+          if git ls-remote --exit-code                    \
+            --heads origin refs/heads/update-translations \
+            >/dev/null
+          then
+            echo "Use existing branch"
+            git switch -c update-translations origin/update-translations
+            echo "existing_branch=yes" >> "$GITHUB_ENV"
+          else
+            echo "Create new branch"
+            git switch -c update-translations
+          fi
+          echo "::endgroup::"
+
+      - name: Update existing branch
+        if: env.existing_branch == 'yes'
+        run: |
+          #Update existing branch
+          echo "::group::git rebase main"
+          if ! git rebase main >/dev/null ; then
+            git rebase --abort
+            echo "Rebase merge conflict!"
+            echo "Previous changes need to be overwritten."
+            echo "recreate_branch=yes" >> "$GITHUB_ENV"
+          else
+            git push -f
+          fi
+          echo "::endgroup::"
+
+      - name: Recreate branch
+        if: env.recreate_branch == 'yes'
+        run: |
+          git switch main
+          git branch -D update-translations
+          git switch -c update-translations
+          git push -u -f origin update-translations
+
+      - name: Update API Translations
+        run: |
+          #Update API Translations
+          cd translations
+          make
+          cd ..
+
+      - name: Update Editor Translations
+        run: |
+          #Update API Translations
+          cd editor/translations
+          make
+          cd ../..
+
+      - name: Check for changes
+        run: |
+          #git diff
+          if git diff --exit-code ; then
+            echo "No files have changed."
+          else
+            echo "Translation files have been updated."
+            echo "has_changes=yes" >> "$GITHUB_ENV"
+          fi
+
+      - name: Create commit
+        if: env.has_changes == 'yes'
+        run: |
+          #Create commit
+          git config user.name "Rebel Documentation"
+          git config user.email "158277139+RebelDocumentation@users.noreply.github.com"
+          echo "Adding files"
+          git add .
+          echo "Creating commit"
+          git commit -m "Update Translations"
+          echo "Pushing changes"
+          git push -u origin update-translations
+
+      - name: Create Pull Request
+        if: env.has_changes == 'yes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          #Create Pull Request
+          if gh pr list --state open --head update-translations \
+            --json state | grep state
+          then
+            echo "Existing Pull Request updated"
+            echo "Please merge the Pull Request"
+          else
+            gh pr create                                                                \
+              --base main                                                               \
+              --head update-translations                                                \
+              --title "Update Translations"                                             \
+              --body "Updates the API and editor translations with the latest changes."
+            echo "New Pull Request created"
+          fi
