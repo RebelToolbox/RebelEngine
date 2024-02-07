@@ -24,43 +24,43 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.9-dev\n"
 
-#: tools/scripts/make_rst.py
+#: tools/scripts/rst_from_xml.py
 msgid "Description"
 msgstr "Descripció"
 
-#: tools/scripts/make_rst.py
+#: tools/scripts/rst_from_xml.py
 msgid "Tutorials"
 msgstr "Tutorials"
 
-#: tools/scripts/make_rst.py
+#: tools/scripts/rst_from_xml.py
 msgid "Properties"
 msgstr "Propietats"
 
-#: tools/scripts/make_rst.py
+#: tools/scripts/rst_from_xml.py
 msgid "Methods"
 msgstr "Mètodes"
 
-#: tools/scripts/make_rst.py
+#: tools/scripts/rst_from_xml.py
 msgid "Theme Properties"
 msgstr "Propietats del tema"
 
-#: tools/scripts/make_rst.py
+#: tools/scripts/rst_from_xml.py
 msgid "Signals"
 msgstr "Senyals"
 
-#: tools/scripts/make_rst.py
+#: tools/scripts/rst_from_xml.py
 msgid "Enumerations"
 msgstr "Enumeracions"
 
-#: tools/scripts/make_rst.py
+#: tools/scripts/rst_from_xml.py
 msgid "Constants"
 msgstr "Constants"
 
-#: tools/scripts/make_rst.py
+#: tools/scripts/rst_from_xml.py
 msgid "Property Descriptions"
 msgstr "Descripcions de la Propietat"
 
-#: tools/scripts/make_rst.py
+#: tools/scripts/rst_from_xml.py
 msgid "Method Descriptions"
 msgstr "Descripcions dels Mètodes"
 
@@ -424,8 +424,8 @@ msgid ""
 "- 1.0: Linear\n"
 "- Greater than 1.0 (exclusive): Ease in\n"
 "[/codeblock]\n"
-"[url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/"
-"img/ease_cheatsheet.png]ease() curve values cheatsheet[/url]\n"
+"[img caption=\"ease() curve values cheatsheet\"]/img/ease_cheatsheet.png[/"
+"img]\n"
 "See also [method smoothstep]. If you need to perform more advanced "
 "transitions, use [Tween] or [AnimationPlayer]."
 msgstr ""
@@ -1126,9 +1126,8 @@ msgid ""
 "[method smoothstep] returns the smoothest possible curve with no sudden "
 "changes in the derivative. If you need to perform more advanced transitions, "
 "use [Tween] or [AnimationPlayer].\n"
-"[url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/"
-"img/smoothstep_ease_comparison.png]Comparison between smoothstep() and "
-"ease(x, -1.6521) return values[/url]"
+"[img caption=\"Comparison between smoothstep() and ease(x, -1.6521) return "
+"values\"]/img/smoothstep_ease_comparison.png[/img]"
 msgstr ""
 
 #: modules/gdscript/docs/@GDScript.xml
@@ -13722,8 +13721,7 @@ msgid ""
 "[b]Note:[/b] In a boolean context, a Color will evaluate to [code]false[/"
 "code] if it's equal to [code]Color(0, 0, 0, 1)[/code] (opaque black). "
 "Otherwise, a Color will always evaluate to [code]true[/code].\n"
-"[url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/"
-"img/color_constants.png]Color constants cheatsheet[/url]"
+"[img caption=\"Color constants cheatsheet\"]/img/color_constants.png[/img]"
 msgstr ""
 
 #: docs/Color.xml
@@ -36268,8 +36266,8 @@ msgstr ""
 #: docs/Node2D.xml
 msgid ""
 "Returns the angle between the node and the [code]point[/code] in radians.\n"
-"[url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/"
-"img/node2d_get_angle_to.png]Illustration of the returned angle.[/url]"
+"[img caption=\"Illustration of the returned angle\"]/img/node2d_get_angle_to."
+"png[/img]"
 msgstr ""
 
 #: docs/Node2D.xml
@@ -57581,8 +57579,8 @@ msgstr ""
 
 #: docs/TileMap.xml
 msgid ""
-"Returns the coordinate (subtile column and row) of the autotile variation in "
-"the tileset. Returns a zero vector if the cell doesn't have autotiling."
+"Returns the coordinate (sub-tile column and row) of the autotile variation "
+"in the tileset. Returns a zero vector if the cell doesn't have autotiling."
 msgstr ""
 
 #: docs/TileMap.xml
@@ -57646,8 +57644,8 @@ msgid ""
 "Sets the tile index for the given cell.\n"
 "An index of [code]-1[/code] clears the cell.\n"
 "Optionally, the tile can also be flipped, transposed, or given autotile "
-"coordinates. The autotile coordinate refers to the column and row of the "
-"subtile.\n"
+"coordinates. The autotile coordinate refers to the column and row of the sub-"
+"tile.\n"
 "[b]Note:[/b] Data such as navigation polygons and collision shapes are not "
 "immediately updated for performance reasons.\n"
 "If you need these to be immediately updated, you can call [method "
@@ -57668,8 +57666,8 @@ msgid ""
 "Sets the tile index for the cell given by a Vector2.\n"
 "An index of [code]-1[/code] clears the cell.\n"
 "Optionally, the tile can also be flipped, transposed, or given autotile "
-"coordinates. The autotile coordinate refers to the column and row of the "
-"subtile.\n"
+"coordinates. The autotile coordinate refers to the column and row of the sub-"
+"tile.\n"
 "[b]Note:[/b] Data such as navigation polygons and collision shapes are not "
 "immediately updated for performance reasons.\n"
 "If you need these to be immediately updated, you can call [method "
@@ -57917,9 +57915,9 @@ msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Returns the bitmask of the subtile from an autotile given its coordinates.\n"
+"Returns the bitmask of the sub-tile from an autotile given its coordinates.\n"
 "The value is the sum of the values in [enum AutotileBindings] present in the "
-"subtile (e.g. a value of 5 means the bitmask has bindings in both the top "
+"sub-tile (e.g. a value of 5 means the bitmask has bindings in both the top "
 "left and top right)."
 msgstr ""
 
@@ -57929,52 +57927,54 @@ msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Returns the subtile that's being used as an icon in an atlas/autotile given "
+"Returns the sub-tile that's being used as an icon in an atlas/autotile given "
 "its coordinates.\n"
-"The subtile defined as the icon will be used as a fallback when the atlas/"
+"The sub-tile defined as the icon will be used as a fallback when the atlas/"
 "autotile's bitmask information is incomplete. It will also be used to "
 "represent it in the TileSet editor."
 msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Returns the light occluder of the subtile from an atlas/autotile given its "
+"Returns the light occluder of the sub-tile from an atlas/autotile given its "
 "coordinates."
 msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Returns the navigation polygon of the subtile from an atlas/autotile given "
+"Returns the navigation polygon of the sub-tile from an atlas/autotile given "
 "its coordinates."
 msgstr ""
 
 #: docs/TileSet.xml
-msgid "Returns the size of the subtiles in an atlas/autotile."
+msgid "Returns the size of the sub-tiles in an atlas/autotile."
 msgstr ""
 
 #: docs/TileSet.xml
-msgid "Returns the spacing between subtiles of the atlas/autotile."
-msgstr ""
+#, fuzzy
+msgid "Returns the spacing between sub-tiles of the atlas/autotile."
+msgstr "Retorna el sinus hiperbòlic invers del paràmetre."
 
 #: docs/TileSet.xml
 msgid ""
-"Returns the priority of the subtile from an autotile given its coordinates.\n"
-"When more than one subtile has the same bitmask value, one of them will be "
+"Returns the priority of the sub-tile from an autotile given its "
+"coordinates.\n"
+"When more than one sub-tile has the same bitmask value, one of them will be "
 "picked randomly for drawing. Its priority will define how often it will be "
 "picked."
 msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Returns the drawing index of the subtile from an atlas/autotile given its "
+"Returns the drawing index of the sub-tile from an atlas/autotile given its "
 "coordinates."
 msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Sets the bitmask of the subtile from an autotile given its coordinates.\n"
+"Sets the bitmask of the sub-tile from an autotile given its coordinates.\n"
 "The value is the sum of the values in [enum AutotileBindings] present in the "
-"subtile (e.g. a value of 5 means the bitmask has bindings in both the top "
+"sub-tile (e.g. a value of 5 means the bitmask has bindings in both the top "
 "left and top right)."
 msgstr ""
 
@@ -57984,44 +57984,44 @@ msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Sets the subtile that will be used as an icon in an atlas/autotile given its "
-"coordinates.\n"
-"The subtile defined as the icon will be used as a fallback when the atlas/"
+"Sets the sub-tile that will be used as an icon in an atlas/autotile given "
+"its coordinates.\n"
+"The sub-tile defined as the icon will be used as a fallback when the atlas/"
 "autotile's bitmask information is incomplete. It will also be used to "
 "represent it in the TileSet editor."
 msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Sets the light occluder of the subtile from an atlas/autotile given its "
+"Sets the light occluder of the sub-tile from an atlas/autotile given its "
 "coordinates."
 msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Sets the navigation polygon of the subtile from an atlas/autotile given its "
+"Sets the navigation polygon of the sub-tile from an atlas/autotile given its "
 "coordinates."
 msgstr ""
 
 #: docs/TileSet.xml
-msgid "Sets the size of the subtiles in an atlas/autotile."
+msgid "Sets the size of the sub-tiles in an atlas/autotile."
 msgstr ""
 
 #: docs/TileSet.xml
-msgid "Sets the spacing between subtiles of the atlas/autotile."
+msgid "Sets the spacing between sub-tiles of the atlas/autotile."
 msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Sets the priority of the subtile from an autotile given its coordinates.\n"
-"When more than one subtile has the same bitmask value, one of them will be "
+"Sets the priority of the sub-tile from an autotile given its coordinates.\n"
+"When more than one sub-tile has the same bitmask value, one of them will be "
 "picked randomly for drawing. Its priority will define how often it will be "
 "picked."
 msgstr ""
 
 #: docs/TileSet.xml
 msgid ""
-"Sets the drawing index of the subtile from an atlas/autotile given its "
+"Sets the drawing index of the sub-tile from an atlas/autotile given its "
 "coordinates."
 msgstr ""
 
@@ -59740,8 +59740,8 @@ msgid ""
 "don't know which transition and easing to pick, you can try different [enum "
 "TransitionType] constants with [constant EASE_IN_OUT], and use the one that "
 "looks best.\n"
-"[url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/"
-"img/tween_cheatsheet.png]Tween easing and transition types cheatsheet[/url]\n"
+"[img caption=\"Tween easing and transition types cheatsheet\"]/img/"
+"tween_cheatsheet.png[/img]\n"
 "[b]Note:[/b] Tween methods will return [code]false[/code] if the requested "
 "operation cannot be completed."
 msgstr ""
@@ -60804,8 +60804,8 @@ msgid ""
 "[code]Vector2.DOWN.angle()[/code] will return [code]PI / 2[/code] (a quarter "
 "turn, or 90 degrees), and [code]Vector2(1, -1).angle()[/code] will return "
 "[code]-PI / 4[/code] (a negative eighth turn, or -45 degrees).\n"
-"[url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/"
-"img/vector2_angle.png]Illustration of the returned angle.[/url]\n"
+"[img caption=\"Illustration of the returned angle\"]/img/vector2_angle.png[/"
+"img]\n"
 "Equivalent to the result of [method @GDScript.atan2] when called with the "
 "vector's [member y] and [member x] as parameters: [code]atan2(y, x)[/code]."
 msgstr ""
@@ -60821,8 +60821,8 @@ msgstr ""
 msgid ""
 "Returns the angle between the line connecting the two points and the X axis, "
 "in radians.\n"
-"[url=https://raw.githubusercontent.com/RebelToolbox/RebelDocumentation/main/"
-"img/vector2_angle_to_point.png]Illustration of the returned angle.[/url]"
+"[img caption=\"Illustration of the returned angle\"]/img/"
+"vector2_angle_to_point.png[/img]"
 msgstr ""
 
 #: docs/Vector2.xml
@@ -69880,7 +69880,7 @@ msgid ""
 "signals is the same id as used in [member ARVRController.controller_id].\n"
 "You can use one or all of these methods to allow your game or app to support "
 "a wider or narrower set of devices and input methods, or to allow more "
-"advanced interations with more advanced devices."
+"advanced interactions with more advanced devices."
 msgstr ""
 
 #: modules/webxr/docs/WebXRInterface.xml
