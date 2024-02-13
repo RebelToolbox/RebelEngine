@@ -83,17 +83,7 @@ def update_version(module_version_string=""):
     f.write("#define VERSION_MAJOR " + str(version.major) + "\n")
     f.write("#define VERSION_MINOR " + str(version.minor) + "\n")
     f.write("#define VERSION_PATCH " + str(version.patch) + "\n")
-    # For dev snapshots (alpha, beta, RC, etc.) we do not commit status change to Git,
-    # so this define provides a way to override it without having to modify the source.
-    godot_status = str(version.status)
-    if os.getenv("GODOT_VERSION_STATUS") != None:
-        godot_status = str(os.getenv("GODOT_VERSION_STATUS"))
-        print(
-            "Using version status '{}', overriding the original '{}'.".format(
-                godot_status, str(version.status)
-            )
-        )
-    f.write('#define VERSION_STATUS "' + godot_status + '"\n')
+    f.write('#define VERSION_STATUS "' + str(version.status) + '"\n')
     f.write('#define VERSION_BUILD "' + str(build_name) + '"\n')
     f.write(
         '#define VERSION_MODULE_CONFIG "'
