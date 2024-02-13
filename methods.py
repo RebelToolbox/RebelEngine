@@ -193,12 +193,13 @@ def detect_modules(search_path, recursive=False):
         modules[module_name] = module_path
 
     def is_engine(path):
-        # Prevent recursively detecting modules in self and other
-        # Godot sources when using `custom_modules` build option.
-        version_path = os.path.join(path, "version.py")
-        if os.path.exists(version_path):
-            with open(version_path) as f:
-                if 'short_name = "godot"' in f.read():
+        # If `path` contains the file `version.py`, and
+        # it contains a line 'short_name = "rebel"',
+        # then we assume the path is the Rebel root folder.
+        version_file_path = os.path.join(path, "version.py")
+        if os.path.exists(version_file_path):
+            with open(version_file_path) as version_file:
+                if 'short_name = "rebel"' in version_file.read():
                     return True
         return False
 
@@ -553,8 +554,8 @@ def detect_visual_c_compiler_version(tools_env):
     # "x86"           Native 32 bit compiler
     # "x86_amd64"     32 bit Cross Compiler for 64 bit
 
-    # There are other architectures, but Godot does not support them currently, so this function does not detect arm/amd64_arm
-    # and similar architectures/compilers
+    # There are other architectures, but we don't support them currently; so
+    # this function does not detect arm, arm64 and similar architecture compilers.
 
     # Set chosen compiler to "not detected"
     vc_chosen_compiler_index = -1
