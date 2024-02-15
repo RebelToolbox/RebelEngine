@@ -43,7 +43,7 @@ def create_engine_file(env, target, source, externs):
 
 
 def create_template_zip(env, js, wasm, extra):
-    binary_name = "godot.tools" if env["tools"] else "godot"
+    binary_name = "rebel.tools" if env["tools"] else "rebel"
     zip_dir = env.Dir("#bin/.javascript_zip")
     in_files = [
         js,
@@ -68,21 +68,21 @@ def create_template_zip(env, js, wasm, extra):
         # HTML
         html = "#tools/dist/html/editor.html"
         cache = [
-            "godot.tools.html",
+            "rebel.tools.html",
             "offline.html",
-            "godot.tools.js",
-            "godot.tools.worker.js",
-            "godot.tools.audio.worklet.js",
+            "rebel.tools.js",
+            "rebel.tools.worker.js",
+            "rebel.tools.audio.worklet.js",
             "logo.svg",
             "favicon.png",
         ]
-        opt_cache = ["godot.tools.wasm"]
+        opt_cache = ["rebel.tools.wasm"]
         subst_dict = {
-            "@GODOT_VERSION@": get_build_version(),
-            "@GODOT_NAME@": "GodotEngine",
-            "@GODOT_CACHE@": json.dumps(cache),
-            "@GODOT_OPT_CACHE@": json.dumps(opt_cache),
-            "@GODOT_OFFLINE_PAGE@": "offline.html",
+            "@REBEL_VERSION@": get_build_version(),
+            "@REBEL_NAME@": "RebelEngine",
+            "@REBEL_CACHE@": json.dumps(cache),
+            "@REBEL_OPT_CACHE@": json.dumps(opt_cache),
+            "@REBEL_OFFLINE_PAGE@": "offline.html",
         }
         html = env.Substfile(
             target="#bin/rebel${PROGSUFFIX}.html", source=html, SUBST_DICT=subst_dict
@@ -113,7 +113,7 @@ def create_template_zip(env, js, wasm, extra):
         in_files.append(service_worker)
         out_files.append(zip_dir.File(binary_name + ".service.worker.js"))
         in_files.append("#tools/dist/html/offline-export.html")
-        out_files.append(zip_dir.File("godot.offline.html"))
+        out_files.append(zip_dir.File("rebel.offline.html"))
 
     zip_files = env.InstallAs(out_files, in_files)
     env.Zip(
