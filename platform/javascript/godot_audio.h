@@ -13,31 +13,31 @@ extern "C" {
 
 #include "stddef.h"
 
-extern int godot_audio_is_available();
-extern int godot_audio_has_worklet();
-extern int godot_audio_has_script_processor();
-extern int godot_audio_init(
+extern int rebel_audio_is_available();
+extern int rebel_audio_has_worklet();
+extern int rebel_audio_has_script_processor();
+extern int rebel_audio_init(
     int* p_mix_rate,
     int p_latency,
     void (*_state_cb)(int),
     void (*_latency_cb)(float)
 );
-extern void godot_audio_resume();
+extern void rebel_audio_resume();
 
-extern int godot_audio_capture_start();
-extern void godot_audio_capture_stop();
+extern int rebel_audio_capture_start();
+extern void rebel_audio_capture_stop();
 
 // Worklet
-typedef int32_t GodotAudioState[4];
-extern int godot_audio_worklet_create(int p_channels);
-extern void godot_audio_worklet_start(
+typedef int32_t AudioState[4];
+extern int rebel_audio_worklet_create(int p_channels);
+extern void rebel_audio_worklet_start(
     float* p_in_buf,
     int p_in_size,
     float* p_out_buf,
     int p_out_size,
-    GodotAudioState p_state
+    AudioState p_state
 );
-extern void godot_audio_worklet_start_no_threads(
+extern void rebel_audio_worklet_start_no_threads(
     float* p_out_buf,
     int p_out_size,
     void (*p_out_cb)(int p_pos, int p_frames),
@@ -45,13 +45,13 @@ extern void godot_audio_worklet_start_no_threads(
     int p_in_size,
     void (*p_in_cb)(int p_pos, int p_frames)
 );
-extern int godot_audio_worklet_state_add(
-    GodotAudioState p_state,
+extern int rebel_audio_worklet_state_add(
+    AudioState p_state,
     int p_idx,
     int p_value
 );
-extern int godot_audio_worklet_state_get(GodotAudioState p_state, int p_idx);
-extern int godot_audio_worklet_state_wait(
+extern int rebel_audio_worklet_state_get(AudioState p_state, int p_idx);
+extern int rebel_audio_worklet_state_wait(
     int32_t* p_state,
     int p_idx,
     int32_t p_expected,
@@ -59,8 +59,8 @@ extern int godot_audio_worklet_state_wait(
 );
 
 // Script
-extern int godot_audio_script_create(int* p_buffer_size, int p_channels);
-extern void godot_audio_script_start(
+extern int rebel_audio_script_create(int* p_buffer_size, int p_channels);
+extern void rebel_audio_script_start(
     float* p_in_buf,
     int p_in_size,
     float* p_out_buf,

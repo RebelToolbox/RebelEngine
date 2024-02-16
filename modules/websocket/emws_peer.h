@@ -32,7 +32,7 @@ typedef void (*WSOnClose)(
 );
 typedef void (*WSOnError)(void* p_ref);
 
-extern int godot_js_websocket_create(
+extern int rebel_js_websocket_create(
     void* p_ref,
     const char* p_url,
     const char* p_proto,
@@ -41,19 +41,19 @@ extern int godot_js_websocket_create(
     WSOnError p_on_error,
     WSOnClose p_on_close
 );
-extern int godot_js_websocket_send(
+extern int rebel_js_websocket_send(
     int p_id,
     const uint8_t* p_buf,
     int p_buf_len,
     int p_raw
 );
-extern int godot_js_websocket_buffered_amount(int p_id);
-extern void godot_js_websocket_close(
+extern int rebel_js_websocket_buffered_amount(int p_id);
+extern void rebel_js_websocket_close(
     int p_id,
     int p_code,
     const char* p_reason
 );
-extern void godot_js_websocket_destroy(int p_id);
+extern void rebel_js_websocket_destroy(int p_id);
 }
 
 class EMWSPeer : public WebSocketPeer {

@@ -61,7 +61,7 @@ void WebRTCPeerConnectionJS::_on_data_channel(void* p_obj, int p_id) {
 }
 
 void WebRTCPeerConnectionJS::close() {
-    godot_js_rtc_pc_close(_js_id);
+    rebel_js_rtc_pc_close(_js_id);
     _conn_state = STATE_CLOSED;
 }
 
@@ -69,7 +69,7 @@ Error WebRTCPeerConnectionJS::create_offer() {
     ERR_FAIL_COND_V(_conn_state != STATE_NEW, FAILED);
 
     _conn_state = STATE_CONNECTING;
-    godot_js_rtc_pc_offer_create(
+    rebel_js_rtc_pc_offer_create(
         _js_id,
         this,
         &_on_session_created,
@@ -79,7 +79,7 @@ Error WebRTCPeerConnectionJS::create_offer() {
 }
 
 Error WebRTCPeerConnectionJS::set_local_description(String type, String sdp) {
-    godot_js_rtc_pc_local_description_set(
+    rebel_js_rtc_pc_local_description_set(
         _js_id,
         type.utf8().get_data(),
         sdp.utf8().get_data(),
@@ -94,7 +94,7 @@ Error WebRTCPeerConnectionJS::set_remote_description(String type, String sdp) {
         ERR_FAIL_COND_V(_conn_state != STATE_NEW, FAILED);
         _conn_state = STATE_CONNECTING;
     }
-    godot_js_rtc_pc_remote_description_set(
+    rebel_js_rtc_pc_remote_description_set(
         _js_id,
         type.utf8().get_data(),
         sdp.utf8().get_data(),
@@ -110,7 +110,7 @@ Error WebRTCPeerConnectionJS::add_ice_candidate(
     int sdpMlineIndexName,
     String sdpName
 ) {
-    godot_js_rtc_pc_ice_candidate_add(
+    rebel_js_rtc_pc_ice_candidate_add(
         _js_id,
         sdpMidName.utf8().get_data(),
         sdpMlineIndexName,
@@ -121,13 +121,13 @@ Error WebRTCPeerConnectionJS::add_ice_candidate(
 
 Error WebRTCPeerConnectionJS::initialize(Dictionary p_config) {
     if (_js_id) {
-        godot_js_rtc_pc_destroy(_js_id);
+        rebel_js_rtc_pc_destroy(_js_id);
         _js_id = 0;
     }
     _conn_state = STATE_NEW;
 
     String config = JSON::print(p_config);
-    _js_id        = godot_js_rtc_pc_create(
+    _js_id        = rebel_js_rtc_pc_create(
         config.utf8().get_data(),
         this,
         &_on_connection_state_changed,
@@ -144,7 +144,7 @@ Ref<WebRTCDataChannel> WebRTCPeerConnectionJS::create_data_channel(
     ERR_FAIL_COND_V(_conn_state != STATE_NEW, NULL);
 
     String config = JSON::print(p_channel_config);
-    int id        = godot_js_rtc_pc_datachannel_create(
+    int id        = rebel_js_rtc_pc_datachannel_create(
         _js_id,
         p_channel.utf8().get_data(),
         config.utf8().get_data()
@@ -173,7 +173,7 @@ WebRTCPeerConnectionJS::WebRTCPeerConnectionJS() {
 WebRTCPeerConnectionJS::~WebRTCPeerConnectionJS() {
     close();
     if (_js_id) {
-        godot_js_rtc_pc_destroy(_js_id);
+        rebel_js_rtc_pc_destroy(_js_id);
         _js_id = 0;
     }
 };

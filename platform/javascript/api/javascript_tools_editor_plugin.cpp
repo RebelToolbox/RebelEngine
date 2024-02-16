@@ -15,9 +15,9 @@
 
 #include <emscripten/emscripten.h>
 
-// JavaScript functions defined in library_godot_editor_tools.js
+// JavaScript functions defined in library_rebel_editor_tools.js
 extern "C" {
-extern void godot_js_os_download_buffer(
+extern void rebel_js_os_download_buffer(
     const uint8_t* p_buf,
     int p_buf_size,
     const char* p_name,
@@ -60,7 +60,7 @@ void JavaScriptToolsEditorPlugin::_download_zip(Variant p_v) {
     Vector<uint8_t> buf;
     buf.resize(f->get_len());
     f->get_buffer(buf.ptrw(), buf.size());
-    godot_js_os_download_buffer(
+    rebel_js_os_download_buffer(
         buf.ptr(),
         buf.size(),
         "project.zip",

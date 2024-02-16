@@ -28,10 +28,10 @@ const IDHandler = {
 autoAddDeps(IDHandler, '$IDHandler');
 mergeInto(LibraryManager.library, IDHandler);
 
-const GodotConfig = {
-	$GodotConfig__postset: 'Module["initConfig"] = GodotConfig.init_config;',
-	$GodotConfig__deps: ['$GodotRuntime'],
-	$GodotConfig: {
+const RebelConfig = {
+	$RebelConfig__postset: 'Module["initConfig"] = RebelConfig.init_config;',
+	$RebelConfig__deps: ['$RebelRuntime'],
+	$RebelConfig: {
 		canvas: null,
 		locale: 'en',
 		canvas_resize_policy: 2, // Adaptive
@@ -41,15 +41,15 @@ const GodotConfig = {
 		on_exit: null,
 
 		init_config: function (p_opts) {
-			GodotConfig.canvas_resize_policy = p_opts['canvasResizePolicy'];
-			GodotConfig.canvas = p_opts['canvas'];
-			GodotConfig.locale = p_opts['locale'] || GodotConfig.locale;
-			GodotConfig.virtual_keyboard = p_opts['virtualKeyboard'];
-			GodotConfig.persistent_drops = !!p_opts['persistentDrops'];
-			GodotConfig.on_execute = p_opts['onExecute'];
-			GodotConfig.on_exit = p_opts['onExit'];
+			RebelConfig.canvas_resize_policy = p_opts['canvasResizePolicy'];
+			RebelConfig.canvas = p_opts['canvas'];
+			RebelConfig.locale = p_opts['locale'] || RebelConfig.locale;
+			RebelConfig.virtual_keyboard = p_opts['virtualKeyboard'];
+			RebelConfig.persistent_drops = !!p_opts['persistentDrops'];
+			RebelConfig.on_execute = p_opts['onExecute'];
+			RebelConfig.on_exit = p_opts['onExit'];
 			if (p_opts['focusCanvas']) {
-				GodotConfig.canvas.focus();
+				RebelConfig.canvas.focus();
 			}
 		},
 
@@ -57,58 +57,58 @@ const GodotConfig = {
 			return Module['locateFile'](file); // eslint-disable-line no-undef
 		},
 		clear: function () {
-			GodotConfig.canvas = null;
-			GodotConfig.locale = 'en';
-			GodotConfig.canvas_resize_policy = 2;
-			GodotConfig.virtual_keyboard = false;
-			GodotConfig.persistent_drops = false;
-			GodotConfig.on_execute = null;
-			GodotConfig.on_exit = null;
+			RebelConfig.canvas = null;
+			RebelConfig.locale = 'en';
+			RebelConfig.canvas_resize_policy = 2;
+			RebelConfig.virtual_keyboard = false;
+			RebelConfig.persistent_drops = false;
+			RebelConfig.on_execute = null;
+			RebelConfig.on_exit = null;
 		},
 	},
 
-	godot_js_config_canvas_id_get__sig: 'vii',
-	godot_js_config_canvas_id_get: function (p_ptr, p_ptr_max) {
-		GodotRuntime.stringToHeap(`#${GodotConfig.canvas.id}`, p_ptr, p_ptr_max);
+	rebel_js_config_canvas_id_get__sig: 'vii',
+	rebel_js_config_canvas_id_get: function (p_ptr, p_ptr_max) {
+		RebelRuntime.stringToHeap(`#${RebelConfig.canvas.id}`, p_ptr, p_ptr_max);
 	},
 
-	godot_js_config_locale_get__sig: 'vii',
-	godot_js_config_locale_get: function (p_ptr, p_ptr_max) {
-		GodotRuntime.stringToHeap(GodotConfig.locale, p_ptr, p_ptr_max);
+	rebel_js_config_locale_get__sig: 'vii',
+	rebel_js_config_locale_get: function (p_ptr, p_ptr_max) {
+		RebelRuntime.stringToHeap(RebelConfig.locale, p_ptr, p_ptr_max);
 	},
 };
 
-autoAddDeps(GodotConfig, '$GodotConfig');
-mergeInto(LibraryManager.library, GodotConfig);
+autoAddDeps(RebelConfig, '$RebelConfig');
+mergeInto(LibraryManager.library, RebelConfig);
 
-const GodotFS = {
-	$GodotFS__deps: ['$ERRNO_CODES', '$FS', '$IDBFS', '$GodotRuntime'],
-	$GodotFS__postset: [
-		'Module["initFS"] = GodotFS.init;',
-		'Module["copyToFS"] = GodotFS.copy_to_fs;',
+const RebelFS = {
+	$RebelFS__deps: ['$ERRNO_CODES', '$FS', '$IDBFS', '$RebelRuntime'],
+	$RebelFS__postset: [
+		'Module["initFS"] = RebelFS.init;',
+		'Module["copyToFS"] = RebelFS.copy_to_fs;',
 	].join(''),
-	$GodotFS: {
+	$RebelFS: {
 		_idbfs: false,
 		_syncing: false,
 		_mount_points: [],
 
 		is_persistent: function () {
-			return GodotFS._idbfs ? 1 : 0;
+			return RebelFS._idbfs ? 1 : 0;
 		},
 
-		// Initialize godot file system, setting up persistent paths.
+		// Initialize Rebel file system, setting up persistent paths.
 		// Returns a promise that resolves when the FS is ready.
 		// We keep track of mount_points, so that we can properly close the IDBFS
 		// since emscripten is not doing it by itself. (emscripten GH#12516).
 		init: function (persistentPaths) {
-			GodotFS._idbfs = false;
+			RebelFS._idbfs = false;
 			if (!Array.isArray(persistentPaths)) {
 				return Promise.reject(new Error('Persistent paths must be an array'));
 			}
 			if (!persistentPaths.length) {
 				return Promise.resolve();
 			}
-			GodotFS._mount_points = persistentPaths.slice();
+			RebelFS._mount_points = persistentPaths.slice();
 
 			function createRecursive(dir) {
 				try {
@@ -121,54 +121,54 @@ const GodotFS = {
 				}
 			}
 
-			GodotFS._mount_points.forEach(function (path) {
+			RebelFS._mount_points.forEach(function (path) {
 				createRecursive(path);
 				FS.mount(IDBFS, {}, path);
 			});
 			return new Promise(function (resolve, reject) {
 				FS.syncfs(true, function (err) {
 					if (err) {
-						GodotFS._mount_points = [];
-						GodotFS._idbfs = false;
-						GodotRuntime.print(`IndexedDB not available: ${err.message}`);
+						RebelFS._mount_points = [];
+						RebelFS._idbfs = false;
+						RebelRuntime.print(`IndexedDB not available: ${err.message}`);
 					} else {
-						GodotFS._idbfs = true;
+						RebelFS._idbfs = true;
 					}
 					resolve(err);
 				});
 			});
 		},
 
-		// Deinit godot file system, making sure to unmount file systems, and close IDBFS(s).
+		// Deinit Rebel file system, making sure to unmount file systems, and close IDBFS(s).
 		deinit: function () {
-			GodotFS._mount_points.forEach(function (path) {
+			RebelFS._mount_points.forEach(function (path) {
 				try {
 					FS.unmount(path);
 				} catch (e) {
-					GodotRuntime.print('Already unmounted', e);
+					RebelRuntime.print('Already unmounted', e);
 				}
-				if (GodotFS._idbfs && IDBFS.dbs[path]) {
+				if (RebelFS._idbfs && IDBFS.dbs[path]) {
 					IDBFS.dbs[path].close();
 					delete IDBFS.dbs[path];
 				}
 			});
-			GodotFS._mount_points = [];
-			GodotFS._idbfs = false;
-			GodotFS._syncing = false;
+			RebelFS._mount_points = [];
+			RebelFS._idbfs = false;
+			RebelFS._syncing = false;
 		},
 
 		sync: function () {
-			if (GodotFS._syncing) {
-				GodotRuntime.error('Already syncing!');
+			if (RebelFS._syncing) {
+				RebelRuntime.error('Already syncing!');
 				return Promise.resolve();
 			}
-			GodotFS._syncing = true;
+			RebelFS._syncing = true;
 			return new Promise(function (resolve, reject) {
 				FS.syncfs(false, function (error) {
 					if (error) {
-						GodotRuntime.error(`Failed to save IDB file system: ${error.message}`);
+						RebelRuntime.error(`Failed to save IDB file system: ${error.message}`);
 					}
-					GodotFS._syncing = false;
+					RebelFS._syncing = false;
 					resolve(error);
 				});
 			});
@@ -193,42 +193,42 @@ const GodotFS = {
 		},
 	},
 };
-mergeInto(LibraryManager.library, GodotFS);
+mergeInto(LibraryManager.library, RebelFS);
 
-const GodotOS = {
-	$GodotOS__deps: ['$GodotRuntime', '$GodotConfig', '$GodotFS'],
-	$GodotOS__postset: [
-		'Module["request_quit"] = function() { GodotOS.request_quit() };',
-		'Module["onExit"] = GodotOS.cleanup;',
-		'GodotOS._fs_sync_promise = Promise.resolve();',
+const RebelOS = {
+	$RebelOS__deps: ['$RebelRuntime', '$RebelConfig', '$RebelFS'],
+	$RebelOS__postset: [
+		'Module["request_quit"] = function() { RebelOS.request_quit() };',
+		'Module["onExit"] = RebelOS.cleanup;',
+		'RebelOS._fs_sync_promise = Promise.resolve();',
 	].join(''),
-	$GodotOS: {
+	$RebelOS: {
 		request_quit: function () {},
 		_async_cbs: [],
 		_fs_sync_promise: null,
 
 		atexit: function (p_promise_cb) {
-			GodotOS._async_cbs.push(p_promise_cb);
+			RebelOS._async_cbs.push(p_promise_cb);
 		},
 
 		cleanup: function (exit_code) {
-			const cb = GodotConfig.on_exit;
-			GodotFS.deinit();
-			GodotConfig.clear();
+			const cb = RebelConfig.on_exit;
+			RebelFS.deinit();
+			RebelConfig.clear();
 			if (cb) {
 				cb(exit_code);
 			}
 		},
 
 		finish_async: function (callback) {
-			GodotOS._fs_sync_promise.then(function (err) {
+			RebelOS._fs_sync_promise.then(function (err) {
 				const promises = [];
-				GodotOS._async_cbs.forEach(function (cb) {
+				RebelOS._async_cbs.forEach(function (cb) {
 					promises.push(new Promise(cb));
 				});
 				return Promise.all(promises);
 			}).then(function () {
-				return GodotFS.sync(); // Final FS sync.
+				return RebelFS.sync(); // Final FS sync.
 			}).then(function (err) {
 				// Always deferred.
 				setTimeout(function () {
@@ -238,57 +238,57 @@ const GodotOS = {
 		},
 	},
 
-	godot_js_os_finish_async__sig: 'vi',
-	godot_js_os_finish_async: function (p_callback) {
-		const func = GodotRuntime.get_func(p_callback);
-		GodotOS.finish_async(func);
+	rebel_js_os_finish_async__sig: 'vi',
+	rebel_js_os_finish_async: function (p_callback) {
+		const func = RebelRuntime.get_func(p_callback);
+		RebelOS.finish_async(func);
 	},
 
-	godot_js_os_request_quit_cb__sig: 'vi',
-	godot_js_os_request_quit_cb: function (p_callback) {
-		GodotOS.request_quit = GodotRuntime.get_func(p_callback);
+	rebel_js_os_request_quit_cb__sig: 'vi',
+	rebel_js_os_request_quit_cb: function (p_callback) {
+		RebelOS.request_quit = RebelRuntime.get_func(p_callback);
 	},
 
-	godot_js_os_fs_is_persistent__sig: 'i',
-	godot_js_os_fs_is_persistent: function () {
-		return GodotFS.is_persistent();
+	rebel_js_os_fs_is_persistent__sig: 'i',
+	rebel_js_os_fs_is_persistent: function () {
+		return RebelFS.is_persistent();
 	},
 
-	godot_js_os_fs_sync__sig: 'vi',
-	godot_js_os_fs_sync: function (callback) {
-		const func = GodotRuntime.get_func(callback);
-		GodotOS._fs_sync_promise = GodotFS.sync();
-		GodotOS._fs_sync_promise.then(function (err) {
+	rebel_js_os_fs_sync__sig: 'vi',
+	rebel_js_os_fs_sync: function (callback) {
+		const func = RebelRuntime.get_func(callback);
+		RebelOS._fs_sync_promise = RebelFS.sync();
+		RebelOS._fs_sync_promise.then(function (err) {
 			func();
 		});
 	},
 
-	godot_js_os_execute__sig: 'ii',
-	godot_js_os_execute: function (p_json) {
-		const json_args = GodotRuntime.parseString(p_json);
+	rebel_js_os_execute__sig: 'ii',
+	rebel_js_os_execute: function (p_json) {
+		const json_args = RebelRuntime.parseString(p_json);
 		const args = JSON.parse(json_args);
-		if (GodotConfig.on_execute) {
-			GodotConfig.on_execute(args);
+		if (RebelConfig.on_execute) {
+			RebelConfig.on_execute(args);
 			return 0;
 		}
 		return 1;
 	},
 
-	godot_js_os_shell_open__sig: 'vi',
-	godot_js_os_shell_open: function (p_uri) {
-		window.open(GodotRuntime.parseString(p_uri), '_blank');
+	rebel_js_os_shell_open__sig: 'vi',
+	rebel_js_os_shell_open: function (p_uri) {
+		window.open(RebelRuntime.parseString(p_uri), '_blank');
 	},
 
-	godot_js_os_hw_concurrency_get__sig: 'i',
-	godot_js_os_hw_concurrency_get: function () {
+	rebel_js_os_hw_concurrency_get__sig: 'i',
+	rebel_js_os_hw_concurrency_get: function () {
 		return navigator.hardwareConcurrency || 1;
 	},
 
-	godot_js_os_download_buffer__sig: 'viiii',
-	godot_js_os_download_buffer: function (p_ptr, p_size, p_name, p_mime) {
-		const buf = GodotRuntime.heapSlice(HEAP8, p_ptr, p_size);
-		const name = GodotRuntime.parseString(p_name);
-		const mime = GodotRuntime.parseString(p_mime);
+	rebel_js_os_download_buffer__sig: 'viiii',
+	rebel_js_os_download_buffer: function (p_ptr, p_size, p_name, p_mime) {
+		const buf = RebelRuntime.heapSlice(HEAP8, p_ptr, p_size);
+		const name = RebelRuntime.parseString(p_name);
+		const mime = RebelRuntime.parseString(p_mime);
 		const blob = new Blob([buf], { type: mime });
 		const url = window.URL.createObjectURL(blob);
 		const a = document.createElement('a');
@@ -302,27 +302,27 @@ const GodotOS = {
 	},
 };
 
-autoAddDeps(GodotOS, '$GodotOS');
-mergeInto(LibraryManager.library, GodotOS);
+autoAddDeps(RebelOS, '$RebelOS');
+mergeInto(LibraryManager.library, RebelOS);
 
 /*
- * Godot event listeners.
+ * Rebel event listeners.
  * Keeps track of registered event listeners so it can remove them on shutdown.
  */
-const GodotEventListeners = {
-	$GodotEventListeners__deps: ['$GodotOS'],
-	$GodotEventListeners__postset: 'GodotOS.atexit(function(resolve, reject) { GodotEventListeners.clear(); resolve(); });',
-	$GodotEventListeners: {
+const RebelEventListeners = {
+	$RebelEventListeners__deps: ['$RebelOS'],
+	$RebelEventListeners__postset: 'RebelOS.atexit(function(resolve, reject) { RebelEventListeners.clear(); resolve(); });',
+	$RebelEventListeners: {
 		handlers: [],
 
 		has: function (target, event, method, capture) {
-			return GodotEventListeners.handlers.findIndex(function (e) {
+			return RebelEventListeners.handlers.findIndex(function (e) {
 				return e.target === target && e.event === event && e.method === method && e.capture === capture;
 			}) !== -1;
 		},
 
 		add: function (target, event, method, capture) {
-			if (GodotEventListeners.has(target, event, method, capture)) {
+			if (RebelEventListeners.has(target, event, method, capture)) {
 				return;
 			}
 			function Handler(p_target, p_event, p_method, p_capture) {
@@ -331,16 +331,16 @@ const GodotEventListeners = {
 				this.method = p_method;
 				this.capture = p_capture;
 			}
-			GodotEventListeners.handlers.push(new Handler(target, event, method, capture));
+			RebelEventListeners.handlers.push(new Handler(target, event, method, capture));
 			target.addEventListener(event, method, capture);
 		},
 
 		clear: function () {
-			GodotEventListeners.handlers.forEach(function (h) {
+			RebelEventListeners.handlers.forEach(function (h) {
 				h.target.removeEventListener(h.event, h.method, h.capture);
 			});
-			GodotEventListeners.handlers.length = 0;
+			RebelEventListeners.handlers.length = 0;
 		},
 	},
 };
-mergeInto(LibraryManager.library, GodotEventListeners);
+mergeInto(LibraryManager.library, RebelEventListeners);
