@@ -29,7 +29,7 @@ def get_opts():
         EnumVariable(
             "android_arch",
             "Target architecture",
-            "armv7",
+            "arm64v8",
             ("armv7", "arm64v8", "x86", "x86_64"),
         ),
         BoolVariable("android_neon", "Enable NEON support (armv7 only)", True),
