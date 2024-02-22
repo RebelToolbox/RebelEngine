@@ -3,10 +3,10 @@
 // SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 //
 // SPDX-License-Identifier: MIT
-const GodotWebXR = {
+const RebelWebXR = {
 
-	$GodotWebXR__deps: ['$Browser', '$GL', '$GodotRuntime'],
-	$GodotWebXR: {
+	$RebelWebXR__deps: ['$Browser', '$GL', '$RebelRuntime'],
+	$RebelWebXR: {
 		gl: null,
 
 		texture_ids: [null, null],
@@ -22,28 +22,28 @@ const GodotWebXR = {
 		// when an XR session is started.
 		orig_requestAnimationFrame: null,
 		requestAnimationFrame: (callback) => {
-			if (GodotWebXR.session && GodotWebXR.space) {
+			if (RebelWebXR.session && RebelWebXR.space) {
 				const onFrame = function (time, frame) {
-					GodotWebXR.frame = frame;
-					GodotWebXR.pose = frame.getViewerPose(GodotWebXR.space);
+					RebelWebXR.frame = frame;
+					RebelWebXR.pose = frame.getViewerPose(RebelWebXR.space);
 					callback(time);
-					GodotWebXR.frame = null;
-					GodotWebXR.pose = null;
+					RebelWebXR.frame = null;
+					RebelWebXR.pose = null;
 				};
-				GodotWebXR.session.requestAnimationFrame(onFrame);
+				RebelWebXR.session.requestAnimationFrame(onFrame);
 			} else {
-				GodotWebXR.orig_requestAnimationFrame(callback);
+				RebelWebXR.orig_requestAnimationFrame(callback);
 			}
 		},
 		monkeyPatchRequestAnimationFrame: (enable) => {
-			if (GodotWebXR.orig_requestAnimationFrame === null) {
-				GodotWebXR.orig_requestAnimationFrame = Browser.requestAnimationFrame;
+			if (RebelWebXR.orig_requestAnimationFrame === null) {
+				RebelWebXR.orig_requestAnimationFrame = Browser.requestAnimationFrame;
 			}
 			Browser.requestAnimationFrame = enable
-				? GodotWebXR.requestAnimationFrame : GodotWebXR.orig_requestAnimationFrame;
+				? RebelWebXR.requestAnimationFrame : RebelWebXR.orig_requestAnimationFrame;
 		},
 		pauseResumeMainLoop: () => {
-			// Once both GodotWebXR.session and GodotWebXR.space are set or
+			// Once both RebelWebXR.session and RebelWebXR.space are set or
 			// unset, our monkey-patched requestAnimationFrame() should be
 			// enabled or disabled. When using the WebXR API Emulator, this
 			// gets picked up automatically, however, in the Oculus Browser
@@ -83,8 +83,8 @@ const GodotWebXR = {
 		`,
 
 		initShaderProgram: (gl, vsSource, fsSource) => {
-			const vertexShader = GodotWebXR.loadShader(gl, gl.VERTEX_SHADER, vsSource);
-			const fragmentShader = GodotWebXR.loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+			const vertexShader = RebelWebXR.loadShader(gl, gl.VERTEX_SHADER, vsSource);
+			const fragmentShader = RebelWebXR.loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
 
 			const shaderProgram = gl.createProgram();
 			gl.attachShader(shaderProgram, vertexShader);
@@ -92,7 +92,7 @@ const GodotWebXR = {
 			gl.linkProgram(shaderProgram);
 
 			if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-				GodotRuntime.error(`Unable to initialize the shader program: ${gl.getProgramInfoLog(shaderProgram)}`);
+				RebelRuntime.error(`Unable to initialize the shader program: ${gl.getProgramInfoLog(shaderProgram)}`);
 				return null;
 			}
 
@@ -104,7 +104,7 @@ const GodotWebXR = {
 			gl.compileShader(shader);
 
 			if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-				GodotRuntime.error(`An error occurred compiling the shader: ${gl.getShaderInfoLog(shader)}`);
+				RebelRuntime.error(`An error occurred compiling the shader: ${gl.getShaderInfoLog(shader)}`);
 				gl.deleteShader(shader);
 				return null;
 			}
@@ -124,36 +124,36 @@ const GodotWebXR = {
 			return positionBuffer;
 		},
 		blitTexture: (gl, texture) => {
-			if (GodotWebXR.shaderProgram === null) {
-				GodotWebXR.shaderProgram = GodotWebXR.initShaderProgram(gl, GodotWebXR.vsSource, GodotWebXR.fsSource);
-				GodotWebXR.programInfo = {
-					program: GodotWebXR.shaderProgram,
+			if (RebelWebXR.shaderProgram === null) {
+				RebelWebXR.shaderProgram = RebelWebXR.initShaderProgram(gl, RebelWebXR.vsSource, RebelWebXR.fsSource);
+				RebelWebXR.programInfo = {
+					program: RebelWebXR.shaderProgram,
 					attribLocations: {
-						vertexPosition: gl.getAttribLocation(GodotWebXR.shaderProgram, 'aVertexPosition'),
+						vertexPosition: gl.getAttribLocation(RebelWebXR.shaderProgram, 'aVertexPosition'),
 					},
 					uniformLocations: {
-						uSampler: gl.getUniformLocation(GodotWebXR.shaderProgram, 'uSampler'),
+						uSampler: gl.getUniformLocation(RebelWebXR.shaderProgram, 'uSampler'),
 					},
 				};
-				GodotWebXR.buffer = GodotWebXR.initBuffer(gl);
+				RebelWebXR.buffer = RebelWebXR.initBuffer(gl);
 			}
 
 			const orig_program = gl.getParameter(gl.CURRENT_PROGRAM);
-			gl.useProgram(GodotWebXR.shaderProgram);
+			gl.useProgram(RebelWebXR.shaderProgram);
 
-			gl.bindBuffer(gl.ARRAY_BUFFER, GodotWebXR.buffer);
-			gl.vertexAttribPointer(GodotWebXR.programInfo.attribLocations.vertexPosition, 2, gl.FLOAT, false, 0, 0);
-			gl.enableVertexAttribArray(GodotWebXR.programInfo.attribLocations.vertexPosition);
+			gl.bindBuffer(gl.ARRAY_BUFFER, RebelWebXR.buffer);
+			gl.vertexAttribPointer(RebelWebXR.programInfo.attribLocations.vertexPosition, 2, gl.FLOAT, false, 0, 0);
+			gl.enableVertexAttribArray(RebelWebXR.programInfo.attribLocations.vertexPosition);
 
 			gl.activeTexture(gl.TEXTURE0);
 			gl.bindTexture(gl.TEXTURE_2D, texture);
-			gl.uniform1i(GodotWebXR.programInfo.uniformLocations.uSampler, 0);
+			gl.uniform1i(RebelWebXR.programInfo.uniformLocations.uSampler, 0);
 
 			gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
 			// Restore state.
 			gl.bindTexture(gl.TEXTURE_2D, null);
-			gl.disableVertexAttribArray(GodotWebXR.programInfo.attribLocations.vertexPosition);
+			gl.disableVertexAttribArray(RebelWebXR.programInfo.attribLocations.vertexPosition);
 			gl.bindBuffer(gl.ARRAY_BUFFER, null);
 			gl.useProgram(orig_program);
 		},
@@ -165,13 +165,13 @@ const GodotWebXR = {
 		// the first element, and the right hand is the second element, and any
 		// others placed at the 3rd position and up.
 		sampleControllers: () => {
-			if (!GodotWebXR.session || !GodotWebXR.frame) {
+			if (!RebelWebXR.session || !RebelWebXR.frame) {
 				return;
 			}
 
 			let other_index = 2;
 			const controllers = [];
-			GodotWebXR.session.inputSources.forEach((input_source) => {
+			RebelWebXR.session.inputSources.forEach((input_source) => {
 				if (input_source.targetRayMode === 'tracked-pointer') {
 					if (input_source.handedness === 'right') {
 						controllers[1] = input_source;
@@ -182,52 +182,52 @@ const GodotWebXR = {
 					controllers[other_index++] = input_source;
 				}
 			});
-			GodotWebXR.controllers = controllers;
+			RebelWebXR.controllers = controllers;
 		},
 
-		getControllerId: (input_source) => GodotWebXR.controllers.indexOf(input_source),
+		getControllerId: (input_source) => RebelWebXR.controllers.indexOf(input_source),
 	},
 
-	godot_webxr_is_supported__proxy: 'sync',
-	godot_webxr_is_supported__sig: 'i',
-	godot_webxr_is_supported: function () {
+	rebel_webxr_is_supported__proxy: 'sync',
+	rebel_webxr_is_supported__sig: 'i',
+	rebel_webxr_is_supported: function () {
 		return !!navigator.xr;
 	},
 
-	godot_webxr_is_session_supported__proxy: 'sync',
-	godot_webxr_is_session_supported__sig: 'vii',
-	godot_webxr_is_session_supported: function (p_session_mode, p_callback) {
-		const session_mode = GodotRuntime.parseString(p_session_mode);
-		const cb = GodotRuntime.get_func(p_callback);
+	rebel_webxr_is_session_supported__proxy: 'sync',
+	rebel_webxr_is_session_supported__sig: 'vii',
+	rebel_webxr_is_session_supported: function (p_session_mode, p_callback) {
+		const session_mode = RebelRuntime.parseString(p_session_mode);
+		const cb = RebelRuntime.get_func(p_callback);
 		if (navigator.xr) {
 			navigator.xr.isSessionSupported(session_mode).then(function (supported) {
-				const c_str = GodotRuntime.allocString(session_mode);
+				const c_str = RebelRuntime.allocString(session_mode);
 				cb(c_str, supported ? 1 : 0);
-				GodotRuntime.free(c_str);
+				RebelRuntime.free(c_str);
 			});
 		} else {
-			const c_str = GodotRuntime.allocString(session_mode);
+			const c_str = RebelRuntime.allocString(session_mode);
 			cb(c_str, 0);
-			GodotRuntime.free(c_str);
+			RebelRuntime.free(c_str);
 		}
 	},
 
-	godot_webxr_initialize__deps: ['emscripten_webgl_get_current_context'],
-	godot_webxr_initialize__proxy: 'sync',
-	godot_webxr_initialize__sig: 'viiiiiiiiii',
-	godot_webxr_initialize: function (p_session_mode, p_required_features, p_optional_features, p_requested_reference_spaces, p_on_session_started, p_on_session_ended, p_on_session_failed, p_on_controller_changed, p_on_input_event, p_on_simple_event) {
-		GodotWebXR.monkeyPatchRequestAnimationFrame(true);
+	rebel_webxr_initialize__deps: ['emscripten_webgl_get_current_context'],
+	rebel_webxr_initialize__proxy: 'sync',
+	rebel_webxr_initialize__sig: 'viiiiiiiiii',
+	rebel_webxr_initialize: function (p_session_mode, p_required_features, p_optional_features, p_requested_reference_spaces, p_on_session_started, p_on_session_ended, p_on_session_failed, p_on_controller_changed, p_on_input_event, p_on_simple_event) {
+		RebelWebXR.monkeyPatchRequestAnimationFrame(true);
 
-		const session_mode = GodotRuntime.parseString(p_session_mode);
-		const required_features = GodotRuntime.parseString(p_required_features).split(',').map((s) => s.trim()).filter((s) => s !== '');
-		const optional_features = GodotRuntime.parseString(p_optional_features).split(',').map((s) => s.trim()).filter((s) => s !== '');
-		const requested_reference_space_types = GodotRuntime.parseString(p_requested_reference_spaces).split(',').map((s) => s.trim());
-		const onstarted = GodotRuntime.get_func(p_on_session_started);
-		const onended = GodotRuntime.get_func(p_on_session_ended);
-		const onfailed = GodotRuntime.get_func(p_on_session_failed);
-		const oncontroller = GodotRuntime.get_func(p_on_controller_changed);
-		const oninputevent = GodotRuntime.get_func(p_on_input_event);
-		const onsimpleevent = GodotRuntime.get_func(p_on_simple_event);
+		const session_mode = RebelRuntime.parseString(p_session_mode);
+		const required_features = RebelRuntime.parseString(p_required_features).split(',').map((s) => s.trim()).filter((s) => s !== '');
+		const optional_features = RebelRuntime.parseString(p_optional_features).split(',').map((s) => s.trim()).filter((s) => s !== '');
+		const requested_reference_space_types = RebelRuntime.parseString(p_requested_reference_spaces).split(',').map((s) => s.trim());
+		const onstarted = RebelRuntime.get_func(p_on_session_started);
+		const onended = RebelRuntime.get_func(p_on_session_ended);
+		const onfailed = RebelRuntime.get_func(p_on_session_failed);
+		const oncontroller = RebelRuntime.get_func(p_on_controller_changed);
+		const oninputevent = RebelRuntime.get_func(p_on_input_event);
+		const onsimpleevent = RebelRuntime.get_func(p_on_simple_event);
 
 		const session_init = {};
 		if (required_features.length > 0) {
@@ -238,7 +238,7 @@ const GodotWebXR = {
 		}
 
 		navigator.xr.requestSession(session_mode, session_init).then(function (session) {
-			GodotWebXR.session = session;
+			RebelWebXR.session = session;
 
 			session.addEventListener('end', function (evt) {
 				onended();
@@ -260,21 +260,21 @@ const GodotWebXR = {
 
 			['selectstart', 'select', 'selectend', 'squeezestart', 'squeeze', 'squeezeend'].forEach((input_event) => {
 				session.addEventListener(input_event, function (evt) {
-					const c_str = GodotRuntime.allocString(input_event);
-					oninputevent(c_str, GodotWebXR.getControllerId(evt.inputSource));
-					GodotRuntime.free(c_str);
+					const c_str = RebelRuntime.allocString(input_event);
+					oninputevent(c_str, RebelWebXR.getControllerId(evt.inputSource));
+					RebelRuntime.free(c_str);
 				});
 			});
 
 			session.addEventListener('visibilitychange', function (evt) {
-				const c_str = GodotRuntime.allocString('visibility_state_changed');
+				const c_str = RebelRuntime.allocString('visibility_state_changed');
 				onsimpleevent(c_str);
-				GodotRuntime.free(c_str);
+				RebelRuntime.free(c_str);
 			});
 
 			const gl_context_handle = _emscripten_webgl_get_current_context(); // eslint-disable-line no-undef
 			const gl = GL.getContext(gl_context_handle).GLctx;
-			GodotWebXR.gl = gl;
+			RebelWebXR.gl = gl;
 
 			gl.makeXRCompatible().then(function () {
 				session.updateRenderState({
@@ -282,29 +282,29 @@ const GodotWebXR = {
 				});
 
 				function onReferenceSpaceSuccess(reference_space, reference_space_type) {
-					GodotWebXR.space = reference_space;
+					RebelWebXR.space = reference_space;
 
 					// Using reference_space.addEventListener() crashes when
 					// using the polyfill with the WebXR Emulator extension,
 					// so we set the event property instead.
 					reference_space.onreset = function (evt) {
-						const c_str = GodotRuntime.allocString('reference_space_reset');
+						const c_str = RebelRuntime.allocString('reference_space_reset');
 						onsimpleevent(c_str);
-						GodotRuntime.free(c_str);
+						RebelRuntime.free(c_str);
 					};
 
-					// Now that both GodotWebXR.session and GodotWebXR.space are
+					// Now that both RebelWebXR.session and RebelWebXR.space are
 					// set, we need to pause and resume the main loop for the XR
 					// main loop to kick in.
-					GodotWebXR.pauseResumeMainLoop();
+					RebelWebXR.pauseResumeMainLoop();
 
 					// Call in setTimeout() so that errors in the onstarted()
-					// callback don't bubble up here and cause Godot to try the
+					// callback don't bubble up here and cause Rebel to try the
 					// next reference space.
 					window.setTimeout(function () {
-						const c_str = GodotRuntime.allocString(reference_space_type);
+						const c_str = RebelRuntime.allocString(reference_space_type);
 						onstarted(c_str);
-						GodotRuntime.free(c_str);
+						RebelRuntime.free(c_str);
 					}, 0);
 				}
 
@@ -316,9 +316,9 @@ const GodotWebXR = {
 						})
 						.catch(() => {
 							if (requested_reference_space_types.length === 0) {
-								const c_str = GodotRuntime.allocString('Unable to get any of the requested reference space types');
+								const c_str = RebelRuntime.allocString('Unable to get any of the requested reference space types');
 								onfailed(c_str);
-								GodotRuntime.free(c_str);
+								RebelRuntime.free(c_str);
 							} else {
 								requestReferenceSpace();
 							}
@@ -327,139 +327,139 @@ const GodotWebXR = {
 
 				requestReferenceSpace();
 			}).catch(function (error) {
-				const c_str = GodotRuntime.allocString(`Unable to make WebGL context compatible with WebXR: ${error}`);
+				const c_str = RebelRuntime.allocString(`Unable to make WebGL context compatible with WebXR: ${error}`);
 				onfailed(c_str);
-				GodotRuntime.free(c_str);
+				RebelRuntime.free(c_str);
 			});
 		}).catch(function (error) {
-			const c_str = GodotRuntime.allocString(`Unable to start session: ${error}`);
+			const c_str = RebelRuntime.allocString(`Unable to start session: ${error}`);
 			onfailed(c_str);
-			GodotRuntime.free(c_str);
+			RebelRuntime.free(c_str);
 		});
 	},
 
-	godot_webxr_uninitialize__proxy: 'sync',
-	godot_webxr_uninitialize__sig: 'v',
-	godot_webxr_uninitialize: function () {
-		if (GodotWebXR.session) {
-			GodotWebXR.session.end()
+	rebel_webxr_uninitialize__proxy: 'sync',
+	rebel_webxr_uninitialize__sig: 'v',
+	rebel_webxr_uninitialize: function () {
+		if (RebelWebXR.session) {
+			RebelWebXR.session.end()
 				// Prevent exception when session has already ended.
 				.catch((e) => { });
 		}
 
 		// Clean-up the textures we allocated for each view.
-		const gl = GodotWebXR.gl;
-		for (let i = 0; i < GodotWebXR.textures.length; i++) {
-			const texture = GodotWebXR.textures[i];
+		const gl = RebelWebXR.gl;
+		for (let i = 0; i < RebelWebXR.textures.length; i++) {
+			const texture = RebelWebXR.textures[i];
 			if (texture !== null) {
 				gl.deleteTexture(texture);
 			}
-			GodotWebXR.textures[i] = null;
+			RebelWebXR.textures[i] = null;
 
-			const texture_id = GodotWebXR.texture_ids[i];
+			const texture_id = RebelWebXR.texture_ids[i];
 			if (texture_id !== null) {
 				GL.textures[texture_id] = null;
 			}
-			GodotWebXR.texture_ids[i] = null;
+			RebelWebXR.texture_ids[i] = null;
 		}
 
-		GodotWebXR.session = null;
-		GodotWebXR.space = null;
-		GodotWebXR.frame = null;
-		GodotWebXR.pose = null;
+		RebelWebXR.session = null;
+		RebelWebXR.space = null;
+		RebelWebXR.frame = null;
+		RebelWebXR.pose = null;
 
 		// Disable the monkey-patched window.requestAnimationFrame() and
 		// pause/restart the main loop to activate it on all platforms.
-		GodotWebXR.monkeyPatchRequestAnimationFrame(false);
-		GodotWebXR.pauseResumeMainLoop();
+		RebelWebXR.monkeyPatchRequestAnimationFrame(false);
+		RebelWebXR.pauseResumeMainLoop();
 	},
 
-	godot_webxr_get_view_count__proxy: 'sync',
-	godot_webxr_get_view_count__sig: 'i',
-	godot_webxr_get_view_count: function () {
-		if (!GodotWebXR.session || !GodotWebXR.pose) {
+	rebel_webxr_get_view_count__proxy: 'sync',
+	rebel_webxr_get_view_count__sig: 'i',
+	rebel_webxr_get_view_count: function () {
+		if (!RebelWebXR.session || !RebelWebXR.pose) {
 			return 0;
 		}
-		return GodotWebXR.pose.views.length;
+		return RebelWebXR.pose.views.length;
 	},
 
-	godot_webxr_get_render_targetsize__proxy: 'sync',
-	godot_webxr_get_render_targetsize__sig: 'i',
-	godot_webxr_get_render_targetsize: function () {
-		if (!GodotWebXR.session || !GodotWebXR.pose) {
+	rebel_webxr_get_render_targetsize__proxy: 'sync',
+	rebel_webxr_get_render_targetsize__sig: 'i',
+	rebel_webxr_get_render_targetsize: function () {
+		if (!RebelWebXR.session || !RebelWebXR.pose) {
 			return 0;
 		}
 
-		const glLayer = GodotWebXR.session.renderState.baseLayer;
-		const view = GodotWebXR.pose.views[0];
+		const glLayer = RebelWebXR.session.renderState.baseLayer;
+		const view = RebelWebXR.pose.views[0];
 		const viewport = glLayer.getViewport(view);
 
-		const buf = GodotRuntime.malloc(2 * 4);
-		GodotRuntime.setHeapValue(buf + 0, viewport.width, 'i32');
-		GodotRuntime.setHeapValue(buf + 4, viewport.height, 'i32');
+		const buf = RebelRuntime.malloc(2 * 4);
+		RebelRuntime.setHeapValue(buf + 0, viewport.width, 'i32');
+		RebelRuntime.setHeapValue(buf + 4, viewport.height, 'i32');
 		return buf;
 	},
 
-	godot_webxr_get_transform_for_eye__proxy: 'sync',
-	godot_webxr_get_transform_for_eye__sig: 'ii',
-	godot_webxr_get_transform_for_eye: function (p_eye) {
-		if (!GodotWebXR.session || !GodotWebXR.pose) {
+	rebel_webxr_get_transform_for_eye__proxy: 'sync',
+	rebel_webxr_get_transform_for_eye__sig: 'ii',
+	rebel_webxr_get_transform_for_eye: function (p_eye) {
+		if (!RebelWebXR.session || !RebelWebXR.pose) {
 			return 0;
 		}
 
-		const views = GodotWebXR.pose.views;
+		const views = RebelWebXR.pose.views;
 		let matrix;
 		if (p_eye === 0) {
-			matrix = GodotWebXR.pose.transform.matrix;
+			matrix = RebelWebXR.pose.transform.matrix;
 		} else {
 			matrix = views[p_eye - 1].transform.matrix;
 		}
-		const buf = GodotRuntime.malloc(16 * 4);
+		const buf = RebelRuntime.malloc(16 * 4);
 		for (let i = 0; i < 16; i++) {
-			GodotRuntime.setHeapValue(buf + (i * 4), matrix[i], 'float');
+			RebelRuntime.setHeapValue(buf + (i * 4), matrix[i], 'float');
 		}
 		return buf;
 	},
 
-	godot_webxr_get_projection_for_eye__proxy: 'sync',
-	godot_webxr_get_projection_for_eye__sig: 'ii',
-	godot_webxr_get_projection_for_eye: function (p_eye) {
-		if (!GodotWebXR.session || !GodotWebXR.pose) {
+	rebel_webxr_get_projection_for_eye__proxy: 'sync',
+	rebel_webxr_get_projection_for_eye__sig: 'ii',
+	rebel_webxr_get_projection_for_eye: function (p_eye) {
+		if (!RebelWebXR.session || !RebelWebXR.pose) {
 			return 0;
 		}
 
 		const view_index = (p_eye === 2 /* ARVRInterface::EYE_RIGHT */) ? 1 : 0;
-		const matrix = GodotWebXR.pose.views[view_index].projectionMatrix;
-		const buf = GodotRuntime.malloc(16 * 4);
+		const matrix = RebelWebXR.pose.views[view_index].projectionMatrix;
+		const buf = RebelRuntime.malloc(16 * 4);
 		for (let i = 0; i < 16; i++) {
-			GodotRuntime.setHeapValue(buf + (i * 4), matrix[i], 'float');
+			RebelRuntime.setHeapValue(buf + (i * 4), matrix[i], 'float');
 		}
 		return buf;
 	},
 
-	godot_webxr_get_external_texture_for_eye__proxy: 'sync',
-	godot_webxr_get_external_texture_for_eye__sig: 'ii',
-	godot_webxr_get_external_texture_for_eye: function (p_eye) {
-		if (!GodotWebXR.session) {
+	rebel_webxr_get_external_texture_for_eye__proxy: 'sync',
+	rebel_webxr_get_external_texture_for_eye__sig: 'ii',
+	rebel_webxr_get_external_texture_for_eye: function (p_eye) {
+		if (!RebelWebXR.session) {
 			return 0;
 		}
 
 		const view_index = (p_eye === 2 /* ARVRInterface::EYE_RIGHT */) ? 1 : 0;
-		if (GodotWebXR.texture_ids[view_index]) {
-			return GodotWebXR.texture_ids[view_index];
+		if (RebelWebXR.texture_ids[view_index]) {
+			return RebelWebXR.texture_ids[view_index];
 		}
 
 		// Check pose separately and after returning the cached texture id,
 		// because we won't get a pose in some cases if we lose tracking, and
 		// we don't want to return 0 just because tracking was lost.
-		if (!GodotWebXR.pose) {
+		if (!RebelWebXR.pose) {
 			return 0;
 		}
 
-		const glLayer = GodotWebXR.session.renderState.baseLayer;
-		const view = GodotWebXR.pose.views[view_index];
+		const glLayer = RebelWebXR.session.renderState.baseLayer;
+		const view = RebelWebXR.pose.views[view_index];
 		const viewport = glLayer.getViewport(view);
-		const gl = GodotWebXR.gl;
+		const gl = RebelWebXR.gl;
 
 		const texture = gl.createTexture();
 		gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -473,23 +473,23 @@ const GodotWebXR = {
 
 		const texture_id = GL.getNewId(GL.textures);
 		GL.textures[texture_id] = texture;
-		GodotWebXR.textures[view_index] = texture;
-		GodotWebXR.texture_ids[view_index] = texture_id;
+		RebelWebXR.textures[view_index] = texture;
+		RebelWebXR.texture_ids[view_index] = texture_id;
 		return texture_id;
 	},
 
-	godot_webxr_commit_for_eye__proxy: 'sync',
-	godot_webxr_commit_for_eye__sig: 'vi',
-	godot_webxr_commit_for_eye: function (p_eye) {
-		if (!GodotWebXR.session || !GodotWebXR.pose) {
+	rebel_webxr_commit_for_eye__proxy: 'sync',
+	rebel_webxr_commit_for_eye__sig: 'vi',
+	rebel_webxr_commit_for_eye: function (p_eye) {
+		if (!RebelWebXR.session || !RebelWebXR.pose) {
 			return;
 		}
 
 		const view_index = (p_eye === 2 /* ARVRInterface::EYE_RIGHT */) ? 1 : 0;
-		const glLayer = GodotWebXR.session.renderState.baseLayer;
-		const view = GodotWebXR.pose.views[view_index];
+		const glLayer = RebelWebXR.session.renderState.baseLayer;
+		const view = RebelWebXR.pose.views[view_index];
 		const viewport = glLayer.getViewport(view);
-		const gl = GodotWebXR.gl;
+		const gl = RebelWebXR.gl;
 
 		const orig_framebuffer = gl.getParameter(gl.FRAMEBUFFER_BINDING);
 		const orig_viewport = gl.getParameter(gl.VIEWPORT);
@@ -498,51 +498,51 @@ const GodotWebXR = {
 		gl.bindFramebuffer(gl.FRAMEBUFFER, glLayer.framebuffer);
 		gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height);
 
-		GodotWebXR.blitTexture(gl, GodotWebXR.textures[view_index]);
+		RebelWebXR.blitTexture(gl, RebelWebXR.textures[view_index]);
 
 		// Restore state.
 		gl.bindFramebuffer(gl.FRAMEBUFFER, orig_framebuffer);
 		gl.viewport(orig_viewport[0], orig_viewport[1], orig_viewport[2], orig_viewport[3]);
 	},
 
-	godot_webxr_sample_controller_data__proxy: 'sync',
-	godot_webxr_sample_controller_data__sig: 'v',
-	godot_webxr_sample_controller_data: function () {
-		GodotWebXR.sampleControllers();
+	rebel_webxr_sample_controller_data__proxy: 'sync',
+	rebel_webxr_sample_controller_data__sig: 'v',
+	rebel_webxr_sample_controller_data: function () {
+		RebelWebXR.sampleControllers();
 	},
 
-	godot_webxr_get_controller_count__proxy: 'sync',
-	godot_webxr_get_controller_count__sig: 'i',
-	godot_webxr_get_controller_count: function () {
-		if (!GodotWebXR.session || !GodotWebXR.frame) {
+	rebel_webxr_get_controller_count__proxy: 'sync',
+	rebel_webxr_get_controller_count__sig: 'i',
+	rebel_webxr_get_controller_count: function () {
+		if (!RebelWebXR.session || !RebelWebXR.frame) {
 			return 0;
 		}
-		return GodotWebXR.controllers.length;
+		return RebelWebXR.controllers.length;
 	},
 
-	godot_webxr_is_controller_connected__proxy: 'sync',
-	godot_webxr_is_controller_connected__sig: 'ii',
-	godot_webxr_is_controller_connected: function (p_controller) {
-		if (!GodotWebXR.session || !GodotWebXR.frame) {
+	rebel_webxr_is_controller_connected__proxy: 'sync',
+	rebel_webxr_is_controller_connected__sig: 'ii',
+	rebel_webxr_is_controller_connected: function (p_controller) {
+		if (!RebelWebXR.session || !RebelWebXR.frame) {
 			return false;
 		}
-		return !!GodotWebXR.controllers[p_controller];
+		return !!RebelWebXR.controllers[p_controller];
 	},
 
-	godot_webxr_get_controller_transform__proxy: 'sync',
-	godot_webxr_get_controller_transform__sig: 'ii',
-	godot_webxr_get_controller_transform: function (p_controller) {
-		if (!GodotWebXR.session || !GodotWebXR.frame) {
+	rebel_webxr_get_controller_transform__proxy: 'sync',
+	rebel_webxr_get_controller_transform__sig: 'ii',
+	rebel_webxr_get_controller_transform: function (p_controller) {
+		if (!RebelWebXR.session || !RebelWebXR.frame) {
 			return 0;
 		}
 
-		const controller = GodotWebXR.controllers[p_controller];
+		const controller = RebelWebXR.controllers[p_controller];
 		if (!controller) {
 			return 0;
 		}
 
-		const frame = GodotWebXR.frame;
-		const space = GodotWebXR.space;
+		const frame = RebelWebXR.frame;
+		const space = RebelWebXR.space;
 
 		const pose = frame.getPose(controller.targetRaySpace, space);
 		if (!pose) {
@@ -551,51 +551,51 @@ const GodotWebXR = {
 		}
 		const matrix = pose.transform.matrix;
 
-		const buf = GodotRuntime.malloc(16 * 4);
+		const buf = RebelRuntime.malloc(16 * 4);
 		for (let i = 0; i < 16; i++) {
-			GodotRuntime.setHeapValue(buf + (i * 4), matrix[i], 'float');
+			RebelRuntime.setHeapValue(buf + (i * 4), matrix[i], 'float');
 		}
 		return buf;
 	},
 
-	godot_webxr_get_controller_buttons__proxy: 'sync',
-	godot_webxr_get_controller_buttons__sig: 'ii',
-	godot_webxr_get_controller_buttons: function (p_controller) {
-		if (GodotWebXR.controllers.length === 0) {
+	rebel_webxr_get_controller_buttons__proxy: 'sync',
+	rebel_webxr_get_controller_buttons__sig: 'ii',
+	rebel_webxr_get_controller_buttons: function (p_controller) {
+		if (RebelWebXR.controllers.length === 0) {
 			return 0;
 		}
 
-		const controller = GodotWebXR.controllers[p_controller];
+		const controller = RebelWebXR.controllers[p_controller];
 		if (!controller || !controller.gamepad) {
 			return 0;
 		}
 
 		const button_count = controller.gamepad.buttons.length;
 
-		const buf = GodotRuntime.malloc((button_count + 1) * 4);
-		GodotRuntime.setHeapValue(buf, button_count, 'i32');
+		const buf = RebelRuntime.malloc((button_count + 1) * 4);
+		RebelRuntime.setHeapValue(buf, button_count, 'i32');
 		for (let i = 0; i < button_count; i++) {
-			GodotRuntime.setHeapValue(buf + 4 + (i * 4), controller.gamepad.buttons[i].value, 'float');
+			RebelRuntime.setHeapValue(buf + 4 + (i * 4), controller.gamepad.buttons[i].value, 'float');
 		}
 		return buf;
 	},
 
-	godot_webxr_get_controller_axes__proxy: 'sync',
-	godot_webxr_get_controller_axes__sig: 'ii',
-	godot_webxr_get_controller_axes: function (p_controller) {
-		if (GodotWebXR.controllers.length === 0) {
+	rebel_webxr_get_controller_axes__proxy: 'sync',
+	rebel_webxr_get_controller_axes__sig: 'ii',
+	rebel_webxr_get_controller_axes: function (p_controller) {
+		if (RebelWebXR.controllers.length === 0) {
 			return 0;
 		}
 
-		const controller = GodotWebXR.controllers[p_controller];
+		const controller = RebelWebXR.controllers[p_controller];
 		if (!controller || !controller.gamepad) {
 			return 0;
 		}
 
 		const axes_count = controller.gamepad.axes.length;
 
-		const buf = GodotRuntime.malloc((axes_count + 1) * 4);
-		GodotRuntime.setHeapValue(buf, axes_count, 'i32');
+		const buf = RebelRuntime.malloc((axes_count + 1) * 4);
+		RebelRuntime.setHeapValue(buf, axes_count, 'i32');
 		for (let i = 0; i < axes_count; i++) {
 			let value = controller.gamepad.axes[i];
 			if (i === 1 || i === 3) {
@@ -603,40 +603,40 @@ const GodotWebXR = {
 				// match OpenXR and other XR platform SDKs.
 				value *= -1.0;
 			}
-			GodotRuntime.setHeapValue(buf + 4 + (i * 4), value, 'float');
+			RebelRuntime.setHeapValue(buf + 4 + (i * 4), value, 'float');
 		}
 		return buf;
 	},
 
-	godot_webxr_get_visibility_state__proxy: 'sync',
-	godot_webxr_get_visibility_state__sig: 'i',
-	godot_webxr_get_visibility_state: function () {
-		if (!GodotWebXR.session || !GodotWebXR.session.visibilityState) {
+	rebel_webxr_get_visibility_state__proxy: 'sync',
+	rebel_webxr_get_visibility_state__sig: 'i',
+	rebel_webxr_get_visibility_state: function () {
+		if (!RebelWebXR.session || !RebelWebXR.session.visibilityState) {
 			return 0;
 		}
 
-		return GodotRuntime.allocString(GodotWebXR.session.visibilityState);
+		return RebelRuntime.allocString(RebelWebXR.session.visibilityState);
 	},
 
-	godot_webxr_get_bounds_geometry__proxy: 'sync',
-	godot_webxr_get_bounds_geometry__sig: 'i',
-	godot_webxr_get_bounds_geometry: function () {
-		if (!GodotWebXR.space || !GodotWebXR.space.boundsGeometry) {
+	rebel_webxr_get_bounds_geometry__proxy: 'sync',
+	rebel_webxr_get_bounds_geometry__sig: 'i',
+	rebel_webxr_get_bounds_geometry: function () {
+		if (!RebelWebXR.space || !RebelWebXR.space.boundsGeometry) {
 			return 0;
 		}
 
-		const point_count = GodotWebXR.space.boundsGeometry.length;
+		const point_count = RebelWebXR.space.boundsGeometry.length;
 		if (point_count === 0) {
 			return 0;
 		}
 
-		const buf = GodotRuntime.malloc(((point_count * 3) + 1) * 4);
-		GodotRuntime.setHeapValue(buf, point_count, 'i32');
+		const buf = RebelRuntime.malloc(((point_count * 3) + 1) * 4);
+		RebelRuntime.setHeapValue(buf, point_count, 'i32');
 		for (let i = 0; i < point_count; i++) {
-			const point = GodotWebXR.space.boundsGeometry[i];
-			GodotRuntime.setHeapValue(buf + ((i * 3) + 1) * 4, point.x, 'float');
-			GodotRuntime.setHeapValue(buf + ((i * 3) + 2) * 4, point.y, 'float');
-			GodotRuntime.setHeapValue(buf + ((i * 3) + 3) * 4, point.z, 'float');
+			const point = RebelWebXR.space.boundsGeometry[i];
+			RebelRuntime.setHeapValue(buf + ((i * 3) + 1) * 4, point.x, 'float');
+			RebelRuntime.setHeapValue(buf + ((i * 3) + 2) * 4, point.y, 'float');
+			RebelRuntime.setHeapValue(buf + ((i * 3) + 3) * 4, point.z, 'float');
 		}
 
 		return buf;
@@ -644,5 +644,5 @@ const GodotWebXR = {
 
 };
 
-autoAddDeps(GodotWebXR, '$GodotWebXR');
-mergeInto(LibraryManager.library, GodotWebXR);
+autoAddDeps(RebelWebXR, '$RebelWebXR');
+mergeInto(LibraryManager.library, RebelWebXR);

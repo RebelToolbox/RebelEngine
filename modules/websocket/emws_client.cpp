@@ -61,7 +61,7 @@ Error EMWSClient::connect_to_host(
     const Vector<String> p_custom_headers
 ) {
     if (_js_id) {
-        godot_js_websocket_destroy(_js_id);
+        rebel_js_websocket_destroy(_js_id);
         _js_id = 0;
     }
 
@@ -90,7 +90,7 @@ Error EMWSClient::connect_to_host(
     str            += p_host + ":" + itos(p_port) + p_path;
     _is_connecting  = true;
 
-    _js_id = godot_js_websocket_create(
+    _js_id = rebel_js_websocket_create(
         this,
         str.utf8().get_data(),
         proto_string.utf8().get_data(),
@@ -168,7 +168,7 @@ EMWSClient::~EMWSClient() {
     disconnect_from_host();
     _peer = Ref<EMWSPeer>();
     if (_js_id) {
-        godot_js_websocket_destroy(_js_id);
+        rebel_js_websocket_destroy(_js_id);
     }
 }
 

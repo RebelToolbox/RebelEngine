@@ -54,14 +54,14 @@ void main_loop_callback() {
         emscripten_cancel_main_loop(
         ); // Cancel current loop and wait for finalize_async.
         os->get_main_loop()->finish();
-        godot_js_os_finish_async(cleanup_after_sync);
+        rebel_js_os_finish_async(cleanup_after_sync);
     }
 }
 
-extern EMSCRIPTEN_KEEPALIVE int godot_js_main(int argc, char* argv[]) {
+extern EMSCRIPTEN_KEEPALIVE int rebel_js_main(int argc, char* argv[]) {
     // Set locale
     char locale_ptr[16];
-    godot_js_config_locale_get(locale_ptr, sizeof(locale_ptr));
+    rebel_js_config_locale_get(locale_ptr, sizeof(locale_ptr));
     setenv("LANG", locale_ptr, true);
 
     os = new OS_JavaScript();

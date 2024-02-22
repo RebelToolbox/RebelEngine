@@ -9,7 +9,7 @@
 #include "emscripten.h"
 
 extern "C" {
-extern void godot_js_os_download_buffer(
+extern void rebel_js_os_download_buffer(
     const uint8_t* p_buf,
     int p_buf_size,
     const char* p_name,
@@ -24,62 +24,62 @@ typedef union {
     int64_t i;
     double r;
     void* p;
-} godot_js_wrapper_ex;
+} rebel_js_wrapper_ex;
 
-typedef int (*GodotJSWrapperVariant2JSCallback)(
+typedef int (*RebelJSWrapperVariant2JSCallback)(
     const void** p_args,
     int p_pos,
-    godot_js_wrapper_ex* r_val,
+    rebel_js_wrapper_ex* r_val,
     void** p_lock
 );
-typedef void (*GodotJSWrapperFreeLockCallback)(void** p_lock, int p_type);
-extern int godot_js_wrapper_interface_get(const char* p_name);
-extern int godot_js_wrapper_object_call(
+typedef void (*RebelJSWrapperFreeLockCallback)(void** p_lock, int p_type);
+extern int rebel_js_wrapper_interface_get(const char* p_name);
+extern int rebel_js_wrapper_object_call(
     int p_id,
     const char* p_method,
     void** p_args,
     int p_argc,
-    GodotJSWrapperVariant2JSCallback p_variant2js_callback,
-    godot_js_wrapper_ex* p_cb_rval,
+    RebelJSWrapperVariant2JSCallback p_variant2js_callback,
+    rebel_js_wrapper_ex* p_cb_rval,
     void** p_lock,
-    GodotJSWrapperFreeLockCallback p_lock_callback
+    RebelJSWrapperFreeLockCallback p_lock_callback
 );
-extern int godot_js_wrapper_object_get(
+extern int rebel_js_wrapper_object_get(
     int p_id,
-    godot_js_wrapper_ex* p_val,
+    rebel_js_wrapper_ex* p_val,
     const char* p_prop
 );
-extern int godot_js_wrapper_object_getvar(
+extern int rebel_js_wrapper_object_getvar(
     int p_id,
     int p_type,
-    godot_js_wrapper_ex* p_val
+    rebel_js_wrapper_ex* p_val
 );
-extern int godot_js_wrapper_object_setvar(
+extern int rebel_js_wrapper_object_setvar(
     int p_id,
     int p_key_type,
-    godot_js_wrapper_ex* p_key_ex,
+    rebel_js_wrapper_ex* p_key_ex,
     int p_val_type,
-    godot_js_wrapper_ex* p_val_ex
+    rebel_js_wrapper_ex* p_val_ex
 );
-extern void godot_js_wrapper_object_set(
+extern void rebel_js_wrapper_object_set(
     int p_id,
     const char* p_name,
     int p_type,
-    godot_js_wrapper_ex* p_val
+    rebel_js_wrapper_ex* p_val
 );
-extern void godot_js_wrapper_object_unref(int p_id);
-extern int godot_js_wrapper_create_cb(
+extern void rebel_js_wrapper_object_unref(int p_id);
+extern int rebel_js_wrapper_create_cb(
     void* p_ref,
     void (*p_callback)(void* p_ref, int p_arg_id, int p_argc)
 );
-extern int godot_js_wrapper_create_object(
+extern int rebel_js_wrapper_create_object(
     const char* p_method,
     void** p_args,
     int p_argc,
-    GodotJSWrapperVariant2JSCallback p_variant2js_callback,
-    godot_js_wrapper_ex* p_cb_rval,
+    RebelJSWrapperVariant2JSCallback p_variant2js_callback,
+    rebel_js_wrapper_ex* p_cb_rval,
     void** p_lock,
-    GodotJSWrapperFreeLockCallback p_lock_callback
+    RebelJSWrapperFreeLockCallback p_lock_callback
 );
 };
 
@@ -94,11 +94,11 @@ private:
     static int _variant2js(
         const void** p_args,
         int p_pos,
-        godot_js_wrapper_ex* r_val,
+        rebel_js_wrapper_ex* r_val,
         void** p_lock
     );
     static void _free_lock(void** p_lock, int p_type);
-    static Variant _js2variant(int p_type, godot_js_wrapper_ex* p_val);
+    static Variant _js2variant(int p_type, rebel_js_wrapper_ex* p_val);
     static void* _alloc_variants(int p_size);
     static void _callback(void* p_ref, int p_arg_id, int p_argc);
 
@@ -130,7 +130,7 @@ public:
 
     ~JavaScriptObjectImpl() {
         if (_js_id) {
-            godot_js_wrapper_object_unref(_js_id);
+            rebel_js_wrapper_object_unref(_js_id);
         }
     }
 };
@@ -141,11 +141,11 @@ bool JavaScriptObjectImpl::_set(
 ) {
     ERR_FAIL_COND_V_MSG(!_js_id, false, "Invalid JS instance");
     const String name = p_name;
-    godot_js_wrapper_ex exchange;
+    rebel_js_wrapper_ex exchange;
     void* lock       = nullptr;
     const Variant* v = &p_value;
     int type         = _variant2js((const void**)&v, 0, &exchange, &lock);
-    godot_js_wrapper_object_set(
+    rebel_js_wrapper_object_set(
         _js_id,
         name.utf8().get_data(),
         type,
@@ -161,9 +161,9 @@ bool JavaScriptObjectImpl::_get(const StringName& p_name, Variant& r_ret)
     const {
     ERR_FAIL_COND_V_MSG(!_js_id, false, "Invalid JS instance");
     const String name = p_name;
-    godot_js_wrapper_ex exchange;
+    rebel_js_wrapper_ex exchange;
     int type =
-        godot_js_wrapper_object_get(_js_id, &exchange, name.utf8().get_data());
+        rebel_js_wrapper_object_get(_js_id, &exchange, name.utf8().get_data());
     r_ret = _js2variant(type, &exchange);
     return true;
 }
@@ -173,11 +173,11 @@ Variant JavaScriptObjectImpl::getvar(const Variant& p_key, bool* r_valid)
     if (r_valid) {
         *r_valid = false;
     }
-    godot_js_wrapper_ex exchange;
+    rebel_js_wrapper_ex exchange;
     void* lock       = nullptr;
     const Variant* v = &p_key;
     int prop_type    = _variant2js((const void**)&v, 0, &exchange, &lock);
-    int type = godot_js_wrapper_object_getvar(_js_id, prop_type, &exchange);
+    int type = rebel_js_wrapper_object_getvar(_js_id, prop_type, &exchange);
     if (lock) {
         _free_lock(&lock, prop_type);
     }
@@ -198,14 +198,14 @@ void JavaScriptObjectImpl::setvar(
     if (r_valid) {
         *r_valid = false;
     }
-    godot_js_wrapper_ex kex, vex;
+    rebel_js_wrapper_ex kex, vex;
     void* klock       = nullptr;
     void* vlock       = nullptr;
     const Variant* kv = &p_key;
     const Variant* vv = &p_value;
     int ktype         = _variant2js((const void**)&kv, 0, &kex, &klock);
     int vtype         = _variant2js((const void**)&vv, 0, &vex, &vlock);
-    int ret = godot_js_wrapper_object_setvar(_js_id, ktype, &kex, vtype, &vex);
+    int ret = rebel_js_wrapper_object_setvar(_js_id, ktype, &kex, vtype, &vex);
     if (klock) {
         _free_lock(&klock, ktype);
     }
@@ -236,7 +236,7 @@ void JavaScriptObjectImpl::_free_lock(void** p_lock, int p_type) {
 
 Variant JavaScriptObjectImpl::_js2variant(
     int p_type,
-    godot_js_wrapper_ex* p_val
+    rebel_js_wrapper_ex* p_val
 ) {
     Variant::Type type = (Variant::Type)p_type;
     switch (type) {
@@ -262,7 +262,7 @@ Variant JavaScriptObjectImpl::_js2variant(
 int JavaScriptObjectImpl::_variant2js(
     const void** p_args,
     int p_pos,
-    godot_js_wrapper_ex* r_val,
+    rebel_js_wrapper_ex* r_val,
     void** p_lock
 ) {
     const Variant** args = (const Variant**)p_args;
@@ -306,10 +306,10 @@ Variant JavaScriptObjectImpl::call(
     int p_argc,
     Variant::CallError& r_error
 ) {
-    godot_js_wrapper_ex exchange;
+    rebel_js_wrapper_ex exchange;
     const String method = p_method;
     void* lock          = nullptr;
-    const int type      = godot_js_wrapper_object_call(
+    const int type      = rebel_js_wrapper_object_call(
         _js_id,
         method.utf8().get_data(),
         (void**)p_args,
@@ -333,10 +333,10 @@ void JavaScriptObjectImpl::_callback(void* p_ref, int p_args_id, int p_argc) {
     Vector<const Variant*> argp;
     Array arg_arr;
     for (int i = 0; i < p_argc; i++) {
-        godot_js_wrapper_ex exchange;
+        rebel_js_wrapper_ex exchange;
         exchange.i = i;
         int type =
-            godot_js_wrapper_object_getvar(p_args_id, Variant::INT, &exchange);
+            rebel_js_wrapper_object_getvar(p_args_id, Variant::INT, &exchange);
         arg_arr.push_back(_js2variant(type, &exchange));
     }
     Variant arg            = arg_arr;
@@ -353,12 +353,12 @@ Ref<JavaScriptObject> JavaScript::create_callback(
     out->_ref                     = p_ref;
     out->_method                  = p_method;
     out->_js_id =
-        godot_js_wrapper_create_cb(out.ptr(), JavaScriptObjectImpl::_callback);
+        rebel_js_wrapper_create_cb(out.ptr(), JavaScriptObjectImpl::_callback);
     return out;
 }
 
 Ref<JavaScriptObject> JavaScript::get_interface(const String& p_interface) {
-    int js_id = godot_js_wrapper_interface_get(p_interface.utf8().get_data());
+    int js_id = rebel_js_wrapper_interface_get(p_interface.utf8().get_data());
     ERR_FAIL_COND_V_MSG(
         !js_id,
         Ref<JavaScriptObject>(),
@@ -383,11 +383,11 @@ Variant JavaScript::_create_object_bind(
         r_error.expected = Variant::STRING;
         return Ref<JavaScriptObject>();
     }
-    godot_js_wrapper_ex exchange;
+    rebel_js_wrapper_ex exchange;
     const String object  = *p_args[0];
     void* lock           = nullptr;
     const Variant** args = p_argcount > 1 ? &p_args[1] : nullptr;
-    const int type       = godot_js_wrapper_create_object(
+    const int type       = rebel_js_wrapper_create_object(
         object.utf8().get_data(),
         (void**)args,
         p_argcount - 1,
@@ -411,7 +411,7 @@ union js_eval_ret {
     char* s;
 };
 
-extern int godot_js_eval(
+extern int rebel_js_eval(
     const char* p_js,
     int p_use_global_ctx,
     union js_eval_ret* p_union_ptr,
@@ -438,7 +438,7 @@ Variant JavaScript::eval(const String& p_code, bool p_use_global_exec_context) {
     PoolByteArray::Write arr_write;
     union js_eval_ret js_data;
     memset(&js_data, 0, sizeof(js_data));
-    Variant::Type return_type = static_cast<Variant::Type>(godot_js_eval(
+    Variant::Type return_type = static_cast<Variant::Type>(rebel_js_eval(
         p_code.utf8().get_data(),
         p_use_global_exec_context,
         &js_data,
@@ -472,7 +472,7 @@ void JavaScript::download_buffer(
     const String& p_name,
     const String& p_mime
 ) {
-    godot_js_os_download_buffer(
+    rebel_js_os_download_buffer(
         p_arr.ptr(),
         p_arr.size(),
         p_name.utf8().get_data(),
