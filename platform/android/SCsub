@@ -61,7 +61,7 @@ if lib_arch_dir != "":
     env_android.Command(
         out_dir + "/librebel_android.so",
         "#bin/librebel" + env["SHLIBSUFFIX"],
-        Move("$TARGET", "$SOURCE"),
+        Copy("$TARGET", "$SOURCE"),
     )
 
     stl_lib_path = (
