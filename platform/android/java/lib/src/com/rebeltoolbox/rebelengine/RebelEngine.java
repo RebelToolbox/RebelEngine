@@ -18,7 +18,7 @@ public class RebelEngine {
     public static RebelIO io;
 
     static {
-        System.loadLibrary("godot_android");
+        System.loadLibrary("rebel_android");
     }
 
     /**

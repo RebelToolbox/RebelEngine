@@ -22,8 +22,8 @@
  */
 class NetSocketAndroid : public NetSocketPosix {
 private:
-    static jobject net_utils;
-    static jclass cls;
+    static jobject wifi_multicast_lock;
+    static jclass wifi_multicast_lock_class;
     static jmethodID _multicast_lock_acquire;
     static jmethodID _multicast_lock_release;
 
@@ -38,7 +38,7 @@ protected:
 
 public:
     static void make_default();
-    static void setup(jobject p_net_utils);
+    static void setup(jobject p_wifi_multicast_lock);
 
     virtual void close();
 

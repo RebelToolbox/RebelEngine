@@ -158,7 +158,7 @@ ext.getExportPath = {
 ext.getExportFilename = {
     String exportFilename = project.hasProperty("export_filename") ? project.property("export_filename") : ""
     if (exportFilename == null || exportFilename.isEmpty()) {
-        exportFilename = "godot_android"
+        exportFilename = "rebel_android"
     }
     return exportFilename
 }
