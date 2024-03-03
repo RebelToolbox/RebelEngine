@@ -328,26 +328,26 @@ void touch_preprocessing(
         return;
     }
 
-    Vector<AndroidInputHandler::TouchPos> points;
+    Vector<AndroidInputHandler::Touch> touches;
     for (int i = 0; i < pointer_count; i++) {
         jfloat p[3];
         env->GetFloatArrayRegion(positions, i * 3, 3, p);
-        AndroidInputHandler::TouchPos tp;
-        tp.pos = Point2(p[1], p[2]);
-        tp.id  = (int)p[0];
-        points.push_back(tp);
+        AndroidInputHandler::Touch touch;
+        touch.pos = Point2(p[1], p[2]);
+        touch.id  = (int)p[0];
+        touches.push_back(touch);
     }
 
     if ((input_device & AINPUT_SOURCE_MOUSE) == AINPUT_SOURCE_MOUSE) {
         input_handler->process_mouse_event(
             ev,
             buttons_mask,
-            points[0].pos,
+            touches[0].pos,
             vertical_factor,
             horizontal_factor
         );
     } else {
-        input_handler->process_touch(ev, pointer, points);
+        input_handler->process_touch(ev, pointer, touches);
     }
 }
 
