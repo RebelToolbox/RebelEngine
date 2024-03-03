@@ -19,7 +19,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
     JNIEnv* env,
     jclass clazz,
     jobject activity,
-    jobject godot_instance,
+    jobject fragment,
     jobject p_asset_manager,
     jboolean p_use_apk_expansion
 );

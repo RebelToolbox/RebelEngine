@@ -465,7 +465,7 @@ public class RebelFragment
     }
 
     /**
-     * Used by the native code (java_godot_wrapper.h) to vibrate the device.
+     * Used by the native code (android_jni_os.h) to vibrate the device.
      * @param durationMs
      */
     @SuppressLint("MissingPermission")
@@ -573,7 +573,7 @@ public class RebelFragment
     }
 
     /**
-     * Used by the native code (java_godot_wrapper.h) to check whether the
+     * Used by the native code (android_jni_os.h) to check whether the
      * activity is resumed or paused.
      */
     @Keep
@@ -582,7 +582,7 @@ public class RebelFragment
     }
 
     /**
-     * Used by the native code (java_godot_wrapper.h) to access the Android
+     * Used by the native code (android_jni_os.h) to access the Android
      * surface.
      */
     @Keep
@@ -591,7 +591,7 @@ public class RebelFragment
     }
 
     /**
-     * Used by the native code (java_godot_wrapper.h) to access the input
+     * Used by the native code (android_jni_os.h) to access the input
      * fallback mapping.
      * @return The input fallback mapping for the current XR mode.
      */

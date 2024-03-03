@@ -12,7 +12,7 @@ android_files = [
     "net_socket_android.cpp",
     "java_godot_lib_jni.cpp",
     "java_class_wrapper.cpp",
-    "java_godot_wrapper.cpp",
+    "android_jni_os.cpp",
     "android_jni_io.cpp",
     "jni_utils.cpp",
     "android_keys_utils.cpp",

@@ -7,6 +7,7 @@
 #include "os_android.h"
 
 #include "android_jni_io.h"
+#include "android_jni_os.h"
 #include "core/project_settings.h"
 #include "dir_access_jandroid.h"
 #include "drivers/gles2/rasterizer_gles2.h"
@@ -14,7 +15,6 @@
 #include "drivers/unix/dir_access_unix.h"
 #include "drivers/unix/file_access_unix.h"
 #include "file_access_android.h"
-#include "java_godot_wrapper.h"
 #include "main/main.h"
 #include "net_socket_android.h"
 #include "servers/visual/visual_server_raster.h"
@@ -113,7 +113,7 @@ Error OS_Android::initialize(
     int p_video_driver,
     int p_audio_driver
 ) {
-    bool use_gl3 = godot_java->get_gles_version_code() >= 0x00030000;
+    bool use_gl3 = android_jni_os->get_gles_version_code() >= 0x00030000;
     use_gl3      = use_gl3
            && (GLOBAL_GET("rendering/quality/driver/driver_name") == "GLES3");
     bool gl_initialization_error = false;
@@ -121,7 +121,7 @@ Error OS_Android::initialize(
     while (true) {
         if (use_gl3) {
             if (RasterizerGLES3::is_viable() == OK) {
-                godot_java->gfx_init(false);
+                android_jni_os->gfx_init(false);
                 RasterizerGLES3::register_config();
                 RasterizerGLES3::make_current();
                 break;
@@ -137,7 +137,7 @@ Error OS_Android::initialize(
             }
         } else {
             if (RasterizerGLES2::is_viable() == OK) {
-                godot_java->gfx_init(true);
+                android_jni_os->gfx_init(true);
                 RasterizerGLES2::register_config();
                 RasterizerGLES2::make_current();
                 break;
@@ -174,7 +174,7 @@ Error OS_Android::initialize(
     input = memnew(InputDefault);
     input->set_use_input_buffering(true
     ); // Needed because events will come directly from the UI thread
-    input->set_fallback_mapping(godot_java->get_input_fallback_mapping());
+    input->set_fallback_mapping(android_jni_os->get_input_fallback_mapping());
 
     // power_manager = memnew(PowerAndroid);
 
@@ -194,8 +194,8 @@ void OS_Android::finalize() {
     memdelete(input);
 }
 
-GodotJavaWrapper* OS_Android::get_godot_java() {
-    return godot_java;
+AndroidJNIOS* OS_Android::get_android_jni_os() {
+    return android_jni_os;
 }
 
 AndroidJNIIO* OS_Android::get_android_jni_io() {
@@ -204,19 +204,19 @@ AndroidJNIIO* OS_Android::get_android_jni_io() {
 
 void OS_Android::alert(const String& p_alert, const String& p_title) {
     // print("ALERT: %s\n", p_alert.utf8().get_data());
-    godot_java->alert(p_alert, p_title);
+    android_jni_os->alert(p_alert, p_title);
 }
 
 bool OS_Android::request_permission(const String& p_name) {
-    return godot_java->request_permission(p_name);
+    return android_jni_os->request_permission(p_name);
 }
 
 bool OS_Android::request_permissions() {
-    return godot_java->request_permissions();
+    return android_jni_os->request_permissions();
 }
 
 Vector<String> OS_Android::get_granted_permissions() const {
-    return godot_java->get_granted_permissions();
+    return android_jni_os->get_granted_permissions();
 }
 
 Error OS_Android::open_dynamic_library(
@@ -258,7 +258,7 @@ void OS_Android::set_window_title(const String& p_title) {
     // This queries/updates the currently connected devices/joypads
     // Set_window_title is called when initializing the main loop (main.cpp)
     // therefore this place is found to be suitable (I found no better).
-    godot_java->init_input_devices();
+    android_jni_os->init_input_devices();
 }
 
 void OS_Android::set_video_mode(const VideoMode& p_video_mode, int p_screen) {}
@@ -275,7 +275,7 @@ void OS_Android::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
 void OS_Android::set_keep_screen_on(bool p_enabled) {
     OS::set_keep_screen_on(p_enabled);
 
-    godot_java->set_keep_screen_on(p_enabled);
+    android_jni_os->set_keep_screen_on(p_enabled);
 }
 
 Size2 OS_Android::get_window_size() const {
@@ -424,8 +424,8 @@ String OS_Android::get_locale() const {
 
 void OS_Android::set_clipboard(const String& p_text) {
     // DO we really need the fallback to OS_Unix here?!
-    if (godot_java->has_set_clipboard()) {
-        godot_java->set_clipboard(p_text);
+    if (android_jni_os->has_set_clipboard()) {
+        android_jni_os->set_clipboard(p_text);
     } else {
         OS_Unix::set_clipboard(p_text);
     }
@@ -433,8 +433,8 @@ void OS_Android::set_clipboard(const String& p_text) {
 
 String OS_Android::get_clipboard() const {
     // DO we really need the fallback to OS_Unix here?!
-    if (godot_java->has_get_clipboard()) {
-        return godot_java->get_clipboard();
+    if (android_jni_os->has_get_clipboard()) {
+        return android_jni_os->get_clipboard();
     }
 
     return OS_Unix::get_clipboard();
@@ -523,7 +523,7 @@ String OS_Android::get_joy_guid(int p_device) const {
 }
 
 void OS_Android::vibrate_handheld(int p_duration_ms) {
-    godot_java->vibrate(p_duration_ms);
+    android_jni_os->vibrate(p_duration_ms);
 }
 
 bool OS_Android::_check_internal_feature_support(const String& p_feature) {
@@ -548,7 +548,7 @@ bool OS_Android::_check_internal_feature_support(const String& p_feature) {
 }
 
 OS_Android::OS_Android(
-    GodotJavaWrapper* p_godot_java,
+    AndroidJNIOS* p_android_jni_os,
     AndroidJNIIO* p_android_jni_io,
     bool p_use_apk_expansion
 ) {
@@ -563,7 +563,7 @@ OS_Android::OS_Android(
     // rasterizer = NULL;
     use_gl2       = false;
 
-    godot_java     = p_godot_java;
+    android_jni_os = p_android_jni_os;
     android_jni_io = p_android_jni_io;
 
     Vector<Logger*> loggers;

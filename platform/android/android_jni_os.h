@@ -4,26 +4,21 @@
 //
 // SPDX-License-Identifier: MIT
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
-
-#ifndef JAVA_GODOT_WRAPPER_H
-#define JAVA_GODOT_WRAPPER_H
+#ifndef ANDROID_JNI_OS_H
+#define ANDROID_JNI_OS_H
 
 #include "string_android.h"
 
 #include <android/log.h>
 #include <jni.h>
 
-// Class that makes methods in
-// java/src/lib/com/rebeltoolbox/rebelengine/RebelFragment.java class callable
-// from C++
-class GodotJavaWrapper {
+class AndroidJNIOS {
 private:
-    jobject godot_instance;
     jobject activity;
-    jclass java_method_class;
+    jobject fragment;
+
     jclass activity_class;
+    jclass fragment_class;
 
     jmethodID _on_video_init              = 0;
     jmethodID _restart                    = 0;
@@ -46,12 +41,8 @@ private:
     jmethodID _get_class_loader           = 0;
 
 public:
-    GodotJavaWrapper(
-        JNIEnv* p_env,
-        jobject p_activity,
-        jobject p_godot_instance
-    );
-    ~GodotJavaWrapper();
+    AndroidJNIOS(JNIEnv* p_env, jobject p_activity, jobject p_fragment);
+    ~AndroidJNIOS();
 
     jobject get_activity();
     jobject get_member_object(
@@ -85,4 +76,4 @@ public:
     String get_input_fallback_mapping();
 };
 
-#endif /* !JAVA_GODOT_WRAPPER_H */
+#endif // ANDROID_JNI_OS_H

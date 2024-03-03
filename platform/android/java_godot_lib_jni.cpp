@@ -9,13 +9,13 @@
 #include "android/asset_manager_jni.h"
 #include "android_input_handler.h"
 #include "android_jni_io.h"
+#include "android_jni_os.h"
 #include "api/java_class_wrapper.h"
 #include "api/jni_singleton.h"
 #include "core/engine.h"
 #include "core/project_settings.h"
 #include "dir_access_jandroid.h"
 #include "file_access_android.h"
-#include "java_godot_wrapper.h"
 #include "jni_utils.h"
 #include "main/input_default.h"
 #include "main/main.h"
@@ -30,7 +30,7 @@
 static JavaClassWrapper* java_class_wrapper = NULL;
 static OS_Android* os_android               = NULL;
 static AndroidInputHandler* input_handler   = NULL;
-static GodotJavaWrapper* godot_java         = NULL;
+static AndroidJNIOS* android_jni_os         = NULL;
 static AndroidJNIIO* android_jni_io         = NULL;
 
 static bool initialized = false;
@@ -55,7 +55,7 @@ static void _initialize_java_modules() {
     Vector<String> mods = modules.split(",", false);
 
     if (mods.size()) {
-        jobject cls = godot_java->get_class_loader();
+        jobject cls = android_jni_os->get_class_loader();
 
         // TODO create wrapper for class loader
 
@@ -97,7 +97,7 @@ static void _initialize_java_modules() {
             jobject obj = env->CallStaticObjectMethod(
                 singletonClass,
                 initialize,
-                godot_java->get_activity()
+                android_jni_os->get_activity()
             );
             env->NewGlobalRef(obj);
         }
@@ -121,7 +121,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
     JNIEnv* env,
     jclass clazz,
     jobject activity,
-    jobject godot_instance,
+    jobject fragment,
     jobject p_asset_manager,
     jboolean p_use_apk_expansion
 ) {
@@ -130,11 +130,10 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
     JavaVM* jvm;
     env->GetJavaVM(&jvm);
 
-    // create our wrapper classes
-    godot_java     = new GodotJavaWrapper(env, activity, godot_instance);
+    android_jni_os = new AndroidJNIOS(env, activity, fragment);
     android_jni_io = new AndroidJNIIO(
         env,
-        godot_java->get_member_object(
+        android_jni_os->get_member_object(
             "io",
             "Lcom/rebeltoolbox/rebelengine/RebelIO;",
             env
@@ -148,19 +147,19 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
     FileAccessAndroid::asset_manager = AAssetManager_fromJava(env, amgr);
 
     DirAccessJAndroid::setup(android_jni_io->get_instance());
-    NetSocketAndroid::setup(godot_java->get_member_object(
+    NetSocketAndroid::setup(android_jni_os->get_member_object(
         "wifiMulticastLock",
         "Lcom/rebeltoolbox/rebelengine/utils/WifiMulticastLock;",
         env
     ));
 
     os_android =
-        new OS_Android(godot_java, android_jni_io, p_use_apk_expansion);
+        new OS_Android(android_jni_os, android_jni_io, p_use_apk_expansion);
 
     char wd[500];
     getcwd(wd, 500);
 
-    godot_java->on_video_init(env);
+    android_jni_os->on_video_init(env);
 }
 
 JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_ondestroy(
@@ -170,8 +169,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_ondestroy(
     if (android_jni_io) {
         delete android_jni_io;
     }
-    if (godot_java) {
-        delete godot_java;
+    if (android_jni_os) {
+        delete android_jni_os;
     }
     if (input_handler) {
         delete input_handler;
@@ -227,7 +226,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_setup(
         return; // should exit instead and print the error
     }
 
-    java_class_wrapper = memnew(JavaClassWrapper(godot_java->get_activity()));
+    java_class_wrapper =
+        memnew(JavaClassWrapper(android_jni_os->get_activity()));
     ClassDB::register_class<JNISingleton>();
     _initialize_java_modules();
 }
@@ -258,7 +258,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_newcontext(
             step.set(-1); // Ensure no further steps are attempted and no
                           // further events are sent
             os_android->main_loop_end();
-            godot_java->restart(env);
+            android_jni_os->restart(env);
         }
     }
 }
@@ -297,9 +297,9 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_step(JNIEnv* env, jclass clazz) {
             return; // should exit instead and print the error
         }
 
-        godot_java->on_setup_completed(env);
+        android_jni_os->on_setup_completed(env);
         os_android->main_loop_begin();
-        godot_java->on_main_loop_started(env);
+        android_jni_os->on_main_loop_started(env);
         step.increment();
     }
 
@@ -309,7 +309,7 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_step(JNIEnv* env, jclass clazz) {
     os_android->process_gyroscope(gyroscope);
 
     if (os_android->main_loop_iterate()) {
-        godot_java->force_quit(env);
+        android_jni_os->force_quit(env);
     }
 }
 
