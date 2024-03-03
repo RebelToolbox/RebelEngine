@@ -4,31 +4,31 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "godot_plugin_config.h"
+#include "android_plugin_config.h"
 
-const char* PluginConfigAndroid::PLUGIN_CONFIG_EXT = ".gdap";
+const char* AndroidPluginConfig::PLUGIN_CONFIG_EXT = ".gdap";
 
-const char* PluginConfigAndroid::CONFIG_SECTION         = "config";
-const char* PluginConfigAndroid::CONFIG_NAME_KEY        = "name";
-const char* PluginConfigAndroid::CONFIG_BINARY_TYPE_KEY = "binary_type";
-const char* PluginConfigAndroid::CONFIG_BINARY_KEY      = "binary";
+const char* AndroidPluginConfig::CONFIG_SECTION         = "config";
+const char* AndroidPluginConfig::CONFIG_NAME_KEY        = "name";
+const char* AndroidPluginConfig::CONFIG_BINARY_TYPE_KEY = "binary_type";
+const char* AndroidPluginConfig::CONFIG_BINARY_KEY      = "binary";
 
-const char* PluginConfigAndroid::DEPENDENCIES_SECTION    = "dependencies";
-const char* PluginConfigAndroid::DEPENDENCIES_LOCAL_KEY  = "local";
-const char* PluginConfigAndroid::DEPENDENCIES_REMOTE_KEY = "remote";
-const char* PluginConfigAndroid::DEPENDENCIES_CUSTOM_MAVEN_REPOS_KEY =
+const char* AndroidPluginConfig::DEPENDENCIES_SECTION    = "dependencies";
+const char* AndroidPluginConfig::DEPENDENCIES_LOCAL_KEY  = "local";
+const char* AndroidPluginConfig::DEPENDENCIES_REMOTE_KEY = "remote";
+const char* AndroidPluginConfig::DEPENDENCIES_CUSTOM_MAVEN_REPOS_KEY =
     "custom_maven_repos";
 
-const char* PluginConfigAndroid::BINARY_TYPE_LOCAL  = "local";
-const char* PluginConfigAndroid::BINARY_TYPE_REMOTE = "remote";
+const char* AndroidPluginConfig::BINARY_TYPE_LOCAL  = "local";
+const char* AndroidPluginConfig::BINARY_TYPE_REMOTE = "remote";
 
-const char* PluginConfigAndroid::PLUGIN_VALUE_SEPARATOR = "|";
+const char* AndroidPluginConfig::PLUGIN_VALUE_SEPARATOR = "|";
 
 /*
  * Set of prebuilt plugins.
  * Currently unused, this is just for future reference:
  */
-// static const PluginConfigAndroid MY_PREBUILT_PLUGIN = {
+// static const AndroidPluginConfig MY_PREBUILT_PLUGIN = {
 //	/*.valid_config =*/true,
 //	/*.last_updated =*/0,
 //	/*.name =*/"PluginName",
@@ -40,7 +40,7 @@ const char* PluginConfigAndroid::PLUGIN_VALUE_SEPARATOR = "|";
 // 	/*.custom_maven_repos =*/{}
 // };
 
-String PluginConfigAndroid::resolve_local_dependency_path(
+String AndroidPluginConfig::resolve_local_dependency_path(
     String plugin_config_dir,
     String dependency_path
 ) {
@@ -58,13 +58,13 @@ String PluginConfigAndroid::resolve_local_dependency_path(
     return absolute_path;
 }
 
-PluginConfigAndroid PluginConfigAndroid::resolve_prebuilt_plugin(
-    PluginConfigAndroid prebuilt_plugin,
+AndroidPluginConfig AndroidPluginConfig::resolve_prebuilt_plugin(
+    AndroidPluginConfig prebuilt_plugin,
     String plugin_config_dir
 ) {
-    PluginConfigAndroid resolved = prebuilt_plugin;
+    AndroidPluginConfig resolved = prebuilt_plugin;
     resolved.binary =
-        resolved.binary_type == PluginConfigAndroid::BINARY_TYPE_LOCAL
+        resolved.binary_type == AndroidPluginConfig::BINARY_TYPE_LOCAL
             ? resolve_local_dependency_path(
                 plugin_config_dir,
                 prebuilt_plugin.binary
@@ -82,28 +82,28 @@ PluginConfigAndroid PluginConfigAndroid::resolve_prebuilt_plugin(
     return resolved;
 }
 
-Vector<PluginConfigAndroid> PluginConfigAndroid::get_prebuilt_plugins(
+Vector<AndroidPluginConfig> AndroidPluginConfig::get_prebuilt_plugins(
     String plugins_base_dir
 ) {
-    Vector<PluginConfigAndroid> prebuilt_plugins;
+    Vector<AndroidPluginConfig> prebuilt_plugins;
     // prebuilt_plugins.push_back(resolve_prebuilt_plugin(MY_PREBUILT_PLUGIN,
     // plugins_base_dir));
     return prebuilt_plugins;
 }
 
-bool PluginConfigAndroid::is_plugin_config_valid(
-    PluginConfigAndroid plugin_config
+bool AndroidPluginConfig::is_plugin_config_valid(
+    AndroidPluginConfig plugin_config
 ) {
     bool valid_name = !plugin_config.name.empty();
     bool valid_binary_type =
-        plugin_config.binary_type == PluginConfigAndroid::BINARY_TYPE_LOCAL
-        || plugin_config.binary_type == PluginConfigAndroid::BINARY_TYPE_REMOTE;
+        plugin_config.binary_type == AndroidPluginConfig::BINARY_TYPE_LOCAL
+        || plugin_config.binary_type == AndroidPluginConfig::BINARY_TYPE_REMOTE;
 
     bool valid_binary = false;
     if (valid_binary_type) {
         valid_binary = !plugin_config.binary.empty()
                     && (plugin_config.binary_type
-                            == PluginConfigAndroid::BINARY_TYPE_REMOTE
+                            == AndroidPluginConfig::BINARY_TYPE_REMOTE
                         || FileAccess::exists(plugin_config.binary));
     }
 
@@ -120,8 +120,8 @@ bool PluginConfigAndroid::is_plugin_config_valid(
         && valid_local_dependencies;
 }
 
-uint64_t PluginConfigAndroid::get_plugin_modification_time(
-    const PluginConfigAndroid& plugin_config,
+uint64_t AndroidPluginConfig::get_plugin_modification_time(
+    const AndroidPluginConfig& plugin_config,
     const String& config_path
 ) {
     uint64_t last_modified = FileAccess::get_modified_time(config_path);
@@ -137,11 +137,11 @@ uint64_t PluginConfigAndroid::get_plugin_modification_time(
     return last_modified;
 }
 
-PluginConfigAndroid PluginConfigAndroid::load_plugin_config(
+AndroidPluginConfig AndroidPluginConfig::load_plugin_config(
     Ref<ConfigFile> config_file,
     const String& path
 ) {
-    PluginConfigAndroid plugin_config = {};
+    AndroidPluginConfig plugin_config = {};
 
     if (config_file.is_valid()) {
         Error err = config_file->load(path);
@@ -149,24 +149,24 @@ PluginConfigAndroid PluginConfigAndroid::load_plugin_config(
             String config_base_dir = path.get_base_dir();
 
             plugin_config.name = config_file->get_value(
-                PluginConfigAndroid::CONFIG_SECTION,
-                PluginConfigAndroid::CONFIG_NAME_KEY,
+                AndroidPluginConfig::CONFIG_SECTION,
+                AndroidPluginConfig::CONFIG_NAME_KEY,
                 String()
             );
             plugin_config.binary_type = config_file->get_value(
-                PluginConfigAndroid::CONFIG_SECTION,
-                PluginConfigAndroid::CONFIG_BINARY_TYPE_KEY,
+                AndroidPluginConfig::CONFIG_SECTION,
+                AndroidPluginConfig::CONFIG_BINARY_TYPE_KEY,
                 String()
             );
 
             String binary_path = config_file->get_value(
-                PluginConfigAndroid::CONFIG_SECTION,
-                PluginConfigAndroid::CONFIG_BINARY_KEY,
+                AndroidPluginConfig::CONFIG_SECTION,
+                AndroidPluginConfig::CONFIG_BINARY_KEY,
                 String()
             );
             plugin_config.binary =
                 plugin_config.binary_type
-                        == PluginConfigAndroid::BINARY_TYPE_LOCAL
+                        == AndroidPluginConfig::BINARY_TYPE_LOCAL
                     ? resolve_local_dependency_path(
                         config_base_dir,
                         binary_path
@@ -174,12 +174,12 @@ PluginConfigAndroid PluginConfigAndroid::load_plugin_config(
                     : binary_path;
 
             if (config_file->has_section(
-                    PluginConfigAndroid::DEPENDENCIES_SECTION
+                    AndroidPluginConfig::DEPENDENCIES_SECTION
                 )) {
                 Vector<String> local_dependencies_paths =
                     config_file->get_value(
-                        PluginConfigAndroid::DEPENDENCIES_SECTION,
-                        PluginConfigAndroid::DEPENDENCIES_LOCAL_KEY,
+                        AndroidPluginConfig::DEPENDENCIES_SECTION,
+                        AndroidPluginConfig::DEPENDENCIES_LOCAL_KEY,
                         Vector<String>()
                     );
                 if (!local_dependencies_paths.empty()) {
@@ -194,13 +194,13 @@ PluginConfigAndroid PluginConfigAndroid::load_plugin_config(
                 }
 
                 plugin_config.remote_dependencies = config_file->get_value(
-                    PluginConfigAndroid::DEPENDENCIES_SECTION,
-                    PluginConfigAndroid::DEPENDENCIES_REMOTE_KEY,
+                    AndroidPluginConfig::DEPENDENCIES_SECTION,
+                    AndroidPluginConfig::DEPENDENCIES_REMOTE_KEY,
                     Vector<String>()
                 );
                 plugin_config.maven_repos = config_file->get_value(
-                    PluginConfigAndroid::DEPENDENCIES_SECTION,
-                    PluginConfigAndroid::DEPENDENCIES_CUSTOM_MAVEN_REPOS_KEY,
+                    AndroidPluginConfig::DEPENDENCIES_SECTION,
+                    AndroidPluginConfig::DEPENDENCIES_CUSTOM_MAVEN_REPOS_KEY,
                     Vector<String>()
                 );
             }
@@ -214,15 +214,15 @@ PluginConfigAndroid PluginConfigAndroid::load_plugin_config(
     return plugin_config;
 }
 
-String PluginConfigAndroid::get_plugins_dependencies(
+String AndroidPluginConfig::get_plugins_dependencies(
     String type,
-    Vector<PluginConfigAndroid> plugins_configs
+    Vector<AndroidPluginConfig> plugins_configs
 ) {
     String plugins_dependencies;
     if (!plugins_configs.empty()) {
         Vector<String> dependencies;
         for (int i = 0; i < plugins_configs.size(); i++) {
-            PluginConfigAndroid config = plugins_configs[i];
+            AndroidPluginConfig config = plugins_configs[i];
             if (!config.valid_config) {
                 continue;
             }
@@ -231,31 +231,31 @@ String PluginConfigAndroid::get_plugins_dependencies(
                 dependencies.push_back(config.binary);
             }
 
-            if (type == PluginConfigAndroid::BINARY_TYPE_LOCAL) {
+            if (type == AndroidPluginConfig::BINARY_TYPE_LOCAL) {
                 dependencies.append_array(config.local_dependencies);
             }
 
-            if (type == PluginConfigAndroid::BINARY_TYPE_REMOTE) {
+            if (type == AndroidPluginConfig::BINARY_TYPE_REMOTE) {
                 dependencies.append_array(config.remote_dependencies);
             }
         }
 
         plugins_dependencies =
-            String(PluginConfigAndroid::PLUGIN_VALUE_SEPARATOR)
+            String(AndroidPluginConfig::PLUGIN_VALUE_SEPARATOR)
                 .join(dependencies);
     }
 
     return plugins_dependencies;
 }
 
-String PluginConfigAndroid::get_plugins_maven_repos(
-    Vector<PluginConfigAndroid> plugins_configs
+String AndroidPluginConfig::get_plugins_maven_repos(
+    Vector<AndroidPluginConfig> plugins_configs
 ) {
     String maven_repos;
     if (!plugins_configs.empty()) {
         Vector<String> repos_urls;
         for (int i = 0; i < plugins_configs.size(); i++) {
-            PluginConfigAndroid config = plugins_configs[i];
+            AndroidPluginConfig config = plugins_configs[i];
             if (!config.valid_config) {
                 continue;
             }
@@ -263,20 +263,20 @@ String PluginConfigAndroid::get_plugins_maven_repos(
             repos_urls.append_array(config.maven_repos);
         }
 
-        maven_repos = String(PluginConfigAndroid::PLUGIN_VALUE_SEPARATOR)
+        maven_repos = String(AndroidPluginConfig::PLUGIN_VALUE_SEPARATOR)
                           .join(repos_urls);
     }
     return maven_repos;
 }
 
-String PluginConfigAndroid::get_plugins_names(
-    Vector<PluginConfigAndroid> plugins_configs
+String AndroidPluginConfig::get_plugins_names(
+    Vector<AndroidPluginConfig> plugins_configs
 ) {
     String plugins_names;
     if (!plugins_configs.empty()) {
         Vector<String> names;
         for (int i = 0; i < plugins_configs.size(); i++) {
-            PluginConfigAndroid config = plugins_configs[i];
+            AndroidPluginConfig config = plugins_configs[i];
             if (!config.valid_config) {
                 continue;
             }
@@ -284,7 +284,7 @@ String PluginConfigAndroid::get_plugins_names(
             names.push_back(config.name);
         }
         plugins_names =
-            String(PluginConfigAndroid::PLUGIN_VALUE_SEPARATOR).join(names);
+            String(AndroidPluginConfig::PLUGIN_VALUE_SEPARATOR).join(names);
     }
 
     return plugins_names;
