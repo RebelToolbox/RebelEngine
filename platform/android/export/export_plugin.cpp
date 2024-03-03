@@ -594,7 +594,7 @@ bool EditorExportPlatformAndroid::_should_compress_asset(
         ".awb",
         ".wma",
         ".wmv",
-        // Godot-specific:
+        // Rebel-specific:
         ".webp", // Same reasoning as .png
         ".cfb",  // Don't let small config files slow-down startup
         ".scn",  // Binary scenes are usually already compressed
@@ -2412,7 +2412,7 @@ void EditorExportPlatformAndroid::get_export_options(
             PROPERTY_HINT_PLACEHOLDER_TEXT,
             "ext.domain.name"
         ),
-        "org.godotengine.$genname"
+        "com.example.$genname"
     ));
     r_options->push_back(ExportOption(
         PropertyInfo(
