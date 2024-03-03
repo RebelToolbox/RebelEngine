@@ -360,7 +360,7 @@ public class RebelFragment
     }
 
     /**
-     * Used by the native code (java_godot_lib_jni.cpp) to complete
+     * Used by the native code (android_jni.cpp) to complete
      * initialization of the GLSurfaceView view and renderer.
      */
     @Keep

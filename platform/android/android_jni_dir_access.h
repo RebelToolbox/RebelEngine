@@ -7,8 +7,8 @@
 #ifndef ANDROID_JNI_DIR_ACCESS
 #define ANDROID_JNI_DIR_ACCESS
 
+#include "android_jni.h"
 #include "core/os/dir_access.h"
-#include "java_godot_lib_jni.h"
 
 #include <stdio.h>
 

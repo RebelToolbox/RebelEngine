@@ -10,7 +10,7 @@ android_files = [
     "android_jni_dir_access.cpp",
     "thread_jandroid.cpp",
     "net_socket_android.cpp",
-    "java_godot_lib_jni.cpp",
+    "android_jni.cpp",
     "java_class_wrapper.cpp",
     "android_jni_os.cpp",
     "android_jni_io.cpp",

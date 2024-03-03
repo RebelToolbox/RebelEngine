@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "java_godot_lib_jni.h"
+#include "android_jni.h"
 
 #include "android/asset_manager_jni.h"
 #include "android_input_handler.h"
@@ -283,9 +283,9 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_step(JNIEnv* env, jclass clazz) {
     }
 
     if (step.get() == 0) {
-        // Since Godot is initialized on the UI thread, _main_thread_id was set
-        // to that thread's id, but for Godot purposes, the main thread is the
-        // one running the game loop
+        // Rebel is initialized on Android's UI thread, so
+        // _main_thread_id was set to that thread's id, but
+        // Rebel Engine's main thread is the one running the game loop.
         Main::setup2(Thread::get_caller_id());
         input_handler = new AndroidInputHandler();
         step.increment();

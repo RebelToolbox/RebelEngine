@@ -4,16 +4,16 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JAVA_GODOT_LIB_JNI_H
-#define JAVA_GODOT_LIB_JNI_H
+#ifndef ANDROID_JNI_H
+#define ANDROID_JNI_H
 
 #include <android/log.h>
 #include <jni.h>
 
-// These functions can be called from within JAVA and are the means by which our
-// JAVA implementation calls back into our C++ code. See
-// java/lib/src/com/rebeltoolbox/rebelengine/RebelEngine.java for the JAVA side
-// of this (yes that's why we have the long names)
+// The Rebel Engine Android Java Native Interface.
+// For the Android declrations of these methods, see
+// java/lib/src/com/rebeltoolbox/rebelengine/RebelEngine.java
+
 extern "C" {
 JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
     JNIEnv* env,
@@ -234,4 +234,4 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_onRendererPaused(
 );
 }
 
-#endif /* !JAVA_GODOT_LIB_JNI_H */
+#endif // ANDROID_JNI_H
