@@ -95,12 +95,13 @@ static void _initialize_java_modules() {
                 singletonClass,
                 "initialize",
                 "(Landroid/app/Activity;)Lcom/rebeltoolbox/rebelengine/"
-                "Godot$SingletonBase;"
+                "RebelFragment$SingletonBase;"
             );
             ERR_CONTINUE_MSG(
                 !initialize,
-                "Couldn't find proper initialize function 'public static "
-                "Godot.SingletonBase Class::initialize(Activity p_activity)' "
+                "Couldn't find proper initialize function "
+                "'public static RebelFragment.SingletonBase Class::initialize("
+                "Activity p_activity)'"
                 "initializer for singleton class: "
                     + m + "."
             );
@@ -147,7 +148,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
         env,
         godot_java->get_member_object(
             "io",
-            "Lcom/rebeltoolbox/rebelengine/GodotIO;",
+            "Lcom/rebeltoolbox/rebelengine/RebelIO;",
             env
         )
     );
@@ -160,8 +161,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
 
     DirAccessJAndroid::setup(godot_io_java->get_instance());
     NetSocketAndroid::setup(godot_java->get_member_object(
-        "netUtils",
-        "Lcom/rebeltoolbox/rebelengine/utils/GodotNetUtils;",
+        "wifiMulticastLock",
+        "Lcom/rebeltoolbox/rebelengine/utils/WifiMulticastLock;",
         env
     ));
 

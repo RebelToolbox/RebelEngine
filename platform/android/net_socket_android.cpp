@@ -8,36 +8,40 @@
 
 #include "thread_jandroid.h"
 
-jobject NetSocketAndroid::net_utils                 = 0;
-jclass NetSocketAndroid::cls                        = 0;
+jobject NetSocketAndroid::wifi_multicast_lock       = 0;
+jclass NetSocketAndroid::wifi_multicast_lock_class  = 0;
 jmethodID NetSocketAndroid::_multicast_lock_acquire = 0;
 jmethodID NetSocketAndroid::_multicast_lock_release = 0;
 
-void NetSocketAndroid::setup(jobject p_net_utils) {
+void NetSocketAndroid::setup(jobject p_wifi_multicast_lock) {
     JNIEnv* env = get_jni_env();
 
-    net_utils = env->NewGlobalRef(p_net_utils);
-
-    jclass c = env->GetObjectClass(net_utils);
-    cls      = (jclass)env->NewGlobalRef(c);
-
-    _multicast_lock_acquire =
-        env->GetMethodID(cls, "multicastLockAcquire", "()V");
-    _multicast_lock_release =
-        env->GetMethodID(cls, "multicastLockRelease", "()V");
+    wifi_multicast_lock       = env->NewGlobalRef(p_wifi_multicast_lock);
+    jclass lock_class         = env->GetObjectClass(wifi_multicast_lock);
+    wifi_multicast_lock_class = (jclass)env->NewGlobalRef(lock_class);
+    _multicast_lock_acquire   = env->GetMethodID(
+        wifi_multicast_lock_class,
+        "multicastLockAcquire",
+        "()V"
+    );
+    _multicast_lock_release = env->GetMethodID(
+        wifi_multicast_lock_class,
+        "multicastLockRelease",
+        "()V"
+    );
 }
 
 void NetSocketAndroid::multicast_lock_acquire() {
     if (_multicast_lock_acquire) {
         JNIEnv* env = get_jni_env();
-        env->CallVoidMethod(net_utils, _multicast_lock_acquire);
+        env->CallVoidMethod(wifi_multicast_lock, _multicast_lock_acquire);
     }
 }
 
 void NetSocketAndroid::multicast_lock_release() {
     if (_multicast_lock_release) {
         JNIEnv* env = get_jni_env();
-        env->CallVoidMethod(net_utils, _multicast_lock_release);
+        env->CallVoidMethod(wifi_multicast_lock, _multicast_lock_release);
     }
 }
 

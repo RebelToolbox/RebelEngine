@@ -16,7 +16,7 @@
 #include <jni.h>
 
 // Class that makes functions in
-// java/src/com/rebeltoolbox/rebelengine/GodotIO.java callable from C++
+// java/src/com/rebeltoolbox/rebelengine/RebelIO.java callable from C++
 class GodotIOJavaWrapper {
 private:
     jobject io_object;

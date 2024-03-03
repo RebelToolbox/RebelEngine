@@ -12,8 +12,8 @@
 // environment we can't cache it. For IO we call all access methods from our
 // thread and we thus get a valid JNIEnv from ThreadAndroid.
 
-GodotIOJavaWrapper::GodotIOJavaWrapper(JNIEnv* p_env, jobject io_object) {
-    io_object = p_env->NewGlobalRef(io_object);
+GodotIOJavaWrapper::GodotIOJavaWrapper(JNIEnv* p_env, jobject p_io_object) {
+    io_object = p_env->NewGlobalRef(p_io_object);
     if (io_object) {
         cls = p_env->GetObjectClass(io_object);
         if (cls) {
