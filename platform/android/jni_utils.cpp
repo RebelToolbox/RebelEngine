@@ -320,7 +320,7 @@ Variant _jobject_to_variant(JNIEnv* env, jobject obj) {
     };
 
     if (name == "java.util.HashMap"
-        || name == "org.godotengine.godot.Dictionary") {
+        || name == "com.rebeltoolbox.rebelengine.Dictionary") {
         Dictionary ret;
         jclass oclass = c;
         jmethodID get_keys =
@@ -354,18 +354,18 @@ Variant::Type get_jni_type(const String& p_type) {
         const char* name;
         Variant::Type type;
     } _type_to_vtype[] = {
-        {"void",                             Variant::NIL              },
-        {"boolean",                          Variant::BOOL             },
-        {"int",                              Variant::INT              },
-        {"float",                            Variant::REAL             },
-        {"double",                           Variant::REAL             },
-        {"java.lang.String",                 Variant::STRING           },
-        {"[I",                               Variant::POOL_INT_ARRAY   },
-        {"[B",                               Variant::POOL_BYTE_ARRAY  },
-        {"[F",                               Variant::POOL_REAL_ARRAY  },
-        {"[Ljava.lang.String;",              Variant::POOL_STRING_ARRAY},
-        {"org.godotengine.godot.Dictionary", Variant::DICTIONARY       },
-        {NULL,                               Variant::NIL              }
+        {"void",                                    Variant::NIL              },
+        {"boolean",                                 Variant::BOOL             },
+        {"int",                                     Variant::INT              },
+        {"float",                                   Variant::REAL             },
+        {"double",                                  Variant::REAL             },
+        {"java.lang.String",                        Variant::STRING           },
+        {"[I",                                      Variant::POOL_INT_ARRAY   },
+        {"[B",                                      Variant::POOL_BYTE_ARRAY  },
+        {"[F",                                      Variant::POOL_REAL_ARRAY  },
+        {"[Ljava.lang.String;",                     Variant::POOL_STRING_ARRAY},
+        {"com.rebeltoolbox.rebelengine.Dictionary", Variant::DICTIONARY       },
+        {NULL,                                      Variant::NIL              }
     };
 
     int idx = 0;
