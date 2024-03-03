@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "java_godot_io_wrapper.h"
+#include "android_jni_io.h"
 
 #include "core/error_list.h"
 
@@ -12,55 +12,59 @@
 // environment we can't cache it. For IO we call all access methods from our
 // thread and we thus get a valid JNIEnv from ThreadAndroid.
 
-GodotIOJavaWrapper::GodotIOJavaWrapper(JNIEnv* p_env, jobject p_io_object) {
+AndroidJNIIO::AndroidJNIIO(JNIEnv* p_env, jobject p_io_object) {
     io_object = p_env->NewGlobalRef(p_io_object);
     if (io_object) {
-        cls = p_env->GetObjectClass(io_object);
-        if (cls) {
-            cls = (jclass)p_env->NewGlobalRef(cls);
+        io_class = p_env->GetObjectClass(io_object);
+        if (io_class) {
+            io_class = (jclass)p_env->NewGlobalRef(io_class);
         } else {
             // this is a pretty serious fail.. bail... pointers will stay 0
             return;
         }
 
-        _open_URI = p_env->GetMethodID(cls, "openURI", "(Ljava/lang/String;)I");
+        _open_URI =
+            p_env->GetMethodID(io_class, "openURI", "(Ljava/lang/String;)I");
         _get_cache_dir =
-            p_env->GetMethodID(cls, "getCacheDir", "()Ljava/lang/String;");
+            p_env->GetMethodID(io_class, "getCacheDir", "()Ljava/lang/String;");
         _get_data_dir =
-            p_env->GetMethodID(cls, "getDataDir", "()Ljava/lang/String;");
+            p_env->GetMethodID(io_class, "getDataDir", "()Ljava/lang/String;");
         _get_locale =
-            p_env->GetMethodID(cls, "getLocale", "()Ljava/lang/String;");
+            p_env->GetMethodID(io_class, "getLocale", "()Ljava/lang/String;");
         _get_model =
-            p_env->GetMethodID(cls, "getModel", "()Ljava/lang/String;");
-        _get_screen_DPI = p_env->GetMethodID(cls, "getScreenDPI", "()I");
+            p_env->GetMethodID(io_class, "getModel", "()Ljava/lang/String;");
+        _get_screen_DPI = p_env->GetMethodID(io_class, "getScreenDPI", "()I");
         _get_window_safe_area =
-            p_env->GetMethodID(cls, "getWindowSafeArea", "()[I"),
+            p_env->GetMethodID(io_class, "getWindowSafeArea", "()[I"),
         _get_unique_id =
-            p_env->GetMethodID(cls, "getUniqueID", "()Ljava/lang/String;");
+            p_env->GetMethodID(io_class, "getUniqueID", "()Ljava/lang/String;");
         _show_keyboard = p_env->GetMethodID(
-            cls,
+            io_class,
             "showKeyboard",
             "(Ljava/lang/String;ZIII)V"
         );
-        _hide_keyboard = p_env->GetMethodID(cls, "hideKeyboard", "()V");
+        _hide_keyboard = p_env->GetMethodID(io_class, "hideKeyboard", "()V");
         _set_screen_orientation =
-            p_env->GetMethodID(cls, "setScreenOrientation", "(I)V");
+            p_env->GetMethodID(io_class, "setScreenOrientation", "(I)V");
         _get_screen_orientation =
-            p_env->GetMethodID(cls, "getScreenOrientation", "()I");
-        _get_system_dir =
-            p_env->GetMethodID(cls, "getSystemDir", "(IZ)Ljava/lang/String;");
+            p_env->GetMethodID(io_class, "getScreenOrientation", "()I");
+        _get_system_dir = p_env->GetMethodID(
+            io_class,
+            "getSystemDir",
+            "(IZ)Ljava/lang/String;"
+        );
     }
 }
 
-GodotIOJavaWrapper::~GodotIOJavaWrapper() {
+AndroidJNIIO::~AndroidJNIIO() {
     // nothing to do here for now
 }
 
-jobject GodotIOJavaWrapper::get_instance() {
+jobject AndroidJNIIO::get_instance() {
     return io_object;
 }
 
-Error GodotIOJavaWrapper::open_uri(const String& p_uri) {
+Error AndroidJNIIO::open_uri(const String& p_uri) {
     if (_open_URI) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, ERR_UNAVAILABLE);
@@ -72,7 +76,7 @@ Error GodotIOJavaWrapper::open_uri(const String& p_uri) {
     }
 }
 
-String GodotIOJavaWrapper::get_cache_dir() {
+String AndroidJNIIO::get_cache_dir() {
     if (_get_cache_dir) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
@@ -83,7 +87,7 @@ String GodotIOJavaWrapper::get_cache_dir() {
     }
 }
 
-String GodotIOJavaWrapper::get_user_data_dir() {
+String AndroidJNIIO::get_user_data_dir() {
     if (_get_data_dir) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
@@ -94,7 +98,7 @@ String GodotIOJavaWrapper::get_user_data_dir() {
     }
 }
 
-String GodotIOJavaWrapper::get_locale() {
+String AndroidJNIIO::get_locale() {
     if (_get_locale) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
@@ -105,7 +109,7 @@ String GodotIOJavaWrapper::get_locale() {
     }
 }
 
-String GodotIOJavaWrapper::get_model() {
+String AndroidJNIIO::get_model() {
     if (_get_model) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
@@ -116,7 +120,7 @@ String GodotIOJavaWrapper::get_model() {
     }
 }
 
-int GodotIOJavaWrapper::get_screen_dpi() {
+int AndroidJNIIO::get_screen_dpi() {
     if (_get_screen_DPI) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, 160);
@@ -126,7 +130,7 @@ int GodotIOJavaWrapper::get_screen_dpi() {
     }
 }
 
-void GodotIOJavaWrapper::get_window_safe_area(int (&p_rect_xywh)[4]) {
+void AndroidJNIIO::get_window_safe_area(int (&p_rect_xywh)[4]) {
     if (_get_window_safe_area) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND(env == nullptr);
@@ -141,7 +145,7 @@ void GodotIOJavaWrapper::get_window_safe_area(int (&p_rect_xywh)[4]) {
     }
 }
 
-String GodotIOJavaWrapper::get_unique_id() {
+String AndroidJNIIO::get_unique_id() {
     if (_get_unique_id) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
@@ -152,11 +156,11 @@ String GodotIOJavaWrapper::get_unique_id() {
     }
 }
 
-bool GodotIOJavaWrapper::has_vk() {
+bool AndroidJNIIO::has_vk() {
     return (_show_keyboard != 0) && (_hide_keyboard != 0);
 }
 
-void GodotIOJavaWrapper::show_vk(
+void AndroidJNIIO::show_vk(
     const String& p_existing,
     bool p_multiline,
     int p_max_input_length,
@@ -179,7 +183,7 @@ void GodotIOJavaWrapper::show_vk(
     }
 }
 
-void GodotIOJavaWrapper::hide_vk() {
+void AndroidJNIIO::hide_vk() {
     if (_hide_keyboard) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND(env == nullptr);
@@ -187,7 +191,7 @@ void GodotIOJavaWrapper::hide_vk() {
     }
 }
 
-void GodotIOJavaWrapper::set_screen_orientation(int p_orient) {
+void AndroidJNIIO::set_screen_orientation(int p_orient) {
     if (_set_screen_orientation) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND(env == nullptr);
@@ -195,7 +199,7 @@ void GodotIOJavaWrapper::set_screen_orientation(int p_orient) {
     }
 }
 
-int GodotIOJavaWrapper::get_screen_orientation() const {
+int AndroidJNIIO::get_screen_orientation() const {
     if (_get_screen_orientation) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, 0);
@@ -205,7 +209,7 @@ int GodotIOJavaWrapper::get_screen_orientation() const {
     }
 }
 
-String GodotIOJavaWrapper::get_system_dir(int p_dir, bool p_shared_storage) {
+String AndroidJNIIO::get_system_dir(int p_dir, bool p_shared_storage) {
     if (_get_system_dir) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String("."));
@@ -225,10 +229,10 @@ String GodotIOJavaWrapper::get_system_dir(int p_dir, bool p_shared_storage) {
 // ensure the change is immediately visible to other threads.
 static SafeNumeric<int> virtual_keyboard_height;
 
-int GodotIOJavaWrapper::get_vk_height() {
+int AndroidJNIIO::get_vk_height() {
     return virtual_keyboard_height.get();
 }
 
-void GodotIOJavaWrapper::set_vk_height(int p_height) {
+void AndroidJNIIO::set_vk_height(int p_height) {
     virtual_keyboard_height.set(p_height);
 }

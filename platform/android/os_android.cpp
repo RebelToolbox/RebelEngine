@@ -6,6 +6,7 @@
 
 #include "os_android.h"
 
+#include "android_jni_io.h"
 #include "core/project_settings.h"
 #include "dir_access_jandroid.h"
 #include "drivers/gles2/rasterizer_gles2.h"
@@ -13,7 +14,6 @@
 #include "drivers/unix/dir_access_unix.h"
 #include "drivers/unix/file_access_unix.h"
 #include "file_access_android.h"
-#include "java_godot_io_wrapper.h"
 #include "java_godot_wrapper.h"
 #include "main/main.h"
 #include "net_socket_android.h"
@@ -198,8 +198,8 @@ GodotJavaWrapper* OS_Android::get_godot_java() {
     return godot_java;
 }
 
-GodotIOJavaWrapper* OS_Android::get_godot_io_java() {
-    return godot_io_java;
+AndroidJNIIO* OS_Android::get_android_jni_io() {
+    return android_jni_io;
 }
 
 void OS_Android::alert(const String& p_alert, const String& p_title) {
@@ -284,7 +284,7 @@ Size2 OS_Android::get_window_size() const {
 
 Rect2 OS_Android::get_window_safe_area() const {
     int xywh[4];
-    godot_io_java->get_window_safe_area(xywh);
+    android_jni_io->get_window_safe_area(xywh);
     return Rect2(xywh[0], xywh[1], xywh[2], xywh[3]);
 }
 
@@ -358,7 +358,7 @@ bool OS_Android::has_virtual_keyboard() const {
 }
 
 int OS_Android::get_virtual_keyboard_height() const {
-    return godot_io_java->get_vk_height();
+    return android_jni_io->get_vk_height();
 
     // ERR_PRINT("Cannot obtain virtual keyboard height.");
     // return 0;
@@ -372,8 +372,8 @@ void OS_Android::show_virtual_keyboard(
     int p_cursor_start,
     int p_cursor_end
 ) {
-    if (godot_io_java->has_vk()) {
-        godot_io_java->show_vk(
+    if (android_jni_io->has_vk()) {
+        android_jni_io->show_vk(
             p_existing_text,
             p_multiline,
             p_max_input_length,
@@ -386,8 +386,8 @@ void OS_Android::show_virtual_keyboard(
 }
 
 void OS_Android::hide_virtual_keyboard() {
-    if (godot_io_java->has_vk()) {
-        godot_io_java->hide_vk();
+    if (android_jni_io->has_vk()) {
+        android_jni_io->hide_vk();
     } else {
         ERR_PRINT("Virtual keyboard not available");
     };
@@ -406,7 +406,7 @@ void OS_Android::set_display_size(Size2 p_size) {
 }
 
 Error OS_Android::shell_open(String p_uri) {
-    return godot_io_java->open_uri(p_uri);
+    return android_jni_io->open_uri(p_uri);
 }
 
 String OS_Android::get_resource_dir() const {
@@ -414,7 +414,7 @@ String OS_Android::get_resource_dir() const {
 }
 
 String OS_Android::get_locale() const {
-    String locale = godot_io_java->get_locale();
+    String locale = android_jni_io->get_locale();
     if (locale != "") {
         return locale;
     }
@@ -441,7 +441,7 @@ String OS_Android::get_clipboard() const {
 }
 
 String OS_Android::get_model_name() const {
-    String model = godot_io_java->get_model();
+    String model = android_jni_io->get_model();
     if (model != "") {
         return model;
     }
@@ -450,7 +450,7 @@ String OS_Android::get_model_name() const {
 }
 
 int OS_Android::get_screen_dpi(int p_screen) const {
-    return godot_io_java->get_screen_dpi();
+    return android_jni_io->get_screen_dpi();
 }
 
 String OS_Android::get_data_path() const {
@@ -462,7 +462,7 @@ String OS_Android::get_user_data_dir() const {
         return data_dir_cache;
     }
 
-    String data_dir = godot_io_java->get_user_data_dir();
+    String data_dir = android_jni_io->get_user_data_dir();
     if (data_dir != "") {
         data_dir_cache = _remove_symlink(data_dir);
         return data_dir_cache;
@@ -471,7 +471,7 @@ String OS_Android::get_user_data_dir() const {
 }
 
 String OS_Android::get_cache_path() const {
-    String cache_dir = godot_io_java->get_cache_dir();
+    String cache_dir = android_jni_io->get_cache_dir();
     if (cache_dir != "") {
         cache_dir = _remove_symlink(cache_dir);
         return cache_dir;
@@ -480,11 +480,11 @@ String OS_Android::get_cache_path() const {
 }
 
 void OS_Android::set_screen_orientation(ScreenOrientation p_orientation) {
-    godot_io_java->set_screen_orientation(p_orientation);
+    android_jni_io->set_screen_orientation(p_orientation);
 }
 
 OS::ScreenOrientation OS_Android::get_screen_orientation() const {
-    const int orientation = godot_io_java->get_screen_orientation();
+    const int orientation = android_jni_io->get_screen_orientation();
     ERR_FAIL_INDEX_V_MSG(
         orientation,
         7,
@@ -495,7 +495,7 @@ OS::ScreenOrientation OS_Android::get_screen_orientation() const {
 }
 
 String OS_Android::get_unique_id() const {
-    String unique_id = godot_io_java->get_unique_id();
+    String unique_id = android_jni_io->get_unique_id();
     if (unique_id != "") {
         return unique_id;
     }
@@ -505,7 +505,7 @@ String OS_Android::get_unique_id() const {
 
 String OS_Android::get_system_dir(SystemDir p_dir, bool p_shared_storage)
     const {
-    return godot_io_java->get_system_dir(p_dir, p_shared_storage);
+    return android_jni_io->get_system_dir(p_dir, p_shared_storage);
 }
 
 void OS_Android::set_context_is_16_bits(bool p_is_16) {
@@ -549,7 +549,7 @@ bool OS_Android::_check_internal_feature_support(const String& p_feature) {
 
 OS_Android::OS_Android(
     GodotJavaWrapper* p_godot_java,
-    GodotIOJavaWrapper* p_godot_io_java,
+    AndroidJNIIO* p_android_jni_io,
     bool p_use_apk_expansion
 ) {
     use_apk_expansion            = p_use_apk_expansion;
@@ -563,8 +563,8 @@ OS_Android::OS_Android(
     // rasterizer = NULL;
     use_gl2       = false;
 
-    godot_java    = p_godot_java;
-    godot_io_java = p_godot_io_java;
+    godot_java     = p_godot_java;
+    android_jni_io = p_android_jni_io;
 
     Vector<Logger*> loggers;
     loggers.push_back(memnew(AndroidLogger));

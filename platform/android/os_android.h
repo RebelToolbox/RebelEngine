@@ -15,7 +15,7 @@
 #include "servers/visual/rasterizer.h"
 
 class GodotJavaWrapper;
-class GodotIOJavaWrapper;
+class AndroidJNIIO;
 
 class OS_Android : public OS_Unix {
     bool use_gl2;
@@ -36,7 +36,7 @@ class OS_Android : public OS_Unix {
     MainLoop* main_loop;
 
     GodotJavaWrapper* godot_java;
-    GodotIOJavaWrapper* godot_io_java;
+    AndroidJNIIO* android_jni_io;
 
     // PowerAndroid *power_manager_func;
 
@@ -70,7 +70,7 @@ public:
 
     static OS* get_singleton();
     GodotJavaWrapper* get_godot_java();
-    GodotIOJavaWrapper* get_godot_io_java();
+    AndroidJNIIO* get_android_jni_io();
 
     virtual void alert(const String& p_alert, const String& p_title = "ALERT!");
     virtual bool request_permission(const String& p_name);
@@ -178,7 +178,7 @@ public:
     virtual bool _check_internal_feature_support(const String& p_feature);
     OS_Android(
         GodotJavaWrapper* p_godot_java,
-        GodotIOJavaWrapper* p_godot_io_java,
+        AndroidJNIIO* p_android_jni_io,
         bool p_use_apk_expansion
     );
     ~OS_Android();

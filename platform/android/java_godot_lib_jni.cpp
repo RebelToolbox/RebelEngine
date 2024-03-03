@@ -8,13 +8,13 @@
 
 #include "android/asset_manager_jni.h"
 #include "android_input_handler.h"
+#include "android_jni_io.h"
 #include "api/java_class_wrapper.h"
 #include "api/jni_singleton.h"
 #include "core/engine.h"
 #include "core/project_settings.h"
 #include "dir_access_jandroid.h"
 #include "file_access_android.h"
-#include "java_godot_io_wrapper.h"
 #include "java_godot_wrapper.h"
 #include "jni_utils.h"
 #include "main/input_default.h"
@@ -31,7 +31,7 @@ static JavaClassWrapper* java_class_wrapper = NULL;
 static OS_Android* os_android               = NULL;
 static AndroidInputHandler* input_handler   = NULL;
 static GodotJavaWrapper* godot_java         = NULL;
-static GodotIOJavaWrapper* godot_io_java    = NULL;
+static AndroidJNIIO* android_jni_io         = NULL;
 
 static bool initialized = false;
 static SafeNumeric<int> step; // Shared between UI and render threads
@@ -112,8 +112,8 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_setVirtualKeyboardHeight(
     jclass clazz,
     jint p_height
 ) {
-    if (godot_io_java) {
-        godot_io_java->set_vk_height(p_height);
+    if (android_jni_io) {
+        android_jni_io->set_vk_height(p_height);
     }
 }
 
@@ -131,8 +131,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
     env->GetJavaVM(&jvm);
 
     // create our wrapper classes
-    godot_java    = new GodotJavaWrapper(env, activity, godot_instance);
-    godot_io_java = new GodotIOJavaWrapper(
+    godot_java     = new GodotJavaWrapper(env, activity, godot_instance);
+    android_jni_io = new AndroidJNIIO(
         env,
         godot_java->get_member_object(
             "io",
@@ -147,14 +147,15 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
 
     FileAccessAndroid::asset_manager = AAssetManager_fromJava(env, amgr);
 
-    DirAccessJAndroid::setup(godot_io_java->get_instance());
+    DirAccessJAndroid::setup(android_jni_io->get_instance());
     NetSocketAndroid::setup(godot_java->get_member_object(
         "wifiMulticastLock",
         "Lcom/rebeltoolbox/rebelengine/utils/WifiMulticastLock;",
         env
     ));
 
-    os_android = new OS_Android(godot_java, godot_io_java, p_use_apk_expansion);
+    os_android =
+        new OS_Android(godot_java, android_jni_io, p_use_apk_expansion);
 
     char wd[500];
     getcwd(wd, 500);
@@ -166,9 +167,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_ondestroy(
     JNIEnv* env,
     jclass clazz
 ) {
-    // lets cleanup
-    if (godot_io_java) {
-        delete godot_io_java;
+    if (android_jni_io) {
+        delete android_jni_io;
     }
     if (godot_java) {
         delete godot_java;
