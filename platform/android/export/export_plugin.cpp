@@ -3105,26 +3105,6 @@ bool EditorExportPlatformAndroid::can_export(
         err   += etc_error;
     }
 
-    // The GodotPaymentV3 module was converted to the external
-    // GodotGooglePlayBilling plugin in Godot 3.2.2, this check helps users to
-    // notice the change to ensure that they change their settings.
-    String modules = ProjectSettings::get_singleton()->get("android/modules");
-    if (modules.find("org/godotengine/godot/GodotPaymentV3") != -1) {
-        bool godot_google_play_billing_enabled =
-            p_preset->get("plugins/GodotGooglePlayBilling");
-        if (!godot_google_play_billing_enabled) {
-            valid = false;
-            err +=
-                TTR("Invalid \"GodotPaymentV3\" module included in the "
-                    "\"android/modules\" project setting (changed in Godot "
-                    "3.2.2).\nReplace it with the first-party "
-                    "\"GodotGooglePlayBilling\" plugin.\nNote that the "
-                    "singleton was also renamed from \"GodotPayments\" to "
-                    "\"GodotGooglePlayBilling\".");
-            err += "\n";
-        }
-    }
-
     // Ensure that `Use Custom Build` is enabled if a plugin is selected.
     String enabled_plugins_names =
         PluginConfigAndroid::get_plugins_names(get_enabled_plugins(p_preset));

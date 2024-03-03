@@ -31,9 +31,9 @@ const char* PluginConfigAndroid::PLUGIN_VALUE_SEPARATOR = "|";
 // static const PluginConfigAndroid MY_PREBUILT_PLUGIN = {
 //	/*.valid_config =*/true,
 //	/*.last_updated =*/0,
-//	/*.name =*/"GodotPayment",
+//	/*.name =*/"PluginName",
 //	/*.binary_type =*/"local",
-//	/*.binary =*/"res://android/build/libs/plugins/GodotPayment.release.aar",
+//	/*.binary =*/"res://android/build/libs/plugins/PluginName.release.aar",
 //	/*.local_dependencies =*/{},
 // 	/*.remote_dependencies
 // =*/String("com.android.billingclient:billing:2.2.1").split("|"),
