@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_PLUGIN_JNI_H
-#define GODOT_PLUGIN_JNI_H
+#ifndef ANDROID_JNI_PLUGIN_H
+#define ANDROID_JNI_PLUGIN_H
 
 #include <android/log.h>
 #include <jni.h>
@@ -51,4 +51,4 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterGDNativeLibra
 );
 }
 
-#endif // GODOT_PLUGIN_JNI_H
+#endif // ANDROID_JNI_PLUGIN_H

@@ -4,14 +4,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "godot_plugin_jni.h"
+#include "android_jni_plugin.h"
 
-#include <core/engine.h>
-#include <core/error_macros.h>
-#include <core/project_settings.h>
-#include <platform/android/api/jni_singleton.h>
-#include <platform/android/jni_utils.h>
-#include <platform/android/string_android.h>
+#include "api/jni_singleton.h"
+#include "core/engine.h"
+#include "core/error_macros.h"
+#include "core/project_settings.h"
+#include "jni_utils.h"
+#include "string_android.h"
 
 static HashMap<String, JNISingleton*> jni_singletons;
 

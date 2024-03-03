@@ -16,7 +16,7 @@ android_files = [
     "android_jni_io.cpp",
     "jni_utils.cpp",
     "android_keys_utils.cpp",
-    "plugin/godot_plugin_jni.cpp",
+    "android_jni_plugin.cpp",
 ]
 
 env_android = env.Clone()
