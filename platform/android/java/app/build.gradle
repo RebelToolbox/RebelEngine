@@ -51,8 +51,6 @@ dependencies {
 
     if (rootProject.findProject(":lib")) {
         implementation project(":lib")
-    } else if (rootProject.findProject(":godot:lib")) {
-        implementation project(":godot:lib")
     } else {
         // Custom build mode. In this scenario this project is the only one around and the Rebel
         // library is available through the pre-generated rebel-lib.*.aar android archive files.
