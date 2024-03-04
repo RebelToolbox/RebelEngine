@@ -28,14 +28,10 @@ android {
         targetCompatibility versions.javaVersion
     }
 
-    lintOptions {
-        abortOnError false
-        disable 'MissingTranslation', 'UnusedResources'
-    }
-
     packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
+        resources {
+            excludes += ['META-INF/LICENSE', 'META-INF/NOTICE']
+        }
 
         // 'doNotStrip' is enabled for development within Android Studio
         if (shouldNotStrip()) {
@@ -53,6 +49,11 @@ android {
         }
         debug.jniLibs.srcDirs = ['libs/debug']
         release.jniLibs.srcDirs = ['libs/release']
+    }
+
+    lint {
+        abortOnError false
+        disable 'MissingTranslation', 'UnusedResources'
     }
 
     libraryVariants.all { variant ->

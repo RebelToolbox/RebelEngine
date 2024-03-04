@@ -108,16 +108,12 @@ android {
 //CHUNK_ANDROID_DEFAULTCONFIG_END
     }
 
-    lintOptions {
-        abortOnError false
-        disable 'MissingTranslation', 'UnusedResources'
-    }
-
     ndkVersion versions.ndkVersion
 
     packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
+        resources {
+            excludes += ['META-INF/LICENSE', 'META-INF/NOTICE']
+        }
 
         // 'doNotStrip' is enabled for development within Android Studio
         if (shouldNotStrip()) {
@@ -199,6 +195,11 @@ android {
 //DIR_JNI_RELEASE_BEGIN
 //DIR_JNI_RELEASE_END
         ]
+    }
+
+    lint {
+        abortOnError false
+        disable 'MissingTranslation', 'UnusedResources'
     }
 
     applicationVariants.all { variant ->
