@@ -73,6 +73,15 @@ dependencies {
 //CHUNK_DEPENDENCIES_END
 }
 
+// Android transitive dependencies pull in different versions of the Kotlin JDK.
+// Since Kotlin stdlib v1.8 now includes the JDK; it doesn't need to be included separately.
+// However, we exclude the stdlib JDK module to avoid duplicate JDK classes being included.
+// This will need to be removed when all Android transitive dependencies use Kotlin stdlib v1.8.
+// Reference: https://stackoverflow.com/a/75315276
+configurations.implementation {
+    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+}
+
 android {
     namespace 'com.rebeltoolbox.rebelapp'
     compileSdk versions.compileSdk

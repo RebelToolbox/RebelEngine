@@ -52,6 +52,11 @@ android {
         disable 'MissingTranslation', 'UnusedResources'
     }
 
+    buildFeatures {
+        aidl true
+        buildConfig true
+    }
+
     libraryVariants.all { variant ->
         variant.outputs.all { output ->
             output.outputFileName = "rebel-lib.${variant.name}.aar"
