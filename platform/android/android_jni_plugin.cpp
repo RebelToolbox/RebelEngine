@@ -11,7 +11,6 @@
 #include "core/error_macros.h"
 #include "core/project_settings.h"
 #include "jni_utils.h"
-#include "string_android.h"
 
 static HashMap<String, JNISingleton*> jni_singletons;
 

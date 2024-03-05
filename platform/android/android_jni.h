@@ -7,7 +7,6 @@
 #ifndef ANDROID_JNI_H
 #define ANDROID_JNI_H
 
-#include <android/log.h>
 #include <jni.h>
 
 // The Rebel Engine Android Java Native Interface.

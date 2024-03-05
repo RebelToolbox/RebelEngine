@@ -7,9 +7,8 @@
 #ifndef ANDROID_JNI_OS_H
 #define ANDROID_JNI_OS_H
 
-#include "string_android.h"
+#include "core/ustring.h"
 
-#include <android/log.h>
 #include <jni.h>
 
 class AndroidJNIOS {

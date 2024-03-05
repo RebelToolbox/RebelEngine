@@ -6,6 +6,9 @@
 
 #include "android_jni_os.h"
 
+#include "jni_utils.h"
+#include "thread_jandroid.h"
+
 // JNIEnv is only valid within the thread it belongs to, in a multi threading
 // environment we can't cache it. For RebelFragment we call most access methods
 // from our thread and we thus get a valid JNIEnv from ThreadAndroid. For one or

@@ -413,3 +413,11 @@ const char* get_jni_sig(const String& p_type) {
 
     return "Ljava/lang/Object;";
 }
+
+String jstring_to_string(jstring source, JNIEnv* env) {
+    String result;
+    const char* utf8 = env->GetStringUTFChars(source, NULL);
+    result.parse_utf8(utf8);
+    env->ReleaseStringUTFChars(source, utf8);
+    return result;
+}

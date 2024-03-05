@@ -6,7 +6,6 @@
 
 #include "android_jni.h"
 
-#include "android/asset_manager_jni.h"
 #include "android_input_handler.h"
 #include "android_jni_dir_access.h"
 #include "android_jni_io.h"
@@ -21,9 +20,9 @@
 #include "main/main.h"
 #include "net_socket_android.h"
 #include "os_android.h"
-#include "string_android.h"
 #include "thread_jandroid.h"
 
+#include <android/asset_manager_jni.h>
 #include <android/input.h>
 #include <unistd.h>
 

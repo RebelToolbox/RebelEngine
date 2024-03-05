@@ -8,7 +8,7 @@
 
 #include "core/print_string.h"
 #include "file_access_android.h"
-#include "string_android.h"
+#include "jni_utils.h"
 #include "thread_jandroid.h"
 
 jobject AndroidJNIDirAccess::io            = NULL;

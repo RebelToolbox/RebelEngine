@@ -7,7 +7,6 @@
 #ifndef ANDROID_JNI_PLUGIN_H
 #define ANDROID_JNI_PLUGIN_H
 
-#include <android/log.h>
 #include <jni.h>
 
 extern "C" {
