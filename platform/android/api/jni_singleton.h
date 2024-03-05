@@ -105,7 +105,7 @@ public:
             case Variant::STRING: {
                 jobject o =
                     env->CallObjectMethodA(instance, E->get().method, v);
-                ret = jstring_to_string((jstring)o, env);
+                ret = string_from_jstring(env, (jstring)o);
                 env->DeleteLocalRef(o);
             } break;
             case Variant::POOL_STRING_ARRAY: {

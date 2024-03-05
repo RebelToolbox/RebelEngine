@@ -82,8 +82,9 @@ String AndroidJNIIO::get_cache_dir() {
     if (_get_cache_dir) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
-        jstring s = (jstring)env->CallObjectMethod(io_object, _get_cache_dir);
-        return jstring_to_string(s, env);
+        jstring cache_dir =
+            (jstring)env->CallObjectMethod(io_object, _get_cache_dir);
+        return string_from_jstring(env, cache_dir);
     } else {
         return String();
     }
@@ -93,8 +94,9 @@ String AndroidJNIIO::get_user_data_dir() {
     if (_get_data_dir) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
-        jstring s = (jstring)env->CallObjectMethod(io_object, _get_data_dir);
-        return jstring_to_string(s, env);
+        jstring data_dir =
+            (jstring)env->CallObjectMethod(io_object, _get_data_dir);
+        return string_from_jstring(env, data_dir);
     } else {
         return String();
     }
@@ -104,8 +106,8 @@ String AndroidJNIIO::get_locale() {
     if (_get_locale) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
-        jstring s = (jstring)env->CallObjectMethod(io_object, _get_locale);
-        return jstring_to_string(s, env);
+        jstring locale = (jstring)env->CallObjectMethod(io_object, _get_locale);
+        return string_from_jstring(env, locale);
     } else {
         return String();
     }
@@ -115,8 +117,8 @@ String AndroidJNIIO::get_model() {
     if (_get_model) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
-        jstring s = (jstring)env->CallObjectMethod(io_object, _get_model);
-        return jstring_to_string(s, env);
+        jstring model = (jstring)env->CallObjectMethod(io_object, _get_model);
+        return string_from_jstring(env, model);
     } else {
         return String();
     }
@@ -151,8 +153,9 @@ String AndroidJNIIO::get_unique_id() {
     if (_get_unique_id) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
-        jstring s = (jstring)env->CallObjectMethod(io_object, _get_unique_id);
-        return jstring_to_string(s, env);
+        jstring unique_id =
+            (jstring)env->CallObjectMethod(io_object, _get_unique_id);
+        return string_from_jstring(env, unique_id);
     } else {
         return String();
     }
@@ -215,13 +218,13 @@ String AndroidJNIIO::get_system_dir(int p_dir, bool p_shared_storage) {
     if (_get_system_dir) {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String("."));
-        jstring s = (jstring)env->CallObjectMethod(
+        jstring system_dir = (jstring)env->CallObjectMethod(
             io_object,
             _get_system_dir,
             p_dir,
             p_shared_storage
         );
-        return jstring_to_string(s, env);
+        return string_from_jstring(env, system_dir);
     } else {
         return String(".");
     }

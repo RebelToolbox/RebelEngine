@@ -558,8 +558,7 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_joyconnectionchanged(
     if (step.get() <= 0) {
         return;
     }
-
-    String name = jstring_to_string(p_name, env);
+    String name = string_from_jstring(env, p_name);
     input_handler->joy_connection_changed(p_device, p_connected, name);
 }
 
@@ -650,8 +649,7 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_getGlobal(
     jclass clazz,
     jstring path
 ) {
-    String js = jstring_to_string(path, env);
-
+    String js = string_from_jstring(env, path);
     return env->NewStringUTF(ProjectSettings::get_singleton()
                                  ->get(js)
                                  .
@@ -673,11 +671,10 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_callobject(
     int res = env->PushLocalFrame(16);
     ERR_FAIL_COND(res != 0);
 
-    String str_method = jstring_to_string(method, env);
-
-    int count      = env->GetArrayLength(params);
-    Variant* vlist = (Variant*)alloca(sizeof(Variant) * count);
-    Variant** vptr = (Variant**)alloca(sizeof(Variant*) * count);
+    String str_method = string_from_jstring(env, method);
+    int count         = env->GetArrayLength(params);
+    Variant* vlist    = (Variant*)alloca(sizeof(Variant) * count);
+    Variant** vptr    = (Variant**)alloca(sizeof(Variant*) * count);
     for (int i = 0; i < count; i++) {
         jobject obj = env->GetObjectArrayElement(params, i);
         Variant v;
@@ -711,9 +708,8 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_calldeferred(
     int res = env->PushLocalFrame(16);
     ERR_FAIL_COND(res != 0);
 
-    String str_method = jstring_to_string(method, env);
-
-    int count = env->GetArrayLength(params);
+    String str_method = string_from_jstring(env, method);
+    int count         = env->GetArrayLength(params);
     Variant args[VARIANT_ARG_MAX];
 
     for (int i = 0; i < MIN(count, VARIANT_ARG_MAX); i++) {
@@ -736,7 +732,7 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_requestPermissionResult(
     jstring p_permission,
     jboolean p_result
 ) {
-    String permission = jstring_to_string(p_permission, env);
+    String permission = string_from_jstring(env, p_permission);
     if (permission == "android.permission.RECORD_AUDIO" && p_result) {
         AudioDriver::get_singleton()->capture_start();
     }

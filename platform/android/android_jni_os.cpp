@@ -240,8 +240,9 @@ String AndroidJNIOS::get_clipboard() {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
 
-        jstring s = (jstring)env->CallObjectMethod(fragment, _get_clipboard);
-        return jstring_to_string(s, env);
+        jstring clipboard =
+            (jstring)env->CallObjectMethod(fragment, _get_clipboard);
+        return string_from_jstring(env, clipboard);
     } else {
         return String();
     }
@@ -254,7 +255,7 @@ String AndroidJNIOS::get_input_fallback_mapping() {
 
         jstring fallback_mapping = (jstring
         )env->CallObjectMethod(fragment, _get_input_fallback_mapping);
-        return jstring_to_string(fallback_mapping, env);
+        return string_from_jstring(env, fallback_mapping);
     } else {
         return String();
     }
@@ -311,9 +312,9 @@ Vector<String> AndroidJNIOS::get_granted_permissions() const {
         int i     = 0;
         jsize len = env->GetArrayLength(*arr);
         for (i = 0; i < len; i++) {
-            jstring jstr = (jstring)env->GetObjectArrayElement(*arr, i);
-            String str   = jstring_to_string(jstr, env);
-            permissions_list.push_back(str);
+            jstring jstr  = (jstring)env->GetObjectArrayElement(*arr, i);
+            String string = string_from_jstring(env, jstr);
+            permissions_list.push_back(string);
             env->DeleteLocalRef(jstr);
         }
     }

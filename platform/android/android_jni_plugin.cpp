@@ -23,7 +23,7 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSingleton(
     jstring name,
     jobject obj
 ) {
-    String singname = jstring_to_string(name, env);
+    String singname = string_from_jstring(env, name);
     JNISingleton* s = (JNISingleton*)ClassDB::instance("JNISingleton");
     s->set_instance(env->NewGlobalRef(obj));
     jni_singletons[singname] = s;
@@ -41,14 +41,14 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterMethod(
     jstring ret,
     jobjectArray args
 ) {
-    String singname = jstring_to_string(sname, env);
+    String singname = string_from_jstring(env, sname);
 
     ERR_FAIL_COND(!jni_singletons.has(singname));
 
     JNISingleton* s = jni_singletons.get(singname);
 
-    String mname  = jstring_to_string(name, env);
-    String retval = jstring_to_string(ret, env);
+    String mname  = string_from_jstring(env, name);
+    String retval = string_from_jstring(env, ret);
     Vector<Variant::Type> types;
     String cs = "(";
 
@@ -56,7 +56,7 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterMethod(
 
     for (int i = 0; i < stringCount; i++) {
         jstring string         = (jstring)env->GetObjectArrayElement(args, i);
-        const String rawString = jstring_to_string(string, env);
+        const String rawString = string_from_jstring(env, string);
         types.push_back(get_jni_type(rawString));
         cs += get_jni_sig(rawString);
     }
@@ -81,13 +81,13 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSignal(
     jstring j_signal_name,
     jobjectArray j_signal_param_types
 ) {
-    String singleton_name = jstring_to_string(j_plugin_name, env);
+    String singleton_name = string_from_jstring(env, j_plugin_name);
 
     ERR_FAIL_COND(!jni_singletons.has(singleton_name));
 
     JNISingleton* singleton = jni_singletons.get(singleton_name);
 
-    String signal_name = jstring_to_string(j_signal_name, env);
+    String signal_name = string_from_jstring(env, j_signal_name);
     Vector<Variant::Type> types;
 
     int stringCount = env->GetArrayLength(j_signal_param_types);
@@ -96,7 +96,7 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterSignal(
         jstring j_signal_param_type =
             (jstring)env->GetObjectArrayElement(j_signal_param_types, i);
         const String signal_param_type =
-            jstring_to_string(j_signal_param_type, env);
+            string_from_jstring(env, j_signal_param_type);
         types.push_back(get_jni_type(signal_param_type));
     }
 
@@ -111,13 +111,13 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeEmitSignal(
     jstring j_signal_name,
     jobjectArray j_signal_params
 ) {
-    String singleton_name = jstring_to_string(j_plugin_name, env);
+    String singleton_name = string_from_jstring(env, j_plugin_name);
 
     ERR_FAIL_COND(!jni_singletons.has(singleton_name));
 
     JNISingleton* singleton = jni_singletons.get(singleton_name);
 
-    String signal_name = jstring_to_string(j_signal_name, env);
+    String signal_name = string_from_jstring(env, j_signal_name);
 
     int count = env->GetArrayLength(j_signal_params);
     ERR_FAIL_COND_MSG(
@@ -161,7 +161,7 @@ Java_com_rebeltoolbox_rebelengine_plugin_RebelPlugin_nativeRegisterGDNativeLibra
         jstring relative_path =
             (jstring)env->GetObjectArrayElement(gdnlib_paths, i);
 
-        String path = "res://" + jstring_to_string(relative_path, env);
+        String path = "res://" + string_from_jstring(env, relative_path);
         if (!singletons.has(path)) {
             singletons.push_back(path);
         }

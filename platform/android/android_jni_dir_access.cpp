@@ -46,7 +46,7 @@ String AndroidJNIDirAccess::get_next() {
         return "";
     }
 
-    String ret = jstring_to_string((jstring)str, env);
+    String ret = string_from_jstring(env, str);
     env->DeleteLocalRef((jobject)str);
     return ret;
 }

@@ -36,6 +36,6 @@ Variant::Type get_jni_type(const String& p_type);
 
 const char* get_jni_sig(const String& p_type);
 
-String jstring_to_string(jstring source, JNIEnv* env);
+String string_from_jstring(JNIEnv* env, jstring string);
 
 #endif // JNI_UTILS_H

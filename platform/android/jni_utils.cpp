@@ -190,7 +190,7 @@ String _get_class_name(JNIEnv* env, jclass cls, bool* array) {
         jboolean isarr    = env->CallBooleanMethod(cls, isArray);
         (*array)          = isarr ? true : false;
     }
-    String name = jstring_to_string(clsName, env);
+    String name = string_from_jstring(env, clsName);
     env->DeleteLocalRef(clsName);
 
     return name;
@@ -206,7 +206,7 @@ Variant _jobject_to_variant(JNIEnv* env, jobject obj) {
     String name = _get_class_name(env, c, &array);
 
     if (name == "java.lang.String") {
-        return jstring_to_string((jstring)obj, env);
+        return string_from_jstring(env, (jstring)obj);
     };
 
     if (name == "[Ljava.lang.String;") {
@@ -216,7 +216,7 @@ Variant _jobject_to_variant(JNIEnv* env, jobject obj) {
 
         for (int i = 0; i < stringCount; i++) {
             jstring string = (jstring)env->GetObjectArrayElement(arr, i);
-            sarr.push_back(jstring_to_string(string, env));
+            sarr.push_back(string_from_jstring(env, string));
             env->DeleteLocalRef(string);
         }
 
@@ -414,10 +414,10 @@ const char* get_jni_sig(const String& p_type) {
     return "Ljava/lang/Object;";
 }
 
-String jstring_to_string(jstring source, JNIEnv* env) {
+String string_from_jstring(JNIEnv* env, jstring string) {
     String result;
-    const char* utf8 = env->GetStringUTFChars(source, NULL);
+    const char* utf8 = env->GetStringUTFChars(string, NULL);
     result.parse_utf8(utf8);
-    env->ReleaseStringUTFChars(source, utf8);
+    env->ReleaseStringUTFChars(string, utf8);
     return result;
 }
