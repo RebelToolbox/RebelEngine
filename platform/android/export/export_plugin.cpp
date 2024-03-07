@@ -4003,7 +4003,7 @@ Error EditorExportPlatformAndroid::export_project_helper(
             if (version != VERSION_FULL_CONFIG) {
                 EditorNode::get_singleton()->show_warning(vformat(
                     TTR("Android build version mismatch:\n   Template "
-                        "installed: %s\n   Godot Version: %s\nPlease reinstall "
+                        "installed: %s\n   Rebel Version: %s\nPlease reinstall "
                         "Android build template from 'Project' menu."),
                     version,
                     VERSION_FULL_CONFIG

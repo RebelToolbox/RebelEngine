@@ -290,7 +290,7 @@ String _get_instrumentation_tag(const Ref<EditorExportPreset>& p_preset) {
     String manifest_instrumentation_text = vformat(
         "    <instrumentation\n"
         "        tools:node=\"replace\"\n"
-        "        android:name=\".GodotInstrumentation\"\n"
+        "        android:name=\".RebelInstrumentation\"\n"
         "        android:icon=\"@mipmap/icon\"\n"
         "        android:label=\"@string/project_name_string\"\n"
         "        android:targetPackage=\"%s\" />\n",
