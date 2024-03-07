@@ -205,6 +205,12 @@ android {
         variant.outputs.all { output ->
             output.outputFileName = "android_${variant.name}.apk"
         }
+        def buildType = variant.buildType.name.capitalize()
+        if (findProject(":app")) {
+            tasks.named("merge${buildType}JniLibFolders") {
+                dependsOn ":copy${buildType}AARToAppModule"
+            }
+        }
     }
 }
 
