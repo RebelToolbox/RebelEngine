@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'com.rebeltoolbox.rebelengine'
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
 
