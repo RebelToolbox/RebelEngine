@@ -214,7 +214,7 @@ static const int DEFAULT_MIN_SDK_VERSION =
     19; // Should match the value in
         // 'platform/android/java/app/config.gradle#minSdk'
 static const int DEFAULT_TARGET_SDK_VERSION =
-    31; // Should match the value in
+    34; // Should match the value in
         // 'platform/android/java/app/config.gradle#targetSdk'
 const String SDK_VERSION_RANGE = vformat(
     "%s,%s,1,or_greater",
@@ -3168,12 +3168,6 @@ bool EditorExportPlatformAndroid::can_export(
     }
 
     // Check the min and target sdk version.
-
-    // They're only used for custom_build_enabled, but since we save their
-    // default values in the export preset, users would get an unexpected error
-    // when updating to a Godot version that has different values (GH-62465). So
-    // we don't make a blocking error, instead we just show a warning.
-
     int min_sdk_version = p_preset->get("version/min_sdk");
     if (min_sdk_version != DEFAULT_MIN_SDK_VERSION && !custom_build_enabled) {
         err += vformat(
@@ -3188,9 +3182,6 @@ bool EditorExportPlatformAndroid::can_export(
         err += "\n";
     }
 
-    // Here we also handle compatibility with Godot 3.4 to 3.4.4 where target
-    // SDK was 30. Version 3.4.5 updated it to 31 to match platform
-    // requirements, so make sure that users notice it.
     int target_sdk_version = p_preset->get("version/target_sdk");
     if (target_sdk_version != DEFAULT_TARGET_SDK_VERSION) {
         if (!custom_build_enabled) {
@@ -3204,12 +3195,13 @@ bool EditorExportPlatformAndroid::can_export(
                 DEFAULT_TARGET_SDK_VERSION
             );
             err += "\n";
-        } else if (target_sdk_version == 30) { // Compatibility with < 3.4.5.
+        } else if (target_sdk_version < DEFAULT_TARGET_SDK_VERSION) {
             err += vformat(
-                TTR("\"Target Sdk\" is set to 30, while the current default is "
-                    "\"%d\". This might be due to upgrading from a previous "
-                    "Godot release.\n>> Consider changing it to \"%d\" to stay "
-                    "up-to-date with platform requirements."),
+                TTR("\"Target Sdk\" is set to \"%d\", while the current "
+                    "default is \"%d\". This might be due to upgrading from a "
+                    "previous release.\n>> Consider changing it to \"%d\" to "
+                    "stay up-to-date with platform requirements."),
+                target_sdk_version,
                 DEFAULT_TARGET_SDK_VERSION,
                 DEFAULT_TARGET_SDK_VERSION
             );
@@ -3217,7 +3209,7 @@ bool EditorExportPlatformAndroid::can_export(
         } else if (target_sdk_version > DEFAULT_TARGET_SDK_VERSION) {
             err += vformat(
                 TTR("\"Target Sdk\" %d is higher than the default version %d. "
-                    "This may work, but wasn't tested and may be unstable."),
+                    "This may work, but isn't tested and may be unstable."),
                 target_sdk_version,
                 DEFAULT_TARGET_SDK_VERSION
             );
