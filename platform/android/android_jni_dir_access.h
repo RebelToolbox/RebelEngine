@@ -4,17 +4,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef DIR_ACCESS_JANDROID_H
-#define DIR_ACCESS_JANDROID_H
+#ifndef ANDROID_JNI_DIR_ACCESS
+#define ANDROID_JNI_DIR_ACCESS
 
 #include "core/os/dir_access.h"
 #include "java_godot_lib_jni.h"
 
 #include <stdio.h>
 
-class DirAccessJAndroid : public DirAccess {
-    // AAssetDir* aad;
-
+class AndroidJNIDirAccess : public DirAccess {
     static jobject io;
     static jclass cls;
 
@@ -70,8 +68,8 @@ public:
 
     static void setup(jobject p_io);
 
-    DirAccessJAndroid();
-    ~DirAccessJAndroid();
+    AndroidJNIDirAccess();
+    ~AndroidJNIDirAccess();
 };
 
-#endif // DIR_ACCESS_JANDROID_H
+#endif // ANDROID_JNI_DIR_ACCESS

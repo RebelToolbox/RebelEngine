@@ -4,25 +4,25 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "dir_access_jandroid.h"
+#include "android_jni_dir_access.h"
 
 #include "core/print_string.h"
 #include "file_access_android.h"
 #include "string_android.h"
 #include "thread_jandroid.h"
 
-jobject DirAccessJAndroid::io            = NULL;
-jclass DirAccessJAndroid::cls            = NULL;
-jmethodID DirAccessJAndroid::_dir_open   = NULL;
-jmethodID DirAccessJAndroid::_dir_next   = NULL;
-jmethodID DirAccessJAndroid::_dir_close  = NULL;
-jmethodID DirAccessJAndroid::_dir_is_dir = NULL;
+jobject AndroidJNIDirAccess::io            = NULL;
+jclass AndroidJNIDirAccess::cls            = NULL;
+jmethodID AndroidJNIDirAccess::_dir_open   = NULL;
+jmethodID AndroidJNIDirAccess::_dir_next   = NULL;
+jmethodID AndroidJNIDirAccess::_dir_close  = NULL;
+jmethodID AndroidJNIDirAccess::_dir_is_dir = NULL;
 
-DirAccess* DirAccessJAndroid::create_fs() {
-    return memnew(DirAccessJAndroid);
+DirAccess* AndroidJNIDirAccess::create_fs() {
+    return memnew(AndroidJNIDirAccess);
 }
 
-Error DirAccessJAndroid::list_dir_begin() {
+Error AndroidJNIDirAccess::list_dir_begin() {
     list_dir_end();
     JNIEnv* env = get_jni_env();
 
@@ -37,7 +37,7 @@ Error DirAccessJAndroid::list_dir_begin() {
     return OK;
 }
 
-String DirAccessJAndroid::get_next() {
+String AndroidJNIDirAccess::get_next() {
     ERR_FAIL_COND_V(id == 0, "");
 
     JNIEnv* env = get_jni_env();
@@ -51,17 +51,17 @@ String DirAccessJAndroid::get_next() {
     return ret;
 }
 
-bool DirAccessJAndroid::current_is_dir() const {
+bool AndroidJNIDirAccess::current_is_dir() const {
     JNIEnv* env = get_jni_env();
 
     return env->CallBooleanMethod(io, _dir_is_dir, id);
 }
 
-bool DirAccessJAndroid::current_is_hidden() const {
+bool AndroidJNIDirAccess::current_is_hidden() const {
     return current != "." && current != ".." && current.begins_with(".");
 }
 
-void DirAccessJAndroid::list_dir_end() {
+void AndroidJNIDirAccess::list_dir_end() {
     if (id == 0) {
         return;
     }
@@ -71,15 +71,15 @@ void DirAccessJAndroid::list_dir_end() {
     id = 0;
 }
 
-int DirAccessJAndroid::get_drive_count() {
+int AndroidJNIDirAccess::get_drive_count() {
     return 0;
 }
 
-String DirAccessJAndroid::get_drive(int p_drive) {
+String AndroidJNIDirAccess::get_drive(int p_drive) {
     return "";
 }
 
-Error DirAccessJAndroid::change_dir(String p_dir) {
+Error AndroidJNIDirAccess::change_dir(String p_dir) {
     JNIEnv* env = get_jni_env();
 
     if (p_dir == "" || p_dir == "." || (p_dir == ".." && current_dir == "")) {
@@ -119,11 +119,11 @@ Error DirAccessJAndroid::change_dir(String p_dir) {
     return OK;
 }
 
-String DirAccessJAndroid::get_current_dir() {
+String AndroidJNIDirAccess::get_current_dir() {
     return "res://" + current_dir;
 }
 
-bool DirAccessJAndroid::file_exists(String p_file) {
+bool AndroidJNIDirAccess::file_exists(String p_file) {
     String sd;
     if (current_dir == "") {
         sd = p_file;
@@ -138,7 +138,7 @@ bool DirAccessJAndroid::file_exists(String p_file) {
     return exists;
 }
 
-bool DirAccessJAndroid::dir_exists(String p_dir) {
+bool AndroidJNIDirAccess::dir_exists(String p_dir) {
     JNIEnv* env = get_jni_env();
 
     String sd;
@@ -173,27 +173,27 @@ bool DirAccessJAndroid::dir_exists(String p_dir) {
     return true;
 }
 
-Error DirAccessJAndroid::make_dir(String p_dir) {
+Error AndroidJNIDirAccess::make_dir(String p_dir) {
     ERR_FAIL_V(ERR_UNAVAILABLE);
 }
 
-Error DirAccessJAndroid::rename(String p_from, String p_to) {
+Error AndroidJNIDirAccess::rename(String p_from, String p_to) {
     ERR_FAIL_V(ERR_UNAVAILABLE);
 }
 
-Error DirAccessJAndroid::remove(String p_name) {
+Error AndroidJNIDirAccess::remove(String p_name) {
     ERR_FAIL_V(ERR_UNAVAILABLE);
 }
 
-String DirAccessJAndroid::get_filesystem_type() const {
+String AndroidJNIDirAccess::get_filesystem_type() const {
     return "APK";
 }
 
-uint64_t DirAccessJAndroid::get_space_left() {
+uint64_t AndroidJNIDirAccess::get_space_left() {
     return 0;
 }
 
-void DirAccessJAndroid::setup(jobject p_io) {
+void AndroidJNIDirAccess::setup(jobject p_io) {
     JNIEnv* env = get_jni_env();
     io          = p_io;
 
@@ -204,14 +204,12 @@ void DirAccessJAndroid::setup(jobject p_io) {
     _dir_next   = env->GetMethodID(cls, "dir_next", "(I)Ljava/lang/String;");
     _dir_close  = env->GetMethodID(cls, "dir_close", "(I)V");
     _dir_is_dir = env->GetMethodID(cls, "dir_is_dir", "(I)Z");
-
-    //(*env)->CallVoidMethod(env,obj,aMethodID, myvar);
 }
 
-DirAccessJAndroid::DirAccessJAndroid() {
+AndroidJNIDirAccess::AndroidJNIDirAccess() {
     id = 0;
 }
 
-DirAccessJAndroid::~DirAccessJAndroid() {
+AndroidJNIDirAccess::~AndroidJNIDirAccess() {
     list_dir_end();
 }

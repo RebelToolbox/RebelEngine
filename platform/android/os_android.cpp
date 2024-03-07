@@ -6,10 +6,10 @@
 
 #include "os_android.h"
 
+#include "android_jni_dir_access.h"
 #include "android_jni_io.h"
 #include "android_jni_os.h"
 #include "core/project_settings.h"
-#include "dir_access_jandroid.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
 #include "drivers/unix/dir_access_unix.h"
@@ -91,7 +91,8 @@ void OS_Android::initialize_core() {
     if (use_apk_expansion) {
         DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_RESOURCES);
     } else {
-        DirAccess::make_default<DirAccessJAndroid>(DirAccess::ACCESS_RESOURCES);
+        DirAccess::make_default<AndroidJNIDirAccess>(DirAccess::ACCESS_RESOURCES
+        );
     }
     DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_USERDATA);
     DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_FILESYSTEM);

@@ -8,13 +8,13 @@
 
 #include "android/asset_manager_jni.h"
 #include "android_input_handler.h"
+#include "android_jni_dir_access.h"
 #include "android_jni_io.h"
 #include "android_jni_os.h"
 #include "api/java_class_wrapper.h"
 #include "api/jni_singleton.h"
 #include "core/engine.h"
 #include "core/project_settings.h"
-#include "dir_access_jandroid.h"
 #include "file_access_android.h"
 #include "jni_utils.h"
 #include "main/input_default.h"
@@ -146,7 +146,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
 
     FileAccessAndroid::asset_manager = AAssetManager_fromJava(env, amgr);
 
-    DirAccessJAndroid::setup(android_jni_io->get_instance());
+    AndroidJNIDirAccess::setup(android_jni_io->get_instance());
     NetSocketAndroid::setup(android_jni_os->get_member_object(
         "wifiMulticastLock",
         "Lcom/rebeltoolbox/rebelengine/utils/WifiMulticastLock;",

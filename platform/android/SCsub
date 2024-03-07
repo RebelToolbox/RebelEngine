@@ -7,7 +7,7 @@ android_files = [
     "android_input_handler.cpp",
     "file_access_android.cpp",
     "audio_driver_opensl.cpp",
-    "dir_access_jandroid.cpp",
+    "android_jni_dir_access.cpp",
     "thread_jandroid.cpp",
     "net_socket_android.cpp",
     "java_godot_lib_jni.cpp",
