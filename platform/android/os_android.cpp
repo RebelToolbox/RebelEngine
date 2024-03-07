@@ -46,7 +46,7 @@ public:
     virtual void logv(const char* p_format, va_list p_list, bool p_err) {
         __android_log_vprint(
             p_err ? ANDROID_LOG_ERROR : ANDROID_LOG_INFO,
-            "godot",
+            "RebelEngine",
             p_format,
             p_list
         );
