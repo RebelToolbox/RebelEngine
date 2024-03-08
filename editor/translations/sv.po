@@ -13542,8 +13542,8 @@ msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"\"Target Sdk\" is set to 30, while the current default is \"%d\". This might "
-"be due to upgrading from a previous Godot release.\n"
+"\"Target Sdk\" is set to \"%d\", while the current default is \"%d\". This "
+"might be due to upgrading from a previous release.\n"
 ">> Consider changing it to \"%d\" to stay up-to-date with platform "
 "requirements."
 msgstr ""
@@ -13551,7 +13551,7 @@ msgstr ""
 #: platform/android/export/export_plugin.cpp
 msgid ""
 "\"Target Sdk\" %d is higher than the default version %d. This may work, but "
-"wasn't tested and may be unstable."
+"isn't tested and may be unstable."
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
@@ -13625,7 +13625,7 @@ msgstr ""
 msgid ""
 "Android build version mismatch:\n"
 "   Template installed: %s\n"
-"   Godot Version: %s\n"
+"   Rebel Version: %s\n"
 "Please reinstall Android build template from 'Project' menu."
 msgstr ""
 
