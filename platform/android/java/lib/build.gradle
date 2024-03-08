@@ -11,7 +11,6 @@ def pathToRootDir = "../../../../"
 android {
     namespace 'com.rebeltoolbox.rebelengine'
     compileSdk versions.compileSdk
-    buildToolsVersion versions.buildTools
 
     ndkVersion versions.ndkVersion
 

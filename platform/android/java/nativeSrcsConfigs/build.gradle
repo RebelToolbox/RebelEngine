@@ -6,7 +6,6 @@ plugins {
 android {
     namespace 'com.rebeltoolbox.rebelengine'
     compileSdk versions.compileSdk
-    buildToolsVersion versions.buildTools
 
     defaultConfig {
         minSdk versions.minSdk

@@ -76,7 +76,6 @@ dependencies {
 android {
     namespace 'com.rebeltoolbox.rebelapp'
     compileSdk versions.compileSdk
-    buildToolsVersion versions.buildTools
 
     compileOptions {
         sourceCompatibility versions.javaVersion
