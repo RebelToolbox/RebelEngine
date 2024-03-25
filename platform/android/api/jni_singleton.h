@@ -7,10 +7,12 @@
 #ifndef JNI_SINGLETON_H
 #define JNI_SINGLETON_H
 
-#include <core/engine.h>
-#include <core/variant.h>
+#include "core/engine.h"
+#include "core/variant.h"
+
 #ifdef ANDROID_ENABLED
-#include <platform/android/jni_utils.h>
+#include "../jni_utils.h"
+#include "../thread_jandroid.h"
 #endif
 
 class JNISingleton : public Object {
@@ -103,7 +105,7 @@ public:
             case Variant::STRING: {
                 jobject o =
                     env->CallObjectMethodA(instance, E->get().method, v);
-                ret = jstring_to_string((jstring)o, env);
+                ret = string_from_jstring(env, (jstring)o);
                 env->DeleteLocalRef(o);
             } break;
             case Variant::POOL_STRING_ARRAY: {

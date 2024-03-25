@@ -6,7 +6,7 @@
 
 #include "api/java_class_wrapper.h"
 
-#include "string_android.h"
+#include "jni_utils.h"
 #include "thread_jandroid.h"
 
 bool JavaClass::_call_method(
@@ -573,7 +573,7 @@ bool JavaClassWrapper::_get_type_sig(
     String& strsig
 ) {
     jstring name2   = (jstring)env->CallObjectMethod(obj, Class_getName);
-    String str_type = jstring_to_string(name2, env);
+    String str_type = string_from_jstring(env, name2);
     env->DeleteLocalRef(name2);
     uint32_t t = 0;
 
@@ -734,7 +734,7 @@ bool JavaClass::_convert_object_to_variant(
             return true;
         } break;
         case ARG_TYPE_STRING: {
-            var = jstring_to_string((jstring)obj, env);
+            var = string_from_jstring(env, (jstring)obj);
             return true;
         } break;
         case ARG_TYPE_CLASS: {
@@ -1062,7 +1062,7 @@ bool JavaClass::_convert_object_to_variant(
                 if (!o) {
                     ret.push_back(Variant());
                 } else {
-                    String val = jstring_to_string((jstring)o, env);
+                    String val = string_from_jstring(env, (jstring)o);
                     ret.push_back(val);
                 }
                 env->DeleteLocalRef(o);
@@ -1109,7 +1109,7 @@ Ref<JavaClass> JavaClassWrapper::wrap(const String& p_class) {
         ERR_CONTINUE(!obj);
 
         jstring name      = (jstring)env->CallObjectMethod(obj, getName);
-        String str_method = jstring_to_string(name, env);
+        String str_method = string_from_jstring(env, name);
         env->DeleteLocalRef(name);
 
         Vector<String> params;
@@ -1265,7 +1265,7 @@ Ref<JavaClass> JavaClassWrapper::wrap(const String& p_class) {
         ERR_CONTINUE(!obj);
 
         jstring name     = (jstring)env->CallObjectMethod(obj, Field_getName);
-        String str_field = jstring_to_string(name, env);
+        String str_field = string_from_jstring(env, name);
         env->DeleteLocalRef(name);
         int mods = env->CallIntMethod(obj, Field_getModifiers);
         if ((mods & 0x8) && (mods & 0x10)

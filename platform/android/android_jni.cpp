@@ -4,34 +4,33 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "java_godot_lib_jni.h"
+#include "android_jni.h"
 
-#include "android/asset_manager_jni.h"
 #include "android_input_handler.h"
+#include "android_jni_dir_access.h"
+#include "android_jni_io.h"
+#include "android_jni_os.h"
 #include "api/java_class_wrapper.h"
 #include "api/jni_singleton.h"
 #include "core/engine.h"
 #include "core/project_settings.h"
-#include "dir_access_jandroid.h"
 #include "file_access_android.h"
-#include "java_godot_io_wrapper.h"
-#include "java_godot_wrapper.h"
 #include "jni_utils.h"
 #include "main/input_default.h"
 #include "main/main.h"
 #include "net_socket_android.h"
 #include "os_android.h"
-#include "string_android.h"
 #include "thread_jandroid.h"
 
+#include <android/asset_manager_jni.h>
 #include <android/input.h>
 #include <unistd.h>
 
 static JavaClassWrapper* java_class_wrapper = NULL;
 static OS_Android* os_android               = NULL;
 static AndroidInputHandler* input_handler   = NULL;
-static GodotJavaWrapper* godot_java         = NULL;
-static GodotIOJavaWrapper* godot_io_java    = NULL;
+static AndroidJNIOS* android_jni_os         = NULL;
+static AndroidJNIIO* android_jni_io         = NULL;
 
 static bool initialized = false;
 static SafeNumeric<int> step; // Shared between UI and render threads
@@ -55,7 +54,7 @@ static void _initialize_java_modules() {
     Vector<String> mods = modules.split(",", false);
 
     if (mods.size()) {
-        jobject cls = godot_java->get_class_loader();
+        jobject cls = android_jni_os->get_class_loader();
 
         // TODO create wrapper for class loader
 
@@ -69,18 +68,6 @@ static void _initialize_java_modules() {
 
         for (int i = 0; i < mods.size(); i++) {
             String m = mods[i];
-
-            // Deprecated in Godot 3.2.2, it's now a plugin to enable in export
-            // preset.
-            if (m == "org/godotengine/godot/GodotPaymentV3") {
-                WARN_PRINT(
-                    "GodotPaymentV3 is deprecated and is replaced by the "
-                    "'GodotPayment' plugin, which should be enabled in the "
-                    "Android export preset."
-                );
-                print_line("Skipping Android module: " + m);
-                continue;
-            }
 
             print_line("Loading Android module: " + m);
             jstring strClassName = env->NewStringUTF(m.utf8().get_data());
@@ -109,7 +96,7 @@ static void _initialize_java_modules() {
             jobject obj = env->CallStaticObjectMethod(
                 singletonClass,
                 initialize,
-                godot_java->get_activity()
+                android_jni_os->get_activity()
             );
             env->NewGlobalRef(obj);
         }
@@ -124,8 +111,8 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_setVirtualKeyboardHeight(
     jclass clazz,
     jint p_height
 ) {
-    if (godot_io_java) {
-        godot_io_java->set_vk_height(p_height);
+    if (android_jni_io) {
+        android_jni_io->set_vk_height(p_height);
     }
 }
 
@@ -133,7 +120,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
     JNIEnv* env,
     jclass clazz,
     jobject activity,
-    jobject godot_instance,
+    jobject fragment,
     jobject p_asset_manager,
     jboolean p_use_apk_expansion
 ) {
@@ -142,11 +129,10 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
     JavaVM* jvm;
     env->GetJavaVM(&jvm);
 
-    // create our wrapper classes
-    godot_java    = new GodotJavaWrapper(env, activity, godot_instance);
-    godot_io_java = new GodotIOJavaWrapper(
+    android_jni_os = new AndroidJNIOS(env, activity, fragment);
+    android_jni_io = new AndroidJNIIO(
         env,
-        godot_java->get_member_object(
+        android_jni_os->get_member_object(
             "io",
             "Lcom/rebeltoolbox/rebelengine/RebelIO;",
             env
@@ -159,31 +145,31 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
 
     FileAccessAndroid::asset_manager = AAssetManager_fromJava(env, amgr);
 
-    DirAccessJAndroid::setup(godot_io_java->get_instance());
-    NetSocketAndroid::setup(godot_java->get_member_object(
+    AndroidJNIDirAccess::setup(android_jni_io->get_instance());
+    NetSocketAndroid::setup(android_jni_os->get_member_object(
         "wifiMulticastLock",
         "Lcom/rebeltoolbox/rebelengine/utils/WifiMulticastLock;",
         env
     ));
 
-    os_android = new OS_Android(godot_java, godot_io_java, p_use_apk_expansion);
+    os_android =
+        new OS_Android(android_jni_os, android_jni_io, p_use_apk_expansion);
 
     char wd[500];
     getcwd(wd, 500);
 
-    godot_java->on_video_init(env);
+    android_jni_os->on_video_init(env);
 }
 
 JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_ondestroy(
     JNIEnv* env,
     jclass clazz
 ) {
-    // lets cleanup
-    if (godot_io_java) {
-        delete godot_io_java;
+    if (android_jni_io) {
+        delete android_jni_io;
     }
-    if (godot_java) {
-        delete godot_java;
+    if (android_jni_os) {
+        delete android_jni_os;
     }
     if (input_handler) {
         delete input_handler;
@@ -239,7 +225,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_setup(
         return; // should exit instead and print the error
     }
 
-    java_class_wrapper = memnew(JavaClassWrapper(godot_java->get_activity()));
+    java_class_wrapper =
+        memnew(JavaClassWrapper(android_jni_os->get_activity()));
     ClassDB::register_class<JNISingleton>();
     _initialize_java_modules();
 }
@@ -270,7 +257,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_newcontext(
             step.set(-1); // Ensure no further steps are attempted and no
                           // further events are sent
             os_android->main_loop_end();
-            godot_java->restart(env);
+            android_jni_os->restart(env);
         }
     }
 }
@@ -295,9 +282,9 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_step(JNIEnv* env, jclass clazz) {
     }
 
     if (step.get() == 0) {
-        // Since Godot is initialized on the UI thread, _main_thread_id was set
-        // to that thread's id, but for Godot purposes, the main thread is the
-        // one running the game loop
+        // Rebel is initialized on Android's UI thread, so
+        // _main_thread_id was set to that thread's id, but
+        // Rebel Engine's main thread is the one running the game loop.
         Main::setup2(Thread::get_caller_id());
         input_handler = new AndroidInputHandler();
         step.increment();
@@ -309,9 +296,9 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_step(JNIEnv* env, jclass clazz) {
             return; // should exit instead and print the error
         }
 
-        godot_java->on_setup_completed(env);
+        android_jni_os->on_setup_completed(env);
         os_android->main_loop_begin();
-        godot_java->on_main_loop_started(env);
+        android_jni_os->on_main_loop_started(env);
         step.increment();
     }
 
@@ -321,7 +308,7 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_step(JNIEnv* env, jclass clazz) {
     os_android->process_gyroscope(gyroscope);
 
     if (os_android->main_loop_iterate()) {
-        godot_java->force_quit(env);
+        android_jni_os->force_quit(env);
     }
 }
 
@@ -341,26 +328,26 @@ void touch_preprocessing(
         return;
     }
 
-    Vector<AndroidInputHandler::TouchPos> points;
+    Vector<AndroidInputHandler::Touch> touches;
     for (int i = 0; i < pointer_count; i++) {
         jfloat p[3];
         env->GetFloatArrayRegion(positions, i * 3, 3, p);
-        AndroidInputHandler::TouchPos tp;
-        tp.pos = Point2(p[1], p[2]);
-        tp.id  = (int)p[0];
-        points.push_back(tp);
+        AndroidInputHandler::Touch touch;
+        touch.pos = Point2(p[1], p[2]);
+        touch.id  = (int)p[0];
+        touches.push_back(touch);
     }
 
     if ((input_device & AINPUT_SOURCE_MOUSE) == AINPUT_SOURCE_MOUSE) {
         input_handler->process_mouse_event(
             ev,
             buttons_mask,
-            points[0].pos,
+            touches[0].pos,
             vertical_factor,
             horizontal_factor
         );
     } else {
-        input_handler->process_touch(ev, pointer, points);
+        input_handler->process_touch(ev, pointer, touches);
     }
 }
 
@@ -571,8 +558,7 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_joyconnectionchanged(
     if (step.get() <= 0) {
         return;
     }
-
-    String name = jstring_to_string(p_name, env);
+    String name = string_from_jstring(env, p_name);
     input_handler->joy_connection_changed(p_device, p_connected, name);
 }
 
@@ -663,8 +649,7 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_getGlobal(
     jclass clazz,
     jstring path
 ) {
-    String js = jstring_to_string(path, env);
-
+    String js = string_from_jstring(env, path);
     return env->NewStringUTF(ProjectSettings::get_singleton()
                                  ->get(js)
                                  .
@@ -686,11 +671,10 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_callobject(
     int res = env->PushLocalFrame(16);
     ERR_FAIL_COND(res != 0);
 
-    String str_method = jstring_to_string(method, env);
-
-    int count      = env->GetArrayLength(params);
-    Variant* vlist = (Variant*)alloca(sizeof(Variant) * count);
-    Variant** vptr = (Variant**)alloca(sizeof(Variant*) * count);
+    String str_method = string_from_jstring(env, method);
+    int count         = env->GetArrayLength(params);
+    Variant* vlist    = (Variant*)alloca(sizeof(Variant) * count);
+    Variant** vptr    = (Variant**)alloca(sizeof(Variant*) * count);
     for (int i = 0; i < count; i++) {
         jobject obj = env->GetObjectArrayElement(params, i);
         Variant v;
@@ -724,9 +708,8 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_calldeferred(
     int res = env->PushLocalFrame(16);
     ERR_FAIL_COND(res != 0);
 
-    String str_method = jstring_to_string(method, env);
-
-    int count = env->GetArrayLength(params);
+    String str_method = string_from_jstring(env, method);
+    int count         = env->GetArrayLength(params);
     Variant args[VARIANT_ARG_MAX];
 
     for (int i = 0; i < MIN(count, VARIANT_ARG_MAX); i++) {
@@ -749,7 +732,7 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_requestPermissionResult(
     jstring p_permission,
     jboolean p_result
 ) {
-    String permission = jstring_to_string(p_permission, env);
+    String permission = string_from_jstring(env, p_permission);
     if (permission == "android.permission.RECORD_AUDIO" && p_result) {
         AudioDriver::get_singleton()->capture_start();
     }

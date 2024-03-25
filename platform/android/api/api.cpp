@@ -18,7 +18,8 @@ void register_android_api() {
 #if !defined(ANDROID_ENABLED)
     // On Android platforms, the `java_class_wrapper` instantiation and the
     // `JNISingleton` registration occurs in
-    // `platform/android/java_godot_lib_jni.cpp#Java_com_rebeltoolbox_rebelengine_RebelEngine_setup`
+    // `platform/android/android_jni.cpp
+    // Java_com_rebeltoolbox_rebelengine_RebelEngine_setup`
     java_class_wrapper = memnew(JavaClassWrapper); // Dummy
     ClassDB::register_class<JNISingleton>();
 #endif

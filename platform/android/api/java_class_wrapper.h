@@ -10,7 +10,6 @@
 #include "core/reference.h"
 
 #ifdef ANDROID_ENABLED
-#include <android/log.h>
 #include <jni.h>
 #endif
 

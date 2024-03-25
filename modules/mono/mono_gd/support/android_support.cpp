@@ -25,7 +25,7 @@
 #include "../gd_mono_marshal.h"
 #include "core/os/os.h"
 #include "core/ustring.h"
-#include "platform/android/java_godot_wrapper.h"
+#include "platform/android/android_jni_os.h"
 #include "platform/android/os_android.h"
 #include "platform/android/thread_jandroid.h"
 
@@ -102,9 +102,9 @@ String determine_app_native_lib_dir() {
 
     JNIEnv* env = get_jni_env();
 
-    GodotJavaWrapper* godot_java =
-        static_cast<OS_Android*>(OS::get_singleton())->get_godot_java();
-    jobject activity = godot_java->get_activity();
+    AndroidJNIOS* android_jni_os =
+        static_cast<OS_Android*>(OS::get_singleton())->get_android_jni_os();
+    jobject activity = android_jni_os->get_activity();
 
     ScopedLocalRef<jclass> contextClass(
         env,
@@ -707,9 +707,9 @@ static void interop_get_active_network_dns_servers(
 
     JNIEnv* env = get_jni_env();
 
-    GodotJavaWrapper* godot_java =
-        ((OS_Android*)OS::get_singleton())->get_godot_java();
-    jobject activity = godot_java->get_activity();
+    AndroidJNIOS* android_jni_os =
+        ((OS_Android*)OS::get_singleton())->get_android_jni_os();
+    jobject activity = android_jni_os->get_activity();
 
     ScopedLocalRef<jclass> activityClass(env, env->GetObjectClass(activity));
     ERR_FAIL_NULL(activityClass);

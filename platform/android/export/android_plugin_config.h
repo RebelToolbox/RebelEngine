@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef ANDROID_GODOT_PLUGIN_CONFIG_H
-#define ANDROID_GODOT_PLUGIN_CONFIG_H
+#ifndef ANDROID_PLUGIN_CONFIG_H
+#define ANDROID_PLUGIN_CONFIG_H
 
 #include "core/error_list.h"
 #include "core/io/config_file.h"
@@ -22,7 +22,7 @@
 plugin `aar` file in the `res://android/plugins` directory (e.g:
 `MyPlugin.aar`).
   - if **binary_type** is `remote`, then this should be a declaration for a
-remote gradle binary (e.g: "org.godot.example:my-plugin:0.0.0").
+remote gradle binary (e.g: "com.example:my-plugin:0.0.0").
 
 The `dependencies` section and fields are optional and defined as follow:
 - **local**: contains a list of local `.aar` binary files the plugin depends on.
@@ -35,7 +35,7 @@ required for the plugin's dependencies.
 
  See https://github.com/godotengine/godot/issues/38157#issuecomment-618773871
  */
-struct PluginConfigAndroid {
+struct AndroidPluginConfig {
     static const char* PLUGIN_CONFIG_EXT;
 
     static const char* CONFIG_SECTION;
@@ -73,38 +73,38 @@ struct PluginConfigAndroid {
         String dependency_path
     );
 
-    static PluginConfigAndroid resolve_prebuilt_plugin(
-        PluginConfigAndroid prebuilt_plugin,
+    static AndroidPluginConfig resolve_prebuilt_plugin(
+        AndroidPluginConfig prebuilt_plugin,
         String plugin_config_dir
     );
 
-    static Vector<PluginConfigAndroid> get_prebuilt_plugins(
+    static Vector<AndroidPluginConfig> get_prebuilt_plugins(
         String plugins_base_dir
     );
 
-    static bool is_plugin_config_valid(PluginConfigAndroid plugin_config);
+    static bool is_plugin_config_valid(AndroidPluginConfig plugin_config);
 
     static uint64_t get_plugin_modification_time(
-        const PluginConfigAndroid& plugin_config,
+        const AndroidPluginConfig& plugin_config,
         const String& config_path
     );
 
-    static PluginConfigAndroid load_plugin_config(
+    static AndroidPluginConfig load_plugin_config(
         Ref<ConfigFile> config_file,
         const String& path
     );
 
     static String get_plugins_dependencies(
         String type,
-        Vector<PluginConfigAndroid> plugins_configs
+        Vector<AndroidPluginConfig> plugins_configs
     );
 
     static String get_plugins_maven_repos(
-        Vector<PluginConfigAndroid> plugins_configs
+        Vector<AndroidPluginConfig> plugins_configs
     );
 
-    static String get_plugins_names(Vector<PluginConfigAndroid> plugins_configs
+    static String get_plugins_names(Vector<AndroidPluginConfig> plugins_configs
     );
 };
 
-#endif // ANDROID_GODOT_PLUGIN_CONFIG_H
+#endif // ANDROID_PLUGIN_CONFIG_H

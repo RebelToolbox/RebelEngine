@@ -230,7 +230,7 @@ void EditorExportPlatformAndroid::_check_for_changes_poll_thread(void* ud) {
         {
             // Nothing to do if we already know the plugins have changed.
             if (!ea->plugins_changed.is_set()) {
-                Vector<PluginConfigAndroid> loaded_plugins = get_plugins();
+                Vector<AndroidPluginConfig> loaded_plugins = get_plugins();
 
                 ea->plugins_lock.lock();
 
@@ -594,7 +594,7 @@ bool EditorExportPlatformAndroid::_should_compress_asset(
         ".awb",
         ".wma",
         ".wmv",
-        // Godot-specific:
+        // Rebel-specific:
         ".webp", // Same reasoning as .png
         ".cfb",  // Don't let small config files slow-down startup
         ".scn",  // Binary scenes are usually already compressed
@@ -667,7 +667,7 @@ Vector<String> EditorExportPlatformAndroid::list_gdap_files(const String& p_path
                 continue;
             }
 
-            if (file.ends_with(PluginConfigAndroid::PLUGIN_CONFIG_EXT)) {
+            if (file.ends_with(AndroidPluginConfig::PLUGIN_CONFIG_EXT)) {
                 dir_files.push_back(file);
             }
         }
@@ -677,8 +677,8 @@ Vector<String> EditorExportPlatformAndroid::list_gdap_files(const String& p_path
     return dir_files;
 }
 
-Vector<PluginConfigAndroid> EditorExportPlatformAndroid::get_plugins() {
-    Vector<PluginConfigAndroid> loaded_plugins;
+Vector<AndroidPluginConfig> EditorExportPlatformAndroid::get_plugins() {
+    Vector<AndroidPluginConfig> loaded_plugins;
 
     String plugins_dir =
         ProjectSettings::get_singleton()->get_resource_path().plus_file(
@@ -687,7 +687,7 @@ Vector<PluginConfigAndroid> EditorExportPlatformAndroid::get_plugins() {
 
     // Add the prebuilt plugins
     loaded_plugins.append_array(
-        PluginConfigAndroid::get_prebuilt_plugins(plugins_dir)
+        AndroidPluginConfig::get_prebuilt_plugins(plugins_dir)
     );
 
     if (DirAccess::exists(plugins_dir)) {
@@ -696,8 +696,8 @@ Vector<PluginConfigAndroid> EditorExportPlatformAndroid::get_plugins() {
         if (!plugins_filenames.empty()) {
             Ref<ConfigFile> config_file = memnew(ConfigFile);
             for (int i = 0; i < plugins_filenames.size(); i++) {
-                PluginConfigAndroid config =
-                    PluginConfigAndroid::load_plugin_config(
+                AndroidPluginConfig config =
+                    AndroidPluginConfig::load_plugin_config(
                         config_file,
                         plugins_dir.plus_file(plugins_filenames[i])
                     );
@@ -715,13 +715,13 @@ Vector<PluginConfigAndroid> EditorExportPlatformAndroid::get_plugins() {
     return loaded_plugins;
 }
 
-Vector<PluginConfigAndroid> EditorExportPlatformAndroid::get_enabled_plugins(
+Vector<AndroidPluginConfig> EditorExportPlatformAndroid::get_enabled_plugins(
     const Ref<EditorExportPreset>& p_presets
 ) {
-    Vector<PluginConfigAndroid> enabled_plugins;
-    Vector<PluginConfigAndroid> all_plugins = get_plugins();
+    Vector<AndroidPluginConfig> enabled_plugins;
+    Vector<AndroidPluginConfig> all_plugins = get_plugins();
     for (int i = 0; i < all_plugins.size(); i++) {
-        PluginConfigAndroid plugin = all_plugins[i];
+        AndroidPluginConfig plugin = all_plugins[i];
         bool enabled               = p_presets->get("plugins/" + plugin.name);
         if (enabled) {
             enabled_plugins.push_back(plugin);
@@ -2316,7 +2316,7 @@ void EditorExportPlatformAndroid::get_export_options(
         EXPORT_FORMAT_APK
     ));
 
-    Vector<PluginConfigAndroid> plugins_configs = get_plugins();
+    Vector<AndroidPluginConfig> plugins_configs = get_plugins();
     for (int i = 0; i < plugins_configs.size(); i++) {
         print_verbose("Found Android plugin " + plugins_configs[i].name);
         r_options->push_back(ExportOption(
@@ -2412,7 +2412,7 @@ void EditorExportPlatformAndroid::get_export_options(
             PROPERTY_HINT_PLACEHOLDER_TEXT,
             "ext.domain.name"
         ),
-        "org.godotengine.$genname"
+        "com.example.$genname"
     ));
     r_options->push_back(ExportOption(
         PropertyInfo(
@@ -3105,29 +3105,9 @@ bool EditorExportPlatformAndroid::can_export(
         err   += etc_error;
     }
 
-    // The GodotPaymentV3 module was converted to the external
-    // GodotGooglePlayBilling plugin in Godot 3.2.2, this check helps users to
-    // notice the change to ensure that they change their settings.
-    String modules = ProjectSettings::get_singleton()->get("android/modules");
-    if (modules.find("org/godotengine/godot/GodotPaymentV3") != -1) {
-        bool godot_google_play_billing_enabled =
-            p_preset->get("plugins/GodotGooglePlayBilling");
-        if (!godot_google_play_billing_enabled) {
-            valid = false;
-            err +=
-                TTR("Invalid \"GodotPaymentV3\" module included in the "
-                    "\"android/modules\" project setting (changed in Godot "
-                    "3.2.2).\nReplace it with the first-party "
-                    "\"GodotGooglePlayBilling\" plugin.\nNote that the "
-                    "singleton was also renamed from \"GodotPayments\" to "
-                    "\"GodotGooglePlayBilling\".");
-            err += "\n";
-        }
-    }
-
     // Ensure that `Use Custom Build` is enabled if a plugin is selected.
     String enabled_plugins_names =
-        PluginConfigAndroid::get_plugins_names(get_enabled_plugins(p_preset));
+        AndroidPluginConfig::get_plugins_names(get_enabled_plugins(p_preset));
     if (!enabled_plugins_names.empty() && !custom_build_enabled) {
         valid = false;
         err += TTR("\"Use Custom Build\" must be enabled to use the plugins.");
@@ -4109,20 +4089,20 @@ Error EditorExportPlatformAndroid::export_project_helper(
         String sign_flag          = should_sign ? "true" : "false";
         String zipalign_flag      = "true";
 
-        Vector<PluginConfigAndroid> enabled_plugins =
+        Vector<AndroidPluginConfig> enabled_plugins =
             get_enabled_plugins(p_preset);
         String plugins_local_dependencies =
-            PluginConfigAndroid::get_plugins_dependencies(
-                PluginConfigAndroid::BINARY_TYPE_LOCAL,
+            AndroidPluginConfig::get_plugins_dependencies(
+                AndroidPluginConfig::BINARY_TYPE_LOCAL,
                 enabled_plugins
             );
         String plugins_remote_dependencies =
-            PluginConfigAndroid::get_plugins_dependencies(
-                PluginConfigAndroid::BINARY_TYPE_REMOTE,
+            AndroidPluginConfig::get_plugins_dependencies(
+                AndroidPluginConfig::BINARY_TYPE_REMOTE,
                 enabled_plugins
             );
         String plugins_maven_repos =
-            PluginConfigAndroid::get_plugins_maven_repos(enabled_plugins);
+            AndroidPluginConfig::get_plugins_maven_repos(enabled_plugins);
         bool clean_build_required = is_clean_build_required(enabled_plugins);
 
         List<String> cmdline;

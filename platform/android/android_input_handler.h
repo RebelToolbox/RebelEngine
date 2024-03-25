@@ -9,14 +9,14 @@
 
 #include "main/input_default.h"
 
-// This class encapsulates all the handling of input events that come from the
-// Android UI thread. Remarks:
-// - It's not thread-safe by itself, so its functions must only be called on a
-// single thread, which is the Android UI thread.
-// - Its functions must only call thread-safe methods.
+// This handler handles all input events from the Android UI thread.
+// It is not thread-safe. Therefore:
+// - All methods must be called on the Android UI thread.
+// - Methods must only call thread-safe methods.
+
 class AndroidInputHandler {
 public:
-    struct TouchPos {
+    struct Touch {
         int id;
         Point2 pos;
     };
@@ -36,12 +36,34 @@ public:
         int hat;
     };
 
+    void process_key_event(
+        int p_keycode,
+        int p_scancode,
+        int p_unicode_char,
+        bool p_pressed
+    );
+    void process_touch(
+        int p_event,
+        int p_pointer,
+        const Vector<Touch>& p_touches
+    );
+    void process_hover(int p_type, Point2 p_pos);
+    void process_mouse_event(
+        int p_event_action,
+        int p_event_android_buttons_mask,
+        Point2 p_event_pos,
+        float p_event_vertical_factor,
+        float p_event_horizontal_factor
+    );
+    void process_double_tap(int p_event_android_buttons_mask, Point2 p_pos);
+    void process_scroll(Point2 p_pos);
+    void process_joy_event(const JoypadEvent& p_event);
+    void joy_connection_changed(int p_device, bool p_connected, String p_name);
+
 private:
-    Vector<TouchPos> touch;
-    Point2 hover_prev_pos; // needed to calculate the relative position on hover
-                           // events
-    Point2 scroll_prev_pos; // needed to calculate the relative position on
-                            // scroll events
+    Vector<Touch> prev_touches;
+    Point2 prev_hover_pos;
+    Point2 prev_scroll_pos;
 
     bool alt_mem     = false;
     bool shift_mem   = false;
@@ -53,45 +75,20 @@ private:
     InputDefault* input =
         static_cast<InputDefault*>(InputDefault::get_singleton());
 
-    void _set_key_modifier_state(Ref<InputEventWithModifiers> ev) const;
-
-    static int _button_index_from_mask(int button_mask);
-
-    static int _android_button_mask_to_godot_button_mask(int android_button_mask
+    void set_key_modifier_state(
+        Ref<InputEventWithModifiers> r_event_with_modifiers
+    ) const;
+    void wheel_button_click(
+        const Ref<InputEventMouseButton>& p_mouse_button_event,
+        int p_wheel_button,
+        int p_event_buttons_mask,
+        float p_factor
     );
 
-    void _wheel_button_click(
-        int event_buttons_mask,
-        const Ref<InputEventMouseButton>& ev,
-        int wheel_button,
-        float factor
+    static int button_index_from_buttons_mask(int p_buttons_mask);
+    static int rebel_buttons_mask_from_android_buttons_mask(
+        int p_android_buttons_mask
     );
-
-public:
-    void process_event(Ref<InputEvent>& p_event);
-    void process_joy_event(const JoypadEvent& p_event);
-    void process_key_event(
-        int p_keycode,
-        int p_scancode,
-        int p_unicode_char,
-        bool p_pressed
-    );
-    void process_touch(
-        int p_event,
-        int p_pointer,
-        const Vector<TouchPos>& p_points
-    );
-    void process_hover(int p_type, Point2 p_pos);
-    void process_mouse_event(
-        int event_action,
-        int event_android_buttons_mask,
-        Point2 event_pos,
-        float event_vertical_factor,
-        float event_horizontal_factor
-    );
-    void process_double_tap(int event_android_button_mask, Point2 p_pos);
-    void process_scroll(Point2 p_pos);
-    void joy_connection_changed(int p_device, bool p_connected, String p_name);
 };
 
 #endif

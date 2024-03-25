@@ -4,6 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
+#include "android_plugin_config.h"
 #include "core/io/image_loader.h"
 #include "core/io/json.h"
 #include "core/io/marshalls.h"
@@ -19,7 +20,6 @@
 #include "editor/editor_log.h"
 #include "editor/editor_node.h"
 #include "editor/editor_settings.h"
-#include "godot_plugin_config.h"
 #include "gradle_export_util.h"
 #include "main/splash.gen.h"
 #include "platform/android/logo.gen.h"
@@ -63,7 +63,7 @@ class EditorExportPlatformAndroid : public EditorExportPlatform {
         EditorProgress* ep;
     };
 
-    Vector<PluginConfigAndroid> plugins;
+    Vector<AndroidPluginConfig> plugins;
     String last_plugin_names;
     uint64_t last_custom_build_time = 0;
     SafeFlag plugins_changed;
@@ -102,9 +102,9 @@ class EditorExportPlatformAndroid : public EditorExportPlatform {
     /// List the gdap files in the directory specified by the p_path parameter.
     static Vector<String> list_gdap_files(const String& p_path);
 
-    static Vector<PluginConfigAndroid> get_plugins();
+    static Vector<AndroidPluginConfig> get_plugins();
 
-    static Vector<PluginConfigAndroid> get_enabled_plugins(
+    static Vector<AndroidPluginConfig> get_enabled_plugins(
         const Ref<EditorExportPreset>& p_presets
     );
 
@@ -267,10 +267,10 @@ public:
     void _update_custom_build_project();
 
     inline bool is_clean_build_required(
-        Vector<PluginConfigAndroid> enabled_plugins
+        Vector<AndroidPluginConfig> enabled_plugins
     ) {
         String plugin_names =
-            PluginConfigAndroid::get_plugins_names(enabled_plugins);
+            AndroidPluginConfig::get_plugins_names(enabled_plugins);
         bool first_build          = last_custom_build_time == 0;
         bool have_plugins_changed = false;
 

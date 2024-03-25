@@ -4,23 +4,17 @@
 //
 // SPDX-License-Identifier: MIT
 
-// note, swapped java and godot around in the file name so all the java
-// wrappers are together
+#ifndef ANDROID_JNI_IO_H
+#define ANDROID_JNI_IO_H
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+#include "core/ustring.h"
 
-#include "string_android.h"
-
-#include <android/log.h>
 #include <jni.h>
 
-// Class that makes functions in
-// java/src/com/rebeltoolbox/rebelengine/RebelIO.java callable from C++
-class GodotIOJavaWrapper {
+class AndroidJNIIO {
 private:
     jobject io_object;
-    jclass cls;
+    jclass io_class;
 
     jmethodID _open_URI               = 0;
     jmethodID _get_cache_dir          = 0;
@@ -37,8 +31,8 @@ private:
     jmethodID _get_system_dir         = 0;
 
 public:
-    GodotIOJavaWrapper(JNIEnv* p_env, jobject io_object);
-    ~GodotIOJavaWrapper();
+    AndroidJNIIO(JNIEnv* p_env, jobject io_object);
+    ~AndroidJNIIO();
 
     jobject get_instance();
 
@@ -66,4 +60,4 @@ public:
     String get_system_dir(int p_dir, bool p_shared_storage);
 };
 
-#endif /* !JAVA_GODOT_IO_WRAPPER_H */
+#endif // ANDROID_JNI_IO_H

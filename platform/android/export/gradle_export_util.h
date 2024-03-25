@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_GRADLE_EXPORT_UTIL_H
-#define GODOT_GRADLE_EXPORT_UTIL_H
+#ifndef GRADLE_EXPORT_UTIL_H
+#define GRADLE_EXPORT_UTIL_H
 
 #include "core/io/zip_io.h"
 #include "core/os/dir_access.h"
@@ -98,4 +98,4 @@ String _get_application_tag(
     bool p_has_storage_permission
 );
 
-#endif // GODOT_GRADLE_EXPORT_UTIL_H
+#endif // GRADLE_EXPORT_UTIL_H

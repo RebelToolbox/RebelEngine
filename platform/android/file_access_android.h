@@ -10,7 +10,6 @@
 #include "core/os/file_access.h"
 
 #include <android/asset_manager.h>
-#include <android/log.h>
 #include <stdio.h>
 
 // #include <android_native_app_glue.h>
