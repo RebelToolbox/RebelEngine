@@ -13251,15 +13251,6 @@ msgid "Invalid package name:"
 msgstr "잘못된 패키지 이름:"
 
 #: platform/android/export/export_plugin.cpp
-msgid ""
-"Invalid \"GodotPaymentV3\" module included in the \"android/modules\" "
-"project setting (changed in Godot 3.2.2).\n"
-"Replace it with the first-party \"GodotGooglePlayBilling\" plugin.\n"
-"Note that the singleton was also renamed from \"GodotPayments\" to "
-"\"GodotGooglePlayBilling\"."
-msgstr ""
-
-#: platform/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
 msgstr "플러그인을 사용하려면 \"Use Custom Build\"가 활성화되어야 합니다."
 

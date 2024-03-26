@@ -13079,15 +13079,6 @@ msgid "Invalid package name:"
 msgstr "無效的套件名稱："
 
 #: platform/android/export/export_plugin.cpp
-msgid ""
-"Invalid \"GodotPaymentV3\" module included in the \"android/modules\" "
-"project setting (changed in Godot 3.2.2).\n"
-"Replace it with the first-party \"GodotGooglePlayBilling\" plugin.\n"
-"Note that the singleton was also renamed from \"GodotPayments\" to "
-"\"GodotGooglePlayBilling\"."
-msgstr ""
-
-#: platform/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
 msgstr "「使用自定建置」必須啟用以使用本外掛。"
 
