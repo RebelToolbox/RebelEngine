@@ -1,13 +1,15 @@
 // These settings apply when creating a custom build in the Rebel Editor.
 pluginManagement {
-    apply from: 'config.gradle'
-
-    plugins {
-        id 'com.android.application' version versions.androidGradlePlugin
-    }
     repositories {
         gradlePluginPortal()
         google()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
     }
 }
 

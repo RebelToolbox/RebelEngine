@@ -3,31 +3,25 @@
 // Do not remove/modify comments ending with BEGIN/END, they are used to inject
 // addon-specific configuration.
 buildscript {
-    apply from: 'config.gradle'
-
     repositories {
-        google()
-        mavenCentral()
 //CHUNK_BUILDSCRIPT_REPOSITORIES_BEGIN
 //CHUNK_BUILDSCRIPT_REPOSITORIES_END
     }
     dependencies {
-        classpath libraries.androidGradlePlugin
 //CHUNK_BUILDSCRIPT_DEPENDENCIES_BEGIN
 //CHUNK_BUILDSCRIPT_DEPENDENCIES_END
     }
 }
 
 plugins {
-    id 'com.android.application'
+    alias libs.plugins.androidApplication
+    alias libs.plugins.androidAssetPack
 }
 
 apply from: 'config.gradle'
 
 allprojects {
     repositories {
-        google()
-        mavenCentral()
 //CHUNK_ALLPROJECTS_REPOSITORIES_BEGIN
 //CHUNK_ALLPROJECTS_REPOSITORIES_END
 
@@ -44,7 +38,7 @@ allprojects {
 }
 
 dependencies {
-    implementation libraries.androidxFragment
+    implementation libs.androidxFragment
 
     if (rootProject.findProject(":lib")) {
         implementation project(":lib")

@@ -1,9 +1,9 @@
 plugins {
-    id 'com.android.library'
+    alias libs.plugins.androidLibrary
 }
 
 dependencies {
-    implementation libraries.androidxFragment
+    implementation libs.androidxFragment
 }
 
 android {

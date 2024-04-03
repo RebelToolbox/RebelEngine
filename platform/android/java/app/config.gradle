@@ -1,20 +1,13 @@
 ext.versions = [
-    androidGradlePlugin: '8.4.0',
     compileSdk         : 34,
     // Also update platform/android/export/export_plugin.cpp:
     // - DEFAULT_MIN_SDK_VERSION
     // - DEFAULT_TARGET_SDK_VERSION
     minSdk             : 21,
     targetSdk          : 34,
-    fragmentVersion    : '1.7.0',
     javaVersion        : 17,
     // Also update platform/android/detect.py get_ndk_version()
     ndkVersion         : '26.2.11394342'
-]
-
-ext.libraries = [
-    androidGradlePlugin: "com.android.tools.build:gradle:$versions.androidGradlePlugin",
-    androidxFragment   : "androidx.fragment:fragment:$versions.fragmentVersion",
 ]
 
 ext.getExportPackageName = { ->

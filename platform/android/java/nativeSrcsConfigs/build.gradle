@@ -1,6 +1,6 @@
 // Non functional android library used to provide Android Studio editor support to the project.
 plugins {
-    id 'com.android.library'
+    alias libs.plugins.androidLibrary
 }
 
 android {

@@ -1,24 +1,4 @@
-buildscript {
-    apply from: 'app/config.gradle'
-
-    repositories {
-        google()
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath libraries.androidGradlePlugin
-    }
-}
-
 apply from: 'app/config.gradle'
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
 
 def binDir = "../../../bin"
 def supportedTargets = ["release", "debug"]

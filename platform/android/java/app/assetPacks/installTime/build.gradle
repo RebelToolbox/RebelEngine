@@ -1,4 +1,6 @@
-apply plugin: 'com.android.asset-pack'
+plugins {
+    alias libs.plugins.androidAssetPack
+}
 
 assetPack {
     packName = "installTime" // Directory name for the asset pack
