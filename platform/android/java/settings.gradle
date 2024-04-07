@@ -6,7 +6,6 @@ pluginManagement {
         id 'com.android.application' version versions.androidGradlePlugin
         id 'com.android.library' version versions.androidGradlePlugin
         id 'org.jetbrains.kotlin.android' version versions.kotlinVersion
-        id 'io.github.gradle-nexus.publish-plugin' version versions.nexusPublishVersion
     }
     repositories {
         gradlePluginPortal()

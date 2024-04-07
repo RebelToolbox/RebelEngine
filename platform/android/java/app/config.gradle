@@ -6,10 +6,8 @@ ext.versions = [
     buildTools         : '30.0.3',
     kotlinVersion      : '1.6.21',
     fragmentVersion    : '1.3.6',
-    nexusPublishVersion: '1.1.0',
     javaVersion        : 11,
     ndkVersion         : '23.2.8568313' // Also update 'platform/android/detect.py#get_ndk_version' when this is updated.
-
 ]
 
 ext.libraries = [
@@ -123,11 +121,6 @@ ext.generateLibraryVersion = { List<String> requiredKeys ->
 
 ext.getLibraryVersion = { ->
     List<String> requiredKeys = ["major", "minor", "patch", "status", "module_config"]
-    return generateLibraryVersion(requiredKeys)
-}
-
-ext.getPublishVersion = { ->
-    List<String> requiredKeys = ["major", "minor", "patch", "status"]
     return generateLibraryVersion(requiredKeys)
 }
 

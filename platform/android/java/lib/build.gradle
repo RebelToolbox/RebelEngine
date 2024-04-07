@@ -3,13 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-ext {
-    PUBLISH_VERSION = getPublishVersion()
-    PUBLISH_ARTIFACT_ID = 'rebel'
-}
-
-apply from: "../scripts/publish-module.gradle"
-
 dependencies {
     implementation libraries.kotlinStdLib
     implementation libraries.androidxFragment
@@ -126,12 +119,4 @@ android {
         // Schedule the tasks so the generated libs are present before the aar file is packaged.
         tasks["merge${buildType}JniLibFolders"].dependsOn taskName
     }
-
-    // TODO: Enable when issues with AGP 7.1+ are resolved (https://github.com/GodotVR/godot_openxr/issues/187).
-//    publishing {
-//        singleVariant("release") {
-//            withSourcesJar()
-//            withJavadocJar()
-//        }
-//    }
 }

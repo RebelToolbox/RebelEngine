@@ -9,16 +9,10 @@ buildscript {
     dependencies {
         classpath libraries.androidGradlePlugin
         classpath libraries.kotlinGradlePlugin
-        classpath 'io.github.gradle-nexus:publish-plugin:1.1.0'
     }
 }
 
-plugins {
-    id 'io.github.gradle-nexus.publish-plugin'
-}
-
 apply from: 'app/config.gradle'
-apply from: 'scripts/publish-root.gradle'
 
 allprojects {
     repositories {
