@@ -46,8 +46,18 @@ def get_flags():
 
 
 def configure(env):
-    ## Build type
+    ## Architecture
+    if env["bits"] == "32":
+        print("iOS does not support 32 bit builds.")
+        sys.exit()
+    if not env["arch"]:
+        env["arch"] = "arm64"
+    supported_archs = ["x86_64", "arm64"]
+    if env["arch"] not in supported_archs:
+        print("iOS does not support arch=%s.", env["arch"])
+        sys.exit()
 
+    ## Build type
     if env["target"].startswith("release"):
         env.Append(CPPDEFINES=["NDEBUG", ("NS_BLOCK_ASSERTIONS", 1)])
         if env["optimize"] == "speed":  # optimize for speed (default)
@@ -56,7 +66,6 @@ def configure(env):
         elif env["optimize"] == "size":  # optimize for size
             env.Append(CCFLAGS=["-Os", "-ftree-vectorize"])
             env.Append(LINKFLAGS=["-Os"])
-
     elif env["target"] == "debug":
         env.Append(CCFLAGS=["-gdwarf-2", "-O0"])
         env.Append(CPPDEFINES=["_DEBUG", ("DEBUG", 1)])
@@ -64,23 +73,6 @@ def configure(env):
     if env["use_lto"]:
         env.Append(CCFLAGS=["-flto"])
         env.Append(LINKFLAGS=["-flto"])
-
-    ## Architecture
-    if env["arch"] == "x86":  # i386
-        env["bits"] = "32"
-    elif env["arch"] == "x86_64":
-        env["bits"] = "64"
-    elif (
-        env["arch"] == "arm"
-        or env["arch"] == "arm32"
-        or env["arch"] == "armv7"
-        or env["bits"] == "32"
-    ):  # arm
-        env["arch"] = "arm"
-        env["bits"] = "32"
-    else:  # armv64
-        env["arch"] = "arm64"
-        env["bits"] = "64"
 
     ## Compiler configuration
 
@@ -119,25 +111,30 @@ def configure(env):
         env.Append(CCFLAGS=["-miphoneos-version-min=10.0"])
         env.Append(LINKFLAGS=["-miphoneos-version-min=10.0"])
 
-    if env["arch"] == "x86" or env["arch"] == "x86_64":
+    if env["arch"] == "x86_64":
         env["ENV"]["MACOSX_DEPLOYMENT_TARGET"] = "10.9"
-        arch_flag = "i386" if env["arch"] == "x86" else env["arch"]
         env.Append(
             CCFLAGS=(
-                "-arch "
-                + arch_flag
-                + " -fobjc-arc -fobjc-abi-version=2 -fobjc-legacy-dispatch -fmessage-length=0 -fpascal-strings -fblocks -fasm-blocks -isysroot $IPHONESDK"
+                "-arch x86_64 "
+                + "-fobjc-arc -fobjc-abi-version=2 -fobjc-legacy-dispatch "
+                + "-fmessage-length=0 -fpascal-strings -fblocks -fasm-blocks "
+                + "-isysroot $IPHONESDK"
             ).split()
         )
-    elif env["arch"] == "arm":
+    else:  # env["arch"] == "arm64"
         detect_darwin_sdk_path("iphone", env)
         env.Append(
-            CCFLAGS='-fobjc-arc -arch armv7 -fmessage-length=0 -fno-strict-aliasing -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -fpascal-strings -fblocks -isysroot $IPHONESDK -fvisibility=hidden -mthumb "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -MMD -MT dependencies'.split()
-        )
-    elif env["arch"] == "arm64":
-        detect_darwin_sdk_path("iphone", env)
-        env.Append(
-            CCFLAGS="-fobjc-arc -arch arm64 -fmessage-length=0 -fno-strict-aliasing -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -fpascal-strings -fblocks -fvisibility=hidden -MMD -MT dependencies -isysroot $IPHONESDK".split()
+            CCFLAGS=(
+                "-arch arm64 "
+                + "-fobjc-arc "
+                + "-fmessage-length=0 -fpascal-strings -fblocks "
+                + "-fno-strict-aliasing -fvisibility=hidden "
+                + "-fdiagnostics-print-source-range-info "
+                + "-fdiagnostics-show-category=id "
+                + "-fdiagnostics-parseable-fixits "
+                + "-MMD -MT dependencies "
+                + "-isysroot $IPHONESDK"
+            ).split()
         )
         env.Append(CPPDEFINES=["NEED_LONG_INT"])
         env.Append(CPPDEFINES=["LIBYUV_DISABLE_NEON"])
@@ -154,32 +151,20 @@ def configure(env):
 
     ## Link flags
 
-    if env["arch"] == "x86" or env["arch"] == "x86_64":
-        arch_flag = "i386" if env["arch"] == "x86" else env["arch"]
+    if env["arch"] == "x86_64":
         env.Append(
-            LINKFLAGS=[
-                "-arch",
-                arch_flag,
-                "-isysroot",
-                "$IPHONESDK",
-                "-Xlinker",
-                "-objc_abi_version",
-                "-Xlinker",
-                "2",
-                "-F$IPHONESDK",
-            ]
+            LINKFLAGS=(
+                "-arch x86_64 "
+                + "-isysroot $IPHONESDK "
+                + "-Xlinker -objc_abi_version "
+                + "-Xlinker 2 "
+                + "-F$IPHONESDK"
+            ).split()
         )
-    elif env["arch"] == "arm":
-        env.Append(LINKFLAGS=["-arch", "armv7", "-Wl,-dead_strip"])
-    if env["arch"] == "arm64":
+    else:  # env["arch"] == "arm64"
         env.Append(LINKFLAGS=["-arch", "arm64", "-Wl,-dead_strip"])
 
-    env.Append(
-        LINKFLAGS=[
-            "-isysroot",
-            "$IPHONESDK",
-        ]
-    )
+    env.Append(LINKFLAGS=["-isysroot", "$IPHONESDK"])
 
     env.Prepend(
         CPPPATH=[

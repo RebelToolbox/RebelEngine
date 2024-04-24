@@ -25,7 +25,7 @@ jobs:
       - name: Setup build dependencies
         uses: ./.github/actions/build-dependencies
 
-      - name: Build (armv7)
+      - name: Build (arm64)
         uses: ./.github/actions/build
         with:
           sconsflags: ${{ env.SCONSFLAGS }}
