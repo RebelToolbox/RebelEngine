@@ -1,7 +1,5 @@
-// Gradle build config for Rebel Engine's Android port.
-//
-// Do not remove/modify comments ending with BEGIN/END, they are used to inject
-// addon-specific configuration.
+// Do not remove/modify comments ending with BEGIN/END,
+// they are used to inject addon-specific configuration.
 buildscript {
     repositories {
 //CHUNK_BUILDSCRIPT_REPOSITORIES_BEGIN
@@ -22,16 +20,12 @@ apply from: 'config.gradle'
 
 allprojects {
     repositories {
-//CHUNK_ALLPROJECTS_REPOSITORIES_BEGIN
-//CHUNK_ALLPROJECTS_REPOSITORIES_END
-
-        // User plugins' Maven repos
-        String[] mavenRepos = getPluginsMavenRepos()
-        if (mavenRepos != null && mavenRepos.size() > 0) {
-            for (String repoUrl : mavenRepos) {
-                maven {
-                    url repoUrl
-                }
+//CHUNK_ALL_PROJECTS_REPOSITORIES_BEGIN
+//CHUNK_ALL_PROJECTS_REPOSITORIES_END
+        def pluginsMavenRepos = arrayProperty("plugins_maven_repos")
+        for (repositoryURL in pluginsMavenRepos) {
+            maven {
+                url repositoryURL
             }
         }
     }
@@ -43,26 +37,17 @@ dependencies {
     if (rootProject.findProject(":lib")) {
         implementation project(":lib")
     } else {
-        // Custom build mode. In this scenario this project is the only one around and the Rebel
-        // library is available through the pre-generated rebel-lib.*.aar android archive files.
+        // Rebel Editor custom build mode.
+        // Use pre-generated rebel-lib.*.aar android archive files.
         debugImplementation fileTree(dir: 'libs/debug', include: ['*.jar', '*.aar'])
         releaseImplementation fileTree(dir: 'libs/release', include: ['*.jar', '*.aar'])
     }
 
-    // User plugins' remote dependencies
-    String[] remoteDependencies = getPluginsRemoteDependencies()
-    if (remoteDependencies != null && remoteDependencies.size() > 0) {
-        for (String dependency : remoteDependencies) {
-            implementation dependency
-        }
+    def pluginsRemoteDependencies = arrayProperty("plugins_remote_dependencies")
+    for (String pluginRemoteDependency in pluginsRemoteDependencies) {
+        implementation pluginRemoteDependency
     }
-
-    // User plugins' local dependencies
-    String[] localDependencies = getPluginsLocalDependencies()
-    if (localDependencies != null && localDependencies.size() > 0) {
-        implementation files(localDependencies)
-    }
-
+    implementation files(arrayProperty("plugins_local_dependencies"))
 //CHUNK_DEPENDENCIES_BEGIN
 //CHUNK_DEPENDENCIES_END
 }
@@ -88,27 +73,28 @@ android {
     assetPacks = [":assetPacks:installTime"]
 
     defaultConfig {
-        // The default ignore pattern for the 'assets' directory includes hidden files and
-        // directories that are used by Rebel projects.
+        // The default ignore pattern for the 'assets' directory includes
+        // hidden files and directories that are used by Rebel projects.
         aaptOptions {
             ignoreAssetsPattern "!.svn:!.git:!.gitignore:!.ds_store:!*.scc:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"
         }
 
         ndk {
-            String[] export_abi_list = getExportEnabledABIs()
-            abiFilters export_abi_list
+            def exportEnabledABIs = arrayProperty("export_enabled_abis", "armeabi-v7a|arm64-v8a|x86|x86_64")
+            for (abi in exportEnabledABIs) {
+                abiFilter abi
+            }
         }
 
-        manifestPlaceholders = [editorVersion: getEditorVersion()]
+        manifestPlaceholders.editorVersion = stringProperty("editor_version", buildVersion())
 
-        // Feel free to modify the application id to your own.
-        applicationId getExportPackageName()
-        versionCode getExportVersionCode()
-        versionName getExportVersionName()
-        minSdk getExportMinSdkVersion()
-        targetSdk getExportTargetSdkVersion()
-//CHUNK_ANDROID_DEFAULTCONFIG_BEGIN
-//CHUNK_ANDROID_DEFAULTCONFIG_END
+        applicationId stringProperty("export_package_name", "com.rebeltoolbox.rebelapp")
+        versionName stringProperty("export_version_name", "1.0")
+        versionCode integerProperty("export_version_code", 1)
+        minSdk integerProperty("export_version_min_sdk", versions.minSdk)
+        targetSdk integerProperty("export_version_target_sdk", versions.targetSdk)
+//CHUNK_ANDROID_DEFAULT_CONFIG_BEGIN
+//CHUNK_ANDROID_DEFAULT_CONFIG_END
     }
 
     ndkVersion versions.ndkVersion
@@ -117,50 +103,46 @@ android {
         resources {
             excludes += ['META-INF/LICENSE', 'META-INF/NOTICE']
         }
-
-        // 'doNotStrip' is enabled for development within Android Studio
-        if (shouldNotStrip()) {
+        if (project.hasProperty("doNotStrip")) {
             doNotStrip '**/*.so'
         }
     }
 
     signingConfigs {
         debug {
-            if (hasCustomDebugKeystore()) {
-                storeFile new File(getDebugKeystoreFile())
-                storePassword getDebugKeystorePassword()
-                keyAlias getDebugKeyAlias()
-                keyPassword getDebugKeystorePassword()
+            def debugStoreFile = new File (stringProperty("debug_keystore_file", "."))
+            def debugKeyAlias = stringProperty("debug_keystore_alias", "androiddebugkey")
+            def debugPassword = stringProperty("debug_keystore_password", "android")
+            if (debugStoreFile.isFile()) {
+                storeFile debugStoreFile
+                keyAlias debugKeyAlias
+                storePassword debugPassword
+                keyPassword debugPassword
             }
         }
-
         release {
-            File keystoreFile = new File(getReleaseKeystoreFile())
-            if (keystoreFile.isFile()) {
-                storeFile keystoreFile
-                storePassword getReleaseKeystorePassword()
-                keyAlias getReleaseKeyAlias()
-                keyPassword getReleaseKeystorePassword()
+            def releaseStoreFile = new File(stringProperty("release_keystore_file", "."))
+            def releaseKeyAlias = stringProperty("release_keystore_alias", "")
+            def releasePassword = stringProperty("release_keystore_password", "")
+            if (releaseStoreFile.isFile()) {
+                storeFile releaseStoreFile
+                keyAlias releaseKeyAlias
+                storePassword releasePassword
+                keyPassword releasePassword
             }
         }
     }
 
     buildTypes {
-
         debug {
-            if (shouldSign()) {
-                signingConfig signingConfigs.debug
-            } else {
-                signingConfig null
-            }
+            signingConfig project.hasProperty("perform_signing")
+                ? signingConfigs.debug
+                : null
         }
-
         release {
-            if (shouldSign()) {
-                signingConfig signingConfigs.release
-            } else {
-                signingConfig null
-            }
+            signingConfig project.hasProperty("perform_signing")
+                ? signingConfigs.release
+                : null
         }
     }
 
@@ -205,8 +187,8 @@ android {
         disable 'MissingTranslation', 'UnusedResources'
     }
 
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
             output.outputFileName = "android_${variant.name}.apk"
         }
         def buildType = variant.buildType.name.capitalize()
@@ -218,28 +200,31 @@ android {
     }
 }
 
-task copyAndRenameDebugApk(type: Copy) {
-    from "$buildDir/outputs/apk/debug/android_debug.apk"
-    into getExportPath()
-    rename "android_debug.apk", getExportFilename()
+def exportPath = stringProperty("export_path", ".")
+def exportFilename = stringProperty("export_filename", "rebel_android")
+
+tasks.register('copyAndRenameDebugApk', Copy) {
+    from layout.buildDirectory.dir("outputs/apk/debug/android_debug.apk")
+    into exportPath
+    rename "android_debug.apk", exportFilename
 }
 
-task copyAndRenameReleaseApk(type: Copy) {
-    from "$buildDir/outputs/apk/release/android_release.apk"
-    into getExportPath()
-    rename "android_release.apk", getExportFilename()
+tasks.register('copyAndRenameReleaseApk', Copy) {
+    from layout.buildDirectory.dir("outputs/apk/release/android_release.apk")
+    into exportPath
+    rename "android_release.apk", exportFilename
 }
 
-task copyAndRenameDebugAab(type: Copy) {
-    from "$buildDir/outputs/bundle/debug/build-debug.aab"
-    into getExportPath()
-    rename "build-debug.aab", getExportFilename()
+tasks.register('copyAndRenameDebugAab', Copy) {
+    from layout.buildDirectory.dir("outputs/bundle/debug/build-debug.aab")
+    into exportPath
+    rename "build-debug.aab", exportFilename
 }
 
-task copyAndRenameReleaseAab(type: Copy) {
-    from "$buildDir/outputs/bundle/release/build-release.aab"
-    into getExportPath()
-    rename "build-release.aab", getExportFilename()
+tasks.register('copyAndRenameReleaseAab', Copy) {
+    from layout.buildDirectory.dir("outputs/bundle/release/build-release.aab")
+    into exportPath
+    rename "build-release.aab", exportFilename
 }
 
 //CHUNK_GLOBAL_BEGIN

@@ -37,7 +37,7 @@ android {
         }
     }
 
-    libraryVariants.all { variant ->
+    libraryVariants.configureEach { variant ->
         def buildType = variant.buildType.name.capitalize()
 
         def taskPrefix = ""
@@ -45,8 +45,8 @@ android {
             taskPrefix = project.path + ":"
         }
 
-        // Disable the externalNativeBuild* task as it would cause build failures since the cmake build
-        // files is only setup for editing support.
+        // We use SCons to build the native libraries.
+        // So, we need to disable the externalNativeBuild* tasks.
         gradle.startParameter.excludedTaskNames += taskPrefix + "externalNativeBuild" + buildType
     }
 }

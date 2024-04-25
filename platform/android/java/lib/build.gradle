@@ -15,8 +15,7 @@ android {
     defaultConfig {
         minSdk versions.minSdk
         targetSdk versions.targetSdk
-
-        manifestPlaceholders = [libraryVersion: getLibraryVersion()]
+        manifestPlaceholders.libraryVersion = buildVersion()
     }
 
     compileOptions {
@@ -28,9 +27,7 @@ android {
         resources {
             excludes += ['META-INF/LICENSE', 'META-INF/NOTICE']
         }
-
-        // 'doNotStrip' is enabled for development within Android Studio
-        if (shouldNotStrip()) {
+        if (project.hasProperty("doNotStrip")) {
             doNotStrip '**/*.so'
         }
     }
@@ -57,8 +54,8 @@ android {
         buildConfig true
     }
 
-    libraryVariants.all { variant ->
-        variant.outputs.all { output ->
+    libraryVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
             output.outputFileName = "rebel-lib.${variant.name}.aar"
         }
         def buildType = variant.buildType.name.capitalize()
