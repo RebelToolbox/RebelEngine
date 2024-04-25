@@ -1,4 +1,3 @@
-
 The files in this repository are licensed under the zlib license, except for the files under 'Extras' and examples/ThirdPartyLibs.
 
 Bullet Continuous Collision Detection and Physics Library
