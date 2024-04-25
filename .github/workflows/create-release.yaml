@@ -180,18 +180,6 @@ jobs:
             build-options: platform=iphone production=yes tools=no target=release_debug
             rebel-executable: librebel.iphone.opt.debug.arm64.a
 
-          - name: iOS Engine Library arm 32 bit
-            os: macos-latest
-            artifact: ios-engine-library-arm
-            build-options: platform=iphone production=yes tools=no target=release arch=arm
-            rebel-executable: librebel.iphone.opt.arm.a
-
-          - name: iOS Engine Library arm 32 bit Debug
-            os: macos-latest
-            artifact: ios-engine-library-arm-debug
-            build-options: platform=iphone production=yes tools=no target=release_debug arch=arm
-            rebel-executable: librebel.iphone.opt.debug.arm.a
-
           - name: iOS Engine Library x86 64 bit Simulator
             os: macos-latest
             artifact: ios-engine-library-x86-64
@@ -421,27 +409,13 @@ jobs:
           path: bin/
           merge-multiple: true
 
-      - name: Create Universal binaries
-        run: |
-          # For each build type, run lipo to create a universal binary.
-          for build in                \
-            librebel.iphone.opt       \
-            librebel.iphone.opt.debug
-          do
-            lipo -create           \
-            bin/$build.arm.a       \
-            bin/$build.arm64.a     \
-            -output                \
-            bin/$build.universal.a
-          done
-
       - name: Create iOS Template
         run: |
           # Add universal binaries to iOS Tempate.
           cp -r tools/dist/ios_xcode .
-          cp bin/librebel.iphone.opt.universal.a                                              \
+          cp bin/librebel.iphone.opt.arm64.a                                                  \
           ios_xcode/libgodot.iphone.release.xcframework/ios-arm64/librebel.a
-          cp bin/librebel.iphone.opt.debug.universal.a                                        \
+          cp bin/librebel.iphone.opt.debug.arm64.a                                            \
           ios_xcode/libgodot.iphone.debug.xcframework/ios-arm64/librebel.a
           cp bin/librebel.iphone.opt.x86_64.simulator.a                                       \
           ios_xcode/libgodot.iphone.release.xcframework/ios-arm64_x86_64-simulator/librebel.a
