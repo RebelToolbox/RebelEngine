@@ -76585,12 +76585,12 @@ msgid "Control for playing video streams."
 msgstr "用于播放视频流的控件。"
 
 #: docs/VideoPlayer.xml
+#, fuzzy
 msgid ""
 "Control node for playing video streams using [VideoStream] resources.\n"
-"Supported video formats are [url=https://www.webmproject.org/]WebM[/url] "
-"([code].webm[/code], [VideoStreamWebm]), [url=https://www.theora.org/]Ogg "
-"Theora[/url] ([code].ogv[/code], [VideoStreamTheora]), and any format "
-"exposed via a GDNative plugin using [VideoStreamGDNative].\n"
+"Supported video formats are [url=https://www.theora.org/]Ogg Theora[/url] "
+"([code].ogv[/code], [VideoStreamTheora]), and any format exposed via a "
+"GDNative plugin using [VideoStreamGDNative].\n"
 "[b]Note:[/b] Due to a bug, VideoPlayer does not support localization "
 "remapping yet.\n"
 "[b]Warning:[/b] On HTML5, video playback [i]will[/i] perform poorly due to "
@@ -76743,9 +76743,7 @@ msgstr "[VideoStream] Ogg Theora视频的资源。"
 #, fuzzy
 msgid ""
 "[VideoStream] resource handling the [url=https://www.theora.org/]Ogg Theora[/"
-"url] video format with [code].ogv[/code] extension. The Theora codec is less "
-"efficient than [VideoStreamWebm]'s VP8 and VP9, but it requires less CPU "
-"resources to decode. The Theora codec is decoded on the CPU.\n"
+"url] video format with [code].ogv[/code] extension.\n"
 "[b]Note:[/b] While Ogg Theora videos can also have an [code].ogg[/code] "
 "extension, you will have to rename the extension to [code].ogv[/code] to use "
 "those videos within Rebel Engine."
@@ -76768,46 +76766,6 @@ msgid ""
 msgstr ""
 "设置该[VideoStreamTheora]资源处理的Ogg Theora视频文件。[code]file[/code]的名"
 "称应该有[code].ogv[/code]扩展名。"
-
-#: modules/webm/docs/VideoStreamWebm.xml
-msgid "[VideoStream] resource for WebM videos."
-msgstr "[VideoStream] WebM视频的资源。"
-
-#: modules/webm/docs/VideoStreamWebm.xml
-#, fuzzy
-msgid ""
-"[VideoStream] resource handling the [url=https://www.webmproject.org/]WebM[/"
-"url] video format with [code].webm[/code] extension. Both the VP8 and VP9 "
-"codecs are supported. The VP8 and VP9 codecs are more efficient than "
-"[VideoStreamTheora], but they require more CPU resources to decode "
-"(especially VP9). Both the VP8 and VP9 codecs are decoded on the CPU.\n"
-"[b]Note:[/b] Alpha channel (also known as transparency) is not supported. "
-"The video will always appear to have a black background, even if it "
-"originally contains an alpha channel.\n"
-"[b]Note:[/b] There are known bugs and performance issues with WebM video "
-"playback in Rebel Engine. If you run into problems, try using the Ogg Theora "
-"format instead: [VideoStreamTheora]"
-msgstr ""
-"[VideoStream]资源处理[url=https://www.webmproject.org/]WebM[/url]视频格式，扩"
-"展名为[code].webm[/code]。支持VP8和VP9编解码器。VP8和VP9编解码器比"
-"[VideoStreamTheora]更有效，但其需要更多的CPU资源来解码，尤其是VP9。VP8和VP9编"
-"解码器是在CPU上解码的。\n"
-"[b]注意：[/b] 不支持Alpha通道，也称为透明度。视频将始终显示为黑色背景，即使它"
-"最初包含alpha通道。\n"
-"[b]注意：[/b] Godot中的WebM视频播放存在已知的错误和性能问题。如果你遇到问题，"
-"可以尝试用Ogg Theora格式代替:[VideoStreamTheora]"
-
-#: modules/webm/docs/VideoStreamWebm.xml
-msgid "Returns the WebM video file handled by this [VideoStreamWebm]."
-msgstr "返回由这个[VideoStreamWebm]处理的WebM视频文件。"
-
-#: modules/webm/docs/VideoStreamWebm.xml
-msgid ""
-"Sets the WebM video file that this [VideoStreamWebm] resource handles. The "
-"[code]file[/code] name should have the [code].webm[/code] extension."
-msgstr ""
-"设置这个[VideoStreamWebm]资源处理的WebM视频文件。[code]file[/code]名称具有"
-"[code].webm[/code]扩展名。"
 
 #: docs/Viewport.xml
 msgid "Creates a sub-view into the screen."
