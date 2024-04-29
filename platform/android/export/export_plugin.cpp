@@ -210,12 +210,12 @@ static const char* APK_ASSETS_DIRECTORY = "res://android/build/assets";
 static const char* AAB_ASSETS_DIRECTORY =
     "res://android/build/assetPacks/installTime/src/main/assets";
 
-static const int DEFAULT_MIN_SDK_VERSION =
-    19; // Should match the value in
-        // 'platform/android/java/app/config.gradle#minSdk'
-static const int DEFAULT_TARGET_SDK_VERSION =
-    34; // Should match the value in
-        // 'platform/android/java/app/config.gradle#targetSdk'
+// Also update platform/android/java/app/config.gradle:
+// - minSdk
+// - targetSdk
+static const int DEFAULT_MIN_SDK_VERSION    = 21;
+static const int DEFAULT_TARGET_SDK_VERSION = 34;
+
 const String SDK_VERSION_RANGE = vformat(
     "%s,%s,1,or_greater",
     DEFAULT_MIN_SDK_VERSION,

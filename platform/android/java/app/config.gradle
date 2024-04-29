@@ -1,11 +1,15 @@
 ext.versions = [
     androidGradlePlugin: '8.4.0',
     compileSdk         : 34,
-    minSdk             : 19, // Also update 'platform/android/export/export_plugin.cpp#DEFAULT_MIN_SDK_VERSION'
-    targetSdk          : 34, // Also update 'platform/android/export/export_plugin.cpp#DEFAULT_TARGET_SDK_VERSION'
+    // Also update platform/android/export/export_plugin.cpp:
+    // - DEFAULT_MIN_SDK_VERSION
+    // - DEFAULT_TARGET_SDK_VERSION
+    minSdk             : 21,
+    targetSdk          : 34,
     fragmentVersion    : '1.7.0',
     javaVersion        : 17,
-    ndkVersion         : '23.2.8568313' // Also update 'platform/android/detect.py#get_ndk_version' when this is updated.
+    // Also update platform/android/detect.py get_ndk_version()
+    ndkVersion         : '26.2.11394342'
 ]
 
 ext.libraries = [
