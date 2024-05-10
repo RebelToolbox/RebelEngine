@@ -20,24 +20,8 @@ allprojects {
     }
 }
 
-ext {
-    supportedAbis = ["armv7", "arm64v8", "x86", "x86_64"]
-    supportedTargets = ["release", "debug"]
-
-    // Used by gradle to specify which architecture to build for by default when running `./gradlew build`.
-    // This command is usually used by Android Studio.
-    // If building manually on the command line, it's recommended to use the
-    // `./gradlew createAndroidTemplates` command instead after running the `scons` command.
-    // The defaultAbi must be one of the {supportedAbis} values.
-    defaultAbi = "arm64v8"
-}
-
-def rootDir = "../../.."
-def binDir = "$rootDir/bin/"
-
-def getSconsTaskName(String buildType) {
-    return "compileRebelEngine" + buildType.capitalize()
-}
+def binDir = "../../../bin"
+def supportedTargets = ["release", "debug"]
 
 /**
  * Copy the generated 'android_debug.apk' binary template into the bin directory.
@@ -111,7 +95,6 @@ task copyReleaseAARToBin(type: Copy) {
  * The zip file also includes some gradle tools to allow building of the custom build.
  */
 task zipCustomBuild(type: Zip) {
-    onlyIf { createAndroidTemplates.state.executed || createDevelopmentAndroidTemplates.state.executed }
     doFirst {
         logger.lifecycle("Creating the Rebel Android custom build template")
     }
@@ -121,16 +104,7 @@ task zipCustomBuild(type: Zip) {
     destinationDirectory = file(binDir)
 }
 
-def templateExcludedBuildTask() {
-    // We exclude these gradle tasks so we can run the scons command manually.
-    def excludedTasks = []
-    for (String buildType : supportedTargets) {
-        excludedTasks += ":lib:" + getSconsTaskName(buildType)
-    }
-    return excludedTasks
-}
-
-def templateBuildTasks() {
+def templateBuildTasks = {
     def tasks = []
 
     // Only build the apks and aar files for which we have native shared libraries.
@@ -159,9 +133,7 @@ def templateBuildTasks() {
  * Creates the Rebel Engine Android templates for each previously built target and architecture.
  */
 task createAndroidTemplates {
-    gradle.startParameter.excludedTaskNames += templateExcludedBuildTask()
-    dependsOn = templateBuildTasks()
-
+    dependsOn templateBuildTasks
     finalizedBy 'zipCustomBuild'
 }
 
@@ -169,13 +141,8 @@ task createAndroidTemplates {
  * Creates the development Android templates for each previously built target and architecture.
  */
 task createDevelopmentAndroidTemplates {
-    // add parameter to set symbols to true
     gradle.startParameter.projectProperties += [doNotStrip: true]
-
-    gradle.startParameter.excludedTaskNames += templateExcludedBuildTask()
-    dependsOn = templateBuildTasks()
-
-    finalizedBy 'zipCustomBuild'
+    finalizedBy 'createAndrdoidTempates'
 }
 
 /**
