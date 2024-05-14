@@ -4087,7 +4087,6 @@ Error EditorExportPlatformAndroid::export_project_helper(
         String target_sdk_version = itos(p_preset->get("version/target_sdk"));
         String enabled_abi_string = String("|").join(enabled_abis);
         String sign_flag          = should_sign ? "true" : "false";
-        String zipalign_flag      = "true";
 
         Vector<AndroidPluginConfig> enabled_plugins =
             get_enabled_plugins(p_preset);
@@ -4149,9 +4148,6 @@ Error EditorExportPlatformAndroid::export_project_helper(
             "-Pplugins_maven_repos=" + plugins_maven_repos
         ); // argument to specify the list of custom maven repos for the plugins
            // dependencies.
-        cmdline.push_back(
-            "-Pperform_zipalign=" + zipalign_flag
-        ); // argument to specify whether the build should be zipaligned.
         cmdline.push_back(
             "-Pperform_signing=" + sign_flag
         ); // argument to specify whether the build should be signed.

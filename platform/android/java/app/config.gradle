@@ -262,18 +262,6 @@ ext.isAndroidStudio = { ->
     return sysProps != null && sysProps['idea.platform.prefix'] != null
 }
 
-ext.shouldZipAlign = { ->
-    String zipAlignFlag = project.hasProperty("perform_zipalign") ? project.property("perform_zipalign") : ""
-    if (zipAlignFlag == null || zipAlignFlag.isEmpty()) {
-        if (isAndroidStudio()) {
-            zipAlignFlag = "true"
-        } else {
-            zipAlignFlag = "false"
-        }
-    }
-    return Boolean.parseBoolean(zipAlignFlag)
-}
-
 ext.shouldSign = { ->
     String signFlag = project.hasProperty("perform_signing") ? project.property("perform_signing") : ""
     if (signFlag == null || signFlag.isEmpty()) {
