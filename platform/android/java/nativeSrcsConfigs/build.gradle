@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.rebeltoolbox.rebelengine'
-    compileSdkVersion versions.compileSdk
+    compileSdk versions.compileSdk
     buildToolsVersion versions.buildTools
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
     }
 
     compileOptions {

@@ -75,7 +75,7 @@ dependencies {
 
 android {
     namespace 'com.rebeltoolbox.rebelapp'
-    compileSdkVersion versions.compileSdk
+    compileSdk versions.compileSdk
     buildToolsVersion versions.buildTools
 
     compileOptions {
@@ -103,8 +103,8 @@ android {
         applicationId getExportPackageName()
         versionCode getExportVersionCode()
         versionName getExportVersionName()
-        minSdkVersion getExportMinSdkVersion()
-        targetSdkVersion getExportTargetSdkVersion()
+        minSdk getExportMinSdkVersion()
+        targetSdk getExportTargetSdkVersion()
 //CHUNK_ANDROID_DEFAULTCONFIG_BEGIN
 //CHUNK_ANDROID_DEFAULTCONFIG_END
     }
