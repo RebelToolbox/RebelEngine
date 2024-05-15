@@ -63,13 +63,6 @@ if lib_arch_dir != "":
         "#bin/librebel" + env["SHLIBSUFFIX"],
         Copy("$TARGET", "$SOURCE"),
     )
-
-    stl_lib_path = (
-        str(env["ANDROID_NDK_ROOT"])
-        + "/sources/cxx-stl/llvm-libc++/libs/"
-        + lib_arch_dir
-        + "/libc++_shared.so"
-    )
     env_android.Command(
-        out_dir + "/libc++_shared.so", stl_lib_path, Copy("$TARGET", "$SOURCE")
+        out_dir + "/libc++_shared.so", env["LIBC"], Copy("$TARGET", "$SOURCE")
     )

@@ -49,9 +49,9 @@ def get_android_ndk_root(env):
     return env["ANDROID_SDK_ROOT"] + "/ndk/" + get_ndk_version()
 
 
-# This is kept in sync with the value in 'platform/android/java/app/config.gradle'.
 def get_ndk_version():
-    return "23.2.8568313"
+    # Also update platform/android/java/app/config.gradle ndkVersion
+    return "26.2.11394342"
 
 
 def get_flags():
@@ -99,32 +99,28 @@ def configure(env):
     print("Building for Android (" + env["android_arch"] + ")" + neon_text)
 
     if get_min_sdk_version(env["ndk_platform"]) < 21:
-        if env["android_arch"] == "x86_64" or env["android_arch"] == "arm64v8":
-            print(
-                "WARNING: android_arch="
-                + env["android_arch"]
-                + " is not supported by ndk_platform lower than android-21; setting ndk_platform=android-21"
-            )
-            env["ndk_platform"] = "android-21"
+        print("WARNING: Minimum Android NDK API level is 21")
+        print("Setting ndk_platform=android-21")
+        env["ndk_platform"] = "android-21"
 
     if env["android_arch"] == "armv7":
+        triple = "arm-linux-androideabi"
         target_triple = "armv7a-linux-androideabi"
-        bin_utils = "arm-linux-androideabi"
         if env["android_neon"]:
             env.extra_suffix = ".armv7.neon" + env.extra_suffix
         else:
             env.extra_suffix = ".armv7" + env.extra_suffix
     elif env["android_arch"] == "arm64v8":
-        target_triple = "aarch64-linux-android"
-        bin_utils = target_triple
+        triple = "aarch64-linux-android"
+        target_triple = triple
         env.extra_suffix = ".armv8" + env.extra_suffix
     elif env["android_arch"] == "x86":
-        target_triple = "i686-linux-android"
-        bin_utils = target_triple
+        triple = "i686-linux-android"
+        target_triple = triple
         env.extra_suffix = ".x86" + env.extra_suffix
     elif env["android_arch"] == "x86_64":
-        target_triple = "x86_64-linux-android"
-        bin_utils = target_triple
+        triple = "x86_64-linux-android"
+        target_triple = triple
         env.extra_suffix = ".x86_64" + env.extra_suffix
 
     target_option = [
@@ -132,6 +128,7 @@ def configure(env):
         target_triple + str(get_min_sdk_version(env["ndk_platform"])),
     ]
     env.Append(CCFLAGS=target_option)
+    env.Append(ASFLAGS=target_option)
     env.Append(LINKFLAGS=target_option)
 
     # Build type
@@ -169,13 +166,13 @@ def configure(env):
 
     toolchain_path = ndk_root + "/toolchains/llvm/prebuilt/" + host_subpath
     compiler_path = toolchain_path + "/bin"
-    bin_utils_path = toolchain_path + "/" + bin_utils + "/bin"
+    libc_shared_path = toolchain_path + "/sysroot/usr/lib/" + triple
 
     env["CC"] = compiler_path + "/clang"
     env["CXX"] = compiler_path + "/clang++"
     env["AR"] = compiler_path + "/llvm-ar"
     env["RANLIB"] = compiler_path + "/llvm-ranlib"
-    env["AS"] = bin_utils_path + "/as"
+    env["LIBC"] = libc_shared_path + "/libc++_shared.so"
 
     # Disable exceptions and rtti on non-tools (template) builds
     if env["tools"]:
@@ -199,17 +196,13 @@ def configure(env):
         # -mstackrealign is needed to properly align stacks for global constructors.
         env.Append(CCFLAGS=["-mstackrealign"])
     elif env["android_arch"] == "armv7":
-        env.Append(CCFLAGS="-march=armv7-a -mfloat-abi=softfp".split())
-        env.Append(CPPDEFINES=["__ARM_ARCH_7__", "__ARM_ARCH_7A__"])
         if env["android_neon"]:
             env["neon_enabled"] = True
-            env.Append(CPPDEFINES=["__ARM_NEON__"])
+            env.Append(CCFLAGS=["-mfpu=neon"])
         else:
             env.Append(CCFLAGS=["-mfpu=vfpv3-d16"])
-
     elif env["android_arch"] == "arm64v8":
         env.Append(CCFLAGS=["-mfix-cortex-a53-835769"])
-        env.Append(CPPDEFINES=["__ARM_ARCH_8A__"])
 
     # Link flags
 

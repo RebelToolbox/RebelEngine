@@ -1,16 +1,15 @@
 // Configure the root project.
 pluginManagement {
-    apply from: 'app/config.gradle'
-
-    plugins {
-        id 'com.android.application' version versions.androidGradlePlugin
-        id 'com.android.library' version versions.androidGradlePlugin
-        id 'org.jetbrains.kotlin.android' version versions.kotlinVersion
-        id 'io.github.gradle-nexus.publish-plugin' version versions.nexusPublishVersion
-    }
     repositories {
         gradlePluginPortal()
         google()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
     }
 }
 
@@ -19,6 +18,6 @@ rootProject.name = "Rebel"
 include ':app'
 include ':lib'
 include ':nativeSrcsConfigs'
-
 include ':assetPacks:installTime'
+project(':assetPacks').projectDir = file("app/assetPacks")
 project(':assetPacks:installTime').projectDir = file("app/assetPacks/installTime")

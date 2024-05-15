@@ -1,57 +1,33 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.androidLibrary
 }
-
-ext {
-    PUBLISH_VERSION = getPublishVersion()
-    PUBLISH_ARTIFACT_ID = 'rebel'
-}
-
-apply from: "../scripts/publish-module.gradle"
 
 dependencies {
-    implementation libraries.kotlinStdLib
-    implementation libraries.androidxFragment
+    implementation libs.androidxFragment
 }
 
-def pathToRootDir = "../../../../"
-
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+    namespace 'com.rebeltoolbox.rebelengine'
+    compileSdk versions.compileSdk
 
     ndkVersion versions.ndkVersion
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
-
-        manifestPlaceholders = [libraryVersion: getLibraryVersion()]
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
+        manifestPlaceholders.libraryVersion = buildVersion()
     }
-
-    namespace = "com.rebeltoolbox.rebelengine"
 
     compileOptions {
         sourceCompatibility versions.javaVersion
         targetCompatibility versions.javaVersion
     }
 
-    kotlinOptions {
-        jvmTarget = versions.javaVersion
-    }
-
-    lintOptions {
-        abortOnError false
-        disable 'MissingTranslation', 'UnusedResources'
-    }
-
     packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
-
-        // 'doNotStrip' is enabled for development within Android Studio
-        if (shouldNotStrip()) {
+        resources {
+            excludes += ['META-INF/LICENSE', 'META-INF/NOTICE']
+        }
+        if (project.hasProperty("doNotStrip")) {
             doNotStrip '**/*.so'
         }
     }
@@ -68,70 +44,125 @@ android {
         release.jniLibs.srcDirs = ['libs/release']
     }
 
-    libraryVariants.all { variant ->
-        variant.outputs.all { output ->
-            output.outputFileName = "rebel-lib.${variant.name}.aar"
-        }
-
-        def buildType = variant.buildType.name.capitalize()
-
-        def releaseTarget = buildType.toLowerCase()
-        if (releaseTarget == null || releaseTarget == "") {
-            throw new GradleException("Invalid build type: " + buildType)
-        }
-
-        if (!supportedAbis.contains(defaultAbi)) {
-            throw new GradleException("Invalid default abi: " + defaultAbi)
-        }
-
-        // Find scons' executable path
-        File sconsExecutableFile = null
-        def sconsName = "scons"
-        def sconsExts = (org.gradle.internal.os.OperatingSystem.current().isWindows()
-            ? [".bat", ".cmd", ".ps1", ".exe"]
-            : [""])
-        logger.lifecycle("Looking for $sconsName executable path")
-        for (ext in sconsExts) {
-            String sconsNameExt = sconsName + ext
-            logger.lifecycle("Checking $sconsNameExt")
-
-            sconsExecutableFile = org.gradle.internal.os.OperatingSystem.current().findInPath(sconsNameExt)
-            if (sconsExecutableFile != null) {
-                // We're done!
-                break
-            }
-
-            // Check all the options in path
-            List<File> allOptions = org.gradle.internal.os.OperatingSystem.current().findAllInPath(sconsNameExt)
-            if (!allOptions.isEmpty()) {
-                // Pick the first option and we're done!
-                sconsExecutableFile = allOptions.get(0)
-                break
-            }
-        }
-
-        if (sconsExecutableFile == null) {
-            throw new GradleException("Unable to find executable path for the '$sconsName' command.")
-        } else {
-            logger.lifecycle("Found executable path for $sconsName: ${sconsExecutableFile.absolutePath}")
-        }
-
-        // Creating gradle task to generate the native libraries for the default abi.
-        def taskName = getSconsTaskName(buildType)
-        tasks.create(name: taskName, type: Exec) {
-            executable sconsExecutableFile.absolutePath
-            args "--directory=${pathToRootDir}", "platform=android", "target=${releaseTarget}", "android_arch=${defaultAbi}", "-j" + Runtime.runtime.availableProcessors()
-        }
-
-        // Schedule the tasks so the generated libs are present before the aar file is packaged.
-        tasks["merge${buildType}JniLibFolders"].dependsOn taskName
+    lint {
+        abortOnError false
+        disable 'MissingTranslation', 'UnusedResources'
     }
 
-    // TODO: Enable when issues with AGP 7.1+ are resolved (https://github.com/GodotVR/godot_openxr/issues/187).
-//    publishing {
-//        singleVariant("release") {
-//            withSourcesJar()
-//            withJavadocJar()
-//        }
-//    }
+    buildFeatures {
+        aidl true
+        buildConfig true
+    }
+
+    libraryVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            output.outputFileName = "rebel-lib.${variant.name}.aar"
+        }
+        def buildType = variant.buildType.name.capitalize()
+        // Ensure all compiled libraries are present before the Android libraries are created.
+        tasks.named("merge${buildType}JniLibFolders") {
+            mustRunAfter "compile${buildType}RebelEngine"
+        }
+    }
+}
+
+def sourceDir = "../../../.."
+def supportedABIs = ["armv7", "arm64v8", "x86", "x86_64"]
+def scons = "scons" + (System.getProperty("os.name") == "Windows" ? ".exe" : "")
+def processors = Runtime.runtime.availableProcessors()
+
+def allCompileRebelEngineTasks = { buildType ->
+    def tasks = []
+    for (abi in supportedABIs) {
+        tasks.add("compile${abi.capitalize()}${buildType.capitalize()}RebelEngine")
+    }
+    return tasks
+}
+
+tasks.register('buildRebelEngine') {
+    group "Rebel"
+    description "Builds all the Rebel Engine libraries for all supported architectures."
+    dependsOn 'compileDebugRebelEngine'
+    dependsOn 'compileReleaseRebelEngine'
+    finalizedBy 'build'
+}
+
+tasks.register('compileDebugRebelEngine') {
+    group "Rebel Debug"
+    description "Builds the debug Rebel Engine libraries for all supported architectures."
+    dependsOn allCompileRebelEngineTasks('Debug')
+    finalizedBy 'build'
+}
+
+tasks.register('compileReleaseRebelEngine') {
+    group "Rebel Release"
+    description "Builds the release Rebel Engine libraries for all supported architectures."
+    dependsOn allCompileRebelEngineTasks('Release')
+    finalizedBy 'build'
+}
+
+// Compile Rebel Engine debug libraries
+tasks.register('compileArmv7DebugRebelEngine', Exec) {
+    group "Rebel Debug"
+    description "Builds the debug Rebel Engine libraries for 32 bit Arm v7."
+    executable scons
+    args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release_debug", "android_arch=armv7"
+    finalizedBy 'build'
+}
+
+tasks.register('compileArm64v8DebugRebelEngine', Exec) {
+    group "Rebel Debug"
+    description "Builds the debug Rebel Engine libraries for 64 bit Arm v8."
+    executable scons
+    args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release_debug", "android_arch=arm64v8"
+    finalizedBy 'build'
+}
+
+tasks.register('compileX86DebugRebelEngine', Exec) {
+    group "Rebel Debug"
+    description "Builds the debug Rebel Engine libraries for 32 bit x86."
+    executable scons
+    args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release_debug", "android_arch=x86"
+    finalizedBy 'build'
+}
+
+tasks.register('compileX86_64DebugRebelEngine', Exec) {
+    group "Rebel Debug"
+    description "Builds the debug Rebel Engine libraries for 64 bit x86."
+    executable scons
+    args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release_debug", "android_arch=x86_64"
+    finalizedBy 'build'
+}
+
+// Compile Rebel Engine release libraries
+tasks.register('compileArmv7ReleaseRebelEngine', Exec) {
+    group "Rebel Release"
+    description "Builds the release Rebel Engine libraries for 32 bit Arm v7."
+    executable scons
+    args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release", "android_arch=armv7"
+    finalizedBy 'build'
+}
+
+tasks.register('compileArm64v8ReleaseRebelEngine', Exec) {
+    group "Rebel Release"
+    description "Builds the release Rebel Engine libraries for 64 bit Arm v8."
+    executable scons
+    args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release", "android_arch=arm64v8"
+    finalizedBy 'build'
+}
+
+tasks.register('compileX86ReleaseRebelEngine', Exec) {
+    group "Rebel Release"
+    description "Builds the release Rebel Engine libraries for 32 bit x86."
+    executable scons
+    args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release", "android_arch=x86"
+    finalizedBy 'build'
+}
+
+tasks.register('compileX86_64ReleaseRebelEngine', Exec) {
+    group "Rebel Release"
+    description "Builds the release Rebel Engine libraries for 64 bit x86."
+    executable scons
+    args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release", "android_arch=x86_64"
+    finalizedBy 'build'
 }

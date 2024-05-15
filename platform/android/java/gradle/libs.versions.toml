@@ -1,0 +1,11 @@
+[versions]
+androidGradlePlugin = "8.4.0"
+androidxFragment = "1.7.0"
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+androidAssetPack = { id = "com.android.asset-pack", version.ref = "androidGradlePlugin" }
+
+[libraries]
+androidxFragment = { module = "androidx.fragment:fragment", version.ref = "androidxFragment" }

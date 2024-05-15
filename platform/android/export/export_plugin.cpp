@@ -210,14 +210,14 @@ static const char* APK_ASSETS_DIRECTORY = "res://android/build/assets";
 static const char* AAB_ASSETS_DIRECTORY =
     "res://android/build/assetPacks/installTime/src/main/assets";
 
-static const int DEFAULT_MIN_SDK_VERSION =
-    19; // Should match the value in
-        // 'platform/android/java/app/config.gradle#minSdk'
-static const int DEFAULT_TARGET_SDK_VERSION =
-    34; // Should match the value in
-        // 'platform/android/java/app/config.gradle#targetSdk'
+// Also update platform/android/java/app/config.gradle:
+// - minSdk
+// - targetSdk
+static const int DEFAULT_MIN_SDK_VERSION    = 21;
+static const int DEFAULT_TARGET_SDK_VERSION = 34;
+
 const String SDK_VERSION_RANGE = vformat(
-    "%s,%s,1,or_greater",
+    "%s,%s,1,or_greater,or_lesser",
     DEFAULT_MIN_SDK_VERSION,
     DEFAULT_TARGET_SDK_VERSION + 1
 );
@@ -3148,61 +3148,55 @@ bool EditorExportPlatformAndroid::can_export(
     }
 
     // Check the min and target sdk version.
-    int min_sdk_version = p_preset->get("version/min_sdk");
-    if (min_sdk_version != DEFAULT_MIN_SDK_VERSION && !custom_build_enabled) {
-        err += vformat(
-            TTR("\"Min Sdk\" was changed from the default \"%d\" to \"%d\". "
-                "This option requires \"Use Custom Build\" to be enabled.\n>> "
-                "Change it to \"%d\" to silence this warning, or enable \"Use "
-                "Custom Build\" to use this min SDK."),
-            DEFAULT_MIN_SDK_VERSION,
-            min_sdk_version,
-            DEFAULT_MIN_SDK_VERSION
-        );
-        err += "\n";
-    }
-
+    int min_sdk_version    = p_preset->get("version/min_sdk");
     int target_sdk_version = p_preset->get("version/target_sdk");
-    if (target_sdk_version != DEFAULT_TARGET_SDK_VERSION) {
-        if (!custom_build_enabled) {
-            err += vformat(
-                TTR("\"Target Sdk\" was changed from the default \"%d\" to "
-                    "\"%d\". This option requires \"Use Custom Build\" to be "
-                    "enabled.\n>> Change it to \"%d\" to silence this warning, "
-                    "or enable \"Use Custom Build\" to use this target SDK."),
-                DEFAULT_TARGET_SDK_VERSION,
-                target_sdk_version,
-                DEFAULT_TARGET_SDK_VERSION
+    if (custom_build_enabled) {
+        if (target_sdk_version < min_sdk_version) {
+            valid = false;
+            err +=
+                TTR("\"Target Sdk\" version must be greater or equal to \"Min "
+                    "Sdk\" version.\n");
+        } else if (min_sdk_version < DEFAULT_MIN_SDK_VERSION) {
+            valid  = false;
+            err   += vformat(
+                TTR("\"Min Sdk\" is set to \"%d\", while the current minimum "
+                      "is \"%d\".\n"),
+                min_sdk_version,
+                DEFAULT_MIN_SDK_VERSION
             );
-            err += "\n";
-        } else if (target_sdk_version < DEFAULT_TARGET_SDK_VERSION) {
+        } else if (min_sdk_version > DEFAULT_MIN_SDK_VERSION) {
+            err += vformat(
+                TTR("\"Min Sdk\" is set to \"%d\", while the current default "
+                    "is \"%d\".\n"),
+                min_sdk_version,
+                DEFAULT_MIN_SDK_VERSION
+            );
+        }
+        if (target_sdk_version != DEFAULT_TARGET_SDK_VERSION) {
             err += vformat(
                 TTR("\"Target Sdk\" is set to \"%d\", while the current "
-                    "default is \"%d\". This might be due to upgrading from a "
-                    "previous release.\n>> Consider changing it to \"%d\" to "
-                    "stay up-to-date with platform requirements."),
-                target_sdk_version,
-                DEFAULT_TARGET_SDK_VERSION,
-                DEFAULT_TARGET_SDK_VERSION
-            );
-            err += "\n";
-        } else if (target_sdk_version > DEFAULT_TARGET_SDK_VERSION) {
-            err += vformat(
-                TTR("\"Target Sdk\" %d is higher than the default version %d. "
-                    "This may work, but isn't tested and may be unstable."),
+                    "default is \"%d\".\n"),
                 target_sdk_version,
                 DEFAULT_TARGET_SDK_VERSION
             );
-            err += "\n";
         }
-    }
-
-    if (target_sdk_version < min_sdk_version) {
-        valid = false;
-        err +=
-            TTR("\"Target Sdk\" version must be greater or equal to \"Min "
-                "Sdk\" version.");
-        err += "\n";
+    } else { // !custom_build_enabled
+        if (min_sdk_version != DEFAULT_MIN_SDK_VERSION) {
+            err += vformat(
+                TTR("\"Min Sdk\" has no effect unless \"Use Custom Build\" is "
+                    "enabled.\n"
+                    "To silence this warning set \"Min Sdk\" to \"%d\".\n"),
+                DEFAULT_MIN_SDK_VERSION
+            );
+        }
+        if (target_sdk_version != DEFAULT_TARGET_SDK_VERSION) {
+            err += vformat(
+                TTR("\"Target Sdk\" has no effect unless \"Use Custom Build\" "
+                    "is enabled.\n"
+                    "To silence this warning set \"Target Sdk\" to \"%d\".\n"),
+                DEFAULT_TARGET_SDK_VERSION
+            );
+        }
     }
 
     r_error = err;
@@ -4087,7 +4081,6 @@ Error EditorExportPlatformAndroid::export_project_helper(
         String target_sdk_version = itos(p_preset->get("version/target_sdk"));
         String enabled_abi_string = String("|").join(enabled_abis);
         String sign_flag          = should_sign ? "true" : "false";
-        String zipalign_flag      = "true";
 
         Vector<AndroidPluginConfig> enabled_plugins =
             get_enabled_plugins(p_preset);
@@ -4149,9 +4142,6 @@ Error EditorExportPlatformAndroid::export_project_helper(
             "-Pplugins_maven_repos=" + plugins_maven_repos
         ); // argument to specify the list of custom maven repos for the plugins
            // dependencies.
-        cmdline.push_back(
-            "-Pperform_zipalign=" + zipalign_flag
-        ); // argument to specify whether the build should be zipaligned.
         cmdline.push_back(
             "-Pperform_signing=" + sign_flag
         ); // argument to specify whether the build should be signed.

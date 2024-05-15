@@ -1,16 +1,15 @@
 // Non functional android library used to provide Android Studio editor support to the project.
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.androidLibrary
 }
 
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+    namespace 'com.rebeltoolbox.rebelengine'
+    compileSdk versions.compileSdk
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
     }
 
     compileOptions {
@@ -18,13 +17,10 @@ android {
         targetCompatibility versions.javaVersion
     }
 
-    kotlinOptions {
-        jvmTarget = versions.javaVersion
-    }
-
     packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
+        resources {
+            excludes += ['META-INF/LICENSE', 'META-INF/NOTICE']
+        }
     }
 
     sourceSets {
@@ -41,7 +37,7 @@ android {
         }
     }
 
-    libraryVariants.all { variant ->
+    libraryVariants.configureEach { variant ->
         def buildType = variant.buildType.name.capitalize()
 
         def taskPrefix = ""
@@ -49,8 +45,8 @@ android {
             taskPrefix = project.path + ":"
         }
 
-        // Disable the externalNativeBuild* task as it would cause build failures since the cmake build
-        // files is only setup for editing support.
+        // We use SCons to build the native libraries.
+        // So, we need to disable the externalNativeBuild* tasks.
         gradle.startParameter.excludedTaskNames += taskPrefix + "externalNativeBuild" + buildType
     }
 }
