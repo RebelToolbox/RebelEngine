@@ -190,10 +190,9 @@ void PowerX11::check_proc_acpi_battery(
      * We pick the battery that claims to have the most minutes left.
      *  (failing a report of minutes, we'll take the highest percent.)
      */
-    // -- GODOT start --
+    // Change suggested by clang-tidy
     // if ((secs < 0) && (this->nsecs_left < 0)) {
     if (this->nsecs_left < 0) {
-        // -- GODOT end --
         if ((pct < 0) && (this->percent_left < 0)) {
             choose = true; /* at least we know there's a battery. */
         }
