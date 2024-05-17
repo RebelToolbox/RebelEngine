@@ -13400,39 +13400,35 @@ msgstr ""
 "geçerlidir."
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"\"Min Sdk\" was changed from the default \"%d\" to \"%d\". This option "
-"requires \"Use Custom Build\" to be enabled.\n"
-">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
-"Build\" to use this min SDK."
-msgstr ""
-
-#: platform/android/export/export_plugin.cpp
-msgid ""
-"\"Target Sdk\" was changed from the default \"%d\" to \"%d\". This option "
-"requires \"Use Custom Build\" to be enabled.\n"
-">> Change it to \"%d\" to silence this warning, or enable \"Use Custom "
-"Build\" to use this target SDK."
-msgstr ""
-
-#: platform/android/export/export_plugin.cpp
-msgid ""
-"\"Target Sdk\" is set to \"%d\", while the current default is \"%d\". This "
-"might be due to upgrading from a previous release.\n"
-">> Consider changing it to \"%d\" to stay up-to-date with platform "
-"requirements."
-msgstr ""
-
-#: platform/android/export/export_plugin.cpp
-msgid ""
-"\"Target Sdk\" %d is higher than the default version %d. This may work, but "
-"isn't tested and may be unstable."
-msgstr ""
-
-#: platform/android/export/export_plugin.cpp
-msgid "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version."
+"\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version.\n"
 msgstr ""
 "\"Target Sdk\" sürümü \"Min Sdk\" sürümünden daha büyük veya eşit olmalıdır."
+
+#: platform/android/export/export_plugin.cpp
+msgid "\"Min Sdk\" is set to \"%d\", while the current minimum is \"%d\".\n"
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid "\"Min Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid "\"Target Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Min Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
+"To silence this warning set \"Min Sdk\" to \"%d\".\n"
+msgstr ""
+
+#: platform/android/export/export_plugin.cpp
+msgid ""
+"\"Target Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
+"To silence this warning set \"Target Sdk\" to \"%d\".\n"
+msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
