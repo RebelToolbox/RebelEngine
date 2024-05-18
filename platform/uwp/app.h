@@ -13,7 +13,7 @@
 #include "GLES2/gl2.h"
 #include "os_uwp.h"
 
-namespace GodotUWP
+namespace RebelUWP
 {
 ref class App sealed : public Windows::ApplicationModel::Core::IFrameworkView {
 public:
@@ -135,4 +135,4 @@ private:
     int last_touch_y[32];
     Windows::Foundation::Point last_mouse_pos;
 };
-} // namespace GodotUWP
+} // namespace RebelUWP

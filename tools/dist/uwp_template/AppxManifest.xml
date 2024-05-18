@@ -27,6 +27,6 @@
   </Applications>
   $capabilities_place$
   <build:Metadata>
-    <build:Item Name="RebelEngine" Version="$rebel_version$" />
+    <build:Item Name="RebelEngine" Version="$version_full_name$" />
   </build:Metadata>
 </Package>

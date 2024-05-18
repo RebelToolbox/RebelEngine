@@ -4,10 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-//
 // This file demonstrates how to initialize EGL in a Windows Store app, using
 // ICoreWindow.
-//
 
 #include "app.h"
 
@@ -31,7 +29,7 @@ using namespace Windows::System;
 using namespace Windows::System::Threading::Core;
 using namespace Microsoft::WRL;
 
-using namespace GodotUWP;
+using namespace RebelUWP;
 
 // Helper to convert a length in device-independent pixels (DIPs) to a length in
 // physical pixels.
@@ -42,7 +40,7 @@ inline float ConvertDipsToPixels(float dips, float dpi) {
 
 // Implementation of the IFrameworkViewSource interface, necessary to run our
 // app.
-ref class GodotUWPViewSource sealed :
+ref class RebelUWPViewSource sealed :
     Windows::ApplicationModel::Core::IFrameworkViewSource {
 public:
     virtual Windows::ApplicationModel::Core::IFrameworkView
@@ -52,8 +50,8 @@ public:
 // The main function creates an IFrameworkViewSource for our app, and runs the
 // app.
 [Platform::MTAThread] int main(Platform::Array<Platform::String ^> ^) {
-    auto godotApplicationSource = ref new GodotUWPViewSource();
-    CoreApplication::Run(godotApplicationSource);
+    auto rebelApplicationSource = ref new RebelUWPViewSource();
+    CoreApplication::Run(rebelApplicationSource);
     return 0;
 }
 
