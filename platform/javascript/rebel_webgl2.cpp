@@ -4,16 +4,22 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_WEBGL2_H
-#include "GLES3/gl3.h"
+#include "rebel_webgl2.h"
 
-// We could include "webgl/webgl2.h", but old (< 2.0.17) emscripten versions do
-// not have it, so use our own wrapper instead.
-void glGetBufferSubData(
+extern "C" {
+extern void rebel_js_display_glGetBufferSubData(
     GLenum target,
     GLintptr offset,
     GLsizeiptr size,
     GLvoid* data
 );
+}
 
-#endif
+void glGetBufferSubData(
+    GLenum target,
+    GLintptr offset,
+    GLsizeiptr size,
+    GLvoid* data
+) {
+    rebel_js_display_glGetBufferSubData(target, offset, size, data);
+}

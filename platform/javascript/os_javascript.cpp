@@ -18,7 +18,7 @@
 #endif
 
 #include "dom_keys.inc"
-#include "godot_js.h"
+#include "rebel_js.h"
 
 #include <dlfcn.h>
 #include <emscripten.h>

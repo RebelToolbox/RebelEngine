@@ -9,7 +9,7 @@
 
 #include "core/os/mutex.h"
 #include "core/os/thread.h"
-#include "godot_audio.h"
+#include "rebel_audio.h"
 #include "servers/audio_server.h"
 
 class AudioDriverJavaScript : public AudioDriver {

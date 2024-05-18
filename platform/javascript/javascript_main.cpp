@@ -5,9 +5,9 @@
 // SPDX-License-Identifier: MIT
 
 #include "core/io/resource_loader.h"
-#include "godot_js.h"
 #include "main/main.h"
 #include "platform/javascript/os_javascript.h"
+#include "rebel_js.h"
 
 #include <emscripten/emscripten.h>
 #include <stdlib.h>

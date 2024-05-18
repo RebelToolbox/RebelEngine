@@ -12,6 +12,6 @@ if use_gdnative:  # GDNative is retained in Javascript for export compatibility
 
 if env["platform"] == "javascript":
     # Our JavaScript/C++ interface.
-    env.AddJSLibraries(["library_godot_webrtc.js"])
+    env.AddJSLibraries(["rebel_webrtc.js"])
 
 env_webrtc.add_source_files(env.modules_sources, "*.cpp")

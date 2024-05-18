@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_AUDIO_H
-#define GODOT_AUDIO_H
+#ifndef REBEL_AUDIO_H
+#define REBEL_AUDIO_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -72,4 +72,4 @@ extern void rebel_audio_script_start(
 }
 #endif
 
-#endif /* GODOT_AUDIO_H */
+#endif // REBEL_AUDIO_H
