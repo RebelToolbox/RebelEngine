@@ -52,8 +52,8 @@ static void set_class_hint(Display* p_display, Window p_window) {
     /* set the name and class hints for the window manager to use */
     classHint = XAllocClassHint();
     if (classHint) {
-        classHint->res_name  = (char*)"Godot_Engine";
-        classHint->res_class = (char*)"Godot";
+        classHint->res_name  = (char*)"Rebel_Engine";
+        classHint->res_class = (char*)"Rebel";
     }
     XSetClassHint(p_display, p_window, classHint);
     XFree(classHint);

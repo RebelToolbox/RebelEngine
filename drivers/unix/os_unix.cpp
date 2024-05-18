@@ -512,7 +512,7 @@ String OS_Unix::get_user_data_dir() const {
             return get_data_path().plus_file(custom_dir);
         } else {
             return get_data_path()
-                .plus_file(get_godot_dir_name())
+                .plus_file(get_rebel_dir_name())
                 .plus_file("app_userdata")
                 .plus_file(appname);
         }

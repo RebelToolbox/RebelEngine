@@ -179,7 +179,7 @@ __declspec(dllexport) int main(int _argc, char** _argv) {
 #endif
 }
 
-HINSTANCE godot_hinstance = NULL;
+HINSTANCE rebel_hinstance = NULL;
 
 int WINAPI WinMain(
     HINSTANCE hInstance,
@@ -187,6 +187,6 @@ int WINAPI WinMain(
     LPSTR lpCmdLine,
     int nCmdShow
 ) {
-    godot_hinstance = hInstance;
+    rebel_hinstance = hInstance;
     return main(0, NULL);
 }

@@ -958,7 +958,7 @@ class EditorExportPlatformUWP : public EditorExportPlatform {
         String result =
             String::utf8((const char*)p_template.ptr(), p_template.size());
 
-        result = result.replace("$godot_version$", VERSION_FULL_NAME);
+        result = result.replace("$version_full_name$", VERSION_FULL_NAME);
 
         result = result.replace(
             "$identity_name$",
@@ -1250,7 +1250,6 @@ class EditorExportPlatformUWP : public EditorExportPlatform {
             ".awb",
             ".wma",
             ".wmv",
-            // Godot-specific:
             ".webp", // Same reasoning as .png
             ".cfb",  // Don't let small config files slow-down startup
             ".scn",  // Binary scenes are usually already compressed

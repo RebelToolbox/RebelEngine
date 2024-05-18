@@ -602,7 +602,7 @@ public:
         const String& p_dir_name,
         bool p_allow_dir_separator = false
     ) const;
-    virtual String get_godot_dir_name() const;
+    virtual String get_rebel_dir_name() const;
 
     virtual String get_data_path() const;
     virtual String get_config_path() const;

@@ -310,7 +310,7 @@ String OS::get_safe_dir_name(
 // Path to data, config, cache, etc. OS-specific folders
 
 // Get properly capitalized engine name for system paths
-String OS::get_godot_dir_name() const {
+String OS::get_rebel_dir_name() const {
     // Default to lowercase, so only override when different case is needed
     return String(VERSION_SHORT_NAME).to_lower();
 }

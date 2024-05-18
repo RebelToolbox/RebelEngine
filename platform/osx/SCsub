@@ -8,7 +8,7 @@ import platform_osx_builders
 files = [
     "crash_handler_osx.mm",
     "os_osx.mm",
-    "godot_main_osx.mm",
+    "osx_main.mm",
     "dir_access_osx.mm",
     "joypad_osx.cpp",
     "power_osx.cpp",

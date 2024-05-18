@@ -211,7 +211,7 @@ void EditorExportPlatformOSX::get_export_options(List<ExportOption>* r_options
     ));
     r_options->push_back(ExportOption(
         PropertyInfo(Variant::STRING, "application/info"),
-        "Made with Godot Engine"
+        "Made with Rebel Engine"
     ));
     r_options->push_back(ExportOption(
         PropertyInfo(
@@ -787,12 +787,10 @@ void EditorExportPlatformOSX::_fix_plist(
     }
 }
 
-/**
-    If we're running the OSX version of the Godot editor we'll:
-    - export our application bundle to a temporary folder
-    - attempt to code sign it
-    - and then wrap it up in a DMG
-**/
+// If we're running the OSX version of the Rebel Editor we'll:
+// - export our application bundle to a temporary folder
+// - attempt to code sign it
+// - and then wrap it up in a DMG
 
 Error EditorExportPlatformOSX::_notarize(
     const Ref<EditorExportPreset>& p_preset,
@@ -1005,7 +1003,7 @@ Error EditorExportPlatformOSX::export_project(
     int ret = unzGoToFirstFile(src_pkg_zip);
 
     String binary_to_use =
-        "godot_osx_" + String(p_debug ? "debug" : "release") + ".64";
+        "rebel_osx_" + String(p_debug ? "debug" : "release") + ".64";
 
     String pkg_name;
     if (p_preset->get("application/name") != "") {
@@ -1123,7 +1121,7 @@ Error EditorExportPlatformOSX::export_project(
             _fix_plist(p_preset, data, pkg_name);
         }
 
-        if (file.begins_with("Contents/MacOS/godot_")) {
+        if (file.begins_with("Contents/MacOS/rebel_")) {
             if (file != "Contents/MacOS/" + binary_to_use) {
                 ret = unzGoToNextFile(src_pkg_zip);
                 continue; // skip
@@ -1660,10 +1658,10 @@ void EditorExportPlatformOSX::_zip_folder_recursive(
             zipfi.tmz_date.tm_hour = time.hour;
             zipfi.tmz_date.tm_mday = date.day;
             zipfi.tmz_date.tm_min  = time.min;
-            zipfi.tmz_date.tm_mon =
-                date.month
-                - 1; // Note: "tm" month range - 0..11, Godot month range
-                     // - 1..12, http://www.cplusplus.com/reference/ctime/tm/
+            // ctime's tm time structure's month range is 0-11
+            // We use a month range of 1-12
+            // Ref: http://www.cplusplus.com/reference/ctime/tm/
+            zipfi.tmz_date.tm_mon  = date.month - 1;
             zipfi.tmz_date.tm_sec  = time.sec;
             zipfi.tmz_date.tm_year = date.year;
             zipfi.dosDate          = 0;
@@ -1722,10 +1720,10 @@ void EditorExportPlatformOSX::_zip_folder_recursive(
             zipfi.tmz_date.tm_hour = time.hour;
             zipfi.tmz_date.tm_mday = date.day;
             zipfi.tmz_date.tm_min  = time.min;
-            zipfi.tmz_date.tm_mon =
-                date.month
-                - 1; // Note: "tm" month range - 0..11, Godot month range
-                     // - 1..12, http://www.cplusplus.com/reference/ctime/tm/
+            // ctime's tm time structure's month range is 0-11
+            // We use a month range of 1-12
+            // Ref: http://www.cplusplus.com/reference/ctime/tm/
+            zipfi.tmz_date.tm_mon  = date.month - 1;
             zipfi.tmz_date.tm_sec  = time.sec;
             zipfi.tmz_date.tm_year = date.year;
             zipfi.dosDate          = 0;

@@ -222,22 +222,6 @@ Error OS_X11::initialize(
         XFree(imvalret);
     }
 
-/*
-    char* windowid = getenv("GODOT_WINDOWID");
-    if (windowid) {
-
-        //freopen("/home/punto/stdout", "w", stdout);
-        //reopen("/home/punto/stderr", "w", stderr);
-        x11_window = atol(windowid);
-
-        XWindowAttributes xwa;
-        XGetWindowAttributes(x11_display,x11_window,&xwa);
-
-        current_videomode.width = xwa.width;
-        current_videomode.height = xwa.height;
-    };
-    */
-
 // maybe contextgl wants to be in charge of creating the window
 #if defined(OPENGL_ENABLED)
     if (getenv("DRI_PRIME") == nullptr) {
@@ -281,7 +265,7 @@ Error OS_X11::initialize(
         if (use_prime) {
             print_line("Found discrete GPU, setting DRI_PRIME=1 to use it.");
             print_line(
-                "Note: Set DRI_PRIME=0 in the environment to disable Godot "
+                "Note: Set DRI_PRIME=0 in the environment to disable Rebel "
                 "from using the discrete GPU."
             );
             setenv("DRI_PRIME", "1", 1);
@@ -366,7 +350,7 @@ Error OS_X11::initialize(
             "integrated GPU, upgrade it.\n"
             "If you have updated your graphics drivers recently, try "
             "rebooting.\n"
-            "Alternatively, you can force software rendering by running Godot "
+            "Alternatively, you can force software rendering by running Rebel "
             "with the `LIBGL_ALWAYS_SOFTWARE=1`\n"
             "environment variable set, but this will be very slow.",
             "Unable to initialize Video driver"
@@ -3025,9 +3009,8 @@ void OS_X11::process_xevents() {
                             if (xi.state.size() == 1) {
                                 // X11 may send a motion event when a touch
                                 // gesture begins, that would result in a
-                                // spurious mouse motion event being sent to
-                                // Godot; remember it to be able to filter it
-                                // out
+                                // spurious mouse motion event being sent;
+                                // remember it to be able to filter it out.
                                 xi.mouse_pos_to_filter = pos;
                             }
                             input->parse_input_event(st);
@@ -4469,13 +4452,13 @@ void OS_X11::set_context(int p_context) {
         CharString name_str;
         switch (p_context) {
             case CONTEXT_EDITOR:
-                name_str = "Godot_Editor";
+                name_str = "Rebel_Editor";
                 break;
             case CONTEXT_PROJECTMAN:
-                name_str = "Godot_ProjectList";
+                name_str = "Rebel_ProjectList";
                 break;
             case CONTEXT_ENGINE:
-                name_str = "Godot_Engine";
+                name_str = "Rebel_Engine";
                 break;
         }
 
@@ -4483,12 +4466,12 @@ void OS_X11::set_context(int p_context) {
         if (p_context == CONTEXT_ENGINE) {
             String config_name = GLOBAL_GET("application/config/name");
             if (config_name.length() == 0) {
-                class_str = "Godot_Engine";
+                class_str = "Rebel_Engine";
             } else {
                 class_str = config_name.utf8();
             }
         } else {
-            class_str = "Godot";
+            class_str = "Rebel";
         }
 
         classHint->res_class = class_str.ptrw();

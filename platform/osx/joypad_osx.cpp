@@ -8,7 +8,7 @@
 
 #include <machine/endian.h>
 
-#define GODOT_JOY_LOOP_RUN_MODE CFSTR("GodotJoypad")
+#define RUN_LOOP_MODE CFSTR("JoypadMode")
 
 static JoypadOSX* self = NULL;
 
@@ -40,7 +40,7 @@ void joypad::free() {
         IOHIDDeviceUnscheduleFromRunLoop(
             device_ref,
             CFRunLoopGetCurrent(),
-            GODOT_JOY_LOOP_RUN_MODE
+            RUN_LOOP_MODE
         );
     }
     if (ff_device) {
@@ -261,7 +261,7 @@ void JoypadOSX::_device_added(IOReturn p_res, IOHIDDeviceRef p_device) {
     IOHIDDeviceScheduleWithRunLoop(
         p_device,
         CFRunLoopGetCurrent(),
-        GODOT_JOY_LOOP_RUN_MODE
+        RUN_LOOP_MODE
     );
 }
 
@@ -492,7 +492,7 @@ static int process_hat_value(
 }
 
 void JoypadOSX::poll_joypads() const {
-    while (CFRunLoopRunInMode(GODOT_JOY_LOOP_RUN_MODE, 0, TRUE)
+    while (CFRunLoopRunInMode(RUN_LOOP_MODE, 0, TRUE)
            == kCFRunLoopRunHandledSource) {
         /* no-op. Pending callbacks will fire. */
     }
@@ -667,13 +667,9 @@ void JoypadOSX::config_hid_manager(CFArrayRef p_matching_array) const {
         joypad_removed_callback,
         NULL
     );
-    IOHIDManagerScheduleWithRunLoop(
-        hid_manager,
-        runloop,
-        GODOT_JOY_LOOP_RUN_MODE
-    );
+    IOHIDManagerScheduleWithRunLoop(hid_manager, runloop, RUN_LOOP_MODE);
 
-    while (CFRunLoopRunInMode(GODOT_JOY_LOOP_RUN_MODE, 0, TRUE)
+    while (CFRunLoopRunInMode(RUN_LOOP_MODE, 0, TRUE)
            == kCFRunLoopRunHandledSource) {
         /* no-op. Callback fires once per existing device. */
     }
@@ -734,7 +730,7 @@ JoypadOSX::~JoypadOSX() {
     IOHIDManagerUnscheduleFromRunLoop(
         hid_manager,
         CFRunLoopGetCurrent(),
-        GODOT_JOY_LOOP_RUN_MODE
+        RUN_LOOP_MODE
     );
     IOHIDManagerClose(hid_manager, kIOHIDOptionsTypeNone);
     CFRelease(hid_manager);

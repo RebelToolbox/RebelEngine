@@ -55,7 +55,7 @@ String _get_mono_user_dir() {
             settings_path = exe_dir.plus_file("editor_data");
         } else {
             settings_path = OS::get_singleton()->get_data_path().plus_file(
-                OS::get_singleton()->get_godot_dir_name()
+                OS::get_singleton()->get_rebel_dir_name()
             );
         }
 

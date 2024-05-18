@@ -105,10 +105,10 @@ static NSCursor* cursorFromSelector(SEL selector, SEL fallback = nil) {
     return [NSCursor arrowCursor];
 }
 
-@interface GodotApplication : NSApplication
+@interface RebelApplication : NSApplication
 @end
 
-@implementation GodotApplication
+@implementation RebelApplication
 
 - (void)sendEvent:(NSEvent*)event {
     // special case handling of command-period, which is traditionally a special
@@ -142,13 +142,13 @@ static NSCursor* cursorFromSelector(SEL selector, SEL fallback = nil) {
 
 @end
 
-@interface GodotApplicationDelegate : NSObject
+@interface RebelApplicationDelegate : NSObject
 - (void)forceUnbundledWindowActivationHackStep1;
 - (void)forceUnbundledWindowActivationHackStep2;
 - (void)forceUnbundledWindowActivationHackStep3;
 @end
 
-@implementation GodotApplicationDelegate
+@implementation RebelApplicationDelegate
 
 - (void)forceUnbundledWindowActivationHackStep1 {
     // Step 1: Switch focus to macOS SystemUIServer process.
@@ -264,26 +264,12 @@ static NSCursor* cursorFromSelector(SEL selector, SEL fallback = nil) {
 }
 
 - (void)applicationDidHide:(NSNotification*)notification {
-    /*
-    _Godotwindow* window;
-    for (window = _Godot.windowListHead;  window;  window = window->next)
-        _GodotInputWindowVisibility(window, GL_FALSE);
-*/
 }
 
 - (void)applicationDidUnhide:(NSNotification*)notification {
-    /*
-    _Godotwindow* window;
-
-    for (window = _Godot.windowListHead;  window;  window = window->next) {
-        if ([window_object isVisible])
-            _GodotInputWindowVisibility(window, GL_TRUE);
-    }
-*/
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification*)notification {
-    //_GodotInputMonitorChange();
 }
 
 - (void)showAbout:(id)sender {
@@ -296,16 +282,14 @@ static NSCursor* cursorFromSelector(SEL selector, SEL fallback = nil) {
 
 @end
 
-@interface GodotWindowDelegate : NSObject {
-    //_Godotwindow* window;
+@interface RebelWindowDelegate : NSObject {
 }
 
 @end
 
-@implementation GodotWindowDelegate
+@implementation RebelWindowDelegate
 
 - (BOOL)windowShouldClose:(id)sender {
-    //_GodotInputWindowCloseRequest(window);
     if (OS_OSX::singleton->get_main_loop()) {
         OS_OSX::singleton->get_main_loop()->notification(
             MainLoop::NOTIFICATION_WM_QUIT_REQUEST
@@ -443,32 +427,12 @@ static NSCursor* cursorFromSelector(SEL selector, SEL fallback = nil) {
             Main::iteration();
         }
     }
-
-    /*
-    _GodotInputFramebufferSize(window, fbRect.size.width, fbRect.size.height);
-    _GodotInputWindowSize(window, contentRect.size.width,
-    contentRect.size.height); _GodotInputWindowDamage(window);
-
-    if (window->cursorMode == Godot_CURSOR_DISABLED)
-        centerCursor(window);
-*/
 }
 
 - (void)windowDidMove:(NSNotification*)notification {
     if (OS_OSX::singleton->get_main_loop()) {
         OS_OSX::singleton->input->release_pressed_events();
     }
-
-    /*
-    [window->nsgl.context update];
-
-    int x, y;
-    _GodotPlatformGetWindowPos(window, &x, &y);
-    _GodotInputWindowPos(window, x, y);
-
-    if (window->cursorMode == Godot_CURSOR_DISABLED)
-        centerCursor(window);
-*/
 }
 
 - (void)windowDidBecomeKey:(NSNotification*)notification {
@@ -520,7 +484,7 @@ static NSCursor* cursorFromSelector(SEL selector, SEL fallback = nil) {
 
 @end
 
-@interface GodotContentView : NSOpenGLView <NSTextInputClient> {
+@interface RebelContentView : NSOpenGLView <NSTextInputClient> {
     NSTrackingArea* trackingArea;
     NSMutableAttributedString* markedText;
     bool imeInputEventInProgress;
@@ -530,10 +494,10 @@ static NSCursor* cursorFromSelector(SEL selector, SEL fallback = nil) {
 - (void)updateLayer;
 @end
 
-@implementation GodotContentView
+@implementation RebelContentView
 
 + (void)initialize {
-    if (self == [GodotContentView class]) {
+    if (self == [RebelContentView class]) {
         // nothing left to do here at the moment..
     }
 }
@@ -1043,8 +1007,7 @@ static bool isNumpadKey(unsigned int key) {
     return false;
 }
 
-// Translates a OS X keycode to a Godot keycode
-//
+// Translates a OS X keycode to a Rebel Engine keycode.
 static int translateKey(unsigned int key) {
     // Keyboard symbol translation table
     static const unsigned int table[128] = {
@@ -1521,11 +1484,11 @@ inline void sendPanEvent(double dx, double dy, int modifierFlags) {
 
 @end
 
-@interface GodotWindow : NSWindow {
+@interface RebelWindow : NSWindow {
 }
 @end
 
-@implementation GodotWindow
+@implementation RebelWindow
 
 - (BOOL)canBecomeKeyWindow {
     // Required for NSBorderlessWindowMask windows
@@ -1741,7 +1704,7 @@ Error OS_OSX::initialize(
         NULL
     );
 
-    window_delegate = [[GodotWindowDelegate alloc] init];
+    window_delegate = [[RebelWindowDelegate alloc] init];
 
     // Don't use accumulation buffer support; it's not accelerated
     // Aux buffers probably aren't accelerated either
@@ -1759,7 +1722,7 @@ Error OS_OSX::initialize(
 
     float displayScale = get_screen_max_scale();
 
-    window_object = [[GodotWindow alloc]
+    window_object = [[RebelWindow alloc]
         initWithContentRect:NSMakeRect(
                                 0,
                                 0,
@@ -1772,7 +1735,7 @@ Error OS_OSX::initialize(
 
     ERR_FAIL_COND_V(window_object == nil, ERR_UNAVAILABLE);
 
-    window_view = [[GodotContentView alloc] init];
+    window_view = [[RebelContentView alloc] init];
     if (NSAppKitVersionNumber >= NSAppKitVersionNumber10_14) {
         [window_view setWantsLayer:TRUE];
     }
@@ -1782,14 +1745,12 @@ Error OS_OSX::initialize(
 
     if (displayScale > 1.0) {
         [window_view setWantsBestResolutionOpenGLSurface:YES];
-        // if (current_videomode.resizable)
         [window_object
             setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
     } else {
         [window_view setWantsBestResolutionOpenGLSurface:NO];
     }
 
-    //[window_object setTitle:[NSString stringWithUTF8String:"GodotEnginies"]];
     [window_object setContentView:window_view];
     [window_object setDelegate:window_delegate];
     if (!is_no_window_mode_enabled()) {
@@ -1828,27 +1789,8 @@ Error OS_OSX::initialize(
     }
 
     ADD_ATTR2(NSOpenGLPFAColorSize, colorBits);
-
-    /*
-    if (fbconfig->alphaBits > 0)
-        ADD_ATTR2(NSOpenGLPFAAlphaSize, fbconfig->alphaBits);
-*/
-
     ADD_ATTR2(NSOpenGLPFADepthSize, 24);
-
     ADD_ATTR2(NSOpenGLPFAStencilSize, 8);
-
-    /*
-    if (fbconfig->stereo)
-        ADD_ATTR(NSOpenGLPFAStereo);
-*/
-
-    /*
-    if (fbconfig->samples > 0) {
-        ADD_ATTR2(NSOpenGLPFASampleBuffers, 1);
-        ADD_ATTR2(NSOpenGLPFASamples, fbconfig->samples);
-    }
-*/
 
     // NOTE: All NSOpenGLPixelFormats on the relevant cards support sRGB
     //       framebuffer, so there's no need (and no way) to request it
@@ -2006,7 +1948,6 @@ void OS_OSX::finalize() {
     cursors_cache.clear();
     visual_server->finish();
     memdelete(visual_server);
-    // memdelete(rasterizer);
 }
 
 void OS_OSX::set_main_loop(MainLoop* p_main_loop) {
@@ -2643,7 +2584,7 @@ String OS_OSX::get_bundle_icon_path() const {
 }
 
 // Get properly capitalized engine name for system paths
-String OS_OSX::get_godot_dir_name() const {
+String OS_OSX::get_rebel_dir_name() const {
     return String(VERSION_SHORT_NAME).capitalize();
 }
 
@@ -2783,7 +2724,7 @@ int OS_OSX::get_screen_count() const {
 // that encompasses all screens. Needed in get_screen_position(),
 // get_window_position, and set_window_position()
 // to convert between OS X native screen coordinates and the ones expected by
-// Godot
+// Rebel Engine.
 Point2 OS_OSX::get_screens_origin() const {
     static Point2 origin;
 
@@ -2851,7 +2792,7 @@ Point2 OS_OSX::get_screen_position(int p_screen) const {
     Point2 position =
         get_native_screen_position(p_screen) - get_screens_origin();
     // OS X native y-coordinate relative to get_screens_origin() is negative,
-    // Godot expects a positive value
+    // Rebel Engine expects a positive value.
     position.y *= -1;
     return position;
 }
@@ -2988,7 +2929,7 @@ Point2 OS_OSX::get_native_window_position() const {
 Point2 OS_OSX::get_window_position() const {
     Point2 position  = get_native_window_position() - get_screens_origin();
     // OS X native y-coordinate relative to get_screens_origin() is negative,
-    // Godot expects a positive value
+    // Rebel Engine expects a positive value.
     position.y      *= -1;
     return position;
 }
@@ -3016,7 +2957,7 @@ void OS_OSX::set_window_position(const Point2& p_position) {
 
     Point2 position  = p_position;
     // OS X native y-coordinate relative to get_screens_origin() is negative,
-    // Godot passes a positive value
+    // Rebel Engine passes a positive value.
     position.y      *= -1;
     set_native_window_position(get_screens_origin() + position);
 
@@ -3467,7 +3408,6 @@ Error OS_OSX::execute(
 }
 
 // Returns string representation of keys, if they are printable.
-//
 static NSString* createStringForKeys(const CGKeyCode* keyCode, int length) {
     TISInputSourceRef currentKeyboard = TISCopyCurrentKeyboardInputSource();
     if (!currentKeyboard) {
@@ -3513,9 +3453,6 @@ static NSString* createStringForKeys(const CGKeyCode* keyCode, int length) {
 
         CFStringAppendCharacters(output, chars, 1);
     }
-
-    // CFStringUppercase(output, NULL);
-
     return (NSString*)output;
 }
 
@@ -3815,11 +3752,6 @@ void OS_OSX::run() {
         set_window_fullscreen(true);
     }
 
-    // uint64_t last_ticks=get_ticks_usec();
-
-    // int frames=0;
-    // uint64_t frame=0;
-
     bool quit = false;
 
     while (!force_quit && !quit) {
@@ -3960,18 +3892,11 @@ OS_OSX::OS_OSX() {
 
     CGEventSourceSetLocalEventsSuppressionInterval(eventSource, 0.0);
 
-    /*
-    if (pthread_key_create(&_Godot.nsgl.current, NULL) != 0) {
-        _GodotInputError(Godot_PLATFORM_ERROR, "NSGL: Failed to create context
-    TLS"); return GL_FALSE;
-    }
-*/
-
     framework = CFBundleGetBundleWithIdentifier(CFSTR("com.apple.opengl"));
     ERR_FAIL_COND(!framework);
 
     // Implicitly create shared NSApplication instance
-    [GodotApplication sharedApplication];
+    [RebelApplication sharedApplication];
 
     // Menu bar setup must go between sharedApplication above and
     // finishLaunching below, in order to properly emulate the behavior
@@ -4041,7 +3966,7 @@ OS_OSX::OS_OSX() {
 
     [NSApp finishLaunching];
 
-    delegate = [[GodotApplicationDelegate alloc] init];
+    delegate = [[RebelApplicationDelegate alloc] init];
     ERR_FAIL_COND(!delegate);
     [NSApp setDelegate:delegate];
 
