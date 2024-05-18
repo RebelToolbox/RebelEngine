@@ -2643,7 +2643,7 @@ String OS_OSX::get_bundle_icon_path() const {
 }
 
 // Get properly capitalized engine name for system paths
-String OS_OSX::get_godot_dir_name() const {
+String OS_OSX::get_rebel_dir_name() const {
     return String(VERSION_SHORT_NAME).capitalize();
 }
 

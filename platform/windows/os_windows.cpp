@@ -3974,7 +3974,7 @@ String OS_Windows::get_cache_path() const {
 }
 
 // Get properly capitalized engine name for system paths
-String OS_Windows::get_godot_dir_name() const {
+String OS_Windows::get_rebel_dir_name() const {
     return String(VERSION_SHORT_NAME).capitalize();
 }
 
@@ -4038,7 +4038,7 @@ String OS_Windows::get_user_data_dir() const {
             return get_data_path().plus_file(custom_dir).replace("\\", "/");
         } else {
             return get_data_path()
-                .plus_file(get_godot_dir_name())
+                .plus_file(get_rebel_dir_name())
                 .plus_file("app_userdata")
                 .plus_file(appname)
                 .replace("\\", "/");
