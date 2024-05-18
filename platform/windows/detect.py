@@ -16,14 +16,7 @@ def get_name():
 def can_build():
     if os.name == "nt":
         # Building natively on Windows
-        # If VCINSTALLDIR is set in the OS environ, use traditional Godot logic to set up MSVC
-        if os.getenv("VCINSTALLDIR"):  # MSVC, manual setup
-            return True
-
-        # Otherwise, let SCons find MSVC if installed, or else Mingw.
-        # Since we're just returning True here, if there's no compiler
-        # installed, we'll get errors when it tries to build with the
-        # null compiler.
+        # We let SCons find the compiler or return an error if none are found.
         return True
 
     if os.name == "posix":

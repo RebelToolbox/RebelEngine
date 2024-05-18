@@ -57,8 +57,8 @@ bool ContextGL_Windows::should_vsync_via_compositor() {
         return false;
     }
 
-    // Note: All Windows versions supported by Godot have a compositor.
-    // It can be disabled on earlier Windows versions.
+    // Note: All current versions of Windows have a compositor.
+    // On earlier Windows versions, it could be disabled.
     BOOL dwm_enabled;
 
     if (SUCCEEDED(DwmIsCompositionEnabled(&dwm_enabled))) {

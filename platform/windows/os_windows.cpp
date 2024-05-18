@@ -94,7 +94,7 @@ static String format_error_message(DWORD id) {
     return msg;
 }
 
-extern HINSTANCE godot_hinstance;
+extern HINSTANCE rebel_hinstance;
 
 void RedirectIOToConsole() {
     int hConHandle;
@@ -235,7 +235,7 @@ void OS_Windows::initialize_core() {
 
     process_map = memnew((Map<ProcessID, ProcessInfo>));
 
-    // Add current Godot PID to the list of known PIDs
+    // Add current PID to the list of known PIDs
     ProcessInfo current_pi            = {};
     PROCESS_INFORMATION current_pi_pi = {};
     current_pi.pi                     = current_pi_pi;
@@ -1539,7 +1539,7 @@ Error OS_Windows::initialize(
     wc.cbClsExtra  = 0;
     wc.cbWndExtra  = 0;
     // wc.hInstance = hInstance;
-    wc.hInstance   = godot_hinstance ? godot_hinstance : GetModuleHandle(NULL);
+    wc.hInstance   = rebel_hinstance ? rebel_hinstance : GetModuleHandle(NULL);
     wc.hIcon       = LoadIcon(NULL, IDI_WINLOGO);
     wc.hCursor     = NULL; // LoadCursor(NULL, IDC_ARROW);
     wc.hbrBackground = NULL;
@@ -1632,10 +1632,10 @@ Error OS_Windows::initialize(
 
     char* windowid;
 #ifdef MINGW_ENABLED
-    windowid = getenv("GODOT_WINDOWID");
+    windowid = getenv("REGEL_WINDOWID");
 #else
     size_t len;
-    _dupenv_s(&windowid, &len, "GODOT_WINDOWID");
+    _dupenv_s(&windowid, &len, "REBEL_WINDOWID");
 #endif
 
     if (windowid) {
