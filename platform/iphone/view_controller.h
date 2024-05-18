@@ -6,15 +6,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class GodotView;
-@class GodotNativeVideoView;
-@class GodotKeyboardInputView;
+@class RebelView;
+@class RebelNativeVideoView;
+@class RebelKeyboardInputView;
 
 @interface ViewController : UIViewController
 
-@property(nonatomic, readonly, strong) GodotView* godotView;
-@property(nonatomic, readonly, strong) GodotNativeVideoView* videoView;
-@property(nonatomic, readonly, strong) GodotKeyboardInputView* keyboardView;
+@property(nonatomic, readonly, strong) RebelView* rebelView;
+@property(nonatomic, readonly, strong) RebelNativeVideoView* videoView;
+@property(nonatomic, readonly, strong) RebelKeyboardInputView* keyboardView;
 
 // MARK: Native Video Player
 

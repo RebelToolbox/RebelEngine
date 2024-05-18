@@ -6,7 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GodotNativeVideoView : UIView
+@interface RebelNativeVideoView : UIView
 
 - (BOOL)playVideoAtPath:(NSString*)filePath
                  volume:(float)videoVolume

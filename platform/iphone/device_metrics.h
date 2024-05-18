@@ -6,7 +6,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GodotDeviceMetrics : NSObject
+@interface RebelDeviceMetrics : NSObject
 
 @property(nonatomic, class, readonly, strong)
     NSDictionary<NSArray*, NSNumber*>* dpiList;

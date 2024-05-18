@@ -7,33 +7,33 @@
 #import "view_controller.h"
 
 #include "core/project_settings.h"
-#import "godot_view.h"
-#import "godot_view_renderer.h"
 #import "keyboard_input_view.h"
 #import "native_video_view.h"
 #include "os_iphone.h"
+#import "rebel_view.h"
+#import "rebel_view_renderer.h"
 
-@interface ViewController () <GodotViewDelegate>
+@interface ViewController () <RebelViewDelegate>
 
-@property(strong, nonatomic) GodotViewRenderer* renderer;
-@property(strong, nonatomic) GodotNativeVideoView* videoView;
-@property(strong, nonatomic) GodotKeyboardInputView* keyboardView;
+@property(strong, nonatomic) RebelViewRenderer* renderer;
+@property(strong, nonatomic) RebelNativeVideoView* videoView;
+@property(strong, nonatomic) RebelKeyboardInputView* keyboardView;
 
-@property(strong, nonatomic) UIView* godotLoadingOverlay;
+@property(strong, nonatomic) UIView* rebelLoadingOverlay;
 
 @end
 
 @implementation ViewController
 
-- (GodotView*)godotView {
-    return (GodotView*)self.view;
+- (RebelView*)rebelView {
+    return (RebelView*)self.view;
 }
 
 - (void)loadView {
-    GodotView* view = [[GodotView alloc] init];
+    RebelView* view = [[RebelView alloc] init];
     [view initializeRendering];
 
-    GodotViewRenderer* renderer = [[GodotViewRenderer alloc] init];
+    RebelViewRenderer* renderer = [[RebelViewRenderer alloc] init];
 
     self.renderer = renderer;
     self.view     = view;
@@ -47,7 +47,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if (self) {
-        [self godot_commonInit];
+        [self rebel_commonInit];
     }
 
     return self;
@@ -57,13 +57,13 @@
     self = [super initWithCoder:coder];
 
     if (self) {
-        [self godot_commonInit];
+        [self rebel_commonInit];
     }
 
     return self;
 }
 
-- (void)godot_commonInit {
+- (void)rebel_commonInit {
     // Initialize view controller values.
 }
 
@@ -85,7 +85,7 @@
 
 - (void)observeKeyboard {
     printf("******** setting up keyboard input view\n");
-    self.keyboardView = [GodotKeyboardInputView new];
+    self.keyboardView = [RebelKeyboardInputView new];
     [self.view addSubview:self.keyboardView];
 
     printf("******** adding observer for keyboard show/hide\n");
@@ -114,17 +114,17 @@
 
     UIViewController* controller =
         [launchStoryboard instantiateInitialViewController];
-    self.godotLoadingOverlay       = controller.view;
-    self.godotLoadingOverlay.frame = self.view.bounds;
-    self.godotLoadingOverlay.autoresizingMask =
+    self.rebelLoadingOverlay       = controller.view;
+    self.rebelLoadingOverlay.frame = self.view.bounds;
+    self.rebelLoadingOverlay.autoresizingMask =
         UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
-    [self.view addSubview:self.godotLoadingOverlay];
+    [self.view addSubview:self.rebelLoadingOverlay];
 }
 
-- (BOOL)godotViewFinishedSetup:(GodotView*)view {
-    [self.godotLoadingOverlay removeFromSuperview];
-    self.godotLoadingOverlay = nil;
+- (BOOL)rebelViewFinishedSetup:(RebelView*)view {
+    [self.rebelLoadingOverlay removeFromSuperview];
+    self.rebelLoadingOverlay = nil;
 
     return YES;
 }
@@ -137,9 +137,9 @@
 
     self.renderer = nil;
 
-    if (self.godotLoadingOverlay) {
-        [self.godotLoadingOverlay removeFromSuperview];
-        self.godotLoadingOverlay = nil;
+    if (self.rebelLoadingOverlay) {
+        [self.rebelLoadingOverlay removeFromSuperview];
+        self.rebelLoadingOverlay = nil;
     }
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -238,8 +238,8 @@
                                       subtitle:subtitleTrack];
     } else {
         // Create autoresizing view for video playback.
-        GodotNativeVideoView* videoView =
-            [[GodotNativeVideoView alloc] initWithFrame:self.view.bounds];
+        RebelNativeVideoView* videoView =
+            [[RebelNativeVideoView alloc] initWithFrame:self.view.bounds];
         videoView.autoresizingMask =
             UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:videoView];

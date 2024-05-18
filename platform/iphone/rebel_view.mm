@@ -4,13 +4,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-#import "godot_view.h"
+#import "rebel_view.h"
 
 #include "core/project_settings.h"
 #import "display_layer.h"
-#import "godot_view_gesture_recognizer.h"
-#import "godot_view_renderer.h"
 #include "os_iphone.h"
+#import "rebel_view_gesture_recognizer.h"
+#import "rebel_view_renderer.h"
 #include "servers/audio_server.h"
 
 #import <CoreMotion/CoreMotion.h>
@@ -19,8 +19,8 @@
 
 static const int max_touches = 8;
 
-@interface GodotView () {
-    UITouch* godot_touches[max_touches];
+@interface RebelView () {
+    UITouch* rebel_touches[max_touches];
 }
 
 @property(assign, nonatomic) BOOL isActive;
@@ -38,11 +38,11 @@ static const int max_touches = 8;
 
 @property(strong, nonatomic) CMMotionManager* motionManager;
 
-@property(strong, nonatomic) GodotViewGestureRecognizer* delayGestureRecognizer;
+@property(strong, nonatomic) RebelViewGestureRecognizer* delayGestureRecognizer;
 
 @end
 
-@implementation GodotView
+@implementation RebelView
 
 // Implement this to override the default layer class (which is [CALayer
 // class]). We do this so that our view will be backed by a layer that is
@@ -52,7 +52,7 @@ static const int max_touches = 8;
         return self.renderingLayer;
     }
 
-    CALayer<DisplayLayer>* layer = [GodotOpenGLLayer layer];
+    CALayer<DisplayLayer>* layer = [RebelOpenGLLayer layer];
 
     layer.frame         = self.bounds;
     layer.contentsScale = self.contentScaleFactor;
@@ -69,7 +69,7 @@ static const int max_touches = 8;
     self = [super initWithCoder:coder];
 
     if (self) {
-        [self godot_commonInit];
+        [self rebel_commonInit];
     }
 
     return self;
@@ -79,7 +79,7 @@ static const int max_touches = 8;
     self = [super initWithFrame:frame];
 
     if (self) {
-        [self godot_commonInit];
+        [self rebel_commonInit];
     }
 
     return self;
@@ -117,7 +117,7 @@ static const int max_touches = 8;
     }
 }
 
-- (void)godot_commonInit {
+- (void)rebel_commonInit {
     self.contentScaleFactor = [UIScreen mainScreen].nativeScale;
 
     [self initTouches];
@@ -138,8 +138,8 @@ static const int max_touches = 8;
     }
 
     // Initialize delay gesture recognizer
-    GodotViewGestureRecognizer* gestureRecognizer =
-        [[GodotViewGestureRecognizer alloc] init];
+    RebelViewGestureRecognizer* gestureRecognizer =
+        [[RebelViewGestureRecognizer alloc] init];
     self.delayGestureRecognizer = gestureRecognizer;
     [self addGestureRecognizer:self.delayGestureRecognizer];
 }
@@ -229,7 +229,7 @@ static const int max_touches = 8;
 
     if (self.delegate) {
         BOOL delegateFinishedSetup =
-            [self.delegate godotViewFinishedSetup:self];
+            [self.delegate rebelViewFinishedSetup:self];
 
         if (!delegateFinishedSetup) {
             return;
@@ -278,24 +278,24 @@ static const int max_touches = 8;
 
 - (void)initTouches {
     for (int i = 0; i < max_touches; i++) {
-        godot_touches[i] = NULL;
+        rebel_touches[i] = NULL;
     }
 }
 
 - (int)getTouchIDForTouch:(UITouch*)p_touch {
     int first = -1;
     for (int i = 0; i < max_touches; i++) {
-        if (first == -1 && godot_touches[i] == NULL) {
+        if (first == -1 && rebel_touches[i] == NULL) {
             first = i;
             continue;
         }
-        if (godot_touches[i] == p_touch) {
+        if (rebel_touches[i] == p_touch) {
             return i;
         }
     }
 
     if (first != -1) {
-        godot_touches[first] = p_touch;
+        rebel_touches[first] = p_touch;
         return first;
     }
 
@@ -305,11 +305,11 @@ static const int max_touches = 8;
 - (int)removeTouch:(UITouch*)p_touch {
     int remaining = 0;
     for (int i = 0; i < max_touches; i++) {
-        if (godot_touches[i] == NULL) {
+        if (rebel_touches[i] == NULL) {
             continue;
         }
-        if (godot_touches[i] == p_touch) {
-            godot_touches[i] = NULL;
+        if (rebel_touches[i] == p_touch) {
+            rebel_touches[i] = NULL;
         } else {
             ++remaining;
         }
@@ -319,11 +319,11 @@ static const int max_touches = 8;
 
 - (void)clearTouches {
     for (int i = 0; i < max_touches; i++) {
-        godot_touches[i] = NULL;
+        rebel_touches[i] = NULL;
     }
 }
 
-- (void)godotTouchesBegan:(NSSet*)touchesSet withEvent:(UIEvent*)event {
+- (void)rebelTouchesBegan:(NSSet*)touchesSet withEvent:(UIEvent*)event {
     NSArray* tlist = [event.allTouches allObjects];
     for (unsigned int i = 0; i < [tlist count]; i++) {
         if ([touchesSet containsObject:[tlist objectAtIndex:i]]) {
@@ -353,7 +353,7 @@ static const int max_touches = 8;
     }
 }
 
-- (void)godotTouchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
+- (void)rebelTouchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     NSArray* tlist = [event.allTouches allObjects];
     for (unsigned int i = 0; i < [tlist count]; i++) {
         if ([touches containsObject:[tlist objectAtIndex:i]]) {
@@ -387,7 +387,7 @@ static const int max_touches = 8;
     }
 }
 
-- (void)godotTouchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
+- (void)rebelTouchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
     NSArray* tlist = [event.allTouches allObjects];
     for (unsigned int i = 0; i < [tlist count]; i++) {
         if ([touches containsObject:[tlist objectAtIndex:i]]) {
@@ -417,7 +417,7 @@ static const int max_touches = 8;
     }
 }
 
-- (void)godotTouchesCancelled:(NSSet*)touches withEvent:(UIEvent*)event {
+- (void)rebelTouchesCancelled:(NSSet*)touches withEvent:(UIEvent*)event {
     NSArray* tlist = [event.allTouches allObjects];
     for (unsigned int i = 0; i < [tlist count]; i++) {
         if ([touches containsObject:[tlist objectAtIndex:i]]) {
@@ -452,14 +452,13 @@ static const int max_touches = 8;
     CMAcceleration acceleration =
         self.motionManager.deviceMotion.userAcceleration;
 
-    ///@TODO We don't seem to be getting data here, is my device broken or
-    /// is this code incorrect?
+    // @TODO We don't seem to be getting data here, is my device broken or
+    // is this code incorrect?
     CMMagneticField magnetic =
         self.motionManager.deviceMotion.magneticField.field;
 
-    ///@TODO we can access rotationRate as a CMRotationRate variable
-    ///(processed date) or CMGyroData (raw data), have to see what works
-    /// best
+    // @TODO we can access rotationRate as a CMRotationRate variable
+    // (processed date) or CMGyroData (raw data), have to see what works best
     CMRotationRate rotation = self.motionManager.deviceMotion.rotationRate;
 
     // Adjust for screen orientation.
@@ -468,10 +467,9 @@ static const int max_touches = 8;
     // your user to move the screen in all directions and want consistent
     // output
 
-    ///@TODO Using [[UIApplication sharedApplication] statusBarOrientation]
-    /// is a bit of a hack. Godot obviously knows the orientation so maybe
-    /// we
-    // can use that instead? (note that left and right seem swapped)
+    // @TODO Using [[UIApplication sharedApplication] statusBarOrientation]
+    // is a bit of a hack. Rebel Engine obviously knows the orientation so maybe
+    // we can use that instead? (note that left and right seem swapped)
 
     UIInterfaceOrientation interfaceOrientation = UIInterfaceOrientationUnknown;
 

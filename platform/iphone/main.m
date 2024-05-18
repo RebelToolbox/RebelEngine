@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#import "godot_app_delegate.h"
+#import "rebel_app_delegate.h"
 
 #import <UIKit/UIKit.h>
 #include <stdio.h>
@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
     printf("running app main\n");
     @autoreleasepool {
         NSString* className =
-            NSStringFromClass([GodotApplicalitionDelegate class]);
+            NSStringFromClass([RebelApplicalitionDelegate class]);
         UIApplicationMain(argc, argv, nil, className);
     }
     printf("main done\n");

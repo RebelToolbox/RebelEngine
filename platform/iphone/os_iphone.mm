@@ -17,10 +17,10 @@
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
 #include "drivers/unix/syslog_logger.h"
-#import "godot_view.h"
 #import "keyboard_input_view.h"
 #include "main/main.h"
 #import "native_video_view.h"
+#import "rebel_view.h"
 #include "servers/visual/visual_server_raster.h"
 #include "servers/visual/visual_server_wrap_mt.h"
 #import "view_controller.h"
@@ -571,7 +571,7 @@ int OSIPhone::get_screen_dpi(int p_screen) const {
     NSString* string = [NSString stringWithCString:systemInfo.machine
                                           encoding:NSUTF8StringEncoding];
 
-    NSDictionary* iOSModelToDPI = [GodotDeviceMetrics dpiList];
+    NSDictionary* iOSModelToDPI = [RebelDeviceMetrics dpiList];
 
     for (NSArray* keyArray in iOSModelToDPI) {
         if ([keyArray containsObject:string]) {
@@ -605,7 +605,7 @@ int OSIPhone::get_screen_dpi(int p_screen) const {
 Rect2 OSIPhone::get_window_safe_area() const {
     if (@available(iOS 11, *)) {
         UIEdgeInsets insets = UIEdgeInsetsZero;
-        UIView* view        = AppDelegate.viewController.godotView;
+        UIView* view        = AppDelegate.viewController.rebelView;
 
         if ([view respondsToSelector:@selector(safeAreaInsets)]) {
             insets = [view safeAreaInsets];
@@ -780,7 +780,7 @@ void OSIPhone::on_focus_out() {
             get_main_loop()->notification(MainLoop::NOTIFICATION_WM_FOCUS_OUT);
         }
 
-        [AppDelegate.viewController.godotView stopRendering];
+        [AppDelegate.viewController.rebelView stopRendering];
 
         if (native_video_is_playing()) {
             native_video_focus_out();
@@ -798,7 +798,7 @@ void OSIPhone::on_focus_in() {
             get_main_loop()->notification(MainLoop::NOTIFICATION_WM_FOCUS_IN);
         }
 
-        [AppDelegate.viewController.godotView startRendering];
+        [AppDelegate.viewController.rebelView startRendering];
 
         if (native_video_is_playing()) {
             native_video_unpause();

@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#import "godot_view_renderer.h"
+#import "rebel_view_renderer.h"
 
 #include "core/os/keyboard.h"
 #include "core/project_settings.h"
@@ -18,7 +18,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
-@interface GodotViewRenderer ()
+@interface RebelViewRenderer ()
 
 @property(assign, nonatomic) BOOL hasFinishedProjectDataSetup;
 @property(assign, nonatomic) BOOL hasStartedMain;
@@ -26,7 +26,7 @@
 
 @end
 
-@implementation GodotViewRenderer
+@implementation RebelViewRenderer
 
 - (BOOL)setupView:(UIView*)view {
     if (self.hasFinishedSetup) {

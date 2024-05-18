@@ -6,7 +6,7 @@
 
 #import "device_metrics.h"
 
-@implementation GodotDeviceMetrics
+@implementation RebelDeviceMetrics
 
 + (NSDictionary*)dpiList {
     return @{

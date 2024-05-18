@@ -23,7 +23,7 @@
 int gl_view_base_fb;
 bool gles3_available = true;
 
-@implementation GodotOpenGLLayer {
+@implementation RebelOpenGLLayer {
     // The pixel dimensions of the backbuffer
     GLint backingWidth;
     GLint backingHeight;

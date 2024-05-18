@@ -4,15 +4,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-#import "godot_app_delegate.h"
+#import "rebel_app_delegate.h"
 
 #import "app_delegate.h"
 
-@interface GodotApplicalitionDelegate ()
+@interface RebelApplicalitionDelegate ()
 
 @end
 
-@implementation GodotApplicalitionDelegate
+@implementation RebelApplicalitionDelegate
 
 static NSMutableArray<ApplicationDelegateService*>* services = nil;
 
@@ -95,7 +95,7 @@ static NSMutableArray<ApplicationDelegateService*>* services = nil;
     return result;
 }
 
-/* Can be handled by Info.plist. Not yet supported by Godot.
+/* Can be handled by Info.plist. Not yet supported by Rebel.
 
 // MARK: Scene
 

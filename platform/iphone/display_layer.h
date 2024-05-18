@@ -16,6 +16,6 @@
 
 @end
 
-@interface GodotOpenGLLayer : CAEAGLLayer <DisplayLayer>
+@interface RebelOpenGLLayer : CAEAGLLayer <DisplayLayer>
 
 @end

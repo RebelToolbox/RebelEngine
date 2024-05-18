@@ -9,20 +9,20 @@
 #include "core/os/keyboard.h"
 #include "os_iphone.h"
 
-@interface GodotKeyboardInputView () <UITextViewDelegate>
+@interface RebelKeyboardInputView () <UITextViewDelegate>
 
 @property(nonatomic, copy) NSString* previousText;
 @property(nonatomic, assign) NSRange previousSelectedRange;
 
 @end
 
-@implementation GodotKeyboardInputView
+@implementation RebelKeyboardInputView
 
 - (instancetype)initWithCoder:(NSCoder*)coder {
     self = [super initWithCoder:coder];
 
     if (self) {
-        [self godot_commonInit];
+        [self rebel_commonInit];
     }
 
     return self;
@@ -33,13 +33,13 @@
     self = [super initWithFrame:frame textContainer:textContainer];
 
     if (self) {
-        [self godot_commonInit];
+        [self rebel_commonInit];
     }
 
     return self;
 }
 
-- (void)godot_commonInit {
+- (void)rebel_commonInit {
     self.hidden   = YES;
     self.delegate = self;
 

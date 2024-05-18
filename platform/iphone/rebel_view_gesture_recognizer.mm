@@ -4,10 +4,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-#import "godot_view_gesture_recognizer.h"
+#import "rebel_view_gesture_recognizer.h"
 
 #include "core/project_settings.h"
-#import "godot_view.h"
+#import "rebel_view.h"
 
 // Minimum distance for touches to move to fire
 // a delay timer before scheduled time.
@@ -15,16 +15,16 @@
 // but big enough to allow click to work.
 const CGFloat kGLGestureMovementDistance = 0.5;
 
-@interface GodotViewGestureRecognizer ()
+@interface RebelViewGestureRecognizer ()
 
 @property(nonatomic, readwrite, assign) NSTimeInterval delayTimeInterval;
 
 @end
 
-@implementation GodotViewGestureRecognizer
+@implementation RebelViewGestureRecognizer
 
-- (GodotView*)godotView {
-    return (GodotView*)self.view;
+- (RebelView*)rebelView {
+    return (RebelView*)self.view;
 }
 
 - (instancetype)init {
@@ -60,7 +60,7 @@ const CGFloat kGLGestureMovementDistance = 0.5;
     delayTimer = nil;
 
     if (delayedTouches) {
-        [self.godotView godotTouchesBegan:delayedTouches
+        [self.rebelView rebelTouchesBegan:delayedTouches
                                 withEvent:delayedEvent];
     }
 
@@ -82,8 +82,8 @@ const CGFloat kGLGestureMovementDistance = 0.5;
         // We should check if movement was significant enough to fire an event
         // for dragging to work correctly.
         for (UITouch* touch in cleared) {
-            CGPoint from      = [touch locationInView:self.godotView];
-            CGPoint to        = [touch previousLocationInView:self.godotView];
+            CGPoint from      = [touch locationInView:self.rebelView];
+            CGPoint to        = [touch previousLocationInView:self.rebelView];
             CGFloat xDistance = from.x - to.x;
             CGFloat yDistance = from.y - to.y;
 
@@ -94,14 +94,14 @@ const CGFloat kGLGestureMovementDistance = 0.5;
             // event.
             if (distance > kGLGestureMovementDistance) {
                 [delayTimer fire];
-                [self.godotView godotTouchesMoved:cleared withEvent:event];
+                [self.rebelView rebelTouchesMoved:cleared withEvent:event];
                 return;
             }
         }
         return;
     }
 
-    [self.godotView godotTouchesMoved:cleared withEvent:event];
+    [self.rebelView rebelTouchesMoved:cleared withEvent:event];
 
     [super touchesMoved:touches withEvent:event];
 }
@@ -110,14 +110,14 @@ const CGFloat kGLGestureMovementDistance = 0.5;
     [delayTimer fire];
 
     NSSet* cleared = [self copyClearedTouches:touches phase:UITouchPhaseEnded];
-    [self.godotView godotTouchesEnded:cleared withEvent:event];
+    [self.rebelView rebelTouchesEnded:cleared withEvent:event];
 
     [super touchesEnded:touches withEvent:event];
 }
 
 - (void)touchesCancelled:(NSSet*)touches withEvent:(UIEvent*)event {
     [delayTimer fire];
-    [self.godotView godotTouchesCancelled:touches withEvent:event];
+    [self.rebelView rebelTouchesCancelled:touches withEvent:event];
 
     [super touchesCancelled:touches withEvent:event];
 }
