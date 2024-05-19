@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_JS_H
-#define GODOT_JS_H
+#ifndef REBEL_JS_H
+#define REBEL_JS_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -153,4 +153,4 @@ extern void rebel_js_display_vk_hide();
 }
 #endif
 
-#endif /* GODOT_JS_H */
+#endif // REBEL_JS_H

@@ -8,9 +8,9 @@
 
 #include "core/project_settings.h"
 #include "drivers/coreaudio/audio_driver_coreaudio.h"
-#import "godot_view.h"
 #include "main/main.h"
 #include "os_iphone.h"
+#import "rebel_view.h"
 
 JoypadIPhone::JoypadIPhone() {
     observer = [[JoypadIPhoneObserver alloc] init];
@@ -45,13 +45,13 @@ void JoypadIPhone::start_processing() {
     self = [super init];
 
     if (self) {
-        [self godot_commonInit];
+        [self rebel_commonInit];
     }
 
     return self;
 }
 
-- (void)godot_commonInit {
+- (void)rebel_commonInit {
     self.isObserving  = NO;
     self.isProcessing = NO;
 }
@@ -133,7 +133,7 @@ void JoypadIPhone::start_processing() {
         controller.playerIndex = [self getFreePlayerIndex];
     };
 
-    // tell Godot about our new controller
+    // Tell Rebel Engine about our new controller.
     OSIPhone::get_singleton()->joy_connection_changed(
         joy_id,
         true,
@@ -176,7 +176,7 @@ void JoypadIPhone::start_processing() {
 
     NSArray* keys = [self.connectedJoypads allKeysForObject:controller];
     for (NSNumber* key in keys) {
-        // tell Godot this joystick is no longer there
+        // Tell Rebel Engine this joystick is no longer there.
         int joy_id = [key intValue];
         OSIPhone::get_singleton()->joy_connection_changed(joy_id, false, "");
 

@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_PLUGIN_CONFIG_H
-#define GODOT_PLUGIN_CONFIG_H
+#ifndef REBEL_PLUGIN_CONFIG_H
+#define REBEL_PLUGIN_CONFIG_H
 
 #include "core/error_list.h"
 #include "core/io/config_file.h"
@@ -461,4 +461,4 @@ static inline PluginConfigIOS load_plugin_config(
     return plugin_config;
 }
 
-#endif // GODOT_PLUGIN_CONFIG_H
+#endif // REBEL_PLUGIN_CONFIG_H

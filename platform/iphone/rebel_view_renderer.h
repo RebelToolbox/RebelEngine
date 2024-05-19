@@ -6,7 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol GodotViewRendererProtocol <NSObject>
+@protocol RebelViewRendererProtocol <NSObject>
 
 @property(assign, readonly, nonatomic) BOOL hasFinishedSetup;
 
@@ -15,6 +15,6 @@
 
 @end
 
-@interface GodotViewRenderer : NSObject <GodotViewRendererProtocol>
+@interface RebelViewRenderer : NSObject <RebelViewRendererProtocol>
 
 @end

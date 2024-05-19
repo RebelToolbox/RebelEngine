@@ -6,7 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GodotKeyboardInputView : UITextView
+@interface RebelKeyboardInputView : UITextView
 
 - (BOOL)becomeFirstResponderWithString:(NSString*)existingString
                              multiline:(BOOL)flag

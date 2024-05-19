@@ -8,8 +8,8 @@
 #define IPHONE_API_H
 
 #if defined(IPHONE_ENABLED)
-extern void godot_ios_plugins_initialize();
-extern void godot_ios_plugins_deinitialize();
+extern void rebel_ios_plugins_initialize();
+extern void rebel_ios_plugins_deinitialize();
 #endif
 
 void register_iphone_api();

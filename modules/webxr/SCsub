@@ -4,7 +4,7 @@ Import("env")
 Import("env_modules")
 
 if env["platform"] == "javascript":
-    env.AddJSLibraries(["native/library_godot_webxr.js"])
+    env.AddJSLibraries(["native/rebel_webxr.js"])
     env.AddJSExterns(["native/webxr.externs.js"])
 
 env_webxr = env_modules.Clone()

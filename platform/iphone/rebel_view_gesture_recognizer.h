@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-// GodotViewGestureRecognizer allows iOS gestures to work currectly by
+// RebelViewGestureRecognizer allows iOS gestures to work currectly by
 // emulating UIScrollView's UIScrollViewDelayedTouchesBeganGestureRecognizer.
 // It catches all gestures incoming to UIView and delays them for 150ms
 // (the same value used by UIScrollViewDelayedTouchesBeganGestureRecognizer)
@@ -13,7 +13,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GodotViewGestureRecognizer : UIGestureRecognizer {
+@interface RebelViewGestureRecognizer : UIGestureRecognizer {
 @private
 
     // Timer used to delay begin touch message.

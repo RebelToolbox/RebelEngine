@@ -8,7 +8,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-@interface GodotNativeVideoView ()
+@interface RebelNativeVideoView ()
 
 @property(strong, nonatomic) AVAsset* avAsset;
 @property(strong, nonatomic) AVPlayerItem* avPlayerItem;
@@ -19,13 +19,13 @@
 
 @end
 
-@implementation GodotNativeVideoView
+@implementation RebelNativeVideoView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
 
     if (self) {
-        [self godot_commonInit];
+        [self rebel_commonInit];
     }
 
     return self;
@@ -35,13 +35,13 @@
     self = [super initWithCoder:coder];
 
     if (self) {
-        [self godot_commonInit];
+        [self rebel_commonInit];
     }
 
     return self;
 }
 
-- (void)godot_commonInit {
+- (void)rebel_commonInit {
     self.isVideoCurrentlyPlaying = NO;
     self.videoCurrentTime        = kCMTimeZero;
 

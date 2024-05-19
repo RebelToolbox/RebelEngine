@@ -13,20 +13,20 @@
 
 class String;
 
-@class GodotView;
+@class RebelView;
 @protocol DisplayLayer;
-@protocol GodotViewRendererProtocol;
+@protocol RebelViewRendererProtocol;
 
-@protocol GodotViewDelegate
+@protocol RebelViewDelegate
 
-- (BOOL)godotViewFinishedSetup:(GodotView*)view;
+- (BOOL)rebelViewFinishedSetup:(RebelView*)view;
 
 @end
 
-@interface GodotView : UIView
+@interface RebelView : UIView
 
-@property(assign, nonatomic) id<GodotViewRendererProtocol> renderer;
-@property(assign, nonatomic) id<GodotViewDelegate> delegate;
+@property(assign, nonatomic) id<RebelViewRendererProtocol> renderer;
+@property(assign, nonatomic) id<RebelViewDelegate> delegate;
 
 @property(assign, readonly, nonatomic) BOOL isActive;
 
@@ -41,9 +41,9 @@ class String;
 
 @property(nonatomic, assign) BOOL useCADisplayLink;
 
-- (void)godotTouchesBegan:(NSSet*)touches withEvent:(UIEvent*)event;
-- (void)godotTouchesMoved:(NSSet*)touches withEvent:(UIEvent*)event;
-- (void)godotTouchesEnded:(NSSet*)touches withEvent:(UIEvent*)event;
-- (void)godotTouchesCancelled:(NSSet*)touches withEvent:(UIEvent*)event;
+- (void)rebelTouchesBegan:(NSSet*)touches withEvent:(UIEvent*)event;
+- (void)rebelTouchesMoved:(NSSet*)touches withEvent:(UIEvent*)event;
+- (void)rebelTouchesEnded:(NSSet*)touches withEvent:(UIEvent*)event;
+- (void)rebelTouchesCancelled:(NSSet*)touches withEvent:(UIEvent*)event;
 
 @end

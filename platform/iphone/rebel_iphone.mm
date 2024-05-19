@@ -16,7 +16,7 @@ static OSIPhone* os = NULL;
 
 int add_path(int p_argc, char** p_args) {
     NSString* str =
-        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"godot_path"];
+        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"rebel_path"];
     if (!str) {
         return p_argc;
     }
@@ -30,7 +30,7 @@ int add_path(int p_argc, char** p_args) {
 
 int add_cmdline(int p_argc, char** p_args) {
     NSArray* arr =
-        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"godot_cmdline"];
+        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"rebel_cmdline"];
     if (!arr) {
         return p_argc;
     }
@@ -66,7 +66,7 @@ int iphone_main(int argc, char** argv, String data_dir) {
         chdir(path);
     }
 
-    printf("godot_iphone %s\n", argv[0]);
+    printf("rebel_iphone %s\n", argv[0]);
     char cwd[512];
     getcwd(cwd, sizeof(cwd));
     printf("cwd %s\n", cwd);

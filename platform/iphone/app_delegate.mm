@@ -8,9 +8,9 @@
 
 #include "core/project_settings.h"
 #include "drivers/coreaudio/audio_driver_coreaudio.h"
-#import "godot_view.h"
 #include "main/main.h"
 #include "os_iphone.h"
+#import "rebel_view.h"
 #import "view_controller.h"
 
 #import <AudioToolbox/AudioServices.h>
@@ -56,14 +56,14 @@ static ViewController* mainViewController = nil;
         return FALSE;
     }
 
-    // WARNING: We must *always* create the GodotView after we have constructed
-    // the OS with iphone_main. This allows the GodotView to access project
+    // WARNING: We must *always* create the RebelView after we have constructed
+    // the OS with iphone_main. This allows the RebelView to access project
     // settings so it can properly initialize the OpenGL context
 
     ViewController* viewController = [[ViewController alloc] init];
-    viewController.godotView.useCADisplayLink =
+    viewController.rebelView.useCADisplayLink =
         bool(GLOBAL_DEF("display.iOS/use_cadisplaylink", true)) ? YES : NO;
-    viewController.godotView.renderingInterval = 1.0 / kRenderingFrequency;
+    viewController.rebelView.renderingInterval = 1.0 / kRenderingFrequency;
 
     self.window.rootViewController = viewController;
 

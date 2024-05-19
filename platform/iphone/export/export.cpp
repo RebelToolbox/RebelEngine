@@ -20,7 +20,7 @@
 #include "editor/editor_settings.h"
 #include "main/splash.gen.h"
 #include "platform/iphone/logo.gen.h"
-#include "platform/iphone/plugin/godot_plugin_config.h"
+#include "platform/iphone/plugin/rebel_plugin_config.h"
 #include "string.h"
 
 #include <sys/stat.h>
@@ -553,7 +553,7 @@ void EditorExportPlatformIOS::get_export_options(List<ExportOption>* r_options
     ));
     r_options->push_back(ExportOption(
         PropertyInfo(Variant::STRING, "application/info"),
-        "Made with Godot Engine"
+        "Made with Rebel Engine"
     ));
     r_options->push_back(ExportOption(
         PropertyInfo(
@@ -979,9 +979,9 @@ void EditorExportPlatformIOS::_fix_config_file(
                           p_config.plist_content
                       )
                     + "\n";
-        } else if (lines[i].find("$godot_archs") != -1) {
+        } else if (lines[i].find("$rebel_archs") != -1) {
             strnew +=
-                lines[i].replace("$godot_archs", p_config.architectures) + "\n";
+                lines[i].replace("$rebel_archs", p_config.architectures) + "\n";
         } else if (lines[i].find("$linker_flags") != -1) {
             strnew +=
                 lines[i].replace("$linker_flags", p_config.linker_flags) + "\n";
@@ -1202,8 +1202,8 @@ void EditorExportPlatformIOS::_fix_config_file(
                     bool is_on = ProjectSettings::get_singleton()->get(
                         "application/boot_splash/fullsize"
                     );
-                    // If custom logo is not specified, Godot does not scale
-                    // default one, so we should do the same.
+                    // If custom logo is not specified, Rebel Engine does not
+                    // scale the default one, so we should do the same.
                     value = (is_on && logo_path.length() > 0) ? "scaleAspectFit"
                                                               : "center";
                 } break;
@@ -1573,8 +1573,8 @@ Error EditorExportPlatformIOS::_export_loading_screen_file(
             splash = Ref<Image>(memnew(Image(boot_splash_png)));
         }
 
-        // Using same image for both @2x and @3x
-        // because Godot's own boot logo uses single image for all resolutions.
+        // Using same image for both @2x and @3x, because Rebel Engine's own
+        // boot logo uses single image for all resolutions.
         // Also not using @1x image, because devices using this image variant
         // are not supported by iOS 9, which is minimal target.
         const String splash_png_path_2x = p_dest_dir.plus_file("splash@2x.png");
@@ -1844,8 +1844,8 @@ void EditorExportPlatformIOS::_add_assets_to_project(
     Vector<uint8_t>& p_project_data,
     const Vector<IOSExportAsset>& p_additional_assets
 ) {
-    // that is just a random number, we just need Godot IDs not to clash with
-    // existing IDs in the project.
+    // that is just a random number, we just need Rebel Engine IDs not to clash
+    // with existing IDs in the project.
     PbxId current_id = {0x58938401, 0, 0};
     String pbx_files;
     String pbx_frameworks_build;
@@ -2452,16 +2452,16 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
         plugin_format["deinitialization"] = plugin_deinitialization_cpp_code;
 
         String plugin_cpp_code =
-            "\n// Godot Plugins\n"
-            "void godot_ios_plugins_initialize();\n"
-            "void godot_ios_plugins_deinitialize();\n"
+            "\n// Rebel Plugins\n"
+            "void rebel_ios_plugins_initialize();\n"
+            "void rebel_ios_plugins_deinitialize();\n"
             "// Exported Plugins\n\n"
             "$definition"
             "// Use Plugins\n"
-            "void godot_ios_plugins_initialize() {\n"
+            "void rebel_ios_plugins_initialize() {\n"
             "$initialization"
             "}\n\n"
-            "void godot_ios_plugins_deinitialize() {\n"
+            "void rebel_ios_plugins_deinitialize() {\n"
             "$deinitialization"
             "}\n";
 
@@ -2589,20 +2589,20 @@ Error EditorExportPlatformIOS::export_project(
 
     bool found_library = false;
 
-    const String project_file = "godot_ios.xcodeproj/project.pbxproj";
+    const String project_file = "rebel_ios.xcodeproj/project.pbxproj";
     Set<String> files_to_parse;
-    files_to_parse.insert("godot_ios/godot_ios-Info.plist");
+    files_to_parse.insert("rebel_ios/rebel_ios-Info.plist");
     files_to_parse.insert(project_file);
-    files_to_parse.insert("godot_ios/export_options.plist");
-    files_to_parse.insert("godot_ios/dummy.cpp");
+    files_to_parse.insert("rebel_ios/export_options.plist");
+    files_to_parse.insert("rebel_ios/dummy.cpp");
     files_to_parse.insert(
-        "godot_ios.xcodeproj/project.xcworkspace/contents.xcworkspacedata"
+        "rebel_ios.xcodeproj/project.xcworkspace/contents.xcworkspacedata"
     );
     files_to_parse.insert(
-        "godot_ios.xcodeproj/xcshareddata/xcschemes/godot_ios.xcscheme"
+        "rebel_ios.xcodeproj/xcshareddata/xcschemes/rebel_ios.xcscheme"
     );
-    files_to_parse.insert("godot_ios/godot_ios.entitlements");
-    files_to_parse.insert("godot_ios/Launch Screen.storyboard");
+    files_to_parse.insert("rebel_ios/rebel_ios.entitlements");
+    files_to_parse.insert("rebel_ios/Launch Screen.storyboard");
 
     IOSConfigData config_data = {
         pkg_name,
@@ -2702,7 +2702,7 @@ Error EditorExportPlatformIOS::export_project(
         ///@TODO need to parse logo files
 
         if (data.size() > 0) {
-            file = file.replace("godot_ios", binary_name);
+            file = file.replace("rebel_ios", binary_name);
 
             print_line("ADDING: " + file + " size: " + itos(data.size()));
 
