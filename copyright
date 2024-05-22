@@ -135,8 +135,8 @@ Comment: Bullet Continuous Collision Detection and Physics Library
 Copyright: 2003-2013, Erwin Coumans
 License: Zlib
 
-Files: ./thirdparty/certs/ca-certificates.crt
-Comment: CA certificates
+Files: ./thirdparty/certs/ca-bundle.crt
+Comment: Mozilla CA certificate bundle
 Copyright: Mozilla Contributors
 License: MPL-2.0
 

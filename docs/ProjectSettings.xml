@@ -1008,7 +1008,7 @@ SPDX-License-Identifier: MIT
             Page size used by remote filesystem (in bytes).
         </member>
         <member name="network/ssl/certificates" type="String" setter="" getter="" default="&quot;&quot;">
-            The CA certificates bundle to use for SSL connections. If this is set to a non-empty value, this will [i]override[/i] Rebel Engine's default [url=https://github.com/RebelToolbox/RebelEngine/blob/main/thirdparty/certs/ca-certificates.crt]Mozilla certificate bundle[/url]. If left empty, the default certificate bundle will be used.
+            The CA certificates bundle to use for SSL connections. If this is set to a non-empty value, this will [i]override[/i] Rebel Engine's default [url=https://github.com/RebelToolbox/RebelEngine/blob/main/thirdparty/certs/ca-bundle.crt]Mozilla CA certificate bundle[/url]. If left empty, the default certificate bundle will be used.
             If in doubt, leave this setting empty.
         </member>
         <member name="node/name_casing" type="int" setter="" getter="" default="0">
