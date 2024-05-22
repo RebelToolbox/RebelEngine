@@ -14,6 +14,13 @@ thirdparty_obj = []
 if env["builtin_freetype"]:
     thirdparty_dir = "#thirdparty/freetype/"
     thirdparty_sources = [
+        # All modules have a single object source file
+        # <module-name>.c or ft<module-name>.c,
+        # which includes all the module's source files;
+        # so we only compile these files.
+        # Note: the base module's single object source file
+        # doesn't actually include all the module's source files;
+        # so the other source files are included manually.
         "src/autofit/autofit.c",
         "src/base/ftbase.c",
         "src/base/ftbbox.c",
@@ -35,11 +42,13 @@ if env["builtin_freetype"]:
         "src/base/ftsystem.c",
         "src/base/fttype1.c",
         "src/base/ftwinfnt.c",
+        "src/base/md5.c",
         "src/bdf/bdf.c",
         "src/bzip2/ftbzip2.c",
         "src/cache/ftcache.c",
         "src/cff/cff.c",
         "src/cid/type1cid.c",
+        "src/dlg/dlgwrap.c",
         "src/gxvalid/gxvalid.c",
         "src/gzip/ftgzip.c",
         "src/lzw/ftlzw.c",
@@ -50,7 +59,10 @@ if env["builtin_freetype"]:
         "src/pshinter/pshinter.c",
         "src/psnames/psnames.c",
         "src/raster/raster.c",
+        "src/sdf/sdf.c",
+        "src/sfnt/sfnt.c",
         "src/smooth/smooth.c",
+        "src/svg/svg.c",
         "src/truetype/truetype.c",
         "src/type1/type1.c",
         "src/type42/type42.c",
@@ -76,17 +88,6 @@ if env["builtin_freetype"]:
     if env["builtin_libpng"]:
         env_freetype.Prepend(CPPPATH=["#thirdparty/libpng"])
 
-    sfnt = thirdparty_dir + "src/sfnt/sfnt.c"
-    # Must be done after all CPPDEFINES are being set so we can copy them.
-    if env["platform"] == "javascript":
-        # Forcibly undefine this macro so SIMD is not used in this file,
-        # since currently unsupported in WASM
-        tmp_env = env_freetype.Clone()
-        tmp_env.disable_warnings()
-        tmp_env.Append(CPPFLAGS=["-U__OPTIMIZE__"])
-        sfnt = tmp_env.Object(sfnt)
-    thirdparty_sources += [sfnt]
-
     env_thirdparty = env_freetype.Clone()
     env_thirdparty.disable_warnings()
     lib = env_thirdparty.add_library("freetype_builtin", thirdparty_sources)
@@ -108,7 +109,7 @@ if env["builtin_freetype"]:
         env.Append(LIBS=[lib])
 
 
-# Godot source files
+# Module source files
 
 module_obj = []
 

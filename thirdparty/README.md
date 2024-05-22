@@ -118,15 +118,16 @@ comments.
 
 ## freetype
 
-- Upstream: https://www.freetype.org
-- Version: 2.10.4 (6a2b3e4007e794bfc6c91030d0ed987f925164a8, 2020)
+- Upstream: https://gitlab.freedesktop.org/freetype/freetype
+- Version: 2.13.2 (August 2023)
 - License: FreeType License (BSD-like)
 
 Files extracted from upstream source:
 
-- the `src/` folder, stripped of the `Jamfile` files and the `tools` subfolder
+- the `src/` folder except for the `*.mk` Makefiles and the `tools` subfolder
 - the `include/` folder
-- `docs/{FTL.TXT,LICENSE.TXT}`
+- `docs/FTL.TXT
+- `LICENSE.TXT`
 
 
 ## glad
