@@ -210,7 +210,7 @@ static const char* APK_ASSETS_DIRECTORY = "res://android/build/assets";
 static const char* AAB_ASSETS_DIRECTORY =
     "res://android/build/assetPacks/installTime/src/main/assets";
 
-// Also update platform/android/java/app/config.gradle:
+// Also update platform/android/project/app/config.gradle:
 // - minSdk
 // - targetSdk
 static const int DEFAULT_MIN_SDK_VERSION    = 21;

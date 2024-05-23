@@ -271,10 +271,10 @@ jobs:
           echo "Setting JAVA_HOME=${!java_home_variable}"
           echo "JAVA_HOME=${!java_home_variable}" >> $GITHUB_ENV
 
-      - name: Copy Android libraries to Java libs folders
+      - name: Copy Android libraries to project libs folders
         run: |
           # For each library identify the correct build and architecture folder.
-          java_libs_dir=platform/android/java/lib/libs
+          project_libs_dir=platform/android/project/lib/libs
           for library in `ls -1 bin/librebel.android.*`; do
             case $library in
               *debug* )
@@ -299,7 +299,7 @@ jobs:
                 arch="x86_64" ;;
             esac
             stl_lib=$ANDROID_NDK_ROOT/sources/cxx-stl/llvm-libc++/libs/$arch/libc++_shared.so
-            target=$java_libs_dir/$build/$arch
+            target=$project_libs_dir/$build/$arch
             mkdir -p $target
             echo Copying $library into $build/$arch
             cp $library $target/librebel_android.so
@@ -310,7 +310,7 @@ jobs:
       - name: Create Android Templates
         run: |
           # Create Android Templates
-          cd platform/android/java
+          cd platform/android/project
           ./gradlew createAndroidTemplates
           cd ../../..
 

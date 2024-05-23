@@ -71,9 +71,9 @@ local.properties
 *.iml
 .gradletasknamecache
 project.properties
-platform/android/java/*/.cxx/
-platform/android/java/*/build/
-platform/android/java/*/libs/
+platform/android/project/*/.cxx/
+platform/android/project/*/build/
+platform/android/project/*/libs/
 
 # iOS
 *.dSYM
