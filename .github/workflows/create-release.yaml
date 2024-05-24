@@ -271,10 +271,11 @@ jobs:
           echo "Setting JAVA_HOME=${!java_home_variable}"
           echo "JAVA_HOME=${!java_home_variable}" >> $GITHUB_ENV
 
-      - name: Copy Android libraries to project libs folders
+      - name: Copy Android libraries to project's jniLibs folders
         run: |
+          # Copy Android libraries to project's jniLibs folders
           # For each library identify the correct build and architecture folder.
-          project_engine_libs_dir=platform/android/project/engine/libs
+          project_src_dir=platform/android/project/engine/src
           for library in `ls -1 bin/librebel.android.*`; do
             case $library in
               *debug* )
@@ -298,13 +299,15 @@ jobs:
               x86_64 )
                 arch="x86_64" ;;
             esac
-            stl_lib=$ANDROID_NDK_ROOT/sources/cxx-stl/llvm-libc++/libs/$arch/libc++_shared.so
-            target=$project_engine_libs_dir/$build/$arch
+            # Copy $arch_id $build Rebel Engine library into $build jniLibs $arch folder
+            target=$project_src_dir/$build/jniLibs/$arch
             mkdir -p $target
-            echo Copying $library into $build/$arch
-            cp $library $target/librebel_android.so
-            echo Copying $stl_lib into $build/$arch
-            cp $stl_lib $target/
+            echo "Copying $library into $target
+            # Copy $arch_id stl_lib into jniLibs $arch folder
+            stl_lib=$ANDROID_NDK_ROOT/sources/cxx-stl/llvm-libc++/libs/$arch/libc++_shared.so
+            target=$project_src_dir/main/jniLibs/$arch
+            mkdir -p $target
+            echo "Copying $stl_lib into $target
           done
 
       - name: Create Android Templates

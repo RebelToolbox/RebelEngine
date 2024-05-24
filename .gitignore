@@ -73,7 +73,7 @@ local.properties
 project.properties
 platform/android/project/*/.cxx/
 platform/android/project/*/build/
-platform/android/project/*/libs/
+platform/android/project/**/jniLibs/
 
 # iOS
 *.dSYM

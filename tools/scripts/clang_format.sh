@@ -14,7 +14,7 @@ while IFS= read -rd '' f; do
     # Exclude some files.
     if [[ "$f" == "thirdparty"* ]]; then
         continue
-    elif [[ "$f" == "platform/android/project/engine/src/com/google"* ]]; then
+    elif [[ "$f" == "platform/android/project/engine/src/main/java/com/google"* ]]; then
         continue
     elif [[ "$f" == *"-so_wrap."* ]]; then
         continue

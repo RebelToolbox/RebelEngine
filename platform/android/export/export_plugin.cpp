@@ -163,7 +163,7 @@ static const char* SPLASH_BG_COLOR_PATH =
 static const char* LEGACY_BUILD_SPLASH_BG_COLOR_PATH =
     "res/drawable-nodpi-v4/splash_bg_color.png";
 static const char* SPLASH_CONFIG_PATH =
-    "res://android/project/res/drawable/splash_drawable.xml";
+    "res://android/project/src/main/res/drawable/splash_drawable.xml";
 static const char* GDNATIVE_LIBS_PATH =
     "res://android/project/libs/gdnativelibs.json";
 
@@ -206,7 +206,8 @@ static const LauncherIcon
 static const int EXPORT_FORMAT_APK = 0;
 static const int EXPORT_FORMAT_AAB = 1;
 
-static const char* APK_ASSETS_DIRECTORY = "res://android/project/assets";
+static const char* APK_ASSETS_DIRECTORY =
+    "res://android/project/src/main/assets";
 static const char* AAB_ASSETS_DIRECTORY =
     "res://android/project/game/src/main/assets";
 
@@ -843,12 +844,15 @@ Error EditorExportPlatformAndroid::copy_gradle_so(
         int abi_index = abis.find(p_so.tags[i]);
         if (abi_index != -1) {
             exported        = true;
-            String base     = "res://android/project/libs";
+            String base     = "res://android/project/src";
             String type     = export_data->debug ? "debug" : "release";
+            String jniLibs  = "jniLibs";
             String abi      = abis[abi_index];
             String filename = p_so.path.get_file();
-            String dst_path =
-                base.plus_file(type).plus_file(abi).plus_file(filename);
+            String dst_path = base.plus_file(type)
+                                  .plus_file(jniLibs)
+                                  .plus_file(abi)
+                                  .plus_file(filename);
             Vector<uint8_t> data = FileAccess::get_file_as_array(p_so.path);
             print_verbose(
                 "Copying .so file from " + p_so.path + " to " + dst_path
@@ -2097,7 +2101,7 @@ void EditorExportPlatformAndroid::store_image(
     const String& export_path,
     const Vector<uint8_t>& data
 ) {
-    String img_path = export_path.insert(0, "res://android/project/");
+    String img_path = export_path.insert(0, "res://android/project/src/main/");
     store_file_at_path(img_path, data);
 }
 
@@ -3647,10 +3651,10 @@ Error EditorExportPlatformAndroid::export_project_helper(
             project_name
         ); // project name localization.
         if (err != OK) {
-            EditorNode::add_io_error(
-                TTR("Unable to overwrite res://android/project/res/*.xml files "
-                    "with project name")
-            );
+            EditorNode::add_io_error(TTR(
+                "Unable to overwrite res://android/project/src/main/res/*.xml "
+                "files with project name"
+            ));
         }
         // Copies the project icon files into the appropriate Gradle project
         // directory.
