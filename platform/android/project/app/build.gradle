@@ -19,11 +19,11 @@ allprojects {
 dependencies {
     implementation libs.androidxFragment
 
-    if (rootProject.findProject(":lib")) {
-        implementation project(":lib")
+    if (rootProject.findProject(":engine")) {
+        implementation project(":engine")
     } else {
         // Rebel Editor custom build mode.
-        // Use pre-generated rebel-lib.*.aar android archive files.
+        // Include pre-built engine-*.aar files and other plugin libraries.
         debugImplementation fileTree(dir: 'libs/debug', include: ['*.jar', '*.aar'])
         releaseImplementation fileTree(dir: 'libs/release', include: ['*.jar', '*.aar'])
     }

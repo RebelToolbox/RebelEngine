@@ -55,9 +55,6 @@ android {
     }
 
     libraryVariants.configureEach { variant ->
-        variant.outputs.configureEach { output ->
-            output.outputFileName = "rebel-lib.${variant.name}.aar"
-        }
         def buildType = variant.buildType.name.capitalize()
         // Ensure all compiled libraries are present before the Android libraries are created.
         tasks.named("merge${buildType}JniLibFolders") {

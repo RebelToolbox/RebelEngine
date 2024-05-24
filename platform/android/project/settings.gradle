@@ -16,7 +16,7 @@ dependencyResolutionManagement {
 rootProject.name = "Rebel"
 
 include ':app'
-include ':lib'
+include ':engine'
 include ':nativeSrcsConfigs'
 include ':assetPacks:installTime'
 project(':assetPacks').projectDir = file("app/assetPacks")
