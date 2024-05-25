@@ -167,7 +167,7 @@ android {
         def buildType = variant.buildType.name.capitalize()
         if (findProject(":app")) {
             tasks.named("merge${buildType}JniLibFolders") {
-                dependsOn ":copy${buildType}AARToAppModule"
+                mustRunAfter ":copy${buildType}AARToAppModule"
             }
         }
     }

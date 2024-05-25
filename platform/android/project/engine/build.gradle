@@ -6,10 +6,18 @@ dependencies {
     implementation libs.androidxFragment
 }
 
+// Android transitive dependencies pull in different versions of the Kotlin JDK.
+// Since Kotlin stdlib v1.8 now includes the JDK; it doesn't need to be included separately.
+// However, we exclude the stdlib JDK module to avoid duplicate JDK classes being included.
+// This will need to be removed when all Android transitive dependencies use Kotlin stdlib v1.8.
+// Reference: https://stackoverflow.com/a/75315276
+configurations.implementation {
+    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+}
+
 android {
     namespace 'com.rebeltoolbox.rebelengine'
     compileSdk versions.compileSdk
-
     ndkVersion versions.ndkVersion
 
     defaultConfig {
@@ -54,12 +62,19 @@ android {
         buildConfig true
     }
 
-    libraryVariants.configureEach { variant ->
-        def buildType = variant.buildType.name.capitalize()
-        // Ensure all compiled libraries are present before the Android libraries are created.
-        tasks.named("merge${buildType}JniLibFolders") {
-            mustRunAfter "compile${buildType}RebelEngine"
+    // Provides access to the Rebel source files.
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
         }
+    }
+}
+
+// We use SCons to build the native libraries.
+// So, we need to disable the buildCMake* tasks.
+tasks.configureEach { task ->
+    if(task.name.contains("buildCMake")) {
+        task.enabled = false
     }
 }
 

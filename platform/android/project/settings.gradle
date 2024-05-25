@@ -17,4 +17,3 @@ rootProject.name = "Rebel"
 
 include ':app'
 include ':engine'
-include ':nativeSrcsConfigs'
