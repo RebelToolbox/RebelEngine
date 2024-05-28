@@ -106,8 +106,8 @@ private:
         FILE_IMPORT_SUBSCENE,
         FILE_EXPORT_PROJECT,
         FILE_EXPORT_MESH_LIBRARY,
-        FILE_INSTALL_ANDROID_SOURCE,
-        FILE_EXPLORE_ANDROID_BUILD_TEMPLATES,
+        FILE_INSTALL_ANDROID_PROJECT_TEMPLATE,
+        FILE_EXPLORE_ANDROID,
         FILE_EXPORT_TILESET,
         FILE_SAVE_OPTIMIZED,
         FILE_OPEN_RECENT,
@@ -163,7 +163,7 @@ private:
         SETTINGS_EDITOR_CONFIG_FOLDER,
         SETTINGS_MANAGE_EXPORT_TEMPLATES,
         SETTINGS_MANAGE_FEATURE_PROFILES,
-        SETTINGS_INSTALL_ANDROID_BUILD_TEMPLATE,
+        SETTINGS_INSTALL_ANDROID_PROJECT_TEMPLATE,
         SETTINGS_PICK_MAIN_SCENE,
         SETTINGS_TOGGLE_CONSOLE,
         SETTINGS_TOGGLE_FULLSCREEN,
@@ -296,9 +296,9 @@ private:
     PopupMenu* editor_layouts;
     EditorLayoutsDialog* layout_dialog;
 
-    ConfirmationDialog* custom_build_manage_templates;
-    ConfirmationDialog* install_android_build_template;
-    ConfirmationDialog* remove_android_build_template;
+    ConfirmationDialog* manage_android_project_template;
+    ConfirmationDialog* install_android_project_template;
+    ConfirmationDialog* remove_android_project_template;
 
     EditorSettingsDialog* settings_config_dialog;
     RunSettingsDialog* run_settings_dialog;
@@ -310,7 +310,7 @@ private:
     EditorFileDialog* file_templates;
     EditorFileDialog* file_export_lib;
     EditorFileDialog* file_script;
-    EditorFileDialog* file_android_build_source;
+    EditorFileDialog* file_android_project_template;
     CheckBox* file_export_lib_merge;
     CheckBox* file_export_lib_apply_xforms;
     String current_path;
@@ -436,7 +436,7 @@ private:
     void _menu_confirm_current();
     void _menu_option_confirm(int p_option, bool p_confirmed);
 
-    void _android_build_source_selected(const String& p_file);
+    void _android_source_selected(const String& p_file);
 
     void _request_screenshot();
     void _screenshot(bool p_use_utc = false);

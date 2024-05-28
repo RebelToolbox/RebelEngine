@@ -805,9 +805,8 @@ Error ExportTemplateManager::install_android_template() {
 Error ExportTemplateManager::install_android_template_from_file(
     const String& p_file
 ) {
-    // To support custom Android builds, we install the Java source code and
-    // buildsystem from android_source.zip to the project's res://android
-    // folder.
+    // To support Android custom builds, we install a project template
+    // from android_source.zip to the project's res://android folder.
 
     DirAccessRef da = DirAccess::open("res://");
     ERR_FAIL_COND_V(!da, ERR_CANT_CREATE);
@@ -815,7 +814,7 @@ Error ExportTemplateManager::install_android_template_from_file(
     // Make res://android dir (if it does not exist).
     da->make_dir("android");
     {
-        // Add version, to ensure building won't work if template and Godot
+        // Add version, to ensure building won't work if template and engine
         // version don't match.
         FileAccessRef f =
             FileAccess::open("res://android/.build_version", FileAccess::WRITE);
@@ -828,12 +827,12 @@ Error ExportTemplateManager::install_android_template_from_file(
     Error err = da->make_dir_recursive("android/plugins");
     ERR_FAIL_COND_V(err != OK, err);
 
-    err = da->make_dir_recursive("android/build");
+    err = da->make_dir_recursive("android/project");
     ERR_FAIL_COND_V(err != OK, err);
     {
         // Add an empty .gdignore file to avoid scan.
         FileAccessRef f = FileAccess::open(
-            "res://android/build/.gdignore",
+            "res://android/project/.gdignore",
             FileAccess::WRITE
         );
         ERR_FAIL_COND_V(!f, ERR_CANT_CREATE);
@@ -899,12 +898,12 @@ Error ExportTemplateManager::install_android_template_from_file(
 
             if (!dirs_tested.has(base_dir)) {
                 da->make_dir_recursive(
-                    String("android/build").plus_file(base_dir)
+                    String("android/project").plus_file(base_dir)
                 );
                 dirs_tested.insert(base_dir);
             }
 
-            String to_write = String("res://android/build").plus_file(path);
+            String to_write = String("res://android/project").plus_file(path);
             FileAccess* f   = FileAccess::open(to_write, FileAccess::WRITE);
             if (f) {
                 f->store_buffer(data.ptr(), data.size());
