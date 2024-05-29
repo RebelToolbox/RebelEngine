@@ -2919,7 +2919,7 @@ bool EditorExportPlatformAndroid::can_export(
             FileAccess::exists("res://android/project/build.gradle");
         if (!installed_android_project_template) {
             r_missing_templates =
-                !exists_export_template("android_source.zip", &err);
+                !exists_export_template("android_template.zip", &err);
             err += TTR("The Android project template is not installed. "
                        "It can be installed from the Project menu.")
                  + "\n";

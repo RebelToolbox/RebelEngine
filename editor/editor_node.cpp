@@ -2763,7 +2763,7 @@ void EditorNode::_run(bool p_current, const String& p_custom) {
     _playing_edited = p_current;
 }
 
-void EditorNode::_android_source_selected(const String& p_file) {
+void EditorNode::_android_template_selected(const String& p_file) {
     export_template_manager->install_android_template_from_file(p_file);
 }
 
@@ -6901,8 +6901,8 @@ void EditorNode::_bind_methods() {
         &EditorNode::_update_file_menu_closed
     );
     ClassDB::bind_method(
-        "_android_source_selected",
-        &EditorNode::_android_source_selected
+        "_android_template_selected",
+        &EditorNode::_android_template_selected
     );
 
     ClassDB::bind_method(
@@ -8691,14 +8691,15 @@ EditorNode::EditorNode() {
     gui_base->add_child(manage_android_project_template);
 
     file_android_project_template = memnew(EditorFileDialog);
-    file_android_project_template->set_title(TTR("Select android source file"));
+    file_android_project_template->set_title(TTR("Select android template file")
+    );
     file_android_project_template->set_access(
         EditorFileDialog::ACCESS_FILESYSTEM
     );
     file_android_project_template->set_mode(EditorFileDialog::MODE_OPEN_FILE);
     file_android_project_template->add_filter("*.zip");
     file_android_project_template
-        ->connect("file_selected", this, "_android_source_selected");
+        ->connect("file_selected", this, "_android_template_selected");
     gui_base->add_child(file_android_project_template);
 
     install_android_project_template = memnew(ConfirmationDialog);

@@ -789,7 +789,7 @@ bool ExportTemplateManager::can_install_android_template() {
         EditorSettings::get_singleton()->get_templates_dir().plus_file(
             VERSION_FULL_CONFIG
         );
-    return FileAccess::exists(templates_dir.plus_file("android_source.zip"));
+    return FileAccess::exists(templates_dir.plus_file("android_template.zip"));
 }
 
 Error ExportTemplateManager::install_android_template() {
@@ -797,7 +797,7 @@ Error ExportTemplateManager::install_android_template() {
         EditorSettings::get_singleton()->get_templates_dir().plus_file(
             VERSION_FULL_CONFIG
         );
-    const String& source_zip = templates_path.plus_file("android_source.zip");
+    const String& source_zip = templates_path.plus_file("android_template.zip");
     ERR_FAIL_COND_V(!FileAccess::exists(source_zip), ERR_CANT_OPEN);
     return install_android_template_from_file(source_zip);
 }
@@ -806,7 +806,7 @@ Error ExportTemplateManager::install_android_template_from_file(
     const String& p_file
 ) {
     // To support Android custom builds, we install a project template
-    // from android_source.zip to the project's res://android folder.
+    // from android_template.zip to the project's res://android folder.
 
     DirAccessRef da = DirAccess::open("res://");
     ERR_FAIL_COND_V(!da, ERR_CANT_CREATE);

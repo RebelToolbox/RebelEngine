@@ -436,7 +436,7 @@ private:
     void _menu_confirm_current();
     void _menu_option_confirm(int p_option, bool p_confirmed);
 
-    void _android_source_selected(const String& p_file);
+    void _android_template_selected(const String& p_file);
 
     void _request_screenshot();
     void _screenshot(bool p_use_utc = false);

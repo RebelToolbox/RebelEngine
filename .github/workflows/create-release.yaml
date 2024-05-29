@@ -328,11 +328,11 @@ jobs:
           path: bin/android_debug.apk
           retention-days: 1
 
-      - name: Upload Android Custom Build Files
+      - name: Upload Android Project Template
         uses: actions/upload-artifact@v4
         with:
-          name: android-source
-          path: bin/android_source.zip
+          name: android-template
+          path: bin/android_template.zip
           retention-days: 1
 
   macos-apps:
@@ -495,7 +495,7 @@ jobs:
           # Move Android templates.
           mv artifacts/android_release.apk templates/android_release.apk
           mv artifacts/android_debug.apk templates/android_debug.apk
-          mv artifacts/android_source.zip templates/android_source.zip
+          mv artifacts/android_template.zip templates/android_template.zip
           # Move Web templates.
           mv artifacts/rebel.javascript.opt.zip templates/webassembly_release.zip
           mv artifacts/rebel.javascript.opt.debug.zip templates/webassembly_debug.zip
