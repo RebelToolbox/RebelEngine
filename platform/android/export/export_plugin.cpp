@@ -921,56 +921,6 @@ void EditorExportPlatformAndroid::_get_permissions(
     }
 }
 
-void EditorExportPlatformAndroid::_write_tmp_manifest(
-    const Ref<EditorExportPreset>& p_preset,
-    bool p_give_internet,
-    bool p_debug
-) {
-    print_verbose("Building temporary manifest..");
-    String manifest_text =
-        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-        "<manifest "
-        "xmlns:android=\"http://schemas.android.com/apk/res/android\"\n"
-        "    xmlns:tools=\"http://schemas.android.com/tools\">\n";
-
-    manifest_text += _get_screen_sizes_tag(p_preset);
-    manifest_text += _get_gles_tag();
-
-    Vector<String> perms;
-    _get_permissions(p_preset, p_give_internet, perms);
-    for (int i = 0; i < perms.size(); i++) {
-        String permission = perms.get(i);
-        if (permission == "android.permission.WRITE_EXTERNAL_STORAGE"
-            || permission == "android.permission.READ_EXTERNAL_STORAGE") {
-            manifest_text += vformat(
-                "    <uses-permission android:name=\"%s\" "
-                "android:maxSdkVersion=\"29\" />\n",
-                permission
-            );
-        } else {
-            manifest_text += vformat(
-                "    <uses-permission android:name=\"%s\" />\n",
-                permission
-            );
-        }
-    }
-
-    manifest_text += _get_xr_features_tag(p_preset);
-    manifest_text += _get_instrumentation_tag(p_preset);
-    manifest_text +=
-        _get_application_tag(p_preset, _has_storage_permission(perms));
-    manifest_text        += "</manifest>\n";
-    String manifest_path  = vformat(
-        "res://android/build/src/%s/AndroidManifest.xml",
-        (p_debug ? "debug" : "release")
-    );
-
-    print_verbose(
-        "Storing manifest into " + manifest_path + ": " + "\n" + manifest_text
-    );
-    store_string_at_path(manifest_path, manifest_text);
-}
-
 void EditorExportPlatformAndroid::_fix_manifest(
     const Ref<EditorExportPreset>& p_preset,
     Vector<uint8_t>& p_manifest,
@@ -3713,8 +3663,6 @@ Error EditorExportPlatformAndroid::export_project_helper(
             foreground,
             background
         );
-        // Write an AndroidManifest.xml file into the Gradle project directory.
-        _write_tmp_manifest(p_preset, p_give_internet, p_debug);
         _update_custom_build_project();
         // stores all the project files inside the Gradle project directory.
         // Also includes all ABIs
