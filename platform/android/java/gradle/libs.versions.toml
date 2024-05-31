@@ -1,6 +1,6 @@
 [versions]
-androidGradlePlugin = "8.4.0"
-androidxFragment = "1.7.0"
+androidGradlePlugin = "8.4.1"
+androidxFragment = "1.7.1"
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
