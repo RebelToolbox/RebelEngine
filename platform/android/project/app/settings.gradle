@@ -6,6 +6,8 @@ pluginManagement {
     }
 }
 
+rootProject.name = "RebelApp"
+
 dependencyResolutionManagement {
     repositories {
         google()
@@ -13,4 +15,4 @@ dependencyResolutionManagement {
     }
 }
 
-include ':assetPacks:installTime'
+include ':game'

@@ -208,7 +208,7 @@ static const int EXPORT_FORMAT_AAB = 1;
 
 static const char* APK_ASSETS_DIRECTORY = "res://android/project/assets";
 static const char* AAB_ASSETS_DIRECTORY =
-    "res://android/project/assetPacks/installTime/src/main/assets";
+    "res://android/project/game/src/main/assets";
 
 // Also update platform/android/project/app/config.gradle:
 // - minSdk
@@ -3896,9 +3896,9 @@ Error EditorExportPlatformAndroid::export_project_helper(
         List<String> copy_args;
         String copy_command;
         if (export_format == EXPORT_FORMAT_AAB) {
-            copy_command = vformat("copyAndRename%sAab", build_type);
+            copy_command = vformat("copyAndRename%sAAB", build_type);
         } else if (export_format == EXPORT_FORMAT_APK) {
-            copy_command = vformat("copyAndRename%sApk", build_type);
+            copy_command = vformat("copyAndRename%sAPK", build_type);
         }
 
         copy_args.push_back(copy_command);
