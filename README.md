@@ -1,4 +1,4 @@
-<p style="text-align: center;">
+<p align="center">
   <img src="rebel-engine.png" alt="Rebel Engine"/>
 </p>
 
