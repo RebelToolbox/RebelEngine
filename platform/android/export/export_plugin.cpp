@@ -163,9 +163,9 @@ static const char* SPLASH_BG_COLOR_PATH =
 static const char* LEGACY_BUILD_SPLASH_BG_COLOR_PATH =
     "res/drawable-nodpi-v4/splash_bg_color.png";
 static const char* SPLASH_CONFIG_PATH =
-    "res://android/build/res/drawable/splash_drawable.xml";
+    "res://android/project/src/main/res/drawable/splash_drawable.xml";
 static const char* GDNATIVE_LIBS_PATH =
-    "res://android/build/libs/gdnativelibs.json";
+    "res://android/project/libs/gdnativelibs.json";
 
 static const int icon_densities_count   = 6;
 static const char* launcher_icon_option = "launcher_icons/main_192x192";
@@ -206,11 +206,12 @@ static const LauncherIcon
 static const int EXPORT_FORMAT_APK = 0;
 static const int EXPORT_FORMAT_AAB = 1;
 
-static const char* APK_ASSETS_DIRECTORY = "res://android/build/assets";
+static const char* APK_ASSETS_DIRECTORY =
+    "res://android/project/src/main/assets";
 static const char* AAB_ASSETS_DIRECTORY =
-    "res://android/build/assetPacks/installTime/src/main/assets";
+    "res://android/project/game/src/main/assets";
 
-// Also update platform/android/java/app/config.gradle:
+// Also update platform/android/project/app/config.gradle:
 // - minSdk
 // - targetSdk
 static const int DEFAULT_MIN_SDK_VERSION    = 21;
@@ -843,12 +844,15 @@ Error EditorExportPlatformAndroid::copy_gradle_so(
         int abi_index = abis.find(p_so.tags[i]);
         if (abi_index != -1) {
             exported        = true;
-            String base     = "res://android/build/libs";
+            String base     = "res://android/project/src";
             String type     = export_data->debug ? "debug" : "release";
+            String jniLibs  = "jniLibs";
             String abi      = abis[abi_index];
             String filename = p_so.path.get_file();
-            String dst_path =
-                base.plus_file(type).plus_file(abi).plus_file(filename);
+            String dst_path = base.plus_file(type)
+                                  .plus_file(jniLibs)
+                                  .plus_file(abi)
+                                  .plus_file(filename);
             Vector<uint8_t> data = FileAccess::get_file_as_array(p_so.path);
             print_verbose(
                 "Copying .so file from " + p_so.path + " to " + dst_path
@@ -2097,7 +2101,7 @@ void EditorExportPlatformAndroid::store_image(
     const String& export_path,
     const Vector<uint8_t>& data
 ) {
-    String img_path = export_path.insert(0, "res://android/build/");
+    String img_path = export_path.insert(0, "res://android/project/src/main/");
     store_file_at_path(img_path, data);
 }
 
@@ -2915,19 +2919,19 @@ bool EditorExportPlatformAndroid::can_export(
             err += template_err;
         }
     } else {
-        bool installed_android_build_template =
-            FileAccess::exists("res://android/build/build.gradle");
-        if (!installed_android_build_template) {
+        bool installed_android_project_template =
+            FileAccess::exists("res://android/project/build.gradle");
+        if (!installed_android_project_template) {
             r_missing_templates =
-                !exists_export_template("android_source.zip", &err);
-            err += TTR("Android build template not installed in the project. "
-                       "Install it from the Project menu.")
+                !exists_export_template("android_template.zip", &err);
+            err += TTR("The Android project template is not installed. "
+                       "It can be installed from the Project menu.")
                  + "\n";
         } else {
             r_missing_templates = false;
         }
 
-        valid = installed_android_build_template && !r_missing_templates;
+        valid = installed_android_project_template && !r_missing_templates;
     }
 
     // Validate the rest of the configuration.
@@ -3171,8 +3175,8 @@ void EditorExportPlatformAndroid::_update_custom_build_project() {
     da->list_dir_begin();
     String d = da->get_next();
     while (d != String()) {
-        if (!d.begins_with(".") && d != "build"
-            && da->current_is_dir()) { // a dir and not the build dir
+        if (!d.begins_with(".") && d != "project"
+            && da->current_is_dir()) { // a dir and not the project dir
             // add directories found
             DirAccessRef ds =
                 DirAccess::open(String("res://android").plus_file(d));
@@ -3608,11 +3612,11 @@ Error EditorExportPlatformAndroid::export_project_helper(
                 FileAccess::READ
             );
             if (!f) {
-                EditorNode::get_singleton()->show_warning(
-                    TTR("Trying to build from a custom built template, but no "
-                        "version info for it exists. Please reinstall from the "
-                        "'Project' menu.")
-                );
+                EditorNode::get_singleton()->show_warning(TTR(
+                    "Trying to build from a custom project template, but no "
+                    "version info for it exists. Please reinstall from the "
+                    "'Project' menu."
+                ));
                 return ERR_UNCONFIGURED;
             }
             String version = f->get_line().strip_edges();
@@ -3622,7 +3626,7 @@ Error EditorExportPlatformAndroid::export_project_helper(
                 EditorNode::get_singleton()->show_warning(vformat(
                     TTR("Android build version mismatch:\n   Template "
                         "installed: %s\n   Rebel Version: %s\nPlease reinstall "
-                        "Android build template from 'Project' menu."),
+                        "Android project template from 'Project' menu."),
                     version,
                     VERSION_FULL_CONFIG
                 ));
@@ -3647,10 +3651,10 @@ Error EditorExportPlatformAndroid::export_project_helper(
             project_name
         ); // project name localization.
         if (err != OK) {
-            EditorNode::add_io_error(
-                TTR("Unable to overwrite res://android/build/res/*.xml files "
-                    "with project name")
-            );
+            EditorNode::add_io_error(TTR(
+                "Unable to overwrite res://android/project/src/main/res/*.xml "
+                "files with project name"
+            ));
         }
         // Copies the project icon files into the appropriate Gradle project
         // directory.
@@ -3719,7 +3723,7 @@ Error EditorExportPlatformAndroid::export_project_helper(
 
         String build_path =
             ProjectSettings::get_singleton()->get_resource_path().plus_file(
-                "android/build"
+                "android/project"
             );
         build_command = build_path.plus_file(build_command);
 
@@ -3896,9 +3900,9 @@ Error EditorExportPlatformAndroid::export_project_helper(
         List<String> copy_args;
         String copy_command;
         if (export_format == EXPORT_FORMAT_AAB) {
-            copy_command = vformat("copyAndRename%sAab", build_type);
+            copy_command = vformat("copyAndRename%sAAB", build_type);
         } else if (export_format == EXPORT_FORMAT_APK) {
-            copy_command = vformat("copyAndRename%sApk", build_type);
+            copy_command = vformat("copyAndRename%sAPK", build_type);
         }
 
         copy_args.push_back(copy_command);

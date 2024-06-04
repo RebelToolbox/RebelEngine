@@ -1,0 +1,18 @@
+// These settings apply when creating a custom build in the Rebel Editor.
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+    }
+}
+
+rootProject.name = "RebelApp"
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+include ':game'

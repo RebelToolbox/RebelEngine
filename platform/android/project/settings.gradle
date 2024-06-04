@@ -1,4 +1,4 @@
-// These settings apply when creating a custom build in the Rebel Editor.
+// Configure the root project.
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -13,4 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-include ':assetPacks:installTime'
+rootProject.name = "Rebel"
+
+include ':app'
+include ':engine'

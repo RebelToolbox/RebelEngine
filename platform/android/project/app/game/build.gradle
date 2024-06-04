@@ -1,0 +1,12 @@
+plugins {
+    alias libs.plugins.androidAssetPack
+}
+
+assetPack {
+    // All the game's resources are copied to the game Asset Pack during a AAB custom build.
+    packName = "game"
+    dynamicDelivery {
+        // All the game's resources will be delivered at install time.
+        deliveryType = "install-time"
+    }
+}

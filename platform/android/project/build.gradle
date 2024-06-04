@@ -1,0 +1,123 @@
+apply from: 'app/config.gradle'
+
+def binDir = "../../../bin"
+def supportedBuildTypes = ["release", "debug"]
+
+def templateBuildTasks = {
+    def tasks = []
+    // Only copy the generated AAR and APK files for existing native shared libraries.
+    for (String buildType : supportedBuildTypes) {
+        File buildTypeDir = new File("engine/src/" + buildType + "/jniLibs")
+        if (buildTypeDir != null
+            && buildTypeDir.isDirectory()
+            && buildTypeDir.listFiles() != null
+            && buildTypeDir.listFiles().length > 0) {
+            tasks.add("copy${buildType.capitalize()}AARToAppModule")
+            tasks.add("copy${buildType.capitalize()}AARToBin")
+            tasks.add("copy${buildType.capitalize()}APKToBin")
+        } else {
+            logger.lifecycle("No $buildType build JNI libraries found: Skipping.")
+            logger.lifecycle("Consider building $buildType builds for Android architectures.")
+        }
+    }
+    return tasks
+}
+
+tasks.register('createAndroidTemplates') {
+    group "Rebel"
+    description "Creates the Rebel Engine Android templates for each previously built build type and architecture."
+    dependsOn templateBuildTasks
+    finalizedBy 'createCustomBuildTemplate'
+}
+
+tasks.register('createDevelopmentAndroidTemplates') {
+    group "Rebel"
+    description "Creates development Android templates for each previously built build type and architecture."
+    gradle.startParameter.projectProperties += [doNotStrip: true]
+    finalizedBy 'createAndrdoidTempates'
+}
+
+tasks.register('cleanAndroidTemplates', Delete) {
+    group "Rebel"
+    description "Cleans and deletes all the Rebel Engine Android libraries and templates."
+    delete "app/src/debug"
+    delete "app/src/release"
+    delete "engine/src/main/jniLibs"
+    delete "engine/src/debug"
+    delete "engine/src/release"
+    delete "engine/build/outputs/aar"
+    delete "app/build/outputs/apk"
+    delete "$binDir/android_debug.apk"
+    delete "$binDir/android_release.apk"
+    delete "$binDir/android_template.zip"
+    delete "$binDir/engine-debug.aar"
+    delete "$binDir/engine-release.aar"
+    finalizedBy getTasksByName("clean", true)
+}
+
+// Copy the Rebel Engine debug Android library archive file to the app debug jniLibs directory.
+// Depends on the library build task to ensure the AAR file is created prior to copying.
+tasks.register('copyDebugAARToAppModule', Copy) {
+    dependsOn ':engine:assembleDebug'
+    from 'engine/build/outputs/aar'
+    into 'app/libs/debug'
+    include 'engine-debug.aar'
+}
+
+// Copy the Rebel Engine release Android library archive file to the app release jniLibs directory.
+// Depends on the library build task to ensure the AAR file is created prior to copying.
+tasks.register('copyReleaseAARToAppModule', Copy) {
+    dependsOn ':engine:assembleRelease'
+    from 'engine/build/outputs/aar'
+    into 'app/libs/release'
+    include 'engine-release.aar'
+}
+
+// Copy the Rebel Engine debug Android library archive file to the bin directory.
+// Depends on the library build task to ensure the AAR file is created prior to copying.
+tasks.register('copyDebugAARToBin', Copy) {
+    dependsOn ':engine:assembleDebug'
+    from 'engine/build/outputs/aar'
+    into binDir
+    include 'engine-debug.aar'
+}
+
+// Copy the Rebel Engine release Android library archive file to the bin directory.
+// Depends on the library build task to ensure the AAR file is created prior to copying.
+tasks.register('copyReleaseAARToBin', Copy) {
+    dependsOn ':engine:assembleRelease'
+    from 'engine/build/outputs/aar'
+    into binDir
+    include 'engine-release.aar'
+}
+
+// Copy the Rebel debug Android application package template to the bin directory.
+// Depends on the app assemble task to ensure the APK file is created prior to copying.
+tasks.register('copyDebugAPKToBin', Copy) {
+    dependsOn ':app:assembleDebug'
+    from 'app/build/outputs/apk/debug'
+    into binDir
+    include 'android_debug.apk'
+}
+
+// Copy the Rebel release Android application package template to the bin directory.
+// Depends on the app assemble task to ensure the APK file is created prior to copying.
+tasks.register('copyReleaseAPKToBin', Copy) {
+    dependsOn ':app:assembleRelease'
+    from 'app/build/outputs/apk/release'
+    into binDir
+    include 'android_release.apk'
+}
+
+// Create the custom build template by zipping the app module with its own settings.gradle,
+// the Rebel Engine library AAR files added by 'copyDebugAAR' and 'copyReleaseAAR', and
+// the Gradle tools to build the template.
+tasks.register('createCustomBuildTemplate', Zip) {
+    from (
+        fileTree(dir: 'app', excludes: ['**/build/**', '**/.gradle/**', '**/*.iml']),
+        fileTree(dir: '.', includes: ['gradlew', 'gradlew.bat', 'gradle/**'])
+    )
+    include '**/*'
+    archiveFileName = 'android_template.zip'
+    destinationDirectory = file(binDir)
+}

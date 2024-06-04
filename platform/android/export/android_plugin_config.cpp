@@ -33,7 +33,7 @@ const char* AndroidPluginConfig::PLUGIN_VALUE_SEPARATOR = "|";
 //	/*.last_updated =*/0,
 //	/*.name =*/"PluginName",
 //	/*.binary_type =*/"local",
-//	/*.binary =*/"res://android/build/libs/plugins/PluginName.release.aar",
+//	/*.binary =*/"res://android/project/libs/plugins/PluginName.release.aar",
 //	/*.local_dependencies =*/{},
 // 	/*.remote_dependencies
 // =*/String("com.android.billingclient:billing:2.2.1").split("|"),

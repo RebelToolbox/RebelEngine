@@ -37,8 +37,9 @@ import javax.microedition.khronos.opengles.GL10;
  * <p>
  * A Rebel plugin is a regular Android library packaged as an aar archive file
  * with the following caveats: <p>
- * - The library must have a dependency on the Rebel Android library
- * (rebel-lib.aar). A stable version is available for each release. <p>
+ * - The library must have a dependency on the Rebel Engine Android library
+ * archive (engine-release.aar and engine-debug.aar). A stable version is
+ * available for each release. <p>
  * - The library must include a <meta-data> tag in its manifest file setup as
  * follow: <meta-data android:name="rebel.plugin.[PluginName]"
  * android:value="[Plugin.Class.Name]" /> Where:

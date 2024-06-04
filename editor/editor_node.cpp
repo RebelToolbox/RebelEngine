@@ -2763,7 +2763,7 @@ void EditorNode::_run(bool p_current, const String& p_custom) {
     _playing_edited = p_current;
 }
 
-void EditorNode::_android_build_source_selected(const String& p_file) {
+void EditorNode::_android_template_selected(const String& p_file) {
     export_template_manager->install_android_template_from_file(p_file);
 }
 
@@ -3251,17 +3251,17 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
         case RUN_SETTINGS: {
             project_settings->popup_project_settings();
         } break;
-        case FILE_INSTALL_ANDROID_SOURCE: {
+        case FILE_INSTALL_ANDROID_PROJECT_TEMPLATE: {
             if (p_confirmed) {
                 export_template_manager->install_android_template();
             } else {
-                if (DirAccess::exists("res://android/build")) {
-                    remove_android_build_template->popup_centered_minsize();
+                if (DirAccess::exists("res://android/project")) {
+                    remove_android_project_template->popup_centered_minsize();
                 } else if (export_template_manager
                                ->can_install_android_template()) {
-                    install_android_build_template->popup_centered_minsize();
+                    install_android_project_template->popup_centered_minsize();
                 } else {
-                    custom_build_manage_templates->popup_centered_minsize();
+                    manage_android_project_template->popup_centered_minsize();
                 }
             }
         } break;
@@ -3274,7 +3274,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
                 String("file://") + OS::get_singleton()->get_user_data_dir()
             );
         } break;
-        case FILE_EXPLORE_ANDROID_BUILD_TEMPLATES: {
+        case FILE_EXPLORE_ANDROID: {
             OS::get_singleton()->shell_open(
                 "file://"
                 + ProjectSettings::get_singleton()
@@ -3505,9 +3505,9 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
             export_template_manager->popup_manager();
 
         } break;
-        case SETTINGS_INSTALL_ANDROID_BUILD_TEMPLATE: {
-            custom_build_manage_templates->hide();
-            file_android_build_source->popup_centered_ratio();
+        case SETTINGS_INSTALL_ANDROID_PROJECT_TEMPLATE: {
+            manage_android_project_template->hide();
+            file_android_project_template->popup_centered_ratio();
         } break;
         case SETTINGS_MANAGE_FEATURE_PROFILES: {
             feature_profile_manager->popup_centered_clamped(
@@ -6901,8 +6901,8 @@ void EditorNode::_bind_methods() {
         &EditorNode::_update_file_menu_closed
     );
     ClassDB::bind_method(
-        "_android_build_source_selected",
-        &EditorNode::_android_build_source_selected
+        "_android_template_selected",
+        &EditorNode::_android_template_selected
     );
 
     ClassDB::bind_method(
@@ -7995,8 +7995,8 @@ EditorNode::EditorNode() {
         FILE_EXPORT_PROJECT
     );
     p->add_item(
-        TTR("Install Android Build Template..."),
-        FILE_INSTALL_ANDROID_SOURCE
+        TTR("Install Android Project Template..."),
+        FILE_INSTALL_ANDROID_PROJECT_TEMPLATE
     );
     p->add_item(TTR("Open Project Data Folder"), RUN_PROJECT_DATA_FOLDER);
 
@@ -8668,64 +8668,70 @@ EditorNode::EditorNode() {
     save_confirmation->connect("confirmed", this, "_menu_confirm_current");
     save_confirmation->connect("custom_action", this, "_discard_changes");
 
-    custom_build_manage_templates = memnew(ConfirmationDialog);
-    custom_build_manage_templates->set_text(TTR(
-        "Android build template is missing, please install relevant templates."
-    ));
-    custom_build_manage_templates->get_ok()->set_text(TTR("Manage Templates"));
-    custom_build_manage_templates->add_button(TTR("Install from file"))
+    manage_android_project_template = memnew(ConfirmationDialog);
+    manage_android_project_template->set_text(
+        TTR("Android project template is missing, please install relevant "
+            "templates.")
+    );
+    manage_android_project_template->get_ok()->set_text(TTR("Manage Templates")
+    );
+    manage_android_project_template->add_button(TTR("Install from file"))
         ->connect(
             "pressed",
             this,
             "_menu_option",
-            varray(SETTINGS_INSTALL_ANDROID_BUILD_TEMPLATE)
+            varray(SETTINGS_INSTALL_ANDROID_PROJECT_TEMPLATE)
         );
-    custom_build_manage_templates->connect(
+    manage_android_project_template->connect(
         "confirmed",
         this,
         "_menu_option",
         varray(SETTINGS_MANAGE_EXPORT_TEMPLATES)
     );
-    gui_base->add_child(custom_build_manage_templates);
+    gui_base->add_child(manage_android_project_template);
 
-    file_android_build_source = memnew(EditorFileDialog);
-    file_android_build_source->set_title(TTR("Select android sources file"));
-    file_android_build_source->set_access(EditorFileDialog::ACCESS_FILESYSTEM);
-    file_android_build_source->set_mode(EditorFileDialog::MODE_OPEN_FILE);
-    file_android_build_source->add_filter("*.zip");
-    file_android_build_source
-        ->connect("file_selected", this, "_android_build_source_selected");
-    gui_base->add_child(file_android_build_source);
+    file_android_project_template = memnew(EditorFileDialog);
+    file_android_project_template->set_title(TTR("Select android template file")
+    );
+    file_android_project_template->set_access(
+        EditorFileDialog::ACCESS_FILESYSTEM
+    );
+    file_android_project_template->set_mode(EditorFileDialog::MODE_OPEN_FILE);
+    file_android_project_template->add_filter("*.zip");
+    file_android_project_template
+        ->connect("file_selected", this, "_android_template_selected");
+    gui_base->add_child(file_android_project_template);
 
-    install_android_build_template = memnew(ConfirmationDialog);
-    install_android_build_template->set_text(TTR(
+    install_android_project_template = memnew(ConfirmationDialog);
+    install_android_project_template->set_text(TTR(
         "This will set up your project for custom Android builds by installing "
-        "the source template to \"res://android/build\".\nYou can then apply "
+        "a project template to \"res://android/project\".\nYou can then apply "
         "modifications and build your own custom APK on export (adding "
         "modules, changing the AndroidManifest.xml, etc.).\nNote that in order "
         "to make custom builds instead of using pre-built APKs, the \"Use "
         "Custom Build\" option should be enabled in the Android export preset."
     ));
-    install_android_build_template->get_ok()->set_text(TTR("Install"));
-    install_android_build_template
+    install_android_project_template->get_ok()->set_text(TTR("Install"));
+    install_android_project_template
         ->connect("confirmed", this, "_menu_confirm_current");
-    gui_base->add_child(install_android_build_template);
+    gui_base->add_child(install_android_project_template);
 
-    remove_android_build_template = memnew(ConfirmationDialog);
-    remove_android_build_template->set_text(
-        TTR("The Android build template is already installed in this project "
-            "and it won't be overwritten.\nRemove the \"res://android/build\" "
-            "directory manually before attempting this operation again.")
-    );
-    remove_android_build_template->get_ok()->set_text(TTR("Show in File Manager"
+    remove_android_project_template = memnew(ConfirmationDialog);
+    remove_android_project_template->set_text(TTR(
+        "The Android project template is already installed in this project "
+        "and it won't be overwritten.\nRemove the \"res://android/project\" "
+        "directory manually before attempting this operation again."
     ));
-    remove_android_build_template->connect(
+    remove_android_project_template->get_ok()->set_text(
+        TTR("Show in File Manager")
+    );
+    remove_android_project_template->connect(
         "confirmed",
         this,
         "_menu_option",
-        varray(FILE_EXPLORE_ANDROID_BUILD_TEMPLATES)
+        varray(FILE_EXPLORE_ANDROID)
     );
-    gui_base->add_child(remove_android_build_template);
+    gui_base->add_child(remove_android_project_template);
 
     file_templates = memnew(EditorFileDialog);
     file_templates->set_title(TTR("Import Templates From ZIP File"));

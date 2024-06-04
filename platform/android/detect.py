@@ -49,7 +49,7 @@ def get_android_ndk_root():
 
 
 def get_ndk_version():
-    # Also update platform/android/java/app/config.gradle ndkVersion
+    # Also update platform/android/project/app/config.gradle ndkVersion
     return "26.2.11394342"
 
 

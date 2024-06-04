@@ -19,11 +19,11 @@ allprojects {
 dependencies {
     implementation libs.androidxFragment
 
-    if (rootProject.findProject(":lib")) {
-        implementation project(":lib")
+    if (rootProject.findProject(":engine")) {
+        implementation project(":engine")
     } else {
         // Rebel Editor custom build mode.
-        // Use pre-generated rebel-lib.*.aar android archive files.
+        // Include pre-built engine-*.aar files and other plugin libraries.
         debugImplementation fileTree(dir: 'libs/debug', include: ['*.jar', '*.aar'])
         releaseImplementation fileTree(dir: 'libs/release', include: ['*.jar', '*.aar'])
     }
@@ -53,7 +53,11 @@ android {
         targetCompatibility versions.javaVersion
     }
 
-    assetPacks = [":assetPacks:installTime"]
+    // Only Rebel Editor custom builds can create Android App Bundles (AAB) with Asset Packs.
+    if (!rootProject.findProject(":engine")) {
+        // All the game's resources are copied to the game Asset Pack.
+        assetPacks = [":game"]
+    }
 
     defaultConfig {
         // The default ignore pattern for the 'assets' directory includes
@@ -127,30 +131,6 @@ android {
         }
     }
 
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = [
-                'src'
-            ]
-            res.srcDirs = [
-                'res'
-            ]
-            aidl.srcDirs = [
-                'aidl'
-            ]
-            assets.srcDirs = [
-                'assets'
-            ]
-        }
-        debug.jniLibs.srcDirs = [
-            'libs/debug'
-        ]
-        release.jniLibs.srcDirs = [
-            'libs/release'
-        ]
-    }
-
     lint {
         abortOnError false
         disable 'MissingTranslation', 'UnusedResources'
@@ -163,7 +143,7 @@ android {
         def buildType = variant.buildType.name.capitalize()
         if (findProject(":app")) {
             tasks.named("merge${buildType}JniLibFolders") {
-                dependsOn ":copy${buildType}AARToAppModule"
+                mustRunAfter ":copy${buildType}AARToAppModule"
             }
         }
     }
@@ -172,26 +152,26 @@ android {
 def exportPath = stringProperty("export_path", ".")
 def exportFilename = stringProperty("export_filename", "rebel_android")
 
-tasks.register('copyAndRenameDebugApk', Copy) {
+tasks.register('copyAndRenameDebugAPK', Copy) {
     from layout.buildDirectory.dir("outputs/apk/debug/android_debug.apk")
     into exportPath
     rename "android_debug.apk", exportFilename
 }
 
-tasks.register('copyAndRenameReleaseApk', Copy) {
+tasks.register('copyAndRenameReleaseAPK', Copy) {
     from layout.buildDirectory.dir("outputs/apk/release/android_release.apk")
     into exportPath
     rename "android_release.apk", exportFilename
 }
 
-tasks.register('copyAndRenameDebugAab', Copy) {
-    from layout.buildDirectory.dir("outputs/bundle/debug/build-debug.aab")
+tasks.register('copyAndRenameDebugAAB', Copy) {
+    from layout.buildDirectory.dir("outputs/bundle/debug/RebelApp-debug.aab")
     into exportPath
-    rename "build-debug.aab", exportFilename
+    rename "RebelApp-debug.aab", exportFilename
 }
 
-tasks.register('copyAndRenameReleaseAab', Copy) {
-    from layout.buildDirectory.dir("outputs/bundle/release/build-release.aab")
+tasks.register('copyAndRenameReleaseAAB', Copy) {
+    from layout.buildDirectory.dir("outputs/bundle/release/RebelApp-release.aab")
     into exportPath
-    rename "build-release.aab", exportFilename
+    rename "RebelApp-release.aab", exportFilename
 }

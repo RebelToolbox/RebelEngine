@@ -157,12 +157,12 @@ Error _create_project_name_strings_files(
     String processed_default_xml_string =
         vformat(project_name_xml_string, _android_xml_escape(project_name));
     store_string_at_path(
-        "res://android/build/res/values/project_name_string.xml",
+        "res://android/project/src/main/res/values/project_name_string.xml",
         processed_default_xml_string
     );
 
     // Searches the Gradle project res/ directory to find all supported locales
-    DirAccessRef da = DirAccess::open("res://android/build/res");
+    DirAccessRef da = DirAccess::open("res://android/project/src/main/res");
     if (!da) {
         if (OS::get_singleton()->is_stdout_verbose()) {
             print_error("Unable to open Android resources directory.");
@@ -182,8 +182,8 @@ Error _create_project_name_strings_files(
         }
         String locale        = file.replace("values-", "").replace("-r", "_");
         String property_name = "application/config/name_" + locale;
-        String locale_directory =
-            "res://android/build/res/" + file + "/project_name_string.xml";
+        String locale_directory = "res://android/project/src/main/res/" + file
+                                + "/project_name_string.xml";
         if (ProjectSettings::get_singleton()->has_setting(property_name)) {
             String locale_project_name =
                 ProjectSettings::get_singleton()->get(property_name);
