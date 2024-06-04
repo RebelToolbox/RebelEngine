@@ -1,7 +1,7 @@
 diff --git a/platform/android/java/lib/src/com/google/android/vending/licensing/PreferenceObfuscator.java b/platform/android/java/lib/src/com/google/android/vending/licensing/PreferenceObfuscator.java
 index 7c42bfc28..feb579af0 100644
---- a/platform/android/java/lib/src/com/google/android/vending/licensing/PreferenceObfuscator.java
-+++ b/platform/android/java/lib/src/com/google/android/vending/licensing/PreferenceObfuscator.java
+--- a/platform/android/project/engine/src/main/java/com/google/android/vending/licensing/PreferenceObfuscator.java
++++ b/platform/android/project/engine/src/main/java/com/google/android/vending/licensing/PreferenceObfuscator.java
 @@ -45,6 +45,9 @@ public class PreferenceObfuscator {
      public void putString(String key, String value) {
          if (mEditor == null) {
@@ -14,8 +14,8 @@ index 7c42bfc28..feb579af0 100644
          mEditor.putString(key, obfuscatedValue);
 diff --git a/platform/android/java/lib/src/com/google/android/vending/licensing/util/Base64.java b/platform/android/java/lib/src/com/google/android/vending/licensing/util/Base64.java
 index a0d2779af..a8bf65f9c 100644
---- a/platform/android/java/lib/src/com/google/android/vending/licensing/util/Base64.java
-+++ b/platform/android/java/lib/src/com/google/android/vending/licensing/util/Base64.java
+--- a/platform/android/project/engine/src/main/java/com/google/android/vending/licensing/util/Base64.java
++++ b/platform/android/project/engine/src/main/java/com/google/android/vending/licensing/util/Base64.java
 @@ -31,6 +31,10 @@ package com.google.android.vending.licensing.util;
   * @version 1.3
   */

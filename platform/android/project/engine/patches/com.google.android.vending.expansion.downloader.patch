@@ -1,7 +1,7 @@
 diff --git a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/DownloaderClientMarshaller.java b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/DownloaderClientMarshaller.java
 index ad6ea0de6..452c7d148 100644
---- a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/DownloaderClientMarshaller.java
-+++ b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/DownloaderClientMarshaller.java
+--- a/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/DownloaderClientMarshaller.java
++++ b/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/DownloaderClientMarshaller.java
 @@ -32,6 +32,9 @@ import android.os.Messenger;
  import android.os.RemoteException;
  import android.util.Log;
@@ -80,8 +80,8 @@ index ad6ea0de6..452c7d148 100644
              mItf = itf;
 diff --git a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/DownloaderServiceMarshaller.java b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/DownloaderServiceMarshaller.java
 index 979352299..3771d19c9 100644
---- a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/DownloaderServiceMarshaller.java
-+++ b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/DownloaderServiceMarshaller.java
+--- a/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/DownloaderServiceMarshaller.java
++++ b/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/DownloaderServiceMarshaller.java
 @@ -25,6 +25,9 @@ import android.os.Message;
  import android.os.Messenger;
  import android.os.RemoteException;
@@ -166,8 +166,8 @@ index 979352299..3771d19c9 100644
              mItf = itf;
 diff --git a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/Helpers.java b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/Helpers.java
 index e4b1b0f1c..36cd6aacf 100644
---- a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/Helpers.java
-+++ b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/Helpers.java
+--- a/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/Helpers.java
++++ b/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/Helpers.java
 @@ -24,7 +24,10 @@ import android.os.StatFs;
  import android.os.SystemClock;
  import android.util.Log;
@@ -210,8 +210,8 @@ index e4b1b0f1c..36cd6aacf 100644
      public static String getTimeRemaining(long durationInMilliseconds) {
 diff --git a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/SystemFacade.java b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/SystemFacade.java
 index 12edd97ab..a0e1165cc 100644
---- a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/SystemFacade.java
-+++ b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/SystemFacade.java
+--- a/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/SystemFacade.java
++++ b/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/SystemFacade.java
 @@ -26,6 +26,10 @@ import android.net.NetworkInfo;
  import android.telephony.TelephonyManager;
  import android.util.Log;
@@ -241,8 +241,8 @@ index 12edd97ab..a0e1165cc 100644
          TelephonyManager tm = (TelephonyManager) mContext
 diff --git a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloadNotification.java b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloadNotification.java
 index f1536e80e..4b214b22d 100644
---- a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloadNotification.java
-+++ b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloadNotification.java
+--- a/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/impl/DownloadNotification.java
++++ b/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/impl/DownloadNotification.java
 @@ -16,7 +16,11 @@
  
  package com.google.android.vending.expansion.downloader.impl;
@@ -258,8 +258,8 @@ index f1536e80e..4b214b22d 100644
  import com.google.android.vending.expansion.downloader.Helpers;
 diff --git a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloadThread.java b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloadThread.java
 index b2e0e7af0..c114b8a64 100644
---- a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloadThread.java
-+++ b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloadThread.java
+--- a/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/impl/DownloadThread.java
++++ b/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/impl/DownloadThread.java
 @@ -146,8 +146,12 @@ public class DownloadThread {
  
          try {
@@ -277,8 +277,8 @@ index b2e0e7af0..c114b8a64 100644
                  Log.v(Constants.TAG, "initiating download for " + mInfo.mFileName);
 diff --git a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloaderService.java b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloaderService.java
 index 4babe476f..8d41a7690 100644
---- a/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloaderService.java
-+++ b/platform/android/java/lib/src/com/google/android/vending/expansion/downloader/impl/DownloaderService.java
+--- a/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/impl/DownloaderService.java
++++ b/platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/impl/DownloaderService.java
 @@ -50,6 +50,10 @@ import android.provider.Settings.Secure;
  import android.telephony.TelephonyManager;
  import android.util.Log;
