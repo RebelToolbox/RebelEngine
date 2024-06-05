@@ -2926,7 +2926,8 @@ msgid "Export..."
 msgstr "ส่งออก..."
 
 #: editor/editor_node.cpp
-msgid "Install Android Build Template..."
+#, fuzzy
+msgid "Install Android Project Template..."
 msgstr "ติดตั้งเทมเพลตการสร้างของแอนดรอยด์"
 
 #: editor/editor_node.cpp
@@ -3191,7 +3192,8 @@ msgid "Don't Save"
 msgstr "ไม่บันทึก"
 
 #: editor/editor_node.cpp
-msgid "Android build template is missing, please install relevant templates."
+#, fuzzy
+msgid "Android project template is missing, please install relevant templates."
 msgstr "เทมเพลตการสร้างบนแอนดรอยด์หายไป กรุณาติดตั้งเทมเพลตที่เกี่ยวข้อง"
 
 #: editor/editor_node.cpp
@@ -3205,13 +3207,14 @@ msgstr "ติดตั้งไฟล์แม่แบบ"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Select android sources file"
+msgid "Select android template file"
 msgstr "เลือก Mesh ต้นฉบับ:"
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"This will set up your project for custom Android builds by installing the "
-"source template to \"res://android/build\".\n"
+"This will set up your project for custom Android builds by installing a "
+"project template to \"res://android/project\".\n"
 "You can then apply modifications and build your own custom APK on export "
 "(adding modules, changing the AndroidManifest.xml, etc.).\n"
 "Note that in order to make custom builds instead of using pre-built APKs, "
@@ -3226,11 +3229,12 @@ msgstr ""
 "\"Use Custom Build\" ในพรีเซ็ตการส่งออกของ Android"
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The Android build template is already installed in this project and it won't "
-"be overwritten.\n"
-"Remove the \"res://android/build\" directory manually before attempting this "
-"operation again."
+"The Android project template is already installed in this project and it "
+"won't be overwritten.\n"
+"Remove the \"res://android/project\" directory manually before attempting "
+"this operation again."
 msgstr ""
 "เทมเพลตการสร้างบนแอนดรอยด์ถูกติดตั้งในโปรเจคต์นี้เรียบร้อยแล้ว และจะไม่ถูกเขียนทับ\n"
 "กรุณาลบไดเรคทอรี \"res://android/build\" ก่อนที่จะดำเนินการอีกครั้ง"
@@ -13248,8 +13252,9 @@ msgid "Unable to find the 'apksigner' tool."
 msgstr "ไม่สามารถหาเครื่องมือ 'apksigner'"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Android build template not installed in the project. Install it from the "
+"The Android project template is not installed. It can be installed from the "
 "Project menu."
 msgstr "เทมเพลตการสร้างสำหรับแอนดรอยด์ไม่ถูกติดตั้ง สามารถติดตั้งจากเมนูโปรเจกต์"
 
@@ -13415,8 +13420,9 @@ msgid "Unsupported export format!\n"
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Trying to build from a custom built template, but no version info for it "
+"Trying to build from a custom project template, but no version info for it "
 "exists. Please reinstall from the 'Project' menu."
 msgstr ""
 "พยายามสร้างจากเทมเพลตที่สร้างขึ้นเอง แต่ไม่มีข้อมูลเวอร์ชัน โปรดติดตั้งใหม่จากเมนู \"โปรเจกต์\""
@@ -13427,7 +13433,7 @@ msgid ""
 "Android build version mismatch:\n"
 "   Template installed: %s\n"
 "   Rebel Version: %s\n"
-"Please reinstall Android build template from 'Project' menu."
+"Please reinstall Android project template from 'Project' menu."
 msgstr ""
 "เวอร์ชันบิวด์ Android ไม่ตรงกัน:\n"
 "    ติดตั้งเทมเพลตแล้ว:% s\n"
@@ -13436,7 +13442,8 @@ msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Unable to overwrite res://android/build/res/*.xml files with project name"
+"Unable to overwrite res://android/project/src/main/res/*.xml files with "
+"project name"
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp

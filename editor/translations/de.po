@@ -3039,7 +3039,8 @@ msgid "Export..."
 msgstr "Exportieren..."
 
 #: editor/editor_node.cpp
-msgid "Install Android Build Template..."
+#, fuzzy
+msgid "Install Android Project Template..."
 msgstr "Android-Build-Vorlage installieren..."
 
 #: editor/editor_node.cpp
@@ -3312,7 +3313,8 @@ msgid "Don't Save"
 msgstr "Nicht speichern"
 
 #: editor/editor_node.cpp
-msgid "Android build template is missing, please install relevant templates."
+#, fuzzy
+msgid "Android project template is missing, please install relevant templates."
 msgstr ""
 "Android-Build-Vorlage fehlt, Installation relevanter Vorlagen erforderlich."
 
@@ -3325,13 +3327,15 @@ msgid "Install from file"
 msgstr "Aus Datei installieren"
 
 #: editor/editor_node.cpp
-msgid "Select android sources file"
+#, fuzzy
+msgid "Select android template file"
 msgstr "Android-Quelldateien auswählen"
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"This will set up your project for custom Android builds by installing the "
-"source template to \"res://android/build\".\n"
+"This will set up your project for custom Android builds by installing a "
+"project template to \"res://android/project\".\n"
 "You can then apply modifications and build your own custom APK on export "
 "(adding modules, changing the AndroidManifest.xml, etc.).\n"
 "Note that in order to make custom builds instead of using pre-built APKs, "
@@ -3347,11 +3351,12 @@ msgstr ""
 "sein."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The Android build template is already installed in this project and it won't "
-"be overwritten.\n"
-"Remove the \"res://android/build\" directory manually before attempting this "
-"operation again."
+"The Android project template is already installed in this project and it "
+"won't be overwritten.\n"
+"Remove the \"res://android/project\" directory manually before attempting "
+"this operation again."
 msgstr ""
 "Die Android-Build-Vorlage wurde bereits für dieses Projekt installiert und "
 "wird nicht überschrieben.\n"
@@ -13409,8 +13414,9 @@ msgid "Unable to find the 'apksigner' tool."
 msgstr "Das ‚apksigner‘-Hilfswerkzeug konnte nicht gefunden werden."
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Android build template not installed in the project. Install it from the "
+"The Android project template is not installed. It can be installed from the "
 "Project menu."
 msgstr ""
 "Es wurde keine Android-Buildvorlage für dieses Projekt installiert. Es kann "
@@ -13597,8 +13603,9 @@ msgid "Unsupported export format!\n"
 msgstr "Nicht unterstütztes Exportformat!\n"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Trying to build from a custom built template, but no version info for it "
+"Trying to build from a custom project template, but no version info for it "
 "exists. Please reinstall from the 'Project' menu."
 msgstr ""
 "Es wurde versucht aus einer eigener Build-Vorlage zu bauen aber es "
@@ -13611,7 +13618,7 @@ msgid ""
 "Android build version mismatch:\n"
 "   Template installed: %s\n"
 "   Rebel Version: %s\n"
-"Please reinstall Android build template from 'Project' menu."
+"Please reinstall Android project template from 'Project' menu."
 msgstr ""
 "Android-Build-Versionsinkompatibilität:\n"
 " Installierte Vorlage: %s\n"
@@ -13619,8 +13626,10 @@ msgstr ""
 "Bitte Android-Build-Vorlage im ‚Projekt‘-Menü neu installieren."
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Unable to overwrite res://android/build/res/*.xml files with project name"
+"Unable to overwrite res://android/project/src/main/res/*.xml files with "
+"project name"
 msgstr ""
 "Kann res://android/build/res/*.xml Dateien nicht mit Projektnamen "
 "überschreiben"

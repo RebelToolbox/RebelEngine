@@ -2949,7 +2949,8 @@ msgid "Export..."
 msgstr "내보내기..."
 
 #: editor/editor_node.cpp
-msgid "Install Android Build Template..."
+#, fuzzy
+msgid "Install Android Project Template..."
 msgstr "Android 빌드 템플릿 설치..."
 
 #: editor/editor_node.cpp
@@ -3219,7 +3220,8 @@ msgid "Don't Save"
 msgstr "저장하지 않음"
 
 #: editor/editor_node.cpp
-msgid "Android build template is missing, please install relevant templates."
+#, fuzzy
+msgid "Android project template is missing, please install relevant templates."
 msgstr "Android 빌드 템플릿이 누락되어 있습니다, 관련 템플릿을 설치해주세요."
 
 #: editor/editor_node.cpp
@@ -3231,13 +3233,15 @@ msgid "Install from file"
 msgstr "파일에서 설치"
 
 #: editor/editor_node.cpp
-msgid "Select android sources file"
+#, fuzzy
+msgid "Select android template file"
 msgstr "Android 소스 파일 선택"
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"This will set up your project for custom Android builds by installing the "
-"source template to \"res://android/build\".\n"
+"This will set up your project for custom Android builds by installing a "
+"project template to \"res://android/project\".\n"
 "You can then apply modifications and build your own custom APK on export "
 "(adding modules, changing the AndroidManifest.xml, etc.).\n"
 "Note that in order to make custom builds instead of using pre-built APKs, "
@@ -3252,11 +3256,12 @@ msgstr ""
 "셋에서 \"커스텀 빌드 사용(Use Custom Build)\" 설정을 활성화해야 합니다."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The Android build template is already installed in this project and it won't "
-"be overwritten.\n"
-"Remove the \"res://android/build\" directory manually before attempting this "
-"operation again."
+"The Android project template is already installed in this project and it "
+"won't be overwritten.\n"
+"Remove the \"res://android/project\" directory manually before attempting "
+"this operation again."
 msgstr ""
 "Android 빌드 템플릿이 이미 이 프로젝트에 설치했고, 덮어 쓸 수 없습니다.\n"
 "이 명령을 다시 실행하기 전에 \"res://android/build\" 디렉토리를 직접 제거하세"
@@ -13183,8 +13188,9 @@ msgid "Unable to find the 'apksigner' tool."
 msgstr "'apksigner' 툴을 찾을 수 없습니다."
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Android build template not installed in the project. Install it from the "
+"The Android project template is not installed. It can be installed from the "
 "Project menu."
 msgstr ""
 "프로젝트에 Android 빌드 템플릿을 설치하지 않았습니다. 프로젝트 메뉴에서 설치"
@@ -13357,8 +13363,9 @@ msgid "Unsupported export format!\n"
 msgstr "지원되지 않는 내보내기 형식입니다!\n"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Trying to build from a custom built template, but no version info for it "
+"Trying to build from a custom project template, but no version info for it "
 "exists. Please reinstall from the 'Project' menu."
 msgstr ""
 "커스텀 빌드 템플릿으로 빌드하려 했으나, 버전 정보가 없습니다. '프로젝트"
@@ -13370,7 +13377,7 @@ msgid ""
 "Android build version mismatch:\n"
 "   Template installed: %s\n"
 "   Rebel Version: %s\n"
-"Please reinstall Android build template from 'Project' menu."
+"Please reinstall Android project template from 'Project' menu."
 msgstr ""
 "Android 빌드 버전이 맞지 않음:\n"
 "   설치된 템플릿: %s\n"
@@ -13378,8 +13385,10 @@ msgstr ""
 "'프로젝트' 메뉴에서 Android 빌드 템플릿을 다시 설치해주세요."
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Unable to overwrite res://android/build/res/*.xml files with project name"
+"Unable to overwrite res://android/project/src/main/res/*.xml files with "
+"project name"
 msgstr ""
 "res://android/build/res/*.xml 파일을 프로젝트 이름으로 덮어쓸 수 없습니다"
 

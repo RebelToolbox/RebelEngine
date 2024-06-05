@@ -3039,7 +3039,8 @@ msgid "Export..."
 msgstr "Экспортировать..."
 
 #: editor/editor_node.cpp
-msgid "Install Android Build Template..."
+#, fuzzy
+msgid "Install Android Project Template..."
 msgstr "Установить шаблон сборки Android..."
 
 #: editor/editor_node.cpp
@@ -3310,7 +3311,8 @@ msgid "Don't Save"
 msgstr "Не сохранять"
 
 #: editor/editor_node.cpp
-msgid "Android build template is missing, please install relevant templates."
+#, fuzzy
+msgid "Android project template is missing, please install relevant templates."
 msgstr ""
 "Шаблон сборки Android отсутствует, пожалуйста, установите соответствующие "
 "шаблоны."
@@ -3324,13 +3326,15 @@ msgid "Install from file"
 msgstr "Установить из файла"
 
 #: editor/editor_node.cpp
-msgid "Select android sources file"
+#, fuzzy
+msgid "Select android template file"
 msgstr "Выберите файл исходников android"
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"This will set up your project for custom Android builds by installing the "
-"source template to \"res://android/build\".\n"
+"This will set up your project for custom Android builds by installing a "
+"project template to \"res://android/project\".\n"
 "You can then apply modifications and build your own custom APK on export "
 "(adding modules, changing the AndroidManifest.xml, etc.).\n"
 "Note that in order to make custom builds instead of using pre-built APKs, "
@@ -3347,11 +3351,12 @@ msgstr ""
 "включена опция «Использовать пользовательскую сборку»."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The Android build template is already installed in this project and it won't "
-"be overwritten.\n"
-"Remove the \"res://android/build\" directory manually before attempting this "
-"operation again."
+"The Android project template is already installed in this project and it "
+"won't be overwritten.\n"
+"Remove the \"res://android/project\" directory manually before attempting "
+"this operation again."
 msgstr ""
 "Шаблон сборки Android уже установлен в этом проекте и не будет перезаписан.\n"
 "Удалите директорию «res://android/build» вручную прежде чем выполнять эту "
@@ -13362,8 +13367,9 @@ msgid "Unable to find the 'apksigner' tool."
 msgstr "Не удалось найти инструмент «apksigner»."
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Android build template not installed in the project. Install it from the "
+"The Android project template is not installed. It can be installed from the "
 "Project menu."
 msgstr ""
 "Шаблон сборки Android не установлен в проекте. Установите его в меню проекта."
@@ -13543,8 +13549,9 @@ msgid "Unsupported export format!\n"
 msgstr "Неподдерживаемый формат экспорта!\n"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Trying to build from a custom built template, but no version info for it "
+"Trying to build from a custom project template, but no version info for it "
 "exists. Please reinstall from the 'Project' menu."
 msgstr ""
 "Попытка сборки из пользовательского шаблона, но информации о версии для него "
@@ -13556,7 +13563,7 @@ msgid ""
 "Android build version mismatch:\n"
 "   Template installed: %s\n"
 "   Rebel Version: %s\n"
-"Please reinstall Android build template from 'Project' menu."
+"Please reinstall Android project template from 'Project' menu."
 msgstr ""
 "Несоответствие версии сборки Android:\n"
 "   Установлен шаблон: %s\n"
@@ -13564,8 +13571,10 @@ msgstr ""
 "Пожалуйста, переустановите шаблон сборки Android из меню «Проект»."
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Unable to overwrite res://android/build/res/*.xml files with project name"
+"Unable to overwrite res://android/project/src/main/res/*.xml files with "
+"project name"
 msgstr ""
 "Невозможно перезаписать файлы res://android/build/res/*.xml с именем проекта"
 

@@ -2939,7 +2939,8 @@ msgid "Export..."
 msgstr "Xuất..."
 
 #: editor/editor_node.cpp
-msgid "Install Android Build Template..."
+#, fuzzy
+msgid "Install Android Project Template..."
 msgstr "Cài đặt mẫu xây dựng Android..."
 
 #: editor/editor_node.cpp
@@ -3202,7 +3203,8 @@ msgid "Don't Save"
 msgstr "Không Lưu"
 
 #: editor/editor_node.cpp
-msgid "Android build template is missing, please install relevant templates."
+#, fuzzy
+msgid "Android project template is missing, please install relevant templates."
 msgstr ""
 "Mẫu xuất bản cho Android bị thiếu, vui lòng cài các mẫu xuất bản liên quan."
 
@@ -3216,13 +3218,14 @@ msgstr "Cài đặt từ tệp"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Select android sources file"
+msgid "Select android template file"
 msgstr "Chọn một lưới nguồn:"
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"This will set up your project for custom Android builds by installing the "
-"source template to \"res://android/build\".\n"
+"This will set up your project for custom Android builds by installing a "
+"project template to \"res://android/project\".\n"
 "You can then apply modifications and build your own custom APK on export "
 "(adding modules, changing the AndroidManifest.xml, etc.).\n"
 "Note that in order to make custom builds instead of using pre-built APKs, "
@@ -3237,11 +3240,12 @@ msgstr ""
 "chỉnh\" phải được BẬT trong Cài đặt xuất Android."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The Android build template is already installed in this project and it won't "
-"be overwritten.\n"
-"Remove the \"res://android/build\" directory manually before attempting this "
-"operation again."
+"The Android project template is already installed in this project and it "
+"won't be overwritten.\n"
+"Remove the \"res://android/project\" directory manually before attempting "
+"this operation again."
 msgstr ""
 "Mẫu bản dựng cho Android đã được cài đặt trong dự án này sẽ không bị ghi "
 "đè.\n"
@@ -13316,8 +13320,9 @@ msgid "Unable to find the 'apksigner' tool."
 msgstr "Không tìm thấy công cụ 'apksigner'."
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Android build template not installed in the project. Install it from the "
+"The Android project template is not installed. It can be installed from the "
 "Project menu."
 msgstr ""
 "Bản mẫu dựng cho Android chưa được cài đặt trong dự án. Cài đặt nó từ bảng "
@@ -13494,8 +13499,9 @@ msgid "Unsupported export format!\n"
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Trying to build from a custom built template, but no version info for it "
+"Trying to build from a custom project template, but no version info for it "
 "exists. Please reinstall from the 'Project' menu."
 msgstr ""
 "Cố gắng dựng từ một bản mẫu được dựng tùy chỉnh, nhưng không có thông tin "
@@ -13507,7 +13513,7 @@ msgid ""
 "Android build version mismatch:\n"
 "   Template installed: %s\n"
 "   Rebel Version: %s\n"
-"Please reinstall Android build template from 'Project' menu."
+"Please reinstall Android project template from 'Project' menu."
 msgstr ""
 "Phiên bản dựng Android không khớp:\n"
 "   Bản mẫu được cài đặt: %s\n"
@@ -13516,7 +13522,8 @@ msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Unable to overwrite res://android/build/res/*.xml files with project name"
+"Unable to overwrite res://android/project/src/main/res/*.xml files with "
+"project name"
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
