@@ -2899,7 +2899,8 @@ msgid "Export..."
 msgstr "匯出..."
 
 #: editor/editor_node.cpp
-msgid "Install Android Build Template..."
+#, fuzzy
+msgid "Install Android Project Template..."
 msgstr "安裝 Android 建置樣板..."
 
 #: editor/editor_node.cpp
@@ -3159,7 +3160,8 @@ msgid "Don't Save"
 msgstr "不保存"
 
 #: editor/editor_node.cpp
-msgid "Android build template is missing, please install relevant templates."
+#, fuzzy
+msgid "Android project template is missing, please install relevant templates."
 msgstr "缺少 Android 建置樣板，請先安裝對應的樣板。"
 
 #: editor/editor_node.cpp
@@ -3171,13 +3173,15 @@ msgid "Install from file"
 msgstr "自檔案安裝"
 
 #: editor/editor_node.cpp
-msgid "Select android sources file"
+#, fuzzy
+msgid "Select android template file"
 msgstr "選擇Android原始檔"
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"This will set up your project for custom Android builds by installing the "
-"source template to \"res://android/build\".\n"
+"This will set up your project for custom Android builds by installing a "
+"project template to \"res://android/project\".\n"
 "You can then apply modifications and build your own custom APK on export "
 "(adding modules, changing the AndroidManifest.xml, etc.).\n"
 "Note that in order to make custom builds instead of using pre-built APKs, "
@@ -3192,11 +3196,12 @@ msgstr ""
 "的 [Use Custom Build] 選項。"
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The Android build template is already installed in this project and it won't "
-"be overwritten.\n"
-"Remove the \"res://android/build\" directory manually before attempting this "
-"operation again."
+"The Android project template is already installed in this project and it "
+"won't be overwritten.\n"
+"Remove the \"res://android/project\" directory manually before attempting "
+"this operation again."
 msgstr ""
 "該專案中已安裝 Android 建置樣板，將不會覆蓋。\n"
 "若要再次執行此操作，請先手動移除「res://android/build」目錄。"
@@ -13016,8 +13021,9 @@ msgid "Unable to find the 'apksigner' tool."
 msgstr "找不到「apksigner」工具。"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Android build template not installed in the project. Install it from the "
+"The Android project template is not installed. It can be installed from the "
 "Project menu."
 msgstr "尚未於專案中安裝 Android 建置樣板。請先於專案目錄中進行安裝。"
 
@@ -13184,8 +13190,9 @@ msgid "Unsupported export format!\n"
 msgstr "不支援的匯出格式！\n"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Trying to build from a custom built template, but no version info for it "
+"Trying to build from a custom project template, but no version info for it "
 "exists. Please reinstall from the 'Project' menu."
 msgstr ""
 "嘗試自自定建置樣板進行建置，但無版本資訊可用。請自「專案」選單中重新安裝。"
@@ -13196,7 +13203,7 @@ msgid ""
 "Android build version mismatch:\n"
 "   Template installed: %s\n"
 "   Rebel Version: %s\n"
-"Please reinstall Android build template from 'Project' menu."
+"Please reinstall Android project template from 'Project' menu."
 msgstr ""
 "Android 建置版本不符合：\n"
 "   已安裝的樣板：%s\n"
@@ -13204,8 +13211,10 @@ msgstr ""
 "請自「專案」目錄中重新安裝 Android 建置樣板。"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Unable to overwrite res://android/build/res/*.xml files with project name"
+"Unable to overwrite res://android/project/src/main/res/*.xml files with "
+"project name"
 msgstr "無法以專案名稱覆蓋檔案res://android/build/res/*.xml"
 
 #: platform/android/export/export_plugin.cpp

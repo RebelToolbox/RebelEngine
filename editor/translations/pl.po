@@ -2978,7 +2978,8 @@ msgid "Export..."
 msgstr "Eksport..."
 
 #: editor/editor_node.cpp
-msgid "Install Android Build Template..."
+#, fuzzy
+msgid "Install Android Project Template..."
 msgstr "Zainstaluj szablon eksportu dla Androida..."
 
 #: editor/editor_node.cpp
@@ -3249,7 +3250,8 @@ msgid "Don't Save"
 msgstr "Nie zapisuj"
 
 #: editor/editor_node.cpp
-msgid "Android build template is missing, please install relevant templates."
+#, fuzzy
+msgid "Android project template is missing, please install relevant templates."
 msgstr "Brakuje szablonu budowania Androida, zainstaluj odpowiednie szablony."
 
 #: editor/editor_node.cpp
@@ -3261,13 +3263,15 @@ msgid "Install from file"
 msgstr "Zainstaluj z pliku"
 
 #: editor/editor_node.cpp
-msgid "Select android sources file"
+#, fuzzy
+msgid "Select android template file"
 msgstr "Wybierz pliki źródłowe Androida"
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"This will set up your project for custom Android builds by installing the "
-"source template to \"res://android/build\".\n"
+"This will set up your project for custom Android builds by installing a "
+"project template to \"res://android/project\".\n"
 "You can then apply modifications and build your own custom APK on export "
 "(adding modules, changing the AndroidManifest.xml, etc.).\n"
 "Note that in order to make custom builds instead of using pre-built APKs, "
@@ -3282,11 +3286,12 @@ msgstr ""
 "\"Use Custom Build\" powinna być włączona w profilu eksportu Androida."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The Android build template is already installed in this project and it won't "
-"be overwritten.\n"
-"Remove the \"res://android/build\" directory manually before attempting this "
-"operation again."
+"The Android project template is already installed in this project and it "
+"won't be overwritten.\n"
+"Remove the \"res://android/project\" directory manually before attempting "
+"this operation again."
 msgstr ""
 "Szablon budowania Androida jest już zainstalowany w tym projekcie i nie "
 "zostanie on nadpisany.\n"
@@ -13293,8 +13298,9 @@ msgid "Unable to find the 'apksigner' tool."
 msgstr "Nie udało się znaleźć narzędzia \"apksigner\"."
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Android build template not installed in the project. Install it from the "
+"The Android project template is not installed. It can be installed from the "
 "Project menu."
 msgstr ""
 "Szablon budowania Androida nie jest zainstalowany dla projektu. Zainstaluj "
@@ -13472,8 +13478,9 @@ msgid "Unsupported export format!\n"
 msgstr "Nieobsługiwany format eksportu!\n"
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Trying to build from a custom built template, but no version info for it "
+"Trying to build from a custom project template, but no version info for it "
 "exists. Please reinstall from the 'Project' menu."
 msgstr ""
 "Próbowano zbudować z własnego szablonu, ale nie istnieje dla niego "
@@ -13485,7 +13492,7 @@ msgid ""
 "Android build version mismatch:\n"
 "   Template installed: %s\n"
 "   Rebel Version: %s\n"
-"Please reinstall Android build template from 'Project' menu."
+"Please reinstall Android project template from 'Project' menu."
 msgstr ""
 "Niezgodna wersja buildu Androida:\n"
 "   Zainstalowany szablon: %s\n"
@@ -13493,8 +13500,10 @@ msgstr ""
 "Zainstaluj ponownie szablon z menu \"Projekt\"."
 
 #: platform/android/export/export_plugin.cpp
+#, fuzzy
 msgid ""
-"Unable to overwrite res://android/build/res/*.xml files with project name"
+"Unable to overwrite res://android/project/src/main/res/*.xml files with "
+"project name"
 msgstr ""
 "Nie udało się nadpisać plików \"res://android/build/res/*.xml\" nazwą "
 "projektu"

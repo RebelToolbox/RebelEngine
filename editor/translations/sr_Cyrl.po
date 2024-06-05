@@ -3176,7 +3176,7 @@ msgstr "Извоз"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Install Android Build Template..."
+msgid "Install Android Project Template..."
 msgstr "Инсталирај Android образце градње"
 
 #: editor/editor_node.cpp
@@ -3470,7 +3470,7 @@ msgstr "Немој сачувати"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Android build template is missing, please install relevant templates."
+msgid "Android project template is missing, please install relevant templates."
 msgstr "Недостаје Android образац за изградњу, инсталирај релевантне обрасце."
 
 #: editor/editor_node.cpp
@@ -3485,14 +3485,14 @@ msgstr "Инсталирај са датотеком"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Select android sources file"
+msgid "Select android template file"
 msgstr "Одабери изворну мрежу:"
 
 #: editor/editor_node.cpp
 #, fuzzy
 msgid ""
-"This will set up your project for custom Android builds by installing the "
-"source template to \"res://android/build\".\n"
+"This will set up your project for custom Android builds by installing a "
+"project template to \"res://android/project\".\n"
 "You can then apply modifications and build your own custom APK on export "
 "(adding modules, changing the AndroidManifest.xml, etc.).\n"
 "Note that in order to make custom builds instead of using pre-built APKs, "
@@ -3510,10 +3510,10 @@ msgstr ""
 #: editor/editor_node.cpp
 #, fuzzy
 msgid ""
-"The Android build template is already installed in this project and it won't "
-"be overwritten.\n"
-"Remove the \"res://android/build\" directory manually before attempting this "
-"operation again."
+"The Android project template is already installed in this project and it "
+"won't be overwritten.\n"
+"Remove the \"res://android/project\" directory manually before attempting "
+"this operation again."
 msgstr ""
 "Android образац градње је већ инсталиран у овај пројекат и неће бити "
 "преписан.\n"
@@ -14902,7 +14902,7 @@ msgstr ""
 #: platform/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
-"Android build template not installed in the project. Install it from the "
+"The Android project template is not installed. It can be installed from the "
 "Project menu."
 msgstr ""
 "Android нацрт изградње није инсталиран у пројекат. Инсталирај га из Пројекат "
@@ -15086,7 +15086,7 @@ msgstr ""
 #: platform/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
-"Trying to build from a custom built template, but no version info for it "
+"Trying to build from a custom project template, but no version info for it "
 "exists. Please reinstall from the 'Project' menu."
 msgstr ""
 "Покушај изградње за произвољни нацрт изградње, али не постоји инфо о "
@@ -15098,7 +15098,7 @@ msgid ""
 "Android build version mismatch:\n"
 "   Template installed: %s\n"
 "   Rebel Version: %s\n"
-"Please reinstall Android build template from 'Project' menu."
+"Please reinstall Android project template from 'Project' menu."
 msgstr ""
 "Верзија Android изградње се не подудара:\n"
 "   Нацрт инсталиран: %s\n"
@@ -15107,7 +15107,8 @@ msgstr ""
 
 #: platform/android/export/export_plugin.cpp
 msgid ""
-"Unable to overwrite res://android/build/res/*.xml files with project name"
+"Unable to overwrite res://android/project/src/main/res/*.xml files with "
+"project name"
 msgstr ""
 
 #: platform/android/export/export_plugin.cpp
