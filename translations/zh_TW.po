@@ -17,16 +17,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rebel Engine class reference\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
-"PO-Revision-Date: 2021-10-10 14:03+0000\n"
-"Last-Translator: Nick Chu <nickchu35@gmail.com>\n"
+"PO-Revision-Date: 2024-06-08 04:09+0000\n"
+"Last-Translator: hugoalh <hugoalh@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
-"godot-engine/godot-class-reference/zh_Hant/>\n"
+"rebel-toolbox/rebel-engine-api/zh_Hant/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: tools/scripts/rst_from_xml.py
 msgid "Description"
@@ -330,14 +330,7 @@ msgstr ""
 
 #: modules/gdscript/docs/@GDScript.xml
 msgid "Converts from decibels to linear energy (audio)."
-msgstr ""
-"** hello ** \n"
-"** hello **\n"
-"** hello **\n"
-"** hello **\n"
-"** hello **\n"
-"** hello **** hello **\n"
-"** hello **"
+msgstr "轉換分貝為線性能量（音訊）。"
 
 #: modules/gdscript/docs/@GDScript.xml
 msgid "Deprecated alias for [method step_decimals]."
@@ -1543,19 +1536,19 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Top-left corner."
-msgstr ""
+msgstr "左上角。"
 
 #: docs/@GlobalScope.xml
 msgid "Top-right corner."
-msgstr ""
+msgstr "右上角。"
 
 #: docs/@GlobalScope.xml
 msgid "Bottom-right corner."
-msgstr ""
+msgstr "右下角。"
 
 #: docs/@GlobalScope.xml
 msgid "Bottom-left corner."
-msgstr ""
+msgstr "左下角。"
 
 #: docs/@GlobalScope.xml
 msgid ""
@@ -1599,19 +1592,19 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Escape key."
-msgstr ""
+msgstr "ESC 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Tab key."
-msgstr ""
+msgstr "Tab 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Shift+Tab key."
-msgstr ""
+msgstr "Shift+Tab 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Backspace key."
-msgstr ""
+msgstr "退格鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Return key (on the main keyboard)."
@@ -1623,15 +1616,15 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Insert key."
-msgstr ""
+msgstr "Insert 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Delete key."
-msgstr ""
+msgstr "Delete 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Pause key."
-msgstr ""
+msgstr "Pause 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Print Screen key."
@@ -1643,15 +1636,15 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Clear key."
-msgstr ""
+msgstr "Clear 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Home key."
-msgstr ""
+msgstr "Home 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "End key."
-msgstr ""
+msgstr "End 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Left arrow key."
@@ -1679,19 +1672,19 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Shift key."
-msgstr ""
+msgstr "Shift 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Control key."
-msgstr ""
+msgstr "Ctrl 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Meta key."
-msgstr ""
+msgstr "Meta 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Alt key."
-msgstr ""
+msgstr "Alt 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Caps Lock key."
@@ -1707,67 +1700,67 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "F1 key."
-msgstr ""
+msgstr "F1 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F2 key."
-msgstr ""
+msgstr "F2 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F3 key."
-msgstr ""
+msgstr "F3 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F4 key."
-msgstr ""
+msgstr "F4 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F5 key."
-msgstr ""
+msgstr "F5 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F6 key."
-msgstr ""
+msgstr "F6 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F7 key."
-msgstr ""
+msgstr "F7 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F8 key."
-msgstr ""
+msgstr "F8 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F9 key."
-msgstr ""
+msgstr "F9 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F10 key."
-msgstr ""
+msgstr "F10 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F11 key."
-msgstr ""
+msgstr "F11 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F12 key."
-msgstr ""
+msgstr "F12 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F13 key."
-msgstr ""
+msgstr "F13 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F14 key."
-msgstr ""
+msgstr "F14 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F15 key."
-msgstr ""
+msgstr "F15 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F16 key."
-msgstr ""
+msgstr "F16 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Multiply (*) key on the numeric keypad."
@@ -1851,7 +1844,7 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Help key."
-msgstr ""
+msgstr "Help 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Left Direction key."
@@ -1936,11 +1929,11 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Search key."
-msgstr ""
+msgstr "搜尋鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Standby key."
-msgstr ""
+msgstr "待機鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Open URL / Launch Browser key."
@@ -2024,279 +2017,279 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Space key."
-msgstr ""
+msgstr "空格鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "! key."
-msgstr ""
+msgstr "! 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "\" key."
-msgstr ""
+msgstr "\" 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "# key."
-msgstr ""
+msgstr "# 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "$ key."
-msgstr ""
+msgstr "$ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "% key."
-msgstr ""
+msgstr "% 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "& key."
-msgstr ""
+msgstr "& 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "' key."
-msgstr ""
+msgstr "' 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "( key."
-msgstr ""
+msgstr "( 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid ") key."
-msgstr ""
+msgstr ") 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "* key."
-msgstr ""
+msgstr "* 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "+ key."
-msgstr ""
+msgstr "+ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid ", key."
-msgstr ""
+msgstr ", 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "- key."
-msgstr ""
+msgstr "- 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid ". key."
-msgstr ""
+msgstr ". 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "/ key."
-msgstr ""
+msgstr "/ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Number 0."
-msgstr ""
+msgstr "數字 0。"
 
 #: docs/@GlobalScope.xml
 msgid "Number 1."
-msgstr ""
+msgstr "數字 1。"
 
 #: docs/@GlobalScope.xml
 msgid "Number 2."
-msgstr ""
+msgstr "數字 2。"
 
 #: docs/@GlobalScope.xml
 msgid "Number 3."
-msgstr ""
+msgstr "數字 3。"
 
 #: docs/@GlobalScope.xml
 msgid "Number 4."
-msgstr ""
+msgstr "數字 4。"
 
 #: docs/@GlobalScope.xml
 msgid "Number 5."
-msgstr ""
+msgstr "數字 5。"
 
 #: docs/@GlobalScope.xml
 msgid "Number 6."
-msgstr ""
+msgstr "數字 6。"
 
 #: docs/@GlobalScope.xml
 msgid "Number 7."
-msgstr ""
+msgstr "數字 7。"
 
 #: docs/@GlobalScope.xml
 msgid "Number 8."
-msgstr ""
+msgstr "數字 8。"
 
 #: docs/@GlobalScope.xml
 msgid "Number 9."
-msgstr ""
+msgstr "數字 9。"
 
 #: docs/@GlobalScope.xml
 msgid ": key."
-msgstr ""
+msgstr ": 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "; key."
-msgstr ""
+msgstr "; 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "< key."
-msgstr ""
+msgstr "< 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "= key."
-msgstr ""
+msgstr "= 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "> key."
-msgstr ""
+msgstr "> 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "? key."
-msgstr ""
+msgstr "? 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "@ key."
-msgstr ""
+msgstr "@ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "A key."
-msgstr ""
+msgstr "A 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "B key."
-msgstr ""
+msgstr "B 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "C key."
-msgstr ""
+msgstr "C 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "D key."
-msgstr ""
+msgstr "D 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "E key."
-msgstr ""
+msgstr "E 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "F key."
-msgstr ""
+msgstr "F 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "G key."
-msgstr ""
+msgstr "G 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "H key."
-msgstr ""
+msgstr "H 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "I key."
-msgstr ""
+msgstr "I 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "J key."
-msgstr ""
+msgstr "J 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "K key."
-msgstr ""
+msgstr "K 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "L key."
-msgstr ""
+msgstr "L 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "M key."
-msgstr ""
+msgstr "M 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "N key."
-msgstr ""
+msgstr "N 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "O key."
-msgstr ""
+msgstr "O 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "P key."
-msgstr ""
+msgstr "P 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Q key."
-msgstr ""
+msgstr "Q 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "R key."
-msgstr ""
+msgstr "R 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "S key."
-msgstr ""
+msgstr "S 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "T key."
-msgstr ""
+msgstr "T 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "U key."
-msgstr ""
+msgstr "U 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "V key."
-msgstr ""
+msgstr "V 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "W key."
-msgstr ""
+msgstr "W 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "X key."
-msgstr ""
+msgstr "X 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Y key."
-msgstr ""
+msgstr "Y 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Z key."
-msgstr ""
+msgstr "Z 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "[ key."
-msgstr ""
+msgstr "[ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "\\ key."
-msgstr ""
+msgstr "\\ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "] key."
-msgstr ""
+msgstr "] 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "^ key."
-msgstr ""
+msgstr "^ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "_ key."
-msgstr ""
+msgstr "_ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "` key."
-msgstr ""
+msgstr "` 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "{ key."
-msgstr ""
+msgstr "{ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "| key."
-msgstr ""
+msgstr "| 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "} key."
-msgstr ""
+msgstr "} 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "~ key."
-msgstr ""
+msgstr "~ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Non-breakable space key."
@@ -2304,51 +2297,51 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "¡ key."
-msgstr ""
+msgstr "¡ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¢ key."
-msgstr ""
+msgstr "¢ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "£ key."
-msgstr ""
+msgstr "£ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¤ key."
-msgstr ""
+msgstr "¤ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¥ key."
-msgstr ""
+msgstr "¥ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¦ key."
-msgstr ""
+msgstr "¦ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "§ key."
-msgstr ""
+msgstr "§ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¨ key."
-msgstr ""
+msgstr "¨ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "© key."
-msgstr ""
+msgstr "© 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "ª key."
-msgstr ""
+msgstr "ª 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "« key."
-msgstr ""
+msgstr "« 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¬ key."
-msgstr ""
+msgstr "¬ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Soft hyphen key."
@@ -2356,211 +2349,211 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "® key."
-msgstr ""
+msgstr "® 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¯ key."
-msgstr ""
+msgstr "¯ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "° key."
-msgstr ""
+msgstr "° 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "± key."
-msgstr ""
+msgstr "± 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "² key."
-msgstr ""
+msgstr "² 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "³ key."
-msgstr ""
+msgstr "³ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "´ key."
-msgstr ""
+msgstr "´ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "µ key."
-msgstr ""
+msgstr "µ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¶ key."
-msgstr ""
+msgstr "¶ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "· key."
-msgstr ""
+msgstr "· 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¸ key."
-msgstr ""
+msgstr "¸ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¹ key."
-msgstr ""
+msgstr "¹ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "º key."
-msgstr ""
+msgstr "º 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "» key."
-msgstr ""
+msgstr "» 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¼ key."
-msgstr ""
+msgstr "¼ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "½ key."
-msgstr ""
+msgstr "½ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¾ key."
-msgstr ""
+msgstr "¾ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "¿ key."
-msgstr ""
+msgstr "¿ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "À key."
-msgstr ""
+msgstr "À 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Á key."
-msgstr ""
+msgstr "Á 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Â key."
-msgstr ""
+msgstr "Â 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ã key."
-msgstr ""
+msgstr "Ã 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ä key."
-msgstr ""
+msgstr "Ä 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Å key."
-msgstr ""
+msgstr "Å 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Æ key."
-msgstr ""
+msgstr "Æ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ç key."
-msgstr ""
+msgstr "Ç 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "È key."
-msgstr ""
+msgstr "È 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "É key."
-msgstr ""
+msgstr "É 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ê key."
-msgstr ""
+msgstr "Ê 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ë key."
-msgstr ""
+msgstr "Ë 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ì key."
-msgstr ""
+msgstr "Ì 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Í key."
-msgstr ""
+msgstr "Í 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Î key."
-msgstr ""
+msgstr "Î 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ï key."
-msgstr ""
+msgstr "Ï 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ð key."
-msgstr ""
+msgstr "Ð 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ñ key."
-msgstr ""
+msgstr "Ñ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ò key."
-msgstr ""
+msgstr "Ò 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ó key."
-msgstr ""
+msgstr "Ó 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ô key."
-msgstr ""
+msgstr "Ô 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Õ key."
-msgstr ""
+msgstr "Õ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ö key."
-msgstr ""
+msgstr "Ö 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "× key."
-msgstr ""
+msgstr "× 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ø key."
-msgstr ""
+msgstr "Ø 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ù key."
-msgstr ""
+msgstr "Ù 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ú key."
-msgstr ""
+msgstr "Ú 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Û key."
-msgstr ""
+msgstr "Û 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ü key."
-msgstr ""
+msgstr "Ü 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Ý key."
-msgstr ""
+msgstr "Ý 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Þ key."
-msgstr ""
+msgstr "Þ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "ß key."
-msgstr ""
+msgstr "ß 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "÷ key."
-msgstr ""
+msgstr "÷ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "ÿ key."
-msgstr ""
+msgstr "ÿ 鍵。"
 
 #: docs/@GlobalScope.xml
 msgid "Key Code mask."
@@ -3038,7 +3031,7 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Generic error."
-msgstr ""
+msgstr "一般錯誤。"
 
 #: docs/@GlobalScope.xml
 msgid "Unavailable error."
@@ -3046,11 +3039,11 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Unconfigured error."
-msgstr ""
+msgstr "未配置的錯誤。"
 
 #: docs/@GlobalScope.xml
 msgid "Unauthorized error."
-msgstr ""
+msgstr "未經授權的錯誤。"
 
 #: docs/@GlobalScope.xml
 msgid "Parameter range error."
@@ -3130,7 +3123,7 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Timeout error."
-msgstr ""
+msgstr "逾時錯誤。"
 
 #: docs/@GlobalScope.xml
 msgid "Can't connect error."
@@ -3142,7 +3135,7 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Connection error."
-msgstr ""
+msgstr "連接錯誤。"
 
 #: docs/@GlobalScope.xml
 msgid "Can't acquire resource error."
@@ -3206,7 +3199,7 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Parse error."
-msgstr ""
+msgstr "解析錯誤。"
 
 #: docs/@GlobalScope.xml
 msgid "Busy error."
@@ -3218,7 +3211,7 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "Help error."
-msgstr ""
+msgstr "幫助錯誤。"
 
 #: docs/@GlobalScope.xml
 msgid "Bug error."
@@ -6234,15 +6227,15 @@ msgstr ""
 
 #: docs/AnimationTreePlayer.xml
 msgid "Output node."
-msgstr ""
+msgstr "輸出節點。"
 
 #: docs/AnimationTreePlayer.xml
 msgid "Animation node."
-msgstr ""
+msgstr "動畫節點。"
 
 #: docs/AnimationTreePlayer.xml
 msgid "OneShot node."
-msgstr ""
+msgstr "OneShot 節點。"
 
 #: docs/AnimationTreePlayer.xml
 msgid "Mix node."
@@ -6250,15 +6243,15 @@ msgstr ""
 
 #: docs/AnimationTreePlayer.xml
 msgid "Blend2 node."
-msgstr ""
+msgstr "Blend2 節點。"
 
 #: docs/AnimationTreePlayer.xml
 msgid "Blend3 node."
-msgstr ""
+msgstr "Blend3 節點。"
 
 #: docs/AnimationTreePlayer.xml
 msgid "Blend4 node."
-msgstr ""
+msgstr "Blend4 節點。"
 
 #: docs/AnimationTreePlayer.xml
 msgid "TimeScale node."
@@ -23798,10 +23791,14 @@ msgstr ""
 #: docs/float.xml
 msgid "https://en.wikipedia.org/wiki/Double-precision_floating-point_format"
 msgstr ""
+"https://zh.wikipedia.org/zh-tw/"
+"%E9%9B%99%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8"
 
 #: docs/float.xml
 msgid "https://en.wikipedia.org/wiki/Single-precision_floating-point_format"
 msgstr ""
+"https://zh.wikipedia.org/zh-tw/"
+"%E5%96%AE%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8"
 
 #: docs/float.xml
 msgid ""
@@ -25450,9 +25447,8 @@ msgid "Returns the interpolated color specified by [code]offset[/code]."
 msgstr ""
 
 #: docs/Gradient.xml
-#, fuzzy
 msgid "Removes the color at the index [code]point[/code]."
-msgstr "計算兩個向量的外積。"
+msgstr "刪除索引 [code]point[/code] 處的顏色。"
 
 #: docs/Gradient.xml
 msgid "Sets the color of the ramp color at index [code]point[/code]."
@@ -38745,79 +38741,79 @@ msgstr ""
 
 #: docs/OS.xml
 msgid "Sunday."
-msgstr ""
+msgstr "星期日。"
 
 #: docs/OS.xml
 msgid "Monday."
-msgstr ""
+msgstr "星期一。"
 
 #: docs/OS.xml
 msgid "Tuesday."
-msgstr ""
+msgstr "星期二。"
 
 #: docs/OS.xml
 msgid "Wednesday."
-msgstr ""
+msgstr "星期三。"
 
 #: docs/OS.xml
 msgid "Thursday."
-msgstr ""
+msgstr "星期四。"
 
 #: docs/OS.xml
 msgid "Friday."
-msgstr ""
+msgstr "星期五。"
 
 #: docs/OS.xml
 msgid "Saturday."
-msgstr ""
+msgstr "星期六。"
 
 #: docs/OS.xml
 msgid "January."
-msgstr ""
+msgstr "一月。"
 
 #: docs/OS.xml
 msgid "February."
-msgstr ""
+msgstr "二月。"
 
 #: docs/OS.xml
 msgid "March."
-msgstr ""
+msgstr "三月。"
 
 #: docs/OS.xml
 msgid "April."
-msgstr ""
+msgstr "四月。"
 
 #: docs/OS.xml
 msgid "May."
-msgstr ""
+msgstr "五月。"
 
 #: docs/OS.xml
 msgid "June."
-msgstr ""
+msgstr "六月。"
 
 #: docs/OS.xml
 msgid "July."
-msgstr ""
+msgstr "七月。"
 
 #: docs/OS.xml
 msgid "August."
-msgstr ""
+msgstr "八月。"
 
 #: docs/OS.xml
 msgid "September."
-msgstr ""
+msgstr "九月。"
 
 #: docs/OS.xml
 msgid "October."
-msgstr ""
+msgstr "十月。"
 
 #: docs/OS.xml
 msgid "November."
-msgstr ""
+msgstr "十一月。"
 
 #: docs/OS.xml
 msgid "December."
-msgstr ""
+msgstr "十二月。"
 
 #: docs/OS.xml
 msgid ""
@@ -46828,7 +46824,7 @@ msgstr ""
 
 #: docs/Quat.xml
 msgid "Quaternion."
-msgstr ""
+msgstr "四元數。"
 
 #: docs/Quat.xml
 msgid ""
@@ -60753,7 +60749,7 @@ msgstr ""
 
 #: modules/upnp/docs/UPNPDevice.xml
 msgid "OK."
-msgstr ""
+msgstr "好的。"
 
 #: modules/upnp/docs/UPNPDevice.xml
 msgid "Empty HTTP response."
@@ -60769,7 +60765,7 @@ msgstr ""
 
 #: modules/upnp/docs/UPNPDevice.xml
 msgid "Disconnected."
-msgstr ""
+msgstr "已斷開連接。"
 
 #: modules/upnp/docs/UPNPDevice.xml
 msgid "Unknown device."
@@ -60911,6 +60907,7 @@ msgstr ""
 msgid ""
 "https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"
 msgstr ""
+"https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"
 
 #: docs/Vector2.xml
 msgid ""
