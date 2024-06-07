@@ -1,6 +1,6 @@
 import os
 import sys
-from methods import detect_darwin_sdk_path
+from methods import get_darwin_sdk_path
 
 
 def is_active():
@@ -23,7 +23,6 @@ def get_opts():
 
     return [
         ("osxcross_sdk", "OSXCross SDK version", "darwin14"),
-        ("MACOS_SDK_PATH", "Path to the macOS SDK", ""),
         EnumVariable(
             "macports_clang",
             "Build using Clang from MacPorts",
@@ -125,9 +124,9 @@ def configure(env):
             env["CC"] = "clang"
             env["CXX"] = "clang++"
 
-        detect_darwin_sdk_path("osx", env)
-        env.Append(CCFLAGS=["-isysroot", "$MACOS_SDK_PATH"])
-        env.Append(LINKFLAGS=["-isysroot", "$MACOS_SDK_PATH"])
+        sdk_path = get_darwin_sdk_path("osx")
+        env.Append(CCFLAGS=["-isysroot", sdk_path])
+        env.Append(LINKFLAGS=["-isysroot", sdk_path])
 
     else:  # osxcross build
         root = os.environ.get("OSXCROSS_ROOT", 0)

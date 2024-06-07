@@ -1,6 +1,6 @@
 import os
 import sys
-from methods import detect_darwin_sdk_path, get_darwin_sdk_version
+from methods import get_darwin_sdk_path, get_darwin_sdk_version
 
 
 def is_active():
@@ -32,7 +32,6 @@ def get_opts():
             "Path to iPhone toolchain",
             "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain",
         ),
-        ("IPHONESDK", "Path to the iPhone SDK", ""),
         BoolVariable("ios_simulator", "Build for iOS Simulator", False),
         BoolVariable("ios_exceptions", "Enable exceptions", False),
         ("ios_triple", "Triple for ios toolchain", ""),
@@ -100,16 +99,16 @@ def configure(env):
     env["RANLIB"] = compiler_path + "ranlib"
 
     ## Compile flags
-
+    sdk_path = get_darwin_sdk_path("ios")
     if env["ios_simulator"]:
-        detect_darwin_sdk_path("iphonesimulator", env)
+        sdk_path = get_darwin_sdk_path("ios_simulator")
         env.Append(CCFLAGS=["-mios-simulator-version-min=10.0"])
         env.Append(LINKFLAGS=["-mios-simulator-version-min=10.0"])
         env.extra_suffix = ".simulator" + env.extra_suffix
     else:
-        detect_darwin_sdk_path("iphone", env)
         env.Append(CCFLAGS=["-miphoneos-version-min=10.0"])
         env.Append(LINKFLAGS=["-miphoneos-version-min=10.0"])
+    env.Append(CCFLAGS=["-isysroot", sdk_path])
 
     if env["arch"] == "x86_64":
         env["ENV"]["MACOSX_DEPLOYMENT_TARGET"] = "10.9"
@@ -118,11 +117,9 @@ def configure(env):
                 "-arch x86_64 "
                 + "-fobjc-arc -fobjc-abi-version=2 -fobjc-legacy-dispatch "
                 + "-fmessage-length=0 -fpascal-strings -fblocks -fasm-blocks "
-                + "-isysroot $IPHONESDK"
             ).split()
         )
     else:  # env["arch"] == "arm64"
-        detect_darwin_sdk_path("iphone", env)
         env.Append(
             CCFLAGS=(
                 "-arch arm64 "
@@ -133,7 +130,6 @@ def configure(env):
                 + "-fdiagnostics-show-category=id "
                 + "-fdiagnostics-parseable-fixits "
                 + "-MMD -MT dependencies "
-                + "-isysroot $IPHONESDK"
             ).split()
         )
         env.Append(CPPDEFINES=["NEED_LONG_INT"])
@@ -155,22 +151,21 @@ def configure(env):
         env.Append(
             LINKFLAGS=(
                 "-arch x86_64 "
-                + "-isysroot $IPHONESDK "
                 + "-Xlinker -objc_abi_version "
                 + "-Xlinker 2 "
-                + "-F$IPHONESDK"
+                + f"-F{sdk_path}"
             ).split()
         )
     else:  # env["arch"] == "arm64"
         env.Append(LINKFLAGS=["-arch", "arm64", "-Wl,-dead_strip"])
 
-    env.Append(LINKFLAGS=["-isysroot", "$IPHONESDK"])
+    env.Append(LINKFLAGS=["-isysroot", sdk_path])
 
     env.Prepend(
         CPPPATH=[
-            "$IPHONESDK/usr/include",
-            "$IPHONESDK/System/Library/Frameworks/OpenGLES.framework/Headers",
-            "$IPHONESDK/System/Library/Frameworks/AudioUnit.framework/Headers",
+            f"{sdk_path}/usr/include",
+            f"{sdk_path}/System/Library/Frameworks/OpenGLES.framework/Headers",
+            f"{sdk_path}/System/Library/Frameworks/AudioUnit.framework/Headers",
         ]
     )
 
@@ -178,7 +173,7 @@ def configure(env):
         "CODESIGN_ALLOCATE"
     ] = "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate"
 
-    env.Prepend(CPPPATH=["#platform/iphone"])
+    env.Prepend(CPPPATH=["#platform/ios"])
     env.Append(
         CPPDEFINES=[
             "IPHONE_ENABLED",
