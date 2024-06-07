@@ -468,15 +468,15 @@ MONO_AOT_MODE_LAST = 1000,
 
             // Add the required Mono libraries to the Xcode project
 
-            string MonoLibFile(string libFileName) => libFileName + ".iphone.fat.a";
+            string MonoLibFile(string libFileName) => libFileName + ".ios.fat.a";
 
             string MonoLibFromTemplate(string libFileName) =>
-                Path.Combine(Internal.FullTemplatesDir, "iphone-mono-libs", MonoLibFile(libFileName));
+                Path.Combine(Internal.FullTemplatesDir, "ios-mono-libs", MonoLibFile(libFileName));
 
             string MonoFrameworkFile(string frameworkFileName) => frameworkFileName + ".xcframework";
 
             string MonoFrameworkFromTemplate(string frameworkFileName) =>
-                Path.Combine(Internal.FullTemplatesDir, "iphone-mono-libs", MonoFrameworkFile(frameworkFileName));
+                Path.Combine(Internal.FullTemplatesDir, "ios-mono-libs", MonoFrameworkFile(frameworkFileName));
 
             exporter.AddIosProjectStaticLib(MonoFrameworkFromTemplate("libmonosgen-2.0"));
 

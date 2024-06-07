@@ -10616,7 +10616,7 @@ void RasterizerStorageGLES3::initialize() {
     // textures, as they are not exported in the APK. This is a simple way to
     // prevent Android devices trying to load S3TC, by faking lack of hardware
     // support.
-#if defined(ANDROID_ENABLED) || defined(IPHONE_ENABLED)
+#if defined(ANDROID_ENABLED) || defined(IOS_ENABLED)
     config.s3tc_supported = false;
 #endif
 #endif

@@ -6,7 +6,7 @@
 
 #include "ios_support.h"
 
-#if defined(IPHONE_ENABLED)
+#if defined(IOS_ENABLED)
 
 #include "../gd_mono_marshal.h"
 #include "core/ustring.h"
@@ -152,4 +152,4 @@ GD_PINVOKE_EXPORT void xamarin_start_wwan(const char* p_uri) {
     os_log_error(OS_LOG_DEFAULT, "Not implemented: 'xamarin_start_wwan'");
 }
 
-#endif // IPHONE_ENABLED
+#endif // IOS_ENABLED

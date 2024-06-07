@@ -4,13 +4,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "power_iphone.h"
+#include "ios_power.h"
 
-bool PowerIphone::UpdatePowerInfo() {
+bool IosPower::UpdatePowerInfo() {
     return false;
 }
 
-OS::PowerState PowerIphone::get_power_state() {
+OS::PowerState IosPower::get_power_state() {
     if (UpdatePowerInfo()) {
         return power_state;
     } else {
@@ -18,7 +18,7 @@ OS::PowerState PowerIphone::get_power_state() {
     }
 }
 
-int PowerIphone::get_power_seconds_left() {
+int IosPower::get_power_seconds_left() {
     if (UpdatePowerInfo()) {
         return nsecs_left;
     } else {
@@ -26,7 +26,7 @@ int PowerIphone::get_power_seconds_left() {
     }
 }
 
-int PowerIphone::get_power_percent_left() {
+int IosPower::get_power_percent_left() {
     if (UpdatePowerInfo()) {
         return percent_left;
     } else {
@@ -34,13 +34,13 @@ int PowerIphone::get_power_percent_left() {
     }
 }
 
-PowerIphone::PowerIphone() :
+IosPower::IosPower() :
     nsecs_left(-1),
     percent_left(-1),
     power_state(OS::POWERSTATE_UNKNOWN) {
     // TODO Auto-generated constructor stub
 }
 
-PowerIphone::~PowerIphone() {
+IosPower::~IosPower() {
     // TODO Auto-generated destructor stub
 }

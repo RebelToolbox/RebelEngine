@@ -19,14 +19,14 @@
 #include "editor/editor_node.h"
 #include "editor/editor_settings.h"
 #include "main/splash.gen.h"
-#include "platform/iphone/logo.gen.h"
-#include "platform/iphone/plugin/rebel_plugin_config.h"
+#include "platform/ios/logo.gen.h"
+#include "platform/ios/plugin/ios_plugin_config.h"
 #include "string.h"
 
 #include <sys/stat.h>
 
-class EditorExportPlatformIOS : public EditorExportPlatform {
-    GDCLASS(EditorExportPlatformIOS, EditorExportPlatform);
+class IosEditorExportPlatform : public EditorExportPlatform {
+    GDCLASS(IosEditorExportPlatform, EditorExportPlatform);
 
     int version_code;
 
@@ -37,7 +37,7 @@ class EditorExportPlatformIOS : public EditorExportPlatform {
     Thread check_for_changes_thread;
     SafeFlag quit_request;
     Mutex plugins_lock;
-    Vector<PluginConfigIOS> plugins;
+    Vector<IosPluginConfig> plugins;
 
     typedef Error (*FileHandler)(String p_file, void* p_userdata);
     static Error _walk_dir_recursive(
@@ -48,7 +48,7 @@ class EditorExportPlatformIOS : public EditorExportPlatform {
     static Error _codesign(String p_file, void* p_userdata);
     void _blend_and_rotate(Ref<Image>& p_dst, Ref<Image>& p_src, bool p_rot);
 
-    struct IOSConfigData {
+    struct IosConfigData {
         String pkg_name;
         String binary_name;
         String plist_content;
@@ -74,7 +74,7 @@ class EditorExportPlatformIOS : public EditorExportPlatform {
         }
     };
 
-    struct IOSExportAsset {
+    struct IosExportAsset {
         String exported_path;
         bool is_framework; // framework is anything linked to the binary,
                            // otherwise it's a resource
@@ -87,7 +87,7 @@ class EditorExportPlatformIOS : public EditorExportPlatform {
     void _fix_config_file(
         const Ref<EditorExportPreset>& p_preset,
         Vector<uint8_t>& pfile,
-        const IOSConfigData& p_config,
+        const IosConfigData& p_config,
         bool p_debug
     );
     Error _export_loading_screen_images(
@@ -111,7 +111,7 @@ class EditorExportPlatformIOS : public EditorExportPlatform {
     void _add_assets_to_project(
         const Ref<EditorExportPreset>& p_preset,
         Vector<uint8_t>& p_project_data,
-        const Vector<IOSExportAsset>& p_additional_assets
+        const Vector<IosExportAsset>& p_additional_assets
     );
     Error _copy_asset(
         const String& p_out_dir,
@@ -119,25 +119,25 @@ class EditorExportPlatformIOS : public EditorExportPlatform {
         const String* p_custom_file_name,
         bool p_is_framework,
         bool p_should_embed,
-        Vector<IOSExportAsset>& r_exported_assets
+        Vector<IosExportAsset>& r_exported_assets
     );
     Error _export_additional_assets(
         const String& p_out_dir,
         const Vector<String>& p_assets,
         bool p_is_framework,
         bool p_should_embed,
-        Vector<IOSExportAsset>& r_exported_assets
+        Vector<IosExportAsset>& r_exported_assets
     );
     Error _export_additional_assets(
         const String& p_out_dir,
         const Vector<SharedObject>& p_libraries,
-        Vector<IOSExportAsset>& r_exported_assets
+        Vector<IosExportAsset>& r_exported_assets
     );
     Error _export_ios_plugins(
         const Ref<EditorExportPreset>& p_preset,
-        IOSConfigData& p_config_data,
+        IosConfigData& p_config_data,
         const String& dest_dir,
-        Vector<IOSExportAsset>& r_exported_assets,
+        Vector<IosExportAsset>& r_exported_assets,
         bool p_debug
     );
 
@@ -172,14 +172,14 @@ class EditorExportPlatformIOS : public EditorExportPlatform {
     }
 
     static void _check_for_changes_poll_thread(void* ud) {
-        EditorExportPlatformIOS* ea = (EditorExportPlatformIOS*)ud;
+        IosEditorExportPlatform* ea = (IosEditorExportPlatform*)ud;
 
         while (!ea->quit_request.is_set()) {
             // Nothing to do if we already know the plugins have changed.
             if (!ea->plugins_changed.is_set()) {
                 ea->plugins_lock.lock();
 
-                Vector<PluginConfigIOS> loaded_plugins = get_plugins();
+                Vector<IosPluginConfig> loaded_plugins = get_plugins();
 
                 if (ea->plugins.size() != loaded_plugins.size()) {
                     ea->plugins_changed.set();
@@ -269,8 +269,8 @@ public:
         Set<String>& p_features
     ) {}
 
-    EditorExportPlatformIOS();
-    ~EditorExportPlatformIOS();
+    IosEditorExportPlatform();
+    ~IosEditorExportPlatform();
 
     /// List the gdip files in the directory specified by the p_path parameter.
     static Vector<String> list_plugin_config_files(
@@ -312,7 +312,7 @@ public:
                     continue;
                 }
 
-                if (file.ends_with(PluginConfigIOS::PLUGIN_CONFIG_EXT)) {
+                if (file.ends_with(IosPluginConfig::PLUGIN_CONFIG_EXT)) {
                     dir_files.push_back(file);
                 }
             }
@@ -322,8 +322,8 @@ public:
         return dir_files;
     }
 
-    static Vector<PluginConfigIOS> get_plugins() {
-        Vector<PluginConfigIOS> loaded_plugins;
+    static Vector<IosPluginConfig> get_plugins() {
+        Vector<IosPluginConfig> loaded_plugins;
 
         String plugins_dir =
             ProjectSettings::get_singleton()->get_resource_path().plus_file(
@@ -337,7 +337,7 @@ public:
             if (!plugins_filenames.empty()) {
                 Ref<ConfigFile> config_file = memnew(ConfigFile);
                 for (int i = 0; i < plugins_filenames.size(); i++) {
-                    PluginConfigIOS config = load_plugin_config(
+                    IosPluginConfig config = load_plugin_config(
                         config_file,
                         plugins_dir.plus_file(plugins_filenames[i])
                     );
@@ -355,13 +355,13 @@ public:
         return loaded_plugins;
     }
 
-    static Vector<PluginConfigIOS> get_enabled_plugins(
+    static Vector<IosPluginConfig> get_enabled_plugins(
         const Ref<EditorExportPreset>& p_presets
     ) {
-        Vector<PluginConfigIOS> enabled_plugins;
-        Vector<PluginConfigIOS> all_plugins = get_plugins();
+        Vector<IosPluginConfig> enabled_plugins;
+        Vector<IosPluginConfig> all_plugins = get_plugins();
         for (int i = 0; i < all_plugins.size(); i++) {
-            PluginConfigIOS plugin = all_plugins[i];
+            IosPluginConfig plugin = all_plugins[i];
             bool enabled           = p_presets->get("plugins/" + plugin.name);
             if (enabled) {
                 enabled_plugins.push_back(plugin);
@@ -372,7 +372,7 @@ public:
     }
 };
 
-void EditorExportPlatformIOS::get_preset_features(
+void IosEditorExportPlatform::get_preset_features(
     const Ref<EditorExportPreset>& p_preset,
     List<String>* r_features
 ) {
@@ -390,7 +390,7 @@ void EditorExportPlatformIOS::get_preset_features(
     }
 }
 
-Vector<EditorExportPlatformIOS::ExportArchitecture> EditorExportPlatformIOS::
+Vector<IosEditorExportPlatform::ExportArchitecture> IosEditorExportPlatform::
     _get_supported_architectures() {
     Vector<ExportArchitecture> archs;
     archs.push_back(ExportArchitecture("armv7", false)
@@ -444,7 +444,7 @@ static const LoadingScreenInfo loading_screen_infos[] = {
      2208, true }
 };
 
-void EditorExportPlatformIOS::get_export_options(List<ExportOption>* r_options
+void IosEditorExportPlatform::get_export_options(List<ExportOption>* r_options
 ) {
     r_options->push_back(ExportOption(
         PropertyInfo(
@@ -579,7 +579,7 @@ void EditorExportPlatformIOS::get_export_options(List<ExportOption>* r_options
         ExportOption(PropertyInfo(Variant::STRING, "application/copyright"), "")
     );
 
-    Vector<PluginConfigIOS> found_plugins = get_plugins();
+    Vector<IosPluginConfig> found_plugins = get_plugins();
     for (int i = 0; i < found_plugins.size(); i++) {
         r_options->push_back(ExportOption(
             PropertyInfo(Variant::BOOL, "plugins/" + found_plugins[i].name),
@@ -591,14 +591,14 @@ void EditorExportPlatformIOS::get_export_options(List<ExportOption>* r_options
 
     for (int i = 0; i < found_plugins.size(); i++) {
         // Editable plugin plist values
-        PluginConfigIOS plugin = found_plugins[i];
+        IosPluginConfig plugin = found_plugins[i];
         const String* K        = nullptr;
 
         while ((K = plugin.plist.next(K))) {
             String key                      = *K;
-            PluginConfigIOS::PlistItem item = plugin.plist[key];
+            IosPluginConfig::PlistItem item = plugin.plist[key];
             switch (item.type) {
-                case PluginConfigIOS::PlistItemType::STRING_INPUT: {
+                case IosPluginConfig::PlistItemType::STRING_INPUT: {
                     String preset_name = "plugins_plist/" + key;
                     if (!plist_keys.has(preset_name)) {
                         r_options->push_back(ExportOption(
@@ -802,10 +802,10 @@ void EditorExportPlatformIOS::get_export_options(List<ExportOption>* r_options
     }
 }
 
-void EditorExportPlatformIOS::_fix_config_file(
+void IosEditorExportPlatform::_fix_config_file(
     const Ref<EditorExportPreset>& p_preset,
     Vector<uint8_t>& pfile,
-    const IOSConfigData& p_config,
+    const IosConfigData& p_config,
     bool p_debug
 ) {
     static const String export_method_string[] =
@@ -1248,7 +1248,7 @@ void EditorExportPlatformIOS::_fix_config_file(
     }
 }
 
-String EditorExportPlatformIOS::_get_additional_plist_content() {
+String IosEditorExportPlatform::_get_additional_plist_content() {
     Vector<Ref<EditorExportPlugin>> export_plugins =
         EditorExport::get_singleton()->get_export_plugins();
     String result;
@@ -1258,7 +1258,7 @@ String EditorExportPlatformIOS::_get_additional_plist_content() {
     return result;
 }
 
-String EditorExportPlatformIOS::_get_linker_flags() {
+String IosEditorExportPlatform::_get_linker_flags() {
     Vector<Ref<EditorExportPlugin>> export_plugins =
         EditorExport::get_singleton()->get_export_plugins();
     String result;
@@ -1276,7 +1276,7 @@ String EditorExportPlatformIOS::_get_linker_flags() {
     return result.replace("\"", "\\\"");
 }
 
-String EditorExportPlatformIOS::_get_cpp_code() {
+String IosEditorExportPlatform::_get_cpp_code() {
     Vector<Ref<EditorExportPlugin>> export_plugins =
         EditorExport::get_singleton()->get_export_plugins();
     String result;
@@ -1286,7 +1286,7 @@ String EditorExportPlatformIOS::_get_cpp_code() {
     return result;
 }
 
-void EditorExportPlatformIOS::_blend_and_rotate(
+void IosEditorExportPlatform::_blend_and_rotate(
     Ref<Image>& p_dst,
     Ref<Image>& p_src,
     bool p_rot
@@ -1389,7 +1389,7 @@ static const IconInfo icon_infos[] = {
      "40x40",     false}
 };
 
-Error EditorExportPlatformIOS::_export_icons(
+Error IosEditorExportPlatform::_export_icons(
     const Ref<EditorExportPreset>& p_preset,
     const String& p_iconset_dir
 ) {
@@ -1516,7 +1516,7 @@ Error EditorExportPlatformIOS::_export_icons(
     return OK;
 }
 
-Error EditorExportPlatformIOS::_export_loading_screen_file(
+Error IosEditorExportPlatform::_export_loading_screen_file(
     const Ref<EditorExportPreset>& p_preset,
     const String& p_dest_dir
 ) {
@@ -1592,7 +1592,7 @@ Error EditorExportPlatformIOS::_export_loading_screen_file(
     return OK;
 }
 
-Error EditorExportPlatformIOS::_export_loading_screen_images(
+Error IosEditorExportPlatform::_export_loading_screen_images(
     const Ref<EditorExportPreset>& p_preset,
     const String& p_dest_dir
 ) {
@@ -1712,7 +1712,7 @@ Error EditorExportPlatformIOS::_export_loading_screen_images(
     return OK;
 }
 
-Error EditorExportPlatformIOS::_walk_dir_recursive(
+Error IosEditorExportPlatform::_walk_dir_recursive(
     DirAccess* p_da,
     FileHandler p_handler,
     void* p_userdata
@@ -1758,7 +1758,7 @@ struct CodesignData {
         debug(p_debug) {}
 };
 
-Error EditorExportPlatformIOS::_codesign(String p_file, void* p_userdata) {
+Error IosEditorExportPlatform::_codesign(String p_file, void* p_userdata) {
     if (p_file.ends_with(".dylib")) {
         CodesignData* data = (CodesignData*)p_userdata;
         print_line(String("Signing ") + p_file);
@@ -1839,10 +1839,10 @@ struct ExportLibsData {
     String dest_dir;
 };
 
-void EditorExportPlatformIOS::_add_assets_to_project(
+void IosEditorExportPlatform::_add_assets_to_project(
     const Ref<EditorExportPreset>& p_preset,
     Vector<uint8_t>& p_project_data,
-    const Vector<IOSExportAsset>& p_additional_assets
+    const Vector<IosExportAsset>& p_additional_assets
 ) {
     // that is just a random number, we just need Rebel Engine IDs not to clash
     // with existing IDs in the project.
@@ -1870,7 +1870,7 @@ void EditorExportPlatformIOS::_add_assets_to_project(
         String ref_id       = (++current_id).str();
         String framework_id = "";
 
-        const IOSExportAsset& asset = p_additional_assets[i];
+        const IosExportAsset& asset = p_additional_assets[i];
 
         String type;
         if (asset.exported_path.ends_with(".framework")) {
@@ -1944,13 +1944,13 @@ void EditorExportPlatformIOS::_add_assets_to_project(
     }
 }
 
-Error EditorExportPlatformIOS::_copy_asset(
+Error IosEditorExportPlatform::_copy_asset(
     const String& p_out_dir,
     const String& p_asset,
     const String* p_custom_file_name,
     bool p_is_framework,
     bool p_should_embed,
-    Vector<IOSExportAsset>& r_exported_assets
+    Vector<IosExportAsset>& r_exported_assets
 ) {
     DirAccess* filesystem_da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     ERR_FAIL_COND_V_MSG(
@@ -2049,7 +2049,7 @@ Error EditorExportPlatformIOS::_copy_asset(
         memdelete(filesystem_da);
         return err;
     }
-    IOSExportAsset exported_asset = {
+    IosExportAsset exported_asset = {
         binary_name.plus_file(asset_path),
         p_is_framework,
         p_should_embed
@@ -2129,18 +2129,18 @@ Error EditorExportPlatformIOS::_copy_asset(
     return OK;
 }
 
-Error EditorExportPlatformIOS::_export_additional_assets(
+Error IosEditorExportPlatform::_export_additional_assets(
     const String& p_out_dir,
     const Vector<String>& p_assets,
     bool p_is_framework,
     bool p_should_embed,
-    Vector<IOSExportAsset>& r_exported_assets
+    Vector<IosExportAsset>& r_exported_assets
 ) {
     for (int f_idx = 0; f_idx < p_assets.size(); ++f_idx) {
         String asset = p_assets[f_idx];
         if (!asset.begins_with("res://")) {
             // either SDK-builtin or already a part of the export template
-            IOSExportAsset exported_asset = {
+            IosExportAsset exported_asset = {
                 asset,
                 p_is_framework,
                 p_should_embed
@@ -2162,10 +2162,10 @@ Error EditorExportPlatformIOS::_export_additional_assets(
     return OK;
 }
 
-Error EditorExportPlatformIOS::_export_additional_assets(
+Error IosEditorExportPlatform::_export_additional_assets(
     const String& p_out_dir,
     const Vector<SharedObject>& p_libraries,
-    Vector<IOSExportAsset>& r_exported_assets
+    Vector<IosExportAsset>& r_exported_assets
 ) {
     Vector<Ref<EditorExportPlugin>> export_plugins =
         EditorExport::get_singleton()->get_export_plugins();
@@ -2235,7 +2235,7 @@ Error EditorExportPlatformIOS::_export_additional_assets(
     return OK;
 }
 
-Vector<String> EditorExportPlatformIOS::_get_preset_architectures(
+Vector<String> IosEditorExportPlatform::_get_preset_architectures(
     const Ref<EditorExportPreset>& p_preset
 ) {
     Vector<ExportArchitecture> all_archs = _get_supported_architectures();
@@ -2249,11 +2249,11 @@ Vector<String> EditorExportPlatformIOS::_get_preset_architectures(
     return enabled_archs;
 }
 
-Error EditorExportPlatformIOS::_export_ios_plugins(
+Error IosEditorExportPlatform::_export_ios_plugins(
     const Ref<EditorExportPreset>& p_preset,
-    IOSConfigData& p_config_data,
+    IosConfigData& p_config_data,
     const String& dest_dir,
-    Vector<IOSExportAsset>& r_exported_assets,
+    Vector<IosExportAsset>& r_exported_assets,
     bool p_debug
 ) {
     String plugin_definition_cpp_code;
@@ -2264,7 +2264,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
     Vector<String> plugin_embedded_dependencies;
     Vector<String> plugin_files;
 
-    Vector<PluginConfigIOS> enabled_plugins = get_enabled_plugins(p_preset);
+    Vector<IosPluginConfig> enabled_plugins = get_enabled_plugins(p_preset);
 
     Vector<String> added_linked_dependenciy_names;
     Vector<String> added_embedded_dependenciy_names;
@@ -2275,7 +2275,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
     Error err;
 
     for (int i = 0; i < enabled_plugins.size(); i++) {
-        PluginConfigIOS plugin = enabled_plugins[i];
+        IosPluginConfig plugin = enabled_plugins[i];
 
         // Export plugin binary.
         String plugin_main_binary = get_plugin_main_binary(plugin, p_debug);
@@ -2358,12 +2358,12 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
 
         while ((K = plugin.plist.next(K))) {
             String key                      = *K;
-            PluginConfigIOS::PlistItem item = plugin.plist[key];
+            IosPluginConfig::PlistItem item = plugin.plist[key];
 
             String value;
 
             switch (item.type) {
-                case PluginConfigIOS::PlistItemType::STRING_INPUT: {
+                case IosPluginConfig::PlistItemType::STRING_INPUT: {
                     String preset_name = "plugins_plist/" + key;
                     String input_value = p_preset->get(preset_name);
                     value              = "<string>" + input_value + "</string>";
@@ -2492,7 +2492,7 @@ Error EditorExportPlatformIOS::_export_ios_plugins(
     return OK;
 }
 
-Error EditorExportPlatformIOS::export_project(
+Error IosEditorExportPlatform::export_project(
     const Ref<EditorExportPreset>& p_preset,
     bool p_debug,
     const String& p_path,
@@ -2521,7 +2521,7 @@ Error EditorExportPlatformIOS::export_project(
 
     if (src_pkg_name == "") {
         String err;
-        src_pkg_name = find_export_template("iphone.zip", &err);
+        src_pkg_name = find_export_template("ios.zip", &err);
         if (src_pkg_name == "") {
             EditorNode::add_io_error(err);
             return ERR_FILE_NOT_FOUND;
@@ -2571,7 +2571,7 @@ Error EditorExportPlatformIOS::export_project(
         return ERR_SKIP;
     }
 
-    String library_to_use = "librebel.iphone."
+    String library_to_use = "librebel.ios."
                           + String(p_debug ? "debug" : "release")
                           + ".xcframework";
 
@@ -2604,7 +2604,7 @@ Error EditorExportPlatformIOS::export_project(
     files_to_parse.insert("rebel_ios/rebel_ios.entitlements");
     files_to_parse.insert("rebel_ios/Launch Screen.storyboard");
 
-    IOSConfigData config_data = {
+    IosConfigData config_data = {
         pkg_name,
         binary_name,
         _get_additional_plist_content(),
@@ -2618,7 +2618,7 @@ Error EditorExportPlatformIOS::export_project(
         Vector<String>()
     };
 
-    Vector<IOSExportAsset> assets;
+    Vector<IosExportAsset> assets;
 
     DirAccess* tmp_app_path = DirAccess::create_for_path(dest_dir);
     ERR_FAIL_COND_V(!tmp_app_path, ERR_CANT_CREATE);
@@ -2678,11 +2678,11 @@ Error EditorExportPlatformIOS::export_project(
 
         // write
 
-        file = file.replace_first("iphone/", "");
+        file = file.replace_first("ios/", "");
 
         if (files_to_parse.has(file)) {
             _fix_config_file(p_preset, data, config_data, p_debug);
-        } else if (file.begins_with("librebel.iphone")) {
+        } else if (file.begins_with("librebel.ios")) {
             if (!file.begins_with(library_to_use)
                 || file.ends_with(String("/empty"))) {
                 ret = unzGoToNextFile(src_pkg_zip);
@@ -2936,7 +2936,7 @@ Error EditorExportPlatformIOS::export_project(
     return OK;
 }
 
-bool EditorExportPlatformIOS::can_export(
+bool IosEditorExportPlatform::can_export(
     const Ref<EditorExportPreset>& p_preset,
     String& r_error,
     bool& r_missing_templates
@@ -2947,7 +2947,7 @@ bool EditorExportPlatformIOS::can_export(
     // Look for export templates (first official, and if defined custom
     // templates).
 
-    bool dvalid = exists_export_template("iphone.zip", &err);
+    bool dvalid = exists_export_template("ios.zip", &err);
     bool rvalid = dvalid; // Both in the same ZIP.
 
     if (p_preset->get("custom_template/debug") != "") {
@@ -3010,8 +3010,8 @@ bool EditorExportPlatformIOS::can_export(
     return valid;
 }
 
-EditorExportPlatformIOS::EditorExportPlatformIOS() {
-    Ref<Image> img = memnew(Image(_iphone_logo));
+IosEditorExportPlatform::IosEditorExportPlatform() {
+    Ref<Image> img = memnew(Image(_ios_logo));
     logo.instance();
     logo->create_from_image(img);
 
@@ -3020,13 +3020,13 @@ EditorExportPlatformIOS::EditorExportPlatformIOS() {
     check_for_changes_thread.start(_check_for_changes_poll_thread, this);
 }
 
-EditorExportPlatformIOS::~EditorExportPlatformIOS() {
+IosEditorExportPlatform::~IosEditorExportPlatform() {
     quit_request.set();
     check_for_changes_thread.wait_to_finish();
 }
 
-void register_iphone_exporter() {
-    Ref<EditorExportPlatformIOS> platform;
+void register_ios_exporter() {
+    Ref<IosEditorExportPlatform> platform;
     platform.instance();
 
     EditorExport::get_singleton()->add_export_platform(platform);

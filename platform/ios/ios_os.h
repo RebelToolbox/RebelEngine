@@ -4,22 +4,22 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef IPHONE_ENABLED
+#ifndef IOS_OS_H
+#define IOS_OS_H
 
-#ifndef OS_IPHONE_H
-#define OS_IPHONE_H
+#ifdef IOS_ENABLED
 
 #include "core/os/input.h"
 #include "drivers/coreaudio/audio_driver_coreaudio.h"
 #include "drivers/unix/os_unix.h"
 #include "ios.h"
-#include "joypad_iphone.h"
+#include "ios_joypad.h"
 #include "main/input_default.h"
 #include "servers/audio_server.h"
 #include "servers/visual/rasterizer.h"
 #include "servers/visual_server.h"
 
-class OSIPhone : public OS_Unix {
+class IosOS : public OS_Unix {
 private:
     static HashMap<String, void*> dynamic_symbol_lookup_table;
     friend void register_dynamic_symbol(char* name, void* address);
@@ -30,7 +30,7 @@ private:
 
     iOS* ios;
 
-    JoypadIPhone* joypad_iphone;
+    IosJoypad* ios_joypad;
 
     MainLoop* main_loop;
 
@@ -70,10 +70,10 @@ private:
     bool is_focused = false;
 
 public:
-    static OSIPhone* get_singleton();
+    static IosOS* get_singleton();
 
-    OSIPhone(String p_data_dir);
-    ~OSIPhone();
+    IosOS(String p_data_dir);
+    ~IosOS();
 
     bool iterate();
 
@@ -214,6 +214,6 @@ public:
     void on_focus_in();
 };
 
-#endif // OS_IPHONE_H
+#endif // IOS_ENABLED
 
-#endif
+#endif // IOS_OS_H

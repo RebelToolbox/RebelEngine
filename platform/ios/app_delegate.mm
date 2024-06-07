@@ -8,8 +8,8 @@
 
 #include "core/project_settings.h"
 #include "drivers/coreaudio/audio_driver_coreaudio.h"
+#include "ios_os.h"
 #include "main/main.h"
-#include "os_iphone.h"
 #import "rebel_view.h"
 #import "view_controller.h"
 
@@ -20,8 +20,8 @@
 extern int gargc;
 extern char** gargv;
 
-extern int iphone_main(int, char**, String);
-extern void iphone_finish();
+extern int ios_main(int, char**, String);
+extern void ios_finish();
 
 @implementation AppDelegate
 
@@ -44,11 +44,8 @@ static ViewController* mainViewController = nil;
     );
     NSString* documentsDirectory = [paths objectAtIndex:0];
 
-    int err = iphone_main(
-        gargc,
-        gargv,
-        String::utf8([documentsDirectory UTF8String])
-    );
+    int err =
+        ios_main(gargc, gargv, String::utf8([documentsDirectory UTF8String]));
     if (err != 0) {
         // bail, things did not go very well for us, should probably output a
         // message on screen with our error code...
@@ -57,7 +54,7 @@ static ViewController* mainViewController = nil;
     }
 
     // WARNING: We must *always* create the RebelView after we have constructed
-    // the OS with iphone_main. This allows the RebelView to access project
+    // the OS with ios_main. This allows the RebelView to access project
     // settings so it can properly initialize the OpenGL context
 
     ViewController* viewController = [[ViewController alloc] init];
@@ -84,7 +81,7 @@ static ViewController* mainViewController = nil;
 
     bool keep_screen_on =
         bool(GLOBAL_DEF("display/window/energy_saving/keep_screen_on", true));
-    OSIPhone::get_singleton()->set_keep_screen_on(keep_screen_on);
+    IosOS::get_singleton()->set_keep_screen_on(keep_screen_on);
 
     return TRUE;
 }
@@ -98,7 +95,7 @@ static ViewController* mainViewController = nil;
                     [NSNumber
                         numberWithInt:AVAudioSessionInterruptionTypeBegan]]) {
             NSLog(@"Audio interruption began");
-            OSIPhone::get_singleton()->on_focus_out();
+            IosOS::get_singleton()->on_focus_out();
         } else if ([[notification.userInfo
                        valueForKey:AVAudioSessionInterruptionTypeKey]
                        isEqualToNumber:
@@ -106,7 +103,7 @@ static ViewController* mainViewController = nil;
                                numberWithInt:
                                    AVAudioSessionInterruptionTypeEnded]]) {
             NSLog(@"Audio interruption ended");
-            OSIPhone::get_singleton()->on_focus_in();
+            IosOS::get_singleton()->on_focus_in();
         }
     }
 }
@@ -120,7 +117,7 @@ static ViewController* mainViewController = nil;
 }
 
 - (void)applicationWillTerminate:(UIApplication*)application {
-    iphone_finish();
+    ios_finish();
 }
 
 // When application goes to background (e.g. user switches to another app or
@@ -136,11 +133,11 @@ static ViewController* mainViewController = nil;
 // the upper part of the screen.
 
 - (void)applicationWillResignActive:(UIApplication*)application {
-    OSIPhone::get_singleton()->on_focus_out();
+    IosOS::get_singleton()->on_focus_out();
 }
 
 - (void)applicationDidBecomeActive:(UIApplication*)application {
-    OSIPhone::get_singleton()->on_focus_in();
+    IosOS::get_singleton()->on_focus_in();
 }
 
 - (void)dealloc {

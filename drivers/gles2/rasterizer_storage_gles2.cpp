@@ -70,7 +70,7 @@ GLuint RasterizerStorageGLES2::system_fbo = 0;
 #include <dlfcn.h> // needed to load extensions
 #endif
 
-#ifdef IPHONE_ENABLED
+#ifdef IOS_ENABLED
 
 #include <OpenGLES/ES2/glext.h>
 // void *glRenderbufferStorageMultisampleAPPLE;
@@ -6535,7 +6535,7 @@ void RasterizerStorageGLES2::_render_target_allocate(RenderTarget* rt) {
             rt->multisample_depth
         );
 
-#if defined(GLES_OVER_GL) || defined(IPHONE_ENABLED)
+#if defined(GLES_OVER_GL) || defined(IOS_ENABLED)
 
         glGenRenderbuffers(1, &rt->multisample_color);
         glBindRenderbuffer(GL_RENDERBUFFER, rt->multisample_color);
@@ -8017,7 +8017,7 @@ void RasterizerStorageGLES2::initialize() {
     // textures, as they are not exported in the APK. This is a simple way to
     // prevent Android devices trying to load S3TC, by faking lack of hardware
     // support.
-#if defined(ANDROID_ENABLED) || defined(IPHONE_ENABLED)
+#if defined(ANDROID_ENABLED) || defined(IOS_ENABLED)
     config.s3tc_supported = false;
 #endif
 
@@ -8042,18 +8042,8 @@ void RasterizerStorageGLES2::initialize() {
 #endif
 
 #ifndef GLES_OVER_GL
-    // Manually load extensions for android and ios
-
-#ifdef IPHONE_ENABLED
-    // appears that IPhone doesn't need to dlopen TODO: test this rigorously
-    // before removing
-    // void *gles2_lib = dlopen(NULL, RTLD_LAZY);
-    // glRenderbufferStorageMultisampleAPPLE = dlsym(gles2_lib,
-    // "glRenderbufferStorageMultisampleAPPLE");
-    // glResolveMultisampleFramebufferAPPLE = dlsym(gles2_lib,
-    // "glResolveMultisampleFramebufferAPPLE");
-#elif ANDROID_ENABLED
-
+    // Manually load extensions for android
+#if ANDROID_ENABLED
     void* gles2_lib = dlopen("libGLESv2.so", RTLD_LAZY);
     glRenderbufferStorageMultisampleEXT =
         (PFNGLRENDERBUFFERSTORAGEMULTISAMPLEEXTPROC
@@ -8061,8 +8051,8 @@ void RasterizerStorageGLES2::initialize() {
     glFramebufferTexture2DMultisampleEXT =
         (PFNGLFRAMEBUFFERTEXTURE2DMULTISAMPLEEXTPROC
         )dlsym(gles2_lib, "glFramebufferTexture2DMultisampleEXT");
-#endif
-#endif
+#endif // ANDROID_ENABLED
+#endif // GLES_OVER_GL
 
     // Check for multisample support
     config.multisample_supported =

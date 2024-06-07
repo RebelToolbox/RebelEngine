@@ -7,7 +7,7 @@
 #import "keyboard_input_view.h"
 
 #include "core/os/keyboard.h"
-#include "os_iphone.h"
+#include "ios_os.h"
 
 @interface RebelKeyboardInputView () <UITextViewDelegate>
 
@@ -95,8 +95,8 @@
 
 - (void)deleteText:(NSInteger)charactersToDelete {
     for (int i = 0; i < charactersToDelete; i++) {
-        OSIPhone::get_singleton()->key(KEY_BACKSPACE, true);
-        OSIPhone::get_singleton()->key(KEY_BACKSPACE, false);
+        IosOS::get_singleton()->key(KEY_BACKSPACE, true);
+        IosOS::get_singleton()->key(KEY_BACKSPACE, false);
     }
 }
 
@@ -118,8 +118,8 @@
                 break;
         }
 
-        OSIPhone::get_singleton()->key(character, true);
-        OSIPhone::get_singleton()->key(character, false);
+        IosOS::get_singleton()->key(character, true);
+        IosOS::get_singleton()->key(character, false);
     }
 }
 

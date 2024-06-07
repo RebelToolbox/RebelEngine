@@ -13,7 +13,7 @@ def get_name():
 
 def can_build():
     if sys.platform == "darwin":
-        if get_darwin_sdk_version("iphone") < 13.0:
+        if get_darwin_sdk_version("ios") < 13.0:
             print("Detected iOS SDK version older than 13")
             return False
         return True
@@ -178,7 +178,7 @@ def configure(env):
     env.Prepend(CPPPATH=["#platform/ios"])
     env.Append(
         CPPDEFINES=[
-            "IPHONE_ENABLED",
+            "IOS_ENABLED",
             "UNIX_ENABLED",
             "GLES_ENABLED",
             "COREAUDIO_ENABLED",

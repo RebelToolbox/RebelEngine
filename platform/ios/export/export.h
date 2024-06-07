@@ -4,9 +4,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef IPHONE_EXPORT_H
-#define IPHONE_EXPORT_H
+#ifndef IOS_EXPORT_H
+#define IOS_EXPORT_H
 
-void register_iphone_exporter();
+void register_ios_exporter();
 
-#endif // IPHONE_EXPORT_H
+#endif // IOS_EXPORT_H

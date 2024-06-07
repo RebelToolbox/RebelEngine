@@ -20,7 +20,7 @@
 #endif
 
 #ifndef GLES_OVER_GL
-#ifdef IPHONE_ENABLED
+#ifdef IOS_ENABLED
 #include <OpenGLES/ES2/glext.h>
 // void *glResolveMultisampleFramebufferAPPLE;
 
@@ -4202,7 +4202,7 @@ void RasterizerSceneGLES2::_post_process(
 
         glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-#elif IPHONE_ENABLED
+#elif IOS_ENABLED
 
         glBindFramebuffer(
             GL_READ_FRAMEBUFFER,
@@ -5502,7 +5502,7 @@ void RasterizerSceneGLES2::render_scene(
 
             glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
             glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-#elif IPHONE_ENABLED
+#elif IOS_ENABLED
 
             glBindFramebuffer(
                 GL_READ_FRAMEBUFFER,

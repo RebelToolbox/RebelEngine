@@ -171,26 +171,26 @@ jobs:
           - name: iOS Engine Library arm 64 bit
             os: macos-latest
             artifact: ios-engine-library-arm64
-            build-options: platform=iphone production=yes tools=no target=release
-            rebel-executable: librebel.iphone.opt.arm64.a
+            build-options: platform=ios production=yes tools=no target=release
+            rebel-executable: librebel.ios.opt.arm64.a
 
           - name: iOS Engine Library arm 64 bit Debug
             os: macos-latest
             artifact: ios-engine-library-arm64-debug
-            build-options: platform=iphone production=yes tools=no target=release_debug
-            rebel-executable: librebel.iphone.opt.debug.arm64.a
+            build-options: platform=ios production=yes tools=no target=release_debug
+            rebel-executable: librebel.ios.opt.debug.arm64.a
 
           - name: iOS Engine Library x86 64 bit Simulator
             os: macos-latest
             artifact: ios-engine-library-x86-64
-            build-options: platform=iphone production=yes tools=no ios_simulator=yes target=release arch=x86_64
-            rebel-executable: librebel.iphone.opt.x86_64.simulator.a
+            build-options: platform=ios production=yes tools=no ios_simulator=yes target=release arch=x86_64
+            rebel-executable: librebel.ios.opt.x86_64.simulator.a
 
           - name: iOS Engine Library x86 64 bit Simulator Debug
             os: macos-latest
             artifact: ios-engine-library-x86-64-debug
-            build-options: platform=iphone production=yes tools=no ios_simulator=yes target=release_debug arch=x86_64
-            rebel-executable: librebel.iphone.opt.debug.x86_64.simulator.a
+            build-options: platform=ios production=yes tools=no ios_simulator=yes target=release_debug arch=x86_64
+            rebel-executable: librebel.ios.opt.debug.x86_64.simulator.a
 
           # Rebel Engine Web builds
           - name: Web Engine
@@ -427,14 +427,14 @@ jobs:
         run: |
           # Add universal binaries to iOS Tempate.
           cp -r tools/dist/ios_xcode .
-          cp bin/librebel.iphone.opt.arm64.a                                                  \
-          ios_xcode/libgodot.iphone.release.xcframework/ios-arm64/librebel.a
-          cp bin/librebel.iphone.opt.debug.arm64.a                                            \
-          ios_xcode/libgodot.iphone.debug.xcframework/ios-arm64/librebel.a
-          cp bin/librebel.iphone.opt.x86_64.simulator.a                                       \
-          ios_xcode/libgodot.iphone.release.xcframework/ios-arm64_x86_64-simulator/librebel.a
-          cp bin/librebel.iphone.opt.debug.x86_64.simulator.a                                 \
-          ios_xcode/libgodot.iphone.debug.xcframework/ios-arm64_x86_64-simulator/librebel.a
+          cp bin/librebel.ios.opt.arm64.a                                                  \
+          ios_xcode/libgodot.ios.release.xcframework/ios-arm64/librebel.a
+          cp bin/librebel.ios.opt.debug.arm64.a                                            \
+          ios_xcode/libgodot.ios.debug.xcframework/ios-arm64/librebel.a
+          cp bin/librebel.ios.opt.x86_64.simulator.a                                       \
+          ios_xcode/libgodot.ios.release.xcframework/ios-arm64_x86_64-simulator/librebel.a
+          cp bin/librebel.ios.opt.debug.x86_64.simulator.a                                 \
+          ios_xcode/libgodot.ios.debug.xcframework/ios-arm64_x86_64-simulator/librebel.a
           cd ios_xcode/
           echo "::group::Zip iOS Template."
           zip -r ../ios-template.zip .
@@ -497,7 +497,7 @@ jobs:
           # Move macOS templates.
           mv artifacts/rebel-engine-macos-universal.zip templates/osx.zip
           # Move iOS template.
-          mv artifacts/ios-template.zip templates/iphone.zip
+          mv artifacts/ios-template.zip templates/ios.zip
           # Move Android templates.
           mv artifacts/android_release.apk templates/android_release.apk
           mv artifacts/android_debug.apk templates/android_debug.apk

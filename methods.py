@@ -836,9 +836,9 @@ def get_darwin_sdk_version(platform):
     sdk_name = ""
     if platform == "osx":
         sdk_name = "macosx"
-    elif platform == "iphone":
+    elif platform == "ios":
         sdk_name = "iphoneos"
-    elif platform == "iphonesimulator":
+    elif platform == "ios_simulator":
         sdk_name = "iphonesimulator"
     else:
         raise Exception("Invalid platform argument passed to get_darwin_sdk_version")
@@ -856,9 +856,9 @@ def get_darwin_sdk_path(platform):
     sdk_name = ""
     if platform == "osx":
         sdk_name = "macosx"
-    elif platform == "iphone":
+    elif platform == "ios":
         sdk_name = "iphoneos"
-    elif platform == "iphonesimulator":
+    elif platform == "ios_simulator":
         sdk_name = "iphonesimulator"
     else:
         raise Exception("Invalid platform argument passed to detect_darwin_sdk_path")

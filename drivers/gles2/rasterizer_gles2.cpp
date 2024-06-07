@@ -41,7 +41,7 @@
 #endif
 #endif
 
-#ifndef IPHONE_ENABLED
+#ifndef IOS_ENABLED
 // We include EGL below to get debug callback on GLES2 platforms,
 // but EGL is not available on iOS.
 #define CAN_DEBUG

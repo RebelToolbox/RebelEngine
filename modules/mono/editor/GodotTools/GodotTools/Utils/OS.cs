@@ -38,7 +38,7 @@ namespace GodotTools.Utils
             public const string Server = "server";
             public const string UWP = "uwp";
             public const string Android = "android";
-            public const string iOS = "iphone";
+            public const string iOS = "ios";
             public const string HTML5 = "javascript";
         }
 

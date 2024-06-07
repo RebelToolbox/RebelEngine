@@ -2,26 +2,26 @@
 
 Import("env")
 
-iphone_lib = [
-    "rebel_iphone.mm",
-    "os_iphone.mm",
-    "main.m",
+ios_lib = [
     "app_delegate.mm",
-    "view_controller.mm",
-    "ios.mm",
-    "joypad_iphone.mm",
-    "rebel_view.mm",
-    "display_layer.mm",
-    "rebel_app_delegate.m",
-    "rebel_view_renderer.mm",
-    "rebel_view_gesture_recognizer.mm",
     "device_metrics.m",
+    "display_layer.mm",
     "keyboard_input_view.mm",
+    "ios.mm",
+    "ios_joypad.mm",
+    "ios_main.mm",
+    "ios_os.mm",
+    "main.m",
     "native_video_view.m",
+    "rebel_app_delegate.m",
+    "rebel_view.mm",
+    "rebel_view_gesture_recognizer.mm",
+    "rebel_view_renderer.mm",
+    "view_controller.mm",
 ]
 
 env_ios = env.Clone()
-ios_lib = env_ios.add_library("iphone", iphone_lib)
+ios_lib = env_ios.add_library("ios", ios_lib)
 
 # (iOS) Enable module support
 env_ios.Append(CCFLAGS=["-fmodules", "-fcxx-modules"])

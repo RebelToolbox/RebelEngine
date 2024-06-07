@@ -71,11 +71,11 @@ def is_desktop(platform):
 
 
 def is_unix_like(platform):
-    return platform in ["osx", "x11", "server", "android", "iphone"]
+    return platform in ["osx", "x11", "server", "android", "ios"]
 
 
 def module_supports_tools_on(platform):
-    return platform not in ["android", "javascript", "iphone"]
+    return platform not in ["android", "javascript", "ios"]
 
 
 def find_wasm_src_dir(mono_root):
@@ -93,7 +93,7 @@ def configure(env, env_mono):
     bits = env["bits"]
     is_android = env["platform"] == "android"
     is_javascript = env["platform"] == "javascript"
-    is_ios = env["platform"] == "iphone"
+    is_ios = env["platform"] == "ios"
     is_ios_sim = is_ios and env["ios_simulator"]
 
     tools_enabled = env["tools"]
@@ -238,7 +238,7 @@ def configure(env, env_mono):
 
             copy_file(mono_bin_path, "#bin", mono_dll_file)
     else:
-        is_apple = env["platform"] in ["osx", "iphone"]
+        is_apple = env["platform"] in ["osx", "ios"]
         is_macos = is_apple and not is_ios
 
         sharedlib_ext = ".dylib" if is_apple else ".so"
@@ -311,14 +311,14 @@ def configure(env, env_mono):
                                     mono_lib_path,
                                     "#bin",
                                     libname_wo_ext + ".a",
-                                    "%s.iphone.%s.simulator.a" % (libname_wo_ext, arch),
+                                    "%s.ios.%s.simulator.a" % (libname_wo_ext, arch),
                                 )
                             else:
                                 copy_file(
                                     mono_lib_path,
                                     "#bin",
                                     libname_wo_ext + ".a",
-                                    "%s.iphone.%s.a" % (libname_wo_ext, arch),
+                                    "%s.ios.%s.a" % (libname_wo_ext, arch),
                                 )
 
                         # Copy Mono libraries to the output folder. These are meant to be bundled with

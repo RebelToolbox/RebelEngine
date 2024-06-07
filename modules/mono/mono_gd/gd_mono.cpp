@@ -33,7 +33,7 @@
 #ifdef ANDROID_ENABLED
 #include "android_mono_config.h"
 #include "support/android_support.h"
-#elif defined(IPHONE_ENABLED)
+#elif defined(IOS_ENABLED)
 #include "support/ios_support.h"
 #endif
 
@@ -213,7 +213,7 @@ MonoDomain* gd_initialize_mono_runtime() {
 MonoDomain* gd_initialize_mono_runtime() {
     gd_mono_debug_init();
 
-#if defined(IPHONE_ENABLED) || defined(ANDROID_ENABLED)
+#if defined(IOS_ENABLED) || defined(ANDROID_ENABLED)
     // I don't know whether this actually matters or not
     const char* runtime_version = "mobile";
 #else
@@ -393,7 +393,7 @@ void GDMono::initialize() {
 
 #if defined(ANDROID_ENABLED)
     gdmono::android::support::initialize();
-#elif defined(IPHONE_ENABLED)
+#elif defined(IOS_ENABLED)
     gdmono::ios::support::initialize();
 #endif
 

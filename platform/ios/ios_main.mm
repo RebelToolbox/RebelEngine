@@ -5,14 +5,14 @@
 // SPDX-License-Identifier: MIT
 
 #include "core/ustring.h"
+#include "ios_os.h"
 #include "main/main.h"
-#include "os_iphone.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
-static OSIPhone* os = NULL;
+static IosOS* os = NULL;
 
 int add_path(int p_argc, char** p_args) {
     NSString* str =
@@ -49,7 +49,7 @@ int add_cmdline(int p_argc, char** p_args) {
     return p_argc;
 }
 
-int iphone_main(int argc, char** argv, String data_dir) {
+int ios_main(int argc, char** argv, String data_dir) {
     size_t len = strlen(argv[0]);
 
     while (len--) {
@@ -66,11 +66,11 @@ int iphone_main(int argc, char** argv, String data_dir) {
         chdir(path);
     }
 
-    printf("rebel_iphone %s\n", argv[0]);
+    printf("ios_main %s\n", argv[0]);
     char cwd[512];
     getcwd(cwd, sizeof(cwd));
     printf("cwd %s\n", cwd);
-    os = new OSIPhone(data_dir);
+    os = new IosOS(data_dir);
 
     char* fargv[64];
     for (int i = 0; i < argc; i++) {
@@ -90,8 +90,8 @@ int iphone_main(int argc, char** argv, String data_dir) {
     return 0;
 }
 
-void iphone_finish() {
-    printf("iphone_finish\n");
+void ios_finish() {
+    printf("ios_finish\n");
     Main::cleanup();
     delete os;
 }

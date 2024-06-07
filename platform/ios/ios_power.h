@@ -4,12 +4,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef POWER_IPHONE_H
-#define POWER_IPHONE_H
+#ifndef IOS_POWER_H
+#define IOS_POWER_H
 
 #include <os/os.h>
 
-class PowerIphone {
+class IosPower {
 private:
     int nsecs_left;
     int percent_left;
@@ -18,12 +18,12 @@ private:
     bool UpdatePowerInfo();
 
 public:
-    PowerIphone();
-    virtual ~PowerIphone();
+    IosPower();
+    virtual ~IosPower();
 
     OS::PowerState get_power_state();
     int get_power_seconds_left();
     int get_power_percent_left();
 };
 
-#endif // POWER_IPHONE_H
+#endif // IOS_POWER_H

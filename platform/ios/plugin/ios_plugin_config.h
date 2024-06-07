@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef REBEL_PLUGIN_CONFIG_H
-#define REBEL_PLUGIN_CONFIG_H
+#ifndef IOS_PLUGIN_CONFIG_H
+#define IOS_PLUGIN_CONFIG_H
 
 #include "core/error_list.h"
 #include "core/io/config_file.h"
@@ -29,7 +29,7 @@ The `plist` section are optional.
 - **key**: key and value that would be added in Info.plist file.
  */
 
-struct PluginConfigIOS {
+struct IosPluginConfig {
     static const char* PLUGIN_CONFIG_EXT;
 
     static const char* CONFIG_SECTION;
@@ -91,23 +91,23 @@ struct PluginConfigIOS {
     HashMap<String, PlistItem> plist;
 };
 
-const char* PluginConfigIOS::PLUGIN_CONFIG_EXT = ".gdip";
+const char* IosPluginConfig::PLUGIN_CONFIG_EXT = ".gdip";
 
-const char* PluginConfigIOS::CONFIG_SECTION          = "config";
-const char* PluginConfigIOS::CONFIG_NAME_KEY         = "name";
-const char* PluginConfigIOS::CONFIG_BINARY_KEY       = "binary";
-const char* PluginConfigIOS::CONFIG_INITIALIZE_KEY   = "initialization";
-const char* PluginConfigIOS::CONFIG_DEINITIALIZE_KEY = "deinitialization";
+const char* IosPluginConfig::CONFIG_SECTION          = "config";
+const char* IosPluginConfig::CONFIG_NAME_KEY         = "name";
+const char* IosPluginConfig::CONFIG_BINARY_KEY       = "binary";
+const char* IosPluginConfig::CONFIG_INITIALIZE_KEY   = "initialization";
+const char* IosPluginConfig::CONFIG_DEINITIALIZE_KEY = "deinitialization";
 
-const char* PluginConfigIOS::DEPENDENCIES_SECTION          = "dependencies";
-const char* PluginConfigIOS::DEPENDENCIES_LINKED_KEY       = "linked";
-const char* PluginConfigIOS::DEPENDENCIES_EMBEDDED_KEY     = "embedded";
-const char* PluginConfigIOS::DEPENDENCIES_SYSTEM_KEY       = "system";
-const char* PluginConfigIOS::DEPENDENCIES_CAPABILITIES_KEY = "capabilities";
-const char* PluginConfigIOS::DEPENDENCIES_LINKER_FLAGS     = "linker_flags";
-const char* PluginConfigIOS::DEPENDENCIES_FILES_KEY        = "files";
+const char* IosPluginConfig::DEPENDENCIES_SECTION          = "dependencies";
+const char* IosPluginConfig::DEPENDENCIES_LINKED_KEY       = "linked";
+const char* IosPluginConfig::DEPENDENCIES_EMBEDDED_KEY     = "embedded";
+const char* IosPluginConfig::DEPENDENCIES_SYSTEM_KEY       = "system";
+const char* IosPluginConfig::DEPENDENCIES_CAPABILITIES_KEY = "capabilities";
+const char* IosPluginConfig::DEPENDENCIES_LINKER_FLAGS     = "linker_flags";
+const char* IosPluginConfig::DEPENDENCIES_FILES_KEY        = "files";
 
-const char* PluginConfigIOS::PLIST_SECTION = "plist";
+const char* IosPluginConfig::PLIST_SECTION = "plist";
 
 static inline String resolve_local_dependency_path(
     String plugin_config_dir,
@@ -183,7 +183,7 @@ static inline Vector<String> resolve_system_dependencies(Vector<String> p_paths
     return paths;
 }
 
-static inline bool validate_plugin(PluginConfigIOS& plugin_config) {
+static inline bool validate_plugin(IosPluginConfig& plugin_config) {
     bool valid_name         = !plugin_config.name.empty();
     bool valid_binary_name  = !plugin_config.binary.empty();
     bool valid_initialize   = !plugin_config.initialization_method.empty();
@@ -226,7 +226,7 @@ static inline bool validate_plugin(PluginConfigIOS& plugin_config) {
 }
 
 static inline String get_plugin_main_binary(
-    PluginConfigIOS& plugin_config,
+    IosPluginConfig& plugin_config,
     bool p_debug
 ) {
     if (!plugin_config.supports_targets) {
@@ -244,7 +244,7 @@ static inline String get_plugin_main_binary(
 }
 
 static inline uint64_t get_plugin_modification_time(
-    const PluginConfigIOS& plugin_config,
+    const IosPluginConfig& plugin_config,
     const String& config_path
 ) {
     uint64_t last_updated = FileAccess::get_modified_time(config_path);
@@ -271,11 +271,11 @@ static inline uint64_t get_plugin_modification_time(
     return last_updated;
 }
 
-static inline PluginConfigIOS load_plugin_config(
+static inline IosPluginConfig load_plugin_config(
     Ref<ConfigFile> config_file,
     const String& path
 ) {
-    PluginConfigIOS plugin_config = {};
+    IosPluginConfig plugin_config = {};
 
     if (!config_file.is_valid()) {
         return plugin_config;
@@ -292,48 +292,48 @@ static inline PluginConfigIOS load_plugin_config(
     String config_base_dir = path.get_base_dir();
 
     plugin_config.name = config_file->get_value(
-        PluginConfigIOS::CONFIG_SECTION,
-        PluginConfigIOS::CONFIG_NAME_KEY,
+        IosPluginConfig::CONFIG_SECTION,
+        IosPluginConfig::CONFIG_NAME_KEY,
         String()
     );
     plugin_config.initialization_method = config_file->get_value(
-        PluginConfigIOS::CONFIG_SECTION,
-        PluginConfigIOS::CONFIG_INITIALIZE_KEY,
+        IosPluginConfig::CONFIG_SECTION,
+        IosPluginConfig::CONFIG_INITIALIZE_KEY,
         String()
     );
     plugin_config.deinitialization_method = config_file->get_value(
-        PluginConfigIOS::CONFIG_SECTION,
-        PluginConfigIOS::CONFIG_DEINITIALIZE_KEY,
+        IosPluginConfig::CONFIG_SECTION,
+        IosPluginConfig::CONFIG_DEINITIALIZE_KEY,
         String()
     );
 
     String binary_path = config_file->get_value(
-        PluginConfigIOS::CONFIG_SECTION,
-        PluginConfigIOS::CONFIG_BINARY_KEY,
+        IosPluginConfig::CONFIG_SECTION,
+        IosPluginConfig::CONFIG_BINARY_KEY,
         String()
     );
     plugin_config.binary =
         resolve_local_dependency_path(config_base_dir, binary_path);
 
-    if (config_file->has_section(PluginConfigIOS::DEPENDENCIES_SECTION)) {
+    if (config_file->has_section(IosPluginConfig::DEPENDENCIES_SECTION)) {
         Vector<String> linked_dependencies = config_file->get_value(
-            PluginConfigIOS::DEPENDENCIES_SECTION,
-            PluginConfigIOS::DEPENDENCIES_LINKED_KEY,
+            IosPluginConfig::DEPENDENCIES_SECTION,
+            IosPluginConfig::DEPENDENCIES_LINKED_KEY,
             Vector<String>()
         );
         Vector<String> embedded_dependencies = config_file->get_value(
-            PluginConfigIOS::DEPENDENCIES_SECTION,
-            PluginConfigIOS::DEPENDENCIES_EMBEDDED_KEY,
+            IosPluginConfig::DEPENDENCIES_SECTION,
+            IosPluginConfig::DEPENDENCIES_EMBEDDED_KEY,
             Vector<String>()
         );
         Vector<String> system_dependencies = config_file->get_value(
-            PluginConfigIOS::DEPENDENCIES_SECTION,
-            PluginConfigIOS::DEPENDENCIES_SYSTEM_KEY,
+            IosPluginConfig::DEPENDENCIES_SECTION,
+            IosPluginConfig::DEPENDENCIES_SYSTEM_KEY,
             Vector<String>()
         );
         Vector<String> files = config_file->get_value(
-            PluginConfigIOS::DEPENDENCIES_SECTION,
-            PluginConfigIOS::DEPENDENCIES_FILES_KEY,
+            IosPluginConfig::DEPENDENCIES_SECTION,
+            IosPluginConfig::DEPENDENCIES_FILES_KEY,
             Vector<String>()
         );
 
@@ -348,67 +348,67 @@ static inline PluginConfigIOS load_plugin_config(
             resolve_local_dependencies(config_base_dir, files);
 
         plugin_config.capabilities = config_file->get_value(
-            PluginConfigIOS::DEPENDENCIES_SECTION,
-            PluginConfigIOS::DEPENDENCIES_CAPABILITIES_KEY,
+            IosPluginConfig::DEPENDENCIES_SECTION,
+            IosPluginConfig::DEPENDENCIES_CAPABILITIES_KEY,
             Vector<String>()
         );
 
         plugin_config.linker_flags = config_file->get_value(
-            PluginConfigIOS::DEPENDENCIES_SECTION,
-            PluginConfigIOS::DEPENDENCIES_LINKER_FLAGS,
+            IosPluginConfig::DEPENDENCIES_SECTION,
+            IosPluginConfig::DEPENDENCIES_LINKER_FLAGS,
             Vector<String>()
         );
     }
 
-    if (config_file->has_section(PluginConfigIOS::PLIST_SECTION)) {
+    if (config_file->has_section(IosPluginConfig::PLIST_SECTION)) {
         List<String> keys;
-        config_file->get_section_keys(PluginConfigIOS::PLIST_SECTION, &keys);
+        config_file->get_section_keys(IosPluginConfig::PLIST_SECTION, &keys);
 
         for (int i = 0; i < keys.size(); i++) {
             Vector<String> key_components = keys[i].split(":");
 
             String key_value = "";
-            PluginConfigIOS::PlistItemType key_type =
-                PluginConfigIOS::PlistItemType::UNKNOWN;
+            IosPluginConfig::PlistItemType key_type =
+                IosPluginConfig::PlistItemType::UNKNOWN;
 
             if (key_components.size() == 1) {
                 key_value = key_components[0];
-                key_type  = PluginConfigIOS::PlistItemType::STRING;
+                key_type  = IosPluginConfig::PlistItemType::STRING;
             } else if (key_components.size() == 2) {
                 key_value = key_components[0];
 
                 if (key_components[1].to_lower() == "string") {
-                    key_type = PluginConfigIOS::PlistItemType::STRING;
+                    key_type = IosPluginConfig::PlistItemType::STRING;
                 } else if (key_components[1].to_lower() == "integer") {
-                    key_type = PluginConfigIOS::PlistItemType::INTEGER;
+                    key_type = IosPluginConfig::PlistItemType::INTEGER;
                 } else if (key_components[1].to_lower() == "boolean") {
-                    key_type = PluginConfigIOS::PlistItemType::BOOLEAN;
+                    key_type = IosPluginConfig::PlistItemType::BOOLEAN;
                 } else if (key_components[1].to_lower() == "raw") {
-                    key_type = PluginConfigIOS::PlistItemType::RAW;
+                    key_type = IosPluginConfig::PlistItemType::RAW;
                 } else if (key_components[1].to_lower() == "string_input") {
-                    key_type = PluginConfigIOS::PlistItemType::STRING_INPUT;
+                    key_type = IosPluginConfig::PlistItemType::STRING_INPUT;
                 }
             }
 
             if (key_value.empty()
-                || key_type == PluginConfigIOS::PlistItemType::UNKNOWN) {
+                || key_type == IosPluginConfig::PlistItemType::UNKNOWN) {
                 continue;
             }
 
             String value;
 
             switch (key_type) {
-                case PluginConfigIOS::PlistItemType::STRING: {
+                case IosPluginConfig::PlistItemType::STRING: {
                     String raw_value = config_file->get_value(
-                        PluginConfigIOS::PLIST_SECTION,
+                        IosPluginConfig::PLIST_SECTION,
                         keys[i],
                         String()
                     );
                     value = "<string>" + raw_value + "</string>";
                 } break;
-                case PluginConfigIOS::PlistItemType::INTEGER: {
+                case IosPluginConfig::PlistItemType::INTEGER: {
                     int raw_value = config_file->get_value(
-                        PluginConfigIOS::PLIST_SECTION,
+                        IosPluginConfig::PLIST_SECTION,
                         keys[i],
                         0
                     );
@@ -417,9 +417,9 @@ static inline PluginConfigIOS load_plugin_config(
                     value_dictionary["value"] = raw_value;
                     value = value_format.format(value_dictionary, "$_");
                 } break;
-                case PluginConfigIOS::PlistItemType::BOOLEAN:
+                case IosPluginConfig::PlistItemType::BOOLEAN:
                     if (config_file->get_value(
-                            PluginConfigIOS::PLIST_SECTION,
+                            IosPluginConfig::PLIST_SECTION,
                             keys[i],
                             false
                         )) {
@@ -428,17 +428,17 @@ static inline PluginConfigIOS load_plugin_config(
                         value = "<false/>";
                     }
                     break;
-                case PluginConfigIOS::PlistItemType::RAW: {
+                case IosPluginConfig::PlistItemType::RAW: {
                     String raw_value = config_file->get_value(
-                        PluginConfigIOS::PLIST_SECTION,
+                        IosPluginConfig::PLIST_SECTION,
                         keys[i],
                         String()
                     );
                     value = raw_value;
                 } break;
-                case PluginConfigIOS::PlistItemType::STRING_INPUT: {
+                case IosPluginConfig::PlistItemType::STRING_INPUT: {
                     String raw_value = config_file->get_value(
-                        PluginConfigIOS::PLIST_SECTION,
+                        IosPluginConfig::PLIST_SECTION,
                         keys[i],
                         String()
                     );
@@ -449,7 +449,7 @@ static inline PluginConfigIOS load_plugin_config(
             }
 
             plugin_config.plist[key_value] =
-                PluginConfigIOS::PlistItem{key_type, value};
+                IosPluginConfig::PlistItem{key_type, value};
         }
     }
 
@@ -461,4 +461,4 @@ static inline PluginConfigIOS load_plugin_config(
     return plugin_config;
 }
 
-#endif // REBEL_PLUGIN_CONFIG_H
+#endif // IOS_PLUGIN_CONFIG_H

@@ -8,7 +8,7 @@
 
 #include "core/project_settings.h"
 #import "display_layer.h"
-#include "os_iphone.h"
+#include "ios_os.h"
 #import "rebel_view_gesture_recognizer.h"
 #import "rebel_view_renderer.h"
 #include "servers/audio_server.h"
@@ -333,7 +333,7 @@ static const int max_touches = 8;
             CGPoint touchPoint = [touch locationInView:self];
 
             if (touch.type == UITouchTypeStylus) {
-                OSIPhone::get_singleton()->pencil_press(
+                IosOS::get_singleton()->pencil_press(
                     tid,
                     touchPoint.x * self.contentScaleFactor,
                     touchPoint.y * self.contentScaleFactor,
@@ -341,7 +341,7 @@ static const int max_touches = 8;
                     touch.tapCount > 1
                 );
             } else {
-                OSIPhone::get_singleton()->touch_press(
+                IosOS::get_singleton()->touch_press(
                     tid,
                     touchPoint.x * self.contentScaleFactor,
                     touchPoint.y * self.contentScaleFactor,
@@ -366,7 +366,7 @@ static const int max_touches = 8;
             // Vector2 tilt = touch.azimuthUnitVector;
 
             if (touch.type == UITouchTypeStylus) {
-                OSIPhone::get_singleton()->pencil_drag(
+                IosOS::get_singleton()->pencil_drag(
                     tid,
                     prev_point.x * self.contentScaleFactor,
                     prev_point.y * self.contentScaleFactor,
@@ -375,7 +375,7 @@ static const int max_touches = 8;
                     force
                 );
             } else {
-                OSIPhone::get_singleton()->touch_drag(
+                IosOS::get_singleton()->touch_drag(
                     tid,
                     prev_point.x * self.contentScaleFactor,
                     prev_point.y * self.contentScaleFactor,
@@ -397,7 +397,7 @@ static const int max_touches = 8;
             [self removeTouch:touch];
             CGPoint touchPoint = [touch locationInView:self];
             if (touch.type == UITouchTypeStylus) {
-                OSIPhone::get_singleton()->pencil_press(
+                IosOS::get_singleton()->pencil_press(
                     tid,
                     touchPoint.x * self.contentScaleFactor,
                     touchPoint.y * self.contentScaleFactor,
@@ -405,7 +405,7 @@ static const int max_touches = 8;
                     false
                 );
             } else {
-                OSIPhone::get_singleton()->touch_press(
+                IosOS::get_singleton()->touch_press(
                     tid,
                     touchPoint.x * self.contentScaleFactor,
                     touchPoint.y * self.contentScaleFactor,
@@ -425,9 +425,9 @@ static const int max_touches = 8;
             int tid        = [self getTouchIDForTouch:touch];
             ERR_FAIL_COND(tid == -1);
             if (touch.type == UITouchTypeStylus) {
-                OSIPhone::get_singleton()->pencil_cancelled(tid);
+                IosOS::get_singleton()->pencil_cancelled(tid);
             } else {
-                OSIPhone::get_singleton()->touches_cancelled(tid);
+                IosOS::get_singleton()->touches_cancelled(tid);
             }
         }
     }
@@ -484,55 +484,55 @@ static const int max_touches = 8;
 
     switch (interfaceOrientation) {
         case UIInterfaceOrientationLandscapeLeft: {
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_gravity(-gravity.y, gravity.x, gravity.z);
-            OSIPhone::get_singleton()->update_accelerometer(
+            IosOS::get_singleton()->update_accelerometer(
                 -(acceleration.y + gravity.y),
                 (acceleration.x + gravity.x),
                 acceleration.z + gravity.z
             );
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_magnetometer(-magnetic.y, magnetic.x, magnetic.z);
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_gyroscope(-rotation.y, rotation.x, rotation.z);
         } break;
         case UIInterfaceOrientationLandscapeRight: {
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_gravity(gravity.y, -gravity.x, gravity.z);
-            OSIPhone::get_singleton()->update_accelerometer(
+            IosOS::get_singleton()->update_accelerometer(
                 (acceleration.y + gravity.y),
                 -(acceleration.x + gravity.x),
                 acceleration.z + gravity.z
             );
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_magnetometer(magnetic.y, -magnetic.x, magnetic.z);
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_gyroscope(rotation.y, -rotation.x, rotation.z);
         } break;
         case UIInterfaceOrientationPortraitUpsideDown: {
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_gravity(-gravity.x, gravity.y, gravity.z);
-            OSIPhone::get_singleton()->update_accelerometer(
+            IosOS::get_singleton()->update_accelerometer(
                 -(acceleration.x + gravity.x),
                 (acceleration.y + gravity.y),
                 acceleration.z + gravity.z
             );
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_magnetometer(-magnetic.x, magnetic.y, magnetic.z);
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_gyroscope(-rotation.x, rotation.y, rotation.z);
         } break;
         default: { // assume portrait
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_gravity(gravity.x, gravity.y, gravity.z);
-            OSIPhone::get_singleton()->update_accelerometer(
+            IosOS::get_singleton()->update_accelerometer(
                 acceleration.x + gravity.x,
                 acceleration.y + gravity.y,
                 acceleration.z + gravity.z
             );
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_magnetometer(magnetic.x, magnetic.y, magnetic.z);
-            OSIPhone::get_singleton()
+            IosOS::get_singleton()
                 ->update_gyroscope(rotation.x, rotation.y, rotation.z);
         } break;
     }

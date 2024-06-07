@@ -7,9 +7,9 @@
 #import "view_controller.h"
 
 #include "core/project_settings.h"
+#include "ios_os.h"
 #import "keyboard_input_view.h"
 #import "native_video_view.h"
-#include "os_iphone.h"
 #import "rebel_view.h"
 #import "rebel_view_renderer.h"
 
@@ -152,7 +152,7 @@
 }
 
 - (BOOL)shouldAutorotate {
-    if (!OSIPhone::get_singleton()) {
+    if (!IosOS::get_singleton()) {
         return NO;
     }
 
@@ -167,7 +167,7 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if (!OSIPhone::get_singleton()) {
+    if (!IosOS::get_singleton()) {
         return UIInterfaceOrientationMaskAll;
     }
 
@@ -211,16 +211,16 @@
     CGRect rawFrame      = [value CGRectValue];
     CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
 
-    if (OSIPhone::get_singleton()) {
-        OSIPhone::get_singleton()->set_virtual_keyboard_height(
+    if (IosOS::get_singleton()) {
+        IosOS::get_singleton()->set_virtual_keyboard_height(
             keyboardFrame.size.height
         );
     }
 }
 
 - (void)keyboardHidden:(NSNotification*)notification {
-    if (OSIPhone::get_singleton()) {
-        OSIPhone::get_singleton()->set_virtual_keyboard_height(0);
+    if (IosOS::get_singleton()) {
+        IosOS::get_singleton()->set_virtual_keyboard_height(0);
     }
 }
 

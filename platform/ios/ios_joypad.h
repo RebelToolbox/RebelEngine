@@ -6,7 +6,7 @@
 
 #import <GameController/GameController.h>
 
-@interface JoypadIPhoneObserver : NSObject
+@interface IosJoypadObserver : NSObject
 
 - (void)startObserving;
 - (void)startProcessing;
@@ -14,13 +14,13 @@
 
 @end
 
-class JoypadIPhone {
+class IosJoypad {
 private:
-    JoypadIPhoneObserver* observer;
+    IosJoypadObserver* observer;
 
 public:
-    JoypadIPhone();
-    ~JoypadIPhone();
+    IosJoypad();
+    ~IosJoypad();
 
     void start_processing();
 };
