@@ -28,8 +28,8 @@ def get_opts():
 
     return [
         (
-            "IPHONEPATH",
-            "Path to iPhone toolchain",
+            "xctoolchain",
+            "Path to the xctoolchain directory",
             "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain",
         ),
         BoolVariable("ios_simulator", "Build for iOS Simulator", False),
@@ -79,10 +79,12 @@ def configure(env):
     if "OSXCROSS_IOS" in os.environ:
         env["osxcross"] = True
 
-    env["ENV"]["PATH"] = env["IPHONEPATH"] + "/Developer/usr/bin/:" + env["ENV"]["PATH"]
+    env["ENV"]["PATH"] = (
+        env["xctoolchain"] + "/Developer/usr/bin/:" + env["ENV"]["PATH"]
+    )
 
-    compiler_path = "$IPHONEPATH/usr/bin/${ios_triple}"
-    s_compiler_path = "$IPHONEPATH/Developer/usr/bin/"
+    compiler_path = "$xctoolchain/usr/bin/${ios_triple}"
+    s_compiler_path = "$xctoolchain/Developer/usr/bin/"
 
     ccache_path = os.environ.get("CCACHE")
     if ccache_path is None:
