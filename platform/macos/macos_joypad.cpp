@@ -4,13 +4,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "joypad_osx.h"
+#include "macos_joypad.h"
 
 #include <machine/endian.h>
 
 #define RUN_LOOP_MODE CFSTR("JoypadMode")
 
-static JoypadOSX* self = NULL;
+static MacOSJoypad* self = NULL;
 
 joypad::joypad() {
     device_ref    = NULL;
@@ -237,7 +237,7 @@ static bool is_joypad(IOHIDDeviceRef p_device_ref) {
     return true;
 }
 
-void JoypadOSX::_device_added(IOReturn p_res, IOHIDDeviceRef p_device) {
+void MacOSJoypad::_device_added(IOReturn p_res, IOHIDDeviceRef p_device) {
     if (p_res != kIOReturnSuccess || have_device(p_device)) {
         return;
     }
@@ -265,7 +265,7 @@ void JoypadOSX::_device_added(IOReturn p_res, IOHIDDeviceRef p_device) {
     );
 }
 
-void JoypadOSX::_device_removed(IOReturn p_res, IOHIDDeviceRef p_device) {
+void MacOSJoypad::_device_removed(IOReturn p_res, IOHIDDeviceRef p_device) {
     int device = get_joy_ref(p_device);
     ERR_FAIL_COND(device == -1);
 
@@ -285,7 +285,7 @@ static String _hex_str(uint8_t p_byte) {
     return ret;
 }
 
-bool JoypadOSX::configure_joypad(IOHIDDeviceRef p_device_ref, joypad* p_joy) {
+bool MacOSJoypad::configure_joypad(IOHIDDeviceRef p_device_ref, joypad* p_joy) {
     p_joy->device_ref = p_device_ref;
     /* get device name */
     String name;
@@ -491,7 +491,7 @@ static int process_hat_value(
     return hat_value;
 }
 
-void JoypadOSX::poll_joypads() const {
+void MacOSJoypad::poll_joypads() const {
     while (CFRunLoopRunInMode(RUN_LOOP_MODE, 0, TRUE)
            == kCFRunLoopRunHandledSource) {
         /* no-op. Pending callbacks will fire. */
@@ -519,7 +519,7 @@ static const InputDefault::JoyAxis axis_correct(
     return jx;
 }
 
-void JoypadOSX::process_joypads() {
+void MacOSJoypad::process_joypads() {
     poll_joypads();
 
     for (int i = 0; i < device_list.size(); i++) {
@@ -559,7 +559,7 @@ void JoypadOSX::process_joypads() {
     }
 }
 
-void JoypadOSX::joypad_vibration_start(
+void MacOSJoypad::joypad_vibration_start(
     int p_id,
     float p_magnitude,
     float p_duration,
@@ -577,13 +577,13 @@ void JoypadOSX::joypad_vibration_start(
     FFEffectStart(joy->ff_object, 1, 0);
 }
 
-void JoypadOSX::joypad_vibration_stop(int p_id, uint64_t p_timestamp) {
+void MacOSJoypad::joypad_vibration_stop(int p_id, uint64_t p_timestamp) {
     joypad* joy       = &device_list.write[get_joy_index(p_id)];
     joy->ff_timestamp = p_timestamp;
     FFEffectStop(joy->ff_object);
 }
 
-int JoypadOSX::get_joy_index(int p_id) const {
+int MacOSJoypad::get_joy_index(int p_id) const {
     for (int i = 0; i < device_list.size(); i++) {
         if (device_list[i].id == p_id) {
             return i;
@@ -592,7 +592,7 @@ int JoypadOSX::get_joy_index(int p_id) const {
     return -1;
 }
 
-int JoypadOSX::get_joy_ref(IOHIDDeviceRef p_device) const {
+int MacOSJoypad::get_joy_ref(IOHIDDeviceRef p_device) const {
     for (int i = 0; i < device_list.size(); i++) {
         if (device_list[i].device_ref == p_device) {
             return i;
@@ -601,7 +601,7 @@ int JoypadOSX::get_joy_ref(IOHIDDeviceRef p_device) const {
     return -1;
 }
 
-bool JoypadOSX::have_device(IOHIDDeviceRef p_device) const {
+bool MacOSJoypad::have_device(IOHIDDeviceRef p_device) const {
     for (int i = 0; i < device_list.size(); i++) {
         if (device_list[i].device_ref == p_device) {
             return true;
@@ -651,7 +651,7 @@ static CFDictionaryRef create_match_dictionary(
     return retval;
 }
 
-void JoypadOSX::config_hid_manager(CFArrayRef p_matching_array) const {
+void MacOSJoypad::config_hid_manager(CFArrayRef p_matching_array) const {
     CFRunLoopRef runloop = CFRunLoopGetCurrent();
     IOReturn ret         = IOHIDManagerOpen(hid_manager, kIOHIDOptionsTypeNone);
     ERR_FAIL_COND(ret != kIOReturnSuccess);
@@ -675,7 +675,7 @@ void JoypadOSX::config_hid_manager(CFArrayRef p_matching_array) const {
     }
 }
 
-JoypadOSX::JoypadOSX() {
+MacOSJoypad::MacOSJoypad() {
     self  = this;
     input = (InputDefault*)Input::get_singleton();
 
@@ -722,7 +722,7 @@ JoypadOSX::JoypadOSX() {
     }
 }
 
-JoypadOSX::~JoypadOSX() {
+MacOSJoypad::~MacOSJoypad() {
     for (int i = 0; i < device_list.size(); i++) {
         device_list.write[i].free();
     }

@@ -8,7 +8,7 @@
 /// those to minimize code duplication!!!!
 // If you fix something here, make sure you fix it there as well!
 
-#include "camera_osx.h"
+#include "macos_camera.h"
 
 #include "servers/camera/camera_feed.h"
 
@@ -303,7 +303,7 @@ void CameraFeedOSX::deactivate_feed() {
 // when devices are connected/disconnected
 
 @interface MyDeviceNotifications : NSObject {
-    CameraOSX* camera_server;
+    MacOSCamera* camera_server;
 }
 
 @end
@@ -314,7 +314,7 @@ void CameraFeedOSX::deactivate_feed() {
     camera_server->update_feeds();
 }
 
-- (id)initForServer:(CameraOSX*)p_server {
+- (id)initForServer:(MacOSCamera*)p_server {
     if (self = [super init]) {
         camera_server = p_server;
 
@@ -351,9 +351,9 @@ void CameraFeedOSX::deactivate_feed() {
 MyDeviceNotifications* device_notifications = nil;
 
 //////////////////////////////////////////////////////////////////////////
-// CameraOSX - Subclass for our camera server on OSX
+// MacOSCamera - Subclass for our camera server on OSX
 
-void CameraOSX::update_feeds() {
+void MacOSCamera::update_feeds() {
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 101500
     AVCaptureDeviceDiscoverySession* session = [AVCaptureDeviceDiscoverySession
         discoverySessionWithDeviceTypes:
@@ -401,7 +401,7 @@ void CameraOSX::update_feeds() {
     };
 };
 
-CameraOSX::CameraOSX() {
+MacOSCamera::MacOSCamera() {
     // Find available cameras we have at this time
     update_feeds();
 
@@ -409,6 +409,6 @@ CameraOSX::CameraOSX() {
     device_notifications = [[MyDeviceNotifications alloc] initForServer:this];
 };
 
-CameraOSX::~CameraOSX() {
+MacOSCamera::~MacOSCamera() {
     [device_notifications release];
 };

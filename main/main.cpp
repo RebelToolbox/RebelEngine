@@ -619,7 +619,7 @@ Error Main::setup(
 
     I = args.front();
     while (I) {
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
         // Ignore the process serial number argument passed by macOS Gatekeeper.
         // Otherwise, Godot would try to open a non-existent project on the
         // first start and abort.
@@ -2766,7 +2766,7 @@ bool Main::start() {
                 );
                 sml->add_current_scene(scene);
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
                 String mac_iconpath = GLOBAL_DEF(
                     "application/config/macos_native_icon",
                     "Variant()"

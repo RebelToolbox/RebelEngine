@@ -67,11 +67,11 @@ def copy_file(src_dir, dst_dir, src_name, dst_name=""):
 
 
 def is_desktop(platform):
-    return platform in ["windows", "osx", "x11", "server", "uwp"]
+    return platform in ["windows", "macos", "x11", "server", "uwp"]
 
 
 def is_unix_like(platform):
-    return platform in ["osx", "x11", "server", "android", "ios"]
+    return platform in ["macos", "x11", "server", "android", "ios"]
 
 
 def module_supports_tools_on(platform):
@@ -238,7 +238,7 @@ def configure(env, env_mono):
 
             copy_file(mono_bin_path, "#bin", mono_dll_file)
     else:
-        is_apple = env["platform"] in ["osx", "ios"]
+        is_apple = env["platform"] in ["macos", "ios"]
         is_macos = is_apple and not is_ios
 
         sharedlib_ext = ".dylib" if is_apple else ".so"
@@ -253,7 +253,7 @@ def configure(env, env_mono):
             )
 
         if not mono_root and is_macos:
-            # Try with some known directories under OSX
+            # Try with some known directories under MacOS
             hint_dirs = [
                 "/Library/Frameworks/Mono.framework/Versions/Current",
                 "/usr/local/var/homebrew/linked/mono",
@@ -642,7 +642,7 @@ def copy_mono_shared_libs(env, mono_root, target_mono_root_dir):
         src_mono_lib_dir = os.path.join(mono_root, "lib")
 
         lib_file_names = []
-        if platform == "osx":
+        if platform == "macos":
             lib_file_names = [
                 lib_name + ".dylib"
                 for lib_name in ["libmono-btls-shared", "libMonoPosixHelper"]

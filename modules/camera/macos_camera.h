@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef CAMERAOSX_H
-#define CAMERAOSX_H
+#ifndef MACOS_CAMERA_H
+#define MACOS_CAMERA_H
 
 ///@TODO this is a near duplicate of IosCamera, we should find a way to combine
 /// those to minimize code duplication!!!!
@@ -13,12 +13,12 @@
 
 #include "servers/camera_server.h"
 
-class CameraOSX : public CameraServer {
+class MacOSCamera : public CameraServer {
 public:
-    CameraOSX();
-    ~CameraOSX();
+    MacOSCamera();
+    ~MacOSCamera();
 
     void update_feeds();
 };
 
-#endif /* CAMERAOSX_H */
+#endif // MACOS_CAMERA_H

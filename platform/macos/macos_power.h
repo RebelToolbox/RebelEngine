@@ -4,16 +4,16 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef POWER_OSX_H
-#define POWER_OSX_H
+#ifndef MACOS_POWER_H
+#define MACOS_POWER_H
 
 #include "core/os/file_access.h"
 #include "core/os/os.h"
-#include "dir_access_osx.h"
+#include "macos_dir_access.h"
 
 #include <CoreFoundation/CoreFoundation.h>
 
-class PowerOSX {
+class MacOSPower {
 private:
     int nsecs_left;
     int percent_left;
@@ -24,17 +24,16 @@ private:
         bool* have_battery,
         bool* charging
     );
-    bool
-        GetPowerInfo_MacOSX(/*PowerState * state, int *seconds, int *percent*/);
+    bool GetPowerInfo();
     bool UpdatePowerInfo();
 
 public:
-    PowerOSX();
-    virtual ~PowerOSX();
+    MacOSPower();
+    virtual ~MacOSPower();
 
     OS::PowerState get_power_state();
     int get_power_seconds_left();
     int get_power_percent_left();
 };
 
-#endif // POWER_OSX_H
+#endif // MACOS_POWER_H

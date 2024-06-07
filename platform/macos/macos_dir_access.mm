@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "dir_access_osx.h"
+#include "macos_dir_access.h"
 
 #if defined(UNIX_ENABLED) || defined(LIBC_FILEIO_ENABLED)
 
@@ -12,7 +12,7 @@
 #include <Foundation/Foundation.h>
 #include <errno.h>
 
-String DirAccessOSX::fix_unicode_name(const char* p_name) const {
+String MacOSDirAccess::fix_unicode_name(const char* p_name) const {
     String fname;
     NSString* nsstr = [[NSString stringWithUTF8String:p_name]
         precomposedStringWithCanonicalMapping];
@@ -22,7 +22,7 @@ String DirAccessOSX::fix_unicode_name(const char* p_name) const {
     return fname;
 }
 
-int DirAccessOSX::get_drive_count() {
+int MacOSDirAccess::get_drive_count() {
     NSArray* res_keys = [NSArray
         arrayWithObjects:NSURLVolumeURLKey, NSURLIsSystemImmutableKey, nil];
     NSArray* vols     = [[NSFileManager defaultManager]
@@ -33,7 +33,7 @@ int DirAccessOSX::get_drive_count() {
     return [vols count];
 }
 
-String DirAccessOSX::get_drive(int p_drive) {
+String MacOSDirAccess::get_drive(int p_drive) {
     NSArray* res_keys = [NSArray
         arrayWithObjects:NSURLVolumeURLKey, NSURLIsSystemImmutableKey, nil];
     NSArray* vols     = [[NSFileManager defaultManager]
@@ -52,7 +52,7 @@ String DirAccessOSX::get_drive(int p_drive) {
     return volname;
 }
 
-bool DirAccessOSX::is_hidden(const String& p_name) {
+bool MacOSDirAccess::is_hidden(const String& p_name) {
     String f         = get_current_dir().plus_file(p_name);
     NSURL* url       = [NSURL fileURLWithPath:@(f.utf8().get_data())];
     NSNumber* hidden = nil;

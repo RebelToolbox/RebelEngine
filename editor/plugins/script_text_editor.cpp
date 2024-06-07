@@ -2677,7 +2677,7 @@ void ScriptTextEditor::register_editor() {
         TTR("Unfold All Lines"),
         0
     );
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     ED_SHORTCUT(
         "script_text_editor/duplicate_selection",
         TTR("Duplicate Selection"),
@@ -2731,7 +2731,7 @@ void ScriptTextEditor::register_editor() {
         TTR("Find..."),
         KEY_MASK_CMD | KEY_F
     );
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     ED_SHORTCUT(
         "script_text_editor/find_next",
         TTR("Find Next"),
@@ -2767,7 +2767,7 @@ void ScriptTextEditor::register_editor() {
         KEY_MASK_CMD | KEY_MASK_SHIFT | KEY_F
     );
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     ED_SHORTCUT(
         "script_text_editor/contextual_help",
         TTR("Contextual Help"),
@@ -2802,7 +2802,7 @@ void ScriptTextEditor::register_editor() {
         0
     );
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     ED_SHORTCUT(
         "script_text_editor/goto_function",
         TTR("Go to Function..."),
@@ -2821,7 +2821,7 @@ void ScriptTextEditor::register_editor() {
         KEY_MASK_CMD | KEY_L
     );
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     ED_SHORTCUT(
         "script_text_editor/toggle_breakpoint",
         TTR("Toggle Breakpoint"),

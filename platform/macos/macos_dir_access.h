@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef DIR_ACCESS_OSX_H
-#define DIR_ACCESS_OSX_H
+#ifndef MACOS_DIR_ACCESS_H
+#define MACOS_DIR_ACCESS_H
 
 #if defined(UNIX_ENABLED) || defined(LIBC_FILEIO_ENABLED)
 
@@ -17,7 +17,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-class DirAccessOSX : public DirAccessUnix {
+class MacOSDirAccess : public DirAccessUnix {
 protected:
     virtual String fix_unicode_name(const char* p_name) const;
 
@@ -28,4 +28,4 @@ protected:
 };
 
 #endif // UNIX ENABLED
-#endif
+#endif // MACOS_DIR_ACCESS_H

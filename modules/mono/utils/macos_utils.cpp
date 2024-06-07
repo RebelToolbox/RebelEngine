@@ -4,16 +4,16 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "osx_utils.h"
+#include "macos_utils.h"
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
 
 #include "core/print_string.h"
 
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
 
-bool osx_is_app_bundle_installed(const String& p_bundle_id) {
+bool macos_is_app_bundle_installed(const String& p_bundle_id) {
     CFStringRef bundle_id = CFStringCreateWithCString(
         nullptr,
         p_bundle_id.utf8(),

@@ -4,19 +4,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef OS_OSX_H
-#define OS_OSX_H
+#ifndef MacOSOS_H
+#define MacOSOS_H
 
 #define BitMap _QDBitMap // Suppress deprecated QuickDraw definition.
 
 #include "core/os/input.h"
-#include "crash_handler_osx.h"
 #include "drivers/coreaudio/audio_driver_coreaudio.h"
 #include "drivers/coremidi/midi_driver_coremidi.h"
 #include "drivers/unix/os_unix.h"
-#include "joypad_osx.h"
+#include "macos_crash_handler.h"
+#include "macos_joypad.h"
+#include "macos_power.h"
 #include "main/input_default.h"
-#include "power_osx.h"
 #include "servers/audio_server.h"
 #include "servers/visual/rasterizer.h"
 #include "servers/visual/visual_server_wrap_mt.h"
@@ -30,10 +30,10 @@
 #undef BitMap
 #undef CursorShape
 
-class OS_OSX : public OS_Unix {
+class MacOSOS : public OS_Unix {
 public:
     struct KeyEvent {
-        unsigned int osx_state;
+        unsigned int macos_state;
         bool pressed;
         bool echo;
         bool raw;
@@ -71,7 +71,7 @@ public:
 #endif
 
     InputDefault* input;
-    JoypadOSX* joypad_osx;
+    MacOSJoypad* macos_joypad;
 
     /* objc */
 
@@ -123,7 +123,7 @@ public:
     Size2 min_size;
     Size2 max_size;
 
-    PowerOSX* power_manager;
+    MacOSPower* power_manager;
 
     CrashHandler crash_handler;
 
@@ -170,7 +170,7 @@ protected:
     virtual void delete_main_loop();
 
 public:
-    static OS_OSX* singleton;
+    static MacOSOS* singleton;
 
     void global_menu_add_item(
         const String& p_menu,
@@ -339,7 +339,7 @@ public:
 
     void force_process_input();
 
-    OS_OSX();
+    MacOSOS();
 
 private:
     Point2 get_native_screen_position(int p_screen) const;

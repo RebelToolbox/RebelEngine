@@ -276,7 +276,7 @@ else:
     ):
         selected_platform = "x11"
     elif sys.platform == "darwin":
-        selected_platform = "osx"
+        selected_platform = "macos"
     elif sys.platform == "win32":
         selected_platform = "windows"
     else:

@@ -834,7 +834,7 @@ def CommandNoCache(env, target, sources, command, **args):
 
 def get_darwin_sdk_version(platform):
     sdk_name = ""
-    if platform == "osx":
+    if platform == "macos":
         sdk_name = "macosx"
     elif platform == "ios":
         sdk_name = "iphoneos"
@@ -854,7 +854,7 @@ def get_darwin_sdk_version(platform):
 
 def get_darwin_sdk_path(platform):
     sdk_name = ""
-    if platform == "osx":
+    if platform == "macos":
         sdk_name = "macosx"
     elif platform == "ios":
         sdk_name = "iphoneos"

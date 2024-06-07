@@ -21,7 +21,7 @@ namespace GodotTools.Utils
         public static class Names
         {
             public const string Windows = "Windows";
-            public const string OSX = "OSX";
+            public const string MacOS = "MacOS";
             public const string X11 = "X11";
             public const string Server = "Server";
             public const string UWP = "UWP";
@@ -33,7 +33,7 @@ namespace GodotTools.Utils
         public static class Platforms
         {
             public const string Windows = "windows";
-            public const string OSX = "osx";
+            public const string MacOS = "macos";
             public const string X11 = "x11";
             public const string Server = "server";
             public const string UWP = "uwp";
@@ -45,7 +45,7 @@ namespace GodotTools.Utils
         public static readonly Dictionary<string, string> PlatformNameMap = new Dictionary<string, string>
         {
             [Names.Windows] = Platforms.Windows,
-            [Names.OSX] = Platforms.OSX,
+            [Names.MacOS] = Platforms.MacOS,
             [Names.X11] = Platforms.X11,
             [Names.Server] = Platforms.Server,
             [Names.UWP] = Platforms.UWP,
@@ -65,7 +65,7 @@ namespace GodotTools.Utils
         }
 
         private static readonly Lazy<bool> _isWindows = new Lazy<bool>(() => IsOS(Names.Windows));
-        private static readonly Lazy<bool> _isOSX = new Lazy<bool>(() => IsOS(Names.OSX));
+        private static readonly Lazy<bool> _isMacOS = new Lazy<bool>(() => IsOS(Names.MacOS));
         private static readonly Lazy<bool> _isX11 = new Lazy<bool>(() => IsOS(Names.X11));
         private static readonly Lazy<bool> _isServer = new Lazy<bool>(() => IsOS(Names.Server));
         private static readonly Lazy<bool> _isUWP = new Lazy<bool>(() => IsOS(Names.UWP));
@@ -75,7 +75,7 @@ namespace GodotTools.Utils
         private static readonly Lazy<bool> _isUnixLike = new Lazy<bool>(() => IsAnyOS(UnixLikePlatforms));
 
         public static bool IsWindows => _isWindows.Value || IsUWP;
-        public static bool IsOSX => _isOSX.Value;
+        public static bool IsMacOS => _isMacOS.Value;
         public static bool IsX11 => _isX11.Value;
         public static bool IsServer => _isServer.Value;
         public static bool IsUWP => _isUWP.Value;
@@ -83,7 +83,7 @@ namespace GodotTools.Utils
         public static bool IsiOS => _isiOS.Value;
         public static bool IsHTML5 => _isHTML5.Value;
 
-        private static readonly string[] UnixLikePlatforms = {Names.OSX, Names.X11, Names.Server, Names.Android, Names.iOS};
+        private static readonly string[] UnixLikePlatforms = {Names.MacOS, Names.X11, Names.Server, Names.Android, Names.iOS};
 
         public static bool IsUnixLike => _isUnixLike.Value;
 

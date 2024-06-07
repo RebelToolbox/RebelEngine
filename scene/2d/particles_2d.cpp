@@ -236,7 +236,7 @@ String Particles2D::get_configuration_warning() const {
         return warning;
     }
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     if (warning != String()) {
         warning += "\n\n";
     }

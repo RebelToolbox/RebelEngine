@@ -4,9 +4,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef OSX_EXPORT_H
-#define OSX_EXPORT_H
+#ifndef MACOS_EXPORT_H
+#define MACOS_EXPORT_H
 
-void register_osx_exporter();
+void register_macos_exporter();
 
-#endif // OSX_EXPORT_H
+#endif // MACOS_EXPORT_H

@@ -29,7 +29,7 @@ Adapted from corresponding SDL 2.0 code.
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include "power_osx.h"
+#include "macos_power.h"
 
 #include <CoreFoundation/CoreFoundation.h>
 #include <IOKit/ps/IOPSKeys.h>
@@ -43,7 +43,7 @@ Adapted from corresponding SDL 2.0 code.
     CFDictionaryGetValueIfPresent(dict, CFSTR(k), (const void**)v)
 
 /* Note that AC power sources also include a laptop battery it is charging. */
-void PowerOSX::checkps(
+void MacOSPower::checkps(
     CFDictionaryRef dict,
     bool* have_ac,
     bool* have_battery,
@@ -99,7 +99,7 @@ void PowerOSX::checkps(
         SInt32 val = -1;
         CFNumberGetValue(numval, kCFNumberSInt32Type, &val);
 
-        /* Mac OS X reports 0 minutes until empty if you're plugged in. :( */
+        // MacOS reports 0 minutes until empty if you're plugged in. :(
         if ((val == 0) && (is_ac)) {
             val = -1; /* !!! FIXME: calc from timeToFull and capacity? */
         }
@@ -150,7 +150,7 @@ void PowerOSX::checkps(
 #undef STRMATCH
 
 // CODE CHUNK IMPORTED FROM SDL 2.0
-bool PowerOSX::GetPowerInfo_MacOSX() {
+bool MacOSPower::GetPowerInfo() {
     CFTypeRef blob = IOPSCopyPowerSourcesInfo();
 
     nsecs_left   = -1;
@@ -189,17 +189,17 @@ bool PowerOSX::GetPowerInfo_MacOSX() {
         CFRelease(blob);
     }
 
-    return true; /* always the definitive answer on Mac OS X. */
+    return true;
 }
 
-bool PowerOSX::UpdatePowerInfo() {
-    if (GetPowerInfo_MacOSX()) {
+bool MacOSPower::UpdatePowerInfo() {
+    if (GetPowerInfo()) {
         return true;
     }
     return false;
 }
 
-OS::PowerState PowerOSX::get_power_state() {
+OS::PowerState MacOSPower::get_power_state() {
     if (UpdatePowerInfo()) {
         return power_state;
     } else {
@@ -207,7 +207,7 @@ OS::PowerState PowerOSX::get_power_state() {
     }
 }
 
-int PowerOSX::get_power_seconds_left() {
+int MacOSPower::get_power_seconds_left() {
     if (UpdatePowerInfo()) {
         return nsecs_left;
     } else {
@@ -215,7 +215,7 @@ int PowerOSX::get_power_seconds_left() {
     }
 }
 
-int PowerOSX::get_power_percent_left() {
+int MacOSPower::get_power_percent_left() {
     if (UpdatePowerInfo()) {
         return percent_left;
     } else {
@@ -223,9 +223,9 @@ int PowerOSX::get_power_percent_left() {
     }
 }
 
-PowerOSX::PowerOSX() :
+MacOSPower::MacOSPower() :
     nsecs_left(-1),
     percent_left(-1),
     power_state(OS::POWERSTATE_UNKNOWN) {}
 
-PowerOSX::~PowerOSX() {}
+MacOSPower::~MacOSPower() {}

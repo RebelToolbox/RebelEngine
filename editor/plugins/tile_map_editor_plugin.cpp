@@ -2482,7 +2482,7 @@ TileMapEditor::TileMapEditor(EditorNode* p_editor) {
     paint_button->set_shortcut(
         ED_SHORTCUT("tile_map_editor/paint_tile", TTR("Paint Tile"), KEY_P)
     );
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     paint_button->set_tooltip(
         TTR("Shift+LMB: Line Draw\nShift+Command+LMB: Rectangle Paint")
     );

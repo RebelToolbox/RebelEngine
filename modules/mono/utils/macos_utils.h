@@ -6,13 +6,13 @@
 
 #include "core/ustring.h"
 
-#ifndef OSX_UTILS_H
-#define OSX_UTILS_H
+#ifndef MACOS_UTILS_H
+#define MACOS_UTILS_H
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
 
-bool osx_is_app_bundle_installed(const String& p_bundle_id);
+bool macos_is_app_bundle_installed(const String& p_bundle_id);
 
 #endif
 
-#endif // OSX_UTILS_H
+#endif // MACOS_UTILS_H

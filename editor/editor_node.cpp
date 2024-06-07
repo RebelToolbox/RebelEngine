@@ -7669,7 +7669,7 @@ EditorNode::EditorNode() {
     srt->add_child(tabbar_container);
     tabbar_container->add_child(scene_tabs);
     distraction_free = memnew(ToolButton);
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     distraction_free->set_shortcut(ED_SHORTCUT(
         "editor/distraction_free_mode",
         TTR("Distraction Free Mode"),
@@ -8022,7 +8022,7 @@ EditorNode::EditorNode() {
         ),
         RUN_RELOAD_CURRENT_PROJECT
     );
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/quit_to_project_list",
@@ -8160,7 +8160,7 @@ EditorNode::EditorNode() {
 
     p = settings_menu->get_popup();
     p->set_hide_on_window_lose_focus(true);
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/editor_settings",
@@ -8183,7 +8183,7 @@ EditorNode::EditorNode() {
     editor_layouts->connect("id_pressed", this, "_layout_menu_option");
     p->add_submenu_item(TTR("Editor Layout"), "Layouts");
     p->add_separator();
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/take_screenshot",
@@ -8206,7 +8206,7 @@ EditorNode::EditorNode() {
         p->get_item_count() - 1,
         TTR("Screenshots are stored in the Editor Data/Settings Folder.")
     );
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/fullscreen_mode",
@@ -8274,7 +8274,7 @@ EditorNode::EditorNode() {
     p = help_menu->get_popup();
     p->set_hide_on_window_lose_focus(true);
     p->connect("id_pressed", this, "_menu_option");
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     p->add_icon_shortcut(
         gui_base->get_icon("HelpSearch", "EditorIcons"),
         ED_SHORTCUT(
@@ -8327,7 +8327,7 @@ EditorNode::EditorNode() {
     play_button->set_focus_mode(Control::FOCUS_NONE);
     play_button->connect("pressed", this, "_menu_option", make_binds(RUN_PLAY));
     play_button->set_tooltip(TTR("Play the project."));
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     play_button->set_shortcut(
         ED_SHORTCUT("editor/play", TTR("Play"), KEY_MASK_CMD | KEY_B)
     );
@@ -8342,7 +8342,7 @@ EditorNode::EditorNode() {
     pause_button->set_tooltip(TTR("Pause the scene execution for debugging."));
     pause_button->set_disabled(true);
     play_hb->add_child(pause_button);
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     pause_button->set_shortcut(ED_SHORTCUT(
         "editor/pause_scene",
         TTR("Pause Scene"),
@@ -8361,7 +8361,7 @@ EditorNode::EditorNode() {
     stop_button->connect("pressed", this, "_menu_option", make_binds(RUN_STOP));
     stop_button->set_tooltip(TTR("Stop the scene."));
     stop_button->set_disabled(true);
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     stop_button->set_shortcut(
         ED_SHORTCUT("editor/stop", TTR("Stop"), KEY_MASK_CMD | KEY_PERIOD)
     );
@@ -8382,7 +8382,7 @@ EditorNode::EditorNode() {
     play_scene_button
         ->connect("pressed", this, "_menu_option", make_binds(RUN_PLAY_SCENE));
     play_scene_button->set_tooltip(TTR("Play the edited scene."));
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     play_scene_button->set_shortcut(ED_SHORTCUT(
         "editor/play_scene",
         TTR("Play Scene"),
@@ -8408,7 +8408,7 @@ EditorNode::EditorNode() {
         make_binds(RUN_PLAY_CUSTOM_SCENE)
     );
     play_custom_scene_button->set_tooltip(TTR("Play custom scene"));
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     play_custom_scene_button->set_shortcut(ED_SHORTCUT(
         "editor/play_custom_scene",
         TTR("Play Custom Scene"),
@@ -9073,7 +9073,7 @@ EditorNode::EditorNode() {
     ResourceSaver::set_save_callback(_resource_saved);
     ResourceLoader::set_load_callback(_resource_loaded);
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     ED_SHORTCUT(
         "editor/editor_2d",
         TTR("Open 2D Editor"),

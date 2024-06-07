@@ -2098,7 +2098,7 @@ void ProjectManager::_unhandled_input(const Ref<InputEvent>& p_ev) {
         // Pressing Command + Q quits the Project Manager
         // This is handled by the platform implementation on macOS,
         // so only define the shortcut on other platforms
-#ifndef OSX_ENABLED
+#ifndef MACOS_ENABLED
         if (k->get_scancode_with_modifiers() == (KEY_MASK_CMD | KEY_Q)) {
             _dim_window();
             get_tree()->quit();

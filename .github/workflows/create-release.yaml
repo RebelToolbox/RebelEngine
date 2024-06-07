@@ -35,13 +35,13 @@ jobs:
             os: macos-latest
             artifact: macos-editor-x86-64
             build-options: production=yes target=release_debug
-            rebel-executable: rebel.osx.opt.tools.64
+            rebel-executable: rebel.macos.opt.tools.64
 
           - name: macOS Editor armv8 64 bit
             os: macos-latest
             artifact: macos-editor-arm64
             build-options: production=yes target=release_debug arch=arm64
-            rebel-executable: rebel.osx.opt.tools.arm64
+            rebel-executable: rebel.macos.opt.tools.arm64
 
           # Rebel Engine Linux builds
           - name: Linux Engine 64 bit
@@ -98,25 +98,25 @@ jobs:
             os: macos-latest
             artifact: macos-engine-x86-64
             build-options: production=yes tools=no target=release
-            rebel-executable: rebel.osx.opt.64
+            rebel-executable: rebel.macos.opt.64
 
           - name: macOS Engine x86 64 bit Debug
             os: macos-latest
             artifact: macos-engine-x86-64-debug
             build-options: production=yes tools=no target=release_debug
-            rebel-executable: rebel.osx.opt.debug.64
+            rebel-executable: rebel.macos.opt.debug.64
 
           - name: macOS Engine armv8 64 bit
             os: macos-latest
             artifact: macos-engine-arm64
             build-options: production=yes tools=no target=release arch=arm64
-            rebel-executable: rebel.osx.opt.arm64
+            rebel-executable: rebel.macos.opt.arm64
 
           - name: macOS Engine armv8 64 bit Debug
             os: macos-latest
             artifact: macos-engine-arm64-debug
             build-options: production=yes tools=no target=release_debug arch=arm64
-            rebel-executable: rebel.osx.opt.debug.arm64
+            rebel-executable: rebel.macos.opt.debug.arm64
 
           # Rebel Engine Android Library builds
           - name: Android Engine Library armv8 64 bit
@@ -359,10 +359,10 @@ jobs:
       - name: Create Universal binaries
         run: |
           # For each application and build type, run lipo to create a universal binary.
-          for build in          \
-            rebel.osx.opt.tools \
-            rebel.osx.opt       \
-            rebel.osx.opt.debug
+          for build in            \
+            rebel.macos.opt.tools \
+            rebel.macos.opt       \
+            rebel.macos.opt.debug
           do
             lipo -create         \
             bin/$build.64        \
@@ -374,10 +374,10 @@ jobs:
       - name: Create macOS Editor App
         run: |
           # Add universal binary to macOS Editor App template.
-          cp -r tools/dist/osx_tools.app RebelEditor.app
+          cp -r tools/dist/macos_tools.app RebelEditor.app
           bin_folder=RebelEditor.app/Contents/MacOS
           mkdir $bin_folder
-          cp bin/rebel.osx.opt.tools.universal $bin_folder/Rebel
+          cp bin/rebel.macos.opt.tools.universal $bin_folder/Rebel
           echo "::group::Zip macOS Editor App."
           zip -r rebel-editor-macos-universal.zip RebelEditor.app
           echo "::endgroup::"
@@ -385,11 +385,11 @@ jobs:
       - name: Create macOS Engine App
         run: |
           # Add universal binaries to macOS Engine App template.
-          cp -r tools/dist/osx_template.app RebelEngine.app
+          cp -r tools/dist/macos_template.app RebelEngine.app
           bin_folder=RebelEngine.app/Contents/MacOS
           mkdir $bin_folder
-          cp bin/rebel.osx.opt.universal $bin_folder/rebel_release.universal
-          cp bin/rebel.osx.opt.debug.universal $bin_folder/rebel_debug.universal
+          cp bin/rebel.macos.opt.universal $bin_folder/rebel_release.universal
+          cp bin/rebel.macos.opt.debug.universal $bin_folder/rebel_debug.universal
           echo "::group::Zip macOS Engine App."
           zip -r rebel-engine-macos-universal.zip RebelEngine.app
           echo "::endgroup::"
@@ -495,7 +495,7 @@ jobs:
           mv artifacts/rebel.windows.opt.32.msvc.exe templates/windows_32_release.exe
           mv artifacts/rebel.windows.opt.debug.32.msvc.exe templates/windows_32_debug.exe
           # Move macOS templates.
-          mv artifacts/rebel-engine-macos-universal.zip templates/osx.zip
+          mv artifacts/rebel-engine-macos-universal.zip templates/macos.zip
           # Move iOS template.
           mv artifacts/ios-template.zip templates/ios.zip
           # Move Android templates.

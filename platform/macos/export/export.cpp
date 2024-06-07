@@ -17,12 +17,12 @@
 #include "editor/editor_export.h"
 #include "editor/editor_node.h"
 #include "editor/editor_settings.h"
-#include "platform/osx/logo.gen.h"
+#include "platform/macos/logo.gen.h"
 
 #include <sys/stat.h>
 
-class EditorExportPlatformOSX : public EditorExportPlatform {
-    GDCLASS(EditorExportPlatformOSX, EditorExportPlatform);
+class MacOSEditorExportPlatform : public EditorExportPlatform {
+    GDCLASS(MacOSEditorExportPlatform, EditorExportPlatform);
 
     int version_code;
 
@@ -56,7 +56,7 @@ class EditorExportPlatformOSX : public EditorExportPlatform {
         const String& p_pkg_name
     );
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     bool use_codesign() const {
         return true;
     }
@@ -112,11 +112,11 @@ protected:
 
 public:
     virtual String get_name() const {
-        return "Mac OSX";
+        return "MacOS";
     }
 
     virtual String get_os_name() const {
-        return "OSX";
+        return "MacOS";
     }
 
     virtual Ref<Texture> get_logo() const {
@@ -150,7 +150,7 @@ public:
     virtual void get_platform_features(List<String>* r_features) {
         r_features->push_back("pc");
         r_features->push_back("s3tc");
-        r_features->push_back("OSX");
+        r_features->push_back("MacOS");
     }
 
     virtual void resolve_platform_feature_priorities(
@@ -158,11 +158,11 @@ public:
         Set<String>& p_features
     ) {}
 
-    EditorExportPlatformOSX();
-    ~EditorExportPlatformOSX();
+    MacOSEditorExportPlatform();
+    ~MacOSEditorExportPlatform();
 };
 
-void EditorExportPlatformOSX::get_preset_features(
+void MacOSEditorExportPlatform::get_preset_features(
     const Ref<EditorExportPreset>& p_preset,
     List<String>* r_features
 ) {
@@ -179,7 +179,7 @@ void EditorExportPlatformOSX::get_preset_features(
     r_features->push_back("64");
 }
 
-void EditorExportPlatformOSX::get_export_options(List<ExportOption>* r_options
+void MacOSEditorExportPlatform::get_export_options(List<ExportOption>* r_options
 ) {
     r_options->push_back(ExportOption(
         PropertyInfo(
@@ -283,7 +283,7 @@ void EditorExportPlatformOSX::get_export_options(List<ExportOption>* r_options
         ""
     ));
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     r_options->push_back(
         ExportOption(PropertyInfo(Variant::BOOL, "codesign/enable"), true)
     );
@@ -575,7 +575,7 @@ void _rgba8_to_packbits_encode(
     memcpy(&p_dest.write[ofs], result.ptr(), res_size);
 }
 
-void EditorExportPlatformOSX::_make_icon(
+void MacOSEditorExportPlatform::_make_icon(
     const Ref<Image>& p_icon,
     Vector<uint8_t>& p_data
 ) {
@@ -706,7 +706,7 @@ void EditorExportPlatformOSX::_make_icon(
     p_data = data;
 }
 
-void EditorExportPlatformOSX::_fix_plist(
+void MacOSEditorExportPlatform::_fix_plist(
     const Ref<EditorExportPreset>& p_preset,
     Vector<uint8_t>& plist,
     const String& p_binary
@@ -787,16 +787,16 @@ void EditorExportPlatformOSX::_fix_plist(
     }
 }
 
-// If we're running the OSX version of the Rebel Editor we'll:
+// If we're running the MacOS version of the Rebel Editor we'll:
 // - export our application bundle to a temporary folder
 // - attempt to code sign it
 // - and then wrap it up in a DMG
 
-Error EditorExportPlatformOSX::_notarize(
+Error MacOSEditorExportPlatform::_notarize(
     const Ref<EditorExportPreset>& p_preset,
     const String& p_path
 ) {
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     List<String> args;
 
     args.push_back("altool");
@@ -812,7 +812,7 @@ Error EditorExportPlatformOSX::_notarize(
     args.push_back(p_preset->get("notarization/apple_id_password"));
 
     args.push_back("--type");
-    args.push_back("osx");
+    args.push_back("macos");
 
     if (p_preset->get("notarization/apple_team_id")) {
         args.push_back("--asc-provider");
@@ -851,12 +851,12 @@ Error EditorExportPlatformOSX::_notarize(
     return OK;
 }
 
-Error EditorExportPlatformOSX::_code_sign(
+Error MacOSEditorExportPlatform::_code_sign(
     const Ref<EditorExportPreset>& p_preset,
     const String& p_path,
     const String& p_ent_path
 ) {
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     List<String> args;
 
     if (p_preset->get("codesign/timestamp")) {
@@ -915,7 +915,7 @@ Error EditorExportPlatformOSX::_code_sign(
     return OK;
 }
 
-Error EditorExportPlatformOSX::_create_dmg(
+Error MacOSEditorExportPlatform::_create_dmg(
     const String& p_dmg_path,
     const String& p_pkg_name,
     const String& p_app_path_name
@@ -954,7 +954,7 @@ Error EditorExportPlatformOSX::_create_dmg(
     return OK;
 }
 
-Error EditorExportPlatformOSX::export_project(
+Error MacOSEditorExportPlatform::export_project(
     const Ref<EditorExportPreset>& p_preset,
     bool p_debug,
     const String& p_path,
@@ -964,7 +964,7 @@ Error EditorExportPlatformOSX::export_project(
 
     String src_pkg_name;
 
-    EditorProgress ep("export", "Exporting for OSX", 3, true);
+    EditorProgress ep("export", "Exporting for MacOS", 3, true);
 
     if (p_debug) {
         src_pkg_name = p_preset->get("custom_template/debug");
@@ -974,7 +974,7 @@ Error EditorExportPlatformOSX::export_project(
 
     if (src_pkg_name == "") {
         String err;
-        src_pkg_name = find_export_template("osx.zip", &err);
+        src_pkg_name = find_export_template("macos.zip", &err);
         if (src_pkg_name == "") {
             EditorNode::add_io_error(err);
             return ERR_FILE_NOT_FOUND;
@@ -1003,7 +1003,7 @@ Error EditorExportPlatformOSX::export_project(
     int ret = unzGoToFirstFile(src_pkg_zip);
 
     String binary_to_use =
-        "rebel_osx_" + String(p_debug ? "debug" : "release") + ".64";
+        "rebel_macos_" + String(p_debug ? "debug" : "release") + ".64";
 
     String pkg_name;
     if (p_preset->get("application/name") != "") {
@@ -1115,7 +1115,7 @@ Error EditorExportPlatformOSX::export_project(
         unzCloseCurrentFile(src_pkg_zip);
 
         // Write.
-        file = file.replace_first("osx_template.app/", "");
+        file = file.replace_first("macos_template.app/", "");
 
         if (file == "Contents/Info.plist") {
             _fix_plist(p_preset, data, pkg_name);
@@ -1164,23 +1164,25 @@ Error EditorExportPlatformOSX::export_project(
         }
 
         if (data.size() > 0) {
-            if (file.find("/data.mono.osx.64.release_debug/") != -1) {
+            if (file.find("/data.mono.macos.64.release_debug/") != -1) {
                 if (!p_debug) {
                     ret = unzGoToNextFile(src_pkg_zip);
                     continue; // skip
                 }
                 file = file.replace(
-                    "/data.mono.osx.64.release_debug/",
+                    "/data.mono.macos.64.release_debug/",
                     "/GodotSharp/"
                 );
             }
-            if (file.find("/data.mono.osx.64.release/") != -1) {
+            if (file.find("/data.mono.macos.64.release/") != -1) {
                 if (p_debug) {
                     ret = unzGoToNextFile(src_pkg_zip);
                     continue; // skip
                 }
-                file =
-                    file.replace("/data.mono.osx.64.release/", "/GodotSharp/");
+                file = file.replace(
+                    "/data.mono.macos.64.release/",
+                    "/GodotSharp/"
+                );
             }
 
             if (file.ends_with(".dylib")) {
@@ -1635,7 +1637,7 @@ Error EditorExportPlatformOSX::export_project(
     return err;
 }
 
-void EditorExportPlatformOSX::_zip_folder_recursive(
+void MacOSEditorExportPlatform::_zip_folder_recursive(
     zipFile& p_zip,
     const String& p_root_path,
     const String& p_folder,
@@ -1783,7 +1785,7 @@ void EditorExportPlatformOSX::_zip_folder_recursive(
     memdelete(da);
 }
 
-bool EditorExportPlatformOSX::can_export(
+bool MacOSEditorExportPlatform::can_export(
     const Ref<EditorExportPreset>& p_preset,
     String& r_error,
     bool& r_missing_templates
@@ -1794,7 +1796,7 @@ bool EditorExportPlatformOSX::can_export(
     // Look for export templates (first official, and if defined custom
     // templates).
 
-    bool dvalid = exists_export_template("osx.zip", &err);
+    bool dvalid = exists_export_template("macos.zip", &err);
     bool rvalid = dvalid; // Both in the same ZIP.
 
     if (p_preset->get("custom_template/debug") != "") {
@@ -1848,16 +1850,16 @@ bool EditorExportPlatformOSX::can_export(
     return valid;
 }
 
-EditorExportPlatformOSX::EditorExportPlatformOSX() {
-    Ref<Image> img = memnew(Image(_osx_logo));
+MacOSEditorExportPlatform::MacOSEditorExportPlatform() {
+    Ref<Image> img = memnew(Image(_macos_logo));
     logo.instance();
     logo->create_from_image(img);
 }
 
-EditorExportPlatformOSX::~EditorExportPlatformOSX() {}
+MacOSEditorExportPlatform::~MacOSEditorExportPlatform() {}
 
-void register_osx_exporter() {
-    Ref<EditorExportPlatformOSX> platform;
+void register_macos_exporter() {
+    Ref<MacOSEditorExportPlatform> platform;
     platform.instance();
 
     EditorExport::get_singleton()->add_export_platform(platform);

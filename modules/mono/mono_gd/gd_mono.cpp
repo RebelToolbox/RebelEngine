@@ -297,7 +297,7 @@ void GDMono::determine_mono_dirs(
         && DirAccess::exists(mono_reg_info.config_dir)) {
         r_config_dir = mono_reg_info.config_dir;
     }
-#elif defined(OSX_ENABLED)
+#elif defined(MACOS_ENABLED)
     const char* c_assembly_rootdir = mono_assembly_getrootdir();
     const char* c_config_dir       = mono_get_config_dir();
 

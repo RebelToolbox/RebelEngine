@@ -11,8 +11,8 @@
 #include "drivers/unix/os_unix.h"
 #include "main/input_default.h"
 #ifdef __APPLE__
-#include "platform/osx/crash_handler_osx.h"
-#include "platform/osx/power_osx.h"
+#include "platform/macos/macos_crash_handler.h"
+#include "platform/macos/macos_power.h"
 #else
 #include "platform/x11/crash_handler_x11.h"
 #include "platform/x11/power_x11.h"
@@ -38,7 +38,7 @@ class OS_Server : public OS_Unix {
     InputDefault* input;
 
 #ifdef __APPLE__
-    PowerOSX* power_manager;
+    MacOSPower* power_manager;
 #else
     PowerX11* power_manager;
 #endif

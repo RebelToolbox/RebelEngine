@@ -32,7 +32,7 @@
 	<string>$copyright</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
-		<string>MacOSX</string>
+		<string>MacOS</string>
 	</array>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>

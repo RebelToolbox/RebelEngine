@@ -1240,7 +1240,7 @@ void IosEditorExportPlatform::_fix_config_file(
 
     // !BAS! I'm assuming the 9 in the original code was a typo. I've added -1
     // or else it seems to also be adding our terminating zero... should apply
-    // the same fix in our OSX export.
+    // the same fix in our MacOS export.
     CharString cs = strnew.utf8();
     pfile.resize(cs.size() - 1);
     for (int i = 0; i < cs.size() - 1; i++) {
@@ -2647,7 +2647,7 @@ Error IosEditorExportPlatform::export_project(
     int ret = unzGoToFirstFile(src_pkg_zip);
     Vector<uint8_t> project_file_data;
     while (ret == UNZ_OK) {
-#if defined(OSX_ENABLED) || defined(X11_ENABLED)
+#if defined(MACOS_ENABLED) || defined(X11_ENABLED)
         bool is_execute = false;
 #endif
 
@@ -2689,7 +2689,7 @@ Error IosEditorExportPlatform::export_project(
                 continue; // ignore!
             }
             found_library = true;
-#if defined(OSX_ENABLED) || defined(X11_ENABLED)
+#if defined(MACOS_ENABLED) || defined(X11_ENABLED)
             is_execute = true;
 #endif
             file = file.replace(library_to_use, binary_name + ".xcframework");
@@ -2734,7 +2734,7 @@ Error IosEditorExportPlatform::export_project(
             f->close();
             memdelete(f);
 
-#if defined(OSX_ENABLED) || defined(X11_ENABLED)
+#if defined(MACOS_ENABLED) || defined(X11_ENABLED)
             if (is_execute) {
                 // we need execute rights on this file
                 chmod(file.utf8().get_data(), 0755);
@@ -2859,7 +2859,7 @@ Error IosEditorExportPlatform::export_project(
     f->close();
     memdelete(f);
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     if (ep.step("Code-signing dylibs", 2)) {
         return ERR_SKIP;
     }

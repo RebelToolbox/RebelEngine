@@ -69,7 +69,7 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="id" type="Variant" />
             <argument index="1" name="meta" type="Variant" />
             <description>
-                Called when the user performs an action in the system global menu (e.g. the Mac OS menu bar).
+                Called when the user performs an action in the system global menu (e.g. the macOS menu bar).
             </description>
         </method>
         <method name="_idle" qualifiers="virtual">

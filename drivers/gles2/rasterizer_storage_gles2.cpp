@@ -8183,7 +8183,7 @@ void RasterizerStorageGLES2::initialize() {
 
         if (status != GL_FRAMEBUFFER_COMPLETE) {
             // If it fails, test to see if it supports a framebuffer texture
-            // using UNSIGNED_SHORT This is needed because many OSX devices
+            // using UNSIGNED_SHORT. This is needed because many macOS devices
             // don't support either UNSIGNED_INT or UNSIGNED_SHORT
 #ifdef GLES_OVER_GL
             config.depth_internalformat = GL_DEPTH_COMPONENT16;

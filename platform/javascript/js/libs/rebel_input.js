@@ -105,7 +105,7 @@ const RebelInputGamepads = {
 				os = 'iOS';
 			} else if (ua.indexOf('Macintosh') >= 0) {
 				// Updated iPads will fall into this category.
-				os = 'MacOSX';
+				os = 'MacOS';
 			} else if (ua.indexOf('Windows') >= 0) {
 				os = 'Windows';
 			}

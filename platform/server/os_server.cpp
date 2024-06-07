@@ -64,7 +64,7 @@ Error OS_Server::initialize(
     input = memnew(InputDefault);
 
 #ifdef __APPLE__
-    power_manager = memnew(PowerOSX);
+    power_manager = memnew(MacOSPower);
 #else
     power_manager = memnew(PowerX11);
 #endif

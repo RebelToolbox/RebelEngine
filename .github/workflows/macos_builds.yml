@@ -22,7 +22,7 @@ jobs:
             cache-name: macos-editor
             target: release_debug
             tools: true
-            bin: "./bin/rebel.osx.opt.tools.64"
+            bin: "./bin/rebel.macos.opt.tools.64"
 
           - name: Template (target=release, tools=no)
             cache-name: macos-template
@@ -45,7 +45,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           sconsflags: ${{ env.SCONSFLAGS }}
-          platform: osx
+          platform: macos
           target: ${{ matrix.target }}
           tools: ${{ matrix.tools }}
 

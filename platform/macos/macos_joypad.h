@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JOYPADOSX_H
-#define JOYPADOSX_H
+#ifndef MACOS_JOYPAD_H
+#define MACOS_JOYPAD_H
 
 #ifdef MACOS_10_0_4
 #include <IOKit/hidsystem/IOHIDUsageTables.h>
@@ -67,7 +67,7 @@ struct joypad {
     joypad();
 };
 
-class JoypadOSX {
+class MacOSJoypad {
     enum {
         JOYPADS_MAX = 16,
     };
@@ -102,8 +102,8 @@ public:
     void _device_added(IOReturn p_res, IOHIDDeviceRef p_device);
     void _device_removed(IOReturn p_res, IOHIDDeviceRef p_device);
 
-    JoypadOSX();
-    ~JoypadOSX();
+    MacOSJoypad();
+    ~MacOSJoypad();
 };
 
-#endif // JOYPADOSX_H
+#endif // MACOS_JOYPAD_H

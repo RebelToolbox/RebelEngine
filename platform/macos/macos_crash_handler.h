@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef CRASH_HANDLER_OSX_H
-#define CRASH_HANDLER_OSX_H
+#ifndef MACOS_CRASH_HANDLER_H
+#define MACOS_CRASH_HANDLER_H
 
 class CrashHandler {
     bool disabled;
@@ -23,4 +23,4 @@ public:
     ~CrashHandler();
 };
 
-#endif // CRASH_HANDLER_OSX_H
+#endif // MACOS_CRASH_HANDLER_H

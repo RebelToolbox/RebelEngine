@@ -8,7 +8,7 @@ def is_active():
 
 
 def get_name():
-    return "OSX"
+    return "MacOS"
 
 
 def can_build():
@@ -87,7 +87,7 @@ def configure(env):
 
     ## Architecture
 
-    # Mac OS X no longer runs on 32-bit since 10.7 which is unsupported since 2014
+    # MacOS no longer runs on 32-bit since 10.7 which is unsupported since 2014
     # As such, we only support 64-bit
     env["bits"] = "64"
 
@@ -124,7 +124,7 @@ def configure(env):
             env["CC"] = "clang"
             env["CXX"] = "clang++"
 
-        sdk_path = get_darwin_sdk_path("osx")
+        sdk_path = get_darwin_sdk_path("macos")
         env.Append(CCFLAGS=["-isysroot", sdk_path])
         env.Append(LINKFLAGS=["-isysroot", sdk_path])
 
@@ -178,10 +178,10 @@ def configure(env):
 
     ## Flags
 
-    env.Prepend(CPPPATH=["#platform/osx"])
+    env.Prepend(CPPPATH=["#platform/macos"])
     env.Append(
         CPPDEFINES=[
-            "OSX_ENABLED",
+            "MACOS_ENABLED",
             "UNIX_ENABLED",
             "GLES_ENABLED",
             "APPLE_STYLE_KEYS",

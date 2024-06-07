@@ -364,12 +364,12 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
         platform_linux.library_extension = "*.so";
         platforms["X11"]                 = platform_linux;
 
-        NativePlatformConfig platform_osx;
-        platform_osx.name = "macOS";
-        platform_osx.entries.push_back("64");
-        platform_osx.library_extension =
+        NativePlatformConfig platform_macos;
+        platform_macos.name = "macOS";
+        platform_macos.entries.push_back("64");
+        platform_macos.library_extension =
             "*.framework; Framework, *.dylib; Dynamic Library";
-        platforms["OSX"] = platform_osx;
+        platforms["MacOS"] = platform_macos;
 
         NativePlatformConfig platform_uwp;
         platform_uwp.name = "UWP";

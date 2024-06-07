@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+#include "macos_os.h"
 #include "main/main.h"
-#include "os_osx.h"
 
 #include <string.h>
 #include <unistd.h>
@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     printf("Current path: %s\n", cwd);
 #endif
 
-    OS_OSX os;
+    MacOSOS os;
     Error err;
 
     if (os.open_with_filename != "") {

@@ -294,7 +294,7 @@ SPDX-License-Identifier: MIT
         <method name="get_name" qualifiers="const">
             <return type="String" />
             <description>
-                Returns the name of the host OS. Possible values are: [code]"Android"[/code], [code]"iOS"[/code], [code]"HTML5"[/code], [code]"OSX"[/code], [code]"Server"[/code], [code]"Windows"[/code], [code]"UWP"[/code], [code]"X11"[/code].
+                Returns the name of the host OS. Possible values are: [code]"Android"[/code], [code]"iOS"[/code], [code]"HTML5"[/code], [code]"macOS"[/code], [code]"Server"[/code], [code]"Windows"[/code], [code]"UWP"[/code], [code]"X11"[/code].
             </description>
         </method>
         <method name="get_native_handle">
@@ -802,7 +802,7 @@ SPDX-License-Identifier: MIT
         <method name="request_attention">
             <return type="void" />
             <description>
-                Request the user attention to the window. It'll flash the taskbar button on Windows or bounce the dock icon on OSX.
+                Request the user attention to the window. It'll flash the taskbar button on Windows or bounce the dock icon on macOS.
                 [b]Note:[/b] This method is implemented on Linux, macOS and Windows.
             </description>
         </method>
